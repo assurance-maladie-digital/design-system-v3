@@ -8,6 +8,14 @@ import * as FilterSideBarStories from './FilterSideBar.stories.ts';
   <p>Le composant `FilterSideBar` est utilisé pour permettre à l’utilisateur de sélectionner des filtres dans un panel dédié.</p>
 </div>
 
+{/* func-version-start */}
+<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.1.1 - 17/06/2026</p>
+{/* func-version-end */}
+{/* a11y-version-start */}
+<p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.0.20 - 11/02/2026</p>
+{/* a11y-version-end */}
+
+
 <Canvas of={FilterSideBarStories.Default} />
 
 # API
@@ -93,7 +101,6 @@ const filters = ref([
 		title: 'Profession',
 	},
 ])
-import '../../stories/styles/shared.css';
 
 const folderTypes = [
 	{
@@ -236,6 +243,14 @@ const professionList = [
 		`
 	}}
 />
+
+## Titre du panneau
+
+Vous pouvez afficher un titre au-dessus des filtres via la prop `title`. C'est utile pour distinguer plusieurs `FilterSideBar` présents sur une même page (par exemple associés à des tableaux différents).
+
+Le niveau sémantique du titre est configurable via la prop `headingLevel` (`1` à `6`, défaut `2`) afin de l'intégrer correctement dans la hiérarchie de titres de la page. Le titre sert également de **nom accessible** au panneau (`aria-labelledby`).
+
+<Canvas of={FilterSideBarStories.Title} />
 
 ## Gestion du z-index
 

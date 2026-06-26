@@ -18,7 +18,7 @@ function generateBuiltInRuleType(type: 'base' | 'date' | 'number' | 'string' | '
 	}
 }
 
-export function getValidationDocumentation(type: 'date' | 'number' | 'string' | 'all' = 'all') {
+export function getValidationDocumentation(type: 'base' | 'date' | 'number' | 'string' | 'all' = 'all') {
 	const builtInRuleType = generateBuiltInRuleType(type)
 
 	return {
@@ -63,7 +63,7 @@ export function getValidationDocumentation(type: 'date' | 'number' | 'string' | 
 			control: 'boolean',
 			table: {
 				type: { summary: 'boolean' },
-				defaultValue: { summary: 'true' },
+				defaultValue: { summary: 'false' },
 				category: 'props',
 			},
 		},

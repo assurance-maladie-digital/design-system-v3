@@ -24,6 +24,9 @@ const ap2026OnlyStories = [
 const apOnlyStories = [
 	'composants-structure-footerbar--back-office',
 	'composants-structure-footerbar--with-phone-number',
+	'composants-boutons-usermenubtn--with-ps-info',
+	'composants-données-accordion--with-custom-content',
+	'composants-layout-pagecontainer--with-header-and-footer',
 ]
 
 // Components to display in AP theme
@@ -32,26 +35,35 @@ const apComponents = [
 	'composants-boutons-copybtn',
 	'composants-boutons-downloadbtn',
 	'composants-boutons-syiconbutton',
+	'composants-boutons-usermenubtn',
 	'composants-composants-vuetify',
 	'composants-composants-vuetify-introduction--docs',
 	'composants-composants-vuetify-vbreadcrumbs--docs',
 	'composants-composants-vuetify-vbtn--docs',
 	'composants-composants-vuetify-vcard--docs',
+	'composants-composants-vuetify-vcarousel--docs',
+	'composants-composants-vuetify-vnavigationdrawer--docs',
 	'composants-composants-vuetify-votpinput--docs',
 	'composants-composants-vuetify-vskeletonloader--docs',
+	'composants-composants-vuetify-vslidegroup--docs',
+	'composants-composants-vuetify-vstepper--docs',
 	'composants-composants-vuetify-vswitch--docs',
 	'composants-composants-vuetify-vtooltip--docs',
 	'composants-données-accordion',
 	'composants-données-chiplist',
+	'composants-données-filepreview',
 	'composants-feedback-dialogbox',
 	'composants-feedback-notificationbar',
-	'composants-filtres-filterssidebar',
+	'composants-filtres-filtersidebar',
+	'composants-filtres-searchlistfield',
+	'composants-formulaires-captcha',
 	'composants-formulaires-datepicker-introduction--docs',
 	'composants-formulaires-datepicker-calendarmode',
 	'composants-formulaires-datepicker-combinedmode',
 	'composants-formulaires-datepicker-dateinput',
 	'composants-formulaires-datepicker-validation',
 	'composants-formulaires-datepicker-usages',
+	'composants-formulaires-fileupload',
 	'composants-formulaires-nirfield',
 	'composants-formulaires-phonefield',
 	'composants-formulaires-selects-syautocomplete',
@@ -62,18 +74,23 @@ const apComponents = [
 	'composants-formulaires-syradiogroup',
 	'composants-formulaires-sytextarea',
 	'composants-formulaires-sytextfield',
+	'composants-formulaires-passwordfield',
+	'composants-formulaires-uploadworkflow',
+	'composants-formulaires-rangefield',
 	'composants-layout-pagecontainer',
+	'composants-navigation-contextualmenu',
 	'composants-navigation-skiplink',
 	'composants-navigation-sypagination',
 	'composants-navigation-sytabs',
 	'composants-structure-footerbar',
 	'composants-structure-headerbar',
 	'composants-structure-headerloading',
+	'composants-structure-headertoolbar',
 	'composants-tableaux-tabletoolbar',
 	'composants-vue-d-ensemble--docs',
-    'composants-tableaux-sytable',
-    'composants-tableaux-syservertable',
-    'composants-tableaux-paginatedtable',
+	'composants-tableaux-sytable',
+	'composants-tableaux-syservertable',
+	'composants-tableaux-paginatedtable',
 ]
 
 // Get stored theme or default to CNAM
@@ -99,18 +116,23 @@ const shouldShowApComponent = (item, itemId, theme) => {
 	const hideAmelipro = ['pa', 'cnam', 'ap'].includes(theme)
 
 	const hiddenWhenAp = new Set([
-		'guide-du-dev-correspondance-composants-pag--docs',
-		'guide-du-dev-guide-des-formulaires-syform-validation-automatique--docs',
-		'accessibilité-design-system',
-		'accessibilité-kit-de-pré-audit-avancement',
-		'guide-du-dev-guide-technique-système-de-validation-règles--docs',
-		'guide-du-dev-migration',
-		'guide-du-dev-installation--docs',
 		'composants-structure-headerbar--prepend-slot',
 		'composants-structure-headerbar--with-header-toolbar',
 		'composants-structure-headerbar-headernavigationbar',
 		'composants-structure-headerbar--usages',
 	])
+
+	// Convergence des DS / Équivalence des composants : toujours visible, quel que soit le thème
+	if (itemId.startsWith('guide-du-dev-convergence-des-ds')) {
+		item.style.display = 'block'
+		return
+	}
+
+	// Dossier Migration : entièrement masqué en thèmes pa, ap et ap2026 (visible uniquement en cnam).
+	if (itemId.startsWith('guide-du-dev-migration')) {
+		item.style.display = (theme === 'pa' || theme === 'ap' || theme === 'ap2026') ? 'none' : 'block'
+		return
+	}
 
 	if (itemId === 'composants-amelipro') {
 		item.style.display = hideAmelipro ? 'none' : 'block'
@@ -119,11 +141,6 @@ const shouldShowApComponent = (item, itemId, theme) => {
 
 	if (hiddenWhenAp.has(itemId)) {
 		item.style.display = isAp ? 'none' : 'block'
-		return
-	}
-
-	if (itemId === 'guide-du-dev-correspondance-composants-amelipro--docs') {
-		item.style.display = isAp ? 'block' : 'none'
 		return
 	}
 
@@ -182,6 +199,18 @@ const applyThemeSidebar = (theme) => {
 			items.forEach((item) => {
 				item.style.display = 'block'
 				const itemId = item.getAttribute('data-item-id') || ''
+
+				// Convergence des DS / Équivalence des composants : toujours visible, quel que soit le thème
+				if (itemId.startsWith('guide-du-dev-convergence-des-ds')) {
+					item.style.display = 'block'
+					return
+				}
+
+				// Dossier Migration : entièrement masqué en thèmes pa, ap et ap2026 (visible uniquement en cnam).
+				if (itemId.startsWith('guide-du-dev-migration')) {
+					item.style.display = (theme === 'pa' || theme === 'ap' || theme === 'ap2026') ? 'none' : 'block'
+					return
+				}
 
 				// Handle design tokens container page
 				if (item.querySelector('a#design-tokens-conteneurs-de-page--docs')) {
@@ -248,36 +277,6 @@ const applyThemeSidebar = (theme) => {
 					item.style.display = isAp2026 ? 'none' : 'block'
 				}
 
-				// Handle the "Migration depuis Bridge" page - hide it when AP theme is active
-				if (item.textContent && item.textContent.includes('Migration depuis Bridge')) {
-					item.style.display = isAp2026 ? 'none' : 'block'
-				}
-
-				// Handle the "Migration depuis Vue2" page - hide it when AP theme is active
-				if (item.textContent && item.textContent.includes('Migration depuis Vue2')) {
-					item.style.display = isAp2026 ? 'none' : 'block'
-				}
-
-				// Handle the "Breaking changes" page - hide it when AP theme is active
-				if (item.textContent && item.textContent.includes('Breaking changes')) {
-					item.style.display = isAp2026 ? 'none' : 'block'
-				}
-
-				// Handle the "Correspondance composants PAG" page - hide it when AP theme is active
-				if (item.textContent && item.textContent.includes('Correspondance composants PAG')) {
-					item.style.display = isAp2026 ? 'none' : 'block'
-				}
-
-				// Handle the "Correspondance composants Amelipro" page - display it when AP theme is active
-				if (itemId === 'guide-du-dev-correspondance-composants-pag--docs') {
-					item.style.display = isAp ? 'none' : 'block'
-					return
-				}
-
-				if (itemId === 'guide-du-dev-correspondance-composants-amelipro--docs') {
-					item.style.display = isAp ? 'block' : 'none'
-					return
-				}
 				// Get item ID and text content once for all checks
 				const itemText = item.textContent || ''
 
@@ -299,6 +298,10 @@ const applyThemeSidebar = (theme) => {
 				allLinks.forEach((link) => {
 					const linkId = link.id || ''
 					const linkText = link.textContent || ''
+					// Convergence des DS (dont équivalence Amelipro) : toujours visible, ne pas masquer
+					if (linkId.startsWith('guide-du-dev-convergence-des-ds')) {
+						return
+					}
 					if (linkId.toLowerCase().includes('amelipro') || linkText.toLowerCase().includes('amelipro')) {
 						// Find the parent sidebar item and hide it
 						let parent = link.parentElement

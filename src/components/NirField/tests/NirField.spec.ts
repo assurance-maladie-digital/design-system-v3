@@ -397,28 +397,15 @@ describe('NirField.vue', () => {
 		})
 
 		it('respects showSuccessMessages prop', async () => {
-			// Par défaut, showSuccessMessages = true
+			// Par défaut, showSuccessMessages = false
 			await wrapper.setProps({ showSuccessMessages: true })
-
-			// On ne peut pas tester facilement le DOM de VMessages dans ce contexte jsdom avec Vuetify
-			// On vérifie donc que la prop showSuccessMessages est bien transmise aux éléments enfants
-			// internes si applicable, ou que le comportement conditionnel est correctement câblé.
-			// La prop showSuccessMessages est utilisée dans v-show="numberValidation.hasSuccess.value && showSuccessMessages"
-
-			// Pour tester que Vue applique bien la condition, on vérifie l'état de notre wrapper
 			expect(wrapper.props('showSuccessMessages')).toBe(true)
 
-			// Avec showSuccessMessages = false
 			await wrapper.setProps({ showSuccessMessages: false })
 			await wrapper.vm.$nextTick()
 			await flushPromises()
 
 			expect(wrapper.props('showSuccessMessages')).toBe(false)
-
-			// On vérifie également que l'attribut est passé aux sous-composants s'ils l'utilisent
-			const textFields = wrapper.findAllComponents({ name: 'SyTextField' })
-			// SyTextField a showSuccessMessages false en dur dans NirField
-			expect(textFields[0]?.props('showSuccessMessages')).toBe(false)
 		})
 
 		it('respects disableErrorHandling prop', async () => {
@@ -450,6 +437,23 @@ describe('NirField.vue', () => {
 
 			expect(textFields[0]?.props('appendTooltip')).toBe(nirTooltip)
 			expect(textFields[1]?.props('appendTooltip')).toBe(keyTooltip)
+		})
+
+		it('affiche les hints internes (numberHint/keyHint) quand persistentHint est true', async () => {
+			const w = mount(NirField, {
+				props: {
+					label: 'Identifiant',
+					numberHint: 'Indice numéro',
+					keyHint: 'Indice clé',
+					persistentHint: true,
+				},
+			})
+			activeWrappers.push(w)
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			expect(w.text()).toContain('Indice numéro')
+			expect(w.text()).toContain('Indice clé')
 		})
 
 		it('renders asterisks correctly when displayAsterisk is true AND required is true', async () => {
@@ -620,6 +624,320 @@ describe('NirField.vue', () => {
 			expect(focusSpy).not.toHaveBeenCalled()
 
 			focusSpy.mockRestore()
+		})
+	})
+
+	describe('helpText', () => {
+		it('affiche le helpText quand aucun message de validation', async () => {
+			const w = mount(NirField, { props: { label: 'Identifiant', helpText: 'Saisissez le NIR' } })
+			activeWrappers.push(w)
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			const help = w.find('.sy-nir-help-text')
+			expect(help.exists()).toBe(true)
+			expect(help.text()).toBe('Saisissez le NIR')
+		})
+
+		it('n\'affiche pas le helpText quand hideDetails est true', async () => {
+			const w = mount(NirField, { props: { label: 'Identifiant', helpText: 'Saisissez le NIR', hideDetails: true } })
+			activeWrappers.push(w)
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			expect(w.find('.sy-nir-help-text').exists()).toBe(false)
+		})
+
+		it('affiche toujours le helpText lorsqu\'une erreur est présente', async () => {
+			const w = mount(NirField, { props: { label: 'Identifiant', helpText: 'Saisissez le NIR', required: true } })
+			activeWrappers.push(w)
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			// Déclenche l'erreur "requis" (champ vide)
+			await w.vm.validateOnSubmit()
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			const help = w.find('.sy-nir-help-text')
+			expect(help.exists()).toBe(true)
+			expect(help.text()).toBe('Saisissez le NIR')
+		})
+	})
+
+	describe('clearable', () => {
+		it('affiche le bouton clear quand clearable et qu\'il y a une valeur', async () => {
+			const w = mount(NirField, { props: { label: 'Identifiant', clearable: true } })
+			activeWrappers.push(w)
+			await w.find('.number-field input').setValue('2940375120005')
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			expect(w.find('.number-field .sy-text-field__clear').exists()).toBe(true)
+		})
+
+		it('n\'affiche pas le bouton clear quand clearable est false', async () => {
+			const w = mount(NirField, { props: { label: 'Identifiant', clearable: false } })
+			activeWrappers.push(w)
+			await w.find('.number-field input').setValue('2940375120005')
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			expect(w.find('.number-field .sy-text-field__clear').exists()).toBe(false)
+		})
+
+		it('vide le champ au clic sur le bouton clear', async () => {
+			const w = mount(NirField, { props: { label: 'Identifiant', clearable: true } })
+			activeWrappers.push(w)
+			const numberInput = w.find('.number-field input')
+			await numberInput.setValue('2940375120005')
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			await w.find('.number-field .sy-text-field__clear').trigger('click')
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			expect((numberInput.element as HTMLInputElement).value).toBe('')
+		})
+	})
+
+	describe('validation Vuetify (numberRules / keyRules)', () => {
+		const numberRules = [(v: string) => (!!v && v.replace(/\s/g, '').length === 13) || 'Le numéro doit contenir 13 chiffres']
+		const keyRules = [(v: string) => (!!v && v.replace(/\s/g, '').length === 2) || 'La clé doit contenir 2 chiffres']
+
+		it('applique numberRules : un NIR partiel est invalide', async () => {
+			const w = mount(NirField, { props: { label: 'Identifiant', useVuetifyValidation: true, numberRules, keyRules } })
+			activeWrappers.push(w)
+			await w.find('.number-field input').setValue('12345')
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			const isValid = await w.vm.validateOnSubmit()
+			await flushPromises()
+			expect(isValid).toBe(false)
+		})
+
+		it('applique keyRules : une clé vide invalide même si le numéro est complet', async () => {
+			const w = mount(NirField, { props: { label: 'Identifiant', useVuetifyValidation: true, numberRules, keyRules } })
+			activeWrappers.push(w)
+			await w.find('.number-field input').setValue('2940375120005')
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			const isValid = await w.vm.validateOnSubmit()
+			await flushPromises()
+			expect(isValid).toBe(false)
+		})
+
+		it('valide quand le numéro (13 chiffres) et la clé (2 chiffres) respectent les règles', async () => {
+			const w = mount(NirField, { props: { label: 'Identifiant', useVuetifyValidation: true, numberRules, keyRules } })
+			activeWrappers.push(w)
+			await w.find('.number-field input').setValue('2940375120005')
+			await w.find('.key-field input').setValue('05')
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			const isValid = await w.vm.validateOnSubmit()
+			await flushPromises()
+			expect(isValid).toBe(true)
+		})
+	})
+
+	describe('RGAA 7.4 - Auto-focus behavior and user notification', () => {
+		it('le message d\'avertissement est présent mais caché visuellement lorsque displayKey est true', async () => {
+			const noticeWrapper = wrapper.find('.d-sr-only')
+			expect(noticeWrapper.exists()).toBe(true)
+			expect(noticeWrapper.text()).toContain('Après la saisie des 13 caractères du numéro de sécurité sociale')
+		})
+
+		it('n\'affiche pas le message d\'avertissement lorsque displayKey est false', async () => {
+			await wrapper.setProps({ displayKey: false })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			const noticeWrapper = wrapper.find('.d-sr-only')
+			expect(noticeWrapper.exists()).toBe(false)
+		})
+
+		it('n\'affiche pas le message d\'avertissement lorsque disabled est true', async () => {
+			await wrapper.setProps({ disabled: true })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			const noticeWrapper = wrapper.find('.d-sr-only')
+			expect(noticeWrapper.exists()).toBe(false)
+		})
+
+		it('n\'affiche pas le message d\'avertissement lorsque readonly est true', async () => {
+			await wrapper.setProps({ readonly: true })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			const noticeWrapper = wrapper.find('.d-sr-only')
+			expect(noticeWrapper.exists()).toBe(false)
+		})
+
+		it('le champ numéro possède un aria-describedby contenant l\'ID du message d\'avertissement', async () => {
+			const noticeWrapper = wrapper.find('.d-sr-only')
+			const noticeId = noticeWrapper.attributes('id')
+
+			const numberField = wrapper.find('.number-field input')
+			const describedBy = numberField.attributes('aria-describedby')
+
+			expect(describedBy).toContain(noticeId)
+		})
+
+		it('le champ clé ne possède pas l\'ID du message d\'avertissement dans son aria-describedby', async () => {
+			const noticeWrapper = wrapper.find('.d-sr-only')
+			const noticeId = noticeWrapper.attributes('id')
+
+			const keyField = wrapper.find('.key-field input')
+			const describedBy = keyField.attributes('aria-describedby')
+
+			expect(describedBy).not.toContain(noticeId)
+		})
+
+		it('le focus passe du champ numéro au champ clé lorsque le numéro atteint 13 caractères', async () => {
+			const focusSpy = vi.spyOn(HTMLElement.prototype, 'focus')
+
+			const numberInput = wrapper.find('.number-field input')
+			await numberInput.setValue('2940375120005')
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			expect(focusSpy).toHaveBeenCalled()
+
+			focusSpy.mockRestore()
+		})
+
+		it('le focus revient du champ clé au champ numéro lorsque la clé est vidée', async () => {
+			const focusSpy = vi.spyOn(HTMLElement.prototype, 'focus')
+
+			// D'abord remplir le numéro pour activer le comportement
+			await wrapper.find('.number-field input').setValue('2940375120005')
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Réinitialiser le spy pour ne compter que les appels suivants
+			focusSpy.mockClear()
+
+			// Vider la clé
+			const keyInput = wrapper.find('.key-field input')
+			await keyInput.setValue('')
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			expect(focusSpy).toHaveBeenCalled()
+
+			focusSpy.mockRestore()
+		})
+
+		it('le focus ne se déplace pas automatiquement lorsque modelValue est synchronisé depuis l\'extérieur', async () => {
+			const focusSpy = vi.spyOn(HTMLElement.prototype, 'focus')
+
+			// Synchroniser modelValue depuis l'extérieur
+			await wrapper.setProps({ modelValue: '294037512000591' })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Vérifier qu'aucun focus automatique n'a été déclenché
+			expect(focusSpy).not.toHaveBeenCalled()
+
+			focusSpy.mockRestore()
+		})
+
+		it('le focus ne se déplace pas lorsque le composant est disabled', async () => {
+			const focusSpy = vi.spyOn(HTMLElement.prototype, 'focus')
+
+			await wrapper.setProps({ disabled: true })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			const numberInput = wrapper.find('.number-field input')
+			await numberInput.setValue('2940375120005')
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			expect(focusSpy).not.toHaveBeenCalled()
+
+			focusSpy.mockRestore()
+		})
+
+		it('le focus ne se déplace pas lorsque le composant est readonly', async () => {
+			const focusSpy = vi.spyOn(HTMLElement.prototype, 'focus')
+
+			await wrapper.setProps({ readonly: true })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			const numberInput = wrapper.find('.number-field input')
+			await numberInput.setValue('2940375120005')
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			expect(focusSpy).not.toHaveBeenCalled()
+
+			focusSpy.mockRestore()
+		})
+
+		it('lorsque le numéro contient déjà 13 caractères et qu\'un chiffre est saisi, ce chiffre est ajouté au champ clé', async () => {
+			// Remplir d'abord le numéro
+			await wrapper.find('.number-field input').setValue('2940375120005')
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Vérifier la valeur de la clé avant
+			const keyInputBefore = wrapper.find('.key-field input').element as HTMLInputElement
+			const keyBefore = keyInputBefore.value
+
+			// Simuler la saisie d'un chiffre supplémentaire via keydown
+			const numberInput = wrapper.find('.number-field input')
+			await numberInput.trigger('keydown', { key: '9' })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Vérifier que le chiffre a été ajouté à la clé
+			const keyInputAfter = wrapper.find('.key-field input').element as HTMLInputElement
+			const keyAfter = keyInputAfter.value
+			expect(keyAfter).toBe(keyBefore + '9')
+		})
+
+		it('le comportement reste identique avec withoutFieldset', async () => {
+			await wrapper.setProps({ withoutFieldset: true })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Vérifier que le message d'avertissement est toujours présent
+			const noticeWrapper = wrapper.find('.d-sr-only')
+			expect(noticeWrapper.exists()).toBe(true)
+
+			// Vérifier que les aria-describedby sont toujours corrects
+			const noticeId = noticeWrapper.attributes('id')
+			const numberField = wrapper.find('.number-field input')
+			const describedBy = numberField.attributes('aria-describedby')
+			expect(describedBy).toContain(noticeId)
+		})
+
+		it('shouldUseAutoFocus retourne false lorsque displayKey est false', async () => {
+			await wrapper.setProps({ displayKey: false })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// shouldUseAutoFocus est une propriété interne, on teste son comportement
+			// en vérifiant que le message n'est pas affiché
+			const noticeWrapper = wrapper.find('.sy-nir-focus-notice')
+			expect(noticeWrapper.exists()).toBe(false)
+		})
+
+		it('autoFocusNoticeText est vide lorsque shouldUseAutoFocus est false', async () => {
+			await wrapper.setProps({ disabled: true })
+			await wrapper.vm.$nextTick()
+			await flushPromises()
+
+			// Le computed doit retourner une chaîne vide
+			const noticeWrapper = wrapper.find('.sy-nir-focus-notice')
+			expect(noticeWrapper.exists()).toBe(false)
 		})
 	})
 })

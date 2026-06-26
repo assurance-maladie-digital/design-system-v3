@@ -10,7 +10,7 @@ import RangeField from '../RangeField/RangeField.vue'
 import SyTextField from '../Customs/SyTextField/SyTextField.vue'
 
 const meta = {
-	title: 'Composants/Filtres/FiltersSideBar',
+	title: 'Composants/Filtres/FilterSideBar',
 	component: FilterSideBar,
 
 	argTypes: {
@@ -86,6 +86,37 @@ const meta = {
 				},
 				defaultValue: {
 					summary: 'undefined',
+				},
+			},
+		},
+		'title': {
+			description: 'Titre affiché au-dessus des filtres du panneau',
+			control: {
+				type: 'text',
+			},
+			table: {
+				category: 'props',
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'undefined',
+				},
+			},
+		},
+		'headingLevel': {
+			description: 'Niveau sémantique du titre (balise h1 à h6), pour l’intégration dans la hiérarchie de titres de la page',
+			control: {
+				type: 'select',
+			},
+			options: [1, 2, 3, 4, 5, 6],
+			table: {
+				category: 'props',
+				type: {
+					summary: '1 | 2 | 3 | 4 | 5 | 6',
+				},
+				defaultValue: {
+					summary: '2',
 				},
 			},
 		},
@@ -602,6 +633,7 @@ export const FilterCombination: Story = {
 
 				<template #profession="{ props }">
 					<SearchListField
+						label="Profession"
 						v-bind="props"
 						:items="professionList"
 					/>
@@ -703,6 +735,7 @@ export const FilterCombination: Story = {
 
 				<template #profession="{ props }">
 					<SearchListField
+						label="Profession"
 						v-bind="props"
 						:items="professionList"
 					/>
@@ -831,6 +864,108 @@ const professionList = [
 			},
 		],
 	},
+}
+
+export const Title: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<FilterSideBar
+		v-model="filters"
+		title="Filtres du tableau personnalisé"
+	>
+		<template #name="{ props }">
+			<SyTextField
+				v-bind="props"
+				label="Nom"
+				variant="outlined"
+				hide-details
+			/>
+		</template>
+
+		<template #folder="{ props }">
+			<SyTextField
+				v-bind="props"
+				label="Type de dossier"
+				variant="outlined"
+				hide-details
+			/>
+		</template>
+	</FilterSideBar>
+</template>
+			`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { FilterSideBar, SyTextField } from '@cnamts/synapse'
+
+const filters = ref([
+	{
+		name: 'name',
+		title: 'Identité',
+	},
+	{
+		name: 'folder',
+		title: 'Type de dossier',
+	},
+])
+</script>
+			`,
+			},
+		],
+	},
+	args: {
+		'onUpdate:modelValue': fn(),
+		'title': 'Filtres du tableau personnalisé',
+	},
+	decorators: Default.decorators,
+	render: args => ({
+		components: { FilterSideBar, SyTextField },
+		setup() {
+			const filters = ref([
+				{
+					name: 'name',
+					title: 'Identité',
+				},
+				{
+					name: 'folder',
+					title: 'Type de dossier',
+				},
+			])
+
+			return { args, filters }
+		},
+		template: `
+			<FilterSideBar
+				v-bind="args"
+				v-model="filters"
+			>
+				<template #name="{ props }">
+					<SyTextField
+						v-bind="props"
+						label="Nom"
+						variant="outlined"
+						hide-details
+					/>
+				</template>
+
+				<template #folder="{ props }">
+					<SyTextField
+						v-bind="props"
+						label="Type de dossier"
+						variant="outlined"
+						hide-details
+					/>
+				</template>
+			</FilterSideBar>
+		`,
+	}),
 }
 
 export const ZIndex: Story = {

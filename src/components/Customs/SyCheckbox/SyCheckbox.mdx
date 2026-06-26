@@ -9,6 +9,14 @@ import * as SyCheckboxStories from "./SyCheckbox.stories";
   <p>Le composant `SyCheckbox` est une case à cocher tri-état qui étend le composant `VCheckbox` de Vuetify, conforme au style du Design System et qui respecte les règles d'accessibilité <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>.</p>
 </div>
 
+{/* func-version-start */}
+<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.1.1 - 23/06/2026</p>
+{/* func-version-end */}
+{/* a11y-version-start */}
+<p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.1.1 - 23/06/2026</p>
+{/* a11y-version-end */}
+
+
 Il étend les fonctionnalités de base de Vuetify avec :
 
 - Un état indéterminé pour les sélections partielles
@@ -56,4 +64,4 @@ La propriété `controlsIds` permet d'établir une relation entre une case à co
 La propriété `decorative` permet d'afficher la case à cocher uniquement de manière visuelle, sans rendre l'élément interactif natif (`<input type="checkbox">`) dans le DOM. 
 Ce mode est essentiel lorsque la case à cocher est imbriquée à l'intérieur d'un autre élément interactif (comme une ligne d'un tableau cliquable ou une option de liste déroulante). Il permet de respecter les règles d'accessibilité (qui interdisent l'imbrication de contrôles interactifs) tout en offrant le rendu visuel attendu. Le composant parent devient alors responsable de l'annonce de l'état (ex: via `aria-selected`).
 
-<a href="/?path=/docs/guide-du-dev-guide-de-validation-des-formulaires--docs" className="action-link">Pour plus d'informations sur la validation, consultez le guide de validation des formulaires.</a>
+<a href="/?path=/docs/guide-du-dev-formulaires-validation-guide-des-formulaires--docs" className="action-link">Pour plus d'informations sur la validation, consultez le guide de validation des formulaires.</a>

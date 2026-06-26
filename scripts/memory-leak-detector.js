@@ -18,7 +18,7 @@ const MEMORY_THRESHOLD_MB = 10;
 const ITERATIONS_PER_TEST = 2;
 const REPORT_FILE = join(projectRoot, 'memory-leak-report.json');
 
-console.log('🔍 Détection des fuites mémoire dans les tests');
+console.log(' Détection des fuites mémoire dans les tests');
 console.log(`Seuil: ${MEMORY_THRESHOLD_MB} MB`);
 console.log(`Itérations par test: ${ITERATIONS_PER_TEST}`);
 
@@ -167,7 +167,7 @@ async function main() {
     console.log(`✅ ${okTests.length} tests sans problème`);
     
     if (leakingTests.length > 0) {
-      console.log('\n📑 LISTE DES TESTS AVEC FUITES MÉMOIRE:');
+      console.log('\n LISTE DES TESTS AVEC FUITES MÉMOIRE:');
       leakingTests.forEach(test => {
         console.log(`   - ${test.file}: ${test.maxMemoryIncrease.toFixed(2)} MB`);
       });
@@ -188,7 +188,7 @@ async function main() {
     };
     
     writeFileSync(REPORT_FILE, JSON.stringify(report, null, 2));
-    console.log(`\n📝 Rapport complet enregistré dans ${REPORT_FILE}`);
+    console.log(`\n Rapport complet enregistré dans ${REPORT_FILE}`);
     
   } catch (error) {
     console.error('❌ Erreur lors de l\'exécution des tests:', error);

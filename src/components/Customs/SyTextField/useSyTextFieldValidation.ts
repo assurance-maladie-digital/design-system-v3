@@ -1,7 +1,6 @@
 import { computed, type Ref } from 'vue'
 import { useValidation } from '@/composables/unifyValidation/useValidation'
 import type { ValidationRule as SyValidationRule, VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
-import { mdiAlertOutline, mdiCheck, mdiAlertCircle } from '@mdi/js'
 
 export function useSyTextFieldValidation(params: {
 	modelValue: Ref<string | number | null | undefined>
@@ -38,7 +37,7 @@ export function useSyTextFieldValidation(params: {
 			: [],
 	)
 
-	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess, clearValidation } = useValidation({
+	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess, state, clearValidation } = useValidation({
 		modelValue: params.modelValue,
 		readonly: params.readonly,
 		disabled: params.disabled,
@@ -72,22 +71,10 @@ export function useSyTextFieldValidation(params: {
 		return 'rgba(0, 0, 0, 1)'
 	})
 
-	const clearButtonColorClass = computed(() => {
-		if (hasError.value) return 'error-field'
-		if (hasWarning.value) return 'warning-field'
-		if (hasSuccess.value) return 'success-field'
-		return 'text-iconBase'
-	})
-
-	const validationIcon = computed(() => {
-		if (hasError.value) return mdiAlertCircle
-		if (hasWarning.value) return mdiAlertOutline
-		if (hasSuccess.value) return mdiCheck
-		return null
-	})
+	// Le bouton clear garde toujours une couleur neutre, quel que soit l'état de validation
+	const clearButtonColorClass = computed(() => 'text-iconBase')
 
 	const hasMessages = computed(() => {
-		if (params.disableErrorHandling.value) return false
 		return (params.errorMessages.value?.length ?? 0) > 0 || hasError.value || hasWarning.value || (hasSuccess.value && params.showSuccessMessages.value)
 	})
 
@@ -100,8 +87,8 @@ export function useSyTextFieldValidation(params: {
 		hasSuccess,
 		iconColor,
 		clearButtonColorClass,
-		validationIcon,
 		hasMessages,
+		state,
 		validate,
 		clearValidation,
 	}

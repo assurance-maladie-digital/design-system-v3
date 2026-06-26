@@ -75,7 +75,7 @@
 		placeholder: undefined,
 		readonly: false,
 		required: false,
-		showSuccessMessages: true,
+		showSuccessMessages: false,
 		title: false,
 		skipInternalValidation: false,
 	})
@@ -115,7 +115,7 @@
 	const shouldUseInternalValidation = computed(() => !props.skipInternalValidation && !readonly.value)
 
 	const bridgeValidation = useDatePickerValidationBridge({
-		showSuccessMessages: props.showSuccessMessages,
+		showSuccessMessages: true,
 		disableErrorHandling: props.disableErrorHandling,
 		noCalendar: true,
 		required: props.required,

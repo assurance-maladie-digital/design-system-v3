@@ -86,6 +86,7 @@
 		:unique-id="uniqueId"
 		:role="role"
 		:aria-labelledby="role ? `${uniqueId}-title` : undefined"
+		align-center
 	>
 		<VCard
 			:elevation="0"

@@ -10,6 +10,14 @@ import * as PaginatedTableStories from "./PaginatedTable.stories.ts";
   <p>Le composant `PaginatedTable` est utilisé pour afficher une `VDataTable` de Vuetify avec une pagination persistante.</p>
 </div>
 
+{/* func-version-start */}
+<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.0.27 - 20/05/2026</p>
+{/* func-version-end */}
+{/* a11y-version-start */}
+<p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.0.20 - 11/02/2026</p>
+{/* a11y-version-end */}
+
+
 <Canvas story={{height: '550px'}} of={PaginatedTableStories.Default}/>
 
 # API
@@ -28,7 +36,6 @@ import * as PaginatedTableStories from "./PaginatedTable.stories.ts";
 		itemsPerPage: 4,
 		sortBy: [{ key: 'calories', order: 'desc' }],
 	})
-import '../../stories/styles/shared.css';
 
 	const headers = reactive([
 		{ text: 'Dessert (100g serving)', value: 'name' },

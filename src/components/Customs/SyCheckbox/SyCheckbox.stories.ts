@@ -2,11 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3'
 import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 import { ref, watch } from 'vue'
 import { fn } from '@storybook/test'
-
-// Interface pour typer correctement le composant SyCheckbox avec sa méthode validateOnSubmit
-interface SyCheckboxInstance {
-	validateOnSubmit: () => Promise<boolean>
-}
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta = {
 	title: 'Composants/Formulaires/SyCheckbox',
@@ -26,9 +22,14 @@ const meta = {
 		},
 	},
 	argTypes: {
+		...getValidationDocumentation(),
 		modelValue: { control: 'boolean' },
 		label: {
 			description: 'Texte affiché comme label de la case à cocher',
+			control: 'text',
+		},
+		helpText: {
+			description: 'Texte d\'aide affiché sous la case (masqué quand un message de validation est présent)',
 			control: 'text',
 		},
 		color: {
@@ -196,6 +197,41 @@ const indeterminate = ref(true)
 				story: `
 ### Case à cocher avec état indéterminé
 Cette case à cocher est dans un état indéterminé, généralement utilisé lorsque certains éléments d'un groupe sont sélectionnés mais pas tous.
+				`,
+			},
+		},
+	},
+}
+
+export const HelpText: Story = {
+	args: {
+		...Default.args,
+		helpText: 'Cochez cette case pour accepter les conditions générales.',
+	},
+	render: args => ({
+		components: { SyCheckbox },
+		setup() {
+			const checked = ref(false)
+			return { args, checked }
+		},
+		template: `<SyCheckbox v-model="checked" v-bind="args" label="Case à cocher" />`,
+	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<SyCheckbox
+  v-model="checked"
+  label="Case à cocher"
+  help-text="Cochez cette case pour accepter les conditions générales."
+/>`,
+			},
+		],
+		docs: {
+			description: {
+				story: `
+### Case à cocher avec texte d'aide
+Un texte d'aide (\`helpText\`) s'affiche sous la case pour guider l'utilisateur, tant qu'aucun message de validation (erreur, avertissement, succès) n'est présent.
 				`,
 			},
 		},
@@ -637,162 +673,6 @@ Le composant SyCheckbox peut être personnalisé avec différentes couleurs pour
               <SyCheckbox v-model="checked4" label="Couleur erreur" color="error"/>
               <SyCheckbox v-model="checked5" label="Couleur avertissement" color="onWarningVariant"/>
 			</div>
-		`,
-	}),
-}
-
-export const FormValidation: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-<template>
-  <form @submit.prevent="validateForm">
-    <h3>Validation avec règles personnalisées</h3>
-    <SyCheckbox
-      ref="checkbox"
-      v-model="checked"
-      label="J'accepte les conditions générales d'utilisation"
-      :custom-rules="rules"
-      validate-on-submit
-    />
-    <h3>Validation avec la prop required</h3>
-    <SyCheckbox
-      ref="checkbox2"
-      v-model="checked2"
-      label="J'accepte les conditions générales d'utilisation"
-	  display-asterisk
-      required
-    />
-    <VBtn 
-      type="submit" 
-      color="primary"
-      class="mt-4"
-    >
-      Soumettre
-    </VBtn>
-    <p v-if="formSubmitted" style="margin-top: 16px; color: var(--v-success-base);">Formulaire soumis avec succès!</p>
-  </form>
-</template>
-
-<script setup lang="ts">
-import { ref, watch } from 'vue'
-
-const checkbox = ref<SyCheckboxInstance | null>(null)
-const checkbox2 = ref<SyCheckboxInstance | null>(null)
-const checked = ref(false)
-const checked2 = ref(false)
-const formSubmitted = ref(false)
-const hasError = ref(false)
-
-const rules = [
-  {
-    type: 'custom',
-    options: {
-      message: 'Cette case doit être cochée pour continuer.',
-      validate: (value: boolean) => value === true,
-    },
-  },
-]
-
-const validateForm = async (): Promise<void> => {
-  if (!checkbox.value || !checkbox2.value) return
-  hasError.value = true
-  const isValid = await checkbox.value.validateOnSubmit()
-  const isValid2 = await checkbox2.value.validateOnSubmit()
-  if (isValid && isValid2) {
-    formSubmitted.value = true
-    hasError.value = false
-  }
-}
-</script>`,
-			},
-		],
-		docs: {
-			description: {
-				story: `
-### Case à cocher avec validation au moment de la soumission
-Cette case à cocher utilise des règles de validation personnalisées et valide le formulaire lors de la soumission grâce à la propriété \`validateOnSubmit\`. Le bouton de soumission déclenche la validation et affiche un message de succès si la case est cochée.
-				`,
-			},
-		},
-	},
-	render: args => ({
-		components: { SyCheckbox },
-		setup() {
-			const checkbox = ref<SyCheckboxInstance | null>(null)
-			const checkbox2 = ref<SyCheckboxInstance | null>(null)
-			const checked = ref(false)
-			const checked2 = ref(false)
-			const formSubmitted = ref(false)
-			const hasError = ref(false)
-
-			// Revalider quand les valeurs changent
-			watch([checked, checked2], async () => {
-				if (hasError.value && checkbox.value && checkbox2.value) {
-					await checkbox.value.validateOnSubmit()
-					await checkbox2.value.validateOnSubmit()
-				}
-			})
-
-			const validateForm = async (): Promise<void> => {
-				if (!checkbox.value || !checkbox2.value) return
-				hasError.value = true
-				const isValid = await checkbox.value.validateOnSubmit()
-				const isValid2 = await checkbox2.value.validateOnSubmit()
-				if (isValid && isValid2) {
-					formSubmitted.value = true
-					hasError.value = false
-				}
-			}
-
-			return {
-				args,
-				checkbox,
-				checked,
-				checkbox2,
-				checked2,
-				formSubmitted,
-				hasError,
-				rules: [
-					{
-						type: 'custom',
-						options: {
-							message: 'Cette case doit être cochée pour continuer.',
-							validate: (value: boolean) => value === true,
-						},
-					},
-				],
-				validateForm,
-			}
-		},
-		template: `
-			<form @submit.prevent="validateForm">
-				<h3>Validation avec règles personnalisées</h3>
-				<SyCheckbox
-					ref="checkbox"
-					v-model="checked"
-					label="J'accepte les conditions générales d'utilisation"
-					:custom-rules="rules"
-				/>
-				<h3>Validation avec la prop required et display-asterisk</h3>
-				<SyCheckbox
-					ref="checkbox2"
-					v-model="checked2"
-					label="J'accepte les conditions générales d'utilisation"
-					required
-					display-asterisk
-				/>
-				<VBtn
-                    type="submit"
-                    color="primary"
-					class="mt-4"
-				>
-					Soumettre
-				</VBtn>
-				<p v-if="formSubmitted" style="margin-top: 16px; color: var(--v-success-base);">Formulaire soumis avec succès!</p>
-			</form>
 		`,
 	}),
 }

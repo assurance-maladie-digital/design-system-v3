@@ -1,0 +1,235 @@
+import { Meta, Source } from '@storybook/blocks';
+import '../styles/shared.css';
+
+<Meta title="Design Tokens/Utilisation" />
+
+<div className="header">
+  <h1>Utilisation</h1>
+  <p>Comment consommer les design tokens (espacements, couleurs, arrondis, typographie) dans vos styles.</p>
+</div>
+
+Depuis la version **1.0.25**, les design tokens sont exposés sous forme de **variables CSS** (custom properties) `--v-…`, générées à partir du thème Vuetify de Synapse. Elles **s'adaptent automatiquement au thème actif** (cnam / pa / amelipro, clair / sombre).
+
+> Cette page remplace l'ancien **export SCSS** de tokens (`$gap-2`, variables de couleur…) disponible jusqu'à la **1.0.24**. Voir la section [Migration](#migration-depuis-lexport-scss) en bas de page.
+
+## Espacements (`gap`)
+
+Échelle `--v-gap-N`, où `N` est un multiple de 4&nbsp;px.
+
+<table>
+  <thead>
+    <tr>
+      <th>Variable CSS</th>
+      <th>Valeur</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--v-gap-0</code></td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td><code>--v-gap-1</code></td>
+      <td>4px</td>
+    </tr>
+    <tr>
+      <td><code>--v-gap-2</code></td>
+      <td>8px</td>
+    </tr>
+    <tr>
+      <td><code>--v-gap-3</code></td>
+      <td>12px</td>
+    </tr>
+    <tr>
+      <td><code>--v-gap-4</code></td>
+      <td>16px</td>
+    </tr>
+    <tr>
+      <td><code>--v-gap-6</code></td>
+      <td>24px</td>
+    </tr>
+    <tr>
+      <td><code>--v-gap-8</code></td>
+      <td>32px</td>
+    </tr>
+    <tr>
+      <td>…</td>
+      <td>… (par pas de 4&nbsp;px)</td>
+    </tr>
+  </tbody>
+</table>
+
+<Source dark language="scss" code={`
+.mon-bloc {
+  display: flex;
+  gap: var(--v-gap-2);     /* 8px */
+  padding: var(--v-gap-4); /* 16px */
+}
+`} />
+
+Catalogue complet&nbsp;: [Design Tokens → Espacements](/docs/design-tokens-espacements--docs).
+
+## Couleurs
+
+Variables de thème `--v-theme-<nom>`. ⚠️ Si elles contiennent un **triplet RVB**, à envelopper dans `rgb()` / `rgba()`&nbsp;:
+
+<Source dark language="scss" code={`
+.element {
+  color: rgb(var(--v-theme-primary));
+  background-color: rgba(var(--v-theme-primary), 0.08); /* avec opacité */
+  border: 1px solid rgb(var(--v-theme-onSurface));
+}
+`} />
+
+Catalogue complet&nbsp;: [Design Tokens → Couleurs](/docs/design-tokens-couleurs--docs).
+
+### Nommage des variables CSS — deux familles de `on-*`
+
+Pour les couleurs de thème, deux familles de variables coexistent. **Une seule est l'API du Design System.**
+
+<table>
+  <thead>
+    <tr>
+      <th>Famille</th>
+      <th>Forme</th>
+      <th>Origine</th>
+      <th>À utiliser&nbsp;?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Tokens sémantiques du DS</td>
+      <td><code>--v-theme-onSurface</code>, <code>--v-theme-onSurfaceVariant</code>, <code>--v-theme-onPrimary</code>… (<strong>camelCase</strong>)</td>
+      <td>Définis par le Design System</td>
+      <td>✅ Oui</td>
+    </tr>
+    <tr>
+      <td>Contrastes auto-générés par Vuetify</td>
+      <td><code>--v-theme-on-surface</code>, <code>--v-theme-on-surfaceBright</code>… (<strong>kebab <code>on-</code></strong>)</td>
+      <td>Générés automatiquement par Vuetify (un <code>on-&lt;couleur&gt;</code> par couleur de thème)</td>
+      <td>❌ Non (couleurs techniques, hors API)</td>
+    </tr>
+  </tbody>
+</table>
+
+> **Règle simple&nbsp;:** si la variable a un **`on-` avec un tiret**, c'est une couleur technique générée par Vuetify&nbsp;: prenez plutôt la version **camelCase `onXxx`** du Design System.
+
+Comme il n'y a plus de variables SCSS, une faute de nom ne génère **pas d'erreur de compilation** (la `var()` reste juste non résolue). En cas de doute sur le nom d'un token issu de Figma, reportez-vous à [Correspondances couleurs](/docs/design-tokens-couleurs-correspondances-couleurs--docs).
+
+## Arrondis (`radius`)
+
+<table>
+  <thead>
+    <tr>
+      <th>Variable CSS</th>
+      <th>Nom</th>
+      <th>Valeur (thème cnam)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>--v-radius-rounded0</code></td>
+      <td>rounded-0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td><code>--v-radius-rounded</code></td>
+      <td>rounded</td>
+      <td>4px</td>
+    </tr>
+    <tr>
+      <td><code>--v-radius-roundedLg</code></td>
+      <td>rounded-lg</td>
+      <td>8px</td>
+    </tr>
+    <tr>
+      <td><code>--v-radius-roundedPill</code></td>
+      <td>rounded-pill</td>
+      <td>64px</td>
+    </tr>
+  </tbody>
+</table>
+
+Les valeurs varient selon le thème (par ex. AmeliPro&nbsp;: `rounded` = 12px, `roundedLg` = 24px).
+
+<Source dark language="scss" code={`
+.card {
+  border-radius: var(--v-radius-roundedLg); /* 8px en thème cnam */
+}
+`} />
+
+Catalogue complet&nbsp;: [Design Tokens → Arrondis](/docs/design-tokens-arrondis--docs).
+
+## Typographie
+
+`font-family: var(--v-font-family)` et les tailles `--v-fontSize-…` (`titres`, `titresAlternatifs`, `corpsDeTexte`, `liensEtLibelles`…)&nbsp;:
+
+<Source dark language="scss" code={`
+.titre {
+  font-family: var(--v-font-family);
+  font-size: var(--v-fontSize-titres);
+}
+`} />
+
+Catalogue complet&nbsp;: [Design Tokens → Styles typographiques](/docs/design-tokens-styles-typographiques--docs).
+
+## Classes utilitaires (templates)
+
+Pour la plupart des cas, les **classes utilitaires** Vuetify suffisent et suivent les mêmes échelles&nbsp;:
+
+- Espacements&nbsp;: `ga-2` (gap), `pa-4` (padding), `ma-2` (margin)…
+- Couleurs&nbsp;: `text-primary`, `bg-primary`, `border-primary`…
+- Arrondis&nbsp;: `rounded-0`, `rounded`, `rounded-lg`, `rounded-pill`.
+
+## Migration depuis l'export SCSS
+
+Jusqu'à la **1.0.24**, les tokens étaient disponibles via un **export SCSS** (`$gap-2`, …). Depuis la **1.0.25**, cet export est remplacé par les **variables CSS** ci-dessus&nbsp;:
+
+<table>
+  <thead>
+    <tr>
+      <th>Avant (SCSS, ≤ 1.0.24)</th>
+      <th>Maintenant (CSS, ≥ 1.0.25)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>$gap-2</code></td>
+      <td><code>var(--v-gap-2)</code></td>
+    </tr>
+    <tr>
+      <td>couleur primaire</td>
+      <td><code>rgb(var(--v-theme-primary))</code></td>
+    </tr>
+    <tr>
+      <td><code>$rounded-lg</code></td>
+      <td><code>var(--v-radius-roundedLg)</code></td>
+    </tr>
+    <tr>
+      <td>taille de texte</td>
+      <td><code>var(--v-fontSize-…)</code></td>
+    </tr>
+  </tbody>
+</table>
+
+**Pourquoi ce changement&nbsp;?** Les variables CSS sont résolues au **runtime** et s'adaptent au thème actif, là où l'export SCSS produisait des valeurs **figées à la compilation**.
+
+### Shim de compatibilité (optionnel)
+
+Pour faciliter la migration d'un projet qui consommait encore l'ancien export SCSS, un **partial SCSS optionnel** ré-expose les anciennes variables (sous leurs anciens noms) vers les variables CSS. Sont couverts&nbsp;: **espacements** (`$gap-N`, `$padding-N`, `$spacing-*`), **arrondis** (`$radius-rounded-*`) et **typographie** (`$font-size-*`).
+
+<Source dark language="scss" code={`
+// Dans votre projet
+@use '@cnamts/synapse/assets/compat/legacy-tokens' as *;
+
+.box {
+  gap: $gap-2;                       // -> var(--v-gap-2)
+  padding: $padding-4;               // -> var(--v-padding-4)
+  border-radius: $radius-rounded-lg; // -> var(--v-radius-roundedLg)
+  font-size: $font-size-title;       // -> var(--v-fontSize-titres)
+}
+`} />
+
+> ⚠️ Ces variables contiennent une `var(--…)` résolue au **runtime**&nbsp;: elles conviennent pour des affectations directes (`gap`, `padding`, `margin`, `border-radius`, `font-size`…) mais **pas** pour des opérations SCSS *compile-time* (`calc` Sass, fonctions de couleur…). C'est une aide à la transition&nbsp;: à terme, utilisez directement les variables CSS.
+
+Les **couleurs** ne sont pas ré-exposées (palette > 100 valeurs, et triplet RVB)&nbsp;: utilisez directement `rgb(var(--v-theme-<nom>))` (voir la section [Couleurs](#couleurs)).

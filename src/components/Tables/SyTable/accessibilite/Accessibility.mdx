@@ -40,7 +40,7 @@ import {
     [//]: # (</AuditSection>)
 
     <CriteriaSection>
-        <CriteriaCard icon="🏷️" title="Structure et rôles">
+        <CriteriaCard title="Structure et rôles">
             <ul>
                 <li>Le composant repose sur <code>VDataTable</code> et conserve la structure sémantique native d’un tableau HTML (<code>table</code>, <code>caption</code>, <code>thead</code>, <code>tbody</code>, <code>th</code>, <code>td</code>).</li>
                 <li>Une légende (<code>caption</code>) est injectée dynamiquement au montage et reste accessible via la classe <code>d-sr-only</code> lorsqu’elle est masquée visuellement.</li>
@@ -51,7 +51,7 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="⌨️" title="Navigation clavier">
+        <CriteriaCard title="Navigation clavier">
             <ul>
                 <li>Les en-têtes de colonnes sont focalisables via <code>tabindex="0"</code> et activables au clavier.</li>
                 <li>Les actions de tri sont accessibles via Entrée ou Espace.</li>
@@ -62,7 +62,7 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="📢" title="Annonces aux technologies d’assistance">
+        <CriteriaCard title="Annonces aux technologies d’assistance">
             <ul>
                 <li>Le <code>caption</code> fournit un contexte global de lecture du tableau.</li>
                 <li>Un region <code>role="status"</code> avec <code>aria-live="polite"</code> annonce les changements de résultats.</li>
@@ -72,7 +72,7 @@ import {
             </ul>
         </CriteriaCard>
 
-        <CriteriaCard icon="🎨" title="Contraste et lisibilité">
+        <CriteriaCard title="Contraste et lisibilité">
             <ul>
                 <li>Les styles du design system assurent un contraste suffisant pour texte, bordures et focus.</li>
                 <li>Les lignes alternées (<code>striped</code>) améliorent la lisibilité sans nuire au contraste.</li>

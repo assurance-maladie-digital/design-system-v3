@@ -3,12 +3,20 @@ import '../../stories/styles/shared.css';
 import * as SearchListFieldStories from './SearchListField.stories';
 import SearchListField from './SearchListField.vue';
 
-<Meta title="Composants/Formulaires/SearchListField" component={SearchListField}/>
+<Meta title="Composants/Filtres/SearchListField" component={SearchListField}/>
 
 <div className="header">
   <h1>SearchListField</h1>
   <p>Le composant `SearchListField` est utilisé pour permettre à l’utilisateur de sélectionner des valeurs dans une liste.</p>
 </div>
+
+{/* func-version-start */}
+<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.1.0 - 05/06/2026</p>
+{/* func-version-end */}
+{/* a11y-version-start */}
+<p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.0.20 - 11/02/2026</p>
+{/* a11y-version-end */}
+
 
 <Canvas story={{height: '450px'}} of={SearchListFieldStories.Default}/>
 

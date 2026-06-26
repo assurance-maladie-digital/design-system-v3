@@ -139,7 +139,6 @@
 	const { focused, validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess, validationIcon } = useSySelectValidation(props)
 
 	const labelWidth = ref(0)
-	const labelRef = ref<HTMLElement | null>(null)
 	const list = ref<VList | null>(null)
 	const textInput = ref<InstanceType<typeof VTextField> | null>(null)
 	const htmlItemRefs = ref<HTMLElement[]>([])
@@ -189,12 +188,8 @@
 	const inputId = ref(`sy-select-${Math.random().toString(36).substring(7)}`)
 	// text d'aide
 	const helpTextId = computed(() => `${inputId.value}-help`)
-	// messages d'erreur, success avertissement
-	const messagesId = computed(() => `${inputId.value}-sr-messages`)
 	// live region pour le lecteur ecran
 	const liveRegionId = computed(() => `${inputId.value}-live`)
-	// un libellé caché pour la popup/grid
-	const overlayLabelId = computed(() => `${inputId.value}-overlay-label`)
 
 	// Generate unique menu ID for each component instance to avoid conflicts and validation issues
 	const uniqueMenuId = ref(props.menuId === 'sy-select-menu' ? `sy-select-menu-${Math.random().toString(36).substring(7)}` : props.menuId)
@@ -466,10 +461,11 @@
 		return props.required === true
 	})
 
-	// Détecte s'il y a des messages d'erreur, de succès ou d'avertissement
+	// Détecte s'il y a un message réellement affiché (le succès ne compte que s'il est affiché
+	// via showSuccessMessages, sinon le helpText doit occuper la position du message sans espace vide)
 	const hasMessages = computed(() => {
 		if (props.disableErrorHandling) return false
-		return hasError.value || hasWarning.value || hasSuccess.value
+		return hasError.value || hasWarning.value || (hasSuccess.value && props.showSuccessMessages)
 	})
 
 	// Détermine si le helpText doit être affiché à la position du message ou en dessous
@@ -490,10 +486,6 @@
 		// help text / hint
 		if ((showHelpTextAsMessage.value || showHelpTextBelow.value) && props.helpText) {
 			ids.push(helpTextId.value)
-		}
-		// messages affichés
-		if (!props.hideDetails && hasMessages.value) {
-			ids.push(messagesId.value)
 		}
 		// live region si erreur
 		if (hasError.value || errors.value.length > 0) {
@@ -765,10 +757,6 @@
 	}
 
 	onMounted(() => {
-		if (labelRef.value) {
-			labelWidth.value = labelRef.value.offsetWidth + 64
-		}
-
 		nextTick(() => {
 			setupAriaAttributes()
 
@@ -874,7 +862,6 @@
 		else {
 			listElement.removeAttribute('aria-multiselectable')
 		}
-		listElement.setAttribute('aria-labelledby', overlayLabelId.value)
 	}
 
 	const focusInput = () => {
@@ -973,6 +960,7 @@
 							'warning-field': hasWarning,
 							'success-field': hasSuccess,
 							'basic-field': !hasError && !hasWarning && !hasSuccess,
+							'help-text-as-hint': showHelpTextAsMessage,
 						}"
 						v-bind="{
 							...Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk')),
@@ -1074,6 +1062,7 @@
 								:icon="validationIcon"
 								:decorative="true"
 								role="presentation"
+								width="24"
 							/>
 							<button
 								v-if="props.clearable && hasSelectionToClear"
@@ -1089,31 +1078,19 @@
 									class="sy-select__clear-icon"
 									:icon="mdiCloseCircle"
 									:decorative="true"
+									width="24"
 								/>
 							</button>
 							<SyIcon
 								class="arrow"
 								:icon="mdiChevronDown"
 								:decorative="true"
+								width="24"
 							/>
 						</template>
 					</VTextField>
 				</div>
-				<span
-					ref="labelRef"
-					class="hidden-label"
-				>{{ label }}</span>
 			</template>
-
-			<!--
-				Libellé caché utilisé pour nommer la popup/grid.
-			-->
-			<span
-				:id="overlayLabelId"
-				class="d-sr-only"
-			>
-				{{ accessibleLabel }}
-			</span>
 
 			<VList
 				:id="uniqueMenuId"
@@ -1121,11 +1098,12 @@
 				class="v-list sy-select-grid"
 				role="listbox"
 				:aria-multiselectable="props.multiple ? 'true' : undefined"
-				:aria-labelledby="overlayLabelId"
+				:aria-labelledby="`${inputId}-label`"
 				:title="accessibleLabel"
 				:style="{
 					minWidth: `${textInput?.$el.offsetWidth}px`
 				}"
+				tag="ul"
 				bg-color="white"
 				tabindex="-1"
 				@keydown.esc.prevent="closeList"
@@ -1139,7 +1117,7 @@
 				@keydown.page-down.prevent="handlePageDownKey"
 				@click.stop
 			>
-				<div
+				<li
 					v-for="(item, index) in formattedItems"
 					:id="`option-${index}`"
 					:key="index"
@@ -1186,7 +1164,7 @@
 							</span>
 						</VListItemTitle>
 					</div>
-				</div>
+				</li>
 			</VList>
 		</VMenu>
 
@@ -1199,14 +1177,7 @@
 		</div>
 
 		<div
-			v-if="!props.hideDetails && hasMessages"
-			:id="messagesId"
-			class="d-sr-only"
-		>
-			{{ hasError ? errors.join(' ') : (hasWarning ? warnings.join(' ') : successes.join(' ')) }}
-		</div>
-
-		<div
+			v-if="props.hideDetails && hasMessages"
 			:id="liveRegionId"
 			class="d-sr-only"
 			aria-live="polite"
@@ -1359,6 +1330,16 @@
 	}
 }
 
+.help-text-as-hint {
+	:deep(.v-messages) {
+		opacity: 1 !important;
+
+		.v-messages__message {
+			color: rgba(var(--v-theme-onSurface), var(--v-medium-emphasis-opacity)) !important;
+		}
+	}
+}
+
 .v-field {
 	position: relative;
 }
@@ -1495,12 +1476,6 @@
 	z-index: auto;
 	text-overflow: ellipsis;
 	white-space: normal;
-}
-
-.hidden-label {
-	visibility: hidden;
-	position: absolute;
-	white-space: nowrap;
 }
 
 .sy-select--with-chips :deep(.v-field__input input) {

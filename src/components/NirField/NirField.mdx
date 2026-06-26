@@ -9,6 +9,14 @@ import NirField from './NirField.vue';
   <p>Le composant `NirField` est utilisé pour afficher un champ de saisie de numéro de sécurité sociale.</p>
 </div>
 
+{/* func-version-start */}
+<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.1.1 - 22/06/2026</p>
+{/* func-version-end */}
+{/* a11y-version-start */}
+<p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.1.1 - 23/06/2026</p>
+{/* a11y-version-end */}
+
+
 <Canvas story={{
     height: '150px',
 }} of={NirFieldStories.Default}
@@ -49,7 +57,14 @@ import NirField from './NirField.vue';
                     <NirField
                         ref="nirFieldRef"
                         v-model="model"
+                        number-label="Numéro de sécurité sociale"
+                        key-label="Clé"
                         :display-key="true"
+                        number-hint="Exemple : 1 84 01 234 567 890"
+                        key-hint="Exemple : 74"
+                        number-tooltip="message d'aide pour le NIR"
+                        key-tooltip="message d'aide pour la clef"
+                        outlined
                         required
                     />
                     <button type="submit">
@@ -70,17 +85,14 @@ Le composant `NirField` utilise des règles de validation par défaut pour le nu
 
   - Le 1er chiffre (1er composant) permet d'identifier le sexe de l'assuré (1 pour un homme et 2 pour une femme) ;
   - Le second composant est un groupe de deux chiffres permettant de distinguer l'année de naissance (exemple 77 pour 1977) ;
-  - Le 3ème composant est un groupe de deux chiffres correspondant au mois de naissance (de 01 à 12) mais peut aussi prendre d’autres valeurs (de 20 à 99) qui indiquent que le mois de naissance de l’individu n’est pas connu (cela peut arriver pour des personnes nées à l’étranger) (https://www.insee.fr/fr/information/6665190?sommaire=6665196#titre-bloc-encadre4) ;
+  - Le 3ème composant est un groupe de deux chiffres correspondant au mois de naissance (de 01 à 12) mais peut aussi prendre d'autres valeurs (de 20 à 99) qui indiquent que le mois de naissance de l'individu n'est pas connu (cela peut arriver pour des personnes nées à l'étranger) (https://www.insee.fr/fr/information/6665190?sommaire=6665196#titre-bloc-encadre4) ;
   - Le 4ème correspond au département de naissance selon le code géographique officiel (de 01 à 95 et 97 pour les DOM et COM 976, 98 pour les TOM et COM et enfin 99 pour les nés hors de France) ;
   - Le 5ème est un groupe de 3 chiffres permettant d'identifier la commune de naissance, selon le code géographique officiel édité par l'INSEE (https://www.insee.fr/fr/information/5057840) ;
   - Le 6ème est un groupe de 3 chiffres, correspondant au rang d'inscription sur la liste du répertoire régional de l'INSEE ;
   - Le 7ème composant optionnel est un groupe de 2 chiffres appelé la clé de contrôle du NIR.
 
 - Props: `nirType` à complexe : d'après la page [Wikipedia](https://fr.wikipedia.org/wiki/Num%C3%A9ro_de_s%C3%A9curit%C3%A9_sociale_en_France)
-
-  - Le numéro NIR doit être composé de 13 chiffres.
-  - Le numéro NIR doit respecter le format suivant :
-  - 1 chiffre pour le sexe (1-4, 7, 8)
+  - 1 chiffre pour le sexe (1=homme, 2=femme, 3=homme étranger, 4=femme étrangère, 7=homme inconnu, 8=femme inconnue)
   - 2 chiffres pour l'année de naissance
   - 2 chiffres pour le mois de naissance (01-12, 20-42)
   - 2 chiffres pour le département de naissance (01-99, 2A, 2B, 96, 97X, 98X)
@@ -104,27 +116,116 @@ Chaque règle est un objet avec la structure suivante :
 
 - `type` (string) : Le type de validation (par exemple, `minLength`).
 - `options` (object) : Options pour la règle de validation, incluant :
-- `length` (number) : La longueur requise pour les règles `minLength`, `maxLength`, `min` et `max`.
+  - `length` (number) : La longueur requise pour les règles `minLength`, `maxLength`, `min` et `max`.
 - `message` (string | optionnel) : Le message d'erreur à afficher si la validation échoue (sinon le message par default s'affiche).
 - `successMessage` (string | optionnel) : Le message à afficher si la validation réussit (sinon le message par default s'affiche).
 
-Vous trouverez la liste des rules mises à disposition dans la section [Comment utiliser les rules](/docs/guide-du-dev-comment-utiliser-les-rules--docs).
+Vous trouverez la liste des rules mises à disposition dans la section [Comment utiliser les rules](/docs/guide-du-dev-formulaires-validation-guide-technique--docs).
 
 #### 2. Regles personnalisées :
 
-Pour les regles de gestion personnalisées, vous pouvez utiliser les règles de type `custom` et définir une fonction de validation personnalisée. Cette fonction doit retourner un objet avec les propriétés `valid` (booléen) et `message` (string) :
+Pour les regles de gestion personnalisées, vous pouvez utiliser les règles de type `custom` et définir une fonction de validation personnalisée. Cette fonction doit retourner un booléen (`true` si la valeur est valide, `false` si elle est invalide) :
 
 <Source dark code={`
 {
     type: 'custom',
     options: {
-      validate: (value: string) => value.startsWith('123') || 'Le NIR doit commencer par 123.',
+      validate: (value: string) => value.startsWith('123'),
       message: 'Le NIR est invalide.',
       successMessage: 'Le NIR est valide.',
 },
 
-    `}
-/>
+    `}/>
+`}/>
+
+### Custom Rules Precedence
+
+<h4 id="ancre-customrulesprecedent">Priorité des règles personnalisées</h4>
+
+La prop `custom-rules-precedence` permet de donner la priorité absolue aux règles de validation personnalisées sur la validation standard du composant.
+
+#### Quand l'utiliser ?
+
+- **NIR migrants** : Pour accepter les codes sexe 5 (masculin) et 6 (féminin) non supportés par la validation standard
+- **Formats spécifiques** : Besoin de valider des formats particuliers non couverts par la regex standard
+- **Migration progressive** : Accepter temporairement des formats legacy en attendant une correction native
+
+#### Comment ça fonctionne ?
+
+1. **Activation** : `custom-rules-precedence="true"`
+2. **Priorité** : Les règles personnalisées s'exécutent en premier
+3. **Ignorer la standard** : La règle de validation NIR native n'est pas exécutée du tout
+4. **Contrôle total** : Vous définissez complètement la logique de validation
+
+#### Exemple d'usage pour les NIR migrants :
+
+<Source dark code={`
+<template>
+  <NirField
+    v-model="nirValue"
+    :custom-number-rules="migrantNumberRules"
+    :custom-key-rules="migrantKeyRules"
+    custom-rules-precedence
+    nir-type="complexe"
+  />
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const nirValue = ref('')
+
+const migrantNumberRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value) => {
+        if (!value || value.length < 13) return true
+        // Accepte tous les codes sexe 1-8 (y compris 5 et 6 pour migrants)
+        const migrantRegex = /^[1-8]\\d{12}$/
+        return migrantRegex.test(value.replace(/\\s/g, ''))
+      },
+      message: 'Format du NIR invalide',
+      successMessage: 'Le numéro de sécurité sociale est valide',
+    },
+  },
+]
+
+const migrantKeyRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value) => {
+        if (!value || value.length !== 2) return true
+        return /^\\d{2}$/.test(value)
+      },
+      message: 'Format de clé invalide',
+      successMessage: 'La clé de contrôle est valide',
+    },
+  },
+]
+</script>
+`}/>
+
+#### Limitations importantes
+
+- **Clé de contrôle** : L'algorithme standard de calcul de clé ne fonctionne pas pour les NIR migrants
+- **Contournement** : C'est une solution temporaire, pas une correction native du composant
+- **Maintenance** : Nécessite de maintenir les règles personnalisées en parallèle
+
+#### Exemples de NIR acceptés
+
+- `5900175120005` (masculin migrant)
+- `6900175120005` (féminin migrante)  
+- `1900175120005` (masculin standard)
+- `188052A004123` (masculin — Corse-du-Sud)
+- `288052A004456` (féminin — Corse-du-Sud)
+- `190112B033789` (masculin — Haute-Corse)
+- `290112B033321` (féminin — Haute-Corse)
+
+
+
+Pour voir un exemple fonctionnel, consultez la [story CustomRulesPrecedence](/?path=/story/composants-formulaires-nirfield--custom-rules-precedence).
 
 ### Exemple d'utilisation
 
@@ -140,74 +241,36 @@ const customNumberRules = [
     {
     type: 'custom',
     options: {
-      validate: (value: string) => value.startsWith('123') || 'Le NIR doit commencer par 123.',
+      validate: (value: string) => value.startsWith('123'),
       message: 'Le NIR est invalide.',
       successMessage: 'Le NIR est valide.',
     },
   },
 ]
 const customKeyRules = [
-  {
-    type: 'minLength',
+    {
+    type: 'custom',
     options: {
-      length: 2,
-      message: 'La clé doit avoir au moins 2 caractères.',
-      successMessage: 'La clé a une longueur valide.',
+      validate: (value: string) => value.length === 2,
+      message: 'La clé doit faire 2 caractères.',
+      successMessage: 'La clé est valide.',
     },
   },
 ]
 </script>
 
 <template>
-  <NirField
-    v-model="nir"
-    :outlined="true"
-    :required="true"
-    numberLabel="NIR"
-    keyLabel="Clé"
-    :displayKey="true"
-    :customNumberRules="customNumberRules"
-    :customKeyRules="customKeyRules"
-  />
-</template>
-`}
-/>
-
-### Méthode validateOnSubmit
-
-La méthode `validateOnSubmit` permet de valider les champs du composant `NirField` lors de la soumission du formulaire. Elle retourne `true` si tous les champs sont valides, sinon `false`.
-
-Pour utiliser cette méthode, vous devez ajouter une référence Vue au composant `NirField` et appeler la méthode `validateOnSubmit` via cette référence.
-
-    <Source dark code={`
-<script setup lang="ts">
-    import {ref} from 'vue'
-    import { NirField } from '@cnamts/synapse'
-
-    const model = ref('')
-import '../../stories/styles/shared.css';
-    const nirFieldRef = ref() // Référence Vue pour accéder au composant enfant
-    const handleSubmit = () => {
-    // Appeler la méthode exposée validateOnSubmit via la référence
-    const isValid = nirFieldRef.value?.validateOnSubmit()
-    if (!isValid) {
-    alert('Corrigez les erreurs avant de soumettre !')
-} else {
-    alert('Formulaire soumis avec succès !')
-}
-}
-</script>
-
-    <template>
-      <main>
-        <form
-          class="mx-16 my-6"
-          @submit.prevent="handleSubmit"
-        >
-          <NirField
-            ref="nirFieldRef"
-            v-model="model"
-            :display-key="true"
+  <main>
+    <form class="mx-16 my-6">
+      <NirField
+        v-model="nir"
+        :custom-number-rules="customNumberRules"
+        :custom-key-rules="customKeyRules"
+        number-label="Numéro de sécurité sociale"
+        key-label="Clé"
+        :display-key="true"
+        number-hint="Exemple : 1 84 01 234 567 890"
+        key-hint="Exemple : 74"
             key-tooltip="message d'aide pour la clef"
             nir-tooltip="message d'aide pour le NIR"
             outlined
@@ -222,5 +285,4 @@ import '../../stories/styles/shared.css';
 `}
 />
 
-<a href="/?path=/docs/guide-du-dev-guide-de-validation-des-formulaires--docs" className="action-link">Pour plus d'informations sur la validation, consultez le guide de validation des formulaires.</a>
-
+<a href="/?path=/docs/guide-du-dev-formulaires-validation-guide-des-formulaires--docs" className="action-link">Pour plus d'informations sur la validation, consultez le guide de validation des formulaires.</a>

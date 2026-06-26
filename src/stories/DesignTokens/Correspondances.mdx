@@ -1,0 +1,238 @@
+import { Meta } from '@storybook/blocks';
+import '../styles/shared.css';
+
+<Meta title="Design Tokens/Couleurs/Correspondances couleurs" />
+
+<div className="header">
+  <h1>Correspondances couleurs</h1>
+  <p>Aide à la migration&nbsp;: correspondance entre les anciens tokens sémantiques et les nouveaux tokens unifiés.</p>
+</div>
+
+Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (cnam, pa, amelipro)&nbsp;: seules sont listées celles dont la **valeur est préservée à l'identique** dans chaque thème (ancien `*Semantic.ts` → nouveau `*LightTheme.ts`). Les nouveaux tokens sont exposés comme couleurs de thème (`var(--v-theme-<token>)`, classes `text-<token>`, `bg-<token>`…).
+
+> **Success (`text` / `border` / `icon`)** — ces tokens correspondent à `onSuccessVariant`.
+
+> **Premier plan feedback** — `onInfoVariant`, `onSuccessVariant`, `onWarningVariant`, `onErrorVariant` sont les couleurs de **texte / icône / bordure** à poser sur les fonds `infoVariant` / `successVariant` / `warningVariant` / `errorVariant`.
+>
+> - `onSuccessVariant` et `onWarningVariant` reprennent la valeur des anciens `text/border.success` et `.warning`.
+> - `onInfoVariant` et `onErrorVariant` sont des nuances **plus foncées introduites par la refonte**, **sans équivalent ancien** (l'ancien texte info/error utilisait la couleur principale → voir `info` / `error`).
+
+## Background
+
+<table>
+  <thead>
+    <tr>
+      <th>Ancien token</th>
+      <th>Nouveau token</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>colors.background.main</code></td>
+      <td><code>background</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.background.surface</code></td>
+      <td><code>surface</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.background.mainAlt</code></td>
+      <td><code>backgroundVariant</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.background.surfaceAlt</code></td>
+      <td><code>surfaceDim</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.background.raised</code></td>
+      <td><code>surfaceBright</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.background.accent</code></td>
+      <td><code>primary</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.background.info</code></td>
+      <td><code>infoVariant</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.background.infoContrasted</code></td>
+      <td><code>info</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.background.successContrasted</code></td>
+      <td><code>success</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.background.warning</code></td>
+      <td><code>warningVariant</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.background.warningContrasted</code></td>
+      <td><code>warning</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.background.errorContrasted</code></td>
+      <td><code>error</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.background.disabled</code></td>
+      <td><code>disabled</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Border
+
+<table>
+  <thead>
+    <tr>
+      <th>Ancien token</th>
+      <th>Nouveau token</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>colors.border.base</code></td>
+      <td><code>borderVariant</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.border.subdued</code></td>
+      <td><code>disabled</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.border.accentPrimary</code></td>
+      <td><code>primary</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.border.accentPrimaryContrasted</code></td>
+      <td><code>primaryVariant</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.border.accentPrimaryOnDark</code></td>
+      <td><code>borderBright</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.border.info</code></td>
+      <td><code>info</code><br /><small>(ou <code>onInfoVariant</code> pour une bordure sur fond <code>infoVariant</code>)</small></td>
+    </tr>
+    <tr>
+      <td><code>colors.border.success</code></td>
+      <td><code>onSuccessVariant</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.border.warning</code></td>
+      <td><code>onWarningVariant</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.border.error</code></td>
+      <td><code>error</code><br /><small>(ou <code>onErrorVariant</code> pour une bordure sur fond <code>errorVariant</code>)</small></td>
+    </tr>
+    <tr>
+      <td><code>colors.border.disabled</code></td>
+      <td><code>disabled</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Text
+
+<table>
+  <thead>
+    <tr>
+      <th>Ancien token</th>
+      <th>Nouveau token</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>colors.text.base</code></td>
+      <td><code>onSurface</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.text.accentPrimary</code></td>
+      <td><code>primary</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.text.accentPrimaryContrasted</code></td>
+      <td><code>primaryVariant</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.text.subdued</code></td>
+      <td><code>onSurfaceVariant</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.text.info</code></td>
+      <td><code>info</code><br /><small>(ou <code>onInfoVariant</code> pour un texte sur fond <code>infoVariant</code>)</small></td>
+    </tr>
+    <tr>
+      <td><code>colors.text.success</code></td>
+      <td><code>onSuccessVariant</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.text.warning</code></td>
+      <td><code>onWarningVariant</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.text.error</code></td>
+      <td><code>error</code><br /><small>(ou <code>onErrorVariant</code> pour un texte sur fond <code>errorVariant</code>)</small></td>
+    </tr>
+    <tr>
+      <td><code>colors.text.disabled</code></td>
+      <td><code>onDisabled</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.text.onDark</code></td>
+      <td><code>onPrimary</code></td>
+    </tr>
+  </tbody>
+</table>
+
+## Icon
+
+<table>
+  <thead>
+    <tr>
+      <th>Ancien token</th>
+      <th>Nouveau token</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>colors.icon.base</code></td>
+      <td><code>onSurface</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.icon.subdued</code></td>
+      <td><code>onSurfaceVariant</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.icon.accentPrimary</code></td>
+      <td><code>primary</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.icon.accentPrimaryContrasted</code></td>
+      <td><code>primaryVariant</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.icon.info</code></td>
+      <td><code>info</code><br /><small>(ou <code>onInfoVariant</code> pour une icône sur fond <code>infoVariant</code>)</small></td>
+    </tr>
+    <tr>
+      <td><code>colors.icon.success</code></td>
+      <td><code>onSuccessVariant</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.icon.error</code></td>
+      <td><code>error</code><br /><small>(ou <code>onErrorVariant</code> pour une icône sur fond <code>errorVariant</code>)</small></td>
+    </tr>
+    <tr>
+      <td><code>colors.icon.onDark</code></td>
+      <td><code>onPrimary</code></td>
+    </tr>
+    <tr>
+      <td><code>colors.icon.disabled</code></td>
+      <td><code>onDisabled</code></td>
+    </tr>
+  </tbody>
+</table>

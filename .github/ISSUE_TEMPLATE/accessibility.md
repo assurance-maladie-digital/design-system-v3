@@ -9,7 +9,7 @@ labels:
 
 ## Type d'anomalie
 
-♿ Anomalie d'accessibilité
+ Anomalie d'accessibilité
 
 ### Impact
 

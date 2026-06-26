@@ -39,7 +39,7 @@ export const ComponentsList: StoryObj = {
 						title: 'HeaderToolbar',
 						description: 'Utilisé pour afficher une barre d\'outils en haut de la page. Il est composé de deux zones customisables.',
 						link: '/?path=/docs/composants-structure-headertoolbar--docs',
-						img: '/components/header-toolbar.svg',
+						img: `/components/header-toolbar${isAp ? '-ap' : ''}.svg`,
 						category: 'Structure',
 					},
 					{
@@ -64,6 +64,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Structure',
 					},
 					{
+						title: 'NavigationDrawer',
+						description: 'Utilisé pour naviguer dans l\'application.',
+						link: '/?path=/docs/composants-composants-vuetify-vnavigationdrawer--docs',
+						img: `/components/navigation-drawer${isAp ? '-ap' : ''}.svg`,
+						category: 'Navigation',
+					},
+					{
 						title: 'FooterBar',
 						description: 'Utilisé pour afficher une barre de pied de page avec des liens et des informations supplémentaires.',
 						link: '/?path=/docs/composants-structure-footerbar--docs',
@@ -85,6 +92,27 @@ export const ComponentsList: StoryObj = {
 						category: 'Layout',
 					},
 					{
+						title: 'Carousel',
+						description: 'Utilisé pour afficher un diaporama d\'images ou de contenu.',
+						link: '/?path=/docs/composants-composants-vuetify-vcarousel--docs',
+						img: `/components/carousel${isAp ? '-ap' : ''}.svg`,
+						category: 'Layout',
+					},
+					{
+						title: 'SlideGroup',
+						description: 'Utilisé pour afficher des informations pseudo-paginées.',
+						link: '/?path=/docs/composants-composants-vuetify-vslidegroup--docs',
+						img: `/components/slide-group${isAp ? '-ap' : ''}.svg`,
+						category: 'Layout',
+					},
+					{
+						title: 'Stepper',
+						description: 'Affiche la progression par étapes numérotées.',
+						link: '/?path=/docs/composants-composants-vuetify-vstepper--docs',
+						img: `/components/stepper${isAp ? '-ap' : ''}.svg`,
+						category: 'Navigation',
+					},
+					{
 						title: 'SyTabs',
 						description: 'Permet de masquer du contenu derrière un élément sélectionnable.',
 						link: '/?path=/docs/composants-navigation-sytabs--docs',
@@ -95,7 +123,7 @@ export const ComponentsList: StoryObj = {
 						title: 'ContextualMenu',
 						description: 'Utilisé pour afficher un menu avec une liste d’ancres pour la navigation.',
 						link: '/?path=/docs/composants-navigation-contextualmenu--docs',
-						img: '/components/contextual-menu.svg',
+						img: `/components/contextual-menu${isAp ? '-ap' : ''}.svg`,
 						category: 'Navigation',
 					},
 					{
@@ -193,7 +221,7 @@ export const ComponentsList: StoryObj = {
 						title: 'UserMenuBtn',
 						description: 'Utilisé pour afficher un bouton de menu utilisateur avec un menu déroulant.',
 						link: '/?path=/docs/composants-boutons-usermenubtn--docs',
-						img: '/components/user-menu-btn.svg',
+						img: `/components/user-menu-btn${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
 					},
 					{
@@ -263,7 +291,14 @@ export const ComponentsList: StoryObj = {
 						title: 'FileUpload',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner ou de glisser-déposer des fichiers.',
 						link: '/?path=/docs/composants-formulaires-fileupload--docs',
-						img: '/components/file-upload.svg',
+						img: `/components/file-upload${isAp ? '-ap' : ''}.svg`,
+						category: 'Formulaires',
+					},
+					{
+						title: 'UploadWorkflow',
+						description: 'Utilisé pour permettre à l’utilisateur de sélectionner ou de glisser-déposer plusieurs fichiers demandés.',
+						link: '/?path=/docs/composants-formulaires-uploadworkflow--docs',
+						img: `/components/upload-workflow${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -277,7 +312,7 @@ export const ComponentsList: StoryObj = {
 						title: 'PasswordField',
 						description: 'Utilisé pour afficher un champ de saisie de mot de passe et gérer sa validation.',
 						link: '/?path=/docs/composants-formulaires-passwordfield--docs',
-						img: '/components/password-field.svg',
+						img: `/components/password-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -298,15 +333,15 @@ export const ComponentsList: StoryObj = {
 						title: 'RangeField',
 						description: 'Utilisé pour permettre à l\'utilisateur de sélectionner un interval.',
 						link: '/?path=/docs/composants-formulaires-rangefield--docs',
-						img: '/components/range-field.svg',
+						img: `/components/range-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
 						title: 'SearchListField',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner des valeurs dans une liste.',
-						link: '/?path=/docs/composants-formulaires-searchlistfield--docs',
-						img: '/components/search-list-field.svg',
-						category: 'Formulaires',
+						link: '/?path=/docs/composants-filtres-searchlistfield--docs',
+						img: `/components/search-list-field${isAp ? '-ap' : ''}.svg`,
+						category: 'Filtres',
 					},
 					{
 						title: 'SelectBtnField',
@@ -334,6 +369,13 @@ export const ComponentsList: StoryObj = {
 						description: 'Utilisé pour permettre à l\'utilisateur de choisir une option parmi plusieurs.',
 						link: '/?path=/docs/composants-formulaires-syradiogroup--docs',
 						img: `/components/sy-radiogroup${isAp ? '-ap' : ''}.svg`,
+						category: 'Formulaires',
+					},
+					{
+						title: 'Captcha',
+						description: 'Utilisé pour confirmer que les interactions des utilisateurs sont effectuées par des humains et non par des robots.',
+						link: '/?path=/docs/composants-formulaires-captcha--docs',
+						img: `/components/captcha${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -417,7 +459,7 @@ export const ComponentsList: StoryObj = {
 						title: 'FilePreview',
 						description: 'Utilisé pour afficher l\'aperçu d\'un fichier.',
 						link: '/?path=/docs/composants-donn%C3%A9es-filepreview--docs',
-						img: '/components/file-preview.svg',
+						img: `/components/file-preview${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{
@@ -465,8 +507,15 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'FilterSideBar',
 						description: 'Permet de filtrer rapidement les contenus selon plusieurs critères.',
-						link: '/?path=/docs/composants-filtres-filterssidebar--docs',
+						link: '/?path=/docs/composants-filtres-filtersidebar--docs',
 						img: `/components/filter-side-bar${isAp ? '-ap' : ''}.svg`,
+						category: 'Filtres',
+					},
+					{
+						title: 'FilterInline',
+						description: 'Permet de filtrer rapidement les contenus selon plusieurs critères.',
+						link: '/?path=/docs/composants-filtres-filterinline--docs',
+						img: `/components/filters-inline${isAp ? '-ap' : ''}.svg`,
 						category: 'Filtres',
 					},
 				]
@@ -502,6 +551,7 @@ export const ComponentsList: StoryObj = {
 					'NirField',
 					'Card',
 					'FilterSideBar',
+					'SearchListField',
 					'SyTextField',
 					'Switch',
 					'Tooltip',
@@ -521,6 +571,18 @@ export const ComponentsList: StoryObj = {
 					'SyTable',
 					'SyServerTable',
 					'DatePicker',
+					'PasswordField',
+					'Stepper',
+					'Captcha',
+					'Carousel',
+					'UserMenuBtn',
+					'UploadWorkflow',
+					'NavigationDrawer',
+					'SlideGroup',
+					'RangeField',
+					'FileUpload',
+					'ContextualMenu',
+					'HeaderToolbar',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

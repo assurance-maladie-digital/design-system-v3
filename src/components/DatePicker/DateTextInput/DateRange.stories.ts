@@ -145,7 +145,7 @@ const meta = {
 		showSuccessMessages: {
 			control: 'boolean',
 			description: 'Affiche les messages de succès',
-			defaultValue: true,
+			defaultValue: false,
 		},
 		bgColor: {
 			control: 'color',

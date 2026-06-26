@@ -25,7 +25,7 @@ import {
 	</AuditSection>
 	
 	<CriteriaSection>
-		<CriteriaCard icon="🏷️" title="Structure et rôles">
+		<CriteriaCard title="Structure et rôles">
 			<ul>
 				<li><strong>Titre accessible</strong> : utilise un heading natif (<code>h1–h6</code>) ou un <code>role="heading"</code> + <code>aria-level</code> via <code>use-native-heading</code>.</li>
 				<li><strong>Liens</strong> : chaque bouton est un lien <code>&lt;a&gt;</code> avec <code>aria-label</code> explicite « Lien vers &lt;nom&gt; ».</li>
@@ -34,7 +34,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="⌨️" title="Navigation clavier">
+		<CriteriaCard title="Navigation clavier">
 			<ul>
 				<li><strong>Focus visible</strong> : halo visible sur <code>.v-btn--icon:focus-visible</code>, contrasté en clair/sombre.</li>
 				<li><strong>Ordre logique</strong> : tabulation suit l’ordre des liens fournis.</li>
@@ -42,7 +42,7 @@ import {
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard icon="🎨" title="Contraste et lisibilité">
+		<CriteriaCard title="Contraste et lisibilité">
 			<ul>
 				<li><strong>Texte du label</strong> : couleur primaire (<code>tokens.$blue-base</code>) ou blanc en thème sombre.</li>
 				<li><strong>Icônes</strong> : couleur neutre (<code>tokens.$grey-base</code>) et outline blanc en sombre.</li>

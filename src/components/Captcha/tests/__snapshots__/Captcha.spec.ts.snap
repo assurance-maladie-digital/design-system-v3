@@ -117,22 +117,22 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
                     v-field-label
                     v-label
                   "
-                  for="input-v-3"
-                  id="input-v-3-label"
+                  for="input-v-4"
+                  id="input-v-4-label"
                 >
                   <!---->
-                  Caractères de l’audio
+                  Caractères de l’image
                 </label>
                 <!---->
                 <input
-                  aria-describedby="input-v-3-messages"
-                  aria-label="Caractères de l’audio"
-                  aria-labelledby="input-v-3-label"
+                  aria-label="Caractères de l’image"
+                  aria-labelledby="input-v-4-label"
+                  aria-required="false"
                   autocomplete="off"
                   class="v-field__input"
                   direction="horizontal"
-                  id="input-v-3"
-                  title="Caractères de l’audio"
+                  id="input-v-4"
+                  title="Caractères de l’image"
                   type="text"
                 />
                 <!---->
@@ -142,6 +142,8 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
                 <!-- Keyboard-focusable clear button -->
                 <!-- v-if -->
                 <!-- v-if -->
+                <!-- v-if -->
+                <!-- Boutons d'incrément custom (remplacent le spinner natif, perdu en type=text) -->
                 <!-- v-if -->
               </div>
               <div class="v-field__outline">
@@ -156,7 +158,7 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
                     "
                   >
                     <!---->
-                    Caractères de l’audio
+                    Caractères de l’image
                   </label>
                 </div>
                 <div class="v-field__outline__end"></div>
@@ -165,20 +167,7 @@ exports[`Captcha > renders correctly in audio mode 1`] = `
             </div>
           </div>
           <!---->
-          <div class="v-input__details">
-            <transition-group-stub
-              appear="false"
-              class="v-messages"
-              css="true"
-              id="input-v-3-messages"
-              name="slide-y-transition"
-              persisted="false"
-              tag="div"
-            >
-              <!---->
-            </transition-group-stub>
-            <!---->
-          </div>
+          <!---->
         </div>
         <!-- v-if -->
       </div>
@@ -459,21 +448,21 @@ exports[`Captcha > renders correctly in image mode 1`] = `
                     v-field-label
                     v-label
                   "
-                  for="input-v-2"
-                  id="input-v-2-label"
+                  for="input-v-3"
+                  id="input-v-3-label"
                 >
                   <!---->
                   Caractères de l’image
                 </label>
                 <!---->
                 <input
-                  aria-describedby="input-v-2-messages"
                   aria-label="Caractères de l’image"
-                  aria-labelledby="input-v-2-label"
+                  aria-labelledby="input-v-3-label"
+                  aria-required="false"
                   autocomplete="off"
                   class="v-field__input"
                   direction="horizontal"
-                  id="input-v-2"
+                  id="input-v-3"
                   title="Caractères de l’image"
                   type="text"
                 />
@@ -484,6 +473,8 @@ exports[`Captcha > renders correctly in image mode 1`] = `
                 <!-- Keyboard-focusable clear button -->
                 <!-- v-if -->
                 <!-- v-if -->
+                <!-- v-if -->
+                <!-- Boutons d'incrément custom (remplacent le spinner natif, perdu en type=text) -->
                 <!-- v-if -->
               </div>
               <div class="v-field__outline">
@@ -507,20 +498,7 @@ exports[`Captcha > renders correctly in image mode 1`] = `
             </div>
           </div>
           <!---->
-          <div class="v-input__details">
-            <transition-group-stub
-              appear="false"
-              class="v-messages"
-              css="true"
-              id="input-v-2-messages"
-              name="slide-y-transition"
-              persisted="false"
-              tag="div"
-            >
-              <!---->
-            </transition-group-stub>
-            <!---->
-          </div>
+          <!---->
         </div>
         <!-- v-if -->
       </div>

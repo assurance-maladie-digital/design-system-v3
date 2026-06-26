@@ -73,7 +73,7 @@ export function useSyRadioGroupValidation(
 
 	// Vuetify ne gère pas les messages de succès, on désactive automatiquement en mode Vuetify
 	const effectiveShowSuccessMessages = computed(() =>
-		props.useVuetifyValidation ? false : (props.showSuccessMessages ?? true),
+		props.useVuetifyValidation ? false : (props.showSuccessMessages ?? false),
 	)
 
 	const {

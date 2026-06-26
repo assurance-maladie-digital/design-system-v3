@@ -58,6 +58,11 @@ export default defineConfig({
 			},
 		},
 	},
+	esbuild: {
+		supported: {
+			destructuring: true,
+		},
+	},
 	css: {
 		preprocessorOptions: {
 			scss: {
@@ -96,6 +101,9 @@ export default defineConfig({
 				'src/**/*.a11y.spec.ts',
 				'src/**/*.cy.ts',
 				'src/**/*.stories.*',
+				'src/**/*.mdx',
+				'src/**/*.mdx.old',
+				'src/**/*.old',
 				'src/**/*ExpertiseLevelEnum.ts*',
 				'src/**/tests/data/*',
 				'src/**/constants/*',

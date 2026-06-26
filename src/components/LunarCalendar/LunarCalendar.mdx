@@ -9,6 +9,14 @@ import * as LunarCalendarStories from './LunarCalendar.stories';
   <p>Il hérite des props et fonctionnalités du composant `SyTextField` de Synapse.</p>
 </div>
 
+{/* func-version-start */}
+<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.1.1 - 12/06/2026</p>
+{/* func-version-end */}
+{/* a11y-version-start */}
+<p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.0.23 - 30/03/2026</p>
+{/* a11y-version-end */}
+
+
 <Canvas of={LunarCalendarStories.Default} />
 
 # API
@@ -17,17 +25,14 @@ import * as LunarCalendarStories from './LunarCalendar.stories';
 
 # Exemples d'utilisation
 
-## Avec contraintes d'années
+## Champ requis
 
-<Canvas of={LunarCalendarStories.WithYearConstraints} />
+<Canvas of={LunarCalendarStories.Required} />
 
-Limitation de la saisie entre deux années spécifiques.
+## Avec bouton de suppression
 
-## Avec année minimale seulement
+<Canvas of={LunarCalendarStories.WithClearable} />
 
-<Canvas of={LunarCalendarStories.WithMinYearOnly} />
+## Avec texte d'aide
 
-## Avec année maximale seulement
-
-<Canvas of={LunarCalendarStories.WithMaxYearOnly} />
-
+<Canvas of={LunarCalendarStories.HelpText} />

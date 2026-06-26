@@ -45,7 +45,7 @@ export const validationPropsDefaults = {
 	disabled: false,
 	required: false,
 	isValidateOnBlur: true,
-	showSuccessMessages: true,
+	showSuccessMessages: false,
 	disableErrorHandling: false,
 	customRules: () => [],
 	customWarningRules: () => [],
@@ -76,13 +76,13 @@ export function useValidation(params: {
 	hasErrorProp?: Ref<boolean>
 	hasWarningProp?: Ref<boolean>
 	hasSuccessProp?: Ref<boolean>
+	maxErrors?: Ref<number>
 } & ({
 	useVuetifyValidation: true
 	rules: Ref<VuetifyValidationRule[] | undefined>
 	customRules?: never
 	customWarningRules?: never
 	customSuccessRules?: never
-	maxErrors?: Ref<number>
 } | {
 	useVuetifyValidation: false
 	customRules: Ref<SyValidationRule[]>
@@ -95,20 +95,7 @@ export function useValidation(params: {
 	customWarningRules?: Ref<SyValidationRule[]>
 	customSuccessRules?: Ref<SyValidationRule[]>
 	rules: Ref<VuetifyValidationRule[] | undefined>
-	maxErrors?: Ref<number>
 })) {
-	if (params.disableErrorHandling.value) {
-		return {
-			errors: ref<string[]>([]),
-			warnings: ref<string[]>([]),
-			successes: ref<string[]>([]),
-			hasError: computed(() => params.hasErrorProp?.value ?? false),
-			hasWarning: computed(() => params.hasWarningProp?.value ?? false),
-			hasSuccess: computed(() => params.hasSuccessProp?.value ?? false),
-			validate: async () => true,
-			clearValidation: () => {},
-		}
-	}
 	const vuetifyErrors = ref<string[]>([])
 	const customErrors = ref<string[]>([])
 	const innerWarnings = ref<string[]>([])
@@ -126,7 +113,7 @@ export function useValidation(params: {
 			computed(() => params.errorMessages?.value || []),
 			params.focused,
 			params.maxErrors,
-			params.label,
+			computed(() => toValue(params.useVuetifyValidation) ? params.label?.value : undefined),
 			params.label,
 			params.readonly,
 			computed(() => params.isValidateOnBlur.value ? 'blur' : 'input'),
@@ -171,23 +158,45 @@ export function useValidation(params: {
 		}
 	}
 
-	const errors = computed(() => [...new Set([
-		...vuetifyErrors.value,
-		...customErrors.value,
-		...(params.errorMessages?.value || []),
-	])])
-	const warnings = computed(() => [...new Set([
-		...innerWarnings.value,
-		...(params.warningMessages?.value || []),
-	])])
-	const successes = computed(() => [...new Set([
-		...(params.showSuccessMessages.value ? innerSuccesses.value : []),
-		...(params.successMessages?.value || []),
-	])])
+	const errors = computed(() => {
+		const errorslist = [...params.errorMessages?.value || []]
+		if (toValue(params.disableErrorHandling) !== true) {
+			errorslist.push(...vuetifyErrors.value)
+			errorslist.push(...customErrors.value)
+		}
+
+		const max = params.maxErrors?.value
+		return max && max > 0 ? [...new Set(errorslist)].slice(0, max) : [...new Set(errorslist)]
+	})
+
+	const warnings = computed(() => {
+		const warningsList = [...params.warningMessages?.value || []]
+		if (toValue(params.disableErrorHandling) !== true) {
+			warningsList.push(...innerWarnings.value)
+		}
+		const max = params.maxErrors?.value
+		return max && max > 0 ? [...new Set(warningsList)].slice(0, max) : [...new Set(warningsList)]
+	})
+	const successes = computed(() => {
+		const successesList = [...params.successMessages?.value || []]
+		if (toValue(params.disableErrorHandling) !== true) {
+			successesList.push(...innerSuccesses.value)
+		}
+		const max = params.maxErrors?.value
+		return max && max > 0 ? [...new Set(successesList)].slice(0, max) : [...new Set(successesList)]
+	})
 	const internalHasSuccess = computed(() => customValidator.hasSuccess.value)
 
-	const hasError = computed(() => errors.value.length > 0 || params.hasErrorProp?.value)
-	const hasWarning = computed(() => warnings.value.length > 0 || params.hasWarningProp?.value)
+	const hasError = computed(() => errors.value.length > 0 || Boolean(params.hasErrorProp?.value))
+	const hasWarning = computed(() => warnings.value.length > 0 || Boolean(params.hasWarningProp?.value))
+
+	const state = computed(() => {
+		if (hasError.value) return 'error'
+		if (hasWarning.value) return 'warning'
+		if (hasSuccess.value) return 'success'
+		return 'default'
+	})
+
 	// TODO: vérifier si c'est la meilleure approche pour supprimer le succès en mode Vuetify
 	const hasSuccess = computed(() => {
 		if (toValue(params.useVuetifyValidation)) {
@@ -212,6 +221,7 @@ export function useValidation(params: {
 		hasError,
 		hasWarning,
 		hasSuccess,
+		state,
 		validate,
 		clearValidation,
 	}

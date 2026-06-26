@@ -1,8 +1,7 @@
-import { type ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
 import { checkNIR, isNIRKeyValid } from './nirValidation'
 import { locales } from './locales'
-import { useValidation } from '@/composables/unifyValidation/useValidation'
+import { useValidation, type ValidationRule as SyValidationRule } from '@/composables/unifyValidation/useValidation'
 import type { SyTextField } from '@/main'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 
@@ -13,16 +12,23 @@ export type NirValidationProps = {
 	customNumberWarningRules?: SyValidationRule[]
 	customRulesPrecedence?: boolean
 	disabled?: boolean
+	errorMessages?: string[] | null
+	hasError?: boolean
+	hasSuccess?: boolean
+	hasWarning?: boolean
 	isValidateOnBlur?: boolean
 	keyLabel?: string
 	keyRules?: VuetifyValidationRule[]
+	maxErrors?: number
 	nirType?: 'simple' | 'complexe'
 	numberLabel?: string
 	numberRules?: VuetifyValidationRule[]
 	readonly?: boolean
 	required?: boolean
 	showSuccessMessages?: boolean
+	successMessages?: string[] | null
 	useVuetifyValidation?: boolean
+	warningMessages?: string[] | null
 }
 
 /**
@@ -55,6 +61,13 @@ export function useNirValidation(
 	useVuetifyValidation: Ref<boolean>,
 	vuetifyNumberRules: Ref<VuetifyValidationRule[]>,
 	vuetifyKeyRules: Ref<VuetifyValidationRule[]>,
+	errorMessages: Ref<string[] | null | undefined>,
+	warningMessages: Ref<string[] | null | undefined>,
+	successMessages: Ref<string[] | null | undefined>,
+	hasErrorProp: Ref<boolean>,
+	hasWarningProp: Ref<boolean>,
+	hasSuccessProp: Ref<boolean>,
+	maxErrors: Ref<number>,
 ) {
 	// Règles de validation
 	const numberRules = computed(() => {
@@ -80,24 +93,23 @@ export function useNirValidation(
 			})))
 		}
 
-		// Règle de validation standard du NIR
-		rules.push({
-			type: 'custom',
-			options: {
-				validate: (value: string) => {
-					if (!value) return true
-					// Ne valider que si tous les caractères sont saisis
-					if (value.length < 13) {
-						return customLocale.value.errorInvalidNumber || locales.errorInvalidNumber
-					}
-					const result = checkNIR(value, nirType.value)
-					return result ? true : customLocale.value.errorInvalidNumber || locales.errorInvalidNumber
+		// Règle de validation standard du NIR (ignorée si customRulesPrecedence est activé)
+		if (!customRulesPrecedence.value) {
+			rules.push({
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						if (!value) return true
+						// Ne valider que si tous les caractères sont saisis
+						if (value.length < 13) return false
+						return checkNIR(value, nirType.value)
+					},
+					message: customLocale.value.errorInvalidNumber || locales.errorInvalidNumber,
+					successMessage: customLocale.value.successNumberValid || locales.successNumberValid,
+					fieldIdentifier: numberLabel.value,
 				},
-				message: customLocale.value.errorInvalidNumber || locales.errorInvalidNumber,
-				successMessage: customLocale.value.successNumberValid || locales.successNumberValid,
-				fieldIdentifier: numberLabel.value,
-			},
-		})
+			})
+		}
 
 		// Ajout des règles personnalisées sans prévalence (comportement par défaut)
 		if (!customRulesPrecedence.value && customNumberRules.value && customNumberRules.value.length > 0) {
@@ -212,6 +224,13 @@ export function useNirValidation(
 		customWarningRules: computed(() => unmaskedNumberValue.value.length === 13 ? customNumberWarningRules.value : []),
 		rules: vuetifyNumberRules,
 		focused: numberFieldFocused,
+		errorMessages,
+		warningMessages,
+		successMessages,
+		hasErrorProp,
+		hasWarningProp,
+		hasSuccessProp,
+		maxErrors,
 	})
 
 	const keyValidation = useValidation({
@@ -268,10 +287,16 @@ export function useNirValidation(
 
 	const hasFieldErrors = computed(() => numberValidation.hasError.value || (displayKey.value && keyValidation.hasError.value))
 
+	const clearValidation = () => {
+		numberValidation.clearValidation()
+		keyValidation.clearValidation()
+	}
+
 	return {
 		numberValidation,
 		keyValidation,
 		validateFields,
 		hasFieldErrors,
+		clearValidation,
 	}
 }

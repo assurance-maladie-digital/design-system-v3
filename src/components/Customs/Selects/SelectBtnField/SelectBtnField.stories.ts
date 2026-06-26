@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
+import { onMounted, ref } from 'vue'
 import SelectBtnField from './SelectBtnField.vue'
-import SyAlert from '@/components/SyAlert/SyAlert.vue'
-import { VBtn } from 'vuetify/components'
-import { ref } from 'vue'
+import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta = {
 	title: 'Composants/Formulaires/Selects/SelectBtnField',
@@ -17,6 +16,7 @@ const meta = {
 		controls: { exclude: ['copy'] },
 	},
 	argTypes: {
+		...getValidationDocumentation('base'),
 		modelValue: {
 			control: { SelectBtnField },
 			default: null,
@@ -47,21 +47,10 @@ const meta = {
 			control: { type: 'boolean' },
 			default: false,
 		},
-		hint: {
+		helpText: {
+			description: 'Texte d’aide permanent affiché sous le champ.',
 			control: { type: 'text' },
 			default: undefined,
-		},
-		error: {
-			control: { type: 'boolean' },
-			default: false,
-		},
-		errorMessages: {
-			control: { type: 'text' },
-			default: undefined,
-		},
-		readonly: {
-			control: { type: 'boolean' },
-			default: false,
 		},
 	},
 } satisfies Meta<typeof SelectBtnField>
@@ -92,23 +81,13 @@ export const Default: Story = {
 				code: `<script setup lang="ts">
     import { SelectBtnField } from '@cnamts/synapse'
     import { ref } from 'vue'
-	
+
 	const value = ref([])
 	const items = [
-		{
-			text: 'Email',
-			value: 'email',
-		},
-		{
-			text: 'Courrier',
-			value: 'courrier',
-		},
-		{
-			text: 'SMS',
-			value: 'sms',
-		},
+		{ text: 'Email', value: 'email' },
+		{ text: 'Courrier', value: 'courrier' },
+		{ text: 'SMS', value: 'sms' },
 	]
-    
 </script>
                 `,
 			},
@@ -117,24 +96,12 @@ export const Default: Story = {
 	args: {
 		modelValue: null,
 		items: [
-			{
-				text: 'Email',
-				value: 'email',
-			},
-			{
-				text: 'Courrier',
-				value: 'courrier',
-			},
-			{
-				text: 'SMS',
-				value: 'sms',
-			},
+			{ text: 'Email', value: 'email' },
+			{ text: 'Courrier', value: 'courrier' },
+			{ text: 'SMS', value: 'sms' },
 		],
 		multiple: false,
 		inline: false,
-		hint: undefined,
-		error: false,
-		errorMessages: undefined,
 		readonly: false,
 	},
 	render: (args) => {
@@ -152,14 +119,73 @@ export const Default: Story = {
 						:label="args.label"
 						:multiple="args.multiple"
 						:inline="args.inline"
-						:hint="args.hint"
-						:error="args.error"
-						:error-messages="args.errorMessages"
+						:help-text="args.helpText"
 						:readonly="args.readonly"
 						aria-labelledby="contact-method"
 					/>
 				</div>
             `,
+		}
+	},
+}
+
+export const Required: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Champ requis : la validation `required` se déclenche à la soumission (`validateOnSubmit`).',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { SelectBtnField } from '@cnamts/synapse'
+
+const value = ref(null)
+const fieldRef = ref(null)
+
+onMounted(() => {
+	fieldRef.value?.validateOnSubmit()
+})
+</script>`,
+			},
+		],
+	},
+	args: {
+		modelValue: null,
+		items: [
+			{ text: 'Email', value: 'email' },
+			{ text: 'Courrier', value: 'courrier' },
+			{ text: 'SMS', value: 'sms' },
+		],
+		label: 'Moyen de contact',
+		required: true,
+	},
+	render: (args) => {
+		return {
+			components: { SelectBtnField },
+			setup() {
+				const fieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+				onMounted(() => {
+					fieldRef.value?.validateOnSubmit()
+				})
+				return { args, fieldRef }
+			},
+			template: `
+				<div style="max-width: 400px">
+					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
+					<SelectBtnField
+						ref="fieldRef"
+						v-model="args.modelValue"
+						:items="args.items"
+						label="Moyen de contact"
+						aria-labelledby="contact-method"
+						required
+					/>
+				</div>
+			`,
 		}
 	},
 }
@@ -185,23 +211,14 @@ export const Multiple: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-     import { SelectBtnField } from '@cnamts/synapse'
+    import { SelectBtnField } from '@cnamts/synapse'
     import { ref } from 'vue'
-	
+
 	const value = ref([])
 	const items = [
-		{
-			text: 'Email',
-			value: 'email',
-		},
-		{
-			text: 'Courrier',
-			value: 'courrier',
-		},
-		{
-			text: 'SMS',
-			value: 'sms',
-		},
+		{ text: 'Email', value: 'email' },
+		{ text: 'Courrier', value: 'courrier' },
+		{ text: 'SMS', value: 'sms' },
 	]
 </script>
                 `,
@@ -211,18 +228,9 @@ export const Multiple: Story = {
 	args: {
 		modelValue: null,
 		items: [
-			{
-				text: 'Email',
-				value: 'email',
-			},
-			{
-				text: 'Courrier',
-				value: 'courrier',
-			},
-			{
-				text: 'SMS',
-				value: 'sms',
-			},
+			{ text: 'Email', value: 'email' },
+			{ text: 'Courrier', value: 'courrier' },
+			{ text: 'SMS', value: 'sms' },
 		],
 		multiple: true,
 	},
@@ -268,23 +276,14 @@ export const inline: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-     import { SelectBtnField } from '@cnamts/synapse'
+    import { SelectBtnField } from '@cnamts/synapse'
     import { ref } from 'vue'
-	
+
 	const value = ref([])
 	const items = [
-		{
-			text: 'Email',
-			value: 'email',
-		},
-		{
-			text: 'Courrier',
-			value: 'courrier',
-		},
-		{
-			text: 'SMS',
-			value: 'sms',
-		},
+		{ text: 'Email', value: 'email' },
+		{ text: 'Courrier', value: 'courrier' },
+		{ text: 'SMS', value: 'sms' },
 	]
 </script>
                 `,
@@ -294,18 +293,9 @@ export const inline: Story = {
 	args: {
 		modelValue: null,
 		items: [
-			{
-				text: 'Email',
-				value: 'email',
-			},
-			{
-				text: 'Courrier',
-				value: 'courrier',
-			},
-			{
-				text: 'SMS',
-				value: 'sms',
-			},
+			{ text: 'Email', value: 'email' },
+			{ text: 'Courrier', value: 'courrier' },
+			{ text: 'SMS', value: 'sms' },
 		],
 		inline: true,
 	},
@@ -339,8 +329,8 @@ export const itemUnique: Story = {
 	<div style="max-width: 400px">
 		<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
 	   <SelectBtnField
-			v-model="args.modelValue"
-			:items="args.items"
+			v-model="value"
+			:items="items"
 			aria-labelledby="contact-method"
 			multiple
 		/>
@@ -351,28 +341,15 @@ export const itemUnique: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-     import { SelectBtnField } from '@cnamts/synapse'
+    import { SelectBtnField } from '@cnamts/synapse'
     import { ref } from 'vue'
-	
+
 	const value = ref([])
 	const items = [
-		{
-			text: 'Email',
-			value: 'email',
-		},
-		{
-			text: 'Courrier',
-			value: 'courrier',
-		},
-		{
-			text: 'SMS',
-			value: 'sms',
-		},
-        {
-			text: 'Autre',
-			value: 'other',
-			unique: true
-		}
+		{ text: 'Email', value: 'email' },
+		{ text: 'Courrier', value: 'courrier' },
+		{ text: 'SMS', value: 'sms' },
+        { text: 'Autre', value: 'other', unique: true },
 	]
 </script>
                 `,
@@ -382,23 +359,10 @@ export const itemUnique: Story = {
 	args: {
 		modelValue: null,
 		items: [
-			{
-				text: 'Email',
-				value: 'email',
-			},
-			{
-				text: 'Courrier',
-				value: 'courrier',
-			},
-			{
-				text: 'SMS',
-				value: 'sms',
-			},
-			{
-				text: 'Autre',
-				value: 'other',
-				unique: true,
-			},
+			{ text: 'Email', value: 'email' },
+			{ text: 'Courrier', value: 'courrier' },
+			{ text: 'SMS', value: 'sms' },
+			{ text: 'Autre', value: 'other', unique: true },
 		],
 		multiple: true,
 	},
@@ -427,7 +391,7 @@ export const itemUnique: Story = {
 	},
 }
 
-export const messageAide: Story = {
+export const HelpText: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -439,7 +403,7 @@ export const messageAide: Story = {
 			v-model="value"
 			:items="items"
 			aria-labelledby="contact-method"
-			hint="Par défaut, le moyen de contact est l’email."
+			help-text="Par défaut, le moyen de contact est l’email."
 		/>
 	</div>
 </template>
@@ -448,23 +412,14 @@ export const messageAide: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-     import { SelectBtnField } from '@cnamts/synapse'
+    import { SelectBtnField } from '@cnamts/synapse'
     import { ref } from 'vue'
-	
+
 	const value = ref([])
 	const items = [
-		{
-			text: 'Email',
-			value: 'email',
-		},
-		{
-			text: 'Courrier',
-			value: 'courrier',
-		},
-		{
-			text: 'SMS',
-			value: 'sms',
-		},
+		{ text: 'Email', value: 'email' },
+		{ text: 'Courrier', value: 'courrier' },
+		{ text: 'SMS', value: 'sms' },
 	]
 </script>
                 `,
@@ -474,20 +429,11 @@ export const messageAide: Story = {
 	args: {
 		modelValue: null,
 		items: [
-			{
-				text: 'Email',
-				value: 'email',
-			},
-			{
-				text: 'Courrier',
-				value: 'courrier',
-			},
-			{
-				text: 'SMS',
-				value: 'sms',
-			},
+			{ text: 'Email', value: 'email' },
+			{ text: 'Courrier', value: 'courrier' },
+			{ text: 'SMS', value: 'sms' },
 		],
-		hint: 'Par défaut, le moyen de contact est l’email.',
+		helpText: 'Par défaut, le moyen de contact est l’email.',
 	},
 	render: (args) => {
 		return {
@@ -502,237 +448,10 @@ export const messageAide: Story = {
 						v-model="args.modelValue"
 						:items="args.items"
 						aria-labelledby="contact-method"
-						:hint="args.hint"
+						:help-text="args.helpText"
 					/>
 				</div>
             `,
-		}
-	},
-}
-
-export const erreur: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `<template>
-	<div style="max-width: 400px">
-		<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
-		<SelectBtnField
-			v-model="value"
-			:items="items"
-			aria-labelledby="contact-method"
-			v-model:error="error"
-		/>
-		<VBtn
-			color="primary"
-			class="mt-3"
-			@click="resetExample"
-		>
-			Réinitialiser
-		</VBtn>      
-	</div> 
-</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `<script setup lang="ts">
-    import { SelectBtnField } from '@cnamts/synapse'
-    import { ref } from 'vue'
-	const value = ref([])
-	const error = ref(true)
-	const items = [
-		{
-			text: 'Email',
-			value: 'email',
-		},
-		{
-			text: 'Courrier',
-			value: 'courrier',
-		},
-		{
-			text: 'SMS',
-			value: 'sms',
-		},
-	]
-	function resetExample() {
-		value.value = null
-		error.value = true
-	}
-</script>
-                `,
-			},
-		],
-	},
-	args: {
-		modelValue: null,
-		items: [
-			{
-				text: 'Email',
-				value: 'email',
-			},
-			{
-				text: 'Courrier',
-				value: 'courrier',
-			},
-			{
-				text: 'SMS',
-				value: 'sms',
-			},
-		],
-		error: true,
-	},
-	render: (args) => {
-		return {
-			components: { SelectBtnField, VBtn },
-			setup() {
-				const error = ref(args.error)
-				const value = ref(args.modelValue)
-
-				function resetExample() {
-					error.value = true
-					value.value = null
-				}
-				return { args, resetExample, error, value }
-			},
-			template: `
-				<div style="max-width: 400px">
-					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
-					<SelectBtnField
-						v-model="value"
-						:items="args.items"
-						aria-labelledby="contact-method"
-						v-model:error="error"
-					/>
-					<VBtn
-						color="primary"
-						class="mt-3"
-						@click="resetExample"
-					>
-						Réinitialiser
-					</VBtn>       
-				</div>
-            `,
-		}
-	},
-}
-
-export const messageErreur: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `<template>
-	<div style="max-width: 400px">
-		<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
-		<SelectBtnField
-			v-model="value"
-			:items="items"
-			aria-labelledby="contact-method"
-			v-model:error="error"
-			v-model:error-messages="errorMessages"
-		/>
-		<VBtn
-			color="primary"
-			class="mt-3"
-			@click="resetExample"
-		>
-			Réinitialiser
-		</VBtn>       
-	</div>
-</template>
-			`,
-			},
-			{
-				name: 'Script',
-				code: `<script setup lang="ts">
-import { SelectBtnField } from '@cnamts/synapse'
-import { ref } from 'vue'
-const value = ref([])
-const error = ref(true)
-const errorMessages = ref(['Le champ est requis.'])
-const items = [
-    {
-        text: 'Email',
-        value: 'email',
-    },
-    {
-        text: 'Courrier',
-        value: 'courrier',
-    },
-    {
-        text: 'SMS',
-        value: 'sms',
-    },
-]
-	function resetExample() {
-		value.value = null
-		error.value = true
-		errorMessages.value = [
-			'Le champ est requis.',
-		]
-	}
-</script>
-            `,
-			},
-		],
-	},
-	args: {
-		modelValue: null,
-		items: [
-			{
-				text: 'Email',
-				value: 'email',
-			},
-			{
-				text: 'Courrier',
-				value: 'courrier',
-			},
-			{
-				text: 'SMS',
-				value: 'sms',
-			},
-		],
-		error: true,
-		errorMessages: [
-			'Le champ est requis.',
-		],
-	},
-	render: (args) => {
-		return {
-			components: { SelectBtnField, VBtn },
-			setup() {
-				const error = ref(args.error)
-				const value = ref(args.modelValue)
-				const errorMessages = ref(args.errorMessages)
-
-				function resetExample() {
-					error.value = true
-					value.value = null
-					errorMessages.value = ['Le champ est requis.']
-				}
-				return { args, resetExample, error, value, errorMessages }
-			},
-			template: `
-				<div style="max-width: 400px">
-					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
-					<SelectBtnField
-						v-model="value"
-						:items="args.items"
-						aria-labelledby="contact-method"
-						v-model:error="error"
-						v-model:error-messages="errorMessages"
-					/>
-					<VBtn
-						color="primary"
-						class="mt-3"
-						@click="resetExample"
-					>
-						Réinitialiser
-					</VBtn>
-			</div>
-        `,
 		}
 	},
 }
@@ -758,22 +477,14 @@ export const readonly: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-	 import { SelectBtnField } from '@cnamts/synapse'
-	import { ref } from 'vue'
+    import { SelectBtnField } from '@cnamts/synapse'
+    import { ref } from 'vue'
+
 	const value = ref(['email'])
 	const items = [
-		{
-			text: 'Email',
-			value: 'email',
-		},
-		{
-			text: 'Courrier',
-			value: 'courrier',
-		},
-		{
-			text: 'SMS',
-			value: 'sms',
-		},
+		{ text: 'Email', value: 'email' },
+		{ text: 'Courrier', value: 'courrier' },
+		{ text: 'SMS', value: 'sms' },
 	]
 </script>
 				`,
@@ -783,18 +494,9 @@ export const readonly: Story = {
 	args: {
 		modelValue: ['email'],
 		items: [
-			{
-				text: 'Email',
-				value: 'email',
-			},
-			{
-				text: 'Courrier',
-				value: 'courrier',
-			},
-			{
-				text: 'SMS',
-				value: 'sms',
-			},
+			{ text: 'Email', value: 'email' },
+			{ text: 'Courrier', value: 'courrier' },
+			{ text: 'SMS', value: 'sms' },
 		],
 		label: 'Moyen de contact',
 		readonly: true,
@@ -818,22 +520,4 @@ export const readonly: Story = {
 			`,
 		}
 	},
-}
-
-export const Info: Story = {
-	render: (args) => {
-		return {
-			components: { SyAlert },
-			setup() {
-				return { args }
-			},
-			template: `
-                <SyAlert v-model="args.modelValue" :type="args.type" :variant="tonal" :closable="false">
-                    <template #default>Vous pouvez utiliser le modificateur v-model:error pour réinitialiser l’erreur lorsque l’utilisateur modifie la valeur du champ.
-                    </template>
-                </SyAlert>
-            `,
-		}
-	},
-	tags: ['!dev'],
 }

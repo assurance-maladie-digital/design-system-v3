@@ -1,65 +1,27 @@
 <script lang="ts" setup>
-	import { computed, ref, watch, onMounted, onUpdated, nextTick } from 'vue'
+	import { computed, ref, watch, onMounted, onUpdated, nextTick, type Ref } from 'vue'
 	import type { VCheckbox } from 'vuetify/components'
-	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { mdiCheckboxBlankOutline, mdiCheckboxMarked, mdiMinusBox } from '@mdi/js'
+	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
-	import { locales } from './locales'
+	import { useSyCheckboxValidation } from './composables/useSyCheckboxValidation'
 	import { cnamSemanticTokens } from '@/designTokens/tokens/cnam/cnamSemantic'
+	import type { SyCheckboxProps } from './types'
 
 	const props = withDefaults(
-		defineProps<{
-			modelValue?: boolean | null
-			indeterminate?: boolean
-			label?: string
-			ariaLabel?: string
-			ariaLabelledby?: string
-			title?: string
-			color?: string
-			disabled?: boolean
-			readonly?: boolean
-			required?: boolean
-			hideDetails?: boolean | 'auto'
-			density?: 'default' | 'comfortable' | 'compact'
-			errorMessages?: string[] | null
-			warningMessages?: string[] | null
-			successMessages?: string[] | null
-			customRules?: ValidationRule[]
-			customWarningRules?: ValidationRule[]
-			customSuccessRules?: ValidationRule[]
-			showSuccessMessages?: boolean
-			isValidateOnBlur?: boolean
-			disableErrorHandling?: boolean
-			id?: string
-			name?: string
-			value?: unknown
-			trueValue?: unknown
-			falseValue?: unknown
-			controlsIds?: string[]
-			displayAsterisk?: boolean
-			decorative?: boolean
-		}>(),
+		defineProps<SyCheckboxProps>(),
 		{
 			modelValue: false,
 			indeterminate: false,
 			label: undefined,
+			helpText: '',
 			ariaLabel: undefined,
 			ariaLabelledby: undefined,
 			title: undefined,
 			color: 'primary',
-			disabled: false,
-			readonly: false,
-			required: false,
 			hideDetails: 'auto',
 			density: 'default',
-			errorMessages: null,
-			warningMessages: null,
-			successMessages: null,
-			customRules: () => [],
-			customWarningRules: () => [],
-			customSuccessRules: () => [],
-			showSuccessMessages: true,
-			isValidateOnBlur: false,
-			disableErrorHandling: false,
 			id: undefined,
 			name: undefined,
 			value: undefined,
@@ -68,17 +30,17 @@
 			controlsIds: () => [],
 			displayAsterisk: false,
 			decorative: false,
+			...validationPropsDefaults,
+			isValidateOnBlur: false,
 		},
 	)
 
 	const emit = defineEmits(['update:modelValue', 'update:indeterminate', 'change'])
 
-	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import { mdiCheckboxBlankOutline, mdiCheckboxMarked, mdiMinusBox } from '@mdi/js'
-
 	const checkboxRef = ref<VCheckbox | null>(null)
 
 	const internalIndeterminate = ref(props.indeterminate)
+	const focused = ref(false)
 
 	const generatedLabel = computed(() => {
 		return (props.label || '') + (props.displayAsterisk ? '*' : '')
@@ -102,109 +64,43 @@
 		internalIndeterminate.value = val
 	})
 
-	// Initialisation du composable de validation
-	// Variable pour suivre si le formulaire a été soumis
-	const isSubmitted = ref(false)
+	// Validation via le composable unifié dédié
+	const {
+		validate,
+		validateOnSubmit,
+		clearValidation,
+		errors,
+		warnings,
+		successes,
+		hasError,
+		hasWarning,
+		hasSuccess,
+	} = useSyCheckboxValidation(props, model as Ref<boolean | null>, focused)
 
-	const validation = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
-		fieldIdentifier: props.label,
-		disableErrorHandling: props.disableErrorHandling,
-	})
-
-	// Synchronisation des messages externes
-	watch(() => props.errorMessages, (newVal) => {
-		validation.errors.value = newVal || []
-	}, { immediate: true })
-
-	watch(() => props.warningMessages, (newVal) => {
-		validation.warnings.value = newVal || []
-	}, { immediate: true })
-
-	watch(() => props.successMessages, (newVal) => {
-		validation.successes.value = newVal || []
-	}, { immediate: true })
-
-	// Construction des règles de validation
-	const defaultRules = computed<ValidationRule[]>(() => props.required
-		? [{
-			type: 'required',
-			options: {
-				message: `Le champ ${props.label || 'ce champ'} est requis.`,
-				fieldIdentifier: props.label,
-			},
-		}]
-		: [],
+	// Texte d'aide affiché sous la case, tant qu'aucun message de validation n'est présent
+	const showHelpText = computed(() =>
+		!!props.helpText
+		&& props.hideDetails !== true
+		&& !hasError.value
+		&& !hasWarning.value
+		&& !(hasSuccess.value && props.showSuccessMessages),
 	)
 
-	const validateField = async (value: boolean | null) => {
-		// Si en lecture seule ou si la valeur est null et non requise, pas de validation
-		if (props.readonly) {
-			validation.clearValidation()
-			return true
+	// Réinitialisation (appelée par SyForm via useValidatable)
+	const reset = () => {
+		clearValidation()
+		if (internalIndeterminate.value) {
+			internalIndeterminate.value = false
+			emit('update:indeterminate', false)
 		}
-
-		if (value === null && !props.required) {
-			validation.clearValidation()
-			return true
-		}
-
-		// Pour les règles personnalisées qui vérifient si la case est cochée
-		// Si la valeur est true, on peut déjà savoir que la validation va réussir
-		if (value === true && props.customRules.every(rule =>
-			rule.type === 'custom',
-		)) {
-			validation.clearValidation()
-			return true
-		}
-
-		// Validation standard
-		const result = await validation.validateField(
-			value,
-			[...defaultRules.value, ...props.customRules],
-			props.customWarningRules,
-		)
-
-		return !result.hasError
+		model.value = false
 	}
 
-	const validateOnSubmit = () => {
-		isSubmitted.value = true
-		return validateField(model.value)
-	}
-
+	// Validation au blur (en mode eager, c'est sans effet de bord)
 	const checkErrorOnBlur = () => {
-		validateField(model.value)
+		focused.value = false
+		return validate()
 	}
-
-	watch(model, async (newValue) => {
-		if (!props.isValidateOnBlur) {
-			// Si le formulaire a été soumis et que la valeur change, on valide à nouveau
-			if (isSubmitted.value) {
-				const isValid = await validateField(newValue)
-				if (isValid) {
-					// La validation a réussi, effacer les erreurs
-					validation.clearValidation()
-				}
-			}
-			else {
-				// Comportement normal (hors soumission)
-				const isValid = await validateField(newValue)
-				// Si la validation réussit, s'assurer que les erreurs sont effacées
-				if (isValid && validation.hasError.value) {
-					validation.clearValidation()
-				}
-			}
-		}
-	})
-
-	const hasError = computed(() => validation.hasError.value)
-	const hasWarning = computed(() => validation.hasWarning.value)
-	const hasSuccess = computed(() => validation.hasSuccess.value)
-
-	const errors = computed(() => validation.errors.value)
-	const warnings = computed(() => validation.warnings.value)
-	const displaySuccesses = computed(() => validation.displaySuccesses.value)
 
 	const ariaChecked = computed(() => {
 		if (internalIndeterminate.value) return 'mixed'
@@ -270,8 +166,8 @@
 		removeAriaAttributes()
 	})
 
-	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
+	// Intégration avec le système de validation du formulaire (auto-enregistrement SyForm)
+	useValidatable(validateOnSubmit, clearValidation, reset)
 
 	const toggleMixed = () => {
 		if (!props.readonly && !props.disabled) {
@@ -304,8 +200,9 @@
 	}
 
 	defineExpose({
-		validation,
 		validateOnSubmit,
+		clearValidation,
+		reset,
 		checkErrorOnBlur,
 		toggleMixed,
 	})
@@ -359,13 +256,14 @@
 			:density="props.density"
 			:error="hasError"
 			:error-messages="errors"
-			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess ? displaySuccesses : []))"
+			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
 			:indeterminate="internalIndeterminate"
 			:true-value="props.trueValue"
 			:false-value="props.falseValue"
 			:aria-checked="ariaChecked"
 			:aria-describedby="messageId"
 			@click="toggleMixed"
+			@focus="focused = true"
 			@blur="checkErrorOnBlur"
 		>
 			<template
@@ -380,18 +278,35 @@
 			>
 				<slot />
 			</template>
-			<span
-				v-if="messageId && props.required && !props.ariaLabel && !props.ariaLabelledby"
-				:id="messageId"
-				class="d-sr-only"
-			>
-				{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '') }}</span>.
-			</span>
 		</VCheckbox>
+
+		<div
+			v-if="showHelpText"
+			class="help-text-below"
+			:class="{ 'text-disabled': props.disabled }"
+		>
+			{{ props.helpText }}
+		</div>
 	</div>
 </template>
 
 <style scoped>
+.help-text-below {
+	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	font-size: var(--v-fontSize-liensEtLibelles);
+	line-height: 1.2;
+}
+
+.help-text-below.text-disabled {
+	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
+}
+
+.error-field :deep(.v-messages),
+.warning-field :deep(.v-messages),
+.success-field :deep(.v-messages) {
+	opacity: 1 !important;
+}
+
 .success-field :deep(.v-messages__message) {
 	color: rgb(var(--v-theme-onSuccessVariant)) !important;
 }
@@ -436,6 +351,20 @@
 
 :deep(.v-selection-control--error .v-selection-control__input) {
 	color: rgb(var(--v-theme-error));
+}
+
+:deep(.v-input__control) {
+	width: fit-content;
+}
+
+:deep(.v-checkbox) {
+	grid-template-columns: fit-content(100%) auto fit-content(100%);
+}
+
+:deep(.v-selection-control--focus-visible) {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 2px;
+	border-radius: 4px;
 }
 
 :deep(.v-messages__message) {

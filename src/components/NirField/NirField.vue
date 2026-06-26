@@ -5,6 +5,7 @@
 	import { locales } from './locales'
 	import { useValidation } from '@/composables/unifyValidation/useValidation'
 	import { useNirValidation, type NirValidationProps } from './useNirValidation'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: string | undefined | null
@@ -12,6 +13,7 @@
 		numberLabel?: string
 		keyLabel?: string
 		displayKey?: boolean
+		helpText?: string
 		nirTooltip?: string
 		keyTooltip?: string
 		nirTooltipPosition?: 'prepend' | 'append'
@@ -40,6 +42,7 @@
 		numberLabel: 'Numéro de sécurité sociale',
 		keyLabel: 'Clé de validation',
 		displayKey: true,
+		helpText: '',
 		nirTooltip: undefined,
 		keyRules: () => [],
 		keyTooltip: undefined,
@@ -52,7 +55,7 @@
 		customNumberWarningRules: () => [],
 		customKeyWarningRules: () => [],
 		customRulesPrecedence: false,
-		showSuccessMessages: true,
+		showSuccessMessages: false,
 		width: '100%',
 		bgColor: 'white',
 		disabled: false,
@@ -71,9 +74,17 @@
 		persistentPlaceholder: false,
 		disableErrorHandling: false,
 		numberRules: () => [],
+		useVuetifyValidation: false,
 		nirType: 'simple',
 		withoutFieldset: false,
 		customLocale: () => locales,
+		errorMessages: null,
+		warningMessages: null,
+		successMessages: null,
+		hasError: false,
+		hasWarning: false,
+		hasSuccess: false,
+		maxErrors: 1,
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -122,6 +133,7 @@
 	const keyFieldWidth = computed(() => props.clearable ? '0 0 calc(32% - 8px)' : '0 0 calc(32% - 8px)')
 
 	const fieldId = useId()
+	const autoFocusNoticeId = `nir-autofocus-notice-${fieldId}`
 	const numberFieldErrorId = `nir-number-error-${fieldId}`
 	const keyFieldErrorId = `nir-key-error-${fieldId}`
 	const numberFieldWarningId = `nir-number-warning-${fieldId}`
@@ -131,76 +143,44 @@
 
 	const container = ref<HTMLElement | null>(null)
 
+	// Computed pour savoir si le comportement d'auto-focus est actif
+	const shouldUseAutoFocus = computed(() => {
+		return props.displayKey && !props.disabled && !props.readonly
+	})
+
+	// Computed pour le texte d'avertissement
+	const autoFocusNoticeText = computed(() => {
+		if (!shouldUseAutoFocus.value) return ''
+
+		return props.customLocale.autoFocusNotice
+	})
+
+	const numberDescribedBy = computed(() => [
+		shouldUseAutoFocus.value ? autoFocusNoticeId : undefined,
+		numberFieldErrorId,
+		numberFieldWarningId,
+		numberFieldSuccessId,
+	].filter(Boolean).join(' '))
+
+	const keyDescribedBy = computed(() => [
+		keyFieldErrorId,
+		keyFieldWarningId,
+		keyFieldSuccessId,
+	].filter(Boolean).join(' '))
+
 	// Fonction pour gérer le focus des champs
 	const focusField = (field: typeof numberField | typeof keyField) => {
 		nextTick(() => {
-			const input = field.value?.$el?.querySelector?.('input')
-			if (input) {
-				// Focus and select all text
-				input.focus()
-				// Adding a slight delay to ensure focus is applied
-				setTimeout(() => {
-					input.click()
-				}, 50)
+			const input = field.value?.$el?.querySelector?.('input') as HTMLInputElement | null
+
+			if (!input) {
+				console.error('[NirField] focusField: impossible de trouver l\'élément <input> dans le champ cible.')
+				return
 			}
+
+			input.focus({ preventScroll: true })
 		})
 	}
-
-	// Watch sur la valeur non masquée du numéro pour gérer le focus automatique
-	watch(unmaskedNumberValue, (newValue) => {
-		if (newValue && newValue.length === 13 && props.displayKey) {
-			focusField(keyField)
-		}
-	})
-
-	watch(unmaskedKeyValue, (newValue) => {
-		if (newValue.length === 0 && props.displayKey) {
-			focusField(numberField)
-		}
-	})
-
-	// Watch pour détecter la suppression des chiffres de la clé
-	watch(keyValue, (newValue, oldValue) => {
-		if (!props.displayKey) return
-
-		// Si l'ancienne valeur avait des chiffres et la nouvelle est vide ou ne contient que des espaces
-		if (oldValue && newValue !== null && oldValue.trim() && !newValue.trim()) {
-			focusField(numberField)
-		}
-		else if (oldValue && newValue === null) {
-			// Cas où newValue est null (effacement avec clearable)
-			focusField(numberField)
-		}
-	})
-
-	// Synchronisation avec modelValue
-	watch(modelValueRef, (newValue) => {
-		// Ignorer les mises à jour internes pour éviter les boucles infinies
-		if (isInternalUpdate.value) return
-
-		if (newValue === undefined || newValue === null) {
-			numberValue.value = ''
-			keyValue.value = ''
-			return
-		}
-		if (newValue.length === 15) {
-			const number = newValue.slice(0, -2)
-			const key = newValue.slice(-2)
-			numberValue.value = number
-			keyValue.value = key
-		}
-		if (newValue.length === 14) {
-			const number = newValue.slice(0, -1)
-			const key = newValue.slice(-1)
-			numberValue.value = number
-			keyValue.value = key
-		}
-		if (newValue.length <= 13) {
-			const number = newValue
-			numberValue.value = number
-			keyValue.value = ''
-		}
-	}, { immediate: true })
 
 	// Émission de la valeur
 	const emitValue = () => {
@@ -228,6 +208,7 @@
 		keyValidation,
 		validateFields,
 		hasFieldErrors,
+		clearValidation,
 	} = useNirValidation(
 		numberValue,
 		keyValue,
@@ -255,11 +236,58 @@
 		toRef(props, 'useVuetifyValidation'),
 		toRef(props, 'numberRules'),
 		toRef(props, 'keyRules'),
+		toRef(props, 'errorMessages'),
+		toRef(props, 'warningMessages'),
+		toRef(props, 'successMessages'),
+		toRef(props, 'hasError'),
+		toRef(props, 'hasWarning'),
+		toRef(props, 'hasSuccess'),
+		toRef(props, 'maxErrors'),
 	)
+
+	// Synchronisation avec modelValue — placé après useNirValidation pour éviter le TDZ sur clearValidation
+	watch(modelValueRef, (newValue) => {
+		if (isInternalUpdate.value) return
+
+		if (newValue === undefined || newValue === null) {
+			numberValue.value = ''
+			keyValue.value = ''
+			clearValidation()
+			return
+		}
+		if (newValue.length === 15) {
+			const number = newValue.slice(0, -2)
+			const key = newValue.slice(-2)
+			numberValue.value = number
+			keyValue.value = key
+		}
+		if (newValue.length === 14) {
+			const number = newValue.slice(0, -1)
+			const key = newValue.slice(-1)
+			numberValue.value = number
+			keyValue.value = key
+		}
+		if (newValue.length <= 13) {
+			const number = newValue
+			numberValue.value = number
+			keyValue.value = ''
+		}
+	}, { immediate: true })
 
 	const validateOnSubmit = () => {
 		return validateFields(true)
 	}
+
+	useValidatable(validateOnSubmit, clearValidation)
+
+	const hasMessages = computed(() => {
+		if (props.disableErrorHandling) return false
+		return hasFieldErrors.value
+			|| numberValidation.hasWarning.value
+			|| keyValidation.hasWarning.value
+			|| (numberValidation.hasSuccess.value && props.showSuccessMessages)
+			|| (keyValidation.hasSuccess.value && props.showSuccessMessages)
+	})
 
 	// Propriétés calculées pour les attributs ARIA et les états d'erreur
 	const ariaRequired = computed(() => props.required ? 'true' : undefined)
@@ -277,28 +305,39 @@
 	const handleKeyInput = () => {
 		emitValue()
 
-		// Si on supprime le contenu de la clé, on revient au champ NIR
-		if (props.displayKey && unmaskedKeyValue.value.length === 0) {
-			nextTick(() => {
-				numberField.value?.$el?.querySelector?.('input')?.focus()
-			})
+		if (shouldUseAutoFocus.value && unmaskedKeyValue.value.length === 0) {
+			focusField(numberField)
+		}
+	}
+
+	const handleNumberInput = () => {
+		emitValue()
+
+		if (shouldUseAutoFocus.value && unmaskedNumberValue.value.length === 13) {
+			focusField(keyField)
 		}
 	}
 
 	// Gestion des touches pour le champ NIR
 	const handleNumberKeydown = (e: Event) => {
 		const keyEvent = e as KeyboardEvent
-		// Si le NIR est complet et que le champ clé est affiché
-		if (unmaskedNumberValue.value?.length === 13 && props.displayKey) {
-			// Si la touche est un chiffre
-			if (keyEvent.key && keyEvent.key.length === 1 && /[0-9]/.test(keyEvent.key)) {
-				// Ajouter le caractère à la valeur de la clé
-				keyValue.value = (keyValue.value || '') + keyEvent.key
-				// Focus sur le champ clé
-				focusField(keyField)
-				// Empêcher la saisie dans le champ NIR
-				keyEvent.preventDefault()
-			}
+
+		if (!shouldUseAutoFocus.value) return
+
+		const isDigit = keyEvent.key.length === 1 && /[0-9]/.test(keyEvent.key)
+		const isNumberComplete = unmaskedNumberValue.value.length === 13
+		const canFillKey = unmaskedKeyValue.value.length < 2
+
+		if (isNumberComplete && isDigit && canFillKey) {
+			keyValue.value = `${unmaskedKeyValue.value}${keyEvent.key}`
+
+			focusField(keyField)
+
+			nextTick(() => {
+				emitValue()
+			})
+
+			keyEvent.preventDefault()
 		}
 	}
 
@@ -339,12 +378,14 @@
 
 	defineExpose({
 		validateOnSubmit,
+		clearValidation,
 		numberMask,
 		keyMask,
 		numberValidation,
 		keyValidation,
 	} satisfies {
 		validateOnSubmit: () => Promise<boolean>
+		clearValidation: () => void
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		numberMask: { mask: string, preProcess: (value: string) => string, tokens: Record<string, any> }
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
@@ -365,6 +406,13 @@
 		<legend v-if="label && displayKey && !withoutFieldset">
 			{{ label }}
 		</legend>
+		<span
+			v-if="shouldUseAutoFocus"
+			:id="autoFocusNoticeId"
+			class="d-sr-only"
+		>
+			{{ autoFocusNoticeText }}
+		</span>
 		<div class="number-field-container">
 			<SyTextField
 				ref="numberField"
@@ -390,7 +438,7 @@
 				:hide-spin-buttons="props.hideSpinButtons"
 				:placeholder="props.placeholder"
 				:readonly="props.readonly"
-				:clearable="props.clearable"
+				:is-clearable="props.clearable"
 				:counter="props.counter"
 				:hint="props.numberHint || locales.numberHint"
 				:persistent-hint="props.persistentHint"
@@ -400,9 +448,9 @@
 					'sy-hide-detail': props.hideDetails,
 				}"
 				:display-asterisk="false"
-				:aria-describedby="numberFieldErrorId + ' ' + numberFieldWarningId + ' ' + numberFieldSuccessId"
+				:aria-describedby="numberDescribedBy"
 				:show-success-messages="false"
-				@input="emitValue"
+				@input="handleNumberInput"
 			/>
 		</div>
 		<div
@@ -428,7 +476,7 @@
 				:hide-spin-buttons="props.hideSpinButtons"
 				:placeholder="props.placeholder"
 				:readonly="props.readonly"
-				:clearable="props.clearable"
+				:is-clearable="props.clearable"
 				:counter="props.counter"
 				:hint="props.keyHint || locales.keyHint"
 				:persistent-hint="props.persistentHint"
@@ -443,10 +491,17 @@
 					'sy-hide-detail': props.hideDetails,
 				}"
 				:display-asterisk="false"
-				:aria-describedby="keyFieldErrorId + ' ' + keyFieldWarningId + ' ' + keyFieldSuccessId"
+				:aria-describedby="keyDescribedBy"
 				:show-success-messages="false"
 				@input="handleKeyInput"
 			/>
+		</div>
+		<div
+			v-if="helpText && !hasMessages && !hideDetails"
+			class="sy-nir-help-text"
+			style="flex: 1 0 100%;"
+		>
+			{{ helpText }}
 		</div>
 		<div
 			class="sy-messages"
@@ -513,6 +568,13 @@
 				/>
 			</div>
 		</div>
+		<div
+			v-if="helpText && hasMessages && !hideDetails"
+			class="sy-nir-help-text"
+			style="flex: 1 0 100%;"
+		>
+			{{ helpText }}
+		</div>
 	</component>
 </template>
 
@@ -566,6 +628,17 @@
 	width: 100%;
 }
 
+/* La zone de détails interne des champs ne sert qu'au hint au focus : on ne réserve
+   pas d'espace vide sous l'input (helpText/messages NirField gérés à part), pour coller
+   le helpText au champ comme SySelect. Elle grandit naturellement si un hint s'affiche au focus. */
+.nir-field :deep(.v-input__details) {
+	min-height: 0 !important;
+}
+
+.nir-field :deep(.v-input__details .v-messages) {
+	min-height: 0;
+}
+
 .key-field {
 	min-width: 110px;
 	flex-wrap: wrap;
@@ -590,6 +663,15 @@
 
 .sy-hide-detail {
 	padding-bottom: 6px;
+}
+
+.sy-nir-help-text {
+	font-size: var(--v-fontSize-liensEtLibelles);
+	font-weight: 400;
+	letter-spacing: 0.0333em;
+	line-height: 16px;
+	padding-inline: 16px;
+	color: rgba(var(--v-theme-onSurface), var(--v-medium-emphasis-opacity));
 }
 
 .sy-number-errors,

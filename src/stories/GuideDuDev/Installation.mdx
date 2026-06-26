@@ -1,7 +1,7 @@
 import {Meta, Source} from '@storybook/addon-docs/blocks';
 import '../styles/shared.css';
 
-<Meta title="Guide Du Dev/Installation"/>
+<Meta title="Guide Du Dev/Démarrage/Installation"/>
 
 
 <div className="header">
@@ -9,5 +9,82 @@ import '../styles/shared.css';
 </div>
 
 - Pour un nouveau projet, téléchargez le Starter Kit <a href="https://gitlab.cnqd.cnamts.fr/human/developpement/sksn_x" target="_blank" rel="noopener noreferrer">Starter Kit Synapse</a>, le Design System est déjà intégré dans le projet et prêt à l'emploi.
-- Pour migrer un projet existant depuis Bridge (Vue3) vers Synapse, suivez le guide [Migration depuis Bridge](/docs/guide-du-dev-migration-migration-depuis-bridge--docs).
-- Pour migrer un projet existant depuis VueDot (Vue2) vers Synapse, suivez le guide [Migration depuis Vue2](/docs/guide-du-dev-migration-migration-depuis-vue2--docs).
+- Pour migrer un projet existant depuis Bridge (Vue3) vers Synapse, suivez le guide [Migration depuis Bridge](/docs/guide-du-dev-migration-depuis-bridge-vue3--docs).
+- Pour migrer un projet existant depuis VueDot (Vue2) vers Synapse, suivez le guide [Migration depuis Vue2](/docs/guide-du-dev-migration-depuis-vue2--docs).
+
+## Stack technique
+
+Le Starter Kit Synapse (`sksn_x`) est une application **Vue 3 + Vite** (SPA), il n'utilise plus Nuxt. Il embarque :
+
+- **Vue 3**, **Vuetify 3**, **Vue Router 4**, **Pinia**
+- **TypeScript**, **Sass**, Fetch API
+- **Vitest** (tests unitaires) et **Cypress** (tests e2e)
+
+## Prérequis
+
+Pour rester conforme aux CI, respectez impérativement les versions de Node et pnpm de votre cible :
+
+<table>
+  <thead>
+    <tr>
+      <th>Cible CI</th>
+      <th>Node</th>
+      <th>pnpm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Epic VM (<code>NodeJS20</code>)</td>
+      <td>20.11.0</td>
+      <td>8.15.2</td>
+    </tr>
+    <tr>
+      <td>Epic VM (<code>NodeJS22</code>)</td>
+      <td>22.17.0</td>
+      <td>10.12.4</td>
+    </tr>
+    <tr>
+      <td>PaaS</td>
+      <td>20.18.2</td>
+      <td>8.15.2</td>
+    </tr>
+    <tr>
+      <td>Autres versions autorisées (<code>engines</code>)</td>
+      <td>22.22.2</td>
+      <td>10.33.0</td>
+    </tr>
+  </tbody>
+</table>
+
+La cible (`NodeJS20` / `NodeJS22`) est définie dans le fichier `pic.properties` du projet. La version pnpm par défaut (corepack) est **10.12.4**, et `engine-strict = true` (`.npmrc`) refuse toute version hors de cette liste.
+
+## Mise en route
+
+<Source dark language="bash" code={`
+# Installation conforme au lockfile validé (sans mise à jour des dépendances)
+pnpm i --frozen-lockfile
+
+# Serveur de développement (hot reload)
+pnpm dev
+
+# Build de production
+pnpm generate
+
+# Tests unitaires
+pnpm test:unit
+
+# Tests e2e (Cypress)
+pnpm test:e2e
+`}
+/>
+
+> La commande de build est `pnpm generate` (et non `build`).
+
+## Variabilisation
+
+Les paramètres de fonctionnement de l'IHM sont définis dans des fichiers JSON du dossier `public/json/` :
+
+- `dev.config.env.json` est chargé en développement (`pnpm dev`).
+- `var.env.json` est utilisé au déploiement&nbsp;: les chaînes du type `{{ xxx }}` y sont remplacées par les valeurs du dictionnaire de configuration de l'environnement.
+
+Ces variables sont chargées au démarrage dans `src/main.ts` et mises à disposition des composants via `inject` (voir les guides de migration pour le détail).
