@@ -1,0 +1,3515 @@
+{
+  "date": "2026-06-25T11:41:08.736Z",
+  "totalCount": 77,
+  "results": [
+    {
+      "componentName": "Accordion",
+      "storybookTitle": "Composants/Données/Accordion",
+      "status": "actif",
+      "functionalVersion": "1.0.26",
+      "functionalDate": "04/05/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Décommissionnement du composant `AmeliproMultipleFoldingCard` (#2273)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-04",
+          "message": "migration accordion (#2160)"
+        },
+        {
+          "date": "2026-03-25",
+          "message": "[Accordeon] Ajout du vmodel (#2021)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Hx: replace hx to SyHeading (#1874)"
+        },
+        {
+          "date": "2026-02-04",
+          "message": "Fix post audit et renomage du SyBtnSelect en SyBtnMenu (#1759)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2026-01-14",
+          "message": "Accordion : add slots  (#1707)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-07-31",
+          "message": "Feat/improve tests (#884)"
+        }
+      ]
+    },
+    {
+      "componentName": "BackBtn",
+      "storybookTitle": "Composants/Boutons/BackBtn",
+      "status": "actif",
+      "functionalVersion": "1.0.22",
+      "functionalDate": "12/03/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Ajout de test de non régression visuels (#2067)"
+        },
+        {
+          "date": "2026-03-12",
+          "message": "Update Vuetify 3.12.2 (#1951)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        },
+        {
+          "date": "2025-11-07",
+          "message": "Feat/989 ajout de tests unitaires pour le composant ameliprodisclosure (#1212)"
+        },
+        {
+          "date": "2025-10-27",
+          "message": "BackBtn : fix display (#1327)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        }
+      ]
+    },
+    {
+      "componentName": "BackToTopBtn",
+      "storybookTitle": "Composants/Boutons/BackToTopBtn",
+      "status": "actif",
+      "functionalVersion": "1.0.20",
+      "functionalDate": "12/02/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-07-25",
+          "message": "update packages + fix tests + CI improvements (#837)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        },
+        {
+          "date": "2025-04-14",
+          "message": "Amélioration des tests avec vitest (#525)"
+        },
+        {
+          "date": "2025-02-20",
+          "message": "Add usages pages (#387)"
+        },
+        {
+          "date": "2025-01-08",
+          "message": "Ajout d'une configuration pour stylelint (#323)"
+        },
+        {
+          "date": "2024-12-26",
+          "message": "fix doc (#306)"
+        }
+      ]
+    },
+    {
+      "componentName": "Captcha",
+      "storybookTitle": "Composants/Formulaires/Captcha",
+      "status": "actif",
+      "functionalVersion": "1.1.1",
+      "functionalDate": "16/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "[Captcha] mise à jour de la validation (#2234)"
+        },
+        {
+          "date": "2026-06-10",
+          "message": "SyTextField: fix bugs (#2247)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-04-03",
+          "message": "Amelioration du système de validation (#1902)"
+        },
+        {
+          "date": "2026-03-19",
+          "message": "Corrige les warnings présent lors de l'exécution des tests (#1998)"
+        },
+        {
+          "date": "2026-03-18",
+          "message": "SyAutocomplete: improve loading state (#1987)"
+        },
+        {
+          "date": "2026-03-12",
+          "message": "Update Vuetify 3.12.2 (#1951)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        },
+        {
+          "date": "2025-12-12",
+          "message": "SySelect/SyTextField: fix dropdown + helpText display (#1604)"
+        }
+      ]
+    },
+    {
+      "componentName": "ChipList",
+      "storybookTitle": "Composants/Données/ChipList",
+      "status": "actif",
+      "functionalVersion": "1.0.27",
+      "functionalDate": "20/05/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-10",
+          "message": "Fix/preserve camel case in filter side bar (#1943)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-12-23",
+          "message": "espacement icon chiplist (#1668)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-08-12",
+          "message": "ChipList : fix after audit v1 (#948)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        }
+      ]
+    },
+    {
+      "componentName": "CollapsibleList",
+      "storybookTitle": "Composants/Données/CollapsibleList",
+      "status": "actif",
+      "functionalVersion": "1.0.22",
+      "functionalDate": "11/03/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Hx: replace hx to SyHeading (#1874)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-08-01",
+          "message": "Retirer les important des styles de typographies (#867)"
+        },
+        {
+          "date": "2025-07-28",
+          "message": "add v-letter-spacing- directive on collapsibleList (#838)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        },
+        {
+          "date": "2025-01-10",
+          "message": "fix action code ex (#333)"
+        },
+        {
+          "date": "2025-01-08",
+          "message": "Ajout d'une configuration pour stylelint (#323)"
+        },
+        {
+          "date": "2024-12-20",
+          "message": "fix: update import statements to use named imports for various components (#292)"
+        }
+      ]
+    },
+    {
+      "componentName": "ContextualMenu",
+      "storybookTitle": "Composants/Navigation/ContextualMenu",
+      "status": "actif",
+      "functionalVersion": "0.0.8-alpha",
+      "functionalDate": "08/01/2025",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        },
+        {
+          "date": "2025-04-14",
+          "message": "Amélioration des tests avec vitest (#525)"
+        },
+        {
+          "date": "2025-02-20",
+          "message": "Add usages pages (#387)"
+        },
+        {
+          "date": "2025-01-08",
+          "message": "Ajout d'une configuration pour stylelint (#323)"
+        },
+        {
+          "date": "2025-01-08",
+          "message": "ajout du composant ContextualMenu (#328)"
+        }
+      ]
+    },
+    {
+      "componentName": "CookieBanner",
+      "storybookTitle": "Composants/Feedback/CookieBanner",
+      "status": "actif",
+      "functionalVersion": "1.0.22",
+      "functionalDate": "11/03/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Hx: replace hx to SyHeading (#1874)"
+        },
+        {
+          "date": "2026-02-23",
+          "message": "fix: Correction of incorrect CookiesBanner Events (#1849)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-08-01",
+          "message": "Retirer les important des styles de typographies (#867)"
+        },
+        {
+          "date": "2025-07-25",
+          "message": "update packages + fix tests + CI improvements (#837)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        },
+        {
+          "date": "2025-04-14",
+          "message": "Amélioration des tests avec vitest (#525)"
+        }
+      ]
+    },
+    {
+      "componentName": "CookiesSelection",
+      "storybookTitle": "Composants/Feedback/CookiesSelection",
+      "status": "actif",
+      "functionalVersion": "1.0.26",
+      "functionalDate": "28/04/2026",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-04-28",
+          "message": "[build] Optimisation du build (#2110)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Hx: replace hx to SyHeading (#1874)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-07-25",
+          "message": "update packages + fix tests + CI improvements (#837)"
+        },
+        {
+          "date": "2025-04-14",
+          "message": "Amélioration des tests avec vitest (#525)"
+        },
+        {
+          "date": "2025-03-26",
+          "message": "Ajout des règles de validation manquantes (#461)"
+        }
+      ]
+    },
+    {
+      "componentName": "CopyBtn",
+      "storybookTitle": "Composants/Boutons/CopyBtn",
+      "status": "actif",
+      "functionalVersion": "1.0.27",
+      "functionalDate": "20/05/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-05-05",
+          "message": "Chips: Migration Theme AmeliPro (#2161)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-12",
+          "message": "Update Vuetify 3.12.2 (#1951)"
+        },
+        {
+          "date": "2026-03-06",
+          "message": "Copybtn: Migration de composant (#1741)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        },
+        {
+          "date": "2025-12-10",
+          "message": "Fix Vuetify sass warn (#1594)"
+        },
+        {
+          "date": "2025-12-10",
+          "message": "AmeliproIcon : fix v-html issue (#1583)"
+        }
+      ]
+    },
+    {
+      "componentName": "Customs/Selects/SelectBtnField",
+      "storybookTitle": "Composants/Formulaires/Selects/SelectBtnField",
+      "status": "actif",
+      "functionalVersion": "1.1.1",
+      "functionalDate": "16/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "SelectBtnField: add validation (#2269)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Feat/improve tests (#2192)"
+        },
+        {
+          "date": "2026-05-13",
+          "message": "SelectBtnField : Migration composant (#2171)"
+        },
+        {
+          "date": "2026-04-23",
+          "message": "SelectBtnField : Bug lors de l'utilisation de multiple (#2130)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-12-05",
+          "message": "SelectBtnField fix des retours d'audits (#1543)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        }
+      ]
+    },
+    {
+      "componentName": "Customs/Selects/SyAutocomplete",
+      "storybookTitle": "Composants/Formulaires/Selects/SyAutocomplete",
+      "status": "actif",
+      "functionalVersion": "1.1.0",
+      "functionalDate": "01/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-02",
+          "message": "Validation: success message false by default (#2231)"
+        },
+        {
+          "date": "2026-06-01",
+          "message": "[SyTextField] Ajout de stories concernant la validation (#2181)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-22",
+          "message": "SyTextArea: improve validation (#2195)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-05-13",
+          "message": "Autocomplete: add prepend item slot (#2176)"
+        },
+        {
+          "date": "2026-05-12",
+          "message": "SyAutocomplete: improve validation (#2169)"
+        },
+        {
+          "date": "2026-04-30",
+          "message": "Fix/success state display (#2158)"
+        },
+        {
+          "date": "2026-04-28",
+          "message": "[build] Optimisation du build (#2110)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "SyAutocomplete: add disabled prop (#2126)"
+        }
+      ]
+    },
+    {
+      "componentName": "Customs/Selects/SyInputSelect",
+      "storybookTitle": "Composants/Formulaires/Selects/SyInputSelect",
+      "status": "déprécié",
+      "functionalVersion": "1.0.25",
+      "functionalDate": "21/04/2026",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-04-03",
+          "message": "Amelioration du système de validation (#1902)"
+        },
+        {
+          "date": "2026-03-05",
+          "message": "BugFix : Correction sur différents composant AP (#1933)"
+        },
+        {
+          "date": "2026-03-04",
+          "message": "Feat/143 migration error page (#1896)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        },
+        {
+          "date": "2026-01-28",
+          "message": "fix doc (#1765)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-09-05",
+          "message": "Déprecier SyInputSelect (#1071)"
+        }
+      ]
+    },
+    {
+      "componentName": "Customs/Selects/SySelect",
+      "storybookTitle": "Composants/Formulaires/Selects/SySelect",
+      "status": "actif",
+      "functionalVersion": "1.1.0",
+      "functionalDate": "03/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-05",
+          "message": "[PasswordField] Migration de la Validation (#2175)"
+        },
+        {
+          "date": "2026-06-03",
+          "message": "[SySelect]: permettre un meilleur rendu du composant en l'abscence de css (#2232)"
+        },
+        {
+          "date": "2026-06-02",
+          "message": "Validation: success message false by default (#2231)"
+        },
+        {
+          "date": "2026-06-01",
+          "message": "[SyTextField] Ajout de stories concernant la validation (#2181)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-22",
+          "message": "SyTextArea: improve validation (#2195)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-05-13",
+          "message": "Autocomplete: add prepend item slot (#2176)"
+        },
+        {
+          "date": "2026-05-12",
+          "message": "SyAutocomplete: improve validation (#2169)"
+        },
+        {
+          "date": "2026-05-12",
+          "message": "SySelect: add composable, stories and tests (#2174)"
+        }
+      ]
+    },
+    {
+      "componentName": "Customs/SyCheckbox",
+      "storybookTitle": "Composants/Formulaires/SyCheckbox",
+      "status": "actif",
+      "functionalVersion": "1.1.1",
+      "functionalDate": "23/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-24",
+          "message": "Update migration doc + restructure Guide du dev (#2318)"
+        },
+        {
+          "date": "2026-06-23",
+          "message": "fix(SyCheckbox): improve focus styling (#2311)"
+        },
+        {
+          "date": "2026-06-12",
+          "message": "SyCheckBox: add validation (#2265)"
+        },
+        {
+          "date": "2026-06-05",
+          "message": "Filtres : corrections de bugs (#2245)"
+        },
+        {
+          "date": "2026-06-02",
+          "message": "Validation: success message false by default (#2231)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Feat/improve tests (#2192)"
+        },
+        {
+          "date": "2026-04-30",
+          "message": "Fix/success state display (#2158)"
+        },
+        {
+          "date": "2026-04-03",
+          "message": "Amelioration du système de validation (#1902)"
+        }
+      ]
+    },
+    {
+      "componentName": "Customs/SyCheckBoxGroup",
+      "storybookTitle": "Composants/Formulaires/SyCheckBoxGroup",
+      "status": "actif",
+      "functionalVersion": "1.1.1",
+      "functionalDate": "12/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-24",
+          "message": "Update migration doc + restructure Guide du dev (#2318)"
+        },
+        {
+          "date": "2026-06-12",
+          "message": "SyCheckBox: add validation (#2265)"
+        },
+        {
+          "date": "2026-06-12",
+          "message": "Feat/migrate sy check box group validation (#2260)"
+        },
+        {
+          "date": "2026-06-02",
+          "message": "Validation: success message false by default (#2231)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-30",
+          "message": "Fix/success state display (#2158)"
+        },
+        {
+          "date": "2026-04-03",
+          "message": "Amelioration du système de validation (#1902)"
+        },
+        {
+          "date": "2026-02-23",
+          "message": "SyCheckBoxGroup component (#1783)"
+        }
+      ]
+    },
+    {
+      "componentName": "Customs/SyForm",
+      "storybookTitle": "Composants/Formulaires/SyForm",
+      "status": "actif",
+      "functionalVersion": "1.0.16",
+      "functionalDate": "12/12/2025",
+      "commits": [
+        {
+          "date": "2026-04-03",
+          "message": "Amelioration du système de validation (#1902)"
+        },
+        {
+          "date": "2025-12-12",
+          "message": "Fix: add reset event and clearValidation method to SyForm (#1602)"
+        },
+        {
+          "date": "2025-12-09",
+          "message": "SyForm Ajout de props sur le slot default (#1575)"
+        },
+        {
+          "date": "2025-11-14",
+          "message": "SyForm: fix reset for PhoneField & PasswordField (#1464)"
+        },
+        {
+          "date": "2025-11-13",
+          "message": "SyForm: fix reset for NirField, DatePicker & SyTextField (#1456)"
+        },
+        {
+          "date": "2025-09-30",
+          "message": "add syForm (#1176)"
+        }
+      ]
+    },
+    {
+      "componentName": "Customs/SyIcon",
+      "storybookTitle": "Composants/Données/SyIcon",
+      "status": "actif",
+      "functionalVersion": "1.1.0",
+      "functionalDate": "03/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-03",
+          "message": "[SySelect]: permettre un meilleur rendu du composant en l'abscence de css (#2232)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Feat/improve tests (#2192)"
+        },
+        {
+          "date": "2026-03-23",
+          "message": "Feat/1911 migration icon button (#1969)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        },
+        {
+          "date": "2025-07-31",
+          "message": "Feat/improve tests (#884)"
+        },
+        {
+          "date": "2025-07-18",
+          "message": "Fix/sy select after audit (#787)"
+        },
+        {
+          "date": "2025-07-09",
+          "message": "add syIcon componant (#768)"
+        }
+      ]
+    },
+    {
+      "componentName": "Customs/SyIconButton",
+      "storybookTitle": "Composants/Boutons/SyIconButton",
+      "status": "actif",
+      "functionalVersion": "1.0.23",
+      "functionalDate": "23/03/2026",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-03-23",
+          "message": "Feat/1911 migration icon button (#1969)"
+        }
+      ]
+    },
+    {
+      "componentName": "Customs/SyPagination",
+      "storybookTitle": "Composants/Navigation/SyPagination",
+      "status": "actif",
+      "functionalVersion": "1.0.25",
+      "functionalDate": "21/04/2026",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-17",
+          "message": "Migration de la pagination (#1843)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Hx: replace hx to SyHeading (#1874)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-07-09",
+          "message": "SyPagination component (#771)"
+        }
+      ]
+    },
+    {
+      "componentName": "Customs/SyRadioGroup",
+      "storybookTitle": "Composants/Formulaires/SyRadioGroup",
+      "status": "actif",
+      "functionalVersion": "1.1.0",
+      "functionalDate": "02/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-24",
+          "message": "Update migration doc + restructure Guide du dev (#2318)"
+        },
+        {
+          "date": "2026-06-02",
+          "message": "Validation: success message false by default (#2231)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-05-18",
+          "message": "Feat/add new validation system on SyRadioGroup (#2167)"
+        },
+        {
+          "date": "2026-04-30",
+          "message": "Fix/success state display (#2158)"
+        },
+        {
+          "date": "2026-04-03",
+          "message": "Amelioration du système de validation (#1902)"
+        },
+        {
+          "date": "2026-02-23",
+          "message": "SyCheckBoxGroup component (#1783)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "SyRadiogroup/SyCheckbox : add animation on messages (#1740)"
+        }
+      ]
+    },
+    {
+      "componentName": "Customs/SyTabs",
+      "storybookTitle": "Composants/Navigation/SyTabs",
+      "status": "actif",
+      "functionalVersion": "1.0.27",
+      "functionalDate": "20/05/2026",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Fix build after tokens (#2200)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Feat/improve tests (#2192)"
+        },
+        {
+          "date": "2026-05-06",
+          "message": "Feat/sy tab (#2168)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-12-19",
+          "message": "fix: update key binding for tab items to use item label for better uniqueness (#1655)"
+        },
+        {
+          "date": "2025-11-26",
+          "message": "SyTabs : add tab-prepend and tab-append slots (#1511)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        }
+      ]
+    },
+    {
+      "componentName": "Customs/SyTextField",
+      "storybookTitle": "Composants/Formulaires/SyTextField",
+      "status": "actif",
+      "functionalVersion": "1.1.1",
+      "functionalDate": "16/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-24",
+          "message": "Update migration doc + restructure Guide du dev (#2318)"
+        },
+        {
+          "date": "2026-06-16",
+          "message": "[Captcha] mise à jour de la validation (#2234)"
+        },
+        {
+          "date": "2026-06-15",
+          "message": "[MonthPicker] Migration de la validation (#2180)"
+        },
+        {
+          "date": "2026-06-11",
+          "message": "[PhoneField] Fixe et ajout de la validation (#2205)"
+        },
+        {
+          "date": "2026-06-10",
+          "message": "SyTextField: fix bugs (#2247)"
+        },
+        {
+          "date": "2026-06-03",
+          "message": "NirField: Improve validation  (#2228)"
+        },
+        {
+          "date": "2026-06-02",
+          "message": "Validation: success message false by default (#2231)"
+        },
+        {
+          "date": "2026-06-01",
+          "message": "[SyTextField] Ajout de stories concernant la validation (#2181)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-22",
+          "message": "SyTextField: fix with tooltip (#2193)"
+        }
+      ]
+    },
+    {
+      "componentName": "DataList",
+      "storybookTitle": "Composants/Données/DataList",
+      "status": "actif",
+      "functionalVersion": "1.0.16",
+      "functionalDate": "11/12/2025",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-12-11",
+          "message": "DataListItem : déprécier renderHtmlValue et ajouter un slo… (#1573)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        },
+        {
+          "date": "2025-04-14",
+          "message": "remove old classes prefix and add newest (#532)"
+        },
+        {
+          "date": "2025-01-10",
+          "message": "fix action code ex (#333)"
+        },
+        {
+          "date": "2025-01-08",
+          "message": "Ajout d'une configuration pour stylelint (#323)"
+        }
+      ]
+    },
+    {
+      "componentName": "DataListGroup",
+      "storybookTitle": "Composants/Données/DataListGroup",
+      "status": "actif",
+      "functionalVersion": "1.0.16",
+      "functionalDate": "11/12/2025",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-12-11",
+          "message": "DataListItem : déprécier renderHtmlValue et ajouter un slo… (#1573)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        },
+        {
+          "date": "2025-04-14",
+          "message": "remove old classes prefix and add newest (#532)"
+        },
+        {
+          "date": "2025-01-10",
+          "message": "fix action code ex (#333)"
+        },
+        {
+          "date": "2024-12-20",
+          "message": "fix: update import statements to use named imports for various components (#292)"
+        },
+        {
+          "date": "2024-11-21",
+          "message": "Feat/header (#202)"
+        }
+      ]
+    },
+    {
+      "componentName": "DataListItem",
+      "storybookTitle": null,
+      "status": "actif",
+      "functionalVersion": "1.0.16",
+      "functionalDate": "11/12/2025",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Feat/improve tests (#2192)"
+        },
+        {
+          "date": "2025-12-11",
+          "message": "DataListItem : déprécier renderHtmlValue et ajouter un slo… (#1573)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-10-06",
+          "message": "Refactor DataListItem.vue: improve slot structure for action button (#1237)"
+        },
+        {
+          "date": "2025-04-14",
+          "message": "remove old classes prefix and add newest (#532)"
+        },
+        {
+          "date": "2025-01-08",
+          "message": "Ajout d'une configuration pour stylelint (#323)"
+        },
+        {
+          "date": "2024-11-05",
+          "message": "DataList/DataListGroup: add components + composable (#165)"
+        }
+      ]
+    },
+    {
+      "componentName": "DatePicker/CalendarMode",
+      "storybookTitle": "Composants/Formulaires/DatePicker/CalendarMode",
+      "status": "actif",
+      "functionalVersion": "1.1.0",
+      "functionalDate": "02/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-02",
+          "message": "Validation: success message false by default (#2231)"
+        },
+        {
+          "date": "2026-06-01",
+          "message": "migration datePicker (#2216)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-05-19",
+          "message": "Feat/improve dp tests (#2187)"
+        },
+        {
+          "date": "2026-05-19",
+          "message": "add validationBridge and continue refacto (#2177)"
+        },
+        {
+          "date": "2026-04-30",
+          "message": "Clean date picker and fix invalid date (#2149)"
+        },
+        {
+          "date": "2026-04-30",
+          "message": "Fix/success state display (#2158)"
+        },
+        {
+          "date": "2026-04-22",
+          "message": "DatePicker: fix VMenu template syntax (#2129)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-04-03",
+          "message": "Amelioration du système de validation (#1902)"
+        }
+      ]
+    },
+    {
+      "componentName": "DatePicker/ComplexDatePicker",
+      "storybookTitle": "Composants/Formulaires/DatePicker/CombinedMode",
+      "status": "actif",
+      "functionalVersion": "1.1.0",
+      "functionalDate": "02/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-02",
+          "message": "Validation: success message false by default (#2231)"
+        },
+        {
+          "date": "2026-06-01",
+          "message": "migration datePicker (#2216)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-05-19",
+          "message": "Feat/improve dp tests (#2187)"
+        },
+        {
+          "date": "2026-05-19",
+          "message": "add validationBridge and continue refacto (#2177)"
+        },
+        {
+          "date": "2026-04-30",
+          "message": "Clean date picker and fix invalid date (#2149)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-04-14",
+          "message": "Fix/ComplexDatePicker range selection intermediate dates (#2090)"
+        },
+        {
+          "date": "2026-04-03",
+          "message": "Amelioration du système de validation (#1902)"
+        },
+        {
+          "date": "2026-03-12",
+          "message": "Update Vuetify 3.12.2 (#1951)"
+        }
+      ]
+    },
+    {
+      "componentName": "DatePicker/DateTextInput",
+      "storybookTitle": "Composants/Formulaires/DatePicker/DateInput",
+      "status": "actif",
+      "functionalVersion": "1.1.0",
+      "functionalDate": "02/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-02",
+          "message": "Validation: success message false by default (#2231)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-05-19",
+          "message": "DateTextInput: fix autoClamp default value and prevent double model emission on blur (#2189)"
+        },
+        {
+          "date": "2026-05-19",
+          "message": "add validationBridge and continue refacto (#2177)"
+        },
+        {
+          "date": "2026-04-30",
+          "message": "Clean date picker and fix invalid date (#2149)"
+        },
+        {
+          "date": "2026-04-30",
+          "message": "Fix/success state display (#2158)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-04-03",
+          "message": "Amelioration du système de validation (#1902)"
+        },
+        {
+          "date": "2026-04-01",
+          "message": "DatePickers: fix validation to treat skeleton patterns (#2046)"
+        },
+        {
+          "date": "2026-02-23",
+          "message": "Fix/submitting form with date picker readonly mode (#1860)"
+        }
+      ]
+    },
+    {
+      "componentName": "DeclarationAccessibilityPage",
+      "storybookTitle": "Templates/DeclarationAccessibilityPage",
+      "status": "actif",
+      "functionalVersion": "1.0.21",
+      "functionalDate": "25/02/2026",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-02-25",
+          "message": "Page de declaration access (#812)"
+        }
+      ]
+    },
+    {
+      "componentName": "DiacriticPicker",
+      "storybookTitle": "Composants/Formulaires/DiacriticPicker",
+      "status": "actif",
+      "functionalVersion": "0.0.1",
+      "functionalDate": "14/05/2025",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-07-07",
+          "message": "Feat/harmonize forms bg color (#765)"
+        },
+        {
+          "date": "2025-05-14",
+          "message": "Diacritic: fix key = function (#595)"
+        },
+        {
+          "date": "2025-05-14",
+          "message": "fix title (#588)"
+        },
+        {
+          "date": "2025-05-14",
+          "message": "DiacriticPicker PA (#584)"
+        }
+      ]
+    },
+    {
+      "componentName": "DialogBox",
+      "storybookTitle": "Composants/Feedback/DialogBox",
+      "status": "actif",
+      "functionalVersion": "1.1.1",
+      "functionalDate": "17/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-17",
+          "message": "dialogBox: ajout props Scrollable  (#2263)"
+        },
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-06-11",
+          "message": "migration onboarding (#2251)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-30",
+          "message": "DialogBox : Migration Theme AmeliPro (#2148)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Ajout de test de non régression visuels (#2067)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Hx: replace hx to SyHeading (#1874)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        }
+      ]
+    },
+    {
+      "componentName": "DownloadBtn",
+      "storybookTitle": "Composants/Boutons/DownloadBtn",
+      "status": "actif",
+      "functionalVersion": "1.0.22",
+      "functionalDate": "12/03/2026",
+      "commits": [
+        {
+          "date": "2026-06-05",
+          "message": "[PasswordField] Migration de la Validation (#2175)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-03-12",
+          "message": "Update Vuetify 3.12.2 (#1951)"
+        },
+        {
+          "date": "2026-03-05",
+          "message": "DownLoadBtn : Migration de composant AP (#1931)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-09-17",
+          "message": "Rendre la dialogbox déplaçable (#1109)"
+        },
+        {
+          "date": "2025-09-10",
+          "message": "DownloadBtn: fix color (#1093)"
+        },
+        {
+          "date": "2025-07-25",
+          "message": "update packages + fix tests + CI improvements (#837)"
+        }
+      ]
+    },
+    {
+      "componentName": "ErrorPage",
+      "storybookTitle": "Templates/ErrorPage",
+      "status": "actif",
+      "functionalVersion": "1.0.23",
+      "functionalDate": "25/03/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-03-25",
+          "message": "Feat/turn heading level optional (#2025)"
+        },
+        {
+          "date": "2026-03-25",
+          "message": "ErrorPage: pass headingLevel prop to StatusPage component (#2024)"
+        },
+        {
+          "date": "2026-03-25",
+          "message": "ErrorPage: fix slots and add ex + tests (#2020)"
+        },
+        {
+          "date": "2026-03-19",
+          "message": "Corrige les warnings présent lors de l'exécution des tests (#1998)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Hx: replace hx to SyHeading (#1874)"
+        },
+        {
+          "date": "2026-03-04",
+          "message": "Feat/143 migration error page (#1896)"
+        },
+        {
+          "date": "2026-02-18",
+          "message": "Feat/1784 migration error page (#1823)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        }
+      ]
+    },
+    {
+      "componentName": "ExternalLinks",
+      "storybookTitle": "Composants/Navigation/ExternalLinks",
+      "status": "actif",
+      "functionalVersion": "1.0.16",
+      "functionalDate": "02/12/2025",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-03-12",
+          "message": "Update Vuetify 3.12.2 (#1951)"
+        },
+        {
+          "date": "2025-12-10",
+          "message": "Fix Vuetify sass warn (#1594)"
+        },
+        {
+          "date": "2025-12-10",
+          "message": "AmeliproIcon : fix v-html issue (#1583)"
+        },
+        {
+          "date": "2025-12-02",
+          "message": "ExternalLink: correction ombre et espacement caracteres (#1542)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-10-16",
+          "message": "Feat/733 base pour ajout de tests unitaires (#1021)"
+        },
+        {
+          "date": "2025-07-25",
+          "message": "update packages + fix tests + CI improvements (#837)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        }
+      ]
+    },
+    {
+      "componentName": "FileList",
+      "storybookTitle": "Composants/Données/FileList",
+      "status": "actif",
+      "functionalVersion": "1.0.27",
+      "functionalDate": "20/05/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-04-20",
+          "message": "FileList: fix labels (#2115)"
+        },
+        {
+          "date": "2026-03-25",
+          "message": "FileList: amélioration label actions (#1985)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        }
+      ]
+    },
+    {
+      "componentName": "FilePreview",
+      "storybookTitle": "Composants/Données/FilePreview",
+      "status": "actif",
+      "functionalVersion": "0.0.10-alpha",
+      "functionalDate": "14/02/2025",
+      "commits": [
+        {
+          "date": "2026-06-05",
+          "message": "Add deprecated component to doc and new migration (#2246)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        },
+        {
+          "date": "2025-04-14",
+          "message": "Amélioration des tests avec vitest (#525)"
+        },
+        {
+          "date": "2025-02-14",
+          "message": "Ajout de composant FilePreview (#382)"
+        }
+      ]
+    },
+    {
+      "componentName": "FileUpload",
+      "storybookTitle": "Composants/Formulaires/FileUpload",
+      "status": "actif",
+      "functionalVersion": "1.0.27",
+      "functionalDate": "20/05/2026",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-19",
+          "message": "FileUpload: fix locales + format (#1989)"
+        },
+        {
+          "date": "2026-03-04",
+          "message": "Feat/1872 ajout de tokens (#1888)"
+        },
+        {
+          "date": "2026-03-03",
+          "message": "UploadWorkflow: suppression ombre bouton  (#1919)"
+        },
+        {
+          "date": "2026-02-18",
+          "message": "UploadWorkflow: add preview event + info-text (#1846)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-07-31",
+          "message": "Feat/improve tests (#884)"
+        }
+      ]
+    },
+    {
+      "componentName": "FilterInline",
+      "storybookTitle": "Composants/Filtres/FilterInline",
+      "status": "actif",
+      "functionalVersion": "1.1.0",
+      "functionalDate": "05/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-06-05",
+          "message": "Filtres : corrections de bugs (#2245)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-12",
+          "message": "Update Vuetify 3.12.2 (#1951)"
+        },
+        {
+          "date": "2026-03-04",
+          "message": "SearchListField: fix emit shallow copy of array in SearchListField to prevent mutatio… (#1926)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        },
+        {
+          "date": "2026-01-13",
+          "message": "FilterInline: incoherence graphique (#1710)"
+        },
+        {
+          "date": "2025-12-10",
+          "message": "Fix Vuetify sass warn (#1594)"
+        }
+      ]
+    },
+    {
+      "componentName": "FilterSideBar",
+      "storybookTitle": "Composants/Filtres/FilterSideBar",
+      "status": "actif",
+      "functionalVersion": "1.1.1",
+      "functionalDate": "17/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-17",
+          "message": "FilterSideBar: ajout prop title (#2264)"
+        },
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-06-05",
+          "message": "Filtres : corrections de bugs (#2245)"
+        },
+        {
+          "date": "2026-06-05",
+          "message": "refactor(Storybook): Filters (#2241)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-22",
+          "message": "FilterSideBar: remove redundant click handler on apply button (#2211)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-28",
+          "message": "[build] Optimisation du build (#2110)"
+        },
+        {
+          "date": "2026-04-15",
+          "message": "FilterSideBar: custom ZIndex (#2097)"
+        },
+        {
+          "date": "2026-03-04",
+          "message": "SearchListField: fix emit shallow copy of array in SearchListField to prevent mutatio… (#1926)"
+        }
+      ]
+    },
+    {
+      "componentName": "FooterBar",
+      "storybookTitle": "Composants/Structure/FooterBar",
+      "status": "actif",
+      "functionalVersion": "1.0.27",
+      "functionalDate": "20/05/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Migration du footer (#1845)"
+        },
+        {
+          "date": "2026-02-26",
+          "message": "FooterBar: Twitter icon to X (#1893)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2026-01-08",
+          "message": "FOOTERBAR : incoherence graphique background-color et couleur séparateurs  (#1697)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-07-31",
+          "message": "Feat/improve tests (#884)"
+        }
+      ]
+    },
+    {
+      "componentName": "FranceConnectBtn",
+      "storybookTitle": "Composants/Boutons/FranceConnectBtn",
+      "status": "actif",
+      "functionalVersion": "1.0.27",
+      "functionalDate": "20/05/2026",
+      "commits": [
+        {
+          "date": "2026-06-15",
+          "message": "Remove unused CSS import from FranceConnectBtn component documentation (#2267)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-07-25",
+          "message": "update packages + fix tests + CI improvements (#837)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        },
+        {
+          "date": "2025-04-14",
+          "message": "Amélioration des tests avec vitest (#525)"
+        },
+        {
+          "date": "2025-01-08",
+          "message": "Ajout d'une configuration pour stylelint (#323)"
+        }
+      ]
+    },
+    {
+      "componentName": "HeaderBar",
+      "storybookTitle": "Composants/Structure/HeaderBar",
+      "status": "actif",
+      "functionalVersion": "1.0.27",
+      "functionalDate": "20/05/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-06-05",
+          "message": "[PasswordField] Migration de la Validation (#2175)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Ajout de test de non régression visuels (#2067)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-04-09",
+          "message": "HeaderBar: Ajout de la story appendSlot dans le theme ameliPro (#2074)"
+        },
+        {
+          "date": "2026-03-25",
+          "message": "Feat/turn heading level optional (#2025)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Hx: replace hx to SyHeading (#1874)"
+        },
+        {
+          "date": "2026-01-29",
+          "message": "Headerbar: incoherence graphique (#1705)"
+        }
+      ]
+    },
+    {
+      "componentName": "HeaderLoading",
+      "storybookTitle": "Composants/Structure/HeaderLoading",
+      "status": "actif",
+      "functionalVersion": "1.0.7",
+      "functionalDate": "20/08/2025",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Feat/improve tests (#2192)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-08-20",
+          "message": "Feat/improve header loding after audit (#974)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        },
+        {
+          "date": "2025-01-08",
+          "message": "Ajout d'une configuration pour stylelint (#323)"
+        },
+        {
+          "date": "2024-12-20",
+          "message": "fix: update import statements to use named imports for various components (#292)"
+        },
+        {
+          "date": "2024-11-21",
+          "message": "Feat/header (#202)"
+        },
+        {
+          "date": "2024-11-21",
+          "message": "fix doc structure (#219)"
+        }
+      ]
+    },
+    {
+      "componentName": "HeaderNavigationBar",
+      "storybookTitle": "Composants/Structure/HeaderBar/HeaderNavigationBar",
+      "status": "actif",
+      "functionalVersion": "1.0.27",
+      "functionalDate": "20/05/2026",
+      "commits": [
+        {
+          "date": "2026-06-05",
+          "message": "[PasswordField] Migration de la Validation (#2175)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Fix build after tokens (#2200)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Feat/improve tests (#2192)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-25",
+          "message": "Feat/turn heading level optional (#2025)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Hx: replace hx to SyHeading (#1874)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2026-01-05",
+          "message": "HeaderBar ajout de la props width (#1653)"
+        }
+      ]
+    },
+    {
+      "componentName": "HeaderToolbar",
+      "storybookTitle": "Composants/Structure/HeaderToolbar",
+      "status": "actif",
+      "functionalVersion": "1.0.25",
+      "functionalDate": "21/04/2026",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Feat/improve tests (#2192)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-12-23",
+          "message": "fiw  couleur text right menu (#1669)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-09-29",
+          "message": "HeaderToolbar: fix after audit v1 (#1112)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        },
+        {
+          "date": "2025-04-14",
+          "message": "Fix/header toolbar (#519)"
+        },
+        {
+          "date": "2025-01-08",
+          "message": "Ajout d'une configuration pour stylelint (#323)"
+        }
+      ]
+    },
+    {
+      "componentName": "LangBtn",
+      "storybookTitle": "Composants/Boutons/LangBtn",
+      "status": "actif",
+      "functionalVersion": "1.0.26",
+      "functionalDate": "28/04/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-04-28",
+          "message": "[build] Optimisation du build (#2110)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-08-01",
+          "message": "Retirer les important des styles de typographies (#867)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        },
+        {
+          "date": "2025-04-14",
+          "message": "Amélioration des tests avec vitest (#525)"
+        }
+      ]
+    },
+    {
+      "componentName": "Logo",
+      "storybookTitle": "Composants/Données/Logo",
+      "status": "actif",
+      "functionalVersion": "1.0.18",
+      "functionalDate": "20/01/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Ajout de test de non régression visuels (#2067)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-06-05",
+          "message": "add logo audit (#687)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        },
+        {
+          "date": "2024-12-20",
+          "message": "fix: update import statements to use named imports for various components (#292)"
+        },
+        {
+          "date": "2024-11-21",
+          "message": "Feat/header (#202)"
+        },
+        {
+          "date": "2024-11-21",
+          "message": "fix doc structure (#219)"
+        }
+      ]
+    },
+    {
+      "componentName": "LogoBrandSection",
+      "storybookTitle": "Composants/Données/LogoBrandSection",
+      "status": "actif",
+      "functionalVersion": "1.0.25",
+      "functionalDate": "21/04/2026",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Hx: replace hx to SyHeading (#1874)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-08-01",
+          "message": "Retirer les important des styles de typographies (#867)"
+        },
+        {
+          "date": "2025-07-30",
+          "message": "update LogoBrandSection audit (#816)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        },
+        {
+          "date": "2025-04-14",
+          "message": "Amélioration des tests avec vitest (#525)"
+        }
+      ]
+    },
+    {
+      "componentName": "LunarCalendar",
+      "storybookTitle": "Composants/Formulaires/LunarCalendar",
+      "status": "actif",
+      "functionalVersion": "1.1.1",
+      "functionalDate": "12/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-12",
+          "message": "Migration LunarCalendar vers validation unifiée (#2255)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Feat/improve tests (#2192)"
+        },
+        {
+          "date": "2026-04-03",
+          "message": "Amelioration du système de validation (#1902)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-12-09",
+          "message": "Ajout du composant de calendrier lunaire (#1550)"
+        }
+      ]
+    },
+    {
+      "componentName": "MaintenancePage",
+      "storybookTitle": "Templates/MaintenancePage",
+      "status": "actif",
+      "functionalVersion": "1.0.23",
+      "functionalDate": "19/03/2026",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-03-19",
+          "message": "Corrige les warnings présent lors de l'exécution des tests (#1998)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Hx: replace hx to SyHeading (#1874)"
+        },
+        {
+          "date": "2026-03-05",
+          "message": "Feat/1785 migration page de maintenance (#1929)"
+        },
+        {
+          "date": "2026-03-04",
+          "message": "Feat/143 migration error page (#1896)"
+        },
+        {
+          "date": "2026-02-23",
+          "message": "refacto maintenancePage ameliPro (#1854)"
+        },
+        {
+          "date": "2026-02-18",
+          "message": "Feat/1784 migration error page (#1823)"
+        },
+        {
+          "date": "2026-01-12",
+          "message": "add custom illustation stories (#1706)"
+        },
+        {
+          "date": "2025-07-07",
+          "message": "fix MaintenancePage after audit (#770)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        }
+      ]
+    },
+    {
+      "componentName": "MonthPicker",
+      "storybookTitle": "Composants/Formulaires/MonthPicker",
+      "status": "actif",
+      "functionalVersion": "1.1.1",
+      "functionalDate": "16/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "[Captcha] mise à jour de la validation (#2234)"
+        },
+        {
+          "date": "2026-06-15",
+          "message": "[MonthPicker] Migration de la validation (#2180)"
+        },
+        {
+          "date": "2026-06-10",
+          "message": "SyTextField: fix bugs (#2247)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-04-03",
+          "message": "Amelioration du système de validation (#1902)"
+        },
+        {
+          "date": "2026-03-25",
+          "message": "MonthPicker (#1863)"
+        }
+      ]
+    },
+    {
+      "componentName": "NirField",
+      "storybookTitle": "Composants/Formulaires/NirField",
+      "status": "actif",
+      "functionalVersion": "1.1.1",
+      "functionalDate": "22/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-24",
+          "message": "Update migration doc + restructure Guide du dev (#2318)"
+        },
+        {
+          "date": "2026-06-22",
+          "message": "add customRulesPrecedence prop documentation in stories (#2302)"
+        },
+        {
+          "date": "2026-06-22",
+          "message": "Feat/fix custom rules precedence on nirfield (#2291)"
+        },
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-06-03",
+          "message": "NirField: Improve validation  (#2228)"
+        },
+        {
+          "date": "2026-06-02",
+          "message": "Validation: success message false by default (#2231)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-23",
+          "message": "Fix/nir field validation without key (#2133)"
+        },
+        {
+          "date": "2026-04-23",
+          "message": "Fix/nir validation (#2131)"
+        }
+      ]
+    },
+    {
+      "componentName": "NotFoundPage",
+      "storybookTitle": "Templates/NotFoundPage",
+      "status": "actif",
+      "functionalVersion": "1.0.22",
+      "functionalDate": "11/03/2026",
+      "commits": [
+        {
+          "date": "2026-06-17",
+          "message": "migration ameliproPageLayout (#2259)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-03-19",
+          "message": "Corrige les warnings présent lors de l'exécution des tests (#1998)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Hx: replace hx to SyHeading (#1874)"
+        },
+        {
+          "date": "2026-03-10",
+          "message": "migration page not found (#1939)"
+        },
+        {
+          "date": "2026-02-23",
+          "message": "add themes to not found page (#1861)"
+        },
+        {
+          "date": "2026-02-18",
+          "message": "Feat/1784 migration error page (#1823)"
+        },
+        {
+          "date": "2026-01-12",
+          "message": "add custom illustation stories (#1706)"
+        },
+        {
+          "date": "2025-12-04",
+          "message": "Fix/error page safe phone links (#1556)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        }
+      ]
+    },
+    {
+      "componentName": "NotificationBar",
+      "storybookTitle": "Composants/Feedback/NotificationBar",
+      "status": "actif",
+      "functionalVersion": "1.0.27",
+      "functionalDate": "20/05/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-05-04",
+          "message": "add notification bar to amelipro theme (#2138)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-24",
+          "message": "add tests (#2011)"
+        },
+        {
+          "date": "2026-03-24",
+          "message": "add story slot (#2008)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        },
+        {
+          "date": "2026-01-09",
+          "message": "NotificationBar ajout de la fonctionnalité d'affichage des notifications en liste (#1686)"
+        },
+        {
+          "date": "2026-01-06",
+          "message": "fix typo error (#1690)"
+        }
+      ]
+    },
+    {
+      "componentName": "PageContainer",
+      "storybookTitle": "Composants/Layout/PageContainer",
+      "status": "actif",
+      "functionalVersion": "1.1.1",
+      "functionalDate": "17/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-23",
+          "message": "add functions to resize header and footer (#2310)"
+        },
+        {
+          "date": "2026-06-17",
+          "message": "migration ameliproPageLayout (#2259)"
+        },
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-03-04",
+          "message": "Feat/143 migration error page (#1896)"
+        },
+        {
+          "date": "2026-02-18",
+          "message": "Feat/1784 migration error page (#1823)"
+        },
+        {
+          "date": "2026-02-09",
+          "message": "Feat/1768 amelipro clickable icon tile (#1772)"
+        },
+        {
+          "date": "2026-01-29",
+          "message": "add uniqueId on PageContainer component (#1746)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        }
+      ]
+    },
+    {
+      "componentName": "PaginatedTable",
+      "storybookTitle": "Composants/Tableaux/PaginatedTable",
+      "status": "déprécié",
+      "functionalVersion": "1.0.27",
+      "functionalDate": "20/05/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Tables : Migration Ameli pro (#2186)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-05-05",
+          "message": "SySelect: add validation + stories (#2151)"
+        },
+        {
+          "date": "2026-04-28",
+          "message": "[build] Optimisation du build (#2110)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-05",
+          "message": "BugFix : Correction sur différents composant AP (#1933)"
+        },
+        {
+          "date": "2026-03-04",
+          "message": "Feat/143 migration error page (#1896)"
+        },
+        {
+          "date": "2026-02-10",
+          "message": "fix selector-class-pattern warning (#1810)"
+        }
+      ]
+    },
+    {
+      "componentName": "PasswordField",
+      "storybookTitle": "Composants/Formulaires/PasswordField",
+      "status": "actif",
+      "functionalVersion": "1.1.0",
+      "functionalDate": "05/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-24",
+          "message": "Update migration doc + restructure Guide du dev (#2318)"
+        },
+        {
+          "date": "2026-06-05",
+          "message": "[PasswordField] Migration de la Validation (#2175)"
+        },
+        {
+          "date": "2026-06-02",
+          "message": "Validation: success message false by default (#2231)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Feat/improve tests (#2192)"
+        },
+        {
+          "date": "2026-04-30",
+          "message": "Fix/success state display (#2158)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-04-03",
+          "message": "Amelioration du système de validation (#1902)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        }
+      ]
+    },
+    {
+      "componentName": "PeriodField",
+      "storybookTitle": "Composants/Formulaires/PeriodField",
+      "status": "actif",
+      "functionalVersion": "1.1.0",
+      "functionalDate": "02/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-24",
+          "message": "Update migration doc + restructure Guide du dev (#2318)"
+        },
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-06-03",
+          "message": "NirField: Improve validation  (#2228)"
+        },
+        {
+          "date": "2026-06-02",
+          "message": "Validation: success message false by default (#2231)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-04-03",
+          "message": "Amelioration du système de validation (#1902)"
+        },
+        {
+          "date": "2026-03-12",
+          "message": "Update Vuetify 3.12.2 (#1951)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Hx: replace hx to SyHeading (#1874)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        }
+      ]
+    },
+    {
+      "componentName": "PhoneField",
+      "storybookTitle": "Composants/Formulaires/PhoneField",
+      "status": "actif",
+      "functionalVersion": "1.1.1",
+      "functionalDate": "11/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-24",
+          "message": "Update migration doc + restructure Guide du dev (#2318)"
+        },
+        {
+          "date": "2026-06-11",
+          "message": "[PhoneField] Fixe et ajout de la validation (#2205)"
+        },
+        {
+          "date": "2026-06-02",
+          "message": "Validation: success message false by default (#2231)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-04-30",
+          "message": "Fix/success state display (#2158)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-04-03",
+          "message": "Amelioration du système de validation (#1902)"
+        },
+        {
+          "date": "2026-03-10",
+          "message": "PhoneField: fix errors display (#1928)"
+        },
+        {
+          "date": "2026-02-24",
+          "message": "PhoneField: model story fix + actions (#1877)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        }
+      ]
+    },
+    {
+      "componentName": "RangeField",
+      "storybookTitle": "Composants/Formulaires/RangeField",
+      "status": "actif",
+      "functionalVersion": "1.0.27",
+      "functionalDate": "20/05/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-30",
+          "message": "FilterSideBar: Migration Theme AmeliPro (#2157)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Ajout de test de non régression visuels (#2067)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-04-07",
+          "message": "fix layout (#2066)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-11-28",
+          "message": "RangeField: correction anomalie graphique (#1534)"
+        },
+        {
+          "date": "2025-11-07",
+          "message": "Feat/989 ajout de tests unitaires pour le composant ameliprodisclosure (#1212)"
+        }
+      ]
+    },
+    {
+      "componentName": "RatingPicker",
+      "storybookTitle": "Composants/Feedback/RatingPicker",
+      "status": "actif",
+      "functionalVersion": "1.0.25",
+      "functionalDate": "21/04/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Feat/improve tests (#2192)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-12-04",
+          "message": "centrer le rating picker (#1551)"
+        },
+        {
+          "date": "2025-11-28",
+          "message": "Add keyboard navigation support for EmotionPicker, NumberPicker, and StarsPicker components (#1510)"
+        },
+        {
+          "date": "2025-11-27",
+          "message": "Fix the text color in the EmitionPicker (#1517)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-07-25",
+          "message": "update packages + fix tests + CI improvements (#837)"
+        }
+      ]
+    },
+    {
+      "componentName": "SearchListField",
+      "storybookTitle": "Composants/Filtres/SearchListField",
+      "status": "actif",
+      "functionalVersion": "1.1.0",
+      "functionalDate": "05/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-05",
+          "message": "Filtres : corrections de bugs (#2245)"
+        },
+        {
+          "date": "2026-06-04",
+          "message": "SearchListField: move component from Formulaires to Filters (#2239)"
+        },
+        {
+          "date": "2026-06-01",
+          "message": "[SyTextField] Ajout de stories concernant la validation (#2181)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-04",
+          "message": "SearchListField: fix emit shallow copy of array in SearchListField to prevent mutatio… (#1926)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-12-12",
+          "message": "Feat/fix tests warnings (#1605)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        }
+      ]
+    },
+    {
+      "componentName": "SkipLink",
+      "storybookTitle": "Composants/Navigation/SkipLink",
+      "status": "actif",
+      "functionalVersion": "1.0.25",
+      "functionalDate": "21/04/2026",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-01-06",
+          "message": "SkipLink: fix doc url issues (#1695)"
+        },
+        {
+          "date": "2025-09-02",
+          "message": "fix skipLink (#999)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        },
+        {
+          "date": "2025-04-14",
+          "message": "Amélioration des tests avec vitest (#525)"
+        },
+        {
+          "date": "2025-02-20",
+          "message": "Add usages pages (#387)"
+        },
+        {
+          "date": "2025-01-08",
+          "message": "Ajout d'une configuration pour stylelint (#323)"
+        },
+        {
+          "date": "2024-12-20",
+          "message": "fix: update import statements to use named imports for various components (#292)"
+        },
+        {
+          "date": "2024-11-21",
+          "message": "fix doc structure (#219)"
+        }
+      ]
+    },
+    {
+      "componentName": "SocialMediaLinks",
+      "storybookTitle": "Composants/Navigation/SocialMediaLinks",
+      "status": "actif",
+      "functionalVersion": "1.0.25",
+      "functionalDate": "21/04/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Migration du footer (#1845)"
+        },
+        {
+          "date": "2026-02-26",
+          "message": "FooterBar: Twitter icon to X (#1893)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-07-25",
+          "message": "update packages + fix tests + CI improvements (#837)"
+        },
+        {
+          "date": "2025-06-03",
+          "message": "add file for texts (#673)"
+        },
+        {
+          "date": "2025-04-14",
+          "message": "Amélioration des tests avec vitest (#525)"
+        }
+      ]
+    },
+    {
+      "componentName": "StatusPage",
+      "storybookTitle": "Templates/StatusPage",
+      "status": "actif",
+      "functionalVersion": "1.1.1",
+      "functionalDate": "17/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-17",
+          "message": "migration ameliproPageLayout (#2259)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Feat/improve tests (#2192)"
+        },
+        {
+          "date": "2026-03-25",
+          "message": "ErrorPage: fix slots and add ex + tests (#2020)"
+        },
+        {
+          "date": "2026-03-19",
+          "message": "Corrige les warnings présent lors de l'exécution des tests (#1998)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Hx: replace hx to SyHeading (#1874)"
+        },
+        {
+          "date": "2026-03-04",
+          "message": "Feat/143 migration error page (#1896)"
+        },
+        {
+          "date": "2026-02-18",
+          "message": "Feat/1784 migration error page (#1823)"
+        }
+      ]
+    },
+    {
+      "componentName": "SubHeader",
+      "storybookTitle": "Composants/Structure/SubHeader",
+      "status": "actif",
+      "functionalVersion": "1.0.27",
+      "functionalDate": "20/05/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Hx: replace hx to SyHeading (#1874)"
+        },
+        {
+          "date": "2026-01-21",
+          "message": "SubHeader: fix theme dark et bug (#1755)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2026-01-07",
+          "message": "correction adresse en trop (#1696)"
+        },
+        {
+          "date": "2026-01-06",
+          "message": "Fix/subheader anomalie (#1608)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        }
+      ]
+    },
+    {
+      "componentName": "SyAlert",
+      "storybookTitle": "Composants/Feedback/SyAlert",
+      "status": "actif",
+      "functionalVersion": "1.0.27",
+      "functionalDate": "20/05/2026",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Ajout de test de non régression visuels (#2067)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-19",
+          "message": "Corrige les warnings présent lors de l'exécution des tests (#1998)"
+        },
+        {
+          "date": "2026-03-02",
+          "message": "add deprecation notice story (#1895)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        },
+        {
+          "date": "2025-12-24",
+          "message": "fix: adjust margin-top for alert content on mobile (#1672)"
+        },
+        {
+          "date": "2025-12-05",
+          "message": "SyAlert: Changement taille frame picto bouton fermer (#1546)"
+        },
+        {
+          "date": "2025-11-28",
+          "message": "Feat/1486 alignement des labels (#1519)"
+        }
+      ]
+    },
+    {
+      "componentName": "SyBtnMenu",
+      "storybookTitle": "Composants/Navigation/SyBtnMenu",
+      "status": "actif",
+      "functionalVersion": "1.0.25",
+      "functionalDate": "21/04/2026",
+      "commits": [
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-04",
+          "message": "Feat/add icons in user btn list (#1869)"
+        },
+        {
+          "date": "2026-02-04",
+          "message": "Fix post audit et renomage du SyBtnSelect en SyBtnMenu (#1759)"
+        }
+      ]
+    },
+    {
+      "componentName": "SyHeading",
+      "storybookTitle": "Composants/Customs/SyHeading",
+      "status": "actif",
+      "functionalVersion": "1.0.23",
+      "functionalDate": "25/03/2026",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-03-25",
+          "message": "Feat/turn heading level optional (#2025)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Hx: replace hx to SyHeading (#1874)"
+        }
+      ]
+    },
+    {
+      "componentName": "SyTextArea",
+      "storybookTitle": "Composants/Formulaires/SyTextArea",
+      "status": "actif",
+      "functionalVersion": "1.1.0",
+      "functionalDate": "02/06/2026",
+      "commits": [
+        {
+          "date": "2026-06-02",
+          "message": "Validation: success message false by default (#2231)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-26",
+          "message": "migration text area (#2206)"
+        },
+        {
+          "date": "2026-05-22",
+          "message": "SyTextArea: improve validation (#2195)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-04-30",
+          "message": "Fix/success state display (#2158)"
+        },
+        {
+          "date": "2026-04-03",
+          "message": "Amelioration du système de validation (#1902)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2026-01-16",
+          "message": "add required on SyTextArea (#1733)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        }
+      ]
+    },
+    {
+      "componentName": "Tables/SyServerTable",
+      "storybookTitle": "Composants/Tableaux/SyServerTable",
+      "status": "actif",
+      "functionalVersion": "1.1.0",
+      "functionalDate": "29/05/2026",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Tables : Migration Ameli pro (#2186)"
+        },
+        {
+          "date": "2026-05-18",
+          "message": "Add hideDefaultFooter prop to SyTable and SyServerTable components (#2184)"
+        },
+        {
+          "date": "2026-04-28",
+          "message": "[build] Optimisation du build (#2110)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-04-17",
+          "message": "SyTable / SyServerTable: add page input option (#2104)"
+        },
+        {
+          "date": "2026-04-16",
+          "message": "SyTable/SyServerTable: fix display on resize column (#2100)"
+        },
+        {
+          "date": "2026-04-08",
+          "message": "SyTable + SyServerTable: add clickable row (#2075)"
+        },
+        {
+          "date": "2026-04-07",
+          "message": "SyTable / SyServerTable: add autocomplete filter (#2068)"
+        },
+        {
+          "date": "2026-04-03",
+          "message": "SyTable / SyServerTable: pinned columns (#2044)"
+        }
+      ]
+    },
+    {
+      "componentName": "Tables/SyTable",
+      "storybookTitle": "Composants/Tableaux/SyTable",
+      "status": "actif",
+      "functionalVersion": "1.0.27",
+      "functionalDate": "18/05/2026",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Tables : Migration Ameli pro (#2186)"
+        },
+        {
+          "date": "2026-05-18",
+          "message": "Add hideDefaultFooter prop to SyTable and SyServerTable components (#2184)"
+        },
+        {
+          "date": "2026-04-28",
+          "message": "[build] Optimisation du build (#2110)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-04-17",
+          "message": "SyTable / SyServerTable: add page input option (#2104)"
+        },
+        {
+          "date": "2026-04-16",
+          "message": "SyTable/SyServerTable: fix display on resize column (#2100)"
+        },
+        {
+          "date": "2026-04-08",
+          "message": "SyTable + SyServerTable: add clickable row (#2075)"
+        },
+        {
+          "date": "2026-04-07",
+          "message": "SyTable / SyServerTable: add autocomplete filter (#2068)"
+        },
+        {
+          "date": "2026-04-03",
+          "message": "SyTable / SyServerTable: pinned columns (#2044)"
+        }
+      ]
+    },
+    {
+      "componentName": "TableToolbar",
+      "storybookTitle": "Composants/Tableaux/TableToolbar",
+      "status": "actif",
+      "functionalVersion": "1.0.27",
+      "functionalDate": "20/05/2026",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Implémentation des nouveaux tokens (#2164)"
+        },
+        {
+          "date": "2026-05-19",
+          "message": "TableToolbar : Migration Ameli pro (#2183)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-12",
+          "message": "Update Vuetify 3.12.2 (#1951)"
+        },
+        {
+          "date": "2026-02-19",
+          "message": "TableToolbar: fix story SlotFilter (#1857)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        },
+        {
+          "date": "2025-12-10",
+          "message": "Fix Vuetify sass warn (#1594)"
+        },
+        {
+          "date": "2025-12-10",
+          "message": "AmeliproIcon : fix v-html issue (#1583)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        }
+      ]
+    },
+    {
+      "componentName": "ToolbarContainer",
+      "storybookTitle": "Composants/Layout/ToolbarContainer",
+      "status": "actif",
+      "functionalVersion": "1.0.2",
+      "functionalDate": "17/06/2025",
+      "commits": [
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-03-30",
+          "message": "Feat/add axe tests on toolbar container (#2035)"
+        },
+        {
+          "date": "2026-01-20",
+          "message": "update vue-tsconfig (#1739)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-06-17",
+          "message": "Ajout du composant ToolbarContainer (#694)"
+        }
+      ]
+    },
+    {
+      "componentName": "UploadWorkflow",
+      "storybookTitle": "Composants/Formulaires/UploadWorkflow",
+      "status": "actif",
+      "functionalVersion": "1.0.25",
+      "functionalDate": "13/04/2026",
+      "commits": [
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-06-05",
+          "message": "Security: add vitest4 + delete node 18 (#2238)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-05-20",
+          "message": "Feat/improve tests (#2192)"
+        },
+        {
+          "date": "2026-04-13",
+          "message": "Fix/uploadworklist undefined map (#2084)"
+        },
+        {
+          "date": "2026-03-25",
+          "message": "FileList: amélioration label actions (#1985)"
+        },
+        {
+          "date": "2026-03-11",
+          "message": "Hx: replace hx to SyHeading (#1874)"
+        },
+        {
+          "date": "2026-03-03",
+          "message": "UploadWorkflow: suppression ombre bouton  (#1919)"
+        },
+        {
+          "date": "2026-02-19",
+          "message": "fix doc (#1858)"
+        },
+        {
+          "date": "2026-02-18",
+          "message": "UploadWorkflow: add preview event + info-text (#1846)"
+        }
+      ]
+    },
+    {
+      "componentName": "UserMenuBtn",
+      "storybookTitle": "Composants/Boutons/UserMenuBtn",
+      "status": "actif",
+      "functionalVersion": "1.0.25",
+      "functionalDate": "21/04/2026",
+      "commits": [
+        {
+          "date": "2026-06-17",
+          "message": "Migration user menu (#2280)"
+        },
+        {
+          "date": "2026-06-16",
+          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
+        },
+        {
+          "date": "2026-05-29",
+          "message": "Feat/add cypress test (#2203)"
+        },
+        {
+          "date": "2026-04-21",
+          "message": "Tokens simplify v2 (#2102)"
+        },
+        {
+          "date": "2026-03-04",
+          "message": "Feat/add icons in user btn list (#1869)"
+        },
+        {
+          "date": "2026-02-12",
+          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+        },
+        {
+          "date": "2026-02-04",
+          "message": "Fix post audit et renomage du SyBtnSelect en SyBtnMenu (#1759)"
+        },
+        {
+          "date": "2026-01-14",
+          "message": "UserMenuBtn: Ajout de la possibilité de naviguer avec vue-router (#1717)"
+        },
+        {
+          "date": "2025-10-20",
+          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
+        },
+        {
+          "date": "2025-07-31",
+          "message": "Feat/improve tests (#884)"
+        }
+      ]
+    }
+  ]
+}
