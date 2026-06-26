@@ -165,7 +165,7 @@ export const ComponentsList: StoryObj = {
 						title: 'BackBtn',
 						description: 'Utilisé pour permettre à l’utilisateur de revenir à la page précédente.',
 						link: '/?path=/docs/composants-boutons-backbtn--docs',
-						img: '/components/back-btn.svg',
+						img: `/components/back-btn${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
 					},
 					{
@@ -584,6 +584,7 @@ export const ComponentsList: StoryObj = {
 					'ContextualMenu',
 					'HeaderToolbar',
 					'SubHeader',
+					'BackBtn',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
