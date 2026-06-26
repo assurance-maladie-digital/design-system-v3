@@ -8,6 +8,9 @@ exports[`StarsPicker > renders correctly 1`] = `
   ">
     Pourriez-vous donner une note ?
   </legend>
+  <p class="d-sr-only">
+    Ce champ ne sera plus modifiable après saisie
+  </p>
   <div
     class="
       d-flex

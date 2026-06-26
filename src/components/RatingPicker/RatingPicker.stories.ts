@@ -110,6 +110,16 @@ const meta = {
 				},
 			},
 		},
+		lockAfterSelection: {
+			description: 'Si le champ doit être verrouillé après la sélection d’une valeur.',
+			control: 'boolean',
+			default: true,
+			table: {
+				type: {
+					summary: 'boolean',
+				},
+			},
+		},
 	},
 } satisfies Meta<typeof RatingPicker>
 
@@ -516,6 +526,58 @@ const ratingEmotion = ref(2)
 const freeTextLabel = 'Pouvez-vous nous en dire plus ?'
 </script>
 				`,
+			},
+		],
+	},
+}
+
+export const DoNotLockAfterSelection: Story = {
+	args: {
+		'type': 'emotion',
+		'label': 'Êtes-vous satisfait de ce service ?',
+		'readonly': false,
+		'twoEmotions': false,
+		'hideAlert': false,
+		'modelValue': -1,
+		'lockAfterSelection': false,
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { RatingPicker },
+			setup() {
+				return { args }
+			},
+			template: `
+				<RatingPicker v-bind="args" v-model="args.modelValue"/>
+			`,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<RatingPicker
+		v-model="ratingEmotion"
+		label="Êtes-vous satisfait de ce service ?"
+		type="emotion"
+		:lock-after-selection="false"
+	/>
+</template>
+		`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { RatingPicker } from '@cnamts/synapse'
+
+const ratingEmotion = ref(-1)
+</script>
+		`,
 			},
 		],
 	},
