@@ -158,17 +158,17 @@ type Story = StoryObj<typeof meta>
 const headers = [
 	{
 		title: 'Nom',
-		sortable: false,
+		sortable: true,
 		key: 'lastname',
 	},
 	{
 		title: 'Prénom',
-		sortable: false,
+		sortable: true,
 		key: 'firstname',
 	},
 	{
 		title: 'Email',
-		sortable: false,
+		sortable: true,
 		key: 'email',
 	},
 ]
@@ -209,97 +209,6 @@ const createFilteredItems = (search: { value: string | undefined }) => computed(
 	))
 })
 
-const defaultSourceCode = [
-	{
-		name: 'Template',
-		code: `
-<template>
-	<SyTable
-		:headers="headers"
-		:items="filteredItems"
-		:items-per-page="5"
-		hide-default-footer
-		:save-state="false"
-	>
-		<template #top>
-			<TableToolbar
-				v-model:search="search"
-				:nb-total="items.length"
-				:nb-filtered="filteredItems.length"
-				:vuetify-options="vuetifyOptions"
-			/>
-		</template>
-	</SyTable>
-</template>
-`,
-	},
-	{
-		name: 'Script',
-		code: `
-<script setup lang="ts">
-	import { computed, ref } from 'vue'
-	import { SyTable, TableToolbar } from '@cnamts/synapse'
-
-	const headers = [
-		{
-			title: 'Nom',
-			sortable: false,
-			key: 'lastname',
-		},
-		{
-			title: 'Prénom',
-			sortable: false,
-			key: 'firstname',
-		},
-		{
-			title: 'Email',
-			sortable: false,
-			key: 'email',
-		},
-	]
-
-	const items = [
-		{
-			firstname: 'Virginie',
-			lastname: 'Beauchesne',
-			email: 'virginie.beauchesne@example.com',
-		},
-		{
-			firstname: 'Étienne',
-			lastname: 'Salois',
-			email: 'etienne.salois@example.com',
-		},
-	]
-
-	const search = ref('')
-
-	const filteredItems = computed(() => {
-		if (!search.value) {
-			return items
-		}
-
-		const value = search.value.toLowerCase()
-
-		return items.filter(item => (
-			item.firstname.toLowerCase().includes(value)
-			|| item.lastname.toLowerCase().includes(value)
-			|| item.email.toLowerCase().includes(value)
-		))
-	})
-
-	const vuetifyOptions = {
-		textField: {
-			variant: 'outlined',
-			density: 'compact',
-			hideDetails: true,
-			clearable: true,
-		},
-	}
-</script>
-`,
-	},
-]
-
 export const Default: Story = {
 	args: {
 		'nbTotal': 2,
@@ -336,7 +245,73 @@ export const Default: Story = {
 		`,
 	}),
 	parameters: {
-		sourceCode: defaultSourceCode,
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyTable
+		:headers="headers"
+		:items="filteredItems"
+		:items-per-page="5"
+		hide-default-footer
+		:save-state="false"
+		suffix="table-toolbar-default"
+	>
+		<template #top>
+			<TableToolbar
+				v-model:search="search"
+				:nb-total="items.length"
+				:nb-filtered="filteredItems.length"
+			/>
+		</template>
+	</SyTable>
+</template>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { computed, ref } from 'vue'
+	import { SyTable, TableToolbar } from '@cnamts/synapse'
+
+	const headers = [
+		{ title: 'Nom', sortable: true, key: 'lastname' },
+		{ title: 'Prénom', sortable: true, key: 'firstname' },
+		{ title: 'Email', sortable: true, key: 'email' },
+	]
+
+	const items = [
+		{
+			firstname: 'Virginie',
+			lastname: 'Beauchesne',
+			email: 'virginie.beauchesne@example.com',
+		},
+		{
+			firstname: 'Étienne',
+			lastname: 'Salois',
+			email: 'etienne.salois@example.com',
+		},
+	]
+
+	const search = ref('')
+
+	const filteredItems = computed(() => {
+		if (!search.value) return items
+
+		const value = search.value.toLowerCase()
+
+		return items.filter(item => (
+			item.firstname.toLowerCase().includes(value)
+			|| item.lastname.toLowerCase().includes(value)
+			|| item.email.toLowerCase().includes(value)
+		))
+	})
+</script>
+`,
+			},
+		],
 	},
 }
 
@@ -377,7 +352,74 @@ export const AddButton: Story = {
 		`,
 	}),
 	parameters: {
-		sourceCode: defaultSourceCode,
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyTable
+		:headers="headers"
+		:items="filteredItems"
+		:items-per-page="5"
+		hide-default-footer
+		:save-state="false"
+		suffix="table-toolbar-add-button"
+	>
+		<template #top>
+			<TableToolbar
+				v-model:search="search"
+				:nb-total="items.length"
+				:nb-filtered="filteredItems.length"
+				show-add-button
+			/>
+		</template>
+	</SyTable>
+</template>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { computed, ref } from 'vue'
+	import { SyTable, TableToolbar } from '@cnamts/synapse'
+
+	const headers = [
+		{ title: 'Nom', sortable: true, key: 'lastname' },
+		{ title: 'Prénom', sortable: true, key: 'firstname' },
+		{ title: 'Email', sortable: true, key: 'email' },
+	]
+
+	const items = [
+		{
+			firstname: 'Virginie',
+			lastname: 'Beauchesne',
+			email: 'virginie.beauchesne@example.com',
+		},
+		{
+			firstname: 'Étienne',
+			lastname: 'Salois',
+			email: 'etienne.salois@example.com',
+		},
+	]
+
+	const search = ref('')
+
+	const filteredItems = computed(() => {
+		if (!search.value) return items
+
+		const value = search.value.toLowerCase()
+
+		return items.filter(item => (
+			item.firstname.toLowerCase().includes(value)
+			|| item.lastname.toLowerCase().includes(value)
+			|| item.email.toLowerCase().includes(value)
+		))
+	})
+</script>
+`,
+			},
+		],
 	},
 }
 
@@ -414,13 +456,85 @@ export const Labels: Story = {
 						v-model:search="search"
 						:nb-total="items.length"
 						:nb-filtered="filteredItems.length"
+						show-add-button
+						add-button-label="Ajouter un patient"
+						search-label="Rechercher un patient"
 					/>
 				</template>
 			</SyTable>
 		`,
 	}),
 	parameters: {
-		sourceCode: defaultSourceCode,
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyTable
+		:headers="headers"
+		:items="filteredItems"
+		:items-per-page="5"
+		hide-default-footer
+		:save-state="false"
+		suffix="table-toolbar-labels"
+	>
+		<template #top>
+			<TableToolbar
+				v-model:search="search"
+				:nb-total="items.length"
+				:nb-filtered="filteredItems.length"
+				show-add-button
+				add-button-label="Ajouter un patient"
+				search-label="Rechercher un patient"
+			/>
+		</template>
+	</SyTable>
+</template>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { computed, ref } from 'vue'
+	import { SyTable, TableToolbar } from '@cnamts/synapse'
+
+	const headers = [
+		{ title: 'Nom', sortable: true, key: 'lastname' },
+		{ title: 'Prénom', sortable: true, key: 'firstname' },
+		{ title: 'Email', sortable: true, key: 'email' },
+	]
+
+	const items = [
+		{
+			firstname: 'Virginie',
+			lastname: 'Beauchesne',
+			email: 'virginie.beauchesne@example.com',
+		},
+		{
+			firstname: 'Étienne',
+			lastname: 'Salois',
+			email: 'etienne.salois@example.com',
+		},
+	]
+
+	const search = ref('')
+
+	const filteredItems = computed(() => {
+		if (!search.value) return items
+
+		const value = search.value.toLowerCase()
+
+		return items.filter(item => (
+			item.firstname.toLowerCase().includes(value)
+			|| item.lastname.toLowerCase().includes(value)
+			|| item.email.toLowerCase().includes(value)
+		))
+	})
+</script>
+`,
+			},
+		],
 	},
 }
 
@@ -445,7 +559,6 @@ export const Loading: Story = {
 				:headers="headers"
 				:items="filteredItems"
 				:items-per-page="5"
-				loading
 				hide-default-footer
 				:save-state="false"
 				suffix="table-toolbar-loading"
@@ -456,6 +569,7 @@ export const Loading: Story = {
 						v-model:search="search"
 						:nb-total="items.length"
 						:nb-filtered="filteredItems.length"
+						loading
 					/>
 				</template>
 			</SyTable>
@@ -465,7 +579,74 @@ export const Loading: Story = {
 		a11y: {
 			disable: true,
 		},
-		sourceCode: defaultSourceCode,
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyTable
+		:headers="headers"
+		:items="filteredItems"
+		:items-per-page="5"
+		hide-default-footer
+		:save-state="false"
+		suffix="table-toolbar-loading"
+	>
+		<template #top>
+			<TableToolbar
+				v-model:search="search"
+				:nb-total="items.length"
+				:nb-filtered="filteredItems.length"
+				loading
+			/>
+		</template>
+	</SyTable>
+</template>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { computed, ref } from 'vue'
+	import { SyTable, TableToolbar } from '@cnamts/synapse'
+
+	const headers = [
+		{ title: 'Nom', sortable: true, key: 'lastname' },
+		{ title: 'Prénom', sortable: true, key: 'firstname' },
+		{ title: 'Email', sortable: true, key: 'email' },
+	]
+
+	const items = [
+		{
+			firstname: 'Virginie',
+			lastname: 'Beauchesne',
+			email: 'virginie.beauchesne@example.com',
+		},
+		{
+			firstname: 'Étienne',
+			lastname: 'Salois',
+			email: 'etienne.salois@example.com',
+		},
+	]
+
+	const search = ref('')
+
+	const filteredItems = computed(() => {
+		if (!search.value) return items
+
+		const value = search.value.toLowerCase()
+
+		return items.filter(item => (
+			item.firstname.toLowerCase().includes(value)
+			|| item.lastname.toLowerCase().includes(value)
+			|| item.email.toLowerCase().includes(value)
+		))
+	})
+</script>
+`,
+			},
+		],
 	},
 }
 
@@ -506,7 +687,87 @@ export const NbFiltered: Story = {
 		`,
 	}),
 	parameters: {
-		sourceCode: defaultSourceCode,
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyTable
+		:headers="headers"
+		:items="filteredItems"
+		:items-per-page="5"
+		hide-default-footer
+		:save-state="false"
+		suffix="table-toolbar-nb-filtered"
+	>
+		<template #top>
+			<TableToolbar
+				v-model:search="search"
+				:nb-total="items.length"
+				:nb-filtered="1"
+			/>
+		</template>
+	</SyTable>
+</template>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { computed, ref } from 'vue'
+	import { SyTable, TableToolbar } from '@cnamts/synapse'
+
+	const headers = [
+		{
+			title: 'Nom',
+			sortable: true,
+			key: 'lastname',
+		},
+		{
+			title: 'Prénom',
+			sortable: true,
+			key: 'firstname',
+		},
+		{
+			title: 'Email',
+			sortable: true,
+			key: 'email',
+		},
+	]
+
+	const items = [
+		{
+			firstname: 'Virginie',
+			lastname: 'Beauchesne',
+			email: 'virginie.beauchesne@example.com',
+		},
+		{
+			firstname: 'Étienne',
+			lastname: 'Salois',
+			email: 'etienne.salois@example.com',
+		},
+	]
+
+	const search = ref('')
+
+	const filteredItems = computed(() => {
+		if (!search.value) {
+			return items
+		}
+
+		const value = search.value.toLowerCase()
+
+		return items.filter(item => (
+			item.firstname.toLowerCase().includes(value)
+			|| item.lastname.toLowerCase().includes(value)
+			|| item.email.toLowerCase().includes(value)
+		))
+	})
+</script>
+`,
+			},
+		],
 	},
 }
 
@@ -568,7 +829,86 @@ export const SlotFilters: Story = {
 		`,
 	}),
 	parameters: {
-		sourceCode: defaultSourceCode,
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyTable
+		:headers="headers"
+		:items="filteredItems"
+		:items-per-page="5"
+		hide-default-footer
+		:save-state="false"
+		suffix="table-toolbar-filters"
+	>
+		<template #top>
+			<TableToolbar
+				v-model:search="search"
+				:nb-total="items.length"
+				:nb-filtered="filteredItems.length"
+			>
+				<template #filters>
+					<div class="px-4">
+						<SySelect
+							v-model="search"
+							:items="filterItems"
+							label="Nom"
+							density="compact"
+							width="150"
+							hide-details
+							clearable
+						/>
+					</div>
+				</template>
+			</TableToolbar>
+		</template>
+	</SyTable>
+</template>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { computed, ref } from 'vue'
+	import { SySelect, SyTable, TableToolbar } from '@cnamts/synapse'
+
+	const headers = [
+		{ title: 'Nom', sortable: true, key: 'lastname' },
+		{ title: 'Prénom', sortable: true, key: 'firstname' },
+		{ title: 'Email', sortable: true, key: 'email' },
+	]
+
+	const items = [
+		{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+		{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+	]
+
+	const search = ref('')
+
+	const filterItems = ref(
+		items.map(item => ({
+			text: item.lastname,
+			value: item.lastname,
+		})),
+	)
+
+	const filteredItems = computed(() => {
+		if (!search.value) return items
+
+		const value = search.value.toLowerCase()
+
+		return items.filter(item => (
+			item.firstname.toLowerCase().includes(value)
+			|| item.lastname.toLowerCase().includes(value)
+			|| item.email.toLowerCase().includes(value)
+		))
+	})
+</script>
+`,
+			},
+		],
 	},
 }
 
@@ -619,7 +959,76 @@ export const OtherSlots: Story = {
 		`,
 	}),
 	parameters: {
-		sourceCode: defaultSourceCode,
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyTable
+		:headers="headers"
+		:items="filteredItems"
+		:items-per-page="5"
+		hide-default-footer
+		:save-state="false"
+		suffix="table-toolbar-other-slots"
+	>
+		<template #top>
+			<TableToolbar
+				v-model:search="search"
+				:nb-total="items.length"
+				:nb-filtered="filteredItems.length"
+			>
+				<template #search-left>
+					<VBtn
+						color="primary"
+						variant="outlined"
+						size="small"
+						class="mx-5"
+					>
+						Exemple
+					</VBtn>
+				</template>
+			</TableToolbar>
+		</template>
+	</SyTable>
+</template>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { computed, ref } from 'vue'
+	import { SyTable, TableToolbar } from '@cnamts/synapse'
+
+	const headers = [
+		{ title: 'Nom', sortable: true, key: 'lastname' },
+		{ title: 'Prénom', sortable: true, key: 'firstname' },
+		{ title: 'Email', sortable: true, key: 'email' },
+	]
+
+	const items = [
+		{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+		{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+	]
+
+	const search = ref('')
+
+	const filteredItems = computed(() => {
+		if (!search.value) return items
+
+		const value = search.value.toLowerCase()
+
+		return items.filter(item => (
+			item.firstname.toLowerCase().includes(value)
+			|| item.lastname.toLowerCase().includes(value)
+			|| item.email.toLowerCase().includes(value)
+		))
+	})
+</script>
+`,
+			},
+		],
 	},
 }
 
@@ -676,6 +1085,84 @@ export const Customization: Story = {
 		`,
 	}),
 	parameters: {
-		sourceCode: defaultSourceCode,
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyTable
+		:headers="headers"
+		:items="filteredItems"
+		:items-per-page="5"
+		hide-default-footer
+		:save-state="false"
+		suffix="table-toolbar-customization"
+	>
+		<template #top>
+			<TableToolbar
+				v-model:search="search"
+				:nb-total="items.length"
+				:nb-filtered="filteredItems.length"
+				show-add-button
+				:vuetify-options="vuetifyOptions"
+			/>
+		</template>
+	</SyTable>
+</template>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { computed, ref } from 'vue'
+	import { SyTable, TableToolbar } from '@cnamts/synapse'
+
+	const headers = [
+		{ title: 'Nom', sortable: true, key: 'lastname' },
+		{ title: 'Prénom', sortable: true, key: 'firstname' },
+		{ title: 'Email', sortable: true, key: 'email' },
+	]
+
+	const items = [
+		{ firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+		{ firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+	]
+
+	const search = ref('')
+
+	const filteredItems = computed(() => {
+		if (!search.value) return items
+
+		const value = search.value.toLowerCase()
+
+		return items.filter(item => (
+			item.firstname.toLowerCase().includes(value)
+			|| item.lastname.toLowerCase().includes(value)
+			|| item.email.toLowerCase().includes(value)
+		))
+	})
+
+	const vuetifyOptions = {
+		toolbar: {
+			class: 'py-2',
+		},
+		textField: {
+			variant: 'outlined',
+			density: 'compact',
+			hideDetails: true,
+			clearable: true,
+		},
+		addBtn: {
+			color: 'secondary',
+		},
+		addIcon: {
+			class: 'd-none',
+		},
+	}
+</script>
+`,
+			},
+		],
 	},
 }
