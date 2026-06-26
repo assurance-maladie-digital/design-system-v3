@@ -84,6 +84,7 @@ export function useCustomValidation(
 
 		return result
 	}
+
 	useValidatable(
 		async () => {
 			const result = await validate()
@@ -98,6 +99,7 @@ export function useCustomValidation(
 		},
 		() => modelValue.value = undefined,
 		computed(() => isPristine.value ? null : errors.value.length < 1),
+		computed(() => !disableErrorHandling.value || errors.value.length > 0),
 	)
 
 	watch(focused, (newVal) => {

@@ -1,4 +1,4 @@
-import { onMounted, onBeforeUnmount, getCurrentInstance, reactive, type Ref } from 'vue'
+import { onMounted, onBeforeUnmount, getCurrentInstance, reactive, type Ref, toValue, watch } from 'vue'
 import { useValidatableComponent } from './useFormValidation'
 
 /**
@@ -30,6 +30,7 @@ export function useValidatable(
 	clearValidation?: () => void,
 	reset?: () => void,
 	valide?: Ref<boolean | null>,
+	active: Ref<boolean | null> | boolean = true,
 ) {
 	const { register, unregister } = useValidatableComponent()
 	const instance = getCurrentInstance()
@@ -46,7 +47,7 @@ export function useValidatable(
 	})
 
 	onMounted(() => {
-		if (instance) {
+		if (instance && toValue(active)) {
 			register(componentRef)
 		}
 	})
@@ -54,6 +55,17 @@ export function useValidatable(
 	onBeforeUnmount(() => {
 		if (instance) {
 			unregister(componentRef)
+		}
+	})
+
+	watch(() => toValue(active), (newActive) => {
+		if (instance) {
+			if (newActive) {
+				register(componentRef)
+			}
+			else {
+				unregister(componentRef)
+			}
 		}
 	})
 
