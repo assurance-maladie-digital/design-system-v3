@@ -29,6 +29,7 @@
 		{ title: 'Playground interactif', key: 'hasInteractivePlayground' },
 		{ title: 'Tests', key: 'tests' },
 		{ title: 'Criticité', key: 'criticality' },
+		{ title: 'Dernière mise à jour fonctionnelle', key: 'functionalUpdate' },
 	]
 
 	const components = computed(() =>
@@ -342,7 +343,7 @@
 			</template>
 
 			<template #[`item.tests`]="{ item }">
-				<div class="test-chips">
+				<div class="test-chips mt-2 mb-2">
 					<span :class="['test-chip', item.hasUnitTest ? 'test-chip-ok' : 'test-chip-ko']">
 						UT
 					</span>
@@ -361,6 +362,22 @@
 				<span :class="['carbon-tag', item.criticality ? 'tag-red' : 'tag-green']">
 					{{ item.criticality || 'Aucune' }}
 				</span>
+			</template>
+
+			<template #[`item.functionalUpdate`]="{ item }">
+				<div
+					v-if="item.functionalVersion"
+					class="functional-update"
+				>
+					<span class="functional-version">
+						v{{ item.functionalVersion }}
+					</span>
+					<span class="functional-date">
+						{{ item.functionalDate }}
+					</span>
+				</div>
+
+				<span v-else>-</span>
 			</template>
 		</SyTable>
 	</div>
@@ -465,5 +482,28 @@
 .test-chip-ko {
 	background: #fde2e2;
 	color: #c62828;
+}
+
+.functional-update {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 6px;
+}
+
+.functional-version {
+	display: inline-flex;
+	padding: 4px 10px;
+	border: 1px solid #9bd3ad;
+	border-radius: 4px;
+	background: #f0fff4;
+	color: #1e7e34;
+	font-weight: 700;
+	font-size: 12px;
+}
+
+.functional-date {
+	font-size: 12px;
+	color: #6b7280;
 }
 </style>
