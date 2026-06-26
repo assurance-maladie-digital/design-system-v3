@@ -44,6 +44,7 @@ export type DataTableHeaders = {
 	multiple?: boolean
 	chips?: boolean
 	sortable?: boolean
+	editable?: boolean
 	hideMessages?: boolean
 	dateFormat?: string
 	align?: 'start' | 'end' | 'center'
@@ -107,6 +108,8 @@ export type SyTableProps = {
 	clickableRow?: boolean
 	pageInput?: boolean
 	hideDefaultFooter?: boolean
+	/** Active l'édition inline des lignes (cf. flag `editable` par colonne) */
+	editable?: boolean
 }
 
 export type SyServerTableProps = {

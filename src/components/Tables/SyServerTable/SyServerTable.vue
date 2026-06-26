@@ -281,7 +281,6 @@
 				<caption
 					class="text-subtitle-1 text-center pa-4"
 					:class="{ 'd-sr-only': props.caption === '' }"
-					:aria-label="props.caption"
 				>
 					{{ props.caption }}
 				</caption>

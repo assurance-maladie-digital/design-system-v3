@@ -12,9 +12,15 @@ export function useTableAccessibility({
 	const accessibilityTimeouts = ref<ReturnType<typeof setTimeout>[]>([])
 	function setupAccessibility() {
 		onMounted(() => {
+			// Un <caption> vide a besoin d'un nom accessible, mais `aria-label`
+			// est prohibé sur <caption> : on nomme la table via son élément
+			// <table> (autorisé pour role="table").
 			const captionElement = document.querySelector(`#${tableId} caption`)
 			if (captionElement && captionElement.textContent?.trim() === '') {
-				captionElement.setAttribute('aria-label', 'Table caption')
+				const tableElement = document.querySelector(`#${tableId} table`)
+				if (tableElement && !tableElement.hasAttribute('aria-label')) {
+					tableElement.setAttribute('aria-label', 'Table caption')
+				}
 			}
 
 			const inputs = document.querySelectorAll(`#${tableId} input`)
