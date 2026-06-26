@@ -219,6 +219,10 @@ $list-max-height: 248px;
 		0 3px 14px 2px var(--v-shadow-key-ambient-opacity, rgb(0 0 0 / 12%));
 }
 
+.sy-external-links-btn-text {
+  color: rgb(var(--v-theme-onPrimary))
+}
+
 .sy-external-links-list-item {
 	padding-block: 4px !important;
 	height: 48px !important;
