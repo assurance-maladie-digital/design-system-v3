@@ -190,6 +190,7 @@
 	const forwardedSlotNames = computed<string[]>(() => {
 		const intercepted = new Set<string>([
 			'item.actions',
+			'item.data-table-select',
 			'bulk-actions',
 			'bulk-edit-form',
 			...editableColumns.value.map(key => `item.${key}`),
@@ -686,6 +687,21 @@
 					:save="() => onSave()"
 					:cancel="() => onCancel()"
 					:remove="() => onDelete(actionProps.item as Record<string, unknown>)"
+				/>
+			</template>
+
+			<!-- Checkbox de sélection de ligne avec libellé accessible (déclaratif, robuste aux re-renders) -->
+			<template
+				v-if="props.showSelect || props.showSelectSingle"
+				#[`item.data-table-select`]="{ internalItem, isSelected, toggleSelect, index }"
+			>
+				<SyCheckbox
+					:model-value="isSelected(internalItem)"
+					:aria-label="`${locales.selectRow} ${index + 1}`"
+					color="primary"
+					density="compact"
+					hide-details
+					@update:model-value="toggleSelect(internalItem)"
 				/>
 			</template>
 
