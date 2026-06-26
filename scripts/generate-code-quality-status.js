@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import path from 'node:path'
 import { globSync } from 'glob'
 
@@ -6,8 +6,17 @@ const root = process.cwd()
 
 const outputPath = path.resolve(
 	root,
-	'src/stories/Components/code-quality-status.json',
+	'src/components/ComponentStatusTable/code-quality-status.json',
 )
+
+const componentInfoPath = path.resolve(
+	root,
+	'src/stories/Demarrer/component-info.json',
+)
+
+const componentInfo = existsSync(componentInfoPath)
+	? JSON.parse(readFileSync(componentInfoPath, 'utf8'))
+	: { results: [] }
 
 const requiredFormStories = ['disabled', 'required', 'form-validation']
 
@@ -16,6 +25,7 @@ const excludedComponentNames = [
 	'Usages',
 	'DeclarationAccessibilityPage',
 	'datePickers',
+	'ComponentStatusTable',
 ]
 
 const ap2026Components = [
@@ -71,6 +81,29 @@ function slugify(value) {
 		.replace(/[\u0300-\u036f]/g, '')
 		.replace(/[^a-z0-9]+/g, '-')
 		.replace(/^-|-$/g, '')
+}
+function getMainVueNames(componentDir) {
+	try {
+		return globSync('*.vue', {
+			cwd: componentDir,
+			nodir: true,
+		}).map(file => file.replace('.vue', ''))
+	}
+	catch {
+		return []
+	}
+}
+
+function getFunctionalInfo(componentName, storybookTitle) {
+	const info = componentInfo.results.find(item =>
+		item.componentName === componentName
+		|| item.storybookTitle === storybookTitle,
+	)
+
+	return {
+		functionalVersion: info?.functionalVersion || null,
+		functionalDate: info?.functionalDate || null,
+	}
 }
 
 function getComponentName(filePath) {
@@ -287,7 +320,7 @@ function main() {
 			const themeStatus = getVisualThemeStatus(componentName, content)
 			const themeModeStatus = getThemeModeStatus(content)
 			const storyPath = slugify(storybookTitle)
-
+			const functionalInfo = getFunctionalInfo(componentName, storybookTitle)
 			const hasUnitTest = files.some(file =>
 				file.toLowerCase().endsWith(`${componentName.toLowerCase()}.spec.ts`)
 				&& !file.toLowerCase().endsWith(`${componentName.toLowerCase()}.a11y.spec.ts`),
@@ -332,6 +365,8 @@ function main() {
 				isFullyCompliant: !criticality,
 				storybookTitle,
 				hasUnitTest,
+				functionalVersion: functionalInfo.functionalVersion,
+				functionalDate: functionalInfo.functionalDate,
 				hasA11yTest,
 				figmaUrl: defaultFigmaUrl,
 				hasCypressTest,
@@ -341,6 +376,7 @@ function main() {
 		})
 		.filter(Boolean)
 
+	mkdirSync(path.dirname(outputPath), { recursive: true })
 	writeFileSync(
 		outputPath,
 		JSON.stringify({
