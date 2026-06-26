@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import { ref } from 'vue'
+import { mdiDelete, mdiPencil } from '@mdi/js'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
 
@@ -22,9 +23,9 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const headers = [
-	{ title: 'Nom', key: 'lastname' },
-	{ title: 'Prénom', key: 'firstname' },
-	{ title: 'Email', key: 'email' },
+	{ title: 'Nom', key: 'lastname', editable: true },
+	{ title: 'Prénom', key: 'firstname', editable: true },
+	{ title: 'Email', key: 'email', editable: true },
 ]
 
 const baseItems = [
@@ -44,6 +45,7 @@ export const Default: Story = {
 		serverItemsLength: baseItems.length,
 		showSelect: true,
 		showDeleteSelected: true,
+		showEditSelected: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
 	},
@@ -58,7 +60,12 @@ export const Default: Story = {
 				items.value = items.value.filter(i => !ids.has(i.id))
 			}
 
-			return { args, headers, items, selected, onDeleteMultiple }
+			function onSaveMultiple(updatedItems: Record<string, unknown>[]) {
+				const byId = new Map(updatedItems.map(i => [i.id, i]))
+				items.value = items.value.map(i => (byId.get(i.id) ?? i)) as typeof baseItems
+			}
+
+			return { args, headers, items, selected, onDeleteMultiple, onSaveMultiple }
 		},
 		template: `
 			<SyServerTable
@@ -68,6 +75,7 @@ export const Default: Story = {
 				:items="items"
 				:server-items-length="items.length"
 				@delete-multiple="onDeleteMultiple"
+				@save-multiple="onSaveMultiple"
 			/>
 		`,
 	}),
@@ -81,6 +89,7 @@ export const Default: Story = {
 		suffix="server-bulk-actions"
 		show-select
 		show-delete-selected
+		show-edit-selected
 		selection-key="id"
 		hide-default-footer
 		v-model="selected"
@@ -88,6 +97,7 @@ export const Default: Story = {
 		:items="items"
 		:server-items-length="items.length"
 		@delete-multiple="onDeleteMultiple"
+		@save-multiple="onSaveMultiple"
 	/>
 </template>
 `,
@@ -99,10 +109,11 @@ export const Default: Story = {
 	import { ref } from 'vue'
 	import { SyServerTable } from '@cnamts/synapse'
 
+	// Les colonnes \`editable: true\` constituent le formulaire d'édition groupée
 	const headers = [
-		{ title: 'Nom', key: 'lastname' },
-		{ title: 'Prénom', key: 'firstname' },
-		{ title: 'Email', key: 'email' },
+		{ title: 'Nom', key: 'lastname', editable: true },
+		{ title: 'Prénom', key: 'firstname', editable: true },
+		{ title: 'Email', key: 'email', editable: true },
 	]
 
 	const items = ref([
@@ -115,9 +126,73 @@ export const Default: Story = {
 		const ids = new Set(toDelete.map(i => i.id))
 		items.value = items.value.filter(i => !ids.has(i.id))
 	}
+
+	function onSaveMultiple(updatedItems) {
+		const byId = new Map(updatedItems.map(i => [i.id, i]))
+		items.value = items.value.map(i => byId.get(i.id) ?? i)
+	}
 </script>
 `,
 			},
 		],
 	},
+}
+
+/**
+ * Barre personnalisée via le slot `#bulk-actions`, qui expose
+ * `{ selected, count, clearSelection, deleteSelected, editSelected }`.
+ * `show-edit-selected` reste nécessaire pour que la boîte de dialogue d'édition soit disponible.
+ */
+export const CustomBar: Story = {
+	args: {
+		suffix: 'server-bulk-actions-custom',
+		caption: 'Liste des patients',
+		serverItemsLength: baseItems.length,
+		showSelect: true,
+		showEditSelected: true,
+		selectionKey: 'id',
+		hideDefaultFooter: true,
+	},
+	render: args => ({
+		components: { SyServerTable },
+		setup() {
+			const items = ref([...baseItems])
+			const selected = ref<number[]>([])
+
+			function onDeleteMultiple(toDelete: Record<string, unknown>[]) {
+				const ids = new Set(toDelete.map(i => i.id))
+				items.value = items.value.filter(i => !ids.has(i.id))
+			}
+
+			function onSaveMultiple(updatedItems: Record<string, unknown>[]) {
+				const byId = new Map(updatedItems.map(i => [i.id, i]))
+				items.value = items.value.map(i => (byId.get(i.id) ?? i)) as typeof baseItems
+			}
+
+			return { args, headers, items, selected, onDeleteMultiple, onSaveMultiple, mdiDelete, mdiPencil }
+		},
+		template: `
+			<SyServerTable
+				v-bind="args"
+				v-model="selected"
+				:headers="headers"
+				:items="items"
+				:server-items-length="items.length"
+				:bulk-selected-label="(count) => count + ' patient' + (count > 1 ? 's' : '') + ' sélectionné' + (count > 1 ? 's' : '')"
+				:bulk-edit-title="(count) => 'Modifier ' + count + ' patient' + (count > 1 ? 's' : '')"
+				:bulk-edit-position-label="(current, total) => 'Patient ' + current + ' sur ' + total"
+				@delete-multiple="onDeleteMultiple"
+				@save-multiple="onSaveMultiple"
+			>
+				<template #bulk-actions="{ count, deleteSelected, editSelected }">
+					<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="editSelected">
+						Modifier {{ count }} patient(s)
+					</VBtn>
+					<VBtn color="error" variant="flat" size="small" :prepend-icon="mdiDelete" @click="deleteSelected">
+						Supprimer {{ count }} patient(s)
+					</VBtn>
+				</template>
+			</SyServerTable>
+		`,
+	}),
 }

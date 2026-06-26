@@ -12,7 +12,12 @@ export const locales = {
 	bulkActions: 'Actions groupées',
 	selectedCount: (count: number) => count <= 1 ? `${count} élément sélectionné` : `${count} éléments sélectionnés`,
 	deleteSelected: 'Supprimer la sélection',
+	editSelected: 'Modifier la sélection',
 	clearSelection: 'Désélectionner tout',
+	bulkEditTitle: (count: number) => count <= 1 ? `Modifier ${count} élément` : `Modifier ${count} éléments`,
+	bulkEditPosition: (current: number, total: number) => `Ligne ${current} sur ${total}`,
+	previousRow: 'Ligne précédente',
+	nextRow: 'Ligne suivante',
 
 	// Pagination locales
 	pagination: {

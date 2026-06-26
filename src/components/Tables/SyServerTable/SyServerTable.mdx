@@ -1,5 +1,7 @@
 import { Controls, Canvas, Meta, Source } from '@storybook/addon-docs/blocks';
 import * as SyServerTable from './SyServerTable.stories';
+import * as RowEditing from './RowEditing.stories';
+import * as BulkActions from './BulkActions.stories';
 import '@/stories/styles/shared.css';
 
 <Meta of={SyServerTable} />
@@ -99,6 +101,67 @@ Exemple :
   @row-click="handleRowClick"
 />
 `}/>
+
+### Édition des lignes
+
+La prop `editable` active l'édition inline. Chaque colonne dont le header porte `editable: true` devient un champ en mode édition (par défaut un `SyTextField`). Le composant **ne mute jamais `items`** : il émet `save`, `cancel` et `delete`, à l'application de persister les changements.
+
+Les boutons d'action se placent dans le slot `#item.actions`, qui expose les helpers `{ item, isEditing, edit, save, cancel, remove }`. Prévoyez une colonne `actions` dans les headers.
+
+<Source dark code={`
+<SyServerTable
+  editable
+  selection-key="id"
+  :headers="headers"
+  :items="items"
+  :server-items-length="totalCount"
+  @save="onSave"
+  @delete="onDelete"
+>
+  <template #item.actions="{ isEditing, edit, save, cancel, remove }">
+    <template v-if="!isEditing">
+      <SyIconButton :icon="mdiPencil" label="Éditer" @click-icon-button="edit" />
+      <SyIconButton :icon="mdiDelete" label="Supprimer" @click-icon-button="remove" />
+    </template>
+    <template v-else>
+      <SyIconButton :icon="mdiCheck" label="Valider" @click-icon-button="save" />
+      <SyIconButton :icon="mdiClose" label="Annuler" @click-icon-button="cancel" />
+    </template>
+  </template>
+</SyServerTable>
+`}/>
+
+L'éditeur d'une cellule peut être personnalisé via le slot `#edit.<columnKey>` (reçoit `{ item, value, update }`).
+
+**Évènements** : `edit(item)` · `save(updated, original)` · `cancel(item)` · `delete(item)`.
+
+<Canvas story={{height: '350px'}} of={RowEditing.Default} />
+
+### Actions groupées (suppression et édition en masse)
+
+En s'appuyant sur la sélection (`show-select`), une barre d'actions groupées apparaît dès qu'au moins une ligne est cochée :
+
+- **`show-delete-selected`** ajoute un bouton de suppression en masse → émet `delete-multiple(items)`.
+- **`show-edit-selected`** ajoute un bouton d'édition groupée : une boîte de dialogue édite **chaque ligne sélectionnée séquentiellement** (navigation par flèches ‹ ›), pré-remplie avec ses propres données. À la validation, `save-multiple(items)` reçoit **uniquement les lignes modifiées** (objets complets).
+
+<Source dark code={`
+<SyServerTable
+  show-select
+  show-delete-selected
+  show-edit-selected
+  selection-key="id"
+  v-model="selected"
+  :headers="headers"
+  :items="items"
+  :server-items-length="totalCount"
+  @delete-multiple="onDeleteMultiple"
+  @save-multiple="onSaveMultiple"
+/>
+`}/>
+
+La barre est personnalisable via le slot `#bulk-actions` (`{ selected, count, clearSelection, deleteSelected, editSelected }`) et le formulaire d'édition via `#bulk-edit-form`. Les libellés se personnalisent avec les props `bulk-selected-label`, `bulk-edit-title` et `bulk-edit-position-label`.
+
+<Canvas story={{height: '350px'}} of={BulkActions.Default} />
 
 ### Slot item
 Le composant permet de personnaliser l'affichage des contenus en utilisant le slot `item`. Vous pouvez définir la structure de chaque contenu en fonction de vos besoins.

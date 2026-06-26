@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import { computed, onMounted, provide, ref, toRef, useAttrs, useSlots, watch } from 'vue'
+	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js'
 	import type { VDataTableServer } from 'vuetify/components/VDataTable'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -25,6 +26,7 @@
 	import { useTableEditing } from '../common/useTableEditing'
 	import { useTableBulkActions } from '../common/useTableBulkActions'
 	import TableBulkActions from '../common/TableBulkActions.vue'
+	import DialogBox from '@/components/DialogBox/DialogBox.vue'
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
 		caption: '',
@@ -49,6 +51,7 @@
 		hideDefaultFooter: false,
 		editable: false,
 		showDeleteSelected: false,
+		showEditSelected: false,
 	})
 
 	const emit = defineEmits<{
@@ -58,6 +61,7 @@
 		'cancel': [item: Record<string, unknown> | null]
 		'delete': [item: Record<string, unknown>]
 		'delete-multiple': [items: Record<string, unknown>[]]
+		'save-multiple': [items: Record<string, unknown>[]]
 	}>()
 
 	const options = defineModel<Partial<DataOptions>>('options', {
@@ -179,13 +183,16 @@
 		cancelEditing,
 	} = useTableEditing({ getItemValue })
 
-	// Colonnes déclarées éditables (uniquement si le tableau est `editable`)
+	// Colonnes portant le flag `editable` (indépendamment de la prop `editable`)
+	const editableHeaderColumns = computed<string[]>(() =>
+		(props.headers ?? [])
+			.filter(header => header.editable && (header.key ?? header.value))
+			.map(header => String(header.key ?? header.value)),
+	)
+
+	// Colonnes éditables en inline (uniquement si le tableau est `editable`)
 	const editableColumns = computed<string[]>(() =>
-		props.editable
-			? (props.headers ?? [])
-				.filter(header => header.editable && (header.key ?? header.value))
-				.map(header => String(header.key ?? header.value))
-			: [],
+		props.editable ? editableHeaderColumns.value : [],
 	)
 
 	// Libellé d'une colonne, pour le label accessible de l'éditeur par défaut
@@ -200,6 +207,7 @@
 		const intercepted = new Set<string>([
 			'item.actions',
 			'bulk-actions',
+			'bulk-edit-form',
 			...editableColumns.value.map(key => `item.${key}`),
 		])
 		return Object.keys(slots).filter(
@@ -223,8 +231,19 @@
 		emit('delete', item)
 	}
 
-	// --- Actions groupées (suppression en masse) -----------------------------
-	const { selectedItems, clearSelection } = useTableBulkActions({
+	// --- Actions groupées (suppression + édition en masse) -------------------
+	const {
+		selectedItems,
+		clearSelection,
+		bulkEditIndex,
+		bulkEditCount,
+		currentBulkDraft,
+		setBulkField,
+		bulkPrev,
+		bulkNext,
+		initBulkEdit,
+		collectEditedItems,
+	} = useTableBulkActions({
 		items: displayedItems,
 		model,
 		getItemValue,
@@ -235,10 +254,24 @@
 		clearSelection()
 	}
 
+	// Édition séquentielle des lignes sélectionnées via une boîte de dialogue
+	const bulkEditOpen = ref(false)
+
+	function openBulkEdit(): void {
+		initBulkEdit()
+		bulkEditOpen.value = true
+	}
+
+	function onSaveMultiple(): void {
+		emit('save-multiple', collectEditedItems())
+		bulkEditOpen.value = false
+		clearSelection()
+	}
+
 	const showBulkActions = computed<boolean>(() =>
 		props.showSelect
 		&& selectedItems.value.length > 0
-		&& (props.showDeleteSelected || !!slots['bulk-actions']),
+		&& (props.showDeleteSelected || props.showEditSelected || !!slots['bulk-actions']),
 	)
 
 	// Use the ARIA accessibility composable
@@ -344,12 +377,15 @@
 			{{ statusMessage }}
 		</div>
 
-		<!-- Barre d'actions groupées (suppression en masse) -->
+		<!-- Barre d'actions groupées (suppression + édition en masse) -->
 		<TableBulkActions
 			v-if="showBulkActions"
 			:count="selectedItems.length"
+			:label="props.bulkSelectedLabel ? props.bulkSelectedLabel(selectedItems.length) : undefined"
 			:show-delete="props.showDeleteSelected"
+			:show-edit="props.showEditSelected"
 			@delete="onDeleteMultiple"
+			@edit="openBulkEdit"
 			@clear="clearSelection"
 		>
 			<slot
@@ -359,8 +395,67 @@
 				:count="selectedItems.length"
 				:clear-selection="clearSelection"
 				:delete-selected="onDeleteMultiple"
+				:edit-selected="openBulkEdit"
 			/>
 		</TableBulkActions>
+
+		<!-- Boîte de dialogue d'édition séquentielle des lignes sélectionnées -->
+		<DialogBox
+			v-if="props.showEditSelected || $slots['bulk-edit-form']"
+			v-model="bulkEditOpen"
+			:title="props.bulkEditTitle ? props.bulkEditTitle(bulkEditCount) : locales.bulkEditTitle(bulkEditCount)"
+			:confirm-btn-text="locales.apply"
+			width="500px"
+			@confirm="onSaveMultiple"
+			@cancel="bulkEditOpen = false"
+		>
+			<slot
+				name="bulk-edit-form"
+				:draft="currentBulkDraft"
+				:columns="editableHeaderColumns"
+				:set-field="setBulkField"
+				:index="bulkEditIndex"
+				:count="bulkEditCount"
+				:prev="bulkPrev"
+				:next="bulkNext"
+			>
+				<!-- Navigation entre les lignes sélectionnées -->
+				<div
+					v-if="bulkEditCount > 1"
+					class="d-flex align-center justify-space-between mb-4"
+				>
+					<VBtn
+						:icon="mdiChevronLeft"
+						variant="text"
+						size="small"
+						:disabled="bulkEditIndex === 0"
+						:aria-label="locales.previousRow"
+						@click="bulkPrev"
+					/>
+					<span class="text-body-2">{{ props.bulkEditPositionLabel ? props.bulkEditPositionLabel(bulkEditIndex + 1, bulkEditCount) : locales.bulkEditPosition(bulkEditIndex + 1, bulkEditCount) }}</span>
+					<VBtn
+						:icon="mdiChevronRight"
+						variant="text"
+						size="small"
+						:disabled="bulkEditIndex === bulkEditCount - 1"
+						:aria-label="locales.nextRow"
+						@click="bulkNext"
+					/>
+				</div>
+				<div class="d-flex flex-column ga-3">
+					<SyTextField
+						v-for="colKey in editableHeaderColumns"
+						:key="`bulk-edit-${colKey}`"
+						:model-value="(currentBulkDraft[colKey] as string)"
+						:label="columnTitle(colKey)"
+						density="compact"
+						hide-details
+						disable-error-handling
+						@update:model-value="setBulkField(colKey, $event)"
+					/>
+				</div>
+			</slot>
+		</DialogBox>
 
 		<VDataTableServer
 			ref="table"
