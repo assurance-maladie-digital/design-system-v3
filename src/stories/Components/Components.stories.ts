@@ -319,7 +319,7 @@ export const ComponentsList: StoryObj = {
 						title: 'PeriodField',
 						description: 'Utilisé pour permettre à l’utilisateur de saisir une période.',
 						link: '/?path=/docs/composants-formulaires-periodfield--docs',
-						img: '/components/period-field.svg',
+						img: `/components/period-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -587,6 +587,7 @@ export const ComponentsList: StoryObj = {
 					'BackBtn',
 					'LangBtn',
 					'CookieBanner',
+					'PeriodField',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
