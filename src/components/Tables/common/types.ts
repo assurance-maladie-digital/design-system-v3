@@ -139,4 +139,6 @@ export type SyServerTableProps = {
 	clickableRow?: boolean
 	pageInput?: boolean
 	hideDefaultFooter?: boolean
+	/** Active l'édition inline des lignes (cf. flag `editable` par colonne) */
+	editable?: boolean
 }
