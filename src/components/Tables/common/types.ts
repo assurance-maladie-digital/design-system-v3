@@ -110,6 +110,8 @@ export type SyTableProps = {
 	hideDefaultFooter?: boolean
 	/** Active l'édition inline des lignes (cf. flag `editable` par colonne) */
 	editable?: boolean
+	/** Affiche la barre d'actions groupées avec un bouton de suppression en masse (nécessite `showSelect`) */
+	showDeleteSelected?: boolean
 }
 
 export type SyServerTableProps = {
@@ -141,4 +143,6 @@ export type SyServerTableProps = {
 	hideDefaultFooter?: boolean
 	/** Active l'édition inline des lignes (cf. flag `editable` par colonne) */
 	editable?: boolean
+	/** Affiche la barre d'actions groupées avec un bouton de suppression en masse (nécessite `showSelect`) */
+	showDeleteSelected?: boolean
 }

@@ -111,4 +111,29 @@ describe('SyTable - accessibility (axe)', () => {
 			ignoreRules: ['region'],
 		})
 	})
+
+	it('has no obvious axe violations with the bulk actions bar visible', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: {} as DataOptions,
+				suffix: 'a11y-bulk-test',
+				showSelect: true,
+				showDeleteSelected: true,
+				selectionKey: 'id',
+				hideDefaultFooter: true,
+				modelValue: [1, 2],
+				headers,
+				items,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+
+		const results = await axe(wrapper.element as HTMLElement)
+		// `label` est ignoré comme pour les autres tests `showSelect` (cases à cocher de sélection)
+		assertNoA11yViolations(results, 'SyTable - bulk actions', {
+			ignoreRules: ['region', 'label'],
+		})
+	})
 })
