@@ -200,7 +200,7 @@ export const ComponentsList: StoryObj = {
 						title: 'LangBtn',
 						description: 'Utilisé pour permettre à l’utilisateur de choisir la langue de l’application.',
 						link: '/?path=/docs/composants-boutons-langbtn--docs',
-						img: '/components/lang-btn.svg',
+						img: `/components/lang-btn${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
 					},
 					{
