@@ -583,7 +583,7 @@ export const ComponentsList: StoryObj = {
 					'FileUpload',
 					'ContextualMenu',
 					'HeaderToolbar',
-					'CookieBanner,',
+					'CookieBanner',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
