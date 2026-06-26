@@ -124,6 +124,16 @@ describe('SyTable — actions groupées (suppression en masse)', () => {
 		expect(wrapper.emitted('delete-multiple')?.[0]?.[0]).toHaveLength(1)
 	})
 
+	it('les checkboxes de sélection de ligne ont un libellé accessible (même cochées)', () => {
+		const wrapper = mountTable({ modelValue: [1, 2, 3] })
+
+		const rowChecks = [...wrapper.element.querySelectorAll('td .v-selection-control input[type="checkbox"]')]
+		expect(rowChecks).toHaveLength(3)
+		rowChecks.forEach((checkbox) => {
+			expect(checkbox.getAttribute('aria-label')).toBeTruthy()
+		})
+	})
+
 	describe('édition groupée', () => {
 		const editableHeaders = [
 			{ title: 'Nom', key: 'lastname', editable: true },
@@ -158,6 +168,23 @@ describe('SyTable — actions groupées (suppression en masse)', () => {
 
 			expect(wrapper.findComponent(DialogBox).props('modelValue')).toBe(true)
 			expect(wrapper.findAllComponents(SyTextField).length).toBe(2)
+		})
+
+		it('chaque champ d\'édition a un libellé accessible', async () => {
+			const wrapper = mountEditable()
+			const editBtn = wrapper.find(BAR).findAll('button').find(b => b.text().includes('Modifier'))
+			await editBtn!.trigger('click')
+			await wrapper.vm.$nextTick()
+
+			const textInputs = [...document.body.querySelectorAll('input[type="text"]')]
+			expect(textInputs).toHaveLength(2)
+
+			textInputs.forEach((input) => {
+				const labelledby = input.getAttribute('aria-labelledby')
+				const name = input.getAttribute('aria-label')
+					|| (labelledby ? document.getElementById(labelledby)?.textContent?.trim() : '')
+				expect(name).toBeTruthy()
+			})
 		})
 
 		it('pré-remplit le formulaire avec les valeurs de la ligne (sélection unique)', async () => {
