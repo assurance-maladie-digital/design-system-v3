@@ -8,6 +8,12 @@ export const locales = {
 	selectAllRows: 'Sélectionner toutes les lignes',
 	selectRow: 'Sélectionner la ligne',
 
+	// Bulk actions locales
+	bulkActions: 'Actions groupées',
+	selectedCount: (count: number) => count <= 1 ? `${count} élément sélectionné` : `${count} éléments sélectionnés`,
+	deleteSelected: 'Supprimer la sélection',
+	clearSelection: 'Désélectionner tout',
+
 	// Pagination locales
 	pagination: {
 		itemsPerPageText: 'Lignes par page:',

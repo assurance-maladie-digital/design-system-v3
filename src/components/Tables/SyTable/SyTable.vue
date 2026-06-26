@@ -24,6 +24,8 @@
 	import { useTableRowCheckboxAccessibility } from '../common/useTableRowCheckboxAccessibility'
 	import type { ClickableTableRowPropsInput } from '../common/useClickableTableRow'
 	import { useTableEditing } from '../common/useTableEditing'
+	import { useTableBulkActions } from '../common/useTableBulkActions'
+	import TableBulkActions from '../common/TableBulkActions.vue'
 
 	const props = withDefaults(defineProps<SyTableProps>(), {
 		caption: '',
@@ -45,6 +47,7 @@
 		pageInput: false,
 		hideDefaultFooter: false,
 		editable: false,
+		showDeleteSelected: false,
 	})
 
 	const emit = defineEmits<{
@@ -53,6 +56,7 @@
 		'save': [updated: Record<string, unknown>, original: Record<string, unknown> | null]
 		'cancel': [item: Record<string, unknown> | null]
 		'delete': [item: Record<string, unknown>]
+		'delete-multiple': [items: Record<string, unknown>[]]
 	}>()
 
 	const options = defineModel<Partial<DataOptions>>('options', {
@@ -179,9 +183,12 @@
 	const forwardedSlotNames = computed<string[]>(() => {
 		const intercepted = new Set<string>([
 			'item.actions',
+			'bulk-actions',
 			...editableColumns.value.map(key => `item.${key}`),
 		])
-		return Object.keys(slots).filter(name => !intercepted.has(name))
+		return Object.keys(slots).filter(
+			name => !intercepted.has(name) && !name.startsWith('edit.'),
+		)
 	})
 
 	// Wrappers qui émettent les évènements publics
@@ -199,6 +206,26 @@
 	function onDelete(item: Record<string, unknown>): void {
 		emit('delete', item)
 	}
+
+	// --- Actions groupées (suppression en masse) -----------------------------
+	const { selectedItems, clearSelection } = useTableBulkActions({
+		items: filteredItems,
+		model,
+		getItemValue,
+	})
+
+	function onDeleteMultiple(): void {
+		emit('delete-multiple', selectedItems.value)
+		clearSelection()
+	}
+
+	// La barre s'affiche en sélection multiple, dès qu'au moins une ligne est
+	// cochée, si l'action de suppression est activée ou un slot `#bulk-actions` fourni
+	const showBulkActions = computed<boolean>(() =>
+		props.showSelect
+		&& selectedItems.value.length > 0
+		&& (props.showDeleteSelected || !!slots['bulk-actions']),
+	)
 
 	// Use the ARIA accessibility composable
 	const {
@@ -300,6 +327,25 @@
 		>
 			{{ statusMessage }}
 		</div>
+
+		<!-- Barre d'actions groupées (suppression en masse) -->
+		<TableBulkActions
+			v-if="showBulkActions"
+			:count="selectedItems.length"
+			:show-delete="props.showDeleteSelected"
+			@delete="onDeleteMultiple"
+			@clear="clearSelection"
+		>
+			<slot
+				v-if="$slots['bulk-actions']"
+				name="bulk-actions"
+				:selected="selectedItems"
+				:count="selectedItems.length"
+				:clear-selection="clearSelection"
+				:delete-selected="onDeleteMultiple"
+			/>
+		</TableBulkActions>
+
 		<VDataTable
 			ref="table"
 			v-model="model"
