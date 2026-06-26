@@ -698,7 +698,7 @@
 				/>
 			</template>
 
-			<!-- Checkbox de sélection de ligne avec libellé accessible (déclaratif, robuste aux re-renders) -->
+			<!-- Checkbox de sélection de ligne (SyCheckbox) avec libellé accessible -->
 			<template
 				v-if="props.showSelect || props.showSelectSingle"
 				#[`item.data-table-select`]="{ internalItem, isSelected, toggleSelect, index }"
