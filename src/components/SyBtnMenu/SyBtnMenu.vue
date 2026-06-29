@@ -283,12 +283,12 @@
 	}
 
 	&:focus::before {
-		background: rgb(var(--v-theme-blue-base));
+		background: rgb(var(--v-theme-primary));
 		opacity: 0.08;
 	}
 
 	&:focus {
-		background: rgba(var(--v-theme-blue-base), 0.08) !important;
+		background: rgba(var(--v-theme-primary), 0.08) !important;
 	}
 
 	.subtitle {
