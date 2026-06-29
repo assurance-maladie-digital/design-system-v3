@@ -1,12 +1,191 @@
-import { Meta, Story } from '@storybook/addon-docs';
+import { Meta, Primary } from '@storybook/blocks';
 import * as Stories from '../SyInputSelect.stories.ts';
-import '@/stories/styles/shared.css';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+    AccessibilityGuideLayout,
+    CriteriaSection,
+    CriteriaCard,
+    DemoSection,
+    BestPracticesSection,
+    ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={Stories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-  <p>Cette page sera bientôt disponible</p>
-</div>
+<AccessibilityGuideLayout
+    componentName="SyInputSelect"
+    iconSrc={AccessibilityIcon}
+    apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/"
+>
 
-<br />
+    <CriteriaSection>
+
+        <CriteriaCard title="Nom accessible et libellé">
+            <ul>
+                <li>
+                    Le composant expose un <strong>libellé visible</strong> via la propriété
+                    <code>label</code>.
+                </li>
+                <li>
+                    Un astérisque peut être ajouté automatiquement pour signaler un
+                    <strong>champ obligatoire</strong>.
+                </li>
+                <li>
+                    Le titre du composant reprend le libellé afin de faciliter son
+                    identification lors du survol.
+                </li>
+                <li>
+                    Les messages d'erreur sont transmis au composant
+                    <code>v-input</code>, permettant leur restitution par les technologies
+                    d'assistance.
+                </li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard title="Navigation clavier">
+            <ul>
+                <li>
+                    L'ouverture et la fermeture de la liste sont possibles avec
+                    <kbd>Entrée</kbd> et <kbd>Espace</kbd>.
+                </li>
+                <li>
+                    La touche <kbd>Échap</kbd> referme la liste lorsqu'elle est ouverte.
+                </li>
+                <li>
+                    Chaque option est focusable afin de permettre la navigation au clavier.
+                </li>
+                <li>
+                    La fermeture automatique lors d'un clic à l'extérieur évite de laisser
+                    une liste ouverte involontairement.
+                </li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard title="Sélection et restitution">
+            <ul>
+                <li>
+                    La valeur sélectionnée est affichée directement dans le bouton du
+                    composant.
+                </li>
+                <li>
+                    L'option actuellement sélectionnée expose son état grâce à
+                    <code>aria-selected="true"</code>.
+                </li>
+                <li>
+                    Une option peut être désélectionnée lorsque la propriété
+                    <code>clearable</code> est activée.
+                </li>
+                <li>
+                    Le bouton de suppression possède un nom accessible
+                    (<code>aria-label="Supprimer"</code>).
+                </li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard title="Validation et gestion des erreurs">
+            <ul>
+                <li>
+                    Le composant prend en charge les validations obligatoires ainsi que des
+                    règles personnalisées.
+                </li>
+                <li>
+                    Les messages d'erreur sont synchronisés avec les validations internes
+                    et externes.
+                </li>
+                <li>
+                    Un pictogramme visuel accompagne l'affichage des erreurs.
+                </li>
+                <li>
+                    Les erreurs sont automatiquement recalculées lors de la sélection ou
+                    lors de la validation du formulaire.
+                </li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard title="État lecture seule">
+            <ul>
+                <li>
+                    Lorsque <code>readonly</code> est activé, le menu ne peut plus être
+                    ouvert.
+                </li>
+                <li>
+                    Les validations sont désactivées afin d'éviter l'affichage
+                    d'erreurs inutiles.
+                </li>
+                <li>
+                    La valeur sélectionnée reste consultable sans être modifiable.
+                </li>
+            </ul>
+        </CriteriaCard>
+
+        <CriteriaCard title="Limites connues">
+            <ul>
+                <li>
+                    Le composant utilise actuellement le rôle
+                    <code>menu</code> alors qu'il correspond davantage à un
+                    <strong>listbox</strong>. Une évolution vers le pattern
+                    WAI-ARIA Listbox améliorerait la conformité.
+                </li>
+                <li>
+                    La navigation avec les touches
+                    <kbd>Flèche haut</kbd> et
+                    <kbd>Flèche bas</kbd>
+                    n'est actuellement pas implémentée.
+                </li>
+                <li>
+                    Le bouton de suppression est rendu avec une icône portant
+                    <code>role="button"</code>. L'utilisation d'un véritable élément
+                    <code>&lt;button&gt;</code> serait préférable pour garantir un
+                    comportement clavier natif.
+                </li>
+                <li>
+                    Le composant ne gère pas aujourd'hui les attributs
+                    <code>aria-expanded</code>,
+                    <code>aria-controls</code> ou
+                    <code>aria-haspopup</code>.
+                </li>
+            </ul>
+        </CriteriaCard>
+
+    </CriteriaSection>
+
+    <DemoSection componentName="SyInputSelect">
+        <Primary />
+    </DemoSection>
+
+    <BestPracticesSection>
+        <ul>
+            <li>
+                Toujours fournir un <code>label</code> explicite.
+            </li>
+            <li>
+                Utiliser <code>required</code> uniquement lorsque la sélection est
+                obligatoire.
+            </li>
+            <li>
+                Rédiger des messages d'erreur compréhensibles indiquant clairement
+                l'action attendue.
+            </li>
+            <li>
+                Éviter de s'appuyer uniquement sur la couleur pour signaler une erreur.
+            </li>
+            <li>
+                Tester systématiquement la navigation au clavier ainsi que la restitution
+                par un lecteur d'écran.
+            </li>
+            <li>
+                Préférer un véritable bouton HTML pour l'action de réinitialisation de la
+                sélection.
+            </li>
+        </ul>
+    </BestPracticesSection>
+
+    <ResourcesSection>
+        <ul>
+            <li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/" target="_blank" rel="noopener noreferrer">RGAA 4.1 — Critères et tests</a></li>
+            <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices — Listbox Pattern</a></li>
+            <li><a href="https://www.w3.org/TR/wai-aria-1.2/#listbox" target="_blank" rel="noopener noreferrer">WAI-ARIA 1.2 — Listbox Role</a></li>
+        </ul>
+    </ResourcesSection>
+
+</AccessibilityGuideLayout>

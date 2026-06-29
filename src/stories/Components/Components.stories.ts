@@ -263,7 +263,7 @@ export const ComponentsList: StoryObj = {
 						title: 'SyInputSelect',
 						description: 'Utilisé pour proposer une alternative au v-select de Vuetify qui ne respecte pas les règles RGAA.Il est basé sur un v-input.',
 						link: '/?path=/docs/composants-formulaires-syinputselect--docs',
-						img: '/components/sy-input-select.svg',
+						img: `/components/sy-input-select${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -589,6 +589,7 @@ export const ComponentsList: StoryObj = {
 					'CookieBanner',
 					'PeriodField',
 					'CollapsibleList',
+					'SyInputSelect',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

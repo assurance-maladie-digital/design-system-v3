@@ -82,6 +82,7 @@ const apComponents = [
 	'composants-formulaires-uploadworkflow',
 	'composants-formulaires-rangefield',
 	'composants-formulaires-periodfield',
+    'composants-formulaires-selects-syinputselect',
 	'composants-layout-pagecontainer',
 	'composants-navigation-contextualmenu',
 	'composants-navigation-skiplink',
