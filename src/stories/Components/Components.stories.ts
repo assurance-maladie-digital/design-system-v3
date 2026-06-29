@@ -424,7 +424,7 @@ export const ComponentsList: StoryObj = {
 						title: 'CollapsibleList',
 						description: 'Utilisé pour afficher des listes de liens. Les éléments peuvent être dépliés ou repliés.',
 						link: '/?path=/docs/composants-donn%C3%A9es-collapsiblelist--docs',
-						img: '/components/collapsible-list.svg',
+                        img: `/components/collapsible-list${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{
@@ -588,6 +588,7 @@ export const ComponentsList: StoryObj = {
 					'LangBtn',
 					'CookieBanner',
 					'PeriodField',
+                    'CollapsibleList',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
