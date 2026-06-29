@@ -511,26 +511,42 @@ export const Chips: Story = {
 							key: 'Nom',
 							value: 'Dupont',
 							chip: true,
+							options: {
+                                chip: {
+                                	color: 'primary',
+                                }
+                            }
 						},
 						{
 							key: 'Prénom',
 							value: 'Paul',
 							chip: true,
+							options: {
+                                chip: {
+                                    color: 'primary',
+                                }
+                            }
 						},
 						{
 							key: 'Date de naissance',
 							value: '24/09/1970',
 							chip: true,
+							options: {
+                                chip: {
+                                    color: 'primary',
+                                }
+                            }
 						},
 						{
                             key: 'Statut',
                             value: 'Enregistré',
                             chip: true,
-                            options: {
+		                    options: {
                                 chip: {
                                     color: 'success',
                                 }
                             }
+
 						}
 					]
 				</script>
@@ -544,16 +560,31 @@ export const Chips: Story = {
 				key: 'Nom',
 				value: 'Dupont',
 				chip: true,
+				options: {
+					chip: {
+						color: 'primary',
+					},
+				},
 			},
 			{
 				key: 'Prénom',
 				value: 'Paul',
 				chip: true,
+				options: {
+					chip: {
+						color: 'primary',
+					},
+				},
 			},
 			{
 				key: 'Date de naissance',
 				value: '24/09/1970',
 				chip: true,
+				options: {
+					chip: {
+						color: 'primary',
+					},
+				},
 			},
 			{
 				key: 'Statut',
@@ -561,7 +592,7 @@ export const Chips: Story = {
 				chip: true,
 				options: {
 					chip: {
-						color: 'onSuccessVariant',
+						color: 'success',
 					},
 				},
 			},
