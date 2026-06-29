@@ -270,7 +270,7 @@ export const ComponentsList: StoryObj = {
 						title: 'SyBtnMenu',
 						description: 'Utilisé pour proposer une sélection d\'options avec un bouton personnalisé, conforme au style du Design System et qui respecte les règles d\'accessibilité RGAA. Il est basé sur un v-btn.',
 						link: '/?path=/docs/composants-navigation-sybtnMenu--docs',
-						img: `/components/sy-btn-select${isAp ? '-ap' : ''}.svg`,
+						img: `/components/sy-btn-menu${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
