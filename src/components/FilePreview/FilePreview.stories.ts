@@ -1,13 +1,15 @@
-import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import type { Meta, StoryObj } from '@storybook/vue3'
+import { fn } from '@storybook/test'
 import { onMounted, ref } from 'vue'
 import FilePreview from './FilePreview.vue'
 import FileUpload from '../FileUpload/FileUpload.vue'
+import SyCheckbox from '../Customs/SyCheckbox/SyCheckbox.vue'
 
 const meta: Meta = {
 	title: 'Composants/Données/FilePreview',
 	component: FilePreview,
 	argTypes: {
-		file: {
+		'file': {
 			control: false,
 			table: {
 				type: {
@@ -17,7 +19,7 @@ const meta: Meta = {
 			},
 			description: 'Fichier à afficher',
 		},
-		options: {
+		'options': {
 			control: {
 				type: 'object',
 			},
@@ -33,7 +35,7 @@ const meta: Meta = {
 			},
 			description: 'Configuration des attributs pour les balises `object` et `img`. Par défaut, l\'image a une description vide.',
 		},
-		locales: {
+		'locales': {
 			description: 'Traductions',
 			control: {
 				type: 'object',
@@ -52,7 +54,7 @@ const meta: Meta = {
 				},
 			},
 		},
-		default: {
+		'default': {
 			control: {
 				type: 'text',
 			},
@@ -60,6 +62,29 @@ const meta: Meta = {
 				category: 'slots',
 			},
 			description: 'Remplace le contenu par défaut affiché quand le fichier n\'est pas une image ou un pdf',
+		},
+		'trackConsultation': {
+			control: { type: 'boolean' },
+			table: { category: 'props', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
+			description: 'Active le suivi de consultation d\'un PDF (rendu via pdf.js, chargé à la demande). Permet d\'utiliser `v-model:complete` et l\'évènement `loaded`. Désactivé par défaut (aperçu natif `<object>`).',
+		},
+		'pdfWorkerSrc': {
+			control: false,
+			table: { category: 'props', type: { summary: 'string' } },
+			description: 'URL du worker pdf.js (optionnel). Par défaut, le worker bundlé est utilisé.',
+		},
+		'onLoaded': {
+			table: { category: 'events' },
+			description: 'Émis quand le PDF est entièrement chargé et rendu. Reçoit le nombre de pages.',
+		},
+		'complete': {
+			control: false,
+			table: { category: 'props', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
+			description: 'État de consultation complète du document (`v-model:complete`). Passe à `true` quand l\'utilisateur atteint la fin, et revient à `false` au chargement d\'un nouveau document.',
+		},
+		'onUpdate:complete': {
+			table: { category: 'events' },
+			description: 'Émis quand l\'état de consultation change (`true` à la fin, `false` au rechargement). Support de `v-model:complete`.',
 		},
 	},
 } satisfies Meta<typeof FilePreview>
@@ -239,6 +264,93 @@ import { ref } from 'vue'
 import { FilePreview, FileUpload } from '@cnamts/synapse'
 
 const files = ref<File[]>([])`,
+			},
+		],
+	},
+}
+
+export const MandatoryReading: Story = {
+	args: {
+		trackConsultation: true,
+	},
+	render: args => ({
+		components: { FilePreview, FileUpload, SyCheckbox },
+		template: `
+			<div>
+				<FileUpload v-model="files" class="mb-4" :allowed-extensions="['pdf']" />
+				<FilePreview
+					v-if="files[0]"
+					v-bind="args"
+					:file="files[0]"
+					v-model:complete="hasRead"
+					@loaded="onLoaded"
+					@update:complete="onComplete"
+				/>
+				<SyCheckbox
+					v-model="acknowledged"
+					class="mt-4"
+					color="primary"
+					:disabled="!hasRead"
+					label="J'ai pris connaissance de l'intégralité du document"
+					@update:model-value="onAcknowledged"
+				/>
+				<p
+					v-if="files[0] && !hasRead"
+					class="text-caption"
+				>
+					Faites défiler le document jusqu'à la fin pour activer la case à cocher.
+				</p>
+			</div>
+		`,
+		setup: () => {
+			const files = ref<File[]>([])
+			const hasRead = ref(false)
+			const acknowledged = ref(false)
+
+			// Actions loggées dans le panneau « Actions » de Storybook
+			const onLoaded = fn().mockName('loaded')
+			const onAcknowledged = fn().mockName('acknowledged')
+			const onComplete = fn().mockName('update:complete')
+
+			return { args, files, hasRead, acknowledged, onLoaded, onAcknowledged, onComplete }
+		},
+	}),
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<div>
+	<FileUpload v-model="files" :allowed-extensions="['pdf']" />
+
+	<FilePreview
+		v-if="files[0]"
+		:file="files[0]"
+		track-consultation
+		v-model:complete="hasRead"
+	/>
+
+	<SyCheckbox
+		v-model="acknowledged"
+		color="primary"
+		:disabled="!hasRead"
+		label="J'ai pris connaissance de l'intégralité du document"
+	/>
+</div>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+import { ref } from 'vue'
+import { FilePreview, FileUpload, SyCheckbox } from '@cnamts/synapse'
+
+const files = ref<File[]>([])
+const hasRead = ref(false)
+const acknowledged = ref(false)`,
 			},
 		],
 	},

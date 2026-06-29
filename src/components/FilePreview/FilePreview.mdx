@@ -88,3 +88,46 @@ Vous pouvez utiliser ce composant en combinaison avec `FileUpload` pour afficher
 		`,
 	}}
 />
+
+## Suivi de consultation (lecture obligatoire)
+
+Par défaut, l'aperçu PDF utilise le lecteur natif du navigateur (`<object>`), qui ne permet pas de savoir si le document a été consulté.
+
+Pour les parcours où une action (cocher une case, activer un bouton…) doit être conditionnée à la **consultation complète** d'un PDF, activez la prop **`track-consultation`**. Le PDF est alors rendu via **pdf.js** (chargé à la demande, donc sans impact sur le bundle si la fonctionnalité n'est pas utilisée) dans un conteneur scrollable. L'état de consultation est exposé via **`v-model:complete`** :
+
+- **`v-model:complete`** — booléen synchronisé : passe à `true` quand l'utilisateur a fait défiler le document jusqu'à la fin (ou si le document tient entièrement dans le conteneur sans scroll), et revient à `false` au chargement d'un nouveau document ;
+- **`@loaded`** — émis quand le PDF est entièrement chargé et rendu (reçoit le nombre de pages).
+
+<Canvas of={FilePreviewStories.MandatoryReading} />
+
+```vue
+<template>
+  <FilePreview
+    :file="file"
+    track-consultation
+    v-model:complete="hasRead"
+  />
+
+  <SyCheckbox
+    v-model="acknowledged"
+    color="primary"
+    :disabled="!hasRead"
+    label="J'ai pris connaissance de l'intégralité du document"
+  />
+</template>
+
+<script setup lang="ts">
+  import { ref } from 'vue'
+  import { FilePreview, SyCheckbox } from '@cnamts/synapse'
+
+  const file = ref<File | undefined>()
+  const hasRead = ref(false)
+  const acknowledged = ref(false)
+</script>
+```
+
+### Points d'attention
+
+- **Rétrocompatibilité** : `track-consultation` est `false` par défaut → comportement actuel (`<object>`) inchangé. N'a d'effet que sur les fichiers PDF.
+- **Worker pdf.js** : le worker bundlé est utilisé par défaut. Si votre chaîne de build ne le résout pas, fournissez une URL via la prop `pdf-worker-src`.
+- **Accessibilité** : le rendu pdf.js (canvas) n'est pas restituable au lecteur d'écran ; prévoyez un accès alternatif au contenu si nécessaire (lien de téléchargement…).
