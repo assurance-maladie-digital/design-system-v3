@@ -67,6 +67,26 @@ describe('FilePreview — suivi de consultation', () => {
 		expect(wrapper.emitted('update:complete')?.[0]).toEqual([true])
 	})
 
+	it('readonly : rend le viewer pdf.js (pas d\'<object>) sans suivre la consultation', async () => {
+		const wrapper = mount(FilePreview, {
+			props: { file: pdfFile(), readonly: true, pdfWorkerSrc: 'worker' },
+		})
+		await flushPromises()
+
+		expect(wrapper.find('.sy-file-preview__pdf-viewer').exists()).toBe(true)
+		expect(wrapper.find('object').exists()).toBe(false)
+		expect(getDocumentMock).toHaveBeenCalled()
+
+		// Le scroll ne déclenche aucun suivi de consultation en lecture seule
+		const viewerEl = wrapper.find('.sy-file-preview__pdf-viewer').element
+		Object.defineProperty(viewerEl, 'scrollHeight', { value: 1000, configurable: true })
+		Object.defineProperty(viewerEl, 'clientHeight', { value: 400, configurable: true })
+		Object.defineProperty(viewerEl, 'scrollTop', { value: 600, configurable: true })
+		await wrapper.find('.sy-file-preview__pdf-viewer').trigger('scroll')
+
+		expect(wrapper.emitted('update:complete')).toBeUndefined()
+	})
+
 	it('par défaut (trackConsultation=false) garde l\'<object> et ne charge pas pdf.js', async () => {
 		const wrapper = mount(FilePreview, {
 			props: { file: pdfFile() },

@@ -68,6 +68,11 @@ const meta: Meta = {
 			table: { category: 'props', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
 			description: 'Active le suivi de consultation d\'un PDF (rendu via pdf.js, chargé à la demande). Permet d\'utiliser `v-model:complete` et l\'évènement `loaded`. Désactivé par défaut (aperçu natif `<object>`).',
 		},
+		'readonly': {
+			control: { type: 'boolean' },
+			table: { category: 'props', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
+			description: 'Aperçu en lecture seule : rendu via pdf.js sans barre d\'outils native (téléchargement, impression et annotation indisponibles). Désactivé par défaut (aperçu natif `<object>`).',
+		},
 		'pdfWorkerSrc': {
 			control: false,
 			table: { category: 'props', type: { summary: 'string' } },
@@ -254,6 +259,58 @@ export const WithFileUpload: Story = {
 <div>
 	<FileUpload v-model="files" class="mb-4"/>
 	<FilePreview :file="files[0]"/>
+</div>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+import { ref } from 'vue'
+import { FilePreview, FileUpload } from '@cnamts/synapse'
+
+const files = ref<File[]>([])`,
+			},
+		],
+	},
+}
+
+export const ReadOnly: Story = {
+	args: {
+		readonly: true,
+	},
+	render: args => ({
+		components: { FilePreview, FileUpload },
+		template: `
+			<div>
+				<FileUpload v-model="files" class="mb-4" :allowed-extensions="['pdf']" />
+				<FilePreview
+					v-if="files[0]"
+					v-bind="args"
+					:file="files[0]"
+				/>
+			</div>
+		`,
+		setup: () => {
+			const files = ref<File[]>([])
+			return { args, files }
+		},
+	}),
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<div>
+	<FileUpload v-model="files" :allowed-extensions="['pdf']" />
+
+	<FilePreview
+		v-if="files[0]"
+		:file="files[0]"
+		readonly
+	/>
 </div>
 				`,
 			},

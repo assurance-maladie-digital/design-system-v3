@@ -89,6 +89,29 @@ Vous pouvez utiliser ce composant en combinaison avec `FileUpload` pour afficher
 	}}
 />
 
+## Aperçu en lecture seule (sans téléchargement)
+
+Par défaut, l'aperçu PDF utilise le lecteur natif du navigateur (`<object>`), qui affiche une barre d'outils (téléchargement, impression, annotation…). Le viewer natif **ne permet pas** de masquer ces actions de façon fiable (`#toolbar=0` n'est pas honoré partout, et `Ctrl/Cmd+S` reste possible).
+
+Pour un aperçu **en lecture seule** — l'utilisateur peut consulter le document mais pas le télécharger, l'imprimer ni l'annoter — activez la prop **`readonly`**. Le PDF est alors rendu via **pdf.js** (chargé à la demande), sans aucune barre d'outils native.
+
+<Canvas of={FilePreviewStories.ReadOnly} />
+
+```vue
+<template>
+  <FilePreview :file="file" readonly />
+</template>
+
+<script setup lang="ts">
+  import { ref } from 'vue'
+  import { FilePreview } from '@cnamts/synapse'
+
+  const file = ref<File | undefined>()
+</script>
+```
+
+> **Limite** : côté navigateur, aucun rendu ne garantit l'inviolabilité absolue (capture d'écran, récupération du flux via les outils de développement…). `readonly` retire les chemins **normaux** d'export (barre d'outils, téléchargement, impression, clic droit), ce qui couvre le besoin métier, mais ne constitue pas une protection de type DRM.
+
 ## Suivi de consultation (lecture obligatoire)
 
 Par défaut, l'aperçu PDF utilise le lecteur natif du navigateur (`<object>`), qui ne permet pas de savoir si le document a été consulté.
@@ -128,6 +151,7 @@ Pour les parcours où une action (cocher une case, activer un bouton…) doit ê
 
 ### Points d'attention
 
-- **Rétrocompatibilité** : `track-consultation` est `false` par défaut → comportement actuel (`<object>`) inchangé. N'a d'effet que sur les fichiers PDF.
+- **Rétrocompatibilité** : `track-consultation` et `readonly` sont `false` par défaut → comportement actuel (`<object>`) inchangé. N'ont d'effet que sur les fichiers PDF.
+- **Combinables** : `readonly` et `track-consultation` reposent sur le même rendu pdf.js et se cumulent — par ex. un contrat à lire en entier **sans** pouvoir le télécharger : `<FilePreview readonly track-consultation v-model:complete="hasRead" />`.
 - **Worker pdf.js** : le worker bundlé est utilisé par défaut. Si votre chaîne de build ne le résout pas, fournissez une URL via la prop `pdf-worker-src`.
 - **Accessibilité** : le rendu pdf.js (canvas) n'est pas restituable au lecteur d'écran ; prévoyez un accès alternatif au contenu si nécessaire (lien de téléchargement…).

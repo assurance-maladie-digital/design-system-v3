@@ -14,6 +14,11 @@
 		locales?: typeof defaultLocales
 		/** Active le suivi de consultation du PDF (rendu via pdf.js, chargé à la demande). */
 		trackConsultation?: boolean
+		/**
+		 * Aperçu en lecture seule : rendu via pdf.js sans barre d'outils native
+		 * (téléchargement, impression et annotation indisponibles).
+		 */
+		readonly?: boolean
 		/** URL du worker pdf.js (optionnel, sinon worker bundlé). */
 		pdfWorkerSrc?: string
 	}>(), {
@@ -21,6 +26,7 @@
 		options: undefined,
 		locales: () => defaultLocales,
 		trackConsultation: false,
+		readonly: false,
 		pdfWorkerSrc: undefined,
 	})
 
@@ -41,8 +47,10 @@
 	const isImage = computed(() => props.file ? /^image\//.test(props.file.type) : false)
 	const filePreviewOptions = computed(() => deepmerge(config, props.options || {}))
 
-	// Suivi de consultation uniquement pour les PDF
+	// Suivi de consultation (scroll → fin de lecture), uniquement pour les PDF
 	const isTracking = computed(() => props.trackConsultation && isPdf.value)
+	// Rendu embarqué pdf.js : requis par le suivi de consultation ET par la lecture seule
+	const isEmbedded = computed(() => (props.trackConsultation || props.readonly) && isPdf.value)
 
 	const getFileURL = () => {
 		if (!props.file || !(isPdf.value || isImage.value)) return
@@ -75,7 +83,7 @@
 
 	async function loadPdf(): Promise<void> {
 		await nextTick()
-		if (!isTracking.value || !props.file || !pagesHostRef.value) {
+		if (!isEmbedded.value || !props.file || !pagesHostRef.value) {
 			return
 		}
 		const data = await props.file.arrayBuffer()
@@ -85,15 +93,17 @@
 		if (pageCount !== null) {
 			emit('loaded', pageCount)
 			// Document plus court que le conteneur : consultation déjà complète
-			await nextTick()
-			if (viewerRef.value) {
-				checkScrollComplete(viewerRef.value)
+			if (isTracking.value) {
+				await nextTick()
+				if (viewerRef.value) {
+					checkScrollComplete(viewerRef.value)
+				}
 			}
 		}
 	}
 
 	function onViewerScroll(): void {
-		if (viewerRef.value) {
+		if (isTracking.value && viewerRef.value) {
 			checkScrollComplete(viewerRef.value)
 		}
 	}
@@ -103,7 +113,7 @@
 		complete.value = value
 	})
 
-	watch([() => props.file, isTracking], loadPdf, { immediate: true })
+	watch([() => props.file, isEmbedded], loadPdf, { immediate: true })
 </script>
 
 <template>
@@ -111,8 +121,9 @@
 		v-if="file"
 		class="sy-file-preview"
 	>
+		<!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -- @contextmenu purement défensif (lecture seule), n'ajoute aucune interaction utile -->
 		<div
-			v-if="isTracking"
+			v-if="isEmbedded"
 			ref="viewerRef"
 			class="sy-file-preview__pdf-viewer"
 			:style="viewerStyle"
@@ -120,6 +131,7 @@
 			:aria-label="locales.previewNotAvailable"
 			tabindex="0"
 			@scroll="onViewerScroll"
+			@contextmenu="readonly && $event.preventDefault()"
 		>
 			<div
 				ref="pagesHostRef"
