@@ -108,6 +108,17 @@
 		}
 	}
 
+	// En lecture seule : bloque le menu contextuel (clic droit → « Enregistrer… »).
+	// Attaché par programmation pour éviter un handler clic sur élément non interactif.
+	const preventContextMenu = (event: Event): void => event.preventDefault()
+
+	watch([viewerRef, () => props.readonly], ([el], [prevEl]) => {
+		prevEl?.removeEventListener('contextmenu', preventContextMenu)
+		if (el && props.readonly) {
+			el.addEventListener('contextmenu', preventContextMenu)
+		}
+	})
+
 	// Synchronise l'état de consultation (true à la fin, false au rechargement)
 	watch(isComplete, (value) => {
 		complete.value = value
@@ -121,7 +132,6 @@
 		v-if="file"
 		class="sy-file-preview"
 	>
-		<!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -- @contextmenu purement défensif (lecture seule), n'ajoute aucune interaction utile -->
 		<div
 			v-if="isEmbedded"
 			ref="viewerRef"
@@ -131,7 +141,6 @@
 			:aria-label="locales.previewNotAvailable"
 			tabindex="0"
 			@scroll="onViewerScroll"
-			@contextmenu="readonly && $event.preventDefault()"
 		>
 			<div
 				ref="pagesHostRef"

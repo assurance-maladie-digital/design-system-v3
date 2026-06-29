@@ -109,4 +109,69 @@ describe('FilePreview — suivi de consultation', () => {
 		expect(wrapper.find('img').exists()).toBe(true)
 		expect(getDocumentMock).not.toHaveBeenCalled()
 	})
+
+	it('v-model:complete revient à false au changement de document', async () => {
+		const wrapper = mount(FilePreview, {
+			props: { file: pdfFile(), trackConsultation: true, pdfWorkerSrc: 'worker' },
+		})
+		await flushPromises()
+
+		// Atteinte de la fin sur le premier document
+		const viewerEl = wrapper.find('.sy-file-preview__pdf-viewer').element
+		Object.defineProperty(viewerEl, 'scrollHeight', { value: 1000, configurable: true })
+		Object.defineProperty(viewerEl, 'clientHeight', { value: 400, configurable: true })
+		Object.defineProperty(viewerEl, 'scrollTop', { value: 600, configurable: true })
+		await wrapper.find('.sy-file-preview__pdf-viewer').trigger('scroll')
+		expect(wrapper.emitted('update:complete')?.at(-1)).toEqual([true])
+
+		// Chargement d'un nouveau document → l'état de consultation est réinitialisé
+		await wrapper.setProps({ file: pdfFile() })
+		await flushPromises()
+
+		expect(wrapper.emitted('update:complete')).toContainEqual([false])
+	})
+
+	it('readonly + trackConsultation : rendu embarqué ET suivi de consultation actif', async () => {
+		const wrapper = mount(FilePreview, {
+			props: { file: pdfFile(), readonly: true, trackConsultation: true, pdfWorkerSrc: 'worker' },
+		})
+		await flushPromises()
+
+		expect(wrapper.find('.sy-file-preview__pdf-viewer').exists()).toBe(true)
+		expect(wrapper.find('object').exists()).toBe(false)
+
+		const viewerEl = wrapper.find('.sy-file-preview__pdf-viewer').element
+		Object.defineProperty(viewerEl, 'scrollHeight', { value: 1000, configurable: true })
+		Object.defineProperty(viewerEl, 'clientHeight', { value: 400, configurable: true })
+		Object.defineProperty(viewerEl, 'scrollTop', { value: 600, configurable: true })
+		await wrapper.find('.sy-file-preview__pdf-viewer').trigger('scroll')
+
+		expect(wrapper.emitted('update:complete')?.at(-1)).toEqual([true])
+	})
+
+	it('readonly : bloque le menu contextuel (clic droit)', async () => {
+		const wrapper = mount(FilePreview, {
+			props: { file: pdfFile(), readonly: true, pdfWorkerSrc: 'worker' },
+		})
+		await flushPromises()
+
+		const viewer = wrapper.find('.sy-file-preview__pdf-viewer').element
+		const event = new Event('contextmenu', { cancelable: true })
+		viewer.dispatchEvent(event)
+
+		expect(event.defaultPrevented).toBe(true)
+	})
+
+	it('ne bloque pas le menu contextuel en mode suivi seul (sans readonly)', async () => {
+		const wrapper = mount(FilePreview, {
+			props: { file: pdfFile(), trackConsultation: true, pdfWorkerSrc: 'worker' },
+		})
+		await flushPromises()
+
+		const viewer = wrapper.find('.sy-file-preview__pdf-viewer').element
+		const event = new Event('contextmenu', { cancelable: true })
+		viewer.dispatchEvent(event)
+
+		expect(event.defaultPrevented).toBe(false)
+	})
 })
