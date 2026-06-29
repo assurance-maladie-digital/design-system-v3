@@ -81,7 +81,7 @@ export const Default: Story = {
 				<template #item.actions="{ isEditing, edit, save, cancel, remove }">
 					<template v-if="!isEditing">
 						<SyIconButton :icon="mdiPencil" label="Éditer" density="comfortable" @click-icon-button="edit" />
-						<SyIconButton :icon="mdiDelete" label="Supprimer" density="comfortable" @click-icon-button="remove" />
+						<SyIconButton :icon="mdiDelete" label="Supprimer" density="comfortable" color="error" @click-icon-button="remove" />
 					</template>
 					<template v-else>
 						<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="onSuccessVariant" style="opacity: 0.6" @click-icon-button="save" />
@@ -111,7 +111,7 @@ export const Default: Story = {
 		<template #item.actions="{ isEditing, edit, save, cancel, remove }">
 			<template v-if="!isEditing">
 				<SyIconButton :icon="mdiPencil" label="Éditer" density="comfortable" @click-icon-button="edit" />
-				<SyIconButton :icon="mdiDelete" label="Supprimer" density="comfortable" @click-icon-button="remove" />
+				<SyIconButton :icon="mdiDelete" label="Supprimer" density="comfortable" color="error" @click-icon-button="remove" />
 			</template>
 			<template v-else>
 				<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="onSuccessVariant" @click-icon-button="save" />
