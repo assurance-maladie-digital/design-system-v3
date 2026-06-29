@@ -24,7 +24,7 @@ function pdfFile(): File {
 	return new File(['%PDF-1.4 dummy'], 'contrat.pdf', { type: 'application/pdf' })
 }
 
-describe('FilePreview — suivi de consultation', () => {
+describe('FilePreview — rendu pdf.js (suivi de consultation & lecture seule)', () => {
 	beforeEach(() => {
 		getDocumentMock.mockClear()
 	})
