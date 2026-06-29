@@ -168,8 +168,7 @@
 
 <style lang="scss" scoped>
 .sy-file-preview__pdf-viewer {
-	overflow-x: hidden;
-	overflow-y: auto;
+	overflow: hidden auto;
 	background-color: #f4f4f4;
 
 	&:focus-visible {
@@ -189,7 +188,7 @@
 .sy-file-preview__page {
 	display: block;
 	max-width: 100%;
-	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+	box-shadow: 0 1px 4px rgb(0 0 0 / 15%);
 }
 
 .sy-file-preview__status {
