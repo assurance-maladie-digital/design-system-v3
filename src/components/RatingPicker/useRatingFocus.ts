@@ -6,6 +6,7 @@ interface UseRatingFocusOptions {
 	length: Ref<number>
 	modelValue: Ref<number>
 	selectValue: SelectValueFn
+	ratingElements: Ref<HTMLElement[]>
 	wrap?: boolean
 }
 
@@ -13,17 +14,13 @@ export function useRatingFocus({
 	length,
 	modelValue,
 	selectValue,
+	ratingElements,
 	wrap = true,
 }: UseRatingFocusOptions) {
-	const ratingElement = ref<HTMLElement[]>([])
-
+	const activeElementIndex = ref(getCurrentIndex())
 	function setFocus(index: number) {
-		ratingElement.value.forEach((el, i) => {
-			if (!el) return
-			el.setAttribute('tabindex', i === index ? '0' : '-1')
-		})
-
-		ratingElement.value[index]?.focus()
+		activeElementIndex.value = index
+		ratingElements.value[index]?.focus()
 	}
 
 	function getCurrentIndex() {
@@ -31,10 +28,6 @@ export function useRatingFocus({
 			return modelValue.value - 1
 		}
 		return 0
-	}
-
-	function initFocus() {
-		setFocus(getCurrentIndex())
 	}
 
 	function selectAndFocus(index: number) {
@@ -46,10 +39,8 @@ export function useRatingFocus({
 	function focusNextElement(index: number) {
 		let nextIndex = index + 1
 
-		if (wrap) {
-			if (nextIndex >= length.value) {
-				nextIndex = 0
-			}
+		if (wrap && nextIndex >= length.value) {
+			nextIndex = 0
 		}
 		else {
 			nextIndex = Math.min(nextIndex, length.value - 1)
@@ -61,10 +52,8 @@ export function useRatingFocus({
 	function focusPrevElement(index: number) {
 		let prevIndex = index - 1
 
-		if (wrap) {
-			if (prevIndex < 0) {
-				prevIndex = length.value - 1
-			}
+		if (wrap && prevIndex < 0) {
+			prevIndex = length.value - 1
 		}
 		else {
 			prevIndex = Math.max(prevIndex, 0)
@@ -86,9 +75,8 @@ export function useRatingFocus({
 	})
 
 	return {
-		ratingElement,
+		activeElementIndex,
 		setFocus,
-		initFocus,
 		selectAndFocus,
 		focusNextElement,
 		focusPrevElement,

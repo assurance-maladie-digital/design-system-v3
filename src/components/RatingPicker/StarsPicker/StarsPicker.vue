@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-	import { ref, type PropType, onMounted, toRef } from 'vue'
+	import { ref, type PropType, toRef, computed, useId } from 'vue'
 	import { RatingEnum, useRating } from '../Rating'
 	import { mdiStarOutline, mdiStar } from '@mdi/js'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import { locales } from '../locales'
+	import { locales as defaultLocales } from '../locales'
 	import { useRatingFocus } from '../useRatingFocus'
 
 	const props = defineProps({
@@ -23,36 +23,49 @@
 			type: Number,
 			default: -1,
 		},
+		lockAfterSelection: {
+			type: Boolean,
+			default: true,
+		},
+		locales: {
+			type: Object as PropType<typeof defaultLocales>,
+			default: () => defaultLocales,
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
-	const { hasAnswered, emitInputEvent } = useRating(props, emit)
+	const { internalValue, hasAnswered, emitInputEvent } = useRating(props, emit)
 
 	const starOutlineIcon = mdiStarOutline
 	const starIcon = mdiStar
 	const hoverIndex = ref<number | null>(-1)
 
+	const id = useId()
+	const starsPickerDescriptionId = `stars-picker-description-${id}`
+
+	const ratingElements = ref<HTMLElement[]>([])
+
 	function isActive(index: number): boolean {
-		return props.modelValue === index
+		return internalValue.value === index
 	}
 
 	function isFilled(index: number): boolean {
 		const isHovered = hoverIndex.value !== null && hoverIndex.value >= index && !props.readonly
-		const isActive = props.modelValue >= index
+		const isActive = internalValue.value >= index
 		return (isHovered && !hasAnswered.value) || isActive
 	}
 
 	const {
-		ratingElement,
-		initFocus,
 		selectAndFocus,
 		focusNextElement,
 		focusPrevElement,
 		focus,
+		activeElementIndex,
 	} = useRatingFocus({
 		length: toRef(props, 'length'),
-		modelValue: toRef(props, 'modelValue'),
+		modelValue: internalValue,
 		selectValue: emitInputEvent,
+		ratingElements: ratingElements,
 		wrap: true,
 	})
 
@@ -60,8 +73,8 @@
 		focus,
 	})
 
-	onMounted(() => {
-		initFocus()
+	const readonly = computed(() => {
+		return props.readonly || (props.lockAfterSelection && hasAnswered.value)
 	})
 </script>
 
@@ -73,18 +86,27 @@
 			</slot>
 		</legend>
 
+		<p
+			v-if="props.lockAfterSelection"
+			:id="starsPickerDescriptionId"
+			class="d-sr-only"
+		>
+			{{ internalValue === -1 ? props.locales.toValidate : props.locales.validated }}
+		</p>
+
 		<div
 			role="radiogroup"
+			:aria-describedby="starsPickerDescriptionId"
 			class="d-flex max-width-none mx-n1 mx-sm-n2"
 		>
 			<div
 				v-for="index in props.length"
 				:key="index"
-				ref="ratingElement"
+				ref="ratingElements"
 				class="sy-stars-picker__item d-flex align-center justify-center"
 				role="radio"
-				:tabindex="-1"
-				:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
+				:tabindex="activeElementIndex + 1 === index ? '0' : '-1'"
+				:aria-disabled="readonly ? 'true' : undefined"
 				:aria-checked="isActive(index) ? 'true' : 'false'"
 				@mouseover="hoverIndex = index"
 				@focus="hoverIndex = index"
