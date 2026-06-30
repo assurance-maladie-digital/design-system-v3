@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed, ref, toRef } from 'vue'
+	import { computed, ref, toRef, useId } from 'vue'
 	import { locales as defaultLocales } from '../locales'
 	import type { PropType } from 'vue'
 	import type { ItemType } from '@/components/Customs/Selects/SySelect/SySelect.vue'
@@ -48,6 +48,9 @@
 	const isMobile = computed(() => smAndDown.value)
 	const ratingElements = ref<HTMLElement[]>([])
 
+	const id = useId()
+	const numberPickerdescriptionId = `number-picker-description-${id}`
+
 	const emit = defineEmits(['update:modelValue'])
 	const { internalValue, hasAnswered, emitInputEvent } = useRating(props, emit)
 
@@ -94,6 +97,7 @@
 		</legend>
 		<p
 			v-if="props.lockAfterSelection"
+			:id="numberPickerdescriptionId"
 			class="d-sr-only"
 		>
 			{{ internalValue === -1 ? props.locales.toValidate : props.locales.validated }}
@@ -113,6 +117,7 @@
 			>
 				<div
 					role="radiogroup"
+					:aria-describedby="numberPickerdescriptionId"
 					class="d-flex ga-2 flex-wrap max-width-none"
 				>
 					<div
@@ -159,7 +164,7 @@
 			</div>
 			<div v-else>
 				<span class="d-sr-only">
-					{{ props.locales.ratingAriaLabel(props.modelValue, props.length) }}
+					{{ props.locales.ratingAriaLabel(internalValue, props.length) }}
 				</span>
 				<div
 					aria-hidden="true"

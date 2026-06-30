@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { type PropType, computed, ref, toRef } from 'vue'
+	import { type PropType, computed, ref, toRef, useId } from 'vue'
 	import { RatingEnum, useRating } from '../Rating'
 	import { locales as defaultLocales } from '../locales'
 	import { propValidator } from '@/utils/propValidator'
@@ -9,7 +9,6 @@
 		mdiEmoticonSadOutline,
 		mdiEmoticonNeutralOutline,
 	} from '@mdi/js'
-
 	import { useDisplay } from 'vuetify'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
@@ -51,6 +50,9 @@
 	const sadIcon = mdiEmoticonSadOutline
 	const neutralIcon = mdiEmoticonNeutralOutline
 	const happyIcon = mdiEmoticonHappyOutline
+
+	const id = useId()
+	const emotionPickerDescriptionId = `emotion-picker-description-${id}`
 
 	const ratingElements = ref<HTMLElement[]>([])
 
@@ -126,6 +128,7 @@
 
 		<p
 			v-if="props.lockAfterSelection"
+			:id="emotionPickerDescriptionId"
 			class="d-sr-only"
 		>
 			{{ internalValue === -1 ? locales.toValidate : locales.validated }}
@@ -133,6 +136,7 @@
 
 		<div
 			role="radiogroup"
+			aria-describedby="emotionPickerDescriptionId"
 			class="d-flex max-width-none mx-n1 mx-sm-n2"
 		>
 			<div

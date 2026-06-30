@@ -8,10 +8,14 @@ exports[`EmotionPicker > renders correctly 1`] = `
   ">
     Pourriez-vous donner une note ?
   </legend>
-  <p class="d-sr-only">
+  <p
+    class="d-sr-only"
+    id="emotion-picker-description-v-0"
+  >
     Ce champ ne sera plus modifiable après saisie
   </p>
   <div
+    aria-describedby="emotionPickerDescriptionId"
     class="
       d-flex
       max-width-none
@@ -302,10 +306,14 @@ exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
   ">
     Pourriez-vous donner une note ?
   </legend>
-  <p class="d-sr-only">
+  <p
+    class="d-sr-only"
+    id="emotion-picker-description-v-0"
+  >
     Ce champ ne sera plus modifiable après saisie
   </p>
   <div
+    aria-describedby="emotionPickerDescriptionId"
     class="
       d-flex
       max-width-none

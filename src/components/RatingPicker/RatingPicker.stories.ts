@@ -531,7 +531,7 @@ const freeTextLabel = 'Pouvez-vous nous en dire plus ?'
 	},
 }
 
-export const DoNotLockAfterSelection: Story = {
+export const NoLockAfterSelection: Story = {
 	args: {
 		'type': 'emotion',
 		'label': 'Êtes-vous satisfait de ce service ?',

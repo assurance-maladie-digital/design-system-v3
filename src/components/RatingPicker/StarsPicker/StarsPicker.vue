@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, type PropType, toRef, computed } from 'vue'
+	import { ref, type PropType, toRef, computed, useId } from 'vue'
 	import { RatingEnum, useRating } from '../Rating'
 	import { mdiStarOutline, mdiStar } from '@mdi/js'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -39,6 +39,9 @@
 	const starOutlineIcon = mdiStarOutline
 	const starIcon = mdiStar
 	const hoverIndex = ref<number | null>(-1)
+
+	const id = useId()
+	const starsPickerDescriptionId = `stars-picker-description-${id}`
 
 	const ratingElements = ref<HTMLElement[]>([])
 
@@ -85,6 +88,7 @@
 
 		<p
 			v-if="props.lockAfterSelection"
+			:id="starsPickerDescriptionId"
 			class="d-sr-only"
 		>
 			{{ internalValue === -1 ? props.locales.toValidate : props.locales.validated }}
@@ -92,6 +96,7 @@
 
 		<div
 			role="radiogroup"
+			:aria-describedby="starsPickerDescriptionId"
 			class="d-flex max-width-none mx-n1 mx-sm-n2"
 		>
 			<div

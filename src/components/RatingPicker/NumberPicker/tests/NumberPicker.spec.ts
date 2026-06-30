@@ -12,7 +12,7 @@ describe('NumberPicker', () => {
 
 	it('renders correctly', () => {
 		const wrapper = mount(NumberPicker, {
-			propsData: {
+			props: {
 				label: 'Pourriez-vous donner une note ?',
 			},
 		})
