@@ -34,6 +34,7 @@ const meta = {
 			},
 		},
 		'onDelete-multiple': {
+			action: 'delete-multiple',
 			description: 'Émis lors d\'une suppression en masse. Reçoit les lignes sélectionnées.',
 			table: {
 				category: 'events',
@@ -41,6 +42,7 @@ const meta = {
 			},
 		},
 		'onSave-multiple': {
+			action: 'save-multiple',
 			description: 'Émis à la validation de l\'édition groupée. Reçoit uniquement les lignes modifiées (objets complets).',
 			table: {
 				category: 'events',

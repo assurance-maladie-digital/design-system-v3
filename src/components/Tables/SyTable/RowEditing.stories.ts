@@ -35,6 +35,7 @@ const meta = {
 			},
 		},
 		'onEdit': {
+			action: 'edit',
 			description: 'Émis à l\'entrée en édition inline d\'une ligne.',
 			table: {
 				category: 'events',
@@ -42,6 +43,7 @@ const meta = {
 			},
 		},
 		'onSave': {
+			action: 'save',
 			description: 'Émis à la validation de l\'édition inline. Reçoit la ligne mise à jour et l\'originale.',
 			table: {
 				category: 'events',
@@ -49,6 +51,7 @@ const meta = {
 			},
 		},
 		'onCancel': {
+			action: 'cancel',
 			description: 'Émis à l\'annulation de l\'édition inline.',
 			table: {
 				category: 'events',
@@ -56,6 +59,7 @@ const meta = {
 			},
 		},
 		'onDelete': {
+			action: 'delete',
 			description: 'Émis au clic sur l\'action de suppression d\'une ligne.',
 			table: {
 				category: 'events',
