@@ -1,4 +1,4 @@
-import { type Ref, nextTick, onMounted, onBeforeUnmount } from 'vue'
+import { type Ref, nextTick, onMounted, onBeforeUnmount, unref, type MaybeRef } from 'vue'
 
 /**
  * Composable pour gérer la visibilité et les interactions avec le CalendarMode
@@ -8,9 +8,9 @@ import { type Ref, nextTick, onMounted, onBeforeUnmount } from 'vue'
  */
 export const useDatePickerVisibility = (options: {
 	// Propriétés de configuration
-	disabled?: boolean
-	readonly?: boolean
-	textFieldActivator?: boolean
+	disabled?: MaybeRef<boolean>
+	readonly?: MaybeRef<boolean>
+	textFieldActivator?: MaybeRef<boolean>
 
 	// Références réactives
 	isDatePickerVisible: Ref<boolean>
@@ -42,7 +42,7 @@ export const useDatePickerVisibility = (options: {
 	 * Bascule l'affichage du CalendarMode
 	 */
 	const toggleDatePicker = () => {
-		if (disabled || readonly) return
+		if (unref(disabled) || unref(readonly)) return
 
 		isDatePickerVisible.value = !isDatePickerVisible.value
 
@@ -71,7 +71,7 @@ export const useDatePickerVisibility = (options: {
 	 * Ouvre le CalendarMode lors d'un clic sur le champ de texte
 	 */
 	const openDatePickerOnClick = () => {
-		if (textFieldActivator) {
+		if (unref(textFieldActivator)) {
 			openDatePicker()
 		}
 	}
@@ -81,7 +81,7 @@ export const useDatePickerVisibility = (options: {
 	 */
 	const openDatePickerOnFocus = () => {
 		// Only open the CalendarMode if textFieldActivator is true
-		if (textFieldActivator) {
+		if (unref(textFieldActivator)) {
 			openDatePicker()
 		}
 		// Always emit the focus event
@@ -126,7 +126,7 @@ export const useDatePickerVisibility = (options: {
 	 * Gère l'ouverture du CalendarMode lors de l'appui sur Entrée ou Espace
 	 */
 	const handleKeyboardNavigation = (event: KeyboardEvent) => {
-		if ((event.key === 'Enter' || event.key === ' ') && !disabled && !readonly) {
+		if ((event.key === 'Enter' || event.key === ' ') && !unref(disabled) && !unref(readonly)) {
 			event.preventDefault() // Empêcher le comportement par défaut
 			openDatePicker()
 			return true

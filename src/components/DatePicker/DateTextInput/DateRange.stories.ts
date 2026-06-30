@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
+import type { DatePickerRule } from '@/components/DatePicker/types'
 import { ref } from 'vue'
 import { fn } from '@storybook/test'
 
@@ -19,8 +20,8 @@ interface DatePickerProps {
 	'displayIcon'?: boolean
 	'displayAppendIcon'?: boolean
 	'displayPrependIcon'?: boolean
-	'customRules'?: { type: string, options: Record<string, unknown> }[]
-	'customWarningRules'?: { type: string, options: Record<string, unknown> }[]
+	'customRules'?: DatePickerRule[]
+	'customWarningRules'?: DatePickerRule[]
 	'disabled'?: boolean
 	'noIcon'?: boolean
 	'noCalendar'?: boolean
