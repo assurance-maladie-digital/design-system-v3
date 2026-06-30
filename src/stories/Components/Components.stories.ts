@@ -592,7 +592,6 @@ export const ComponentsList: StoryObj = {
 					'FileList',
 					'DataListGroup',
 					'DataList',
-					'FileList',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

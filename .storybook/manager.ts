@@ -54,7 +54,6 @@ const apComponents = [
 	'composants-données-accordion',
 	'composants-données-chiplist',
 	'composants-données-collapsiblelist',
-    'composants-données-filelist',
     'composants-données-datalist',
 	'composants-données-datalistgroup',
 	'composants-données-filelist',
