@@ -46,7 +46,7 @@ exports[`StarsPicker > renders correctly 1`] = `
           notranslate
           px-2
           py-0
-          text-blue-lighten
+          text-lighten
           v-icon
           v-theme--light
         "
@@ -79,7 +79,7 @@ exports[`StarsPicker > renders correctly 1`] = `
           notranslate
           px-2
           py-0
-          text-blue-lighten
+          text-lighten
           v-icon
           v-theme--light
         "
@@ -112,7 +112,7 @@ exports[`StarsPicker > renders correctly 1`] = `
           notranslate
           px-2
           py-0
-          text-blue-lighten
+          text-lighten
           v-icon
           v-theme--light
         "
@@ -145,7 +145,7 @@ exports[`StarsPicker > renders correctly 1`] = `
           notranslate
           px-2
           py-0
-          text-blue-lighten
+          text-lighten
           v-icon
           v-theme--light
         "
@@ -178,7 +178,7 @@ exports[`StarsPicker > renders correctly 1`] = `
           notranslate
           px-2
           py-0
-          text-blue-lighten
+          text-lighten
           v-icon
           v-theme--light
         "
