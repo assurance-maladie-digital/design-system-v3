@@ -1,17 +1,21 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`EmotionPicker > renders correctly 1`] = `
-<fieldset
-  aria-label="Ce champ ne sera plus modifiable après saisie"
-  class="sy-emotion-picker"
->
+<fieldset class="sy-emotion-picker">
   <legend class="
     mb-6
     text-h6
   ">
     Pourriez-vous donner une note ?
   </legend>
+  <p
+    class="d-sr-only"
+    id="emotion-picker-description-v-0"
+  >
+    Ce champ ne sera plus modifiable après saisie
+  </p>
   <div
+    aria-describedby="emotionPickerDescriptionId"
     class="
       d-flex
       max-width-none
@@ -295,17 +299,21 @@ exports[`EmotionPicker > renders correctly 1`] = `
 `;
 
 exports[`EmotionPicker > renders correctly with only 2 items 1`] = `
-<fieldset
-  aria-label="Ce champ ne sera plus modifiable après saisie"
-  class="sy-emotion-picker"
->
+<fieldset class="sy-emotion-picker">
   <legend class="
     mb-6
     text-h6
   ">
     Pourriez-vous donner une note ?
   </legend>
+  <p
+    class="d-sr-only"
+    id="emotion-picker-description-v-0"
+  >
+    Ce champ ne sera plus modifiable après saisie
+  </p>
   <div
+    aria-describedby="emotionPickerDescriptionId"
     class="
       d-flex
       max-width-none

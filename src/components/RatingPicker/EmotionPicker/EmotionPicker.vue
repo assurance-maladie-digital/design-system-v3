@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-	import { type PropType, computed, onMounted, toRef } from 'vue'
+	import { type PropType, computed, ref, toRef, useId } from 'vue'
 	import { RatingEnum, useRating } from '../Rating'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from '../locales'
 	import { propValidator } from '@/utils/propValidator'
 	import { useRatingFocus } from '../useRatingFocus'
 	import {
@@ -9,7 +9,6 @@
 		mdiEmoticonSadOutline,
 		mdiEmoticonNeutralOutline,
 	} from '@mdi/js'
-
 	import { useDisplay } from 'vuetify'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
@@ -28,7 +27,7 @@
 		},
 		itemLabels: {
 			type: Array as PropType<string[]>,
-			default: () => locales.defaultEmotionLabels,
+			default: () => defaultLocales.defaultEmotionLabels,
 		},
 		readonly: {
 			type: Boolean,
@@ -38,11 +37,24 @@
 			type: Number,
 			default: -1,
 		},
+		lockAfterSelection: {
+			type: Boolean,
+			default: true,
+		},
+		locales: {
+			type: Object as PropType<typeof defaultLocales>,
+			default: () => defaultLocales,
+		},
 	})
 
 	const sadIcon = mdiEmoticonSadOutline
 	const neutralIcon = mdiEmoticonNeutralOutline
 	const happyIcon = mdiEmoticonHappyOutline
+
+	const id = useId()
+	const emotionPickerDescriptionId = `emotion-picker-description-${id}`
+
+	const ratingElements = ref<HTMLElement[]>([])
 
 	const btnSize = computed(() => {
 		return isMobile.value ? '70px' : '88px'
@@ -83,49 +95,56 @@
 	}
 
 	const {
-		ratingElement,
-		initFocus,
 		selectAndFocus,
 		focusNextElement,
 		focusPrevElement,
 		focus,
+		activeElementIndex,
 	} = useRatingFocus({
 		length: toRef(props, 'length'),
 		modelValue: internalValue,
 		selectValue: emitInputEvent,
+		ratingElements: ratingElements,
 		wrap: true,
+	})
+
+	const readonly = computed(() => {
+		return props.readonly || (props.lockAfterSelection && hasAnswered.value)
 	})
 
 	defineExpose({
 		focus,
 	})
 
-	onMounted(() => {
-		initFocus()
-	})
 </script>
 
 <template>
-	<fieldset
-		class="sy-emotion-picker"
-		:aria-label="internalValue === -1 ? locales.toValidate : locales.validated"
-	>
+	<fieldset class="sy-emotion-picker">
 		<legend class="text-h6 mb-6">
 			<slot name="label">
 				{{ props.label }}
 			</slot>
 		</legend>
 
+		<p
+			v-if="props.lockAfterSelection"
+			:id="emotionPickerDescriptionId"
+			class="d-sr-only"
+		>
+			{{ internalValue === -1 ? locales.toValidate : locales.validated }}
+		</p>
+
 		<div
 			role="radiogroup"
+			aria-describedby="emotionPickerDescriptionId"
 			class="d-flex max-width-none mx-n1 mx-sm-n2"
 		>
 			<div
 				v-for="index in props.length"
 				:key="index"
-				ref="ratingElement"
-				v-ripple="!(props.readonly || hasAnswered)"
-				:tabindex="-1"
+				ref="ratingElements"
+				v-ripple="!readonly"
+				:tabindex="activeElementIndex + 1 === index ? '0' : '-1'"
 				role="radio"
 				:aria-checked="isActive(index) ? 'true' : 'false'"
 				:class="[getColor(index - 1), { 'sy-emotion-picker__item--active': isActive(index) }]"
@@ -133,7 +152,7 @@
 					'min-height': btnSize,
 					'min-width': btnSize
 				}"
-				:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
+				:aria-disabled="readonly ? 'true' : undefined"
 				class="sy-emotion-picker__item rounded-lg px-1 px-sm-4 mx-1 mx-sm-2"
 				@click="selectAndFocus(index - 1)"
 				@keydown.enter.prevent="selectAndFocus(index - 1)"
@@ -200,6 +219,7 @@
 
 	&:focus-visible {
 		outline: 2px solid currentcolor;
+		outline-offset: 2px;
 	}
 
 	&--active {
