@@ -220,14 +220,14 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 				}
 			}
 
-			// Traiter les successMessages des rules normales (uniquement si successMessage est explicitement défini quand des successRules sont présentes)
+			// Traiter les successMessages des rules normales uniquement si successMessage est explicitement défini
 			const ruleSuccessMessages = new Set(rules.map(r => r.options?.successMessage).filter(Boolean))
 			if (!hasValidationError) {
 				// Dédupliquer les messages de succès pour éviter les doublons (ex: required + minLength)
 				const uniqueSuccessMessages = new Set<string>()
 				for (const result of ruleResults) {
 					if (result.success && unref(options.showSuccessMessages) !== false) {
-						if (successRules.length === 0 || ruleSuccessMessages.has(result.success)) {
+						if (ruleSuccessMessages.has(result.success)) {
 							if (!uniqueSuccessMessages.has(result.success)) {
 								uniqueSuccessMessages.add(result.success)
 								successes.value.push(result.success)

@@ -63,11 +63,13 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 		unref(options.displayRange),
 	)
 
-	if (options.skipValidationWhenReadonly && unref(options.readonly)) {
-		watch(() => unref(options.readonly), () => {
-			errors.value = []
-			warnings.value = []
-			successes.value = []
+	if (options.skipValidationWhenReadonly) {
+		watch(() => unref(options.readonly), (newValue) => {
+			if (newValue) {
+				errors.value = []
+				warnings.value = []
+				successes.value = []
+			}
 		})
 	}
 
