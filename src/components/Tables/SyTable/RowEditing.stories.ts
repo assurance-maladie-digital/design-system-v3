@@ -17,6 +17,52 @@ const meta = {
 		layout: 'fullscreen',
 		controls: { hideNoControlsWarning: true },
 	},
+	argTypes: {
+		'item.actions': {
+			description: 'Slot d\'actions par ligne. Reçoit les helpers d\'édition `{ item, isEditing, edit, save, cancel, remove }`.',
+			control: undefined,
+			table: {
+				category: 'slots',
+				type: { summary: 'slot', detail: '{ item, isEditing: boolean, edit: () => void, save: () => void, cancel: () => void, remove: () => void }' },
+			},
+		},
+		'edit.<columnKey>': {
+			description: 'Personnalise l\'éditeur d\'une cellule en édition inline. Remplacer `<columnKey>` par la clé de la colonne. Par défaut un `SyTextField`.',
+			control: undefined,
+			table: {
+				category: 'slots',
+				type: { summary: 'slot', detail: '{ item, value: unknown, update: (value: unknown) => void }' },
+			},
+		},
+		'onEdit': {
+			description: 'Émis à l\'entrée en édition inline d\'une ligne.',
+			table: {
+				category: 'events',
+				type: { summary: '(item: Record<string, unknown>) => void' },
+			},
+		},
+		'onSave': {
+			description: 'Émis à la validation de l\'édition inline. Reçoit la ligne mise à jour et l\'originale.',
+			table: {
+				category: 'events',
+				type: { summary: '(updated: Record<string, unknown>, original: Record<string, unknown> | null) => void' },
+			},
+		},
+		'onCancel': {
+			description: 'Émis à l\'annulation de l\'édition inline.',
+			table: {
+				category: 'events',
+				type: { summary: '(item: Record<string, unknown> | null) => void' },
+			},
+		},
+		'onDelete': {
+			description: 'Émis au clic sur l\'action de suppression d\'une ligne.',
+			table: {
+				category: 'events',
+				type: { summary: '(item: Record<string, unknown>) => void' },
+			},
+		},
+	},
 } satisfies Meta<typeof SyTable & typeof VDataTable>
 
 export default meta

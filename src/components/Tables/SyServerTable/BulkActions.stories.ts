@@ -16,6 +16,38 @@ const meta = {
 		layout: 'fullscreen',
 		controls: { hideNoControlsWarning: true },
 	},
+	argTypes: {
+		'bulk-actions': {
+			description: 'Personnalise le contenu de la barre d\'actions groupées.',
+			control: undefined,
+			table: {
+				category: 'slots',
+				type: { summary: 'slot', detail: '{ selected: Record<string, unknown>[], count: number, clearSelection: () => void, deleteSelected: () => void, editSelected: () => void }' },
+			},
+		},
+		'bulk-edit-form': {
+			description: 'Personnalise le formulaire de la boîte de dialogue d\'édition groupée.',
+			control: undefined,
+			table: {
+				category: 'slots',
+				type: { summary: 'slot', detail: '{ draft: Record<string, unknown>, columns: string[], setField: (key, value) => void, index: number, count: number, prev: () => void, next: () => void }' },
+			},
+		},
+		'onDelete-multiple': {
+			description: 'Émis lors d\'une suppression en masse. Reçoit les lignes sélectionnées.',
+			table: {
+				category: 'events',
+				type: { summary: '(items: Record<string, unknown>[]) => void' },
+			},
+		},
+		'onSave-multiple': {
+			description: 'Émis à la validation de l\'édition groupée. Reçoit uniquement les lignes modifiées (objets complets).',
+			table: {
+				category: 'events',
+				type: { summary: '(items: Record<string, unknown>[]) => void' },
+			},
+		},
+	},
 } satisfies Meta<typeof SyServerTable & typeof VDataTable>
 
 export default meta
