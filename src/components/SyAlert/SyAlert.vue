@@ -260,7 +260,7 @@
 			'accent': rgb(var(--v-theme-onWarningVariant)),
 			'border': rgb(var(--v-theme-onWarningVariant)),
 			'icon': rgb(var(--v-theme-onWarningVariant)),
-			'icon-bg': rgb(var(--v-theme-warningVariant90)),
+			'icon-bg': rgb(var(--v-theme-warningVariantLigthen)),
 		)
 	);
 	@include redesign(
@@ -270,7 +270,7 @@
 			'accent': rgb(var(--v-theme-onSuccessVariant)),
 			'border': rgb(var(--v-theme-onSuccessVariant)),
 			'icon':rgb(var(--v-theme-onSuccessVariant)),
-			'icon-bg': rgb(var(--v-theme-successVariant90)),
+			'icon-bg': rgb(var(--v-theme-successVariantLighten)),
 		)
 	);
 	@include redesign(
@@ -280,7 +280,7 @@
 			'accent': rgb(var(--v-theme-error)),
 			'border': rgb(var(--v-theme-error)),
 			'icon':rgb(var(--v-theme-error)),
-			'icon-bg': rgb(var(--v-theme-errorVariant90)),
+			'icon-bg': rgb(var(--v-theme-errorVariantLighten)),
 		)
 	);
 	@include redesign(
@@ -290,7 +290,7 @@
 			'accent': rgb(var(--v-theme-info)),
 			'border': rgb(var(--v-theme-info)),
 			'icon':rgb(var(--v-theme-info)),
-			'icon-bg': rgb(var(--v-theme-infoVariant90)),
+			'icon-bg': rgb(var(--v-theme-infoVariantLighten)),
 		)
 	);
 }
