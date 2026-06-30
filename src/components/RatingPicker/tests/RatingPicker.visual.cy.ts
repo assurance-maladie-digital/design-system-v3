@@ -34,6 +34,7 @@ describe('RatingPicker - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
+		cy.get('[tabindex="0"]').first().focus()
 		cy.matchImageSnapshot('rating-picker-emotion', cy.get('.v-application'))
 	})
 

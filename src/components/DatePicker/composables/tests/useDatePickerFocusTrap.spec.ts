@@ -1,17 +1,13 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { useDatePickerFocusTrap } from '../useDatePickerFocusTrap'
 import { ref } from 'vue'
-import type { ComponentPublicInstance } from 'vue'
+import type { Ref, ComponentPublicInstance } from 'vue'
 
 describe('useDatePickerFocusTrap', () => {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
-	let isDatePickerVisible: any
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
-	let datePickerRef: any
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
-	let onClose: any
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
-	let restoreFocus: any
+	let isDatePickerVisible: Ref<boolean>
+	let datePickerRef: Ref<ComponentPublicInstance | null>
+	let onClose: () => void
+	let restoreFocus: () => void
 
 	beforeEach(() => {
 		isDatePickerVisible = ref(true)

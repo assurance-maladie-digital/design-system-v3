@@ -1,7 +1,50 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
+import type { DatePickerRule } from '@/components/DatePicker/types'
 import { ref } from 'vue'
 import { fn } from 'storybook/test'
+
+interface DatePickerProps {
+	'modelValue'?: string | string[] | null
+	'label'?: string
+	'placeholder'?: string
+	'format'?: string
+	'dateFormatReturn'?: string
+	'density'?: 'default' | 'comfortable' | 'compact'
+	'isBirthDate'?: boolean
+	'birthDate'?: boolean
+	'showWeekNumber'?: boolean
+	'required'?: boolean
+	'displayRange'?: boolean
+	'displayIcon'?: boolean
+	'displayAppendIcon'?: boolean
+	'displayPrependIcon'?: boolean
+	'customRules'?: DatePickerRule[]
+	'customWarningRules'?: DatePickerRule[]
+	'disabled'?: boolean
+	'noIcon'?: boolean
+	'noCalendar'?: boolean
+	'isOutlined'?: boolean
+	'readonly'?: boolean
+	'width'?: string
+	'disableErrorHandling'?: boolean
+	'showSuccessMessages'?: boolean
+	'bgColor'?: string
+	'hideDetails'?: boolean | 'auto'
+	'displayWeekendDays'?: boolean
+	'displayTodayButton'?: boolean
+	'displayHolidayDays'?: boolean
+	'autoClamp'?: boolean
+	'displayAsterisk'?: boolean
+	'isValidateOnBlur'?: boolean
+	'title'?: string | false
+	'period'?: { min?: string, max?: string }
+	'onUpdate:modelValue'?: () => void
+	'onFocus'?: () => void
+	'onBlur'?: () => void
+	'onInput'?: () => void
+	'onDate-selected'?: () => void
+}
 
 const meta = {
 	title: 'Composants/Formulaires/DatePicker/DateInput',
@@ -184,11 +227,6 @@ const meta = {
 			description: 'Active la mise en forme automatique lors de la saisie (ajout des séparateurs automatiquement). ⚠️ Peut court-circuiter certaines validations manuelles.',
 			defaultValue: false,
 		},
-		'noCalendar': {
-			control: 'boolean',
-			description: 'Désactive l\'affichage du calendrier, permettant uniquement la saisie manuelle (utile pour les tests automatisés)',
-			defaultValue: true,
-		},
 		'displayAsterisk': {
 			control: 'boolean',
 			description: 'Affiche un astérisque (*) à côté du label pour indiquer visuellement que le champ est obligatoire',
@@ -224,7 +262,7 @@ const meta = {
 			control: 'text',
 		},
 	},
-} as Meta<typeof DatePicker>
+} as Meta<DatePickerProps>
 
 export default meta
 
@@ -285,7 +323,7 @@ export const Default: Story = {
 		'noIcon': false,
 		'displayRange': false,
 		'displayPrependIcon': false,
-		'showSuccessMessages': true,
+		'showSuccessMessages': false,
 		'disableErrorHandling': false,
 		'onUpdate:modelValue': fn(),
 		'onFocus': fn(),
@@ -374,7 +412,7 @@ export const Required: Story = {
 		'noIcon': false,
 		'displayRange': false,
 		'displayPrependIcon': false,
-		'showSuccessMessages': true,
+		'showSuccessMessages': false,
 		'disableErrorHandling': false,
 		'onUpdate:modelValue': fn(),
 		'onFocus': fn(),
@@ -413,27 +451,37 @@ export const EuropeanFormat: Story = {
 				name: 'Template',
 				code: `
 				<template>
-					<DatePicker
-						v-model="date"
-						format="DD/MM/YYYY"
-						date-format-return="YYYY/MM/DD"
-						placeholder="JJ/MM/AAAA"
-						required
-						no-icon
-						no-calendar
-					/>
-
-					<DatePicker
-						v-model="date"
-						format="DD/MM/YYYY"
-						date-format-return="YYYY/MM/DD"
-						placeholder="JJ/MM/AAAA"
-						required
-						no-icon
-						no-calendar
-						displayAsterisk
-					/>
+					<div style="padding: 20px;">
+						<h4 class="mb-4">Format européen avec règles de base (format de date valide) :</h4>
+						<DatePicker
+							v-model="date"
+							v-bind="args"
+						/>
+						<div style="margin-top: 10px; font-family: monospace; color: #666;">
+							Valeur (dateFormatReturn: 'YYYY/MM/DD') : {{ date }}
+						</div>
+					</div>
 				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const date = ref<string | null>(null)
+					const args = {
+						noCalendar: true,
+						format: 'DD/MM/YYYY',
+						dateFormatReturn: 'YYYY/MM/DD',
+						placeholder: 'JJ/MM/AAAA',
+						label: 'Date avec règles de validation',
+						required: true,
+						noIcon: true,
+					}
+				</script>
 				`,
 			},
 		],
@@ -512,7 +560,7 @@ export const CustomRules: Story = {
 		'customRules': [{
 			type: 'custom',
 			options: {
-				validate: (value: string) => !value || !value.includes('2024'),
+				validate: (value: unknown) => !value || !(value as string).includes('2024'),
 				message: 'Les dates en 2024 ne sont pas autorisées',
 				successMessage: 'Les dates hors 2024 sont autorisées',
 				fieldIdentifier: 'date',
@@ -582,7 +630,7 @@ export const WarningRules: Story = {
 		'customWarningRules': [{
 			type: 'custom',
 			options: {
-				validate: (value: string) => !value || !value.includes('2025'),
+				validate: (value: unknown) => !value || !(value as string).includes('2025'),
 				warningMessage: 'Les dates en 2025 ne sont pas autorisées',
 				successMessage: 'Date hors 2025',
 				fieldIdentifier: 'date',

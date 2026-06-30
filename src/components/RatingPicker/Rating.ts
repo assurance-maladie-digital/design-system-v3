@@ -33,7 +33,7 @@ export function useRating(props: {
 	function emitInputEvent(value: string | number): void {
 		if (!props.readonly) {
 			internalValue.value = typeof value === 'number' ? value : parseInt(value, 10)
-			emit('update:modelValue', internalValue.value) // Emit the updated value
+			emit('update:modelValue', internalValue.value)
 		}
 	}
 

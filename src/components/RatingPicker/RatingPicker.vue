@@ -8,7 +8,7 @@
 
 	import { RATING_ENUM_VALUES, RatingEnum, AlertTypeEnum } from './Rating'
 	import { propValidator } from '@/utils/propValidator'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
 
 	const props = defineProps({
 		type: {
@@ -47,6 +47,14 @@
 		freeTextLabel: {
 			type: String,
 			default: 'Pouvez-vous nous en dire plus ?',
+		},
+		lockAfterSelection: {
+			type: Boolean,
+			default: true,
+		},
+		locales: {
+			type: Object as PropType<typeof defaultLocales>,
+			default: () => defaultLocales,
 		},
 	})
 
@@ -120,7 +128,6 @@
 			await nextTick()
 			ratingPickerRef.value?.focus?.()
 		},
-		{ immediate: true },
 	)
 </script>
 
@@ -137,14 +144,14 @@
 			:model-value="internalValue"
 			:label="props.label"
 			:length="length || undefined"
-			:readonly="props.readonly || hasAnswered"
+			:readonly="props.readonly || (props.lockAfterSelection && hasAnswered)"
 			:item-labels="props.itemLabels || undefined"
+			:lock-after-selection="props.lockAfterSelection"
+			:locales="props.locales"
 			@update:model-value="setValue"
 		>
 			<template #label>
-				<slot name="label">
-					{{ props.label }}
-				</slot>
+				<slot name="label" />
 			</template>
 		</component>
 
@@ -158,7 +165,7 @@
 				aria-live="polite"
 				class="mt-4"
 			>
-				{{ locales.thanks }}
+				{{ props.locales.thanks }}
 			</SyAlert>
 
 			<div
