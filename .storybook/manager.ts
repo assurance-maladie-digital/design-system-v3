@@ -61,6 +61,7 @@ const apComponents = [
 	'composants-feedback-dialogbox',
 	'composants-feedback-notificationbar',
 	'composants-feedback-cookiebanner',
+    'composants-feedback-ratingpicker',
 	'composants-filtres-filtersidebar',
 	'composants-filtres-searchlistfield',
 	'composants-formulaires-captcha',
