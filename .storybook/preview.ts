@@ -1,7 +1,7 @@
 import 'vuetify/styles'
 import './storybook.css'
-import type { Preview } from '@storybook/vue3'
-import { setup } from '@storybook/vue3'
+import type { Preview } from '@storybook/vue3-vite'
+import { setup } from '@storybook/vue3-vite'
 import { createVuetifyInstance } from '../src/vuetifyConfig'
 
 const vuetify = createVuetifyInstance()
@@ -89,6 +89,10 @@ const preview: Preview = {
 	globalTypes,
 	initialGlobals: {
 		theme: storedTheme || 'cnam',
+
+		backgrounds: {
+			value: 'main',
+		},
 	},
 	decorators: [
 		(story, context) => {
@@ -173,57 +177,56 @@ const preview: Preview = {
 			disableSaveFromUI: true,
 		},
 		backgrounds: {
-			default: 'main',
-			values: [
-				{
+			options: {
+				'main': {
 					name: 'main',
 					value: '#e7ecf5',
 				},
-				{
+				'surface': {
 					name: 'surface',
 					value: '#fff',
 				},
-				{
+				'raised': {
 					name: 'raised',
 					value: '#f8f9fc',
 				},
-				{
+				'accent': {
 					name: 'accent',
 					value: '#0c419a',
 				},
-				{
+				'accent-contrasted': {
 					name: 'accent-contrasted',
 					value: '#0a347b',
 				},
-				{
+				'accent-alt': {
 					name: 'accent-alt',
 					value: '#545859',
 				},
-				{
+				'info': {
 					name: 'info',
 					value: '#ced9eb',
 				},
-				{
+				'info-subdued': {
 					name: 'info-subdued',
 					value: '#e7ecf5',
 				},
-				{
+				'info-contrasted': {
 					name: 'info-contrasted',
 					value: '#0c419a',
 				},
-				{
+				'success': {
 					name: 'success',
 					value: '#cceee8',
 				},
-				{
+				'success-subdued': {
 					name: 'success-subdued',
 					value: '#e5f7f4',
 				},
-				{
+				'success-contrasted': {
 					name: 'success-contrasted',
 					value: '#56c271',
 				},
-			],
+			},
 		},
 		a11y: {
 			config: {

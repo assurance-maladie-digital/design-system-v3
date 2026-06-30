@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import FileList from './FileList.vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 import { VIcon } from 'vuetify/components'
 import { mdiCardAccountDetailsOutline, mdiCertificateOutline } from '@mdi/js'
 

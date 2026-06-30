@@ -1,6 +1,6 @@
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 import PhoneField from '../PhoneField.vue'
-import type { StoryObj, Meta } from '@storybook/vue3'
+import type { StoryObj, Meta } from '@storybook/vue3-vite'
 import { ref, onMounted } from 'vue'
 import { VBtn } from 'vuetify/components'
 import { VForm } from 'vuetify/components/VForm'

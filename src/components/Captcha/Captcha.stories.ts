@@ -1,6 +1,6 @@
 import Captcha from './Captcha.vue'
-import type { StoryObj } from '@storybook/vue3'
-import { fn } from '@storybook/test'
+import type { StoryObj } from '@storybook/vue3-vite'
+import { fn } from 'storybook/test'
 import { ref, watch } from 'vue'
 import SyAlert from '../SyAlert/SyAlert.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps.ts'

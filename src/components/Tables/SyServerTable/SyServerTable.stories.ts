@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SyServerTable from './SyServerTable.vue'
 import { StateEnum } from '../common/constants/StateEnum'
 import type { DataOptions, FilterType } from '../common/types'
 import { computed, defineComponent, ref, watch } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 
 import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
 

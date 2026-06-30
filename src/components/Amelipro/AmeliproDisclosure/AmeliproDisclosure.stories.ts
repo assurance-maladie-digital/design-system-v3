@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import AmeliproDisclosure from './AmeliproDisclosure.vue'
 
 const meta = {

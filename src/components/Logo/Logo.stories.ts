@@ -1,4 +1,4 @@
-import type { StoryObj, Meta } from '@storybook/vue3'
+import type { StoryObj, Meta } from '@storybook/vue3-vite'
 import Logo from './Logo.vue'
 import { VSheet } from 'vuetify/components'
 

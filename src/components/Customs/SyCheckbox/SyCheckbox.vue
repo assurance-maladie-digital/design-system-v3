@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 	import { computed, ref, watch, onMounted, onUpdated, nextTick, type Ref } from 'vue'
-	import type { VCheckbox } from 'vuetify/components'
+	import type { VCheckbox } from 'vuetify/components/VCheckbox'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiCheckboxBlankOutline, mdiCheckboxMarked, mdiMinusBox } from '@mdi/js'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'

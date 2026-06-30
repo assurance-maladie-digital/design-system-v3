@@ -1,7 +1,7 @@
-import type { StoryObj, Meta } from '@storybook/vue3'
+import type { StoryObj, Meta } from '@storybook/vue3-vite'
 import RatingPicker from './RatingPicker.vue'
 import { VBtn, VSpacer } from 'vuetify/components'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 import SyTextArea from '../SyTextArea/SyTextArea.vue'
 
 const meta = {

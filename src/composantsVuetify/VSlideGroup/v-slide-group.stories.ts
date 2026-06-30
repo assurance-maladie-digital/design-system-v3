@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { VSlideGroup, VSlideGroupItem, VCard, VCardText, VBtn, VChip } from 'vuetify/components'
 import { ref } from 'vue'
 

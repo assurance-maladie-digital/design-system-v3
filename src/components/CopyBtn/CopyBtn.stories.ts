@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import CopyBtn from './CopyBtn.vue'
 import { VIcon } from 'vuetify/components'
 import { mdiContentDuplicate } from '@mdi/js'
