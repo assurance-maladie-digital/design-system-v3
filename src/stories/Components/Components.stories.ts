@@ -452,7 +452,7 @@ export const ComponentsList: StoryObj = {
 						title: 'DataListGroup',
 						description: 'Utilisé pour afficher une liste de DataList.',
 						link: '/?path=/docs/composants-donn%C3%A9es-datalistgroup--docs',
-						img: '/components/data-list-group.svg',
+						img: `/components/data-list-group${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{
@@ -590,6 +590,7 @@ export const ComponentsList: StoryObj = {
 					'PeriodField',
 					'CollapsibleList',
 					'FileList',
+					'DataListGroup',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
