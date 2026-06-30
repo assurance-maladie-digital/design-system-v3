@@ -235,7 +235,6 @@
 		accessiblePlaceholders: true,
 	})
 
-
 	const isOverwriteEditing = ref(false) // garde-fou pour ne pas re-formater au watch pendant qu'on gère le clavier
 
 	// Helpers overwrite
