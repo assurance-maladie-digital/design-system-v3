@@ -1,4 +1,4 @@
-import { addons } from '@storybook/manager-api'
+import { addons, useGlobals  } from '@storybook/manager-api'
 import cnamTheme from './CnamTheme'
 import paTheme from './PaTheme'
 import apTheme from './ApTheme'
@@ -27,6 +27,7 @@ const apOnlyStories = [
 	'composants-boutons-usermenubtn--with-ps-info',
 	'composants-données-accordion--with-custom-content',
 	'composants-layout-pagecontainer--with-header-and-footer',
+    'guide-du-dev-convergence-des-ds-équivalence-des-composants-amelipro--docs'
 ]
 
 // Components to display in AP theme
@@ -509,6 +510,29 @@ addons.setConfig({
 			: storedTheme === 'ap2026'
 				? ap2026Theme
 				: cnamTheme,
+
+    sidebar: {
+        filters: {
+            searchfilter: (item) => {
+                const theme = localStorage.getItem('storybook-theme') ?? 'cnam';
+
+                const id = (item.id ?? '').toLowerCase();
+                const name = (item.name ?? '').toLowerCase();
+
+                if (theme === 'ap2026') {
+                    return true;
+                } else if (theme === 'ap'){
+                    const allowedInAp = id.startsWith('guide-du-dev-convergence-des-ds-équivalence-des-composants-amelipro--docs');
+
+                    if (allowedInAp) {
+                        return true;
+                    }
+                } else {
+                    return !id.includes('amelipro') && !name.includes('amelipro');
+                }
+            },
+        },
+    },
 })
 
 const getCurrentItemIdFromUrl = () => {
@@ -557,6 +581,8 @@ const handleThemeChange = (newTheme) => {
 					? ap2026Theme
 					: cnamTheme,
 	})
+
+    window.location.reload();
 
 	applyThemeClass(newTheme)
 
