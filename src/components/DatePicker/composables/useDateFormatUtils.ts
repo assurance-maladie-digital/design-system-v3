@@ -27,7 +27,7 @@ export const validateDateFormat = (
 	if (!/^[\d/.-]*$/.test(dateStr)) {
 		return {
 			isValid: disableErrorHandling,
-			message: disableErrorHandling ? '' : `Format de date invalide (${format})`,
+			message: disableErrorHandling ? '' : DATE_PICKER_MESSAGES.ERROR_INVALID_FORMAT_WITH_FORMAT(format),
 		}
 	}
 
@@ -37,7 +37,7 @@ export const validateDateFormat = (
 	if (!isValid) {
 		return {
 			isValid: disableErrorHandling,
-			message: disableErrorHandling ? '' : `Format de date invalide (${format})`,
+			message: disableErrorHandling ? '' : DATE_PICKER_MESSAGES.ERROR_INVALID_FORMAT_WITH_FORMAT(format),
 		}
 	}
 

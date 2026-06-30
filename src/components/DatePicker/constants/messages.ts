@@ -10,6 +10,7 @@ export const DATE_PICKER_MESSAGES = {
 	ERROR_REQUIRED: 'La date est requise.',
 	ERROR_INVALID_FORMAT: 'Le format de la date est invalide.',
 	ERROR_INVALID_DATE: 'La date saisie est invalide.',
+	ERROR_INVALID_FORMAT_WITH_FORMAT: (format: string): string => `Format de date invalide (${format})`,
 	ERROR_INCOMPLETE_DATE: 'La date est incomplète.',
 	ERROR_INVALID_RANGE: 'La plage de dates est invalide.',
 	ERROR_START_DATE_MISSING: 'La date de début est manquante.',

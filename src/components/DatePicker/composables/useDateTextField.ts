@@ -158,8 +158,8 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 	const clampIfNeeded = (raw: string): string => {
 		if (!unref(autoClamp) || !raw) return raw
 
-		if (isRange.value && raw.includes(' - ')) {
-			const [rawStartDate = '', rawEndDate = ''] = raw.split(' - ').map(dateText => dateText.trim())
+		if (isRange.value && raw.includes(DATE_PICKER_MESSAGES.RANGE_SEPARATOR)) {
+			const [rawStartDate = '', rawEndDate = ''] = raw.split(DATE_PICKER_MESSAGES.RANGE_SEPARATOR).map(dateText => dateText.trim())
 			const startDateValidation = rawStartDate
 				? autoClampDate(rawStartDate, displayFormat.value)
 				: { adjusted: false, clampedDate: rawStartDate }
@@ -170,7 +170,7 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 			const formattedStartDate = startDateValidation.clampedDate || ''
 			const formattedEndDate = endDateValidation.clampedDate || ''
 
-			return formattedEndDate ? `${formattedStartDate} - ${formattedEndDate}` : `${formattedStartDate} - `
+			return formattedEndDate ? `${formattedStartDate}${DATE_PICKER_MESSAGES.RANGE_SEPARATOR}${formattedEndDate}` : `${formattedStartDate}${DATE_PICKER_MESSAGES.RANGE_SEPARATOR}`
 		}
 
 		const dateValidationResult = autoClampDate(raw, displayFormat.value)
