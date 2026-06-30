@@ -210,9 +210,8 @@
 	}
 
 	&.happy {
-    color: rgb(var(--v-theme-onSuccessVariant)) !important;
-
-  }
+		color: rgb(var(--v-theme-onSuccessVariant)) !important;
+	}
 
 	&--active.sy-emotion-picker__item--disabled .v-icon {
 		color: currentcolor !important;
@@ -235,11 +234,11 @@
 		}
 
 		&.neutral {
-      background: rgb(var(--v-theme-warningVariantLigthen));
+			background: rgb(var(--v-theme-warningVariantLigthen));
 		}
 
 		&.happy {
-      background: rgb(var(--v-theme-successVariantLighten));
+			background: rgb(var(--v-theme-successVariantLighten));
 		}
 	}
 
