@@ -246,8 +246,10 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 				// Même si l'utilisateur modifie la valeur, le message personnalisé reste prioritaire
 				fieldsWithCustomSuccess.add(options.fieldIdentifier)
 			}
+			// hasRuleSuccess ne bloque le message par défaut que si la règle a un successMessage explicite
+			const hasExplicitRuleSuccess = hasRuleSuccess && hasRuleWithCustomSuccessMessage
 			// N'ajouter le message par défaut que si la valeur est remplie, aucune règle n'a de successMessage personnalisé, et aucun succès n'a été retourné
-			if (shouldAddDefaultSuccess(hasValidationError, isValueFilled, successRules, successes, hasRuleSuccess, hasWarningRuleWithCustomSuccessMessage, options.fieldIdentifier, fieldsWithCustomSuccess)) {
+			if (shouldAddDefaultSuccess(hasValidationError, isValueFilled, successRules, successes, hasExplicitRuleSuccess, hasWarningRuleWithCustomSuccessMessage, options.fieldIdentifier, fieldsWithCustomSuccess)) {
 				successState.value = true
 				if (unref(options.showSuccessMessages) !== false) {
 					addDefaultSuccessMessage()
