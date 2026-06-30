@@ -235,11 +235,7 @@
 		accessiblePlaceholders: true,
 	})
 
-	/**
-	 * =====================
-	 * Overwrite editing (nouvelle logique)
-	 * =====================
-	 */
+
 	const isOverwriteEditing = ref(false) // garde-fou pour ne pas re-formater au watch pendant qu'on gère le clavier
 
 	// Helpers overwrite
@@ -731,8 +727,14 @@
 				const parsedDate = dayjs(inputValue.value, displayFormat.value, true).toDate()
 				// Guard isFormatting to prevent the modelValue watcher from
 				// rewriting inputValue in reaction to our own emit.
-				isFormatting.value = true
-				emitModel(returnFormat.value !== displayFormat.value ? dayjs(parsedDate).format(returnFormat.value) : inputValue.value)
+				try {
+					isFormatting.value = true
+					emitModel(returnFormat.value !== displayFormat.value ? dayjs(parsedDate).format(returnFormat.value) : inputValue.value)
+				}
+				catch (error) {
+					isFormatting.value = false
+					throw error
+				}
 			}
 			else if (formatValidationResult.isValid && !customRulesValidationResult.hasError && isRange.value) {
 				if (typeof inputValue.value === 'string' && inputValue.value.includes(' - ')) {
@@ -742,16 +744,22 @@
 						const ed = dayjs(dateRangeParts[1]!, displayFormat.value, true)
 						// Guard isFormatting to prevent the modelValue watcher from
 						// rewriting inputValue in reaction to our own emit.
-						isFormatting.value = true
-						if (sd.isValid() && ed.isValid()) {
-							const emittedRange: [string, string] = [
-								returnFormat.value !== displayFormat.value ? sd.format(returnFormat.value) : dateRangeParts[0]!,
-								returnFormat.value !== displayFormat.value ? ed.format(returnFormat.value) : dateRangeParts[1]!,
-							]
-							emitModel(emittedRange)
+						try {
+							isFormatting.value = true
+							if (sd.isValid() && ed.isValid()) {
+								const emittedRange: [string, string] = [
+									returnFormat.value !== displayFormat.value ? sd.format(returnFormat.value) : dateRangeParts[0]!,
+									returnFormat.value !== displayFormat.value ? ed.format(returnFormat.value) : dateRangeParts[1]!,
+								]
+								emitModel(emittedRange)
+							}
+							else {
+								emitModel([dateRangeParts[0]!, dateRangeParts[1]!])
+							}
 						}
-						else {
-							emitModel([dateRangeParts[0]!, dateRangeParts[1]!])
+						catch (error) {
+							isFormatting.value = false
+							throw error
 						}
 					}
 					else emitModel(inputValue.value)
@@ -759,11 +767,13 @@
 				else emitModel(inputValue.value)
 			}
 			else {
-				runRules(inputValue.value)
-				if (!props.disableErrorHandling && formatValidationResult.message) errors.value.push(formatValidationResult.message)
+				// Format invalide ou règles custom en erreur : runRules appelle validateManualInput
+				// qui pousse déjà le message de format — ne pas pousser formatValidationResult.message
+				// en plus pour éviter les doublons dans errors.value.
 				// Keep the invalid input visible so the user can correct it.
 				// Do NOT emit null — that would trigger the modelValue watcher
 				// which clears inputValue and hides the error message.
+				runRules(inputValue.value)
 				return
 			}
 		}
@@ -773,15 +783,13 @@
 		// Release isFormatting after the current microtask so that
 		// the modelValue watcher (triggered synchronously by emitModel)
 		// stays blocked, but future external changes are allowed.
-		await nextTick()
-		isFormatting.value = false
+		try {
+			await nextTick()
+		}
+		finally {
+			isFormatting.value = false
+		}
 	}
-
-	/**
-	 * =====================
-	 * Watchers
-	 * =====================
-	 */
 	watch(inputValue, async (nv, ov) => {
 		if (props.disabled) {
 			const isEmpty = !nv || nv.trim() === '' || /^[_/\-.\s]+$/.test(nv)
