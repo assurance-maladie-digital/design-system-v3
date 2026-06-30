@@ -227,4 +227,74 @@ export const CustomBar: Story = {
 			</SyServerTable>
 		`,
 	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyServerTable
+		suffix="server-bulk-actions-custom"
+		caption="Liste des patients"
+		show-select
+		show-edit-selected
+		selection-key="id"
+		hide-default-footer
+		v-model="selected"
+		:headers="headers"
+		:items="items"
+		:server-items-length="items.length"
+		:bulk-selected-label="(count) => count + ' patient' + (count > 1 ? 's' : '') + ' sélectionné' + (count > 1 ? 's' : '')"
+		:bulk-edit-title="(count) => 'Modifier ' + count + ' patient' + (count > 1 ? 's' : '')"
+		:bulk-edit-position-label="(current, total) => 'Patient ' + current + ' sur ' + total"
+		@delete-multiple="onDeleteMultiple"
+		@save-multiple="onSaveMultiple"
+	>
+		<!-- Barre d'actions groupées personnalisée via le slot #bulk-actions -->
+		<template #bulk-actions="{ count, deleteSelected, editSelected }">
+			<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="editSelected">
+				Modifier {{ count }} patient(s)
+			</VBtn>
+			<VBtn color="error" variant="flat" size="small" :prepend-icon="mdiDelete" @click="deleteSelected">
+				Supprimer {{ count }} patient(s)
+			</VBtn>
+		</template>
+	</SyServerTable>
+</template>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { SyServerTable } from '@cnamts/synapse'
+	import { mdiDelete, mdiPencil } from '@mdi/js'
+
+	const headers = [
+		{ title: 'Nom', key: 'lastname', editable: true },
+		{ title: 'Prénom', key: 'firstname', editable: true },
+		{ title: 'Email', key: 'email', editable: true },
+	]
+
+	const items = ref([
+		{ id: 1, firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
+		{ id: 2, firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
+	])
+	const selected = ref([])
+
+	function onDeleteMultiple(toDelete) {
+		const ids = new Set(toDelete.map(i => i.id))
+		items.value = items.value.filter(i => !ids.has(i.id))
+	}
+
+	function onSaveMultiple(updatedItems) {
+		const byId = new Map(updatedItems.map(i => [i.id, i]))
+		items.value = items.value.map(i => byId.get(i.id) ?? i)
+	}
+</script>
+`,
+			},
+		],
+	},
 }
