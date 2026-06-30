@@ -466,7 +466,7 @@ export const ComponentsList: StoryObj = {
 						title: 'FileList',
 						description: 'Utilisé pour afficher une liste de document à téléverser.',
 						link: '/?path=/docs/composants-donn%C3%A9es-filelist--docs',
-						img: '/components/file-list.svg',
+						img: `/components/file-list${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{
@@ -589,6 +589,7 @@ export const ComponentsList: StoryObj = {
 					'CookieBanner',
 					'PeriodField',
 					'CollapsibleList',
+					'FileList',
 					'SyInputSelect',
 				]
 
