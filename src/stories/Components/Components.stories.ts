@@ -438,7 +438,7 @@ export const ComponentsList: StoryObj = {
 						title: 'DataList',
 						description: 'Utilisé pour afficher une liste d’informations.',
 						link: '/?path=/docs/composants-donn%C3%A9es-datalist--docs',
-						img: '/components/data-list.svg',
+						img: `/components/data-list${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{
@@ -452,7 +452,7 @@ export const ComponentsList: StoryObj = {
 						title: 'DataListGroup',
 						description: 'Utilisé pour afficher une liste de DataList.',
 						link: '/?path=/docs/composants-donn%C3%A9es-datalistgroup--docs',
-						img: '/components/data-list-group.svg',
+						img: `/components/data-list-group${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{
@@ -589,6 +589,9 @@ export const ComponentsList: StoryObj = {
 					'CookieBanner',
 					'PeriodField',
 					'CollapsibleList',
+					'FileList',
+					'DataListGroup',
+					'DataList',
 					'FileList',
 				]
 
