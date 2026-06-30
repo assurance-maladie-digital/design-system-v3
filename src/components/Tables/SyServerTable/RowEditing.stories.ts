@@ -162,7 +162,7 @@ export const Default: Story = {
 
 /**
  * Éditeur de cellule personnalisé via le slot `#edit.<key>`.
- * Ici la colonne « Nom » est mise en majuscules à la saisie, les autres gardent l'éditeur par défaut.
+ * Ici la colonne « Nom » utilise un `<input>` HTML personnalisé ; les autres gardent l'éditeur par défaut.
  */
 export const CustomEditor: Story = {
 	args: {
@@ -197,8 +197,8 @@ export const CustomEditor: Story = {
 				<template #edit.lastname="{ value, update }">
 					<input
 						:value="value"
-						style="width:100%;padding:4px;text-transform:uppercase"
-						@input="update($event.target.value.toUpperCase())"
+						style="width:100%;padding:4px;border:1px solid #767676;border-radius:4px;background:#fff"
+						@input="update($event.target.value)"
 					>
 				</template>
 				<template #item.actions="{ isEditing, edit, save, cancel }">
@@ -229,12 +229,12 @@ export const CustomEditor: Story = {
 		:server-items-length="items.length"
 		@save="onSave"
 	>
-		<!-- Éditeur personnalisé pour la colonne "Nom" (saisie en majuscules) -->
+		<!-- Éditeur personnalisé pour la colonne "Nom" (input HTML) -->
 		<template #edit.lastname="{ value, update }">
 			<input
 				:value="value"
-				style="width:100%;padding:4px;text-transform:uppercase"
-				@input="update($event.target.value.toUpperCase())"
+				style="width:100%;padding:4px;border:1px solid #767676;border-radius:4px;background:#fff"
+				@input="update($event.target.value)"
 			>
 		</template>
 		<template #item.actions="{ isEditing, edit, save, cancel }">

@@ -1,11 +1,11 @@
 import { computed, nextTick, onMounted, onUnmounted, ref, watch, type Ref } from 'vue'
 import type { VDataTable, VDataTableServer } from 'vuetify/components'
 import { locales } from './locales'
-import type { DataOptions } from './types'
+import type { DataOptions, Items } from './types'
 
 export interface UseTableAriaOptions {
 	table: Ref<VDataTable | VDataTableServer | undefined>
-	items: Ref<unknown[]>
+	items: Ref<Items>
 	totalItemsCount: Ref<number>
 	options: Ref<Partial<DataOptions>>
 	uniqueTableId: string

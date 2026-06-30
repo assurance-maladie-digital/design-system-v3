@@ -10,7 +10,7 @@
 	import { locales } from '../common/locales'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
 	import { useTableProps } from '../common/tableProps'
-	import type { DataOptions, Items, SyServerTableProps } from '../common/types'
+	import type { DataOptions, Item, Items, SyServerTableProps } from '../common/types'
 	import { useTableFilter } from '../common/useTableFilter'
 	import { usePagination } from '../common/usePagination'
 	import { useTableOptions } from '../common/useTableOptions'
@@ -55,13 +55,13 @@
 	})
 
 	const emit = defineEmits<{
-		'row-click': [item: Record<string, unknown>]
-		'edit': [item: Record<string, unknown>]
-		'save': [updated: Record<string, unknown>, original: Record<string, unknown> | null]
-		'cancel': [item: Record<string, unknown> | null]
-		'delete': [item: Record<string, unknown>]
-		'delete-multiple': [items: Record<string, unknown>[]]
-		'save-multiple': [items: Record<string, unknown>[]]
+		'row-click': [item: Item]
+		'edit': [item: Item]
+		'save': [updated: Item, original: Item | null]
+		'cancel': [item: Item | null]
+		'delete': [item: Item]
+		'delete-multiple': [items: Item[]]
+		'save-multiple': [items: Item[]]
 	}>()
 
 	const options = defineModel<Partial<DataOptions>>('options', {
@@ -217,7 +217,7 @@
 	})
 
 	// Wrappers qui émettent les évènements publics
-	function onEdit(item: Record<string, unknown>): void {
+	function onEdit(item: Item): void {
 		startEditing(item)
 		emit('edit', item)
 	}
@@ -228,7 +228,7 @@
 	function onCancel(): void {
 		emit('cancel', cancelEditing())
 	}
-	function onDelete(item: Record<string, unknown>): void {
+	function onDelete(item: Item): void {
 		emit('delete', item)
 	}
 
@@ -691,10 +691,10 @@
 					name="item.actions"
 					v-bind="actionProps"
 					:is-editing="isRowEditing(actionProps.item)"
-					:edit="() => onEdit(actionProps.item as Record<string, unknown>)"
+					:edit="() => onEdit(actionProps.item as Item)"
 					:save="() => onSave()"
 					:cancel="() => onCancel()"
-					:remove="() => onDelete(actionProps.item as Record<string, unknown>)"
+					:remove="() => onDelete(actionProps.item as Item)"
 				/>
 			</template>
 

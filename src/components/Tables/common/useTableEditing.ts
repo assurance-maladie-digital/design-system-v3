@@ -1,29 +1,29 @@
 import { ref, shallowRef, type Ref } from 'vue'
-import type { Items } from './types'
+import type { Item } from './types'
 
 interface UseTableEditingParams {
 	/**
 	 * Fonction d'identité de ligne (réutilise celle de la sélection :
 	 * selectionKey, puis `id`, puis l'objet lui-même).
 	 */
-	getItemValue: (item: Items[number]) => unknown
+	getItemValue: (item: Item) => unknown
 }
 
 interface UseTableEditingReturn {
 	/** Clé de la ligne en cours d'édition (`null` si aucune). */
 	editingKey: Ref<unknown>
 	/** Brouillon de la ligne éditée (copie, la prop `items` n'est jamais mutée). */
-	draft: Ref<Record<string, unknown>>
+	draft: Ref<Item>
 	/** Indique si l'item passé est la ligne actuellement éditée. */
-	isRowEditing: (item: Items[number]) => boolean
+	isRowEditing: (item: Item) => boolean
 	/** Démarre l'édition d'une ligne (une seule à la fois en V1). */
-	startEditing: (item: Record<string, unknown>) => void
+	startEditing: (item: Item) => void
 	/** Met à jour un champ du brouillon. */
 	setDraftField: (key: string, value: unknown) => void
 	/** Valide l'édition et renvoie l'item modifié + l'original. */
-	saveEditing: () => { updated: Record<string, unknown>, original: Record<string, unknown> | null }
+	saveEditing: () => { updated: Item, original: Item | null }
 	/** Annule l'édition et renvoie l'item original. */
-	cancelEditing: () => Record<string, unknown> | null
+	cancelEditing: () => Item | null
 	/** Réinitialise l'état d'édition. */
 	resetEditing: () => void
 }
@@ -40,14 +40,14 @@ export function useTableEditing({ getItemValue }: UseTableEditingParams): UseTab
 	// sans la transformer en proxy réactif, sinon les comparaisons par référence
 	// (`===`) échoueraient pour une identité de ligne basée sur l'objet lui-même.
 	const editingKey = shallowRef<unknown>(null)
-	const draft = ref<Record<string, unknown>>({})
-	const originalItem = shallowRef<Record<string, unknown> | null>(null)
+	const draft = ref<Item>({})
+	const originalItem = shallowRef<Item | null>(null)
 
-	function isRowEditing(item: Items[number]): boolean {
+	function isRowEditing(item: Item): boolean {
 		return editingKey.value !== null && getItemValue(item) === editingKey.value
 	}
 
-	function startEditing(item: Record<string, unknown>): void {
+	function startEditing(item: Item): void {
 		editingKey.value = getItemValue(item)
 		originalItem.value = item
 		draft.value = { ...item }
@@ -57,14 +57,14 @@ export function useTableEditing({ getItemValue }: UseTableEditingParams): UseTab
 		draft.value[key] = value
 	}
 
-	function saveEditing(): { updated: Record<string, unknown>, original: Record<string, unknown> | null } {
+	function saveEditing(): { updated: Item, original: Item | null } {
 		const original = originalItem.value
 		const updated = { ...(original ?? {}), ...draft.value }
 		resetEditing()
 		return { updated, original }
 	}
 
-	function cancelEditing(): Record<string, unknown> | null {
+	function cancelEditing(): Item | null {
 		const original = originalItem.value
 		resetEditing()
 		return original

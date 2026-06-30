@@ -1,5 +1,5 @@
 import { computed, ref, shallowRef, type ComputedRef, type Ref } from 'vue'
-import type { Items } from './types'
+import type { Item, Items } from './types'
 
 interface UseTableBulkActionsParams {
 	/** Liste des lignes affichées (filtrées). */
@@ -7,12 +7,12 @@ interface UseTableBulkActionsParams {
 	/** Sélection (v-model) : tableau des valeurs de ligne (clés ou objets). */
 	model: Ref<unknown[]>
 	/** Fonction d'identité de ligne, partagée avec la sélection. */
-	getItemValue: (item: Items[number]) => unknown
+	getItemValue: (item: Item) => unknown
 }
 
 interface UseTableBulkActionsReturn {
 	/** Lignes sélectionnées, résolues en objets complets. */
-	selectedItems: ComputedRef<Record<string, unknown>[]>
+	selectedItems: ComputedRef<Item[]>
 	/** Vide la sélection. */
 	clearSelection: () => void
 	/** Index de la ligne en cours d'édition (édition séquentielle). */
@@ -20,7 +20,7 @@ interface UseTableBulkActionsReturn {
 	/** Nombre de lignes à éditer. */
 	bulkEditCount: ComputedRef<number>
 	/** Brouillon de la ligne actuellement éditée. */
-	currentBulkDraft: ComputedRef<Record<string, unknown>>
+	currentBulkDraft: ComputedRef<Item>
 	/** Met à jour un champ de la ligne en cours d'édition. */
 	setBulkField: (key: string, value: unknown) => void
 	/** Passe à la ligne précédente. */
@@ -35,7 +35,7 @@ interface UseTableBulkActionsReturn {
 	/** Réinitialise l'état d'édition groupée. */
 	resetBulkEdit: () => void
 	/** Renvoie les lignes dont le brouillon a été modifié (objets complets). */
-	collectEditedItems: () => Record<string, unknown>[]
+	collectEditedItems: () => Item[]
 }
 
 /**
@@ -52,12 +52,12 @@ export function useTableBulkActions({
 	model,
 	getItemValue,
 }: UseTableBulkActionsParams): UseTableBulkActionsReturn {
-	const selectedItems = computed<Record<string, unknown>[]>(() => {
+	const selectedItems = computed<Item[]>(() => {
 		const keys = model.value ?? []
 		if (keys.length === 0) {
 			return []
 		}
-		return items.value.filter(item => keys.includes(getItemValue(item))) as Record<string, unknown>[]
+		return items.value.filter(item => keys.includes(getItemValue(item)))
 	})
 
 	function clearSelection(): void {
@@ -67,13 +67,13 @@ export function useTableBulkActions({
 	// --- Édition séquentielle des lignes sélectionnées -----------------------
 	const bulkEditIndex = ref(0)
 	// Un brouillon (copie indépendante) par ligne sélectionnée
-	const bulkDrafts = ref<Record<string, unknown>[]>([])
+	const bulkDrafts = ref<Item[]>([])
 	// Références des lignes d'origine, pour détecter les modifications
-	const bulkOriginals = shallowRef<Record<string, unknown>[]>([])
+	const bulkOriginals = shallowRef<Item[]>([])
 
 	const bulkEditCount = computed<number>(() => bulkDrafts.value.length)
 
-	const currentBulkDraft = computed<Record<string, unknown>>(
+	const currentBulkDraft = computed<Item>(
 		() => bulkDrafts.value[bulkEditIndex.value] ?? {},
 	)
 
@@ -110,7 +110,7 @@ export function useTableBulkActions({
 		bulkEditIndex.value = 0
 	}
 
-	function collectEditedItems(): Record<string, unknown>[] {
+	function collectEditedItems(): Item[] {
 		return bulkDrafts.value.filter((draft, index) => {
 			const original = bulkOriginals.value[index]
 			return original !== undefined && Object.keys(draft).some(key => draft[key] !== original[key])
