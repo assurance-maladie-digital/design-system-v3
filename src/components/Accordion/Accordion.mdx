@@ -41,6 +41,12 @@ Vous pouvez choisir de positionner l'icône de flèche à gauche (par défaut) o
 
 <Canvas of={AccordionStories.IconPosition} />
 
+## Mode compact
+
+Le mode compact supprime l'espacement entre les éléments de l'accordéon pour un rendu plus intégré et serré.
+
+<Canvas of={AccordionStories.CompactMode} />
+
 ## Contenu avec objet
 
 L'accordéon peut également afficher un contenu structuré sous forme d'objet avec un titre et un contenu détaillé.
@@ -102,6 +108,7 @@ const accordionItems = [
       :items="accordionItems"
       :heading-level="3"
       icon-position="left"
+      compact
     />
   </main>
 </template>

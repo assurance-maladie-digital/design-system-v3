@@ -45,6 +45,15 @@ const meta: Meta<typeof Accordion> = {
 				defaultValue: { summary: 'left' },
 			},
 		},
+		'compact': {
+			control: { type: 'boolean' },
+			description: 'Active le mode compact (sans espacement entre les éléments)',
+			default: false,
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
+			},
+		},
 		'modelValue': {
 			control: 'object',
 			description: 'Liste des identifiants des éléments ouverts (v-model)',
@@ -178,6 +187,66 @@ export const IconPosition: Story = {
 	}),
 }
 
+export const CompactMode: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				language: 'vue',
+				name: 'Template',
+				code: `<template>
+  <!-- Mode normal avec espacement -->
+  <Accordion
+    :items="[
+      { id: 'item1', title: 'Section 1', content: 'Contenu de la section 1' },
+      { id: 'item2', title: 'Section 2', content: 'Contenu de la section 2' },
+      { id: 'item3', title: 'Section 3', content: 'Contenu de la section 3' }
+    ]"
+  />
+
+  <!-- Mode compact sans espacement -->
+  <Accordion
+    :items="[
+      { id: 'item4', title: 'Section 1', content: 'Contenu de la section 1' },
+      { id: 'item5', title: 'Section 2', content: 'Contenu de la section 2' },
+      { id: 'item6', title: 'Section 3', content: 'Contenu de la section 3' }
+    ]"
+    compact
+  />
+</template>`,
+			},
+		],
+	},
+	args: {
+		items: defaultItems,
+		headingLevel: 3,
+	},
+	render: args => ({
+		components: { Accordion },
+		setup() {
+			return { args }
+		},
+		template: `
+            <div class="pa-4">
+                <h3>Mode normal (avec espacement)</h3>
+                <p class="mb-4">Les éléments de l'accordéon ont un espacement de 8px entre eux</p>
+                <Accordion 
+                    v-bind="args" 
+                    :compact="false"
+                    groupId="compact-mode-story"
+                />
+                
+                <h3 class="mt-8">Mode compact (sans espacement)</h3>
+                <p class="mb-4">Les éléments sont collés les uns aux autres pour un rendu plus intégré</p>
+                <Accordion 
+                    v-bind="args" 
+                    compact
+                    groupId="compact-mode-story"
+                />
+            </div>
+        `,
+	}),
+}
+
 export const WithObjectContent: Story = {
 	parameters: {
 		sourceCode: [
@@ -220,10 +289,10 @@ export const WithObjectContent: Story = {
 			return { args }
 		},
 		template: `
-			<div class="pa-4">
-				<Accordion v-bind="args" />
-			</div>
-		`,
+            <div class="pa-4">
+                <Accordion v-bind="args" />
+            </div>
+        `,
 	}),
 }
 
