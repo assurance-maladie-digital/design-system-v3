@@ -118,12 +118,14 @@ describe('SyTable - accessibility (axe)', () => {
 				options: {} as DataOptions,
 				suffix: 'a11y-bulk-test',
 				showSelect: true,
-				showDeleteSelected: true,
 				selectionKey: 'id',
 				hideDefaultFooter: true,
 				modelValue: [1, 2],
 				headers,
 				items,
+			},
+			slots: {
+				'bulk-actions': '<button type="button">Supprimer la sélection</button>',
 			},
 			attachTo: document.body,
 		})

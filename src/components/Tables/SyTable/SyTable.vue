@@ -1,6 +1,5 @@
 <script setup lang="ts">
 	import { computed, onMounted, provide, ref, toRef, useAttrs, useSlots, watch } from 'vue'
-	import { mdiChevronLeft, mdiChevronRight } from '@mdi/js'
 	import type { VDataTable } from 'vuetify/components/VDataTable'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -27,7 +26,6 @@
 	import { useTableEditing } from '../common/useTableEditing'
 	import { useTableBulkActions } from '../common/useTableBulkActions'
 	import TableBulkActions from '../common/TableBulkActions.vue'
-	import DialogBox from '@/components/DialogBox/DialogBox.vue'
 
 	const props = withDefaults(defineProps<SyTableProps>(), {
 		caption: '',
@@ -49,8 +47,6 @@
 		pageInput: false,
 		hideDefaultFooter: false,
 		editable: false,
-		showDeleteSelected: false,
-		showEditSelected: false,
 	})
 
 	const emit = defineEmits<{
@@ -59,8 +55,6 @@
 		'save': [updated: Item, original: Item | null]
 		'cancel': [item: Item | null]
 		'delete': [item: Item]
-		'delete-multiple': [items: Item[]]
-		'save-multiple': [items: Item[]]
 	}>()
 
 	const options = defineModel<Partial<DataOptions>>('options', {
@@ -192,7 +186,6 @@
 			'item.actions',
 			'item.data-table-select',
 			'bulk-actions',
-			'bulk-edit-form',
 			...editableColumns.value.map(key => `item.${key}`),
 		])
 		return Object.keys(slots).filter(
@@ -216,49 +209,25 @@
 		emit('delete', item)
 	}
 
-	// --- Actions groupées (suppression + édition en masse) -------------------
+	// --- Sélection multiple : barre d'actions pilotée par le projet ----------
+	// Le composant ne fournit que la sélection résolue et l'effacement ; les
+	// actions groupées (édition, suppression…) sont rendues par le projet via
+	// le slot `#bulk-actions`.
 	const {
 		selectedItems,
 		clearSelection,
-		bulkEditIndex,
-		bulkEditCount,
-		currentBulkDraft,
-		setBulkField,
-		bulkPrev,
-		bulkNext,
-		initBulkEdit,
-		collectEditedItems,
 	} = useTableBulkActions({
 		items: filteredItems,
 		model,
 		getItemValue,
 	})
 
-	function onDeleteMultiple(): void {
-		emit('delete-multiple', selectedItems.value)
-		clearSelection()
-	}
-
-	// Édition séquentielle des lignes sélectionnées via une boîte de dialogue
-	const bulkEditOpen = ref(false)
-
-	function openBulkEdit(): void {
-		initBulkEdit()
-		bulkEditOpen.value = true
-	}
-
-	function onSaveMultiple(): void {
-		emit('save-multiple', collectEditedItems())
-		bulkEditOpen.value = false
-		clearSelection()
-	}
-
-	// La barre s'affiche en sélection multiple, dès qu'au moins une ligne est
-	// cochée, si une action intégrée est activée ou un slot `#bulk-actions` fourni
+	// La barre s'affiche dès qu'au moins une ligne est sélectionnée et qu'un
+	// slot `#bulk-actions` fournit les actions.
 	const showBulkActions = computed<boolean>(() =>
 		props.showSelect
 		&& selectedItems.value.length > 0
-		&& (props.showDeleteSelected || props.showEditSelected || !!slots['bulk-actions']),
+		&& !!slots['bulk-actions'],
 	)
 
 	// Use the ARIA accessibility composable
@@ -362,85 +331,19 @@
 			{{ statusMessage }}
 		</div>
 
-		<!-- Barre d'actions groupées (suppression + édition en masse) -->
+		<!-- Barre d'actions groupées : actions pilotées par le projet via #bulk-actions -->
 		<TableBulkActions
 			v-if="showBulkActions"
 			:count="selectedItems.length"
-			:label="props.bulkSelectedLabel ? props.bulkSelectedLabel(selectedItems.length) : undefined"
-			:show-delete="props.showDeleteSelected"
-			:show-edit="props.showEditSelected"
-			@delete="onDeleteMultiple"
-			@edit="openBulkEdit"
 			@clear="clearSelection"
 		>
 			<slot
-				v-if="$slots['bulk-actions']"
 				name="bulk-actions"
 				:selected="selectedItems"
 				:count="selectedItems.length"
 				:clear-selection="clearSelection"
-				:delete-selected="onDeleteMultiple"
-				:edit-selected="openBulkEdit"
 			/>
 		</TableBulkActions>
-
-		<!-- Boîte de dialogue d'édition séquentielle des lignes sélectionnées -->
-		<DialogBox
-			v-if="props.showEditSelected || $slots['bulk-edit-form']"
-			v-model="bulkEditOpen"
-			:title="props.bulkEditTitle ? props.bulkEditTitle(bulkEditCount) : locales.bulkEditTitle(bulkEditCount)"
-			:confirm-btn-text="locales.apply"
-			width="500px"
-			@confirm="onSaveMultiple"
-			@cancel="bulkEditOpen = false"
-		>
-			<slot
-				name="bulk-edit-form"
-				:draft="currentBulkDraft"
-				:columns="editableHeaderColumns"
-				:set-field="setBulkField"
-				:index="bulkEditIndex"
-				:count="bulkEditCount"
-				:prev="bulkPrev"
-				:next="bulkNext"
-			>
-				<!-- Navigation entre les lignes sélectionnées -->
-				<div
-					v-if="bulkEditCount > 1"
-					class="d-flex align-center justify-space-between mb-4"
-				>
-					<VBtn
-						:icon="mdiChevronLeft"
-						variant="text"
-						size="small"
-						:disabled="bulkEditIndex === 0"
-						:aria-label="locales.previousRow"
-						@click="bulkPrev"
-					/>
-					<span class="text-body-2">{{ props.bulkEditPositionLabel ? props.bulkEditPositionLabel(bulkEditIndex + 1, bulkEditCount) : locales.bulkEditPosition(bulkEditIndex + 1, bulkEditCount) }}</span>
-					<VBtn
-						:icon="mdiChevronRight"
-						variant="text"
-						size="small"
-						:disabled="bulkEditIndex === bulkEditCount - 1"
-						:aria-label="locales.nextRow"
-						@click="bulkNext"
-					/>
-				</div>
-				<div class="d-flex flex-column ga-3">
-					<SyTextField
-						v-for="colKey in editableHeaderColumns"
-						:key="`bulk-edit-${colKey}`"
-						:model-value="(currentBulkDraft[colKey] as string)"
-						:label="columnTitle(colKey)"
-						density="compact"
-						hide-details
-						disable-error-handling
-						@update:model-value="setBulkField(colKey, $event)"
-					/>
-				</div>
-			</slot>
-		</DialogBox>
 
 		<VDataTable
 			ref="table"

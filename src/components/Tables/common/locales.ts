@@ -8,16 +8,10 @@ export const locales = {
 	selectAllRows: 'Sélectionner toutes les lignes',
 	selectRow: 'Sélectionner la ligne',
 
-	// Bulk actions locales
+	// Bulk actions locales (barre de sélection ; actions pilotées par le projet via #bulk-actions)
 	bulkActions: 'Actions groupées',
 	selectedCount: (count: number) => count <= 1 ? `${count} élément sélectionné` : `${count} éléments sélectionnés`,
-	deleteSelected: 'Supprimer la sélection',
-	editSelected: 'Modifier la sélection',
 	clearSelection: 'Désélectionner tout',
-	bulkEditTitle: (count: number) => count <= 1 ? `Modifier ${count} élément` : `Modifier ${count} éléments`,
-	bulkEditPosition: (current: number, total: number) => `Ligne ${current} sur ${total}`,
-	previousRow: 'Ligne précédente',
-	nextRow: 'Ligne suivante',
 
 	// Pagination locales
 	pagination: {

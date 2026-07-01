@@ -150,28 +150,22 @@ L'éditeur d'une cellule peut être personnalisé via le slot `#edit.<columnKey>
 
 <Canvas story={{height: '350px'}} of={RowEditing.Default} />
 
-### Actions groupées (suppression et édition en masse)
+### Sélection multiple et actions groupées
 
-En s'appuyant sur la sélection (`show-select`), une barre d'actions groupées apparaît dès qu'au moins une ligne est cochée :
+En s'appuyant sur la sélection (`show-select`), une **barre d'actions groupées** apparaît dès qu'au moins une ligne est cochée **et** qu'un slot `#bulk-actions` fournit les actions.
 
-- **`show-delete-selected`** ajoute un bouton de suppression en masse → émet `delete-multiple(items)`.
-- **`show-edit-selected`** ajoute un bouton d'édition groupée : une boîte de dialogue édite **chaque ligne sélectionnée séquentiellement** (navigation par flèches ‹ ›), pré-remplie avec ses propres données. À la validation, `save-multiple(items)` reçoit **uniquement les lignes modifiées** (objets complets).
+Le tableau **n'embarque pas** de formulaire d'édition groupée : il expose uniquement la sélection via le slot `#bulk-actions` (`{ selected, count, clearSelection }`). Le **projet** rend ses propres actions (éditer, supprimer, exporter…) et pilote leur UX avec une `DialogBox`, un drawer, une page dédiée, etc. Ce choix garde le composant léger et laisse au projet la maîtrise de l'accessibilité et des types de champs.
 
 <Source dark code={`
-<SyTable
-  show-select
-  show-delete-selected
-  show-edit-selected
-  selection-key="id"
-  v-model="selected"
-  :headers="headers"
-  :items="items"
-  @delete-multiple="onDeleteMultiple"
-  @save-multiple="onSaveMultiple"
-/>
+<SyTable show-select selection-key="id" v-model="selected" :headers="headers" :items="items">
+  <template #bulk-actions="{ selected, count, clearSelection }">
+    <VBtn @click="openEdit(selected, clearSelection)">Modifier {{ count }}</VBtn>
+    <VBtn @click="openDelete(selected, clearSelection)">Supprimer {{ count }}</VBtn>
+  </template>
+</SyTable>
 `}/>
 
-La barre est personnalisable via le slot `#bulk-actions` (`{ selected, count, clearSelection, deleteSelected, editSelected }`) et le formulaire d'édition via `#bulk-edit-form`. Les libellés se personnalisent avec les props `bulk-selected-label`, `bulk-edit-title` et `bulk-edit-position-label`.
+Voir la story ci-dessous : édition « appliquer une valeur à la sélection » et suppression, pilotées par des `DialogBox` du Design System (un variant séquentiel avancé est aussi fourni).
 
 <Canvas story={{height: '350px'}} of={BulkActions.Default} />
 

@@ -121,16 +121,6 @@ export type SyTableProps = {
 	hideDefaultFooter?: boolean
 	/** Active l'édition inline des lignes (cf. flag `editable` par colonne) */
 	editable?: boolean
-	/** Affiche la barre d'actions groupées avec un bouton de suppression en masse (nécessite `showSelect`) */
-	showDeleteSelected?: boolean
-	/** Affiche le bouton d'édition groupée dans la barre d'actions (nécessite `showSelect`) */
-	showEditSelected?: boolean
-	/** Personnalise le libellé de décompte de la barre d'actions groupées (reçoit le nombre de lignes) */
-	bulkSelectedLabel?: (count: number) => string
-	/** Personnalise le titre de la boîte d'édition groupée (reçoit le nombre de lignes) */
-	bulkEditTitle?: (count: number) => string
-	/** Personnalise le libellé de position en édition séquentielle (ligne courante / total) */
-	bulkEditPositionLabel?: (current: number, total: number) => string
 }
 
 export type SyServerTableProps = {
@@ -162,14 +152,4 @@ export type SyServerTableProps = {
 	hideDefaultFooter?: boolean
 	/** Active l'édition inline des lignes (cf. flag `editable` par colonne) */
 	editable?: boolean
-	/** Affiche la barre d'actions groupées avec un bouton de suppression en masse (nécessite `showSelect`) */
-	showDeleteSelected?: boolean
-	/** Affiche le bouton d'édition groupée dans la barre d'actions (nécessite `showSelect`) */
-	showEditSelected?: boolean
-	/** Personnalise le libellé de décompte de la barre d'actions groupées (reçoit le nombre de lignes) */
-	bulkSelectedLabel?: (count: number) => string
-	/** Personnalise le titre de la boîte d'édition groupée (reçoit le nombre de lignes) */
-	bulkEditTitle?: (count: number) => string
-	/** Personnalise le libellé de position en édition séquentielle (ligne courante / total) */
-	bulkEditPositionLabel?: (current: number, total: number) => string
 }
