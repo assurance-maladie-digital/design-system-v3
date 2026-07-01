@@ -5,6 +5,7 @@ import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
 import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
+import { commonTableArgTypes } from '../common/storyArgTypes'
 
 const meta = {
 	title: 'Composants/Tableaux/SyServerTable/Édition de lignes',
@@ -19,6 +20,7 @@ const meta = {
 		controls: { hideNoControlsWarning: true },
 	},
 	argTypes: {
+		...commonTableArgTypes,
 		'item.actions': {
 			description: 'Slot d\'actions par ligne. Reçoit les helpers d\'édition `{ item, isEditing, edit, save, cancel, remove }`.',
 			control: undefined,
