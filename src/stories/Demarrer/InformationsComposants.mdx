@@ -60,7 +60,12 @@ import { useState } from 'react';
   const [versionFilter, setVersionFilter] = useState('');
   const [a11yVersionFilter, setA11yVersionFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
-  const [activeTab, setActiveTab] = useState('functional');
+  const [cardTabs, setCardTabs] = useState({});
+
+  const defaultTab = a11yVersionFilter ? 'a11y' : 'functional';
+  const getCardTab = (componentName) => cardTabs[componentName] || defaultTab;
+  const setCardTab = (componentName, tab) =>
+    setCardTabs((prev) => ({ ...prev, [componentName]: tab }));
 
   // Versions fonctionnelles distinctes, triées de la plus récente à la plus ancienne.
   const versions = [...new Set(infoData.results.map((r) => r.functionalVersion).filter(Boolean))].sort(
@@ -132,7 +137,8 @@ import { useState } from 'react';
       (statusFilter === '' || item.status === statusFilter),
   );
 
-  const tabClass = (tab) => `ci-tab ${activeTab === tab ? 'active' : ''} ${tab === 'a11y' ? 'a11y' : ''}`;
+  const tabClass = (tab, activeTab) =>
+    `ci-tab ${activeTab === tab ? 'active' : ''} ${tab === 'a11y' ? 'a11y' : ''}`;
 
   return (
     <div className="ci-container">
@@ -189,6 +195,7 @@ import { useState } from 'react';
 
       <div className="ci-grid">
         {rows.map((item) => {
+          const activeTab = getCardTab(item.componentName);
           const isFunctional = activeTab === 'functional';
           const version = isFunctional ? item.functionalVersion : item.a11yVersion;
           const date = isFunctional ? item.functionalDate : item.a11yDate;
@@ -209,15 +216,15 @@ import { useState } from 'react';
               </div>
               <div className="ci-tabs">
                 <button
-                  className={tabClass('functional')}
-                  onClick={() => setActiveTab('functional')}
+                  className={tabClass('functional', activeTab)}
+                  onClick={() => setCardTab(item.componentName, 'functional')}
                   aria-pressed={isFunctional}
                 >
                   Fonctionnel
                 </button>
                 <button
-                  className={tabClass('a11y')}
-                  onClick={() => setActiveTab('a11y')}
+                  className={tabClass('a11y', activeTab)}
+                  onClick={() => setCardTab(item.componentName, 'a11y')}
                   aria-pressed={!isFunctional}
                 >
                   Accessibilité
