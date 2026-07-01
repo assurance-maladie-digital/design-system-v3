@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from '@/components/Accordion/config'
-	import { mdiChevronRight } from '@mdi/js'
+	import { mdiChevronDown } from '@mdi/js' // Changement d'icône
 	// Importation des composables
 	import useAccordionState from './composables/useAccordionState'
 	import useAccordionGroupCommunication from './composables/useAccordionGroupCommunication'
@@ -132,7 +132,7 @@
 							:class="{ 'sy-accordion-icon--open': isItemOpen(item.id) }"
 						>
 							<SyIcon
-								:icon="mdiChevronRight"
+								:icon="mdiChevronDown"
 								decorative
 							/>
 						</span>
@@ -149,7 +149,7 @@
 							:class="{ 'sy-accordion-icon--open': isItemOpen(item.id) }"
 						>
 							<SyIcon
-								:icon="mdiChevronRight"
+								:icon="mdiChevronDown"
 								decorative
 							/>
 						</span>
@@ -206,129 +206,129 @@
 
 <style lang="scss" scoped>
 .sy-accordion {
-	width: 100%;
+    width: 100%;
 }
 
 .sy-accordion-item {
-	border: 1px solid #e0e0e0;
-	border-radius: 4px;
-	margin-bottom: 8px;
-	overflow: hidden;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    margin-bottom: 8px;
+    overflow: hidden;
 }
 
 /* Mode compact : supprime l'espacement entre les éléments */
 .sy-accordion--compact .sy-accordion-item {
-	margin-bottom: 0;
-	border-radius: 0;
+    margin-bottom: 0;
+    border-radius: 0;
 
-	&:first-child {
-		border-top-left-radius: 4px;
-		border-top-right-radius: 4px;
-	}
+    &:first-child {
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
+    }
 
-	&:last-child {
-		border-bottom-left-radius: 4px;
-		border-bottom-right-radius: 4px;
-	}
+    &:last-child {
+        border-bottom-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+    }
 
-	/* Évite les doubles bordures entre les éléments */
-	& + .sy-accordion-item {
-		border-top: none;
-	}
+    /* Évite les doubles bordures entre les éléments */
+    & + .sy-accordion-item {
+        border-top: none;
+    }
 }
 
 .sy-accordion-heading {
-	margin: 0;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	width: 100%;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .sy-accordion-button {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	width: 100%;
-	padding: 16px;
-	border: none;
-	text-align: left;
-	cursor: pointer;
-	font-weight: 500;
-	transition: outline-color 0.3s ease;
-	outline: 2px solid transparent;
-	outline-offset: 2px;
-	position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 16px;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-weight: 500;
+    transition: outline-color 0.3s ease;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    position: relative;
 }
 
 .sy-accordion-title {
-	display: flex;
-	align-items: center;
-	gap: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
-	&.sy-accordion-title--icon-right {
-		justify-content: space-between;
-		width: 100%;
-	}
+    &.sy-accordion-title--icon-right {
+        justify-content: space-between;
+        width: 100%;
+    }
 }
 
 .sy-accordion-right-content {
-	display: flex;
-	align-items: center;
-	margin-left: 16px;
+    display: flex;
+    align-items: center;
+    margin-left: 16px;
 }
 
 .sy-accordion-button:hover,
 .sy-accordion-content--open + .sy-accordion-button,
 .sy-accordion-item:has(.sy-accordion-content--open) .sy-accordion-button {
-	background-color: rgba(var(--accordion-active-color), 0.15);
+    background-color: rgba(var(--accordion-active-color), 0.15);
 
-	.sy-accordion-title {
-		/* La couleur sera appliquée via la classe text-{color} dans le template */
-		color: rgb(var(--accordion-active-color));
-	}
+    .sy-accordion-title {
+        /* La couleur sera appliquée via la classe text-{color} dans le template */
+        color: rgb(var(--accordion-active-color));
+    }
 }
 
 /* Style pour l'accordéon ouvert (focus programmatique) */
 .sy-accordion-button--focused:not(:focus-visible) {
-	background-color: rgba(var(--accordion-focus-color), 0.15);
-	border: 3px solid rgb(var(--accordion-focus-color));
-	z-index: 1;
+    background-color: rgba(var(--accordion-focus-color), 0.15);
+    border: 3px solid rgb(var(--accordion-focus-color));
+    z-index: 1;
 }
 
 /* Style pour l'état de focus lors de la navigation au clavier */
 .sy-accordion-button:focus-visible {
-	outline: none;
-	position: relative;
-	background-color: rgba(var(--accordion-focus-color), 0.15);
-	border: 3px solid rgb(var(--accordion-focus-color));
-	transition: background-color 0.2s ease;
+    outline: none;
+    position: relative;
+    background-color: rgba(var(--accordion-focus-color), 0.15);
+    border: 3px solid rgb(var(--accordion-focus-color));
+    transition: background-color 0.2s ease;
 }
 
 .sy-accordion-content {
-	max-height: 0;
-	overflow: hidden;
-	margin-top: 1px;
-	transition: max-height 0.3s ease;
+    max-height: 0;
+    overflow: hidden;
+    margin-top: 1px;
+    transition: max-height 0.3s ease;
 }
 
 .sy-accordion-content--open {
-	max-height: 500px;
+    max-height: 500px;
 }
 
 .sy-accordion-content:focus-visible {
-	outline: 2px solid rgb(var(--accordion-focus-color));
-	border-top: 2px solid rgb(var(--accordion-focus-color));
-	outline-offset: 2px;
-	margin-top: 2px;
+    outline: 2px solid rgb(var(--accordion-focus-color));
+    border-top: 2px solid rgb(var(--accordion-focus-color));
+    outline-offset: 2px;
+    margin-top: 2px;
 }
 
 .sy-accordion-content-inner {
-	padding: 16px;
+    padding: 16px;
 }
 
 .sy-accordion-content-text {
-	margin: 0;
+    margin: 0;
 }
 
 /* Style pour les éléments interactifs à l'intérieur du contenu */
@@ -337,36 +337,36 @@
 .sy-accordion-content input:focus-visible,
 .sy-accordion-content select:focus-visible,
 .sy-accordion-content textarea:focus-visible {
-	outline: 2px solid rgb(var(--accordion-focus-color));
-	outline-offset: 2px;
-	box-shadow: 0 0 0 2px rgba(var(--accordion-focus-color), 0.3);
+    outline: 2px solid rgb(var(--accordion-focus-color));
+    outline-offset: 2px;
+    box-shadow: 0 0 0 2px rgba(var(--accordion-focus-color), 0.3);
 }
 
 .sy-accordion-content-item {
-	margin: 0;
+    margin: 0;
 }
 
 .sy-accordion-content-line {
-	line-height: 1.5;
+    line-height: 1.5;
 }
 
 /* Style pour l'icône de flèche */
 .sy-accordion-icon {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	transition: transform 0.3s ease;
-	flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
 }
 
-/* Rotation de l'icône lorsque l'accordéon est ouvert */
+/* Rotation de l'icône lorsque l'accordéon est ouvert : pointe vers le haut */
 .sy-accordion-icon--open {
-	transform: rotate(90deg);
+    transform: rotate(180deg);
 }
 
 /* Style pour les éléments désactivés */
 .sy-accordion-button--disabled {
-	opacity: 0.6;
-	cursor: not-allowed;
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 </style>
