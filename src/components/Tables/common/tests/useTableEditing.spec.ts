@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest'
-import { useTableEditing } from '../useTableEditing'
+import { describe, it, expect, vi, afterEach } from 'vitest'
+import { isEditableAsText, useTableEditing } from '../useTableEditing'
 
 // Identité de ligne : la clé `id` si présente, sinon l'objet lui-même
 // (reproduit le comportement de `getItemValue` issu de la sélection).
@@ -93,5 +93,73 @@ describe('useTableEditing', () => {
 
 		expect(isRowEditing(a)).toBe(true)
 		expect(isRowEditing(b)).toBe(false)
+	})
+
+	describe('isEditableAsText', () => {
+		it('vrai pour les valeurs primitives (chaîne, nombre, booléen, nullish)', () => {
+			expect(isEditableAsText('abc')).toBe(true)
+			expect(isEditableAsText(42)).toBe(true)
+			expect(isEditableAsText(true)).toBe(true)
+			expect(isEditableAsText(null)).toBe(true)
+			expect(isEditableAsText(undefined)).toBe(true)
+		})
+
+		it('faux pour les valeurs non primitives (objet, tableau, Date)', () => {
+			expect(isEditableAsText({ a: 1 })).toBe(false)
+			expect(isEditableAsText([1, 2])).toBe(false)
+			expect(isEditableAsText(new Date('2020-01-01'))).toBe(false)
+		})
+	})
+
+	describe('valeur non primitive : avertissement au démarrage de l\'édition', () => {
+		afterEach(() => vi.restoreAllMocks())
+
+		const headers = [
+			{ title: 'Nom', key: 'name', editable: true },
+			{ title: 'Rôle', key: 'role', editable: true },
+		]
+
+		it('avertit si une colonne éditable a une valeur non primitive sans slot #edit', () => {
+			const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+			const { startEditing } = useTableEditing({
+				getItemValue,
+				headers: () => headers,
+				editable: () => true,
+				hasEditSlot: () => false,
+			})
+
+			startEditing({ id: 1, name: 'Jean', role: { code: 'admin' } })
+
+			expect(warn).toHaveBeenCalledTimes(1)
+			expect(warn.mock.calls[0]?.[0]).toContain('#edit.role')
+		})
+
+		it('n\'avertit pas si un slot #edit est fourni pour la colonne', () => {
+			const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+			const { startEditing } = useTableEditing({
+				getItemValue,
+				headers: () => headers,
+				editable: () => true,
+				hasEditSlot: colKey => colKey === 'role',
+			})
+
+			startEditing({ id: 1, name: 'Jean', role: { code: 'admin' } })
+
+			expect(warn).not.toHaveBeenCalled()
+		})
+
+		it('n\'avertit pas pour des valeurs primitives', () => {
+			const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+			const { startEditing } = useTableEditing({
+				getItemValue,
+				headers: () => headers,
+				editable: () => true,
+				hasEditSlot: () => false,
+			})
+
+			startEditing({ id: 1, name: 'Jean', role: 'admin' })
+
+			expect(warn).not.toHaveBeenCalled()
+		})
 	})
 })

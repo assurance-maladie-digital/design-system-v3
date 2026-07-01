@@ -133,9 +133,15 @@ Les boutons d'action se placent dans le slot `#item.actions`, qui expose les hel
 
 L'éditeur d'une cellule peut être personnalisé via le slot `#edit.<columnKey>` (reçoit `{ item, value, update }`).
 
+> ⚠️ L'éditeur par défaut (`SyTextField`) ne gère que les **valeurs primitives** (chaîne, nombre, booléen). Pour une colonne dont la valeur est un **objet, un tableau ou une `Date`**, fournissez un slot `#edit.<columnKey>` avec un éditeur adapté (`SySelect`, `DatePicker`, `<input type="date">`…) — sinon aucun éditeur n'est rendu et un avertissement est émis en développement. Le rendu **hors édition** d'une telle valeur passe par `#item.<columnKey>`.
+
 **Évènements** : `edit(item)` · `save(updated, original)` · `cancel(item)` · `delete(item)`.
 
 <Canvas story={{height: '350px'}} of={RowEditing.Default} />
+
+Édition d'une valeur non primitive (`Date`) via `#edit.<columnKey>` :
+
+<Canvas story={{height: '350px'}} of={RowEditing.NonPrimitiveEditor} />
 
 ### Sélection multiple et actions groupées
 

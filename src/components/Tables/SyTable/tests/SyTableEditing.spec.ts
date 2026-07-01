@@ -146,4 +146,27 @@ describe('SyTable — édition inline', () => {
 
 		expect(wrapper.emitted('delete')?.[0]?.[0]).toMatchObject({ id: 1 })
 	})
+
+	it('valeur non primitive sans slot #edit : n\'affiche pas d\'éditeur par défaut (+ avertit)', async () => {
+		const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+		const objHeaders = [
+			{ title: 'Nom', key: 'lastname', editable: true },
+			{ title: 'Rôle', key: 'role', editable: true },
+			{ title: 'Actions', key: 'actions', sortable: false },
+		]
+		const objItems = [{ id: 1, lastname: 'Beauchesne', role: { code: 'admin' } }]
+		const wrapper = mount(SyTable, {
+			props: { options: {}, suffix: 'editing-obj', editable: true, selectionKey: 'id' },
+			attrs: { items: objItems, headers: objHeaders },
+			slots: { 'item.actions': actionsSlot },
+		})
+
+		await wrapper.find('.edit-btn').trigger('click')
+
+		// lastname (chaîne) → 1 éditeur ; role (objet, sans slot #edit) → aucun
+		expect(wrapper.findAllComponents(SyTextField)).toHaveLength(1)
+		// un avertissement guide le dev vers #edit.role
+		expect(warn).toHaveBeenCalledWith(expect.stringContaining('#edit.role'))
+		warn.mockRestore()
+	})
 })

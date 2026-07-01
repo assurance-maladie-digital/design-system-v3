@@ -4,6 +4,7 @@ import { mdiCheck, mdiClose, mdiDelete, mdiPencil } from '@mdi/js'
 import type { VDataTable } from 'vuetify/components'
 import SyTable from './SyTable.vue'
 import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
+import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 
 const meta = {
 	title: 'Composants/Tableaux/SyTable/Édition de lignes',
@@ -315,6 +316,150 @@ export const CustomEditor: Story = {
 		{ id: 1, firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
 		{ id: 2, firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
 	])
+
+	function onSave(updated) {
+		const index = items.value.findIndex(i => i.id === updated.id)
+		if (index !== -1) {
+			items.value[index] = { ...items.value[index], ...updated }
+		}
+	}
+</script>
+`,
+			},
+		],
+	},
+}
+
+/**
+ * Éditer une colonne dont la valeur est **non primitive** (ici une `Date`), via
+ * le **DatePicker du Design System**. L'éditeur texte par défaut ne gère que les
+ * primitives ; pour un objet / `Date` / tableau, il faut fournir un slot
+ * `#edit.<colonne>` avec un éditeur adapté (sinon aucun éditeur n'est rendu et un
+ * avertissement est émis en dev). Le rendu **hors édition** passe par `#item.<colonne>`.
+ *
+ * Le `DatePicker` travaille avec une **chaîne formatée** (`format`) : on convertit
+ * donc `Date` ↔ chaîne dans le slot pour conserver une `Date` en donnée.
+ */
+export const NonPrimitiveEditor: Story = {
+	args: {
+		suffix: 'row-editing-nonprimitive',
+		editable: true,
+		selectionKey: 'id',
+		hideDefaultFooter: true,
+	},
+	render: args => ({
+		components: { SyTable, SyIconButton, DatePicker },
+		setup() {
+			const rows = [
+				{ id: 1, firstname: 'Virginie', birthdate: new Date('1985-04-12') },
+				{ id: 2, firstname: 'Étienne', birthdate: new Date('1990-11-30') },
+			]
+			const items = ref([...rows])
+			const editHeaders = [
+				{ title: 'Prénom', key: 'firstname', editable: true },
+				{ title: 'Naissance', key: 'birthdate', editable: true },
+				{ title: 'Actions', key: 'actions', sortable: false, align: 'end' as const },
+			]
+			function onSave(updated: Record<string, unknown>) {
+				const index = items.value.findIndex(i => i.id === updated.id)
+				if (index !== -1) {
+					items.value[index] = { ...items.value[index], ...updated } as typeof rows[number]
+				}
+			}
+			// Pont Date ↔ chaîne « DD/MM/YYYY » attendue par le DatePicker du DS
+			const dateToStr = (d: unknown): string =>
+				d instanceof Date
+					? [String(d.getDate()).padStart(2, '0'), String(d.getMonth() + 1).padStart(2, '0'), d.getFullYear()].join('/')
+					: ''
+			const strToDate = (s: unknown): Date | null => {
+				if (typeof s !== 'string') return null
+				const [dd, mm, yyyy] = s.split('/').map(Number)
+				if (!dd || !mm || !yyyy) return null
+				return new Date(yyyy, mm - 1, dd)
+			}
+
+			return { args, editHeaders, items, onSave, dateToStr, strToDate, mdiCheck, mdiClose, mdiPencil }
+		},
+		template: `
+			<SyTable v-bind="args" :headers="editHeaders" :items="items" @save="onSave">
+				<!-- Rendu hors édition d'une valeur objet : via #item.<colonne> -->
+				<template #item.birthdate="{ item }">
+					{{ item.birthdate.toLocaleDateString('fr-FR') }}
+				</template>
+				<!-- Édition d'une valeur non primitive : DatePicker du DS via #edit.<colonne> -->
+				<template #edit.birthdate="{ value, update }">
+					<DatePicker :model-value="dateToStr(value)" format="DD/MM/YYYY" density="compact" hide-details disable-error-handling @update:model-value="s => update(strToDate(s))" />
+				</template>
+				<template #item.actions="{ isEditing, edit, save, cancel }">
+					<template v-if="!isEditing">
+						<SyIconButton :icon="mdiPencil" label="Éditer" density="comfortable" @click-icon-button="edit" />
+					</template>
+					<template v-else>
+						<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="onSuccessVariant" style="opacity: 0.6" @click-icon-button="save" />
+						<SyIconButton :icon="mdiClose" label="Annuler" density="comfortable" @click-icon-button="cancel" />
+					</template>
+				</template>
+			</SyTable>
+		`,
+	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyTable suffix="row-editing-nonprimitive" editable selection-key="id" hide-default-footer :headers="headers" :items="items" @save="onSave">
+		<!-- Rendu hors édition d'une valeur non primitive -->
+		<template #item.birthdate="{ item }">
+			{{ item.birthdate.toLocaleDateString('fr-FR') }}
+		</template>
+		<!-- Éditeur adapté : DatePicker du DS (l'éditeur texte par défaut ne gère pas les objets/Date) -->
+		<template #edit.birthdate="{ value, update }">
+			<DatePicker :model-value="dateToStr(value)" format="DD/MM/YYYY" density="compact" hide-details disable-error-handling @update:model-value="s => update(strToDate(s))" />
+		</template>
+		<template #item.actions="{ isEditing, edit, save, cancel }">
+			<template v-if="!isEditing">
+				<SyIconButton :icon="mdiPencil" label="Éditer" density="comfortable" @click-icon-button="edit" />
+			</template>
+			<template v-else>
+				<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="onSuccessVariant" @click-icon-button="save" />
+				<SyIconButton :icon="mdiClose" label="Annuler" density="comfortable" @click-icon-button="cancel" />
+			</template>
+		</template>
+	</SyTable>
+</template>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { SyTable, SyIconButton, DatePicker } from '@cnamts/synapse'
+	import { mdiCheck, mdiClose, mdiPencil } from '@mdi/js'
+
+	const headers = [
+		{ title: 'Prénom', key: 'firstname', editable: true },
+		{ title: 'Naissance', key: 'birthdate', editable: true },
+		{ title: 'Actions', key: 'actions', sortable: false, align: 'end' },
+	]
+
+	const items = ref([
+		{ id: 1, firstname: 'Virginie', birthdate: new Date('1985-04-12') },
+		{ id: 2, firstname: 'Étienne', birthdate: new Date('1990-11-30') },
+	])
+
+	// La valeur est une Date (non primitive) : DatePicker du DS via le slot #edit,
+	// avec conversion Date <-> chaîne « DD/MM/YYYY »
+	const dateToStr = (d) => d instanceof Date
+		? [String(d.getDate()).padStart(2, '0'), String(d.getMonth() + 1).padStart(2, '0'), d.getFullYear()].join('/')
+		: ''
+	const strToDate = (s) => {
+		if (typeof s !== 'string') return null
+		const [dd, mm, yyyy] = s.split('/').map(Number)
+		if (!dd || !mm || !yyyy) return null
+		return new Date(yyyy, mm - 1, dd)
+	}
 
 	function onSave(updated) {
 		const index = items.value.findIndex(i => i.id === updated.id)

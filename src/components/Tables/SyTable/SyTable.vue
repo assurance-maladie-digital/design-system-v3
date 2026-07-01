@@ -23,7 +23,7 @@
 	import { useClickableTableRow } from '../common/useClickableTableRow'
 	import { useTableRowCheckboxAccessibility } from '../common/useTableRowCheckboxAccessibility'
 	import type { ClickableTableRowPropsInput } from '../common/useClickableTableRow'
-	import { useTableEditing } from '../common/useTableEditing'
+	import { isEditableAsText, useTableEditing } from '../common/useTableEditing'
 	import { useTableBulkActions } from '../common/useTableBulkActions'
 	import TableBulkActions from '../common/TableBulkActions.vue'
 
@@ -164,6 +164,7 @@
 		getItemValue,
 		headers: () => props.headers,
 		editable: () => props.editable,
+		hasEditSlot: colKey => !!slots[`edit.${colKey}`],
 	})
 
 	// Libellé d'une colonne, pour le label accessible de l'éditeur par défaut
@@ -547,6 +548,7 @@
 					:update="(value: unknown) => setDraftField(colKey, value)"
 				>
 					<SyTextField
+						v-if="isEditableAsText(editDraft[colKey])"
 						:model-value="(editDraft[colKey] as string)"
 						:label="columnTitle(colKey)"
 						density="compact"

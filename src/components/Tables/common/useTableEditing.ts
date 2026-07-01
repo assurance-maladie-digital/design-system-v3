@@ -1,6 +1,20 @@
 import { computed, ref, shallowRef, toValue, type ComputedRef, type MaybeRefOrGetter, type Ref } from 'vue'
 import type { DataTableHeaders, Item } from './types'
 
+/**
+ * Indique si une valeur peut être éditée par l'éditeur texte par défaut
+ * (`SyTextField`). Les valeurs **non primitives** (objet, tableau, `Date`…) ne
+ * peuvent pas l'être proprement : le projet doit fournir un slot
+ * `#edit.<colonne>` avec un éditeur adapté (SySelect, DatePicker…).
+ */
+export function isEditableAsText(value: unknown): boolean {
+	return value === null
+		|| value === undefined
+		|| typeof value === 'string'
+		|| typeof value === 'number'
+		|| typeof value === 'boolean'
+}
+
 interface UseTableEditingParams {
 	/**
 	 * Fonction d'identité de ligne (réutilise celle de la sélection :
@@ -11,6 +25,8 @@ interface UseTableEditingParams {
 	headers?: MaybeRefOrGetter<DataTableHeaders[] | undefined>
 	/** Active l'édition inline des lignes (prop `editable` du tableau). */
 	editable?: MaybeRefOrGetter<boolean>
+	/** Indique si un slot `#edit.<colonne>` est fourni par le projet pour une colonne. */
+	hasEditSlot?: (colKey: string) => boolean
 }
 
 interface UseTableEditingReturn {
@@ -42,8 +58,13 @@ interface UseTableEditingReturn {
  * Ne mute jamais les données d'origine : il travaille sur un brouillon et
  * renvoie l'item modifié au composant, à charge pour l'application parente
  * de persister via l'évènement `@save`.
+ *
+ * L'éditeur par défaut (`SyTextField`) ne gère que les valeurs primitives. Pour
+ * une colonne dont la valeur est un objet/tableau/`Date`, le projet **doit**
+ * fournir un slot `#edit.<colonne>` (un avertissement est émis en développement
+ * dans le cas contraire).
  */
-export function useTableEditing({ getItemValue, headers, editable }: UseTableEditingParams): UseTableEditingReturn {
+export function useTableEditing({ getItemValue, headers, editable, hasEditSlot }: UseTableEditingParams): UseTableEditingReturn {
 	// `shallowRef` : on conserve la valeur brute (clé d'identité et item original)
 	// sans la transformer en proxy réactif, sinon les comparaisons par référence
 	// (`===`) échoueraient pour une identité de ligne basée sur l'objet lui-même.
@@ -63,6 +84,21 @@ export function useTableEditing({ getItemValue, headers, editable }: UseTableEdi
 		toValue(editable) ? editableHeaderColumns.value : [],
 	)
 
+	// Colonnes déjà signalées (évite de spammer la console à chaque édition)
+	const warnedColumns = new Set<string>()
+
+	function warnNonPrimitiveColumns(item: Item): void {
+		for (const colKey of editableColumns.value) {
+			if (warnedColumns.has(colKey)) continue
+			if (!isEditableAsText(item[colKey]) && !(hasEditSlot?.(colKey) ?? false)) {
+				warnedColumns.add(colKey)
+				console.warn(
+					`[SyTable] La colonne « ${colKey} » a une valeur non primitive : l'éditeur par défaut ne peut pas l'éditer. Fournissez un slot #edit.${colKey} avec un éditeur adapté (SySelect, DatePicker…).`,
+				)
+			}
+		}
+	}
+
 	function isRowEditing(item: Item): boolean {
 		return editingKey.value !== null && getItemValue(item) === editingKey.value
 	}
@@ -71,6 +107,9 @@ export function useTableEditing({ getItemValue, headers, editable }: UseTableEdi
 		editingKey.value = getItemValue(item)
 		originalItem.value = item
 		draft.value = { ...item }
+		if (import.meta.env.DEV) {
+			warnNonPrimitiveColumns(item)
+		}
 	}
 
 	function setDraftField(key: string, value: unknown): void {
