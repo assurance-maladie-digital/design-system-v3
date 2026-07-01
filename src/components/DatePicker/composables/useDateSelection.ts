@@ -1,5 +1,5 @@
-import { ref } from 'vue'
-import type { Ref } from 'vue'
+import { ref, unref } from 'vue'
+import type { Ref, MaybeRef } from 'vue'
 import { DATE_PICKER_MESSAGES } from '../constants/messages'
 
 /**
@@ -9,8 +9,8 @@ import { DATE_PICKER_MESSAGES } from '../constants/messages'
 export function useDateSelection(
 	parseDate: (dateStr: string, format: string) => Date | null,
 	selectedDates: Ref<Date | (Date | null)[] | null>,
-	format: string,
-	displayRange: boolean,
+	format: MaybeRef<string>,
+	displayRange: MaybeRef<boolean>,
 ) {
 	// Stockage des dates de début et de fin pour les plages
 	const rangeBoundaryDates = ref<[Date | null, Date | null] | null>(null)
@@ -54,7 +54,7 @@ export function useDateSelection(
 			const dates = input
 				.map((item) => {
 					if (item instanceof Date) return item
-					return item ? parseDate(item, format) : null
+					return item ? parseDate(item, unref(format)) : null
 				})
 				.filter((date): date is Date => date !== null)
 
@@ -64,7 +64,7 @@ export function useDateSelection(
 				return
 			}
 
-			if (displayRange && dates.length >= 2) {
+			if (unref(displayRange) && dates.length >= 2) {
 				// Trier les dates pour s'assurer que nous avons la première et la dernière
 				dates.sort((a, b) => a.getTime() - b.getTime())
 
@@ -94,9 +94,9 @@ export function useDateSelection(
 		}
 
 		// Cas 2: Input est une chaîne de caractères (saisie manuelle)
-		if (!displayRange) {
+		if (!unref(displayRange)) {
 			// Mode date unique
-			const date = input && typeof input === 'string' ? parseDate(input, format) : null
+			const date = input && typeof input === 'string' ? parseDate(input, unref(format)) : null
 			selectedDates.value = date === null ? null : date
 			rangeBoundaryDates.value = null
 		}
@@ -104,8 +104,8 @@ export function useDateSelection(
 			// Mode plage de dates
 			const dates = input.split(DATE_PICKER_MESSAGES.RANGE_SEPARATOR)
 			if (dates.length === 2) {
-				const startDate = parseDate(dates[0]!, format)
-				const endDate = parseDate(dates[1]!, format)
+				const startDate = parseDate(dates[0]!, unref(format))
+				const endDate = parseDate(dates[1]!, unref(format))
 				if (startDate && endDate) {
 					// Stocker les dates de début et de fin pour la plage
 					rangeBoundaryDates.value = [startDate, endDate]

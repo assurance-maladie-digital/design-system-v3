@@ -49,6 +49,37 @@ color: rgb(var(--v-theme-primary));
 background: rgba(var(--v-theme-primary), 0.08);
 ```
 
+#### Déclinaisons (`darken` / `lighten`)
+
+Chaque couleur de la palette dispose d'une échelle de 11 paliers. **Le nom n'a pas de tiret avant le chiffre** : `grey-darken60`, et **non** `grey-darken-60`.
+
+```css
+border-color: rgb(var(--v-theme-grey-darken60));
+background: rgb(var(--v-theme-grey-lighten90));
+```
+
+Échelle : `darken80, darken60, darken40, darken20, base, lighten20, lighten40, lighten60, lighten80, lighten90, lighten97` — identique pour toutes les couleurs (`blue`, `green`, `grey`…). Liste complète : Storybook → **Design Tokens / Couleurs**. Source : `src/designTokens/tokens/baseColors.ts`.
+
+> ⚠️ Le format `<couleur>-darken-1` / `-lighten-2` (avec tiret avant le chiffre, petits paliers) est **réservé à la palette AmeliPro 2026** (`--v-theme-ap-grey-darken-1`), généré par `buildColorClassMap`. Il ne s'applique pas à l'échelle principale.
+
+#### Génération & dépannage — « `--v-theme-…` n'est pas défini »
+
+Ces variables **ne sont pas livrées dans un fichier CSS** : elles sont **générées au runtime par Vuetify** à partir du thème de Synapse, et uniquement dans le périmètre du thème actif. Si une variable `--v-theme-*` est « non définie » côté projet consommateur, vérifier dans l'ordre :
+
+1. **Le nom** — `grey-darken60` (sans tiret avant le chiffre). Cf. ci-dessus.
+2. **Le thème Vuetify de Synapse est bien câblé.** La palette n'est émise que si les `themes` de Synapse sont passés à `createVuetify`. Utiliser l'instance fournie :
+
+   ```ts
+   import { createVuetifyInstance } from '@cnamts/synapse/vuetifyConfig'
+
+   app.use(createVuetifyInstance())
+   ```
+
+   Un `createVuetify` maison qui ne reprend pas `theme.themes.<marque>.colors` de Synapse ne génère pas les variables de palette.
+3. **Le scope du thème.** Vuetify définit ces variables sous le sélecteur `.v-theme--<marque>` (posé sur `<v-app>`). Une règle CSS appliquée **hors de `<v-app>`** (style global sur `body`, overlay/teleport sorti de l'app…) ne résout pas `var(--v-theme-…)`.
+
+Pour vérifier : inspecter un élément **à l'intérieur de `<v-app>`** (onglet *Computed*) et y chercher la variable ; ou grep `grey-darken60` dans la balise `<style>` du thème injectée par Vuetify dans le `<head>`. Absente du `<style>` ⇒ cause n°2 ; présente mais non résolue à l'usage ⇒ cause n°3.
+
 ---
 
 ## 2. Shim de compatibilité legacy
