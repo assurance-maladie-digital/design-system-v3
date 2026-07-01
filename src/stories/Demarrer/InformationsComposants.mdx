@@ -137,8 +137,7 @@ import { useState } from 'react';
   return (
     <div className="ci-container">
       <div className="ci-meta">
-        <strong>{rows.length}</strong> composant(s) affiché(s) ·{' '}
-        <strong>{infoData.totalCount}</strong> au total · Dernière génération&nbsp;:{' '}
+        <strong>{infoData.totalCount}</strong> composants · Dernière génération&nbsp;:{' '}
         {new Date(infoData.date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
       </div>
 
