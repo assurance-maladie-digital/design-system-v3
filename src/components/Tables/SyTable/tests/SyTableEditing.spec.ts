@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeAll, afterEach } from 'vitest'
-import { mount } from '@vue/test-utils'
-import { h } from 'vue'
+import { mount, flushPromises } from '@vue/test-utils'
+import { defineComponent, h, ref } from 'vue'
 import SyTable from '../SyTable.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 
@@ -168,5 +168,118 @@ describe('SyTable — édition inline', () => {
 		// un avertissement guide le dev vers #edit.role
 		expect(warn).toHaveBeenCalledWith(expect.stringContaining('#edit.role'))
 		warn.mockRestore()
+	})
+})
+
+// Composant hôte réaliste : il rend un SyTable éditable et **persiste** lui-même
+// les changements sur `items` via `@save` (le tableau ne mute jamais `items`).
+const Host = defineComponent({
+	components: { SyTable },
+	setup() {
+		const items = ref([
+			{ id: 1, firstname: 'Virginie', lastname: 'Beauchesne' },
+			{ id: 2, firstname: 'Étienne', lastname: 'Salois' },
+		])
+		const hostHeaders = [
+			{ title: 'Nom', key: 'lastname', editable: true },
+			{ title: 'Prénom', key: 'firstname', editable: true },
+			{ title: 'Actions', key: 'actions', sortable: false },
+		]
+		function onSave(updated: Record<string, unknown>) {
+			const i = items.value.findIndex(x => x.id === updated.id)
+			if (i !== -1) {
+				items.value[i] = { ...items.value[i], ...updated } as typeof items.value[number]
+			}
+		}
+		return { items, hostHeaders, onSave }
+	},
+	template: `
+		<SyTable suffix="edit-integration" editable selection-key="id" hide-default-footer :headers="hostHeaders" :items="items" @save="onSave">
+			<template #item.actions="{ isEditing, edit, save, cancel }">
+				<button v-if="!isEditing" class="edit-btn" type="button" @click="edit">Éditer</button>
+				<template v-else>
+					<button class="save-btn" type="button" @click="save">Valider</button>
+					<button class="cancel-btn" type="button" @click="cancel">Annuler</button>
+				</template>
+			</template>
+		</SyTable>
+	`,
+})
+
+describe('SyTable — édition inline (intégration bout-en-bout, rendu HTML)', () => {
+	beforeAll(() => {
+		global.visualViewport = {
+			width: 1024,
+			height: 768,
+			scale: 1,
+			offsetLeft: 0,
+			offsetTop: 0,
+			pageLeft: 0,
+			pageTop: 0,
+			onresize: null,
+			onscroll: null,
+			addEventListener: vi.fn(),
+			removeEventListener: vi.fn(),
+			dispatchEvent: vi.fn(),
+		} as unknown as typeof globalThis.visualViewport
+	})
+
+	afterEach(() => {
+		vi.resetAllMocks()
+		document.body.innerHTML = ''
+	})
+
+	it('affiche les valeurs initiales dans le tableau', () => {
+		const wrapper = mount(Host)
+		const body = wrapper.find('tbody').text()
+		expect(body).toContain('Beauchesne')
+		expect(body).toContain('Virginie')
+	})
+
+	it('édite une ligne de bout en bout : la nouvelle valeur remplace l\'ancienne dans le HTML', async () => {
+		const wrapper = mount(Host)
+
+		// 1) Entre en édition sur la 1re ligne (clic réel sur le bouton du slot)
+		await wrapper.findAll('.edit-btn')[0].trigger('click')
+
+		// 2) L'éditeur de la colonne "Nom" est un vrai <input> du DOM, pré-rempli
+		const input = wrapper.find('tbody tr input')
+		expect((input.element as HTMLInputElement).value).toBe('Beauchesne')
+
+		// 3) Saisie via le DOM (pas via $emit) puis validation
+		await input.setValue('Dupont')
+		await wrapper.find('.save-btn').trigger('click')
+		await flushPromises()
+
+		// 4) Contrôle depuis le HTML rendu : nouvelle valeur affichée, ancienne partie
+		const body = wrapper.find('tbody').text()
+		expect(body).toContain('Dupont')
+		expect(body).not.toContain('Beauchesne')
+		// La ligne est repassée en lecture (le bouton Éditer est de retour)
+		expect(wrapper.findAll('.edit-btn')).toHaveLength(2)
+	})
+
+	it('annuler l\'édition laisse le HTML inchangé', async () => {
+		const wrapper = mount(Host)
+
+		await wrapper.findAll('.edit-btn')[0].trigger('click')
+		const input = wrapper.find('tbody tr input')
+		await input.setValue('Zzz')
+		await wrapper.find('.cancel-btn').trigger('click')
+		await flushPromises()
+
+		const body = wrapper.find('tbody').text()
+		expect(body).toContain('Beauchesne')
+		expect(body).not.toContain('Zzz')
+	})
+
+	it('n\'édite qu\'une seule ligne à la fois (les autres restent en lecture)', async () => {
+		const wrapper = mount(Host)
+
+		await wrapper.findAll('.edit-btn')[0].trigger('click')
+
+		const rowsWithInput = wrapper.findAll('tbody tr').filter(r => r.find('input').exists())
+		expect(rowsWithInput).toHaveLength(1)
+		expect(wrapper.find('tbody').text()).toContain('Salois')
 	})
 })

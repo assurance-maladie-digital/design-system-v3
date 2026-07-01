@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeAll, afterEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
-import { h } from 'vue'
+import { defineComponent, h, ref } from 'vue'
 import SyServerTable from '../SyServerTable.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 
@@ -126,5 +126,119 @@ describe('SyServerTable — édition inline', () => {
 		await wrapper.find('.remove-btn').trigger('click')
 
 		expect(wrapper.emitted('delete')?.[0]?.[0]).toMatchObject({ id: 1 })
+	})
+})
+
+// Composant hôte réaliste : il rend un SyServerTable éditable et **persiste**
+// lui-même les changements sur `items` via `@save` (le tableau ne mute jamais `items`).
+const Host = defineComponent({
+	components: { SyServerTable },
+	setup() {
+		const items = ref([
+			{ id: 1, firstname: 'Virginie', lastname: 'Beauchesne' },
+			{ id: 2, firstname: 'Étienne', lastname: 'Salois' },
+		])
+		const hostHeaders = [
+			{ title: 'Nom', key: 'lastname', editable: true },
+			{ title: 'Prénom', key: 'firstname', editable: true },
+			{ title: 'Actions', key: 'actions', sortable: false },
+		]
+		function onSave(updated: Record<string, unknown>) {
+			const i = items.value.findIndex(x => x.id === updated.id)
+			if (i !== -1) {
+				items.value[i] = { ...items.value[i], ...updated } as typeof items.value[number]
+			}
+		}
+		return { items, hostHeaders, onSave }
+	},
+	template: `
+		<SyServerTable suffix="edit-integration" editable selection-key="id" hide-default-footer :headers="hostHeaders" :items="items" :server-items-length="items.length" @save="onSave">
+			<template #item.actions="{ isEditing, edit, save, cancel }">
+				<button v-if="!isEditing" class="edit-btn" type="button" @click="edit">Éditer</button>
+				<template v-else>
+					<button class="save-btn" type="button" @click="save">Valider</button>
+					<button class="cancel-btn" type="button" @click="cancel">Annuler</button>
+				</template>
+			</template>
+		</SyServerTable>
+	`,
+})
+
+async function mountHost() {
+	const wrapper = mount(Host)
+	await flushPromises()
+	return wrapper
+}
+
+describe('SyServerTable — édition inline (intégration bout-en-bout, rendu HTML)', () => {
+	beforeAll(() => {
+		global.visualViewport = {
+			width: 1024,
+			height: 768,
+			scale: 1,
+			offsetLeft: 0,
+			offsetTop: 0,
+			pageLeft: 0,
+			pageTop: 0,
+			onresize: null,
+			onscroll: null,
+			addEventListener: vi.fn(),
+			removeEventListener: vi.fn(),
+			dispatchEvent: vi.fn(),
+		} as unknown as typeof globalThis.visualViewport
+	})
+
+	afterEach(() => {
+		vi.resetAllMocks()
+		document.body.innerHTML = ''
+	})
+
+	it('affiche les valeurs initiales dans le tableau', async () => {
+		const wrapper = await mountHost()
+		const body = wrapper.find('tbody').text()
+		expect(body).toContain('Beauchesne')
+		expect(body).toContain('Virginie')
+	})
+
+	it('édite une ligne de bout en bout : la nouvelle valeur remplace l\'ancienne dans le HTML', async () => {
+		const wrapper = await mountHost()
+
+		await wrapper.findAll('.edit-btn')[0].trigger('click')
+
+		const input = wrapper.find('tbody tr input')
+		expect((input.element as HTMLInputElement).value).toBe('Beauchesne')
+
+		await input.setValue('Dupont')
+		await wrapper.find('.save-btn').trigger('click')
+		await flushPromises()
+
+		const body = wrapper.find('tbody').text()
+		expect(body).toContain('Dupont')
+		expect(body).not.toContain('Beauchesne')
+		expect(wrapper.findAll('.edit-btn')).toHaveLength(2)
+	})
+
+	it('annuler l\'édition laisse le HTML inchangé', async () => {
+		const wrapper = await mountHost()
+
+		await wrapper.findAll('.edit-btn')[0].trigger('click')
+		const input = wrapper.find('tbody tr input')
+		await input.setValue('Zzz')
+		await wrapper.find('.cancel-btn').trigger('click')
+		await flushPromises()
+
+		const body = wrapper.find('tbody').text()
+		expect(body).toContain('Beauchesne')
+		expect(body).not.toContain('Zzz')
+	})
+
+	it('n\'édite qu\'une seule ligne à la fois (les autres restent en lecture)', async () => {
+		const wrapper = await mountHost()
+
+		await wrapper.findAll('.edit-btn')[0].trigger('click')
+
+		const rowsWithInput = wrapper.findAll('tbody tr').filter(r => r.find('input').exists())
+		expect(rowsWithInput).toHaveLength(1)
+		expect(wrapper.find('tbody').text()).toContain('Salois')
 	})
 })
