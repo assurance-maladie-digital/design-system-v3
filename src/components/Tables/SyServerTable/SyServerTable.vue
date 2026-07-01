@@ -225,19 +225,14 @@
 	const {
 		selectedItems,
 		clearSelection,
+		showBulkActions,
 	} = useTableBulkActions({
 		items: displayedItems,
 		model,
 		getItemValue,
+		showSelect: () => props.showSelect,
+		hasBulkActionsSlot: () => !!slots['bulk-actions'],
 	})
-
-	// La barre s'affiche dès qu'au moins une ligne est sélectionnée et qu'un
-	// slot `#bulk-actions` fournit les actions.
-	const showBulkActions = computed<boolean>(() =>
-		props.showSelect
-		&& selectedItems.value.length > 0
-		&& !!slots['bulk-actions'],
-	)
 
 	// Use the ARIA accessibility composable
 	const {

@@ -57,4 +57,69 @@ describe('useTableBulkActions', () => {
 
 		expect(selectedItems.value).toEqual([a])
 	})
+
+	describe('showBulkActions', () => {
+		it('vrai quand : showSelect actif + au moins une ligne sélectionnée + slot #bulk-actions', () => {
+			const model = ref<unknown[]>([1])
+			const { showBulkActions } = useTableBulkActions({
+				items,
+				model,
+				getItemValue,
+				showSelect: () => true,
+				hasBulkActionsSlot: () => true,
+			})
+			expect(showBulkActions.value).toBe(true)
+		})
+
+		it('faux si showSelect est désactivé', () => {
+			const model = ref<unknown[]>([1])
+			const { showBulkActions } = useTableBulkActions({
+				items,
+				model,
+				getItemValue,
+				showSelect: () => false,
+				hasBulkActionsSlot: () => true,
+			})
+			expect(showBulkActions.value).toBe(false)
+		})
+
+		it('faux si aucune ligne n\'est sélectionnée', () => {
+			const model = ref<unknown[]>([])
+			const { showBulkActions } = useTableBulkActions({
+				items,
+				model,
+				getItemValue,
+				showSelect: () => true,
+				hasBulkActionsSlot: () => true,
+			})
+			expect(showBulkActions.value).toBe(false)
+		})
+
+		it('faux si aucun slot #bulk-actions n\'est fourni', () => {
+			const model = ref<unknown[]>([1])
+			const { showBulkActions } = useTableBulkActions({
+				items,
+				model,
+				getItemValue,
+				showSelect: () => true,
+				hasBulkActionsSlot: () => false,
+			})
+			expect(showBulkActions.value).toBe(false)
+		})
+
+		it('réactif : bascule à `true` dès qu\'une ligne est sélectionnée', () => {
+			const model = ref<unknown[]>([])
+			const { showBulkActions } = useTableBulkActions({
+				items,
+				model,
+				getItemValue,
+				showSelect: () => true,
+				hasBulkActionsSlot: () => true,
+			})
+			expect(showBulkActions.value).toBe(false)
+
+			model.value = [1]
+			expect(showBulkActions.value).toBe(true)
+		})
+	})
 })
