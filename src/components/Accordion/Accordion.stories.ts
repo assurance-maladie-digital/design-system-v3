@@ -35,6 +35,16 @@ const meta: Meta<typeof Accordion> = {
 			description: 'Identifiant de groupe pour synchroniser le focus entre plusieurs accordions',
 			default: 'default',
 		},
+		'iconPosition': {
+			control: { type: 'select' },
+			options: ['left', 'right'],
+			description: 'Position de l\'icône de flèche (gauche ou droite)',
+			default: 'left',
+			table: {
+				type: { summary: '\'left\' | \'right\'' },
+				defaultValue: { summary: 'left' },
+			},
+		},
 		'modelValue': {
 			control: 'object',
 			description: 'Liste des identifiants des éléments ouverts (v-model)',
@@ -102,10 +112,69 @@ export const Default: Story = {
 			return { args }
 		},
 		template: `
-			<div class="pa-4">
-				<Accordion v-bind="args" />
-			</div>
-		`,
+            <div class="pa-4">
+                <Accordion v-bind="args" />
+            </div>
+        `,
+	}),
+}
+
+export const IconPosition: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				language: 'vue',
+				name: 'Template',
+				code: `<template>
+  <!-- Icône à gauche (par défaut) -->
+  <Accordion
+    :items="[
+      { id: 'item1', title: 'Section 1', content: 'Contenu de la section 1' },
+      { id: 'item2', title: 'Section 2', content: 'Contenu de la section 2' }
+    ]"
+    icon-position="left"
+  />
+
+  <!-- Icône à droite -->
+  <Accordion
+    :items="[
+      { id: 'item3', title: 'Section 3', content: 'Contenu de la section 3' },
+      { id: 'item4', title: 'Section 4', content: 'Contenu de la section 4' }
+    ]"
+    icon-position="right"
+  />
+</template>`,
+			},
+		],
+	},
+	args: {
+		items: defaultItems.slice(0, 2),
+		headingLevel: 3,
+	},
+	render: args => ({
+		components: { Accordion },
+		setup() {
+			return { args }
+		},
+		template: `
+            <div class="pa-4">
+                <h3>Icône à gauche (par défaut)</h3>
+                <p class="mb-4">L'icône de flèche est positionnée à gauche du titre</p>
+                <Accordion 
+                    v-bind="args" 
+                    icon-position="left"
+                    groupId="icon-position-story"
+                />
+                
+                <h3 class="mt-8">Icône à droite</h3>
+                <p class="mb-4">L'icône de flèche est positionnée à droite du titre</p>
+                <Accordion 
+                    v-bind="args" 
+                    icon-position="right"
+                    groupId="icon-position-story"
+                />
+            </div>
+        `,
 	}),
 }
 

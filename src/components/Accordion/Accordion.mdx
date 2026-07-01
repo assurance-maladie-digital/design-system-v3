@@ -35,6 +35,12 @@ L'accordéon standard affiche une liste d'éléments avec un titre et un contenu
 - **Type** : `(value: string[]) => void`
 - **Description** : Émis lors de l'ouverture ou la fermeture d'un élément. La valeur est le tableau mis à jour des identifiants des éléments ouverts.
 
+## Position de l'icône
+
+Vous pouvez choisir de positionner l'icône de flèche à gauche (par défaut) ou à droite du titre.
+
+<Canvas of={AccordionStories.IconPosition} />
+
 ## Contenu avec objet
 
 L'accordéon peut également afficher un contenu structuré sous forme d'objet avec un titre et un contenu détaillé.
@@ -95,6 +101,7 @@ const accordionItems = [
       v-model="openItems"
       :items="accordionItems"
       :heading-level="3"
+      icon-position="left"
     />
   </main>
 </template>
