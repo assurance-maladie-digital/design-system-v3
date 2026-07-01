@@ -144,7 +144,7 @@ export const ComponentsList: StoryObj = {
 						title: 'SocialMediaLinks',
 						description: 'Utilisé pour afficher des liens de réseaux sociaux dans le composant Footer.',
 						link: '/?path=/docs/composants-navigation-socialmedialinks--docs',
-						img: '/components/social-media-links.svg',
+						img: `/components/social-media-links${isAp ? '-ap' : ''}.svg`,
 						category: 'Navigation',
 					},
 					{
@@ -593,6 +593,7 @@ export const ComponentsList: StoryObj = {
 					'DataListGroup',
 					'DataList',
 					'SyBtnMenu',
+					'SocialMediaLinks',
 					'RatingPicker',
 				]
 

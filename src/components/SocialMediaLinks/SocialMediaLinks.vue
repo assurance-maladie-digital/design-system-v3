@@ -74,7 +74,7 @@ li {
 }
 
 .vd-social-media-links-label.text--primary {
-	color: rgb(var(--v-theme-blue-base));
+	color: rgb(var(--v-theme-primary));
 	font-weight: 600;
 	margin: 0;
 	padding: 0;
@@ -91,7 +91,7 @@ li {
 }
 
 .vd-social-media-links-icon {
-	color: rgb(var(--v-theme-grey-base)) !important;
+	color: rgb(var(--v-theme-onSurfaceVariant)) !important;
 }
 
 .vd-social-media-links-icon--x {
@@ -105,7 +105,7 @@ li {
 	border: 0;
 
 	&:focus-visible {
-		outline: 3px solid rgb(var(--v-theme-blue-base));
+		outline: 3px solid rgb(var(--v-theme-primary));
 		outline-offset: -1px;
 	}
 }
