@@ -209,8 +209,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			return
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
 		if (!rootEl) return
 
 		const iso = toISO(date)
@@ -291,8 +290,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	}
 
 	const clickDateButton = (date: Date) => {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
-		const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
 		if (!rootEl) return
 
 		const iso = toISO(date)
@@ -480,8 +478,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 		// Utiliser un watcher pour attendre que le VDatePicker soit disponible
 		const tryAttach = () => {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
-			const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
+			const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
 
 			// Chercher le conteneur parent avec tabindex="-1" (le focusTrap)
 			const containerEl = rootEl?.parentElement?.querySelector('[tabindex="-1"]') as HTMLElement | undefined
@@ -521,8 +518,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		}
 
 		if (!isListenerAttached) return
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
-		const rootEl = (datePickerRef.value as any)?.$el as HTMLElement | undefined
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
 
 		// Chercher le conteneur parent avec tabindex="-1" (le focusTrap)
 		const containerEl = rootEl?.parentElement?.querySelector('[tabindex="-1"]') as HTMLElement | undefined

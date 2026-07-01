@@ -1,4 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+﻿import type { Meta, StoryObj } from '@storybook/vue3'
+import type { CalendarModeProps } from '@/components/DatePicker/types'
+import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { ref, onMounted } from 'vue'
@@ -211,12 +213,12 @@ const meta = {
 		},
 		'customRules': {
 			control: 'object',
-			description: 'Règles de validation personnalisées pour la date saisie ({ type: string, options: any }[]), affichant des erreurs si non respectées',
+			description: 'Règles de validation personnalisées pour la date saisie (DatePickerRule[]), affichant des erreurs si non respectées',
 			defaultValue: [],
 		},
 		'customWarningRules': {
 			control: 'object',
-			description: 'Règles d\'avertissement personnalisées ({ type: string, options: any }[]) pour afficher des messages d\'attention sans bloquer la validation',
+			description: 'Règles d\'avertissement personnalisées (DatePickerRule[]) pour afficher des messages d\'attention sans bloquer la validation',
 			defaultValue: [],
 		},
 		'disabled': {
@@ -327,7 +329,14 @@ const meta = {
 			control: 'text',
 		},
 	},
-} as Meta<typeof DatePicker>
+} as Meta<CalendarModeProps & {
+	'onUpdate:modelValue'?: (value: DateModelValue) => void
+	'onFocus'?: () => void
+	'onBlur'?: () => void
+	'onClosed'?: () => void
+	'onInput'?: (value: string) => void
+	'onDate-selected'?: (value: DateModelValue) => void
+}>
 
 export default meta
 
@@ -653,7 +662,7 @@ export const WithValidation: Story = {
 							type: 'custom',
 							options: {
 								validate: (value) => {
-									if (value && new Date(value).getFullYear() === 2024) {
+									if (value && new Date(value as string).getFullYear() === 2024) {
 										return false
 									}
 									return true
@@ -679,8 +688,8 @@ export const WithValidation: Story = {
 			{
 				type: 'custom',
 				options: {
-					validate: (value: string) => {
-						if (value && new Date(value).getFullYear() === 2024) {
+					validate: (value: unknown) => {
+						if (value && new Date(value as string).getFullYear() === 2024) {
 							return false
 						}
 						return true

@@ -931,7 +931,7 @@ export const WithWarning: Story = {
 						label="Date avec avertissement"
 						:custom-warning-rules="[
 							{ type: 'notBeforeDate', options: { 
-								warningMessage: 'Attention : la date est antérieure à la date de référence',
+								warningMessage: 'Attention : la date est antérieure à la date de référence (01/01/2031)',
 								date: '01/01/2031',
 								isWarning: true,
 							} }
@@ -972,8 +972,8 @@ export const WithWarning: Story = {
 		'customWarningRules': [
 			{
 				type: 'notBeforeDate', options: {
-					warningMessage: 'Attention : la date est antérieure à la date de référence',
-					date: '01/01/2024',
+					warningMessage: 'Attention : la date est antérieure à la date de référence (01/01/2031)',
+					date: '01/01/2031',
 					isWarning: true,
 				},
 			},

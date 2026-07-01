@@ -1,4 +1,4 @@
-	<script lang="ts" setup>
+﻿	<script lang="ts" setup>
 	import {
 		type ComponentPublicInstance,
 		computed,
@@ -15,12 +15,10 @@
 		useDateInitialization,
 	} from '@/composables/date/useDateInitializationDayjs'
 	import {
-		useAsteriskDisplay,
 		useCalendarKeyboardNavigation,
-		useDateFormatValidation,
 		useDatePickerFocusTrap,
 		useDatePickerState,
-		useDatePickerValidationBridge,
+		useDatePickerValidation,
 		useDatePickerViewMode,
 		useDatePickerVisibility,
 		useDateRangeValidation,
@@ -28,9 +26,11 @@
 		useDisplayedDateString,
 		useHolidayHighlighting,
 		useInputBlurHandler,
-		useManualDateValidation,
 		useMonthButtonCustomization,
 		useTodayButton,
+		validateDateFormat as validateDateFormatUtil,
+		isDateComplete as isDateCompleteUtil,
+		useDatePickerDerivedValues,
 	} from '../composables'
 	import dayjs from 'dayjs'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -39,11 +39,16 @@
 	import { useInputHandler } from '../composables/useInputHandler'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
-	import type { DateObjectValue } from '../types'
+	import type { DateObjectValue, DatePickerCommonProps } from '../types'
+	import { DatePickerCommonDefaults } from '../types'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
+	import { useDateTextInputProps } from './props/dateTextInputProps'
+	import { useDateTextInputMenuProps } from './props/dateTextInputMenuProps'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import { mdiCalendarMonthOutline } from '@mdi/js'
 	import { getDateDescription as getDateDescriptionUtil } from '../utils/dateFormattingUtils'
+	import { validateEmptyOrIncompleteDate, adaptCustomRules } from '../utils/validationUtils'
+	import type { ValidationRule } from '@/composables/validation/useValidation'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
@@ -125,91 +130,18 @@
 		})
 	}
 
-	const props = withDefaults(
-		defineProps<{
-			autoClamp?: boolean
-			bgColor?: string
-			/** @deprecated Utilisez isBirthDate à la place */
-			birthDate?: boolean
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
-			customRules?: { type: string, options: any }[]
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
-			customWarningRules?: { type: string, options: any }[]
-			dateFormatReturn?: string
-			density?: 'default' | 'comfortable' | 'compact'
-			disableErrorHandling?: boolean
-			disabled?: boolean
-			displayAppendIcon?: boolean
-			displayAsterisk?: boolean
-			displayHolidayDays?: boolean
-			displayIcon?: boolean
-			displayPrependIcon?: boolean
-			displayRange?: boolean
-			displayTodayButton?: boolean
-			displayWeekendDays?: boolean
-			format?: string
-			headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
-			hint?: string
-			isBirthDate?: boolean
-			isOutlined?: boolean
-			isValidateOnBlur?: boolean
-			label: string
-			modelValue?: DateInput
-			noCalendar?: boolean
-			noIcon?: boolean
-			period?: {
-				max?: string
-				min?: string
-			}
-			persistentHint?: boolean
-			placeholder?: string
-			readonly?: boolean
-			required?: boolean
-			showSuccessMessages?: boolean
-			showWeekNumber?: boolean
-			textFieldActivator?: boolean
-			title?: string | false
-			width?: string
-		}>(),
-		{
-			autoClamp: false,
-			bgColor: 'white',
-			birthDate: false,
-			customRules: () => [],
-			customWarningRules: () => [],
-			dateFormatReturn: '',
-			density: 'default',
-			disableErrorHandling: false,
-			disabled: false,
-			displayAppendIcon: false,
-			displayAsterisk: false,
-			displayHolidayDays: true,
-			displayIcon: true,
-			displayPrependIcon: true,
-			displayRange: false,
-			displayTodayButton: true,
-			displayWeekendDays: true,
-			format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
-			headingLevel: 3,
-			hint: undefined,
-			isBirthDate: false,
-			isOutlined: true,
-			isValidateOnBlur: true,
-			modelValue: undefined,
-			noCalendar: false,
-			noIcon: false,
-			period: () => ({ min: '', max: '' }),
-			persistentHint: false,
-			placeholder: undefined,
-			readonly: false,
-			required: false,
-			showSuccessMessages: false,
-			showWeekNumber: false,
-			textFieldActivator: false,
-			title: false,
-			width: '100%',
-		},
-	)
+	const props = withDefaults(defineProps<DatePickerCommonProps>(), DatePickerCommonDefaults)
+
+	// Guard centralisé pour disabled/readonly
+	const isInteractionDisabled = computed(() => props.disabled || props.readonly)
+
+	// Helpers pour le focus sur l'input
+	const getCalendarInputElement = () =>
+		dateCalendarTextInputRef.value?.$el?.querySelector?.('input') as HTMLInputElement | null
+
+	const focusCalendarInput = () => {
+		getCalendarInputElement()?.focus({ preventScroll: true })
+	}
 
 	const emit = defineEmits<{
 		(e: 'update:modelValue', value: DateModelValue): void
@@ -223,9 +155,7 @@
 	/**
 	 * Derived values
 	 */
-	const returnFormat = computed(() => props.dateFormatReturn || props.format)
-	const minDate = computed(() => props.period?.min || dayjs().subtract(200, 'year').format(props.format))
-	const maxDate = computed(() => props.period?.max || dayjs().add(200, 'year').format(props.format))
+	const { returnFormat, minDate, maxDate } = useDatePickerDerivedValues(props)
 
 	/**
 	 * Validation + messages
@@ -250,27 +180,19 @@
 	const hasInteracted = ref(false)
 	const preventCloseOnInternalUpdate = ref(false)
 
-	const { validateDateFormat, isDateComplete } = useDateFormatValidation({
-		format: props.format,
-		dateFormatReturn: props.dateFormatReturn,
-		required: props.required,
-		hasInteracted,
-		disableErrorHandling: props.disableErrorHandling,
-	})
-
 	const {
+		validation,
 		errors,
 		warnings,
-		successes,
 		validateField,
 		clearValidation,
 		validateDates,
-	} = useDatePickerValidationBridge({
-		showSuccessMessages: true,
-		disableErrorHandling: props.disableErrorHandling,
-		noCalendar: props.noCalendar,
-		required: props.required,
-		displayRange: props.displayRange,
+	} = useDatePickerValidation({
+		showSuccessMessages: computed(() => props.showSuccessMessages),
+		disableErrorHandling: computed(() => props.disableErrorHandling),
+		noCalendar: computed(() => props.noCalendar),
+		required: computed(() => props.required),
+		displayRange: computed(() => props.displayRange),
 		customRules: computed(() => props.customRules),
 		customWarningRules: computed(() => props.customWarningRules),
 		selectedDates,
@@ -278,17 +200,24 @@
 		currentRangeIsValid,
 		getRangeValidationError,
 		revalidateOnCustomRulesChange: true,
+		readonly: computed(() => props.readonly),
+		skipValidationWhenReadonly: true,
 	})
 	const errorMessages = computed(() => errors.value)
 	const warningMessages = computed(() => warnings.value)
-	const successMessages = computed(() => successes.value)
 
-	const getMessageClasses = () => ({
+	const messageClasses = computed(() => ({
 		'dp-width': true,
 		'v-messages__message--error': errorMessages.value.length > 0,
 		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length === 0,
-		'v-messages__message--success': successMessages.value.length > 0 && errorMessages.value.length === 0 && warningMessages.value.length === 0,
-	})
+		'v-messages__message--success': validation.hasSuccess.value,
+	}))
+
+	// Props regroupées pour DateTextInput (mode noCalendar)
+	const dateTextInputProps = computed(() => useDateTextInputProps(props, labelWithAsterisk, errorMessages))
+
+	// Props regroupées pour DateTextInput (mode VMenu)
+	const dateTextInputMenuProps = computed(() => useDateTextInputMenuProps(props, labelWithAsterisk, errorMessages))
 
 	const {
 		toggleDatePicker,
@@ -299,9 +228,9 @@
 		handleClickOutside,
 		handleKeyboardNavigation,
 	} = useDatePickerVisibility({
-		disabled: props.disabled,
-		readonly: props.readonly,
-		textFieldActivator: props.textFieldActivator,
+		disabled: isInteractionDisabled,
+		readonly: computed(() => props.readonly),
+		textFieldActivator: computed(() => props.textFieldActivator),
 		isDatePickerVisible,
 		isManualInputActive,
 		hasInteracted,
@@ -348,7 +277,7 @@
 	}
 	// Range handling
 	const rangeBoundaryDates = ref<[Date | null, Date | null] | null>(null)
-	const dateSelectionResult = useDateSelection(parseDate, selectedDates, props.format, props.displayRange)
+	const dateSelectionResult = useDateSelection(parseDate, selectedDates, computed(() => props.format), computed(() => props.displayRange))
 	watch(
 		() => dateSelectionResult.rangeBoundaryDates.value,
 		(newValue) => {
@@ -367,9 +296,9 @@
 	} = useDatePickerState({
 		selectedDates,
 		rangeBoundaryDates,
-		format: props.format,
+		format: computed(() => props.format),
 		dateFormatReturn: props.dateFormatReturn,
-		displayRange: props.displayRange,
+		displayRange: computed(() => props.displayRange),
 		parseDate,
 		formatDate,
 		initializeSelectedDates,
@@ -596,7 +525,7 @@
 		isDatePickerVisible,
 		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
 		onClose: () => emit('closed'),
-		restoreFocus: () => queueMicrotask(() => menuActivatorRef.value?.querySelector?.('input')?.focus({ preventScroll: true })),
+		restoreFocus: () => queueMicrotask(() => focusCalendarInput()),
 	})
 
 	/**
@@ -658,6 +587,10 @@
 						currentYear.value = newYear
 						currentMonthName.value = dayjs(date).format('MMMM')
 						currentYearName.value = newYear
+						nextTick(() => {
+							customizeMonthButton()
+							markHolidayDays()
+						})
 					}
 				}
 			})
@@ -672,23 +605,21 @@
 	 * Input handling (text field)
 	 */
 	const inputHandler = useInputHandler({
-		format: props.format,
-		displayRange: props.displayRange,
+		format: computed(() => props.format),
+		displayRange: computed(() => props.displayRange),
 		dateFormatReturn: props.dateFormatReturn,
-		disableErrorHandling: props.disableErrorHandling,
+		disableErrorHandling: computed(() => props.disableErrorHandling),
 		parseDate,
 		formatDate,
 		generateDateRange: dateSelectionResult.generateDateRange,
-		isDateComplete: isDateComplete.value,
+		isDateComplete: (val: string) => isDateCompleteUtil(val, props.format),
 		displayFormattedDate,
 		selectedDates,
 		isFormatting,
 		isManualInputActive,
 		isUpdatingFromInternal,
 		clearValidation,
-		validateField: (value, rules, warningRules) =>
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- sorry
-			validateField(value, rules as any[], warningRules as any[]),
+		validateField: (value, rules, warningRules) => validateField(value, rules, warningRules),
 		updateModel: value => updateModel(value as DateModelValue),
 		emitInput: value => emit('input', value),
 		inputRef: dateCalendarTextInputRef as Ref<ComponentPublicInstance | null>,
@@ -789,34 +720,98 @@
 	/**
 	 * Manual input validation on blur
 	 */
-	const { validateManualInput } = useManualDateValidation({
-		format: props.format,
-		required: props.required,
-		disableErrorHandling: props.disableErrorHandling,
-		customRules: computed(() => props.customRules),
-		customWarningRules: computed(() => props.customWarningRules),
-		hasInteracted,
-		errors,
-		clearValidation,
-		validateDateFormat,
-		isDateComplete: isDateComplete.value,
-		parseDate,
-		validateField,
-	})
+	const validateManualInput = (value: string): boolean | Promise<boolean> => {
+		clearValidation()
+
+		// Vérifier les cas de champ vide ou incomplet
+		const emptyCheck = validateEmptyOrIncompleteDate(
+			value,
+			props.required,
+			(val: string) => isDateCompleteUtil(val, props.format),
+			hasInteracted.value,
+		)
+
+		// Gérer les erreurs pour champ vide requis
+		if (!emptyCheck.isValid && !props.disableErrorHandling && emptyCheck.errorMessage) {
+			errors.value.push(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
+		}
+
+		// Si on ne doit pas continuer la validation (champ vide/incomplet)
+		if (!emptyCheck.shouldContinue) {
+			return emptyCheck.isValid
+		}
+
+		// Valider le format de la date
+		const formatValidation = validateDateFormatUtil(value, props.format, props.dateFormatReturn, props.required, hasInteracted.value, props.disableErrorHandling)
+		if (!formatValidation.isValid) {
+			if (!props.disableErrorHandling && formatValidation.message) {
+				errors.value.push(formatValidation.message)
+			}
+			return false
+		}
+
+		// Si le format est valide, vérifier si la date peut être parsée
+		const date = parseDate(value, props.format)
+		if (!date) {
+			// La date n'a pas pu être parsée
+			if (!props.disableErrorHandling) {
+				errors.value.push(`Format de date invalide (${props.format})`)
+			}
+			return false
+		}
+
+		// Valider les règles personnalisées
+		if (!props.disableErrorHandling) {
+			const currentCustomRules = props.customRules
+			const currentCustomWarningRules = props.customWarningRules
+
+			// Filtrer les règles qui sont prêtes (ont une date définie)
+			const readyRules = currentCustomRules.filter((rule) => {
+				if (rule.type === 'notBeforeDate' || rule.type === 'notAfterDate' || rule.type === 'exactDate') {
+					return rule.options && rule.options.date !== undefined
+				}
+				return true
+			})
+
+			// Si aucune règle n'est prête, skip la validation
+			if (readyRules.length === 0 && currentCustomRules.length > 0) {
+				return true
+			}
+
+			// Adapter les règles prêtes pour maintenir la compatibilité avec les tests existants
+			const safeCustomRules = adaptCustomRules(readyRules, props.format)
+			const safeWarningRules = adaptCustomRules(currentCustomWarningRules, props.format)
+
+			// Appeler validateField pour évaluer les règles
+			const result = validateField(
+				date,
+				safeCustomRules as ValidationRule[],
+				safeWarningRules as ValidationRule[],
+			)
+
+			if (result instanceof Promise) {
+				return result.then(resolvedResult => !resolvedResult.hasError)
+			}
+
+			return !result.hasError
+		}
+
+		return errors.value.length === 0
+	}
 
 	const emitBlurEvent = () => emit('blur')
 
 	const { handleInputBlur } = useInputBlurHandler({
-		format: props.format,
+		format: computed(() => props.format),
 		dateFormatReturn: props.dateFormatReturn,
-		required: props.required,
+		required: computed(() => props.required),
 		displayFormattedDate,
 		hasInteracted,
 		isManualInputActive,
 		isUpdatingFromInternal,
 		selectedDates,
 		errors,
-		validateDateFormat,
+		validateDateFormat: (value: string) => validateDateFormatUtil(value, props.format, props.dateFormatReturn, props.required, hasInteracted.value, props.disableErrorHandling),
 		parseDate,
 		formatDate,
 		updateModel,
@@ -929,7 +924,15 @@
 	 * Today button + labels
 	 */
 	const { todayInString, selectToday, headerDate } = useTodayButton(props)
-	const { labelWithAsterisk } = useAsteriskDisplay(props)
+
+	// Inlined from useAsteriskDisplay
+	const isShouldDisplayAsterisk = computed(() => props.displayAsterisk && props.required)
+	const labelWithAsterisk = computed(() => {
+		const label = props.label
+		return isShouldDisplayAsterisk.value && label
+			? `${label} *`
+			: label
+	})
 	const { displayedDateString } = useDisplayedDateString({ selectedDates, rangeBoundaryDates, todayInString })
 
 	const handleSelectToday = () => {
@@ -963,7 +966,7 @@
 		hasInteracted.value = false
 		isManualInputActive.value = false
 
-		if (props.disabled) {
+		if (isInteractionDisabled.value) {
 			fieldKey.value++
 			return
 		}
@@ -1004,7 +1007,7 @@
 		validateDates,
 		formatDateInput,
 		emitBlur: emitBlurEvent,
-		validateDateFormat,
+		validateDateFormat: (value: string) => validateDateFormatUtil(value, props.format, props.dateFormatReturn, props.required, hasInteracted.value, props.disableErrorHandling),
 		displayFormattedDate,
 		// Expose for consumers
 		handleDateSelected,
@@ -1016,42 +1019,15 @@
 <template>
 	<div class="date-picker-container">
 		<!-- Hidden live region text holder (kept for potential a11y tooling) -->
-		<span
-			v-if="false"
-			ref="accessibilityDescriptionRef"
-		>{{ accessibilityDescription }}</span>
+		<span v-if="false">{{ accessibilityDescription }}</span>
 
 		<template v-if="props.noCalendar">
 			<DateTextInput
 				ref="dateTextInputRef"
 				:key="fieldKey"
 				v-model="textInputValue"
-				:class="[getMessageClasses(), 'label-hidden-on-focus']"
-				:date-format-return="props.dateFormatReturn"
-				:format="props.format"
-				:label="labelWithAsterisk"
-				:placeholder="props.placeholder"
-				:required="props.required"
-				:custom-rules="props.customRules"
-				:custom-warning-rules="props.customWarningRules"
-				:disabled="props.disabled"
-				:readonly="props.readonly"
-				:is-outlined="props.isOutlined"
-				:display-icon="props.displayIcon"
-				:display-append-icon="props.displayAppendIcon"
-				:display-prepend-icon="props.displayPrependIcon"
-				:no-icon="props.noIcon"
-				:disable-error-handling="props.disableErrorHandling"
-				:show-success-messages="props.showSuccessMessages"
-				:bg-color="props.bgColor"
-				:auto-clamp="props.autoClamp"
-				:external-error-messages="errorMessages"
-				:display-asterisk="props.displayAsterisk"
-				:is-validate-on-blur="props.isValidateOnBlur"
-				:title="props.title"
-				:hint="props.hint"
-				:persistent-hint="props.persistentHint"
-				:skip-internal-validation="true"
+				:class="[messageClasses, 'label-hidden-on-focus']"
+				v-bind="dateTextInputProps"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
 			/>
@@ -1085,34 +1061,8 @@
 							ref="dateCalendarTextInputRef"
 							:key="fieldKey"
 							:model-value="textInputValue"
-							:skip-internal-validation="true"
-							:label="labelWithAsterisk"
-							:placeholder="props.placeholder"
-							:format="props.format"
-							:date-format-return="props.dateFormatReturn"
-							:required="props.required"
-							:disabled="props.disabled"
-							:readonly="props.readonly"
-							:title="props.title"
-							:is-outlined="props.isOutlined"
-							:display-icon="props.displayIcon"
-							:display-append-icon="props.displayAppendIcon"
-							:display-prepend-icon="props.displayPrependIcon"
-							:no-icon="props.noIcon"
-							:custom-rules="props.customRules"
-							:custom-warning-rules="props.customWarningRules"
-							:display-asterisk="props.displayAsterisk"
-							:disable-error-handling="props.disableErrorHandling"
-							:show-success-messages="props.showSuccessMessages"
-							:bg-color="props.bgColor"
-							:display-range="props.displayRange"
-							:is-validate-on-blur="props.isValidateOnBlur"
-							:external-error-messages="errorMessages"
-							:class="[getMessageClasses(), 'label-hidden-on-focus']"
-							:auto-clamp="props.autoClamp"
-							:density="props.density"
-							:hint="props.hint"
-							:persistent-hint="props.persistentHint"
+							:class="[messageClasses, 'label-hidden-on-focus']"
+							v-bind="dateTextInputMenuProps"
 							@update:model-value="handleDateTextInputUpdate"
 							@click="openDatePickerOnClick"
 							@focus="openDatePickerOnFocus"
@@ -1418,9 +1368,7 @@
 :deep(.v-picker__body .v-btn--active .v-btn__overlay) {
 	opacity: 0;
 }
-</style>
 
-<style lang="scss">
 .date-picker-overlay-content .v-date-picker {
 	box-shadow:
 		0 5px 5px -3px rgb(0 0 0 / 20%),
