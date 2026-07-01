@@ -6,22 +6,37 @@ import '@/stories/styles/shared.css';
 
 <style>
 {`
-.eco-title {
-  color: #0C419A;
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-}
+
+
+ /* Variables CSS basées sur les couleurs exactes du thème CNAM */
+    :root {
+      --primary-color: #0c419a; /* primary: cnamColorsTokens.blue.base */
+      --primary-light: #3d67ae; /* blue.lighten20 */
+      --secondary-color: #006386; /* secondary: cnamColorsTokens.cyan.darken40 */
+      --accent-color: #00a5df; /* accent: cnamColorsTokens.cyan.base */
+      --error-color: #b33f2e; /* error: cnamColorsTokens.orange.darken20 */
+      --info-color: #0c419a; /* info: cnamColorsTokens.blue.base */
+      --success-color: #004439; /* success: cnamColorsTokens.turquoise.darken60 */
+      --warning-color: #906b15; /* warning: cnamColorsTokens.yellow.darken60 */
+      --text-color: #020d1f; /* blue.darken80 */
+      --background-light: #f8f9fc; /* blue.lighten97 */
+      --card-shadow: 0 4px 12px rgba(12, 65, 154, 0.05);
+      --transition-speed: 0.3s;
+      --border-radius: 8px;
+    }
+
 
 .eco-subtitle {
   margin-bottom: 2.5rem;
 }
 
-.eco-section-title {
-  color: #0C419A;
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin: 2rem 0 1.5rem;
+.eco-page .eco-section-title {
+  color: var(--primary-color);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(12, 65, 154, 0.2);
+      font-weight: 700;
 }
 
 .cards-grid {
@@ -35,35 +50,49 @@ import '@/stories/styles/shared.css';
   background: #fff;
   border-radius: 8px;
   padding: 2rem;
-  min-height: 260px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+
   display: flex;
   flex-direction: column;
 }
 
 .card-icon {
-  color: #0C419A;
-  font-size: 2.5rem;
-  text-align: center;
-  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
 }
 
 .card h3 {
-  color: #0C419A;
+  color: var(--primary-color);
   text-align: center;
-  margin-top: 0;
   font-weight: 700;
+  min-height: 72px;     
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  margin: 0 0 1.5rem;
+}
+
+.alert h3 {
+  color: var(--primary-color);
+font-weight: 700;
 font-size: 1.25rem;
 }
 
-.card a {
-  margin-top: auto;
-  text-align: right;
-  color: #0C419A !important;
-  font-weight: 700;
-  text-decoration: none;
+.card p {
+  flex: 1;              
+  margin: 0;
+  line-height: 1.8;
 }
 
+.card a {
+  margin-top: 2rem;
+  align-self: flex-end;
+  font-weight: 700;
+  color: #0C419A !important;
+  text-decoration: none;
+}
 .alert {
   background-color: #E3E8F2;
   border-left: 4px solid #0C419A;
@@ -78,6 +107,7 @@ font-size: 1.25rem;
 }
 `}
 </style>
+<div className="eco-page">
 <div className="header">
 <h1 className="eco-title">Ecoconception numérique</h1>
 <p className="eco-subtitle">
@@ -92,7 +122,7 @@ font-size: 1.25rem;
 <p>
   La Studio Design propose une démarche écoconception permettant de faciliter
   l’intégration des bonnes pratiques associées dans la fabrication des projets
-  de leur conception à leur développement Front.
+  ( de leur conception à leur développement Front).
 </p>
 
 <div className="cards-grid">
@@ -173,4 +203,5 @@ font-size: 1.25rem;
     </p>
     <a href="https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/" target="_blank" rel="noopener noreferrer">Consulter →</a>
   </div>
+</div>
 </div>

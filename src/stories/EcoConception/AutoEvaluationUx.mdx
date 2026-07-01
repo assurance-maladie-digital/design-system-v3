@@ -1,14 +1,31 @@
 import { Meta } from '@storybook/blocks';
-import '../styles/shared.css';
+import '@/stories/styles/shared.css';
 
 <Meta title="Éco-conception/Auto-évaluation UX" />
 
 <style>
 {`
-.eco-page h1,
-.eco-page h2,
-.eco-page h3 {
-  color: #0C419A;
+:root {
+  --primary-color: #0c419a;
+  --primary-light: #3d67ae;
+  --secondary-color: #006386;
+  --accent-color: #00a5df;
+  --error-color: #b33f2e;
+  --info-color: #0c419a;
+  --success-color: #004439;
+  --warning-color: #906b15;
+  --text-color: #020d1f;
+  --background-light: #f8f9fc;
+  --card-shadow: 0 4px 12px rgba(12, 65, 154, 0.05);
+  --transition-speed: 0.3s;
+  --border-radius: 8px;
+}
+
+.summary-box {
+  background: #E3E8F2;
+  border-left: 4px solid #0C419A;
+  padding: 1.5rem;
+  margin: 2rem 0;
 }
 
 .steps-list {
@@ -36,32 +53,72 @@ import '../styles/shared.css';
   flex-shrink: 0;
 }
 
-.step-title {
+.eco-page .step-title {
   display: flex;
   align-items: center;
   gap: .75rem;
-  color: #0C419A;
+  color: var(--primary-color);
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 800;
   margin-top: 2rem;
 }
 
+
+.eco-page .eco-section-title {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(12, 65, 154, 0.2);
+  font-weight: 700;
+}
 .download-btn {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  padding: 2px 8px;
-  height: 24px;
-  border: 1px solid #0C419A;
-  border-radius: 4px;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 10px;
+  height: 22px;
+  border: 1px solid var(--primary-color);
+  border-radius: 2px;
+  background: #fff;
+  color: var(--primary-color) !important;
   font-size: 11px;
   font-weight: 600;
-  color: #0C419A !important;
+  line-height: 1;
   text-decoration: none;
-  background: white;
 }
+
 .download-btn:hover {
   background: #F5F8FF;
+}
+
+.download-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.download-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 12px;
+}
+.eco-page ul {
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+.eco-page li {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.eco-page li p {
+  margin: .4rem 0 0;
 }
 `}
 </style>
@@ -76,45 +133,85 @@ import '../styles/shared.css';
   </p>
 </div>
 
-<h2 className="eco-title">L’auto-évaluation manuelle se déroule en 3 étapes :</h2>
+<div className="summary-box">
+
+<h2 className="eco-section-title">En résumé</h2>
+
+<p>
+  L’auto-évaluation manuelle se déroule en 2 étapes :
+</p>
 
 <ul className="steps-list">
-  <li><span className="step-number">1</span> Télécharger le fichier Excel de reporting</li>
-  <li><span className="step-number">2</span> Constituer l’échantillon de test</li>
-  <li><span className="step-number">3</span> Évaluer l’application des bonnes pratiques et reporter vos résultats dans l’excel pour chaque page de l’échantillon</li>
+  <li><span className="step-number">1</span> Constituer l’échantillon de test (= la liste des pages à tester)</li>
+  <li><span className="step-number">2</span> Auto-évaluer l’application des bonnes pratiques et reporter les résultats</li>
 </ul>
 
-<h2 className="step-title"><span className="step-number">1</span> Télécharger le fichier Excel de reporting</h2>
+</div>
+<h2 className="step-title"><span className="step-number">1</span> Constituer l’échantillonage de votre test</h2>
 
-Le fichier Excel vous permettra de lister des pages de votre échantillonnage et de reporter les résultats de l’analyse pour chacune des pages de l’échantillonnage.
+<p>
+  Pour vous aider à lister les pages de l’échantillonnage, voici les questions à se poser par ordre de priorité :
+</p>
 
-<a className="download-btn" href="#">  <span className="mdi mdi-download"></span>
-  Télécharger le fichier Excel
+<ul>
+  <li>
+    <strong>Quelles sont les pages concernées par des chantiers ou refontes à venir pour maximiser l’impact des préconisations techniques ?</strong>
+    <p>
+      Afin d’éviter une ré-écriture, il est important de commencer la démarche
+      éco-conception par les pages à développer ou à modifier.
+    </p>
+  </li>
+
+  <li>
+    <strong>Quelles sont les pages les plus consultées ?</strong>
+    <p>
+      Vous pouvez vous aider des statistiques d’audience pour sélectionner ces pages
+      (exemple : la page d’accueil, la page de connexion, la page de contact).
+    </p>
+  </li>
+
+  <li>
+    <strong>Quels sont les parcours utilisateurs, les parcours fonctionnels représentatifs
+      des usages majeurs du site ou de l’application ? </strong>
+    <p>
+      Mappez au moins un parcours métier complet en ciblant les pages qui structurent
+      la navigation.
+    </p>
+  </li>
+</ul>
+
+<h2 className="step-title"><span className="step-number">2</span>   Auto-évaluer l’application des bonnes pratiques et reporter les résultats</h2>
+
+
+<p>
+  Pour chaque bonne pratique essentielle d’écoconception UX, évaluer la page et reporter
+  si le résultat est :
+</p>
+
+<ul>
+  <li><strong>"Conforme"</strong></li>
+  <li><strong>"Non Conforme"</strong></li>
+  <li><strong>"Non applicable"</strong></li>
+</ul>
+
+<p>
+  Le fichier Excel vous permettra de recenser des pages de votre échantillonnage et de
+  reporter les résultats pour chacune des pages.
+</p>
+
+
+<a
+  className="download-btn"
+  href="../.storybook/public/audit_ecoconception_UX_UI.xlsx"
+  download
+>
+  <img
+    className="download-icon"
+    src="../.storybook/public/logo_download.svg"
+    alt=""
+    aria-hidden="true"
+  />
+  <span>Télécharger le fichier d’auto-évaluation</span>
 </a>
-
-
-<h2 className="step-title"><span className="step-number">2</span> Constituer l’échantillonnage de votre test</h2>
-
-Pour vous aider à lister les pages de l’échantillonnage, voici les questions à se poser par ordre de priorité :
-
-**1. Quelles sont les pages concernées par des chantiers ou refontes à venir pour maximiser l’impact des préconisations techniques ?**
-
-Afin d’éviter une ré-écriture, il est important de commencer la démarche Eco-Conception par les pages à développer ou à modifier.
-
-**2. Quelles sont les pages les plus consultées ?**
-
-Vous pouvez vous aider des statistiques d’audience pour sélectionner ces pages.
-
-**3. Quels sont les parcours utilisateurs, les parcours fonctionnels représentatifs des usages majeurs du site ou de l’application ?**
-
-Mappez au moins un parcours métier complet en ciblant les pages qui structurent la navigation.
-
-<h2 className="step-title"><span className="step-number">3</span> Reporter les résultats de l’analyse dans l’Excel</h2>
-
-Pour chaque bonne pratique de l’excel, évaluer la page et reporter si le résultat est :
-
-- “Conforme”
-- “Non Conforme”
-- “Non applicable”
 
 </div>
