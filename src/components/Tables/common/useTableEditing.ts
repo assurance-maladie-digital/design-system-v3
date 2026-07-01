@@ -1,5 +1,5 @@
-import { ref, shallowRef, type Ref } from 'vue'
-import type { Item } from './types'
+import { computed, ref, shallowRef, toValue, type ComputedRef, type MaybeRefOrGetter, type Ref } from 'vue'
+import type { DataTableHeaders, Item } from './types'
 
 interface UseTableEditingParams {
 	/**
@@ -7,6 +7,10 @@ interface UseTableEditingParams {
 	 * selectionKey, puis `id`, puis l'objet lui-même).
 	 */
 	getItemValue: (item: Item) => unknown
+	/** En-têtes de colonnes, pour déterminer les colonnes éditables (flag `editable`). */
+	headers?: MaybeRefOrGetter<DataTableHeaders[] | undefined>
+	/** Active l'édition inline des lignes (prop `editable` du tableau). */
+	editable?: MaybeRefOrGetter<boolean>
 }
 
 interface UseTableEditingReturn {
@@ -26,6 +30,10 @@ interface UseTableEditingReturn {
 	cancelEditing: () => Item | null
 	/** Réinitialise l'état d'édition. */
 	resetEditing: () => void
+	/** Clés des colonnes portant le flag `editable` (indépendamment de la prop `editable`). */
+	editableHeaderColumns: ComputedRef<string[]>
+	/** Colonnes éditables en inline (uniquement si le tableau est `editable`). */
+	editableColumns: ComputedRef<string[]>
 }
 
 /**
@@ -35,13 +43,25 @@ interface UseTableEditingReturn {
  * renvoie l'item modifié au composant, à charge pour l'application parente
  * de persister via l'évènement `@save`.
  */
-export function useTableEditing({ getItemValue }: UseTableEditingParams): UseTableEditingReturn {
+export function useTableEditing({ getItemValue, headers, editable }: UseTableEditingParams): UseTableEditingReturn {
 	// `shallowRef` : on conserve la valeur brute (clé d'identité et item original)
 	// sans la transformer en proxy réactif, sinon les comparaisons par référence
 	// (`===`) échoueraient pour une identité de ligne basée sur l'objet lui-même.
 	const editingKey = shallowRef<unknown>(null)
 	const draft = ref<Item>({})
 	const originalItem = shallowRef<Item | null>(null)
+
+	// Colonnes portant le flag `editable` (indépendamment de la prop `editable`)
+	const editableHeaderColumns = computed<string[]>(() =>
+		(toValue(headers) ?? [])
+			.filter(header => header.editable && (header.key ?? header.value))
+			.map(header => String(header.key ?? header.value)),
+	)
+
+	// Colonnes éditables en inline (uniquement si le tableau est `editable`)
+	const editableColumns = computed<string[]>(() =>
+		toValue(editable) ? editableHeaderColumns.value : [],
+	)
 
 	function isRowEditing(item: Item): boolean {
 		return editingKey.value !== null && getItemValue(item) === editingKey.value
@@ -85,5 +105,7 @@ export function useTableEditing({ getItemValue }: UseTableEditingParams): UseTab
 		saveEditing,
 		cancelEditing,
 		resetEditing,
+		editableHeaderColumns,
+		editableColumns,
 	}
 }

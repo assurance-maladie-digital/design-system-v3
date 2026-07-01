@@ -175,19 +175,12 @@
 		setDraftField,
 		saveEditing,
 		cancelEditing,
-	} = useTableEditing({ getItemValue })
-
-	// Colonnes portant le flag `editable` (indépendamment de la prop `editable`)
-	const editableHeaderColumns = computed<string[]>(() =>
-		(props.headers ?? [])
-			.filter(header => header.editable && (header.key ?? header.value))
-			.map(header => String(header.key ?? header.value)),
-	)
-
-	// Colonnes éditables en inline (uniquement si le tableau est `editable`)
-	const editableColumns = computed<string[]>(() =>
-		props.editable ? editableHeaderColumns.value : [],
-	)
+		editableColumns,
+	} = useTableEditing({
+		getItemValue,
+		headers: () => props.headers,
+		editable: () => props.editable,
+	})
 
 	// Libellé d'une colonne, pour le label accessible de l'éditeur par défaut
 	function columnTitle(key: string): string {
