@@ -283,7 +283,7 @@ export const SequentialEdit: Story = {
 					</template>
 				</SyServerTable>
 
-				<DialogBox v-model="open" title="Édition séquentielle" confirm-btn-text="Appliquer" @confirm="apply" @cancel="open = false">
+				<DialogBox v-model="open" title="Édition" confirm-btn-text="Appliquer" @confirm="apply" @cancel="open = false">
 					<div v-if="drafts.length > 1" class="d-flex align-center justify-space-between mb-4">
 						<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiChevronLeft" :disabled="index === 0" aria-label="Ligne précédente" @click="prev">Précédent</VBtn>
 						<span role="status" aria-live="polite" class="text-body-2">{{ position }}</span>
@@ -299,4 +299,82 @@ export const SequentialEdit: Story = {
 			</div>
 		`,
 	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyServerTable suffix="server-bulk-actions-sequential" caption="Liste des patients" show-select selection-key="id" v-model="selected" :headers="headers" :items="items" :server-items-length="items.length">
+		<template #bulk-actions="{ selected, count, clearSelection }">
+			<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="openEdit(selected, clearSelection)">
+				Modifier {{ count }} ligne(s)
+			</VBtn>
+		</template>
+	</SyServerTable>
+
+	<!-- Édition séquentielle : navigation et accessibilité gérées par le projet -->
+	<DialogBox v-model="open" title="Édition" confirm-btn-text="Appliquer" @confirm="apply" @cancel="open = false">
+		<div v-if="drafts.length > 1" class="d-flex align-center justify-space-between mb-4">
+			<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiChevronLeft" :disabled="index === 0" aria-label="Ligne précédente" @click="prev">Précédent</VBtn>
+			<span role="status" aria-live="polite">{{ position }}</span>
+			<VBtn color="primary" variant="flat" size="small" :append-icon="mdiChevronRight" :disabled="index === drafts.length - 1" aria-label="Ligne suivante" @click="next">Suivant</VBtn>
+		</div>
+		<div v-if="current" class="d-flex flex-column ga-3">
+			<SyTextField v-model="current.lastname" label="Nom" disable-error-handling />
+			<SyTextField v-model="current.firstname" label="Prénom" disable-error-handling />
+			<SyTextField v-model="current.email" label="Email" disable-error-handling />
+			<SySelect v-model="current.statut" :items="statutOptions" label="Statut" disable-error-handling />
+		</div>
+	</DialogBox>
+</template>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { computed, ref } from 'vue'
+	import { SyServerTable, DialogBox, SyTextField, SySelect } from '@cnamts/synapse'
+	import { mdiChevronLeft, mdiChevronRight, mdiPencil } from '@mdi/js'
+
+	const headers = [
+		{ title: 'Nom', key: 'lastname' },
+		{ title: 'Prénom', key: 'firstname' },
+		{ title: 'Email', key: 'email' },
+		{ title: 'Statut', key: 'statut' },
+	]
+	const items = ref([
+		{ id: 1, firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com', statut: 'Actif' },
+		{ id: 2, firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com', statut: 'Inactif' },
+	])
+	const selected = ref([])
+	const statutOptions = [
+		{ text: 'Actif', value: 'Actif' },
+		{ text: 'Inactif', value: 'Inactif' },
+		{ text: 'Suspendu', value: 'Suspendu' },
+	]
+
+	let clearAfter = () => {}
+	const open = ref(false)
+	const drafts = ref([])
+	const index = ref(0)
+	const current = computed(() => drafts.value[index.value])
+	const position = computed(() => 'Ligne ' + (index.value + 1) + ' sur ' + drafts.value.length)
+
+	function openEdit(rows, clearSelection) {
+		drafts.value = rows.map(r => ({ ...r })); index.value = 0; clearAfter = clearSelection; open.value = true
+	}
+	function prev() { if (index.value > 0) index.value-- }
+	function next() { if (index.value < drafts.value.length - 1) index.value++ }
+	function apply() {
+		const byId = new Map(drafts.value.map(r => [r.id, r]))
+		items.value = items.value.map(r => byId.get(r.id) ?? r)
+		open.value = false; clearAfter()
+	}
+</script>
+`,
+			},
+		],
+	},
 }
