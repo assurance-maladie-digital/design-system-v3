@@ -1,4 +1,4 @@
-import { addons, useGlobals  } from '@storybook/manager-api'
+import { addons, useGlobals } from '@storybook/manager-api'
 import cnamTheme from './CnamTheme'
 import paTheme from './PaTheme'
 import apTheme from './ApTheme'
@@ -27,7 +27,7 @@ const apOnlyStories = [
 	'composants-boutons-usermenubtn--with-ps-info',
 	'composants-données-accordion--with-custom-content',
 	'composants-layout-pagecontainer--with-header-and-footer',
-    'guide-du-dev-convergence-des-ds-équivalence-des-composants-amelipro--docs'
+	'guide-du-dev-convergence-des-ds-équivalence-des-composants-amelipro--docs',
 ]
 
 // Components to display in AP theme
@@ -85,14 +85,14 @@ const apComponents = [
 	'composants-formulaires-passwordfield',
 	'composants-formulaires-uploadworkflow',
 	'composants-formulaires-rangefield',
-    'composants-formulaires-periodfield',
+	'composants-formulaires-periodfield',
 	'composants-layout-pagecontainer',
-    'composants-navigation-contextualmenu',
-    'composants-navigation-skiplink',
-    'composants-navigation-sypagination',
-    'composants-navigation-sytabs',
-    'composants-navigation-sybtnmenu',
-    'composants-structure-footerbar',
+	'composants-navigation-contextualmenu',
+	'composants-navigation-skiplink',
+	'composants-navigation-sypagination',
+	'composants-navigation-sytabs',
+	'composants-navigation-sybtnmenu',
+	'composants-structure-footerbar',
 	'composants-structure-headerbar',
 	'composants-structure-headerloading',
 	'composants-structure-headertoolbar',
@@ -511,28 +511,71 @@ addons.setConfig({
 				? ap2026Theme
 				: cnamTheme,
 
-    sidebar: {
-        filters: {
-            searchfilter: (item) => {
-                const theme = localStorage.getItem('storybook-theme') ?? 'cnam';
+	sidebar: {
+		filters: {
+			// searchfilter: (item) => {
+			// 	const theme = localStorage.getItem('storybook-theme') ?? 'cnam'
+			//
+			// 	const id = (item.id ?? '').toLowerCase()
+			// 	const name = (item.name ?? '').toLowerCase()
+			//
+			// 	if (theme === 'ap2026') return true
+			// 	else if (theme === 'ap') {
+			// 		const allowedInAp = id.startsWith('guide-du-dev-convergence-des-ds-équivalence-des-composants-amelipro--docs')
+			//
+			// 		if (allowedInAp) return true
+			// 	}
+			// 	else return !id.includes('amelipro') && !name.includes('amelipro')
+			// },
+			// amelipro2026Filter: (item) => {
+			// 	const theme = localStorage.getItem('storybook-theme') ?? 'cnam';
+			//
+			// 	if (theme === 'ap2026') return true;
+			//
+			// 	const id = (item.id ?? '').toLowerCase();
+			// 	const name = (item.name ?? '').toLowerCase();
+			// 	const text = `${id} ${name}`;
+			//
+			// 	const isAmelipro = text.includes('amelipro');
+			//
+			// 	if (theme === 'ap') {
+			// 		return (
+			// 			id.startsWith('guide-du-dev-convergence-des-ds') ||
+			// 			!isAmelipro
+			// 		);
+			// 	}
+			//
+			// 	return !isAmelipro;
+			// },
+			amelipro2026Filter: (item) => {
+				const theme = localStorage.getItem('storybook-theme') ?? 'cnam'
 
-                const id = (item.id ?? '').toLowerCase();
-                const name = (item.name ?? '').toLowerCase();
+				const id = (item.id ?? '').toLowerCase()
+				const name = (item.name ?? '').toLowerCase()
 
-                if (theme === 'ap2026') {
-                    return true;
-                } else if (theme === 'ap'){
-                    const allowedInAp = id.startsWith('guide-du-dev-convergence-des-ds-équivalence-des-composants-amelipro--docs');
+				// Dossier Convergence des DS
+				if (id === 'guide-du-dev-convergence-des-ds') return theme === 'ap' || theme === 'pa'
 
-                    if (allowedInAp) {
-                        return true;
-                    }
-                } else {
-                    return !id.includes('amelipro') && !name.includes('amelipro');
-                }
-            },
-        },
-    },
+				// Stories du dossier Convergence des DS
+				if (id.startsWith('guide-du-dev-convergence-des-ds-')) {
+					if (theme === 'ap') return id.includes('amelipro')
+
+					if (theme === 'pa') return id.includes('portail-agent')
+
+					// cnam et ap2026
+					return false
+				}
+
+				// AP2026 : le reste est visible
+				if (theme === 'ap2026') return true
+
+				// Règle générale AmeliPro
+				const isAmelipro = id.includes('amelipro') || name.includes('amelipro')
+
+				return !isAmelipro
+			},
+		},
+	},
 })
 
 const getCurrentItemIdFromUrl = () => {
@@ -582,7 +625,7 @@ const handleThemeChange = (newTheme) => {
 					: cnamTheme,
 	})
 
-    window.location.reload();
+	window.location.reload()
 
 	applyThemeClass(newTheme)
 
