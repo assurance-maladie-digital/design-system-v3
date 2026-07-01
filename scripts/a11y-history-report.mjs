@@ -4,8 +4,10 @@ import { basename, dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
-const outputPath = resolve(rootDir, 'a11y-history-report.md')
-const outputJsonPath = resolve(rootDir, 'a11y-history-data.json')
+const dataDir = resolve(rootDir, 'scripts/data')
+const outputPath = resolve(dataDir, 'a11y-history-report.md')
+const outputJsonPath = resolve(dataDir, 'a11y-history-data.json')
+const outputCommitsJsonPath = resolve(dataDir, 'a11y-commits-data.json')
 const componentsDir = resolve(rootDir, 'src/components')
 
 const a11yKeywords = [
@@ -341,6 +343,26 @@ function buildJsonData(components) {
 	return data
 }
 
+function buildCommitsJsonData(components) {
+	const data = {}
+	for (const component of components) {
+		if (!component.commits.length) continue
+		data[component.name] = component.commits.map(c => ({
+			hash: c.hash,
+			date: c.date,
+			dateFr: new Date(c.date).toLocaleDateString('fr-FR'),
+			message: c.message,
+			version: c.version ? c.version.replace(/^v/i, '') : null,
+			confidence: c.confidence,
+			keywords: c.keywords,
+			patterns: c.patterns,
+			a11yLabel: c.a11yLabel,
+			labels: c.labels,
+		}))
+	}
+	return data
+}
+
 function buildMarkdown(components) {
 	const lines = [
 		'# Rapport d’historique d’accessibilité par composant',
@@ -418,6 +440,15 @@ async function main() {
 	}
 	writeFileSync(outputJsonPath, JSON.stringify(finalJsonData, null, 2), 'utf8')
 	console.info(`✅ Données JSON générées: ${outputJsonPath}`)
+
+	const newCommitsJsonData = buildCommitsJsonData(results)
+	let finalCommitsJsonData = newCommitsJsonData
+	if (targetNames.length && existsSync(outputCommitsJsonPath)) {
+		const existingCommits = JSON.parse(readFileSync(outputCommitsJsonPath, 'utf8'))
+		finalCommitsJsonData = { ...existingCommits, ...newCommitsJsonData }
+	}
+	writeFileSync(outputCommitsJsonPath, JSON.stringify(finalCommitsJsonData, null, 2), 'utf8')
+	console.info(`✅ Commits détaillés JSON générés: ${outputCommitsJsonPath}`)
 
 	const total = results.reduce((sum, c) => sum + c.commits.length, 0)
 	console.info(`📊 ${total} commit(s) d’accessibilité détecté(s)`)

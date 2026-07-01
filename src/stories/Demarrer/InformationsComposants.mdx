@@ -9,46 +9,66 @@ import { useState } from 'react';
 {`
 .ci-container { font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin-top: 1.5rem; }
 .ci-meta { font-size: 0.875rem; color: #525252; margin-bottom: 1.25rem; }
-.ci-filters { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; margin-bottom: 1rem; }
+.ci-filters { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.25rem; }
 .ci-search { width: 360px; max-width: 100%; height: 40px; padding: 0.5rem 0.75rem; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 0.875rem; box-sizing: border-box; outline: none; }
 .ci-search:focus { border-color: #0c419a; box-shadow: 0 0 0 2px rgba(12,65,154,0.15); }
 .ci-select { height: 40px; padding: 0 2rem 0 0.75rem; border: 1px solid #e0e0e0; border-radius: 4px; font-size: 0.875rem; background-color: #fff; cursor: pointer; outline: none; box-sizing: border-box; appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23525252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.6rem center; }
 .ci-select:focus { border-color: #0c419a; box-shadow: 0 0 0 2px rgba(12,65,154,0.15); }
-.ci-table-wrapper { width: 100%; overflow-x: auto; border: 1px solid #e0e0e0; border-radius: 4px; }
-.ci-table { width: 100%; border-collapse: collapse; text-align: left; margin: 0 !important; }
-.ci-table th { background-color: #f4f4f4; color: #161616; font-weight: 600; font-size: 0.8125rem; padding: 0.75rem 1rem; border-bottom: 1px solid #e0e0e0; white-space: nowrap; }
-.ci-table td { padding: 0.75rem 1rem; border-bottom: 1px solid #e0e0e0; font-size: 0.8125rem; vertical-align: top; }
-.ci-table tr:last-child td { border-bottom: none; }
-.ci-name a { color: #0c419a; font-weight: 600; text-decoration: none; }
-.ci-name a:hover { text-decoration: underline; }
-.ci-tag { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 0.75rem; color: #3a5a2a; background-color: #f0fff4; border: 1px solid #b8e0c8; white-space: nowrap; }
-.ci-tag.empty { color: #6f6f6f; background-color: #f4f4f4; border-color: #e0e0e0; }
-.ci-status { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.8125rem; white-space: nowrap; }
-.ci-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
-.ci-dot.actif { background-color: #24a148; }
-.ci-dot.deprecie { background-color: #f1c21b; }
-.ci-date { font-size: 0.6875rem; color: #6f6f6f; margin-top: 0.15rem; }
-.ci-commits { margin: 0; padding: 0; list-style: none; max-height: 180px; overflow-y: auto; }
-.ci-commits li { padding: 0.15rem 0; display: flex; gap: 0.5rem; align-items: baseline; }
+.ci-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 1rem; }
+.ci-card { border: 1px solid #e0e0e0; border-radius: 8px; background-color: #fff; overflow: hidden; }
+.ci-card-header { display: flex; align-items: center; justify-content: space-between; padding: 0.875rem 1rem; background-color: #f4f4f4; border-bottom: 1px solid #e0e0e0; }
+.ci-card-name a { color: #0c419a; font-weight: 700; font-size: 1rem; text-decoration: none; }
+.ci-card-name a:hover { text-decoration: underline; }
+.ci-card-status { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.6rem; border-radius: 999px; white-space: nowrap; }
+.ci-card-status.actif { color: #155329; background-color: #d1f7d9; }
+.ci-card-status.deprecie { color: #684e00; background-color: #fff2cc; }
+.ci-card-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.ci-card-dot.actif { background-color: #24a148; }
+.ci-card-dot.deprecie { background-color: #f1c21b; }
+.ci-tabs { display: flex; border-bottom: 1px solid #e0e0e0; }
+.ci-tab { flex: 1; padding: 0.65rem 0.75rem; font-size: 0.8125rem; font-weight: 600; color: #525252; background-color: #fafafa; border: none; cursor: pointer; text-align: center; }
+.ci-tab:hover { background-color: #f4f4f4; }
+.ci-tab.active { color: #0c419a; background-color: #fff; border-bottom: 2px solid #0c419a; }
+.ci-tab.active.a11y { color: #1a4480; border-bottom-color: #1a4480; }
+.ci-card-body { padding: 1rem; }
+.ci-version-line { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.75rem; }
+.ci-tag { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
+.ci-tag.func { color: #155329; background-color: #d1f7d9; border: 1px solid #a7e0b5; }
+.ci-tag.a11y { color: #1a4480; background-color: #e8f4ff; border: 1px solid #a8d0ff; }
+.ci-tag.empty { color: #6f6f6f; background-color: #f4f4f4; border: 1px solid #e0e0e0; font-weight: 500; }
+.ci-date { font-size: 0.75rem; color: #6f6f6f; }
+.ci-commits { margin: 0; padding: 0; list-style: none; max-height: 200px; overflow-y: auto; }
+.ci-commits li { padding: 0.35rem 0; display: flex; gap: 0.5rem; align-items: baseline; font-size: 0.8125rem; }
 .ci-commits .c-date { color: #6f6f6f; font-variant-numeric: tabular-nums; white-space: nowrap; font-size: 0.75rem; }
-.ci-commits .c-msg { color: #161616; }
+.ci-commits .c-msg { color: #161616; line-height: 1.4; }
 .ci-commits .c-msg a { color: #0c419a; text-decoration: none; font-weight: 600; }
 .ci-commits .c-msg a:hover { text-decoration: underline; }
+.ci-empty { font-size: 0.8125rem; color: #6f6f6f; font-style: italic; }
 `}
 </style>
 
 <div className="header">
   <h1>Suivi des composants</h1>
-  <p>Pour chaque composant : sa page, sa dernière mise à jour fonctionnelle et ses 10 dernières modifications (hors accessibilité, release et doc).</p>
+  <p>
+    Pour chaque composant : sa page, son statut, ses dernières versions fonctionnelle et accessibilité,
+    et ses derniers commits regroupés par type (fonctionnel / accessibilité).
+  </p>
 </div>
 
 {(() => {
   const [search, setSearch] = useState('');
   const [versionFilter, setVersionFilter] = useState('');
+  const [a11yVersionFilter, setA11yVersionFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
+  const [activeTab, setActiveTab] = useState('functional');
 
   // Versions fonctionnelles distinctes, triées de la plus récente à la plus ancienne.
   const versions = [...new Set(infoData.results.map((r) => r.functionalVersion).filter(Boolean))].sort(
+    (a, b) => b.localeCompare(a, undefined, { numeric: true }),
+  );
+
+  // Versions accessibilité distinctes, triées de la plus récente à la plus ancienne.
+  const a11yVersions = [...new Set(infoData.results.map((r) => r.a11yVersion).filter(Boolean))].sort(
     (a, b) => b.localeCompare(a, undefined, { numeric: true }),
   );
 
@@ -62,7 +82,20 @@ import { useState } from 'react';
 
   const REPO = 'https://github.com/assurance-maladie-digital/design-system-v3';
 
-  // Transforme la référence "#1234" du message en lien vers la PR GitHub.
+  // Formate une date en français : "JJ/MM/AAAA" ou ISO "YYYY-MM-DD ..." → "25 mars 2026".
+  const formatDate = (dateStr) => {
+    if (!dateStr) return null;
+    let date;
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(dateStr)) {
+      const [day, month, year] = dateStr.split('/');
+      date = new Date(`${year}-${month}-${day}T00:00:00`);
+    } else {
+      date = new Date(dateStr);
+    }
+    if (Number.isNaN(date.getTime())) return dateStr;
+    return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+  };
+
   const renderMessage = (msg) => {
     const m = msg.match(/#(\d+)/);
     if (!m) return msg;
@@ -77,17 +110,35 @@ import { useState } from 'react';
     );
   };
 
+  const renderCommitList = (commits) => {
+    if (!commits.length) return <p className="ci-empty">Aucun commit à afficher.</p>;
+    return (
+      <ul className="ci-commits">
+        {commits.map((c, i) => (
+          <li key={i}>
+            <span className="c-date">{formatDate(c.date)}</span>
+            <span className="c-msg">{renderMessage(c.message)}</span>
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
   const rows = infoData.results.filter(
     (item) =>
       (search === '' || item.componentName.toLowerCase().includes(search.toLowerCase())) &&
       (versionFilter === '' || item.functionalVersion === versionFilter) &&
+      (a11yVersionFilter === '' || item.a11yVersion === a11yVersionFilter) &&
       (statusFilter === '' || item.status === statusFilter),
   );
+
+  const tabClass = (tab) => `ci-tab ${activeTab === tab ? 'active' : ''} ${tab === 'a11y' ? 'a11y' : ''}`;
 
   return (
     <div className="ci-container">
       <div className="ci-meta">
-        <strong>{infoData.totalCount}</strong> composants · Dernière génération&nbsp;:{' '}
+        <strong>{rows.length}</strong> composant(s) affiché(s) ·{' '}
+        <strong>{infoData.totalCount}</strong> au total · Dernière génération&nbsp;:{' '}
         {new Date(infoData.date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
       </div>
 
@@ -103,10 +154,23 @@ import { useState } from 'react';
           className="ci-select"
           value={versionFilter}
           onChange={(e) => setVersionFilter(e.target.value)}
-          aria-label="Filtrer par version"
+          aria-label="Filtrer par version fonctionnelle"
         >
-          <option value="">Toutes les versions</option>
+          <option value="">Toutes les versions fonctionnelles</option>
           {versions.map((v) => (
+            <option key={v} value={v}>
+              v{v}
+            </option>
+          ))}
+        </select>
+        <select
+          className="ci-select"
+          value={a11yVersionFilter}
+          onChange={(e) => setA11yVersionFilter(e.target.value)}
+          aria-label="Filtrer par version accessibilité"
+        >
+          <option value="">Toutes les versions a11y</option>
+          {a11yVersions.map((v) => (
             <option key={v} value={v}>
               v{v}
             </option>
@@ -124,58 +188,58 @@ import { useState } from 'react';
         </select>
       </div>
 
-      <div className="ci-table-wrapper">
-        <table className="ci-table">
-          <thead>
-            <tr>
-              <th style={{ width: '18%' }}>Composant</th>
-              <th style={{ width: '10%' }}>Statut</th>
-              <th style={{ width: '18%' }}>Dernière mise à jour fonctionnelle</th>
-              <th>10 dernières modifications fonctionnelles</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map((item) => (
-              <tr key={item.componentName}>
-                <td className="ci-name">
+      <div className="ci-grid">
+        {rows.map((item) => {
+          const isFunctional = activeTab === 'functional';
+          const version = isFunctional ? item.functionalVersion : item.a11yVersion;
+          const date = isFunctional ? item.functionalDate : item.a11yDate;
+          const commits = isFunctional ? item.commits || [] : item.a11yCommits || [];
+
+          return (
+            <div className="ci-card" key={item.componentName}>
+              <div className="ci-card-header">
+                <span className="ci-card-name">
                   <a href={getUrl(item.componentName, item.storybookTitle)}>
                     {item.componentName.split('/').pop()}
                   </a>
-                </td>
-                <td>
-                  <span className="ci-status">
-                    <span className={`ci-dot ${item.status === 'déprécié' ? 'deprecie' : 'actif'}`}></span>
-                    {item.status === 'déprécié' ? 'Déprécié' : 'Actif'}
-                  </span>
-                </td>
-                <td>
-                  {item.functionalVersion ? (
-                    <>
-                      <span className="ci-tag">v{item.functionalVersion}</span>
-                      <div className="ci-date">{item.functionalDate}</div>
-                    </>
+                </span>
+                <span className={`ci-card-status ${item.status === 'déprécié' ? 'deprecie' : 'actif'}`}>
+                  <span className={`ci-card-dot ${item.status === 'déprécié' ? 'deprecie' : 'actif'}`}></span>
+                  {item.status === 'déprécié' ? 'Déprécié' : 'Actif'}
+                </span>
+              </div>
+              <div className="ci-tabs">
+                <button
+                  className={tabClass('functional')}
+                  onClick={() => setActiveTab('functional')}
+                  aria-pressed={isFunctional}
+                >
+                  Fonctionnel
+                </button>
+                <button
+                  className={tabClass('a11y')}
+                  onClick={() => setActiveTab('a11y')}
+                  aria-pressed={!isFunctional}
+                >
+                  Accessibilité
+                </button>
+              </div>
+              <div className="ci-card-body">
+                <div className="ci-version-line">
+                  {version ? (
+                    <span className={`ci-tag ${isFunctional ? 'func' : 'a11y'}`}>
+                      v{version}
+                    </span>
                   ) : (
-                    <span className="ci-tag empty">—</span>
+                    <span className="ci-tag empty">Version non renseignée</span>
                   )}
-                </td>
-                <td>
-                  {item.commits.length ? (
-                    <ul className="ci-commits">
-                      {item.commits.map((c, i) => (
-                        <li key={i}>
-                          <span className="c-date">{c.date}</span>
-                          <span className="c-msg">{renderMessage(c.message)}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <span className="ci-tag empty">—</span>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  {version && <span className="ci-date">{formatDate(date)}</span>}
+                </div>
+                {renderCommitList(commits)}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

@@ -16,7 +16,8 @@ import { basename, dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
-const outputJsonPath = resolve(rootDir, 'functional-history-data.json')
+const dataDir = resolve(rootDir, 'scripts/data')
+const outputJsonPath = resolve(dataDir, 'functional-history-data.json')
 const componentsDir = resolve(rootDir, 'src/components')
 
 // Mots-clés qui signalent un commit purement a11y (à exclure du badge fonctionnel)

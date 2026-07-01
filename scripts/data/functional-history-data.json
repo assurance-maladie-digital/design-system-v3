@@ -630,10 +630,10 @@
     "message": "Ajout d'une configuration pour stylelint (#323)"
   },
   "CookieBanner": {
-    "version": "1.0.22",
-    "date": "11/03/2026",
-    "dateIso": "2026-03-11 11:00:31 +0100",
-    "message": "Hx: replace hx to SyHeading (#1874)"
+    "version": "1.1.1",
+    "date": "26/06/2026",
+    "dateIso": "2026-06-26 14:59:19 +0200",
+    "message": "migration cookie banner (#2336)"
   },
   "CookiesInformation": {
     "version": "1.0.26",
@@ -666,10 +666,10 @@
     "message": "SelectBtnField: add validation (#2269)"
   },
   "SyAutocomplete": {
-    "version": "1.1.0",
-    "date": "01/06/2026",
-    "dateIso": "2026-06-01 11:06:12 +0200",
-    "message": "[SyTextField] Ajout de stories concernant la validation (#2181)"
+    "version": "1.0.27",
+    "date": "12/05/2026",
+    "dateIso": "2026-05-12 14:26:57 +0200",
+    "message": "SyAutocomplete: improve validation (#2169)"
   },
   "SyInputSelect": {
     "version": "1.0.25",
@@ -678,22 +678,22 @@
     "message": "Tokens simplify v2 (#2102)"
   },
   "SySelect": {
-    "version": "1.1.0",
-    "date": "03/06/2026",
-    "dateIso": "2026-06-03 17:32:15 +0200",
-    "message": "[SySelect]: permettre un meilleur rendu du composant en l'abscence de css (#2232)"
+    "version": "1.0.27",
+    "date": "13/05/2026",
+    "dateIso": "2026-05-13 14:06:58 +0200",
+    "message": "Autocomplete: add prepend item slot (#2176)"
+  },
+  "SyCheckbox": {
+    "version": "1.1.1",
+    "date": "12/06/2026",
+    "dateIso": "2026-06-12 17:18:16 +0200",
+    "message": "SyCheckBox: add validation (#2265)"
   },
   "SyCheckBoxGroup": {
     "version": "1.1.1",
     "date": "12/06/2026",
     "dateIso": "2026-06-12 11:24:26 +0200",
     "message": "Feat/migrate sy check box group validation (#2260)"
-  },
-  "SyCheckbox": {
-    "version": "1.1.1",
-    "date": "23/06/2026",
-    "dateIso": "2026-06-23 15:07:43 +0200",
-    "message": "fix(SyCheckbox): improve focus styling (#2311)"
   },
   "SyForm": {
     "version": "1.0.16",
@@ -774,40 +774,40 @@
     "message": "DataListItem : déprécier renderHtmlValue et ajouter un slo… (#1573)"
   },
   "DatePicker": {
-    "version": "1.1.0",
-    "date": "02/06/2026",
-    "dateIso": "2026-06-02 17:01:03 +0200",
-    "message": "Validation: success message false by default (#2231)"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 14:31:34 +0200",
+    "message": "Feat/wip refacto dp 3 (#2207)"
   },
   "ComplexDatePicker": {
-    "version": "1.1.0",
-    "date": "02/06/2026",
-    "dateIso": "2026-06-02 17:01:03 +0200",
-    "message": "Validation: success message false by default (#2231)"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 14:31:34 +0200",
+    "message": "Feat/wip refacto dp 3 (#2207)"
   },
   "DateTextInput": {
-    "version": "1.1.0",
-    "date": "02/06/2026",
-    "dateIso": "2026-06-02 17:01:03 +0200",
-    "message": "Validation: success message false by default (#2231)"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 14:31:34 +0200",
+    "message": "Feat/wip refacto dp 3 (#2207)"
   },
   "BidirectionalComplexValidation": {
-    "version": "1.0.27",
-    "date": "20/05/2026",
-    "dateIso": "2026-05-20 17:19:08 +0200",
-    "message": "Implémentation des nouveaux tokens (#2164)"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 14:31:34 +0200",
+    "message": "Feat/wip refacto dp 3 (#2207)"
   },
   "DatePickerBidirectionalValidation": {
-    "version": "1.0.27",
-    "date": "20/05/2026",
-    "dateIso": "2026-05-20 17:19:08 +0200",
-    "message": "Implémentation des nouveaux tokens (#2164)"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 14:31:34 +0200",
+    "message": "Feat/wip refacto dp 3 (#2207)"
   },
   "DatePickerValidationExamples": {
-    "version": "1.0.27",
-    "date": "20/05/2026",
-    "dateIso": "2026-05-20 17:19:08 +0200",
-    "message": "Implémentation des nouveaux tokens (#2164)"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 14:31:34 +0200",
+    "message": "Feat/wip refacto dp 3 (#2207)"
   },
   "ComplexDatePickerPlayground": {
     "version": "1.0.25",
@@ -1086,16 +1086,16 @@
     "message": "migration ameliproPageLayout (#2259)"
   },
   "PaginatedTable": {
-    "version": "1.0.27",
-    "date": "20/05/2026",
-    "dateIso": "2026-05-20 17:19:08 +0200",
-    "message": "Implémentation des nouveaux tokens (#2164)"
+    "version": "0.0.11-alpha",
+    "date": "18/02/2025",
+    "dateIso": "2025-02-18 14:46:46 +0100",
+    "message": "PaginatedTable (#383)"
   },
   "Pagination": {
-    "version": "1.0.27",
-    "date": "20/05/2026",
-    "dateIso": "2026-05-20 17:19:08 +0200",
-    "message": "Implémentation des nouveaux tokens (#2164)"
+    "version": "0.0.11-alpha",
+    "date": "18/02/2025",
+    "dateIso": "2025-02-18 14:46:46 +0100",
+    "message": "PaginatedTable (#383)"
   },
   "PasswordField": {
     "version": "1.1.0",
@@ -1188,16 +1188,16 @@
     "message": "Implémentation des nouveaux tokens (#2164)"
   },
   "SyAlert": {
-    "version": "1.0.27",
-    "date": "20/05/2026",
-    "dateIso": "2026-05-20 17:19:08 +0200",
-    "message": "Implémentation des nouveaux tokens (#2164)"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 13:41:05 +0200",
+    "message": "Fix / SyAlert Color issue (#2346)"
   },
   "SyBtnMenu": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 12:02:12 +0200",
+    "message": "Feat/migration SyBtnMenu (#2349)"
   },
   "SyHeading": {
     "version": "1.0.23",
@@ -1210,42 +1210,6 @@
     "date": "02/06/2026",
     "dateIso": "2026-06-02 17:01:03 +0200",
     "message": "Validation: success message false by default (#2231)"
-  },
-  "TableToolbar": {
-    "version": "1.0.27",
-    "date": "20/05/2026",
-    "dateIso": "2026-05-20 17:19:08 +0200",
-    "message": "Implémentation des nouveaux tokens (#2164)"
-  },
-  "SyServerTable": {
-    "version": "1.1.0",
-    "date": "29/05/2026",
-    "dateIso": "2026-05-29 09:22:51 +0200",
-    "message": "Tables : Migration Ameli pro (#2186)"
-  },
-  "SyTable": {
-    "version": "1.0.27",
-    "date": "18/05/2026",
-    "dateIso": "2026-05-18 12:58:39 +0200",
-    "message": "Add hideDefaultFooter prop to SyTable and SyServerTable components (#2184)"
-  },
-  "SyTableFilter": {
-    "version": "1.1.0",
-    "date": "29/05/2026",
-    "dateIso": "2026-05-29 09:22:51 +0200",
-    "message": "Tables : Migration Ameli pro (#2186)"
-  },
-  "SyTablePagination": {
-    "version": "1.1.0",
-    "date": "29/05/2026",
-    "dateIso": "2026-05-29 09:22:51 +0200",
-    "message": "Tables : Migration Ameli pro (#2186)"
-  },
-  "TableHeader": {
-    "version": "1.1.0",
-    "date": "29/05/2026",
-    "dateIso": "2026-05-29 09:22:51 +0200",
-    "message": "Tables : Migration Ameli pro (#2186)"
   },
   "AutocompleteFilter": {
     "version": "1.0.26",
@@ -1288,6 +1252,42 @@
     "date": "12/02/2026",
     "dateIso": "2026-02-12 10:01:33 +0100",
     "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+  },
+  "SyTableFilter": {
+    "version": "1.0.1",
+    "date": "26/05/2025",
+    "dateIso": "2025-05-26 14:03:38 +0200",
+    "message": "Tables components refacto (#615)"
+  },
+  "SyTablePagination": {
+    "version": "1.0.1",
+    "date": "26/05/2025",
+    "dateIso": "2025-05-26 14:03:38 +0200",
+    "message": "Tables components refacto (#615)"
+  },
+  "TableHeader": {
+    "version": "1.0.1",
+    "date": "26/05/2025",
+    "dateIso": "2025-05-26 14:03:38 +0200",
+    "message": "Tables components refacto (#615)"
+  },
+  "SyServerTable": {
+    "version": "1.1.0",
+    "date": "29/05/2026",
+    "dateIso": "2026-05-29 09:22:51 +0200",
+    "message": "Tables : Migration Ameli pro (#2186)"
+  },
+  "SyTable": {
+    "version": "1.0.27",
+    "date": "18/05/2026",
+    "dateIso": "2026-05-18 12:58:39 +0200",
+    "message": "Add hideDefaultFooter prop to SyTable and SyServerTable components (#2184)"
+  },
+  "TableToolbar": {
+    "version": "1.0.27",
+    "date": "20/05/2026",
+    "dateIso": "2026-05-20 17:19:08 +0200",
+    "message": "Implémentation des nouveaux tokens (#2164)"
   },
   "ToolbarContainer": {
     "version": "1.0.2",
