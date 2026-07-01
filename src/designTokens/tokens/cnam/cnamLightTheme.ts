@@ -76,4 +76,10 @@ export const cnamLightTheme = {
 	interactionDarkenEnabled: baseTokens.color.transparentBlack.alpha00,
 	interactionDarkenHover: baseTokens.color.transparentBlack.alpha20,
 	interactionDarkenPressed: baseTokens.color.transparentBlack.alpha40,
+
+	// Focus ring
+	ringPrimary: baseTokens.color.pink.darken20,
+	ringSuccess: baseTokens.color.green.darken60,
+	ringWarning: baseTokens.color.yellow.darken60,
+	ringError: baseTokens.color.orange.darken20,
 }
