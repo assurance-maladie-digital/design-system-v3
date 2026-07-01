@@ -70,6 +70,54 @@ describe('DateTextInput.clean', () => {
 		expect(emitted && emitted[0]?.[0]).toBe('2025-01-01')
 	})
 
+	it('correctly handles European format with YYYY/MM/DD return format on blur', async () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY/MM/DD',
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('17/12/1986')
+		await input.trigger('blur')
+		await flushPromises()
+
+		// The emitted value should be in return format (YYYY/MM/DD)
+		const emitted = wrapper.emitted('update:model-value')
+		expect(emitted).toBeTruthy()
+		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('1986/12/17')
+
+		// The input display should remain in display format (DD/MM/YYYY)
+		expect(input.element.value).toBe('17/12/1986')
+	})
+
+	it('does not corrupt the date when modelValue is updated from outside with return format', async () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY/MM/DD',
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('17/12/1986')
+		await input.trigger('blur')
+		await flushPromises()
+
+		// Get the last emitted value (which should be '1986/12/17')
+		const emitted = wrapper.emitted('update:model-value')
+		expect(emitted).toBeTruthy()
+		const lastEmitted = emitted && emitted[emitted.length - 1]?.[0]
+		expect(lastEmitted).toBe('1986/12/17')
+
+		// Simulate parent component updating modelValue with the emitted value (like v-model does)
+		await wrapper.setProps({ modelValue: lastEmitted })
+		await flushPromises()
+
+		// The input display should remain '17/12/1986' (DD/MM/YYYY format)
+		// and NOT be corrupted to '19/86/1217'
+		expect(input.element.value).toBe('17/12/1986')
+	})
+
 	it('auto-clamps invalid day on blur in single mode', async () => {
 		const wrapper = mountComponent({
 			label: 'Date',

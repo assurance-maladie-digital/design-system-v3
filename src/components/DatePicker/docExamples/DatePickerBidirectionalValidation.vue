@@ -2,6 +2,7 @@
 	import { ref, computed, watch } from 'vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
+	import type { DatePickerRule } from '@/components/DatePicker/types'
 	// useDateFormat n'est plus nécessaire avec les règles prédéfinies
 
 	// État des dates
@@ -16,7 +17,7 @@
 
 	// Règles de validation pour la date de début
 	const startDateRules = computed(() => {
-		const rules = [
+		const rules: DatePickerRule[] = [
 			{
 				type: 'required',
 				options: {
@@ -29,12 +30,10 @@
 		if (endDate.value) {
 			rules.push({
 				type: 'notAfterDate',
-
 				options: {
 					message: 'La date de début ne peut pas être postérieure à la date de fin',
 					date: endDate.value, // Déjà une chaîne au format DD/MM/YYYY
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
-				} as any,
+				},
 			})
 		}
 
@@ -43,7 +42,7 @@
 
 	// Règles de validation pour la date de fin
 	const endDateRules = computed(() => {
-		const rules = [
+		const rules: DatePickerRule[] = [
 			{
 				type: 'required',
 				options: {
@@ -55,12 +54,10 @@
 		if (startDate.value) {
 			rules.push({
 				type: 'notBeforeDate',
-
 				options: {
 					message: 'La date de fin ne peut pas être antérieure à la date de début',
 					date: startDate.value, // Déjà une chaîne au format DD/MM/YYYY
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
-				} as any,
+				},
 			})
 		}
 		return rules

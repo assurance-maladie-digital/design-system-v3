@@ -384,7 +384,7 @@ export function useFieldValidation() {
 
 					const handleCustomResult = (res: boolean | string): ValidationResult => {
 						if (res === true) {
-							return { success: options.successMessage || baseMessages.success }
+							return { success: baseMessages.success }
 						}
 						// If result is undefined or falsy but not true, treat as invalid
 						if (res === false) {

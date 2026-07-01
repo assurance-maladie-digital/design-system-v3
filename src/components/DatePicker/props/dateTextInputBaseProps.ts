@@ -1,0 +1,35 @@
+import { type Ref } from 'vue'
+import type { DatePickerCommonProps } from '../types'
+
+export const useDateTextInputBaseProps = (
+	props: DatePickerCommonProps,
+	labelWithAsterisk: Ref<string | undefined>,
+	errorMessages: Ref<string[]>,
+) => ({
+	'date-format-return': props.dateFormatReturn,
+	'format': props.format,
+	'label': labelWithAsterisk.value,
+	'placeholder': props.placeholder,
+	'required': props.required,
+	'custom-rules': props.customRules,
+	'custom-warning-rules': props.customWarningRules,
+	'disabled': props.disabled,
+	'readonly': props.readonly,
+	'is-outlined': props.isOutlined,
+	'display-icon': props.displayIcon,
+	'display-append-icon': props.displayAppendIcon,
+	'display-prepend-icon': props.displayPrependIcon,
+	'no-icon': props.noIcon,
+	'disable-error-handling': props.disableErrorHandling,
+	'show-success-messages': props.showSuccessMessages,
+	'bg-color': props.bgColor,
+	'density': props.density,
+	'hide-details': props.hideDetails,
+	'auto-clamp': props.autoClamp,
+	'external-error-messages': errorMessages.value,
+	'display-asterisk': props.displayAsterisk,
+	'is-validate-on-blur': props.isValidateOnBlur,
+	'title': props.title || props.placeholder || undefined,
+	'hint': props.hint,
+	'persistent-hint': props.persistentHint,
+})
