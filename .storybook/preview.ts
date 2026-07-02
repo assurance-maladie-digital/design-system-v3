@@ -110,7 +110,7 @@ const preview: Preview = {
 					'Accessibilité',
 					[
 						'Introduction',
-						'Aculturation', ['Sensibilisation à l’accessibilité numérique'],
+						'Acculturation', ['Sensibilisation à l’accessibilité numérique'],
 						'Kit de pré-audit', ['Introduction', 'Échantillonnage', 'Pré-audit', 'Outils', ['Introduction', 'Tanaguru', ['Utilisation', 'Faux positifs']]],
 						'Audit', ['RGAA'],
 						'Design System', ['Audit du Design System', 'Avancement', 'Vuetify'],
