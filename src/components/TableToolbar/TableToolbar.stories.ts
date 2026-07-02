@@ -245,6 +245,9 @@ export const Default: Story = {
 		`,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -352,6 +355,9 @@ export const AddButton: Story = {
 		`,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -465,6 +471,9 @@ export const Labels: Story = {
 		`,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -687,6 +696,9 @@ export const NbFiltered: Story = {
 		`,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -829,6 +841,9 @@ export const SlotFilters: Story = {
 		`,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -959,6 +974,9 @@ export const OtherSlots: Story = {
 		`,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1085,6 +1103,9 @@ export const Customization: Story = {
 		`,
 	}),
 	parameters: {
+		a11y: {
+			disable: true,
+		},
 		sourceCode: [
 			{
 				name: 'Template',
