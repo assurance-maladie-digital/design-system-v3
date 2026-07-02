@@ -1,4 +1,4 @@
-import type { Meta } from '@storybook/vue3'
+import type { Meta } from '@storybook/vue3-vite'
 
 /**
  * Définitions `argTypes` Storybook communes aux tableaux (SyTable, SyServerTable).

@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
-import { fn } from '@storybook/test'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import { fn } from 'storybook/test'
 import { ref } from 'vue'
 import SyTable from './SyTable.vue'
 import { commonTableArgTypes } from '../common/storyArgTypes'

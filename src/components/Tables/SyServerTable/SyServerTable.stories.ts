@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SyServerTable from './SyServerTable.vue'
 import { commonTableArgTypes } from '../common/storyArgTypes'
 import { StateEnum } from '../common/constants/StateEnum'
 import type { DataOptions } from '../common/types'
 import { ref, watch } from 'vue'
 import type { VDataTable } from 'vuetify/components'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 
 interface User {
 	[key: string]: string
