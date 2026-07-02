@@ -167,6 +167,12 @@ pre.prismjs {
 	}
 }
 
+.storybook-docs-mode .v-list {
+	position: absolute !important;
+	z-index: 9999 !important;
+	visibility: visible !important;
+}
+
 #story--composants-formulaires-searchlistfield--default {
 	.v-list {
 		width: 100% !important;
