@@ -1,6 +1,6 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 25/06/2026
+Généré le: 02/07/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
@@ -16,7 +16,7 @@ Généré le: 25/06/2026
 | **CopyBtn** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
 | **Customs/Selects/SelectBtnField** | ❌ Non | ✅ Non | ✅ Complète | ❌ Non | ❌ |
 | **Customs/Selects/SyAutocomplete** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
-| **Customs/Selects/SyInputSelect** | ❌ Non | ✅ Non | ⚠️ Bientôt disponible | ❌ Non | ❌ |
+| **Customs/Selects/SyInputSelect** | ❌ Non | ✅ Non | ✅ Complète | ❌ Non | ❌ |
 | **Customs/Selects/SySelect** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **Customs/SyCheckbox** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyCheckBoxGroup** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |

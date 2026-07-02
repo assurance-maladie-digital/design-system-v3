@@ -156,7 +156,6 @@
 
 .sy-form-input :deep(input) {
 	color: rgb(var(--v-theme-on-surface)) !important;
-	-webkit-text-fill-color: rgb(var(--v-theme-on-surface)) !important;
 }
 
 .sy-form-input :deep(.v-field__input),
