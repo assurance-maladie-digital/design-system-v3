@@ -89,6 +89,20 @@
 		padding-left: 16px;
 	}
 
+	// Centrer le focus ring sur la case à cocher : par défaut il entoure tout le
+	// contrôle (zone tactile plus large que la case visible de 16px) et paraît
+	// décentré. On le déplace sur `.v-selection-control__input`, carré et centré
+	// sur la case.
+	.v-selection-control--focus-visible {
+		outline: none;
+	}
+
+	.v-selection-control--focus-visible .v-selection-control__input {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 2px;
+		border-radius: 4px;
+	}
+
 	.v-data-table-rows-no-data {
 		color: rgb(var(--v-theme-grey-base));
 	}
