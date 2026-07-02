@@ -45,7 +45,7 @@ dependencies:
     version: 4.3.1
   iso-639-1:
     specifier: ^3.1.3
-    version: 3.1.5
+    version: 3.1.6
   maska:
     specifier: ^3.0.3
     version: 3.2.0
@@ -107,7 +107,7 @@ devDependencies:
     version: 4.1.9(vitest@4.1.9)
   '@vue/test-utils':
     specifier: ^2.4.6
-    version: 2.4.11(@vue/compiler-dom@3.5.38)(vue@3.5.38)
+    version: 2.4.11(@vue/compiler-dom@3.5.39)(vue@3.5.38)
   '@vue/tsconfig':
     specifier: ~0.8.0
     version: 0.8.1(typescript@5.9.3)(vue@3.5.38)
@@ -137,7 +137,7 @@ devDependencies:
     version: 9.33.0(eslint@9.39.4)
   eslint-plugin-vuejs-accessibility:
     specifier: ^2.4.1
-    version: 2.5.0(eslint@9.39.4)(globals@17.6.0)
+    version: 2.5.0(eslint@9.39.4)(globals@17.7.0)
   happy-dom:
     specifier: ^20.8.8
     version: 20.10.6
@@ -155,7 +155,7 @@ devDependencies:
     version: 1.8.1
   postcss-scss:
     specifier: ^4.0.9
-    version: 4.0.9(postcss@8.5.15)
+    version: 4.0.9(postcss@8.5.16)
   resize-observer-polyfill:
     specifier: ^1.5.1
     version: 1.5.1
@@ -170,19 +170,19 @@ devDependencies:
     version: 25.0.5(typescript@5.9.3)
   storybook:
     specifier: 10.4.6
-    version: 10.4.6(@testing-library/dom@10.4.0)(@types/react@19.2.17)(react@19.2.7)
+    version: 10.4.6(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react@19.2.7)
   stylelint:
     specifier: ^16.12.0
     version: 16.26.1(typescript@5.9.3)
   stylelint-config-recommended-scss:
     specifier: ^14.1.0
-    version: 14.1.0(postcss@8.5.15)(stylelint@16.26.1)
+    version: 14.1.0(postcss@8.5.16)(stylelint@16.26.1)
   stylelint-config-recommended-vue:
     specifier: ^1.5.0
     version: 1.6.1(postcss-html@1.8.1)(stylelint@16.26.1)
   stylelint-config-standard-scss:
     specifier: ^14.0.0
-    version: 14.0.0(postcss@8.5.15)(stylelint@16.26.1)
+    version: 14.0.0(postcss@8.5.16)(stylelint@16.26.1)
   typescript:
     specifier: ~5.9.3
     version: 5.9.3
@@ -976,7 +976,7 @@ packages:
       storybook: '>=9 <11'
     dependencies:
       react: 19.2.7
-      storybook: 10.4.6(@testing-library/dom@10.4.0)(@types/react@19.2.17)(react@19.2.7)
+      storybook: 10.4.6(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react@19.2.7)
     dev: true
 
   /@jridgewell/gen-mapping@0.3.13:
@@ -2111,7 +2111,7 @@ packages:
     dependencies:
       '@storybook/global': 5.0.0
       axe-core: 4.12.1
-      storybook: 10.4.6(@testing-library/dom@10.4.0)(@types/react@19.2.17)(react@19.2.7)
+      storybook: 10.4.6(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react@19.2.7)
     dev: true
 
   /@storybook/addon-docs@10.4.6(@types/react@19.2.17)(storybook@10.4.6)(vite@6.4.3):
@@ -2130,7 +2130,7 @@ packages:
       '@types/react': 19.2.17
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
-      storybook: 10.4.6(@testing-library/dom@10.4.0)(@types/react@19.2.17)(react@19.2.7)
+      storybook: 10.4.6(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react@19.2.7)
       ts-dedent: 2.3.0
     transitivePeerDependencies:
       - '@types/react-dom'
@@ -2155,7 +2155,7 @@ packages:
       '@storybook/global': 5.0.0
       '@types/react': 19.2.17
       react: 19.2.7
-      storybook: 10.4.6(@testing-library/dom@10.4.0)(@types/react@19.2.17)(react@19.2.7)
+      storybook: 10.4.6(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react@19.2.7)
     dev: true
 
   /@storybook/addon-onboarding@10.4.6(storybook@10.4.6):
@@ -2163,7 +2163,7 @@ packages:
     peerDependencies:
       storybook: ^10.4.6
     dependencies:
-      storybook: 10.4.6(@testing-library/dom@10.4.0)(@types/react@19.2.17)(react@19.2.7)
+      storybook: 10.4.6(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react@19.2.7)
     dev: true
 
   /@storybook/addon-queryparams@10.0.0(storybook@10.4.6):
@@ -2171,7 +2171,7 @@ packages:
     peerDependencies:
       storybook: ^10
     dependencies:
-      storybook: 10.4.6(@testing-library/dom@10.4.0)(@types/react@19.2.17)(react@19.2.7)
+      storybook: 10.4.6(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react@19.2.7)
     dev: true
 
   /@storybook/builder-vite@10.4.6(storybook@10.4.6)(vite@6.4.3):
@@ -2181,7 +2181,7 @@ packages:
       vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
     dependencies:
       '@storybook/csf-plugin': 10.4.6(storybook@10.4.6)(vite@6.4.3)
-      storybook: 10.4.6(@testing-library/dom@10.4.0)(@types/react@19.2.17)(react@19.2.7)
+      storybook: 10.4.6(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react@19.2.7)
       ts-dedent: 2.3.0
       vite: 6.4.3(@types/node@20.19.43)(sass-embedded@1.83.0)(sass@1.101.0)
     transitivePeerDependencies:
@@ -2208,7 +2208,7 @@ packages:
       webpack:
         optional: true
     dependencies:
-      storybook: 10.4.6(@testing-library/dom@10.4.0)(@types/react@19.2.17)(react@19.2.7)
+      storybook: 10.4.6(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react@19.2.7)
       unplugin: 2.3.11
       vite: 6.4.3(@types/node@20.19.43)(sass-embedded@1.83.0)(sass@1.101.0)
     dev: true
@@ -2242,7 +2242,7 @@ packages:
       '@types/react': 19.2.17
       react: 19.2.7
       react-dom: 19.2.7(react@19.2.7)
-      storybook: 10.4.6(@testing-library/dom@10.4.0)(@types/react@19.2.17)(react@19.2.7)
+      storybook: 10.4.6(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react@19.2.7)
     dev: true
 
   /@storybook/vue3-vite@10.4.6(storybook@10.4.6)(vite@6.4.3)(vue@3.5.38):
@@ -2254,7 +2254,7 @@ packages:
       '@storybook/builder-vite': 10.4.6(storybook@10.4.6)(vite@6.4.3)
       '@storybook/vue3': 10.4.6(storybook@10.4.6)(vue@3.5.38)
       magic-string: 0.30.21
-      storybook: 10.4.6(@testing-library/dom@10.4.0)(@types/react@19.2.17)(react@19.2.7)
+      storybook: 10.4.6(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react@19.2.7)
       typescript: 5.9.3
       vite: 6.4.3(@types/node@20.19.43)(sass-embedded@1.83.0)(sass@1.101.0)
       vue-component-meta: 2.2.12(typescript@5.9.3)
@@ -2273,7 +2273,7 @@ packages:
       vue: ^3.0.0
     dependencies:
       '@storybook/global': 5.0.0
-      storybook: 10.4.6(@testing-library/dom@10.4.0)(@types/react@19.2.17)(react@19.2.7)
+      storybook: 10.4.6(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react@19.2.7)
       type-fest: 5.7.0
       vue: 3.5.38(typescript@5.9.3)
       vue-component-type-helpers: 3.3.5
@@ -2337,17 +2337,17 @@ packages:
       stylelint: 16.26.1(typescript@5.9.3)
     dev: true
 
-  /@testing-library/dom@10.4.0:
-    resolution: {integrity: sha512-pemlzrSESWbdAloYml3bAJMEfNh1Z7EduzqPKprCH5S341frlpYnUEW0H72dLxa6IsYr+mPno20GiSm+h9dEdQ==}
+  /@testing-library/dom@10.4.1:
+    resolution: {integrity: sha512-o4PXJQidqJl82ckFaXUeoAW+XysPLauYI43Abki5hABd853iMhitooc6znOnczgbTYmEP6U6/y1ZyKAIsvMKGg==}
     engines: {node: '>=18'}
     dependencies:
       '@babel/code-frame': 7.29.7
       '@babel/runtime': 7.29.7
       '@types/aria-query': 5.0.4
       aria-query: 5.3.0
-      chalk: 4.1.2
       dom-accessibility-api: 0.5.16
       lz-string: 1.5.0
+      picocolors: 1.1.1
       pretty-format: 27.5.1
     dev: true
 
@@ -2363,13 +2363,13 @@ packages:
       redent: 3.0.0
     dev: true
 
-  /@testing-library/user-event@14.6.1(@testing-library/dom@10.4.0):
+  /@testing-library/user-event@14.6.1(@testing-library/dom@10.4.1):
     resolution: {integrity: sha512-vq7fv0rnt+QTXgPxr5Hjc210p6YKq2kmdziLgnsZGgLJ9e6VAShx1pACLuRjd/AS/sr7phAR58OIIpf0LlmQNw==}
     engines: {node: '>=12', npm: '>=6'}
     peerDependencies:
       '@testing-library/dom': '>=7.21.4'
     dependencies:
-      '@testing-library/dom': 10.4.0
+      '@testing-library/dom': 10.4.1
     dev: true
 
   /@tsconfig/node20@20.1.9:
@@ -2775,11 +2775,28 @@ packages:
       estree-walker: 2.0.2
       source-map-js: 1.2.1
 
+  /@vue/compiler-core@3.5.39:
+    resolution: {integrity: sha512-16KBTEXAJCpDr0mwlw+AZyhu8iyC7R3S2vBwsI7QnWJU6X3WKc9VKeNEZpiMdZ569qWhz9574L3vV55qRL0Vtw==}
+    dependencies:
+      '@babel/parser': 7.29.7
+      '@vue/shared': 3.5.39
+      entities: 7.0.1
+      estree-walker: 2.0.2
+      source-map-js: 1.2.1
+    dev: true
+
   /@vue/compiler-dom@3.5.38:
     resolution: {integrity: sha512-JTqp25l8aFfJYF7/KmsXZjAxJz7T+SjmTJLoXVjHtc2BrSgSiW2n9Aem/cWq1OPe68A8JL06B3eVdhlP0H4TVw==}
     dependencies:
       '@vue/compiler-core': 3.5.38
       '@vue/shared': 3.5.38
+
+  /@vue/compiler-dom@3.5.39:
+    resolution: {integrity: sha512-oQPigALqYbNxTNPvNgSOe+czwVExfbVF02lz8jP0S3AXJiu3jxYDygNUiqSep4ezzW8XgnubqH63My2A7JR/vg==}
+    dependencies:
+      '@vue/compiler-core': 3.5.39
+      '@vue/shared': 3.5.39
+    dev: true
 
   /@vue/compiler-sfc@3.5.38:
     resolution: {integrity: sha512-DuA2GiZawSEW442iw/9+Fkol8hTgb4Ke5KkhmSry65QA7YuyMbIdy8p0XZRMvNwJdgRz307W8g1CSzdvS4nuNg==}
@@ -2880,7 +2897,11 @@ packages:
   /@vue/shared@3.5.38:
     resolution: {integrity: sha512-FTW0AFZNaK5/mOqvGBwVfUlNLU38TiQn4+DQgIFUnrBBJQ1crMJ82yeGQLV5jyKFsO8yRukpbuP7x+nRbH6aug==}
 
-  /@vue/test-utils@2.4.11(@vue/compiler-dom@3.5.38)(vue@3.5.38):
+  /@vue/shared@3.5.39:
+    resolution: {integrity: sha512-l1rrBtBfTnmxvtsvdQDXltUUy8S1Y+ZaqdfUzmAnJkTd8Z8rv5v/ytW+TKiqEOWyHPoqtPlNFSs0lhRmYVSHVA==}
+    dev: true
+
+  /@vue/test-utils@2.4.11(@vue/compiler-dom@3.5.39)(vue@3.5.38):
     resolution: {integrity: sha512-GDqaqZsA6m2E5vNzej0aYiIb6BX8xV9pNSbbbXKOfEYwg7ZNblVX8suyqmUBThq8VIrgAJNxn+z72hVtUeiWHA==}
     peerDependencies:
       '@vue/compiler-dom': 3.x
@@ -2890,7 +2911,7 @@ packages:
       '@vue/server-renderer':
         optional: true
     dependencies:
-      '@vue/compiler-dom': 3.5.38
+      '@vue/compiler-dom': 3.5.39
       js-beautify: 1.15.4
       vue: 3.5.38(typescript@5.9.3)
       vue-component-type-helpers: 3.3.5
@@ -4192,7 +4213,7 @@ packages:
     dependencies:
       '@typescript-eslint/utils': 8.61.1(eslint@9.39.4)(typescript@5.9.3)
       eslint: 9.39.4
-      storybook: 10.4.6(@testing-library/dom@10.4.0)(@types/react@19.2.17)(react@19.2.7)
+      storybook: 10.4.6(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react@19.2.7)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -4217,7 +4238,7 @@ packages:
       - supports-color
     dev: true
 
-  /eslint-plugin-vuejs-accessibility@2.5.0(eslint@9.39.4)(globals@17.6.0):
+  /eslint-plugin-vuejs-accessibility@2.5.0(eslint@9.39.4)(globals@17.7.0):
     resolution: {integrity: sha512-oZ2fL4tS91Cm/ezH3BueNP+FtpbbeS627OSqqgp9/lsN//glmoPcLBT6D53xwGocLtyBybaT99tX4ThBh8+ytA==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
@@ -4226,7 +4247,7 @@ packages:
     dependencies:
       aria-query: 5.3.2
       eslint: 9.39.4
-      globals: 17.6.0
+      globals: 17.7.0
       vue-eslint-parser: 10.4.1(eslint@9.39.4)
     transitivePeerDependencies:
       - supports-color
@@ -4805,8 +4826,8 @@ packages:
     engines: {node: '>=18'}
     dev: true
 
-  /globals@17.6.0:
-    resolution: {integrity: sha512-sepffkT8stwnIYbsMBpoCHJuJM5l98FUF2AnE07hfvE0m/qp3R586hw4jF4uadbhvg1ooIdzuu7CsfD2jzCaNA==}
+  /globals@17.7.0:
+    resolution: {integrity: sha512-Czmyns5dUsq4seFBR/Kdydhmo8y9kC79hiSkPn0YcGtNnYWnrgt0vjrSjx9tspoDGWm2CMarffRuLjM4xUz8xg==}
     engines: {node: '>=18'}
     dev: true
 
@@ -5328,8 +5349,8 @@ packages:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
     dev: true
 
-  /iso-639-1@3.1.5:
-    resolution: {integrity: sha512-gXkz5+KN7HrG0Q5UGqSMO2qB9AsbEeyLP54kF1YrMsIxmu+g4BdB7rflReZTSTZGpfj8wywu6pfPBCylPIzGQA==}
+  /iso-639-1@3.1.6:
+    resolution: {integrity: sha512-ZFar/L4ngX7wZh2QX+Fiftmuf0igWJsrJtfizrovWifF1gAWkfmRa5Z1m0LQZbm0hKCHRDYhLRSLFrSqNe4EJA==}
     engines: {node: '>=6.0'}
     dev: false
 
@@ -6461,13 +6482,13 @@ packages:
       postcss: 8.5.15
     dev: true
 
-  /postcss-scss@4.0.9(postcss@8.5.15):
+  /postcss-scss@4.0.9(postcss@8.5.16):
     resolution: {integrity: sha512-AjKOeiwAitL/MXxQW2DliT28EKukvvbEWx3LBmJIRN8KfBGZbRTxNYW0kSqi1COiTZ57nZ9NW06S6ux//N1c9A==}
     engines: {node: '>=12.0'}
     peerDependencies:
       postcss: '>=8.5.10'
     dependencies:
-      postcss: 8.5.15
+      postcss: 8.5.16
     dev: true
 
   /postcss-selector-parser@6.1.4:
@@ -6497,6 +6518,15 @@ packages:
       nanoid: 3.3.15
       picocolors: 1.1.1
       source-map-js: 1.2.1
+
+  /postcss@8.5.16:
+    resolution: {integrity: sha512-vuwillviilfKZsg0VGj5R/YwwcHx4SLsIOI/7K6mQkWx+l5cUHTjj5g0AasTBcyXsbfTgrwsUNmVUb5xVwyPwg==}
+    engines: {node: ^10 || ^12 || >=14}
+    dependencies:
+      nanoid: 3.3.15
+      picocolors: 1.1.1
+      source-map-js: 1.2.1
+    dev: true
 
   /prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
@@ -7382,7 +7412,7 @@ packages:
     resolution: {integrity: sha512-Rq7ybcX2RuC55r9oaPVEW7/xu3tj8u4GeBYHBWCychFtzMIr86A7e3PPEBPT37sHStKX3+TiX/Fr/ACmJLVlLQ==}
     dev: true
 
-  /storybook@10.4.6(@testing-library/dom@10.4.0)(@types/react@19.2.17)(react@19.2.7):
+  /storybook@10.4.6(@testing-library/dom@10.4.1)(@types/react@19.2.17)(react@19.2.7):
     resolution: {integrity: sha512-6wkA6LxfDSSilloITsrFOJfsnw0mDUP2h8Ls+lRt8oRsudtz2RWFhLv+Toiwg6NW7hUpdTDc2hzR7DztJid6+A==}
     hasBin: true
     peerDependencies:
@@ -7400,7 +7430,7 @@ packages:
       '@storybook/global': 5.0.0
       '@storybook/icons': 2.1.0(react@19.2.7)
       '@testing-library/jest-dom': 6.9.1
-      '@testing-library/user-event': 14.6.1(@testing-library/dom@10.4.0)
+      '@testing-library/user-event': 14.6.1(@testing-library/dom@10.4.1)
       '@types/react': 19.2.17
       '@vitest/expect': 3.2.4
       '@vitest/spy': 3.2.4
@@ -7530,7 +7560,7 @@ packages:
       stylelint: 16.26.1(typescript@5.9.3)
     dev: true
 
-  /stylelint-config-recommended-scss@14.1.0(postcss@8.5.15)(stylelint@16.26.1):
+  /stylelint-config-recommended-scss@14.1.0(postcss@8.5.16)(stylelint@16.26.1):
     resolution: {integrity: sha512-bhaMhh1u5dQqSsf6ri2GVWWQW5iUjBYgcHkh7SgDDn92ijoItC/cfO/W+fpXshgTQWhwFkP1rVcewcv4jaftRg==}
     engines: {node: '>=18.12.0'}
     peerDependencies:
@@ -7540,8 +7570,8 @@ packages:
       postcss:
         optional: true
     dependencies:
-      postcss: 8.5.15
-      postcss-scss: 4.0.9(postcss@8.5.15)
+      postcss: 8.5.16
+      postcss-scss: 4.0.9(postcss@8.5.16)
       stylelint: 16.26.1(typescript@5.9.3)
       stylelint-config-recommended: 14.0.1(stylelint@16.26.1)
       stylelint-scss: 6.14.0(stylelint@16.26.1)
@@ -7579,7 +7609,7 @@ packages:
       stylelint: 16.26.1(typescript@5.9.3)
     dev: true
 
-  /stylelint-config-standard-scss@14.0.0(postcss@8.5.15)(stylelint@16.26.1):
+  /stylelint-config-standard-scss@14.0.0(postcss@8.5.16)(stylelint@16.26.1):
     resolution: {integrity: sha512-6Pa26D9mHyi4LauJ83ls3ELqCglU6VfCXchovbEqQUiEkezvKdv6VgsIoMy58i00c854wVmOw0k8W5FTpuaVqg==}
     engines: {node: '>=18.12.0'}
     peerDependencies:
@@ -7589,9 +7619,9 @@ packages:
       postcss:
         optional: true
     dependencies:
-      postcss: 8.5.15
+      postcss: 8.5.16
       stylelint: 16.26.1(typescript@5.9.3)
-      stylelint-config-recommended-scss: 14.1.0(postcss@8.5.15)(stylelint@16.26.1)
+      stylelint-config-recommended-scss: 14.1.0(postcss@8.5.16)(stylelint@16.26.1)
       stylelint-config-standard: 36.0.1(stylelint@16.26.1)
     dev: true
 
