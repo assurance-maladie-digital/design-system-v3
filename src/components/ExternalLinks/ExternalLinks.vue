@@ -196,7 +196,6 @@ $list-max-height: 248px;
 		&::after {
 			opacity: 1;
 			background-color: transparent !important;
-			border: 2px solid rgb(var(--v-theme-ringPrimary));
 		}
 	}
 
@@ -266,7 +265,6 @@ $list-max-height: 248px;
 
 		&::after {
 			opacity: 1;
-			border: 2px solid rgb(var(--v-theme-ringPrimary));
 		}
 	}
 }
