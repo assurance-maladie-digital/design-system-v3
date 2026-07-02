@@ -53,11 +53,12 @@
 		// Fond opaque (surface + teinte primaire) pour rester lisible en position sticky,
 		// sinon les lignes du tableau transparaîtraient sous la barre.
 		background-color: rgb(var(--v-theme-surface));
-		background-image: linear-gradient(
-			0deg,
-			rgba(var(--v-theme-primary), 0.06),
-			rgba(var(--v-theme-primary), 0.06)
-		);
+		background-image:
+			linear-gradient(
+				0deg,
+				rgba(var(--v-theme-primary), 0.06),
+				rgba(var(--v-theme-primary), 0.06)
+			);
 		border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
 	}
 
