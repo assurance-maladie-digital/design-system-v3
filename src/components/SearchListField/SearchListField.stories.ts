@@ -1,6 +1,6 @@
-import type { StoryObj, Meta } from '@storybook/vue3'
+import type { StoryObj, Meta } from '@storybook/vue3-vite'
 import SearchListField from './SearchListField.vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 
 const meta = {
 	title: 'Composants/Filtres/SearchListField',

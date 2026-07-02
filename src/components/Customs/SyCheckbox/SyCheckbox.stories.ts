@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 import { ref, watch } from 'vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta = {

@@ -11,7 +11,7 @@ import ColorIntegrationExample from './ColorIntegrationExample.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { h } from 'vue'
 import { useTheme } from 'vuetify'
-import type { StoryObj } from '@storybook/vue3'
+import type { StoryObj } from '@storybook/vue3-vite'
 import { computed } from 'vue'
 
 function createSection(

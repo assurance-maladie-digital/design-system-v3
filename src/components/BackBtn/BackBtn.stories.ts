@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 import BackBtn from './BackBtn.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'

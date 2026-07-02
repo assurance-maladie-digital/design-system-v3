@@ -1,5 +1,5 @@
-import { fn } from '@storybook/test'
-import type { Meta, StoryObj } from '@storybook/vue3'
+import { fn } from 'storybook/test'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 import ContextualMenu from './ContextualMenu.vue'
 import { ref, watch } from 'vue'

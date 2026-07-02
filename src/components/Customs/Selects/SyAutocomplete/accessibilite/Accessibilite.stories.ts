@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/vue3'
+import type { StoryObj } from '@storybook/vue3-vite'
 import { mdiKeyboard, mdiLoading } from '@mdi/js'
 
 const keyboardIcon = mdiKeyboard

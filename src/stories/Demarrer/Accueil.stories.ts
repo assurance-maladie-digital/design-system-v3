@@ -1,5 +1,5 @@
 import { VBtn, VIcon, VRow, VCol, VCard, VCardText, VCardTitle } from 'vuetify/components'
-import type { StoryObj } from '@storybook/vue3'
+import type { StoryObj } from '@storybook/vue3-vite'
 
 import { mdiArrowRight, mdiNpm } from '@mdi/js'
 

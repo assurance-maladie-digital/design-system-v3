@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SyPagination from '@/components/Customs/SyPagination/SyPagination.vue'
 import { ref, computed } from 'vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 
 const meta: Meta<typeof SyPagination> = {
 	title: 'Composants/Navigation/SyPagination',

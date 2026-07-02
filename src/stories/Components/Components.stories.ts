@@ -1,5 +1,5 @@
 import { VCard, VCardText, VCardTitle, VRow, VCol, VIcon } from 'vuetify/components'
-import type { StoryObj } from '@storybook/vue3'
+import type { StoryObj } from '@storybook/vue3-vite'
 import { useTheme } from 'vuetify'
 
 export default {
