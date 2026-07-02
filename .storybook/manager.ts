@@ -90,6 +90,7 @@ const apComponents = [
 	'composants-navigation-contextualmenu',
 	'composants-navigation-externallinks',
 	'composants-navigation-skiplink',
+	'composants-navigation-socialmedialinks',
 	'composants-navigation-sybtnmenu',
 	'composants-navigation-sypagination',
 	'composants-navigation-sytabs',
