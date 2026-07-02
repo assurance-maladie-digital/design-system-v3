@@ -27,12 +27,12 @@ exports[`HeaderBar > should render the component 1`] = `
             <picture class="logo-picture">
               <source
             media="(min-width: 990px)"
-            srcset="/assets/logos/logo-desktop.svg"
+            srcset="/src/assets/logos/logo-desktop.svg"
             type="image/svg+xml"
           /><img
             alt="Sécurité sociale, l'Assurance Maladie : Agir ensemble, protéger chacun. Retour à l'accueil."
             class="logo-image"
-            src="/assets/logos/logo-mobile.svg"
+            src="/src/assets/logos/logo-mobile.svg"
           />
             </picture>
             
