@@ -255,7 +255,7 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'SySelect',
 						description: 'Utilisé pour proposer une alternative au v-select de Vuetify qui ne respecte pas les règles d\'accessibilité RGAA. Il est basé sur un v-textfield.',
-						link: '/?path=/docs/composants-formulaires-syselect--docs',
+						link: '/?path=/docs/composants-formulaires-selects-syselect--docs',
 						img: `/components/sy-select${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
@@ -346,7 +346,7 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'SelectBtnField',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner une valeur dans une liste.',
-						link: '/?path=/docs/composants-formulaires-selectbtnfield--docs',
+						link: '/?path=/docs/composants-formulaires-selects-selectbtnfield--docs',
 						img: `/components/select-btn-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
