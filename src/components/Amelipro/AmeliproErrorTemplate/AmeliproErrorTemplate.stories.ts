@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { createDeprecationNotice } from '@/stories/DeprecationNotice/DeprecationNotice'
 import AmeliproErrorTemplate from './AmeliproErrorTemplate.vue'
 

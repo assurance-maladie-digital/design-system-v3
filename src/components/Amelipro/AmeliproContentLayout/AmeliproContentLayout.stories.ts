@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import AmeliproContentLayout from './AmeliproContentLayout.vue'
 import { createDeprecationNotice } from '@/stories/DeprecationNotice/DeprecationNotice'
 

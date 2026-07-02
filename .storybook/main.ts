@@ -5,13 +5,12 @@ const config: StorybookConfig = {
 	stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
 	staticDirs: ['./public'],
 	addons: [
-		'@storybook/addon-links',
-		'@storybook/addon-essentials',
-		'@storybook/addon-viewport',
-		'@jls-digital/storybook-addon-code',
-		'@storybook/addon-queryparams',
-		'@storybook/addon-a11y',
-	],
+        '@storybook/addon-links',
+        '@jls-digital/storybook-addon-code',
+        '@storybook/addon-queryparams',
+        '@storybook/addon-a11y',
+        '@storybook/addon-docs'
+    ],
 	framework: {
 		name: '@storybook/vue3-vite',
 		options: {},
@@ -35,7 +34,7 @@ const config: StorybookConfig = {
 					'@storybook/addon-docs/blocks',
 					'@storybook/addon-essentials/docs/preview',
 					'@storybook/addon-essentials/docs/mdx-react-shim',
-					'@storybook/blocks',
+					'@storybook/addon-docs/blocks',
 					'@storybook/vue3/dist/entry-preview-docs.mjs',
 				],
 			},

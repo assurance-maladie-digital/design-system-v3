@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { VCard, VCardTitle, VCardText, VCardActions, VDivider, VAvatar } from 'vuetify/components'
 import { VBtn } from 'vuetify/components'
 

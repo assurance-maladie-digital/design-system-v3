@@ -1,5 +1,5 @@
 import DataListGroup from './DataListGroup.vue'
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { mdiAccount, mdiCalendar, mdiCardAccountDetails, mdiDoctor, mdiPencil } from '@mdi/js'
 
 const meta: Meta<typeof DataListGroup> = {

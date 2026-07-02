@@ -1,5 +1,5 @@
 import { mdiAccount } from '@mdi/js'
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SyBtnMenu from './SyBtnMenu.vue'
 import { VListItem, VListItemTitle } from 'vuetify/components'
 import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'

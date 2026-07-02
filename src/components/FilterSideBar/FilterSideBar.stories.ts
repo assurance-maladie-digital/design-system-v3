@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import FilterSideBar from './FilterSideBar.vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 import { VBtn, VDialog, VCard, VCardText, VCardActions, VDivider, VSelect } from 'vuetify/components'
 import PeriodField from '../PeriodField/PeriodField.vue'
 import SearchListField from '../SearchListField/SearchListField.vue'

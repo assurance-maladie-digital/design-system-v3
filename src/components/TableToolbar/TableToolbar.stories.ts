@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import TableToolbar from './TableToolbar.vue'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import { VDataTable } from 'vuetify/components'
 import { ref } from 'vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 
 const meta = {
 	title: 'Composants/Tableaux/TableToolbar',

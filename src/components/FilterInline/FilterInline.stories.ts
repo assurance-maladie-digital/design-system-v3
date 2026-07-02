@@ -1,6 +1,6 @@
 /* eslint-disable vue/one-component-per-file */
-import { fn } from '@storybook/test'
-import type { Meta, StoryObj } from '@storybook/vue3'
+import { fn } from 'storybook/test'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { defineComponent, ref, watch, type PropType } from 'vue'
 import { VCheckbox, VDivider, VSelect, VTextField } from 'vuetify/components'
 import FilterSideBar from '../FilterSideBar/FilterSideBar.vue'

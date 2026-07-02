@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 import HeaderNavigationBar from './HeaderNavigationBar.vue'
 import { VBtn } from 'vuetify/components'
 import BackBtn from '../BackBtn/BackBtn.vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 
 const meta = {
 	title: 'Composants/Structure/HeaderBar/HeaderNavigationBar',

@@ -1,5 +1,5 @@
 import { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPanelText, VDataTable, VIcon, VRow, VCol, VSelect, VBtn, VCombobox, VContainer, VListItem, VChip, VDivider, VSheet, VCard, VCardItem, VCardTitle, VCardText, VBadge, VTooltip } from 'vuetify/components'
-import type { StoryObj } from '@storybook/vue3'
+import type { StoryObj } from '@storybook/vue3-vite'
 import { VuetifyItems, itemsChips } from './VuetifyItems'
 import { mdiCheckboxMarkedCircleOutline, mdiLinkVariant, mdiAlertCircleOutline, mdiMagnify, mdiFilterVariant, mdiInformationOutline } from '@mdi/js'
 import { computed, ref, watch } from 'vue'

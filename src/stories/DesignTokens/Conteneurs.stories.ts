@@ -1,5 +1,5 @@
 import { VRow, VCol } from 'vuetify/components'
-import type { StoryObj } from '@storybook/vue3'
+import type { StoryObj } from '@storybook/vue3-vite'
 
 export default {
 	title: 'Design Tokens/Conteneurs de page',
