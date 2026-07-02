@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import TableToolbar from './TableToolbar.vue'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import { ref, computed } from 'vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 import SyTable from '@/components/Tables/SyTable/SyTable.vue'
 
 const meta = {
