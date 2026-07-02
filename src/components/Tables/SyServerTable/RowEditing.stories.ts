@@ -8,7 +8,7 @@ import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import { commonTableArgTypes } from '../common/storyArgTypes'
 
 const meta = {
-	title: 'Composants/Tableaux/SyServerTable/Édition de lignes',
+	title: 'Composants/Tableaux/SyServerTable/Édition/Ligne par ligne',
 	component: SyServerTable,
 	decorators: [
 		() => ({

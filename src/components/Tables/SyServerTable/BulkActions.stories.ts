@@ -8,7 +8,7 @@ import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 
 const meta = {
-	title: 'Composants/Tableaux/SyServerTable/Actions groupées',
+	title: 'Composants/Tableaux/SyServerTable/Édition/Actions groupées',
 	component: SyServerTable,
 	decorators: [
 		() => ({
