@@ -262,7 +262,7 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'SyInputSelect',
 						description: 'Utilisé pour proposer une alternative au v-select de Vuetify qui ne respecte pas les règles RGAA.Il est basé sur un v-input.',
-						link: '/?path=/docs/composants-formulaires-syinputselect--docs',
+						link: '/?path=/docs/composants-formulaires-selects-syinputselect--docs',
 						img: `/components/sy-input-select${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
