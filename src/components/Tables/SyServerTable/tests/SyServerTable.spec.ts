@@ -551,7 +551,7 @@ describe('SyServerTable', () => {
 		})
 
 		await wrapper.vm.$nextTick()
-		const resetButton = wrapper.find('button')
+		const resetButton = wrapper.find('.reset button')
 		expect(resetButton.exists()).toBe(true)
 		expect(resetButton.text()).toContain('Réinitialiser les filtres')
 	})
@@ -578,7 +578,7 @@ describe('SyServerTable', () => {
 		})
 
 		await wrapper.vm.$nextTick()
-		const resetButton = wrapper.find('button')
+		const resetButton = wrapper.find('.reset button')
 		await resetButton.trigger('click')
 
 		const emitted = wrapper.emitted('update:options')

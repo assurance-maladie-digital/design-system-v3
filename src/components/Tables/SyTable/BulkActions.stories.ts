@@ -49,6 +49,24 @@ const baseItems = [
 	{ id: 3, firstname: 'Camille', lastname: 'Tremblay', email: 'camille.tremblay@example.com', statut: 'Actif' },
 ]
 
+// Jeu plus long + conteneur scrollable pour illustrer la barre d'actions
+// « sticky » : elle reste visible en haut même après avoir sélectionné une
+// ligne située plus bas dans le tableau.
+const manyItems = [
+	{ id: 1, firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com', statut: 'Actif' },
+	{ id: 2, firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com', statut: 'Inactif' },
+	{ id: 3, firstname: 'Camille', lastname: 'Tremblay', email: 'camille.tremblay@example.com', statut: 'Actif' },
+	{ id: 4, firstname: 'Thierry', lastname: 'Bobu', email: 'thierry.bobu@example.com', statut: 'Actif' },
+	{ id: 5, firstname: 'Bernadette', lastname: 'Langelier', email: 'bernadette.langelier@example.com', statut: 'Suspendu' },
+	{ id: 6, firstname: 'Agate', lastname: 'Roy', email: 'agate.roy@example.com', statut: 'Actif' },
+	{ id: 7, firstname: 'Louis', lastname: 'Denis', email: 'louis.denis@example.com', statut: 'Inactif' },
+	{ id: 8, firstname: 'Édith', lastname: 'Cartier', email: 'edith.cartier@example.com', statut: 'Actif' },
+	{ id: 9, firstname: 'Alphonse', lastname: 'Bouvier', email: 'alphonse.bouvier@example.com', statut: 'Suspendu' },
+	{ id: 10, firstname: 'Rosemarie', lastname: 'Quessy', email: 'rosemarie.quessy@example.com', statut: 'Actif' },
+	{ id: 11, firstname: 'Serge', lastname: 'Rivard', email: 'serge.rivard@example.com', statut: 'Inactif' },
+	{ id: 12, firstname: 'Delphine', lastname: 'Robillard', email: 'delphine.robillard@example.com', statut: 'Actif' },
+]
+
 const statutOptions = [
 	{ text: 'Actif', value: 'Actif' },
 	{ text: 'Inactif', value: 'Inactif' },
@@ -75,7 +93,8 @@ export const Default: Story = {
 	render: args => ({
 		components: { SyTable, DialogBox, SySelect },
 		setup() {
-			const items = ref([...baseItems])
+			const items = ref([...manyItems])
+			const options = ref({ itemsPerPage: -1 })
 			const selected = ref<number[]>([])
 			let clearAfter = () => {}
 
@@ -111,20 +130,23 @@ export const Default: Story = {
 				clearAfter()
 			}
 
-			return { args, headers, items, selected, statutOptions, statut, editOpen, deleteOpen, openEdit, applyEdit, openDelete, applyDelete, mdiPencil, mdiDelete }
+			return { args, headers, items, options, selected, statutOptions, statut, editOpen, deleteOpen, openEdit, applyEdit, openDelete, applyDelete, mdiPencil, mdiDelete }
 		},
 		template: `
 			<div>
-				<SyTable v-bind="args" v-model="selected" :headers="headers" :items="items">
-					<template #bulk-actions="{ selected, count, clearSelection }">
-						<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="openEdit(selected, clearSelection)">
-							Modifier le statut ({{ count }})
-						</VBtn>
-						<VBtn color="error" variant="flat" size="small" :prepend-icon="mdiDelete" @click="openDelete(selected, clearSelection)">
-							Supprimer ({{ count }})
-						</VBtn>
-					</template>
-				</SyTable>
+				<!-- Conteneur scrollable : la barre d'actions reste « sticky » en haut -->
+				<div style="max-height: 360px; overflow: auto; border: 1px solid rgba(0,0,0,0.12); border-radius: 4px;">
+					<SyTable v-bind="args" v-model="selected" v-model:options="options" :headers="headers" :items="items">
+						<template #bulk-actions="{ selected, count, clearSelection }">
+							<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="openEdit(selected, clearSelection)">
+								Modifier le statut ({{ count }})
+							</VBtn>
+							<VBtn color="error" variant="flat" size="small" :prepend-icon="mdiDelete" @click="openDelete(selected, clearSelection)">
+								Supprimer ({{ count }})
+							</VBtn>
+						</template>
+					</SyTable>
+				</div>
 
 				<DialogBox v-model="editOpen" title="Modifier le statut de la sélection" confirm-btn-text="Appliquer" @confirm="applyEdit" @cancel="editOpen = false">
 					<SySelect v-model="statut" :items="statutOptions" label="Nouveau statut" disable-error-handling />
@@ -142,6 +164,8 @@ export const Default: Story = {
 				name: 'Template',
 				code: `
 <template>
+	<!-- La barre d'actions groupées est « sticky » par défaut : elle reste visible
+	     en haut quand on fait défiler le tableau (désactivable via :sticky-bulk-actions="false"). -->
 	<SyTable suffix="bulk-actions" show-select selection-key="id" v-model="selected" :headers="headers" :items="items">
 		<!-- Le projet rend ses propres actions ; le tableau ne fournit que la sélection -->
 		<template #bulk-actions="{ selected, count, clearSelection }">

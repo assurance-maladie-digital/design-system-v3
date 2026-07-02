@@ -119,6 +119,8 @@ export type SyTableProps = {
 	clickableRow?: boolean
 	pageInput?: boolean
 	hideDefaultFooter?: boolean
+	/** Rend la barre d'actions groupées « sticky » en haut du tableau (défaut : true) */
+	stickyBulkActions?: boolean
 	/** Active l'édition inline des lignes (cf. flag `editable` par colonne) */
 	editable?: boolean
 }
@@ -150,6 +152,8 @@ export type SyServerTableProps = {
 	clickableRow?: boolean
 	pageInput?: boolean
 	hideDefaultFooter?: boolean
+	/** Rend la barre d'actions groupées « sticky » en haut du tableau (défaut : true) */
+	stickyBulkActions?: boolean
 	/** Active l'édition inline des lignes (cf. flag `editable` par colonne) */
 	editable?: boolean
 }

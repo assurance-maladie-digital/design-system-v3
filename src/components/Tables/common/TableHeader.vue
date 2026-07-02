@@ -242,16 +242,21 @@
 			v-if="header!.sortable"
 			class="sort-container d-flex align-center"
 		>
-			<SyIcon
-				class="v-data-table-header__sort-icon"
-				:class="{ 'text-primary opacity-100' : isColumnSorted }"
-				:icon="headerParams.getSortIcon(column)"
+			<button
+				type="button"
+				class="sort-button"
+				:class="{ 'sort-button--active': isColumnSorted }"
 				:title="locales.columnOrder(column.title!)"
-				:label="locales.columnOrder(column.title!)"
-				:decorative="false"
-				role="button"
+				:aria-label="locales.columnOrder(column.title!)"
 				@click="headerParams.toggleSort(column)"
-			/>
+			>
+				<SyIcon
+					class="v-data-table-header__sort-icon"
+					:class="{ 'text-primary opacity-100' : isColumnSorted }"
+					:icon="headerParams.getSortIcon(column)"
+					decorative
+				/>
+			</button>
 			<div
 				v-if="sortOrderIndex"
 				class="sort-order-indicator text-primary ml-0 mr-2"
@@ -306,6 +311,34 @@
 
 .sort-container {
 	flex: 0 0 auto;
+}
+
+// Bouton de tri natif : focusable et actionnable au clavier (Entrée/Espace).
+.sort-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2px;
+	margin: 0;
+	border: 0;
+	border-radius: 4px;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+}
+
+// L'icône de tri est masquée par défaut (opacity 0 via Vuetify) : on la révèle
+// au survol ET au focus clavier, sinon le tri est invisible en navigation clavier.
+.sort-button:hover :deep(.v-data-table-header__sort-icon),
+.sort-button:focus-visible :deep(.v-data-table-header__sort-icon),
+.sort-button--active :deep(.v-data-table-header__sort-icon) {
+	opacity: 1;
+}
+
+// Focus visible fortement contrasté.
+.sort-button:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 2px;
 }
 
 .sort-order-indicator {

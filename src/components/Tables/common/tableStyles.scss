@@ -104,6 +104,15 @@
 		color: rgb(var(--v-theme-grey-base));
 	}
 
+	// Focus clavier fortement contrasté sur les boutons du tableau
+	// (pagination, redimensionnement, boutons d'actions…) : anneau primaire 2px
+	// avec décalage, homogène avec le focus des cases à cocher.
+	.v-btn:focus-visible,
+	.resizer:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 2px;
+	}
+
 	// Ensure loading progress bar appears above sticky/pinned header cells
 	.v-data-table-progress th {
 		position: sticky;

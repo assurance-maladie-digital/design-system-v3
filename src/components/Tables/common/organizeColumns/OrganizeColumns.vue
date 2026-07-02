@@ -270,4 +270,12 @@
 		opacity: 1;
 	}
 }
+
+// Focus clavier fortement contrasté sur les boutons du menu (activateur, œil,
+// chevrons). Le menu est téléporté dans le body : le style reste appliqué via
+// l'attribut de scope porté par la racine de chaque bouton.
+.v-btn:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 2px;
+}
 </style>

@@ -47,6 +47,7 @@
 		clickableRow: false,
 		pageInput: false,
 		hideDefaultFooter: false,
+		stickyBulkActions: true,
 		editable: false,
 	})
 
@@ -342,6 +343,7 @@
 		<TableBulkActions
 			v-if="showBulkActions"
 			:count="selectedItems.length"
+			:sticky="props.stickyBulkActions"
 			@clear="clearSelection"
 		>
 			<slot
