@@ -6,6 +6,7 @@ import SyServerTable from './SyServerTable.vue'
 import DialogBox from '@/components/DialogBox/DialogBox.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
+import { useServerEditingDemo } from '../common/serverStoryHelpers'
 
 const meta = {
 	title: 'Composants/Tableaux/SyServerTable/Édition/Actions groupées',
@@ -93,7 +94,7 @@ export const Default: Story = {
 	render: args => ({
 		components: { SyServerTable, DialogBox, SySelect },
 		setup() {
-			const items = ref([...manyItems])
+			const { items, state, StateEnum } = useServerEditingDemo(manyItems)
 			const selected = ref<number[]>([])
 			let clearAfter = () => {}
 
@@ -129,13 +130,13 @@ export const Default: Story = {
 				clearAfter()
 			}
 
-			return { args, headers, items, selected, statutOptions, statut, editOpen, deleteOpen, openEdit, applyEdit, openDelete, applyDelete, mdiPencil, mdiDelete }
+			return { args, headers, items, state, StateEnum, selected, statutOptions, statut, editOpen, deleteOpen, openEdit, applyEdit, openDelete, applyDelete, mdiPencil, mdiDelete }
 		},
 		template: `
 			<div>
 				<!-- Conteneur scrollable : la barre d'actions reste « sticky » en haut -->
 				<div style="max-height: 360px; overflow: auto; border: 1px solid rgba(0,0,0,0.12); border-radius: 4px;">
-					<SyServerTable v-bind="args" v-model="selected" :headers="headers" :items="items" :server-items-length="items.length">
+					<SyServerTable v-bind="args" v-model="selected" :headers="headers" :items="items" :server-items-length="items.length" :loading="state === StateEnum.PENDING">
 						<template #bulk-actions="{ selected, count, clearSelection }">
 							<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="openEdit(selected, clearSelection)">
 								Modifier le statut ({{ count }})
@@ -165,7 +166,7 @@ export const Default: Story = {
 <template>
 	<!-- La barre d'actions groupées est « sticky » par défaut : elle reste visible
 	     en haut quand on fait défiler le tableau (désactivable via :sticky-bulk-actions="false"). -->
-	<SyServerTable suffix="server-bulk-actions" show-select selection-key="id" v-model="selected" :headers="headers" :items="items" :server-items-length="items.length">
+	<SyServerTable suffix="server-bulk-actions" show-select selection-key="id" v-model="selected" :headers="headers" :items="items" :server-items-length="items.length" :loading="state === StateEnum.PENDING">
 		<!-- Le projet rend ses propres actions ; le tableau ne fournit que la sélection -->
 		<template #bulk-actions="{ selected, count, clearSelection }">
 			<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="openEdit(selected, clearSelection)">
@@ -195,6 +196,7 @@ export const Default: Story = {
 <script setup lang="ts">
 	import { ref } from 'vue'
 	import { SyServerTable, DialogBox, SySelect } from '@cnamts/synapse'
+	import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
 	import { mdiDelete, mdiPencil } from '@mdi/js'
 
 	const headers = [
@@ -203,11 +205,23 @@ export const Default: Story = {
 		{ title: 'Email', key: 'email' },
 		{ title: 'Statut', key: 'statut' },
 	]
-	const items = ref([
+	const items = ref([])
+	const state = ref(StateEnum.IDLE)
+	const selected = ref([])
+
+	const getPatients = () => [
 		{ id: 1, firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com', statut: 'Actif' },
 		{ id: 2, firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com', statut: 'Inactif' },
-	])
-	const selected = ref([])
+	]
+
+	// Chargement initial (à remplacer par un appel serveur)
+	async function fetchData() {
+		state.value = StateEnum.PENDING
+		await new Promise(r => setTimeout(r, 800))
+		items.value = getPatients()
+		state.value = StateEnum.RESOLVED
+	}
+	fetchData()
 	const statutOptions = [
 		{ text: 'Actif', value: 'Actif' },
 		{ text: 'Inactif', value: 'Inactif' },
@@ -265,7 +279,7 @@ export const SequentialEdit: Story = {
 	render: args => ({
 		components: { SyServerTable, DialogBox, SyTextField, SySelect },
 		setup() {
-			const items = ref([...baseItems])
+			const { items, state, StateEnum } = useServerEditingDemo(baseItems)
 			const selected = ref<number[]>([])
 			let clearAfter = () => {}
 
@@ -294,11 +308,11 @@ export const SequentialEdit: Story = {
 				clearAfter()
 			}
 
-			return { args, headers, items, selected, open, drafts, index, current, position, statutOptions, openEdit, prev, next, apply, mdiPencil, mdiChevronLeft, mdiChevronRight }
+			return { args, headers, items, state, StateEnum, selected, open, drafts, index, current, position, statutOptions, openEdit, prev, next, apply, mdiPencil, mdiChevronLeft, mdiChevronRight }
 		},
 		template: `
 			<div>
-				<SyServerTable v-bind="args" v-model="selected" :headers="headers" :items="items" :server-items-length="items.length">
+				<SyServerTable v-bind="args" v-model="selected" :headers="headers" :items="items" :server-items-length="items.length" :loading="state === StateEnum.PENDING">
 					<template #bulk-actions="{ selected, count, clearSelection }">
 						<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="openEdit(selected, clearSelection)">
 							Modifier {{ count }} ligne(s)
@@ -328,7 +342,7 @@ export const SequentialEdit: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<SyServerTable suffix="server-bulk-actions-sequential" caption="Liste des patients" show-select selection-key="id" v-model="selected" :headers="headers" :items="items" :server-items-length="items.length">
+	<SyServerTable suffix="server-bulk-actions-sequential" caption="Liste des patients" show-select selection-key="id" v-model="selected" :headers="headers" :items="items" :server-items-length="items.length" :loading="state === StateEnum.PENDING">
 		<template #bulk-actions="{ selected, count, clearSelection }">
 			<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="openEdit(selected, clearSelection)">
 				Modifier {{ count }} ligne(s)
@@ -359,6 +373,7 @@ export const SequentialEdit: Story = {
 <script setup lang="ts">
 	import { computed, ref } from 'vue'
 	import { SyServerTable, DialogBox, SyTextField, SySelect } from '@cnamts/synapse'
+	import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
 	import { mdiChevronLeft, mdiChevronRight, mdiPencil } from '@mdi/js'
 
 	const headers = [
@@ -367,11 +382,23 @@ export const SequentialEdit: Story = {
 		{ title: 'Email', key: 'email' },
 		{ title: 'Statut', key: 'statut' },
 	]
-	const items = ref([
+	const items = ref([])
+	const state = ref(StateEnum.IDLE)
+	const selected = ref([])
+
+	const getPatients = () => [
 		{ id: 1, firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com', statut: 'Actif' },
 		{ id: 2, firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com', statut: 'Inactif' },
-	])
-	const selected = ref([])
+	]
+
+	// Chargement initial (à remplacer par un appel serveur)
+	async function fetchData() {
+		state.value = StateEnum.PENDING
+		await new Promise(r => setTimeout(r, 800))
+		items.value = getPatients()
+		state.value = StateEnum.RESOLVED
+	}
+	fetchData()
 	const statutOptions = [
 		{ text: 'Actif', value: 'Actif' },
 		{ text: 'Inactif', value: 'Inactif' },

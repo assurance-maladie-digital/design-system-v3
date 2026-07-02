@@ -9,6 +9,28 @@ dayjs.extend(customParseFormat)
 export type ServerRow = Record<string, unknown>
 
 /**
+ * Simule un chargement serveur initial pour les stories qui gèrent des items
+ * **mutables localement** (édition inline, actions groupées) : `state` passe de
+ * `PENDING` à `RESOLVED` après un court délai et les items apparaissent, comme sur
+ * les autres stories serveur (`:loading="state === StateEnum.PENDING"`). Le `ref`
+ * d'items retourné reste modifiable par la story (save/delete).
+ */
+export function useServerEditingDemo<T>(
+	initialItems: T[],
+	delay = 800,
+): { items: Ref<T[]>, state: Ref<StateEnum>, StateEnum: typeof StateEnum } {
+	const items = ref<T[]>([]) as Ref<T[]>
+	const state = ref<StateEnum>(StateEnum.PENDING)
+
+	setTimeout(() => {
+		items.value = [...initialItems]
+		state.value = StateEnum.RESOLVED
+	}, delay)
+
+	return { items, state, StateEnum }
+}
+
+/**
  * Prédicat de filtrage d'une ligne pour un filtre donné : retourne `true` si la
  * ligne doit être conservée. {@link useServerTableDemo} utilise
  * {@link defaultFilterMatch} par défaut, mais une story peut fournir sa propre

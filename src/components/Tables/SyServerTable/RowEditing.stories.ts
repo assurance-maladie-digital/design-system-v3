@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { ref } from 'vue'
 import { mdiCheck, mdiClose, mdiDelete, mdiPencil } from '@mdi/js'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
 import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import { commonTableArgTypes } from '../common/storyArgTypes'
+import { useServerEditingDemo } from '../common/serverStoryHelpers'
 
 const meta = {
 	title: 'Composants/Tableaux/SyServerTable/Édition/Ligne par ligne',
@@ -107,7 +107,7 @@ export const Default: Story = {
 	render: args => ({
 		components: { SyServerTable, SyIconButton },
 		setup() {
-			const items = ref([...baseItems])
+			const { items, state, StateEnum } = useServerEditingDemo(baseItems)
 
 			function onSave(updated: Record<string, unknown>) {
 				const index = items.value.findIndex(i => i.id === updated.id)
@@ -120,14 +120,14 @@ export const Default: Story = {
 				items.value = items.value.filter(i => i.id !== item.id)
 			}
 
-			return { args, headers, items, onSave, onDelete, mdiPencil, mdiDelete, mdiCheck, mdiClose }
+			return { args, headers, items, state, StateEnum, onSave, onDelete, mdiPencil, mdiDelete, mdiCheck, mdiClose }
 		},
 		template: `
 			<SyServerTable
 				v-bind="args"
 				:headers="headers"
 				:items="items"
-				:server-items-length="items.length"
+				:server-items-length="items.length" :loading="state === StateEnum.PENDING"
 				@save="onSave"
 				@delete="onDelete"
 			>
@@ -158,6 +158,7 @@ export const Default: Story = {
 		:headers="headers"
 		:items="items"
 		:server-items-length="items.length"
+		:loading="state === StateEnum.PENDING"
 		@save="onSave"
 		@delete="onDelete"
 	>
@@ -181,6 +182,7 @@ export const Default: Story = {
 <script setup lang="ts">
 	import { ref } from 'vue'
 	import { SyServerTable, SyIconButton } from '@cnamts/synapse'
+	import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
 	import { mdiCheck, mdiClose, mdiDelete, mdiPencil } from '@mdi/js'
 
 	const headers = [
@@ -190,10 +192,22 @@ export const Default: Story = {
 		{ title: 'Actions', key: 'actions', sortable: false, align: 'end' },
 	]
 
-	const items = ref([
+	const items = ref([])
+	const state = ref(StateEnum.IDLE)
+
+	const getPatients = () => [
 		{ id: 1, firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
 		{ id: 2, firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
-	])
+	]
+
+	// Chargement initial (à remplacer par un appel serveur)
+	async function fetchData() {
+		state.value = StateEnum.PENDING
+		await new Promise(r => setTimeout(r, 800))
+		items.value = getPatients()
+		state.value = StateEnum.RESOLVED
+	}
+	fetchData()
 
 	// SyServerTable ne mute jamais \`items\` : on persiste nous-mêmes l'item modifié
 	function onSave(updated) {
@@ -228,7 +242,7 @@ export const CustomEditor: Story = {
 	render: args => ({
 		components: { SyServerTable, SyIconButton },
 		setup() {
-			const items = ref([...baseItems])
+			const { items, state, StateEnum } = useServerEditingDemo(baseItems)
 
 			function onSave(updated: Record<string, unknown>) {
 				const index = items.value.findIndex(i => i.id === updated.id)
@@ -237,14 +251,14 @@ export const CustomEditor: Story = {
 				}
 			}
 
-			return { args, headers, items, onSave, mdiPencil, mdiDelete, mdiCheck, mdiClose }
+			return { args, headers, items, state, StateEnum, onSave, mdiPencil, mdiDelete, mdiCheck, mdiClose }
 		},
 		template: `
 			<SyServerTable
 				v-bind="args"
 				:headers="headers"
 				:items="items"
-				:server-items-length="items.length"
+				:server-items-length="items.length" :loading="state === StateEnum.PENDING"
 				@save="onSave"
 			>
 				<template #edit.lastname="{ value, update }">
@@ -280,6 +294,7 @@ export const CustomEditor: Story = {
 		:headers="headers"
 		:items="items"
 		:server-items-length="items.length"
+		:loading="state === StateEnum.PENDING"
 		@save="onSave"
 	>
 		<!-- Éditeur personnalisé pour la colonne "Nom" (input HTML) -->
@@ -309,6 +324,7 @@ export const CustomEditor: Story = {
 <script setup lang="ts">
 	import { ref } from 'vue'
 	import { SyServerTable, SyIconButton } from '@cnamts/synapse'
+	import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
 	import { mdiCheck, mdiClose, mdiPencil } from '@mdi/js'
 
 	const headers = [
@@ -318,10 +334,22 @@ export const CustomEditor: Story = {
 		{ title: 'Actions', key: 'actions', sortable: false, align: 'end' },
 	]
 
-	const items = ref([
+	const items = ref([])
+	const state = ref(StateEnum.IDLE)
+
+	const getPatients = () => [
 		{ id: 1, firstname: 'Virginie', lastname: 'Beauchesne', email: 'virginie.beauchesne@example.com' },
 		{ id: 2, firstname: 'Étienne', lastname: 'Salois', email: 'etienne.salois@example.com' },
-	])
+	]
+
+	// Chargement initial (à remplacer par un appel serveur)
+	async function fetchData() {
+		state.value = StateEnum.PENDING
+		await new Promise(r => setTimeout(r, 800))
+		items.value = getPatients()
+		state.value = StateEnum.RESOLVED
+	}
+	fetchData()
 
 	function onSave(updated) {
 		const index = items.value.findIndex(i => i.id === updated.id)
@@ -361,7 +389,7 @@ export const NonPrimitiveEditor: Story = {
 				{ id: 1, firstname: 'Virginie', birthdate: new Date('1985-04-12') },
 				{ id: 2, firstname: 'Étienne', birthdate: new Date('1990-11-30') },
 			]
-			const items = ref([...rows])
+			const { items, state, StateEnum } = useServerEditingDemo(rows)
 			const editHeaders = [
 				{ title: 'Prénom', key: 'firstname', editable: true },
 				{ title: 'Naissance', key: 'birthdate', editable: true },
@@ -385,10 +413,10 @@ export const NonPrimitiveEditor: Story = {
 				return new Date(yyyy, mm - 1, dd)
 			}
 
-			return { args, editHeaders, items, onSave, dateToStr, strToDate, mdiCheck, mdiClose, mdiPencil }
+			return { args, editHeaders, items, state, StateEnum, onSave, dateToStr, strToDate, mdiCheck, mdiClose, mdiPencil }
 		},
 		template: `
-			<SyServerTable v-bind="args" :headers="editHeaders" :items="items" :server-items-length="items.length" @save="onSave">
+			<SyServerTable v-bind="args" :headers="editHeaders" :items="items" :server-items-length="items.length" :loading="state === StateEnum.PENDING" @save="onSave">
 				<!-- Rendu hors édition d'une valeur objet : via #item.<colonne> -->
 				<template #item.birthdate="{ item }">
 					{{ item.birthdate.toLocaleDateString('fr-FR') }}
@@ -415,7 +443,7 @@ export const NonPrimitiveEditor: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<SyServerTable suffix="server-row-editing-nonprimitive" editable selection-key="id" hide-default-footer :headers="headers" :items="items" :server-items-length="items.length" @save="onSave">
+	<SyServerTable suffix="server-row-editing-nonprimitive" editable selection-key="id" hide-default-footer :headers="headers" :items="items" :server-items-length="items.length" :loading="state === StateEnum.PENDING" @save="onSave">
 		<!-- Rendu hors édition d'une valeur non primitive -->
 		<template #item.birthdate="{ item }">
 			{{ item.birthdate.toLocaleDateString('fr-FR') }}
@@ -443,6 +471,7 @@ export const NonPrimitiveEditor: Story = {
 <script setup lang="ts">
 	import { ref } from 'vue'
 	import { SyServerTable, SyIconButton, DatePicker } from '@cnamts/synapse'
+	import { StateEnum } from '@cnamts/synapse/src/components/Tables/common/constants/StateEnum'
 	import { mdiCheck, mdiClose, mdiPencil } from '@mdi/js'
 
 	const headers = [
@@ -451,10 +480,22 @@ export const NonPrimitiveEditor: Story = {
 		{ title: 'Actions', key: 'actions', sortable: false, align: 'end' },
 	]
 
-	const items = ref([
+	const items = ref([])
+	const state = ref(StateEnum.IDLE)
+
+	const getPatients = () => [
 		{ id: 1, firstname: 'Virginie', birthdate: new Date('1985-04-12') },
 		{ id: 2, firstname: 'Étienne', birthdate: new Date('1990-11-30') },
-	])
+	]
+
+	// Chargement initial (à remplacer par un appel serveur)
+	async function fetchData() {
+		state.value = StateEnum.PENDING
+		await new Promise(r => setTimeout(r, 800))
+		items.value = getPatients()
+		state.value = StateEnum.RESOLVED
+	}
+	fetchData()
 
 	// La valeur est une Date (non primitive) : DatePicker du DS via le slot #edit,
 	// avec conversion Date <-> chaîne « DD/MM/YYYY »
