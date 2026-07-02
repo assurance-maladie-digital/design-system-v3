@@ -18,7 +18,7 @@ export const useSyTextFieldProps = (
 	'success-messages': successMessages.value,
 	'has-success': isOnSuccess.value,
 	'disabled': props.disabled,
-	'disable-click-button': false,
+	'disable-click-button': props.textFieldActivator,
 	'readonly': true,
 	'label': labelWithAsterisk.value,
 	'placeholder': props.placeholder,

@@ -25,7 +25,9 @@ export const DATE_PICKER_MESSAGES = {
 	// Messages d'accessibilité
 	ARIA_DATE_INPUT: 'Date en cours de saisie',
 	ARIA_CALENDAR_BUTTON: 'Ouvrir le calendrier',
-	ARIA_TODAY_BUTTON: 'Sélectionner aujourd\'hui',
+	ARIA_CALENDAR_MONTH_BUTTON: (month: string): string => `Sélectionner le mois (${month})`,
+	ARIA_CALENDAR_YEAR_BUTTON: (year: string): string => `Sélectionner l'année (${year})`,
+	ARIA_TODAY_BUTTON: 'Sélectionner la date d\'aujourd\'hui',
 
 	// Boutons et actions
 	BUTTON_TODAY: 'Aujourd\'hui',
