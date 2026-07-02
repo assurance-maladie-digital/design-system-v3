@@ -2,11 +2,11 @@
 	import { computed, getCurrentInstance } from 'vue'
 	import type { RouteLocationRaw } from 'vue-router'
 	import { useTheme } from 'vuetify'
-	import useHeaderResponsiveMode from '../useHeaderResponsiveMode'
 	import { locales } from './locales'
-	import LogoMobile from './logos/Logo-mobile.vue'
-	import Logo from './logos/Logo.vue'
+	import logoDesktopUrl from '@/assets/logos/logo-desktop.svg'
+	import logoMobileUrl from '@/assets/logos/logo-mobile.svg'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
+	import { headerBreakpoint } from '../consts'
 
 	const props = withDefaults(defineProps<{
 		ariaLabel?: string
@@ -34,7 +34,7 @@
 
 	const theme = useTheme()
 	const primary = theme.current.value.colors.primary
-	const { isDesktop } = useHeaderResponsiveMode()
+	const desktopLogoMediaQuery = `(min-width: ${headerBreakpoint}px)`
 
 	const routeType = computed(() => {
 		if (props.homeLink?.to) {
@@ -62,14 +62,18 @@
 		}"
 		class="logo"
 	>
-		<Logo
-			v-if="isDesktop"
-			:aria-label="props.ariaLabel"
-		/>
-		<LogoMobile
-			v-else
-			:aria-label="props.ariaLabel"
-		/>
+		<picture class="logo-picture">
+			<source
+				:media="desktopLogoMediaQuery"
+				:srcset="logoDesktopUrl"
+				type="image/svg+xml"
+			>
+			<img
+				class="logo-image"
+				:src="logoMobileUrl"
+				:alt="props.ariaLabel"
+			>
+		</picture>
 
 		<slot
 			name="brand-content"
@@ -119,6 +123,15 @@
 	font-family: Cabin, Arial, Helvetica, sans-serif;
 	text-decoration: none;
 	cursor: pointer;
+}
+
+.logo-picture {
+	flex-grow: 0;
+	flex-shrink: 0;
+}
+
+.logo-image {
+	display: block;
 }
 
 .logo :deep(svg) {

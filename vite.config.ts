@@ -4,11 +4,19 @@ import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 import vue from '@vitejs/plugin-vue'
 import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import libAssetsPlugin from '@laynezh/vite-plugin-lib-assets'
 import { coverageConfigDefaults } from 'vitest/config'
 
 // https://vitejs.dev/config/
 export default defineConfig({
 	plugins: [
+		libAssetsPlugin({
+			// Only extract the header logos as real emitted files (instead of
+			// being inlined as data URIs by Vite's library mode). Other assets
+			// keep their default behaviour.
+			include: /[\\/]assets[\\/]logos[\\/].*\.svg$/,
+			name: 'logos/[name].[contenthash:8].[ext]',
+		}),
 		dts({
 			exclude: ['**/*.stories.ts', '**/*.spec.ts', 'src/stories/**'],
 			entryRoot: 'src',
