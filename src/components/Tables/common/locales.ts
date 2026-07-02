@@ -38,6 +38,7 @@ export const locales = {
 	moveColumnRight: (columnTitle: string) => `Déplacer la colonne ${columnTitle} vers la droite`,
 
 	// Accessibility locales
+	loading: 'Chargement des données en cours',
 	rowCountStatus: (count: number) => count <= 1 ? `${count} ligne trouvée` : `${count} lignes trouvées`,
 	sortAscending: 'Tri croissant',
 	sortDescending: 'Tri décroissant',

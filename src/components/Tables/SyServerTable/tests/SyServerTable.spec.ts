@@ -1369,4 +1369,20 @@ describe('SyServerTable pageInput', () => {
 		const lastEmit = emitted![emitted!.length - 1]![0] as DataOptions
 		expect(lastEmit.page).toBe(3)
 	})
+
+	it('gives the loading progressbar an accessible name (RGAA)', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: { options: {} as DataOptions, suffix: 'loader-test', serverItemsLength: 0 },
+			attrs: { items: [], headers, loading: true },
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+
+		const bars = wrapper.element.querySelectorAll('[role="progressbar"]')
+		expect(bars.length).toBeGreaterThan(0)
+		bars.forEach((bar) => {
+			expect(bar.getAttribute('aria-label')).toBe('Chargement des données en cours')
+		})
+	})
 })

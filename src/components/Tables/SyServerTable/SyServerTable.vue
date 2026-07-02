@@ -381,6 +381,17 @@
 					{{ props.caption }}
 				</caption>
 			</template>
+			<!-- Barre de chargement nommée (RGAA : role="progressbar" doit avoir un nom accessible) -->
+			<template #loader="{ color, isActive }">
+				<VProgressLinear
+					:active="isActive"
+					:color="color"
+					:aria-label="locales.loading"
+					height="2"
+					absolute
+					indeterminate
+				/>
+			</template>
 			<template #headers="slotProps">
 				<template v-if="slotProps && slotProps.columns">
 					<tr class="headers">
