@@ -28,6 +28,9 @@
 
 > `vue` et `vuetify` sont des **peerDependencies / externals** : ils ne doivent **jamais** être inclus dans le bundle.
 
+- Le DS doit pouvoir tourner en **SSR** : éviter tout accès direct à `window` / `document` dans le setup global ou les computed synchrones ; encapsuler ces accès dans des guards côté client.
+- Côté bundle, **privilégier les imports locaux** (ex. `@/composantsVuetify/VBtn`) et éviter les imports globaux de Vuetify qui gonflent la sortie.
+
 ---
 
 ## 3. Commandes essentielles
@@ -129,6 +132,8 @@ Règles :
 - **Préfixe `Sy`** pour les composants « custom » maison (`SyAlert`, `SyHeading`, `SyBtnMenu`…).
 - Tout composant public **doit être exporté** dans [src/components/index.ts](src/components/index.ts), rangé dans la bonne catégorie (Structure, Layout, Navigation, Boutons, etc.).
 - Toujours prévoir : stories, tests unitaires, et couverture a11y.
+- Toute **nouvelle prop publique** doit être documentée dans la doc (`*.mdx`) et illustrée dans les stories.
+- Les stories Storybook doivent montrer au moins un **cas d'usage standard** et un **état d'erreur / vide** pertinent.
 - **Logique réutilisable → composable** : extraire l'état et la logique non triviale dans un composable `useXxx` (`ref`/`computed`/`watch`, typé, retournant un objet). Le placer dans `src/composables/` s'il est partagé (et l'exporter via [src/composables/index.ts](src/composables/index.ts)), ou dans le dossier du composant s'il lui est spécifique. Le `.vue` reste ainsi fin et la logique est testable isolément.
 - **Réactivité** : un composable doit, dans la mesure du possible, gérer des éléments **réactifs**. Accepter les entrées en `ref`/`getter` (les normaliser avec `toRef`/`toValue`), exposer l'état dérivé en `computed`, et retourner des `ref`/`computed` (jamais des valeurs figées désynchronisées de la source). La réactivité doit être préservée de bout en bout.
 
@@ -171,6 +176,7 @@ Règles :
 - i18n : **aucune librairie** (pas de `vue-i18n`). Externaliser les chaînes dans `locales.ts` (ne jamais coder en dur), qui exporte un objet `locales` dont les valeurs sont :
   - soit des **constantes** string : `export const locales = { close: 'Fermer' }`, utilisées `{{ locales.close }}` ;
   - soit des **fonctions à paramètres** pour l'interpolation / le pluriel : `rowText: (lignes: string, plural: boolean): string => \`${lignes} ligne${plural ? 's' : ''}\``.
+- Les chaînes de texte restent dans `locales.ts`, **jamais en dur** dans le template ou la logique.
 - **Personnalisation par le consommateur** : exposer les libellés en prop plutôt que de les figer. Importer l'objet sous alias (`import { locales as defaultLocales } from './locales'`), déclarer `locales?: typeof defaultLocales` et fournir le défaut via `withDefaults` (`locales: () => defaultLocales`). Le consommateur peut ainsi surcharger tout ou partie des chaînes.
 
 ---
@@ -191,6 +197,10 @@ Règles :
 
 ⚠️ **Tests visuels & WSL** : les snapshots diffèrent entre WSL et Linux natif.
 Sur WSL, utiliser `test:visual:open` pour l'inspection seulement ; générer les **baselines officielles en CI (Ubuntu) ou sur Linux natif**. Ne pas committer de baselines produites sous WSL.
+
+- Prévoir **un test de régression** dédié pour chaque bug corrigé (reprendre le scénario ayant échoué).
+- Si un composant change visuellement, valider manuellement le rendu avant de mettre à jour les **snapshots Cypress**.
+- Pour les tests dépendant de Vue Router, **utiliser `createRouter` / `createMemoryHistory`** plutôt que `global.mocks` (cf. limitation sur `getCurrentInstance()` dans `HorizontalNavbar.vue`).
 
 ---
 
@@ -226,6 +236,7 @@ Règles à fort impact, non redites ailleurs :
 - **pnpm uniquement** (jamais npm/yarn) ; `vue`/`vuetify` restent externes.
 - Ne pas committer de baselines de tests visuels générées sous **WSL** (cf. §6).
 - Ne pas créer de fichiers markdown de documentation « de changement » non demandés.
+- **Pas de code mort** : pas de `console.log`, `debugger`, commentaires temporaires ou branches inatteignables laissées dans le code.
 
 ---
 
