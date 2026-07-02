@@ -1,4 +1,4 @@
-import { addons } from '@storybook/manager-api'
+import { addons } from 'storybook/manager-api'
 import cnamTheme from './CnamTheme'
 import paTheme from './PaTheme'
 import apTheme from './ApTheme'
@@ -86,6 +86,7 @@ const apComponents = [
 	'composants-formulaires-uploadworkflow',
 	'composants-formulaires-rangefield',
 	'composants-formulaires-periodfield',
+	'composants-formulaires-selects-syinputselect',
 	'composants-layout-pagecontainer',
 	'composants-navigation-contextualmenu',
 	'composants-navigation-skiplink',

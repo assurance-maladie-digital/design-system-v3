@@ -1,9 +1,9 @@
-import type { StoryObj, Meta } from '@storybook/vue3'
+import type { StoryObj, Meta } from '@storybook/vue3-vite'
 import PhoneField from './PhoneField.vue'
 import { ref, watch } from 'vue'
 import { indicatifs } from './indicatifs'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 
 const meta = {
 	title: 'Composants/Formulaires/PhoneField',

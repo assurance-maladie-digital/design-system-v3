@@ -1,9 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import SyAlert from '../../../SyAlert/SyAlert.vue'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/components'
 import { ref } from 'vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta: Meta<typeof SySelect> = {

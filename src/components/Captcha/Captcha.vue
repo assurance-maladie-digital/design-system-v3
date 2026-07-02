@@ -13,7 +13,7 @@
 	import { type CaptchaProps, type CaptchaType, type StateType } from './types'
 	import { useCaptchaValidation } from './useCaptchaValidation'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation.ts'
+	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 
 	const props = withDefaults(defineProps<CaptchaProps>(), {
 		modelValue: undefined,

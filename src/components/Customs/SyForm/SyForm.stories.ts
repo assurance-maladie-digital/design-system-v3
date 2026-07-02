@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref, computed } from 'vue'
 import SyForm from './SyForm.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import { VBtn } from 'vuetify/components'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 
 export default {
 	title: 'Composants/Formulaires/SyForm',

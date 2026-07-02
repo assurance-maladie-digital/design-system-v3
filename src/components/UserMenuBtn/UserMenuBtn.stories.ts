@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { mdiAccount, mdiCog, mdiShieldAccount } from '@mdi/js'
 import UserMenuBtn from './UserMenuBtn.vue'
 

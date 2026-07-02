@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref, watch } from 'vue'
 import AmeliproIllustratedRadioGroup from './AmeliproIllustratedRadioGroup.vue'
 import AmeliproTooltips from '../AmeliproTooltips/AmeliproTooltips.vue'

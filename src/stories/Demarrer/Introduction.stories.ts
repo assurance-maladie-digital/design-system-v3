@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/vue3'
+import type { StoryObj } from '@storybook/vue3-vite'
 
 import { mdiGithub, mdiMenuRight } from '@mdi/js'
 

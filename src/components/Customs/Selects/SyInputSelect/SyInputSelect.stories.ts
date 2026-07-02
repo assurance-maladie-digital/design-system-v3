@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SyInputSelect from './SyInputSelect.vue'
 import { VBtn, VMenu, VList, VListItem, VListItemTitle, VForm } from 'vuetify/components'
 import { ref } from 'vue'

@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import AmeliproHeader from './AmeliproHeader.vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 
 const meta: Meta<typeof AmeliproHeader> = {
 	argTypes: {

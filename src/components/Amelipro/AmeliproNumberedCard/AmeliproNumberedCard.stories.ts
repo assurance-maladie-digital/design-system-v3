@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import AmeliproNumberedCard from './AmeliproNumberedCard.vue'
 import type { AmeliproNumberedCardItem } from './types'
 

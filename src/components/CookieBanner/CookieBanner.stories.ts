@@ -1,6 +1,6 @@
-import { type Meta, type StoryObj } from '@storybook/vue3'
+import { type Meta, type StoryObj } from '@storybook/vue3-vite'
 import CookieBanner from './CookieBanner.vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 import { VBtn } from 'vuetify/components'
 import { ref, watch } from 'vue'
 

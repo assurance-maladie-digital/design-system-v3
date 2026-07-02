@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import AmeliproDentalChart from './AmeliproDentalChart.vue'
 import type { AmeliproDentalChartLine } from './types'
 import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'

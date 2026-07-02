@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import AmeliproAccordionResultList from './AmeliproAccordionResultList.vue'
 import type { IDataListItem } from '../types'
 import { computed, ref } from 'vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 
 const meta = {
 	argTypes: {
