@@ -33,12 +33,6 @@
 	const currentYear = ref<string | null>(null)
 	const currentMonthName = ref<string | null>(null)
 	const currentYearName = ref<string | null>(null)
-	const monthYearLiveText = computed(() => {
-		if (currentMonthName.value && currentYearName.value) return `${currentMonthName.value} ${currentYearName.value}`
-		if (currentMonthName.value) return currentMonthName.value
-		if (currentYearName.value) return currentYearName.value
-		return ''
-	})
 
 	const props = withDefaults(defineProps<CalendarModeProps>(), {
 		...DatePickerCommonDefaults,
@@ -101,6 +95,9 @@
 	const datePickerRef = ref<ComponentPublicInstance | null>(null)
 	const complexDatePickerRef = ref<null | ComponentPublicInstance<typeof ComplexDatePicker>>()
 	const datePickerContentId = `date-picker-${useId()}`
+	const datePickerDialogRef = ref<HTMLElement | null>(null)
+	const datePickerDialogId = `${datePickerContentId}-dialog`
+	const datePickerHeadingId = `${datePickerContentId}-heading`
 
 	const isDatePickerVisible = ref(false)
 	const { handleMenuKeydown } = useDatePickerFocusTrap({
@@ -108,6 +105,42 @@
 		datePickerRef,
 		onClose: () => emit('closed'),
 		restoreFocus: () => queueMicrotask(() => focusCalendarInput()),
+	})
+
+	const addDatePickerKeydownListener = async () => {
+		await nextTick()
+
+		const dialogEl = datePickerDialogRef.value
+		if (!dialogEl) return
+
+		dialogEl.removeEventListener('keydown', handleMenuKeydown, true)
+		dialogEl.addEventListener('keydown', handleMenuKeydown, true)
+	}
+
+	const removeDatePickerKeydownListener = () => {
+		datePickerDialogRef.value?.removeEventListener(
+			'keydown',
+			handleMenuKeydown,
+			true,
+		)
+	}
+
+	watch(
+		() => isDatePickerVisible.value,
+		async (visible) => {
+			if (visible && !props.noCalendar) {
+				await addDatePickerKeydownListener()
+				datePickerDialogRef.value?.focus()
+				return
+			}
+
+			removeDatePickerKeydownListener()
+		},
+		{ flush: 'post' },
+	)
+
+	onBeforeUnmount(() => {
+		removeDatePickerKeydownListener()
 	})
 
 	// Utiliser le calendarKeyboardNavigation normalement
@@ -847,19 +880,14 @@
 					</div>
 				</template>
 				<div
+					v-if="isDatePickerVisible && !props.noCalendar"
+					:id="datePickerDialogId"
+					ref="datePickerDialogRef"
+					role="dialog"
+					:aria-labelledby="datePickerHeadingId"
 					tabindex="-1"
-					role="presentation"
-					@keydown.capture="handleMenuKeydown"
 				>
-					<div
-						class="sr-only"
-						aria-live="polite"
-						aria-atomic="true"
-					>
-						{{ monthYearLiveText }}
-					</div>
 					<VDatePicker
-						v-if="isDatePickerVisible && !props.noCalendar"
 						:id="datePickerContentId"
 						ref="datePickerRef"
 						v-model="selectedDates"
@@ -887,6 +915,7 @@
 						</template>
 						<template #header>
 							<SyHeading
+								:id="datePickerHeadingId"
 								class="mx-auto my-auto ml-5 mb-4"
 								aria-live="polite"
 								aria-atomic="true"
