@@ -191,12 +191,12 @@
 	>
 		<div class="header">
 			<SyHeading :level="1">
-				20 bonnes pratiques essentielles d'ecoconception
+				Bonnes pratiques essentielles d'ecoconception
 			</SyHeading>
-			<p><strong>Pourquoi ces 20 bonnes pratiques essentielles ?</strong> </p>
+			<p><strong>Pourquoi ces bonnes pratiques essentielles ?</strong> </p>
 			<p>
 				Afin de faciliter l'intégration de l'écoconception dans les projets numériques,
-				le Studio Design a sélectionné <strong>20 bonnes pratiques essentielles</strong>
+				le Studio Design a sélectionné les <strong>bonnes pratiques essentielles</strong>
 				issues du référentiel d'écoconception numérique, spécifiquement adaptées aux
 				phases <strong>UX/UI</strong> et <strong>Développement Front</strong>.
 			</p>
