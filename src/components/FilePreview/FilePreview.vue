@@ -58,11 +58,17 @@
 	// Rendu embarqué pdf.js : requis par le suivi de consultation ET par la lecture seule
 	const isEmbedded = computed(() => (props.trackConsultation || props.readonly) && isPdf.value)
 
+	// `fileURL` (URL objet) n'est consommée que par <img> (images) et <object> (PDF en
+	// mode natif). En rendu embarqué pdf.js (readonly / track-consultation), c'est le
+	// viewer qui affiche le PDF via arrayBuffer() → créer une URL objet serait inutile.
+	const needsObjectUrl = computed(() => isImage.value || (isPdf.value && !isEmbedded.value))
+
 	const getFileURL = () => {
-		// Révoque l'URL objet précédente avant d'en (re)créer une : sans cela, chaque
-		// changement de fichier fuit l'ancienne URL (jamais révoquée). No-op si vide.
+		// Révoque et réinitialise l'URL précédente : sans cela, chaque changement de
+		// fichier (ou de mode) fuit l'ancienne URL, jamais révoquée. No-op si vide.
 		revokeFileURL()
-		if (!props.file || !(isPdf.value || isImage.value)) return
+		fileURL.value = ''
+		if (!props.file || !needsObjectUrl.value) return
 		fileURL.value = URL.createObjectURL(props.file)
 	}
 
@@ -71,7 +77,9 @@
 		URL.revokeObjectURL(fileURL.value)
 	}
 
-	watch(() => props.file, getFileURL, { immediate: true })
+	// Recrée l'URL au changement de fichier ET quand le besoin bascule (ex. `readonly`
+	// activé/désactivé) : le viewer pdf.js et l'<object> natif n'utilisent pas la même source.
+	watch([() => props.file, needsObjectUrl], getFileURL, { immediate: true })
 
 	onUnmounted(revokeFileURL)
 

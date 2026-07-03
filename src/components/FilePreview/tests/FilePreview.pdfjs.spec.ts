@@ -90,6 +90,23 @@ describe('FilePreview — rendu pdf.js (suivi de consultation & lecture seule)',
 		expect(wrapper.emitted('update:complete')).toBeUndefined()
 	})
 
+	it('ne crée pas d\'URL objet en rendu embarqué pdf.js (fileURL inutile)', async () => {
+		const orig = URL.createObjectURL
+		const createSpy = vi.fn(() => 'blob:x')
+		URL.createObjectURL = createSpy
+
+		const wrapper = mount(FilePreview, {
+			props: { file: pdfFile(), readonly: true, pdfWorkerSrc: 'worker' },
+		})
+		await flushPromises()
+
+		// Le viewer pdf.js affiche le PDF via arrayBuffer() : aucune URL objet créée
+		expect(createSpy).not.toHaveBeenCalled()
+
+		wrapper.unmount()
+		URL.createObjectURL = orig
+	})
+
 	it('par défaut (trackConsultation=false) garde l\'<object> et ne charge pas pdf.js', async () => {
 		const wrapper = mount(FilePreview, {
 			props: { file: pdfFile() },
