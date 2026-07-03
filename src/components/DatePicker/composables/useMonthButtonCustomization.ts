@@ -1,4 +1,5 @@
 import { ref, nextTick, type Ref, onBeforeUnmount } from 'vue'
+import { locales } from '../locales'
 
 /**
  * Composable pour personnaliser les boutons du mois et de l'année dans les composants CalendarMode
@@ -28,16 +29,16 @@ export function useMonthButtonCustomization(
 		year: string | null | undefined,
 	): string => {
 		const monthLabel = normalizeMonthLabel(rawMonth, displayMonth)
-		if (!monthLabel) return 'Sélectionner un mois'
+		if (!monthLabel) return locales.selectMonth()
 		const cleanYear = (year ?? '').trim()
 		return cleanYear
-			? `Sélectionner le mois de ${monthLabel} ${cleanYear}`
-			: `Ouvrir le sélecteur de mois`
+			? locales.selectMonthWithYear(monthLabel, cleanYear)
+			: locales.openMonthSelector
 	}
 
 	const buildYearAriaLabel = (year: string | null | undefined): string => {
 		const cleanYear = (year ?? '').trim()
-		return cleanYear ? `Ouvrir le selecteur d'année` : 'Sélectionner une année'
+		return cleanYear ? locales.selectYearForDisplay(cleanYear) : locales.selectYear()
 	}
 
 	onBeforeUnmount(() => {
@@ -53,50 +54,33 @@ export function useMonthButtonCustomization(
 	const getCustomMonthName = (monthName: string | null | undefined): string => {
 		if (!monthName) return ''
 
-		// Convertir en minuscules pour faciliter la comparaison
 		const lowerMonth = monthName.toLowerCase()
-
-		switch (lowerMonth) {
-			case 'january':
-			case 'janvier':
-				return 'janv.'
-			case 'february':
-			case 'février':
-				return 'févr.'
-			case 'march':
-			case 'mars':
-				return 'mars'
-			case 'april':
-			case 'avril':
-				return 'avr.'
-			case 'may':
-			case 'mai':
-				return 'mai'
-			case 'june':
-			case 'juin':
-				return 'juin'
-			case 'july':
-			case 'juillet':
-				return 'juil.'
-			case 'august':
-			case 'août':
-				return 'août'
-			case 'september':
-			case 'septembre':
-				return 'sept.'
-			case 'october':
-			case 'octobre':
-				return 'oct.'
-			case 'november':
-			case 'novembre':
-				return 'nov.'
-			case 'december':
-			case 'décembre':
-				return 'déc.'
-			default:
-				// Si le mois n'est pas reconnu, retourner le mois avec la première lettre en majuscule
-				return monthName.charAt(0).toUpperCase() + monthName.slice(1)
+		const normalizedEnglishMonths = [
+			'january',
+			'february',
+			'march',
+			'april',
+			'may',
+			'june',
+			'july',
+			'august',
+			'september',
+			'october',
+			'november',
+			'december',
+		]
+		const englishIndex = normalizedEnglishMonths.indexOf(lowerMonth)
+		if (englishIndex !== -1) {
+			return locales.monthNamesShort[englishIndex]!
 		}
+
+		const frenchIndex = locales.monthNames.findIndex(name => name.toLowerCase() === lowerMonth)
+		if (frenchIndex !== -1) {
+			return locales.monthNamesShort[frenchIndex]!
+		}
+
+		// Si le mois n'est pas reconnu, retourner le mois avec la première lettre en majuscule
+		return monthName.charAt(0).toUpperCase() + monthName.slice(1)
 	}
 
 	/**

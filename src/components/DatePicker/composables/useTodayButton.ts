@@ -1,5 +1,6 @@
 import { computed, type ComputedRef } from 'vue'
 import dayjs from 'dayjs'
+import { formatDateLabel } from '../locales'
 import { type DateObjectValue } from '../types'
 
 export interface TodayButtonProps {
@@ -18,19 +19,9 @@ export interface TodayButtonReturn {
  */
 export function useTodayButton(props: TodayButtonProps): TodayButtonReturn {
 	// Computed pour le format de la date du jour
-	const todayInString = computed(() => {
-		return dayjs().locale('fr').format('dddd DD MMMM YYYY')
-			.split(' ')
-			.map(word => word.charAt(0).toUpperCase() + word.slice(1))
-			.join(' ')
-	})
+	const todayInString = computed(() => formatDateLabel(dayjs()))
 
-	const headerDate = computed(() => {
-		return dayjs().locale('fr').format('dddd DD MMMM YYYY')
-			.split(' ')
-			.map(word => word.charAt(0).toUpperCase() + word.slice(1))
-			.join(' ')
-	})
+	const headerDate = computed(() => formatDateLabel(dayjs()))
 
 	// Fonction pour sélectionner la date du jour
 	const selectToday = (selectedDates: { value: DateObjectValue }) => {

@@ -12,7 +12,7 @@
 	import { useDateTextInputProps } from './props/dateTextInputProps'
 	import { useComplexDatePickerProps } from './props/complexDatePickerProps'
 	import { useSyTextFieldProps } from './props/syTextFieldProps'
-	import { DATE_PICKER_MESSAGES } from '../constants/messages'
+	import { locales } from '../locales'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import { mdiCalendarMonthOutline } from '@mdi/js'
@@ -60,9 +60,7 @@
 	const displayWeekendDays = computed(() => props.displayWeekendDays ?? true)
 	const { todayInString, headerDate } = useTodayButton(props)
 	const todayButtonLabel = computed(() => {
-		const dateText = todayInString.value?.trim()
-		const baseLabel = 'Sélectionner la date d\'aujourd\'hui'
-		return dateText ? `${baseLabel} (${dateText})` : baseLabel
+		return locales.buttonTodayAriaLabel(todayInString.value?.trim())
 	})
 
 	// Inlined from useAsteriskDisplay
@@ -823,7 +821,7 @@
 				:offset="[-20, 5]"
 				content-class="date-picker-overlay-content"
 				role="presentation"
-				:title="props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT"
+				:title="props.placeholder || locales.label"
 			>
 				<template #activator="{ props: menuProps }">
 					<div
@@ -882,7 +880,7 @@
 						@update:month-year="markHolidayDays"
 					>
 						<template #title>
-							Sélectionnez une date
+							{{ locales.calendarTitle }}
 						</template>
 						<template #header>
 							<SyHeading
@@ -913,7 +911,7 @@
 										decorative
 										:icon="mdiCalendarMonthOutline"
 									/>
-									{{ DATE_PICKER_MESSAGES.BUTTON_TODAY }}
+									{{ locales.buttonToday }}
 								</v-btn>
 							</div>
 						</template>

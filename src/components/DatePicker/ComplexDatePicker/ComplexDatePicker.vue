@@ -45,7 +45,7 @@
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
 	import { useDateTextInputProps } from './props/dateTextInputProps'
 	import { useDateTextInputMenuProps } from './props/dateTextInputMenuProps'
-	import { DATE_PICKER_MESSAGES } from '../constants/messages'
+	import { locales } from '../locales'
 	import { mdiCalendarMonthOutline } from '@mdi/js'
 	import { getDateDescription as getDateDescriptionUtil } from '../utils/dateFormattingUtils'
 	import { validateEmptyOrIncompleteDate, adaptCustomRules } from '../utils/validationUtils'
@@ -447,7 +447,7 @@
 				if (rangeBoundaryDates.value?.[0] && rangeBoundaryDates.value?.[1]) {
 					const startDate = formatDate(rangeBoundaryDates.value[0], props.format)
 					const endDate = formatDate(rangeBoundaryDates.value[1], props.format)
-					formattedValue = `${startDate} - ${endDate}`
+					formattedValue = `${startDate}${locales.rangeSeparator}${endDate}`
 					displayFormattedDate.value = textInputValue.value = formattedValue
 					const formattedDates = [
 						formatDate(rangeBoundaryDates.value[0], returnFormat.value),
@@ -463,7 +463,7 @@
 						formatDate(selectedDates.value[0]!, props.format),
 						formatDate(selectedDates.value[selectedDates.value.length - 1]!, props.format),
 					] as [string, string]
-					formattedValue = `${formattedDates[0]} - ${formattedDates[1]}`
+					formattedValue = `${formattedDates[0]}${locales.rangeSeparator}${formattedDates[1]}`
 					displayFormattedDate.value = textInputValue.value = formattedValue
 					updateModel(formattedDates)
 					emit('date-selected', formattedDates)
@@ -490,14 +490,14 @@
 	/**
 	 * Accessibility (live description during typing)
 	 */
-	const accessibilityDescription = ref(DATE_PICKER_MESSAGES.ARIA_DATE_INPUT)
+	const accessibilityDescription = ref<string>(locales.dateInputDescription)
 
 	watch(displayFormattedDate, (newValue) => {
 		if (newValue && typeof newValue === 'string') {
 			accessibilityDescription.value = getDateDescriptionUtil(newValue.replace(/_/g, ' '), props.format)
 		}
 		else {
-			accessibilityDescription.value = 'Aucune date saisie'
+			accessibilityDescription.value = locales.noDateEntered
 		}
 	})
 
@@ -683,8 +683,8 @@
 		textInputValue.value = eventOrValue
 
 		if (props.displayRange && typeof eventOrValue === 'string') {
-			if (eventOrValue.includes(' - ')) {
-				const [startDateStr = '', endDateStr = ''] = eventOrValue.split(' - ').map(s => s.trim())
+			if (eventOrValue.includes(locales.rangeSeparator)) {
+				const [startDateStr = '', endDateStr = ''] = eventOrValue.split(locales.rangeSeparator).map(s => s.trim())
 				if (startDateStr && endDateStr && !endDateStr.includes('_')) {
 					const startDate = parseDate(startDateStr, props.format)
 					const endDate = parseDate(endDateStr, props.format)
@@ -734,7 +734,7 @@
 
 		// Gérer les erreurs pour champ vide requis
 		if (!emptyCheck.isValid && !props.disableErrorHandling && emptyCheck.errorMessage) {
-			errors.value.push(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
+			errors.value.push(locales.required)
 		}
 
 		// Si on ne doit pas continuer la validation (champ vide/incomplet)
@@ -756,7 +756,7 @@
 		if (!date) {
 			// La date n'a pas pu être parsée
 			if (!props.disableErrorHandling) {
-				errors.value.push(`Format de date invalide (${props.format})`)
+				errors.value.push(locales.invalidDateFormatWithFormat(props.format))
 			}
 			return false
 		}
@@ -849,7 +849,7 @@
 				if (startDate && endDate) {
 					selectedDates.value = dateSelectionResult.generateDateRange(startDate, endDate)
 					displayFormattedDate.value
-						= `${formatDate(startDate, props.format)} - ${formatDate(endDate, props.format)}`
+						= `${formatDate(startDate, props.format)}${locales.rangeSeparator}${formatDate(endDate, props.format)}`
 				}
 				else if (startDate) {
 					// Première date saisie uniquement
@@ -1056,7 +1056,7 @@
 						v-bind="menuActivatorProps"
 						:aria-controls="isDatePickerVisible ? datePickerContentId : undefined"
 						:aria-expanded="isDatePickerVisible"
-						:title="props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT"
+						:title="props.placeholder || locales.label"
 					>
 						<DateTextInput
 							ref="dateCalendarTextInputRef"
@@ -1118,7 +1118,7 @@
 					>
 						<template #title>
 							<span class="date-picker-title">
-								Sélectionnez une date
+								{{ locales.calendarTitle }}
 							</span>
 						</template>
 						<template #header>
@@ -1138,7 +1138,7 @@
 									v-if="props.displayTodayButton"
 									size="x-small"
 									color="primary"
-									:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
+									:title="locales.buttonToday"
 									class="date-picker__today-button my-2 pa-2 mt-2"
 									:ripple="false"
 									@click="handleSelectToday"
@@ -1148,7 +1148,7 @@
 										decorative
 										:icon="mdiCalendarMonthOutline"
 									/>
-									{{ DATE_PICKER_MESSAGES.BUTTON_TODAY }}
+									{{ locales.buttonToday }}
 								</v-btn>
 							</div>
 						</template>
