@@ -1,5 +1,6 @@
 import { computed, type ComputedRef } from 'vue'
 import dayjs from 'dayjs'
+import { formatDateLabel, formatDateRangeEnd, formatDateShort } from '../locales'
 import { type DateObjectValue } from '../types'
 
 export interface DisplayedDateStringProps {
@@ -28,12 +29,7 @@ export function useDisplayedDateString(props: DisplayedDateStringProps): Display
 			const endDate = dayjs(props.rangeBoundaryDates.value[1])
 
 			if (startDate.isValid() && endDate.isValid()) {
-				// Format court pour la date de début, format complet pour la date de fin
-				return `${startDate.format('D MMMM').split(' ')
-					.map(word => word.charAt(0).toUpperCase() + word.slice(1))
-					.join(' ')} - ${endDate.format('D MMMM YYYY').split(' ')
-					.map(word => word.charAt(0).toUpperCase() + word.slice(1))
-					.join(' ')}`
+				return `${formatDateShort(startDate)} - ${formatDateRangeEnd(endDate)}`
 			}
 		}
 
@@ -45,22 +41,14 @@ export function useDisplayedDateString(props: DisplayedDateStringProps): Display
 				const endDate = dayjs(props.selectedDates.value[props.selectedDates.value.length - 1])
 
 				if (startDate.isValid() && endDate.isValid()) {
-					// Format court pour la date de début, format complet pour la date de fin
-					return `${startDate.format('D MMMM').split(' ')
-						.map(word => word.charAt(0).toUpperCase() + word.slice(1))
-						.join(' ')} - ${endDate.format('D MMMM YYYY').split(' ')
-						.map(word => word.charAt(0).toUpperCase() + word.slice(1))
-						.join(' ')}`
+					return `${formatDateShort(startDate)} - ${formatDateRangeEnd(endDate)}`
 				}
 			}
 			// Si nous n'avons qu'une seule date dans le tableau
 			else if (props.selectedDates.value.length === 1) {
 				const date = dayjs(props.selectedDates.value[0])
 				if (date.isValid()) {
-					return dayjs(date).locale('fr').format('dddd DD MMMM YYYY')
-						.split(' ')
-						.map(word => word.charAt(0).toUpperCase() + word.slice(1))
-						.join(' ')
+					return formatDateLabel(date)
 				}
 			}
 			return props.todayInString.value
@@ -69,10 +57,7 @@ export function useDisplayedDateString(props: DisplayedDateStringProps): Display
 		else {
 			const date = dayjs(props.selectedDates.value)
 			if (date.isValid()) {
-				return dayjs(date).locale('fr').format('dddd DD MMMM YYYY')
-					.split(' ')
-					.map(word => word.charAt(0).toUpperCase() + word.slice(1))
-					.join(' ')
+				return formatDateLabel(date)
 			}
 			return props.todayInString.value
 		}

@@ -1,4 +1,5 @@
 import { computed, type Ref } from 'vue'
+import { locales } from '../locales'
 import type { DateObjectValue } from '../types'
 
 /**
@@ -37,7 +38,7 @@ export function useDateRangeValidation(
 	 */
 	const getRangeValidationError = computed((): string => {
 		if (currentRangeIsValid.value) return ''
-		return 'La date de fin doit être postérieure ou égale à la date de début'
+		return locales.endBeforeStartEqual
 	})
 
 	return {

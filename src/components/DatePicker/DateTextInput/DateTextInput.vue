@@ -17,7 +17,7 @@
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useSyTextFieldProps } from './props/syTextFieldProps'
-	import { DATE_PICKER_MESSAGES } from '../constants/messages'
+	import { locales } from '../locales'
 	import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 	import type { DateObjectValue, DateTextInputProps } from '../types'
 
@@ -37,7 +37,7 @@
 		displayPrependIcon: true,
 		displayRange: false,
 		externalErrorMessages: () => [],
-		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
+		format: locales.formatDefault,
 		hint: undefined,
 		isOutlined: true,
 		isValidateOnBlur: true,
@@ -201,17 +201,17 @@
 	// isUpdatingFromInternal est déjà déclaré plus haut pour le Bridge
 	const isFocused = ref(false)
 	const hasInteracted = ref(false)
-	const ariaLabel = ref(props.label || props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT)
+	const ariaLabel = ref(props.label || props.placeholder || locales.label)
 
 	function validateDateFormatForSingleOrRange(input: string): { isValid: boolean, message: string } {
 		if (readonly.value) return { isValid: true, message: '' }
-		if (isRange.value && input.includes(' - ')) {
-			const [start = '', end = ''] = input.split(' - ').map(s => s?.trim() ?? '')
+		if (isRange.value && input.includes(locales.rangeSeparator)) {
+			const [start = '', end = ''] = input.split(locales.rangeSeparator).map(s => s?.trim() ?? '')
 			const startDateFormatValidation = validateDateFormat(start, displayFormat.value, dateFormatReturn.value, required.value, hasInteracted.value, props.disableErrorHandling)
 			const endDateFormatValidation = end ? validateDateFormat(end, displayFormat.value, dateFormatReturn.value, required.value, hasInteracted.value, props.disableErrorHandling) : { isValid: true, message: '' }
 			if (startDateFormatValidation.isValid && endDateFormatValidation.isValid) return { isValid: true, message: '' }
-			if (!startDateFormatValidation.isValid) return { isValid: false, message: `${DATE_PICKER_MESSAGES.ERROR_INVALID_FORMAT_START} (${displayFormat.value})` }
-			return { isValid: false, message: `${DATE_PICKER_MESSAGES.ERROR_INVALID_FORMAT_END} (${displayFormat.value})` }
+			if (!startDateFormatValidation.isValid) return { isValid: false, message: `${locales.invalidStartDateFormat} (${displayFormat.value})` }
+			return { isValid: false, message: `${locales.invalidEndDateFormat} (${displayFormat.value})` }
 		}
 		return validateDateFormat(input, displayFormat.value, dateFormatReturn.value, required.value, hasInteracted.value, props.disableErrorHandling)
 	}
@@ -225,7 +225,7 @@
 
 	const updateDisplayValue = (dateDisplayText: string) => (inputValue.value = dateDisplayText)
 	const updateAriaLabel = (ariaLabelText: string) => {
-		ariaLabel.value = ariaLabelText || props.label || props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT
+		ariaLabel.value = ariaLabelText || props.label || props.placeholder || locales.label
 	}
 
 	const { formatDateInput, handlePaste: handlePasteSingle, isHandlingBackspace } = useDateInputEditing({
@@ -292,7 +292,7 @@
 		// Only inject skeleton when focused, not on initial load
 		if (!inputValue.value && options.focus) {
 			inputValue.value = isRange.value
-				? `${skeletonFromFormat(displayFormat.value)} - ${skeletonFromFormat(displayFormat.value)}`
+				? `${skeletonFromFormat(displayFormat.value)}${locales.rangeSeparator}${skeletonFromFormat(displayFormat.value)}`
 				: skeletonFromFormat(displayFormat.value)
 		}
 
@@ -413,7 +413,7 @@
 		if (['Tab', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'Delete'].includes(keyboardEvent.key)) return
 
 		const dateFormat = displayFormat.value
-		const rangeSeparator = ' - '
+		const rangeSeparator = locales.rangeSeparator
 
 		if (!inputElement.value && isDigitKey(keyboardEvent)) {
 			keyboardEvent.preventDefault()
@@ -597,7 +597,7 @@
 
 		if (isEmptyOrSkeleton) {
 			if (required.value && hasInteracted.value && !readonly.value && !props.disableErrorHandling) {
-				errors.value.push(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
+				errors.value.push(locales.required)
 				return false
 			}
 			// Permettre aux custom rules de s'exécuter même sur des champs vides
@@ -610,8 +610,8 @@
 			return true
 		}
 
-		if (isRange.value && value.includes(' - ')) {
-			const [startDateText, endDateText] = value.split(' - ')
+		if (isRange.value && value.includes(locales.rangeSeparator)) {
+			const [startDateText, endDateText] = value.split(locales.rangeSeparator)
 			if (startDateText && !endDateText) return !!(await validateManualInput(startDateText))
 
 			if (startDateText && endDateText) {
@@ -625,7 +625,7 @@
 				if (startDate && endDate) {
 					// Vérifier que la plage est valide avant d'appliquer les règles personnalisées
 					if (!isValidRange(startDate, endDate) && !props.disableErrorHandling) {
-						errors.value.push(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
+						errors.value.push(locales.endBeforeStart)
 						return false
 					}
 					await safeValidateField(startDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
@@ -736,8 +736,8 @@
 				}
 			}
 			else if (formatValidationResult.isValid && !customRulesValidationResult.hasError && isRange.value) {
-				if (typeof inputValue.value === 'string' && inputValue.value.includes(' - ')) {
-					const dateRangeParts = inputValue.value.split(' - ')
+				if (typeof inputValue.value === 'string' && inputValue.value.includes(locales.rangeSeparator)) {
+					const dateRangeParts = inputValue.value.split(locales.rangeSeparator)
 					if (dateRangeParts.length === 2) {
 						const sd = dayjs(dateRangeParts[0]!, displayFormat.value, true)
 						const ed = dayjs(dateRangeParts[1]!, displayFormat.value, true)
@@ -876,7 +876,7 @@
 					if (sd && ed) {
 						if (!isValidRange(sd, ed)) {
 							clearValidation()
-							errors.value.push(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
+							errors.value.push(locales.endBeforeStart)
 						}
 						else {
 							const rf = returnFormat.value
@@ -896,11 +896,11 @@
 
 				if (typeof nv !== 'string') return
 				let formatted = ''
-				if (nv.includes(' - ')) {
-					const [startDateText, endDateText = ''] = nv.split(' - ')
+				if (nv.includes(locales.rangeSeparator)) {
+					const [startDateText, endDateText = ''] = nv.split(locales.rangeSeparator)
 					const formattedStartDate = startDateText ? formatDateInput(startDateText).formatted : ''
 					const formattedEndDate = endDateText ? formatDateInput(endDateText).formatted : ''
-					formatted = `${formattedStartDate} - ${formattedEndDate}`
+					formatted = `${formattedStartDate}${locales.rangeSeparator}${formattedEndDate}`
 				}
 				else {
 					formatted = formatDateInput(nv).formatted
@@ -921,7 +921,7 @@
 
 					if (result.isComplete && result.dates[1]) {
 						const [sd, ed] = result.dates
-						if (!isValidRange(sd, ed)) errors.value.push(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
+						if (!isValidRange(sd, ed)) errors.value.push(locales.endBeforeStart)
 					}
 					else if (result.justCompletedFirstDate) {
 						emit('date-selected', toReturnFormat(result.dates[0]))
@@ -1082,7 +1082,7 @@
 				const endDate = parseDate(endDateString, returnFormat.value)
 				if (startDate && endDate) {
 					selectedDates.value = [startDate, endDate]
-					inputValue.value = `${formatDate(startDate, displayFormat.value)} - ${formatDate(endDate, displayFormat.value)}`
+					inputValue.value = `${formatDate(startDate, displayFormat.value)}${locales.rangeSeparator}${formatDate(endDate, displayFormat.value)}`
 				}
 			}
 			else {

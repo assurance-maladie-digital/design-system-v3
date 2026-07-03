@@ -13,8 +13,8 @@
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
 	import { useCalendarKeyboardNavigation, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useTodayButton } from '../composables'
-	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
+	import { locales } from '../locales'
 	import type { CalendarModeProps, DateObjectValue } from '../types'
 	import { DatePickerCommonDefaults } from '../types'
 	import { useComplexDatePickerProps } from './props/complexDatePickerProps'
@@ -60,9 +60,7 @@
 	const displayWeekendDays = computed(() => props.displayWeekendDays ?? true)
 	const { todayInString, headerDate } = useTodayButton(props)
 	const todayButtonLabel = computed(() => {
-		const dateText = todayInString.value?.trim()
-		const baseLabel = 'Sélectionner la date d\'aujourd\'hui'
-		return dateText ? `${baseLabel} (${dateText})` : baseLabel
+		return locales.buttonTodayAriaLabel(todayInString.value?.trim())
 	})
 
 	// Inlined from useAsteriskDisplay
@@ -826,7 +824,7 @@
 				:offset="[-20, 5]"
 				content-class="date-picker-overlay-content"
 				role="presentation"
-				:title="props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT"
+				:title="props.placeholder || locales.label"
 			>
 				<template #activator="{ props: menuProps }">
 					<div
@@ -885,7 +883,7 @@
 						@update:month-year="markHolidayDays"
 					>
 						<template #title>
-							Sélectionnez une date
+							{{ locales.calendarTitle }}
 						</template>
 						<template #header>
 							<SyHeading
@@ -916,7 +914,7 @@
 										decorative
 										:icon="mdiCalendarMonthOutline"
 									/>
-									{{ DATE_PICKER_MESSAGES.BUTTON_TODAY }}
+									{{ locales.buttonToday }}
 								</v-btn>
 							</div>
 						</template>

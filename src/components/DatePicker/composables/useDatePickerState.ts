@@ -1,6 +1,6 @@
 import { computed, ref, unref, watch, type Ref, type ComputedRef, type MaybeRef } from 'vue'
 import type { DateInput, DateModelValue } from '@/composables/date/useDateInitializationDayjs'
-import { DATE_PICKER_MESSAGES } from '../constants/messages'
+import { locales } from '../locales'
 
 export interface UseDatePickerStateOptions {
 	selectedDates: Ref<Date | (Date | null)[] | null>
@@ -74,7 +74,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 
 		if (Array.isArray(selectedDates.value)) {
 			if (selectedDates.value.length >= 2) {
-				return `${formatDate(selectedDates.value[0]!, unref(format))}${DATE_PICKER_MESSAGES.RANGE_SEPARATOR}${formatDate(
+				return `${formatDate(selectedDates.value[0]!, unref(format))}${locales.rangeSeparator}${formatDate(
 					selectedDates.value[selectedDates.value.length - 1]!,
 					unref(format),
 				)}`
@@ -100,7 +100,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 				const endStr = dateFormatReturn
 					? formatDate(parseDate(newValue[1]!, dateFormatReturn), unref(format))
 					: newValue[1]!
-				textInputValue.value = `${startStr}${DATE_PICKER_MESSAGES.RANGE_SEPARATOR}${endStr}`
+				textInputValue.value = `${startStr}${locales.rangeSeparator}${endStr}`
 			}
 			else if (typeof newValue === 'string') {
 				if (dateFormatReturn) {
@@ -143,7 +143,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 				const startDate = selectedDates.value[0]
 				const endDate = selectedDates.value[selectedDates.value.length - 1]
 				if (startDate && endDate) {
-					textInputValue.value = `${formatDate(startDate, unref(format))}${DATE_PICKER_MESSAGES.RANGE_SEPARATOR}${formatDate(endDate, unref(format))}`
+					textInputValue.value = `${formatDate(startDate, unref(format))}${locales.rangeSeparator}${formatDate(endDate, unref(format))}`
 				}
 			}
 			else {
@@ -156,7 +156,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 			}
 			if (Array.isArray(formattedDate.value)) {
 				// Pour les plages, formater avec le séparateur standard " - "
-				displayFormattedDate.value = formattedDate.value.join(DATE_PICKER_MESSAGES.RANGE_SEPARATOR)
+				displayFormattedDate.value = formattedDate.value.join(locales.rangeSeparator)
 			}
 			else {
 				displayFormattedDate.value = (formattedDate.value as string) || ''
@@ -176,7 +176,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 			const startDate = value[0]
 			const endDate = value[value.length - 1]
 			if (startDate && endDate) {
-				const formattedForInput = `${formatDate(startDate, unref(format))}${DATE_PICKER_MESSAGES.RANGE_SEPARATOR}${formatDate(endDate, unref(format))}`
+				const formattedForInput = `${formatDate(startDate, unref(format))}${locales.rangeSeparator}${formatDate(endDate, unref(format))}`
 				if (textInputValue.value !== formattedForInput) {
 					textInputValue.value = formattedForInput
 				}
