@@ -83,10 +83,6 @@ const meta: Meta = {
 			table: { category: 'props', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
 			description: 'État de consultation complète du document (`v-model:complete`). Passe à `true` quand l\'utilisateur atteint la fin, et revient à `false` au chargement d\'un nouveau document.',
 		},
-		'update:complete': {
-			table: { category: 'events' },
-			description: 'Émis quand l\'état de consultation change (`true` à la fin, `false` au rechargement). Support de `v-model:complete`.',
-		},
 	},
 } satisfies Meta<typeof FilePreview>
 
