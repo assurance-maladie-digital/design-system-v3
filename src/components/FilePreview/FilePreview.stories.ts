@@ -9,7 +9,7 @@ const meta: Meta = {
 	title: 'Composants/Données/FilePreview',
 	component: FilePreview,
 	argTypes: {
-		'file': {
+		file: {
 			control: false,
 			table: {
 				type: {
@@ -19,7 +19,7 @@ const meta: Meta = {
 			},
 			description: 'Fichier à afficher',
 		},
-		'options': {
+		options: {
 			control: {
 				type: 'object',
 			},
@@ -35,7 +35,7 @@ const meta: Meta = {
 			},
 			description: 'Configuration des attributs pour les balises `object` et `img`. Par défaut, l\'image a une description vide.',
 		},
-		'locales': {
+		locales: {
 			description: 'Traductions',
 			control: {
 				type: 'object',
@@ -54,7 +54,7 @@ const meta: Meta = {
 				},
 			},
 		},
-		'default': {
+		default: {
 			control: {
 				type: 'text',
 			},
@@ -63,22 +63,22 @@ const meta: Meta = {
 			},
 			description: 'Remplace le contenu par défaut affiché quand le fichier n\'est pas une image ou un pdf',
 		},
-		'trackConsultation': {
+		trackConsultation: {
 			control: { type: 'boolean' },
 			table: { category: 'props', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
 			description: 'Active le suivi de consultation d\'un PDF (rendu via pdf.js, chargé à la demande). Permet d\'utiliser `v-model:complete` et l\'évènement `loaded`. Désactivé par défaut (aperçu natif `<object>`).',
 		},
-		'readonly': {
+		readonly: {
 			control: { type: 'boolean' },
 			table: { category: 'props', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
 			description: 'Aperçu en lecture seule : rendu via pdf.js sans barre d\'outils native (téléchargement, impression et annotation indisponibles). Désactivé par défaut (aperçu natif `<object>`).',
 		},
-		'pdfWorkerSrc': {
+		pdfWorkerSrc: {
 			control: false,
 			table: { category: 'props', type: { summary: 'string' } },
 			description: 'URL du worker pdf.js (optionnel). Par défaut, le worker bundlé est utilisé.',
 		},
-		'complete': {
+		complete: {
 			control: false,
 			table: { category: 'props', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
 			description: 'État de consultation complète du document (`v-model:complete`). Passe à `true` quand l\'utilisateur atteint la fin, et revient à `false` au chargement d\'un nouveau document.',
