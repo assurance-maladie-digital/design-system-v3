@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
-import { fn } from '@storybook/test'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import { fn } from 'storybook/test'
 import { onMounted, ref } from 'vue'
 import FilePreview from './FilePreview.vue'
 import FileUpload from '../FileUpload/FileUpload.vue'
