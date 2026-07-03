@@ -131,4 +131,91 @@ describe('useDatePickerFocusTrap', () => {
 
 		expect(btn2.focus).toHaveBeenCalled()
 	})
+
+	it('should cycle focus backward with Shift+Tab', () => {
+		const rootEl = document.createElement('div')
+
+		const btn1 = document.createElement('button')
+		btn1.focus = vi.fn()
+
+		const btn2 = document.createElement('button')
+		btn2.focus = vi.fn()
+
+		rootEl.appendChild(btn1)
+		rootEl.appendChild(btn2)
+
+		datePickerRef.value = { $el: rootEl } as unknown as ComponentPublicInstance
+
+		const { handleMenuKeydown } = useDatePickerFocusTrap({
+			isDatePickerVisible,
+			datePickerRef,
+		})
+
+		vi.spyOn(document, 'activeElement', 'get').mockReturnValue(btn2)
+
+		const event = new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true })
+		Object.defineProperty(event, 'target', { value: btn2 })
+
+		handleMenuKeydown(event)
+
+		expect(btn1.focus).toHaveBeenCalled()
+	})
+
+	it('should cycle from last to first with Tab', () => {
+		const rootEl = document.createElement('div')
+
+		const btn1 = document.createElement('button')
+		btn1.focus = vi.fn()
+
+		const btn2 = document.createElement('button')
+		btn2.focus = vi.fn()
+
+		rootEl.appendChild(btn1)
+		rootEl.appendChild(btn2)
+
+		datePickerRef.value = { $el: rootEl } as unknown as ComponentPublicInstance
+
+		const { handleMenuKeydown } = useDatePickerFocusTrap({
+			isDatePickerVisible,
+			datePickerRef,
+		})
+
+		vi.spyOn(document, 'activeElement', 'get').mockReturnValue(btn2)
+
+		const event = new KeyboardEvent('keydown', { key: 'Tab' })
+		Object.defineProperty(event, 'target', { value: btn2 })
+
+		handleMenuKeydown(event)
+
+		expect(btn1.focus).toHaveBeenCalled()
+	})
+
+	it('should cycle from first to last with Shift+Tab', () => {
+		const rootEl = document.createElement('div')
+
+		const btn1 = document.createElement('button')
+		btn1.focus = vi.fn()
+
+		const btn2 = document.createElement('button')
+		btn2.focus = vi.fn()
+
+		rootEl.appendChild(btn1)
+		rootEl.appendChild(btn2)
+
+		datePickerRef.value = { $el: rootEl } as unknown as ComponentPublicInstance
+
+		const { handleMenuKeydown } = useDatePickerFocusTrap({
+			isDatePickerVisible,
+			datePickerRef,
+		})
+
+		vi.spyOn(document, 'activeElement', 'get').mockReturnValue(btn1)
+
+		const event = new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true })
+		Object.defineProperty(event, 'target', { value: btn1 })
+
+		handleMenuKeydown(event)
+
+		expect(btn2.focus).toHaveBeenCalled()
+	})
 })
