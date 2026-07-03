@@ -95,6 +95,7 @@ export function useCustomValidation(
 	)
 
 	watch(focused, (newVal) => {
+		console.log('focused changed to', newVal, 'isValidateOnBlur:', isValidateOnBlur.value, 'disableErrorHandling:', disableErrorHandling.value)
 		if (isValidateOnBlur.value && !newVal && !disableErrorHandling.value) {
 			validate()
 		}

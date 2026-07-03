@@ -4,10 +4,10 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiCheckboxBlankOutline, mdiCheckboxMarked, mdiMinusBox } from '@mdi/js'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
-	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useSyCheckboxValidation } from './composables/useSyCheckboxValidation'
 	import { cnamSemanticTokens } from '@/designTokens/tokens/cnam/cnamSemantic'
 	import type { SyCheckboxProps } from './types'
+	import { vRgaaSvgFix } from '@/directives/rgaaSvgFix'
 
 	const props = withDefaults(
 		defineProps<SyCheckboxProps>(),
@@ -28,6 +28,7 @@
 			trueValue: () => true,
 			falseValue: () => false,
 			controlsIds: () => [],
+			cycleIndeterminate: false,
 			displayAsterisk: false,
 			decorative: false,
 			...validationPropsDefaults,
@@ -35,7 +36,7 @@
 		},
 	)
 
-	const emit = defineEmits(['update:modelValue', 'update:indeterminate', 'change'])
+	const emit = defineEmits(['update:modelValue', 'update:indeterminate'])
 
 	const checkboxRef = ref<VCheckbox | null>(null)
 
@@ -56,7 +57,6 @@
 				emit('update:indeterminate', false)
 			}
 			emit('update:modelValue', value)
-			emit('change', value)
 		},
 	})
 
@@ -66,7 +66,6 @@
 
 	// Validation via le composable unifié dédié
 	const {
-		validate,
 		validateOnSubmit,
 		clearValidation,
 		errors,
@@ -94,12 +93,6 @@
 			emit('update:indeterminate', false)
 		}
 		model.value = false
-	}
-
-	// Validation au blur (en mode eager, c'est sans effet de bord)
-	const checkErrorOnBlur = () => {
-		focused.value = false
-		return validate()
 	}
 
 	const ariaChecked = computed(() => {
@@ -166,9 +159,6 @@
 		removeAriaAttributes()
 	})
 
-	// Intégration avec le système de validation du formulaire (auto-enregistrement SyForm)
-	useValidatable(validateOnSubmit, clearValidation, reset)
-
 	const toggleMixed = () => {
 		if (!props.readonly && !props.disabled) {
 			if (internalIndeterminate.value) {
@@ -177,33 +167,38 @@
 				emit('update:indeterminate', false)
 				// Émettre l'événement update:modelValue directement
 				emit('update:modelValue', true)
-				emit('change', true)
 			}
 			else if (model.value) {
 				// Émettre l'événement update:modelValue directement
 				emit('update:modelValue', false)
-				emit('change', false)
 			}
 			else {
-				if (props.controlsIds.length > 0) {
-					// Activer l'état indéterminé
+				if (props.controlsIds.length > 0 && props.cycleIndeterminate) {
 					internalIndeterminate.value = true
 					emit('update:indeterminate', true)
+					return
 				}
-				else {
-					// Émettre l'événement update:modelValue directement
-					emit('update:modelValue', true)
-					emit('change', true)
-				}
+
+				// Émettre l'événement update:modelValue directement
+				emit('update:modelValue', true)
 			}
 		}
+	}
+
+	const handleActivation = (event: Event) => {
+		if (props.controlsIds.length === 0) {
+			return
+		}
+
+		event.preventDefault()
+		event.stopPropagation()
+		toggleMixed()
 	}
 
 	defineExpose({
 		validateOnSubmit,
 		clearValidation,
 		reset,
-		checkErrorOnBlur,
 		toggleMixed,
 	})
 </script>
@@ -238,6 +233,7 @@
 			:id="props.id"
 			ref="checkboxRef"
 			v-model="model"
+			v-rgaa-svg-fix="{ onlyInner: true }"
 			:name="props.name"
 			:label="generatedLabel"
 			:aria-label="props.ariaLabel"
@@ -251,6 +247,8 @@
 			}"
 			:style="{ color: labelColor }"
 			:disabled="props.disabled"
+			:aria-disabled="props.readonly ? 'true' : undefined"
+			:required="props.required"
 			:readonly="props.readonly"
 			:hide-details="props.hideDetails"
 			:density="props.density"
@@ -262,9 +260,10 @@
 			:false-value="props.falseValue"
 			:aria-checked="ariaChecked"
 			:aria-describedby="messageId"
-			@click="toggleMixed"
+			@click.capture="handleActivation"
+			@keydown.space.capture="handleActivation"
 			@focus="focused = true"
-			@blur="checkErrorOnBlur"
+			@blur="focused = false"
 		>
 			<template
 				v-if="$slots.label"

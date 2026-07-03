@@ -38,6 +38,16 @@ Le composant `SyCheckbox` peut avoir trois états :
 - **Indéterminé** : La case est partiellement cochée (indeterminate = true)
 
 L'état indéterminé est généralement utilisé pour représenter une sélection partielle dans un groupe d'éléments.
+Il est exposé aux technologies d'assistance via `aria-checked="mixed"`.
+
+Lorsqu'une case parent possède des `controlsIds`, son activation au clavier comme au clic suit l'état réel des enfants par défaut :
+- depuis l'état non coché, l'activation coche tous les enfants ;
+- depuis l'état **indéterminé**, l'activation coche tous les enfants ;
+- depuis l'état coché, l'activation décoche tous les enfants.
+
+L'état `mixed` ne fait donc pas partie d'une rotation automatique du parent. Il ne doit être affiché que si la sélection des enfants est réellement partielle. Si tous les enfants sont cochés, le parent doit être coché ; si tous les enfants sont décochés, le parent doit être non coché.
+
+Si le besoin métier est de permettre à l'utilisateur de revenir à la dernière sélection partielle depuis le parent, activez `cycleIndeterminate`. Dans ce mode, la rotation devient : non coché, indéterminé, coché, puis non coché. L'application doit alors restaurer une combinaison partielle réelle lorsque `update:indeterminate` vaut `true`. Cette combinaison mémorisée doit être invalidée si l'utilisateur coche ou décoche individuellement tous les enfants.
 
 ## Validation
 
@@ -56,6 +66,12 @@ La case à cocher adapte automatiquement son apparence selon son état :
 ## Relation parent-enfant
 
 La propriété `controlsIds` permet d'établir une relation entre une case à cocher parent et plusieurs cases à cocher enfants. Lorsque certains enfants sont cochés mais pas tous, le parent passe automatiquement en état indéterminé.
+
+Pour rester conforme au modèle WAI-ARIA des cases à cocher mixtes, l'état `indeterminate` doit être dérivé de la sélection réelle des enfants. Le composant gère l'annonce et l'activation du parent, tandis que l'application conserve la responsabilité de synchroniser les valeurs des enfants et de ne fournir `indeterminate=true` que pour une sélection partielle.
+
+Deux modes sont disponibles :
+- **Rotation binaire** (par défaut) : le parent alterne entre tout cocher et tout décocher ; l'état indéterminé apparaît uniquement quand les enfants sont modifiés en sélection partielle.
+- **Rotation tri-état** (`cycleIndeterminate`) : le parent peut réintroduire l'état indéterminé dans sa rotation, à condition que l'application restaure une combinaison partielle réelle des enfants et l'oublie lorsque tous les enfants sont cochés ou décochés individuellement.
 
 <Canvas of={SyCheckboxStories.WithControlsIds} />
 

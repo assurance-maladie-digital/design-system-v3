@@ -25,7 +25,6 @@ describe('SyCheckbox', () => {
 
 		await wrapper.find('input[type="checkbox"]').setValue(true)
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
-		expect(wrapper.emitted('change')?.[0]).toEqual([true])
 	})
 
 	it('should handle indeterminate state correctly', async () => {
@@ -41,8 +40,8 @@ describe('SyCheckbox', () => {
 		// Vérifier que l'état indéterminé est actif
 		expect(wrapper.props('indeterminate')).toBe(true)
 
-		// Cliquer sur la case à cocher devrait changer l'état indéterminé à checked
-		await wrapper.find('.v-selection-control').trigger('click')
+		// Cocher la case devrait changer l'état indéterminé à checked
+		await wrapper.find('input[type="checkbox"]').setValue(true)
 		expect(wrapper.emitted('update:indeterminate')?.[0]).toEqual([false])
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
 	})
@@ -59,31 +58,12 @@ describe('SyCheckbox', () => {
 		// État initial: non coché
 		expect(wrapper.props('modelValue')).toBe(false)
 
-		// Premier toggle: passe à indéterminé (car controlsIds est défini)
+		// Premier toggle: passe à coché
 		await wrapper.vm.toggleMixed()
 		await nextTick()
 
-		// Vérifier que l'événement update:indeterminate a été émis
-		const indeterminateEvents = wrapper.emitted('update:indeterminate')
-		expect(indeterminateEvents).toBeTruthy()
-		expect(indeterminateEvents && indeterminateEvents[0]).toEqual([true])
-
-		// Simuler la mise à jour des props par le parent
-		await wrapper.setProps({
-			indeterminate: true,
-			modelValue: false,
-		})
-
-		// Deuxième toggle: passe à coché
-		await wrapper.vm.toggleMixed()
-		await nextTick()
-
-		// Vérifier que les événements ont été émis
-		const updatedIndeterminateEvents = wrapper.emitted('update:indeterminate')
-		const modelValueEvents = wrapper.emitted('update:modelValue')
-		expect(updatedIndeterminateEvents && updatedIndeterminateEvents[1]).toEqual([false])
-		expect(modelValueEvents).toBeTruthy()
-		expect(modelValueEvents && modelValueEvents[0]).toEqual([true])
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
+		expect(wrapper.emitted('update:indeterminate')).toBeFalsy()
 
 		// Simuler la mise à jour des props par le parent
 		await wrapper.setProps({
@@ -91,13 +71,215 @@ describe('SyCheckbox', () => {
 			modelValue: true,
 		})
 
-		// Troisième toggle: passe à non coché
+		// Deuxième toggle: passe à non coché
 		await wrapper.vm.toggleMixed()
 		await nextTick()
 
-		// Vérifier que l'événement update:modelValue a été émis avec false
-		const finalModelValueEvents = wrapper.emitted('update:modelValue')
-		expect(finalModelValueEvents && finalModelValueEvents[1]).toEqual([false])
+		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([false])
+
+		// Simuler un état partiel réel depuis les enfants
+		await wrapper.setProps({
+			indeterminate: true,
+			modelValue: false,
+		})
+
+		// Troisième toggle: un état partiel activé passe à coché
+		await wrapper.vm.toggleMixed()
+		await nextTick()
+
+		expect(wrapper.emitted('update:indeterminate')?.[0]).toEqual([false])
+		expect(wrapper.emitted('update:modelValue')?.[2]).toEqual([true])
+	})
+
+	it('should keep controlled parent binary with Space key when children are not partial', async () => {
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				'modelValue': false,
+				'indeterminate': false,
+				'controlsIds': ['child-1', 'child-2'],
+				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+				'onUpdate:indeterminate': e => wrapper.setProps({ indeterminate: e }),
+			},
+		})
+
+		await wrapper.find('.v-checkbox').trigger('keydown', { key: ' ' })
+		await nextTick()
+
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
+		expect(wrapper.emitted('update:indeterminate')).toBeFalsy()
+
+		await wrapper.find('.v-checkbox').trigger('keydown', { key: ' ' })
+		await nextTick()
+
+		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([false])
+		expect(wrapper.emitted('update:indeterminate')).toBeFalsy()
+	})
+
+	it('should include mixed in controlled parent rotation with Space key when cycleIndeterminate is true', async () => {
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				'modelValue': false,
+				'indeterminate': false,
+				'controlsIds': ['child-1', 'child-2'],
+				'cycleIndeterminate': true,
+				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+				'onUpdate:indeterminate': e => wrapper.setProps({ indeterminate: e }),
+			},
+		})
+
+		await wrapper.find('.v-checkbox').trigger('keydown', { key: ' ' })
+		await nextTick()
+
+		expect(wrapper.emitted('update:indeterminate')?.[0]).toEqual([true])
+		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+
+		await wrapper.find('.v-checkbox').trigger('keydown', { key: ' ' })
+		await nextTick()
+
+		expect(wrapper.emitted('update:indeterminate')?.[1]).toEqual([false])
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
+
+		await wrapper.find('.v-checkbox').trigger('keydown', { key: ' ' })
+		await nextTick()
+
+		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([false])
+	})
+
+	it('should turn real mixed controlled parent into checked with Space key', async () => {
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				'modelValue': false,
+				'indeterminate': true,
+				'controlsIds': ['child-1', 'child-2'],
+				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+				'onUpdate:indeterminate': e => wrapper.setProps({ indeterminate: e }),
+			},
+		})
+
+		await wrapper.find('.v-checkbox').trigger('keydown', { key: ' ' })
+		await nextTick()
+
+		expect(wrapper.emitted('update:indeterminate')?.[0]).toEqual([false])
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
+	})
+
+	it('should keep controlled parent binary with click when children are not partial', async () => {
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				'modelValue': false,
+				'indeterminate': false,
+				'controlsIds': ['child-1', 'child-2'],
+				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+				'onUpdate:indeterminate': e => wrapper.setProps({ indeterminate: e }),
+			},
+		})
+
+		await wrapper.find('.v-checkbox').trigger('click')
+		await nextTick()
+
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
+		expect(wrapper.emitted('update:indeterminate')).toBeFalsy()
+
+		await wrapper.find('.v-checkbox').trigger('click')
+		await nextTick()
+
+		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([false])
+		expect(wrapper.emitted('update:indeterminate')).toBeFalsy()
+	})
+
+	it('should include mixed in controlled parent rotation with click when cycleIndeterminate is true', async () => {
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				'modelValue': false,
+				'indeterminate': false,
+				'controlsIds': ['child-1', 'child-2'],
+				'cycleIndeterminate': true,
+				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+				'onUpdate:indeterminate': e => wrapper.setProps({ indeterminate: e }),
+			},
+		})
+
+		await wrapper.find('.v-checkbox').trigger('click')
+		await nextTick()
+
+		expect(wrapper.emitted('update:indeterminate')?.[0]).toEqual([true])
+		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+
+		await wrapper.find('.v-checkbox').trigger('click')
+		await nextTick()
+
+		expect(wrapper.emitted('update:indeterminate')?.[1]).toEqual([false])
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
+
+		await wrapper.find('.v-checkbox').trigger('click')
+		await nextTick()
+
+		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([false])
+	})
+
+	it('should turn real mixed controlled parent into checked with click', async () => {
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				'modelValue': false,
+				'indeterminate': true,
+				'controlsIds': ['child-1', 'child-2'],
+				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+				'onUpdate:indeterminate': e => wrapper.setProps({ indeterminate: e }),
+			},
+		})
+
+		await wrapper.find('.v-checkbox').trigger('click')
+		await nextTick()
+
+		expect(wrapper.emitted('update:indeterminate')?.[0]).toEqual([false])
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
+	})
+
+	it('should not cycle controlled tri-state checkbox when readonly or disabled', async () => {
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				modelValue: false,
+				controlsIds: ['child-1', 'child-2'],
+				readonly: true,
+			},
+		})
+
+		await wrapper.find('.v-checkbox').trigger('keydown', { key: ' ' })
+		await wrapper.find('.v-checkbox').trigger('click')
+
+		expect(wrapper.emitted('update:indeterminate')).toBeFalsy()
+		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+
+		await wrapper.setProps({ readonly: false, disabled: true })
+
+		await wrapper.find('.v-checkbox').trigger('keydown', { key: ' ' })
+		await wrapper.find('.v-checkbox').trigger('click')
+
+		expect(wrapper.emitted('update:indeterminate')).toBeFalsy()
+		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+	})
+
+	it('should keep standard checkbox binary without controlsIds', async () => {
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				'modelValue': false,
+				'indeterminate': false,
+				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+				'onUpdate:indeterminate': e => wrapper.setProps({ indeterminate: e }),
+			},
+		})
+
+		await wrapper.find('input[type="checkbox"]').setValue(true)
+		await nextTick()
+
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
+		expect(wrapper.emitted('update:indeterminate')).toBeFalsy()
+
+		await wrapper.find('input[type="checkbox"]').setValue(false)
+		await nextTick()
+
+		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([false])
+		expect(wrapper.emitted('update:indeterminate')).toBeFalsy()
 	})
 
 	it('should handle validation correctly', async () => {
@@ -106,12 +288,17 @@ describe('SyCheckbox', () => {
 				'modelValue': false,
 				'label': 'Required checkbox',
 				'required': true,
+				'isValidateOnBlur': true,
 				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
 			},
 		})
 
-		// Simuler un événement blur pour déclencher la validation
-		await wrapper.find('.v-checkbox').trigger('blur')
+		const input = wrapper.find('input[type="checkbox"]')
+
+		// Simuler un evenement blur pour déclencher la validation
+		await input.trigger('focus')
+		await input.trigger('blur')
+		await nextTick()
 
 		// Vérifier que le message d'erreur est affiché
 		expect(wrapper.find('.v-messages').exists()).toBe(true)

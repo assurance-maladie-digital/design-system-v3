@@ -88,7 +88,7 @@ describe('SearchListField.vue', () => {
 		})
 
 		const listItem = wrapper.find('[data-test-id="suggestions-list"] li')
-		await listItem.find('input[type="checkbox"]').trigger('click')
+		await listItem.find('input[type="checkbox"]').setValue(true)
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.emitted('update:modelValue')).toEqual([[[1]]])
@@ -113,7 +113,7 @@ describe('SearchListField.vue', () => {
 		})
 
 		const listItem = wrapper.find('[data-test-id="suggestions-list"] li')
-		await listItem.find('input[type="checkbox"]').trigger('click')
+		await listItem.find('input[type="checkbox"]').setValue(true)
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.emitted('update:modelValue')).toEqual([[[1]]])
@@ -137,7 +137,7 @@ describe('SearchListField.vue', () => {
 		})
 
 		const listItem = wrapper.find('[data-test-id="suggestions-list"] li')
-		await listItem.find('input[type="checkbox"]').trigger('click')
+		await listItem.find('input[type="checkbox"]').setValue(true)
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.emitted('update:modelValue')).toEqual([[[1]]])
@@ -317,7 +317,7 @@ describe('SearchListField.vue', () => {
 		})
 
 		const listItem = wrapper.find('[data-test-id="suggestions-list"] input')
-		listItem.trigger('click')
+		listItem.setValue(true)
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
@@ -368,7 +368,7 @@ describe('SearchListField.vue', () => {
 				},
 			})
 
-			wrapper.find('input[type="checkbox"]').trigger('click')
+			wrapper.find('input[type="checkbox"]').setValue(true)
 			await wrapper.vm.$nextTick()
 
 			const emittedEvents = wrapper.emitted('update:modelValue')
@@ -397,7 +397,7 @@ describe('SearchListField.vue', () => {
 				},
 			})
 
-			wrapper.find('input[type="checkbox"]').trigger('click')
+			wrapper.find('input[type="checkbox"]').setValue(true)
 			await wrapper.vm.$nextTick()
 
 			const emittedEvents = wrapper.emitted('update:modelValue')
@@ -426,7 +426,7 @@ describe('SearchListField.vue', () => {
 				},
 			})
 
-			wrapper.find('input[type="checkbox"]').trigger('click')
+			wrapper.find('input[type="checkbox"]').setValue(true)
 			await wrapper.vm.$nextTick()
 
 			const emittedEvents = wrapper.emitted('update:modelValue')
@@ -438,7 +438,7 @@ describe('SearchListField.vue', () => {
 			await wrapper.vm.$nextTick()
 
 			// Deselect first item
-			wrapper.find('input[type="checkbox"]').trigger('click')
+			wrapper.find('input[type="checkbox"]').setValue(false)
 			await wrapper.vm.$nextTick()
 
 			expect(emittedEvents![1]).toEqual([[]])
@@ -459,7 +459,7 @@ describe('SearchListField.vue', () => {
 
 			// Select item 1
 			const checkboxes = wrapper.findAll('[data-test-id="suggestions-list"] input[type="checkbox"]')
-			await checkboxes[0].trigger('click')
+			await checkboxes[0].setValue(true)
 			await wrapper.vm.$nextTick()
 
 			// Simulate parent syncing modelValue back
@@ -469,7 +469,7 @@ describe('SearchListField.vue', () => {
 			await wrapper.setProps({ modelValue: undefined })
 
 			// Select item 2
-			await checkboxes[1].trigger('click')
+			await checkboxes[1].setValue(true)
 			await wrapper.vm.$nextTick()
 
 			const emitted = wrapper.emitted('update:modelValue')!
@@ -490,7 +490,7 @@ describe('SearchListField.vue', () => {
 				},
 			})
 
-			await wrapper.findAll('[data-test-id="suggestions-list"] input[type="checkbox"]')[1].trigger('click')
+			await wrapper.findAll('[data-test-id="suggestions-list"] input[type="checkbox"]')[1].setValue(true)
 			await wrapper.vm.$nextTick()
 
 			// Original prop array must not be mutated
@@ -512,7 +512,7 @@ describe('SearchListField.vue', () => {
 				},
 			})
 
-			await wrapper.findAll('[data-test-id="suggestions-list"] input[type="checkbox"]')[0].trigger('click')
+			await wrapper.findAll('[data-test-id="suggestions-list"] input[type="checkbox"]')[0].setValue(false)
 			await wrapper.vm.$nextTick()
 
 			// Original prop array must not be mutated

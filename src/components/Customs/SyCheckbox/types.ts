@@ -20,6 +20,7 @@ export interface SyCheckboxProps extends FieldValidationProps {
 	trueValue?: unknown
 	falseValue?: unknown
 	controlsIds?: string[]
+	cycleIndeterminate?: boolean
 	displayAsterisk?: boolean
 	decorative?: boolean
 }
