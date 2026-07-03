@@ -4,16 +4,6 @@ import { locales } from '@/components/DatePicker/locales'
 /**
  * Composable pour améliorer l'accessibilité du CalendarMode
  */
-const DATE_PICKER_SELECTOR = '.v-date-picker'
-const GRID_ROOT_SELECTOR = '.v-date-picker-month'
-const DAYS_CONTAINER_SELECTOR = '.v-date-picker-month__days'
-
-const WEEKDAY_ROW_SELECTOR = '.v-date-picker-month__weekdays'
-const WEEK_ROW_SELECTOR = '.v-date-picker-month__week'
-
-const HEADER_CELL_SELECTOR = '.v-date-picker-month__weekday'
-const DAY_CELL_SELECTOR = '.v-date-picker-month__day, [data-v-date]'
-const DAY_BUTTON_SELECTOR = 'button, [role="button"]'
 
 const MONTH_CONTROL_SELECTOR = [
 	'[data-testid="month-btn"]',
@@ -36,7 +26,7 @@ const NEXT_MONTH_BUTTON_SELECTOR = [
 	'.v-date-picker-controls__month button:last-of-type',
 ].join(',')
 
-const WEEKDAY_LABELS_MONDAY_FIRST = locales.weekdayLabelsMondayFirst
+const WEEKDAY_LABELS = locales.weekdayLabelsMondayFirst
 
 const MONTH_ACCESSIBLE_NAMES: Record<string, string> = {
 	'janvier': locales.monthNames[0]!,
@@ -71,15 +61,6 @@ const compactText = (value: string | null | undefined): string => (
 const expandMonthAccessibleName = (value: string): string => {
 	const normalized = value.toLocaleLowerCase('fr-FR')
 	return MONTH_ACCESSIBLE_NAMES[normalized] ?? normalized
-}
-
-const inferColumnCount = (monthEl: HTMLElement): number => {
-	const cssValue = monthEl.style.getPropertyValue('--v-date-picker-days-in-week')?.trim()
-	const parsed = cssValue ? Number.parseInt(cssValue, 10) : Number.NaN
-
-	if (Number.isFinite(parsed) && parsed > 0) return parsed
-
-	return 7
 }
 
 const inferMonthYearLabel = (pickerEl: Element): string => {
@@ -186,192 +167,94 @@ const ensureMonthAndYearSelectorLabels = (pickerEl: HTMLElement) => {
  * - cellules de date => role="gridcell"
  * - boutons de date => restent de vrais boutons
  */
-const ensureCalendarRows = (monthEl: HTMLElement) => {
-	const daysContainer = monthEl.querySelector<HTMLElement>(DAYS_CONTAINER_SELECTOR)
-	if (!daysContainer) return
-
-	if (daysContainer.dataset.syStructured === 'true') return
-
-	const existingRows = daysContainer.querySelectorAll<HTMLElement>(
-		`${WEEKDAY_ROW_SELECTOR}, ${WEEK_ROW_SELECTOR}`,
-	)
-
-	if (existingRows.length > 0) {
-		daysContainer.dataset.syStructured = 'true'
-		return
-	}
-
-	const children = Array.from(daysContainer.children).filter(
-		(node): node is HTMLElement => node instanceof HTMLElement,
-	)
-
-	if (children.length === 0) return
-
-	const columnCount = inferColumnCount(monthEl)
-	const headerCandidates = children.slice(0, columnCount)
-
-	const hasHeaderRow = (
-		headerCandidates.length === columnCount
-		&& headerCandidates.every(cell => cell.classList.contains('v-date-picker-month__weekday'))
-	)
-
-	const fragment = document.createDocumentFragment()
-
-	if (hasHeaderRow) {
-		const headerRow = document.createElement('div')
-		headerRow.classList.add('v-date-picker-month__weekdays')
-		headerRow.style.display = 'contents'
-
-		headerCandidates.forEach((cell) => {
-			headerRow.appendChild(cell)
-		})
-
-		fragment.appendChild(headerRow)
-	}
-
-	const bodyCells = hasHeaderRow ? children.slice(columnCount) : children
-
-	for (let index = 0; index < bodyCells.length; index += columnCount) {
-		const rowCells = bodyCells.slice(index, index + columnCount)
-		if (rowCells.length === 0) continue
-
-		const row = document.createElement('div')
-		row.classList.add('v-date-picker-month__week')
-		row.style.display = 'contents'
-
-		rowCells.forEach((cell) => {
-			row.appendChild(cell)
-		})
-
-		fragment.appendChild(row)
-	}
-
-	daysContainer.replaceChildren(fragment)
-	daysContainer.dataset.syStructured = 'true'
-}
-
-const isSelectedCell = (cell: HTMLElement, button: HTMLElement): boolean => (
-	cell.classList.contains('v-date-picker-month__day--selected')
-	|| cell.classList.contains('v-date-picker-month__day--range-start')
-	|| cell.classList.contains('v-date-picker-month__day--range-end')
-	|| button.classList.contains('v-btn--active')
-	|| button.getAttribute('aria-selected') === 'true'
-)
-
-const isDisabledCell = (cell: HTMLElement, button: HTMLElement): boolean => (
-	cell.classList.contains('v-date-picker-month__day--disabled')
-	|| button.hasAttribute('disabled')
-	|| button.getAttribute('aria-disabled') === 'true'
-)
-
-const assignGridCellAttributes = (cell: HTMLElement) => {
-	const button = cell.querySelector<HTMLElement>(DAY_BUTTON_SELECTOR)
-	if (!button) return
-
-	const selected = isSelectedCell(cell, button)
-	const disabled = isDisabledCell(cell, button)
-
-	cell.setAttribute('role', 'gridcell')
-	cell.setAttribute('aria-selected', selected ? 'true' : 'false')
-
-	if (disabled) {
-		cell.setAttribute('aria-disabled', 'true')
-	}
-	else {
-		cell.removeAttribute('aria-disabled')
-	}
-
-	// Nettoyage des attributs qui ne doivent pas être sur le bouton.
-	// Le bouton doit rester un vrai bouton.
-	button.removeAttribute('role')
-	button.removeAttribute('aria-rowindex')
-	button.removeAttribute('aria-colindex')
-	button.removeAttribute('aria-selected')
-
-	// Nettoyage si l’ancienne version avait posé ces attributs sur la cellule.
-	cell.removeAttribute('aria-rowindex')
-	cell.removeAttribute('aria-colindex')
-}
-
-const ensureWeekdayHeaderLabels = (headerCells: HTMLElement[]) => {
-	headerCells.forEach((cell, index) => {
-		cell.setAttribute('role', 'columnheader')
-
-		const label = WEEKDAY_LABELS_MONDAY_FIRST[index]
-		if (label) {
-			cell.setAttribute('aria-label', label)
-		}
-
-		cell.removeAttribute('aria-colindex')
-	})
-}
-
-const ensureHolidayDayLabels = (monthEl: HTMLElement) => {
-	const holidayButtons = monthEl.querySelectorAll<HTMLButtonElement>(
-		'.holiday-day .v-date-picker-month__day-btn',
-	)
-
-	holidayButtons.forEach((button) => {
-		const label = button.getAttribute('aria-label')
-		if (!label || label.includes(locales.publicHoliday)) return
-
-		button.setAttribute('aria-label', `${label}, ${locales.publicHoliday}`)
-	})
-}
-
 const applyGridSemantics = (pickerEl: HTMLElement) => {
-	const monthEls = pickerEl.querySelectorAll<HTMLElement>(GRID_ROOT_SELECTOR)
-	if (monthEls.length === 0) return
+	const monthEls = pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-month')
 
 	monthEls.forEach((monthEl) => {
-		ensureCalendarRows(monthEl)
-
-		const labelScope = monthEl.closest(DATE_PICKER_SELECTOR) ?? pickerEl
+		const daysContainer = monthEl.querySelector<HTMLElement>('.v-date-picker-month__days')
+		if (!daysContainer) return
 
 		monthEl.setAttribute('role', 'grid')
-		monthEl.setAttribute('aria-label', inferGridLabel(labelScope))
+		monthEl.setAttribute('aria-label', inferGridLabel(pickerEl))
 
-		// Nettoyage des attributs inutiles ou trompeurs.
 		monthEl.removeAttribute('aria-readonly')
-		monthEl.removeAttribute('aria-colcount')
 		monthEl.removeAttribute('aria-rowcount')
+		monthEl.removeAttribute('aria-colcount')
 
-		const headerRow = monthEl.querySelector<HTMLElement>(WEEKDAY_ROW_SELECTOR)
-		const headerCells = headerRow
-			? Array.from(headerRow.querySelectorAll<HTMLElement>(HEADER_CELL_SELECTOR)).filter(cell => compactText(cell.textContent).length > 0)
-			: []
+		const allChildren = Array.from(daysContainer.children).filter(
+			(child): child is HTMLElement => child instanceof HTMLElement,
+		)
 
-		if (headerRow) {
-			headerRow.setAttribute('role', 'row')
-			headerRow.removeAttribute('aria-rowindex')
-			ensureWeekdayHeaderLabels(headerCells)
+		const weekdayCells = allChildren.filter(cell =>
+			cell.classList.contains('v-date-picker-month__weekday'),
+		)
+
+		const dayCells = allChildren.filter(cell =>
+			cell.hasAttribute('data-v-date'),
+		)
+
+		const colCount = weekdayCells.length || 7
+
+		const createRow = (className?: string): HTMLElement => {
+			const row = document.createElement('div')
+			row.setAttribute('role', 'row')
+			row.style.display = 'contents'
+			if (className) row.className = className
+			return row
 		}
 
-		const weekRows = Array.from(monthEl.querySelectorAll<HTMLElement>(WEEK_ROW_SELECTOR))
+		const clearExistingRows = () => {
+			Array.from(daysContainer.children).forEach((child) => {
+				if (child instanceof HTMLElement && child.getAttribute('role') === 'row' && child.style.display === 'contents') {
+					while (child.firstChild) {
+						daysContainer.appendChild(child.firstChild)
+					}
+					child.remove()
+				}
+			})
+		}
 
-		weekRows.forEach((row) => {
-			row.setAttribute('role', 'row')
-			row.removeAttribute('aria-rowindex')
+		clearExistingRows()
 
-			const dayCells = Array.from(
-				row.querySelectorAll<HTMLElement>(DAY_CELL_SELECTOR),
-			).filter(cell => row.contains(cell))
+		if (weekdayCells.length > 0) {
+			const headerRow = createRow('v-date-picker-month__weekdays')
+			weekdayCells.forEach((cell, index) => {
+				cell.setAttribute('role', 'columnheader')
 
-			dayCells.forEach(assignGridCellAttributes)
-		})
+				const label = WEEKDAY_LABELS[index]
+				if (label) {
+					cell.setAttribute('aria-label', label)
+				}
 
-		ensureHolidayDayLabels(monthEl)
+				cell.removeAttribute('aria-colindex')
+				cell.removeAttribute('aria-rowindex')
+				headerRow.appendChild(cell)
+			})
+			daysContainer.insertBefore(headerRow, daysContainer.firstChild)
+		}
+
+		for (let i = 0; i < dayCells.length; i += colCount) {
+			const row = createRow('v-date-picker-month__week')
+			const chunk = dayCells.slice(i, i + colCount)
+			chunk.forEach((cell) => {
+				const button = cell.querySelector<HTMLButtonElement>('button')
+				if (!button) return
+
+				cell.setAttribute('role', 'gridcell')
+				cell.setAttribute(
+					'aria-selected',
+					button.classList.contains('v-btn--active') ? 'true' : 'false',
+				)
+
+				button.removeAttribute('role')
+				button.removeAttribute('aria-selected')
+				button.removeAttribute('aria-rowindex')
+				button.removeAttribute('aria-colindex')
+				row.appendChild(cell)
+			})
+			daysContainer.appendChild(row)
+		}
 	})
-}
-
-const findPickerElements = (root: ParentNode): HTMLElement[] => {
-	const pickerEls = Array.from(root.querySelectorAll<HTMLElement>(DATE_PICKER_SELECTOR))
-
-	if (root instanceof HTMLElement && root.matches(DATE_PICKER_SELECTOR)) {
-		return [root, ...pickerEls]
-	}
-
-	return pickerEls
 }
 
 /**
@@ -388,8 +271,11 @@ export function useDatePickerAccessibility() {
 	const updateAccessibility = async (root: ParentNode = document): Promise<void> => {
 		await nextTick()
 
-		const pickerEls = findPickerElements(root)
-		if (pickerEls.length === 0) return
+		const pickerEls = Array.from(root.querySelectorAll<HTMLElement>('.v-date-picker'))
+
+		if (root instanceof HTMLElement && root.matches('.v-date-picker')) {
+			pickerEls.unshift(root)
+		}
 
 		pickerEls.forEach((pickerEl) => {
 			ensureNavigationButtonLabels(pickerEl)

@@ -42,21 +42,24 @@ describe('useDatePickerAccessibility', () => {
 		// Créer une structure DOM simulée pour les tests
 		document.body.innerHTML = `
 			<div class="v-date-picker">
-				<div class="v-date-picker-header">
-					<button class="v-btn v-btn--icon">
-						<span class="v-btn__content">
-							<i class="v-icon mdi mdi-chevron-left"></i>
-						</span>
-					</button>
-					<button class="v-btn v-btn--icon">
-						<span class="v-btn__content">
-							<div>Janvier 2023</div>
-						</span>
-					</button>
-					<button class="v-btn v-btn--icon">
-						<span class="v-btn__content">
-							<i class="v-icon mdi mdi-chevron-right"></i>
-						</span>
+				<div class="v-date-picker-controls">
+					<div class="v-date-picker-controls__month">
+						<button class="v-btn v-btn--icon" data-testid="prev-month">
+							<span class="v-btn__content">
+								<i class="v-icon mdi mdi-chevron-left"></i>
+							</span>
+						</button>
+						<button class="v-date-picker-controls__month-btn v-btn">
+							Janvier 2023
+						</button>
+						<button class="v-btn v-btn--icon" data-testid="next-month">
+							<span class="v-btn__content">
+								<i class="v-icon mdi mdi-chevron-right"></i>
+							</span>
+						</button>
+					</div>
+					<button class="v-date-picker-controls__mode-btn v-btn">
+						2023
 					</button>
 				</div>
 			</div>
@@ -68,12 +71,16 @@ describe('useDatePickerAccessibility', () => {
 		await updateAccessibility()
 
 		// Récupérer les boutons
-		const buttons = document.querySelectorAll('.v-date-picker-header button')
+		const prevButton = document.querySelector('[data-testid="prev-month"]')
+		const nextButton = document.querySelector('[data-testid="next-month"]')
+		const monthButton = document.querySelector('.v-date-picker-controls__month-btn')
+		const yearButton = document.querySelector('.v-date-picker-controls__mode-btn')
 
 		// Vérifier que les attributs aria-label sont correctement définis
-		expect(buttons[0]?.getAttribute('aria-label')).toBe('Mois précédent')
-		expect(buttons[1]?.getAttribute('aria-label')).toBe(null) // Pas d'icône, donc pas d'attribu
-		expect(buttons[2]?.getAttribute('aria-label')).toBe('Mois suivant')
+		expect(prevButton?.getAttribute('aria-label')).toBe('Mois précédent')
+		expect(nextButton?.getAttribute('aria-label')).toBe('Mois suivant')
+		expect(monthButton?.getAttribute('aria-label')).toBe('Ouvrir le sélecteur de mois')
+		expect(yearButton?.getAttribute('aria-label')).toBe('Ouvrir le sélecteur d\'année')
 	})
 
 	it('handles missing elements gracefully', async () => {
@@ -88,15 +95,13 @@ describe('useDatePickerAccessibility', () => {
 		document.body.innerHTML = `
 			<div class="v-date-picker">
 				<div class="v-date-picker-month">
-					<div class="v-date-picker-month__weekdays">
-						<div class="v-date-picker-month__weekday">Lun</div>
-						<div class="v-date-picker-month__weekday">Mar</div>
-						<div class="v-date-picker-month__weekday">Mer</div>
-					</div>
-					<div class="v-date-picker-month__week">
-						<div class="v-date-picker-month__day v-date-picker-month__day--selected"><button>1</button></div>
-						<div class="v-date-picker-month__day"><button>2</button></div>
-						<div class="v-date-picker-month__day"><button>3</button></div>
+					<div class="v-date-picker-month__days">
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">Lun</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">Mar</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">Mer</div>
+						<div class="v-date-picker-month__day v-date-picker-month__day--selected" data-v-date="1"><button class="v-btn--active">1</button></div>
+						<div class="v-date-picker-month__day" data-v-date="2"><button>2</button></div>
+						<div class="v-date-picker-month__day" data-v-date="3"><button>3</button></div>
 					</div>
 				</div>
 			</div>
@@ -106,33 +111,39 @@ describe('useDatePickerAccessibility', () => {
 
 		const monthEl = document.querySelector('.v-date-picker-month') as HTMLElement
 		expect(monthEl.getAttribute('role')).toBe('grid')
-		expect(monthEl.getAttribute('aria-colcount')).toBe('3')
-		expect(monthEl.getAttribute('aria-rowcount')).toBe('2')
+		expect(monthEl.getAttribute('aria-colcount')).toBeNull()
+		expect(monthEl.getAttribute('aria-rowcount')).toBeNull()
 
-		const headerRow = document.querySelector('.v-date-picker-month__weekdays') as HTMLElement
-		expect(headerRow.getAttribute('role')).toBe('row')
-		expect(headerRow.getAttribute('aria-rowindex')).toBe('1')
+		const daysContainer = document.querySelector('.v-date-picker-month__days') as HTMLElement
 
-		const headerCells = Array.from(document.querySelectorAll('.v-date-picker-month__weekday'))
-		headerCells.forEach((cell, index) => {
+		const headerRow = daysContainer.querySelector('.v-date-picker-month__weekdays') as HTMLElement
+		expect(headerRow?.getAttribute('role')).toBe('row')
+		expect(headerRow?.style.display).toBe('contents')
+
+		const headerCells = Array.from(headerRow?.querySelectorAll('.v-date-picker-month__weekday') ?? [])
+		headerCells.forEach((cell) => {
 			expect(cell.getAttribute('role')).toBe('columnheader')
-			expect(cell.getAttribute('aria-colindex')).toBe(String(index + 1))
+			expect(cell.getAttribute('aria-colindex')).toBeNull()
 		})
 
-		const firstWeek = document.querySelector('.v-date-picker-month__week') as HTMLElement
-		expect(firstWeek.getAttribute('role')).toBe('row')
-		expect(firstWeek.getAttribute('aria-rowindex')).toBe('2')
+		const dataRows = Array.from(daysContainer.querySelectorAll('.v-date-picker-month__week')) as HTMLElement[]
+		expect(dataRows).toHaveLength(1)
+		expect(dataRows[0]?.getAttribute('role')).toBe('row')
+		expect(dataRows[0]?.style.display).toBe('contents')
 
-		const dayButtons = Array.from(firstWeek.querySelectorAll('button'))
-		expect(dayButtons[0]?.getAttribute('role')).toBe('gridcell')
-		expect(dayButtons[0]?.getAttribute('aria-selected')).toBe('true')
-		expect(dayButtons[1]?.getAttribute('aria-selected')).toBe('false')
+		const dayCells = Array.from(dataRows[0]?.querySelectorAll('.v-date-picker-month__day[data-v-date]') ?? [])
+		expect(dayCells[0]?.getAttribute('role')).toBe('gridcell')
+		expect(dayCells[0]?.getAttribute('aria-selected')).toBe('true')
+		expect(dayCells[1]?.getAttribute('aria-selected')).toBe('false')
+
+		const dayButtons = Array.from(dayCells[0]?.querySelectorAll('button') ?? [])
+		expect(dayButtons[0]?.getAttribute('role')).toBeNull()
 	})
 
-	it('wraps div structure into thead/tbody table', async () => {
+	it('wraps flat div structure into ARIA rows with display: contents', async () => {
 		document.body.innerHTML = `
 			<div class="v-date-picker">
-				<div class="v-date-picker-month" style="--v-date-picker-days-in-week: 7;">
+				<div class="v-date-picker-month">
 					<div class="v-date-picker-month__days">
 						<div class="v-date-picker-month__day v-date-picker-month__weekday">L</div>
 						<div class="v-date-picker-month__day v-date-picker-month__weekday">M</div>
@@ -141,13 +152,13 @@ describe('useDatePickerAccessibility', () => {
 						<div class="v-date-picker-month__day v-date-picker-month__weekday">V</div>
 						<div class="v-date-picker-month__day v-date-picker-month__weekday">S</div>
 						<div class="v-date-picker-month__day v-date-picker-month__weekday">D</div>
-						<div class="v-date-picker-month__day"><button>1</button></div>
-						<div class="v-date-picker-month__day"><button>2</button></div>
-						<div class="v-date-picker-month__day"><button>3</button></div>
-						<div class="v-date-picker-month__day"><button>4</button></div>
-						<div class="v-date-picker-month__day"><button>5</button></div>
-						<div class="v-date-picker-month__day"><button>6</button></div>
-						<div class="v-date-picker-month__day"><button>7</button></div>
+						<div class="v-date-picker-month__day" data-v-date="1"><button>1</button></div>
+						<div class="v-date-picker-month__day" data-v-date="2"><button>2</button></div>
+						<div class="v-date-picker-month__day" data-v-date="3"><button>3</button></div>
+						<div class="v-date-picker-month__day" data-v-date="4"><button>4</button></div>
+						<div class="v-date-picker-month__day" data-v-date="5"><button>5</button></div>
+						<div class="v-date-picker-month__day" data-v-date="6"><button>6</button></div>
+						<div class="v-date-picker-month__day" data-v-date="7"><button>7</button></div>
 					</div>
 				</div>
 			</div>
@@ -155,47 +166,44 @@ describe('useDatePickerAccessibility', () => {
 
 		await updateAccessibility()
 
-		const table = document.querySelector('.v-date-picker-month__days table') as HTMLTableElement
-		expect(table).not.toBeNull()
-		expect(table.dataset.syStructured).toBe('true')
+		const daysContainer = document.querySelector('.v-date-picker-month__days') as HTMLElement
 
-		const thead = table.querySelector('thead')
-		const tbody = table.querySelector('tbody')
-		expect(thead).not.toBeNull()
-		expect(tbody).not.toBeNull()
-
-		const headerRow = thead?.querySelector('tr')
-		expect(headerRow?.classList.contains('v-date-picker-month__weekdays')).toBe(true)
-		const headerCells = Array.from(headerRow?.querySelectorAll('th') ?? [])
+		const headerRow = daysContainer.querySelector('.v-date-picker-month__weekdays') as HTMLElement
+		expect(headerRow?.getAttribute('role')).toBe('row')
+		expect(headerRow?.style.display).toBe('contents')
+		const headerCells = Array.from(headerRow?.querySelectorAll('.v-date-picker-month__weekday') ?? [])
 		expect(headerCells).toHaveLength(7)
+		expect(headerCells[0]?.getAttribute('role')).toBe('columnheader')
 
-		const dataRows = Array.from(tbody?.querySelectorAll('tr') ?? [])
-		expect(dataRows.length).toBeGreaterThan(0)
-		expect(dataRows[0]?.classList.contains('v-date-picker-month__week')).toBe(true)
-		const firstDataRowCells = Array.from(dataRows[0]?.querySelectorAll('td') ?? [])
-		expect(firstDataRowCells).toHaveLength(7)
+		const dataRows = Array.from(daysContainer.querySelectorAll('.v-date-picker-month__week')) as HTMLElement[]
+		expect(dataRows).toHaveLength(1)
+		expect(dataRows[0]?.getAttribute('role')).toBe('row')
+		expect(dataRows[0]?.style.display).toBe('contents')
+		const dayCells = Array.from(dataRows[0]?.querySelectorAll('.v-date-picker-month__day[data-v-date]') ?? [])
+		expect(dayCells).toHaveLength(7)
+		expect(dayCells[0]?.getAttribute('role')).toBe('gridcell')
 	})
 
 	it('handles different icons correctly', async () => {
 		// Modifier les icônes
 		document.body.innerHTML = `
 			<div class="v-date-picker">
-				<div class="v-date-picker-header">
-					<button class="v-btn v-btn--icon">
-						<span class="v-btn__content">
-							<i class="v-icon mdi mdi-arrow-left"></i>
-						</span>
-					</button>
-					<button class="v-btn v-btn--icon">
-						<span class="v-btn__content">
-							<div>Janvier 2023</div>
-						</span>
-					</button>
-					<button class="v-btn v-btn--icon">
-						<span class="v-btn__content">
-							<i class="v-icon mdi mdi-arrow-right"></i>
-						</span>
-					</button>
+				<div class="v-date-picker-controls">
+					<div class="v-date-picker-controls__month">
+						<button class="v-btn v-btn--icon" data-testid="prev-month">
+							<span class="v-btn__content">
+								<i class="v-icon mdi mdi-arrow-left"></i>
+							</span>
+						</button>
+						<button class="v-date-picker-controls__month-btn v-btn">
+							Janvier 2023
+						</button>
+						<button class="v-btn v-btn--icon" data-testid="next-month">
+							<span class="v-btn__content">
+								<i class="v-icon mdi mdi-arrow-right"></i>
+							</span>
+						</button>
+					</div>
 				</div>
 			</div>
 		`
@@ -204,12 +212,16 @@ describe('useDatePickerAccessibility', () => {
 		await updateAccessibility()
 
 		// Récupérer les boutons
-		const buttons = document.querySelectorAll('.v-date-picker-header button')
+		const prevButton = document.querySelector('[data-testid="prev-month"]')
+		const nextButton = document.querySelector('[data-testid="next-month"]')
+		const monthButton = document.querySelector('.v-date-picker-controls__month-btn')
 
 		// Vérifier que les attributs aria-label sont correctement définis
-		expect(buttons[0]?.getAttribute('aria-label')).toBe(null) // Pas de chevron-lef
-		expect(buttons[1]?.getAttribute('aria-label')).toBe(null) // Pas d'icône
-		expect(buttons[2]?.getAttribute('aria-label')).toBe(null) // Pas de chevron-righ
+		// Le composable se base sur la position dans .v-date-picker-controls__month,
+		// pas sur le nom de l'icône.
+		expect(prevButton?.getAttribute('aria-label')).toBe('Mois précédent')
+		expect(nextButton?.getAttribute('aria-label')).toBe('Mois suivant')
+		expect(monthButton?.getAttribute('aria-label')).toBe('Ouvrir le sélecteur de mois')
 	})
 
 	it('ne crée pas de bloc sr-only instructions (comportement actuel)', async () => {
@@ -219,7 +231,7 @@ describe('useDatePickerAccessibility', () => {
 	})
 
 	describe('handleKeyDown', () => {
-		it('simulates a click event when Enter key is pressed', () => {
+		it('does not intercept Enter on native interactive elements', () => {
 			// Créer une fonction d'espionnage autonome plutôt que d'espionner une méthode existante
 			const clickHandlerSpy = vi.fn()
 
@@ -242,10 +254,34 @@ describe('useDatePickerAccessibility', () => {
 			// Appeler la fonction handleKeyDown avec l'événement
 			handleKeyDown(enterEvent)
 
-			// Vérifier que preventDefault a été appelé
-			expect(preventDefaultSpy).toHaveBeenCalled()
+			// Vérifier que preventDefault n'a pas été appelé sur un vrai bouton
+			expect(preventDefaultSpy).not.toHaveBeenCalled()
 
-			// Vérifier que le gestionnaire de clic a été déclenché suite à l'événement simulé
+			// Vérifier que le gestionnaire de clic n'a pas été déclenché par le composable
+			expect(clickHandlerSpy).not.toHaveBeenCalled()
+		})
+
+		it('simulates a click event when Enter key is pressed on a gridcell', () => {
+			const clickHandlerSpy = vi.fn()
+
+			const cell = document.createElement('div')
+			cell.setAttribute('role', 'gridcell')
+			const button = document.createElement('button')
+			button.addEventListener('click', clickHandlerSpy)
+			cell.appendChild(button)
+			document.body.appendChild(cell)
+
+			const enterEvent = new KeyboardEvent('keydown', {
+				key: 'Enter',
+				bubbles: true,
+				cancelable: true,
+			})
+			Object.defineProperty(enterEvent, 'target', { value: cell, enumerable: true })
+			const preventDefaultSpy = vi.spyOn(enterEvent, 'preventDefault')
+
+			handleKeyDown(enterEvent)
+
+			expect(preventDefaultSpy).toHaveBeenCalled()
 			expect(clickHandlerSpy).toHaveBeenCalled()
 		})
 
