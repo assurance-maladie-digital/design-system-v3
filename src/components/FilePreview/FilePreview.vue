@@ -43,7 +43,8 @@
 	/**
 	 * État de consultation complète du document (`v-model:complete`).
 	 * Passe à `true` quand l'utilisateur atteint la fin, et revient à `false`
-	 * lors du chargement d'un nouveau document.
+	 * lors du chargement d'un nouveau document. L'événement `update:complete`
+	 * correspondant est émis à chaque changement de cet état.
 	 */
 	const complete = defineModel<boolean>('complete', { default: false })
 
