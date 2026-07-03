@@ -53,11 +53,15 @@
 	const isEmbedded = computed(() => (props.trackConsultation || props.readonly) && isPdf.value)
 
 	const getFileURL = () => {
+		// Révoque l'URL objet précédente avant d'en (re)créer une : sans cela, chaque
+		// changement de fichier fuit l'ancienne URL (jamais révoquée). No-op si vide.
+		revokeFileURL()
 		if (!props.file || !(isPdf.value || isImage.value)) return
 		fileURL.value = URL.createObjectURL(props.file)
 	}
 
 	const revokeFileURL = () => {
+		if (!fileURL.value) return
 		URL.revokeObjectURL(fileURL.value)
 	}
 
