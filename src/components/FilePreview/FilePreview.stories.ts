@@ -78,16 +78,12 @@ const meta: Meta = {
 			table: { category: 'props', type: { summary: 'string' } },
 			description: 'URL du worker pdf.js (optionnel). Par défaut, le worker bundlé est utilisé.',
 		},
-		'onLoaded': {
-			table: { category: 'events' },
-			description: 'Émis quand le PDF est entièrement chargé et rendu. Reçoit le nombre de pages.',
-		},
 		'complete': {
 			control: false,
 			table: { category: 'props', type: { summary: 'boolean' }, defaultValue: { summary: 'false' } },
 			description: 'État de consultation complète du document (`v-model:complete`). Passe à `true` quand l\'utilisateur atteint la fin, et revient à `false` au chargement d\'un nouveau document.',
 		},
-		'onUpdate:complete': {
+		'update:complete': {
 			table: { category: 'events' },
 			description: 'Émis quand l\'état de consultation change (`true` à la fin, `false` au rechargement). Support de `v-model:complete`.',
 		},

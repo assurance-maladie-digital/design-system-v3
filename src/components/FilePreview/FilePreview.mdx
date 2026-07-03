@@ -95,9 +95,11 @@ Par défaut, l'aperçu PDF utilise le lecteur natif du navigateur (`<object>`), 
 
 Pour un aperçu **en lecture seule** — l'utilisateur peut consulter le document mais pas le télécharger, l'imprimer ni l'annoter — activez la prop **`readonly`**. Le PDF est alors rendu via **pdf.js** (chargé à la demande), sans aucune barre d'outils native.
 
+> **Événement `@loaded`** — émis avec le nombre de pages dès que le PDF est rendu via pdf.js (que ce soit en `readonly` ou en `track-consultation`). C'est un signal de **rendu**, indépendant du suivi de consultation. Il n'est **pas** émis en mode natif par défaut (`<object>`) ni pour les images.
+
 <Canvas of={FilePreviewStories.ReadOnly} />
 
-```vue
+<Source dark code={`
 <template>
   <FilePreview :file="file" readonly />
 </template>
@@ -108,7 +110,7 @@ Pour un aperçu **en lecture seule** — l'utilisateur peut consulter le documen
 
   const file = ref<File | undefined>()
 </script>
-```
+`} />
 
 > **Limite** : côté navigateur, aucun rendu ne garantit l'inviolabilité absolue (capture d'écran, récupération du flux via les outils de développement…). `readonly` retire les chemins **normaux** d'export (barre d'outils, téléchargement, impression, clic droit), ce qui couvre le besoin métier, mais ne constitue pas une protection de type DRM.
 
@@ -118,12 +120,13 @@ Par défaut, l'aperçu PDF utilise le lecteur natif du navigateur (`<object>`), 
 
 Pour les parcours où une action (cocher une case, activer un bouton…) doit être conditionnée à la **consultation complète** d'un PDF, activez la prop **`track-consultation`**. Le PDF est alors rendu via **pdf.js** (chargé à la demande, donc sans impact sur le bundle si la fonctionnalité n'est pas utilisée) dans un conteneur scrollable. L'état de consultation est exposé via **`v-model:complete`** :
 
-- **`v-model:complete`** — booléen synchronisé : passe à `true` quand l'utilisateur a fait défiler le document jusqu'à la fin (ou si le document tient entièrement dans le conteneur sans scroll), et revient à `false` au chargement d'un nouveau document ;
-- **`@loaded`** — émis quand le PDF est entièrement chargé et rendu (reçoit le nombre de pages).
+- **`v-model:complete`** — booléen synchronisé : passe à `true` quand l'utilisateur a fait défiler le document jusqu'à la fin (ou si le document tient entièrement dans le conteneur sans scroll), et revient à `false` au chargement d'un nouveau document.
+
+L'événement **`@loaded`** (décrit dans la section [Aperçu en lecture seule](#aperçu-en-lecture-seule-sans-téléchargement)) est également disponible ici, comme pour tout rendu pdf.js.
 
 <Canvas of={FilePreviewStories.MandatoryReading} />
 
-```vue
+<Source dark code={`
 <template>
   <FilePreview
     :file="file"
@@ -147,7 +150,7 @@ Pour les parcours où une action (cocher une case, activer un bouton…) doit ê
   const hasRead = ref(false)
   const acknowledged = ref(false)
 </script>
-```
+`} />
 
 ### Points d'attention
 

@@ -31,7 +31,12 @@
 	})
 
 	const emit = defineEmits<{
-		/** Émis quand le PDF est entièrement chargé et rendu. Reçoit le nombre de pages. */
+		/**
+		 * Émis quand le PDF est entièrement chargé et rendu via pdf.js. Reçoit le nombre
+		 * de pages. C'est un signal de **rendu** : il se déclenche pour tout rendu pdf.js
+		 * (`readonly` ou `track-consultation`), indépendamment du suivi de consultation.
+		 * Non émis en mode natif par défaut (`<object>`) ni pour les images.
+		 */
 		loaded: [pageCount: number]
 	}>()
 

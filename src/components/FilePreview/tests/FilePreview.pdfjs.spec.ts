@@ -77,6 +77,9 @@ describe('FilePreview — rendu pdf.js (suivi de consultation & lecture seule)',
 		expect(wrapper.find('object').exists()).toBe(false)
 		expect(getDocumentMock).toHaveBeenCalled()
 
+		// @loaded est un signal de rendu : émis même en readonly seul (sans trackConsultation)
+		expect(wrapper.emitted('loaded')?.[0]).toEqual([2])
+
 		// Le scroll ne déclenche aucun suivi de consultation en lecture seule
 		const viewerEl = wrapper.find('.sy-file-preview__pdf-viewer').element
 		Object.defineProperty(viewerEl, 'scrollHeight', { value: 1000, configurable: true })
@@ -96,6 +99,8 @@ describe('FilePreview — rendu pdf.js (suivi de consultation & lecture seule)',
 		expect(wrapper.find('object').exists()).toBe(true)
 		expect(wrapper.find('.sy-file-preview__pdf-viewer').exists()).toBe(false)
 		expect(getDocumentMock).not.toHaveBeenCalled()
+		// @loaded n'est pas émis en mode natif (<object>) : pas de nombre de pages sans pdf.js
+		expect(wrapper.emitted('loaded')).toBeUndefined()
 	})
 
 	it('n\'active pas le suivi pour un fichier non-PDF', async () => {
