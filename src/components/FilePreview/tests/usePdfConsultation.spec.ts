@@ -1,4 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
+import { flushPromises } from '@vue/test-utils'
 import { usePdfConsultation } from '../usePdfConsultation'
 
 const { getDocumentMock } = vi.hoisted(() => {
@@ -51,6 +52,36 @@ describe('usePdfConsultation', () => {
 
 		expect(count).toBeNull()
 		expect(hasError.value).toBe(true)
+	})
+
+	it('render : un second appel annule le premier avant qu\'il ne peuple le host (race condition)', async () => {
+		const { render } = usePdfConsultation()
+		const host = document.createElement('div')
+
+		// 1er document : getDocument reste en attente (résolution contrôlée)
+		let resolveFirstDoc!: (pdf: unknown) => void
+		getDocumentMock.mockReturnValueOnce({
+			promise: new Promise((resolve) => {
+				resolveFirstDoc = resolve
+			}),
+		} as never)
+
+		// Démarre le 1er rendu puis laisse-le atteindre l'await getDocument (encore courant)
+		const first = render(new ArrayBuffer(8), host, { workerSrc: 'worker' })
+		await flushPromises()
+
+		// Nouveau fichier : le 2e rendu (mock par défaut, 3 pages) s'exécute entièrement
+		const secondCount = await render(new ArrayBuffer(8), host, { workerSrc: 'worker' })
+		expect(secondCount).toBe(3)
+		expect(host.querySelectorAll('canvas.sy-file-preview__page')).toHaveLength(3)
+
+		// On débloque le 1er (5 pages) : étant obsolète, il doit s'arrêter sans toucher au host
+		resolveFirstDoc({ numPages: 5, getPage: vi.fn() })
+		const firstCount = await first
+
+		expect(firstCount).toBeNull()
+		// Le host ne contient QUE les pages du 2e document (3), pas 3 + 5
+		expect(host.querySelectorAll('canvas.sy-file-preview__page')).toHaveLength(3)
 	})
 
 	it('checkScrollComplete : passe isComplete à true uniquement quand le bas est atteint', () => {

@@ -31,7 +31,15 @@ export function usePdfConsultation(): UsePdfConsultationReturn {
 	const hasError = ref(false)
 	const isComplete = ref(false)
 
+	// Identifie le rendu en cours. Quand un nouveau render() démarre, il incrémente ce
+	// numéro : le rendu précédent devient « obsolète » et s'arrête (voir isStale), afin
+	// que deux PDF ne s'affichent pas en même temps dans le host.
+	let activeRenderId = 0
+
 	async function render(source: PdfSource, host: HTMLElement, options: RenderOptions = {}): Promise<number | null> {
+		const renderId = ++activeRenderId
+		const isStale = (): boolean => renderId !== activeRenderId
+
 		isLoading.value = true
 		hasError.value = false
 		isComplete.value = false
@@ -39,6 +47,7 @@ export function usePdfConsultation(): UsePdfConsultationReturn {
 		try {
 			// pdf.js n'est chargé que lorsque le suivi est activé (bundle par défaut préservé)
 			const pdfjs = await import('pdfjs-dist')
+			if (isStale()) return null
 
 			if (options.workerSrc) {
 				pdfjs.GlobalWorkerOptions.workerSrc = options.workerSrc
@@ -50,6 +59,8 @@ export function usePdfConsultation(): UsePdfConsultationReturn {
 
 			const documentParams = typeof source === 'string' ? { url: source } : { data: source }
 			const pdf = await pdfjs.getDocument(documentParams).promise
+			// Un rendu plus récent a démarré pendant le chargement : on n'écrase pas son host.
+			if (isStale()) return null
 
 			host.replaceChildren()
 
@@ -59,6 +70,10 @@ export function usePdfConsultation(): UsePdfConsultationReturn {
 
 			for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
 				const page = await pdf.getPage(pageNumber)
+				// Vérifié AVANT tout appendChild : garantit qu'un rendu obsolète n'ajoute
+				// jamais de canvas après le replaceChildren d'un rendu plus récent.
+				if (isStale()) return null
+
 				const baseViewport = page.getViewport({ scale: 1 })
 				const scale = (containerWidth / baseViewport.width) * pixelRatio
 				const viewport = page.getViewport({ scale })
@@ -72,12 +87,15 @@ export function usePdfConsultation(): UsePdfConsultationReturn {
 				host.appendChild(canvas)
 
 				await page.render({ canvas, viewport }).promise
+				if (isStale()) return null
 			}
 
 			isLoading.value = false
 			return pdf.numPages
 		}
 		catch {
+			// Une erreur d'un rendu obsolète ne doit pas polluer l'état du rendu courant.
+			if (isStale()) return null
 			hasError.value = true
 			isLoading.value = false
 			return null
