@@ -16,6 +16,30 @@ export function useMonthButtonCustomization(
 	const monthButtonObservers: MutationObserver[] = []
 	const primaryThemeColor = 'rgb(var(--v-theme-primary, 12, 65, 154))'
 
+	const normalizeMonthLabel = (rawMonth: string | null | undefined, fallback: string): string => {
+		const source = (rawMonth ?? '').trim() || fallback.trim()
+		if (!source) return ''
+		return source.charAt(0).toLocaleLowerCase('fr-FR') + source.slice(1)
+	}
+
+	const buildMonthAriaLabel = (
+		rawMonth: string | null | undefined,
+		displayMonth: string,
+		year: string | null | undefined,
+	): string => {
+		const monthLabel = normalizeMonthLabel(rawMonth, displayMonth)
+		if (!monthLabel) return 'Sélectionner un mois'
+		const cleanYear = (year ?? '').trim()
+		return cleanYear
+			? `Sélectionner le mois de ${monthLabel} ${cleanYear}`
+			: `Ouvrir le sélecteur de mois`
+	}
+
+	const buildYearAriaLabel = (year: string | null | undefined): string => {
+		const cleanYear = (year ?? '').trim()
+		return cleanYear ? `Ouvrir le selecteur d'année` : 'Sélectionner une année'
+	}
+
 	onBeforeUnmount(() => {
 		monthButtonObservers.forEach(observer => observer.disconnect())
 		monthButtonObservers.length = 0
@@ -94,11 +118,13 @@ export function useMonthButtonCustomization(
 					monthBtns.forEach((monthBtn) => {
 						// Extraire le mois et l'année pour ce bouton spécifique
 						const btnText = monthBtn.textContent?.trim() || ''
-						const btnParts = btnText.split(' ')
+						const btnParts = btnText.split(' ').filter(Boolean)
 						// Utiliser le monthName fourni s'il existe, sinon utiliser le texte extrait
 						const rawMonthText = monthName?.value || btnParts[0]
 						// Personnaliser le nom du mois avec notre fonction switch case
 						const monthText = getCustomMonthName(rawMonthText)
+						const accessibleYear = yearName?.value || btnParts[1] || yearText.value || ''
+						const monthAriaLabel = buildMonthAriaLabel(rawMonthText, monthText, accessibleYear)
 
 						// Styliser le bouton existant comme un VBtn avec une icône Material Design
 						const monthBtnElement = monthBtn as HTMLElement
@@ -111,7 +137,8 @@ export function useMonthButtonCustomization(
 							'custom-month-btn',
 						)
 						monthBtnElement.setAttribute('data-ripple', 'false')
-						monthBtnElement.setAttribute('aria-label', monthText)
+						monthBtnElement.setAttribute('aria-label', monthAriaLabel)
+						monthBtnElement.setAttribute('title', monthAriaLabel)
 						monthBtnElement.style.color = primaryThemeColor
 
 						const buttonContentHTML = `
@@ -156,6 +183,8 @@ export function useMonthButtonCustomization(
 							displayedYear = new Date().getFullYear().toString()
 						}
 
+						const yearAriaLabel = buildYearAriaLabel(displayedYear)
+
 						// Styliser le bouton existant pour l'année
 						const yearBtnElement = yearBtn as HTMLElement
 						yearBtnElement.classList.add(
@@ -167,7 +196,8 @@ export function useMonthButtonCustomization(
 							'custom-year-btn',
 						)
 						yearBtnElement.setAttribute('data-ripple', 'false')
-						yearBtnElement.setAttribute('aria-label', displayedYear)
+						yearBtnElement.setAttribute('aria-label', yearAriaLabel)
+						yearBtnElement.setAttribute('title', yearAriaLabel)
 						yearBtnElement.style.color = primaryThemeColor
 
 						const yearButtonContentHTML = `
