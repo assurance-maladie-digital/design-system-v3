@@ -144,6 +144,10 @@ describe('useDatePickerAccessibility', () => {
 						<div class="v-date-picker-month__day"><button>1</button></div>
 						<div class="v-date-picker-month__day"><button>2</button></div>
 						<div class="v-date-picker-month__day"><button>3</button></div>
+						<div class="v-date-picker-month__day"><button>4</button></div>
+						<div class="v-date-picker-month__day"><button>5</button></div>
+						<div class="v-date-picker-month__day"><button>6</button></div>
+						<div class="v-date-picker-month__day"><button>7</button></div>
 					</div>
 				</div>
 			</div>
