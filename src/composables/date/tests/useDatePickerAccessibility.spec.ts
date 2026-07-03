@@ -84,6 +84,94 @@ describe('useDatePickerAccessibility', () => {
 		await expect(updateAccessibility()).resolves.not.toThrow()
 	})
 
+	it('applies grid semantics on .v-date-picker-month', async () => {
+		document.body.innerHTML = `
+			<div class="v-date-picker">
+				<div class="v-date-picker-month">
+					<div class="v-date-picker-month__weekdays">
+						<div class="v-date-picker-month__weekday">Lun</div>
+						<div class="v-date-picker-month__weekday">Mar</div>
+						<div class="v-date-picker-month__weekday">Mer</div>
+					</div>
+					<div class="v-date-picker-month__week">
+						<div class="v-date-picker-month__day v-date-picker-month__day--selected"><button>1</button></div>
+						<div class="v-date-picker-month__day"><button>2</button></div>
+						<div class="v-date-picker-month__day"><button>3</button></div>
+					</div>
+				</div>
+			</div>
+		`
+
+		await updateAccessibility()
+
+		const monthEl = document.querySelector('.v-date-picker-month') as HTMLElement
+		expect(monthEl.getAttribute('role')).toBe('grid')
+		expect(monthEl.getAttribute('aria-colcount')).toBe('3')
+		expect(monthEl.getAttribute('aria-rowcount')).toBe('2')
+
+		const headerRow = document.querySelector('.v-date-picker-month__weekdays') as HTMLElement
+		expect(headerRow.getAttribute('role')).toBe('row')
+		expect(headerRow.getAttribute('aria-rowindex')).toBe('1')
+
+		const headerCells = Array.from(document.querySelectorAll('.v-date-picker-month__weekday'))
+		headerCells.forEach((cell, index) => {
+			expect(cell.getAttribute('role')).toBe('columnheader')
+			expect(cell.getAttribute('aria-colindex')).toBe(String(index + 1))
+		})
+
+		const firstWeek = document.querySelector('.v-date-picker-month__week') as HTMLElement
+		expect(firstWeek.getAttribute('role')).toBe('row')
+		expect(firstWeek.getAttribute('aria-rowindex')).toBe('2')
+
+		const dayButtons = Array.from(firstWeek.querySelectorAll('button'))
+		expect(dayButtons[0]?.getAttribute('role')).toBe('gridcell')
+		expect(dayButtons[0]?.getAttribute('aria-selected')).toBe('true')
+		expect(dayButtons[1]?.getAttribute('aria-selected')).toBe('false')
+	})
+
+	it('wraps div structure into thead/tbody table', async () => {
+		document.body.innerHTML = `
+			<div class="v-date-picker">
+				<div class="v-date-picker-month" style="--v-date-picker-days-in-week: 7;">
+					<div class="v-date-picker-month__days">
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">L</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">M</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">M</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">J</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">V</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">S</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">D</div>
+						<div class="v-date-picker-month__day"><button>1</button></div>
+						<div class="v-date-picker-month__day"><button>2</button></div>
+						<div class="v-date-picker-month__day"><button>3</button></div>
+					</div>
+				</div>
+			</div>
+		`
+
+		await updateAccessibility()
+
+		const table = document.querySelector('.v-date-picker-month__days table') as HTMLTableElement
+		expect(table).not.toBeNull()
+		expect(table.dataset.syStructured).toBe('true')
+
+		const thead = table.querySelector('thead')
+		const tbody = table.querySelector('tbody')
+		expect(thead).not.toBeNull()
+		expect(tbody).not.toBeNull()
+
+		const headerRow = thead?.querySelector('tr')
+		expect(headerRow?.classList.contains('v-date-picker-month__weekdays')).toBe(true)
+		const headerCells = Array.from(headerRow?.querySelectorAll('th') ?? [])
+		expect(headerCells).toHaveLength(7)
+
+		const dataRows = Array.from(tbody?.querySelectorAll('tr') ?? [])
+		expect(dataRows.length).toBeGreaterThan(0)
+		expect(dataRows[0]?.classList.contains('v-date-picker-month__week')).toBe(true)
+		const firstDataRowCells = Array.from(dataRows[0]?.querySelectorAll('td') ?? [])
+		expect(firstDataRowCells).toHaveLength(7)
+	})
+
 	it('handles different icons correctly', async () => {
 		// Modifier les icônes
 		document.body.innerHTML = `
