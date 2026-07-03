@@ -27,6 +27,13 @@ export default ts.config(
 		semi: false,
 		jsx: false,
 	}),
+
+	{
+		rules: {
+			'no-useless-assignment': 'off',
+		},
+	},
+
 	// Overrides
 	{
 		// Vue Overrides
