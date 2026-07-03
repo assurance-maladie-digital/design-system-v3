@@ -174,4 +174,34 @@ describe('FilePreview — rendu pdf.js (suivi de consultation & lecture seule)',
 
 		expect(event.defaultPrevented).toBe(false)
 	})
+
+	it('active puis retire le blocage du menu contextuel quand readonly change', async () => {
+		// trackConsultation garde le viewer monté quel que soit readonly : on teste donc
+		// bien le toggle de readonly sur un même élément DOM
+		const wrapper = mount(FilePreview, {
+			props: { file: pdfFile(), trackConsultation: true, readonly: false, pdfWorkerSrc: 'worker' },
+		})
+		await flushPromises()
+
+		const viewer = wrapper.find('.sy-file-preview__pdf-viewer').element
+
+		const dispatch = () => {
+			const event = new Event('contextmenu', { cancelable: true })
+			viewer.dispatchEvent(event)
+			return event.defaultPrevented
+		}
+
+		// readonly = false : pas de listener → non bloqué
+		expect(dispatch()).toBe(false)
+
+		// readonly = true : listener attaché → bloqué
+		await wrapper.setProps({ readonly: true })
+		await flushPromises()
+		expect(dispatch()).toBe(true)
+
+		// readonly = false : listener retiré → de nouveau non bloqué
+		await wrapper.setProps({ readonly: false })
+		await flushPromises()
+		expect(dispatch()).toBe(false)
+	})
 })

@@ -118,9 +118,15 @@
 
 	watch([viewerRef, () => props.readonly], ([el], [prevEl]) => {
 		prevEl?.removeEventListener('contextmenu', preventContextMenu)
+		el?.removeEventListener('contextmenu', preventContextMenu)
 		if (el && props.readonly) {
 			el.addEventListener('contextmenu', preventContextMenu)
 		}
+	})
+
+	// Nettoyage au démontage : retire le listener si le composant est détruit en lecture seule.
+	onUnmounted(() => {
+		viewerRef.value?.removeEventListener('contextmenu', preventContextMenu)
 	})
 
 	// Synchronise l'état de consultation (true à la fin, false au rechargement)
