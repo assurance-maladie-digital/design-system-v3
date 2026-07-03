@@ -10,6 +10,30 @@ const HEADER_CELL_SELECTOR = '.v-date-picker-month__weekday'
 const DAY_CELL_SELECTOR = '.v-date-picker-month__day, [data-v-date]'
 const DAY_BUTTON_SELECTOR = 'button, [role="button"]'
 
+const MONTH_ACCESSIBLE_NAMES: Record<string, string> = {
+	'janvier': 'janvier',
+	'janv.': 'janvier',
+	'février': 'février',
+	'févr.': 'février',
+	'mars': 'mars',
+	'avril': 'avril',
+	'avr.': 'avril',
+	'mai': 'mai',
+	'juin': 'juin',
+	'juillet': 'juillet',
+	'juil.': 'juillet',
+	'août': 'août',
+	'septembre': 'septembre',
+	'sept.': 'septembre',
+	'octobre': 'octobre',
+	'oct.': 'octobre',
+	'novembre': 'novembre',
+	'nov.': 'novembre',
+	'décembre': 'décembre',
+	'déc.': 'décembre',
+	'dec.': 'décembre',
+}
+
 const DEFAULT_GRID_LABEL = 'Calendrier des dates'
 
 const compactText = (value: string | null | undefined): string => value?.replace(/\s+/g, ' ').trim() ?? ''
@@ -40,15 +64,44 @@ const ensureNavigationButtonLabels = (pickerEl: HTMLElement) => {
 		const icon = button.querySelector('i')
 		if (icon?.classList.contains('mdi-chevron-left')) {
 			button.setAttribute('aria-label', 'Mois précédent')
+			button.setAttribute('title', 'Mois précédent')
+
 			return
 		}
 
 		if (icon?.classList.contains('mdi-chevron-right')) {
 			button.setAttribute('aria-label', 'Mois suivant')
+			button.setAttribute('title', 'Mois suivant')
 			return
 		}
 
 		button.removeAttribute('aria-label')
+	})
+}
+
+const expandMonthAccessibleName = (value: string): string => {
+	const normalized = value.toLocaleLowerCase('fr-FR')
+	return MONTH_ACCESSIBLE_NAMES[normalized] ?? normalized
+}
+
+const ensureMonthAndYearSelectorLabels = (pickerEl: HTMLElement) => {
+	const monthButtons = pickerEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-months button')
+	monthButtons.forEach((button) => {
+		const text = compactText(button.textContent)
+		if (!text) return
+		const monthLabel = expandMonthAccessibleName(text)
+		const ariaLabel = `Sélectionner le mois de ${monthLabel}`
+		button.setAttribute('aria-label', ariaLabel)
+		button.setAttribute('title', ariaLabel)
+	})
+
+	const yearButtons = pickerEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-years button')
+	yearButtons.forEach((button) => {
+		const text = compactText(button.textContent)
+		if (!text) return
+		const ariaLabel = `Sélectionner l'année ${text}`
+		button.setAttribute('aria-label', ariaLabel)
+		button.setAttribute('title', ariaLabel)
 	})
 }
 
@@ -220,6 +273,7 @@ export function useDatePickerAccessibility() {
 
 		pickerEls.forEach((pickerEl) => {
 			ensureNavigationButtonLabels(pickerEl)
+			ensureMonthAndYearSelectorLabels(pickerEl)
 			applyGridSemantics(pickerEl)
 		})
 	}

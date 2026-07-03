@@ -59,6 +59,11 @@
 	// Utilisation des composables pour les fonctionnalités du CalendarMode
 	const displayWeekendDays = computed(() => props.displayWeekendDays ?? true)
 	const { todayInString, headerDate } = useTodayButton(props)
+	const todayButtonLabel = computed(() => {
+		const dateText = todayInString.value?.trim()
+		const baseLabel = 'Sélectionner la date d\'aujourd\'hui'
+		return dateText ? `${baseLabel} (${dateText})` : baseLabel
+	})
 
 	// Inlined from useAsteriskDisplay
 	const isShouldDisplayAsterisk = computed(() => props.displayAsterisk && props.required)
@@ -900,7 +905,8 @@
 								<v-btn
 									size="x-small"
 									color="primary"
-									:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
+									:title="todayButtonLabel"
+									:aria-label="todayButtonLabel"
 									class="date-picker__today-button my-2 pa-2 mt-2"
 									:ripple="false"
 									@click="handleSelectToday"
