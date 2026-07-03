@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
 import PasswordField from './PasswordField.vue'
 import type { PasswordFieldProps } from './types'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 type PasswordFieldStoryArgs = PasswordFieldProps & {

@@ -1,14 +1,15 @@
-import { type Ref, type ComponentPublicInstance } from 'vue'
+import { type Ref, type ComponentPublicInstance, type MaybeRef, unref } from 'vue'
+import type { ValidationRule } from '@/composables/validation/useValidation'
 import type { DateObjectValue } from '../types'
 import { useDateInputEditing } from './useDateInputEditing'
 import { useDateRangeInput } from './useDateRangeInput'
 
 export interface InputHandlerOptions {
 	// Configuration
-	format: string
-	displayRange: boolean
+	format: MaybeRef<string>
+	displayRange: MaybeRef<boolean>
 	dateFormatReturn?: string
-	disableErrorHandling?: boolean
+	disableErrorHandling?: MaybeRef<boolean>
 
 	// Fonctions externes
 	parseDate: (dateStr: string, format: string) => Date | null
@@ -25,7 +26,7 @@ export interface InputHandlerOptions {
 
 	// Fonctions de validation
 	clearValidation: () => void
-	validateField: (value: unknown, rules?: unknown[], warningRules?: unknown[]) => unknown
+	validateField: (value: unknown, rules?: ValidationRule[], warningRules?: ValidationRule[]) => unknown
 
 	// Fonctions d'émission
 	updateModel: (value: unknown) => void
@@ -62,7 +63,7 @@ export function useInputHandler(options: InputHandlerOptions) {
 
 	// Utiliser le composable useDateInputEditing pour le formatage
 	const dateInputEditing = useDateInputEditing({
-		format,
+		format: unref(format),
 		updateDisplayValue: (value) => {
 			displayFormattedDate.value = value
 			emitInput(value)
@@ -70,8 +71,8 @@ export function useInputHandler(options: InputHandlerOptions) {
 	})
 
 	const { parseRangeInput: parseRangeInputForSelectedDates } = useDateRangeInput(
-		format,
-		displayRange,
+		unref(format),
+		unref(displayRange),
 		parseDate,
 		formatDate,
 	)
@@ -97,7 +98,7 @@ export function useInputHandler(options: InputHandlerOptions) {
    */
 	const handleFirstDateCompletion = (value: string): boolean => {
 		// Ne traiter que si nous sommes en mode plage
-		if (!displayRange) {
+		if (!unref(displayRange)) {
 			return false
 		}
 
@@ -116,15 +117,15 @@ export function useInputHandler(options: InputHandlerOptions) {
 		let date: Date | null = null
 
 		if (value.charAt(value.length - 1) === '_') {
-			date = parseDate(value.substring(0, value.length - 1), format)
+			date = parseDate(value.substring(0, value.length - 1), unref(format))
 		}
 		else {
-			date = parseDate(value, format)
+			date = parseDate(value, unref(format))
 		}
 
 		if (date) {
 			// Formater la date pour s'assurer qu'elle est correctement formatée
-			const formattedDate = formatDate(date, format)
+			const formattedDate = formatDate(date, unref(format))
 
 			// Ajouter le séparateur de plage
 			const newValue = `${formattedDate} - `
@@ -172,11 +173,11 @@ export function useInputHandler(options: InputHandlerOptions) {
 				emitInput(newValue)
 
 				// Mettre à jour les dates sélectionnées
-				if (displayRange) {
+				if (unref(displayRange)) {
 					// Récupérer la première date
-					const firstDate = parseDate(firstPart, format)
+					const firstDate = parseDate(firstPart, unref(format))
 					// Essayer de parser la seconde date (peut être incomplète)
-					const secondDate = parseDate(secondPart, format)
+					const secondDate = parseDate(secondPart, unref(format))
 					// Mettre à jour les dates sélectionnées
 					selectedDates.value = [firstDate, secondDate]
 				}
@@ -207,11 +208,11 @@ export function useInputHandler(options: InputHandlerOptions) {
 					emitInput(newValue)
 
 					// Mettre à jour les dates sélectionnées
-					if (displayRange) {
+					if (unref(displayRange)) {
 						// Récupérer la première date
-						const firstDate = parseDate(parts[0]!, format)
+						const firstDate = parseDate(parts[0]!, unref(format))
 						// Essayer de parser la seconde date (peut être incomplète)
-						const secondDate = parseDate(secondPart, format)
+						const secondDate = parseDate(secondPart, unref(format))
 						// Mettre à jour les dates sélectionnées
 						selectedDates.value = [firstDate, secondDate]
 					}
@@ -271,7 +272,7 @@ export function useInputHandler(options: InputHandlerOptions) {
 	 * Met à jour les dates sélectionnées à partir d'une valeur formatée
 	 */
 	const updateSelectedDatesFromFormattedValue = (formattedInput: string) => {
-		if (displayRange) {
+		if (unref(displayRange)) {
 			const [startDate, endDate] = parseRangeInputForSelectedDates(formattedInput)
 			if (startDate && endDate) {
 				selectedDates.value = [startDate, endDate]
@@ -284,7 +285,7 @@ export function useInputHandler(options: InputHandlerOptions) {
 			}
 		}
 		else {
-			const date = parseDate(formattedInput, format)
+			const date = parseDate(formattedInput, unref(format))
 			selectedDates.value = date
 		}
 	}
@@ -300,13 +301,13 @@ export function useInputHandler(options: InputHandlerOptions) {
 				? selectedDates.value
 				: (selectedDates.value ? [selectedDates.value] : [])
 
-			if (displayRange && currentDates.length >= 2 && currentDates[0] && currentDates[1]) {
+			if (unref(displayRange) && currentDates.length >= 2 && currentDates[0] && currentDates[1]) {
 				// Générer toutes les dates entre les deux dates
 				const allDates = generateDateRange(currentDates[0], currentDates[1])
 				selectedDates.value = allDates
 
 				// Formater les dates pour le modèle
-				const returnFormat = dateFormatReturn || format
+				const returnFormat = dateFormatReturn || unref(format)
 				const modelValue = [
 					formatDate(currentDates[0], returnFormat),
 					formatDate(currentDates[1], returnFormat),
@@ -315,18 +316,18 @@ export function useInputHandler(options: InputHandlerOptions) {
 				updateModel(modelValue)
 
 				// Valider les règles personnalisées si la saisie est complète
-				if (!disableErrorHandling && displayFormattedDate.value && isDateComplete(displayFormattedDate.value)) {
+				if (!unref(disableErrorHandling) && displayFormattedDate.value && isDateComplete(displayFormattedDate.value)) {
 					validateField(currentDates[0])
 					validateField(currentDates[1])
 				}
 			}
 			else if (currentDates.length > 0 && currentDates[0]) {
-				const returnFormat = dateFormatReturn || format
+				const returnFormat = dateFormatReturn || unref(format)
 				const modelValue = formatDate(currentDates[0], returnFormat)
 				updateModel(modelValue)
 
 				// Valider les règles personnalisées si la saisie est complète
-				if (!disableErrorHandling && displayFormattedDate.value && isDateComplete(displayFormattedDate.value)) {
+				if (!unref(disableErrorHandling) && displayFormattedDate.value && isDateComplete(displayFormattedDate.value)) {
 					validateField(currentDates[0])
 				}
 			}
@@ -373,7 +374,7 @@ export function useInputHandler(options: InputHandlerOptions) {
 			? selectedDates.value
 			: (selectedDates.value ? [selectedDates.value] : [])
 
-		if (displayRange && currentDates.length >= 2 && currentDates[0] && currentDates[1]) {
+		if (unref(displayRange) && currentDates.length >= 2 && currentDates[0] && currentDates[1]) {
 			updateModelFromSelectedDates()
 		}
 	}
@@ -394,7 +395,7 @@ export function useInputHandler(options: InputHandlerOptions) {
 		emitInput(formatted)
 
 		// Mettre à jour les dates sélectionnées
-		const date = parseDate(formatted, format)
+		const date = parseDate(formatted, unref(format))
 		selectedDates.value = date
 
 		// Mettre à jour la position du curseur
@@ -420,7 +421,7 @@ export function useInputHandler(options: InputHandlerOptions) {
 		try {
 			isFormatting.value = true
 
-			if (displayRange) {
+			if (unref(displayRange)) {
 				handleRangeInput(event)
 			}
 			else {

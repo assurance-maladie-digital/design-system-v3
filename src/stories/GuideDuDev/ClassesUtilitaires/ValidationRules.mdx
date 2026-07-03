@@ -1,4 +1,4 @@
-import { Meta, Source } from '@storybook/addon-docs'
+import { Meta, Source } from '@storybook/addon-docs/blocks'
 import '../../styles/shared.css';
 
 <Meta title="Guide Du Dev/Utilitaires/Règles de validation" />
@@ -16,19 +16,29 @@ Ces règles ne sont pas liées à la validation interne du Design System&nbsp;: 
 ## Importation
 
 <Source dark code={`import {
-  doMatchPattern,
-  isDateValid,
-  isExactLength,
-  isHolidayDay,
-  isMaxLength,
-  isMinLength,
-  isNotAfterDate,
-  isNotAfterToday,
-  isNotBeforeDate,
-  isNotBeforeToday,
+  // Règles prêtes à l'emploi (sans paramètre) :
   isRequired,
-  isValidEmail
+  isValidEmail,
+  isDateValid,
+  isNotBeforeToday,
+  isNotAfterToday,
+  isHolidayDay,
+  // Fonctions d'ordre supérieur (à appeler avec un paramètre) :
+  isMinLengthFn,
+  isMaxLengthFn,
+  isExactLengthFn,
+  doMatchPatternFn,
+  isNotBeforeDateFn,
+  isNotAfterDateFn,
 } from '@cnamts/synapse'
+`}/>
+
+Chaque règle existe aussi sous sa forme \`…Fn\` (ex. \`isRequiredFn\`) pour **personnaliser le message** via un objet \`errorMessages\`. La clé \`default\` accepte&nbsp;:
+- une **chaîne** pour un message fixe&nbsp;;
+- une **fonction** uniquement quand on veut injecter un paramètre de la règle (longueur, date…).
+
+<Source dark code={`isRequiredFn({ default: 'Ce champ est obligatoire' })                       // message fixe
+isMinLengthFn(8, false, { default: (min) => \`Au moins \${min} caractères\` })  // message avec paramètre
 `}/>
 
 ## Règles disponibles
@@ -37,174 +47,111 @@ Ces règles ne sont pas liées à la validation interne du Design System&nbsp;: 
 
 Vérifie qu'un champ n'est pas vide.
 
-<Source dark code={`// Utilisation simple
-isRequired()
-
-// Avec message personnalisé
-isRequired('Ce champ est obligatoire')
-
-// Avec nom de champ
-isRequired('Ce champ est obligatoire', 'Email')
+<Source dark code={`isRequired                                            // règle prête à l'emploi
+isRequiredFn({ default: 'Ce champ est obligatoire' })  // message personnalisé
 `}/>
 
 ### isValidEmail
 
 Vérifie qu'un champ contient une adresse email valide.
 
-<Source dark code={`// Utilisation simple
-isValidEmail()
-
-// Avec message personnalisé
-isValidEmail('Format d\\'email invalide')
-
-// Avec nom de champ
-isValidEmail('Format d\\'email invalide', 'Email professionnel')
+<Source dark code={`isValidEmail                                       // règle prête à l'emploi
+isValidEmailFn({ default: 'Format d\\'email invalide' })  // message personnalisé
 `}/>
 
 ### isMinLength
 
 Vérifie qu'un champ contient au moins un nombre minimum de caractères.
 
-<Source dark code={`// Minimum 8 caractères
-isMinLength(8)
+<Source dark code={`isMinLengthFn(8)                  // minimum 8 caractères
+isMinLengthFn(8, true)            // en ignorant les espaces (2e arg)
 
-// Avec message personnalisé
-isMinLength(8, 'Doit contenir au moins {min} caractères')
-
-// Avec nom de champ
-isMinLength(8, 'Doit contenir au moins {min} caractères', 'Mot de passe')
+// message personnalisé (3e arg : objet errorMessages)
+isMinLengthFn(8, false, { default: (min) => \`Doit contenir au moins \${min} caractères\` })
 `}/>
 
 ### isMaxLength
 
 Vérifie qu'un champ ne dépasse pas un nombre maximum de caractères.
 
-<Source dark code={`// Maximum 100 caractères
-isMaxLength(100)
+<Source dark code={`isMaxLengthFn(100)               // maximum 100 caractères
+isMaxLengthFn(100, true)         // en ignorant les espaces
 
-// Avec message personnalisé
-isMaxLength(100, 'Ne doit pas dépasser {max} caractères')
-
-// Avec nom de champ
-isMaxLength(100, 'Ne doit pas dépasser {max} caractères', 'Description')
+// message personnalisé
+isMaxLengthFn(100, false, { default: (max) => \`Ne doit pas dépasser \${max} caractères\` })
 `}/>
 
 ### isExactLength
 
 Vérifie qu'un champ contient exactement un nombre spécifique de caractères.
 
-<Source dark code={`// Exactement 10 caractères
-isExactLength(10)
+<Source dark code={`isExactLengthFn(10)              // exactement 10 caractères
+isExactLengthFn(10, true)        // en ignorant les espaces
 
-// Avec message personnalisé
-isExactLength(10, 'Doit contenir exactement {length} caractères')
-
-// Avec nom de champ
-isExactLength(10, 'Doit contenir exactement {length} caractères', 'Code')
+// message personnalisé
+isExactLengthFn(10, false, { default: (len) => \`Doit contenir exactement \${len} caractères\` })
 `}/>
 
 ### doMatchPattern
 
 Vérifie qu'un champ correspond à un motif d'expression régulière.
 
-<Source dark code={`// Motif simple (lettres uniquement)
-doMatchPattern(/^[a-zA-Z]+$/)
+<Source dark code={`doMatchPatternFn(/^[a-zA-Z]+$/)   // motif (lettres uniquement)
 
-// Avec message personnalisé
-doMatchPattern(/^[a-zA-Z]+$/, 'Doit contenir uniquement des lettres')
-
-// Avec nom de champ
-doMatchPattern(/^[a-zA-Z]+$/, 'Doit contenir uniquement des lettres', 'Nom')
-
-// Exemple pour un mot de passe fort
-doMatchPattern(
-  // Regex pour mot de passe fort (commenté pour éviter les problèmes de parsing)
-  // Doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial
-  'REGEX_MOT_DE_PASSE_FORT',
-  'Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial'
-)
+// message personnalisé (2e arg : objet errorMessages)
+doMatchPatternFn(/^[a-zA-Z]+$/, { default: 'Doit contenir uniquement des lettres' })
 `}/>
 
 ### isDateValid
 
 Vérifie qu'un champ contient une date valide.
 
-<Source dark code={`// Utilisation simple
-isDateValid()
-
-// Avec message personnalisé
-isDateValid('Date invalide')
-
-// Avec nom de champ
-isDateValid('Date invalide', 'Date de naissance')
+<Source dark code={`isDateValid                                  // règle prête à l'emploi
+isDateValidFn({ default: 'Date invalide' })  // message personnalisé
 `}/>
 
 ### isNotBeforeDate
 
 Vérifie qu'une date n'est pas antérieure à une date spécifiée.
 
-<Source dark code={`// Date de référence
-isNotBeforeDate('01/01/2023')
+<Source dark code={`isNotBeforeDateFn('01/01/2023')   // date de référence (format JJ/MM/AAAA)
 
-// Avec message personnalisé
-isNotBeforeDate('01/01/2023', 'La date doit être postérieure ou égale au {date}')
-
-// Avec nom de champ
-isNotBeforeDate('01/01/2023', 'La date doit être postérieure ou égale au {date}', 'Date de début')
+// message personnalisé (la date de référence est passée à la fonction)
+isNotBeforeDateFn('01/01/2023', { default: (date) => \`La date doit être postérieure ou égale au \${date}\` })
 `}/>
 
 ### isNotAfterDate
 
 Vérifie qu'une date n'est pas postérieure à une date spécifiée.
 
-<Source dark code={`// Date de référence
-isNotAfterDate('31/12/2023')
+<Source dark code={`isNotAfterDateFn('31/12/2023')    // date de référence (format JJ/MM/AAAA)
 
-// Avec message personnalisé
-isNotAfterDate('31/12/2023', 'La date doit être antérieure ou égale au {date}')
-
-// Avec nom de champ
-isNotAfterDate('31/12/2023', 'La date doit être antérieure ou égale au {date}', 'Date de fin')
+// message personnalisé (la date de référence est passée à la fonction)
+isNotAfterDateFn('31/12/2023', { default: (date) => \`La date doit être antérieure ou égale au \${date}\` })
 `}/>
 
 ### isNotBeforeToday
 
 Vérifie qu'une date n'est pas antérieure à aujourd'hui.
 
-<Source dark code={`// Utilisation simple
-isNotBeforeToday()
-
-// Avec message personnalisé
-isNotBeforeToday('La date ne peut pas être dans le passé')
-
-// Avec nom de champ
-isNotBeforeToday('La date ne peut pas être dans le passé', 'Date de rendez-vous')
+<Source dark code={`isNotBeforeToday                                          // règle prête à l'emploi
+isNotBeforeTodayFn({ default: 'La date ne peut pas être dans le passé' })  // message personnalisé
 `}/>
 
 ### isNotAfterToday
 
 Vérifie qu'une date n'est pas postérieure à aujourd'hui.
 
-<Source dark code={`// Utilisation simple
-isNotAfterToday()
-
-// Avec message personnalisé
-isNotAfterToday('La date ne peut pas être dans le futur')
-
-// Avec nom de champ
-isNotAfterToday('La date ne peut pas être dans le futur', 'Date de naissance')
+<Source dark code={`isNotAfterToday                                          // règle prête à l'emploi
+isNotAfterTodayFn({ default: 'La date ne peut pas être dans le futur' })  // message personnalisé
 `}/>
 
 ### isHolidayDay
 
-Vérifie si une date correspond à un jour férié en France.
+Règle qui **échoue si la date est un jour férié français** : elle renvoie `true` quand la date n'est PAS un férié, sinon le message d'erreur. C'est déjà une règle complète&nbsp;: passez-la directement dans `:rules`, inutile de l'inverser avec `v => !isHolidayDay(v)`.
 
-<Source dark code={`// Utilisation comme fonction de vérification
-const isHoliday = isHolidayDay('25/12/2023')
-console.log(isHoliday) // true (Noël)
-
-// Utilisation comme règle de validation (avec négation)
-v => !isHolidayDay(v) || 'La date ne peut pas être un jour férié'
+<Source dark code={`isHolidayDay                                              // règle prête à l'emploi
+isHolidayDayFn({ default: 'La date ne peut pas être un jour férié' })  // message personnalisé
 `}/>
 
 ## Exemples d'utilisation
@@ -248,8 +195,7 @@ import { ref, reactive, computed } from 'vue'
 import {
   isRequired,
   isValidEmail,
-  isMinLength,
-  doMatchPattern
+  isMinLengthFn
 } from '@cnamts/synapse'
 
 export default {
@@ -265,18 +211,18 @@ export default {
     
     const rules = {
       email: [
-        isRequired('Ce champ est requis', 'Email'),
-        isValidEmail('Format d\\'email invalide', 'Email')
+        isRequired,
+        isValidEmail
       ],
       password: [
-        isRequired('Ce champ est requis', 'Mot de passe'),
-        isMinLength(8, 'Doit contenir au moins {min} caractères', 'Mot de passe'),
+        isRequired,
+        isMinLengthFn(8),
         // Règle de validation pour mot de passe fort (simplifiée)
         v => v && v.match(/[A-Z]/) && v.match(/[a-z]/) && v.match(/[0-9]/) && v.match(/[^A-Za-z0-9]/) || 
             'Doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial'
       ],
       confirmPassword: [
-        isRequired('Ce champ est requis', 'Confirmation du mot de passe'),
+        isRequired,
         v => v === formData.password || 'Les mots de passe ne correspondent pas'
       ]
     }
@@ -335,13 +281,12 @@ export default {
 </template>
 
 <script>
-import { ref, reactive, computed } from '
-import '../../styles/shared.css';vue'
+import { ref, reactive, computed } from 'vue'
 import {
   isRequired,
   isDateValid,
   isNotBeforeToday,
-  isNotAfterDate,
+  isNotAfterDateFn,
   isHolidayDay
 } from '@cnamts/synapse'
 
@@ -371,23 +316,23 @@ export default {
     
     const rules = {
       name: [
-        isRequired('Ce champ est requis', 'Nom')
+        isRequired
       ],
       startDate: [
-        isRequired('Ce champ est requis', 'Date de début'),
-        isDateValid('Format de date invalide (JJ/MM/AAAA)', 'Date de début'),
-        isNotBeforeToday('La date ne peut pas être dans le passé', 'Date de début'),
-        isNotAfterDate(maxDateFormatted, 'La date doit être avant le {date}', 'Date de début'),
-        v => !isHolidayDay(v) || 'La date ne peut pas être un jour férié'
+        isRequired,
+        isDateValid,
+        isNotBeforeToday,
+        isNotAfterDateFn(maxDateFormatted),
+        isHolidayDay
       ],
       endDate: computed(() => [
-        isRequired('Ce champ est requis', 'Date de fin'),
-        isDateValid('Format de date invalide (JJ/MM/AAAA)', 'Date de fin'),
-        v => !formData.startDate || !isDateValid()(formData.startDate) === true || 
-             !isDateValid()(v) === true || 
+        isRequired,
+        isDateValid,
+        v => !formData.startDate || isDateValid(formData.startDate) !== true || 
+             isDateValid(v) !== true || 
              isDateAfter(v, formData.startDate),
-        isNotAfterDate(maxDateFormatted, 'La date doit être avant le {date}', 'Date de fin'),
-        v => !isHolidayDay(v) || 'La date ne peut pas être un jour férié'
+        isNotAfterDateFn(maxDateFormatted),
+        isHolidayDay
       ])
     }
     
@@ -416,9 +361,9 @@ Vous pouvez facilement combiner les règles prédéfinies avec vos propres règl
 
 <Source dark code={`const rules = {
   username: [
-    isRequired(),
-    isMinLength(3),
-    isMaxLength(20),
+    isRequired,
+    isMinLengthFn(3),
+    isMaxLengthFn(20),
     // Règle personnalisée pour valider le format du nom d'utilisateur
     v => v && /^[a-z0-9_-]+$/.test(v) || 
         'Le nom d\\'utilisateur ne peut contenir que des lettres minuscules, chiffres, tirets et underscores'

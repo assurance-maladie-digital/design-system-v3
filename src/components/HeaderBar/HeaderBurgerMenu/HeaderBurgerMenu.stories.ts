@@ -1,13 +1,13 @@
 import HeaderToolbar from '@/components/HeaderToolbar/HeaderToolbar.vue'
 import { mdiMapMarker } from '@mdi/js'
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { VBtn } from 'vuetify/components'
 import HeaderBar from '../HeaderBar.vue'
 import HeaderBurgerMenu from './HeaderBurgerMenu.vue'
 import HeaderMenuItem from './HeaderMenuItem/HeaderMenuItem.vue'
 import HeaderMenuSection from './HeaderMenuSection/HeaderMenuSection.vue'
 import HeaderSubMenu from './HeaderSubMenu/HeaderSubMenu.vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 
 const meta = {
 	title: 'Composants/Structure/HeaderBar/HeaderBurgerMenu',

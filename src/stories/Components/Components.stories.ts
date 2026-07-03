@@ -1,5 +1,5 @@
 import { VCard, VCardText, VCardTitle, VRow, VCol, VIcon } from 'vuetify/components'
-import type { StoryObj } from '@storybook/vue3'
+import type { StoryObj } from '@storybook/vue3-vite'
 import { useTheme } from 'vuetify'
 
 export default {
@@ -39,7 +39,7 @@ export const ComponentsList: StoryObj = {
 						title: 'HeaderToolbar',
 						description: 'Utilisé pour afficher une barre d\'outils en haut de la page. Il est composé de deux zones customisables.',
 						link: '/?path=/docs/composants-structure-headertoolbar--docs',
-						img: '/components/header-toolbar.svg',
+						img: `/components/header-toolbar${isAp ? '-ap' : ''}.svg`,
 						category: 'Structure',
 					},
 					{
@@ -53,7 +53,7 @@ export const ComponentsList: StoryObj = {
 						title: 'SubHeader',
 						description: 'Utilisé pour afficher un bloc d’informations sous l’en-tête principale.',
 						link: '/?path=/docs/composants-structure-subheader--docs',
-						img: '/components/sub-header.svg',
+						img: `/components/sub-header${isAp ? '-ap' : ''}.svg`,
 						category: 'Structure',
 					},
 					{
@@ -144,7 +144,7 @@ export const ComponentsList: StoryObj = {
 						title: 'SocialMediaLinks',
 						description: 'Utilisé pour afficher des liens de réseaux sociaux dans le composant Footer.',
 						link: '/?path=/docs/composants-navigation-socialmedialinks--docs',
-						img: '/components/social-media-links.svg',
+						img: `/components/social-media-links${isAp ? '-ap' : ''}.svg`,
 						category: 'Navigation',
 					},
 					{
@@ -165,7 +165,7 @@ export const ComponentsList: StoryObj = {
 						title: 'BackBtn',
 						description: 'Utilisé pour permettre à l’utilisateur de revenir à la page précédente.',
 						link: '/?path=/docs/composants-boutons-backbtn--docs',
-						img: '/components/back-btn.svg',
+						img: `/components/back-btn${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
 					},
 					{
@@ -200,7 +200,7 @@ export const ComponentsList: StoryObj = {
 						title: 'LangBtn',
 						description: 'Utilisé pour permettre à l’utilisateur de choisir la langue de l’application.',
 						link: '/?path=/docs/composants-boutons-langbtn--docs',
-						img: '/components/lang-btn.svg',
+						img: `/components/lang-btn${isAp ? '-ap' : ''}.svg`,
 						category: 'Boutons',
 					},
 					{
@@ -255,22 +255,22 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'SySelect',
 						description: 'Utilisé pour proposer une alternative au v-select de Vuetify qui ne respecte pas les règles d\'accessibilité RGAA. Il est basé sur un v-textfield.',
-						link: '/?path=/docs/composants-formulaires-syselect--docs',
+						link: '/?path=/docs/composants-formulaires-selects-syselect--docs',
 						img: `/components/sy-select${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
 						title: 'SyInputSelect',
 						description: 'Utilisé pour proposer une alternative au v-select de Vuetify qui ne respecte pas les règles RGAA.Il est basé sur un v-input.',
-						link: '/?path=/docs/composants-formulaires-syinputselect--docs',
-						img: '/components/sy-input-select.svg',
+						link: '/?path=/docs/composants-formulaires-selects-syinputselect--docs',
+						img: `/components/sy-input-select${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
 						title: 'SyBtnMenu',
 						description: 'Utilisé pour proposer une sélection d\'options avec un bouton personnalisé, conforme au style du Design System et qui respecte les règles d\'accessibilité RGAA. Il est basé sur un v-btn.',
-						link: '/?path=/docs/composants-formulaires-sybtnMenu--docs',
-						img: '/components/sy-btn-select.svg',
+						link: '/?path=/docs/composants-navigation-sybtnMenu--docs',
+						img: `/components/sy-btn-menu${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -319,7 +319,7 @@ export const ComponentsList: StoryObj = {
 						title: 'PeriodField',
 						description: 'Utilisé pour permettre à l’utilisateur de saisir une période.',
 						link: '/?path=/docs/composants-formulaires-periodfield--docs',
-						img: '/components/period-field.svg',
+						img: `/components/period-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -346,7 +346,7 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'SelectBtnField',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner une valeur dans une liste.',
-						link: '/?path=/docs/composants-formulaires-selectbtnfield--docs',
+						link: '/?path=/docs/composants-formulaires-selects-selectbtnfield--docs',
 						img: `/components/select-btn-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
@@ -424,7 +424,7 @@ export const ComponentsList: StoryObj = {
 						title: 'CollapsibleList',
 						description: 'Utilisé pour afficher des listes de liens. Les éléments peuvent être dépliés ou repliés.',
 						link: '/?path=/docs/composants-donn%C3%A9es-collapsiblelist--docs',
-						img: '/components/collapsible-list.svg',
+						img: `/components/collapsible-list${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{
@@ -438,7 +438,7 @@ export const ComponentsList: StoryObj = {
 						title: 'DataList',
 						description: 'Utilisé pour afficher une liste d’informations.',
 						link: '/?path=/docs/composants-donn%C3%A9es-datalist--docs',
-						img: '/components/data-list.svg',
+						img: `/components/data-list${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{
@@ -452,7 +452,7 @@ export const ComponentsList: StoryObj = {
 						title: 'DataListGroup',
 						description: 'Utilisé pour afficher une liste de DataList.',
 						link: '/?path=/docs/composants-donn%C3%A9es-datalistgroup--docs',
-						img: '/components/data-list-group.svg',
+						img: `/components/data-list-group${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{
@@ -466,7 +466,7 @@ export const ComponentsList: StoryObj = {
 						title: 'FileList',
 						description: 'Utilisé pour afficher une liste de document à téléverser.',
 						link: '/?path=/docs/composants-donn%C3%A9es-filelist--docs',
-						img: '/components/file-list.svg',
+						img: `/components/file-list${isAp ? '-ap' : ''}.svg`,
 						category: 'Données',
 					},
 					{
@@ -494,7 +494,7 @@ export const ComponentsList: StoryObj = {
 						title: 'CookieBanner',
 						description: 'Utilisé pour afficher une bannière de consentement pour les cookies.',
 						link: '/?path=/docs/composants-feedback-cookiebanner--docs',
-						img: '/components/cookie-banner.svg',
+						img: `/components/cookie-banner${isAp ? '-ap' : ''}.svg`,
 						category: 'Feedback',
 					},
 					{
@@ -582,6 +582,19 @@ export const ComponentsList: StoryObj = {
 					'RangeField',
 					'FileUpload',
 					'ContextualMenu',
+					'HeaderToolbar',
+					'SubHeader',
+					'BackBtn',
+					'LangBtn',
+					'CookieBanner',
+					'PeriodField',
+					'CollapsibleList',
+					'FileList',
+					'DataListGroup',
+					'DataList',
+					'SyBtnMenu',
+					'SocialMediaLinks',
+					'SyInputSelect',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

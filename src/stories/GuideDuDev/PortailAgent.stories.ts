@@ -1,5 +1,5 @@
 import { VDivider, VExpansionPanel, VExpansionPanels, VExpansionPanelText, VExpansionPanelTitle } from 'vuetify/components'
-import type { StoryObj } from '@storybook/vue3'
+import type { StoryObj } from '@storybook/vue3-vite'
 
 export default {
 	title: 'Guide Du Dev/Convergence des DS/Équivalence des composants/Portail Agent',

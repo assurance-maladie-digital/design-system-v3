@@ -1,12 +1,9 @@
 <svg width="541" height="357" viewBox="0 0 541 357" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="541" height="357" fill="#E7ECF5"/>
-<rect x="63" y="88" width="415" height="181" fill="white"/>
-<rect x="286" y="117" width="97" height="19" rx="9.5" fill="#0C419A"/>
-<rect x="139" y="117" width="97" height="19" rx="9.5" fill="#0C419A"/>
-<rect opacity="0.5" x="286" y="187" width="97" height="19" rx="9.5" fill="#CED9EB"/>
-<rect opacity="0.5" x="139" y="187" width="116" height="19" rx="9.5" fill="#CED9EB"/>
-<rect opacity="0.5" x="286" y="222" width="116" height="19" rx="9.5" fill="#CED9EB"/>
-<rect opacity="0.5" x="139" y="222" width="97" height="19" rx="9.5" fill="#CED9EB"/>
-<rect opacity="0.5" x="286" y="152" width="116" height="19" rx="9.5" fill="#CED9EB"/>
-<rect opacity="0.5" x="139" y="152" width="116" height="19" rx="9.5" fill="#CED9EB"/>
+    <rect width="541" height="357" fill="#E7ECF5"/>
+    <rect x="63" y="88" width="415" height="181" fill="white"/>
+    <path d="M349.935 136.705L345.345 132.125L340.755 136.705L339.345 135.295L345.345 129.295L351.345 135.295L349.935 136.705Z" fill="#222324"/>
+    <rect opacity="0.5" x="184" y="123.699" width="136" height="19" rx="9.5" fill="#0C419A"/>
+    <rect opacity="0.5" x="184" y="154.699" width="112" height="19" rx="9.5" fill="#CED9EB"/>
+    <rect opacity="0.5" x="184" y="185.699" width="112" height="19" rx="9.5" fill="#CED9EB"/>
+    <rect opacity="0.5" x="184" y="216.699" width="112" height="19" rx="9.5" fill="#CED9EB"/>
 </svg>

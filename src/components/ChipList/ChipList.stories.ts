@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import ChipList from './ChipList.vue'
 import { mdiAccount } from '@mdi/js'
 import type { ChipItem } from './types'

@@ -1,4 +1,4 @@
-import type { StoryObj, Meta } from '@storybook/vue3'
+import type { StoryObj, Meta } from '@storybook/vue3-vite'
 import { ref } from 'vue'
 import NirField from './NirField.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'

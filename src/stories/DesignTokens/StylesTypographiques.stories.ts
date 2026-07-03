@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { computed } from 'vue'
 // Import Vue component with proper type declaration from vue-shims.d.ts
 import TypographyDisplay from './TypographyDisplay.vue'

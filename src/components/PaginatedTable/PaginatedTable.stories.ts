@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import PaginatedTable from './PaginatedTable.vue'
 import { StateEnum } from './constants/StateEnum'
 import type { DataOptions } from './types'

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import ExternalLinks from './ExternalLinks.vue'
 import { mdiArrowTopRight } from '@mdi/js'
 import { VIcon } from 'vuetify/components'

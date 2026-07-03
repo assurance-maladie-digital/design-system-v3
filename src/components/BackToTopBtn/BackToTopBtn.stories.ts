@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 import BackToTopBtn from './BackToTopBtn.vue'
 import { VCard, VSheet } from 'vuetify/components'

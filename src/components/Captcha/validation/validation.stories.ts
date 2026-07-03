@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
-import { fn, userEvent, within } from '@storybook/test'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import { fn, userEvent, within } from 'storybook/test'
 import { ref, watch } from 'vue'
 import Captcha from '../Captcha.vue'
 import { VBtn, VCard, VForm } from 'vuetify/components'

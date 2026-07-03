@@ -1,5 +1,5 @@
 import { VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPanelText, VDataTable, VIcon } from 'vuetify/components'
-import type { StoryObj } from '@storybook/vue3'
+import type { StoryObj } from '@storybook/vue3-vite'
 import { checkIcon, linkICon, croixIcon } from '@/constants/icons'
 import Usages from '@/components/Usages/Usages.vue'
 

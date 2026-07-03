@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import UploadWorkflow from './UploadWorkflow.vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 import { VBtn, VSnackbar } from 'vuetify/components'
 import { ref } from 'vue'
 

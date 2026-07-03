@@ -1,6 +1,6 @@
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 import FileUpload from './FileUpload.vue'
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 import NotificationBar from '@/components/NotificationBar/NotificationBar.vue'
 import { useNotificationService } from '@/services/NotificationService'

@@ -1,6 +1,6 @@
-import { type Meta, type StoryObj } from '@storybook/vue3'
+import { type Meta, type StoryObj } from '@storybook/vue3-vite'
 import CookieBanner from './CookieBanner.vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 import { VBtn } from 'vuetify/components'
 import { ref, watch } from 'vue'
 
@@ -586,7 +586,7 @@ export const Customization: Story = {
 		onCustomize: fn(),
 		vuetifyOptions: {
 			banner: {
-				color: '#ced9eb',
+				color: 'rgb(var(--v-theme-infoVariant))',
 			},
 			customizeBtn: {
 				variant: 'text',

@@ -72,10 +72,10 @@ describe('Bridge Integration Regression Tests', () => {
 	})
 
 	/**
-	 * Test 3: Coordonnation parent/enfant avec skipInternalValidation
+	 * Test 3: Coordonnation parent/enfant pour éviter la double validation
 	 * Bug potentiel : DateTextInput valide en parallèle du parent
 	 */
-	it('ComplexDatePicker contrôle la validation quand DateTextInput a skipInternalValidation', async () => {
+	it('ComplexDatePicker contrôle la validation de manière centralisée', async () => {
 		const parentValidate = vi.fn(() => ({ hasError: false, hasWarning: false, hasSuccess: true, state: { errors: [], warnings: [], successes: ['OK'] } }))
 
 		// Ce test vérifie que le parent gère la validation, pas l'enfant
