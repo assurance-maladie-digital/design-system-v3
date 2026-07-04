@@ -42,7 +42,7 @@
 	// Remove deprecated components from selection when switch is turned off
 	watch(() => filters.includeDeprecated, (includeDeprecated) => {
 		if (!includeDeprecated && filters.selectedComponents.length > 0) {
-			filters.selectedComponents = filters.selectedComponents.filter(compName => {
+			filters.selectedComponents = filters.selectedComponents.filter((compName) => {
 				const component = results.find(r => r.componentName === compName)
 				return component?.status === 'actif'
 			})
@@ -168,6 +168,7 @@
 					:multiple="true"
 					:chips="true"
 					:clearable="true"
+					:hide-details="true"
 					density="compact"
 					text-key="text"
 					value-key="value"
@@ -210,7 +211,10 @@
 						v{{ v }}
 					</option>
 				</select>
-				<label class="ci-switch" for="include-deprecated">
+				<label
+					class="ci-switch"
+					for="include-deprecated"
+				>
 					<input
 						id="include-deprecated"
 						v-model="filters.includeDeprecated"
@@ -226,6 +230,11 @@
 			v-if="filteredRows.length === 0"
 			class="ci-empty-state"
 		>
+			<img
+				src="./box.png"
+				alt=""
+				class="ci-empty-state-image"
+			>
 			{{ hasActiveFilter ? locales.noResults.message : locales.emptyState.message }}
 		</div>
 
@@ -339,11 +348,23 @@
 		margin-bottom: 1.25rem;
 	}
 
+	.ci-filters :deep(.sy-autocomplete) {
+		--sy-autocomplete-color: #0c419a;
+		--sy-autocomplete-border-color: #0c419a;
+		--sy-autocomplete-bg-color: #0c419a;
+	}
+
 	.ci-filters-row {
 		display: flex;
 		gap: 0.75rem;
 		align-items: center;
 		flex-wrap: wrap;
+	}
+
+	.ci-filters-row .ci-select,
+	.ci-filters-row .ci-switch {
+		flex: 1;
+		min-width: 0;
 	}
 
 	.ci-select {
@@ -357,8 +378,8 @@
 		outline: none;
 		box-sizing: border-box;
 		appearance: none;
-		-webkit-appearance: none;
-		-moz-appearance: none;
+		appearance: none;
+		appearance: none;
 		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23525252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
 		background-repeat: no-repeat;
 		background-position: right 0.6rem center;
@@ -366,7 +387,7 @@
 
 	.ci-select:focus {
 		border-color: #0c419a;
-		box-shadow: 0 0 0 2px rgba(12, 65, 154, 0.15);
+		box-shadow: 0 0 0 2px rgb(12 65 154 / 15%);
 	}
 
 	.ci-switch {
@@ -406,7 +427,7 @@
 		background-color: #fff;
 		border-radius: 50%;
 		transition: transform 0.2s ease;
-		box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+		box-shadow: 0 1px 3px rgb(0 0 0 / 20%);
 	}
 
 	.ci-switch input:checked + .ci-switch-slider {
@@ -418,7 +439,7 @@
 	}
 
 	.ci-switch input:focus + .ci-switch-slider {
-		box-shadow: 0 0 0 2px rgba(12, 65, 154, 0.15);
+		box-shadow: 0 0 0 2px rgb(12 65 154 / 15%);
 	}
 
 	.ci-switch input:disabled + .ci-switch-slider {
@@ -450,6 +471,17 @@
 		background-color: #f8f9fc;
 		border-radius: 8px;
 		border: 1px dashed #e0e0e0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+	}
+
+	.ci-empty-state-image {
+		width: 120px;
+		height: 120px;
+		object-fit: contain;
+		opacity: 0.6;
 	}
 
 	.ci-grid {
