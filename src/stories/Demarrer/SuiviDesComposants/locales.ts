@@ -2,6 +2,7 @@ export const locales = {
 	autocomplete: {
 		label: 'Rechercher un composant...',
 		placeholder: 'Sélectionner un ou plusieurs composants',
+		selectAll: 'Sélectionner tous',
 	},
 	filters: {
 		allFunctionalVersions: 'Toutes les versions fonctionnelles',

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, reactive, watch } from 'vue'
+	import { computed, reactive, watch, ref, onMounted, onUnmounted } from 'vue'
 	import SyAutocomplete from '@/components/Customs/Selects/SyAutocomplete/SyAutocomplete.vue'
 	import infoData from '../component-info.json'
 	import { locales } from './locales'
@@ -62,35 +62,60 @@
 
 	const results = (infoData.results ?? []) as ComponentInfo[]
 
-	const componentOptions = computed(() =>
-		results
+	const componentOptions = computed(() => {
+		const allOption = {
+			text: locales.autocomplete.selectAll,
+			value: '__ALL__',
+		}
+
+		const componentItems = results
 			.filter(item => filters.includeDeprecated || item.status === 'actif')
 			.map(item => ({
 				text: item.componentName.split('/').pop() || item.componentName,
 				value: item.componentName,
 			}))
-			.sort((a, b) => a.text.localeCompare(b.text)),
-	)
+			.sort((a, b) => a.text.localeCompare(b.text))
 
-	const versions = computed(() =>
-		[...new Set(results.map(r => r.functionalVersion).filter(Boolean) as string[])].sort(
-			(a, b) => b.localeCompare(a, undefined, { numeric: true }),
-		),
-	)
+		return [allOption, ...componentItems]
+	})
 
-	const a11yVersions = computed(() =>
-		[...new Set(results.map(r => r.a11yVersion).filter(Boolean) as string[])].sort(
+	// Handle select all / deselect all
+	watch(() => filters.selectedComponents, (newVal, oldVal) => {
+		// Check if "__ALL__" was just added
+		if (newVal.includes('__ALL__') && !oldVal?.includes('__ALL__')) {
+			// Select all available components
+			const availableComponents = results
+				.filter(item => filters.includeDeprecated || item.status === 'actif')
+				.map(item => item.componentName)
+			filters.selectedComponents = availableComponents
+		}
+	}, { deep: true })
+
+	const versions = computed(() => {
+		const filteredResults = filters.selectedComponents.length > 0
+			? results.filter(r => filters.selectedComponents.includes(r.componentName))
+			: results
+		return [...new Set(filteredResults.map(r => r.functionalVersion).filter(Boolean) as string[])].sort(
 			(a, b) => b.localeCompare(a, undefined, { numeric: true }),
-		),
-	)
+		)
+	})
+
+	const a11yVersions = computed(() => {
+		const filteredResults = filters.selectedComponents.length > 0
+			? results.filter(r => filters.selectedComponents.includes(r.componentName))
+			: results
+		return [...new Set(filteredResults.map(r => r.a11yVersion).filter(Boolean) as string[])].sort(
+			(a, b) => b.localeCompare(a, undefined, { numeric: true }),
+		)
+	})
 
 	const slug = (title: string) =>
 		title.toLowerCase().replace(/[\s/'’()&,.]+/g, '-').replace(/^-+|-+$/g, '')
 
 	const getUrl = (componentName: string, storybookTitle?: string) =>
 		storybookTitle
-			? `/docs/${slug(storybookTitle)}--docs`
-			: `/docs/composants-${componentName.toLowerCase().replace(/[^a-z0-9]/g, '')}--docs`
+			? `/?path=/docs/${slug(storybookTitle)}--docs`
+			: `/?path=/docs/composants-${componentName.toLowerCase().replace(/[^a-z0-9]/g, '')}--docs`
 
 	const REPO = 'https://github.com/assurance-maladie-digital/design-system-v3'
 
@@ -116,13 +141,7 @@
 	}
 
 	const filteredRows = computed(() => {
-		// Return empty array if no filters are applied
-		const hasActiveFilter
-			= filters.selectedComponents.length > 0
-				|| filters.versionFilter !== ''
-				|| filters.a11yVersionFilter !== ''
-
-		if (!hasActiveFilter) return []
+		if (!hasActiveFilter.value) return []
 
 		return results
 			.filter(
@@ -149,6 +168,47 @@
 		|| filters.versionFilter !== ''
 		|| filters.a11yVersionFilter !== '',
 	)
+
+	// Keyboard navigation for cards
+	const focusedCardIndex = ref<number>(-1)
+
+	const handleKeyDown = (event: KeyboardEvent) => {
+		if (filteredRows.value.length === 0) return
+
+		const cards = document.querySelectorAll('.ci-card')
+		if (cards.length === 0) return
+
+		switch (event.key) {
+		case 'ArrowRight':
+			event.preventDefault()
+			focusedCardIndex.value = Math.min(focusedCardIndex.value + 1, cards.length - 1)
+			cards[focusedCardIndex.value]?.querySelector('a')?.focus()
+			break
+		case 'ArrowLeft':
+			event.preventDefault()
+			focusedCardIndex.value = Math.max(focusedCardIndex.value - 1, 0)
+			cards[focusedCardIndex.value]?.querySelector('a')?.focus()
+			break
+		case 'Home':
+			event.preventDefault()
+			focusedCardIndex.value = 0
+			cards[0]?.querySelector('a')?.focus()
+			break
+		case 'End':
+			event.preventDefault()
+			focusedCardIndex.value = cards.length - 1
+			cards[cards.length - 1]?.querySelector('a')?.focus()
+			break
+		}
+	}
+
+	onMounted(() => {
+		document.addEventListener('keydown', handleKeyDown)
+	})
+
+	onUnmounted(() => {
+		document.removeEventListener('keydown', handleKeyDown)
+	})
 </script>
 
 <template>
@@ -267,6 +327,7 @@
 				<div class="ci-tabs">
 					<button
 						:aria-pressed="getCardTab(item.componentName) === 'functional'"
+						:aria-label="`${locales.tabs.functional} pour ${item.componentName.split('/').pop()}`"
 						:class="tabClass('functional', getCardTab(item.componentName))"
 						@click="setCardTab(item.componentName, 'functional')"
 					>
@@ -274,6 +335,7 @@
 					</button>
 					<button
 						:aria-pressed="getCardTab(item.componentName) === 'a11y'"
+						:aria-label="`${locales.tabs.a11y} pour ${item.componentName.split('/').pop()}`"
 						:class="tabClass('a11y', getCardTab(item.componentName))"
 						@click="setCardTab(item.componentName, 'a11y')"
 					>
@@ -390,6 +452,23 @@
 	.ci-select:focus {
 		border-color: #0c419a;
 		box-shadow: 0 0 0 2px rgb(12 65 154 / 15%);
+		outline: none;
+	}
+
+	.ci-switch input:focus + .ci-switch-slider {
+		box-shadow: 0 0 0 2px rgb(12 65 154 / 15%);
+		outline: none;
+	}
+
+	.ci-tab:focus {
+		outline: 2px solid #0c419a;
+		outline-offset: -2px;
+	}
+
+	.ci-card-name a:focus {
+		outline: 2px solid #0c419a;
+		outline-offset: 2px;
+		border-radius: 2px;
 	}
 
 	.ci-switch {
@@ -490,6 +569,22 @@
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
 		gap: 1rem;
+	}
+
+	@media (width <= 768px) {
+		.ci-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.ci-filters-row {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		.ci-filters-row .ci-select,
+		.ci-filters-row .ci-switch {
+			width: 100%;
+		}
 	}
 
 	.ci-card {
