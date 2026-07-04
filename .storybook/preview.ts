@@ -33,7 +33,7 @@ setup((app, { globals }) => {
 		// Wait for DOM to be ready
 		window.addEventListener('DOMContentLoaded', () => {
 			// Add click handler to document to help with dropdown positioning
-			document.addEventListener('click', (event) => {
+			document.addEventListener('click', () => {
 				// Check if we're in docs mode
 				if (document.body.classList.contains('storybook-docs-mode')) {
 					// Find all dropdowns and make sure they're properly positioned
@@ -89,9 +89,13 @@ const preview: Preview = {
 	globalTypes,
 	initialGlobals: {
 		theme: storedTheme || 'cnam',
-
 		backgrounds: {
 			value: 'main',
+		},
+		vueMdx: {
+			beforeVueAppMount: (app: { use: (plugin: unknown) => void }) => {
+				app.use(vuetify)
+			},
 		},
 	},
 	decorators: [
