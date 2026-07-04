@@ -153,13 +153,6 @@
 
 <template>
 	<div class="ci-container">
-		<div
-			v-if="filteredRows.length > 0"
-			class="ci-meta"
-		>
-			<strong>{{ filteredRows.length }}</strong> {{ filteredRows.length === 1 ? locales.meta.component : locales.meta.components }}
-		</div>
-
 		<div class="ci-filters">
 			<div class="ci-filters-row">
 				<SyAutocomplete
@@ -224,6 +217,13 @@
 					<span class="ci-switch-label">{{ locales.filters.includeDeprecated }}</span>
 				</label>
 			</div>
+		</div>
+
+		<div
+			v-if="filteredRows.length > 0"
+			class="ci-meta"
+		>
+			<strong>{{ filteredRows.length }}</strong> {{ filteredRows.length === 1 ? locales.meta.component : locales.meta.components }}
 		</div>
 
 		<div
@@ -341,6 +341,10 @@
 		margin-bottom: 1.25rem;
 	}
 
+	.ci-meta strong {
+		color: #0c419a;
+	}
+
 	.ci-filters {
 		display: flex;
 		flex-direction: column;
@@ -377,8 +381,6 @@
 		cursor: pointer;
 		outline: none;
 		box-sizing: border-box;
-		appearance: none;
-		appearance: none;
 		appearance: none;
 		background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23525252' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
 		background-repeat: no-repeat;
