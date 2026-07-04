@@ -519,10 +519,6 @@
 		transform: translateX(20px);
 	}
 
-	.ci-switch input:focus + .ci-switch-slider {
-		box-shadow: 0 0 0 2px rgb(12 65 154 / 15%);
-	}
-
 	.ci-switch input:disabled + .ci-switch-slider {
 		background-color: #e0e0e0;
 		opacity: 0.5;
