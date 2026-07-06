@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import PageContainer from './PageContainer.vue'
 import { VCard, VDivider } from 'vuetify/components'
 import HeaderBar from '../HeaderBar/HeaderBar.vue'

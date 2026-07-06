@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/blocks';
+import { Meta, Story } from '@storybook/addon-docs/blocks';
 import * as PasswordFieldStories from '../PasswordField.stories.ts';
 import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import {
@@ -29,11 +29,7 @@ import {
 			<ul>
 				<li>Les champs de formulaires doivent avoir une étiquette pertinente et accolée au champ associé.</li>
 				<li>Techniquement, il est recommandé d'utiliser la balise <code>label</code> avec les attributs <code>for</code> et <code>id</code>.</li>
-				<li>
-					<a href="https://www.accede-web.com/notices/html-et-css/formulaires/utiliser-la-balise-label-ainsi-que-les-attributs-for-et-id-pour-etiqueter-les-champs-avec-intitule-visible/" target="_blank" rel="noopener noreferrer">
-						Documentation accede-web
-					</a>
-				</li>
+				<li><a href="https://www.accede-web.com/notices/html-et-css/formulaires/utiliser-la-balise-label-ainsi-que-les-attributs-for-et-id-pour-etiqueter-les-champs-avec-intitule-visible/" target="_blank" rel="noopener noreferrer">Documentation accede-web</a></li>
 			</ul>
 		</CriteriaCard>
 
@@ -41,11 +37,7 @@ import {
 			<ul>
 				<li>Selon la finalité du champ, l'attribut <code>autocomplete</code> permet de faciliter le remplissage automatique.</li>
 				<li>PasswordField propose les valeurs <code>current-password</code> et <code>new-password</code>.</li>
-				<li>
-					<a href="https://www.accede-web.com/notices/html-et-css/formulaires/utiliser-lattribut-autocomplete-pour-faciliter-le-remplissage-automatique-des-champs/" target="_blank" rel="noopener noreferrer">
-						Documentation accede-web
-					</a>
-				</li>
+				<li><a href="https://www.accede-web.com/notices/html-et-css/formulaires/utiliser-lattribut-autocomplete-pour-faciliter-le-remplissage-automatique-des-champs/" target="_blank" rel="noopener noreferrer">Documentation accede-web</a></li>
 			</ul>
 		</CriteriaCard>
 
@@ -53,11 +45,7 @@ import {
 			<ul>
 				<li>En cas d'aide à la saisie, l'inscription doit être visible ou présente dans l'étiquette.</li>
 				<li>Elle doit être rattachée au libellé ou située dans le passage de texte associé au champ.</li>
-				<li>
-					<a href="https://www.accede-web.com/notices/html-et-css/formulaires/integrer-les-aides-a-la-saisie-directement-dans-les-balises-label/" target="_blank" rel="noopener noreferrer">
-						Documentation accede-web
-					</a>
-				</li>
+				<li><a href="https://www.accede-web.com/notices/html-et-css/formulaires/integrer-les-aides-a-la-saisie-directement-dans-les-balises-label/" target="_blank" rel="noopener noreferrer">Documentation accede-web</a></li>
 			</ul>
 		</CriteriaCard>
 
@@ -78,24 +66,24 @@ import {
 				<li>En cas d'erreur, un message visible permet de l'identifier et l'attribut <code>aria-invalid="true"</code> est présent.</li>
 				<li>S'il s'agit d'une erreur de type ou de format, l'information est retranscrite dans le message avec des exemples de valeurs attendues.</li>
 				<li>
-					<a href="https://www.accede-web.com/notices/html-et-css/formulaires/integrer-les-messages-derreur-et-les-suggestions-de-correction-directement-dans-les-balises-label/" target="_blank" rel="noopener noreferrer">
-						Documentation accede-web
-					</a>
+					<a href="https://www.accede-web.com/notices/html-et-css/formulaires/integrer-les-messages-derreur-et-les-suggestions-de-correction-directement-dans-les-balises-label/" target="_blank" rel="noopener noreferrer">Documentation accede-web</a>
 				</li>
 			</ul>
 		</CriteriaCard>
 
-		<CriteriaCard title="Spécificités des champs de mot de passe">
-			<ul>
-				<li>Le copier-coller doit être possible dans un champ d'authentification pour faciliter l'utilisation d'un gestionnaire de mot de passe.</li>
-				<li>Il faut pouvoir démasquer le mot de passe lors de la saisie pour améliorer la réussite de saisie.</li>
-				<li>
-					<a href="https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html" target="_blank" rel="noopener noreferrer">
-						Documentation W3C — Accessible Authentication
-					</a>
-				</li>
-			</ul>
-		</CriteriaCard>
+	<CriteriaCard title="Spécificités des champs de mot de passe">
+	<ul>
+		<li>Le copier-coller doit être possible dans un champ d'authentification pour faciliter l'utilisation d'un gestionnaire de mot de passe.</li>
+		<li>Il faut pouvoir démasquer le mot de passe lors de la saisie pour améliorer la réussite de saisie.</li>
+		<li>Le bouton permettant d'afficher ou de masquer le mot de passe est un bouton à bascule (toggle button).</li>
+		<li>Son état doit être indiqué avec l'attribut <code>aria-pressed</code> (<code>true</code> lorsque le mot de passe est affiché, <code>false</code> lorsqu'il est masqué).</li>
+		<li>Le libellé du bouton ne doit pas changer lorsque son état change. Seul l'état porté par <code>aria-pressed</code> évolue afin d'être correctement annoncé par les technologies d'assistance.</li>
+		<li><a href="https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html" target="_blank" rel="noopener noreferrer">Documentation W3C — Accessible Authentication</a></li>
+		<li>
+			<a href="https://www.w3.org/WAI/ARIA/apg/patterns/button/" target="_blank" rel="noopener noreferrer">Documentation W3C — Button Pattern (Toggle Button)</a>
+		</li>
+	</ul>
+</CriteriaCard>
 	</CriteriaSection>
 
 	<DemoSection componentName="PasswordField">
@@ -114,36 +102,12 @@ import {
 
 	<ResourcesSection>
 		<ul>
-			<li>
-				<a href="https://www.accede-web.com/notices/html-et-css/formulaires/utiliser-la-balise-label-ainsi-que-les-attributs-for-et-id-pour-etiqueter-les-champs-avec-intitule-visible/" target="_blank" rel="noopener noreferrer">
-					Accede Web — Étiqueter les champs
-				</a>
-			</li>
-			<li>
-				<a href="https://www.accede-web.com/notices/html-et-css/formulaires/utiliser-lattribut-autocomplete-pour-faciliter-le-remplissage-automatique-des-champs/" target="_blank" rel="noopener noreferrer">
-					Accede Web — Autocomplete
-				</a>
-			</li>
-			<li>
-				<a href="https://www.accede-web.com/notices/html-et-css/formulaires/integrer-les-aides-a-la-saisie-directement-dans-les-balises-label/" target="_blank" rel="noopener noreferrer">
-					Accede Web — Aides à la saisie
-				</a>
-			</li>
-			<li>
-				<a href="https://www.accede-web.com/notices/html-et-css/formulaires/integrer-required-ou-aria-requiredtrue-dans-les-champs-obligatoires/" target="_blank" rel="noopener noreferrer">
-					Accede Web — Champs obligatoires
-				</a>
-			</li>
-			<li>
-				<a href="https://www.accede-web.com/notices/html-et-css/formulaires/integrer-les-messages-derreur-et-les-suggestions-de-correction-directement-dans-les-balises-label/" target="_blank" rel="noopener noreferrer">
-					Accede Web — Messages d'erreur
-				</a>
-			</li>
-			<li>
-				<a href="https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html" target="_blank" rel="noopener noreferrer">
-					W3C — Accessible Authentication (WCAG 2.2)
-				</a>
-			</li>
+			<li><a href="https://www.accede-web.com/notices/html-et-css/formulaires/utiliser-la-balise-label-ainsi-que-les-attributs-for-et-id-pour-etiqueter-les-champs-avec-intitule-visible/" target="_blank" rel="noopener noreferrer">Accede Web — Étiqueter les champs</a></li>
+			<li><a href="https://www.accede-web.com/notices/html-et-css/formulaires/utiliser-lattribut-autocomplete-pour-faciliter-le-remplissage-automatique-des-champs/" target="_blank" rel="noopener noreferrer">Accede Web — Autocomplete</a></li>
+			<li><a href="https://www.accede-web.com/notices/html-et-css/formulaires/integrer-les-aides-a-la-saisie-directement-dans-les-balises-label/" target="_blank" rel="noopener noreferrer">Accede Web — Aides à la saisie</a></li>
+			<li><a href="https://www.accede-web.com/notices/html-et-css/formulaires/integrer-required-ou-aria-requiredtrue-dans-les-champs-obligatoires/" target="_blank" rel="noopener noreferrer">Accede Web — Champs obligatoires</a></li>
+			<li><a href="https://www.accede-web.com/notices/html-et-css/formulaires/integrer-les-messages-derreur-et-les-suggestions-de-correction-directement-dans-les-balises-label/" target="_blank" rel="noopener noreferrer">Accede Web — Messages d'erreur</a></li>
+			<li><a href="https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html" target="_blank" rel="noopener noreferrer">W3C — Accessible Authentication (WCAG 2.2)</a></li>
 		</ul>
 	</ResourcesSection>
 </AccessibilityGuideLayout>

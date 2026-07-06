@@ -1,5 +1,5 @@
 import { VCard, VCardText, VCardTitle, VRow, VCol, VIcon } from 'vuetify/components'
-import type { StoryObj } from '@storybook/vue3'
+import type { StoryObj } from '@storybook/vue3-vite'
 import { useTheme } from 'vuetify'
 
 export default {
@@ -144,7 +144,7 @@ export const ComponentsList: StoryObj = {
 						title: 'SocialMediaLinks',
 						description: 'Utilisé pour afficher des liens de réseaux sociaux dans le composant Footer.',
 						link: '/?path=/docs/composants-navigation-socialmedialinks--docs',
-						img: '/components/social-media-links.svg',
+						img: `/components/social-media-links${isAp ? '-ap' : ''}.svg`,
 						category: 'Navigation',
 					},
 					{
@@ -255,15 +255,15 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'SySelect',
 						description: 'Utilisé pour proposer une alternative au v-select de Vuetify qui ne respecte pas les règles d\'accessibilité RGAA. Il est basé sur un v-textfield.',
-						link: '/?path=/docs/composants-formulaires-syselect--docs',
+						link: '/?path=/docs/composants-formulaires-selects-syselect--docs',
 						img: `/components/sy-select${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
 						title: 'SyInputSelect',
 						description: 'Utilisé pour proposer une alternative au v-select de Vuetify qui ne respecte pas les règles RGAA.Il est basé sur un v-input.',
-						link: '/?path=/docs/composants-formulaires-syinputselect--docs',
-						img: '/components/sy-input-select.svg',
+						link: '/?path=/docs/composants-formulaires-selects-syinputselect--docs',
+						img: `/components/sy-input-select${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
 					{
@@ -346,7 +346,7 @@ export const ComponentsList: StoryObj = {
 					{
 						title: 'SelectBtnField',
 						description: 'Utilisé pour permettre à l’utilisateur de sélectionner une valeur dans une liste.',
-						link: '/?path=/docs/composants-formulaires-selectbtnfield--docs',
+						link: '/?path=/docs/composants-formulaires-selects-selectbtnfield--docs',
 						img: `/components/select-btn-field${isAp ? '-ap' : ''}.svg`,
 						category: 'Formulaires',
 					},
@@ -593,6 +593,8 @@ export const ComponentsList: StoryObj = {
 					'DataListGroup',
 					'DataList',
 					'SyBtnMenu',
+					'SocialMediaLinks',
+					'SyInputSelect',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

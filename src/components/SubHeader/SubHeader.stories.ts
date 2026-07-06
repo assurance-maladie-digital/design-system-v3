@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SubHeader from './SubHeader.vue'
 import { ref } from 'vue'
 import { mdiStepBackward, mdiClose, mdiContentCopy } from '@mdi/js'

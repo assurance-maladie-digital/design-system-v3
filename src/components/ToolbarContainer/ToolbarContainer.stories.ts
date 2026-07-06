@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import ToolbarContainer from './ToolbarContainer.vue'
 import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 import { VBtn, VBtnToggle, VCheckbox, VDivider } from 'vuetify/components'

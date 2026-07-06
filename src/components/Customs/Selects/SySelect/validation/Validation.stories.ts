@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SySelect from '../SySelect.vue'
 import SyForm from '../../../SyForm/SyForm.vue'
 import { computed, ref, onMounted } from 'vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 import { VBtn, VForm } from 'vuetify/components'
 
 const meta: Meta<typeof SySelect> = {

@@ -1,10 +1,10 @@
-﻿import type { Meta, StoryObj } from '@storybook/vue3'
-import type { CalendarModeProps } from '@/components/DatePicker/types'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { ref, onMounted } from 'vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
+import type { CalendarModeProps } from '../types'
 
 const meta = {
 	title: 'Composants/Formulaires/DatePicker/CombinedMode',

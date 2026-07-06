@@ -348,10 +348,10 @@
 }
 
 .v-btn {
-	color: rgb(var(--v-theme-blue-base));
+	color: rgb(var(--v-theme-primary));
 }
 
 .text-color {
-	color: rgb(var(--v-theme-blue-base));
+	color: rgb(var(--v-theme-primary));
 }
 </style>

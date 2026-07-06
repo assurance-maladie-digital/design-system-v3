@@ -1,6 +1,6 @@
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 import MonthPicker from './MonthPicker.vue'
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import type SyTextField from '../Customs/SyTextField/SyTextField.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 

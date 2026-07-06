@@ -1,4 +1,4 @@
-import { useCustomizableOptions } from '@/composables/useCustomizableOptions'
+import type useCustomizableOptions from '@/composables/useCustomizableOptions'
 
 export interface IndexedObject<Type = string> {
 	[key: string]: Type
@@ -10,7 +10,7 @@ export interface DataListItem {
 	action?: string
 	chip?: boolean
 	icon?: string
-	options?: useCustomizableOptions
+	options?: ReturnType<typeof useCustomizableOptions>
 	class?: string
 }
 

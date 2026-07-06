@@ -1,4 +1,4 @@
-import type { StoryObj } from '@storybook/vue3'
+import type { StoryObj } from '@storybook/vue3-vite'
 import { VTextField } from 'vuetify/components'
 import { isNotAfterToday, isNotAfterTodayFn } from './index'
 import { ref } from 'vue'

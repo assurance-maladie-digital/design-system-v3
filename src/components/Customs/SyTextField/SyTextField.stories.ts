@@ -1,10 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import { VIcon } from 'vuetify/components'
 import { ref, watch } from 'vue'
 import { mdiAccountBox } from '@mdi/js'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 import type { SyTextFieldProps } from './types'
 
 const meta = {

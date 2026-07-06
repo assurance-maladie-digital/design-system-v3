@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SyIcon from './SyIcon.vue'
 import SyIconAccessibility from './SyIconAccessibility.vue'
 import { mdiHome, mdiAlert, mdiStar, mdiDelete, mdiClose, mdiInformation } from '@mdi/js'

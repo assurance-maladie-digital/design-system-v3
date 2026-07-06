@@ -1,5 +1,5 @@
 import { VIcon } from 'vuetify/components'
-import type { StoryObj } from '@storybook/vue3'
+import type { StoryObj } from '@storybook/vue3-vite'
 import { mdiCheckboxMarkedCircle } from '@mdi/js'
 const checkIcon = mdiCheckboxMarkedCircle
 

@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import type { DatePickerRule } from '@/components/DatePicker/types'
 import { ref } from 'vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 
 // Define the props interface for DatePicker component
 interface DatePickerProps {

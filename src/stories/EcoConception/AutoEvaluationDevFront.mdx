@@ -1,0 +1,321 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import '@/stories/styles/shared.css';
+
+<Meta title="Éco-conception/Auto-évaluation Dev Front" />
+
+<style>
+{`
+
+/* Variables CSS basées sur les couleurs exactes du thème CNAM */
+    :root {
+      --primary-color: #0c419a; /* primary: cnamColorsTokens.blue.base */
+      --primary-light: #3d67ae; /* blue.lighten20 */
+      --secondary-color: #006386; /* secondary: cnamColorsTokens.cyan.darken40 */
+      --accent-color: #00a5df; /* accent: cnamColorsTokens.cyan.base */
+      --error-color: #b33f2e; /* error: cnamColorsTokens.orange.darken20 */
+      --info-color: #0c419a; /* info: cnamColorsTokens.blue.base */
+      --success-color: #004439; /* success: cnamColorsTokens.turquoise.darken60 */
+      --warning-color: #906b15; /* warning: cnamColorsTokens.yellow.darken60 */
+      --text-color: #020d1f; /* blue.darken80 */
+      --background-light: #f8f9fc; /* blue.lighten97 */
+      --card-shadow: 0 4px 12px rgba(12, 65, 154, 0.05);
+      --transition-speed: 0.3s;
+      --border-radius: 8px;
+    }
+
+
+.summary-box {
+  background: #E3E8F2;
+  border-left: 4px solid #0C419A;
+  padding: 1.5rem;
+  margin: 2rem 0;
+}
+
+.steps-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.steps-list li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.step-number {
+  background: #0C419A;
+  color: white;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.eco-page .step-title {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-top: 2rem;
+}
+
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 4px 10px;
+  min-height: 28px;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--primary-color) !important;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.download-btn:hover {
+  background: #F5F8FF;
+}
+
+.download-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.download-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.eco-page .eco-section-title {
+    color: var(--primary-color);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(12, 65, 154, 0.2);
+      font-weight: 700;
+}
+
+.eco-page ul {
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+}
+
+.eco-page li {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.eco-page li p {
+  margin: .4rem 0 0;
+}
+`}
+</style>
+
+<div className="eco-page">
+
+<div className="header">
+<h1 className="eco-title">Auto-évaluation Dev Front</h1>
+<p className="eco-subtitle">
+Cette démarche permet d’évaluer de façon automatique comment votre produit numérique respecte les bonnes pratiques d’écoconception essentielles au niveau de son développement Front.
+</p>
+</div>
+
+  
+<div className="summary-box">
+
+<h2 className="eco-section-title">En résumé</h2>
+
+<p>
+  L’auto-évaluation automatique se déroule en 4 étapes :
+</p>
+<ul className="steps-list">
+  <li><span className="step-number">1</span> Constituer l’échantillonage de votre test</li>
+  <li><span className="step-number">2</span> Télécharger l’outil GreenIT Analysis</li>
+  <li><span className="step-number">3</span> Lancer l’analyse GreenIT Analysis</li>
+  <li><span className="step-number">4</span> Reporter les résultats de l’analyse GreenIT Analysis dans le document d’auto-évaluation</li>
+</ul>
+
+</div>
+
+
+<h2 className="step-title"><span className="step-number">1</span> Constituer l’échantillonage de votre test</h2>
+
+<p>
+  Pour vous aider à lister les pages de l’échantillonnage, voici les questions à se poser par ordre de priorité :
+</p>
+
+<ul>
+  <li>
+    <strong>Quelles sont les pages concernées par des chantiers ou refontes à venir pour maximiser l’impact des préconisations techniques ?</strong>
+    <p>
+      Afin d’éviter une ré-écriture, il est important de commencer la démarche
+      d’éco-conception par les pages à développer ou à modifier.
+    </p>
+  </li>
+
+  <li>
+    <strong>Quelles sont les pages les plus consultées ?</strong>
+    <p>
+      Vous pouvez vous aider des statistiques d’audience pour sélectionner ces
+      pages (exemple : la page d’accueil, la page de connexion, la page de
+      contact).
+    </p>
+  </li>
+
+  <li>
+    <strong>Quels sont les parcours utilisateurs, les parcours fonctionnels
+      représentatifs des usages majeurs du site ou de l’application ? </strong>
+    <p>
+      Mappez au moins un parcours métier complet en ciblant les pages qui
+      structurent la navigation.
+    </p>
+  </li>
+</ul>
+
+
+<h2 className="step-title"><span className="step-number">2</span> Télécharger GreenIT Analysis</h2>
+
+<p>
+  <strong>GreenIT Analysis</strong> est un outil open-source conçu pour évaluer
+  l’impact environnemental des sites web et applications (consommation
+  énergétique, émissions de CO₂, etc.).
+  Il analyse les bonnes pratiques écoresponsables (poids des pages, requêtes
+  HTTP, optimisation du code) et propose des recommandations concrètes pour
+  réduire leur empreinte numérique.
+</p>
+
+<p>
+  L’extension permet :
+</p>
+
+<ul>
+  <li>de <strong>mesurer l'ecoIndex d'un site WEB</strong> tel que définit par le site web ecoindex  <a href="http://www.ecoindex.fr/quest-ce-que-ecoindex/" target="_blank" rel="noopener noreferrer">http://www.ecoindex.fr/quest-ce-que-ecoindex/</a></li>
+  <li>de <strong>vérifier la mise en application des bonnes pratiques d’éco-conception.</strong></li>
+</ul>
+
+<p>
+  <strong>
+    Pour télécharger GreenIT Analysis, deux options en fonction de votre
+    navigateur préféré :
+  </strong>
+</p>
+
+<div className="download-buttons">
+  <a
+    className="download-btn"
+    href="https://chromewebstore.google.com/detail/greenit-analysis/mofbfhffeklkbebfclfaiifefjflcpad?hl=fr"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <img
+      className="download-icon"
+      src="/logo_download.svg"
+      alt=""
+      aria-hidden="true"
+    />
+    <span>Sur Chrome Web Store</span>
+  </a>
+
+  <a
+    className="download-btn"
+    href="https://addons.mozilla.org/fr/firefox/addon/greenit-analysis/"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <img
+      className="download-icon"
+      src="/logo_download.svg"
+      alt=""
+      aria-hidden="true"
+    />
+    <span>Sur Add-ons Mozilla Firefox</span>
+  </a>
+</div>
+
+
+<h2 className="step-title"><span className="step-number">3</span> Lancer l’analyse GreenIT Analysis</h2>
+
+<p>
+  Une fois le plugin installé, le lancement se fait de la même manière sur
+  Chrome ou Firefox :
+</p>
+
+<ul>
+  <li>Ouvrir le navigateur et entrer l’URL de la page à analyser.</li>
+  <li>Cliquer droit puis sélectionner <strong>Inspecter</strong>.</li>
+  <li>Dans le menu horizontal, cliquer sur le logo <strong>GreenIT Analysis</strong>.</li>
+  <li>Cocher <strong>Activer l’analyse des bonnes pratiques</strong>.</li>
+  <li>Cliquer sur <strong>Lancer l’analyse</strong>.</li>
+</ul>
+
+<img
+  src="/outil-eco-conception.png"
+  alt="GreenIT Analysis"
+/>
+
+
+<h2 className="step-title"><span className="step-number">4</span>Reporter les résultats de l’analyse dans le document d’auto-évaluation</h2>
+
+<p>
+  Pour chacune des bonnes pratiques essentielles, nous avons associé l’audit
+  GreenIT à reporter dans la case <strong>« Conformité »</strong>.
+</p>
+
+<ul>
+  <li>
+    Si l’audit Green ou les deux audits Green IT est / sont réussi(s),
+    indiquer le résultat comme <strong>"Conforme"</strong>.
+  </li>
+
+  <li>
+    Si l’un des deux audits ou les deux audits est / sont un échec,
+    indiquer le résultat comme <strong>"Non Conforme"</strong>.
+  </li>
+
+  <li>
+    Si la bonne pratique n’est pas applicable à la page,
+    indiquer le résultat comme <strong>"Non applicable"</strong>.
+  </li>
+</ul>
+
+<img
+  src="/excel-eco-conception.png"
+  alt="Document d’auto-évaluation"
+/>
+
+<p>
+  Ce fichier d’auto-évaluation (au format Excel) vous permettra de recenser les
+  pages de votre échantillonnage et de reporter les résultats de l’analyse
+  GreenIT Analysis pour chacune des pages.
+</p>
+
+<a
+  className="download-btn"
+  href="/audit_ecoconception_dev_front.xlsx"
+  download
+>
+  <img
+    className="download-icon"
+    src="/logo_download.svg"
+    alt=""
+    aria-hidden="true"
+  />
+  <span>Télécharger le fichier d’auto-évaluation</span>
+</a>
+</div>
