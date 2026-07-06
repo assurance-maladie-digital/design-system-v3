@@ -7,7 +7,7 @@ import ap2026Theme from './Ap2026Theme'
 const channel = addons.getChannel()
 
 // Helper function to apply theme class to HTML root element
-const applyThemeClass = (theme) => {
+const applyThemeClass = (theme: string) => {
 	const rootElement = document.documentElement // Always exists
 	rootElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap', 'theme-ap2026')
 	rootElement.classList.add(`theme-${theme}`)
@@ -36,6 +36,7 @@ const hiddenIdsByTheme: Record<string, string[]> = {
 	ap: [
 		'composants-données-logo',
 		'composants-données-logobrandsection',
+		'guide-du-dev-migration-breaking-changes',
 	],
 	ap2026: [
 		'guide-du-dev',
