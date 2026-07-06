@@ -137,7 +137,7 @@ export const ComponentsList: StoryObj = {
 						title: 'ExternalLinks',
 						description: 'Utilisé pour afficher un menu avec une liste vers des liens externes.',
 						link: '/?path=/docs/composants-navigation-externallinks--docs',
-						img: '/components/external-links.svg',
+						img: `/components/external-links${isAp ? '-ap' : ''}.svg`,
 						category: 'Navigation',
 					},
 					{
@@ -595,6 +595,7 @@ export const ComponentsList: StoryObj = {
 					'SyBtnMenu',
 					'SocialMediaLinks',
 					'SyInputSelect',
+					'ExternalLinks',
 					'RatingPicker',
 				]
 

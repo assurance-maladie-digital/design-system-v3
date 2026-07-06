@@ -141,6 +141,11 @@ pre.prismjs {
 	transform: none !important;
 }
 
+.css-14qbhoz {
+	place-content: stretch !important;
+	place-items: stretch !important;
+}
+
 .sbdocs-preview {
 	/* Fix for dropdown positioning */
 	.docs-story .v-list,
