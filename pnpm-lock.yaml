@@ -5,8 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
-  esbuild: '>=0.28
-  .1'
+  esbuild: '>=0.28.1'
   undici: '>=6.27.0 <8'
   glob: '>=10.5.0'
   js-yaml: '>=4.1.1'
@@ -8339,15 +8338,7 @@ packages:
     resolution: {integrity: sha512-Fe1jyPJoUGpJOYKOri44jduR7My4yYINOMJISuMAbmrs+L5LbIDUc8NTWZYY3EJLK0yPLuCmcd5zoCsE4k2/KA==}
     dev: true
 
-<<<<<<< HEAD
   /vue-docgen-api@4.79.2(vue@3.5.38):
-=======
-  /vue-component-type-helpers@3.2.8:
-    resolution: {integrity: sha512-9689efAXhN/EV86plgkL/XFiJSXhGtWPG6JDboZ+QnjlUWUUQrQ0ILKQtw4iQsuwIwu5k6Aw+JnehDe7161e7A==}
-    dev: true
-
-  /vue-docgen-api@4.79.2(vue@3.5.33):
->>>>>>> b4a2d54a (premier jet)
     resolution: {integrity: sha512-n9ENAcs+40awPZMsas7STqjkZiVlIjxIKgiJr5rSohDP0/JCrD9VtlzNojafsA1MChm/hz2h3PDtUedx3lbgfA==}
     peerDependencies:
       vue: '>=2'
