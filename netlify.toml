@@ -1,6 +1,8 @@
 [build]
-  command = "pnpm build && pnpm run build-storybook"
+  command = "pnpm run build-storybook"
   publish = "storybook-static"
   
 [build.environment]
+  # Storybook 10 requiert Node 20.19+ / 22.12+ (Netlify build par défaut en Node 18).
+  NODE_VERSION = "20.19.0"
   NODE_OPTIONS = "--max-old-space-size=4096"

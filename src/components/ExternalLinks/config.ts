@@ -1,5 +1,3 @@
-import { cnamColorsTokens } from '@/designTokens/tokens/cnam/cnamColors'
-
 export const config = {
 	menu: {
 		zIndex: 4,
@@ -9,7 +7,7 @@ export const config = {
 		tile: true,
 		minHeight: '48px',
 		minWidth: '328px',
-		color: cnamColorsTokens.blue.base,
+		color: 'rgb(var(--v-theme-primary))',
 		class: 'd-flex px-3',
 	},
 	btnIcon: {
