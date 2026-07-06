@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from '@/components/Accordion/config'
-	import { mdiChevronDown } from '@mdi/js' // Changement d'icône
+	import { mdiChevronDown } from '@mdi/js'
 	// Importation des composables
 	import useAccordionState from './composables/useAccordionState'
 	import useAccordionGroupCommunication from './composables/useAccordionGroupCommunication'
