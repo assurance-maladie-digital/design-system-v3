@@ -162,4 +162,10 @@
 		color: rgb(var(--v-theme-primary), 0.4) !important;
 	}
 }
+
+.sy-stars-picker__item:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px rgb(var(--v-theme-primary));
+  border-radius: var(--radius-md);
+}
 </style>
