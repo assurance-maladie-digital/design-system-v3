@@ -67,6 +67,16 @@
         place-items: stretch !important;
     }
 
+    /* Firefox donne 150px de hauteur par défaut à une iframe sans hauteur explicite ;
+       combiné au centrage du wrapper, cela affichait le contenu au milieu avec une
+       scrollbar. On force l'iframe à remplir son conteneur. */
+    #storybook-preview-wrapper > iframe {
+        width: 100% !important;
+        height: 100% !important;
+        align-self: stretch !important;
+        justify-self: stretch !important;
+    }
+
     .sidebar-header img {
         display: block !important;
         width: auto;
