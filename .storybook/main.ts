@@ -7,12 +7,10 @@ const config: StorybookConfig = {
 	staticDirs: ['./public'],
 
 	addons: [
-        '@storybook/addon-links',
-        '@jls-digital/storybook-addon-code',
-        '@storybook/addon-queryparams',
-        // '@storybook/addon-a11y',
-        // '@storybook/addon-docs'
-    ],
+		'@storybook/addon-links',
+		'@jls-digital/storybook-addon-code',
+		'@storybook/addon-queryparams',
+	],
 	framework: {
 		name: '@storybook/vue3-vite',
 		options: {},
