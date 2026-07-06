@@ -8,6 +8,7 @@ const config: StorybookConfig = {
 
 	addons: [
 		'@storybook/addon-links',
+		'@storybook/addon-docs',
 		'@jls-digital/storybook-addon-code',
 		'@storybook/addon-queryparams',
 		'@storybook/addon-a11y',
@@ -21,6 +22,7 @@ const config: StorybookConfig = {
 	async viteFinal(baseConfig) {
 		return mergeConfig(baseConfig, {
 			optimizeDeps: {
+				include: ['@storybook/blocks'],
 			},
 		})
 	},
