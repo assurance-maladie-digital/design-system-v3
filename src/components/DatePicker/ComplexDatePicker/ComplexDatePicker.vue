@@ -941,6 +941,9 @@
 	 * Today button + labels
 	 */
 	const { todayInString, selectToday, headerDate } = useTodayButton(props)
+	const todayButtonLabel = computed(() => {
+		return locales.selectTodayCapitalized(todayInString.value?.trim())
+	})
 
 	// Inlined from useAsteriskDisplay
 	const isShouldDisplayAsterisk = computed(() => props.displayAsterisk && props.required)
@@ -1158,7 +1161,8 @@
 									v-if="props.displayTodayButton"
 									size="x-small"
 									color="primary"
-									:title="locales.buttonToday"
+									:title="todayButtonLabel"
+									:aria-label="todayButtonLabel"
 									class="date-picker__today-button my-2 pa-2 mt-2"
 									:ripple="false"
 									@click="handleSelectToday"
