@@ -183,6 +183,32 @@ $list-max-height: 248px;
 	border-radius: 0 !important;
 	box-shadow: none !important;
 
+	// Désactive complètement l'overlay Vuetify pour tous les états
+	:deep(.v-btn__overlay) {
+		background-color: transparent !important;
+		opacity: 0 !important;
+		display: none !important;
+	}
+
+	&:focus-visible {
+		outline: 0;
+
+		&::after {
+			opacity: 1;
+			background-color: transparent !important;
+			border: 2px solid rgb(var(--v-theme-primary));
+		}
+	}
+
+	// Force la couleur blanche du texte dans tous les états
+	&:hover,
+	&:active,
+	&:focus {
+		.sy-external-links-btn-text {
+			color: rgb(var(--v-theme-onPrimary)) !important;
+		}
+	}
+
 	:deep(.v-btn__content) {
 		flex-direction: inherit;
 		justify-content: space-between;
@@ -219,18 +245,24 @@ $list-max-height: 248px;
 		0 3px 14px 2px var(--v-shadow-key-ambient-opacity, rgb(0 0 0 / 12%));
 }
 
+.sy-external-links-btn-text {
+	color: rgb(var(--v-theme-onPrimary)) !important;
+}
+
 .sy-external-links-list-item {
 	padding-block: 4px !important;
 	height: 48px !important;
 	border-radius: 0 !important;
 
+	// Désactive l'overlay pour les items de liste aussi
+	:deep(.v-btn__overlay) {
+		background-color: transparent !important;
+		opacity: 0 !important;
+		display: none !important;
+	}
+
 	&:focus-visible {
 		outline: 0;
-
-		:deep(.v-btn__overlay) {
-			background-color: transparent !important;
-			display: none !important;
-		}
 
 		&::after {
 			opacity: 1;
