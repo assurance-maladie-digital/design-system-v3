@@ -49,7 +49,7 @@ export default defineConfig({
 		},
 		chunkSizeWarningLimit: 4000,
 		rollupOptions: {
-			external: ['vue', /^vuetify/],
+			external: ['vue', 'vue-router', /^vuetify/],
 			output: {
 				globals: {
 					vue: 'Vue',
@@ -61,6 +61,13 @@ export default defineConfig({
 	esbuild: {
 		supported: {
 			destructuring: true,
+		},
+	},
+	optimizeDeps: {
+		esbuildOptions: {
+			supported: {
+				destructuring: true,
+			},
 		},
 	},
 	css: {
