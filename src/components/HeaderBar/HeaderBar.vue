@@ -19,7 +19,6 @@
 		serviceTitle?: string
 		serviceSubtitle?: string
 		homeLink?: {
-			ariaLabel?: string
 			to?: RouteLocationRaw
 			href?: string
 		}
@@ -193,22 +192,21 @@
 							:heading-level-title="headingLevelTitle"
 						>
 							<HeaderLogo
-								:aria-label="homeAriaLabel"
 								:service-title="serviceTitle"
 								:service-subtitle="serviceSubtitle"
+								:logo-alt="homeAriaLabel"
 								:heading-level-title="headingLevelTitle"
-								:home-link
 							>
 								<template
 									#brand-content
 								>
 									<slot
 										name="logo-brand-content"
-										:menu-open
-										:home-aria-label
-										:service-title
-										:service-subtitle
-										:home-link
+										:menu-open="menuOpen"
+										:home-aria-label="homeAriaLabel"
+										:service-title="serviceTitle"
+										:service-subtitle="serviceSubtitle"
+										:home-link="homeLink"
 										:heading-level-title="headingLevelTitle"
 									/>
 								</template>

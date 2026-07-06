@@ -7,17 +7,18 @@
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 	import { headerBreakpoint } from '../consts'
 
-	const props = withDefaults(defineProps<{
-		ariaLabel: string
+	type PropsType = {
+		logoAlt: string
 		serviceTitle?: string
 		serviceSubtitle?: string
 		homeLink?: {
-			ariaLabel?: string
 			to?: RouteLocationRaw
 			href?: string
 		}
 		headingLevelTitle?: 1 | 2 | 3 | 4 | 5 | 6
-	}>(), {
+	}
+
+	const props = withDefaults(defineProps<PropsType>(), {
 		serviceTitle: undefined,
 		serviceSubtitle: undefined,
 		homeLink: () => ({
@@ -56,7 +57,6 @@
 		v-bind="{
 			to: 'to' in homeLink ? homeLink?.to : undefined,
 			href: 'href' in homeLink ? homeLink?.href : undefined,
-			'aria-label': 'aria-label' in homeLink ? homeLink?.['aria-label'] : undefined,
 		}"
 		class="logo"
 	>
@@ -69,7 +69,7 @@
 			<img
 				class="logo-image"
 				:src="logoMobileUrl"
-				:alt="props.ariaLabel"
+				:alt="props.logoAlt"
 			>
 		</picture>
 

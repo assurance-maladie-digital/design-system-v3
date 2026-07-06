@@ -48,6 +48,7 @@ describe('HeaderLogo', () => {
 	it('sould display the service and the logo aria-label', async () => {
 		const wrapper = mount(HeaderLogo, {
 			props: {
+				logoAlt: 'Test aria label',
 				headingLevelTitle: 2,
 				ariaLabel: 'Test aria label',
 				serviceTitle: 'Test service title',
@@ -67,6 +68,7 @@ describe('HeaderLogo', () => {
 			props: {
 				headingLevelTitle: 2,
 				ariaLabel: 'Test aria label',
+				logoAlt: 'Test aria label',
 				serviceTitle: 'Test service title',
 			},
 			slots: {
@@ -86,6 +88,7 @@ describe('HeaderLogo', () => {
 				stubs: ['RouterLink'] },
 			props: {
 				ariaLabel: 'Test aria label',
+				logoAlt: 'Test aria label',
 				headingLevelTitle: 2,
 				homeLink: {
 					to: '/',
@@ -101,6 +104,7 @@ describe('HeaderLogo', () => {
 		const wrapper = mount(HeaderLogo, {
 			props: {
 				ariaLabel: 'Test aria label',
+				logoAlt: 'Test aria label',
 				headingLevelTitle: 2,
 				homeLink: {
 					to: '/',
@@ -115,6 +119,7 @@ describe('HeaderLogo', () => {
 		const wrapper = mount(HeaderLogo, {
 			props: {
 				ariaLabel: 'Test aria label',
+				logoAlt: 'Test aria label',
 				headingLevelTitle: 2,
 				homeLink: {
 					to: undefined,
