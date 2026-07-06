@@ -2,14 +2,13 @@
 	import { computed, getCurrentInstance } from 'vue'
 	import type { RouteLocationRaw } from 'vue-router'
 	import { useTheme } from 'vuetify'
-	import { locales } from './locales'
 	import logoDesktopUrl from '@/assets/logos/logo-desktop.svg'
 	import logoMobileUrl from '@/assets/logos/logo-mobile.svg'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 	import { headerBreakpoint } from '../consts'
 
 	const props = withDefaults(defineProps<{
-		ariaLabel?: string
+		ariaLabel: string
 		serviceTitle?: string
 		serviceSubtitle?: string
 		homeLink?: {
@@ -19,7 +18,6 @@
 		}
 		headingLevelTitle?: 1 | 2 | 3 | 4 | 5 | 6
 	}>(), {
-		ariaLabel: locales.ariaLabel,
 		serviceTitle: undefined,
 		serviceSubtitle: undefined,
 		homeLink: () => ({
