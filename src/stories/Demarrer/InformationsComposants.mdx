@@ -1,10 +1,9 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Meta, Story } from '@storybook/addon-docs/blocks';
 import infoData from './component-info.json';
 import '../styles/shared.css';
-import { useState } from 'react';
-import ComponentTrackingPage from './SuiviDesComposants/ComponentTrackingPage.vue';
+import * as InformationsComposantsStories from './InformationsComposants.stories';
 
-<Meta title="Démarrer/Suivi des composants" />
+<Meta of={InformationsComposantsStories} />
 
 <div className="header">
   <h1>Suivi des composants</h1>
@@ -14,4 +13,4 @@ import ComponentTrackingPage from './SuiviDesComposants/ComponentTrackingPage.vu
   </div>
 </div>
 
-<ComponentTrackingPage />
+<Story of={InformationsComposantsStories.ComponentTracking} />
