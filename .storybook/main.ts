@@ -20,11 +20,13 @@ const config: StorybookConfig = {
 
 	async viteFinal(baseConfig) {
 		return mergeConfig(baseConfig, {
+			build: {
+				sourcemap: false,
+			},
 			optimizeDeps: {
-				include: ['@storybook/addon-docs/blocks'],
+				include: ['vue', '@storybook/addon-docs/blocks'],
 			},
 		})
 	},
 }
-
 export default config
