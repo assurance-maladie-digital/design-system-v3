@@ -2,7 +2,8 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { useDatePickerAccessibility } from '../useDatePickerAccessibility'
 import { mount } from '@vue/test-utils'
 // Créer un composant vide pour servir de contexte à l'exécution des hooks
-import { defineComponent } from 'vue'
+import { defineComponent, ref, nextTick } from 'vue'
+import { useMonthButtonCustomization } from '../../../components/DatePicker/composables/useMonthButtonCustomization'
 
 // Composant vide qui servira de contexte pour les hooks Vue
 const TestComponent = defineComponent({
@@ -328,6 +329,108 @@ describe('useDatePickerAccessibility', () => {
 
 			// Vérifier que la fonction ne génère pas d'erreur
 			expect(() => handleKeyDown(enterEvent)).not.toThrow()
+		})
+	})
+
+	describe('RGAA 12.6 - aria-label reprend le texte visible', () => {
+		it('vérifie que l\'aria-label du bouton du mois contient le texte visible', async () => {
+			document.body.innerHTML = `
+				<div class="v-date-picker-controls">
+					<button class="v-date-picker-controls__month-btn">janv.</button>
+					<button class="v-date-picker-controls__mode-btn">2025</button>
+				</div>
+			`
+
+			const { customizeMonthButton } = useMonthButtonCustomization(
+				() => true,
+				ref('janvier'),
+				ref('2025'),
+			)
+
+			await customizeMonthButton()
+			await nextTick()
+
+			const monthBtn = document.querySelector('.v-date-picker-controls__month-btn')!
+			const ariaLabel = monthBtn.getAttribute('aria-label')
+			const visibleText = monthBtn.textContent
+
+			// Vérifier que l'aria-label contient le texte visible (janv.)
+			expect(ariaLabel).toContain('janv.')
+			expect(visibleText).toContain('janv.')
+		})
+
+		it('vérifie que l\'aria-label du bouton de l\'année contient le texte visible', async () => {
+			document.body.innerHTML = `
+				<div class="v-date-picker-controls">
+					<button class="v-date-picker-controls__month-btn">janv.</button>
+					<button class="v-date-picker-controls__mode-btn">2025</button>
+				</div>
+			`
+
+			const { customizeMonthButton } = useMonthButtonCustomization(
+				() => true,
+				ref('janvier'),
+				ref('2025'),
+			)
+
+			await customizeMonthButton()
+			await nextTick()
+
+			const yearBtn = document.querySelector('.v-date-picker-controls__mode-btn')!
+			const ariaLabel = yearBtn.getAttribute('aria-label')
+			const visibleText = yearBtn.textContent
+
+			// Vérifier que l'aria-label contient le texte visible (2025)
+			expect(ariaLabel).toContain('2025')
+			expect(visibleText).toContain('2025')
+		})
+
+		it('vérifie que l\'aria-label du bouton du mois contient le mois sélectionné par défaut', async () => {
+			document.body.innerHTML = `
+				<div class="v-date-picker-controls">
+					<button class="v-date-picker-controls__month-btn">déc.</button>
+					<button class="v-date-picker-controls__mode-btn">2030</button>
+				</div>
+			`
+
+			const { customizeMonthButton } = useMonthButtonCustomization(
+				() => true,
+				ref('décembre'),
+				ref('2030'),
+			)
+
+			await customizeMonthButton()
+			await nextTick()
+
+			const monthBtn = document.querySelector('.v-date-picker-controls__month-btn')!
+			const ariaLabel = monthBtn.getAttribute('aria-label')
+
+			// Vérifier que l'aria-label contient "décembre sélectionné par défaut"
+			expect(ariaLabel).toContain('décembre sélectionné par défaut')
+		})
+
+		it('vérifie que l\'aria-label du bouton de l\'année contient l\'année sélectionnée par défaut', async () => {
+			document.body.innerHTML = `
+				<div class="v-date-picker-controls">
+					<button class="v-date-picker-controls__month-btn">janv.</button>
+					<button class="v-date-picker-controls__mode-btn">2030</button>
+				</div>
+			`
+
+			const { customizeMonthButton } = useMonthButtonCustomization(
+				() => true,
+				ref('janvier'),
+				ref('2030'),
+			)
+
+			await customizeMonthButton()
+			await nextTick()
+
+			const yearBtn = document.querySelector('.v-date-picker-controls__mode-btn')!
+			const ariaLabel = yearBtn.getAttribute('aria-label')
+
+			// Vérifier que l'aria-label contient "2030 sélectionné par défaut"
+			expect(ariaLabel).toContain('2030 sélectionné par défaut')
 		})
 	})
 })

@@ -99,13 +99,13 @@ describe('useMonthButtonCustomization', () => {
 		expect(monthBtn.innerHTML).toContain('<svg') // icône ajoutée
 		expect(monthBtn.textContent).toContain('janv.') // mois transformé
 		expect(exposed.monthButtonText.value).toBe('janvier 2023')
-		expect(monthBtn.getAttribute('aria-label')).toBe('Sélectionner le mois de janvier 2023')
-		expect(monthBtn.getAttribute('title')).toBe('Sélectionner le mois de janvier 2023')
+		expect(monthBtn.getAttribute('aria-label')).toBe('Sélectionner un mois (janvier sélectionné par défaut) - janv.')
+		expect(monthBtn.getAttribute('title')).toBe('Sélectionner un mois (janvier sélectionné par défaut) - janv.')
 
 		expect(yearBtn.innerHTML).toContain('2023')
 		expect(yearBtn.innerHTML).toContain('<svg')
-		expect(yearBtn.getAttribute('aria-label')).toBe(`Sélectionner l'année 2023`)
-		expect(yearBtn.getAttribute('title')).toBe(`Sélectionner l'année 2023`)
+		expect(yearBtn.getAttribute('aria-label')).toBe(`Sélectionner une année (2023 sélectionné par défaut)`)
+		expect(yearBtn.getAttribute('title')).toBe(`Sélectionner une année (2023 sélectionné par défaut)`)
 	})
 
 	it('utilise monthName et yearName si fournis', async () => {
@@ -120,9 +120,9 @@ describe('useMonthButtonCustomization', () => {
 		const yearBtn = document.querySelector('.v-date-picker-controls__mode-btn')!
 
 		expect(monthBtn.textContent).toContain('mars')
-		expect(monthBtn.getAttribute('aria-label')).toBe('Sélectionner le mois de mars 2030')
+		expect(monthBtn.getAttribute('aria-label')).toBe('Sélectionner un mois (mars sélectionné par défaut) - mars')
 		expect(yearBtn.textContent).toContain('2030')
-		expect(yearBtn.getAttribute('aria-label')).toBe(`Sélectionner l'année 2030`)
+		expect(yearBtn.getAttribute('aria-label')).toBe(`Sélectionner une année (2030 sélectionné par défaut)`)
 	})
 
 	it('observe les changements du DOM et personnalise automatiquement', async () => {

@@ -31,14 +31,18 @@ export function useMonthButtonCustomization(
 		const monthLabel = normalizeMonthLabel(rawMonth, displayMonth)
 		if (!monthLabel) return locales.selectMonth()
 		const cleanYear = (year ?? '').trim()
-		return cleanYear
-			? locales.selectMonthWithYear(monthLabel, cleanYear)
-			: locales.openMonthSelector
+		if (cleanYear) {
+			return `${locales.selectMonth()} (${monthLabel} ${locales.selectedByDefault}) - ${displayMonth}`
+		}
+		return locales.openMonthSelector
 	}
 
 	const buildYearAriaLabel = (year: string | null | undefined): string => {
 		const cleanYear = (year ?? '').trim()
-		return cleanYear ? locales.selectYearForDisplay(cleanYear) : locales.selectYear()
+		if (cleanYear) {
+			return `${locales.selectYear()} (${cleanYear} ${locales.selectedByDefault})`
+		}
+		return locales.selectYear()
 	}
 
 	onBeforeUnmount(() => {

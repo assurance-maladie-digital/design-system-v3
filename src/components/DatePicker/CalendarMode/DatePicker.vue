@@ -54,7 +54,7 @@
 	const displayWeekendDays = computed(() => props.displayWeekendDays ?? true)
 	const { todayInString, headerDate } = useTodayButton(props)
 	const todayButtonLabel = computed(() => {
-		return locales.buttonTodayAriaLabel(todayInString.value?.trim())
+		return locales.selectTodayCapitalized(todayInString.value?.trim())
 	})
 
 	// Inlined from useAsteriskDisplay
