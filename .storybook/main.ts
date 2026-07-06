@@ -7,13 +7,12 @@ const config: StorybookConfig = {
 	staticDirs: ['./public'],
 
 	addons: [
-		'@storybook/addon-links',
-		'@storybook/addon-docs',
-		'@jls-digital/storybook-addon-code',
-		'@storybook/addon-queryparams',
-		'@storybook/addon-a11y',
-	],
-
+        '@storybook/addon-links',
+        '@jls-digital/storybook-addon-code',
+        '@storybook/addon-queryparams',
+        '@storybook/addon-a11y',
+        '@storybook/addon-docs'
+    ],
 	framework: {
 		name: '@storybook/vue3-vite',
 		options: {},
@@ -22,7 +21,7 @@ const config: StorybookConfig = {
 	async viteFinal(baseConfig) {
 		return mergeConfig(baseConfig, {
 			optimizeDeps: {
-				include: ['@storybook/blocks'],
+				include: ['@storybook/addon-docs/blocks'],
 			},
 		})
 	},
