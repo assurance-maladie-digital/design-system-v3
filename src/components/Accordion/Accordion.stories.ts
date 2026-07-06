@@ -135,20 +135,11 @@ export const IconPosition: Story = {
 				language: 'vue',
 				name: 'Template',
 				code: `<template>
-  <!-- Icône à gauche (par défaut) -->
-  <Accordion
-    :items="[
-      { id: 'item1', title: 'Section 1', content: 'Contenu de la section 1' },
-      { id: 'item2', title: 'Section 2', content: 'Contenu de la section 2' }
-    ]"
-    icon-position="left"
-  />
-
   <!-- Icône à droite -->
   <Accordion
     :items="[
-      { id: 'item3', title: 'Section 3', content: 'Contenu de la section 3' },
-      { id: 'item4', title: 'Section 4', content: 'Contenu de la section 4' }
+      { id: 'right-item1', title: 'Section 1', content: 'Contenu de la section 1' },
+      { id: 'right-item2', title: 'Section 2', content: 'Contenu de la section 2' }
     ]"
     icon-position="right"
   />
@@ -163,24 +154,22 @@ export const IconPosition: Story = {
 	render: args => ({
 		components: { Accordion },
 		setup() {
-			return { args }
+			const rightItems = [
+				{ id: 'iconpos-story-right-1', title: 'Section 1', content: 'Contenu de la section 1' },
+				{ id: 'iconpos-story-right-2', title: 'Section 2', content: 'Contenu de la section 2' },
+			]
+
+			return { args, rightItems }
 		},
 		template: `
-            <div class="pa-4">
-                <h3>Icône à gauche (par défaut)</h3>
-                <p class="mb-4">L'icône de flèche est positionnée à gauche du titre</p>
-                <Accordion 
-                    v-bind="args" 
-                    icon-position="left"
-                    groupId="icon-position-story"
-                />
-                
+            <div class="pa-4"> 
                 <h3 class="mt-8">Icône à droite</h3>
                 <p class="mb-4">L'icône de flèche est positionnée à droite du titre</p>
                 <Accordion 
-                    v-bind="args" 
+                    v-bind="args"
+                    :items="rightItems"
                     icon-position="right"
-                    groupId="icon-position-story"
+                    groupId="icon-position-right"
                 />
             </div>
         `,
@@ -194,21 +183,12 @@ export const CompactMode: Story = {
 				language: 'vue',
 				name: 'Template',
 				code: `<template>
-  <!-- Mode normal avec espacement -->
-  <Accordion
-    :items="[
-      { id: 'item1', title: 'Section 1', content: 'Contenu de la section 1' },
-      { id: 'item2', title: 'Section 2', content: 'Contenu de la section 2' },
-      { id: 'item3', title: 'Section 3', content: 'Contenu de la section 3' }
-    ]"
-  />
-
   <!-- Mode compact sans espacement -->
   <Accordion
     :items="[
-      { id: 'item4', title: 'Section 1', content: 'Contenu de la section 1' },
-      { id: 'item5', title: 'Section 2', content: 'Contenu de la section 2' },
-      { id: 'item6', title: 'Section 3', content: 'Contenu de la section 3' }
+      { id: 'compact-item1', title: 'Section 1', content: 'Contenu de la section 1' },
+      { id: 'compact-item2', title: 'Section 2', content: 'Contenu de la section 2' },
+      { id: 'compact-item3', title: 'Section 3', content: 'Contenu de la section 3' }
     ]"
     compact
   />
@@ -223,24 +203,24 @@ export const CompactMode: Story = {
 	render: args => ({
 		components: { Accordion },
 		setup() {
-			return { args }
+			// Créer des items avec des IDs uniques pour cette story
+			const compactItems = [
+				{ id: 'compact-story-compact-1', title: 'Section 1', content: 'Contenu de la section 1' },
+				{ id: 'compact-story-compact-2', title: 'Section 2', content: 'Contenu de la section 2' },
+				{ id: 'compact-story-compact-3', title: 'Section 3', content: 'Contenu de la section 3' },
+			]
+
+			return { args, compactItems }
 		},
 		template: `
             <div class="pa-4">
-                <h3>Mode normal (avec espacement)</h3>
-                <p class="mb-4">Les éléments de l'accordéon ont un espacement de 8px entre eux</p>
-                <Accordion 
-                    v-bind="args" 
-                    :compact="false"
-                    groupId="compact-mode-story"
-                />
-                
-                <h3 class="mt-8">Mode compact (sans espacement)</h3>
+                <h3>Mode compact (sans espacement)</h3>
                 <p class="mb-4">Les éléments sont collés les uns aux autres pour un rendu plus intégré</p>
                 <Accordion 
                     v-bind="args" 
+                    :items="compactItems"
                     compact
-                    groupId="compact-mode-story"
+                    groupId="compact-mode-compact"
                 />
             </div>
         `,
