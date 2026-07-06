@@ -25,7 +25,7 @@ if (typeof window !== 'undefined') {
 	})
 }
 
-setup((app, { globals }) => {
+setup((app, context) => {
 	app.use(vuetify)
 
 	// Add global mixin to help with SySelect dropdown in docs mode
@@ -53,8 +53,9 @@ setup((app, { globals }) => {
 	app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
 
 	// Apply theme immediately on load
-	if (typeof window !== 'undefined') {
-		applyTheme(globals.theme)
+	if (typeof window !== 'undefined' && context?.globals) {
+		const theme = (context.globals as { theme?: string }).theme
+		if (theme) applyTheme(theme)
 	}
 })
 
@@ -75,7 +76,6 @@ const globalTypes = {
 		defaultValue: 'cnam',
 		toolbar: {
 			title: 'Thèmes',
-			icon: 'paintbrush',
 			items: themeItems,
 			dynamicTitle: true,
 		},

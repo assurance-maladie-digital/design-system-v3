@@ -7,8 +7,8 @@ export default create({
 	brandImage: '/logos/logo-assurance-maladie.svg',
 	brandTarget: '_self',
 
-    primary: '#0C419A',
-    secondary: '#07275C',
+	colorPrimary: '#0C419A',
+	colorSecondary: '#07275C',
 
 	// UI
 	appBg: '#FFFFFF',
@@ -33,4 +33,4 @@ export default create({
 
 	// Links colors
 	textMutedColor: '#0C419A',
-})
+}) as any

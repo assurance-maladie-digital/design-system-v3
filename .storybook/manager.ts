@@ -580,9 +580,9 @@ const handleThemeChange = (newTheme) => {
 if (typeof window !== 'undefined') {
 	// Override the localStorage.setItem method to detect changes in the current tab
 	const originalSetItem = localStorage.setItem
-	localStorage.setItem = function (key, value) {
+	localStorage.setItem = function (key: string, value: string) {
 		// Call the original method
-		originalSetItem.apply(this, arguments)
+		originalSetItem.call(this, key, value)
 
 		// If the theme is being changed, handle it
 		if (key === 'storybook-theme') {
