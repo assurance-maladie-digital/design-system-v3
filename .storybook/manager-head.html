@@ -56,15 +56,23 @@
     }
 
     /*
-     * Storybook 10 : le conteneur de l'iframe (#storybook-preview-wrapper) est une
-     * grille en place-content/place-items: center. Ce centrage décale le contenu
-     * vers le milieu et provoque une scrollbar (visible notamment sur Firefox).
-     * On force le remplissage sans centrage : l'iframe occupe tout l'espace, alignée
-     * en haut à gauche.
+     * Storybook 10 centre la preview via une grille (place-content/place-items: center)
+     * sur « CanvasWrap » : un <div> enfant DIRECT du <main> de preview, sans id, avec
+     * une classe emotion hashée (ex. css-14qbhoz) qui change à chaque build. On le cible
+     * par sa position structurelle (enfant direct du <main>) — stable et sans :has. Le
+     * #storybook-preview-wrapper (id stable) est ajouté par sécurité.
      */
+    main > div,
     #storybook-preview-wrapper {
         place-content: stretch !important;
         place-items: stretch !important;
+    }
+
+    /* Firefox donne 150px de hauteur par défaut à une iframe sans hauteur explicite :
+       on la force à remplir son conteneur. */
+    #storybook-preview-iframe {
+        width: 100% !important;
+        height: 100% !important;
     }
 
     .sidebar-header img {
