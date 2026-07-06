@@ -1,5 +1,5 @@
 {
-  "date": "2026-06-26T08:55:25.701Z",
+  "date": "2026-07-06T13:22:38.123Z",
   "results": [
     {
       "componentName": "UserMenuBtn",
@@ -326,7 +326,7 @@
     {
       "componentName": "RatingPicker",
       "hasPropsDocumentation": true,
-      "propsDocumentationLabel": "8/8 documentés",
+      "propsDocumentationLabel": "9/9 documentés",
       "hasSourceTab": true,
       "requiredStoriesStatus": "Non concerné",
       "hasUxUsagePage": false,
@@ -1150,6 +1150,29 @@
       "hasCypressTest": true,
       "storybookId": "composants-formulaires-diacriticpicker--docs",
       "category": "Formulaires"
+    },
+    {
+      "componentName": "DeclarationAccessibilityPage",
+      "hasPropsDocumentation": true,
+      "propsDocumentationLabel": "23/23 documentés",
+      "hasSourceTab": false,
+      "requiredStoriesStatus": "Non concerné",
+      "hasUxUsagePage": false,
+      "themeStatus": "Non concerné",
+      "hasAp2026Theme": false,
+      "themeModeStatus": "PA",
+      "hasInteractivePlayground": true,
+      "criticality": "Onglet source code incomplet | Page usages UX absente",
+      "isFullyCompliant": false,
+      "storybookTitle": "Templates/DeclarationAccessibilityPage",
+      "hasUnitTest": true,
+      "functionalVersion": "1.0.21",
+      "functionalDate": "25/02/2026",
+      "hasA11yTest": true,
+      "figmaUrl": "https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1",
+      "hasCypressTest": true,
+      "storybookId": "templates-declarationaccessibilitypage--docs",
+      "category": "Autres"
     },
     {
       "componentName": "ComplexDatePicker",
@@ -3200,8 +3223,8 @@
     },
     {
       "componentName": "Accordion",
-      "hasPropsDocumentation": false,
-      "propsDocumentationLabel": "0/0 documentés",
+      "hasPropsDocumentation": true,
+      "propsDocumentationLabel": "6/6 documentés",
       "hasSourceTab": true,
       "requiredStoriesStatus": "Non concerné",
       "hasUxUsagePage": false,
@@ -3209,7 +3232,7 @@
       "hasAp2026Theme": false,
       "themeModeStatus": "AmeliPro",
       "hasInteractivePlayground": true,
-      "criticality": "Props / slots non documentés | Page usages UX absente",
+      "criticality": "Page usages UX absente",
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Données/Accordion",
       "hasUnitTest": true,

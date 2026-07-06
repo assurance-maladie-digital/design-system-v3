@@ -23,7 +23,6 @@ const requiredFormStories = ['disabled', 'required', 'form-validation']
 const excludedComponentNames = [
 	'FilterRules',
 	'Usages',
-	'DeclarationAccessibilityPage',
 	'datePickers',
 	'ComponentStatusTable',
 ]

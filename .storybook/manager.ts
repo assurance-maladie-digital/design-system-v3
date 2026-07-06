@@ -1,6 +1,6 @@
 import React from 'react'
-import { addons, types, useChannel } from '@storybook/manager-api'
-import { AddonPanel } from '@storybook/components'
+import { addons, types, useChannel } from 'storybook/manager-api'
+import { AddonPanel } from 'storybook/internal/components'
 import cnamTheme from './CnamTheme'
 import paTheme from './PaTheme'
 import apTheme from './ApTheme'
