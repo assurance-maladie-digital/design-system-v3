@@ -832,6 +832,7 @@ export const SlotFilters: Story = {
 									width="150"
 									hide-details
 									clearable
+									disableErrorHandling
 								/>
 							</div>
 						</template>
@@ -872,6 +873,7 @@ export const SlotFilters: Story = {
 							density="compact"
 							width="150"
 							hide-details
+							disableErrorHandling
 							clearable
 						/>
 					</div>

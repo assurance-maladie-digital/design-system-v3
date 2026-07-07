@@ -149,15 +149,16 @@
 	@media (width <= 600px) {
 		margin-left: 0;
 	}
+
+	:deep(.v-field .v-field__clearable),
+	:deep(.v-field .v-field__append-inner) {
+		color: rgb(var(--v-theme-onSurface)) !important;
+		opacity: var(--v-medium-emphasis-opacity) !important;
+	}
 }
 
 .sy-form-input {
 	width: 328px;
-}
-
-.sy-form-input :deep(input) {
-	color: rgb(var(--v-theme-onSurface)) !important;
-	opacity: none !important;
 }
 
 .sy-form-input :deep(.v-field__input),
@@ -166,7 +167,6 @@
 .sy-form-input :deep(.v-field__clearable),
 .sy-form-input :deep(.v-field__append-inner) {
 	color: rgb(var(--v-theme-onSurface)) !important;
-	opacity: none !important;
 }
 
 .sy-form-input--s {
@@ -198,4 +198,10 @@
 .v-theme--dark button.v-btn:hover :deep() {
 	background: rgba(var(--v-theme-onPrimary), 0.1);
 }
+
+// .sy-select__clear-icon {
+// 	color: rgb(var(--v-theme-onSurface)) !important;
+// 	opacity: var(--v-medium-emphasis-opacity) !important;
+// }
+
 </style>
