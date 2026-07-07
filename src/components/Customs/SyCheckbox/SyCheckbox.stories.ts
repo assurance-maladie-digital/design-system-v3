@@ -75,12 +75,8 @@ const meta = {
 				defaultValue: { summary: 'false' },
 			},
 		},
-		'controlsIds': {
-			description: 'IDs des éléments contrôlés par cette case à cocher (pour l\'état indéterminé)',
-			control: 'object',
-		},
 		'cycleIndeterminate': {
-			description: 'Inclut l\'état indéterminé dans la rotation du parent contrôlant des enfants',
+			description: 'Inclut l\'état indéterminé dans la rotation du parent et remplace l\'ancienne prop controlsIds',
 			control: 'boolean',
 		},
 		'displayAsterisk': {
@@ -89,7 +85,7 @@ const meta = {
 		},
 		'update:modelValue': {
 			action: 'update:modelValue',
-			description: 'Événement émis lorsque la valeur de la case à cocher devient true ou false',
+			description: 'Événement émis lorsque la valeur de la case à cocher devient true ou false. Remplace l\'ancien événement change.',
 			table: {
 				category: 'events',
 				type: {
@@ -253,7 +249,7 @@ Un texte d'aide (\`helpText\`) s'affiche sous la case pour guider l'utilisateur,
 	},
 }
 
-export const WithControlsIds: Story = {
+export const WithCycleIndeterminate: Story = {
 	args: Default.args,
 	parameters: {
 		sourceCode: [
@@ -267,7 +263,6 @@ export const WithControlsIds: Story = {
       :indeterminate="parentIndeterminate" 
       @update:model-value="handleParentModelUpdate"
       @update:indeterminate="handleParentIndeterminateUpdate"
-      :controls-ids="childrenIds"
       :cycle-indeterminate="canCycleIndeterminate"
       label="Parent"
     />
@@ -357,10 +352,9 @@ const handleParentIndeterminateUpdate = (isIndeterminate) => {
 			description: {
 				story: `
 ### Case à cocher avec contrôle d'éléments enfants
-Cette case à cocher contrôle un groupe d'éléments enfants. Elle utilise la propriété \`controlsIds\` pour établir la relation entre le parent et les enfants. 
-Lorsque certains enfants sont cochés mais pas tous, le parent passe automatiquement en état indéterminé.
+Cette case à cocher contrôle un groupe d'éléments enfants. L'application synchronise les valeurs des enfants, dérive l'état \`indeterminate\` du parent et applique \`update:modelValue\` à tous les enfants.
 
-La propriété \`controlsIds\` permet de créer une relation sémantique entre une case à cocher parent et ses enfants, ce qui est important pour l'accessibilité. Cette relation est établie via les attributs \`aria-controls\` et les identifiants des cases à cocher enfants.
+L'événement \`update:modelValue\` remplace l'ancien événement \`change\`. La prop \`controlsIds\` n'est plus utilisée par SyCheckbox ; le groupe applicatif porte la structure et les relations nécessaires autour des cases à cocher.
 
 Dans cet exemple, la prop \`cycleIndeterminate\` est activée pour permettre au parent de réintroduire la dernière sélection partielle dans sa rotation. Cette sélection partielle mémorisée est supprimée si l'utilisateur coche ou décoche individuellement tous les enfants. Sans cette prop, le parent contrôlant des enfants reste binaire : depuis non coché ou indéterminé, l'activation coche tous les enfants ; depuis coché, elle les décoche tous.
 				`,
@@ -387,7 +381,6 @@ Dans cet exemple, la prop \`cycleIndeterminate\` est activée pour permettre au 
 					:indeterminate="parentIndeterminate" 
 					@update:model-value="handleParentModelUpdate"
 					@update:indeterminate="handleParentIndeterminateUpdate"
-					:controls-ids="childrenIds"
 					:cycle-indeterminate="canCycleIndeterminate"
 					label="Parent"
 				/>

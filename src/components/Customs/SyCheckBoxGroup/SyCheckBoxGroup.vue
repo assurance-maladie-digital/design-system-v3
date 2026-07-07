@@ -30,7 +30,7 @@
 		},
 	)
 
-	const emit = defineEmits(['update:modelValue', 'change'])
+	const emit = defineEmits(['update:modelValue'])
 
 	const focused = ref(false)
 	const isMultiple = computed(() => props.multiple)
@@ -41,7 +41,6 @@
 		},
 		set(value) {
 			emit('update:modelValue', value)
-			emit('change', value)
 		},
 	})
 

@@ -10,6 +10,7 @@ export interface SyCheckboxProps extends FieldValidationProps {
 	helpText?: string
 	ariaLabel?: string
 	ariaLabelledby?: string
+	ariaDescribedby?: string
 	title?: string
 	color?: string
 	hideDetails?: boolean | 'auto'
@@ -19,7 +20,8 @@ export interface SyCheckboxProps extends FieldValidationProps {
 	value?: unknown
 	trueValue?: unknown
 	falseValue?: unknown
-	controlsIds?: string[]
+	/** @deprecated Utiliser cycleIndeterminate à la place. */
+	controlsIds?: never
 	cycleIndeterminate?: boolean
 	displayAsterisk?: boolean
 	decorative?: boolean

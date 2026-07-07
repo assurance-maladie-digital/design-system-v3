@@ -46,24 +46,52 @@ describe('SyCheckbox', () => {
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
 	})
 
+	it('should update indeterminate state when prop changes', async () => {
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				modelValue: false,
+				indeterminate: false,
+			},
+		})
+		const vCheckbox = () => wrapper.findComponent({ name: 'VCheckbox' })
+
+		expect(vCheckbox().props('indeterminate')).toBe(false)
+
+		await wrapper.setProps({ indeterminate: true })
+		await nextTick()
+
+		expect(vCheckbox().props('indeterminate')).toBe(true)
+
+		await wrapper.setProps({
+			modelValue: true,
+			indeterminate: false,
+		})
+		await nextTick()
+
+		expect(vCheckbox().props('indeterminate')).toBe(false)
+		expect(vCheckbox().props('modelValue')).toBe(true)
+	})
+
 	it('should toggle between states correctly', async () => {
 		// Monter le composant avec des handlers pour les événements
 		const wrapper = mount(SyCheckbox, {
 			props: {
-				modelValue: false,
-				controlsIds: ['child-1', 'child-2'],
+				'modelValue': false,
+				'cycleIndeterminate': true,
+				'onUpdate:modelValue': (e: boolean) => wrapper.setProps({ modelValue: e }),
+				'onUpdate:indeterminate': (e: boolean) => wrapper.setProps({ indeterminate: e }),
 			},
 		})
 
 		// État initial: non coché
 		expect(wrapper.props('modelValue')).toBe(false)
 
-		// Premier toggle: passe à coché
+		// Premier toggle: passe à indéterminé
 		await wrapper.vm.toggleMixed()
 		await nextTick()
 
-		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
-		expect(wrapper.emitted('update:indeterminate')).toBeFalsy()
+		expect(wrapper.emitted('update:indeterminate')?.[0]).toEqual([true])
+		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
 
 		// Simuler la mise à jour des props par le parent
 		await wrapper.setProps({
@@ -75,7 +103,7 @@ describe('SyCheckbox', () => {
 		await wrapper.vm.toggleMixed()
 		await nextTick()
 
-		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([false])
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([false])
 
 		// Simuler un état partiel réel depuis les enfants
 		await wrapper.setProps({
@@ -87,8 +115,8 @@ describe('SyCheckbox', () => {
 		await wrapper.vm.toggleMixed()
 		await nextTick()
 
-		expect(wrapper.emitted('update:indeterminate')?.[0]).toEqual([false])
-		expect(wrapper.emitted('update:modelValue')?.[2]).toEqual([true])
+		expect(wrapper.emitted('update:indeterminate')?.[1]).toEqual([false])
+		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([true])
 	})
 
 	it('should keep controlled parent binary with Space key when children are not partial', async () => {
@@ -96,19 +124,18 @@ describe('SyCheckbox', () => {
 			props: {
 				'modelValue': false,
 				'indeterminate': false,
-				'controlsIds': ['child-1', 'child-2'],
 				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
 				'onUpdate:indeterminate': e => wrapper.setProps({ indeterminate: e }),
 			},
 		})
 
-		await wrapper.find('.v-checkbox').trigger('keydown', { key: ' ' })
+		await wrapper.find('input[type="checkbox"]').setValue(true)
 		await nextTick()
 
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
 		expect(wrapper.emitted('update:indeterminate')).toBeFalsy()
 
-		await wrapper.find('.v-checkbox').trigger('keydown', { key: ' ' })
+		await wrapper.find('input[type="checkbox"]').setValue(false)
 		await nextTick()
 
 		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([false])
@@ -120,7 +147,6 @@ describe('SyCheckbox', () => {
 			props: {
 				'modelValue': false,
 				'indeterminate': false,
-				'controlsIds': ['child-1', 'child-2'],
 				'cycleIndeterminate': true,
 				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
 				'onUpdate:indeterminate': e => wrapper.setProps({ indeterminate: e }),
@@ -150,13 +176,12 @@ describe('SyCheckbox', () => {
 			props: {
 				'modelValue': false,
 				'indeterminate': true,
-				'controlsIds': ['child-1', 'child-2'],
 				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
 				'onUpdate:indeterminate': e => wrapper.setProps({ indeterminate: e }),
 			},
 		})
 
-		await wrapper.find('.v-checkbox').trigger('keydown', { key: ' ' })
+		await wrapper.find('input[type="checkbox"]').setValue(true)
 		await nextTick()
 
 		expect(wrapper.emitted('update:indeterminate')?.[0]).toEqual([false])
@@ -168,19 +193,18 @@ describe('SyCheckbox', () => {
 			props: {
 				'modelValue': false,
 				'indeterminate': false,
-				'controlsIds': ['child-1', 'child-2'],
 				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
 				'onUpdate:indeterminate': e => wrapper.setProps({ indeterminate: e }),
 			},
 		})
 
-		await wrapper.find('.v-checkbox').trigger('click')
+		await wrapper.find('input[type="checkbox"]').setValue(true)
 		await nextTick()
 
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
 		expect(wrapper.emitted('update:indeterminate')).toBeFalsy()
 
-		await wrapper.find('.v-checkbox').trigger('click')
+		await wrapper.find('input[type="checkbox"]').setValue(false)
 		await nextTick()
 
 		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([false])
@@ -192,7 +216,6 @@ describe('SyCheckbox', () => {
 			props: {
 				'modelValue': false,
 				'indeterminate': false,
-				'controlsIds': ['child-1', 'child-2'],
 				'cycleIndeterminate': true,
 				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
 				'onUpdate:indeterminate': e => wrapper.setProps({ indeterminate: e }),
@@ -222,13 +245,12 @@ describe('SyCheckbox', () => {
 			props: {
 				'modelValue': false,
 				'indeterminate': true,
-				'controlsIds': ['child-1', 'child-2'],
 				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
 				'onUpdate:indeterminate': e => wrapper.setProps({ indeterminate: e }),
 			},
 		})
 
-		await wrapper.find('.v-checkbox').trigger('click')
+		await wrapper.find('input[type="checkbox"]').setValue(true)
 		await nextTick()
 
 		expect(wrapper.emitted('update:indeterminate')?.[0]).toEqual([false])
@@ -239,7 +261,7 @@ describe('SyCheckbox', () => {
 		const wrapper = mount(SyCheckbox, {
 			props: {
 				modelValue: false,
-				controlsIds: ['child-1', 'child-2'],
+				cycleIndeterminate: true,
 				readonly: true,
 			},
 		})
@@ -259,7 +281,7 @@ describe('SyCheckbox', () => {
 		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
 	})
 
-	it('should keep standard checkbox binary without controlsIds', async () => {
+	it('should keep standard checkbox binary without cycleIndeterminate', async () => {
 		const wrapper = mount(SyCheckbox, {
 			props: {
 				'modelValue': false,
