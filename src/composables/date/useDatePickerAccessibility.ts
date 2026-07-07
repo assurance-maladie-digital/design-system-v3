@@ -114,21 +114,6 @@ const ensureNavigationButtonLabels = (pickerEl: HTMLElement) => {
 	}
 }
 
-const ensureControlButtonLabels = (pickerEl: HTMLElement) => {
-	const monthButton = pickerEl.querySelector<HTMLButtonElement>(MONTH_CONTROL_SELECTOR)
-	const yearButton = pickerEl.querySelector<HTMLButtonElement>(YEAR_CONTROL_SELECTOR)
-
-	if (monthButton) {
-		monthButton.setAttribute('aria-label', locales.openMonthSelector)
-		monthButton.setAttribute('title', locales.openMonthSelector)
-	}
-
-	if (yearButton) {
-		yearButton.setAttribute('aria-label', locales.openYearSelector)
-		yearButton.setAttribute('title', locales.openYearSelector)
-	}
-}
-
 const ensureMonthAndYearSelectorLabels = (pickerEl: HTMLElement) => {
 	const monthButtons = pickerEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-months button')
 
@@ -279,7 +264,6 @@ export function useDatePickerAccessibility() {
 
 		pickerEls.forEach((pickerEl) => {
 			ensureNavigationButtonLabels(pickerEl)
-			ensureControlButtonLabels(pickerEl)
 			ensureMonthAndYearSelectorLabels(pickerEl)
 			applyGridSemantics(pickerEl)
 		})

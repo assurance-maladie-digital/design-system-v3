@@ -67,8 +67,14 @@ describe('useDatePickerAccessibility', () => {
 		`
 	})
 
-	it('sets correct aria-label attributes on navigation buttons', async () => {
-		// Appeler la fonction updateAccessibility
+	it('does not override month/year control labels set by useMonthButtonCustomization', async () => {
+		const { customizeMonthButton } = useMonthButtonCustomization(
+			() => true,
+			ref('janvier'),
+			ref('2023'),
+		)
+
+		await customizeMonthButton()
 		await updateAccessibility()
 
 		// Récupérer les boutons
@@ -77,11 +83,14 @@ describe('useDatePickerAccessibility', () => {
 		const monthButton = document.querySelector('.v-date-picker-controls__month-btn')
 		const yearButton = document.querySelector('.v-date-picker-controls__mode-btn')
 
-		// Vérifier que les attributs aria-label sont correctement définis
+		// Vérifier que les flèches de navigation sont toujours étiquetées
 		expect(prevButton?.getAttribute('aria-label')).toBe('Mois précédent')
 		expect(nextButton?.getAttribute('aria-label')).toBe('Mois suivant')
-		expect(monthButton?.getAttribute('aria-label')).toBe('Ouvrir le sélecteur de mois')
-		expect(yearButton?.getAttribute('aria-label')).toBe('Ouvrir le sélecteur d\'année')
+
+		// Vérifier que les labels riches des boutons mois/année ne sont pas écrasés
+		expect(monthButton?.getAttribute('aria-label')).toContain('Sélectionner un mois')
+		expect(monthButton?.getAttribute('aria-label')).toContain('janvier')
+		expect(yearButton?.getAttribute('aria-label')).toContain('2023')
 	})
 
 	it('handles missing elements gracefully', async () => {
@@ -185,7 +194,7 @@ describe('useDatePickerAccessibility', () => {
 		expect(dayCells[0]?.getAttribute('role')).toBe('gridcell')
 	})
 
-	it('handles different icons correctly', async () => {
+	it('preserves customized month button label with different navigation icons', async () => {
 		// Modifier les icônes
 		document.body.innerHTML = `
 			<div class="v-date-picker">
@@ -209,7 +218,13 @@ describe('useDatePickerAccessibility', () => {
 			</div>
 		`
 
-		// Appeler la fonction updateAccessibility
+		const { customizeMonthButton } = useMonthButtonCustomization(
+			() => true,
+			ref('janvier'),
+			ref('2023'),
+		)
+
+		await customizeMonthButton()
 		await updateAccessibility()
 
 		// Récupérer les boutons
@@ -217,12 +232,12 @@ describe('useDatePickerAccessibility', () => {
 		const nextButton = document.querySelector('[data-testid="next-month"]')
 		const monthButton = document.querySelector('.v-date-picker-controls__month-btn')
 
-		// Vérifier que les attributs aria-label sont correctement définis
-		// Le composable se base sur la position dans .v-date-picker-controls__month,
-		// pas sur le nom de l'icône.
+		// Vérifier que les flèches de navigation sont toujours étiquetées
 		expect(prevButton?.getAttribute('aria-label')).toBe('Mois précédent')
 		expect(nextButton?.getAttribute('aria-label')).toBe('Mois suivant')
-		expect(monthButton?.getAttribute('aria-label')).toBe('Ouvrir le sélecteur de mois')
+
+		// Vérifier que le label personnalisé du mois n'est pas écrasé
+		expect(monthButton?.getAttribute('aria-label')).toContain('janvier')
 	})
 
 	it('ne crée pas de bloc sr-only instructions (comportement actuel)', async () => {
