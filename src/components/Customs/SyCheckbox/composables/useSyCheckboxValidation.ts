@@ -1,4 +1,4 @@
-import { computed, ref, toRef, type ComputedRef, type Ref } from 'vue'
+import { computed, toRef, type ComputedRef, type Ref } from 'vue'
 import { useValidation, type ValidationRule } from '@/composables/unifyValidation/useValidation'
 import type { SyCheckboxValidationProps } from '../types'
 
@@ -28,7 +28,7 @@ export interface UseSyCheckboxValidationReturn {
 export function useSyCheckboxValidation(
 	props: SyCheckboxValidationProps,
 	model: Ref<boolean | null>,
-	focused: Ref<boolean> = ref(false),
+	focused: Ref<boolean>,
 ): UseSyCheckboxValidationReturn {
 	// « required » pour une case = doit être cochée (true)
 	const defaultRules = computed<ValidationRule[]>(() =>
