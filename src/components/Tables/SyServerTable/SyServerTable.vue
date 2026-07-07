@@ -174,6 +174,7 @@
 		isRowEditing,
 		startEditing,
 		setDraftField,
+		restoreFieldType,
 		saveEditing,
 		cancelEditing,
 		editableColumns,
@@ -188,6 +189,14 @@
 	function columnTitle(key: string): string {
 		const header = (props.headers ?? []).find(h => (h.key ?? h.value) === key)
 		return header?.title ?? header?.text ?? key
+	}
+
+	// Valeur affichée par l'éditeur texte par défaut : toujours une chaîne, car
+	// SyTextField n'accepte pas Boolean pour `model-value`. La reconversion vers
+	// le type d'origine (number/boolean) est faite par `restoreFieldType`.
+	function defaultEditorModelValue(key: string): string {
+		const value = editDraft.value[key]
+		return value == null ? '' : String(value)
 	}
 
 	// Slots gérés en interne (édition) : exclus du forwarding générique pour
@@ -563,21 +572,24 @@
 				#[`item.${colKey}`]="cellProps"
 			>
 				<!-- Ligne en édition : éditeur (SyTextField par défaut, surchargeable via #edit.<key>) -->
+				<!-- Le slot d'édition reçoit les mêmes `cellProps` que le slot de lecture
+					(item, column, index…), plus `value` (brouillon) et `update`. -->
 				<slot
 					v-if="isRowEditing(cellProps.item)"
 					:name="`edit.${colKey}`"
+					v-bind="cellProps"
 					:item="cellProps.item"
 					:value="editDraft[colKey]"
 					:update="(value: unknown) => setDraftField(colKey, value)"
 				>
 					<SyTextField
 						v-if="isEditableAsText(editDraft[colKey])"
-						:model-value="(editDraft[colKey] as string)"
+						:model-value="defaultEditorModelValue(colKey)"
 						:label="columnTitle(colKey)"
 						density="compact"
 						hide-details
 						disable-error-handling
-						@update:model-value="setDraftField(colKey, $event)"
+						@update:model-value="setDraftField(colKey, restoreFieldType(colKey, $event))"
 					/>
 				</slot>
 				<!-- Ligne normale : slot consommateur #item.<key> si fourni, sinon valeur brute -->

@@ -40,6 +40,14 @@ interface UseTableEditingReturn {
 	startEditing: (item: Item) => void
 	/** Met à jour un champ du brouillon. */
 	setDraftField: (key: string, value: unknown) => void
+	/**
+	 * Restaure le type primitif d'origine d'une colonne (`number`/`boolean`) pour une
+	 * valeur **émise par l'éditeur texte par défaut** (`SyTextField`, qui émet toujours
+	 * une `string`), afin de ne pas transformer silencieusement un nombre ou un booléen
+	 * en chaîne. Les slots `#edit.<colonne>` fournissent déjà une valeur typée et ne
+	 * passent pas par cette fonction.
+	 */
+	restoreFieldType: (key: string, value: unknown) => unknown
 	/** Valide l'édition et renvoie l'item modifié + l'original. */
 	saveEditing: () => { updated: Item, original: Item | null }
 	/** Annule l'édition et renvoie l'item original. */
@@ -116,6 +124,35 @@ export function useTableEditing({ getItemValue, headers, editable, hasEditSlot }
 		draft.value[key] = value
 	}
 
+	function restoreFieldType(key: string, value: unknown): unknown {
+		// L'éditeur par défaut (SyTextField) émet toujours une chaîne : on ne
+		// touche qu'à ce cas. Les slots #edit fournissent déjà une valeur typée.
+		if (typeof value !== 'string') return value
+
+		const originalValue = originalItem.value?.[key]
+
+		if (typeof originalValue === 'number') {
+			const trimmed = value.trim()
+			// Champ vidé → null (plutôt qu'un NaN silencieux)
+			if (trimmed === '') return null
+			const parsed = Number(trimmed)
+			// Saisie non numérique : on conserve la chaîne pour ne pas bloquer la
+			// saisie en cours ; la validation applicative reste à la charge du projet.
+			return Number.isNaN(parsed) ? value : parsed
+		}
+
+		if (typeof originalValue === 'boolean') {
+			const normalized = value.trim().toLowerCase()
+			if (normalized === 'true') return true
+			if (normalized === 'false') return false
+			return value
+		}
+
+		return value
+	}
+
+	// Sort du mode édition immédiatement ; `original` est renvoyé pour permettre
+	// au parent un retour arrière si son enregistrement asynchrone échoue.
 	function saveEditing(): { updated: Item, original: Item | null } {
 		const original = originalItem.value
 		const updated = { ...(original ?? {}), ...draft.value }
@@ -141,6 +178,7 @@ export function useTableEditing({ getItemValue, headers, editable, hasEditSlot }
 		isRowEditing,
 		startEditing,
 		setDraftField,
+		restoreFieldType,
 		saveEditing,
 		cancelEditing,
 		resetEditing,

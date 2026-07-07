@@ -131,11 +131,17 @@ Les boutons d'action se placent dans le slot `#item.actions`, qui expose les hel
 </SyServerTable>
 `}/>
 
-L'éditeur d'une cellule peut être personnalisé via le slot `#edit.<columnKey>` (reçoit `{ item, value, update }`).
+L'éditeur d'une cellule peut être personnalisé via le slot `#edit.<columnKey>`. Il reçoit `value` (le brouillon), `update(value)` (pour écrire dans le brouillon) **et les mêmes `cellProps` que le slot de lecture** `#item.<columnKey>` (`item`, `column`, `index`…), pour une API cohérente entre lecture et édition. La valeur passée à `update()` conserve le type que vous lui donnez (pas de conversion).
 
-> ⚠️ L'éditeur par défaut (`SyTextField`) ne gère que les **valeurs primitives** (chaîne, nombre, booléen). Pour une colonne dont la valeur est un **objet, un tableau ou une `Date`**, fournissez un slot `#edit.<columnKey>` avec un éditeur adapté (`SySelect`, `DatePicker`, `<input type="date">`…) — sinon aucun éditeur n'est rendu et un avertissement est émis en développement. Le rendu **hors édition** d'une telle valeur passe par `#item.<columnKey>`.
+> ⚠️ L'éditeur par défaut (`SyTextField`) ne gère que les **valeurs primitives** (chaîne, nombre, booléen). Pour une colonne dont la valeur est un **objet, un tableau ou une `Date`**, fournissez un slot `#edit.<columnKey>` avec un éditeur adapté (`SySelect`, `DatePicker`, `<input type="date">`…) — sinon aucun éditeur n'est rendu et un avertissement est émis en développement. Le rendu **hors édition** d'une telle valeur passe par `#item.<columnKey>`. Dans tous les cas, **ne mutez jamais la valeur en place** (ex. `item.role.code = …`) : appelez `update()` avec une **nouvelle** valeur/copie, afin de préserver l'annulation (`cancel`) et l'immutabilité de `items`.
+
+> 💡 **Type préservé** : l'éditeur texte par défaut émet des chaînes ; le composant reconvertit automatiquement la valeur vers le type d'origine de la colonne (`number` → nombre, `boolean` → booléen, champ vidé d'une colonne numérique → `null`). `save(updated)` renvoie donc des types cohérents avec `items`.
 
 **Évènements** : `edit(item)` · `save(updated, original)` · `cancel(item)` · `delete(item)`.
+
+> ⚠️ **La ligne quitte le mode édition dès le clic sur `save`**, avant l'appel à votre API. `save` reçoit `updated` (la ligne modifiée) et `original` (la ligne d'avant). En mode serveur, l'enregistrement échoue parfois : gérez vous-même le retour arrière en réaffichant `original`.
+>
+> Schéma recommandé : affichez `updated` tout de suite, et **si l'API renvoie une erreur, restaurez `original`** (ou rechargez la page).
 
 <Canvas story={{height: '350px'}} of={RowEditing.Default} />
 

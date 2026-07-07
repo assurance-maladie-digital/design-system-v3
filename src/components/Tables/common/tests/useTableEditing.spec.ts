@@ -50,6 +50,55 @@ describe('useTableEditing', () => {
 		expect(isRowEditing(item)).toBe(false)
 	})
 
+	describe('restoreFieldType : préserve le type primitif d\'origine', () => {
+		it('colonne number : la chaîne émise par l\'éditeur texte redevient un nombre', () => {
+			const { startEditing, restoreFieldType } = useTableEditing({ getItemValue })
+			startEditing({ id: 1, age: 42 })
+
+			expect(restoreFieldType('age', '43')).toBe(43)
+			expect(restoreFieldType('age', '43')).toBeTypeOf('number')
+		})
+
+		it('colonne number vidée : renvoie null plutôt qu\'un NaN', () => {
+			const { startEditing, restoreFieldType } = useTableEditing({ getItemValue })
+			startEditing({ id: 1, age: 42 })
+
+			expect(restoreFieldType('age', '')).toBeNull()
+			expect(restoreFieldType('age', '   ')).toBeNull()
+		})
+
+		it('colonne number avec saisie non numérique : conserve la chaîne (validation applicative)', () => {
+			const { startEditing, restoreFieldType } = useTableEditing({ getItemValue })
+			startEditing({ id: 1, age: 42 })
+
+			expect(restoreFieldType('age', 'abc')).toBe('abc')
+		})
+
+		it('colonne boolean : « true » / « false » redeviennent des booléens', () => {
+			const { startEditing, restoreFieldType } = useTableEditing({ getItemValue })
+			startEditing({ id: 1, active: true })
+
+			expect(restoreFieldType('active', 'false')).toBe(false)
+			expect(restoreFieldType('active', 'true')).toBe(true)
+			expect(restoreFieldType('active', 'False')).toBe(false)
+		})
+
+		it('colonne string : la valeur est inchangée', () => {
+			const { startEditing, restoreFieldType } = useTableEditing({ getItemValue })
+			startEditing({ id: 1, name: 'Jean' })
+
+			expect(restoreFieldType('name', 'Paul')).toBe('Paul')
+		})
+
+		it('valeur déjà typée (slot #edit) : laissée telle quelle', () => {
+			const { startEditing, restoreFieldType } = useTableEditing({ getItemValue })
+			startEditing({ id: 1, age: 42 })
+
+			// Un slot custom passe directement un nombre : pas de conversion parasite
+			expect(restoreFieldType('age', 7)).toBe(7)
+		})
+	})
+
 	it('cancelEditing : renvoie l\'original, ne propage aucune modification et réinitialise', () => {
 		const { startEditing, setDraftField, cancelEditing, isRowEditing } = useTableEditing({ getItemValue })
 		const item = { id: 1, name: 'Jean' }

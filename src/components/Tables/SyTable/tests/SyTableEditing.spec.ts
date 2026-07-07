@@ -147,6 +147,36 @@ describe('SyTable — édition inline', () => {
 		expect(wrapper.emitted('delete')?.[0]?.[0]).toMatchObject({ id: 1 })
 	})
 
+	it('colonnes number / boolean : @save conserve les types primitifs (pas de string)', async () => {
+		const typedHeaders = [
+			{ title: 'Âge', key: 'age', editable: true },
+			{ title: 'Actif', key: 'active', editable: true },
+			{ title: 'Actions', key: 'actions', sortable: false },
+		]
+		const typedItems = [{ id: 1, age: 42, active: true }]
+		const wrapper = mount(SyTable, {
+			props: { options: {}, suffix: 'editing-typed', editable: true, selectionKey: 'id' },
+			attrs: { items: typedItems, headers: typedHeaders },
+			slots: { 'item.actions': actionsSlot },
+		})
+
+		await wrapper.find('.edit-btn').trigger('click')
+
+		const fields = wrapper.findAllComponents(SyTextField)
+		expect(fields).toHaveLength(2)
+
+		// L'éditeur texte émet des chaînes : elles doivent être reconverties
+		await fields[0].vm.$emit('update:modelValue', '43') // age
+		await fields[1].vm.$emit('update:modelValue', 'false') // active
+		await wrapper.find('.save-btn').trigger('click')
+
+		const saved = wrapper.emitted('save')?.[0]?.[0] as Record<string, unknown>
+		expect(saved.age).toBe(43)
+		expect(saved.age).toBeTypeOf('number')
+		expect(saved.active).toBe(false)
+		expect(saved.active).toBeTypeOf('boolean')
+	})
+
 	it('valeur non primitive sans slot #edit : n\'affiche pas d\'éditeur par défaut (+ avertit)', async () => {
 		const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
 		const objHeaders = [
