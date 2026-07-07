@@ -50,7 +50,6 @@ describe('HeaderLogo', () => {
 			props: {
 				logoAlt: 'Test aria label',
 				headingLevelTitle: 2,
-				ariaLabel: 'Test aria label',
 				serviceTitle: 'Test service title',
 				serviceSubtitle: 'Test service subtitle',
 			},
@@ -67,7 +66,6 @@ describe('HeaderLogo', () => {
 		const wrapper = mount(HeaderLogo, {
 			props: {
 				headingLevelTitle: 2,
-				ariaLabel: 'Test aria label',
 				logoAlt: 'Test aria label',
 				serviceTitle: 'Test service title',
 			},
@@ -87,7 +85,6 @@ describe('HeaderLogo', () => {
 			global: {
 				stubs: ['RouterLink'] },
 			props: {
-				ariaLabel: 'Test aria label',
 				logoAlt: 'Test aria label',
 				headingLevelTitle: 2,
 				homeLink: {
@@ -118,7 +115,6 @@ describe('HeaderLogo', () => {
 	it('render a div when the homeLink properties `to` and `href` are both set to `undefined`', async () => {
 		const wrapper = mount(HeaderLogo, {
 			props: {
-				ariaLabel: 'Test aria label',
 				logoAlt: 'Test aria label',
 				headingLevelTitle: 2,
 				homeLink: {

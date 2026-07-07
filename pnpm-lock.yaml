@@ -52,6 +52,9 @@ dependencies:
   slugify:
     specifier: ^1.6.6
     version: 1.6.9
+  vue-router:
+    specifier: ^4.4.5
+    version: 4.6.4(vue@3.5.38)
   vuetify:
     specifier: 3.12.2
     version: 3.12.2(patch_hash=t74vhpqgv77kshgn24oftwvhoy)(typescript@5.9.3)(vite-plugin-vuetify@2.1.3)(vue@3.5.38)
@@ -213,9 +216,6 @@ devDependencies:
   vue-component-type-helpers:
     specifier: 2.2.12
     version: 2.2.12
-  vue-router:
-    specifier: ^4.4.5
-    version: 4.6.4(vue@3.5.38)
   vue-tsc:
     specifier: ^2.1.8
     version: 2.2.12(typescript@5.9.3)
@@ -2824,7 +2824,7 @@ packages:
 
   /@vue/devtools-api@6.6.4:
     resolution: {integrity: sha512-sGhTPMuXqZ1rVOk32RylztWkfXTRhuS7vgAKv0zjqk8gbsHkJ7xfFf+jbySxt7tWObEJwyKaHMikV/WGDiQm8g==}
-    dev: true
+    dev: false
 
   /@vue/language-core@2.2.0(typescript@5.9.3):
     resolution: {integrity: sha512-O1ZZFaaBGkKbsRfnVH1ifOK1/1BUkyK+3SQsfnh6PmMmD4qJcTU8godCeA96jjDRTL6zgnK7YzCHfaUlH2r0Mw==}
@@ -8434,7 +8434,7 @@ packages:
     dependencies:
       '@vue/devtools-api': 6.6.4
       vue: 3.5.38(typescript@5.9.3)
-    dev: true
+    dev: false
 
   /vue-tsc@2.2.12(typescript@5.9.3):
     resolution: {integrity: sha512-P7OP77b2h/Pmk+lZdJ0YWs+5tJ6J2+uOQPo7tlBnY44QqQSPYvS0qVT4wqDJgwrZaLe47etJLLQRFia71GYITw==}

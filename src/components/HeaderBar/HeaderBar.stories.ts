@@ -38,7 +38,7 @@ const meta = {
 		},
 		'homeAriaLabel': {
 			control: { type: 'text' },
-			description: 'Le texte de l\'attribut aria-label pour le logo du header.',
+			description: 'Le texte de l\'attribut alt pour le logo du header.',
 			table: {
 				type: {
 					summary: 'string',

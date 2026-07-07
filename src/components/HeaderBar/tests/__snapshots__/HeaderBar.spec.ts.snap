@@ -32,7 +32,9 @@ exports[`HeaderBar > should render the component 1`] = `
           /><img
             alt="Sécurité sociale, l'Assurance Maladie : Agir ensemble, protéger chacun. Retour à l'accueil."
             class="logo-image"
+            height="64"
             src="/src/assets/logos/logo-mobile.svg"
+            width="211"
           />
             </picture>
             

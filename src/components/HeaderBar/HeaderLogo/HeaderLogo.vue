@@ -12,8 +12,9 @@
 		serviceTitle?: string
 		serviceSubtitle?: string
 		homeLink?: {
-			to?: RouteLocationRaw
-			href?: string
+			'to'?: RouteLocationRaw
+			'href'?: string
+			'aria-label'?: string
 		}
 		headingLevelTitle?: 1 | 2 | 3 | 4 | 5 | 6
 	}
@@ -57,6 +58,7 @@
 		v-bind="{
 			to: 'to' in homeLink ? homeLink?.to : undefined,
 			href: 'href' in homeLink ? homeLink?.href : undefined,
+			'aria-label': 'aria-label' in homeLink ? homeLink?.['aria-label'] : undefined,
 		}"
 		class="logo"
 	>
