@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from '@/components/Accordion/config'
-	import { mdiChevronRight } from '@mdi/js'
+	import { mdiChevronDown } from '@mdi/js'
 	// Importation des composables
 	import useAccordionState from './composables/useAccordionState'
 	import useAccordionGroupCommunication from './composables/useAccordionGroupCommunication'
@@ -20,6 +20,8 @@
 		items: AccordionItem[]
 		headingLevel?: number
 		groupId?: string
+		iconPosition?: 'left' | 'right'
+		compact?: boolean
 		vuetifyOptions?: {
 			accordion?: {
 				backgroundColor?: string
@@ -34,6 +36,8 @@
 	const props = withDefaults(defineProps<AccordionProps>(), {
 		headingLevel: 3,
 		groupId: 'default',
+		iconPosition: 'left',
+		compact: false,
 		vuetifyOptions: () => ({}),
 	})
 
@@ -78,6 +82,7 @@
 <template>
 	<div
 		class="sy-accordion"
+		:class="{ 'sy-accordion--compact': compact }"
 		:style="{
 			'--accordion-hover-color': `var(--v-theme-${options.accordion.hoverColor})`,
 			'--accordion-focus-color': `var(--v-theme-${options.accordion.focusColor})`,
@@ -116,14 +121,18 @@
 				>
 					<span
 						class="sy-accordion-title"
-						:class="isItemOpen(item.id) ? `text-${options.accordion.activeColor}` : `text-${options.accordion.titleColor}`"
+						:class="[
+							isItemOpen(item.id) ? `text-${options.accordion.activeColor}` : `text-${options.accordion.titleColor}`,
+							{ 'sy-accordion-title--icon-right': iconPosition === 'right' }
+						]"
 					>
 						<span
+							v-if="iconPosition === 'left'"
 							class="sy-accordion-icon"
 							:class="{ 'sy-accordion-icon--open': isItemOpen(item.id) }"
 						>
 							<SyIcon
-								:icon="mdiChevronRight"
+								:icon="mdiChevronDown"
 								decorative
 							/>
 						</span>
@@ -134,6 +143,16 @@
 						>
 							<span>{{ item.title }}</span>
 						</slot>
+						<span
+							v-if="iconPosition === 'right'"
+							class="sy-accordion-icon"
+							:class="{ 'sy-accordion-icon--open': isItemOpen(item.id) }"
+						>
+							<SyIcon
+								:icon="mdiChevronDown"
+								decorative
+							/>
+						</span>
 					</span>
 					<span
 						v-if="$slots['right-content']"
@@ -197,6 +216,27 @@
 	overflow: hidden;
 }
 
+/* Mode compact : supprime l'espacement entre les éléments */
+.sy-accordion--compact .sy-accordion-item {
+	margin-bottom: 0;
+	border-radius: 0;
+
+	&:first-child {
+		border-top-left-radius: 4px;
+		border-top-right-radius: 4px;
+	}
+
+	&:last-child {
+		border-bottom-left-radius: 4px;
+		border-bottom-right-radius: 4px;
+	}
+
+	/* Évite les doubles bordures entre les éléments */
+	& + .sy-accordion-item {
+		border-top: none;
+	}
+}
+
 .sy-accordion-heading {
 	margin: 0;
 	display: flex;
@@ -225,6 +265,11 @@
 	display: flex;
 	align-items: center;
 	gap: 8px;
+
+	&.sy-accordion-title--icon-right {
+		justify-content: space-between;
+		width: 100%;
+	}
 }
 
 .sy-accordion-right-content {
@@ -311,11 +356,12 @@
 	align-items: center;
 	justify-content: center;
 	transition: transform 0.3s ease;
+	flex-shrink: 0;
 }
 
-/* Rotation de l'icône lorsque l'accordéon est ouvert */
+/* Rotation de l'icône lorsque l'accordéon est ouvert : pointe vers le haut */
 .sy-accordion-icon--open {
-	transform: rotate(90deg);
+	transform: rotate(180deg);
 }
 
 /* Style pour les éléments désactivés */
