@@ -70,6 +70,8 @@
 				class="logo-image"
 				:src="logoMobileUrl"
 				:alt="props.logoAlt"
+				width="211"
+				height="64"
 			>
 		</picture>
 
