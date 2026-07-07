@@ -1,6 +1,6 @@
 import { computed, type ComputedRef } from 'vue'
 import dayjs from 'dayjs'
-import { formatDateLabel, formatDateRangeEnd, formatDateShort } from '../locales'
+import { formatDateLabel, formatDateRangeEnd, formatDateShort, locales } from '../locales'
 import { type DateObjectValue } from '../types'
 
 export interface DisplayedDateStringProps {
@@ -29,7 +29,7 @@ export function useDisplayedDateString(props: DisplayedDateStringProps): Display
 			const endDate = dayjs(props.rangeBoundaryDates.value[1])
 
 			if (startDate.isValid() && endDate.isValid()) {
-				return `${formatDateShort(startDate)} - ${formatDateRangeEnd(endDate)}`
+				return `${formatDateShort(startDate)}${locales.rangeSeparator}${formatDateRangeEnd(endDate)}`
 			}
 		}
 
@@ -41,7 +41,7 @@ export function useDisplayedDateString(props: DisplayedDateStringProps): Display
 				const endDate = dayjs(props.selectedDates.value[props.selectedDates.value.length - 1])
 
 				if (startDate.isValid() && endDate.isValid()) {
-					return `${formatDateShort(startDate)} - ${formatDateRangeEnd(endDate)}`
+					return `${formatDateShort(startDate)}${locales.rangeSeparator}${formatDateRangeEnd(endDate)}`
 				}
 			}
 			// Si nous n'avons qu'une seule date dans le tableau

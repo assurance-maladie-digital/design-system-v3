@@ -8,9 +8,10 @@ import { useMonthButtonCustomization } from '../../../components/DatePicker/comp
 // Composant vide qui servira de contexte pour les hooks Vue
 const TestComponent = defineComponent({
 	setup() {
-		const { updateAccessibility, handleKeyDown, fixAriaAttributes } = useDatePickerAccessibility()
+		const { updateAccessibility, cleanupGridSemantics, handleKeyDown, fixAriaAttributes } = useDatePickerAccessibility()
 		return {
 			updateAccessibility,
+			cleanupGridSemantics,
 			handleKeyDown,
 			fixAriaAttributes,
 		}
@@ -21,10 +22,12 @@ const TestComponent = defineComponent({
 describe('useDatePickerAccessibility', () => {
 	// Variables pour stocker les méthodes du composable
 	let updateAccessibility: ReturnType<typeof useDatePickerAccessibility>['updateAccessibility']
+	let cleanupGridSemantics: ReturnType<typeof useDatePickerAccessibility>['cleanupGridSemantics']
 	let handleKeyDown: ReturnType<typeof useDatePickerAccessibility>['handleKeyDown']
 	// Wrapper pour le composant de test
 	let wrapper: ReturnType<typeof mount<{
 		updateAccessibility: ReturnType<typeof useDatePickerAccessibility>['updateAccessibility']
+		cleanupGridSemantics: ReturnType<typeof useDatePickerAccessibility>['cleanupGridSemantics']
 		handleKeyDown: ReturnType<typeof useDatePickerAccessibility>['handleKeyDown']
 		fixAriaAttributes: ReturnType<typeof useDatePickerAccessibility>['fixAriaAttributes']
 	}>>
@@ -33,11 +36,13 @@ describe('useDatePickerAccessibility', () => {
 		// Monter le composant de test pour fournir un contexte aux hooks Vue
 		wrapper = mount(TestComponent) as unknown as ReturnType<typeof mount<{
 			updateAccessibility: ReturnType<typeof useDatePickerAccessibility>['updateAccessibility']
+			cleanupGridSemantics: ReturnType<typeof useDatePickerAccessibility>['cleanupGridSemantics']
 			handleKeyDown: ReturnType<typeof useDatePickerAccessibility>['handleKeyDown']
 			fixAriaAttributes: ReturnType<typeof useDatePickerAccessibility>['fixAriaAttributes']
 		}>>
 		// Obtenir les fonctions du composable directement depuis le composant monté
 		updateAccessibility = wrapper.vm.updateAccessibility!
+		cleanupGridSemantics = wrapper.vm.cleanupGridSemantics!
 		handleKeyDown = wrapper.vm.handleKeyDown!
 
 		// Créer une structure DOM simulée pour les tests
@@ -148,6 +153,30 @@ describe('useDatePickerAccessibility', () => {
 
 		const dayButtons = Array.from(dayCells[0]?.querySelectorAll('button') ?? [])
 		expect(dayButtons[0]?.getAttribute('role')).toBeNull()
+	})
+
+	it('cleanupGridSemantics flattens injected rows', async () => {
+		document.body.innerHTML = `
+			<div class="v-date-picker">
+				<div class="v-date-picker-month">
+					<div class="v-date-picker-month__days">
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">Lun</div>
+						<div class="v-date-picker-month__day" data-v-date="1"><button>1</button></div>
+					</div>
+				</div>
+			</div>
+		`
+
+		await updateAccessibility()
+		const monthElBefore = document.querySelector('.v-date-picker-month') as HTMLElement
+		expect(monthElBefore.querySelectorAll('[role="row"]')).toHaveLength(2)
+
+		await cleanupGridSemantics()
+		const monthElAfter = document.querySelector('.v-date-picker-month') as HTMLElement
+		expect(monthElAfter.querySelectorAll('[role="row"]')).toHaveLength(0)
+
+		const daysContainer = monthElAfter.querySelector('.v-date-picker-month__days') as HTMLElement
+		expect(daysContainer.children.length).toBe(2)
 	})
 
 	it('wraps flat div structure into ARIA rows with display: contents', async () => {

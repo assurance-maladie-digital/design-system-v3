@@ -15,6 +15,7 @@
 	import { useCalendarKeyboardNavigation, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useTodayButton } from '../composables'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { locales } from '../locales'
+	import type { ViewMode } from '../composables/useDatePickerViewMode'
 	import type { CalendarModeProps, DateObjectValue } from '../types'
 	import { DatePickerCommonDefaults } from '../types'
 	import { useComplexDatePickerProps } from './props/complexDatePickerProps'
@@ -26,7 +27,7 @@
 
 	const { parseDate, formatDate } = useDateFormat()
 	const { initializeSelectedDates } = useDateInitialization()
-	const { updateAccessibility, fixAriaAttributes } = useDatePickerAccessibility()
+	const { updateAccessibility, cleanupGridSemantics, fixAriaAttributes } = useDatePickerAccessibility()
 
 	// Variables pour suivre le mois et l'année actuellement affichés dans le CalendarMode
 	const currentMonth = ref<string | null>(null)
@@ -95,6 +96,18 @@
 	const datePickerRef = ref<ComponentPublicInstance | null>(null)
 	const complexDatePickerRef = ref<null | ComponentPublicInstance<typeof ComplexDatePicker>>()
 	const datePickerContentId = `date-picker-${useId()}`
+
+	/**
+	 * Nettoie la sémantique grid ARIA injectée avant que Vuetify ne re-render le mois,
+	 * puis la réapplique dans le prochain tick. Cela évite les erreurs de patch Vue
+	 * dues au reparentage de nœuds du virtual DOM.
+	 */
+	const reapplyAccessibility = () => {
+		cleanupGridSemantics()
+		nextTick(() => {
+			updateAccessibility()
+		})
+	}
 	const datePickerDialogRef = ref<HTMLElement | null>(null)
 	const datePickerDialogId = `${datePickerContentId}-dialog`
 	const datePickerHeadingId = `${datePickerContentId}-heading`
@@ -176,10 +189,6 @@
 			// S'assurer que le VDatePicker affiche le bon mois après navigation clavier
 			nextTick(() => {
 				syncDisplayedMonthYearFromDate(date)
-			})
-
-			queueMicrotask(() => {
-				preventCloseOnKeyboardNavigation.value = false
 			})
 		},
 	})
@@ -284,6 +293,11 @@
 
 	// Watcher pour mettre à jour le modèle lorsque les dates sélectionnées changent
 	watch(selectedDates, async (newValue) => {
+		// Vider la grille ARIA injectée avant que Vuetify ne re-render le calendrier
+		if (isDatePickerVisible.value) {
+			reapplyAccessibility()
+		}
+
 		// Ne valider automatiquement que si isValidateOnBlur est true ET pas en validation initiale
 		if (props.isValidateOnBlur && !isInitialValidation.value) {
 			// Valider les dates avec le flux spécifique CalendarMode
@@ -327,6 +341,9 @@
 			// Réinitialiser textInputValue
 			textInputValue.value = ''
 		}
+
+		// Réinitialiser le flag de protection une fois le modèle mis à jour
+		preventCloseOnKeyboardNavigation.value = false
 	})
 
 	const messageClasses = computed(() => ({
@@ -552,6 +569,7 @@
 		}
 
 		if (hasMonthChanged || hasYearChanged) {
+			reapplyAccessibility()
 			nextTick(() => {
 				if (isDatePickerVisible.value) {
 					customizeMonthButton()
@@ -620,6 +638,7 @@
 		currentMonth.value = month
 		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
 		handleMonthUpdate()
+		reapplyAccessibility()
 		nextTick(() => {
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
@@ -634,6 +653,7 @@
 		currentYearName.value = year
 
 		handleYearUpdate()
+		reapplyAccessibility()
 		nextTick(() => {
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
@@ -658,6 +678,13 @@
 		// Fonction qui retourne l'état de la date sélectionnée
 		() => selectedDates.value,
 	)
+
+	const handleViewModeUpdateWrapper = (mode: ViewMode) => {
+		handleViewModeUpdate(mode)
+		if (isDatePickerVisible.value) {
+			reapplyAccessibility()
+		}
+	}
 
 	const handleInputBlur = async () => {
 		emit('blur')
@@ -902,7 +929,7 @@
 						:max="maxDate"
 						:min="minDate"
 						:display-holiday-days="props.displayHolidayDays"
-						@update:view-mode="handleViewModeUpdate"
+						@update:view-mode="handleViewModeUpdateWrapper"
 						@update:month="onUpdateMonth"
 						@update:year="onUpdateYear"
 						@click:date="updateSelectedDates"

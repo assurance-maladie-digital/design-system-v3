@@ -40,22 +40,26 @@ function calculPaquesGregorienne(annee: number): { jour: number, mois: number } 
  * @param format - Format des jours fériés en retour (défaut : "DD/MM/YYYY")
  * @returns Un Set contenant la liste des jours fériés
  */
+// Format littéral des chaînes de dates fixes utilisées dans getJoursFeries.
+// Il ne doit pas dépendre de locales.formatDefault car ces chaînes sont toujours en JJ/MM/AAAA.
+const FIXED_DATE_PARSE_FORMAT = 'DD/MM/YYYY'
+
 export function getJoursFeries(annee: number, format: string = locales.formatDefault): Set<string> {
 	const { jour: jourPaques, mois: moisPaques } = calculPaquesGregorienne(annee)
 	const formatDay = (date: dayjs.Dayjs) => date.format(format)
 
 	const jours = new Set([
-		formatDay(dayjs(`01/01/${annee}`, locales.formatDefault)), // Jour de l'an
+		formatDay(dayjs(`01/01/${annee}`, FIXED_DATE_PARSE_FORMAT)), // Jour de l'an
 		formatDay(dayjs(new Date(annee, moisPaques - 1, jourPaques + 1))), // Lundi de Pâques
-		formatDay(dayjs(`01/05/${annee}`, locales.formatDefault)), // Fête du travail
-		formatDay(dayjs(`08/05/${annee}`, locales.formatDefault)), // Victoire des alliés
+		formatDay(dayjs(`01/05/${annee}`, FIXED_DATE_PARSE_FORMAT)), // Fête du travail
+		formatDay(dayjs(`08/05/${annee}`, FIXED_DATE_PARSE_FORMAT)), // Victoire des alliés
 		formatDay(dayjs(new Date(annee, moisPaques - 1, jourPaques + 39))), // Ascension
 		formatDay(dayjs(new Date(annee, moisPaques - 1, jourPaques + 50))), // Lundi de Pentecôte
-		formatDay(dayjs(`14/07/${annee}`, locales.formatDefault)), // Fête Nationale
-		formatDay(dayjs(`15/08/${annee}`, locales.formatDefault)), // Assomption
-		formatDay(dayjs(`01/11/${annee}`, locales.formatDefault)), // Toussaint
-		formatDay(dayjs(`11/11/${annee}`, locales.formatDefault)), // Armistice
-		formatDay(dayjs(`25/12/${annee}`, locales.formatDefault)), // Noël
+		formatDay(dayjs(`14/07/${annee}`, FIXED_DATE_PARSE_FORMAT)), // Fête Nationale
+		formatDay(dayjs(`15/08/${annee}`, FIXED_DATE_PARSE_FORMAT)), // Assomption
+		formatDay(dayjs(`01/11/${annee}`, FIXED_DATE_PARSE_FORMAT)), // Toussaint
+		formatDay(dayjs(`11/11/${annee}`, FIXED_DATE_PARSE_FORMAT)), // Armistice
+		formatDay(dayjs(`25/12/${annee}`, FIXED_DATE_PARSE_FORMAT)), // Noël
 	])
 
 	return jours
