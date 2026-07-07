@@ -1,11 +1,11 @@
-import type { FilterOption, Items } from './types'
+import type { FilterOption, Item } from './types'
 import filterByPeriod from './filters/logics/period'
 import filterByExactDate from './filters/logics/date'
 import filterByNumber from './filters/logics/number'
 import filterBySelect from './filters/logics/select'
 import filterByText from './filters/logics/text'
 
-export function filterItems<T extends Items[0]>(items: T[], filters: FilterOption[]): T[] {
+export function filterItems<T extends Item>(items: T[], filters: FilterOption[]): T[] {
 	if (!Array.isArray(items) || items.length === 0) return []
 	if (!Array.isArray(filters) || filters.length === 0) return items
 
@@ -14,7 +14,7 @@ export function filterItems<T extends Items[0]>(items: T[], filters: FilterOptio
 	})
 }
 
-function applyFilter<T extends Items[0]>(item: T, filter: FilterOption): boolean {
+function applyFilter<T extends Item>(item: T, filter: FilterOption): boolean {
 	if (!filter.key) return true
 
 	const itemValue = item[filter.key]

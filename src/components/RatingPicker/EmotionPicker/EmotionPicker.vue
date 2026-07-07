@@ -202,15 +202,15 @@
 	flex-direction: column;
 
 	&.sad {
-		color: rgb(var(--v-theme-orange-darken20)) !important;
+		color: rgb(var(--v-theme-error)) !important;
 	}
 
 	&.neutral {
-		color: rgb(var(--v-theme-yellow-darken60)) !important;
+		color: rgb(var(--v-theme-onWarningVariant)) !important;
 	}
 
 	&.happy {
-		color: rgb(var(--v-theme-turquoise-darken60)) !important;
+		color: rgb(var(--v-theme-onSuccessVariant)) !important;
 	}
 
 	&--active.sy-emotion-picker__item--disabled .v-icon {
@@ -230,15 +230,15 @@
 	&:focus,
 	&:hover {
 		&.sad {
-			background: rgb(var(--v-theme-orange-lighten90));
+			background: rgb(var(--v-theme-errorVariantLighten));
 		}
 
 		&.neutral {
-			background: rgb(var(--v-theme-yellow-lighten90));
+			background: rgb(var(--v-theme-warningVariantLigthen));
 		}
 
 		&.happy {
-			background: rgb(var(--v-theme-turquoise-lighten90));
+			background: rgb(var(--v-theme-successVariantLighten));
 		}
 	}
 

@@ -137,7 +137,9 @@ const preview: Preview = {
 					'Éco-conception',
 					[
 						'Introduction',
-						'Reférentiel',
+						'Bonnes pratiques essentielles',
+						'Auto-évaluation Dev Front',
+						'Auto-évaluation UX',
 					],
 					'Design Tokens',
 					['Introduction', 'Utilisation', 'Couleurs', ['*', 'Correspondances couleurs'], 'Couleurs Amelipro', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations'],

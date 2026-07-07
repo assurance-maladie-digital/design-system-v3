@@ -408,13 +408,13 @@ import { useState } from 'react';
                   .toLowerCase()
                   .replace(/[\s\/'’()&,.]+/g, '-')
                   .replace(/^-+|-+$/g, '');
-                return `/docs/${slug}--docs`;
+                return `/?path=/docs/${slug}--docs`;
               }
               
               // Fallback to the old method for components without storybookTitle
               const category = getCategory(componentName);
               const formattedName = componentName.toLowerCase().replace(/[^a-z0-9]/g, '');
-              return `/docs/composants-${category}-${formattedName}--docs`;
+              return `/?path=/docs/composants-${category}-${formattedName}--docs`;
             };
 
             return (

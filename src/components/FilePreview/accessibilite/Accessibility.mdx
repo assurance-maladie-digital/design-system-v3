@@ -45,6 +45,15 @@ import {
       </ul>
     </CriteriaCard>
 
+    <CriteriaCard title="⚠️ Aperçu pdf.js (readonly / suivi de consultation) — non accessible">
+      <ul>
+        <li><strong>Rendu visuel uniquement</strong> : avec <code>readonly</code> ou <code>track-consultation</code>, le PDF est rendu via <strong>pdf.js</strong> dans des <code>&lt;canvas&gt;</code>, <strong>sans couche de texte</strong> (le conteneur des pages est <code>aria-hidden="true"</code>).</li>
+        <li><strong>Non restitué par les lecteurs d'écran</strong> : le contenu du document n'est pas lisible par les technologies d'assistance ; pas de sélection ni de recherche de texte.</li>
+        <li><strong>Alternative obligatoire</strong> : fournir une version accessible du contenu (texte/HTML équivalent, lien de téléchargement du PDF source…). La prévisualisation pdf.js ne doit <strong>jamais</strong> être l'unique moyen d'accès à l'information.</li>
+        <li><strong>À réserver</strong> aux besoins spécifiques de ces modes (masquer le téléchargement/l'impression, suivi de lecture obligatoire) ; sinon préférer l'aperçu natif <code>&lt;object&gt;</code>.</li>
+      </ul>
+    </CriteriaCard>
+
     <CriteriaCard title="Gestion des formats non supportés">
       <ul>
         <li><strong>Message alternatif</strong> : Affichage d'un contenu de remplacement lorsque le type de fichier n'est pas prévisualisable</li>
@@ -73,6 +82,7 @@ import {
       <li>Renseigner systématiquement <code>options.image.alt</code> pour les images informatives.</li>
       <li>Prévoir un message explicite pour les formats non pris en charge.</li>
       <li>Ne pas utiliser la prévisualisation comme unique moyen d'accéder au document.</li>
+      <li><strong>Modes <code>readonly</code> / <code>track-consultation</code> (pdf.js)</strong> : le rendu <code>&lt;canvas&gt;</code> n'est <strong>pas accessible</strong> aux lecteurs d'écran — fournir impérativement une alternative textuelle et/ou un accès au document source.</li>
       <li>Fournir un lien de téléchargement complémentaire lorsque cela est pertinent.</li>
       <li>Tester les PDF sur plusieurs navigateurs car leur rendu dépend des capacités natives.</li>
       <li>Vérifier que le contraste des contenus affichés respecte les exigences d'accessibilité.</li>

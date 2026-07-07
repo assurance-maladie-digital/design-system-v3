@@ -78,6 +78,32 @@ describe('FilePreview', async () => {
 		wrapper.unmount()
 	})
 
+	it('revokes the previous object URL when the file changes (no memory leak)', async () => {
+		// Mocks locaux avec restauration manuelle pour ne pas polluer les autres tests.
+		const origCreate = URL.createObjectURL
+		const origRevoke = URL.revokeObjectURL
+		const revokeSpy = vi.fn()
+		URL.createObjectURL = vi.fn()
+			.mockReturnValueOnce('blob:first')
+			.mockReturnValueOnce('blob:second')
+		URL.revokeObjectURL = revokeSpy
+
+		const localWrapper = mount(FilePreview, { props: { file: testFileImg } })
+		await localWrapper.vm.$nextTick()
+
+		// Première URL créée : rien à révoquer encore (garde sur URL vide)
+		expect(revokeSpy).not.toHaveBeenCalled()
+
+		// Changement de fichier : l'ancienne URL doit être révoquée AVANT d'en créer une nouvelle
+		await localWrapper.setProps({ file: testFilePdf })
+
+		expect(revokeSpy).toHaveBeenCalledWith('blob:first')
+
+		localWrapper.unmount()
+		URL.createObjectURL = origCreate
+		URL.revokeObjectURL = origRevoke
+	})
+
 	it('with options', async () => {
 		await wrapper.setProps({
 			file: testFileImg,

@@ -137,7 +137,7 @@ export const ComponentsList: StoryObj = {
 						title: 'ExternalLinks',
 						description: 'Utilisé pour afficher un menu avec une liste vers des liens externes.',
 						link: '/?path=/docs/composants-navigation-externallinks--docs',
-						img: '/components/external-links.svg',
+						img: `/components/external-links${isAp ? '-ap' : ''}.svg`,
 						category: 'Navigation',
 					},
 					{
@@ -501,7 +501,7 @@ export const ComponentsList: StoryObj = {
 						title: 'RatingPicker',
 						description: 'Permet de recueillir l’avis d’un utilisateur.',
 						link: '/?path=/docs/composants-feedback-ratingpicker--docs',
-						img: '/components/rating-picker.svg',
+						img: `/components/rating-picker${isAp ? '-ap' : ''}.svg`,
 						category: 'Feedback',
 					},
 					{
@@ -595,6 +595,8 @@ export const ComponentsList: StoryObj = {
 					'SyBtnMenu',
 					'SocialMediaLinks',
 					'SyInputSelect',
+					'ExternalLinks',
+					'RatingPicker',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
