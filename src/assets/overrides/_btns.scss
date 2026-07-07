@@ -13,3 +13,11 @@
 .v-btn.v-tab {
 	text-transform: uppercase !important;
 }
+
+.v-btn.bg-primary:focus-visible {
+  outline: 2px solid rgb(var(--v-theme-primary));
+  outline-offset: 3px;
+}
+.v-btn.bg-primary:focus-visible .v-btn__overlay {
+  opacity: 0 !important;
+}
