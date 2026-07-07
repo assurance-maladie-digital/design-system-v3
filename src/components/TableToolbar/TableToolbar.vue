@@ -158,7 +158,6 @@
 .sy-form-input :deep(input) {
 	color: rgb(var(--v-theme-onSurface)) !important;
 	opacity: none !important;
-
 }
 
 .sy-form-input :deep(.v-field__input),
