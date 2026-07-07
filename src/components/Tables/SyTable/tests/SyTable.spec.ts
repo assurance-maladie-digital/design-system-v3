@@ -334,7 +334,7 @@ describe('SyTable', () => {
 
 		await wrapper.vm.$nextTick()
 		await vi.dynamicImportSettled()
-		const resetButton = wrapper.find('button')
+		const resetButton = wrapper.find('.reset button')
 		expect(resetButton.exists()).toBe(true)
 		expect(resetButton.text()).toContain('Réinitialiser les filtres')
 	})
@@ -361,7 +361,7 @@ describe('SyTable', () => {
 
 		await wrapper.vm.$nextTick()
 		await vi.dynamicImportSettled()
-		const resetButton = wrapper.find('button')
+		const resetButton = wrapper.find('.reset button')
 		await resetButton.trigger('click')
 
 		const emitted = wrapper.emitted('update:options')
