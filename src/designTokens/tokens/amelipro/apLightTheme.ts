@@ -4,7 +4,7 @@ export const apLightTheme = {
 	risquePro: baseTokens.color.red.base,
 
 	// Border
-	border: baseTokens.color.cyan.darken20,
+	border: baseTokens.color.cyan.darken40,
 	borderVariant: baseTokens.color.grey.lighten40,
 	borderBright: baseTokens.color.white.base,
 	borderDim: baseTokens.color.white.alpha40,
@@ -16,15 +16,15 @@ export const apLightTheme = {
 	onDisabledVariant: baseTokens.color.white.alpha40,
 
 	// Primary
-	primary: baseTokens.color.cyan.darken20,
+	primary: baseTokens.color.cyan.darken40,
 	onPrimary: baseTokens.color.white.base,
-	primaryVariant: baseTokens.color.cyan.darken40,
+	primaryVariant: baseTokens.color.cyan.darken60,
 	onPrimaryVariant: baseTokens.color.white.base,
 
 	// Secondary
-	secondary: baseTokens.color.cyan.darken60,
+	secondary: baseTokens.color.blue.base,
 	onSecondary: baseTokens.color.white.base,
-	secondaryVariant: baseTokens.color.cyan.darken80,
+	secondaryVariant: baseTokens.color.blue.darken40,
 	onSecondaryVariant: baseTokens.color.white.base,
 
 	// Overlay
@@ -33,7 +33,7 @@ export const apLightTheme = {
 	// Surface
 	surface: baseTokens.color.white.base,
 	surfaceBright: baseTokens.color.cyan.lighten97,
-	surfaceDim: baseTokens.color.cyan.lighten80,
+	surfaceDim: baseTokens.color.cyan.lighten90,
 	onSurface: baseTokens.color.grey.darken60,
 	onSurfaceVariant: baseTokens.color.grey.base,
 
@@ -73,6 +73,7 @@ export const apLightTheme = {
 	interactionDarkEnabled: baseTokens.color.transparentCyan.alpha00,
 	interactionDarkHover: baseTokens.color.transparentCyan.alpha08,
 	interactionDarkPressed: baseTokens.color.transparentCyan.alpha18,
+	interactionDarkSelected: baseTokens.color.cyan.darken40,
 	interactionDarkenEnabled: baseTokens.color.transparentBlack.alpha00,
 	interactionDarkenHover: baseTokens.color.transparentBlack.alpha20,
 	interactionDarkenPressed: baseTokens.color.transparentBlack.alpha40,
