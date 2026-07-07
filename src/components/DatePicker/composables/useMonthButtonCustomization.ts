@@ -26,13 +26,10 @@ export function useMonthButtonCustomization(
 	const buildMonthAriaLabel = (
 		rawMonth: string | null | undefined,
 		displayMonth: string,
-		year: string | null | undefined,
 	): string => {
 		const monthLabel = normalizeMonthLabel(rawMonth, displayMonth)
 		if (!monthLabel) return locales.selectMonth()
-		const cleanYear = (year ?? '').trim()
-		const yearPart = cleanYear ? ` ${cleanYear}` : ''
-		return `${locales.selectMonth()} (${monthLabel}${yearPart} ${locales.selectedByDefault}) - ${displayMonth}`
+		return `${locales.selectMonth()} (${monthLabel} ${locales.selectedByDefault}) - ${displayMonth}`
 	}
 
 	const buildYearAriaLabel = (year: string | null | undefined): string => {
@@ -109,8 +106,7 @@ export function useMonthButtonCustomization(
 						const rawMonthText = monthName?.value || btnParts[0]
 						// Personnaliser le nom du mois avec notre fonction switch case
 						const monthText = getCustomMonthName(rawMonthText)
-						const accessibleYear = yearName?.value || btnParts[1] || yearText.value || ''
-						const monthAriaLabel = buildMonthAriaLabel(rawMonthText, monthText, accessibleYear)
+						const monthAriaLabel = buildMonthAriaLabel(rawMonthText, monthText)
 
 						// Styliser le bouton existant comme un VBtn avec une icône Material Design
 						const monthBtnElement = monthBtn as HTMLElement
