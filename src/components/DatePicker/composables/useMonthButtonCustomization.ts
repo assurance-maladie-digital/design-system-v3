@@ -31,10 +31,8 @@ export function useMonthButtonCustomization(
 		const monthLabel = normalizeMonthLabel(rawMonth, displayMonth)
 		if (!monthLabel) return locales.selectMonth()
 		const cleanYear = (year ?? '').trim()
-		if (cleanYear) {
-			return `${locales.selectMonth()} (${monthLabel} ${locales.selectedByDefault}) - ${displayMonth}`
-		}
-		return locales.openMonthSelector
+		const yearPart = cleanYear ? ` ${cleanYear}` : ''
+		return `${locales.selectMonth()} (${monthLabel}${yearPart} ${locales.selectedByDefault}) - ${displayMonth}`
 	}
 
 	const buildYearAriaLabel = (year: string | null | undefined): string => {

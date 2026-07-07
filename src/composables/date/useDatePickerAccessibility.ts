@@ -152,6 +152,29 @@ const ensureMonthAndYearSelectorLabels = (pickerEl: HTMLElement) => {
  * - cellules de date => role="gridcell"
  * - boutons de date => restent de vrais boutons
  */
+const createAriaRow = (className?: string): HTMLElement => {
+	const row = document.createElement('div')
+	row.setAttribute('role', 'row')
+	row.style.display = 'contents'
+	if (className) row.className = className
+	return row
+}
+
+const cleanupGridSemanticsForMonth = (daysContainer: HTMLElement) => {
+	Array.from(daysContainer.children).forEach((child) => {
+		if (
+			child instanceof HTMLElement
+			&& child.getAttribute('role') === 'row'
+			&& child.style.display === 'contents'
+		) {
+			while (child.firstChild) {
+				daysContainer.appendChild(child.firstChild)
+			}
+			child.remove()
+		}
+	})
+}
+
 const applyGridSemantics = (pickerEl: HTMLElement) => {
 	const monthEls = pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-month')
 
@@ -180,29 +203,10 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 
 		const colCount = weekdayCells.length || 7
 
-		const createRow = (className?: string): HTMLElement => {
-			const row = document.createElement('div')
-			row.setAttribute('role', 'row')
-			row.style.display = 'contents'
-			if (className) row.className = className
-			return row
-		}
-
-		const clearExistingRows = () => {
-			Array.from(daysContainer.children).forEach((child) => {
-				if (child instanceof HTMLElement && child.getAttribute('role') === 'row' && child.style.display === 'contents') {
-					while (child.firstChild) {
-						daysContainer.appendChild(child.firstChild)
-					}
-					child.remove()
-				}
-			})
-		}
-
-		clearExistingRows()
+		cleanupGridSemanticsForMonth(daysContainer)
 
 		if (weekdayCells.length > 0) {
-			const headerRow = createRow('v-date-picker-month__weekdays')
+			const headerRow = createAriaRow('v-date-picker-month__weekdays')
 			weekdayCells.forEach((cell, index) => {
 				cell.setAttribute('role', 'columnheader')
 
@@ -219,7 +223,7 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 		}
 
 		for (let i = 0; i < dayCells.length; i += colCount) {
-			const row = createRow('v-date-picker-month__week')
+			const row = createAriaRow('v-date-picker-month__week')
 			const chunk = dayCells.slice(i, i + colCount)
 			chunk.forEach((cell) => {
 				const button = cell.querySelector<HTMLButtonElement>('button')
@@ -239,6 +243,20 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 			})
 			daysContainer.appendChild(row)
 		}
+	})
+}
+
+const cleanupGridSemantics = (root: ParentNode = document) => {
+	const pickerEls = Array.from(root.querySelectorAll<HTMLElement>('.v-date-picker'))
+
+	if (root instanceof HTMLElement && root.matches('.v-date-picker')) {
+		pickerEls.unshift(root)
+	}
+
+	pickerEls.forEach((pickerEl) => {
+		pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-month__days').forEach((daysContainer) => {
+			cleanupGridSemanticsForMonth(daysContainer)
+		})
 	})
 }
 
@@ -329,6 +347,7 @@ export function useDatePickerAccessibility() {
 
 	return {
 		updateAccessibility,
+		cleanupGridSemantics,
 		handleKeyDown,
 		fixAriaAttributes,
 	}
