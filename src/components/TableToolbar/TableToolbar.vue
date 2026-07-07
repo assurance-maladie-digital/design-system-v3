@@ -198,10 +198,4 @@
 .v-theme--dark button.v-btn:hover :deep() {
 	background: rgba(var(--v-theme-onPrimary), 0.1);
 }
-
-// .sy-select__clear-icon {
-// 	color: rgb(var(--v-theme-onSurface)) !important;
-// 	opacity: var(--v-medium-emphasis-opacity) !important;
-// }
-
 </style>
