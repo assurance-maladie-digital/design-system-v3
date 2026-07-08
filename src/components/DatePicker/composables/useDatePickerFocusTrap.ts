@@ -69,6 +69,17 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 			return
 		}
 
+		// Shift+Tab inverse de Tab : depuis la grille on remonte au header
+		if (event.shiftKey && isFromGrid && todayButton) {
+			const header = root.querySelector<HTMLElement>('.v-date-picker-controls')
+			const headerFocusables = header ? getFocusableElements(header) : []
+			const lastHeaderFocusable = headerFocusables.at(-1)
+			if (lastHeaderFocusable) {
+				lastHeaderFocusable.focus({ preventScroll: true })
+				return
+			}
+		}
+
 		if (!event.shiftKey && active === focusables.at(-1)) {
 			firstFocusable.focus({ preventScroll: true })
 			return

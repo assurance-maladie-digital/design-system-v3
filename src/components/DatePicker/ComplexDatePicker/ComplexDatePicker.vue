@@ -520,6 +520,7 @@
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
 	const menuActivatorRef = ref<HTMLElement | undefined>(undefined)
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
+	const datePickerMenuRef = ref<HTMLElement | null>(null)
 	const datePickerContentId = `date-picker-${useId()}`
 
 	// Aria props for activator: only declare aria-controls when panel exists
@@ -932,6 +933,10 @@
 				nextTick(() => {
 					customizeMonthButton()
 					markHolidayDays()
+					nextTick(() => {
+						const monthBtn = datePickerMenuRef.value?.querySelector<HTMLElement>('.v-date-picker-controls__month-btn')
+						monthBtn?.focus({ preventScroll: true })
+					})
 				})
 			}
 		},
@@ -1101,6 +1106,7 @@
 				</template>
 
 				<div
+					ref="datePickerMenuRef"
 					tabindex="-1"
 					role="presentation"
 					@keydown.capture="handleMenuKeydown"
