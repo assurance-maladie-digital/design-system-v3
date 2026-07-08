@@ -1,5 +1,6 @@
 import { nextTick, onBeforeUnmount, onMounted } from 'vue'
 import { locales } from '@/components/DatePicker/locales'
+import type { ViewMode } from '@/components/DatePicker/composables/useDatePickerViewMode'
 
 /**
  * Composable pour améliorer l'accessibilité du CalendarMode
@@ -139,6 +140,19 @@ const ensureMonthAndYearSelectorLabels = (pickerEl: HTMLElement) => {
 		button.setAttribute('aria-label', ariaLabel)
 		button.setAttribute('title', ariaLabel)
 	})
+}
+
+const ensureMonthAndYearControlExpanded = (pickerEl: HTMLElement, viewMode: ViewMode) => {
+	const monthControl = pickerEl.querySelector<HTMLElement>(MONTH_CONTROL_SELECTOR)
+	const yearControl = pickerEl.querySelector<HTMLElement>(YEAR_CONTROL_SELECTOR)
+
+	if (monthControl) {
+		monthControl.setAttribute('aria-expanded', String(viewMode === 'months'))
+	}
+
+	if (yearControl) {
+		yearControl.setAttribute('aria-expanded', String(viewMode === 'year'))
+	}
 }
 
 /**
@@ -282,7 +296,7 @@ export function useDatePickerAccessibility() {
 	 * Un root peut être passé pour limiter le patch à une zone précise.
 	 * Sans root, on garde le comportement historique : tous les date pickers du document sont traités.
 	 */
-	const updateAccessibility = async (root: ParentNode = document): Promise<void> => {
+	const updateAccessibility = async (root: ParentNode = document, viewMode?: ViewMode): Promise<void> => {
 		await nextTick()
 
 		const pickerEls = Array.from(root.querySelectorAll<HTMLElement>('.v-date-picker'))
@@ -294,6 +308,9 @@ export function useDatePickerAccessibility() {
 		pickerEls.forEach((pickerEl) => {
 			ensureNavigationButtonLabels(pickerEl)
 			ensureMonthAndYearSelectorLabels(pickerEl)
+			if (viewMode !== undefined) {
+				ensureMonthAndYearControlExpanded(pickerEl, viewMode)
+			}
 			applyGridSemantics(pickerEl)
 		})
 	}
