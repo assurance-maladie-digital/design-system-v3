@@ -44,7 +44,7 @@ interface DataOptions {
 }
 
 const meta = {
-	title: 'Composants/Tableaux/SyServerTable/Rules',
+	title: 'Composants/Tableaux/SyServerTable/Filtres/Rules',
 	component: SyServerTable,
 	decorators: [
 		() => ({
