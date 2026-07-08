@@ -143,7 +143,9 @@
 		async (visible) => {
 			if (visible && !props.noCalendar) {
 				await addDatePickerKeydownListener()
-				datePickerDialogRef.value?.focus()
+				// Placer le focus sur le bouton d'ouverture du panel des mois
+				const monthBtn = datePickerDialogRef.value?.querySelector<HTMLElement>('.v-date-picker-controls__month-btn')
+				monthBtn?.focus({ preventScroll: true })
 				return
 			}
 
