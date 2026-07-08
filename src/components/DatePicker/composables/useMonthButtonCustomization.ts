@@ -34,8 +34,8 @@ export function useMonthButtonCustomization(
 		return `${locales.selectMonth()} (${fullMonth} / ${displayMonth} ${locales.selectedByDefault})`
 	}
 
-	const buildYearAriaLabel = (year: string | null | undefined): string => {
-		const cleanYear = (year ?? '').trim()
+	const buildYearAriaLabel = (year: string | number | null | undefined): string => {
+		const cleanYear = String(year ?? '').trim()
 		if (cleanYear) {
 			return `${locales.selectYear()} (${cleanYear} ${locales.selectedByDefault})`
 		}
