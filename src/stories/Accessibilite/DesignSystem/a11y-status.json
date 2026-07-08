@@ -1,5 +1,5 @@
 {
-  "date": "2026-06-25T11:17:10.772Z",
+  "date": "2026-07-02T12:46:19.790Z",
   "compliantCount": 54,
   "totalCount": 77,
   "percentage": "70.13",
@@ -140,7 +140,7 @@
       "componentName": "Customs/Selects/SyInputSelect",
       "hasA11yTests": false,
       "hasA11yDisabledInStories": false,
-      "mdxStatus": "Bientôt disponible",
+      "mdxStatus": "Complète",
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Formulaires/Selects/SyInputSelect",
       "hasManualAudit": false,
