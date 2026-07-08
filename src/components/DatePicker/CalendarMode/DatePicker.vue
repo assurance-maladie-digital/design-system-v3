@@ -105,7 +105,7 @@
 	const reapplyAccessibility = () => {
 		cleanupGridSemantics()
 		nextTick(() => {
-			updateAccessibility()
+			updateAccessibility(document, currentViewMode.value)
 		})
 	}
 	const datePickerDialogRef = ref<HTMLElement | null>(null)
@@ -805,7 +805,7 @@
 
 		if (isDatePickerVisible.value) {
 			nextTick(() => {
-				updateAccessibility()
+				updateAccessibility(document, currentViewMode.value)
 			})
 		}
 		else {
