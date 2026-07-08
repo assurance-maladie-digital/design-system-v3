@@ -152,12 +152,16 @@
 		// Si "Toutes les versions" est sélectionné et aucun composant n'est choisi, afficher tous les composants
 		if (filters.selectedComponents.length === 0
 			&& (filters.versionFilter === '__ALL__' || filters.a11yVersionFilter === '__ALL__')) {
-			return results
+			return [...results].sort((a, b) => {
+				const versionA = a.functionalVersion || '0.0.0'
+				const versionB = b.functionalVersion || '0.0.0'
+				return versionB.localeCompare(versionA, undefined, { numeric: true })
+			})
 		}
 
 		if (!hasActiveFilter.value) return []
 
-		return results
+		return [...results]
 			.filter(
 				item =>
 					(filters.selectedComponents.length === 0
@@ -168,9 +172,14 @@
 					&& (filters.selectedComponents.length === 0 || filters.includeDeprecated || item.status === 'actif'),
 			)
 			.sort((a, b) => {
-				const versionA = a.functionalVersion || '0.0.0'
-				const versionB = b.functionalVersion || '0.0.0'
-				return versionB.localeCompare(versionA, undefined, { numeric: true })
+				// Si "Toutes les versions" est sélectionné, trier par version (décroissante)
+				if (filters.versionFilter === '__ALL__' || filters.a11yVersionFilter === '__ALL__') {
+					const versionA = a.functionalVersion || '0.0.0'
+					const versionB = b.functionalVersion || '0.0.0'
+					return versionB.localeCompare(versionA, undefined, { numeric: true })
+				}
+				// Sinon, trier par nom alphabétique
+				return a.componentName.localeCompare(b.componentName)
 			})
 	})
 
