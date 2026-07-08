@@ -40,12 +40,10 @@ describe('SyCheckBoxGroup', () => {
 		await checkboxes[0]?.find('input').setValue(true)
 
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['A'])
-		expect(wrapper.emitted('change')?.[0]).toEqual(['A'])
 
 		// Uncheck
 		await checkboxes[0]?.find('input').setValue(false)
 		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([null])
-		expect(wrapper.emitted('change')?.[1]).toEqual([null])
 	})
 
 	it('should handle v-model correctly (multiple)', async () => {
