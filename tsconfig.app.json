@@ -6,7 +6,6 @@
     "declaration": true,
     "declarationDir": "./dist/src",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "moduleResolution": "bundler",
     "paths": {
       "@/*": [
         "./src/*"
@@ -23,9 +22,7 @@
     "src/**/*.vue",
     "src/**/*.json",
     "package.json",
-    "src/vuetifyConfig.ts",
-    ".storybook/**/*",
-    "src/stories/**/*"
+    "src/vuetifyConfig.ts"
   ],
   "exclude": [
     "**/*.visual.cy.ts",
