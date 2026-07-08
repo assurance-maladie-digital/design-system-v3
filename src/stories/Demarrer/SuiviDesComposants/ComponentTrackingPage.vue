@@ -172,14 +172,9 @@
 					&& (filters.selectedComponents.length === 0 || filters.includeDeprecated || item.status === 'actif'),
 			)
 			.sort((a, b) => {
-				// Si "Toutes les versions" est sélectionné, trier par version (décroissante)
-				if (filters.versionFilter === '__ALL__' || filters.a11yVersionFilter === '__ALL__') {
-					const versionA = a.functionalVersion || '0.0.0'
-					const versionB = b.functionalVersion || '0.0.0'
-					return versionB.localeCompare(versionA, undefined, { numeric: true })
-				}
-				// Sinon, trier par nom alphabétique
-				return a.componentName.localeCompare(b.componentName)
+				const versionA = a.functionalVersion || '0.0.0'
+				const versionB = b.functionalVersion || '0.0.0'
+				return versionB.localeCompare(versionA, undefined, { numeric: true })
 			})
 	})
 
