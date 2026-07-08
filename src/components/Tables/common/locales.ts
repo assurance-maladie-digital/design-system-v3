@@ -8,6 +8,11 @@ export const locales = {
 	selectAllRows: 'Sélectionner toutes les lignes',
 	selectRow: 'Sélectionner la ligne',
 
+	// Bulk actions locales (barre de sélection ; actions pilotées par le projet via #bulk-actions)
+	bulkActions: 'Actions groupées',
+	selectedCount: (count: number) => count <= 1 ? `${count} élément sélectionné` : `${count} éléments sélectionnés`,
+	clearSelection: 'Désélectionner tout',
+
 	// Pagination locales
 	pagination: {
 		itemsPerPageText: 'Lignes par page:',
@@ -33,6 +38,7 @@ export const locales = {
 	moveColumnRight: (columnTitle: string) => `Déplacer la colonne ${columnTitle} vers la droite`,
 
 	// Accessibility locales
+	loading: 'Chargement des données en cours',
 	rowCountStatus: (count: number) => count <= 1 ? `${count} ligne trouvée` : `${count} lignes trouvées`,
 	sortAscending: 'Tri croissant',
 	sortDescending: 'Tri décroissant',
