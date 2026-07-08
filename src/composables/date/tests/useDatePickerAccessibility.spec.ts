@@ -449,8 +449,7 @@ describe('useDatePickerAccessibility', () => {
 			const monthBtn = document.querySelector('.v-date-picker-controls__month-btn')!
 			const ariaLabel = monthBtn.getAttribute('aria-label')
 
-			// Vérifier que l'aria-label contient "décembre sélectionné par défaut"
-			expect(ariaLabel).toContain('décembre sélectionné par défaut')
+			expect(ariaLabel).toContain('électionner un mois (décembre / déc. sélectionné par défaut)')
 		})
 
 		it('vérifie que l\'aria-label du bouton de l\'année contient l\'année sélectionnée par défaut', async () => {
