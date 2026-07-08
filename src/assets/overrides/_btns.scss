@@ -23,3 +23,7 @@ button:focus-visible,
 .v-btn.bg-primary:focus-visible .v-btn__overlay {
 	opacity: 0 !important;
 }
+
+.v-btn:focus-visible::after {
+	opacity: 0 !important;
+}
