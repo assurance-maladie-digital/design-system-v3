@@ -29,7 +29,7 @@ export const locales = {
 	selectYear: (year?: string): string => year ? `Sélectionner l'année (${year})` : 'Sélectionner une année',
 	selectYearForDisplay: (year: string): string => `Sélectionner l'année ${year}`,
 	selectMonthWithYear: (month: string, year?: string): string => {
-		return year ? `Sélectionner le mois de ${month} ${year}` : `Sélectionner le mois de ${month}`
+		return year ? `Sélectionner le mois de ${month} ${year}` : `${month}`
 	},
 	openMonthSelector: 'Ouvrir le sélecteur de mois',
 	openYearSelector: 'Ouvrir le sélecteur d\'année',

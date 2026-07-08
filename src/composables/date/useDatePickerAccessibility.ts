@@ -58,8 +58,8 @@ const compactText = (value: string | null | undefined): string => (
 	value?.replace(/\s+/g, ' ').trim() ?? ''
 )
 
-export const expandMonthAccessibleName = (value: string): string => {
-	const normalized = value.toLocaleLowerCase('fr-FR')
+export const expandMonthAccessibleName = (value: string | number | null | undefined): string => {
+	const normalized = String(value ?? '').toLocaleLowerCase('fr-FR')
 	return MONTH_ACCESSIBLE_NAMES[normalized] ?? normalized
 }
 
