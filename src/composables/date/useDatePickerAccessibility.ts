@@ -210,6 +210,17 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 			weekdayCells.forEach((cell, index) => {
 				cell.setAttribute('role', 'columnheader')
 
+				// Masquer le texte abrégé (L, M, M, J, V, S, D) aux lecteurs d'écran
+				// pour ne garder que le aria-label complet (Lundi, Mardi, etc.)
+				if (!cell.querySelector('span[aria-hidden="true"]')) {
+					const visualText = cell.textContent ?? ''
+					cell.textContent = ''
+					const hiddenSpan = document.createElement('span')
+					hiddenSpan.setAttribute('aria-hidden', 'true')
+					hiddenSpan.textContent = visualText
+					cell.appendChild(hiddenSpan)
+				}
+
 				const label = WEEKDAY_LABELS[index]
 				if (label) {
 					cell.setAttribute('aria-label', label)
