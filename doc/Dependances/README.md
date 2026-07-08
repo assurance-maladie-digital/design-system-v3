@@ -12,7 +12,7 @@ doit installer lui-même, le Design System ne les embarquant pas dans son bundle
 |---|---|---|
 | `vue` | `^3.5.18` | Framework. Une seule instance de Vue doit exister dans l'application. |
 | `vuetify` | `3.12.2` | Bibliothèque de composants sous-jacente. Version **fixée** (pas de plage). |
-| `@mdi/js` | `>=7.0.0` | Chemins SVG des icônes Material Design Icons utilisés par les composants. |
+| `@mdi/js` | `^7.4.47` | Chemins SVG des icônes Material Design Icons utilisés par les composants. |
 
 > Une `peerDependency` n'est **pas installée** par le Design System : c'est au
 > projet consommateur de l'ajouter à son `package.json`. En contrepartie, une seule
@@ -34,8 +34,12 @@ Il est désormais déclaré en **`peerDependency`** et **externalisé du build**
 | Section `package.json` | Avant | Après |
 |---|---|---|
 | `dependencies` | `@mdi/js: ^7.4.47` | — (retiré) |
-| `peerDependencies` | — | `@mdi/js: >=7.0.0` |
-| `devDependencies` | — | `@mdi/js: ^7.4.47` *(pour le dev/les stories)* |
+| `peerDependencies` | — | `@mdi/js: ^7.4.47` |
+| `devDependencies` | `@mdi/js: ^7.4.47` *(déjà présent)* | `@mdi/js: ^7.4.47` *(inchangé, pour le dev et les stories)* |
+
+> Seule la ligne `dependencies → peerDependencies` change : `@mdi/js` était déjà présent
+> en `devDependencies` et le reste (il sert au dev, aux stories et aux tests du Design
+> System lui-même).
 
 ### Externalisation dans le build
 
@@ -47,7 +51,7 @@ l'exécution.
 // vite.config.ts
 build: {
   rollupOptions: {
-    external: ['vue', /^vuetify/, '@mdi/js'],
+    external: ['vue', 'vue-router', /^vuetify/, '@mdi/js'],
     output: {
       globals: {
         // …
@@ -67,9 +71,12 @@ build: {
   **version unique** partagée, au lieu de deux copies dans le `node_modules` / le bundle.
 - **Bundle plus léger.** Les chemins d'icônes ne sont plus embarqués dans le paquet
   publié `@cnamts/synapse`.
-- **Contrôle de version côté consommateur.** La contrainte large `>=7.0.0` laisse
-  l'application choisir/aligner sa version de `@mdi/js` (cohérente avec celle exigée
-  par sa version de Vuetify).
+- **Version alignée et garantie.** La contrainte `^7.4.47` demande au consommateur une
+  version au moins égale à celle contre laquelle le Design System est développé, tout en
+  restant dans le major `7.x`. Cela garantit que **toutes les icônes utilisées par le DS
+  existent** côté consommateur : une version antérieure pourrait exposer certains chemins
+  d'icônes en `undefined` (icônes vides, sans erreur), et un saut de major non testé
+  pourrait renommer ou supprimer des icônes.
 
 ---
 
