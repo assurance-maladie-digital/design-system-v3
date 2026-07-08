@@ -123,7 +123,10 @@ export function useFieldValidation() {
 					return createValidationResult(
 						(typeof value === 'string' && value.trim() !== '')
 						|| (value instanceof Date)
-						|| (typeof value === 'object' && value !== null),
+						// Un tableau vide (mode multiple : aucune sélection) n'est pas rempli
+						|| (Array.isArray(value)
+							? value.length > 0
+							: (typeof value === 'object' && value !== null)),
 						options.message || options.warningMessage || `Vous devez renseigner ${identifier}.`,
 					)
 

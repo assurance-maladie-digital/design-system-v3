@@ -44,6 +44,16 @@ describe('useFieldValidation', () => {
 		expect(await rule(null)).toEqual({ error: 'This field is required.' })
 	})
 
+	it('should invalidate required rule for an empty array (multiple mode)', async () => {
+		const rules = generateRules([{ type: 'required', options: { message: 'This field is required.' } }])
+		const rule = rules[0]!
+
+		// Tableau vide = aucune sélection → invalide
+		expect(await rule([])).toEqual({ error: 'This field is required.' })
+		// Tableau avec au moins une sélection → valide
+		expect(await rule(['a'])).toEqual({ success: 'Le champ est valide.' })
+	})
+
 	it('should validate required rule with warning mode', async () => {
 		const rules = generateRules([{ type: 'required', options: { isWarning: true, warningMessage: 'Warning: field required.' } }])
 		const rule = rules[0]!
