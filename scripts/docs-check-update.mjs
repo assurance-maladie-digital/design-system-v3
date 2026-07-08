@@ -15,8 +15,9 @@ import { basename, dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
-const a11yJsonPath = resolve(rootDir, 'a11y-history-data.json')
-const funcJsonPath = resolve(rootDir, 'functional-history-data.json')
+const dataDir = resolve(rootDir, 'scripts/data')
+const a11yJsonPath = resolve(dataDir, 'a11y-history-data.json')
+const funcJsonPath = resolve(dataDir, 'functional-history-data.json')
 const componentsDir = resolve(rootDir, 'src/components')
 
 const targetNames = process.argv.slice(2).filter(Boolean)

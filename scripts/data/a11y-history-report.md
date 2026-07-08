@@ -1,6 +1,6 @@
 # Rapport d’historique d’accessibilité par composant
 
-- Généré le: 2026-06-25T11:17:10.493Z
+- Généré le: 2026-07-01T08:03:15.452Z
 
 ## Accordion
 
@@ -1584,11 +1584,6 @@ Aucune amélioration d’accessibilité détectée.
 - **18/07/2025** — Fix/sy select after audit (#787)  
   Release: `v1.0.3` · Hash: `bb0f966392add9b7ded61f7edddd960556bc228c` | pattern ARIA
 
-## SyCheckBoxGroup
-
-- **23/02/2026** — SyCheckBoxGroup component (#1783)  
-  Release: `v1.0.21` · Hash: `eaed6607738f2806fd050d39f4e4a0145dbce92f` | pattern ARIA
-
 ## SyCheckbox
 
 - **24/06/2026** — Update migration doc + restructure Guide du dev (#2318)  
@@ -1638,6 +1633,11 @@ Aucune amélioration d’accessibilité détectée.
 
 - **30/06/2025** — add syCheckbox componant (#725)  
   Release: `v1.0.2` · Hash: `0a269e7639a19a04f820491b746d9033750fb7f4` | pattern ARIA
+
+## SyCheckBoxGroup
+
+- **23/02/2026** — SyCheckBoxGroup component (#1783)  
+  Release: `v1.0.21` · Hash: `eaed6607738f2806fd050d39f4e4a0145dbce92f` | pattern ARIA
 
 ## SyForm
 
@@ -2056,6 +2056,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## DatePicker
 
+- **30/06/2026** — Feat/wip refacto dp 3 (#2207)  
+  Release: `1.1.1` · Hash: `f632ce4fe5248ce7bb02a97cd2cb29cdf76b473e` | pattern ARIA
+
 - **22/04/2026** — DatePicker: fix VMenu template syntax (#2129)  
   Release: `v1.0.25` · Hash: `649a041438673664012b80d0e2ae74b7ba18d2b4` | pattern ARIA
 
@@ -2113,6 +2116,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.1` · Hash: `f1384e4430380e37ef475f2a924039341233e794` | pattern ARIA
 
 ## DateTextInput
+
+- **30/06/2026** — Feat/wip refacto dp 3 (#2207)  
+  Release: `1.1.1` · Hash: `f632ce4fe5248ce7bb02a97cd2cb29cdf76b473e` | pattern ARIA
 
 - **01/04/2026** — Feat/improve date pickers accessibility (#1964)  
   Release: `v1.0.24` · Hash: `bfc61d4def7a5d1b29f3777ab2f57eff5e88152a` | mot-clé a11y · pattern ARIA
@@ -3305,6 +3311,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## EmotionPicker
 
+- **30/06/2026** — [RatingPicker] fix des problèmes d'accessibilitées (#2335)  
+  Release: `1.1.1` · Hash: `e288adda25134e15065ec4b6c5332bb9c3e70d01` | mot-clé a11y · pattern ARIA
+
 - **06/05/2026** — RatingPicker: Ameliorer accessibilité (#2092)  
   Release: `v1.0.26` · Hash: `e0db1fedb8c2481a894b0db0401b17ffeb891485` | mot-clé a11y · pattern ARIA
 
@@ -3331,6 +3340,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## NumberPicker
 
+- **30/06/2026** — [RatingPicker] fix des problèmes d'accessibilitées (#2335)  
+  Release: `1.1.1` · Hash: `e288adda25134e15065ec4b6c5332bb9c3e70d01` | mot-clé a11y · pattern ARIA
+
 - **06/05/2026** — RatingPicker: Ameliorer accessibilité (#2092)  
   Release: `v1.0.26` · Hash: `e0db1fedb8c2481a894b0db0401b17ffeb891485` | mot-clé a11y · pattern ARIA
 
@@ -3353,6 +3365,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.9-alpha` · Hash: `750c722f16ddd4a2e400de7819f0bb1bc249d3bd` | pattern ARIA
 
 ## RatingPicker
+
+- **30/06/2026** — [RatingPicker] fix des problèmes d'accessibilitées (#2335)  
+  Release: `1.1.1` · Hash: `e288adda25134e15065ec4b6c5332bb9c3e70d01` | mot-clé a11y · pattern ARIA
 
 - **20/05/2026** — Feat/improve tests (#2192)  
   Release: `v1.0.27` · Hash: `c2b48d9293c9a62a5401fd577ca2c04894ad9539` | pattern ARIA
@@ -3388,6 +3403,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.9-alpha` · Hash: `750c722f16ddd4a2e400de7819f0bb1bc249d3bd` | pattern ARIA
 
 ## StarsPicker
+
+- **30/06/2026** — [RatingPicker] fix des problèmes d'accessibilitées (#2335)  
+  Release: `1.1.1` · Hash: `e288adda25134e15065ec4b6c5332bb9c3e70d01` | mot-clé a11y · pattern ARIA
 
 - **06/05/2026** — RatingPicker: Ameliorer accessibilité (#2092)  
   Release: `v1.0.26` · Hash: `e0db1fedb8c2481a894b0db0401b17ffeb891485` | mot-clé a11y · pattern ARIA
@@ -3587,98 +3605,79 @@ Aucune amélioration d’accessibilité détectée.
 - **21/05/2025** — Ajout du composant SyTextArea (#612)  
   Release: `v0.0.1` · Hash: `368e7d8935d95521d1adfb4a1fdf58d2c45e3d86` | pattern ARIA
 
-## TableToolbar
+## AutocompleteFilter
 
-- **11/02/2026** — Accessibilité: file reorganization accessibility (#1792)  
-  Release: `v1.0.20` · Hash: `b1bca6204773d854436df21d2acd547e18f0f61a` | mot-clé a11y
+- **07/04/2026** — SyTable / SyServerTable: add autocomplete filter (#2068)  
+  Release: `v1.0.24` · Hash: `e7e25c54c490c4756d82ca344057897083fdd444` | pattern ARIA
 
-- **22/12/2025** — add Storybook a11y addon and disable color-contrast checks (#1658)  
-  Release: `v1.0.17` · Hash: `d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4` | mot-clé a11y
+- **19/06/2025** — Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)  
+  Release: `v1.0.2` · Hash: `5679a48dca94324f5f1da304664ab7e77cabe8c4` | pattern ARIA
 
-- **10/12/2025** — Fix Vuetify sass warn (#1594)  
-  Release: `v1.0.16` · Hash: `cd8602b795a93778f3678ecca90d565aca86af5a` | pattern ARIA
+- **18/06/2025** — Complexe Tables : add Select rules (#708)  
+  Release: `v1.0.2` · Hash: `ad3306195e85f853ec49e9d77fc79f70bff673f1` | pattern ARIA
 
-- **10/12/2025** — AmeliproIcon : fix v-html issue (#1583)  
-  Release: `v1.0.16` · Hash: `687eac066320e4974c10e66e83e908e642cd8308` | pattern ARIA
+## DateFilter
 
-- **25/07/2025** — update packages + fix tests + CI improvements (#837)  
-  Release: `v1.0.4` · Hash: `5f94b9c5cc9e56eab174e34bc3475be74ea2d088` | pattern ARIA
+- **07/04/2026** — SyTable / SyServerTable: add autocomplete filter (#2068)  
+  Release: `v1.0.24` · Hash: `e7e25c54c490c4756d82ca344057897083fdd444` | pattern ARIA
 
-- **14/04/2025** — Amélioration des tests avec vitest (#525)  
-  Release: `v0.0.15-alpha` · Hash: `7bd988914d82b2708a9386593486a63aa86f0660` | pattern ARIA
+- **19/06/2025** — Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)  
+  Release: `v1.0.2` · Hash: `5679a48dca94324f5f1da304664ab7e77cabe8c4` | pattern ARIA
 
-- **17/02/2025** — Ajout du composant TableToolbar (#388)  
-  Release: `v0.0.10-alpha` · Hash: `e5a0f2ec8f52a5b6df6868adc8e908d24043c25b` | pattern ARIA
+- **18/06/2025** — Complexe Tables : add Select rules (#708)  
+  Release: `v1.0.2` · Hash: `ad3306195e85f853ec49e9d77fc79f70bff673f1` | pattern ARIA
 
-## SyServerTable
+## NumberFilter
 
-- **29/05/2026** — Tables : Migration Ameli pro (#2186)  
-  Release: `v1.1.0` · Hash: `8c2f5cc85c4c5705daecafc3f00727b7f4b6ef89` | pattern ARIA
+- **07/04/2026** — SyTable / SyServerTable: add autocomplete filter (#2068)  
+  Release: `v1.0.24` · Hash: `e7e25c54c490c4756d82ca344057897083fdd444` | pattern ARIA
 
-- **17/04/2026** — SyTable / SyServerTable: add page input option (#2104)  
-  Release: `v1.0.25` · Hash: `dfccf9d35dfd9fc7fc21f6009e9aba4d2afd5ddc` | pattern ARIA
+- **19/06/2025** — Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)  
+  Release: `v1.0.2` · Hash: `5679a48dca94324f5f1da304664ab7e77cabe8c4` | pattern ARIA
 
-- **08/04/2026** — SyTable + SyServerTable: add clickable row (#2075)  
-  Release: `v1.0.24` · Hash: `49652e0d949e0e40b9215f9211cecb4bd95a1b5e` | pattern ARIA
+- **18/06/2025** — Complexe Tables : add Select rules (#708)  
+  Release: `v1.0.2` · Hash: `ad3306195e85f853ec49e9d77fc79f70bff673f1` | pattern ARIA
 
-- **03/04/2026** — SyTable / SyServerTable: pinned columns (#2044)  
-  Release: `v1.0.24` · Hash: `a2fa72299b5806daab9486dd41f474dd9dd80ab4` | pattern ARIA
+## PeriodFilter
 
-- **11/02/2026** — Accessibilité: file reorganization accessibility (#1792)  
-  Release: `v1.0.20` · Hash: `b1bca6204773d854436df21d2acd547e18f0f61a` | mot-clé a11y
+- **07/04/2026** — SyTable / SyServerTable: add autocomplete filter (#2068)  
+  Release: `v1.0.24` · Hash: `e7e25c54c490c4756d82ca344057897083fdd444` | pattern ARIA
 
-- **22/12/2025** — add Storybook a11y addon and disable color-contrast checks (#1658)  
-  Release: `v1.0.17` · Hash: `d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4` | mot-clé a11y
+- **19/06/2025** — Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)  
+  Release: `v1.0.2` · Hash: `5679a48dca94324f5f1da304664ab7e77cabe8c4` | pattern ARIA
 
-- **24/07/2025** — ComplexeTables: rgaa improvments + fix display (#829)  
-  Release: `v1.0.4` · Hash: `1ce73af328b4960272770e8c8c5b22d786838649` | pattern ARIA
+- **18/06/2025** — Complexe Tables : add Select rules (#708)  
+  Release: `v1.0.2` · Hash: `ad3306195e85f853ec49e9d77fc79f70bff673f1` | pattern ARIA
 
-- **01/07/2025** — SyTable / SyServerTable : Selection (#726)  
-  Release: `v1.0.2` · Hash: `b3ae1a7879d2e8911093e5a597ac18b8ffb5face` | pattern ARIA
+## SelectFilter
 
-- **12/06/2025** — gestion de la dimension des colonnes des les tableaux (#666)  
-  Release: `v1.0.1` · Hash: `8566e67d97bab55244be6f39956b99283b43a927` | pattern ARIA
+- **07/04/2026** — SyTable / SyServerTable: add autocomplete filter (#2068)  
+  Release: `v1.0.24` · Hash: `e7e25c54c490c4756d82ca344057897083fdd444` | pattern ARIA
 
-- **10/06/2025** — Tables improve props and styles (#689)  
-  Release: `v1.0.1` · Hash: `88e3816fc167eb21dbaee3dca9df1a72dfa27547` | pattern ARIA
+- **19/06/2025** — Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)  
+  Release: `v1.0.2` · Hash: `5679a48dca94324f5f1da304664ab7e77cabe8c4` | pattern ARIA
 
-- **05/06/2025** — Add filter management in tables components v2 (#665)  
-  Release: `v1.0.1` · Hash: `44b6129940ba1ee01dd57f10fd1162bab63ddb2a` | pattern ARIA
+- **18/06/2025** — Complexe Tables : add Select rules (#708)  
+  Release: `v1.0.2` · Hash: `ad3306195e85f853ec49e9d77fc79f70bff673f1` | pattern ARIA
 
-## SyTable
+## TextFilter
 
-- **29/05/2026** — Tables : Migration Ameli pro (#2186)  
-  Release: `v1.1.0` · Hash: `8c2f5cc85c4c5705daecafc3f00727b7f4b6ef89` | pattern ARIA
+- **07/04/2026** — SyTable / SyServerTable: add autocomplete filter (#2068)  
+  Release: `v1.0.24` · Hash: `e7e25c54c490c4756d82ca344057897083fdd444` | pattern ARIA
 
-- **17/04/2026** — SyTable / SyServerTable: add page input option (#2104)  
-  Release: `v1.0.25` · Hash: `dfccf9d35dfd9fc7fc21f6009e9aba4d2afd5ddc` | pattern ARIA
+- **19/06/2025** — Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)  
+  Release: `v1.0.2` · Hash: `5679a48dca94324f5f1da304664ab7e77cabe8c4` | pattern ARIA
 
-- **08/04/2026** — SyTable + SyServerTable: add clickable row (#2075)  
-  Release: `v1.0.24` · Hash: `49652e0d949e0e40b9215f9211cecb4bd95a1b5e` | pattern ARIA
+- **18/06/2025** — Complexe Tables : add Select rules (#708)  
+  Release: `v1.0.2` · Hash: `ad3306195e85f853ec49e9d77fc79f70bff673f1` | pattern ARIA
 
-- **03/04/2026** — SyTable / SyServerTable: pinned columns (#2044)  
-  Release: `v1.0.24` · Hash: `a2fa72299b5806daab9486dd41f474dd9dd80ab4` | pattern ARIA
+## OrganizeColumns
 
-- **11/02/2026** — Accessibilité: file reorganization accessibility (#1792)  
-  Release: `v1.0.20` · Hash: `b1bca6204773d854436df21d2acd547e18f0f61a` | mot-clé a11y
+- **12/02/2026** — SyIcon: replace VIcon to SyIcon (#1793)  
+  Release: `v1.0.20` · Hash: `129060e2b8a94d277d8a03fd98eb169ad72ebcdb` | pattern ARIA
 
-- **22/12/2025** — add Storybook a11y addon and disable color-contrast checks (#1658)  
-  Release: `v1.0.17` · Hash: `d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4` | mot-clé a11y
-
-- **24/07/2025** — ComplexeTables: rgaa improvments + fix display (#829)  
-  Release: `v1.0.4` · Hash: `1ce73af328b4960272770e8c8c5b22d786838649` | pattern ARIA
-
-- **01/07/2025** — SyTable / SyServerTable : Selection (#726)  
-  Release: `v1.0.2` · Hash: `b3ae1a7879d2e8911093e5a597ac18b8ffb5face` | pattern ARIA
-
-- **12/06/2025** — gestion de la dimension des colonnes des les tableaux (#666)  
-  Release: `v1.0.1` · Hash: `8566e67d97bab55244be6f39956b99283b43a927` | pattern ARIA
-
-- **10/06/2025** — Tables improve props and styles (#689)  
-  Release: `v1.0.1` · Hash: `88e3816fc167eb21dbaee3dca9df1a72dfa27547` | pattern ARIA
-
-- **05/06/2025** — Add filter management in tables components v2 (#665)  
-  Release: `v1.0.1` · Hash: `44b6129940ba1ee01dd57f10fd1162bab63ddb2a` | pattern ARIA
+- **03/07/2025** — Tables: ajout de la fonctionalitée de réorganisation des colones (#730)  
+  Release: `v1.0.2` · Hash: `c9bc9f5e122b48b6b3023386c551f8fc0f4f4aeb` | pattern ARIA
 
 ## SyTableFilter
 
@@ -3902,79 +3901,98 @@ Aucune amélioration d’accessibilité détectée.
 - **05/06/2025** — Add filter management in tables components v2 (#665)  
   Release: `v1.0.1` · Hash: `44b6129940ba1ee01dd57f10fd1162bab63ddb2a` | pattern ARIA
 
-## AutocompleteFilter
+## SyServerTable
 
-- **07/04/2026** — SyTable / SyServerTable: add autocomplete filter (#2068)  
-  Release: `v1.0.24` · Hash: `e7e25c54c490c4756d82ca344057897083fdd444` | pattern ARIA
+- **29/05/2026** — Tables : Migration Ameli pro (#2186)  
+  Release: `v1.1.0` · Hash: `8c2f5cc85c4c5705daecafc3f00727b7f4b6ef89` | pattern ARIA
 
-- **19/06/2025** — Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)  
-  Release: `v1.0.2` · Hash: `5679a48dca94324f5f1da304664ab7e77cabe8c4` | pattern ARIA
+- **17/04/2026** — SyTable / SyServerTable: add page input option (#2104)  
+  Release: `v1.0.25` · Hash: `dfccf9d35dfd9fc7fc21f6009e9aba4d2afd5ddc` | pattern ARIA
 
-- **18/06/2025** — Complexe Tables : add Select rules (#708)  
-  Release: `v1.0.2` · Hash: `ad3306195e85f853ec49e9d77fc79f70bff673f1` | pattern ARIA
+- **08/04/2026** — SyTable + SyServerTable: add clickable row (#2075)  
+  Release: `v1.0.24` · Hash: `49652e0d949e0e40b9215f9211cecb4bd95a1b5e` | pattern ARIA
 
-## DateFilter
+- **03/04/2026** — SyTable / SyServerTable: pinned columns (#2044)  
+  Release: `v1.0.24` · Hash: `a2fa72299b5806daab9486dd41f474dd9dd80ab4` | pattern ARIA
 
-- **07/04/2026** — SyTable / SyServerTable: add autocomplete filter (#2068)  
-  Release: `v1.0.24` · Hash: `e7e25c54c490c4756d82ca344057897083fdd444` | pattern ARIA
+- **11/02/2026** — Accessibilité: file reorganization accessibility (#1792)  
+  Release: `v1.0.20` · Hash: `b1bca6204773d854436df21d2acd547e18f0f61a` | mot-clé a11y
 
-- **19/06/2025** — Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)  
-  Release: `v1.0.2` · Hash: `5679a48dca94324f5f1da304664ab7e77cabe8c4` | pattern ARIA
+- **22/12/2025** — add Storybook a11y addon and disable color-contrast checks (#1658)  
+  Release: `v1.0.17` · Hash: `d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4` | mot-clé a11y
 
-- **18/06/2025** — Complexe Tables : add Select rules (#708)  
-  Release: `v1.0.2` · Hash: `ad3306195e85f853ec49e9d77fc79f70bff673f1` | pattern ARIA
+- **24/07/2025** — ComplexeTables: rgaa improvments + fix display (#829)  
+  Release: `v1.0.4` · Hash: `1ce73af328b4960272770e8c8c5b22d786838649` | pattern ARIA
 
-## NumberFilter
+- **01/07/2025** — SyTable / SyServerTable : Selection (#726)  
+  Release: `v1.0.2` · Hash: `b3ae1a7879d2e8911093e5a597ac18b8ffb5face` | pattern ARIA
 
-- **07/04/2026** — SyTable / SyServerTable: add autocomplete filter (#2068)  
-  Release: `v1.0.24` · Hash: `e7e25c54c490c4756d82ca344057897083fdd444` | pattern ARIA
+- **12/06/2025** — gestion de la dimension des colonnes des les tableaux (#666)  
+  Release: `v1.0.1` · Hash: `8566e67d97bab55244be6f39956b99283b43a927` | pattern ARIA
 
-- **19/06/2025** — Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)  
-  Release: `v1.0.2` · Hash: `5679a48dca94324f5f1da304664ab7e77cabe8c4` | pattern ARIA
+- **10/06/2025** — Tables improve props and styles (#689)  
+  Release: `v1.0.1` · Hash: `88e3816fc167eb21dbaee3dca9df1a72dfa27547` | pattern ARIA
 
-- **18/06/2025** — Complexe Tables : add Select rules (#708)  
-  Release: `v1.0.2` · Hash: `ad3306195e85f853ec49e9d77fc79f70bff673f1` | pattern ARIA
+- **05/06/2025** — Add filter management in tables components v2 (#665)  
+  Release: `v1.0.1` · Hash: `44b6129940ba1ee01dd57f10fd1162bab63ddb2a` | pattern ARIA
 
-## PeriodFilter
+## SyTable
 
-- **07/04/2026** — SyTable / SyServerTable: add autocomplete filter (#2068)  
-  Release: `v1.0.24` · Hash: `e7e25c54c490c4756d82ca344057897083fdd444` | pattern ARIA
+- **29/05/2026** — Tables : Migration Ameli pro (#2186)  
+  Release: `v1.1.0` · Hash: `8c2f5cc85c4c5705daecafc3f00727b7f4b6ef89` | pattern ARIA
 
-- **19/06/2025** — Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)  
-  Release: `v1.0.2` · Hash: `5679a48dca94324f5f1da304664ab7e77cabe8c4` | pattern ARIA
+- **17/04/2026** — SyTable / SyServerTable: add page input option (#2104)  
+  Release: `v1.0.25` · Hash: `dfccf9d35dfd9fc7fc21f6009e9aba4d2afd5ddc` | pattern ARIA
 
-- **18/06/2025** — Complexe Tables : add Select rules (#708)  
-  Release: `v1.0.2` · Hash: `ad3306195e85f853ec49e9d77fc79f70bff673f1` | pattern ARIA
+- **08/04/2026** — SyTable + SyServerTable: add clickable row (#2075)  
+  Release: `v1.0.24` · Hash: `49652e0d949e0e40b9215f9211cecb4bd95a1b5e` | pattern ARIA
 
-## SelectFilter
+- **03/04/2026** — SyTable / SyServerTable: pinned columns (#2044)  
+  Release: `v1.0.24` · Hash: `a2fa72299b5806daab9486dd41f474dd9dd80ab4` | pattern ARIA
 
-- **07/04/2026** — SyTable / SyServerTable: add autocomplete filter (#2068)  
-  Release: `v1.0.24` · Hash: `e7e25c54c490c4756d82ca344057897083fdd444` | pattern ARIA
+- **11/02/2026** — Accessibilité: file reorganization accessibility (#1792)  
+  Release: `v1.0.20` · Hash: `b1bca6204773d854436df21d2acd547e18f0f61a` | mot-clé a11y
 
-- **19/06/2025** — Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)  
-  Release: `v1.0.2` · Hash: `5679a48dca94324f5f1da304664ab7e77cabe8c4` | pattern ARIA
+- **22/12/2025** — add Storybook a11y addon and disable color-contrast checks (#1658)  
+  Release: `v1.0.17` · Hash: `d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4` | mot-clé a11y
 
-- **18/06/2025** — Complexe Tables : add Select rules (#708)  
-  Release: `v1.0.2` · Hash: `ad3306195e85f853ec49e9d77fc79f70bff673f1` | pattern ARIA
+- **24/07/2025** — ComplexeTables: rgaa improvments + fix display (#829)  
+  Release: `v1.0.4` · Hash: `1ce73af328b4960272770e8c8c5b22d786838649` | pattern ARIA
 
-## TextFilter
+- **01/07/2025** — SyTable / SyServerTable : Selection (#726)  
+  Release: `v1.0.2` · Hash: `b3ae1a7879d2e8911093e5a597ac18b8ffb5face` | pattern ARIA
 
-- **07/04/2026** — SyTable / SyServerTable: add autocomplete filter (#2068)  
-  Release: `v1.0.24` · Hash: `e7e25c54c490c4756d82ca344057897083fdd444` | pattern ARIA
+- **12/06/2025** — gestion de la dimension des colonnes des les tableaux (#666)  
+  Release: `v1.0.1` · Hash: `8566e67d97bab55244be6f39956b99283b43a927` | pattern ARIA
 
-- **19/06/2025** — Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)  
-  Release: `v1.0.2` · Hash: `5679a48dca94324f5f1da304664ab7e77cabe8c4` | pattern ARIA
+- **10/06/2025** — Tables improve props and styles (#689)  
+  Release: `v1.0.1` · Hash: `88e3816fc167eb21dbaee3dca9df1a72dfa27547` | pattern ARIA
 
-- **18/06/2025** — Complexe Tables : add Select rules (#708)  
-  Release: `v1.0.2` · Hash: `ad3306195e85f853ec49e9d77fc79f70bff673f1` | pattern ARIA
+- **05/06/2025** — Add filter management in tables components v2 (#665)  
+  Release: `v1.0.1` · Hash: `44b6129940ba1ee01dd57f10fd1162bab63ddb2a` | pattern ARIA
 
-## OrganizeColumns
+## TableToolbar
 
-- **12/02/2026** — SyIcon: replace VIcon to SyIcon (#1793)  
-  Release: `v1.0.20` · Hash: `129060e2b8a94d277d8a03fd98eb169ad72ebcdb` | pattern ARIA
+- **11/02/2026** — Accessibilité: file reorganization accessibility (#1792)  
+  Release: `v1.0.20` · Hash: `b1bca6204773d854436df21d2acd547e18f0f61a` | mot-clé a11y
 
-- **03/07/2025** — Tables: ajout de la fonctionalitée de réorganisation des colones (#730)  
-  Release: `v1.0.2` · Hash: `c9bc9f5e122b48b6b3023386c551f8fc0f4f4aeb` | pattern ARIA
+- **22/12/2025** — add Storybook a11y addon and disable color-contrast checks (#1658)  
+  Release: `v1.0.17` · Hash: `d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4` | mot-clé a11y
+
+- **10/12/2025** — Fix Vuetify sass warn (#1594)  
+  Release: `v1.0.16` · Hash: `cd8602b795a93778f3678ecca90d565aca86af5a` | pattern ARIA
+
+- **10/12/2025** — AmeliproIcon : fix v-html issue (#1583)  
+  Release: `v1.0.16` · Hash: `687eac066320e4974c10e66e83e908e642cd8308` | pattern ARIA
+
+- **25/07/2025** — update packages + fix tests + CI improvements (#837)  
+  Release: `v1.0.4` · Hash: `5f94b9c5cc9e56eab174e34bc3475be74ea2d088` | pattern ARIA
+
+- **14/04/2025** — Amélioration des tests avec vitest (#525)  
+  Release: `v0.0.15-alpha` · Hash: `7bd988914d82b2708a9386593486a63aa86f0660` | pattern ARIA
+
+- **17/02/2025** — Ajout du composant TableToolbar (#388)  
+  Release: `v0.0.10-alpha` · Hash: `e5a0f2ec8f52a5b6df6868adc8e908d24043c25b` | pattern ARIA
 
 ## ToolbarContainer
 

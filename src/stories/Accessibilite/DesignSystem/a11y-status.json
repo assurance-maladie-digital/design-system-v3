@@ -470,7 +470,7 @@
       "componentName": "HeaderBar",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
-      "mdxStatus": "Incomplète",
+      "mdxStatus": "Complète",
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Structure/HeaderBar",
       "hasManualAudit": true,
@@ -683,8 +683,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Feedback/RatingPicker",
       "hasManualAudit": true,
-      "version": "1.0.26",
-      "versionDate": "06/05/2026"
+      "version": "1.1.1",
+      "versionDate": "30/06/2026"
     },
     {
       "componentName": "SearchListField",
