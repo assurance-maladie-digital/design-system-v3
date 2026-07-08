@@ -122,6 +122,8 @@ export function useFieldValidation() {
 				case 'required':
 					return createValidationResult(
 						(typeof value === 'string' && value.trim() !== '')
+						|| (typeof value === 'number' && !Number.isNaN(value))
+						|| (typeof value === 'boolean' && value === true)
 						|| (value instanceof Date)
 						// Un tableau vide (mode multiple : aucune sélection) n'est pas rempli
 						|| (Array.isArray(value)

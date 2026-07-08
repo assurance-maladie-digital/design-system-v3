@@ -54,6 +54,23 @@ describe('useFieldValidation', () => {
 		expect(await rule(['a'])).toEqual({ success: 'Le champ est valide.' })
 	})
 
+	it('should validate required rule with numbers', async () => {
+		const rules = generateRules([{ type: 'required', options: { message: 'This field is required.' } }])
+		const rule = rules[0]!
+
+		expect(await rule(0)).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule(42)).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule(Number.NaN)).toEqual({ error: 'This field is required.' })
+	})
+
+	it('should validate required rule with booleans', async () => {
+		const rules = generateRules([{ type: 'required', options: { message: 'This field is required.' } }])
+		const rule = rules[0]!
+
+		expect(await rule(true)).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule(false)).toEqual({ error: 'This field is required.' })
+	})
+
 	it('should validate required rule with warning mode', async () => {
 		const rules = generateRules([{ type: 'required', options: { isWarning: true, warningMessage: 'Warning: field required.' } }])
 		const rule = rules[0]!
