@@ -25,7 +25,7 @@ if (typeof window !== 'undefined') {
 	})
 }
 
-setup((app, context) => {
+setup((app, { globals }) => {
 	app.use(vuetify)
 
 	// Add global mixin to help with SySelect dropdown in docs mode
@@ -33,7 +33,7 @@ setup((app, context) => {
 		// Wait for DOM to be ready
 		window.addEventListener('DOMContentLoaded', () => {
 			// Add click handler to document to help with dropdown positioning
-			document.addEventListener('click', () => {
+			document.addEventListener('click', (event) => {
 				// Check if we're in docs mode
 				if (document.body.classList.contains('storybook-docs-mode')) {
 					// Find all dropdowns and make sure they're properly positioned
@@ -53,9 +53,8 @@ setup((app, context) => {
 	app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
 
 	// Apply theme immediately on load
-	if (typeof window !== 'undefined' && context?.globals) {
-		const theme = (context.globals as { theme?: string }).theme
-		if (theme) applyTheme(theme)
+	if (typeof window !== 'undefined') {
+		applyTheme(globals.theme)
 	}
 })
 
@@ -76,6 +75,7 @@ const globalTypes = {
 		defaultValue: 'cnam',
 		toolbar: {
 			title: 'Thèmes',
+			icon: 'paintbrush',
 			items: themeItems,
 			dynamicTitle: true,
 		},
@@ -89,13 +89,9 @@ const preview: Preview = {
 	globalTypes,
 	initialGlobals: {
 		theme: storedTheme || 'cnam',
+
 		backgrounds: {
 			value: 'main',
-		},
-		vueMdx: {
-			beforeVueAppMount: (app: { use: (plugin: unknown) => void }) => {
-				app.use(vuetify)
-			},
 		},
 	},
 	decorators: [

@@ -33,4 +33,4 @@ export default create({
 
 	// Links colors
     textMutedColor: '#0084b2',
-}) as any
+})
