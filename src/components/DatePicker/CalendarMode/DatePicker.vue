@@ -8,7 +8,7 @@
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useDateInitialization, type DateModelValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
-	import { useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString, useDatePickerState, useHolidayHighlighting, useSelectedDayAria, useCalendarKeyboardNavigation, useDatePickerFocusTrap, useDatePickerValidation, useDatePickerDerivedValues } from '../composables'
+	import { useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString, useDatePickerState, useHolidayHighlighting, useSelectedDayAria, useDatePickerViewFocus, useCalendarKeyboardNavigation, useDatePickerFocusTrap, useDatePickerValidation, useDatePickerDerivedValues } from '../composables'
 	import type { ViewMode } from '../composables/useDatePickerViewMode'
 	import { useDateTextInputProps } from './props/dateTextInputProps'
 	import { useComplexDatePickerProps } from './props/complexDatePickerProps'
@@ -692,6 +692,14 @@
 		// Fonction qui retourne l'état de la date sélectionnée
 		() => selectedDates.value,
 	)
+
+	useDatePickerViewFocus({
+		currentViewMode,
+		isDatePickerVisible,
+		rootElement: computed(
+			() => datePickerRef.value?.$el as HTMLElement | null,
+		),
+	})
 
 	const handleViewModeUpdateWrapper = (mode: ViewMode) => {
 		handleViewModeUpdate(mode)
