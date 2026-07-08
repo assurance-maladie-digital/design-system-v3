@@ -1000,7 +1000,7 @@
 </template>
 
 <style lang="scss" scoped>
-$ap-grey-mid: #b0b1b1;
+$ap-grey-mid: #d6d6d6;
 
 .v-sheet {
 	border-radius: var(--radius-md) !important;
@@ -1145,7 +1145,7 @@ $ap-grey-mid: #b0b1b1;
 }
 
 :deep(.v-date-picker-month__day--adjacent) {
-	opacity: 0.5;
+	opacity: 0.7;
 }
 
 :deep(.v-date-picker-month__day--adjacent:has(.v-btn:focus-visible)) {
