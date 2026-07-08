@@ -60,6 +60,14 @@
 		filters.cardTabs[componentName] = tab
 	}
 
+	const resetFilters = () => {
+		filters.selectedComponents = []
+		filters.versionFilter = ''
+		filters.a11yVersionFilter = ''
+		filters.includeDeprecated = false
+		filters.cardTabs = {}
+	}
+
 	const results = (infoData.results ?? []) as ComponentInfo[]
 
 	const componentOptions = computed(() => {
@@ -148,8 +156,8 @@
 				item =>
 					(filters.selectedComponents.length === 0
 						|| filters.selectedComponents.includes(item.componentName))
-					&& (filters.versionFilter === '' || item.functionalVersion === filters.versionFilter)
-					&& (filters.a11yVersionFilter === '' || item.a11yVersion === filters.a11yVersionFilter)
+					&& (filters.versionFilter === '' || filters.versionFilter === '__ALL__' || item.functionalVersion === filters.versionFilter)
+					&& (filters.a11yVersionFilter === '' || filters.a11yVersionFilter === '__ALL__' || item.a11yVersion === filters.a11yVersionFilter)
 					// Only apply deprecated filter if components are selected
 					&& (filters.selectedComponents.length === 0 || filters.includeDeprecated || item.status === 'actif'),
 			)
@@ -165,8 +173,8 @@
 
 	const hasActiveFilter = computed(() =>
 		filters.selectedComponents.length > 0
-		|| filters.versionFilter !== ''
-		|| filters.a11yVersionFilter !== '',
+		|| (filters.versionFilter !== '' && filters.versionFilter !== '__ALL__')
+		|| (filters.a11yVersionFilter !== '' && filters.a11yVersionFilter !== '__ALL__'),
 	)
 
 	// Keyboard navigation for cards
@@ -237,8 +245,14 @@
 					class="ci-select"
 					:aria-label="locales.filters.functionalLabel"
 				>
-					<option value="">
-						{{ locales.filters.allFunctionalVersions }}
+					<option
+						value=""
+						disabled
+					>
+						{{ locales.filters.selectFunctionalVersion }}
+					</option>
+					<option value="__ALL__">
+						{{ locales.filters.allVersions }}
 					</option>
 					<option
 						v-for="v in versions"
@@ -253,8 +267,14 @@
 					class="ci-select"
 					:aria-label="locales.filters.a11yLabel"
 				>
-					<option value="">
-						{{ locales.filters.allA11yVersions }}
+					<option
+						value=""
+						disabled
+					>
+						{{ locales.filters.selectA11yVersion }}
+					</option>
+					<option value="__ALL__">
+						{{ locales.filters.allVersions }}
 					</option>
 					<option
 						v-for="v in a11yVersions"
@@ -276,6 +296,13 @@
 					<span class="ci-switch-slider" />
 					<span class="ci-switch-label">{{ locales.filters.includeDeprecated }}</span>
 				</label>
+				<button
+					type="button"
+					class="ci-reset-button"
+					@click="resetFilters"
+				>
+					{{ locales.filters.resetFilters }}
+				</button>
 			</div>
 		</div>
 
@@ -538,6 +565,30 @@
 		font-size: 0.875rem;
 		color: #525252;
 		font-weight: 500;
+	}
+
+	.ci-reset-button {
+		height: 40px;
+		padding: 0 0.75rem;
+		border: 1px solid #0c419a;
+		border-radius: 4px;
+		background-color: #fff;
+		color: #0c419a;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background-color 0.2s ease, color 0.2s ease;
+		flex-shrink: 0;
+	}
+
+	.ci-reset-button:hover {
+		background-color: #0c419a;
+		color: #fff;
+	}
+
+	.ci-reset-button:focus {
+		outline: 2px solid #0c419a;
+		outline-offset: 2px;
 	}
 
 	.ci-empty-state {

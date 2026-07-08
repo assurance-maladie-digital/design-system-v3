@@ -5,13 +5,15 @@ export const locales = {
 		selectAll: 'Sélectionner tous',
 	},
 	filters: {
-		allFunctionalVersions: 'Toutes les versions fonctionnelles',
-		allA11yVersions: 'Toutes les versions a11y',
+		selectFunctionalVersion: 'Sélectionner une version fonctionnelle',
+		selectA11yVersion: 'Sélectionner une version a11y',
+		allVersions: 'Toutes les versions',
 		allStatuses: 'Tous les statuts',
 		functionalLabel: 'Filtrer par version fonctionnelle',
 		a11yLabel: 'Filtrer par version accessibilité',
 		statusLabel: 'Filtrer par statut',
 		includeDeprecated: 'Inclure les dépréciés',
+		resetFilters: 'Effacer les filtres',
 	},
 	status: {
 		active: 'Actif',
