@@ -12,7 +12,7 @@
 	import { VDatePicker } from 'vuetify/components'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
-	import { useCalendarKeyboardNavigation, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useTodayButton } from '../composables'
+	import { useCalendarKeyboardNavigation, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useSelectedDayAria, useTodayButton } from '../composables'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { locales } from '../locales'
 	import type { ViewMode } from '../composables/useDatePickerViewMode'
@@ -307,6 +307,9 @@
 		}
 		// Marquer les jours fériés après la mise à jour des dates
 		markHolidayDays()
+		if (isDatePickerVisible.value) {
+			updateSelectedDayAria()
+		}
 
 		// Mettre à jour le modèle si nécessaire
 		if (newValue !== null) {
@@ -576,6 +579,7 @@
 				if (isDatePickerVisible.value) {
 					customizeMonthButton()
 					markHolidayDays()
+					updateSelectedDayAria()
 				}
 			})
 		}
@@ -645,6 +649,7 @@
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
 				markHolidayDays()
+				updateSelectedDayAria()
 			}
 		})
 	}
@@ -660,6 +665,7 @@
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
 				markHolidayDays()
+				updateSelectedDayAria()
 			}
 		})
 	}
@@ -669,6 +675,12 @@
 		currentMonth,
 		currentYear,
 		isDisplayHolidayDays: () => props.displayHolidayDays,
+		rootElement: computed(
+			() => datePickerRef.value?.$el as HTMLElement | null,
+		),
+	})
+
+	const { updateSelectedDayAria } = useSelectedDayAria({
 		rootElement: computed(
 			() => datePickerRef.value?.$el as HTMLElement | null,
 		),
@@ -708,6 +720,7 @@
 			// Marquer les jours fériés lorsque le calendrier devient visible
 			markHolidayDays()
 			customizeMonthButton()
+			updateSelectedDayAria()
 		}
 		if (!isVisible && props.isBirthDate) {
 			// Réinitialiser le mode d'affichage au type birthdate
@@ -723,6 +736,12 @@
 					isDatePickerVisible.value = false
 				})
 			}, 0)
+		}
+	})
+
+	watch(selectedDates, () => {
+		if (isDatePickerVisible.value) {
+			updateSelectedDayAria()
 		}
 	})
 

@@ -29,6 +29,7 @@
 		useHolidayHighlighting,
 		useInputBlurHandler,
 		useMonthButtonCustomization,
+		useSelectedDayAria,
 		useTodayButton,
 		validateDateFormat as validateDateFormatUtil,
 		isDateComplete as isDateCompleteUtil,
@@ -99,6 +100,7 @@
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
 				markHolidayDays()
+				updateSelectedDayAria()
 			}
 		})
 	}
@@ -128,6 +130,7 @@
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
 				markHolidayDays()
+				updateSelectedDayAria()
 			}
 		})
 	}
@@ -369,6 +372,7 @@
 				nextTick(() => {
 					customizeMonthButton()
 					markHolidayDays()
+					updateSelectedDayAria()
 				})
 			}
 		}
@@ -387,6 +391,7 @@
 				nextTick(() => {
 					customizeMonthButton()
 					markHolidayDays()
+					updateSelectedDayAria()
 				})
 			}
 		}
@@ -558,6 +563,12 @@
 		),
 	})
 
+	const { updateSelectedDayAria } = useSelectedDayAria({
+		rootElement: computed(
+			() => datePickerRef.value?.$el as HTMLElement | null,
+		),
+	})
+
 	onMounted(() => {
 		setupMonthButtonObserver()
 		document.addEventListener('click', handleClickOutside)
@@ -608,6 +619,7 @@
 						nextTick(() => {
 							customizeMonthButton()
 							markHolidayDays()
+							updateSelectedDayAria()
 						})
 					}
 				}
@@ -933,6 +945,7 @@
 				nextTick(() => {
 					customizeMonthButton()
 					markHolidayDays()
+					updateSelectedDayAria()
 					nextTick(() => {
 						const monthBtn = datePickerMenuRef.value?.querySelector<HTMLElement>('.v-date-picker-controls__month-btn')
 						monthBtn?.focus({ preventScroll: true })

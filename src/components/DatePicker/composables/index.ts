@@ -21,6 +21,7 @@ export { useTodayButton } from './useTodayButton'
 export { useMonthButtonCustomization } from './useMonthButtonCustomization'
 export { useDatePickerState } from './useDatePickerState'
 export { useHolidayHighlighting } from './useHolidayHighlighting'
+export { useSelectedDayAria } from './useSelectedDayAria'
 export { useDatePickerFocusTrap } from './useDatePickerFocusTrap'
 export * from './useCalendarKeyboardNavigation'
 
