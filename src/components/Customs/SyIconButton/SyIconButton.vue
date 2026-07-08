@@ -36,3 +36,9 @@
 		/>
 	</v-btn>
 </template>
+
+<style lang="scss" scoped>
+.rounded-circle:focus-visible > :deep(.v-btn__overlay) {
+	opacity: 0 !important;
+}
+</style>

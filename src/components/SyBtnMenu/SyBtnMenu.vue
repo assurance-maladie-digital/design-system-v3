@@ -287,10 +287,6 @@
 		opacity: 0.08;
 	}
 
-	&:focus {
-		background: rgba(var(--v-theme-primary), 0.08) !important;
-	}
-
 	.subtitle {
 		font-size: 0.875rem;
 		line-height: 1.5;

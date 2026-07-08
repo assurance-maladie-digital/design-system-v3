@@ -195,7 +195,7 @@
 
 .v-list-item:focus-visible {
 	&::after {
-		color: rgb(var(--v-theme-primary));
+		color: rgb(var(--v-theme-OnPrimary));
 		opacity: 1;
 	}
 
@@ -218,10 +218,7 @@
 }
 
 .vd-lang-btn:focus-visible {
-	outline: 0;
+	color: rgb(var(--v-theme-OnPrimary));
 }
 
-.vd-lang-btn:focus-visible::after {
-	opacity: 1;
-}
 </style>

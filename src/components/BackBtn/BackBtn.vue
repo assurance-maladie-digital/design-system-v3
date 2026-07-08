@@ -32,7 +32,7 @@
 		:variant="buttonVariant"
 		:theme="buttonTheme"
 		:color="buttonColor"
-		:class="['sy-back-btn', 'text-none', buttonClasses]"
+		:class="['sy-back-btn', 'text-none', { 'sy-back-btn--dark': isDark }, buttonClasses]"
 		:style="{ backgroundColor: buttonBgColor }"
 	>
 		<slot name="icon">
@@ -61,11 +61,9 @@
 	}
 }
 
-.sy-back-btn:focus-visible {
-	outline: 0;
+.sy-back-btn--dark:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-onPrimary));
+	outline-offset: 2px;
 }
 
-.sy-back-btn:focus-visible::after {
-	opacity: 1;
-}
 </style>

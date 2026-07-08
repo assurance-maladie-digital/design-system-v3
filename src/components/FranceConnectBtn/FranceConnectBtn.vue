@@ -100,12 +100,6 @@
 <style lang="scss" scoped>
 .sy-france-connect-btn a {
 	color: #000091;
-
-	&:focus-visible {
-		outline: solid #0a76f6;
-		outline-width: 2px;
-		outline-offset: 2px;
-	}
 }
 
 .sy-france-connect-link {
@@ -117,7 +111,10 @@
 	}
 
 	&:focus {
-		outline-offset: 3px;
+		outline-offset: 2px;
+		outline-style: solid !important;
+		outline-width: 2px !important;
+		outline-color: rgb(var(--v-theme-primary)) !important;
 	}
 }
 
@@ -145,9 +142,12 @@
 	&:hover {
 		background-size: 100% 2px;
 	}
-}
 
-:deep(&:focus) {
-	border-radius: 0 !important;
+	&:focus {
+		outline-offset: 2px;
+		outline-style: solid !important;
+		outline-width: 2px !important;
+		outline-color: rgb(var(--v-theme-primary)) !important;
+	}
 }
 </style>
