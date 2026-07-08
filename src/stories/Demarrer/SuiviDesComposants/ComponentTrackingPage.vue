@@ -149,6 +149,12 @@
 	}
 
 	const filteredRows = computed(() => {
+		// Si "Toutes les versions" est sélectionné et aucun composant n'est choisi, afficher tous les composants
+		if (filters.selectedComponents.length === 0
+			&& (filters.versionFilter === '__ALL__' || filters.a11yVersionFilter === '__ALL__')) {
+			return results
+		}
+
 		if (!hasActiveFilter.value) return []
 
 		return results
