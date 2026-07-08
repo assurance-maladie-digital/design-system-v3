@@ -1,4 +1,5 @@
 import { ref, nextTick, type Ref, onBeforeUnmount } from 'vue'
+import { expandMonthAccessibleName } from '@/composables/date/useDatePickerAccessibility'
 import { locales } from '../locales'
 
 /**
@@ -27,9 +28,10 @@ export function useMonthButtonCustomization(
 		rawMonth: string | null | undefined,
 		displayMonth: string,
 	): string => {
-		const monthLabel = normalizeMonthLabel(rawMonth, displayMonth)
+		const fullMonth = rawMonth ? expandMonthAccessibleName(rawMonth) : ''
+		const monthLabel = fullMonth || normalizeMonthLabel(rawMonth, displayMonth)
 		if (!monthLabel) return locales.selectMonth()
-		return `${locales.selectMonth()} (${monthLabel} ${locales.selectedByDefault}) - ${displayMonth}`
+		return `${locales.selectMonth()} (${fullMonth} / ${displayMonth} ${locales.selectedByDefault})`
 	}
 
 	const buildYearAriaLabel = (year: string | null | undefined): string => {
