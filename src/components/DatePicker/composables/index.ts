@@ -23,7 +23,6 @@ export { useDatePickerState } from './useDatePickerState'
 export { useHolidayHighlighting } from './useHolidayHighlighting'
 export { useSelectedDayAria } from './useSelectedDayAria'
 export { useDatePickerFocusTrap } from './useDatePickerFocusTrap'
-export { useDatePickerViewFocus } from './useDatePickerViewFocus'
 export * from './useCalendarKeyboardNavigation'
 
 // Derived values (shared computed)

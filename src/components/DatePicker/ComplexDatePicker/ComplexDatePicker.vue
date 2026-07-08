@@ -30,7 +30,6 @@
 		useInputBlurHandler,
 		useMonthButtonCustomization,
 		useSelectedDayAria,
-		useDatePickerViewFocus,
 		useTodayButton,
 		validateDateFormat as validateDateFormatUtil,
 		isDateComplete as isDateCompleteUtil,
@@ -747,14 +746,6 @@
 			() => props.isBirthDate || props.birthDate,
 			() => selectedDates.value,
 		)
-
-	useDatePickerViewFocus({
-		currentViewMode,
-		isDatePickerVisible,
-		rootElement: computed(
-			() => datePickerRef.value?.$el as HTMLElement | null,
-		),
-	})
 
 	/**
 	 * Manual input validation on blur
