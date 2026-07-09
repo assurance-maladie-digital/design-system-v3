@@ -88,14 +88,58 @@ describe('useDatePickerAccessibility', () => {
 		const monthButton = document.querySelector('.v-date-picker-controls__month-btn')
 		const yearButton = document.querySelector('.v-date-picker-controls__mode-btn')
 
-		// Vérifier que les flèches de navigation sont toujours étiquetées
-		expect(prevButton?.getAttribute('aria-label')).toBe('Mois précédent')
-		expect(nextButton?.getAttribute('aria-label')).toBe('Mois suivant')
+		// Vérifier que les flèches de navigation indiquent le mois cible
+		expect(prevButton?.getAttribute('aria-label')).toBe('Mois précédent: décembre 2022')
+		expect(nextButton?.getAttribute('aria-label')).toBe('Mois suivant: février 2023')
 
 		// Vérifier que les labels riches des boutons mois/année ne sont pas écrasés
 		expect(monthButton?.getAttribute('aria-label')).toContain('Sélectionner un mois')
 		expect(monthButton?.getAttribute('aria-label')).toContain('janvier')
 		expect(yearButton?.getAttribute('aria-label')).toContain('2023')
+	})
+
+	it('adds a dedicated hidden role="status" element', async () => {
+		await updateAccessibility()
+
+		const status = document.querySelector('#date-picker-status-region')
+		expect(status?.getAttribute('role')).toBe('status')
+		expect(status?.getAttribute('aria-live')).toBe('polite')
+		expect(status?.getAttribute('aria-atomic')).toBe('true')
+	})
+
+	it('announces the target month when clicking a navigation button', async () => {
+		await updateAccessibility()
+
+		const nextButton = document.querySelector('[data-testid="next-month"]') as HTMLButtonElement
+		const status = document.querySelector('#date-picker-status-region') as HTMLElement
+
+		nextButton?.click()
+		await nextTick()
+
+		expect(status.textContent).toBe('Mois suivant, février 2023')
+	})
+
+	it('recalculates labels when the calendar DOM updates after updateAccessibility', async () => {
+		await updateAccessibility()
+
+		const prevButton = document.querySelector('[data-testid="prev-month"]') as HTMLButtonElement
+		const monthButton = document.querySelector('.v-date-picker-controls__month-btn') as HTMLElement
+		const status = document.querySelector('#date-picker-status-region') as HTMLElement
+
+		// Simulate updateAccessibility running before the calendar DOM has changed
+		await updateAccessibility()
+
+		// The calendar DOM then updates to February
+		monthButton.textContent = 'Février 2023'
+
+		// Wait for the MutationObserver microtask to update labels
+		await new Promise(resolve => setTimeout(resolve, 0))
+
+		// Second click on previous should now announce January, not February again
+		prevButton?.click()
+		await nextTick()
+
+		expect(status.textContent).toBe('Mois précédent, janvier 2023')
 	})
 
 	it('handles missing elements gracefully', async () => {

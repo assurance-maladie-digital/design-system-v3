@@ -100,18 +100,149 @@ const inferGridLabel = (scope: Element): string => {
 	return DEFAULT_GRID_LABEL
 }
 
+const findMonthIndex = (text: string): number => {
+	const normalized = text.toLowerCase()
+
+	for (let i = 0; i < locales.monthNames.length; i++) {
+		if (normalized.includes(locales.monthNames[i]!.toLowerCase())) return i
+	}
+
+	for (let i = 0; i < locales.monthNamesShort.length; i++) {
+		const short = locales.monthNamesShort[i]!.toLowerCase().replace('.', '')
+		if (normalized.includes(short)) return i
+	}
+
+	return -1
+}
+
+const getNavigationMonthYear = (pickerEl: Element): { month: number, year: number } | null => {
+	const monthButton = pickerEl.querySelector<HTMLElement>(MONTH_CONTROL_SELECTOR)
+	const yearButton = pickerEl.querySelector<HTMLElement>(YEAR_CONTROL_SELECTOR)
+
+	const monthText = compactText(monthButton?.textContent)
+	const yearText = compactText(yearButton?.textContent)
+
+	if (!monthText || !yearText) return null
+
+	const monthIndex = findMonthIndex(monthText)
+	const year = parseInt(yearText, 10)
+
+	if (monthIndex === -1 || Number.isNaN(year)) return null
+
+	return { month: monthIndex, year }
+}
+
+const STATUS_REGION_ID = 'date-picker-status-region'
+
+const navigationObservers = new WeakMap<HTMLElement, MutationObserver>()
+
+const observeNavigationLabels = (pickerEl: HTMLElement) => {
+	if (navigationObservers.has(pickerEl)) return
+
+	const controls = pickerEl.querySelector<HTMLElement>('.v-date-picker-controls')
+	if (!controls) return
+
+	const observer = new MutationObserver(() => {
+		ensureNavigationButtonLabels(pickerEl)
+	})
+
+	observer.observe(controls, {
+		childList: true,
+		subtree: true,
+		characterData: true,
+	})
+
+	navigationObservers.set(pickerEl, observer)
+}
+
+const ensureControlsStatusRole = (pickerEl: HTMLElement) => {
+	const controls = pickerEl.querySelector<HTMLElement>('.v-date-picker-controls')
+	if (!controls) return
+
+	if (controls.querySelector(`#${STATUS_REGION_ID}`)) return
+
+	const status = document.createElement('div')
+	status.id = STATUS_REGION_ID
+	status.setAttribute('role', 'status')
+	status.setAttribute('aria-live', 'polite')
+	status.setAttribute('aria-atomic', 'true')
+	status.style.position = 'absolute'
+	status.style.left = '-10000px'
+	status.style.width = '1px'
+	status.style.height = '1px'
+	status.style.overflow = 'hidden'
+	status.style.clip = 'rect(0, 0, 0, 0)'
+	status.style.whiteSpace = 'nowrap'
+	status.style.border = '0'
+	controls.appendChild(status)
+}
+
+const announceNavigation = (pickerEl: HTMLElement, direction: 'previous' | 'next') => {
+	const selector = direction === 'previous' ? PREV_MONTH_BUTTON_SELECTOR : NEXT_MONTH_BUTTON_SELECTOR
+	const button = pickerEl.querySelector<HTMLButtonElement>(selector)
+	if (!button) return
+
+	const targetMonth = button.dataset.a11yTargetMonth
+	const targetYear = button.dataset.a11yTargetYear
+	if (targetMonth === undefined || targetYear === undefined) return
+
+	const region = pickerEl.querySelector<HTMLElement>(`#${STATUS_REGION_ID}`)
+	if (!region) return
+
+	const announcement = `${direction === 'previous' ? locales.previousMonth : locales.nextMonth}, ${locales.monthNames[parseInt(targetMonth, 10)]!} ${targetYear}`
+	region.textContent = ''
+	nextTick(() => {
+		region.textContent = announcement
+	})
+}
+
 const ensureNavigationButtonLabels = (pickerEl: HTMLElement) => {
+	observeNavigationLabels(pickerEl)
+
 	const prevButton = pickerEl.querySelector<HTMLButtonElement>(PREV_MONTH_BUTTON_SELECTOR)
 	const nextButton = pickerEl.querySelector<HTMLButtonElement>(NEXT_MONTH_BUTTON_SELECTOR)
+	const current = getNavigationMonthYear(pickerEl)
 
 	if (prevButton) {
-		prevButton.setAttribute('aria-label', locales.previousMonth)
-		prevButton.setAttribute('title', locales.previousMonth)
+		const targetMonth = current ? (current.month - 1 + 12) % 12 : null
+		const targetYear = current ? (current.month === 0 ? current.year - 1 : current.year) : null
+		const label = targetMonth !== null
+			? `${locales.previousMonth}: ${locales.monthNames[targetMonth]!} ${targetYear}`
+			: locales.previousMonth
+
+		prevButton.setAttribute('aria-label', label)
+		prevButton.setAttribute('title', label)
+
+		if (targetMonth !== null && targetYear !== null) {
+			prevButton.setAttribute('data-a11y-target-month', String(targetMonth))
+			prevButton.setAttribute('data-a11y-target-year', String(targetYear))
+		}
+
+		if (!prevButton.dataset.a11yNavigationListener) {
+			prevButton.dataset.a11yNavigationListener = 'true'
+			prevButton.addEventListener('click', () => announceNavigation(pickerEl, 'previous'))
+		}
 	}
 
 	if (nextButton) {
-		nextButton.setAttribute('aria-label', locales.nextMonth)
-		nextButton.setAttribute('title', locales.nextMonth)
+		const targetMonth = current ? (current.month + 1) % 12 : null
+		const targetYear = current ? (current.month === 11 ? current.year + 1 : current.year) : null
+		const label = targetMonth !== null
+			? `${locales.nextMonth}: ${locales.monthNames[targetMonth]!} ${targetYear}`
+			: locales.nextMonth
+
+		nextButton.setAttribute('aria-label', label)
+		nextButton.setAttribute('title', label)
+
+		if (targetMonth !== null && targetYear !== null) {
+			nextButton.setAttribute('data-a11y-target-month', String(targetMonth))
+			nextButton.setAttribute('data-a11y-target-year', String(targetYear))
+		}
+
+		if (!nextButton.dataset.a11yNavigationListener) {
+			nextButton.dataset.a11yNavigationListener = 'true'
+			nextButton.addEventListener('click', () => announceNavigation(pickerEl, 'next'))
+		}
 	}
 }
 
@@ -308,6 +439,7 @@ export function useDatePickerAccessibility() {
 		}
 
 		pickerEls.forEach((pickerEl) => {
+			ensureControlsStatusRole(pickerEl)
 			ensureNavigationButtonLabels(pickerEl)
 			ensureMonthAndYearSelectorLabels(pickerEl)
 			if (viewMode !== undefined) {
