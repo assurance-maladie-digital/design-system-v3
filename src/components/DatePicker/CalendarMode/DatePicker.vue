@@ -118,6 +118,11 @@
 		datePickerRef,
 		onClose: () => emit('closed'),
 		restoreFocus: () => queueMicrotask(() => focusCalendarInput()),
+		getInitialFocusDate: () => {
+			const value = selectedDates.value
+			const selected = Array.isArray(value) ? value[0] ?? null : value
+			return selected ?? new Date()
+		},
 	})
 
 	const addDatePickerKeydownListener = async () => {
@@ -143,9 +148,6 @@
 		async (visible) => {
 			if (visible && !props.noCalendar) {
 				await addDatePickerKeydownListener()
-				// Placer le focus sur le bouton d'ouverture du panel des mois
-				const monthBtn = datePickerDialogRef.value?.querySelector<HTMLElement>('.v-date-picker-controls__month-btn')
-				monthBtn?.focus({ preventScroll: true })
 				return
 			}
 
@@ -162,6 +164,11 @@
 	useCalendarKeyboardNavigation({
 		isDatePickerVisible,
 		datePickerRef,
+		getInitialFocusDate: () => {
+			const value = selectedDates.value
+			const selected = Array.isArray(value) ? value[0] ?? null : value
+			return selected ?? new Date()
+		},
 		getCurrentDate: () => {
 			const value = selectedDates.value
 			if (value) {

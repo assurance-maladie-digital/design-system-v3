@@ -17,6 +17,9 @@ export interface CalendarKeyboardNavigationOptions {
 
 	// Applique la nouvelle date (typiquement via updateSelectedDates)
 	setCurrentDate: (date: Date) => void
+
+	// Renvoie la date sur laquelle placer le focus à l'ouverture (date sélectionnée ou aujourd'hui)
+	getInitialFocusDate?: () => Date
 }
 
 export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigationOptions) => {
@@ -25,6 +28,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		datePickerRef,
 		getCurrentDate,
 		setCurrentDate,
+		getInitialFocusDate,
 	} = options
 
 	const addDays = (date: Date, amount: number) => dayjs(date).add(amount, 'day').toDate()
@@ -540,9 +544,22 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		isListenerAttached = false
 	}
 
+	const focusInitialDay = () => {
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		if (!rootEl) return
+
+		const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
+		const iso = toISO(targetDate)
+		const dayBtn = rootEl.querySelector<HTMLElement>(`[data-v-date="${iso}"] button`)
+		dayBtn?.focus({ preventScroll: true })
+	}
+
 	watch(isDatePickerVisible, (visible) => {
 		if (visible) {
-			nextTick(attachListeners)
+			nextTick(() => {
+				attachListeners()
+				nextTick(focusInitialDay)
+			})
 		}
 		else {
 			detachListeners()
