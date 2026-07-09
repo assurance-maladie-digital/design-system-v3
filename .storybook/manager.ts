@@ -66,11 +66,17 @@ const hiddenIdsByTheme: Record<Theme, string[]> = {
 		'guide-du-dev',
 		'guide-du-dev-migration',
 		'design-tokens-conteneurs-de-page',
+		'design-tokens-couleurs--border-section',
+		'design-tokens-couleurs--overlay-section',
+		'design-tokens-couleurs--interaction-section',
+		'design-tokens-couleurs--disabled-section',
+		'design-tokens-couleurs--feedback-section',
+		'design-tokens-couleurs-correspondances-couleurs--docs',
 		'démarrer-créer-une-issue--creeruneissue',
 		'design-tokens-arrondis',
 		'design-tokens-elevations',
 		'design-tokens-styles-typographiques',
-		'vue d\'ensemble',
+		'composants-vue-d-ensemble--docs',
 	],
 }
 
