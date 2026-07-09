@@ -95,13 +95,7 @@
 				{{ props.label }}
 			</slot>
 		</legend>
-		<p
-			v-if="props.lockAfterSelection"
-			:id="numberPickerdescriptionId"
-			class="d-sr-only"
-		>
-			{{ internalValue === -1 ? props.locales.toValidate : props.locales.validated }}
-		</p>
+
 		<SySelect
 			v-if="isMobile"
 			:model-value="internalValue === -1 ? undefined : internalValue"
@@ -117,8 +111,8 @@
 			>
 				<div
 					role="radiogroup"
-					:aria-describedby="numberPickerdescriptionId"
-					class="d-flex ga-2 flex-wrap max-width-none"
+					:aria-describedby="props.lockAfterSelection ? numberPickerdescriptionId : undefined"
+					class="d-flex ga-2 flex-wrap max-width-none mb-6"
 				>
 					<div
 						v-for="index in props.length"
@@ -168,7 +162,7 @@
 				</span>
 				<div
 					aria-hidden="true"
-					class="mb-0 d-flex align-center"
+					class="mb-0 d-flex align-center mb-6"
 				>
 					<div
 						class="sy-btn-answer text-body-2 mr-1 pa-0"
@@ -181,11 +175,21 @@
 				</div>
 			</div>
 		</template>
+		<p
+			v-if="props.lockAfterSelection"
+			:id="numberPickerdescriptionId"
+			class="locking-state text-caption"
+			:class="{'d-sr-only': internalValue !== -1}"
+		>
+			{{ internalValue === -1 ? props.locales.toValidate : props.locales.validated }}
+		</p>
 	</fieldset>
 </template>
 
 <style lang="scss" scoped>
 .sy-number-picker {
+	display: flex;
+	flex-direction: column;
 	border: 0;
 }
 
@@ -238,4 +242,10 @@
 	outline: 2px solid rgb(var(--v-theme-primary));
 	outline-offset: 2px;
 }
+
+.locking-state {
+	font-style: italic;
+	color: rgb(var(--v-theme-grey-base));
+}
+
 </style>

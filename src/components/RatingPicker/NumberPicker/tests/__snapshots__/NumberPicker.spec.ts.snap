@@ -8,12 +8,6 @@ exports[`NumberPicker > renders correctly 1`] = `
   ">
     Pourriez-vous donner une note ?
   </legend>
-  <p
-    class="d-sr-only"
-    id="number-picker-description-v-0"
-  >
-    Ce champ ne sera plus modifiable après saisie
-  </p>
   <div class="d-inline-block">
     <div
       aria-describedby="number-picker-description-v-0"
@@ -22,6 +16,7 @@ exports[`NumberPicker > renders correctly 1`] = `
         flex-wrap
         ga-2
         max-width-none
+        mb-6
       "
       role="radiogroup"
     >
@@ -158,5 +153,14 @@ exports[`NumberPicker > renders correctly 1`] = `
     </div>
     <!-- v-if -->
   </div>
+  <p
+    class="
+      locking-state
+      text-caption
+    "
+    id="number-picker-description-v-0"
+  >
+    Ce champ ne sera plus modifiable après saisie
+  </p>
 </fieldset>
 `;

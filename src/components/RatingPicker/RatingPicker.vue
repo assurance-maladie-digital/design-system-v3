@@ -163,7 +163,6 @@
 				:type="AlertTypeEnum.SUCCESS"
 				role="status"
 				aria-live="polite"
-				class="mt-4"
 			>
 				{{ props.locales.thanks }}
 			</SyAlert>
@@ -172,7 +171,6 @@
 				v-if="displayAdditionalContent"
 				role="region"
 				aria-live="polite"
-				class="mt-4"
 			>
 				<slot />
 			</div>
@@ -183,7 +181,8 @@
 <style lang="scss" scoped>
 .sy-rating-picker--center :deep(fieldset) {
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
 }
 
 .sy-rating-picker--center :deep(legend) {

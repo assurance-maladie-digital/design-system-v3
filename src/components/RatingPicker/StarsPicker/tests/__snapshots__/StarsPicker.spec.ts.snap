@@ -3,7 +3,7 @@
 exports[`StarsPicker > renders correctly 1`] = `
 <fieldset class="sy-stars-picker">
   <legend class="
-    mb-6
+    mb-4
     text-h6
   ">
     Pourriez-vous donner une note ?
@@ -19,6 +19,7 @@ exports[`StarsPicker > renders correctly 1`] = `
     class="
       d-flex
       max-width-none
+      mb-4
       mx-n1
       mx-sm-n2
     "
@@ -190,5 +191,14 @@ exports[`StarsPicker > renders correctly 1`] = `
       ></i>
     </div>
   </div>
+  <p
+    class="
+      locking-state
+      text-caption
+    "
+    id="stars-picker-description-v-0"
+  >
+    Ce champ ne sera plus modifiable après saisie
+  </p>
 </fieldset>
 `;
