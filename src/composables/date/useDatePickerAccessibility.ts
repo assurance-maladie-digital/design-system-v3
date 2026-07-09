@@ -388,7 +388,8 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 				if (!button) return
 
 				cell.setAttribute('role', 'gridcell')
-				const isSelected = button.classList.contains('v-btn--active')
+				const isSelected = cell.classList.contains('v-date-picker-month__day--selected')
+					|| button.classList.contains('v-btn--active')
 				cell.setAttribute('aria-selected', isSelected ? 'true' : 'false')
 
 				button.removeAttribute('role')

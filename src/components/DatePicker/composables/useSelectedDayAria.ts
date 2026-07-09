@@ -29,6 +29,7 @@ export const useSelectedDayAria = (
 
 			allDayButtons.forEach((button) => {
 				button.removeAttribute('aria-pressed')
+				button.removeAttribute('aria-selected')
 			})
 
 			selectedButtons.forEach((button) => {
