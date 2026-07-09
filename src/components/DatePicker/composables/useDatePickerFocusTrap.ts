@@ -62,49 +62,73 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 		const todayButton = root.querySelector<HTMLElement>('.date-picker__today-button')
 		const focusables = getFocusableElements(root)
 		const firstFocusable = focusables[0]
-		if (!firstFocusable) {
-			// Aucun focusable : rester dans le menu via le bouton Aujourd'hui si présent
-			todayButton?.focus({ preventScroll: true })
-			return
-		}
+		const lastFocusable = focusables.at(-1)
+		if (!firstFocusable) return
 
 		const active = document.activeElement as HTMLElement | null
 
-		// Si on appuie sur Tab (sans Shift) depuis la grille des jours, des mois ou des années,
-		// on force le focus vers le bouton Aujourd'hui (s'il existe)
 		const isFromGrid = Boolean(
 			target?.closest('.v-date-picker-months')
 			|| target?.closest('.v-date-picker-years')
 			|| target?.closest('.v-date-picker-month'),
 		)
 
+		const isFromTodayButton = Boolean(target?.closest('.date-picker__today-button'))
+
+		// Tab depuis la grille → bouton Aujourd'hui (empêche Tab de passer de jour en jour)
 		if (!event.shiftKey && isFromGrid && todayButton) {
 			todayButton.focus({ preventScroll: true })
 			return
 		}
 
-		// Shift+Tab depuis la grille : focus sur le jour sélectionné ou aujourd'hui
-		if (event.shiftKey && isFromGrid) {
+		// Shift+Tab depuis la grille → dernier focusable avant la grille en DOM (empêche Shift+Tab de passer de jour en jour)
+		if (event.shiftKey && isFromGrid && active) {
+			const gridContainer = active.closest('.v-date-picker-month, .v-date-picker-months, .v-date-picker-years')
+			const precedingOutsideGrid = focusables.filter((el) => {
+				const isInsideGrid = gridContainer ? gridContainer.contains(el) : false
+				return !isInsideGrid && (active.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_PRECEDING)
+			})
+			console.log('[FocusTrap] Shift+Tab from grid', {
+				isFromGrid,
+				activeTag: active.tagName,
+				activeClass: active.className?.slice(0, 80),
+				precedingCount: precedingOutsideGrid.length,
+				preceding: precedingOutsideGrid.map(el => ({ tag: el.tagName, class: el.className?.slice(0, 60) })),
+				chosen: precedingOutsideGrid.at(-1)?.className?.slice(0, 60),
+			})
+			precedingOutsideGrid.at(-1)?.focus({ preventScroll: true })
+			return
+		}
+
+		// Shift+Tab depuis le bouton Aujourd'hui → jour sélectionné dans la grille (inverse du Tab depuis grille)
+		if (event.shiftKey && isFromTodayButton) {
 			if (focusDayButton(root)) return
 		}
 
-		if (!event.shiftKey && active === focusables.at(-1)) {
-			firstFocusable.focus({ preventScroll: true })
+		const currentIndex = active ? focusables.indexOf(active) : -1
+
+		if (currentIndex === -1 && active) {
+			// L'élément actif n'est pas dans la liste des focusables (ex: bouton de jour avec tabindex=-1)
+			// On trouve le focusable le plus proche en ordre DOM
+			const preceding = focusables.filter(el => active.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_PRECEDING)
+			const following = focusables.filter(el => active.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING)
+
+			if (event.shiftKey) {
+				const prev = preceding.at(-1) ?? lastFocusable
+				prev?.focus({ preventScroll: true })
+			}
+			else {
+				const next = following[0] ?? firstFocusable
+				next.focus({ preventScroll: true })
+			}
 			return
 		}
 
-		if (event.shiftKey && active === focusables[0]) {
-			focusables.at(-1)?.focus({ preventScroll: true })
-			return
-		}
-
-		// Comportement par défaut : laisser Tab circuler mais au sein du menu
-		const baseActive = active ?? firstFocusable
-		const currentIndex = focusables.indexOf(baseActive)
 		const safeIndex = currentIndex === -1 ? 0 : currentIndex
-		const nextIndex = event.shiftKey ? (safeIndex - 1 + focusables.length) % focusables.length : (safeIndex + 1) % focusables.length
-		const nextFocusable = focusables[nextIndex]
-		nextFocusable?.focus({ preventScroll: true })
+		const nextIndex = event.shiftKey
+			? (safeIndex - 1 + focusables.length) % focusables.length
+			: (safeIndex + 1) % focusables.length
+		focusables[nextIndex]?.focus({ preventScroll: true })
 	}
 
 	return { handleMenuKeydown }
