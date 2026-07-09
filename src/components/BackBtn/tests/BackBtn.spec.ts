@@ -78,4 +78,39 @@ describe('BackBtn', () => {
 		})
 		expect(wrapper.vm.dark).toBe(false)
 	})
+
+	// Le ring de focus est géré globalement (_btns.scss) : ces tests vérifient les
+	// prérequis structurels de ce ring (jsdom ne calcule pas le style :focus-visible).
+	describe('focus', () => {
+		it('renders a native <button> so the global focus ring applies', () => {
+			const wrapper = mount(BackBtn, {
+				component: { VIcon, VBtn },
+			})
+
+			expect(wrapper.get('.sy-back-btn').element.tagName).toBe('BUTTON')
+		})
+
+		it('carries the v-theme--dark class in dark mode (onPrimary focus ring)', () => {
+			const wrapper = mount(BackBtn, {
+				component: { VIcon, VBtn },
+				props: { dark: true },
+			})
+
+			expect(wrapper.get('.sy-back-btn').classes()).toContain('v-theme--dark')
+		})
+
+		it('is focusable', () => {
+			const wrapper = mount(BackBtn, {
+				component: { VIcon, VBtn },
+				attachTo: document.body,
+			})
+
+			const button = wrapper.get('.sy-back-btn').element as HTMLButtonElement
+			button.focus()
+
+			expect(document.activeElement).toBe(button)
+
+			wrapper.unmount()
+		})
+	})
 })
