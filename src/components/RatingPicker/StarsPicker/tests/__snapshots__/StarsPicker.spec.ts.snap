@@ -3,7 +3,7 @@
 exports[`StarsPicker > renders correctly 1`] = `
 <fieldset class="sy-stars-picker">
   <legend class="
-    mb-4
+    mb-6
     text-h6
   ">
     Pourriez-vous donner une note ?
@@ -19,7 +19,7 @@ exports[`StarsPicker > renders correctly 1`] = `
     class="
       d-flex
       max-width-none
-      mb-4
+      mb-6
       mx-n1
       mx-sm-n2
     "
