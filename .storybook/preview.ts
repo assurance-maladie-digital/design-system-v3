@@ -147,7 +147,7 @@ const preview: Preview = {
 						'Services', ['useNotificationService'],
 						'Directives', ['v-rgaa-svg-fix'],
 						'Migration', ['Depuis Bridge (Vue3)', 'Depuis Vue2', 'Breaking changes'],
-						'Convergence des DS', ['Équivalence des composants', ['Portail Agent', 'Amelipro']],
+						'Équivalence des composants', ['Portail Agent', 'Amelipro'],
 					],
 				],
 			},

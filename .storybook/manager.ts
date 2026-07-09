@@ -39,13 +39,12 @@ const applyThemeClass = (theme: Theme) => {
 
 const hiddenIdsByTheme: Record<Theme, string[]> = {
 	cnam: [
-		'guide-du-dev-convergence-des-ds',
 		'composants-structure-footerbar--back-office',
 		'composants-structure-footerbar--with-phone-number',
 		'composants-boutons-usermenubtn--with-ps-info',
 		'composants-données-accordion--with-custom-content',
 		'composants-layout-pagecontainer--with-header-and-footer',
-		'guide-du-dev-convergence-des-ds-équivalence-des-composants-amelipro--docs',
+		'guide-du-dev-équivalence-des-composants-amelipro--docs',
 	],
 
 	pa: [
@@ -56,11 +55,11 @@ const hiddenIdsByTheme: Record<Theme, string[]> = {
 		'composants-données-logo',
 		'composants-données-logobrandsection',
 		'guide-du-dev-formulaires-validation',
+		'guide-du-dev-migration',
 	],
 
 	ap2026: [
 		'guide-du-dev',
-		'guide-du-dev-convergence-des-ds',
 		'guide-du-dev-migration',
 		'design-tokens-conteneurs-de-page',
 		'démarrer-créer-une-issue--creeruneissue',
@@ -71,13 +70,13 @@ const hiddenIdsByTheme: Record<Theme, string[]> = {
 	],
 }
 
-const allowedConvergenceIdsByTheme: Partial<Record<Theme, string[]>> = {
+const allowedEquivalenceIdsByTheme: Partial<Record<Theme, string[]>> = {
 	ap: [
-		'guide-du-dev-convergence-des-ds-équivalence-des-composants-amelipro',
+		'guide-du-dev-équivalence-des-composants-amelipro',
 	],
 
 	pa: [
-		'guide-du-dev-convergence-des-ds-équivalence-des-composants-portail-agent',
+		'guide-du-dev-équivalence-des-composants-portail-agent',
 	],
 }
 
@@ -96,9 +95,9 @@ const makeThemeFilter = (theme: Theme) => {
 			return false
 		}
 
-		if (id.startsWith('guide-du-dev-convergence-des-ds-')) {
+		if (id.startsWith('guide-du-dev-équivalence-des-composants')) {
 			const allowedIds
-				= allowedConvergenceIdsByTheme[theme] ?? []
+				= allowedEquivalenceIdsByTheme[theme] ?? []
 
 			return allowedIds.some(allowedId =>
 				id.startsWith(allowedId),
@@ -132,32 +131,15 @@ const getCurrentItemIdFromUrl = () => {
 	return match?.[1] ?? null
 }
 
-const navigateToDocsStory = (itemId: string) => {
-	const params = new URLSearchParams(window.location.search)
-	const globals = params.get('globals')
-
-	window.history.pushState(
-		null,
-		'',
-		`?path=/docs/${encodeURIComponent(itemId)}${
-			globals
-				? `&globals=${globals}`
-				: ''
-		}`,
-	)
-
-	channel.emit('SET_CURRENT_STORY', {
-		storyId: itemId,
-	})
-}
-
 const updateTheme = (api: API, themeValue?: string) => {
 	const theme = (themeValue ?? 'cnam') as Theme
+
 	applyThemeClass(theme)
 
 	addons.setConfig({
 		theme: getThemeConfig(theme),
 	})
+
 	api.experimental_setFilter(
 		'theme',
 		makeThemeFilter(theme),
@@ -166,22 +148,15 @@ const updateTheme = (api: API, themeValue?: string) => {
 	const currentItemId = getCurrentItemIdFromUrl()
 
 	if (currentItemId) {
-		const item
-			= document.querySelector(
-				`.sidebar-item[data-item-id="${currentItemId}"]`,
-			)
+		const isAllowed = makeThemeFilter(theme)({
+			id: currentItemId,
+		})
 
-		if (
-			item
-			&& (item as HTMLElement).style.display === 'none'
-		) {
-			navigateToDocsStory(
-				'démarrer-accueil--docs',
-			)
+		if (!isAllowed) {
+			api.selectStory('démarrer-accueil--docs')
 		}
 	}
 }
-
 addons.register(
 	'theme-sidebar-filter',
 	(api) => {
