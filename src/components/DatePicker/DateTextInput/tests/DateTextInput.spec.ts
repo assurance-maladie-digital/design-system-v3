@@ -766,4 +766,25 @@ describe('DateTextInput.clean', () => {
 
 		expect((input.element as HTMLInputElement).value).toBe('01/01/2025 - 10/01/2025')
 	})
+
+	it('associates the expected date format to the input via aria-describedby', async () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+		})
+
+		await flushPromises()
+
+		const input = wrapper.find('input')
+		const describedBy = input.attributes('aria-describedby')
+		expect(describedBy).toBeTruthy()
+
+		const descriptionId = describedBy?.split(' ').find(id => id.startsWith('date-format-desc-'))
+		expect(descriptionId).toBeTruthy()
+
+		const descriptionEl = wrapper.find(`#${descriptionId}`).element
+		expect(descriptionEl).toBeTruthy()
+		expect(descriptionEl?.textContent).toContain('Format attendu :')
+		expect(descriptionEl?.textContent).toContain('DD/MM/YYYY')
+	})
 })
