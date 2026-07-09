@@ -1,5 +1,6 @@
 import { type Ref } from 'vue'
 import type { ComponentPublicInstance } from 'vue'
+import dayjs from 'dayjs'
 
 interface UseDatePickerFocusTrapOptions {
 	isDatePickerVisible: Ref<boolean>
@@ -20,7 +21,7 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 
 	const focusDayButton = (root: HTMLElement): boolean => {
 		const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
-		const iso = targetDate.toISOString().slice(0, 10)
+		const iso = dayjs(targetDate).format('YYYY-MM-DD')
 		const dayBtn = root.querySelector<HTMLElement>(`[data-v-date="${iso}"] button`)
 		if (dayBtn) {
 			dayBtn.focus({ preventScroll: true })

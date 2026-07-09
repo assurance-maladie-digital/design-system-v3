@@ -132,12 +132,10 @@ const getNavigationMonthYear = (pickerEl: Element): { month: number, year: numbe
 	return { month: monthIndex, year }
 }
 
-let statusRegionCounter = 0
-
 const getStatusRegionId = (pickerEl: HTMLElement): string => {
 	let id = pickerEl.dataset.a11yStatusRegionId
 	if (!id) {
-		id = `date-picker-status-region-${++statusRegionCounter}`
+		id = `date-picker-status-region-${Math.random().toString(36).slice(2)}`
 		pickerEl.dataset.a11yStatusRegionId = id
 	}
 	return id
