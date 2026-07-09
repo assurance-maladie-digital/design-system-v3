@@ -1,46 +1,46 @@
 // Base button styles
 .v-btn {
-    text-transform: inherit !important;
-    font-weight: 700 !important;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+	text-transform: inherit !important;
+	font-weight: 700 !important;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 .theme-cnam .v-btn,
 .theme-pa .v-btn {
-    padding: 0 var(--spacing-4) !important;
+	padding: 0 var(--spacing-4) !important;
 }
 
 .v-btn.v-tab {
-    text-transform: uppercase !important;
+	text-transform: uppercase !important;
 }
 // btn primary
 
 // Overlay base configuration
 .v-btn__overlay {
-    opacity: 0;
-    background: transparent !important;
-    transition: opacity 0.2s ease, background 0s 0.2s;
+	opacity: 0;
+	background: transparent !important;
+	transition: opacity 0.2s ease, background 0s 0.2s;
 }
 
 // Elevated buttons
 .v-btn--variant-elevated {
-    .v-btn__content {
-        position: relative;
-        z-index: 1;
-    }
+	.v-btn__content {
+		position: relative;
+		z-index: 1;
+	}
 
-    &:hover .v-btn__overlay {
-        background: rgba(var(--v-theme-interactionDarkenHover), 0.2) !important;
-        opacity: 1;
-        transition: opacity 0.2s ease, background 0s;
-    }
+	&:hover .v-btn__overlay {
+		background: rgba(var(--v-theme-interactionDarkenHover), 0.2) !important;
+		opacity: 1;
+		transition: opacity 0.2s ease, background 0s;
+	}
 
-    &:active .v-btn__overlay {
-        background: rgba(var(--v-theme-interactionDarkenHover), 0.4) !important;
-        opacity: 1;
-        transition: opacity 0.2s ease, background 0s;
-    }
+	&:active .v-btn__overlay {
+		background: rgba(var(--v-theme-interactionDarkenHover), 0.4) !important;
+		opacity: 1;
+		transition: opacity 0.2s ease, background 0s;
+	}
 }
 
 // Outlined & Text buttons
@@ -95,9 +95,9 @@ button:focus-visible {
 	transition: opacity 0.2s ease;
 }
 
-    &:active .v-btn__overlay {
-        background: rgba(var(--v-theme-secondary), 0.2) !important;
-        opacity: 1;
-        transition: opacity 0.2s ease, background 0s;
-    }
+	&:active .v-btn__overlay {
+		background: rgba(var(--v-theme-secondary), 0.2) !important;
+		opacity: 1;
+		transition: opacity 0.2s ease, background 0s;
+	}
 }
