@@ -102,6 +102,15 @@
 		calendar: mdiCalendar,
 	}
 
+	const ICON_ACTION_LABELS: Record<NonNullable<IconType>, (label?: string) => string> = {
+		calendar: label => locales.value.openCalendar(label),
+		info: label => locales.value.moreInfo(label),
+		success: label => locales.value.successIcon(label),
+		warning: label => locales.value.warningIcon(label),
+		error: label => locales.value.errorIcon(label),
+		close: label => locales.value.closeField(label),
+	}
+
 	const emit = defineEmits([
 		'update:modelValue',
 		'input',
@@ -631,7 +640,7 @@
 					</template>
 					<SyIcon
 						v-else-if="props.prependIcon && !props.noIcon"
-						:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.prependIcon}` : `Bouton ${props.prependIcon}`)"
+						:label="disableClickButton ? undefined : ICON_ACTION_LABELS[props.prependIcon](props.label)"
 						:color="iconColor"
 						:icon="ICONS[props.prependIcon]"
 						:role="disableClickButton ? 'presentation' : 'button'"
@@ -670,7 +679,7 @@
 					</template>
 					<SyIcon
 						v-else-if="props.appendIcon && !props.noIcon"
-						:label="disableClickButton ? undefined : (props.label ? `${props.label} - bouton ${props.appendIcon}` : `Bouton ${props.appendIcon}`)"
+						:label="disableClickButton ? undefined : ICON_ACTION_LABELS[props.appendIcon](props.label)"
 						:color="iconColor"
 						:icon="ICONS[props.appendIcon]"
 						:role="disableClickButton ? 'presentation' : 'button'"
