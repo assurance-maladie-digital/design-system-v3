@@ -107,6 +107,39 @@ describe('useDatePickerAccessibility', () => {
 		expect(status?.getAttribute('aria-atomic')).toBe('true')
 	})
 
+	it('sets aria-pressed on active month/year selector buttons', async () => {
+		document.body.innerHTML = `
+			<div class="v-date-picker">
+				<div class="v-date-picker-months">
+					<button class="v-btn">janv.</button>
+					<button class="v-btn v-btn--active">févr.</button>
+					<button class="v-btn">mars</button>
+				</div>
+				<div class="v-date-picker-years">
+					<button class="v-btn">2024</button>
+					<button class="v-btn v-btn--active">2025</button>
+					<button class="v-btn">2026</button>
+				</div>
+			</div>
+		`
+
+		await updateAccessibility()
+
+		const monthButtons = document.querySelectorAll('.v-date-picker-months button')
+		expect(monthButtons[0]?.getAttribute('aria-pressed')).toBe('false')
+		expect(monthButtons[1]?.getAttribute('aria-pressed')).toBe('true')
+		expect(monthButtons[2]?.getAttribute('aria-pressed')).toBe('false')
+
+		const yearButtons = document.querySelectorAll('.v-date-picker-years button')
+		expect(yearButtons[0]?.getAttribute('aria-pressed')).toBe('false')
+		expect(yearButtons[1]?.getAttribute('aria-pressed')).toBe('true')
+		expect(yearButtons[2]?.getAttribute('aria-pressed')).toBe('false')
+
+		// Les aria-label doivent toujours être présents
+		expect(monthButtons[1]?.getAttribute('aria-label')).toBeTruthy()
+		expect(yearButtons[1]?.getAttribute('aria-label')).toBeTruthy()
+	})
+
 	it('announces the target month when clicking a navigation button', async () => {
 		await updateAccessibility()
 

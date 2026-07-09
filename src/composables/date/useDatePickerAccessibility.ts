@@ -258,7 +258,7 @@ const ensureMonthAndYearSelectorLabels = (pickerEl: HTMLElement) => {
 
 		button.setAttribute('aria-label', ariaLabel)
 		button.setAttribute('title', ariaLabel)
-		button.setAttribute('aria-selected', String(button.classList.contains('v-btn--active')))
+		button.setAttribute('aria-pressed', String(button.classList.contains('v-btn--active')))
 	})
 
 	const yearButtons = pickerEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-years button')
@@ -271,7 +271,7 @@ const ensureMonthAndYearSelectorLabels = (pickerEl: HTMLElement) => {
 
 		button.setAttribute('aria-label', ariaLabel)
 		button.setAttribute('title', ariaLabel)
-		button.setAttribute('aria-selected', String(button.classList.contains('v-btn--active')))
+		button.setAttribute('aria-pressed', String(button.classList.contains('v-btn--active')))
 	})
 }
 
