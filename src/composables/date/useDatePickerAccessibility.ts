@@ -388,15 +388,18 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 				if (!button) return
 
 				cell.setAttribute('role', 'gridcell')
-				cell.setAttribute(
-					'aria-selected',
-					button.classList.contains('v-btn--active') ? 'true' : 'false',
-				)
+				const isSelected = button.classList.contains('v-btn--active')
+				cell.setAttribute('aria-selected', isSelected ? 'true' : 'false')
 
 				button.removeAttribute('role')
-				button.removeAttribute('aria-selected')
 				button.removeAttribute('aria-rowindex')
 				button.removeAttribute('aria-colindex')
+				if (isSelected) {
+					button.setAttribute('aria-selected', 'true')
+				}
+				else {
+					button.removeAttribute('aria-selected')
+				}
 				row.appendChild(cell)
 			})
 			daysContainer.appendChild(row)
