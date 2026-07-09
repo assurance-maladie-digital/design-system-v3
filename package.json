@@ -123,13 +123,13 @@
     "vitest-axe": "^0.1.0",
     "vue": "^3.5.18",
     "vue-component-type-helpers": "2.2.12",
+    "vue-router": "^4.4.5",
     "vue-tsc": "^2.1.8",
     "vue3-snapshot-serializer": "^2.9.0"
   },
   "peerDependencies": {
     "vue": "^3.5.18",
-    "vuetify": "3.12.2",
-    "vue-router": "^4.4.5"
+    "vuetify": "3.12.2"
   },
   "dependencies": {
     "@emotion/css": "^11.13.5",
