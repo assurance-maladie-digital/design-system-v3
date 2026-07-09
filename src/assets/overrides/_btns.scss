@@ -13,6 +13,45 @@
 .v-btn.v-tab {
 	text-transform: uppercase !important;
 }
+// btn primary
+
+.v-btn--variant-elevated .v-btn__content {
+	z-index: 1;
+}
+
+//hover effect for elevated buttons
+
+.v-btn--variant-elevated:hover .v-btn__overlay {
+    opacity: 1;
+	background: rgba(var(--v-theme-interactionDarkenHover), 0.2) !important;
+	transition: opacity 0.2s ease;
+}
+
+// pressed effect for elevated buttons
+
+.v-btn--variant-elevated:active .v-btn__overlay {
+	background: rgba(var(--v-theme-interactionDarkenHover), 0.4) !important;
+    opacity: 1;
+	transition: opacity 0.2s ease;
+}
+
+// hover effect for outline buttons
+
+.v-btn--variant-outlined:hover .v-btn__overlay {
+    opacity: 1;
+	background: rgba(var(--v-theme-secondary), 0.08) !important;
+	transition: opacity 0.2s ease;
+}
+
+// pressed effect for outline buttons
+
+.v-btn--variant-outlined:active .v-btn__overlay {
+	background: rgba(var(--v-theme-secondary), 0.2) !important;
+    opacity: 1;
+	transition: opacity 0.2s ease;
+}
+
+// hover effect for text buttons
 
 // Ring de focus : couvre les VBtn rendus en <button> ET en lien (<a>, via to/href),
 // ainsi que les <button> natifs du design system.
@@ -37,4 +76,18 @@ button:focus-visible {
 
 .v-btn:focus-visible::after {
 	opacity: 0 !important;
+}
+
+.v-btn--variant-text:hover .v-btn__overlay {
+    opacity: 1;
+	background: rgba(var(--v-theme-secondary), 0.08) !important;
+	transition: opacity 0.2s ease;
+}
+
+// pressed effect for text buttons
+
+.v-btn--variant-text:active .v-btn__overlay {
+	background: rgba(var(--v-theme-secondary), 0.2) !important;
+    opacity: 1;
+	transition: opacity 0.2s ease;
 }
