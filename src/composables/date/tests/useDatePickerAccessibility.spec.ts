@@ -101,10 +101,43 @@ describe('useDatePickerAccessibility', () => {
 	it('adds a dedicated hidden role="status" element', async () => {
 		await updateAccessibility()
 
-		const status = document.querySelector('#date-picker-status-region')
+		const status = document.querySelector('[role="status"]')
 		expect(status?.getAttribute('role')).toBe('status')
 		expect(status?.getAttribute('aria-live')).toBe('polite')
 		expect(status?.getAttribute('aria-atomic')).toBe('true')
+	})
+
+	it('assigns a unique status region id per date picker', async () => {
+		document.body.innerHTML = `
+			<div class="v-date-picker" id="picker-1">
+				<div class="v-date-picker-controls">
+					<div class="v-date-picker-controls__month">
+						<button data-testid="prev-month"></button>
+						<button class="v-date-picker-controls__month-btn">Janvier 2023</button>
+						<button data-testid="next-month"></button>
+					</div>
+					<button class="v-date-picker-controls__mode-btn">2023</button>
+				</div>
+			</div>
+			<div class="v-date-picker" id="picker-2">
+				<div class="v-date-picker-controls">
+					<div class="v-date-picker-controls__month">
+						<button data-testid="prev-month"></button>
+						<button class="v-date-picker-controls__month-btn">Février 2023</button>
+						<button data-testid="next-month"></button>
+					</div>
+					<button class="v-date-picker-controls__mode-btn">2023</button>
+				</div>
+			</div>
+		`
+
+		await updateAccessibility()
+
+		const statusRegions = Array.from(document.querySelectorAll('[role="status"]'))
+		expect(statusRegions).toHaveLength(2)
+
+		const ids = statusRegions.map(el => el.id)
+		expect(new Set(ids).size).toBe(2)
 	})
 
 	it('sets aria-pressed on active month/year selector buttons', async () => {
@@ -144,7 +177,7 @@ describe('useDatePickerAccessibility', () => {
 		await updateAccessibility()
 
 		const nextButton = document.querySelector('[data-testid="next-month"]') as HTMLButtonElement
-		const status = document.querySelector('#date-picker-status-region') as HTMLElement
+		const status = document.querySelector('[role="status"]') as HTMLElement
 
 		nextButton?.click()
 		await nextTick()
@@ -157,7 +190,7 @@ describe('useDatePickerAccessibility', () => {
 
 		const prevButton = document.querySelector('[data-testid="prev-month"]') as HTMLButtonElement
 		const monthButton = document.querySelector('.v-date-picker-controls__month-btn') as HTMLElement
-		const status = document.querySelector('#date-picker-status-region') as HTMLElement
+		const status = document.querySelector('[role="status"]') as HTMLElement
 
 		// Simulate updateAccessibility running before the calendar DOM has changed
 		await updateAccessibility()
@@ -173,6 +206,20 @@ describe('useDatePickerAccessibility', () => {
 		await nextTick()
 
 		expect(status.textContent).toBe('Mois précédent, janvier 2023')
+	})
+
+	it('cleans up navigation listeners and observers on unmount', async () => {
+		await updateAccessibility()
+
+		const prevButton = document.querySelector('[data-testid="prev-month"]') as HTMLButtonElement
+		const nextButton = document.querySelector('[data-testid="next-month"]') as HTMLButtonElement
+		const removePrevSpy = vi.spyOn(prevButton, 'removeEventListener')
+		const removeNextSpy = vi.spyOn(nextButton, 'removeEventListener')
+
+		wrapper.unmount()
+
+		expect(removePrevSpy).toHaveBeenCalledWith('click', expect.any(Function))
+		expect(removeNextSpy).toHaveBeenCalledWith('click', expect.any(Function))
 	})
 
 	it('handles missing elements gracefully', async () => {
@@ -230,6 +277,7 @@ describe('useDatePickerAccessibility', () => {
 
 		const dayButtons = Array.from(dayCells[0]?.querySelectorAll('button') ?? [])
 		expect(dayButtons[0]?.getAttribute('role')).toBeNull()
+		expect(dayButtons[0]?.getAttribute('aria-selected')).toBeNull()
 	})
 
 	it('cleanupGridSemantics flattens injected rows', async () => {
