@@ -671,4 +671,199 @@ describe('useCalendarKeyboardNavigation', () => {
 		addSpy.mockRestore()
 		vi.useRealTimers()
 	})
+
+	it('focusInitialDay focuses the target date button when it exists in the DOM', () => {
+		const isDatePickerVisible = ref(true)
+		const rootEl = document.createElement('div')
+
+		// Simulate a day button for 2023-06-15
+		const dayCell = document.createElement('div')
+		dayCell.setAttribute('data-v-date', '2023-06-15')
+		const dayBtn = document.createElement('button')
+		dayBtn.type = 'button'
+		dayCell.appendChild(dayBtn)
+		rootEl.appendChild(dayCell)
+
+		const focusSpy = vi.spyOn(dayBtn, 'focus')
+
+		let focusInitialDay!: () => void
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef: ref({ $el: rootEl } as unknown as ComponentPublicInstance),
+					getInitialFocusDate: () => new Date(2023, 5, 15),
+					getCurrentDate: vi.fn(() => null),
+					setCurrentDate: vi.fn(),
+				})
+				focusInitialDay = result.focusInitialDay
+				return () => null
+			},
+		})
+		mount(TestComponent)
+
+		focusInitialDay()
+		expect(focusSpy).toHaveBeenCalledWith({ preventScroll: true })
+	})
+
+	it('focusInitialDay does nothing when rootEl is missing', () => {
+		const isDatePickerVisible = ref(true)
+
+		let focusInitialDay!: () => void
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef: ref(null),
+					getInitialFocusDate: () => new Date(2023, 5, 15),
+					getCurrentDate: vi.fn(() => null),
+					setCurrentDate: vi.fn(),
+				})
+				focusInitialDay = result.focusInitialDay
+				return () => null
+			},
+		})
+		mount(TestComponent)
+
+		// Should not throw
+		expect(() => focusInitialDay()).not.toThrow()
+	})
+
+	it('focusInitialDay falls back to first non-adjacent day when target date is not in displayed month', () => {
+		const isDatePickerVisible = ref(true)
+		const rootEl = document.createElement('div')
+
+		// Simulate October 2026 calendar with adjacent days from September
+		// Adjacent day (Sept 28) - has adjacent class
+		const adjCell = document.createElement('div')
+		adjCell.setAttribute('data-v-date', '2026-09-28')
+		adjCell.className = 'v-date-picker-month__day v-date-picker-month__day--adjacent'
+		const adjBtn = document.createElement('button')
+		adjBtn.type = 'button'
+		adjCell.appendChild(adjBtn)
+		rootEl.appendChild(adjCell)
+
+		// Adjacent day (Sept 29)
+		const adjCell2 = document.createElement('div')
+		adjCell2.setAttribute('data-v-date', '2026-09-29')
+		adjCell2.className = 'v-date-picker-month__day v-date-picker-month__day--adjacent'
+		const adjBtn2 = document.createElement('button')
+		adjBtn2.type = 'button'
+		adjCell2.appendChild(adjBtn2)
+		rootEl.appendChild(adjCell2)
+
+		// Adjacent day (Sept 30)
+		const adjCell3 = document.createElement('div')
+		adjCell3.setAttribute('data-v-date', '2026-09-30')
+		adjCell3.className = 'v-date-picker-month__day v-date-picker-month__day--adjacent'
+		const adjBtn3 = document.createElement('button')
+		adjBtn3.type = 'button'
+		adjCell3.appendChild(adjBtn3)
+		rootEl.appendChild(adjCell3)
+
+		// First real day of October (Oct 1) - no adjacent class
+		const octCell = document.createElement('div')
+		octCell.setAttribute('data-v-date', '2026-10-01')
+		octCell.className = 'v-date-picker-month__day'
+		const octBtn = document.createElement('button')
+		octBtn.type = 'button'
+		octCell.appendChild(octBtn)
+		rootEl.appendChild(octCell)
+
+		// Another day of October
+		const octCell2 = document.createElement('div')
+		octCell2.setAttribute('data-v-date', '2026-10-02')
+		octCell2.className = 'v-date-picker-month__day'
+		const octBtn2 = document.createElement('button')
+		octBtn2.type = 'button'
+		octCell2.appendChild(octBtn2)
+		rootEl.appendChild(octCell2)
+
+		const adjFocusSpy = vi.spyOn(adjBtn, 'focus')
+		const octFocusSpy = vi.spyOn(octBtn, 'focus')
+
+		let focusInitialDay!: () => void
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef: ref({ $el: rootEl } as unknown as ComponentPublicInstance),
+					// Target date is July 9 - not in October calendar
+					getInitialFocusDate: () => new Date(2026, 6, 9),
+					getCurrentDate: vi.fn(() => null),
+					setCurrentDate: vi.fn(),
+				})
+				focusInitialDay = result.focusInitialDay
+				return () => null
+			},
+		})
+		mount(TestComponent)
+
+		focusInitialDay()
+
+		// Should NOT focus the adjacent day
+		expect(adjFocusSpy).not.toHaveBeenCalled()
+		// Should focus the first non-adjacent day (Oct 1)
+		expect(octFocusSpy).toHaveBeenCalledWith({ preventScroll: true })
+	})
+
+	it('focusInitialDay does not focus anything when no day buttons exist', () => {
+		const isDatePickerVisible = ref(true)
+		const rootEl = document.createElement('div')
+		// Empty root - no day cells
+
+		let focusInitialDay!: () => void
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef: ref({ $el: rootEl } as unknown as ComponentPublicInstance),
+					getInitialFocusDate: () => new Date(2023, 5, 15),
+					getCurrentDate: vi.fn(() => null),
+					setCurrentDate: vi.fn(),
+				})
+				focusInitialDay = result.focusInitialDay
+				return () => null
+			},
+		})
+		mount(TestComponent)
+
+		// Should not throw
+		expect(() => focusInitialDay()).not.toThrow()
+	})
+
+	it('focusInitialDay is called when date picker becomes visible', async () => {
+		const isDatePickerVisible = ref(false)
+		const rootEl = document.createElement('div')
+
+		const dayCell = document.createElement('div')
+		dayCell.setAttribute('data-v-date', '2023-06-15')
+		const dayBtn = document.createElement('button')
+		dayBtn.type = 'button'
+		dayCell.appendChild(dayBtn)
+		rootEl.appendChild(dayCell)
+
+		const focusSpy = vi.spyOn(dayBtn, 'focus')
+
+		const TestComponent = defineComponent({
+			setup() {
+				useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef: ref({ $el: rootEl } as unknown as ComponentPublicInstance),
+					getInitialFocusDate: () => new Date(2023, 5, 15),
+					getCurrentDate: vi.fn(() => null),
+					setCurrentDate: vi.fn(),
+				})
+				return () => null
+			},
+		})
+		mount(TestComponent)
+
+		isDatePickerVisible.value = true
+		await nextTick() // watcher triggers
+		await nextTick() // attachListeners + nextTick(focusInitialDay)
+		await nextTick() // focusInitialDay runs
+
+		expect(focusSpy).toHaveBeenCalledWith({ preventScroll: true })
+	})
 })
