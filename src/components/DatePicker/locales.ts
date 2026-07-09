@@ -4,6 +4,9 @@ export const locales = {
 	// Labels et placeholders
 	label: 'Date',
 
+	// Messages de description
+	formatHint: 'Format attendu :',
+
 	// Messages d'erreur
 	required: 'La date est requise.',
 	invalidDateFormat: 'Le format de la date est invalide.',

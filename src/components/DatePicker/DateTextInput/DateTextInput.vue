@@ -9,7 +9,7 @@
 		validateDateFormat,
 		isDateComplete,
 	} from '../composables'
-	import { ref, computed, watch, nextTick, onMounted, toRefs } from 'vue'
+	import { ref, computed, watch, nextTick, onMounted, toRefs, useId } from 'vue'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -202,6 +202,7 @@
 	const isFocused = ref(false)
 	const hasInteracted = ref(false)
 	const ariaLabel = ref(props.label || props.placeholder || locales.label)
+	const formatDescriptionId = `date-format-desc-${useId()}`
 
 	function validateDateFormatForSingleOrRange(input: string): { isValid: boolean, message: string } {
 		if (readonly.value) return { isValid: true, message: '' }
@@ -1109,21 +1110,30 @@
 </script>
 
 <template>
-	<SyTextField
-		ref="inputRef"
-		v-model="inputValue"
-		:class="{
-			'error-field': isOnError,
-			'warning-field': isOnWarning,
-			'success-field': isOnSuccess,
-		}"
-		color="primary"
-		v-bind="syTextFieldProps"
-		@focus="onFocus"
-		@blur="onBlur"
-		@keydown="handleKeydown"
-		@paste="handlePaste"
-	/>
+	<div class="date-text-input">
+		<SyTextField
+			ref="inputRef"
+			v-model="inputValue"
+			:class="{
+				'error-field': isOnError,
+				'warning-field': isOnWarning,
+				'success-field': isOnSuccess,
+			}"
+			color="primary"
+			v-bind="syTextFieldProps"
+			:aria-describedby="formatDescriptionId"
+			@focus="onFocus"
+			@blur="onBlur"
+			@keydown="handleKeydown"
+			@paste="handlePaste"
+		/>
+		<div
+			:id="formatDescriptionId"
+			class="d-sr-only"
+		>
+			{{ locales.formatHint }} {{ displayFormat }}
+		</div>
+	</div>
 </template>
 
 <style lang="scss" scoped>
