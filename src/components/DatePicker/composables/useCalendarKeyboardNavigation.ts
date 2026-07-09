@@ -545,12 +545,24 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	}
 
 	const focusInitialDay = () => {
+		console.log('[focusInitialDay] called')
 		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
-		if (!rootEl) return
+		if (!rootEl) {
+			console.log('[focusInitialDay] no rootEl, aborting')
+			return
+		}
 
 		const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
 		const iso = toISO(targetDate)
+		console.log('[focusInitialDay] targetDate:', targetDate, 'iso:', iso)
 		const dayBtn = rootEl.querySelector<HTMLElement>(`[data-v-date="${iso}"] button`)
+		if (!dayBtn) {
+			console.log('[focusInitialDay] no dayBtn found for iso:', iso)
+			console.log('[focusInitialDay] available data-v-date:', Array.from(rootEl.querySelectorAll('[data-v-date]')).map(el => el.getAttribute('data-v-date')))
+		}
+		else {
+			console.log('[focusInitialDay] dayBtn found, focusing')
+		}
 		dayBtn?.focus({ preventScroll: true })
 	}
 
@@ -579,5 +591,6 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	return {
 		attachListeners,
 		detachListeners,
+		focusInitialDay,
 	}
 }

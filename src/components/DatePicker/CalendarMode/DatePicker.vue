@@ -161,13 +161,29 @@
 	})
 
 	// Utiliser le calendarKeyboardNavigation normalement
-	useCalendarKeyboardNavigation({
+	const { focusInitialDay } = useCalendarKeyboardNavigation({
 		isDatePickerVisible,
 		datePickerRef,
 		getInitialFocusDate: () => {
 			const value = selectedDates.value
 			const selected = Array.isArray(value) ? value[0] ?? null : value
-			return selected ?? new Date()
+			const target = selected ?? new Date()
+
+			// Si la date cible est dans le mois affiché, l'utiliser
+			if (currentMonth.value !== null && currentYear.value !== null) {
+				const sameMonth = target.getMonth() === Number(currentMonth.value)
+				const sameYear = target.getFullYear() === Number(currentYear.value)
+				if (sameMonth && sameYear) {
+					return target
+				}
+			}
+
+			// Fallback: 1er du mois actuellement affiché
+			if (currentMonth.value !== null && currentYear.value !== null) {
+				return new Date(Number(currentYear.value), Number(currentMonth.value), 1)
+			}
+
+			return target
 		},
 		getCurrentDate: () => {
 			const value = selectedDates.value
@@ -647,32 +663,40 @@
 
 	// Fonction pour mettre à jour le mois quand on navigue via les flèches
 	const onUpdateMonth = (month: string) => {
+		console.log('[onUpdateMonth] called with month:', month, 'currentMonth:', currentMonth.value)
 		if (currentMonth.value === month) return
 		currentMonth.value = month
 		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
 		handleMonthUpdate()
 		reapplyAccessibility()
 		nextTick(() => {
+			console.log('[onUpdateMonth] nextTick, isDatePickerVisible:', isDatePickerVisible.value)
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
 				markHolidayDays()
 				updateSelectedDayAria()
+				console.log('[onUpdateMonth] scheduling focusInitialDay')
+				nextTick(focusInitialDay)
 			}
 		})
 	}
 
 	// Fonction pour mettre à jour l'année quand on navigue via les flèches
 	const onUpdateYear = (year: string) => {
+		console.log('[onUpdateYear] called with year:', year)
 		currentYear.value = year
 		currentYearName.value = year
 
 		handleYearUpdate()
 		reapplyAccessibility()
 		nextTick(() => {
+			console.log('[onUpdateYear] nextTick, isDatePickerVisible:', isDatePickerVisible.value)
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
 				markHolidayDays()
 				updateSelectedDayAria()
+				console.log('[onUpdateYear] scheduling focusInitialDay')
+				nextTick(focusInitialDay)
 			}
 		})
 	}
@@ -701,9 +725,42 @@
 	)
 
 	const handleViewModeUpdateWrapper = (mode: ViewMode) => {
+		console.log('[handleViewModeUpdateWrapper] called with mode:', mode)
 		handleViewModeUpdate(mode)
 		if (isDatePickerVisible.value) {
 			reapplyAccessibility()
+		}
+		if (mode === 'month') {
+			console.log('[handleViewModeUpdateWrapper] mode is month, scheduling focus')
+			nextTick(() => {
+				console.log('[handleViewModeUpdateWrapper] month nextTick, isDatePickerVisible:', isDatePickerVisible.value)
+				if (isDatePickerVisible.value) {
+					const root = datePickerDialogRef.value
+					console.log('[handleViewModeUpdateWrapper] root (datePickerDialogRef):', root)
+					if (!root) return
+					const monthContainer = root.querySelector<HTMLElement>('.v-date-picker-month')
+					console.log('[handleViewModeUpdateWrapper] monthContainer:', monthContainer)
+					if (!monthContainer) {
+						console.log('[handleViewModeUpdateWrapper] no monthContainer, calling focusInitialDay directly')
+						focusInitialDay()
+						return
+					}
+
+					const focusDay = () => {
+						console.log('[handleViewModeUpdateWrapper] focusDay callback called')
+						focusInitialDay()
+					}
+
+					if (monthContainer.classList.contains('v-enter-active') || monthContainer.classList.contains('fade-transition-enter-active')) {
+						console.log('[handleViewModeUpdateWrapper] transition active, waiting for transitionend')
+						monthContainer.addEventListener('transitionend', focusDay, { once: true })
+					}
+					else {
+						console.log('[handleViewModeUpdateWrapper] no transition, calling focusDay directly')
+						focusDay()
+					}
+				}
+			})
 		}
 		if (mode === 'months') {
 			nextTick(() => {
