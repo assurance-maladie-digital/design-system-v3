@@ -705,6 +705,63 @@
 		if (isDatePickerVisible.value) {
 			reapplyAccessibility()
 		}
+		if (mode === 'months') {
+			nextTick(() => {
+				const root = datePickerDialogRef.value
+				if (!root) return
+				const monthsContainer = root.querySelector<HTMLElement>('.v-date-picker-months')
+				if (!monthsContainer) return
+
+				const focusActiveMonth = () => {
+					const active = root.querySelector<HTMLElement>('.v-date-picker-months .v-btn--active')
+					if (active) {
+						active.focus({ preventScroll: true })
+						return
+					}
+					const monthIndex = currentMonth.value !== null ? Number(currentMonth.value) : new Date().getMonth()
+					const monthBtns = root.querySelectorAll<HTMLElement>('.v-date-picker-months .v-btn')
+					monthBtns[monthIndex]?.focus({ preventScroll: true })
+				}
+
+				if (monthsContainer.classList.contains('v-enter-active') || monthsContainer.classList.contains('fade-transition-enter-active')) {
+					monthsContainer.addEventListener('transitionend', focusActiveMonth, { once: true })
+				}
+				else {
+					focusActiveMonth()
+				}
+			})
+		}
+
+		if (mode === 'year') {
+			nextTick(() => {
+				const root = datePickerDialogRef.value
+				if (!root) return
+				const yearsContainer = root.querySelector<HTMLElement>('.v-date-picker-years')
+				if (!yearsContainer) return
+
+				const focusActiveYear = () => {
+					const active = root.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
+					if (active) {
+						active.focus({ preventScroll: true })
+						return
+					}
+					const currentYearBtn = root.querySelector<HTMLElement>('.v-date-picker-years .v-date-picker-years__year--current .v-btn')
+					if (currentYearBtn) {
+						currentYearBtn.focus({ preventScroll: true })
+						return
+					}
+					const firstBtn = root.querySelector<HTMLElement>('.v-date-picker-years .v-btn')
+					firstBtn?.focus({ preventScroll: true })
+				}
+
+				if (yearsContainer.classList.contains('v-enter-active') || yearsContainer.classList.contains('fade-transition-enter-active')) {
+					yearsContainer.addEventListener('transitionend', focusActiveYear, { once: true })
+				}
+				else {
+					focusActiveYear()
+				}
+			})
+		}
 	}
 
 	const handleInputBlur = async () => {
