@@ -6,6 +6,8 @@ interface UseDatePickerFocusTrapOptions {
 	datePickerRef: Ref<ComponentPublicInstance | null>
 	onClose?: () => void
 	restoreFocus?: () => void
+	// Renvoie la date sur laquelle placer le focus (date sélectionnée ou aujourd'hui)
+	getInitialFocusDate?: () => Date
 }
 
 const getFocusableElements = (root: HTMLElement): HTMLElement[] => {
@@ -14,7 +16,18 @@ const getFocusableElements = (root: HTMLElement): HTMLElement[] => {
 }
 
 export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
-	const { isDatePickerVisible, datePickerRef, onClose, restoreFocus } = options
+	const { isDatePickerVisible, datePickerRef, onClose, restoreFocus, getInitialFocusDate } = options
+
+	const focusDayButton = (root: HTMLElement): boolean => {
+		const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
+		const iso = targetDate.toISOString().slice(0, 10)
+		const dayBtn = root.querySelector<HTMLElement>(`[data-v-date="${iso}"] button`)
+		if (dayBtn) {
+			dayBtn.focus({ preventScroll: true })
+			return true
+		}
+		return false
+	}
 
 	const handleMenuKeydown = (event: KeyboardEvent) => {
 		if (!isDatePickerVisible.value) return
@@ -69,15 +82,9 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 			return
 		}
 
-		// Shift+Tab inverse de Tab : depuis la grille on remonte au header
-		if (event.shiftKey && isFromGrid && todayButton) {
-			const header = root.querySelector<HTMLElement>('.v-date-picker-controls')
-			const headerFocusables = header ? getFocusableElements(header) : []
-			const lastHeaderFocusable = headerFocusables.at(-1)
-			if (lastHeaderFocusable) {
-				lastHeaderFocusable.focus({ preventScroll: true })
-				return
-			}
+		// Shift+Tab depuis la grille : focus sur le jour sélectionné ou aujourd'hui
+		if (event.shiftKey && isFromGrid) {
+			if (focusDayButton(root)) return
 		}
 
 		if (!event.shiftKey && active === focusables.at(-1)) {

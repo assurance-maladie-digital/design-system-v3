@@ -533,6 +533,11 @@
 		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
 		onClose: () => emit('closed'),
 		restoreFocus: () => queueMicrotask(() => focusCalendarInput()),
+		getInitialFocusDate: () => {
+			const value = selectedDates.value
+			const selected = Array.isArray(value) ? value[0] ?? null : value
+			return selected ?? new Date()
+		},
 	})
 
 	/**
@@ -567,6 +572,11 @@
 	useCalendarKeyboardNavigation({
 		isDatePickerVisible,
 		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
+		getInitialFocusDate: () => {
+			const value = selectedDates.value
+			const selected = Array.isArray(value) ? value[0] ?? null : value
+			return selected ?? new Date()
+		},
 		getCurrentDate: () => {
 			const value = selectedDates.value
 			if (value) {
@@ -930,10 +940,7 @@
 					customizeMonthButton()
 					markHolidayDays()
 					updateSelectedDayAria()
-					nextTick(() => {
-						const monthBtn = datePickerMenuRef.value?.querySelector<HTMLElement>('.v-date-picker-controls__month-btn')
-						monthBtn?.focus({ preventScroll: true })
-					})
+					// Le focus initial sur le jour est géré par useCalendarKeyboardNavigation
 				})
 			}
 		},
