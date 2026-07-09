@@ -95,6 +95,39 @@ describe('SyCheckBoxGroup', () => {
 		expect(wrapper.props('modelValue')).toBe('X')
 	})
 
+	it('should handle validation correctly (required, multiple)', async () => {
+		const wrapper = mount(SyCheckBoxGroup, {
+			props: {
+				'multiple': true,
+				'modelValue': [],
+				'label': 'Required CheckBoxGroup',
+				'required': true,
+				'isValidateOnBlur': false,
+				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+				'options': [
+					{ label: 'Option A', value: 'A', id: 'opt-a' },
+					{ label: 'Option B', value: 'B', id: 'opt-b' },
+				],
+			},
+		})
+
+		// Sélection vide (tableau vide) → le champ doit être en erreur au submit
+		const isValidInitial = await wrapper.vm.validateOnSubmit()
+		await nextTick()
+		expect(isValidInitial).toBe(false)
+		expect(wrapper.text()).toContain('est requis')
+
+		// Après sélection d'au moins une option → valide, plus d'erreur
+		await wrapper.findAll('input[type="checkbox"]')[0]!.setValue(true)
+
+		const isValidAfterSelection = await wrapper.vm.validateOnSubmit()
+		await nextTick()
+
+		expect(isValidAfterSelection).toBe(true)
+		expect(wrapper.props('modelValue')).toEqual(['A'])
+		expect(wrapper.text()).not.toContain('est requis')
+	})
+
 	it('should handle readonly and disabled states', async () => {
 		const wrapper = mount(SyCheckBoxGroup, {
 			props: {
