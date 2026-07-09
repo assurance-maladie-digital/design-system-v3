@@ -35,6 +35,7 @@
 		isDateComplete as isDateCompleteUtil,
 		useDatePickerDerivedValues,
 	} from '../composables'
+	import type { ViewMode } from '../composables/useDatePickerViewMode'
 	import dayjs from 'dayjs'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
@@ -92,21 +93,26 @@
 
 	// Fonction pour mettre à jour le mois quand on navigue via les flèches
 	const onUpdateMonth = (month: string) => {
+		console.log('[CDP onUpdateMonth] called with month:', month, 'currentMonth:', currentMonth.value)
 		if (currentMonth.value === month) return
 		currentMonth.value = month
 		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
 		handleMonthUpdate()
 		nextTick(() => {
+			console.log('[CDP onUpdateMonth] nextTick, isDatePickerVisible:', isDatePickerVisible.value)
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
 				markHolidayDays()
 				updateSelectedDayAria()
+				console.log('[CDP onUpdateMonth] scheduling focusInitialDay')
+				nextTick(focusInitialDay)
 			}
 		})
 	}
 
 	// Fonction pour mettre à jour l'année quand on navigue via les flèches
 	const onUpdateYear = (year: string) => {
+		console.log('[CDP onUpdateYear] called with year:', year)
 		const oldYear = currentYear.value
 		currentYear.value = year
 		currentYearName.value = year
@@ -127,10 +133,13 @@
 
 		handleYearUpdate()
 		nextTick(() => {
+			console.log('[CDP onUpdateYear] nextTick, isDatePickerVisible:', isDatePickerVisible.value)
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
 				markHolidayDays()
 				updateSelectedDayAria()
+				console.log('[CDP onUpdateYear] scheduling focusInitialDay')
+				nextTick(focusInitialDay)
 			}
 		})
 	}
@@ -585,13 +594,29 @@
 		document.removeEventListener('click', handleClickOutside)
 	})
 
-	useCalendarKeyboardNavigation({
+	const { focusInitialDay } = useCalendarKeyboardNavigation({
 		isDatePickerVisible,
 		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
 		getInitialFocusDate: () => {
 			const value = selectedDates.value
 			const selected = Array.isArray(value) ? value[0] ?? null : value
-			return selected ?? new Date()
+			const target = selected ?? new Date()
+
+			// Si la date cible est dans le mois affiché, l'utiliser
+			if (currentMonth.value !== null && currentYear.value !== null) {
+				const sameMonth = target.getMonth() === Number(currentMonth.value)
+				const sameYear = target.getFullYear() === Number(currentYear.value)
+				if (sameMonth && sameYear) {
+					return target
+				}
+			}
+
+			// Fallback: 1er du mois actuellement affiché
+			if (currentMonth.value !== null && currentYear.value !== null) {
+				return new Date(Number(currentYear.value), Number(currentMonth.value), 1)
+			}
+
+			return target
 		},
 		getCurrentDate: () => {
 			const value = selectedDates.value
@@ -756,6 +781,99 @@
 			() => props.isBirthDate || props.birthDate,
 			() => selectedDates.value,
 		)
+
+	const handleViewModeUpdateWrapper = (mode: ViewMode) => {
+		console.log('[CDP handleViewModeUpdateWrapper] called with mode:', mode)
+		handleViewModeUpdate(mode)
+		if (mode === 'month') {
+			console.log('[CDP handleViewModeUpdateWrapper] mode is month, scheduling focus')
+			nextTick(() => {
+				console.log('[CDP handleViewModeUpdateWrapper] month nextTick, isDatePickerVisible:', isDatePickerVisible.value)
+				if (isDatePickerVisible.value) {
+					const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+					console.log('[CDP handleViewModeUpdateWrapper] rootEl:', rootEl)
+					if (!rootEl) return
+					const monthContainer = rootEl.querySelector<HTMLElement>('.v-date-picker-month')
+					console.log('[CDP handleViewModeUpdateWrapper] monthContainer:', monthContainer)
+					if (!monthContainer) {
+						console.log('[CDP handleViewModeUpdateWrapper] no monthContainer, calling focusInitialDay directly')
+						focusInitialDay()
+						return
+					}
+
+					const focusDay = () => {
+						console.log('[CDP handleViewModeUpdateWrapper] focusDay callback called')
+						focusInitialDay()
+					}
+
+					if (monthContainer.classList.contains('v-enter-active') || monthContainer.classList.contains('fade-transition-enter-active')) {
+						console.log('[CDP handleViewModeUpdateWrapper] transition active, waiting for transitionend')
+						monthContainer.addEventListener('transitionend', focusDay, { once: true })
+					}
+					else {
+						console.log('[CDP handleViewModeUpdateWrapper] no transition, calling focusDay directly')
+						focusDay()
+					}
+				}
+			})
+		}
+		if (mode === 'months') {
+			nextTick(() => {
+				const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+				if (!rootEl) return
+				const monthsContainer = rootEl.querySelector<HTMLElement>('.v-date-picker-months')
+				if (!monthsContainer) return
+
+				const focusActiveMonth = () => {
+					const active = rootEl.querySelector<HTMLElement>('.v-date-picker-months .v-btn--active')
+					if (active) {
+						active.focus({ preventScroll: true })
+						return
+					}
+					const monthIndex = currentMonth.value !== null ? Number(currentMonth.value) : new Date().getMonth()
+					const monthBtns = rootEl.querySelectorAll<HTMLElement>('.v-date-picker-months .v-btn')
+					monthBtns[monthIndex]?.focus({ preventScroll: true })
+				}
+
+				if (monthsContainer.classList.contains('v-enter-active') || monthsContainer.classList.contains('fade-transition-enter-active')) {
+					monthsContainer.addEventListener('transitionend', focusActiveMonth, { once: true })
+				}
+				else {
+					focusActiveMonth()
+				}
+			})
+		}
+		if (mode === 'year') {
+			nextTick(() => {
+				const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+				if (!rootEl) return
+				const yearsContainer = rootEl.querySelector<HTMLElement>('.v-date-picker-years')
+				if (!yearsContainer) return
+
+				const focusActiveYear = () => {
+					const active = rootEl.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
+					if (active) {
+						active.focus({ preventScroll: true })
+						return
+					}
+					const currentYearBtn = rootEl.querySelector<HTMLElement>('.v-date-picker-years .v-date-picker-years__year--current .v-btn')
+					if (currentYearBtn) {
+						currentYearBtn.focus({ preventScroll: true })
+						return
+					}
+					const firstBtn = rootEl.querySelector<HTMLElement>('.v-date-picker-years .v-btn')
+					firstBtn?.focus({ preventScroll: true })
+				}
+
+				if (yearsContainer.classList.contains('v-enter-active') || yearsContainer.classList.contains('fade-transition-enter-active')) {
+					yearsContainer.addEventListener('transitionend', focusActiveYear, { once: true })
+				}
+				else {
+					focusActiveYear()
+				}
+			})
+		}
+	}
 
 	/**
 	 * Manual input validation on blur
@@ -1158,7 +1276,7 @@
 						:hint="props.hint"
 						:persistent-hint="props.persistentHint"
 						@update:model-value="updateDisplayFormattedDate"
-						@update:view-mode="handleViewModeUpdate"
+						@update:view-mode="handleViewModeUpdateWrapper"
 						@update:month="onUpdateMonth"
 						@update:year="onUpdateYear"
 						@click:date="updateSelectedDates"
