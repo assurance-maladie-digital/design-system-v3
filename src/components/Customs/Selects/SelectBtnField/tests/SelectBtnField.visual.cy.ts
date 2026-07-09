@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue'
+import { defineComponent, h } from 'vue'
 import SelectBtnField from '../SelectBtnField.vue'
 
 const defaultItems = [
@@ -100,16 +100,16 @@ describe('SelectBtnField - Focus visual regression tests', () => {
 
 	it('does not clip the focus ring inside an overflow:hidden container', () => {
 		// Un ancêtre overflow:hidden peut rogner l'outline (offset 3px). Ce cas le vérifie.
+		// Render function (pas de template string) : le compilateur runtime n'est pas
+		// dispo dans le build Cypress component.
 		const OverflowWrapper = defineComponent({
-			components: { SelectBtnField },
-			data() {
-				return { items: defaultItems }
+			setup() {
+				return () => h(
+					'div',
+					{ style: 'overflow: hidden; width: 360px; padding: 16px; border: 1px solid #ccc' },
+					[h(SelectBtnField, { items: defaultItems, label: 'Votre réponse', inline: true })],
+				)
 			},
-			template: `
-				<div style="overflow: hidden; width: 360px; padding: 16px; border: 1px solid #ccc">
-					<SelectBtnField :items="items" label="Votre réponse" inline />
-				</div>
-			`,
 		})
 
 		cy.mountWithVuetify(OverflowWrapper)
