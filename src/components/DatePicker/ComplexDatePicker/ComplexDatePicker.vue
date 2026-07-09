@@ -92,18 +92,15 @@
 
 	// Fonction pour mettre à jour le mois quand on navigue via les flèches
 	const onUpdateMonth = (month: string) => {
-		console.log('[CDP onUpdateMonth] called with month:', month, 'currentMonth:', currentMonth.value)
 		if (currentMonth.value === month) return
 		currentMonth.value = month
 		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
 		handleMonthUpdate()
 		nextTick(() => {
-			console.log('[CDP onUpdateMonth] nextTick, isDatePickerVisible:', isDatePickerVisible.value)
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
 				markHolidayDays()
 				updateSelectedDayAria()
-				console.log('[CDP onUpdateMonth] scheduling focusInitialDay')
 				nextTick(focusInitialDay)
 			}
 		})
@@ -111,7 +108,6 @@
 
 	// Fonction pour mettre à jour l'année quand on navigue via les flèches
 	const onUpdateYear = (year: string) => {
-		console.log('[CDP onUpdateYear] called with year:', year)
 		const oldYear = currentYear.value
 		currentYear.value = year
 		currentYearName.value = year
@@ -132,12 +128,10 @@
 
 		handleYearUpdate()
 		nextTick(() => {
-			console.log('[CDP onUpdateYear] nextTick, isDatePickerVisible:', isDatePickerVisible.value)
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
 				markHolidayDays()
 				updateSelectedDayAria()
-				console.log('[CDP onUpdateYear] scheduling focusInitialDay')
 				nextTick(focusInitialDay)
 			}
 		})
@@ -767,35 +761,26 @@
 		)
 
 	const handleViewModeUpdateWrapper = (mode: ViewMode) => {
-		console.log('[CDP handleViewModeUpdateWrapper] called with mode:', mode)
 		handleViewModeUpdate(mode)
 		if (mode === 'month') {
-			console.log('[CDP handleViewModeUpdateWrapper] mode is month, scheduling focus')
 			nextTick(() => {
-				console.log('[CDP handleViewModeUpdateWrapper] month nextTick, isDatePickerVisible:', isDatePickerVisible.value)
 				if (isDatePickerVisible.value) {
 					const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
-					console.log('[CDP handleViewModeUpdateWrapper] rootEl:', rootEl)
 					if (!rootEl) return
 					const monthContainer = rootEl.querySelector<HTMLElement>('.v-date-picker-month')
-					console.log('[CDP handleViewModeUpdateWrapper] monthContainer:', monthContainer)
 					if (!monthContainer) {
-						console.log('[CDP handleViewModeUpdateWrapper] no monthContainer, calling focusInitialDay directly')
 						focusInitialDay()
 						return
 					}
 
 					const focusDay = () => {
-						console.log('[CDP handleViewModeUpdateWrapper] focusDay callback called')
 						focusInitialDay()
 					}
 
 					if (monthContainer.classList.contains('v-enter-active') || monthContainer.classList.contains('fade-transition-enter-active')) {
-						console.log('[CDP handleViewModeUpdateWrapper] transition active, waiting for transitionend')
 						monthContainer.addEventListener('transitionend', focusDay, { once: true })
 					}
 					else {
-						console.log('[CDP handleViewModeUpdateWrapper] no transition, calling focusDay directly')
 						focusDay()
 					}
 				}

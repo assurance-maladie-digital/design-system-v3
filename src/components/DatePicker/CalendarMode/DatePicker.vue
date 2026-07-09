@@ -663,19 +663,16 @@
 
 	// Fonction pour mettre à jour le mois quand on navigue via les flèches
 	const onUpdateMonth = (month: string) => {
-		console.log('[onUpdateMonth] called with month:', month, 'currentMonth:', currentMonth.value)
 		if (currentMonth.value === month) return
 		currentMonth.value = month
 		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
 		handleMonthUpdate()
 		reapplyAccessibility()
 		nextTick(() => {
-			console.log('[onUpdateMonth] nextTick, isDatePickerVisible:', isDatePickerVisible.value)
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
 				markHolidayDays()
 				updateSelectedDayAria()
-				console.log('[onUpdateMonth] scheduling focusInitialDay')
 				nextTick(focusInitialDay)
 			}
 		})
@@ -683,19 +680,16 @@
 
 	// Fonction pour mettre à jour l'année quand on navigue via les flèches
 	const onUpdateYear = (year: string) => {
-		console.log('[onUpdateYear] called with year:', year)
 		currentYear.value = year
 		currentYearName.value = year
 
 		handleYearUpdate()
 		reapplyAccessibility()
 		nextTick(() => {
-			console.log('[onUpdateYear] nextTick, isDatePickerVisible:', isDatePickerVisible.value)
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
 				markHolidayDays()
 				updateSelectedDayAria()
-				console.log('[onUpdateYear] scheduling focusInitialDay')
 				nextTick(focusInitialDay)
 			}
 		})
@@ -725,38 +719,29 @@
 	)
 
 	const handleViewModeUpdateWrapper = (mode: ViewMode) => {
-		console.log('[handleViewModeUpdateWrapper] called with mode:', mode)
 		handleViewModeUpdate(mode)
 		if (isDatePickerVisible.value) {
 			reapplyAccessibility()
 		}
 		if (mode === 'month') {
-			console.log('[handleViewModeUpdateWrapper] mode is month, scheduling focus')
 			nextTick(() => {
-				console.log('[handleViewModeUpdateWrapper] month nextTick, isDatePickerVisible:', isDatePickerVisible.value)
 				if (isDatePickerVisible.value) {
 					const root = datePickerDialogRef.value
-					console.log('[handleViewModeUpdateWrapper] root (datePickerDialogRef):', root)
 					if (!root) return
 					const monthContainer = root.querySelector<HTMLElement>('.v-date-picker-month')
-					console.log('[handleViewModeUpdateWrapper] monthContainer:', monthContainer)
 					if (!monthContainer) {
-						console.log('[handleViewModeUpdateWrapper] no monthContainer, calling focusInitialDay directly')
 						focusInitialDay()
 						return
 					}
 
 					const focusDay = () => {
-						console.log('[handleViewModeUpdateWrapper] focusDay callback called')
 						focusInitialDay()
 					}
 
 					if (monthContainer.classList.contains('v-enter-active') || monthContainer.classList.contains('fade-transition-enter-active')) {
-						console.log('[handleViewModeUpdateWrapper] transition active, waiting for transitionend')
 						monthContainer.addEventListener('transitionend', focusDay, { once: true })
 					}
 					else {
-						console.log('[handleViewModeUpdateWrapper] no transition, calling focusDay directly')
 						focusDay()
 					}
 				}
