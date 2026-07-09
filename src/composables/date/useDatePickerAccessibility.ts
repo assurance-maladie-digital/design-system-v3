@@ -132,18 +132,30 @@ const getNavigationMonthYear = (pickerEl: Element): { month: number, year: numbe
 	return { month: monthIndex, year }
 }
 
-const STATUS_REGION_ID = 'date-picker-status-region'
+let statusRegionCounter = 0
 
-const navigationObservers = new WeakMap<HTMLElement, MutationObserver>()
+const getStatusRegionId = (pickerEl: HTMLElement): string => {
+	let id = pickerEl.dataset.a11yStatusRegionId
+	if (!id) {
+		id = `date-picker-status-region-${++statusRegionCounter}`
+		pickerEl.dataset.a11yStatusRegionId = id
+	}
+	return id
+}
 
-const observeNavigationLabels = (pickerEl: HTMLElement) => {
-	if (navigationObservers.has(pickerEl)) return
+const observeNavigationLabels = (
+	pickerEl: HTMLElement,
+	observerRegistry: WeakMap<HTMLElement, MutationObserver>,
+	registerCleanup: (cleanup: () => void) => void,
+	navigationListeners: WeakMap<HTMLButtonElement, () => void>,
+) => {
+	if (observerRegistry.has(pickerEl)) return
 
 	const controls = pickerEl.querySelector<HTMLElement>('.v-date-picker-controls')
 	if (!controls) return
 
 	const observer = new MutationObserver(() => {
-		ensureNavigationButtonLabels(pickerEl)
+		ensureNavigationButtonLabels(pickerEl, observerRegistry, registerCleanup, navigationListeners)
 	})
 
 	observer.observe(controls, {
@@ -152,17 +164,22 @@ const observeNavigationLabels = (pickerEl: HTMLElement) => {
 		characterData: true,
 	})
 
-	navigationObservers.set(pickerEl, observer)
+	observerRegistry.set(pickerEl, observer)
+	registerCleanup(() => {
+		observer.disconnect()
+		observerRegistry.delete(pickerEl)
+	})
 }
 
 const ensureControlsStatusRole = (pickerEl: HTMLElement) => {
 	const controls = pickerEl.querySelector<HTMLElement>('.v-date-picker-controls')
 	if (!controls) return
 
-	if (controls.querySelector(`#${STATUS_REGION_ID}`)) return
+	const statusRegionId = getStatusRegionId(pickerEl)
+	if (controls.querySelector(`#${statusRegionId}`)) return
 
 	const status = document.createElement('div')
-	status.id = STATUS_REGION_ID
+	status.id = statusRegionId
 	status.setAttribute('role', 'status')
 	status.setAttribute('aria-live', 'polite')
 	status.setAttribute('aria-atomic', 'true')
@@ -186,7 +203,8 @@ const announceNavigation = (pickerEl: HTMLElement, direction: 'previous' | 'next
 	const targetYear = button.dataset.a11yTargetYear
 	if (targetMonth === undefined || targetYear === undefined) return
 
-	const region = pickerEl.querySelector<HTMLElement>(`#${STATUS_REGION_ID}`)
+	const statusRegionId = getStatusRegionId(pickerEl)
+	const region = pickerEl.querySelector<HTMLElement>(`#${statusRegionId}`)
 	if (!region) return
 
 	const announcement = `${direction === 'previous' ? locales.previousMonth : locales.nextMonth}, ${locales.monthNames[parseInt(targetMonth, 10)]!} ${targetYear}`
@@ -196,54 +214,56 @@ const announceNavigation = (pickerEl: HTMLElement, direction: 'previous' | 'next
 	})
 }
 
-const ensureNavigationButtonLabels = (pickerEl: HTMLElement) => {
-	observeNavigationLabels(pickerEl)
+const ensureNavigationButtonLabels = (
+	pickerEl: HTMLElement,
+	observerRegistry: WeakMap<HTMLElement, MutationObserver>,
+	registerCleanup: (cleanup: () => void) => void,
+	navigationListeners: WeakMap<HTMLButtonElement, () => void>,
+) => {
+	observeNavigationLabels(pickerEl, observerRegistry, registerCleanup, navigationListeners)
 
 	const prevButton = pickerEl.querySelector<HTMLButtonElement>(PREV_MONTH_BUTTON_SELECTOR)
 	const nextButton = pickerEl.querySelector<HTMLButtonElement>(NEXT_MONTH_BUTTON_SELECTOR)
 	const current = getNavigationMonthYear(pickerEl)
 
-	if (prevButton) {
-		const targetMonth = current ? (current.month - 1 + 12) % 12 : null
-		const targetYear = current ? (current.month === 0 ? current.year - 1 : current.year) : null
-		const label = targetMonth !== null
-			? `${locales.previousMonth}: ${locales.monthNames[targetMonth]!} ${targetYear}`
-			: locales.previousMonth
+	const setupButton = (button: HTMLButtonElement | null, direction: 'previous' | 'next') => {
+		if (!button) return
 
-		prevButton.setAttribute('aria-label', label)
-		prevButton.setAttribute('title', label)
+		const targetMonth = current
+			? (direction === 'previous' ? (current.month - 1 + 12) % 12 : (current.month + 1) % 12)
+			: null
+		const targetYear = current
+			? (direction === 'previous'
+					? (current.month === 0 ? current.year - 1 : current.year)
+					: (current.month === 11 ? current.year + 1 : current.year)
+				)
+			: null
+
+		const label = targetMonth !== null
+			? `${direction === 'previous' ? locales.previousMonth : locales.nextMonth}: ${locales.monthNames[targetMonth]!} ${targetYear}`
+			: (direction === 'previous' ? locales.previousMonth : locales.nextMonth)
+
+		button.setAttribute('aria-label', label)
+		button.setAttribute('title', label)
 
 		if (targetMonth !== null && targetYear !== null) {
-			prevButton.setAttribute('data-a11y-target-month', String(targetMonth))
-			prevButton.setAttribute('data-a11y-target-year', String(targetYear))
+			button.setAttribute('data-a11y-target-month', String(targetMonth))
+			button.setAttribute('data-a11y-target-year', String(targetYear))
 		}
 
-		if (!prevButton.dataset.a11yNavigationListener) {
-			prevButton.dataset.a11yNavigationListener = 'true'
-			prevButton.addEventListener('click', () => announceNavigation(pickerEl, 'previous'))
+		if (!navigationListeners.has(button)) {
+			const handler = () => announceNavigation(pickerEl, direction)
+			navigationListeners.set(button, handler)
+			button.addEventListener('click', handler)
+			registerCleanup(() => {
+				button.removeEventListener('click', handler)
+				navigationListeners.delete(button)
+			})
 		}
 	}
 
-	if (nextButton) {
-		const targetMonth = current ? (current.month + 1) % 12 : null
-		const targetYear = current ? (current.month === 11 ? current.year + 1 : current.year) : null
-		const label = targetMonth !== null
-			? `${locales.nextMonth}: ${locales.monthNames[targetMonth]!} ${targetYear}`
-			: locales.nextMonth
-
-		nextButton.setAttribute('aria-label', label)
-		nextButton.setAttribute('title', label)
-
-		if (targetMonth !== null && targetYear !== null) {
-			nextButton.setAttribute('data-a11y-target-month', String(targetMonth))
-			nextButton.setAttribute('data-a11y-target-year', String(targetYear))
-		}
-
-		if (!nextButton.dataset.a11yNavigationListener) {
-			nextButton.dataset.a11yNavigationListener = 'true'
-			nextButton.addEventListener('click', () => announceNavigation(pickerEl, 'next'))
-		}
-	}
+	setupButton(prevButton, 'previous')
+	setupButton(nextButton, 'next')
 }
 
 const ensureMonthAndYearSelectorLabels = (pickerEl: HTMLElement) => {
@@ -395,12 +415,7 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 				button.removeAttribute('role')
 				button.removeAttribute('aria-rowindex')
 				button.removeAttribute('aria-colindex')
-				if (isSelected) {
-					button.setAttribute('aria-selected', 'true')
-				}
-				else {
-					button.removeAttribute('aria-selected')
-				}
+				button.removeAttribute('aria-selected')
 				row.appendChild(cell)
 			})
 			daysContainer.appendChild(row)
@@ -442,15 +457,32 @@ export function useDatePickerAccessibility() {
 			pickerEls.unshift(root)
 		}
 
+		cleanupLastRun?.()
+
+		const observerRegistry = new WeakMap<HTMLElement, MutationObserver>()
+		const navigationListeners = new WeakMap<HTMLButtonElement, () => void>()
+		const pickerCleanups = new Map<HTMLElement, Array<() => void>>()
+
 		pickerEls.forEach((pickerEl) => {
+			const cleanups: Array<() => void> = []
+			pickerCleanups.set(pickerEl, cleanups)
+			const registerCleanup = (cleanup: () => void) => cleanups.push(cleanup)
+
 			ensureControlsStatusRole(pickerEl)
-			ensureNavigationButtonLabels(pickerEl)
+			ensureNavigationButtonLabels(pickerEl, observerRegistry, registerCleanup, navigationListeners)
 			ensureMonthAndYearSelectorLabels(pickerEl)
 			if (viewMode !== undefined) {
 				ensureMonthAndYearControlExpanded(pickerEl, viewMode)
 			}
 			applyGridSemantics(pickerEl)
 		})
+
+		cleanupLastRun = () => {
+			pickerCleanups.forEach((cleanups) => {
+				cleanups.forEach(cleanup => cleanup())
+			})
+			pickerCleanups.clear()
+		}
 	}
 
 	/**
@@ -498,17 +530,14 @@ export function useDatePickerAccessibility() {
 		}
 	}
 
-	const setupMutationObserver = () => {
-		// noop volontaire
-	}
+	let cleanupLastRun: (() => void) | undefined
 
 	onMounted(() => {
 		fixAriaAttributes()
-		setupMutationObserver()
 	})
 
 	onBeforeUnmount(() => {
-		// noop volontaire
+		cleanupLastRun?.()
 	})
 
 	return {
