@@ -82,8 +82,8 @@ const hiddenIdsByTheme: Record<Theme, string[]> = {
 
 const allowedEquivalenceIdsByTheme: Partial<Record<Theme, string[]>> = {
 	ap: [
-		'guide-du-dev-équivalence-des-composants-amelipro',
-	],
+			'guide-du-dev-équivalence-des-composants-amelipro',
+		],
 
 	pa: [
 		'guide-du-dev-équivalence-des-composants-portail-agent',
