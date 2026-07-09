@@ -26,15 +26,17 @@ exports[`HeaderBar > should render the component 1`] = `
           >
             <picture class="logo-picture">
               <source
+            height="50"
             media="(min-width: 990px)"
             srcset="/src/assets/logos/logo-desktop.svg"
             type="image/svg+xml"
+            width="165"
           /><img
             alt="Sécurité sociale, l'Assurance Maladie : Agir ensemble, protéger chacun. Retour à l'accueil."
             class="logo-image"
-            height="64"
+            height="42"
             src="/src/assets/logos/logo-mobile.svg"
-            width="211"
+            width="141"
           />
             </picture>
             
