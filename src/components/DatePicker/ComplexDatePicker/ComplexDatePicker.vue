@@ -60,7 +60,7 @@
 
 	const { parseDate, formatDate } = useDateFormat()
 	const { initializeSelectedDates } = useDateInitialization()
-	const { updateAccessibility } = useDatePickerAccessibility()
+	const { updateAccessibility, cleanupGridSemantics } = useDatePickerAccessibility()
 
 	/**
 	 * Utils
@@ -719,9 +719,6 @@
 			return
 		}
 
-		const inputElement = dateCalendarTextInputRef.value?.$el?.querySelector?.('input')
-		if (!inputElement) return
-
 		textInputValue.value = eventOrValue
 
 		if (props.displayRange && typeof eventOrValue === 'string') {
@@ -749,6 +746,7 @@
 		() => isDatePickerVisible.value,
 		currentMonthName,
 		currentYearName,
+		() => datePickerRef.value?.$el as HTMLElement | undefined,
 	)
 
 	/**
@@ -760,8 +758,34 @@
 			() => selectedDates.value,
 		)
 
+	const reapplyAccessibility = () => {
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		cleanupGridSemantics(rootEl)
+		nextTick(() => {
+			updateAccessibility(rootEl, currentViewMode.value)
+		})
+	}
+
+	const waitForTransitionEnd = (container: HTMLElement, callback: () => void) => {
+		if (container.classList.contains('v-enter-active') || container.classList.contains('fade-transition-enter-active')) {
+			let fired = false
+			const handler = () => {
+				if (fired) return
+				fired = true
+				clearTimeout(fallbackId)
+				callback()
+			}
+			const fallbackId = setTimeout(handler, 400)
+			container.addEventListener('transitionend', handler, { once: true })
+		}
+		else {
+			callback()
+		}
+	}
+
 	const handleViewModeUpdateWrapper = (mode: ViewMode) => {
 		handleViewModeUpdate(mode)
+		reapplyAccessibility()
 		if (mode === 'month') {
 			nextTick(() => {
 				if (isDatePickerVisible.value) {
@@ -773,16 +797,7 @@
 						return
 					}
 
-					const focusDay = () => {
-						focusInitialDay()
-					}
-
-					if (monthContainer.classList.contains('v-enter-active') || monthContainer.classList.contains('fade-transition-enter-active')) {
-						monthContainer.addEventListener('transitionend', focusDay, { once: true })
-					}
-					else {
-						focusDay()
-					}
+					waitForTransitionEnd(monthContainer, () => focusInitialDay())
 				}
 			})
 		}
@@ -804,12 +819,7 @@
 					monthBtns[monthIndex]?.focus({ preventScroll: true })
 				}
 
-				if (monthsContainer.classList.contains('v-enter-active') || monthsContainer.classList.contains('fade-transition-enter-active')) {
-					monthsContainer.addEventListener('transitionend', focusActiveMonth, { once: true })
-				}
-				else {
-					focusActiveMonth()
-				}
+				waitForTransitionEnd(monthsContainer, focusActiveMonth)
 			})
 		}
 		if (mode === 'year') {
@@ -834,12 +844,7 @@
 					firstBtn?.focus({ preventScroll: true })
 				}
 
-				if (yearsContainer.classList.contains('v-enter-active') || yearsContainer.classList.contains('fade-transition-enter-active')) {
-					yearsContainer.addEventListener('transitionend', focusActiveYear, { once: true })
-				}
-				else {
-					focusActiveYear()
-				}
+				waitForTransitionEnd(yearsContainer, focusActiveYear)
 			})
 		}
 	}

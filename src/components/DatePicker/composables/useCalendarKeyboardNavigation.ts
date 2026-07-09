@@ -54,7 +54,8 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		const targetBtn = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>('.v-date-picker-months button')
 		if (!targetBtn) return false
 
-		const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.v-date-picker-months button')).filter(btn => !btn.disabled)
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		const buttons = Array.from((rootEl ?? document).querySelectorAll<HTMLButtonElement>('.v-date-picker-months button')).filter(btn => !btn.disabled)
 		if (buttons.length === 0) return false
 
 		const currentIndex = buttons.indexOf(targetBtn)
@@ -110,7 +111,8 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		const targetBtn = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>('.v-date-picker-years button')
 		if (!targetBtn) return false
 
-		const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.v-date-picker-years button')).filter(btn => !btn.disabled)
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		const buttons = Array.from((rootEl ?? document).querySelectorAll<HTMLButtonElement>('.v-date-picker-years button')).filter(btn => !btn.disabled)
 		if (buttons.length === 0) return false
 
 		const currentIndex = buttons.indexOf(targetBtn)

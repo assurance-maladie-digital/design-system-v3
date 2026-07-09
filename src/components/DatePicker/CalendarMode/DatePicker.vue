@@ -103,9 +103,11 @@
 	 * dues au reparentage de nœuds du virtual DOM.
 	 */
 	const reapplyAccessibility = () => {
-		cleanupGridSemantics()
+		const rootEl = datePickerDialogRef.value
+		if (!rootEl) return
+		cleanupGridSemantics(rootEl)
 		nextTick(() => {
-			updateAccessibility(document, currentViewMode.value)
+			updateAccessibility(rootEl, currentViewMode.value)
 		})
 	}
 	const datePickerDialogRef = ref<HTMLElement | null>(null)
@@ -577,6 +579,7 @@
 		() => isDatePickerVisible.value,
 		currentMonthName,
 		currentYearName,
+		() => datePickerDialogRef.value,
 	)
 
 	const syncDisplayedMonthYearFromDate = (date: Date) => {
@@ -718,6 +721,23 @@
 		() => selectedDates.value,
 	)
 
+	const waitForTransitionEnd = (container: HTMLElement, callback: () => void) => {
+		if (container.classList.contains('v-enter-active') || container.classList.contains('fade-transition-enter-active')) {
+			let fired = false
+			const handler = () => {
+				if (fired) return
+				fired = true
+				clearTimeout(fallbackId)
+				callback()
+			}
+			const fallbackId = setTimeout(handler, 400)
+			container.addEventListener('transitionend', handler, { once: true })
+		}
+		else {
+			callback()
+		}
+	}
+
 	const handleViewModeUpdateWrapper = (mode: ViewMode) => {
 		handleViewModeUpdate(mode)
 		if (isDatePickerVisible.value) {
@@ -734,16 +754,7 @@
 						return
 					}
 
-					const focusDay = () => {
-						focusInitialDay()
-					}
-
-					if (monthContainer.classList.contains('v-enter-active') || monthContainer.classList.contains('fade-transition-enter-active')) {
-						monthContainer.addEventListener('transitionend', focusDay, { once: true })
-					}
-					else {
-						focusDay()
-					}
+					waitForTransitionEnd(monthContainer, () => focusInitialDay())
 				}
 			})
 		}
@@ -765,12 +776,7 @@
 					monthBtns[monthIndex]?.focus({ preventScroll: true })
 				}
 
-				if (monthsContainer.classList.contains('v-enter-active') || monthsContainer.classList.contains('fade-transition-enter-active')) {
-					monthsContainer.addEventListener('transitionend', focusActiveMonth, { once: true })
-				}
-				else {
-					focusActiveMonth()
-				}
+				waitForTransitionEnd(monthsContainer, focusActiveMonth)
 			})
 		}
 
@@ -796,12 +802,7 @@
 					firstBtn?.focus({ preventScroll: true })
 				}
 
-				if (yearsContainer.classList.contains('v-enter-active') || yearsContainer.classList.contains('fade-transition-enter-active')) {
-					yearsContainer.addEventListener('transitionend', focusActiveYear, { once: true })
-				}
-				else {
-					focusActiveYear()
-				}
+				waitForTransitionEnd(yearsContainer, focusActiveYear)
 			})
 		}
 	}
@@ -842,12 +843,6 @@
 					isDatePickerVisible.value = false
 				})
 			}, 0)
-		}
-	})
-
-	watch(selectedDates, () => {
-		if (isDatePickerVisible.value) {
-			updateSelectedDayAria()
 		}
 	})
 
@@ -911,7 +906,7 @@
 
 		if (isDatePickerVisible.value) {
 			nextTick(() => {
-				updateAccessibility(document, currentViewMode.value)
+				updateAccessibility(datePickerDialogRef.value ?? undefined, currentViewMode.value)
 			})
 		}
 		else {

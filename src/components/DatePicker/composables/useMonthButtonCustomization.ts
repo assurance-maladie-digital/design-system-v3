@@ -12,6 +12,7 @@ export function useMonthButtonCustomization(
 	isPickerVisibleGetter: () => boolean,
 	monthName?: Ref<string | null>,
 	yearName?: Ref<string | null>,
+	rootElGetter?: () => HTMLElement | null | undefined,
 ) {
 	const monthButtonText = ref('')
 	const yearText = ref('')
@@ -90,8 +91,9 @@ export function useMonthButtonCustomization(
 	const customizeMonthButton = () => {
 		if (isPickerVisibleGetter() || monthName?.value) {
 			nextTick(() => {
+				const root = rootElGetter?.() ?? document
 				// Personnalisation des boutons du mois pour tous les DatePickers
-				const monthBtns = document.querySelectorAll('.v-date-picker-controls__month-btn')
+				const monthBtns = root.querySelectorAll('.v-date-picker-controls__month-btn')
 				if (monthBtns.length > 0) {
 					// Récupérer le texte original et le nettoyer du premier bouton pour référence
 					// Cela n'affectera pas la personnalisation des autres boutons
@@ -137,7 +139,7 @@ export function useMonthButtonCustomization(
 					})
 
 					// Personnalisation des boutons d'année pour tous les DatePickers
-					const yearBtns = document.querySelectorAll('.v-date-picker-controls__mode-btn')
+					const yearBtns = root.querySelectorAll('.v-date-picker-controls__mode-btn')
 					yearBtns.forEach((yearBtn) => {
 						// Trouver le parent CalendarMode-controls pour ce bouton d'année
 						const parentControl = yearBtn.closest('.v-date-picker-controls')
@@ -206,7 +208,8 @@ export function useMonthButtonCustomization(
 	 */
 	const setupMonthButtonObserver = () => {
 		nextTick(() => {
-			const targetNodes = document.querySelectorAll('.v-date-picker-controls')
+			const root = rootElGetter?.() ?? document
+			const targetNodes = root.querySelectorAll('.v-date-picker-controls')
 			if (targetNodes.length > 0) {
 				targetNodes.forEach((targetNode) => {
 					const observer = new MutationObserver(() => {

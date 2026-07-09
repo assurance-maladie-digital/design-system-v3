@@ -53,10 +53,6 @@ export const locales = {
 
 	// Boutons et actions
 	buttonToday: 'Aujourd\'hui',
-	buttonTodayAriaLabel: (dateText?: string): string => {
-		const baseLabel = 'Sélectionner la date d\'aujourd\'hui'
-		return dateText ? `${baseLabel} (${dateText})` : baseLabel
-	},
 	buttonClear: 'Effacer',
 	buttonClose: 'Fermer',
 	calendarTitle: 'Sélectionnez une date',
