@@ -128,7 +128,13 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 		const nextIndex = event.shiftKey
 			? (safeIndex - 1 + focusables.length) % focusables.length
 			: (safeIndex + 1) % focusables.length
-		focusables[nextIndex]?.focus({ preventScroll: true })
+		const nextFocusable = focusables[nextIndex]
+
+		if (nextFocusable && nextFocusable.closest('.v-date-picker-month, .v-date-picker-months, .v-date-picker-years')) {
+			if (focusDayButton(root)) return
+		}
+
+		nextFocusable?.focus({ preventScroll: true })
 	}
 
 	return { handleMenuKeydown }
