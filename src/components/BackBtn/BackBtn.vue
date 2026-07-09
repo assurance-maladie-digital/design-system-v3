@@ -62,11 +62,6 @@
 	}
 }
 
-.sy-back-btn:focus-visible {
-	outline: 0;
-}
-
-.sy-back-btn:focus-visible::after {
-	opacity: 1;
-}
+// Le ring de focus est géré globalement (_btns.scss) :
+// primary en clair, onPrimary (blanc) en thème dark.
 </style>
