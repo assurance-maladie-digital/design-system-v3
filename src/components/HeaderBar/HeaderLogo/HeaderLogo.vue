@@ -67,13 +67,15 @@
 				:media="desktopLogoMediaQuery"
 				:srcset="logoDesktopUrl"
 				type="image/svg+xml"
+				width="165"
+				height="50"
 			>
 			<img
 				class="logo-image"
 				:src="logoMobileUrl"
 				:alt="props.logoAlt"
-				width="211"
-				height="64"
+				width="141"
+				height="42"
 			>
 		</picture>
 
