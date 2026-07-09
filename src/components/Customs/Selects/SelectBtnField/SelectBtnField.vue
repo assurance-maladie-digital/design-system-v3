@@ -362,10 +362,18 @@
 	padding: 0;
 	margin: 0;
 	gap: var(--v-gap-2);
+
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 3px;
+		border-radius: var(--v-radius-rounded);
+	}
 }
 
 .select-btn-field__options--inline {
 	flex-flow: row wrap;
+	width: fit-content;
+	max-width: 100%;
 }
 
 .select-btn-field__options--column {
@@ -390,7 +398,7 @@
 
 	&:focus-visible {
 		outline: 2px solid rgb(var(--v-theme-primary));
-		outline-offset: 2px;
+		outline-offset: 3px;
 	}
 
 	&::before {
