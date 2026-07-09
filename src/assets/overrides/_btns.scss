@@ -1,54 +1,54 @@
 // Base button styles
 .v-btn {
-    text-transform: inherit !important;
-    font-weight: 700 !important;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+	text-transform: inherit !important;
+	font-weight: 700 !important;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 .theme-cnam .v-btn,
 .theme-pa .v-btn {
-    padding: 0 var(--spacing-4) !important;
+	padding: 0 var(--spacing-4) !important;
 }
 
 .v-btn.v-tab {
-    text-transform: uppercase !important;
+	text-transform: uppercase !important;
 }
 
 // Overlay base configuration
 .v-btn__overlay {
-    opacity: 0;
-    transition: opacity 0.2s ease;
+	opacity: 0;
+	transition: opacity 0.2s ease;
 }
 
 // Elevated buttons
 .v-btn--variant-elevated {
-    .v-btn__content {
-        position: relative;
-        z-index: 1;
-    }
+	.v-btn__content {
+		position: relative;
+		z-index: 1;
+	}
 
-    &:hover .v-btn__overlay {
-        background: rgba(var(--v-theme-interactionDarkenHover), 0.2) !important;
-        opacity: 1;
-    }
+	&:hover .v-btn__overlay {
+		background: rgba(var(--v-theme-interactionDarkenHover), 0.2) !important;
+		opacity: 1;
+	}
 
-    &:active .v-btn__overlay {
-        background: rgba(var(--v-theme-interactionDarkenHover), 0.4) !important;
-        opacity: 1;
-    }
+	&:active .v-btn__overlay {
+		background: rgba(var(--v-theme-interactionDarkenHover), 0.4) !important;
+		opacity: 1;
+	}
 }
 
 // Outlined & Text buttons
 .v-btn--variant-outlined,
 .v-btn--variant-text {
-    &:hover .v-btn__overlay {
-        background: rgba(var(--v-theme-secondary), 0.08) !important;
-        opacity: 1;
-    }
+	&:hover .v-btn__overlay {
+		background: rgba(var(--v-theme-secondary), 0.08) !important;
+		opacity: 1;
+	}
 
-    &:active .v-btn__overlay {
-        background: rgba(var(--v-theme-secondary), 0.2) !important;
-        opacity: 1;
-    }
+	&:active .v-btn__overlay {
+		background: rgba(var(--v-theme-secondary), 0.2) !important;
+		opacity: 1;
+	}
 }
