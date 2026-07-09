@@ -49,6 +49,9 @@ const hiddenIdsByTheme: Record<Theme, string[]> = {
 
 	pa: [
 		'composants-structure',
+		'composants-boutons-usermenubtn--with-ps-info',
+		'composants-données-accordion--with-custom-content',
+		'composants-layout-pagecontainer--with-header-and-footer',
 	],
 
 	ap: [
@@ -56,6 +59,7 @@ const hiddenIdsByTheme: Record<Theme, string[]> = {
 		'composants-données-logobrandsection',
 		'guide-du-dev-formulaires-validation',
 		'guide-du-dev-migration',
+		'composants-boutons-franceconnectbtn',
 	],
 
 	ap2026: [
