@@ -274,21 +274,11 @@
 }
 
 .sy-user-menu-btn {
-	outline: none;
 	padding: 12px !important;
 
 	&:hover::before {
 		background: #000;
 		opacity: 0.05;
-	}
-
-	&:focus::before {
-		background: rgb(var(--v-theme-primary));
-		opacity: 0.08;
-	}
-
-	&:focus {
-		background: rgba(var(--v-theme-primary), 0.08) !important;
 	}
 
 	.subtitle {
@@ -299,19 +289,6 @@
 
 :deep(.sy-user-menu-btn:focus > .v-btn__overlay) {
 	opacity: 0 !important;
-}
-
-.v-btn:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-primary));
-	outline-offset: 2px;
-
-	:deep(.v-btn__overlay) {
-		opacity: 0;
-	}
-
-	&::after {
-		opacity: 0;
-	}
 }
 
 :global(.sy-user-menu .v-list-item:focus) {

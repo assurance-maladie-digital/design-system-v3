@@ -13,3 +13,23 @@
 .v-btn.v-tab {
 	text-transform: uppercase !important;
 }
+
+button:focus-visible,
+.v-btn.bg-primary:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 3px;
+}
+
+// Sur fond sombre (thème dark), le ring de focus passe en blanc
+.v-theme--dark:focus-visible,
+.v-theme--dark button:focus-visible {
+	outline-color: rgb(var(--v-theme-onPrimary));
+}
+
+.v-btn:focus-visible .v-btn__overlay {
+	opacity: 0 !important;
+}
+
+.v-btn:focus-visible::after {
+	opacity: 0 !important;
+}
