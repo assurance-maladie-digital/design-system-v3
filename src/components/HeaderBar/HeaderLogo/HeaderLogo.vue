@@ -126,6 +126,13 @@
 	font-family: Cabin, Arial, Helvetica, sans-serif;
 	text-decoration: none;
 	cursor: pointer;
+
+	// Ring DS au focus clavier (remplace l'outline navigateur par défaut)
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 3px;
+		border-radius: 4px;
+	}
 }
 
 .logo-picture {
