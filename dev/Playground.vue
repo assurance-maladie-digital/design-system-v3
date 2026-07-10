@@ -217,7 +217,7 @@
 						</v-expansion-panel-title>
 						<v-expansion-panel-text>
 							<div class="text-caption mb-2">
-								Bouton menu du header (fond primary) — ring primary au focus
+								Bouton menu du header (fond primary) — ring inset au focus (blanc sur fond primary)
 							</div>
 							<v-sheet
 								color="surface"
@@ -236,7 +236,7 @@
 						</v-expansion-panel-title>
 						<v-expansion-panel-text>
 							<div class="text-caption mb-2">
-								Item de menu pleine largeur — focus = traits primary haut + bas (pas de ring)
+								Item de menu pleine largeur — focus = ring inset 2px (visible sur les 4 côtés)
 							</div>
 							<v-sheet
 								color="surface"
