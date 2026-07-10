@@ -2,8 +2,11 @@
 	// Ring inset (offset négatif) : indicateur de focus des items de menu pleine largeur.
 	// Dessiné À L'INTÉRIEUR de l'item → visible sur les 4 côtés et non rogné par
 	// l'overflow du menu (contrairement à un ring outset ou à des traits en bord).
+	// currentColor : le ring inset est dessiné SUR le composant, il doit donc contraster
+	// avec SON fond (qui change au hover). currentColor suit la couleur du texte, donc
+	// contraste toujours (primary sur fond clair, onPrimary sur fond primary) — WCAG 2.4.11.
 	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-primary));
+		outline: 2px solid currentcolor;
 		outline-offset: -2px;
 	}
 }
