@@ -129,6 +129,60 @@ describe('useCalendarKeyboardNavigation', () => {
 		vi.useRealTimers()
 	})
 
+	it('preserves day-of-month on PageUp/PageDown and clamps when needed', () => {
+		vi.useFakeTimers()
+		const isDatePickerVisible = ref(true)
+		// Base: 31 March 2023
+		const getCurrentDate = vi.fn(() => new Date(2023, 2, 31))
+		const setCurrentDate = vi.fn()
+
+		let savedListener: ((e: KeyboardEvent) => void) | null = null
+		const addEventListenerSpy = vi.spyOn(document, 'addEventListener').mockImplementation((type, listener) => {
+			if (type === 'keydown') savedListener = listener as (e: KeyboardEvent) => void
+		})
+
+		let attachListeners!: () => void
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef: ref(null),
+					getCurrentDate,
+					setCurrentDate,
+				})
+				attachListeners = result.attachListeners
+				return () => null
+			},
+		})
+
+		mount(TestComponent)
+		attachListeners()
+		vi.advanceTimersByTime(150)
+
+		const fireKey = (key: string, shiftKey = false) => {
+			setCurrentDate.mockClear()
+			const event = new KeyboardEvent('keydown', { key, shiftKey, bubbles: true })
+			Object.defineProperty(event, 'target', { value: document.createElement('div') })
+			savedListener!(event)
+			return setCurrentDate.mock.calls[0]?.[0] as Date | undefined
+		}
+
+		// PageUp: 31 Mar -> 28 Feb 2023 (clamped)
+		const up = fireKey('PageUp')
+		expect(up?.getFullYear()).toBe(2023)
+		expect(up?.getMonth()).toBe(1) // Feb
+		expect(up?.getDate()).toBe(28)
+
+		// PageDown: 31 Mar -> 30 Apr 2023 (clamped)
+		const down = fireKey('PageDown')
+		expect(down?.getFullYear()).toBe(2023)
+		expect(down?.getMonth()).toBe(3) // Apr
+		expect(down?.getDate()).toBe(30)
+
+		addEventListenerSpy.mockRestore()
+		vi.useRealTimers()
+	})
+
 	it('falls back to getCurrentDate when event target is not a day cell', () => {
 		vi.useFakeTimers()
 		const isDatePickerVisible = ref(true)
@@ -357,22 +411,22 @@ describe('useCalendarKeyboardNavigation', () => {
 		const endDate = fireKey('End')
 		expect(endDate?.getDate()).toBe(31)
 
-		// PageUp → premier jour du mois précédent (1 Dec 2022)
+		// PageUp → même jour du mois précédent (15 Dec 2022)
 		const pageUpDate = fireKey('PageUp')
-		expect(pageUpDate?.getDate()).toBe(1)
+		expect(pageUpDate?.getDate()).toBe(15)
 		expect(pageUpDate?.getMonth()).toBe(11)
 		expect(pageUpDate?.getFullYear()).toBe(2022)
 
-		// PageDown → premier jour du mois suivant (1 Feb 2023)
+		// PageDown → même jour du mois suivant (15 Feb 2023)
 		const pageDownDate = fireKey('PageDown')
-		expect(pageDownDate?.getDate()).toBe(1)
+		expect(pageDownDate?.getDate()).toBe(15)
 		expect(pageDownDate?.getMonth()).toBe(1)
 
-		// PageUp + Shift → année précédente (1 Jan 2022)
+		// PageUp + Shift → même jour l'année précédente (15 Jan 2022)
 		const pageUpShiftDate = fireKey('PageUp', true)
 		expect(pageUpShiftDate?.getFullYear()).toBe(2022)
 
-		// PageDown + Shift → année suivante (1 Jan 2024)
+		// PageDown + Shift → même jour l'année suivante (15 Jan 2024)
 		const pageDownShiftDate = fireKey('PageDown', true)
 		expect(pageDownShiftDate?.getFullYear()).toBe(2024)
 

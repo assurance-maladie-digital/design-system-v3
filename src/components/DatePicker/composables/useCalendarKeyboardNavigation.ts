@@ -32,8 +32,6 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	} = options
 
 	const addDays = (date: Date, amount: number) => dayjs(date).add(amount, 'day').toDate()
-	const addMonths = (date: Date, amount: number) => dayjs(date).add(amount, 'month').toDate()
-	const addYears = (date: Date, amount: number) => dayjs(date).add(amount, 'year').toDate()
 
 	const toISO = (date: Date) => dayjs(date).format('YYYY-MM-DD')
 
@@ -407,14 +405,16 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			nextDate = dayjs(current).endOf('month').toDate()
 		}
 		else if (event.key === 'PageUp') {
-			nextDate = event.shiftKey ? addYears(current, -1) : addMonths(current, -1)
-			// Focus sur le premier jour du mois précédent
-			nextDate = dayjs(nextDate).startOf('month').toDate()
+			const currentDay = dayjs(current).date()
+			const base = event.shiftKey ? dayjs(current).add(-1, 'year') : dayjs(current).add(-1, 'month')
+			const clampedDay = Math.min(currentDay, base.daysInMonth())
+			nextDate = base.date(clampedDay).toDate()
 		}
 		else if (event.key === 'PageDown') {
-			nextDate = event.shiftKey ? addYears(current, 1) : addMonths(current, 1)
-			// Focus sur le premier jour du mois suivant
-			nextDate = dayjs(nextDate).startOf('month').toDate()
+			const currentDay = dayjs(current).date()
+			const base = event.shiftKey ? dayjs(current).add(1, 'year') : dayjs(current).add(1, 'month')
+			const clampedDay = Math.min(currentDay, base.daysInMonth())
+			nextDate = base.date(clampedDay).toDate()
 		}
 
 		setCurrentDate(nextDate)
