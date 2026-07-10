@@ -237,9 +237,7 @@ const ensureNavigationButtonLabels = (
 				)
 			: null
 
-		const label = targetMonth !== null
-			? `${direction === 'previous' ? locales.previousMonth : locales.nextMonth}: ${locales.monthNames[targetMonth]!} ${targetYear}`
-			: (direction === 'previous' ? locales.previousMonth : locales.nextMonth)
+		const label = direction === 'previous' ? locales.previousMonth : locales.nextMonth
 
 		button.setAttribute('aria-label', label)
 		button.setAttribute('title', label)
@@ -264,7 +262,22 @@ const ensureNavigationButtonLabels = (
 	setupButton(nextButton, 'next')
 }
 
-const ensureMonthAndYearSelectorLabels = (pickerEl: HTMLElement) => {
+const ensureMonthAndYearSelectorLabels = (
+	pickerEl: HTMLElement,
+	registerCleanup: (cleanup: () => void) => void,
+	selectionListeners: WeakMap<HTMLButtonElement, () => void>,
+) => {
+	const announceSelection = (announcement: string) => {
+		const statusRegionId = getStatusRegionId(pickerEl)
+		const region = pickerEl.querySelector<HTMLElement>(`#${statusRegionId}`)
+		if (!region) return
+
+		region.textContent = ''
+		nextTick(() => {
+			region.textContent = announcement
+		})
+	}
+
 	const monthButtons = pickerEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-months button')
 
 	monthButtons.forEach((button) => {
@@ -277,6 +290,18 @@ const ensureMonthAndYearSelectorLabels = (pickerEl: HTMLElement) => {
 		button.setAttribute('aria-label', ariaLabel)
 		button.setAttribute('title', ariaLabel)
 		button.setAttribute('aria-pressed', String(button.classList.contains('v-btn--active')))
+
+		if (!selectionListeners.has(button)) {
+			const handler = () => {
+				announceSelection(locales.monthDescription(monthLabel))
+			}
+			selectionListeners.set(button, handler)
+			button.addEventListener('click', handler)
+			registerCleanup(() => {
+				button.removeEventListener('click', handler)
+				selectionListeners.delete(button)
+			})
+		}
 	})
 
 	const yearButtons = pickerEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-years button')
@@ -290,6 +315,18 @@ const ensureMonthAndYearSelectorLabels = (pickerEl: HTMLElement) => {
 		button.setAttribute('aria-label', ariaLabel)
 		button.setAttribute('title', ariaLabel)
 		button.setAttribute('aria-pressed', String(button.classList.contains('v-btn--active')))
+
+		if (!selectionListeners.has(button)) {
+			const handler = () => {
+				announceSelection(locales.yearDescription(text))
+			}
+			selectionListeners.set(button, handler)
+			button.addEventListener('click', handler)
+			registerCleanup(() => {
+				button.removeEventListener('click', handler)
+				selectionListeners.delete(button)
+			})
+		}
 	})
 }
 
@@ -459,6 +496,7 @@ export function useDatePickerAccessibility() {
 
 		const observerRegistry = new WeakMap<HTMLElement, MutationObserver>()
 		const navigationListeners = new WeakMap<HTMLButtonElement, () => void>()
+		const selectionListeners = new WeakMap<HTMLButtonElement, () => void>()
 		const pickerCleanups = new Map<HTMLElement, Array<() => void>>()
 
 		pickerEls.forEach((pickerEl) => {
@@ -468,7 +506,7 @@ export function useDatePickerAccessibility() {
 
 			ensureControlsStatusRole(pickerEl)
 			ensureNavigationButtonLabels(pickerEl, observerRegistry, registerCleanup, navigationListeners)
-			ensureMonthAndYearSelectorLabels(pickerEl)
+			ensureMonthAndYearSelectorLabels(pickerEl, registerCleanup, selectionListeners)
 			if (viewMode !== undefined) {
 				ensureMonthAndYearControlExpanded(pickerEl, viewMode)
 			}
