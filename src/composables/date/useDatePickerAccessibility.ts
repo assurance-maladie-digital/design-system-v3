@@ -138,11 +138,8 @@ const observeNavigationLabels = (
 }
 
 const ensureControlsStatusRole = (pickerEl: HTMLElement) => {
-	const controls = pickerEl.querySelector<HTMLElement>('.v-date-picker-controls')
-	if (!controls) return
-
 	const statusRegionId = getStatusRegionId(pickerEl)
-	if (controls.querySelector(`#${statusRegionId}`)) return
+	if (pickerEl.querySelector(`#${statusRegionId}`)) return
 
 	const status = document.createElement('div')
 	status.id = statusRegionId
@@ -157,7 +154,7 @@ const ensureControlsStatusRole = (pickerEl: HTMLElement) => {
 	status.style.clip = 'rect(0, 0, 0, 0)'
 	status.style.whiteSpace = 'nowrap'
 	status.style.border = '0'
-	controls.appendChild(status)
+	pickerEl.appendChild(status)
 }
 
 const announceNavigation = (pickerEl: HTMLElement, direction: 'previous' | 'next') => {
@@ -416,6 +413,8 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 		monthEl.removeAttribute('aria-rowcount')
 		monthEl.removeAttribute('aria-colcount')
 
+		cleanupGridSemanticsForMonth(daysContainer)
+
 		const allChildren = Array.from(daysContainer.children).filter(
 			(child): child is HTMLElement => child instanceof HTMLElement,
 		)
@@ -429,8 +428,6 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 		)
 
 		const colCount = weekdayCells.length || 7
-
-		cleanupGridSemanticsForMonth(daysContainer)
 
 		if (weekdayCells.length > 0) {
 			const headerRow = createAriaRow('v-date-picker-month__weekdays')

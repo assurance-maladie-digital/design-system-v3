@@ -108,6 +108,28 @@ describe('useMonthButtonCustomization', () => {
 		expect(yearBtn.getAttribute('title')).toBe(`Sélectionner une année (2023 sélectionné)`)
 	})
 
+	it('ne réécrit pas le DOM quand la personnalisation est déjà à jour', async () => {
+		const { exposed } = mountUseMonthButtonCustomization()
+
+		await exposed.customizeMonthButton()
+		await nextTick()
+		await new Promise(resolve => setTimeout(resolve, 0))
+
+		const controls = document.querySelector('.v-date-picker-controls')!
+		let childListMutations = 0
+		const observer = new MutationObserver((mutations) => {
+			childListMutations += mutations.filter(mutation => mutation.type === 'childList').length
+		})
+		observer.observe(controls, { childList: true, subtree: true })
+
+		await exposed.customizeMonthButton()
+		await nextTick()
+		await new Promise(resolve => setTimeout(resolve, 0))
+
+		observer.disconnect()
+		expect(childListMutations).toBe(0)
+	})
+
 	it('utilise monthName et yearName si fournis', async () => {
 		monthName.value = 'mars'
 		yearName.value = '2030'

@@ -105,6 +105,7 @@ describe('useDatePickerAccessibility', () => {
 		expect(status?.getAttribute('role')).toBe('status')
 		expect(status?.getAttribute('aria-live')).toBe('polite')
 		expect(status?.getAttribute('aria-atomic')).toBe('true')
+		expect(status?.closest('.v-date-picker-controls')).toBeNull()
 	})
 
 	it('assigns a unique status region id per date picker', async () => {
@@ -350,6 +351,34 @@ describe('useDatePickerAccessibility', () => {
 		const dayCells = Array.from(dataRows[0]?.querySelectorAll('.v-date-picker-month__day[data-v-date]') ?? [])
 		expect(dayCells).toHaveLength(7)
 		expect(dayCells[0]?.getAttribute('role')).toBe('gridcell')
+	})
+
+	it('préserve les lignes ARIA après plusieurs réapplications', async () => {
+		document.body.innerHTML = `
+			<div class="v-date-picker">
+				<div class="v-date-picker-month">
+					<div class="v-date-picker-month__days">
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">L</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">M</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">M</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">J</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">V</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">S</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">D</div>
+						<div class="v-date-picker-month__day" data-v-date="1"><button>1</button></div>
+						<div class="v-date-picker-month__day" data-v-date="2"><button>2</button></div>
+					</div>
+				</div>
+			</div>
+		`
+
+		await updateAccessibility()
+		await updateAccessibility()
+
+		const daysContainer = document.querySelector('.v-date-picker-month__days') as HTMLElement
+		expect(daysContainer.querySelectorAll('.v-date-picker-month__weekdays')).toHaveLength(1)
+		expect(daysContainer.querySelectorAll('.v-date-picker-month__week')).toHaveLength(1)
+		expect(daysContainer.querySelectorAll('.v-date-picker-month__day[data-v-date]')).toHaveLength(2)
 	})
 
 	it('preserves customized month button label with different navigation icons', async () => {
