@@ -155,26 +155,26 @@
 			</template>
 		</component>
 
-		<template v-if="hasAnswered">
-			<SyAlert
-				v-if="!props.hideAlert"
-				:class="{ 'mb-4': displayAdditionalContent }"
-				outlined
-				:type="AlertTypeEnum.SUCCESS"
-				role="status"
-				aria-live="polite"
-			>
-				{{ props.locales.thanks }}
-			</SyAlert>
+		<SyAlert
+			:model-value="!props.hideAlert && hasAnswered"
+			:class="{ 'mb-4': displayAdditionalContent }"
+			variant="outlined"
+			:type="AlertTypeEnum.SUCCESS"
+			role="status"
+		>
+			{{ props.locales.thanks }}
+		</SyAlert>
 
-			<div
-				v-if="displayAdditionalContent"
-				role="region"
-				aria-live="polite"
+		<div
+			role="region"
+			aria-live="polite"
+		>
+			<template
+				v-if="displayAdditionalContent && hasAnswered"
 			>
 				<slot />
-			</div>
-		</template>
+			</template>
+		</div>
 	</div>
 </template>
 

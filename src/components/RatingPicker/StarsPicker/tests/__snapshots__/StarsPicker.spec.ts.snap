@@ -8,12 +8,6 @@ exports[`StarsPicker > renders correctly 1`] = `
   ">
     Pourriez-vous donner une note ?
   </legend>
-  <p
-    class="d-sr-only"
-    id="stars-picker-description-v-0"
-  >
-    Ce champ ne sera plus modifiable après saisie
-  </p>
   <div
     aria-describedby="stars-picker-description-v-0"
     class="

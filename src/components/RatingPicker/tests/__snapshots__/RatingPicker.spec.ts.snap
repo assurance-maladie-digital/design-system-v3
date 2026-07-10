@@ -162,6 +162,17 @@ exports[`RatingPicker > renders correctly 1`] = `
       Ce champ ne sera plus modifiable après saisie
     </p>
   </fieldset>
-  <!-- v-if -->
+  <div
+    class="sy-alert"
+    role="status"
+  >
+    <!---->
+  </div>
+  <div
+    aria-live="polite"
+    role="region"
+  >
+    <!-- v-if -->
+  </div>
 </div>
 `;

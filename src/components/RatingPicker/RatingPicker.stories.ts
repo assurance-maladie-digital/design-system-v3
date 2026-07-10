@@ -18,6 +18,9 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
+		controls: {
+			exclude: /^on*/,
+		},
 	},
 	argTypes: {
 		type: {
@@ -484,11 +487,10 @@ export const DefaultSlot: Story = {
 								rows="4"
 							/>
 
-							<div class="d-flex mt-4">
-								<VSpacer />
-
+							<div class="d-flex mt-6">
 								<VBtn
 									right
+									type="submit"
 									color="primary"
 								>
 									Terminé
@@ -506,13 +508,13 @@ export const DefaultSlot: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<RatingPicker
-		v-model="ratingEmotion"
-		label="Êtes-vous satisfait de ce service ?"
-		type="emotion"
-		:free-text-label="'Pouvez-vous nous en dire plus ?'"
-	>
-		<form class="mt-8">
+	<form class="mt-8">
+		<RatingPicker
+			v-model="ratingEmotion"
+			label="Êtes-vous satisfait de ce service ?"
+			type="emotion"
+			:free-text-label="'Pouvez-vous nous en dire plus ?'"
+		>
 			<label
 				for="rating-picker-comment"
 				class="d-block mb-2"
@@ -526,9 +528,7 @@ export const DefaultSlot: Story = {
 				rows="4"
 			/>
 
-			<div class="d-flex mt-4">
-				<VSpacer />
-
+			<div class="d-flex mt-6">
 				<VBtn
 					right
 					color="primary"
@@ -537,8 +537,8 @@ export const DefaultSlot: Story = {
 					Terminé
 				</VBtn>
 			</div>
-		</form>
-	</RatingPicker>
+		</RatingPicker>
+	</form>
 </template>
 				`,
 			},
@@ -609,9 +609,9 @@ export const AccessibilityBestPractices: Story = {
 							</div>
 						</RatingPicker>
 
-						<div class="d-flex justify-center mt-4">
+						<div class="d-flex justify-center mt-6">
 							<VBtn v-if="!isSubmitted" type="submit" color="primary">Transmettre mon avis</VBtn>
-							<SyAlert v-else type="success" variant="outlined" :closable="false" role="status" aria-live="polite" style="width: 100%">
+							<SyAlert v-model="isSubmitted" type="success" variant="outlined" :closable="false" role="status" aria-live="polite" style="width: 100%">
 								Merci pour votre réponse
 							</SyAlert>
 						</div>
@@ -659,9 +659,9 @@ export const AccessibilityBestPractices: Story = {
 				</div>
 			</RatingPicker>
 
-			<div class="d-flex justify-center mt-4">
+			<div class="d-flex justify-center mt-6">
 				<VBtn v-if="!isSubmitted" type="submit" color="primary">Transmettre mon avis</VBtn>
-				<SyAlert v-else type="success" variant="outlined" :closable="false" role="status" aria-live="polite" style="width: 100%">
+				<SyAlert v-model="isSubmitted" type="success" variant="outlined" :closable="false" role="status" aria-live="polite" style="width: 100%">
 					Merci pour votre réponse
 				</SyAlert>
 			</div>
@@ -744,9 +744,9 @@ export const NoLockAfterSelectionEmotion: Story = {
 					<SyForm @submit="handleSubmit">
 						<RatingPicker v-bind="args" v-model="args.modelValue" :readonly="args.readonly || isSubmitted"/>
 
-						<div class="d-flex justify-center">
+						<div class="d-flex justify-center mt-6">
 							<VBtn v-if="!isSubmitted" type="submit" color="primary">Transmettre mon avis</VBtn>
-							<SyAlert v-else type="success" variant="outlined" :closable="false" style="width: 100%">
+							<SyAlert v-model="isSubmitted" type="success" variant="outlined" :closable="false" style="width: 100%">
 								Merci pour votre réponse
 							</SyAlert>
 						</div>
@@ -786,7 +786,7 @@ export const NoLockAfterSelectionEmotion: Story = {
 
 			<div class="d-flex justify-center">
 				<VBtn v-if="!isSubmitted" type="submit" color="primary">Transmettre mon avis</VBtn>
-				<SyAlert v-else type="success" variant="outlined" :closable="false" style="width: 100%">
+				<SyAlert v-model="isSubmitted" type="success" variant="outlined" :closable="false" style="width: 100%">
 					Merci pour votre réponse
 				</SyAlert>
 			</div>
@@ -868,9 +868,9 @@ export const NoLockAfterSelectionNumber: Story = {
 					<SyForm @submit="handleSubmit">
 						<RatingPicker v-bind="args" v-model="args.modelValue" :readonly="args.readonly || isSubmitted"/>
 
-						<div class="d-flex justify-center">
+						<div class="d-flex justify-center mt-6">
 							<VBtn v-if="!isSubmitted" type="submit" color="primary">Transmettre mon avis</VBtn>
-							<SyAlert v-else type="success" variant="outlined" :closable="false" style="width: 100%">
+							<SyAlert v-model="isSubmitted" type="success" variant="outlined" :closable="false" style="width: 100%">
 								Merci pour votre réponse
 							</SyAlert>
 						</div>
@@ -908,9 +908,9 @@ export const NoLockAfterSelectionNumber: Story = {
 				center
 			/>
 
-			<div class="d-flex justify-center">
+			<div class="d-flex justify-center mt-6">
 				<VBtn v-if="!isSubmitted" type="submit" color="primary">Transmettre mon avis</VBtn>
-				<SyAlert v-else type="success" variant="outlined" :closable="false" style="width: 100%">
+				<SyAlert v-model="isSubmitted" type="success" variant="outlined" :closable="false" style="width: 100%">
 					Merci pour votre réponse
 				</SyAlert>
 			</div>
@@ -992,9 +992,9 @@ export const NoLockAfterSelectionStars: Story = {
 					<SyForm @submit="handleSubmit">
 						<RatingPicker v-bind="args" v-model="args.modelValue" :readonly="args.readonly || isSubmitted"/>
 
-						<div class="d-flex justify-center">
+						<div class="d-flex justify-center mt-6">
 							<VBtn v-if="!isSubmitted" type="submit" color="primary">Transmettre mon avis</VBtn>
-							<SyAlert v-else type="success" variant="outlined" :closable="false" style="width: 100%">
+							<SyAlert v-model="isSubmitted" type="success" variant="outlined" :closable="false" style="width: 100%">
 								Merci pour votre réponse
 							</SyAlert>
 						</div>
@@ -1032,9 +1032,9 @@ export const NoLockAfterSelectionStars: Story = {
 				center
 			/>
 
-			<div class="d-flex justify-center">
+			<div class="d-flex justify-center mt-6">
 				<VBtn v-if="!isSubmitted" type="submit" color="primary">Transmettre mon avis</VBtn>
-				<SyAlert v-else type="success" variant="outlined" :closable="false" style="width: 100%">
+				<SyAlert v-model="isSubmitted" type="success" variant="outlined" :closable="false" style="width: 100%">
 					Merci pour votre réponse
 				</SyAlert>
 			</div>

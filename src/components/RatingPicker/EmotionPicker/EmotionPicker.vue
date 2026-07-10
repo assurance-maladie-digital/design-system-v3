@@ -171,7 +171,7 @@
 			</div>
 		</div>
 		<p
-			v-if="props.lockAfterSelection"
+			v-if="props.lockAfterSelection || !props.readonly"
 			:id="emotionPickerDescriptionId"
 			class="locking-state text-caption"
 			:class="{'d-sr-only': internalValue !== -1}"

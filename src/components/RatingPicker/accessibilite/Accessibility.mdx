@@ -67,8 +67,8 @@ import {
         <ul>
             <li>Dans le parcours recommandé, le message s’affiche après validation du formulaire (ex : <code>Merci pour votre réponse</code>).</li>
             <li>Ce message doit être annoncé automatiquement, sans déplacer le focus.</li>
-            <li>On utilise pour ça <code>role="status"</code>.</li>
-            <li>Ne pas utiliser <code>role="alert"</code> pour ce type de message.</li>
+            <li>On utilise <code>SyAlert</code> avec <code>role="status"</code> et <code>aria-live="polite"</code>.</li>
+            <li>Ne pas utiliser <code>role="alert"</code> pour ce type de message sauf si l’information est réellement urgente.</li>
         </ul>
     </CriteriaCard>
 
@@ -118,7 +118,7 @@ import {
         <li>Assurer une navigation clavier complète et fluide.</li>
         <li>Afficher un focus bien visible.</li>
         <li>Masquer correctement les éléments décoratifs.</li>
-        <li>Utiliser <code>role="status"</code> pour le message de confirmation.</li>
+        <li>Utiliser <code>SyAlert</code> avec <code>role="status"</code> et <code>aria-live="polite"</code> pour le message de confirmation dans le cas général.</li>
         <li>Ajouter un label clair pour le champ de commentaire.</li>
         <li>Rester simple : moins de complexité = meilleure accessibilité.</li>
     </ul>

@@ -86,14 +86,6 @@
 			</slot>
 		</legend>
 
-		<p
-			v-if="props.lockAfterSelection"
-			:id="starsPickerDescriptionId"
-			class="d-sr-only"
-		>
-			{{ internalValue === -1 ? props.locales.toValidate : props.locales.validated }}
-		</p>
-
 		<div
 			role="radiogroup"
 			:aria-describedby="props.lockAfterSelection ? starsPickerDescriptionId : undefined"
@@ -135,7 +127,7 @@
 			</div>
 		</div>
 		<p
-			v-if="props.lockAfterSelection"
+			v-if="props.lockAfterSelection || !props.readonly"
 			:id="starsPickerDescriptionId"
 			class="locking-state text-caption"
 			:class="{'d-sr-only': internalValue !== -1}"
