@@ -3,7 +3,7 @@
 	import { mdiChevronDown, mdiChevronRight, mdiMenu } from '@mdi/js'
 	import { ref, type PropType, nextTick, onMounted, onBeforeUnmount, watch } from 'vue'
 	import type { MenuItem, SelectItem } from './types'
-	import { useDisplay } from 'vuetify'
+	import { useDisplay, useTheme } from 'vuetify'
 	import { useMobileRightMenu } from './useMobileRightMenu'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
@@ -173,6 +173,10 @@
 
 	// Display breakpoint helpers
 	const { smAndDown } = useDisplay()
+
+	// Le menu est téléporté (attach="body") hors de .v-application : sans thème explicite,
+	// ses couleurs (var(--v-theme-*)) se résolvent dans le mauvais thème. On propage le thème courant.
+	const theme = useTheme()
 
 	// Return proper link component
 	const getLinkComponent = (item: MenuItem): string => {
@@ -572,6 +576,7 @@
 										:close-on-content-click="true"
 										activator="parent"
 										content-class="left-dropdown-menu"
+										:theme="theme.global.name.value"
 										@update:model-value="onLeftMenuModel"
 									>
 										<v-list
@@ -638,6 +643,7 @@
 						origin="top right"
 						attach="body"
 						content-class="mobile-burger-menu"
+						:theme="theme.global.name.value"
 						eager
 						:offset="[0,0]"
 						:close-on-content-click="true"
@@ -1037,12 +1043,8 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 		background-color: transparent;
 	}
 
-	// Style pour l'élément ayant le focus via aria-activedescendant
-	&.menu-item-focused {
-		background-color: rgba(var(--v-theme-primary), 0.12);
-		outline: 2px solid rgb(var(--v-theme-primary));
-		outline-offset: -3px;
-	}
+	// Focus des items : le menu est téléporté (attach="body"), le style est donc
+	// dans l'override global src/assets/overrides/_menus.scss.
 }
 
 .v-list-item-title {
@@ -1164,12 +1166,4 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 	border: none;
 	z-index: 3;
 }
-
-/* Ensure focused menu item styles also apply to teleported overlay content */
-:deep(.menu-item-focused) {
-	background-color: rgba(var(--v-theme-primary), 0.12);
-	outline: 2px solid rgb(var(--v-theme-primary));
-	outline-offset: -3px;
-}
-
 </style>
