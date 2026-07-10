@@ -1159,6 +1159,10 @@
 </template>
 
 <style lang="scss" scoped>
+.v-sheet {
+	border-radius: var(--radius-md) !important;
+}
+
 .date-picker-title {
 	display: block;
 	text-transform: lowercase;

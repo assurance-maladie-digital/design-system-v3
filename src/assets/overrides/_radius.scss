@@ -1,7 +1,7 @@
 // Define theme radius separately
 $border-radius-cnam: 4px;
 $border-radius-pa: 4px;
-$border-radius-ap: 12px;
+$border-radius-ap: 8px;
 $cnam-radius: (
 	0: 0px,
 	'sm': calc($border-radius-cnam / 2),
@@ -111,4 +111,8 @@ $radius-keys: (0, 'sm', 'md', 'lg', 'xl', 'pill', 'circle');
 	.v-btn {
 		border-radius: var(--radius-pill) !important;
 	}
+}
+
+.v-card {
+	border-radius: var(--radius-lg) !important;
 }

@@ -239,6 +239,8 @@
 /* stylelint-disable selector-class-pattern */
 
 .sy-paginated-table :deep() {
+	border-radius: 8px;
+
 	table thead tr {
 		white-space: nowrap;
 	}
