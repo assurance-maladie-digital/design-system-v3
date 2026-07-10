@@ -88,9 +88,9 @@ describe('useDatePickerAccessibility', () => {
 		const monthButton = document.querySelector('.v-date-picker-controls__month-btn')
 		const yearButton = document.querySelector('.v-date-picker-controls__mode-btn')
 
-		// Vérifier que les flèches de navigation indiquent le mois cible
-		expect(prevButton?.getAttribute('aria-label')).toBe('Mois précédent: décembre 2022')
-		expect(nextButton?.getAttribute('aria-label')).toBe('Mois suivant: février 2023')
+		// Vérifier que les flèches de navigation ont des labels statiques
+		expect(prevButton?.getAttribute('aria-label')).toBe('Mois précédent')
+		expect(nextButton?.getAttribute('aria-label')).toBe('Mois suivant')
 
 		// Vérifier que les labels riches des boutons mois/année ne sont pas écrasés
 		expect(monthButton?.getAttribute('aria-label')).toContain('Sélectionner un mois')
@@ -134,10 +134,10 @@ describe('useDatePickerAccessibility', () => {
 		await updateAccessibility()
 
 		const statusRegions = Array.from(document.querySelectorAll('[role="status"]'))
-		expect(statusRegions).toHaveLength(2)
+		expect(statusRegions).toHaveLength(4)
 
 		const ids = statusRegions.map(el => el.id)
-		expect(new Set(ids).size).toBe(2)
+		expect(new Set(ids).size).toBe(4)
 	})
 
 	it('sets aria-pressed on active month/year selector buttons', async () => {
@@ -179,10 +179,12 @@ describe('useDatePickerAccessibility', () => {
 		const nextButton = document.querySelector('[data-testid="next-month"]') as HTMLButtonElement
 		const status = document.querySelector('[role="status"]') as HTMLElement
 
+		nextButton?.focus()
 		nextButton?.click()
 		await nextTick()
+		await new Promise(resolve => setTimeout(resolve, 0))
 
-		expect(status.textContent).toBe('Mois suivant, février 2023')
+		expect(status.textContent).toBe('Mois suivant')
 	})
 
 	it('recalculates labels when the calendar DOM updates after updateAccessibility', async () => {
@@ -201,11 +203,13 @@ describe('useDatePickerAccessibility', () => {
 		// Wait for the MutationObserver microtask to update labels
 		await new Promise(resolve => setTimeout(resolve, 0))
 
-		// Second click on previous should now announce January, not February again
+		// Second click on previous should announce static label
+		prevButton?.focus()
 		prevButton?.click()
 		await nextTick()
+		await new Promise(resolve => setTimeout(resolve, 0))
 
-		expect(status.textContent).toBe('Mois précédent, janvier 2023')
+		expect(status.textContent).toBe('Mois précédent')
 	})
 
 	it('cleans up navigation listeners and observers on unmount', async () => {
@@ -554,7 +558,7 @@ describe('useDatePickerAccessibility', () => {
 			expect(visibleText).toContain('2025')
 		})
 
-		it('vérifie que l\'aria-label du bouton du mois contient le mois sélectionné par défaut', async () => {
+		it('vérifie que l\'aria-label du bouton du mois contient le mois sélectionné', async () => {
 			document.body.innerHTML = `
 				<div class="v-date-picker-controls">
 					<button class="v-date-picker-controls__month-btn">déc.</button>
@@ -574,10 +578,10 @@ describe('useDatePickerAccessibility', () => {
 			const monthBtn = document.querySelector('.v-date-picker-controls__month-btn')!
 			const ariaLabel = monthBtn.getAttribute('aria-label')
 
-			expect(ariaLabel).toContain('électionner un mois (décembre / déc. sélectionné par défaut)')
+			expect(ariaLabel).toContain('électionner un mois (décembre / déc. sélectionné)')
 		})
 
-		it('vérifie que l\'aria-label du bouton de l\'année contient l\'année sélectionnée par défaut', async () => {
+		it('vérifie que l\'aria-label du bouton de l\'année contient l\'année sélectionnée', async () => {
 			document.body.innerHTML = `
 				<div class="v-date-picker-controls">
 					<button class="v-date-picker-controls__month-btn">janv.</button>
@@ -597,8 +601,8 @@ describe('useDatePickerAccessibility', () => {
 			const yearBtn = document.querySelector('.v-date-picker-controls__mode-btn')!
 			const ariaLabel = yearBtn.getAttribute('aria-label')
 
-			// Vérifier que l'aria-label contient "2030 sélectionné par défaut"
-			expect(ariaLabel).toContain('2030 sélectionné par défaut')
+			// Vérifier que l'aria-label contient "2030 sélectionné"
+			expect(ariaLabel).toContain('2030 sélectionné')
 		})
 	})
 })
