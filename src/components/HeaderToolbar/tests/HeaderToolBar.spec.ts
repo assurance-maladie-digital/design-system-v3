@@ -335,4 +335,23 @@ describe('HeaderToolbar', () => {
 			expect(wrapper.vm.showOverlay).toBe(true)
 		})
 	})
+
+	// Le ring de focus des items de menu (via aria-activedescendant) est en 2px primary
+	// (cf. .menu-item-focused dans HeaderToolbar.vue). jsdom ne calcule pas le style :
+	// on vérifie les prérequis structurels (déclencheurs = <button> natifs, items focusables).
+	describe('focus', () => {
+		it('renders the left-menu items as focusable links (focus ring targets)', () => {
+			const wrapper = mount(HeaderToolbar, {
+				props: {
+					leftMenu: [
+						{ title: 'Assuré', href: '#a' },
+						{ title: 'Professionnel de santé', href: '#b' },
+					],
+				},
+			})
+
+			const links = wrapper.findAll('#left-menu a')
+			expect(links.length).toBe(2)
+		})
+	})
 })
