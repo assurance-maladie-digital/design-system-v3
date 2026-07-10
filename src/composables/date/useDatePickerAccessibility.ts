@@ -100,38 +100,6 @@ const inferGridLabel = (scope: Element): string => {
 	return DEFAULT_GRID_LABEL
 }
 
-const findMonthIndex = (text: string): number => {
-	const normalized = text.toLowerCase()
-
-	for (let i = 0; i < locales.monthNames.length; i++) {
-		if (normalized.includes(locales.monthNames[i]!.toLowerCase())) return i
-	}
-
-	for (let i = 0; i < locales.monthNamesShort.length; i++) {
-		const short = locales.monthNamesShort[i]!.toLowerCase().replace('.', '')
-		if (normalized.includes(short)) return i
-	}
-
-	return -1
-}
-
-const getNavigationMonthYear = (pickerEl: Element): { month: number, year: number } | null => {
-	const monthButton = pickerEl.querySelector<HTMLElement>(MONTH_CONTROL_SELECTOR)
-	const yearButton = pickerEl.querySelector<HTMLElement>(YEAR_CONTROL_SELECTOR)
-
-	const monthText = compactText(monthButton?.textContent)
-	const yearText = compactText(yearButton?.textContent)
-
-	if (!monthText || !yearText) return null
-
-	const monthIndex = findMonthIndex(monthText)
-	const year = parseInt(yearText, 10)
-
-	if (monthIndex === -1 || Number.isNaN(year)) return null
-
-	return { month: monthIndex, year }
-}
-
 const getStatusRegionId = (pickerEl: HTMLElement): string => {
 	let id = pickerEl.dataset.a11yStatusRegionId
 	if (!id) {
@@ -193,19 +161,11 @@ const ensureControlsStatusRole = (pickerEl: HTMLElement) => {
 }
 
 const announceNavigation = (pickerEl: HTMLElement, direction: 'previous' | 'next') => {
-	const selector = direction === 'previous' ? PREV_MONTH_BUTTON_SELECTOR : NEXT_MONTH_BUTTON_SELECTOR
-	const button = pickerEl.querySelector<HTMLButtonElement>(selector)
-	if (!button) return
-
-	const targetMonth = button.dataset.a11yTargetMonth
-	const targetYear = button.dataset.a11yTargetYear
-	if (targetMonth === undefined || targetYear === undefined) return
-
 	const statusRegionId = getStatusRegionId(pickerEl)
 	const region = pickerEl.querySelector<HTMLElement>(`#${statusRegionId}`)
 	if (!region) return
 
-	const announcement = `${direction === 'previous' ? locales.previousMonth : locales.nextMonth}, ${locales.monthNames[parseInt(targetMonth, 10)]!} ${targetYear}`
+	const announcement = direction === 'previous' ? locales.previousMonth : locales.nextMonth
 	region.textContent = ''
 	nextTick(() => {
 		region.textContent = announcement
@@ -222,33 +182,30 @@ const ensureNavigationButtonLabels = (
 
 	const prevButton = pickerEl.querySelector<HTMLButtonElement>(PREV_MONTH_BUTTON_SELECTOR)
 	const nextButton = pickerEl.querySelector<HTMLButtonElement>(NEXT_MONTH_BUTTON_SELECTOR)
-	const current = getNavigationMonthYear(pickerEl)
 
 	const setupButton = (button: HTMLButtonElement | null, direction: 'previous' | 'next') => {
 		if (!button) return
-
-		const targetMonth = current
-			? (direction === 'previous' ? (current.month - 1 + 12) % 12 : (current.month + 1) % 12)
-			: null
-		const targetYear = current
-			? (direction === 'previous'
-					? (current.month === 0 ? current.year - 1 : current.year)
-					: (current.month === 11 ? current.year + 1 : current.year)
-				)
-			: null
 
 		const label = direction === 'previous' ? locales.previousMonth : locales.nextMonth
 
 		button.setAttribute('aria-label', label)
 		button.setAttribute('title', label)
 
-		if (targetMonth !== null && targetYear !== null) {
-			button.setAttribute('data-a11y-target-month', String(targetMonth))
-			button.setAttribute('data-a11y-target-year', String(targetYear))
-		}
-
 		if (!navigationListeners.has(button)) {
-			const handler = () => announceNavigation(pickerEl, direction)
+			const handler = () => {
+				announceNavigation(pickerEl, direction)
+
+				if (document.activeElement !== button) return
+
+				const directionKey = direction
+				nextTick(() => {
+					setTimeout(() => {
+						const selector = directionKey === 'previous' ? PREV_MONTH_BUTTON_SELECTOR : NEXT_MONTH_BUTTON_SELECTOR
+						const newButton = pickerEl.querySelector<HTMLElement>(selector)
+						newButton?.focus({ preventScroll: true })
+					}, 0)
+				})
+			}
 			navigationListeners.set(button, handler)
 			button.addEventListener('click', handler)
 			registerCleanup(() => {
