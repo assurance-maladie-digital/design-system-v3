@@ -1039,9 +1039,9 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 
 	// Style pour l'élément ayant le focus via aria-activedescendant
 	&.menu-item-focused {
-		background-color: rgb(25 118 210 / 12%);
-		outline: 2px solid #1976d2;
-		outline-offset: -2px;
+		background-color: rgba(var(--v-theme-primary), 0.12);
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: -3px;
 	}
 }
 
@@ -1143,8 +1143,8 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 		cursor: pointer;
 
 		&:focus-visible {
-			outline: 2px solid #1976d2;
-			outline-offset: 2px;
+			outline: 2px solid rgb(var(--v-theme-primary));
+			outline-offset: 3px;
 		}
 	}
 }
@@ -1167,9 +1167,9 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 
 /* Ensure focused menu item styles also apply to teleported overlay content */
 :deep(.menu-item-focused) {
-	background-color: rgb(25 118 210 / 12%);
-	outline: 2px solid #1976d2;
-	outline-offset: -2px;
+	background-color: rgba(var(--v-theme-primary), 0.12);
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: -3px;
 }
 
 </style>

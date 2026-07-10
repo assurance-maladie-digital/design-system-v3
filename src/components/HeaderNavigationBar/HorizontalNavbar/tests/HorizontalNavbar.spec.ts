@@ -586,4 +586,24 @@ describe('HorizontalNavbar', () => {
 			expect(vm.tabItems).toHaveLength(0)
 		})
 	})
+
+	// Le focus des onglets est délégué à SyTabs (ring 2px porté par .sy-tabs__button).
+	// On monte avec le VRAI SyTabs (sans stub) pour vérifier que les onglets focusables
+	// sont bien rendus. jsdom ne calcule pas :focus-visible.
+	describe('focus', () => {
+		it('renders focusable SyTabs tab buttons for each item', () => {
+			const wrapper = mount(HorizontalNavbar, {
+				global: { stubs: { RouterLink: true } },
+				props: {
+					items: [
+						{ label: 'Accueil', href: '#a' },
+						{ label: 'Compte', href: '#b' },
+					],
+				},
+			})
+
+			const tabs = wrapper.findAll('.sy-tabs__button')
+			expect(tabs.length).toBe(2)
+		})
+	})
 })
