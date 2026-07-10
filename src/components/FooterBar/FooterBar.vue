@@ -373,6 +373,11 @@ a {
 		}
 	}
 
+	// Ring de focus des liens en onPrimary sur le footer sombre
+	.vd-footer-bar-links a:focus-visible {
+		outline-color: rgb(var(--v-theme-onPrimary));
+	}
+
 	p,
 	.text--primary {
 		color: rgba(var(--v-theme-onPrimary));
@@ -395,6 +400,18 @@ a {
 	}
 }
 
+// Mode light : l'icône du back-to-top serait blanche sur fond blanc → on la repasse en primary
+.vd-footer-bar.v-theme--light :deep() {
+	.scroll {
+		color: rgb(var(--v-theme-primary)) !important;
+		fill: rgb(var(--v-theme-primary));
+
+		svg {
+			fill: rgb(var(--v-theme-primary));
+		}
+	}
+}
+
 .vd-footer-bar-links :deep() {
 	li {
 		list-style: none;
@@ -402,25 +419,29 @@ a {
 	}
 
 	a {
-		transition: 0.15s;
+		// Ne transitionne que le soulignement : sinon `all` anime aussi l'outline
+		// et fait apparaître un flash noir (couleur par défaut) au focus/blur.
+		transition: border-color 0.15s;
 		text-decoration: none;
 		padding-top: 1px; // Add top padding to account for bottom border
 		border-bottom: 1px solid transparent;
 
-		&:hover,
-		&:focus {
+		// Soulignement en survol uniquement (le focus utilise le ring ci-dessous),
+		// pour éviter le double indicateur (soulignement + outline).
+		&:hover {
 			border-color: currentcolor;
+		}
+
+		&:focus-visible {
+			outline: 2px solid rgb(var(--v-theme-primary));
+			outline-offset: 3px;
+			border-radius: 2px;
 		}
 	}
 
 	p {
 		padding: 1px 0;
 	}
-}
-
-#scroll-btn:focus-visible {
-	outline: 2px solid white;
-	outline-offset: 2px;
 }
 
 .v-theme--dark button.v-btn:hover :deep() {

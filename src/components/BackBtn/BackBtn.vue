@@ -60,7 +60,4 @@
 		display: none;
 	}
 }
-
-// Le ring de focus est géré globalement (_btns.scss) :
-// primary en clair, onPrimary (blanc) en thème dark.
 </style>
