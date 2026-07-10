@@ -7,7 +7,30 @@
 	import HeaderMenuBtn from '@/components/HeaderBar/HeaderMenuBtn/HeaderMenuBtn.vue'
 	import HeaderMenuItem from '@/components/HeaderBar/HeaderBurgerMenu/HeaderMenuItem/HeaderMenuItem.vue'
 	import HeaderLogo from '@/components/HeaderBar/HeaderLogo/HeaderLogo.vue'
+	import HeaderNavigationBar from '@/components/HeaderNavigationBar/HeaderNavigationBar.vue'
+	import HeaderToolbar from '@/components/HeaderToolbar/HeaderToolbar.vue'
+	import SyTabs from '@/components/Customs/SyTabs/SyTabs.vue'
 	import CollapsibleList from '@/components/CollapsibleList/CollapsibleList.vue'
+
+	// SyTabs
+	const tabsItems = [
+		{ label: 'Onglet 1', value: 'tab1', content: 'Contenu 1' },
+		{ label: 'Onglet 2', value: 'tab2', content: 'Contenu 2' },
+		{ label: 'Onglet 3', value: 'tab3', content: 'Contenu 3' },
+	]
+
+	// HeaderNavigationBar
+	const navItems = [
+		{ label: 'Accueil', href: '#' },
+		{ label: 'Mon compte', href: '#' },
+		{ label: 'Mes remboursements', href: '#' },
+	]
+
+	// HeaderToolbar
+	const toolbarMenu = [
+		{ title: 'Assuré', href: '#' },
+		{ title: 'Professionnel de santé', href: '#' },
+	]
 
 	// HeaderMenuBtn (bouton menu du HeaderBar)
 	const menuOpen = ref(false)
@@ -272,6 +295,38 @@
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 
+					<!-- ============ HeaderNavigationBar ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							HeaderNavigationBar
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Barre de nav (fond primary) — ring inset onPrimary au focus des liens
+							</div>
+							<HeaderNavigationBar
+								service-title="Ameli"
+								:items="navItems"
+							/>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ HeaderToolbar ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							HeaderToolbar
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Ouvre un menu puis navigue aux flèches : ring primary sur l'item actif (aria-activedescendant)
+							</div>
+							<HeaderToolbar
+								:left-menu="toolbarMenu"
+								:current-page-index="0"
+							/>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
 					<!-- ============ FooterBar (prop light) ============ -->
 					<v-expansion-panel>
 						<v-expansion-panel-title>
@@ -301,6 +356,40 @@
 									Contenu du footer
 								</p>
 							</FooterBar>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyTabs ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyTabs
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Fond clair — ring inset 2px primary
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4 mb-6"
+							>
+								<SyTabs :items="tabsItems" />
+							</v-sheet>
+
+							<div class="text-caption mb-2">
+								Fond primary (sheet dark) — ring onPrimary (blanc)
+							</div>
+							<SyTabs
+								:items="tabsItems"
+								:vuetify-options="{
+									sheet: { color: 'rgb(var(--v-theme-primary))' },
+									tab: {
+										'base-color': 'rgba(var(--v-theme-onPrimary), 0.7)',
+										'active-color': 'rgb(var(--v-theme-onPrimary))',
+										'slider-color': 'rgb(var(--v-theme-onPrimary))',
+									},
+								}"
+							/>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 
