@@ -301,19 +301,71 @@ const ensureMonthAndYearControlExpanded = (pickerEl: HTMLElement, viewMode: View
 	}
 }
 
-const ensureMonthAndYearControlsLiveRegion = (pickerEl: HTMLElement) => {
+const ensureMonthAndYearLabelAnnouncer = (
+	pickerEl: HTMLElement,
+	registerCleanup: (cleanup: () => void) => void,
+) => {
+	const controls = pickerEl.querySelector<HTMLElement>('.v-date-picker-controls')
+	if (!controls) return
+
 	const monthControl = pickerEl.querySelector<HTMLElement>(MONTH_CONTROL_SELECTOR)
 	const yearControl = pickerEl.querySelector<HTMLElement>(YEAR_CONTROL_SELECTOR)
 
-	if (monthControl) {
-		monthControl.setAttribute('aria-live', 'polite')
-		monthControl.setAttribute('aria-atomic', 'true')
+	// Retirer aria-live des contrôles eux-mêmes pour éviter les annonces parasites
+	monthControl?.removeAttribute('aria-live')
+	monthControl?.removeAttribute('aria-atomic')
+	yearControl?.removeAttribute('aria-live')
+	yearControl?.removeAttribute('aria-atomic')
+
+	// Zone live dédiée, hors du nœud observé pour éviter les boucles
+	const regionId = `${getStatusRegionId(pickerEl)}-month-year-label`
+	let region = pickerEl.querySelector<HTMLElement>(`#${regionId}`)
+	if (!region) {
+		region = document.createElement('div')
+		region.id = regionId
+		region.setAttribute('role', 'status')
+		region.setAttribute('aria-live', 'polite')
+		region.setAttribute('aria-atomic', 'true')
+		region.style.position = 'absolute'
+		region.style.left = '-10000px'
+		region.style.width = '1px'
+		region.style.height = '1px'
+		region.style.overflow = 'hidden'
+		region.style.clip = 'rect(0, 0, 0, 0)'
+		region.style.whiteSpace = 'nowrap'
+		region.style.border = '0'
+		pickerEl.appendChild(region)
 	}
 
-	if (yearControl) {
-		yearControl.setAttribute('aria-live', 'polite')
-		yearControl.setAttribute('aria-atomic', 'true')
+	let timeoutId: ReturnType<typeof setTimeout> | undefined
+
+	const announceLabel = () => {
+		const monthText = monthControl ? compactText(monthControl.textContent) : ''
+		const yearText = yearControl ? compactText(yearControl.textContent) : ''
+		const announcement = [monthText, yearText].filter(Boolean).join(' ')
+		if (!announcement) return
+
+		region.textContent = ''
+		nextTick(() => {
+			region.textContent = announcement
+		})
 	}
+
+	const observer = new MutationObserver(() => {
+		clearTimeout(timeoutId)
+		timeoutId = setTimeout(announceLabel, 100)
+	})
+
+	observer.observe(controls, {
+		childList: true,
+		subtree: true,
+		characterData: true,
+	})
+
+	registerCleanup(() => {
+		observer.disconnect()
+		clearTimeout(timeoutId)
+	})
 }
 
 /**
@@ -480,7 +532,7 @@ export function useDatePickerAccessibility() {
 			ensureControlsStatusRole(pickerEl)
 			ensureNavigationButtonLabels(pickerEl, observerRegistry, registerCleanup, navigationListeners)
 			ensureMonthAndYearSelectorLabels(pickerEl, registerCleanup, selectionListeners)
-			ensureMonthAndYearControlsLiveRegion(pickerEl)
+			ensureMonthAndYearLabelAnnouncer(pickerEl, registerCleanup)
 			if (viewMode !== undefined) {
 				ensureMonthAndYearControlExpanded(pickerEl, viewMode)
 			}
