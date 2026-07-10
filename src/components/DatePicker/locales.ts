@@ -45,7 +45,7 @@ export const locales = {
 	monthDescription: (month: string): string => `mois ${month}`,
 	yearDescription: (year: string): string => `année ${year}`,
 	partialDateDescription: (description: string): string => `Date en cours de saisie: ${description}`,
-	selectedByDefault: 'sélectionné par défaut',
+	selectedByDefault: 'sélectionné',
 	selectTodayCapitalized: (dateText?: string): string => {
 		const baseLabel = 'Sélectionner la date d\'Aujourd\'hui'
 		return dateText ? `${baseLabel} (${dateText})` : baseLabel

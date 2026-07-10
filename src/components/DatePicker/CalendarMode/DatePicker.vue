@@ -222,8 +222,8 @@
 
 	// Fonction pour sélectionner la date du jour
 	const handleSelectToday = () => {
-		// Créer une seule instance de la date du jour
-		const today = new Date()
+		// Créer une seule instance de la date du jour, normalisée à minuit
+		const today = dayjs().startOf('day').toDate()
 
 		// Si c'est une plage de dates, on définit le même jour pour début et fin
 		if (props.displayRange) {

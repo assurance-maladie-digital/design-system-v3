@@ -166,6 +166,7 @@ const announceNavigation = (pickerEl: HTMLElement, direction: 'previous' | 'next
 	if (!region) return
 
 	const announcement = direction === 'previous' ? locales.previousMonth : locales.nextMonth
+
 	region.textContent = ''
 	nextTick(() => {
 		region.textContent = announcement
@@ -193,8 +194,6 @@ const ensureNavigationButtonLabels = (
 
 		if (!navigationListeners.has(button)) {
 			const handler = () => {
-				announceNavigation(pickerEl, direction)
-
 				if (document.activeElement !== button) return
 
 				const directionKey = direction
@@ -203,6 +202,8 @@ const ensureNavigationButtonLabels = (
 						const selector = directionKey === 'previous' ? PREV_MONTH_BUTTON_SELECTOR : NEXT_MONTH_BUTTON_SELECTOR
 						const newButton = pickerEl.querySelector<HTMLElement>(selector)
 						newButton?.focus({ preventScroll: true })
+
+						announceNavigation(pickerEl, direction)
 					}, 0)
 				})
 			}
@@ -297,6 +298,21 @@ const ensureMonthAndYearControlExpanded = (pickerEl: HTMLElement, viewMode: View
 
 	if (yearControl) {
 		yearControl.setAttribute('aria-expanded', String(viewMode === 'year'))
+	}
+}
+
+const ensureMonthAndYearControlsLiveRegion = (pickerEl: HTMLElement) => {
+	const monthControl = pickerEl.querySelector<HTMLElement>(MONTH_CONTROL_SELECTOR)
+	const yearControl = pickerEl.querySelector<HTMLElement>(YEAR_CONTROL_SELECTOR)
+
+	if (monthControl) {
+		monthControl.setAttribute('aria-live', 'polite')
+		monthControl.setAttribute('aria-atomic', 'true')
+	}
+
+	if (yearControl) {
+		yearControl.setAttribute('aria-live', 'polite')
+		yearControl.setAttribute('aria-atomic', 'true')
 	}
 }
 
@@ -464,6 +480,7 @@ export function useDatePickerAccessibility() {
 			ensureControlsStatusRole(pickerEl)
 			ensureNavigationButtonLabels(pickerEl, observerRegistry, registerCleanup, navigationListeners)
 			ensureMonthAndYearSelectorLabels(pickerEl, registerCleanup, selectionListeners)
+			ensureMonthAndYearControlsLiveRegion(pickerEl)
 			if (viewMode !== undefined) {
 				ensureMonthAndYearControlExpanded(pickerEl, viewMode)
 			}
