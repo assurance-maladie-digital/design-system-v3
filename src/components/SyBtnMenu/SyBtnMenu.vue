@@ -291,11 +291,6 @@
 	opacity: 0 !important;
 }
 
-:global(.sy-user-menu .v-list-item:focus) {
-	outline: 2px solid rgb(var(--v-theme-primary));
-	outline-offset: -2px;
-}
-
 .item-title {
 	white-space: wrap;
 }
