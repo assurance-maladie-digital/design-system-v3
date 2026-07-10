@@ -64,7 +64,7 @@
 	// Ring inset en currentColor (bouton bord-à-bord → un ring outset serait rogné) :
 	// blanc (onPrimary) sur fond primary, primary sur fond surface (état ouvert).
 	&:focus-visible {
-		outline: 2px solid currentColor;
+		outline: 2px solid currentcolor;
 		outline-offset: -2px;
 	}
 }
