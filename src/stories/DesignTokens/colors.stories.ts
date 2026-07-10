@@ -240,40 +240,16 @@ export const Interaction: StoryObj = {
 				const displayEmptyColors = false
 				const colorTitleLevel = 3
 				const cnamColors = {
-					interactionLightenEnabled: cnamLightTheme.interactionLightenEnabled,
-					interactionLightenHover: cnamLightTheme.interactionLightenHover,
-					interactionLightenSelected: cnamLightTheme.interactionLightenSelected,
-					interactionLightenPressed: cnamLightTheme.interactionLightenPressed,
-					interactionDarkEnabled: cnamLightTheme.interactionDarkEnabled,
-					interactionDarkHover: cnamLightTheme.interactionDarkHover,
-					interactionDarkPressed: cnamLightTheme.interactionDarkPressed,
-					interactionDarkenEnabled: cnamLightTheme.interactionDarkenEnabled,
-					interactionDarkenHover: cnamLightTheme.interactionDarkenHover,
-					interactionDarkenPressed: cnamLightTheme.interactionDarkenPressed,
+					interactionDark: cnamLightTheme.interactionDark,
+					interactionDarken: cnamLightTheme.interactionDarken,
 				}
 				const paColors = {
-					interactionLightenEnabled: paLightTheme.interactionLightenEnabled,
-					interactionLightenHover: paLightTheme.interactionLightenHover,
-					interactionLightenSelected: paLightTheme.interactionLightenSelected,
-					interactionLightenPressed: paLightTheme.interactionLightenPressed,
-					interactionDarkEnabled: paLightTheme.interactionDarkEnabled,
-					interactionDarkHover: paLightTheme.interactionDarkHover,
-					interactionDarkPressed: paLightTheme.interactionDarkPressed,
-					interactionDarkenEnabled: paLightTheme.interactionDarkenEnabled,
-					interactionDarkenHover: paLightTheme.interactionDarkenHover,
-					interactionDarkenPressed: paLightTheme.interactionDarkenPressed,
+					interactionDark: paLightTheme.interactionDark,
+					interactionDarken: paLightTheme.interactionDarken,
 				}
 				const apColors = {
-					interactionLightenEnabled: apLightTheme.interactionLightenEnabled,
-					interactionLightenHover: apLightTheme.interactionLightenHover,
-					interactionLightenSelected: apLightTheme.interactionLightenSelected,
-					interactionLightenPressed: apLightTheme.interactionLightenPressed,
-					interactionDarkEnabled: apLightTheme.interactionDarkEnabled,
-					interactionDarkHover: apLightTheme.interactionDarkHover,
-					interactionDarkPressed: apLightTheme.interactionDarkPressed,
-					interactionDarkenEnabled: apLightTheme.interactionDarkenEnabled,
-					interactionDarkenHover: apLightTheme.interactionDarkenHover,
-					interactionDarkenPressed: apLightTheme.interactionDarkenPressed,
+					interactionDark: apLightTheme.interactionDark,
+					interactionDarken: apLightTheme.interactionDarken,
 				}
 				const apColors2026 = {}
 				return {

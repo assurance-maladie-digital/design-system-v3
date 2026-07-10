@@ -66,15 +66,6 @@ export const apLightTheme = {
 	onWarningVariant: baseTokens.color.yellow.darken60,
 
 	// Interaction
-	interactionLightenEnabled: baseTokens.color.none,
-	interactionLightenHover: baseTokens.color.white.alpha20,
-	interactionLightenSelected: baseTokens.color.white.alpha20,
-	interactionLightenPressed: baseTokens.color.white.alpha38,
-	interactionDarkEnabled: baseTokens.color.transparentCyan.alpha00,
-	interactionDarkHover: baseTokens.color.transparentCyan.alpha08,
-	interactionDarkPressed: baseTokens.color.transparentCyan.alpha18,
-	interactionDarkSelected: baseTokens.color.cyan.darken40,
-	interactionDarkenEnabled: baseTokens.color.transparentBlack.alpha00,
-	interactionDarkenHover: baseTokens.color.transparentBlack.alpha20,
-	interactionDarkenPressed: baseTokens.color.transparentBlack.alpha40,
+	interactionDark: baseTokens.color.blue.base,
+	interactionDarken: baseTokens.color.black.base,
 }
