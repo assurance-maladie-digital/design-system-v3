@@ -5,9 +5,18 @@
 	import SelectBtnField from '@/components/Customs/Selects/SelectBtnField/SelectBtnField.vue'
 	import FooterBar from '@/components/FooterBar/FooterBar.vue'
 	import HeaderMenuBtn from '@/components/HeaderBar/HeaderMenuBtn/HeaderMenuBtn.vue'
+	import HeaderMenuItem from '@/components/HeaderBar/HeaderBurgerMenu/HeaderMenuItem/HeaderMenuItem.vue'
+	import CollapsibleList from '@/components/CollapsibleList/CollapsibleList.vue'
 
 	// HeaderMenuBtn (bouton menu du HeaderBar)
 	const menuOpen = ref(false)
+
+	// CollapsibleList
+	const collapsibleItems = [
+		{ text: 'Lien 1', href: '#lien1' },
+		{ text: 'Lien 2', href: '#lien2' },
+		{ text: 'Lien 3', href: '#lien3' },
+	]
 
 	// SelectBtnField
 	const column = ref<string | null>(null)
@@ -220,6 +229,29 @@
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 
+					<!-- ============ HeaderMenuItem (HeaderBar / burger) ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							HeaderMenuItem (HeaderBar)
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Item de menu pleine largeur — focus = traits primary haut + bas (pas de ring)
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<ul class="pa-0">
+									<HeaderMenuItem>
+										<a href="#">Mon lien</a>
+									</HeaderMenuItem>
+								</ul>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
 					<!-- ============ FooterBar (prop light) ============ -->
 					<v-expansion-panel>
 						<v-expansion-panel-title>
@@ -249,6 +281,44 @@
 									Contenu du footer
 								</p>
 							</FooterBar>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ CollapsibleList ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							CollapsibleList
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Fond clair — ring primary (desktop : liens ; mobile : titre du panel)
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4 mb-6"
+							>
+								<CollapsibleList
+									list-title="Mon titre"
+									:items="collapsibleItems"
+								/>
+							</v-sheet>
+
+							<div class="text-caption mb-2">
+								Fond primary (thème dark) — ring onPrimary
+							</div>
+							<v-sheet
+								color="primary"
+								rounded
+								class="pa-4"
+							>
+								<div class="v-theme--dark">
+									<CollapsibleList
+										list-title="Mon titre"
+										:items="collapsibleItems"
+									/>
+								</div>
+							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>

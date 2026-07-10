@@ -105,7 +105,7 @@ li {
 	border: 0;
 
 	&:focus-visible {
-		outline: 3px solid rgb(var(--v-theme-primary));
+		outline: 2px solid rgb(var(--v-theme-primary));
 		outline-offset: -1px;
 	}
 }
@@ -116,7 +116,7 @@ li {
 	}
 
 	.v-btn--icon:focus-visible {
-		outline: 3px solid white;
+		outline: 2px solid white;
 		outline-offset: -1px;
 	}
 }

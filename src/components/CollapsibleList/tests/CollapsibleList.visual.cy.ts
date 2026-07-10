@@ -31,3 +31,32 @@ describe('CollapsibleList - Visual regression tests', () => {
 		cy.matchImageSnapshot('collapsible-list-no-title', cy.get('.vd-collapse-list'))
 	})
 })
+
+// Déclenche :focus-visible via l'option native focus({ focusVisible: true }).
+const focusVisible = (selector: string) =>
+	cy.get(selector).then(($el) => {
+		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
+	})
+
+describe('CollapsibleList - Focus visual regression tests', () => {
+	it('shows the focus ring on a link (desktop)', () => {
+		cy.mountWithVuetify(CollapsibleList, {
+			props: { listTitle: 'Mon titre', items: defaultItems },
+		})
+
+		focusVisible('.vd-collapse-list a')
+		cy.wait(100)
+		cy.matchImageSnapshot('collapsible-list-focus-link', cy.get('.v-application'))
+	})
+
+	it('shows the focus ring on the panel title (mobile)', () => {
+		cy.viewport(375, 667)
+		cy.mountWithVuetify(CollapsibleList, {
+			props: { listTitle: 'Mon titre', items: defaultItems },
+		})
+
+		focusVisible('.v-expansion-panel-title')
+		cy.wait(100)
+		cy.matchImageSnapshot('collapsible-list-focus-title', cy.get('.v-application'))
+	})
+})
