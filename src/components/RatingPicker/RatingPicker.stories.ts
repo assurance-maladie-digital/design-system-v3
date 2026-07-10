@@ -131,6 +131,20 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
+const RecommendedAccessibilityStoryNotice = {
+	template: `
+		<div
+			class="mb-6 pa-4"
+			role="note"
+			style="border: 1px solid #0C41BD; border-radius: 4px; background-color: #F4F7FF; color: #1F2937;"
+		>
+			<strong>Recommandation accessibilité :</strong>
+			pour un parcours complet, il est préférable de consulter la story
+			<strong>AccessibilityBestPractices</strong>, qui laisse l’utilisateur modifier sa réponse jusqu’à la validation du formulaire.
+		</div>
+	`,
+}
+
 /**
  * Story par défaut
  */
@@ -146,11 +160,12 @@ export const Default: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { RatingPicker },
+			components: { RatingPicker, RecommendedAccessibilityStoryNotice },
 			setup() {
 				return { args }
 			},
 			template: `
+				<RecommendedAccessibilityStoryNotice />
                 <RatingPicker v-bind="args" v-model="args.modelValue"/>
             `,
 		}
@@ -196,11 +211,12 @@ export const TwoEmotions: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { RatingPicker },
+			components: { RatingPicker, RecommendedAccessibilityStoryNotice },
 			setup() {
 				return { args }
 			},
 			template: `
+				<RecommendedAccessibilityStoryNotice />
                 <RatingPicker v-bind="args" v-model="args.modelValue"/>
             `,
 		}
@@ -246,11 +262,12 @@ export const Numbers: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { RatingPicker },
+			components: { RatingPicker, RecommendedAccessibilityStoryNotice },
 			setup() {
 				return { args }
 			},
 			template: `
+				<RecommendedAccessibilityStoryNotice />
                 <RatingPicker v-bind="args" v-model="args.modelValue"/>
             `,
 		}
@@ -295,11 +312,12 @@ export const Stars: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { RatingPicker },
+			components: { RatingPicker, RecommendedAccessibilityStoryNotice },
 			setup() {
 				return { args }
 			},
 			template: `
+				<RecommendedAccessibilityStoryNotice />
                 <RatingPicker v-bind="args" v-model="args.modelValue"/>
             `,
 		}
@@ -345,11 +363,12 @@ export const ReadOnly: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { RatingPicker },
+			components: { RatingPicker, RecommendedAccessibilityStoryNotice },
 			setup() {
 				return { args }
 			},
 			template: `
+				<RecommendedAccessibilityStoryNotice />
                 <RatingPicker v-bind="args" v-model="args.modelValue"/>
             `,
 		}
@@ -396,11 +415,12 @@ export const HideAlert: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { RatingPicker },
+			components: { RatingPicker, RecommendedAccessibilityStoryNotice },
 			setup() {
 				return { args }
 			},
 			template: `
+				<RecommendedAccessibilityStoryNotice />
                 <RatingPicker v-bind="args" v-model="args.modelValue"/>
             `,
 		}
@@ -447,33 +467,36 @@ export const DefaultSlot: Story = {
 		'onUpdate:modelValue': fn() },
 	render: (args) => {
 		return {
-			components: { RatingPicker, VBtn, VSpacer, SyTextArea },
+			components: { RatingPicker, RecommendedAccessibilityStoryNotice, VBtn, VSpacer, SyTextArea },
 			setup() {
 				return { args }
 			},
 			template: `
-				<RatingPicker v-bind="args" v-model="args.modelValue">
-					<div class="mt-8">
+				<RecommendedAccessibilityStoryNotice />
+				<form>
+					<RatingPicker v-bind="args" v-model="args.modelValue">
+						<div class="mt-8">
 
-						<SyTextArea
-							id="rating-picker-comment"
-							class="w-100 pa-3"
-							:label="args.freeTextLabel"
-							rows="4"
-						/>
+							<SyTextArea
+								id="rating-picker-comment"
+								class="w-100 pa-3"
+								:label="args.freeTextLabel"
+								rows="4"
+							/>
 
-						<div class="d-flex mt-4">
-							<VSpacer />
+							<div class="d-flex mt-4">
+								<VSpacer />
 
-							<VBtn
-								right
-								color="primary"
-							>
-								Terminé
-							</VBtn>
+								<VBtn
+									right
+									color="primary"
+								>
+									Terminé
+								</VBtn>
+							</div>
 						</div>
-					</div>
-				</RatingPicker>
+					</RatingPicker>
+				</form>
 			`,
 		}
 	},
@@ -489,7 +512,7 @@ export const DefaultSlot: Story = {
 		type="emotion"
 		:free-text-label="'Pouvez-vous nous en dire plus ?'"
 	>
-		<div class="mt-8">
+		<form class="mt-8">
 			<label
 				for="rating-picker-comment"
 				class="d-block mb-2"
@@ -509,11 +532,12 @@ export const DefaultSlot: Story = {
 				<VBtn
 					right
 					color="primary"
+					type="submit"
 				>
 					Terminé
 				</VBtn>
 			</div>
-		</div>
+		</form>
 	</RatingPicker>
 </template>
 				`,
@@ -530,6 +554,156 @@ const ratingEmotion = ref(2)
 const freeTextLabel = 'Pouvez-vous nous en dire plus ?'
 </script>
 				`,
+			},
+		],
+	},
+}
+
+export const AccessibilityBestPractices: Story = {
+	args: {
+		'type': 'emotion',
+		'label': 'Êtes-vous satisfait de ce service ?',
+		'readonly': false,
+		'twoEmotions': false,
+		'hideAlert': true,
+		'modelValue': -1,
+		'freeTextLabel': 'Pouvez-vous nous en dire plus ?',
+		'lockAfterSelection': false,
+		'center': true,
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { DialogBox, RatingPicker, SyAlert, SyForm, SyTextArea, VBtn },
+			setup() {
+				const dialogOpen = ref(false)
+				const isSubmitted = ref(false)
+
+				function handleSubmit() {
+					if (args.modelValue === -1) {
+						dialogOpen.value = true
+						return
+					}
+
+					isSubmitted.value = true
+				}
+
+				return { args, dialogOpen, handleSubmit, isSubmitted }
+			},
+			template: `
+				<div style="max-width: 800px; margin: 0 auto;">
+					<SyForm @submit="handleSubmit">
+						<RatingPicker
+							v-bind="args"
+							v-model="args.modelValue"
+							:readonly="args.readonly || isSubmitted"
+						>
+							<div class="mt-8">
+								<SyTextArea
+									id="rating-picker-accessibility-comment"
+									class="w-100"
+									:label="args.freeTextLabel"
+									:readonly="isSubmitted"
+									rows="4"
+								/>
+							</div>
+						</RatingPicker>
+
+						<div class="d-flex justify-center mt-4">
+							<VBtn v-if="!isSubmitted" type="submit" color="primary">Transmettre mon avis</VBtn>
+							<SyAlert v-else type="success" variant="outlined" :closable="false" role="status" aria-live="polite" style="width: 100%">
+								Merci pour votre réponse
+							</SyAlert>
+						</div>
+					</SyForm>
+				</div>
+
+				<DialogBox
+					v-model="dialogOpen"
+					title="Réponse manquante"
+				>
+					Veuillez sélectionner une réponse avant de valider.
+
+					<template #actions>
+						<VBtn color="primary" @click="dialogOpen = false">Compris</VBtn>
+					</template>
+				</DialogBox>
+			`,
+		}
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<div style="max-width: 800px; margin: 0 auto;">
+		<SyForm @submit="handleSubmit">
+			<RatingPicker
+				v-model="ratingEmotion"
+				label="Êtes-vous satisfait de ce service ?"
+				type="emotion"
+				:hide-alert="true"
+				:readonly="isSubmitted"
+				:lock-after-selection="false"
+				:center="true"
+			>
+				<div class="mt-8">
+					<SyTextArea
+						id="rating-picker-accessibility-comment"
+						class="w-100"
+						:label="freeTextLabel"
+						:readonly="isSubmitted"
+						rows="4"
+					/>
+				</div>
+			</RatingPicker>
+
+			<div class="d-flex justify-center mt-4">
+				<VBtn v-if="!isSubmitted" type="submit" color="primary">Transmettre mon avis</VBtn>
+				<SyAlert v-else type="success" variant="outlined" :closable="false" role="status" aria-live="polite" style="width: 100%">
+					Merci pour votre réponse
+				</SyAlert>
+			</div>
+		</SyForm>
+	</div>
+
+	<DialogBox
+		v-model="dialogOpen"
+		title="Réponse manquante"
+	>
+		Veuillez sélectionner une réponse avant de valider.
+
+		<template #actions>
+			<VBtn color="primary" @click="dialogOpen = false">Compris</VBtn>
+		</template>
+	</DialogBox>
+</template>
+		`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DialogBox, RatingPicker, SyAlert, SyForm, SyTextArea } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const ratingEmotion = ref(-1)
+const dialogOpen = ref(false)
+const isSubmitted = ref(false)
+const freeTextLabel = 'Pouvez-vous nous en dire plus ?'
+
+function handleSubmit() {
+	if (ratingEmotion.value === -1) {
+		dialogOpen.value = true
+		return
+	}
+
+	isSubmitted.value = true
+}
+</script>
+		`,
 			},
 		],
 	},
