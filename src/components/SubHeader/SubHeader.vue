@@ -195,6 +195,13 @@
 
 .vd-sub-header-back-btn {
 	margin: 0 -6px;
+
+	// Fond du subheader = primary : ring en onPrimary (le ring global primary
+	// serait bleu sur bleu = invisible).
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-onPrimary));
+		outline-offset: 3px;
+	}
 }
 
 .vd-data-list-group,
