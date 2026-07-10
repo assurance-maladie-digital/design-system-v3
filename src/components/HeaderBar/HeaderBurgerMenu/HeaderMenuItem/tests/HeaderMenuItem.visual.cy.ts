@@ -8,8 +8,8 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('HeaderMenuItem - Focus visual regression tests', () => {
-	// Item de menu pleine largeur : au focus, ring inset 2px primary (mixin
-	// item-focused), visible sur les 4 côtés et non rogné par l'overflow du menu.
+	// Item de menu pleine largeur : au focus, ring inset 2px en currentColor (mixin
+	// item-focused), visible sur les 4 côtés, non rogné, et contrasté quel que soit le fond.
 	it('shows the inset focus ring', () => {
 		cy.mountWithVuetify(HeaderMenuItem, {
 			slots: { default: () => h('a', { href: '#' }, 'Mon lien') },
