@@ -6,6 +6,7 @@
 	import FooterBar from '@/components/FooterBar/FooterBar.vue'
 	import HeaderMenuBtn from '@/components/HeaderBar/HeaderMenuBtn/HeaderMenuBtn.vue'
 	import HeaderMenuItem from '@/components/HeaderBar/HeaderBurgerMenu/HeaderMenuItem/HeaderMenuItem.vue'
+	import HeaderLogo from '@/components/HeaderBar/HeaderLogo/HeaderLogo.vue'
 	import CollapsibleList from '@/components/CollapsibleList/CollapsibleList.vue'
 
 	// HeaderMenuBtn (bouton menu du HeaderBar)
@@ -248,6 +249,25 @@
 										<a href="#">Mon lien</a>
 									</HeaderMenuItem>
 								</ul>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ HeaderLogo (HeaderBar) ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							HeaderLogo (HeaderBar)
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Lien logo — ring outset au focus (padding du header, non rogné)
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<HeaderLogo service-title="Mon service" />
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
