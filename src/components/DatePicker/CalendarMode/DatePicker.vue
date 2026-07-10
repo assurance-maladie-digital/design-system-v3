@@ -1033,6 +1033,7 @@
 					:id="datePickerDialogId"
 					ref="datePickerDialogRef"
 					role="dialog"
+					aria-modal="true"
 					:aria-labelledby="datePickerHeadingId"
 					tabindex="-1"
 				>
