@@ -60,6 +60,13 @@
 			rgb(var(--v-theme-blue-lighten80)) 100%
 		);
 	transition: color 0.15s 0.1s, background-color 0.15s 0.1s, border 0.15s 0.1s;
+
+	// Ring inset en currentColor (bouton bord-à-bord → un ring outset serait rogné) :
+	// blanc (onPrimary) sur fond primary, primary sur fond surface (état ouvert).
+	&:focus-visible {
+		outline: 2px solid currentColor;
+		outline-offset: -2px;
+	}
 }
 
 .header-menu-btn__open {

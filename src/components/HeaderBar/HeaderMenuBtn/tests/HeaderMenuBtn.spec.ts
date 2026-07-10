@@ -58,7 +58,7 @@ describe('HeaderMenuBtn', () => {
 		wrapper.unmount()
 	})
 
-	it('renders a native <button> so the global focus ring applies', () => {
+	it('renders a native <button>', () => {
 		const wrapper = mount(HeaderMenuBtn, {
 			props: { modelValue: false },
 		})

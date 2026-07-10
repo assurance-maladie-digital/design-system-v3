@@ -7,9 +7,9 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('HeaderMenuBtn - Focus visual regression tests', () => {
-	// Bouton à fond primary : au focus, ring primary (visible sur fond clair grâce à
-	// l'offset 3px), sans changement de couleur du bouton.
-	it('shows the primary focus ring without changing the button colours', () => {
+	// Bouton bord-à-bord à fond primary : au focus, ring inset en currentColor
+	// (blanc onPrimary sur fond primary), non rogné, sans changement de couleur du bouton.
+	it('shows the inset focus ring without changing the button colours', () => {
 		cy.mountWithVuetify(HeaderMenuBtn)
 
 		focusVisible('.header-menu-btn')
