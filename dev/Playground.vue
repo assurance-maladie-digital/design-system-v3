@@ -10,6 +10,7 @@
 	import HeaderNavigationBar from '@/components/HeaderNavigationBar/HeaderNavigationBar.vue'
 	import HeaderToolbar from '@/components/HeaderToolbar/HeaderToolbar.vue'
 	import SyTabs from '@/components/Customs/SyTabs/SyTabs.vue'
+	import SubHeader from '@/components/SubHeader/SubHeader.vue'
 	import CollapsibleList from '@/components/CollapsibleList/CollapsibleList.vue'
 
 	// SyTabs
@@ -356,6 +357,19 @@
 									Contenu du footer
 								</p>
 							</FooterBar>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SubHeader ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SubHeader
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Fond primary — back button en ring onPrimary (blanc) au focus
+							</div>
+							<SubHeader title-text="Titre de la page" />
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 
