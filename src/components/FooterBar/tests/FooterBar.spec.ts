@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect, vi } from 'vitest'
+import { h } from 'vue'
 import FooterBar from '@/components/FooterBar/FooterBar.vue'
 import { locales } from '@/components/FooterBar/locales'
 import { A11yComplianceEnum } from '@/components/FooterBar/A11yCompliance'
@@ -145,5 +146,30 @@ describe('FooterBar', () => {
 		expect(sourceElement.exists()).toBe(true)
 		expect(sourceElement.attributes('srcset')).toBeTruthy()
 		expect(sourceElement.attributes('media')).toBe(`(min-width: 600px)`)
+	})
+
+	it('updates the logo dynamically when the theme changes', async () => {
+		const wrapper = mount(FooterBar, {
+			slots: {
+				default: () => h('div', 'Extended mode content'),
+			},
+		})
+
+		const getLogoAttributes = () => ({
+			desktopSrcset: wrapper.find('.logo-picture source').attributes('srcset'),
+			mobileSrc: wrapper.find('.logo-picture img').attributes('src'),
+		})
+
+		expect(getLogoAttributes()).toEqual({
+			desktopSrcset: expect.stringContaining('logo-desktop-white.svg'),
+			mobileSrc: expect.stringContaining('logo-mobile-white.svg'),
+		})
+
+		await wrapper.setProps({ light: true })
+
+		expect(getLogoAttributes()).toEqual({
+			desktopSrcset: expect.stringContaining('logo-desktop.svg'),
+			mobileSrc: expect.stringContaining('logo-mobile.svg'),
+		})
 	})
 })

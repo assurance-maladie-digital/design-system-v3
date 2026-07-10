@@ -13,8 +13,10 @@
 	import { mdiArrowUp } from '@mdi/js'
 	import { config } from './config'
 	import { locales } from './locales'
-	import logoDesktopUrl from '@/assets/logos/logo-desktop-white.svg'
-	import logoMobileUrl from '@/assets/logos/logo-mobile-white.svg'
+	import logoDarkDesktopUrl from '@/assets/logos/logo-desktop.svg'
+	import logoDarkMobileUrl from '@/assets/logos/logo-mobile.svg'
+	import logoLightDesktopUrl from '@/assets/logos/logo-desktop-white.svg'
+	import logoLightMobileUrl from '@/assets/logos/logo-mobile-white.svg'
 
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 
@@ -188,14 +190,14 @@
 						<picture class="logo-picture">
 							<source
 								:media="desktopLogoMediaQuery"
-								:srcset="logoDesktopUrl"
+								:srcset="props.light ? logoDarkDesktopUrl : logoLightDesktopUrl"
 								type="image/svg+xml"
 								width="211"
 								height="64"
 							>
 							<img
 								class="logo-image"
-								:src="logoMobileUrl"
+								:src="props.light ? logoDarkMobileUrl : logoLightMobileUrl"
 								:alt="locales.logoAlt"
 								width="131"
 								height="40"
