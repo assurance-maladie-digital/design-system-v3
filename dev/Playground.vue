@@ -3,6 +3,7 @@
 	import BackBtn from '@/components/BackBtn/BackBtn.vue'
 	import SyBtnMenu from '@/components/SyBtnMenu/SyBtnMenu.vue'
 	import SelectBtnField from '@/components/Customs/Selects/SelectBtnField/SelectBtnField.vue'
+	import FooterBar from '@/components/FooterBar/FooterBar.vue'
 
 	// SelectBtnField
 	const column = ref<string | null>(null)
@@ -20,6 +21,12 @@
 		{ text: 'Mon profil', value: 'profile' },
 		{ text: 'Paramètres', value: 'settings' },
 	]
+
+	// FooterBar : liens en href (évite les RouterLink vers des routes absentes du playground)
+	const footerLinks = [
+		{ text: 'Mentions légales', href: '#' },
+		{ text: 'Accessibilité', href: '#' },
+	]
 </script>
 
 <template>
@@ -27,171 +34,201 @@
 		<v-main>
 			<v-container class="py-8">
 				<h1 class="text-h4 mb-2">
-					Playground — Focus des boutons
+					Playground — Focus
 				</h1>
 				<p class="text-body-2 mb-8">
-					Naviguez au <strong>clavier (Tab / Shift+Tab</strong>, puis flèches dans le
-					SelectBtnField) pour vérifier le ring de focus : anneau 2px, offset 3px,
-					couleur <em>primary</em>. Seul BackBtn gère un état dark (ring <em>onPrimary</em>).
+					Ouvrez un panneau puis naviguez au <strong>clavier (Tab / Shift+Tab</strong>,
+					puis flèches dans le SelectBtnField) pour vérifier le ring de focus :
+					anneau 2px, offset 3px, <em>primary</em> (ou <em>onPrimary</em> sur fond sombre).
 				</p>
 
-				<!-- ============ v-btn (Vuetify natif) ============ -->
-				<v-card
-					class="pa-6 mb-8"
-					variant="outlined"
-				>
-					<h2 class="text-h6 mb-4">
-						v-btn (Vuetify)
-					</h2>
-					<v-row>
-						<v-col
-							cols="12"
-							md="6"
-						>
-							<div class="text-caption mb-2">
-								Fond clair
-							</div>
-							<v-sheet
-								color="surface"
-								rounded
-								class="pa-4"
-							>
-								<v-btn color="primary">
-									Valider
-								</v-btn>
-							</v-sheet>
-						</v-col>
-						<v-col
-							cols="12"
-							md="6"
-						>
-							<div class="text-caption mb-2">
-								Fond primary (prop <code>theme="dark"</code>)
-							</div>
-							<v-sheet
-								color="primary"
-								rounded
-								class="pa-4"
-							>
-								<v-btn
-									theme="dark"
-									variant="outlined"
+				<v-expansion-panels multiple>
+					<!-- ============ v-btn (Vuetify natif) ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							v-btn (Vuetify)
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<v-row>
+								<v-col
+									cols="12"
+									md="6"
 								>
-									Valider
-								</v-btn>
-							</v-sheet>
-						</v-col>
-					</v-row>
-				</v-card>
+									<div class="text-caption mb-2">
+										Fond clair
+									</div>
+									<v-sheet
+										color="surface"
+										rounded
+										class="pa-4"
+									>
+										<v-btn color="primary">
+											Valider
+										</v-btn>
+									</v-sheet>
+								</v-col>
+								<v-col
+									cols="12"
+									md="6"
+								>
+									<div class="text-caption mb-2">
+										Fond primary (prop <code>theme="dark"</code>)
+									</div>
+									<v-sheet
+										color="primary"
+										rounded
+										class="pa-4"
+									>
+										<v-btn
+											theme="dark"
+											variant="outlined"
+										>
+											Valider
+										</v-btn>
+									</v-sheet>
+								</v-col>
+							</v-row>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
 
-				<!-- ============ BackBtn (gère la prop dark) ============ -->
-				<v-card
-					class="pa-6 mb-8"
-					variant="outlined"
-				>
-					<h2 class="text-h6 mb-4">
-						BackBtn
-					</h2>
-					<v-row>
-						<v-col
-							cols="12"
-							md="6"
-						>
-							<div class="text-caption mb-2">
-								Fond clair
-							</div>
+					<!-- ============ BackBtn (gère la prop dark) ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							BackBtn
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<v-row>
+								<v-col
+									cols="12"
+									md="6"
+								>
+									<div class="text-caption mb-2">
+										Fond clair
+									</div>
+									<v-sheet
+										color="surface"
+										rounded
+										class="pa-4"
+									>
+										<BackBtn />
+									</v-sheet>
+								</v-col>
+								<v-col
+									cols="12"
+									md="6"
+								>
+									<div class="text-caption mb-2">
+										Fond primary (prop <code>dark</code>)
+									</div>
+									<v-sheet
+										color="primary"
+										rounded
+										class="pa-4"
+									>
+										<BackBtn dark />
+									</v-sheet>
+								</v-col>
+							</v-row>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyBtnMenu (pas de prop dark) ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyBtnMenu
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
 							<v-sheet
 								color="surface"
 								rounded
 								class="pa-4"
 							>
-								<BackBtn />
+								<SyBtnMenu
+									v-model="menuValue"
+									primary-info="Jean Dupont"
+									secondary-info="Administrateur"
+									:menu-items="menuItems"
+								/>
 							</v-sheet>
-						</v-col>
-						<v-col
-							cols="12"
-							md="6"
-						>
-							<div class="text-caption mb-2">
-								Fond primary (prop <code>dark</code>)
-							</div>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SelectBtnField (pas de prop dark) ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SelectBtnField
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<p class="text-caption mb-4">
+								1er focus = ring englobant le groupe, puis flèches item par item.
+							</p>
+
+							<h3 class="text-subtitle-2 mb-2">
+								Version en colonne
+							</h3>
 							<v-sheet
-								color="primary"
+								color="surface"
+								rounded
+								class="pa-4 mb-6"
+							>
+								<SelectBtnField
+									v-model="column"
+									label="Moyen de contact préféré"
+									:items="contactItems"
+								/>
+							</v-sheet>
+
+							<h3 class="text-subtitle-2 mb-2">
+								Version en ligne (inline)
+							</h3>
+							<v-sheet
+								color="surface"
 								rounded
 								class="pa-4"
 							>
-								<BackBtn dark />
+								<SelectBtnField
+									v-model="inline"
+									label="Moyens de contact"
+									inline
+									multiple
+									:items="contactItems"
+								/>
 							</v-sheet>
-						</v-col>
-					</v-row>
-				</v-card>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
 
-				<!-- ============ SyBtnMenu (pas de prop dark) ============ -->
-				<v-card
-					class="pa-6 mb-8"
-					variant="outlined"
-				>
-					<h2 class="text-h6 mb-4">
-						SyBtnMenu
-					</h2>
-					<v-sheet
-						color="surface"
-						rounded
-						class="pa-4"
-					>
-						<SyBtnMenu
-							v-model="menuValue"
-							primary-info="Jean Dupont"
-							secondary-info="Administrateur"
-							:menu-items="menuItems"
-						/>
-					</v-sheet>
-				</v-card>
+					<!-- ============ FooterBar (prop light) ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							FooterBar
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Défaut (sombre) — ring onPrimary
+							</div>
+							<FooterBar
+								class="mb-6"
+								:link-items="footerLinks"
+							>
+								<p class="ma-0">
+									Contenu du footer
+								</p>
+							</FooterBar>
 
-				<!-- ============ SelectBtnField (pas de prop dark) ============ -->
-				<v-card
-					class="pa-6 mb-8"
-					variant="outlined"
-				>
-					<h2 class="text-h6 mb-1">
-						SelectBtnField
-					</h2>
-					<p class="text-caption mb-4">
-						1er focus = ring englobant le groupe, puis flèches item par item.
-					</p>
-
-					<h3 class="text-subtitle-2 mb-2">
-						Version en colonne
-					</h3>
-					<v-sheet
-						color="surface"
-						rounded
-						class="pa-4 mb-6"
-					>
-						<SelectBtnField
-							v-model="column"
-							label="Moyen de contact préféré"
-							:items="contactItems"
-						/>
-					</v-sheet>
-
-					<h3 class="text-subtitle-2 mb-2">
-						Version en ligne (inline)
-					</h3>
-					<v-sheet
-						color="surface"
-						rounded
-						class="pa-4"
-					>
-						<SelectBtnField
-							v-model="inline"
-							label="Moyens de contact"
-							inline
-							multiple
-							:items="contactItems"
-						/>
-					</v-sheet>
-				</v-card>
+							<div class="text-caption mb-2">
+								Mode <code>light</code> — ring primary
+							</div>
+							<FooterBar
+								light
+								:link-items="footerLinks"
+							>
+								<p class="ma-0">
+									Contenu du footer
+								</p>
+							</FooterBar>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+				</v-expansion-panels>
 			</v-container>
 		</v-main>
 	</v-app>
