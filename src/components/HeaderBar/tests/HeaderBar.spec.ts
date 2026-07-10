@@ -44,6 +44,24 @@ describe('HeaderBar', () => {
 		wrapper.unmount()
 	})
 
+	it('should render the homeLink href on the logo link', () => {
+		const homeHref = '/accueil'
+		const wrapper = mount(HeaderBar, {
+			props: {
+				homeLink: {
+					href: homeHref,
+				},
+			},
+			attachTo: document.body,
+		})
+
+		const logoLink = wrapper.get('a.logo')
+
+		expect(logoLink.attributes('href')).toBe(homeHref)
+
+		wrapper.unmount()
+	})
+
 	it('should render all the component slots', async () => {
 		const wrapper = mount(HeaderBar, {
 			attachTo: document.body,
