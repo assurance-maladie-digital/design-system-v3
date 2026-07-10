@@ -1,28 +1,9 @@
 @mixin item-focused() {
-	position: relative;
-
-	// Les traits ::before/::after (haut + bas) sont l'unique indicateur de focus des
-	// items de menu pleine largeur. On supprime l'outline (navigateur pour les <a>,
-	// ring global pour les <button>) pour éviter un double indicateur.
+	// Ring inset (offset négatif) : indicateur de focus des items de menu pleine largeur.
+	// Dessiné À L'INTÉRIEUR de l'item → visible sur les 4 côtés et non rogné par
+	// l'overflow du menu (contrairement à un ring outset ou à des traits en bord).
 	&:focus-visible {
-		outline: none;
-	}
-
-	&:focus-visible::before,
-	&:focus-visible::after {
-		content: '';
-		position: absolute;
-		left: 0;
-		right: 0;
-		height: 2px;
-		background-color: rgb(var(--v-theme-primary));
-	}
-
-	&:focus-visible::before {
-		top: 0;
-	}
-
-	&:focus-visible::after {
-		bottom: 0;
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: -2px;
 	}
 }
