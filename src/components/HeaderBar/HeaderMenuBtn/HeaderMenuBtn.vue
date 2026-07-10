@@ -65,7 +65,7 @@
 	// blanc (onPrimary) sur fond primary, primary sur fond surface (état ouvert).
 	&:focus-visible {
 		outline: 2px solid currentcolor;
-		outline-offset: -2px;
+		outline-offset: -3px;
 	}
 }
 
