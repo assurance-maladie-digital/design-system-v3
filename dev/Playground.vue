@@ -4,6 +4,10 @@
 	import SyBtnMenu from '@/components/SyBtnMenu/SyBtnMenu.vue'
 	import SelectBtnField from '@/components/Customs/Selects/SelectBtnField/SelectBtnField.vue'
 	import FooterBar from '@/components/FooterBar/FooterBar.vue'
+	import HeaderMenuBtn from '@/components/HeaderBar/HeaderMenuBtn/HeaderMenuBtn.vue'
+
+	// HeaderMenuBtn (bouton menu du HeaderBar)
+	const menuOpen = ref(false)
 
 	// SelectBtnField
 	const column = ref<string | null>(null)
@@ -193,6 +197,25 @@
 									multiple
 									:items="contactItems"
 								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ HeaderMenuBtn (HeaderBar) ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							HeaderMenuBtn (HeaderBar)
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Bouton menu du header (fond primary) — ring primary au focus
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<HeaderMenuBtn v-model="menuOpen" />
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
