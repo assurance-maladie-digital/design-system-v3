@@ -30,13 +30,13 @@
 	}
 
 	&:hover .v-btn__overlay {
-		background: rgba(var(--v-theme-interactionDarkenHover), 0.2) !important;
+		background: rgba(var(--v-theme-interactionDarken), 0.2) !important;
 		opacity: 1;
 		transition: opacity 0.2s ease, background 0s;
 	}
 
 	&:active .v-btn__overlay {
-		background: rgba(var(--v-theme-interactionDarkenHover), 0.4) !important;
+		background: rgba(var(--v-theme-interactionDarken), 0.4) !important;
 		opacity: 1;
 		transition: opacity 0.2s ease, background 0s;
 	}
@@ -46,13 +46,13 @@
 .v-btn--variant-outlined,
 .v-btn--variant-text {
 	&:hover .v-btn__overlay {
-		background: rgba(var(--v-theme-secondary), 0.08) !important;
+		background: rgba(var(--v-theme-interactionDark), 0.08) !important;
 		opacity: 1;
 		transition: opacity 0.2s ease, background 0s;
 	}
 
 	&:active .v-btn__overlay {
-		background: rgba(var(--v-theme-secondary), 0.2) !important;
+		background: rgba(var(--v-theme-interactionDark), 0.2) !important;
 		opacity: 1;
 		transition: opacity 0.2s ease, background 0s;
 	}
