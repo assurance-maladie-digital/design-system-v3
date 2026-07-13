@@ -438,15 +438,15 @@ describe('useCalendarKeyboardNavigation', () => {
 		vi.useFakeTimers()
 		const isDatePickerVisible = ref(true)
 		const setCurrentDate = vi.fn()
+		const onSelectDate = vi.fn()
 
-		// Créer un rootEl contenant la cellule de jour (nécessaire pour clickDateButton)
+		// Créer un rootEl contenant la cellule de jour pour résoudre la date active
 		const rootEl = document.createElement('div')
 		const dayWrapper = document.createElement('div')
 		dayWrapper.setAttribute('data-v-date', '2023-01-10')
 		dayWrapper.className = 'v-date-picker-month__day'
 		const btn = document.createElement('button')
 		btn.type = 'button'
-		const clickSpy = vi.spyOn(btn, 'click')
 		dayWrapper.appendChild(btn)
 		rootEl.appendChild(dayWrapper)
 		document.body.appendChild(rootEl)
@@ -465,6 +465,7 @@ describe('useCalendarKeyboardNavigation', () => {
 					datePickerRef: ref({ $el: rootEl } as unknown as ComponentPublicInstance),
 					getCurrentDate: vi.fn(() => new Date(2023, 0, 10)),
 					setCurrentDate,
+					onSelectDate,
 				})
 				attachListeners = result.attachListeners
 				return () => null
@@ -478,7 +479,18 @@ describe('useCalendarKeyboardNavigation', () => {
 		Object.defineProperty(enterEvent, 'target', { value: btn })
 		savedListener!(enterEvent)
 
-		expect(clickSpy).toHaveBeenCalled()
+		expect(setCurrentDate).toHaveBeenCalledWith(new Date(2023, 0, 10))
+		expect(onSelectDate).toHaveBeenCalledWith(new Date(2023, 0, 10))
+
+		setCurrentDate.mockClear()
+		onSelectDate.mockClear()
+
+		const spaceEvent = new KeyboardEvent('keydown', { key: ' ', bubbles: true })
+		Object.defineProperty(spaceEvent, 'target', { value: btn })
+		savedListener!(spaceEvent)
+
+		expect(setCurrentDate).toHaveBeenCalledWith(new Date(2023, 0, 10))
+		expect(onSelectDate).toHaveBeenCalledWith(new Date(2023, 0, 10))
 		document.body.removeChild(rootEl)
 
 		addSpy.mockRestore()
