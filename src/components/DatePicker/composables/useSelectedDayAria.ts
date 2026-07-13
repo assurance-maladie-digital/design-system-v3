@@ -9,8 +9,9 @@ export interface UseSelectedDayAriaResult {
 }
 
 /**
- * Ajoute `aria-pressed="true"` sur le bouton du jour sélectionné du VDatePicker,
- * et retire l'attribut des autres boutons de jour.
+ * Nettoie les attributs ARIA redondants au niveau des boutons de jour.
+ * L'état de sélection est exposé par la cellule `gridcell` via `aria-selected`.
+ * Les boutons internes ne doivent pas utiliser `aria-pressed` ni `aria-selected`.
  */
 export const useSelectedDayAria = (
 	options: UseSelectedDayAriaOptions,
@@ -22,18 +23,11 @@ export const useSelectedDayAria = (
 			const root = rootElement.value
 			if (!root) return
 
-			const selectedButtons = root.querySelectorAll<HTMLElement>(
-				'.v-date-picker-month__day--selected .v-btn',
-			)
 			const allDayButtons = root.querySelectorAll<HTMLElement>('.v-date-picker-month__day .v-btn')
 
 			allDayButtons.forEach((button) => {
 				button.removeAttribute('aria-pressed')
 				button.removeAttribute('aria-selected')
-			})
-
-			selectedButtons.forEach((button) => {
-				button.setAttribute('aria-pressed', 'true')
 			})
 		})
 	}
