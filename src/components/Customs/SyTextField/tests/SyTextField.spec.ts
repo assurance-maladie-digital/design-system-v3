@@ -104,26 +104,26 @@ describe('SyTextField', () => {
 
 	it('emits prepend-icon-click event when prepend icon is clicked', async () => {
 		const wrapper = mount(SyTextField, {
-			props: { prependIcon: 'info' as IconType, label: 'Test Field' },
+			props: { prependIcon: 'calendar' as IconType, label: 'Test Field', disableClickButton: false },
 		})
 
 		await wrapper.vm.$nextTick()
-		const prependIcon = wrapper.findComponent(VIcon)
-		expect(prependIcon.exists()).toBe(true)
-		await prependIcon.trigger('click')
+		const prependButton = wrapper.find('.sy-text-field__icon-button')
+		expect(prependButton.exists()).toBe(true)
+		await prependButton.trigger('click')
 		await wrapper.vm.$nextTick()
 		expect(wrapper.emitted('prepend-icon-click')).toBeTruthy()
 	})
 
 	it('emits append-icon-click event when append icon is clicked', async () => {
 		const wrapper = mount(SyTextField, {
-			props: { appendIcon: 'info' as IconType, label: 'Test Field' },
+			props: { appendIcon: 'calendar' as IconType, label: 'Test Field', disableClickButton: false },
 		})
 
 		await wrapper.vm.$nextTick()
-		const appendIcon = wrapper.findComponent(VIcon)
-		expect(appendIcon.exists()).toBe(true)
-		await appendIcon.trigger('click')
+		const appendButton = wrapper.find('.sy-text-field__icon-button')
+		expect(appendButton.exists()).toBe(true)
+		await appendButton.trigger('click')
 		await wrapper.vm.$nextTick()
 		expect(wrapper.emitted('append-icon-click')).toBeTruthy()
 	})

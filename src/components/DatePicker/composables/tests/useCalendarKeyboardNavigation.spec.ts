@@ -402,14 +402,14 @@ describe('useCalendarKeyboardNavigation', () => {
 			return setCurrentDate.mock.calls[0]?.[0] as Date | undefined
 		}
 
-		// Home → premier jour du mois (1 Jan)
+		// Home → premier jour de la semaine affichée (lundi 9 Jan)
 		const homeDate = fireKey('Home')
-		expect(homeDate?.getDate()).toBe(1)
+		expect(homeDate?.getDate()).toBe(9)
 		expect(homeDate?.getMonth()).toBe(0)
 
-		// End → dernier jour du mois (31 Jan)
+		// End → dernier jour de la semaine affichée (dimanche 15 Jan)
 		const endDate = fireKey('End')
-		expect(endDate?.getDate()).toBe(31)
+		expect(endDate?.getDate()).toBe(15)
 
 		// PageUp → même jour du mois précédent (15 Dec 2022)
 		const pageUpDate = fireKey('PageUp')

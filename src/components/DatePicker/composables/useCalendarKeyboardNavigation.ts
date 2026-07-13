@@ -35,6 +35,16 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 	const toISO = (date: Date) => dayjs(date).format('YYYY-MM-DD')
 
+	const getStartOfDisplayedWeek = (date: Date) => {
+		const mondayBasedOffset = (date.getDay() + 6) % 7
+		return addDays(date, -mondayBasedOffset)
+	}
+
+	const getEndOfDisplayedWeek = (date: Date) => {
+		const startOfWeek = getStartOfDisplayedWeek(date)
+		return addDays(startOfWeek, 6)
+	}
+
 	let isListenerAttached = false
 	let attachTimeoutId: ReturnType<typeof setTimeout> | undefined
 
@@ -399,10 +409,10 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 		let nextDate = current
 		if (event.key === 'Home') {
-			nextDate = dayjs(current).startOf('month').toDate()
+			nextDate = getStartOfDisplayedWeek(current)
 		}
 		else if (event.key === 'End') {
-			nextDate = dayjs(current).endOf('month').toDate()
+			nextDate = getEndOfDisplayedWeek(current)
 		}
 		else if (event.key === 'PageUp') {
 			const currentDay = dayjs(current).date()

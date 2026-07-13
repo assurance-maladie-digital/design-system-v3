@@ -3,7 +3,6 @@
 		type ComponentPublicInstance,
 		computed,
 		nextTick,
-		onBeforeUnmount,
 		onMounted,
 		readonly,
 		ref,
@@ -37,7 +36,6 @@
 	} from '../composables'
 	import type { ViewMode } from '../composables/useDatePickerViewMode'
 	import dayjs from 'dayjs'
-	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { VDatePicker } from 'vuetify/components'
 	import { useInputHandler } from '../composables/useInputHandler'
@@ -143,12 +141,114 @@
 	// Guard centralisé pour disabled/readonly
 	const isInteractionDisabled = computed(() => props.disabled || props.readonly)
 
+	const isSelectableInput = (value: unknown): value is HTMLInputElement =>
+		value instanceof HTMLInputElement && typeof value.setSelectionRange === 'function'
+
 	// Helpers pour le focus sur l'input
-	const getCalendarInputElement = () =>
-		dateCalendarTextInputRef.value?.$el?.querySelector?.('input') as HTMLInputElement | null
+	const getCalendarInputElement = () => {
+		const element = dateCalendarTextInputRef.value?.$el?.querySelector?.('input')
+		return element instanceof HTMLInputElement ? element : null
+	}
 
 	const focusCalendarInput = () => {
-		getCalendarInputElement()?.focus({ preventScroll: true })
+		const input = getCalendarInputElement()
+		if (input) {
+			input.focus()
+			const caretPosition = input.value.length
+			if (typeof input.setSelectionRange === 'function') {
+				input.setSelectionRange(caretPosition, caretPosition)
+			}
+			return
+		}
+
+		if (typeof dateCalendarTextInputRef.value?.focus === 'function') {
+			dateCalendarTextInputRef.value.focus()
+		}
+	}
+
+	const shouldRestoreFocusToInput = ref(false)
+	const shouldMoveFocusToDialogOnOpen = ref(false)
+	const lastVisibilityChangeReason = ref('initial')
+	const keyboardNavigatedDate = ref<Date | null>(null)
+
+	const scheduleCalendarInputFocusRestore = () => {
+		shouldRestoreFocusToInput.value = true
+	}
+
+	const scheduleDialogInitialFocus = () => {
+		shouldMoveFocusToDialogOnOpen.value = true
+	}
+
+	const restoreCalendarInputFocus = (attempt = 0) => {
+		nextTick(() => {
+			requestAnimationFrame(() => {
+				focusCalendarInput()
+
+				const input = getCalendarInputElement()
+				if (!input) return
+
+				if (document.activeElement === input) return
+				if (attempt >= 8) return
+
+				setTimeout(() => {
+					restoreCalendarInputFocus(attempt + 1)
+				}, attempt < 3 ? 16 : 50)
+			})
+		})
+	}
+
+	const setDatePickerVisibility = (visible: boolean, reason: string) => {
+		lastVisibilityChangeReason.value = reason
+		isDatePickerVisible.value = visible
+	}
+
+	const menuVisibilityModel = computed({
+		get: () => isDatePickerVisible.value,
+		set: (visible: boolean) => {
+			isDatePickerVisible.value = visible
+		},
+	})
+
+	const closeDatePicker = (options: { restoreFocus?: boolean, reason?: string } = {}) => {
+		if (!isDatePickerVisible.value) return
+
+		setDatePickerVisibility(false, options.reason || 'closeDatePicker')
+		emit('closed')
+
+		if (options.restoreFocus) {
+			scheduleCalendarInputFocusRestore()
+		}
+	}
+
+	const syncComboboxInputSemantics = () => {
+		const input = getCalendarInputElement()
+		if (!input) return
+
+		input.setAttribute('role', 'combobox')
+		input.setAttribute('aria-haspopup', 'dialog')
+		input.setAttribute('aria-expanded', String(isDatePickerVisible.value))
+		input.setAttribute('aria-autocomplete', 'none')
+
+		if (isDatePickerVisible.value) {
+			input.setAttribute('aria-controls', datePickerDialogId)
+		}
+		else {
+			input.removeAttribute('aria-controls')
+		}
+
+		if (props.disabled) {
+			input.setAttribute('aria-disabled', 'true')
+		}
+		else {
+			input.removeAttribute('aria-disabled')
+		}
+
+		if (props.readonly) {
+			input.setAttribute('aria-readonly', 'true')
+		}
+		else {
+			input.removeAttribute('aria-readonly')
+		}
 	}
 
 	// À la fermeture (ex. après sélection d'une date), le VMenu rend le focus à son
@@ -198,6 +298,9 @@
 	const isUpdatingFromInternal = ref(false)
 	const hasInteracted = ref(false)
 	const preventCloseOnInternalUpdate = ref(false)
+	const skipNextInputBlurProcessing = ref(false)
+	const suppressNextCalendarModelValueUpdate = ref(false)
+	let suppressNextCalendarModelValueUpdateTimeout: ReturnType<typeof setTimeout> | undefined
 
 	const {
 		validation,
@@ -241,9 +344,8 @@
 	const {
 		toggleDatePicker,
 		openDatePicker,
-		openDatePickerOnClick,
 		openDatePickerOnFocus,
-		openDatePickerOnIconClick,
+		openDatePickerOnIconClick: openDatePickerOnIconClickFromVisibility,
 		handleClickOutside,
 		handleKeyboardNavigation,
 	} = useDatePickerVisibility({
@@ -258,6 +360,18 @@
 		emitClosed: () => emit('closed'),
 		emitFocus: () => emit('focus'),
 	})
+
+	const openDatePickerOnIconClick = () => {
+		if (isInteractionDisabled.value) return
+		skipNextInputBlurProcessing.value = true
+		suppressNextCalendarModelValueUpdate.value = true
+		clearTimeout(suppressNextCalendarModelValueUpdateTimeout)
+		suppressNextCalendarModelValueUpdateTimeout = setTimeout(() => {
+			suppressNextCalendarModelValueUpdate.value = false
+		}, 120)
+		lastVisibilityChangeReason.value = 'iconClick'
+		openDatePickerOnIconClickFromVisibility()
+	}
 
 	const updateModel = (value: DateModelValue) => {
 		// Prevent redundant emits
@@ -349,6 +463,17 @@
 	watch(selectedDates, (newValue) => {
 		validateDates()
 		if (newValue !== null) {
+			keyboardNavigatedDate.value = Array.isArray(newValue)
+				? (newValue.find(date => date instanceof Date) as Date | null) ?? null
+				: newValue
+			if (suppressNextCalendarModelValueUpdate.value && isDatePickerVisible.value) {
+				suppressNextCalendarModelValueUpdate.value = false
+				withInternalUpdate(() => {
+					syncTextInputFromSelection()
+				})
+				return
+			}
+
 			if (!preventCloseOnInternalUpdate.value) {
 				updateModel(formattedDate.value)
 			}
@@ -378,8 +503,23 @@
 					updateSelectedDayAria()
 				})
 			}
+
+			const hasCompletedRangeSelection = props.displayRange
+				&& (
+					(rangeBoundaryDates.value?.[0] && rangeBoundaryDates.value?.[1])
+					|| (Array.isArray(newValue) && newValue.length >= 2 && newValue[0] && newValue[newValue.length - 1])
+				)
+
+			if (
+				isDatePickerVisible.value
+				&& !preventCloseOnInternalUpdate.value
+				&& (!props.displayRange || hasCompletedRangeSelection)
+			) {
+				closeDatePicker({ restoreFocus: true, reason: 'selectedDates-watch' })
+			}
 		}
 		else {
+			keyboardNavigatedDate.value = null
 			updateModel(null)
 			withInternalUpdate(() => {
 				syncTextInputFromSelection()
@@ -460,6 +600,11 @@
 	 * UI updates after picking
 	 */
 	const updateDisplayFormattedDate = () => {
+		if (suppressNextCalendarModelValueUpdate.value) {
+			suppressNextCalendarModelValueUpdate.value = false
+			return
+		}
+
 		queueMicrotask(() => {
 			let formattedValue = ''
 
@@ -475,8 +620,7 @@
 					] as [string, string]
 					updateModel(formattedDates)
 					emit('date-selected', formattedDates)
-					isDatePickerVisible.value = false
-					emit('closed')
+					closeDatePicker({ restoreFocus: true, reason: 'updateDisplayFormattedDate-rangeBoundaryDates' })
 				}
 				else if (Array.isArray(selectedDates.value) && selectedDates.value.length >= 2) {
 					const formattedDates = [
@@ -487,8 +631,7 @@
 					displayFormattedDate.value = textInputValue.value = formattedValue
 					updateModel(formattedDates)
 					emit('date-selected', formattedDates)
-					isDatePickerVisible.value = false
-					emit('closed')
+					closeDatePicker({ restoreFocus: true, reason: 'updateDisplayFormattedDate-selectedDatesRange' })
 				}
 				else {
 					formattedValue = displayFormattedDateComputed.value || ''
@@ -498,8 +641,7 @@
 			else {
 				formattedValue = displayFormattedDateComputed.value || ''
 				displayFormattedDate.value = textInputValue.value = formattedValue
-				isDatePickerVisible.value = false
-				emit('closed')
+				closeDatePicker({ restoreFocus: true, reason: 'updateDisplayFormattedDate-single' })
 				emit('date-selected', formattedDate.value)
 			}
 
@@ -525,33 +667,19 @@
 	 * Mount / unmount
 	 */
 	const dateTextInputRef = ref<null | ComponentPublicInstance<typeof DateTextInput>>()
-	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
+	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof DateTextInput>>()
 	const menuActivatorRef = ref<HTMLElement | undefined>(undefined)
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
 	const datePickerMenuRef = ref<HTMLElement | null>(null)
 	const datePickerContentId = `date-picker-${useId()}`
-
-	// Aria props for activator: only declare aria-controls when panel exists
-	const menuActivatorProps = computed(() => ({
-		'aria-controls': isDatePickerVisible.value ? datePickerContentId : undefined,
-		'aria-expanded': isDatePickerVisible.value,
-		'aria-haspopup': 'dialog' as const,
-		'aria-disabled': props.disabled || undefined,
-		'aria-readonly': props.readonly || undefined,
-		'aria-label': labelWithAsterisk.value || props.placeholder || props.title || undefined,
-		// Le conteneur n'est pas un point de tabulation (tabindex -1) : c'est l'<input>
-		// interne qui reçoit le focus (bordure de field). Évite le double focus + le ring
-		// navigateur par défaut englobant tout le conteneur. Aucun handler clavier ne
-		// dépend du conteneur (les interactions passent par l'input et le focus trap).
-		'tabindex': -1,
-		'aria-owns': undefined,
-	}))
+	const datePickerDialogId = `${datePickerContentId}-dialog`
+	const datePickerHeadingId = `${datePickerContentId}-heading`
 
 	const { handleMenuKeydown } = useDatePickerFocusTrap({
 		isDatePickerVisible,
 		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
 		onClose: () => emit('closed'),
-		restoreFocus: () => queueMicrotask(() => focusCalendarInput()),
+		restoreFocus: () => scheduleCalendarInputFocusRestore(),
 		getInitialFocusDate: () => {
 			const value = selectedDates.value
 			const selected = Array.isArray(value) ? value[0] ?? null : value
@@ -579,21 +707,41 @@
 
 	onMounted(() => {
 		setupMonthButtonObserver()
-		document.addEventListener('click', handleClickOutside)
 		if (displayFormattedDateComputed.value) displayFormattedDate.value = displayFormattedDateComputed.value
 		validateDates()
+		nextTick(syncComboboxInputSemantics)
 	})
 
-	onBeforeUnmount(() => {
-		document.removeEventListener('click', handleClickOutside)
-	})
+	watch(
+		() => [
+			isDatePickerVisible.value,
+			props.disabled,
+			props.readonly,
+			props.label,
+			props.placeholder,
+			fieldKey.value,
+		],
+		() => {
+			nextTick(syncComboboxInputSemantics)
+		},
+		{ flush: 'post' },
+	)
+
+	watch(isDatePickerVisible, (visible) => {
+		if (visible || !shouldRestoreFocusToInput.value) return
+
+		shouldRestoreFocusToInput.value = false
+		restoreCalendarInputFocus()
+		setTimeout(() => restoreCalendarInputFocus(), 150)
+		setTimeout(() => restoreCalendarInputFocus(), 300)
+	}, { flush: 'post' })
 
 	const { focusInitialDay } = useCalendarKeyboardNavigation({
 		isDatePickerVisible,
 		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
 		getInitialFocusDate: () => {
-			const value = selectedDates.value
-			const selected = Array.isArray(value) ? value[0] ?? null : value
+			const selected = keyboardNavigatedDate.value
+				?? (Array.isArray(selectedDates.value) ? selectedDates.value[0] ?? null : selectedDates.value)
 			const target = selected ?? new Date()
 
 			// Si la date cible est dans le mois affiché, l'utiliser
@@ -613,10 +761,11 @@
 			return target
 		},
 		getCurrentDate: () => {
-			const value = selectedDates.value
+			const value = keyboardNavigatedDate.value
+				?? (Array.isArray(selectedDates.value) ? selectedDates.value[0] ?? null : selectedDates.value)
 			if (value) {
-				const date = Array.isArray(value) ? value[0] ?? null : value
-				if (date && currentMonth.value !== null && currentYear.value !== null) {
+				const date = value
+				if (currentMonth.value !== null && currentYear.value !== null) {
 					const sameMonth = date.getMonth() === Number(currentMonth.value)
 					const sameYear = date.getFullYear() === Number(currentYear.value)
 					if (sameMonth && sameYear) {
@@ -632,8 +781,7 @@
 			return null
 		},
 		setCurrentDate: (date: Date) => {
-			preventCloseOnInternalUpdate.value = true
-			updateSelectedDates(date)
+			keyboardNavigatedDate.value = date
 
 			// S'assurer que le VDatePicker affiche le bon mois après navigation clavier
 			nextTick(() => {
@@ -652,10 +800,6 @@
 						})
 					}
 				}
-			})
-
-			queueMicrotask(() => {
-				preventCloseOnInternalUpdate.value = false
 			})
 		},
 	})
@@ -684,13 +828,33 @@
 		inputRef: dateCalendarTextInputRef as Ref<ComponentPublicInstance | null>,
 	})
 
-	const handleKeydown = (event: KeyboardEvent & { target: HTMLInputElement }) => {
+	const handleKeydown = (event: KeyboardEvent) => {
 		if (props.readonly) return
 
-		if (!props.noCalendar && handleKeyboardNavigation(event)) return
+		const input = isSelectableInput(event.target) ? event.target : null
+		if (!input) return
+
+		if (!props.noCalendar && (event.key === 'Enter' || event.key === 'ArrowDown') && !isInteractionDisabled.value) {
+			event.preventDefault()
+			skipNextInputBlurProcessing.value = true
+			scheduleDialogInitialFocus()
+			suppressNextCalendarModelValueUpdate.value = true
+			clearTimeout(suppressNextCalendarModelValueUpdateTimeout)
+			suppressNextCalendarModelValueUpdateTimeout = setTimeout(() => {
+				suppressNextCalendarModelValueUpdate.value = false
+			}, 120)
+			lastVisibilityChangeReason.value = `keyboard:${event.key}`
+			openDatePicker()
+			return
+		}
+
+		if (!props.noCalendar && handleKeyboardNavigation(event)) {
+			skipNextInputBlurProcessing.value = true
+			scheduleDialogInitialFocus()
+			return
+		}
 
 		if (event.key === 'Backspace') {
-			const input = event.target
 			if (!input.selectionStart || input.selectionStart !== input.selectionEnd) return
 			const cursorPos = input.selectionStart
 			const charBeforeCursor = input.value[cursorPos - 1]
@@ -706,7 +870,6 @@
 		}
 
 		if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
-			const input = event.target
 			const cursorPos = input.selectionStart || 0
 			const separator = props.format.match(/[^DMY]/)?.[0] || '/'
 
@@ -725,6 +888,17 @@
 				}
 			}
 		}
+	}
+
+	const handleCalendarInputBlur = async () => {
+		if (skipNextInputBlurProcessing.value && isDatePickerVisible.value) {
+			skipNextInputBlurProcessing.value = false
+			emitBlurEvent()
+			return
+		}
+
+		skipNextInputBlurProcessing.value = false
+		await handleInputBlur()
 	}
 
 	const handleInput = (eventOrValue: Event | string) => {
@@ -1036,16 +1210,8 @@
 				if (preventCloseOnInternalUpdate.value) {
 					return
 				}
-				if (props.displayRange) {
-					if (Array.isArray(newValue) && newValue.length >= 2) {
-						isDatePickerVisible.value = false
-						emit('closed')
-					}
-				}
-				else {
-					isDatePickerVisible.value = false
-					emit('closed')
-				}
+				// Internal model sync is not a reliable dialog-close signal.
+				// Actual user selections already close through selectedDates/updateDisplayFormattedDate.
 				return
 			}
 			withInternalUpdate(() => syncFromModelValue(newValue))
@@ -1057,6 +1223,13 @@
 	watch(
 		isDatePickerVisible,
 		(visible) => {
+			if (!visible) {
+				skipNextInputBlurProcessing.value = false
+				shouldMoveFocusToDialogOnOpen.value = false
+				suppressNextCalendarModelValueUpdate.value = false
+				keyboardNavigatedDate.value = null
+			}
+
 			if (visible) {
 				// Réinitialiser le view mode à l'ouverture pour éviter les problèmes de navigation
 				resetViewMode()
@@ -1064,7 +1237,13 @@
 					customizeMonthButton()
 					markHolidayDays()
 					updateSelectedDayAria()
-					// Le focus initial sur le jour est géré par useCalendarKeyboardNavigation
+
+					if (shouldMoveFocusToDialogOnOpen.value) {
+						shouldMoveFocusToDialogOnOpen.value = false
+						focusInitialDay()
+						setTimeout(() => focusInitialDay(), 75)
+						setTimeout(() => focusInitialDay(), 200)
+					}
 				})
 			}
 		},
@@ -1191,11 +1370,11 @@
 
 		<template v-else>
 			<VMenu
-				v-model="isDatePickerVisible"
+				v-model="menuVisibilityModel"
 				:activator="menuActivatorRef"
-				:activator-props="menuActivatorProps"
 				:min-width="0"
 				location="bottom"
+				:persistent="true"
 				:close-on-content-click="false"
 				:open-on-click="false"
 				scroll-strategy="none"
@@ -1203,16 +1382,13 @@
 				:offset="[0, 10]"
 				content-class="date-picker-overlay-content"
 			>
-				<template #activator>
+				<template #activator="{ props: menuProps }">
 					<div
 						ref="menuActivatorRef"
 						class="date-text-input-activator"
-						role="combobox"
-						v-bind="menuActivatorProps"
-						:aria-controls="isDatePickerVisible ? datePickerContentId : undefined"
-						:aria-expanded="isDatePickerVisible"
 						:title="props.placeholder || locales.label"
 						@focus="redirectActivatorFocus"
+						v-bind="{ ...menuProps, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': isDatePickerVisible ? datePickerDialogId : undefined }"
 					>
 						<DateTextInput
 							ref="dateCalendarTextInputRef"
@@ -1221,9 +1397,8 @@
 							:class="[messageClasses, 'label-hidden-on-focus']"
 							v-bind="dateTextInputMenuProps"
 							@update:model-value="handleDateTextInputUpdate"
-							@click="openDatePickerOnClick"
 							@focus="openDatePickerOnFocus"
-							@blur="handleInputBlur"
+							@blur="handleCalendarInputBlur"
 							@input="handleInput"
 							@keydown="handleKeydown"
 							@date-selected="handleDateSelected"
@@ -1234,10 +1409,11 @@
 				</template>
 
 				<div
+					:id="datePickerDialogId"
 					ref="datePickerMenuRef"
 					tabindex="-1"
-					role="presentation"
-					@keydown.capture="handleMenuKeydown"
+					role="dialog"
+					:aria-labelledby="datePickerHeadingId"
 				>
 					<VDatePicker
 						v-if="isDatePickerVisible"
@@ -1265,6 +1441,7 @@
 						:density="props.density"
 						:hint="props.hint"
 						:persistent-hint="props.persistentHint"
+						@keydown.capture="handleMenuKeydown"
 						@update:model-value="updateDisplayFormattedDate"
 						@update:view-mode="handleViewModeUpdateWrapper"
 						@update:month="onUpdateMonth"
@@ -1280,6 +1457,7 @@
 						</template>
 						<template #header>
 							<SyHeading
+								:id="datePickerHeadingId"
 								class="mx-auto my-auto ml-5 mb-4"
 								:level="headingLevel"
 							>
@@ -1318,6 +1496,8 @@
 </template>
 
 <style lang="scss" scoped>
+$ap-grey-mid: #d6d6d6;
+
 .v-sheet {
 	border-radius: var(--radius-md) !important;
 }
@@ -1366,18 +1546,23 @@
 .v-messages__message--success {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-success)) !important;
+		color: rgb(var(--v-theme-onSuccessVariant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-success)) !important;
+		color: rgb(var(--v-theme-onSuccessVariant)) !important;
 	}
 }
 
 .v-messages__message--error {
-	:deep(.v-input__control),
+	:deep(.v-input__control) {
+		color: rgb(var(--v-theme-error)) !important;
+
+		--v-medium-emphasis-opacity: 1;
+	}
+
 	:deep(.v-messages__message) {
 		color: rgb(var(--v-theme-error)) !important;
 	}
@@ -1389,17 +1574,17 @@
 
 .v-messages__message--warning {
 	:deep(.v-input__control) {
-		color: rgb(var(--v-theme-warning)) !important;
+		color: rgb(var(--v-theme-onWarningVariant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-warning)) !important;
+		color: rgb(var(--v-theme-onWarningVariant)) !important;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-warning)) !important;
+		color: rgb(var(--v-theme-onWarningVariant)) !important;
 	}
 }
 
@@ -1412,8 +1597,13 @@
 	opacity: 1;
 }
 
-:deep(.v-field--dirty),
+:deep(.v-field--dirty) {
+	--v-medium-emphasis-opacity: 1;
+}
+
 :deep(.v-field--focused) {
+	opacity: 1 !important;
+
 	--v-medium-emphasis-opacity: 1;
 }
 
@@ -1438,9 +1628,8 @@
 	background-color: rgb(var(--v-theme-background));
 }
 
-:deep(.v-date-picker-month__day--selected),
 :deep(.v-date-picker-month__day--adjacent) {
-	opacity: 0.5;
+	opacity: 0.7;
 }
 
 :deep(.v-date-picker-month__day--adjacent:has(.v-btn:focus-visible)) {
@@ -1458,15 +1647,16 @@
 
 :deep(.v-date-picker-month__day--selected .v-btn:hover) {
 	background-color: rgb(var(--v-theme-primaryVariant)) !important;
+	opacity: 0.9;
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
-	background-color: rgb(var(--v-theme-grey-lighten60));
+	background-color: $ap-grey-mid;
 }
 
 /* day before weekend */
 :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
-	background-color: rgb(var(--v-theme-grey-lighten60));
+	background-color: $ap-grey-mid;
 }
 
 :deep(.v-date-picker-controls__mode-btn) {
@@ -1484,7 +1674,7 @@
 
 /* Style de base du ::after */
 :deep(.custom-year-btn::after) {
-	background-color: rgb(var(--v-theme-grey-lighten60));
+	background-color: $ap-grey-mid;
 	padding: 10px 40px;
 	text-decoration: none;
 	display: inline-block;
@@ -1494,7 +1684,7 @@
 }
 
 :deep(.custom-month-btn::after) {
-	background-color: rgb(var(--v-theme-grey-lighten60));
+	background-color: $ap-grey-mid;
 	text-decoration: none;
 	display: inline-block;
 	cursor: pointer;

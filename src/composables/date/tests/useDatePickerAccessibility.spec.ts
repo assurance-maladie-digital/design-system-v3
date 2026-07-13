@@ -278,7 +278,7 @@ describe('useDatePickerAccessibility', () => {
 		const dayCells = Array.from(dataRows[0]?.querySelectorAll('.v-date-picker-month__day[data-v-date]') ?? [])
 		expect(dayCells[0]?.getAttribute('role')).toBe('gridcell')
 		expect(dayCells[0]?.getAttribute('aria-selected')).toBe('true')
-		expect(dayCells[1]?.getAttribute('aria-selected')).toBe('false')
+		expect(dayCells[1]?.hasAttribute('aria-selected')).toBe(false)
 
 		const dayButtons = Array.from(dayCells[0]?.querySelectorAll('button') ?? [])
 		expect(dayButtons[0]?.getAttribute('role')).toBeNull()

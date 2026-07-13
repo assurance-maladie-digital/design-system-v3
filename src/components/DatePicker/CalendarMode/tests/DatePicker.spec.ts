@@ -38,6 +38,30 @@ describe('DatePicker', () => {
 		expect(input.exists()).toBe(true)
 	})
 
+	it('keeps the visible calendar heading free of live-region attributes', async () => {
+		const wrapper = mountComponent()
+		const vm = wrapper.vm as DatePickerInstance
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const heading = document.querySelector<HTMLElement>(`#${vm.datePickerHeadingId}`)
+		expect(heading).not.toBeNull()
+		expect(heading?.getAttribute('aria-live')).toBeNull()
+		expect(heading?.getAttribute('aria-atomic')).toBeNull()
+	})
+
+	it('links the readonly activator wrapper to the exposed dialog when the calendar is open', async () => {
+		const wrapper = mountComponent()
+		const vm = wrapper.vm as DatePickerInstance
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const activatorWrapper = wrapper.find(`[aria-controls="${vm.datePickerDialogId}"]`)
+		expect(activatorWrapper.exists()).toBe(true)
+	})
+
 	/**
 	 * AutoClamp est testé dans useDateAutoClamp.spec.ts (composable natif)
 	 * Tests de composant conservés pour intégration
@@ -441,6 +465,7 @@ describe('DatePicker', () => {
 		vm.isDatePickerVisible = true
 		vm.handleClickOutside({ target: outsideElement } as unknown as MouseEvent)
 
+		expect(vm.isDatePickerVisible).toBe(false)
 		const closedEvents = wrapper.emitted('closed')
 		expect(closedEvents).toBeTruthy()
 	})

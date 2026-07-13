@@ -32,6 +32,7 @@
 		density: 'default',
 		disableErrorHandling: false,
 		disabled: false,
+		disableClickButton: false,
 		displayAppendIcon: false,
 		displayIcon: true,
 		displayPrependIcon: true,
@@ -57,6 +58,8 @@
 		(e: 'blur'): void
 		(e: 'input', value: string): void
 		(e: 'date-selected', value: DateModelValue): void
+		(e: 'prepend-icon-click', event: MouseEvent): void
+		(e: 'append-icon-click', event: MouseEvent): void
 	}>()
 
 	/**
@@ -276,6 +279,24 @@
 		return dateFormat.replace(/[A-Za-z]/g, '_')
 	}
 
+	function isTextInputElement(element: unknown): element is HTMLInputElement {
+		return element instanceof HTMLInputElement && typeof element.setSelectionRange === 'function'
+	}
+
+	function getNativeInputElement() {
+		const element = inputRef.value?.$el?.querySelector?.('input:not([type="hidden"])')
+		return isTextInputElement(element) ? element : null
+	}
+
+	function getEventInputElement(event: Event | undefined | null) {
+		return isTextInputElement(event?.target) ? event.target : null
+	}
+
+	function setInputSelectionRange(inputElement: HTMLInputElement | null, start: number, end = start) {
+		if (!inputElement) return
+		inputElement.setSelectionRange(start, end)
+	}
+
 	/**
 	 * =====================
 	 * Bootstrapping caret (DEBUT DE L'INPUT)
@@ -284,8 +305,7 @@
 	const isBootstrapping = ref(false)
 
 	async function initializeCursorAtFirstEditablePosition(options: { focus?: boolean } = {}) {
-		const inputElement: HTMLInputElement | null | undefined
-			= inputRef.value?.$el?.querySelector?.('input:not([type="hidden"])')
+		const inputElement = getNativeInputElement()
 		if (!inputElement) return
 
 		isBootstrapping.value = true
@@ -304,7 +324,7 @@
 		// double rAF pour laisser Vuetify finir ses mises à jour
 		requestAnimationFrame(() => {
 			requestAnimationFrame(() => {
-				inputElement.setSelectionRange(cursorPosition, cursorPosition)
+				setInputSelectionRange(inputElement, cursorPosition)
 				isBootstrapping.value = false
 			})
 		})
@@ -326,7 +346,7 @@
 			inputValue.value = updatedInputValue
 			requestAnimationFrame(() => {
 				const nextCursorPosition = nextEditableIndex(dateFormat, startPosition + 1)
-				inputElement.setSelectionRange(nextCursorPosition, nextCursorPosition)
+				setInputSelectionRange(inputElement, nextCursorPosition)
 				isOverwriteEditing.value = false
 			})
 			return
@@ -337,7 +357,7 @@
 			inputValue.value = skeletonFromFormat(displayFormat.value)
 			requestAnimationFrame(() => {
 				const startPosition = nextEditableIndex(displayFormat.value, 0)
-				inputElement.setSelectionRange(startPosition, startPosition)
+				setInputSelectionRange(inputElement, startPosition)
 			})
 		}
 
@@ -350,7 +370,7 @@
 				const updatedInputValue = overwriteSelection(inputElement.value, displayFormat.value, selectionStart, selectionEnd, () => '_')
 				inputValue.value = updatedInputValue
 				requestAnimationFrame(() => {
-					inputElement.setSelectionRange(selectionStart, selectionStart)
+					setInputSelectionRange(inputElement, selectionStart)
 					isOverwriteEditing.value = false
 				})
 				return
@@ -360,7 +380,7 @@
 				const updatedInputValue = overwriteAt(inputElement.value, newCursorPosition, '_')
 				inputValue.value = updatedInputValue
 				requestAnimationFrame(() => {
-					inputElement.setSelectionRange(newCursorPosition, newCursorPosition)
+					setInputSelectionRange(inputElement, newCursorPosition)
 					isOverwriteEditing.value = false
 				})
 			}
@@ -382,7 +402,7 @@
 				inputValue.value = updatedInputValue
 				const nextCursorPosition = nextEditableIndex(displayFormat.value, cursorPosition + 1)
 				requestAnimationFrame(() => {
-					inputElement.setSelectionRange(nextCursorPosition, nextCursorPosition)
+					setInputSelectionRange(inputElement, nextCursorPosition)
 					isOverwriteEditing.value = false
 				})
 				return
@@ -394,7 +414,7 @@
 				inputValue.value = updatedInputValue
 				const nextCursorPosition = nextEditableIndex(displayFormat.value, cursorPosition + 1)
 				requestAnimationFrame(() => {
-					inputElement.setSelectionRange(nextCursorPosition, nextCursorPosition)
+					setInputSelectionRange(inputElement, nextCursorPosition)
 					isOverwriteEditing.value = false
 				})
 			}
@@ -426,7 +446,7 @@
 			inputValue.value = `${leftWithDigit}${rangeSeparator}${rightFormatSkeleton}`
 			requestAnimationFrame(() => {
 				const nextCursorPosition = nextEditableIndex(dateFormat, startPosition + 1)
-				inputElement.setSelectionRange(nextCursorPosition, nextCursorPosition)
+				setInputSelectionRange(inputElement, nextCursorPosition)
 				isOverwriteEditing.value = false
 			})
 			return
@@ -436,7 +456,7 @@
 			inputValue.value = `${skeletonFromFormat(dateFormat)}${rangeSeparator}${skeletonFromFormat(dateFormat)}`
 			requestAnimationFrame(() => {
 				const startPosition = nextEditableIndex(dateFormat, 0)
-				inputElement.setSelectionRange(startPosition, startPosition)
+				setInputSelectionRange(inputElement, startPosition)
 			})
 		}
 
@@ -462,7 +482,7 @@
 			inputValue.value = newInputText
 			const absoluteCursorPosition = baseOffset + newLocalCursorPosition
 			requestAnimationFrame(() => {
-				inputElement.setSelectionRange(absoluteCursorPosition, absoluteCursorPosition)
+				setInputSelectionRange(inputElement, absoluteCursorPosition)
 				isOverwriteEditing.value = false
 			})
 		}
@@ -524,7 +544,7 @@
 				inputValue.value = `${leftDateText}${rangeSeparator}${updatedRightDateText}`
 				requestAnimationFrame(() => {
 					const absoluteCursorPosition = separatorIndex + rangeSeparator.length + nextCursorPosition
-					inputElement.setSelectionRange(absoluteCursorPosition, absoluteCursorPosition)
+					setInputSelectionRange(inputElement, absoluteCursorPosition)
 					isOverwriteEditing.value = false
 				})
 			}
@@ -644,14 +664,17 @@
 	 * Handlers (routeurs)
 	 * =====================
 	 */
-	function handleKeydown(evt: KeyboardEvent & { target: HTMLInputElement }) {
+	function handleKeydown(evt: KeyboardEvent) {
 		if (props.readonly) return
+		if (!getEventInputElement(evt)) return
+
+		const inputEvent = evt as KeyboardEvent & { target: HTMLInputElement }
 
 		if (isRange.value) {
-			handleRangeDateKeyboardInput(evt)
+			handleRangeDateKeyboardInput(inputEvent)
 		}
 		else {
-			handleSingleDateKeyboardInput(evt)
+			handleSingleDateKeyboardInput(inputEvent)
 		}
 	}
 
@@ -686,7 +709,9 @@
 		return true
 	}
 
-	async function onFocus() {
+	async function onFocus(event?: FocusEvent) {
+		if (!getEventInputElement(event)) return
+
 		isFocused.value = true
 		// Si aucun chiffre n'a été saisi (champ vide ou squelette), bootstrap et place le caret au début
 		if (!/\d/.test(inputValue.value || '')) {
@@ -695,7 +720,9 @@
 		emit('focus')
 	}
 
-	async function onBlur() {
+	async function onBlur(event?: FocusEvent) {
+		if (!getEventInputElement(event)) return
+
 		isFocused.value = false
 		hasInteracted.value = true
 
@@ -867,7 +894,7 @@
 				}
 			}
 
-			const inputEl: HTMLInputElement | undefined = inputRef.value?.$el?.querySelector?.('input')
+			const inputEl = getNativeInputElement()
 			const cursor = inputEl?.selectionStart ?? 0
 
 			if (isRange.value) {
@@ -935,7 +962,7 @@
 
 				emit('input', result.formattedValue)
 				if (result.cursorPosition !== undefined && !isHandlingBackspace.value) {
-					queueMicrotask(() => inputEl?.setSelectionRange(result.cursorPosition!, result.cursorPosition!))
+					queueMicrotask(() => setInputSelectionRange(inputEl, result.cursorPosition!))
 				}
 			}
 			else {
@@ -967,7 +994,7 @@
 					inputValue.value = formatted
 					if (!isHandlingBackspace.value) {
 						await nextTick()
-						inputEl?.setSelectionRange(cursorPos, cursorPos)
+						setInputSelectionRange(inputEl, cursorPos)
 					}
 				}
 
@@ -1065,11 +1092,11 @@
 		warnings: readonlyState(warningMessages),
 		successes: readonlyState(successMessages),
 		focus() {
-			const el: HTMLInputElement | null | undefined = inputRef.value?.$el?.querySelector?.('input:not([type="hidden"])')
+			const el = getNativeInputElement()
 			el?.focus({ preventScroll: true })
 		},
 		blur() {
-			const el: HTMLInputElement | null | undefined = inputRef.value?.$el?.querySelector?.('input:not([type="hidden"])')
+			const el = getNativeInputElement()
 			el?.blur()
 		},
 	})
@@ -1129,6 +1156,8 @@
 			@blur="onBlur"
 			@keydown="handleKeydown"
 			@paste="handlePaste"
+			@prepend-icon-click="emit('prepend-icon-click', $event)"
+			@append-icon-click="emit('append-icon-click', $event)"
 		/>
 		<div
 			:id="formatDescriptionId"

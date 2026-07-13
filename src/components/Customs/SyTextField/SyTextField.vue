@@ -224,12 +224,29 @@
 		}
 	})
 
-	const handlePrependIconClick = () => {
-		emit('prepend-icon-click')
+	const isTextFieldEventTarget = (target: EventTarget | null): target is HTMLInputElement | HTMLTextAreaElement =>
+		target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement
+
+	const handlePrependIconClick = (event: MouseEvent) => {
+		emit('prepend-icon-click', event)
 	}
 
-	const handleAppendIconClick = () => {
-		emit('append-icon-click')
+	const handleAppendIconClick = (event: MouseEvent) => {
+		emit('append-icon-click', event)
+	}
+
+	const handleFocusEvent = (event: FocusEvent) => {
+		if (!isTextFieldEventTarget(event.target)) return
+
+		focused.value = true
+		emit('focus', event)
+	}
+
+	const handleBlurEvent = (event: FocusEvent) => {
+		if (!isTextFieldEventTarget(event.target)) return
+
+		focused.value = false
+		emit('blur', event)
 	}
 
 	const handleInput = (event: Event) => {
@@ -270,6 +287,8 @@
 	}
 
 	const handleKeydown = (event: KeyboardEvent) => {
+		if (!isTextFieldEventTarget(event.target)) return
+
 		if ((props.type === 'number' || props.type === 'tel') && !event.ctrlKey && !event.metaKey && !event.altKey) {
 			const allowedNonCharacterKeys = [
 				'Backspace',
@@ -613,8 +632,8 @@
 				'basic-field': !hasError && !hasWarning && !hasSuccess,
 				'help-text-as-hint': showHelpTextAsMessage,
 			}"
-			@focus="focused = true; emit('focus')"
-			@blur="focused = false; emit('blur')"
+			@focus="handleFocusEvent"
+			@blur="handleBlurEvent"
 			@beforeinput="handleBeforeInput"
 			@input="handleInput"
 			@keydown="handleKeydown"
@@ -643,18 +662,28 @@
 						</VTooltip>
 					</template>
 					<SyIcon
-						v-else-if="props.prependIcon && !props.noIcon"
-						:label="disableClickButton ? undefined : ICON_ACTION_LABELS[props.prependIcon](props.label)"
+						v-else-if="props.prependIcon && !props.noIcon && disableClickButton"
 						:color="iconColor"
 						:icon="ICONS[props.prependIcon]"
-						:role="disableClickButton ? 'presentation' : 'button'"
-						:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
-						:decorative="disableClickButton"
-						:tabindex="disableClickButton ? undefined : '0'"
-						@click="handlePrependIconClick"
-						@keydown.enter.prevent="handlePrependIconClick"
-						@keydown.space.prevent="handlePrependIconClick"
+						role="presentation"
+						class="cursor-default"
+						:decorative="true"
 					/>
+						<button
+							v-else-if="props.prependIcon && !props.noIcon"
+							type="button"
+							class="sy-text-field__icon-button"
+							:aria-label="ICON_ACTION_LABELS[props.prependIcon](props.label)"
+							:title="ICON_ACTION_LABELS[props.prependIcon](props.label)"
+							@click.stop="handlePrependIconClick"
+						>
+						<SyIcon
+							:color="iconColor"
+							:icon="ICONS[props.prependIcon]"
+							role="presentation"
+							:decorative="true"
+						/>
+					</button>
 				</slot>
 			</template>
 
@@ -682,18 +711,28 @@
 						</VTooltip>
 					</template>
 					<SyIcon
-						v-else-if="props.appendIcon && !props.noIcon"
-						:label="disableClickButton ? undefined : ICON_ACTION_LABELS[props.appendIcon](props.label)"
+						v-else-if="props.appendIcon && !props.noIcon && disableClickButton"
 						:color="iconColor"
 						:icon="ICONS[props.appendIcon]"
-						:role="disableClickButton ? 'presentation' : 'button'"
-						:class="disableClickButton ? 'cursor-default' : 'cursor-pointer'"
-						:decorative="disableClickButton"
-						:tabindex="disableClickButton ? undefined : '0'"
-						@click="handleAppendIconClick"
-						@keydown.enter.prevent="handleAppendIconClick"
-						@keydown.space.prevent="handleAppendIconClick"
+						role="presentation"
+						class="cursor-default"
+						:decorative="true"
 					/>
+						<button
+							v-else-if="props.appendIcon && !props.noIcon"
+							type="button"
+							class="sy-text-field__icon-button"
+							:aria-label="ICON_ACTION_LABELS[props.appendIcon](props.label)"
+							:title="ICON_ACTION_LABELS[props.appendIcon](props.label)"
+							@click.stop="handleAppendIconClick"
+						>
+						<SyIcon
+							:color="iconColor"
+							:icon="ICONS[props.appendIcon]"
+							role="presentation"
+							:decorative="true"
+						/>
+					</button>
 				</slot>
 			</template>
 
@@ -978,6 +1017,17 @@
 
 .sy-text-field__clear {
 	transition: none !important;
+}
+
+.sy-text-field__icon-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
 }
 
 .sy-text-field__clear:hover :deep(.v-btn__overlay) {

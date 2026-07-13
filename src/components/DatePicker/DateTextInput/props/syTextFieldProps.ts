@@ -1,8 +1,8 @@
 import type { Ref } from 'vue'
-import type { DatePickerCommonProps } from '../../types'
+import type { DateTextInputProps } from '../../types'
 
 export const useSyTextFieldProps = (
-	props: DatePickerCommonProps,
+	props: DateTextInputProps,
 	errorMessages: Ref<string[]>,
 	warningMessages: Ref<string[]>,
 	successMessages: Ref<string[]>,
@@ -11,6 +11,7 @@ export const useSyTextFieldProps = (
 ) => ({
 	'append-icon': props.displayIcon && props.displayAppendIcon ? 'calendar' : undefined,
 	'disabled': props.disabled,
+	'disable-click-button': props.disableClickButton,
 	'error-messages': errorMessages.value,
 	'label': props.label,
 	'placeholder': props.placeholder,

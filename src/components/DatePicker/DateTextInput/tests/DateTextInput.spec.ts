@@ -53,6 +53,17 @@ describe('DateTextInput.clean', () => {
 		expect(textField.props('errorMessages')).toEqual(['Erreur externe de contrat DateTextInput'])
 	})
 
+	it('forwards disableClickButton to the underlying text field', () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			disableClickButton: false,
+		})
+
+		const textField = wrapper.findComponent(SyTextField)
+		expect(textField.props('disableClickButton')).toBe(false)
+	})
+
 	it('formats modelValue according to dateFormatReturn in single mode', async () => {
 		const wrapper = mountComponent({
 			label: 'Date',

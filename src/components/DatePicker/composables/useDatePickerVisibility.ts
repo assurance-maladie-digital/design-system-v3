@@ -108,6 +108,7 @@ export const useDatePickerVisibility = (options: {
 
 		// Si on clique dans le conteneur du CalendarMode, on ne fait rien
 		if (container) return
+		isDatePickerVisible.value = false
 		emitClosed()
 		// Déclencher la validation à la fermeture
 		validateDates()
@@ -123,10 +124,14 @@ export const useDatePickerVisibility = (options: {
 	})
 
 	/**
-	 * Gère l'ouverture du CalendarMode lors de l'appui sur Entrée ou Espace
+	 * Gère l'ouverture du CalendarMode depuis le champ.
+	 * ArrowDown aligne le comportement du mode combiné sur le pattern APG date picker combobox.
 	 */
 	const handleKeyboardNavigation = (event: KeyboardEvent) => {
-		if ((event.key === 'Enter' || event.key === ' ') && !unref(disabled) && !unref(readonly)) {
+		if ((
+			event.key === 'Enter'
+			|| event.key === 'ArrowDown'
+		) && !unref(disabled) && !unref(readonly)) {
 			event.preventDefault() // Empêcher le comportement par défaut
 			openDatePicker()
 			return true

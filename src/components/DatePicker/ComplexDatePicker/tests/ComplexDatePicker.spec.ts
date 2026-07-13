@@ -1,13 +1,16 @@
-import { mount, flushPromises, VueWrapper } from '@vue/test-utils'
-import { describe, it, expect, afterEach } from 'vitest'
+import { mount, flushPromises, VueWrapper, type MountingOptions } from '@vue/test-utils'
+import { describe, it, expect, afterEach, vi } from 'vitest'
 import { nextTick } from 'vue'
 import ComplexDatePicker from '../ComplexDatePicker.vue'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- VueWrapper<any> est le pattern standard pour les composants Vue avec defineExpose complexe
 let wrapper: VueWrapper<any> | null = null
 
-const mountComponent = (props: Record<string, unknown> = { label: 'Test' }) => {
-	wrapper = mount(ComplexDatePicker, { props })
+const mountComponent = (
+	props: Record<string, unknown> = { label: 'Test' },
+	options: MountingOptions<InstanceType<typeof ComplexDatePicker>> = {},
+) => {
+	wrapper = mount(ComplexDatePicker, { props, ...options })
 	return wrapper
 }
 
@@ -24,6 +27,243 @@ describe('ComplexDatePicker.clean', () => {
 		// The activator text field should be present
 		const input = wrapper.find('input')
 		expect(input.exists()).toBe(true)
+	})
+
+	it('applies combobox semantics to the actual input element', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+		}, { attachTo: document.body })
+
+		await nextTick()
+		await flushPromises()
+
+		const input = wrapper.find('input')
+		expect(input.attributes('role')).toBe('combobox')
+		expect(input.attributes('aria-haspopup')).toBe('dialog')
+		expect(input.attributes('aria-expanded')).toBe('false')
+		expect(input.attributes('aria-autocomplete')).toBe('none')
+		expect(input.attributes('aria-controls')).toBeUndefined()
+
+		wrapper.vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		expect(input.attributes('aria-expanded')).toBe('true')
+		expect(input.attributes('aria-controls')).toBe(wrapper.vm.datePickerDialogId)
+		expect(wrapper.find('.date-text-input-activator').attributes('role')).toBeUndefined()
+	})
+
+	it('uses a labelled dialog for the calendar popup without live attributes on the visible heading', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+		}, { attachTo: document.body })
+
+		wrapper.vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const dialog = document.getElementById(wrapper.vm.datePickerDialogId)
+		expect(dialog).not.toBeNull()
+		expect(dialog?.getAttribute('role')).toBe('dialog')
+		expect(dialog?.getAttribute('aria-modal')).toBe('true')
+		expect(dialog?.getAttribute('aria-labelledby')).toBe(wrapper.vm.datePickerHeadingId)
+
+		const heading = document.getElementById(wrapper.vm.datePickerHeadingId)
+		expect(heading).not.toBeNull()
+		expect(heading?.getAttribute('aria-live')).toBeNull()
+		expect(heading?.getAttribute('aria-atomic')).toBeNull()
+	})
+
+	it('opens the calendar from the input with ArrowDown', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+		})
+
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: 'ArrowDown' })
+		await nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+		expect(input.attributes('aria-expanded')).toBe('true')
+		expect(input.attributes('aria-controls')).toBe(wrapper.vm.datePickerDialogId)
+	})
+
+	it('attempts to move focus into the calendar when opened from the input keyboard', async () => {
+		const focusSpy = vi.spyOn(HTMLElement.prototype, 'focus')
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+		}, { attachTo: document.body })
+
+		const input = wrapper.find('input')
+
+		await input.trigger('keydown', { key: 'Enter' })
+		await nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+		expect(focusSpy).toHaveBeenCalled()
+
+		focusSpy.mockRestore()
+	})
+
+	it('does not clear the input value when the calendar is opened with ArrowDown', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			modelValue: '01/01/2025',
+		})
+
+		await nextTick()
+		await flushPromises()
+
+		const input = wrapper.find('input')
+		expect((input.element as HTMLInputElement).value).toBe('01/01/2025')
+
+		await input.trigger('keydown', { key: 'ArrowDown' })
+		await nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+		expect((input.element as HTMLInputElement).value).toBe('01/01/2025')
+		expect(wrapper.vm.selectedDates).toBeInstanceOf(Date)
+		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+	})
+
+	it('does not open the calendar from the input with Space', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+		})
+
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: ' ' })
+		await nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+		expect(input.attributes('aria-expanded')).toBe('false')
+	})
+
+	it('does not clear the input value when the calendar button receives keyboard interaction', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			modelValue: '01/01/2025',
+		})
+
+		await nextTick()
+		await flushPromises()
+
+		const input = wrapper.find('input')
+		const calendarButton = wrapper.find('button.sy-text-field__icon-button')
+
+		expect(calendarButton.exists()).toBe(true)
+		expect((input.element as HTMLInputElement).value).toBe('01/01/2025')
+
+		await calendarButton.trigger('focus')
+		await calendarButton.trigger('keydown', { key: 'ArrowDown' })
+		await nextTick()
+		await flushPromises()
+
+		expect((input.element as HTMLInputElement).value).toBe('01/01/2025')
+		expect(wrapper.vm.selectedDates).toBeInstanceOf(Date)
+	})
+
+	it('opens the calendar from the calendar button click without clearing the input value', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			modelValue: '01/01/2025',
+		})
+
+		await nextTick()
+		await flushPromises()
+
+		const input = wrapper.find('input')
+		const calendarButton = wrapper.find('button.sy-text-field__icon-button')
+
+		expect(calendarButton.exists()).toBe(true)
+
+		await calendarButton.trigger('click')
+		await nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+		expect((input.element as HTMLInputElement).value).toBe('01/01/2025')
+		expect(wrapper.vm.selectedDates).toBeInstanceOf(Date)
+	})
+
+	it('returns focus to the input when a keyboard-opened date selection closes the dialog', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+		})
+
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: 'ArrowDown' })
+		await nextTick()
+		await flushPromises()
+
+		wrapper.vm.selectedDates = new Date(2025, 0, 15)
+		const datePicker = wrapper.findComponent({ name: 'VDatePicker' })
+		await datePicker.vm.$emit('update:model-value')
+		await nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+		expect(input.attributes('aria-expanded')).toBe('false')
+	})
+
+	it('keeps manual input state stable when keyboard interaction is used afterwards', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('01/01/2025')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect((input.element as HTMLInputElement).value).toBe('01/01/2025')
+		expect(wrapper.vm.selectedDates).toBeInstanceOf(Date)
+
+		await input.trigger('keydown', { key: 'ArrowDown' })
+		await nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+		expect((input.element as HTMLInputElement).value).toBe('01/01/2025')
+		expect(wrapper.vm.selectedDates).toBeInstanceOf(Date)
+		expect(wrapper.vm.currentMonth).toBe('0')
+	})
+
+	it('closes the dialog and restores focus to the input on Escape', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+		})
+
+		wrapper.vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const input = wrapper.find('input')
+		const dialog = document.getElementById(wrapper.vm.datePickerDialogId)
+
+		expect(dialog).not.toBeNull()
+
+		dialog?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
+		await nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+		expect(input.attributes('aria-expanded')).toBe('false')
 	})
 
 	it('renders in text-only mode when noCalendar=true', () => {
@@ -211,17 +451,34 @@ describe('ComplexDatePicker.clean', () => {
 		expect(cursorPos).toBe(formatted.length)
 	})
 
-	it('opens calendar when textFieldActivator is true and input is clicked', async () => {
+	it('does not open calendar when the input is clicked', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
 			format: 'DD/MM/YYYY',
-			textFieldActivator: true,
 		})
 
 		const input = wrapper.find('input')
 		expect(wrapper.vm.isDatePickerVisible).toBe(false)
 		await input.trigger('click')
 		await nextTick()
+		await flushPromises()
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+	})
+
+	it('opens calendar when the calendar icon is clicked', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+		})
+
+		const iconButton = wrapper.find('.sy-text-field__icon-button')
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+		expect(iconButton.exists()).toBe(true)
+
+		await iconButton.trigger('click')
+		await nextTick()
+		await flushPromises()
+
 		expect(wrapper.vm.isDatePickerVisible).toBe(true)
 	})
 
@@ -252,6 +509,20 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.isDatePickerVisible).toBe(false)
 	})
 
+	it('does not close the dialog when keyboard navigation updates the active date', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			modelValue: '27/07/2026',
+		})
+
+		wrapper.vm.isDatePickerVisible = true
+		wrapper.vm.keyboardNavigatedDate = new Date(2026, 6, 28)
+		await nextTick()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+	})
+
 	it('emits closed when handleClickOutside is called while open', () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
@@ -262,6 +533,7 @@ describe('ComplexDatePicker.clean', () => {
 		wrapper.vm.isDatePickerVisible = true
 		wrapper.vm.handleClickOutside({ target: outsideElement } as unknown as MouseEvent)
 
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
 		const closedEvents = wrapper.emitted('closed')
 		expect(closedEvents).toBeTruthy()
 	})

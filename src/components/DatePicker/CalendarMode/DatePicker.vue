@@ -567,6 +567,7 @@
 
 		// Si on clique dans le conteneur du CalendarMode, on ne fait rien
 		if (container) return
+		isDatePickerVisible.value = false
 		emit('closed')
 		// Déclencher la validation à la fermeture
 		validateDates()
@@ -612,8 +613,6 @@
 	}
 
 	onMounted(() => {
-		document.addEventListener('click', handleClickOutside)
-
 		// Configurer l'observateur pour le bouton du mois
 		setupMonthButtonObserver()
 
@@ -631,10 +630,6 @@
 			isInitialValidation.value = false
 			fixAriaAttributes()
 		})
-	})
-
-	onBeforeUnmount(() => {
-		document.removeEventListener('click', handleClickOutside)
 	})
 
 	const validateOnSubmit = async () => {
@@ -1010,7 +1005,7 @@
 			>
 				<template #activator="{ props: menuProps }">
 					<div
-						v-bind="{ ...menuProps, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': isDatePickerVisible ? datePickerContentId : undefined }"
+						v-bind="{ ...menuProps, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': isDatePickerVisible ? datePickerDialogId : undefined }"
 					>
 						<SyTextField
 							:id="`${datePickerContentId}-input`"
@@ -1067,8 +1062,6 @@
 							<SyHeading
 								:id="datePickerHeadingId"
 								class="mx-auto my-auto ml-5 mb-4"
-								aria-live="polite"
-								aria-atomic="true"
 								:level="headingLevel"
 							>
 								{{ selectedDates ? displayedDateString : headerDate }}
