@@ -1073,6 +1073,7 @@
 						>
 							<div class="d-flex justify-center align-center w-100">
 								<v-btn
+									type="button"
 									size="x-small"
 									color="primary"
 									:title="todayButtonLabel"
@@ -1080,6 +1081,8 @@
 									class="date-picker__today-button my-2 pa-2 mt-2"
 									:ripple="false"
 									@click="handleSelectToday"
+									@keydown.enter.prevent.stop="handleSelectToday"
+									@keydown.space.prevent.stop="handleSelectToday"
 								>
 									<SyIcon
 										size="16px"

@@ -3,6 +3,7 @@
 		type ComponentPublicInstance,
 		computed,
 		nextTick,
+		onBeforeUnmount,
 		onMounted,
 		readonly,
 		ref,
@@ -300,7 +301,6 @@
 	const preventCloseOnInternalUpdate = ref(false)
 	const skipNextInputBlurProcessing = ref(false)
 	const suppressNextCalendarModelValueUpdate = ref(false)
-	let suppressNextCalendarModelValueUpdateTimeout: ReturnType<typeof setTimeout> | undefined
 
 	const {
 		validation,
@@ -365,10 +365,6 @@
 		if (isInteractionDisabled.value) return
 		skipNextInputBlurProcessing.value = true
 		suppressNextCalendarModelValueUpdate.value = true
-		clearTimeout(suppressNextCalendarModelValueUpdateTimeout)
-		suppressNextCalendarModelValueUpdateTimeout = setTimeout(() => {
-			suppressNextCalendarModelValueUpdate.value = false
-		}, 120)
 		lastVisibilityChangeReason.value = 'iconClick'
 		openDatePickerOnIconClickFromVisibility()
 	}
@@ -448,6 +444,8 @@
 	})
 
 	const updateSelectedDates = async (date: Date | null) => {
+		suppressNextCalendarModelValueUpdate.value = false
+
 		if (date !== null) {
 			const validationResult = await Promise.resolve(validateField(date, props.customRules, props.customWarningRules))
 			if (validationResult.hasError) {
@@ -456,6 +454,14 @@
 			}
 		}
 		dateSelectionResult.updateSelectedDates(date)
+		if (date !== null && isDatePickerVisible.value && !props.displayRange) {
+			withInternalUpdate(() => {
+				syncTextInputFromSelection()
+			})
+			updateModel(formatDate(date, returnFormat.value))
+			displayFormattedDate.value = formatDate(date, props.format)
+			closeDatePicker({ restoreFocus: true, reason: 'updateSelectedDates-single' })
+		}
 		// Validate immediately to surface messages
 		queueMicrotask(() => validateDates(true))
 	}
@@ -687,6 +693,14 @@
 		},
 	})
 
+	const syncDialogKeydownListener = () => {
+		datePickerMenuRef.value?.removeEventListener('keydown', handleMenuKeydown, true)
+
+		if (isDatePickerVisible.value && datePickerMenuRef.value) {
+			datePickerMenuRef.value.addEventListener('keydown', handleMenuKeydown, true)
+		}
+	}
+
 	/**
 	 * Holiday marking (partagé via useHolidayHighlighting)
 	 */
@@ -710,6 +724,11 @@
 		if (displayFormattedDateComputed.value) displayFormattedDate.value = displayFormattedDateComputed.value
 		validateDates()
 		nextTick(syncComboboxInputSemantics)
+		nextTick(syncDialogKeydownListener)
+	})
+
+	onBeforeUnmount(() => {
+		datePickerMenuRef.value?.removeEventListener('keydown', handleMenuKeydown, true)
 	})
 
 	watch(
@@ -720,9 +739,11 @@
 			props.label,
 			props.placeholder,
 			fieldKey.value,
+			datePickerMenuRef.value,
 		],
 		() => {
 			nextTick(syncComboboxInputSemantics)
+			nextTick(syncDialogKeydownListener)
 		},
 		{ flush: 'post' },
 	)
@@ -802,6 +823,9 @@
 				}
 			})
 		},
+		onSelectDate: (date: Date) => {
+			void updateSelectedDates(date)
+		},
 	})
 
 	/**
@@ -839,10 +863,6 @@
 			skipNextInputBlurProcessing.value = true
 			scheduleDialogInitialFocus()
 			suppressNextCalendarModelValueUpdate.value = true
-			clearTimeout(suppressNextCalendarModelValueUpdateTimeout)
-			suppressNextCalendarModelValueUpdateTimeout = setTimeout(() => {
-				suppressNextCalendarModelValueUpdate.value = false
-			}, 120)
 			lastVisibilityChangeReason.value = `keyboard:${event.key}`
 			openDatePicker()
 			return
@@ -1237,6 +1257,11 @@
 					customizeMonthButton()
 					markHolidayDays()
 					updateSelectedDayAria()
+					setTimeout(() => {
+						if (isDatePickerVisible.value) {
+							suppressNextCalendarModelValueUpdate.value = false
+						}
+					}, 0)
 
 					if (shouldMoveFocusToDialogOnOpen.value) {
 						shouldMoveFocusToDialogOnOpen.value = false
@@ -1252,7 +1277,7 @@
 	/**
 	 * Today button + labels
 	 */
-	const { todayInString, selectToday, headerDate } = useTodayButton(props)
+	const { todayInString, headerDate } = useTodayButton(props)
 	const todayButtonLabel = computed(() => {
 		return locales.selectTodayCapitalized(todayInString.value?.trim())
 	})
@@ -1268,14 +1293,40 @@
 	const { displayedDateString } = useDisplayedDateString({ selectedDates, rangeBoundaryDates, todayInString })
 
 	const handleSelectToday = () => {
-		selectToday(selectedDates)
-		const today = new Date()
+		const today = dayjs().startOf('day').toDate()
+		suppressNextCalendarModelValueUpdate.value = false
+		const formattedTodayForDisplay = formatDate(today, props.format)
+		const formattedTodayForModel = formatDate(today, props.dateFormatReturn || props.format)
+
+		if (props.displayRange) {
+			selectedDates.value = [today, today]
+			withInternalUpdate(() => {
+				textInputValue.value = `${formattedTodayForDisplay}${locales.rangeSeparator}${formattedTodayForDisplay}`
+				displayFormattedDate.value = textInputValue.value
+			})
+			updateModel([formattedTodayForModel, formattedTodayForModel])
+			emit('date-selected', [formattedTodayForModel, formattedTodayForModel])
+		}
+		else {
+			selectedDates.value = today
+			withInternalUpdate(() => {
+				textInputValue.value = formattedTodayForDisplay
+				displayFormattedDate.value = formattedTodayForDisplay
+			})
+			updateModel(formattedTodayForModel)
+			emit('date-selected', formattedTodayForModel)
+		}
+
 		const todayMonth = today.getMonth().toString()
 		const todayYear = today.getFullYear().toString()
 		currentMonth.value = todayMonth
 		currentYear.value = todayYear
 		currentMonthName.value = dayjs().month(parseInt(todayMonth, 10)).format('MMMM')
 		currentYearName.value = todayYear
+
+		if (isDatePickerVisible.value) {
+			closeDatePicker({ restoreFocus: true, reason: props.displayRange ? 'handleSelectToday-range' : 'handleSelectToday-single' })
+		}
 	}
 
 	/**
@@ -1346,6 +1397,7 @@
 		displayFormattedDate,
 		// Expose for consumers
 		handleDateSelected,
+		updateSelectedDates,
 		resetViewMode,
 		reset,
 	})
@@ -1471,6 +1523,7 @@
 							<div class="d-flex justify-center align-center w-100">
 								<v-btn
 									v-if="props.displayTodayButton"
+									type="button"
 									size="x-small"
 									color="primary"
 									:title="todayButtonLabel"
@@ -1478,6 +1531,8 @@
 									class="date-picker__today-button my-2 pa-2 mt-2"
 									:ripple="false"
 									@click="handleSelectToday"
+									@keydown.enter.prevent.stop="handleSelectToday"
+									@keydown.space.prevent.stop="handleSelectToday"
 								>
 									<SyIcon
 										size="16px"

@@ -18,6 +18,9 @@ export interface CalendarKeyboardNavigationOptions {
 	// Applique la nouvelle date (typiquement via updateSelectedDates)
 	setCurrentDate: (date: Date) => void
 
+	// Déclenche la sélection effective de la date courante
+	onSelectDate?: (date: Date) => void
+
 	// Renvoie la date sur laquelle placer le focus à l'ouverture (date sélectionnée ou aujourd'hui)
 	getInitialFocusDate?: () => Date
 }
@@ -29,6 +32,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		getCurrentDate,
 		setCurrentDate,
 		getInitialFocusDate,
+		onSelectDate,
 	} = options
 
 	const addDays = (date: Date, amount: number) => dayjs(date).add(amount, 'day').toDate()
@@ -303,48 +307,6 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		}
 	}
 
-	const clickDateButton = (date: Date) => {
-		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
-		if (!rootEl) return
-
-		const iso = toISO(date)
-
-		// Essayer plusieurs sélecteurs pour trouver le bouton du jour
-		const selectors = [
-			`[data-v-date="${iso}"] > [type="button"]`, // Bouton enfant direct avec data-v-date
-			`[data-v-date="${iso}"] button`, // N'importe quel bouton dans l'élément avec data-v-date
-			`[data-v-date="${iso}"] .v-btn`, // Bouton Vuetify spécifique avec data-v-date
-			`[data-v-date="${iso}"] [role="button"]`, // Élément avec role="button" et data-v-date
-			// Sélecteurs Vuetify sans data-v-date
-			`.v-date-picker-month__day:has(.v-btn[aria-label*="${date.getDate()}"]) .v-btn`,
-			`.v-date-picker-month__day .v-btn[aria-label*="${date.getDate()}"]`,
-		]
-
-		let dayButton: HTMLButtonElement | null = null
-		for (const selector of selectors) {
-			dayButton = rootEl.querySelector<HTMLButtonElement>(selector)
-			if (dayButton) {
-				break
-			}
-		}
-
-		// Si aucun sélecteur précis ne fonctionne, chercher par aria-label complet
-		if (!dayButton) {
-			const ariaLabelPattern = new RegExp(`\\b${date.getDate()}\\b`)
-			const allButtons = rootEl.querySelectorAll<HTMLElement>('.v-date-picker-month__day .v-btn')
-			for (const button of allButtons) {
-				const ariaLabel = button.getAttribute('aria-label')
-				if (ariaLabel && ariaLabelPattern.test(ariaLabel)) {
-					dayButton = button as HTMLButtonElement
-					break
-				}
-			}
-		}
-
-		dayButton?.click()
-		dayButton?.focus()
-	}
-
 	const handleArrowNavigation = (event: KeyboardEvent) => {
 		if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
 			return
@@ -454,7 +416,8 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 		// Enter/Space : empêcher le scroll et déclencher la sélection explicite
 		event.preventDefault()
-		clickDateButton(current)
+		setCurrentDate(current)
+		onSelectDate?.(current)
 	}
 
 	const keydownListener = (event: Event) => {

@@ -104,7 +104,7 @@ export const useDatePickerVisibility = (options: {
 		if (!isDatePickerVisible.value) return
 
 		const target = event.target as HTMLElement
-		const container = target.closest('.date-picker-container')
+		const container = target.closest('.date-picker-container, .date-picker-overlay-content')
 
 		// Si on clique dans le conteneur du CalendarMode, on ne fait rien
 		if (container) return

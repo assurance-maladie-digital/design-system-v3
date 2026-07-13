@@ -94,6 +94,12 @@ export function useDateSelection(
 		}
 
 		// Cas 2: Input est une chaîne de caractères (saisie manuelle)
+		if (!unref(displayRange) && input instanceof Date) {
+			selectedDates.value = input
+			rangeBoundaryDates.value = null
+			return
+		}
+
 		if (!unref(displayRange)) {
 			// Mode date unique
 			const date = input && typeof input === 'string' ? parseDate(input, unref(format)) : null

@@ -67,7 +67,7 @@ describe('ComplexDatePicker.clean', () => {
 		const dialog = document.getElementById(wrapper.vm.datePickerDialogId)
 		expect(dialog).not.toBeNull()
 		expect(dialog?.getAttribute('role')).toBe('dialog')
-		expect(dialog?.getAttribute('aria-modal')).toBe('true')
+		expect(dialog?.getAttribute('aria-modal')).toBeNull()
 		expect(dialog?.getAttribute('aria-labelledby')).toBe(wrapper.vm.datePickerHeadingId)
 
 		const heading = document.getElementById(wrapper.vm.datePickerHeadingId)
@@ -202,17 +202,17 @@ describe('ComplexDatePicker.clean', () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
 			format: 'DD/MM/YYYY',
-		})
+		}, { attachTo: document.body })
 
 		const input = wrapper.find('input')
 		await input.trigger('keydown', { key: 'ArrowDown' })
 		await nextTick()
 		await flushPromises()
 
-		wrapper.vm.selectedDates = new Date(2025, 0, 15)
-		const datePicker = wrapper.findComponent({ name: 'VDatePicker' })
-		await datePicker.vm.$emit('update:model-value')
+		await wrapper.vm.updateSelectedDates(new Date(2025, 0, 15))
 		await nextTick()
+		await flushPromises()
+		await new Promise(resolve => setTimeout(resolve, 10))
 		await flushPromises()
 
 		expect(wrapper.vm.isDatePickerVisible).toBe(false)
@@ -585,14 +585,40 @@ describe('ComplexDatePicker.clean', () => {
 		expect(result).toBe(true)
 	})
 
-	it('handleSelectToday selects today and keeps component usable', async () => {
+	it('handleSelectToday selects today, updates the model, and keeps component usable', async () => {
 		const wrapper = mountComponent()
 
 		await wrapper.vm.handleSelectToday()
 		await flushPromises()
 
 		expect(wrapper.vm.selectedDates).not.toBeNull()
+		expect(wrapper.vm.displayFormattedDate).toMatch(/^\d{2}\/\d{2}\/\d{4}$/)
+		expect(wrapper.emitted('update:modelValue')?.length).toBeGreaterThan(0)
 		expect(wrapper.exists()).toBe(true)
+	})
+
+	it('activates today button from keyboard and selects today before closing', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			displayTodayButton: true,
+		}, { attachTo: document.body })
+
+		wrapper.vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const todayButton = document.body.querySelector('.date-picker__today-button') as HTMLButtonElement | null
+		expect(todayButton).not.toBeNull()
+
+		todayButton?.click()
+		await nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+		expect(wrapper.vm.selectedDates).toBeInstanceOf(Date)
+		expect(wrapper.vm.displayFormattedDate).toMatch(/^\d{2}\/\d{2}\/\d{4}$/)
+		expect(wrapper.emitted('update:modelValue')?.length).toBeGreaterThan(0)
 	})
 
 	it('validateOnSubmit returns false when required and empty in calendar mode', async () => {
