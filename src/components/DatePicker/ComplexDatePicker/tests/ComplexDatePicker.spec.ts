@@ -6,6 +6,20 @@ import ComplexDatePicker from '../ComplexDatePicker.vue'
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- VueWrapper<any> est le pattern standard pour les composants Vue avec defineExpose complexe
 let wrapper: VueWrapper<any> | null = null
 
+const waitForCondition = async (
+	predicate: () => boolean,
+	{ timeoutMs = 500, intervalMs = 20 } = {},
+) => {
+	const deadline = Date.now() + timeoutMs
+
+	while (Date.now() < deadline) {
+		if (predicate()) return
+		await new Promise(resolve => setTimeout(resolve, intervalMs))
+	}
+
+	throw new Error('Timed out waiting for condition')
+}
+
 const mountComponent = (
 	props: Record<string, unknown> = { label: 'Test' },
 	options: MountingOptions<InstanceType<typeof ComplexDatePicker>> = {},
@@ -212,7 +226,8 @@ describe('ComplexDatePicker.clean', () => {
 		await wrapper.vm.updateSelectedDates(new Date(2025, 0, 15))
 		await nextTick()
 		await flushPromises()
-		await new Promise(resolve => setTimeout(resolve, 10))
+		await waitForCondition(() => wrapper?.vm.isDatePickerVisible === false)
+		await nextTick()
 		await flushPromises()
 
 		expect(wrapper.vm.isDatePickerVisible).toBe(false)

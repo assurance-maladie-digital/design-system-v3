@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { locales } from '../locales'
 
 /**
@@ -31,6 +32,34 @@ export interface FormatDateOptions {
    * Caractère à utiliser pour les positions non remplies
    */
 	placeholderChar?: string
+}
+
+export interface DisplayedMonthYearState {
+	month: string
+	year: string
+	monthName: string
+	yearName: string
+}
+
+export const getDisplayedMonthYearState = (date: Date): DisplayedMonthYearState => {
+	const month = date.getMonth().toString()
+	const year = date.getFullYear().toString()
+
+	return {
+		month,
+		year,
+		monthName: dayjs(date).format('MMMM'),
+		yearName: year,
+	}
+}
+
+export const formatDateRangeDisplay = (
+	startDate: Date,
+	endDate: Date,
+	format: string,
+	formatDate: (date: Date | null, format: string) => string,
+) => {
+	return `${formatDate(startDate, format)}${locales.rangeSeparator}${formatDate(endDate, format)}`
 }
 
 /**

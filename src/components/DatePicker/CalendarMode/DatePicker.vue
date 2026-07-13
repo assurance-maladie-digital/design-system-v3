@@ -12,12 +12,13 @@
 	import { VDatePicker } from 'vuetify/components'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
-	import { useCalendarKeyboardNavigation, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useSelectedDayAria, useTodayButton } from '../composables'
+	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useSelectedDayAria, useTodayButton } from '../composables'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { locales } from '../locales'
 	import type { ViewMode } from '../composables/useDatePickerViewMode'
 	import type { CalendarModeProps, DateObjectValue } from '../types'
 	import { DatePickerCommonDefaults } from '../types'
+	import { formatDateRangeDisplay, getDisplayedMonthYearState } from '../utils/dateFormattingUtils'
 	import { useComplexDatePickerProps } from './props/complexDatePickerProps'
 	import { useDateTextInputProps } from './props/dateTextInputProps'
 	import { useSyTextFieldProps } from './props/syTextFieldProps'
@@ -222,29 +223,21 @@
 
 	// Fonction pour sélectionner la date du jour
 	const handleSelectToday = () => {
-		// Créer une seule instance de la date du jour, normalisée à minuit
-		const today = dayjs().startOf('day').toDate()
+		const todaySelection = buildTodaySelectionState({
+			displayRange: props.displayRange,
+			format: props.format,
+			dateFormatReturn: props.dateFormatReturn,
+			formatDate,
+		})
 
-		// Si c'est une plage de dates, on définit le même jour pour début et fin
-		if (props.displayRange) {
-			selectedDates.value = [today, today]
-			// Formater les dates pour le modèle (format de retour)
-			const formattedToday = formatDate(today, props.dateFormatReturn || props.format)
-			updateModel([formattedToday, formattedToday])
-		}
-		else {
-			// Sinon, on sélectionne simplement aujourd'hui
-			selectedDates.value = today
-			// Formater la date pour le modèle (format de retour)
-			const formattedToday = formatDate(today, props.dateFormatReturn || props.format)
-			updateModel(formattedToday)
-		}
+		selectedDates.value = todaySelection.selectedDates
+		updateModel(todaySelection.modelValue)
+		displayFormattedDate.value = todaySelection.displayValue
 
-		// Mettre à jour l'affichage formaté
-		updateDisplayFormattedDate()
-
-		// Mettre à jour les variables currentMonth et currentYear pour refléter la date d'aujourd'hui
-		syncDisplayedMonthYearFromDate(today)
+		currentMonth.value = todaySelection.month
+		currentYear.value = todaySelection.year
+		currentMonthName.value = todaySelection.monthName
+		currentYearName.value = todaySelection.yearName
 	}
 
 	const emit = defineEmits<{
@@ -352,7 +345,7 @@
 					const start = newValue[0]
 					const end = newValue[newValue.length - 1]
 					if (start && end) {
-						textInputValue.value = `${formatDate(start, props.format)} - ${formatDate(end, props.format)}`
+						textInputValue.value = formatDateRangeDisplay(start, end, props.format, formatDate)
 					}
 				}
 				else {
@@ -435,7 +428,7 @@
 
 				if (startDate && endDate) {
 					selectedDates.value = generateDateRange(startDate, endDate)
-					displayFormattedDate.value = `${formatDate(startDate, props.format)} - ${formatDate(endDate, props.format)}`
+					displayFormattedDate.value = formatDateRangeDisplay(startDate, endDate, props.format, formatDate)
 				}
 			}
 			else if (typeof value === 'string') {
@@ -584,20 +577,19 @@
 	)
 
 	const syncDisplayedMonthYearFromDate = (date: Date) => {
-		const month = date.getMonth().toString()
-		const year = date.getFullYear().toString()
-		const hasMonthChanged = currentMonth.value !== month
-		const hasYearChanged = currentYear.value !== year
+		const displayedState = getDisplayedMonthYearState(date)
+		const hasMonthChanged = currentMonth.value !== displayedState.month
+		const hasYearChanged = currentYear.value !== displayedState.year
 
 		if (hasMonthChanged) {
-			currentMonth.value = month
-			currentMonthName.value = dayjs(date).format('MMMM')
+			currentMonth.value = displayedState.month
+			currentMonthName.value = displayedState.monthName
 			handleMonthUpdate()
 		}
 
 		if (hasYearChanged) {
-			currentYear.value = year
-			currentYearName.value = year
+			currentYear.value = displayedState.year
+			currentYearName.value = displayedState.yearName
 		}
 
 		if (hasMonthChanged || hasYearChanged) {

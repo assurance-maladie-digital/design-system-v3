@@ -17,6 +17,7 @@
 		useDateInitialization,
 	} from '@/composables/date/useDateInitializationDayjs'
 	import {
+		buildTodaySelectionState,
 		useCalendarKeyboardNavigation,
 		useDatePickerFocusTrap,
 		useDatePickerState,
@@ -49,7 +50,11 @@
 	import { useDateTextInputMenuProps } from './props/dateTextInputMenuProps'
 	import { locales } from '../locales'
 	import { mdiCalendarMonthOutline } from '@mdi/js'
-	import { getDateDescription as getDateDescriptionUtil } from '../utils/dateFormattingUtils'
+	import {
+		formatDateRangeDisplay,
+		getDateDescription as getDateDescriptionUtil,
+		getDisplayedMonthYearState,
+	} from '../utils/dateFormattingUtils'
 	import { validateEmptyOrIncompleteDate, adaptCustomRules } from '../utils/validationUtils'
 	import type { ValidationRule } from '@/composables/validation/useValidation'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -495,12 +500,11 @@
 				baseDate = newValue
 			}
 			if (baseDate) {
-				const monthIndex = baseDate.getMonth()
-				const yearString = baseDate.getFullYear().toString()
-				currentMonth.value = monthIndex.toString()
-				currentMonthName.value = dayjs(baseDate).format('MMMM')
-				currentYear.value = yearString
-				currentYearName.value = yearString
+				const displayedState = getDisplayedMonthYearState(baseDate)
+				currentMonth.value = displayedState.month
+				currentMonthName.value = displayedState.monthName
+				currentYear.value = displayedState.year
+				currentYearName.value = displayedState.yearName
 			}
 			if (isDatePickerVisible.value) {
 				nextTick(() => {
@@ -532,10 +536,11 @@
 			})
 			// Reset month/year names when clearing the date
 			const today = new Date()
-			currentMonth.value = today.getMonth().toString()
-			currentMonthName.value = dayjs(today).format('MMMM')
-			currentYear.value = today.getFullYear().toString()
-			currentYearName.value = today.getFullYear().toString()
+			const displayedState = getDisplayedMonthYearState(today)
+			currentMonth.value = displayedState.month
+			currentMonthName.value = displayedState.monthName
+			currentYear.value = displayedState.year
+			currentYearName.value = displayedState.yearName
 			if (isDatePickerVisible.value) {
 				nextTick(() => {
 					customizeMonthButton()
@@ -616,9 +621,12 @@
 
 			if (props.displayRange) {
 				if (rangeBoundaryDates.value?.[0] && rangeBoundaryDates.value?.[1]) {
-					const startDate = formatDate(rangeBoundaryDates.value[0], props.format)
-					const endDate = formatDate(rangeBoundaryDates.value[1], props.format)
-					formattedValue = `${startDate}${locales.rangeSeparator}${endDate}`
+					formattedValue = formatDateRangeDisplay(
+						rangeBoundaryDates.value[0],
+						rangeBoundaryDates.value[1],
+						props.format,
+						formatDate,
+					)
 					displayFormattedDate.value = textInputValue.value = formattedValue
 					const formattedDates = [
 						formatDate(rangeBoundaryDates.value[0], returnFormat.value),
@@ -633,7 +641,12 @@
 						formatDate(selectedDates.value[0]!, props.format),
 						formatDate(selectedDates.value[selectedDates.value.length - 1]!, props.format),
 					] as [string, string]
-					formattedValue = `${formattedDates[0]}${locales.rangeSeparator}${formattedDates[1]}`
+					formattedValue = formatDateRangeDisplay(
+						selectedDates.value[0]!,
+						selectedDates.value[selectedDates.value.length - 1]!,
+						props.format,
+						formatDate,
+					)
 					displayFormattedDate.value = textInputValue.value = formattedValue
 					updateModel(formattedDates)
 					emit('date-selected', formattedDates)
@@ -807,13 +820,12 @@
 			// S'assurer que le VDatePicker affiche le bon mois après navigation clavier
 			nextTick(() => {
 				if (datePickerRef.value) {
-					const newMonth = String(date.getMonth())
-					const newYear = String(date.getFullYear())
-					if (currentMonth.value !== newMonth || currentYear.value !== newYear) {
-						currentMonth.value = newMonth
-						currentYear.value = newYear
-						currentMonthName.value = dayjs(date).format('MMMM')
-						currentYearName.value = newYear
+					const displayedState = getDisplayedMonthYearState(date)
+					if (currentMonth.value !== displayedState.month || currentYear.value !== displayedState.year) {
+						currentMonth.value = displayedState.month
+						currentYear.value = displayedState.year
+						currentMonthName.value = displayedState.monthName
+						currentYearName.value = displayedState.yearName
 						nextTick(() => {
 							customizeMonthButton()
 							markHolidayDays()
@@ -1189,8 +1201,7 @@
 
 				if (startDate && endDate) {
 					selectedDates.value = dateSelectionResult.generateDateRange(startDate, endDate)
-					displayFormattedDate.value
-						= `${formatDate(startDate, props.format)}${locales.rangeSeparator}${formatDate(endDate, props.format)}`
+					displayFormattedDate.value = formatDateRangeDisplay(startDate, endDate, props.format, formatDate)
 				}
 				else if (startDate) {
 					// Première date saisie uniquement
@@ -1293,36 +1304,38 @@
 	const { displayedDateString } = useDisplayedDateString({ selectedDates, rangeBoundaryDates, todayInString })
 
 	const handleSelectToday = () => {
-		const today = dayjs().startOf('day').toDate()
+		const todaySelection = buildTodaySelectionState({
+			displayRange: props.displayRange,
+			format: props.format,
+			dateFormatReturn: props.dateFormatReturn,
+			formatDate,
+		})
+
 		suppressNextCalendarModelValueUpdate.value = false
-		const formattedTodayForDisplay = formatDate(today, props.format)
-		const formattedTodayForModel = formatDate(today, props.dateFormatReturn || props.format)
 
 		if (props.displayRange) {
-			selectedDates.value = [today, today]
+			selectedDates.value = todaySelection.selectedDates
 			withInternalUpdate(() => {
-				textInputValue.value = `${formattedTodayForDisplay}${locales.rangeSeparator}${formattedTodayForDisplay}`
-				displayFormattedDate.value = textInputValue.value
+				textInputValue.value = todaySelection.displayValue
+				displayFormattedDate.value = todaySelection.displayValue
 			})
-			updateModel([formattedTodayForModel, formattedTodayForModel])
-			emit('date-selected', [formattedTodayForModel, formattedTodayForModel])
+			updateModel(todaySelection.modelValue)
+			emit('date-selected', todaySelection.modelValue)
 		}
 		else {
-			selectedDates.value = today
+			selectedDates.value = todaySelection.selectedDates
 			withInternalUpdate(() => {
-				textInputValue.value = formattedTodayForDisplay
-				displayFormattedDate.value = formattedTodayForDisplay
+				textInputValue.value = todaySelection.displayValue
+				displayFormattedDate.value = todaySelection.displayValue
 			})
-			updateModel(formattedTodayForModel)
-			emit('date-selected', formattedTodayForModel)
+			updateModel(todaySelection.modelValue)
+			emit('date-selected', todaySelection.modelValue)
 		}
 
-		const todayMonth = today.getMonth().toString()
-		const todayYear = today.getFullYear().toString()
-		currentMonth.value = todayMonth
-		currentYear.value = todayYear
-		currentMonthName.value = dayjs().month(parseInt(todayMonth, 10)).format('MMMM')
-		currentYearName.value = todayYear
+		currentMonth.value = todaySelection.month
+		currentYear.value = todaySelection.year
+		currentMonthName.value = todaySelection.monthName
+		currentYearName.value = todaySelection.yearName
 
 		if (isDatePickerVisible.value) {
 			closeDatePicker({ restoreFocus: true, reason: props.displayRange ? 'handleSelectToday-range' : 'handleSelectToday-single' })

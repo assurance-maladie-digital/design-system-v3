@@ -1,6 +1,7 @@
 import { computed, ref, unref, watch, type Ref, type ComputedRef, type MaybeRef } from 'vue'
 import type { DateInput, DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 import { locales } from '../locales'
+import { formatDateRangeDisplay } from '../utils/dateFormattingUtils'
 
 export interface UseDatePickerStateOptions {
 	selectedDates: Ref<Date | (Date | null)[] | null>
@@ -74,10 +75,12 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 
 		if (Array.isArray(selectedDates.value)) {
 			if (selectedDates.value.length >= 2) {
-				return `${formatDate(selectedDates.value[0]!, unref(format))}${locales.rangeSeparator}${formatDate(
+				return formatDateRangeDisplay(
+					selectedDates.value[0]!,
 					selectedDates.value[selectedDates.value.length - 1]!,
 					unref(format),
-				)}`
+					formatDate,
+				)
 			}
 			return formatDate(selectedDates.value[0]!, unref(format))
 		}
@@ -143,7 +146,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 				const startDate = selectedDates.value[0]
 				const endDate = selectedDates.value[selectedDates.value.length - 1]
 				if (startDate && endDate) {
-					textInputValue.value = `${formatDate(startDate, unref(format))}${locales.rangeSeparator}${formatDate(endDate, unref(format))}`
+					textInputValue.value = formatDateRangeDisplay(startDate, endDate, unref(format), formatDate)
 				}
 			}
 			else {
@@ -176,7 +179,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 			const startDate = value[0]
 			const endDate = value[value.length - 1]
 			if (startDate && endDate) {
-				const formattedForInput = `${formatDate(startDate, unref(format))}${locales.rangeSeparator}${formatDate(endDate, unref(format))}`
+				const formattedForInput = formatDateRangeDisplay(startDate, endDate, unref(format), formatDate)
 				if (textInputValue.value !== formattedForInput) {
 					textInputValue.value = formattedForInput
 				}
