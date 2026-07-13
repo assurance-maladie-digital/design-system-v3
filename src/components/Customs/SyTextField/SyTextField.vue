@@ -669,14 +669,14 @@
 						class="cursor-default"
 						:decorative="true"
 					/>
-						<button
-							v-else-if="props.prependIcon && !props.noIcon"
-							type="button"
-							class="sy-text-field__icon-button"
-							:aria-label="ICON_ACTION_LABELS[props.prependIcon](props.label)"
-							:title="ICON_ACTION_LABELS[props.prependIcon](props.label)"
-							@click.stop="handlePrependIconClick"
-						>
+					<button
+						v-else-if="props.prependIcon && !props.noIcon"
+						type="button"
+						class="sy-text-field__icon-button"
+						:aria-label="ICON_ACTION_LABELS[props.prependIcon](props.label)"
+						:title="ICON_ACTION_LABELS[props.prependIcon](props.label)"
+						@click.stop="handlePrependIconClick"
+					>
 						<SyIcon
 							:color="iconColor"
 							:icon="ICONS[props.prependIcon]"
@@ -718,14 +718,14 @@
 						class="cursor-default"
 						:decorative="true"
 					/>
-						<button
-							v-else-if="props.appendIcon && !props.noIcon"
-							type="button"
-							class="sy-text-field__icon-button"
-							:aria-label="ICON_ACTION_LABELS[props.appendIcon](props.label)"
-							:title="ICON_ACTION_LABELS[props.appendIcon](props.label)"
-							@click.stop="handleAppendIconClick"
-						>
+					<button
+						v-else-if="props.appendIcon && !props.noIcon"
+						type="button"
+						class="sy-text-field__icon-button"
+						:aria-label="ICON_ACTION_LABELS[props.appendIcon](props.label)"
+						:title="ICON_ACTION_LABELS[props.appendIcon](props.label)"
+						@click.stop="handleAppendIconClick"
+					>
 						<SyIcon
 							:color="iconColor"
 							:icon="ICONS[props.appendIcon]"

@@ -1409,6 +1409,7 @@
 				</template>
 
 				<div
+					v-if="isDatePickerVisible && !props.noCalendar"
 					:id="datePickerDialogId"
 					ref="datePickerMenuRef"
 					tabindex="-1"
@@ -1416,7 +1417,6 @@
 					:aria-labelledby="datePickerHeadingId"
 				>
 					<VDatePicker
-						v-if="isDatePickerVisible"
 						:id="datePickerContentId"
 						ref="datePickerRef"
 						v-model="selectedDates"
