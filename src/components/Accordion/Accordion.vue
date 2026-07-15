@@ -221,15 +221,15 @@
 	margin-bottom: 0;
 	border-radius: 0;
 
-  &:first-child {
-    border-top-left-radius: var(--radius-md);
-    border-top-right-radius: var(--radius-md);
+	&:first-child {
+		border-top-left-radius: var(--radius-md);
+		border-top-right-radius: var(--radius-md);
 
-    .sy-accordion-button--focused:not(:focus-visible) {
-      border-top-left-radius: inherit;
-      border-top-right-radius: inherit;
-    }
-  }
+		.sy-accordion-button--focused:not(:focus-visible) {
+			border-top-left-radius: inherit;
+			border-top-right-radius: inherit;
+		}
+	}
 
 	&:last-child {
 		border-bottom-left-radius: var(--radius-md);
@@ -296,10 +296,10 @@
 
 /* Style pour l'accordéon ouvert (focus programmatique) */
 .sy-accordion .sy-accordion-item {
-    .sy-accordion-button--focused:not(:focus-visible) {
-      border-top-left-radius: inherit;
-      border-top-right-radius: inherit;
-    }
+	.sy-accordion-button--focused:not(:focus-visible) {
+		border-top-left-radius: inherit;
+		border-top-right-radius: inherit;
+	}
 }
 
 .sy-accordion-button--focused:not(:focus-visible) {
