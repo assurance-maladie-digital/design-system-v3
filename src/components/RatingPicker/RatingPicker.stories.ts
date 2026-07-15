@@ -592,7 +592,7 @@ export const AccessibilityBestPractices: Story = {
 				return { args, dialogOpen, handleSubmit, isSubmitted }
 			},
 			template: `
-				<div style="max-width: 800px; margin: 0 auto;">
+				<div>
 					<SyForm @submit="handleSubmit">
 						<RatingPicker
 							v-bind="args"
@@ -638,7 +638,7 @@ export const AccessibilityBestPractices: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<div style="max-width: 800px; margin: 0 auto;">
+	<div>
 		<SyForm @submit="handleSubmit">
 			<RatingPicker
 				v-model="ratingEmotion"
@@ -747,7 +747,7 @@ export const NoLockAfterSelectionEmotion: Story = {
 				return { args, dialogOpen, handleSubmit, isSubmitted }
 			},
 			template: `
-				<div style="max-width: 800px; margin: 0 auto;">
+				<div>
 					<SyForm @submit="handleSubmit">
 						<RatingPicker v-bind="args" v-model="args.modelValue" :readonly="args.readonly || isSubmitted"/>
 
@@ -779,7 +779,7 @@ export const NoLockAfterSelectionEmotion: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<div style="max-width: 800px; margin: 0 auto;">
+	<div>
 		<SyForm @submit="handleSubmit">
 			<RatingPicker
 				v-model="ratingEmotion"
@@ -877,7 +877,7 @@ export const NoLockAfterSelectionNumber: Story = {
 				return { args, dialogOpen, handleSubmit, isSubmitted }
 			},
 			template: `
-				<div style="max-width: 800px; margin: 0 auto;">
+				<div>
 					<SyForm @submit="handleSubmit">
 						<RatingPicker v-bind="args" v-model="args.modelValue" :readonly="args.readonly || isSubmitted"/>
 
@@ -909,7 +909,7 @@ export const NoLockAfterSelectionNumber: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<div style="max-width: 800px; margin: 0 auto;">
+	<div>
 		<SyForm @submit="handleSubmit">
 			<RatingPicker
 				v-model="ratingNumber"
@@ -1007,7 +1007,7 @@ export const NoLockAfterSelectionStars: Story = {
 				return { args, dialogOpen, handleSubmit, isSubmitted }
 			},
 			template: `
-				<div style="max-width: 800px; margin: 0 auto;">
+				<div>
 					<SyForm @submit="handleSubmit">
 						<RatingPicker v-bind="args" v-model="args.modelValue" :readonly="args.readonly || isSubmitted"/>
 
@@ -1039,7 +1039,7 @@ export const NoLockAfterSelectionStars: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<div style="max-width: 800px; margin: 0 auto;">
+	<div>
 		<SyForm @submit="handleSubmit">
 			<RatingPicker
 				v-model="ratingStars"
