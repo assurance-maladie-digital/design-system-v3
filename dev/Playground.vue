@@ -12,6 +12,9 @@
 	import SyTabs from '@/components/Customs/SyTabs/SyTabs.vue'
 	import SubHeader from '@/components/SubHeader/SubHeader.vue'
 	import CollapsibleList from '@/components/CollapsibleList/CollapsibleList.vue'
+	import ToolbarContainer from '@/components/ToolbarContainer/ToolbarContainer.vue'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight } from '@mdi/js'
 
 	// SyTabs
 	const tabsItems = [
@@ -35,6 +38,10 @@
 
 	// HeaderMenuBtn (bouton menu du HeaderBar)
 	const menuOpen = ref(false)
+
+	// ToolbarContainer (calqué sur la story Default : barre d'alignement)
+	const justification = ref<string>()
+	const justificationDark = ref<string>()
 
 	// CollapsibleList
 	const collapsibleItems = [
@@ -440,6 +447,155 @@
 										list-title="Mon titre"
 										:items="collapsibleItems"
 									/>
+								</div>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ ToolbarContainer ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							ToolbarContainer
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Tab pour entrer, puis flèches (← → / Home / End) entre les outils :
+								le ring 2px primary se pose sur l'outil actif (roving tabindex).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<ToolbarContainer
+									class="d-flex flex-wrap ga-4"
+									aria-label="Outils de mise en forme"
+								>
+									<v-btn-toggle
+										v-model="justification"
+										class="d-flex flex-wrap ga-2"
+										role="radiogroup"
+										aria-label="Alignement du texte"
+										color="primary"
+										style="overflow: visible;"
+									>
+										<v-btn
+											title="ferrer à gauche"
+											aria-label="ferrer à gauche"
+											role="radio"
+											value="left"
+											elevation="2"
+											size="small"
+											:aria-checked="justification === 'left' ? 'true' : 'false'"
+										>
+											<SyIcon
+												:icon="mdiFormatAlignLeft"
+												size="x-large"
+												decorative
+											/>
+										</v-btn>
+										<v-btn
+											title="centrer"
+											aria-label="centrer"
+											role="radio"
+											value="center"
+											elevation="2"
+											size="small"
+											:aria-checked="justification === 'center' ? 'true' : 'false'"
+										>
+											<SyIcon
+												:icon="mdiFormatAlignCenter"
+												size="x-large"
+												decorative
+											/>
+										</v-btn>
+										<v-btn
+											title="ferrer à droite"
+											aria-label="ferrer à droite"
+											role="radio"
+											value="right"
+											elevation="2"
+											size="small"
+											:aria-checked="justification === 'right' ? 'true' : 'false'"
+										>
+											<SyIcon
+												:icon="mdiFormatAlignRight"
+												size="x-large"
+												decorative
+											/>
+										</v-btn>
+									</v-btn-toggle>
+								</ToolbarContainer>
+							</v-sheet>
+
+							<div class="text-caption mb-2 mt-6">
+								Fond primary (thème dark) — ring onPrimary (blanc) sur l'outil actif
+							</div>
+							<v-sheet
+								color="primary"
+								rounded
+								class="pa-4"
+							>
+								<div class="v-theme--dark">
+									<ToolbarContainer
+										class="d-flex flex-wrap ga-4"
+										aria-label="Outils de mise en forme (fond sombre)"
+									>
+										<v-btn-toggle
+											v-model="justificationDark"
+											class="d-flex flex-wrap ga-2"
+											role="radiogroup"
+											aria-label="Alignement du texte"
+											color="primary"
+											style="overflow: visible;"
+										>
+											<v-btn
+												title="ferrer à gauche"
+												aria-label="ferrer à gauche"
+												role="radio"
+												value="left"
+												elevation="2"
+												size="small"
+												:aria-checked="justificationDark === 'left' ? 'true' : 'false'"
+											>
+												<SyIcon
+													:icon="mdiFormatAlignLeft"
+													size="x-large"
+													decorative
+												/>
+											</v-btn>
+											<v-btn
+												title="centrer"
+												aria-label="centrer"
+												role="radio"
+												value="center"
+												elevation="2"
+												size="small"
+												:aria-checked="justificationDark === 'center' ? 'true' : 'false'"
+											>
+												<SyIcon
+													:icon="mdiFormatAlignCenter"
+													size="x-large"
+													decorative
+												/>
+											</v-btn>
+											<v-btn
+												title="ferrer à droite"
+												aria-label="ferrer à droite"
+												role="radio"
+												value="right"
+												elevation="2"
+												size="small"
+												:aria-checked="justificationDark === 'right' ? 'true' : 'false'"
+											>
+												<SyIcon
+													:icon="mdiFormatAlignRight"
+													size="x-large"
+													decorative
+												/>
+											</v-btn>
+										</v-btn-toggle>
+									</ToolbarContainer>
 								</div>
 							</v-sheet>
 						</v-expansion-panel-text>
