@@ -2,8 +2,7 @@
 	import { computed, getCurrentInstance } from 'vue'
 	import type { RouteLocationRaw } from 'vue-router'
 	import { useTheme } from 'vuetify'
-	import logoDesktopUrl from '@/assets/logos/logo-desktop.svg'
-	import logoMobileUrl from '@/assets/logos/logo-mobile.svg'
+	import { logoDesktop as logoDesktopUrl, logoMobile as logoMobileUrl } from '@/assets/logos'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 	import { headerBreakpoint } from '../consts'
 
