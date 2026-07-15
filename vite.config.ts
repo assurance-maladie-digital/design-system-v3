@@ -57,11 +57,12 @@ export default defineConfig({
 		},
 		chunkSizeWarningLimit: 4000,
 		rollupOptions: {
-			external: ['vue', 'vue-router', /^vuetify/],
+			external: ['vue', 'vue-router', /^vuetify/, '@mdi/js'],
 			output: {
 				globals: {
-					vue: 'Vue',
-					vuetify: 'Vuetify',
+					'vue': 'Vue',
+					'vuetify': 'Vuetify',
+					'@mdi/js': 'mdi',
 				},
 			},
 		},
