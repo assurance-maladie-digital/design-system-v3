@@ -477,7 +477,7 @@ export const DefaultSlot: Story = {
 			},
 			template: `
 				<RecommendedAccessibilityStoryNotice />
-				<form>
+				<form @submit.prevent>
 					<RatingPicker v-bind="args" v-model="args.modelValue">
 						<div class="mt-8">
 
@@ -509,7 +509,7 @@ export const DefaultSlot: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<form class="mt-8">
+	<form class="mt-8" @submit.prevent>
 		<RatingPicker
 			v-model="ratingEmotion"
 			label="Êtes-vous satisfait de ce service ?"
