@@ -83,6 +83,10 @@
 		return props.readonly || (props.lockAfterSelection && hasAnswered.value)
 	})
 
+	const shouldDisplayLockingState = computed(() => {
+		return props.lockAfterSelection && !props.readonly
+	})
+
 	defineExpose({
 		focus,
 	})
@@ -111,7 +115,7 @@
 			>
 				<div
 					role="radiogroup"
-					:aria-describedby="props.lockAfterSelection ? numberPickerdescriptionId : undefined"
+					:aria-describedby="shouldDisplayLockingState ? numberPickerdescriptionId : undefined"
 					class="d-flex ga-2 flex-wrap max-width-none mb-6"
 				>
 					<div
@@ -176,7 +180,7 @@
 			</div>
 		</template>
 		<p
-			v-if="props.lockAfterSelection || !props.readonly"
+			v-if="shouldDisplayLockingState"
 			:id="numberPickerdescriptionId"
 			class="locking-state text-caption"
 			:class="{'d-sr-only': internalValue !== -1}"
