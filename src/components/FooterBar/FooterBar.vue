@@ -13,10 +13,12 @@
 	import { mdiArrowUp } from '@mdi/js'
 	import { config } from './config'
 	import { locales } from './locales'
-	import logoDarkDesktopUrl from '@/assets/logos/logo-desktop.svg'
-	import logoDarkMobileUrl from '@/assets/logos/logo-mobile.svg'
-	import logoLightDesktopUrl from '@/assets/logos/logo-desktop-white.svg'
-	import logoLightMobileUrl from '@/assets/logos/logo-mobile-white.svg'
+	import {
+		logoDesktop as logoDarkDesktopUrl,
+		logoMobile as logoDarkMobileUrl,
+		logoDesktopWhite as logoLightDesktopUrl,
+		logoMobileWhite as logoLightMobileUrl,
+	} from '@/assets/logos'
 
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 

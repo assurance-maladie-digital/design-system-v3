@@ -2,6 +2,7 @@
   "name": "@cnamts/synapse",
   "version": "1.1.1",
   "private": false,
+  "packageManager": "pnpm@10.12.4",
   "description": "CNAM DS v3",
   "type": "module",
   "files": [
@@ -70,8 +71,9 @@
     "node": ">=20.11.0"
   },
   "devDependencies": {
-    "@laynezh/vite-plugin-lib-assets": "^2.1.3",
+    "@eslint/js": "^9.39.5",
     "@jls-digital/storybook-addon-code": "^2.3.0",
+    "@laynezh/vite-plugin-lib-assets": "^2.1.3",
     "@mdi/js": "^7.4.47",
     "@simonsmith/cypress-image-snapshot": "^10.0.3",
     "@storybook/addon-a11y": "10.4.6",
@@ -128,12 +130,12 @@
     "vue3-snapshot-serializer": "^2.9.0"
   },
   "peerDependencies": {
+    "@mdi/js": "^7.4.47",
     "vue": "^3.5.18",
     "vuetify": "3.12.2"
   },
   "dependencies": {
     "@emotion/css": "^11.13.5",
-    "@mdi/js": "^7.4.47",
     "dayjs": "^1.11.13",
     "deepmerge": "^4.3.1",
     "iso-639-1": "^3.1.3",
