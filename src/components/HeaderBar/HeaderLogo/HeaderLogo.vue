@@ -2,24 +2,24 @@
 	import { computed, getCurrentInstance } from 'vue'
 	import type { RouteLocationRaw } from 'vue-router'
 	import { useTheme } from 'vuetify'
-	import useHeaderResponsiveMode from '../useHeaderResponsiveMode'
-	import { locales } from './locales'
-	import LogoMobile from './logos/Logo-mobile.vue'
-	import Logo from './logos/Logo.vue'
+	import logoDesktopUrl from '@/assets/logos/logo-desktop.svg'
+	import logoMobileUrl from '@/assets/logos/logo-mobile.svg'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
+	import { headerBreakpoint } from '../consts'
 
-	const props = withDefaults(defineProps<{
-		ariaLabel?: string
+	type PropsType = {
+		logoAlt: string
 		serviceTitle?: string
 		serviceSubtitle?: string
 		homeLink?: {
-			ariaLabel?: string
-			to?: RouteLocationRaw
-			href?: string
+			'to'?: RouteLocationRaw
+			'href'?: string
+			'aria-label'?: string
 		}
 		headingLevelTitle?: 1 | 2 | 3 | 4 | 5 | 6
-	}>(), {
-		ariaLabel: locales.ariaLabel,
+	}
+
+	const props = withDefaults(defineProps<PropsType>(), {
 		serviceTitle: undefined,
 		serviceSubtitle: undefined,
 		homeLink: () => ({
@@ -34,7 +34,7 @@
 
 	const theme = useTheme()
 	const primary = theme.current.value.colors.primary
-	const { isDesktop } = useHeaderResponsiveMode()
+	const desktopLogoMediaQuery = `(min-width: ${headerBreakpoint}px)`
 
 	const routeType = computed(() => {
 		if (props.homeLink?.to) {
@@ -62,14 +62,22 @@
 		}"
 		class="logo"
 	>
-		<Logo
-			v-if="isDesktop"
-			:aria-label="props.ariaLabel"
-		/>
-		<LogoMobile
-			v-else
-			:aria-label="props.ariaLabel"
-		/>
+		<picture class="logo-picture">
+			<source
+				:media="desktopLogoMediaQuery"
+				:srcset="logoDesktopUrl"
+				type="image/svg+xml"
+				width="165"
+				height="50"
+			>
+			<img
+				class="logo-image"
+				:src="logoMobileUrl"
+				:alt="props.logoAlt"
+				width="141"
+				height="42"
+			>
+		</picture>
 
 		<slot
 			name="brand-content"
@@ -119,6 +127,22 @@
 	font-family: Cabin, Arial, Helvetica, sans-serif;
 	text-decoration: none;
 	cursor: pointer;
+
+	// Ring DS au focus clavier (remplace l'outline navigateur par défaut)
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 3px;
+		border-radius: 4px;
+	}
+}
+
+.logo-picture {
+	flex-grow: 0;
+	flex-shrink: 0;
+}
+
+.logo-image {
+	display: block;
 }
 
 .logo :deep(svg) {

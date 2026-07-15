@@ -4,9 +4,10 @@ import { resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
-const rawReportPath = resolve(rootDir, 'a11y-raw.json')
-const summaryJsonPath = resolve(rootDir, 'a11y-report.json')
-const summaryMdPath = resolve(rootDir, 'a11y-report.md')
+const dataDir = resolve(rootDir, 'scripts/data')
+const rawReportPath = resolve(dataDir, 'a11y-raw.json')
+const summaryJsonPath = resolve(dataDir, 'a11y-report.json')
+const summaryMdPath = resolve(dataDir, 'a11y-report.md')
 
 const ansiRegex = new RegExp('\u001B\[[0-9;]*m', 'g')
 

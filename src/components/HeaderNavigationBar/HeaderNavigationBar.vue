@@ -140,6 +140,7 @@
 		:home-aria-label="homeAriaLabel"
 		:service-title="serviceTitle"
 		:service-subtitle="serviceSubtitle"
+		:home-link="homeLink"
 		:width="width"
 	>
 		<template #menu>

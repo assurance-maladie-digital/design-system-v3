@@ -1,356 +1,140 @@
-import { Meta, Title, Subtitle, Description, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Meta, Story } from '@storybook/addon-docs/blocks';
 import * as SyCheckboxStories from '../SyCheckbox.stories';
 import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
-import '@/stories/styles/shared.css';
+import {
+  AccessibilityGuideLayout,
+  CriteriaSection,
+  CriteriaCard,
+  DemoSection,
+  BestPracticesSection,
+  ResourcesSection,
+  AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={SyCheckboxStories} name="Accessibility" />
 
-<div className="accessibility-guide">
-<div className="header">
-  <h1>Guide d'Accessibilité du Composant SyCheckbox</h1>
-</div>
-  
-  <div className="intro-section">
-    <img 
-      src={AccessibilityIcon} 
-      alt="Icône d'accessibilité" 
-      className="accessibility-icon"
-    />
-    <p className="intro-text">
-      Le composant SyCheckbox a été conçu en suivant rigoureusement les recommandations d'accessibilité du W3C, 
-      notamment le modèle <a href="https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/examples/checkbox-mixed/" target="_blank" rel="noopener noreferrer">WAI-ARIA pour les cases à cocher tri-état</a>. 
-      Ce guide détaille comment notre implémentation respecte ces standards et garantit une expérience utilisateur inclusive.
-    </p>
-</div>
+<AccessibilityGuideLayout
+  componentName="SyCheckbox"
+  iconSrc={AccessibilityIcon}
+  apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/examples/checkbox-mixed/"
+  apgLabel="WAI-ARIA pour les cases à cocher tri-état"
+>
+  <AuditSection>
+    <div class="mt-2">
+      <p>Rapport d'audit manuel : <a href="/audits/SyCheckbox.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+    </div>
+  </AuditSection>
 
-  <div className="criteria-section">
-    <h2>Critères d'accessibilité respectés</h2>
-    
-    <div className="criteria-card">
-      <div className="criteria-header">
-        <span className="criteria-icon"></span>
-        <h3>Structure sémantique</h3>
-      </div>
+  <CriteriaSection>
+    <CriteriaCard title="Structure sémantique">
       <ul>
         <li><strong>Rôles ARIA appropriés</strong> : <code>role="checkbox"</code> pour la case à cocher</li>
         <li><strong>État de la case à cocher</strong> : <code>aria-checked</code> avec les valeurs <code>true</code>, <code>false</code> ou <code>mixed</code> pour l'état indéterminé</li>
-        <li><strong>Relations entre éléments</strong> : <code>aria-controls</code> pour indiquer les éléments contrôlés par la case à cocher parent</li>
+        <li><strong>Relations entre éléments</strong> : Structure de groupe explicite dans l'application pour associer la case parent et les cases enfants</li>
         <li><strong>Étiquetage explicite</strong> : Association claire entre la case à cocher et son label</li>
       </ul>
-    </div>
-    
-    <div className="criteria-card">
-      <div className="criteria-header">
-        <span className="criteria-icon"></span>
-        <h3>Navigation clavier complète</h3>
-      </div>
+    </CriteriaCard>
+
+    <CriteriaCard title="Navigation clavier complète">
       <ul>
         <li><strong>Touche Espace</strong> : Pour activer/désactiver la case à cocher</li>
         <li><strong>Touche Tab</strong> : Navigation séquentielle entre les cases à cocher</li>
         <li><strong>Focus visible</strong> : Indication claire de l'élément actuellement focalisé</li>
         <li><strong>Gestion des états multiples</strong> : Cycle entre les états non coché, coché et indéterminé</li>
       </ul>
-    </div>
-    
-    <div className="criteria-card">
-      <div className="criteria-header">
-        <span className="criteria-icon"></span>
-        <h3>États et retours d'information</h3>
-      </div>
+    </CriteriaCard>
+
+    <CriteriaCard title="États et retours d'information">
       <ul>
         <li><strong>État de sélection</strong> : <code>aria-checked</code> indique si la case est cochée, non cochée ou indéterminée</li>
         <li><strong>État de désactivation</strong> : <code>aria-disabled</code> signale les éléments non disponibles</li>
         <li><strong>Indication visuelle</strong> : Symboles distincts pour chaque état (coché, non coché, indéterminé)</li>
         <li><strong>Validation visuelle</strong> : Couleurs et icônes spécifiques pour les états d'erreur, d'avertissement et de succès</li>
       </ul>
-    </div>
-    
-    <div className="criteria-card">
-      <div className="criteria-header">
-        <span className="criteria-icon"></span>
-        <h3>Personnalisation accessible</h3>
-      </div>
+    </CriteriaCard>
+
+    <CriteriaCard title="Personnalisation accessible">
       <ul>
         <li><strong>Contraste configurable</strong> : Options de couleurs pour garantir un contraste suffisant</li>
         <li><strong>Taille et espacement</strong> : Dimensions adaptées pour faciliter l'interaction tactile</li>
         <li><strong>Compatibilité avec le mode contraste élevé</strong> : Utilisation de <code>currentColor</code> pour s'adapter aux paramètres système</li>
         <li><strong>Densité ajustable</strong> : Options de densité pour s'adapter aux besoins des utilisateurs</li>
       </ul>
-    </div>
-  </div>
+    </CriteriaCard>
+  </CriteriaSection>
 
-  <div className="aria-management-section">
-    <h2>Gestion des attributs ARIA</h2>
-    <p>
-      Pour garantir la conformité ARIA, le composant SyCheckbox gère activement les conflits potentiels 
-      avec l'implémentation native de Vuetify :
-    </p>
-    <ul>
-      <li><strong>Suppression des attributs conflictuels</strong> : Les attributs ARIA natifs de Vuetify sont automatiquement supprimés de l'élément input pour éviter les doublons</li>
-      <li><strong>Gestion centralisée</strong> : L'attribut <code>aria-checked</code> est géré au niveau du composant SyCheckbox et non au niveau de l'input natif</li>
-      <li><strong>Conformité garantie</strong> : Cette approche garantit que l'attribut <code>aria-checked</code> reflète toujours l'état réel du composant (true, false ou mixed)</li>
-    </ul>
-    <p>
-      Cette gestion préventive évite les erreurs d'audit d'accessibilité qui pourraient survenir 
-      lorsque plusieurs attributs ARIA contradictoires sont présents sur le même élément.
-    </p>
-  </div>
-
-  <div className="tri-state-section">
-    <h2>Fonctionnalité tri-état (indéterminé)</h2>
-    <p>
-      Le composant SyCheckbox prend en charge l'état indéterminé, particulièrement utile pour représenter :
-    </p>
-    <ul>
-      <li>Une sélection partielle d'éléments dans un groupe</li>
-      <li>Un état intermédiaire avant que l'utilisateur ne fasse un choix définitif</li>
-      <li>Une relation parent-enfant où certains éléments enfants sont sélectionnés</li>
-    </ul>
-    <p>
-      Conformément aux recommandations WAI-ARIA, notre implémentation de l'état indéterminé :
-    </p>
-    <ul>
-      <li>Utilise l'attribut <code>aria-checked="mixed"</code> pour les lecteurs d'écran</li>
-      <li>Fournit un indicateur visuel distinct pour l'état indéterminé</li>
-      <li>Gère correctement le cycle des états lors de l'interaction utilisateur</li>
-      <li>Maintient la cohérence entre l'état parent et les états des enfants</li>
-    </ul>
-  </div>
-
-  <div className="demo-section">
-    <h2>Démonstration interactive</h2>
-    <p>
-      Explorez ci-dessous un exemple de SyCheckbox entièrement accessible avec état indéterminé. 
-      Essayez de naviguer en utilisant uniquement votre clavier (Tab pour naviguer, Espace pour activer) pour tester l'accessibilité.
-    </p>
-    <Primary />
-  </div>
-
-  <div className="parent-child-section">
-    <h2>Relation parent-enfant</h2>
-    <p>
-      Le composant SyCheckbox permet de créer des relations parent-enfant entre les cases à cocher, où :
-    </p>
-    <ul>
-      <li>La case à cocher parent contrôle l'état de toutes les cases à cocher enfants</li>
-      <li>L'état de la case à cocher parent reflète l'état collectif des enfants :</li>
+  <CriteriaSection title="Fonctionnalités avancées">
+    <CriteriaCard title="Gestion des attributs ARIA">
       <ul>
-        <li>Cochée : tous les enfants sont cochés</li>
-        <li>Non cochée : aucun enfant n'est coché</li>
-        <li>Indéterminée : certains enfants sont cochés, d'autres non</li>
+        <li><strong>Suppression des attributs conflictuels</strong> : Les attributs ARIA natifs de Vuetify sont automatiquement supprimés de l'élément input pour éviter les doublons</li>
+        <li><strong>Gestion centralisée</strong> : L'attribut <code>aria-checked</code> est géré au niveau du composant SyCheckbox et non au niveau de l'input natif</li>
+        <li><strong>Conformité garantie</strong> : Cette approche garantit que l'attribut <code>aria-checked</code> reflète toujours l'état réel du composant (true, false ou mixed)</li>
+        <li><strong>Prévention des erreurs d'audit</strong> : Évite les conflits lorsque plusieurs attributs ARIA contradictoires sont présents sur le même élément</li>
       </ul>
-    </ul>
-    <p>
-      Cette relation est établie via la propriété <code>controlsIds</code> qui liste les identifiants des cases à cocher enfants.
-    </p>
-  </div>
+    </CriteriaCard>
 
-  <div className="decorative-mode-section">
-    <h2>Mode Décoratif (Imbrication)</h2>
-    <p>
-      Le composant SyCheckbox dispose d'une propriété <code>decorative</code> permettant de l'utiliser de manière purement visuelle. 
-      Dans ce mode, la case à cocher n'inclut pas d'élément <code>&lt;input type="checkbox"&gt;</code> natif et est masquée aux lecteurs d'écran via <code>aria-hidden="true"</code>.
-    </p>
-    <p>
-      Ce mode est <strong>indispensable pour respecter l'accessibilité</strong> lorsque la case à cocher doit être imbriquée dans un autre composant interactif (par exemple, une option de <code>listbox</code> ou une ligne cliquable de tableau). 
-      Les règles WAI-ARIA interdisent l'imbrication d'éléments interactifs. Le composant parent assume alors la responsabilité d'annoncer l'état de sélection (ex: via <code>aria-selected</code> ou <code>aria-checked</code> au niveau de la ligne).
-    </p>
-  </div>
+    <CriteriaCard title="Description complémentaire (aria-describedby)">
+      <ul>
+        <li><strong>Texte d'aide</strong> : Lorsque la prop <code>helpText</code> est fournie conjointement à une prop <code>id</code>, un élément de description est rendu sous la case à cocher avec l'identifiant <code>{id}-help-text</code>. L'attribut <code>aria-describedby</code> de l'input pointe automatiquement vers cet élément, permettant aux lecteurs d'écran d'en lire le contenu après le label.</li>
+        <li><strong>Labelisation externe</strong> : Lorsque la prop <code>ariaLabelledby</code> est renseignée, sa valeur est également injectée dans <code>aria-describedby</code> afin de conserver la relation de description programmatique.</li>
+        <li><strong>Valeurs composites</strong> : Si <code>ariaLabelledby</code> et <code>helpText</code> sont simultanément actifs, <code>aria-describedby</code> contient les deux identifiants séparés par un espace (<code>"{ariaLabelledby} {id}-help-text"</code>), conformément à la spécification WAI-ARIA.</li>
+        <li><strong>Masquage en cas d'erreur</strong> : Le <code>helpText</code> et sa référence dans <code>aria-describedby</code> sont automatiquement supprimés dès qu'un message de validation (erreur, avertissement ou succès) est affiché, évitant ainsi une description redondante ou contradictoire.</li>
+      </ul>
+    </CriteriaCard>
 
-  <div className="best-practices">
-    <h2>Bonnes pratiques d'utilisation</h2>
+    <CriteriaCard title="Fonctionnalité tri-état (indéterminé)">
+      <ul>
+        <li>Utilise l'attribut <code>aria-checked="mixed"</code> pour les lecteurs d'écran</li>
+        <li>Fournit un indicateur visuel distinct pour l'état indéterminé</li>
+        <li>Gère correctement le cycle des états lors de l'interaction utilisateur, au clic comme avec la touche Espace</li>
+        <li>L'état indéterminé doit provenir d'une sélection partielle réelle des enfants, pas d'une rotation automatique du parent</li>
+        <li>La propriété <code>cycleIndeterminate</code> permet de restaurer une dernière sélection partielle depuis le parent</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Relation parent-enfant">
+      <ul>
+        <li>La case à cocher parent contrôle l'état de toutes les cases à cocher enfants via la synchronisation applicative des valeurs</li>
+        <li><strong>Cochée</strong> : tous les enfants sont cochés</li>
+        <li><strong>Non cochée</strong> : aucun enfant n'est coché</li>
+        <li><strong>Indéterminée</strong> : certains enfants sont cochés, d'autres non (<code>aria-checked="mixed"</code>)</li>
+        <li>L'état du parent est recalculé depuis les valeurs réelles des enfants après chaque modification</li>
+        <li>La prop <code>controlsIds</code> n'est plus utilisée ; <code>cycleIndeterminate</code> sert uniquement à permettre le retour à une sélection partielle mémorisée</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Mode Décoratif (Imbrication)">
+      <ul>
+        <li>La propriété <code>decorative</code> permet une utilisation purement visuelle</li>
+        <li>Dans ce mode, la case n'inclut pas d'<code>&lt;input type="checkbox"&gt;</code> natif et est masquée via <code>aria-hidden="true"</code></li>
+        <li><strong>Indispensable</strong> lorsque la case doit être imbriquée dans un autre composant interactif (option de <code>listbox</code>, ligne cliquable de tableau)</li>
+        <li>Le composant parent assume alors l'annonce de l'état de sélection (<code>aria-selected</code> ou <code>aria-checked</code> au niveau de la ligne)</li>
+      </ul>
+    </CriteriaCard>
+  </CriteriaSection>
+
+  <DemoSection componentName="SyCheckbox">
+    <Story of={SyCheckboxStories.Indeterminate} />
+  </DemoSection>
+
+  <BestPracticesSection>
     <ul>
       <li>Utilisez des libellés clairs et concis pour décrire l'action associée à la case à cocher</li>
       <li>Regroupez les cases à cocher liées dans un fieldset avec une légende explicative</li>
+      <li>Présentez plusieurs cases à cocher liées sous forme de liste (<code>&lt;ul&gt;</code>/<code>&lt;li&gt;</code> ou <code>&lt;ol&gt;</code>/<code>&lt;li&gt;</code>) afin d'expliciter le nombre d'options et leur appartenance au même groupe</li>
       <li>Évitez de modifier l'état d'une case à cocher automatiquement sans action utilisateur explicite</li>
       <li>Assurez-vous que la taille de la zone cliquable est suffisante (au moins 44×44 pixels pour les interfaces tactiles)</li>
       <li>Utilisez l'état indéterminé uniquement pour indiquer une sélection partielle, pas un troisième état fonctionnel</li>
       <li>Fournissez un retour visuel et textuel clair pour les erreurs de validation</li>
     </ul>
-  </div>
+  </BestPracticesSection>
 
-  <div className="resources-section">
-    <h2>Ressources supplémentaires</h2>
+  <ResourcesSection>
     <ul>
       <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/" target="_blank" rel="noopener noreferrer">Guide des pratiques d'auteur WAI-ARIA pour les cases à cocher</a></li>
       <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/examples/checkbox-mixed/" target="_blank" rel="noopener noreferrer">Exemple de case à cocher tri-état WAI-ARIA</a></li>
       <li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
       <li><a href="https://www.w3.org/TR/wai-aria-1.2/#checkbox" target="_blank" rel="noopener noreferrer">Spécification WAI-ARIA 1.2 pour le rôle checkbox</a></li>
     </ul>
-  </div>
-</div>
-
-<style>
-{`
-  .accessibility-guide {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    color: #333;
-  }
-
-  .intro-section {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    border-left: 5px solid #0077cc;
-  }
-
-  .accessibility-icon {
-    width: 60px;
-    height: 60px;
-    margin-right: 20px;
-    flex-shrink: 0;
-  }
-
-  .intro-text {
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  .criteria-section {
-    margin-bottom: 40px;
-  }
-
-  .criteria-section h2,
-  .demo-section h2,
-  .aria-management-section h2,
-  .tri-state-section h2,
-  .parent-child-section h2,
-  .decorative-mode-section h2,
-  .best-practices h2,
-  .resources-section h2 {
-    border-bottom: 2px solid #eaecef;
-    padding-bottom: 10px;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    color: #0077cc;
-  }
-
-  .criteria-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-
-  .criteria-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-
-  .criteria-icon {
-    font-size: 1.8em;
-    margin-right: 15px;
-  }
-
-  .criteria-header h3 {
-    margin: 0;
-    font-size: 1.3em;
-    color: #0077cc;
-  }
-
-  .criteria-card ul {
-    margin: 0;
-    padding-left: 20px;
-  }
-
-  .criteria-card li {
-    margin-bottom: 8px;
-    line-height: 1.5;
-  }
-
-  .demo-section {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 40px;
-  }
-
-  .aria-management-section {
-    background-color: #fff9e6;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-    border-left: 5px solid #ff9800;
-  }
-
-  .aria-management-section ul {
-    padding-left: 20px;
-  }
-
-  .aria-management-section li {
-    margin-bottom: 8px;
-    line-height: 1.5;
-  }
-
-  .tri-state-section,
-  .parent-child-section,
-  .decorative-mode-section {
-    background-color: #f0f7ff;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-  }
-
-  .tri-state-section p,
-  .parent-child-section p,
-  .decorative-mode-section p {
-    line-height: 1.6;
-  }
-
-  .best-practices {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 30px;
-  }
-
-  .best-practices ul {
-    padding-left: 20px;
-  }
-
-  .best-practices li {
-    margin-bottom: 10px;
-    line-height: 1.5;
-  }
-
-  .resources-section {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-  }
-
-  .resources-section ul {
-    padding-left: 20px;
-  }
-
-  .resources-section li {
-    margin-bottom: 10px;
-  }
-
-  .resources-section a {
-    color: #0077cc;
-    text-decoration: none;
-  }
-
-  .resources-section a:hover {
-    text-decoration: underline;
-  }
-
-  code {
-    background-color: #f0f0f0;
-    padding: 2px 5px;
-    border-radius: 3px;
-    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-    font-size: 0.9em;
-  }
-`}
-</style>
+  </ResourcesSection>
+</AccessibilityGuideLayout>

@@ -48,8 +48,8 @@
     "func:inject:dry": "node ./scripts/inject-functional-version.mjs --dry-run",
     "docs:update": "node ./scripts/a11y-update.mjs",
     "docs:check": "node ./scripts/docs-check-update.mjs",
-    "a11y:status": "node generate-a11y-report.mjs",
-    "info:components": "node generate-component-info.mjs",
+    "a11y:status": "node ./scripts/generate-a11y-report.mjs",
+    "info:components": "node ./scripts/generate-component-info.mjs",
     "test:visual": "cypress run --component --browser electron",
     "test:visual:open": "cypress open --component --browser electron",
     "test:visual:update": "cypress run --component --browser electron --env updateSnapshots=true",
@@ -70,6 +70,7 @@
     "node": ">=20.11.0"
   },
   "devDependencies": {
+    "@laynezh/vite-plugin-lib-assets": "^2.1.3",
     "@jls-digital/storybook-addon-code": "^2.3.0",
     "@mdi/js": "^7.4.47",
     "@simonsmith/cypress-image-snapshot": "^10.0.3",

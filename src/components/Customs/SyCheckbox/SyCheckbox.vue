@@ -1,13 +1,14 @@
 <script lang="ts" setup>
-	import { computed, ref, watch, onMounted, onUpdated, nextTick, type Ref } from 'vue'
+	import { computed, ref, useId, watch } from 'vue'
 	import type { VCheckbox } from 'vuetify/components/VCheckbox'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiCheckboxBlankOutline, mdiCheckboxMarked, mdiMinusBox } from '@mdi/js'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
-	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useSyCheckboxValidation } from './composables/useSyCheckboxValidation'
+	import { useSyCheckboxA11y } from './composables/useSyCheckboxA11y'
 	import { cnamSemanticTokens } from '@/designTokens/tokens/cnam/cnamSemantic'
 	import type { SyCheckboxProps } from './types'
+	import { vRgaaSvgFix } from '@/directives/rgaaSvgFix'
 
 	const props = withDefaults(
 		defineProps<SyCheckboxProps>(),
@@ -18,6 +19,7 @@
 			helpText: '',
 			ariaLabel: undefined,
 			ariaLabelledby: undefined,
+			ariaDescribedby: undefined,
 			title: undefined,
 			color: 'primary',
 			hideDetails: 'auto',
@@ -27,7 +29,7 @@
 			value: undefined,
 			trueValue: () => true,
 			falseValue: () => false,
-			controlsIds: () => [],
+			cycleIndeterminate: false,
 			displayAsterisk: false,
 			decorative: false,
 			...validationPropsDefaults,
@@ -35,7 +37,7 @@
 		},
 	)
 
-	const emit = defineEmits(['update:modelValue', 'update:indeterminate', 'change'])
+	const emit = defineEmits(['update:modelValue', 'update:indeterminate'])
 
 	const checkboxRef = ref<VCheckbox | null>(null)
 
@@ -56,7 +58,6 @@
 				emit('update:indeterminate', false)
 			}
 			emit('update:modelValue', value)
-			emit('change', value)
 		},
 	})
 
@@ -66,7 +67,6 @@
 
 	// Validation via le composable unifié dédié
 	const {
-		validate,
 		validateOnSubmit,
 		clearValidation,
 		errors,
@@ -75,7 +75,7 @@
 		hasError,
 		hasWarning,
 		hasSuccess,
-	} = useSyCheckboxValidation(props, model as Ref<boolean | null>, focused)
+	} = useSyCheckboxValidation(props, model, focused)
 
 	// Texte d'aide affiché sous la case, tant qu'aucun message de validation n'est présent
 	const showHelpText = computed(() =>
@@ -94,12 +94,6 @@
 			emit('update:indeterminate', false)
 		}
 		model.value = false
-	}
-
-	// Validation au blur (en mode eager, c'est sans effet de bord)
-	const checkErrorOnBlur = () => {
-		focused.value = false
-		return validate()
 	}
 
 	const ariaChecked = computed(() => {
@@ -123,87 +117,53 @@
 		}
 	})
 
-	// Propriétés ARIA personnalisées pour éviter les conflits
-	const messageId = computed(() => {
-		// Don't create messageId if aria-labelledby is provided
+	useSyCheckboxA11y(checkboxRef)
+
+	const id = computed(() => props.id || useId())
+
+	const messageAriaDescribedby = computed(() => {
+		const describedbyIds: string[] = []
 		if (props.ariaLabelledby) {
-			return undefined
+			describedbyIds.push(props.ariaLabelledby)
 		}
-
-		// Create messageId for checkboxes with IDs
-		if (props.id) {
-			return `${props.id}`
+		if (showHelpText.value) {
+			describedbyIds.push(`${id.value}-help-text`)
 		}
-		return undefined
+		return describedbyIds.length > 0 ? describedbyIds.join(' ') : undefined
 	})
-
-	// Fonction pour supprimer les attributs ARIA non désirés des éléments input
-	const removeAriaAttributes = () => {
-		nextTick(() => {
-			if (checkboxRef.value) {
-				const checkboxInput = checkboxRef.value.$el?.querySelector('input[type="checkbox"]')
-				if (checkboxInput) {
-					// Supprimer aria-disabled="false" car il est redondant
-					if (checkboxInput.getAttribute('aria-disabled') === 'false') {
-						checkboxInput.removeAttribute('aria-disabled')
-					}
-					// Supprimer aria-checked natif de Vuetify pour éviter les conflits
-					// Notre composant gère aria-checked au niveau du wrapper VCheckbox
-					if (checkboxInput.hasAttribute('aria-checked')) {
-						checkboxInput.removeAttribute('aria-checked')
-					}
-				}
-			}
-		})
-	}
-
-	// Appliquer la correction lors du montage et de la mise à jour du composant
-	onMounted(() => {
-		removeAriaAttributes()
-	})
-
-	onUpdated(() => {
-		removeAriaAttributes()
-	})
-
-	// Intégration avec le système de validation du formulaire (auto-enregistrement SyForm)
-	useValidatable(validateOnSubmit, clearValidation, reset)
 
 	const toggleMixed = () => {
-		if (!props.readonly && !props.disabled) {
-			if (internalIndeterminate.value) {
-				// Désactiver l'état indéterminé
-				internalIndeterminate.value = false
-				emit('update:indeterminate', false)
-				// Émettre l'événement update:modelValue directement
-				emit('update:modelValue', true)
-				emit('change', true)
-			}
-			else if (model.value) {
-				// Émettre l'événement update:modelValue directement
-				emit('update:modelValue', false)
-				emit('change', false)
-			}
-			else {
-				if (props.controlsIds.length > 0) {
-					// Activer l'état indéterminé
-					internalIndeterminate.value = true
-					emit('update:indeterminate', true)
-				}
-				else {
-					// Émettre l'événement update:modelValue directement
-					emit('update:modelValue', true)
-					emit('change', true)
-				}
-			}
+		if (props.readonly || props.disabled) {
+			return
 		}
+		if (internalIndeterminate.value) {
+			internalIndeterminate.value = false
+			emit('update:indeterminate', false)
+			emit('update:modelValue', true)
+		}
+		else if (model.value === true) {
+			model.value = false
+		}
+		else {
+			internalIndeterminate.value = true
+			emit('update:indeterminate', true)
+		}
+	}
+
+	const handleActivation = (event: Event) => {
+		if (!props.cycleIndeterminate) {
+			return
+		}
+
+		event.preventDefault()
+		event.stopPropagation()
+		toggleMixed()
 	}
 
 	defineExpose({
 		validateOnSubmit,
 		clearValidation,
 		reset,
-		checkErrorOnBlur,
 		toggleMixed,
 	})
 </script>
@@ -235,13 +195,15 @@
 		<!-- Rendu interactif standard -->
 		<VCheckbox
 			v-else
-			:id="props.id"
+			:id="id"
 			ref="checkboxRef"
 			v-model="model"
+			v-rgaa-svg-fix="{ onlyInner: true }"
 			:name="props.name"
 			:label="generatedLabel"
 			:aria-label="props.ariaLabel"
 			:aria-labelledby="props.ariaLabelledby"
+			:aria-describedby="messageAriaDescribedby"
 			:title="props.title"
 			:color="props.color"
 			:class="{
@@ -251,6 +213,8 @@
 			}"
 			:style="{ color: labelColor }"
 			:disabled="props.disabled"
+			:aria-disabled="props.readonly ? 'true' : undefined"
+			:required="props.required"
 			:readonly="props.readonly"
 			:hide-details="props.hideDetails"
 			:density="props.density"
@@ -261,10 +225,10 @@
 			:true-value="props.trueValue"
 			:false-value="props.falseValue"
 			:aria-checked="ariaChecked"
-			:aria-describedby="messageId"
-			@click="toggleMixed"
+			@click.capture="handleActivation"
+			@keydown.space.capture="handleActivation"
 			@focus="focused = true"
-			@blur="checkErrorOnBlur"
+			@blur="focused = false"
 		>
 			<template
 				v-if="$slots.label"
@@ -282,6 +246,7 @@
 
 		<div
 			v-if="showHelpText"
+			:id="`${id}-help-text`"
 			class="help-text-below"
 			:class="{ 'text-disabled': props.disabled }"
 		>

@@ -8,7 +8,7 @@ describe('HeaderLogo', () => {
 		document.body.innerHTML = ''
 	})
 
-	it('should render the component in mobile mode and desktop', async () => {
+	it('should render native picture sources for mobile and desktop logos', async () => {
 		// Test mobile mode
 		// @ts-expect-error  - Property 'happyDOM' does not exist on type 'Window & typeof globalThis'.
 		window.happyDOM.setInnerWidth(600)
@@ -17,13 +17,12 @@ describe('HeaderLogo', () => {
 			attachTo: document.body,
 		})
 
-		// Wait for reactive updates
 		await mobileWrapper.vm.$nextTick()
 		const mobileMode = mobileWrapper.html()
 
-		// Verify mobile mode renders LogoMobile (width="141" height="42")
-		expect(mobileMode).toContain('width="141"')
-		expect(mobileMode).toContain('height="42"')
+		// Verify picture fallback img exists for mobile
+		expect(mobileMode).toContain('<picture')
+		expect(mobileMode).toContain('logo-mobile.svg')
 		mobileWrapper.unmount()
 
 		// Test desktop mode
@@ -34,26 +33,23 @@ describe('HeaderLogo', () => {
 			attachTo: document.body,
 		})
 
-		// Wait for reactive updates
 		await desktopWrapper.vm.$nextTick()
 		const desktopMode = desktopWrapper.html()
 
-		// Verify desktop mode renders Logo (width="211" height="63")
-		expect(desktopMode).toContain('width="165"')
-		expect(desktopMode).toContain('height="50"')
-		// And doesn't contain mobile dimensions
-		expect(desktopMode).not.toContain('width="141"')
+		// Verify desktop source is present in picture
+		expect(desktopMode).toContain('logo-desktop.svg')
+		expect(desktopMode).toContain('min-width: 990px')
 		desktopWrapper.unmount()
 
-		// Ensure they are different
-		expect(mobileMode).not.toEqual(desktopMode)
+		// Ensure source declarations are stable regardless of viewport
+		expect(mobileMode).toContain('min-width: 990px')
 	})
 
 	it('sould display the service and the logo aria-label', async () => {
 		const wrapper = mount(HeaderLogo, {
 			props: {
+				logoAlt: 'Test aria label',
 				headingLevelTitle: 2,
-				ariaLabel: 'Test aria label',
 				serviceTitle: 'Test service title',
 				serviceSubtitle: 'Test service subtitle',
 			},
@@ -63,13 +59,14 @@ describe('HeaderLogo', () => {
 
 		expect(render).toContain('Test service title')
 		expect(render).toContain('Test service subtitle')
-		expect(render).toContain('Test aria label')
+		expect(wrapper.find('img[alt="Test aria label"]').exists()).toBe(true)
 	})
 
 	it('should render only the serviceTitle slot when set', async () => {
 		const wrapper = mount(HeaderLogo, {
 			props: {
 				headingLevelTitle: 2,
+				logoAlt: 'Test aria label',
 				serviceTitle: 'Test service title',
 			},
 			slots: {
@@ -88,6 +85,7 @@ describe('HeaderLogo', () => {
 			global: {
 				stubs: ['RouterLink'] },
 			props: {
+				logoAlt: 'Test aria label',
 				headingLevelTitle: 2,
 				homeLink: {
 					to: '/',
@@ -102,6 +100,8 @@ describe('HeaderLogo', () => {
 	it('render a div when there there is no `RouterLink` component registered', async () => {
 		const wrapper = mount(HeaderLogo, {
 			props: {
+				ariaLabel: 'Test aria label',
+				logoAlt: 'Test aria label',
 				headingLevelTitle: 2,
 				homeLink: {
 					to: '/',
@@ -115,6 +115,7 @@ describe('HeaderLogo', () => {
 	it('render a div when the homeLink properties `to` and `href` are both set to `undefined`', async () => {
 		const wrapper = mount(HeaderLogo, {
 			props: {
+				logoAlt: 'Test aria label',
 				headingLevelTitle: 2,
 				homeLink: {
 					to: undefined,
@@ -124,5 +125,22 @@ describe('HeaderLogo', () => {
 		})
 
 		expect(wrapper.find('.logo').element.tagName).toBe('DIV')
+	})
+
+	it('should use browser-native source selection for desktop and mobile svg files', async () => {
+		const wrapper = mount(HeaderLogo, {
+			attachTo: document.body,
+		})
+
+		const source = wrapper.find('source')
+		const image = wrapper.find('img')
+
+		expect(source.exists()).toBe(true)
+		expect(source.attributes('media')).toBe('(min-width: 990px)')
+		expect(source.attributes('srcset')).toContain('logo-desktop.svg')
+		expect(image.exists()).toBe(true)
+		expect(image.attributes('src')).toContain('logo-mobile.svg')
+
+		wrapper.unmount()
 	})
 })

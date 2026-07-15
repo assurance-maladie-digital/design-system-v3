@@ -3,8 +3,9 @@
  *
  * Génère src/stories/Demarrer/component-info.json :
  * pour chaque composant (set de a11y-status.json), son titre Storybook (pour le lien),
- * sa dernière mise à jour fonctionnelle (functional-history-data.json) et ses 10 derniers
- * commits git.
+ * son statut, sa dernière mise à jour fonctionnelle (functional-history-data.json),
+ * sa dernière mise à jour accessibilité (a11y-history-data.json), ses 10 derniers
+ * commits fonctionnels et ses commits accessibilité (a11y-commits-data.json).
  *
  * Usage : node generate-component-info.mjs
  */
@@ -15,15 +16,24 @@ import { execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const root = __dirname;
+const root = path.resolve(__dirname, '..');
+const dataDir = path.join(root, 'scripts/data');
 
 const a11yStatusPath = path.join(root, 'src/stories/Accessibilite/DesignSystem/a11y-status.json');
-const funcHistoryPath = path.join(root, 'functional-history-data.json');
+const funcHistoryPath = path.join(dataDir, 'functional-history-data.json');
+const a11yHistoryPath = path.join(dataDir, 'a11y-history-data.json');
+const a11yCommitsPath = path.join(dataDir, 'a11y-commits-data.json');
 const outputPath = path.join(root, 'src/stories/Demarrer/component-info.json');
 
 const a11yStatus = JSON.parse(fs.readFileSync(a11yStatusPath, 'utf8'));
 const funcHistory = fs.existsSync(funcHistoryPath)
   ? JSON.parse(fs.readFileSync(funcHistoryPath, 'utf8'))
+  : {};
+const a11yHistory = fs.existsSync(a11yHistoryPath)
+  ? JSON.parse(fs.readFileSync(a11yHistoryPath, 'utf8'))
+  : {};
+const a11yCommits = fs.existsSync(a11yCommitsPath)
+  ? JSON.parse(fs.readFileSync(a11yCommitsPath, 'utf8'))
   : {};
 
 // Filtres identiques au badge fonctionnel (functional-history-report.mjs) : on ne garde que
@@ -92,19 +102,29 @@ function getMainVue(componentPath, leaf) {
   }
 }
 
+// Résout une entrée d'historique (fonctionnelle, a11y ou liste de commits) par nom de composant
+// ou par nom du .vue principal, avec fallback sur le chemin complet.
+function resolveHistory(data, leaf, fullName, mainVue) {
+  return data[leaf] || data[fullName] || (mainVue ? data[mainVue] : null) || null;
+}
+
 const results = a11yStatus.results.map((r) => {
   const leaf = r.componentName.split('/').pop();
   const componentPath = `src/components/${r.componentName}`;
   const mainVue = getMainVue(componentPath, leaf);
-  const func =
-    funcHistory[leaf] || funcHistory[r.componentName] || (mainVue ? funcHistory[mainVue] : null) || null;
+  const func = resolveHistory(funcHistory, leaf, r.componentName, mainVue);
+  const a11y = resolveHistory(a11yHistory, leaf, r.componentName, mainVue);
+  const a11yCommitList = resolveHistory(a11yCommits, leaf, r.componentName, mainVue);
   return {
     componentName: r.componentName,
     storybookTitle: r.storybookTitle || null,
     status: isDeprecated(componentPath) ? 'déprécié' : 'actif',
     functionalVersion: func ? func.version : null,
     functionalDate: func ? func.date : null,
+    a11yVersion: a11y ? a11y.version : null,
+    a11yDate: a11y ? a11y.date : null,
     commits: getLast10FunctionalCommits(componentPath),
+    a11yCommits: a11yCommitList || [],
   };
 });
 

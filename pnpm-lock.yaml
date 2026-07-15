@@ -63,6 +63,9 @@ devDependencies:
   '@jls-digital/storybook-addon-code':
     specifier: ^2.3.0
     version: 2.3.0(react@19.2.7)(storybook@10.4.6)
+  '@laynezh/vite-plugin-lib-assets':
+    specifier: ^2.1.3
+    version: 2.1.3(vite@6.4.3)
   '@simonsmith/cypress-image-snapshot':
     specifier: ^10.0.3
     version: 10.0.4(cypress@15.18.0)
@@ -1021,6 +1024,18 @@ packages:
 
   /@keyv/serialize@1.1.1:
     resolution: {integrity: sha512-dXn3FZhPv0US+7dtJsIi2R+c7qWYiReoEh5zUntWCf4oSpMNib8FDhSoed6m3QyZdx5hK7iLFkYk3rNxwt8vTA==}
+    dev: true
+
+  /@laynezh/vite-plugin-lib-assets@2.1.3(vite@6.4.3):
+    resolution: {integrity: sha512-HZIFWKwzW9rqFnqXbMMzf8LnhHJvEzvG1eHbVH6vK5Ux1maqWLd00WBtLf7CgeMwmuQP0uTZU2muKSsRcC++Qw==}
+    peerDependencies:
+      vite: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
+    dependencies:
+      escape-string-regexp: 4.0.0
+      loader-utils: 3.3.1
+      mrmime: 1.0.1
+      semver: 7.8.5
+      vite: 6.4.3(@types/node@20.19.43)(sass-embedded@1.83.0)(sass@1.101.0)
     dev: true
 
   /@mdi/js@7.4.47:
@@ -5720,6 +5735,11 @@ packages:
       strip-bom: 3.0.0
     dev: true
 
+  /loader-utils@3.3.1:
+    resolution: {integrity: sha512-FMJTLMXfCLMLfJxcX9PFqX5qD88Z5MRGaZCVzfuqeZSPsyiBzs+pahDQjbIWz2QIzPZz0NX9Zy4FX3lmK6YHIg==}
+    engines: {node: '>= 12.13.0'}
+    dev: true
+
   /local-pkg@1.2.1:
     resolution: {integrity: sha512-++gUqRDEvcnN6Zhqrr+y/CkVEHhlrR96vZn3nZZPYzMcBUyBtTKzB9NadClFIsIVSsu+3i9tfk/erqy9kAmt7Q==}
     engines: {node: '>=14'}
@@ -5987,6 +6007,11 @@ packages:
       pathe: 2.0.3
       pkg-types: 1.3.1
       ufo: 1.6.4
+    dev: true
+
+  /mrmime@1.0.1:
+    resolution: {integrity: sha512-hzzEagAgDyoU1Q6yg5uI+AorQgdvMCur3FcKf7NhMKWsaYg+RnbTyHRa/9IlLF9rf455MOCtcqqrQQ83pPP7Uw==}
+    engines: {node: '>=10'}
     dev: true
 
   /ms@2.1.3:

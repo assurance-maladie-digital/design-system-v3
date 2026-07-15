@@ -1,5 +1,5 @@
 {
-  "date": "2026-06-25T11:17:10.772Z",
+  "date": "2026-07-02T12:46:19.790Z",
   "compliantCount": 54,
   "totalCount": 77,
   "percentage": "70.13",
@@ -140,7 +140,7 @@
       "componentName": "Customs/Selects/SyInputSelect",
       "hasA11yTests": false,
       "hasA11yDisabledInStories": false,
-      "mdxStatus": "Bientôt disponible",
+      "mdxStatus": "Complète",
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Formulaires/Selects/SyInputSelect",
       "hasManualAudit": false,
@@ -470,7 +470,7 @@
       "componentName": "HeaderBar",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
-      "mdxStatus": "Incomplète",
+      "mdxStatus": "Complète",
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Structure/HeaderBar",
       "hasManualAudit": true,
@@ -683,8 +683,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Feedback/RatingPicker",
       "hasManualAudit": true,
-      "version": "1.0.26",
-      "versionDate": "06/05/2026"
+      "version": "1.1.1",
+      "versionDate": "30/06/2026"
     },
     {
       "componentName": "SearchListField",

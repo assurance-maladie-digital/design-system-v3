@@ -6,11 +6,11 @@ import * as SyCheckboxStories from "./SyCheckbox.stories";
 
 <div className="header">
   <h1>SyCheckbox</h1>
-  <p>Le composant `SyCheckbox` est une case à cocher tri-état qui étend le composant `VCheckbox` de Vuetify, conforme au style du Design System et qui respecte les règles d'accessibilité <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>.</p>
+  <p>Le composant `SyCheckbox` est une case à cocher basée sur `VCheckbox` de Vuetify. Elle peut afficher un état indéterminé, expose des événements de mise à jour contrôlés et respecte les règles d'accessibilité <abbr title="Référentiel Général d'Amélioration de l'Accessibilité">RGAA</abbr>.</p>
 </div>
 
 {/* func-version-start */}
-<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.1.1 - 23/06/2026</p>
+<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.1.1 - 12/06/2026</p>
 {/* func-version-end */}
 {/* a11y-version-start */}
 <p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.1.1 - 23/06/2026</p>
@@ -22,7 +22,7 @@ Il étend les fonctionnalités de base de Vuetify avec :
 - Un état indéterminé pour les sélections partielles
 - Un système de validation avancé
 - Des états visuels (erreur, avertissement, succès)
-- Une gestion de la relation parent-enfant via la propriété `controlsIds`
+- Un mode optionnel `cycleIndeterminate` pour faire passer l'utilisateur par l'état indéterminé au clic ou avec la touche Espace
 
 <Canvas of={SyCheckboxStories.Default} />
 
@@ -30,14 +30,35 @@ Il étend les fonctionnalités de base de Vuetify avec :
 
 <Controls of={SyCheckboxStories.Default} />
 
-## États
+## États et interaction
 
 Le composant `SyCheckbox` peut avoir trois états :
 - **Coché** : La case est cochée (modelValue = true)
 - **Non coché** : La case est vide (modelValue = false)
 - **Indéterminé** : La case est partiellement cochée (indeterminate = true)
 
-L'état indéterminé est généralement utilisé pour représenter une sélection partielle dans un groupe d'éléments.
+L'état affiché est piloté par les props `modelValue` et `indeterminate`. Quand `indeterminate` vaut `true`, le composant expose `aria-checked="mixed"` aux technologies d'assistance.
+
+Par défaut, `cycleIndeterminate` vaut `false` et SyCheckbox conserve le comportement binaire de Vuetify lors de l'activation utilisateur : la case alterne entre cochée et non cochée. Si la case était indéterminée, l'activation désactive d'abord `indeterminate` puis émet une valeur cochée.
+
+Avec `cycleIndeterminate`, SyCheckbox intercepte le clic et la touche Espace pour inclure l'état indéterminé dans la rotation : non coché, indéterminé, coché, puis non coché. Dans ce mode, passer de non coché à indéterminé émet uniquement `update:indeterminate` avec `true` ; passer d'indéterminé à coché émet `update:indeterminate` avec `false`, puis `update:modelValue` avec `true`.
+
+Le composant ne calcule pas lui-même une sélection partielle et ne mémorise pas l'état des enfants. Si `indeterminate` représente un groupe de cases, l'application doit dériver cette prop depuis les valeurs réelles du groupe.
+
+## Événements
+
+Le composant utilise les événements Vue de mise à jour de modèle :
+- `update:modelValue` est émis quand la valeur cochée/non cochée change ; utilisez `@update:model-value` à la place de l'ancien `@change`.
+- `update:indeterminate` est émis quand SyCheckbox sort de l'état indéterminé ou quand `cycleIndeterminate` fait entrer la case dans cet état.
+
+```vue
+<SyCheckbox
+  v-model="checked"
+  :indeterminate="indeterminate"
+  @update:model-value="handleValueUpdate"
+  @update:indeterminate="handleIndeterminateUpdate"
+/>
+```
 
 ## Validation
 
@@ -55,9 +76,19 @@ La case à cocher adapte automatiquement son apparence selon son état :
 
 ## Relation parent-enfant
 
-La propriété `controlsIds` permet d'établir une relation entre une case à cocher parent et plusieurs cases à cocher enfants. Lorsque certains enfants sont cochés mais pas tous, le parent passe automatiquement en état indéterminé.
+SyCheckbox ne connaît pas ses enfants et ne modifie pas directement d'autres cases. Une relation parent-enfant se construit dans l'application, en composant plusieurs SyCheckbox.
 
-<Canvas of={SyCheckboxStories.WithControlsIds} />
+Pour rester conforme au modèle WAI-ARIA des cases à cocher mixtes, l'état `indeterminate` du parent doit être dérivé de la sélection réelle des enfants : si tous les enfants sont cochés, le parent doit être coché ; si aucun enfant n'est coché, le parent doit être non coché ; si une partie seulement est cochée, le parent doit être indéterminé.
+
+L'application reste responsable de :
+- synchroniser les valeurs des enfants ;
+- recalculer `modelValue` et `indeterminate` pour le parent ;
+- appliquer `update:modelValue` à tous les enfants quand le parent coche ou décoche le groupe ;
+- restaurer une combinaison partielle si elle active `cycleIndeterminate` et reçoit `update:indeterminate=true`.
+
+`controlsIds` n'est plus utilisé par SyCheckbox. Si une relation programmatique spécifique est nécessaire dans un contexte donné, elle doit être portée par le conteneur applicatif qui organise le groupe.
+
+<Canvas of={SyCheckboxStories.WithCycleIndeterminate} />
 
 ## Mode Décoratif
 

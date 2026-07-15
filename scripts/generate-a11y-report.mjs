@@ -5,8 +5,8 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const componentsDir = path.join(__dirname, 'src', 'components');
-const reportPath = path.join(__dirname, 'a11y-status-report.md');
+const componentsDir = path.join(__dirname, '..', 'src', 'components');
+const reportPath = path.join(__dirname, 'data', 'a11y-status-report.md');
 
 // Components or folders to ignore
 const ignoreFolders = ['Amelipro', 'Common', 'Usages', 'System', 'AccessibilityProgressPage', 'stories'];
@@ -191,7 +191,7 @@ function generateReport() {
   results.sort((a, b) => a.componentName.localeCompare(b.componentName));
 
   // Injecte la version & la date de dernière correction accessibilité (depuis a11y-history-data.json)
-  const historyPath = path.join(__dirname, 'a11y-history-data.json');
+  const historyPath = path.join(__dirname, 'data', 'a11y-history-data.json');
   let a11yHistory = {};
   try {
     a11yHistory = JSON.parse(fs.readFileSync(historyPath, 'utf8'));
@@ -240,7 +240,7 @@ function generateReport() {
   console.log(`Report generated at ${reportPath}`);
 
   // Also write JSON for dynamic Vue component hydration
-  const jsonReportPath = path.join(__dirname, 'src', 'stories', 'Accessibilite', 'DesignSystem', 'a11y-status.json');
+  const jsonReportPath = path.join(__dirname, '..', 'src', 'stories', 'Accessibilite', 'DesignSystem', 'a11y-status.json');
   fs.mkdirSync(path.dirname(jsonReportPath), { recursive: true });
   fs.writeFileSync(jsonReportPath, JSON.stringify({
     date: new Date().toISOString(),
