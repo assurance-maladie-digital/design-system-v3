@@ -8,17 +8,12 @@ exports[`StarsPicker > renders correctly 1`] = `
   ">
     Pourriez-vous donner une note ?
   </legend>
-  <p
-    class="d-sr-only"
-    id="stars-picker-description-v-0"
-  >
-    Ce champ ne sera plus modifiable après saisie
-  </p>
   <div
     aria-describedby="stars-picker-description-v-0"
     class="
       d-flex
       max-width-none
+      mb-6
       mx-n1
       mx-sm-n2
     "
@@ -46,7 +41,7 @@ exports[`StarsPicker > renders correctly 1`] = `
           notranslate
           px-2
           py-0
-          text-blue-lighten
+          text-lighten
           v-icon
           v-theme--light
         "
@@ -79,7 +74,7 @@ exports[`StarsPicker > renders correctly 1`] = `
           notranslate
           px-2
           py-0
-          text-blue-lighten
+          text-lighten
           v-icon
           v-theme--light
         "
@@ -112,7 +107,7 @@ exports[`StarsPicker > renders correctly 1`] = `
           notranslate
           px-2
           py-0
-          text-blue-lighten
+          text-lighten
           v-icon
           v-theme--light
         "
@@ -145,7 +140,7 @@ exports[`StarsPicker > renders correctly 1`] = `
           notranslate
           px-2
           py-0
-          text-blue-lighten
+          text-lighten
           v-icon
           v-theme--light
         "
@@ -178,7 +173,7 @@ exports[`StarsPicker > renders correctly 1`] = `
           notranslate
           px-2
           py-0
-          text-blue-lighten
+          text-lighten
           v-icon
           v-theme--light
         "
@@ -190,5 +185,14 @@ exports[`StarsPicker > renders correctly 1`] = `
       ></i>
     </div>
   </div>
+  <p
+    class="
+      locking-state
+      text-caption
+    "
+    id="stars-picker-description-v-0"
+  >
+    Ce champ ne sera plus modifiable après saisie
+  </p>
 </fieldset>
 `;

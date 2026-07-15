@@ -76,6 +76,10 @@
 	const readonly = computed(() => {
 		return props.readonly || (props.lockAfterSelection && hasAnswered.value)
 	})
+
+	const shouldDisplayLockingState = computed(() => {
+		return props.lockAfterSelection && !props.readonly
+	})
 </script>
 
 <template>
@@ -86,18 +90,10 @@
 			</slot>
 		</legend>
 
-		<p
-			v-if="props.lockAfterSelection"
-			:id="starsPickerDescriptionId"
-			class="d-sr-only"
-		>
-			{{ internalValue === -1 ? props.locales.toValidate : props.locales.validated }}
-		</p>
-
 		<div
 			role="radiogroup"
-			:aria-describedby="starsPickerDescriptionId"
-			class="d-flex max-width-none mx-n1 mx-sm-n2"
+			:aria-describedby="shouldDisplayLockingState ? starsPickerDescriptionId : undefined"
+			class="d-flex max-width-none mx-n1 mx-sm-n2 mb-6"
 		>
 			<div
 				v-for="index in props.length"
@@ -126,7 +122,7 @@
 					:class="
 						isFilled(index)
 							? 'text-primary'
-							: 'text-blue-lighten'
+							: 'text-lighten'
 					"
 					size="36px"
 					class="py-0 px-2"
@@ -134,6 +130,14 @@
 				/>
 			</div>
 		</div>
+		<p
+			v-if="shouldDisplayLockingState"
+			:id="starsPickerDescriptionId"
+			class="locking-state text-caption"
+			:class="{'d-sr-only': internalValue !== -1}"
+		>
+			{{ internalValue === -1 ? props.locales.toValidate : props.locales.validated }}
+		</p>
 	</fieldset>
 </template>
 
@@ -154,12 +158,24 @@
 		color: rgb(var(--v-theme-primary)) !important;
 	}
 
-	&.text-blue-lighten {
-		color: rgb(var(--v-theme-blue-lighten60)) !important;
+	&.text-lighten {
+		color: rgb(var(--v-theme-primary), 0.4) !important;
 	}
 
-	&--disabled.text-blue-lighten {
-		color: rgb(var(--v-theme-blue-lighten60)) !important;
+	&--disabled.text-lighten {
+		color: rgb(var(--v-theme-primary), 0.4) !important;
 	}
 }
+
+.sy-stars-picker__item:focus-visible {
+	outline: none;
+	box-shadow: inset 0 0 0 2px rgb(var(--v-theme-primary));
+	border-radius: var(--radius-md);
+}
+
+.locking-state {
+	font-style: italic;
+	color: rgb(var(--v-theme-grey-base));
+}
+
 </style>

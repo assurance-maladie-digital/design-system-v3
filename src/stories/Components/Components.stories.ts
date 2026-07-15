@@ -501,7 +501,7 @@ export const ComponentsList: StoryObj = {
 						title: 'RatingPicker',
 						description: 'Permet de recueillir l’avis d’un utilisateur.',
 						link: '/?path=/docs/composants-feedback-ratingpicker--docs',
-						img: '/components/rating-picker.svg',
+						img: `/components/rating-picker${isAp ? '-ap' : ''}.svg`,
 						category: 'Feedback',
 					},
 					{
@@ -596,6 +596,7 @@ export const ComponentsList: StoryObj = {
 					'SocialMediaLinks',
 					'SyInputSelect',
 					'ExternalLinks',
+					'RatingPicker',
 				]
 
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {

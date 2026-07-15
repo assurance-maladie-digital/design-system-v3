@@ -44,6 +44,18 @@ describe('StarsPicker', () => {
 		)
 	})
 
+	it('does not render the locking state when readonly', () => {
+		const wrapper = mount(StarsPicker, {
+			props: {
+				modelValue: 3,
+				readonly: true,
+			},
+		})
+
+		expect(wrapper.find('.locking-state').exists()).toBe(false)
+		expect(wrapper.find('[role="radiogroup"]').attributes('aria-describedby')).toBeUndefined()
+	})
+
 	it('change the style of the stars on hover', async () => {
 		const wrapper = mount(StarsPicker)
 

@@ -62,6 +62,15 @@
  *   >
  *     <svg>...</svg>
  *   </div>
+ *
+ *   <!-- Rendre uniquement les SVG internes décoratifs sans toucher au conteneur -->
+ *   <div
+ *     v-rgaa-svg-fix="{ onlyInner: true }"
+ *     role="img"
+ *     aria-label="Label géré par le conteneur"
+ *   >
+ *     <svg>...</svg>
+ *   </div>
  * </template>
  * ```
  *
@@ -71,7 +80,7 @@
  *
  * 1. La directive prend un paramètre qui peut être :
  *    - Un booléen indiquant si l'icône est décorative (true) ou fonctionnelle (false)
- *    - Un objet de configuration avec des options avancées (isDecorative, role, autoDetectButton)
+ *    - Un objet de configuration avec des options avancées (isDecorative, role, autoDetectButton, onlyInner)
  *
  * 2. Elle recherche tous les éléments SVG à l'intérieur de l'élément auquel elle est appliquée
  *
@@ -90,6 +99,11 @@
  *        - Ajoute le rôle approprié au conteneur parent
  *        - Ajoute un aria-label par défaut si aucun n'est présent
  *        - Supprime `aria-hidden="true"` du conteneur parent
+ *
+ *    - Cas particulier `onlyInner: true` :
+ *      - Rend uniquement les SVG internes décoratifs (`role` supprimé, `aria-hidden="true"`)
+ *      - Ne modifie AUCUN attribut du conteneur attaché à la directive
+ *        (utile lorsque le conteneur porte déjà son propre rôle/label)
  *
  * 4. La directive s'applique au montage du composant et à chaque mise à jour
  *
@@ -118,6 +132,15 @@
  * >
  *   mdi-close
  * </v-icon>
+ *
+ * <!-- Pour rendre les SVG internes décoratifs sans modifier le conteneur -->
+ * <button
+ *   v-rgaa-svg-fix="{ onlyInner: true }"
+ *   aria-label="Fermer"
+ *   @click="close"
+ * >
+ *   <svg>...</svg>
+ * </button>
  * ```
  *
  * ## Recommandation
@@ -134,6 +157,12 @@ interface RgaaSvgFixConfig {
 	isDecorative?: boolean
 	role?: 'presentation' | 'img' | 'button'
 	autoDetectButton?: boolean
+	/**
+	 * Si `true`, rend uniquement les SVG internes décoratifs
+	 * (`role` supprimé, `aria-hidden="true"`) sans modifier les attributs
+	 * du conteneur attaché à la directive.
+	 */
+	onlyInner?: boolean
 }
 
 /**
@@ -150,39 +179,107 @@ function parseConfig(binding: DirectiveBinding): RgaaSvgFixConfig {
 	}
 	else if (typeof binding.value === 'object' && binding.value !== null) {
 		config = { ...config, ...binding.value }
+
+		// Fournir un rôle fonctionnel explicite implique une icône non décorative,
+		// sauf si isDecorative est explicitement précisé par l'appelant.
+		if (
+			config.role
+			&& config.role !== 'presentation'
+			&& binding.value.isDecorative === undefined
+		) {
+			config.isDecorative = false
+		}
 	}
 
 	return config
 }
 
 /**
- * Détecte si un élément a des attributs ou événements interactifs
+ * Balises HTML nativement interactives (recevant le focus / déclenchant une action)
+ */
+const INTERACTIVE_TAGS = new Set([
+	'button',
+	'a',
+	'input',
+	'select',
+	'textarea',
+	'summary',
+])
+
+/**
+ * Rôles ARIA correspondant à un widget interactif
+ */
+const INTERACTIVE_ROLES = new Set([
+	'button',
+	'link',
+	'menuitem',
+	'menuitemcheckbox',
+	'menuitemradio',
+	'tab',
+	'checkbox',
+	'radio',
+	'switch',
+	'option',
+	'slider',
+	'spinbutton',
+])
+
+/**
+ * Sélecteur CSS regroupant les ancêtres considérés comme interactifs
+ */
+const INTERACTIVE_ANCESTOR_SELECTOR = 'button, a[href], [role="button"], [role="link"], [role="menuitem"], [role="tab"], summary'
+
+/**
+ * Détecte si un élément (ou son contexte) est interactif.
+ *
+ * Note : Vue compile les liaisons `@click` / `v-on:*` en écouteurs JavaScript
+ * ajoutés via `addEventListener`. Il n'existe aucune API standard pour les
+ * inspecter à l'exécution : ces liaisons ne sont donc pas détectables ici.
+ * La détection se base sur tout ce qui est réellement observable dans le DOM :
+ * balise native, rôle ARIA, focusabilité, édition, gestionnaires inline et
+ * appartenance à un ancêtre interactif.
  */
 function detectInteractivity(element: HTMLElement): boolean {
-	// Détection des attributs d'interactivité
-	const hasTabindex = element.hasAttribute('tabindex')
-	const hasClickHandler = element.hasAttribute('onclick')
-		|| element.onclick !== null
-	const hasKeyHandlers = element.hasAttribute('onkeydown')
-		|| element.hasAttribute('onkeyup')
-		|| element.hasAttribute('onkeypress')
-		|| element.hasAttribute('@keydown')
-		|| element.hasAttribute('@keyup')
-		|| element.hasAttribute('@keypress')
-		|| element.hasAttribute('v-on:keydown')
-		|| element.hasAttribute('v-on:keyup')
-		|| element.hasAttribute('v-on:keypress')
+	const tag = element.tagName.toLowerCase()
+
+	// Balise nativement interactive
+	if (INTERACTIVE_TAGS.has(tag)) {
+		// Un lien n'est interactif que s'il possède une cible (href)
+		if (tag === 'a') {
+			return element.hasAttribute('href')
+		}
+
+		return true
+	}
+
+	// Rôle ARIA interactif déjà présent
+	const role = element.getAttribute('role')
+	if (role !== null && INTERACTIVE_ROLES.has(role)) {
+		return true
+	}
+
+	// Focusable explicitement
+	if (element.hasAttribute('tabindex')) {
+		return true
+	}
+
+	// Contenu éditable
+	if (element.isContentEditable) {
+		return true
+	}
+
+	// Gestionnaires d'événements inline (rares avec Vue mais possibles)
+	if (
+		element.onclick !== null
 		|| element.onkeydown !== null
 		|| element.onkeyup !== null
 		|| element.onkeypress !== null
+	) {
+		return true
+	}
 
-	// Vérifier si l'élément a des attributs data-* liés à des événements Vue
-	const hasVueEvents = Array.from(element.attributes)
-		.some(attr => attr.name.startsWith('data-v-on:')
-			|| attr.name.startsWith('@')
-			|| attr.name.startsWith('v-on:'))
-
-	return hasTabindex || hasClickHandler || hasKeyHandlers || hasVueEvents
+	// Élément imbriqué dans un ancêtre interactif (ex : <svg> dans un <button>)
+	return element.closest(INTERACTIVE_ANCESTOR_SELECTOR) !== null
 }
 
 /**
@@ -193,8 +290,23 @@ function fixSvgAttributes(el: HTMLElement, config: RgaaSvgFixConfig) {
 	const svgs = el.getElementsByTagName('svg')
 
 	if (svgs.length > 0) {
+		// Mode onlyInner : rendre uniquement les SVG internes décoratifs
+		// sans modifier les attributs du conteneur attaché à la directive
+		if (config.onlyInner) {
+			for (let i = 0; i < svgs.length; i++) {
+				const svg = svgs[i]!
+
+				// Toujours supprimer role="img"
+				svg.removeAttribute('role')
+				// Toujours masquer le SVG
+				svg.setAttribute('aria-hidden', 'true')
+			}
+
+			return
+		}
+
 		// Déterminer le rôle approprié pour l'élément
-		let role = 'presentation'
+		let role: 'presentation' | 'img' | 'button' = 'presentation'
 		let needsLabel = false
 
 		if (!config.isDecorative) {
@@ -256,19 +368,11 @@ function fixSvgAttributes(el: HTMLElement, config: RgaaSvgFixConfig) {
 /**
  * Corrige les attributs d'accessibilité des SVG en fonction du type d'icône (décorative ou fonctionnelle)
  */
+function applyFix(el: HTMLElement, binding: DirectiveBinding) {
+	fixSvgAttributes(el, parseConfig(binding))
+}
+
 export const vRgaaSvgFix: Directive = {
-	mounted(el: HTMLElement, binding: DirectiveBinding) {
-		// Extraire la configuration
-		const config = parseConfig(binding)
-
-		// Appliquer les corrections au montage
-		fixSvgAttributes(el, config)
-	},
-	updated(el: HTMLElement, binding: DirectiveBinding) {
-		// Extraire la configuration (identique au montage)
-		const config = parseConfig(binding)
-
-		// Appliquer les corrections à la mise à jour
-		fixSvgAttributes(el, config)
-	},
+	mounted: applyFix,
+	updated: applyFix,
 }

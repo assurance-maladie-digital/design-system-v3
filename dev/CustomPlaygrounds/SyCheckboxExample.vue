@@ -1,13 +1,15 @@
 <script lang="ts" setup>
-	import { ref, computed, watch } from 'vue'
+	import { ref, watch } from 'vue'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import type { ValidationRule } from '@/composables/validation/useValidation'
 
 	// Case à cocher simple
 	const checked = ref(false)
+	const lastUpdatedValue = ref(false)
+	const lastIndeterminateValue = ref(false)
 
-	const onChange = (value: boolean) => {
-		console.log('Valeur changée:', value)
+	const onUpdateModelValue = (value: boolean) => {
+		lastUpdatedValue.value = value
 	}
 
 	// Case à cocher avec état mixte
@@ -16,10 +18,6 @@
 		{ label: 'Option 2', checked: false },
 		{ label: 'Option 3', checked: false },
 	])
-
-	const childrenIds = computed(() => {
-		return items.value.map((_, index) => `child-${index}`)
-	})
 
 	const parentChecked = ref(false)
 	const parentIndeterminate = ref(false)
@@ -41,18 +39,18 @@
 		}
 	}
 
-	const onChildChange = () => {
+	const onChildUpdate = () => {
 		updateParentState()
 	}
 
-	const onParentChange = (value: boolean) => {
+	const onParentUpdate = (value: boolean) => {
 		items.value.forEach((item) => {
 			item.checked = value
 		})
 	}
 
 	const onUpdateIndeterminate = (value: boolean) => {
-		console.log('État indéterminé mis à jour:', value)
+		lastIndeterminateValue.value = value
 	}
 
 	watch(
@@ -88,10 +86,13 @@
 			<SyCheckbox
 				v-model="checked"
 				label="Case à cocher standard"
-				@change="onChange"
+				@update:model-value="onUpdateModelValue"
 			/>
 			<div class="mt-2">
 				Valeur actuelle: {{ checked }}
+			</div>
+			<div class="mt-2">
+				Dernière valeur émise: {{ lastUpdatedValue }}
 			</div>
 		</div>
 
@@ -101,9 +102,8 @@
 				v-model="parentChecked"
 				:indeterminate="parentIndeterminate"
 				label="Sélectionner tout"
-				:controls-ids="childrenIds"
 				@update:indeterminate="onUpdateIndeterminate"
-				@change="onParentChange"
+				@update:model-value="onParentUpdate"
 			/>
 
 			<div class="ml-4 mt-2">
@@ -113,8 +113,11 @@
 					:key="index"
 					v-model="item.checked"
 					:label="item.label"
-					@change="onChildChange"
+					@update:model-value="onChildUpdate"
 				/>
+			</div>
+			<div class="mt-2">
+				Dernier état indéterminé émis: {{ lastIndeterminateValue }}
 			</div>
 		</div>
 

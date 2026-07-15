@@ -214,10 +214,16 @@
     "date": "21/04/2026",
     "dateIso": "2026-04-21 09:58:59 +0200"
   },
+  "SyCheckBoxGroup": {
+    "version": "1.0.21",
+    "date": "23/02/2026",
+    "dateIso": "23/02/2026",
+    "override": true
+  },
   "SyCheckbox": {
     "version": "1.1.1",
-    "date": "23/06/2026",
-    "dateIso": "2026-06-23 15:07:43 +0200"
+    "date": "08/07/2026",
+    "dateIso": "2026-07-08 14:17:13 +0200"
   },
   "SyForm": {
     "version": "1.0.21",
@@ -455,9 +461,9 @@
     "dateIso": "2026-02-11 12:51:15 +0100"
   },
   "PasswordField": {
-    "version": "1.0.20",
-    "date": "11/02/2026",
-    "dateIso": "2026-02-11 12:51:15 +0100"
+    "version": "1.1.1",
+    "date": "03/07/2026",
+    "dateIso": "2026-07-03 11:28:48 +0200"
   },
   "PeriodField": {
     "version": "1.0.24",
@@ -475,29 +481,29 @@
     "dateIso": "2026-03-30 08:20:25 +0100"
   },
   "EmotionPicker": {
-    "version": "1.0.26",
-    "date": "06/05/2026",
-    "dateIso": "2026-05-06 09:37:36 +0200"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 11:48:21 +0200"
   },
   "NumberPicker": {
-    "version": "1.0.26",
-    "date": "06/05/2026",
-    "dateIso": "2026-05-06 09:37:36 +0200"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 11:48:21 +0200"
   },
   "RatingPicker": {
-    "version": "1.0.26",
-    "date": "06/05/2026",
-    "dateIso": "2026-05-06 09:37:36 +0200"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 11:48:21 +0200"
   },
   "StarsPicker": {
-    "version": "1.0.26",
-    "date": "06/05/2026",
-    "dateIso": "2026-05-06 09:37:36 +0200"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 11:48:21 +0200"
   },
   "SearchListField": {
-    "version": "1.0.20",
-    "date": "11/02/2026",
-    "dateIso": "2026-02-11 12:51:15 +0100"
+    "version": "1.1.1",
+    "date": "08/07/2026",
+    "dateIso": "2026-07-08 14:17:13 +0200"
   },
   "SkipLink": {
     "version": "1.0.23",
@@ -573,12 +579,6 @@
     "version": "1.0.27",
     "date": "13/05/2026",
     "dateIso": "13/05/2026",
-    "override": true
-  },
-  "SyCheckBoxGroup": {
-    "version": "1.0.21",
-    "date": "23/02/2026",
-    "dateIso": "23/02/2026",
     "override": true
   },
   "SyIconButton": {

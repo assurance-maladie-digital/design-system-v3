@@ -1,9 +1,9 @@
 {
   "Accordion": {
-    "version": "1.0.26",
-    "date": "04/05/2026",
-    "dateIso": "2026-05-04 15:19:19 +0200",
-    "message": "migration accordion (#2160)"
+    "version": "1.1.1",
+    "date": "06/07/2026",
+    "dateIso": "2026-07-06 14:20:28 +0200",
+    "message": "Feat/accordion icon right and compact mode (#2356)"
   },
   "AmeliproAccordion": {
     "version": "1.0.25",
@@ -547,51 +547,51 @@
   },
   "Captcha": {
     "version": "1.1.1",
-    "date": "16/06/2026",
-    "dateIso": "2026-06-16 14:55:28 +0200",
-    "message": "[Captcha] mise à jour de la validation (#2234)"
+    "date": "02/07/2026",
+    "dateIso": "2026-07-02 14:04:11 +0200",
+    "message": "update storybook and fix links (#2354)"
   },
   "CaptchaAlert": {
     "version": "1.1.1",
-    "date": "16/06/2026",
-    "dateIso": "2026-06-16 14:55:28 +0200",
-    "message": "[Captcha] mise à jour de la validation (#2234)"
+    "date": "02/07/2026",
+    "dateIso": "2026-07-02 14:04:11 +0200",
+    "message": "update storybook and fix links (#2354)"
   },
   "CaptchaBase": {
     "version": "1.1.1",
-    "date": "16/06/2026",
-    "dateIso": "2026-06-16 14:55:28 +0200",
-    "message": "[Captcha] mise à jour de la validation (#2234)"
+    "date": "02/07/2026",
+    "dateIso": "2026-07-02 14:04:11 +0200",
+    "message": "update storybook and fix links (#2354)"
   },
   "CaptchaBtn": {
     "version": "1.1.1",
-    "date": "16/06/2026",
-    "dateIso": "2026-06-16 14:55:28 +0200",
-    "message": "[Captcha] mise à jour de la validation (#2234)"
+    "date": "02/07/2026",
+    "dateIso": "2026-07-02 14:04:11 +0200",
+    "message": "update storybook and fix links (#2354)"
   },
   "CaptchaForm": {
     "version": "1.1.1",
-    "date": "16/06/2026",
-    "dateIso": "2026-06-16 14:55:28 +0200",
-    "message": "[Captcha] mise à jour de la validation (#2234)"
+    "date": "02/07/2026",
+    "dateIso": "2026-07-02 14:04:11 +0200",
+    "message": "update storybook and fix links (#2354)"
   },
   "CaptchaHelpdesk": {
     "version": "1.1.1",
-    "date": "16/06/2026",
-    "dateIso": "2026-06-16 14:55:28 +0200",
-    "message": "[Captcha] mise à jour de la validation (#2234)"
+    "date": "02/07/2026",
+    "dateIso": "2026-07-02 14:04:11 +0200",
+    "message": "update storybook and fix links (#2354)"
   },
   "CaptchaImg": {
     "version": "1.1.1",
-    "date": "16/06/2026",
-    "dateIso": "2026-06-16 14:55:28 +0200",
-    "message": "[Captcha] mise à jour de la validation (#2234)"
+    "date": "02/07/2026",
+    "dateIso": "2026-07-02 14:04:11 +0200",
+    "message": "update storybook and fix links (#2354)"
   },
   "CaptchaInformation": {
     "version": "1.1.1",
-    "date": "16/06/2026",
-    "dateIso": "2026-06-16 14:55:28 +0200",
-    "message": "[Captcha] mise à jour de la validation (#2234)"
+    "date": "02/07/2026",
+    "dateIso": "2026-07-02 14:04:11 +0200",
+    "message": "update storybook and fix links (#2354)"
   },
   "volumeUp": {
     "version": "1.0.13",
@@ -630,10 +630,10 @@
     "message": "Ajout d'une configuration pour stylelint (#323)"
   },
   "CookieBanner": {
-    "version": "1.0.22",
-    "date": "11/03/2026",
-    "dateIso": "2026-03-11 11:00:31 +0100",
-    "message": "Hx: replace hx to SyHeading (#1874)"
+    "version": "1.1.1",
+    "date": "26/06/2026",
+    "dateIso": "2026-06-26 14:59:19 +0200",
+    "message": "migration cookie banner (#2336)"
   },
   "CookiesInformation": {
     "version": "1.0.26",
@@ -672,10 +672,10 @@
     "message": "[SyTextField] Ajout de stories concernant la validation (#2181)"
   },
   "SyInputSelect": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
+    "version": "1.1.1",
+    "date": "02/07/2026",
+    "dateIso": "2026-07-02 10:31:06 +0200",
+    "message": "Migration du composant `SyInputSelect` (#2348)"
   },
   "SySelect": {
     "version": "1.1.0",
@@ -691,9 +691,9 @@
   },
   "SyCheckbox": {
     "version": "1.1.1",
-    "date": "23/06/2026",
-    "dateIso": "2026-06-23 15:07:43 +0200",
-    "message": "fix(SyCheckbox): improve focus styling (#2311)"
+    "date": "02/07/2026",
+    "dateIso": "2026-07-02 14:04:11 +0200",
+    "message": "update storybook and fix links (#2354)"
   },
   "SyForm": {
     "version": "1.0.16",
@@ -714,10 +714,10 @@
     "message": "[SySelect]: permettre un meilleur rendu du composant en l'abscence de css (#2232)"
   },
   "SyIconButton": {
-    "version": "1.0.23",
-    "date": "23/03/2026",
-    "dateIso": "2026-03-23 10:47:55 +0100",
-    "message": "Feat/1911 migration icon button (#1969)"
+    "version": "1.1.1",
+    "date": "07/07/2026",
+    "dateIso": "2026-07-07 15:06:32 +0200",
+    "message": "SyTable/SyServerTable row editing + global actions (#2338)"
   },
   "SyPagination": {
     "version": "1.0.25",
@@ -768,46 +768,46 @@
     "message": "DataListItem : déprécier renderHtmlValue et ajouter un slo… (#1573)"
   },
   "DataListItem": {
-    "version": "1.0.16",
-    "date": "11/12/2025",
-    "dateIso": "2025-12-11 11:42:59 +0100",
-    "message": "DataListItem : déprécier renderHtmlValue et ajouter un slo… (#1573)"
+    "version": "1.1.1",
+    "date": "02/07/2026",
+    "dateIso": "2026-07-02 14:04:11 +0200",
+    "message": "update storybook and fix links (#2354)"
   },
   "DatePicker": {
-    "version": "1.1.0",
-    "date": "02/06/2026",
-    "dateIso": "2026-06-02 17:01:03 +0200",
-    "message": "Validation: success message false by default (#2231)"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 14:31:34 +0200",
+    "message": "Feat/wip refacto dp 3 (#2207)"
   },
   "ComplexDatePicker": {
-    "version": "1.1.0",
-    "date": "02/06/2026",
-    "dateIso": "2026-06-02 17:01:03 +0200",
-    "message": "Validation: success message false by default (#2231)"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 14:31:34 +0200",
+    "message": "Feat/wip refacto dp 3 (#2207)"
   },
   "DateTextInput": {
-    "version": "1.1.0",
-    "date": "02/06/2026",
-    "dateIso": "2026-06-02 17:01:03 +0200",
-    "message": "Validation: success message false by default (#2231)"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 14:31:34 +0200",
+    "message": "Feat/wip refacto dp 3 (#2207)"
   },
   "BidirectionalComplexValidation": {
-    "version": "1.0.27",
-    "date": "20/05/2026",
-    "dateIso": "2026-05-20 17:19:08 +0200",
-    "message": "Implémentation des nouveaux tokens (#2164)"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 14:31:34 +0200",
+    "message": "Feat/wip refacto dp 3 (#2207)"
   },
   "DatePickerBidirectionalValidation": {
-    "version": "1.0.27",
-    "date": "20/05/2026",
-    "dateIso": "2026-05-20 17:19:08 +0200",
-    "message": "Implémentation des nouveaux tokens (#2164)"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 14:31:34 +0200",
+    "message": "Feat/wip refacto dp 3 (#2207)"
   },
   "DatePickerValidationExamples": {
-    "version": "1.0.27",
-    "date": "20/05/2026",
-    "dateIso": "2026-05-20 17:19:08 +0200",
-    "message": "Implémentation des nouveaux tokens (#2164)"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 14:31:34 +0200",
+    "message": "Feat/wip refacto dp 3 (#2207)"
   },
   "ComplexDatePickerPlayground": {
     "version": "1.0.25",
@@ -852,10 +852,10 @@
     "message": "Feat/turn heading level optional (#2025)"
   },
   "ExternalLinks": {
-    "version": "1.0.16",
-    "date": "02/12/2025",
-    "dateIso": "2025-12-02 08:36:26 +0100",
-    "message": "ExternalLink: correction ombre et espacement caracteres (#1542)"
+    "version": "1.1.1",
+    "date": "06/07/2026",
+    "dateIso": "2026-07-06 10:18:16 +0200",
+    "message": "Feat/migration external links (#2339)"
   },
   "FileList": {
     "version": "1.0.27",
@@ -870,10 +870,10 @@
     "message": "Implémentation des nouveaux tokens (#2164)"
   },
   "FilePreview": {
-    "version": "0.0.10-alpha",
-    "date": "14/02/2025",
-    "dateIso": "2025-02-14 10:07:22 +0100",
-    "message": "Ajout de composant FilePreview (#382)"
+    "version": "1.1.1",
+    "date": "07/07/2026",
+    "dateIso": "2026-07-07 15:23:08 +0200",
+    "message": "FilePreview: add readonly + mandatory + pdf.js (#2344)"
   },
   "FileUpload": {
     "version": "1.0.27",
@@ -900,10 +900,10 @@
     "message": "FilterSideBar: ajout prop title (#2264)"
   },
   "FooterBar": {
-    "version": "1.0.27",
-    "date": "20/05/2026",
-    "dateIso": "2026-05-20 17:19:08 +0200",
-    "message": "Implémentation des nouveaux tokens (#2164)"
+    "version": "1.1.1",
+    "date": "15/07/2026",
+    "dateIso": "2026-07-15 10:13:23 +0200",
+    "message": "mdijs in peerDependencies (#2350)"
   },
   "FranceConnectBtn": {
     "version": "1.0.27",
@@ -912,10 +912,10 @@
     "message": "Implémentation des nouveaux tokens (#2164)"
   },
   "HeaderBar": {
-    "version": "1.0.27",
-    "date": "20/05/2026",
-    "dateIso": "2026-05-20 17:19:08 +0200",
-    "message": "Implémentation des nouveaux tokens (#2164)"
+    "version": "1.1.1",
+    "date": "15/07/2026",
+    "dateIso": "2026-07-15 10:13:23 +0200",
+    "message": "mdijs in peerDependencies (#2350)"
   },
   "HeaderBurgerMenu": {
     "version": "1.0.27",
@@ -942,22 +942,10 @@
     "message": "Implémentation des nouveaux tokens (#2164)"
   },
   "HeaderLogo": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
-  },
-  "Logo-mobile": {
-    "version": "1.0.18",
-    "date": "29/01/2026",
-    "dateIso": "2026-01-29 18:19:39 +0100",
-    "message": "Headerbar: incoherence graphique (#1705)"
-  },
-  "Logo": {
-    "version": "1.0.18",
-    "date": "20/01/2026",
-    "dateIso": "2026-01-20 16:46:59 +0100",
-    "message": "update vue-tsconfig (#1739)"
+    "version": "1.1.1",
+    "date": "15/07/2026",
+    "dateIso": "2026-07-15 10:13:23 +0200",
+    "message": "mdijs in peerDependencies (#2350)"
   },
   "HeaderMenuBtn": {
     "version": "1.0.27",
@@ -972,10 +960,10 @@
     "message": "Feat/improve header loding after audit (#974)"
   },
   "HeaderNavigationBar": {
-    "version": "1.0.27",
-    "date": "20/05/2026",
-    "dateIso": "2026-05-20 17:19:08 +0200",
-    "message": "Implémentation des nouveaux tokens (#2164)"
+    "version": "1.1.1",
+    "date": "10/07/2026",
+    "dateIso": "2026-07-10 16:49:34 +0200",
+    "message": "[logo] charger uniquement les images de logo si elles sont affiché (#2359)"
   },
   "HorizontalNavbar": {
     "version": "1.0.27",
@@ -994,6 +982,12 @@
     "date": "28/04/2026",
     "dateIso": "2026-04-28 09:17:51 +0200",
     "message": "[build] Optimisation du build (#2110)"
+  },
+  "Logo": {
+    "version": "1.0.18",
+    "date": "20/01/2026",
+    "dateIso": "2026-01-20 16:46:59 +0100",
+    "message": "update vue-tsconfig (#1739)"
   },
   "LogoBrandSection": {
     "version": "1.0.25",
@@ -1134,28 +1128,28 @@
     "message": "Implémentation des nouveaux tokens (#2164)"
   },
   "EmotionPicker": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
+    "version": "1.1.1",
+    "date": "15/07/2026",
+    "dateIso": "2026-07-15 14:44:47 +0200",
+    "message": "[RatingPicker] Iso Maquettes (#2389)"
   },
   "NumberPicker": {
-    "version": "1.0.16",
-    "date": "28/11/2025",
-    "dateIso": "2025-11-28 11:12:05 +0100",
-    "message": "Add keyboard navigation support for EmotionPicker, NumberPicker, and StarsPicker components (#1510)"
+    "version": "1.1.1",
+    "date": "15/07/2026",
+    "dateIso": "2026-07-15 14:44:47 +0200",
+    "message": "[RatingPicker] Iso Maquettes (#2389)"
   },
   "RatingPicker": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
+    "version": "1.1.1",
+    "date": "15/07/2026",
+    "dateIso": "2026-07-15 14:44:47 +0200",
+    "message": "[RatingPicker] Iso Maquettes (#2389)"
   },
   "StarsPicker": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
+    "version": "1.1.1",
+    "date": "15/07/2026",
+    "dateIso": "2026-07-15 14:44:47 +0200",
+    "message": "[RatingPicker] Iso Maquettes (#2389)"
   },
   "SearchListField": {
     "version": "1.1.0",
@@ -1170,10 +1164,10 @@
     "message": "Tokens simplify v2 (#2102)"
   },
   "SocialMediaLinks": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
+    "version": "1.1.1",
+    "date": "01/07/2026",
+    "dateIso": "2026-07-01 13:48:17 +0200",
+    "message": "migration socialmedialinks (#2351)"
   },
   "StatusPage": {
     "version": "1.1.1",
@@ -1188,16 +1182,16 @@
     "message": "Implémentation des nouveaux tokens (#2164)"
   },
   "SyAlert": {
-    "version": "1.0.27",
-    "date": "20/05/2026",
-    "dateIso": "2026-05-20 17:19:08 +0200",
-    "message": "Implémentation des nouveaux tokens (#2164)"
+    "version": "1.1.1",
+    "date": "15/07/2026",
+    "dateIso": "2026-07-15 14:44:47 +0200",
+    "message": "[RatingPicker] Iso Maquettes (#2389)"
   },
   "SyBtnMenu": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 12:02:12 +0200",
+    "message": "Feat/migration SyBtnMenu (#2349)"
   },
   "SyHeading": {
     "version": "1.0.23",
@@ -1206,46 +1200,52 @@
     "message": "Feat/turn heading level optional (#2025)"
   },
   "SyTextArea": {
-    "version": "1.1.0",
-    "date": "02/06/2026",
-    "dateIso": "2026-06-02 17:01:03 +0200",
-    "message": "Validation: success message false by default (#2231)"
+    "version": "1.1.1",
+    "date": "15/07/2026",
+    "dateIso": "2026-07-15 14:44:47 +0200",
+    "message": "[RatingPicker] Iso Maquettes (#2389)"
   },
   "TableToolbar": {
-    "version": "1.0.27",
-    "date": "20/05/2026",
-    "dateIso": "2026-05-20 17:19:08 +0200",
-    "message": "Implémentation des nouveaux tokens (#2164)"
+    "version": "1.1.1",
+    "date": "08/07/2026",
+    "dateIso": "2026-07-08 14:14:52 +0200",
+    "message": "TableToolbar: ajout SyTable (#2326)"
   },
   "SyServerTable": {
-    "version": "1.1.0",
-    "date": "29/05/2026",
-    "dateIso": "2026-05-29 09:22:51 +0200",
-    "message": "Tables : Migration Ameli pro (#2186)"
+    "version": "1.1.1",
+    "date": "07/07/2026",
+    "dateIso": "2026-07-07 15:06:32 +0200",
+    "message": "SyTable/SyServerTable row editing + global actions (#2338)"
   },
   "SyTable": {
-    "version": "1.0.27",
-    "date": "18/05/2026",
-    "dateIso": "2026-05-18 12:58:39 +0200",
-    "message": "Add hideDefaultFooter prop to SyTable and SyServerTable components (#2184)"
+    "version": "1.1.1",
+    "date": "07/07/2026",
+    "dateIso": "2026-07-07 15:06:32 +0200",
+    "message": "SyTable/SyServerTable row editing + global actions (#2338)"
   },
   "SyTableFilter": {
-    "version": "1.1.0",
-    "date": "29/05/2026",
-    "dateIso": "2026-05-29 09:22:51 +0200",
-    "message": "Tables : Migration Ameli pro (#2186)"
+    "version": "1.1.1",
+    "date": "07/07/2026",
+    "dateIso": "2026-07-07 15:06:32 +0200",
+    "message": "SyTable/SyServerTable row editing + global actions (#2338)"
   },
   "SyTablePagination": {
-    "version": "1.1.0",
-    "date": "29/05/2026",
-    "dateIso": "2026-05-29 09:22:51 +0200",
-    "message": "Tables : Migration Ameli pro (#2186)"
+    "version": "1.1.1",
+    "date": "07/07/2026",
+    "dateIso": "2026-07-07 15:06:32 +0200",
+    "message": "SyTable/SyServerTable row editing + global actions (#2338)"
+  },
+  "TableBulkActions": {
+    "version": "1.1.1",
+    "date": "07/07/2026",
+    "dateIso": "2026-07-07 15:06:32 +0200",
+    "message": "SyTable/SyServerTable row editing + global actions (#2338)"
   },
   "TableHeader": {
-    "version": "1.1.0",
-    "date": "29/05/2026",
-    "dateIso": "2026-05-29 09:22:51 +0200",
-    "message": "Tables : Migration Ameli pro (#2186)"
+    "version": "1.1.1",
+    "date": "07/07/2026",
+    "dateIso": "2026-07-07 15:06:32 +0200",
+    "message": "SyTable/SyServerTable row editing + global actions (#2338)"
   },
   "AutocompleteFilter": {
     "version": "1.0.26",
@@ -1284,10 +1284,10 @@
     "message": "Clean date picker and fix invalid date (#2149)"
   },
   "OrganizeColumns": {
-    "version": "1.0.20",
-    "date": "12/02/2026",
-    "dateIso": "2026-02-12 10:01:33 +0100",
-    "message": "SyIcon: replace VIcon to SyIcon (#1793)"
+    "version": "1.1.1",
+    "date": "07/07/2026",
+    "dateIso": "2026-07-07 15:06:32 +0200",
+    "message": "SyTable/SyServerTable row editing + global actions (#2338)"
   },
   "ToolbarContainer": {
     "version": "1.0.2",

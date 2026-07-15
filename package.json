@@ -1,7 +1,8 @@
 {
   "name": "@cnamts/synapse",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "private": false,
+  "packageManager": "pnpm@10.12.4",
   "description": "CNAM DS v3",
   "type": "module",
   "files": [
@@ -48,8 +49,8 @@
     "func:inject:dry": "node ./scripts/inject-functional-version.mjs --dry-run",
     "docs:update": "node ./scripts/a11y-update.mjs",
     "docs:check": "node ./scripts/docs-check-update.mjs",
-    "a11y:status": "node generate-a11y-report.mjs",
-    "info:components": "node generate-component-info.mjs",
+    "a11y:status": "node ./scripts/generate-a11y-report.mjs",
+    "info:components": "node ./scripts/generate-component-info.mjs",
     "test:visual": "cypress run --component --browser electron",
     "test:visual:open": "cypress open --component --browser electron",
     "test:visual:update": "cypress run --component --browser electron --env updateSnapshots=true",
@@ -70,7 +71,9 @@
     "node": ">=20.11.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.5",
     "@jls-digital/storybook-addon-code": "^2.3.0",
+    "@laynezh/vite-plugin-lib-assets": "^2.1.3",
     "@mdi/js": "^7.4.47",
     "@simonsmith/cypress-image-snapshot": "^10.0.3",
     "@storybook/addon-a11y": "10.4.6",
@@ -127,16 +130,17 @@
     "vue3-snapshot-serializer": "^2.9.0"
   },
   "peerDependencies": {
+    "@mdi/js": "^7.4.47",
     "vue": "^3.5.18",
     "vuetify": "3.12.2"
   },
   "dependencies": {
     "@emotion/css": "^11.13.5",
-    "@mdi/js": "^7.4.47",
     "dayjs": "^1.11.13",
     "deepmerge": "^4.3.1",
     "iso-639-1": "^3.1.3",
     "maska": "^3.0.3",
+    "pdfjs-dist": "^6.1.200",
     "slugify": "^1.6.6"
   },
   "publishConfig": {

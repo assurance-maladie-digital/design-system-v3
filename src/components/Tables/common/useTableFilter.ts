@@ -1,5 +1,5 @@
 import { inject } from 'vue'
-import type { FilterOption, Items } from './types'
+import type { FilterOption, Item } from './types'
 import { filterItems as filterItemsUtil } from './tableFilterUtils'
 
 /**
@@ -10,7 +10,7 @@ import { filterItems as filterItemsUtil } from './tableFilterUtils'
 export function useTableFilter() {
 	// Récupère la fonction filterItems du modèle provide/inject
 	const filterItems = inject<
-		<T extends Items[0]>(items: T[], filters: FilterOption[]) => T[]
+		<T extends Item>(items: T[], filters: FilterOption[]) => T[]
 	>('filterItems', filterItemsUtil)
 
 	return {

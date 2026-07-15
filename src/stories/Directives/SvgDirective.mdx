@@ -163,6 +163,19 @@ import '../styles/shared.css';
       </ul>
     </div>
   </div>
+
+  <div className="feature-card">
+    <h3> Pour les SVG internes uniquement</h3>
+    <p>Le paramètre <code>onlyInner</code> s'utilise lorsque le conteneur porte déjà son propre rôle, son label ou son état ARIA, et que seuls les SVG internes doivent être masqués.</p>
+    <div className="info-box" style={{ margin: '1rem 0' }}>
+      <p>Avec <code>{'{ onlyInner: true }'}</code>, la directive :</p>
+      <ul>
+        <li>Supprime <code>role="img"</code> sur chaque SVG interne</li>
+        <li>Ajoute <code>aria-hidden="true"</code> sur chaque SVG interne</li>
+        <li>Ne modifie aucun attribut du conteneur attaché à la directive</li>
+      </ul>
+    </div>
+  </div>
 </div>
 
 <h2 className="section-title">Comment utiliser cette directive</h2>
@@ -283,6 +296,15 @@ import '../styles/shared.css';
       >
         mdi-close
       </v-icon>
+
+      <!-- Masquer uniquement les SVG internes sans modifier le conteneur -->
+      <button
+        v-rgaa-svg-fix="{ onlyInner: true }"
+        aria-label="Fermer la fenêtre"
+        @click="closeModal"
+      >
+        <svg><!-- ... --></svg>
+      </button>
       ```
     </div>
   </div>
@@ -299,6 +321,7 @@ import '../styles/shared.css';
         <li><code>isDecorative</code> : <code>boolean</code> - Indique si l'icône est décorative (true) ou fonctionnelle (false)</li>
         <li><code>role</code> : <code>'img' | 'button' | 'presentation'</code> - Définit explicitement le rôle ARIA de l'icône</li>
         <li><code>autoDetectButton</code> : <code>boolean</code> - Active la détection automatique du rôle bouton en fonction des événements</li>
+        <li><code>onlyInner</code> : <code>boolean</code> - Corrige uniquement les SVG internes sans modifier le conteneur</li>
       </ul>
     </div>
     <div className="code-example">
@@ -308,7 +331,32 @@ import '../styles/shared.css';
         isDecorative?: boolean;
         role?: 'img' | 'button' | 'presentation';
         autoDetectButton?: boolean;
+        onlyInner?: boolean;
       }
+      ```
+    </div>
+  </div>
+
+  <div className="feature-card">
+    <h3> Option onlyInner</h3>
+    <p><code>onlyInner</code> est utile quand la directive est posée sur un composant ou un élément qui gère déjà son accessibilité au niveau du conteneur.</p>
+    <div className="info-box" style={{ margin: '1rem 0' }}>
+      <ul>
+        <li>Le conteneur conserve son <code>role</code>, son <code>aria-label</code>, son <code>aria-checked</code> ou ses autres attributs ARIA</li>
+        <li>Les SVG internes deviennent décoratifs pour éviter un double énoncé par les technologies d'assistance</li>
+        <li>Cette option convient aux composants complexes comme une checkbox, un bouton ou un champ qui exposent déjà leur état accessible</li>
+      </ul>
+    </div>
+    <div className="code-example">
+      ```vue
+      <div
+        v-rgaa-svg-fix="{ onlyInner: true }"
+        role="checkbox"
+        aria-label="Sélection partielle"
+        aria-checked="mixed"
+      >
+        <svg><!-- icône visuelle --></svg>
+      </div>
       ```
     </div>
   </div>

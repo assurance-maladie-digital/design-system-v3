@@ -34,7 +34,6 @@ describe('SyCheckbox – accessibility (axe)', () => {
 				label: 'Sélection partielle',
 				modelValue: false,
 				indeterminate: true,
-				controlsIds: ['child-1', 'child-2', 'child-3'],
 			},
 		})
 
@@ -152,6 +151,63 @@ describe('SyCheckbox – accessibility (axe)', () => {
 		})
 
 		// Nettoyer
+		wrapper.unmount()
+		document.body.removeChild(container)
+	})
+
+	it('has no axe violations for checkbox with helpText and id (aria-describedby)', async () => {
+		const container = document.createElement('div')
+		document.body.appendChild(container)
+
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				id: 'checkbox-with-help',
+				label: 'J\'accepte les conditions',
+				helpText: 'Veuillez lire les conditions avant d\'accepter',
+				modelValue: false,
+			},
+			attachTo: container,
+		})
+
+		await wrapper.vm.$nextTick()
+		await wrapper.vm.$nextTick()
+
+		const results = await axe(container as HTMLElement)
+		assertNoA11yViolations(results, 'SyCheckbox – checkbox with helpText and aria-describedby', {
+			ignoreRules: ['region'],
+		})
+
+		wrapper.unmount()
+		document.body.removeChild(container)
+	})
+
+	it('has no axe violations for checkbox with ariaLabelledby and helpText combined (composite aria-describedby)', async () => {
+		const container = document.createElement('div')
+		document.body.appendChild(container)
+
+		const labelElement = document.createElement('div')
+		labelElement.id = 'composite-label'
+		labelElement.textContent = 'Libellé externe'
+		container.appendChild(labelElement)
+
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				id: 'composite-checkbox',
+				ariaLabelledby: 'composite-label',
+				helpText: 'Texte d\'aide complémentaire',
+				modelValue: false,
+			},
+			attachTo: container,
+		})
+
+		await wrapper.vm.$nextTick()
+		await wrapper.vm.$nextTick()
+
+		const results = await axe(container as HTMLElement)
+		assertNoA11yViolations(results, 'SyCheckbox – composite aria-describedby', {
+			ignoreRules: ['region'],
+		})
+
 		wrapper.unmount()
 		document.body.removeChild(container)
 	})

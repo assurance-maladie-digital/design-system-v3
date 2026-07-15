@@ -20,7 +20,10 @@
 		background-color: rgb(var(--v-theme-infoVariantLighten));
 	}
 
-	caption,
+	caption {
+		background-color: rgb(var(--v-theme-infoVariant90));
+	}
+
 	table thead tr.headers,
 	table thead tr.reset {
 		background-color: rgba(var(--v-theme-infoVariant), 0.2);
@@ -80,8 +83,34 @@
 		border-color: rgb(var(--v-theme-primary)) !important;
 	}
 
+	// Aligner la checkbox de sélection de ligne sur celle de l'en-tête :
+	// la cellule d'en-tête a 16px de padding-left, la cellule de ligne 8px par défaut.
+	.v-data-table__td--select-row {
+		padding-left: 16px;
+	}
+
+	// Centrer le focus ring sur la case à cocher
+	.v-selection-control--focus-visible {
+		outline: none;
+	}
+
+	.v-selection-control--focus-visible .v-selection-control__input {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 2px;
+		border-radius: 4px;
+	}
+
 	.v-data-table-rows-no-data {
 		color: rgb(var(--v-theme-grey-base));
+	}
+
+	// Focus clavier fortement contrasté sur les boutons du tableau
+	// (pagination, redimensionnement, boutons d'actions…) : anneau primaire 2px
+	// avec décalage, homogène avec le focus des cases à cocher.
+	.v-btn:focus-visible,
+	.resizer:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 2px;
 	}
 
 	// Ensure loading progress bar appears above sticky/pinned header cells

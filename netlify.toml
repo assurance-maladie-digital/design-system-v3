@@ -1,5 +1,5 @@
 [build]
-  command = "pnpm build && pnpm run build-storybook"
+  command = "pnpm run build-storybook"
   publish = "storybook-static"
   
 [build.environment]

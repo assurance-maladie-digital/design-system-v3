@@ -21,7 +21,18 @@ export interface FilterOption {
 	type: FilterType
 }
 
-export type Items = (Record<string, unknown> | object)[]
+/**
+ * Une ligne de tableau : un enregistrement indexable par clé de colonne.
+ * Type de base pour toutes les manipulations de lignes (sélection, édition,
+ * filtrage). Sert de contrainte aux signatures génériques sur la ligne.
+ */
+export type Item = Record<string, unknown>
+
+/**
+ * Liste de lignes de tableau. Générique sur le type de ligne afin de pouvoir
+ * préserver un type concret de bout en bout ; `Item` par défaut.
+ */
+export type Items<TItem extends Item = Item> = TItem[]
 
 export interface DataOptions {
 	page: number
@@ -44,6 +55,7 @@ export type DataTableHeaders = {
 	multiple?: boolean
 	chips?: boolean
 	sortable?: boolean
+	editable?: boolean
 	hideMessages?: boolean
 	dateFormat?: string
 	align?: 'start' | 'end' | 'center'
@@ -107,6 +119,10 @@ export type SyTableProps = {
 	clickableRow?: boolean
 	pageInput?: boolean
 	hideDefaultFooter?: boolean
+	/** Rend la barre d'actions groupées « sticky » en haut du tableau (défaut : true) */
+	stickyBulkActions?: boolean
+	/** Active l'édition inline des lignes (cf. flag `editable` par colonne) */
+	editable?: boolean
 }
 
 export type SyServerTableProps = {
@@ -136,4 +152,8 @@ export type SyServerTableProps = {
 	clickableRow?: boolean
 	pageInput?: boolean
 	hideDefaultFooter?: boolean
+	/** Rend la barre d'actions groupées « sticky » en haut du tableau (défaut : true) */
+	stickyBulkActions?: boolean
+	/** Active l'édition inline des lignes (cf. flag `editable` par colonne) */
+	editable?: boolean
 }

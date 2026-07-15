@@ -1,10 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect, vi } from 'vitest'
+import { h } from 'vue'
 import FooterBar from '@/components/FooterBar/FooterBar.vue'
 import { locales } from '@/components/FooterBar/locales'
 import { A11yComplianceEnum } from '@/components/FooterBar/A11yCompliance'
-import { LogoSize } from '@/components/Logo/LogoSize'
-import { nextTick } from 'vue'
 
 describe('FooterBar', () => {
 	const getComponentType = (item: { href: unknown }) => {
@@ -65,23 +64,6 @@ describe('FooterBar', () => {
 		const version = '1.0.0'
 		const wrapper = mount(FooterBar, { props: { version } })
 		expect(wrapper.text()).toContain(`${locales.versionLabel} ${version}`)
-	})
-
-	it('computes logoSize correctly for desktop screens', () => {
-		const wrapper = mount(FooterBar)
-		expect(wrapper.vm.$.exposed?.logoSize.value).toBe(LogoSize.NORMAL)
-	})
-
-	it('computes logoSize correctly for small screens', async () => {
-		const wrapper = mount(FooterBar)
-		Object.defineProperty(window, 'innerWidth', {
-			writable: true,
-			configurable: true,
-			value: 400,
-		})
-		window.dispatchEvent(new Event('resize'))
-		await nextTick()
-		expect(wrapper.vm.$.exposed?.logoSize.value).toBe(LogoSize.SMALL)
 	})
 
 	it('renders the scroll to top button and triggers scrollToTop', async () => {
@@ -151,5 +133,43 @@ describe('FooterBar', () => {
 		const complianceLabel = null
 		const result = testFunction(complianceLabel)
 		expect(result).toBe('')
+	})
+
+	it('have an image with a source for the desktop logo', () => {
+		const wrapper = mount(FooterBar, {
+			slots: {
+				default: '<div>Extended mode content</div>', // Slot pour forcer le mode étendu
+			},
+		})
+
+		const sourceElement = wrapper.find('.logo-picture source')
+		expect(sourceElement.exists()).toBe(true)
+		expect(sourceElement.attributes('srcset')).toBeTruthy()
+		expect(sourceElement.attributes('media')).toBe(`(min-width: 600px)`)
+	})
+
+	it('updates the logo dynamically when the theme changes', async () => {
+		const wrapper = mount(FooterBar, {
+			slots: {
+				default: () => h('div', 'Extended mode content'),
+			},
+		})
+
+		const getLogoAttributes = () => ({
+			desktopSrcset: wrapper.find('.logo-picture source').attributes('srcset'),
+			mobileSrc: wrapper.find('.logo-picture img').attributes('src'),
+		})
+
+		expect(getLogoAttributes()).toEqual({
+			desktopSrcset: expect.stringContaining('logo-desktop-white.svg'),
+			mobileSrc: expect.stringContaining('logo-mobile-white.svg'),
+		})
+
+		await wrapper.setProps({ light: true })
+
+		expect(getLogoAttributes()).toEqual({
+			desktopSrcset: expect.stringContaining('logo-desktop.svg'),
+			mobileSrc: expect.stringContaining('logo-mobile.svg'),
+		})
 	})
 })

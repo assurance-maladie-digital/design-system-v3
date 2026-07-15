@@ -1,15 +1,15 @@
 {
-  "date": "2026-06-25T11:17:10.772Z",
-  "compliantCount": 54,
+  "date": "2026-07-15T13:56:57.475Z",
+  "compliantCount": 55,
   "totalCount": 77,
-  "percentage": "70.13",
+  "percentage": "71.43",
   "results": [
     {
       "componentName": "Accordion",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
+      "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false,
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Données/Accordion",
       "hasManualAudit": true,
       "version": "1.0.20",
@@ -140,7 +140,7 @@
       "componentName": "Customs/Selects/SyInputSelect",
       "hasA11yTests": false,
       "hasA11yDisabledInStories": false,
-      "mdxStatus": "Bientôt disponible",
+      "mdxStatus": "Complète",
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Formulaires/Selects/SyInputSelect",
       "hasManualAudit": false,
@@ -165,9 +165,9 @@
       "mdxStatus": "Complète",
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/SyCheckbox",
-      "hasManualAudit": false,
+      "hasManualAudit": true,
       "version": "1.1.1",
-      "versionDate": "23/06/2026"
+      "versionDate": "08/07/2026"
     },
     {
       "componentName": "Customs/SyCheckBoxGroup",
@@ -639,8 +639,8 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Formulaires/PasswordField",
       "hasManualAudit": true,
-      "version": "1.0.20",
-      "versionDate": "11/02/2026"
+      "version": "1.1.1",
+      "versionDate": "03/07/2026"
     },
     {
       "componentName": "PeriodField",
@@ -683,8 +683,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Feedback/RatingPicker",
       "hasManualAudit": true,
-      "version": "1.0.26",
-      "versionDate": "06/05/2026"
+      "version": "1.1.1",
+      "versionDate": "30/06/2026"
     },
     {
       "componentName": "SearchListField",
@@ -694,8 +694,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Filtres/SearchListField",
       "hasManualAudit": true,
-      "version": "1.0.20",
-      "versionDate": "11/02/2026"
+      "version": "1.1.1",
+      "versionDate": "08/07/2026"
     },
     {
       "componentName": "SkipLink",

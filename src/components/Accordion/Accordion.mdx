@@ -11,7 +11,7 @@ import * as AccordionStories from './Accordion.stories';
 </div>
 
 {/* func-version-start */}
-<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.0.26 - 04/05/2026</p>
+<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.1.1 - 06/07/2026</p>
 {/* func-version-end */}
 {/* a11y-version-start */}
 <p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.0.20 - 11/02/2026</p>
@@ -34,6 +34,18 @@ L'accordéon standard affiche une liste d'éléments avec un titre et un contenu
 
 - **Type** : `(value: string[]) => void`
 - **Description** : Émis lors de l'ouverture ou la fermeture d'un élément. La valeur est le tableau mis à jour des identifiants des éléments ouverts.
+
+## Position de l'icône
+
+Vous pouvez choisir de positionner l'icône de flèche à gauche (par défaut) ou à droite du titre.
+
+<Canvas of={AccordionStories.IconPosition} />
+
+## Mode compact
+
+Le mode compact supprime l'espacement entre les éléments de l'accordéon pour un rendu plus intégré et serré.
+
+<Canvas of={AccordionStories.CompactMode} />
 
 ## Contenu avec objet
 
@@ -95,6 +107,8 @@ const accordionItems = [
       v-model="openItems"
       :items="accordionItems"
       :heading-level="3"
+      icon-position="left"
+      compact
     />
   </main>
 </template>

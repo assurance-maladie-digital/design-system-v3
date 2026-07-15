@@ -7,7 +7,13 @@ import { createVuetifyInstance } from '../src/vuetifyConfig'
 const vuetify = createVuetifyInstance()
 const isDev = process.env.NODE_ENV === 'development'
 
+let currentTheme: string | null = null
+let initialized = false
+
 const applyTheme = (theme: string) => {
+	if (!theme || theme === currentTheme) return
+	currentTheme = theme
+
 	vuetify.theme.change(theme)
 	const rootElement = document.documentElement
 	rootElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap', 'theme-ap2026')
@@ -15,12 +21,14 @@ const applyTheme = (theme: string) => {
 	localStorage.setItem('storybook-theme', theme)
 }
 
-// Listen to Storybook globals changes — fires on all pages including pure MDX.
-// __STORYBOOK_ADDONS_CHANNEL__ is the shared channel injected by Storybook into the preview iframe.
-if (typeof window !== 'undefined') {
-	const channel = (window as Window & { __STORYBOOK_ADDONS_CHANNEL__?: { on: (event: string, cb: (data: unknown) => void) => void } }).__STORYBOOK_ADDONS_CHANNEL__
-	channel?.on('globalsUpdated', (data) => {
-		const theme = (data as { globals?: Record<string, string> })?.globals?.theme
+// Listen Storybook globals (preview iframe)
+if (typeof window !== 'undefined' && !initialized) {
+	initialized = true
+
+	const channel = (window as any).__STORYBOOK_ADDONS_CHANNEL__
+
+	channel?.on('globalsUpdated', (data: any) => {
+		const theme = data?.globals?.theme
 		if (theme) applyTheme(theme)
 	})
 }
@@ -28,34 +36,12 @@ if (typeof window !== 'undefined') {
 setup((app, { globals }) => {
 	app.use(vuetify)
 
-	// Add global mixin to help with SySelect dropdown in docs mode
-	if (typeof window !== 'undefined') {
-		// Wait for DOM to be ready
-		window.addEventListener('DOMContentLoaded', () => {
-			// Add click handler to document to help with dropdown positioning
-			document.addEventListener('click', (event) => {
-				// Check if we're in docs mode
-				if (document.body.classList.contains('storybook-docs-mode')) {
-					// Find all dropdowns and make sure they're properly positioned
-					const lists = document.querySelectorAll('.v-list')
-					lists.forEach((list) => {
-						if (list instanceof HTMLElement) {
-							list.style.position = 'absolute'
-							list.style.zIndex = '9999'
-							list.style.visibility = 'visible'
-						}
-					})
-				}
-			})
-		})
-	}
-
-	app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
-
-	// Apply theme immediately on load
+	// Apply theme once
 	if (typeof window !== 'undefined') {
 		applyTheme(globals.theme)
 	}
+
+	app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
 })
 
 const themeItems = [
@@ -101,14 +87,9 @@ const preview: Preview = {
 				applyTheme(context.globals.theme)
 			}
 
-			// Check if we're in docs mode to apply special handling for dropdowns
-			const isInDocs = context.viewMode === 'docs'
-
-			if (isInDocs) {
-				// Add a special class to help target docs mode in CSS
-				if (typeof document !== 'undefined') {
-					document.body.classList.add('storybook-docs-mode')
-				}
+			// Docs mode flag (no DOM manipulation anymore)
+			if (typeof document !== 'undefined' && context.viewMode === 'docs') {
+				document.body.classList.add('storybook-docs-mode')
 			}
 
 			return story()
@@ -129,7 +110,7 @@ const preview: Preview = {
 					'Accessibilité',
 					[
 						'Introduction',
-						'Aculturation', ['Sensibilisation à l’accessibilité numérique'],
+						'Acculturation', ['Sensibilisation à l’accessibilité numérique'],
 						'Kit de pré-audit', ['Introduction', 'Échantillonnage', 'Pré-audit', 'Outils', ['Introduction', 'Tanaguru', ['Utilisation', 'Faux positifs']]],
 						'Audit', ['RGAA'],
 						'Design System', ['Audit du Design System', 'Avancement', 'Vuetify'],
@@ -166,7 +147,7 @@ const preview: Preview = {
 						'Services', ['useNotificationService'],
 						'Directives', ['v-rgaa-svg-fix'],
 						'Migration', ['Depuis Bridge (Vue3)', 'Depuis Vue2', 'Breaking changes'],
-						'Convergence des DS', ['Équivalence des composants', ['Portail Agent', 'Amelipro']],
+						'Équivalence des composants', ['Portail Agent', 'Amelipro'],
 					],
 				],
 			},

@@ -5,7 +5,7 @@ import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
 
 const meta = {
-	title: 'Composants/Tableaux/SyTable/Rules',
+	title: 'Composants/Tableaux/SyTable/Filtres/Rules',
 	component: SyTable,
 	decorators: [
 		() => ({
