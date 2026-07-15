@@ -105,4 +105,19 @@ button:focus-visible {
 		opacity: 1;
 		transition: opacity 0.2s ease, background 0s;
 	}
+
+	// Interaction sur les boutons en version dark
+	&[class*='--dark'] {
+		&:hover .v-btn__overlay {
+			background: rgba(var(--v-theme-interactionLighten), 0.2) !important;
+			opacity: 1;
+			transition: opacity 0.2s ease, background 0s;
+		}
+
+		&:active .v-btn__overlay {
+			background: rgba(var(--v-theme-interactionLighten), 0.4) !important;
+			opacity: 1;
+			transition: opacity 0.2s ease, background 0s;
+		}
+	}
 }

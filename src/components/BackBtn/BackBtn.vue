@@ -4,24 +4,14 @@
 	import { locales } from './locales'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
-	const props = withDefaults(defineProps<{
+	const props = (defineProps<{
 		hideBackIcon?: boolean
 		dark?: boolean
-		backgroundColor?: string
-	}>(), {
-		backgroundColor: 'white',
-	})
-
-	const isDark = computed(() => props.dark ?? false)
-	const iconColor = computed(() => isDark.value ? 'white' : 'primary')
-	const buttonVariant = computed(() => isDark.value ? 'outlined' : 'text')
-	const buttonTheme = computed(() => isDark.value ? 'dark' : undefined)
-	const buttonColor = computed(() => isDark.value ? 'white' : 'primary')
-	const buttonBgColor = computed(() => isDark.value ? 'transparent' : props.backgroundColor)
+	}>())
 
 	const buttonClasses = computed(() => ({
-		'px-0': !isDark.value,
-		'pr-1': !isDark.value && !props.hideBackIcon,
+		'px-0': !props.dark,
+		'pr-1': !props.dark && !props.hideBackIcon,
 	}))
 
 </script>
@@ -29,19 +19,21 @@
 <template>
 	<VBtn
 		v-bind="$attrs"
-		:variant="buttonVariant"
-		:theme="buttonTheme"
-		:color="buttonColor"
-		:class="['sy-back-btn', 'text-none', buttonClasses]"
-		:style="{ backgroundColor: buttonBgColor }"
+		variant="outlined"
+		:class="[
+			'sy-back-btn',
+			'text-none',
+			buttonClasses,
+			{ 'sy-back-btn--dark': dark },
+		]"
+		:ripple="false"
 	>
 		<slot name="icon">
 			<SyIcon
 				v-if="!props.hideBackIcon"
 				:icon="mdiArrowLeft"
 				decorative
-				:color="iconColor"
-				:class="{ 'ml-n1': isDark }"
+				:class="{ 'ml-n1': dark }"
 				class="mr-1"
 			/>
 		</slot>
@@ -53,11 +45,13 @@
 </template>
 
 <style lang="scss" scoped>
-// Désactiver l'état de hover sur le thème clair
-.v-btn:deep() {
-	.v-btn__underlay,
-	.v-btn__overlay {
-		display: none;
+.sy-back-btn {
+	border-color: rgb(var(--v-theme-primary));
+	color: rgb(var(--v-theme-primary));
+
+	&--dark {
+		border-color: rgb(var(--v-theme-onPrimary));
+		color: rgb(var(--v-theme-onPrimary));
 	}
 }
 </style>

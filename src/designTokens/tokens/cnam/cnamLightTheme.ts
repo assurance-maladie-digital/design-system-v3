@@ -62,10 +62,11 @@ export const cnamLightTheme = {
 	warning: baseTokens.color.yellow.base,
 	onWarning: baseTokens.color.grey.darken60,
 	warningVariant: baseTokens.color.yellow.lighten80,
-	warningVariantLigthen: baseTokens.color.yellow.lighten90,
+	warningVariantLighten: baseTokens.color.yellow.lighten90,
 	onWarningVariant: baseTokens.color.yellow.darken60,
 
 	// Interaction
 	interactionDark: baseTokens.color.blue.base,
 	interactionDarken: baseTokens.color.black.base,
+	interactionLighten: baseTokens.color.white.base,
 }
