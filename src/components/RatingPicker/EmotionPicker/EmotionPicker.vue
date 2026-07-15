@@ -112,6 +112,10 @@
 		return props.readonly || (props.lockAfterSelection && hasAnswered.value)
 	})
 
+	const shouldDisplayLockingState = computed(() => {
+		return props.lockAfterSelection && !props.readonly
+	})
+
 	defineExpose({
 		focus,
 	})
@@ -126,18 +130,10 @@
 			</slot>
 		</legend>
 
-		<p
-			v-if="props.lockAfterSelection"
-			:id="emotionPickerDescriptionId"
-			class="d-sr-only"
-		>
-			{{ internalValue === -1 ? locales.toValidate : locales.validated }}
-		</p>
-
 		<div
 			role="radiogroup"
-			aria-describedby="emotionPickerDescriptionId"
-			class="d-flex max-width-none mx-n1 mx-sm-n2"
+			:aria-describedby="shouldDisplayLockingState ? emotionPickerDescriptionId : undefined"
+			class="d-flex max-width-none mx-n1 mx-sm-n2 mb-6"
 		>
 			<div
 				v-for="index in props.length"
@@ -178,12 +174,19 @@
 				</span>
 			</div>
 		</div>
+		<p
+			v-if="shouldDisplayLockingState"
+			:id="emotionPickerDescriptionId"
+			class="locking-state text-caption"
+			:class="{'d-sr-only': internalValue !== -1}"
+		>
+			{{ internalValue === -1 ? props.locales.toValidate : props.locales.validated }}
+		</p>
 	</fieldset>
 </template>
 
 <style lang="scss" scoped>
 .sy-emotion-picker {
-	display: flex;
 	border: 0;
 }
 
@@ -256,6 +259,11 @@
 
 .sy-emotion-picker__item--active .sy-emotion-picker__item-title {
 	color: currentcolor;
+}
+
+.locking-state {
+	font-style: italic;
+	color: rgb(var(--v-theme-grey-base));
 }
 
 </style>

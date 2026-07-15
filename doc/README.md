@@ -114,3 +114,14 @@ Documentation du système de badges automatiques affichés sur les pages de comp
 | [Logique date/version](./Badges/version-logic.md) | Comment la version et la date sont déterminées depuis git |
 
 ---
+
+### 📦 [Dépendances & `peerDependencies`](./Dependances/README.md)
+
+Dépendances déclarées par `@cnamts/synapse` et paquets à installer côté projet consommateur.
+
+| Sujet | Contenu |
+|---|---|
+| [`peerDependencies`](./Dependances/README.md#peerdependencies-actuelles) | Liste à jour (`vue`, `vuetify`, `@mdi/js`) et rôle de chacune |
+| [`@mdi/js` en peer](./Dependances/README.md#changement--mdijs-devient-une-peerdependency) | PR #2350 — passage de `dependencies` à `peerDependencies`, externalisation du build, impact consommateurs |
+
+---
