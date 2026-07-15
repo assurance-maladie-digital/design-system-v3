@@ -234,7 +234,7 @@
 		}
 
 		&.neutral {
-			background: rgb(var(--v-theme-warningVariantLigthen));
+			background: rgb(var(--v-theme-warningVariantLighten));
 		}
 
 		&.happy {
