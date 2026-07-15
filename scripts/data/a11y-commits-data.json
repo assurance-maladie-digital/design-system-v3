@@ -4695,6 +4695,17 @@
   ],
   "SyInputSelect": [
     {
+      "hash": "b76045911a704d35026f9a97a68716da6323f256",
+      "date": "2026-07-02 10:31:06 +0200",
+      "dateFr": "02/07/2026",
+      "message": "Migration du composant `SyInputSelect` (#2348)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "129060e2b8a94d277d8a03fd98eb169ad72ebcdb",
       "date": "2026-02-12 10:01:33 +0100",
       "dateFr": "12/02/2026",
@@ -5005,7 +5016,42 @@
       "a11yLabel": false
     }
   ],
+  "SyCheckBoxGroup": [
+    {
+      "hash": "7f2a9c3ab64afbcceb675f6207bcef447a508ec8",
+      "date": "2026-07-08 14:17:13 +0200",
+      "dateFr": "08/07/2026",
+      "message": "[SyCheckbox] fix des retours d'accessibilitées (#2366)",
+      "version": "1.1.1",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eaed6607738f2806fd050d39f4e4a0145dbce92f",
+      "date": "2026-02-23 11:37:39 +0100",
+      "dateFr": "23/02/2026",
+      "message": "SyCheckBoxGroup component (#1783)",
+      "version": "1.0.21",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
   "SyCheckbox": [
+    {
+      "hash": "7f2a9c3ab64afbcceb675f6207bcef447a508ec8",
+      "date": "2026-07-08 14:17:13 +0200",
+      "dateFr": "08/07/2026",
+      "message": "[SyCheckbox] fix des retours d'accessibilitées (#2366)",
+      "version": "1.1.1",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "f3fe608be0d7f942087d1a7e09ddb9f358ed9820",
       "date": "2026-06-24 14:14:23 +0200",
@@ -5177,19 +5223,6 @@
       "dateFr": "30/06/2025",
       "message": "add syCheckbox componant (#725)",
       "version": "1.0.2",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    }
-  ],
-  "SyCheckBoxGroup": [
-    {
-      "hash": "eaed6607738f2806fd050d39f4e4a0145dbce92f",
-      "date": "2026-02-23 11:37:39 +0100",
-      "dateFr": "23/02/2026",
-      "message": "SyCheckBoxGroup component (#1783)",
-      "version": "1.0.21",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -5478,6 +5511,17 @@
     }
   ],
   "SyIconButton": [
+    {
+      "hash": "dbafe6cb9c1b46af7f14e4e822970a19eaae6c19",
+      "date": "2026-07-07 15:06:32 +0200",
+      "dateFr": "07/07/2026",
+      "message": "SyTable/SyServerTable row editing + global actions (#2338)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "6816c49867c1f06368e49ed5cd44461a1ce7bb1f",
       "date": "2026-06-23 15:27:49 +0200",
@@ -7480,6 +7524,17 @@
   ],
   "ExternalLinks": [
     {
+      "hash": "ab8872050a245b8e750b776979c26552b703abdb",
+      "date": "2026-07-06 10:18:16 +0200",
+      "dateFr": "06/07/2026",
+      "message": "Feat/migration external links (#2339)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
       "date": "2026-03-30 08:20:25 +0100",
       "dateFr": "30/03/2026",
@@ -7727,6 +7782,17 @@
     }
   ],
   "FilePreview": [
+    {
+      "hash": "4d4bee7db90d75e5fabec97b8ed43991cf3cfaef",
+      "date": "2026-07-07 15:23:08 +0200",
+      "dateFr": "07/07/2026",
+      "message": "FilePreview: add readonly + mandatory + pdf.js (#2344)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
       "date": "2026-02-11 12:51:15 +0100",
@@ -8237,6 +8303,17 @@
   ],
   "HeaderBar": [
     {
+      "hash": "ac297075e94eb8b9fbf9a969f2a3dd074b2dc0f9",
+      "date": "2026-07-10 16:49:34 +0200",
+      "dateFr": "10/07/2026",
+      "message": "[logo] charger uniquement les images de logo si elles sont affiché (#2359)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "462a742899258fad303074faa447e8c8a2b109b2",
       "date": "2026-03-11 11:00:31 +0100",
       "dateFr": "11/03/2026",
@@ -8256,17 +8333,6 @@
       "confidence": "forte",
       "keywords": true,
       "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "a3593a202701c3e0434289c60745c359a68abe57",
-      "date": "2026-01-29 18:19:39 +0100",
-      "dateFr": "29/01/2026",
-      "message": "Headerbar: incoherence graphique (#1705)",
-      "version": "1.0.18",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
       "a11yLabel": false
     },
     {
@@ -8676,22 +8742,22 @@
   ],
   "HeaderLogo": [
     {
-      "hash": "462a742899258fad303074faa447e8c8a2b109b2",
-      "date": "2026-03-11 11:00:31 +0100",
-      "dateFr": "11/03/2026",
-      "message": "Hx: replace hx to SyHeading (#1874)",
-      "version": "1.0.22",
+      "hash": "ac297075e94eb8b9fbf9a969f2a3dd074b2dc0f9",
+      "date": "2026-07-10 16:49:34 +0200",
+      "dateFr": "10/07/2026",
+      "message": "[logo] charger uniquement les images de logo si elles sont affiché (#2359)",
+      "version": "1.1.1",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
       "a11yLabel": false
     },
     {
-      "hash": "a3593a202701c3e0434289c60745c359a68abe57",
-      "date": "2026-01-29 18:19:39 +0100",
-      "dateFr": "29/01/2026",
-      "message": "Headerbar: incoherence graphique (#1705)",
-      "version": "1.0.18",
+      "hash": "462a742899258fad303074faa447e8c8a2b109b2",
+      "date": "2026-03-11 11:00:31 +0100",
+      "dateFr": "11/03/2026",
+      "message": "Hx: replace hx to SyHeading (#1874)",
+      "version": "1.0.22",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -8758,76 +8824,6 @@
       "dateFr": "31/10/2024",
       "message": "Ajout de la version beta du complexMenu (#180)",
       "version": "0.0.5-alpha",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    }
-  ],
-  "Logo-mobile": [
-    {
-      "hash": "a3593a202701c3e0434289c60745c359a68abe57",
-      "date": "2026-01-29 18:19:39 +0100",
-      "dateFr": "29/01/2026",
-      "message": "Headerbar: incoherence graphique (#1705)",
-      "version": "1.0.18",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "ae8ef3a5f2845ca17cd9baf322318e82e75e7386",
-      "date": "2024-10-31 16:08:14 +0100",
-      "dateFr": "31/10/2024",
-      "message": "Ajout de la version beta du complexMenu (#180)",
-      "version": "0.0.5-alpha",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    }
-  ],
-  "Logo": [
-    {
-      "hash": "d8ba7ec7683ccf3a0f0607adbd6731da5bbfab85",
-      "date": "2026-03-30 10:39:46 +0100",
-      "dateFr": "30/03/2026",
-      "message": "Feat/add a11y doc for logo x DiacriticPicker x Captcha x LogoBrandSection (#2037)",
-      "version": "1.0.24",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
-      "date": "2026-02-11 12:51:15 +0100",
-      "dateFr": "11/02/2026",
-      "message": "Accessibilité: file reorganization accessibility (#1792)",
-      "version": "1.0.20",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
-      "date": "2026-01-06 11:55:17 +0100",
-      "dateFr": "06/01/2026",
-      "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "006827e9f5d3a1bdfa2b8822ea853f6d85c8dbaa",
-      "date": "2024-10-21 13:54:06 +0200",
-      "dateFr": "21/10/2024",
-      "message": "Feat/add logo (#158)",
-      "version": "0.0.2-alpha",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -8949,6 +8945,17 @@
     }
   ],
   "HeaderNavigationBar": [
+    {
+      "hash": "ac297075e94eb8b9fbf9a969f2a3dd074b2dc0f9",
+      "date": "2026-07-10 16:49:34 +0200",
+      "dateFr": "10/07/2026",
+      "message": "[logo] charger uniquement les images de logo si elles sont affiché (#2359)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "c5a2297435779e2698442027eaa64ec319a83ad5",
       "date": "2026-05-20 17:19:08 +0200",
@@ -9291,6 +9298,52 @@
       "dateFr": "30/09/2024",
       "message": "Feat/add lang btn (#86)",
       "version": "0.0.1-alpha",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "Logo": [
+    {
+      "hash": "d8ba7ec7683ccf3a0f0607adbd6731da5bbfab85",
+      "date": "2026-03-30 10:39:46 +0100",
+      "dateFr": "30/03/2026",
+      "message": "Feat/add a11y doc for logo x DiacriticPicker x Captcha x LogoBrandSection (#2037)",
+      "version": "1.0.24",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
+      "date": "2026-02-11 12:51:15 +0100",
+      "dateFr": "11/02/2026",
+      "message": "Accessibilité: file reorganization accessibility (#1792)",
+      "version": "1.0.20",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
+      "date": "2026-01-06 11:55:17 +0100",
+      "dateFr": "06/01/2026",
+      "message": "Feat/add accessibility in ci (#1663)",
+      "version": "1.0.17",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "006827e9f5d3a1bdfa2b8822ea853f6d85c8dbaa",
+      "date": "2024-10-21 13:54:06 +0200",
+      "dateFr": "21/10/2024",
+      "message": "Feat/add logo (#158)",
+      "version": "0.0.2-alpha",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -10378,6 +10431,17 @@
   ],
   "PasswordField": [
     {
+      "hash": "fe709542b28b9e7e3ed8876a8258920c11778c12",
+      "date": "2026-07-03 11:28:48 +0200",
+      "dateFr": "03/07/2026",
+      "message": "ajout doc aria pressed (#2362)",
+      "version": "1.1.1",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "5a2966f8841c575fe09967b67aae3089bfeeda3e",
       "date": "2026-06-05 16:47:31 +0200",
       "dateFr": "05/06/2026",
@@ -10828,6 +10892,17 @@
   ],
   "EmotionPicker": [
     {
+      "hash": "7ddc61cf5874855db49eb1c6128bdcb8d451b47d",
+      "date": "2026-07-15 14:44:47 +0200",
+      "dateFr": "15/07/2026",
+      "message": "[RatingPicker] Iso Maquettes (#2389)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "e288adda25134e15065ec4b6c5332bb9c3e70d01",
       "date": "2026-06-30 11:48:21 +0200",
       "dateFr": "30/06/2026",
@@ -10929,6 +11004,17 @@
   ],
   "NumberPicker": [
     {
+      "hash": "7ddc61cf5874855db49eb1c6128bdcb8d451b47d",
+      "date": "2026-07-15 14:44:47 +0200",
+      "dateFr": "15/07/2026",
+      "message": "[RatingPicker] Iso Maquettes (#2389)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "e288adda25134e15065ec4b6c5332bb9c3e70d01",
       "date": "2026-06-30 11:48:21 +0200",
       "dateFr": "30/06/2026",
@@ -11018,6 +11104,17 @@
     }
   ],
   "RatingPicker": [
+    {
+      "hash": "7ddc61cf5874855db49eb1c6128bdcb8d451b47d",
+      "date": "2026-07-15 14:44:47 +0200",
+      "dateFr": "15/07/2026",
+      "message": "[RatingPicker] Iso Maquettes (#2389)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "e288adda25134e15065ec4b6c5332bb9c3e70d01",
       "date": "2026-06-30 11:48:21 +0200",
@@ -11153,6 +11250,17 @@
   ],
   "StarsPicker": [
     {
+      "hash": "7ddc61cf5874855db49eb1c6128bdcb8d451b47d",
+      "date": "2026-07-15 14:44:47 +0200",
+      "dateFr": "15/07/2026",
+      "message": "[RatingPicker] Iso Maquettes (#2389)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "e288adda25134e15065ec4b6c5332bb9c3e70d01",
       "date": "2026-06-30 11:48:21 +0200",
       "dateFr": "30/06/2026",
@@ -11253,6 +11361,17 @@
     }
   ],
   "SearchListField": [
+    {
+      "hash": "7f2a9c3ab64afbcceb675f6207bcef447a508ec8",
+      "date": "2026-07-08 14:17:13 +0200",
+      "dateFr": "08/07/2026",
+      "message": "[SyCheckbox] fix des retours d'accessibilitées (#2366)",
+      "version": "1.1.1",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "5356b6d759844fa0a12d09adbd11ba8516923819",
       "date": "2026-06-04 15:33:27 +0200",
@@ -11649,6 +11768,17 @@
   ],
   "SyAlert": [
     {
+      "hash": "7ddc61cf5874855db49eb1c6128bdcb8d451b47d",
+      "date": "2026-07-15 14:44:47 +0200",
+      "dateFr": "15/07/2026",
+      "message": "[RatingPicker] Iso Maquettes (#2389)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
       "date": "2026-03-30 08:20:25 +0100",
       "dateFr": "30/03/2026",
@@ -11842,234 +11972,347 @@
       "a11yLabel": false
     }
   ],
-  "AutocompleteFilter": [
+  "TableToolbar": [
     {
-      "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
-      "date": "2026-04-07 16:39:07 +0200",
-      "dateFr": "07/04/2026",
-      "message": "SyTable / SyServerTable: add autocomplete filter (#2068)",
-      "version": "1.0.24",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "5679a48dca94324f5f1da304664ab7e77cabe8c4",
-      "date": "2025-06-19 14:39:37 +0200",
-      "dateFr": "19/06/2025",
-      "message": "Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)",
-      "version": "1.0.2",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "ad3306195e85f853ec49e9d77fc79f70bff673f1",
-      "date": "2025-06-18 09:53:05 +0200",
-      "dateFr": "18/06/2025",
-      "message": "Complexe Tables : add Select rules (#708)",
-      "version": "1.0.2",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    }
-  ],
-  "DateFilter": [
-    {
-      "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
-      "date": "2026-04-07 16:39:07 +0200",
-      "dateFr": "07/04/2026",
-      "message": "SyTable / SyServerTable: add autocomplete filter (#2068)",
-      "version": "1.0.24",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "5679a48dca94324f5f1da304664ab7e77cabe8c4",
-      "date": "2025-06-19 14:39:37 +0200",
-      "dateFr": "19/06/2025",
-      "message": "Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)",
-      "version": "1.0.2",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "ad3306195e85f853ec49e9d77fc79f70bff673f1",
-      "date": "2025-06-18 09:53:05 +0200",
-      "dateFr": "18/06/2025",
-      "message": "Complexe Tables : add Select rules (#708)",
-      "version": "1.0.2",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    }
-  ],
-  "NumberFilter": [
-    {
-      "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
-      "date": "2026-04-07 16:39:07 +0200",
-      "dateFr": "07/04/2026",
-      "message": "SyTable / SyServerTable: add autocomplete filter (#2068)",
-      "version": "1.0.24",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "5679a48dca94324f5f1da304664ab7e77cabe8c4",
-      "date": "2025-06-19 14:39:37 +0200",
-      "dateFr": "19/06/2025",
-      "message": "Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)",
-      "version": "1.0.2",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "ad3306195e85f853ec49e9d77fc79f70bff673f1",
-      "date": "2025-06-18 09:53:05 +0200",
-      "dateFr": "18/06/2025",
-      "message": "Complexe Tables : add Select rules (#708)",
-      "version": "1.0.2",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    }
-  ],
-  "PeriodFilter": [
-    {
-      "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
-      "date": "2026-04-07 16:39:07 +0200",
-      "dateFr": "07/04/2026",
-      "message": "SyTable / SyServerTable: add autocomplete filter (#2068)",
-      "version": "1.0.24",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "5679a48dca94324f5f1da304664ab7e77cabe8c4",
-      "date": "2025-06-19 14:39:37 +0200",
-      "dateFr": "19/06/2025",
-      "message": "Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)",
-      "version": "1.0.2",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "ad3306195e85f853ec49e9d77fc79f70bff673f1",
-      "date": "2025-06-18 09:53:05 +0200",
-      "dateFr": "18/06/2025",
-      "message": "Complexe Tables : add Select rules (#708)",
-      "version": "1.0.2",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    }
-  ],
-  "SelectFilter": [
-    {
-      "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
-      "date": "2026-04-07 16:39:07 +0200",
-      "dateFr": "07/04/2026",
-      "message": "SyTable / SyServerTable: add autocomplete filter (#2068)",
-      "version": "1.0.24",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "5679a48dca94324f5f1da304664ab7e77cabe8c4",
-      "date": "2025-06-19 14:39:37 +0200",
-      "dateFr": "19/06/2025",
-      "message": "Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)",
-      "version": "1.0.2",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "ad3306195e85f853ec49e9d77fc79f70bff673f1",
-      "date": "2025-06-18 09:53:05 +0200",
-      "dateFr": "18/06/2025",
-      "message": "Complexe Tables : add Select rules (#708)",
-      "version": "1.0.2",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    }
-  ],
-  "TextFilter": [
-    {
-      "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
-      "date": "2026-04-07 16:39:07 +0200",
-      "dateFr": "07/04/2026",
-      "message": "SyTable / SyServerTable: add autocomplete filter (#2068)",
-      "version": "1.0.24",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "5679a48dca94324f5f1da304664ab7e77cabe8c4",
-      "date": "2025-06-19 14:39:37 +0200",
-      "dateFr": "19/06/2025",
-      "message": "Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)",
-      "version": "1.0.2",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "ad3306195e85f853ec49e9d77fc79f70bff673f1",
-      "date": "2025-06-18 09:53:05 +0200",
-      "dateFr": "18/06/2025",
-      "message": "Complexe Tables : add Select rules (#708)",
-      "version": "1.0.2",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    }
-  ],
-  "OrganizeColumns": [
-    {
-      "hash": "129060e2b8a94d277d8a03fd98eb169ad72ebcdb",
-      "date": "2026-02-12 10:01:33 +0100",
-      "dateFr": "12/02/2026",
-      "message": "SyIcon: replace VIcon to SyIcon (#1793)",
+      "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
+      "date": "2026-02-11 12:51:15 +0100",
+      "dateFr": "11/02/2026",
+      "message": "Accessibilité: file reorganization accessibility (#1792)",
       "version": "1.0.20",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
+      "date": "2025-12-22 14:37:18 +0100",
+      "dateFr": "22/12/2025",
+      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
+      "version": "1.0.17",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "cd8602b795a93778f3678ecca90d565aca86af5a",
+      "date": "2025-12-10 17:32:50 +0100",
+      "dateFr": "10/12/2025",
+      "message": "Fix Vuetify sass warn (#1594)",
+      "version": "1.0.16",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
       "a11yLabel": false
     },
     {
-      "hash": "c9bc9f5e122b48b6b3023386c551f8fc0f4f4aeb",
-      "date": "2025-07-03 16:28:52 +0200",
-      "dateFr": "03/07/2025",
-      "message": "Tables: ajout de la fonctionalitée de réorganisation des colones (#730)",
+      "hash": "687eac066320e4974c10e66e83e908e642cd8308",
+      "date": "2025-12-10 15:05:36 +0100",
+      "dateFr": "10/12/2025",
+      "message": "AmeliproIcon : fix v-html issue (#1583)",
+      "version": "1.0.16",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "5f94b9c5cc9e56eab174e34bc3475be74ea2d088",
+      "date": "2025-07-25 10:40:07 +0200",
+      "dateFr": "25/07/2025",
+      "message": "update packages + fix tests + CI improvements (#837)",
+      "version": "1.0.4",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "7bd988914d82b2708a9386593486a63aa86f0660",
+      "date": "2025-04-14 12:37:55 +0000",
+      "dateFr": "14/04/2025",
+      "message": "Amélioration des tests avec vitest (#525)",
+      "version": "0.0.15-alpha",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "e5a0f2ec8f52a5b6df6868adc8e908d24043c25b",
+      "date": "2025-02-17 13:47:57 +0100",
+      "dateFr": "17/02/2025",
+      "message": "Ajout du composant TableToolbar (#388)",
+      "version": "0.0.10-alpha",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "SyServerTable": [
+    {
+      "hash": "dbafe6cb9c1b46af7f14e4e822970a19eaae6c19",
+      "date": "2026-07-07 15:06:32 +0200",
+      "dateFr": "07/07/2026",
+      "message": "SyTable/SyServerTable row editing + global actions (#2338)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "8c2f5cc85c4c5705daecafc3f00727b7f4b6ef89",
+      "date": "2026-05-29 09:22:51 +0200",
+      "dateFr": "29/05/2026",
+      "message": "Tables : Migration Ameli pro (#2186)",
+      "version": "1.1.0",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "dfccf9d35dfd9fc7fc21f6009e9aba4d2afd5ddc",
+      "date": "2026-04-17 17:32:44 +0200",
+      "dateFr": "17/04/2026",
+      "message": "SyTable / SyServerTable: add page input option (#2104)",
+      "version": "1.0.25",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "49652e0d949e0e40b9215f9211cecb4bd95a1b5e",
+      "date": "2026-04-08 17:46:25 +0200",
+      "dateFr": "08/04/2026",
+      "message": "SyTable + SyServerTable: add clickable row (#2075)",
+      "version": "1.0.24",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "a2fa72299b5806daab9486dd41f474dd9dd80ab4",
+      "date": "2026-04-03 15:13:25 +0200",
+      "dateFr": "03/04/2026",
+      "message": "SyTable / SyServerTable: pinned columns (#2044)",
+      "version": "1.0.24",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
+      "date": "2026-02-11 12:51:15 +0100",
+      "dateFr": "11/02/2026",
+      "message": "Accessibilité: file reorganization accessibility (#1792)",
+      "version": "1.0.20",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
+      "date": "2025-12-22 14:37:18 +0100",
+      "dateFr": "22/12/2025",
+      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
+      "version": "1.0.17",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "1ce73af328b4960272770e8c8c5b22d786838649",
+      "date": "2025-07-24 16:01:40 +0200",
+      "dateFr": "24/07/2025",
+      "message": "ComplexeTables: rgaa improvments + fix display (#829)",
+      "version": "1.0.4",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "b3ae1a7879d2e8911093e5a597ac18b8ffb5face",
+      "date": "2025-07-01 14:49:15 +0200",
+      "dateFr": "01/07/2025",
+      "message": "SyTable / SyServerTable : Selection (#726)",
       "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "8566e67d97bab55244be6f39956b99283b43a927",
+      "date": "2025-06-12 14:41:49 +0000",
+      "dateFr": "12/06/2025",
+      "message": "gestion de la dimension des colonnes des les tableaux (#666)",
+      "version": "1.0.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "88e3816fc167eb21dbaee3dca9df1a72dfa27547",
+      "date": "2025-06-10 15:57:25 +0200",
+      "dateFr": "10/06/2025",
+      "message": "Tables improve props and styles (#689)",
+      "version": "1.0.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "44b6129940ba1ee01dd57f10fd1162bab63ddb2a",
+      "date": "2025-06-05 09:31:38 +0200",
+      "dateFr": "05/06/2025",
+      "message": "Add filter management in tables components v2 (#665)",
+      "version": "1.0.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "SyTable": [
+    {
+      "hash": "dbafe6cb9c1b46af7f14e4e822970a19eaae6c19",
+      "date": "2026-07-07 15:06:32 +0200",
+      "dateFr": "07/07/2026",
+      "message": "SyTable/SyServerTable row editing + global actions (#2338)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "8c2f5cc85c4c5705daecafc3f00727b7f4b6ef89",
+      "date": "2026-05-29 09:22:51 +0200",
+      "dateFr": "29/05/2026",
+      "message": "Tables : Migration Ameli pro (#2186)",
+      "version": "1.1.0",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "dfccf9d35dfd9fc7fc21f6009e9aba4d2afd5ddc",
+      "date": "2026-04-17 17:32:44 +0200",
+      "dateFr": "17/04/2026",
+      "message": "SyTable / SyServerTable: add page input option (#2104)",
+      "version": "1.0.25",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "49652e0d949e0e40b9215f9211cecb4bd95a1b5e",
+      "date": "2026-04-08 17:46:25 +0200",
+      "dateFr": "08/04/2026",
+      "message": "SyTable + SyServerTable: add clickable row (#2075)",
+      "version": "1.0.24",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "a2fa72299b5806daab9486dd41f474dd9dd80ab4",
+      "date": "2026-04-03 15:13:25 +0200",
+      "dateFr": "03/04/2026",
+      "message": "SyTable / SyServerTable: pinned columns (#2044)",
+      "version": "1.0.24",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
+      "date": "2026-02-11 12:51:15 +0100",
+      "dateFr": "11/02/2026",
+      "message": "Accessibilité: file reorganization accessibility (#1792)",
+      "version": "1.0.20",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
+      "date": "2025-12-22 14:37:18 +0100",
+      "dateFr": "22/12/2025",
+      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
+      "version": "1.0.17",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "1ce73af328b4960272770e8c8c5b22d786838649",
+      "date": "2025-07-24 16:01:40 +0200",
+      "dateFr": "24/07/2025",
+      "message": "ComplexeTables: rgaa improvments + fix display (#829)",
+      "version": "1.0.4",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "b3ae1a7879d2e8911093e5a597ac18b8ffb5face",
+      "date": "2025-07-01 14:49:15 +0200",
+      "dateFr": "01/07/2025",
+      "message": "SyTable / SyServerTable : Selection (#726)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "8566e67d97bab55244be6f39956b99283b43a927",
+      "date": "2025-06-12 14:41:49 +0000",
+      "dateFr": "12/06/2025",
+      "message": "gestion de la dimension des colonnes des les tableaux (#666)",
+      "version": "1.0.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "88e3816fc167eb21dbaee3dca9df1a72dfa27547",
+      "date": "2025-06-10 15:57:25 +0200",
+      "dateFr": "10/06/2025",
+      "message": "Tables improve props and styles (#689)",
+      "version": "1.0.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "44b6129940ba1ee01dd57f10fd1162bab63ddb2a",
+      "date": "2025-06-05 09:31:38 +0200",
+      "dateFr": "05/06/2025",
+      "message": "Add filter management in tables components v2 (#665)",
+      "version": "1.0.1",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -12077,6 +12320,17 @@
     }
   ],
   "SyTableFilter": [
+    {
+      "hash": "dbafe6cb9c1b46af7f14e4e822970a19eaae6c19",
+      "date": "2026-07-07 15:06:32 +0200",
+      "dateFr": "07/07/2026",
+      "message": "SyTable/SyServerTable row editing + global actions (#2338)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "a204f01588c0d18f938412ff579464a08e7f1ceb",
       "date": "2026-05-05 11:53:45 +0200",
@@ -12344,6 +12598,294 @@
   ],
   "SyTablePagination": [
     {
+      "hash": "dbafe6cb9c1b46af7f14e4e822970a19eaae6c19",
+      "date": "2026-07-07 15:06:32 +0200",
+      "dateFr": "07/07/2026",
+      "message": "SyTable/SyServerTable row editing + global actions (#2338)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "a204f01588c0d18f938412ff579464a08e7f1ceb",
+      "date": "2026-05-05 11:53:45 +0200",
+      "dateFr": "05/05/2026",
+      "message": "SySelect: add validation + stories (#2151)",
+      "version": "1.0.26",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "dfccf9d35dfd9fc7fc21f6009e9aba4d2afd5ddc",
+      "date": "2026-04-17 17:32:44 +0200",
+      "dateFr": "17/04/2026",
+      "message": "SyTable / SyServerTable: add page input option (#2104)",
+      "version": "1.0.25",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "49652e0d949e0e40b9215f9211cecb4bd95a1b5e",
+      "date": "2026-04-08 17:46:25 +0200",
+      "dateFr": "08/04/2026",
+      "message": "SyTable + SyServerTable: add clickable row (#2075)",
+      "version": "1.0.24",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
+      "date": "2026-04-07 16:39:07 +0200",
+      "dateFr": "07/04/2026",
+      "message": "SyTable / SyServerTable: add autocomplete filter (#2068)",
+      "version": "1.0.24",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "a2fa72299b5806daab9486dd41f474dd9dd80ab4",
+      "date": "2026-04-03 15:13:25 +0200",
+      "dateFr": "03/04/2026",
+      "message": "SyTable / SyServerTable: pinned columns (#2044)",
+      "version": "1.0.24",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "129060e2b8a94d277d8a03fd98eb169ad72ebcdb",
+      "date": "2026-02-12 10:01:33 +0100",
+      "dateFr": "12/02/2026",
+      "message": "SyIcon: replace VIcon to SyIcon (#1793)",
+      "version": "1.0.20",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "ca60bc0bc764e7f8c8ac9df8bf129b5d2e606d61",
+      "date": "2025-10-30 16:20:06 +0100",
+      "dateFr": "30/10/2025",
+      "message": "SyTable / SyServerTable : fix items per page option on page change (#1371)",
+      "version": "1.0.12",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "9746e979eb11a79db404aeea14ea06d9df41c292",
+      "date": "2025-10-27 09:41:44 +0100",
+      "dateFr": "27/10/2025",
+      "message": "fix Tous options size (#1324)",
+      "version": "1.0.11",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "f9b57f2e1f4a5a54a28d5f126fe93584f31e086a",
+      "date": "2025-09-30 16:43:00 +0200",
+      "dateFr": "30/09/2025",
+      "message": "SyServerTable : fix double emit (#1186)",
+      "version": "1.0.10",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "c2fa4e74bf232f907ff73899b53909c75844e14b",
+      "date": "2025-07-31 11:47:54 +0200",
+      "dateFr": "31/07/2025",
+      "message": "Feat/improve tests (#884)",
+      "version": "1.0.6",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "1ce73af328b4960272770e8c8c5b22d786838649",
+      "date": "2025-07-24 16:01:40 +0200",
+      "dateFr": "24/07/2025",
+      "message": "ComplexeTables: rgaa improvments + fix display (#829)",
+      "version": "1.0.4",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "151264b0377705e3f7baf70ac8d29f71e3c7d22f",
+      "date": "2025-07-22 15:24:15 +0200",
+      "dateFr": "22/07/2025",
+      "message": "Feat/remove useless div on sy select (#826)",
+      "version": "1.0.4",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "b52b7faedd98f484289c6fd21454bba093145d48",
+      "date": "2025-07-15 11:39:33 +0200",
+      "dateFr": "15/07/2025",
+      "message": "Tables : add multi-sort option (#789)",
+      "version": "1.0.3",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "f16bb16e024f573b35b5e58de919bda7478b7726",
+      "date": "2025-07-09 09:57:42 +0200",
+      "dateFr": "09/07/2025",
+      "message": "SyPagination component (#771)",
+      "version": "1.0.3",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "c9bc9f5e122b48b6b3023386c551f8fc0f4f4aeb",
+      "date": "2025-07-03 16:28:52 +0200",
+      "dateFr": "03/07/2025",
+      "message": "Tables: ajout de la fonctionalitée de réorganisation des colones (#730)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "b3ae1a7879d2e8911093e5a597ac18b8ffb5face",
+      "date": "2025-07-01 14:49:15 +0200",
+      "dateFr": "01/07/2025",
+      "message": "SyTable / SyServerTable : Selection (#726)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "bd1c86b11240d4a046b5a0f0bb89fe830602dedd",
+      "date": "2025-06-26 17:30:44 +0200",
+      "dateFr": "26/06/2025",
+      "message": "SyTable / SyServerTable : pagination (#714)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "a449d9913256f0f2916a11ba45fc9082ab01f8be",
+      "date": "2025-06-20 11:26:37 +0200",
+      "dateFr": "20/06/2025",
+      "message": "Fix du filtre periode sur SyTable (#711)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "abda0ca5c639142f7a945c99c9a0e4bbee80af42",
+      "date": "2025-06-19 15:06:35 +0200",
+      "dateFr": "19/06/2025",
+      "message": "Refactorisation des type du slot headers (#705)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "5679a48dca94324f5f1da304664ab7e77cabe8c4",
+      "date": "2025-06-19 14:39:37 +0200",
+      "dateFr": "19/06/2025",
+      "message": "Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "ad3306195e85f853ec49e9d77fc79f70bff673f1",
+      "date": "2025-06-18 09:53:05 +0200",
+      "dateFr": "18/06/2025",
+      "message": "Complexe Tables : add Select rules (#708)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "8566e67d97bab55244be6f39956b99283b43a927",
+      "date": "2025-06-12 14:41:49 +0000",
+      "dateFr": "12/06/2025",
+      "message": "gestion de la dimension des colonnes des les tableaux (#666)",
+      "version": "1.0.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "88e3816fc167eb21dbaee3dca9df1a72dfa27547",
+      "date": "2025-06-10 15:57:25 +0200",
+      "dateFr": "10/06/2025",
+      "message": "Tables improve props and styles (#689)",
+      "version": "1.0.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "44b6129940ba1ee01dd57f10fd1162bab63ddb2a",
+      "date": "2025-06-05 09:31:38 +0200",
+      "dateFr": "05/06/2025",
+      "message": "Add filter management in tables components v2 (#665)",
+      "version": "1.0.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "TableBulkActions": [
+    {
+      "hash": "dbafe6cb9c1b46af7f14e4e822970a19eaae6c19",
+      "date": "2026-07-07 15:06:32 +0200",
+      "dateFr": "07/07/2026",
+      "message": "SyTable/SyServerTable row editing + global actions (#2338)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "a204f01588c0d18f938412ff579464a08e7f1ceb",
       "date": "2026-05-05 11:53:45 +0200",
       "dateFr": "05/05/2026",
@@ -12610,6 +13152,17 @@
   ],
   "TableHeader": [
     {
+      "hash": "dbafe6cb9c1b46af7f14e4e822970a19eaae6c19",
+      "date": "2026-07-07 15:06:32 +0200",
+      "dateFr": "07/07/2026",
+      "message": "SyTable/SyServerTable row editing + global actions (#2338)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "a204f01588c0d18f938412ff579464a08e7f1ceb",
       "date": "2026-05-05 11:53:45 +0200",
       "dateFr": "05/05/2026",
@@ -12874,34 +13427,12 @@
       "a11yLabel": false
     }
   ],
-  "SyServerTable": [
+  "AutocompleteFilter": [
     {
-      "hash": "8c2f5cc85c4c5705daecafc3f00727b7f4b6ef89",
-      "date": "2026-05-29 09:22:51 +0200",
-      "dateFr": "29/05/2026",
-      "message": "Tables : Migration Ameli pro (#2186)",
-      "version": "1.1.0",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "dfccf9d35dfd9fc7fc21f6009e9aba4d2afd5ddc",
-      "date": "2026-04-17 17:32:44 +0200",
-      "dateFr": "17/04/2026",
-      "message": "SyTable / SyServerTable: add page input option (#2104)",
-      "version": "1.0.25",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "49652e0d949e0e40b9215f9211cecb4bd95a1b5e",
-      "date": "2026-04-08 17:46:25 +0200",
-      "dateFr": "08/04/2026",
-      "message": "SyTable + SyServerTable: add clickable row (#2075)",
+      "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
+      "date": "2026-04-07 16:39:07 +0200",
+      "dateFr": "07/04/2026",
+      "message": "SyTable / SyServerTable: add autocomplete filter (#2068)",
       "version": "1.0.24",
       "confidence": "faible",
       "keywords": false,
@@ -12909,54 +13440,10 @@
       "a11yLabel": false
     },
     {
-      "hash": "a2fa72299b5806daab9486dd41f474dd9dd80ab4",
-      "date": "2026-04-03 15:13:25 +0200",
-      "dateFr": "03/04/2026",
-      "message": "SyTable / SyServerTable: pinned columns (#2044)",
-      "version": "1.0.24",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
-      "date": "2026-02-11 12:51:15 +0100",
-      "dateFr": "11/02/2026",
-      "message": "Accessibilité: file reorganization accessibility (#1792)",
-      "version": "1.0.20",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "1ce73af328b4960272770e8c8c5b22d786838649",
-      "date": "2025-07-24 16:01:40 +0200",
-      "dateFr": "24/07/2025",
-      "message": "ComplexeTables: rgaa improvments + fix display (#829)",
-      "version": "1.0.4",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "b3ae1a7879d2e8911093e5a597ac18b8ffb5face",
-      "date": "2025-07-01 14:49:15 +0200",
-      "dateFr": "01/07/2025",
-      "message": "SyTable / SyServerTable : Selection (#726)",
+      "hash": "5679a48dca94324f5f1da304664ab7e77cabe8c4",
+      "date": "2025-06-19 14:39:37 +0200",
+      "dateFr": "19/06/2025",
+      "message": "Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)",
       "version": "1.0.2",
       "confidence": "faible",
       "keywords": false,
@@ -12964,67 +13451,23 @@
       "a11yLabel": false
     },
     {
-      "hash": "8566e67d97bab55244be6f39956b99283b43a927",
-      "date": "2025-06-12 14:41:49 +0000",
-      "dateFr": "12/06/2025",
-      "message": "gestion de la dimension des colonnes des les tableaux (#666)",
-      "version": "1.0.1",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "88e3816fc167eb21dbaee3dca9df1a72dfa27547",
-      "date": "2025-06-10 15:57:25 +0200",
-      "dateFr": "10/06/2025",
-      "message": "Tables improve props and styles (#689)",
-      "version": "1.0.1",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "44b6129940ba1ee01dd57f10fd1162bab63ddb2a",
-      "date": "2025-06-05 09:31:38 +0200",
-      "dateFr": "05/06/2025",
-      "message": "Add filter management in tables components v2 (#665)",
-      "version": "1.0.1",
+      "hash": "ad3306195e85f853ec49e9d77fc79f70bff673f1",
+      "date": "2025-06-18 09:53:05 +0200",
+      "dateFr": "18/06/2025",
+      "message": "Complexe Tables : add Select rules (#708)",
+      "version": "1.0.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
       "a11yLabel": false
     }
   ],
-  "SyTable": [
+  "DateFilter": [
     {
-      "hash": "8c2f5cc85c4c5705daecafc3f00727b7f4b6ef89",
-      "date": "2026-05-29 09:22:51 +0200",
-      "dateFr": "29/05/2026",
-      "message": "Tables : Migration Ameli pro (#2186)",
-      "version": "1.1.0",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "dfccf9d35dfd9fc7fc21f6009e9aba4d2afd5ddc",
-      "date": "2026-04-17 17:32:44 +0200",
-      "dateFr": "17/04/2026",
-      "message": "SyTable / SyServerTable: add page input option (#2104)",
-      "version": "1.0.25",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "49652e0d949e0e40b9215f9211cecb4bd95a1b5e",
-      "date": "2026-04-08 17:46:25 +0200",
-      "dateFr": "08/04/2026",
-      "message": "SyTable + SyServerTable: add clickable row (#2075)",
+      "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
+      "date": "2026-04-07 16:39:07 +0200",
+      "dateFr": "07/04/2026",
+      "message": "SyTable / SyServerTable: add autocomplete filter (#2068)",
       "version": "1.0.24",
       "confidence": "faible",
       "keywords": false,
@@ -13032,54 +13475,10 @@
       "a11yLabel": false
     },
     {
-      "hash": "a2fa72299b5806daab9486dd41f474dd9dd80ab4",
-      "date": "2026-04-03 15:13:25 +0200",
-      "dateFr": "03/04/2026",
-      "message": "SyTable / SyServerTable: pinned columns (#2044)",
-      "version": "1.0.24",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
-      "date": "2026-02-11 12:51:15 +0100",
-      "dateFr": "11/02/2026",
-      "message": "Accessibilité: file reorganization accessibility (#1792)",
-      "version": "1.0.20",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "1ce73af328b4960272770e8c8c5b22d786838649",
-      "date": "2025-07-24 16:01:40 +0200",
-      "dateFr": "24/07/2025",
-      "message": "ComplexeTables: rgaa improvments + fix display (#829)",
-      "version": "1.0.4",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "b3ae1a7879d2e8911093e5a597ac18b8ffb5face",
-      "date": "2025-07-01 14:49:15 +0200",
-      "dateFr": "01/07/2025",
-      "message": "SyTable / SyServerTable : Selection (#726)",
+      "hash": "5679a48dca94324f5f1da304664ab7e77cabe8c4",
+      "date": "2025-06-19 14:39:37 +0200",
+      "dateFr": "19/06/2025",
+      "message": "Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)",
       "version": "1.0.2",
       "confidence": "faible",
       "keywords": false,
@@ -13087,112 +13486,175 @@
       "a11yLabel": false
     },
     {
-      "hash": "8566e67d97bab55244be6f39956b99283b43a927",
-      "date": "2025-06-12 14:41:49 +0000",
-      "dateFr": "12/06/2025",
-      "message": "gestion de la dimension des colonnes des les tableaux (#666)",
-      "version": "1.0.1",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "88e3816fc167eb21dbaee3dca9df1a72dfa27547",
-      "date": "2025-06-10 15:57:25 +0200",
-      "dateFr": "10/06/2025",
-      "message": "Tables improve props and styles (#689)",
-      "version": "1.0.1",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "44b6129940ba1ee01dd57f10fd1162bab63ddb2a",
-      "date": "2025-06-05 09:31:38 +0200",
-      "dateFr": "05/06/2025",
-      "message": "Add filter management in tables components v2 (#665)",
-      "version": "1.0.1",
+      "hash": "ad3306195e85f853ec49e9d77fc79f70bff673f1",
+      "date": "2025-06-18 09:53:05 +0200",
+      "dateFr": "18/06/2025",
+      "message": "Complexe Tables : add Select rules (#708)",
+      "version": "1.0.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
       "a11yLabel": false
     }
   ],
-  "TableToolbar": [
+  "NumberFilter": [
     {
-      "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
-      "date": "2026-02-11 12:51:15 +0100",
-      "dateFr": "11/02/2026",
-      "message": "Accessibilité: file reorganization accessibility (#1792)",
+      "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
+      "date": "2026-04-07 16:39:07 +0200",
+      "dateFr": "07/04/2026",
+      "message": "SyTable / SyServerTable: add autocomplete filter (#2068)",
+      "version": "1.0.24",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "5679a48dca94324f5f1da304664ab7e77cabe8c4",
+      "date": "2025-06-19 14:39:37 +0200",
+      "dateFr": "19/06/2025",
+      "message": "Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "ad3306195e85f853ec49e9d77fc79f70bff673f1",
+      "date": "2025-06-18 09:53:05 +0200",
+      "dateFr": "18/06/2025",
+      "message": "Complexe Tables : add Select rules (#708)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "PeriodFilter": [
+    {
+      "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
+      "date": "2026-04-07 16:39:07 +0200",
+      "dateFr": "07/04/2026",
+      "message": "SyTable / SyServerTable: add autocomplete filter (#2068)",
+      "version": "1.0.24",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "5679a48dca94324f5f1da304664ab7e77cabe8c4",
+      "date": "2025-06-19 14:39:37 +0200",
+      "dateFr": "19/06/2025",
+      "message": "Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "ad3306195e85f853ec49e9d77fc79f70bff673f1",
+      "date": "2025-06-18 09:53:05 +0200",
+      "dateFr": "18/06/2025",
+      "message": "Complexe Tables : add Select rules (#708)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "SelectFilter": [
+    {
+      "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
+      "date": "2026-04-07 16:39:07 +0200",
+      "dateFr": "07/04/2026",
+      "message": "SyTable / SyServerTable: add autocomplete filter (#2068)",
+      "version": "1.0.24",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "5679a48dca94324f5f1da304664ab7e77cabe8c4",
+      "date": "2025-06-19 14:39:37 +0200",
+      "dateFr": "19/06/2025",
+      "message": "Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "ad3306195e85f853ec49e9d77fc79f70bff673f1",
+      "date": "2025-06-18 09:53:05 +0200",
+      "dateFr": "18/06/2025",
+      "message": "Complexe Tables : add Select rules (#708)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "TextFilter": [
+    {
+      "hash": "e7e25c54c490c4756d82ca344057897083fdd444",
+      "date": "2026-04-07 16:39:07 +0200",
+      "dateFr": "07/04/2026",
+      "message": "SyTable / SyServerTable: add autocomplete filter (#2068)",
+      "version": "1.0.24",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "5679a48dca94324f5f1da304664ab7e77cabe8c4",
+      "date": "2025-06-19 14:39:37 +0200",
+      "dateFr": "19/06/2025",
+      "message": "Add Multiple and Chips props on SySelect + stories / add ex stories on SyTable and SyServerTable (#710)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "ad3306195e85f853ec49e9d77fc79f70bff673f1",
+      "date": "2025-06-18 09:53:05 +0200",
+      "dateFr": "18/06/2025",
+      "message": "Complexe Tables : add Select rules (#708)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "OrganizeColumns": [
+    {
+      "hash": "129060e2b8a94d277d8a03fd98eb169ad72ebcdb",
+      "date": "2026-02-12 10:01:33 +0100",
+      "dateFr": "12/02/2026",
+      "message": "SyIcon: replace VIcon to SyIcon (#1793)",
       "version": "1.0.20",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "cd8602b795a93778f3678ecca90d565aca86af5a",
-      "date": "2025-12-10 17:32:50 +0100",
-      "dateFr": "10/12/2025",
-      "message": "Fix Vuetify sass warn (#1594)",
-      "version": "1.0.16",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
       "a11yLabel": false
     },
     {
-      "hash": "687eac066320e4974c10e66e83e908e642cd8308",
-      "date": "2025-12-10 15:05:36 +0100",
-      "dateFr": "10/12/2025",
-      "message": "AmeliproIcon : fix v-html issue (#1583)",
-      "version": "1.0.16",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "5f94b9c5cc9e56eab174e34bc3475be74ea2d088",
-      "date": "2025-07-25 10:40:07 +0200",
-      "dateFr": "25/07/2025",
-      "message": "update packages + fix tests + CI improvements (#837)",
-      "version": "1.0.4",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "7bd988914d82b2708a9386593486a63aa86f0660",
-      "date": "2025-04-14 12:37:55 +0000",
-      "dateFr": "14/04/2025",
-      "message": "Amélioration des tests avec vitest (#525)",
-      "version": "0.0.15-alpha",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "e5a0f2ec8f52a5b6df6868adc8e908d24043c25b",
-      "date": "2025-02-17 13:47:57 +0100",
-      "dateFr": "17/02/2025",
-      "message": "Ajout du composant TableToolbar (#388)",
-      "version": "0.0.10-alpha",
+      "hash": "c9bc9f5e122b48b6b3023386c551f8fc0f4f4aeb",
+      "date": "2025-07-03 16:28:52 +0200",
+      "dateFr": "03/07/2025",
+      "message": "Tables: ajout de la fonctionalitée de réorganisation des colones (#730)",
+      "version": "1.0.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,

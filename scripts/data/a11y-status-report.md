@@ -1,10 +1,10 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 02/07/2026
+Généré le: 15/07/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
-| **Accordion** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
+| **Accordion** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **BackBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **BackToTopBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **Captcha** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
@@ -18,7 +18,7 @@ Généré le: 02/07/2026
 | **Customs/Selects/SyAutocomplete** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/Selects/SyInputSelect** | ❌ Non | ✅ Non | ✅ Complète | ❌ Non | ❌ |
 | **Customs/Selects/SySelect** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **Customs/SyCheckbox** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
+| **Customs/SyCheckbox** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **Customs/SyCheckBoxGroup** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyForm** | ✅ Oui | ✅ Non | ⚠️ Bientôt disponible | ❌ Non | ❌ |
 | **Customs/SyIcon** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ✅ |
@@ -46,7 +46,7 @@ Généré le: 02/07/2026
 | **FilterSideBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **FooterBar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **FranceConnectBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **HeaderBar** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
+| **HeaderBar** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
 | **HeaderLoading** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **HeaderNavigationBar** | ❌ Non | ❌ Oui | ❌ Manquante | ❌ Non | ❌ |
 | **HeaderToolbar** | ❌ Non | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
@@ -82,4 +82,4 @@ Généré le: 02/07/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 54 / 77 (70.13%)**
+**Total des composants conformes : 55 / 77 (71.43%)**

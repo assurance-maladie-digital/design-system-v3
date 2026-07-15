@@ -51,6 +51,17 @@ describe('NumberPicker', () => {
 		expect(btn?.text()).toBe('5')
 	})
 
+	it('does not render the locking state when readonly', () => {
+		const wrapper = mount(NumberPicker, {
+			props: {
+				readonly: true,
+			},
+		})
+
+		expect(wrapper.find('.locking-state').exists()).toBe(false)
+		expect(wrapper.find('[role="radiogroup"]').attributes('aria-describedby')).toBeUndefined()
+	})
+
 	it('renders correctly in xs window', async () => {
 		// @ts-expect-error  - Property 'happyDOM' does not exist on type 'Window & typeof globalThis'.
 		window.happyDOM.setInnerWidth(600)

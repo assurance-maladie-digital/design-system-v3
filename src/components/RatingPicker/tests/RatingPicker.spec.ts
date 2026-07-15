@@ -135,6 +135,24 @@ describe('RatingPicker', () => {
 		expect(wrapper.text()).not.toContain('Additional content')
 	})
 
+	it('renders the thank you message with status and polite live region', () => {
+		const wrapper = mount(RatingPicker, {
+			stubs: {
+				NumberPicker: {
+					template: '<div />',
+				},
+			},
+			props: {
+				type: RatingEnum.NUMBER,
+				modelValue: 8,
+			},
+		})
+
+		const alert = wrapper.find('.sy-alert')
+
+		expect(alert.attributes('role')).toBe('status')
+	})
+
 	it('sends the correct values to the EmotionPicker', async () => {
 		const wrapper = mount(RatingPicker, {
 			stubs: {
