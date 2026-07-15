@@ -4,7 +4,7 @@ import * as ComponentStatusTableStories from './ComponentStatusTable.stories';
 
 <Meta title="Composants/Statut des composants" />
 
-<Canvas of={ComponentStatusTableStories.Default} />
+<Canvas of={ComponentStatusTableStories.Default} sourceState="none"/>
 
 <style>
 {`
@@ -17,10 +17,6 @@ import * as ComponentStatusTableStories from './ComponentStatusTable.stories';
 .sbdocs-content {
   padding-left: 32px !important;
   padding-right: 32px !important;
-}
-
-:deep(table) {
-  min-width: 1600px;
 }
 
 `}
