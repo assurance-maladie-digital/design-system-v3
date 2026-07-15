@@ -111,18 +111,3 @@
 		<slot />
 	</div>
 </template>
-
-<style scoped>
-.sy-toolbar:has(:focus-visible) {
-	position: relative;
-}
-
-.sy-toolbar:has(:focus-visible)::after {
-	content: '';
-	display: block;
-	position: absolute;
-	inset: -6px;
-	border-radius: 5px;
-	border: 2px solid rgb(var(--v-theme-primary));
-}
-</style>
