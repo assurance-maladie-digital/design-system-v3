@@ -81,6 +81,18 @@ describe('EmotionPicker', () => {
 		expect(items[0]?.classes()).toContain('sy-emotion-picker__item--active')
 	})
 
+	it('does not render the locking state when readonly', () => {
+		const wrapper = mount(EmotionPicker, {
+			props: {
+				modelValue: 1,
+				readonly: true,
+			},
+		})
+
+		expect(wrapper.find('.locking-state').exists()).toBe(false)
+		expect(wrapper.find('[role="radiogroup"]').attributes('aria-describedby')).toBeUndefined()
+	})
+
 	describe('when it do not lock the field after selection', () => {
 		it('can change the value after selection', async () => {
 			const wrapper = mount(EmotionPicker, {

@@ -30,6 +30,32 @@ const meta = {
 			control: { type: 'select' },
 			default: 'outlined',
 		},
+		role: {
+			description: 'Rôle ARIA appliqué au conteneur de l’alerte.',
+			control: 'text',
+			default: 'alert',
+			table: {
+				category: 'props',
+				type: {
+					summary: 'string',
+				},
+				defaultValue: {
+					summary: 'alert',
+				},
+			},
+		},
+		ariaLive: {
+			name: 'aria-live',
+			description: 'Priorité d’annonce du message par les technologies d’assistance.',
+			control: 'select',
+			options: [undefined, 'off', 'polite', 'assertive'],
+			table: {
+				category: 'props',
+				type: {
+					summary: 'off, polite, assertive',
+				},
+			},
+		},
 	},
 } as Meta<typeof SyAlert>
 
@@ -72,6 +98,7 @@ export const Default: Story = {
 		type: 'success',
 		closable: true,
 		variant: 'tonal',
+		role: 'alert',
 		default: 'Contenu de l\'alerte',
 	},
 	render: (args) => {
@@ -82,7 +109,7 @@ export const Default: Story = {
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center justify-center">
-					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable" style="width: 100%">
+					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable" :role="args.role" :aria-live="args.ariaLive" style="width: 100%">
 						<template #default>{{ args.default }}</template>
 					</SyAlert>
 					<VBtn v-if="!args.modelValue" color="primary" @click="args.modelValue = true" class="ma-6">
@@ -128,6 +155,7 @@ export const Outlined: Story = {
 		type: 'warning',
 		closable: true,
 		variant: 'outlined',
+		role: 'alert',
 		default: 'Contenu de l\'alerte',
 	},
 	render: (args) => {
@@ -138,7 +166,7 @@ export const Outlined: Story = {
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center justify-center">
-					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable" style="width: 100%">
+					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable" :role="args.role" :aria-live="args.ariaLive" style="width: 100%">
 						<template #default>{{ args.default }}</template>
 					</SyAlert>
 					<VBtn v-if="!args.modelValue" color="primary" @click="args.modelValue = true" class="ma-6">
@@ -187,6 +215,7 @@ export const SlotIcon: Story = {
 		type: 'success',
 		closable: true,
 		variant: 'tonal',
+		role: 'alert',
 		default: 'Contenu de l\'alerte',
 		icon: 'M21.1,12.5L22.5,13.91L15.97,20.5L12.5,17L13.9,15.59L15.97,17.67L21.1,12.5M10,17L13,20H3V18C3,15.79 6.58,14 11,14L12.89,14.11L10,17M11,4A4,4 0 0,1 15,8A4,4 0 0,1 11,12A4,4 0 0,1 7,8A4,4 0 0,1 11,4Z',
 	},
@@ -198,7 +227,7 @@ export const SlotIcon: Story = {
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center justify-center">
-					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable" style="width: 100%">
+					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable" :role="args.role" :aria-live="args.ariaLive" style="width: 100%">
 						<template #default>{{ args.default }}</template>
 						<template #icon>{{ args.icon }}</template>
 					</SyAlert>
@@ -206,6 +235,51 @@ export const SlotIcon: Story = {
 						Réinitialiser
 					</VBtn>
 				</div>
+			`,
+		}
+	},
+}
+
+export const StatusMessage: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<SyAlert role="status" aria-live="polite" type="success" variant="outlined" style="width: 100%">
+		Votre action a bien été prise en compte.
+	</SyAlert>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { SyAlert } from '@cnamts/synapse'
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		modelValue: true,
+		type: 'success',
+		closable: false,
+		variant: 'outlined',
+		role: 'status',
+		ariaLive: 'polite',
+		default: 'Votre action a bien été prise en compte.',
+	},
+	render: (args) => {
+		return {
+			components: { SyAlert },
+			setup() {
+				return { args }
+			},
+			template: `
+				<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable" :role="args.role" :aria-live="args.ariaLive" style="width: 100%">
+					<template #default>{{ args.default }}</template>
+				</SyAlert>
 			`,
 		}
 	},

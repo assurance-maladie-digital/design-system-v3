@@ -23,10 +23,14 @@
 		type?: 'success' | 'info' | 'warning' | 'error'
 		closable?: boolean
 		variant?: 'tonal' | 'outlined'
+		role?: string
+		ariaLive?: 'off' | 'polite' | 'assertive'
 	}>(), {
 		type: 'info',
 		closable: false,
 		variant: 'tonal',
+		role: 'alert',
+		ariaLive: undefined,
 	})
 
 	const attrs = useAttrs()
@@ -61,7 +65,8 @@
 <template>
 	<div
 		class="sy-alert"
-		role="alert"
+		:role="props.role"
+		:aria-live="props.ariaLive"
 	>
 		<VAlert
 			v-model="show"

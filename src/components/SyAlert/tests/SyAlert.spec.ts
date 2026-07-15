@@ -85,4 +85,45 @@ describe('Alert', () => {
 
 		expect(wrapper.vm.prependIcon).toBe('M12,2L1,21H23M12,6L19.53,19H4.47M11,10V14H13V10M11,16V18H13V16')
 	})
+
+	it('uses alert role by default', () => {
+		const wrapper = mount(SyAlert, {
+			slots: {
+				default: 'slot content',
+			},
+		})
+
+		expect(wrapper.attributes('role')).toBe('alert')
+		expect(wrapper.attributes('aria-live')).toBeUndefined()
+	})
+
+	it('applies role and ariaLive props on the alert wrapper', () => {
+		const wrapper = mount(SyAlert, {
+			props: {
+				role: 'status',
+				ariaLive: 'polite',
+			},
+			slots: {
+				default: 'slot content',
+			},
+		})
+
+		expect(wrapper.attributes('role')).toBe('status')
+		expect(wrapper.attributes('aria-live')).toBe('polite')
+	})
+
+	it('allows assertive live region props on the alert wrapper', () => {
+		const wrapper = mount(SyAlert, {
+			props: {
+				role: 'alert',
+				ariaLive: 'assertive',
+			},
+			slots: {
+				default: 'slot content',
+			},
+		})
+
+		expect(wrapper.attributes('role')).toBe('alert')
+		expect(wrapper.attributes('aria-live')).toBe('assertive')
+	})
 })

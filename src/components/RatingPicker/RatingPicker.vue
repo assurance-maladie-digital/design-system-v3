@@ -155,35 +155,34 @@
 			</template>
 		</component>
 
-		<template v-if="hasAnswered">
-			<SyAlert
-				v-if="!props.hideAlert"
-				:class="{ 'mb-4': displayAdditionalContent }"
-				outlined
-				:type="AlertTypeEnum.SUCCESS"
-				role="status"
-				aria-live="polite"
-				class="mt-4"
-			>
-				{{ props.locales.thanks }}
-			</SyAlert>
+		<SyAlert
+			:model-value="!props.hideAlert && hasAnswered"
+			:class="{ 'mb-4': displayAdditionalContent }"
+			variant="outlined"
+			:type="AlertTypeEnum.SUCCESS"
+			role="status"
+		>
+			{{ props.locales.thanks }}
+		</SyAlert>
 
-			<div
-				v-if="displayAdditionalContent"
-				role="region"
-				aria-live="polite"
-				class="mt-4"
+		<div
+			role="region"
+			aria-live="polite"
+		>
+			<template
+				v-if="displayAdditionalContent && hasAnswered"
 			>
 				<slot />
-			</div>
-		</template>
+			</template>
+		</div>
 	</div>
 </template>
 
 <style lang="scss" scoped>
 .sy-rating-picker--center :deep(fieldset) {
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
+	align-items: center;
 }
 
 .sy-rating-picker--center :deep(legend) {
