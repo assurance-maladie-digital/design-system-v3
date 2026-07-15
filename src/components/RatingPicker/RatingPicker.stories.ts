@@ -7,6 +7,7 @@ import SyTextArea from '../SyTextArea/SyTextArea.vue'
 import SyForm from '../Customs/SyForm/SyForm.vue'
 import DialogBox from '../DialogBox/DialogBox.vue'
 import SyAlert from '../SyAlert/SyAlert.vue'
+import './RatingPicker.stories.scss'
 
 const meta = {
 	title: 'Composants/Feedback/RatingPicker',
@@ -569,7 +570,7 @@ export const AccessibilityBestPractices: Story = {
 		'modelValue': -1,
 		'freeTextLabel': 'Pouvez-vous nous en dire plus ?',
 		'lockAfterSelection': false,
-		'center': true,
+		'center': false,
 		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
@@ -609,8 +610,8 @@ export const AccessibilityBestPractices: Story = {
 							</div>
 						</RatingPicker>
 
-						<div class="d-flex justify-center mt-6">
-							<VBtn v-if="!isSubmitted" type="submit" color="primary">Transmettre mon avis</VBtn>
+						<div class="d-flex mt-6">
+							<VBtn v-if="!isSubmitted" class="rating-picker-submit-button" type="submit" color="primary">Transmettre mon avis</VBtn>
 							<SyAlert v-model="isSubmitted" type="success" variant="outlined" :closable="false" role="status" aria-live="polite" style="width: 100%">
 								Merci pour votre réponse
 							</SyAlert>
@@ -646,7 +647,6 @@ export const AccessibilityBestPractices: Story = {
 				:hide-alert="true"
 				:readonly="isSubmitted"
 				:lock-after-selection="false"
-				:center="true"
 			>
 				<div class="mt-8">
 					<SyTextArea
@@ -659,8 +659,8 @@ export const AccessibilityBestPractices: Story = {
 				</div>
 			</RatingPicker>
 
-			<div class="d-flex justify-center mt-6">
-				<VBtn v-if="!isSubmitted" type="submit" color="primary">Transmettre mon avis</VBtn>
+			<div class="d-flex mt-6">
+				<VBtn v-if="!isSubmitted" class="rating-picker-submit-button" type="submit" color="primary">Transmettre mon avis</VBtn>
 				<SyAlert v-model="isSubmitted" type="success" variant="outlined" :closable="false" role="status" aria-live="polite" style="width: 100%">
 					Merci pour votre réponse
 				</SyAlert>
@@ -679,6 +679,13 @@ export const AccessibilityBestPractices: Story = {
 		</template>
 	</DialogBox>
 </template>
+
+<style>
+.rating-picker-submit-button:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 2px;
+}
+</style>
 		`,
 			},
 			{
@@ -718,7 +725,7 @@ export const NoLockAfterSelectionEmotion: Story = {
 		'hideAlert': true,
 		'modelValue': -1,
 		'lockAfterSelection': false,
-		'center': true,
+		'center': false,
 		'onUpdate:modelValue': fn(),
 	},
 	render: (args) => {
@@ -744,8 +751,8 @@ export const NoLockAfterSelectionEmotion: Story = {
 					<SyForm @submit="handleSubmit">
 						<RatingPicker v-bind="args" v-model="args.modelValue" :readonly="args.readonly || isSubmitted"/>
 
-						<div class="d-flex justify-center mt-6">
-							<VBtn v-if="!isSubmitted" type="submit" color="primary">Transmettre mon avis</VBtn>
+						<div class="d-flex mt-6">
+							<VBtn v-if="!isSubmitted" class="rating-picker-submit-button" type="submit" color="primary">Transmettre mon avis</VBtn>
 							<SyAlert v-model="isSubmitted" type="success" variant="outlined" :closable="false" style="width: 100%">
 								Merci pour votre réponse
 							</SyAlert>
@@ -781,11 +788,10 @@ export const NoLockAfterSelectionEmotion: Story = {
 				:readonly="isSubmitted"
 				:lock-after-selection="false"
 				:hide-alert="true"
-				center
 			/>
 
-			<div class="d-flex justify-center">
-				<VBtn v-if="!isSubmitted" type="submit" color="primary">Transmettre mon avis</VBtn>
+			<div class="d-flex">
+				<VBtn v-if="!isSubmitted" class="rating-picker-submit-button" type="submit" color="primary">Transmettre mon avis</VBtn>
 				<SyAlert v-model="isSubmitted" type="success" variant="outlined" :closable="false" style="width: 100%">
 					Merci pour votre réponse
 				</SyAlert>
@@ -805,6 +811,13 @@ export const NoLockAfterSelectionEmotion: Story = {
 		</template>
 	</DialogBox>
 </template>
+
+<style>
+.rating-picker-submit-button:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 2px;
+}
+</style>
 		`,
 			},
 			{
@@ -840,7 +853,7 @@ export const NoLockAfterSelectionNumber: Story = {
 		'label': 'Êtes-vous satisfait de ce service ?',
 		'readonly': false,
 		'hideAlert': true,
-		'center': true,
+		'center': false,
 		'modelValue': -1,
 		'lockAfterSelection': false,
 		'onUpdate:modelValue': fn(),
@@ -868,8 +881,8 @@ export const NoLockAfterSelectionNumber: Story = {
 					<SyForm @submit="handleSubmit">
 						<RatingPicker v-bind="args" v-model="args.modelValue" :readonly="args.readonly || isSubmitted"/>
 
-						<div class="d-flex justify-center mt-6">
-							<VBtn v-if="!isSubmitted" type="submit" color="primary">Transmettre mon avis</VBtn>
+						<div class="d-flex mt-6">
+							<VBtn v-if="!isSubmitted" class="rating-picker-submit-button" type="submit" color="primary">Transmettre mon avis</VBtn>
 							<SyAlert v-model="isSubmitted" type="success" variant="outlined" :closable="false" style="width: 100%">
 								Merci pour votre réponse
 							</SyAlert>
@@ -905,11 +918,10 @@ export const NoLockAfterSelectionNumber: Story = {
 				:readonly="isSubmitted"
 				:lock-after-selection="false"
 				:hide-alert="true"
-				center
 			/>
 
-			<div class="d-flex justify-center mt-6">
-				<VBtn v-if="!isSubmitted" type="submit" color="primary">Transmettre mon avis</VBtn>
+			<div class="d-flex mt-6">
+				<VBtn v-if="!isSubmitted" class="rating-picker-submit-button" type="submit" color="primary">Transmettre mon avis</VBtn>
 				<SyAlert v-model="isSubmitted" type="success" variant="outlined" :closable="false" style="width: 100%">
 					Merci pour votre réponse
 				</SyAlert>
@@ -929,6 +941,13 @@ export const NoLockAfterSelectionNumber: Story = {
 		</template>
 	</DialogBox>
 </template>
+
+<style>
+.rating-picker-submit-button:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 2px;
+}
+</style>
 		`,
 			},
 			{
@@ -964,7 +983,7 @@ export const NoLockAfterSelectionStars: Story = {
 		'label': 'Êtes-vous satisfait de ce service ?',
 		'readonly': false,
 		'hideAlert': true,
-		'center': true,
+		'center': false,
 		'modelValue': -1,
 		'lockAfterSelection': false,
 		'onUpdate:modelValue': fn(),
@@ -992,8 +1011,8 @@ export const NoLockAfterSelectionStars: Story = {
 					<SyForm @submit="handleSubmit">
 						<RatingPicker v-bind="args" v-model="args.modelValue" :readonly="args.readonly || isSubmitted"/>
 
-						<div class="d-flex justify-center mt-6">
-							<VBtn v-if="!isSubmitted" type="submit" color="primary">Transmettre mon avis</VBtn>
+						<div class="d-flex mt-6">
+							<VBtn v-if="!isSubmitted" class="rating-picker-submit-button" type="submit" color="primary">Transmettre mon avis</VBtn>
 							<SyAlert v-model="isSubmitted" type="success" variant="outlined" :closable="false" style="width: 100%">
 								Merci pour votre réponse
 							</SyAlert>
@@ -1029,11 +1048,10 @@ export const NoLockAfterSelectionStars: Story = {
 				:hide-alert="true"
 				:readonly="isSubmitted"
 				:lock-after-selection="false"
-				center
 			/>
 
-			<div class="d-flex justify-center mt-6">
-				<VBtn v-if="!isSubmitted" type="submit" color="primary">Transmettre mon avis</VBtn>
+			<div class="d-flex mt-6">
+				<VBtn v-if="!isSubmitted" class="rating-picker-submit-button" type="submit" color="primary">Transmettre mon avis</VBtn>
 				<SyAlert v-model="isSubmitted" type="success" variant="outlined" :closable="false" style="width: 100%">
 					Merci pour votre réponse
 				</SyAlert>
@@ -1053,6 +1071,13 @@ export const NoLockAfterSelectionStars: Story = {
 		</template>
 	</DialogBox>
 </template>
+
+<style>
+.rating-picker-submit-button:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 2px;
+}
+</style>
 		`,
 			},
 			{
