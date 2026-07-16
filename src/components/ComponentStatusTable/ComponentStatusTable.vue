@@ -171,8 +171,9 @@
 		})),
 	)
 
-	function getStoryPath(item: ComponentStatusItem): string {
-		const title = item.storybookTitle ?? ''
+	function getStoryPath(item: unknown): string {
+		const componentItem = item as Partial<ComponentStatusItem>
+		const title = componentItem.storybookTitle ?? ''
 
 		return title
 			.toLowerCase()
@@ -181,7 +182,7 @@
 	}
 
 	function getStorybookLink(
-		item: ComponentStatusItem | unknown,
+		item: unknown,
 		theme?: string,
 	): string {
 		const storyPath = getStoryPath(item)
