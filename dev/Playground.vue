@@ -24,6 +24,7 @@
 	import FranceConnectBtn from '@/components/FranceConnectBtn/FranceConnectBtn.vue'
 	import UserMenuBtn from '@/components/UserMenuBtn/UserMenuBtn.vue'
 	import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
+	import SyInputSelect from '@/components/Customs/Selects/SyInputSelect/SyInputSelect.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -92,6 +93,14 @@
 		{ text: 'Mon compte', value: 'account' },
 		{ text: 'Paramètres', value: 'settings' },
 	]
+
+	// SyInputSelect
+	const selectItems = [
+		{ text: 'Option A', value: 'a' },
+		{ text: 'Option B', value: 'b' },
+		{ text: 'Option C', value: 'c' },
+	]
+	const selectValue = ref<Record<string, unknown> | string | null>(null)
 
 	// DownloadBtn (stub de filePromise, pas de vrai téléchargement)
 	const downloadPromise = (): Promise<AxiosResponse<Blob>> =>
@@ -974,6 +983,32 @@
 										color="onPrimary"
 									/>
 								</div>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyInputSelect ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyInputSelect
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Select custom. Tab sur le déclencheur → ring 2px primary outset (offset 3px).
+								Ouvre la liste → ring inset (−3px) sur l'option focalisée (liste custom,
+								pas couverte par le global).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 320px;"
+							>
+								<SyInputSelect
+									v-model="selectValue"
+									:items="selectItems"
+									label="Sélectionner une option"
+								/>
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
