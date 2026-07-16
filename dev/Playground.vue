@@ -16,6 +16,7 @@
 	import ContextualMenu from '@/components/ContextualMenu/ContextualMenu.vue'
 	import ExternalLinks from '@/components/ExternalLinks/ExternalLinks.vue'
 	import SkipLink from '@/components/SkipLink/SkipLink.vue'
+	import SyPagination from '@/components/Customs/SyPagination/SyPagination.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight } from '@mdi/js'
 
@@ -70,6 +71,9 @@
 		{ text: 'Ameli.fr', href: 'https://www.ameli.fr' },
 		{ text: 'Service-public.fr', href: 'https://www.service-public.fr' },
 	]
+
+	// SyPagination
+	const paginationPage = ref(5)
 
 	// CollapsibleList
 	const collapsibleItems = [
@@ -708,6 +712,30 @@
 								label="Aller au contenu principal"
 								target="#main"
 							/>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyPagination ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyPagination
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Tab entre les liens de pagination : ring 2px primary (offset 3px)
+								sur le lien focalisé (page, précédent/suivant).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<SyPagination
+									v-model="paginationPage"
+									:pages="10"
+									:visible="5"
+								/>
+							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>

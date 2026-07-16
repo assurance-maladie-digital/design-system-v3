@@ -1,5 +1,11 @@
 import SyPagination from '../SyPagination.vue'
 
+// Déclenche :focus-visible via l'option native focus({ focusVisible: true }).
+const focusVisible = (selector: string) =>
+	cy.get(selector).then(($el) => {
+		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
+	})
+
 describe('SyPagination - Visual regression tests', () => {
 	it('displays pagination on first page', () => {
 		cy.mountWithVuetify(SyPagination, {
@@ -36,5 +42,22 @@ describe('SyPagination - Visual regression tests', () => {
 
 		cy.get('.sy-pagination').should('be.visible')
 		cy.matchImageSnapshot('sy-pagination-with-label', cy.get('.sy-pagination'))
+	})
+})
+
+describe('SyPagination - Focus visual regression tests', () => {
+	// Ring 2px primary (offset 3px) sur le lien focalisé. Page 1 (non active ici) :
+	// cellule bordée blanche + ring primary.
+	it('shows the focus ring on a page link', () => {
+		cy.mountWithVuetify(SyPagination, {
+			props: {
+				modelValue: 5,
+				pages: 10,
+			},
+		})
+
+		focusVisible('.list-first')
+		cy.wait(100)
+		cy.matchImageSnapshot('sy-pagination-focus', cy.get('.sy-pagination'))
 	})
 })

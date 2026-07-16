@@ -46,7 +46,10 @@
 	width: 100%;
 	background: rgb(var(--v-theme-surface));
 
-	&:focus-visible {
+	// Le skip link n'est atteignable qu'au clavier (d-sr-only-focusable) : on utilise
+	// `:focus` (et non `:focus-visible`) pour garantir que le ring accompagne toujours
+	// la barre quand elle devient visible. Inset (-2px) : barre pleine largeur collée au bord.
+	&:focus {
 		outline: 2px solid rgb(var(--v-theme-primary));
 		outline-offset: -2px;
 	}
