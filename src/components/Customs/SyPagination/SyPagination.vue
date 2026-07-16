@@ -385,13 +385,17 @@
 				color: var(--pagination-color);
 				border: 1px solid var(--pagination-border);
 				border-radius: 4px;
-				transition: all 0.2s ease;
+				transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 				font-size: 0.875rem;
 				line-height: 1;
 
-				&:hover,
-				&:focus {
+				&:hover {
 					background-color: var(--pagination-focused-background-color);
+				}
+
+				&:focus-visible {
+					outline: 2px solid rgb(var(--v-theme-primary));
+					outline-offset: 3px;
 				}
 
 				&[aria-current='page'] {
@@ -426,8 +430,8 @@
 				padding-left: 0.25rem;
 				padding-right: 0.25rem;
 
-				&:hover,
-				&:focus {
+				// Fond transparent conservé au survol ; le focus utilise le ring (ci-dessus).
+				&:hover {
 					background-color: transparent;
 				}
 			}
