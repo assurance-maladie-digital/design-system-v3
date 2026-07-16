@@ -6,6 +6,25 @@
 	import SySelect from '../Customs/Selects/SySelect/SySelect.vue'
 	import SyTextField from '../Customs/SyTextField/SyTextField.vue'
 
+	type ComponentStatusItem = {
+		componentName: string
+		storybookTitle?: string
+		category?: string
+		figmaUrl?: string
+		propsDocumentationLabel?: string
+		hasPropsDocumentation?: boolean
+		hasSourceTab?: boolean
+		requiredStoriesStatus?: string
+		hasUxUsagePage?: boolean
+		themeModeStatus?: string
+		hasInteractivePlayground?: boolean
+		hasUnitTest?: boolean
+		hasA11yTest?: boolean
+		hasCypressTest?: boolean
+		criticality?: string
+		functionalVersion?: string
+		functionalDate?: string
+	}
 	const searchTerm = ref('')
 	const selectedCategory = ref('Toutes')
 
@@ -32,8 +51,8 @@
 		{ title: 'Dernière mise à jour fonctionnelle', key: 'functionalUpdate' },
 	]
 
-	const components = computed(() =>
-		qualityData.results
+	const components = computed<ComponentStatusItem[]>(() =>
+		(qualityData.results as ComponentStatusItem[])
 			.filter(Boolean)
 			.filter(item =>
 				!item.componentName?.toLowerCase().startsWith('amelipro')
@@ -152,18 +171,23 @@
 		})),
 	)
 
-	function getStoryPath(item) {
+	function getStoryPath(item: ComponentStatusItem): string {
 		return item.storybookTitle
 			?.toLowerCase()
 			.replaceAll('/', '-')
 			.replaceAll(' ', '')
 	}
 
-	function getStorybookLink(item, theme?: string) {
+	function getStorybookLink(
+		item: ComponentStatusItem,
+		theme?: string,
+	): string {
 		const storyPath = getStoryPath(item)
 		const base = `${window.location.origin}/?path=/docs/${storyPath}--docs`
 
-		return theme ? `${base}&globals=theme:${theme}` : base
+		return theme
+			? `${base}&globals=theme:${theme}`
+			: base
 	}
 
 	function tagClass(value) {

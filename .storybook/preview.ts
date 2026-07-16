@@ -85,7 +85,6 @@ const preview: Preview = {
 	},
 	decorators: [
 		(story, context) => {
-			console.log('context.globals =', JSON.stringify(context.globals))
 			// Handle theme changes for story renders (channel event handles MDX pages)
 			if (typeof window !== 'undefined' && context.globals.theme !== vuetify.theme.global.name.value) {
 				applyTheme(context.globals.theme)
