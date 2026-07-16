@@ -19,6 +19,7 @@
 	import SyPagination from '@/components/Customs/SyPagination/SyPagination.vue'
 	import BackToTopBtn from '@/components/BackToTopBtn/BackToTopBtn.vue'
 	import CopyBtn from '@/components/CopyBtn/CopyBtn.vue'
+	import LangBtn from '@/components/LangBtn/LangBtn.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight } from '@mdi/js'
 
@@ -76,6 +77,10 @@
 
 	// SyPagination
 	const paginationPage = ref(5)
+
+	// LangBtn
+	const lang = ref('fr')
+	const langDark = ref('fr')
 
 	// CollapsibleList
 	const collapsibleItems = [
@@ -772,6 +777,46 @@
 								class="pa-4"
 							>
 								<CopyBtn text-to-copy="Texte à copier" />
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ LangBtn ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							LangBtn
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Sélecteur de langue. Bouton (outlined primary) : ring 2px primary
+								standard (offset 3px). Ouvre le menu et navigue : ring inset (−3px)
+								sur l'item de langue focalisé.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4 mb-6"
+							>
+								<LangBtn
+									v-model="lang"
+									:available-languages="['fr', 'en', 'es', 'de']"
+								/>
+							</v-sheet>
+
+							<div class="text-caption mb-2">
+								Fond primary (thème dark, ex. header) — bouton en onPrimary, ring onPrimary
+							</div>
+							<v-sheet
+								color="primary"
+								rounded
+								class="pa-4"
+							>
+								<div class="v-theme--dark">
+									<LangBtn
+										v-model="langDark"
+										:available-languages="['fr', 'en', 'es', 'de']"
+									/>
+								</div>
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
