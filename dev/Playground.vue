@@ -18,6 +18,7 @@
 	import SkipLink from '@/components/SkipLink/SkipLink.vue'
 	import SyPagination from '@/components/Customs/SyPagination/SyPagination.vue'
 	import BackToTopBtn from '@/components/BackToTopBtn/BackToTopBtn.vue'
+	import CopyBtn from '@/components/CopyBtn/CopyBtn.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight } from '@mdi/js'
 
@@ -752,6 +753,26 @@
 								primary standard (offset 3px), fourni par l'override global (VBtn outlined).
 							</div>
 							<BackToTopBtn :threshold="0" />
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ CopyBtn ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							CopyBtn
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Bouton icône (fond transparent) : Tab dessus → ring 2px primary
+								standard (offset 3px), fourni par l'override global.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<CopyBtn text-to-copy="Texte à copier" />
+							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>
