@@ -145,9 +145,4 @@
 		display: none;
 	}
 }
-
-// Focus : plus de ring bespoke. Le bouton est un VBtn → il reçoit le ring standard
-// du design system via l'override global `_btns.scss` (2px primary, offset 3px,
-// onPrimary sur fond sombre). L'ancien `::after { opacity: 1 }` (ring currentColor de
-// Vuetify) aurait de toute façon été neutralisé par le global (`::after { opacity: 0 }`).
 </style>
