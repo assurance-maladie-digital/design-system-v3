@@ -21,6 +21,7 @@
 	import CopyBtn from '@/components/CopyBtn/CopyBtn.vue'
 	import LangBtn from '@/components/LangBtn/LangBtn.vue'
 	import DownloadBtn from '@/components/DownloadBtn/DownloadBtn.vue'
+	import FranceConnectBtn from '@/components/FranceConnectBtn/FranceConnectBtn.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight } from '@mdi/js'
@@ -866,6 +867,40 @@
 								>
 									Télécharger
 								</DownloadBtn>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ FranceConnectBtn ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							FranceConnectBtn
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Composant de marque (DSFR) : ring focus <strong>2px #0a76f6</strong>
+								(bleu focus officiel de l'État), volontairement <em>pas</em> le primary du DS.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4 mb-6"
+							>
+								<FranceConnectBtn href="https://franceconnect.gouv.fr" />
+							</v-sheet>
+
+							<div class="text-caption mb-2">
+								Mode <code>dark</code> (fond sombre)
+							</div>
+							<v-sheet
+								color="#161616"
+								rounded
+								class="pa-4"
+							>
+								<FranceConnectBtn
+									href="https://franceconnect.gouv.fr"
+									dark
+								/>
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
