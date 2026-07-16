@@ -674,9 +674,6 @@
 .sy-server-table :deep() {
 	@include tablestyles;
 	@include clickable-row-styles;
-
-	// le radius reste fixe sur tout les thèmes
-	border-radius: 8px;
 }
 
 @mixin striped-rows {

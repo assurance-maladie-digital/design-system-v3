@@ -120,3 +120,10 @@ $radius-keys: (0, 'sm', 'md', 'lg', 'xl', 'pill', 'circle');
 .v-alert {
 	border-radius: var(--radius-md) !important;
 }
+
+// le radius des tableaux reste fixe sur tout les thèmes
+.sy-paginated-table,
+.sy-table,
+.sy-server-table {
+	border-radius: 8px;
+}
