@@ -1,11 +1,5 @@
 import SkipLink from '../SkipLink.vue'
 
-// Déclenche :focus-visible via l'option native focus({ focusVisible: true }).
-const focusVisible = (selector: string) =>
-	cy.get(selector).then(($el) => {
-		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
-	})
-
 describe('SkipLink - Visual regression tests', () => {
 	it('displays the skip link when focused', () => {
 		cy.mountWithVuetify(SkipLink, {
@@ -15,8 +9,8 @@ describe('SkipLink - Visual regression tests', () => {
 			},
 		})
 
-		// :focus-visible requis pour afficher le ring DS (barre visible via sr-only-focusable).
-		focusVisible('.sy-skip-link')
+		// Le ring est sur `:focus` → un focus simple suffit à afficher barre + ring.
+		cy.get('.sy-skip-link').focus()
 		cy.get('.sy-skip-link').should('be.visible')
 		cy.matchImageSnapshot('skip-link-focused', cy.get('.v-application'))
 	})
