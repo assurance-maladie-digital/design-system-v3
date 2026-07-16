@@ -221,4 +221,25 @@ describe('StatusPage', () => {
 			expect(telLinks.length).toBe(2)
 		})
 	})
+
+	// Ring de focus : bouton = override global `_btns.scss`, liens tel: du message =
+	// override global `_links.scss`. jsdom ne calcule pas :focus-visible : on vérifie le
+	// prérequis — le bouton d'action rend un élément natif focusable.
+	describe('focus', () => {
+		const btnProps = { btnText: 'Retour à l\'accueil', btnHref: 'https://example.com' }
+
+		it('renders the action button as a native <a> so the global focus ring applies', () => {
+			const wrapper = mount(StatusPage, { props: btnProps })
+			expect(wrapper.get('.v-btn').element.tagName).toBe('A')
+			wrapper.unmount()
+		})
+
+		it('is focusable', () => {
+			const wrapper = mount(StatusPage, { props: btnProps, attachTo: document.body })
+			const btn = wrapper.get('.v-btn').element as HTMLElement
+			btn.focus()
+			expect(document.activeElement).toBe(btn)
+			wrapper.unmount()
+		})
+	})
 })
