@@ -45,7 +45,10 @@
 	transition: none;
 	width: 100%;
 	background: rgb(var(--v-theme-surface));
-	outline: none; // Disable outline to use border
-	border: 2px solid rgb(var(--v-theme-blue-darken60));
+
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: -2px;
+	}
 }
 </style>
