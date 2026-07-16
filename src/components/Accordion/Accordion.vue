@@ -326,6 +326,7 @@
 
 .sy-accordion-content--open {
 	max-height: 500px;
+	overflow: auto;
 }
 
 .sy-accordion-content:focus-visible {
