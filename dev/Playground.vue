@@ -12,6 +12,11 @@
 	import SyTabs from '@/components/Customs/SyTabs/SyTabs.vue'
 	import SubHeader from '@/components/SubHeader/SubHeader.vue'
 	import CollapsibleList from '@/components/CollapsibleList/CollapsibleList.vue'
+	import ToolbarContainer from '@/components/ToolbarContainer/ToolbarContainer.vue'
+	import ContextualMenu from '@/components/ContextualMenu/ContextualMenu.vue'
+	import ExternalLinks from '@/components/ExternalLinks/ExternalLinks.vue'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight } from '@mdi/js'
 
 	// SyTabs
 	const tabsItems = [
@@ -35,6 +40,35 @@
 
 	// HeaderMenuBtn (bouton menu du HeaderBar)
 	const menuOpen = ref(false)
+
+	// ToolbarContainer (calqué sur la story Default : barre d'alignement)
+	const justification = ref<string>()
+	const justificationDark = ref<string>()
+
+	// ContextualMenu (sommaire de page, avec un niveau imbriqué)
+	const contextualHash = ref<string | null>(null)
+	const contextualItems = [
+		{ text: 'Introduction', hash: '#pg-intro' },
+		{ text: 'Prérequis', hash: '#pg-prerequis' },
+		{ text: 'Installation', hash: '#pg-install', level: 2 },
+		{ text: 'Configuration', hash: '#pg-config', level: 2 },
+		{ text: 'Aller plus loin', hash: '#pg-plus' },
+	]
+	// Instance dark indépendante (hashs distincts pour éviter le highlight croisé).
+	const contextualHashDark = ref<string | null>(null)
+	const contextualItemsDark = [
+		{ text: 'Introduction', hash: '#pg-dark-intro' },
+		{ text: 'Prérequis', hash: '#pg-dark-prerequis' },
+		{ text: 'Installation', hash: '#pg-dark-install', level: 2 },
+		{ text: 'Configuration', hash: '#pg-dark-config', level: 2 },
+		{ text: 'Aller plus loin', hash: '#pg-dark-plus' },
+	]
+
+	// ExternalLinks (onglet flottant)
+	const externalLinksItems = [
+		{ text: 'Ameli.fr', href: 'https://www.ameli.fr' },
+		{ text: 'Service-public.fr', href: 'https://www.service-public.fr' },
+	]
 
 	// CollapsibleList
 	const collapsibleItems = [
@@ -442,6 +476,220 @@
 									/>
 								</div>
 							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ ToolbarContainer ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							ToolbarContainer
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Tab pour entrer, puis flèches (← → / Home / End) entre les outils :
+								le ring 2px primary se pose sur l'outil actif (roving tabindex).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<ToolbarContainer
+									class="d-flex flex-wrap ga-4"
+									aria-label="Outils de mise en forme"
+								>
+									<v-btn-toggle
+										v-model="justification"
+										class="d-flex flex-wrap ga-2"
+										role="radiogroup"
+										aria-label="Alignement du texte"
+										color="primary"
+										style="overflow: visible;"
+									>
+										<v-btn
+											title="ferrer à gauche"
+											aria-label="ferrer à gauche"
+											role="radio"
+											value="left"
+											elevation="2"
+											size="small"
+											:aria-checked="justification === 'left' ? 'true' : 'false'"
+										>
+											<SyIcon
+												:icon="mdiFormatAlignLeft"
+												size="x-large"
+												decorative
+											/>
+										</v-btn>
+										<v-btn
+											title="centrer"
+											aria-label="centrer"
+											role="radio"
+											value="center"
+											elevation="2"
+											size="small"
+											:aria-checked="justification === 'center' ? 'true' : 'false'"
+										>
+											<SyIcon
+												:icon="mdiFormatAlignCenter"
+												size="x-large"
+												decorative
+											/>
+										</v-btn>
+										<v-btn
+											title="ferrer à droite"
+											aria-label="ferrer à droite"
+											role="radio"
+											value="right"
+											elevation="2"
+											size="small"
+											:aria-checked="justification === 'right' ? 'true' : 'false'"
+										>
+											<SyIcon
+												:icon="mdiFormatAlignRight"
+												size="x-large"
+												decorative
+											/>
+										</v-btn>
+									</v-btn-toggle>
+								</ToolbarContainer>
+							</v-sheet>
+
+							<div class="text-caption mb-2 mt-6">
+								Fond primary (thème dark) — ring onPrimary (blanc) sur l'outil actif
+							</div>
+							<v-sheet
+								color="primary"
+								rounded
+								class="pa-4"
+							>
+								<div class="v-theme--dark">
+									<ToolbarContainer
+										class="d-flex flex-wrap ga-4"
+										aria-label="Outils de mise en forme (fond sombre)"
+									>
+										<v-btn-toggle
+											v-model="justificationDark"
+											class="d-flex flex-wrap ga-2"
+											role="radiogroup"
+											aria-label="Alignement du texte"
+											color="primary"
+											style="overflow: visible;"
+										>
+											<v-btn
+												title="ferrer à gauche"
+												aria-label="ferrer à gauche"
+												role="radio"
+												value="left"
+												elevation="2"
+												size="small"
+												:aria-checked="justificationDark === 'left' ? 'true' : 'false'"
+											>
+												<SyIcon
+													:icon="mdiFormatAlignLeft"
+													size="x-large"
+													decorative
+												/>
+											</v-btn>
+											<v-btn
+												title="centrer"
+												aria-label="centrer"
+												role="radio"
+												value="center"
+												elevation="2"
+												size="small"
+												:aria-checked="justificationDark === 'center' ? 'true' : 'false'"
+											>
+												<SyIcon
+													:icon="mdiFormatAlignCenter"
+													size="x-large"
+													decorative
+												/>
+											</v-btn>
+											<v-btn
+												title="ferrer à droite"
+												aria-label="ferrer à droite"
+												role="radio"
+												value="right"
+												elevation="2"
+												size="small"
+												:aria-checked="justificationDark === 'right' ? 'true' : 'false'"
+											>
+												<SyIcon
+													:icon="mdiFormatAlignRight"
+													size="x-large"
+													decorative
+												/>
+											</v-btn>
+										</v-btn-toggle>
+									</ToolbarContainer>
+								</div>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ ContextualMenu ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							ContextualMenu
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Tab entre les liens : ring 2px primary inset sur le lien focalisé
+								(les items sont de simples liens, non couverts par l'override global).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 320px;"
+							>
+								<ContextualMenu
+									v-model="contextualHash"
+									aria-label="Sommaire de la page"
+									:items="contextualItems"
+								/>
+							</v-sheet>
+
+							<div class="text-caption mb-2 mt-6">
+								Fond primary (thème dark) — texte & ring en onPrimary
+							</div>
+							<v-sheet
+								color="primary"
+								rounded
+								class="pa-4"
+								style="max-width: 320px;"
+							>
+								<div class="v-theme--dark">
+									<ContextualMenu
+										v-model="contextualHashDark"
+										aria-label="Sommaire de la page (fond sombre)"
+										:items="contextualItemsDark"
+									/>
+								</div>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ ExternalLinks ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							ExternalLinks
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Onglet flottant (fond primary) : ring onPrimary inset au focus.
+								Ouvre le menu (survol/clic) → items sur fond blanc, ring primary inset.
+								Démo contenue dans une box relative (l'onglet s'ancre à son bord).
+							</div>
+							<div
+								style="position: relative; height: 240px; border: 1px dashed rgba(0, 0, 0, 0.2); border-radius: 4px; overflow: hidden;"
+							>
+								<ExternalLinks
+									:items="externalLinksItems"
+									position="top left"
+								/>
+							</div>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>
