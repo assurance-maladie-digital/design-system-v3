@@ -265,6 +265,6 @@ export function getValidationDocumentation(type: 'base' | 'date' | 'number' | 's
 				type: { summary: '() => void' },
 				category: 'expose',
 			},
-		}
+		},
 	} as const
 }
