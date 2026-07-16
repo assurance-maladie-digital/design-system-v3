@@ -78,5 +78,29 @@ a {
 	&.active::after {
 		opacity: 1;
 	}
+
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: -3px;
+		border-radius: 2px;
+	}
+}
+
+.v-theme--dark {
+	a {
+		color: rgba(var(--v-theme-onPrimary), 0.7) !important;
+	}
+
+	a.active {
+		color: rgb(var(--v-theme-onPrimary)) !important;
+	}
+
+	a::before {
+		background: rgba(var(--v-theme-onPrimary), 0.6);
+	}
+
+	a:focus-visible {
+		outline-color: rgb(var(--v-theme-onPrimary));
+	}
 }
 </style>
