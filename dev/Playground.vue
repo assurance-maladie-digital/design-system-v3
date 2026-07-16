@@ -20,6 +20,8 @@
 	import BackToTopBtn from '@/components/BackToTopBtn/BackToTopBtn.vue'
 	import CopyBtn from '@/components/CopyBtn/CopyBtn.vue'
 	import LangBtn from '@/components/LangBtn/LangBtn.vue'
+	import DownloadBtn from '@/components/DownloadBtn/DownloadBtn.vue'
+	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight } from '@mdi/js'
 
@@ -81,6 +83,16 @@
 	// LangBtn
 	const lang = ref('fr')
 	const langDark = ref('fr')
+
+	// DownloadBtn (stub de filePromise, pas de vrai téléchargement)
+	const downloadPromise = (): Promise<AxiosResponse<Blob>> =>
+		Promise.resolve({
+			data: new Blob(['Contenu du fichier'], { type: 'text/plain' }),
+			headers: { 'content-disposition': 'attachment; filename="exemple.txt"', 'content-type': 'text/plain' },
+			status: 200,
+			statusText: 'OK',
+			config: {} as AxiosResponse['config'],
+		})
 
 	// CollapsibleList
 	const collapsibleItems = [
@@ -817,6 +829,43 @@
 										:available-languages="['fr', 'en', 'es', 'de']"
 									/>
 								</div>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ DownloadBtn ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							DownloadBtn
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Mode clair (outlined primary) — ring 2px primary, offset 3px
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4 mb-6"
+							>
+								<DownloadBtn :file-promise="downloadPromise">
+									Télécharger
+								</DownloadBtn>
+							</v-sheet>
+
+							<div class="text-caption mb-2">
+								Mode <code>dark</code> (prop) sur fond primary — ring onPrimary (blanc)
+							</div>
+							<v-sheet
+								color="primary"
+								rounded
+								class="pa-4"
+							>
+								<DownloadBtn
+									:file-promise="downloadPromise"
+									dark
+								>
+									Télécharger
+								</DownloadBtn>
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
