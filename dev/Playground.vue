@@ -15,6 +15,7 @@
 	import ToolbarContainer from '@/components/ToolbarContainer/ToolbarContainer.vue'
 	import ContextualMenu from '@/components/ContextualMenu/ContextualMenu.vue'
 	import ExternalLinks from '@/components/ExternalLinks/ExternalLinks.vue'
+	import SkipLink from '@/components/SkipLink/SkipLink.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight } from '@mdi/js'
 
@@ -690,6 +691,23 @@
 									position="top left"
 								/>
 							</div>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SkipLink ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SkipLink
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Lien d'évitement masqué (sr-only) : Tab dessus → il apparaît en
+								barre fixe <strong>en haut du viewport</strong> avec le ring 2px primary inset.
+							</div>
+							<SkipLink
+								label="Aller au contenu principal"
+								target="#main"
+							/>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>

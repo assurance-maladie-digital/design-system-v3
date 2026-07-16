@@ -253,16 +253,12 @@ $list-max-height: 248px;
 	height: 48px !important;
 	border-radius: 0 !important;
 
-	// Désactive l'overlay pour les items de liste aussi
 	:deep(.v-btn__overlay) {
 		background-color: transparent !important;
 		opacity: 0 !important;
 		display: none !important;
 	}
 
-	// Ring DS sur le fond blanc de la liste → primary, inset (offset -2px) pour ne pas
-	// être rogné dans la liste scrollable. Via `outline` (l'ancien `::after` était
-	// neutralisé par l'override global `_btns.scss`).
 	&:focus-visible {
 		outline: 2px solid rgb(var(--v-theme-primary));
 		outline-offset: -2px;
