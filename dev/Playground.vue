@@ -15,8 +15,20 @@
 	import ToolbarContainer from '@/components/ToolbarContainer/ToolbarContainer.vue'
 	import ContextualMenu from '@/components/ContextualMenu/ContextualMenu.vue'
 	import ExternalLinks from '@/components/ExternalLinks/ExternalLinks.vue'
+	import SkipLink from '@/components/SkipLink/SkipLink.vue'
+	import SyPagination from '@/components/Customs/SyPagination/SyPagination.vue'
+	import BackToTopBtn from '@/components/BackToTopBtn/BackToTopBtn.vue'
+	import CopyBtn from '@/components/CopyBtn/CopyBtn.vue'
+	import LangBtn from '@/components/LangBtn/LangBtn.vue'
+	import DownloadBtn from '@/components/DownloadBtn/DownloadBtn.vue'
+	import FranceConnectBtn from '@/components/FranceConnectBtn/FranceConnectBtn.vue'
+	import UserMenuBtn from '@/components/UserMenuBtn/UserMenuBtn.vue'
+	import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
+	import SyInputSelect from '@/components/Customs/Selects/SyInputSelect/SyInputSelect.vue'
+	import ErrorPage from '@/components/ErrorPage/ErrorPage.vue'
+	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight } from '@mdi/js'
+	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
 
 	// SyTabs
 	const tabsItems = [
@@ -69,6 +81,37 @@
 		{ text: 'Ameli.fr', href: 'https://www.ameli.fr' },
 		{ text: 'Service-public.fr', href: 'https://www.service-public.fr' },
 	]
+
+	// SyPagination
+	const paginationPage = ref(5)
+
+	// LangBtn
+	const lang = ref('fr')
+	const langDark = ref('fr')
+
+	// UserMenuBtn
+	const userMenuItems = [
+		{ text: 'Mon compte', value: 'account' },
+		{ text: 'Paramètres', value: 'settings' },
+	]
+
+	// SyInputSelect
+	const selectItems = [
+		{ text: 'Option A', value: 'a' },
+		{ text: 'Option B', value: 'b' },
+		{ text: 'Option C', value: 'c' },
+	]
+	const selectValue = ref<Record<string, unknown> | string | null>(null)
+
+	// DownloadBtn (stub de filePromise, pas de vrai téléchargement)
+	const downloadPromise = (): Promise<AxiosResponse<Blob>> =>
+		Promise.resolve({
+			data: new Blob(['Contenu du fichier'], { type: 'text/plain' }),
+			headers: { 'content-disposition': 'attachment; filename="exemple.txt"', 'content-type': 'text/plain' },
+			status: 200,
+			statusText: 'OK',
+			config: {} as AxiosResponse['config'],
+		})
 
 	// CollapsibleList
 	const collapsibleItems = [
@@ -690,6 +733,307 @@
 									position="top left"
 								/>
 							</div>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SkipLink ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SkipLink
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Lien d'évitement masqué (sr-only) : Tab dessus → il apparaît en
+								barre fixe <strong>en haut du viewport</strong> avec le ring 2px primary inset.
+							</div>
+							<SkipLink
+								label="Aller au contenu principal"
+								target="#main"
+							/>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyPagination ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyPagination
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Tab entre les liens de pagination : ring 2px primary (offset 3px)
+								sur le lien focalisé (page, précédent/suivant).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<SyPagination
+									v-model="paginationPage"
+									:pages="10"
+									:visible="5"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ BackToTopBtn ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							BackToTopBtn
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Bouton flottant déclenché au scroll (<code>threshold: 0</code>) : fais défiler
+								la page → il apparaît <strong>en bas à droite</strong>. Tab dessus → ring 2px
+								primary standard (offset 3px), fourni par l'override global (VBtn outlined).
+							</div>
+							<BackToTopBtn :threshold="0" />
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ CopyBtn ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							CopyBtn
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Bouton icône (fond transparent) : Tab dessus → ring 2px primary
+								standard (offset 3px), fourni par l'override global.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<CopyBtn text-to-copy="Texte à copier" />
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ LangBtn ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							LangBtn
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Sélecteur de langue. Bouton (outlined primary) : ring 2px primary
+								standard (offset 3px). Ouvre le menu et navigue : ring inset (−3px)
+								sur l'item de langue focalisé.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4 mb-6"
+							>
+								<LangBtn
+									v-model="lang"
+									:available-languages="['fr', 'en', 'es', 'de']"
+								/>
+							</v-sheet>
+
+							<div class="text-caption mb-2">
+								Fond primary (thème dark, ex. header) — bouton en onPrimary, ring onPrimary
+							</div>
+							<v-sheet
+								color="primary"
+								rounded
+								class="pa-4"
+							>
+								<div class="v-theme--dark">
+									<LangBtn
+										v-model="langDark"
+										:available-languages="['fr', 'en', 'es', 'de']"
+									/>
+								</div>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ DownloadBtn ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							DownloadBtn
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Mode clair (outlined primary) — ring 2px primary, offset 3px
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4 mb-6"
+							>
+								<DownloadBtn :file-promise="downloadPromise">
+									Télécharger
+								</DownloadBtn>
+							</v-sheet>
+
+							<div class="text-caption mb-2">
+								Mode <code>dark</code> (prop) sur fond primary — ring onPrimary (blanc)
+							</div>
+							<v-sheet
+								color="primary"
+								rounded
+								class="pa-4"
+							>
+								<DownloadBtn
+									:file-promise="downloadPromise"
+									dark
+								>
+									Télécharger
+								</DownloadBtn>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ FranceConnectBtn ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							FranceConnectBtn
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Composant de marque (DSFR) : ring focus <strong>2px #0a76f6</strong>
+								(bleu focus officiel de l'État), volontairement <em>pas</em> le primary du DS.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4 mb-6"
+							>
+								<FranceConnectBtn href="https://franceconnect.gouv.fr" />
+							</v-sheet>
+
+							<div class="text-caption mb-2">
+								Mode <code>dark</code> (fond sombre)
+							</div>
+							<v-sheet
+								color="#161616"
+								rounded
+								class="pa-4"
+							>
+								<FranceConnectBtn
+									href="https://franceconnect.gouv.fr"
+									dark
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ UserMenuBtn ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							UserMenuBtn
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Wrapper de SyBtnMenu. Tab sur le bouton → ring 2px primary standard.
+								Ouvre le menu → items (dont Déconnexion) avec ring inset (−3px) via <code>_menus.scss</code>.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<UserMenuBtn
+									:menu-items="userMenuItems"
+									full-name="Jean Dupont"
+									additional-information="N° 123456789"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyIconButton ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyIconButton
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Wrapper de <code>&lt;v-btn icon&gt;</code> : Tab dessus → ring 2px primary
+								standard (offset 3px), fourni par l'override global.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4 mb-6"
+							>
+								<SyIconButton
+									:icon="mdiPencil"
+									label="Modifier"
+									color="primary"
+								/>
+							</v-sheet>
+
+							<div class="text-caption mb-2">
+								Fond primary (thème dark) — ring onPrimary (blanc)
+							</div>
+							<v-sheet
+								color="primary"
+								rounded
+								class="pa-4"
+							>
+								<div class="v-theme--dark">
+									<SyIconButton
+										:icon="mdiPencil"
+										label="Modifier"
+										color="onPrimary"
+									/>
+								</div>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyInputSelect ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyInputSelect
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Select custom. Tab sur le déclencheur → ring 2px primary outset (offset 3px).
+								Ouvre la liste → ring inset (−3px) sur l'option focalisée (liste custom,
+								pas couverte par le global).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 320px;"
+							>
+								<SyInputSelect
+									v-model="selectValue"
+									:items="selectItems"
+									label="Sélectionner une option"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ ErrorPage ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							ErrorPage
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Wrapper de StatusPage. Le bouton d'action (VBtn) reçoit le ring 2px primary
+								standard via l'override global.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<ErrorPage
+									btn-text="Retour à l'accueil"
+									btn-href="#"
+								/>
+							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>

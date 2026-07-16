@@ -150,3 +150,25 @@ describe('SyIconButton', () => {
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 })
+
+// SyIconButton est un wrapper de <v-btn icon> : le ring de focus vient de l'override
+// global (_btns.scss). jsdom ne calcule pas :focus-visible : on vérifie le prérequis —
+// un <button> natif focusable.
+describe('SyIconButton - focus', () => {
+	it('renders a native <button> so the global focus ring applies', () => {
+		const wrapper = mount(SyIconButton, { props: { icon: 'mdi-pencil', label: 'Modifier' } })
+		expect(wrapper.get('.v-btn').element.tagName).toBe('BUTTON')
+		wrapper.unmount()
+	})
+
+	it('is focusable', () => {
+		const wrapper = mount(SyIconButton, {
+			props: { icon: 'mdi-pencil', label: 'Modifier' },
+			attachTo: document.body,
+		})
+		const button = wrapper.get('.v-btn').element as HTMLButtonElement
+		button.focus()
+		expect(document.activeElement).toBe(button)
+		wrapper.unmount()
+	})
+})

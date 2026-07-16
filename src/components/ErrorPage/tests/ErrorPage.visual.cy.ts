@@ -1,5 +1,11 @@
 import ErrorPage from '../ErrorPage.vue'
 
+// Déclenche :focus-visible via l'option native focus({ focusVisible: true }).
+const focusVisible = (selector: string) =>
+	cy.get(selector).then(($el) => {
+		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
+	})
+
 describe('ErrorPage - Visual regression tests', () => {
 	it('displays the error page by default', () => {
 		cy.mountWithVuetify(ErrorPage)
@@ -28,5 +34,18 @@ describe('ErrorPage - Visual regression tests', () => {
 
 		cy.get('.v-application').should('be.visible')
 		cy.matchImageSnapshot('error-page-no-btn', cy.get('.v-application'))
+	})
+})
+
+describe('ErrorPage - Focus visual regression tests', () => {
+	// Bouton d'action (VBtn via StatusPage) : ring standard global (2px primary, offset 3px).
+	it('shows the standard ring on the action button', () => {
+		cy.mountWithVuetify(ErrorPage, {
+			props: { btnText: 'Retour à l\'accueil', btnHref: 'https://example.com' },
+		})
+
+		focusVisible('.v-btn')
+		cy.wait(100)
+		cy.matchImageSnapshot('error-page-focus', cy.get('.v-application'))
 	})
 })
