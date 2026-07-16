@@ -22,6 +22,7 @@
 	import LangBtn from '@/components/LangBtn/LangBtn.vue'
 	import DownloadBtn from '@/components/DownloadBtn/DownloadBtn.vue'
 	import FranceConnectBtn from '@/components/FranceConnectBtn/FranceConnectBtn.vue'
+	import UserMenuBtn from '@/components/UserMenuBtn/UserMenuBtn.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight } from '@mdi/js'
@@ -84,6 +85,12 @@
 	// LangBtn
 	const lang = ref('fr')
 	const langDark = ref('fr')
+
+	// UserMenuBtn
+	const userMenuItems = [
+		{ text: 'Mon compte', value: 'account' },
+		{ text: 'Paramètres', value: 'settings' },
+	]
 
 	// DownloadBtn (stub de filePromise, pas de vrai téléchargement)
 	const downloadPromise = (): Promise<AxiosResponse<Blob>> =>
@@ -900,6 +907,30 @@
 								<FranceConnectBtn
 									href="https://franceconnect.gouv.fr"
 									dark
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ UserMenuBtn ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							UserMenuBtn
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Wrapper de SyBtnMenu. Tab sur le bouton → ring 2px primary standard.
+								Ouvre le menu → items (dont Déconnexion) avec ring inset (−3px) via <code>_menus.scss</code>.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<UserMenuBtn
+									:menu-items="userMenuItems"
+									full-name="Jean Dupont"
+									additional-information="N° 123456789"
 								/>
 							</v-sheet>
 						</v-expansion-panel-text>
