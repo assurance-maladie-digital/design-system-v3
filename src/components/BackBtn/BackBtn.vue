@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 	import { mdiArrowLeft } from '@mdi/js'
-	import { computed } from 'vue'
 	import { locales } from './locales'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
@@ -8,11 +7,6 @@
 		hideBackIcon?: boolean
 		dark?: boolean
 	}>())
-
-	const buttonClasses = computed(() => ({
-		'px-0': !props.dark,
-		'pr-1': !props.dark && !props.hideBackIcon,
-	}))
 
 </script>
 
@@ -23,7 +17,7 @@
 		:class="[
 			'sy-back-btn',
 			'text-none',
-			buttonClasses,
+
 			{ 'sy-back-btn--dark': dark },
 		]"
 		:ripple="false"
