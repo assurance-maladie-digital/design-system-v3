@@ -37,8 +37,6 @@ if (typeof window !== 'undefined' && !initialized) {
 }
 
 setup((app, { globals }) => {
-	console.log('SETUP globals =', globals)
-
 	app.use(vuetify)
 
 	// Apply theme once
@@ -108,14 +106,7 @@ const preview: Preview = {
 						}
 					).__STORYBOOK_ADDONS_CHANNEL__
 
-					console.log('========== PREVIEW ==========')
-					console.log('context.globals', context.globals)
-					console.log('context.globals.theme', context.globals?.theme)
-					console.log('vuetify theme', vuetify.theme.global.name.value)
-					console.log('localStorage', localStorage.getItem('storybook-theme'))
-
 					const result = useComponentStatus(context)
-					console.log('result.themeMode', result.themeMode)
 
 					channel?.emit('conformite-design-system/result', result)
 				}

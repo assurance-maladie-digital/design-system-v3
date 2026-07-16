@@ -101,9 +101,6 @@ function getSidebarStories(): SidebarStory[] {
 export function useComponentStatus(
 	context: StorybookContext,
 ): StatutResult {
-	console.log('========== useComponentStatus ==========')
-	console.log('globals', context.globals)
-	console.log('theme reçu', context.globals?.theme)
 	const argTypes = context.argTypes ?? {}
 
 	const props = Object.entries(argTypes).filter(

@@ -7,7 +7,6 @@ export type StatutResult = {
 	requiredStories: string
 	usagePage: string
 	visualTheme: string
-	themeMode: string
 	playground: string
 	criticality: string
 	score: number

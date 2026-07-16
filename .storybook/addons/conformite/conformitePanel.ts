@@ -18,8 +18,6 @@ export const ConformitePanel = ({
 		'conformite-design-system/result': (
 			data: StatutResult,
 		) => {
-			console.log('========== MANAGER ==========')
-			console.log(data)
 			setResult(data)
 		},
 	})
@@ -66,7 +64,6 @@ export const ConformitePanel = ({
 		...(hasVisualTheme
 			? ['Thème visuel']
 			: []),
-		'Theme mode',
 		'Playground interactif',
 		'Criticité',
 	]
@@ -82,7 +79,6 @@ export const ConformitePanel = ({
 		...(hasVisualTheme
 			? [result.visualTheme || '-']
 			: []),
-		result.themeMode,
 		result.playground,
 		result.criticality,
 	]
