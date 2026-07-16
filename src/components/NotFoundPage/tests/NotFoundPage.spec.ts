@@ -136,3 +136,24 @@ describe('NotFoundPage', () => {
 		expect(statusPage.props('uniqueId')).toBe('custom-id')
 	})
 })
+
+// Wrapper de StatusPage : le bouton d'action est un VBtn → ring de focus via l'override
+// global (_btns.scss). jsdom ne calcule pas :focus-visible : on vérifie le prérequis —
+// le bouton rend un élément natif focusable.
+describe('NotFoundPage - focus', () => {
+	const btnProps = { btnText: 'Retour à l\'accueil', btnHref: 'https://example.com' }
+
+	it('renders the action button as a native <a> so the global focus ring applies', () => {
+		const wrapper = mount(NotFoundPage, { props: btnProps })
+		expect(wrapper.get('.v-btn').element.tagName).toBe('A')
+		wrapper.unmount()
+	})
+
+	it('is focusable', () => {
+		const wrapper = mount(NotFoundPage, { props: btnProps, attachTo: document.body })
+		const btn = wrapper.get('.v-btn').element as HTMLElement
+		btn.focus()
+		expect(document.activeElement).toBe(btn)
+		wrapper.unmount()
+	})
+})
