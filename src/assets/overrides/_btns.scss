@@ -15,7 +15,31 @@
 .v-btn.v-tab {
 	text-transform: uppercase !important;
 }
-// btn primary
+
+// Ring de focus : couvre les VBtn rendus en <button> ET en lien (<a>, via to/href),
+// ainsi que les <button> natifs du design system.
+.v-btn:focus-visible,
+button:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 3px;
+}
+
+// Sur fond sombre (thème dark), le ring passe en onPrimary.
+// Le compound `.v-btn.v-theme--dark` couvre le cas où la classe de thème
+// est portée par le bouton lui-même (ex. BackBtn dark).
+.v-theme--dark .v-btn:focus-visible,
+.v-theme--dark button:focus-visible,
+.v-btn.v-theme--dark:focus-visible {
+	outline-color: rgb(var(--v-theme-onPrimary));
+}
+
+.v-btn:focus-visible .v-btn__overlay {
+	opacity: 0 !important;
+}
+
+.v-btn:focus-visible::after {
+	opacity: 0 !important;
+}
 
 // Overlay base configuration
 .v-btn__overlay {
@@ -52,54 +76,6 @@
 		opacity: 1;
 		transition: opacity 0.2s ease, background 0s;
 	}
-    &:hover .v-btn__overlay {
-        background: rgba(var(--v-theme-secondary), 0.08) !important;
-        opacity: 1;
-    }
-.v-btn--variant-outlined:hover .v-btn__overlay {
-	opacity: 1;
-	background: rgba(var(--v-theme-secondary), 0.08) !important;
-  transition: opacity 0.2s ease, background 0s;}
-
-// pressed effect for outline buttons
-
-.v-btn--variant-outlined:active .v-btn__overlay {
-	background: rgba(var(--v-theme-secondary), 0.2) !important;
-	opacity: 1;
-  transition: opacity 0.2s ease, background 0s;}
-
-// hover effect for text buttons
-
-// Ring de focus : couvre les VBtn rendus en <button> ET en lien (<a>, via to/href),
-// ainsi que les <button> natifs du design system.
-.v-btn:focus-visible,
-button:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-primary));
-	outline-offset: 3px;
-}
-
-// Sur fond sombre (thème dark), le ring passe en onPrimary.
-// Le compound `.v-btn.v-theme--dark` couvre le cas où la classe de thème
-// est portée par le bouton lui-même (ex. BackBtn dark).
-.v-theme--dark .v-btn:focus-visible,
-.v-theme--dark button:focus-visible,
-.v-btn.v-theme--dark:focus-visible {
-	outline-color: rgb(var(--v-theme-onPrimary));
-}
-
-.v-btn:focus-visible .v-btn__overlay {
-	opacity: 0 !important;
-}
-
-.v-btn:focus-visible::after {
-	opacity: 0 !important;
-}
-
-.v-btn--variant-text:hover .v-btn__overlay {
-	opacity: 1;
-	background: rgba(var(--v-theme-secondary), 0.08) !important;
-	transition: opacity 0.2s ease;
-}
 
 	&:active .v-btn__overlay {
 		background: rgba(var(--v-theme-interactionDark), 0.2) !important;
