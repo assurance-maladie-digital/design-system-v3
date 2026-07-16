@@ -37,6 +37,8 @@ if (typeof window !== 'undefined' && !initialized) {
 }
 
 setup((app, { globals }) => {
+	console.log('SETUP globals =', globals)
+
 	app.use(vuetify)
 
 	// Apply theme once
@@ -85,6 +87,7 @@ const preview: Preview = {
 	},
 	decorators: [
 		(story, context) => {
+			console.log('context.globals =', JSON.stringify(context.globals))
 			// Handle theme changes for story renders (channel event handles MDX pages)
 			if (typeof window !== 'undefined' && context.globals.theme !== vuetify.theme.global.name.value) {
 				applyTheme(context.globals.theme)
@@ -105,7 +108,14 @@ const preview: Preview = {
 						}
 					).__STORYBOOK_ADDONS_CHANNEL__
 
+					console.log('========== PREVIEW ==========')
+					console.log('context.globals', context.globals)
+					console.log('context.globals.theme', context.globals?.theme)
+					console.log('vuetify theme', vuetify.theme.global.name.value)
+					console.log('localStorage', localStorage.getItem('storybook-theme'))
+
 					const result = useComponentStatus(context)
+					console.log('result.themeMode', result.themeMode)
 
 					channel?.emit('conformite-design-system/result', result)
 				}
