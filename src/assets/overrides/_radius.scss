@@ -1,7 +1,7 @@
 // Define theme radius separately
 $border-radius-cnam: 4px;
 $border-radius-pa: 4px;
-$border-radius-ap: 12px;
+$border-radius-ap: 8px;
 $cnam-radius: (
 	0: 0px,
 	'sm': calc($border-radius-cnam / 2),
@@ -111,4 +111,19 @@ $radius-keys: (0, 'sm', 'md', 'lg', 'xl', 'pill', 'circle');
 	.v-btn {
 		border-radius: var(--radius-pill) !important;
 	}
+}
+
+.v-card {
+	border-radius: var(--radius-lg) !important;
+}
+
+.v-alert {
+	border-radius: var(--radius-md) !important;
+}
+
+// le radius des tableaux reste fixe sur tout les thèmes
+.sy-paginated-table,
+.sy-table,
+.sy-server-table {
+	border-radius: 8px;
 }
