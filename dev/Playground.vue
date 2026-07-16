@@ -13,6 +13,7 @@
 	import SubHeader from '@/components/SubHeader/SubHeader.vue'
 	import CollapsibleList from '@/components/CollapsibleList/CollapsibleList.vue'
 	import ToolbarContainer from '@/components/ToolbarContainer/ToolbarContainer.vue'
+	import ContextualMenu from '@/components/ContextualMenu/ContextualMenu.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight } from '@mdi/js'
 
@@ -42,6 +43,25 @@
 	// ToolbarContainer (calqué sur la story Default : barre d'alignement)
 	const justification = ref<string>()
 	const justificationDark = ref<string>()
+
+	// ContextualMenu (sommaire de page, avec un niveau imbriqué)
+	const contextualHash = ref<string | null>(null)
+	const contextualItems = [
+		{ text: 'Introduction', hash: '#pg-intro' },
+		{ text: 'Prérequis', hash: '#pg-prerequis' },
+		{ text: 'Installation', hash: '#pg-install', level: 2 },
+		{ text: 'Configuration', hash: '#pg-config', level: 2 },
+		{ text: 'Aller plus loin', hash: '#pg-plus' },
+	]
+	// Instance dark indépendante (hashs distincts pour éviter le highlight croisé).
+	const contextualHashDark = ref<string | null>(null)
+	const contextualItemsDark = [
+		{ text: 'Introduction', hash: '#pg-dark-intro' },
+		{ text: 'Prérequis', hash: '#pg-dark-prerequis' },
+		{ text: 'Installation', hash: '#pg-dark-install', level: 2 },
+		{ text: 'Configuration', hash: '#pg-dark-config', level: 2 },
+		{ text: 'Aller plus loin', hash: '#pg-dark-plus' },
+	]
 
 	// CollapsibleList
 	const collapsibleItems = [
@@ -596,6 +616,49 @@
 											</v-btn>
 										</v-btn-toggle>
 									</ToolbarContainer>
+								</div>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ ContextualMenu ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							ContextualMenu
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Tab entre les liens : ring 2px primary inset sur le lien focalisé
+								(les items sont de simples liens, non couverts par l'override global).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 320px;"
+							>
+								<ContextualMenu
+									v-model="contextualHash"
+									aria-label="Sommaire de la page"
+									:items="contextualItems"
+								/>
+							</v-sheet>
+
+							<div class="text-caption mb-2 mt-6">
+								Fond primary (thème dark) — texte & ring en onPrimary
+							</div>
+							<v-sheet
+								color="primary"
+								rounded
+								class="pa-4"
+								style="max-width: 320px;"
+							>
+								<div class="v-theme--dark">
+									<ContextualMenu
+										v-model="contextualHashDark"
+										aria-label="Sommaire de la page (fond sombre)"
+										:items="contextualItemsDark"
+									/>
 								</div>
 							</v-sheet>
 						</v-expansion-panel-text>
