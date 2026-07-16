@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed, ref, toRef, watch } from 'vue'
+	import { computed, readonly as readonlyState, ref, toRef, watch } from 'vue'
 	import { mdiPhone, mdiCloseCircle } from '@mdi/js'
 	import { locales as defaultLocales } from './locales'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
@@ -149,7 +149,9 @@
 	defineExpose({
 		dialCodeList,
 		hasError,
-		errors,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
 		validation,
 		validateOnSubmit: validate,
 		phoneMask,

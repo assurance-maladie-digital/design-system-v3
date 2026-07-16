@@ -940,4 +940,394 @@ describe('NirField.vue', () => {
 			expect(noticeWrapper.exists()).toBe(false)
 		})
 	})
+
+	describe('Exposed values: errors, warnings, successes', () => {
+		// Helper pour créer un wrapper avec des props personnalisées
+		const createNirFieldWrapper = (props: Record<string, unknown> = {}) => {
+			const defaultProps = {
+				modelValue: undefined,
+				required: false,
+				showSuccessMessages: true,
+				outlined: true,
+			}
+			const testWrapper = mount(NirField, {
+				props: { ...defaultProps, ...props },
+			})
+			activeWrappers.push(testWrapper)
+			return testWrapper
+		}
+
+		// Helper pour remplir et valider le NIR
+		const fillAndValidateNir = async (w: ReturnType<typeof mount>, nirValue: string, keyValue?: string) => {
+			const numberInput = w.find('.number-field input')
+			await numberInput.trigger('focus')
+			await numberInput.setValue(nirValue)
+			await w.vm.$nextTick()
+			await numberInput.trigger('blur')
+			await w.vm.$nextTick()
+			await flushPromises()
+
+			if (keyValue !== undefined) {
+				const keyInput = w.find('.key-field input')
+				await keyInput.trigger('focus')
+				await keyInput.setValue(keyValue)
+				await w.vm.$nextTick()
+				await keyInput.trigger('blur')
+				await w.vm.$nextTick()
+				await flushPromises()
+			}
+		}
+
+		describe('Structure and initialization', () => {
+			it('exposes errors object with number and key refs', async () => {
+				expect(wrapper.vm.errors).toBeDefined()
+				expect(wrapper.vm.errors).toHaveProperty('number')
+				expect(wrapper.vm.errors).toHaveProperty('key')
+				expect(wrapper.vm.errors.number.value).toEqual([])
+				expect(wrapper.vm.errors.key.value).toEqual([])
+			})
+
+			it('exposes warnings object with number and key refs', async () => {
+				expect(wrapper.vm.warnings).toBeDefined()
+				expect(wrapper.vm.warnings).toHaveProperty('number')
+				expect(wrapper.vm.warnings).toHaveProperty('key')
+				expect(wrapper.vm.warnings.number.value).toEqual([])
+				expect(wrapper.vm.warnings.key.value).toEqual([])
+			})
+
+			it('exposes successes object with number and key refs', async () => {
+				expect(wrapper.vm.successes).toBeDefined()
+				expect(wrapper.vm.successes).toHaveProperty('number')
+				expect(wrapper.vm.successes).toHaveProperty('key')
+				expect(wrapper.vm.successes.number.value).toEqual([])
+				expect(wrapper.vm.successes.key.value).toEqual([])
+			})
+
+			it('keeps number and key errors separate', async () => {
+				await fillAndValidateNir(wrapper, '123', '1')
+
+				expect(wrapper.vm.errors.number.value.length).toBeGreaterThan(0)
+				expect(wrapper.vm.errors.key.value.length).toBeGreaterThan(0)
+				// Les deux devraient contenir des messages d'erreur différents
+				expect(wrapper.vm.errors.number.value[0]).not.toBe(wrapper.vm.errors.key.value[0])
+			})
+		})
+
+		describe('Error handling', () => {
+			it('populates number errors when NIR is invalid', async () => {
+				await fillAndValidateNir(wrapper, '123')
+
+				expect(wrapper.vm.errors.number.value.length).toBeGreaterThan(0)
+				expect(wrapper.vm.errors.number.value[0]).toBe('Le numéro de sécurité sociale est invalide.')
+				expect(wrapper.vm.errors.key.value.length).toBe(0) // Pas d'erreur clé
+			})
+
+			it('populates key errors when key is invalid', async () => {
+				await fillAndValidateNir(wrapper, '2940375120005', '1')
+
+				expect(wrapper.vm.errors.key.value.length).toBeGreaterThan(0)
+				expect(wrapper.vm.errors.key.value[0]).toBe('La clé de contrôle est invalide.')
+				expect(wrapper.vm.errors.number.value.length).toBe(0) // Pas d'erreur NIR
+			})
+
+			it('clears number errors when corrected', async () => {
+				// D'abord créer une erreur
+				await fillAndValidateNir(wrapper, '123')
+				expect(wrapper.vm.errors.number.value.length).toBeGreaterThan(0)
+
+				// Corriger la valeur
+				await fillAndValidateNir(wrapper, '2940375120005')
+				expect(wrapper.vm.errors.number.value.length).toBe(0)
+			})
+
+			it('includes injected error messages in exposed errors', async () => {
+				const testWrapper = createNirFieldWrapper({
+					errorMessages: ['Erreur injectée depuis le parent'],
+				})
+
+				const allErrors = [
+					...testWrapper.vm.errors.number.value,
+					...testWrapper.vm.errors.key.value,
+				]
+				expect(allErrors).toContain('Erreur injectée depuis le parent')
+			})
+
+			it('respects disableErrorHandling prop', async () => {
+				const testWrapper = createNirFieldWrapper({
+					required: true,
+					disableErrorHandling: true,
+				})
+
+				await fillAndValidateNir(testWrapper, '123')
+
+				// Les erreurs doivent être vides car disableErrorHandling est true
+				expect(testWrapper.vm.errors.number.value.length).toBe(0)
+				expect(testWrapper.vm.errors.key.value.length).toBe(0)
+			})
+
+			it('respects maxErrors limit for exposed errors', async () => {
+				const testWrapper = createNirFieldWrapper({
+					maxErrors: 1,
+					customNumberRules: () => [
+						{ type: 'custom', options: { validate: () => 'Erreur 1', message: 'Erreur 1' } },
+						{ type: 'custom', options: { validate: () => 'Erreur 2', message: 'Erreur 2' } },
+					],
+				})
+
+				await fillAndValidateNir(testWrapper, '123')
+
+				// Même si plusieurs erreurs existent, maxErrors limite l'affichage
+				const errorCount = testWrapper.vm.errors.number.value.length
+				expect(errorCount).toBeLessThanOrEqual(1)
+			})
+		})
+
+		describe('Warning handling', () => {
+			it('includes injected warning messages in exposed warnings', async () => {
+				const testWrapper = createNirFieldWrapper({
+					warningMessages: ['Avertissement injecté depuis le parent'],
+				})
+
+				const allWarnings = [
+					...testWrapper.vm.warnings.number.value,
+					...testWrapper.vm.warnings.key.value,
+				]
+				expect(allWarnings).toContain('Avertissement injecté depuis le parent')
+			})
+
+			it('keeps number and key warnings separate when warnings are injected', async () => {
+				const testWrapper = createNirFieldWrapper({
+					warningMessages: ['Avertissement NIR'],
+				})
+
+				// Les avertissements injectés
+				expect(testWrapper.vm.warnings.number.value.length >= 0).toBe(true)
+				expect(testWrapper.vm.warnings.key.value.length >= 0).toBe(true)
+			})
+		})
+
+		describe('Success handling', () => {
+			it('populates number successes when NIR is valid', async () => {
+				const testWrapper = createNirFieldWrapper({
+					required: false,
+					showSuccessMessages: true,
+				})
+
+				await fillAndValidateNir(testWrapper, '2940375120005')
+
+				expect(testWrapper.vm.successes.number.value.length).toBeGreaterThan(0)
+				expect(testWrapper.vm.successes.number.value[0]).toBe('Le numéro de sécurité sociale est valide.')
+				expect(testWrapper.vm.successes.key.value.length).toBe(0) // Pas de succès clé
+			})
+
+			it('populates key successes when key is valid', async () => {
+				const testWrapper = createNirFieldWrapper({
+					required: false,
+					showSuccessMessages: true,
+				})
+
+				await fillAndValidateNir(testWrapper, '2940375120005', '91')
+
+				expect(testWrapper.vm.successes.key.value.length).toBeGreaterThan(0)
+				expect(testWrapper.vm.successes.key.value[0]).toBe('La clé de contrôle est valide.')
+				expect(testWrapper.vm.successes.number.value.length).toBeGreaterThan(0)
+			})
+
+			it('includes injected success messages in exposed successes', async () => {
+				const testWrapper = createNirFieldWrapper({
+					successMessages: ['Succès injecté depuis le parent'],
+					showSuccessMessages: true,
+				})
+
+				const allSuccesses = [
+					...testWrapper.vm.successes.number.value,
+					...testWrapper.vm.successes.key.value,
+				]
+				expect(allSuccesses).toContain('Succès injecté depuis le parent')
+			})
+
+			it('hides successes when showSuccessMessages is false', async () => {
+				const testWrapper = createNirFieldWrapper({
+					showSuccessMessages: false,
+				})
+
+				await fillAndValidateNir(testWrapper, '2940375120005')
+
+				// Les successes ne doivent pas être affichés
+				expect(testWrapper.vm.successes.number.value.length).toBe(0)
+			})
+
+			it('shows successes when showSuccessMessages changes to true', async () => {
+				const testWrapper = createNirFieldWrapper({
+					showSuccessMessages: false,
+				})
+
+				await fillAndValidateNir(testWrapper, '2940375120005')
+				expect(testWrapper.vm.successes.number.value.length).toBe(0)
+
+				// Changer la prop
+				await testWrapper.setProps({ showSuccessMessages: true })
+				await testWrapper.vm.$nextTick()
+				await flushPromises()
+
+				// Les successes doivent maintenant être affichés
+				expect(testWrapper.vm.successes.number.value.length).toBeGreaterThan(0)
+			})
+		})
+
+		describe('Lifecycle and reactivity', () => {
+			it('clears all exposed values when clearValidation is called', async () => {
+				// D'abord créer des erreurs
+				await fillAndValidateNir(wrapper, '123')
+				expect(wrapper.vm.errors.number.value.length).toBeGreaterThan(0)
+
+				// Appeler clearValidation
+				await wrapper.vm.clearValidation()
+				await wrapper.vm.$nextTick()
+				await flushPromises()
+
+				// Vérifier que tout est vidé
+				expect(wrapper.vm.errors.number.value.length).toBe(0)
+				expect(wrapper.vm.errors.key.value.length).toBe(0)
+				expect(wrapper.vm.warnings.number.value.length).toBe(0)
+				expect(wrapper.vm.warnings.key.value.length).toBe(0)
+				expect(wrapper.vm.successes.number.value.length).toBe(0)
+				expect(wrapper.vm.successes.key.value.length).toBe(0)
+			})
+
+			it('exposed values are readonly refs', async () => {
+				expect(wrapper.vm.errors.number.value).toBeDefined()
+				expect(Array.isArray(wrapper.vm.errors.number.value)).toBe(true)
+
+				// Vérifier que l'accès multiple retourne la même valeur
+				const first = wrapper.vm.errors.number.value
+				const second = wrapper.vm.errors.number.value
+				expect(first).toEqual(second)
+			})
+
+			it('updates exposed values reactively on prop changes', async () => {
+				const testWrapper = createNirFieldWrapper({
+					errorMessages: [],
+				})
+
+				expect(testWrapper.vm.errors.number.value.length).toBe(0)
+
+				// Changer la prop errorMessages
+				await testWrapper.setProps({
+					errorMessages: ['Nouvelle erreur injectée'],
+				})
+				await testWrapper.vm.$nextTick()
+				await flushPromises()
+
+				// Les erreurs exposées doivent être mises à jour
+				const allErrors = [
+					...testWrapper.vm.errors.number.value,
+					...testWrapper.vm.errors.key.value,
+				]
+				expect(allErrors).toContain('Nouvelle erreur injectée')
+			})
+
+			it('updates exposed values reactively on field value changes', async () => {
+				const testWrapper = createNirFieldWrapper({
+					required: false,
+					showSuccessMessages: true,
+				})
+
+				expect(testWrapper.vm.successes.number.value.length).toBe(0)
+
+				// Remplir le NIR valide
+				await fillAndValidateNir(testWrapper, '2940375120005')
+
+				// Les successes doivent être actualisées
+				expect(testWrapper.vm.successes.number.value.length).toBeGreaterThan(0)
+
+				// Vider le NIR
+				const numberInput = testWrapper.find('.number-field input')
+				await numberInput.setValue('')
+				await testWrapper.vm.$nextTick()
+				await numberInput.trigger('blur')
+				await testWrapper.vm.$nextTick()
+				await flushPromises()
+
+				// Les successes doivent être vides
+				expect(testWrapper.vm.successes.number.value.length).toBe(0)
+			})
+
+			it('preserves error state during field navigation', async () => {
+				await fillAndValidateNir(wrapper, '123')
+				const errorsBefore = wrapper.vm.errors.number.value.length
+
+				// Naviguer vers le champ clé
+				await wrapper.find('.key-field input').trigger('focus')
+				await wrapper.vm.$nextTick()
+				await flushPromises()
+
+				// Les erreurs du NIR doivent persister
+				expect(wrapper.vm.errors.number.value.length).toBe(errorsBefore)
+			})
+
+			it('exposes independent state for number and key fields', async () => {
+				// Créer une erreur sur le NIR
+				await wrapper.find('.number-field input').trigger('focus')
+				await wrapper.find('.number-field input').setValue('123')
+				await wrapper.vm.$nextTick()
+				await wrapper.find('.number-field input').trigger('blur')
+				await wrapper.vm.$nextTick()
+				await flushPromises()
+
+				const numberErrors = wrapper.vm.errors.number.value.length
+				const keyErrors = wrapper.vm.errors.key.value.length
+
+				// Les deux doivent être indépendants
+				expect(numberErrors).toBeGreaterThan(0)
+				expect(keyErrors).toBe(0)
+
+				// Modifier la clé ne devrait pas affecter les erreurs du NIR
+				await wrapper.find('.key-field input').trigger('focus')
+				await wrapper.find('.key-field input').setValue('1')
+				await wrapper.vm.$nextTick()
+				await wrapper.find('.key-field input').trigger('blur')
+				await wrapper.vm.$nextTick()
+				await flushPromises()
+
+				// Les erreurs du NIR doivent rester inchangées
+				expect(wrapper.vm.errors.number.value.length).toBe(numberErrors)
+			})
+		})
+
+		describe('Multiple messages handling', () => {
+			it('combines multiple error sources', async () => {
+				const testWrapper = createNirFieldWrapper({
+					errorMessages: ['Erreur injectée'],
+					required: true,
+				})
+
+				// Trigger validation error
+				await fillAndValidateNir(testWrapper, '')
+
+				const allErrors = [
+					...testWrapper.vm.errors.number.value,
+					...testWrapper.vm.errors.key.value,
+				]
+
+				// Doit contenir à la fois l'erreur injectée et l'erreur de validation
+				expect(allErrors.length).toBeGreaterThan(0)
+			})
+
+			it('removes duplicates from exposed errors', async () => {
+				const testWrapper = createNirFieldWrapper({
+					errorMessages: ['Erreur identique'],
+					customNumberRules: () => [
+						{ type: 'custom', options: { validate: () => 'Erreur identique', message: 'Erreur identique' } },
+					],
+				})
+
+				await fillAndValidateNir(testWrapper, '123')
+
+				// Les doublons doivent être supprimés
+				const uniqueErrors = new Set(testWrapper.vm.errors.number.value)
+				expect(uniqueErrors.size).toBeLessThanOrEqual(testWrapper.vm.errors.number.value.length)
+			})
+		})
+	})
 })

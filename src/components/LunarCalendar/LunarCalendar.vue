@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 	import { vMaska } from 'maska/vue'
-	import { computed } from 'vue'
+	import { computed, readonly as readonlyState } from 'vue'
 	import SyTextField from '../Customs/SyTextField/SyTextField.vue'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import { useLunarCalendarValidation } from './useLunarCalendarValidation'
@@ -44,6 +44,9 @@
 	defineExpose({
 		validateOnSubmit: validate,
 		clearValidation,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
 	})
 
 </script>

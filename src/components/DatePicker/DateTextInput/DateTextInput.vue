@@ -9,7 +9,7 @@
 		validateDateFormat,
 		isDateComplete,
 	} from '../composables'
-	import { ref, computed, watch, nextTick, onMounted, toRefs } from 'vue'
+	import { ref, computed, watch, nextTick, onMounted, readonly as readonlyState, toRefs } from 'vue'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -1060,6 +1060,9 @@
 	defineExpose({
 		validateOnSubmit,
 		reset,
+		errors: readonlyState(errorMessages),
+		warnings: readonlyState(warningMessages),
+		successes: readonlyState(successMessages),
 		focus() {
 			const el: HTMLInputElement | null | undefined = inputRef.value?.$el?.querySelector?.('input:not([type="hidden"])')
 			el?.focus({ preventScroll: true })

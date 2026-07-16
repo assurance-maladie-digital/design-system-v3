@@ -4,7 +4,7 @@
 		inheritAttrs: false,
 	})
 	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
-	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, useAttrs } from 'vue'
+	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, readonly as readonlyState, useAttrs } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import type { ColorType, IconType, VariantStyle } from '@/types/vuetifyTypes'
 	import type { VList, VTextField } from 'vuetify/components'
@@ -846,6 +846,10 @@
 		isOpen,
 		closeList,
 		validateOnSubmit: validate,
+		clearValidation,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
 	})
 
 	// on reprend la mm methode que pour le datepicker : useDatePickerAccesssibity (updateAccessibility)

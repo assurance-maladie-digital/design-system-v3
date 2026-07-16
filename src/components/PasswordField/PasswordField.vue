@@ -4,7 +4,7 @@
 		mdiEyeOffOutline,
 		mdiCloseCircle,
 	} from '@mdi/js'
-	import { computed, ref, watch, nextTick, toRef } from 'vue'
+	import { computed, ref, watch, nextTick, readonly as readonlyState, toRef } from 'vue'
 	import { usePasswordField } from './usePasswordFieldValidation'
 	import { config } from './config'
 	import { locales } from './locales'
@@ -132,9 +132,9 @@
 	})
 
 	defineExpose({
-		errors,
-		warnings,
-		successes,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
 		hasError,
 		hasWarning,
 		hasSuccess,

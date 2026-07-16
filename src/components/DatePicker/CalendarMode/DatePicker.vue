@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, type ComponentPublicInstance, type Ref } from 'vue'
+	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, readonly as readonlyState, type ComponentPublicInstance, type Ref } from 'vue'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
@@ -771,6 +771,9 @@
 		isDatePickerVisible,
 		selectedDates,
 		errorMessages,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successMessages),
 		handleClickOutside,
 		initializeSelectedDates,
 		updateAccessibility,

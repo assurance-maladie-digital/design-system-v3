@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed, ref, useId, watch } from 'vue'
+	import { computed, readonly as readonlyState, ref, useId, watch } from 'vue'
 	import type { VCheckbox } from 'vuetify/components/VCheckbox'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiCheckboxBlankOutline, mdiCheckboxMarked, mdiMinusBox } from '@mdi/js'
@@ -165,6 +165,9 @@
 		clearValidation,
 		reset,
 		toggleMixed,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
 	})
 </script>
 

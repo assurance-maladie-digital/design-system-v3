@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 	/* eslint-disable @typescript-eslint/no-explicit-any -- Nécessaire pour gérer différents types d'entrée */
-	import { ref, watch, computed, onMounted } from 'vue'
+	import { ref, watch, computed, onMounted, readonly as readonlyState } from 'vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import { useFieldValidation } from '@/composables'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
@@ -318,16 +318,16 @@
 	defineExpose({
 		validateOnSubmit,
 		errors: {
-			fromDate: fromDateValidation.errors,
-			toDate: toDateValidation.errors,
+			fromDate: readonlyState(fromDateValidation.errors),
+			toDate: readonlyState(toDateValidation.errors),
 		},
 		successes: {
-			fromDate: fromDateValidation.successes,
-			toDate: toDateValidation.successes,
+			fromDate: readonlyState(fromDateValidation.successes),
+			toDate: readonlyState(toDateValidation.successes),
 		},
 		warnings: {
-			fromDate: fromDateValidation.warnings,
-			toDate: toDateValidation.warnings,
+			fromDate: readonlyState(fromDateValidation.warnings),
+			toDate: readonlyState(toDateValidation.warnings),
 		},
 		isValid,
 	})

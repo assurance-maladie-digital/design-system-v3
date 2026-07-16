@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, nextTick, onMounted, ref, useSlots, watch } from 'vue'
+	import { computed, nextTick, onMounted, readonly as readonlyState, ref, useSlots, watch } from 'vue'
 	import { mdiChevronDown, mdiCloseCircle } from '@mdi/js'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -358,6 +358,9 @@
 		isOpen,
 		selectItem,
 		search,
+		errors: readonlyState(displayErrors),
+		warnings: readonlyState(displayWarnings),
+		successes: readonlyState(displaySuccesses),
 	})
 </script>
 

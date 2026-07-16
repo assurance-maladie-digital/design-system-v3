@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed, ref } from 'vue'
+	import { computed, readonly as readonlyState, ref } from 'vue'
 	import { VMessages } from 'vuetify/components'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
@@ -130,6 +130,9 @@
 		clearValidation,
 		reset,
 		defaultRules,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
 		checkErrorOnBlur: () => {
 			focused.value = false
 			if (props.isValidateOnBlur) {
