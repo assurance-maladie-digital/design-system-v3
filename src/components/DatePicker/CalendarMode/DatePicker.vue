@@ -921,6 +921,10 @@
 <style lang="scss" scoped>
 $ap-grey-mid: #b0b1b1;
 
+.v-sheet {
+	border-radius: var(--radius-md) !important;
+}
+
 .date-picker-title {
 	display: block;
 	text-transform: lowercase;

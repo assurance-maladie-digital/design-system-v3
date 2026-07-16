@@ -377,7 +377,7 @@
 	color: rgb(var(--v-theme-primary));
 	border: 1px solid rgb(var(--v-theme-primary));
 	min-height: 56px;
-	border-radius: var(--v-radius-rounded);
+	border-radius: var(--radius-md) !important;
 	cursor: pointer;
 	position: relative;
 	transition: background-color 0.2s, color 0.2s;
@@ -401,7 +401,7 @@
 		width: 100%;
 		height: 100%;
 		transition: background-color 0.2s;
-		border-radius: var(--v-radius-rounded);
+		border-radius: var(--radius-md) !important;
 	}
 
 	&:hover::before {
