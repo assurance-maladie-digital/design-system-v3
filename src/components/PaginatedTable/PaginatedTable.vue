@@ -239,7 +239,6 @@
 /* stylelint-disable selector-class-pattern */
 
 .sy-paginated-table :deep() {
-
 	table thead tr {
 		white-space: nowrap;
 	}
