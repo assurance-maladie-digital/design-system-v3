@@ -170,6 +170,13 @@
 			value: category,
 		})),
 	)
+	function getFigmaUrl(item: unknown): string {
+		const componentItem = item as Partial<ComponentStatusItem>
+
+		return typeof componentItem.figmaUrl === 'string'
+			? componentItem.figmaUrl
+			: ''
+	}
 
 	function getStoryPath(item: unknown): string {
 		const componentItem = item as Partial<ComponentStatusItem>
@@ -313,8 +320,8 @@
 		>
 			<template #[`item.figmaUrl`]="{ item }">
 				<a
-					v-if="item.figmaUrl"
-					:href="item.figmaUrl"
+					v-if="getFigmaUrl(item)"
+					:href="getFigmaUrl(item)"
 					target="_blank"
 					rel="noopener noreferrer"
 				>
