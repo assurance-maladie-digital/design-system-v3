@@ -354,4 +354,20 @@
 .text-color {
 	color: rgb(var(--v-theme-primary));
 }
+
+.sy-input-select:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 3px;
+}
+
+.v-list-item:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: -3px;
+
+	// Pas de double indicateur : on masque l'overlay de fond de Vuetify au focus
+	// (comme `_menus.scss`), le ring suffit.
+	:deep(.v-list-item__overlay) {
+		opacity: 0 !important;
+	}
+}
 </style>
