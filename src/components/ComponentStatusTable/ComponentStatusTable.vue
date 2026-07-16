@@ -172,14 +172,16 @@
 	)
 
 	function getStoryPath(item: ComponentStatusItem): string {
-		return item.storybookTitle
-			?.toLowerCase()
+		const title = item.storybookTitle ?? ''
+
+		return title
+			.toLowerCase()
 			.replaceAll('/', '-')
 			.replaceAll(' ', '')
 	}
 
 	function getStorybookLink(
-		item: ComponentStatusItem,
+		item: ComponentStatusItem | unknown,
 		theme?: string,
 	): string {
 		const storyPath = getStoryPath(item)
