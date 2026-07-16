@@ -26,6 +26,7 @@
 	import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
 	import SyInputSelect from '@/components/Customs/Selects/SyInputSelect/SyInputSelect.vue'
 	import ErrorPage from '@/components/ErrorPage/ErrorPage.vue'
+	import SyAlert from '@/components/SyAlert/SyAlert.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -1034,6 +1035,25 @@
 									btn-href="#"
 								/>
 							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyAlert ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyAlert
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Alerte fermable : Tab sur la croix → ring 2px primary (offset 3px).
+								Le fond de l'alerte reste clair même en dark → ring primary (pas onPrimary).
+							</div>
+							<SyAlert
+								type="info"
+								closable
+							>
+								Ceci est une alerte d'information fermable.
+							</SyAlert>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>
