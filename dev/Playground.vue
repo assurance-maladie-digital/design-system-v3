@@ -25,6 +25,7 @@
 	import UserMenuBtn from '@/components/UserMenuBtn/UserMenuBtn.vue'
 	import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
 	import SyInputSelect from '@/components/Customs/Selects/SyInputSelect/SyInputSelect.vue'
+	import ErrorPage from '@/components/ErrorPage/ErrorPage.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -1008,6 +1009,29 @@
 									v-model="selectValue"
 									:items="selectItems"
 									label="Sélectionner une option"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ ErrorPage ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							ErrorPage
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Wrapper de StatusPage. Le bouton d'action (VBtn) reçoit le ring 2px primary
+								standard via l'override global.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<ErrorPage
+									btn-text="Retour à l'accueil"
+									btn-href="#"
 								/>
 							</v-sheet>
 						</v-expansion-panel-text>
