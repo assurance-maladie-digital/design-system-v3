@@ -23,9 +23,10 @@
 	import DownloadBtn from '@/components/DownloadBtn/DownloadBtn.vue'
 	import FranceConnectBtn from '@/components/FranceConnectBtn/FranceConnectBtn.vue'
 	import UserMenuBtn from '@/components/UserMenuBtn/UserMenuBtn.vue'
+	import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight } from '@mdi/js'
+	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
 
 	// SyTabs
 	const tabsItems = [
@@ -932,6 +933,47 @@
 									full-name="Jean Dupont"
 									additional-information="N° 123456789"
 								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyIconButton ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyIconButton
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Wrapper de <code>&lt;v-btn icon&gt;</code> : Tab dessus → ring 2px primary
+								standard (offset 3px), fourni par l'override global.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4 mb-6"
+							>
+								<SyIconButton
+									:icon="mdiPencil"
+									label="Modifier"
+									color="primary"
+								/>
+							</v-sheet>
+
+							<div class="text-caption mb-2">
+								Fond primary (thème dark) — ring onPrimary (blanc)
+							</div>
+							<v-sheet
+								color="primary"
+								rounded
+								class="pa-4"
+							>
+								<div class="v-theme--dark">
+									<SyIconButton
+										:icon="mdiPencil"
+										label="Modifier"
+										color="onPrimary"
+									/>
+								</div>
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
