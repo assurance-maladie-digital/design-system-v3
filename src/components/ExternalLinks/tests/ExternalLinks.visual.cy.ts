@@ -53,8 +53,10 @@ describe('ExternalLinks - Focus visual regression tests', () => {
 			props: { items: defaultItems },
 		})
 
-		cy.get('.sy-external-links-btn').click()
-		cy.get('.sy-external-links-list').should('be.visible')
+		// L'onglet est translaté en partie hors-viewport (seuls ~48px dépassent) : son
+		// centre n'est pas actionnable → force le clic pour ouvrir le menu.
+		cy.get('.sy-external-links-btn').click({ force: true })
+		cy.get('.sy-external-links-list-item').should('be.visible')
 		focusVisible('.sy-external-links-list-item')
 		cy.wait(100)
 		cy.matchImageSnapshot('external-links-focus-item', cy.get('.v-application'))
