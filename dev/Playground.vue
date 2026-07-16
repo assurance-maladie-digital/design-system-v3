@@ -14,6 +14,7 @@
 	import CollapsibleList from '@/components/CollapsibleList/CollapsibleList.vue'
 	import ToolbarContainer from '@/components/ToolbarContainer/ToolbarContainer.vue'
 	import ContextualMenu from '@/components/ContextualMenu/ContextualMenu.vue'
+	import ExternalLinks from '@/components/ExternalLinks/ExternalLinks.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight } from '@mdi/js'
 
@@ -61,6 +62,12 @@
 		{ text: 'Installation', hash: '#pg-dark-install', level: 2 },
 		{ text: 'Configuration', hash: '#pg-dark-config', level: 2 },
 		{ text: 'Aller plus loin', hash: '#pg-dark-plus' },
+	]
+
+	// ExternalLinks (onglet flottant)
+	const externalLinksItems = [
+		{ text: 'Ameli.fr', href: 'https://www.ameli.fr' },
+		{ text: 'Service-public.fr', href: 'https://www.service-public.fr' },
 	]
 
 	// CollapsibleList
@@ -661,6 +668,28 @@
 									/>
 								</div>
 							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ ExternalLinks ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							ExternalLinks
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Onglet flottant (fond primary) : ring onPrimary inset au focus.
+								Ouvre le menu (survol/clic) → items sur fond blanc, ring primary inset.
+								Démo contenue dans une box relative (l'onglet s'ancre à son bord).
+							</div>
+							<div
+								style="position: relative; height: 240px; border: 1px dashed rgba(0, 0, 0, 0.2); border-radius: 4px; overflow: hidden;"
+							>
+								<ExternalLinks
+									:items="externalLinksItems"
+									position="top left"
+								/>
+							</div>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>
