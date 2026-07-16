@@ -17,6 +17,7 @@
 	import ExternalLinks from '@/components/ExternalLinks/ExternalLinks.vue'
 	import SkipLink from '@/components/SkipLink/SkipLink.vue'
 	import SyPagination from '@/components/Customs/SyPagination/SyPagination.vue'
+	import BackToTopBtn from '@/components/BackToTopBtn/BackToTopBtn.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight } from '@mdi/js'
 
@@ -736,6 +737,21 @@
 									:visible="5"
 								/>
 							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ BackToTopBtn ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							BackToTopBtn
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Bouton flottant déclenché au scroll (<code>threshold: 0</code>) : fais défiler
+								la page → il apparaît <strong>en bas à droite</strong>. Tab dessus → ring 2px
+								primary standard (offset 3px), fourni par l'override global (VBtn outlined).
+							</div>
+							<BackToTopBtn :threshold="0" />
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>
