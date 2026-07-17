@@ -28,6 +28,7 @@
 	import ErrorPage from '@/components/ErrorPage/ErrorPage.vue'
 	import SyAlert from '@/components/SyAlert/SyAlert.vue'
 	import SyTextArea from '@/components/SyTextArea/SyTextArea.vue'
+	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -99,6 +100,9 @@
 
 	// SyTextArea
 	const textAreaValue = ref('Ceci est un texte de description.')
+
+	// SyTextField
+	const textFieldValue = ref('Jean Dupont')
 
 	// SyInputSelect
 	const selectItems = [
@@ -1082,6 +1086,31 @@
 									v-model="textAreaValue"
 									label="Description"
 									clearable
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyTextField ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyTextField
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Champ : bordure de focus Vuetify en primary.
+								Bouton d'effacement (croix, VBtn) → ring 2px primary standard via l'override global.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<SyTextField
+									v-model="textFieldValue"
+									label="Nom"
+									is-clearable
 								/>
 							</v-sheet>
 						</v-expansion-panel-text>

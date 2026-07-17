@@ -1,5 +1,11 @@
 import SyTextField from '../SyTextField.vue'
 
+// Déclenche :focus-visible via l'option native focus({ focusVisible: true }).
+const focusVisible = (selector: string) =>
+	cy.get(selector).then(($el) => {
+		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
+	})
+
 describe('SyTextField - Visual regression tests', () => {
 	it('displays the text field by default', () => {
 		cy.mountWithVuetify(SyTextField, {
@@ -112,5 +118,19 @@ describe('SyTextField - Visual regression tests', () => {
 
 		cy.get('.sy-text-field__spinner').should('not.exist')
 		cy.matchImageSnapshot('sy-text-field-number-disabled', cy.get('.v-text-field'))
+	})
+})
+
+describe('SyTextField - Focus visual regression tests', () => {
+	// Bouton d'effacement (VBtn) : ring standard global (2px primary, offset 3px).
+	// Capture `.v-application` pour ne pas rogner le ring outset.
+	it('shows the ring on the clear button', () => {
+		cy.mountWithVuetify(SyTextField, {
+			props: { label: 'Nom', isClearable: true, modelValue: 'Ceci est un texte' },
+		})
+
+		focusVisible('.sy-text-field__clear')
+		cy.wait(100)
+		cy.matchImageSnapshot('sy-text-field-focus-clear', cy.get('.v-application'))
 	})
 })
