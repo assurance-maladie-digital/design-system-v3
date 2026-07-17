@@ -33,6 +33,7 @@
 	import DiacriticPicker from '@/components/DiacriticPicker/DiacriticPicker.vue'
 	import Captcha from '@/components/Captcha/Captcha.vue'
 	import NirField from '@/components/NirField/NirField.vue'
+	import PasswordField from '@/components/PasswordField/PasswordField.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -119,6 +120,9 @@
 
 	// NirField
 	const nirValue = ref('')
+
+	// PasswordField
+	const passwordValue = ref('MonMotDePasse123')
 
 	// SyInputSelect
 	const selectItems = [
@@ -1233,6 +1237,34 @@
 									label="Identifiant d'assuré"
 									nir-tooltip="Numéro de sécurité sociale à 13 chiffres"
 									key-tooltip="Clé de contrôle à 2 chiffres"
+									clearable
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ PasswordField ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							PasswordField
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Au Tab : input (bordure primary), bouton <em>clear</em> et bouton
+								<em>afficher/masquer</em>. Les deux boutons portaient un box-shadow bleu codé
+								en dur → remplacés par le ring DS primary (2px, offset 2px). Le clear est un
+								<code>&lt;button&gt;</code> natif, le toggle un <code>.v-btn</code> ; les deux
+								sont serrés dans le bord du champ (offset 2px pour ne pas déborder).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<PasswordField
+									v-model="passwordValue"
+									label="Mot de passe"
 									clearable
 								/>
 							</v-sheet>
