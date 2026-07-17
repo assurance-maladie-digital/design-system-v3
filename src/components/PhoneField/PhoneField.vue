@@ -101,16 +101,6 @@
 		withCountryCode: toRef(props, 'withCountryCode'),
 	})
 
-	const validation = {
-		clearValidation,
-		errors,
-		warnings,
-		successes,
-		hasError,
-		hasWarning,
-		hasSuccess,
-	}
-
 	const phoneMask = computed(() => internalDialCode.value.mask)
 
 	// Rattrape l'autofill du navigateur : avec un champ indicatif séparé, le navigateur
@@ -152,7 +142,6 @@
 		errors: readonlyState(errors),
 		warnings: readonlyState(warnings),
 		successes: readonlyState(successes),
-		validation,
 		validateOnSubmit: validate,
 		phoneMask,
 		clearValidation,
