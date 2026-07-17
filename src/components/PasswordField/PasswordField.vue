@@ -208,6 +208,7 @@
 				<VBtn
 					type="button"
 					class="password-toggle-button"
+					size="small"
 					:aria-label="btnLabel"
 					:aria-pressed="showEyeIcon"
 					:aria-controls="passwordFieldId"
@@ -219,6 +220,7 @@
 					<SyIcon
 						:icon="showEyeIcon ? mdiEyeOutline : mdiEyeOffOutline"
 						color="rgb(0 0 0 / 70%)"
+						size="26"
 						:aria-hidden="true"
 						decorative
 					/>
@@ -252,14 +254,13 @@
 	border: none;
 	background: transparent;
 	cursor: pointer;
-	padding: 4px;
+	padding: 0;
 	border-radius: 4px;
-	outline: none;
 	transition: background-color 0.2s ease;
 
 	&:focus-visible {
-		background-color: rgb(0 0 0 / 8%);
-		box-shadow: 0 0 0 2px rgb(25 118 210 / 50%);
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 1px;
 	}
 
 	&:hover {
@@ -337,8 +338,9 @@
 	padding: 0;
 
 	&:focus-visible {
-		background-color: rgb(0 0 0 / 8%);
-		box-shadow: 0 0 0 2px rgb(25 118 210 / 50%);
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 1px;
+		border-radius: 4px;
 	}
 
 	:deep(.v-icon__svg) {
