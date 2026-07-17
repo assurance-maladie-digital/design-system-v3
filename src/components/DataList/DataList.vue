@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import type { PropType } from 'vue'
+	import { useId, type PropType } from 'vue'
 
 	import DataListItem from '@/components/DataListItem/DataListItem.vue'
 	import DataListLoading from './DataListLoading/DataListLoading.vue'
@@ -66,7 +66,7 @@
 		},
 	})
 
-	const uniqueId = Math.random().toString(36).substr(2, 9)
+	const uniqueId = useId()
 
 	const sectionTitleId = `data-list-section-title-${uniqueId}`
 

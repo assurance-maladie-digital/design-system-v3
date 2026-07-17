@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, ref } from 'vue'
+	import { computed, ref, useId } from 'vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
 	// Props definition
@@ -43,7 +43,7 @@
 	const totalPages = computed(() => props.pages || 1)
 
 	// Generate unique ID for this pagination instance
-	const uniqueId = ref(`pagination-${Math.random().toString(36).substr(2, 9)}`)
+	const uniqueId = ref(`pagination-${useId()}`)
 
 	// Emits definition
 	const emit = defineEmits<{

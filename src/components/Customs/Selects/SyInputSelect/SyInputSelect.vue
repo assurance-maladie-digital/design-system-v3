@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 	import { mdiChevronDown, mdiInformation, mdiCloseCircle } from '@mdi/js'
-	import { computed, onMounted, ref, watch } from 'vue'
+	import { computed, onMounted, ref, useId, watch } from 'vue'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import defaultOptions from './config'
@@ -86,7 +86,7 @@
 		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
 	})
 
-	const inputId = ref(`sy-input-select-${Math.random().toString(36).substring(7)}`)
+	const inputId = `sy-input-select-${useId()}`
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 	const selectItem = async (item: any) => {

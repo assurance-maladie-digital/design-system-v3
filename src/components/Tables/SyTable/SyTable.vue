@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, onMounted, provide, ref, toRef, useAttrs, useSlots, watch } from 'vue'
+	import { computed, onMounted, provide, ref, toRef, useAttrs, useId, useSlots, watch } from 'vue'
 	import type { VDataTable } from 'vuetify/components/VDataTable'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -81,7 +81,7 @@
 	const componentAttributes = useAttrs()
 
 	// Generate a unique ID for this table instance
-	const uniqueTableId = ref(`sy-table-${Math.random().toString(36).substring(2, 11)}`)
+	const uniqueTableId = ref(`sy-table-${useId()}`)
 
 	const { storedOptions, storeOptions } = useStoredOptions({
 		key: computed(() => props.suffix ? `table-${props.suffix}` : 'table'),

@@ -4,6 +4,7 @@ import { describe, it, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
+import { useId } from 'vue'
 
 import SelectFilter from '../SelectFilter.vue'
 
@@ -22,7 +23,7 @@ const accessibleSySelectStub = {
 		'disableErrorHandling', 'variant', 'bgColor', 'multiple', 'chips'],
 	emits: ['update:modelValue', 'click:clear'],
 	setup() {
-		const inputId = `select-stub-${Math.random().toString(36).slice(2)}`
+		const inputId = `select-stub-${useId()}`
 		return { inputId }
 	},
 }

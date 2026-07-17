@@ -4,7 +4,7 @@
 		inheritAttrs: false,
 	})
 	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
-	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, useAttrs } from 'vue'
+	import { ref, useId, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, useAttrs } from 'vue'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import type { ColorType, IconType, VariantStyle } from '@/types/vuetifyTypes'
 	import type { VList, VTextField } from 'vuetify/components'
@@ -185,14 +185,14 @@
 		const controlEl = el.querySelector('.v-input__control') as HTMLElement | null
 		menuMinWidth.value = (controlEl ?? el).offsetWidth
 	}
-	const inputId = ref(`sy-select-${Math.random().toString(36).substring(7)}`)
+	const inputId = ref(`sy-select-${useId()}`)
 	// text d'aide
 	const helpTextId = computed(() => `${inputId.value}-help`)
 	// live region pour le lecteur ecran
 	const liveRegionId = computed(() => `${inputId.value}-live`)
 
 	// Generate unique menu ID for each component instance to avoid conflicts and validation issues
-	const uniqueMenuId = ref(props.menuId === 'sy-select-menu' ? `sy-select-menu-${Math.random().toString(36).substring(7)}` : props.menuId)
+	const uniqueMenuId = ref(props.menuId === 'sy-select-menu' ? `sy-select-menu-${useId()}` : props.menuId)
 
 	const rawAriaLabel = computed(() => {
 		const ariaLabel = attrs['aria-label']

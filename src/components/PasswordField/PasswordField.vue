@@ -4,7 +4,7 @@
 		mdiEyeOffOutline,
 		mdiCloseCircle,
 	} from '@mdi/js'
-	import { computed, ref, watch, nextTick, toRef } from 'vue'
+	import { computed, ref, useId, watch, nextTick, toRef } from 'vue'
 	import { usePasswordField } from './usePasswordFieldValidation'
 	import { config } from './config'
 	import { locales } from './locales'
@@ -46,7 +46,7 @@
 		},
 	)
 
-	const passwordFieldId = ref(`password-field-${Math.random().toString(36).substring(2, 10)}`)
+	const passwordFieldId = ref(`password-field-${useId()}`)
 	const alertMessage = ref('')
 	const fieldKey = ref(0)
 	const focused = ref(false)
