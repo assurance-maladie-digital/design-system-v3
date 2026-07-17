@@ -35,6 +35,7 @@
 	import NirField from '@/components/NirField/NirField.vue'
 	import PasswordField from '@/components/PasswordField/PasswordField.vue'
 	import FileUpload from '@/components/FileUpload/FileUpload.vue'
+	import UploadWorkflow from '@/components/UploadWorkflow/UploadWorkflow.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -127,6 +128,12 @@
 
 	// FileUpload
 	const uploadedFiles = ref([])
+
+	// UploadWorkflow
+	const uploadWorkflowList = [
+		{ id: 'id', title: 'Carte d\'identité', state: 'initial', showUploadBtn: true },
+		{ id: 'bill', title: 'Facture de soin', state: 'success', fileName: 'facture.pdf' },
+	]
 
 	// SyInputSelect
 	const selectItems = [
@@ -1295,6 +1302,29 @@
 								style="max-width: 480px;"
 							>
 								<FileUpload v-model="uploadedFiles" />
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ UploadWorkflow ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							UploadWorkflow
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								UploadWorkflow ne porte <strong>aucun style de focus propre</strong> : il
+								compose FileUpload (dropzone → ring DS scopé), FileList (actions =
+								<code>.v-btn</code> → ring global), SySelect et DialogBox (focus gérés par eux).
+								Au Tab : les actions de chaque ligne puis la dropzone.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 560px;"
+							>
+								<UploadWorkflow :upload-list="uploadWorkflowList" />
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
