@@ -3,18 +3,18 @@
 	defineOptions({
 		inheritAttrs: false,
 	})
-	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
-	import { ref, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, readonly as readonlyState, useAttrs } from 'vue'
-	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
+	import IconSlot from '@/components/Common/IconSlot/IconSlot.vue'
+	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import type { ColorType, IconType, VariantStyle } from '@/types/vuetifyTypes'
+	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
+	import { computed, nextTick, onBeforeUnmount, onMounted, readonly as readonlyState, ref, useAttrs, useId, watch, watchEffect } from 'vue'
 	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
-	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
-	import IconSlot from '@/components/Common/IconSlot/IconSlot.vue'
-	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import { locales } from './locales'
-	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { useSySelectValidation } from './composables/useSySelectValidation'
+	import { locales } from './locales'
 
 	export type ItemType = {
 		[key: string]: unknown
@@ -185,14 +185,14 @@
 		const controlEl = el.querySelector('.v-input__control') as HTMLElement | null
 		menuMinWidth.value = (controlEl ?? el).offsetWidth
 	}
-	const inputId = ref(`sy-select-${Math.random().toString(36).substring(7)}`)
+	const inputId = ref(`sy-select-${useId()}`)
 	// text d'aide
 	const helpTextId = computed(() => `${inputId.value}-help`)
 	// live region pour le lecteur ecran
 	const liveRegionId = computed(() => `${inputId.value}-live`)
 
 	// Generate unique menu ID for each component instance to avoid conflicts and validation issues
-	const uniqueMenuId = ref(props.menuId === 'sy-select-menu' ? `sy-select-menu-${Math.random().toString(36).substring(7)}` : props.menuId)
+	const uniqueMenuId = ref(props.menuId === 'sy-select-menu' ? `sy-select-menu-${useId()}` : props.menuId)
 
 	const rawAriaLabel = computed(() => {
 		const ariaLabel = attrs['aria-label']

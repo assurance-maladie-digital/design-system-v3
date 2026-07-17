@@ -1,17 +1,17 @@
 <script setup lang="ts">
-	import { computed, nextTick, onMounted, readonly as readonlyState, ref, useSlots, watch } from 'vue'
-	import { mdiChevronDown, mdiCloseCircle } from '@mdi/js'
-	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
-	import { ariaManager } from './utils/ariaManager'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
-	import type { ItemType, SelectValue, SelectArray } from './types'
-	import { useItemUtils } from './utils/useItemUtils'
-	import { useSelectionLogic } from './utils/useSelectionLogic'
-	import { useSyAutocompleteKeyboard } from './utils/useKeyboardHandler'
+	import { mdiChevronDown, mdiCloseCircle } from '@mdi/js'
+	import { computed, nextTick, onMounted, readonly as readonlyState, ref, useId, useSlots, watch } from 'vue'
 	import { useSyAutocompleteValidation } from './composables/useSyAutocompleteValidation'
 	import { locales } from './locales'
+	import type { ItemType, SelectArray, SelectValue } from './types'
+	import { ariaManager } from './utils/ariaManager'
+	import { useItemUtils } from './utils/useItemUtils'
+	import { useSyAutocompleteKeyboard } from './utils/useKeyboardHandler'
+	import { useSelectionLogic } from './utils/useSelectionLogic'
 
 	interface SyAutocompleteProps {
 		bgColor?: string
@@ -84,7 +84,7 @@
 	const suppressMenuOpen = ref(false)
 	type SyTextFieldInstance = InstanceType<typeof SyTextField> & { $refs?: { input?: HTMLInputElement } }
 	const textFieldRef = ref<SyTextFieldInstance | null>(null)
-	const randomId = Math.random().toString(36).slice(2)
+	const randomId = useId()
 	const uniqueMenuId = computed(() => props.menuId === 'sy-autocomplete-menu' ? `sy-autocomplete-menu-${randomId}` : props.menuId)
 	const optionIdPrefixed = computed(() => `${uniqueMenuId.value}-option`)
 	const activeDescendantId = ref('')

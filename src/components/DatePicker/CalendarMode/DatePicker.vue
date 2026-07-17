@@ -1,25 +1,25 @@
 <script lang="ts" setup>
-	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, readonly as readonlyState, type ComponentPublicInstance, type Ref } from 'vue'
-	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
-	import DateTextInput from '../DateTextInput/DateTextInput.vue'
-	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
-	import { VDatePicker } from 'vuetify/components'
-	import { useValidatable } from '@/composables/validation/useValidatable'
-	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
-	import { useDateInitialization, type DateModelValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
-	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
-	import { useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString, useDatePickerState, useHolidayHighlighting, useCalendarKeyboardNavigation, useDatePickerFocusTrap, useDatePickerValidation, useDatePickerDerivedValues } from '../composables'
-	import { useDateTextInputProps } from './props/dateTextInputProps'
-	import { useComplexDatePickerProps } from './props/complexDatePickerProps'
-	import { useSyTextFieldProps } from './props/syTextFieldProps'
-	import { DATE_PICKER_MESSAGES } from '../constants/messages'
-	import dayjs from 'dayjs'
-	import customParseFormat from 'dayjs/plugin/customParseFormat'
-	import { mdiCalendarMonthOutline } from '@mdi/js'
-	import type { DateObjectValue, CalendarModeProps } from '../types'
-	import { DatePickerCommonDefaults } from '../types'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
+	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
+	import { useDateInitialization, type DateInput, type DateModelValue } from '@/composables/date/useDateInitializationDayjs'
+	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
+	import { useValidatable } from '@/composables/validation/useValidatable'
+	import { mdiCalendarMonthOutline } from '@mdi/js'
+	import dayjs from 'dayjs'
+	import customParseFormat from 'dayjs/plugin/customParseFormat'
+	import { computed, nextTick, onBeforeUnmount, onMounted, readonly as readonlyState, ref, useId, watch, type ComponentPublicInstance, type Ref } from 'vue'
+	import { VDatePicker } from 'vuetify/components'
+	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
+	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
+	import { useCalendarKeyboardNavigation, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useTodayButton } from '../composables'
+	import { DATE_PICKER_MESSAGES } from '../constants/messages'
+	import DateTextInput from '../DateTextInput/DateTextInput.vue'
+	import type { CalendarModeProps, DateObjectValue } from '../types'
+	import { DatePickerCommonDefaults } from '../types'
+	import { useComplexDatePickerProps } from './props/complexDatePickerProps'
+	import { useDateTextInputProps } from './props/dateTextInputProps'
+	import { useSyTextFieldProps } from './props/syTextFieldProps'
 
 	// Initialiser les plugins dayjs
 	dayjs.extend(customParseFormat)
@@ -97,7 +97,7 @@
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
 	const datePickerRef = ref<ComponentPublicInstance | null>(null)
 	const complexDatePickerRef = ref<null | ComponentPublicInstance<typeof ComplexDatePicker>>()
-	const datePickerContentId = `date-picker-${Math.random().toString(36).slice(2)}`
+	const datePickerContentId = `date-picker-${useId()}`
 
 	const isDatePickerVisible = ref(false)
 	const { handleMenuKeydown } = useDatePickerFocusTrap({
@@ -923,6 +923,10 @@
 
 <style lang="scss" scoped>
 $ap-grey-mid: #b0b1b1;
+
+.v-sheet {
+	border-radius: var(--radius-md) !important;
+}
 
 .date-picker-title {
 	display: block;

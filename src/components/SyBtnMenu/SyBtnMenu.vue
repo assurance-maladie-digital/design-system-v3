@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, watch, computed, onMounted, useSlots, type PropType, nextTick } from 'vue'
+	import { ref, watch, computed, onMounted, useSlots, useId, type PropType, nextTick } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import slugify from 'slugify'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -118,7 +118,7 @@
 		selectedItem.value = newValue
 	})
 
-	const generatedId = ref(`custom-btn-select-${Math.random().toString(36).substring(7)}`)
+	const generatedId = ref(`custom-btn-select-${useId()}`)
 
 	function getSelectedValue() {
 		if (!selectedItem.value) return undefined
