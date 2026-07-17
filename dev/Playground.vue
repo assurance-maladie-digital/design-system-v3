@@ -31,6 +31,7 @@
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import DiacriticPicker from '@/components/DiacriticPicker/DiacriticPicker.vue'
+	import Captcha from '@/components/Captcha/Captcha.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -111,6 +112,9 @@
 
 	// DiacriticPicker
 	const diacriticValue = ref('')
+
+	// Captcha
+	const captchaValue = ref('')
 
 	// SyInputSelect
 	const selectItems = [
@@ -1176,6 +1180,28 @@
 										label="Nom avec accents"
 									/>
 								</DiacriticPicker>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ Captcha ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							Captcha
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<Captcha
+									v-model="captchaValue"
+									url-create="https://free.mockerapi.com/mock/0adac32b-e832-4553-aa7f-0011b7f35f0c"
+									url-get-image="/captcha/captcha.png"
+									url-get-audio="/captcha/captcha.mp3"
+								/>
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
