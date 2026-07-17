@@ -34,6 +34,7 @@
 	import Captcha from '@/components/Captcha/Captcha.vue'
 	import NirField from '@/components/NirField/NirField.vue'
 	import PasswordField from '@/components/PasswordField/PasswordField.vue'
+	import FileUpload from '@/components/FileUpload/FileUpload.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -123,6 +124,9 @@
 
 	// PasswordField
 	const passwordValue = ref('MonMotDePasse123')
+
+	// FileUpload
+	const uploadedFiles = ref([])
 
 	// SyInputSelect
 	const selectItems = [
@@ -1267,6 +1271,30 @@
 									label="Mot de passe"
 									clearable
 								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ FileUpload ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							FileUpload
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								La zone de dépôt est un <code>role="button"</code> custom (pas un
+								<code>.v-btn</code>) → non couverte par le global. Au Tab elle reçoit un ring
+								DS primary (2px, offset 2px) <strong>au clavier uniquement</strong>
+								(<code>:focus-visible</code>) ; le fond gris existant reste au survol / focus /
+								drag. L'input fichier caché est hors séquence Tab (<code>tabindex="-1"</code>).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<FileUpload v-model="uploadedFiles" />
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
