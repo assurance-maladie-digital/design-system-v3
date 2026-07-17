@@ -8,13 +8,15 @@ const focusVisible = (selector: string) =>
 
 describe('ComplexDatePicker - Focus visual regression tests', () => {
 	// Même migration que CalendarMode : ring global sur les `.v-btn` du calendrier, offset
-	// annulé dans la grille dense. On ouvre le calendrier puis on focus une cellule de jour.
+	// annulé dans la grille dense. Contrairement au CalendarMode, le champ n'est pas
+	// l'activateur (`textFieldActivator: false` par défaut) : le calendrier s'ouvre via
+	// l'icône calendrier (prepend). On l'ouvre donc, puis on focus une cellule de jour.
 	it('shows the ring on a focused calendar day cell', () => {
 		cy.mountWithVuetify(ComplexDatePicker, {
 			props: { label: 'Date' },
 		})
 
-		cy.get('.v-field').first().click()
+		cy.get('.v-input__prepend').first().click()
 		cy.get('.v-date-picker-month__day .v-btn', { timeout: 8000 }).should('be.visible')
 
 		focusVisible('.v-date-picker-month__day .v-btn')

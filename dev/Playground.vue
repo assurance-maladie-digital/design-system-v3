@@ -30,6 +30,7 @@
 	import SyTextArea from '@/components/SyTextArea/SyTextArea.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
+	import DiacriticPicker from '@/components/DiacriticPicker/DiacriticPicker.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -107,6 +108,9 @@
 
 	// DatePicker (CalendarMode)
 	const dateValue = ref<string | null>(null)
+
+	// DiacriticPicker
+	const diacriticValue = ref('')
 
 	// SyInputSelect
 	const selectItems = [
@@ -1142,6 +1146,36 @@
 									v-model="dateValue"
 									label="Date de naissance"
 								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ DiacriticPicker ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							DiacriticPicker
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Tab s'arrête sur l'<strong>input du champ</strong> (bordure primary) puis sur
+								le bouton d'ouverture. Le conteneur <code>role="textbox"</code> qui enveloppe
+								l'input est en <code>tabindex="-1"</code> (plus d'arrêt de Tab ni de ring
+								conteneur en trop).
+								Le bouton et les caractères de la boîte de dialogue reçoivent le ring primary
+								via l'override global.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 360px;"
+							>
+								<DiacriticPicker v-model="diacriticValue">
+									<SyTextField
+										v-model="diacriticValue"
+										label="Nom avec accents"
+									/>
+								</DiacriticPicker>
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
