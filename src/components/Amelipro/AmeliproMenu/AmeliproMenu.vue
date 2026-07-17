@@ -1,10 +1,11 @@
 <script setup lang="ts">
-	import { type PropType, onMounted, reactive, ref } from 'vue'
+	import { type PropType, onMounted, reactive, ref, computed } from 'vue'
 	import { mdiChevronDown, mdiChevronUp, mdiClose } from '@mdi/js'
 	import AmeliproBtn from '../AmeliproBtn/AmeliproBtn.vue'
 	import AmeliproIconBtn from '../AmeliproIconBtn/AmeliproIconBtn.vue'
 	import type { AmeliproMenuItem } from './types'
 	import type { RouteLocationRaw } from 'vue-router'
+	import { locales as defaultLocales } from './locales'
 
 	const props = defineProps({
 		homeHref: {
@@ -27,7 +28,13 @@
 			type: String,
 			required: true,
 		},
+		locales: {
+			type: Object,
+			default: () => defaultLocales,
+		},
 	})
+
+	const locales = computed(() => props.locales ?? defaultLocales)
 
 	const reactiveItems = reactive<AmeliproMenuItem[]>(props.items)
 
@@ -70,7 +77,7 @@
 		class="d-flex justify-center amelipro-menu"
 	>
 		<AmeliproIconBtn
-			btn-label="Menu du service"
+			:btn-label="locales.serviceMenuLabel"
 			class="amelipro-menu__btn--open"
 			icon="menuSquare"
 			icon-bg-color="transparent"
@@ -84,7 +91,7 @@
 
 		<VNavigationDrawer
 			:id="`${uniqueId}-drawer`"
-			aria-label="Menu du service"
+			:aria-label="locales.serviceMenuLabel"
 			aria-modal="true"
 			color="ap-blue-darken-2"
 			hide-overlay
@@ -105,7 +112,7 @@
 				</h2>
 
 				<AmeliproIconBtn
-					btn-label="Fermer le menu"
+					:btn-label="locales.closeMenuLabel"
 					class="menu-btn-close"
 					icon-bg-color="transparent"
 					icon-color="ap-white"
@@ -299,7 +306,7 @@
 					@keydown.tab.exact.prevent="setFocus(`${uniqueId}-close-menu-btn`)"
 				>
 					<img
-						alt="Accueil Amelipro"
+						:alt="locales.homeAlt"
 						class="home-menu-btn__img"
 						src="@/assets/amelipro/img/logo-menu.svg"
 					>

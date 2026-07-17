@@ -4,7 +4,7 @@
 	import { type PropType, computed } from 'vue'
 	import AmeliproBtn from '../AmeliproBtn/AmeliproBtn.vue'
 	import type { RouteLocationRaw } from 'vue-router'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
 	import { propValidator } from '@/utils/propValidator'
 	import { useDisplay } from 'vuetify'
 
@@ -86,6 +86,10 @@
 			type: [Array, Object, String] as PropType<RouteLocationRaw>,
 			default: undefined,
 		},
+		locales: {
+			type: Object as PropType<typeof defaultLocales>,
+			default: () => defaultLocales,
+		},
 		noA11y: {
 			type: Boolean,
 			default: false,
@@ -145,7 +149,6 @@
 	})
 
 	const { mdAndUp, width } = useDisplay()
-	const localesValue = locales
 
 	const footerDisplay = computed<string>(() => (width.value < 1170 ? 'd-block' : 'd-flex'))
 
@@ -173,11 +176,11 @@
 	})
 
 	const a11yComplianceLabel = computed<string | null>(() => {
-		const complianceLabel = localesValue[props.a11yCompliance as A11yComplianceEnum]
+		const complianceLabel = props.locales[props.a11yCompliance as A11yComplianceEnum]
 		if (!complianceLabel) {
 			return null
 		}
-		return locales.a11yLabel(complianceLabel)
+		return props.locales.a11yLabel(complianceLabel)
 	})
 
 	const emit = defineEmits(['click-phone', 'site-map-event', 'about-event', 'config-event', 'legal-notice-event', 'cgu-event', 'a11y-event'])
@@ -222,7 +225,7 @@
 				<AmeliproBtn
 					class="text-ap-white text-decoration-none amelipro-footer__contact__link"
 					:class="mdAndUp ? '' : 'align-center'"
-					:href="phoneLink ? 'tel:3608' : undefined"
+					:href="phoneLink ? locales.phoneLink : undefined"
 					text
 					:unique-id="uniqueId ? `${uniqueId}-contact-link` : undefined"
 					@click="phoneBtnClick"
@@ -231,12 +234,12 @@
 						:id="uniqueId ? `${uniqueId}-contact-link-text` : undefined"
 						class="text-uppercase text-button d-sr-only"
 					>
-						{{ localesValue.contactLabel }}
+						{{ locales.contactLabel }}
 					</span>
 
 					<img
 						:id="uniqueId ? `${uniqueId}-contact-link-img` : undefined"
-						alt="au 3608 : Service gratuit + prix appel"
+						alt="locales.phoneAltText"
 						:src="locales.imgSrc"
 					>
 				</AmeliproBtn>
@@ -264,7 +267,7 @@
 						:unique-id="uniqueId ? `${uniqueId}-site-map-btn` : undefined"
 						@click="siteMapEvent"
 					>
-						{{ localesValue.siteMapLabel }}
+						{{ locales.siteMapLabel }}
 					</AmeliproBtn>
 				</li>
 
@@ -284,7 +287,7 @@
 						:unique-id="uniqueId ? `${uniqueId}-about-btn` : undefined"
 						@click="aboutEvent"
 					>
-						{{ localesValue.aboutLabel }}
+						{{ locales.aboutLabel }}
 					</AmeliproBtn>
 				</li>
 
@@ -324,7 +327,7 @@
 						:unique-id="uniqueId ? `${uniqueId}-legal-notice-btn` : undefined"
 						@click="legalNoticeEvent"
 					>
-						{{ localesValue.legalNoticeLabel }}
+						{{ locales.legalNoticeLabel }}
 					</AmeliproBtn>
 				</li>
 
@@ -344,7 +347,7 @@
 						:unique-id="uniqueId ? `${uniqueId}-cgu-btn` : undefined"
 						@click="cguEvent"
 					>
-						{{ localesValue.cguLabel }}
+						{{ locales.cguLabel }}
 					</AmeliproBtn>
 				</li>
 

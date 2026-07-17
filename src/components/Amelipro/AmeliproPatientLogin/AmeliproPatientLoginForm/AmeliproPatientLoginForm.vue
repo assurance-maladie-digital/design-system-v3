@@ -10,6 +10,7 @@
 	import { vMaska } from 'maska/vue'
 	import imgVital from '@/assets/amelipro/img/idpa/carte-vitale.svg'
 	import apcvLogo from '@/assets/amelipro/img/idpa/apcv_logo.svg'
+	import { locales as defaultLocales } from './locales'
 
 	const props = defineProps({
 		autoCompleteCardItems: {
@@ -72,6 +73,10 @@
 			type: String,
 			default: undefined,
 		},
+		locales: {
+			type: Object,
+			default: () => defaultLocales,
+		},
 	})
 
 	const emit = defineEmits(['click:vital-card', 'click:vital-card-app', 'submit:nir', 'update:model-value'])
@@ -113,7 +118,7 @@
 				class="mt-4"
 			>
 				<img
-					alt="Carte Vitale"
+					:alt="locales.vitalCardAlt"
 					class="mx-auto mb-6 d-block"
 					:src="imgVital"
 				>
@@ -122,7 +127,7 @@
 					v-if="autoCompleteCardItems"
 					v-model="currentValue.autoCompleteValue"
 					:items="autoCompleteCardItems"
-					label="Sélectionnez une carte :"
+					:label="locales.cardSelectLabel"
 					:rules="rulesAutoCompleteCard"
 					:unique-id="`${uniqueId}-select-card`"
 				/>
@@ -189,7 +194,7 @@
 					classes="mt-6"
 					clearable
 					:counter="13"
-					label="Saisir son NIR :"
+					:label="locales.nirInputLabel"
 					:rules="rulesNir"
 					:unique-id="`${uniqueId}-nir`"
 					@keypress.enter.prevent="submitNir"

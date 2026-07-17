@@ -5,7 +5,7 @@
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useSyCheckBoxGroupValidation } from './composables/useSyCheckBoxGroupValidation'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
 	import type { SyCheckBoxGroupProps } from './types'
 
 	const props = withDefaults(
@@ -27,6 +27,7 @@
 			title: undefined,
 			...validationPropsDefaults,
 			isValidateOnBlur: false,
+			locales: () => defaultLocales,
 		},
 	)
 
@@ -173,7 +174,7 @@
 				:disabled="props.disabled || opt.disabled"
 				:readonly="props.readonly || opt.readonly"
 				:name="opt.name || props.name"
-				:aria-label="opt.ariaLabel || `Option ${opt.value}`"
+				:aria-label="opt.ariaLabel || locales.optionLabel(opt.value)"
 				:title="opt.title"
 				:hide-details="props.hideDetails"
 				:density="props.density"

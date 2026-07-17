@@ -1,3 +1,4 @@
+import { type locales } from './locales'
 import type { FieldValidationProps, ValidationRule, VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 
 export type Option = {
@@ -29,6 +30,7 @@ export interface SyCheckBoxGroupProps extends FieldValidationProps {
 	name?: string
 	options?: Option[]
 	title?: string
+	locales?: typeof locales
 }
 
 /**

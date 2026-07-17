@@ -2,8 +2,9 @@
 	import { computed, useSlots, Comment, Text } from 'vue'
 	import { VTooltip } from 'vuetify/components'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { locales as defaultLocales } from './locales'
 
-	const props = defineProps<{
+	const props = withDefaults(defineProps<{
 		icon?: string
 		tooltip?: string
 		label?: string
@@ -12,7 +13,13 @@
 		noIcon?: boolean
 		disableClickButton: boolean
 		tooltipLocation: 'top' | 'bottom' | 'start' | 'end'
-	}>()
+		locales?: typeof defaultLocales
+	}>(), {
+		icon: undefined,
+		tooltip: undefined,
+		label: undefined,
+		locales: () => defaultLocales,
+	})
 
 	const emit = defineEmits<{
 		(e: 'click'): void
@@ -51,7 +58,7 @@
 			<template #activator="{ props: tooltipProps }">
 				<SyIcon
 					v-bind="tooltipProps"
-					:label="label ? `${label} - info` : 'Info'"
+					:label="label ? locales.infoWithLabel(label) : locales.info"
 					:color="iconColor"
 					:icon="icons.info"
 					role="button"
@@ -78,7 +85,7 @@
 			class="cursor-pointer"
 			:decorative="false"
 			tabindex="0"
-			:label="label ? `${label} - bouton ${icon}` : `Bouton ${icon}`"
+			:label="label && icon ? locales.buttonWithLabel(label, icon) : (icon ? locales.buttonLabel(icon) : '')"
 			@click.stop="handleClick"
 			@keydown.enter.prevent.stop="handleClick"
 			@keydown.space.prevent.stop="handleClick"
