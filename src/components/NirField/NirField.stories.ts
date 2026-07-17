@@ -389,7 +389,38 @@ const meta: Meta<typeof NirField> = {
 				defaultValue: { summary: '{}' },
 			},
 		},
-	},
+		errors: {
+			description: 'Tableaux réactif contenant tous les messages d\'erreur. Combine les erreurs injectées via errorMessages et celles générées par la validation. Les doublons sont supprimés et le tableau est limité selon maxErrors. Accessible via template ref du composant.',
+			table: {
+				type: { summary: `{
+	number: Readonly<Ref<readonly string[]>>,
+	key: Readonly<Ref<readonly string[]>>
+}` },
+				category: 'expose',
+			},
+		},
+		warnings: {
+			description: 'Tableaux réactif contenant tous les messages d\'avertissement. Combine les avertissements injectés via warningMessages et ceux générés par customWarningRules. Les doublons sont supprimés et le tableau est limité selon maxErrors. Accessible via template ref du composant.',
+			table: {
+				type: { summary: `{
+	number: Readonly<Ref<readonly string[]>>,
+	key: Readonly<Ref<readonly string[]>>
+}` },
+				category: 'expose',
+			},
+		},
+		successes: {
+			description: 'Tableaux réactif contenant tous les messages de succès. Combine les succès injectés via successMessages et ceux générés par customSuccessRules. Les doublons sont supprimés et le tableau est limité selon maxErrors. Accessible via template ref du composant.',
+			table: {
+				type: { summary: `{
+	number: Readonly<Ref<readonly string[]>>,
+	key: Readonly<Ref<readonly string[]>>
+}` },
+				category: 'expose',
+			},
+		},
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	} as Record<string, any>,
 } satisfies Meta<typeof NirField>
 
 export default meta
