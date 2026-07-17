@@ -7,6 +7,7 @@
 		onMounted,
 		ref,
 		type Ref,
+		useId,
 		watch,
 	} from 'vue'
 	import {
@@ -507,7 +508,7 @@
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
 	const menuActivatorRef = ref<HTMLElement | undefined>(undefined)
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
-	const datePickerContentId = `date-picker-${Math.random().toString(36).slice(2)}`
+	const datePickerContentId = `date-picker-${useId()}`
 
 	// Aria props for activator: only declare aria-controls when panel exists
 	const menuActivatorProps = computed(() => ({
@@ -1159,6 +1160,10 @@
 </template>
 
 <style lang="scss" scoped>
+.v-sheet {
+	border-radius: var(--radius-md) !important;
+}
+
 .date-picker-title {
 	display: block;
 	text-transform: lowercase;

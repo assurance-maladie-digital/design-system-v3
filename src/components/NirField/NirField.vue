@@ -590,7 +590,7 @@
 .nir-field--fieldset {
 	width: calc(v-bind(fieldWidth) + 5px);
 	border: 1px solid #949494;
-	border-radius: 4px;
+	border-radius: var(--radius-md) !important;
 	padding: 25px;
 	margin: 0;
 	display: flex;

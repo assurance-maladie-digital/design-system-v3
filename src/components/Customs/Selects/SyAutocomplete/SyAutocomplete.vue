@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, nextTick, onMounted, ref, useSlots, watch } from 'vue'
+	import { computed, nextTick, onMounted, ref, useId, useSlots, watch } from 'vue'
 	import { mdiChevronDown, mdiCloseCircle } from '@mdi/js'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -84,7 +84,7 @@
 	const suppressMenuOpen = ref(false)
 	type SyTextFieldInstance = InstanceType<typeof SyTextField> & { $refs?: { input?: HTMLInputElement } }
 	const textFieldRef = ref<SyTextFieldInstance | null>(null)
-	const randomId = Math.random().toString(36).slice(2)
+	const randomId = useId()
 	const uniqueMenuId = computed(() => props.menuId === 'sy-autocomplete-menu' ? `sy-autocomplete-menu-${randomId}` : props.menuId)
 	const optionIdPrefixed = computed(() => `${uniqueMenuId.value}-option`)
 	const activeDescendantId = ref('')

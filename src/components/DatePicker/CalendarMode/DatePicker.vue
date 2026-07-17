@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, type ComponentPublicInstance, type Ref } from 'vue'
+	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, useId, type ComponentPublicInstance, type Ref } from 'vue'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
@@ -97,7 +97,7 @@
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
 	const datePickerRef = ref<ComponentPublicInstance | null>(null)
 	const complexDatePickerRef = ref<null | ComponentPublicInstance<typeof ComplexDatePicker>>()
-	const datePickerContentId = `date-picker-${Math.random().toString(36).slice(2)}`
+	const datePickerContentId = `date-picker-${useId()}`
 
 	const isDatePickerVisible = ref(false)
 	const { handleMenuKeydown } = useDatePickerFocusTrap({
@@ -920,6 +920,10 @@
 
 <style lang="scss" scoped>
 $ap-grey-mid: #b0b1b1;
+
+.v-sheet {
+	border-radius: var(--radius-md) !important;
+}
 
 .date-picker-title {
 	display: block;

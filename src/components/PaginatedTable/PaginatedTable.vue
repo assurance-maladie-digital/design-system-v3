@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, computed, watch, useAttrs, onMounted } from 'vue'
+	import { ref, computed, watch, useAttrs, useId, onMounted } from 'vue'
 	import type { DataOptions, SortOption, GroupOption } from './types'
 	import { LocalStorageUtility } from '@/utils/localStorageUtility'
 	import Pagination from './Pagination.vue'
@@ -45,7 +45,7 @@
 	const localOptions = ref({})
 
 	// Generate a unique ID for this table instance
-	const uniqueTableId = ref(`paginated-table-${Math.random().toString(36).substr(2, 9)}`)
+	const uniqueTableId = ref(`paginated-table-${useId()}`)
 
 	const storageKey = computed(() => {
 		const prefix = 'pagination'

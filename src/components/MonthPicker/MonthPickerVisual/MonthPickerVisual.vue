@@ -145,7 +145,7 @@
 .month-picker-menu {
 	overflow-y: auto;
 	background-color: white;
-	border-radius: 4px;
+	border-radius: var(--radius-md) !important;
 	box-shadow:
 		0 1px 5px 0 #0000001f,
 		0 2px 2px 0 #00000024,

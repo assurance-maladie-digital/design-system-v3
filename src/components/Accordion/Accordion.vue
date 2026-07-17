@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	import { useId } from 'vue'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from '@/components/Accordion/config'
 	import { mdiChevronDown } from '@mdi/js'
@@ -46,7 +47,7 @@
 	const options = useCustomizableOptions(config, props)
 
 	// Génération d'un ID unique pour cette instance d'accordéon
-	const instanceId = `accordion-${Math.random().toString(36).substring(2, 9)}`
+	const instanceId = `accordion-${useId()}`
 
 	// Utilisation du composable pour gérer l'état de l'accordéon
 	const {
@@ -211,7 +212,7 @@
 
 .sy-accordion-item {
 	border: 1px solid #e0e0e0;
-	border-radius: 4px;
+	border-radius: var(--radius-md);
 	margin-bottom: 8px;
 	overflow: hidden;
 }
@@ -222,13 +223,18 @@
 	border-radius: 0;
 
 	&:first-child {
-		border-top-left-radius: 4px;
-		border-top-right-radius: 4px;
+		border-top-left-radius: var(--radius-md);
+		border-top-right-radius: var(--radius-md);
+
+		.sy-accordion-button--focused:not(:focus-visible) {
+			border-top-left-radius: inherit;
+			border-top-right-radius: inherit;
+		}
 	}
 
 	&:last-child {
-		border-bottom-left-radius: 4px;
-		border-bottom-right-radius: 4px;
+		border-bottom-left-radius: var(--radius-md);
+		border-bottom-right-radius: var(--radius-md);
 	}
 
 	/* Évite les doubles bordures entre les éléments */
@@ -290,6 +296,13 @@
 }
 
 /* Style pour l'accordéon ouvert (focus programmatique) */
+.sy-accordion .sy-accordion-item {
+	.sy-accordion-button--focused:not(:focus-visible) {
+		border-top-left-radius: inherit;
+		border-top-right-radius: inherit;
+	}
+}
+
 .sy-accordion-button--focused:not(:focus-visible) {
 	background-color: rgba(var(--accordion-focus-color), 0.15);
 	border: 3px solid rgb(var(--accordion-focus-color));
@@ -314,6 +327,7 @@
 
 .sy-accordion-content--open {
 	max-height: 500px;
+	overflow: auto;
 }
 
 .sy-accordion-content:focus-visible {
