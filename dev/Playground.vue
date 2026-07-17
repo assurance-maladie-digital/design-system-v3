@@ -27,6 +27,7 @@
 	import SyInputSelect from '@/components/Customs/Selects/SyInputSelect/SyInputSelect.vue'
 	import ErrorPage from '@/components/ErrorPage/ErrorPage.vue'
 	import SyAlert from '@/components/SyAlert/SyAlert.vue'
+	import SyTextArea from '@/components/SyTextArea/SyTextArea.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -95,6 +96,9 @@
 		{ text: 'Mon compte', value: 'account' },
 		{ text: 'Paramètres', value: 'settings' },
 	]
+
+	// SyTextArea
+	const textAreaValue = ref('Ceci est un texte de description.')
 
 	// SyInputSelect
 	const selectItems = [
@@ -1054,6 +1058,32 @@
 							>
 								Ceci est une alerte d'information fermable.
 							</SyAlert>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyTextArea ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyTextArea
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Le champ utilise la bordure de focus Vuetify (convention DS des champs).
+								Le bouton d'effacement (croix) est un <code>&lt;button&gt;</code> natif → ring
+								2px primary standard via l'override global. Tab pour l'atteindre.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<SyTextArea
+									v-model="textAreaValue"
+									label="Description"
+									clearable
+								/>
+							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>
