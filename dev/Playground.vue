@@ -36,6 +36,8 @@
 	import PasswordField from '@/components/PasswordField/PasswordField.vue'
 	import FileUpload from '@/components/FileUpload/FileUpload.vue'
 	import UploadWorkflow from '@/components/UploadWorkflow/UploadWorkflow.vue'
+	import FileList from '@/components/FileList/FileList.vue'
+	import FilePreview from '@/components/FilePreview/FilePreview.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -134,6 +136,19 @@
 		{ id: 'id', title: 'Carte d\'identité', state: 'initial', showUploadBtn: true },
 		{ id: 'bill', title: 'Facture de soin', state: 'success', fileName: 'facture.pdf' },
 	]
+
+	// FileList
+	const fileListItems = [
+		{ id: '1', title: 'Carte vitale', state: 'initial', showUploadBtn: true },
+		{ id: '2', title: 'Justificatif de domicile', state: 'success', fileName: 'justificatif.pdf', showDeleteBtn: true },
+		{ id: '3', title: 'Ordonnance', state: 'error' },
+	]
+
+	// FilePreview (PDF factice : le rendu pdfjs échoue mais le visualiseur focusable + son
+	// ring DS s'affichent ; readonly => mode embarqué)
+	const previewFile = new File([new Uint8Array([0x25, 0x50, 0x44, 0x46])], 'apercu.pdf', {
+		type: 'application/pdf',
+	})
 
 	// SyInputSelect
 	const selectItems = [
@@ -1325,6 +1340,56 @@
 								style="max-width: 560px;"
 							>
 								<UploadWorkflow :upload-list="uploadWorkflowList" />
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ FileList ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							FileList
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Les actions de chaque ligne (envoyer / prévisualiser / supprimer) sont des
+								<code>.v-btn</code> → ring primary via l'override global <code>_btns.scss</code>.
+								FileList / UploadItem ne portent aucun style de focus propre.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 560px;"
+							>
+								<FileList :upload-list="fileListItems" />
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ FilePreview ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							FilePreview
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								En mode embarqué (readonly / suivi de consultation d'un PDF), le visualiseur
+								est un <code>role="document"</code> focusable au clavier. Il porte <strong>déjà</strong>
+								le ring DS (2px primary, offset -2px inset — adapté au conteneur scrollable).
+								Ici le PDF est factice : le rendu échoue mais le conteneur focusable + son ring
+								restent démontrables (Tab dans la zone grise).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 560px;"
+							>
+								<FilePreview
+									:file="previewFile"
+									readonly
+									:style="{ height: '200px' }"
+								/>
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
