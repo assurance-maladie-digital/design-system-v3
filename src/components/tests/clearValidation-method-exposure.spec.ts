@@ -14,22 +14,22 @@ import PhoneField from '@/components/PhoneField/PhoneField.vue'
 import SyTextArea from '@/components/SyTextArea/SyTextArea.vue'
 
 const fieldsWithClearValidation: Array<{ name: string, component: Component, props?: Record<string, unknown> }> = [
-	{ name: 'Captcha', component: Captcha, props: { modelValue: 'captcha', urlCreate: '/captcha.json', urlGetImage: '/captcha.png', urlGetAudio: '/captcha.mp3' } },
-	{ name: 'SelectBtnField', component: SelectBtnField },
-	{ name: 'SySelect', component: SySelect },
-	{ name: 'SyCheckBoxGroup', component: SyCheckBoxGroup },
-	{ name: 'SyCheckbox', component: SyCheckbox },
-	{ name: 'SyRadioGroup', component: SyRadioGroup },
-	{ name: 'SyTextField', component: SyTextField },
-	{ name: 'MonthPicker', component: MonthPicker },
+	{ name: 'Captcha', component: Captcha, props: { modelValue: 'captcha', urlCreate: '/captcha.json', urlGetImage: '/captcha.png', urlGetAudio: '/captcha.mp3', label: 'Captcha' } },
+	{ name: 'SelectBtnField', component: SelectBtnField, props: { label: 'Select' } },
+	{ name: 'SySelect', component: SySelect, props: { label: 'Select' } },
+	{ name: 'SyCheckBoxGroup', component: SyCheckBoxGroup, props: { label: 'Select' } },
+	{ name: 'SyCheckbox', component: SyCheckbox, props: { label: 'Selection' } },
+	{ name: 'SyRadioGroup', component: SyRadioGroup, props: { label: 'Choix' } },
+	{ name: 'SyTextField', component: SyTextField, props: { label: 'Nom' } },
+	{ name: 'MonthPicker', component: MonthPicker, props: { label: 'Mois' } },
 	{ name: 'PasswordField', component: PasswordField, props: { label: 'Mot de passe' } },
-	{ name: 'PhoneField', component: PhoneField, props: { modelValue: '0612345678' } },
+	{ name: 'PhoneField', component: PhoneField, props: { label: 'Téléphone', modelValue: '0612345678' } },
 	{ name: 'SyTextArea', component: SyTextArea, props: { label: 'Description', modelValue: 'Description valide' } },
 ]
 
 describe('clearValidation method exposure', () => {
 	it.each(fieldsWithClearValidation)('$name has clearValidation() method exposed', ({ component, props }) => {
-		const wrapper = component === MonthPicker
+		const wrapper = component !== Captcha
 			? mount(component, { props })
 			: shallowMount(component, { props })
 
@@ -39,7 +39,7 @@ describe('clearValidation method exposure', () => {
 	})
 
 	it.each(fieldsWithClearValidation)('$name.clearValidation() method can be called', ({ component, props }) => {
-		const wrapper = component === MonthPicker
+		const wrapper = component !== Captcha
 			? mount(component, { props })
 			: shallowMount(component, { props })
 
