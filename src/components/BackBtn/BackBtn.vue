@@ -27,7 +27,6 @@
 				v-if="!props.hideBackIcon"
 				:icon="mdiArrowLeft"
 				decorative
-				:class="{ 'ml-n1': dark }"
 				class="mr-1"
 			/>
 		</slot>
