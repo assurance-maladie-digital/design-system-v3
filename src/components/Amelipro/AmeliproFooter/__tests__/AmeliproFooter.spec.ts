@@ -3,6 +3,7 @@ import { VueWrapper, mount, shallowMount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import { AmeliproBtn } from '@/components'
 import AmeliproFooter from '../AmeliproFooter.vue'
+import { locales as defaultLocales } from '../locales'
 import type { ComponentProps } from 'vue-component-type-helpers'
 import { DisplayTestComponent } from '@tests/helpers/utils'
 import type { ExpectedPropOptions } from '@tests/types'
@@ -88,6 +89,10 @@ const expectedPropOptions: ExpectedPropOptions<typeof AmeliproFooter> = {
 	legalNoticeTo: {
 		type: [Array, Object, String] as PropType<RouteLocationRaw>,
 		default: undefined,
+	},
+	locales: {
+		type: Object as PropType<typeof defaultLocales>,
+		default: () => defaultLocales,
 	},
 	noA11y: {
 		type: Boolean,

@@ -1,6 +1,7 @@
 import { VueWrapper, mount, shallowMount } from '@vue/test-utils'
 import { beforeEach, describe, expect, it } from 'vitest'
 import AmeliproMenu from '../AmeliproMenu.vue'
+import { locales as defaultLocales } from '../locales'
 import type { AmeliproMenuItem } from '../types'
 import type { ComponentProps } from 'vue-component-type-helpers'
 import type { ExpectedPropOptions } from '@tests/types'
@@ -29,6 +30,10 @@ const expectedPropOptions: ExpectedPropOptions<typeof AmeliproMenu> = {
 	uniqueId: {
 		type: String,
 		required: true,
+	},
+	locales: {
+		type: Object,
+		default: () => defaultLocales,
 	},
 }
 
