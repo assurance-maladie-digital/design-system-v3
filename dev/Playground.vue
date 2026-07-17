@@ -32,6 +32,7 @@
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import DiacriticPicker from '@/components/DiacriticPicker/DiacriticPicker.vue'
 	import Captcha from '@/components/Captcha/Captcha.vue'
+	import NirField from '@/components/NirField/NirField.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -115,6 +116,9 @@
 
 	// Captcha
 	const captchaValue = ref('')
+
+	// NirField
+	const nirValue = ref('')
 
 	// SyInputSelect
 	const selectItems = [
@@ -1201,6 +1205,35 @@
 									url-create="https://free.mockerapi.com/mock/0adac32b-e832-4553-aa7f-0011b7f35f0c"
 									url-get-image="/captcha/captcha.png"
 									url-get-audio="/captcha/captcha.mp3"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ NirField ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							NirField
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								NirField ne porte <strong>aucun style de focus propre</strong> : il assemble
+								deux <code>SyTextField</code> (numéro + clé) qui gèrent tout. Au Tab :
+								input → bordure primary du champ ; icône <em>info</em> (tooltip) → ring DS de
+								SyTextField ; bouton <em>clear</em> → <code>.v-btn</code> couvert par le global.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<NirField
+									v-model="nirValue"
+									label="Identifiant d'assuré"
+									nir-tooltip="Numéro de sécurité sociale à 13 chiffres"
+									key-tooltip="Clé de contrôle à 2 chiffres"
+									clearable
 								/>
 							</v-sheet>
 						</v-expansion-panel-text>
