@@ -29,6 +29,7 @@
 	import SyAlert from '@/components/SyAlert/SyAlert.vue'
 	import SyTextArea from '@/components/SyTextArea/SyTextArea.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -103,6 +104,9 @@
 
 	// SyTextField
 	const textFieldValue = ref('Jean Dupont')
+
+	// DatePicker (CalendarMode)
+	const dateValue = ref<string | null>(null)
 
 	// SyInputSelect
 	const selectItems = [
@@ -1111,6 +1115,32 @@
 									v-model="textFieldValue"
 									label="Nom"
 									is-clearable
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ DatePicker (CalendarMode) ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							DatePicker
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Ouvre le calendrier puis navigue au clavier (flèches + Tab). Tous les boutons
+								(jours, mois/année, navigation, « Aujourd'hui ») reçoivent le ring primary via
+								l'override global. Dans la <strong>grille dense</strong>, l'offset est réduit
+								à 1px (au lieu du 3px global) pour ne pas déborder sur les cellules voisines.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 360px;"
+							>
+								<DatePicker
+									v-model="dateValue"
+									label="Date de naissance"
 								/>
 							</v-sheet>
 						</v-expansion-panel-text>

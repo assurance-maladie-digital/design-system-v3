@@ -1122,15 +1122,8 @@ $ap-grey-mid: #b0b1b1;
 }
 
 :deep(.v-picker__body .v-btn:focus-visible) {
-	outline: 2px solid rgb(var(--v-theme-primary, '12, 65, 154'));
-
-	.v-btn__overlay {
-		display: none;
-	}
-
-	&::after {
-		display: none;
-	}
+	// Ring du global `_btns.scss` (2px primary). Offset réduit à 1px pour la grille dense
+	outline-offset: 1px;
 }
 
 :deep(.v-date-picker-months) {
@@ -1147,18 +1140,6 @@ $ap-grey-mid: #b0b1b1;
 	:deep(.v-btn__content) {
 		font-size: 1rem;
 		gap: 8px;
-	}
-
-	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-primary, '12, 65, 154'));
-
-		:deep(.v-btn__overlay) {
-			display: none;
-		}
-
-		&::after {
-			display: none;
-		}
 	}
 }
 
