@@ -105,7 +105,6 @@
 					:ripple="false"
 					variant="text"
 					width="auto"
-					height="100%"
 					class="alert-close-btn"
 					@click="dismissAlert"
 				>
@@ -149,7 +148,10 @@
 }
 
 :deep(.v-alert__close) {
+	// Hauteur naturelle du bouton (comme les autres boutons DS) mais centré verticalement
+	// sur toute la hauteur de l'alerte (grid-row span 2 + align-self center).
 	align-self: center;
+	height: auto;
 }
 
 :deep(.v-btn--variant-text .v-btn__overlay) {
@@ -171,14 +173,13 @@
 		font-size: var(--v-fontSize-liensEtLibelles);
 	}
 
+	// Ring DS. Le fond de l'alerte reste clair même en thème dark → ring en primary
+	// (pas onPrimary) pour rester visible. Le `::after` natif du VBtn est masqué par
+	// l'override global `_btns.scss`. (Avant : `var(--v-theme-primary)` sur un triplet
+	// RGB était invalide → le ring retombait en noir.)
 	&:focus-visible {
-		outline: solid 2px black !important;
-		outline-color: var(--v-theme-primary) !important;
-		outline-offset: 2px !important;
-
-		&::after {
-			visibility: hidden;
-		}
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 3px;
 	}
 
 	.v-btn__overlay {
@@ -308,8 +309,9 @@
 	.alert-close-btn {
 		color: black !important;
 
+		// Le fond de l'alerte reste clair en thème dark → ring primary (comme en clair).
 		&:focus-visible {
-			outline-color: black !important;
+			outline-color: rgb(var(--v-theme-primary));
 		}
 	}
 }

@@ -32,4 +32,10 @@
 		font-weight: 700;
 		font-size: 0.875rem;
 	}
+
+	.captcha-btn:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 2px;
+		border-radius: 4px;
+	}
 </style>

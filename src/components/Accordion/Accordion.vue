@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	import { useId } from 'vue'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from '@/components/Accordion/config'
 	import { mdiChevronDown } from '@mdi/js'
@@ -46,7 +47,7 @@
 	const options = useCustomizableOptions(config, props)
 
 	// Génération d'un ID unique pour cette instance d'accordéon
-	const instanceId = `accordion-${Math.random().toString(36).substring(2, 9)}`
+	const instanceId = `accordion-${useId()}`
 
 	// Utilisation du composable pour gérer l'état de l'accordéon
 	const {
@@ -326,6 +327,7 @@
 
 .sy-accordion-content--open {
 	max-height: 500px;
+	overflow: auto;
 }
 
 .sy-accordion-content:focus-visible {

@@ -26,6 +26,15 @@
 	import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
 	import SyInputSelect from '@/components/Customs/Selects/SyInputSelect/SyInputSelect.vue'
 	import ErrorPage from '@/components/ErrorPage/ErrorPage.vue'
+	import SyAlert from '@/components/SyAlert/SyAlert.vue'
+	import SyTextArea from '@/components/SyTextArea/SyTextArea.vue'
+	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
+	import DiacriticPicker from '@/components/DiacriticPicker/DiacriticPicker.vue'
+	import Captcha from '@/components/Captcha/Captcha.vue'
+	import NirField from '@/components/NirField/NirField.vue'
+	import PasswordField from '@/components/PasswordField/PasswordField.vue'
+	import FileUpload from '@/components/FileUpload/FileUpload.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -94,6 +103,30 @@
 		{ text: 'Mon compte', value: 'account' },
 		{ text: 'Paramètres', value: 'settings' },
 	]
+
+	// SyTextArea
+	const textAreaValue = ref('Ceci est un texte de description.')
+
+	// SyTextField
+	const textFieldValue = ref('Jean Dupont')
+
+	// DatePicker (CalendarMode)
+	const dateValue = ref<string | null>(null)
+
+	// DiacriticPicker
+	const diacriticValue = ref('')
+
+	// Captcha
+	const captchaValue = ref('')
+
+	// NirField
+	const nirValue = ref('')
+
+	// PasswordField
+	const passwordValue = ref('MonMotDePasse123')
+
+	// FileUpload
+	const uploadedFiles = ref([])
 
 	// SyInputSelect
 	const selectItems = [
@@ -1033,6 +1066,235 @@
 									btn-text="Retour à l'accueil"
 									btn-href="#"
 								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyAlert ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyAlert
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Alerte fermable : Tab sur la croix → ring 2px primary (offset 3px).
+								Le fond de l'alerte reste clair même en dark → ring primary (pas onPrimary).
+							</div>
+							<SyAlert
+								type="info"
+								closable
+							>
+								Ceci est une alerte d'information fermable.
+							</SyAlert>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyTextArea ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyTextArea
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Le champ utilise la bordure de focus Vuetify (convention DS des champs).
+								Le bouton d'effacement (croix) est un <code>&lt;button&gt;</code> natif → ring
+								2px primary standard via l'override global. Tab pour l'atteindre.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<SyTextArea
+									v-model="textAreaValue"
+									label="Description"
+									clearable
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyTextField ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyTextField
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Champ : bordure de focus Vuetify en primary.
+								Bouton d'effacement (croix, VBtn) → ring 2px primary standard via l'override global.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<SyTextField
+									v-model="textFieldValue"
+									label="Nom"
+									is-clearable
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ DatePicker (CalendarMode) ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							DatePicker
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Ouvre le calendrier puis navigue au clavier (flèches + Tab). Tous les boutons
+								(jours, mois/année, navigation, « Aujourd'hui ») reçoivent le ring primary via
+								l'override global. Dans la <strong>grille dense</strong>, l'offset est réduit
+								à 1px (au lieu du 3px global) pour ne pas déborder sur les cellules voisines.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 360px;"
+							>
+								<DatePicker
+									v-model="dateValue"
+									label="Date de naissance"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ DiacriticPicker ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							DiacriticPicker
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Tab s'arrête sur l'<strong>input du champ</strong> (bordure primary) puis sur
+								le bouton d'ouverture. Le conteneur <code>role="textbox"</code> qui enveloppe
+								l'input est en <code>tabindex="-1"</code> (plus d'arrêt de Tab ni de ring
+								conteneur en trop).
+								Le bouton et les caractères de la boîte de dialogue reçoivent le ring primary
+								via l'override global.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 360px;"
+							>
+								<DiacriticPicker v-model="diacriticValue">
+									<SyTextField
+										v-model="diacriticValue"
+										label="Nom avec accents"
+									/>
+								</DiacriticPicker>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ Captcha ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							Captcha
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<Captcha
+									v-model="captchaValue"
+									url-create="https://free.mockerapi.com/mock/0adac32b-e832-4553-aa7f-0011b7f35f0c"
+									url-get-image="/captcha/captcha.png"
+									url-get-audio="/captcha/captcha.mp3"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ NirField ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							NirField
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								NirField ne porte <strong>aucun style de focus propre</strong> : il assemble
+								deux <code>SyTextField</code> (numéro + clé) qui gèrent tout. Au Tab :
+								input → bordure primary du champ ; icône <em>info</em> (tooltip) → ring DS de
+								SyTextField ; bouton <em>clear</em> → <code>.v-btn</code> couvert par le global.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<NirField
+									v-model="nirValue"
+									label="Identifiant d'assuré"
+									nir-tooltip="Numéro de sécurité sociale à 13 chiffres"
+									key-tooltip="Clé de contrôle à 2 chiffres"
+									clearable
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ PasswordField ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							PasswordField
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Au Tab : input (bordure primary), bouton <em>clear</em> et bouton
+								<em>afficher/masquer</em>. Les deux boutons portaient un box-shadow bleu codé
+								en dur → remplacés par le ring DS primary (2px, offset 2px). Le clear est un
+								<code>&lt;button&gt;</code> natif, le toggle un <code>.v-btn</code> ; les deux
+								sont serrés dans le bord du champ (offset 2px pour ne pas déborder).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<PasswordField
+									v-model="passwordValue"
+									label="Mot de passe"
+									clearable
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ FileUpload ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							FileUpload
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								La zone de dépôt est un <code>role="button"</code> custom (pas un
+								<code>.v-btn</code>) → non couverte par le global. Au Tab elle reçoit un ring
+								DS primary (2px, offset 2px) <strong>au clavier uniquement</strong>
+								(<code>:focus-visible</code>) ; le fond gris existant reste au survol / focus /
+								drag. L'input fichier caché est hors séquence Tab (<code>tabindex="-1"</code>).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<FileUpload v-model="uploadedFiles" />
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>

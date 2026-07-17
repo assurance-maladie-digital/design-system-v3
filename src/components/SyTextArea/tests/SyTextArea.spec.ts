@@ -907,3 +907,26 @@ describe('SyTextArea', () => {
 		})
 	})
 })
+
+// Le focus du textarea lui-même = bordure du field Vuetify (convention DS des champs).
+// Le bouton d'effacement est un <button> natif → ring de focus via l'override global
+// (_btns.scss). jsdom ne calcule pas :focus-visible : on vérifie le prérequis — un
+// <button> natif focusable.
+describe('SyTextArea - focus (clear button)', () => {
+	it('renders the clear button as a native <button> so the global focus ring applies', () => {
+		const wrapper = mount(SyTextArea, { props: { clearable: true, modelValue: 'Texte' } })
+		expect(wrapper.get('.sy-textarea__clear-button').element.tagName).toBe('BUTTON')
+		wrapper.unmount()
+	})
+
+	it('is focusable', () => {
+		const wrapper = mount(SyTextArea, {
+			props: { clearable: true, modelValue: 'Texte' },
+			attachTo: document.body,
+		})
+		const btn = wrapper.get('.sy-textarea__clear-button').element as HTMLButtonElement
+		btn.focus()
+		expect(document.activeElement).toBe(btn)
+		wrapper.unmount()
+	})
+})
