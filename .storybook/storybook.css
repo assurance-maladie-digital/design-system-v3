@@ -173,7 +173,6 @@ pre.prismjs {
 }
 
 .storybook-docs-mode .v-list {
-	position: absolute !important;
 	z-index: 9999 !important;
 	visibility: visible !important;
 }
