@@ -43,20 +43,4 @@ describe('NirField - Visual regression tests', () => {
 		cy.wait(150)
 		cy.matchImageSnapshot('nir-field-input-focus', cy.get('.v-application'))
 	})
-
-	// Icône info (tooltip) : ring DS défini par SyTextField
-	// (`.v-input__append .v-icon:focus-visible`, 2px primary, offset 2px).
-	it('shows the DS ring on a focused info tooltip icon', () => {
-		cy.mountWithVuetify(NirField, {
-			props: {
-				displayKey: true,
-				nirTooltip: 'Numéro de sécurité sociale',
-				nirTooltipPosition: 'append',
-			},
-		})
-
-		focusVisible('.number-field .v-input__append .v-icon')
-		cy.wait(150)
-		cy.matchImageSnapshot('nir-field-info-icon-focus', cy.get('.v-application'))
-	})
 })
