@@ -188,13 +188,13 @@
 	const restoreCalendarInputFocus = (attempt = 0) => {
 		nextTick(() => {
 			requestAnimationFrame(() => {
-					focusCalendarInput()
+				focusCalendarInput()
 
-					const input = getCalendarInputElement()
-					if (!input) return
+				const input = getCalendarInputElement()
+				if (!input) return
 
-					if (document.activeElement === input) return
-					if (attempt >= 8) return
+				if (document.activeElement === input) return
+				if (attempt >= 8) return
 
 				setTimeout(() => {
 					restoreCalendarInputFocus(attempt + 1)
