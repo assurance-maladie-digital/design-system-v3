@@ -24,6 +24,16 @@ const meta = {
 	},
 	argTypes: {
 		...getValidationDocumentation(),
+		'locales': {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (messages de validation). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	requiredField: (label: string) => string,
+}` },
+				category: 'props',
+			},
+		},
 		'modelValue': { control: 'boolean' },
 		'label': {
 			description: 'Texte affiché comme label de la case à cocher',

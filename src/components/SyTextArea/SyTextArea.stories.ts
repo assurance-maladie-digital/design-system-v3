@@ -19,6 +19,18 @@ const meta = {
 		},
 	},
 	argTypes: {
+		locales: {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (messages de validation et libellé du bouton d\'effacement). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	required: string,
+	maxLines: (maxLines: number) => string,
+	clearField: string,
+}` },
+				category: 'props',
+			},
+		},
 		...getValidationDocumentation('string'),
 		uniqueId: {
 			control: { type: 'text' },

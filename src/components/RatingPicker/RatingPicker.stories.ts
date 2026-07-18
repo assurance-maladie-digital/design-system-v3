@@ -24,6 +24,21 @@ const meta = {
 		},
 	},
 	argTypes: {
+		locales: {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés de notation et messages d\'état). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	thanks: string,
+	etoiles: (n: number) => string,
+	defaultEmotionLabels: unknown[],
+	toValidate: string,
+	validated: string,
+	ratingAriaLabel: (index: number, length: number) => string,
+}` },
+				category: 'props',
+			},
+		},
 		type: {
 			description: 'Le type de notation.',
 			control: 'select',

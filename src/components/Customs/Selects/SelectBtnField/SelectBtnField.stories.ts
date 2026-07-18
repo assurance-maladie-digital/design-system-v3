@@ -17,6 +17,16 @@ const meta = {
 	},
 	argTypes: {
 		...getValidationDocumentation('base'),
+		locales: {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (messages de validation). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	requiredField: (label: string) => string,
+}` },
+				category: 'props',
+			},
+		},
 		modelValue: {
 			control: { SelectBtnField },
 			default: null,

@@ -1,6 +1,7 @@
 import { computed, ref, toValue, type Ref } from 'vue'
 import { useValidation, type ValidationRule } from '@/composables/unifyValidation/useValidation'
 import type { LunarCalendarProps } from './types'
+import { locales as defaultLocales } from './locales'
 
 function getYearFromModel(model: string): number | null {
 	const parts = model.split('/')
@@ -12,6 +13,7 @@ function getYearFromModel(model: string): number | null {
 
 export function useLunarCalendarValidation(modelValue: Ref<string | undefined>, props: LunarCalendarProps) {
 	const focused = ref(false)
+	const locales = props.locales ?? defaultLocales
 
 	const customRules = computed<ValidationRule[]>(() => {
 		const rules: ValidationRule[] = []
@@ -24,7 +26,7 @@ export function useLunarCalendarValidation(modelValue: Ref<string | undefined>, 
 					const regex = /^\d{2}\/\d{2}\/\d{4}$/
 					return regex.test(value)
 				},
-				message: 'La date est invalide.',
+				message: locales.invalidDate,
 			},
 		})
 
@@ -40,7 +42,7 @@ export function useLunarCalendarValidation(modelValue: Ref<string | undefined>, 
 						if (year === null) return true
 						return year >= minYear && year <= maxYear
 					},
-					message: `L'année doit être comprise entre ${minYear} et ${maxYear}.`,
+					message: locales.yearBetween(minYear, maxYear),
 				},
 			})
 		}
@@ -53,7 +55,7 @@ export function useLunarCalendarValidation(modelValue: Ref<string | undefined>, 
 						if (year === null) return true
 						return year >= minYear
 					},
-					message: `L'année doit être supérieure ou égale à ${minYear}.`,
+					message: locales.yearMin(minYear),
 				},
 			})
 		}
@@ -66,7 +68,7 @@ export function useLunarCalendarValidation(modelValue: Ref<string | undefined>, 
 						if (year === null) return true
 						return year <= maxYear
 					},
-					message: `L'année doit être inférieure ou égale à ${maxYear}.`,
+					message: locales.yearMax(maxYear),
 				},
 			})
 		}
@@ -78,7 +80,7 @@ export function useLunarCalendarValidation(modelValue: Ref<string | undefined>, 
 		? [{
 				type: 'required',
 				options: {
-					message: `Le champ ${props.label || 'ce champ'} est requis.`,
+					message: locales.requiredField(props.label),
 					fieldIdentifier: props.label,
 				},
 			}]

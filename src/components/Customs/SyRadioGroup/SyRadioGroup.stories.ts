@@ -26,6 +26,17 @@ Il permet de choisir **une seule valeur** parmi une liste d’options.
 	},
 	argTypes: {
 		...getValidationDocumentation(),
+		locales: {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés et messages de validation). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	requiredField: (label: string) => string,
+	labelledbyMessage: string,
+}` },
+				category: 'props',
+			},
+		},
 		modelValue: { control: false },
 		label: {
 			description: 'Label du groupe',

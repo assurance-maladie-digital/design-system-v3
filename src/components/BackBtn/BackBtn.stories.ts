@@ -20,19 +20,13 @@ const meta = {
 			control: 'boolean',
 		},
 		locales: {
-			description: 'Traductions',
-			control: false,
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellé du bouton). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant.',
+			control: 'object',
 			table: {
+				type: { summary: 'object', detail: `{
+	label: string,
+}` },
 				category: 'props',
-				type: {
-					summary: undefined,
-				},
-				defaultValue: {
-					summary: `Locales`,
-					detail: `{
-	label: 'Retour',
-}`,
-				},
 			},
 		},
 		backgroundColor: {

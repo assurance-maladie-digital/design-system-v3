@@ -20,6 +20,17 @@ const meta = {
 		controls: { exclude: ['confirmationMessage'] },
 	},
 	argTypes: {
+		locales: {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés d\'accessibilité du mode navigation et du mode onglets). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	navigationMode: string,
+	tablistMode: string,
+}` },
+				category: 'props',
+			},
+		},
 		items: {
 			description: 'Liste des éléments à afficher dans les onglets',
 			control: 'object',

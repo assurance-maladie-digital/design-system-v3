@@ -1,4 +1,5 @@
 import type { FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+import type { locales } from './locales'
 
 export type IconType = 'info' | 'success' | 'warning' | 'error' | 'close' | 'calendar' | undefined
 export type VariantStyle = 'outlined' | 'plain' | 'underlined' | 'filled' | 'solo' | 'solo-inverted' | 'solo-filled'
@@ -36,4 +37,5 @@ export type LunarCalendarProps = {
 	readonly?: boolean
 	required?: boolean
 	hideDetails?: boolean | 'auto'
+	locales?: typeof locales
 } & Omit<FieldValidationProps, 'modelValue'>

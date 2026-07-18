@@ -4,6 +4,7 @@
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import { useFieldValidation } from '@/composables'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import { locales as defaultLocales } from './locales'
 
 	const { parseDate } = useFieldValidation()
 
@@ -33,6 +34,7 @@
 		required?: boolean
 		showSuccessMessages?: boolean
 		showWeekNumber?: boolean
+		locales?: typeof defaultLocales
 	}>(), {
 		bgColor: 'white',
 		customRules: () => [],
@@ -56,6 +58,7 @@
 		required: false,
 		showSuccessMessages: false,
 		showWeekNumber: false,
+		locales: () => defaultLocales,
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -119,8 +122,8 @@
 							if (parsedToDate.value === null) return true
 							return value <= parsedToDate.value
 						},
-						message: 'La date de début ne peut pas être supérieure à la date de fin.',
-						successMessage: 'La date de début est valide.',
+						message: props.locales.fromAfterTo,
+						successMessage: props.locales.fromValid,
 						fieldIdentifier: 'fromDate',
 					},
 				},
@@ -139,8 +142,8 @@
 								}
 								return true
 							},
-							message: 'La date de début est requise.',
-							successMessage: 'La date de début est renseignée.',
+							message: props.locales.fromRequired,
+							successMessage: props.locales.fromFilled,
 							fieldIdentifier: 'fromDate',
 						},
 					}]
@@ -167,8 +170,8 @@
 							if (parsedFromDate.value === null) return true
 							return value >= parsedFromDate.value
 						},
-						message: 'La date de fin ne peut pas être inférieure à la date de début.',
-						successMessage: 'La date de fin est valide.',
+						message: props.locales.toBeforeFrom,
+						successMessage: props.locales.toValid,
 						fieldIdentifier: 'toDate',
 					},
 				},
@@ -187,8 +190,8 @@
 								}
 								return true
 							},
-							message: 'La date de fin est requise.',
-							successMessage: 'La date de fin est renseignée.',
+							message: props.locales.toRequired,
+							successMessage: props.locales.toFilled,
 							fieldIdentifier: 'toDate',
 						},
 					}]

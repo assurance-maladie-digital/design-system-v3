@@ -28,6 +28,21 @@ const meta = {
 		},
 	},
 	argTypes: {
+		'locales': {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés d\'affichage/masquage du mot de passe, message de champ requis et libellé de vidage). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	hidePassword: string,
+	showPassword: string,
+	showedPassword: string,
+	hidedPassword: string,
+	required: string,
+	clearPassword: (label: string) => string,
+}` },
+				category: 'props',
+			},
+		},
 		...getValidationDocumentation('string'),
 		'modelValue': {
 			control: 'text',

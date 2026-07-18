@@ -16,6 +16,16 @@ const meta = {
 		},
 	},
 	argTypes: {
+		locales: {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (texte affiché pendant le téléchargement). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	loader: string,
+}` },
+				category: 'props',
+			},
+		},
 		default: {
 			control: { type: 'text' },
 			table: {

@@ -23,6 +23,19 @@ const meta: Meta<typeof SyAutocomplete> = {
 	},
 	argTypes: {
 		...getValidationDocumentation(),
+		'locales': {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés et messages de validation). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	requiredField: (label: string) => string,
+	noData: string,
+	clearSelection: string,
+	removeChip: (label: string) => string,
+}` },
+				category: 'props',
+			},
+		},
 
 		// Override : défaut false sur SyAutocomplete (la validation se déclenche à la sélection, pas à chaque frappe)
 		'isValidateOnBlur': {

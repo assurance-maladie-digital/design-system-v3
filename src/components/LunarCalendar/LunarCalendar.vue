@@ -5,6 +5,7 @@
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import { useLunarCalendarValidation } from './useLunarCalendarValidation'
 	import type { LunarCalendarProps } from './types'
+	import { locales as defaultLocales } from './locales'
 
 	const model = defineModel<string>()
 	const mask = '##/##/####'
@@ -36,6 +37,7 @@
 		name: undefined,
 		hideDetails: false,
 		autocomplete: 'off',
+		locales: () => defaultLocales,
 		...validationPropsDefaults,
 	})
 

@@ -14,6 +14,25 @@ const meta = {
 		controls: { exclude: /^on*|undefined/ },
 	},
 	argTypes: {
+		'locales': {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés du champ et de l\'indicatif, messages d\'erreur/succès de validation et libellés du bouton d\'effacement). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	label: string,
+	indicatifLabel: string,
+	phoneNumberWithoutCountryLabel: string,
+	errorLength: (length: number) => string,
+	errorRequired: (fieldIdentifier: string) => string,
+	success: (fieldIdentifier: string) => string,
+	clearButtonAriaLabel: string,
+	clearButtonAriaLabelWithField: (fieldIdentifier: string) => string,
+	clearButtonTitle: string,
+	clearButtonTitleWithField: (fieldIdentifier: string) => string,
+}` },
+				category: 'props',
+			},
+		},
 		'modelValue': {
 			control: 'string',
 			description: 'Valeur du champ numéro de téléphone. Ne doit contenir que les chiffres du numéro national, sans l\'indicatif pays. Par exemple, pour un numéro français +33 6 12 34 56 78, le `modelValue` doit être `0612345678`.',

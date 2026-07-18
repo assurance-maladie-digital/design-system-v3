@@ -30,29 +30,20 @@ const meta = {
 			},
 		},
 		'locales': {
-			description: 'Traductions',
-			control: false,
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés et messages liés aux documents). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant.',
+			control: 'object',
 			table: {
+				type: { summary: 'object', detail: `{
+	optionalDocument: string,
+	see: string,
+	delete: string,
+	import: string,
+	uploading: string,
+	success: string,
+	error: string,
+	errorOccurred: string,
+}` },
 				category: 'props',
-				type: {
-					summary: undefined,
-				},
-				defaultValue: {
-					summary: `Locales`,
-					detail: `{
-	optionalDocument: 'Document facultatif',
-	see: 'Voir',
-	import: 'Importer',
-	delete: 'Supprimer',
-	uploading: 'En cours',
-	importLabel: (title: string) => string,
-	seeLabel: (title: string) => string,
-	deleteLabel: (title: string) => string,
-	success: 'Téléchargé',
-	error: 'Erreur',
-	errorOccurred: 'Une erreur est survenue pendant le téléchargement.',
-}`,
-				},
 			},
 		},
 		'maxWidth': {

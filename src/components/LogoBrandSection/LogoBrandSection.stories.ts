@@ -5,6 +5,28 @@ const meta = {
 	title: 'Composants/Données/LogoBrandSection',
 	component: LogoBrandSection,
 	argTypes: {
+		'locales': {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés des logos, lien d\'accueil et titre du compte entreprise). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	homeLinkPrefix: string,
+	logoCnam: string,
+	logoAmeli: string,
+	logoAmeliPro: string,
+	logoCompteAmeli: string,
+	compteEntreprise: {
+		title: {
+			text: string,
+			highlight: string,
+		},
+		subTitle: string,
+	},
+	homeLinkLabel: string,
+}` },
+				category: 'props',
+			},
+		},
 		'headingLevelTitle': {
 			control: {
 				type: 'select',
