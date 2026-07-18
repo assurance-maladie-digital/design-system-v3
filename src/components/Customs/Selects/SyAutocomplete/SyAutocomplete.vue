@@ -325,11 +325,11 @@
 
 	const resultsLiveText = computed(() => {
 		if (!hasInteracted.value) return
-		if (props.loading) return 'Chargement des résultats'
+		if (props.loading) return props.locales.loading
 		const count = filteredItems.value.length
 		if (!props.filter) return ''
-		if (count === 0) return props.hideNoData ? 'Aucun résultat' : props.noDataText
-		return `${count} option${count > 1 ? 's' : ''} disponible${count > 1 ? 's' : ''}`
+		if (count === 0) return props.hideNoData ? props.locales.noData : props.noDataText
+		return props.locales.nAvailable(count)
 	})
 
 	onMounted(() => {

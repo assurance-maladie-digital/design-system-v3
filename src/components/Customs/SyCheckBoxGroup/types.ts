@@ -1,5 +1,6 @@
 import { type locales } from './locales'
 import type { FieldValidationProps, ValidationRule, VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
+import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 export type Option = {
 	label: string
@@ -30,7 +31,7 @@ export interface SyCheckBoxGroupProps extends FieldValidationProps {
 	name?: string
 	options?: Option[]
 	title?: string
-	locales?: typeof locales
+	locales?: DeepPartial<typeof locales>
 }
 
 /**
@@ -58,5 +59,5 @@ export interface SyCheckBoxGroupValidationProps extends FieldValidationProps {
 	maxErrors?: number
 	disableErrorHandling?: boolean
 	fieldIdentifier?: string
-	locales?: typeof locales
+	locales?: DeepPartial<typeof locales>
 }

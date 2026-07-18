@@ -4,6 +4,8 @@
 	import { locales as defaultLocales } from '../locales'
 	import { propValidator } from '@/utils/propValidator'
 	import { useRatingFocus } from '../useRatingFocus'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 	import {
 		mdiEmoticonHappyOutline,
 		mdiEmoticonSadOutline,
@@ -42,10 +44,12 @@
 			default: true,
 		},
 		locales: {
-			type: Object as PropType<typeof defaultLocales>,
+			type: Object as PropType<DeepPartial<typeof defaultLocales>>,
 			default: () => defaultLocales,
 		},
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const sadIcon = mdiEmoticonSadOutline
 	const neutralIcon = mdiEmoticonNeutralOutline
@@ -180,7 +184,7 @@
 			class="locking-state text-caption"
 			:class="{'d-sr-only': internalValue !== -1}"
 		>
-			{{ internalValue === -1 ? props.locales.toValidate : props.locales.validated }}
+			{{ internalValue === -1 ? locales.toValidate : locales.validated }}
 		</p>
 	</fieldset>
 </template>

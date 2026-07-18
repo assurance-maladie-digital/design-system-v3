@@ -5,6 +5,8 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { locales as defaultLocales } from '../locales'
 	import { useRatingFocus } from '../useRatingFocus'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = defineProps({
 		label: {
@@ -28,10 +30,12 @@
 			default: true,
 		},
 		locales: {
-			type: Object as PropType<typeof defaultLocales>,
+			type: Object as PropType<DeepPartial<typeof defaultLocales>>,
 			default: () => defaultLocales,
 		},
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emit = defineEmits(['update:modelValue'])
 	const { internalValue, hasAnswered, emitInputEvent } = useRating(props, emit)
@@ -136,7 +140,7 @@
 			class="locking-state text-caption"
 			:class="{'d-sr-only': internalValue !== -1}"
 		>
-			{{ internalValue === -1 ? props.locales.toValidate : props.locales.validated }}
+			{{ internalValue === -1 ? locales.toValidate : locales.validated }}
 		</p>
 	</fieldset>
 </template>

@@ -32,6 +32,8 @@ const meta: Meta<typeof SyAutocomplete> = {
 	noData: string,
 	clearSelection: string,
 	removeChip: (label: string) => string,
+	loading: string,
+	nAvailable: (count: number) => string
 }` },
 				category: 'props',
 			},

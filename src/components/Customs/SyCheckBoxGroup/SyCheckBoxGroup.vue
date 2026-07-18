@@ -7,6 +7,7 @@
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import { locales as defaultLocales } from './locales'
 	import type { SyCheckBoxGroupProps } from './types'
+	import { useLocales } from '@/composables/useLocales'
 
 	const props = withDefaults(
 		defineProps<SyCheckBoxGroupProps>(),
@@ -30,6 +31,8 @@
 			locales: () => defaultLocales,
 		},
 	)
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emit = defineEmits(['update:modelValue'])
 

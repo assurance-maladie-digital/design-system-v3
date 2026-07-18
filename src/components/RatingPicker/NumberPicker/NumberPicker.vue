@@ -4,6 +4,8 @@
 	import type { PropType } from 'vue'
 	import type { ItemType } from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import { useRatingFocus } from '../useRatingFocus'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import { useDisplay } from 'vuetify'
 	import { RatingEnum, useRating } from '../Rating'
@@ -39,10 +41,12 @@
 			default: true,
 		},
 		locales: {
-			type: Object as PropType<typeof defaultLocales>,
+			type: Object as PropType<DeepPartial<typeof defaultLocales>>,
 			default: () => defaultLocales,
 		},
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const { smAndDown } = useDisplay()
 	const isMobile = computed(() => smAndDown.value)
@@ -128,7 +132,7 @@
 						:aria-checked="internalValue === index ? 'true' : 'false'"
 						class="sy-number-picker__item text-body-2 pa-0"
 						:aria-disabled="readonly ? 'true' : undefined"
-						:aria-label="props.locales.ratingAriaLabel(index, props.length)"
+						:aria-label="locales.ratingAriaLabel(index, props.length)"
 						@click="selectAndFocus(index - 1)"
 						@keydown.enter.prevent="selectAndFocus(index - 1)"
 						@keydown.space.prevent="selectAndFocus(index - 1)"
@@ -145,14 +149,14 @@
 					class="d-flex justify-space-between mt-1"
 				>
 					<span
-						:aria-label="`${props.locales.ratingAriaLabel(1, props.length)} ${
+						:aria-label="`${locales.ratingAriaLabel(1, props.length)} ${
 							props.itemLabels[0]
 						}.`"
 						class="text-caption"
 						v-text="props.itemLabels[0]"
 					/>
 					<span
-						:aria-label="`${props.locales.ratingAriaLabel(props.length, props.length)} ${
+						:aria-label="`${locales.ratingAriaLabel(props.length, props.length)} ${
 							props.itemLabels[1]
 						}.`"
 						class="text-caption mr-2"
@@ -162,7 +166,7 @@
 			</div>
 			<div v-else>
 				<span class="d-sr-only">
-					{{ props.locales.ratingAriaLabel(internalValue, props.length) }}
+					{{ locales.ratingAriaLabel(internalValue, props.length) }}
 				</span>
 				<div
 					aria-hidden="true"
@@ -185,7 +189,7 @@
 			class="locking-state text-caption"
 			:class="{'d-sr-only': internalValue !== -1}"
 		>
-			{{ internalValue === -1 ? props.locales.toValidate : props.locales.validated }}
+			{{ internalValue === -1 ? locales.toValidate : locales.validated }}
 		</p>
 	</fieldset>
 </template>

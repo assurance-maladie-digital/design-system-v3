@@ -2,6 +2,7 @@ import { computed, ref, toRef, type ComputedRef, type Ref } from 'vue'
 import { useValidation, type ValidationRule } from '@/composables/unifyValidation/useValidation'
 import type { SyCheckBoxGroupValidationProps } from '../types'
 import { locales as defaultLocales } from '../locales'
+import { mergeLocales } from '@/utils/locales/mergeLocales'
 
 export interface UseSyCheckBoxGroupValidationReturn {
 	validate: () => Promise<boolean>
@@ -38,7 +39,7 @@ export function useSyCheckBoxGroupValidation(
 	const focusedRef = focused !== undefined ? focused : ref(false)
 
 	// Construction des règles de validation par défaut (required)
-	const locales = props.locales ?? defaultLocales
+	const locales = mergeLocales(defaultLocales, props.locales)
 	const defaultRules = computed<ValidationRule[]>(() =>
 		props.required
 			? [{

@@ -16,6 +16,8 @@
 	import useFileUploadJourney from './useFileUploadJourney'
 	import useFileList from './useFileList'
 	import SyHeading from '../SyHeading/SyHeading.vue'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(
 		defineProps<
@@ -26,7 +28,7 @@
 				showFilePreview?: boolean
 				infoText?: string
 				headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
-				locales?: typeof defaultLocales
+				locales?: DeepPartial<typeof defaultLocales>
 			}
 		>(),
 		{
@@ -65,8 +67,10 @@
 		toRef(props, 'uploadList'),
 	)
 
+	const locales = useLocales(defaultLocales, () => props.locales)
+
 	const title = computed(
-		() => props.sectionTitle ?? props.locales.title(!!props.uploadList.length),
+		() => props.sectionTitle ?? locales.value.title(!!props.uploadList.length),
 	)
 
 	const { addOrReplaceFile, resetFile, setItemOnError, filledUploadList }

@@ -239,7 +239,7 @@
 
 					<img
 						:id="uniqueId ? `${uniqueId}-contact-link-img` : undefined"
-						alt="locales.phoneAltText"
+						:alt="locales.phoneAltText"
 						:src="locales.imgSrc"
 					>
 				</AmeliproBtn>
