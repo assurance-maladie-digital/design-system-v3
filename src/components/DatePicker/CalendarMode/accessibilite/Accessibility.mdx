@@ -39,7 +39,7 @@ import {
 	<CriteriaCard title="Ouverture et focus" icon="">
 		<ul>
 			<li><strong>Ouverture clavier</strong> : <kbd>Entrée</kbd> sur le champ ouvre le calendrier; l’icône déclenche l’ouverture avec la souris.</li>
-			<li><strong>Fermeture</strong> : <kbd>Échap</kbd> ferme et valide, focus rendu au champ.</li>
+			<li><strong>Fermeture</strong> : <kbd>Échap</kbd> ferme et valide; un clic extérieur ferme aussi le panneau; le focus est ensuite rendu au champ.</li>
 			<li><strong>Piège de focus</strong> : <kbd>Tab</kbd>/<kbd>Shift+Tab</kbd> restent dans le panneau ouvert (boutons d’entête, grille de jours, bouton « Aujourd’hui »).</li>
 		</ul>
 	</CriteriaCard>
@@ -75,7 +75,7 @@ import {
 
 <ResourcesSection>
 - Stories DatePicker : cas standard, plage, lecture seule.
-- Tests : <code>CalendarMode/DatePicker.spec.ts</code> et <code>DatePicker.events.spec.ts</code> couvrent l’ouverture, le focus et la navigation clavier.
+- Tests : <code>CalendarMode/tests/DatePicker.spec.ts</code>, <code>CalendarMode/tests/DatePicker.a11y.spec.ts</code> et <code>composables/tests/useDatePickerFocusTrap.a11y.spec.ts</code> couvrent l’ouverture, la fermeture, le focus et la navigation clavier.
 - WAI-ARIA grid & boutons : référence pour les comportements clavier sur les grilles de dates.
 </ResourcesSection>
 

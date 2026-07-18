@@ -288,6 +288,28 @@
 	const warningMessages = warnings
 	const successMessages = validation.displaySuccesses
 	const isOnSuccess = validation.hasSuccess
+	const isHandlingProgrammaticClose = ref(false)
+
+	const finalizeDatePickerClose = async () => {
+		emit('closed')
+		await validateDates()
+	}
+
+	const closeDatePicker = async () => {
+		if (!isDatePickerVisible.value) return
+
+		isHandlingProgrammaticClose.value = true
+		isDatePickerVisible.value = false
+
+		try {
+			await finalizeDatePickerClose()
+		}
+		finally {
+			queueMicrotask(() => {
+				isHandlingProgrammaticClose.value = false
+			})
+		}
+	}
 
 	// Fonction centralisée pour mettre à jour le modèle
 	const updateModel = async (value: DateModelValue) => {
@@ -298,10 +320,11 @@
 			isUpdatingFromInternal.value = true
 			emit('update:modelValue', value)
 			if (!preventCloseOnKeyboardNavigation.value) {
-				isDatePickerVisible.value = false
-				emit('closed')
+				await closeDatePicker()
 			}
-			await validateDates()
+			else {
+				await validateDates()
+			}
 		}
 		finally {
 			// S'assurer que le flag est toujours réinitialisé
@@ -560,10 +583,7 @@
 
 		// Si on clique dans le conteneur du CalendarMode, on ne fait rien
 		if (container) return
-		isDatePickerVisible.value = false
-		emit('closed')
-		// Déclencher la validation à la fermeture
-		validateDates()
+		void closeDatePicker()
 	}
 
 	// todayInString est maintenant fourni par le composable useTodayButton
@@ -822,6 +842,10 @@
 		}
 
 		if (!isVisible) {
+			if (!isHandlingProgrammaticClose.value) {
+				await finalizeDatePickerClose()
+			}
+
 			// set the focus on the text input
 			// wait for VMenu to finish DOM updates & transition
 			setTimeout(() => {
@@ -889,16 +913,14 @@
 	const toggleDatePicker = async () => {
 		if (isInteractionDisabled.value) return
 
-		isDatePickerVisible.value = !isDatePickerVisible.value
-
-		if (isDatePickerVisible.value) {
+		if (!isDatePickerVisible.value) {
+			isDatePickerVisible.value = true
 			nextTick(() => {
 				updateAccessibility(datePickerDialogRef.value ?? undefined, currentViewMode.value)
 			})
 		}
 		else {
-			emit('closed')
-			await validateDates()
+			await closeDatePicker()
 		}
 	}
 
@@ -931,9 +953,7 @@
 		}
 		// Fermer le calendrier lorsque la touche Escape est pressée
 		else if ((event.key === 'Escape' || event.key === 'Esc') && isDatePickerVisible.value) {
-			isDatePickerVisible.value = false
-			emit('closed')
-			await validateDates() // Valider les dates à la fermeture
+			await closeDatePicker()
 			event.preventDefault()
 		}
 	}

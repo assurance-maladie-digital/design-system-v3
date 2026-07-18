@@ -1,5 +1,5 @@
 import { mount, flushPromises, type VueWrapper } from '@vue/test-utils'
-import { describe, it, expect, afterEach, beforeEach } from 'vitest'
+import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest'
 import { nextTick } from 'vue'
 import DatePicker from '../DatePicker.vue'
 
@@ -60,6 +60,22 @@ describe('DatePicker', () => {
 
 		const activatorWrapper = wrapper.find(`[aria-controls="${vm.datePickerDialogId}"]`)
 		expect(activatorWrapper.exists()).toBe(true)
+	})
+
+	it('removes aria-controls from the activator wrapper when the calendar closes', async () => {
+		const wrapper = mountComponent()
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+		expect(wrapper.find(`[aria-controls="${vm.datePickerDialogId}"]`).exists()).toBe(true)
+
+		vm.isDatePickerVisible = false
+		await nextTick()
+		await flushPromises()
+
+		expect(wrapper.find(`[aria-controls="${vm.datePickerDialogId}"]`).exists()).toBe(false)
 	})
 
 	/**
@@ -470,6 +486,75 @@ describe('DatePicker', () => {
 		expect(closedEvents).toBeTruthy()
 	})
 
+	it('emits closed when visibility is externally toggled to false', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+
+		vm.isDatePickerVisible = false
+		await flushPromises()
+
+		const closedEvents = wrapper.emitted('closed')
+		expect(closedEvents).toBeTruthy()
+		expect(closedEvents).toHaveLength(1)
+	})
+
+	it('does not render the today button when displayTodayButton is false', async () => {
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '',
+				format: 'DD/MM/YYYY',
+				displayTodayButton: false,
+			},
+			attachTo: document.body,
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		expect(document.body.querySelector('.date-picker__today-button')).toBeNull()
+
+		wrapper.unmount()
+	})
+
+	it('restores focus to the input and emits closed when Escape closes the open dialog', async () => {
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '',
+				format: 'DD/MM/YYYY',
+			},
+			attachTo: document.body,
+		})
+		const vm = wrapper.vm as DatePickerInstance
+		const input = wrapper.find('input')
+		const focusSpy = vi.spyOn(input.element, 'focus')
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const dialog = document.body.querySelector<HTMLElement>(`#${vm.datePickerDialogId}`)
+		expect(dialog).not.toBeNull()
+
+		dialog?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
+		await flushPromises()
+
+		expect(vm.isDatePickerVisible).toBe(false)
+		expect(wrapper.emitted('closed')).toBeTruthy()
+		expect(focusSpy).toHaveBeenCalled()
+
+		focusSpy.mockRestore()
+		wrapper.unmount()
+	})
+
 	it('handleSelectToday selects today and keeps the component usable', async () => {
 		const wrapper = mountComponent()
 		const vm = wrapper.vm as DatePickerInstance
@@ -589,6 +674,20 @@ describe('DatePicker - Events & Interactions', () => {
 		expect(evWrapper.vm.isDatePickerVisible).toBe(false)
 	})
 
+	it('handleInputKeydown Enter ouvre le calendrier et prevent le comportement par défaut', async () => {
+		const event = new KeyboardEvent('keydown', {
+			key: 'Enter',
+			cancelable: true,
+		})
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await (evWrapper.vm as any).handleInputKeydown(event)
+		await flushPromises()
+
+		expect(evWrapper.vm.isDatePickerVisible).toBe(true)
+		expect(event.defaultPrevented).toBe(true)
+	})
+
 	it('onUpdateMonth met à jour currentMonth et currentMonthName', async () => {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		;(evWrapper.vm as any).onUpdateMonth('5')
@@ -609,6 +708,25 @@ describe('DatePicker - Events & Interactions', () => {
 		;(evWrapper.vm as any).openDatePickerOnFocus()
 		await nextTick()
 		expect(evWrapper.emitted('focus')).toBeTruthy()
+	})
+
+	it('openDatePickerOnFocus does not open the calendar in current calendar mode behavior', async () => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(evWrapper.vm as any).openDatePickerOnFocus()
+		await nextTick()
+		expect(evWrapper.vm.isDatePickerVisible).toBe(false)
+	})
+
+	it('openDatePickerOnIconClick toggles the calendar when interaction is enabled', async () => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await (evWrapper.vm as any).openDatePickerOnIconClick()
+		await flushPromises()
+		expect(evWrapper.vm.isDatePickerVisible).toBe(true)
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await (evWrapper.vm as any).openDatePickerOnIconClick()
+		await flushPromises()
+		expect(evWrapper.vm.isDatePickerVisible).toBe(false)
 	})
 
 	it('openDatePickerOnIconClick ne fait rien si disabled', async () => {
