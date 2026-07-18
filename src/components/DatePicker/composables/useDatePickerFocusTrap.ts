@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 interface UseDatePickerFocusTrapOptions {
 	isDatePickerVisible: Ref<boolean>
 	datePickerRef: Ref<ComponentPublicInstance | null>
-	onClose?: () => void
+	onClose?: () => void | Promise<void>
 	restoreFocus?: () => void
 	// Renvoie la date sur laquelle placer le focus (date sélectionnée ou aujourd'hui)
 	getInitialFocusDate?: () => Date
@@ -56,9 +56,13 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 		if (!isDatePickerVisible.value) return
 
 		if (event.key === 'Escape' || event.key === 'Esc') {
-			isDatePickerVisible.value = false
-			onClose?.()
-			restoreFocus?.()
+			if (onClose) {
+				void onClose()
+			}
+			else {
+				isDatePickerVisible.value = false
+				restoreFocus?.()
+			}
 			event.preventDefault()
 			event.stopPropagation()
 			return

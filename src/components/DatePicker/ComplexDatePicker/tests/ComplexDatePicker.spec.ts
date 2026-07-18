@@ -281,6 +281,28 @@ describe('ComplexDatePicker.clean', () => {
 		expect(input.attributes('aria-expanded')).toBe('false')
 	})
 
+	it('validates the field when Escape closes the dialog', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			required: true,
+		}, { attachTo: document.body })
+
+		wrapper.vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const dialog = document.getElementById(wrapper.vm.datePickerDialogId)
+		expect(dialog).not.toBeNull()
+
+		dialog?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
+		await nextTick()
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+		expect(wrapper.vm.errorMessages).toContain('La date est requise.')
+	})
+
 	it('renders in text-only mode when noCalendar=true', () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',

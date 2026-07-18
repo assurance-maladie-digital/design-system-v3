@@ -119,7 +119,7 @@
 	const { handleMenuKeydown } = useDatePickerFocusTrap({
 		isDatePickerVisible,
 		datePickerRef,
-		onClose: () => emit('closed'),
+		onClose: () => closeDatePicker(),
 		restoreFocus: () => queueMicrotask(() => focusCalendarInput()),
 		getInitialFocusDate: () => {
 			const value = selectedDates.value

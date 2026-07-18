@@ -60,6 +60,7 @@
 		(e: 'date-selected', value: DateModelValue): void
 		(e: 'prepend-icon-click', event: MouseEvent): void
 		(e: 'append-icon-click', event: MouseEvent): void
+		(e: 'mousedown', event: MouseEvent): void
 	}>()
 
 	/**
@@ -1137,6 +1138,10 @@
 
 	// Props regroupées pour SyTextField
 	const syTextFieldProps = computed(() => useSyTextFieldProps(props, errorMessages, warningMessages, successMessages, isOnSuccess, ariaLabel.value))
+
+	function onMouseDown(event: MouseEvent) {
+		emit('mousedown', event)
+	}
 </script>
 
 <template>
@@ -1151,11 +1156,12 @@
 			}"
 			color="primary"
 			v-bind="syTextFieldProps"
-			:aria-describedby="formatDescriptionId"
-			@focus="onFocus"
-			@blur="onBlur"
-			@keydown="handleKeydown"
-			@paste="handlePaste"
+				:aria-describedby="formatDescriptionId"
+				@focus="onFocus"
+				@blur="onBlur"
+				@mousedown="onMouseDown"
+				@keydown="handleKeydown"
+				@paste="handlePaste"
 			@prepend-icon-click="emit('prepend-icon-click', $event)"
 			@append-icon-click="emit('append-icon-click', $event)"
 		/>

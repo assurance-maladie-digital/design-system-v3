@@ -152,7 +152,7 @@
 
 	// Helpers pour le focus sur l'input
 	const getCalendarInputElement = () => {
-		const element = dateCalendarTextInputRef.value?.$el?.querySelector?.('input')
+		const element = dateCalendarTextInputRef.value?.$el?.querySelector?.('input:not([type="hidden"])')
 		return element instanceof HTMLInputElement ? element : null
 	}
 
@@ -188,13 +188,13 @@
 	const restoreCalendarInputFocus = (attempt = 0) => {
 		nextTick(() => {
 			requestAnimationFrame(() => {
-				focusCalendarInput()
+					focusCalendarInput()
 
-				const input = getCalendarInputElement()
-				if (!input) return
+					const input = getCalendarInputElement()
+					if (!input) return
 
-				if (document.activeElement === input) return
-				if (attempt >= 8) return
+					if (document.activeElement === input) return
+					if (attempt >= 8) return
 
 				setTimeout(() => {
 					restoreCalendarInputFocus(attempt + 1)
@@ -215,7 +215,7 @@
 		},
 	})
 
-	const closeDatePicker = (options: { restoreFocus?: boolean, reason?: string } = {}) => {
+	const closeDatePicker = async (options: { restoreFocus?: boolean, reason?: string } = {}) => {
 		if (!isDatePickerVisible.value) return
 
 		setDatePickerVisibility(false, options.reason || 'closeDatePicker')
@@ -224,6 +224,8 @@
 		if (options.restoreFocus) {
 			scheduleCalendarInputFocusRestore()
 		}
+
+		await validateDates()
 	}
 
 	const syncComboboxInputSemantics = () => {
@@ -372,6 +374,15 @@
 		suppressNextCalendarModelValueUpdate.value = true
 		lastVisibilityChangeReason.value = 'iconClick'
 		openDatePickerOnIconClickFromVisibility()
+	}
+
+	const openDatePickerFromInputClick = (event?: MouseEvent) => {
+		const input = getCalendarInputElement()
+		if (isInteractionDisabled.value || isDatePickerVisible.value || !input) return
+		if (event && (event.target !== input || document.activeElement !== input)) return
+
+		lastVisibilityChangeReason.value = 'inputClick'
+		openDatePicker()
 	}
 
 	const updateModel = (value: DateModelValue) => {
@@ -697,7 +708,7 @@
 	const { handleMenuKeydown } = useDatePickerFocusTrap({
 		isDatePickerVisible,
 		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
-		onClose: () => emit('closed'),
+		onClose: () => closeDatePicker({ restoreFocus: true, reason: 'escapeKey' }),
 		restoreFocus: () => scheduleCalendarInputFocusRestore(),
 		getInitialFocusDate: () => {
 			const value = selectedDates.value
@@ -1461,6 +1472,7 @@
 							:model-value="textInputValue"
 							:class="[messageClasses, 'label-hidden-on-focus']"
 							v-bind="dateTextInputMenuProps"
+							@mousedown="openDatePickerFromInputClick"
 							@update:model-value="handleDateTextInputUpdate"
 							@focus="openDatePickerOnFocus"
 							@blur="handleCalendarInputBlur"

@@ -275,7 +275,7 @@ describe('useDatePickerFocusTrap – a11y keyboard navigation', () => {
 		expect(todayButton.focus).toHaveBeenCalled()
 	})
 
-	it('closes the picker and restores focus on Escape', () => {
+	it('delegates Escape handling to onClose when provided', () => {
 		const rootEl = document.createElement('div')
 		datePickerRef.value = { $el: rootEl } as unknown as ComponentPublicInstance
 
@@ -292,9 +292,9 @@ describe('useDatePickerFocusTrap – a11y keyboard navigation', () => {
 
 		handleMenuKeydown(event)
 
-		expect(isDatePickerVisible.value).toBe(false)
+		expect(isDatePickerVisible.value).toBe(true)
 		expect(onClose).toHaveBeenCalled()
-		expect(restoreFocus).toHaveBeenCalled()
+		expect(restoreFocus).not.toHaveBeenCalled()
 		expect(preventDefault).toHaveBeenCalled()
 		expect(stopPropagation).toHaveBeenCalled()
 	})

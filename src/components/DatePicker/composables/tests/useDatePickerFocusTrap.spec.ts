@@ -30,7 +30,7 @@ describe('useDatePickerFocusTrap', () => {
 		expect(preventDefault).not.toHaveBeenCalled()
 	})
 
-	it('should close and restore focus on Escape', () => {
+	it('should delegate Escape handling to onClose when provided', () => {
 		const { handleMenuKeydown } = useDatePickerFocusTrap({
 			isDatePickerVisible,
 			datePickerRef,
@@ -44,9 +44,9 @@ describe('useDatePickerFocusTrap', () => {
 
 		handleMenuKeydown(event)
 
-		expect(isDatePickerVisible.value).toBe(false)
+		expect(isDatePickerVisible.value).toBe(true)
 		expect(onClose).toHaveBeenCalled()
-		expect(restoreFocus).toHaveBeenCalled()
+		expect(restoreFocus).not.toHaveBeenCalled()
 		expect(preventDefault).toHaveBeenCalled()
 		expect(stopPropagation).toHaveBeenCalled()
 	})
