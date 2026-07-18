@@ -65,6 +65,6 @@ export type SyTextFieldProps = {
 	maxlength?: string | number
 	title?: string | false
 	hideDetails?: boolean | 'auto'
-	/** Surcharge des libellés d'accessibilité (boutons +/-, vider, chargement). */
-	locales?: Partial<SyTextFieldLocales>
+	/** Surcharge des libellés d'accessibilité (boutons +/-, vider, chargement) et des messages de validation. */
+	locales?: SyTextFieldLocales
 } & FieldValidationProps

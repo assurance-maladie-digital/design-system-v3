@@ -5,8 +5,9 @@ import { mdiAlertCircle, mdiAlertOutline, mdiCheck } from '@mdi/js'
 import { type ValidationRule } from '@/composables/validation/useValidation'
 import { useValidation, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 import { useValidatable } from '@/composables/validation/useValidatable'
+import type { locales as defaultLocales } from '../locales'
 
-export function useSyAutocompleteValidation(props: FieldValidationProps) {
+export function useSyAutocompleteValidation(props: FieldValidationProps & { locales: typeof defaultLocales }) {
 	const hasInteracted = ref(false)
 	const focused = ref(false)
 
@@ -15,7 +16,7 @@ export function useSyAutocompleteValidation(props: FieldValidationProps) {
 			? [{
 					type: 'required',
 					options: {
-						message: `Le champ ${props.label || 'ce champ'} est requis.`,
+						message: props.locales.requiredField(props.label),
 						fieldIdentifier: props.label,
 					},
 				}]

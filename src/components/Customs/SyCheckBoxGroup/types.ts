@@ -58,4 +58,5 @@ export interface SyCheckBoxGroupValidationProps extends FieldValidationProps {
 	maxErrors?: number
 	disableErrorHandling?: boolean
 	fieldIdentifier?: string
+	locales?: typeof locales
 }

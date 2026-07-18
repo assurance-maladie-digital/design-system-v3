@@ -1,5 +1,6 @@
 import { computed, ref, toRef, type ComputedRef, type Ref } from 'vue'
 import { useValidation, type FieldValidationProps, type ValidationRule, type VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
+import { locales as defaultLocales } from '../locales'
 
 export interface SyRadioGroupValidationProps extends FieldValidationProps {
 	modelValue?: PropertyKey | null
@@ -22,6 +23,7 @@ export interface SyRadioGroupValidationProps extends FieldValidationProps {
 	maxErrors?: number
 	disableErrorHandling?: boolean
 	fieldIdentifier?: string
+	locales: typeof defaultLocales
 }
 
 export interface UseSyRadioGroupValidationReturn {
@@ -64,7 +66,7 @@ export function useSyRadioGroupValidation(
 			? [{
 					type: 'required',
 					options: {
-						message: `Le champ ${props.fieldIdentifier || props.label || 'ce champ'} est requis.`,
+						message: props.locales.requiredField(props.fieldIdentifier || props.label),
 						fieldIdentifier: props.label,
 					},
 				}]

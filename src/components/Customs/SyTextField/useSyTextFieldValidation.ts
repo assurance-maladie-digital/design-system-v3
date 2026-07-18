@@ -1,6 +1,7 @@
 import { computed, type Ref } from 'vue'
 import { useValidation } from '@/composables/unifyValidation/useValidation'
 import type { ValidationRule as SyValidationRule, VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
+import type { SyTextFieldLocales } from './locales'
 
 export function useSyTextFieldValidation(params: {
 	modelValue: Ref<string | number | null | undefined>
@@ -24,13 +25,14 @@ export function useSyTextFieldValidation(params: {
 	hasWarningProp: Ref<boolean>
 	hasSuccessProp: Ref<boolean>
 	maxErrors: Ref<number>
+	locales: Ref<SyTextFieldLocales>
 }) {
 	const defaultRules = computed<SyValidationRule[]>(() =>
 		params.required.value
 			? [{
 					type: 'required',
 					options: {
-						message: `Le champ ${params.label.value || 'ce champ'} est requis.`,
+						message: params.locales.value.requiredField(params.label.value),
 						fieldIdentifier: params.label.value,
 					},
 				}]

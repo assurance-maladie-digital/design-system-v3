@@ -11,7 +11,7 @@
 	import { useSelectionLogic } from './utils/useSelectionLogic'
 	import { useSyAutocompleteKeyboard } from './utils/useKeyboardHandler'
 	import { useSyAutocompleteValidation } from './composables/useSyAutocompleteValidation'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
 
 	interface SyAutocompleteProps {
 		bgColor?: string
@@ -37,6 +37,7 @@
 		selectionText?: (selected: SelectArray) => string
 		textKey?: string
 		valueKey?: string
+		locales?: typeof defaultLocales
 	}
 
 	const props = withDefaults(
@@ -57,7 +58,7 @@
 			menuId: 'sy-autocomplete-menu',
 			modelValue: null,
 			multiple: false,
-			noDataText: locales.noData,
+			noDataText: defaultLocales.noData,
 			helpText: '',
 			selectionText: undefined,
 			placeholder: '',
@@ -69,8 +70,12 @@
 			// Diverge du défaut global (true) : modelValue ne change que lors d'une sélection (pas à chaque frappe),
 			// donc valider sur ce changement donne un retour immédiat après sélection sans erreurs prématurées pendant la saisie.
 			isValidateOnBlur: false,
+			locales: () => defaultLocales,
 		},
 	)
+
+	// `locales` est exposé via la prop du même nom (défaut : module `locales`).
+	// Le template y accède directement par son nom.
 
 	const emit = defineEmits(['update:modelValue', 'search'])
 

@@ -5,6 +5,7 @@
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import { useSelectBtnFieldValidation } from './composables/useSelectBtnFieldValidation'
 	import type { SelectBtnItem, SelectBtnValue } from './types'
+	import { locales as defaultLocales } from './locales'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: SelectBtnValue
@@ -15,6 +16,7 @@
 		inline?: boolean
 		helpText?: string
 		hideDetails?: boolean
+		locales?: typeof defaultLocales
 	} & FieldValidationProps>(), {
 		modelValue: null,
 		items: () => [],
@@ -24,6 +26,7 @@
 		inline: false,
 		helpText: undefined,
 		hideDetails: false,
+		locales: () => defaultLocales,
 		...validationPropsDefaults,
 		isValidateOnBlur: false, // La validation se déclenche immédiatement à la sélection
 	})

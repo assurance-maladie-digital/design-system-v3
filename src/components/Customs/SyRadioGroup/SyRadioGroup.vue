@@ -6,7 +6,7 @@
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useSyRadioGroupValidation } from './composables/useSyRadioGroupValidation'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
 
 	const props = withDefaults(
 		defineProps<{
@@ -23,6 +23,7 @@
 			name?: string
 			options?: Array<{ label: string, value: PropertyKey }>
 			title?: string
+			locales?: typeof defaultLocales
 		} & FieldValidationProps>(),
 		{
 			ariaLabel: undefined,
@@ -38,6 +39,7 @@
 			name: undefined,
 			options: () => [],
 			title: undefined,
+			locales: () => defaultLocales,
 			...validationPropsDefaults,
 			isValidateOnBlur: false, // La validation se déclenche immédiatement à la sélection pour les radios
 		},

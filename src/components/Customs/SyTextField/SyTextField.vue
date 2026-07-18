@@ -81,13 +81,10 @@
 			helpText: '',
 			maxlength: undefined,
 			title: undefined,
-			locales: () => ({}),
+			locales: () => defaultLocales,
 			...validationPropsDefaults,
 		},
 	)
-
-	// Libellés d'accessibilité : valeurs par défaut surchargeables via la prop `locales`.
-	const locales = computed(() => ({ ...defaultLocales, ...props.locales }))
 
 	const ICONS: Record<NonNullable<IconType>, string> = {
 		info: mdiInformationOutline,
@@ -180,6 +177,7 @@
 		hasSuccessProp: toRef(props, 'hasSuccess'),
 		maxErrors: toRef(props, 'maxErrors'),
 		focused,
+		locales: toRef(props, 'locales'),
 	})
 
 	const forwardedAttrs = computed(() => {

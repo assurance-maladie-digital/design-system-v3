@@ -5,6 +5,7 @@
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import defaultOptions from './config'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { locales as defaultLocales } from './locales'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		modelValue?: Record<string, unknown> | string | null
@@ -22,6 +23,7 @@
 		customRules?: ValidationRule[]
 		disableErrorHandling?: boolean
 		bgColor?: string
+		locales?: typeof defaultLocales
 	}>(), {
 
 		modelValue: null,
@@ -39,6 +41,7 @@
 		customRules: () => [],
 		disableErrorHandling: false,
 		bgColor: 'white',
+		locales: () => defaultLocales,
 	})
 
 	const options = useCustomizableOptions(defaultOptions, props)
@@ -174,7 +177,7 @@
 		? [{
 			type: 'required',
 			options: {
-				message: `Le champ ${props.label || 'ce champ'} est requis.`,
+				message: props.locales.requiredField(props.label),
 				fieldIdentifier: props.label,
 			},
 		}]

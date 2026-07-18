@@ -2,15 +2,16 @@ import { computed, ref } from 'vue'
 import { mdiAlertCircle, mdiAlertOutline, mdiCheck } from '@mdi/js'
 import { useValidation, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 import type { ValidationRule } from '@/composables/validation/useValidation'
+import type { locales as defaultLocales } from '../locales'
 
-export function useSySelectValidation(props: FieldValidationProps & { modelValue?: unknown }) {
+export function useSySelectValidation(props: FieldValidationProps & { modelValue?: unknown, locales: typeof defaultLocales }) {
 	const focused = ref(false)
 
 	const defaultRules = computed<ValidationRule[]>(() => props.required
 		? [{
 				type: 'required',
 				options: {
-					message: `Le champ ${props.label || 'ce champ'} est requis.`,
+					message: props.locales.requiredField(props.label),
 					fieldIdentifier: props.label,
 				},
 			}]

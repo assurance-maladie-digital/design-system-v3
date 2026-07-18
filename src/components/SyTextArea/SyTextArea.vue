@@ -7,7 +7,7 @@
 	import { useSyTextAreaValidation } from './composables/useSyTextAreaValidation'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
 
 	const props = withDefaults(defineProps<{
 		uniqueId?: string
@@ -28,6 +28,7 @@
 		helpText?: string
 		hideDetails?: boolean
 		displayAsterisk?: boolean
+		locales?: typeof defaultLocales
 	} & FieldValidationProps>(), {
 		uniqueId: undefined,
 		modelValue: '',
@@ -45,6 +46,7 @@
 		helpText: '',
 		hideDetails: false,
 		displayAsterisk: false,
+		locales: () => defaultLocales,
 		...validationPropsDefaults,
 	})
 

@@ -8,6 +8,7 @@
 	import { useSyCheckboxA11y } from './composables/useSyCheckboxA11y'
 	import { cnamSemanticTokens } from '@/designTokens/tokens/cnam/cnamSemantic'
 	import type { SyCheckboxProps } from './types'
+	import { locales as defaultLocales } from './locales'
 	import { vRgaaSvgFix } from '@/directives/rgaaSvgFix'
 
 	const props = withDefaults(
@@ -32,6 +33,7 @@
 			cycleIndeterminate: false,
 			displayAsterisk: false,
 			decorative: false,
+			locales: () => defaultLocales,
 			...validationPropsDefaults,
 			isValidateOnBlur: false,
 		},

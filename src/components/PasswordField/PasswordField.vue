@@ -7,7 +7,7 @@
 	import { computed, ref, useId, watch, nextTick, toRef } from 'vue'
 	import { usePasswordField } from './usePasswordFieldValidation'
 	import { config } from './config'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import useCustomizableOptions from '@/composables/useCustomizableOptions'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
@@ -25,6 +25,7 @@
 		autocompleteType: 'current-password',
 		helpText: undefined,
 		hideDetails: false,
+		locales: () => defaultLocales,
 		...validationPropsDefaults,
 	})
 
@@ -50,7 +51,7 @@
 	const alertMessage = ref('')
 	const fieldKey = ref(0)
 	const focused = ref(false)
-	const btnLabel = locales.showPassword
+	const btnLabel = props.locales.showPassword
 
 	const showClear = computed(() => {
 		if (!props.clearable) return false
@@ -78,7 +79,7 @@
 
 	function togglePasswordVisibility() {
 		showEyeIcon.value = !showEyeIcon.value
-		alertMessage.value = showEyeIcon.value ? locales.showedPassword : locales.hidedPassword
+		alertMessage.value = showEyeIcon.value ? props.locales.showedPassword : props.locales.hidedPassword
 		nextTick(() => {
 			const inputElement = document.getElementById(passwordFieldId.value)
 			const statusId = `${passwordFieldId.value}-status`
@@ -129,6 +130,7 @@
 		hasWarningProp: toRef(props, 'hasWarning'),
 		hasSuccessProp: toRef(props, 'hasSuccess'),
 		maxErrors: toRef(props, 'maxErrors'),
+		locales: toRef(props, 'locales'),
 	})
 
 	defineExpose({
