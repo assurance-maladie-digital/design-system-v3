@@ -525,6 +525,7 @@ describe('DatePicker', () => {
 	})
 
 	it('restores focus to the input and emits closed when Escape closes the open dialog', async () => {
+		vi.useFakeTimers()
 		const wrapper = mount(DatePicker, {
 			props: {
 				label: 'Date Field',
@@ -534,8 +535,7 @@ describe('DatePicker', () => {
 			attachTo: document.body,
 		})
 		const vm = wrapper.vm as DatePickerInstance
-		const input = wrapper.find('input')
-		const focusSpy = vi.spyOn(input.element, 'focus')
+		const focusSpy = vi.spyOn(HTMLInputElement.prototype, 'focus')
 
 		vm.isDatePickerVisible = true
 		await nextTick()
@@ -546,12 +546,15 @@ describe('DatePicker', () => {
 
 		dialog?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
 		await flushPromises()
+		await vi.runAllTimersAsync()
+		await nextTick()
 
 		expect(vm.isDatePickerVisible).toBe(false)
 		expect(wrapper.emitted('closed')).toBeTruthy()
 		expect(focusSpy).toHaveBeenCalled()
 
 		focusSpy.mockRestore()
+		vi.useRealTimers()
 		wrapper.unmount()
 	})
 
