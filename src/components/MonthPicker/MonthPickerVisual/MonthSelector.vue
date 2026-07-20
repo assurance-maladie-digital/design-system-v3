@@ -130,7 +130,7 @@
 	}
 }
 
-.month-selector__month--active:focus {
+.month-selector__month--active:focus-visible {
 	/* stylelint-disable-next-line custom-property-pattern */
 	outline: 2px solid rgb(var(--v-theme-primary, 12, 65, 154));
 }

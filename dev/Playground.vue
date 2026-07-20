@@ -41,6 +41,7 @@
 	import PhoneField from '@/components/PhoneField/PhoneField.vue'
 	import RangeField from '@/components/RangeField/RangeField.vue'
 	import LunarCalendar from '@/components/LunarCalendar/LunarCalendar.vue'
+	import MonthPicker from '@/components/MonthPicker/MonthPicker.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -164,6 +165,9 @@
 
 	// LunarCalendar
 	const lunarValue = ref('15/08/1990')
+
+	// MonthPicker
+	const monthValue = ref('03/2025')
 
 	// SyInputSelect
 	const selectItems = [
@@ -1514,6 +1518,33 @@
 									v-model="lunarValue"
 									label="Date de naissance (calendrier lunaire)"
 									is-clearable
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ MonthPicker ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							MonthPicker
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Le champ délègue à SyTextField ; le <strong>bouton calendrier</strong>
+								(<code>&lt;button&gt;</code> natif) reçoit un ring DS scopé. Ouvre le picker :
+								les grilles mois/année sont en <strong>roving tabindex</strong> (flèches), et
+								le bouton actif reçoit le ring primary au clavier (<code>:focus-visible</code>).
+								Le YearSelector utilisait <code>accentPrimary</code> → corrigé en <code>primary</code>.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<MonthPicker
+									v-model="monthValue"
+									label="Mois de début"
 								/>
 							</v-sheet>
 						</v-expansion-panel-text>
