@@ -35,6 +35,9 @@
 	import NirField from '@/components/NirField/NirField.vue'
 	import PasswordField from '@/components/PasswordField/PasswordField.vue'
 	import FileUpload from '@/components/FileUpload/FileUpload.vue'
+	import UploadWorkflow from '@/components/UploadWorkflow/UploadWorkflow.vue'
+	import FileList from '@/components/FileList/FileList.vue'
+	import FilePreview from '@/components/FilePreview/FilePreview.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -127,6 +130,28 @@
 
 	// FileUpload
 	const uploadedFiles = ref([])
+
+	// UploadWorkflow
+	const uploadWorkflowList = [
+		{ id: 'id', title: 'Carte d\'identité', state: 'initial', showUploadBtn: true },
+		{ id: 'bill', title: 'Facture de soin', state: 'success', fileName: 'facture.pdf' },
+	]
+
+	// FileList
+	const fileListItems = [
+		{ id: '1', title: 'Carte vitale', state: 'initial', showUploadBtn: true },
+		{ id: '2', title: 'Justificatif de domicile', state: 'success', fileName: 'justificatif.pdf', showDeleteBtn: true },
+		{ id: '3', title: 'Ordonnance', state: 'error' },
+	]
+
+	// FilePreview : vrai PDF minimal (1 page « Apercu PDF ») pour montrer les deux modes.
+	const PREVIEW_PDF_B64
+		= 'JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCAzMDAgMjAwXSAvQ29udGVudHMgNCAwIFIgL1Jlc291cmNlcyA8PCAvRm9udCA8PCAvRjEgNSAwIFIgPj4gPj4gPj4KZW5kb2JqCjQgMCBvYmoKPDwgL0xlbmd0aCA0MSA+PgpzdHJlYW0KQlQgL0YxIDI0IFRmIDQwIDExMCBUZCAoQXBlcmN1IFBERikgVGogRVQKZW5kc3RyZWFtCmVuZG9iago1IDAgb2JqCjw8IC9UeXBlIC9Gb250IC9TdWJ0eXBlIC9UeXBlMSAvQmFzZUZvbnQgL0hlbHZldGljYSA+PgplbmRvYmoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDA5IDAwMDAwIG4gCjAwMDAwMDAwNTggMDAwMDAgbiAKMDAwMDAwMDExNSAwMDAwMCBuIAowMDAwMDAwMjQxIDAwMDAwIG4gCjAwMDAwMDAzMzIgMDAwMDAgbiAKdHJhaWxlcgo8PCAvU2l6ZSA2IC9Sb290IDEgMCBSID4+CnN0YXJ0eHJlZgo0MDIKJSVFT0Y='
+	const previewFile = new File(
+		[Uint8Array.from(atob(PREVIEW_PDF_B64), c => c.charCodeAt(0))],
+		'apercu.pdf',
+		{ type: 'application/pdf' },
+	)
 
 	// SyInputSelect
 	const selectItems = [
@@ -1296,6 +1321,106 @@
 							>
 								<FileUpload v-model="uploadedFiles" />
 							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ UploadWorkflow ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							UploadWorkflow
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								UploadWorkflow ne porte <strong>aucun style de focus propre</strong> : il
+								compose FileUpload (dropzone → ring DS scopé), FileList (actions =
+								<code>.v-btn</code> → ring global), SySelect et DialogBox (focus gérés par eux).
+								Au Tab : les actions de chaque ligne puis la dropzone.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 560px;"
+							>
+								<UploadWorkflow :upload-list="uploadWorkflowList" />
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ FileList ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							FileList
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Les actions de chaque ligne (envoyer / prévisualiser / supprimer) sont des
+								<code>.v-btn</code> → ring primary via l'override global <code>_btns.scss</code>.
+								FileList / UploadItem ne portent aucun style de focus propre.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 560px;"
+							>
+								<FileList :upload-list="fileListItems" />
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ FilePreview ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							FilePreview
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								<strong>Mode classique</strong> (<code>&lt;object&gt;</code>, visionneuse PDF
+								native du navigateur) : pas de focusable DS spécifique. <strong>Mode pdfjs</strong>
+								(readonly / suivi de consultation) : le visualiseur est un
+								<code>role="document"</code> focusable au clavier, qui porte <strong>déjà</strong>
+								le ring DS (2px primary, offset -2px inset — adapté au conteneur scrollable).
+							</div>
+							<v-row>
+								<v-col
+									cols="12"
+									md="6"
+								>
+									<div class="text-caption font-weight-medium mb-1">
+										Mode classique
+									</div>
+									<v-sheet
+										color="surface"
+										rounded
+										class="pa-2"
+									>
+										<FilePreview
+											:file="previewFile"
+											:options="{ pdf: { height: '200px' } }"
+										/>
+									</v-sheet>
+								</v-col>
+								<v-col
+									cols="12"
+									md="6"
+								>
+									<div class="text-caption font-weight-medium mb-1">
+										Mode pdfjs (readonly)
+									</div>
+									<v-sheet
+										color="surface"
+										rounded
+										class="pa-2"
+									>
+										<FilePreview
+											:file="previewFile"
+											readonly
+											:options="{ pdf: { height: '200px' } }"
+										/>
+									</v-sheet>
+								</v-col>
+							</v-row>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>
