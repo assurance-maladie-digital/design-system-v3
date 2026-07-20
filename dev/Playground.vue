@@ -50,6 +50,7 @@
 	import PaginatedTable from '@/components/PaginatedTable/PaginatedTable.vue'
 	import TableToolbar from '@/components/TableToolbar/TableToolbar.vue'
 	import SyTable from '@/components/Tables/SyTable/SyTable.vue'
+	import SyServerTable from '@/components/Tables/SyServerTable/SyServerTable.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -1829,6 +1830,35 @@
 									caption="Liste des assurés"
 									resizable-columns
 									show-select
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyServerTable ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyServerTable
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Variante serveur : <strong>aucun focus propre</strong>, tout est délégué à
+								l'infra commune déjà migrée (TableHeader : tri + poignée ; SyTablePagination ;
+								OrganizeColumns ; SyCheckbox/SyTextField ; mixin ligne cliquable). Ligne
+								cliquable ici : focus clavier = anneau seul, sans fond.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<SyServerTable
+									:headers="syTableHeaders"
+									:items="tableItems"
+									:server-items-length="50"
+									caption="Liste des assurés (serveur)"
+									resizable-columns
+									clickable-row
 								/>
 							</v-sheet>
 						</v-expansion-panel-text>

@@ -245,7 +245,7 @@
 
 	table thead th {
 		.v-data-table-header__content {
-			opacity: 0.65;
+			color: rgba(var(--v-theme-onSurface), 0.65);
 			font-size: 0.875rem;
 			font-weight: 700 !important;
 		}
