@@ -45,6 +45,7 @@
 	import SyAutocomplete from '@/components/Customs/Selects/SyAutocomplete/SyAutocomplete.vue'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import SyCheckBoxGroup from '@/components/Customs/SyCheckBoxGroup/SyCheckBoxGroup.vue'
+	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -195,6 +196,9 @@
 		{ label: 'Option B', value: 'b' },
 		{ label: 'Option C', value: 'c' },
 	]
+
+	// SyCheckbox
+	const checkboxValue = ref(true)
 
 	// SyInputSelect
 	const selectItems = [
@@ -1657,6 +1661,31 @@
 									:options="checkGroupOptions"
 									label="Vos préférences"
 									multiple
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyCheckbox ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyCheckbox
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Case seule : ring DS au clavier via
+								<code>.v-selection-control--focus-visible</code> (2px primary, offset 2px).
+								Aucune modif — le ring existait déjà. Tab pour le voir.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<SyCheckbox
+									v-model="checkboxValue"
+									label="J'accepte les conditions"
 								/>
 							</v-sheet>
 						</v-expansion-panel-text>
