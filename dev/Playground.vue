@@ -47,6 +47,7 @@
 	import SyCheckBoxGroup from '@/components/Customs/SyCheckBoxGroup/SyCheckBoxGroup.vue'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyRadioGroup from '@/components/Customs/SyRadioGroup/SyRadioGroup.vue'
+	import PaginatedTable from '@/components/PaginatedTable/PaginatedTable.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -207,6 +208,18 @@
 		{ label: 'Option A', value: 'a' },
 		{ label: 'Option B', value: 'b' },
 		{ label: 'Option C', value: 'c' },
+	]
+
+	// PaginatedTable
+	const tableHeaders = [
+		{ title: 'Nom', key: 'nom' },
+		{ title: 'Prénom', key: 'prenom' },
+		{ title: 'Ville', key: 'ville' },
+	]
+	const tableItems = [
+		{ nom: 'Dupont', prenom: 'Jean', ville: 'Paris' },
+		{ nom: 'Martin', prenom: 'Marie', ville: 'Lyon' },
+		{ nom: 'Bernard', prenom: 'Paul', ville: 'Lille' },
 	]
 
 	// SyInputSelect
@@ -1722,6 +1735,33 @@
 									v-model="radioValue"
 									:options="radioOptions"
 									label="Votre choix"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ PaginatedTable ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							PaginatedTable
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Au Tab : les <strong>en-têtes de colonnes</strong> triables
+								(<code>&lt;th tabindex="0"&gt;</code>) reçoivent un ring DS primary inset — ils
+								n'en avaient aucun. Les boutons de <strong>pagination</strong> aussi (leur ring
+								utilisait un token invalide <code>colors-interactive</code>, corrigé en primary).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<PaginatedTable
+									:headers="tableHeaders"
+									:items="tableItems"
+									:server-items-length="50"
+									caption="Liste des assurés"
 								/>
 							</v-sheet>
 						</v-expansion-panel-text>
