@@ -42,6 +42,7 @@
 	import RangeField from '@/components/RangeField/RangeField.vue'
 	import LunarCalendar from '@/components/LunarCalendar/LunarCalendar.vue'
 	import MonthPicker from '@/components/MonthPicker/MonthPicker.vue'
+	import SyAutocomplete from '@/components/Customs/Selects/SyAutocomplete/SyAutocomplete.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -168,6 +169,14 @@
 
 	// MonthPicker
 	const monthValue = ref('03/2025')
+
+	// SyAutocomplete
+	const autocompleteValue = ref('paris')
+	const autocompleteItems = [
+		{ text: 'Paris', value: 'paris' },
+		{ text: 'Lyon', value: 'lyon' },
+		{ text: 'Marseille', value: 'marseille' },
+	]
 
 	// SyInputSelect
 	const selectItems = [
@@ -1545,6 +1554,36 @@
 								<MonthPicker
 									v-model="monthValue"
 									label="Mois de début"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyAutocomplete ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyAutocomplete
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Combobox : le focus reste sur l'input (SyTextField → bordure primary) ;
+								l'option active du menu est signalée via <code>aria-activedescendant</code>.
+								Ouvre le menu et navigue aux flèches : l'option active reçoit un ring DS
+								primary inset (avant, le token <code>borderAccentPrimary</code> invalide
+								n'affichait rien). Le bouton <em>clear</em> est un <code>&lt;button&gt;</code>
+								natif → ring DS primary scopé (2px, offset 1px).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<SyAutocomplete
+									v-model="autocompleteValue"
+									:items="autocompleteItems"
+									label="Ville"
+									clearable
 								/>
 							</v-sheet>
 						</v-expansion-panel-text>
