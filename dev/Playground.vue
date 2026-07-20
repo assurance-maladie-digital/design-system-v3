@@ -46,6 +46,7 @@
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import SyCheckBoxGroup from '@/components/Customs/SyCheckBoxGroup/SyCheckBoxGroup.vue'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
+	import SyRadioGroup from '@/components/Customs/SyRadioGroup/SyRadioGroup.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -199,6 +200,14 @@
 
 	// SyCheckbox
 	const checkboxValue = ref(true)
+
+	// SyRadioGroup
+	const radioValue = ref('a')
+	const radioOptions = [
+		{ label: 'Option A', value: 'a' },
+		{ label: 'Option B', value: 'b' },
+		{ label: 'Option C', value: 'c' },
+	]
 
 	// SyInputSelect
 	const selectItems = [
@@ -1686,6 +1695,33 @@
 								<SyCheckbox
 									v-model="checkboxValue"
 									label="J'accepte les conditions"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyRadioGroup ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyRadioGroup
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Les radios n'avaient que le focus Vuetify par défaut (pas de ring DS). J'ai
+								ajouté le <strong>même ring que SyCheckbox</strong>
+								(<code>.v-selection-control--focus-visible</code>, 2px primary, offset 2px).
+								Tab entre dans le groupe, les flèches naviguent entre les radios.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<SyRadioGroup
+									v-model="radioValue"
+									:options="radioOptions"
+									label="Votre choix"
 								/>
 							</v-sheet>
 						</v-expansion-panel-text>
