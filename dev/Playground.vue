@@ -43,6 +43,7 @@
 	import LunarCalendar from '@/components/LunarCalendar/LunarCalendar.vue'
 	import MonthPicker from '@/components/MonthPicker/MonthPicker.vue'
 	import SyAutocomplete from '@/components/Customs/Selects/SyAutocomplete/SyAutocomplete.vue'
+	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -176,6 +177,14 @@
 		{ text: 'Paris', value: 'paris' },
 		{ text: 'Lyon', value: 'lyon' },
 		{ text: 'Marseille', value: 'marseille' },
+	]
+
+	// SySelect
+	const selectFocusValue = ref('a')
+	const selectFocusItems = [
+		{ text: 'Option A', value: 'a' },
+		{ text: 'Option B', value: 'b' },
+		{ text: 'Option C', value: 'c' },
 	]
 
 	// SyInputSelect
@@ -1583,6 +1592,34 @@
 									v-model="autocompleteValue"
 									:items="autocompleteItems"
 									label="Ville"
+									clearable
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SySelect ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SySelect
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Combobox : focus sur l'input (bordure primary). Ouvre le menu et navigue aux
+								flèches → l'option active reçoit un <strong>anneau primary sans fond gris</strong>
+								(le fond gris reste au survol et sur la sélection). Le bouton <em>clear</em> est
+								un <code>&lt;button&gt;</code> natif → ring DS primary scopé (2px, offset 1px).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<SySelect
+									v-model="selectFocusValue"
+									:items="selectFocusItems"
+									label="Choisir une option"
 									clearable
 								/>
 							</v-sheet>

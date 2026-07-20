@@ -1,5 +1,11 @@
 import SySelect from '../SySelect.vue'
 
+// Déclenche `:focus-visible` via l'option native focus({ focusVisible: true }).
+const focusVisible = (selector: string) =>
+	cy.get(selector).then(($el) => {
+		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
+	})
+
 const defaultItems = [
 	{ text: 'Option A', value: 'a' },
 	{ text: 'Option B', value: 'b' },
@@ -73,5 +79,35 @@ describe('SySelect - Visual regression tests', () => {
 
 		cy.get('.v-text-field').should('be.visible')
 		cy.matchImageSnapshot('sy-select-clearable', cy.get('.v-text-field'))
+	})
+
+	// Bouton clear (`<button>` natif) : ring DS primary scopé (2px, offset 1px).
+	it('shows the DS ring on the focused clear button', () => {
+		cy.mountWithVuetify(SySelect, {
+			props: {
+				items: defaultItems,
+				label: 'Choisir une option',
+				clearable: true,
+				modelValue: 'a',
+			},
+		})
+
+		focusVisible('.sy-select__clear-button')
+		cy.wait(150)
+		cy.matchImageSnapshot('sy-select-clear-focus', cy.get('.v-text-field'))
+	})
+
+	// Option active du menu (combobox) : anneau DS primary SANS fond gris.
+	// On ouvre le menu et on descend d'une option au clavier.
+	it('shows the DS ring (no grey background) on the keyboard-active menu option', () => {
+		cy.mountWithVuetify(SySelect, {
+			props: { items: defaultItems, label: 'Choisir une option' },
+		})
+
+		cy.get('.v-field').click()
+		cy.get('.v-text-field input').trigger('keydown', { key: 'ArrowDown' })
+		cy.get('.v-list-item.keyboard-focused', { timeout: 8000 }).should('be.visible')
+		cy.wait(150)
+		cy.matchImageSnapshot('sy-select-menu-option-focus', cy.get('.v-application'))
 	})
 })

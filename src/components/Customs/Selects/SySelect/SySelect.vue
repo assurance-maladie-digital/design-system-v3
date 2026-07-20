@@ -1358,8 +1358,10 @@
 	background-color: rgb(0 0 0 / 8%);
 }
 
-.v-list-item.active {
-	background-color: rgb(0 0 0 / 8%);
+/* `.active` couvre aussi l'option active au clavier (aria-activedescendant) : pas de fond ici,
+   sinon le focus afficherait un fond gris. Le fond de sélection vient de `--selected`. */
+.v-list-item.active:not(.v-list-item--selected) {
+	background-color: transparent;
 }
 
 .help-text {
@@ -1382,12 +1384,12 @@
 	color: rgba(var(--v-theme-onSurface), var(--v-disabled-opacity));
 }
 
-/* Ensure focus styles match selection styles for keyboard navigation */
+/* Focus = anneau seul (pas de fond) ; le fond gris reste réservé au survol (:hover) et à la
+   sélection (.active / --selected). */
 .v-list-item:focus-visible,
 .v-list-item.keyboard-focused {
 	outline: 2px solid rgb(var(--v-theme-primary));
 	outline-offset: -2px;
-	background-color: rgb(0 0 0 / 8%);
 }
 
 .v-list-item :deep(.v-list-item__overlay) {
@@ -1439,6 +1441,14 @@
 
 	.v-icon {
 		position: static;
+	}
+
+	// `<button>` natif (pas un `.v-btn`) → non couvert par `_btns.scss`. Ring DS primary,
+	// collé (offset 1px) car bouton-icône positionné dans le bord du champ.
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 1px;
+		border-radius: 4px;
 	}
 }
 
