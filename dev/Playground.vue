@@ -39,6 +39,7 @@
 	import FileList from '@/components/FileList/FileList.vue'
 	import FilePreview from '@/components/FilePreview/FilePreview.vue'
 	import PhoneField from '@/components/PhoneField/PhoneField.vue'
+	import RangeField from '@/components/RangeField/RangeField.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -156,6 +157,9 @@
 
 	// PhoneField
 	const phoneValue = ref('0612345678')
+
+	// RangeField
+	const rangeValue = ref([20, 80])
 
 	// SyInputSelect
 	const selectItems = [
@@ -1451,6 +1455,34 @@
 									label="Téléphone"
 									with-country-code
 									is-clearable
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ RangeField ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							RangeField
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Au Tab : les deux champs numériques (min/max, SyTextField → bordure primary)
+								et les deux <em>thumbs</em> du slider (<code>role="slider"</code>). Chaque thumb
+								affiche un cadre de focus DS (2px primary) <strong>au clavier uniquement</strong>
+								(<code>:focus-visible</code>) ; au drag souris, seul le cercle s'agrandit.
+								Utilise les flèches pour déplacer un thumb focus.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4 pt-10"
+								style="max-width: 480px;"
+							>
+								<RangeField
+									v-model="rangeValue"
+									:min="0"
+									:max="100"
 								/>
 							</v-sheet>
 						</v-expansion-panel-text>
