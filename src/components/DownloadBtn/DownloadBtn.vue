@@ -8,6 +8,8 @@
 	import { config } from './config'
 	import { locales as defaultLocales } from './locales'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	type State = 'idle' | 'loading' | 'success' | 'error'
 
@@ -21,7 +23,7 @@
 		fallbackFilename?: string
 		backgroundColor?: string
 		dark?: boolean
-		locales?: typeof defaultLocales
+		locales?: DeepPartial<typeof defaultLocales>
 	}
 
 	defineOptions({
@@ -34,6 +36,8 @@
 		dark: false,
 		locales: () => defaultLocales,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emits = defineEmits(['error', 'success'])
 	const attrs = useAttrs()

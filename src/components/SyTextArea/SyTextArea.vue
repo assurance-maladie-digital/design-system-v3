@@ -8,6 +8,8 @@
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(defineProps<{
 		uniqueId?: string
@@ -28,7 +30,7 @@
 		helpText?: string
 		hideDetails?: boolean
 		displayAsterisk?: boolean
-		locales?: typeof defaultLocales
+		locales?: DeepPartial<typeof defaultLocales>
 	} & FieldValidationProps>(), {
 		uniqueId: undefined,
 		modelValue: '',
@@ -49,6 +51,8 @@
 		locales: () => defaultLocales,
 		...validationPropsDefaults,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: string): void

@@ -10,11 +10,13 @@
 	import { locales as defaultLocales } from './locales'
 	import vLockFocus from '@/directives/lockFocus'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: FilterProp
 		modale?: boolean
-		locales?: typeof defaultLocales
+		locales?: DeepPartial<typeof defaultLocales>
 		zIndex?: number
 		title?: string
 		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
@@ -26,6 +28,8 @@
 		title: undefined,
 		headingLevel: 2,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: FilterProp): void

@@ -21,6 +21,7 @@
 	import { useSyTextFieldValidation } from './useSyTextFieldValidation'
 	import { useNumberField } from './useNumberField'
 	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
 	import type { SyTextFieldProps } from './types'
 	import FieldState from './FieldState.vue'
 
@@ -85,6 +86,8 @@
 			...validationPropsDefaults,
 		},
 	)
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const ICONS: Record<NonNullable<IconType>, string> = {
 		info: mdiInformationOutline,
@@ -177,7 +180,7 @@
 		hasSuccessProp: toRef(props, 'hasSuccess'),
 		maxErrors: toRef(props, 'maxErrors'),
 		focused,
-		locales: toRef(props, 'locales'),
+		locales,
 	})
 
 	const forwardedAttrs = computed(() => {

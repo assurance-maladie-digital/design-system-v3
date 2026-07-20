@@ -7,6 +7,8 @@
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useSyRadioGroupValidation } from './composables/useSyRadioGroupValidation'
 	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(
 		defineProps<{
@@ -23,7 +25,7 @@
 			name?: string
 			options?: Array<{ label: string, value: PropertyKey }>
 			title?: string
-			locales?: typeof defaultLocales
+			locales?: DeepPartial<typeof defaultLocales>
 		} & FieldValidationProps>(),
 		{
 			ariaLabel: undefined,
@@ -44,6 +46,8 @@
 			isValidateOnBlur: false, // La validation se déclenche immédiatement à la sélection pour les radios
 		},
 	)
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emit = defineEmits(['update:modelValue', 'change'])
 	const radioGroupRef = ref<VRadioGroup | null>(null)

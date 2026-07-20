@@ -7,6 +7,8 @@
 	import { locales as defaultLocales } from './locales'
 	import { propValidator } from '@/utils/propValidator'
 	import { useDisplay } from 'vuetify'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = defineProps({
 		a11yCompliance: {
@@ -87,7 +89,7 @@
 			default: undefined,
 		},
 		locales: {
-			type: Object as PropType<typeof defaultLocales>,
+			type: Object as PropType<DeepPartial<typeof defaultLocales>>,
 			default: () => defaultLocales,
 		},
 		noA11y: {
@@ -148,6 +150,8 @@
 		},
 	})
 
+	const locales = useLocales(defaultLocales, () => props.locales)
+
 	const { mdAndUp, width } = useDisplay()
 
 	const footerDisplay = computed<string>(() => (width.value < 1170 ? 'd-block' : 'd-flex'))
@@ -176,11 +180,11 @@
 	})
 
 	const a11yComplianceLabel = computed<string | null>(() => {
-		const complianceLabel = props.locales[props.a11yCompliance as A11yComplianceEnum]
+		const complianceLabel = locales.value[props.a11yCompliance as A11yComplianceEnum]
 		if (!complianceLabel) {
 			return null
 		}
-		return props.locales.a11yLabel(complianceLabel)
+		return locales.value.a11yLabel(complianceLabel)
 	})
 
 	const emit = defineEmits(['click-phone', 'site-map-event', 'about-event', 'config-event', 'legal-notice-event', 'cgu-event', 'a11y-event'])

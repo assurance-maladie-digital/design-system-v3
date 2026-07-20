@@ -5,6 +5,8 @@
 	import type { PropType } from 'vue'
 	import type { SearchListItem } from './types'
 	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	import { SyTextField, SyCheckbox } from '@/components'
 	import slugify from 'slugify'
@@ -40,10 +42,12 @@
 			default: defaultLocales.searchListTitle,
 		},
 		locales: {
-			type: Object as PropType<typeof defaultLocales>,
+			type: Object as PropType<DeepPartial<typeof defaultLocales>>,
 			default: () => defaultLocales,
 		},
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emit = defineEmits(['update:modelValue'])
 

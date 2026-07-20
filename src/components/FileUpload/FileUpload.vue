@@ -6,6 +6,8 @@
 	import { locales as defaultLocales } from './locales'
 	import useFileDrop from './useFileDrop'
 	import validateFiles from './validateFiles'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(defineProps<{
 		modelValue: File[]
@@ -14,7 +16,7 @@
 		fileSizeMax?: number
 		fileSizeUnits?: Array<string>
 		allowedExtensions?: Array<string>
-		locales?: typeof defaultLocales
+		locales?: DeepPartial<typeof defaultLocales>
 	} & Widthable>(), {
 		disabled: false,
 		multiple: false,
@@ -23,6 +25,8 @@
 		allowedExtensions: () => ['pdf', 'jpg', 'jpeg', 'png'],
 		locales: () => defaultLocales,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: File[]): void
@@ -74,7 +78,7 @@
 			files = files.slice(0, 1)
 		}
 		const { errors, validFiles } = validateFiles(
-			files, props.fileSizeMax, props.allowedExtensions, props.fileSizeUnits, props.locales,
+			files, props.fileSizeMax, props.allowedExtensions, props.fileSizeUnits, locales.value,
 		)
 
 		if (errors.length) {

@@ -6,6 +6,8 @@
 	import type { TabItem } from './types'
 	import { useTabTransition } from './useTabTransition'
 	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(defineProps<{
 		items: TabItem[]
@@ -16,7 +18,7 @@
 		confirmationMessage?: string
 		/** Si activé, le contenu des onglets ne sera rendu que lorsqu'ils deviendront actifs */
 		lazy?: boolean
-		locales?: typeof defaultLocales
+		locales?: DeepPartial<typeof defaultLocales>
 		vuetifyOptions?: {
 			sheet?: {
 				theme?: string
@@ -42,6 +44,8 @@
 		vuetifyOptions: () => ({}),
 		locales: () => defaultLocales,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	// Disable automatic attribute inheritance since we handle it manually
 	defineOptions({

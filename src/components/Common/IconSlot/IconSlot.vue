@@ -3,6 +3,8 @@
 	import { VTooltip } from 'vuetify/components'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(defineProps<{
 		icon?: string
@@ -13,13 +15,15 @@
 		noIcon?: boolean
 		disableClickButton: boolean
 		tooltipLocation: 'top' | 'bottom' | 'start' | 'end'
-		locales?: typeof defaultLocales
+		locales?: DeepPartial<typeof defaultLocales>
 	}>(), {
 		icon: undefined,
 		tooltip: undefined,
 		label: undefined,
 		locales: () => defaultLocales,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emit = defineEmits<{
 		(e: 'click'): void

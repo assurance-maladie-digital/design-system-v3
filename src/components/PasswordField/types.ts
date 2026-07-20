@@ -2,6 +2,7 @@ import type { FieldValidationProps } from '@/composables/unifyValidation/useVali
 import type { CustomizableOptions } from '@/composables/useCustomizableOptions'
 import type { ColorType } from '@/components/Customs/SyTextField/types'
 import type { locales } from './locales'
+import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 export interface PasswordFieldProps extends CustomizableOptions, FieldValidationProps {
 	modelValue?: string | null
@@ -15,5 +16,5 @@ export interface PasswordFieldProps extends CustomizableOptions, FieldValidation
 	autocompleteType?: 'current-password' | 'new-password'
 	helpText?: string
 	hideDetails?: boolean
-	locales?: typeof locales
+	locales?: DeepPartial<typeof locales>
 }

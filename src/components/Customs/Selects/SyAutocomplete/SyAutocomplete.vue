@@ -12,6 +12,8 @@
 	import { useSyAutocompleteKeyboard } from './utils/useKeyboardHandler'
 	import { useSyAutocompleteValidation } from './composables/useSyAutocompleteValidation'
 	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	interface SyAutocompleteProps {
 		bgColor?: string
@@ -37,7 +39,7 @@
 		selectionText?: (selected: SelectArray) => string
 		textKey?: string
 		valueKey?: string
-		locales?: typeof defaultLocales
+		locales?: DeepPartial<typeof defaultLocales>
 	}
 
 	const props = withDefaults(
@@ -76,6 +78,7 @@
 
 	// `locales` est exposé via la prop du même nom (défaut : module `locales`).
 	// Le template y accède directement par son nom.
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emit = defineEmits(['update:modelValue', 'search'])
 
@@ -325,11 +328,11 @@
 
 	const resultsLiveText = computed(() => {
 		if (!hasInteracted.value) return
-		if (props.loading) return props.locales.loading
+		if (props.loading) return locales.value.loading
 		const count = filteredItems.value.length
 		if (!props.filter) return ''
-		if (count === 0) return props.hideNoData ? props.locales.noData : props.noDataText
-		return props.locales.nAvailable(count)
+		if (count === 0) return props.hideNoData ? locales.value.noData : props.noDataText
+		return locales.value.nAvailable(count)
 	})
 
 	onMounted(() => {

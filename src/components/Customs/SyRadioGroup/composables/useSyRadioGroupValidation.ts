@@ -1,6 +1,7 @@
 import { computed, ref, toRef, type ComputedRef, type Ref } from 'vue'
 import { useValidation, type FieldValidationProps, type ValidationRule, type VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 import { locales as defaultLocales } from '../locales'
+import { mergeLocales, type DeepPartial } from '@/utils/locales/mergeLocales'
 
 export interface SyRadioGroupValidationProps extends FieldValidationProps {
 	modelValue?: PropertyKey | null
@@ -23,7 +24,7 @@ export interface SyRadioGroupValidationProps extends FieldValidationProps {
 	maxErrors?: number
 	disableErrorHandling?: boolean
 	fieldIdentifier?: string
-	locales: typeof defaultLocales
+	locales?: DeepPartial<typeof defaultLocales>
 }
 
 export interface UseSyRadioGroupValidationReturn {
@@ -60,13 +61,16 @@ export function useSyRadioGroupValidation(
 	// Utiliser la variable focused passée en paramètre, sinon en créer une locale
 	const focusedRef = focused || ref(false)
 
+	// Les locales sont fusionnées avec les valeurs par défaut pour autoriser la surcharge partielle
+	const locales = mergeLocales(defaultLocales, props.locales)
+
 	// Construction des règles de validation par défaut (required)
 	const defaultRules = computed<ValidationRule[]>(() =>
 		props.required
 			? [{
 					type: 'required',
 					options: {
-						message: props.locales.requiredField(props.fieldIdentifier || props.label),
+						message: locales.requiredField(props.fieldIdentifier || props.label),
 						fieldIdentifier: props.label,
 					},
 				}]

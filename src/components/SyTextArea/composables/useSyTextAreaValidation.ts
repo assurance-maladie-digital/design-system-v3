@@ -5,9 +5,11 @@ import { useDefaultValidationRules } from '../useDefaultValidationRules'
 import { useValidation, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 import type { ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
 import { locales as defaultLocales } from '../locales'
+import { useLocales } from '@/composables/useLocales'
+import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 export function useSyTextAreaValidation(
-	props: FieldValidationProps & { maxLines?: number, locales?: typeof defaultLocales },
+	props: FieldValidationProps & { maxLines?: number, locales?: DeepPartial<typeof defaultLocales> },
 	{
 		internalValue,
 		hasInteracted,
@@ -22,7 +24,7 @@ export function useSyTextAreaValidation(
 		required: computed(() => props.required ?? false),
 		maxLines: computed(() => props.maxLines),
 		hasInteracted,
-		locales: computed(() => props.locales ?? defaultLocales),
+		locales: useLocales(defaultLocales, () => props.locales),
 	})
 
 	const mergedCustomRules = computed<SyValidationRule[]>(() => [

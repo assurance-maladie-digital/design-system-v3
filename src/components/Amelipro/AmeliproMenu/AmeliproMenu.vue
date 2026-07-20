@@ -1,11 +1,13 @@
 <script setup lang="ts">
-	import { type PropType, onMounted, reactive, ref, computed } from 'vue'
+	import { type PropType, onMounted, reactive, ref } from 'vue'
 	import { mdiChevronDown, mdiChevronUp, mdiClose } from '@mdi/js'
 	import AmeliproBtn from '../AmeliproBtn/AmeliproBtn.vue'
 	import AmeliproIconBtn from '../AmeliproIconBtn/AmeliproIconBtn.vue'
 	import type { AmeliproMenuItem } from './types'
 	import type { RouteLocationRaw } from 'vue-router'
 	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = defineProps({
 		homeHref: {
@@ -29,12 +31,12 @@
 			required: true,
 		},
 		locales: {
-			type: Object,
+			type: Object as PropType<DeepPartial<typeof defaultLocales>>,
 			default: () => defaultLocales,
 		},
 	})
 
-	const locales = computed(() => props.locales ?? defaultLocales)
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const reactiveItems = reactive<AmeliproMenuItem[]>(props.items)
 

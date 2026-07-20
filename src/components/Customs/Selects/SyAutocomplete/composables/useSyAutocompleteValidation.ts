@@ -5,18 +5,21 @@ import { mdiAlertCircle, mdiAlertOutline, mdiCheck } from '@mdi/js'
 import { type ValidationRule } from '@/composables/validation/useValidation'
 import { useValidation, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 import { useValidatable } from '@/composables/validation/useValidatable'
-import type { locales as defaultLocales } from '../locales'
+import { locales as defaultLocales } from '../locales'
+import { mergeLocales, type DeepPartial } from '@/utils/locales/mergeLocales'
 
-export function useSyAutocompleteValidation(props: FieldValidationProps & { locales: typeof defaultLocales }) {
+export function useSyAutocompleteValidation(props: FieldValidationProps & { locales?: DeepPartial<typeof defaultLocales> }) {
 	const hasInteracted = ref(false)
 	const focused = ref(false)
+
+	const locales = mergeLocales(defaultLocales, props.locales)
 
 	const defaultRules = computed<ValidationRule[]>(() =>
 		props.required
 			? [{
 					type: 'required',
 					options: {
-						message: props.locales.requiredField(props.label),
+						message: locales.requiredField(props.label),
 						fieldIdentifier: props.label,
 					},
 				}]

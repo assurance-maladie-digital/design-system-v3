@@ -3,6 +3,7 @@ import { mdiAlertCircle, mdiAlertOutline, mdiCheck } from '@mdi/js'
 import { useValidation, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 import type { ValidationRule } from '@/composables/validation/useValidation'
 import { locales as defaultLocales } from '../locales'
+import { mergeLocales, type DeepPartial } from '@/utils/locales/mergeLocales'
 
 /**
  * Composable de validation dédié au composant SelectBtnField.
@@ -12,10 +13,10 @@ import { locales as defaultLocales } from '../locales'
  * - validation immédiate à la sélection (isValidateOnBlur à `false` par défaut, comme un groupe de boutons),
  * - intégration automatique au SyForm via le useValidatable interne à useValidation.
  */
-export function useSelectBtnFieldValidation(props: FieldValidationProps & { modelValue?: unknown, locales?: typeof defaultLocales }) {
+export function useSelectBtnFieldValidation(props: FieldValidationProps & { modelValue?: unknown, locales?: DeepPartial<typeof defaultLocales> }) {
 	const focused = ref(false)
 
-	const locales = props.locales ?? defaultLocales
+	const locales = mergeLocales(defaultLocales, props.locales)
 
 	const defaultRules = computed<ValidationRule[]>(() => props.required
 		? [{

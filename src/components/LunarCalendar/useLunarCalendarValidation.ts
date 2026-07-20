@@ -2,6 +2,7 @@ import { computed, ref, toValue, type Ref } from 'vue'
 import { useValidation, type ValidationRule } from '@/composables/unifyValidation/useValidation'
 import type { LunarCalendarProps } from './types'
 import { locales as defaultLocales } from './locales'
+import { mergeLocales } from '@/utils/locales/mergeLocales'
 
 function getYearFromModel(model: string): number | null {
 	const parts = model.split('/')
@@ -13,7 +14,7 @@ function getYearFromModel(model: string): number | null {
 
 export function useLunarCalendarValidation(modelValue: Ref<string | undefined>, props: LunarCalendarProps) {
 	const focused = ref(false)
-	const locales = props.locales ?? defaultLocales
+	const locales = mergeLocales(defaultLocales, props.locales)
 
 	const customRules = computed<ValidationRule[]>(() => {
 		const rules: ValidationRule[] = []

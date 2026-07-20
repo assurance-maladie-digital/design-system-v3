@@ -6,6 +6,8 @@
 	import { config } from './config'
 	import { locales as defaultLocales } from './locales'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(defineProps<{
 		nbTotal?: number
@@ -15,7 +17,7 @@
 		showAddButton?: boolean
 		addButtonLabel?: string
 		loading?: boolean
-		locales?: typeof defaultLocales
+		locales?: DeepPartial<typeof defaultLocales>
 	} & CustomizableOptions>(), {
 		nbTotal: 0,
 		nbFiltered: undefined,
@@ -26,6 +28,8 @@
 		loading: false,
 		locales: () => defaultLocales,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	defineEmits<{
 		(e: 'update:search', value: string): void
@@ -51,7 +55,7 @@
 
 	const displayNbRows = computed(() => {
 		const lines = props.nbFiltered ? `${props.nbFiltered}/${props.nbTotal}` : String(props.nbTotal)
-		return props.locales.rowText(
+		return locales.value.rowText(
 			lines,
 			props.nbTotal > 1,
 		)

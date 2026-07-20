@@ -6,6 +6,7 @@
 	import { useSelectBtnFieldValidation } from './composables/useSelectBtnFieldValidation'
 	import type { SelectBtnItem, SelectBtnValue } from './types'
 	import { locales as defaultLocales } from './locales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: SelectBtnValue
@@ -16,7 +17,7 @@
 		inline?: boolean
 		helpText?: string
 		hideDetails?: boolean
-		locales?: typeof defaultLocales
+		locales?: DeepPartial<typeof defaultLocales>
 	} & FieldValidationProps>(), {
 		modelValue: null,
 		items: () => [],

@@ -5,6 +5,8 @@
 	import { useFieldValidation } from '@/composables'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const { parseDate } = useFieldValidation()
 
@@ -34,7 +36,7 @@
 		required?: boolean
 		showSuccessMessages?: boolean
 		showWeekNumber?: boolean
-		locales?: typeof defaultLocales
+		locales?: DeepPartial<typeof defaultLocales>
 	}>(), {
 		bgColor: 'white',
 		customRules: () => [],
@@ -60,6 +62,8 @@
 		showWeekNumber: false,
 		locales: () => defaultLocales,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emit = defineEmits(['update:modelValue'])
 
@@ -122,8 +126,8 @@
 							if (parsedToDate.value === null) return true
 							return value <= parsedToDate.value
 						},
-						message: props.locales.fromAfterTo,
-						successMessage: props.locales.fromValid,
+						message: locales.value.fromAfterTo,
+						successMessage: locales.value.fromValid,
 						fieldIdentifier: 'fromDate',
 					},
 				},
@@ -142,8 +146,8 @@
 								}
 								return true
 							},
-							message: props.locales.fromRequired,
-							successMessage: props.locales.fromFilled,
+							message: locales.value.fromRequired,
+							successMessage: locales.value.fromFilled,
 							fieldIdentifier: 'fromDate',
 						},
 					}]
@@ -170,8 +174,8 @@
 							if (parsedFromDate.value === null) return true
 							return value >= parsedFromDate.value
 						},
-						message: props.locales.toBeforeFrom,
-						successMessage: props.locales.toValid,
+						message: locales.value.toBeforeFrom,
+						successMessage: locales.value.toValid,
 						fieldIdentifier: 'toDate',
 					},
 				},
@@ -190,8 +194,8 @@
 								}
 								return true
 							},
-							message: props.locales.toRequired,
-							successMessage: props.locales.toFilled,
+							message: locales.value.toRequired,
+							successMessage: locales.value.toFilled,
 							fieldIdentifier: 'toDate',
 						},
 					}]

@@ -13,6 +13,7 @@
 	import type { Indicatif } from './types'
 	import { usePhoneFieldValidation } from './usePhoneFieldValidation'
 	import FieldState from '@/components/Customs/SyTextField/FieldState.vue'
+	import { useLocales } from '@/composables/useLocales'
 
 	const props = withDefaults(defineProps<PhoneFieldProps>(), {
 		...validationPropsDefaults,
@@ -32,6 +33,8 @@
 		isClearable: false,
 		locales: () => defaultLocales,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emits = defineEmits<{
 		'update:modelValue': [value: string]
@@ -80,7 +83,7 @@
 		disabled: toRef(props, 'disabled'),
 		required: toRef(props, 'required'),
 		counter: computed(() => internalDialCode.value.phoneLength || 10),
-		phoneFieldIdentifier: computed(() => props.withCountryCode ? props.locales?.phoneNumberWithoutCountryLabel || 'Numéro de téléphone' : props.locales?.label || 'Téléphone'),
+		phoneFieldIdentifier: computed(() => props.withCountryCode ? locales.value.phoneNumberWithoutCountryLabel || 'Numéro de téléphone' : locales.value.label || 'Téléphone'),
 		shouldDisableErrorHandling: computed(() => props.disableErrorHandling || props.readonly),
 		hasError: toRef(props, 'hasError'),
 		hasWarning: toRef(props, 'hasWarning'),
@@ -96,7 +99,7 @@
 		errorMessages: toRef(props, 'errorMessages'),
 		warningMessages: toRef(props, 'warningMessages'),
 		successMessages: toRef(props, 'successMessages'),
-		locales: toRef(props, 'locales'),
+		locales,
 		dialCode: internalDialCode,
 		withCountryCode: toRef(props, 'withCountryCode'),
 	})

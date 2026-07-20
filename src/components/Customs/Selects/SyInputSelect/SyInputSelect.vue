@@ -6,6 +6,8 @@
 	import defaultOptions from './config'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		modelValue?: Record<string, unknown> | string | null
@@ -23,7 +25,7 @@
 		customRules?: ValidationRule[]
 		disableErrorHandling?: boolean
 		bgColor?: string
-		locales?: typeof defaultLocales
+		locales?: DeepPartial<typeof defaultLocales>
 	}>(), {
 
 		modelValue: null,
@@ -43,6 +45,8 @@
 		bgColor: 'white',
 		locales: () => defaultLocales,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const options = useCustomizableOptions(defaultOptions, props)
 
@@ -177,7 +181,7 @@
 		? [{
 			type: 'required',
 			options: {
-				message: props.locales.requiredField(props.label),
+				message: locales.value.requiredField(props.label),
 				fieldIdentifier: props.label,
 			},
 		}]

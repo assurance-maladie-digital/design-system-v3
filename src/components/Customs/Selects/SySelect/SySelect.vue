@@ -15,6 +15,8 @@
 	import { locales as defaultLocales } from './locales'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import { useSySelectValidation } from './composables/useSySelectValidation'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	export type ItemType = {
 		[key: string]: unknown
@@ -54,7 +56,7 @@
 			tooltipLocation?: 'top' | 'bottom' | 'start' | 'end'
 			noIcon?: boolean
 			disableClickButton?: boolean
-			locales?: typeof defaultLocales
+			locales?: DeepPartial<typeof defaultLocales>
 		} & FieldValidationProps>(),
 		{
 			modelValue: null,
@@ -93,6 +95,7 @@
 
 	// `locales` est exposé via la prop du même nom (défaut : module `locales`).
 	// Le template y accède directement par son nom.
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	// pr récupérer proprement aria-label
 	const attrs = useAttrs()
