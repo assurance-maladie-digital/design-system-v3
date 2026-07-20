@@ -48,6 +48,7 @@
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyRadioGroup from '@/components/Customs/SyRadioGroup/SyRadioGroup.vue'
 	import PaginatedTable from '@/components/PaginatedTable/PaginatedTable.vue'
+	import TableToolbar from '@/components/TableToolbar/TableToolbar.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -221,6 +222,9 @@
 		{ nom: 'Martin', prenom: 'Marie', ville: 'Lyon' },
 		{ nom: 'Bernard', prenom: 'Paul', ville: 'Lille' },
 	]
+
+	// TableToolbar
+	const toolbarSearch = ref('')
 
 	// SyInputSelect
 	const selectItems = [
@@ -1762,6 +1766,32 @@
 									:items="tableItems"
 									:server-items-length="50"
 									caption="Liste des assurés"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ TableToolbar ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							TableToolbar
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Aucun style de focus propre : le champ de recherche est un
+								<code>VTextField color="primary"</code> (bordure primary au focus) et le bouton
+								« ajouter » est un <code>.v-btn</code> (ring global <code>_btns.scss</code>).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<TableToolbar
+									v-model:search="toolbarSearch"
+									:nb-total="42"
+									show-add-button
+									@add="() => {}"
 								/>
 							</v-sheet>
 						</v-expansion-panel-text>
