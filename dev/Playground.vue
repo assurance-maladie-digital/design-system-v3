@@ -38,6 +38,7 @@
 	import UploadWorkflow from '@/components/UploadWorkflow/UploadWorkflow.vue'
 	import FileList from '@/components/FileList/FileList.vue'
 	import FilePreview from '@/components/FilePreview/FilePreview.vue'
+	import PhoneField from '@/components/PhoneField/PhoneField.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -152,6 +153,9 @@
 		'apercu.pdf',
 		{ type: 'application/pdf' },
 	)
+
+	// PhoneField
+	const phoneValue = ref('0612345678')
 
 	// SyInputSelect
 	const selectItems = [
@@ -1421,6 +1425,34 @@
 									</v-sheet>
 								</v-col>
 							</v-row>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ PhoneField ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							PhoneField
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Au Tab : le sélecteur d'indicatif (SySelect) puis le champ numéro
+								(SyTextField) — focus gérés par ces composants (bordure primary). Le bouton
+								<em>clear</em> est un <code>&lt;button&gt;</code> natif → ring DS primary scopé
+								(2px, offset 1px), au lieu du focus navigateur par défaut.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<PhoneField
+									v-model="phoneValue"
+									label="Téléphone"
+									with-country-code
+									is-clearable
+								/>
+							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>

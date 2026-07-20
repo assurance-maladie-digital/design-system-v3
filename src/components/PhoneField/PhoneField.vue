@@ -376,6 +376,13 @@
 	.v-icon {
 		position: static;
 	}
+
+	// Ring DS primary collé (offset 1px) car icône serré dans le bord du champ.
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 1px;
+		border-radius: 4px;
+	}
 }
 
 .phone-field__clear-icon {
