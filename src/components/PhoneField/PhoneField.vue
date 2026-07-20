@@ -145,6 +145,16 @@
 		validateOnSubmit: validate,
 		phoneMask,
 		clearValidation,
+		/** Deprecated */
+		validation: {
+			clearValidation,
+			errors,
+			warnings,
+			successes,
+			hasError,
+			hasWarning,
+			hasSuccess,
+		},
 	})
 
 </script>

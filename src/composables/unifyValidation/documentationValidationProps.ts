@@ -262,7 +262,7 @@ export function getValidationDocumentation(type: 'base' | 'date' | 'number' | 's
 		validateOnSubmit: {
 			description: 'Méthode pour déclencher la validation du composant',
 			table: {
-				type: { summary: '() => void' },
+				type: { summary: '() => Promise<boolean>' },
 				category: 'expose',
 			},
 		},

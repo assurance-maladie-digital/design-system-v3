@@ -317,6 +317,10 @@
 
 	defineExpose({
 		validateOnSubmit,
+		clearValidation: () => {
+			fromDateValidation.clearValidation()
+			toDateValidation.clearValidation()
+		},
 		errors: {
 			fromDate: readonlyState(fromDateValidation.errors),
 			toDate: readonlyState(toDateValidation.errors),

@@ -127,6 +127,27 @@ const meta: Meta<typeof PeriodField> = {
 				category: 'expose',
 			},
 		},
+		isValid: {
+			description: 'Vrai si le champ est valide.',
+			table: {
+				type: { summary: 'boolean' },
+				category: 'expose',
+			},
+		},
+		validateOnSubmit: {
+			description: 'Fonction qui permet de déclencher la validation du champ.',
+			table: {
+				type: { summary: '() => promise<boolean>' },
+				category: 'expose',
+			},
+		},
+		clearValidation: {
+			description: 'Fonction qui permet de réinitialiser la validation du champ.',
+			table: {
+				type: { summary: '() => void' },
+				category: 'expose',
+			},
+		},
 	},
 } as Meta<typeof PeriodField>
 
