@@ -44,6 +44,7 @@
 	import MonthPicker from '@/components/MonthPicker/MonthPicker.vue'
 	import SyAutocomplete from '@/components/Customs/Selects/SyAutocomplete/SyAutocomplete.vue'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
+	import SyCheckBoxGroup from '@/components/Customs/SyCheckBoxGroup/SyCheckBoxGroup.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -185,6 +186,14 @@
 		{ text: 'Option A', value: 'a' },
 		{ text: 'Option B', value: 'b' },
 		{ text: 'Option C', value: 'c' },
+	]
+
+	// SyCheckBoxGroup
+	const checkGroupValue = ref(['a'])
+	const checkGroupOptions = [
+		{ label: 'Option A', value: 'a' },
+		{ label: 'Option B', value: 'b' },
+		{ label: 'Option C', value: 'c' },
 	]
 
 	// SyInputSelect
@@ -1621,6 +1630,33 @@
 									:items="selectFocusItems"
 									label="Choisir une option"
 									clearable
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyCheckBoxGroup ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyCheckBoxGroup
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Aucun style de focus propre : un <code>&lt;fieldset&gt;</code> qui assemble des
+								<code>SyCheckbox</code>. Au Tab, chaque case reçoit le ring DS géré par
+								SyCheckbox (<code>.v-selection-control--focus-visible</code>, 2px primary, offset 2px).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<SyCheckBoxGroup
+									v-model="checkGroupValue"
+									:options="checkGroupOptions"
+									label="Vos préférences"
+									multiple
 								/>
 							</v-sheet>
 						</v-expansion-panel-text>
