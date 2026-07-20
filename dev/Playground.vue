@@ -40,6 +40,7 @@
 	import FilePreview from '@/components/FilePreview/FilePreview.vue'
 	import PhoneField from '@/components/PhoneField/PhoneField.vue'
 	import RangeField from '@/components/RangeField/RangeField.vue'
+	import LunarCalendar from '@/components/LunarCalendar/LunarCalendar.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -160,6 +161,9 @@
 
 	// RangeField
 	const rangeValue = ref([20, 80])
+
+	// LunarCalendar
+	const lunarValue = ref('15/08/1990')
 
 	// SyInputSelect
 	const selectItems = [
@@ -1483,6 +1487,33 @@
 									v-model="rangeValue"
 									:min="0"
 									:max="100"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ LunarCalendar ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							LunarCalendar
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Simple wrapper autour d'un <code>SyTextField</code> masqué
+								(<code>##/##/####</code>) : aucun style de focus propre. Au Tab, focus sur
+								l'input (bordure primary) ; le bouton <em>clear</em> (VBtn) et l'icône info
+								éventuelle sont gérés par SyTextField (ring global / scopé de SyTextField).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<LunarCalendar
+									v-model="lunarValue"
+									label="Date de naissance (calendrier lunaire)"
+									is-clearable
 								/>
 							</v-sheet>
 						</v-expansion-panel-text>
