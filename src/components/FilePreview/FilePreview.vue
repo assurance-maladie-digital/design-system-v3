@@ -4,6 +4,8 @@
 	import { config } from './config'
 	import { locales as defaultLocales } from './locales'
 	import { usePdfConsultation } from './usePdfConsultation'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(defineProps<{
 		file?: File | Blob
@@ -11,7 +13,7 @@
 			pdf?: Record<string, string>
 			image?: Record<string, string>
 		}
-		locales?: typeof defaultLocales
+		locales?: DeepPartial<typeof defaultLocales>
 		/** Active le suivi de consultation du PDF (rendu via pdf.js, chargé à la demande). */
 		trackConsultation?: boolean
 		/**
@@ -29,6 +31,8 @@
 		readonly: false,
 		pdfWorkerSrc: undefined,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emit = defineEmits<{
 		/**

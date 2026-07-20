@@ -2,6 +2,8 @@
 	import UploadItem from '@/components/FileList/UploadItem/UploadItem.vue'
 	import { useWidthable, type Widthable } from '@/composables/widthable'
 	import { locales as defaultLocales } from './UploadItem/locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	export type FileState = 'initial' | 'success' | 'error' | 'loading'
 	export interface Item {
@@ -18,7 +20,7 @@
 
 	const props = withDefaults(defineProps<{
 		uploadList: Item[]
-		locales?: typeof defaultLocales
+		locales?: DeepPartial<typeof defaultLocales>
 		seeLabel?: string
 		importLabel?: string
 		deleteLabel?: string
@@ -28,6 +30,8 @@
 		importLabel: undefined,
 		deleteLabel: undefined,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const { widthStyles } = useWidthable(props)
 

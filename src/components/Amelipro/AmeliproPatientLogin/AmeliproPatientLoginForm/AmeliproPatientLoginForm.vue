@@ -11,6 +11,8 @@
 	import imgVital from '@/assets/amelipro/img/idpa/carte-vitale.svg'
 	import apcvLogo from '@/assets/amelipro/img/idpa/apcv_logo.svg'
 	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = defineProps({
 		autoCompleteCardItems: {
@@ -74,10 +76,12 @@
 			default: undefined,
 		},
 		locales: {
-			type: Object,
+			type: Object as PropType<DeepPartial<typeof defaultLocales>>,
 			default: () => defaultLocales,
 		},
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emit = defineEmits(['click:vital-card', 'click:vital-card-app', 'submit:nir', 'update:model-value'])
 

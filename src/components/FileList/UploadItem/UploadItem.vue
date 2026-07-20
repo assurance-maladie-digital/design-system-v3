@@ -10,6 +10,8 @@
 	import { cnamContextualTokens } from '@/designTokens/tokens/cnam/cnamContextual'
 	import { locales as defaultLocales } from './locales'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	type FileState = 'initial' | 'success' | 'error' | 'loading'
 
@@ -19,7 +21,7 @@
 		(e: 'delete', item: string): void
 	}>()
 
-	withDefaults(defineProps<{
+	const props = withDefaults(defineProps<{
 		itemId: string
 		title: string
 		fileName?: string
@@ -31,7 +33,7 @@
 		showDeleteBtn?: boolean
 		showPreviewBtn?: boolean
 		tag?: string
-		locales?: typeof defaultLocales
+		locales?: DeepPartial<typeof defaultLocales>
 		seeLabel?: string
 		deleteLabel?: string
 		importLabel?: string
@@ -50,6 +52,8 @@
 		deleteLabel: defaultLocales.delete,
 		importLabel: defaultLocales.import,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	defineSlots<{
 		'file-icon'(props: { state: FileState }): void

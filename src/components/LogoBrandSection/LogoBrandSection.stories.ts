@@ -6,7 +6,7 @@ const meta = {
 	component: LogoBrandSection,
 	argTypes: {
 		'locales': {
-			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés des logos, lien d\'accueil et titre du compte entreprise). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant.',
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés des logos, lien d\'accueil et titre du compte entreprise). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant. La prop accepte un objet partiel : seules les clés renseignées surchargent les valeurs par défaut, le reste est conservé.',
 			control: 'object',
 			table: {
 				type: { summary: 'object', detail: `{

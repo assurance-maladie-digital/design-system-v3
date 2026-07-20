@@ -215,7 +215,7 @@
 				:hide-signature="hideSignature"
 				:hide-organism="isCompteAmeliMobile"
 				:risque-pro="isRisquePro"
-				:aria-label="homeLink?.ariaLabel + ' ' + locales.value.homeLinkLabel"
+				:aria-label="homeLink?.ariaLabel + ' ' + locales.homeLinkLabel"
 				:avatar="avatar"
 				:size="logoSize"
 				:class="{ 'mr-2': avatar }"

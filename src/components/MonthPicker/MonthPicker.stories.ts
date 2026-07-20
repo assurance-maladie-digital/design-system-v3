@@ -9,7 +9,7 @@ const meta: Meta<typeof MonthPicker> = {
 	component: MonthPicker,
 	argTypes: {
 		'locales': {
-			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés des boutons et sélecteurs du composant, messages vocalisés pour l\'année et le mois, message de champ requis). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant.',
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés des boutons et sélecteurs du composant, messages vocalisés pour l\'année et le mois, message de champ requis). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant. La prop accepte un objet partiel : seules les clés renseignées surchargent les valeurs par défaut, le reste est conservé.',
 			control: 'object',
 			table: {
 				type: { summary: 'object', detail: `{

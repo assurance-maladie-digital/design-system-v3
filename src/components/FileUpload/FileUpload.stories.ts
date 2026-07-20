@@ -14,7 +14,7 @@ const meta = {
 	component: FileUpload,
 	argTypes: {
 		'locales': {
-			description: 'Surcharge des chaînes affichées à l\'utilisateur (titres, boutons, messages d\'erreur liés au téléversement). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant.',
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (titres, boutons, messages d\'erreur liés au téléversement). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant. La prop accepte un objet partiel : seules les clés renseignées surchargent les valeurs par défaut, le reste est conservé.',
 			control: 'object',
 			table: {
 				type: { summary: 'object', detail: `{

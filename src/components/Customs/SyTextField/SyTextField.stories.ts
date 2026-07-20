@@ -29,7 +29,7 @@ const meta = {
 	argTypes: {
 		...getValidationDocumentation('string'),
 		'locales': {
-			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés d\'accessibilité et messages de validation). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant.',
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés d\'accessibilité et messages de validation). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant. La prop accepte un objet partiel : seules les clés renseignées surchargent les valeurs par défaut, le reste est conservé.',
 			control: 'object',
 			table: {
 				type: { summary: 'SyTextFieldLocales', detail: `{
