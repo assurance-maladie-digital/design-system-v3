@@ -49,6 +49,7 @@
 	import SyRadioGroup from '@/components/Customs/SyRadioGroup/SyRadioGroup.vue'
 	import PaginatedTable from '@/components/PaginatedTable/PaginatedTable.vue'
 	import TableToolbar from '@/components/TableToolbar/TableToolbar.vue'
+	import SyTable from '@/components/Tables/SyTable/SyTable.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -225,6 +226,13 @@
 
 	// TableToolbar
 	const toolbarSearch = ref('')
+
+	// SyTable
+	const syTableHeaders = [
+		{ title: 'Nom', key: 'nom', sortable: true },
+		{ title: 'Prénom', key: 'prenom', sortable: true },
+		{ title: 'Ville', key: 'ville' },
+	]
 
 	// SyInputSelect
 	const selectItems = [
@@ -1792,6 +1800,35 @@
 									:nb-total="42"
 									show-add-button
 									@add="() => {}"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyTable ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyTable
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Au Tab dans l'en-tête : le <strong>bouton de tri</strong> (colonnes triables) a
+								son ring DS, et la <strong>poignée de redimensionnement</strong>
+								(<code>resizableColumns</code>, opérable aux flèches) reçoit un ring DS
+								qu'elle n'avait pas. Cases (select), édition, pagination et filtres délèguent
+								à SyCheckbox / SyTextField / SySelect.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<SyTable
+									:headers="syTableHeaders"
+									:items="tableItems"
+									caption="Liste des assurés"
+									resizable-columns
+									show-select
 								/>
 							</v-sheet>
 						</v-expansion-panel-text>
