@@ -125,15 +125,10 @@
 		float: left;
 	}
 
-	.notification__close:focus-visible {
-		:deep(.v-btn__overlay) {
-			display: none;
-		}
-
-		&::after {
-			display: none;
-		}
-	}
+	// Bouton « Fermer » : c'est un bouton d'action standalone. Le ring DS (largeur, offset 3px) et
+	// le masquage de l'overlay/`::after` au focus sont assurés par l'override global `_btns.scss`.
+	// On ne surcharge donc, par type (`.notification--<type>` ci-dessous), que la COULEUR du ring
+	// pour la contraster avec le fond coloré de la barre.
 
 	/* stylelint-disable custom-property-pattern */
 	.notification--info {

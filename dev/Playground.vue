@@ -61,6 +61,8 @@
 	import Logo from '@/components/Logo/Logo.vue'
 	import LogoBrandSection from '@/components/LogoBrandSection/LogoBrandSection.vue'
 	import DialogBox from '@/components/DialogBox/DialogBox.vue'
+	import NotificationBar from '@/components/NotificationBar/NotificationBar.vue'
+	import { useNotificationService } from '@/services/NotificationService'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -281,6 +283,19 @@
 	// DialogBox
 	const dialogOpen = ref(false)
 	const dialogScrollableOpen = ref(false)
+
+	// NotificationBar
+	const { addNotification } = useNotificationService()
+	let notificationId = 0
+	function pushNotification(type: 'info' | 'success' | 'warning' | 'error'): void {
+		notificationId += 1
+		addNotification({
+			id: `playground-${notificationId}`,
+			message: `Notification de type ${type} — tabuler pour voir le ring du bouton Fermer`,
+			type,
+			timeout: -1,
+		})
+	}
 
 	// DataList / DataListGroup
 	const dataListItems = [
@@ -2233,6 +2248,53 @@
 									</p>
 								</DialogBox>
 							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ NotificationBar ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							NotificationBar
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								La seule cible focusable est le bouton « Fermer » (<code>.notification__close</code>)
+								sur le fond coloré de la barre : ring DS <strong>contrasté par type</strong>
+								(couleur « on »). Offset 3px et masquage overlay/::after hérités du global ; seule
+								la couleur est surchargée. Déclencher une notification puis tabuler jusqu'au bouton
+								Fermer.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4 d-flex flex-wrap ga-4"
+							>
+								<v-btn
+									color="info"
+									@click="pushNotification('info')"
+								>
+									Info
+								</v-btn>
+								<v-btn
+									color="success"
+									@click="pushNotification('success')"
+								>
+									Succès
+								</v-btn>
+								<v-btn
+									color="warning"
+									@click="pushNotification('warning')"
+								>
+									Avertissement
+								</v-btn>
+								<v-btn
+									color="error"
+									@click="pushNotification('error')"
+								>
+									Erreur
+								</v-btn>
+							</v-sheet>
+							<NotificationBar show-all />
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>
