@@ -76,5 +76,7 @@ export const paLightTheme = {
 	interactionDarkenEnabled: baseTokens.color.transparentBlack.alpha00,
 	interactionDarkenHover: baseTokens.color.transparentBlack.alpha20,
 	interactionDarkenPressed: baseTokens.color.transparentBlack.alpha40,
-
+	interactionDark: baseTokens.color.blue.base,
+	interactionDarken: baseTokens.color.black.base,
+	interactionLighten: baseTokens.color.white.base,
 }
