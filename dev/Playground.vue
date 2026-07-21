@@ -65,6 +65,7 @@
 	import { useNotificationService } from '@/services/NotificationService'
 	import CookieBanner from '@/components/CookieBanner/CookieBanner.vue'
 	import CookiesSelection from '@/components/CookiesSelection/CookiesSelection.vue'
+	import RatingPicker from '@/components/RatingPicker/RatingPicker.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -2372,6 +2373,40 @@
 								class="pa-4"
 							>
 								<CookiesSelection :items="cookiesSelectionItems" />
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ RatingPicker ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							RatingPicker
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								3 variantes en radio-group à roving tabindex (flèches pour naviguer). Rings DS :
+								étoiles = <code>box-shadow</code> inset primary (pas de débordement sur les voisines),
+								nombres/émotions = <code>outline</code> primary. Corrigé : fond retiré au focus
+								(NumberPicker) ; ring émotion passé de <code>currentcolor</code> à primary (lisible
+								sur le fond coloré). Fond coloré = hover/sélection uniquement.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4 d-flex flex-column ga-6"
+							>
+								<RatingPicker
+									type="stars"
+									label="Évaluation (étoiles)"
+								/>
+								<RatingPicker
+									type="number"
+									label="Satisfaction (nombres)"
+								/>
+								<RatingPicker
+									type="emotion"
+									label="Ressenti (émotions)"
+								/>
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>

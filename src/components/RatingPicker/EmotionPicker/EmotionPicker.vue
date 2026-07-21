@@ -221,7 +221,7 @@
 	}
 
 	&:focus-visible {
-		outline: 2px solid currentcolor;
+		outline: 2px solid rgb(var(--v-theme-primary));
 		outline-offset: 2px;
 	}
 
@@ -230,7 +230,6 @@
 	}
 
 	&--active,
-	&:focus,
 	&:hover {
 		&.sad {
 			background: rgb(var(--v-theme-errorVariantLighten));
