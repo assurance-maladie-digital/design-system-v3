@@ -60,6 +60,7 @@
 	import DataListGroup from '@/components/DataListGroup/DataListGroup.vue'
 	import Logo from '@/components/Logo/Logo.vue'
 	import LogoBrandSection from '@/components/LogoBrandSection/LogoBrandSection.vue'
+	import DialogBox from '@/components/DialogBox/DialogBox.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -276,6 +277,10 @@
 	function removeChip(item: { value: string, text: string }): void {
 		chipListItems.value = chipListItems.value.filter(i => i.value !== item.value)
 	}
+
+	// DialogBox
+	const dialogOpen = ref(false)
+	const dialogScrollableOpen = ref(false)
 
 	// DataList / DataListGroup
 	const dataListItems = [
@@ -2167,6 +2172,66 @@
 									label="Icône informative (non focusable)"
 									role="img"
 								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ DialogBox ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							DialogBox
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Boutons (fermer/annuler/confirmer) = ring global <code>_btns.scss</code> (offset
+								3px) ; le bloc scoped redondant a été retiré. Le bouton autofocus garde un ring sur
+								<code>:focus</code> (visible dès l'ouverture, focus programmatique). Nouveau : la
+								région scrollable (tabindex 0) reçoit un ring DS inset.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4 d-flex ga-4"
+							>
+								<v-btn
+									color="primary"
+									@click="dialogOpen = true"
+								>
+									Ouvrir un dialog
+								</v-btn>
+								<v-btn
+									color="primary"
+									variant="outlined"
+									@click="dialogScrollableOpen = true"
+								>
+									Ouvrir un dialog scrollable
+								</v-btn>
+
+								<DialogBox
+									v-model="dialogOpen"
+									title="Confirmer la suppression"
+									autofocus-validate-btn
+									@cancel="dialogOpen = false"
+									@confirm="dialogOpen = false"
+								>
+									<p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
+								</DialogBox>
+
+								<DialogBox
+									v-model="dialogScrollableOpen"
+									title="Dialog scrollable"
+									scrollable
+									@cancel="dialogScrollableOpen = false"
+									@confirm="dialogScrollableOpen = false"
+								>
+									<p
+										v-for="n in 60"
+										:key="n"
+										class="mb-4"
+									>
+										Ligne de contenu numéro {{ n }}
+									</p>
+								</DialogBox>
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
