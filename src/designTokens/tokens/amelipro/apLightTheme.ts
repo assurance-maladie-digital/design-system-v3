@@ -77,4 +77,7 @@ export const apLightTheme = {
 	interactionDarkenEnabled: baseTokens.color.transparentBlack.alpha00,
 	interactionDarkenHover: baseTokens.color.transparentBlack.alpha20,
 	interactionDarkenPressed: baseTokens.color.transparentBlack.alpha40,
+	interactionDark: baseTokens.color.red.darken20,
+	interactionDarken: baseTokens.color.black.base,
+	interactionLighten: baseTokens.color.white.base,
 }
