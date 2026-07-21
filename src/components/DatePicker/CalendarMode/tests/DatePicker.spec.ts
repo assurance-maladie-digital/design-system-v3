@@ -558,6 +558,59 @@ describe('DatePicker', () => {
 		wrapper.unmount()
 	})
 
+	it('does not change the selected date when navigating the calendar with arrow keys (calendar-only mode)', async () => {
+		vi.useFakeTimers()
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '15/06/2024',
+				format: 'DD/MM/YYYY',
+			},
+			attachTo: document.body,
+		})
+
+		const input = wrapper.find('input')
+		expect(input.element.value).toBe('15/06/2024')
+
+		// Ouvre le calendrier via l'activator (mode calendar-only : pas de noCalendar, pas de useCombinedMode)
+		await input.trigger('click')
+		await nextTick()
+		await flushPromises()
+		// Laisse le listener de navigation clavier s'attacher (setTimeout différé)
+		await vi.runAllTimersAsync()
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		// Le focus initial doit être placé sur un bouton de jour du calendrier
+		const focusedDay = document.activeElement as HTMLElement | null
+		expect(focusedDay).not.toBeNull()
+		expect(focusedDay?.closest('.v-date-picker-month__day')).not.toBeNull()
+
+		// Capture de la valeur avant navigation, via le DOM uniquement
+		const valueBefore = input.element.value
+		const emittedBefore = wrapper.emitted('update:modelValue')?.length ?? 0
+
+		// Plusieurs navigations clavier vers la droite : doivent uniquement déplacer le focus,
+		// sans modifier la date sélectionnée ni émettre de mise à jour du modèle.
+		for (let i = 1; i <= 5; i++) {
+			const day = document.activeElement as HTMLElement | null
+			day?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }))
+			await flushPromises()
+			await vi.runAllTimersAsync()
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+		}
+
+		// La valeur affichée dans l'activator ne doit pas changer
+		expect(input.element.value).toBe(valueBefore)
+		// Aucun update:modelValue supplémentaire ne doit être émis suite aux navigations fléchées
+		const emittedAfter = wrapper.emitted('update:modelValue')?.length ?? 0
+		expect(emittedAfter).toBe(emittedBefore)
+
+		vi.useRealTimers()
+		wrapper.unmount()
+	})
+
 	it('handleSelectToday selects today and keeps the component usable', async () => {
 		const wrapper = mountComponent()
 		const vm = wrapper.vm as DatePickerInstance

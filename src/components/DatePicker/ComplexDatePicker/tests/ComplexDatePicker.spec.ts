@@ -1,3 +1,4 @@
+import { VDatePicker } from 'vuetify/components'
 import { mount, flushPromises, VueWrapper, type MountingOptions } from '@vue/test-utils'
 import { describe, it, expect, afterEach, vi } from 'vitest'
 import { nextTick } from 'vue'
@@ -918,5 +919,153 @@ describe('ComplexDatePicker.clean', () => {
 
 		expect(wrapper.props('birthDate')).toBe(true)
 		expect(wrapper.vm.currentViewMode).toBe('year')
+	})
+
+	it('applies the required attribute on the input when required is true', () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			modelValue: '',
+			format: 'DD/MM/YYYY',
+			noCalendar: true,
+			required: true,
+		})
+
+		const input = wrapper.find('input')
+		expect(input.exists()).toBe(true)
+		// Le champ natif doit exposer l'état requis (attribut HTML `required`)
+		expect(input.element.hasAttribute('required')).toBe(true)
+	})
+
+	it('sets aria-invalid="true" on the input when the field is in an error state', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			modelValue: '',
+			format: 'DD/MM/YYYY',
+			noCalendar: true,
+			required: true,
+		})
+
+		const input = wrapper.find('input')
+
+		// Déclenche un état d'erreur : champ requis laissé vide puis perte de focus
+		await input.trigger('focus')
+		await input.setValue('')
+		await input.trigger('blur')
+		await flushPromises()
+
+		// Un message d'erreur doit être présent (garde-fou pour confirmer l'état d'erreur)
+		expect(wrapper.findAll('.v-messages__message').length).toBeGreaterThan(0)
+		// L'input doit alors exposer aria-invalid="true" pour les lecteurs d'écran
+		expect(input.element.getAttribute('aria-invalid')).toBe('true')
+	})
+
+	it('moves focus to the selected day (not the last displayed) on Shift+Tab from the today button in day view', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			modelValue: '12/12/2005',
+			displayTodayButton: true,
+		}, { attachTo: document.body })
+
+		// Ouvre le calendrier via le champ (interaction clavier DOM)
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: 'Enter' })
+		await nextTick()
+		await flushPromises()
+
+		// focus the today button
+		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
+		const dialogContent = vDatePickerWrapper.element.parentElement
+		const todayBtn = dialogContent.querySelector('.date-picker__today-button')
+
+		// Shift+Tab depuis le bouton « Aujourd'hui » : doit focaliser le jour sélectionné,
+		// pas le dernier jour affiché.
+		todayBtn.focus()
+		todayBtn.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true, cancelable: true }))
+		await flushPromises()
+
+		const focused = document.activeElement as HTMLElement
+		expect(focused.getAttribute('aria-label')).toBe('Monday, December 12, 2005')
+		expect(focused.getAttribute('aria-pressed')).toBe('true')
+
+		wrapper.unmount()
+	})
+
+	it('moves focus to the selected month (not the last displayed) on Shift+Tab from the today button in months view', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			modelValue: '12/09/2005',
+			displayTodayButton: true,
+		}, { attachTo: document.body })
+
+		// Ouvre le calendrier
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: 'Enter' })
+		await nextTick()
+		await flushPromises()
+
+		// ouvre la page des mois
+		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
+		const monthBtn = vDatePickerWrapper.find('.v-date-picker-controls__month-btn')
+		monthBtn.trigger('click')
+		await nextTick()
+		await flushPromises()
+
+		// focus the doday btn
+		const dialogContent = vDatePickerWrapper.element.parentElement
+		const todayBtn = dialogContent.querySelector('.date-picker__today-button')
+		todayBtn.focus()
+
+		// Shift+Tab depuis le bouton « Aujourd'hui » : doit focaliser le mois sélectionné,
+		// pas le dernier jour affiché.
+		todayBtn.focus()
+		todayBtn.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true, cancelable: true }))
+		await flushPromises()
+
+		const focused = document.activeElement as HTMLElement
+		expect(focused.getAttribute('aria-label')).toBe('september')
+		expect(focused.getAttribute('aria-pressed')).toBe('true')
+
+		wrapper.unmount()
+	})
+
+	it('moves focus to the selected year (not the last displayed) on Shift+Tab from the today button in years view', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			modelValue: '12/09/2005',
+			displayTodayButton: true,
+		}, { attachTo: document.body })
+
+		// Ouvre le calendrier
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: 'Enter' })
+		await nextTick()
+		await flushPromises()
+
+		// ouvre la page des mois
+		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
+		const yearBtn = vDatePickerWrapper.find('.custom-year-btn')
+		yearBtn.trigger('click')
+		await nextTick()
+		await flushPromises()
+
+		// focus the doday btn
+		const dialogContent = vDatePickerWrapper.element.parentElement
+		const todayBtn = dialogContent.querySelector('.date-picker__today-button')
+		todayBtn.focus()
+
+		// Shift+Tab depuis le bouton « Aujourd'hui » : doit focaliser le mois sélectionné,
+		// pas le dernier jour affiché.
+		todayBtn.focus()
+		todayBtn.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true, bubbles: true, cancelable: true }))
+		await flushPromises()
+
+		const focused = document.activeElement as HTMLElement
+		expect(focused.getAttribute('aria-label')).toBe('2005')
+		expect(focused.getAttribute('aria-pressed')).toBe('true')
+
+		wrapper.unmount()
 	})
 })
