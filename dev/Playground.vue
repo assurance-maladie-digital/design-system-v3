@@ -55,6 +55,7 @@
 	import FilterInline from '@/components/FilterInline/FilterInline.vue'
 	import SearchListField from '@/components/SearchListField/SearchListField.vue'
 	import Accordion from '@/components/Accordion/Accordion.vue'
+	import ChipList from '@/components/ChipList/ChipList.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -259,6 +260,18 @@
 		{ id: '2', title: 'Deuxième élément', content: 'Contenu du deuxième élément' },
 		{ id: '3', title: 'Troisième élément', content: 'Contenu du troisième élément' },
 	]
+
+	// ChipList
+	const chipListItems = ref([
+		{ value: '1', text: 'Option 1' },
+		{ value: '2', text: 'Option 2' },
+		{ value: '3', text: 'Option 3' },
+		{ value: '4', text: 'Option 4' },
+		{ value: '5', text: 'Option 5' },
+	])
+	function removeChip(item: { value: string, text: string }): void {
+		chipListItems.value = chipListItems.value.filter(i => i.value !== item.value)
+	}
 
 	// SyTable
 	const syTableHeaders = [
@@ -2014,6 +2027,31 @@
 								class="pa-4"
 							>
 								<Accordion :items="accordionItems" />
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ ChipList ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							ChipList
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Focus déjà conforme : la croix a un ring <code>inset</code> contrasté (onPrimary
+								sur chip primary) pour rester dans le chip, le chip d'overflow "+N" un ring
+								primary, et Réinitialiser/Masquer le ring global <code>_btns.scss</code>.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<ChipList
+									:items="chipListItems"
+									@remove="removeChip"
+									@reset="chipListItems = []"
+								/>
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
