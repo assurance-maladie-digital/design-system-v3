@@ -64,6 +64,7 @@
 	import NotificationBar from '@/components/NotificationBar/NotificationBar.vue'
 	import { useNotificationService } from '@/services/NotificationService'
 	import CookieBanner from '@/components/CookieBanner/CookieBanner.vue'
+	import CookiesSelection from '@/components/CookiesSelection/CookiesSelection.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -287,6 +288,16 @@
 
 	// CookieBanner
 	const cookieBannerOpen = ref(false)
+
+	// CookiesSelection
+	const cookiesSelectionItems = {
+		analytics: [
+			{ name: 'Matomo', description: 'Mesure d\'audience', conservation: '13 mois' },
+		],
+		functional: [
+			{ name: 'Préférences', description: 'Sauvegarde les préférences utilisateur', conservation: '12 mois' },
+		],
+	}
 
 	// NotificationBar
 	const { addNotification } = useNotificationService()
@@ -2338,6 +2349,29 @@
 									Afficher le bandeau cookies
 								</v-btn>
 								<CookieBanner v-model="cookieBannerOpen" />
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ CookiesSelection ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							CookiesSelection
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Les boutons (Tout refuser / Tout accepter / Enregistrer) sont couverts par le ring
+								global. Deux lacunes corrigées dans <code>CookiesInformation</code> : le
+								<code>&lt;summary&gt;</code> (ni bouton ni lien → aucun ring global) et les
+								<code>VRadio</code> bruts (pas de SyRadioGroup) reçoivent désormais un ring DS scoped.
+								Tabuler dans le bloc pour les voir.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<CookiesSelection :items="cookiesSelectionItems" />
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>

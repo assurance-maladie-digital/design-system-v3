@@ -144,3 +144,13 @@
 		</VForm>
 	</VCard>
 </template>
+
+<style lang="scss" scoped>
+// Le VCard racine (transparent, sans élévation) impose `overflow: hidden` par défaut, ce qui rogne
+// les rings de focus (outset) des éléments situés à ses bords : boutons (Tout refuser/accepter,
+// Enregistrer), `<summary>` et radios. Comme la carte n'a aucun visuel à rogner, on rétablit
+// `overflow: visible` pour que les rings s'affichent entièrement.
+.vd-cookies-card {
+	overflow: visible;
+}
+</style>
