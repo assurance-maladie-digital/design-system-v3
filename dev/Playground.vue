@@ -56,6 +56,8 @@
 	import SearchListField from '@/components/SearchListField/SearchListField.vue'
 	import Accordion from '@/components/Accordion/Accordion.vue'
 	import ChipList from '@/components/ChipList/ChipList.vue'
+	import DataList from '@/components/DataList/DataList.vue'
+	import DataListGroup from '@/components/DataListGroup/DataListGroup.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -272,6 +274,29 @@
 	function removeChip(item: { value: string, text: string }): void {
 		chipListItems.value = chipListItems.value.filter(i => i.value !== item.value)
 	}
+
+	// DataList / DataListGroup
+	const dataListItems = [
+		{ key: 'Nom', value: 'Dupont' },
+		{ key: 'Prénom', value: 'Jean' },
+		{ key: 'Email', value: 'jean.dupont@example.com', action: 'Modifier' },
+	]
+	const dataListGroupItems = [
+		{
+			title: 'Identité',
+			items: [
+				{ key: 'Nom', value: 'Dupont' },
+				{ key: 'Prénom', value: 'Jean' },
+			],
+		},
+		{
+			title: 'Contact',
+			items: [
+				{ key: 'Email', value: 'jean.dupont@example.com', action: 'Modifier' },
+				{ key: 'Téléphone', value: '0102030405' },
+			],
+		},
+	]
 
 	// SyTable
 	const syTableHeaders = [
@@ -2052,6 +2077,32 @@
 									@remove="removeChip"
 									@reset="chipListItems = []"
 								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ DataList / DataListGroup ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							DataList / DataListGroup
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Purs conteneurs, sans style de focus propre. La seule cible focusable est le
+								bouton d'action d'un item (<code>action</code>), un <code>.v-btn</code> standalone
+								couvert par le ring global <code>_btns.scss</code>.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<DataList
+									:items="dataListItems"
+									list-title="Informations personnelles"
+									class="mb-6"
+								/>
+								<DataListGroup :items="dataListGroupItems" />
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
