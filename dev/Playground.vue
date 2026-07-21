@@ -58,6 +58,8 @@
 	import ChipList from '@/components/ChipList/ChipList.vue'
 	import DataList from '@/components/DataList/DataList.vue'
 	import DataListGroup from '@/components/DataListGroup/DataListGroup.vue'
+	import Logo from '@/components/Logo/Logo.vue'
+	import LogoBrandSection from '@/components/LogoBrandSection/LogoBrandSection.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -2103,6 +2105,33 @@
 									class="mb-6"
 								/>
 								<DataListGroup :items="dataListGroupItems" />
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ Logo / LogoBrandSection ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							Logo / LogoBrandSection
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								<code>Logo</code> : pur SVG <code>focusable="false"</code>, non interactif → aucun
+								focus. <code>LogoBrandSection</code> : le logo est enveloppé dans un lien d'accueil
+								<code>&lt;a&gt;</code> (homeLink) → ring DS via l'override global
+								<code>_links.scss</code>. Tabuler pour voir le ring sur le lien.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<Logo class="mb-6" />
+								<LogoBrandSection
+									service-title="Ameli"
+									service-sub-title="Assurance Maladie"
+									:home-link="{ href: '/', ariaLabel: 'Accueil' }"
+								/>
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
