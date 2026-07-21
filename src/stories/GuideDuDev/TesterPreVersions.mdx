@@ -1,0 +1,209 @@
+import {Meta, Source} from '@storybook/addon-docs/blocks';
+import '../styles/shared.css';
+
+<Meta title="Guide Du Dev/Démarrage/Tester les pré-versions" />
+
+
+<div className="header">
+    <h1>Tester les pré-versions</h1>
+</div>
+
+Une correction ou un composant vous intéresse sur la branche `dev`, mais il n'est **pas encore publié sur npm** ? Vous pouvez tester la librairie `@cnamts/synapse` localement dans votre projet, sans attendre la release.
+
+Le principe :
+
+1. récupérer et builder le code source de la librairie&nbsp;;
+2. relier ce build local à votre projet via un **link** (`pnpm link`).
+
+> Cette page s'adresse aux projets qui consomment la librairie. Pour contribuer au
+> Design System lui-même, consultez la section [Contribution](/docs/guide-du-dev-demarrage-installation--docs)
+> du README.
+
+---
+
+## 1. Récupérer le code source
+
+Clônez le dépôt sur votre poste&nbsp;:
+
+<Source dark language="bash" code={`
+# Via SSH
+git clone git@github.com:assurance-maladie-digital/design-system-v3.git
+
+# Ou via HTTPS
+git clone https://github.com/assurance-maladie-digital/design-system-v3.git
+`}
+/>
+
+Placez-vous ensuite dans le dossier et positionnez-vous sur la **branche `dev`**
+(c'est la branche de développement, où se trouvent les changements non encore publiés)&nbsp;:
+
+<Source dark language="bash" code={`
+cd design-system-v3
+git checkout dev
+git pull
+`}
+/>
+
+> Vous pouvez cibler n'importe quelle branche ou PR&nbsp;: adaptez simplement le
+> `git checkout`. Pour tester une PR précise, utilisez `git fetch origin pull/<id>/head:pr-<id>`
+> puis `git checkout pr-<id>`.
+
+---
+
+## 2. Vérifier les versions de Node et pnpm
+
+Le Design System impose des versions strictes via le champ `engines` de son
+`package.json` (`engine-strict = true`). **Les plages exactes peuvent évoluer**&nbsp;:
+référez-vous toujours au [`package.json`](https://github.com/assurance-maladie-digital/design-system-v3/blob/dev/package.json)
+du dépôt plutôt qu'à une version figée dans cette page.
+
+<Source dark language="bash" code={`
+# Consultez les contraintes actuelles dans le dépôt
+cat package.json | grep -A3 '"engines"'
+
+# Vérifiez vos versions locales
+node -v
+pnpm -v
+`}
+/>
+
+Si vous utilisez [nvm](https://github.com/nvm-sh/nvm) / [fnm](https://github.com/Schniz/fnm),
+alignez le runtime sur une version compatible (selon `engines`)&nbsp;:
+
+<Source dark language="bash" code={`
+nvm use <version-node-compatible>
+corepack enable
+corepack prepare pnpm@<version-pnpm-compatible> --activate
+`}
+/>
+
+---
+
+## 3. Installer les dépendances et builder la librairie
+
+Depuis la racine du dépôt&nbsp;:
+
+<Source dark language="bash" code={`
+# Installation conforme au lockfile (plus rapide, garantit la reproductibilité)
+pnpm i --frozen-lockfile
+
+# Build de la librairie 
+pnpm build
+`}
+/>
+
+> À ne pas confondre&nbsp;: `pnpm dev` lance le playground de développement, `pnpm build`
+> produit bien le paquet final. C'est ce dernier que votre projet consommera.
+
+---
+
+## 4. Relier la librairie à votre projet (link)
+
+Nous utilisons ici `pnpm link --global`&nbsp;: la librairie est inscrite dans un
+registre global de pnpm, puis déclarée dans votre projet.
+
+### 4.1. Côté librairie — enregistrement global
+
+Toujours à la racine du dépôt du Design System&nbsp;:
+
+<Source dark language="bash" code={`
+pnpm link --global
+`}
+/>
+
+### 4.2. Côté projet consommateur — branchement
+
+Dans le dossier de votre application&nbsp;:
+
+<Source dark language="bash" code={`
+pnpm link --global @cnamts/synapse
+`}
+/>
+
+Votre projet utilise désormais la version locale (buildée à l'étape 3) à la place du
+paquet npm. Relancez votre serveur de dev (`pnpm dev`) pour le prise en compte.
+
+### 4.3. Itérer
+
+À chaque modification du code source de la librairie, recompilez puis laissez votre
+projet se rafraîchir&nbsp;:
+
+<Source dark language="bash" code={`
+# Dans le dépôt du Design System
+pnpm build   # régénère dist/
+`}
+/>
+
+<Source dark language="bash" code={`
+# Dans votre projet
+pnpm dev     # le hot-reload recharge @cnamts/synapse
+`}
+/>
+
+---
+
+## 5. Alternative : tester dans le playground du dépôt
+
+Si vous n'avez pas besoin de valider le comportement dans votre **projet réel**, la
+voie la plus rapide est d'utiliser le **playground** inclus dans le dépôt. Il s'agit
+d'une application Vite (`/dev`) qui charge les composants **directement depuis le
+code source** (`@/components/...`) avec hot-reload — donc **sans build ni link**.
+
+### Lancer le playground
+
+<Source dark language="bash" code={`
+# Depuis la racine du dépôt du Design System
+pnpm dev
+`}
+/>
+
+L'application est alors servie (par défaut sur `http://localhost:5173`) avec une
+instance Vuetify configurée (thème CNAM par défaut).
+
+### Tester un composant
+
+Par défaut, **tout se passe dans [`dev/Playground.vue`](https://github.com/assurance-maladie-digital/design-system-v3/blob/dev/dev/Playground.vue)**&nbsp;:
+c'est la page affichée à l'ouverture du playground. Importez-y le composant depuis le
+source et exposez vos cas de figure&nbsp;:
+
+```vue
+<!-- dev/Playground.vue -->
+<script setup lang="ts">
+import { ref } from 'vue'
+import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
+
+const value = ref<string | null>(null)
+</script>
+
+<template>
+	<div class="playground-container">
+		<h1>Mon test de pré-version</h1>
+		<DatePicker v-model="value" />
+	</div>
+</template>
+```
+
+> Les imports se font via l'alias `@/` (racine `src/`). Vous touchez ainsi au code
+> **réellement publié**, sans étape de build intermédiaire. Chaque modification est
+> appliquée instantanément (HMR), sans rien recompiler.
+
+### S'inspirer d'un playground existant (optionnel)
+
+Vous n'avez **pas** besoin de créer de fichier&nbsp;: codez directement dans
+`Playground.vue`. Toutefois, si vous cherchez un point de départ, le sous-dossier
+[`dev/CustomPlaygrounds/`](https://github.com/assurance-maladie-digital/design-system-v3/blob/dev/dev/CustomPlaygrounds)
+contient des **playgrounds de test déjà conçus** pour certains composants
+(`Dp.vue`, `accordion.vue`, `syForm.vue`…). Vous pouvez vous en inspirer, ou en copier
+le contenu directement dans votre `Playground.vue`.
+
+### Quand préférer le playground plutôt qu'un link
+
+| Besoin | Méthode recommandée |
+|---|---|
+| Tester rapidement un composant isolé | **Playground** (`pnpm dev`) |
+| Vérifier le rendu dans le contexte d'une PR | **Playground** (branche/PR checkout) |
+| Valider l'intégration dans **votre application** (data, thème, pairs) | **Link** (section 4) |
+
+> Le playground est idéal pour **itérer vite** sur un composant. Dès qu'il s'agit de
+> confirmer le comportement côté consommateur (thème spécifique, version de Vuetify,
+> interactions avec votre code), repassez par le link décrit plus haut.
