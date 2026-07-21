@@ -230,6 +230,7 @@
 	}
 
 	&--active,
+	&:focus,
 	&:hover {
 		&.sad {
 			background: rgb(var(--v-theme-errorVariantLighten));

@@ -31,6 +31,10 @@ describe('RatingPicker - Visual regression tests', () => {
 		})
 
 		cy.get('.v-application').should('be.visible')
+		// Focus programmatique de la 1re émotion : montre son fond coloré (langage visuel de
+		// l'émotion). État identique à la baseline existante (le ring primary, lui, n'apparaît qu'au
+		// focus clavier `:focus-visible` — couvert par le test dédié plus bas).
+		cy.get('[tabindex="0"]').first().focus()
 		cy.matchImageSnapshot('rating-picker-emotion', cy.get('.v-application'))
 	})
 
