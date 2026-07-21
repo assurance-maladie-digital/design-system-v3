@@ -1,3 +1,4 @@
+import { h } from 'vue'
 import NotificationBar from '../NotificationBar.vue'
 import { useNotificationService } from '@/services/NotificationService'
 
@@ -84,7 +85,11 @@ describe('NotificationBar - Visual regression tests', () => {
 		cy.mountWithVuetify(NotificationBar, {
 			props: { showAll: true },
 			slots: {
-				action: '<button type="button" class="notification-action-btn px-3 py-2">Voir le détail</button>',
+				action: () => h(
+					'button',
+					{ type: 'button', class: 'notification-action-btn px-3 py-2' },
+					'Voir le détail',
+				),
 			},
 		})
 

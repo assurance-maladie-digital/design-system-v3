@@ -333,9 +333,14 @@
 
 	// `overflow-y: auto` fait aussi passer `overflow-x` en `auto` → ce conteneur rogne les deux
 	// axes. Les boutons d'action sont à son bord : sans marge, leur ring de focus outset (offset
-	// 3px + 2px de trait) serait rogné en bas, et à gauche quand les boutons passent en pleine
-	// largeur (mobile). On réserve donc ~6px de padding (le 8px à droite couvre aussi la scrollbar).
+	// 3px + 2px) serait rogné en bas, et à gauche quand les boutons passent en pleine largeur
+	// (mobile). On agrandit donc la boîte de débordement via un padding (bas + gauche) POUR laisser
+	// la place au ring, et on compense par une marge négative afin de NE PAS décaler la mise en page
+	// visible (la place récupérée est absorbée par le padding `pa-8` de la VSheet parente). Le 8px à
+	// droite existait déjà pour la scrollbar et couvre le ring de ce côté.
 	padding: 0 8px 6px 6px;
+	margin-bottom: -6px;
+	margin-left: -6px;
 	background: transparent;
 
 	div {
