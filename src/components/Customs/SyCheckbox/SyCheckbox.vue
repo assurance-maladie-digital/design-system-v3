@@ -27,8 +27,9 @@
 			id: undefined,
 			name: undefined,
 			value: undefined,
-			trueValue: () => true,
-			falseValue: () => false,
+			trueValue: undefined,
+			falseValue: undefined,
+			multiple: undefined,
 			cycleIndeterminate: false,
 			displayAsterisk: false,
 			decorative: false,
@@ -96,9 +97,18 @@
 		model.value = false
 	}
 
+	const isMultiple = computed(() => !!props.multiple || Array.isArray(props.modelValue))
+
+	const isChecked = computed(() => {
+		if (isMultiple.value) {
+			return Array.isArray(props.modelValue) && props.modelValue.includes(props.value)
+		}
+		return !!props.modelValue
+	})
+
 	const ariaChecked = computed(() => {
 		if (internalIndeterminate.value) return 'mixed'
-		return model.value ? 'true' : 'false'
+		return isChecked.value ? 'true' : 'false'
 	})
 
 	const labelColor = computed(() => {
@@ -222,6 +232,8 @@
 			:error-messages="errors"
 			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
 			:indeterminate="internalIndeterminate"
+			:value="props.value"
+			:multiple="props.multiple"
 			:true-value="props.trueValue"
 			:false-value="props.falseValue"
 			:aria-checked="ariaChecked"

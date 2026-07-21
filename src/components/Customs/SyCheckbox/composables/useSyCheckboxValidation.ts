@@ -27,7 +27,7 @@ export interface UseSyCheckboxValidationReturn {
  */
 export function useSyCheckboxValidation(
 	props: SyCheckboxValidationProps,
-	model: Ref<boolean | null>,
+	model: Ref<boolean | unknown[] | null>,
 	focused: Ref<boolean>,
 ): UseSyCheckboxValidationReturn {
 	// « required » pour une case = doit être cochée (true)

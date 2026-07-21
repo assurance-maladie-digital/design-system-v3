@@ -4,7 +4,7 @@ import type { FieldValidationProps, ValidationRule, VuetifyValidationRule } from
  * Props du composant SyCheckbox
  */
 export interface SyCheckboxProps extends FieldValidationProps {
-	modelValue?: boolean | null
+	modelValue?: boolean | unknown[] | null
 	indeterminate?: boolean
 	label?: string
 	helpText?: string
@@ -20,6 +20,8 @@ export interface SyCheckboxProps extends FieldValidationProps {
 	value?: unknown
 	trueValue?: unknown
 	falseValue?: unknown
+	/** Active le mode sélection multiple : `modelValue` devient un tableau dans lequel `value` est ajouté/retiré. */
+	multiple?: boolean
 	/** @deprecated Utiliser cycleIndeterminate à la place. */
 	controlsIds?: never
 	cycleIndeterminate?: boolean
@@ -31,7 +33,7 @@ export interface SyCheckboxProps extends FieldValidationProps {
  * Props de validation passées au composable dédié
  */
 export interface SyCheckboxValidationProps extends FieldValidationProps {
-	modelValue?: boolean | null
+	modelValue?: boolean | unknown[] | null
 	required?: boolean
 	readonly?: boolean
 	disabled?: boolean

@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
-import { nextTick } from 'vue'
+import { nextTick, ref, defineComponent } from 'vue'
 import SyCheckbox from '../SyCheckbox.vue'
 
 describe('SyCheckbox', () => {
@@ -388,7 +388,7 @@ describe('SyCheckbox', () => {
 		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
 	})
 
-	it('affiche le helpText quand aucun message de validation n\'est présent', () => {
+	it('displays the helpText when no validation message is present', () => {
 		const wrapper = mount(SyCheckbox, {
 			props: {
 				label: 'CGU',
@@ -401,7 +401,7 @@ describe('SyCheckbox', () => {
 		expect(help.text()).toContain('Texte d\'aide')
 	})
 
-	it('masque le helpText et affiche l\'erreur quand la validation échoue', async () => {
+	it('hides the helpText and displays the error when validation fails', async () => {
 		const wrapper = mount(SyCheckbox, {
 			props: {
 				label: 'CGU',
@@ -418,7 +418,7 @@ describe('SyCheckbox', () => {
 		expect(wrapper.find('.v-messages').text()).toContain('CGU est requis')
 	})
 
-	it('disableErrorHandling : aucune erreur affichée même si requis et décoché', async () => {
+	it('does not display an error when required and unchecked if disableErrorHandling is enabled', async () => {
 		const wrapper = mount(SyCheckbox, {
 			props: {
 				label: 'CGU',
@@ -436,7 +436,7 @@ describe('SyCheckbox', () => {
 		expect(wrapper.find('.v-messages__message').exists()).toBe(false)
 	})
 
-	it('affiche un message d\'avertissement via customWarningRules', async () => {
+	it('displays a warning message from customWarningRules', async () => {
 		const wrapper = mount(SyCheckbox, {
 			props: {
 				label: 'CGU',
@@ -458,7 +458,7 @@ describe('SyCheckbox', () => {
 		expect(wrapper.find('.v-messages').text()).toContain('Avertissement de test')
 	})
 
-	it('affiche un message de succès via customSuccessRules et showSuccessMessages', async () => {
+	it('displays a success message from customSuccessRules with showSuccessMessages true', async () => {
 		const wrapper = mount(SyCheckbox, {
 			props: {
 				label: 'CGU',
@@ -481,7 +481,7 @@ describe('SyCheckbox', () => {
 		expect(wrapper.find('.v-messages').text()).toContain('Succès de test')
 	})
 
-	it('affiche les messages externes (errorMessages + hasError)', () => {
+	it('displays external messages (errorMessages + hasError)', () => {
 		const wrapper = mount(SyCheckbox, {
 			props: {
 				label: 'CGU',
@@ -492,5 +492,126 @@ describe('SyCheckbox', () => {
 
 		expect(wrapper.find('.error-field').exists()).toBe(true)
 		expect(wrapper.find('.v-messages').text()).toContain('Erreur externe')
+	})
+
+	describe('multiple mode', () => {
+		it('adds the value to the array when checked', async () => {
+			const wrapper = mount(SyCheckbox, {
+				props: {
+					'modelValue': [] as string[],
+					'value': 'identity',
+					'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+				},
+			})
+
+			await wrapper.find('input[type="checkbox"]').setValue(true)
+			await nextTick()
+
+			expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([['identity']])
+			expect(wrapper.props('modelValue')).toEqual(['identity'])
+		})
+
+		it('removes the value from the array when unchecked', async () => {
+			const wrapper = mount(SyCheckbox, {
+				props: {
+					'modelValue': ['identity', 'nir'] as string[],
+					'value': 'identity',
+					'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+				},
+			})
+
+			await wrapper.find('input[type="checkbox"]').setValue(false)
+			await nextTick()
+
+			expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([['nir']])
+			expect(wrapper.props('modelValue')).toEqual(['nir'])
+		})
+
+		it('passes `value` and `multiple` to the child VCheckbox`', () => {
+			const wrapper = mount(SyCheckbox, {
+				props: {
+					modelValue: ['identity'],
+					value: 'identity',
+					multiple: true,
+				},
+			})
+			const vCheckbox = wrapper.findComponent({ name: 'VCheckbox' })
+
+			expect(vCheckbox.props('value')).toBe('identity')
+			expect(vCheckbox.props('multiple')).toBe(true)
+		})
+
+		it('checks the checkbox when it\'s value is present in the array', () => {
+			const wrapper = mount(SyCheckbox, {
+				props: {
+					modelValue: ['identity', 'nir'],
+					value: 'nir',
+				},
+			})
+
+			expect((wrapper.find('input[type="checkbox"]').element as HTMLInputElement).checked).toBe(true)
+		})
+
+		it('unchecks the checkbox when value is absent from the array', () => {
+			const wrapper = mount(SyCheckbox, {
+				props: {
+					modelValue: ['identity'],
+					value: 'nir',
+				},
+			})
+
+			expect((wrapper.find('input[type="checkbox"]').element as HTMLInputElement).checked).toBe(false)
+		})
+
+		it('sets aria-checked="true" when value is present in the array', () => {
+			const wrapper = mount(SyCheckbox, {
+				props: {
+					modelValue: ['identity'],
+					value: 'identity',
+				},
+			})
+
+			expect(wrapper.find('input[type="checkbox"]').attributes('aria-checked')).toBe('true')
+		})
+
+		it('sets aria-checked="false" when value is absent from the array', () => {
+			const wrapper = mount(SyCheckbox, {
+				props: {
+					modelValue: ['nir'],
+					value: 'identity',
+				},
+			})
+
+			expect(wrapper.find('input[type="checkbox"]').attributes('aria-checked')).toBe('false')
+		})
+
+		it('allows two checkboxes to share the same array', async () => {
+			const shared = ref<string[]>([])
+			const Parent = defineComponent({
+				components: { SyCheckbox },
+				setup() {
+					return { shared }
+				},
+				template: `
+					<div>
+						<SyCheckbox v-model="shared" value="identity" label="Identité" />
+						<SyCheckbox v-model="shared" value="nir" label="NIR" />
+					</div>
+				`,
+			})
+			const wrapper = mount(Parent)
+			const inputs = wrapper.findAll('input[type="checkbox"]')
+
+			await inputs[0]!.setValue(true)
+			await inputs[1]!.setValue(true)
+			await nextTick()
+
+			expect(shared.value).toEqual(['identity', 'nir'])
+
+			await inputs[0]!.setValue(false)
+			await nextTick()
+
+			expect(shared.value).toEqual(['nir'])
+		})
 	})
 })
