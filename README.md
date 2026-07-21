@@ -8,9 +8,10 @@ Pour consulter les changements récents, veuillez consulter le [CHANGELOG](https
 
 ## Prérequis
 
-Pour utiliser ce Design System, vous devez avoir au moins les versions suivantes de Node :
+Pour utiliser ce Design System, vous devez avoir les versions suivantes installées :
 
--   Node : 20.11.0
+-   **Node** : >=20 <23 (versions 20 et 22 supportées)
+-   **pnpm** : >=10 <11 (version 10 et supérieures compatibles)
 
 ## Stack Technique
 

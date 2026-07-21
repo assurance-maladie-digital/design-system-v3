@@ -38,6 +38,12 @@
 </template>
 
 <style lang="scss" scoped>
+//.v-btn:deep() {
+//  .v-btn__underlay,
+//  .v-btn__overlay {
+//    display: none;
+//  }
+//}
 .sy-back-btn {
 	border-color: rgb(var(--v-theme-primary));
 	color: rgb(var(--v-theme-primary));

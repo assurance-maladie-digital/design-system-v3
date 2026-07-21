@@ -1,5 +1,11 @@
 import SyTable from '../SyTable.vue'
 
+// Déclenche `:focus-visible` via l'option native focus({ focusVisible: true }).
+const focusVisible = (selector: string) =>
+	cy.get(selector).then(($el) => {
+		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
+	})
+
 const defaultHeaders = [
 	{ title: 'Nom', key: 'nom', sortable: true },
 	{ title: 'Prénom', key: 'prenom', sortable: true },
@@ -66,5 +72,33 @@ describe('SyTable - Visual regression tests', () => {
 
 		cy.get('.v-table').should('be.visible')
 		cy.matchImageSnapshot('sy-table-compact', cy.get('.v-application'))
+	})
+
+	// Bouton de tri d'un en-tête (`.sort-button`) : ring DS primary (offset 2px).
+	it('shows the DS ring on a focused sort button', () => {
+		cy.mountWithVuetify(SyTable, {
+			props: { headers: defaultHeaders, items: defaultItems, caption: 'Table' },
+		})
+
+		focusVisible('.sort-button')
+		cy.wait(150)
+		cy.matchImageSnapshot('sy-table-sort-focus', cy.get('.v-application'))
+	})
+
+	// Poignée de redimensionnement clavier (`.resizer`) : ring DS primary ajouté.
+	it('shows the DS ring on a focused column resizer', () => {
+		cy.mountWithVuetify(SyTable, {
+			props: {
+				headers: defaultHeaders,
+				items: defaultItems,
+				caption: 'Table',
+				resizableColumns: true,
+			},
+		})
+
+		cy.get('.resizer').first().should('have.attr', 'tabindex', '0')
+		focusVisible('.resizer')
+		cy.wait(150)
+		cy.matchImageSnapshot('sy-table-resizer-focus', cy.get('.v-application'))
 	})
 })

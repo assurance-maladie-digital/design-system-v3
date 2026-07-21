@@ -38,6 +38,23 @@
 	import UploadWorkflow from '@/components/UploadWorkflow/UploadWorkflow.vue'
 	import FileList from '@/components/FileList/FileList.vue'
 	import FilePreview from '@/components/FilePreview/FilePreview.vue'
+	import PhoneField from '@/components/PhoneField/PhoneField.vue'
+	import RangeField from '@/components/RangeField/RangeField.vue'
+	import LunarCalendar from '@/components/LunarCalendar/LunarCalendar.vue'
+	import MonthPicker from '@/components/MonthPicker/MonthPicker.vue'
+	import SyAutocomplete from '@/components/Customs/Selects/SyAutocomplete/SyAutocomplete.vue'
+	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
+	import SyCheckBoxGroup from '@/components/Customs/SyCheckBoxGroup/SyCheckBoxGroup.vue'
+	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
+	import SyRadioGroup from '@/components/Customs/SyRadioGroup/SyRadioGroup.vue'
+	import PaginatedTable from '@/components/PaginatedTable/PaginatedTable.vue'
+	import TableToolbar from '@/components/TableToolbar/TableToolbar.vue'
+	import SyTable from '@/components/Tables/SyTable/SyTable.vue'
+	import SyServerTable from '@/components/Tables/SyServerTable/SyServerTable.vue'
+	import FilterSideBar from '@/components/FilterSideBar/FilterSideBar.vue'
+	import FilterInline from '@/components/FilterInline/FilterInline.vue'
+	import SearchListField from '@/components/SearchListField/SearchListField.vue'
+	import Accordion from '@/components/Accordion/Accordion.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -152,6 +169,103 @@
 		'apercu.pdf',
 		{ type: 'application/pdf' },
 	)
+
+	// PhoneField
+	const phoneValue = ref('0612345678')
+
+	// RangeField
+	const rangeValue = ref([20, 80])
+
+	// LunarCalendar
+	const lunarValue = ref('15/08/1990')
+
+	// MonthPicker
+	const monthValue = ref('03/2025')
+
+	// SyAutocomplete
+	const autocompleteValue = ref('paris')
+	const autocompleteItems = [
+		{ text: 'Paris', value: 'paris' },
+		{ text: 'Lyon', value: 'lyon' },
+		{ text: 'Marseille', value: 'marseille' },
+	]
+
+	// SySelect
+	const selectFocusValue = ref('a')
+	const selectFocusItems = [
+		{ text: 'Option A', value: 'a' },
+		{ text: 'Option B', value: 'b' },
+		{ text: 'Option C', value: 'c' },
+	]
+
+	// SyCheckBoxGroup
+	const checkGroupValue = ref(['a'])
+	const checkGroupOptions = [
+		{ label: 'Option A', value: 'a' },
+		{ label: 'Option B', value: 'b' },
+		{ label: 'Option C', value: 'c' },
+	]
+
+	// SyCheckbox
+	const checkboxValue = ref(true)
+
+	// SyRadioGroup
+	const radioValue = ref('a')
+	const radioOptions = [
+		{ label: 'Option A', value: 'a' },
+		{ label: 'Option B', value: 'b' },
+		{ label: 'Option C', value: 'c' },
+	]
+
+	// PaginatedTable
+	const tableHeaders = [
+		{ title: 'Nom', key: 'nom' },
+		{ title: 'Prénom', key: 'prenom' },
+		{ title: 'Ville', key: 'ville' },
+	]
+	const tableItems = [
+		{ nom: 'Dupont', prenom: 'Jean', ville: 'Paris' },
+		{ nom: 'Martin', prenom: 'Marie', ville: 'Lyon' },
+		{ nom: 'Bernard', prenom: 'Paul', ville: 'Lille' },
+	]
+
+	// TableToolbar
+	const toolbarSearch = ref('')
+
+	// FilterSideBar
+	const sidebarFilters = ref([
+		{ name: 'statut', title: 'Statut', value: ['actif'] },
+		{ name: 'type', title: 'Type', value: null },
+	])
+
+	// FilterInline
+	const inlineFilters = ref([
+		{ name: 'statut', title: 'Statut', value: ['actif'] },
+		{ name: 'type', title: 'Type', value: null },
+	])
+
+	// SearchListField
+	const searchListItems = [
+		{ label: 'Option A', value: 'a' },
+		{ label: 'Option B', value: 'b' },
+		{ label: 'Option C', value: 'c' },
+		{ label: 'Option D', value: 'd' },
+	]
+	const searchListValue = ref<unknown[]>(['a'])
+
+	// Accordion
+	const accordionItems = [
+		{ id: '1', title: 'Premier élément', content: 'Contenu du premier élément' },
+		{ id: '2', title: 'Deuxième élément', content: 'Contenu du deuxième élément' },
+		{ id: '3', title: 'Troisième élément', content: 'Contenu du troisième élément' },
+	]
+
+	// SyTable
+	const syTableHeaders = [
+		{ title: 'Nom', key: 'nom', sortable: true },
+		{ title: 'Prénom', key: 'prenom', sortable: true },
+		{ title: 'Ville', key: 'ville' },
+	]
 
 	// SyInputSelect
 	const selectItems = [
@@ -1421,6 +1535,486 @@
 									</v-sheet>
 								</v-col>
 							</v-row>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ PhoneField ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							PhoneField
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Au Tab : le sélecteur d'indicatif (SySelect) puis le champ numéro
+								(SyTextField) — focus gérés par ces composants (bordure primary). Le bouton
+								<em>clear</em> est un <code>&lt;button&gt;</code> natif → ring DS primary scopé
+								(2px, offset 1px), au lieu du focus navigateur par défaut.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<PhoneField
+									v-model="phoneValue"
+									label="Téléphone"
+									with-country-code
+									is-clearable
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ RangeField ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							RangeField
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Au Tab : les deux champs numériques (min/max, SyTextField → bordure primary)
+								et les deux <em>thumbs</em> du slider (<code>role="slider"</code>). Chaque thumb
+								affiche un cadre de focus DS (2px primary) <strong>au clavier uniquement</strong>
+								(<code>:focus-visible</code>) ; au drag souris, seul le cercle s'agrandit.
+								Utilise les flèches pour déplacer un thumb focus.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4 pt-10"
+								style="max-width: 480px;"
+							>
+								<RangeField
+									v-model="rangeValue"
+									:min="0"
+									:max="100"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ LunarCalendar ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							LunarCalendar
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Simple wrapper autour d'un <code>SyTextField</code> masqué
+								(<code>##/##/####</code>) : aucun style de focus propre. Au Tab, focus sur
+								l'input (bordure primary) ; le bouton <em>clear</em> (VBtn) et l'icône info
+								éventuelle sont gérés par SyTextField (ring global / scopé de SyTextField).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<LunarCalendar
+									v-model="lunarValue"
+									label="Date de naissance (calendrier lunaire)"
+									is-clearable
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ MonthPicker ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							MonthPicker
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Le champ délègue à SyTextField ; le <strong>bouton calendrier</strong>
+								(<code>&lt;button&gt;</code> natif) reçoit un ring DS scopé. Ouvre le picker :
+								les grilles mois/année sont en <strong>roving tabindex</strong> (flèches), et
+								le bouton actif reçoit le ring primary au clavier (<code>:focus-visible</code>).
+								Le YearSelector utilisait <code>accentPrimary</code> → corrigé en <code>primary</code>.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<MonthPicker
+									v-model="monthValue"
+									label="Mois de début"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyAutocomplete ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyAutocomplete
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Combobox : le focus reste sur l'input (SyTextField → bordure primary) ;
+								l'option active du menu est signalée via <code>aria-activedescendant</code>.
+								Ouvre le menu et navigue aux flèches : l'option active reçoit un ring DS
+								primary inset (avant, le token <code>borderAccentPrimary</code> invalide
+								n'affichait rien). Le bouton <em>clear</em> est un <code>&lt;button&gt;</code>
+								natif → ring DS primary scopé (2px, offset 1px).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<SyAutocomplete
+									v-model="autocompleteValue"
+									:items="autocompleteItems"
+									label="Ville"
+									clearable
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SySelect ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SySelect
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Combobox : focus sur l'input (bordure primary). Ouvre le menu et navigue aux
+								flèches → l'option active reçoit un <strong>anneau primary sans fond gris</strong>
+								(le fond gris reste au survol et sur la sélection). Le bouton <em>clear</em> est
+								un <code>&lt;button&gt;</code> natif → ring DS primary scopé (2px, offset 1px).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<SySelect
+									v-model="selectFocusValue"
+									:items="selectFocusItems"
+									label="Choisir une option"
+									clearable
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyCheckBoxGroup ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyCheckBoxGroup
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Aucun style de focus propre : un <code>&lt;fieldset&gt;</code> qui assemble des
+								<code>SyCheckbox</code>. Au Tab, chaque case reçoit le ring DS géré par
+								SyCheckbox (<code>.v-selection-control--focus-visible</code>, 2px primary, offset 2px).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<SyCheckBoxGroup
+									v-model="checkGroupValue"
+									:options="checkGroupOptions"
+									label="Vos préférences"
+									multiple
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyCheckbox ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyCheckbox
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Case seule : ring DS au clavier via
+								<code>.v-selection-control--focus-visible</code> (2px primary, offset 2px).
+								Aucune modif — le ring existait déjà. Tab pour le voir.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<SyCheckbox
+									v-model="checkboxValue"
+									label="J'accepte les conditions"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyRadioGroup ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyRadioGroup
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Les radios n'avaient que le focus Vuetify par défaut (pas de ring DS). J'ai
+								ajouté le <strong>même ring que SyCheckbox</strong>
+								(<code>.v-selection-control--focus-visible</code>, 2px primary, offset 2px).
+								Tab entre dans le groupe, les flèches naviguent entre les radios.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+								style="max-width: 480px;"
+							>
+								<SyRadioGroup
+									v-model="radioValue"
+									:options="radioOptions"
+									label="Votre choix"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ PaginatedTable ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							PaginatedTable
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Au Tab : les <strong>en-têtes de colonnes</strong> triables
+								(<code>&lt;th tabindex="0"&gt;</code>) reçoivent un ring DS primary inset — ils
+								n'en avaient aucun. Les boutons de <strong>pagination</strong> aussi (leur ring
+								utilisait un token invalide <code>colors-interactive</code>, corrigé en primary).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<PaginatedTable
+									:headers="tableHeaders"
+									:items="tableItems"
+									:server-items-length="50"
+									caption="Liste des assurés"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ TableToolbar ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							TableToolbar
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Aucun style de focus propre : le champ de recherche est un
+								<code>VTextField color="primary"</code> (bordure primary au focus) et le bouton
+								« ajouter » est un <code>.v-btn</code> (ring global <code>_btns.scss</code>).
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<TableToolbar
+									v-model:search="toolbarSearch"
+									:nb-total="42"
+									show-add-button
+									@add="() => {}"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyTable ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyTable
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Au Tab dans l'en-tête : le <strong>bouton de tri</strong> (colonnes triables) a
+								son ring DS, et la <strong>poignée de redimensionnement</strong>
+								(<code>resizableColumns</code>, opérable aux flèches) reçoit un ring DS
+								qu'elle n'avait pas. Cases (select), édition, pagination et filtres délèguent
+								à SyCheckbox / SyTextField / SySelect.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<SyTable
+									:headers="syTableHeaders"
+									:items="tableItems"
+									caption="Liste des assurés"
+									resizable-columns
+									show-select
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SyServerTable ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyServerTable
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Variante serveur : <strong>aucun focus propre</strong>, tout est délégué à
+								l'infra commune déjà migrée (TableHeader : tri + poignée ; SyTablePagination ;
+								OrganizeColumns ; SyCheckbox/SyTextField ; mixin ligne cliquable). Ligne
+								cliquable ici : focus clavier = anneau seul, sans fond.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<SyServerTable
+									:headers="syTableHeaders"
+									:items="tableItems"
+									:server-items-length="50"
+									caption="Liste des assurés (serveur)"
+									resizable-columns
+									clickable-row
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ FilterSideBar ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							FilterSideBar
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Déjà bien câblé : le bouton d'ouverture et les boutons bas de panneau ont un
+								ring DS (offset 2px, overlay masqué), les titres d'accordéon un ring inset.
+								Le conteneur du drawer (role="dialog") ne montre plus de ring navigateur
+								(focus annoncé par le rôle). Ouvre le panneau et navigue au clavier.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<FilterSideBar
+									v-model="sidebarFilters"
+									title="Filtres"
+								>
+									<template #statut>
+										<div class="text-body-2">
+											Contenu du filtre Statut
+										</div>
+									</template>
+									<template #type>
+										<div class="text-body-2">
+											Contenu du filtre Type
+										</div>
+									</template>
+								</FilterSideBar>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ FilterInline ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							FilterInline
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Chaque filtre est un <code>.v-btn</code> pill (activateur de VMenu) → ring
+								primary via l'override global <code>_btns.scss</code>. Aucun style de focus
+								propre. Le contenu du menu (chips + slot) est géré par ses composants.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<FilterInline v-model="inlineFilters">
+									<template #statut="{ props: p }">
+										<div
+											v-bind="p"
+											class="text-body-2"
+										>
+											Contenu du filtre Statut
+										</div>
+									</template>
+									<template #type="{ props: p }">
+										<div
+											v-bind="p"
+											class="text-body-2"
+										>
+											Contenu du filtre Type
+										</div>
+									</template>
+								</FilterInline>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SearchListField ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SearchListField
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Champ de recherche (SyTextField, bordure primary) + liste de cases. Toute la
+								ligne (<code>.label</code>) est cliquable → le ring DS épouse la ligne entière
+								(<code>:has(:focus-visible)</code>, offset inset -2px). Le ring propre de
+								<code>SyCheckbox</code> est neutralisé pour éviter le double contour.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<SearchListField
+									v-model="searchListValue"
+									label="Rechercher"
+									:items="searchListItems"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ Accordion ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							Accordion
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Accordéon bespoke (pas VExpansionPanel). L'item a <code>overflow: hidden</code>,
+								donc le ring DS est un <code>outline</code> inset (offset -2px) sur l'en-tête —
+								plus de background ni de bordure 3px qui décalait la mise en page. Naviguer au
+								clavier (Tab, puis ↑/↓/Home/Fin) pour voir le ring.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<Accordion :items="accordionItems" />
+							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>

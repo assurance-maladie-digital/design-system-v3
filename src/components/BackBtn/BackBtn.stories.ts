@@ -35,6 +35,15 @@ const meta = {
 				},
 			},
 		},
+		color: {
+			control: { type: 'text' },
+			description: 'Couleur du texte du text et icone parmi la palette du thème.',
+			table: {
+				type: {
+					summary: 'string',
+				},
+			},
+		},
 		backgroundColor: {
 			control: { type: 'text' },
 			description: 'Couleur de fond du bouton parmi la palette du thème.',

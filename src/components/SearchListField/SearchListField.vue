@@ -209,8 +209,17 @@
 		background-color: rgba(var(--v-theme-primary), 0.08);
 	}
 
+	// La ligne entière (`<label>`) est la cible cliquable : le ring DS épouse donc toute la
+	// ligne. Offset inset (-2px) pour ne jamais toucher/rogner les lignes voisines empilées.
 	&:has(:focus-visible) {
-		outline: 2px solid rgba(var(--v-theme-primary));
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: -2px;
+	}
+
+	// On neutralise le ring propre de SyCheckbox (`.v-selection-control--focus-visible`, offset
+	// 2px sur la case) pour éviter un double contour : le ring de ligne suffit.
+	:deep(.v-selection-control--focus-visible) {
+		outline: none;
 	}
 
 	span {
