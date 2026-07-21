@@ -2135,6 +2135,41 @@
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
+
+					<!-- ============ SyIcon ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SyIcon
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Une icône interactive (<code>role="button"</code> → <code>tabindex=0</code> via la
+								directive <code>rgaaSvgFix</code>) est focusable mais n'est ni
+								<code>&lt;button&gt;</code> ni <code>.v-btn</code> : l'override global ne la couvre
+								pas. Le ring DS (2px primary, offset 2px) est ajouté dans le style scoped de SyIcon.
+								Les icônes décoratives/informatives ne sont pas focusables.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4 d-flex align-center ga-6"
+							>
+								<SyIcon
+									:icon="mdiPencil"
+									:decorative="false"
+									label="Éditer"
+									role="button"
+									@click="() => {}"
+								/>
+								<SyIcon
+									:icon="mdiPencil"
+									:decorative="false"
+									label="Icône informative (non focusable)"
+									role="img"
+								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
 				</v-expansion-panels>
 			</v-container>
 		</v-main>
