@@ -54,6 +54,7 @@
 	import FilterSideBar from '@/components/FilterSideBar/FilterSideBar.vue'
 	import FilterInline from '@/components/FilterInline/FilterInline.vue'
 	import SearchListField from '@/components/SearchListField/SearchListField.vue'
+	import Accordion from '@/components/Accordion/Accordion.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -251,6 +252,13 @@
 		{ label: 'Option D', value: 'd' },
 	]
 	const searchListValue = ref<unknown[]>(['a'])
+
+	// Accordion
+	const accordionItems = [
+		{ id: '1', title: 'Premier élément', content: 'Contenu du premier élément' },
+		{ id: '2', title: 'Deuxième élément', content: 'Contenu du deuxième élément' },
+		{ id: '3', title: 'Troisième élément', content: 'Contenu du troisième élément' },
+	]
 
 	// SyTable
 	const syTableHeaders = [
@@ -1984,6 +1992,28 @@
 									label="Rechercher"
 									:items="searchListItems"
 								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ Accordion ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							Accordion
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Accordéon bespoke (pas VExpansionPanel). L'item a <code>overflow: hidden</code>,
+								donc le ring DS est un <code>outline</code> inset (offset -2px) sur l'en-tête —
+								plus de background ni de bordure 3px qui décalait la mise en page. Naviguer au
+								clavier (Tab, puis ↑/↓/Home/Fin) pour voir le ring.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<Accordion :items="accordionItems" />
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
