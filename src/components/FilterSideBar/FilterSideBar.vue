@@ -283,6 +283,11 @@
 		outline: 2px solid rgb(var(--v-theme-primary));
 		outline-offset: 2px;
 
+		// Bouton `elevated` (appliquer) : Vuetify fait apparaître une ombre d'élévation au
+		// focus. On la neutralise pour que le bouton ne « change » pas au focus (le ring suffit
+		// comme indicateur). Sans effet sur les boutons `outlined` (déjà sans ombre).
+		box-shadow: none !important;
+
 		:deep(.v-btn__overlay) {
 			display: none;
 		}
@@ -302,5 +307,12 @@
 			display: none;
 		}
 	}
+}
+
+// Conteneur du drawer (role="dialog", tabindex 0) : il reçoit le focus à l'ouverture. Pas de
+// ring navigateur sur tout le panneau — le focus visible est porté par les contrôles internes
+// (accordéon, boutons), et le dialog est déjà annoncé par son rôle + aria-label.
+.sy-filters-side-bar__content:focus-visible {
+	outline: none;
 }
 </style>

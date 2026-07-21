@@ -51,6 +51,7 @@
 	import TableToolbar from '@/components/TableToolbar/TableToolbar.vue'
 	import SyTable from '@/components/Tables/SyTable/SyTable.vue'
 	import SyServerTable from '@/components/Tables/SyServerTable/SyServerTable.vue'
+	import FilterSideBar from '@/components/FilterSideBar/FilterSideBar.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -227,6 +228,12 @@
 
 	// TableToolbar
 	const toolbarSearch = ref('')
+
+	// FilterSideBar
+	const sidebarFilters = ref([
+		{ name: 'statut', title: 'Statut', value: ['actif'] },
+		{ name: 'type', title: 'Type', value: null },
+	])
 
 	// SyTable
 	const syTableHeaders = [
@@ -1860,6 +1867,42 @@
 									resizable-columns
 									clickable-row
 								/>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ FilterSideBar ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							FilterSideBar
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Déjà bien câblé : le bouton d'ouverture et les boutons bas de panneau ont un
+								ring DS (offset 2px, overlay masqué), les titres d'accordéon un ring inset.
+								Le conteneur du drawer (role="dialog") ne montre plus de ring navigateur
+								(focus annoncé par le rôle). Ouvre le panneau et navigue au clavier.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<FilterSideBar
+									v-model="sidebarFilters"
+									title="Filtres"
+								>
+									<template #statut>
+										<div class="text-body-2">
+											Contenu du filtre Statut
+										</div>
+									</template>
+									<template #type>
+										<div class="text-body-2">
+											Contenu du filtre Type
+										</div>
+									</template>
+								</FilterSideBar>
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
