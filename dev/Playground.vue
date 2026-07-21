@@ -53,6 +53,7 @@
 	import SyServerTable from '@/components/Tables/SyServerTable/SyServerTable.vue'
 	import FilterSideBar from '@/components/FilterSideBar/FilterSideBar.vue'
 	import FilterInline from '@/components/FilterInline/FilterInline.vue'
+	import SearchListField from '@/components/SearchListField/SearchListField.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -241,6 +242,15 @@
 		{ name: 'statut', title: 'Statut', value: ['actif'] },
 		{ name: 'type', title: 'Type', value: null },
 	])
+
+	// SearchListField
+	const searchListItems = [
+		{ label: 'Option A', value: 'a' },
+		{ label: 'Option B', value: 'b' },
+		{ label: 'Option C', value: 'c' },
+		{ label: 'Option D', value: 'd' },
+	]
+	const searchListValue = ref<unknown[]>(['a'])
 
 	// SyTable
 	const syTableHeaders = [
@@ -1948,6 +1958,32 @@
 										</div>
 									</template>
 								</FilterInline>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ SearchListField ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							SearchListField
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Champ de recherche (SyTextField, bordure primary) + liste de cases. Toute la
+								ligne (<code>.label</code>) est cliquable → le ring DS épouse la ligne entière
+								(<code>:has(:focus-visible)</code>, offset inset -2px). Le ring propre de
+								<code>SyCheckbox</code> est neutralisé pour éviter le double contour.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<SearchListField
+									v-model="searchListValue"
+									label="Rechercher"
+									:items="searchListItems"
+								/>
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
