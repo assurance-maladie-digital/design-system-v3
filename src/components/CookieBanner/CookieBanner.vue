@@ -330,7 +330,12 @@
 
 .vd-cookie-banner-content {
 	overflow-y: auto;
-	padding-right: 8px;
+
+	// `overflow-y: auto` fait aussi passer `overflow-x` en `auto` → ce conteneur rogne les deux
+	// axes. Les boutons d'action sont à son bord : sans marge, leur ring de focus outset (offset
+	// 3px + 2px de trait) serait rogné en bas, et à gauche quand les boutons passent en pleine
+	// largeur (mobile). On réserve donc ~6px de padding (le 8px à droite couvre aussi la scrollbar).
+	padding: 0 8px 6px 6px;
 	background: transparent;
 
 	div {

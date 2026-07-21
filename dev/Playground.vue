@@ -63,6 +63,7 @@
 	import DialogBox from '@/components/DialogBox/DialogBox.vue'
 	import NotificationBar from '@/components/NotificationBar/NotificationBar.vue'
 	import { useNotificationService } from '@/services/NotificationService'
+	import CookieBanner from '@/components/CookieBanner/CookieBanner.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -283,6 +284,9 @@
 	// DialogBox
 	const dialogOpen = ref(false)
 	const dialogScrollableOpen = ref(false)
+
+	// CookieBanner
+	const cookieBannerOpen = ref(false)
 
 	// NotificationBar
 	const { addNotification } = useNotificationService()
@@ -2306,6 +2310,35 @@
 									</v-btn>
 								</template>
 							</NotificationBar>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ CookieBanner ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							CookieBanner
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Aucun style de focus propre : tous les boutons (fermer, personnaliser, refuser,
+								accepter) sont des <code>.v-btn</code> standalone sur le fond clair de la VSheet →
+								ring global <code>_btns.scss</code> (offset 3px). Le conteneur
+								<code>overflow-y: auto</code> rognait le bas du ring des boutons d'action → un
+								padding a été réservé sur le conteneur pour l'éviter.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<v-btn
+									color="primary"
+									@click="cookieBannerOpen = true"
+								>
+									Afficher le bandeau cookies
+								</v-btn>
+								<CookieBanner v-model="cookieBannerOpen" />
+							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>
