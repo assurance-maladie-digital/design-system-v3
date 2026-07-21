@@ -2294,7 +2294,18 @@
 									Erreur
 								</v-btn>
 							</v-sheet>
-							<NotificationBar show-all />
+							<div class="text-caption mt-4 mb-2">
+								Bouton fourni via le slot <code>action</code> : il reçoit aussi le ring contrasté
+								par type (sinon il hériterait du ring primary du global, invisible sur le fond
+								coloré).
+							</div>
+							<NotificationBar show-all>
+								<template #action>
+									<v-btn variant="outlined">
+										Voir le détail
+									</v-btn>
+								</template>
+							</NotificationBar>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
 				</v-expansion-panels>

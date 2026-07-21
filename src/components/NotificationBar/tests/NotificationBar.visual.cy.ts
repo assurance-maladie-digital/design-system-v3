@@ -74,4 +74,23 @@ describe('NotificationBar - Visual regression tests', () => {
 		cy.wait(150)
 		cy.matchImageSnapshot('notification-bar-close-focus', cy.get('.v-application'))
 	})
+
+	// Un bouton interactif fourni via le slot `action` reçoit aussi le ring contrasté par type
+	// (sinon il hériterait du ring primary du global, invisible sur le fond coloré de la barre).
+	it('shows the contrast ring on a focused action-slot button', () => {
+		const { addNotification } = useNotificationService()
+		addNotification({ id: '1', message: 'Notification avec action', type: 'info' })
+
+		cy.mountWithVuetify(NotificationBar, {
+			props: { showAll: true },
+			slots: {
+				action: '<button type="button" class="notification-action-btn px-3 py-2">Voir le détail</button>',
+			},
+		})
+
+		cy.get('.notification-action-btn').should('be.visible')
+		focusVisible('.notification-action-btn')
+		cy.wait(150)
+		cy.matchImageSnapshot('notification-bar-action-focus', cy.get('.v-application'))
+	})
 })
