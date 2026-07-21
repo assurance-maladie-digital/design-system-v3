@@ -20,13 +20,6 @@ const componentInfo = existsSync(componentInfoPath)
 
 const requiredFormStories = ['disabled', 'required', 'form-validation']
 
-const excludedComponentNames = [
-	'FilterRules',
-	'Usages',
-	'datePickers',
-	'ComponentStatusTable',
-]
-
 const ap2026Components = [
 	'composants-layout-pagecontainer',
 	'composants-navigation-sypagination',
@@ -60,37 +53,13 @@ const ap2026Components = [
 	'composants-tableaux-paginatedtable',
 ]
 
-const storyFiles = globSync('src/components/**/*.stories.@(js|ts|tsx)', {
-	cwd: root,
-	absolute: true,
-}).filter((file) => {
-	const normalized = file.replace(/\\/g, '/')
-
-	return !normalized.includes('/rules/')
-		&& !normalized.includes('/Usages.')
-		&& !normalized.includes('/usage.')
-		&& !normalized.includes('/accessibilite/')
-		&& !normalized.includes('/accessibilité/')
-})
-
-function slugify(value) {
+function slugify(value = '') {
 	return value
 		.toLowerCase()
 		.normalize('NFD')
 		.replace(/[\u0300-\u036f]/g, '')
 		.replace(/[^a-z0-9]+/g, '-')
 		.replace(/^-|-$/g, '')
-}
-function getMainVueNames(componentDir) {
-	try {
-		return globSync('*.vue', {
-			cwd: componentDir,
-			nodir: true,
-		}).map(file => file.replace('.vue', ''))
-	}
-	catch {
-		return []
-	}
 }
 
 function getFunctionalInfo(componentName, storybookTitle) {
@@ -105,19 +74,7 @@ function getFunctionalInfo(componentName, storybookTitle) {
 	}
 }
 
-function getComponentName(filePath) {
-	return path.basename(filePath)
-		.replace('.stories.tsx', '')
-		.replace('.stories.ts', '')
-		.replace('.stories.js', '')
-}
-
-function getStorybookTitle(content, componentName) {
-	const match = content.match(/title\s*:\s*['"`]([^'"`]+)['"`]/)
-	return match?.[1] || componentName
-}
-
-function getCategory(storybookTitle) {
+function getCategory(storybookTitle = '') {
 	const parts = storybookTitle.split('/')
 
 	if (parts[0] !== 'Composants') {
@@ -196,9 +153,15 @@ function hasPlayground(content, docsContent = '') {
 }
 
 function getRequiredStoriesStatus(content, title) {
+	if (!title) {
+		return 'Non concerné'
+	}
+
 	const isFormComponent = title.toLowerCase().includes('formulaires')
 
-	if (!isFormComponent) return 'Non concerné'
+	if (!isFormComponent) {
+		return 'Non concerné'
+	}
 
 	const storyNames = Array.from(content.matchAll(/export\s+const\s+([a-zA-Z_$][\w$]*)/g))
 		.map(match => match[1].toLowerCase())
@@ -273,107 +236,162 @@ function getCriticality({
 	return issues.join(' | ')
 }
 
-function shouldExcludeStory({ componentName, storybookTitle }) {
-	if (excludedComponentNames.includes(componentName)) {
-		return true
-	}
+const allStoryFiles = globSync(
+	'src/components/**/*.stories.@(js|ts|tsx)',
+	{
+		cwd: root,
+		absolute: true,
+	},
+).filter((file) => {
+	const normalized = file.replace(/\\/g, '/').toLowerCase()
 
-	const excludedSegments = [
-		'/Accessibility',
-		'/Validation',
-		'/DateInput',
-		'/Submit',
-	]
+	return !normalized.includes('/rules/')
+		&& !normalized.includes('/accessibilite/')
+		&& !normalized.includes('/accessibilité/')
+		&& !normalized.includes('/usages.')
+		&& !normalized.includes('/usage.')
+})
 
-	return excludedSegments.some(segment => storybookTitle.includes(segment))
+function getStoryName(filePath) {
+	return path.basename(filePath)
+		.replace(/\.stories\.(js|ts|tsx)$/, '')
 }
 
+function getStorybookTitle(content, fallback = '') {
+	const match = content.match(
+		/title\s*:\s*['"`]([^'"`]+)['"`]/,
+	)
+
+	return match?.[1] || fallback
+}
 function main() {
-	const results = storyFiles
-		.map((filePath) => {
-			const content = readFileSync(filePath, 'utf8')
-			const componentName = getComponentName(filePath)
-			const componentDir = path.dirname(filePath)
-			const storybookTitle = getStorybookTitle(content, componentName)
+	const results = componentInfo.results.map((component) => {
+		const componentName
+		= component.componentName.split('/').pop()
+			|| component.componentName
 
-			if (shouldExcludeStory({ componentName, storybookTitle })) {
-				return null
-			}
+		let storyFile = allStoryFiles.find(file =>
+			getStoryName(file).toLowerCase()
+			=== componentName.toLowerCase(),
+		)
 
-			const mdxPath = filePath.replace(/\.stories\.(js|ts|tsx)$/, '.mdx')
-			const docsContent = existsSync(mdxPath)
-				? readFileSync(mdxPath, 'utf8')
-				: ''
+		if (!storyFile && component.storybookTitle) {
+			storyFile = allStoryFiles.find((file) => {
+				const fileContent = readFileSync(file, 'utf8')
+				const fileTitle = getStorybookTitle(fileContent)
 
-			const files = globSync('**/*', {
-				cwd: componentDir,
-				nodir: true,
+				return fileTitle === component.storybookTitle
 			})
+		}
 
-			const propsDetails = getPropsAndSlotsDocumentationDetails(content)
-			const propsDocumentation = propsDetails.isComplete
-			const sourceTab = hasSourceCode(content)
-			const requiredStoriesStatus = getRequiredStoriesStatus(content, storybookTitle)
-			const uxUsagePage = files.some(file => file.toLowerCase().endsWith('usages.mdx'))
-			const interactivePlayground = hasPlayground(content, docsContent)
-			const themeStatus = getVisualThemeStatus(componentName, content)
-			const themeModeStatus = getThemeModeStatus(content)
-			const storyPath = slugify(storybookTitle)
-			const functionalInfo = getFunctionalInfo(componentName, storybookTitle)
-			const hasUnitTest = files.some(file =>
-				file.toLowerCase().endsWith(`${componentName.toLowerCase()}.spec.ts`)
-				&& !file.toLowerCase().endsWith(`${componentName.toLowerCase()}.a11y.spec.ts`),
-			)
+		const content = storyFile
+			? readFileSync(storyFile, 'utf8')
+			: ''
 
-			const hasA11yTest = files.some(file =>
-				file.toLowerCase().endsWith(`${componentName.toLowerCase()}.a11y.spec.ts`),
-			)
+		const storybookTitle
+		= component.storybookTitle
+			|| getStorybookTitle(content, componentName)
+			|| componentName
 
-			const hasCypressTest = files.some(file =>
-				file.toLowerCase().endsWith(`${componentName.toLowerCase()}.visual.cy.ts`),
-			)
+		// if (!storyFile) {
+		// 	console.log(
+		// 		`Storie introuvable : ${component.componentName}`,
+		// 	)
+		// }
 
-			const hasAp2026Theme = ap2026Components.some(id =>
-				storyPath === id
-				|| storyPath.startsWith(`${id}-`),
-			)
+		const effectiveComponentDir = storyFile
+			? path.dirname(storyFile)
+			: path.join(root, 'src/components', component.componentName)
 
-			const criticality = getCriticality({
-				hasPropsDocumentation: propsDocumentation,
-				hasSourceTab: sourceTab,
-				requiredStoriesStatus,
-				hasUxUsagePage: uxUsagePage,
-				hasInteractivePlayground: interactivePlayground,
-			})
+		const mdxPath = storyFile
+			? storyFile.replace(/\.stories\.(js|ts|tsx)$/, '.mdx')
+			: ''
+		const docsContent = mdxPath && existsSync(mdxPath)
+			? readFileSync(mdxPath, 'utf8')
+			: ''
 
-			const defaultFigmaUrl
+		const files = globSync('**/*', {
+			cwd: effectiveComponentDir,
+			nodir: true,
+		})
+
+		const propsDetails = getPropsAndSlotsDocumentationDetails(content)
+		const propsDocumentation = propsDetails.isComplete
+		const sourceTab = hasSourceCode(content)
+		const requiredStoriesStatus = getRequiredStoriesStatus(content, storybookTitle)
+		const uxUsagePage = files.some(file => file.toLowerCase().endsWith('usages.mdx'))
+		const interactivePlayground = hasPlayground(content, docsContent)
+		const themeStatus = getVisualThemeStatus(componentName, content)
+		const themeModeStatus = getThemeModeStatus(content)
+		const storyPath = slugify(storybookTitle)
+		const functionalInfo = getFunctionalInfo(componentName, storybookTitle)
+		const hasUnitTest = files.some(file =>
+			file.toLowerCase().endsWith(`${componentName.toLowerCase()}.spec.ts`)
+			&& !file.toLowerCase().endsWith(`${componentName.toLowerCase()}.a11y.spec.ts`),
+		)
+
+		const hasA11yTest = files.some(file =>
+			file.toLowerCase().endsWith(`${componentName.toLowerCase()}.a11y.spec.ts`),
+		)
+
+		const hasCypressTest = files.some(file =>
+			file.toLowerCase().endsWith(`${componentName.toLowerCase()}.visual.cy.ts`),
+		)
+
+		const hasAp2026Theme = ap2026Components.some(id =>
+			storyPath === id
+			|| storyPath.startsWith(`${id}-`),
+		)
+
+		const criticality = getCriticality({
+			hasPropsDocumentation: propsDocumentation,
+			hasSourceTab: sourceTab,
+			requiredStoriesStatus,
+			hasUxUsagePage: uxUsagePage,
+			hasInteractivePlayground: interactivePlayground,
+		})
+
+		const checks = [
+			propsDocumentation,
+			sourceTab,
+			!requiredStoriesStatus.startsWith('Partiel'),
+			uxUsagePage,
+			interactivePlayground,
+		]
+
+		const successfulChecks = checks.filter(Boolean).length
+		const score = Math.round(
+			(successfulChecks / checks.length) * 100,
+		)
+
+		const defaultFigmaUrl
   = 'https://www.figma.com/design/m2tWjSODYdgi5POFx0cmJr/Synapse?m=auto&node-id=1109-4028&t=xjggswqIQwBbmkTk-1'
 
-			return {
-				componentName,
-				hasPropsDocumentation: propsDocumentation,
-				propsDocumentationLabel: propsDetails.label,
-				hasSourceTab: sourceTab,
-				requiredStoriesStatus,
-				hasUxUsagePage: uxUsagePage,
-				themeStatus,
-				hasAp2026Theme,
-				themeModeStatus,
-				hasInteractivePlayground: interactivePlayground,
-				criticality,
-				isFullyCompliant: !criticality,
-				storybookTitle,
-				hasUnitTest,
-				functionalVersion: functionalInfo.functionalVersion,
-				functionalDate: functionalInfo.functionalDate,
-				hasA11yTest,
-				figmaUrl: defaultFigmaUrl,
-				hasCypressTest,
-				storybookId: `${storyPath}--docs`,
-				category: getCategory(storybookTitle),
-			}
-		})
-		.filter(Boolean)
+		return {
+			componentName,
+			hasPropsDocumentation: propsDocumentation,
+			propsDocumentationLabel: propsDetails.label,
+			hasSourceTab: sourceTab,
+			requiredStoriesStatus,
+			hasUxUsagePage: uxUsagePage,
+			themeStatus,
+			hasAp2026Theme,
+			themeModeStatus,
+			hasInteractivePlayground: interactivePlayground,
+			criticality,
+			isFullyCompliant: !criticality,
+			storybookTitle,
+			hasUnitTest,
+			functionalVersion: functionalInfo.functionalVersion,
+			functionalDate: functionalInfo.functionalDate,
+			hasA11yTest,
+			figmaUrl: defaultFigmaUrl,
+			score,
+			hasCypressTest,
+			storybookId: `${storyPath}--docs`,
+			category: getCategory(storybookTitle),
+		}
+	})
 
 	mkdirSync(path.dirname(outputPath), { recursive: true })
 	writeFileSync(
