@@ -52,6 +52,7 @@
 	import SyTable from '@/components/Tables/SyTable/SyTable.vue'
 	import SyServerTable from '@/components/Tables/SyServerTable/SyServerTable.vue'
 	import FilterSideBar from '@/components/FilterSideBar/FilterSideBar.vue'
+	import FilterInline from '@/components/FilterInline/FilterInline.vue'
 	import type { AxiosResponse } from 'axios'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiFormatAlignLeft, mdiFormatAlignCenter, mdiFormatAlignRight, mdiPencil } from '@mdi/js'
@@ -231,6 +232,12 @@
 
 	// FilterSideBar
 	const sidebarFilters = ref([
+		{ name: 'statut', title: 'Statut', value: ['actif'] },
+		{ name: 'type', title: 'Type', value: null },
+	])
+
+	// FilterInline
+	const inlineFilters = ref([
 		{ name: 'statut', title: 'Statut', value: ['actif'] },
 		{ name: 'type', title: 'Type', value: null },
 	])
@@ -1903,6 +1910,44 @@
 										</div>
 									</template>
 								</FilterSideBar>
+							</v-sheet>
+						</v-expansion-panel-text>
+					</v-expansion-panel>
+
+					<!-- ============ FilterInline ============ -->
+					<v-expansion-panel>
+						<v-expansion-panel-title>
+							FilterInline
+						</v-expansion-panel-title>
+						<v-expansion-panel-text>
+							<div class="text-caption mb-2">
+								Chaque filtre est un <code>.v-btn</code> pill (activateur de VMenu) → ring
+								primary via l'override global <code>_btns.scss</code>. Aucun style de focus
+								propre. Le contenu du menu (chips + slot) est géré par ses composants.
+							</div>
+							<v-sheet
+								color="surface"
+								rounded
+								class="pa-4"
+							>
+								<FilterInline v-model="inlineFilters">
+									<template #statut="{ props: p }">
+										<div
+											v-bind="p"
+											class="text-body-2"
+										>
+											Contenu du filtre Statut
+										</div>
+									</template>
+									<template #type="{ props: p }">
+										<div
+											v-bind="p"
+											class="text-body-2"
+										>
+											Contenu du filtre Type
+										</div>
+									</template>
+								</FilterInline>
 							</v-sheet>
 						</v-expansion-panel-text>
 					</v-expansion-panel>
