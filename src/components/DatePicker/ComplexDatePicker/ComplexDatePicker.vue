@@ -380,6 +380,8 @@
 		const input = getCalendarInputElement()
 		if (isInteractionDisabled.value || isDatePickerVisible.value || !input) return
 		if (event && (event.target !== input || document.activeElement !== input)) return
+		// Ne pas ouvrir le calendrier si le clic vient du bouton clear
+		if (event && (event.target as HTMLElement)?.closest('.sy-text-field__clear')) return
 
 		lastVisibilityChangeReason.value = 'inputClick'
 		openDatePicker()

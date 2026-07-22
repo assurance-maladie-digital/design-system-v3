@@ -1120,6 +1120,12 @@ $ap-grey-mid: #d6d6d6;
 	border-radius: var(--radius-md) !important;
 }
 
+/* En mode calendar, le champ est readonly : pas de cursor pointer sur l'input et les icônes */
+:deep(.v-field__input),
+:deep(.sy-text-field__icon-button) {
+	cursor: default;
+}
+
 .date-picker-title {
 	display: block;
 	text-transform: lowercase;
