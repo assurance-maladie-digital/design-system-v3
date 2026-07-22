@@ -9,7 +9,7 @@
 		validateDateFormat,
 		isDateComplete,
 	} from '../composables'
-	import { ref, computed, watch, nextTick, onMounted, readonly as readonlyState, toRefs, useId } from 'vue'
+	import { ref, computed, watch, nextTick, onMounted, readonly as readonlyState, toRefs } from 'vue'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -206,7 +206,6 @@
 	const isFocused = ref(false)
 	const hasInteracted = ref(false)
 	const ariaLabel = ref(props.label || props.placeholder || locales.label)
-	const formatDescriptionId = `date-format-desc-${useId()}`
 
 	function validateDateFormatForSingleOrRange(input: string): { isValid: boolean, message: string } {
 		if (readonly.value) return { isValid: true, message: '' }
@@ -1144,35 +1143,28 @@
 	}
 </script>
 
-<template>
-	<div class="date-text-input">
-		<SyTextField
+	<template>
+		<div class="date-text-input">
+			<SyTextField
 			ref="inputRef"
 			v-model="inputValue"
 			:class="{
 				'error-field': isOnError,
 				'warning-field': isOnWarning,
 				'success-field': isOnSuccess,
-			}"
-			color="primary"
-			v-bind="syTextFieldProps"
-			:aria-describedby="formatDescriptionId"
-			@focus="onFocus"
-			@blur="onBlur"
-			@mousedown="onMouseDown"
-			@keydown="handleKeydown"
-			@paste="handlePaste"
-			@prepend-icon-click="emit('prepend-icon-click', $event)"
-			@append-icon-click="emit('append-icon-click', $event)"
-		/>
-		<div
-			:id="formatDescriptionId"
-			class="d-sr-only"
-		>
-			{{ locales.formatHint }} {{ displayFormat }}
+				}"
+				color="primary"
+				v-bind="syTextFieldProps"
+				@focus="onFocus"
+				@blur="onBlur"
+				@mousedown="onMouseDown"
+				@keydown="handleKeydown"
+				@paste="handlePaste"
+				@prepend-icon-click="emit('prepend-icon-click', $event)"
+				@append-icon-click="emit('append-icon-click', $event)"
+			/>
 		</div>
-	</div>
-</template>
+	</template>
 
 <style lang="scss" scoped>
 :deep(.v-icon__svg) { cursor: default; }

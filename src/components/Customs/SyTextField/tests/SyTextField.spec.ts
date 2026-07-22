@@ -127,6 +127,39 @@ describe('SyTextField', () => {
 		expect(wrapper.emitted('append-icon-click')).toBeTruthy()
 	})
 
+	it('disables prepend icon button when the field is readonly', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				prependIcon: 'calendar' as IconType,
+				label: 'Test Field',
+				disableClickButton: false,
+				readonly: true,
+			},
+		})
+
+		const prependButton = wrapper.find('.sy-text-field__icon-button')
+		expect(prependButton.attributes('disabled')).toBeDefined()
+		expect(prependButton.attributes('aria-disabled')).toBe('true')
+		await prependButton.trigger('click')
+		expect(wrapper.emitted('prepend-icon-click')).toBeFalsy()
+	})
+
+	it('prevents mousedown on icon buttons from blurring the input first', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				prependIcon: 'calendar' as IconType,
+				label: 'Test Field',
+				disableClickButton: false,
+			},
+		})
+
+		const prependButton = wrapper.find('.sy-text-field__icon-button')
+		const mouseDownEvent = new MouseEvent('mousedown', { bubbles: true, cancelable: true })
+		prependButton.element.dispatchEvent(mouseDownEvent)
+
+		expect(mouseDownEvent.defaultPrevented).toBe(true)
+	})
+
 	it('does not propagate click from clear button to parent container', async () => {
 		const onClickParent = vi.fn()
 
