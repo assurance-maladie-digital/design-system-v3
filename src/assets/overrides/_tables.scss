@@ -1,5 +1,7 @@
 .v-data-table thead th .v-data-table-header__content {
-	opacity: 0.65;
+	// Atténuation via la COULEUR du texte, pas `opacity` : `opacity` sur ce conteneur
+	// atténuerait aussi tout indicateur de focus rendu à l'intérieur (ring du bouton de tri).
+	color: rgba(var(--v-theme-on-surface), 0.65);
 	font-size: var(--v-ap-fontSizeXs);
 	font-weight: 700 !important;
 }
