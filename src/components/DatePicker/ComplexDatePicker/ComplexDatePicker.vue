@@ -60,6 +60,7 @@
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
+	import DatePickerLiveRegion from '../DatePickerLiveRegion.vue'
 
 	dayjs.extend(customParseFormat)
 
@@ -95,53 +96,6 @@
 	const currentMonthName = ref<string | null>(null)
 	const currentYearName = ref<string | null>(null)
 
-	// Fonction pour mettre à jour le mois quand on navigue via les flèches
-	const onUpdateMonth = (month: string) => {
-		if (currentMonth.value === month) return
-		currentMonth.value = month
-		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
-		handleMonthUpdate()
-		nextTick(() => {
-			if (isDatePickerVisible.value) {
-				customizeMonthButton()
-				markHolidayDays()
-				updateSelectedDayAria()
-				nextTick(focusInitialDay)
-			}
-		})
-	}
-
-	// Fonction pour mettre à jour l'année quand on navigue via les flèches
-	const onUpdateYear = (year: string) => {
-		const oldYear = currentYear.value
-		currentYear.value = year
-		currentYearName.value = year
-
-		const curMonth = parseInt(currentMonth.value ?? '0', 10)
-		const newYear = parseInt(year, 10)
-		const prevYear = parseInt(oldYear ?? '0', 10)
-
-		// Bridges Dec -> Jan and Jan -> Dec when navigating years
-		if (newYear > prevYear && curMonth === 11) {
-			currentMonth.value = '0'
-			currentMonthName.value = dayjs().month(0).format('MMMM')
-		}
-		else if (newYear < prevYear && curMonth === 0) {
-			currentMonth.value = '11'
-			currentMonthName.value = dayjs().month(11).format('MMMM')
-		}
-
-		handleYearUpdate()
-		nextTick(() => {
-			if (isDatePickerVisible.value) {
-				customizeMonthButton()
-				markHolidayDays()
-				updateSelectedDayAria()
-				nextTick(focusInitialDay)
-			}
-		})
-	}
-
 	const props = withDefaults(defineProps<DatePickerCommonProps>(), DatePickerCommonDefaults)
 
 	// Guard centralisé pour disabled/readonly
@@ -173,7 +127,7 @@
 	}
 
 	const shouldRestoreFocusToInput = ref(false)
-	const shouldMoveFocusToDialogOnOpen = ref(false)
+	const shouldFocusDialogOnOpen = ref(false)
 	const keyboardNavigatedDate = ref<Date | null>(null)
 
 	const scheduleCalendarInputFocusRestore = () => {
@@ -181,7 +135,7 @@
 	}
 
 	const scheduleDialogInitialFocus = () => {
-		shouldMoveFocusToDialogOnOpen.value = true
+		shouldFocusDialogOnOpen.value = true
 	}
 
 	const restoreCalendarInputFocus = (attempt = 0) => {
@@ -214,6 +168,8 @@
 
 		await validateDates()
 	}
+
+	const closeAndRestoreFocus = () => closeDatePicker({ restoreFocus: true })
 
 	const syncComboboxInputSemantics = () => {
 		const input = getCalendarInputElement()
@@ -293,8 +249,8 @@
 	const isUpdatingFromInternal = ref(false)
 	const hasInteracted = ref(false)
 	const preventCloseOnInternalUpdate = ref(false)
-	const skipNextInputBlurProcessing = ref(false)
-	const suppressNextCalendarModelValueUpdate = ref(false)
+	const ignoreNextInputBlur = ref(false)
+	const ignoreNextCalendarModelSync = ref(false)
 
 	const {
 		validation,
@@ -335,6 +291,14 @@
 	// Props regroupées pour DateTextInput (mode VMenu)
 	const dateTextInputMenuProps = computed(() => useDateTextInputMenuProps(props, labelWithAsterisk, errorMessages))
 
+	const syncDisplayedMonthYearFromDate = (date: Date) => {
+		const displayedState = getDisplayedMonthYearState(date)
+		currentMonth.value = displayedState.month
+		currentMonthName.value = displayedState.monthName
+		currentYear.value = displayedState.year
+		currentYearName.value = displayedState.yearName
+	}
+
 	const {
 		toggleDatePicker,
 		openDatePicker,
@@ -355,10 +319,22 @@
 		emitFocus: () => emit('focus'),
 	})
 
+	const refreshVisibleCalendarUi = (options: { focusDay?: boolean } = {}) => {
+		if (!isDatePickerVisible.value) return
+
+		customizeMonthButton()
+		markHolidayDays()
+		updateSelectedDayAria()
+
+		if (options.focusDay) {
+			nextTick(focusInitialDay)
+		}
+	}
+
 	const openDatePickerOnIconClick = () => {
 		if (isInteractionDisabled.value) return
-		skipNextInputBlurProcessing.value = true
-		suppressNextCalendarModelValueUpdate.value = true
+		ignoreNextInputBlur.value = true
+		ignoreNextCalendarModelSync.value = true
 		openDatePickerOnIconClickFromVisibility()
 	}
 
@@ -447,7 +423,7 @@
 	})
 
 	const updateSelectedDates = async (date: Date | null) => {
-		suppressNextCalendarModelValueUpdate.value = false
+		ignoreNextCalendarModelSync.value = false
 
 		if (date !== null) {
 			const validationResult = await Promise.resolve(validateField(date, props.customRules, props.customWarningRules))
@@ -463,7 +439,7 @@
 			})
 			updateModel(formatDate(date, returnFormat.value))
 			displayFormattedDate.value = formatDate(date, props.format)
-			closeDatePicker({ restoreFocus: true })
+			closeAndRestoreFocus()
 		}
 		// Validate immediately to surface messages
 		queueMicrotask(() => validateDates(true))
@@ -475,8 +451,8 @@
 			keyboardNavigatedDate.value = Array.isArray(newValue)
 				? (newValue.find(date => date instanceof Date) as Date | null) ?? null
 				: newValue
-			if (suppressNextCalendarModelValueUpdate.value && isDatePickerVisible.value) {
-				suppressNextCalendarModelValueUpdate.value = false
+			if (ignoreNextCalendarModelSync.value && isDatePickerVisible.value) {
+				ignoreNextCalendarModelSync.value = false
 				withInternalUpdate(() => {
 					syncTextInputFromSelection()
 				})
@@ -497,19 +473,9 @@
 			else {
 				baseDate = newValue
 			}
-			if (baseDate) {
-				const displayedState = getDisplayedMonthYearState(baseDate)
-				currentMonth.value = displayedState.month
-				currentMonthName.value = displayedState.monthName
-				currentYear.value = displayedState.year
-				currentYearName.value = displayedState.yearName
-			}
+			if (baseDate) syncDisplayedMonthYearFromDate(baseDate)
 			if (isDatePickerVisible.value) {
-				nextTick(() => {
-					customizeMonthButton()
-					markHolidayDays()
-					updateSelectedDayAria()
-				})
+				nextTick(() => refreshVisibleCalendarUi())
 			}
 
 			const hasCompletedRangeSelection = props.displayRange
@@ -523,7 +489,7 @@
 				&& !preventCloseOnInternalUpdate.value
 				&& (!props.displayRange || hasCompletedRangeSelection)
 			) {
-				closeDatePicker({ restoreFocus: true })
+				closeAndRestoreFocus()
 			}
 		}
 		else {
@@ -533,18 +499,9 @@
 				syncTextInputFromSelection()
 			})
 			// Reset month/year names when clearing the date
-			const today = new Date()
-			const displayedState = getDisplayedMonthYearState(today)
-			currentMonth.value = displayedState.month
-			currentMonthName.value = displayedState.monthName
-			currentYear.value = displayedState.year
-			currentYearName.value = displayedState.yearName
+			syncDisplayedMonthYearFromDate(new Date())
 			if (isDatePickerVisible.value) {
-				nextTick(() => {
-					customizeMonthButton()
-					markHolidayDays()
-					updateSelectedDayAria()
-				})
+				nextTick(() => refreshVisibleCalendarUi())
 			}
 		}
 	})
@@ -609,58 +566,58 @@
 	 * UI updates after picking
 	 */
 	const updateDisplayFormattedDate = () => {
-		if (suppressNextCalendarModelValueUpdate.value) {
-			suppressNextCalendarModelValueUpdate.value = false
+		if (ignoreNextCalendarModelSync.value) {
+			ignoreNextCalendarModelSync.value = false
 			return
 		}
 
 		queueMicrotask(() => {
 			let formattedValue = ''
 
-			if (props.displayRange) {
-				if (rangeBoundaryDates.value?.[0] && rangeBoundaryDates.value?.[1]) {
-					formattedValue = formatDateRangeDisplay(
-						rangeBoundaryDates.value[0],
-						rangeBoundaryDates.value[1],
+				if (props.displayRange) {
+					if (rangeBoundaryDates.value?.[0] && rangeBoundaryDates.value?.[1]) {
+						formattedValue = formatDateRangeDisplay(
+							rangeBoundaryDates.value[0],
+							rangeBoundaryDates.value[1],
 						props.format,
 						formatDate,
 					)
-					displayFormattedDate.value = textInputValue.value = formattedValue
-					const formattedDates = [
-						formatDate(rangeBoundaryDates.value[0], returnFormat.value),
-						formatDate(rangeBoundaryDates.value[1], returnFormat.value),
-					] as [string, string]
-					updateModel(formattedDates)
-					emit('date-selected', formattedDates)
-					closeDatePicker({ restoreFocus: true })
-				}
-				else if (Array.isArray(selectedDates.value) && selectedDates.value.length >= 2) {
-					const formattedDates = [
-						formatDate(selectedDates.value[0]!, props.format),
-						formatDate(selectedDates.value[selectedDates.value.length - 1]!, props.format),
-					] as [string, string]
-					formattedValue = formatDateRangeDisplay(
+						displayFormattedDate.value = textInputValue.value = formattedValue
+						const formattedDates = [
+							formatDate(rangeBoundaryDates.value[0], returnFormat.value),
+							formatDate(rangeBoundaryDates.value[1], returnFormat.value),
+						] as [string, string]
+						updateModel(formattedDates)
+						emit('date-selected', formattedDates)
+						closeAndRestoreFocus()
+					}
+					else if (Array.isArray(selectedDates.value) && selectedDates.value.length >= 2) {
+						const formattedDates = [
+							formatDate(selectedDates.value[0]!, props.format),
+							formatDate(selectedDates.value[selectedDates.value.length - 1]!, props.format),
+						] as [string, string]
+						formattedValue = formatDateRangeDisplay(
 						selectedDates.value[0]!,
 						selectedDates.value[selectedDates.value.length - 1]!,
-						props.format,
-						formatDate,
-					)
-					displayFormattedDate.value = textInputValue.value = formattedValue
-					updateModel(formattedDates)
-					emit('date-selected', formattedDates)
-					closeDatePicker({ restoreFocus: true })
+							props.format,
+							formatDate,
+						)
+						displayFormattedDate.value = textInputValue.value = formattedValue
+						updateModel(formattedDates)
+						emit('date-selected', formattedDates)
+						closeAndRestoreFocus()
+					}
+					else {
+						formattedValue = displayFormattedDateComputed.value || ''
+						displayFormattedDate.value = textInputValue.value = formattedValue
+					}
 				}
 				else {
 					formattedValue = displayFormattedDateComputed.value || ''
 					displayFormattedDate.value = textInputValue.value = formattedValue
+					closeAndRestoreFocus()
+					emit('date-selected', formattedDate.value)
 				}
-			}
-			else {
-				formattedValue = displayFormattedDateComputed.value || ''
-				displayFormattedDate.value = textInputValue.value = formattedValue
-				closeDatePicker({ restoreFocus: true })
-				emit('date-selected', formattedDate.value)
-			}
 
 			validateDates()
 		})
@@ -695,7 +652,7 @@
 	const { handleMenuKeydown } = useDatePickerFocusTrap({
 		isDatePickerVisible,
 		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
-		onClose: () => closeDatePicker({ restoreFocus: true }),
+		onClose: () => closeAndRestoreFocus(),
 		restoreFocus: () => scheduleCalendarInputFocusRestore(),
 		getInitialFocusDate: () => {
 			const value = selectedDates.value
@@ -729,6 +686,39 @@
 			() => datePickerRef.value?.$el as HTMLElement | null,
 		),
 	})
+
+	// Fonction pour mettre à jour le mois quand on navigue via les flèches
+	const onUpdateMonth = (month: string) => {
+		if (currentMonth.value === month) return
+		currentMonth.value = month
+		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
+		handleMonthUpdate()
+		nextTick(() => refreshVisibleCalendarUi({ focusDay: true }))
+	}
+
+	// Fonction pour mettre à jour l'année quand on navigue via les flèches
+	const onUpdateYear = (year: string) => {
+		const oldYear = currentYear.value
+		currentYear.value = year
+		currentYearName.value = year
+
+		const curMonth = parseInt(currentMonth.value ?? '0', 10)
+		const newYear = parseInt(year, 10)
+		const prevYear = parseInt(oldYear ?? '0', 10)
+
+		// Bridges Dec -> Jan and Jan -> Dec when navigating years
+		if (newYear > prevYear && curMonth === 11) {
+			currentMonth.value = '0'
+			currentMonthName.value = dayjs().month(0).format('MMMM')
+		}
+		else if (newYear < prevYear && curMonth === 0) {
+			currentMonth.value = '11'
+			currentMonthName.value = dayjs().month(11).format('MMMM')
+		}
+
+		handleYearUpdate()
+		nextTick(() => refreshVisibleCalendarUi({ focusDay: true }))
+	}
 
 	onMounted(() => {
 		setupMonthButtonObserver()
@@ -821,20 +811,13 @@
 			nextTick(() => {
 				if (datePickerRef.value) {
 					const displayedState = getDisplayedMonthYearState(date)
-					if (currentMonth.value !== displayedState.month || currentYear.value !== displayedState.year) {
-						currentMonth.value = displayedState.month
-						currentYear.value = displayedState.year
-						currentMonthName.value = displayedState.monthName
-						currentYearName.value = displayedState.yearName
-						nextTick(() => {
-							customizeMonthButton()
-							markHolidayDays()
-							updateSelectedDayAria()
-						})
+						if (currentMonth.value !== displayedState.month || currentYear.value !== displayedState.year) {
+							syncDisplayedMonthYearFromDate(date)
+							nextTick(() => refreshVisibleCalendarUi())
+						}
 					}
-				}
-			})
-		},
+				})
+			},
 		onSelectDate: (date: Date) => {
 			void updateSelectedDates(date)
 		},
@@ -872,15 +855,15 @@
 
 		if (!props.noCalendar && (event.key === 'Enter' || event.key === 'ArrowDown') && !isInteractionDisabled.value) {
 			event.preventDefault()
-			skipNextInputBlurProcessing.value = true
+			ignoreNextInputBlur.value = true
 			scheduleDialogInitialFocus()
-			suppressNextCalendarModelValueUpdate.value = true
+			ignoreNextCalendarModelSync.value = true
 			openDatePicker()
 			return
 		}
 
 		if (!props.noCalendar && handleKeyboardNavigation(event)) {
-			skipNextInputBlurProcessing.value = true
+			ignoreNextInputBlur.value = true
 			scheduleDialogInitialFocus()
 			return
 		}
@@ -922,13 +905,13 @@
 	}
 
 	const handleCalendarInputBlur = async () => {
-		if (skipNextInputBlurProcessing.value && isDatePickerVisible.value) {
-			skipNextInputBlurProcessing.value = false
+		if (ignoreNextInputBlur.value && isDatePickerVisible.value) {
+			ignoreNextInputBlur.value = false
 			emitBlurEvent()
 			return
 		}
 
-		skipNextInputBlurProcessing.value = false
+		ignoreNextInputBlur.value = false
 		await handleInputBlur()
 	}
 
@@ -1295,9 +1278,9 @@
 		isDatePickerVisible,
 		(visible) => {
 			if (!visible) {
-				skipNextInputBlurProcessing.value = false
-				shouldMoveFocusToDialogOnOpen.value = false
-				suppressNextCalendarModelValueUpdate.value = false
+				ignoreNextInputBlur.value = false
+				shouldFocusDialogOnOpen.value = false
+				ignoreNextCalendarModelSync.value = false
 				keyboardNavigatedDate.value = null
 			}
 
@@ -1305,17 +1288,15 @@
 				// Réinitialiser le view mode à l'ouverture pour éviter les problèmes de navigation
 				resetViewMode()
 				nextTick(() => {
-					customizeMonthButton()
-					markHolidayDays()
-					updateSelectedDayAria()
+					refreshVisibleCalendarUi()
 					setTimeout(() => {
 						if (isDatePickerVisible.value) {
-							suppressNextCalendarModelValueUpdate.value = false
+							ignoreNextCalendarModelSync.value = false
 						}
 					}, 0)
 
-					if (shouldMoveFocusToDialogOnOpen.value) {
-						shouldMoveFocusToDialogOnOpen.value = false
+					if (shouldFocusDialogOnOpen.value) {
+						shouldFocusDialogOnOpen.value = false
 						focusInitialDay()
 						setTimeout(() => focusInitialDay(), 75)
 						setTimeout(() => focusInitialDay(), 200)
@@ -1351,7 +1332,7 @@
 			formatDate,
 		})
 
-		suppressNextCalendarModelValueUpdate.value = false
+		ignoreNextCalendarModelSync.value = false
 
 		if (props.displayRange) {
 			selectedDates.value = todaySelection.selectedDates
@@ -1372,13 +1353,10 @@
 			emit('date-selected', todaySelection.modelValue)
 		}
 
-		currentMonth.value = todaySelection.month
-		currentYear.value = todaySelection.year
-		currentMonthName.value = todaySelection.monthName
-		currentYearName.value = todaySelection.yearName
+		syncDisplayedMonthYearFromDate(new Date())
 
 		if (isDatePickerVisible.value) {
-			closeDatePicker({ restoreFocus: true })
+			closeAndRestoreFocus()
 		}
 	}
 
@@ -1458,13 +1436,7 @@
 
 <template>
 	<div class="date-picker-container">
-		<span
-			class="sr-only"
-			aria-live="polite"
-			aria-atomic="true"
-		>
-			{{ accessibilityDescription }}
-		</span>
+		<DatePickerLiveRegion :text="accessibilityDescription" />
 
 		<template v-if="props.noCalendar">
 			<DateTextInput
@@ -1475,15 +1447,15 @@
 				v-bind="dateTextInputProps"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
-			/>
+				/>
 		</template>
 
 		<template v-else>
 			<VMenu
 				v-model="isDatePickerVisible"
-				:activator="menuActivatorRef"
-				:min-width="0"
-				location="bottom"
+					:activator="menuActivatorRef"
+					:min-width="0"
+					location="bottom"
 				:persistent="true"
 				:close-on-content-click="false"
 				:open-on-click="false"
@@ -1513,9 +1485,9 @@
 							@input="handleInput"
 							@keydown="handleKeydown"
 							@date-selected="handleDateSelected"
-							@prepend-icon-click="openDatePickerOnIconClick"
-							@append-icon-click="openDatePickerOnIconClick"
-						/>
+						@prepend-icon-click="openDatePickerOnIconClick"
+						@append-icon-click="openDatePickerOnIconClick"
+					/>
 					</div>
 				</template>
 
@@ -1838,15 +1810,4 @@ $ap-grey-mid: #d6d6d6;
 		0 3px 14px 2px rgb(0 0 0 / 12%) !important;
 }
 
-.sr-only {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	white-space: nowrap;
-	border: 0;
-}
 </style>

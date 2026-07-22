@@ -20,6 +20,7 @@
 	import { locales } from '../locales'
 	import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 	import type { DateObjectValue, DateTextInputProps } from '../types'
+	import DatePickerLiveRegion from '../DatePickerLiveRegion.vue'
 
 	dayjs.extend(customParseFormat)
 
@@ -1166,29 +1167,15 @@
 			@prepend-icon-click="emit('prepend-icon-click', $event)"
 			@append-icon-click="emit('append-icon-click', $event)"
 		/>
-		<span
-			:id="formatDescriptionId"
-			class="sr-only"
-		>
-			{{ formatDescription }}
-		</span>
-	</div>
+			<DatePickerLiveRegion
+				:id="formatDescriptionId"
+				:text="formatDescription"
+			/>
+		</div>
 </template>
 
 <style lang="scss" scoped>
 :deep(.v-icon__svg) { cursor: default; }
-
-.sr-only {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	white-space: nowrap;
-	border: 0;
-}
 
 .warning-field {
 	:deep(.v-input__details > .v-icon),
