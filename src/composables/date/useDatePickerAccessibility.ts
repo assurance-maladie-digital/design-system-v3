@@ -1,4 +1,4 @@
-import { nextTick, onBeforeUnmount, onMounted } from 'vue'
+import { nextTick, onBeforeUnmount } from 'vue'
 import { locales } from '@/components/DatePicker/locales'
 import type { ViewMode } from '@/components/DatePicker/composables/useDatePickerViewMode'
 
@@ -550,16 +550,6 @@ export function useDatePickerAccessibility() {
 	}
 
 	/**
-	 * Conservé pour compatibilité avec les appels existants.
-	 *
-	 * On ne supprime plus globalement aria-expanded / aria-haspopup,
-	 * pour éviter de casser les combobox ou les menus.
-	 */
-	const fixAriaAttributes = () => {
-		// noop volontaire
-	}
-
-	/**
 	 * Gestion clavier plus sûre.
 	 *
 	 * Les vrais boutons gèrent déjà Entrée nativement :
@@ -596,10 +586,6 @@ export function useDatePickerAccessibility() {
 
 	let cleanupLastRun: (() => void) | undefined
 
-	onMounted(() => {
-		fixAriaAttributes()
-	})
-
 	onBeforeUnmount(() => {
 		cleanupLastRun?.()
 	})
@@ -608,7 +594,6 @@ export function useDatePickerAccessibility() {
 		updateAccessibility,
 		cleanupGridSemantics,
 		handleKeyDown,
-		fixAriaAttributes,
 	}
 }
 

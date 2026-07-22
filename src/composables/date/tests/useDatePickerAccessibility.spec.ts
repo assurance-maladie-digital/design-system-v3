@@ -8,12 +8,11 @@ import { useMonthButtonCustomization } from '../../../components/DatePicker/comp
 // Composant vide qui servira de contexte pour les hooks Vue
 const TestComponent = defineComponent({
 	setup() {
-		const { updateAccessibility, cleanupGridSemantics, handleKeyDown, fixAriaAttributes } = useDatePickerAccessibility()
+		const { updateAccessibility, cleanupGridSemantics, handleKeyDown } = useDatePickerAccessibility()
 		return {
 			updateAccessibility,
 			cleanupGridSemantics,
 			handleKeyDown,
-			fixAriaAttributes,
 		}
 	},
 	template: '<div></div>',
@@ -29,7 +28,6 @@ describe('useDatePickerAccessibility', () => {
 		updateAccessibility: ReturnType<typeof useDatePickerAccessibility>['updateAccessibility']
 		cleanupGridSemantics: ReturnType<typeof useDatePickerAccessibility>['cleanupGridSemantics']
 		handleKeyDown: ReturnType<typeof useDatePickerAccessibility>['handleKeyDown']
-		fixAriaAttributes: ReturnType<typeof useDatePickerAccessibility>['fixAriaAttributes']
 	}>>
 
 	beforeEach(() => {
@@ -38,7 +36,6 @@ describe('useDatePickerAccessibility', () => {
 			updateAccessibility: ReturnType<typeof useDatePickerAccessibility>['updateAccessibility']
 			cleanupGridSemantics: ReturnType<typeof useDatePickerAccessibility>['cleanupGridSemantics']
 			handleKeyDown: ReturnType<typeof useDatePickerAccessibility>['handleKeyDown']
-			fixAriaAttributes: ReturnType<typeof useDatePickerAccessibility>['fixAriaAttributes']
 		}>>
 		// Obtenir les fonctions du composable directement depuis le composant monté
 		updateAccessibility = wrapper.vm.updateAccessibility!

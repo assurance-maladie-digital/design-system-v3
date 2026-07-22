@@ -28,7 +28,7 @@
 
 	const { parseDate, formatDate } = useDateFormat()
 	const { initializeSelectedDates } = useDateInitialization()
-	const { updateAccessibility, cleanupGridSemantics, fixAriaAttributes } = useDatePickerAccessibility()
+	const { updateAccessibility, cleanupGridSemantics } = useDatePickerAccessibility()
 
 	// Variables pour suivre le mois et l'année actuellement affichés dans le CalendarMode
 	const currentMonth = ref<string | null>(null)
@@ -640,7 +640,6 @@
 		// Après la validation initiale, désactiver le flag
 		nextTick(() => {
 			isInitialValidation.value = false
-			fixAriaAttributes()
 		})
 	})
 
