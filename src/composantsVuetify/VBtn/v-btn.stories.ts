@@ -13,7 +13,6 @@ const meta: Meta = {
         :variant="args.variant" 
         :disabled="args.disabled" 
         :loading="args.loading"
-        :ripple="false"
       >
         {{ args.label }}
       </v-btn>
@@ -27,41 +26,41 @@ type Story = StoryObj<typeof meta>
 // --- Primary ---
 export const Primary: Story = {
 	args: { label: 'Button primary', color: 'primary', variant: 'elevated', disabled: false },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="elevated" :ripple="false">Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<v-btn color="primary" variant="elevated">Button</v-btn>` } } },
 }
 export const PrimaryLoading: Story = {
 	args: { label: 'Button primary loading', color: 'primary', variant: 'elevated', disabled: false, loading: true },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="elevated" loading :ripple="false">Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<v-btn color="primary" variant="elevated" loading>Button</v-btn>` } } },
 }
 export const PrimaryDisabled: Story = {
 	args: { label: 'Button primary disabled', color: 'primary', variant: 'elevated', disabled: true },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="elevated" disabled :ripple="false">Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<v-btn color="primary" variant="elevated" disabled>Button</v-btn>` } } },
 }
 
 // --- Secondary ---
 export const Secondary: Story = {
 	args: { label: 'Button secondary ', color: 'primary', variant: 'outlined', disabled: false },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="outlined" :ripple="false">Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<v-btn color="primary" variant="outlined">Button</v-btn>` } } },
 }
 export const SecondaryLoading: Story = {
 	args: { label: 'Button secondary loading', color: 'primary', variant: 'outlined', disabled: false, loading: true },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="outlined" loading :ripple="false">Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<v-btn color="primary" variant="outlined" loading>Button</v-btn>` } } },
 }
 export const SecondaryDisabled: Story = {
 	args: { label: 'Button secondary disabled', color: 'primary', variant: 'outlined', disabled: true },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="outlined" disabled :ripple="false">Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<v-btn color="primary" variant="outlined" disabled>Button</v-btn>` } } },
 }
 
 // --- Tertiary ---
 export const Tertiary: Story = {
 	args: { label: 'Button tertiary', color: 'primary', variant: 'text', disabled: false },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="text" :ripple="false">Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<v-btn color="primary" variant="text">Button</v-btn>` } } },
 }
 export const TertiaryLoading: Story = {
 	args: { label: 'Button tertiary loading', color: 'primary', variant: 'text', disabled: false, loading: true },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="text" loading :ripple="false">Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<v-btn color="primary" variant="text" loading>Button</v-btn>` } } },
 }
 export const TertiaryDisabled: Story = {
 	args: { label: 'Button tertiary disabled', color: 'primary', variant: 'text', disabled: true },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="text" disabled :ripple="false">Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<v-btn color="primary" variant="text" disabled>Button</v-btn>` } } },
 }
