@@ -344,10 +344,12 @@
 		flex-shrink: 0 !important;
 	}
 
-	// Améliorer le contraste des bordures de focus pour les boutons de suppression
+	// Ring DS de la croix : inset (offset -1px) pour rester DANS le chip (l'offset 3px du ring
+	// global `_btns.scss` déborderait sur les voisins). Couleur contrastée sur le fond du chip :
+	// `onPrimary` par défaut (chip `color: primary`), surchargée par état plus bas.
 	&:focus-visible {
-		outline: 2px solid #fff !important;
-		outline-offset: -2px !important;
+		outline: 2px solid rgb(var(--v-theme-onPrimary)) !important;
+		outline-offset: -1px !important;
 	}
 }
 
@@ -393,21 +395,21 @@
 // Styles spécifiques pour améliorer le contraste de focus selon le thème du chip
 .sy-chip-success .remove-chip:focus-visible {
 	outline: 2px solid rgb(var(--v-theme-onSuccessVariant)) !important;
-	outline-offset: -2px !important;
+	outline-offset: -1px !important;
 }
 
 .sy-chip-info .remove-chip:focus-visible {
 	outline: 2px solid rgb(var(--v-theme-onInfoVariant)) !important;
-	outline-offset: -2px !important;
+	outline-offset: -1px !important;
 }
 
 .sy-chip-warning .remove-chip:focus-visible {
 	outline: 2px solid rgb(var(--v-theme-onWarningVariant)) !important;
-	outline-offset: -2px !important;
+	outline-offset: -1px !important;
 }
 
 .sy-chip-error .remove-chip:focus-visible {
 	outline: 2px solid rgb(var(--v-theme-onErrorVariant)) !important;
-	outline-offset: -2px !important;
+	outline-offset: -1px !important;
 }
 </style>

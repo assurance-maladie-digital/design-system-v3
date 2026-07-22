@@ -205,4 +205,33 @@ describe('SyBtnMenu', () => {
 
 		wrapper.unmount()
 	})
+
+	// Le ring de focus est géré globalement (_btns.scss) sur le bouton natif ;
+	// jsdom ne calcule pas :focus-visible, on vérifie donc les prérequis structurels.
+	describe('focus', () => {
+		it('renders a native <button> activator so the global focus ring applies', () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: { primaryInfo: 'John Doe' },
+				attachTo: document.body,
+			})
+
+			expect(wrapper.get('.sy-user-menu-btn').element.tagName).toBe('BUTTON')
+
+			wrapper.unmount()
+		})
+
+		it('activator is focusable', () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: { primaryInfo: 'John Doe' },
+				attachTo: document.body,
+			})
+
+			const button = wrapper.get('.sy-user-menu-btn').element as HTMLButtonElement
+			button.focus()
+
+			expect(document.activeElement).toBe(button)
+
+			wrapper.unmount()
+		})
+	})
 })

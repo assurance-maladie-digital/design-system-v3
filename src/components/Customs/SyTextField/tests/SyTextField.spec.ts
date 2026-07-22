@@ -557,3 +557,25 @@ describe('SyTextField', () => {
 		expect(wrapper.find('.v-messages').exists()).toBe(false)
 	})
 })
+
+// Le focus du champ = bordure primary du field Vuetify (color="primary"). Le bouton
+// d'effacement est un VBtn → ring de focus via l'override global (_btns.scss). jsdom ne
+// calcule pas :focus-visible : on vérifie le prérequis — un <button> natif focusable.
+describe('SyTextField - focus (clear button)', () => {
+	it('renders the clear button as a native <button> so the global focus ring applies', () => {
+		const wrapper = mount(SyTextField, { props: { label: 'Nom', isClearable: true, modelValue: 'Texte' } })
+		expect(wrapper.get('.sy-text-field__clear').element.tagName).toBe('BUTTON')
+		wrapper.unmount()
+	})
+
+	it('is focusable', () => {
+		const wrapper = mount(SyTextField, {
+			props: { label: 'Nom', isClearable: true, modelValue: 'Texte' },
+			attachTo: document.body,
+		})
+		const btn = wrapper.get('.sy-text-field__clear').element as HTMLButtonElement
+		btn.focus()
+		expect(document.activeElement).toBe(btn)
+		wrapper.unmount()
+	})
+})

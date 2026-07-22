@@ -10,4 +10,7 @@ export const useDateTextInputMenuProps = (
 	...useDateTextInputBaseProps(props, labelWithAsterisk, errorMessages),
 	'display-range': props.displayRange,
 	'density': props.density,
+	// Icône calendrier = bouton focusable au clavier (comme en CalendarMode), pas une
+	// icône décorative. Elle ouvre le calendrier au clic/Enter/Espace et reçoit le ring DS.
+	'disable-click-button': false,
 })

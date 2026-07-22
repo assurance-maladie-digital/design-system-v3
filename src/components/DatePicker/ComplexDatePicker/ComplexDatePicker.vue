@@ -144,6 +144,17 @@
 		getCalendarInputElement()?.focus({ preventScroll: true })
 	}
 
+	// À la fermeture (ex. après sélection d'une date), le VMenu rend le focus à son
+	// activateur (ce conteneur, non focusable au clavier → tabindex -1). On redirige ce
+	// focus vers l'input pour ne pas afficher le ring du conteneur et garder le focus sur
+	// le champ. Gardé sur `!isDatePickerVisible` pour ne pas interférer quand le calendrier
+	// est ouvert.
+	const redirectActivatorFocus = () => {
+		if (!isDatePickerVisible.value) {
+			focusCalendarInput()
+		}
+	}
+
 	const emit = defineEmits<{
 		(e: 'update:modelValue', value: DateModelValue): void
 		(e: 'closed'): void
@@ -518,7 +529,11 @@
 		'aria-disabled': props.disabled || undefined,
 		'aria-readonly': props.readonly || undefined,
 		'aria-label': labelWithAsterisk.value || props.placeholder || props.title || undefined,
-		'tabindex': props.disabled ? -1 : 0,
+		// Le conteneur n'est pas un point de tabulation (tabindex -1) : c'est l'<input>
+		// interne qui reçoit le focus (bordure de field). Évite le double focus + le ring
+		// navigateur par défaut englobant tout le conteneur. Aucun handler clavier ne
+		// dépend du conteneur (les interactions passent par l'input et le focus trap).
+		'tabindex': -1,
 		'aria-owns': undefined,
 	}))
 
@@ -1057,6 +1072,7 @@
 						:aria-controls="isDatePickerVisible ? datePickerContentId : undefined"
 						:aria-expanded="isDatePickerVisible"
 						:title="props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT"
+						@focus="redirectActivatorFocus"
 					>
 						<DateTextInput
 							ref="dateCalendarTextInputRef"
@@ -1330,15 +1346,8 @@
 }
 
 :deep(.v-picker__body .v-btn:focus-visible) {
-	outline: 2px solid rgb(var(--v-theme-primary, '12, 65, 154'));
-
-	.v-btn__overlay {
-		display: none;
-	}
-
-	&::after {
-		display: none;
-	}
+	// Ring du global `_btns.scss` (2px primary). Offset réduit à 1px pour la grille dense
+	outline-offset: 1px;
 }
 
 :deep(.v-date-picker-months) {
@@ -1355,18 +1364,6 @@
 	:deep(.v-btn__content) {
 		font-size: 1rem;
 		gap: 8px;
-	}
-
-	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-primary, '12, 65, 154'));
-
-		:deep(.v-btn__overlay) {
-			display: none;
-		}
-
-		&::after {
-			display: none;
-		}
 	}
 }
 

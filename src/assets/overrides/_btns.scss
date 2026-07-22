@@ -14,6 +14,31 @@
 	text-transform: uppercase !important;
 }
 
+// Ring de focus : couvre les VBtn rendus en <button> ET en lien (<a>, via to/href),
+// ainsi que les <button> natifs du design system.
+.v-btn:focus-visible,
+button:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 3px;
+}
+
+// Sur fond sombre (thème dark), le ring passe en onPrimary.
+// Le compound `.v-btn.v-theme--dark` couvre le cas où la classe de thème
+// est portée par le bouton lui-même (ex. BackBtn dark).
+.v-theme--dark .v-btn:focus-visible,
+.v-theme--dark button:focus-visible,
+.v-btn.v-theme--dark:focus-visible {
+	outline-color: rgb(var(--v-theme-onPrimary));
+}
+
+.v-btn:focus-visible .v-btn__overlay {
+	opacity: 0 !important;
+}
+
+.v-btn:focus-visible::after {
+	opacity: 0 !important;
+}
+
 // Overlay base configuration
 .v-btn__overlay {
 	opacity: 0;

@@ -72,3 +72,27 @@ describe('DownloadBtn', () => {
 		expect(element.text()).toBe(slot)
 	})
 })
+
+// Le ring de focus est scopé (jsdom ne calcule pas :focus-visible) : on vérifie les
+// prérequis structurels — <button> natif focusable + classe dark pour le ring onPrimary.
+describe('DownloadBtn - focus', () => {
+	it('renders a native <button> so the focus ring applies', () => {
+		const wrapper = mount(DownloadBtn, { props: { filePromise } })
+		expect(wrapper.get('.sy-download-btn').element.tagName).toBe('BUTTON')
+		wrapper.unmount()
+	})
+
+	it('carries the --dark class in dark mode (onPrimary focus ring)', () => {
+		const wrapper = mount(DownloadBtn, { props: { filePromise, dark: true } })
+		expect(wrapper.get('.sy-download-btn').classes()).toContain('sy-download-btn--dark')
+		wrapper.unmount()
+	})
+
+	it('is focusable', () => {
+		const wrapper = mount(DownloadBtn, { props: { filePromise }, attachTo: document.body })
+		const button = wrapper.get('.sy-download-btn').element as HTMLButtonElement
+		button.focus()
+		expect(document.activeElement).toBe(button)
+		wrapper.unmount()
+	})
+})
