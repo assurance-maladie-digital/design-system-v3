@@ -1009,12 +1009,11 @@
 		const dayDate = activeDay?.getAttribute('data-v-date')
 		const monthLabel = activeMonthButton?.getAttribute('aria-label') ?? activeMonthButton?.textContent?.trim() ?? ''
 		const yearLabel = activeYearButton?.getAttribute('aria-label') ?? activeYearButton?.textContent?.trim() ?? ''
-
 		cleanupGridSemantics(rootEl)
 		nextTick(() => {
 			updateAccessibility(rootEl, currentViewMode.value)
 			nextTick(() => {
-				if (!activeElement || !rootEl.contains(activeElement) && !dayDate && !monthLabel && !yearLabel) return
+				if (!activeElement || (!rootEl.contains(activeElement) && !dayDate && !monthLabel && !yearLabel)) return
 
 				if (dayDate) {
 					const dayCell = rootEl.querySelector<HTMLElement>(`.v-date-picker-month__day[data-v-date="${dayDate}"]`)
@@ -1042,29 +1041,6 @@
 					target?.focus({ preventScroll: true })
 				}
 			})
-		})
-	}
-
-	const hasMissingGridSemantics = (rootEl?: HTMLElement) => {
-		if (!rootEl) return false
-
-		return Boolean(
-			rootEl.querySelector('.v-date-picker-month:not([role="grid"])')
-			|| rootEl.querySelector('.v-date-picker-month__day[data-v-date]:not([role="gridcell"])')
-			|| rootEl.querySelector('.v-date-picker-month__weekday:not([role="columnheader"])'),
-		)
-	}
-
-	const scheduleOpenAccessibilityRefresh = () => {
-		nextTick(() => {
-			if (!isDatePickerVisible.value) return
-			reapplyAccessibility()
-
-			setTimeout(() => {
-				const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
-				if (!isDatePickerVisible.value || !hasMissingGridSemantics(rootEl)) return
-				reapplyAccessibility()
-			}, 80)
 		})
 	}
 

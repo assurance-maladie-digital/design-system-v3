@@ -286,6 +286,8 @@ describe('useDatePickerAccessibility', () => {
 		headerCells.forEach((cell) => {
 			expect(cell.getAttribute('role')).toBe('columnheader')
 			expect(cell.getAttribute('aria-colindex')).toBeNull()
+			expect(cell.textContent?.trim()).not.toBe('')
+			expect(cell.querySelector('[aria-hidden="true"]')).toBeNull()
 		})
 
 		const dataRows = Array.from(daysContainer.querySelectorAll('.v-date-picker-month__week')) as HTMLElement[]

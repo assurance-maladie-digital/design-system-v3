@@ -117,12 +117,11 @@
 		const dayDate = activeDay?.getAttribute('data-v-date')
 		const monthLabel = activeMonthButton?.getAttribute('aria-label') ?? activeMonthButton?.textContent?.trim() ?? ''
 		const yearLabel = activeYearButton?.getAttribute('aria-label') ?? activeYearButton?.textContent?.trim() ?? ''
-
 		cleanupGridSemantics(rootEl)
 		nextTick(() => {
 			updateAccessibility(rootEl, currentViewMode.value)
 			nextTick(() => {
-				if (!activeElement || !rootEl.contains(activeElement) && !dayDate && !monthLabel && !yearLabel) return
+				if (!activeElement || (!rootEl.contains(activeElement) && !dayDate && !monthLabel && !yearLabel)) return
 
 				if (dayDate) {
 					const dayCell = rootEl.querySelector<HTMLElement>(`.v-date-picker-month__day[data-v-date="${dayDate}"]`)
@@ -153,27 +152,6 @@
 		})
 	}
 
-	const hasMissingGridSemantics = (rootEl: HTMLElement | null) => {
-		if (!rootEl) return false
-
-		return Boolean(
-			rootEl.querySelector('.v-date-picker-month:not([role="grid"])')
-			|| rootEl.querySelector('.v-date-picker-month__day[data-v-date]:not([role="gridcell"])')
-				|| rootEl.querySelector('.v-date-picker-month__weekday:not([role="columnheader"])'),
-		)
-	}
-
-	const scheduleOpenAccessibilityRefresh = () => {
-		nextTick(() => {
-			if (!isDatePickerVisible.value) return
-			reapplyAccessibility()
-
-			setTimeout(() => {
-				if (!isDatePickerVisible.value || !hasMissingGridSemantics(datePickerDialogRef.value)) return
-				reapplyAccessibility()
-			}, 80)
-		})
-	}
 	const datePickerDialogRef = ref<HTMLElement | null>(null)
 	const datePickerDialogId = `${datePickerContentId}-dialog`
 	const datePickerHeadingId = `${datePickerContentId}-heading`
