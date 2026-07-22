@@ -75,7 +75,7 @@
 		hasError,
 		hasWarning,
 		hasSuccess,
-	} = useSyRadioGroupValidation(props, model, focused)
+	} = useSyRadioGroupValidation(props, model, focused, locales)
 
 	// Intégration avec le système de validation du formulaire
 	useValidatable(validateOnSubmit)

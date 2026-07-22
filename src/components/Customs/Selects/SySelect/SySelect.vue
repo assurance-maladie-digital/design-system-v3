@@ -144,7 +144,7 @@
 	const selectedItem = ref<SelectItemValueType | SelectItemArrayType>(props.modelValue)
 	const menuMinWidth = ref<number | null>(null)
 
-	const { focused, validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess, validationIcon } = useSySelectValidation(props)
+	const { focused, validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess, validationIcon } = useSySelectValidation(props, locales)
 
 	const labelWidth = ref(0)
 	const list = ref<VList | null>(null)

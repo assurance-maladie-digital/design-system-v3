@@ -111,7 +111,7 @@
 		displayHasWarning,
 		displayHasSuccess,
 		validationIcon,
-	} = useSyAutocompleteValidation(props)
+	} = useSyAutocompleteValidation(props, locales)
 
 	const formattedItems = computed(() => props.items.map((item) => {
 		if (typeof item === 'string') {

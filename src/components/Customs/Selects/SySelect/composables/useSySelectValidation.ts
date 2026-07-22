@@ -1,20 +1,22 @@
 import { computed, ref } from 'vue'
+import type { Ref } from 'vue'
 import { mdiAlertCircle, mdiAlertOutline, mdiCheck } from '@mdi/js'
 import { useValidation, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 import type { ValidationRule } from '@/composables/validation/useValidation'
-import { locales as defaultLocales } from '../locales'
-import { mergeLocales, type DeepPartial } from '@/utils/locales/mergeLocales'
 
-export function useSySelectValidation(props: FieldValidationProps & { modelValue?: unknown, locales?: DeepPartial<typeof defaultLocales> }) {
+export function useSySelectValidation(
+	props: FieldValidationProps & { modelValue?: unknown },
+	locales: Ref<{
+		requiredField: (label: string | undefined) => string
+	}>,
+) {
 	const focused = ref(false)
-
-	const locales = mergeLocales(defaultLocales, props.locales)
 
 	const defaultRules = computed<ValidationRule[]>(() => props.required
 		? [{
 				type: 'required',
 				options: {
-					message: locales.requiredField(props.label),
+					message: locales.value.requiredField(props.label),
 					fieldIdentifier: props.label,
 				},
 			}]

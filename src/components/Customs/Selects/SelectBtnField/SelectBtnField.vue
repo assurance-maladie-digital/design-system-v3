@@ -6,6 +6,7 @@
 	import { useSelectBtnFieldValidation } from './composables/useSelectBtnFieldValidation'
 	import type { SelectBtnItem, SelectBtnValue } from './types'
 	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(defineProps<{
@@ -40,6 +41,8 @@
 	const listRef = ref<HTMLElement | null>(null)
 	const optionsRef = ref<Array<HTMLElement>>([])
 
+	const locales = useLocales(defaultLocales, () => props.locales)
+
 	const {
 		focused,
 		validate,
@@ -50,7 +53,7 @@
 		hasError,
 		hasWarning,
 		hasSuccess,
-	} = useSelectBtnFieldValidation(props)
+	} = useSelectBtnFieldValidation(props, locales)
 
 	defineExpose({
 		validateOnSubmit: validate,
