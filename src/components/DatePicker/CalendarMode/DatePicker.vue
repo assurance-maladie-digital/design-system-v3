@@ -209,8 +209,8 @@
 		isDatePickerVisible,
 		datePickerRef,
 		getInitialFocusDate: () => {
-			const value = selectedDates.value
-			const selected = Array.isArray(value) ? value[0] ?? null : value
+			const selected = keyboardNavigatedDate.value
+				?? (Array.isArray(selectedDates.value) ? selectedDates.value[0] ?? null : selectedDates.value)
 			const target = selected ?? new Date()
 
 			// Si la date cible est dans le mois affiché, l'utiliser
@@ -230,9 +230,10 @@
 			return target
 		},
 		getCurrentDate: () => {
-			const value = selectedDates.value
+			const value = keyboardNavigatedDate.value
+				?? (Array.isArray(selectedDates.value) ? selectedDates.value[0] ?? null : selectedDates.value)
 			if (value) {
-				const date = Array.isArray(value) ? value[0] ?? null : value
+				const date = value
 				// Vérifier si la date sélectionnée est dans le mois actuellement affiché
 				if (date && currentMonth.value !== null && currentYear.value !== null) {
 					const sameMonth = date.getMonth() === Number(currentMonth.value)
@@ -251,6 +252,7 @@
 			return null
 		},
 		setCurrentDate: (date: Date) => {
+			keyboardNavigatedDate.value = date
 			syncDisplayedMonthYearFromDate(date)
 
 			// S'assurer que le VDatePicker affiche le bon mois après navigation clavier
@@ -259,6 +261,7 @@
 			})
 		},
 		onSelectDate: (date: Date) => {
+			keyboardNavigatedDate.value = null
 			updateSelectedDates([date])
 			nextTick(() => closeDatePicker())
 		},
@@ -294,6 +297,7 @@
 
 	// Variable pour éviter les mises à jour récursives
 	const isUpdatingFromInternal = ref(false)
+	const keyboardNavigatedDate = ref<Date | null>(null)
 	const preventCloseOnKeyboardNavigation = ref(false)
 	const isInitialValidation = ref(true)
 	const currentRangeIsValid = ref(true)
@@ -379,6 +383,10 @@
 
 	// Watcher pour mettre à jour le modèle lorsque les dates sélectionnées changent
 	watch(selectedDates, async (newValue) => {
+		keyboardNavigatedDate.value = Array.isArray(newValue)
+			? newValue[0] ?? null
+			: newValue
+
 		// Vider la grille ARIA injectée avant que Vuetify ne re-render le calendrier
 		if (isDatePickerVisible.value) {
 			reapplyAccessibility()
@@ -945,6 +953,7 @@
 	// Reset month/year names when clearing the date
 	watch(selectedDates, (newValue) => {
 		if (!newValue) {
+			keyboardNavigatedDate.value = null
 			const today = new Date()
 			syncDisplayedMonthYearFromDate(today)
 		}
@@ -1095,6 +1104,8 @@
 						:show-adjacent-months="true"
 						:show-week="props.showWeekNumber"
 						:view-mode="currentViewMode"
+						:month="currentMonth !== null ? Number(currentMonth) : undefined"
+						:year="currentYear !== null ? Number(currentYear) : undefined"
 						:class="displayWeekendDays ? 'weekend' : ''"
 						:max="maxDate"
 						:min="minDate"

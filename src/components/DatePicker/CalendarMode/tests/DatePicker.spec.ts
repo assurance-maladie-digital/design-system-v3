@@ -611,6 +611,46 @@ describe('DatePicker', () => {
 		wrapper.unmount()
 	})
 
+	it('updates the displayed month when keyboard navigation crosses to an adjacent next-month day', async () => {
+		vi.useFakeTimers()
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '30/06/2024',
+				format: 'DD/MM/YYYY',
+			},
+			attachTo: document.body,
+		})
+
+		const input = wrapper.find('input')
+		await input.trigger('click')
+		await nextTick()
+		await flushPromises()
+		await vi.runAllTimersAsync()
+		await flushPromises()
+
+		const vm = wrapper.vm as DatePickerInstance & {
+			currentMonth: string | null
+			currentYear: string | null
+		}
+
+		const focusedDay = document.activeElement as HTMLElement | null
+		expect(focusedDay?.closest('[data-v-date="2024-06-30"]')).not.toBeNull()
+
+		focusedDay?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }))
+		await flushPromises()
+		await vi.runAllTimersAsync()
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		expect(vm.currentMonth).toBe('6')
+		expect(vm.currentYear).toBe('2024')
+		expect(document.activeElement?.closest('[data-v-date="2024-07-01"]')).not.toBeNull()
+
+		vi.useRealTimers()
+		wrapper.unmount()
+	})
+
 	it('handleSelectToday selects today and keeps the component usable', async () => {
 		const wrapper = mountComponent()
 		const vm = wrapper.vm as DatePickerInstance
