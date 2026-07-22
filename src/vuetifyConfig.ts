@@ -29,6 +29,11 @@ import { createVuetify } from 'vuetify'
 export const createVuetifyInstance = () => createVuetify({
 	components,
 	directives,
+	defaults: {
+		VBtn: {
+			ripple: false,
+		},
+	},
 	locale: {
 		locale: 'fr',
 		messages: { fr },
