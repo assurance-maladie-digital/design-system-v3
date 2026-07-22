@@ -1143,28 +1143,28 @@
 	}
 </script>
 
-	<template>
-		<div class="date-text-input">
-			<SyTextField
+<template>
+	<div class="date-text-input">
+		<SyTextField
 			ref="inputRef"
 			v-model="inputValue"
 			:class="{
 				'error-field': isOnError,
 				'warning-field': isOnWarning,
 				'success-field': isOnSuccess,
-				}"
-				color="primary"
-				v-bind="syTextFieldProps"
-				@focus="onFocus"
-				@blur="onBlur"
-				@mousedown="onMouseDown"
-				@keydown="handleKeydown"
-				@paste="handlePaste"
-				@prepend-icon-click="emit('prepend-icon-click', $event)"
-				@append-icon-click="emit('append-icon-click', $event)"
-			/>
-		</div>
-	</template>
+			}"
+			color="primary"
+			v-bind="syTextFieldProps"
+			@focus="onFocus"
+			@blur="onBlur"
+			@mousedown="onMouseDown"
+			@keydown="handleKeydown"
+			@paste="handlePaste"
+			@prepend-icon-click="emit('prepend-icon-click', $event)"
+			@append-icon-click="emit('append-icon-click', $event)"
+		/>
+	</div>
+</template>
 
 <style lang="scss" scoped>
 :deep(.v-icon__svg) { cursor: default; }

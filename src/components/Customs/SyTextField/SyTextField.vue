@@ -672,17 +672,17 @@
 						class="cursor-default"
 						:decorative="true"
 					/>
-						<button
-							v-else-if="props.prependIcon && !props.noIcon"
-							type="button"
-							class="sy-text-field__icon-button"
-							:disabled="props.disabled || props.readonly"
-							:aria-disabled="props.disabled || props.readonly ? 'true' : undefined"
-							:aria-label="ICON_ACTION_LABELS[props.prependIcon](props.label)"
-							:title="ICON_ACTION_LABELS[props.prependIcon](props.label)"
-							@mousedown.prevent.stop
-							@click.stop="handlePrependIconClick"
-						>
+					<button
+						v-else-if="props.prependIcon && !props.noIcon"
+						type="button"
+						class="sy-text-field__icon-button"
+						:disabled="props.disabled || props.readonly"
+						:aria-disabled="props.disabled || props.readonly ? 'true' : undefined"
+						:aria-label="ICON_ACTION_LABELS[props.prependIcon](props.label)"
+						:title="ICON_ACTION_LABELS[props.prependIcon](props.label)"
+						@mousedown.prevent.stop
+						@click.stop="handlePrependIconClick"
+					>
 						<SyIcon
 							:color="iconColor"
 							:icon="ICONS[props.prependIcon]"
@@ -724,17 +724,17 @@
 						class="cursor-default"
 						:decorative="true"
 					/>
-						<button
-							v-else-if="props.appendIcon && !props.noIcon"
-							type="button"
-							class="sy-text-field__icon-button"
-							:disabled="props.disabled || props.readonly"
-							:aria-disabled="props.disabled || props.readonly ? 'true' : undefined"
-							:aria-label="ICON_ACTION_LABELS[props.appendIcon](props.label)"
-							:title="ICON_ACTION_LABELS[props.appendIcon](props.label)"
-							@mousedown.prevent.stop
-							@click.stop="handleAppendIconClick"
-						>
+					<button
+						v-else-if="props.appendIcon && !props.noIcon"
+						type="button"
+						class="sy-text-field__icon-button"
+						:disabled="props.disabled || props.readonly"
+						:aria-disabled="props.disabled || props.readonly ? 'true' : undefined"
+						:aria-label="ICON_ACTION_LABELS[props.appendIcon](props.label)"
+						:title="ICON_ACTION_LABELS[props.appendIcon](props.label)"
+						@mousedown.prevent.stop
+						@click.stop="handleAppendIconClick"
+					>
 						<SyIcon
 							:color="iconColor"
 							:icon="ICONS[props.appendIcon]"
