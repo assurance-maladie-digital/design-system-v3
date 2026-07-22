@@ -27,18 +27,10 @@
 	transition: color 0.2s ease;
 }
 
-.v-theme--ap.v-btn--icon .v-ripple__animation {
-	background-color: rgb(var(--v-theme-primary)) !important;
-	opacity: 0.18;
-}
-
-.v-theme--ap2026.v-btn--icon .v-ripple__animation {
-	background-color: rgb(var(--v-theme-primary)) !important;
-	opacity: 0.18;
-}
-
+.v-theme--ap.v-btn--icon .v-ripple__animation,
+.v-theme--ap2026.v-btn--icon .v-ripple__animation,
 .v-theme--cnam.v-btn--icon .v-ripple__animation,
 .v-theme--pa.v-btn--icon .v-ripple__animation {
-	background-color: rgb(var(--v-theme-primary)) !important;
+	background-color: currentcolor !important;
 	opacity: 0.18;
 }
