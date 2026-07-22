@@ -8,8 +8,10 @@ import {
 	VExpansionPanelTitle,
 } from 'vuetify/components'
 import type { StoryObj } from '@storybook/vue3-vite'
+import SyTable from '@/components/Tables/SyTable/SyTable.vue'
 
 export default {
+	components: { SyTable },
 	title: 'Guide Du Dev/Équivalence des composants/Amelipro',
 }
 
@@ -23,6 +25,7 @@ export const AmeliproComponents: StoryObj = {
 				VExpansionPanelText,
 				VDivider,
 				SyTextField,
+				SyTable,
 			},
 
 			setup() {
@@ -77,6 +80,14 @@ export const AmeliproComponents: StoryObj = {
 							name: 'AmeliproCheckbox',
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-checkbox',
 						},
+						props: [
+							{ name: 'checkbox', reason: 'Doublon avec label et name' },
+							{ name: 'isSwitch', reason: 'Création d’un composant Switch dédié' },
+							{ name: 'append', reason: 'Faisable côté projet' },
+							{ name: 'errorDefault', reason: 'Géré par la validation' },
+							{ name: 'labelLeft', reason: 'Faisable côté projet' },
+							{ name: 'requiredErrorMessage', reason: 'Géré par la validation' },
+						],
 					}, {
 						title: 'AmeliproCheckboxGroup',
 						synapse: {
@@ -562,6 +573,14 @@ export const AmeliproComponents: StoryObj = {
 							name: 'AmeliproRadioGroup',
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-radio-group',
 						},
+						props: [
+							{ name: 'fullHorizontal', reason: 'utiliser le composant selectBtnField pour horizontal' },
+							{ name: 'hiddenLabel', reason: 'Cacher le label n\'est pas une bonne pratique' },
+							{ name: 'horizontal', reason: 'utiliser le composant selectBtnField pour horizontal' },
+							{ name: 'horizontalLabel', reason: 'utiliser le composant selectBtnField pour horizontal' },
+							{ name: 'pills', reason: 'composant existant dans synapse selectBtnField' },
+							{ name: 'requiredErrorMessage', reason: 'Geré par le systeme de validation Synapse' },
+						],
 					},
 					{
 						title: 'AmeliproSelect',
@@ -573,6 +592,20 @@ export const AmeliproComponents: StoryObj = {
 							name: 'AmeliproSelect',
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-select',
 						},
+						props: [
+							{ name: 'fullWidthErrorMessage', reason: 'Geré par la validation' },
+							{ name: 'globalMaxWidth', reason: 'Géré par la props width' },
+							{ name: 'globalMinWidth', reason: 'Géré par la props width' },
+							{ name: 'globalWidth', reason: 'Géré par la props width' },
+							{ name: 'hideErrorMessage', reason: 'Geré par la validation' },
+							{ name: 'horizontal', reason: 'Peut etre intégré sur demande' },
+							{ name: 'inputMaxWidth', reason: 'Géré par la props width' },
+							{ name: 'inputMinWidth', reason: 'Géré par la props width' },
+							{ name: 'labelMaxWidth', reason: 'Peut être fait par le développeur du projet' },
+							{ name: 'labelMinWidth', reason: 'Peut être fait par le développeur du projet' },
+							{ name: 'placeholder', reason: 'Non obligatoire' },
+							{ name: 'rules', reason: 'Geré par la validation' },
+						],
 					},
 					{
 						title: 'AmeliproStateTile',
@@ -896,7 +929,18 @@ export const AmeliproComponents: StoryObj = {
 						)
 				})
 
-				return { filteredComponents, apComponents, searchTerm, getComponentUrl, systemLabel }
+				const headers = ref([
+					{
+						title: 'Props',
+						key: 'name',
+					},
+					{
+						title: 'Raison',
+						key: 'reason',
+					},
+				])
+
+				return { filteredComponents, apComponents, searchTerm, getComponentUrl, systemLabel, headers }
 			},
 
 			template: `
@@ -960,6 +1004,20 @@ export const AmeliproComponents: StoryObj = {
                           Documentation du composant Amelipro {{ component.amelipro.name }}
                         </a>
                       </p>
+						<template v-if="component.props?.length">
+							<VDivider class="my-4"/>
+							<h4 class="mb-3">
+								Props non migrés
+							</h4>
+							<SyTable
+								:items="component.props"
+								:headers="headers"
+								suffix="table"
+								hide-default-footer
+								density="compact"
+								
+							/>
+						</template>
                     </template>
 
                   </VExpansionPanelText>
