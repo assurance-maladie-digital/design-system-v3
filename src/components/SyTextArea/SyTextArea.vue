@@ -137,7 +137,7 @@
 		hasSuccess,
 		validationIcon,
 		mergedVuetifyRules,
-	} = useSyTextAreaValidation(props, { internalValue, hasInteracted })
+	} = useSyTextAreaValidation(props, { internalValue, hasInteracted }, locales)
 
 	const computedLabel = computed(() =>
 		props.displayAsterisk && props.required ? `${props.label} *` : props.label,
