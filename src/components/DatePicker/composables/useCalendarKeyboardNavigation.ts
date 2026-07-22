@@ -414,8 +414,8 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		const { date: current, fromDayCell } = getBaseDateFromEvent(event)
 		if (!current || !fromDayCell) return
 
-		// Enter/Space : empêcher le scroll et déclencher la sélection explicite
-		event.preventDefault()
+		// Enter/Space sur un jour : laisser VDatePicker gérer le clic natif
+		// (la sélection + fermeture se font via v-model et le watcher)
 		setCurrentDate(current)
 		onSelectDate?.(current)
 	}

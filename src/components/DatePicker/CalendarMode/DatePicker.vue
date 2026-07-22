@@ -210,14 +210,16 @@
 			return null
 		},
 		setCurrentDate: (date: Date) => {
-			preventCloseOnKeyboardNavigation.value = true
-			updateSelectedDates([date])
 			syncDisplayedMonthYearFromDate(date)
 
 			// S'assurer que le VDatePicker affiche le bon mois après navigation clavier
 			nextTick(() => {
 				syncDisplayedMonthYearFromDate(date)
 			})
+		},
+		onSelectDate: (date: Date) => {
+			updateSelectedDates([date])
+			nextTick(() => closeDatePicker())
 		},
 	})
 
