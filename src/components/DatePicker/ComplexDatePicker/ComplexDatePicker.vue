@@ -174,7 +174,6 @@
 
 	const shouldRestoreFocusToInput = ref(false)
 	const shouldMoveFocusToDialogOnOpen = ref(false)
-	const lastVisibilityChangeReason = ref('initial')
 	const keyboardNavigatedDate = ref<Date | null>(null)
 
 	const scheduleCalendarInputFocusRestore = () => {
@@ -203,22 +202,10 @@
 		})
 	}
 
-	const setDatePickerVisibility = (visible: boolean, reason: string) => {
-		lastVisibilityChangeReason.value = reason
-		isDatePickerVisible.value = visible
-	}
-
-	const menuVisibilityModel = computed({
-		get: () => isDatePickerVisible.value,
-		set: (visible: boolean) => {
-			isDatePickerVisible.value = visible
-		},
-	})
-
-	const closeDatePicker = async (options: { restoreFocus?: boolean, reason?: string } = {}) => {
+	const closeDatePicker = async (options: { restoreFocus?: boolean } = {}) => {
 		if (!isDatePickerVisible.value) return
 
-		setDatePickerVisibility(false, options.reason || 'closeDatePicker')
+		isDatePickerVisible.value = false
 		emit('closed')
 
 		if (options.restoreFocus) {
@@ -372,7 +359,6 @@
 		if (isInteractionDisabled.value) return
 		skipNextInputBlurProcessing.value = true
 		suppressNextCalendarModelValueUpdate.value = true
-		lastVisibilityChangeReason.value = 'iconClick'
 		openDatePickerOnIconClickFromVisibility()
 	}
 
@@ -383,7 +369,6 @@
 		// Ne pas ouvrir le calendrier si le clic vient du bouton clear
 		if (event && (event.target as HTMLElement)?.closest('.sy-text-field__clear')) return
 
-		lastVisibilityChangeReason.value = 'inputClick'
 		openDatePicker()
 	}
 
@@ -478,7 +463,7 @@
 			})
 			updateModel(formatDate(date, returnFormat.value))
 			displayFormattedDate.value = formatDate(date, props.format)
-			closeDatePicker({ restoreFocus: true, reason: 'updateSelectedDates-single' })
+			closeDatePicker({ restoreFocus: true })
 		}
 		// Validate immediately to surface messages
 		queueMicrotask(() => validateDates(true))
@@ -538,7 +523,7 @@
 				&& !preventCloseOnInternalUpdate.value
 				&& (!props.displayRange || hasCompletedRangeSelection)
 			) {
-				closeDatePicker({ restoreFocus: true, reason: 'selectedDates-watch' })
+				closeDatePicker({ restoreFocus: true })
 			}
 		}
 		else {
@@ -647,7 +632,7 @@
 					] as [string, string]
 					updateModel(formattedDates)
 					emit('date-selected', formattedDates)
-					closeDatePicker({ restoreFocus: true, reason: 'updateDisplayFormattedDate-rangeBoundaryDates' })
+					closeDatePicker({ restoreFocus: true })
 				}
 				else if (Array.isArray(selectedDates.value) && selectedDates.value.length >= 2) {
 					const formattedDates = [
@@ -663,7 +648,7 @@
 					displayFormattedDate.value = textInputValue.value = formattedValue
 					updateModel(formattedDates)
 					emit('date-selected', formattedDates)
-					closeDatePicker({ restoreFocus: true, reason: 'updateDisplayFormattedDate-selectedDatesRange' })
+					closeDatePicker({ restoreFocus: true })
 				}
 				else {
 					formattedValue = displayFormattedDateComputed.value || ''
@@ -673,7 +658,7 @@
 			else {
 				formattedValue = displayFormattedDateComputed.value || ''
 				displayFormattedDate.value = textInputValue.value = formattedValue
-				closeDatePicker({ restoreFocus: true, reason: 'updateDisplayFormattedDate-single' })
+				closeDatePicker({ restoreFocus: true })
 				emit('date-selected', formattedDate.value)
 			}
 
@@ -710,7 +695,7 @@
 	const { handleMenuKeydown } = useDatePickerFocusTrap({
 		isDatePickerVisible,
 		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
-		onClose: () => closeDatePicker({ restoreFocus: true, reason: 'escapeKey' }),
+		onClose: () => closeDatePicker({ restoreFocus: true }),
 		restoreFocus: () => scheduleCalendarInputFocusRestore(),
 		getInitialFocusDate: () => {
 			const value = selectedDates.value
@@ -890,7 +875,6 @@
 			skipNextInputBlurProcessing.value = true
 			scheduleDialogInitialFocus()
 			suppressNextCalendarModelValueUpdate.value = true
-			lastVisibilityChangeReason.value = `keyboard:${event.key}`
 			openDatePicker()
 			return
 		}
@@ -1394,7 +1378,7 @@
 		currentYearName.value = todaySelection.yearName
 
 		if (isDatePickerVisible.value) {
-			closeDatePicker({ restoreFocus: true, reason: props.displayRange ? 'handleSelectToday-range' : 'handleSelectToday-single' })
+				closeDatePicker({ restoreFocus: true })
 		}
 	}
 
@@ -1472,10 +1456,15 @@
 	})
 </script>
 
-<template>
-	<div class="date-picker-container">
-		<!-- Hidden live region text holder (kept for potential a11y tooling) -->
-		<span v-if="false">{{ accessibilityDescription }}</span>
+	<template>
+		<div class="date-picker-container">
+			<span
+				class="sr-only"
+				aria-live="polite"
+				aria-atomic="true"
+			>
+				{{ accessibilityDescription }}
+			</span>
 
 		<template v-if="props.noCalendar">
 			<DateTextInput
@@ -1491,7 +1480,7 @@
 
 		<template v-else>
 			<VMenu
-				v-model="menuVisibilityModel"
+				v-model="isDatePickerVisible"
 				:activator="menuActivatorRef"
 				:min-width="0"
 				location="bottom"
@@ -1847,5 +1836,17 @@ $ap-grey-mid: #d6d6d6;
 		0 5px 5px -3px rgb(0 0 0 / 20%),
 		0 8px 10px 1px rgb(0 0 0 / 14%),
 		0 3px 14px 2px rgb(0 0 0 / 12%) !important;
+}
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
 }
 </style>

@@ -9,7 +9,7 @@
 		validateDateFormat,
 		isDateComplete,
 	} from '../composables'
-	import { ref, computed, watch, nextTick, onMounted, readonly as readonlyState, toRefs } from 'vue'
+	import { ref, computed, watch, nextTick, onMounted, readonly as readonlyState, toRefs, useId } from 'vue'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -226,6 +226,8 @@
 	// Force re-render of SyTextField when needed (e.g., after reset)
 	const fieldKey = ref(0)
 	const isValidating = ref(false)
+	const formatDescriptionId = `date-format-desc-${useId()}`
+	const formatDescription = computed(() => `${locales.formatHint} ${displayFormat.value}`)
 
 	const updateDisplayValue = (dateDisplayText: string) => (inputValue.value = dateDisplayText)
 	const updateAriaLabel = (ariaLabelText: string) => {
@@ -1148,6 +1150,7 @@
 		<SyTextField
 			ref="inputRef"
 			v-model="inputValue"
+			:aria-describedby="formatDescriptionId"
 			:class="{
 				'error-field': isOnError,
 				'warning-field': isOnWarning,
@@ -1163,11 +1166,29 @@
 			@prepend-icon-click="emit('prepend-icon-click', $event)"
 			@append-icon-click="emit('append-icon-click', $event)"
 		/>
+		<span
+			:id="formatDescriptionId"
+			class="sr-only"
+		>
+			{{ formatDescription }}
+		</span>
 	</div>
 </template>
 
 <style lang="scss" scoped>
 :deep(.v-icon__svg) { cursor: default; }
+
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
 
 .warning-field {
 	:deep(.v-input__details > .v-icon),
