@@ -27,6 +27,12 @@ const getFocusableElements = (root: HTMLElement): HTMLElement[] => {
 	)
 }
 
+const focusElement = (element: HTMLElement | null | undefined): boolean => {
+	if (!element) return false
+	element.focus({ preventScroll: true })
+	return true
+}
+
 export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 	const {
 		isDatePickerVisible,
@@ -46,10 +52,41 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 		const iso = dayjs(targetDate).format('YYYY-MM-DD')
 		const dayBtn = root.querySelector<HTMLElement>(`[data-v-date="${iso}"] button`)
 
-		if (!dayBtn) return false
+		return focusElement(dayBtn)
+	}
 
-		dayBtn.focus({ preventScroll: true })
-		return true
+	const focusMonthButton = (root: HTMLElement): boolean => {
+		const activeMonth = root.querySelector<HTMLElement>('.v-date-picker-months .v-btn--active')
+		if (focusElement(activeMonth)) return true
+
+		const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
+		const monthButtons = Array.from(root.querySelectorAll<HTMLElement>('.v-date-picker-months .v-btn'))
+		return focusElement(monthButtons[targetDate.getMonth()] ?? null)
+	}
+
+	const focusYearButton = (root: HTMLElement): boolean => {
+		const activeYear = root.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
+		if (focusElement(activeYear)) return true
+
+		const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
+		const targetYear = String(targetDate.getFullYear())
+		const yearButtons = Array.from(root.querySelectorAll<HTMLElement>('.v-date-picker-years .v-btn'))
+		const matchingYear = yearButtons.find(button =>
+			(button.getAttribute('aria-label') ?? button.textContent ?? '').trim() === targetYear,
+		)
+		return focusElement(matchingYear ?? null)
+	}
+
+	const focusCurrentGridSelection = (root: HTMLElement): boolean => {
+		if (root.querySelector('.v-date-picker-years')) {
+			return focusYearButton(root)
+		}
+
+		if (root.querySelector('.v-date-picker-months')) {
+			return focusMonthButton(root)
+		}
+
+		return focusDayButton(root)
 	}
 
 	const handleMenuKeydown = (event: KeyboardEvent) => {
@@ -112,7 +149,7 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 
 		// Shift+Tab depuis le bouton Aujourd'hui → jour sélectionné dans la grille
 		if (event.shiftKey && isFromTodayButton) {
-			if (focusDayButton(root)) return
+			if (focusCurrentGridSelection(root)) return
 		}
 
 		const currentIndex = active ? focusables.indexOf(active) : -1
@@ -147,7 +184,7 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 		const nextFocusable = focusables[nextIndex]
 
 		if (nextFocusable?.closest(DATE_PICKER_GRID_SELECTOR)) {
-			if (focusDayButton(root)) return
+			if (focusCurrentGridSelection(root)) return
 		}
 
 		nextFocusable?.focus({ preventScroll: true })

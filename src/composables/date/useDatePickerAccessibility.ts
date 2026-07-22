@@ -335,12 +335,18 @@ const ensureMonthAndYearLabelAnnouncer = (
 	}
 
 	let timeoutId: ReturnType<typeof setTimeout> | undefined
+	let lastAnnouncement = [
+		monthControl ? compactText(monthControl.textContent) : '',
+		yearControl ? compactText(yearControl.textContent) : '',
+	].filter(Boolean).join(' ')
 
 	const announceLabel = () => {
 		const monthText = monthControl ? compactText(monthControl.textContent) : ''
 		const yearText = yearControl ? compactText(yearControl.textContent) : ''
 		const announcement = [monthText, yearText].filter(Boolean).join(' ')
-		if (!announcement) return
+		if (!announcement || announcement === lastAnnouncement) return
+
+		lastAnnouncement = announcement
 
 		region.textContent = ''
 		nextTick(() => {
@@ -362,6 +368,56 @@ const ensureMonthAndYearLabelAnnouncer = (
 	registerCleanup(() => {
 		observer.disconnect()
 		clearTimeout(timeoutId)
+	})
+}
+
+const observeGridSemantics = (
+	pickerEl: HTMLElement,
+	registerCleanup: (cleanup: () => void) => void,
+) => {
+	let isApplying = false
+	let scheduled = false
+
+	const needsGridSemantics = () => {
+		const monthEls = pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-month')
+
+		return Array.from(monthEls).some((monthEl) => {
+			const daysContainer = monthEl.querySelector<HTMLElement>('.v-date-picker-month__days')
+			if (!daysContainer) return false
+
+			if (monthEl.getAttribute('role') !== 'grid') return true
+			if (daysContainer.querySelector('[data-v-date]:not([role=\"gridcell\"])')) return true
+			if (daysContainer.querySelector('.v-date-picker-month__weekday:not([role=\"columnheader\"])')) return true
+
+			return false
+		})
+	}
+
+	const observer = new MutationObserver(() => {
+		if (isApplying || scheduled || !needsGridSemantics()) return
+
+		scheduled = true
+		setTimeout(() => {
+			scheduled = false
+			isApplying = true
+			try {
+				applyGridSemantics(pickerEl)
+			}
+			finally {
+				isApplying = false
+			}
+		})
+	})
+
+	observer.observe(pickerEl, {
+		childList: true,
+		subtree: true,
+		attributes: true,
+		attributeFilter: ['role'],
+	})
+
+	registerCleanup(() => {
+		observer.disconnect()
 	})
 }
 
@@ -539,6 +595,7 @@ export function useDatePickerAccessibility() {
 				ensureMonthAndYearControlExpanded(pickerEl, viewMode)
 			}
 			applyGridSemantics(pickerEl)
+			observeGridSemantics(pickerEl, registerCleanup)
 		})
 
 		cleanupLastRun = () => {

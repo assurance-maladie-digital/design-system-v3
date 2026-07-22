@@ -18,6 +18,7 @@ export const useSyTextFieldProps = (
 	'no-icon': props.noIcon,
 	'prepend-icon': props.displayIcon && props.displayPrependIcon && !props.displayAppendIcon ? 'calendar' : undefined,
 	'readonly': props.readonly,
+	'required': props.required,
 	'variant-style': props.isOutlined ? 'outlined' : 'underlined',
 	'warning-messages': warningMessages.value,
 	'success-messages': successMessages.value,

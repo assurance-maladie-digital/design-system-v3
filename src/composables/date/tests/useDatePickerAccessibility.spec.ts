@@ -210,6 +210,27 @@ describe('useDatePickerAccessibility', () => {
 		expect(status.textContent).toBe('Mois précédent')
 	})
 
+	it('does not announce month/year on initial accessibility pass', async () => {
+		await updateAccessibility()
+		await new Promise(resolve => setTimeout(resolve, 150))
+
+		const monthYearStatus = document.querySelector('[id$="-month-year-label"]') as HTMLElement
+		expect(monthYearStatus?.textContent).toBe('')
+	})
+
+	it('announces month/year only when the visible label changes', async () => {
+		await updateAccessibility()
+
+		const monthButton = document.querySelector('.v-date-picker-controls__month-btn') as HTMLElement
+		const monthYearStatus = document.querySelector('[id$="-month-year-label"]') as HTMLElement
+
+		monthButton.textContent = 'Février 2023'
+
+		await new Promise(resolve => setTimeout(resolve, 150))
+
+		expect(monthYearStatus?.textContent).toBe('Février 2023 2023')
+	})
+
 	it('cleans up navigation listeners and observers on unmount', async () => {
 		await updateAccessibility()
 
@@ -376,6 +397,49 @@ describe('useDatePickerAccessibility', () => {
 		expect(daysContainer.querySelectorAll('.v-date-picker-month__weekdays')).toHaveLength(1)
 		expect(daysContainer.querySelectorAll('.v-date-picker-month__week')).toHaveLength(1)
 		expect(daysContainer.querySelectorAll('.v-date-picker-month__day[data-v-date]')).toHaveLength(2)
+	})
+
+	it('reapplies aria rows and gridcells after the month DOM is replaced', async () => {
+		document.body.innerHTML = `
+			<div class="v-date-picker">
+				<div class="v-date-picker-month">
+					<div class="v-date-picker-month__days">
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">L</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">M</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">M</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">J</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">V</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">S</div>
+						<div class="v-date-picker-month__day v-date-picker-month__weekday">D</div>
+						<div class="v-date-picker-month__day" data-v-date="2026-07-21"><button>21</button></div>
+						<div class="v-date-picker-month__day" data-v-date="2026-07-22"><button>22</button></div>
+					</div>
+				</div>
+			</div>
+		`
+
+		await updateAccessibility()
+
+		const daysContainer = document.querySelector('.v-date-picker-month__days') as HTMLElement
+		daysContainer.innerHTML = `
+			<div class="v-date-picker-month__day v-date-picker-month__weekday">L</div>
+			<div class="v-date-picker-month__day v-date-picker-month__weekday">M</div>
+			<div class="v-date-picker-month__day v-date-picker-month__weekday">M</div>
+			<div class="v-date-picker-month__day v-date-picker-month__weekday">J</div>
+			<div class="v-date-picker-month__day v-date-picker-month__weekday">V</div>
+			<div class="v-date-picker-month__day v-date-picker-month__weekday">S</div>
+			<div class="v-date-picker-month__day v-date-picker-month__weekday">D</div>
+			<div class="v-date-picker-month__day" data-v-date="2026-08-01"><button>1</button></div>
+			<div class="v-date-picker-month__day" data-v-date="2026-08-02"><button>2</button></div>
+		`
+
+		await new Promise(resolve => setTimeout(resolve, 0))
+		await new Promise(resolve => setTimeout(resolve, 0))
+
+		expect(daysContainer.querySelectorAll('.v-date-picker-month__weekdays')).toHaveLength(1)
+		expect(daysContainer.querySelectorAll('.v-date-picker-month__week')).toHaveLength(1)
+		expect(daysContainer.querySelector('[data-v-date="2026-08-01"]')?.getAttribute('role')).toBe('gridcell')
+		expect(daysContainer.querySelector('[data-v-date="2026-08-02"]')?.getAttribute('role')).toBe('gridcell')
 	})
 
 	it('preserves customized month button label with different navigation icons', async () => {

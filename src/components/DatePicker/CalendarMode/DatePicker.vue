@@ -106,9 +106,72 @@
 	const reapplyAccessibility = () => {
 		const rootEl = datePickerDialogRef.value
 		if (!rootEl) return
+
+		const activeElement = document.activeElement instanceof HTMLElement
+			? document.activeElement
+			: null
+		const activeDay = activeElement?.closest<HTMLElement>('.v-date-picker-month__day[data-v-date]')
+		const activeMonthButton = activeElement?.closest<HTMLButtonElement>('.v-date-picker-months .v-btn')
+		const activeYearButton = activeElement?.closest<HTMLButtonElement>('.v-date-picker-years .v-btn')
+		const shouldRestoreButtonFocus = activeElement?.tagName === 'BUTTON'
+		const dayDate = activeDay?.getAttribute('data-v-date')
+		const monthLabel = activeMonthButton?.getAttribute('aria-label') ?? activeMonthButton?.textContent?.trim() ?? ''
+		const yearLabel = activeYearButton?.getAttribute('aria-label') ?? activeYearButton?.textContent?.trim() ?? ''
+
 		cleanupGridSemantics(rootEl)
 		nextTick(() => {
 			updateAccessibility(rootEl, currentViewMode.value)
+			nextTick(() => {
+				if (!activeElement || !rootEl.contains(activeElement) && !dayDate && !monthLabel && !yearLabel) return
+
+				if (dayDate) {
+					const dayCell = rootEl.querySelector<HTMLElement>(`.v-date-picker-month__day[data-v-date="${dayDate}"]`)
+					const focusTarget = shouldRestoreButtonFocus
+						? dayCell?.querySelector<HTMLElement>('button')
+						: dayCell
+					focusTarget?.focus({ preventScroll: true })
+					return
+				}
+
+				if (monthLabel) {
+					const monthButtons = Array.from(rootEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-months .v-btn'))
+					const target = monthButtons.find(button =>
+						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === monthLabel,
+					)
+					target?.focus({ preventScroll: true })
+					return
+				}
+
+				if (yearLabel) {
+					const yearButtons = Array.from(rootEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-years .v-btn'))
+					const target = yearButtons.find(button =>
+						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === yearLabel,
+					)
+					target?.focus({ preventScroll: true })
+				}
+			})
+		})
+	}
+
+	const hasMissingGridSemantics = (rootEl: HTMLElement | null) => {
+		if (!rootEl) return false
+
+		return Boolean(
+			rootEl.querySelector('.v-date-picker-month:not([role="grid"])')
+			|| rootEl.querySelector('.v-date-picker-month__day[data-v-date]:not([role="gridcell"])')
+				|| rootEl.querySelector('.v-date-picker-month__weekday:not([role="columnheader"])'),
+		)
+	}
+
+	const scheduleOpenAccessibilityRefresh = () => {
+		nextTick(() => {
+			if (!isDatePickerVisible.value) return
+			reapplyAccessibility()
+
+			setTimeout(() => {
+				if (!isDatePickerVisible.value || !hasMissingGridSemantics(datePickerDialogRef.value)) return
+				reapplyAccessibility()
+			}, 80)
 		})
 	}
 	const datePickerDialogRef = ref<HTMLElement | null>(null)
@@ -678,7 +741,6 @@
 		currentMonth.value = month
 		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
 		handleMonthUpdate()
-		reapplyAccessibility()
 		nextTick(() => {
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
@@ -695,7 +757,6 @@
 		currentYearName.value = year
 
 		handleYearUpdate()
-		reapplyAccessibility()
 		nextTick(() => {
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()

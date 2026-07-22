@@ -581,6 +581,7 @@
 			:active="props.isActive"
 			:title="titleValue"
 			:aria-label="accessibleLabel"
+			:aria-invalid="hasError ? 'true' : undefined"
 			:aria-required="props.required ? 'true' : undefined"
 			:base-color="props.baseColor"
 			:bg-color="props.bgColor"

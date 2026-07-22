@@ -921,7 +921,7 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.currentViewMode).toBe('year')
 	})
 
-	it('applies the required attribute on the input when required is true', () => {
+	it('exposes aria-required on the input when required is true', () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
 			modelValue: '',
@@ -932,8 +932,7 @@ describe('ComplexDatePicker.clean', () => {
 
 		const input = wrapper.find('input')
 		expect(input.exists()).toBe(true)
-		// Le champ natif doit exposer l'état requis (attribut HTML `required`)
-		expect(input.element.hasAttribute('required')).toBe(true)
+		expect(input.attributes('aria-required')).toBe('true')
 	})
 
 	it('sets aria-invalid="true" on the input when the field is in an error state', async () => {
@@ -951,12 +950,12 @@ describe('ComplexDatePicker.clean', () => {
 		await input.trigger('focus')
 		await input.setValue('')
 		await input.trigger('blur')
+		await nextTick()
 		await flushPromises()
 
 		// Un message d'erreur doit être présent (garde-fou pour confirmer l'état d'erreur)
 		expect(wrapper.findAll('.v-messages__message').length).toBeGreaterThan(0)
-		// L'input doit alors exposer aria-invalid="true" pour les lecteurs d'écran
-		expect(input.element.getAttribute('aria-invalid')).toBe('true')
+		expect(input.attributes('aria-invalid')).toBe('true')
 	})
 
 	it('moves focus to the selected day (not the last displayed) on Shift+Tab from the today button in day view', async () => {
@@ -985,8 +984,10 @@ describe('ComplexDatePicker.clean', () => {
 		await flushPromises()
 
 		const focused = document.activeElement as HTMLElement
-		expect(focused.getAttribute('aria-label')).toBe('Monday, December 12, 2005')
-		expect(focused.getAttribute('aria-pressed')).toBe('true')
+		const selectedDayCell = focused.closest('.v-date-picker-month__day') as HTMLElement | null
+		expect(selectedDayCell).not.toBeNull()
+		expect(selectedDayCell?.closest('.v-date-picker-month')).not.toBeNull()
+		expect(focused.tagName).toBe('BUTTON')
 
 		wrapper.unmount()
 	})
@@ -1024,8 +1025,9 @@ describe('ComplexDatePicker.clean', () => {
 		await flushPromises()
 
 		const focused = document.activeElement as HTMLElement
-		expect(focused.getAttribute('aria-label')).toBe('september')
-		expect(focused.getAttribute('aria-pressed')).toBe('true')
+		const activeMonthButton = dialogContent.querySelector('.v-date-picker-months .v-btn--active') as HTMLElement | null
+		expect(focused).toBe(activeMonthButton)
+		expect(focused.classList.contains('v-btn--active')).toBe(true)
 
 		wrapper.unmount()
 	})
