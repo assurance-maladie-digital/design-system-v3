@@ -1167,11 +1167,11 @@
 			@prepend-icon-click="emit('prepend-icon-click', $event)"
 			@append-icon-click="emit('append-icon-click', $event)"
 		/>
-			<DatePickerLiveRegion
-				:id="formatDescriptionId"
-				:text="formatDescription"
-			/>
-		</div>
+		<DatePickerLiveRegion
+			:id="formatDescriptionId"
+			:text="formatDescription"
+		/>
+	</div>
 </template>
 
 <style lang="scss" scoped>

@@ -574,50 +574,50 @@
 		queueMicrotask(() => {
 			let formattedValue = ''
 
-				if (props.displayRange) {
-					if (rangeBoundaryDates.value?.[0] && rangeBoundaryDates.value?.[1]) {
-						formattedValue = formatDateRangeDisplay(
-							rangeBoundaryDates.value[0],
-							rangeBoundaryDates.value[1],
+			if (props.displayRange) {
+				if (rangeBoundaryDates.value?.[0] && rangeBoundaryDates.value?.[1]) {
+					formattedValue = formatDateRangeDisplay(
+						rangeBoundaryDates.value[0],
+						rangeBoundaryDates.value[1],
 						props.format,
 						formatDate,
 					)
-						displayFormattedDate.value = textInputValue.value = formattedValue
-						const formattedDates = [
-							formatDate(rangeBoundaryDates.value[0], returnFormat.value),
-							formatDate(rangeBoundaryDates.value[1], returnFormat.value),
-						] as [string, string]
-						updateModel(formattedDates)
-						emit('date-selected', formattedDates)
-						closeAndRestoreFocus()
-					}
-					else if (Array.isArray(selectedDates.value) && selectedDates.value.length >= 2) {
-						const formattedDates = [
-							formatDate(selectedDates.value[0]!, props.format),
-							formatDate(selectedDates.value[selectedDates.value.length - 1]!, props.format),
-						] as [string, string]
-						formattedValue = formatDateRangeDisplay(
+					displayFormattedDate.value = textInputValue.value = formattedValue
+					const formattedDates = [
+						formatDate(rangeBoundaryDates.value[0], returnFormat.value),
+						formatDate(rangeBoundaryDates.value[1], returnFormat.value),
+					] as [string, string]
+					updateModel(formattedDates)
+					emit('date-selected', formattedDates)
+					closeAndRestoreFocus()
+				}
+				else if (Array.isArray(selectedDates.value) && selectedDates.value.length >= 2) {
+					const formattedDates = [
+						formatDate(selectedDates.value[0]!, props.format),
+						formatDate(selectedDates.value[selectedDates.value.length - 1]!, props.format),
+					] as [string, string]
+					formattedValue = formatDateRangeDisplay(
 						selectedDates.value[0]!,
 						selectedDates.value[selectedDates.value.length - 1]!,
-							props.format,
-							formatDate,
-						)
-						displayFormattedDate.value = textInputValue.value = formattedValue
-						updateModel(formattedDates)
-						emit('date-selected', formattedDates)
-						closeAndRestoreFocus()
-					}
-					else {
-						formattedValue = displayFormattedDateComputed.value || ''
-						displayFormattedDate.value = textInputValue.value = formattedValue
-					}
+						props.format,
+						formatDate,
+					)
+					displayFormattedDate.value = textInputValue.value = formattedValue
+					updateModel(formattedDates)
+					emit('date-selected', formattedDates)
+					closeAndRestoreFocus()
 				}
 				else {
 					formattedValue = displayFormattedDateComputed.value || ''
 					displayFormattedDate.value = textInputValue.value = formattedValue
-					closeAndRestoreFocus()
-					emit('date-selected', formattedDate.value)
 				}
+			}
+			else {
+				formattedValue = displayFormattedDateComputed.value || ''
+				displayFormattedDate.value = textInputValue.value = formattedValue
+				closeAndRestoreFocus()
+				emit('date-selected', formattedDate.value)
+			}
 
 			validateDates()
 		})
@@ -811,13 +811,13 @@
 			nextTick(() => {
 				if (datePickerRef.value) {
 					const displayedState = getDisplayedMonthYearState(date)
-						if (currentMonth.value !== displayedState.month || currentYear.value !== displayedState.year) {
-							syncDisplayedMonthYearFromDate(date)
-							nextTick(() => refreshVisibleCalendarUi())
-						}
+					if (currentMonth.value !== displayedState.month || currentYear.value !== displayedState.year) {
+						syncDisplayedMonthYearFromDate(date)
+						nextTick(() => refreshVisibleCalendarUi())
 					}
-				})
-			},
+				}
+			})
+		},
 		onSelectDate: (date: Date) => {
 			void updateSelectedDates(date)
 		},
@@ -1447,15 +1447,15 @@
 				v-bind="dateTextInputProps"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
-				/>
+			/>
 		</template>
 
 		<template v-else>
 			<VMenu
 				v-model="isDatePickerVisible"
-					:activator="menuActivatorRef"
-					:min-width="0"
-					location="bottom"
+				:activator="menuActivatorRef"
+				:min-width="0"
+				location="bottom"
 				:persistent="true"
 				:close-on-content-click="false"
 				:open-on-click="false"
@@ -1485,9 +1485,9 @@
 							@input="handleInput"
 							@keydown="handleKeydown"
 							@date-selected="handleDateSelected"
-						@prepend-icon-click="openDatePickerOnIconClick"
-						@append-icon-click="openDatePickerOnIconClick"
-					/>
+							@prepend-icon-click="openDatePickerOnIconClick"
+							@append-icon-click="openDatePickerOnIconClick"
+						/>
 					</div>
 				</template>
 
