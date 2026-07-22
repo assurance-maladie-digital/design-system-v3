@@ -1378,7 +1378,7 @@
 		currentYearName.value = todaySelection.yearName
 
 		if (isDatePickerVisible.value) {
-				closeDatePicker({ restoreFocus: true })
+			closeDatePicker({ restoreFocus: true })
 		}
 	}
 
@@ -1456,15 +1456,15 @@
 	})
 </script>
 
-	<template>
-		<div class="date-picker-container">
-			<span
-				class="sr-only"
-				aria-live="polite"
-				aria-atomic="true"
-			>
-				{{ accessibilityDescription }}
-			</span>
+<template>
+	<div class="date-picker-container">
+		<span
+			class="sr-only"
+			aria-live="polite"
+			aria-atomic="true"
+		>
+			{{ accessibilityDescription }}
+		</span>
 
 		<template v-if="props.noCalendar">
 			<DateTextInput
