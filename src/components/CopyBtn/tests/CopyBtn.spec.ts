@@ -170,3 +170,21 @@ describe('CopyBtn', () => {
 		expect(copy).toHaveBeenCalledWith('FR7630004000')
 	})
 })
+
+// Le ring de focus vient de l'override global (_btns.scss) : jsdom ne calcule pas
+// :focus-visible, on vérifie le prérequis — un <button> natif focusable.
+describe('CopyBtn - focus', () => {
+	it('renders a native <button> so the global focus ring applies', () => {
+		const wrapper = mount(CopyBtn, { props: { textToCopy: 'Texte' } })
+		expect(wrapper.get('.v-btn').element.tagName).toBe('BUTTON')
+		wrapper.unmount()
+	})
+
+	it('is focusable', () => {
+		const wrapper = mount(CopyBtn, { props: { textToCopy: 'Texte' }, attachTo: document.body })
+		const button = wrapper.get('.v-btn').element as HTMLButtonElement
+		button.focus()
+		expect(document.activeElement).toBe(button)
+		wrapper.unmount()
+	})
+})

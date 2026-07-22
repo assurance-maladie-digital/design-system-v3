@@ -145,12 +145,4 @@
 		display: none;
 	}
 }
-
-.vd-back-to-top-btn:focus-visible {
-	outline: 0;
-}
-
-.vd-back-to-top-btn:focus-visible::after {
-	opacity: 1;
-}
 </style>

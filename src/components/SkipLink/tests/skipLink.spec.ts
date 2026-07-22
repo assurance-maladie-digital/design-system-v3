@@ -137,3 +137,24 @@ describe('SkipLink', () => {
 		expect(focusSpy).not.toHaveBeenCalled()
 	})
 })
+
+// Le ring de focus est scopé sur `:focus` (jsdom ne calcule pas le style) : on vérifie
+// le prérequis — un <a> natif focusable (le lien n'est visible qu'au focus).
+describe('SkipLink - focus', () => {
+	it('renders a native <a> so the focus ring applies', () => {
+		const wrapper = mount(SkipLink, { props: { label: 'Aller au contenu', target: '#main' } })
+		expect(wrapper.get('.sy-skip-link').element.tagName).toBe('A')
+		wrapper.unmount()
+	})
+
+	it('is focusable', () => {
+		const wrapper = mount(SkipLink, {
+			props: { label: 'Aller au contenu', target: '#main' },
+			attachTo: document.body,
+		})
+		const link = wrapper.get('.sy-skip-link').element as HTMLAnchorElement
+		link.focus()
+		expect(document.activeElement).toBe(link)
+		wrapper.unmount()
+	})
+})

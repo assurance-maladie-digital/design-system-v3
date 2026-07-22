@@ -913,4 +913,37 @@ describe('SelectBtnField', () => {
 			wrapper.unmount()
 		})
 	})
+
+	// Le ring de focus est CSS (:focus-visible), non calculable en jsdom.
+	// On vérifie ici le roving tabindex qui détermine quel élément porte le ring :
+	// d'abord le conteneur (ring englobant), puis l'item focalisé.
+	describe('focus (roving tabindex)', () => {
+		const items = [
+			{ text: 'A', value: 'a' },
+			{ text: 'B', value: 'b' },
+			{ text: 'C', value: 'c' },
+		]
+
+		it('makes the listbox container focusable first, with options non-focusable', () => {
+			const wrapper = mount(SelectBtnField, { props: { items } })
+
+			expect(wrapper.find('[role="listbox"]').attributes('tabindex')).toBe('0')
+			wrapper.findAll('[role="option"]').forEach((option) => {
+				expect(option.attributes('tabindex')).toBe('-1')
+			})
+
+			wrapper.unmount()
+		})
+
+		it('moves the roving tabindex from the container to the focused option on keyboard navigation', async () => {
+			const wrapper = mount(SelectBtnField, { props: { items } })
+
+			await wrapper.find('[role="listbox"]').trigger('keydown', { key: 'ArrowRight' })
+
+			expect(wrapper.find('[role="listbox"]').attributes('tabindex')).toBe('-1')
+			expect(wrapper.find('li:nth-child(1)[role="option"]').attributes('tabindex')).toBe('0')
+
+			wrapper.unmount()
+		})
+	})
 })

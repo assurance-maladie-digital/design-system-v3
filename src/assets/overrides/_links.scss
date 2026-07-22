@@ -1,0 +1,15 @@
+// Ring de focus DS pour les liens `<a>` — pendant de `_btns.scss` (qui ne cible que
+// `.v-btn`/`button`, pas les `<a>` simples). Couvre tous les liens texte du DS (liens
+// tel:, liens en ligne, sommaires…) sans ré-écrire un ring dans chaque composant.
+// Offset réduit (2px) car les liens sont souvent inline : un offset 3px déborderait
+// sur les lignes voisines.
+a:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 2px;
+	border-radius: 2px;
+}
+
+// Sur fond sombre (thème dark), le ring passe en onPrimary, comme pour les boutons.
+.v-theme--dark a:focus-visible {
+	outline-color: rgb(var(--v-theme-onPrimary));
+}

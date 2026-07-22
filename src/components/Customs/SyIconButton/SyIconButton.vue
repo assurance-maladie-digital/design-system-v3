@@ -37,3 +37,9 @@
 		/>
 	</v-btn>
 </template>
+
+<style scoped lang="scss">
+.v-btn:focus-visible {
+	outline-offset: -2px;
+}
+</style>

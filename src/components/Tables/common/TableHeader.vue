@@ -175,7 +175,10 @@
 	})
 
 	function resizeKeyboardColumn(increment: number) {
-		const currentWidth = wrapper.value?.offsetWidth || 0
+		// Même base de largeur que le redimensionnement souris (`startResize`) : `wrapper` est
+		// le contenu de l'en-tête, ~32px plus étroit que la colonne réelle. Sans cette
+		// correction, le 1er appui rétrécissait la colonne d'un coup (« se serre à gauche »).
+		const currentWidth = (wrapper.value?.offsetWidth || 0) + 24 + 1 / 2 * 16
 		if (wrapper.value) {
 			const newWidth = Math.max(50, currentWidth + increment)
 			header.value!.width = newWidth
@@ -356,6 +359,25 @@
 	width: 1rem;
 	height: 100%;
 	left: calc(24px - 1rem / 2);
+
+	// Poignée de redimensionnement opérable au clavier (`tabindex="0"`). La poignée dépasse le
+	// bord de la cellule (`left`) : un anneau (outline/box-shadow) déborde forcément, et un
+	// fond aussi. Le seul indicateur contenu est son trait central (`::after`) : au focus, il
+	// passe en primary et s'élargit. Pas d'anneau, pas de fond.
+	&:focus-visible {
+		// Neutralise le ring global `button:focus-visible` de `_btns.scss` (outline-offset: 3px),
+		// qui déborde sur cette poignée fine et décalée. `!important` pour être sûr de gagner
+		// quel que soit l'ordre d'injection. L'indicateur de focus est le trait central ci-dessous.
+		outline: none !important;
+
+		&::after {
+			top: 50%;
+			height: 60%;
+			width: 0.2rem;
+			transform: translate(-50%, -50%);
+			background: rgb(var(--v-theme-primary));
+		}
+	}
 
 	&::after {
 		content: '';

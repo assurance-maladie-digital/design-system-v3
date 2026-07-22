@@ -132,13 +132,9 @@
 	}
 }
 
-.v-btn {
-	outline: 0;
-}
-
-.v-btn:focus-visible {
-	background: rgb(84 88 89 / 7%);
-}
+// Focus : plus de ring bespoke ni de changement de fond. Le bouton est un VBtn → il
+// reçoit le ring standard du design system via l'override global `_btns.scss`
+// (2px primary, offset 3px, onPrimary sur fond sombre).
 
 .v-btn--icon .v-icon {
 	color: rgb(var(--v-theme-grey-lighten20));

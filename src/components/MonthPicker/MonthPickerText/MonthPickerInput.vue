@@ -110,4 +110,12 @@
 	opacity: var(--v-medium-emphasis-opacity) !important;
 }
 
+// `<button>` natif d'ouverture du picker (pas un `.v-btn`) → non couvert par `_btns.scss`.
+// Ring DS primary au clavier, sinon focus navigateur par défaut.
+.month-picker-input__toggle-btn:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
 </style>

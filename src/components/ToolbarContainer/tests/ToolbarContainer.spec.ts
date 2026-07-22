@@ -134,4 +134,50 @@ describe('ToolbarContainer.vue', () => {
 		await toolbar.trigger('focus')
 		expect(document.activeElement).toBe(secondButton?.element)
 	})
+
+	describe('focus (roving tabindex)', () => {
+		it('makes the toolbar container the only tab stop, with tools non-focusable', () => {
+			const wrapper = mount(Toolbar, {
+				attachTo: document.body,
+				slots: {
+					default: `
+						<div>
+							<VBtn>Action 1</VBtn>
+							<VBtn>Action 2</VBtn>
+						</div>
+					`,
+				},
+			})
+
+			expect(wrapper.find('.sy-toolbar').attributes('tabindex')).toBe('0')
+			wrapper.findAll('button.v-btn').forEach((button) => {
+				expect(button.attributes('tabindex')).toBe('-1')
+			})
+		})
+
+		it('moves the roving tabindex from the container to the focused tool on keyboard navigation', async () => {
+			const wrapper = mount(Toolbar, {
+				attachTo: document.body,
+				slots: {
+					default: `
+						<div>
+							<VBtn>Action 1</VBtn>
+							<VBtn>Action 2</VBtn>
+						</div>
+					`,
+				},
+			})
+
+			const toolbar = wrapper.find('.sy-toolbar')
+			const firstButton = wrapper.find('button.v-btn')
+			const secondButton = wrapper.findAll('button.v-btn')[1]
+
+			await toolbar.trigger('focus')
+			expect(firstButton.attributes('tabindex')).toBe('0')
+
+			await firstButton.trigger('keydown', { key: 'ArrowRight' })
+			expect(firstButton.attributes('tabindex')).toBe('-1')
+			expect(secondButton?.attributes('tabindex')).toBe('0')
+		})
+	})
 })

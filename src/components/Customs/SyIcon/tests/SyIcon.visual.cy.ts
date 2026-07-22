@@ -1,6 +1,12 @@
 import SyIcon from '../SyIcon.vue'
 import { mdiHome, mdiInformation, mdiStar, mdiAlert, mdiCheck, mdiPencil } from '@mdi/js'
 
+// Déclenche `:focus-visible` via l'option native focus({ focusVisible: true }).
+const focusVisible = (selector: string) =>
+	cy.get(selector).then(($el) => {
+		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
+	})
+
 describe('SyIcon - Visual regression tests', () => {
 	it('displays a decorative icon by default', () => {
 		cy.mountWithVuetify(SyIcon, {
@@ -79,5 +85,24 @@ describe('SyIcon - Visual regression tests', () => {
 		cy.get('.v-icon').should('have.attr', 'role', 'button')
 		cy.get('.v-icon').should('have.attr', 'aria-label', 'Éditer')
 		cy.matchImageSnapshot('sy-icon-role-button', cy.get('.v-icon'))
+	})
+
+	// Une icône interactive (role="button" → tabindex=0 via rgaaSvgFix) est focusable mais n'est ni
+	// <button> ni .v-btn : le ring DS vient du style scoped de SyIcon (2px primary, offset 3px,
+	// aligné sur la convention bouton).
+	it('shows the DS ring on a focused interactive (button) icon', () => {
+		cy.mountWithVuetify(SyIcon, {
+			props: {
+				icon: mdiPencil,
+				decorative: false,
+				label: 'Éditer',
+				role: 'button',
+			},
+		})
+
+		cy.get('.v-icon').should('have.attr', 'tabindex', '0')
+		focusVisible('.v-icon[role="button"]')
+		cy.wait(150)
+		cy.matchImageSnapshot('sy-icon-button-focus', cy.get('.v-icon'))
 	})
 })

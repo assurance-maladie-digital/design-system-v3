@@ -221,6 +221,12 @@
 	color: rgb(var(--v-theme-error));
 }
 
+:deep(.v-selection-control--focus-visible) {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+
 :deep(.sy-radio-group__messages) {
 	align-items: flex-start;
 	margin-top: -22px !important;

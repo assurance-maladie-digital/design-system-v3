@@ -329,7 +329,10 @@ $virtual-thumb-size: 40px;
 		}
 	}
 
-	&:focus .thumb-outline {
+	// Cadre de focus DS (2px primary) réservé au clavier (`:focus-visible`), pour ne pas
+	// l'afficher au drag souris ; le cercle `::before` (agrandi sur `:focus`/`:hover`)
+	// suffit comme feedback souris.
+	&:focus-visible .thumb-outline {
 		$offset: 8px;
 
 		position: absolute;
@@ -338,7 +341,7 @@ $virtual-thumb-size: 40px;
 		transform: translate(-50%, -100%);
 		width: calc(var(--sy-thumb-size) * 2 + $offset);
 		height: calc(var(--sy-thumb-size) * 4 + $offset);
-		border: 2px solid rgba(var(--v-theme-primary));
+		border: 2px solid rgb(var(--v-theme-primary));
 		border-radius: 4px;
 	}
 }
