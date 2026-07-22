@@ -34,7 +34,7 @@
 		fallbackFilename: undefined,
 		backgroundColor: 'white',
 		dark: false,
-		locales: () => defaultLocales,
+		locales: () => ({}),
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)

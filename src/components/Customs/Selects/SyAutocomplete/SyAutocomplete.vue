@@ -72,7 +72,7 @@
 			// Diverge du défaut global (true) : modelValue ne change que lors d'une sélection (pas à chaque frappe),
 			// donc valider sur ce changement donne un retour immédiat après sélection sans erreurs prématurées pendant la saisie.
 			isValidateOnBlur: false,
-			locales: () => defaultLocales,
+			locales: () => ({}),
 		},
 	)
 

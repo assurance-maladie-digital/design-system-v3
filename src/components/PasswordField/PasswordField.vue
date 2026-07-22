@@ -26,7 +26,7 @@
 		autocompleteType: 'current-password',
 		helpText: undefined,
 		hideDetails: false,
-		locales: () => defaultLocales,
+		locales: () => ({}),
 		...validationPropsDefaults,
 	})
 

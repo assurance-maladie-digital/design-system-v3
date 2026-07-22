@@ -26,7 +26,7 @@
 	}>(), {
 		file: undefined,
 		options: undefined,
-		locales: () => defaultLocales,
+		locales: () => ({}),
 		trackConsultation: false,
 		readonly: false,
 		pdfWorkerSrc: undefined,

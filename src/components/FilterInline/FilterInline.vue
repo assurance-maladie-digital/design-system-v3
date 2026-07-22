@@ -13,7 +13,7 @@
 		locales?: DeepPartial<typeof defaultLocales>
 	}>(), {
 		modelValue: () => [],
-		locales: () => defaultLocales,
+		locales: () => ({}),
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)

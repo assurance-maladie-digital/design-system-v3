@@ -26,7 +26,7 @@
 		showAddButton: false,
 		addButtonLabel: defaultLocales.addBtnLabel,
 		loading: false,
-		locales: () => defaultLocales,
+		locales: () => ({}),
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)

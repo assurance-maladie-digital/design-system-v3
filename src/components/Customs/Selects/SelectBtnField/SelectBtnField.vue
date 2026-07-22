@@ -27,7 +27,7 @@
 		inline: false,
 		helpText: undefined,
 		hideDetails: false,
-		locales: () => defaultLocales,
+		locales: () => ({}),
 		...validationPropsDefaults,
 		isValidateOnBlur: false, // La validation se déclenche immédiatement à la sélection
 	})

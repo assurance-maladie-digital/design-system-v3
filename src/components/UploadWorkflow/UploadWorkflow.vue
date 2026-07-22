@@ -37,7 +37,7 @@
 			showFilePreview: false,
 			infoText: '',
 			headingLevel: 4,
-			locales: () => defaultLocales,
+			locales: () => ({}),
 		},
 	)
 

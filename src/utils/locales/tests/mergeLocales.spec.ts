@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 
-import { mergeLocales, type DeepPartial } from '../mergeLocales'
+import { mergeLocales } from '../mergeLocales'
 
 const defaultLocales = {
 	thanks: 'Merci',
@@ -43,21 +43,18 @@ describe('mergeLocales', () => {
 	it('replaces a function with the provided one', () => {
 		const custom = (index: number): string => `note ${index}`
 		const result = mergeLocales(defaultLocales, {
-			ratingAriaLabel: custom as unknown as DeepPartial<typeof defaultLocales>['ratingAriaLabel'],
+			ratingAriaLabel: custom,
 		})
 
 		expect(result.ratingAriaLabel(3, 5)).toBe('note 3')
 	})
 
-	it('concatenates arrays when overridden', () => {
+	it('replaces arrays when overridden', () => {
 		const result = mergeLocales(defaultLocales, {
 			defaultEmotionLabels: ['Bof'],
 		})
 
 		expect(result.defaultEmotionLabels).toEqual([
-			'Pas du tout',
-			'Moyen',
-			'Parfait !',
 			'Bof',
 		])
 	})

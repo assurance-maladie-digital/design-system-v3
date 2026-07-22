@@ -23,7 +23,7 @@
 		tagTitle: 'h3',
 		isClearable: false,
 		locale: navigator.language,
-		locales: () => defaultLocales,
+		locales: () => ({}),
 		...validationPropsDefaults,
 	})
 

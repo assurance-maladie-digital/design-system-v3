@@ -14,7 +14,7 @@
 		locales?: DeepPartial<typeof defaultLocales>
 	}>(), {
 		backgroundColor: 'white',
-		locales: () => defaultLocales,
+		locales: () => ({}),
 		color: undefined,
 	})
 

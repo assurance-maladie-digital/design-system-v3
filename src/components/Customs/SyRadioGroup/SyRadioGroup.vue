@@ -41,7 +41,7 @@
 			name: undefined,
 			options: () => [],
 			title: undefined,
-			locales: () => defaultLocales,
+			locales: () => ({}),
 			...validationPropsDefaults,
 			isValidateOnBlur: false, // La validation se déclenche immédiatement à la sélection pour les radios
 		},

@@ -2,7 +2,6 @@ import { computed, ref, toValue, type Ref } from 'vue'
 import { useValidation, type ValidationRule } from '@/composables/unifyValidation/useValidation'
 import type { LunarCalendarProps } from './types'
 import { locales as defaultLocales } from './locales'
-import { mergeLocales } from '@/utils/locales/mergeLocales'
 
 function getYearFromModel(model: string): number | null {
 	const parts = model.split('/')
@@ -12,9 +11,12 @@ function getYearFromModel(model: string): number | null {
 	return Number(parts[2])
 }
 
-export function useLunarCalendarValidation(modelValue: Ref<string | undefined>, props: LunarCalendarProps) {
+export function useLunarCalendarValidation(
+	modelValue: Ref<string | undefined>,
+	props: LunarCalendarProps,
+	locales: Ref<typeof defaultLocales>,
+) {
 	const focused = ref(false)
-	const locales = mergeLocales(defaultLocales, props.locales)
 
 	const customRules = computed<ValidationRule[]>(() => {
 		const rules: ValidationRule[] = []
@@ -27,7 +29,7 @@ export function useLunarCalendarValidation(modelValue: Ref<string | undefined>, 
 					const regex = /^\d{2}\/\d{2}\/\d{4}$/
 					return regex.test(value)
 				},
-				message: locales.invalidDate,
+				message: locales.value.invalidDate,
 			},
 		})
 
@@ -43,7 +45,7 @@ export function useLunarCalendarValidation(modelValue: Ref<string | undefined>, 
 						if (year === null) return true
 						return year >= minYear && year <= maxYear
 					},
-					message: locales.yearBetween(minYear, maxYear),
+					message: locales.value.yearBetween(minYear, maxYear),
 				},
 			})
 		}
@@ -56,7 +58,7 @@ export function useLunarCalendarValidation(modelValue: Ref<string | undefined>, 
 						if (year === null) return true
 						return year >= minYear
 					},
-					message: locales.yearMin(minYear),
+					message: locales.value.yearMin(minYear),
 				},
 			})
 		}
@@ -69,7 +71,7 @@ export function useLunarCalendarValidation(modelValue: Ref<string | undefined>, 
 						if (year === null) return true
 						return year <= maxYear
 					},
-					message: locales.yearMax(maxYear),
+					message: locales.value.yearMax(maxYear),
 				},
 			})
 		}
@@ -81,7 +83,7 @@ export function useLunarCalendarValidation(modelValue: Ref<string | undefined>, 
 		? [{
 				type: 'required',
 				options: {
-					message: locales.requiredField(props.label),
+					message: locales.value.requiredField(props.label),
 					fieldIdentifier: props.label,
 				},
 			}]

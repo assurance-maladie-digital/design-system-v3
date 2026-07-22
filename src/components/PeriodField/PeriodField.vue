@@ -60,7 +60,7 @@
 		required: false,
 		showSuccessMessages: false,
 		showWeekNumber: false,
-		locales: () => defaultLocales,
+		locales: () => ({}),
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)

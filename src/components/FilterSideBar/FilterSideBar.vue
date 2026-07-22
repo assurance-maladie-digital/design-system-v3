@@ -23,7 +23,7 @@
 	}>(), {
 		modelValue: () => [],
 		modale: false,
-		locales: () => defaultLocales,
+		locales: () => ({}),
 		zIndex: undefined,
 		title: undefined,
 		headingLevel: 2,

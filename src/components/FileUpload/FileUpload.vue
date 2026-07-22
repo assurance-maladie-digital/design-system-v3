@@ -21,9 +21,9 @@
 		disabled: false,
 		multiple: false,
 		fileSizeMax: 10_485_760,
-		fileSizeUnits: () => defaultLocales.fileSizeUnits,
+		fileSizeUnits: () => ({}).fileSizeUnits,
 		allowedExtensions: () => ['pdf', 'jpg', 'jpeg', 'png'],
-		locales: () => defaultLocales,
+		locales: () => ({}),
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)

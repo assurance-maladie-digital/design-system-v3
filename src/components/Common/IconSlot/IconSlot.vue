@@ -20,7 +20,7 @@
 		icon: undefined,
 		tooltip: undefined,
 		label: undefined,
-		locales: () => defaultLocales,
+		locales: () => ({}),
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)

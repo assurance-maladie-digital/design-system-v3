@@ -31,7 +31,7 @@
 		},
 		locales: {
 			type: Object as PropType<DeepPartial<typeof defaultLocales>>,
-			default: () => defaultLocales,
+			default: () => ({}),
 		},
 	})
 

@@ -92,7 +92,7 @@ const expectedPropOptions: ExpectedPropOptions<typeof AmeliproFooter> = {
 	},
 	locales: {
 		type: Object as PropType<typeof defaultLocales>,
-		default: () => defaultLocales,
+		default: () => ({}),
 	},
 	noA11y: {
 		type: Boolean,

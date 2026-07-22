@@ -28,7 +28,7 @@
 			title: undefined,
 			...validationPropsDefaults,
 			isValidateOnBlur: false,
-			locales: () => defaultLocales,
+			locales: () => ({}),
 		},
 	)
 
@@ -62,7 +62,7 @@
 		hasWarning,
 		hasSuccess,
 		defaultRules,
-	} = useSyCheckBoxGroupValidation(props, model, focused)
+	} = useSyCheckBoxGroupValidation(props, model, focused, locales)
 
 	const reset = () => {
 		clearValidation()

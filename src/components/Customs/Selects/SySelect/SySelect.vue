@@ -88,7 +88,7 @@
 			tooltipLocation: 'top',
 			noIcon: false,
 			disableClickButton: true,
-			locales: () => defaultLocales,
+			locales: () => ({}),
 			...validationPropsDefaults,
 		},
 	)

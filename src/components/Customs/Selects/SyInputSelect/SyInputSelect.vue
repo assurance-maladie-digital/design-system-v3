@@ -43,7 +43,7 @@
 		customRules: () => [],
 		disableErrorHandling: false,
 		bgColor: 'white',
-		locales: () => defaultLocales,
+		locales: () => ({}),
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)

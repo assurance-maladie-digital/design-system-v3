@@ -90,7 +90,7 @@
 		},
 		locales: {
 			type: Object as PropType<DeepPartial<typeof defaultLocales>>,
-			default: () => defaultLocales,
+			default: () => ({}),
 		},
 		noA11y: {
 			type: Boolean,

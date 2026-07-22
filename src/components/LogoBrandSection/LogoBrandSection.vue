@@ -38,7 +38,7 @@
 			homeLink: () => ({
 				href: '/',
 			}),
-			locales: () => defaultLocales,
+			locales: () => ({}),
 		})
 
 	const locales = useLocales(defaultLocales, () => props.locales)

@@ -29,7 +29,7 @@
 		},
 		itemLabels: {
 			type: Array as PropType<string[]>,
-			default: () => defaultLocales.defaultEmotionLabels,
+			default: () => ({}).defaultEmotionLabels,
 		},
 		readonly: {
 			type: Boolean,
@@ -45,7 +45,7 @@
 		},
 		locales: {
 			type: Object as PropType<DeepPartial<typeof defaultLocales>>,
-			default: () => defaultLocales,
+			default: () => ({}),
 		},
 	})
 

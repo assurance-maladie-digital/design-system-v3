@@ -42,7 +42,7 @@
 		confirmationMessage: 'Voulez-vous vraiment changer d\'onglet ?',
 		lazy: false,
 		vuetifyOptions: () => ({}),
-		locales: () => defaultLocales,
+		locales: () => ({}),
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)

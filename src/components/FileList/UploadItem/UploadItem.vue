@@ -47,7 +47,7 @@
 		showDeleteBtn: true,
 		showPreviewBtn: false,
 		tag: 'div',
-		locales: () => defaultLocales,
+		locales: () => ({}),
 		seeLabel: defaultLocales.see,
 		deleteLabel: defaultLocales.delete,
 		importLabel: defaultLocales.import,

@@ -25,7 +25,7 @@
 		importLabel?: string
 		deleteLabel?: string
 	} & Widthable>(), {
-		locales: () => defaultLocales,
+		locales: () => ({}),
 		seeLabel: undefined,
 		importLabel: undefined,
 		deleteLabel: undefined,

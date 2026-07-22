@@ -13,7 +13,7 @@
 
 	const props = withDefaults(defineProps<MonthPickerProps>(), {
 		modelValue: undefined,
-		locales: () => defaultLocales,
+		locales: () => ({}),
 		helpText: 'Format MM/AAAA',
 		...validationPropsDefaults,
 		...defaultMonthPickerVisualProps,

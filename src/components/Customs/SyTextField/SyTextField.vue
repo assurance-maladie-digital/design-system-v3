@@ -82,7 +82,7 @@
 			helpText: '',
 			maxlength: undefined,
 			title: undefined,
-			locales: () => defaultLocales,
+			locales: () => ({}),
 			...validationPropsDefaults,
 		},
 	)

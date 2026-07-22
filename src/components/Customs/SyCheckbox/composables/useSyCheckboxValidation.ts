@@ -1,8 +1,6 @@
 import { computed, toRef, type ComputedRef, type Ref } from 'vue'
 import { useValidation, type ValidationRule } from '@/composables/unifyValidation/useValidation'
 import type { SyCheckboxValidationProps } from '../types'
-import { locales as defaultLocales } from '../locales'
-import { mergeLocales } from '@/utils/locales/mergeLocales'
 
 export interface UseSyCheckboxValidationReturn {
 	validate: () => Promise<boolean>
@@ -31,16 +29,17 @@ export function useSyCheckboxValidation(
 	props: SyCheckboxValidationProps,
 	model: Ref<boolean | null>,
 	focused: Ref<boolean>,
+	locales: Ref<{
+		requiredField: (label: string | undefined) => string
+	}>,
 ): UseSyCheckboxValidationReturn {
-	// « required » pour une case = doit être cochée (true)
-	const locales = mergeLocales(defaultLocales, props.locales)
 	const defaultRules = computed<ValidationRule[]>(() =>
 		props.required
 			? [{
 					type: 'custom',
 					options: {
 						validate: (value: unknown) => value === true,
-						message: locales.requiredField(props.label),
+						message: locales.value.requiredField(props.label),
 						fieldIdentifier: props.label,
 					},
 				}]

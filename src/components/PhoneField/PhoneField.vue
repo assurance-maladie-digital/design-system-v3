@@ -31,7 +31,7 @@
 		autocompletePhone: 'tel-national',
 		withoutFieldset: false,
 		isClearable: false,
-		locales: () => defaultLocales,
+		locales: () => ({}),
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)

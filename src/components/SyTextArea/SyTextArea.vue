@@ -48,7 +48,7 @@
 		helpText: '',
 		hideDetails: false,
 		displayAsterisk: false,
-		locales: () => defaultLocales,
+		locales: () => ({}),
 		...validationPropsDefaults,
 	})
 
