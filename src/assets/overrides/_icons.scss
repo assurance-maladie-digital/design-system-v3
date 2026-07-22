@@ -2,14 +2,14 @@
 .v-theme--cnam.v-btn--icon .v-icon,
 .v-theme--pa.v-btn--icon .v-icon,
 .v-theme--ap.v-btn--icon .v-icon {
-	color: currentColor;
+	color: currentcolor;
 	transition: color 0.2s ease;
 }
 
-.v-theme--ap2026.v-btn--icon:not([class*='text-']):not([style*='color:']),
-.v-theme--cnam.v-btn--icon:not([class*='text-']):not([style*='color:']),
-.v-theme--pa.v-btn--icon:not([class*='text-']):not([style*='color:']),
-.v-theme--ap.v-btn--icon:not([class*='text-']):not([style*='color:']) {
+.v-theme--ap2026.v-btn--icon:not([class*='text-'], [style*='color:']),
+.v-theme--cnam.v-btn--icon:not([class*='text-'], [style*='color:']),
+.v-theme--pa.v-btn--icon:not([class*='text-'], [style*='color:']),
+.v-theme--ap.v-btn--icon:not([class*='text-'], [style*='color:']) {
 	color: rgb(var(--v-theme-primary));
 }
 
