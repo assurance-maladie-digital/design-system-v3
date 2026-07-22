@@ -3,36 +3,17 @@ import * as EcoStories from './ecoconception-best-practices.stories.ts';
 import '../styles/shared.css';
 
 <Meta title="Éco-conception/Bonnes pratiques essentielles" />
-
+<div className="header eco-header">
+  <h1 className="eco-title">Bonnes pratiques d'écoconception</h1>
+</div>
 <div className="eco-wide-doc">
   <Story of={EcoStories.BonnesPratiquesEssentielles} />
 </div>
 
 <style>
-{
-  `
-  .eco-wide-doc {
-    width: 100vw;
-    max-width: none;
-    margin-left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .eco-wide-doc .sb-story,
-  .eco-wide-doc .docs-story {
-    width: 100%;
-  }
-
-   .sbdocs-content {
-    padding-top: 0 !important;
-  }
-
-  .sbdocs-wrapper {
-    padding-top: 0 !important;
-  }
-
-  .eco-wide-doc {
-    margin-top: 0px;
-  }
+{`
+.eco-header{
+ padding-left: 16px;
+}
 `}
 </style>
