@@ -65,6 +65,7 @@
 		'readonly',
 		'required',
 		'clearable',
+		'hideDetails',
 		'helpText',
 		'errorMessages',
 		'maxErrors',
