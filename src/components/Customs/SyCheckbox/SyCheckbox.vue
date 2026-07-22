@@ -94,10 +94,10 @@
 			internalIndeterminate.value = false
 			emit('update:indeterminate', false)
 		}
-		model.value = false
+		model.value = isMultiple.value ? [] : false
 	}
 
-	const isMultiple = computed(() => !!props.multiple || Array.isArray(props.modelValue))
+	const isMultiple = computed(() => !!props.multiple || (props.multiple == null && Array.isArray(props.modelValue)))
 
 	const isChecked = computed(() => {
 		if (isMultiple.value) {
@@ -161,7 +161,9 @@
 	}
 
 	const handleActivation = (event: Event) => {
-		if (!props.cycleIndeterminate) {
+		// Le cycle tri-state (false → indéterminé → true) n'a de sens qu'en mode booléen :
+		// en mode multiple le modèle est un tableau, on laisse le toggle standard opérer.
+		if (!props.cycleIndeterminate || isMultiple.value) {
 			return
 		}
 
@@ -187,8 +189,8 @@
 			aria-hidden="true"
 		>
 			<SyIcon
-				:icon="internalIndeterminate ? mdiMinusBox : (model ? mdiCheckboxMarked : mdiCheckboxBlankOutline)"
-				:color="(model || internalIndeterminate) ? props.color : '#727273'"
+				:icon="internalIndeterminate ? mdiMinusBox : (isChecked ? mdiCheckboxMarked : mdiCheckboxBlankOutline)"
+				:color="(isChecked || internalIndeterminate) ? props.color : '#727273'"
 				:class="{'text-disabled': props.disabled}"
 				:decorative="true"
 				class="mr-2"
@@ -232,8 +234,8 @@
 			:error-messages="errors"
 			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
 			:indeterminate="internalIndeterminate"
-			:value="props.value"
-			:multiple="props.multiple"
+			:value="isMultiple ? props.value : undefined"
+			:multiple="isMultiple ? props.multiple : undefined"
 			:true-value="props.trueValue"
 			:false-value="props.falseValue"
 			:aria-checked="ariaChecked"

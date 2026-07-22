@@ -24,6 +24,7 @@ export interface SyCheckboxProps extends FieldValidationProps {
 	multiple?: boolean
 	/** @deprecated Utiliser cycleIndeterminate à la place. */
 	controlsIds?: never
+	/** Active la rotation tri-state (non coché → indéterminé → coché). N'a d'effet qu'en mode booléen ; ignoré en mode multiple. */
 	cycleIndeterminate?: boolean
 	displayAsterisk?: boolean
 	decorative?: boolean

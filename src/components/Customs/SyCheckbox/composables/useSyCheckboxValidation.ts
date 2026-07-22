@@ -19,8 +19,10 @@ export interface UseSyCheckboxValidationReturn {
  * Composable de validation du composant SyCheckbox
  *
  * Version simplifiée du système unifié : pour une case à cocher, « required » signifie
- * que la case doit être cochée (`value === true`). On utilise donc une règle `custom`
- * plutôt que la règle `required` générique, qui considère `false` comme une valeur valide.
+ * que la case doit être cochée (`value === true`), ou en mode multiple qu'au moins un
+ * élément est sélectionné (`Array.isArray(value) ? value.length > 0`). On utilise donc
+ * une règle `custom` plutôt que la règle `required` générique, qui considère `false`
+ * comme une valeur valide.
  *
  * @example
  * const { validate, errors, hasError } = useSyCheckboxValidation(props, model, focused)
@@ -30,13 +32,15 @@ export function useSyCheckboxValidation(
 	model: Ref<boolean | unknown[] | null>,
 	focused: Ref<boolean>,
 ): UseSyCheckboxValidationReturn {
-	// « required » pour une case = doit être cochée (true)
+	// « required » pour une case = doit être cochée (true).
+	// En mode multiple (modelValue = tableau), cela signifie qu'au moins un
+	// élément doit être sélectionné.
 	const defaultRules = computed<ValidationRule[]>(() =>
 		props.required
 			? [{
 					type: 'custom',
 					options: {
-						validate: (value: unknown) => value === true,
+						validate: (value: unknown) => (Array.isArray(value) ? value.length > 0 : value === true),
 						message: `Le champ ${props.label || 'ce champ'} est requis.`,
 						fieldIdentifier: props.label,
 					},

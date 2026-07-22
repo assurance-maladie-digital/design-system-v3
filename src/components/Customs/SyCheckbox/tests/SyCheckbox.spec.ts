@@ -2,6 +2,8 @@ import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import { nextTick, ref, defineComponent } from 'vue'
 import SyCheckbox from '../SyCheckbox.vue'
+import { mdiCheckboxBlankOutline, mdiCheckboxMarked } from '@mdi/js'
+import SyIcon from '../../SyIcon/SyIcon.vue'
 
 describe('SyCheckbox', () => {
 	it('should render correctly', () => {
@@ -24,6 +26,23 @@ describe('SyCheckbox', () => {
 		})
 
 		await wrapper.find('input[type="checkbox"]').setValue(true)
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
+	})
+
+	it('en mode simple avec `value`, coche émet true (et non la valeur)', async () => {
+		// Vuetify replie trueValue sur value quand trueValue est undefined :
+		// il ne faut pas transmettre value hors mode multiple, sinon l'émission
+		// devient ['foo'] au lieu de [true].
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				'modelValue': false,
+				'value': 'foo',
+				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+			},
+		})
+
+		await wrapper.find('input[type="checkbox"]').setValue(true)
+
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([true])
 	})
 
@@ -302,6 +321,32 @@ describe('SyCheckbox', () => {
 
 		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([false])
 		expect(wrapper.emitted('update:indeterminate')).toBeFalsy()
+	})
+
+	it('cycleIndeterminate est ignoré en mode multiple (pas de booléen injecté)', async () => {
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				'modelValue': [] as string[],
+				'value': 'a',
+				'cycleIndeterminate': true,
+				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+				'onUpdate:indeterminate': e => wrapper.setProps({ indeterminate: e }),
+			},
+		})
+
+		// 1er clic : ajoute la valeur au tableau (comportement normal), n'émet pas de booléen
+		await wrapper.find('input[type="checkbox"]').setValue(true)
+		await nextTick()
+
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([['a']])
+		expect(wrapper.emitted('update:indeterminate')).toBeFalsy()
+
+		// 2e clic : retire la valeur
+		await wrapper.find('input[type="checkbox"]').setValue(false)
+		await nextTick()
+
+		expect(wrapper.emitted('update:modelValue')?.[1]).toEqual([[]])
+		expect(wrapper.emitted('update:modelValue')?.some(e => e[0] === true)).toBe(false)
 	})
 
 	it('should handle validation correctly', async () => {
@@ -585,6 +630,35 @@ describe('SyCheckbox', () => {
 			expect(wrapper.find('input[type="checkbox"]').attributes('aria-checked')).toBe('false')
 		})
 
+		// aria-checked étant forcé à la main, il doit rester cohérent avec le état
+		// natif du input. La règle isMultiple doit suivre celle de Vuetify
+		// (!!multiple || multiple == null && Array.isArray(...)).
+		it('garde aria-checked cohérent avec input.checked en mode booléen', () => {
+			const cases = [
+				{ modelValue: true, expected: 'true' },
+				{ modelValue: false, expected: 'false' },
+			]
+			for (const { modelValue, expected } of cases) {
+				const wrapper = mount(SyCheckbox, { props: { modelValue, multiple: false } })
+				const input = wrapper.find('input[type="checkbox"]')
+				expect(input.attributes('aria-checked')).toBe(expected)
+				expect((input.element as HTMLInputElement).checked).toBe(expected === 'true')
+			}
+		})
+
+		it('garde aria-checked cohérent avec input.checked en mode tableau', () => {
+			const cases = [
+				{ modelValue: ['identity'], expected: 'true' },
+				{ modelValue: ['nir'], expected: 'false' },
+			]
+			for (const { modelValue, expected } of cases) {
+				const wrapper = mount(SyCheckbox, { props: { modelValue, value: 'identity' } })
+				const input = wrapper.find('input[type="checkbox"]')
+				expect(input.attributes('aria-checked')).toBe(expected)
+				expect((input.element as HTMLInputElement).checked).toBe(expected === 'true')
+			}
+		})
+
 		it('allows two checkboxes to share the same array', async () => {
 			const shared = ref<string[]>([])
 			const Parent = defineComponent({
@@ -612,6 +686,102 @@ describe('SyCheckbox', () => {
 			await nextTick()
 
 			expect(shared.value).toEqual(['nir'])
+		})
+
+		it('reset() émet un tableau vide (et non false) en mode multiple', async () => {
+			const wrapper = mount(SyCheckbox, {
+				props: {
+					'modelValue': ['identity', 'nir'] as string[],
+					'value': 'identity',
+					'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+				},
+			})
+
+			;(wrapper.vm as unknown as { reset: () => void }).reset()
+			await nextTick()
+
+			const emitted = wrapper.emitted('update:modelValue')
+			expect(emitted).toBeTruthy()
+			expect(emitted!.at(-1)).toEqual([[]])
+		})
+
+		it('reset() émet false en mode booléen', async () => {
+			const wrapper = mount(SyCheckbox, {
+				props: {
+					'modelValue': true,
+					'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+				},
+			})
+
+			;(wrapper.vm as unknown as { reset: () => void }).reset()
+			await nextTick()
+
+			const emitted = wrapper.emitted('update:modelValue')
+			expect(emitted).toBeTruthy()
+			expect(emitted!.at(-1)).toEqual([false])
+		})
+	})
+
+	describe('rendu décoratif (decorative)', () => {
+		const iconOf = (wrapper: ReturnType<typeof mount>) =>
+			wrapper.findComponent(SyIcon).props('icon')
+
+		it('rend une case cochée quand la valeur est présente dans le tableau', () => {
+			const wrapper = mount(SyCheckbox, {
+				props: {
+					modelValue: ['a'],
+					value: 'a',
+					decorative: true,
+				},
+			})
+
+			expect(iconOf(wrapper)).toBe(mdiCheckboxMarked)
+		})
+
+		it('rend une case vide quand le tableau ne contient pas la valeur', () => {
+			const wrapper = mount(SyCheckbox, {
+				props: {
+					modelValue: ['b'],
+					value: 'a',
+					decorative: true,
+				},
+			})
+
+			expect(iconOf(wrapper)).toBe(mdiCheckboxBlankOutline)
+		})
+
+		it('rend une case vide pour un tableau vide (même si truthy)', () => {
+			const wrapper = mount(SyCheckbox, {
+				props: {
+					modelValue: [] as string[],
+					value: 'a',
+					decorative: true,
+				},
+			})
+
+			expect(iconOf(wrapper)).toBe(mdiCheckboxBlankOutline)
+		})
+
+		it('rend une case cochée en mode booléen true', () => {
+			const wrapper = mount(SyCheckbox, {
+				props: {
+					modelValue: true,
+					decorative: true,
+				},
+			})
+
+			expect(iconOf(wrapper)).toBe(mdiCheckboxMarked)
+		})
+
+		it('rend une case vide en mode booléen false', () => {
+			const wrapper = mount(SyCheckbox, {
+				props: {
+					modelValue: false,
+					decorative: true,
+				},
+			})
+
+			expect(iconOf(wrapper)).toBe(mdiCheckboxBlankOutline)
 		})
 	})
 })
