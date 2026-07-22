@@ -1,13 +1,16 @@
-.v-theme--ap2026.v-btn--icon .v-icon {
-	color: rgb(var(--v-theme-primary));
-	transition: color 0.2s ease;
-}
-
+.v-theme--ap2026.v-btn--icon .v-icon,
 .v-theme--cnam.v-btn--icon .v-icon,
 .v-theme--pa.v-btn--icon .v-icon,
 .v-theme--ap.v-btn--icon .v-icon {
-	color: rgb(var(--v-theme-primary));
+	color: currentColor;
 	transition: color 0.2s ease;
+}
+
+.v-theme--ap2026.v-btn--icon:not([class*='text-']):not([style*='color:']),
+.v-theme--cnam.v-btn--icon:not([class*='text-']):not([style*='color:']),
+.v-theme--pa.v-btn--icon:not([class*='text-']):not([style*='color:']),
+.v-theme--ap.v-btn--icon:not([class*='text-']):not([style*='color:']) {
+	color: rgb(var(--v-theme-primary));
 }
 
 .v-theme--ap .v-btn--icon:hover,
