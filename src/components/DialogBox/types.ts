@@ -3,7 +3,7 @@ import type { VDialog } from 'vuetify/components'
 
 export type DialogBoxOwnProps = {
 	title?: string
-	width?: string
+	width?: VDialog['$props']['width']
 	cancelBtnText?: string
 	confirmBtnText?: string
 	hideActions?: boolean

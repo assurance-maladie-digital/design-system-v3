@@ -5,14 +5,14 @@
 
 	import { computed, nextTick, readonly as readonlyState, ref, toRef, useAttrs, useId, watch } from 'vue'
 	import { mdiCloseCircle } from '@mdi/js'
-	import type { VTextarea } from 'vuetify/components'
+	import { type VTextarea } from 'vuetify/components'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import useTextActions from './useTextActions'
 	import { useSyTextAreaValidation } from './composables/useSyTextAreaValidation'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { locales } from './locales'
-	import type { SyTextAreaOwnProps } from './types'
+	import { type SyTextAreaOwnProps } from './types'
 
 	type VTextareaProps = VTextarea['$props']
 
@@ -54,7 +54,21 @@
 		'maxLines',
 		'autoWrap',
 		'normalize',
+		'label',
+		'modelValue',
+		'variant',
+		'color',
+		'bgColor',
+		'counter',
+		'validateOn',
+		'disabled',
+		'readonly',
+		'required',
+		'clearable',
 		'helpText',
+		'errorMessages',
+		'maxErrors',
+		'rules',
 		'displayAsterisk',
 		'customRules',
 		'customSuccessRules',
