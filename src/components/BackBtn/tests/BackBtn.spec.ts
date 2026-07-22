@@ -26,15 +26,19 @@ describe('BackBtn', () => {
 		expect(wrapper.find('VIcon').exists()).toBe(false)
 	})
 
-	it('applies correct button classes based on props', () => {
+	it('applies the correct button classes based on props', () => {
 		const wrapper = mount(BackBtn, {
-			component: {
-				VIcon,
-				VBtn,
+			props: {
+				dark: false,
+				hideBackIcon: false,
 			},
-			props: { dark: false, hideBackIcon: false },
 		})
-		expect(wrapper.find('.sy-back-btn').classes()).toContain('pr-1')
+
+		const classes = wrapper.get('.sy-back-btn').classes()
+
+		expect(classes).toContain('sy-back-btn')
+		expect(classes).toContain('text-none')
+		expect(classes).not.toContain('sy-back-btn--dark')
 	})
 
 	it('applies correct button classes when dark is true and hideBackIcon is false', () => {
@@ -90,13 +94,13 @@ describe('BackBtn', () => {
 			expect(wrapper.get('.sy-back-btn').element.tagName).toBe('BUTTON')
 		})
 
-		it('carries the v-theme--dark class in dark mode (onPrimary focus ring)', () => {
+		it('carries the sy-back-btn--dark class in dark mode (onPrimary focus ring)', () => {
 			const wrapper = mount(BackBtn, {
 				component: { VIcon, VBtn },
 				props: { dark: true },
 			})
 
-			expect(wrapper.get('.sy-back-btn').classes()).toContain('v-theme--dark')
+			expect(wrapper.get('.sy-back-btn').classes()).toContain('sy-back-btn--dark')
 		})
 
 		it('is focusable', () => {
