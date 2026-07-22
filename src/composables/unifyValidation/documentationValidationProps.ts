@@ -252,6 +252,30 @@ export function getValidationDocumentation(type: 'base' | 'date' | 'number' | 's
 				category: 'expose',
 			},
 		},
+		hasErrorExpose: {
+			name: 'hasError',
+			description: 'Booléen réactif indiquant si le champ est en erreur (erreur de validation ou erreur injectée). Accessible via template ref du composant.',
+			table: {
+				type: { summary: 'Readonly<Ref<boolean>>' },
+				category: 'expose',
+			},
+		},
+		hasWarningExpose: {
+			name: 'hasWarning',
+			description: 'Booléen réactif indiquant si le champ est en avertissement. Accessible via template ref du composant.',
+			table: {
+				type: { summary: 'Readonly<Ref<boolean>>' },
+				category: 'expose',
+			},
+		},
+		hasSuccessExpose: {
+			name: 'hasSuccess',
+			description: 'Booléen réactif indiquant si le champ est en succès. Accessible via template ref du composant.',
+			table: {
+				type: { summary: 'Readonly<Ref<boolean>>' },
+				category: 'expose',
+			},
+		},
 		clearValidation: {
 			description: 'Méthode pour réinitialiser l\'état de validation du composant',
 			table: {

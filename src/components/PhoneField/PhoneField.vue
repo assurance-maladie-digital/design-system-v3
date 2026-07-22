@@ -138,7 +138,9 @@
 
 	defineExpose({
 		dialCodeList,
-		hasError,
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 		errors: readonlyState(errors),
 		warnings: readonlyState(warnings),
 		successes: readonlyState(successes),

@@ -137,6 +137,9 @@
 		errors: readonlyState(errors),
 		warnings: readonlyState(warnings),
 		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 	})
 
 </script>

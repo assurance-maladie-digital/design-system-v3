@@ -76,9 +76,9 @@ describe('validation state exposure', () => {
 			await (wrapper.vm as unknown as { validateOnSubmit: () => Promise<boolean> }).validateOnSubmit()
 
 			const vm = wrapper.vm as unknown as ValidationStateVm
-			expect(isReadonly(vm.errors)).toBe(true)
-			expect(isReadonly(vm.warnings)).toBe(true)
-			expect(isReadonly(vm.successes)).toBe(true)
+			expect(isReadonly(vm.errors), name).toBe(true)
+			expect(isReadonly(vm.warnings), name).toBe(true)
+			expect(isReadonly(vm.successes), name).toBe(true)
 			for (const [state, messages] of Object.entries(expected) as Array<[keyof ValidationStateVm, string[]]>) {
 				if (messages.length === 0) {
 					expect(vm[state], name).toEqual([])

@@ -133,6 +133,9 @@
 		errors: readonlyState(errors),
 		warnings: readonlyState(warnings),
 		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 		checkErrorOnBlur: () => {
 			focused.value = false
 			if (props.isValidateOnBlur) {

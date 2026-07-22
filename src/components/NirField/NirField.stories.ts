@@ -419,6 +419,39 @@ const meta: Meta<typeof NirField> = {
 				category: 'expose',
 			},
 		},
+		hasErrorExpose: {
+			name: 'hasError',
+			description: 'Booléens réactifs indiquant si le champ numéro ou clé est en erreur (erreur de validation ou erreur injectée via la prop `hasError`). Accessible via template ref du composant.',
+			table: {
+				type: { summary: `{
+	number: Readonly<Ref<boolean>>,
+	key: Readonly<Ref<boolean>>
+}` },
+				category: 'expose',
+			},
+		},
+		hasWarningExpose: {
+			name: 'hasWarning',
+			description: 'Booléens réactifs indiquant si le champ numéro ou clé est en avertissement. Accessible via template ref du composant.',
+			table: {
+				type: { summary: `{
+	number: Readonly<Ref<boolean>>,
+	key: Readonly<Ref<boolean>>
+}` },
+				category: 'expose',
+			},
+		},
+		hasSuccessExpose: {
+			name: 'hasSuccess',
+			description: 'Booléens réactifs indiquant si le champ numéro ou clé est en succès. Accessible via template ref du composant.',
+			table: {
+				type: { summary: `{
+	number: Readonly<Ref<boolean>>,
+	key: Readonly<Ref<boolean>>
+}` },
+				category: 'expose',
+			},
+		},
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	} as Record<string, any>,
 } satisfies Meta<typeof NirField>

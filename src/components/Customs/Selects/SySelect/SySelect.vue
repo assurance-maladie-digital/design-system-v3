@@ -850,6 +850,9 @@
 		errors: readonlyState(errors),
 		warnings: readonlyState(warnings),
 		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 	})
 
 	// on reprend la mm methode que pour le datepicker : useDatePickerAccesssibity (updateAccessibility)

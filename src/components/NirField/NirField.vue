@@ -395,6 +395,18 @@
 			number: readonlyState(numberValidation.successes),
 			key: readonlyState(keyValidation.successes),
 		},
+		hasError: {
+			number: readonlyState(numberValidation.hasError),
+			key: readonlyState(keyValidation.hasError),
+		},
+		hasWarning: {
+			number: readonlyState(numberValidation.hasWarning),
+			key: readonlyState(keyValidation.hasWarning),
+		},
+		hasSuccess: {
+			number: readonlyState(numberValidation.hasSuccess),
+			key: readonlyState(keyValidation.hasSuccess),
+		},
 	} satisfies {
 		validateOnSubmit: () => Promise<boolean>
 		clearValidation: () => void
@@ -407,6 +419,9 @@
 		errors: { number: Readonly<Ref<readonly string[]>>, key: Readonly<Ref<readonly string[]>> }
 		warnings: { number: Readonly<Ref<readonly string[]>>, key: Readonly<Ref<readonly string[]>> }
 		successes: { number: Readonly<Ref<readonly string[]>>, key: Readonly<Ref<readonly string[]>> }
+		hasError: { number: Readonly<Ref<boolean>>, key: Readonly<Ref<boolean>> }
+		hasWarning: { number: Readonly<Ref<boolean>>, key: Readonly<Ref<boolean>> }
+		hasSuccess: { number: Readonly<Ref<boolean>>, key: Readonly<Ref<boolean>> }
 	})
 </script>
 

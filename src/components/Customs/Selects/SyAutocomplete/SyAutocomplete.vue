@@ -361,6 +361,9 @@
 		errors: readonlyState(displayErrors),
 		warnings: readonlyState(displayWarnings),
 		successes: readonlyState(displaySuccesses),
+		hasError: readonlyState(displayHasError),
+		hasWarning: readonlyState(displayHasWarning),
+		hasSuccess: readonlyState(displayHasSuccess),
 	})
 </script>
 
