@@ -21,7 +21,7 @@
 		disabled: false,
 		multiple: false,
 		fileSizeMax: 10_485_760,
-		fileSizeUnits: () => ({}).fileSizeUnits,
+		fileSizeUnits: () => defaultLocales.fileSizeUnits,
 		allowedExtensions: () => ['pdf', 'jpg', 'jpeg', 'png'],
 		locales: () => ({}),
 	})

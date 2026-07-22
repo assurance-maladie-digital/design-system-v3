@@ -11,8 +11,8 @@ import type { DeepPartial } from '@/utils/locales/mergeLocales'
  * const locales = useLocales(defaultLocales, () => props.locales)
  */
 export function useLocales<T extends Record<string, unknown>>(
-	defaults: Required<T>,
-	overrides: () => DeepPartial<T> | undefined | null,
-): ComputedRef<Required<T>> {
-	return computed(() => deepmerge<Required<T>>(defaults, toRaw(overrides() ?? {})))
+	defaults: T,
+	overrides: () => NoInfer<DeepPartial<T>> | undefined | null,
+): ComputedRef<T> {
+	return computed(() => deepmerge<T>(defaults, toRaw(overrides() ?? {})))
 }

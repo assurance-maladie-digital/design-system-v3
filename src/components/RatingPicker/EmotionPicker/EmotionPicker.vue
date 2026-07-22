@@ -29,7 +29,7 @@
 		},
 		itemLabels: {
 			type: Array as PropType<string[]>,
-			default: () => ({}).defaultEmotionLabels,
+			default: () => defaultLocales.defaultEmotionLabels,
 		},
 		readonly: {
 			type: Boolean,
