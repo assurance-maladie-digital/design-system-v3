@@ -365,7 +365,6 @@
 
 .warning-field {
 	:deep(.v-field) {
-		/* Même raison que `.success-field` : ne pas teinter le texte saisi. */
 		--v-medium-emphasis-opacity: 1;
 	}
 
