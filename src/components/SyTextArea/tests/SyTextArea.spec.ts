@@ -1,6 +1,7 @@
 import { it, describe, expect, vi } from 'vitest'
 import { flushPromises, mount } from '@vue/test-utils'
 import { ref } from 'vue'
+import { VTextarea } from 'vuetify/components'
 import SyForm from '../../Customs/SyForm/SyForm.vue'
 import SyIcon from '../../Customs/SyIcon/SyIcon.vue'
 import SyTextArea from '../SyTextArea.vue'
@@ -29,6 +30,21 @@ describe('SyTextArea', () => {
 		})
 
 		expect(wrapper.find('textarea').attributes('id')).toBe('my-textarea-id')
+	})
+
+	it('forwarde les props Vuetify vers VTextarea', () => {
+		const wrapper = mount(SyTextArea, {
+			props: {
+				label: 'Description',
+				modelValue: '',
+				rows: 1,
+				autoGrow: true,
+			},
+		})
+
+		const textarea = wrapper.getComponent(VTextarea)
+		expect(textarea.props('rows')).toBe(1)
+		expect(textarea.props('autoGrow')).toBe(true)
 	})
 
 	it('sets aria-required when required is true', () => {
