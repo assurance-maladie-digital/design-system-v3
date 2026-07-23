@@ -99,9 +99,35 @@ describe('useMonthButtonCustomization', () => {
 		expect(monthBtn.innerHTML).toContain('<svg') // icône ajoutée
 		expect(monthBtn.textContent).toContain('janv.') // mois transformé
 		expect(exposed.monthButtonText.value).toBe('janvier 2023')
+		expect(monthBtn.getAttribute('aria-label')).toBe('Sélectionner un mois (janvier / janv. sélectionné)')
+		expect(monthBtn.getAttribute('title')).toBe('Sélectionner un mois (janvier / janv. sélectionné)')
 
 		expect(yearBtn.innerHTML).toContain('2023')
 		expect(yearBtn.innerHTML).toContain('<svg')
+		expect(yearBtn.getAttribute('aria-label')).toBe(`Sélectionner une année (2023 sélectionné)`)
+		expect(yearBtn.getAttribute('title')).toBe(`Sélectionner une année (2023 sélectionné)`)
+	})
+
+	it('ne réécrit pas le DOM quand la personnalisation est déjà à jour', async () => {
+		const { exposed } = mountUseMonthButtonCustomization()
+
+		await exposed.customizeMonthButton()
+		await nextTick()
+		await new Promise(resolve => setTimeout(resolve, 0))
+
+		const controls = document.querySelector('.v-date-picker-controls')!
+		let childListMutations = 0
+		const observer = new MutationObserver((mutations) => {
+			childListMutations += mutations.filter(mutation => mutation.type === 'childList').length
+		})
+		observer.observe(controls, { childList: true, subtree: true })
+
+		await exposed.customizeMonthButton()
+		await nextTick()
+		await new Promise(resolve => setTimeout(resolve, 0))
+
+		observer.disconnect()
+		expect(childListMutations).toBe(0)
 	})
 
 	it('utilise monthName et yearName si fournis', async () => {
@@ -116,7 +142,9 @@ describe('useMonthButtonCustomization', () => {
 		const yearBtn = document.querySelector('.v-date-picker-controls__mode-btn')!
 
 		expect(monthBtn.textContent).toContain('mars')
+		expect(monthBtn.getAttribute('aria-label')).toBe('Sélectionner un mois (mars / mars sélectionné)')
 		expect(yearBtn.textContent).toContain('2030')
+		expect(yearBtn.getAttribute('aria-label')).toBe(`Sélectionner une année (2030 sélectionné)`)
 	})
 
 	it('observe les changements du DOM et personnalise automatiquement', async () => {

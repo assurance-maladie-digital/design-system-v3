@@ -4,6 +4,7 @@
 
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
+import { locales } from '@/components/DatePicker/locales'
 
 // Étendre dayjs avec le plugin customParseFormat
 dayjs.extend(customParseFormat)
@@ -39,22 +40,26 @@ function calculPaquesGregorienne(annee: number): { jour: number, mois: number } 
  * @param format - Format des jours fériés en retour (défaut : "DD/MM/YYYY")
  * @returns Un Set contenant la liste des jours fériés
  */
-export function getJoursFeries(annee: number, format = 'DD/MM/YYYY'): Set<string> {
+// Format littéral des chaînes de dates fixes utilisées dans getJoursFeries.
+// Il ne doit pas dépendre de locales.formatDefault car ces chaînes sont toujours en JJ/MM/AAAA.
+const FIXED_DATE_PARSE_FORMAT = 'DD/MM/YYYY'
+
+export function getJoursFeries(annee: number, format: string = locales.formatDefault): Set<string> {
 	const { jour: jourPaques, mois: moisPaques } = calculPaquesGregorienne(annee)
 	const formatDay = (date: dayjs.Dayjs) => date.format(format)
 
 	const jours = new Set([
-		formatDay(dayjs(`01/01/${annee}`, 'DD/MM/YYYY')), // Jour de l'an
+		formatDay(dayjs(`01/01/${annee}`, FIXED_DATE_PARSE_FORMAT)), // Jour de l'an
 		formatDay(dayjs(new Date(annee, moisPaques - 1, jourPaques + 1))), // Lundi de Pâques
-		formatDay(dayjs(`01/05/${annee}`, 'DD/MM/YYYY')), // Fête du travail
-		formatDay(dayjs(`08/05/${annee}`, 'DD/MM/YYYY')), // Victoire des alliés
+		formatDay(dayjs(`01/05/${annee}`, FIXED_DATE_PARSE_FORMAT)), // Fête du travail
+		formatDay(dayjs(`08/05/${annee}`, FIXED_DATE_PARSE_FORMAT)), // Victoire des alliés
 		formatDay(dayjs(new Date(annee, moisPaques - 1, jourPaques + 39))), // Ascension
 		formatDay(dayjs(new Date(annee, moisPaques - 1, jourPaques + 50))), // Lundi de Pentecôte
-		formatDay(dayjs(`14/07/${annee}`, 'DD/MM/YYYY')), // Fête Nationale
-		formatDay(dayjs(`15/08/${annee}`, 'DD/MM/YYYY')), // Assomption
-		formatDay(dayjs(`01/11/${annee}`, 'DD/MM/YYYY')), // Toussaint
-		formatDay(dayjs(`11/11/${annee}`, 'DD/MM/YYYY')), // Armistice
-		formatDay(dayjs(`25/12/${annee}`, 'DD/MM/YYYY')), // Noël
+		formatDay(dayjs(`14/07/${annee}`, FIXED_DATE_PARSE_FORMAT)), // Fête Nationale
+		formatDay(dayjs(`15/08/${annee}`, FIXED_DATE_PARSE_FORMAT)), // Assomption
+		formatDay(dayjs(`01/11/${annee}`, FIXED_DATE_PARSE_FORMAT)), // Toussaint
+		formatDay(dayjs(`11/11/${annee}`, FIXED_DATE_PARSE_FORMAT)), // Armistice
+		formatDay(dayjs(`25/12/${annee}`, FIXED_DATE_PARSE_FORMAT)), // Noël
 	])
 
 	return jours
@@ -66,7 +71,7 @@ export function getJoursFeries(annee: number, format = 'DD/MM/YYYY'): Set<string
  * @param format - Format de la date si elle est fournie en string (défaut : "DD/MM/YYYY")
  * @returns true si la date est un jour férié, false sinon
  */
-export function isHolidayDay(date: Date | string, format = 'DD/MM/YYYY'): boolean {
+export function isHolidayDay(date: Date | string, format: string = locales.formatDefault): boolean {
 	// Convertir la date en objet dayjs
 	const dateObj = typeof date === 'string'
 		? dayjs(date, format)

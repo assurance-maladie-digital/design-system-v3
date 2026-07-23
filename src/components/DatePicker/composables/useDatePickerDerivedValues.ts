@@ -1,6 +1,6 @@
 import { computed, type ComputedRef } from 'vue'
 import dayjs from 'dayjs'
-import { DATE_PICKER_MESSAGES } from '../constants/messages'
+import { locales } from '../locales'
 import type { DatePickerCommonProps } from '../types'
 
 /**
@@ -14,17 +14,17 @@ export function useDatePickerDerivedValues(props: DatePickerCommonProps): {
 	/**
 	 * Format de retour pour les dates (dateFormatReturn ou format par défaut)
 	 */
-	const returnFormat = computed(() => props.dateFormatReturn || props.format || DATE_PICKER_MESSAGES.FORMAT_DEFAULT)
+	const returnFormat = computed(() => props.dateFormatReturn || props.format || locales.formatDefault)
 
 	/**
 	 * Date minimale autorisée (period.min ou 200 ans avant aujourd'hui)
 	 */
-	const minDate = computed(() => props.period?.min || dayjs().subtract(200, 'year').format(props.format || DATE_PICKER_MESSAGES.FORMAT_DEFAULT))
+	const minDate = computed(() => props.period?.min || dayjs().subtract(200, 'year').format(props.format || locales.formatDefault))
 
 	/**
 	 * Date maximale autorisée (period.max ou 200 ans après aujourd'hui)
 	 */
-	const maxDate = computed(() => props.period?.max || dayjs().add(200, 'year').format(props.format || DATE_PICKER_MESSAGES.FORMAT_DEFAULT))
+	const maxDate = computed(() => props.period?.max || dayjs().add(200, 'year').format(props.format || locales.formatDefault))
 
 	return {
 		returnFormat,
