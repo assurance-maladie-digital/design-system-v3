@@ -1,5 +1,5 @@
 import { computed, type Ref } from 'vue'
-import type { DataOptions, FilterOption, Items, TableColumnHeader } from './types'
+import type { DataOptions, FilterOption, Item, Items, TableColumnHeader } from './types'
 
 /**
  * Composable for handling table items processing
@@ -20,7 +20,7 @@ export function useTableItems({
 	headers: Ref<TableColumnHeader[] | undefined>
 	filters: Ref<FilterOption[]>
 	options: Ref<Partial<DataOptions>>
-	filterItems: <T extends Items[0]>(items: T[], filters: FilterOption[]) => T[]
+	filterItems: <T extends Item>(items: T[], filters: FilterOption[]) => T[]
 }) {
 	// Filter items based on active filters
 	const filteredItems = computed(() => {

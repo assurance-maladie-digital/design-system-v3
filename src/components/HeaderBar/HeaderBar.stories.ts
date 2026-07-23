@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 import { mdiAccountCircleOutline, mdiMagnify } from '@mdi/js'
 import { VBtn, VListItem, VListItemTitle } from 'vuetify/components'
@@ -9,7 +9,7 @@ import UserMenuBtn from '../UserMenuBtn/UserMenuBtn.vue'
 import HeaderBar from './HeaderBar.vue'
 import SyIcon from '../Customs/SyIcon/SyIcon.vue'
 import { useTheme } from 'vuetify'
-import { addons } from '@storybook/manager-api'
+import { addons } from 'storybook/manager-api'
 
 const meta = {
 	title: 'Composants/Structure/HeaderBar',
@@ -38,7 +38,7 @@ const meta = {
 		},
 		'homeAriaLabel': {
 			control: { type: 'text' },
-			description: 'Le texte de l\'attribut aria-label pour le logo du header.',
+			description: 'Le texte de l\'attribut alt pour le logo du header.',
 			table: {
 				type: {
 					summary: 'string',

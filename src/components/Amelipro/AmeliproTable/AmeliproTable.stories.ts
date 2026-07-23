@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 import AmeliproTable from './AmeliproTable.vue'
 import type { AmeliproTableHeader } from './types'

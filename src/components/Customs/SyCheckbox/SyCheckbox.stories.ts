@@ -1,8 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
-import { ref, watch } from 'vue'
-import { fn } from '@storybook/test'
+import { ref } from 'vue'
+import { fn } from 'storybook/test'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { useTriStateCheckboxGroup } from './triStateCheckboxGroup'
 
 const meta = {
 	title: 'Composants/Formulaires/SyCheckbox',
@@ -14,7 +15,7 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
-		controls: { exclude: ['modelValue', 'errorMessages', 'warningMessages', 'successMessages'] },
+		controls: { exclude: ['modelValue', 'errorMessages', 'warningMessages', 'successMessages', 'onUpdate:modelValue', 'onUpdate:indeterminate', 'undefined'] },
 		docs: {
 			description: {
 				component: `SyCheckbox est un composant de case à cocher tri-état qui étend le composant VCheckbox de Vuetify avec des fonctionnalités supplémentaires comme la validation personnalisée et l'état indéterminé.`,
@@ -23,77 +24,84 @@ const meta = {
 	},
 	argTypes: {
 		...getValidationDocumentation(),
-		modelValue: { control: 'boolean' },
-		label: {
+		'modelValue': { control: 'boolean' },
+		'label': {
 			description: 'Texte affiché comme label de la case à cocher',
 			control: 'text',
 		},
-		helpText: {
+		'helpText': {
 			description: 'Texte d\'aide affiché sous la case (masqué quand un message de validation est présent)',
 			control: 'text',
 		},
-		color: {
+		'color': {
 			control: 'select',
 			options: ['primary', 'success', 'error', 'warning'],
 			description: 'Couleur de la case à cocher',
 		},
-		indeterminate: {
+		'indeterminate': {
 			description: 'État indéterminé de la case à cocher',
 			control: 'boolean',
 		},
-		disabled: {
-			description: 'Désactive la case à cocher',
-			control: 'boolean',
-		},
-		readonly: {
-			description: 'Rend la case à cocher en lecture seule',
-			control: 'boolean',
-		},
-		required: {
-			description: 'Rend la case à cocher obligatoire',
-			control: 'boolean',
-		},
-		hideDetails: {
+		'hideDetails': {
 			description: 'Masque les détails (messages d\'erreur, etc.)',
 			control: 'boolean',
 		},
-		density: {
+		'density': {
 			control: 'select',
 			options: ['default', 'comfortable', 'compact'],
 			description: 'Densité de la case à cocher',
 		},
-		customRules: {
-			description: 'Règles de validation personnalisées',
-			control: 'object',
+		'value': {
+			description: 'Valeur associée à la case à cocher, utile lorsqu\'elle fait partie d\'un groupe de cases à cocher',
+			control: 'text',
+			table: {
+				type: { summary: 'unknown' },
+				defaultValue: { summary: 'undefined' },
+			},
 		},
-		customWarningRules: {
-			description: 'Règles d\'avertissement personnalisées',
-			control: 'object',
+		'trueValue': {
+			description: 'Valeur émise lorsque la case à cocher est cochée',
+			control: 'text',
+			table: {
+				type: { summary: 'unknown' },
+				defaultValue: { summary: 'true' },
+			},
 		},
-		customSuccessRules: {
-			description: 'Règles de succès personnalisées',
-			control: 'object',
+		'falseValue': {
+			description: 'Valeur émise lorsque la case à cocher est décochée',
+			control: 'text',
+			table: {
+				type: { summary: 'unknown' },
+				defaultValue: { summary: 'false' },
+			},
 		},
-		showSuccessMessages: {
-			description: 'Afficher les messages de succès',
+		'cycleIndeterminate': {
+			description: 'Inclut l\'état indéterminé dans la rotation du parent et remplace l\'ancienne prop controlsIds',
 			control: 'boolean',
 		},
-		isValidateOnBlur: {
-			description: 'Vérifie la validité lors de la perte de focus',
-			control: 'boolean',
-			default: true,
-		},
-		disableErrorHandling: {
-			control: 'boolean',
-			description: 'Désactive complètement la validation des règles et l\'affichage des erreurs',
-		},
-		controlsIds: {
-			description: 'IDs des éléments contrôlés par cette case à cocher (pour l\'état indéterminé)',
-			control: 'object',
-		},
-		displayAsterisk: {
+		'displayAsterisk': {
 			description: 'Afficher l\'astérisque (*) pour indiquer un champ obligatoire',
 			control: 'boolean',
+		},
+		'update:modelValue': {
+			action: 'update:modelValue',
+			description: 'Événement émis lorsque la valeur de la case à cocher devient true ou false. Remplace l\'ancien événement change.',
+			table: {
+				category: 'events',
+				type: {
+					summary: 'boolean',
+				},
+			},
+		},
+		'update:indeterminate': {
+			action: 'update:indeterminate',
+			description: 'Événement émis lorsque l\'état indéterminé de la case à cocher change',
+			table: {
+				category: 'events',
+				type: {
+					summary: 'boolean',
+				},
+			},
 		},
 	},
 } as Meta<typeof SyCheckbox>
@@ -182,8 +190,11 @@ export const Indeterminate: Story = {
     :indeterminate="indeterminate" 
     label="Case à cocher indéterminée" 
   />
-</template>
-
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
 <script setup>
 import { ref } from 'vue'
 
@@ -238,7 +249,8 @@ Un texte d'aide (\`helpText\`) s'affiche sous la case pour guider l'utilisateur,
 	},
 }
 
-export const WithControlsIds: Story = {
+export const WithCycleIndeterminate: Story = {
+	args: Default.args,
 	parameters: {
 		sourceCode: [
 			{
@@ -247,101 +259,91 @@ export const WithControlsIds: Story = {
 <template>
   <div>
     <SyCheckbox 
-      v-model="parentChecked" 
+      :model-value="parentChecked" 
       :indeterminate="parentIndeterminate" 
-      @update:indeterminate="parentIndeterminate = $event"
-      :controls-ids="['child-1', 'child-2', 'child-3']"
-      label="Parent" 
+      @update:model-value="handleParentModelUpdate"
+      @update:indeterminate="handleParentIndeterminateUpdate"
+      :cycle-indeterminate="canCycleIndeterminate"
+      label="Parent"
     />
-    <div style="margin-left: 24px;">
-      <SyCheckbox v-model="childChecked1" id="child-1" label="Enfant 1" />
-      <SyCheckbox v-model="childChecked2" id="child-2" label="Enfant 2" />
-      <SyCheckbox v-model="childChecked3" id="child-3" label="Enfant 3" />
-    </div>
+    <ul style="list-style: none; margin: 0; padding-left: 24px;">
+      <li v-for="(child, index) in children" :key="childrenIds[index]">
+        <SyCheckbox v-model="child.value" :id="childrenIds[index]" :label="'Enfant ' + (index + 1)" />
+      </li>
+    </ul>
   </div>
-</template>
-
-<script setup>
-import { ref, watch } from 'vue'
-
-const parentChecked = ref(false)
-const parentIndeterminate = ref(false)
-const childChecked1 = ref(false)
-const childChecked2 = ref(false)
-const childChecked3 = ref(false)
-
-// Logique pour gérer l'état indéterminé du parent
-const updateParentState = () => {
-  const checkedCount = [childChecked1.value, childChecked2.value, childChecked3.value].filter(Boolean).length
-  
-  if (checkedCount === 0) {
-    parentChecked.value = false
-    parentIndeterminate.value = false
-  } else if (checkedCount === 3) {
-    parentChecked.value = true
-    parentIndeterminate.value = false
-  } else {
-    parentChecked.value = false
-    parentIndeterminate.value = true
-  }
-}
-
-// Observer les changements des enfants
-watch(childChecked1, updateParentState)
-watch(childChecked2, updateParentState)
-watch(childChecked3, updateParentState)
-
-// Mettre à jour les enfants lorsque le parent change
-watch(parentChecked, () => {
-  if (!parentIndeterminate.value) {
-    childChecked1.value = parentChecked.value
-    childChecked2.value = parentChecked.value
-    childChecked3.value = parentChecked.value
-  }
-})
-</script>`,
+</template>`,
 			},
 			{
 				name: 'Script',
 				code: `
 <script setup>
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
+
+const childCount = 3
+const initialState = Array.from({ length: childCount }, (_, index) => index === 0)
 
 const parentChecked = ref(false)
 const parentIndeterminate = ref(false)
-const childChecked1 = ref(false)
-const childChecked2 = ref(false)
-const childChecked3 = ref(false)
+const lastMixedState = ref(null)
+const canCycleIndeterminate = computed(() => lastMixedState.value !== null)
+let isApplyingChildState = false
 
-// Logique pour gérer l'état indéterminé du parent
-const updateParentState = () => {
-  const checkedCount = [childChecked1.value, childChecked2.value, childChecked3.value].filter(Boolean).length
-  
+const children = initialState.map(value => ref(value))
+const childrenIds = children.map((_, index) => 'child-' + (index + 1))
+
+const getChildState = () => children.map(child => child.value)
+
+const setChildren = (state) => {
+  isApplyingChildState = true
+  children.forEach((child, index) => { child.value = state[index] ?? false })
+  isApplyingChildState = false
+}
+
+// Recalcule l'état du parent depuis les enfants (action individuelle sur un enfant)
+const recomputeParentFromChildren = () => {
+  const childState = getChildState()
+  const checkedCount = childState.filter(Boolean).length
+
   if (checkedCount === 0) {
+    lastMixedState.value = null
     parentChecked.value = false
     parentIndeterminate.value = false
-  } else if (checkedCount === 3) {
+  } else if (checkedCount === childState.length) {
+    lastMixedState.value = null
     parentChecked.value = true
     parentIndeterminate.value = false
   } else {
+    lastMixedState.value = [...childState]
     parentChecked.value = false
     parentIndeterminate.value = true
   }
 }
 
-// Observer les changements des enfants
-watch(childChecked1, updateParentState)
-watch(childChecked2, updateParentState)
-watch(childChecked3, updateParentState)
+children.forEach(child => watch(child, () => {
+  if (!isApplyingChildState) recomputeParentFromChildren()
+}, { flush: 'sync' }))
 
-// Mettre à jour les enfants lorsque le parent change
-watch(parentChecked, () => {
-  if (!parentIndeterminate.value) {
-    childChecked1.value = parentChecked.value
-    childChecked2.value = parentChecked.value
-    childChecked3.value = parentChecked.value
+// L'état initial du parent est dérivé de l'état des enfants fourni
+recomputeParentFromChildren()
+
+// Le parent coche/décoche tous les enfants sans oublier la combinaison partielle mémorisée
+const handleParentModelUpdate = (value) => {
+  setChildren(children.map(() => value))
+  parentChecked.value = value
+  parentIndeterminate.value = false
+}
+
+// Le parent revient à l'état indéterminé : on restaure la dernière combinaison partielle
+const handleParentIndeterminateUpdate = (isIndeterminate) => {
+  if (isIndeterminate && lastMixedState.value !== null) {
+    setChildren(lastMixedState.value)
+    parentChecked.value = false
+    parentIndeterminate.value = true
+  } else {
+    parentIndeterminate.value = false
   }
-})
+}
 </script>
 `,
 			},
@@ -350,10 +352,11 @@ watch(parentChecked, () => {
 			description: {
 				story: `
 ### Case à cocher avec contrôle d'éléments enfants
-Cette case à cocher contrôle un groupe d'éléments enfants. Elle utilise la propriété \`controlsIds\` pour établir la relation entre le parent et les enfants. 
-Lorsque certains enfants sont cochés mais pas tous, le parent passe automatiquement en état indéterminé.
+Cette case à cocher contrôle un groupe d'éléments enfants. L'application synchronise les valeurs des enfants, dérive l'état \`indeterminate\` du parent et applique \`update:modelValue\` à tous les enfants.
 
-La propriété \`controlsIds\` permet de créer une relation sémantique entre une case à cocher parent et ses enfants, ce qui est important pour l'accessibilité. Cette relation est établie via les attributs \`aria-controls\` et les identifiants des cases à cocher enfants.
+L'événement \`update:modelValue\` remplace l'ancien événement \`change\`. La prop \`controlsIds\` n'est plus utilisée par SyCheckbox ; le groupe applicatif porte la structure et les relations nécessaires autour des cases à cocher.
+
+Dans cet exemple, la prop \`cycleIndeterminate\` est activée pour permettre au parent de réintroduire la dernière sélection partielle dans sa rotation. Cette sélection partielle mémorisée est supprimée si l'utilisateur coche ou décoche individuellement tous les enfants. Sans cette prop, le parent contrôlant des enfants reste binaire : depuis non coché ou indéterminé, l'activation coche tous les enfants ; depuis coché, elle les décoche tous.
 				`,
 			},
 		},
@@ -361,83 +364,38 @@ La propriété \`controlsIds\` permet de créer une relation sémantique entre u
 	render: args => ({
 		components: { SyCheckbox },
 		setup() {
-			const parentChecked = ref(false)
-			const parentIndeterminate = ref(false)
-			const childChecked1 = ref(false)
-			const childChecked2 = ref(false)
-			const childChecked3 = ref(false)
-
-			// Logique pour gérer l'état indéterminé du parent
-			function updateParentState() {
-				const checkedCount = [
-					childChecked1.value,
-					childChecked2.value,
-					childChecked3.value,
-				].filter(Boolean).length
-
-				if (checkedCount === 0) {
-					parentChecked.value = false
-					parentIndeterminate.value = false
-				}
-				else if (checkedCount === 3) {
-					parentChecked.value = true
-					parentIndeterminate.value = false
-				}
-				else {
-					parentChecked.value = false
-					parentIndeterminate.value = true
-				}
-			}
-
-			// Observer les changements des enfants
-			const watchChild = () => {
-				updateParentState()
-			}
-
-			// Mettre à jour les enfants lorsque le parent change
-			const watchParent = () => {
-				if (!parentIndeterminate.value) {
-					childChecked1.value = parentChecked.value
-					childChecked2.value = parentChecked.value
-					childChecked3.value = parentChecked.value
-				}
-			}
-
-			// Configurer les observateurs
-			watch(childChecked1, watchChild)
-			watch(childChecked2, watchChild)
-			watch(childChecked3, watchChild)
-			watch(parentChecked, watchParent)
+			const group = useTriStateCheckboxGroup(3)
+			const childrenIds = group.childrenChecked.map((_, index) => `child-${index + 1}`)
 
 			return {
 				args,
-				parentChecked,
-				parentIndeterminate,
-				childChecked1,
-				childChecked2,
-				childChecked3,
+				...group,
+				childrenIds,
 			}
 		},
 		template: `
 			<div>
 				<SyCheckbox 
-					v-model="parentChecked" 
+					v-bind="args"
+					:model-value="parentChecked" 
 					:indeterminate="parentIndeterminate" 
-					@update:indeterminate="parentIndeterminate = $event"
-					:controls-ids="['child-1', 'child-2', 'child-3']"
+					@update:model-value="handleParentModelUpdate"
+					@update:indeterminate="handleParentIndeterminateUpdate"
+					:cycle-indeterminate="canCycleIndeterminate"
 					label="Parent"
 				/>
-				<div style="margin-left: 24px;">
-					<SyCheckbox v-model="childChecked1" id="child-1" label="Enfant 1" />
-					<SyCheckbox v-model="childChecked2" id="child-2" label="Enfant 2" />
-					<SyCheckbox v-model="childChecked3" id="child-3" label="Enfant 3" />
-				</div>
+				<ul style="list-style: none; margin: 0; padding-left: 24px;">
+					<li v-for="(child, index) in childrenChecked" :key="childrenIds[index]">
+						<SyCheckbox v-bind="args" v-model="child.value" :id="childrenIds[index]" :label="'Enfant ' + (index + 1)" />
+					</li>
+				</ul>
 			</div>
 		`,
 	}),
 }
 
 export const ValidationRules: Story = {
+	args: Default.args,
 	parameters: {
 		sourceCode: [
 			{
@@ -450,8 +408,11 @@ export const ValidationRules: Story = {
     :custom-rules="rules"
     :is-validate-on-blur="false"
   />
-</template>
-
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
 <script setup>
 import { ref } from 'vue'
 
@@ -466,30 +427,6 @@ const rules = [
   },
 ]
 </script>`,
-			},
-			{
-				name: 'Script',
-				code: `
-// Composition API
-export default {
-  setup() {
-    const checked = ref(false)
-    const rules = [
-      {
-        type: 'custom',
-        options: {
-          message: 'Cette case doit être cochée pour continuer.',
-          validate: (value) => value === true,
-        },
-      },
-    ]
-
-    return {
-      checked,
-      rules,
-    }
-  }
-}`,
 			},
 		],
 		docs: {
@@ -522,6 +459,7 @@ Cette case à cocher utilise des règles de validation personnalisées pour vér
 		},
 		template: `
 			<SyCheckbox
+				v-bind="args"
 				v-model="checked"
 				label="J'accepte les conditions générales d'utilisation"
 				:custom-rules="rules"
@@ -599,11 +537,11 @@ export const DifferentDensities: Story = {
 			{
 				name: 'Template',
 				code: `
-                <div>
-                <SyCheckbox v-model="checked1" label="Densité par défaut" />
-                <SyCheckbox v-model="checked2" label="Densité confortable" density="comfortable" />
-                <SyCheckbox v-model="checked3" label="Densité compacte" density="compact" />
-                </div>`,
+				<ul style="list-style: none; margin: 0; padding: 0;">
+					<li><SyCheckbox v-model="checked1" label="Densité par défaut" /></li>
+					<li><SyCheckbox v-model="checked2" label="Densité confortable" density="comfortable" /></li>
+					<li><SyCheckbox v-model="checked3" label="Densité compacte" density="compact" /></li>
+				</ul>`,
 			},
 		],
 		docs: {
@@ -624,11 +562,11 @@ Le composant SyCheckbox prend en charge différentes densités pour s'adapter à
 			return { args, checked1, checked2, checked3 }
 		},
 		template: `
-			<div>
-				<SyCheckbox v-model="checked1" label="Densité par défaut" />
-				<SyCheckbox v-model="checked2" label="Densité confortable" density="comfortable" />
-				<SyCheckbox v-model="checked3" label="Densité compacte" density="compact" />
-			</div>
+			<ul style="list-style: none; margin: 0; padding: 0;">
+				<li><SyCheckbox v-model="checked1" label="Densité par défaut" /></li>
+				<li><SyCheckbox v-model="checked2" label="Densité confortable" density="comfortable" /></li>
+				<li><SyCheckbox v-model="checked3" label="Densité compacte" density="compact" /></li>
+			</ul>
 		`,
 	}),
 }
@@ -639,12 +577,12 @@ export const CustomColors: Story = {
 			{
 				name: 'Template',
 				code: `
-<div>
-  <SyCheckbox v-model="checked1" label="Couleur primaire (par défaut)" />
-  <SyCheckbox v-model="checked3" label="Couleur succès" color="onSuccessVariant" />
-  <SyCheckbox v-model="checked4" label="Couleur erreur" color="error" />
-  <SyCheckbox v-model="checked5" label="Couleur avertissement" color="onWarningVariant" />
-</div>`,
+<ul style="list-style: none; margin: 0; padding: 0;">
+	<li><SyCheckbox v-model="checked1" label="Couleur primaire (par défaut)" /></li>
+	<li><SyCheckbox v-model="checked3" label="Couleur succès" color="onSuccessVariant" /></li>
+	<li><SyCheckbox v-model="checked4" label="Couleur erreur" color="error" /></li>
+	<li><SyCheckbox v-model="checked5" label="Couleur avertissement" color="onWarningVariant" /></li>
+</ul>`,
 			},
 		],
 		docs: {
@@ -667,12 +605,12 @@ Le composant SyCheckbox peut être personnalisé avec différentes couleurs pour
 			return { args, checked1, checked2, checked3, checked4, checked5 }
 		},
 		template: `
-			<div>
-				<SyCheckbox v-model="checked1" label="Couleur primaire (par défaut)" />
-              <SyCheckbox v-model="checked3" label="Couleur succès" color="onSuccessVariant"/>
-              <SyCheckbox v-model="checked4" label="Couleur erreur" color="error"/>
-              <SyCheckbox v-model="checked5" label="Couleur avertissement" color="onWarningVariant"/>
-			</div>
+			<ul style="list-style: none; margin: 0; padding: 0;">
+				<li><SyCheckbox v-model="checked1" label="Couleur primaire (par défaut)" /></li>
+				<li><SyCheckbox v-model="checked3" label="Couleur succès" color="onSuccessVariant" /></li>
+				<li><SyCheckbox v-model="checked4" label="Couleur erreur" color="error" /></li>
+				<li><SyCheckbox v-model="checked5" label="Couleur avertissement" color="onWarningVariant" /></li>
+			</ul>
 		`,
 	}),
 }

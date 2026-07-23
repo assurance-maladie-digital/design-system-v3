@@ -1,4 +1,4 @@
-import { computed, ref, toRef, type ComputedRef, type Ref } from 'vue'
+import { computed, toRef, type ComputedRef, type Ref } from 'vue'
 import { useValidation, type ValidationRule } from '@/composables/unifyValidation/useValidation'
 import type { SyCheckboxValidationProps } from '../types'
 
@@ -13,7 +13,6 @@ export interface UseSyCheckboxValidationReturn {
 	hasWarning: ComputedRef<boolean | undefined>
 	hasSuccess: ComputedRef<boolean | undefined>
 	defaultRules: ComputedRef<ValidationRule[]>
-	focused: Ref<boolean>
 }
 
 /**
@@ -29,10 +28,8 @@ export interface UseSyCheckboxValidationReturn {
 export function useSyCheckboxValidation(
 	props: SyCheckboxValidationProps,
 	model: Ref<boolean | null>,
-	focused?: Ref<boolean>,
+	focused: Ref<boolean>,
 ): UseSyCheckboxValidationReturn {
-	const focusedRef = focused !== undefined ? focused : ref(false)
-
 	// « required » pour une case = doit être cochée (true)
 	const defaultRules = computed<ValidationRule[]>(() =>
 		props.required
@@ -82,7 +79,7 @@ export function useSyCheckboxValidation(
 		hasWarningProp: toRef(() => props.hasWarning ?? false),
 		hasSuccessProp: toRef(() => props.hasSuccess ?? false),
 		maxErrors: toRef(() => props.maxErrors ?? 1),
-		focused: focusedRef,
+		focused: focused,
 	})
 
 	const validateOnSubmit = async (): Promise<boolean> => {
@@ -100,6 +97,5 @@ export function useSyCheckboxValidation(
 		hasWarning,
 		hasSuccess,
 		defaultRules,
-		focused: focusedRef,
 	}
 }

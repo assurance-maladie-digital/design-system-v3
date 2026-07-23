@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-	import { type PropType, computed, onMounted, toRef } from 'vue'
+	import { type PropType, computed, ref, toRef, useId } from 'vue'
 	import { RatingEnum, useRating } from '../Rating'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from '../locales'
 	import { propValidator } from '@/utils/propValidator'
 	import { useRatingFocus } from '../useRatingFocus'
 	import {
@@ -9,7 +9,6 @@
 		mdiEmoticonSadOutline,
 		mdiEmoticonNeutralOutline,
 	} from '@mdi/js'
-
 	import { useDisplay } from 'vuetify'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
@@ -28,7 +27,7 @@
 		},
 		itemLabels: {
 			type: Array as PropType<string[]>,
-			default: () => locales.defaultEmotionLabels,
+			default: () => defaultLocales.defaultEmotionLabels,
 		},
 		readonly: {
 			type: Boolean,
@@ -38,11 +37,24 @@
 			type: Number,
 			default: -1,
 		},
+		lockAfterSelection: {
+			type: Boolean,
+			default: true,
+		},
+		locales: {
+			type: Object as PropType<typeof defaultLocales>,
+			default: () => defaultLocales,
+		},
 	})
 
 	const sadIcon = mdiEmoticonSadOutline
 	const neutralIcon = mdiEmoticonNeutralOutline
 	const happyIcon = mdiEmoticonHappyOutline
+
+	const id = useId()
+	const emotionPickerDescriptionId = `emotion-picker-description-${id}`
+
+	const ratingElements = ref<HTMLElement[]>([])
 
 	const btnSize = computed(() => {
 		return isMobile.value ? '70px' : '88px'
@@ -83,33 +95,35 @@
 	}
 
 	const {
-		ratingElement,
-		initFocus,
 		selectAndFocus,
 		focusNextElement,
 		focusPrevElement,
 		focus,
+		activeElementIndex,
 	} = useRatingFocus({
 		length: toRef(props, 'length'),
 		modelValue: internalValue,
 		selectValue: emitInputEvent,
+		ratingElements: ratingElements,
 		wrap: true,
+	})
+
+	const readonly = computed(() => {
+		return props.readonly || (props.lockAfterSelection && hasAnswered.value)
+	})
+
+	const shouldDisplayLockingState = computed(() => {
+		return props.lockAfterSelection && !props.readonly
 	})
 
 	defineExpose({
 		focus,
 	})
 
-	onMounted(() => {
-		initFocus()
-	})
 </script>
 
 <template>
-	<fieldset
-		class="sy-emotion-picker"
-		:aria-label="internalValue === -1 ? locales.toValidate : locales.validated"
-	>
+	<fieldset class="sy-emotion-picker">
 		<legend class="text-h6 mb-6">
 			<slot name="label">
 				{{ props.label }}
@@ -118,14 +132,15 @@
 
 		<div
 			role="radiogroup"
-			class="d-flex max-width-none mx-n1 mx-sm-n2"
+			:aria-describedby="shouldDisplayLockingState ? emotionPickerDescriptionId : undefined"
+			class="d-flex max-width-none mx-n1 mx-sm-n2 mb-6"
 		>
 			<div
 				v-for="index in props.length"
 				:key="index"
-				ref="ratingElement"
-				v-ripple="!(props.readonly || hasAnswered)"
-				:tabindex="-1"
+				ref="ratingElements"
+				v-ripple="!readonly"
+				:tabindex="activeElementIndex + 1 === index ? '0' : '-1'"
 				role="radio"
 				:aria-checked="isActive(index) ? 'true' : 'false'"
 				:class="[getColor(index - 1), { 'sy-emotion-picker__item--active': isActive(index) }]"
@@ -133,7 +148,7 @@
 					'min-height': btnSize,
 					'min-width': btnSize
 				}"
-				:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
+				:aria-disabled="readonly ? 'true' : undefined"
 				class="sy-emotion-picker__item rounded-lg px-1 px-sm-4 mx-1 mx-sm-2"
 				@click="selectAndFocus(index - 1)"
 				@keydown.enter.prevent="selectAndFocus(index - 1)"
@@ -159,12 +174,19 @@
 				</span>
 			</div>
 		</div>
+		<p
+			v-if="shouldDisplayLockingState"
+			:id="emotionPickerDescriptionId"
+			class="locking-state text-caption"
+			:class="{'d-sr-only': internalValue !== -1}"
+		>
+			{{ internalValue === -1 ? props.locales.toValidate : props.locales.validated }}
+		</p>
 	</fieldset>
 </template>
 
 <style lang="scss" scoped>
 .sy-emotion-picker {
-	display: flex;
 	border: 0;
 }
 
@@ -183,15 +205,15 @@
 	flex-direction: column;
 
 	&.sad {
-		color: rgb(var(--v-theme-orange-darken20)) !important;
+		color: rgb(var(--v-theme-error)) !important;
 	}
 
 	&.neutral {
-		color: rgb(var(--v-theme-yellow-darken60)) !important;
+		color: rgb(var(--v-theme-onWarningVariant)) !important;
 	}
 
 	&.happy {
-		color: rgb(var(--v-theme-turquoise-darken60)) !important;
+		color: rgb(var(--v-theme-onSuccessVariant)) !important;
 	}
 
 	&--active.sy-emotion-picker__item--disabled .v-icon {
@@ -199,26 +221,29 @@
 	}
 
 	&:focus-visible {
-		outline: 2px solid currentcolor;
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 2px;
 	}
 
 	&--active {
 		border-color: currentcolor !important;
 	}
 
+	// Fond coloré de l'émotion : survol et sélection (`--active`) uniquement. PAS au focus :
+	// l'indicateur de focus clavier est le ring primary (ci-dessus), sans changement de fond —
+	// standard DS.
 	&--active,
-	&:focus,
 	&:hover {
 		&.sad {
-			background: rgb(var(--v-theme-orange-lighten90));
+			background: rgb(var(--v-theme-errorVariantLighten));
 		}
 
 		&.neutral {
-			background: rgb(var(--v-theme-yellow-lighten90));
+			background: rgb(var(--v-theme-warningVariantLigthen));
 		}
 
 		&.happy {
-			background: rgb(var(--v-theme-turquoise-lighten90));
+			background: rgb(var(--v-theme-successVariantLighten));
 		}
 	}
 
@@ -236,6 +261,11 @@
 
 .sy-emotion-picker__item--active .sy-emotion-picker__item-title {
 	color: currentcolor;
+}
+
+.locking-state {
+	font-style: italic;
+	color: rgb(var(--v-theme-grey-base));
 }
 
 </style>

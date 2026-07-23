@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import AmeliproBtn from '../AmeliproBtn/AmeliproBtn.vue'
 import AmeliproCard from '../AmeliproCard/AmeliproCard.vue'
 import AmeliproCarousel from './AmeliproCarousel.vue'

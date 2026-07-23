@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { VCarousel, VCarouselItem, VCard, VCardTitle, VCardText, VBtn } from 'vuetify/components'
 
 const meta: Meta<typeof VCarousel> = {

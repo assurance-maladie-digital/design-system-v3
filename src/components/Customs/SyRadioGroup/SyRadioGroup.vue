@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 
-	import { computed, nextTick, onMounted, onUpdated, ref } from 'vue'
+	import { computed, nextTick, onMounted, onUpdated, readonly as readonlyState, ref } from 'vue'
 	import type { VRadioGroup } from 'vuetify/components'
 	import { VMessages } from 'vuetify/components'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
@@ -69,6 +69,7 @@
 		hasError,
 		hasWarning,
 		hasSuccess,
+		clearValidation,
 	} = useSyRadioGroupValidation(props, model, focused)
 
 	// Intégration avec le système de validation du formulaire
@@ -123,6 +124,13 @@
 
 	defineExpose({
 		validateOnSubmit,
+		clearValidation,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 	})
 
 </script>
@@ -219,6 +227,12 @@
 
 :deep(.v-selection-control--error .v-selection-control__input) {
 	color: rgb(var(--v-theme-error));
+}
+
+:deep(.v-selection-control--focus-visible) {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 2px;
+	border-radius: 4px;
 }
 
 :deep(.sy-radio-group__messages) {

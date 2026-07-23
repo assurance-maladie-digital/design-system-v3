@@ -1,4 +1,4 @@
-import {Controls, Canvas, Meta, Source} from '@storybook/blocks';
+import {Controls, Canvas, Meta, Source} from '@storybook/addon-docs/blocks';
 import '../../stories/styles/shared.css';
 
 import * as SyAlertStories from './SyAlert.stories';
@@ -11,7 +11,7 @@ import * as SyAlertStories from './SyAlert.stories';
 </div>
 
 {/* func-version-start */}
-<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.0.27 - 20/05/2026</p>
+<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.1.1 - 15/07/2026</p>
 {/* func-version-end */}
 {/* a11y-version-start */}
 <p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.0.23 - 30/03/2026</p>
@@ -19,6 +19,12 @@ import * as SyAlertStories from './SyAlert.stories';
 
 
 <Canvas of={SyAlertStories.Default}  />
+
+## Annonce aux technologies d’assistance
+
+`SyAlert` utilise <code>role="alert"</code> par défaut. Pour un message de confirmation ou d’information non urgent, vous pouvez personnaliser les props <code>role</code> et <code>ariaLive</code> avec <code>role="status"</code> et <code>aria-live="polite"</code> dans le template.
+
+<Canvas of={SyAlertStories.StatusMessage} />
 
 # API
 
@@ -38,6 +44,10 @@ const showAlert = ref(true)
 <template>
   <SyAlert v-model="showAlert" type="warning" variant="tonal" :closable="true">
     Ceci est une alerte de type "warning".
+  </SyAlert>
+
+  <SyAlert role="status" aria-live="polite" type="success" variant="outlined">
+    Votre action a bien été prise en compte.
   </SyAlert>
 </template>
 `} />

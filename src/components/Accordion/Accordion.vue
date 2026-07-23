@@ -1,7 +1,8 @@
 <script setup lang="ts">
+	import { useId } from 'vue'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from '@/components/Accordion/config'
-	import { mdiChevronRight } from '@mdi/js'
+	import { mdiChevronDown } from '@mdi/js'
 	// Importation des composables
 	import useAccordionState from './composables/useAccordionState'
 	import useAccordionGroupCommunication from './composables/useAccordionGroupCommunication'
@@ -20,6 +21,8 @@
 		items: AccordionItem[]
 		headingLevel?: number
 		groupId?: string
+		iconPosition?: 'left' | 'right'
+		compact?: boolean
 		vuetifyOptions?: {
 			accordion?: {
 				backgroundColor?: string
@@ -34,6 +37,8 @@
 	const props = withDefaults(defineProps<AccordionProps>(), {
 		headingLevel: 3,
 		groupId: 'default',
+		iconPosition: 'left',
+		compact: false,
 		vuetifyOptions: () => ({}),
 	})
 
@@ -42,7 +47,7 @@
 	const options = useCustomizableOptions(config, props)
 
 	// Génération d'un ID unique pour cette instance d'accordéon
-	const instanceId = `accordion-${Math.random().toString(36).substring(2, 9)}`
+	const instanceId = `accordion-${useId()}`
 
 	// Utilisation du composable pour gérer l'état de l'accordéon
 	const {
@@ -78,6 +83,7 @@
 <template>
 	<div
 		class="sy-accordion"
+		:class="{ 'sy-accordion--compact': compact }"
 		:style="{
 			'--accordion-hover-color': `var(--v-theme-${options.accordion.hoverColor})`,
 			'--accordion-focus-color': `var(--v-theme-${options.accordion.focusColor})`,
@@ -116,14 +122,18 @@
 				>
 					<span
 						class="sy-accordion-title"
-						:class="isItemOpen(item.id) ? `text-${options.accordion.activeColor}` : `text-${options.accordion.titleColor}`"
+						:class="[
+							isItemOpen(item.id) ? `text-${options.accordion.activeColor}` : `text-${options.accordion.titleColor}`,
+							{ 'sy-accordion-title--icon-right': iconPosition === 'right' }
+						]"
 					>
 						<span
+							v-if="iconPosition === 'left'"
 							class="sy-accordion-icon"
 							:class="{ 'sy-accordion-icon--open': isItemOpen(item.id) }"
 						>
 							<SyIcon
-								:icon="mdiChevronRight"
+								:icon="mdiChevronDown"
 								decorative
 							/>
 						</span>
@@ -134,6 +144,16 @@
 						>
 							<span>{{ item.title }}</span>
 						</slot>
+						<span
+							v-if="iconPosition === 'right'"
+							class="sy-accordion-icon"
+							:class="{ 'sy-accordion-icon--open': isItemOpen(item.id) }"
+						>
+							<SyIcon
+								:icon="mdiChevronDown"
+								decorative
+							/>
+						</span>
 					</span>
 					<span
 						v-if="$slots['right-content']"
@@ -192,9 +212,30 @@
 
 .sy-accordion-item {
 	border: 1px solid #e0e0e0;
-	border-radius: 4px;
+	border-radius: var(--radius-md);
 	margin-bottom: 8px;
 	overflow: hidden;
+}
+
+/* Mode compact : supprime l'espacement entre les éléments */
+.sy-accordion--compact .sy-accordion-item {
+	margin-bottom: 0;
+	border-radius: 0;
+
+	&:first-child {
+		border-top-left-radius: var(--radius-md);
+		border-top-right-radius: var(--radius-md);
+	}
+
+	&:last-child {
+		border-bottom-left-radius: var(--radius-md);
+		border-bottom-right-radius: var(--radius-md);
+	}
+
+	/* Évite les doubles bordures entre les éléments */
+	& + .sy-accordion-item {
+		border-top: none;
+	}
 }
 
 .sy-accordion-heading {
@@ -225,6 +266,11 @@
 	display: flex;
 	align-items: center;
 	gap: 8px;
+
+	&.sy-accordion-title--icon-right {
+		justify-content: space-between;
+		width: 100%;
+	}
 }
 
 .sy-accordion-right-content {
@@ -244,20 +290,15 @@
 	}
 }
 
-/* Style pour l'accordéon ouvert (focus programmatique) */
+/* Ring DS de focus (clavier réel `:focus-visible` OU surbrillance programmatique via la
+   communication inter-accordéons `--focused`). L'`.sy-accordion-item` a `overflow: hidden`,
+   donc un ring en offset positif serait rogné : on utilise un outline inset (offset négatif)
+   qui reste dans le bouton. Focus = ring seul, pas de background (réservé au hover/actif). */
+.sy-accordion-button:focus-visible,
 .sy-accordion-button--focused:not(:focus-visible) {
-	background-color: rgba(var(--accordion-focus-color), 0.15);
-	border: 3px solid rgb(var(--accordion-focus-color));
+	outline: 2px solid rgb(var(--accordion-focus-color));
+	outline-offset: -2px;
 	z-index: 1;
-}
-
-/* Style pour l'état de focus lors de la navigation au clavier */
-.sy-accordion-button:focus-visible {
-	outline: none;
-	position: relative;
-	background-color: rgba(var(--accordion-focus-color), 0.15);
-	border: 3px solid rgb(var(--accordion-focus-color));
-	transition: background-color 0.2s ease;
 }
 
 .sy-accordion-content {
@@ -269,13 +310,14 @@
 
 .sy-accordion-content--open {
 	max-height: 500px;
+	overflow: auto;
 }
 
+/* Région de contenu focusable (tabindex 0 à l'ouverture) : ring inset pour ne pas être rogné
+   par l'`overflow: hidden` de l'item. */
 .sy-accordion-content:focus-visible {
 	outline: 2px solid rgb(var(--accordion-focus-color));
-	border-top: 2px solid rgb(var(--accordion-focus-color));
-	outline-offset: 2px;
-	margin-top: 2px;
+	outline-offset: -2px;
 }
 
 .sy-accordion-content-inner {
@@ -286,7 +328,9 @@
 	margin: 0;
 }
 
-/* Style pour les éléments interactifs à l'intérieur du contenu */
+/* Éléments interactifs dans le contenu : ring DS simple (les boutons/liens natifs sont déjà
+   couverts par les overrides globaux `_btns.scss`/`_links.scss`). Pas de `box-shadow` glow :
+   un seul indicateur de focus. */
 .sy-accordion-content a:focus-visible,
 .sy-accordion-content button:focus-visible,
 .sy-accordion-content input:focus-visible,
@@ -294,7 +338,6 @@
 .sy-accordion-content textarea:focus-visible {
 	outline: 2px solid rgb(var(--accordion-focus-color));
 	outline-offset: 2px;
-	box-shadow: 0 0 0 2px rgba(var(--accordion-focus-color), 0.3);
 }
 
 .sy-accordion-content-item {
@@ -311,11 +354,12 @@
 	align-items: center;
 	justify-content: center;
 	transition: transform 0.3s ease;
+	flex-shrink: 0;
 }
 
-/* Rotation de l'icône lorsque l'accordéon est ouvert */
+/* Rotation de l'icône lorsque l'accordéon est ouvert : pointe vers le haut */
 .sy-accordion-icon--open {
-	transform: rotate(90deg);
+	transform: rotate(180deg);
 }
 
 /* Style pour les éléments désactivés */

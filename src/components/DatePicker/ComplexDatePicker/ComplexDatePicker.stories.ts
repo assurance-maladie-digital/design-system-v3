@@ -1,8 +1,10 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
+import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { ref, onMounted } from 'vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
+import type { CalendarModeProps } from '../types'
 
 const meta = {
 	title: 'Composants/Formulaires/DatePicker/CombinedMode',
@@ -211,12 +213,12 @@ const meta = {
 		},
 		'customRules': {
 			control: 'object',
-			description: 'Règles de validation personnalisées pour la date saisie ({ type: string, options: any }[]), affichant des erreurs si non respectées',
+			description: 'Règles de validation personnalisées pour la date saisie (DatePickerRule[]), affichant des erreurs si non respectées',
 			defaultValue: [],
 		},
 		'customWarningRules': {
 			control: 'object',
-			description: 'Règles d\'avertissement personnalisées ({ type: string, options: any }[]) pour afficher des messages d\'attention sans bloquer la validation',
+			description: 'Règles d\'avertissement personnalisées (DatePickerRule[]) pour afficher des messages d\'attention sans bloquer la validation',
 			defaultValue: [],
 		},
 		'disabled': {
@@ -326,8 +328,36 @@ const meta = {
 		'title': {
 			control: 'text',
 		},
+		'errors': {
+			description: 'Tableau réactif contenant tous les messages d\'erreur. Combine les erreurs injectées via errorMessages et celles générées par la validation. Les doublons sont supprimés et le tableau est limité selon maxErrors. Accessible via template ref du composant.',
+			table: {
+				type: { summary: 'Readonly<Ref<string[]>>' },
+				category: 'expose',
+			},
+		},
+		'warnings': {
+			description: 'Tableau réactif contenant tous les messages d\'avertissement. Combine les avertissements injectés via warningMessages et ceux générés par customWarningRules. Les doublons sont supprimés et le tableau est limité selon maxErrors. Accessible via template ref du composant.',
+			table: {
+				type: { summary: 'Readonly<Ref<string[]>>' },
+				category: 'expose',
+			},
+		},
+		'successes': {
+			description: 'Tableau réactif contenant tous les messages de succès. Combine les succès injectés via successMessages et ceux générés par customSuccessRules. Les doublons sont supprimés et le tableau est limité selon maxErrors. Accessible via template ref du composant.',
+			table: {
+				type: { summary: 'Readonly<Ref<string[]>>' },
+				category: 'expose',
+			},
+		},
 	},
-} as Meta<typeof DatePicker>
+} as Meta<CalendarModeProps & {
+	'onUpdate:modelValue'?: (value: DateModelValue) => void
+	'onFocus'?: () => void
+	'onBlur'?: () => void
+	'onClosed'?: () => void
+	'onInput'?: (value: string) => void
+	'onDate-selected'?: (value: DateModelValue) => void
+}>
 
 export default meta
 
@@ -653,7 +683,7 @@ export const WithValidation: Story = {
 							type: 'custom',
 							options: {
 								validate: (value) => {
-									if (value && new Date(value).getFullYear() === 2024) {
+									if (value && new Date(value as string).getFullYear() === 2024) {
 										return false
 									}
 									return true
@@ -679,8 +709,8 @@ export const WithValidation: Story = {
 			{
 				type: 'custom',
 				options: {
-					validate: (value: string) => {
-						if (value && new Date(value).getFullYear() === 2024) {
+					validate: (value: unknown) => {
+						if (value && new Date(value as string).getFullYear() === 2024) {
 							return false
 						}
 						return true

@@ -1,6 +1,6 @@
 import Captcha from './Captcha.vue'
-import type { StoryObj } from '@storybook/vue3'
-import { fn } from '@storybook/test'
+import type { StoryObj } from '@storybook/vue3-vite'
+import { fn } from 'storybook/test'
 import { ref, watch } from 'vue'
 import SyAlert from '../SyAlert/SyAlert.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps.ts'
@@ -144,22 +144,6 @@ export default {
 			control: false,
 			table: {
 				type: { summary: 'string' },
-				category: 'expose',
-			},
-		},
-		'clearValidation': {
-			description: 'Méthode exposée pour effacer la validation du captcha.',
-			control: false,
-			table: {
-				type: { summary: '() => void' },
-				category: 'expose',
-			},
-		},
-		'validateOnSubmit': {
-			description: 'Méthode exposée pour déclencher les règles de validation.',
-			control: false,
-			table: {
-				type: { summary: '() => Promise<boolean>' },
 				category: 'expose',
 			},
 		},

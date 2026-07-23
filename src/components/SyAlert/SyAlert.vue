@@ -23,10 +23,14 @@
 		type?: 'success' | 'info' | 'warning' | 'error'
 		closable?: boolean
 		variant?: 'tonal' | 'outlined'
+		role?: string
+		ariaLive?: 'off' | 'polite' | 'assertive'
 	}>(), {
 		type: 'info',
 		closable: false,
 		variant: 'tonal',
+		role: 'alert',
+		ariaLive: undefined,
 	})
 
 	const attrs = useAttrs()
@@ -61,7 +65,8 @@
 <template>
 	<div
 		class="sy-alert"
-		role="alert"
+		:role="props.role"
+		:aria-live="props.ariaLive"
 	>
 		<VAlert
 			v-model="show"
@@ -100,7 +105,6 @@
 					:ripple="false"
 					variant="text"
 					width="auto"
-					height="100%"
 					class="alert-close-btn"
 					@click="dismissAlert"
 				>
@@ -144,7 +148,10 @@
 }
 
 :deep(.v-alert__close) {
+	// Hauteur naturelle du bouton (comme les autres boutons DS) mais centré verticalement
+	// sur toute la hauteur de l'alerte (grid-row span 2 + align-self center).
 	align-self: center;
+	height: auto;
 }
 
 :deep(.v-btn--variant-text .v-btn__overlay) {
@@ -166,14 +173,13 @@
 		font-size: var(--v-fontSize-liensEtLibelles);
 	}
 
+	// Ring DS. Le fond de l'alerte reste clair même en thème dark → ring en primary
+	// (pas onPrimary) pour rester visible. Le `::after` natif du VBtn est masqué par
+	// l'override global `_btns.scss`. (Avant : `var(--v-theme-primary)` sur un triplet
+	// RGB était invalide → le ring retombait en noir.)
 	&:focus-visible {
-		outline: solid 2px black !important;
-		outline-color: var(--v-theme-primary) !important;
-		outline-offset: 2px !important;
-
-		&::after {
-			visibility: hidden;
-		}
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 3px;
 	}
 
 	.v-btn__overlay {
@@ -260,7 +266,7 @@
 			'accent': rgb(var(--v-theme-onWarningVariant)),
 			'border': rgb(var(--v-theme-onWarningVariant)),
 			'icon': rgb(var(--v-theme-onWarningVariant)),
-			'icon-bg': rgb(var(--v-theme-warningVariant90)),
+			'icon-bg': rgb(var(--v-theme-warningVariantLigthen)),
 		)
 	);
 	@include redesign(
@@ -270,7 +276,7 @@
 			'accent': rgb(var(--v-theme-onSuccessVariant)),
 			'border': rgb(var(--v-theme-onSuccessVariant)),
 			'icon':rgb(var(--v-theme-onSuccessVariant)),
-			'icon-bg': rgb(var(--v-theme-successVariant90)),
+			'icon-bg': rgb(var(--v-theme-successVariantLighten)),
 		)
 	);
 	@include redesign(
@@ -280,7 +286,7 @@
 			'accent': rgb(var(--v-theme-error)),
 			'border': rgb(var(--v-theme-error)),
 			'icon':rgb(var(--v-theme-error)),
-			'icon-bg': rgb(var(--v-theme-errorVariant90)),
+			'icon-bg': rgb(var(--v-theme-errorVariantLighten)),
 		)
 	);
 	@include redesign(
@@ -290,7 +296,7 @@
 			'accent': rgb(var(--v-theme-info)),
 			'border': rgb(var(--v-theme-info)),
 			'icon':rgb(var(--v-theme-info)),
-			'icon-bg': rgb(var(--v-theme-infoVariant90)),
+			'icon-bg': rgb(var(--v-theme-infoVariantLighten)),
 		)
 	);
 }
@@ -303,8 +309,9 @@
 	.alert-close-btn {
 		color: black !important;
 
+		// Le fond de l'alerte reste clair en thème dark → ring primary (comme en clair).
 		&:focus-visible {
-			outline-color: black !important;
+			outline-color: rgb(var(--v-theme-primary));
 		}
 	}
 }

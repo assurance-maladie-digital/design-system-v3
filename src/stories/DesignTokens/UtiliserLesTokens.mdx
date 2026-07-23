@@ -1,4 +1,4 @@
-import { Meta, Source } from '@storybook/blocks';
+import { Meta, Source } from '@storybook/addon-docs/blocks';
 import '../styles/shared.css';
 
 <Meta title="Design Tokens/Utilisation" />
@@ -83,6 +83,21 @@ Variables de thème `--v-theme-<nom>`. ⚠️ Si elles contiennent un **triplet 
 
 Catalogue complet&nbsp;: [Design Tokens → Couleurs](/docs/design-tokens-couleurs--docs).
 
+### Déclinaisons (`darken` / `lighten`)
+
+Chaque couleur de la palette dispose d'une échelle de 11 paliers. ⚠️ **Le nom n'a pas de tiret avant le chiffre**&nbsp;: `grey-darken60`, et **non** `grey-darken-60`.
+
+<Source dark language="scss" code={`
+.element {
+  border-color: rgb(var(--v-theme-grey-darken60));
+  background: rgb(var(--v-theme-grey-lighten90));
+}
+`} />
+
+Échelle, identique pour toutes les couleurs (`grey`, `blue`, `green`…)&nbsp;: `darken80`, `darken60`, `darken40`, `darken20`, `base`, `lighten20`, `lighten40`, `lighten60`, `lighten80`, `lighten90`, `lighten97`.
+
+> Le format `…-darken-1` / `-lighten-2` (avec **tiret avant le chiffre**, petits paliers) est réservé à la palette **AmeliPro 2026** (`--v-theme-ap-grey-darken-1`)&nbsp;: il ne s'applique pas à l'échelle principale.
+
 ### Nommage des variables CSS — deux familles de `on-*`
 
 Pour les couleurs de thème, deux familles de variables coexistent. **Une seule est l'API du Design System.**
@@ -115,6 +130,25 @@ Pour les couleurs de thème, deux familles de variables coexistent. **Une seule 
 > **Règle simple&nbsp;:** si la variable a un **`on-` avec un tiret**, c'est une couleur technique générée par Vuetify&nbsp;: prenez plutôt la version **camelCase `onXxx`** du Design System.
 
 Comme il n'y a plus de variables SCSS, une faute de nom ne génère **pas d'erreur de compilation** (la `var()` reste juste non résolue). En cas de doute sur le nom d'un token issu de Figma, reportez-vous à [Correspondances couleurs](/docs/design-tokens-couleurs-correspondances-couleurs--docs).
+
+### Variable « non définie »&nbsp;?
+
+Ces variables sont **générées au runtime par Vuetify** à partir du thème de Synapse, et **uniquement dans le périmètre du thème actif** — elles ne sont pas livrées dans un fichier CSS statique. Si une `var(--v-theme-…)` n'est pas résolue, vérifiez dans l'ordre&nbsp;:
+
+1. **Le nom** — par ex. `grey-darken60` (sans tiret avant le chiffre).
+2. **Le thème Vuetify de Synapse est bien câblé.** La palette n'est émise que si les `themes` de Synapse sont passés à `createVuetify`. Le plus simple&nbsp;: utiliser l'instance fournie.
+
+<Source dark language="ts" code={`
+import { createVuetifyInstance } from '@cnamts/synapse/vuetifyConfig'
+
+app.use(createVuetifyInstance())
+`} />
+
+Voir [createVuetifyInstance](/docs/guide-du-dev-démarrage-createvuetifyinstance--docs).
+
+3. **Le scope du thème.** Vuetify définit ces variables sous le sélecteur `.v-theme--<marque>` (posé sur `<v-app>`). Une règle CSS appliquée **hors de `<v-app>`** (style global sur `body`, overlay/teleport sorti de l'app…) ne résout pas `var(--v-theme-…)`.
+
+> **Vérifier&nbsp;:** inspectez un élément **à l'intérieur de `<v-app>`** (onglet *Computed* des devtools) et cherchez la variable&nbsp;; ou recherchez son nom dans la balise `<style>` du thème injectée par Vuetify dans le `<head>`. Absente du `<style>` ⇒ cause n°2&nbsp;; présente mais non résolue à l'usage ⇒ cause n°3.
 
 ## Arrondis (`radius`)
 

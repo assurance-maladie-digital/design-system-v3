@@ -1,9 +1,16 @@
+import { defineComponent, h } from 'vue'
 import SelectBtnField from '../SelectBtnField.vue'
 
 const defaultItems = [
 	{ text: 'Oui', value: 'oui' },
 	{ text: 'Non', value: 'non' },
 ]
+
+// Déclenche :focus-visible via l'option native focus({ focusVisible: true }).
+const focusVisible = (selector: string) =>
+	cy.get(selector).then(($el) => {
+		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
+	})
 
 describe('SelectBtnField - Visual regression tests', () => {
 	it('displays the button select field by default', () => {
@@ -56,5 +63,59 @@ describe('SelectBtnField - Visual regression tests', () => {
 
 		cy.get('.select-btn-field').should('be.visible')
 		cy.matchImageSnapshot('select-btn-field-readonly', cy.get('.select-btn-field'))
+	})
+})
+
+describe('SelectBtnField - Focus visual regression tests', () => {
+	it('shows the enclosing ring on the group container (inline)', () => {
+		cy.mountWithVuetify(SelectBtnField, {
+			props: { items: defaultItems, label: 'Votre réponse', inline: true },
+		})
+
+		// 1er focus : le conteneur listbox porte le ring englobant
+		focusVisible('[role="listbox"]')
+		cy.wait(100)
+		cy.matchImageSnapshot('select-btn-field-focus-container-inline', cy.get('.v-application'))
+	})
+
+	it('shows the ring on a focused option (inline)', () => {
+		cy.mountWithVuetify(SelectBtnField, {
+			props: { items: defaultItems, label: 'Votre réponse', inline: true },
+		})
+
+		focusVisible('li[role="option"]')
+		cy.wait(100)
+		cy.matchImageSnapshot('select-btn-field-focus-option-inline', cy.get('.v-application'))
+	})
+
+	it('shows the enclosing ring on the group container (column)', () => {
+		cy.mountWithVuetify(SelectBtnField, {
+			props: { items: defaultItems, label: 'Votre réponse' },
+		})
+
+		focusVisible('[role="listbox"]')
+		cy.wait(100)
+		cy.matchImageSnapshot('select-btn-field-focus-container-column', cy.get('.v-application'))
+	})
+
+	it('does not clip the focus ring inside an overflow:hidden container', () => {
+		// Un ancêtre overflow:hidden peut rogner l'outline (offset 3px). Ce cas le vérifie.
+		// Render function (pas de template string) : le compilateur runtime n'est pas
+		// dispo dans le build Cypress component.
+		const OverflowWrapper = defineComponent({
+			setup() {
+				return () => h(
+					'div',
+					{ style: 'overflow: hidden; width: 360px; padding: 16px; border: 1px solid #ccc' },
+					[h(SelectBtnField, { items: defaultItems, label: 'Votre réponse', inline: true })],
+				)
+			},
+		})
+
+		cy.mountWithVuetify(OverflowWrapper)
+
+		focusVisible('[role="listbox"]')
+		cy.wait(100)
+		cy.matchImageSnapshot('select-btn-field-focus-overflow-hidden', cy.get('.v-application'))
 	})
 })

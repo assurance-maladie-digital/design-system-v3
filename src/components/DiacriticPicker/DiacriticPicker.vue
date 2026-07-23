@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, nextTick, onMounted, onUpdated, ref } from 'vue'
+	import { computed, nextTick, onMounted, onUpdated, ref, useId } from 'vue'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { config } from './config'
 	import { locales } from './locales'
@@ -34,7 +34,7 @@
 
 	const options = useCustomizableOptions(config, props)
 
-	const uniqueId = Math.random().toString(36).substr(2, 9)
+	const uniqueId = useId()
 
 	const labelId = `diacritic-label-${uniqueId}`
 	const inputId = `diacritic-input-${uniqueId}`
@@ -178,7 +178,7 @@
 			role="textbox"
 			:aria-label="inputAriaLabel"
 			:title="labelId"
-			tabindex="0"
+			tabindex="-1"
 			@keydown="handleKeydown"
 		>
 			<slot />

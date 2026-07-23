@@ -13,6 +13,12 @@ function fakeFilePromise(): Promise<AxiosResponse<Blob>> {
 	})
 }
 
+// Déclenche :focus-visible via l'option native focus({ focusVisible: true }).
+const focusVisible = (selector: string) =>
+	cy.get(selector).then(($el) => {
+		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
+	})
+
 describe('DownloadBtn - Visual regression tests', () => {
 	it('displays the download button in idle state', () => {
 		cy.mountWithVuetify(DownloadBtn, {
@@ -34,5 +40,32 @@ describe('DownloadBtn - Visual regression tests', () => {
 
 		cy.get('.sy-download-btn').should('be.visible')
 		cy.matchImageSnapshot('download-btn-dark', cy.get('.v-sheet'))
+	})
+})
+
+describe('DownloadBtn - Focus visual regression tests', () => {
+	// Mode clair (outlined primary) : ring primary, offset 3px. Capture `.v-application`
+	// pour ne pas rogner le ring outset.
+	it('shows the primary ring on the button (light)', () => {
+		cy.mountWithVuetify(DownloadBtn, {
+			props: { filePromise: fakeFilePromise },
+		})
+
+		focusVisible('.sy-download-btn')
+		cy.wait(100)
+		cy.matchImageSnapshot('download-btn-focus-light', cy.get('.v-application'))
+	})
+
+	// Mode `dark` (prop) sur fond primary : ring onPrimary (blanc).
+	it('shows the onPrimary ring on the button (dark)', () => {
+		cy.mountWithVuetify(
+			h(VSheet, { color: 'primary', class: 'pa-4', style: 'display: inline-block;' }, () => [
+				h(DownloadBtn, { filePromise: fakeFilePromise, dark: true }, () => 'Télécharger'),
+			]),
+		)
+
+		focusVisible('.sy-download-btn')
+		cy.wait(100)
+		cy.matchImageSnapshot('download-btn-focus-dark', cy.get('.v-application'))
 	})
 })

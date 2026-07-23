@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, watch, computed, onMounted, useSlots, type PropType, nextTick } from 'vue'
+	import { ref, watch, computed, onMounted, useSlots, useId, type PropType, nextTick } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import slugify from 'slugify'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -118,7 +118,7 @@
 		selectedItem.value = newValue
 	})
 
-	const generatedId = ref(`custom-btn-select-${Math.random().toString(36).substring(7)}`)
+	const generatedId = ref(`custom-btn-select-${useId()}`)
 
 	function getSelectedValue() {
 		if (!selectedItem.value) return undefined
@@ -274,21 +274,11 @@
 }
 
 .sy-user-menu-btn {
-	outline: none;
 	padding: 12px !important;
 
 	&:hover::before {
 		background: #000;
 		opacity: 0.05;
-	}
-
-	&:focus::before {
-		background: rgb(var(--v-theme-blue-base));
-		opacity: 0.08;
-	}
-
-	&:focus {
-		background: rgba(var(--v-theme-blue-base), 0.08) !important;
 	}
 
 	.subtitle {
@@ -299,24 +289,6 @@
 
 :deep(.sy-user-menu-btn:focus > .v-btn__overlay) {
 	opacity: 0 !important;
-}
-
-.v-btn:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-primary));
-	outline-offset: 2px;
-
-	:deep(.v-btn__overlay) {
-		opacity: 0;
-	}
-
-	&::after {
-		opacity: 0;
-	}
-}
-
-:global(.sy-user-menu .v-list-item:focus) {
-	outline: 2px solid rgb(var(--v-theme-primary));
-	outline-offset: -2px;
 }
 
 .item-title {

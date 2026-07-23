@@ -9,6 +9,7 @@ describe('SkipLink - Visual regression tests', () => {
 			},
 		})
 
+		// Le ring est sur `:focus` → un focus simple suffit à afficher barre + ring.
 		cy.get('.sy-skip-link').focus()
 		cy.get('.sy-skip-link').should('be.visible')
 		cy.matchImageSnapshot('skip-link-focused', cy.get('.v-application'))

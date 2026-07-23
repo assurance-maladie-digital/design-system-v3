@@ -1,5 +1,11 @@
 import SyRadioGroup from '../SyRadioGroup.vue'
 
+// Déclenche `:focus-visible` via l'option native focus({ focusVisible: true }).
+const focusVisible = (selector: string) =>
+	cy.get(selector).then(($el) => {
+		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
+	})
+
 const defaultOptions = [
 	{ label: 'Option A', value: 'A' },
 	{ label: 'Option B', value: 'B' },
@@ -161,5 +167,17 @@ describe('SyRadioGroup - Visual regression tests', () => {
 
 		cy.get('.v-radio-group').should('be.visible')
 		cy.matchImageSnapshot('sy-radio-group-no-details', cy.get('.v-radio-group'))
+	})
+
+	// Ring DS au clavier ajouté sur les radios : `.v-selection-control--focus-visible`
+	// (2px primary, offset 2px, aligné sur SyCheckbox). On focus le 1er radio.
+	it('shows the DS ring on a focused radio', () => {
+		cy.mountWithVuetify(SyRadioGroup, {
+			props: { label: 'Choix', options: defaultOptions },
+		})
+
+		focusVisible('.v-radio-group input[type="radio"]')
+		cy.wait(150)
+		cy.matchImageSnapshot('sy-radio-group-focus', cy.get('.v-radio-group'))
 	})
 })

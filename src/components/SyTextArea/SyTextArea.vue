@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, nextTick, ref, toRef, watch } from 'vue'
+	import { computed, nextTick, readonly as readonlyState, ref, toRef, useId, watch } from 'vue'
 	import { mdiCloseCircle } from '@mdi/js'
 	import type { VTextarea } from 'vuetify/components'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -10,7 +10,7 @@
 	import { locales } from './locales'
 
 	const props = withDefaults(defineProps<{
-		uniqueId: string
+		uniqueId?: string
 		counter?: boolean | number | string
 		modelValue?: string
 		trim?: boolean
@@ -29,6 +29,7 @@
 		hideDetails?: boolean
 		displayAsterisk?: boolean
 	} & FieldValidationProps>(), {
+		uniqueId: undefined,
 		modelValue: '',
 		trim: false,
 		replaceTabs: undefined,
@@ -54,6 +55,7 @@
 
 	const textAreaRef = ref<VTextarea | null>(null)
 	const hasInteracted = ref(false)
+	const id = computed(() => props.uniqueId || useId())
 
 	const internalValue = ref(props.modelValue)
 
@@ -177,6 +179,12 @@
 		validateOnSubmit,
 		clearField,
 		clearValidation,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 	})
 
 </script>
@@ -184,7 +192,7 @@
 <template>
 	<div class="sy-textarea">
 		<VTextarea
-			:id="uniqueId"
+			:id="id"
 			ref="textAreaRef"
 			:model-value="internalValue"
 			:variant="variant"

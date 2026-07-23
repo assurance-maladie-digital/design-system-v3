@@ -141,6 +141,11 @@ pre.prismjs {
 	transform: none !important;
 }
 
+.css-14qbhoz {
+	place-content: stretch !important;
+	place-items: stretch !important;
+}
+
 .sbdocs-preview {
 	/* Fix for dropdown positioning */
 	.docs-story .v-list,
@@ -165,6 +170,11 @@ pre.prismjs {
 		visibility: visible !important;
 		opacity: 1 !important;
 	}
+}
+
+.storybook-docs-mode .v-list {
+	z-index: 9999 !important;
+	visibility: visible !important;
 }
 
 #story--composants-formulaires-searchlistfield--default {

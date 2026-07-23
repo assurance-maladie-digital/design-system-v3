@@ -175,7 +175,10 @@
 	})
 
 	function resizeKeyboardColumn(increment: number) {
-		const currentWidth = wrapper.value?.offsetWidth || 0
+		// Même base de largeur que le redimensionnement souris (`startResize`) : `wrapper` est
+		// le contenu de l'en-tête, ~32px plus étroit que la colonne réelle. Sans cette
+		// correction, le 1er appui rétrécissait la colonne d'un coup (« se serre à gauche »).
+		const currentWidth = (wrapper.value?.offsetWidth || 0) + 24 + 1 / 2 * 16
 		if (wrapper.value) {
 			const newWidth = Math.max(50, currentWidth + increment)
 			header.value!.width = newWidth
@@ -242,15 +245,21 @@
 			v-if="header!.sortable"
 			class="sort-container d-flex align-center"
 		>
-			<SyIcon
-				class="v-data-table-header__sort-icon"
-				:class="{ 'text-primary opacity-100' : isColumnSorted }"
-				:icon="headerParams.getSortIcon(column)"
+			<button
+				type="button"
+				class="sort-button"
+				:class="{ 'sort-button--active': isColumnSorted }"
 				:title="locales.columnOrder(column.title!)"
 				:aria-label="locales.columnOrder(column.title!)"
-				decorative
 				@click="headerParams.toggleSort(column)"
-			/>
+			>
+				<SyIcon
+					class="v-data-table-header__sort-icon"
+					:class="{ 'text-primary opacity-100' : isColumnSorted }"
+					:icon="headerParams.getSortIcon(column)"
+					decorative
+				/>
+			</button>
 			<div
 				v-if="sortOrderIndex"
 				class="sort-order-indicator text-primary ml-0 mr-2"
@@ -307,6 +316,34 @@
 	flex: 0 0 auto;
 }
 
+// Bouton de tri natif : focusable et actionnable au clavier (Entrée/Espace).
+.sort-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 2px;
+	margin: 0;
+	border: 0;
+	border-radius: 4px;
+	background: transparent;
+	color: inherit;
+	cursor: pointer;
+}
+
+// L'icône de tri est masquée par défaut (opacity 0 via Vuetify) : on la révèle
+// au survol ET au focus clavier, sinon le tri est invisible en navigation clavier.
+.sort-button:hover :deep(.v-data-table-header__sort-icon),
+.sort-button:focus-visible :deep(.v-data-table-header__sort-icon),
+.sort-button--active :deep(.v-data-table-header__sort-icon) {
+	opacity: 1;
+}
+
+// Focus visible fortement contrasté.
+.sort-button:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 2px;
+}
+
 .sort-order-indicator {
 	font-size: 0.75rem;
 	font-weight: bold;
@@ -322,6 +359,25 @@
 	width: 1rem;
 	height: 100%;
 	left: calc(24px - 1rem / 2);
+
+	// Poignée de redimensionnement opérable au clavier (`tabindex="0"`). La poignée dépasse le
+	// bord de la cellule (`left`) : un anneau (outline/box-shadow) déborde forcément, et un
+	// fond aussi. Le seul indicateur contenu est son trait central (`::after`) : au focus, il
+	// passe en primary et s'élargit. Pas d'anneau, pas de fond.
+	&:focus-visible {
+		// Neutralise le ring global `button:focus-visible` de `_btns.scss` (outline-offset: 3px),
+		// qui déborde sur cette poignée fine et décalée. `!important` pour être sûr de gagner
+		// quel que soit l'ordre d'injection. L'indicateur de focus est le trait central ci-dessous.
+		outline: none !important;
+
+		&::after {
+			top: 50%;
+			height: 60%;
+			width: 0.2rem;
+			transform: translate(-50%, -50%);
+			background: rgb(var(--v-theme-primary));
+		}
+	}
 
 	&::after {
 		content: '';

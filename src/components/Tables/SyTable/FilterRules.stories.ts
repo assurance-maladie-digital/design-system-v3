@@ -1,11 +1,11 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SyTable from './SyTable.vue'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
 
 const meta = {
-	title: 'Composants/Tableaux/SyTable/Rules',
+	title: 'Composants/Tableaux/SyTable/Filtres/Rules',
 	component: SyTable,
 	decorators: [
 		() => ({

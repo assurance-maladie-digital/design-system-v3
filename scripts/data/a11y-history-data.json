@@ -1,0 +1,608 @@
+{
+  "Accordion": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "AmeliproAccordionList": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "AmeliproAccordionResultList": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "AmeliproAutoCompleteField": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "AmeliproCaptcha": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "AmeliproCheckbox": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "AmeliproCheckboxGroup": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "AmeliproCustomSelector": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "AmeliproDentalChart": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "AmeliproIllustratedRadioGroup": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "AmeliproPatientLogged": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "AmeliproPatientLogin": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "AmeliproPatientLoginForm": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "AmeliproPostalAddressCityRow": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "AmeliproPostalAddressField": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "AmeliproRadioGroup": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "AmeliproResultList": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "AmeliproSelect": {
+    "version": "1.0.17",
+    "date": "22/12/2025",
+    "dateIso": "2025-12-22 13:42:18 +0100"
+  },
+  "AmeliproTextArea": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "AmeliproTextField": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "AmeliproUpload": {
+    "version": "1.0.16",
+    "date": "17/12/2025",
+    "dateIso": "2025-12-17 14:13:24 +0100"
+  },
+  "BackBtn": {
+    "version": "1.0.23",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 08:20:25 +0100"
+  },
+  "BackToTopBtn": {
+    "version": "1.0.23",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 08:23:27 +0100"
+  },
+  "Captcha": {
+    "version": "1.0.24",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 10:39:46 +0100"
+  },
+  "CaptchaAlert": {
+    "version": "1.0.24",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 10:39:46 +0100"
+  },
+  "CaptchaBase": {
+    "version": "1.0.24",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 10:39:46 +0100"
+  },
+  "CaptchaBtn": {
+    "version": "1.0.24",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 10:39:46 +0100"
+  },
+  "CaptchaForm": {
+    "version": "1.0.24",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 10:39:46 +0100"
+  },
+  "CaptchaHelpdesk": {
+    "version": "1.0.24",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 10:39:46 +0100"
+  },
+  "CaptchaImg": {
+    "version": "1.0.24",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 10:39:46 +0100"
+  },
+  "CaptchaInformation": {
+    "version": "1.0.24",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 10:39:46 +0100"
+  },
+  "ChipList": {
+    "version": "1.0.24",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 15:47:27 +0100"
+  },
+  "CollapsibleList": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "ContextualMenu": {
+    "version": "1.0.21",
+    "date": "24/02/2026",
+    "dateIso": "2026-02-24 11:11:24 +0100"
+  },
+  "DeepMenu": {
+    "version": "1.0.21",
+    "date": "24/02/2026",
+    "dateIso": "2026-02-24 11:11:24 +0100"
+  },
+  "CookieBanner": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "CookiesInformation": {
+    "version": "1.0.17",
+    "date": "06/01/2026",
+    "dateIso": "2026-01-06 11:55:17 +0100"
+  },
+  "CookiesSelection": {
+    "version": "1.0.17",
+    "date": "06/01/2026",
+    "dateIso": "2026-01-06 11:55:17 +0100"
+  },
+  "CookiesTable": {
+    "version": "1.0.17",
+    "date": "06/01/2026",
+    "dateIso": "2026-01-06 11:55:17 +0100"
+  },
+  "CopyBtn": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "SelectBtnField": {
+    "version": "1.0.24",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 12:57:37 +0100"
+  },
+  "SyInputSelect": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "SySelect": {
+    "version": "1.0.25",
+    "date": "21/04/2026",
+    "dateIso": "2026-04-21 09:58:59 +0200"
+  },
+  "SyCheckBoxGroup": {
+    "version": "1.0.21",
+    "date": "23/02/2026",
+    "dateIso": "23/02/2026",
+    "override": true
+  },
+  "SyCheckbox": {
+    "version": "1.1.1",
+    "date": "08/07/2026",
+    "dateIso": "2026-07-08 14:17:13 +0200"
+  },
+  "SyForm": {
+    "version": "1.0.21",
+    "date": "25/02/2026",
+    "dateIso": "2026-02-25 16:19:14 +0100"
+  },
+  "SyIcon": {
+    "version": "1.0.23",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 08:20:25 +0100"
+  },
+  "SyIconAccessibility": {
+    "version": "1.0.23",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 08:20:25 +0100"
+  },
+  "SyPagination": {
+    "version": "1.0.22",
+    "date": "02/03/2026",
+    "dateIso": "2026-03-02 17:09:59 +0100"
+  },
+  "SyRadioGroup": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "SyTabs": {
+    "version": "1.0.25",
+    "date": "20/04/2026",
+    "dateIso": "2026-04-20 11:55:30 +0200"
+  },
+  "FieldState": {
+    "version": "1.0.24",
+    "date": "03/04/2026",
+    "dateIso": "2026-04-03 08:50:02 +0200"
+  },
+  "SyTextField": {
+    "version": "1.0.24",
+    "date": "03/04/2026",
+    "dateIso": "2026-04-03 08:50:02 +0200"
+  },
+  "DataList": {
+    "version": "1.0.23",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 08:20:25 +0100"
+  },
+  "DataListGroup": {
+    "version": "1.0.23",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 08:20:25 +0100"
+  },
+  "DatePicker": {
+    "version": "1.0.25",
+    "date": "20/04/2026",
+    "dateIso": "2026-04-20 11:55:30 +0200"
+  },
+  "ComplexDatePicker": {
+    "version": "1.0.24",
+    "date": "01/04/2026",
+    "dateIso": "2026-04-01 14:41:22 +0200"
+  },
+  "DateTextInput": {
+    "version": "1.0.24",
+    "date": "01/04/2026",
+    "dateIso": "2026-04-01 14:41:22 +0200"
+  },
+  "DiacriticPicker": {
+    "version": "1.0.24",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 10:39:46 +0100"
+  },
+  "DialogBox": {
+    "version": "1.0.22",
+    "date": "10/03/2026",
+    "dateIso": "2026-03-10 11:51:12 +0100"
+  },
+  "DownloadBtn": {
+    "version": "1.0.23",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 08:20:25 +0100"
+  },
+  "ErrorPage": {
+    "version": "1.0.21",
+    "date": "26/02/2026",
+    "dateIso": "2026-02-26 09:47:55 +0100"
+  },
+  "ExternalLinks": {
+    "version": "1.0.23",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 08:20:25 +0100"
+  },
+  "FileList": {
+    "version": "1.0.22",
+    "date": "10/03/2026",
+    "dateIso": "2026-03-10 11:51:12 +0100"
+  },
+  "UploadItem": {
+    "version": "1.0.22",
+    "date": "10/03/2026",
+    "dateIso": "2026-03-10 11:51:12 +0100"
+  },
+  "FilePreview": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "FileUpload": {
+    "version": "1.0.22",
+    "date": "10/03/2026",
+    "dateIso": "2026-03-10 11:51:12 +0100"
+  },
+  "FileUploadContent": {
+    "version": "1.0.22",
+    "date": "10/03/2026",
+    "dateIso": "2026-03-10 11:51:12 +0100"
+  },
+  "FilterInline": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "FilterSideBar": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "FooterBar": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "FranceConnectBtn": {
+    "version": "1.0.23",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 08:20:25 +0100"
+  },
+  "HeaderBar": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "HeaderBurgerMenu": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "HeaderMenuItem": {
+    "version": "0.0.15-alpha",
+    "date": "18/04/2025",
+    "dateIso": "2025-04-18 07:55:43 +0000"
+  },
+  "HeaderSubMenu": {
+    "version": "1.0.17",
+    "date": "22/12/2025",
+    "dateIso": "2025-12-22 14:37:18 +0100"
+  },
+  "HeaderMenuBtn": {
+    "version": "0.0.15-alpha",
+    "date": "18/04/2025",
+    "dateIso": "2025-04-18 07:55:43 +0000"
+  },
+  "HeaderLoading": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "HeaderNavigationBar": {
+    "version": "1.0.25",
+    "date": "20/04/2026",
+    "dateIso": "2026-04-20 11:55:30 +0200"
+  },
+  "HorizontalNavbar": {
+    "version": "1.0.25",
+    "date": "20/04/2026",
+    "dateIso": "2026-04-20 11:55:30 +0200"
+  },
+  "HeaderToolbar": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "LangBtn": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "Logo": {
+    "version": "1.0.24",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 10:39:46 +0100"
+  },
+  "LogoBrandSection": {
+    "version": "1.0.24",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 10:39:46 +0100"
+  },
+  "LunarCalendar": {
+    "version": "1.0.23",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 08:20:25 +0100"
+  },
+  "MaintenancePage": {
+    "version": "1.0.21",
+    "date": "25/02/2026",
+    "dateIso": "2026-02-25 16:36:30 +0100"
+  },
+  "NirField": {
+    "version": "1.1.1",
+    "date": "23/06/2026",
+    "dateIso": "2026-06-23 16:30:57 +0200"
+  },
+  "NotFoundPage": {
+    "version": "1.0.21",
+    "date": "26/02/2026",
+    "dateIso": "2026-02-26 09:47:55 +0100"
+  },
+  "NotificationBar": {
+    "version": "1.0.21",
+    "date": "18/02/2026",
+    "dateIso": "2026-02-18 14:55:20 +0100"
+  },
+  "PageContainer": {
+    "version": "1.0.21",
+    "date": "25/02/2026",
+    "dateIso": "2026-02-25 09:28:19 +0100"
+  },
+  "PaginatedTable": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "Pagination": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "PasswordField": {
+    "version": "1.1.1",
+    "date": "03/07/2026",
+    "dateIso": "2026-07-03 11:28:48 +0200"
+  },
+  "PeriodField": {
+    "version": "1.0.24",
+    "date": "01/04/2026",
+    "dateIso": "2026-04-01 14:41:22 +0200"
+  },
+  "PhoneField": {
+    "version": "1.0.21",
+    "date": "25/02/2026",
+    "dateIso": "2026-02-25 16:19:14 +0100"
+  },
+  "RangeField": {
+    "version": "1.0.23",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 08:20:25 +0100"
+  },
+  "EmotionPicker": {
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 11:48:21 +0200"
+  },
+  "NumberPicker": {
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 11:48:21 +0200"
+  },
+  "RatingPicker": {
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 11:48:21 +0200"
+  },
+  "StarsPicker": {
+    "version": "1.1.1",
+    "date": "30/06/2026",
+    "dateIso": "2026-06-30 11:48:21 +0200"
+  },
+  "SearchListField": {
+    "version": "1.1.1",
+    "date": "08/07/2026",
+    "dateIso": "2026-07-08 14:17:13 +0200"
+  },
+  "SkipLink": {
+    "version": "1.0.23",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 08:20:25 +0100"
+  },
+  "SocialMediaLinks": {
+    "version": "1.0.21",
+    "date": "24/02/2026",
+    "dateIso": "2026-02-24 15:41:22 +0100"
+  },
+  "StatusPage": {
+    "version": "1.0.21",
+    "date": "26/02/2026",
+    "dateIso": "2026-02-26 09:47:55 +0100"
+  },
+  "SubHeader": {
+    "version": "1.0.23",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 08:20:25 +0100"
+  },
+  "SyAlert": {
+    "version": "1.0.23",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 08:20:25 +0100"
+  },
+  "SyBtnMenu": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "SyHeading": {
+    "version": "1.0.23",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 08:20:25 +0100"
+  },
+  "SyTextArea": {
+    "version": "1.0.23",
+    "date": "30/03/2026",
+    "dateIso": "2026-03-30 08:20:25 +0100"
+  },
+  "TableToolbar": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "SyServerTable": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "SyTable": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "ToolbarContainer": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "UploadWorkflow": {
+    "version": "1.0.22",
+    "date": "10/03/2026",
+    "dateIso": "2026-03-10 11:51:12 +0100"
+  },
+  "UserMenuBtn": {
+    "version": "1.0.20",
+    "date": "11/02/2026",
+    "dateIso": "2026-02-11 12:51:15 +0100"
+  },
+  "SyAutocomplete": {
+    "version": "1.0.27",
+    "date": "13/05/2026",
+    "dateIso": "13/05/2026",
+    "override": true
+  },
+  "SyIconButton": {
+    "version": "1.0.23",
+    "date": "23/03/2026",
+    "dateIso": "23/03/2026",
+    "override": true
+  },
+  "MonthPicker": {
+    "version": "1.0.23",
+    "date": "25/03/2026",
+    "dateIso": "25/03/2026",
+    "override": true
+  },
+  "DeclarationAccessibilityPage": {
+    "version": "1.0.21",
+    "date": "25/02/2026",
+    "dateIso": "25/02/2026",
+    "override": true
+  },
+  "DataListItem": {
+    "version": "1.0.23",
+    "date": "30/03/2026",
+    "dateIso": "30/03/2026",
+    "override": true
+  }
+}

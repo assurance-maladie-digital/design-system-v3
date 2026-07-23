@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, computed, watch, useAttrs, onMounted } from 'vue'
+	import { ref, computed, watch, useAttrs, useId, onMounted } from 'vue'
 	import type { DataOptions, SortOption, GroupOption } from './types'
 	import { LocalStorageUtility } from '@/utils/localStorageUtility'
 	import Pagination from './Pagination.vue'
@@ -45,7 +45,7 @@
 	const localOptions = ref({})
 
 	// Generate a unique ID for this table instance
-	const uniqueTableId = ref(`paginated-table-${Math.random().toString(36).substr(2, 9)}`)
+	const uniqueTableId = ref(`paginated-table-${useId()}`)
 
 	const storageKey = computed(() => {
 		const prefix = 'pagination'
@@ -245,9 +245,16 @@
 
 	table thead th {
 		.v-data-table-header__content {
-			opacity: 0.65;
+			color: rgba(var(--v-theme-onSurface), 0.65);
 			font-size: 0.875rem;
 			font-weight: 700 !important;
+		}
+
+		// Les `<th>` sont rendus focusables (tabindex 0) pour le tri au clavier → ring DS
+		// primary. Inset (-2px) car les cellules d'en-tête sont adjacentes.
+		&:focus-visible {
+			outline: 2px solid rgb(var(--v-theme-primary));
+			outline-offset: -2px;
 		}
 	}
 

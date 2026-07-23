@@ -6,7 +6,6 @@ import NumberPicker from '../NumberPicker/NumberPicker.vue'
 import EmotionPicker from '../EmotionPicker/EmotionPicker.vue'
 import StarsPicker from '../StarsPicker/StarsPicker.vue'
 
-import { locales as emotionPickerlocales } from '../EmotionPicker/locales'
 import { locales } from '../locales'
 
 describe('RatingPicker', () => {
@@ -17,7 +16,7 @@ describe('RatingPicker', () => {
 					template: '<div />',
 				},
 			},
-			propsData: {
+			props: {
 				type: RatingEnum.NUMBER,
 			},
 		})
@@ -32,7 +31,7 @@ describe('RatingPicker', () => {
 					template: '<div />',
 				},
 			},
-			propsData: {
+			props: {
 				type: RatingEnum.NUMBER,
 			},
 			slots: {
@@ -55,7 +54,7 @@ describe('RatingPicker', () => {
 					template: '<div />',
 				},
 			},
-			propsData: {
+			props: {
 				type: RatingEnum.STARS,
 			},
 			slots: {
@@ -77,7 +76,7 @@ describe('RatingPicker', () => {
 					template: '<div />',
 				},
 			},
-			propsData: {
+			props: {
 				type: RatingEnum.EMOTION,
 			},
 			slots: {
@@ -99,7 +98,7 @@ describe('RatingPicker', () => {
 					template: '<div />',
 				},
 			},
-			propsData: {
+			props: {
 				type: RatingEnum.EMOTION,
 				twoEmotions: true,
 			},
@@ -122,7 +121,7 @@ describe('RatingPicker', () => {
 					template: '<div />',
 				},
 			},
-			propsData: {
+			props: {
 				type: RatingEnum.NUMBER,
 			},
 			slots: {
@@ -136,6 +135,24 @@ describe('RatingPicker', () => {
 		expect(wrapper.text()).not.toContain('Additional content')
 	})
 
+	it('renders the thank you message with status and polite live region', () => {
+		const wrapper = mount(RatingPicker, {
+			stubs: {
+				NumberPicker: {
+					template: '<div />',
+				},
+			},
+			props: {
+				type: RatingEnum.NUMBER,
+				modelValue: 8,
+			},
+		})
+
+		const alert = wrapper.find('.sy-alert')
+
+		expect(alert.attributes('role')).toBe('status')
+	})
+
 	it('sends the correct values to the EmotionPicker', async () => {
 		const wrapper = mount(RatingPicker, {
 			stubs: {
@@ -143,7 +160,7 @@ describe('RatingPicker', () => {
 					template: '<div />',
 				},
 			},
-			propsData: {
+			props: {
 				type: RatingEnum.EMOTION,
 				itemLabels: ['label1', 'label3'],
 				twoEmotions: true,
@@ -160,6 +177,6 @@ describe('RatingPicker', () => {
 		expect(wrapper.findComponent(EmotionPicker).props('length')).toBe(3)
 		expect(
 			wrapper.findComponent(EmotionPicker).props('itemLabels'),
-		).toEqual(emotionPickerlocales.defaultEmotionLabels)
+		).toEqual(locales.defaultEmotionLabels)
 	})
 })

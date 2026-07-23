@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { mdiCached, mdiImageOutline, mdiPause } from '@mdi/js'
-	import { computed, ref, toRef, watch } from 'vue'
+	import { computed, readonly as readonlyState, ref, toRef, watch } from 'vue'
 	import CaptchaAlert from './CaptchaAlert.vue'
 	import CaptchaBase from './CaptchaBase.vue'
 	import CaptchaBtn from './CaptchaBtn.vue'
@@ -13,7 +13,7 @@
 	import { type CaptchaProps, type CaptchaType, type StateType } from './types'
 	import { useCaptchaValidation } from './useCaptchaValidation'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation.ts'
+	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 
 	const props = withDefaults(defineProps<CaptchaProps>(), {
 		modelValue: undefined,
@@ -134,6 +134,12 @@
 		clearValidation,
 		reset,
 		captchaId: id,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 	})
 
 </script>

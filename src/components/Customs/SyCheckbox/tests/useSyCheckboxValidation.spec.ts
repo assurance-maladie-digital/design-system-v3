@@ -27,7 +27,7 @@ function withValidation(props: SyCheckboxValidationProps, model: Ref<boolean | n
 	let result!: UseSyCheckboxValidationReturn
 	const Harness = defineComponent({
 		setup() {
-			result = useSyCheckboxValidation(props, model)
+			result = useSyCheckboxValidation(props, model, ref(false))
 			return () => null
 		},
 	})

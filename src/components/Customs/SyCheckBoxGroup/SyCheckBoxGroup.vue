@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed, ref } from 'vue'
+	import { computed, readonly as readonlyState, ref } from 'vue'
 	import { VMessages } from 'vuetify/components'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
@@ -30,7 +30,7 @@
 		},
 	)
 
-	const emit = defineEmits(['update:modelValue', 'change'])
+	const emit = defineEmits(['update:modelValue'])
 
 	const focused = ref(false)
 	const isMultiple = computed(() => props.multiple)
@@ -41,7 +41,6 @@
 		},
 		set(value) {
 			emit('update:modelValue', value)
-			emit('change', value)
 		},
 	})
 
@@ -131,6 +130,12 @@
 		clearValidation,
 		reset,
 		defaultRules,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 		checkErrorOnBlur: () => {
 			focused.value = false
 			if (props.isValidateOnBlur) {

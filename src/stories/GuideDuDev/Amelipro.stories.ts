@@ -7,10 +7,10 @@ import {
 	VExpansionPanelText,
 	VExpansionPanelTitle,
 } from 'vuetify/components'
-import type { StoryObj } from '@storybook/vue3'
+import type { StoryObj } from '@storybook/vue3-vite'
 
 export default {
-	title: 'Guide Du Dev/Convergence des DS/Équivalence des composants/Amelipro',
+	title: 'Guide Du Dev/Équivalence des composants/Amelipro',
 }
 
 export const AmeliproComponents: StoryObj = {

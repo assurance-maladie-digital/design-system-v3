@@ -4,6 +4,7 @@ import { describe, it, afterEach } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
+import { useId } from 'vue'
 
 import AutocompleteFilter from '../AutocompleteFilter.vue'
 
@@ -28,7 +29,7 @@ const accessibleSyAutocompleteStub = {
 		'disableErrorHandling', 'variantStyle', 'bgColor', 'multiple', 'chips', 'filter'],
 	emits: ['update:modelValue', 'click:clear'],
 	setup() {
-		const inputId = `autocomplete-stub-${Math.random().toString(36).slice(2)}`
+		const inputId = `autocomplete-stub-${useId()}`
 		return { inputId }
 	},
 }

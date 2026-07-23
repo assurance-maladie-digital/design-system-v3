@@ -9,6 +9,7 @@ export const locales = {
 	legalNoticeLabel: 'Mentions légales',
 	versionLabel: 'Version',
 	followUs: 'Suivez-nous',
+	logoAlt: 'l\'assurance maladie agir ensemble, protéger chacun',
 	[A11yComplianceEnum['non-compliant']]: 'non conforme',
 	[A11yComplianceEnum['partially-compliant']]: 'partiellement conforme',
 	[A11yComplianceEnum['fully-compliant']]: 'totalement conforme',

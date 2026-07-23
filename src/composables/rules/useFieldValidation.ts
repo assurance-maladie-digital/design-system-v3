@@ -122,8 +122,13 @@ export function useFieldValidation() {
 				case 'required':
 					return createValidationResult(
 						(typeof value === 'string' && value.trim() !== '')
+						|| (typeof value === 'number' && !Number.isNaN(value))
+						|| (typeof value === 'boolean' && value === true)
 						|| (value instanceof Date)
-						|| (typeof value === 'object' && value !== null),
+						// Un tableau vide (mode multiple : aucune sélection) n'est pas rempli
+						|| (Array.isArray(value)
+							? value.length > 0
+							: (typeof value === 'object' && value !== null)),
 						options.message || options.warningMessage || `Vous devez renseigner ${identifier}.`,
 					)
 
@@ -384,7 +389,7 @@ export function useFieldValidation() {
 
 					const handleCustomResult = (res: boolean | string): ValidationResult => {
 						if (res === true) {
-							return { success: options.successMessage || baseMessages.success }
+							return { success: baseMessages.success }
 						}
 						// If result is undefined or falsy but not true, treat as invalid
 						if (res === false) {

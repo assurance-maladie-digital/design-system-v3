@@ -1,4 +1,4 @@
-import { Meta, Primary } from '@storybook/blocks';
+import { Meta, Primary } from '@storybook/addon-docs/blocks';
 import * as SyAlertStories from '../SyAlert.stories.ts';
 import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import {
@@ -25,7 +25,9 @@ import {
 	<CriteriaSection>
 		<CriteriaCard title="Rôle ARIA et structure sémantique">
 			<ul>
-				<li><strong>Rôle alert</strong> : Le composant utilise <code>role="alert"</code> pour annoncer automatiquement le message aux lecteurs d'écran</li>
+				<li><strong>Rôle par défaut</strong> : Le composant utilise <code>role="alert"</code> pour annoncer automatiquement les messages importants aux lecteurs d'écran</li>
+				<li><strong>Annonce personnalisable</strong> : Les props <code>role</code> et <code>ariaLive</code> permettent d’adapter la priorité d’annonce de <code>SyAlert</code></li>
+				<li><strong>Messages non urgents</strong> : Utilisez <code>role="status"</code> avec <code>aria-live="polite"</code> pour une confirmation ou une information qui ne doit pas interrompre l’utilisateur</li>
 				<li><strong>Types sémantiques</strong> : Quatre types disponibles (<code>success</code>, <code>info</code>, <code>warning</code>, <code>error</code>) avec icônes appropriées</li>
 				<li><strong>Gestion Vuetify</strong> : Le rôle <code>role="undefined"</code> sur VAlert évite les conflits de rôles avec le conteneur parent</li>
 			</ul>
@@ -63,6 +65,7 @@ import {
 	<BestPracticesSection>
 		<ul>
 			<li><strong>Type approprié</strong> : Choisissez <code>error</code> pour les erreurs bloquantes, <code>warning</code> pour les avertissements, <code>success</code> pour les confirmations, <code>info</code> pour les informations</li>
+			<li><strong>Priorité d’annonce</strong> : Gardez <code>role="alert"</code> pour les messages urgents, et préférez <code>role="status"</code> avec <code>aria-live="polite"</code> pour les confirmations non bloquantes</li>
 			<li><strong>Fermeture conditionnelle</strong> : Utilisez <code>closable={true}</code> uniquement si l'utilisateur peut ignorer l'alerte en toute sécurité</li>
 			<li><strong>Messages concis</strong> : Gardez les textes clairs et directs pour une compréhension rapide</li>
 			<li><strong>Positionnement</strong> : Placez les alertes de manière visible mais non intrusive dans le flux de navigation</li>

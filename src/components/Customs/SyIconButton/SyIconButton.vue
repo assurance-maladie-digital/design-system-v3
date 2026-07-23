@@ -22,6 +22,7 @@
 	<v-btn
 		:disabled="props.disabled"
 		:aria-label="props.label"
+		:title="props.label"
 		:variant="props.variant ?? 'text'"
 		:size="props.size"
 		class="rounded-circle"
@@ -36,3 +37,9 @@
 		/>
 	</v-btn>
 </template>
+
+<style scoped lang="scss">
+.v-btn:focus-visible {
+	outline-offset: -2px;
+}
+</style>

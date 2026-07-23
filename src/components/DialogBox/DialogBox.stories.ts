@@ -1,7 +1,7 @@
-import { type Meta, type StoryObj } from '@storybook/vue3'
+import { type Meta, type StoryObj } from '@storybook/vue3-vite'
 import { VBtn } from 'vuetify/components'
 import DialogBox from './DialogBox.vue'
-import { fn } from '@storybook/test'
+import { fn } from 'storybook/test'
 import { computed, ref } from 'vue'
 
 const meta: Meta<typeof DialogBox> = {

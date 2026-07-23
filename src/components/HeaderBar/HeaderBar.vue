@@ -19,9 +19,9 @@
 		serviceTitle?: string
 		serviceSubtitle?: string
 		homeLink?: {
-			ariaLabel?: string
-			to?: RouteLocationRaw
-			href?: string
+			'to'?: RouteLocationRaw
+			'href'?: string
+			'aria-label'?: string
 		}
 		headingLevelTitle?: 1 | 2 | 3 | 4 | 5 | 6
 	}
@@ -44,9 +44,9 @@
 			 */
 			hideWhenDown?: boolean
 			homeLink?: {
-				ariaLabel?: string
-				to?: RouteLocationRaw
-				href?: string
+				'aria-label'?: string
+				'to'?: RouteLocationRaw
+				'href'?: string
 			}
 			width?: string | number
 		} & LogoProps>(),
@@ -193,22 +193,22 @@
 							:heading-level-title="headingLevelTitle"
 						>
 							<HeaderLogo
-								:aria-label="homeAriaLabel"
 								:service-title="serviceTitle"
 								:service-subtitle="serviceSubtitle"
+								:logo-alt="homeAriaLabel"
+								:home-link="homeLink"
 								:heading-level-title="headingLevelTitle"
-								:home-link
 							>
 								<template
 									#brand-content
 								>
 									<slot
 										name="logo-brand-content"
-										:menu-open
-										:home-aria-label
-										:service-title
-										:service-subtitle
-										:home-link
+										:menu-open="menuOpen"
+										:home-aria-label="homeAriaLabel"
+										:service-title="serviceTitle"
+										:service-subtitle="serviceSubtitle"
+										:home-link="homeLink"
 										:heading-level-title="headingLevelTitle"
 									/>
 								</template>

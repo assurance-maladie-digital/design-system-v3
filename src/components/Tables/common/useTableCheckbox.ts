@@ -1,6 +1,6 @@
 import type { MaybeRefOrGetter } from 'vue'
 import { toRef } from 'vue'
-import type { Items } from './types'
+import type { Item, Items } from './types'
 
 interface UseTableCheckboxOptions {
 	/**
@@ -28,7 +28,7 @@ export function useTableCheckbox(options: UseTableCheckboxOptions) {
 	/**
 	 * Function to get a unique identifier for each item
 	 */
-	const getItemValue = (item: Items[0]) => {
+	const getItemValue = (item: Item) => {
 		// 1) If a custom selectionKey is provided and exists on item, use it
 		const key = (typeof selectionKeyRef?.value === 'function'
 			? (selectionKeyRef.value as unknown as () => string | undefined)()

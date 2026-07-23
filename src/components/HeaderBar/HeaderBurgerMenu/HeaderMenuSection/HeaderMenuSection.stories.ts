@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import HeaderMenuSection from './HeaderMenuSection.vue'
 import HeaderMenuItem from '../HeaderMenuItem/HeaderMenuItem.vue'
 import HeaderBurgerMenu from '../HeaderBurgerMenu.vue'

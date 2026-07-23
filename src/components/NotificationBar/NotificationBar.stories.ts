@@ -1,5 +1,5 @@
 /* eslint-disable no-useless-escape */
-import type { Meta, StoryFn } from '@storybook/vue3'
+import type { Meta, StoryFn } from '@storybook/vue3-vite'
 import NotificationBar from './NotificationBar.vue'
 import { VBtn } from 'vuetify/components'
 import { useNotificationService } from '@/services/NotificationService'

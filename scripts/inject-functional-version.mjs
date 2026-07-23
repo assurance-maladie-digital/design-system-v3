@@ -16,7 +16,7 @@ import { basename, dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
-const jsonPath = resolve(rootDir, 'functional-history-data.json')
+const jsonPath = resolve(rootDir, 'scripts/data/functional-history-data.json')
 const componentsDir = resolve(rootDir, 'src/components')
 const dryRun = process.argv.includes('--dry-run')
 

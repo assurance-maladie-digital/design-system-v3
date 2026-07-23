@@ -1,7 +1,8 @@
-import { type Ref, ref } from 'vue'
+import { type Ref, ref, unref, type MaybeRef } from 'vue'
 import { type DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 import { type DateObjectValue } from '../types'
 import { DATE_PICKER_MESSAGES } from '../constants/messages'
+import { useDateRangeValidation } from './useDateRangeValidation'
 
 /**
  * Composable pour gérer le comportement lors de la perte de focus d'un champ de date
@@ -11,9 +12,10 @@ import { DATE_PICKER_MESSAGES } from '../constants/messages'
  */
 export const useInputBlurHandler = (options: {
 	// Propriétés de configuration
-	format: string
+	format: MaybeRef<string>
 	dateFormatReturn?: string
-	required?: boolean
+	required?: MaybeRef<boolean>
+	displayRange?: MaybeRef<boolean>
 
 	// Références réactives
 	displayFormattedDate: Ref<string>
@@ -37,6 +39,7 @@ export const useInputBlurHandler = (options: {
 		format,
 		dateFormatReturn = '',
 		required = false,
+		displayRange = false,
 		displayFormattedDate,
 		hasInteracted,
 		isManualInputActive,
@@ -50,6 +53,9 @@ export const useInputBlurHandler = (options: {
 		validateManualInput,
 		emitBlur,
 	} = options
+
+	// Utiliser useDateRangeValidation pour centraliser la validation des plages
+	const { isRangeValid } = useDateRangeValidation(selectedDates, unref(displayRange))
 
 	/**
 	 * Gère la perte de focus du champ de saisie de date
@@ -83,12 +89,12 @@ export const useInputBlurHandler = (options: {
 					const endValidation = validateDateFormat(endDateStr)
 
 					if (startValidation.isValid && endValidation.isValid) {
-						const startDate = parseDate(startDateStr, format)
-						const endDate = parseDate(endDateStr, format)
+						const startDate = parseDate(startDateStr, unref(format))
+						const endDate = parseDate(endDateStr, unref(format))
 
 						if (startDate && endDate) {
-							// Vérifier que la date de fin est postérieure ou égale à la date de début
-							if (startDate.getTime() <= endDate.getTime()) {
+							// Utiliser isRangeValid depuis useDateRangeValidation pour centraliser la validation
+							if (isRangeValid(startDate, endDate)) {
 								try {
 									isUpdatingFromInternal.value = true
 									selectedDates.value = [startDate, endDate]
@@ -96,10 +102,10 @@ export const useInputBlurHandler = (options: {
 									// Formater les dates selon le format de retour
 									const formattedStartDate = dateFormatReturn
 										? formatDate(startDate, dateFormatReturn)
-										: formatDate(startDate, format)
+										: formatDate(startDate, unref(format))
 									const formattedEndDate = dateFormatReturn
 										? formatDate(endDate, dateFormatReturn)
-										: formatDate(endDate, format)
+										: formatDate(endDate, unref(format))
 
 									// Mettre à jour le modèle avec un tableau de dates formatées
 									updateModel([formattedStartDate, formattedEndDate])
@@ -124,7 +130,7 @@ export const useInputBlurHandler = (options: {
 				// Traitement pour une date unique
 				const validation = validateDateFormat(displayFormattedDate.value)
 				if (validation.isValid) {
-					const date = parseDate(displayFormattedDate.value, format)
+					const date = parseDate(displayFormattedDate.value, unref(format))
 					if (date) {
 						// Si la date est valide, mettre à jour selectedDates et le modèle
 						try {
@@ -134,19 +140,19 @@ export const useInputBlurHandler = (options: {
 							// Si on a un format de retour, formater la date dans ce format
 							const formattedValue = dateFormatReturn
 								? formatDate(date, dateFormatReturn)
-								: formatDate(date, format)
+								: formatDate(date, unref(format))
 							updateModel(formattedValue)
 						}
 						finally {
-							setTimeout(() => {
+							queueMicrotask(() => {
 								isUpdatingFromInternal.value = false
-							}, 0)
+							})
 						}
 					}
 				}
 			}
 		}
-		else if (!required) {
+		else if (!unref(required)) {
 			// Si le champ est vide et non requis, réinitialiser le modèle
 			updateModel(null)
 		}

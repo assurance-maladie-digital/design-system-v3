@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-	import { computed, onMounted, toRef } from 'vue'
-	import { locales } from './locales'
+	import { computed, ref, toRef, useId } from 'vue'
+	import { locales as defaultLocales } from '../locales'
 	import type { PropType } from 'vue'
 	import type { ItemType } from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import { useRatingFocus } from '../useRatingFocus'
@@ -34,13 +34,25 @@
 			type: Number,
 			default: -1,
 		},
+		lockAfterSelection: {
+			type: Boolean,
+			default: true,
+		},
+		locales: {
+			type: Object as PropType<typeof defaultLocales>,
+			default: () => defaultLocales,
+		},
 	})
 
 	const { smAndDown } = useDisplay()
 	const isMobile = computed(() => smAndDown.value)
+	const ratingElements = ref<HTMLElement[]>([])
+
+	const id = useId()
+	const numberPickerdescriptionId = `number-picker-description-${id}`
 
 	const emit = defineEmits(['update:modelValue'])
-	const { hasAnswered, emitInputEvent } = useRating(props, emit)
+	const { internalValue, hasAnswered, emitInputEvent } = useRating(props, emit)
 
 	const selectItems = computed<SelectItem[]>(() => {
 		const length = props.length ?? 10
@@ -51,35 +63,33 @@
 		}))
 	})
 
-	onMounted(() => {
-		if (!isMobile.value) {
-			initFocus()
-		}
-	})
-
 	const shouldDisplayLabels = computed(() => props.itemLabels.length === 2)
 
 	const {
-		ratingElement,
-		initFocus,
 		selectAndFocus,
 		focusNextElement,
 		focusPrevElement,
 		focus,
+		activeElementIndex,
 	} = useRatingFocus({
 		length: toRef(props, 'length'),
-		modelValue: toRef(props, 'modelValue'),
+		modelValue: internalValue,
 		selectValue: emitInputEvent,
+		ratingElements: ratingElements,
 		wrap: true,
+	})
+
+	const readonly = computed(() => {
+		return props.readonly || (props.lockAfterSelection && hasAnswered.value)
+	})
+
+	const shouldDisplayLockingState = computed(() => {
+		return props.lockAfterSelection && !props.readonly
 	})
 
 	defineExpose({
 		focus,
 	})
-
-	if (!isMobile.value) {
-		initFocus()
-	}
 </script>
 
 <template>
@@ -89,33 +99,36 @@
 				{{ props.label }}
 			</slot>
 		</legend>
+
 		<SySelect
 			v-if="isMobile"
-			:model-value="props.modelValue === -1 ? undefined : props.modelValue"
+			:model-value="internalValue === -1 ? undefined : internalValue"
 			:label="props.label"
-			:disabled="props.readonly || hasAnswered"
+			:disabled="readonly"
 			:items="selectItems"
 			@update:model-value="(value) => emit('update:modelValue', value)"
 		/>
 		<template v-else>
 			<div
-				v-if="!hasAnswered"
+				v-if="!hasAnswered || !props.lockAfterSelection"
 				class="d-inline-block"
 			>
 				<div
 					role="radiogroup"
-					class="d-flex ga-2 flex-wrap max-width-none"
+					:aria-describedby="shouldDisplayLockingState ? numberPickerdescriptionId : undefined"
+					class="d-flex ga-2 flex-wrap max-width-none mb-6"
 				>
 					<div
 						v-for="index in props.length"
 						:key="index"
-						ref="ratingElement"
-						v-ripple="!(props.readonly || hasAnswered)"
+						ref="ratingElements"
+						v-ripple="!readonly"
 						role="radio"
-						:tabindex="-1"
-						:aria-checked="props.modelValue === index ? 'true' : 'false'"
+						:tabindex="activeElementIndex + 1 === index ? '0' : '-1'"
+						:aria-checked="internalValue === index ? 'true' : 'false'"
 						class="sy-number-picker__item text-body-2 pa-0"
-						:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
+						:aria-disabled="readonly ? 'true' : undefined"
+						:aria-label="props.locales.ratingAriaLabel(index, props.length)"
 						@click="selectAndFocus(index - 1)"
 						@keydown.enter.prevent="selectAndFocus(index - 1)"
 						@keydown.space.prevent="selectAndFocus(index - 1)"
@@ -125,9 +138,6 @@
 						@keydown.down.prevent="focusNextElement(index - 1)"
 					>
 						{{ index }}
-						<span class="d-sr-only">
-							{{ locales.ariaLabel(index, props.length) }}
-						</span>
 					</div>
 				</div>
 				<div
@@ -135,14 +145,14 @@
 					class="d-flex justify-space-between mt-1"
 				>
 					<span
-						:aria-label="`${locales.ariaLabel(1, props.length)} ${
+						:aria-label="`${props.locales.ratingAriaLabel(1, props.length)} ${
 							props.itemLabels[0]
 						}.`"
 						class="text-caption"
 						v-text="props.itemLabels[0]"
 					/>
 					<span
-						:aria-label="`${locales.ariaLabel(props.length, props.length)} ${
+						:aria-label="`${props.locales.ratingAriaLabel(props.length, props.length)} ${
 							props.itemLabels[1]
 						}.`"
 						class="text-caption mr-2"
@@ -150,28 +160,40 @@
 					/>
 				</div>
 			</div>
-			<div
-				v-else
-				class="mb-0 d-flex align-center"
-			>
+			<div v-else>
 				<span class="d-sr-only">
-					{{ locales.ariaLabel(props.modelValue, props.length) }}
+					{{ props.locales.ratingAriaLabel(internalValue, props.length) }}
 				</span>
 				<div
-					class="sy-btn-answer text-body-2 mr-1 pa-0"
+					aria-hidden="true"
+					class="mb-0 d-flex align-center mb-6"
 				>
-					{{ props.modelValue }}
+					<div
+						class="sy-btn-answer text-body-2 mr-1 pa-0"
+					>
+						{{ internalValue }}
+					</div>
+					<span>
+						/ {{ props.length }}
+					</span>
 				</div>
-				<span aria-hidden="true">
-					/ {{ props.length }}
-				</span>
 			</div>
 		</template>
+		<p
+			v-if="shouldDisplayLockingState"
+			:id="numberPickerdescriptionId"
+			class="locking-state text-caption"
+			:class="{'d-sr-only': internalValue !== -1}"
+		>
+			{{ internalValue === -1 ? props.locales.toValidate : props.locales.validated }}
+		</p>
 	</fieldset>
 </template>
 
 <style lang="scss" scoped>
 .sy-number-picker {
+	display: flex;
+	flex-direction: column;
 	border: 0;
 }
 
@@ -210,12 +232,23 @@
 	}
 }
 
-.sy-number-picker__item:hover,
-.sy-number-picker__item:focus-visible {
+.sy-number-picker__item:hover {
 	background-color: rgba(var(--v-theme-primary), 0.1);
 }
 
-.sy-number-picker__item:focus-visible {
-	outline: 1px solid currentcolor;
+.sy-number-picker__item[aria-checked='true'] {
+	background-color: rgb(var(--v-theme-primary));
+	color: rgb(var(--v-theme-on-primary));
 }
+
+.sy-number-picker__item:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 2px;
+}
+
+.locking-state {
+	font-style: italic;
+	color: rgb(var(--v-theme-grey-base));
+}
+
 </style>

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-	import { ref, type PropType, onMounted, toRef } from 'vue'
+	import { ref, type PropType, toRef, computed, useId } from 'vue'
 	import { RatingEnum, useRating } from '../Rating'
 	import { mdiStarOutline, mdiStar } from '@mdi/js'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import { locales } from '../locales'
+	import { locales as defaultLocales } from '../locales'
 	import { useRatingFocus } from '../useRatingFocus'
 
 	const props = defineProps({
@@ -23,36 +23,49 @@
 			type: Number,
 			default: -1,
 		},
+		lockAfterSelection: {
+			type: Boolean,
+			default: true,
+		},
+		locales: {
+			type: Object as PropType<typeof defaultLocales>,
+			default: () => defaultLocales,
+		},
 	})
 
 	const emit = defineEmits(['update:modelValue'])
-	const { hasAnswered, emitInputEvent } = useRating(props, emit)
+	const { internalValue, hasAnswered, emitInputEvent } = useRating(props, emit)
 
 	const starOutlineIcon = mdiStarOutline
 	const starIcon = mdiStar
 	const hoverIndex = ref<number | null>(-1)
 
+	const id = useId()
+	const starsPickerDescriptionId = `stars-picker-description-${id}`
+
+	const ratingElements = ref<HTMLElement[]>([])
+
 	function isActive(index: number): boolean {
-		return props.modelValue === index
+		return internalValue.value === index
 	}
 
 	function isFilled(index: number): boolean {
 		const isHovered = hoverIndex.value !== null && hoverIndex.value >= index && !props.readonly
-		const isActive = props.modelValue >= index
+		const isActive = internalValue.value >= index
 		return (isHovered && !hasAnswered.value) || isActive
 	}
 
 	const {
-		ratingElement,
-		initFocus,
 		selectAndFocus,
 		focusNextElement,
 		focusPrevElement,
 		focus,
+		activeElementIndex,
 	} = useRatingFocus({
 		length: toRef(props, 'length'),
-		modelValue: toRef(props, 'modelValue'),
+		modelValue: internalValue,
 		selectValue: emitInputEvent,
+		ratingElements: ratingElements,
 		wrap: true,
 	})
 
@@ -60,8 +73,12 @@
 		focus,
 	})
 
-	onMounted(() => {
-		initFocus()
+	const readonly = computed(() => {
+		return props.readonly || (props.lockAfterSelection && hasAnswered.value)
+	})
+
+	const shouldDisplayLockingState = computed(() => {
+		return props.lockAfterSelection && !props.readonly
 	})
 </script>
 
@@ -75,16 +92,17 @@
 
 		<div
 			role="radiogroup"
-			class="d-flex max-width-none mx-n1 mx-sm-n2"
+			:aria-describedby="shouldDisplayLockingState ? starsPickerDescriptionId : undefined"
+			class="d-flex max-width-none mx-n1 mx-sm-n2 mb-6"
 		>
 			<div
 				v-for="index in props.length"
 				:key="index"
-				ref="ratingElement"
+				ref="ratingElements"
 				class="sy-stars-picker__item d-flex align-center justify-center"
 				role="radio"
-				:tabindex="-1"
-				:aria-disabled="(props.readonly || hasAnswered) ? 'true' : undefined"
+				:tabindex="activeElementIndex + 1 === index ? '0' : '-1'"
+				:aria-disabled="readonly ? 'true' : undefined"
 				:aria-checked="isActive(index) ? 'true' : 'false'"
 				@mouseover="hoverIndex = index"
 				@focus="hoverIndex = index"
@@ -104,7 +122,7 @@
 					:class="
 						isFilled(index)
 							? 'text-primary'
-							: 'text-blue-lighten'
+							: 'text-lighten'
 					"
 					size="36px"
 					class="py-0 px-2"
@@ -112,6 +130,14 @@
 				/>
 			</div>
 		</div>
+		<p
+			v-if="shouldDisplayLockingState"
+			:id="starsPickerDescriptionId"
+			class="locking-state text-caption"
+			:class="{'d-sr-only': internalValue !== -1}"
+		>
+			{{ internalValue === -1 ? props.locales.toValidate : props.locales.validated }}
+		</p>
 	</fieldset>
 </template>
 
@@ -132,12 +158,24 @@
 		color: rgb(var(--v-theme-primary)) !important;
 	}
 
-	&.text-blue-lighten {
-		color: rgb(var(--v-theme-blue-lighten60)) !important;
+	&.text-lighten {
+		color: rgb(var(--v-theme-primary), 0.4) !important;
 	}
 
-	&--disabled.text-blue-lighten {
-		color: rgb(var(--v-theme-blue-lighten60)) !important;
+	&--disabled.text-lighten {
+		color: rgb(var(--v-theme-primary), 0.4) !important;
 	}
 }
+
+.sy-stars-picker__item:focus-visible {
+	outline: none;
+	box-shadow: inset 0 0 0 2px rgb(var(--v-theme-primary));
+	border-radius: var(--radius-md);
+}
+
+.locking-state {
+	font-style: italic;
+	color: rgb(var(--v-theme-grey-base));
+}
+
 </style>

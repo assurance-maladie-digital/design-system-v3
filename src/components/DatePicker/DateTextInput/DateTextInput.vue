@@ -2,56 +2,28 @@
 	import {
 		useDateRangeInput,
 		useDateRangeValidation,
-		useDateFormatValidation,
-		useDateValidation,
 		useDateInputEditing,
 		useDateAutoClamp,
 		useDateTextField,
-		useDatePickerValidationBridge,
+		useDatePickerValidation,
+		validateDateFormat,
+		isDateComplete,
 	} from '../composables'
-	import { ref, computed, watch, nextTick, onMounted, toRefs } from 'vue'
+	import { ref, computed, watch, nextTick, onMounted, readonly as readonlyState, toRefs } from 'vue'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import type { ValidationRule, ValidationResult } from '@/composables/validation/useValidation'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
+	import { useSyTextFieldProps } from './props/syTextFieldProps'
 	import { DATE_PICKER_MESSAGES } from '../constants/messages'
 	import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
-	import type { DateObjectValue } from '../types'
+	import type { DateObjectValue, DateTextInputProps } from '../types'
 
 	dayjs.extend(customParseFormat)
 
-	const props = withDefaults(defineProps<{
-		autoClamp?: boolean
-		bgColor?: string
-		customRules?: ValidationRule[]
-		customWarningRules?: ValidationRule[]
-		dateFormatReturn?: string
-		density?: 'default' | 'comfortable' | 'compact'
-		disableErrorHandling?: boolean
-		disabled?: boolean
-		displayAppendIcon?: boolean
-		displayIcon?: boolean
-		displayPrependIcon?: boolean
-		displayRange?: boolean
-		externalErrorMessages?: string[]
-		format?: string
-		hint?: string
-		isOutlined?: boolean
-		isValidateOnBlur?: boolean
-		label: string
-		modelValue?: DateModelValue
-		noIcon?: boolean
-		persistentHint?: boolean
-		placeholder?: string
-		readonly?: boolean
-		required?: boolean
-		showSuccessMessages?: boolean
-		title?: string | false
-		/** @internal Désactive la validation interne quand utilisé dans un parent avec validation */
-		skipInternalValidation?: boolean
-	}>(), {
+	const props = withDefaults(defineProps<DateTextInputProps>(), {
 		autoClamp: false,
 		bgColor: 'white',
 		customRules: () => [],
@@ -77,7 +49,6 @@
 		required: false,
 		showSuccessMessages: false,
 		title: false,
-		skipInternalValidation: false,
 	})
 
 	const emit = defineEmits<{
@@ -106,24 +77,21 @@
 	 * =====================
 	 */
 	const selectedDates = ref<DateObjectValue>(null)
-	const currentRangeIsValid = ref(true)
-	const getRangeValidationError = ref('')
 	const isUpdatingFromInternal = ref(false)
 
-	// Quand skipInternalValidation est true, on utilise le readonlyValidation (pas de validation active)
-	// pour éviter la double validation avec le parent
-	const shouldUseInternalValidation = computed(() => !props.skipInternalValidation && !readonly.value)
+	const { currentRangeIsValid, getRangeValidationError } = useDateRangeValidation(
+		selectedDates,
+		props.displayRange,
+	)
 
-	const bridgeValidation = useDatePickerValidationBridge({
-		showSuccessMessages: true,
-		disableErrorHandling: props.disableErrorHandling,
+	const bridgeValidation = useDatePickerValidation({
+		showSuccessMessages: computed(() => props.showSuccessMessages),
+		disableErrorHandling: computed(() => props.disableErrorHandling),
 		noCalendar: true,
-		required: props.required,
-		displayRange: props.displayRange,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Compatibility with legacy rule format
-		customRules: computed(() => shouldUseInternalValidation.value ? props.customRules as any : []),
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Compatibility with legacy rule format
-		customWarningRules: computed(() => shouldUseInternalValidation.value ? props.customWarningRules as any : []),
+		required: computed(() => props.required),
+		displayRange: computed(() => props.displayRange),
+		customRules: computed(() => props.customRules ?? []),
+		customWarningRules: computed(() => props.customWarningRules ?? []),
 		selectedDates,
 		isUpdatingFromInternal,
 		currentRangeIsValid,
@@ -160,12 +128,6 @@
 			if (!readonly.value) bridgeValidation.warnings.value = value
 		},
 	})
-	const successes = computed({
-		get: () => readonly.value ? readonlyValidation.successes.value : bridgeValidation.successes.value,
-		set: (value) => {
-			if (!readonly.value) bridgeValidation.successes.value = value
-		},
-	})
 	const hasError = computed(() => {
 		if (readonly.value) return false
 		return bridgeValidation.errors.value.length > 0
@@ -191,14 +153,16 @@
 		return await bridgeValidation.validateField(value, rules, warningRules)
 	}
 
-	// Agrégation des erreurs internes et externes
-	const errorMessages = computed(() => [...errors.value, ...props.externalErrorMessages])
-	const warningMessages = warnings
-	const displaySuccesses = computed(() => {
-		if (readonly.value) return []
-		return (bridgeValidation.validation as { displaySuccesses?: { value: string[] } }).displaySuccesses?.value ?? []
+	// Agrégation des erreurs internes et externes avec déduplication
+	// Évite les doublons quand les mêmes customRules sont exécutées par le parent et l'enfant
+	const errorMessages = computed(() => {
+		const allErrors = [...errors.value, ...props.externalErrorMessages]
+		return [...new Set(allErrors)] // Déduplication avec Set
 	})
-	const successMessages = displaySuccesses
+	const warningMessages = warnings
+	const successMessages = computed((): string[] =>
+		readonly.value ? [] : (bridgeValidation.validation.displaySuccesses.value ?? []),
+	)
 
 	/**
 	 * Safe validate utility
@@ -229,16 +193,6 @@
 		handlePaste: handlePasteRange,
 	} = useDateRangeInput(displayFormat.value, isRange.value, parseDate, formatDate)
 
-	// Note: currentRangeIsValid et getRangeValidationError sont déjà définis pour le Bridge
-	// On met juste à jour les refs depuis useDateRangeValidation
-	const rangeValidation = useDateRangeValidation(selectedDates, isRange.value)
-	watch(() => rangeValidation.currentRangeIsValid.value, (v) => {
-		currentRangeIsValid.value = v
-	})
-	watch(() => rangeValidation.getRangeValidationError.value, (v) => {
-		getRangeValidationError.value = v
-	})
-
 	/**
 	 * =====================
 	 * Format + manual validation
@@ -249,25 +203,17 @@
 	const hasInteracted = ref(false)
 	const ariaLabel = ref(props.label || props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT)
 
-	const { validateDateFormat: _validateDateFormat } = useDateFormatValidation({
-		format: displayFormat.value,
-		dateFormatReturn: dateFormatReturn.value,
-		required: required.value,
-		hasInteracted,
-		disableErrorHandling: props.disableErrorHandling,
-	})
-
 	function validateDateFormatForSingleOrRange(input: string): { isValid: boolean, message: string } {
 		if (readonly.value) return { isValid: true, message: '' }
 		if (isRange.value && input.includes(' - ')) {
 			const [start = '', end = ''] = input.split(' - ').map(s => s?.trim() ?? '')
-			const startDateFormatValidation = _validateDateFormat(start)
-			const endDateFormatValidation = end ? _validateDateFormat(end) : { isValid: true, message: '' }
+			const startDateFormatValidation = validateDateFormat(start, displayFormat.value, dateFormatReturn.value, required.value, hasInteracted.value, props.disableErrorHandling)
+			const endDateFormatValidation = end ? validateDateFormat(end, displayFormat.value, dateFormatReturn.value, required.value, hasInteracted.value, props.disableErrorHandling) : { isValid: true, message: '' }
 			if (startDateFormatValidation.isValid && endDateFormatValidation.isValid) return { isValid: true, message: '' }
 			if (!startDateFormatValidation.isValid) return { isValid: false, message: `${DATE_PICKER_MESSAGES.ERROR_INVALID_FORMAT_START} (${displayFormat.value})` }
 			return { isValid: false, message: `${DATE_PICKER_MESSAGES.ERROR_INVALID_FORMAT_END} (${displayFormat.value})` }
 		}
-		return _validateDateFormat(input)
+		return validateDateFormat(input, displayFormat.value, dateFormatReturn.value, required.value, hasInteracted.value, props.disableErrorHandling)
 	}
 
 	const inputValue = ref('')
@@ -289,11 +235,6 @@
 		accessiblePlaceholders: true,
 	})
 
-	/**
-	 * =====================
-	 * Overwrite editing (nouvelle logique)
-	 * =====================
-	 */
 	const isOverwriteEditing = ref(false) // garde-fou pour ne pas re-formater au watch pendant qu'on gère le clavier
 
 	// Helpers overwrite
@@ -598,22 +539,20 @@
 	 * =====================
 	 */
 	const { clampIfNeeded, validateManualInput, validateOnSubmit, reset } = useDateTextField({
-		autoClamp: props.autoClamp,
+		autoClamp: computed(() => props.autoClamp),
 		isRange,
 		displayFormat,
 		autoClampDate,
 		manualValidation: {
-			required: required.value,
-			disableErrorHandling: props.disableErrorHandling,
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			customRules: props.customRules as any,
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			customWarningRules: props.customWarningRules as any,
+			required: computed(() => props.required),
+			disableErrorHandling: computed(() => props.disableErrorHandling),
+			customRules: props.customRules ?? [],
+			customWarningRules: props.customWarningRules ?? [],
 			hasInteracted,
 			errors,
 			clearValidation,
 			validateDateFormat: validateDateFormatForSingleOrRange,
-			isDateComplete: (val: string) => val.length >= displayFormat.value.length,
+			isDateComplete: (val: string) => isDateComplete(val, displayFormat.value),
 			parseDate,
 			validateField: safeValidateField,
 		},
@@ -665,7 +604,7 @@
 			// Mais seulement si l'utilisateur a interagi avec le champ
 			if (props.customRules && props.customRules.length > 0 && hasInteracted.value) {
 				// Exécuter les custom rules sur la valeur vide
-				safeValidateField(null, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+				await safeValidateField(null, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
 				return !hasError.value
 			}
 			return true
@@ -787,8 +726,14 @@
 				const parsedDate = dayjs(inputValue.value, displayFormat.value, true).toDate()
 				// Guard isFormatting to prevent the modelValue watcher from
 				// rewriting inputValue in reaction to our own emit.
-				isFormatting.value = true
-				emitModel(returnFormat.value !== displayFormat.value ? dayjs(parsedDate).format(returnFormat.value) : inputValue.value)
+				try {
+					isFormatting.value = true
+					emitModel(returnFormat.value !== displayFormat.value ? dayjs(parsedDate).format(returnFormat.value) : inputValue.value)
+				}
+				catch (error) {
+					isFormatting.value = false
+					throw error
+				}
 			}
 			else if (formatValidationResult.isValid && !customRulesValidationResult.hasError && isRange.value) {
 				if (typeof inputValue.value === 'string' && inputValue.value.includes(' - ')) {
@@ -798,16 +743,22 @@
 						const ed = dayjs(dateRangeParts[1]!, displayFormat.value, true)
 						// Guard isFormatting to prevent the modelValue watcher from
 						// rewriting inputValue in reaction to our own emit.
-						isFormatting.value = true
-						if (sd.isValid() && ed.isValid()) {
-							const emittedRange: [string, string] = [
-								returnFormat.value !== displayFormat.value ? sd.format(returnFormat.value) : dateRangeParts[0]!,
-								returnFormat.value !== displayFormat.value ? ed.format(returnFormat.value) : dateRangeParts[1]!,
-							]
-							emitModel(emittedRange)
+						try {
+							isFormatting.value = true
+							if (sd.isValid() && ed.isValid()) {
+								const emittedRange: [string, string] = [
+									returnFormat.value !== displayFormat.value ? sd.format(returnFormat.value) : dateRangeParts[0]!,
+									returnFormat.value !== displayFormat.value ? ed.format(returnFormat.value) : dateRangeParts[1]!,
+								]
+								emitModel(emittedRange)
+							}
+							else {
+								emitModel([dateRangeParts[0]!, dateRangeParts[1]!])
+							}
 						}
-						else {
-							emitModel([dateRangeParts[0]!, dateRangeParts[1]!])
+						catch (error) {
+							isFormatting.value = false
+							throw error
 						}
 					}
 					else emitModel(inputValue.value)
@@ -815,11 +766,13 @@
 				else emitModel(inputValue.value)
 			}
 			else {
-				runRules(inputValue.value)
-				if (!props.disableErrorHandling && formatValidationResult.message) errors.value.push(formatValidationResult.message)
+				// Format invalide ou règles custom en erreur : runRules appelle validateManualInput
+				// qui pousse déjà le message de format — ne pas pousser formatValidationResult.message
+				// en plus pour éviter les doublons dans errors.value.
 				// Keep the invalid input visible so the user can correct it.
 				// Do NOT emit null — that would trigger the modelValue watcher
 				// which clears inputValue and hides the error message.
+				runRules(inputValue.value)
 				return
 			}
 		}
@@ -829,15 +782,13 @@
 		// Release isFormatting after the current microtask so that
 		// the modelValue watcher (triggered synchronously by emitModel)
 		// stays blocked, but future external changes are allowed.
-		await nextTick()
-		isFormatting.value = false
+		try {
+			await nextTick()
+		}
+		finally {
+			isFormatting.value = false
+		}
 	}
-
-	/**
-	 * =====================
-	 * Watchers
-	 * =====================
-	 */
 	watch(inputValue, async (nv, ov) => {
 		if (props.disabled) {
 			const isEmpty = !nv || nv.trim() === '' || /^[_/\-.\s]+$/.test(nv)
@@ -962,23 +913,7 @@
 					selectedDates.value = result.dates
 					try {
 						isUpdatingFromInternal.value = true
-						;(useDateValidation({
-							noCalendar: false,
-							required: required.value,
-							displayRange: isRange.value,
-							disableErrorHandling: props.disableErrorHandling,
-							customRules: props.customRules,
-							customWarningRules: props.customWarningRules,
-							selectedDates,
-							isUpdatingFromInternal,
-							currentRangeIsValid,
-							getRangeValidationError,
-							clearValidation,
-							validateField: safeValidateField,
-							errors,
-							warnings,
-							successes,
-						})).validateDates()
+						;(bridgeValidation).validateDates()
 					}
 					finally {
 						queueMicrotask(() => (isUpdatingFromInternal.value = false))
@@ -1081,23 +1016,7 @@
 					selectedDates.value = [sd, ed]
 					try {
 						isUpdatingFromInternal.value = true
-						;(useDateValidation({
-							noCalendar: false,
-							required: required.value,
-							displayRange: isRange.value,
-							disableErrorHandling: props.disableErrorHandling,
-							customRules: props.customRules,
-							customWarningRules: props.customWarningRules,
-							selectedDates,
-							isUpdatingFromInternal,
-							currentRangeIsValid,
-							getRangeValidationError,
-							clearValidation,
-							validateField: safeValidateField,
-							errors,
-							warnings,
-							successes,
-						})).validateDates()
+						;(bridgeValidation).validateDates()
 					}
 					finally { queueMicrotask(() => (isUpdatingFromInternal.value = false)) }
 					inputValue.value = formatRangeForDisplay(sd, ed)
@@ -1115,9 +1034,15 @@
 		}
 		else {
 			const s = typeof nv === 'string' ? nv : ''
-			const d = dayjs(s, displayFormat.value, true).isValid() ? dayjs(s, displayFormat.value).toDate() : null
+			// Try parsing with returnFormat first (as that's how we emit dates)
+			// Then fallback to displayFormat for backward compatibility
+			let d = dayjs(s, returnFormat.value, true).isValid() ? dayjs(s, returnFormat.value).toDate() : null
+			if (!d && returnFormat.value !== displayFormat.value) {
+				d = dayjs(s, displayFormat.value, true).isValid() ? dayjs(s, displayFormat.value).toDate() : null
+			}
 			if (d) {
-				if (returnFormat.value !== displayFormat.value) emitModel(dayjs(d).format(returnFormat.value))
+				// Just update the display - don't emit here to avoid loops
+				// The parent is responsible for providing the value in the correct format
 				inputValue.value = dayjs(d).format(displayFormat.value)
 				runRules(inputValue.value)
 			}
@@ -1135,6 +1060,9 @@
 	defineExpose({
 		validateOnSubmit,
 		reset,
+		errors: readonlyState(errorMessages),
+		warnings: readonlyState(warningMessages),
+		successes: readonlyState(successMessages),
 		focus() {
 			const el: HTMLInputElement | null | undefined = inputRef.value?.$el?.querySelector?.('input:not([type="hidden"])')
 			el?.focus({ preventScroll: true })
@@ -1177,40 +1105,23 @@
 	 */
 	const isOnError = computed(() => warningMessages.value.length === 0 && successMessages.value.length === 0 && errorMessages.value.length > 0)
 	const isOnWarning = computed(() => errorMessages.value.length === 0 && successMessages.value.length === 0 && warningMessages.value.length > 0)
-	const isOnSuccess = computed(() => errorMessages.value.length === 0 && warningMessages.value.length === 0 && successMessages.value.length > 0)
+	const isOnSuccess = bridgeValidation.validation.hasSuccess
+
+	// Props regroupées pour SyTextField
+	const syTextFieldProps = computed(() => useSyTextFieldProps(props, errorMessages, warningMessages, successMessages, isOnSuccess, ariaLabel.value))
 </script>
 
 <template>
 	<SyTextField
 		ref="inputRef"
 		v-model="inputValue"
-		:append-icon="props.displayIcon && props.displayAppendIcon ? 'calendar' : undefined"
 		:class="{
 			'error-field': isOnError,
 			'warning-field': isOnWarning,
 			'success-field': isOnSuccess,
 		}"
-		:disabled="props.disabled"
-		:error-messages="errorMessages"
-		:label="props.label"
-		:placeholder="props.placeholder"
-		:no-icon="props.noIcon"
-		:prepend-icon="props.displayIcon && props.displayPrependIcon && !props.displayAppendIcon ? 'calendar' : undefined"
-		:readonly="props.readonly"
-		:variant-style="props.isOutlined ? 'outlined' : 'underlined'"
-		:warning-messages="warningMessages"
-		:success-messages="successMessages"
-		:has-success="isOnSuccess"
-		:show-success-messages="props.showSuccessMessages"
-		:bg-color="props.bgColor"
 		color="primary"
-		:is-clearable="!props.readonly"
-		:aria-label="ariaLabel"
-		:is-validate-on-blur="props.isValidateOnBlur"
-		:density="props.density"
-		:title="props.title"
-		:hint="props.hint"
-		:persistent-hint="props.persistentHint"
+		v-bind="syTextFieldProps"
 		@focus="onFocus"
 		@blur="onBlur"
 		@keydown="handleKeydown"

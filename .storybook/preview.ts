@@ -1,13 +1,19 @@
 import 'vuetify/styles'
 import './storybook.css'
-import type { Preview } from '@storybook/vue3'
-import { setup } from '@storybook/vue3'
+import type { Preview } from '@storybook/vue3-vite'
+import { setup } from '@storybook/vue3-vite'
 import { createVuetifyInstance } from '../src/vuetifyConfig'
 
 const vuetify = createVuetifyInstance()
 const isDev = process.env.NODE_ENV === 'development'
 
+let currentTheme: string | null = null
+let initialized = false
+
 const applyTheme = (theme: string) => {
+	if (!theme || theme === currentTheme) return
+	currentTheme = theme
+
 	vuetify.theme.change(theme)
 	const rootElement = document.documentElement
 	rootElement.classList.remove('theme-cnam', 'theme-pa', 'theme-ap', 'theme-ap2026')
@@ -15,12 +21,14 @@ const applyTheme = (theme: string) => {
 	localStorage.setItem('storybook-theme', theme)
 }
 
-// Listen to Storybook globals changes — fires on all pages including pure MDX.
-// __STORYBOOK_ADDONS_CHANNEL__ is the shared channel injected by Storybook into the preview iframe.
-if (typeof window !== 'undefined') {
-	const channel = (window as Window & { __STORYBOOK_ADDONS_CHANNEL__?: { on: (event: string, cb: (data: unknown) => void) => void } }).__STORYBOOK_ADDONS_CHANNEL__
-	channel?.on('globalsUpdated', (data) => {
-		const theme = (data as { globals?: Record<string, string> })?.globals?.theme
+// Listen Storybook globals (preview iframe)
+if (typeof window !== 'undefined' && !initialized) {
+	initialized = true
+
+	const channel = (window as any).__STORYBOOK_ADDONS_CHANNEL__
+
+	channel?.on('globalsUpdated', (data: any) => {
+		const theme = data?.globals?.theme
 		if (theme) applyTheme(theme)
 	})
 }
@@ -28,34 +36,12 @@ if (typeof window !== 'undefined') {
 setup((app, { globals }) => {
 	app.use(vuetify)
 
-	// Add global mixin to help with SySelect dropdown in docs mode
-	if (typeof window !== 'undefined') {
-		// Wait for DOM to be ready
-		window.addEventListener('DOMContentLoaded', () => {
-			// Add click handler to document to help with dropdown positioning
-			document.addEventListener('click', (event) => {
-				// Check if we're in docs mode
-				if (document.body.classList.contains('storybook-docs-mode')) {
-					// Find all dropdowns and make sure they're properly positioned
-					const lists = document.querySelectorAll('.v-list')
-					lists.forEach((list) => {
-						if (list instanceof HTMLElement) {
-							list.style.position = 'absolute'
-							list.style.zIndex = '9999'
-							list.style.visibility = 'visible'
-						}
-					})
-				}
-			})
-		})
-	}
-
-	app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
-
-	// Apply theme immediately on load
+	// Apply theme once
 	if (typeof window !== 'undefined') {
 		applyTheme(globals.theme)
 	}
+
+	app.config.idPrefix = (Math.random() + 1).toString(36).substring(7)
 })
 
 const themeItems = [
@@ -89,6 +75,10 @@ const preview: Preview = {
 	globalTypes,
 	initialGlobals: {
 		theme: storedTheme || 'cnam',
+
+		backgrounds: {
+			value: 'main',
+		},
 	},
 	decorators: [
 		(story, context) => {
@@ -97,14 +87,9 @@ const preview: Preview = {
 				applyTheme(context.globals.theme)
 			}
 
-			// Check if we're in docs mode to apply special handling for dropdowns
-			const isInDocs = context.viewMode === 'docs'
-
-			if (isInDocs) {
-				// Add a special class to help target docs mode in CSS
-				if (typeof document !== 'undefined') {
-					document.body.classList.add('storybook-docs-mode')
-				}
+			// Docs mode flag (no DOM manipulation anymore)
+			if (typeof document !== 'undefined' && context.viewMode === 'docs') {
+				document.body.classList.add('storybook-docs-mode')
 			}
 
 			return story()
@@ -125,7 +110,7 @@ const preview: Preview = {
 					'Accessibilité',
 					[
 						'Introduction',
-						'Aculturation', ['Sensibilisation à l’accessibilité numérique'],
+						'Acculturation', ['Sensibilisation à l’accessibilité numérique'],
 						'Kit de pré-audit', ['Introduction', 'Échantillonnage', 'Pré-audit', 'Outils', ['Introduction', 'Tanaguru', ['Utilisation', 'Faux positifs']]],
 						'Audit', ['RGAA'],
 						'Design System', ['Audit du Design System', 'Avancement', 'Vuetify'],
@@ -133,7 +118,9 @@ const preview: Preview = {
 					'Éco-conception',
 					[
 						'Introduction',
-						'Reférentiel',
+						'Bonnes pratiques essentielles',
+						'Auto-évaluation Dev Front',
+						'Auto-évaluation UX',
 					],
 					'Design Tokens',
 					['Introduction', 'Utilisation', 'Couleurs', ['*', 'Correspondances couleurs'], 'Couleurs Amelipro', 'Typographie', 'Styles typographiques', 'Conteneurs de page', 'Espacements', 'Arrondis', 'Elévations'],
@@ -160,7 +147,7 @@ const preview: Preview = {
 						'Services', ['useNotificationService'],
 						'Directives', ['v-rgaa-svg-fix'],
 						'Migration', ['Depuis Bridge (Vue3)', 'Depuis Vue2', 'Breaking changes'],
-						'Convergence des DS', ['Équivalence des composants', ['Portail Agent', 'Amelipro']],
+						'Équivalence des composants', ['Portail Agent', 'Amelipro'],
 					],
 				],
 			},
@@ -173,57 +160,56 @@ const preview: Preview = {
 			disableSaveFromUI: true,
 		},
 		backgrounds: {
-			default: 'main',
-			values: [
-				{
+			options: {
+				'main': {
 					name: 'main',
 					value: '#e7ecf5',
 				},
-				{
+				'surface': {
 					name: 'surface',
 					value: '#fff',
 				},
-				{
+				'raised': {
 					name: 'raised',
 					value: '#f8f9fc',
 				},
-				{
+				'accent': {
 					name: 'accent',
 					value: '#0c419a',
 				},
-				{
+				'accent-contrasted': {
 					name: 'accent-contrasted',
 					value: '#0a347b',
 				},
-				{
+				'accent-alt': {
 					name: 'accent-alt',
 					value: '#545859',
 				},
-				{
+				'info': {
 					name: 'info',
 					value: '#ced9eb',
 				},
-				{
+				'info-subdued': {
 					name: 'info-subdued',
 					value: '#e7ecf5',
 				},
-				{
+				'info-contrasted': {
 					name: 'info-contrasted',
 					value: '#0c419a',
 				},
-				{
+				'success': {
 					name: 'success',
 					value: '#cceee8',
 				},
-				{
+				'success-subdued': {
 					name: 'success-subdued',
 					value: '#e5f7f4',
 				},
-				{
+				'success-contrasted': {
 					name: 'success-contrasted',
 					value: '#56c271',
 				},
-			],
+			},
 		},
 		a11y: {
 			config: {

@@ -56,15 +56,14 @@ describe('Validation Success Messages Regression', () => {
 		wrapper.unmount()
 	})
 
-	it('pas de double message avec skipInternalValidation', async () => {
+	it('pas de message de succès sans interaction utilisateur', async () => {
 		const wrapper = mount(DateTextInput, {
 			props: {
 				modelValue: '',
-				label: 'Date avec skip',
+				label: 'Date test',
 				format: 'DD/MM/YYYY',
 				showSuccessMessages: true,
 				required: true,
-				skipInternalValidation: true, // Simule utilisation dans ComplexDatePicker
 			},
 		})
 
@@ -73,8 +72,7 @@ describe('Validation Success Messages Regression', () => {
 		await input.trigger('blur')
 		await flushPromises()
 
-		// Avec skipInternalValidation, pas de validation interne
-		// donc pas de message de succès généré par DateTextInput
+		// Sans interaction préalable, pas de validation affichée
 		const successMessages = wrapper.findAll('.v-messages__message--success')
 		expect(successMessages.length).toBe(0)
 

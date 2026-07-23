@@ -189,3 +189,21 @@ describe('SyPagination', () => {
 		expect(wrapper.find('.list-last').exists()).toBe(true)
 	})
 })
+
+// Le ring de focus est scopé (jsdom ne calcule pas :focus-visible) : on vérifie le
+// prérequis — des liens <a> natifs focusables.
+describe('SyPagination - focus', () => {
+	it('renders native <a> page links so the focus ring applies', () => {
+		const wrapper = mount(SyPagination, { props: { modelValue: 1, pages: 10 } })
+		expect(wrapper.get('.list-first').element.tagName).toBe('A')
+		wrapper.unmount()
+	})
+
+	it('is focusable', () => {
+		const wrapper = mount(SyPagination, { props: { modelValue: 1, pages: 10 }, attachTo: document.body })
+		const link = wrapper.get('.list-first').element as HTMLAnchorElement
+		link.focus()
+		expect(document.activeElement).toBe(link)
+		wrapper.unmount()
+	})
+})

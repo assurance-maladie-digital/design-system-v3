@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 
 import BackBtn from './BackBtn.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
@@ -32,6 +32,15 @@ const meta = {
 					detail: `{
 	label: 'Retour',
 }`,
+				},
+			},
+		},
+		color: {
+			control: { type: 'text' },
+			description: 'Couleur du texte du text et icone parmi la palette du thème.',
+			table: {
+				type: {
+					summary: 'string',
 				},
 			},
 		},

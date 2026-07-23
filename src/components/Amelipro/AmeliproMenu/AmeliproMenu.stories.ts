@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import AmeliproMenu from './AmeliproMenu.vue'
 import type { AmeliproMenuItem } from './types'
 

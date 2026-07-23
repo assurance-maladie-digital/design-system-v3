@@ -1,14 +1,15 @@
 <script setup lang="ts">
-	import { computed, onMounted, provide, ref, toRef, useAttrs, watch } from 'vue'
+	import { computed, onMounted, provide, ref, toRef, useAttrs, useId, useSlots, watch } from 'vue'
 	import type { VDataTableServer } from 'vuetify/components/VDataTable'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
+	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import TableHeader from '../common/TableHeader.vue'
 	import SyTablePagination from '../common/SyTablePagination.vue'
 	import { locales } from '../common/locales'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
 	import { useTableProps } from '../common/tableProps'
-	import type { DataOptions, Items, SyServerTableProps } from '../common/types'
+	import type { DataOptions, Item, Items, SyServerTableProps } from '../common/types'
 	import { useTableFilter } from '../common/useTableFilter'
 	import { usePagination } from '../common/usePagination'
 	import { useTableOptions } from '../common/useTableOptions'
@@ -21,6 +22,9 @@
 	import { useClickableTableRow } from '../common/useClickableTableRow'
 	import { useTableRowCheckboxAccessibility } from '../common/useTableRowCheckboxAccessibility'
 	import type { ClickableTableRowPropsInput } from '../common/useClickableTableRow'
+	import { isEditableAsText, useTableEditing } from '../common/useTableEditing'
+	import { useTableBulkActions } from '../common/useTableBulkActions'
+	import TableBulkActions from '../common/TableBulkActions.vue'
 
 	const props = withDefaults(defineProps<SyServerTableProps>(), {
 		caption: '',
@@ -43,10 +47,16 @@
 		clickableRow: false,
 		pageInput: false,
 		hideDefaultFooter: false,
+		stickyBulkActions: true,
+		editable: false,
 	})
 
 	const emit = defineEmits<{
-		'row-click': [item: Record<string, unknown>]
+		'row-click': [item: Item]
+		'edit': [item: Item]
+		'save': [updated: Item, original: Item | null]
+		'cancel': [item: Item | null]
+		'delete': [item: Item]
 	}>()
 
 	const options = defineModel<Partial<DataOptions>>('options', {
@@ -72,7 +82,7 @@
 	const componentAttributes = useAttrs()
 
 	// Generate a unique ID for this table instance
-	const uniqueTableId = ref(`sy-server-table-${Math.random().toString(36).substring(2, 11)}`)
+	const uniqueTableId = ref(`sy-server-table-${useId()}`)
 
 	const { storedOptions, storeOptions } = useStoredOptions({
 		key: computed(() => props.suffix ? `server-table-${props.suffix}` : 'server-table'),
@@ -154,6 +164,85 @@
 			}
 		},
 		selectionKey: toRef(props, 'selectionKey'),
+	})
+
+	// --- Édition inline des lignes -------------------------------------------
+	const slots = useSlots()
+
+	const {
+		draft: editDraft,
+		isRowEditing,
+		startEditing,
+		setDraftField,
+		restoreFieldType,
+		saveEditing,
+		cancelEditing,
+		editableColumns,
+	} = useTableEditing({
+		getItemValue,
+		headers: () => props.headers,
+		editable: () => props.editable,
+		hasEditSlot: colKey => !!slots[`edit.${colKey}`],
+	})
+
+	// Libellé d'une colonne, pour le label accessible de l'éditeur par défaut
+	function columnTitle(key: string): string {
+		const header = (props.headers ?? []).find(h => (h.key ?? h.value) === key)
+		return header?.title ?? header?.text ?? key
+	}
+
+	// Valeur affichée par l'éditeur texte par défaut : toujours une chaîne, car
+	// SyTextField n'accepte pas Boolean pour `model-value`. La reconversion vers
+	// le type d'origine (number/boolean) est faite par `restoreFieldType`.
+	function defaultEditorModelValue(key: string): string {
+		const value = editDraft.value[key]
+		return value == null ? '' : String(value)
+	}
+
+	// Slots gérés en interne (édition) : exclus du forwarding générique pour
+	// éviter toute double définition d'un même slot sur le VDataTableServer
+	const forwardedSlotNames = computed<string[]>(() => {
+		const intercepted = new Set<string>([
+			'item.actions',
+			'item.data-table-select',
+			'bulk-actions',
+			...editableColumns.value.map(key => `item.${key}`),
+		])
+		return Object.keys(slots).filter(
+			name => !intercepted.has(name) && !name.startsWith('edit.'),
+		)
+	})
+
+	// Wrappers qui émettent les évènements publics
+	function onEdit(item: Item): void {
+		startEditing(item)
+		emit('edit', item)
+	}
+	function onSave(): void {
+		const { updated, original } = saveEditing()
+		emit('save', updated, original)
+	}
+	function onCancel(): void {
+		emit('cancel', cancelEditing())
+	}
+	function onDelete(item: Item): void {
+		emit('delete', item)
+	}
+
+	// --- Sélection multiple : barre d'actions pilotée par le projet ----------
+	// Le composant ne fournit que la sélection résolue et l'effacement ; les
+	// actions groupées (édition, suppression…) sont rendues par le projet via
+	// le slot `#bulk-actions`.
+	const {
+		selectedItems,
+		clearSelection,
+		showBulkActions,
+	} = useTableBulkActions({
+		items: displayedItems,
+		model,
+		getItemValue,
+		showSelect: () => props.showSelect,
+		hasBulkActionsSlot: () => !!slots['bulk-actions'],
 	})
 
 	// Use the ARIA accessibility composable
@@ -258,6 +347,22 @@
 		>
 			{{ statusMessage }}
 		</div>
+
+		<!-- Barre d'actions groupées : actions pilotées par le projet via #bulk-actions -->
+		<TableBulkActions
+			v-if="showBulkActions"
+			:count="selectedItems.length"
+			:sticky="props.stickyBulkActions"
+			@clear="clearSelection"
+		>
+			<slot
+				name="bulk-actions"
+				:selected="selectedItems"
+				:count="selectedItems.length"
+				:clear-selection="clearSelection"
+			/>
+		</TableBulkActions>
+
 		<VDataTableServer
 			ref="table"
 			v-bind="propsFacade"
@@ -281,10 +386,20 @@
 				<caption
 					class="text-subtitle-1 text-center pa-4"
 					:class="{ 'd-sr-only': props.caption === '' }"
-					:aria-label="props.caption"
 				>
 					{{ props.caption }}
 				</caption>
+			</template>
+			<!-- Barre de chargement nommée (RGAA : role="progressbar" doit avoir un nom accessible) -->
+			<template #loader="{ color, isActive }">
+				<VProgressLinear
+					:active="isActive"
+					:color="color"
+					:aria-label="locales.loading"
+					height="2"
+					absolute
+					indeterminate
+				/>
 			</template>
 			<template #headers="slotProps">
 				<template v-if="slotProps && slotProps.columns">
@@ -450,9 +565,77 @@
 				</template>
 			</template>
 
+			<!-- Édition inline : interception des cellules des colonnes éditables -->
+			<template
+				v-for="colKey in editableColumns"
+				:key="`editable-cell-${colKey}`"
+				#[`item.${colKey}`]="cellProps"
+			>
+				<!-- Ligne en édition : éditeur (SyTextField par défaut, surchargeable via #edit.<key>) -->
+				<!-- Le slot d'édition reçoit les mêmes `cellProps` que le slot de lecture
+					(item, column, index…), plus `value` (brouillon) et `update`. -->
+				<slot
+					v-if="isRowEditing(cellProps.item)"
+					:name="`edit.${colKey}`"
+					v-bind="cellProps"
+					:item="cellProps.item"
+					:value="editDraft[colKey]"
+					:update="(value: unknown) => setDraftField(colKey, value)"
+				>
+					<SyTextField
+						v-if="isEditableAsText(editDraft[colKey])"
+						:model-value="defaultEditorModelValue(colKey)"
+						:label="columnTitle(colKey)"
+						density="compact"
+						hide-details
+						disable-error-handling
+						@update:model-value="setDraftField(colKey, restoreFieldType(colKey, $event))"
+					/>
+				</slot>
+				<!-- Ligne normale : slot consommateur #item.<key> si fourni, sinon valeur brute -->
+				<slot
+					v-else
+					:name="`item.${colKey}`"
+					v-bind="cellProps"
+				>
+					{{ cellProps.item[colKey] }}
+				</slot>
+			</template>
+
+			<!-- Actions de ligne : on injecte les helpers d'édition dans le slot consommateur -->
+			<template
+				v-if="$slots['item.actions']"
+				#[`item.actions`]="actionProps"
+			>
+				<slot
+					name="item.actions"
+					v-bind="actionProps"
+					:is-editing="isRowEditing(actionProps.item)"
+					:edit="() => onEdit(actionProps.item as Item)"
+					:save="() => onSave()"
+					:cancel="() => onCancel()"
+					:remove="() => onDelete(actionProps.item as Item)"
+				/>
+			</template>
+
+			<!-- Checkbox de sélection de ligne (SyCheckbox) avec libellé accessible -->
+			<template
+				v-if="props.showSelect || props.showSelectSingle"
+				#[`item.data-table-select`]="{ internalItem, isSelected, toggleSelect, index }"
+			>
+				<SyCheckbox
+					:model-value="isSelected(internalItem)"
+					:aria-label="`${locales.selectRow} ${index + 1}`"
+					color="primary"
+					density="compact"
+					hide-details
+					@update:model-value="toggleSelect(internalItem)"
+				/>
+			</template>
+
 			<!-- Dynamically forward all slots to maintain flexibility -->
 			<template
-				v-for="slotName in Object.keys($slots)"
+				v-for="slotName in forwardedSlotNames"
 				#[slotName]="slotProps"
 			>
 				<slot

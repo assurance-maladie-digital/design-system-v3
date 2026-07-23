@@ -1,10 +1,8 @@
 <script setup lang="ts">
 	import { computed, useSlots } from 'vue'
 	import { type RouteLocationRaw } from 'vue-router'
-	import { useTheme } from 'vuetify'
+	import { useTheme, useDisplay } from 'vuetify'
 
-	import Logo from '@/components/Logo/Logo.vue'
-	import { LogoSize } from '@/components/Logo/LogoSize'
 	import SocialMediaLinks from '@/components/SocialMediaLinks/SocialMediaLinks.vue'
 	import type { SocialMediaLink } from '@/components/SocialMediaLinks/types'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -13,9 +11,14 @@
 	import type { LinkItem } from './types'
 
 	import { mdiArrowUp } from '@mdi/js'
-	import { useDisplay } from 'vuetify'
 	import { config } from './config'
 	import { locales } from './locales'
+	import {
+		logoDesktop as logoDarkDesktopUrl,
+		logoMobile as logoDarkMobileUrl,
+		logoDesktopWhite as logoLightDesktopUrl,
+		logoMobileWhite as logoLightMobileUrl,
+	} from '@/assets/logos'
 
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 
@@ -66,11 +69,12 @@
 		backOffice: false,
 		backOfficeText: undefined,
 	})
+	const display = useDisplay()
+	const smallScreen = computed(() => display.thresholds.value.sm)
+	const desktopLogoMediaQuery = computed(() => `(min-width: ${smallScreen.value}px)`)
 
 	const arrowTopIcon = mdiArrowUp
-	const logoSizeEnum = LogoSize
 	const slots = useSlots()
-	const display = useDisplay()
 	const options = useCustomizableOptions(config, props)
 	const vuetifyTheme = useTheme()
 
@@ -100,12 +104,6 @@
 		}
 
 		return false
-	})
-
-	const logoSize = computed(() => {
-		return display.smAndDown.value
-			? logoSizeEnum.SMALL
-			: logoSizeEnum.NORMAL
 	})
 
 	const footerLinksMapping = computed(() => {
@@ -167,10 +165,6 @@
 	function emitEvent(item: LinkItem) {
 		emit('event', item.text)
 	}
-
-	defineExpose({
-		logoSize,
-	})
 </script>
 
 <template>
@@ -195,12 +189,23 @@
 			>
 				<div class="d-flex flex-grow-1 flex-column flex-sm-row">
 					<slot name="logo">
-						<Logo
-							v-if="!props.hideLogo"
-							:size="logoSize"
-							:class="{ 'mb-2 mb-sm-0': !props.hideSocialMediaLinks }"
-							class="logo"
-						/>
+						<picture class="logo-picture">
+							<source
+								:media="desktopLogoMediaQuery"
+								:srcset="props.light ? logoDarkDesktopUrl : logoLightDesktopUrl"
+								type="image/svg+xml"
+								width="211"
+								height="64"
+							>
+							<img
+								class="logo-image"
+								:src="props.light ? logoDarkMobileUrl : logoLightMobileUrl"
+								:alt="locales.logoAlt"
+								width="131"
+								height="40"
+								:class="{ 'mb-2 mb-sm-0': !props.hideSocialMediaLinks }"
+							>
+						</picture>
 					</slot>
 
 					<VSpacer v-bind="options.spacer" />
@@ -370,6 +375,11 @@ a {
 		}
 	}
 
+	// Ring de focus des liens en onPrimary sur le footer sombre
+	.vd-footer-bar-links a:focus-visible {
+		outline-color: rgb(var(--v-theme-onPrimary));
+	}
+
 	p,
 	.text--primary {
 		color: rgba(var(--v-theme-onPrimary));
@@ -392,6 +402,18 @@ a {
 	}
 }
 
+// Mode light : l'icône du back-to-top serait blanche sur fond blanc → on la repasse en primary
+.vd-footer-bar.v-theme--light :deep() {
+	.scroll {
+		color: rgb(var(--v-theme-primary)) !important;
+		fill: rgb(var(--v-theme-primary));
+
+		svg {
+			fill: rgb(var(--v-theme-primary));
+		}
+	}
+}
+
 .vd-footer-bar-links :deep() {
 	li {
 		list-style: none;
@@ -399,25 +421,29 @@ a {
 	}
 
 	a {
-		transition: 0.15s;
+		// Ne transitionne que le soulignement : sinon `all` anime aussi l'outline
+		// et fait apparaître un flash noir (couleur par défaut) au focus/blur.
+		transition: border-color 0.15s;
 		text-decoration: none;
 		padding-top: 1px; // Add top padding to account for bottom border
 		border-bottom: 1px solid transparent;
 
-		&:hover,
-		&:focus {
+		// Soulignement en survol uniquement (le focus utilise le ring ci-dessous),
+		// pour éviter le double indicateur (soulignement + outline).
+		&:hover {
 			border-color: currentcolor;
+		}
+
+		&:focus-visible {
+			outline: 2px solid rgb(var(--v-theme-primary));
+			outline-offset: 3px;
+			border-radius: 2px;
 		}
 	}
 
 	p {
 		padding: 1px 0;
 	}
-}
-
-#scroll-btn:focus-visible {
-	outline: 2px solid white;
-	outline-offset: 2px;
 }
 
 .v-theme--dark button.v-btn:hover :deep() {

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SyServerTable from './SyServerTable.vue'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
@@ -44,7 +44,7 @@ interface DataOptions {
 }
 
 const meta = {
-	title: 'Composants/Tableaux/SyServerTable/Rules',
+	title: 'Composants/Tableaux/SyServerTable/Filtres/Rules',
 	component: SyServerTable,
 	decorators: [
 		() => ({

@@ -6,7 +6,7 @@ import EmotionPicker from '../EmotionPicker.vue'
 describe('EmotionPicker', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(EmotionPicker, {
-			propsData: {
+			props: {
 				label: 'Pourriez-vous donner une note ?',
 				itemLabels: ['Pas du tout', 'Peut-être', 'Oui super'],
 			},
@@ -21,7 +21,7 @@ describe('EmotionPicker', () => {
 
 	it('renders correctly with only 2 items', () => {
 		const wrapper = mount(EmotionPicker, {
-			propsData: {
+			props: {
 				label: 'Pourriez-vous donner une note ?',
 				itemLabels: ['Pas du tout', 'Not used', 'Oui super'],
 				length: 2,
@@ -40,7 +40,7 @@ describe('EmotionPicker', () => {
 		window.happyDOM.setInnerWidth(600)
 
 		const wrapper = mount(EmotionPicker, {
-			propsData: {
+			props: {
 				label: 'Pourriez-vous donner une note ?',
 				itemLabels: ['Pas du tout', 'Peut-être', 'Oui super'],
 			},
@@ -62,7 +62,7 @@ describe('EmotionPicker', () => {
 
 	it('have no labels when no labels are provided', () => {
 		const wrapper = mount(EmotionPicker, {
-			propsData: {
+			props: {
 				itemLabels: [],
 			},
 		})
@@ -79,5 +79,120 @@ describe('EmotionPicker', () => {
 
 		await wrapper.setProps({ modelValue: 1 })
 		expect(items[0]?.classes()).toContain('sy-emotion-picker__item--active')
+	})
+
+	it('does not render the locking state when readonly', () => {
+		const wrapper = mount(EmotionPicker, {
+			props: {
+				modelValue: 1,
+				readonly: true,
+			},
+		})
+
+		expect(wrapper.find('.locking-state').exists()).toBe(false)
+		expect(wrapper.find('[role="radiogroup"]').attributes('aria-describedby')).toBeUndefined()
+	})
+
+	describe('when it do not lock the field after selection', () => {
+		it('can change the value after selection', async () => {
+			const wrapper = mount(EmotionPicker, {
+				props: {
+					lockAfterSelection: false,
+				},
+			})
+
+			const items = wrapper.findAll('[role="radio"]')
+
+			await items[0]?.trigger('click')
+			expect(wrapper.emitted('update:modelValue')?.[0]?.[0]).toBe(1)
+
+			await items[2]?.trigger('click')
+			expect(wrapper.emitted('update:modelValue')?.[1]?.[0]).toBe(3)
+		})
+
+		it('can change the value after selection when the modelValue is updated', async () => {
+			const wrapper = mount(EmotionPicker, {
+				props: {
+					lockAfterSelection: false,
+				},
+			})
+
+			const items = wrapper.findAll('[role="radio"]')
+
+			await items[0]?.trigger('click')
+			expect(wrapper.emitted('update:modelValue')?.[0]?.[0]).toBe(1)
+
+			await wrapper.setProps({ modelValue: 1 })
+			await items[2]?.trigger('click')
+			expect(wrapper.emitted('update:modelValue')?.[1]?.[0]).toBe(3)
+		})
+
+		it('can change the value after selection in two emotions mode', async () => {
+			const wrapper = mount(EmotionPicker, {
+				props: {
+					lockAfterSelection: false,
+					length: 2,
+				},
+			})
+
+			const items = wrapper.findAll('[role="radio"]')
+
+			await items[0]?.trigger('click')
+			expect(wrapper.emitted('update:modelValue')?.[0]?.[0]).toBe(1)
+
+			await items[1]?.trigger('click')
+			expect(wrapper.emitted('update:modelValue')?.[1]?.[0]).toBe(2)
+		})
+
+		it('do not define the radio as disabled when the modelValue is updated', async () => {
+			const wrapper = mount(EmotionPicker, {
+				props: {
+					lockAfterSelection: false,
+				},
+			})
+
+			const items = wrapper.findAll('[role="radio"]')
+
+			await items[0]?.trigger('click')
+			expect(wrapper.emitted('update:modelValue')?.[0]?.[0]).toBe(1)
+
+			await wrapper.setProps({ modelValue: 1 })
+			expect(items[0]?.attributes('aria-checked')).toBe('true')
+			expect(items[0]?.attributes('disabled')).toBeUndefined()
+			expect(items[1]?.attributes('aria-checked')).toBe('false')
+			expect(items[1]?.attributes('disabled')).toBeUndefined()
+		})
+
+		it('allows to update the selected value with the keyord navigation', async () => {
+			const wrapper = mount(EmotionPicker, {
+				props: {
+					lockAfterSelection: false,
+				},
+			})
+
+			const items = wrapper.findAll('[role="radio"]')
+
+			await items[0]?.trigger('keydown', { key: 'ArrowRight' })
+			await wrapper.vm.$nextTick()
+			expect(items[0]?.attributes('tabindex')).toBe('-1')
+			expect(items[1]?.attributes('tabindex')).toBe('0')
+
+			await items[1]?.trigger('keydown', { key: 'Enter' })
+			expect(wrapper.emitted('update:modelValue')?.[0]?.[0]).toBe(2)
+
+			expect(items[0]?.attributes('aria-checked')).toBe('false')
+			expect(items[1]?.attributes('aria-checked')).toBe('true')
+
+			await items[1]?.trigger('keydown', { key: 'ArrowLeft' })
+			await wrapper.vm.$nextTick()
+			expect(items[0]?.attributes('tabindex')).toBe('0')
+			expect(items[1]?.attributes('tabindex')).toBe('-1')
+
+			await items[0]?.trigger('keydown', { key: ' ' })
+			expect(wrapper.emitted('update:modelValue')?.[1]?.[0]).toBe(1)
+
+			expect(items[0]?.attributes('aria-checked')).toBe('true')
+			expect(items[1]?.attributes('aria-checked')).toBe('false')
+		})
 	})
 })

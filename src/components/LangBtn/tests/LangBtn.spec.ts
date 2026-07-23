@@ -253,3 +253,25 @@ describe('LangBtn', () => {
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['co'])
 	})
 })
+
+// Le ring de focus vient de l'override global (activateur) et d'un style scopé (items) :
+// jsdom ne calcule pas :focus-visible, on vérifie le prérequis — l'activateur est un
+// <button> natif focusable.
+describe('LangBtn - focus', () => {
+	it('renders the activator as a native <button> so the global focus ring applies', () => {
+		const langWrapper = mount(LangBtn, { props: { availableLanguages: ['fr', 'en'] } })
+		expect(langWrapper.get('.vd-lang-btn').element.tagName).toBe('BUTTON')
+		langWrapper.unmount()
+	})
+
+	it('is focusable', () => {
+		const langWrapper = mount(LangBtn, {
+			props: { availableLanguages: ['fr', 'en'] },
+			attachTo: document.body,
+		})
+		const button = langWrapper.get('.vd-lang-btn').element as HTMLButtonElement
+		button.focus()
+		expect(document.activeElement).toBe(button)
+		langWrapper.unmount()
+	})
+})

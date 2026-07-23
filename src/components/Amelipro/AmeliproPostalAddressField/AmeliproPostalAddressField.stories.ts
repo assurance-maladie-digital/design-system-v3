@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import AmeliproPostalAddressField from './AmeliproPostalAddressField.vue'
 import { ref, watch } from 'vue'
 

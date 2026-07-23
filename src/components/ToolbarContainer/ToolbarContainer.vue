@@ -125,4 +125,8 @@
 	border-radius: 5px;
 	border: 2px solid rgb(var(--v-theme-primary));
 }
+
+.v-theme--dark .sy-toolbar:has(:focus-visible)::after {
+	border-color: rgb(var(--v-theme-onPrimary));
+}
 </style>

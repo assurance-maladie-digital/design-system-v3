@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
 import SyCheckBoxGroup from './SyCheckBoxGroup.vue'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
@@ -795,7 +795,6 @@ export const EventShowcase: Story = {
 ### Événements
 Ce story démontre les événements émis par le composant :
 - **update:modelValue** : Émis lorsque la valeur change
-- **change** : Émis lorsque la sélection change
 			`,
 			},
 		},
@@ -811,7 +810,6 @@ Ce story démontre les événements émis par le composant :
 			:options="options"
 			:multiple="multiple"
 			@update:model-value="onUpdate"
-			@change="onChange"
 		/>
 		<div class="mt-4">
 			<p>Valeur sélectionnée : {{ selected }}</p>
@@ -840,11 +838,6 @@ const onUpdate = (value: string | null) => {
 	lastEvent.value = \`update:modelValue: \${value}\`
 	console.log('update:modelValue', value)
 }
-
-const onChange = (value: string | null) => {
-	lastEvent.value = \`change: \${value}\`
-	console.log('change', value)
-}
 </script>`,
 			},
 		],
@@ -867,11 +860,7 @@ const onChange = (value: string | null) => {
 				lastEvent.value = `update:modelValue: ${JSON.stringify(value)}`
 			}
 
-			const onChange = (value: (string | number) | (string | number)[] | null) => {
-				lastEvent.value = `change: ${JSON.stringify(value)}`
-			}
-
-			return { args, selected, options, multiple, lastEvent, onUpdate, onChange }
+			return { args, selected, options, multiple, lastEvent, onUpdate }
 		},
 		template: `
 			<div>
@@ -881,7 +870,6 @@ const onChange = (value: string | null) => {
 					:options="options"
 					:multiple="multiple"
 					@update:model-value="onUpdate"
-					@change="onChange"
 				/>
 				<div class="mt-4 pa-4 bg-grey-lighten-4 rounded">
 					<p><strong>Valeur sélectionnée :</strong> {{ selected || 'Aucune' }}</p>

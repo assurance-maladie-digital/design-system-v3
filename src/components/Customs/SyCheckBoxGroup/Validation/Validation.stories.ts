@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3'
+import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
 import SyCheckBoxGroup from '../SyCheckBoxGroup.vue'
 import SyForm from '../../SyForm/SyForm.vue'

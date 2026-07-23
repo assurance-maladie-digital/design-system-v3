@@ -1,3 +1,184 @@
+## v1.1.2 (15-07-2026)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 50%">Synapse</th>
+      <th style="width: 50%">Amelipro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- RatingPicker: improve aceessibility
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2389">#2389</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2335">#2335</a>
+      </td>
+      <td>- Tokens: improve colors
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2371">#2371</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Core: move mdijs to peerDependancies for optimisation with the SK
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2350">#2350</a>
+      </td>
+      <td>- Accordion: add options right icon and compact mode (in all themes)
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2356">#2356</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Logo: optimize display
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2359">#2359</a>
+      </td>
+      <td>- RatingPicker: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2352">#2352</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyCheckBoxGroup: fix validation for an empty array on multiple
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2380">#2380</a>
+      </td>
+      <td>- ExternalLinks: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2339">#2339</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyCheckbox: improve accessibility
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2366">#2366</a>
+      </td>
+      <td>- SyBtnMenu: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2349">#2349</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- TableToolbar: improve documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2326">#2326</a>
+      </td>
+      <td>- SyInputSelect: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2348">#2348</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- FilePreview: add readonly + mandatory options (pdf.js)
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2344">#2344</a>
+      </td>
+      <td>- DataList: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2343">#2343</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable: add row editing + global editing actions
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2338">#2338</a>
+      </td>
+      <td>- DataListGroup: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2345">#2345</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: update eco-conception pages
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2357">#2357</a>
+      </td>
+      <td>- PeriodField: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2340">#2340</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: update storybook to v10
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2354">#2354</a>
+      </td>
+      <td>- CookieBanner: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2336">#2336</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: update storybook to v10
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2354">#2354</a>
+      </td>
+      <td>- LangBtn: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2334">#2334</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: update storybook to v10
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2354">#2354</a>
+      </td>
+      <td>- Backbtn: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2337">#2337</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: add component versioning page (Suivi des composants)
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2330">#2330</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2378">#2378</a>
+      </td>
+      <td>- ContextualMenu: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2324">#2324</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: improve tokens pages
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2353">#2353</a>
+      </td>
+      <td>- SocialmediaLinks: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2351">#2351</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: improve tokens pages
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2353">#2353</a>
+      </td>
+      <td>- SocialmediaLinks: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2351">#2351</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: improve validation pages
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2333">#2333</a>
+      </td>
+      <td>- FileList: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2347">#2347</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: improve accessibity advancement page
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2327">#2327</a>
+      </td>
+      <td>- CollapsibleList: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2342">#2342</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: improve accessibity advancement page
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2327">#2327</a>
+      </td>
+      <td>- SubHeader: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2332">#2332</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: improve Guide du dev section and migration pages
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2318">#2318</a>
+      </td>
+      <td>- FileUpload: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2322">#2322</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- NirField: improve autofocus accessibility
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2303">#2303</a>
+      </td>
+      <td>- RangeField: add AP theme
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2319">#2319</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Documentation: display version badges in components pages
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2308">#2308</a>
+      </td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.1.1 (23-06-2026)
 
 <table>

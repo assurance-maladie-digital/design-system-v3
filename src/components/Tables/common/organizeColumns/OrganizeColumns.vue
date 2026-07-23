@@ -270,4 +270,14 @@
 		opacity: 1;
 	}
 }
+
+// Focus clavier fortement contrasté sur les boutons du menu (activateur, œil,
+// chevrons). Le menu est téléporté dans le body : le style reste appliqué via
+// l'attribut de scope porté par la racine de chaque bouton.
+// Ring INSET (-2px) : les boutons sont joints dans une VBtnGroup et une VList en
+// `overflow: hidden` ; un ring outset serait clippé sur la plupart des côtés.
+.v-btn:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: -2px;
+}
 </style>

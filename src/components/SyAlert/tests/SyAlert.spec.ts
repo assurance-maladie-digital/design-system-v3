@@ -85,4 +85,68 @@ describe('Alert', () => {
 
 		expect(wrapper.vm.prependIcon).toBe('M12,2L1,21H23M12,6L19.53,19H4.47M11,10V14H13V10M11,16V18H13V16')
 	})
+
+	it('uses alert role by default', () => {
+		const wrapper = mount(SyAlert, {
+			slots: {
+				default: 'slot content',
+			},
+		})
+
+		expect(wrapper.attributes('role')).toBe('alert')
+		expect(wrapper.attributes('aria-live')).toBeUndefined()
+	})
+
+	it('applies role and ariaLive props on the alert wrapper', () => {
+		const wrapper = mount(SyAlert, {
+			props: {
+				role: 'status',
+				ariaLive: 'polite',
+			},
+			slots: {
+				default: 'slot content',
+			},
+		})
+
+		expect(wrapper.attributes('role')).toBe('status')
+		expect(wrapper.attributes('aria-live')).toBe('polite')
+	})
+
+	it('allows assertive live region props on the alert wrapper', () => {
+		const wrapper = mount(SyAlert, {
+			props: {
+				role: 'alert',
+				ariaLive: 'assertive',
+			},
+			slots: {
+				default: 'slot content',
+			},
+		})
+
+		expect(wrapper.attributes('role')).toBe('alert')
+		expect(wrapper.attributes('aria-live')).toBe('assertive')
+	})
+})
+
+// Le bouton fermer (closable) porte un ring scopé (primary, y compris en thème dark car
+// le fond de l'alerte reste clair). jsdom ne calcule pas :focus-visible : on vérifie le
+// prérequis — un <button> natif focusable.
+describe('SyAlert - focus (close button)', () => {
+	it('renders the close button as a native <button> when closable', () => {
+		const wrapper = mount(SyAlert, { props: { closable: true }, slots: { default: 'Message' } })
+		expect(wrapper.get('.alert-close-btn').element.tagName).toBe('BUTTON')
+		wrapper.unmount()
+	})
+
+	it('is focusable', () => {
+		const wrapper = mount(SyAlert, {
+			props: { closable: true },
+			slots: { default: 'Message' },
+			attachTo: document.body,
+		})
+		const btn = wrapper.get('.alert-close-btn').element as HTMLButtonElement
+		btn.focus()
+		expect(document.activeElement).toBe(btn)
+		wrapper.unmount()
+	})
 })

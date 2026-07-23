@@ -175,6 +175,123 @@ describe('SyTextField', () => {
 		expect(wrapper.find('.v-messages').text()).toContain('Le champ Test Field est requis')
 	})
 
+	it('exposes validation messages as read-only state', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				errorMessages: ['Erreur exposee'],
+				warningMessages: ['Avertissement expose'],
+				successMessages: ['Succes expose'],
+			},
+		})
+
+		await flushPromises()
+
+		expect(wrapper.vm.errors).toEqual(['Erreur exposee'])
+		expect(wrapper.vm.warnings).toEqual(['Avertissement expose'])
+		expect(wrapper.vm.successes).toEqual(['Succes expose'])
+	})
+
+	it('exposes states calculated by custom validation rules', async () => {
+		const errorWrapper = mount(SyTextField, {
+			props: {
+				modelValue: 'invalid',
+				label: 'Test Field',
+				showSuccessMessages: true,
+				customRules: [{
+					type: 'custom',
+					options: { validate: () => false, message: 'Erreur custom' },
+				}],
+			},
+		})
+		const warningWrapper = mount(SyTextField, {
+			props: {
+				modelValue: 'warning',
+				customWarningRules: [{
+					type: 'custom',
+					options: { validate: () => false, warningMessage: 'Avertissement custom' },
+				}],
+			},
+		})
+		const successWrapper = mount(SyTextField, {
+			props: {
+				modelValue: 'success',
+				showSuccessMessages: true,
+				customSuccessRules: [{
+					type: 'custom',
+					options: { validate: () => true, successMessage: 'Succes custom' },
+				}],
+			},
+		})
+
+		await errorWrapper.vm.validateOnSubmit()
+		await warningWrapper.vm.validateOnSubmit()
+		await successWrapper.vm.validateOnSubmit()
+
+		expect(errorWrapper.vm.errors).toContain('Erreur custom')
+		expect(warningWrapper.vm.warnings).toContain('Avertissement custom')
+		expect(successWrapper.vm.successes).toContain('Succes custom')
+	})
+
+	it('exposes Vuetify validation errors alongside injected warning and success messages', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				modelValue: '',
+				label: 'Test Field',
+				useVuetifyValidation: true,
+				rules: [() => 'Erreur Vuetify'],
+				warningMessages: ['Avertissement expose'],
+				successMessages: ['Succes expose'],
+			},
+		})
+
+		await wrapper.vm.validateOnSubmit()
+
+		expect(wrapper.vm.errors).toContain('Erreur Vuetify')
+		expect(wrapper.vm.warnings).toEqual(['Avertissement expose'])
+		expect(wrapper.vm.successes).toEqual(['Succes expose'])
+	})
+
+	it('keeps only injected states exposed when error handling is disabled', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				modelValue: 'invalid',
+				disableErrorHandling: true,
+				errorMessages: ['Erreur exposee'],
+				warningMessages: ['Avertissement expose'],
+				successMessages: ['Succes expose'],
+				customRules: [{
+					type: 'custom',
+					options: { validate: () => false, message: 'Erreur calculee' },
+				}],
+			},
+		})
+
+		await wrapper.vm.validateOnSubmit()
+
+		expect(wrapper.vm.errors).toEqual(['Erreur exposee'])
+		expect(wrapper.vm.warnings).toEqual(['Avertissement expose'])
+		expect(wrapper.vm.successes).toEqual(['Succes expose'])
+	})
+
+	it('updates exposed states on input when validation on blur is disabled', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				modelValue: '',
+				isValidateOnBlur: false,
+				customRules: [{
+					type: 'custom',
+					options: { validate: (value: string) => value.length > 2, message: 'Erreur a la saisie' },
+				}],
+			},
+		})
+
+		await wrapper.setProps({ modelValue: 'ab' } as Parameters<typeof wrapper.setProps>[0])
+		await vi.waitUntil(() => wrapper.vm.errors.includes('Erreur a la saisie'))
+
+		expect(wrapper.vm.warnings).toEqual([])
+		expect(wrapper.vm.successes).toEqual([])
+	})
+
 	it('validates field with custom rules', async () => {
 		const customRule = {
 			type: 'custom',
@@ -555,5 +672,27 @@ describe('SyTextField', () => {
 		await wrapper.vm.$nextTick()
 		expect(wrapper.find('.v-input__details').exists()).toBe(false)
 		expect(wrapper.find('.v-messages').exists()).toBe(false)
+	})
+})
+
+// Le focus du champ = bordure primary du field Vuetify (color="primary"). Le bouton
+// d'effacement est un VBtn → ring de focus via l'override global (_btns.scss). jsdom ne
+// calcule pas :focus-visible : on vérifie le prérequis — un <button> natif focusable.
+describe('SyTextField - focus (clear button)', () => {
+	it('renders the clear button as a native <button> so the global focus ring applies', () => {
+		const wrapper = mount(SyTextField, { props: { label: 'Nom', isClearable: true, modelValue: 'Texte' } })
+		expect(wrapper.get('.sy-text-field__clear').element.tagName).toBe('BUTTON')
+		wrapper.unmount()
+	})
+
+	it('is focusable', () => {
+		const wrapper = mount(SyTextField, {
+			props: { label: 'Nom', isClearable: true, modelValue: 'Texte' },
+			attachTo: document.body,
+		})
+		const btn = wrapper.get('.sy-text-field__clear').element as HTMLButtonElement
+		btn.focus()
+		expect(document.activeElement).toBe(btn)
+		wrapper.unmount()
 	})
 })

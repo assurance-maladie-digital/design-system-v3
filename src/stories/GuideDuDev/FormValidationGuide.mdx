@@ -87,10 +87,9 @@ const handleSubmit = async () => {
 - **`required`** : Validation simple directement sur le composant
 - **`:custom-rules`** : Règles de validation personnalisées
 
-> **⚠️ Important — Ordre des règles :** placez toujours `required` en dernier dans la liste de vos règles !
-> Les règles sont évaluées dans l'ordre de leur déclaration, et la validation s'arrête dès qu'une erreur est rencontrée.
-> Si `required` est positionné en premier et que l'utilisateur saisit une valeur (même invalide), la validation s'arrêtera immédiatement.
-> En revanche, en le plaçant en dernier, si une autre règle échoue avant, l'utilisateur obtiendra le message d'erreur le plus pertinent.
+> **⚠️ Important — Ordre des règles & nombre de messages :** la validation **ne s'arrête pas** à la première erreur — toutes les règles sont évaluées et toutes les erreurs sont collectées.
+> En revanche, la prop `maxErrors` (1 par défaut) ne fait **afficher qu'un seul message** : celui de la **première règle en échec** dans l'ordre de la liste.
+> L'ordre détermine donc **quel** message s'affiche : placez en tête la règle dont le message est le plus pertinent. Pour afficher plusieurs messages à la fois, augmentez `maxErrors`.
 
 ## Validation complète avec les 3 niveaux
 

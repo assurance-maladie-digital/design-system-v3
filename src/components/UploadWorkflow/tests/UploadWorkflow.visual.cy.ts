@@ -1,5 +1,11 @@
 import UploadWorkflow from '../UploadWorkflow.vue'
 
+// Déclenche `:focus-visible` via l'option native focus({ focusVisible: true }).
+const focusVisible = (selector: string) =>
+	cy.get(selector).then(($el) => {
+		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
+	})
+
 const defaultUploadList = [
 	{
 		id: '1',
@@ -35,5 +41,17 @@ describe('UploadWorkflow - Visual regression tests', () => {
 
 		cy.get('.v-application').should('be.visible')
 		cy.matchImageSnapshot('upload-workflow-with-title', cy.get('.v-application'))
+	})
+
+	// La dropzone FileUpload composée dans le workflow reçoit son ring DS au clavier
+	// (ring défini dans FileUpload, non modifié ici — juste vérifié dans le contexte).
+	it('shows the DS ring on the focused dropzone within the workflow', () => {
+		cy.mountWithVuetify(UploadWorkflow, {
+			props: { uploadList: defaultUploadList },
+		})
+
+		focusVisible('.sy-file-upload')
+		cy.wait(150)
+		cy.matchImageSnapshot('upload-workflow-dropzone-focus', cy.get('.v-application'))
 	})
 })
