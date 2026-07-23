@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed, ref, toRef, watch } from 'vue'
+	import { computed, readonly as readonlyState, ref, toRef, watch } from 'vue'
 	import { mdiPhone, mdiCloseCircle } from '@mdi/js'
 	import { locales as defaultLocales } from './locales'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
@@ -101,16 +101,6 @@
 		withCountryCode: toRef(props, 'withCountryCode'),
 	})
 
-	const validation = {
-		clearValidation,
-		errors,
-		warnings,
-		successes,
-		hasError,
-		hasWarning,
-		hasSuccess,
-	}
-
 	const phoneMask = computed(() => internalDialCode.value.mask)
 
 	// Rattrape l'autofill du navigateur : avec un champ indicatif séparé, le navigateur
@@ -148,12 +138,25 @@
 
 	defineExpose({
 		dialCodeList,
-		hasError,
-		errors,
-		validation,
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
 		validateOnSubmit: validate,
 		phoneMask,
 		clearValidation,
+		/** Deprecated */
+		validation: {
+			clearValidation,
+			errors,
+			warnings,
+			successes,
+			hasError,
+			hasWarning,
+			hasSuccess,
+		},
 	})
 
 </script>

@@ -14,7 +14,7 @@
 		mdiChevronUp,
 		mdiChevronDown,
 	} from '@mdi/js'
-	import { computed, onMounted, ref, watch, nextTick, useAttrs, type ComponentPublicInstance, toRef } from 'vue'
+	import { computed, onMounted, readonly as readonlyState, ref, watch, nextTick, useAttrs, type ComponentPublicInstance, toRef } from 'vue'
 	import type { IconType } from '@/types/vuetifyTypes'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
@@ -158,7 +158,7 @@
 	}
 
 	const focused = ref(false)
-	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess, iconColor, clearButtonColorClass, state, hasMessages } = useSyTextFieldValidation({
+	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess, iconColor, clearButtonColorClass, state, hasMessages, clearValidation } = useSyTextFieldValidation({
 		modelValue: model,
 		readonly: toRef(props, 'readonly'),
 		disabled: toRef(props, 'disabled'),
@@ -532,6 +532,14 @@
 
 	defineExpose({
 		validateOnSubmit: validate,
+		clearField,
+		clearValidation,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 	})
 </script>
 
