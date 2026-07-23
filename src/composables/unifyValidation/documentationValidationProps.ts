@@ -231,5 +231,64 @@ export function getValidationDocumentation(type: 'base' | 'date' | 'number' | 's
 				category: 'props',
 			},
 		},
+		errors: {
+			description: 'Tableau réactif contenant tous les messages d\'erreur. Combine les erreurs injectées via errorMessages et celles générées par la validation. Les doublons sont supprimés et le tableau est limité selon maxErrors. Accessible via template ref du composant.',
+			table: {
+				type: { summary: 'Readonly<Ref<string[]>>' },
+				category: 'expose',
+			},
+		},
+		warnings: {
+			description: 'Tableau réactif contenant tous les messages d\'avertissement. Combine les avertissements injectés via warningMessages et ceux générés par customWarningRules. Les doublons sont supprimés et le tableau est limité selon maxErrors. Accessible via template ref du composant.',
+			table: {
+				type: { summary: 'Readonly<Ref<string[]>>' },
+				category: 'expose',
+			},
+		},
+		successes: {
+			description: 'Tableau réactif contenant tous les messages de succès. Combine les succès injectés via successMessages et ceux générés par customSuccessRules. Les doublons sont supprimés et le tableau est limité selon maxErrors. Accessible via template ref du composant.',
+			table: {
+				type: { summary: 'Readonly<Ref<string[]>>' },
+				category: 'expose',
+			},
+		},
+		hasErrorExpose: {
+			name: 'hasError',
+			description: 'Booléen réactif indiquant si le champ est en erreur (erreur de validation ou erreur injectée). Accessible via template ref du composant.',
+			table: {
+				type: { summary: 'Readonly<Ref<boolean>>' },
+				category: 'expose',
+			},
+		},
+		hasWarningExpose: {
+			name: 'hasWarning',
+			description: 'Booléen réactif indiquant si le champ est en avertissement. Accessible via template ref du composant.',
+			table: {
+				type: { summary: 'Readonly<Ref<boolean>>' },
+				category: 'expose',
+			},
+		},
+		hasSuccessExpose: {
+			name: 'hasSuccess',
+			description: 'Booléen réactif indiquant si le champ est en succès. Accessible via template ref du composant.',
+			table: {
+				type: { summary: 'Readonly<Ref<boolean>>' },
+				category: 'expose',
+			},
+		},
+		clearValidation: {
+			description: 'Méthode pour réinitialiser l\'état de validation du composant',
+			table: {
+				type: { summary: '() => void' },
+				category: 'expose',
+			},
+		},
+		validateOnSubmit: {
+			description: 'Méthode pour déclencher la validation du composant',
+			table: {
+				type: { summary: '() => Promise<boolean>' },
+				category: 'expose',
+			},
+		},
 	} as const
 }

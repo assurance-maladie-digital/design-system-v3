@@ -98,7 +98,7 @@ describe('SyTabs', () => {
 
 			// Vérifier que le bon panneau est affiché
 			const visiblePanel = wrapper.find('.sy-tabs-panel:not([hidden])')
-			expect(visiblePanel.attributes('id')).toBe('panel-1')
+			expect(visiblePanel.attributes('id')).toContain('panel-1')
 		})
 
 		it('doit respecter la prop modelValue de type string', async () => {
@@ -138,7 +138,7 @@ describe('SyTabs', () => {
 
 			// Vérifier que le bon panneau est visible
 			const visiblePanel = wrapper.find('.sy-tabs-panel:not([hidden])')
-			expect(visiblePanel.attributes('id')).toBe('panel-1')
+			expect(visiblePanel.attributes('id')).toContain('panel-1')
 		})
 
 		it('doit émettre l\'événement update:modelValue avec la bonne valeur', async () => {
@@ -220,11 +220,11 @@ describe('SyTabs', () => {
 			// Vérifier les attributs ARIA des onglets
 			const firstTab = wrapper.findAll('[role="tab"]')[0]!
 			expect(firstTab.attributes('aria-selected')).toBe('true')
-			expect(firstTab.attributes('aria-controls')).toBe('panel-0')
+			expect(firstTab.attributes('aria-controls')).toContain('panel-0')
 
 			// Vérifier les attributs ARIA des panneaux
 			const firstPanel = wrapper.find('[role="tabpanel"]')
-			expect(firstPanel.attributes('aria-labelledby')).toBe('tab-0')
+			expect(firstPanel.attributes('aria-labelledby')).toContain('tab-0')
 		})
 
 		it('doit activer un onglet avec les touches Enter/Space', async () => {
@@ -246,7 +246,7 @@ describe('SyTabs', () => {
 				focus: vi.fn(),
 			}
 			document.getElementById = vi.fn().mockImplementation((id) => {
-				if (id === 'tab-0') {
+				if (id.endsWith('tab-0')) {
 					return mockElement
 				}
 				return null
@@ -286,7 +286,7 @@ describe('SyTabs', () => {
 
 			// Mock complet qui retourne mockElement uniquement pour tab-1
 			document.getElementById = vi.fn().mockImplementation((id) => {
-				if (id === 'tab-1') {
+				if (id.endsWith('tab-1')) {
 					return mockElement
 				}
 				return null
@@ -317,7 +317,7 @@ describe('SyTabs', () => {
 
 			// Mock complet qui retourne mockElement uniquement pour tab-0
 			document.getElementById = vi.fn().mockImplementation((id) => {
-				if (id === 'tab-0') {
+				if (id.endsWith('tab-0')) {
 					return mockElement
 				}
 				return null
@@ -353,7 +353,7 @@ describe('SyTabs', () => {
 
 			// Mock complet qui retourne mockElement uniquement pour tab-2
 			document.getElementById = vi.fn().mockImplementation((id) => {
-				if (id === 'tab-2') {
+				if (id.endsWith('tab-2')) {
 					return mockElement
 				}
 				return null
@@ -388,7 +388,7 @@ describe('SyTabs', () => {
 			// Mock complet qui retourne mockElement uniquement pour le dernier tab
 			const lastTabIndex = testItems.length - 1
 			document.getElementById = vi.fn().mockImplementation((id) => {
-				if (id === `tab-${lastTabIndex}`) {
+				if (id.endsWith(`tab-${lastTabIndex}`)) {
 					return mockElement
 				}
 				return null
@@ -417,7 +417,7 @@ describe('SyTabs', () => {
 				focus: vi.fn(),
 			}
 			document.getElementById = vi.fn().mockImplementation((id) => {
-				if (id === 'tab-0') {
+				if (id.endsWith('tab-0')) {
 					return mockElement
 				}
 				return null
@@ -569,7 +569,7 @@ describe('SyTabs', () => {
 			await secondTab.trigger('click')
 			await nextTick()
 
-			expect(wrapper.find('#panel-1').exists()).toBe(true)
+			expect(wrapper.find('[id$="panel-1"]').exists()).toBe(true)
 		})
 	})
 
@@ -844,6 +844,19 @@ describe('SyTabs', () => {
 			markers = wrapper.findAll('[data-test="tab-append-slot"]')
 			expect(markers[2]!.attributes('data-active')).toBe('true')
 			expect(markers[0]!.attributes('data-active')).toBe('false')
+		})
+	})
+
+	// Le ring de focus des onglets est porté par SyTabs (.sy-tabs__button:focus-visible,
+	// 2px, cf. SyTabs.vue). jsdom ne calcule pas :focus-visible : on vérifie que les
+	// onglets sont bien des éléments focusables (role tab).
+	describe('focus', () => {
+		it('renders focusable tab buttons (the focus ring target)', () => {
+			const wrapper = mount(SyTabs, defaultMountOptions)
+
+			const tabs = wrapper.findAll('.sy-tabs__button')
+			expect(tabs.length).toBe(testItems.length)
+			expect(tabs[0]!.attributes('role')).toBe('tab')
 		})
 	})
 })

@@ -114,6 +114,57 @@ const meta: Meta<typeof PeriodField> = {
 			control: 'boolean',
 			description: 'Affiche les messages de succès',
 		},
+		errors: {
+			description: 'Tableaux réactif contenant tous les messages d\'erreur. Combine les erreurs injectées via errorMessages et celles générées par la validation. Les doublons sont supprimés et le tableau est limité selon maxErrors. Accessible via template ref du composant.',
+			table: {
+				type: { summary: `{
+			fromDate: Readonly<Ref<readonly string[]>>,
+			toDate: Readonly<Ref<readonly string[]>>
+		}` },
+				category: 'expose',
+			},
+		},
+		warnings: {
+			description: 'Tableaux réactif contenant tous les messages d\'avertissement. Combine les avertissements injectés via warningMessages et ceux générés par customWarningRules. Les doublons sont supprimés et le tableau est limité selon maxErrors. Accessible via template ref du composant.',
+			table: {
+				type: { summary: `{
+			fromDate: Readonly<Ref<readonly string[]>>,
+			toDate: Readonly<Ref<readonly string[]>>
+		}` },
+				category: 'expose',
+			},
+		},
+		successes: {
+			description: 'Tableaux réactif contenant tous les messages de succès. Combine les succès injectés via successMessages et ceux générés par customSuccessRules. Les doublons sont supprimés et le tableau est limité selon maxErrors. Accessible via template ref du composant.',
+			table: {
+				type: { summary: `{
+			fromDate: Readonly<Ref<readonly string[]>>,
+			toDate: Readonly<Ref<readonly string[]>>
+		}` },
+				category: 'expose',
+			},
+		},
+		isValid: {
+			description: 'Vrai si le champ est valide.',
+			table: {
+				type: { summary: 'boolean' },
+				category: 'expose',
+			},
+		},
+		validateOnSubmit: {
+			description: 'Fonction qui permet de déclencher la validation du champ.',
+			table: {
+				type: { summary: '() => promise<boolean>' },
+				category: 'expose',
+			},
+		},
+		clearValidation: {
+			description: 'Fonction qui permet de réinitialiser la validation du champ.',
+			table: {
+				type: { summary: '() => void' },
+				category: 'expose',
+			},
+		},
 	},
 } as Meta<typeof PeriodField>
 

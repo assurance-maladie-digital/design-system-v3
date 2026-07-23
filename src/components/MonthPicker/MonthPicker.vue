@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed, provide, ref, toRef, useAttrs, type ComponentPublicInstance } from 'vue'
+	import { computed, provide, readonly as readonlyState, ref, toRef, useAttrs, type ComponentPublicInstance } from 'vue'
 	import MonthPickerInput from './MonthPickerText/MonthPickerInput.vue'
 	import MonthPickerVisual from './MonthPickerVisual/MonthPickerVisual.vue'
 	import { watch } from 'vue'
@@ -94,9 +94,9 @@
 	}))
 
 	defineExpose({
-		errors,
-		warnings,
-		successes,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
 		hasError,
 		hasWarning,
 		hasSuccess,

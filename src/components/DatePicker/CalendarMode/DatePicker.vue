@@ -1,25 +1,25 @@
 <script lang="ts" setup>
-	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, useId, type ComponentPublicInstance, type Ref } from 'vue'
-	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
-	import DateTextInput from '../DateTextInput/DateTextInput.vue'
-	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
-	import { VDatePicker } from 'vuetify/components'
-	import { useValidatable } from '@/composables/validation/useValidatable'
-	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
-	import { useDateInitialization, type DateModelValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
-	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
-	import { useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString, useDatePickerState, useHolidayHighlighting, useCalendarKeyboardNavigation, useDatePickerFocusTrap, useDatePickerValidation, useDatePickerDerivedValues } from '../composables'
-	import { useDateTextInputProps } from './props/dateTextInputProps'
-	import { useComplexDatePickerProps } from './props/complexDatePickerProps'
-	import { useSyTextFieldProps } from './props/syTextFieldProps'
-	import { DATE_PICKER_MESSAGES } from '../constants/messages'
-	import dayjs from 'dayjs'
-	import customParseFormat from 'dayjs/plugin/customParseFormat'
-	import { mdiCalendarMonthOutline } from '@mdi/js'
-	import type { DateObjectValue, CalendarModeProps } from '../types'
-	import { DatePickerCommonDefaults } from '../types'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
+	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
+	import { useDateInitialization, type DateInput, type DateModelValue } from '@/composables/date/useDateInitializationDayjs'
+	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
+	import { useValidatable } from '@/composables/validation/useValidatable'
+	import { mdiCalendarMonthOutline } from '@mdi/js'
+	import dayjs from 'dayjs'
+	import customParseFormat from 'dayjs/plugin/customParseFormat'
+	import { computed, nextTick, onBeforeUnmount, onMounted, readonly as readonlyState, ref, useId, watch, type ComponentPublicInstance, type Ref } from 'vue'
+	import { VDatePicker } from 'vuetify/components'
+	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
+	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
+	import { useCalendarKeyboardNavigation, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useTodayButton } from '../composables'
+	import { DATE_PICKER_MESSAGES } from '../constants/messages'
+	import DateTextInput from '../DateTextInput/DateTextInput.vue'
+	import type { CalendarModeProps, DateObjectValue } from '../types'
+	import { DatePickerCommonDefaults } from '../types'
+	import { useComplexDatePickerProps } from './props/complexDatePickerProps'
+	import { useDateTextInputProps } from './props/dateTextInputProps'
+	import { useSyTextFieldProps } from './props/syTextFieldProps'
 
 	// Initialiser les plugins dayjs
 	dayjs.extend(customParseFormat)
@@ -771,6 +771,9 @@
 		isDatePickerVisible,
 		selectedDates,
 		errorMessages,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successMessages),
 		handleClickOutside,
 		initializeSelectedDates,
 		updateAccessibility,
@@ -1122,15 +1125,8 @@ $ap-grey-mid: #b0b1b1;
 }
 
 :deep(.v-picker__body .v-btn:focus-visible) {
-	outline: 2px solid rgb(var(--v-theme-primary, '12, 65, 154'));
-
-	.v-btn__overlay {
-		display: none;
-	}
-
-	&::after {
-		display: none;
-	}
+	// Ring du global `_btns.scss` (2px primary). Offset réduit à 1px pour la grille dense
+	outline-offset: 1px;
 }
 
 :deep(.v-date-picker-months) {
@@ -1147,18 +1143,6 @@ $ap-grey-mid: #b0b1b1;
 	:deep(.v-btn__content) {
 		font-size: 1rem;
 		gap: 8px;
-	}
-
-	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-primary, '12, 65, 154'));
-
-		:deep(.v-btn__overlay) {
-			display: none;
-		}
-
-		&::after {
-			display: none;
-		}
 	}
 }
 

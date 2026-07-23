@@ -190,14 +190,13 @@ $list-max-height: 248px;
 		display: none !important;
 	}
 
+	// Ring DS. Le bouton a un fond primary → ring en onPrimary (blanc), inset pour
+	// rester visible sur le navy et ne pas être rogné (onglet ancré au bord du
+	// viewport). L'ancien ring via `::after` était masqué par l'override global
+	// `_btns.scss` (`.v-btn:focus-visible::after { opacity: 0 !important }`) → outline.
 	&:focus-visible {
-		outline: 0;
-
-		&::after {
-			opacity: 1;
-			background-color: transparent !important;
-			border: 2px solid rgb(var(--v-theme-primary));
-		}
+		outline: 2px solid rgb(var(--v-theme-onPrimary));
+		outline-offset: -3px;
 	}
 
 	// Force la couleur blanche du texte dans tous les états
@@ -254,7 +253,6 @@ $list-max-height: 248px;
 	height: 48px !important;
 	border-radius: 0 !important;
 
-	// Désactive l'overlay pour les items de liste aussi
 	:deep(.v-btn__overlay) {
 		background-color: transparent !important;
 		opacity: 0 !important;
@@ -262,12 +260,8 @@ $list-max-height: 248px;
 	}
 
 	&:focus-visible {
-		outline: 0;
-
-		&::after {
-			opacity: 1;
-			border: 2px solid rgb(var(--v-theme-primary));
-		}
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: -2px;
 	}
 }
 

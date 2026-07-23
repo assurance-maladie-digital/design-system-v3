@@ -144,3 +144,9 @@
 		</VForm>
 	</VCard>
 </template>
+
+<style lang="scss" scoped>
+.vd-cookies-card {
+	overflow: visible;
+}
+</style>

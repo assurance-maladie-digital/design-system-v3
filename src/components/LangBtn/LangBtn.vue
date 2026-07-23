@@ -194,10 +194,8 @@
 }
 
 .v-list-item:focus-visible {
-	&::after {
-		color: rgb(var(--v-theme-primary));
-		opacity: 1;
-	}
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: -3px;
 
 	:deep(.v-list-item__overlay) {
 		display: none;
@@ -217,11 +215,7 @@
 	}
 }
 
-.vd-lang-btn:focus-visible {
-	outline: 0;
-}
-
-.vd-lang-btn:focus-visible::after {
-	opacity: 1;
+.v-theme--dark .vd-lang-btn {
+	color: rgb(var(--v-theme-onPrimary)) !important;
 }
 </style>

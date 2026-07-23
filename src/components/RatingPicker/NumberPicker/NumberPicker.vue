@@ -236,8 +236,7 @@
 	}
 }
 
-.sy-number-picker__item:hover,
-.sy-number-picker__item:focus-visible {
+.sy-number-picker__item:hover {
 	background-color: rgba(var(--v-theme-primary), 0.1);
 }
 

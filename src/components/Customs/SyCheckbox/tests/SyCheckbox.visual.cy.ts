@@ -1,5 +1,11 @@
 import SyCheckbox from '../SyCheckbox.vue'
 
+// Déclenche `:focus-visible` via l'option native focus({ focusVisible: true }).
+const focusVisible = (selector: string) =>
+	cy.get(selector).then(($el) => {
+		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
+	})
+
 describe('SyCheckbox - Visual regression tests', () => {
 	it('displays the checkbox unchecked by default', () => {
 		cy.mountWithVuetify(SyCheckbox, {
@@ -57,5 +63,16 @@ describe('SyCheckbox - Visual regression tests', () => {
 
 		cy.get('.v-checkbox').should('be.visible')
 		cy.matchImageSnapshot('sy-checkbox-required', cy.get('.v-checkbox'))
+	})
+
+	// Ring DS au clavier : `.v-selection-control--focus-visible` (2px primary, offset 2px).
+	it('shows the DS ring on the focused checkbox', () => {
+		cy.mountWithVuetify(SyCheckbox, {
+			props: { label: 'J\'accepte les conditions' },
+		})
+
+		focusVisible('.v-checkbox input[type="checkbox"]')
+		cy.wait(150)
+		cy.matchImageSnapshot('sy-checkbox-focus', cy.get('.v-checkbox'))
 	})
 })

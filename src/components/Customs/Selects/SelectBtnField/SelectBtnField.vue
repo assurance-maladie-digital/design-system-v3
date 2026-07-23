@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiCheck } from '@mdi/js'
-	import { computed, ref, watch } from 'vue'
+	import { computed, readonly as readonlyState, ref, watch } from 'vue'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import { useSelectBtnFieldValidation } from './composables/useSelectBtnFieldValidation'
 	import type { SelectBtnItem, SelectBtnValue } from './types'
@@ -59,9 +59,9 @@
 		validateOnSubmit: validate,
 		validate,
 		clearValidation,
-		errors,
-		warnings,
-		successes,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
 		hasError,
 		hasWarning,
 		hasSuccess,
@@ -369,10 +369,18 @@
 	padding: 0;
 	margin: 0;
 	gap: var(--v-gap-2);
+
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 3px;
+		border-radius: var(--v-radius-rounded);
+	}
 }
 
 .select-btn-field__options--inline {
 	flex-flow: row wrap;
+	width: fit-content;
+	max-width: 100%;
 }
 
 .select-btn-field__options--column {
@@ -397,7 +405,7 @@
 
 	&:focus-visible {
 		outline: 2px solid rgb(var(--v-theme-primary));
-		outline-offset: 2px;
+		outline-offset: 3px;
 	}
 
 	&::before {

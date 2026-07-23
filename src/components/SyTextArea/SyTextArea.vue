@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, nextTick, ref, toRef, useId, watch } from 'vue'
+	import { computed, nextTick, readonly as readonlyState, ref, toRef, useId, watch } from 'vue'
 	import { mdiCloseCircle } from '@mdi/js'
 	import type { VTextarea } from 'vuetify/components'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -185,6 +185,12 @@
 		validateOnSubmit,
 		clearField,
 		clearValidation,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 	})
 
 </script>

@@ -188,6 +188,13 @@
 		background: rgb(var(--v-theme-surfaceDim));
 	}
 
+	// Dropzone = `role="button"` custom (pas un `.v-btn`) → non couverte par `_btns.scss`.
+	// Ring DS au clavier uniquement (`:focus-visible`), en plus du fond `:focus-within`.
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 2px;
+	}
+
 	&.dark-mode {
 		&:hover,
 		&:focus-within,

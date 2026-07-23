@@ -37,7 +37,10 @@ describe('Resize columns functionality', () => {
 
 			await separator.trigger('keydown', { key: 'ArrowRight' })
 
-			expect(col1Header.element.style.width).toBe(`110px`)
+			// Le clavier applique la même correction que la souris (`offsetWidth + 24 + 1/2*16`
+			// ≈ +32) pour repartir de la vraie largeur de colonne : 100 + 32 = 132, puis +10.
+			// Sans cette correction, la 1re flèche rétrécissait la colonne (bug corrigé).
+			expect(col1Header.element.style.width).toBe(`142px`)
 		})
 
 		it('should resize the column to the right', async () => {
@@ -73,7 +76,8 @@ describe('Resize columns functionality', () => {
 
 			await separator.trigger('keydown', { key: 'ArrowLeft' })
 
-			expect(col1Header.element.style.width).toBe(`90px`)
+			// Correction +32 comme la souris : 100 + 32 = 132, puis -10.
+			expect(col1Header.element.style.width).toBe(`122px`)
 		})
 	})
 

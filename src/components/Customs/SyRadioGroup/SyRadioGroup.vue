@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 
-	import { computed, nextTick, onMounted, onUpdated, ref } from 'vue'
+	import { computed, nextTick, onMounted, onUpdated, readonly as readonlyState, ref } from 'vue'
 	import type { VRadioGroup } from 'vuetify/components'
 	import { VMessages } from 'vuetify/components'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
@@ -75,6 +75,7 @@
 		hasError,
 		hasWarning,
 		hasSuccess,
+		clearValidation,
 	} = useSyRadioGroupValidation(props, model, focused, locales)
 
 	// Intégration avec le système de validation du formulaire
@@ -129,6 +130,13 @@
 
 	defineExpose({
 		validateOnSubmit,
+		clearValidation,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 	})
 
 </script>
@@ -157,36 +165,37 @@
 		:error-messages="hasError ? errors : undefined"
 		:aria-describedby="messageId"
 	>
-		<v-radio
-			v-for="opt in props.options"
-			:key="opt.value"
-			:value="opt.value"
-			role="radio"
-			:label="opt.label"
-			:aria-checked="getAriaChecked(opt.value)"
-			@focus="focused = true"
-			@blur="focused = false"
-		/>
 		<template
 			v-if="$slots.label"
 			#label
 		>
 			<slot name="label" />
 		</template>
-		<template
-			v-if="$slots.default"
-			#default
-		>
-			<slot />
+
+		<template #default>
+			<slot>
+				<v-radio
+					v-for="opt in props.options"
+					:key="opt.value"
+					:value="opt.value"
+					role="radio"
+					:label="opt.label"
+					:aria-checked="getAriaChecked(opt.value)"
+					@focus="focused = true"
+					@blur="focused = false"
+				/>
+			</slot>
+
+			<span
+				v-if="messageId && props.required && !props.ariaLabel && !props.ariaLabelledby"
+				:id="messageId"
+				class="d-sr-only"
+			>
+				{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '')
+				}}</span>.
+			</span>
 		</template>
-		<span
-			v-if="messageId && props.required && !props.ariaLabel && !props.ariaLabelledby"
-			:id="messageId"
-			class="d-sr-only"
-		>
-			{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '')
-			}}</span>.
-		</span>
+
 		<template
 			v-if="(!hasError && (hasWarning || (hasSuccess && props.showSuccessMessages))) || showHelpTextAsMessage"
 			#details
@@ -225,6 +234,12 @@
 
 :deep(.v-selection-control--error .v-selection-control__input) {
 	color: rgb(var(--v-theme-error));
+}
+
+:deep(.v-selection-control--focus-visible) {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 2px;
+	border-radius: 4px;
 }
 
 :deep(.sy-radio-group__messages) {

@@ -125,23 +125,14 @@
 		float: left;
 	}
 
-	.notification__close:focus-visible {
-		:deep(.v-btn__overlay) {
-			display: none;
-		}
-
-		&::after {
-			display: none;
-		}
-	}
-
 	/* stylelint-disable custom-property-pattern */
 	.notification--info {
 		background-color: rgb(var(--v-theme-info));
 		color: rgb(var(--v-theme-onPrimary));
 
-		.notification__close:focus-visible {
-			outline: 2px solid rgb(var(--v-theme-onPrimary));
+		:deep(button:focus-visible),
+		:deep(a:focus-visible) {
+			outline-color: rgb(var(--v-theme-onPrimary));
 		}
 	}
 
@@ -149,8 +140,9 @@
 		background-color: rgb(var(--v-theme-success, '86, 194, 113'));
 		color: rgb(var(--v-theme-onSuccess));
 
-		.notification__close:focus-visible {
-			outline: 2px solid rgb(var(--v-theme-onSuccess));
+		:deep(button:focus-visible),
+		:deep(a:focus-visible) {
+			outline-color: rgb(var(--v-theme-onSuccess));
 		}
 	}
 
@@ -158,8 +150,9 @@
 		background-color: rgb(var(--v-theme-warning));
 		color: rgb(var(--v-theme-onWarning));
 
-		.notification__close:focus-visible {
-			outline: 2px solid rgb(var(--v-theme-onSurface));
+		:deep(button:focus-visible),
+		:deep(a:focus-visible) {
+			outline-color: rgb(var(--v-theme-onSurface));
 		}
 	}
 
@@ -167,8 +160,9 @@
 		background-color: rgb(var(--v-theme-error));
 		color: rgb(var(--v-theme-onPrimary));
 
-		.notification__close:focus-visible {
-			outline: 2px solid rgb(var(--v-theme-onPrimary));
+		:deep(button:focus-visible),
+		:deep(a:focus-visible) {
+			outline-color: rgb(var(--v-theme-onPrimary));
 		}
 	}
 

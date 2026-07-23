@@ -3,20 +3,20 @@
 	defineOptions({
 		inheritAttrs: false,
 	})
-	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
-	import { ref, useId, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, useAttrs } from 'vue'
-	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
+	import IconSlot from '@/components/Common/IconSlot/IconSlot.vue'
+	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+	import { useLocales } from '@/composables/useLocales'
 	import type { ColorType, IconType, VariantStyle } from '@/types/vuetifyTypes'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
+	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
+	import { computed, nextTick, onBeforeUnmount, onMounted, readonly as readonlyState, ref, useAttrs, useId, watch, watchEffect } from 'vue'
 	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
-	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
-	import IconSlot from '@/components/Common/IconSlot/IconSlot.vue'
-	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import { locales as defaultLocales } from './locales'
-	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { useSySelectValidation } from './composables/useSySelectValidation'
-	import { useLocales } from '@/composables/useLocales'
-	import type { DeepPartial } from '@/utils/locales/mergeLocales'
+	import { locales as defaultLocales } from './locales'
 
 	export type ItemType = {
 		[key: string]: unknown
@@ -93,8 +93,6 @@
 		},
 	)
 
-	// `locales` est exposé via la prop du même nom (défaut : module `locales`).
-	// Le template y accède directement par son nom.
 	const locales = useLocales(defaultLocales, () => props.locales)
 
 	// pr récupérer proprement aria-label
@@ -854,6 +852,13 @@
 		isOpen,
 		closeList,
 		validateOnSubmit: validate,
+		clearValidation,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 	})
 
 	// on reprend la mm methode que pour le datepicker : useDatePickerAccesssibity (updateAccessibility)
@@ -1366,8 +1371,10 @@
 	background-color: rgb(0 0 0 / 8%);
 }
 
-.v-list-item.active {
-	background-color: rgb(0 0 0 / 8%);
+/* `.active` couvre aussi l'option active au clavier (aria-activedescendant) : pas de fond ici,
+   sinon le focus afficherait un fond gris. Le fond de sélection vient de `--selected`. */
+.v-list-item.active:not(.v-list-item--selected) {
+	background-color: transparent;
 }
 
 .help-text {
@@ -1390,12 +1397,12 @@
 	color: rgba(var(--v-theme-onSurface), var(--v-disabled-opacity));
 }
 
-/* Ensure focus styles match selection styles for keyboard navigation */
+/* Focus = anneau seul (pas de fond) ; le fond gris reste réservé au survol (:hover) et à la
+   sélection (.active / --selected). */
 .v-list-item:focus-visible,
 .v-list-item.keyboard-focused {
 	outline: 2px solid rgb(var(--v-theme-primary));
 	outline-offset: -2px;
-	background-color: rgb(0 0 0 / 8%);
 }
 
 .v-list-item :deep(.v-list-item__overlay) {
@@ -1447,6 +1454,14 @@
 
 	.v-icon {
 		position: static;
+	}
+
+	// `<button>` natif (pas un `.v-btn`) → non couvert par `_btns.scss`. Ring DS primary,
+	// collé (offset 1px) car bouton-icône positionné dans le bord du champ.
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 1px;
+		border-radius: 4px;
 	}
 }
 

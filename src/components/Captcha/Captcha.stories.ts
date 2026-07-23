@@ -180,22 +180,6 @@ export default {
 				category: 'expose',
 			},
 		},
-		'clearValidation': {
-			description: 'Méthode exposée pour effacer la validation du captcha.',
-			control: false,
-			table: {
-				type: { summary: '() => void' },
-				category: 'expose',
-			},
-		},
-		'validateOnSubmit': {
-			description: 'Méthode exposée pour déclencher les règles de validation.',
-			control: false,
-			table: {
-				type: { summary: '() => Promise<boolean>' },
-				category: 'expose',
-			},
-		},
 		'reset': {
 			description: 'Méthode exposée pour réinitialiser le captcha.',
 			control: false,

@@ -134,3 +134,24 @@ describe('UserMenuBtn', () => {
 		expect(wrapper.props('logoutText')).toBe(defaultLogoutText)
 	})
 })
+
+// UserMenuBtn est un wrapper de SyBtnMenu : le focus est délégué (activateur = override
+// global _btns.scss, items = _menus.scss). jsdom ne calcule pas :focus-visible : on
+// vérifie le prérequis — l'activateur est un <button> natif focusable.
+describe('UserMenuBtn - focus', () => {
+	const menuItems = [{ text: 'Mon compte', value: 'account' }]
+
+	it('renders the activator as a native <button> so the global focus ring applies', () => {
+		const wrapper = mount(UserMenuBtn, { props: { menuItems } })
+		expect(wrapper.get('.sy-user-menu-btn').element.tagName).toBe('BUTTON')
+		wrapper.unmount()
+	})
+
+	it('is focusable', () => {
+		const wrapper = mount(UserMenuBtn, { props: { menuItems }, attachTo: document.body })
+		const button = wrapper.get('.sy-user-menu-btn').element as HTMLButtonElement
+		button.focus()
+		expect(document.activeElement).toBe(button)
+		wrapper.unmount()
+	})
+})

@@ -67,12 +67,4 @@
 		display: none;
 	}
 }
-
-.sy-back-btn:focus-visible {
-	outline: 0;
-}
-
-.sy-back-btn:focus-visible::after {
-	opacity: 1;
-}
 </style>
