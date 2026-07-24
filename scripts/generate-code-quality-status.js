@@ -1,4 +1,5 @@
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs'
+import { getComponentDocumentationDetails } from './get-component-documentation.js'
 import path from 'node:path'
 import { globSync } from 'glob'
 
@@ -82,54 +83,6 @@ function getCategory(storybookTitle = '') {
 	}
 
 	return parts[1] || 'Autres'
-}
-
-function extractArgTypesBlock(content) {
-	const match = content.match(/argTypes\s*:\s*{([\s\S]*?)},?\s*(args|parameters|render|tags|}\s*satisfies|}\s*as|}\s*;)/)
-	return match?.[1] || ''
-}
-
-function extractPropsFromArgTypes(content) {
-	const block = extractArgTypesBlock(content)
-	if (!block) return []
-
-	const props = new Set()
-	const propRegex = /^\s{2,}([a-zA-Z_$][\w$]*)\s*:\s*{/gm
-
-	let match
-
-	while ((match = propRegex.exec(block)) !== null) {
-		const prop = match[1]
-
-		if (!['control', 'description', 'table', 'type', 'defaultValue'].includes(prop)) {
-			props.add(prop)
-		}
-	}
-
-	return Array.from(props)
-}
-
-function getPropsAndSlotsDocumentationDetails(content) {
-	const props = extractPropsFromArgTypes(content)
-
-	const slots = Array.from(
-		content.matchAll(/table\s*:\s*{[\s\S]*?category\s*:\s*['"`]slots['"`][\s\S]*?}/gi),
-	).map((_, index) => `slot-${index}`)
-
-	const documentedProps = props.filter((prop) => {
-		const propRegex = new RegExp(`${prop}\\s*:\\s*{[\\s\\S]*?description\\s*:`, 'm')
-		return propRegex.test(content)
-	})
-
-	const total = props.length + slots.length
-	const documented = documentedProps.length + slots.length
-
-	return {
-		total,
-		documented,
-		label: `${documented}/${total} documentés`,
-		isComplete: total > 0 && documented === total,
-	}
 }
 
 function hasSourceCode(content) {
@@ -293,16 +246,21 @@ function main() {
 			|| getStorybookTitle(content, componentName)
 			|| componentName
 
-		// if (!storyFile) {
-		// 	console.log(
-		// 		`Storie introuvable : ${component.componentName}`,
-		// 	)
-		// }
-
 		const effectiveComponentDir = storyFile
 			? path.dirname(storyFile)
 			: path.join(root, 'src/components', component.componentName)
 
+		const vueFiles = globSync('**/*.vue', {
+			cwd: effectiveComponentDir,
+			absolute: true,
+		})
+
+		const componentVueFile
+	= vueFiles.find(file =>
+		path.basename(file, '.vue').toLowerCase()
+		=== componentName.toLowerCase(),
+	)
+	?? vueFiles[0]
 		const mdxPath = storyFile
 			? storyFile.replace(/\.stories\.(js|ts|tsx)$/, '.mdx')
 			: ''
@@ -315,7 +273,10 @@ function main() {
 			nodir: true,
 		})
 
-		const propsDetails = getPropsAndSlotsDocumentationDetails(content)
+		const propsDetails = getComponentDocumentationDetails(
+			componentVueFile, content,
+		)
+
 		const propsDocumentation = propsDetails.isComplete
 		const sourceTab = hasSourceCode(content)
 		const requiredStoriesStatus = getRequiredStoriesStatus(content, storybookTitle)
