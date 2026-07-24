@@ -25,7 +25,7 @@
     "src/vuetifyConfig.ts"
   ],
   "exclude": [
-    "**/*.visual.cy.ts",
+    "**/*.cy.ts",
     "cypress/**/*",
     "tests/**",
     "**/__tests__/**",

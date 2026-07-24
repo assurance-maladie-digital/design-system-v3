@@ -1,6 +1,7 @@
 import { type Ref, type ComponentPublicInstance, type MaybeRef, unref } from 'vue'
 import type { ValidationRule } from '@/composables/validation/useValidation'
 import type { DateObjectValue } from '../types'
+import { locales } from '../locales'
 import { useDateInputEditing } from './useDateInputEditing'
 import { useDateRangeInput } from './useDateRangeInput'
 
@@ -105,7 +106,7 @@ export function useInputHandler(options: InputHandlerOptions) {
 		const previousValue = displayFormattedDate.value
 
 		// Vérifier si la valeur contient déjà un séparateur de plage
-		if (previousValue.includes(' - ') || value.includes(' - ')) {
+		if (previousValue.includes(locales.rangeSeparator) || value.includes(locales.rangeSeparator)) {
 			return false
 		}
 
@@ -128,7 +129,7 @@ export function useInputHandler(options: InputHandlerOptions) {
 			const formattedDate = formatDate(date, unref(format))
 
 			// Ajouter le séparateur de plage
-			const newValue = `${formattedDate} - `
+			const newValue = `${formattedDate}${locales.rangeSeparator}`
 			displayFormattedDate.value = newValue
 			emitInput(newValue)
 
@@ -138,8 +139,8 @@ export function useInputHandler(options: InputHandlerOptions) {
 			// Mettre à jour la position du curseur après le séparateur
 			const inputElement = inputRef.value?.$el?.querySelector('input')
 
-			// Positionner le curseur après le séparateur ' - '
-			const cursorPosition = formattedDate.length + 3 // longueur de la date formatée + longueur du séparateur
+			// Positionner le curseur après le séparateur de plage
+			const cursorPosition = formattedDate.length + locales.rangeSeparator.length // longueur de la date formatée + longueur du séparateur
 
 			// Utiliser setTimeout pour s'assurer que le positionnement du curseur se fait après le rendu
 			setTimeout(() => {
@@ -159,16 +160,16 @@ export function useInputHandler(options: InputHandlerOptions) {
 		const previousValue = displayFormattedDate.value
 
 		// Vérifier si la valeur précédente contient déjà un séparateur de plage
-		if (previousValue.includes(' - ')) {
+		if (previousValue.includes(locales.rangeSeparator)) {
 			// Si la valeur précédente se termine par le séparateur, c'est qu'on commence à saisir la seconde date
-			if (previousValue.endsWith(' - ') && value.length > previousValue.length) {
+			if (previousValue.endsWith(locales.rangeSeparator) && value.length > previousValue.length) {
 				// La nouvelle valeur doit commencer par la première partie + séparateur
-				const firstPart = previousValue.substring(0, previousValue.length - 3) // Enlever ' - '
+				const firstPart = previousValue.substring(0, previousValue.length - locales.rangeSeparator.length) // Enlever le séparateur de plage
 				const secondPart = value.substring(previousValue.length)
 
 				// Formater la seconde partie avec le composable useDateInputEditing
 				const { formatted, cursorPos: newPos } = dateInputEditing.formatDateInput(secondPart, secondPart.length)
-				const newValue = `${firstPart} - ${formatted}`
+				const newValue = `${firstPart}${locales.rangeSeparator}${formatted}`
 				displayFormattedDate.value = newValue
 				emitInput(newValue)
 
@@ -191,19 +192,19 @@ export function useInputHandler(options: InputHandlerOptions) {
 			}
 
 			// Si nous avons déjà une partie de la seconde date, continuer à éditer cette partie
-			const parts = previousValue.split(' - ')
+			const parts = previousValue.split(locales.rangeSeparator)
 			if (parts.length === 2 && parts[1]!.length > 0) {
 				// Vérifier si la nouvelle valeur contient la première partie et le séparateur
-				if (value.startsWith(parts[0] + ' - ')) {
+				if (value.startsWith(parts[0] + locales.rangeSeparator)) {
 					// Extraire la nouvelle seconde partie
-					const secondPart = value.substring((parts[0] + ' - ').length)
+					const secondPart = value.substring((parts[0] + locales.rangeSeparator).length)
 
 					// Formater la seconde partie avec le composable useDateInputEditing
-					const secondPartCursorPos = value.length - (parts[0]!.length + 3)
+					const secondPartCursorPos = value.length - (parts[0]!.length + locales.rangeSeparator.length)
 					const { formatted, cursorPos: newPos } = dateInputEditing.formatDateInput(secondPart, secondPartCursorPos)
 
 					// Créer la nouvelle valeur formatée
-					const newValue = `${parts[0]} - ${formatted}`
+					const newValue = `${parts[0]}${locales.rangeSeparator}${formatted}`
 					displayFormattedDate.value = newValue
 					emitInput(newValue)
 
@@ -220,7 +221,7 @@ export function useInputHandler(options: InputHandlerOptions) {
 					// Mettre à jour la position du curseur après le séparateur et la seconde partie formatée
 					const inputElement = inputRef.value?.$el?.querySelector('input')
 					// Calculer la position du curseur : longueur de la première partie + longueur du séparateur + nouvelle position du curseur dans la seconde partie
-					const cursorPosition = parts[0]!.length + 3 + newPos
+					const cursorPosition = parts[0]!.length + locales.rangeSeparator.length + newPos
 					updateCursorPosition(inputElement, cursorPosition)
 					return true
 				}
@@ -237,24 +238,24 @@ export function useInputHandler(options: InputHandlerOptions) {
 		let newCursorPos = cursorPos
 
 		// Si la valeur contient déjà un séparateur de plage
-		if (value.includes(' - ')) {
-			const parts = value.split(' - ')
+		if (value.includes(locales.rangeSeparator)) {
+			const parts = value.split(locales.rangeSeparator)
 			if (parts.length === 2) {
 				// Déterminer quelle partie est en cours d'édition
 				const firstPartLength = parts[0]!.length
-				const separatorLength = 3 // ' - '
+				const separatorLength = locales.rangeSeparator.length
 
 				if (cursorPos <= firstPartLength) {
 					// Édition de la première partie
 					const { formatted, cursorPos: newPos } = dateInputEditing.formatDateInput(parts[0]!, cursorPos)
-					formattedInput = `${formatted} - ${parts[1]}`
+					formattedInput = `${formatted}${locales.rangeSeparator}${parts[1]}`
 					newCursorPos = newPos
 				}
 				else {
 					// Édition de la seconde partie
 					const secondPartCursorPos = cursorPos - (firstPartLength + separatorLength)
 					const { formatted, cursorPos: newPos } = dateInputEditing.formatDateInput(parts[1]!, secondPartCursorPos)
-					formattedInput = `${parts[0]} - ${formatted}`
+					formattedInput = `${parts[0]}${locales.rangeSeparator}${formatted}`
 					newCursorPos = newPos + (firstPartLength + separatorLength)
 				}
 			}

@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
-import { VIcon } from 'vuetify/components'
 import { ref } from 'vue'
 
 import SyTextField from '../SyTextField.vue'
@@ -104,28 +103,61 @@ describe('SyTextField', () => {
 
 	it('emits prepend-icon-click event when prepend icon is clicked', async () => {
 		const wrapper = mount(SyTextField, {
-			props: { prependIcon: 'info' as IconType, label: 'Test Field' },
+			props: { prependIcon: 'calendar' as IconType, label: 'Test Field', disableClickButton: false },
 		})
 
 		await wrapper.vm.$nextTick()
-		const prependIcon = wrapper.findComponent(VIcon)
-		expect(prependIcon.exists()).toBe(true)
-		await prependIcon.trigger('click')
+		const prependButton = wrapper.find('.sy-text-field__icon-button')
+		expect(prependButton.exists()).toBe(true)
+		await prependButton.trigger('click')
 		await wrapper.vm.$nextTick()
 		expect(wrapper.emitted('prepend-icon-click')).toBeTruthy()
 	})
 
 	it('emits append-icon-click event when append icon is clicked', async () => {
 		const wrapper = mount(SyTextField, {
-			props: { appendIcon: 'info' as IconType, label: 'Test Field' },
+			props: { appendIcon: 'calendar' as IconType, label: 'Test Field', disableClickButton: false },
 		})
 
 		await wrapper.vm.$nextTick()
-		const appendIcon = wrapper.findComponent(VIcon)
-		expect(appendIcon.exists()).toBe(true)
-		await appendIcon.trigger('click')
+		const appendButton = wrapper.find('.sy-text-field__icon-button')
+		expect(appendButton.exists()).toBe(true)
+		await appendButton.trigger('click')
 		await wrapper.vm.$nextTick()
 		expect(wrapper.emitted('append-icon-click')).toBeTruthy()
+	})
+
+	it('disables prepend icon button when the field is readonly', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				prependIcon: 'calendar' as IconType,
+				label: 'Test Field',
+				disableClickButton: false,
+				readonly: true,
+			},
+		})
+
+		const prependButton = wrapper.find('.sy-text-field__icon-button')
+		expect(prependButton.attributes('disabled')).toBeDefined()
+		expect(prependButton.attributes('aria-disabled')).toBe('true')
+		await prependButton.trigger('click')
+		expect(wrapper.emitted('prepend-icon-click')).toBeFalsy()
+	})
+
+	it('prevents mousedown on icon buttons from blurring the input first', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				prependIcon: 'calendar' as IconType,
+				label: 'Test Field',
+				disableClickButton: false,
+			},
+		})
+
+		const prependButton = wrapper.find('.sy-text-field__icon-button')
+		const mouseDownEvent = new MouseEvent('mousedown', { bubbles: true, cancelable: true })
+		prependButton.element.dispatchEvent(mouseDownEvent)
+
+		expect(mouseDownEvent.defaultPrevented).toBe(true)
 	})
 
 	it('does not propagate click from clear button to parent container', async () => {

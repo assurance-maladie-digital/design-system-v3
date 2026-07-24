@@ -1,50 +1,35 @@
+import { locales } from '../locales'
+
 /**
- * Fichier contenant toutes les constantes de textes utilisées dans les composants/composables CalendarMode
+ * Fichier contenant toutes les constantes de textes utilisées dans les composants/composables CalendarMode.
+ * Conservé pour compatibilité ascendante ; les textes sont désormais centralisés dans locales.ts.
  */
 
 export const DATE_PICKER_MESSAGES = {
-	// Labels et placeholders
-	LABEL_DEFAULT: 'Date',
-
-	// Messages d'erreur
-	ERROR_REQUIRED: 'La date est requise.',
-	ERROR_INVALID_FORMAT: 'Le format de la date est invalide.',
-	ERROR_INVALID_DATE: 'La date saisie est invalide.',
-	ERROR_INVALID_FORMAT_WITH_FORMAT: (format: string): string => `Format de date invalide (${format})`,
-	ERROR_INCOMPLETE_DATE: 'La date est incomplète.',
-	ERROR_INVALID_RANGE: 'La plage de dates est invalide.',
-	ERROR_START_DATE_MISSING: 'La date de début est manquante.',
-	ERROR_END_DATE_MISSING: 'La date de fin est manquante.',
-	ERROR_END_BEFORE_START: 'La date de fin doit être postérieure à la date de début.',
-	ERROR_INVALID_FORMAT_START: 'Format de date invalide pour la date de début',
-	ERROR_INVALID_FORMAT_END: 'Format de date invalide pour la date de fin',
-
-	// Messages de succès
-	SUCCESS_VALID_DATE: 'La date est valide.',
-
-	// Messages d'accessibilité
-	ARIA_DATE_INPUT: 'Date en cours de saisie',
-	ARIA_CALENDAR_BUTTON: 'Ouvrir le calendrier',
-	ARIA_TODAY_BUTTON: 'Sélectionner aujourd\'hui',
-
-	// Boutons et actions
-	BUTTON_TODAY: 'Aujourd\'hui',
-	BUTTON_CLEAR: 'Effacer',
-	BUTTON_CLOSE: 'Fermer',
-
-	// Formats de date
-	FORMAT_DEFAULT: 'DD/MM/YYYY',
-
-	// Descriptions des mois pour l'accessibilité
-	MONTH_NAMES: [
-		'janvier', 'février', 'mars', 'avril', 'mai', 'juin',
-		'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre',
-	],
-
-	// Descriptions des jours pour l'accessibilité
-	DAY_NAMES: ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'],
-
-	// Autres messages
-	DATE_SEPARATOR: '/',
-	RANGE_SEPARATOR: ' - ',
+	LABEL_DEFAULT: locales.label,
+	ERROR_REQUIRED: locales.required,
+	ERROR_INVALID_FORMAT: locales.invalidDateFormat,
+	ERROR_INVALID_DATE: locales.invalidDate,
+	ERROR_INVALID_FORMAT_WITH_FORMAT: locales.invalidDateFormatWithFormat,
+	ERROR_INCOMPLETE_DATE: locales.incompleteDate,
+	ERROR_INVALID_RANGE: locales.invalidRange,
+	ERROR_START_DATE_MISSING: locales.startDateMissing,
+	ERROR_END_DATE_MISSING: locales.endDateMissing,
+	ERROR_END_BEFORE_START: locales.endBeforeStart,
+	ERROR_INVALID_FORMAT_START: locales.invalidStartDateFormat,
+	ERROR_INVALID_FORMAT_END: locales.invalidEndDateFormat,
+	SUCCESS_VALID_DATE: locales.validDate,
+	ARIA_DATE_INPUT: locales.dateInputDescription,
+	ARIA_CALENDAR_BUTTON: locales.openCalendar,
+	ARIA_CALENDAR_MONTH_BUTTON: locales.selectMonth,
+	ARIA_CALENDAR_YEAR_BUTTON: locales.selectYear,
+	ARIA_TODAY_BUTTON: locales.buttonToday,
+	BUTTON_TODAY: locales.buttonToday,
+	BUTTON_CLEAR: locales.buttonClear,
+	BUTTON_CLOSE: locales.buttonClose,
+	FORMAT_DEFAULT: locales.formatDefault,
+	MONTH_NAMES: locales.monthNames,
+	DAY_NAMES: locales.dayNames,
+	DATE_SEPARATOR: locales.dateSeparator,
+	RANGE_SEPARATOR: locales.rangeSeparator,
 }

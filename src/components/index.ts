@@ -1,3 +1,8 @@
+import DialogBoxComponent from './DialogBox/DialogBox.vue'
+import type { DialogBoxPublicProps } from './DialogBox/types'
+import type { SyTextAreaPublicProps } from './SyTextArea/types'
+import SyTextAreaComponent from './SyTextArea/SyTextArea.vue'
+
 // ===========================
 // Structure
 // ===========================
@@ -70,7 +75,11 @@ export { indicatifs } from './PhoneField/indicatifs'
 export { default as PhoneField } from './PhoneField/PhoneField.vue'
 export { default as RangeField } from './RangeField/RangeField.vue'
 export { default as SearchListField } from './SearchListField/SearchListField.vue'
-export { default as SyTextArea } from './SyTextArea/SyTextArea.vue'
+export const SyTextArea = SyTextAreaComponent as typeof SyTextAreaComponent & {
+	new (): {
+		$props: SyTextAreaPublicProps
+	}
+}
 export { default as UploadWorkflow } from './UploadWorkflow/UploadWorkflow.vue'
 
 // ===========================
@@ -111,7 +120,11 @@ export { default as CookieBanner } from './CookieBanner/CookieBanner.vue'
 export { default as CookiesInformation } from './CookiesSelection/CookiesInformation/CookiesInformation.vue'
 export { default as CookiesSelection } from './CookiesSelection/CookiesSelection.vue'
 export { default as CookiesTable } from './CookiesSelection/CookiesTable/CookiesTable.vue'
-export { default as DialogBox } from './DialogBox/DialogBox.vue'
+export const DialogBox = DialogBoxComponent as typeof DialogBoxComponent & {
+	new (): {
+		$props: DialogBoxPublicProps
+	}
+}
 export { default as NotificationBar } from './NotificationBar/NotificationBar.vue'
 export * from './NotificationBar/types'
 export { default as RatingPicker } from './RatingPicker/RatingPicker.vue'
