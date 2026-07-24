@@ -17,6 +17,12 @@ export interface CalendarKeyboardNavigationOptions {
 
 	// Applique la nouvelle date (typiquement via updateSelectedDates)
 	setCurrentDate: (date: Date) => void
+
+	// Déclenche la sélection effective de la date courante
+	onSelectDate?: (date: Date) => void
+
+	// Renvoie la date sur laquelle placer le focus à l'ouverture (date sélectionnée ou aujourd'hui)
+	getInitialFocusDate?: () => Date
 }
 
 export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigationOptions) => {
@@ -25,13 +31,23 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		datePickerRef,
 		getCurrentDate,
 		setCurrentDate,
+		getInitialFocusDate,
+		onSelectDate,
 	} = options
 
 	const addDays = (date: Date, amount: number) => dayjs(date).add(amount, 'day').toDate()
-	const addMonths = (date: Date, amount: number) => dayjs(date).add(amount, 'month').toDate()
-	const addYears = (date: Date, amount: number) => dayjs(date).add(amount, 'year').toDate()
 
 	const toISO = (date: Date) => dayjs(date).format('YYYY-MM-DD')
+
+	const getStartOfDisplayedWeek = (date: Date) => {
+		const mondayBasedOffset = (date.getDay() + 6) % 7
+		return addDays(date, -mondayBasedOffset)
+	}
+
+	const getEndOfDisplayedWeek = (date: Date) => {
+		const startOfWeek = getStartOfDisplayedWeek(date)
+		return addDays(startOfWeek, 6)
+	}
 
 	let isListenerAttached = false
 	let attachTimeoutId: ReturnType<typeof setTimeout> | undefined
@@ -50,7 +66,8 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		const targetBtn = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>('.v-date-picker-months button')
 		if (!targetBtn) return false
 
-		const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.v-date-picker-months button')).filter(btn => !btn.disabled)
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		const buttons = Array.from((rootEl ?? document).querySelectorAll<HTMLButtonElement>('.v-date-picker-months button')).filter(btn => !btn.disabled)
 		if (buttons.length === 0) return false
 
 		const currentIndex = buttons.indexOf(targetBtn)
@@ -106,7 +123,8 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		const targetBtn = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>('.v-date-picker-years button')
 		if (!targetBtn) return false
 
-		const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.v-date-picker-years button')).filter(btn => !btn.disabled)
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		const buttons = Array.from((rootEl ?? document).querySelectorAll<HTMLButtonElement>('.v-date-picker-years button')).filter(btn => !btn.disabled)
 		if (buttons.length === 0) return false
 
 		const currentIndex = buttons.indexOf(targetBtn)
@@ -289,48 +307,6 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		}
 	}
 
-	const clickDateButton = (date: Date) => {
-		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
-		if (!rootEl) return
-
-		const iso = toISO(date)
-
-		// Essayer plusieurs sélecteurs pour trouver le bouton du jour
-		const selectors = [
-			`[data-v-date="${iso}"] > [type="button"]`, // Bouton enfant direct avec data-v-date
-			`[data-v-date="${iso}"] button`, // N'importe quel bouton dans l'élément avec data-v-date
-			`[data-v-date="${iso}"] .v-btn`, // Bouton Vuetify spécifique avec data-v-date
-			`[data-v-date="${iso}"] [role="button"]`, // Élément avec role="button" et data-v-date
-			// Sélecteurs Vuetify sans data-v-date
-			`.v-date-picker-month__day:has(.v-btn[aria-label*="${date.getDate()}"]) .v-btn`,
-			`.v-date-picker-month__day .v-btn[aria-label*="${date.getDate()}"]`,
-		]
-
-		let dayButton: HTMLButtonElement | null = null
-		for (const selector of selectors) {
-			dayButton = rootEl.querySelector<HTMLButtonElement>(selector)
-			if (dayButton) {
-				break
-			}
-		}
-
-		// Si aucun sélecteur précis ne fonctionne, chercher par aria-label complet
-		if (!dayButton) {
-			const ariaLabelPattern = new RegExp(`\\b${date.getDate()}\\b`)
-			const allButtons = rootEl.querySelectorAll<HTMLElement>('.v-date-picker-month__day .v-btn')
-			for (const button of allButtons) {
-				const ariaLabel = button.getAttribute('aria-label')
-				if (ariaLabel && ariaLabelPattern.test(ariaLabel)) {
-					dayButton = button as HTMLButtonElement
-					break
-				}
-			}
-		}
-
-		dayButton?.click()
-		dayButton?.focus()
-	}
-
 	const handleArrowNavigation = (event: KeyboardEvent) => {
 		if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(event.key)) {
 			return
@@ -395,20 +371,22 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 		let nextDate = current
 		if (event.key === 'Home') {
-			nextDate = dayjs(current).startOf('month').toDate()
+			nextDate = getStartOfDisplayedWeek(current)
 		}
 		else if (event.key === 'End') {
-			nextDate = dayjs(current).endOf('month').toDate()
+			nextDate = getEndOfDisplayedWeek(current)
 		}
 		else if (event.key === 'PageUp') {
-			nextDate = event.shiftKey ? addYears(current, -1) : addMonths(current, -1)
-			// Focus sur le premier jour du mois précédent
-			nextDate = dayjs(nextDate).startOf('month').toDate()
+			const currentDay = dayjs(current).date()
+			const base = event.shiftKey ? dayjs(current).add(-1, 'year') : dayjs(current).add(-1, 'month')
+			const clampedDay = Math.min(currentDay, base.daysInMonth())
+			nextDate = base.date(clampedDay).toDate()
 		}
 		else if (event.key === 'PageDown') {
-			nextDate = event.shiftKey ? addYears(current, 1) : addMonths(current, 1)
-			// Focus sur le premier jour du mois suivant
-			nextDate = dayjs(nextDate).startOf('month').toDate()
+			const currentDay = dayjs(current).date()
+			const base = event.shiftKey ? dayjs(current).add(1, 'year') : dayjs(current).add(1, 'month')
+			const clampedDay = Math.min(currentDay, base.daysInMonth())
+			nextDate = base.date(clampedDay).toDate()
 		}
 
 		setCurrentDate(nextDate)
@@ -436,9 +414,10 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		const { date: current, fromDayCell } = getBaseDateFromEvent(event)
 		if (!current || !fromDayCell) return
 
-		// Enter/Space : empêcher le scroll et déclencher la sélection explicite
-		event.preventDefault()
-		clickDateButton(current)
+		// Enter/Space sur un jour : laisser VDatePicker gérer le clic natif
+		// (la sélection + fermeture se font via v-model et le watcher)
+		setCurrentDate(current)
+		onSelectDate?.(current)
 	}
 
 	const keydownListener = (event: Event) => {
@@ -540,9 +519,31 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		isListenerAttached = false
 	}
 
+	const focusInitialDay = () => {
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		if (!rootEl) return
+
+		const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
+		const iso = toISO(targetDate)
+		let dayBtn = rootEl.querySelector<HTMLElement>(`[data-v-date="${iso}"] button`)
+		if (!dayBtn) {
+			// Fallback: lire le mois affiché depuis le DOM et focusser le 1er jour non-adjacent
+			const allDates = Array.from(rootEl.querySelectorAll<HTMLElement>('[data-v-date]'))
+			const nonAdjacent = allDates.filter(el => !el.classList.contains('v-date-picker-month__day--adjacent'))
+			if (nonAdjacent.length > 0) {
+				const firstEl = nonAdjacent[0]!
+				dayBtn = firstEl.querySelector<HTMLElement>('button')
+			}
+		}
+		dayBtn?.focus({ preventScroll: true })
+	}
+
 	watch(isDatePickerVisible, (visible) => {
 		if (visible) {
-			nextTick(attachListeners)
+			nextTick(() => {
+				attachListeners()
+				nextTick(focusInitialDay)
+			})
 		}
 		else {
 			detachListeners()
@@ -562,5 +563,6 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	return {
 		attachListeners,
 		detachListeners,
+		focusInitialDay,
 	}
 }

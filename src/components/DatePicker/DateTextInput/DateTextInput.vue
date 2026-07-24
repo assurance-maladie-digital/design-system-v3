@@ -9,7 +9,7 @@
 		validateDateFormat,
 		isDateComplete,
 	} from '../composables'
-	import { ref, computed, watch, nextTick, onMounted, readonly as readonlyState, toRefs } from 'vue'
+	import { ref, computed, watch, nextTick, onMounted, readonly as readonlyState, toRefs, useId } from 'vue'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -17,9 +17,10 @@
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useSyTextFieldProps } from './props/syTextFieldProps'
-	import { DATE_PICKER_MESSAGES } from '../constants/messages'
+	import { locales } from '../locales'
 	import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 	import type { DateObjectValue, DateTextInputProps } from '../types'
+	import DatePickerLiveRegion from '../DatePickerLiveRegion.vue'
 
 	dayjs.extend(customParseFormat)
 
@@ -32,12 +33,13 @@
 		density: 'default',
 		disableErrorHandling: false,
 		disabled: false,
+		disableClickButton: false,
 		displayAppendIcon: false,
 		displayIcon: true,
 		displayPrependIcon: true,
 		displayRange: false,
 		externalErrorMessages: () => [],
-		format: DATE_PICKER_MESSAGES.FORMAT_DEFAULT,
+		format: locales.formatDefault,
 		hint: undefined,
 		isOutlined: true,
 		isValidateOnBlur: true,
@@ -57,6 +59,9 @@
 		(e: 'blur'): void
 		(e: 'input', value: string): void
 		(e: 'date-selected', value: DateModelValue): void
+		(e: 'prepend-icon-click', event: MouseEvent): void
+		(e: 'append-icon-click', event: MouseEvent): void
+		(e: 'mousedown', event: MouseEvent): void
 	}>()
 
 	/**
@@ -201,17 +206,17 @@
 	// isUpdatingFromInternal est déjà déclaré plus haut pour le Bridge
 	const isFocused = ref(false)
 	const hasInteracted = ref(false)
-	const ariaLabel = ref(props.label || props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT)
+	const ariaLabel = ref(props.label || props.placeholder || locales.label)
 
 	function validateDateFormatForSingleOrRange(input: string): { isValid: boolean, message: string } {
 		if (readonly.value) return { isValid: true, message: '' }
-		if (isRange.value && input.includes(' - ')) {
-			const [start = '', end = ''] = input.split(' - ').map(s => s?.trim() ?? '')
+		if (isRange.value && input.includes(locales.rangeSeparator)) {
+			const [start = '', end = ''] = input.split(locales.rangeSeparator).map(s => s?.trim() ?? '')
 			const startDateFormatValidation = validateDateFormat(start, displayFormat.value, dateFormatReturn.value, required.value, hasInteracted.value, props.disableErrorHandling)
 			const endDateFormatValidation = end ? validateDateFormat(end, displayFormat.value, dateFormatReturn.value, required.value, hasInteracted.value, props.disableErrorHandling) : { isValid: true, message: '' }
 			if (startDateFormatValidation.isValid && endDateFormatValidation.isValid) return { isValid: true, message: '' }
-			if (!startDateFormatValidation.isValid) return { isValid: false, message: `${DATE_PICKER_MESSAGES.ERROR_INVALID_FORMAT_START} (${displayFormat.value})` }
-			return { isValid: false, message: `${DATE_PICKER_MESSAGES.ERROR_INVALID_FORMAT_END} (${displayFormat.value})` }
+			if (!startDateFormatValidation.isValid) return { isValid: false, message: `${locales.invalidStartDateFormat} (${displayFormat.value})` }
+			return { isValid: false, message: `${locales.invalidEndDateFormat} (${displayFormat.value})` }
 		}
 		return validateDateFormat(input, displayFormat.value, dateFormatReturn.value, required.value, hasInteracted.value, props.disableErrorHandling)
 	}
@@ -222,10 +227,12 @@
 	// Force re-render of SyTextField when needed (e.g., after reset)
 	const fieldKey = ref(0)
 	const isValidating = ref(false)
+	const formatDescriptionId = `date-format-desc-${useId()}`
+	const formatDescription = computed(() => `${locales.formatHint} ${displayFormat.value}`)
 
 	const updateDisplayValue = (dateDisplayText: string) => (inputValue.value = dateDisplayText)
 	const updateAriaLabel = (ariaLabelText: string) => {
-		ariaLabel.value = ariaLabelText || props.label || props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT
+		ariaLabel.value = ariaLabelText || props.label || props.placeholder || locales.label
 	}
 
 	const { formatDateInput, handlePaste: handlePasteSingle, isHandlingBackspace } = useDateInputEditing({
@@ -275,6 +282,24 @@
 		return dateFormat.replace(/[A-Za-z]/g, '_')
 	}
 
+	function isTextInputElement(element: unknown): element is HTMLInputElement {
+		return element instanceof HTMLInputElement && typeof element.setSelectionRange === 'function'
+	}
+
+	function getNativeInputElement() {
+		const element = inputRef.value?.$el?.querySelector?.('input:not([type="hidden"])')
+		return isTextInputElement(element) ? element : null
+	}
+
+	function getEventInputElement(event: Event | undefined | null) {
+		return isTextInputElement(event?.target) ? event.target : null
+	}
+
+	function setInputSelectionRange(inputElement: HTMLInputElement | null, start: number, end = start) {
+		if (!inputElement) return
+		inputElement.setSelectionRange(start, end)
+	}
+
 	/**
 	 * =====================
 	 * Bootstrapping caret (DEBUT DE L'INPUT)
@@ -283,8 +308,7 @@
 	const isBootstrapping = ref(false)
 
 	async function initializeCursorAtFirstEditablePosition(options: { focus?: boolean } = {}) {
-		const inputElement: HTMLInputElement | null | undefined
-			= inputRef.value?.$el?.querySelector?.('input:not([type="hidden"])')
+		const inputElement = getNativeInputElement()
 		if (!inputElement) return
 
 		isBootstrapping.value = true
@@ -292,7 +316,7 @@
 		// Only inject skeleton when focused, not on initial load
 		if (!inputValue.value && options.focus) {
 			inputValue.value = isRange.value
-				? `${skeletonFromFormat(displayFormat.value)} - ${skeletonFromFormat(displayFormat.value)}`
+				? `${skeletonFromFormat(displayFormat.value)}${locales.rangeSeparator}${skeletonFromFormat(displayFormat.value)}`
 				: skeletonFromFormat(displayFormat.value)
 		}
 
@@ -303,7 +327,7 @@
 		// double rAF pour laisser Vuetify finir ses mises à jour
 		requestAnimationFrame(() => {
 			requestAnimationFrame(() => {
-				inputElement.setSelectionRange(cursorPosition, cursorPosition)
+				setInputSelectionRange(inputElement, cursorPosition)
 				isBootstrapping.value = false
 			})
 		})
@@ -325,7 +349,7 @@
 			inputValue.value = updatedInputValue
 			requestAnimationFrame(() => {
 				const nextCursorPosition = nextEditableIndex(dateFormat, startPosition + 1)
-				inputElement.setSelectionRange(nextCursorPosition, nextCursorPosition)
+				setInputSelectionRange(inputElement, nextCursorPosition)
 				isOverwriteEditing.value = false
 			})
 			return
@@ -336,7 +360,7 @@
 			inputValue.value = skeletonFromFormat(displayFormat.value)
 			requestAnimationFrame(() => {
 				const startPosition = nextEditableIndex(displayFormat.value, 0)
-				inputElement.setSelectionRange(startPosition, startPosition)
+				setInputSelectionRange(inputElement, startPosition)
 			})
 		}
 
@@ -349,7 +373,7 @@
 				const updatedInputValue = overwriteSelection(inputElement.value, displayFormat.value, selectionStart, selectionEnd, () => '_')
 				inputValue.value = updatedInputValue
 				requestAnimationFrame(() => {
-					inputElement.setSelectionRange(selectionStart, selectionStart)
+					setInputSelectionRange(inputElement, selectionStart)
 					isOverwriteEditing.value = false
 				})
 				return
@@ -359,7 +383,7 @@
 				const updatedInputValue = overwriteAt(inputElement.value, newCursorPosition, '_')
 				inputValue.value = updatedInputValue
 				requestAnimationFrame(() => {
-					inputElement.setSelectionRange(newCursorPosition, newCursorPosition)
+					setInputSelectionRange(inputElement, newCursorPosition)
 					isOverwriteEditing.value = false
 				})
 			}
@@ -381,7 +405,7 @@
 				inputValue.value = updatedInputValue
 				const nextCursorPosition = nextEditableIndex(displayFormat.value, cursorPosition + 1)
 				requestAnimationFrame(() => {
-					inputElement.setSelectionRange(nextCursorPosition, nextCursorPosition)
+					setInputSelectionRange(inputElement, nextCursorPosition)
 					isOverwriteEditing.value = false
 				})
 				return
@@ -393,7 +417,7 @@
 				inputValue.value = updatedInputValue
 				const nextCursorPosition = nextEditableIndex(displayFormat.value, cursorPosition + 1)
 				requestAnimationFrame(() => {
-					inputElement.setSelectionRange(nextCursorPosition, nextCursorPosition)
+					setInputSelectionRange(inputElement, nextCursorPosition)
 					isOverwriteEditing.value = false
 				})
 			}
@@ -413,7 +437,7 @@
 		if (['Tab', 'ArrowLeft', 'ArrowRight', 'Home', 'End', 'Delete'].includes(keyboardEvent.key)) return
 
 		const dateFormat = displayFormat.value
-		const rangeSeparator = ' - '
+		const rangeSeparator = locales.rangeSeparator
 
 		if (!inputElement.value && isDigitKey(keyboardEvent)) {
 			keyboardEvent.preventDefault()
@@ -425,7 +449,7 @@
 			inputValue.value = `${leftWithDigit}${rangeSeparator}${rightFormatSkeleton}`
 			requestAnimationFrame(() => {
 				const nextCursorPosition = nextEditableIndex(dateFormat, startPosition + 1)
-				inputElement.setSelectionRange(nextCursorPosition, nextCursorPosition)
+				setInputSelectionRange(inputElement, nextCursorPosition)
 				isOverwriteEditing.value = false
 			})
 			return
@@ -435,7 +459,7 @@
 			inputValue.value = `${skeletonFromFormat(dateFormat)}${rangeSeparator}${skeletonFromFormat(dateFormat)}`
 			requestAnimationFrame(() => {
 				const startPosition = nextEditableIndex(dateFormat, 0)
-				inputElement.setSelectionRange(startPosition, startPosition)
+				setInputSelectionRange(inputElement, startPosition)
 			})
 		}
 
@@ -461,7 +485,7 @@
 			inputValue.value = newInputText
 			const absoluteCursorPosition = baseOffset + newLocalCursorPosition
 			requestAnimationFrame(() => {
-				inputElement.setSelectionRange(absoluteCursorPosition, absoluteCursorPosition)
+				setInputSelectionRange(inputElement, absoluteCursorPosition)
 				isOverwriteEditing.value = false
 			})
 		}
@@ -523,7 +547,7 @@
 				inputValue.value = `${leftDateText}${rangeSeparator}${updatedRightDateText}`
 				requestAnimationFrame(() => {
 					const absoluteCursorPosition = separatorIndex + rangeSeparator.length + nextCursorPosition
-					inputElement.setSelectionRange(absoluteCursorPosition, absoluteCursorPosition)
+					setInputSelectionRange(inputElement, absoluteCursorPosition)
 					isOverwriteEditing.value = false
 				})
 			}
@@ -597,7 +621,7 @@
 
 		if (isEmptyOrSkeleton) {
 			if (required.value && hasInteracted.value && !readonly.value && !props.disableErrorHandling) {
-				errors.value.push(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
+				errors.value.push(locales.required)
 				return false
 			}
 			// Permettre aux custom rules de s'exécuter même sur des champs vides
@@ -610,8 +634,8 @@
 			return true
 		}
 
-		if (isRange.value && value.includes(' - ')) {
-			const [startDateText, endDateText] = value.split(' - ')
+		if (isRange.value && value.includes(locales.rangeSeparator)) {
+			const [startDateText, endDateText] = value.split(locales.rangeSeparator)
 			if (startDateText && !endDateText) return !!(await validateManualInput(startDateText))
 
 			if (startDateText && endDateText) {
@@ -625,7 +649,7 @@
 				if (startDate && endDate) {
 					// Vérifier que la plage est valide avant d'appliquer les règles personnalisées
 					if (!isValidRange(startDate, endDate) && !props.disableErrorHandling) {
-						errors.value.push(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
+						errors.value.push(locales.endBeforeStart)
 						return false
 					}
 					await safeValidateField(startDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
@@ -643,14 +667,17 @@
 	 * Handlers (routeurs)
 	 * =====================
 	 */
-	function handleKeydown(evt: KeyboardEvent & { target: HTMLInputElement }) {
+	function handleKeydown(evt: KeyboardEvent) {
 		if (props.readonly) return
+		if (!getEventInputElement(evt)) return
+
+		const inputEvent = evt as KeyboardEvent & { target: HTMLInputElement }
 
 		if (isRange.value) {
-			handleRangeDateKeyboardInput(evt)
+			handleRangeDateKeyboardInput(inputEvent)
 		}
 		else {
-			handleSingleDateKeyboardInput(evt)
+			handleSingleDateKeyboardInput(inputEvent)
 		}
 	}
 
@@ -685,7 +712,9 @@
 		return true
 	}
 
-	async function onFocus() {
+	async function onFocus(event?: FocusEvent) {
+		if (!getEventInputElement(event)) return
+
 		isFocused.value = true
 		// Si aucun chiffre n'a été saisi (champ vide ou squelette), bootstrap et place le caret au début
 		if (!/\d/.test(inputValue.value || '')) {
@@ -694,7 +723,9 @@
 		emit('focus')
 	}
 
-	async function onBlur() {
+	async function onBlur(event?: FocusEvent) {
+		if (!getEventInputElement(event)) return
+
 		isFocused.value = false
 		hasInteracted.value = true
 
@@ -736,8 +767,8 @@
 				}
 			}
 			else if (formatValidationResult.isValid && !customRulesValidationResult.hasError && isRange.value) {
-				if (typeof inputValue.value === 'string' && inputValue.value.includes(' - ')) {
-					const dateRangeParts = inputValue.value.split(' - ')
+				if (typeof inputValue.value === 'string' && inputValue.value.includes(locales.rangeSeparator)) {
+					const dateRangeParts = inputValue.value.split(locales.rangeSeparator)
 					if (dateRangeParts.length === 2) {
 						const sd = dayjs(dateRangeParts[0]!, displayFormat.value, true)
 						const ed = dayjs(dateRangeParts[1]!, displayFormat.value, true)
@@ -866,7 +897,7 @@
 				}
 			}
 
-			const inputEl: HTMLInputElement | undefined = inputRef.value?.$el?.querySelector?.('input')
+			const inputEl = getNativeInputElement()
 			const cursor = inputEl?.selectionStart ?? 0
 
 			if (isRange.value) {
@@ -876,7 +907,7 @@
 					if (sd && ed) {
 						if (!isValidRange(sd, ed)) {
 							clearValidation()
-							errors.value.push(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
+							errors.value.push(locales.endBeforeStart)
 						}
 						else {
 							const rf = returnFormat.value
@@ -896,11 +927,11 @@
 
 				if (typeof nv !== 'string') return
 				let formatted = ''
-				if (nv.includes(' - ')) {
-					const [startDateText, endDateText = ''] = nv.split(' - ')
+				if (nv.includes(locales.rangeSeparator)) {
+					const [startDateText, endDateText = ''] = nv.split(locales.rangeSeparator)
 					const formattedStartDate = startDateText ? formatDateInput(startDateText).formatted : ''
 					const formattedEndDate = endDateText ? formatDateInput(endDateText).formatted : ''
-					formatted = `${formattedStartDate} - ${formattedEndDate}`
+					formatted = `${formattedStartDate}${locales.rangeSeparator}${formattedEndDate}`
 				}
 				else {
 					formatted = formatDateInput(nv).formatted
@@ -921,7 +952,7 @@
 
 					if (result.isComplete && result.dates[1]) {
 						const [sd, ed] = result.dates
-						if (!isValidRange(sd, ed)) errors.value.push(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
+						if (!isValidRange(sd, ed)) errors.value.push(locales.endBeforeStart)
 					}
 					else if (result.justCompletedFirstDate) {
 						emit('date-selected', toReturnFormat(result.dates[0]))
@@ -934,7 +965,7 @@
 
 				emit('input', result.formattedValue)
 				if (result.cursorPosition !== undefined && !isHandlingBackspace.value) {
-					queueMicrotask(() => inputEl?.setSelectionRange(result.cursorPosition!, result.cursorPosition!))
+					queueMicrotask(() => setInputSelectionRange(inputEl, result.cursorPosition!))
 				}
 			}
 			else {
@@ -966,7 +997,7 @@
 					inputValue.value = formatted
 					if (!isHandlingBackspace.value) {
 						await nextTick()
-						inputEl?.setSelectionRange(cursorPos, cursorPos)
+						setInputSelectionRange(inputEl, cursorPos)
 					}
 				}
 
@@ -1064,11 +1095,11 @@
 		warnings: readonlyState(warningMessages),
 		successes: readonlyState(successMessages),
 		focus() {
-			const el: HTMLInputElement | null | undefined = inputRef.value?.$el?.querySelector?.('input:not([type="hidden"])')
+			const el = getNativeInputElement()
 			el?.focus({ preventScroll: true })
 		},
 		blur() {
-			const el: HTMLInputElement | null | undefined = inputRef.value?.$el?.querySelector?.('input:not([type="hidden"])')
+			const el = getNativeInputElement()
 			el?.blur()
 		},
 	})
@@ -1082,7 +1113,7 @@
 				const endDate = parseDate(endDateString, returnFormat.value)
 				if (startDate && endDate) {
 					selectedDates.value = [startDate, endDate]
-					inputValue.value = `${formatDate(startDate, displayFormat.value)} - ${formatDate(endDate, displayFormat.value)}`
+					inputValue.value = `${formatDate(startDate, displayFormat.value)}${locales.rangeSeparator}${formatDate(endDate, displayFormat.value)}`
 				}
 			}
 			else {
@@ -1109,24 +1140,38 @@
 
 	// Props regroupées pour SyTextField
 	const syTextFieldProps = computed(() => useSyTextFieldProps(props, errorMessages, warningMessages, successMessages, isOnSuccess, ariaLabel.value))
+
+	function onMouseDown(event: MouseEvent) {
+		emit('mousedown', event)
+	}
 </script>
 
 <template>
-	<SyTextField
-		ref="inputRef"
-		v-model="inputValue"
-		:class="{
-			'error-field': isOnError,
-			'warning-field': isOnWarning,
-			'success-field': isOnSuccess,
-		}"
-		color="primary"
-		v-bind="syTextFieldProps"
-		@focus="onFocus"
-		@blur="onBlur"
-		@keydown="handleKeydown"
-		@paste="handlePaste"
-	/>
+	<div class="date-text-input">
+		<SyTextField
+			ref="inputRef"
+			v-model="inputValue"
+			:aria-describedby="formatDescriptionId"
+			:class="{
+				'error-field': isOnError,
+				'warning-field': isOnWarning,
+				'success-field': isOnSuccess,
+			}"
+			color="primary"
+			v-bind="syTextFieldProps"
+			@focus="onFocus"
+			@blur="onBlur"
+			@mousedown="onMouseDown"
+			@keydown="handleKeydown"
+			@paste="handlePaste"
+			@prepend-icon-click="emit('prepend-icon-click', $event)"
+			@append-icon-click="emit('append-icon-click', $event)"
+		/>
+		<DatePickerLiveRegion
+			:id="formatDescriptionId"
+			:text="formatDescription"
+		/>
+	</div>
 </template>
 
 <style lang="scss" scoped>

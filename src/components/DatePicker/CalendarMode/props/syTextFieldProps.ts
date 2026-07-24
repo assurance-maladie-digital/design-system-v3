@@ -1,6 +1,6 @@
 import type { Ref } from 'vue'
 import type { DatePickerCommonProps } from '../../types'
-import { DATE_PICKER_MESSAGES } from '../../constants/messages'
+import { locales } from '../../locales'
 
 export const useSyTextFieldProps = (
 	props: DatePickerCommonProps,
@@ -10,15 +10,17 @@ export const useSyTextFieldProps = (
 	successMessages: Ref<string[]>,
 	isOnSuccess: Ref<boolean>,
 ) => ({
-	'aria-label': labelWithAsterisk.value || props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT,
+	'aria-label': labelWithAsterisk.value || props.placeholder || locales.label,
 	'aria-labelledby': undefined,
 	'append-icon': props.displayIcon && props.displayAppendIcon ? 'calendar' : undefined,
 	'error-messages': errorMessages.value,
 	'warning-messages': warningMessages.value,
 	'success-messages': successMessages.value,
+	'has-error': errorMessages.value.length > 0,
 	'has-success': isOnSuccess.value,
+	'required': props.required,
 	'disabled': props.disabled,
-	'disable-click-button': false,
+	'disable-click-button': props.textFieldActivator,
 	'readonly': true,
 	'label': labelWithAsterisk.value,
 	'placeholder': props.placeholder,

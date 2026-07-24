@@ -39,6 +39,7 @@ Le DatePicker utilise deux formats distincts :
 
 - **Format d'entrée/affichage** : défini par la prop `format`, il détermine à la fois le format dans lequel la date doit être fournie au composant et comment la date est affichée visuellement dans le champ.
 - **Format de retour** : défini par la prop `dateFormatReturn`, il détermine le format de la date émise.
+- **Bornes de période** : `period.min` et `period.max` doivent utiliser le même format que `format`, car ces valeurs sont transmises telles quelles au calendrier.
 
 <div
     style={{
@@ -157,7 +158,7 @@ Le DatePicker utilise deux formats distincts :
     <strong>Note importante</strong>
     <ul>
         <li>La prop <code>period</code> permet de définir une période de dates valides. Les dates en dehors de cette période ne seront pas visibles dans le calendrier.</li>
-        <li>Le format de la prop <code>period</code> est <code>MM/DD/YYYY</code>.</li>
+        <li>Le format de la prop <code>period</code> doit rester cohérent avec la prop <code>format</code> utilisée par le composant.</li>
     </ul>
 </div>
 
