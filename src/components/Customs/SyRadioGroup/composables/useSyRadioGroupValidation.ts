@@ -35,6 +35,7 @@ export interface UseSyRadioGroupValidationReturn {
 	hasSuccess: ComputedRef<boolean | undefined>
 	defaultRules: ComputedRef<ValidationRule[]>
 	focused: Ref<boolean>
+	clearValidation: () => void
 }
 
 /**
@@ -84,6 +85,7 @@ export function useSyRadioGroupValidation(
 		hasError,
 		hasWarning,
 		hasSuccess,
+		clearValidation,
 	} = useValidation({
 		modelValue: model,
 		readonly: toRef(() => props.readonly ?? false),
@@ -123,5 +125,6 @@ export function useSyRadioGroupValidation(
 		hasSuccess,
 		defaultRules,
 		focused: focusedRef,
+		clearValidation,
 	}
 }

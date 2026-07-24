@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, watch, computed, nextTick, toRef, onMounted, useId, onBeforeUnmount } from 'vue'
+	import { ref, watch, computed, nextTick, readonly as readonlyState, toRef, onMounted, useId, onBeforeUnmount, type Ref } from 'vue'
 	import { vMaska } from 'maska/vue'
 	import SyTextField from '../Customs/SyTextField/SyTextField.vue'
 	import { locales } from './locales'
@@ -383,6 +383,30 @@
 		keyMask,
 		numberValidation,
 		keyValidation,
+		errors: {
+			number: readonlyState(numberValidation.errors),
+			key: readonlyState(keyValidation.errors),
+		},
+		warnings: {
+			number: readonlyState(numberValidation.warnings),
+			key: readonlyState(keyValidation.warnings),
+		},
+		successes: {
+			number: readonlyState(numberValidation.successes),
+			key: readonlyState(keyValidation.successes),
+		},
+		hasError: {
+			number: readonlyState(numberValidation.hasError),
+			key: readonlyState(keyValidation.hasError),
+		},
+		hasWarning: {
+			number: readonlyState(numberValidation.hasWarning),
+			key: readonlyState(keyValidation.hasWarning),
+		},
+		hasSuccess: {
+			number: readonlyState(numberValidation.hasSuccess),
+			key: readonlyState(keyValidation.hasSuccess),
+		},
 	} satisfies {
 		validateOnSubmit: () => Promise<boolean>
 		clearValidation: () => void
@@ -392,6 +416,12 @@
 		keyMask: { mask: string, tokens: Record<string, any> }
 		numberValidation: ReturnType<typeof useValidation>
 		keyValidation: ReturnType<typeof useValidation>
+		errors: { number: Readonly<Ref<readonly string[]>>, key: Readonly<Ref<readonly string[]>> }
+		warnings: { number: Readonly<Ref<readonly string[]>>, key: Readonly<Ref<readonly string[]>> }
+		successes: { number: Readonly<Ref<readonly string[]>>, key: Readonly<Ref<readonly string[]>> }
+		hasError: { number: Readonly<Ref<boolean>>, key: Readonly<Ref<boolean>> }
+		hasWarning: { number: Readonly<Ref<boolean>>, key: Readonly<Ref<boolean>> }
+		hasSuccess: { number: Readonly<Ref<boolean>>, key: Readonly<Ref<boolean>> }
 	})
 </script>
 

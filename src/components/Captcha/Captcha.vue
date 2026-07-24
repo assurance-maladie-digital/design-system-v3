@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { mdiCached, mdiImageOutline, mdiPause } from '@mdi/js'
-	import { computed, ref, toRef, watch } from 'vue'
+	import { computed, readonly as readonlyState, ref, toRef, watch } from 'vue'
 	import CaptchaAlert from './CaptchaAlert.vue'
 	import CaptchaBase from './CaptchaBase.vue'
 	import CaptchaBtn from './CaptchaBtn.vue'
@@ -134,6 +134,12 @@
 		clearValidation,
 		reset,
 		captchaId: id,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 	})
 
 </script>

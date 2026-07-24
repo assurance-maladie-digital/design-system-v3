@@ -1,44 +1,40 @@
 <script lang="ts" setup>
-	import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick, useId, type ComponentPublicInstance, type Ref } from 'vue'
-	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
-	import DateTextInput from '../DateTextInput/DateTextInput.vue'
-	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
-	import { VDatePicker } from 'vuetify/components'
-	import { useValidatable } from '@/composables/validation/useValidatable'
-	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
-	import { useDateInitialization, type DateModelValue, type DateInput } from '@/composables/date/useDateInitializationDayjs'
-	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
-	import { useTodayButton, useDatePickerViewMode, useDateSelection, useMonthButtonCustomization, useDisplayedDateString, useDatePickerState, useHolidayHighlighting, useCalendarKeyboardNavigation, useDatePickerFocusTrap, useDatePickerValidation, useDatePickerDerivedValues } from '../composables'
-	import { useDateTextInputProps } from './props/dateTextInputProps'
-	import { useComplexDatePickerProps } from './props/complexDatePickerProps'
-	import { useSyTextFieldProps } from './props/syTextFieldProps'
-	import { DATE_PICKER_MESSAGES } from '../constants/messages'
-	import dayjs from 'dayjs'
-	import customParseFormat from 'dayjs/plugin/customParseFormat'
-	import { mdiCalendarMonthOutline } from '@mdi/js'
-	import type { DateObjectValue, CalendarModeProps } from '../types'
-	import { DatePickerCommonDefaults } from '../types'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
+	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
+	import { useDateInitialization, type DateInput, type DateModelValue } from '@/composables/date/useDateInitializationDayjs'
+	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
+	import { useValidatable } from '@/composables/validation/useValidatable'
+	import { mdiCalendarMonthOutline } from '@mdi/js'
+	import dayjs from 'dayjs'
+	import customParseFormat from 'dayjs/plugin/customParseFormat'
+	import { computed, nextTick, onBeforeUnmount, onMounted, readonly as readonlyState, ref, useId, watch, type ComponentPublicInstance, type Ref } from 'vue'
+	import { VDatePicker } from 'vuetify/components'
+	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
+	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
+	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useSelectedDayAria, useTodayButton } from '../composables'
+	import DateTextInput from '../DateTextInput/DateTextInput.vue'
+	import { locales } from '../locales'
+	import type { ViewMode } from '../composables/useDatePickerViewMode'
+	import type { CalendarModeProps, DateObjectValue } from '../types'
+	import { DatePickerCommonDefaults } from '../types'
+	import { formatDateRangeDisplay, getDisplayedMonthYearState } from '../utils/dateFormattingUtils'
+	import { useComplexDatePickerProps } from './props/complexDatePickerProps'
+	import { useDateTextInputProps } from './props/dateTextInputProps'
+	import { useSyTextFieldProps } from './props/syTextFieldProps'
 
 	// Initialiser les plugins dayjs
 	dayjs.extend(customParseFormat)
 
 	const { parseDate, formatDate } = useDateFormat()
 	const { initializeSelectedDates } = useDateInitialization()
-	const { updateAccessibility, fixAriaAttributes } = useDatePickerAccessibility()
+	const { updateAccessibility, cleanupGridSemantics } = useDatePickerAccessibility()
 
 	// Variables pour suivre le mois et l'année actuellement affichés dans le CalendarMode
 	const currentMonth = ref<string | null>(null)
 	const currentYear = ref<string | null>(null)
 	const currentMonthName = ref<string | null>(null)
 	const currentYearName = ref<string | null>(null)
-	const monthYearLiveText = computed(() => {
-		if (currentMonthName.value && currentYearName.value) return `${currentMonthName.value} ${currentYearName.value}`
-		if (currentMonthName.value) return currentMonthName.value
-		if (currentYearName.value) return currentYearName.value
-		return ''
-	})
 
 	const props = withDefaults(defineProps<CalendarModeProps>(), {
 		...DatePickerCommonDefaults,
@@ -59,6 +55,9 @@
 	// Utilisation des composables pour les fonctionnalités du CalendarMode
 	const displayWeekendDays = computed(() => props.displayWeekendDays ?? true)
 	const { todayInString, headerDate } = useTodayButton(props)
+	const todayButtonLabel = computed(() => {
+		return locales.selectTodayCapitalized(todayInString.value?.trim())
+	})
 
 	// Inlined from useAsteriskDisplay
 	const isShouldDisplayAsterisk = computed(() => props.displayAsterisk && props.required)
@@ -99,22 +98,142 @@
 	const complexDatePickerRef = ref<null | ComponentPublicInstance<typeof ComplexDatePicker>>()
 	const datePickerContentId = `date-picker-${useId()}`
 
+	/**
+	 * Nettoie la sémantique grid ARIA injectée avant que Vuetify ne re-render le mois,
+	 * puis la réapplique dans le prochain tick. Cela évite les erreurs de patch Vue
+	 * dues au reparentage de nœuds du virtual DOM.
+	 */
+	const reapplyAccessibility = () => {
+		const rootEl = datePickerDialogRef.value
+		if (!rootEl) return
+
+		const activeElement = document.activeElement instanceof HTMLElement
+			? document.activeElement
+			: null
+		const activeDay = activeElement?.closest<HTMLElement>('.v-date-picker-month__day[data-v-date]')
+		const activeMonthButton = activeElement?.closest<HTMLButtonElement>('.v-date-picker-months .v-btn')
+		const activeYearButton = activeElement?.closest<HTMLButtonElement>('.v-date-picker-years .v-btn')
+		const shouldRestoreButtonFocus = activeElement?.tagName === 'BUTTON'
+		const dayDate = activeDay?.getAttribute('data-v-date')
+		const monthLabel = activeMonthButton?.getAttribute('aria-label') ?? activeMonthButton?.textContent?.trim() ?? ''
+		const yearLabel = activeYearButton?.getAttribute('aria-label') ?? activeYearButton?.textContent?.trim() ?? ''
+		cleanupGridSemantics(rootEl)
+		nextTick(() => {
+			updateAccessibility(rootEl, currentViewMode.value)
+			nextTick(() => {
+				if (!activeElement || (!rootEl.contains(activeElement) && !dayDate && !monthLabel && !yearLabel)) return
+
+				if (dayDate) {
+					const dayCell = rootEl.querySelector<HTMLElement>(`.v-date-picker-month__day[data-v-date="${dayDate}"]`)
+					const focusTarget = shouldRestoreButtonFocus
+						? dayCell?.querySelector<HTMLElement>('button')
+						: dayCell
+					focusTarget?.focus({ preventScroll: true })
+					return
+				}
+
+				if (monthLabel) {
+					const monthButtons = Array.from(rootEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-months .v-btn'))
+					const target = monthButtons.find(button =>
+						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === monthLabel,
+					)
+					target?.focus({ preventScroll: true })
+					return
+				}
+
+				if (yearLabel) {
+					const yearButtons = Array.from(rootEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-years .v-btn'))
+					const target = yearButtons.find(button =>
+						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === yearLabel,
+					)
+					target?.focus({ preventScroll: true })
+				}
+			})
+		})
+	}
+
+	const datePickerDialogRef = ref<HTMLElement | null>(null)
+	const datePickerDialogId = `${datePickerContentId}-dialog`
+	const datePickerHeadingId = `${datePickerContentId}-heading`
+
 	const isDatePickerVisible = ref(false)
 	const { handleMenuKeydown } = useDatePickerFocusTrap({
 		isDatePickerVisible,
 		datePickerRef,
-		onClose: () => emit('closed'),
+		onClose: () => closeDatePicker(),
 		restoreFocus: () => queueMicrotask(() => focusCalendarInput()),
+		getInitialFocusDate: () => {
+			const value = selectedDates.value
+			const selected = Array.isArray(value) ? value[0] ?? null : value
+			return selected ?? new Date()
+		},
+	})
+
+	const addDatePickerKeydownListener = async () => {
+		await nextTick()
+
+		const dialogEl = datePickerDialogRef.value
+		if (!dialogEl) return
+
+		dialogEl.removeEventListener('keydown', handleMenuKeydown, true)
+		dialogEl.addEventListener('keydown', handleMenuKeydown, true)
+	}
+
+	const removeDatePickerKeydownListener = () => {
+		datePickerDialogRef.value?.removeEventListener(
+			'keydown',
+			handleMenuKeydown,
+			true,
+		)
+	}
+
+	watch(
+		() => isDatePickerVisible.value,
+		async (visible) => {
+			if (visible && !props.noCalendar) {
+				await addDatePickerKeydownListener()
+				return
+			}
+
+			removeDatePickerKeydownListener()
+		},
+		{ flush: 'post' },
+	)
+
+	onBeforeUnmount(() => {
+		removeDatePickerKeydownListener()
 	})
 
 	// Utiliser le calendarKeyboardNavigation normalement
-	useCalendarKeyboardNavigation({
+	const { focusInitialDay } = useCalendarKeyboardNavigation({
 		isDatePickerVisible,
 		datePickerRef,
+		getInitialFocusDate: () => {
+			const selected = keyboardNavigatedDate.value
+				?? (Array.isArray(selectedDates.value) ? selectedDates.value[0] ?? null : selectedDates.value)
+			const target = selected ?? new Date()
+
+			// Si la date cible est dans le mois affiché, l'utiliser
+			if (currentMonth.value !== null && currentYear.value !== null) {
+				const sameMonth = target.getMonth() === Number(currentMonth.value)
+				const sameYear = target.getFullYear() === Number(currentYear.value)
+				if (sameMonth && sameYear) {
+					return target
+				}
+			}
+
+			// Fallback: 1er du mois actuellement affiché
+			if (currentMonth.value !== null && currentYear.value !== null) {
+				return new Date(Number(currentYear.value), Number(currentMonth.value), 1)
+			}
+
+			return target
+		},
 		getCurrentDate: () => {
-			const value = selectedDates.value
+			const value = keyboardNavigatedDate.value
+				?? (Array.isArray(selectedDates.value) ? selectedDates.value[0] ?? null : selectedDates.value)
 			if (value) {
-				const date = Array.isArray(value) ? value[0] ?? null : value
+				const date = value
 				// Vérifier si la date sélectionnée est dans le mois actuellement affiché
 				if (date && currentMonth.value !== null && currentYear.value !== null) {
 					const sameMonth = date.getMonth() === Number(currentMonth.value)
@@ -133,46 +252,38 @@
 			return null
 		},
 		setCurrentDate: (date: Date) => {
-			preventCloseOnKeyboardNavigation.value = true
-			updateSelectedDates([date])
+			keyboardNavigatedDate.value = date
 			syncDisplayedMonthYearFromDate(date)
 
 			// S'assurer que le VDatePicker affiche le bon mois après navigation clavier
 			nextTick(() => {
 				syncDisplayedMonthYearFromDate(date)
 			})
-
-			queueMicrotask(() => {
-				preventCloseOnKeyboardNavigation.value = false
-			})
+		},
+		onSelectDate: (date: Date) => {
+			keyboardNavigatedDate.value = null
+			updateSelectedDates([date])
+			nextTick(() => closeDatePicker())
 		},
 	})
 
 	// Fonction pour sélectionner la date du jour
 	const handleSelectToday = () => {
-		// Créer une seule instance de la date du jour
-		const today = new Date()
+		const todaySelection = buildTodaySelectionState({
+			displayRange: props.displayRange,
+			format: props.format,
+			dateFormatReturn: props.dateFormatReturn,
+			formatDate,
+		})
 
-		// Si c'est une plage de dates, on définit le même jour pour début et fin
-		if (props.displayRange) {
-			selectedDates.value = [today, today]
-			// Formater les dates pour le modèle (format de retour)
-			const formattedToday = formatDate(today, props.dateFormatReturn || props.format)
-			updateModel([formattedToday, formattedToday])
-		}
-		else {
-			// Sinon, on sélectionne simplement aujourd'hui
-			selectedDates.value = today
-			// Formater la date pour le modèle (format de retour)
-			const formattedToday = formatDate(today, props.dateFormatReturn || props.format)
-			updateModel(formattedToday)
-		}
+		selectedDates.value = todaySelection.selectedDates
+		updateModel(todaySelection.modelValue)
+		displayFormattedDate.value = todaySelection.displayValue
 
-		// Mettre à jour l'affichage formaté
-		updateDisplayFormattedDate()
-
-		// Mettre à jour les variables currentMonth et currentYear pour refléter la date d'aujourd'hui
-		syncDisplayedMonthYearFromDate(today)
+		currentMonth.value = todaySelection.month
+		currentYear.value = todaySelection.year
+		currentMonthName.value = todaySelection.monthName
+		currentYearName.value = todaySelection.yearName
 	}
 
 	const emit = defineEmits<{
@@ -186,6 +297,7 @@
 
 	// Variable pour éviter les mises à jour récursives
 	const isUpdatingFromInternal = ref(false)
+	const keyboardNavigatedDate = ref<Date | null>(null)
 	const preventCloseOnKeyboardNavigation = ref(false)
 	const isInitialValidation = ref(true)
 	const currentRangeIsValid = ref(true)
@@ -223,6 +335,28 @@
 	const warningMessages = warnings
 	const successMessages = validation.displaySuccesses
 	const isOnSuccess = validation.hasSuccess
+	const isHandlingProgrammaticClose = ref(false)
+
+	const finalizeDatePickerClose = async () => {
+		emit('closed')
+		await validateDates()
+	}
+
+	const closeDatePicker = async () => {
+		if (!isDatePickerVisible.value) return
+
+		isHandlingProgrammaticClose.value = true
+		isDatePickerVisible.value = false
+
+		try {
+			await finalizeDatePickerClose()
+		}
+		finally {
+			queueMicrotask(() => {
+				isHandlingProgrammaticClose.value = false
+			})
+		}
+	}
 
 	// Fonction centralisée pour mettre à jour le modèle
 	const updateModel = async (value: DateModelValue) => {
@@ -233,10 +367,11 @@
 			isUpdatingFromInternal.value = true
 			emit('update:modelValue', value)
 			if (!preventCloseOnKeyboardNavigation.value) {
-				isDatePickerVisible.value = false
-				emit('closed')
+				await closeDatePicker()
 			}
-			await validateDates()
+			else {
+				await validateDates()
+			}
 		}
 		finally {
 			// S'assurer que le flag est toujours réinitialisé
@@ -248,6 +383,15 @@
 
 	// Watcher pour mettre à jour le modèle lorsque les dates sélectionnées changent
 	watch(selectedDates, async (newValue) => {
+		keyboardNavigatedDate.value = Array.isArray(newValue)
+			? newValue[0] ?? null
+			: newValue
+
+		// Vider la grille ARIA injectée avant que Vuetify ne re-render le calendrier
+		if (isDatePickerVisible.value) {
+			reapplyAccessibility()
+		}
+
 		// Ne valider automatiquement que si isValidateOnBlur est true ET pas en validation initiale
 		if (props.isValidateOnBlur && !isInitialValidation.value) {
 			// Valider les dates avec le flux spécifique CalendarMode
@@ -255,6 +399,9 @@
 		}
 		// Marquer les jours fériés après la mise à jour des dates
 		markHolidayDays()
+		if (isDatePickerVisible.value) {
+			updateSelectedDayAria()
+		}
 
 		// Mettre à jour le modèle si nécessaire
 		if (newValue !== null) {
@@ -272,7 +419,7 @@
 					const start = newValue[0]
 					const end = newValue[newValue.length - 1]
 					if (start && end) {
-						textInputValue.value = `${formatDate(start, props.format)} - ${formatDate(end, props.format)}`
+						textInputValue.value = formatDateRangeDisplay(start, end, props.format, formatDate)
 					}
 				}
 				else {
@@ -291,6 +438,9 @@
 			// Réinitialiser textInputValue
 			textInputValue.value = ''
 		}
+
+		// Réinitialiser le flag de protection une fois le modèle mis à jour
+		preventCloseOnKeyboardNavigation.value = false
 	})
 
 	const messageClasses = computed(() => ({
@@ -352,7 +502,7 @@
 
 				if (startDate && endDate) {
 					selectedDates.value = generateDateRange(startDate, endDate)
-					displayFormattedDate.value = `${formatDate(startDate, props.format)} - ${formatDate(endDate, props.format)}`
+					displayFormattedDate.value = formatDateRangeDisplay(startDate, endDate, props.format, formatDate)
 				}
 			}
 			else if (typeof value === 'string') {
@@ -484,9 +634,7 @@
 
 		// Si on clique dans le conteneur du CalendarMode, on ne fait rien
 		if (container) return
-		emit('closed')
-		// Déclencher la validation à la fermeture
-		validateDates()
+		void closeDatePicker()
 	}
 
 	// todayInString est maintenant fourni par le composable useTodayButton
@@ -496,38 +644,38 @@
 		() => isDatePickerVisible.value,
 		currentMonthName,
 		currentYearName,
+		() => datePickerDialogRef.value,
 	)
 
 	const syncDisplayedMonthYearFromDate = (date: Date) => {
-		const month = date.getMonth().toString()
-		const year = date.getFullYear().toString()
-		const hasMonthChanged = currentMonth.value !== month
-		const hasYearChanged = currentYear.value !== year
+		const displayedState = getDisplayedMonthYearState(date)
+		const hasMonthChanged = currentMonth.value !== displayedState.month
+		const hasYearChanged = currentYear.value !== displayedState.year
 
 		if (hasMonthChanged) {
-			currentMonth.value = month
-			currentMonthName.value = dayjs(date).format('MMMM')
+			currentMonth.value = displayedState.month
+			currentMonthName.value = displayedState.monthName
 			handleMonthUpdate()
 		}
 
 		if (hasYearChanged) {
-			currentYear.value = year
-			currentYearName.value = year
+			currentYear.value = displayedState.year
+			currentYearName.value = displayedState.yearName
 		}
 
 		if (hasMonthChanged || hasYearChanged) {
+			reapplyAccessibility()
 			nextTick(() => {
 				if (isDatePickerVisible.value) {
 					customizeMonthButton()
 					markHolidayDays()
+					updateSelectedDayAria()
 				}
 			})
 		}
 	}
 
 	onMounted(() => {
-		document.addEventListener('click', handleClickOutside)
-
 		// Configurer l'observateur pour le bouton du mois
 		setupMonthButtonObserver()
 
@@ -543,12 +691,7 @@
 		// Après la validation initiale, désactiver le flag
 		nextTick(() => {
 			isInitialValidation.value = false
-			fixAriaAttributes()
 		})
-	})
-
-	onBeforeUnmount(() => {
-		document.removeEventListener('click', handleClickOutside)
 	})
 
 	const validateOnSubmit = async () => {
@@ -588,6 +731,8 @@
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
 				markHolidayDays()
+				updateSelectedDayAria()
+				nextTick(focusInitialDay)
 			}
 		})
 	}
@@ -602,6 +747,8 @@
 			if (isDatePickerVisible.value) {
 				customizeMonthButton()
 				markHolidayDays()
+				updateSelectedDayAria()
+				nextTick(focusInitialDay)
 			}
 		})
 	}
@@ -616,12 +763,104 @@
 		),
 	})
 
+	const { updateSelectedDayAria } = useSelectedDayAria({
+		rootElement: computed(
+			() => datePickerRef.value?.$el as HTMLElement | null,
+		),
+	})
+
 	// Utilisation du composable pour gérer le mode d'affichage du CalendarMode
 	const { currentViewMode, handleViewModeUpdate, handleYearUpdate, handleMonthUpdate, resetViewMode } = useDatePickerViewMode(
 		() => props.isBirthDate || props.birthDate,
 		// Fonction qui retourne l'état de la date sélectionnée
 		() => selectedDates.value,
 	)
+
+	const waitForTransitionEnd = (container: HTMLElement, callback: () => void) => {
+		if (container.classList.contains('v-enter-active') || container.classList.contains('fade-transition-enter-active')) {
+			let fired = false
+			const handler = () => {
+				if (fired) return
+				fired = true
+				clearTimeout(fallbackId)
+				callback()
+			}
+			const fallbackId = setTimeout(handler, 400)
+			container.addEventListener('transitionend', handler, { once: true })
+		}
+		else {
+			callback()
+		}
+	}
+
+	const handleViewModeUpdateWrapper = (mode: ViewMode) => {
+		handleViewModeUpdate(mode)
+		if (isDatePickerVisible.value) {
+			reapplyAccessibility()
+		}
+		if (mode === 'month') {
+			nextTick(() => {
+				if (isDatePickerVisible.value) {
+					const root = datePickerDialogRef.value
+					if (!root) return
+					const monthContainer = root.querySelector<HTMLElement>('.v-date-picker-month')
+					if (!monthContainer) {
+						focusInitialDay()
+						return
+					}
+
+					waitForTransitionEnd(monthContainer, () => focusInitialDay())
+				}
+			})
+		}
+		if (mode === 'months') {
+			nextTick(() => {
+				const root = datePickerDialogRef.value
+				if (!root) return
+				const monthsContainer = root.querySelector<HTMLElement>('.v-date-picker-months')
+				if (!monthsContainer) return
+
+				const focusActiveMonth = () => {
+					const active = root.querySelector<HTMLElement>('.v-date-picker-months .v-btn--active')
+					if (active) {
+						active.focus({ preventScroll: true })
+						return
+					}
+					const monthIndex = currentMonth.value !== null ? Number(currentMonth.value) : new Date().getMonth()
+					const monthBtns = root.querySelectorAll<HTMLElement>('.v-date-picker-months .v-btn')
+					monthBtns[monthIndex]?.focus({ preventScroll: true })
+				}
+
+				waitForTransitionEnd(monthsContainer, focusActiveMonth)
+			})
+		}
+
+		if (mode === 'year') {
+			nextTick(() => {
+				const root = datePickerDialogRef.value
+				if (!root) return
+				const yearsContainer = root.querySelector<HTMLElement>('.v-date-picker-years')
+				if (!yearsContainer) return
+
+				const focusActiveYear = () => {
+					const active = root.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
+					if (active) {
+						active.focus({ preventScroll: true })
+						return
+					}
+					const currentYearBtn = root.querySelector<HTMLElement>('.v-date-picker-years .v-date-picker-years__year--current .v-btn')
+					if (currentYearBtn) {
+						currentYearBtn.focus({ preventScroll: true })
+						return
+					}
+					const firstBtn = root.querySelector<HTMLElement>('.v-date-picker-years .v-btn')
+					firstBtn?.focus({ preventScroll: true })
+				}
+
+				waitForTransitionEnd(yearsContainer, focusActiveYear)
+			})
+		}
+	}
 
 	const handleInputBlur = async () => {
 		emit('blur')
@@ -643,6 +882,7 @@
 			// Marquer les jours fériés lorsque le calendrier devient visible
 			markHolidayDays()
 			customizeMonthButton()
+			updateSelectedDayAria()
 		}
 		if (!isVisible && props.isBirthDate) {
 			// Réinitialiser le mode d'affichage au type birthdate
@@ -650,6 +890,10 @@
 		}
 
 		if (!isVisible) {
+			if (!isHandlingProgrammaticClose.value) {
+				await finalizeDatePickerClose()
+			}
+
 			// set the focus on the text input
 			// wait for VMenu to finish DOM updates & transition
 			setTimeout(() => {
@@ -709,6 +953,7 @@
 	// Reset month/year names when clearing the date
 	watch(selectedDates, (newValue) => {
 		if (!newValue) {
+			keyboardNavigatedDate.value = null
 			const today = new Date()
 			syncDisplayedMonthYearFromDate(today)
 		}
@@ -717,16 +962,14 @@
 	const toggleDatePicker = async () => {
 		if (isInteractionDisabled.value) return
 
-		isDatePickerVisible.value = !isDatePickerVisible.value
-
-		if (isDatePickerVisible.value) {
+		if (!isDatePickerVisible.value) {
+			isDatePickerVisible.value = true
 			nextTick(() => {
-				updateAccessibility()
+				updateAccessibility(datePickerDialogRef.value ?? undefined, currentViewMode.value)
 			})
 		}
 		else {
-			emit('closed')
-			await validateDates()
+			await closeDatePicker()
 		}
 	}
 
@@ -759,9 +1002,7 @@
 		}
 		// Fermer le calendrier lorsque la touche Escape est pressée
 		else if ((event.key === 'Escape' || event.key === 'Esc') && isDatePickerVisible.value) {
-			isDatePickerVisible.value = false
-			emit('closed')
-			await validateDates() // Valider les dates à la fermeture
+			await closeDatePicker()
 			event.preventDefault()
 		}
 	}
@@ -771,6 +1012,9 @@
 		isDatePickerVisible,
 		selectedDates,
 		errorMessages,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successMessages),
 		handleClickOutside,
 		initializeSelectedDates,
 		updateAccessibility,
@@ -818,11 +1062,11 @@
 				:offset="[-20, 5]"
 				content-class="date-picker-overlay-content"
 				role="presentation"
-				:title="props.placeholder || DATE_PICKER_MESSAGES.LABEL_DEFAULT"
+				:title="props.placeholder || locales.label"
 			>
 				<template #activator="{ props: menuProps }">
 					<div
-						v-bind="{ ...menuProps, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': isDatePickerVisible ? datePickerContentId : undefined }"
+						v-bind="{ ...menuProps, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': isDatePickerVisible ? datePickerDialogId : undefined }"
 					>
 						<SyTextField
 							:id="`${datePickerContentId}-input`"
@@ -841,19 +1085,15 @@
 					</div>
 				</template>
 				<div
+					v-if="isDatePickerVisible && !props.noCalendar"
+					:id="datePickerDialogId"
+					ref="datePickerDialogRef"
+					role="dialog"
+					aria-modal="true"
+					:aria-labelledby="datePickerHeadingId"
 					tabindex="-1"
-					role="presentation"
-					@keydown.capture="handleMenuKeydown"
 				>
-					<div
-						class="sr-only"
-						aria-live="polite"
-						aria-atomic="true"
-					>
-						{{ monthYearLiveText }}
-					</div>
 					<VDatePicker
-						v-if="isDatePickerVisible && !props.noCalendar"
 						:id="datePickerContentId"
 						ref="datePickerRef"
 						v-model="selectedDates"
@@ -864,11 +1104,13 @@
 						:show-adjacent-months="true"
 						:show-week="props.showWeekNumber"
 						:view-mode="currentViewMode"
+						:month="currentMonth !== null ? Number(currentMonth) : undefined"
+						:year="currentYear !== null ? Number(currentYear) : undefined"
 						:class="displayWeekendDays ? 'weekend' : ''"
 						:max="maxDate"
 						:min="minDate"
 						:display-holiday-days="props.displayHolidayDays"
-						@update:view-mode="handleViewModeUpdate"
+						@update:view-mode="handleViewModeUpdateWrapper"
 						@update:month="onUpdateMonth"
 						@update:year="onUpdateYear"
 						@click:date="updateSelectedDates"
@@ -877,13 +1119,12 @@
 						@update:month-year="markHolidayDays"
 					>
 						<template #title>
-							Sélectionnez une date
+							{{ locales.calendarTitle }}
 						</template>
 						<template #header>
 							<SyHeading
+								:id="datePickerHeadingId"
 								class="mx-auto my-auto ml-5 mb-4"
-								aria-live="polite"
-								aria-atomic="true"
 								:level="headingLevel"
 							>
 								{{ selectedDates ? displayedDateString : headerDate }}
@@ -895,19 +1136,23 @@
 						>
 							<div class="d-flex justify-center align-center w-100">
 								<v-btn
+									type="button"
 									size="x-small"
 									color="primary"
-									:title="DATE_PICKER_MESSAGES.BUTTON_TODAY"
+									:title="todayButtonLabel"
+									:aria-label="todayButtonLabel"
 									class="date-picker__today-button my-2 pa-2 mt-2"
 									:ripple="false"
 									@click="handleSelectToday"
+									@keydown.enter.prevent.stop="handleSelectToday"
+									@keydown.space.prevent.stop="handleSelectToday"
 								>
 									<SyIcon
 										size="16px"
 										decorative
 										:icon="mdiCalendarMonthOutline"
 									/>
-									{{ DATE_PICKER_MESSAGES.BUTTON_TODAY }}
+									{{ locales.buttonToday }}
 								</v-btn>
 							</div>
 						</template>
@@ -919,10 +1164,16 @@
 </template>
 
 <style lang="scss" scoped>
-$ap-grey-mid: #b0b1b1;
+$ap-grey-mid: #d6d6d6;
 
 .v-sheet {
 	border-radius: var(--radius-md) !important;
+}
+
+/* En mode calendar, le champ est readonly : pas de cursor pointer sur l'input et les icônes */
+:deep(.v-field__input),
+:deep(.sy-text-field__icon-button) {
+	cursor: default;
 }
 
 .date-picker-title {
@@ -1063,12 +1314,26 @@ $ap-grey-mid: #b0b1b1;
 	background-color: rgb(var(--v-theme-background));
 }
 
-:deep(.v-date-picker-month__day--selected, .v-date-picker-month__day--adjacent) {
+:deep(.v-date-picker-month__day--adjacent) {
+	opacity: 0.7;
+}
+
+:deep(.v-date-picker-month__day--adjacent:has(.v-btn:focus-visible)) {
 	opacity: 1;
+}
+
+:deep(.v-date-picker-month__day--adjacent .v-btn:focus-visible) {
+	opacity: 1;
+	background-color: transparent !important;
+
+	.v-btn__content {
+		opacity: 0.5;
+	}
 }
 
 :deep(.v-date-picker-month__day--selected .v-btn:hover) {
 	background-color: rgb(var(--v-theme-primaryVariant)) !important;
+	opacity: 0.9;
 }
 
 .fade-enter-active,

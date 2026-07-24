@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import useCustomizableOptions from '@/composables/useCustomizableOptions'
 	import { mdiClose } from '@mdi/js'
 	import { nextTick, ref, toRef, useId, watch } from 'vue'
 	import type { VBtn, VDialog } from 'vuetify/components'
@@ -7,21 +7,11 @@
 	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
 	import { config } from './config'
 	import { locales } from './locales'
+	import type { DialogBoxOwnProps } from './types'
 	import { useDraggable } from './useDraggable'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
-	const props = withDefaults(defineProps<{
-		title?: string
-		width?: string
-		cancelBtnText?: string
-		confirmBtnText?: string
-		hideActions?: boolean
-		persistent?: boolean
-		autofocusValidateBtn?: boolean
-		draggable?: boolean
-		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
-		scrollable?: boolean
-	} & CustomizableOptions>(), {
+	const props = withDefaults(defineProps<DialogBoxOwnProps>(), {
 		title: undefined,
 		width: '800px',
 		cancelBtnText: locales.cancelBtn,

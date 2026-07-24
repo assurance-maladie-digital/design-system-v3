@@ -3,7 +3,7 @@ import type { ValidationResult, ValidationRule } from '@/composables/validation/
 import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 import { validateDateFormat, isDateComplete } from './useDateFormatUtils'
 import { validateEmptyOrIncompleteDate, adaptCustomRules } from '../utils/validationUtils'
-import { DATE_PICKER_MESSAGES } from '../constants/messages'
+import { locales } from '../locales'
 import type { DatePickerRule } from '../types'
 
 export interface UseDateTextFieldManualValidationOptions {
@@ -72,7 +72,7 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 
 		// Gérer les erreurs pour champ vide requis
 		if (!emptyCheck.isValid && !unref(manualValidation.disableErrorHandling) && emptyCheck.errorMessage) {
-			manualValidation.errors.value.push(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
+			manualValidation.errors.value.push(locales.required)
 		}
 
 		// Si on ne doit pas continuer la validation (champ vide/incomplet)
@@ -101,7 +101,7 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 		if (!date) {
 			// La date n'a pas pu être parsée
 			if (!unref(manualValidation.disableErrorHandling)) {
-				manualValidation.errors.value.push(`Format de date invalide (${displayFormat.value})`)
+				manualValidation.errors.value.push(locales.invalidDateFormatWithFormat(displayFormat.value))
 			}
 			return false
 		}
@@ -158,8 +158,8 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 	const clampIfNeeded = (raw: string): string => {
 		if (!unref(autoClamp) || !raw) return raw
 
-		if (isRange.value && raw.includes(DATE_PICKER_MESSAGES.RANGE_SEPARATOR)) {
-			const [rawStartDate = '', rawEndDate = ''] = raw.split(DATE_PICKER_MESSAGES.RANGE_SEPARATOR).map(dateText => dateText.trim())
+		if (isRange.value && raw.includes(locales.rangeSeparator)) {
+			const [rawStartDate = '', rawEndDate = ''] = raw.split(locales.rangeSeparator).map(dateText => dateText.trim())
 			const startDateValidation = rawStartDate
 				? autoClampDate(rawStartDate, displayFormat.value)
 				: { adjusted: false, clampedDate: rawStartDate }
@@ -170,7 +170,7 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 			const formattedStartDate = startDateValidation.clampedDate || ''
 			const formattedEndDate = endDateValidation.clampedDate || ''
 
-			return formattedEndDate ? `${formattedStartDate}${DATE_PICKER_MESSAGES.RANGE_SEPARATOR}${formattedEndDate}` : `${formattedStartDate}${DATE_PICKER_MESSAGES.RANGE_SEPARATOR}`
+			return formattedEndDate ? `${formattedStartDate}${locales.rangeSeparator}${formattedEndDate}` : `${formattedStartDate}${locales.rangeSeparator}`
 		}
 
 		const dateValidationResult = autoClampDate(raw, displayFormat.value)

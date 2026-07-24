@@ -1,6 +1,6 @@
 import { watch, unref, type Ref, type MaybeRef } from 'vue'
 import { useValidation, type ValidationResult, type ValidationRule } from '@/composables/validation/useValidation'
-import { DATE_PICKER_MESSAGES } from '../constants/messages'
+import { locales } from '../locales'
 import type { DateObjectValue, DatePickerRule } from '../types'
 import { useDateRangeValidation } from './useDateRangeValidation'
 
@@ -128,13 +128,13 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 				}
 			}
 			if (shouldDisplayErrors) {
-				errors.value.push(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
+				errors.value.push(locales.required)
 				return {
 					hasError: true,
 					hasWarning: false,
 					hasSuccess: false,
 					state: {
-						errors: [DATE_PICKER_MESSAGES.ERROR_REQUIRED],
+						errors: [locales.required],
 						warnings: [],
 						successes: [],
 					},
@@ -197,7 +197,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 				const endDate = options.selectedDates.value[options.selectedDates.value.length - 1]
 
 				if (startDate && endDate && startDate.getTime() > endDate.getTime()) {
-					const rangeError = DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START
+					const rangeError = locales.endBeforeStart
 					if (!errors.value.includes(rangeError)) {
 						errors.value.push(rangeError)
 						finalIsValid = false
@@ -277,7 +277,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 				return
 			}
 			if (shouldDisplayErrors) {
-				errors.value.push(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
+				errors.value.push(locales.required)
 			}
 			return
 		}

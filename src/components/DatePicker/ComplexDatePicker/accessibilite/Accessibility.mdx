@@ -21,16 +21,16 @@ import {
 <CriteriaSection>
 	<CriteriaCard title="Structure sémantique" icon="">
 		<ul>
-			<li><strong>Champ</strong> : conteneur <code>role="combobox"</code> qui expose <code>aria-controls</code> et <code>aria-expanded</code>; champ de saisie interne en <code>textbox</code> avec libellé dynamique. À la différence du mode calendrier simple, ce mode permet la saisie libre, justifiant l'utilisation du pattern combobox.</li>
-			<li><strong>Panneau</strong> : calendrier dans un menu <code>role="presentation"</code>, grille de boutons natifs pour les jours.</li>
-			<li><strong>Relations</strong> : l’activateur référence le panneau via <code>aria-controls</code> quand ouvert; <code>aria-labelledby</code> et <code>aria-label</code> portés par l’input.</li>
+			<li><strong>Champ</strong> : l’input réellement focusé porte la sémantique <code>combobox</code> et expose <code>aria-haspopup="dialog"</code>, <code>aria-expanded</code> et <code>aria-controls</code> quand le calendrier est ouvert. À la différence du mode calendrier simple, ce mode permet la saisie libre, justifiant l'utilisation du pattern combobox.</li>
+			<li><strong>Panneau</strong> : calendrier exposé comme un vrai <code>dialog</code> modal, contenant la grille de jours et les actions associées.</li>
+			<li><strong>Relations</strong> : l’activateur référence le dialog via <code>aria-controls</code> quand ouvert; le dialog est nommé via <code>aria-labelledby</code> sur son heading visible.</li>
 			<li><strong>États</strong> : <code>aria-expanded</code> synchronisé, <code>aria-disabled</code> / <code>aria-readonly</code> propagés aux champs et messages.</li>
 		</ul>
 	</CriteriaCard>
 
 	<CriteriaCard title="Ouverture et focus" icon="">
 		<ul>
-			<li><strong>Ouverture</strong> : clic sur le champ ou l’icône; <kbd>Entrée</kbd> sur le champ ouvre; option <code>textFieldActivator</code> active toute la zone.</li>
+			<li><strong>Ouverture</strong> : clic sur l’icône, <kbd>Entrée</kbd> et <kbd>Flèche bas</kbd> sur le champ ouvrent; le clic dans l’input et <kbd>Espace</kbd> ne sont pas surchargés pour préserver la saisie manuelle; option <code>textFieldActivator</code> active toute la zone.</li>
 			<li><strong>Fermeture</strong> : <kbd>Échap</kbd> via le piège de focus; fermeture valide et émet <code>closed</code>.</li>
 			<li><strong>Piège de focus</strong> : <kbd>Tab</kbd>/<kbd>Shift+Tab</kbd> circulent dans l’en-tête, la grille et le bouton « Aujourd’hui » tant que le panneau est ouvert.</li>
 			<li><strong>Lecture seule</strong> : aucun clear ni validation interactive, champs non éditables.</li>
@@ -40,7 +40,7 @@ import {
 	<CriteriaCard title="Navigation clavier dans le calendrier" icon="">
 		<ul>
 			<li><strong>Jours</strong> : flèches déplacent le focus; <code>PageUp/PageDown</code> changent de mois (<kbd>Shift</kbd> + touche change d’année).</li>
-			<li><strong>Home/End</strong> : premier/dernier jour du mois affiché.</li>
+			<li><strong>Home/End</strong> : premier/dernier jour de la semaine affichée.</li>
 			<li><strong>Activation</strong> : <kbd>Espace</kbd>/<kbd>Entrée</kbd> déclenchent les boutons de jour et de l’en-tête (mois/année/flèches).</li>
 			<li><strong>Dialogue mois/années</strong> : flèches et <kbd>Home</kbd>/<kbd>End</kbd>, <kbd>Espace</kbd>/<kbd>Entrée</kbd> sélectionnent l’option et conservent le focus.</li>
 		</ul>
@@ -50,7 +50,7 @@ import {
 		<ul>
 			<li><strong>Statuts</strong> : erreurs/avertissements/succès affichés sous le champ; bouton « Aujourd’hui » avec <code>title</code>.</li>
 			<li><strong>Formats attendus</strong> : placeholder + hint décrivent la saisie; autoClamp optionnel sur la saisie interne.</li>
-			<li><strong>Lecture/voix</strong> : libellé/placeholder alimentent <code>aria-label</code>; les messages sont reliés via <code>aria-describedby</code>.</li>
+			<li><strong>Lecture/voix</strong> : libellé/placeholder alimentent <code>aria-label</code>; les messages sont reliés via <code>aria-describedby</code>; les changements de mois/année sont annoncés via une unique région de statut dédiée.</li>
 		</ul>
 	</CriteriaCard>
 </CriteriaSection>
