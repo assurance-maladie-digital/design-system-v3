@@ -7,13 +7,12 @@ export type TextareaRule = (value: string) => boolean | string
 export function useDefaultValidationRules(params: {
 	required: Ref<boolean>
 	maxLines: Ref<number | undefined>
-	hasInteracted: Ref<boolean>
 }) {
 	const vuetifyRules = computed<TextareaRule[]>(() => {
 		const rules: TextareaRule[] = []
 
 		rules.push((value: string) => {
-			if (params.required.value && params.hasInteracted.value && !value) {
+			if (params.required.value && !value) {
 				return locales.required
 			}
 			return true

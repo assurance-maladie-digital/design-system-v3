@@ -215,6 +215,7 @@
 	})
 
 	const clearField = () => {
+		clearValidation({ silent: true })
 		model.value = ''
 	}
 

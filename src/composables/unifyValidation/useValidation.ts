@@ -209,9 +209,23 @@ export function useValidation(params: {
 		) || (params.hasSuccessProp?.value ?? false)
 	})
 
-	function clearValidation() {
+	function clearValidation(options?: { silent?: boolean }) {
 		vuetifyErrors.value = []
-		customValidator.clearValidation()
+
+		const vuetifyBridge = vuetifyValidator as (typeof vuetifyValidator & {
+			resetValidation?: () => void
+			isPristine?: Ref<boolean>
+		})
+
+		if (vuetifyBridge?.resetValidation) {
+			vuetifyBridge.resetValidation()
+		}
+
+		if (options?.silent && vuetifyBridge?.isPristine) {
+			vuetifyBridge.isPristine.value = true
+		}
+
+		customValidator.clearValidation(options)
 	}
 
 	return {

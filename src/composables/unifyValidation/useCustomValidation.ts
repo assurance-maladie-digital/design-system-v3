@@ -58,6 +58,7 @@ export function useCustomValidation(
 	)
 
 	const isPristine = ref(true)
+	const skipNextAutoValidation = ref(false)
 
 	async function validate() {
 		if (readonly?.value || disabled?.value) {
@@ -109,16 +110,27 @@ export function useCustomValidation(
 	})
 
 	watch(modelValue, () => {
+		if (skipNextAutoValidation.value) {
+			skipNextAutoValidation.value = false
+			return
+		}
+
 		if (!isValidateOnBlur.value && !disableErrorHandling.value) {
 			validate()
 		}
 	})
 
-	function clearValidation() {
+	function clearValidation(options?: { silent?: boolean }) {
 		errors.value = []
 		warnings.value = []
 		successes.value = []
 		hasSuccess.value = false
+		isPristine.value = true
+
+		// Silent clear also skips the immediate auto-validation triggered by the model reset.
+		if (options?.silent) {
+			skipNextAutoValidation.value = true
+		}
 	}
 
 	return { validate, hasSuccess, clearValidation }

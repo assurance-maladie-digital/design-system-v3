@@ -43,7 +43,6 @@
 	const attrs = useAttrs()
 
 	const textAreaRef = ref<VTextarea | null>(null)
-	const hasInteracted = ref(false)
 	const id = computed(() => props.uniqueId || useId())
 
 	const wrapperOnlyPropKeys = new Set([
@@ -100,7 +99,7 @@
 		normalize: toRef(props, 'normalize'),
 	})
 
-	// Applique les changeActions et blurActions sans mettre hasInteracted à true (pour les changements externes)
+	// Applique les changeActions et blurActions pour les changements externes.
 	function applyExternalValue(value: string) {
 		let processedValue = value
 		// Applique d'abord les changeActions (replaceTabs, normalize)
@@ -145,7 +144,6 @@
 	}
 
 	function execBlurChange() {
-		hasInteracted.value = true
 		let value = internalValue.value
 		blurActions.value.forEach((action) => {
 			value = action(value)
@@ -165,7 +163,7 @@
 		hasSuccess,
 		validationIcon,
 		mergedVuetifyRules,
-	} = useSyTextAreaValidation(props, { internalValue, hasInteracted })
+	} = useSyTextAreaValidation(props, { internalValue })
 
 	const computedLabel = computed(() =>
 		props.displayAsterisk && props.required ? `${props.label} *` : props.label,
@@ -187,9 +185,8 @@
 	)
 
 	function clearField() {
+		clearValidation({ silent: true })
 		internalValue.value = ''
-		clearValidation()
-		hasInteracted.value = false
 		emits('clear')
 	}
 
@@ -202,7 +199,6 @@
 	})
 
 	const validateOnSubmit = async () => {
-		hasInteracted.value = true
 		await nextTick()
 		return validate()
 	}

@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import SyForm from '../SyForm.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+import SyTextArea from '@/components/SyTextArea/SyTextArea.vue'
 import NirField from '@/components/NirField/NirField.vue'
 import { VTextField } from 'vuetify/components/VTextField'
 import { nextTick } from 'vue'
@@ -81,6 +82,72 @@ describe('SyForm', () => {
 		await flushPromises()
 		expect(submitHandler).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ isValid: false }))
 		expect(wrapper.vm.formValide).toBe(false)
+	})
+
+	it('keeps the form invalid when a required clearable SyTextArea is cleared without showing the error', async () => {
+		const TestWrapper = {
+			components: { SyForm, SyTextArea },
+			template: `
+					<SyForm v-model="formValide" ref="form">
+						<SyTextArea v-model="text" required clearable label="Description" />
+						<button type="submit">Valider</button>
+					</SyForm>
+				`,
+			data() {
+				return {
+					text: '',
+					formValide: null as boolean | null,
+				}
+			},
+		}
+
+		const wrapper = mount(TestWrapper)
+		const textarea = wrapper.find('textarea')
+		await textarea.trigger('focus')
+		await textarea.setValue('Texte initial')
+		await textarea.trigger('blur')
+		await flushPromises()
+		expect(wrapper.vm.formValide).toBe(true)
+		expect(wrapper.text()).not.toContain('Ce champ est requis')
+
+		await wrapper.find('.sy-textarea__clear-button').trigger('click')
+		await flushPromises()
+
+		expect(wrapper.vm.formValide).toBe(false)
+		expect(wrapper.text()).not.toContain('Ce champ est requis')
+	})
+
+	it('keeps the form invalid when a required clearable SyTextField is cleared without showing the error', async () => {
+		const TestWrapper = {
+			components: { SyForm, SyTextField },
+			template: `
+					<SyForm v-model="formValide" ref="form">
+						<SyTextField v-model="text" required is-clearable label="Nom" />
+						<button type="submit">Valider</button>
+					</SyForm>
+				`,
+			data() {
+				return {
+					text: '',
+					formValide: null as boolean | null,
+				}
+			},
+		}
+
+		const wrapper = mount(TestWrapper)
+		const input = wrapper.find('input')
+		await input.trigger('focus')
+		await input.setValue('Jean Dupont')
+		await input.trigger('blur')
+		await flushPromises()
+		expect(wrapper.vm.formValide).toBe(true)
+		expect(wrapper.text()).not.toContain('Le champ Nom est requis.')
+
+		await wrapper.find('.sy-text-field__clear').trigger('click')
+		await flushPromises()
+
+		expect(wrapper.vm.formValide).toBe(false)
+		expect(wrapper.text()).not.toContain('Le champ Nom est requis.')
 	})
 
 	it('handle valid form submission', async () => {

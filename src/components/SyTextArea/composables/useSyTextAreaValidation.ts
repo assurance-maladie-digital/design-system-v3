@@ -9,10 +9,8 @@ export function useSyTextAreaValidation(
 	props: FieldValidationProps & { maxLines?: number },
 	{
 		internalValue,
-		hasInteracted,
 	}: {
 		internalValue: Ref<string>
-		hasInteracted: Ref<boolean>
 	},
 ) {
 	const focused = ref(false)
@@ -20,7 +18,6 @@ export function useSyTextAreaValidation(
 	const { vuetifyRules: defaultVuetifyRules, customRules: defaultCustomRules } = useDefaultValidationRules({
 		required: computed(() => props.required ?? false),
 		maxLines: computed(() => props.maxLines),
-		hasInteracted,
 	})
 
 	const mergedCustomRules = computed<SyValidationRule[]>(() => [

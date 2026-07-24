@@ -190,6 +190,29 @@ describe('SyTextField', () => {
 		expect(onClickParent).not.toHaveBeenCalled()
 	})
 
+	it('does not show required error immediately after clear in non-blur validation mode', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				label: 'Nom',
+				modelValue: 'Jean Dupont',
+				required: true,
+				isClearable: true,
+				isValidateOnBlur: false,
+			},
+			attachTo: document.body,
+		})
+
+		const clearButton = wrapper.find('.sy-text-field__clear')
+		expect(clearButton.exists()).toBe(true)
+
+		await clearButton.trigger('click')
+		await flushPromises()
+
+		expect(wrapper.text()).not.toContain('Le champ Nom est requis.')
+
+		wrapper.unmount()
+	})
+
 	it('shows validation error message', async () => {
 		const wrapper = mount(SyTextField, {
 			props: {

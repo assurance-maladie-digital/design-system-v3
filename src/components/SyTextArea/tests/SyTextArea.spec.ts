@@ -700,6 +700,27 @@ describe('SyTextArea', () => {
 
 			wrapper.unmount()
 		})
+
+		it('does not show required error immediately after clear in non-blur validation mode', async () => {
+			const wrapper = mount(SyTextArea, {
+				props: {
+					uniqueId: 'textarea-1',
+					modelValue: 'contenu',
+					label: 'Description',
+					required: true,
+					clearable: true,
+					isValidateOnBlur: false,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.find('.sy-textarea__clear-button').trigger('click')
+			await flushPromises()
+
+			expect(wrapper.text()).not.toContain('Ce champ est requis')
+
+			wrapper.unmount()
+		})
 	})
 
 	describe('disableErrorHandling', () => {
