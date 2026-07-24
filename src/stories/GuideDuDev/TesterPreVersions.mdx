@@ -92,29 +92,51 @@ pnpm build
 
 ## 4. Relier la librairie à votre projet (link)
 
-Nous utilisons ici `pnpm link --global`&nbsp;: la librairie est inscrite dans un
-registre global de pnpm, puis déclarée dans votre projet.
+Un **link** remplace le paquet npm `@cnamts/synapse` de votre projet par un symlink vers le
+build local (produit à l'étape 3). Deux méthodes au choix — elles donnent le même résultat.
 
-### 4.1. Côté librairie — enregistrement global
+### 4.1. Méthode recommandée — lien par chemin (une seule commande)
 
-Toujours à la racine du dépôt du Design System&nbsp;:
+Depuis le dossier de **votre application**, pointez directement vers le dépôt du Design System&nbsp;:
 
 <Source dark language="bash" code={`
-pnpm link --global
+# Depuis la racine de VOTRE projet — indiquez le chemin du dépôt Design System
+pnpm link /chemin/vers/design-system-v3
+
+# Exemple avec un chemin relatif
+pnpm link ../design-system-v3
 `}
 />
 
-### 4.2. Côté projet consommateur — branchement
+pnpm résout le nom du paquet (`@cnamts/synapse`) depuis le `package.json` ciblé et crée le
+symlink dans le `node_modules` de votre projet. Pas de registre global à gérer.
 
-Dans le dossier de votre application&nbsp;:
+### 4.2. Alternative — lien global (deux étapes)
+
+Si vous préférez passer par le store global de pnpm&nbsp;:
 
 <Source dark language="bash" code={`
+# 1) À la racine du dépôt du Design System — enregistrement global
+pnpm link --global
+
+# 2) Dans le dossier de votre application — branchement
 pnpm link --global @cnamts/synapse
 `}
 />
 
 Votre projet utilise désormais la version locale (buildée à l'étape 3) à la place du
-paquet npm. Relancez votre serveur de dev (`pnpm dev`) pour le prise en compte.
+paquet npm. Relancez votre serveur de dev (`pnpm dev`) pour la prise en compte.
+
+> ⚠️ **Les deux méthodes modifient le `package.json` de votre projet** (ajout de l'entrée de
+> lien). Pensez à **retirer le lien avant tout commit**, sinon vous committez une dépendance qui
+> pointe vers votre disque local.
+
+<Source dark language="bash" code={`
+# Dans votre projet — retirer le lien
+pnpm unlink @cnamts/synapse
+pnpm install
+`}
+/>
 
 ### 4.3. Itérer
 
@@ -153,7 +175,7 @@ instance Vuetify configurée (thème CNAM par défaut).
 
 ### Tester un composant
 
-Par défaut, **tout se passe dans `dev/Playground.vue**&nbsp;:
+Par défaut, **tout se passe dans `dev/Playground.vue`**&nbsp;:
 c'est la page affichée à l'ouverture du playground. Importez-y le composant depuis le
 source et exposez vos cas de figure&nbsp;:
 
