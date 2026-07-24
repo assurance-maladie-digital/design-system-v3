@@ -4,7 +4,6 @@ import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import { mdiAlertCircle, mdiAlertOutline, mdiCheck } from '@mdi/js'
 import { type ValidationRule } from '@/composables/validation/useValidation'
 import { useValidation, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
-import { useValidatable } from '@/composables/validation/useValidatable'
 
 export function useSyAutocompleteValidation(
 	props: FieldValidationProps,
@@ -84,8 +83,6 @@ export function useSyAutocompleteValidation(
 		focused.value = false
 		validate()
 	}
-
-	useValidatable(validateOnSubmit, clearValidation)
 
 	return {
 		focused,

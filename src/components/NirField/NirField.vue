@@ -5,7 +5,6 @@
 	import { locales } from './locales'
 	import { useValidation } from '@/composables/unifyValidation/useValidation'
 	import { useNirValidation, type NirValidationProps } from './useNirValidation'
-	import { useValidatable } from '@/composables/validation/useValidatable'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: string | undefined | null
@@ -277,8 +276,6 @@
 	const validateOnSubmit = () => {
 		return validateFields(true)
 	}
-
-	useValidatable(validateOnSubmit, clearValidation)
 
 	const hasMessages = computed(() => {
 		if (props.disableErrorHandling) return false

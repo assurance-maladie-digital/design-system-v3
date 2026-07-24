@@ -4,7 +4,7 @@ import type { Ref } from 'vue'
 import { useDefaultValidationRules } from '../useDefaultValidationRules'
 import { useValidation, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 import type { ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
-import type { SyTextAreaLocales } from '../locales'
+import type { locales as defaultLocales } from '../locales'
 
 export function useSyTextAreaValidation(
 	props: FieldValidationProps & { maxLines?: number },
@@ -15,7 +15,7 @@ export function useSyTextAreaValidation(
 		internalValue: Ref<string>
 		hasInteracted: Ref<boolean>
 	},
-	locales: Ref<SyTextAreaLocales>,
+	locales: Ref<typeof defaultLocales>,
 ) {
 	const focused = ref(false)
 

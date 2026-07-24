@@ -3,18 +3,16 @@
 		inheritAttrs: false,
 	})
 
-	import { computed, nextTick, readonly as readonlyState, ref, toRef, useAttrs, useId, watch } from 'vue'
-	import { mdiCloseCircle } from '@mdi/js'
-	import { type VTextarea } from 'vuetify/components'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import useTextActions from './useTextActions'
-	import { useSyTextAreaValidation } from './composables/useSyTextAreaValidation'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
-	import { useValidatable } from '@/composables/validation/useValidatable'
-	import { locales as defaultLocales } from './locales'
 	import { useLocales } from '@/composables/useLocales'
-
+	import { mdiCloseCircle } from '@mdi/js'
+	import { computed, nextTick, readonly as readonlyState, ref, toRef, useAttrs, useId, watch } from 'vue'
+	import { type VTextarea } from 'vuetify/components'
+	import { useSyTextAreaValidation } from './composables/useSyTextAreaValidation'
+	import { locales as defaultLocales } from './locales'
 	import { type SyTextAreaOwnProps } from './types'
+	import useTextActions from './useTextActions'
 
 	type VTextareaProps = VTextarea['$props']
 
@@ -212,8 +210,6 @@
 		await nextTick()
 		return validate()
 	}
-
-	useValidatable(validateOnSubmit, clearValidation)
 
 	defineExpose({
 		validateOnSubmit,

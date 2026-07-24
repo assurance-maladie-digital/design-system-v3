@@ -4,7 +4,6 @@
 	import type { VRadioGroup } from 'vuetify/components'
 	import { VMessages } from 'vuetify/components'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
-	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useSyRadioGroupValidation } from './composables/useSyRadioGroupValidation'
 	import { locales as defaultLocales } from './locales'
 	import { useLocales } from '@/composables/useLocales'
@@ -77,9 +76,6 @@
 		hasSuccess,
 		clearValidation,
 	} = useSyRadioGroupValidation(props, model, focused, locales)
-
-	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
 
 	const hasMessages = computed(() =>
 		errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0,

@@ -2,7 +2,6 @@
 	import { computed, readonly as readonlyState, ref } from 'vue'
 	import { VMessages } from 'vuetify/components'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
-	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useSyCheckBoxGroupValidation } from './composables/useSyCheckBoxGroupValidation'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import { locales as defaultLocales } from './locales'
@@ -125,9 +124,6 @@
 
 		return ids.length > 0 ? ids.join(' ') : undefined
 	})
-
-	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit, clearValidation, reset)
 
 	defineExpose({
 		validateOnSubmit,
