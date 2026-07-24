@@ -25,6 +25,7 @@
 		label: string
 		text: string
 		image: string
+		email?: string
 	}
 	interface Pillar {
 		id: string
