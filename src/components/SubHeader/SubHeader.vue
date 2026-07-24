@@ -180,6 +180,7 @@
 	overflow-x: auto;
 	border-radius: 0 0 32px 32px;
 }
+
 .back-btn--dark {
 	margin: 0 -6px 16px -16px;
 	color: rgb(var(--v-theme-onPrimary));
