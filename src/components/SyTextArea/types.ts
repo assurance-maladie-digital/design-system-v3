@@ -1,5 +1,7 @@
 import type { FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 import type { VTextarea } from 'vuetify/components'
+import { locales as defaultLocales } from './locales'
+import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 export type SyTextAreaOwnProps = {
 	uniqueId?: string
@@ -20,6 +22,7 @@ export type SyTextAreaOwnProps = {
 	helpText?: string
 	hideDetails?: boolean
 	displayAsterisk?: boolean
+	locales?: DeepPartial<typeof defaultLocales>
 } & FieldValidationProps
 
 export type SyTextAreaVuetifyProps = VTextarea['$props']
