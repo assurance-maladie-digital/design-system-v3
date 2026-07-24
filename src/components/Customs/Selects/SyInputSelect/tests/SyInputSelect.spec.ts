@@ -321,4 +321,23 @@ describe('SyInputSelect', () => {
 			expect(wrapper.find('.v-list').attributes('is-header-toolbar')).toBeTruthy()
 		})
 	})
+
+	// Le ring de focus est scopé (jsdom ne calcule pas :focus-visible) : on vérifie le
+	// prérequis — le déclencheur est un élément focusable (tabindex 0).
+	describe('focus', () => {
+		const items = [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }]
+
+		it('renders a focusable trigger (tabindex 0) as the focus ring target', () => {
+			const wrapper = mount(SyInputSelect, { props: { items } })
+			expect(wrapper.get('.sy-input-select').attributes('tabindex')).toBe('0')
+		})
+
+		it('is focusable', () => {
+			const wrapper = mount(SyInputSelect, { props: { items }, attachTo: document.body })
+			const trigger = wrapper.get('.sy-input-select').element as HTMLElement
+			trigger.focus()
+			expect(document.activeElement).toBe(trigger)
+			wrapper.unmount()
+		})
+	})
 })

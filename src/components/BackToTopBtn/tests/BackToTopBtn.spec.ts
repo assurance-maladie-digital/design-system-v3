@@ -178,3 +178,25 @@ describe('BackToTopBtn', () => {
 		expect(removeEventListenerSpy).toHaveBeenCalledWith('scroll', expect.any(Function))
 	})
 })
+
+// Le ring de focus vient de l'override global (_btns.scss) : jsdom ne calcule pas
+// :focus-visible, on vérifie le prérequis — un <button> natif focusable.
+describe('BackToTopBtn - focus', () => {
+	it('renders a native <button> so the global focus ring applies', () => {
+		const wrapper = mount(BackToTopBtn)
+		expect(wrapper.get('.vd-back-to-top-btn').element.tagName).toBe('BUTTON')
+		wrapper.unmount()
+	})
+
+	it('is focusable once revealed by scroll', async () => {
+		const wrapper = mount(BackToTopBtn, { props: { threshold: 0 }, attachTo: document.body })
+		Object.defineProperty(window, 'scrollY', { value: 200, writable: true })
+		window.dispatchEvent(new Event('scroll'))
+		await wrapper.vm.$nextTick()
+
+		const button = wrapper.get('.vd-back-to-top-btn').element as HTMLButtonElement
+		button.focus()
+		expect(document.activeElement).toBe(button)
+		wrapper.unmount()
+	})
+})

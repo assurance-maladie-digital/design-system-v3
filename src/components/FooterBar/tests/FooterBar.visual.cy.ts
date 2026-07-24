@@ -61,3 +61,33 @@ describe('FooterBar - Visual regression tests', () => {
 		cy.matchImageSnapshot('footer-bar-version', cy.get('.v-footer'))
 	})
 })
+
+// Déclenche :focus-visible via l'option native focus({ focusVisible: true }).
+const focusVisible = (selector: string) =>
+	cy.get(selector).then(($el) => {
+		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
+	})
+
+describe('FooterBar - Focus visual regression tests', () => {
+	// Le back-to-top (#scroll-btn) n'apparaît qu'en mode étendu (slot par défaut).
+	it('shows the onPrimary focus ring on the back-to-top (dark)', () => {
+		cy.mountWithVuetify(FooterBar, {
+			slots: { default: () => 'Contenu du footer' },
+		})
+
+		focusVisible('#scroll-btn')
+		cy.wait(100)
+		cy.matchImageSnapshot('footer-bar-focus-scroll-dark', cy.get('.v-footer'))
+	})
+
+	it('shows the primary focus ring on the back-to-top (light)', () => {
+		cy.mountWithVuetify(FooterBar, {
+			props: { light: true },
+			slots: { default: () => 'Contenu du footer' },
+		})
+
+		focusVisible('#scroll-btn')
+		cy.wait(100)
+		cy.matchImageSnapshot('footer-bar-focus-scroll-light', cy.get('.v-footer'))
+	})
+})

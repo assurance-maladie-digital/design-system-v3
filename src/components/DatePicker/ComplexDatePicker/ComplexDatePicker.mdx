@@ -51,6 +51,8 @@ La propriété `disablePickerInteraction` permet d'utiliser le champ de saisie a
 
 Le composant supporte différents formats de date et détecte automatiquement le séparateur utilisé dans le format (/, -, ., etc.) pour l'appliquer lors de la saisie.
 
+Les bornes `period.min` et `period.max` doivent rester exprimées dans le même format que la prop `format`, car elles sont fournies directement au calendrier.
+
 <Canvas of={DatePickerStories.CustomDateFormat}/>
 
 ## Mode lecture seule
@@ -78,7 +80,7 @@ Le composant permet la sélection de plages de dates avec validation automatique
     <strong>Note importante</strong>
     <ul>
         <li>La prop <code>period</code> permet de définir une période de dates valides. Les dates en dehors de cette période ne seront pas visibles dans le calendrier.</li>
-        <li>Le format de la prop <code>period</code> est <code>MM/DD/YYYY</code>.</li>
+        <li>Le format de la prop <code>period</code> doit rester cohérent avec la prop <code>format</code> utilisée par le composant.</li>
     </ul>
 </div>
 
@@ -133,6 +135,9 @@ Le composant expose plusieurs méthodes qui peuvent être utilisées via une ré
 
 ### toggleDatePicker
 - **Description** : Bascule l'état d'ouverture du calendrier
+
+### reset
+- **Description** : Efface la sélection, les messages de validation et referme le calendrier
 
 ### Exemple d'utilisation
 
@@ -216,4 +221,4 @@ Le composant émet plusieurs événements :
 - **Payload** : `string` - La valeur saisie dans le champ
 
 ### date-selected
-- **Payload** : `Date | Date[] | null` - La date ou les dates sélectionnées
+- **Payload** : `string | [string, string] | null` - La valeur sélectionnée, au format de retour du composant

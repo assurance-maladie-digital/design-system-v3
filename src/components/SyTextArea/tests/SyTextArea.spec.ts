@@ -1,6 +1,7 @@
 import { it, describe, expect, vi } from 'vitest'
 import { flushPromises, mount } from '@vue/test-utils'
 import { ref } from 'vue'
+import { VTextarea } from 'vuetify/components'
 import SyForm from '../../Customs/SyForm/SyForm.vue'
 import SyIcon from '../../Customs/SyIcon/SyIcon.vue'
 import SyTextArea from '../SyTextArea.vue'
@@ -29,6 +30,21 @@ describe('SyTextArea', () => {
 		})
 
 		expect(wrapper.find('textarea').attributes('id')).toBe('my-textarea-id')
+	})
+
+	it('forwarde les props Vuetify vers VTextarea', () => {
+		const wrapper = mount(SyTextArea, {
+			props: {
+				label: 'Description',
+				modelValue: '',
+				rows: 1,
+				autoGrow: true,
+			},
+		})
+
+		const textarea = wrapper.getComponent(VTextarea)
+		expect(textarea.props('rows')).toBe(1)
+		expect(textarea.props('autoGrow')).toBe(true)
 	})
 
 	it('sets aria-required when required is true', () => {
@@ -905,5 +921,28 @@ describe('SyTextArea', () => {
 			expect(onSubmit).toHaveBeenCalledWith({ isValid: false })
 			expect(wrapper.text()).toContain('Ce champ est requis')
 		})
+	})
+})
+
+// Le focus du textarea lui-même = bordure du field Vuetify (convention DS des champs).
+// Le bouton d'effacement est un <button> natif → ring de focus via l'override global
+// (_btns.scss). jsdom ne calcule pas :focus-visible : on vérifie le prérequis — un
+// <button> natif focusable.
+describe('SyTextArea - focus (clear button)', () => {
+	it('renders the clear button as a native <button> so the global focus ring applies', () => {
+		const wrapper = mount(SyTextArea, { props: { clearable: true, modelValue: 'Texte' } })
+		expect(wrapper.get('.sy-textarea__clear-button').element.tagName).toBe('BUTTON')
+		wrapper.unmount()
+	})
+
+	it('is focusable', () => {
+		const wrapper = mount(SyTextArea, {
+			props: { clearable: true, modelValue: 'Texte' },
+			attachTo: document.body,
+		})
+		const btn = wrapper.get('.sy-textarea__clear-button').element as HTMLButtonElement
+		btn.focus()
+		expect(document.activeElement).toBe(btn)
+		wrapper.unmount()
 	})
 })

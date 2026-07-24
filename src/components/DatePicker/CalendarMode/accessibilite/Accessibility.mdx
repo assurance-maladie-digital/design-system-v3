@@ -30,8 +30,8 @@ import {
 					<li><em>Alternative robuste</em> : L'accessibilité de l'ouverture est garantie contextuellement. L'ouverture du calendrier déplace immédiatement le focus dans une modale avec un <em>focus trap</em>. Le lecteur d'écran comprend le changement de contexte et l'annonce via les régions <code>aria-live</code>, rendant l'expérience fluide et conforme aux standards.</li>
 				</ul>
 			</li>
-			<li><strong>Panneau</strong> : contenu dans un menu <code>role="presentation"</code> avec grille de boutons (<code>role=button</code> natif sur chaque jour).</li>
-			<li><strong>Relations</strong> : <code>aria-controls</code> relie l’input au panneau lorsqu’il est ouvert; <code>aria-owns/expanded/haspopup</code> ne sont pas surchargés.</li>
+			<li><strong>Panneau</strong> : calendrier exposé dans un vrai <code>dialog</code> modal, contenant la grille de jours et ses contrôles.</li>
+			<li><strong>Relations</strong> : <code>aria-controls</code> relie l’enveloppe activatrice du champ readonly au <code>dialog</code> lorsqu’il est ouvert; <code>aria-owns/expanded/haspopup</code> ne sont pas surchargés sur l’input natif.</li>
 			<li><strong>États</strong> : <code>aria-disabled</code> / <code>aria-readonly</code> alignés sur les props, messages d’erreur/avertissement/succès annoncés via la zone de messages du champ.</li>
 		</ul>
 	</CriteriaCard>
@@ -39,7 +39,7 @@ import {
 	<CriteriaCard title="Ouverture et focus" icon="">
 		<ul>
 			<li><strong>Ouverture clavier</strong> : <kbd>Entrée</kbd> sur le champ ouvre le calendrier; l’icône déclenche l’ouverture avec la souris.</li>
-			<li><strong>Fermeture</strong> : <kbd>Échap</kbd> ferme et valide, focus rendu au champ.</li>
+			<li><strong>Fermeture</strong> : <kbd>Échap</kbd> ferme et valide; un clic extérieur ferme aussi le panneau; le focus est ensuite rendu au champ.</li>
 			<li><strong>Piège de focus</strong> : <kbd>Tab</kbd>/<kbd>Shift+Tab</kbd> restent dans le panneau ouvert (boutons d’entête, grille de jours, bouton « Aujourd’hui »).</li>
 		</ul>
 	</CriteriaCard>
@@ -47,7 +47,7 @@ import {
 	<CriteriaCard title="Navigation clavier dans le calendrier" icon="">
 		<ul>
 			<li><strong>Jours</strong> : flèches déplacent le focus jour par jour; <code>PageUp/PageDown</code> changent de mois (<kbd>Shift</kbd> + touche change d’année).</li>
-			<li><strong>Home/End</strong> : vont au premier/dernier jour du mois affiché.</li>
+			<li><strong>Home/End</strong> : vont au premier/dernier jour de la semaine affichée.</li>
 			<li><strong>Activation</strong> : <kbd>Espace</kbd>/<kbd>Entrée</kbd> sur un jour déclenchent le bouton du jour; même logique sur les boutons d’entête (mois/année et flèches).</li>
 			<li><strong>Dialogue mois/années</strong> : navigation par flèches et <kbd>Home</kbd>/<kbd>End</kbd>; <kbd>Espace</kbd>/<kbd>Entrée</kbd> sélectionnent l’option et conservent le focus.</li>
 		</ul>
@@ -55,7 +55,7 @@ import {
 
 	<CriteriaCard title="Messages et annonces" icon="">
 		<ul>
-			<li><strong>Live region</strong> : le mois/année affichés sont annoncés via <code>aria-live="polite"</code> (zone masquée).</li>
+			<li><strong>Live region</strong> : le mois/année affichés sont annoncés via une unique région de statut dédiée, pour éviter les annonces en double.</li>
 			<li><strong>Statuts</strong> : erreurs/avertissements/succès sous le champ; le bouton « Aujourd’hui » a un <code>title</code> explicite.</li>
 			<li><strong>Guidage</strong> : placeholder et libellé (ou <code>aria-label</code>) décrivent l’action attendue.</li>
 		</ul>
@@ -75,7 +75,7 @@ import {
 
 <ResourcesSection>
 - Stories DatePicker : cas standard, plage, lecture seule.
-- Tests : <code>CalendarMode/DatePicker.spec.ts</code> et <code>DatePicker.events.spec.ts</code> couvrent l’ouverture, le focus et la navigation clavier.
+- Tests : <code>CalendarMode/tests/DatePicker.spec.ts</code>, <code>CalendarMode/tests/DatePicker.a11y.spec.ts</code> et <code>composables/tests/useDatePickerFocusTrap.a11y.spec.ts</code> couvrent l’ouverture, la fermeture, le focus et la navigation clavier.
 - WAI-ARIA grid & boutons : référence pour les comportements clavier sur les grilles de dates.
 </ResourcesSection>
 

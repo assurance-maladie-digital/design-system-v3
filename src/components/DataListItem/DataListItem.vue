@@ -137,12 +137,6 @@
 	margin-left: 2.5rem;
 }
 
-.sy-data-list-item-action-btn.v-btn {
-	&:focus-visible::after {
-		opacity: 1;
-	}
-}
-
 .v-icon.v-theme--light {
 	color: rgb(0 0 0 / 54%);
 }

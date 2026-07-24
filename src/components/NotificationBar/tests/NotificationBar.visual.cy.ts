@@ -1,5 +1,12 @@
+import { h } from 'vue'
 import NotificationBar from '../NotificationBar.vue'
 import { useNotificationService } from '@/services/NotificationService'
+
+// Déclenche `:focus-visible` via l'option native focus({ focusVisible: true }).
+const focusVisible = (selector: string) =>
+	cy.get(selector).then(($el) => {
+		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
+	})
 
 describe('NotificationBar - Visual regression tests', () => {
 	beforeEach(() => {
@@ -50,5 +57,45 @@ describe('NotificationBar - Visual regression tests', () => {
 		cy.get('.notification').should('contain', 'Succès de l\'opération')
 		cy.get('.notification').should('contain', 'Une erreur est survenue')
 		cy.matchImageSnapshot('notification-bar-multiple', cy.get('.v-application'))
+	})
+
+	// Bouton « Fermer » : ring DS contrasté sur le fond coloré de la barre (onPrimary sur info).
+	// Largeur/offset (3px) et masquage overlay/::after hérités du global ; seule la couleur est
+	// surchargée par type.
+	it('shows the DS ring on a focused close button', () => {
+		const { addNotification } = useNotificationService()
+		addNotification({ id: '1', message: 'Ceci est une notification informative', type: 'info' })
+
+		cy.mountWithVuetify(NotificationBar, {
+			props: { showAll: true },
+		})
+
+		cy.get('.notification__close').should('be.visible')
+		focusVisible('.notification__close')
+		cy.wait(150)
+		cy.matchImageSnapshot('notification-bar-close-focus', cy.get('.v-application'))
+	})
+
+	// Un bouton interactif fourni via le slot `action` reçoit aussi le ring contrasté par type
+	// (sinon il hériterait du ring primary du global, invisible sur le fond coloré de la barre).
+	it('shows the contrast ring on a focused action-slot button', () => {
+		const { addNotification } = useNotificationService()
+		addNotification({ id: '1', message: 'Notification avec action', type: 'info' })
+
+		cy.mountWithVuetify(NotificationBar, {
+			props: { showAll: true },
+			slots: {
+				action: () => h(
+					'button',
+					{ type: 'button', class: 'notification-action-btn px-3 py-2' },
+					'Voir le détail',
+				),
+			},
+		})
+
+		cy.get('.notification-action-btn').should('be.visible')
+		focusVisible('.notification-action-btn')
+		cy.wait(150)
+		cy.matchImageSnapshot('notification-bar-action-focus', cy.get('.v-application'))
 	})
 })

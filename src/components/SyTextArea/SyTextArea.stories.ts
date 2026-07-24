@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SyTextArea from './SyTextArea.vue'
 import type { VTextarea } from 'vuetify/components'
 import { fn } from 'storybook/test'
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted, nextTick, watch } from 'vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
 const meta = {
@@ -336,6 +336,83 @@ const text = ref('Texte initial')
 				v-model="value"
 				label="Commentaire"
 				clearable
+			/>
+		`,
+	}),
+}
+
+export const AutoGrowCompact: Story = {
+	argTypes: {
+		label: {
+			control: { type: 'text' },
+		},
+		rows: {
+			control: { type: 'number', min: 1, step: 1 },
+		},
+		autoGrow: {
+			control: { type: 'boolean' },
+		},
+		placeholder: {
+			control: { type: 'text' },
+		},
+		modelValue: {
+			control: { type: 'text' },
+		},
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Exemple d\'usage compact avec les props Vuetify `rows="1"` et `auto-grow`, utile pour éviter un textarea trop haut par défaut tout en laissant la zone grandir avec le contenu.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<SyTextArea
+		v-model="text"
+		label="Commentaire"
+		:rows="1"
+		auto-grow
+		placeholder="Ajoutez un commentaire"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+const text = ref('')
+</script>`,
+			},
+		],
+	},
+	args: {
+		'label': 'Commentaire',
+		'modelValue': '',
+		'rows': 1,
+		'autoGrow': true,
+		'placeholder': 'Ajoutez un commentaire',
+		'onUpdate:modelValue': fn(),
+	},
+	render: args => ({
+		components: { SyTextArea },
+		setup() {
+			const value = ref(args.modelValue ?? '')
+
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue ?? ''
+			})
+
+			return { args, value }
+		},
+		template: `
+			<SyTextArea
+				v-model="value"
+				:label="args.label"
+				:rows="args.rows"
+				:auto-grow="args.autoGrow"
+				:placeholder="args.placeholder"
 			/>
 		`,
 	}),

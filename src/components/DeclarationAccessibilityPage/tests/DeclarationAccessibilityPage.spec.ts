@@ -57,3 +57,22 @@ describe('DeclarationAccessibilityPage', () => {
 		expect(wrapper.find('.verified-pages').exists()).toBe(true)
 	})
 })
+
+// Les liens `<a>` de la page (site, mail, tél, RGAA…) reçoivent le ring de focus via
+// l'override global `_links.scss`. jsdom ne calcule pas :focus-visible : on vérifie le
+// prérequis — un lien natif focusable.
+describe('DeclarationAccessibilityPage - focus', () => {
+	it('renders native <a> links so the global focus ring applies', () => {
+		const wrapper = mount(DeclarationAccessibilityPage, { props: minimalProps })
+		expect(wrapper.get('.engagement a[href]').element.tagName).toBe('A')
+		wrapper.unmount()
+	})
+
+	it('a link is focusable', () => {
+		const wrapper = mount(DeclarationAccessibilityPage, { props: minimalProps, attachTo: document.body })
+		const link = wrapper.get('.engagement a[href]').element as HTMLAnchorElement
+		link.focus()
+		expect(document.activeElement).toBe(link)
+		wrapper.unmount()
+	})
+})

@@ -129,6 +129,60 @@ describe('useCalendarKeyboardNavigation', () => {
 		vi.useRealTimers()
 	})
 
+	it('preserves day-of-month on PageUp/PageDown and clamps when needed', () => {
+		vi.useFakeTimers()
+		const isDatePickerVisible = ref(true)
+		// Base: 31 March 2023
+		const getCurrentDate = vi.fn(() => new Date(2023, 2, 31))
+		const setCurrentDate = vi.fn()
+
+		let savedListener: ((e: KeyboardEvent) => void) | null = null
+		const addEventListenerSpy = vi.spyOn(document, 'addEventListener').mockImplementation((type, listener) => {
+			if (type === 'keydown') savedListener = listener as (e: KeyboardEvent) => void
+		})
+
+		let attachListeners!: () => void
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef: ref(null),
+					getCurrentDate,
+					setCurrentDate,
+				})
+				attachListeners = result.attachListeners
+				return () => null
+			},
+		})
+
+		mount(TestComponent)
+		attachListeners()
+		vi.advanceTimersByTime(150)
+
+		const fireKey = (key: string, shiftKey = false) => {
+			setCurrentDate.mockClear()
+			const event = new KeyboardEvent('keydown', { key, shiftKey, bubbles: true })
+			Object.defineProperty(event, 'target', { value: document.createElement('div') })
+			savedListener!(event)
+			return setCurrentDate.mock.calls[0]?.[0] as Date | undefined
+		}
+
+		// PageUp: 31 Mar -> 28 Feb 2023 (clamped)
+		const up = fireKey('PageUp')
+		expect(up?.getFullYear()).toBe(2023)
+		expect(up?.getMonth()).toBe(1) // Feb
+		expect(up?.getDate()).toBe(28)
+
+		// PageDown: 31 Mar -> 30 Apr 2023 (clamped)
+		const down = fireKey('PageDown')
+		expect(down?.getFullYear()).toBe(2023)
+		expect(down?.getMonth()).toBe(3) // Apr
+		expect(down?.getDate()).toBe(30)
+
+		addEventListenerSpy.mockRestore()
+		vi.useRealTimers()
+	})
+
 	it('falls back to getCurrentDate when event target is not a day cell', () => {
 		vi.useFakeTimers()
 		const isDatePickerVisible = ref(true)
@@ -348,31 +402,31 @@ describe('useCalendarKeyboardNavigation', () => {
 			return setCurrentDate.mock.calls[0]?.[0] as Date | undefined
 		}
 
-		// Home → premier jour du mois (1 Jan)
+		// Home → premier jour de la semaine affichée (lundi 9 Jan)
 		const homeDate = fireKey('Home')
-		expect(homeDate?.getDate()).toBe(1)
+		expect(homeDate?.getDate()).toBe(9)
 		expect(homeDate?.getMonth()).toBe(0)
 
-		// End → dernier jour du mois (31 Jan)
+		// End → dernier jour de la semaine affichée (dimanche 15 Jan)
 		const endDate = fireKey('End')
-		expect(endDate?.getDate()).toBe(31)
+		expect(endDate?.getDate()).toBe(15)
 
-		// PageUp → premier jour du mois précédent (1 Dec 2022)
+		// PageUp → même jour du mois précédent (15 Dec 2022)
 		const pageUpDate = fireKey('PageUp')
-		expect(pageUpDate?.getDate()).toBe(1)
+		expect(pageUpDate?.getDate()).toBe(15)
 		expect(pageUpDate?.getMonth()).toBe(11)
 		expect(pageUpDate?.getFullYear()).toBe(2022)
 
-		// PageDown → premier jour du mois suivant (1 Feb 2023)
+		// PageDown → même jour du mois suivant (15 Feb 2023)
 		const pageDownDate = fireKey('PageDown')
-		expect(pageDownDate?.getDate()).toBe(1)
+		expect(pageDownDate?.getDate()).toBe(15)
 		expect(pageDownDate?.getMonth()).toBe(1)
 
-		// PageUp + Shift → année précédente (1 Jan 2022)
+		// PageUp + Shift → même jour l'année précédente (15 Jan 2022)
 		const pageUpShiftDate = fireKey('PageUp', true)
 		expect(pageUpShiftDate?.getFullYear()).toBe(2022)
 
-		// PageDown + Shift → année suivante (1 Jan 2024)
+		// PageDown + Shift → même jour l'année suivante (15 Jan 2024)
 		const pageDownShiftDate = fireKey('PageDown', true)
 		expect(pageDownShiftDate?.getFullYear()).toBe(2024)
 
@@ -384,15 +438,15 @@ describe('useCalendarKeyboardNavigation', () => {
 		vi.useFakeTimers()
 		const isDatePickerVisible = ref(true)
 		const setCurrentDate = vi.fn()
+		const onSelectDate = vi.fn()
 
-		// Créer un rootEl contenant la cellule de jour (nécessaire pour clickDateButton)
+		// Créer un rootEl contenant la cellule de jour pour résoudre la date active
 		const rootEl = document.createElement('div')
 		const dayWrapper = document.createElement('div')
 		dayWrapper.setAttribute('data-v-date', '2023-01-10')
 		dayWrapper.className = 'v-date-picker-month__day'
 		const btn = document.createElement('button')
 		btn.type = 'button'
-		const clickSpy = vi.spyOn(btn, 'click')
 		dayWrapper.appendChild(btn)
 		rootEl.appendChild(dayWrapper)
 		document.body.appendChild(rootEl)
@@ -411,6 +465,7 @@ describe('useCalendarKeyboardNavigation', () => {
 					datePickerRef: ref({ $el: rootEl } as unknown as ComponentPublicInstance),
 					getCurrentDate: vi.fn(() => new Date(2023, 0, 10)),
 					setCurrentDate,
+					onSelectDate,
 				})
 				attachListeners = result.attachListeners
 				return () => null
@@ -424,7 +479,18 @@ describe('useCalendarKeyboardNavigation', () => {
 		Object.defineProperty(enterEvent, 'target', { value: btn })
 		savedListener!(enterEvent)
 
-		expect(clickSpy).toHaveBeenCalled()
+		expect(setCurrentDate).toHaveBeenCalledWith(new Date(2023, 0, 10))
+		expect(onSelectDate).toHaveBeenCalledWith(new Date(2023, 0, 10))
+
+		setCurrentDate.mockClear()
+		onSelectDate.mockClear()
+
+		const spaceEvent = new KeyboardEvent('keydown', { key: ' ', bubbles: true })
+		Object.defineProperty(spaceEvent, 'target', { value: btn })
+		savedListener!(spaceEvent)
+
+		expect(setCurrentDate).toHaveBeenCalledWith(new Date(2023, 0, 10))
+		expect(onSelectDate).toHaveBeenCalledWith(new Date(2023, 0, 10))
 		document.body.removeChild(rootEl)
 
 		addSpy.mockRestore()
@@ -670,5 +736,200 @@ describe('useCalendarKeyboardNavigation', () => {
 
 		addSpy.mockRestore()
 		vi.useRealTimers()
+	})
+
+	it('focusInitialDay focuses the target date button when it exists in the DOM', () => {
+		const isDatePickerVisible = ref(true)
+		const rootEl = document.createElement('div')
+
+		// Simulate a day button for 2023-06-15
+		const dayCell = document.createElement('div')
+		dayCell.setAttribute('data-v-date', '2023-06-15')
+		const dayBtn = document.createElement('button')
+		dayBtn.type = 'button'
+		dayCell.appendChild(dayBtn)
+		rootEl.appendChild(dayCell)
+
+		const focusSpy = vi.spyOn(dayBtn, 'focus')
+
+		let focusInitialDay!: () => void
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef: ref({ $el: rootEl } as unknown as ComponentPublicInstance),
+					getInitialFocusDate: () => new Date(2023, 5, 15),
+					getCurrentDate: vi.fn(() => null),
+					setCurrentDate: vi.fn(),
+				})
+				focusInitialDay = result.focusInitialDay
+				return () => null
+			},
+		})
+		mount(TestComponent)
+
+		focusInitialDay()
+		expect(focusSpy).toHaveBeenCalledWith({ preventScroll: true })
+	})
+
+	it('focusInitialDay does nothing when rootEl is missing', () => {
+		const isDatePickerVisible = ref(true)
+
+		let focusInitialDay!: () => void
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef: ref(null),
+					getInitialFocusDate: () => new Date(2023, 5, 15),
+					getCurrentDate: vi.fn(() => null),
+					setCurrentDate: vi.fn(),
+				})
+				focusInitialDay = result.focusInitialDay
+				return () => null
+			},
+		})
+		mount(TestComponent)
+
+		// Should not throw
+		expect(() => focusInitialDay()).not.toThrow()
+	})
+
+	it('focusInitialDay falls back to first non-adjacent day when target date is not in displayed month', () => {
+		const isDatePickerVisible = ref(true)
+		const rootEl = document.createElement('div')
+
+		// Simulate October 2026 calendar with adjacent days from September
+		// Adjacent day (Sept 28) - has adjacent class
+		const adjCell = document.createElement('div')
+		adjCell.setAttribute('data-v-date', '2026-09-28')
+		adjCell.className = 'v-date-picker-month__day v-date-picker-month__day--adjacent'
+		const adjBtn = document.createElement('button')
+		adjBtn.type = 'button'
+		adjCell.appendChild(adjBtn)
+		rootEl.appendChild(adjCell)
+
+		// Adjacent day (Sept 29)
+		const adjCell2 = document.createElement('div')
+		adjCell2.setAttribute('data-v-date', '2026-09-29')
+		adjCell2.className = 'v-date-picker-month__day v-date-picker-month__day--adjacent'
+		const adjBtn2 = document.createElement('button')
+		adjBtn2.type = 'button'
+		adjCell2.appendChild(adjBtn2)
+		rootEl.appendChild(adjCell2)
+
+		// Adjacent day (Sept 30)
+		const adjCell3 = document.createElement('div')
+		adjCell3.setAttribute('data-v-date', '2026-09-30')
+		adjCell3.className = 'v-date-picker-month__day v-date-picker-month__day--adjacent'
+		const adjBtn3 = document.createElement('button')
+		adjBtn3.type = 'button'
+		adjCell3.appendChild(adjBtn3)
+		rootEl.appendChild(adjCell3)
+
+		// First real day of October (Oct 1) - no adjacent class
+		const octCell = document.createElement('div')
+		octCell.setAttribute('data-v-date', '2026-10-01')
+		octCell.className = 'v-date-picker-month__day'
+		const octBtn = document.createElement('button')
+		octBtn.type = 'button'
+		octCell.appendChild(octBtn)
+		rootEl.appendChild(octCell)
+
+		// Another day of October
+		const octCell2 = document.createElement('div')
+		octCell2.setAttribute('data-v-date', '2026-10-02')
+		octCell2.className = 'v-date-picker-month__day'
+		const octBtn2 = document.createElement('button')
+		octBtn2.type = 'button'
+		octCell2.appendChild(octBtn2)
+		rootEl.appendChild(octCell2)
+
+		const adjFocusSpy = vi.spyOn(adjBtn, 'focus')
+		const octFocusSpy = vi.spyOn(octBtn, 'focus')
+
+		let focusInitialDay!: () => void
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef: ref({ $el: rootEl } as unknown as ComponentPublicInstance),
+					// Target date is July 9 - not in October calendar
+					getInitialFocusDate: () => new Date(2026, 6, 9),
+					getCurrentDate: vi.fn(() => null),
+					setCurrentDate: vi.fn(),
+				})
+				focusInitialDay = result.focusInitialDay
+				return () => null
+			},
+		})
+		mount(TestComponent)
+
+		focusInitialDay()
+
+		// Should NOT focus the adjacent day
+		expect(adjFocusSpy).not.toHaveBeenCalled()
+		// Should focus the first non-adjacent day (Oct 1)
+		expect(octFocusSpy).toHaveBeenCalledWith({ preventScroll: true })
+	})
+
+	it('focusInitialDay does not focus anything when no day buttons exist', () => {
+		const isDatePickerVisible = ref(true)
+		const rootEl = document.createElement('div')
+		// Empty root - no day cells
+
+		let focusInitialDay!: () => void
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef: ref({ $el: rootEl } as unknown as ComponentPublicInstance),
+					getInitialFocusDate: () => new Date(2023, 5, 15),
+					getCurrentDate: vi.fn(() => null),
+					setCurrentDate: vi.fn(),
+				})
+				focusInitialDay = result.focusInitialDay
+				return () => null
+			},
+		})
+		mount(TestComponent)
+
+		// Should not throw
+		expect(() => focusInitialDay()).not.toThrow()
+	})
+
+	it('focusInitialDay is called when date picker becomes visible', async () => {
+		const isDatePickerVisible = ref(false)
+		const rootEl = document.createElement('div')
+
+		const dayCell = document.createElement('div')
+		dayCell.setAttribute('data-v-date', '2023-06-15')
+		const dayBtn = document.createElement('button')
+		dayBtn.type = 'button'
+		dayCell.appendChild(dayBtn)
+		rootEl.appendChild(dayCell)
+
+		const focusSpy = vi.spyOn(dayBtn, 'focus')
+
+		const TestComponent = defineComponent({
+			setup() {
+				useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef: ref({ $el: rootEl } as unknown as ComponentPublicInstance),
+					getInitialFocusDate: () => new Date(2023, 5, 15),
+					getCurrentDate: vi.fn(() => null),
+					setCurrentDate: vi.fn(),
+				})
+				return () => null
+			},
+		})
+		mount(TestComponent)
+
+		isDatePickerVisible.value = true
+		await nextTick() // watcher triggers
+		await nextTick() // attachListeners + nextTick(focusInitialDay)
+		await nextTick() // focusInitialDay runs
+
+		expect(focusSpy).toHaveBeenCalledWith({ preventScroll: true })
 	})
 })

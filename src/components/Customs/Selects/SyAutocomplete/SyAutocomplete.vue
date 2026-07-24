@@ -1,17 +1,17 @@
 <script setup lang="ts">
-	import { computed, nextTick, onMounted, ref, useId, useSlots, watch } from 'vue'
-	import { mdiChevronDown, mdiCloseCircle } from '@mdi/js'
-	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
-	import { ariaManager } from './utils/ariaManager'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
-	import type { ItemType, SelectValue, SelectArray } from './types'
-	import { useItemUtils } from './utils/useItemUtils'
-	import { useSelectionLogic } from './utils/useSelectionLogic'
-	import { useSyAutocompleteKeyboard } from './utils/useKeyboardHandler'
+	import { mdiChevronDown, mdiCloseCircle } from '@mdi/js'
+	import { computed, nextTick, onMounted, readonly as readonlyState, ref, useId, useSlots, watch } from 'vue'
 	import { useSyAutocompleteValidation } from './composables/useSyAutocompleteValidation'
 	import { locales } from './locales'
+	import type { ItemType, SelectArray, SelectValue } from './types'
+	import { ariaManager } from './utils/ariaManager'
+	import { useItemUtils } from './utils/useItemUtils'
+	import { useSyAutocompleteKeyboard } from './utils/useKeyboardHandler'
+	import { useSelectionLogic } from './utils/useSelectionLogic'
 
 	interface SyAutocompleteProps {
 		bgColor?: string
@@ -358,6 +358,12 @@
 		isOpen,
 		selectItem,
 		search,
+		errors: readonlyState(displayErrors),
+		warnings: readonlyState(displayWarnings),
+		successes: readonlyState(displaySuccesses),
+		hasError: readonlyState(displayHasError),
+		hasWarning: readonlyState(displayHasWarning),
+		hasSuccess: readonlyState(displayHasSuccess),
 	})
 </script>
 
@@ -501,7 +507,10 @@
 						:key="getItemKey(item, index)"
 						role="option"
 						:aria-selected="isItemSelected(item) ? 'true' : 'false'"
-						:class="{ active: isItemSelected(item) || getOptionId(index) === activeDescendantId }"
+						:class="{
+							'active': isItemSelected(item),
+							'sy-autocomplete__option--focused': getOptionId(index) === activeDescendantId,
+						}"
 						tag="li"
 						@mousedown.prevent.stop="() => selectItem(item)"
 					>
@@ -582,6 +591,14 @@
 	.v-icon {
 		position: static;
 	}
+
+	// `<button>` natif (pas un `.v-btn`) → non couvert par `_btns.scss`. Ring DS primary,
+	// collé (offset 1px) car bouton-icône positionné dans le bord du champ.
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 1px;
+		border-radius: 4px;
+	}
 }
 
 .sy-autocomplete__clear-icon {
@@ -653,18 +670,25 @@ li:hover {
 
 /* :deep() is required for keyboard-focused so the style applies to slot content (prepend-item),
    which carries the parent's scoped attribute, not SyAutocomplete's. */
+
+/* Focus = anneau seul (pas de fond) ; le fond gris reste réservé au survol et à la
+   sélection (.active / [aria-selected]). */
 .v-list-item:focus-visible,
 li:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
+	outline: 2px solid rgb(var(--v-theme-primary));
 	outline-offset: -2px;
-	background-color: rgb(0 0 0 / 8%);
+}
+
+.v-list-item.sy-autocomplete__option--focused,
+li.sy-autocomplete__option--focused {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: -2px;
 }
 
 :deep(.v-list-item.keyboard-focused),
 :deep(li.keyboard-focused) {
-	outline: 2px solid rgb(var(--v-theme-borderAccentPrimary));
+	outline: 2px solid rgb(var(--v-theme-primary));
 	outline-offset: -2px;
-	background-color: rgb(0 0 0 / 8%);
 }
 
 :deep(.error-field .v-icon.arrow),

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-	import { mdiChevronDown, mdiInformation, mdiCloseCircle } from '@mdi/js'
-	import { computed, onMounted, ref, useId, watch } from 'vue'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import { mdiChevronDown, mdiCloseCircle, mdiInformation } from '@mdi/js'
+	import { computed, onMounted, readonly as readonlyState, ref, useId, watch } from 'vue'
 	import defaultOptions from './config'
-	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		modelValue?: Record<string, unknown> | string | null
@@ -222,6 +222,9 @@
 		validateOnSubmit,
 		validateField,
 		checkForErrors,
+		errors: readonlyState(validation.errors),
+		warnings: readonlyState(validation.warnings),
+		successes: readonlyState(validation.successes),
 	})
 </script>
 
@@ -353,5 +356,21 @@
 
 .text-color {
 	color: rgb(var(--v-theme-primary));
+}
+
+.sy-input-select:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 3px;
+}
+
+.v-list-item:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: -3px;
+
+	// Pas de double indicateur : on masque l'overlay de fond de Vuetify au focus
+	// (comme `_menus.scss`), le ring suffit.
+	:deep(.v-list-item__overlay) {
+		opacity: 0 !important;
+	}
 }
 </style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import useCustomizableOptions from '@/composables/useCustomizableOptions'
 	import { mdiClose } from '@mdi/js'
 	import { nextTick, ref, toRef, useId, watch } from 'vue'
 	import type { VBtn, VDialog } from 'vuetify/components'
@@ -7,21 +7,11 @@
 	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
 	import { config } from './config'
 	import { locales } from './locales'
+	import type { DialogBoxOwnProps } from './types'
 	import { useDraggable } from './useDraggable'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 
-	const props = withDefaults(defineProps<{
-		title?: string
-		width?: string
-		cancelBtnText?: string
-		confirmBtnText?: string
-		hideActions?: boolean
-		persistent?: boolean
-		autofocusValidateBtn?: boolean
-		draggable?: boolean
-		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
-		scrollable?: boolean
-	} & CustomizableOptions>(), {
+	const props = withDefaults(defineProps<DialogBoxOwnProps>(), {
 		title: undefined,
 		width: '800px',
 		cancelBtnText: locales.cancelBtn,
@@ -271,20 +261,16 @@ h2 {
 	text-wrap: balance;
 }
 
-.sy-dialog-box-close-btn:focus-visible,
-.sy-dialog-box-cancel-btn:focus-visible,
-.sy-dialog-box-confirm-btn:focus-visible,
+// Fermer / Annuler / Confirmer sont des `.v-btn` standalone : leur ring DS (2px primary, offset 3px)
+// et le masquage de l'overlay au focus sont déjà assurés par l'override global `_btns.scss`. Aucune
+// règle scoped nécessaire.
+// Cas particulier `autofocusValidateBtn` : le bouton de validation est focusé par programme à
+// l'ouverture, or `:focus-visible` peut ne pas s'appliquer sur un focus programmatique. On force
+// donc le ring DS sur `:focus` pour qu'il soit visible dès l'ouverture, aligné sur le bouton
+// (offset 3px, comme `_btns.scss`).
 .sy-dialog-box-confirm-btn--autofocus:focus {
-	:deep(.v-btn__overlay) {
-		display: none;
-	}
-
-	&::after {
-		opacity: 1;
-		border: transparent;
-		outline: 2px solid rgb(var(--v-theme-primary));
-		outline-offset: 2px;
-	}
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 3px;
 }
 
 .sy-dialog-box-actions-ctn {
@@ -319,6 +305,13 @@ h2 {
 .sy-dialog-box-content--scrollable {
 	overflow-y: auto;
 	min-height: 0;
+
+	// Région scrollable focusable au clavier (tabindex 0, role="region") : ring DS inset pour
+	// signaler le focus sans déborder de la carte ni chevaucher le titre/les actions.
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: -2px;
+	}
 }
 
 @media screen and (width >= 600px) {

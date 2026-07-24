@@ -182,6 +182,7 @@
 
 <style lang="scss" scoped>
 details > summary {
+	display: inline-block;
 	cursor: pointer;
 	list-style: none;
 	user-select: none;
@@ -189,6 +190,12 @@ details > summary {
 	&::marker,
 	&::-webkit-details-marker {
 		display: none;
+	}
+
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 2px;
+		border-radius: 2px;
 	}
 }
 
@@ -199,6 +206,11 @@ details > summary {
 
 .vd-cookies-information__radio-group {
 	margin-top: 0;
+
+	:deep(.v-selection-control--focus-visible) {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 2px;
+	}
 
 	:deep(.v-input__details) {
 		padding: 0;
