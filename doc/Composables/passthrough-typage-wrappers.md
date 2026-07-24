@@ -1,140 +1,136 @@
-# Passthrough & typage des wrappers — stratégie sans breaking change
+# Passer & typer les props vers Vuetify
 
-Guide pour harmoniser, sur les composants qui enveloppent un composant Vuetify, le
-**passage des props** (`v-bind` / `$attrs` / `vuetifyOptions`) et leur **typage** — **sans
-casser** les projets consommateurs.
+Nos composants « enveloppent » un composant Vuetify (ex. `SyTextField` enveloppe `VTextField`).
+Ce guide explique comment **laisser passer davantage de props** vers ce composant Vuetify, et
+comment les **typer**, **sans casser les projets qui utilisent déjà le Design System**.
 
-> Contexte : demande client [#2417](https://github.com/assurance-maladie-digital/design-system-v3/issues/2417)
-> (suite de #2411). Ce document couvre la stratégie « 0 breaking change ». Le choix du pattern
-> canonique cible reste une décision d'équipe (voir aussi [vuetifyOptions](./vuetify-options.md)).
+> Contexte : demande [#2417](https://github.com/assurance-maladie-digital/design-system-v3/issues/2417).
+> Voir aussi la doc [vuetifyOptions](./vuetify-options.md).
 
 ---
 
-## Principe fondateur
+## L'essentiel
 
-**« Où atterrissent les `$attrs` (class / style / id / listeners) fait partie du contrat
-public. »** Un consommateur peut styliser via `class`/`style` en comptant sur l'élément qui les
-reçoit aujourd'hui. Déplacer ce point de chute est un **breaking change DOM/CSS**, même si
-aucune prop ne change.
+- On veut faire **2 choses** : **(1)** typer les props Vuetify sur le wrapper, **(2)** faire
+  passer les props manquantes vers le composant Vuetify en dessous.
+- **Typer = presque toujours sans risque.** On ajoute des props acceptées, on n'en retire aucune.
+- **Faire passer les props = risqué** si on déplace où atterrissent `class` / `style` / `id`.
+  Ça, **on n'y touche pas** en version mineure.
 
-Il faut donc **séparer les deux demandes** — elles ont des profils de risque opposés :
+---
 
-| Demande | Risque de breaking |
+## Mini-glossaire
+
+| Terme | En clair |
 |---|---|
-| Ajouter le **typage** des props Vuetify | Faible (additif) |
-| Ajouter le **`v-bind` / passthrough** manquant | Élevé si mal fait |
+| **`$attrs`** | Tout ce que le parent passe et qui n'est **pas** déclaré comme prop : `class`, `style`, `id`, écouteurs (`@click`)… |
+| **Fallthrough** | Comportement par défaut de Vue : les `$attrs` « tombent » automatiquement sur l'élément **racine** du template. |
+| **`inheritAttrs: false`** | Désactive ce fallthrough → à nous de placer les `$attrs` où on veut avec `v-bind="$attrs"`. |
+| **Passthrough** | Le fait de transmettre des props/attrs du wrapper vers le composant Vuetify en dessous. |
 
 ---
 
-## État actuel (à connaître avant de toucher un wrapper)
+## La règle d'or
 
-Les attrs tombent à des endroits **différents** selon la racine du template :
+> **Là où atterrissent `class` / `style` / `id` aujourd'hui fait partie du contrat public.**
 
-| Wrapper (exemple) | `inheritAttrs:false` | Racine | Où vont `class`/`style`/`id` |
-|---|:--:|---|---|
-| `BackBtn` | non | `<VBtn>` | déjà sur le VBtn |
-| `SyCheckbox` | non | `<div>` | sur le **`<div>` racine** |
-| `ChipList` | non | `<div>` | sur le **`<div>` racine** |
-| `SyCheckBoxGroup` | non | `<fieldset>` | sur le **`<fieldset>` racine** |
-| `SyTextArea` | **oui** | `<div>` | forward curé vers `VTextarea` (modèle propre) |
+Un projet peut styliser notre composant via `class` en comptant sur l'élément qui la reçoit
+actuellement. Si on déplace cet élément, **son CSS casse** — même si aucune prop n'a changé.
+Donc : **on ne déplace jamais le point de chute des `$attrs` en version mineure.**
 
-> Avant toute modification : identifier la racine et le comportement `inheritAttrs` du composant.
+Où ça tombe dépend de la racine du template. Toujours vérifier avant de modifier :
+
+| Wrapper | Racine du template | `class`/`style` tombe sur… |
+|---|---|---|
+| `BackBtn` | `<VBtn>` | le `VBtn` (déjà le bon endroit) |
+| `SyCheckbox` | `<div>` | le `<div>` |
+| `ChipList` | `<div>` | le `<div>` |
+| `SyCheckBoxGroup` | `<fieldset>` | le `<fieldset>` |
+| `SyTextArea` | `<div>` (+ `inheritAttrs:false`) | transmis proprement au `VTextarea` |
 
 ---
 
-## 1. Typage — quasi toujours non-breaking (à faire en premier)
+## Cas 1 — Ajouter le typage des props Vuetify
 
-Élargir `defineProps` avec `& Partial<VXxx['$props']>` est **additif** (on accepte davantage de
-props) → non-breaking au niveau type.
+**Objectif** : que l'IDE connaisse les props Vuetify sur notre wrapper.
 
-### Deux pièges
-
-- **Ne jamais rétrécir ni renommer** une prop existante. Si le wrapper a déjà
-  `variant?: 'a' | 'b'`, le conserver (intersection « own-first ») ; ne pas le remplacer par le
-  type Vuetify large.
-- **Déclarer une prop la retire de `$attrs`.** Sur un wrapper qui compte sur le fallthrough
-  (`BackBtn` : racine `VBtn` + `v-bind="$attrs"`), typer `color` en vraie prop **coupe son
-  passage** — sauf à la `v-bind` explicitement. → **toujours coupler typage + forwarding**.
-
-### Recette (racine = composant Vuetify)
+**À faire** : élargir `defineProps` avec le type Vuetify. C'est additif (on accepte plus, on
+n'enlève rien).
 
 ```ts
-const props = defineProps<Own & Partial<VBtn['$props']>>()
+// on garde nos props maison ET on ajoute celles de VBtn
+const props = defineProps<OwnProps & Partial<VBtn['$props']>>()
 ```
 
+**⚠️ Le piège à connaître** : en Vue, **une prop déclarée disparaît de `$attrs`**. Donc si le
+wrapper comptait sur le fallthrough pour transmettre (ex. `color`), la déclarer coupe son passage.
+La solution : **quand on type, on transmet aussi explicitement** avec `v-bind`.
+
 ```vue
-<!-- inheritAttrs laissé à true : class/style/listeners continuent de tomber sur VBtn -->
+<!-- la racine EST le VBtn : on lui passe nos props, le reste (class/style) tombe dessus tout seul -->
 <VBtn v-bind="props"> … </VBtn>
 ```
 
-Net : les mêmes props qu'avant atteignent `VBtn`, **plus** elles sont typées. Aucun changement
-de comportement.
+Résultat : mêmes props qu'avant sur le `VBtn`, mais **typées**. Rien ne change côté comportement.
 
 ---
 
-## 2. `v-bind` manquant — additif uniquement
+## Cas 2 — Faire passer des props qui manquent
 
-Pour les wrappers à **racine conteneur** (`SyCheckbox`, `ChipList`, `SyCheckBoxGroup`), les attrs
-tombent aujourd'hui sur le `<div>` / `<fieldset>`.
+Concerne surtout les wrappers dont la racine est un **conteneur** (`SyCheckbox`, `ChipList`,
+`SyCheckBoxGroup`) : aujourd'hui `class`/`style` tombent sur le `<div>`/`<fieldset>`.
 
-- ❌ **Ne pas** basculer `inheritAttrs:false` + router `$attrs` vers le composant Vuetify interne
-  en version mineure → cela **déplace** `class`/`style`/`id` et casse le CSS consommateur.
-- ❌ **Ne pas** ajouter `v-bind="$attrs"` sur l'enfant sans `inheritAttrs:false` → double
-  application (id / classes en double).
-- ✅ **Ajouter à la place une liste blanche de props typées** qui forwardent vers l'enfant, en
-  laissant intact le comportement `$attrs` de la racine. Purement additif.
+**❌ À ne PAS faire** (ça casse) :
+
+- Passer `inheritAttrs: false` puis renvoyer les `$attrs` vers le composant Vuetify interne
+  → `class`/`style` **changent d'élément** → CSS des projets cassé.
+- Ajouter `v-bind="$attrs"` sur l'enfant **sans** `inheritAttrs: false` → les attrs sont
+  appliqués **deux fois** (id et classes en double).
+
+**✅ À faire** : ajouter des **props explicites et typées** qui transmettent vers l'enfant, en
+laissant `class`/`style` continuer de tomber sur la racine comme avant. C'est purement additif.
 
 ---
 
-## 3. Typer `vuetifyOptions` — éviter le narrowing
+## Cas 3 — Typer la prop `vuetifyOptions`
 
-Passer `Record<string, unknown>` à `{ VBtn?: … }` **rétrécit** le type → casse à la compilation
-les consommateurs qui passent d'autres formes.
+Elle est typée aujourd'hui `Record<string, unknown>` (tout est accepté). La resserrer en
+`{ VBtn?: … }` **casse** les projets qui passent d'autres formes.
 
-Version non-breaking (typée **et** permissive) :
+**✅ À faire** : typer **et** rester permissif :
 
 ```ts
 vuetifyOptions?: { VBtn?: Partial<VBtn['$props']> } & Record<string, unknown>
 ```
 
-IntelliSense sur la clé connue, tout le reste compile encore, runtime inchangé.
+→ autocomplétion sur `VBtn`, tout le reste compile encore, aucun changement à l'exécution.
 
 ---
 
-## Tactiques transverses
+## Les 4 règles à retenir
 
-1. **Additif seulement** : élargir, jamais retirer / renommer / rétrécir une prop existante.
-2. **Ne jamais déplacer** le point de chute des `$attrs` / `class` / `style` en mineure — c'est du
-   contrat DOM.
-3. **Typage ⇒ forwarding** systématiquement couplés (sinon régression silencieuse du passthrough).
-4. **Déprécier, pas supprimer** : pour retirer `vuetifyOptions` au profit de `$attrs` à terme,
-   garder les deux fonctionnels, marquer l'ancien `@deprecated`.
-5. **Verrouiller par tests** : (a) une prop Vuetify arbitraire atteint bien le composant réel,
-   (b) `class` / `style` **restent** sur la racine actuelle, (c) snapshots visuels.
+1. **On ajoute, on ne retire jamais** une prop existante (et on ne la rend pas plus stricte).
+2. **On ne déplace jamais** `class` / `style` / `id` d'un élément à un autre (contrat DOM).
+3. **Typer ⇒ transmettre** : les deux vont toujours ensemble (sinon la prop ne passe plus).
+4. **On déprécie, on ne supprime pas** : pour remplacer un ancien mécanisme, garder les deux le
+   temps d'une transition (`@deprecated`).
+
+Et on **verrouille par des tests** : une prop Vuetify arbitraire atteint bien le composant réel,
+et `class`/`style` restent sur la racine actuelle (+ snapshots visuels).
 
 ---
 
-## Séquencement « 0 breaking change »
+## Dans quel ordre migrer (du plus sûr au plus risqué)
 
-| Phase | Cible | Risque |
+| Ordre | Quoi | Risque |
 |:--:|---|:--:|
-| 1 | Typage-façade des wrappers dont la racine **est** le composant Vuetify (`BackBtn`, Amelipro* en `$attrs`) | nul |
-| 2 | `vuetifyOptions` typé **permissif** (intersection `Record`) sur les composants concernés | nul |
-| 3 | Props d'allowlist **additives** sur les wrappers conteneurs sans passthrough (`ChipList`, `SyCheckBoxGroup`) | nul |
-| 4 | Tout ce qui exige de **déplacer** les `$attrs` / flipper `inheritAttrs` | **à reporter en version majeure** (ou via prop opt-in) |
+| 1 | Typer les wrappers dont la racine **est** déjà le composant Vuetify (`BackBtn`…) | aucun |
+| 2 | Typer `vuetifyOptions` en gardant le `Record` permissif | aucun |
+| 3 | Ajouter des props explicites qui transmettent, sur les wrappers conteneurs (`ChipList`…) | aucun |
+| 4 | Tout ce qui oblige à **déplacer les `$attrs`** | **à garder pour une version majeure** |
 
-**En résumé** : la majeure partie de la demande #2417 est réalisable en **additif pur** (typage +
-`vuetifyOptions` permissif + props d'allowlist). Le seul vrai breaking — repositionner les
-`$attrs` vers le composant interne sur les wrappers conteneurs — se reporte à une version
-majeure, ou se contourne par une prop opt-in.
+**En résumé** : l'essentiel de #2417 se fait **sans rien casser** (cas 1, 2 et 3). Le seul vrai
+breaking — déplacer les `$attrs` sur les wrappers conteneurs — attend une version majeure.
 
----
-
-## Points d'attention
-
-- **Vue 3** : une prop déclarée dans `defineProps` est **exclue de `$attrs`**. C'est la cause n°1
-  de régression silencieuse du passthrough (voir §1).
-- **`class` / `style` / listeners** ne sont **pas** dans `$props` — ils restent dans `$attrs` et
-  suivent la règle `inheritAttrs`. Les traiter séparément des props de données.
-- **Éligibilité** : tous les wrappers ne sont pas concernés (composites, ou API volontairement
-  restreinte pour la validation / le thème). Voir la catégorisation A/B/C dans l'audit #2417.
+> Tous les wrappers ne sont pas concernés : certains sont des composites, ou restreignent
+> volontairement l'API (validation, thème). Voir la catégorisation dans l'audit #2417.
