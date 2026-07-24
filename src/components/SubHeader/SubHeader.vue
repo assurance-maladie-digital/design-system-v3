@@ -1,14 +1,12 @@
 <script lang="ts" setup>
-	import { computed, ref } from 'vue'
-	import { mdiKeyboardBackspace } from '@mdi/js'
+	import { computed } from 'vue'
 
 	import { config } from './config'
 	import { locales } from './locales'
 
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { useWidthable, type Widthable } from '@/composables/widthable'
-
-	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import BackBtn from '../BackBtn/BackBtn.vue'
 	import DataListGroup from '../DataListGroup/DataListGroup.vue'
 	import HeaderLoading from '../HeaderLoading/HeaderLoading.vue'
 	import type { DataListActionEvent, DataListGroupItems } from '../DataListGroup/types'
@@ -43,8 +41,6 @@
 
 	const options = useCustomizableOptions(config, props)
 	const { widthStyles } = useWidthable(props)
-
-	const backArrowIcon = ref(mdiKeyboardBackspace)
 
 	const emit = defineEmits<{
 		(e: 'click:list-item', value: DataListActionEvent): void
@@ -83,22 +79,14 @@
 							theme="dark"
 						/>
 
-						<VBtn
+						<BackBtn
 							v-else
-							v-bind="options.backBtn"
-							class="vd-sub-header-back-btn mb-1"
+							class="back-btn--dark"
 							:aria-label="effectiveBackBtnAccessibleName"
 							@click="$emit('back')"
 						>
-							<slot name="back-btn-icon">
-								<SyIcon
-									class="mr-2"
-									:icon="backArrowIcon"
-									:decorative="true"
-								/>
-							</slot>
 							{{ backBtnText }}
-						</VBtn>
+						</BackBtn>
 					</VThemeProvider>
 				</div>
 			</VFadeTransition>
@@ -192,9 +180,9 @@
 	overflow-x: auto;
 	border-radius: 0 0 32px 32px;
 }
-
-.vd-sub-header-back-btn {
-	margin: 0 -6px;
+.back-btn--dark {
+	margin: 0 -6px 16px -16px;
+	color: rgb(var(--v-theme-onPrimary));
 
 	// Fond du subheader = primary : ring en onPrimary (le ring global primary
 	// serait bleu sur bleu = invisible).

@@ -116,7 +116,7 @@ describe('SubHeader', () => {
 			},
 		})
 
-		const btn = wrapper.find('.vd-sub-header-back-btn')
+		const btn = wrapper.find('.back-btn--dark')
 		await btn.trigger('click')
 
 		await wrapper.vm.$nextTick()
@@ -131,6 +131,6 @@ describe('SubHeader', () => {
 			props: { titleText: 'Titre' },
 		})
 
-		expect(wrapper.find('.vd-sub-header-back-btn').element.tagName).toBe('BUTTON')
+		expect(wrapper.find('.back-btn--dark').element.tagName).toBe('BUTTON')
 	})
 })

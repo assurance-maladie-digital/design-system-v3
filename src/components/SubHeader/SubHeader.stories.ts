@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SubHeader from './SubHeader.vue'
 import { ref } from 'vue'
-import { mdiStepBackward, mdiClose, mdiContentCopy } from '@mdi/js'
+import { mdiClose, mdiContentCopy } from '@mdi/js'
 import type { DataListGroupItems } from '../DataListGroup/types'
 
 const meta = {
@@ -84,12 +84,6 @@ const meta = {
 			control: { type: 'text' },
 			default: undefined,
 			description: 'Slot pour personnaliser complètement le bouton de retour',
-		},
-		'back-btn-icon': {
-			type: 'string',
-			control: { type: 'text' },
-			default: undefined,
-			description: 'Slot pour personnaliser l\'icône du bouton de retour',
 		},
 		'title': {
 			type: 'string',
@@ -174,7 +168,6 @@ export const Default: Story = {
 		'dataListGroupItems': [],
 		'additional-informations': undefined,
 		'back-btn': undefined,
-		'back-btn-icon': undefined,
 		'title': undefined,
 		'sub-title': undefined,
 		'right-content': undefined,
@@ -936,78 +929,6 @@ export const SlotBackBtn: Story = {
 						>
 							Retour
 						</VBtn>
-					</template>
-				</SubHeader>
-			`,
-		}
-	},
-}
-
-export const SlotBackBtnIcon: Story = {
-	parameters: {
-		a11y: {
-			disable: true,
-		},
-		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'title', 'sub-title', 'right-content'] },
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<SubHeader
-						title-text="Paul Dupont"
-						sub-title-text="1 69 08 75 125 456 75"
-						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
-					>
-						<template #back-btn-icon>
-							<VIcon class="mr-2">
-								{{ backArrowIcon }}
-							</VIcon>
-						</template>
-					</SubHeader>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { SubHeader } from '@cnamts/synapse'
-					import { mdiStepBackward } from '@mdi/js'
-
-					const backArrowIcon = ref(mdiStepBackward)
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		'headingLevel': 2,
-		'backBtnText': 'Retour',
-		'hideBackBtn': false,
-		'titleText': 'Paul Dupont',
-		'subTitleText': '1 69 08 75 125 456 75',
-		'subTitleAccessibleName': 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
-		'loading': false,
-		'back-btn-icon': `<template #back-btn-icon>
-	<VIcon class="mr-2">
-		{{ backArrowIcon }}
-	</VIcon>
-</template>`,
-	},
-	render: (args) => {
-		return {
-			components: { SubHeader },
-			setup() {
-				const backArrowIcon = ref(mdiStepBackward)
-				return { args, backArrowIcon }
-			},
-			template: `
-				<SubHeader v-bind="args">
-					<template #back-btn-icon>
-						<VIcon class="mr-2">
-							{{ backArrowIcon }}
-						</VIcon>
 					</template>
 				</SubHeader>
 			`,
