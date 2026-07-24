@@ -78,7 +78,6 @@
 							class="vd-subheader-loading mb-4"
 							theme="dark"
 						/>
-
 						<BackBtn
 							v-else
 							class="back-btn--dark"
