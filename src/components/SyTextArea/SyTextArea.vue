@@ -10,7 +10,6 @@
 	import useTextActions from './useTextActions'
 	import { useSyTextAreaValidation } from './composables/useSyTextAreaValidation'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
-	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { locales } from './locales'
 	import { type SyTextAreaOwnProps } from './types'
 
@@ -207,8 +206,6 @@
 		await nextTick()
 		return validate()
 	}
-
-	useValidatable(validateOnSubmit, clearValidation)
 
 	defineExpose({
 		validateOnSubmit,
