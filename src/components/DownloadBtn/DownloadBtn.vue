@@ -140,13 +140,6 @@
 	}
 }
 
-.v-btn:deep() {
-	.v-btn__underlay,
-	.v-btn__overlay {
-		display: none;
-	}
-}
-
 .sy-download-btn:focus-visible {
 	outline: 2px solid rgb(var(--v-theme-primary));
 	outline-offset: 3px;
