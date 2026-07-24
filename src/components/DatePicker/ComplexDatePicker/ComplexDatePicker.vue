@@ -1588,6 +1588,10 @@ $ap-grey-mid: #d6d6d6;
 	border-radius: var(--radius-md) !important;
 }
 
+:deep(.v-btn) {
+	height: 36px !important;
+}
+
 .date-picker-title {
 	display: block;
 	text-transform: lowercase;

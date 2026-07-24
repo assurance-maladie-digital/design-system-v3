@@ -1168,6 +1168,9 @@ $ap-grey-mid: #d6d6d6;
 
 .v-sheet {
 	border-radius: var(--radius-md) !important;
+	:deep(.v-btn) {
+	height: 36px !important;
+}
 }
 
 /* En mode calendar, le champ est readonly : pas de cursor pointer sur l'input et les icônes */
