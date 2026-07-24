@@ -46,7 +46,6 @@ git pull
 > `git checkout`. Pour tester une PR précise, utilisez `git fetch origin pull/<id>/head:pr-<id>`
 > puis `git checkout pr-<id>`.
 
----
 
 ## 2. Vérifier les versions de Node et pnpm
 
@@ -75,8 +74,6 @@ corepack prepare pnpm@<version-pnpm-compatible> --activate
 `}
 />
 
----
-
 ## 3. Installer les dépendances et builder la librairie
 
 Depuis la racine du dépôt&nbsp;:
@@ -93,9 +90,7 @@ pnpm build
 > À ne pas confondre&nbsp;: `pnpm dev` lance le playground de développement, `pnpm build`
 > produit bien le paquet final. C'est ce dernier que votre projet consommera.
 
----
-
-## 4. Relier la librairie à votre projet (link)
+## 4. Relier la librairie à votre projet (link)---
 
 Nous utilisons ici `pnpm link --global`&nbsp;: la librairie est inscrite dans un
 registre global de pnpm, puis déclarée dans votre projet.
@@ -137,8 +132,6 @@ pnpm build   # régénère dist/
 pnpm dev
 `}
 />
-
----
 
 ## 5. Alternative : tester dans le playground du dépôt
 
