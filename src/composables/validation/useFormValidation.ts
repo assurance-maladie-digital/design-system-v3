@@ -11,7 +11,7 @@ export type ValidatableComponent = {
 }
 
 // Clé d'injection pour le registre des composants validables
-const ValidatableComponentsKey: InjectionKey<{
+export const ValidatableComponentsKey: InjectionKey<{
 	register: (component: ValidatableComponent) => void
 	unregister: (component: ValidatableComponent) => void
 	clearAll: () => void
