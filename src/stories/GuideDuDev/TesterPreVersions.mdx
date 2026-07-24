@@ -19,8 +19,6 @@ Le principe :
 > Design System lui-même, consultez la section [Contribution](/docs/guide-du-dev-demarrage-installation--docs)
 > du README.
 
----
-
 ## 1. Récupérer le code source
 
 Clônez le dépôt sur votre poste&nbsp;:
@@ -136,7 +134,7 @@ pnpm build   # régénère dist/
 
 <Source dark language="bash" code={`
 # Dans votre projet
-pnpm dev     # le hot-reload recharge @cnamts/synapse
+pnpm dev
 `}
 />
 
@@ -166,22 +164,23 @@ Par défaut, **tout se passe dans [`dev/Playground.vue`](https://github.com/assu
 c'est la page affichée à l'ouverture du playground. Importez-y le composant depuis le
 source et exposez vos cas de figure&nbsp;:
 
-```vue
-<!-- dev/Playground.vue -->
-<script setup lang="ts">
-import { ref } from 'vue'
-import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 
-const value = ref<string | null>(null)
-</script>
+<Source dark language="html" code={`
+	<!-- dev/Playground.vue -->
+	<script setup lang="ts">
+	import { ref } from 'vue'
+	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 
-<template>
-	<div class="playground-container">
-		<h1>Mon test de pré-version</h1>
-		<DatePicker v-model="value" />
-	</div>
-</template>
-```
+	const value = ref<string | null>(null)
+	</script>
+
+	<template>
+		<div class="playground-container">
+			<h1>Mon test de pré-version</h1>
+			<DatePicker v-model="value" />
+		</div>
+	</template>
+`}/>
 
 > Les imports se font via l'alias `@/` (racine `src/`). Vous touchez ainsi au code
 > **réellement publié**, sans étape de build intermédiaire. Chaque modification est
