@@ -346,8 +346,6 @@
 
 .success-field {
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-success)) !important;
-
 		--v-medium-emphasis-opacity: 1;
 	}
 
@@ -372,8 +370,6 @@
 
 .warning-field {
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-onWarningVariant)) !important;
-
 		--v-medium-emphasis-opacity: 1;
 	}
 

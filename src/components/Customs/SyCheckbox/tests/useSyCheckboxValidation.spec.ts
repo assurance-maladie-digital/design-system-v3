@@ -58,6 +58,45 @@ describe('useSyCheckboxValidation', () => {
 		})
 	})
 
+	describe('required en mode multiple (tableau)', () => {
+		it('échoue quand le tableau est vide', async () => {
+			const model = ref<boolean | unknown[] | null>([])
+			const { validate, errors, hasError } = withValidation(createProps({ required: true }), model)
+
+			expect(await validate()).toBe(false)
+			await nextTick()
+			expect(hasError.value).toBe(true)
+			expect(errors.value.join(' ')).toContain('Conditions générales est requis')
+		})
+
+		it('échoue quand le tableau est null', async () => {
+			const model = ref<boolean | unknown[] | null>(null)
+			const { validate, hasError } = withValidation(createProps({ required: true }), model)
+
+			expect(await validate()).toBe(false)
+			await nextTick()
+			expect(hasError.value).toBe(true)
+		})
+
+		it('réussit quand au moins un élément est sélectionné', async () => {
+			const model = ref<boolean | unknown[] | null>(['a'])
+			const { validate, hasError } = withValidation(createProps({ required: true }), model)
+
+			expect(await validate()).toBe(true)
+			await nextTick()
+			expect(hasError.value).toBeFalsy()
+		})
+
+		it('réussit avec plusieurs éléments sélectionnés', async () => {
+			const model = ref<boolean | unknown[] | null>(['a', 'b', 'c'])
+			const { validate, hasError } = withValidation(createProps({ required: true }), model)
+
+			expect(await validate()).toBe(true)
+			await nextTick()
+			expect(hasError.value).toBeFalsy()
+		})
+	})
+
 	it('non requis : valide même décochée', async () => {
 		const model = ref<boolean | null>(false)
 		const { validate, hasError } = withValidation(createProps({ required: false }), model)

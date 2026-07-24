@@ -62,11 +62,19 @@ const meta = {
 			description: 'Densité de la case à cocher',
 		},
 		'value': {
-			description: 'Valeur associée à la case à cocher, utile lorsqu\'elle fait partie d\'un groupe de cases à cocher',
+			description: 'Valeur associée à la case à cocher, utile lorsqu\'elle fait partie d\'un groupe de cases à cocher ou en mode `multiple`',
 			control: 'text',
 			table: {
 				type: { summary: 'unknown' },
 				defaultValue: { summary: 'undefined' },
+			},
+		},
+		'multiple': {
+			description: 'Active le mode sélection multiple : `modelValue` est alors un tableau dans lequel `value` est ajouté ou retiré. Inféré automatiquement quand `modelValue` est un tableau.',
+			control: 'boolean',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
 			},
 		},
 		'trueValue': {
@@ -74,7 +82,7 @@ const meta = {
 			control: 'text',
 			table: {
 				type: { summary: 'unknown' },
-				defaultValue: { summary: 'true' },
+				defaultValue: { summary: 'undefined (replie sur true, ou value en mode multiple)' },
 			},
 		},
 		'falseValue': {
@@ -82,7 +90,7 @@ const meta = {
 			control: 'text',
 			table: {
 				type: { summary: 'unknown' },
-				defaultValue: { summary: 'false' },
+				defaultValue: { summary: 'undefined (replie sur false)' },
 			},
 		},
 		'cycleIndeterminate': {
@@ -542,6 +550,7 @@ Cette case à cocher est en lecture seule et ne peut pas être modifiée par l'u
 }
 
 export const DifferentDensities: Story = {
+	args: Default.args,
 	parameters: {
 		sourceCode: [
 			{
@@ -573,9 +582,9 @@ Le composant SyCheckbox prend en charge différentes densités pour s'adapter à
 		},
 		template: `
 			<ul style="list-style: none; margin: 0; padding: 0;">
-				<li><SyCheckbox v-model="checked1" label="Densité par défaut" /></li>
-				<li><SyCheckbox v-model="checked2" label="Densité confortable" density="comfortable" /></li>
-				<li><SyCheckbox v-model="checked3" label="Densité compacte" density="compact" /></li>
+				<li><SyCheckbox v-bind="args" v-model="checked1" label="Densité par défaut" /></li>
+				<li><SyCheckbox v-bind="args" v-model="checked2" label="Densité confortable" density="comfortable" /></li>
+				<li><SyCheckbox v-bind="args" v-model="checked3" label="Densité compacte" density="compact" /></li>
 			</ul>
 		`,
 	}),
@@ -621,6 +630,68 @@ Le composant SyCheckbox peut être personnalisé avec différentes couleurs pour
 				<li><SyCheckbox v-model="checked4" label="Couleur erreur" color="error" /></li>
 				<li><SyCheckbox v-model="checked5" label="Couleur avertissement" color="onWarningVariant" /></li>
 			</ul>
+		`,
+	}),
+}
+
+export const Multiple: Story = {
+	args: {
+		...Default.args,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <fieldset>
+    <legend>Objet de la demande</legend>
+    <SyCheckbox v-model="selected" value="identity" label="Identité du demandeur" />
+    <SyCheckbox v-model="selected" value="nir" label="Numéro de sécurité sociale" />
+    <SyCheckbox v-model="selected" value="other" label="Autre" />
+  </fieldset>
+  <p>Sélection : {{ selected }}</p>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup>
+import { ref } from 'vue'
+
+const selected = ref([])
+</script>`,
+			},
+		],
+		docs: {
+			description: {
+				story: `
+### Sélection multiple
+Quand \`v-model\` est un tableau, le composant bascule automatiquement en mode multiple (comme le \`VCheckbox\` de Vuetify). La prop \`value\` de chaque case est alors ajoutée ou retirée du tableau.
+
+La prop \`multiple\` peut être passée explicitement pour forcer ce comportement, mais elle est inférée dès que \`modelValue\` est un tableau.
+				`,
+			},
+		},
+	},
+	render: args => ({
+		components: { SyCheckbox },
+		setup() {
+			const selected = ref<string[]>([])
+			return { selected, args }
+		},
+		template: `
+			<div>
+				<fieldset style="border: none; padding: 0; margin: 0;">
+					<legend style="padding: 0; margin-bottom: 8px;">Objet de la demande</legend>
+					<ul style="list-style: none; margin: 0; padding: 0;">
+						<li><SyCheckbox v-bind="args" v-model="selected" value="identity" label="Identité du demandeur" /></li>
+						<li><SyCheckbox v-bind="args" v-model="selected" value="nir" label="Numéro de sécurité sociale" /></li>
+						<li><SyCheckbox v-bind="args" v-model="selected" value="other" label="Autre" /></li>
+					</ul>
+				</fieldset>
+				<p style="margin-top: 16px;">Sélection : {{ selected }}</p>
+			</div>
 		`,
 	}),
 }
