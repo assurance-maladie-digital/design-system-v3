@@ -73,9 +73,10 @@ button:focus-visible {
 	}
 }
 
-// Outlined & Text buttons
+// Outlined, Text and Tonal buttons
 .v-btn--variant-outlined,
-.v-btn--variant-text {
+.v-btn--variant-text,
+.v-btn--variant-tonal {
 	opacity: 1 !important;
 
 	&.v-btn--disabled {
