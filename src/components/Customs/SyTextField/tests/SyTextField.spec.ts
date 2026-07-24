@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
-import { VIcon } from 'vuetify/components'
 import { ref } from 'vue'
 
 import SyTextField from '../SyTextField.vue'
@@ -104,28 +103,61 @@ describe('SyTextField', () => {
 
 	it('emits prepend-icon-click event when prepend icon is clicked', async () => {
 		const wrapper = mount(SyTextField, {
-			props: { prependIcon: 'info' as IconType, label: 'Test Field' },
+			props: { prependIcon: 'calendar' as IconType, label: 'Test Field', disableClickButton: false },
 		})
 
 		await wrapper.vm.$nextTick()
-		const prependIcon = wrapper.findComponent(VIcon)
-		expect(prependIcon.exists()).toBe(true)
-		await prependIcon.trigger('click')
+		const prependButton = wrapper.find('.sy-text-field__icon-button')
+		expect(prependButton.exists()).toBe(true)
+		await prependButton.trigger('click')
 		await wrapper.vm.$nextTick()
 		expect(wrapper.emitted('prepend-icon-click')).toBeTruthy()
 	})
 
 	it('emits append-icon-click event when append icon is clicked', async () => {
 		const wrapper = mount(SyTextField, {
-			props: { appendIcon: 'info' as IconType, label: 'Test Field' },
+			props: { appendIcon: 'calendar' as IconType, label: 'Test Field', disableClickButton: false },
 		})
 
 		await wrapper.vm.$nextTick()
-		const appendIcon = wrapper.findComponent(VIcon)
-		expect(appendIcon.exists()).toBe(true)
-		await appendIcon.trigger('click')
+		const appendButton = wrapper.find('.sy-text-field__icon-button')
+		expect(appendButton.exists()).toBe(true)
+		await appendButton.trigger('click')
 		await wrapper.vm.$nextTick()
 		expect(wrapper.emitted('append-icon-click')).toBeTruthy()
+	})
+
+	it('disables prepend icon button when the field is readonly', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				prependIcon: 'calendar' as IconType,
+				label: 'Test Field',
+				disableClickButton: false,
+				readonly: true,
+			},
+		})
+
+		const prependButton = wrapper.find('.sy-text-field__icon-button')
+		expect(prependButton.attributes('disabled')).toBeDefined()
+		expect(prependButton.attributes('aria-disabled')).toBe('true')
+		await prependButton.trigger('click')
+		expect(wrapper.emitted('prepend-icon-click')).toBeFalsy()
+	})
+
+	it('prevents mousedown on icon buttons from blurring the input first', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				prependIcon: 'calendar' as IconType,
+				label: 'Test Field',
+				disableClickButton: false,
+			},
+		})
+
+		const prependButton = wrapper.find('.sy-text-field__icon-button')
+		const mouseDownEvent = new MouseEvent('mousedown', { bubbles: true, cancelable: true })
+		prependButton.element.dispatchEvent(mouseDownEvent)
+
+		expect(mouseDownEvent.defaultPrevented).toBe(true)
 	})
 
 	it('does not propagate click from clear button to parent container', async () => {
@@ -173,6 +205,123 @@ describe('SyTextField', () => {
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.find('.v-messages').text()).toContain('Le champ Test Field est requis')
+	})
+
+	it('exposes validation messages as read-only state', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				errorMessages: ['Erreur exposee'],
+				warningMessages: ['Avertissement expose'],
+				successMessages: ['Succes expose'],
+			},
+		})
+
+		await flushPromises()
+
+		expect(wrapper.vm.errors).toEqual(['Erreur exposee'])
+		expect(wrapper.vm.warnings).toEqual(['Avertissement expose'])
+		expect(wrapper.vm.successes).toEqual(['Succes expose'])
+	})
+
+	it('exposes states calculated by custom validation rules', async () => {
+		const errorWrapper = mount(SyTextField, {
+			props: {
+				modelValue: 'invalid',
+				label: 'Test Field',
+				showSuccessMessages: true,
+				customRules: [{
+					type: 'custom',
+					options: { validate: () => false, message: 'Erreur custom' },
+				}],
+			},
+		})
+		const warningWrapper = mount(SyTextField, {
+			props: {
+				modelValue: 'warning',
+				customWarningRules: [{
+					type: 'custom',
+					options: { validate: () => false, warningMessage: 'Avertissement custom' },
+				}],
+			},
+		})
+		const successWrapper = mount(SyTextField, {
+			props: {
+				modelValue: 'success',
+				showSuccessMessages: true,
+				customSuccessRules: [{
+					type: 'custom',
+					options: { validate: () => true, successMessage: 'Succes custom' },
+				}],
+			},
+		})
+
+		await errorWrapper.vm.validateOnSubmit()
+		await warningWrapper.vm.validateOnSubmit()
+		await successWrapper.vm.validateOnSubmit()
+
+		expect(errorWrapper.vm.errors).toContain('Erreur custom')
+		expect(warningWrapper.vm.warnings).toContain('Avertissement custom')
+		expect(successWrapper.vm.successes).toContain('Succes custom')
+	})
+
+	it('exposes Vuetify validation errors alongside injected warning and success messages', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				modelValue: '',
+				label: 'Test Field',
+				useVuetifyValidation: true,
+				rules: [() => 'Erreur Vuetify'],
+				warningMessages: ['Avertissement expose'],
+				successMessages: ['Succes expose'],
+			},
+		})
+
+		await wrapper.vm.validateOnSubmit()
+
+		expect(wrapper.vm.errors).toContain('Erreur Vuetify')
+		expect(wrapper.vm.warnings).toEqual(['Avertissement expose'])
+		expect(wrapper.vm.successes).toEqual(['Succes expose'])
+	})
+
+	it('keeps only injected states exposed when error handling is disabled', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				modelValue: 'invalid',
+				disableErrorHandling: true,
+				errorMessages: ['Erreur exposee'],
+				warningMessages: ['Avertissement expose'],
+				successMessages: ['Succes expose'],
+				customRules: [{
+					type: 'custom',
+					options: { validate: () => false, message: 'Erreur calculee' },
+				}],
+			},
+		})
+
+		await wrapper.vm.validateOnSubmit()
+
+		expect(wrapper.vm.errors).toEqual(['Erreur exposee'])
+		expect(wrapper.vm.warnings).toEqual(['Avertissement expose'])
+		expect(wrapper.vm.successes).toEqual(['Succes expose'])
+	})
+
+	it('updates exposed states on input when validation on blur is disabled', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				modelValue: '',
+				isValidateOnBlur: false,
+				customRules: [{
+					type: 'custom',
+					options: { validate: (value: string) => value.length > 2, message: 'Erreur a la saisie' },
+				}],
+			},
+		})
+
+		await wrapper.setProps({ modelValue: 'ab' } as Parameters<typeof wrapper.setProps>[0])
+		await vi.waitUntil(() => wrapper.vm.errors.includes('Erreur a la saisie'))
+
+		expect(wrapper.vm.warnings).toEqual([])
+		expect(wrapper.vm.successes).toEqual([])
 	})
 
 	it('validates field with custom rules', async () => {

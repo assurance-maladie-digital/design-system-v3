@@ -53,6 +53,17 @@ describe('DateTextInput.clean', () => {
 		expect(textField.props('errorMessages')).toEqual(['Erreur externe de contrat DateTextInput'])
 	})
 
+	it('forwards disableClickButton to the underlying text field', () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			disableClickButton: false,
+		})
+
+		const textField = wrapper.findComponent(SyTextField)
+		expect(textField.props('disableClickButton')).toBe(false)
+	})
+
 	it('formats modelValue according to dateFormatReturn in single mode', async () => {
 		const wrapper = mountComponent({
 			label: 'Date',
@@ -765,5 +776,26 @@ describe('DateTextInput.clean', () => {
 		await flushPromises()
 
 		expect((input.element as HTMLInputElement).value).toBe('01/01/2025 - 10/01/2025')
+	})
+
+	it('associates the expected date format to the input via aria-describedby', async () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+		})
+
+		await flushPromises()
+
+		const input = wrapper.find('input')
+		const describedBy = input.attributes('aria-describedby')
+		expect(describedBy).toBeTruthy()
+
+		const descriptionId = describedBy?.split(' ').find(id => id.startsWith('date-format-desc-'))
+		expect(descriptionId).toBeTruthy()
+
+		const descriptionEl = wrapper.find(`#${descriptionId}`).element
+		expect(descriptionEl).toBeTruthy()
+		expect(descriptionEl?.textContent).toContain('Format attendu :')
+		expect(descriptionEl?.textContent).toContain('DD/MM/YYYY')
 	})
 })

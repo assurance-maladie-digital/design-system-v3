@@ -61,7 +61,7 @@ export default defineConfig({
 			bundler: 'vite',
 			viteConfig: createCypressViteConfig,
 		},
-		specPattern: 'src/**/*.visual.cy.ts',
+		specPattern: 'src/**/*.cy.ts',
 		supportFile: 'cypress/support/component.ts',
 		indexHtmlFile: 'cypress/support/component-index.html',
 		video: false,

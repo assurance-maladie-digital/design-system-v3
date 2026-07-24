@@ -328,6 +328,27 @@ const meta = {
 		'title': {
 			control: 'text',
 		},
+		'errors': {
+			description: 'Tableau réactif contenant tous les messages d\'erreur. Combine les erreurs injectées via errorMessages et celles générées par la validation. Les doublons sont supprimés et le tableau est limité selon maxErrors. Accessible via template ref du composant.',
+			table: {
+				type: { summary: 'Readonly<Ref<string[]>>' },
+				category: 'expose',
+			},
+		},
+		'warnings': {
+			description: 'Tableau réactif contenant tous les messages d\'avertissement. Combine les avertissements injectés via warningMessages et ceux générés par customWarningRules. Les doublons sont supprimés et le tableau est limité selon maxErrors. Accessible via template ref du composant.',
+			table: {
+				type: { summary: 'Readonly<Ref<string[]>>' },
+				category: 'expose',
+			},
+		},
+		'successes': {
+			description: 'Tableau réactif contenant tous les messages de succès. Combine les succès injectés via successMessages et ceux générés par customSuccessRules. Les doublons sont supprimés et le tableau est limité selon maxErrors. Accessible via template ref du composant.',
+			table: {
+				type: { summary: 'Readonly<Ref<string[]>>' },
+				category: 'expose',
+			},
+		},
 	},
 } as Meta<CalendarModeProps & {
 	'onUpdate:modelValue'?: (value: DateModelValue) => void

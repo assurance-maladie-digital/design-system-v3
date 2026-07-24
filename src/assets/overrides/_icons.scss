@@ -1,41 +1,22 @@
-.v-theme--ap2026.v-btn--icon .v-icon {
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026):where(.v-btn--icon) {
 	color: rgb(var(--v-theme-primary));
 	transition: color 0.2s ease;
 }
 
-.v-theme--cnam.v-btn--icon .v-icon,
-.v-theme--pa.v-btn--icon .v-icon,
-.v-theme--ap.v-btn--icon .v-icon {
-	color: rgb(var(--v-theme-primary));
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026) .v-btn--icon .v-icon {
+	color: currentcolor;
 	transition: color 0.2s ease;
 }
 
-.v-theme--ap .v-btn--icon:hover,
-.v-theme--ap2026 .v-btn--icon:hover,
-.v-theme--cnam .v-btn--icon:hover,
-.v-theme--pa .v-btn--icon:hover {
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026) .v-btn--icon:hover {
 	opacity: 0.8;
 }
 
-.v-theme--ap.v-icon,
-.v-theme--ap2026.v-icon,
-.v-theme--cnam.v-icon,
-.v-theme--pa.v-icon {
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026) .v-icon {
 	transition: color 0.2s ease;
 }
 
-.v-theme--ap.v-btn--icon .v-ripple__animation {
-	background-color: rgb(var(--v-theme-primary)) !important;
-	opacity: 0.18;
-}
-
-.v-theme--ap2026.v-btn--icon .v-ripple__animation {
-	background-color: rgb(var(--v-theme-primary)) !important;
-	opacity: 0.18;
-}
-
-.v-theme--cnam.v-btn--icon .v-ripple__animation,
-.v-theme--pa.v-btn--icon .v-ripple__animation {
-	background-color: rgb(var(--v-theme-primary)) !important;
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026) .v-btn--icon .v-ripple__animation {
+	background-color: currentcolor !important;
 	opacity: 0.18;
 }

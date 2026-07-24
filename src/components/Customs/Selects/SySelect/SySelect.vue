@@ -3,18 +3,18 @@
 	defineOptions({
 		inheritAttrs: false,
 	})
-	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
-	import { ref, useId, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, useAttrs } from 'vue'
-	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
+	import IconSlot from '@/components/Common/IconSlot/IconSlot.vue'
+	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import type { ColorType, IconType, VariantStyle } from '@/types/vuetifyTypes'
+	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
+	import { computed, nextTick, onBeforeUnmount, onMounted, readonly as readonlyState, ref, useAttrs, useId, watch, watchEffect } from 'vue'
 	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
-	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
-	import IconSlot from '@/components/Common/IconSlot/IconSlot.vue'
-	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import { locales } from './locales'
-	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { useSySelectValidation } from './composables/useSySelectValidation'
+	import { locales } from './locales'
 
 	export type ItemType = {
 		[key: string]: unknown
@@ -846,6 +846,13 @@
 		isOpen,
 		closeList,
 		validateOnSubmit: validate,
+		clearValidation,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 	})
 
 	// on reprend la mm methode que pour le datepicker : useDatePickerAccesssibity (updateAccessibility)

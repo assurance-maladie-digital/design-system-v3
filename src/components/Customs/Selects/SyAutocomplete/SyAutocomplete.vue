@@ -1,17 +1,17 @@
 <script setup lang="ts">
-	import { computed, nextTick, onMounted, ref, useId, useSlots, watch } from 'vue'
-	import { mdiChevronDown, mdiCloseCircle } from '@mdi/js'
-	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
-	import { ariaManager } from './utils/ariaManager'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
-	import type { ItemType, SelectValue, SelectArray } from './types'
-	import { useItemUtils } from './utils/useItemUtils'
-	import { useSelectionLogic } from './utils/useSelectionLogic'
-	import { useSyAutocompleteKeyboard } from './utils/useKeyboardHandler'
+	import { mdiChevronDown, mdiCloseCircle } from '@mdi/js'
+	import { computed, nextTick, onMounted, readonly as readonlyState, ref, useId, useSlots, watch } from 'vue'
 	import { useSyAutocompleteValidation } from './composables/useSyAutocompleteValidation'
 	import { locales } from './locales'
+	import type { ItemType, SelectArray, SelectValue } from './types'
+	import { ariaManager } from './utils/ariaManager'
+	import { useItemUtils } from './utils/useItemUtils'
+	import { useSyAutocompleteKeyboard } from './utils/useKeyboardHandler'
+	import { useSelectionLogic } from './utils/useSelectionLogic'
 
 	interface SyAutocompleteProps {
 		bgColor?: string
@@ -358,6 +358,12 @@
 		isOpen,
 		selectItem,
 		search,
+		errors: readonlyState(displayErrors),
+		warnings: readonlyState(displayWarnings),
+		successes: readonlyState(displaySuccesses),
+		hasError: readonlyState(displayHasError),
+		hasWarning: readonlyState(displayHasWarning),
+		hasSuccess: readonlyState(displayHasSuccess),
 	})
 </script>
 

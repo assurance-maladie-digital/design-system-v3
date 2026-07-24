@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-	import {
-		mdiEyeOutline,
-		mdiEyeOffOutline,
-		mdiCloseCircle,
-	} from '@mdi/js'
-	import { computed, ref, useId, watch, nextTick, toRef } from 'vue'
-	import { usePasswordField } from './usePasswordFieldValidation'
-	import { config } from './config'
-	import { locales } from './locales'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import useCustomizableOptions from '@/composables/useCustomizableOptions'
-	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import {
+		mdiCloseCircle,
+		mdiEyeOffOutline,
+		mdiEyeOutline,
+	} from '@mdi/js'
+	import { computed, nextTick, readonly as readonlyState, ref, toRef, useId, watch } from 'vue'
+	import { config } from './config'
+	import { locales } from './locales'
 	import type { PasswordFieldProps } from './types'
+	import { usePasswordField } from './usePasswordFieldValidation'
 
 	const props = withDefaults(defineProps<PasswordFieldProps>(), {
 		modelValue: null,
@@ -132,9 +132,9 @@
 	})
 
 	defineExpose({
-		errors,
-		warnings,
-		successes,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
 		hasError,
 		hasWarning,
 		hasSuccess,

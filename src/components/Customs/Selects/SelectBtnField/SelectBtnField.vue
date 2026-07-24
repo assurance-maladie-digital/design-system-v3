@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiCheck } from '@mdi/js'
-	import { computed, ref, watch } from 'vue'
+	import { computed, readonly as readonlyState, ref, watch } from 'vue'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import { useSelectBtnFieldValidation } from './composables/useSelectBtnFieldValidation'
 	import type { SelectBtnItem, SelectBtnValue } from './types'
@@ -52,9 +52,9 @@
 		validateOnSubmit: validate,
 		validate,
 		clearValidation,
-		errors,
-		warnings,
-		successes,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
 		hasError,
 		hasWarning,
 		hasSuccess,
