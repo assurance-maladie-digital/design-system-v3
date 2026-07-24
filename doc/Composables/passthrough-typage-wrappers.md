@@ -120,6 +120,109 @@ et `class`/`style` restent sur la racine actuelle (+ snapshots visuels).
 
 ---
 
+## Récapitulatif des composants à migrer
+
+Inventaire des wrappers **hors Amelipro**, recoupé avec la story Storybook *Accessibilité /
+Design System / Avancement* (77 composants suivis). Les sous-composants internes et les
+composants non concernés sont listés en fin de section. Légende :
+
+- **Passthrough** : ✅ transmis · 🟡 uniquement via `vuetifyOptions` · ❌ absent
+- **Typage** : ✅ basé sur le composant Vuetify · ❌ non typé / redéfini à la main
+- **Cat.** : **A** = wrapper fin transparent · **B** = champ **à API restreinte** (n'expose
+  volontairement qu'une partie des props Vuetify, pour protéger sa validation / son thème) ·
+  **C** = composite (plusieurs composants Vuetify)
+
+> **« API restreinte » / « liste blanche »** : le wrapper ne transmet pas *toutes* les props du
+> composant Vuetify, seulement une liste choisie de props sûres. Les autres restent gérées en
+> interne (ex. `SyTextField` garde la main sur la validation plutôt que de laisser passer les
+> `rules` de Vuetify).
+
+### A — Wrappers fins « transparents »
+
+| Composant | Vuetify | Passthrough | Typage | Ce qui manque |
+|---|---|:--:|:--:|---|
+| `BackBtn` | `VBtn` | ✅ (`$attrs`) | ❌ | Typage `VBtn` (+ retirer le `v-bind="$attrs"` redondant) |
+| `SyAlert` | `VAlert` | ✅ | ❌ | Typage `VAlert` |
+| `SyTabs` | `VTabs` | ✅ | ❌ | Typage `VTabs` |
+| `SyTable` | `VDataTable` | ✅ | ❌ | Typage `VDataTable` |
+| `SyServerTable` | `VDataTableServer` | ✅ | ❌ | Typage `VDataTableServer` |
+| `PaginatedTable` | `VDataTable` | ✅ | ❌ | Typage `VDataTable` |
+| `HeaderLoading` | `VSkeletonLoader` | ✅ (`$attrs`) | ❌ | Typage `VSkeletonLoader` |
+| `DownloadBtn` | `VBtn` | ✅ + `vuetifyOptions` | ❌ | Typer `vuetifyOptions.VBtn` |
+| `BackToTopBtn` | `VBtn` | 🟡 | ❌ | Typer `vuetifyOptions.VBtn` (type importé mais inutilisé) |
+| `CopyBtn` | `VBtn` | 🟡 | ❌ | Typer `vuetifyOptions` |
+| `DataListItem` | `VChip` | 🟡 | ❌ | Typer `vuetifyOptions.VChip` |
+| `PasswordField` | `SyTextField` | 🟡 | ❌ | Typer `vuetifyOptions` |
+| `UserMenuBtn` | `VBtn` / `VListItem` | 🟡 | ❌ | Typer `vuetifyOptions` |
+| `ChipList` | `VChip` | ❌ | ❌ | Transmettre les props au `VChip` + typage |
+| `SyRadioGroup` | `VRadioGroup` | ❌ | ❌ | Passthrough + typage |
+| `SocialMediaLinks` | `VBtn` | ❌ | ❌ | Passthrough + typage |
+| `SyIconButton` | `VBtn` | ❌ | ❌ | Passthrough + typage |
+| `SyForm` | `VForm` | ❌ | ❌ | Passthrough + typage (`VForm` : `disabled`, `readonly`…) |
+| `PageContainer` | `VSheet` | ❌ | ❌ | Passthrough + typage |
+| `CollapsibleList` | `VExpansionPanels` | ❌ | ❌ | Passthrough + typage |
+
+### B — Champs de formulaire à API restreinte
+
+| Composant | Vuetify | Passthrough | Typage | Ce qui manque |
+|---|---|:--:|:--:|---|
+| `SyTextArea` | `VTextarea` | ✅ | ✅ | *(rien — modèle de référence)* |
+| `SyTextField` | `VTextField` | ✅ (restreint) | ❌ | Baser le typage sur `VTextField` (liste blanche) |
+| `SySelect` | `VSelect` | ✅ (restreint) | ❌ | Typage `VSelect` (liste blanche) |
+| `SyInputSelect` | `VSelect` / `VList` | 🟡 | ❌ | Typage `VSelect` |
+| `SyAutocomplete` | `VAutocomplete` | ❌ | ❌ | Passthrough + typage |
+| `SyCheckbox` | `VCheckbox` | ❌ | ❌ | Passthrough (liste blanche) + typage |
+| `SyCheckBoxGroup` | `SyCheckbox` | ❌ | ❌ | Transmettre les props vers chaque case |
+| `NirField` | `VTextField` ×2 | ❌ | ❌ | Passthrough + typage |
+
+### C — Composites (customisation par sous-composant via `vuetifyOptions`)
+
+| Composant | Vuetify principal | Passthrough | Typage | Ce qui manque |
+|---|---|:--:|:--:|---|
+| `DialogBox` | `VDialog` (+ `VBtn`…) | ✅ + `vuetifyOptions` | ❌ | Typer `vuetifyOptions` par sous-composant |
+| `DatePicker` | `VMenu` + `VTextField` | ✅ | ❌ | `vuetifyOptions` typé par sous-composant |
+| `ComplexDatePicker` | `VMenu` + `VTextField` | ✅ | ❌ | idem |
+| `SyBtnMenu` | `VMenu` + `VBtn` | ✅ | ❌ | idem |
+| `TableToolbar` | `VToolbar` | 🟡 | ❌ | Typer `vuetifyOptions` |
+| `FooterBar` | composite | 🟡 | ❌ | `vuetifyOptions` par sous-composant |
+| `SubHeader` | composite | 🟡 | ❌ | idem |
+| `ExternalLinks` | `VBtn` / `VList` | 🟡 | ❌ | Typer `vuetifyOptions` |
+| `LangBtn` | `VMenu` / `VListItem` | 🟡 | ❌ | idem |
+| `CookieBanner` | composite | 🟡 | ❌ | idem |
+| `DiacriticPicker` | `VBtn` (grille) | 🟡 | ❌ | idem |
+| `FilterInline` | `VMenu` | ❌ | ❌ | Passthrough + typage |
+| `FilterSideBar` | composite | ❌ | ❌ | Passthrough + typage |
+
+### Non concernés
+
+- **Couverts *via* leurs enfants `Sy*`** — ils ne rendent aucun composant Vuetify directement,
+  mais composent des wrappers DS et leur transmettent déjà la config (ex. `RangeField` →
+  `v-bind="options.textField"` sur ses deux `SyTextField`). Le passthrough/typage Vuetify se
+  règle **dans l'enfant** (déjà listé ci-dessus), pas ici : `RangeField`, `PhoneField`,
+  `PeriodField`, `SelectBtnField`, `SearchListField`, `ContextualMenu`, `MonthPicker`,
+  `RatingPicker`, `LunarCalendar`, `UploadWorkflow`, `FileUpload`, `FileList`, `FilePreview`,
+  `DateTextInput`, `CalendarMode`, `DataListGroup`, `NotificationBar` (→ `Notification`).
+- **Markup natif / aucun composant Vuetify à configurer** : `Accordion` (`<component :is>`),
+  `SyPagination` (`<nav>`), `FranceConnectBtn`, `SkipLink`, `Logo`, `LogoBrandSection`,
+  `SyHeading`, `SyIcon`.
+- **Pages** : `ErrorPage`, `MaintenancePage`, `NotFoundPage`, `DeclarationAccessibilityPage`.
+- **Structure / composites d'en-tête** : `HeaderBar`, `HeaderToolbar`, `HeaderNavigationBar`,
+  `ToolbarContainer`.
+- **Sous-composants internes** : `Notification`, `TableHeader`, `TableBulkActions`,
+  `OrganizeColumns`, `Pagination`, `MonthPickerVisual`, `HorizontalNavbar`, `IconSlot`,
+  `DataList`, `Captcha*`, `Cookies*`, `StatusPage`, `Usages` *(démo)*.
+
+> ⚠️ **Cas particulier — `Accordion`** : il expose une prop `vuetifyOptions`, mais elle est
+> **détournée de son sens**. Accordion ne rend aucun composant Vuetify ; le contenu sert
+> uniquement à des couleurs CSS (`vuetifyOptions.accordion.{backgroundColor, titleColor,
+> hoverColor…}`), appliquées en classes/variables. Ce ne sont donc pas des props Vuetify, et la
+> clé `accordion` n'est pas un composant Vuetify (contrairement à la convention `vuetifyOptions`
+> — voir [vuetifyOptions](./vuetify-options.md)). À terme : renommer la prop (`colors` / `theme`)
+> ou la faire passer par les tokens, plutôt que `vuetifyOptions`. *(Pas du code mort : les valeurs
+> sont bien lues.)*
+
+---
+
 ## Dans quel ordre migrer (du plus sûr au plus risqué)
 
 | Ordre | Quoi | Risque |
