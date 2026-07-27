@@ -267,6 +267,10 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 		if (textInputValue.value !== formattedForInput) {
 			textInputValue.value = formattedForInput
 		}
+
+		if (displayFormattedDate.value !== formattedForInput) {
+			displayFormattedDate.value = formattedForInput
+		}
 	}
 
 	return {

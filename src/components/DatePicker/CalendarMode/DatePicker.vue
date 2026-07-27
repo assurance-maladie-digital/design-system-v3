@@ -121,7 +121,6 @@
 		isDatePickerVisible,
 		datePickerRef,
 		onClose: () => closeDatePicker(),
-		restoreFocus: () => queueMicrotask(() => focusCalendarInput()),
 		getInitialFocusDate: () => {
 			const value = keyboardNavigatedDate.value
 				?? (Array.isArray(selectedDates.value) ? selectedDates.value[0] ?? null : selectedDates.value)
@@ -238,13 +237,7 @@
 		})
 
 		selectedDates.value = todaySelection.selectedDates
-		updateModel(todaySelection.modelValue)
-		displayFormattedDate.value = todaySelection.displayValue
-
-		currentMonth.value = todaySelection.month
-		currentYear.value = todaySelection.year
-		currentMonthName.value = todaySelection.monthName
-		currentYearName.value = todaySelection.yearName
+		syncDisplayedMonthYearFromDate(todaySelection.today)
 	}
 
 	const emit = defineEmits<{
@@ -259,7 +252,6 @@
 	// Variable pour éviter les mises à jour récursives
 	const isUpdatingFromInternal = ref(false)
 	const keyboardNavigatedDate = ref<Date | null>(null)
-	const preventCloseOnKeyboardNavigation = ref(false)
 	const isInitialValidation = ref(true)
 	const currentRangeIsValid = ref(true)
 	const getRangeValidationError = ref('')
@@ -327,12 +319,7 @@
 		try {
 			isUpdatingFromInternal.value = true
 			emit('update:modelValue', value)
-			if (!preventCloseOnKeyboardNavigation.value) {
-				await closeDatePicker()
-			}
-			else {
-				await validateDates()
-			}
+			await closeDatePicker()
 		}
 		finally {
 			// S'assurer que le flag est toujours réinitialisé
@@ -344,9 +331,14 @@
 
 	// Watcher pour mettre à jour le modèle lorsque les dates sélectionnées changent
 	watch(selectedDates, async (newValue) => {
-		keyboardNavigatedDate.value = Array.isArray(newValue)
+		const firstSelectedDate = Array.isArray(newValue)
 			? newValue[0] ?? null
 			: newValue
+		const shouldUpdateModel = newValue === null
+			|| !props.displayRange
+			|| (Array.isArray(newValue) && newValue.length >= 2)
+
+		keyboardNavigatedDate.value = firstSelectedDate
 
 		// Vider la grille ARIA injectée avant que Vuetify ne re-render le calendrier
 		if (isDatePickerVisible.value) {
@@ -364,22 +356,16 @@
 			updateSelectedDayAria()
 		}
 
-		// Mettre à jour le modèle si nécessaire
-		if (newValue !== null) {
-			// En mode range, ne mettez à jour le modèle et ne fermez que si la plage est complète.
-			const isRangeComplete = props.displayRange && Array.isArray(newValue) && newValue.length >= 2
-			if (!props.displayRange || isRangeComplete) {
+		if (shouldUpdateModel) {
+			if (newValue === null) {
+				await updateModel(null)
+			}
+			else {
 				await updateModel(formattedDate.value)
 			}
 		}
-		else {
-			updateModel(null)
-		}
 
 		syncTextInputFromSelection()
-
-		// Réinitialiser le flag de protection une fois le modèle mis à jour
-		preventCloseOnKeyboardNavigation.value = false
 	})
 
 	const messageClasses = computed(() => ({
@@ -401,7 +387,6 @@
 		textInputValue,
 		displayFormattedDate,
 		formattedDate,
-		displayFormattedFromSelectedDates,
 		syncFromModelValue,
 		syncTextInputFromSelection,
 	} = useDatePickerState({
@@ -419,21 +404,15 @@
 	})
 
 	// Gestionnaire pour les mises à jour du DateTextInput en mode no-calendar
-	const handleDateTextInputUpdate = (value: DateModelValue) => {
+	const handleDateTextInputUpdate = async (value: DateModelValue) => {
 		if (isUpdatingFromInternal.value && !props.noCalendar) return
 
-		try {
-			isUpdatingFromInternal.value = true
-
-			updateModel(value)
-			syncFromModelValue(value)
-		}
-		finally {
-			queueMicrotask(() => {
-				isUpdatingFromInternal.value = false
-			})
-		}
+		await updateModel(value)
+		syncFromModelValue(value)
 	}
+
+	const shouldSyncInternalRangeModelValue = (value: DateInput | undefined) =>
+		props.displayRange && Array.isArray(value) && value.length >= 2
 
 	// Gestionnaire pour les événements date-selected du DateTextInput
 	const handleDateTextInputSelection = async (value: DateModelValue) => {
@@ -442,15 +421,6 @@
 		// Mettre à jour le modèle avec la valeur sélectionnée
 		await updateModel(value)
 	}
-
-	// Date(s) formatée(s) en chaîne de caractères pour l'affichage (centralisée dans useDatePickerState)
-	const displayFormattedDateComputed = displayFormattedFromSelectedDates
-
-	watch(displayFormattedDateComputed, (newValue) => {
-		if (!props.noCalendar && newValue) {
-			displayFormattedDate.value = newValue
-		}
-	}, { immediate: true })
 
 	watch(displayFormattedDate, (newValue, oldValue) => {
 		if (!newValue) {
@@ -522,6 +492,16 @@
 		}
 	}
 
+	const restoreCalendarInputAfterClose = () => {
+		// wait for VMenu to finish DOM updates & transition
+		setTimeout(() => {
+			requestAnimationFrame(() => {
+				focusCalendarInput()
+				isDatePickerVisible.value = false
+			})
+		}, 0)
+	}
+
 	onMounted(() => {
 		// Configurer l'observateur pour le bouton du mois
 		setupMonthButtonObserver()
@@ -557,10 +537,12 @@
 	useValidatable(validateOnSubmit, clearValidation)
 
 	const openDatePicker = async () => {
-		if (isInteractionDisabled.value) return
-		if (!isDatePickerVisible.value) {
-			await toggleDatePicker()
-		}
+		if (isInteractionDisabled.value || isDatePickerVisible.value) return
+
+		isDatePickerVisible.value = true
+		nextTick(() => {
+			updateAccessibility(datePickerDialogRef.value ?? undefined, currentViewMode.value)
+		})
 	}
 
 	// Fonction pour mettre à jour le mois quand on navigue via les flèches
@@ -712,40 +694,26 @@
 			markHolidayDays()
 			customizeMonthButton()
 			updateSelectedDayAria()
+			return
 		}
-		if (!isVisible && props.isBirthDate) {
+
+		if (props.isBirthDate) {
 			// Réinitialiser le mode d'affichage au type birthdate
 			resetViewMode()
 		}
 
-		if (!isVisible) {
-			if (!isHandlingProgrammaticClose.value) {
-				await finalizeDatePickerClose()
-			}
-
-			// set the focus on the text input
-			// wait for VMenu to finish DOM updates & transition
-			setTimeout(() => {
-				requestAnimationFrame(() => {
-					focusCalendarInput()
-					isDatePickerVisible.value = false
-				})
-			}, 0)
+		if (!isHandlingProgrammaticClose.value) {
+			await finalizeDatePickerClose()
 		}
+
+		restoreCalendarInputAfterClose()
 	})
 
 	watch(() => props.modelValue, (newValue) => {
-		if (isUpdatingFromInternal.value) {
-			if (props.displayRange) {
-				if (Array.isArray(newValue) && newValue.length >= 2) {
-					// Synchroniser les dates de plage avec le modèle
-					syncFromModelValue(newValue)
-				}
-			}
+		if (isUpdatingFromInternal.value && !shouldSyncInternalRangeModelValue(newValue)) {
 			return
 		}
 
-		// Synchroniser les dates sélectionnées avec le modèle
 		syncFromModelValue(newValue)
 	}, { immediate: true })
 
@@ -761,21 +729,16 @@
 	const toggleDatePicker = async () => {
 		if (isInteractionDisabled.value) return
 
-		if (!isDatePickerVisible.value) {
-			isDatePickerVisible.value = true
-			nextTick(() => {
-				updateAccessibility(datePickerDialogRef.value ?? undefined, currentViewMode.value)
-			})
-		}
-		else {
+		if (isDatePickerVisible.value) {
 			await closeDatePicker()
+			return
 		}
+
+		await openDatePicker()
 	}
 
 	const openDatePickerOnClick = () => {
-		if (isInteractionDisabled.value) return
-		openDatePicker()
-		customizeMonthButton()
+		void openDatePicker()
 	}
 
 	// Ne plus ouvrir automatiquement le calendrier au focus, juste émettre l'événement
@@ -785,7 +748,6 @@
 	}
 
 	const openDatePickerOnIconClick = async () => {
-		if (isInteractionDisabled.value) return
 		await toggleDatePicker()
 	}
 
@@ -794,13 +756,13 @@
 		// Ne rien faire si le composant est en readonly
 		if (props.readonly) return // Gardé tel quel car readonly-only, pas disabled
 
-		// Ouvrir le calendrier uniquement lorsque la touche Entrée est pressée
 		if (event.key === 'Enter') {
 			await openDatePicker()
 			event.preventDefault() // Empêcher la soumission du formulaire
+			return
 		}
-		// Fermer le calendrier lorsque la touche Escape est pressée
-		else if ((event.key === 'Escape' || event.key === 'Esc') && isDatePickerVisible.value) {
+
+		if ((event.key === 'Escape' || event.key === 'Esc') && isDatePickerVisible.value) {
 			await closeDatePicker()
 			event.preventDefault()
 		}

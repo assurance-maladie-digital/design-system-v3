@@ -135,4 +135,37 @@ describe('useDatePickerState', () => {
 			expect(textInputValue.value).toBe('invalid-start - 10/01/2025')
 		})
 	})
+
+	describe('syncTextInputFromSelection', () => {
+		it('synchronise textInputValue et displayFormattedDate depuis la sélection', () => {
+			const selectedDate = new Date('2025-01-10')
+			const selectedDates = ref<Date | (Date | null)[] | null>(selectedDate)
+
+			mockFormatDate.mockImplementation((date: Date | null) => {
+				if (date?.getTime() === selectedDate.getTime()) {
+					return '10/01/2025'
+				}
+
+				return ''
+			})
+
+			const { textInputValue, displayFormattedDate, syncTextInputFromSelection } = useDatePickerState({
+				selectedDates,
+				format,
+				displayRange: false,
+				parseDate: mockParseDate,
+				formatDate: mockFormatDate,
+				initializeSelectedDates: mockInitializeSelectedDates,
+				validateDates: mockValidateDates,
+			})
+
+			textInputValue.value = ''
+			displayFormattedDate.value = ''
+
+			syncTextInputFromSelection()
+
+			expect(textInputValue.value).toBe('10/01/2025')
+			expect(displayFormattedDate.value).toBe('10/01/2025')
+		})
+	})
 })

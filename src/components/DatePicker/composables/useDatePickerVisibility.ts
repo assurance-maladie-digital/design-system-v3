@@ -91,13 +91,6 @@ export const useDatePickerVisibility = (options: {
 	}
 
 	/**
-	 * Gère le clic sur l'icône du CalendarMode
-	 */
-	const openDatePickerOnIconClick = () => {
-		toggleDatePicker()
-	}
-
-	/**
 	 * Gère les clics en dehors du CalendarMode pour le fermer
 	 */
 	const handleClickOutside = (event: MouseEvent) => {
@@ -144,7 +137,6 @@ export const useDatePickerVisibility = (options: {
 		openDatePicker,
 		openDatePickerOnClick,
 		openDatePickerOnFocus,
-		openDatePickerOnIconClick,
 		handleClickOutside,
 		handleKeyboardNavigation,
 	}
