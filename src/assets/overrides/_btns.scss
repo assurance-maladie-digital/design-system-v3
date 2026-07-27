@@ -6,13 +6,13 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.v-btn.v-btn--density-default{
+.v-btn.v-btn--density-default {
 	height: auto !important;
 }
 
 // le v-btn de vuetify a déjà un padding horizontale de 8px donc en total le padding lateral sera de 16px
 .v-btn__content {
-	padding: var(--spacing-3) var(--spacing-2)!important;
+	padding: var(--spacing-3) var(--spacing-2) !important;
 }
 
 .v-btn.v-tab {
