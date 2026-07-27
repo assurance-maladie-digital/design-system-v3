@@ -179,43 +179,10 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 		}
 	}
 
-	// Validation des dates (fusionnée de useDateValidation)
-	const validateDates = (forceValidation = false): ValidationResult | Promise<ValidationResult> => {
-		const customRules = options.customRules.value
-		const customWarningRules = options.customWarningRules.value
-
-		if (unref(options.noCalendar)) {
-			// En mode no-calendar, on délègue la validation au DateTextInput
-			return emptyValidationResult()
-		}
-
-		// Réinitialiser la validation
-		clearValidation()
-
-		// Vérifier si le champ est requis et vide
-		if (isRequiredSelectionMissing(forceValidation)) {
-			// Respecter isInitialValidation pour ne pas afficher l'erreur au chargement initial
-			if (options.isInitialValidation?.value && !forceValidation) {
-				return emptyValidationResult()
-			}
-
-			if (shouldDisplayErrors()) {
-				addUniqueMessage(errors, locales.required)
-			}
-
-			return createRequiredValidationResult(shouldDisplayErrors())
-		}
-
-		if (!options.selectedDates.value) {
-			return successValidationResult()
-		}
-
-		// Détecter si nous sommes en train de saisir une plage incomplète
-		if (isIncompleteRangeSelection(options.selectedDates.value, unref(options.displayRange), forceValidation)) {
-			return emptyValidationResult()
-		}
-
-		// Préparer les dates à valider
+	const validateCurrentSelectionRules = (
+		customRules: DatePickerRule[],
+		customWarningRules: DatePickerRule[],
+	): ValidationResult | Promise<ValidationResult> => {
 		const datesToValidate = getDatesToValidate(options.selectedDates.value)
 
 		if (!shouldDisplayErrors()) {
@@ -237,6 +204,109 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 		return applyRangeValidation(!hasError)
 	}
 
+	const validateRequiredSelection = (forceValidation: boolean): ValidationResult | null => {
+		if (!isRequiredSelectionMissing(forceValidation)) {
+			return null
+		}
+
+		if (options.isInitialValidation?.value && !forceValidation) {
+			return emptyValidationResult()
+		}
+
+		if (shouldDisplayErrors()) {
+			addUniqueMessage(errors, locales.required)
+		}
+
+		return createRequiredValidationResult(shouldDisplayErrors())
+	}
+
+	const validateCalendarSelection = (
+		customRules: DatePickerRule[],
+		customWarningRules: DatePickerRule[],
+		forceValidation: boolean,
+	): ValidationResult | Promise<ValidationResult> => {
+		const requiredResult = validateRequiredSelection(forceValidation)
+		if (requiredResult) {
+			return requiredResult
+		}
+
+		if (!options.selectedDates.value) {
+			return successValidationResult()
+		}
+
+		if (isIncompleteRangeSelection(options.selectedDates.value, unref(options.displayRange), forceValidation)) {
+			return emptyValidationResult()
+		}
+
+		return validateCurrentSelectionRules(customRules, customWarningRules)
+	}
+
+	const shouldSkipCalendarModeRequiredValidation = (forceValidation: boolean, hasNoSelection: boolean) => {
+		if (!(forceValidation || !options.isUpdatingFromInternal.value) || !unref(options.required) || !hasNoSelection) {
+			return false
+		}
+
+		if (unref(options.readonly)) {
+			return true
+		}
+
+		if (options.onblur?.value && !options.isValidateOnBlur?.value) {
+			return true
+		}
+
+		if (options.isInitialValidation?.value) {
+			return true
+		}
+
+		return false
+	}
+
+	const validateCalendarModeRequiredSelection = (forceValidation: boolean, hasNoSelection: boolean) => {
+		if (!(forceValidation || !options.isUpdatingFromInternal.value) || !unref(options.required) || !hasNoSelection) {
+			return false
+		}
+
+		if (shouldSkipCalendarModeRequiredValidation(forceValidation, hasNoSelection)) {
+			return true
+		}
+
+		if (shouldDisplayErrors()) {
+			addUniqueMessage(errors, locales.required)
+		}
+
+		return true
+	}
+
+	const shouldRunCalendarModeSelectionValidation = (forceValidation: boolean) =>
+		shouldDisplayErrors() && (!options.isInitialValidation?.value || forceValidation)
+
+	const validateCalendarModeEmptySelection = async (forceValidation: boolean) => {
+		if (!options.customRules.value || options.customRules.value.length === 0) return
+
+		if (shouldRunCalendarModeSelectionValidation(forceValidation)) {
+			await validateField(
+				options.selectedDates.value,
+				options.customRules.value,
+				options.customWarningRules.value,
+			)
+			syncValidationCollections(errors, warnings, successes)
+		}
+	}
+
+	// Validation des dates (fusionnée de useDateValidation)
+	const validateDates = (forceValidation = false): ValidationResult | Promise<ValidationResult> => {
+		const customRules = options.customRules.value
+		const customWarningRules = options.customWarningRules.value
+
+		if (unref(options.noCalendar)) {
+			// En mode no-calendar, on délègue la validation au DateTextInput
+			return emptyValidationResult()
+		}
+
+		clearValidation()
+		return validateCalendarSelection(customRules, customWarningRules, forceValidation)
+	}
+
 	// Validation CalendarMode required flow
 	const validateCalendarModeDates = async (forceValidation = false) => {
 		if (!options.useCalendarModeRequiredFlow) {
@@ -250,39 +320,16 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 		clearValidation()
 		const hasNoSelection = isSelectionEmpty(options.selectedDates.value)
 
-		if ((forceValidation || !options.isUpdatingFromInternal.value) && unref(options.required) && hasNoSelection) {
-			if (unref(options.readonly)) {
-				return
-			}
-			// Respecter isValidateOnBlur même quand forceValidation est true
-			if (options.onblur?.value && !options.isValidateOnBlur?.value) {
-				return
-			}
-			// Ne jamais afficher l'erreur required lors de la validation initiale
-			if (options.isInitialValidation?.value) {
-				return
-			}
-			if (shouldDisplayErrors()) {
-				addUniqueMessage(errors, locales.required)
-			}
+		if (validateCalendarModeRequiredSelection(forceValidation, hasNoSelection)) {
 			return
 		}
 
 		if (!options.selectedDates.value) {
-			if (!options.customRules.value || options.customRules.value.length === 0) return
-
-			if (shouldDisplayErrors() && (!options.isInitialValidation?.value || forceValidation)) {
-				await validateField(
-					options.selectedDates.value,
-					options.customRules.value,
-					options.customWarningRules.value,
-				)
-				syncValidationCollections(errors, warnings, successes)
-			}
+			await validateCalendarModeEmptySelection(forceValidation)
 			return
 		}
 
-		if (shouldDisplayErrors() && (!options.isInitialValidation?.value || forceValidation)) {
+		if (shouldRunCalendarModeSelectionValidation(forceValidation)) {
 			return await Promise.resolve(validateDates(forceValidation))
 		}
 	}

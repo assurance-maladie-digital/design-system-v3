@@ -4,7 +4,7 @@
 export { useDateInputEditing } from './useDateInputEditing'
 export { useDateRangeInput } from './useDateRangeInput'
 export { useDateAutoClamp } from './useDateAutoClamp'
-export { useDateTextField } from './useDateTextField'
+export { useDateTextField, createDateTextFieldManualInputValidator } from './useDateTextField'
 
 // Date selection and validation
 export { useDateSelection } from './useDateSelection'

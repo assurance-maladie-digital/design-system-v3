@@ -21,7 +21,7 @@ const generateDateRange = (start: Date, end: Date): Date[] => [start, end]
 const isDateComplete = (value: string): boolean => value.length === 10
 
 describe('useInputHandler', () => {
-	it('handleInput in single mode formats value, updates selectedDates and model', () => {
+	it('handleInput in single mode formats value and updates selectedDates without committing the model', () => {
 		const format = 'DD/MM/YYYY'
 
 		const displayFormattedDate = ref('')
@@ -68,9 +68,9 @@ describe('useInputHandler', () => {
 
 		expect(displayFormattedDate.value).toBe('01/01/2023')
 		expect(selectedDates.value).toBeInstanceOf(Date)
-		expect(updateModel).toHaveBeenCalledWith('01/01/2023')
+		expect(updateModel).not.toHaveBeenCalled()
 		expect(clearValidation).toHaveBeenCalled()
-		expect(validateField).toHaveBeenCalledTimes(1)
+		expect(validateField).not.toHaveBeenCalled()
 	})
 
 	it('handleInput in range mode completes first date and prepares second date input', () => {

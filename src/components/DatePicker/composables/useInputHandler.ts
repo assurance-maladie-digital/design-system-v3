@@ -369,15 +369,6 @@ export function useInputHandler(options: InputHandlerOptions) {
 
 		// Réinitialiser les messages d'erreur
 		clearValidation()
-
-		// Mettre à jour le modèle en fonction des dates sélectionnées
-		const currentDates = Array.isArray(selectedDates.value)
-			? selectedDates.value
-			: (selectedDates.value ? [selectedDates.value] : [])
-
-		if (unref(displayRange) && currentDates.length >= 2 && currentDates[0] && currentDates[1]) {
-			updateModelFromSelectedDates()
-		}
 	}
 
 	/**
@@ -405,11 +396,6 @@ export function useInputHandler(options: InputHandlerOptions) {
 
 		// Réinitialiser les messages d'erreur
 		clearValidation()
-
-		// Mettre à jour le modèle si la date est complète
-		if (date && isDateComplete(formatted)) {
-			updateModelFromSelectedDates()
-		}
 	}
 
 	/**

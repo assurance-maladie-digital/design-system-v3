@@ -4,6 +4,7 @@
 		useDateRangeValidation,
 		useDateInputEditing,
 		useDateAutoClamp,
+		createDateTextFieldManualInputValidator,
 		useDateTextField,
 		useDatePickerValidation,
 		validateDateFormat,
@@ -590,24 +591,25 @@
 	 * Small helpers to DRY (Don't Repeat Yourself 🥸) logic
 	 * =====================
 	 */
-	const { clampIfNeeded, validateManualInput, validateOnSubmit, reset } = useDateTextField({
+	const validateManualInput = createDateTextFieldManualInputValidator(displayFormat, {
+		required: computed(() => props.required),
+		disableErrorHandling: computed(() => props.disableErrorHandling),
+		customRules: customRules.value,
+		customWarningRules: customWarningRules.value,
+		hasInteracted,
+		errors,
+		clearValidation: clearValidationState,
+		validateDateFormat: validateDateFormatForSingleOrRange,
+		isDateComplete: (val: string) => isDateComplete(val, displayFormat.value),
+		parseDate,
+		validateField: safeValidateField,
+	})
+
+	const { clampIfNeeded, validateOnSubmit, reset } = useDateTextField({
 		autoClamp: computed(() => props.autoClamp),
 		isRange,
 		displayFormat,
 		autoClampDate,
-		manualValidation: {
-			required: computed(() => props.required),
-			disableErrorHandling: computed(() => props.disableErrorHandling),
-			customRules: customRules.value,
-			customWarningRules: customWarningRules.value,
-			hasInteracted,
-			errors,
-			clearValidation: clearValidationState,
-			validateDateFormat: validateDateFormatForSingleOrRange,
-			isDateComplete: (val: string) => isDateComplete(val, displayFormat.value),
-			parseDate,
-			validateField: safeValidateField,
-		},
 		submit: {
 			isValidating,
 			hasInteracted,

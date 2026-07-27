@@ -45,21 +45,15 @@ export interface UseDateTextFieldOptions {
 	isRange: Ref<boolean>
 	displayFormat: Ref<string>
 	autoClampDate: (dateStr: string, format: string) => { clampedDate: string, adjusted: boolean }
-	manualValidation: UseDateTextFieldManualValidationOptions
 	submit?: UseDateTextFieldSubmitOptions
 	reset?: UseDateTextFieldResetOptions
 }
 
-/**
- * Composable de haut niveau pour la saisie de date dans un champ texte.
- * Pour l'instant il encapsule uniquement la logique d'autoClamp
- * afin de pouvoir être partagé entre les différents scénarios (single / range).
- */
-export const useDateTextField = (options: UseDateTextFieldOptions) => {
-	const { autoClamp, isRange, displayFormat, autoClampDate, manualValidation, submit, reset: resetOptions } = options
-
-	// Fonction locale de validation manuelle pour remplacer useManualDateValidation
-	const validateManualInput = (value: string): boolean | Promise<boolean> => {
+export const createDateTextFieldManualInputValidator = (
+	displayFormat: Ref<string>,
+	manualValidation: UseDateTextFieldManualValidationOptions,
+) => {
+	return (value: string): boolean | Promise<boolean> => {
 		manualValidation.clearValidation()
 
 		// Vérifier les cas de champ vide ou incomplet
@@ -144,6 +138,15 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 
 		return manualValidation.errors.value.length === 0
 	}
+}
+
+/**
+ * Composable de haut niveau pour la saisie de date dans un champ texte.
+ * Il ne porte plus la validation métier ; il regroupe uniquement
+ * les helpers de champ partagés (clamp, submit, reset).
+ */
+export const useDateTextField = (options: UseDateTextFieldOptions) => {
+	const { autoClamp, isRange, displayFormat, autoClampDate, submit, reset: resetOptions } = options
 
 	const validateOnSubmit = async () => {
 		if (!submit) return true
@@ -218,7 +221,6 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 
 	return {
 		clampIfNeeded,
-		validateManualInput,
 		validateOnSubmit,
 		reset,
 	}
