@@ -1,16 +1,26 @@
 import type { StorybookConfig } from '@storybook/vue3-vite'
 import { mergeConfig } from 'vite'
+import remarkGfm from 'remark-gfm'
 
 const config: StorybookConfig = {
 	stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
 	staticDirs: ['./public'],
 	addons: [
-        '@storybook/addon-links',
-        '@jls-digital/storybook-addon-code',
-        '@storybook/addon-queryparams',
-        '@storybook/addon-a11y',
-        '@storybook/addon-docs'
-    ],
+		'@storybook/addon-links',
+		'@jls-digital/storybook-addon-code',
+		'@storybook/addon-queryparams',
+		'@storybook/addon-a11y',
+		{
+			name: '@storybook/addon-docs',
+			options: {
+				mdxPluginOptions: {
+					mdxCompileOptions: {
+						remarkPlugins: [remarkGfm], // doit être présent
+					},
+				},
+			},
+		},
+	],
 	framework: {
 		name: '@storybook/vue3-vite',
 		options: {},
