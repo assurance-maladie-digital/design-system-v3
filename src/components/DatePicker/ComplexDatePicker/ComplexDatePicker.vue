@@ -129,6 +129,7 @@
 
 	const shouldRestoreFocusToInput = ref(false)
 	const shouldFocusDialogOnOpen = ref(false)
+	const ignoreNextMenuReopen = ref(false)
 	const keyboardNavigatedDate = ref<Date | null>(null)
 	let dialogInitialFocusToken = 0
 	let dialogInitialFocusTimeouts: ReturnType<typeof setTimeout>[] = []
@@ -140,6 +141,7 @@
 
 	const scheduleCalendarInputFocusRestore = () => {
 		shouldRestoreFocusToInput.value = true
+		ignoreNextMenuReopen.value = true
 	}
 
 	const scheduleDialogInitialFocus = () => {
@@ -153,10 +155,21 @@
 				isDatePickerVisible.value = false
 
 				const input = getCalendarInputElement()
-				if (!input) return
+				if (!input) {
+					shouldRestoreFocusToInput.value = false
+					requestAnimationFrame(() => {
+						ignoreNextMenuReopen.value = false
+					})
+					return
+				}
 
-				if (document.activeElement === input) return
-				if (attempt >= 8) return
+				if (document.activeElement === input || attempt >= 8) {
+					shouldRestoreFocusToInput.value = false
+					requestAnimationFrame(() => {
+						ignoreNextMenuReopen.value = false
+					})
+					return
+				}
 
 				setTimeout(() => {
 					restoreCalendarInputFocus(attempt + 1)
@@ -177,7 +190,8 @@
 		}
 
 		runFocus()
-		dialogInitialFocusTimeouts.push(setTimeout(runFocus, 120))
+		dialogInitialFocusTimeouts.push(setTimeout(runFocus, 75))
+		dialogInitialFocusTimeouts.push(setTimeout(runFocus, 200))
 	}
 
 	const closeDatePicker = async (options: { restoreFocus?: boolean } = {}) => {
@@ -272,7 +286,6 @@
 	const isFormatting = ref(false)
 	const isUpdatingFromInternal = ref(false)
 	const hasInteracted = ref(false)
-	const preventCloseOnInternalUpdate = ref(false)
 	const ignoreNextInputBlur = ref(false)
 	const ignoreNextCalendarModelSync = ref(false)
 
@@ -411,10 +424,7 @@
 		generateDateRange: dateSelectionResult.generateDateRange,
 	})
 
-	// Display helpers (centralised in useDatePickerState)
-	const displayFormattedDateComputed = displayFormattedFromSelectedDates
-
-	watch(displayFormattedDateComputed, (newValue) => {
+	watch(displayFormattedFromSelectedDates, (newValue) => {
 		if (!props.noCalendar && newValue) displayFormattedDate.value = newValue
 	}, { immediate: true })
 
@@ -466,7 +476,7 @@
 				closeAndRestoreFocus()
 			}
 			else {
-				syncDisplayedValues(displayFormattedDateComputed.value || '')
+				syncDisplayedValues(displayFormattedFromSelectedDates.value || '')
 			}
 
 			validateDates()
@@ -494,9 +504,10 @@
 	watch(selectedDates, (newValue) => {
 		validateDates()
 		if (newValue !== null) {
-			keyboardNavigatedDate.value = Array.isArray(newValue)
+			const firstSelectedDate = Array.isArray(newValue)
 				? (newValue.find(date => date instanceof Date) as Date | null) ?? null
 				: newValue
+			keyboardNavigatedDate.value = firstSelectedDate
 
 			if (ignoreNextCalendarModelSync.value && isDatePickerVisible.value) {
 				ignoreNextCalendarModelSync.value = false
@@ -506,23 +517,14 @@
 				return
 			}
 
-			const shouldCommitCalendarSelection = isDatePickerVisible.value && !preventCloseOnInternalUpdate.value
-
-			if (!shouldCommitCalendarSelection) {
+			if (!isDatePickerVisible.value) {
 				updateModel(formattedDate.value)
 			}
 			withInternalUpdate(() => {
 				syncTextInputFromSelection()
 			})
 
-			let baseDate: Date | null = null
-			if (Array.isArray(newValue)) {
-				baseDate = (newValue.find(date => date instanceof Date) as Date | null) ?? null
-			}
-			else {
-				baseDate = newValue
-			}
-			if (baseDate) syncDisplayedMonthYearFromDate(baseDate)
+			if (firstSelectedDate) syncDisplayedMonthYearFromDate(firstSelectedDate)
 			if (isDatePickerVisible.value) {
 				nextTick(() => refreshVisibleCalendarUi())
 			}
@@ -738,14 +740,17 @@
 	)
 
 	watch(isDatePickerVisible, (visible) => {
-		if (visible) return
+		if (visible) {
+			if (ignoreNextMenuReopen.value) {
+				ignoreNextMenuReopen.value = false
+				isDatePickerVisible.value = false
+			}
+			return
+		}
 
 		if (!shouldRestoreFocusToInput.value) return
 
-		shouldRestoreFocusToInput.value = false
 		restoreCalendarInputFocus()
-		setTimeout(() => restoreCalendarInputFocus(), 150)
-		setTimeout(() => restoreCalendarInputFocus(), 300)
 	}, { flush: 'post' })
 
 	const { focusInitialDay } = useCalendarKeyboardNavigation({
@@ -1149,14 +1154,7 @@
 	watch(
 		() => props.modelValue,
 		(newValue) => {
-			if (isUpdatingFromInternal.value) {
-				if (preventCloseOnInternalUpdate.value) {
-					return
-				}
-				// Internal model sync is not a reliable dialog-close signal.
-				// Actual user selections already close through selectedDates/updateDisplayFormattedDate.
-				return
-			}
+			if (isUpdatingFromInternal.value) return
 			withInternalUpdate(() => syncFromModelValue(newValue))
 		},
 		{ immediate: true },
@@ -1223,30 +1221,16 @@
 
 		ignoreNextCalendarModelSync.value = false
 
-		if (props.displayRange) {
-			selectedDates.value = todaySelection.selectedDates
-			withInternalUpdate(() => {
-				textInputValue.value = todaySelection.displayValue
-				displayFormattedDate.value = todaySelection.displayValue
-			})
-			updateModel(todaySelection.modelValue)
-			emit('date-selected', todaySelection.modelValue)
-		}
-		else {
-			selectedDates.value = todaySelection.selectedDates
-			withInternalUpdate(() => {
-				textInputValue.value = todaySelection.displayValue
-				displayFormattedDate.value = todaySelection.displayValue
-			})
-			updateModel(todaySelection.modelValue)
-			emit('date-selected', todaySelection.modelValue)
-		}
+		selectedDates.value = todaySelection.selectedDates
+		withInternalUpdate(() => {
+			textInputValue.value = todaySelection.displayValue
+			displayFormattedDate.value = todaySelection.displayValue
+		})
+		updateModel(todaySelection.modelValue)
+		emit('date-selected', todaySelection.modelValue)
 
 		syncDisplayedMonthYearFromDate(new Date())
-
-		if (isDatePickerVisible.value) {
-			closeAndRestoreFocus()
-		}
+		closeAndRestoreFocus()
 	}
 
 	/**

@@ -2,7 +2,6 @@ import { watch, unref, type Ref, type MaybeRef } from 'vue'
 import { useValidation, type ValidationResult, type ValidationRule } from '@/composables/validation/useValidation'
 import { locales } from '../locales'
 import type { DateObjectValue, DatePickerRule } from '../types'
-import { useDateRangeValidation } from './useDateRangeValidation'
 
 export type DatePickerValidationRule = DatePickerRule
 
@@ -55,13 +54,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 		clearValidation: baseClearValidation,
 	} = validation
 
-	const clearValidation = () => baseClearValidation()
-
-	// Utiliser useDateRangeValidation pour centraliser la validation des plages
-	const { isRangeValid: isDateRangeValid } = useDateRangeValidation(
-		options.selectedDates,
-		unref(options.displayRange),
-	)
+	const clearValidation = baseClearValidation
 
 	if (options.skipValidationWhenReadonly) {
 		watch(() => unref(options.readonly), (newValue) => {
@@ -93,16 +86,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 
 		if (unref(options.noCalendar)) {
 			// En mode no-calendar, on délègue la validation au DateTextInput
-			return {
-				hasError: false,
-				hasWarning: false,
-				hasSuccess: false,
-				state: {
-					errors: [],
-					warnings: [],
-					successes: [],
-				},
-			}
+			return emptyValidationResult()
 		}
 
 		// Réinitialiser la validation
@@ -116,16 +100,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 		if ((forceValidation || !options.isUpdatingFromInternal.value) && unref(options.required) && (!options.selectedDates.value || (Array.isArray(options.selectedDates.value) && options.selectedDates.value.length === 0))) {
 			// Respecter isInitialValidation pour ne pas afficher l'erreur au chargement initial
 			if (options.isInitialValidation?.value && !forceValidation) {
-				return {
-					hasError: false,
-					hasWarning: false,
-					hasSuccess: false,
-					state: {
-						errors: [],
-						warnings: [],
-						successes: [],
-					},
-				}
+				return emptyValidationResult()
 			}
 			if (shouldDisplayErrors) {
 				errors.value.push(locales.required)
@@ -171,16 +146,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 		if (unref(options.displayRange) && Array.isArray(options.selectedDates.value)
 			&& options.selectedDates.value.length === 2 && options.selectedDates.value[0] && !options.selectedDates.value[1]
 			&& !forceValidation) {
-			return {
-				hasError: false,
-				hasWarning: false,
-				hasSuccess: false,
-				state: {
-					errors: [],
-					warnings: [],
-					successes: [],
-				},
-			}
+			return emptyValidationResult()
 		}
 
 		// Préparer les dates à valider
@@ -349,6 +315,5 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 		validateField,
 		validateDates,
 		validateCalendarModeDates,
-		isRangeValid: isDateRangeValid,
 	}
 }
