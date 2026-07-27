@@ -1562,3 +1562,92 @@ describe('SySelect.vue', () => {
 		})
 	})
 })
+
+describe('SySelect.vue - String items', () => {
+	it('displays string items in the dropdown list', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: ['un', 'deux'] },
+			attachTo: document.body,
+		})
+		await wrapper.find('.v-field').trigger('click')
+		await wrapper.vm.$nextTick()
+		const listItems = wrapper.findComponent(VList).findAll('.v-list-item')
+		expect(listItems).toHaveLength(2)
+		expect(listItems[0]?.text()).toContain('un')
+		expect(listItems[1]?.text()).toContain('deux')
+		wrapper.unmount()
+	})
+
+	it('displays selected string item in the input field', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: ['un', 'deux'] },
+			attachTo: document.body,
+		})
+		await wrapper.find('.v-field').trigger('click')
+		await wrapper.vm.$nextTick()
+		const firstItem = wrapper.findComponent(VList).findAll('.v-list-item').at(0)!
+		await firstItem.trigger('click')
+		await wrapper.vm.$nextTick()
+		expect(wrapper.find('input').element.value).toBe('un')
+		expect(wrapper.emitted()['update:modelValue']).toEqual([['un']])
+		wrapper.unmount()
+	})
+
+	it('displays selected string item with pre-selected modelValue', () => {
+		const wrapper = mount(SySelect, {
+			props: { items: ['un', 'deux'], modelValue: 'deux' },
+			attachTo: document.body,
+		})
+		expect(wrapper.find('input').element.value).toBe('deux')
+		wrapper.unmount()
+	})
+
+	it('displays multiple selected string items as inline labels', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: ['un', 'deux', 'trois'], multiple: true },
+			attachTo: document.body,
+		})
+		await wrapper.find('.v-field').trigger('click')
+		await wrapper.vm.$nextTick()
+		const listItems = wrapper.findComponent(VList).findAll('.v-list-item')
+		await listItems[0]!.trigger('click')
+		await listItems[1]!.trigger('click')
+		await wrapper.vm.$nextTick()
+		const labels = wrapper.findAll('.sy-select__label')
+		expect(labels.length).toBeGreaterThanOrEqual(2)
+		expect(labels[0].text()).toContain('un')
+		expect(labels[1].text()).toContain('deux')
+		wrapper.unmount()
+	})
+
+	it('displays chips for selected string items in chips mode', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: ['un', 'deux'], multiple: true, chips: true },
+			attachTo: document.body,
+		})
+		await wrapper.find('.v-field').trigger('click')
+		await wrapper.vm.$nextTick()
+		const listItems = wrapper.findComponent(VList).findAll('.v-list-item')
+		await listItems[0]!.trigger('click')
+		await wrapper.vm.$nextTick()
+		const chips = wrapper.findAllComponents({ name: 'VChip' })
+		expect(chips.length).toBeGreaterThan(0)
+		expect(chips[0].text()).toContain('un')
+		wrapper.unmount()
+	})
+
+	it('clears selection and input for string items', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: ['un', 'deux'], clearable: true, modelValue: 'un' },
+			attachTo: document.body,
+		})
+		expect(wrapper.find('input').element.value).toBe('un')
+		const clearBtn = wrapper.find('[aria-label="Effacer la sélection"]')
+		if (clearBtn.exists()) {
+			await clearBtn.trigger('click')
+			await wrapper.vm.$nextTick()
+			expect(wrapper.find('input').element.value).toBe('')
+		}
+		wrapper.unmount()
+	})
+})

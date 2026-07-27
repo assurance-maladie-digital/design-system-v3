@@ -26,7 +26,7 @@
 	const props = withDefaults(
 		defineProps<{
 			modelValue?: Record<string, unknown> | string | number | null | SelectItemArrayType
-			items?: ItemType[]
+			items?: Array<ItemType | string | number>
 			label?: string
 			menuId?: string
 			outlined?: boolean
@@ -554,10 +554,14 @@
 	})
 
 	// Function to check if an item is the default option (e.g., "-choisir-")
-	const isDefaultOption = (item: ItemType) => {
+	const isDefaultOption = (item: ItemType | string | number) => {
+		// Normalize string/number items to objects for consistent access
+		const itemObj = typeof item === 'string' || typeof item === 'number'
+			? { [props.textKey]: item, [props.valueKey]: item }
+			: item
 		// Check if this is the first item and has a placeholder-like text
-		const itemText = item[props.textKey] as string
-		return itemText.includes('-') && (itemText.includes('choisir') || itemText.includes('sélectionner'))
+		const itemText = itemObj[props.textKey] as string
+		return typeof itemText === 'string' && itemText.includes('-') && (itemText.includes('choisir') || itemText.includes('sélectionner'))
 	}
 
 	// Function to check if an item is selected
