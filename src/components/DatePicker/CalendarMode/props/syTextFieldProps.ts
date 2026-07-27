@@ -31,7 +31,7 @@ export const useSyTextFieldProps = (
 	'bg-color': props.bgColor,
 	'density': props.density,
 	'hide-details': props.hideDetails,
-	'display-asterisk': props.displayAsterisk,
+	'display-asterisk': false,
 	'is-clearable': !props.readonly,
 	'auto-clamp': props.autoClamp,
 	'title': props.title || props.placeholder,
