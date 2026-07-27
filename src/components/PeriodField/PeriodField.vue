@@ -2,6 +2,7 @@
 	/* eslint-disable @typescript-eslint/no-explicit-any -- Nécessaire pour gérer différents types d'entrée */
 	import { ref, watch, computed, onMounted, readonly as readonlyState } from 'vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
+	import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 	import { useFieldValidation } from '@/composables'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 	import { locales as defaultLocales } from './locales'
@@ -268,13 +269,19 @@
 		})
 	}
 
-	function handleFromDateUpdate(value: DateInput) {
-		internalFromDate.value = value
+	const normalizeDatePickerValue = (value: DateModelValue): DateInput => {
+		return typeof value === 'string' || value === null
+			? value
+			: value[0] ?? null
+	}
+
+	function handleFromDateUpdate(value: DateModelValue) {
+		internalFromDate.value = normalizeDatePickerValue(value)
 		emitPeriodValue()
 	}
 
-	function handleToDateUpdate(value: DateInput) {
-		internalToDate.value = value
+	function handleToDateUpdate(value: DateModelValue) {
+		internalToDate.value = normalizeDatePickerValue(value)
 		emitPeriodValue()
 	}
 
