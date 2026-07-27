@@ -865,6 +865,10 @@
 	const handleInputBlur = async () => {
 		emit('blur')
 		onblur.value = true
+		// Ne pas valider si le DatePicker est ouvert : le blur est causé par
+		// l'ouverture du calendrier (VMenu prend le focus), pas par l'utilisateur
+		// qui quitterait le champ.
+		if (isDatePickerVisible.value) return
 		// Ne pas valider si isValidateOnBlur est false
 		if (props.isValidateOnBlur) {
 			await validateCalendarModeDates(true)
