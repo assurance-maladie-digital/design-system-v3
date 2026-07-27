@@ -395,7 +395,7 @@
 				if (props.returnObject) {
 					return getPlainItemText(selected)
 				}
-				const foundItem = props.items.find((item: ItemType) => item[props.valueKey] === selected)
+				const foundItem = formattedItems.value.find((item: ItemType) => item[props.valueKey] === selected)
 				return foundItem ? getPlainItemText(foundItem) : ''
 			}).join(', ')
 		}
@@ -407,7 +407,7 @@
 				return getPlainItemText(selectedItem.value)
 			}
 
-			const foundItem = props.items.find(item => item[props.valueKey] === selectedItem.value)
+			const foundItem = formattedItems.value.find(item => item[props.valueKey] === selectedItem.value)
 			return foundItem ? getPlainItemText(foundItem) : ''
 		}
 	})
@@ -609,7 +609,7 @@
 			return (safeItem as Record<string, unknown>)[props.textKey] as string
 		}
 		// Handle primitive types
-		return props.items.find((i: ItemType) => i[props.valueKey] === safeItem)?.[props.textKey] as string || ''
+		return formattedItems.value.find((i: ItemType) => i[props.valueKey] === safeItem)?.[props.textKey] as string || ''
 	}
 
 	// Function to remove a chip
