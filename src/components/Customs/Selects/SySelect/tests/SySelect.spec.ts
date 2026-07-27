@@ -1758,4 +1758,84 @@ describe('SySelect.vue - Number items', () => {
 		expect(listItems).toHaveLength(3)
 		wrapper.unmount()
 	})
+
+	it('displays chip with text for falsy value 0 in chips mode', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: [0, 1, 2], multiple: true, chips: true },
+			attachTo: document.body,
+		})
+		await wrapper.find('.v-field').trigger('click')
+		await wrapper.vm.$nextTick()
+		const listItems = wrapper.findComponent(VList).findAll('.v-list-item')
+		expect(listItems).toHaveLength(3)
+		await listItems[0]!.trigger('click')
+		await wrapper.vm.$nextTick()
+		const chips = wrapper.findAllComponents({ name: 'VChip' })
+		expect(chips.length).toBeGreaterThan(0)
+		expect(chips[0]?.text()).toContain('0')
+		wrapper.unmount()
+	})
+
+	it('displays chip with text for object item with falsy text value 0 in chips mode', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				items: [
+					{ text: 0, value: 'zero' },
+					{ text: 1, value: 'one' },
+				],
+				multiple: true,
+				chips: true,
+				returnObject: true,
+				textKey: 'text',
+				valueKey: 'value',
+			},
+			attachTo: document.body,
+		})
+		await wrapper.find('.v-field').trigger('click')
+		await wrapper.vm.$nextTick()
+		const listItems = wrapper.findComponent(VList).findAll('.v-list-item')
+		expect(listItems).toHaveLength(2)
+		await listItems[0]!.trigger('click')
+		await wrapper.vm.$nextTick()
+		const chips = wrapper.findAllComponents({ name: 'VChip' })
+		expect(chips.length).toBeGreaterThan(0)
+		expect(chips[0]?.text()).toContain('0')
+		wrapper.unmount()
+	})
+
+	it('displays selected object item with falsy text value 0 in input', () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				items: [
+					{ text: 0, value: 'zero' },
+					{ text: 1, value: 'one' },
+				],
+				modelValue: 'zero',
+				textKey: 'text',
+				valueKey: 'value',
+			},
+			attachTo: document.body,
+		})
+		expect(wrapper.find('input').element.value).toBe('0')
+		wrapper.unmount()
+	})
+
+	it('uses plainTextKey with falsy value 0 when allowHtml is true', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				items: [
+					{ text: '<b>0</b>', plainText: 0, value: 'zero' },
+					{ text: '<b>1</b>', plainText: 1, value: 'one' },
+				],
+				modelValue: 'zero',
+				textKey: 'text',
+				valueKey: 'value',
+				plainTextKey: 'plainText',
+				allowHtml: true,
+			},
+			attachTo: document.body,
+		})
+		expect(wrapper.find('input').element.value).toBe('0')
+		wrapper.unmount()
+	})
 })

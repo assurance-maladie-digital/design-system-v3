@@ -359,15 +359,19 @@
 	const getPlainItemText = (item: unknown) => {
 		// Handle primitive types (string/number items)
 		if (typeof item === 'string' || typeof item === 'number') {
-			return item
+			return String(item)
 		}
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		const itemObj = item as Record<string, any>
 		// Use plainTextKey if available and allowHtml is true, otherwise use textKey
-		if (props.plainTextKey && props.allowHtml && itemObj[props.plainTextKey]) {
-			return itemObj[props.plainTextKey]
+		if (props.plainTextKey && props.allowHtml) {
+			const plainText = itemObj[props.plainTextKey]
+			if (plainText !== undefined && plainText !== null && plainText !== '') {
+				return String(plainText)
+			}
 		}
-		return itemObj[props.textKey]
+		const text = itemObj[props.textKey]
+		return text !== undefined && text !== null ? String(text) : ''
 	}
 
 	const selectedItemText = computed(() => {
@@ -614,10 +618,12 @@
 
 		if (typeof safeItem === 'object') {
 			// Handle object type
-			return (safeItem as Record<string, unknown>)[props.textKey] as string
+			const text = (safeItem as Record<string, unknown>)[props.textKey]
+			return text !== undefined && text !== null ? String(text) : ''
 		}
 		// Handle primitive types
-		return formattedItems.value.find((i: ItemType) => i[props.valueKey] === safeItem)?.[props.textKey] as string || ''
+		const foundText = formattedItems.value.find((i: ItemType) => i[props.valueKey] === safeItem)?.[props.textKey]
+		return foundText !== undefined && foundText !== null ? String(foundText) : ''
 	}
 
 	// Function to remove a chip
