@@ -324,6 +324,7 @@
 
 :deep(.v-selection-control__input) {
 	cursor: pointer;
+
 	&:hover {
 		background: rgba(var(--v-theme-interactionDark), 0.08) !important;
 	}
