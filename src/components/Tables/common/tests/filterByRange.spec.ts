@@ -86,6 +86,7 @@ describe('SyTable - filterByRange', () => {
 
 		const endDate = wrapper.find('input[aria-label="Fin"]')
 		await endDate.setValue('01/01/2000')
+		await flushPromises()
 
 		const textContent = wrapper.text()
 
@@ -116,6 +117,7 @@ describe('SyTable - filterByRange', () => {
 
 		const startDate = wrapper.find('input[aria-label="Début"]')
 		await startDate.setValue('01/01/1995')
+		await flushPromises()
 
 		const textContent = wrapper.text()
 
@@ -146,9 +148,11 @@ describe('SyTable - filterByRange', () => {
 
 		const startDate = wrapper.find('input[aria-label="Début"]')
 		await startDate.setValue('01/01/1989')
+		await flushPromises()
 
 		const endDate = wrapper.find('input[aria-label="Fin"]')
 		await endDate.setValue('01/01/2000')
+		await flushPromises()
 
 		const textContent = wrapper.text()
 
@@ -174,9 +178,11 @@ describe('SyTable - filterByRange', () => {
 
 		const startDate = wrapper.find('input[aria-label="Début"]')
 		await startDate.setValue('01/01/1990')
+		await flushPromises()
 
 		const endDate = wrapper.find('input[aria-label="Fin"]')
 		await endDate.setValue('01/01/2000')
+		await flushPromises()
 
 		const textContent = wrapper.text()
 

@@ -401,6 +401,24 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.currentMonthName).toBeTruthy()
 	})
 
+	it('handleDateSelected keeps display format with dateFormatReturn in single mode', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+		})
+
+		await wrapper.vm.handleDateSelected('2025-01-02')
+		await flushPromises()
+
+		expect(wrapper.vm.displayFormattedDate).toBe('02/01/2025')
+		expect((wrapper.find('input').element as HTMLInputElement).value).toBe('02/01/2025')
+
+		const emittedUpdate = wrapper.emitted('update:modelValue')
+		expect(emittedUpdate).toBeTruthy()
+		expect(emittedUpdate && emittedUpdate[emittedUpdate.length - 1]?.[0]).toBe('2025-01-02')
+	})
+
 	it('handleDateSelected updates model, selection and emits event in range mode', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
@@ -442,6 +460,22 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.displayFormattedDate).toBe('02/01/2025')
 		const input = wrapper.find('input')
 		expect((input.element as HTMLInputElement).value).toBe('02/01/2025')
+	})
+
+	it('initializes from external modelValue with dateFormatReturn in range mode', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			displayRange: true,
+			modelValue: ['2025-01-02', '2025-01-10'],
+		})
+
+		await flushPromises()
+
+		expect(wrapper.vm.displayFormattedDate).toBe('02/01/2025 - 10/01/2025')
+		const input = wrapper.find('input')
+		expect((input.element as HTMLInputElement).value).toBe('02/01/2025 - 10/01/2025')
 	})
 
 	it('initializes selection correctly from range modelValue in range mode', async () => {

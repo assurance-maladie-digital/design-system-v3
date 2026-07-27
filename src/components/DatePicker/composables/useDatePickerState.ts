@@ -40,7 +40,6 @@ interface ResolveDatePickerStateOptions {
 interface ResolvedDatePickerState {
 	selectedDates: Date | (Date | null)[] | null
 	textInputValue: string
-	displayFormattedDate: string
 }
 
 const getTextInputValueFromSelection = (
@@ -112,7 +111,6 @@ export const resolveDatePickerStateFromModelValue = ({
 		return {
 			selectedDates: null,
 			textInputValue: '',
-			displayFormattedDate: '',
 		}
 	}
 
@@ -122,7 +120,6 @@ export const resolveDatePickerStateFromModelValue = ({
 		return {
 			selectedDates: null,
 			textInputValue: newValue,
-			displayFormattedDate: newValue,
 		}
 	}
 
@@ -145,7 +142,6 @@ export const resolveDatePickerStateFromModelValue = ({
 	return {
 		selectedDates,
 		textInputValue,
-		displayFormattedDate: textInputValue,
 	}
 }
 
@@ -235,7 +231,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 
 		selectedDates.value = resolvedState.selectedDates
 		textInputValue.value = resolvedState.textInputValue
-		displayFormattedDate.value = resolvedState.displayFormattedDate
+		displayFormattedDate.value = resolvedState.textInputValue
 		validateDates()
 	}
 

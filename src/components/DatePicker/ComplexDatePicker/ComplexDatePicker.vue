@@ -381,29 +381,8 @@
 	const handleDateSelected = (value: DateModelValue) => {
 		if (props.readonly) return
 
-		// 1) Update v-model
 		updateModel(value)
-
-		// 2) Sync internal selection
-		if (value === null) {
-			selectedDates.value = null
-		}
-		else if (Array.isArray(value)) {
-			const dateObjects = value
-				.map(dateStr => parseDate(dateStr, returnFormat.value))
-				.filter(Boolean) as Date[]
-			if (props.displayRange && dateObjects.length >= 2) {
-				selectedDates.value = dateSelectionResult.generateDateRange(dateObjects[0]!, dateObjects[dateObjects.length - 1]!)
-			}
-			else {
-				selectedDates.value = dateObjects
-			}
-		}
-		else {
-			selectedDates.value = parseDate(value, returnFormat.value)
-		}
-
-		// 3) Re-emit upward
+		syncFromModelValue(value)
 		emit('date-selected', value)
 	}
 	// Range handling
@@ -435,7 +414,7 @@
 
 	watch(displayFormattedDateComputed, (newValue) => {
 		if (!props.noCalendar && newValue) displayFormattedDate.value = newValue
-	})
+	}, { immediate: true })
 
 	const updateSelectedDates = async (date: Date | null) => {
 		ignoreNextCalendarModelSync.value = false
@@ -453,7 +432,6 @@
 				syncTextInputFromSelection()
 			})
 			updateModel(formatDate(date, returnFormat.value))
-			displayFormattedDate.value = formatDate(date, props.format)
 			closeAndRestoreFocus()
 		}
 		// Validate immediately to surface messages
@@ -739,7 +717,6 @@
 
 	onMounted(() => {
 		setupMonthButtonObserver()
-		if (displayFormattedDateComputed.value) displayFormattedDate.value = displayFormattedDateComputed.value
 		validateDates()
 		nextTick(syncComboboxInputSemantics)
 		nextTick(syncDialogKeydownListener)
@@ -1165,48 +1142,8 @@
 		try {
 			isUpdatingFromInternal.value = true
 
-			// 1) Propager la valeur brute vers le v-model externe
 			updateModel(value)
-
-			// 2) Mettre à jour selectedDates / displayFormattedDate pour refléter la saisie manuelle
-			if (!value) {
-				selectedDates.value = null
-				displayFormattedDate.value = ''
-				return
-			}
-
-			if (Array.isArray(value) && props.displayRange) {
-				const [startStr, endStr] = value
-				const rf = returnFormat.value
-				const startDate = startStr ? parseDate(startStr, rf) || parseDate(startStr, props.format) : null
-				const endDate = endStr ? parseDate(endStr, rf) || parseDate(endStr, props.format) : null
-
-				if (startDate && endDate) {
-					selectedDates.value = dateSelectionResult.generateDateRange(startDate, endDate)
-					displayFormattedDate.value = formatDateRangeDisplay(startDate, endDate, props.format, formatDate)
-				}
-				else if (startDate) {
-					// Première date saisie uniquement
-					selectedDates.value = [startDate]
-					displayFormattedDate.value = formatDate(startDate, props.format)
-				}
-				else {
-					selectedDates.value = null
-					displayFormattedDate.value = ''
-				}
-			}
-			else if (typeof value === 'string') {
-				const rf = returnFormat.value
-				const date = parseDate(value, rf) || parseDate(value, props.format)
-				if (date) {
-					selectedDates.value = date
-					displayFormattedDate.value = formatDate(date, props.format)
-				}
-				else {
-					selectedDates.value = null
-					displayFormattedDate.value = ''
-				}
-			}
+			syncFromModelValue(value)
 		}
 		finally {
 			queueMicrotask(() => {
