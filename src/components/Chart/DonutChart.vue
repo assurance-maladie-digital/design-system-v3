@@ -119,20 +119,20 @@
 </template>
 
 <style scoped lang="scss">
-	.donut-chart {
-		display: flex;
-		flex-direction: column;
-		gap: 24px;
-		width: 100%;
-	}
+.donut-chart {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	width: 100%;
+}
 
-	.donut-chart__canvas {
-		position: relative;
-		width: 100%;
-		min-height: 400px;
-	}
+.donut-chart__canvas {
+	position: relative;
+	width: 100%;
+	min-height: 400px;
+}
 
-    .donut-chart__center {
+.donut-chart__center {
 	position: absolute;
 	top: 50%;
 	left: 50%;

@@ -31,7 +31,7 @@ export const Default: Story = {
 			}
 		},
 		template: `
-            <div style="width: 100%; height: 560px;">
+            <div style="width: 100%; height: 560px; margin-bottom: 7rem;">
                 <GraphiqueEcoConception v-bind="args" />
             </div>
         `,

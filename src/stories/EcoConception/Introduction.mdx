@@ -1,4 +1,5 @@
 import { Meta, Story } from '@storybook/addon-docs/blocks';
+import * as Graphique from './Graphique.stories';
 import '@/stories/styles/shared.css';
 
 
@@ -104,6 +105,15 @@ font-size: 1.25rem;
   color: #0C419A;
   margin-top: 0;
 }
+
+.eco-level-description {
+	margin: 0;
+	line-height: 1.5;
+}
+
+.graphique {
+margin-top: 36px;
+}
 `}
 </style>
 
@@ -113,12 +123,19 @@ font-size: 1.25rem;
   <h1 className="eco-title">Ecoconception numérique</h1>
   <p className="eco-subtitle">Concevoir des services numériques plus sobres et respectueux de l'environnement.</p>
 </div>
-
-
-
 <h2 className="eco-section-title">Notre démarche</h2>
 
-<p>La Studio Design propose une démarche écoconception permettant de faciliter l’intégration des bonnes pratiques associées dans la fabrication des projets (de leur conception à leur développement Front).</p>
+<p>La Studio Design propose une démarche d’écoconception permettant de faciliter l’intégration d’une sélection de bonnes pratiques essentielles associées à la  fabrication des projets, de leur gouvernance à leur maintenance. En partant du référentiel interne d’écoconception, nous avons défini deux niveaux d’exigence de conformité, couvrant cinq domaines d’intervention tout au long du cycle de vie d’un service numérique :</p>
+
+  <p className="eco-level-description"><strong>Niveau #1 :</strong> une sélection de 20 bonnes pratiques essentielles, faciles à mettre en œuvre pour commencer la démarche ;</p>
+  <p className="eco-level-description"><strong>Niveau #2 :</strong> le reste des bonnes pratiques du référentiel interne d’écoconception complet, inscrivant les projets dans une démarche avancée.</p>
+<div className="graphique">
+  <Story of={Graphique.Default} />
+
+</div>
+
+<h2 className="eco-section-title">Notre offre</h2>
+
 
 <div className="cards-grid">
   <div className="card">
