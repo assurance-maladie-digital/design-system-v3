@@ -133,185 +133,200 @@
 			@reset="handleReset"
 		>
 			<template #default="{ isValid, reset }">
-			<!-- Section: Bénéficiaire -->
-			<VCard
-				variant="outlined"
-				class="mb-6"
-				rounded="lg"
-			>
-				<VCardItem>
-					<template #prepend>
-						<VIcon
-							:icon="mdiAccountOutline"
-							color="primary"
-						/>
-					</template>
-					<VCardTitle class="text-h6">
-						Informations bénéficiaire
-					</VCardTitle>
-				</VCardItem>
-				<VDivider />
-				<VCardText class="pt-4">
-					<VRow>
-						<VCol cols="12" sm="6">
-							<SyTextField
-								v-model="beneficiaryName"
-								label="Nom et prénom"
-								placeholder="Ex : Jean Dupont"
-								variant="outlined"
+				<!-- Section: Bénéficiaire -->
+				<VCard
+					variant="outlined"
+					class="mb-6"
+					rounded="lg"
+				>
+					<VCardItem>
+						<template #prepend>
+							<VIcon
+								:icon="mdiAccountOutline"
+								color="primary"
 							/>
-						</VCol>
-						<VCol cols="12" sm="6">
-							<SyTextField
-								v-model="beneficiarySSN"
-								label="Numéro de sécurité sociale"
-								placeholder="1 23 45 67 890 123 45"
-								variant="outlined"
-							/>
-						</VCol>
-					</VRow>
-				</VCardText>
-			</VCard>
-
-			<!-- Section: Soins -->
-			<VCard
-				variant="outlined"
-				class="mb-6"
-				rounded="lg"
-			>
-				<VCardItem>
-					<template #prepend>
-						<VIcon
-							:icon="mdiMedicalBag"
-							color="primary"
-						/>
-					</template>
-					<VCardTitle class="text-h6">
-						Détails des soins
-					</VCardTitle>
-				</VCardItem>
-				<VDivider />
-				<VCardText class="pt-4">
-					<VRow>
-						<VCol cols="12" sm="6">
-							<VSelect
-								v-model="careType"
-								:items="careTypes"
-								label="Type de soins"
-								variant="outlined"
-								density="default"
-							/>
-						</VCol>
-						<VCol cols="12" sm="6">
-							<DatePicker
-								v-model="selectedDate"
-								label="Date des soins"
-								placeholder="JJ/MM/AAAA"
-								:is-birth-date="false"
-								:required="true"
-								:display-today-button="true"
-								:display-holiday-days="true"
-							/>
-						</VCol>
-					</VRow>
-				</VCardText>
-			</VCard>
-
-			<!-- Section: Satisfaction -->
-			<VCard
-				variant="outlined"
-				class="mb-6"
-				rounded="lg"
-			>
-				<VCardItem>
-					<template #prepend>
-						<VIcon
-							:icon="mdiStarOutline"
-							color="primary"
-						/>
-					</template>
-					<VCardTitle class="text-h6">
-						Votre évaluation
-					</VCardTitle>
-				</VCardItem>
-				<VDivider />
-				<VCardText class="pt-4">
-					<VRow>
-						<VCol cols="12" sm="6">
-							<VSelect
-								v-model="ratingType"
-								:items="ratingTypes"
-								label="Mode de notation"
-								variant="outlined"
-								density="default"
-							/>
-						</VCol>
-						<VCol cols="12">
-							<VSheet
-								variant="outlined"
-								border
-								rounded
-								class="pa-4"
+						</template>
+						<VCardTitle class="text-h6">
+							Informations bénéficiaire
+						</VCardTitle>
+					</VCardItem>
+					<VDivider />
+					<VCardText class="pt-4">
+						<VRow>
+							<VCol
+								cols="12"
+								sm="6"
 							>
-								<p class="text-caption text-medium-emphasis mb-3">
-									Comment évaluez-vous votre prise en charge ?
-								</p>
-								<RatingPicker
-									v-model="ratingValue"
-									:type="ratingType"
-									label="Satisfaction"
-									:lock-after-selection="false"
+								<SyTextField
+									v-model="beneficiaryName"
+									label="Nom et prénom"
+									placeholder="Ex : Jean Dupont"
+									variant="outlined"
 								/>
-							</VSheet>
-						</VCol>
-					</VRow>
-				</VCardText>
-			</VCard>
+							</VCol>
+							<VCol
+								cols="12"
+								sm="6"
+							>
+								<SyTextField
+									v-model="beneficiarySSN"
+									label="Numéro de sécurité sociale"
+									placeholder="1 23 45 67 890 123 45"
+									variant="outlined"
+								/>
+							</VCol>
+						</VRow>
+					</VCardText>
+				</VCard>
 
-			<!-- Section: Consentement -->
-			<VCard
-				variant="outlined"
-				class="mb-6"
-				rounded="lg"
-			>
-				<VCardItem>
-					<template #prepend>
-						<VIcon
-							:icon="mdiShieldCheckOutline"
-							color="primary"
+				<!-- Section: Soins -->
+				<VCard
+					variant="outlined"
+					class="mb-6"
+					rounded="lg"
+				>
+					<VCardItem>
+						<template #prepend>
+							<VIcon
+								:icon="mdiMedicalBag"
+								color="primary"
+							/>
+						</template>
+						<VCardTitle class="text-h6">
+							Détails des soins
+						</VCardTitle>
+					</VCardItem>
+					<VDivider />
+					<VCardText class="pt-4">
+						<VRow>
+							<VCol
+								cols="12"
+								sm="6"
+							>
+								<VSelect
+									v-model="careType"
+									:items="careTypes"
+									label="Type de soins"
+									variant="outlined"
+									density="default"
+								/>
+							</VCol>
+							<VCol
+								cols="12"
+								sm="6"
+							>
+								<DatePicker
+									v-model="selectedDate"
+									label="Date des soins"
+									placeholder="JJ/MM/AAAA"
+									:is-birth-date="false"
+									:required="true"
+									:display-today-button="true"
+									:display-holiday-days="true"
+								/>
+							</VCol>
+						</VRow>
+					</VCardText>
+				</VCard>
+
+				<!-- Section: Satisfaction -->
+				<VCard
+					variant="outlined"
+					class="mb-6"
+					rounded="lg"
+				>
+					<VCardItem>
+						<template #prepend>
+							<VIcon
+								:icon="mdiStarOutline"
+								color="primary"
+							/>
+						</template>
+						<VCardTitle class="text-h6">
+							Votre évaluation
+						</VCardTitle>
+					</VCardItem>
+					<VDivider />
+					<VCardText class="pt-4">
+						<VRow>
+							<VCol
+								cols="12"
+								sm="6"
+							>
+								<VSelect
+									v-model="ratingType"
+									:items="ratingTypes"
+									label="Mode de notation"
+									variant="outlined"
+									density="default"
+								/>
+							</VCol>
+							<VCol cols="12">
+								<VSheet
+									variant="outlined"
+									border
+									rounded
+									class="pa-4"
+								>
+									<p class="text-caption text-medium-emphasis mb-3">
+										Comment évaluez-vous votre prise en charge ?
+									</p>
+									<RatingPicker
+										v-model="ratingValue"
+										:type="ratingType"
+										label="Satisfaction"
+										:lock-after-selection="false"
+									/>
+								</VSheet>
+							</VCol>
+						</VRow>
+					</VCardText>
+				</VCard>
+
+				<!-- Section: Consentement -->
+				<VCard
+					variant="outlined"
+					class="mb-6"
+					rounded="lg"
+				>
+					<VCardItem>
+						<template #prepend>
+							<VIcon
+								:icon="mdiShieldCheckOutline"
+								color="primary"
+							/>
+						</template>
+						<VCardTitle class="text-h6">
+							Consentement
+						</VCardTitle>
+					</VCardItem>
+					<VDivider />
+					<VCardText class="pt-4">
+						<SyCheckbox
+							v-model="acceptTerms"
+							label="J'atteste sur l'honneur l'exactitude des informations déclarées et j'accepte les conditions de traitement de mes données de santé par l'Assurance Maladie."
 						/>
-					</template>
-					<VCardTitle class="text-h6">
-						Consentement
-					</VCardTitle>
-				</VCardItem>
-				<VDivider />
-				<VCardText class="pt-4">
-					<SyCheckbox
-						v-model="acceptTerms"
-						label="J'atteste sur l'honneur l'exactitude des informations déclarées et j'accepte les conditions de traitement de mes données de santé par l'Assurance Maladie."
-					/>
-				</VCardText>
-				<VDivider />
-				<VCardActions class="pa-4">
-					<VBtn
-						type="submit"
-						color="primary"
-						variant="elevated"
-						:prepend-icon="mdiCheckCircle"
-						:disabled="!isValid"
-					>
-						Transmettre la déclaration
-					</VBtn>
-					<VBtn
-						variant="text"
-						:prepend-icon="mdiRefresh"
-						@click="reset"
-					>
-						Réinitialiser
-					</VBtn>
-				</VCardActions>
-			</VCard>
+					</VCardText>
+					<VDivider />
+					<VCardActions class="pa-4">
+						<VBtn
+							type="submit"
+							color="primary"
+							variant="elevated"
+							:prepend-icon="mdiCheckCircle"
+							:disabled="!isValid"
+						>
+							Transmettre la déclaration
+						</VBtn>
+						<VBtn
+							variant="text"
+							:prepend-icon="mdiRefresh"
+							@click="reset"
+						>
+							Réinitialiser
+						</VBtn>
+					</VCardActions>
+				</VCard>
 			</template>
 		</SyForm>
 
@@ -398,27 +413,48 @@
 			<VDivider />
 			<VCardText>
 				<VRow>
-					<VCol cols="12" sm="6">
+					<VCol
+						cols="12"
+						sm="6"
+					>
 						<p class="text-caption text-medium-emphasis mb-2">
 							Variantes
 						</p>
 						<div class="d-flex flex-wrap ga-3">
-							<VBtn color="primary" variant="elevated">
+							<VBtn
+								color="primary"
+								variant="elevated"
+							>
 								Elevated
 							</VBtn>
-							<VBtn color="primary" variant="flat">
+							<VBtn
+								color="primary"
+								variant="flat"
+							>
 								Flat
 							</VBtn>
-							<VBtn color="primary" variant="tonal">
+							<VBtn
+								color="primary"
+								variant="tonal"
+							>
 								Tonal
 							</VBtn>
-							<VBtn color="primary" variant="outlined">
+							<VBtn
+								color="primary"
+								variant="outlined"
+							>
 								Outlined
 							</VBtn>
-							<VBtn color="primary" variant="text">
+							<VBtn
+								color="primary"
+								variant="text"
+							>
 								Text
 							</VBtn>
-							<VBtn color="primary" variant="plain">
+							<VBtn
+								color="primary"
+								variant="plain"
+							>
 								Plain
 							</VBtn>
 							<VBtn disabled>
@@ -426,21 +462,40 @@
 							</VBtn>
 						</div>
 					</VCol>
-					<VCol cols="12" sm="6">
+					<VCol
+						cols="12"
+						sm="6"
+					>
 						<p class="text-caption text-medium-emphasis mb-2">
 							Tailles & couleurs
 						</p>
 						<div class="d-flex flex-wrap ga-3 align-center">
-							<VBtn color="success" variant="elevated" size="small">
+							<VBtn
+								color="success"
+								variant="elevated"
+								size="small"
+							>
 								Valider
 							</VBtn>
-							<VBtn color="primary" variant="elevated" size="default">
+							<VBtn
+								color="primary"
+								variant="elevated"
+								size="default"
+							>
 								Confirmer
 							</VBtn>
-							<VBtn color="error" variant="elevated" size="large">
+							<VBtn
+								color="error"
+								variant="elevated"
+								size="large"
+							>
 								Annuler
 							</VBtn>
-							<VBtn color="warning" variant="elevated" size="x-large">
+							<VBtn
+								color="warning"
+								variant="elevated"
+								size="x-large"
+							>
 								Alerte
 							</VBtn>
 							<VBtn
