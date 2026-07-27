@@ -858,3 +858,41 @@ export const Info: Story = {
 	},
 	tags: ['!dev'],
 }
+
+export const StringArray: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Playground pour reproduire le bug : quand items est un tableau de strings, la sélection ne s\'affiche pas dans le champ.',
+			},
+		},
+	},
+	args: {
+		'items': ['un', 'deux'],
+		'label': 'Sélection (items strings)',
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SySelect },
+			setup() {
+				const value = ref(null)
+				return { args, value }
+			},
+			template: `
+				<div class="pa-4">
+					<p class="mb-4 text-body-2">
+						Items: <code>['un', 'deux']</code> — Sélectionnez une option, le champ devrait afficher la valeur sélectionnée.
+					</p>
+					<SySelect
+						v-model="value"
+						v-bind="args"
+					/>
+					<div class="mt-4 text-body-2">
+						modelValue: <code>{{ JSON.stringify(value) }}</code>
+					</div>
+				</div>
+			`,
+		}
+	},
+}

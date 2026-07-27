@@ -1594,3 +1594,280 @@ describe('SySelect.vue', () => {
 		})
 	})
 })
+
+describe('SySelect.vue - String items', () => {
+	it('displays string items in the dropdown list', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: ['un', 'deux'] },
+			attachTo: document.body,
+		})
+		await wrapper.find('.v-field').trigger('click')
+		await wrapper.vm.$nextTick()
+		const listItems = wrapper.findComponent(VList).findAll('.v-list-item')
+		expect(listItems).toHaveLength(2)
+		expect(listItems[0]?.text()).toContain('un')
+		expect(listItems[1]?.text()).toContain('deux')
+		wrapper.unmount()
+	})
+
+	it('displays selected string item in the input field', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: ['un', 'deux'] },
+			attachTo: document.body,
+		})
+		await wrapper.find('.v-field').trigger('click')
+		await wrapper.vm.$nextTick()
+		const firstItem = wrapper.findComponent(VList).findAll('.v-list-item').at(0)!
+		await firstItem.trigger('click')
+		await wrapper.vm.$nextTick()
+		expect(wrapper.find('input').element.value).toBe('un')
+		expect(wrapper.emitted()['update:modelValue']).toEqual([['un']])
+		wrapper.unmount()
+	})
+
+	it('displays selected string item with pre-selected modelValue', () => {
+		const wrapper = mount(SySelect, {
+			props: { items: ['un', 'deux'], modelValue: 'deux' },
+			attachTo: document.body,
+		})
+		expect(wrapper.find('input').element.value).toBe('deux')
+		wrapper.unmount()
+	})
+
+	it('displays multiple selected string items as inline labels', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: ['un', 'deux', 'trois'], multiple: true },
+			attachTo: document.body,
+		})
+		await wrapper.find('.v-field').trigger('click')
+		await wrapper.vm.$nextTick()
+		const listItems = wrapper.findComponent(VList).findAll('.v-list-item')
+		await listItems[0]!.trigger('click')
+		await listItems[1]!.trigger('click')
+		await wrapper.vm.$nextTick()
+		const labels = wrapper.findAll('.sy-select__label')
+		expect(labels.length).toBeGreaterThanOrEqual(2)
+		expect(labels[0]?.text()).toContain('un')
+		expect(labels[1]?.text()).toContain('deux')
+		wrapper.unmount()
+	})
+
+	it('displays chips for selected string items in chips mode', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: ['un', 'deux'], multiple: true, chips: true },
+			attachTo: document.body,
+		})
+		await wrapper.find('.v-field').trigger('click')
+		await wrapper.vm.$nextTick()
+		const listItems = wrapper.findComponent(VList).findAll('.v-list-item')
+		await listItems[0]!.trigger('click')
+		await wrapper.vm.$nextTick()
+		const chips = wrapper.findAllComponents({ name: 'VChip' })
+		expect(chips.length).toBeGreaterThan(0)
+		expect(chips[0]?.text()).toContain('un')
+		wrapper.unmount()
+	})
+
+	it('clears selection and input for string items', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: ['un', 'deux'], clearable: true, modelValue: 'un' },
+			attachTo: document.body,
+		})
+		expect(wrapper.find('input').element.value).toBe('un')
+		const clearBtn = wrapper.find('[aria-label="Effacer la sélection"]')
+		expect(clearBtn.exists()).toBe(true)
+		await clearBtn.trigger('click')
+		await wrapper.vm.$nextTick()
+		expect(wrapper.find('input').element.value).toBe('')
+		wrapper.unmount()
+	})
+})
+
+describe('SySelect.vue - Number items', () => {
+	it('displays number items in the dropdown list', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: [1, 2] },
+			attachTo: document.body,
+		})
+		await wrapper.find('.v-field').trigger('click')
+		await wrapper.vm.$nextTick()
+		const listItems = wrapper.findComponent(VList).findAll('.v-list-item')
+		expect(listItems).toHaveLength(2)
+		expect(listItems[0]?.text()).toContain('1')
+		expect(listItems[1]?.text()).toContain('2')
+		wrapper.unmount()
+	})
+
+	it('displays selected number item in the input field', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: [1, 2] },
+			attachTo: document.body,
+		})
+		await wrapper.find('.v-field').trigger('click')
+		await wrapper.vm.$nextTick()
+		const firstItem = wrapper.findComponent(VList).findAll('.v-list-item').at(0)!
+		await firstItem.trigger('click')
+		await wrapper.vm.$nextTick()
+		expect(wrapper.find('input').element.value).toBe('1')
+		expect(wrapper.emitted()['update:modelValue']).toEqual([[1]])
+		wrapper.unmount()
+	})
+
+	it('displays selected number item with pre-selected modelValue', () => {
+		const wrapper = mount(SySelect, {
+			props: { items: [1, 2], modelValue: 2 },
+			attachTo: document.body,
+		})
+		expect(wrapper.find('input').element.value).toBe('2')
+		wrapper.unmount()
+	})
+
+	it('displays multiple selected number items as inline labels', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: [1, 2, 3], multiple: true },
+			attachTo: document.body,
+		})
+		await wrapper.find('.v-field').trigger('click')
+		await wrapper.vm.$nextTick()
+		const listItems = wrapper.findComponent(VList).findAll('.v-list-item')
+		await listItems[0]!.trigger('click')
+		await listItems[1]!.trigger('click')
+		await wrapper.vm.$nextTick()
+		const labels = wrapper.findAll('.sy-select__label')
+		expect(labels.length).toBeGreaterThanOrEqual(2)
+		expect(labels[0]?.text()).toContain('1')
+		expect(labels[1]?.text()).toContain('2')
+		wrapper.unmount()
+	})
+
+	it('displays chips for selected number items in chips mode', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: [1, 2], multiple: true, chips: true },
+			attachTo: document.body,
+		})
+		await wrapper.find('.v-field').trigger('click')
+		await wrapper.vm.$nextTick()
+		const listItems = wrapper.findComponent(VList).findAll('.v-list-item')
+		await listItems[0]!.trigger('click')
+		await wrapper.vm.$nextTick()
+		const chips = wrapper.findAllComponents({ name: 'VChip' })
+		expect(chips.length).toBeGreaterThan(0)
+		expect(chips[0]?.text()).toContain('1')
+		wrapper.unmount()
+	})
+
+	it('clears selection and input for number items', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: [1, 2], clearable: true, modelValue: 1 },
+			attachTo: document.body,
+		})
+		expect(wrapper.find('input').element.value).toBe('1')
+		const clearBtn = wrapper.find('[aria-label="Effacer la sélection"]')
+		expect(clearBtn.exists()).toBe(true)
+		await clearBtn.trigger('click')
+		await wrapper.vm.$nextTick()
+		expect(wrapper.find('input').element.value).toBe('')
+		wrapper.unmount()
+	})
+
+	it('displays selected number item with falsy value 0', () => {
+		const wrapper = mount(SySelect, {
+			props: { items: [0, 1, 2], modelValue: 0 },
+			attachTo: document.body,
+		})
+		expect(wrapper.find('input').element.value).toBe('0')
+		wrapper.unmount()
+	})
+
+	it('shows item with value 0 as selected in the dropdown list', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: [0, 1, 2], modelValue: 0 },
+			attachTo: document.body,
+		})
+		await wrapper.find('.v-field').trigger('click')
+		await wrapper.vm.$nextTick()
+		const listItems = wrapper.findComponent(VList).findAll('.v-list-item')
+		expect(listItems).toHaveLength(3)
+		wrapper.unmount()
+	})
+
+	it('displays chip with text for falsy value 0 in chips mode', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: [0, 1, 2], multiple: true, chips: true },
+			attachTo: document.body,
+		})
+		await wrapper.find('.v-field').trigger('click')
+		await wrapper.vm.$nextTick()
+		const listItems = wrapper.findComponent(VList).findAll('.v-list-item')
+		expect(listItems).toHaveLength(3)
+		await listItems[0]!.trigger('click')
+		await wrapper.vm.$nextTick()
+		const chips = wrapper.findAllComponents({ name: 'VChip' })
+		expect(chips.length).toBeGreaterThan(0)
+		expect(chips[0]?.text()).toContain('0')
+		wrapper.unmount()
+	})
+
+	it('displays chip with text for object item with falsy text value 0 in chips mode', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				items: [
+					{ text: 0, value: 'zero' },
+					{ text: 1, value: 'one' },
+				],
+				multiple: true,
+				chips: true,
+				returnObject: true,
+				textKey: 'text',
+				valueKey: 'value',
+			},
+			attachTo: document.body,
+		})
+		await wrapper.find('.v-field').trigger('click')
+		await wrapper.vm.$nextTick()
+		const listItems = wrapper.findComponent(VList).findAll('.v-list-item')
+		expect(listItems).toHaveLength(2)
+		await listItems[0]!.trigger('click')
+		await wrapper.vm.$nextTick()
+		const chips = wrapper.findAllComponents({ name: 'VChip' })
+		expect(chips.length).toBeGreaterThan(0)
+		expect(chips[0]?.text()).toContain('0')
+		wrapper.unmount()
+	})
+
+	it('displays selected object item with falsy text value 0 in input', () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				items: [
+					{ text: 0, value: 'zero' },
+					{ text: 1, value: 'one' },
+				],
+				modelValue: 'zero',
+				textKey: 'text',
+				valueKey: 'value',
+			},
+			attachTo: document.body,
+		})
+		expect(wrapper.find('input').element.value).toBe('0')
+		wrapper.unmount()
+	})
+
+	it('uses plainTextKey with falsy value 0 when allowHtml is true', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				items: [
+					{ text: '<b>0</b>', plainText: 0, value: 'zero' },
+					{ text: '<b>1</b>', plainText: 1, value: 'one' },
+				],
+				modelValue: 'zero',
+				textKey: 'text',
+				valueKey: 'value',
+				plainTextKey: 'plainText',
+				allowHtml: true,
+			},
+			attachTo: document.body,
+		})
+		expect(wrapper.find('input').element.value).toBe('0')
+		wrapper.unmount()
+	})
+})

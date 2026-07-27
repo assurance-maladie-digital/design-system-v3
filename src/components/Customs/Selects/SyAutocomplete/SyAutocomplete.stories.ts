@@ -1212,6 +1212,44 @@ const toggleAll = () => {
 	}),
 }
 
+export const StringArray: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Playground pour reproduire le bug : quand items est un tableau de strings, la sélection ne s\'affiche pas dans le champ.',
+			},
+		},
+	},
+	args: {
+		'items': ['un', 'deux'] as unknown as { text: string, value: string }[],
+		'label': 'Recherche (items strings)',
+		'onUpdate:modelValue': fn(),
+	},
+	render: (args) => {
+		return {
+			components: { SyAutocomplete },
+			setup() {
+				const value = ref(null)
+				return { args, value }
+			},
+			template: `
+				<div class="pa-4">
+					<p class="mb-4 text-body-2">
+						Items: <code>['un', 'deux']</code> — Sélectionnez une option, le champ devrait afficher la valeur sélectionnée.
+					</p>
+					<SyAutocomplete
+						v-model="value"
+						v-bind="args"
+					/>
+					<div class="mt-4 text-body-2">
+						modelValue: <code>{{ JSON.stringify(value) }}</code>
+					</div>
+				</div>
+			`,
+		}
+	},
+}
+
 export const WithCustomKeys: Story = {
 	parameters: {
 

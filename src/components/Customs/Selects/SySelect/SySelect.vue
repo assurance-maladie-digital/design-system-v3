@@ -28,7 +28,7 @@
 	const props = withDefaults(
 		defineProps<{
 			modelValue?: Record<string, unknown> | string | number | null | SelectItemArrayType
-			items?: ItemType[]
+			items?: Array<ItemType | string | number>
 			label?: string
 			menuId?: string
 			outlined?: boolean
@@ -363,13 +363,21 @@
 	})
 
 	const getPlainItemText = (item: unknown) => {
+		// Handle primitive types (string/number items)
+		if (typeof item === 'string' || typeof item === 'number') {
+			return String(item)
+		}
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		const itemObj = item as Record<string, any>
 		// Use plainTextKey if available and allowHtml is true, otherwise use textKey
-		if (props.plainTextKey && props.allowHtml && itemObj[props.plainTextKey]) {
-			return itemObj[props.plainTextKey]
+		if (props.plainTextKey && props.allowHtml) {
+			const plainText = itemObj[props.plainTextKey]
+			if (plainText !== undefined && plainText !== null && plainText !== '') {
+				return String(plainText)
+			}
 		}
-		return itemObj[props.textKey]
+		const text = itemObj[props.textKey]
+		return text !== undefined && text !== null ? String(text) : ''
 	}
 
 	const selectedItemText = computed(() => {
@@ -387,7 +395,7 @@
 		if (props.multiple) {
 			if (!selectedItem.value || (Array.isArray(selectedItem.value) && selectedItem.value.length === 0)) {
 				// Find default option and return its text
-				const defaultOption = props.items.find(item => isDefaultOption(item))
+				const defaultOption = formattedItems.value.find(item => isDefaultOption(item))
 				if (defaultOption) {
 					return getPlainItemText(defaultOption) as string
 				}
@@ -401,19 +409,19 @@
 				if (props.returnObject) {
 					return getPlainItemText(selected)
 				}
-				const foundItem = props.items.find((item: ItemType) => item[props.valueKey] === selected)
+				const foundItem = formattedItems.value.find((item: ItemType) => item[props.valueKey] === selected)
 				return foundItem ? getPlainItemText(foundItem) : ''
 			}).join(', ')
 		}
 		else {
 			// For single selection
-			if (!selectedItem.value) return ''
+			if (selectedItem.value === null || selectedItem.value === undefined) return ''
 
 			if (props.returnObject) {
 				return getPlainItemText(selectedItem.value)
 			}
 
-			const foundItem = props.items.find(item => item[props.valueKey] === selectedItem.value)
+			const foundItem = formattedItems.value.find(item => item[props.valueKey] === selectedItem.value)
 			return foundItem ? getPlainItemText(foundItem) : ''
 		}
 	})
@@ -455,7 +463,7 @@
 
 	const formattedItems = computed(() => {
 		return props.items.map((item) => {
-			if (typeof item === 'string') {
+			if (typeof item === 'string' || typeof item === 'number') {
 				return { [props.textKey]: item, [props.valueKey]: item }
 			}
 			return item
@@ -560,10 +568,14 @@
 	})
 
 	// Function to check if an item is the default option (e.g., "-choisir-")
-	const isDefaultOption = (item: ItemType) => {
+	const isDefaultOption = (item: ItemType | string | number) => {
+		// Normalize string/number items to objects for consistent access
+		const itemObj = typeof item === 'string' || typeof item === 'number'
+			? { [props.textKey]: item, [props.valueKey]: item }
+			: item
 		// Check if this is the first item and has a placeholder-like text
-		const itemText = item[props.textKey] as string
-		return itemText.includes('-') && (itemText.includes('choisir') || itemText.includes('sélectionner'))
+		const itemText = itemObj[props.textKey] as string
+		return typeof itemText === 'string' && itemText.includes('-') && (itemText.includes('choisir') || itemText.includes('sélectionner'))
 	}
 
 	// Function to check if an item is selected
@@ -573,7 +585,7 @@
 			return !selectedItem.value || (Array.isArray(selectedItem.value) && selectedItem.value.length === 0)
 		}
 
-		if (!selectedItem.value) return false
+		if (selectedItem.value === null || selectedItem.value === undefined) return false
 
 		if (props.multiple && Array.isArray(selectedItem.value)) {
 			return selectedItem.value.some((selected) => {
@@ -612,10 +624,12 @@
 
 		if (typeof safeItem === 'object') {
 			// Handle object type
-			return (safeItem as Record<string, unknown>)[props.textKey] as string
+			const text = (safeItem as Record<string, unknown>)[props.textKey]
+			return text !== undefined && text !== null ? String(text) : ''
 		}
 		// Handle primitive types
-		return props.items.find((i: ItemType) => i[props.valueKey] === safeItem)?.[props.textKey] as string || ''
+		const foundText = formattedItems.value.find((i: ItemType) => i[props.valueKey] === safeItem)?.[props.textKey]
+		return foundText !== undefined && foundText !== null ? String(foundText) : ''
 	}
 
 	// Function to remove a chip
