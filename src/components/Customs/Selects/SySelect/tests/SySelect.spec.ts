@@ -1615,8 +1615,8 @@ describe('SySelect.vue - String items', () => {
 		await wrapper.vm.$nextTick()
 		const labels = wrapper.findAll('.sy-select__label')
 		expect(labels.length).toBeGreaterThanOrEqual(2)
-		expect(labels[0].text()).toContain('un')
-		expect(labels[1].text()).toContain('deux')
+		expect(labels[0]?.text()).toContain('un')
+		expect(labels[1]?.text()).toContain('deux')
 		wrapper.unmount()
 	})
 
@@ -1632,7 +1632,7 @@ describe('SySelect.vue - String items', () => {
 		await wrapper.vm.$nextTick()
 		const chips = wrapper.findAllComponents({ name: 'VChip' })
 		expect(chips.length).toBeGreaterThan(0)
-		expect(chips[0].text()).toContain('un')
+		expect(chips[0]?.text()).toContain('un')
 		wrapper.unmount()
 	})
 
