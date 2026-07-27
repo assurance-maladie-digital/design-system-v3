@@ -331,7 +331,7 @@
 		if (props.loading) return locales.value.loading
 		const count = filteredItems.value.length
 		if (!props.filter) return ''
-		if (count === 0) return props.hideNoData ? locales.value.noData : resolvedNoDataText.value
+		if (count === 0) return resolvedNoDataText.value
 		return locales.value.nAvailable(count)
 	})
 
