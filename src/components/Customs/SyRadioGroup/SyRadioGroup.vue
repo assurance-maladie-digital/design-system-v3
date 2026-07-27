@@ -220,6 +220,11 @@
 	padding-inline: 0 !important;
 	margin-top: -10px !important;
 }
+:deep(.v-selection-control__input) {
+	&:hover {
+		background: rgba(var(--v-theme-interactionDark), 0.08) !important;
+	}
+}
 
 :deep(.v-selection-control--error .v-selection-control__input) {
 	color: rgb(var(--v-theme-error));
