@@ -256,8 +256,8 @@
 		errors,
 		warnings,
 		clearValidation,
-		validateDates,
-		validateCalendarModeDates,
+		validateDates: baseValidateDates,
+		validateCalendarModeDates: baseValidateCalendarModeDates,
 	} = useDatePickerValidation({
 		showSuccessMessages: computed(() => props.showSuccessMessages),
 		disableErrorHandling: computed(() => props.disableErrorHandling),
@@ -285,9 +285,21 @@
 	const isOnSuccess = validation.hasSuccess
 	const isHandlingProgrammaticClose = ref(false)
 
+	const clearValidationState = () => {
+		clearValidation()
+	}
+
+	const validateCurrentValue = async () => {
+		return await Promise.resolve(baseValidateDates())
+	}
+
+	const validateCalendarValue = async (forceValidation = false) => {
+		return await Promise.resolve(baseValidateCalendarModeDates(forceValidation))
+	}
+
 	const finalizeDatePickerClose = async () => {
 		emit('closed')
-		await validateDates()
+		await validateCurrentValue()
 	}
 
 	const closeDatePicker = async () => {
@@ -343,7 +355,7 @@
 		// Ne valider automatiquement que si isValidateOnBlur est true ET pas en validation initiale
 		if (props.isValidateOnBlur && !isInitialValidation.value) {
 			// Valider les dates avec le flux spécifique CalendarMode
-			await validateCalendarModeDates()
+			await validateCalendarValue()
 		}
 		// Marquer les jours fériés après la mise à jour des dates
 		markHolidayDays()
@@ -401,7 +413,7 @@
 		parseDate,
 		formatDate,
 		initializeSelectedDates,
-		validateDates,
+		validateDates: baseValidateDates,
 		generateDateRange,
 	})
 
@@ -510,7 +522,7 @@
 
 		// Validation au montage pour afficher les erreurs sur les dates pré-remplies invalides
 		// Aligné sur le comportement de ComplexDatePicker
-		validateDates()
+		void validateCurrentValue()
 
 		// Après la validation initiale, désactiver le flag
 		nextTick(() => {
@@ -530,13 +542,13 @@
 		// Forcer la validation pour ignorer les conditions de validation interactive
 		// S'assurer que isInitialValidation est false pour que la validation required fonctionne
 		isInitialValidation.value = false
-		await validateCalendarModeDates(true)
+		await validateCalendarValue(true)
 		// Retourner directement un booléen pour maintenir la compatibilité avec les tests existants
 		return errors.value.length === 0
 	}
 
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit, clearValidation)
+	useValidatable(validateOnSubmit, clearValidationState)
 
 	const openDatePicker = async () => {
 		if (isInteractionDisabled.value || isDatePickerVisible.value) return
@@ -680,11 +692,11 @@
 		if (isDatePickerVisible.value) return
 		// Ne pas valider si isValidateOnBlur est false
 		if (props.isValidateOnBlur) {
-			await validateCalendarModeDates(true)
+			await validateCalendarValue(true)
 		}
 		else {
 			// Quand isValidateOnBlur est false, on s'assure qu'il n'y a pas d'erreurs
-			clearValidation()
+			clearValidationState()
 		}
 	}
 

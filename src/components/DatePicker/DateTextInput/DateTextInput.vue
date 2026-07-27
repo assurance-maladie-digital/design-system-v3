@@ -73,6 +73,8 @@
 	const { displayRange, format: displayFormat, dateFormatReturn, required, readonly } = toRefs(props)
 	const isRange = computed(() => !!displayRange.value)
 	const returnFormat = computed(() => dateFormatReturn.value || displayFormat.value)
+	const customRules = computed(() => props.customRules ?? [])
+	const customWarningRules = computed(() => props.customWarningRules ?? [])
 
 	const { parseDate, formatDate } = useDateFormat()
 	const { autoClampDate } = useDateAutoClamp()
@@ -96,8 +98,8 @@
 		noCalendar: true,
 		required: computed(() => props.required),
 		displayRange: computed(() => props.displayRange),
-		customRules: computed(() => props.customRules ?? []),
-		customWarningRules: computed(() => props.customWarningRules ?? []),
+		customRules,
+		customWarningRules,
 		selectedDates,
 		isUpdatingFromInternal,
 		currentRangeIsValid,
@@ -148,6 +150,10 @@
 		}
 	}
 
+	const clearValidationState = () => {
+		clearValidation()
+	}
+
 	const validateField = async (
 		value: unknown,
 		rules?: ValidationRule[],
@@ -158,6 +164,13 @@
 		}
 		return await bridgeValidation.validateField(value, rules, warningRules)
 	}
+
+	const emptyValidationResult = (): ValidationResult => ({
+		hasError: false,
+		hasWarning: false,
+		hasSuccess: false,
+		state: { errors: [], warnings: [], successes: [] },
+	})
 
 	// Agrégation des erreurs internes et externes avec déduplication
 	// Évite les doublons quand les mêmes customRules sont exécutées par le parent et l'enfant
@@ -170,6 +183,20 @@
 		readonly.value ? [] : (bridgeValidation.validation.displaySuccesses.value ?? []),
 	)
 
+	const addValidationError = (message: string) => {
+		if (props.disableErrorHandling || errors.value.includes(message)) return
+
+		errors.value = [...errors.value, message]
+	}
+
+	const validateCurrentValue = async (): Promise<ValidationResult> => {
+		if (readonly.value) {
+			return emptyValidationResult()
+		}
+
+		return await Promise.resolve(bridgeValidation.validateDates())
+	}
+
 	/**
 	 * Safe validate utility
 	 */
@@ -179,9 +206,9 @@
 		warningRules?: ValidationRule[],
 	): Promise<ValidationResult> => {
 		if (readonly.value) {
-			return { hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }
+			return emptyValidationResult()
 		}
-		return await validateField(value, rules, warningRules) ?? { hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }
+		return await validateField(value, rules, warningRules) ?? emptyValidationResult()
 	}
 
 	/**
@@ -571,11 +598,11 @@
 		manualValidation: {
 			required: computed(() => props.required),
 			disableErrorHandling: computed(() => props.disableErrorHandling),
-			customRules: props.customRules ?? [],
-			customWarningRules: props.customWarningRules ?? [],
+			customRules: customRules.value,
+			customWarningRules: customWarningRules.value,
 			hasInteracted,
 			errors,
-			clearValidation,
+			clearValidation: clearValidationState,
 			validateDateFormat: validateDateFormatForSingleOrRange,
 			isDateComplete: (val: string) => isDateComplete(val, displayFormat.value),
 			parseDate,
@@ -588,7 +615,7 @@
 			runRules,
 		},
 		reset: {
-			clearValidation,
+			clearValidation: clearValidationState,
 			isFocused,
 			hasInteracted,
 			isDisabled: () => props.disabled,
@@ -610,7 +637,7 @@
 	}
 
 	async function runRules(value: string): Promise<boolean> {
-		clearValidation()
+		clearValidationState()
 
 		// Vérifier si la valeur est vide ou est un squelette (ex: "__//____" pour DD/MM/YYYY)
 		// Un squelette ne contient que des underscores, des espaces et les séparateurs du format
@@ -622,14 +649,14 @@
 
 		if (isEmptyOrSkeleton) {
 			if (required.value && hasInteracted.value && !readonly.value && !props.disableErrorHandling) {
-				errors.value.push(locales.required)
+				addValidationError(locales.required)
 				return false
 			}
 			// Permettre aux custom rules de s'exécuter même sur des champs vides
 			// Mais seulement si l'utilisateur a interagi avec le champ
 			if (props.customRules && props.customRules.length > 0 && hasInteracted.value) {
 				// Exécuter les custom rules sur la valeur vide
-				await safeValidateField(null, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+				await safeValidateField(null, customRules.value, customWarningRules.value)
 				return !hasError.value
 			}
 			return true
@@ -642,7 +669,7 @@
 			if (startDateText && endDateText) {
 				const formatValidationResult = validateDateFormatForSingleOrRange(value)
 				if (!formatValidationResult.isValid) {
-					if (!props.disableErrorHandling && formatValidationResult.message) errors.value.push(formatValidationResult.message)
+					if (!props.disableErrorHandling && formatValidationResult.message) addValidationError(formatValidationResult.message)
 					return false
 				}
 				const startDate = parseDate(startDateText, displayFormat.value)
@@ -650,11 +677,11 @@
 				if (startDate && endDate) {
 					// Vérifier que la plage est valide avant d'appliquer les règles personnalisées
 					if (!isValidRange(startDate, endDate) && !props.disableErrorHandling) {
-						errors.value.push(locales.endBeforeStart)
+						addValidationError(locales.endBeforeStart)
 						return false
 					}
-					await safeValidateField(startDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
-					if (errors.value.length === 0) await safeValidateField(endDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+					await safeValidateField(startDate, customRules.value, customWarningRules.value)
+					if (errors.value.length === 0) await safeValidateField(endDate, customRules.value, customWarningRules.value)
 				}
 			}
 			return !hasError.value
@@ -752,7 +779,7 @@
 
 		if (inputValue.value) {
 			const formatValidationResult = validateDateFormatForSingleOrRange(inputValue.value)
-			const customRulesValidationResult = await safeValidateField(inputValue.value, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
+			const customRulesValidationResult = await safeValidateField(inputValue.value, customRules.value, customWarningRules.value)
 
 			if (formatValidationResult.isValid && !customRulesValidationResult.hasError && !isRange.value) {
 				const parsedDate = dayjs(inputValue.value, displayFormat.value, true).toDate()
@@ -907,8 +934,8 @@
 					const [sd, ed] = parseRangeInput(inputValue.value)
 					if (sd && ed) {
 						if (!isValidRange(sd, ed)) {
-							clearValidation()
-							errors.value.push(locales.endBeforeStart)
+							clearValidationState()
+							addValidationError(locales.endBeforeStart)
 						}
 						else {
 							const rf = returnFormat.value
@@ -918,10 +945,10 @@
 					}
 					else if (sd) {
 						emit('date-selected', formatDate(sd, returnFormat.value))
-						clearValidation()
+						clearValidationState()
 					}
 					else {
-						clearValidation()
+						clearValidationState()
 					}
 					return
 				}
@@ -945,7 +972,7 @@
 					selectedDates.value = result.dates
 					try {
 						isUpdatingFromInternal.value = true
-						;(bridgeValidation).validateDates()
+						await validateCurrentValue()
 					}
 					finally {
 						queueMicrotask(() => (isUpdatingFromInternal.value = false))
@@ -953,7 +980,7 @@
 
 					if (result.isComplete && result.dates[1]) {
 						const [sd, ed] = result.dates
-						if (!isValidRange(sd, ed)) errors.value.push(locales.endBeforeStart)
+						if (!isValidRange(sd, ed)) addValidationError(locales.endBeforeStart)
 					}
 					else if (result.justCompletedFirstDate) {
 						emit('date-selected', toReturnFormat(result.dates[0]))
@@ -989,7 +1016,7 @@
 						runRules(formatted)
 					}
 					else {
-						clearValidation()
+						clearValidationState()
 					}
 					return
 				}
@@ -1020,7 +1047,7 @@
 				}
 				else {
 					// For incomplete dates, clear validation but don't emit model value
-					clearValidation()
+					clearValidationState()
 				}
 			}
 		}
@@ -1048,7 +1075,7 @@
 					selectedDates.value = [sd, ed]
 					try {
 						isUpdatingFromInternal.value = true
-						;(bridgeValidation).validateDates()
+						void validateCurrentValue()
 					}
 					finally { queueMicrotask(() => (isUpdatingFromInternal.value = false)) }
 					inputValue.value = formatRangeForDisplay(sd, ed)
@@ -1087,7 +1114,7 @@
 
 	/** expose */
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit, clearValidation, reset)
+	useValidatable(validateOnSubmit, clearValidationState, reset)
 
 	defineExpose({
 		validateOnSubmit,

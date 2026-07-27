@@ -123,7 +123,6 @@
 	const isRestoringFocusToInput = ref(false)
 	const shouldFocusDialogOnOpen = ref(false)
 	const keyboardNavigatedDate = ref<Date | null>(null)
-	let dialogInitialFocusToken = 0
 	let dialogInitialFocusTimeouts: ReturnType<typeof setTimeout>[] = []
 
 	const clearDialogInitialFocusTimeouts = () => {
@@ -187,7 +186,7 @@
 			scheduleCalendarInputFocusRestore()
 		}
 
-		await validateDates()
+		await runCurrentValueValidation()
 	}
 
 	const syncComboboxInputSemantics = () => {
@@ -276,7 +275,7 @@
 		warnings,
 		validateField,
 		clearValidation,
-		validateDates,
+		validateDates: baseValidateDates,
 	} = useDatePickerValidation({
 		showSuccessMessages: computed(() => props.showSuccessMessages),
 		disableErrorHandling: computed(() => props.disableErrorHandling),
@@ -295,6 +294,35 @@
 	})
 	const errorMessages = computed(() => errors.value)
 	const warningMessages = computed(() => warnings.value)
+
+	const clearValidationState = () => {
+		clearValidation()
+	}
+
+	const applyValidationState = (state: { errors?: string[], warnings?: string[] }) => {
+		errors.value = [...new Set(state.errors ?? [])]
+		warnings.value = [...new Set(state.warnings ?? [])]
+	}
+
+	const addValidationError = (message: string) => {
+		if (props.disableErrorHandling || errors.value.includes(message)) return
+
+		errors.value = [...errors.value, message]
+	}
+
+	const validateCurrentValue = (forceValidation = false) => baseValidateDates(forceValidation)
+
+	const runCurrentValueValidation = async (forceValidation = false) => {
+		return await Promise.resolve(validateCurrentValue(forceValidation))
+	}
+
+	const validateCustomDateRules = async (
+		value: unknown,
+		rules: ValidationRule[] = props.customRules as ValidationRule[],
+		warningRules: ValidationRule[] = props.customWarningRules as ValidationRule[],
+	) => {
+		return await Promise.resolve(validateField(value, rules, warningRules))
+	}
 
 	const messageClasses = computed(() => ({
 		'dp-width': true,
@@ -322,7 +350,6 @@
 		openDatePicker,
 		openDatePickerOnFocus,
 		handleClickOutside,
-		handleKeyboardNavigation,
 	} = useDatePickerVisibility({
 		disabled: isInteractionDisabled,
 		readonly: computed(() => props.readonly),
@@ -331,7 +358,7 @@
 		isManualInputActive,
 		hasInteracted,
 		updateAccessibility,
-		validateDates,
+		validateDates: validateCurrentValue,
 		emitClosed: () => emit('closed'),
 		emitFocus: () => emit('focus'),
 	})
@@ -348,11 +375,71 @@
 		}
 	}
 
-	const openDatePickerOnIconClick = () => {
-		if (isInteractionDisabled.value) return
+	const prepareCalendarOpenInteraction = (focusDialog = false) => {
 		ignoreNextInputBlur.value = true
 		ignoreNextCalendarModelSync.value = true
-		toggleDatePicker()
+
+		if (focusDialog) {
+			scheduleDialogInitialFocus()
+		}
+	}
+
+	const requestCalendarOpen = (options: { focusDialog?: boolean } = {}) => {
+		if (isInteractionDisabled.value || isDatePickerVisible.value) return false
+
+		prepareCalendarOpenInteraction(options.focusDialog)
+		openDatePicker()
+		return true
+	}
+
+	const resetTransientCalendarState = () => {
+		clearDialogInitialFocusTimeouts()
+		ignoreNextInputBlur.value = false
+		shouldFocusDialogOnOpen.value = false
+		ignoreNextCalendarModelSync.value = false
+		keyboardNavigatedDate.value = null
+	}
+
+	const consumeCalendarModelSyncIgnore = () => {
+		if (!ignoreNextCalendarModelSync.value) return false
+
+		ignoreNextCalendarModelSync.value = false
+		return true
+	}
+
+	const releaseDeferredCalendarSync = () => {
+		setTimeout(() => {
+			if (isDatePickerVisible.value) {
+				ignoreNextCalendarModelSync.value = false
+			}
+		}, 0)
+	}
+
+	const focusCalendarDialogAfterOpen = () => {
+		if (!shouldFocusDialogOnOpen.value) return
+
+		shouldFocusDialogOnOpen.value = false
+		scheduleDialogInitialDayFocus()
+	}
+
+	const handleDatePickerOpened = () => {
+		resetViewMode()
+		nextTick(() => {
+			refreshVisibleCalendarUi()
+			releaseDeferredCalendarSync()
+			focusCalendarDialogAfterOpen()
+		})
+	}
+
+	const openDatePickerOnIconClick = () => {
+		if (isInteractionDisabled.value) return
+
+		if (isDatePickerVisible.value) {
+			toggleDatePicker()
+			return
+		}
+
+		requestCalendarOpen()
 	}
 
 	const openDatePickerFromInputClick = (event?: MouseEvent) => {
@@ -362,7 +449,7 @@
 		// Ne pas ouvrir le calendrier si le clic vient du bouton clear
 		if (event && (event.target as HTMLElement)?.closest('.sy-text-field__clear')) return
 
-		openDatePicker()
+		requestCalendarOpen()
 	}
 
 	const updateModel = (value: DateModelValue) => {
@@ -381,15 +468,31 @@
 		return Array.isArray(value) && value.length === 2
 	}
 
+	const syncDateTextInputValue = (value: DateModelValue, emitSelected = false) => {
+		if (emitSelected) {
+			if (!shouldUpdateModelFromDateSelected(value)) {
+				syncModelValueToState(value)
+				emit('date-selected', value)
+				return
+			}
+		}
+
+		if (!emitSelected || shouldUpdateModelFromDateSelected(value)) {
+			updateModel(value)
+		}
+
+		syncModelValueToState(value)
+
+		if (emitSelected) {
+			emit('date-selected', value)
+		}
+	}
+
 	// Keep and expose this so consumers can listen to `date-selected`
 	const handleDateSelected = (value: DateModelValue) => {
 		if (props.readonly) return
 
-		if (shouldUpdateModelFromDateSelected(value)) {
-			updateModel(value)
-		}
-		syncModelValueToState(value)
-		emit('date-selected', value)
+		syncDateTextInputValue(value, true)
 	}
 	// Range handling
 	const dateSelectionResult = useDateSelection(parseDate, selectedDates, computed(() => props.format), computed(() => props.displayRange))
@@ -411,7 +514,7 @@
 		parseDate,
 		formatDate,
 		initializeSelectedDates,
-		validateDates,
+		validateDates: validateCurrentValue,
 		generateDateRange: dateSelectionResult.generateDateRange,
 	})
 
@@ -446,27 +549,55 @@
 		return formatDate(selectedDate, returnFormat.value)
 	}
 
-	const commitCalendarSelection = () => {
-		queueMicrotask(() => {
-			const completedSelection = getCompletedCalendarSelectionValue()
+	const syncTextInputFromCurrentSelection = () => {
+		withInternalUpdate(() => {
 			syncTextInputFromSelection()
-
-			if (completedSelection !== null) {
-				updateModel(completedSelection)
-				emit('date-selected', completedSelection)
-				closeDatePicker(true)
-			}
-
-			validateDates()
 		})
+	}
+
+	const getFirstSelectedDate = (value: Date | (Date | null)[] | null) => {
+		if (value === null) return null
+
+		return Array.isArray(value)
+			? (value.find(date => date instanceof Date) as Date | null) ?? null
+			: value
+	}
+
+	const syncSelectedDatesUiState = (value: Date | (Date | null)[] | null) => {
+		const firstSelectedDate = getFirstSelectedDate(value)
+		keyboardNavigatedDate.value = firstSelectedDate
+
+		if (firstSelectedDate) {
+			syncDisplayedMonthYearFromDate(firstSelectedDate)
+		}
+		else if (value === null) {
+			syncDisplayedMonthYearFromDate(new Date())
+		}
+
+		if (isDatePickerVisible.value) {
+			nextTick(() => refreshVisibleCalendarUi())
+		}
+	}
+
+	const commitCalendarSelection = () => {
+		syncTextInputFromCurrentSelection()
+
+		const completedSelection = getCompletedCalendarSelectionValue()
+		if (completedSelection === null) {
+			return false
+		}
+
+		updateModel(completedSelection)
+		emit('date-selected', completedSelection)
+		void closeDatePicker(true)
+		return true
 	}
 
 	const validateSelectionDates = async (dates: Date[]) => {
 		for (const date of dates) {
-			const { hasError, state } = await Promise.resolve(validateField(date, props.customRules, props.customWarningRules))
+			const { hasError, state } = await validateCustomDateRules(date)
 			if (hasError) {
-				errors.value = state.errors
-				warnings.value = state.warnings
+				applyValidationState(state)
 				return false
 			}
 		}
@@ -474,7 +605,10 @@
 		return true
 	}
 
-	const updateSelectedDates = async (value: Date | Date[] | null) => {
+	const updateSelectedDates = async (
+		value: Date | Date[] | null,
+		options: { commitSelection?: boolean } = {},
+	) => {
 		if (value !== null) {
 			const datesToValidate = Array.isArray(value)
 				? value.filter((date): date is Date => date instanceof Date)
@@ -482,57 +616,51 @@
 
 			const isSelectionValid = await validateSelectionDates(datesToValidate)
 			if (!isSelectionValid) {
-				return
+				return false
 			}
 		}
 
 		dateSelectionResult.updateSelectedDates(value)
 
-		if (value instanceof Date && isDatePickerVisible.value && !props.noCalendar && !props.displayRange) {
+		const shouldCommitSelection = options.commitSelection
+			?? (value instanceof Date && isDatePickerVisible.value && !props.noCalendar && !props.displayRange)
+
+		if (shouldCommitSelection) {
 			commitCalendarSelection()
 		}
+
+		return true
+	}
+
+	const handleCalendarModelValueUpdate = async (value: Date | Date[] | null) => {
+		if (consumeCalendarModelSyncIgnore()) {
+			return
+		}
+
+		const didUpdateSelection = await updateSelectedDates(value, { commitSelection: false })
+		if (!didUpdateSelection) {
+			return
+		}
+
+		commitCalendarSelection()
 	}
 
 	watch(selectedDates, (newValue) => {
 		if (!isUpdatingFromInternal.value) {
-			validateDates()
+			void runCurrentValueValidation()
 		}
-		const firstSelectedDate = newValue === null
-			? null
-			: Array.isArray(newValue)
-				? (newValue.find(date => date instanceof Date) as Date | null) ?? null
-				: newValue
-		keyboardNavigatedDate.value = firstSelectedDate
 
-		if (newValue !== null && ignoreNextCalendarModelSync.value && isDatePickerVisible.value) {
-			ignoreNextCalendarModelSync.value = false
-			withInternalUpdate(() => {
-				syncTextInputFromSelection()
-			})
+		syncSelectedDatesUiState(newValue)
+
+		if (newValue === null) {
+			syncTextInputFromCurrentSelection()
+			updateModel(null)
 			return
 		}
 
-		if (newValue === null) {
-			updateModel(null)
-		}
-		else if (!isDatePickerVisible.value) {
+		if (!isDatePickerVisible.value) {
+			syncTextInputFromCurrentSelection()
 			updateModel(formattedDate.value)
-		}
-
-		withInternalUpdate(() => {
-			syncTextInputFromSelection()
-		})
-
-		if (firstSelectedDate) {
-			syncDisplayedMonthYearFromDate(firstSelectedDate)
-		}
-		else if (newValue === null) {
-			// Reset month/year names when clearing the date
-			syncDisplayedMonthYearFromDate(new Date())
-		}
-
-		if (isDatePickerVisible.value) {
-			nextTick(() => refreshVisibleCalendarUi())
 		}
 	})
 
@@ -596,12 +724,7 @@
 	 * UI updates after picking
 	 */
 	const updateDisplayFormattedDate = () => {
-		if (ignoreNextCalendarModelSync.value) {
-			ignoreNextCalendarModelSync.value = false
-			return
-		}
-
-		commitCalendarSelection()
+		syncTextInputFromCurrentSelection()
 	}
 
 	/**
@@ -705,7 +828,7 @@
 
 	onMounted(() => {
 		setupMonthButtonObserver()
-		validateDates()
+		void runCurrentValueValidation()
 	})
 
 	onBeforeUnmount(() => {
@@ -809,7 +932,7 @@
 			})
 		},
 		onSelectDate: (date: Date) => {
-			void updateSelectedDates(date)
+			void handleCalendarModelValueUpdate(date)
 		},
 	})
 
@@ -830,8 +953,8 @@
 		isFormatting,
 		isManualInputActive,
 		isUpdatingFromInternal,
-		clearValidation,
-		validateField: (value, rules, warningRules) => validateField(value, rules, warningRules),
+		clearValidation: clearValidationState,
+		validateField: (value, rules, warningRules) => validateCustomDateRules(value, rules, warningRules),
 		updateModel: value => updateModel(value as DateModelValue),
 		emitInput: value => emit('input', value),
 		inputRef: dateCalendarTextInputRef as Ref<ComponentPublicInstance | null>,
@@ -845,16 +968,7 @@
 
 		if (!props.noCalendar && (event.key === 'Enter' || event.key === 'ArrowDown') && !isInteractionDisabled.value) {
 			event.preventDefault()
-			ignoreNextInputBlur.value = true
-			scheduleDialogInitialFocus()
-			ignoreNextCalendarModelSync.value = true
-			openDatePicker()
-			return
-		}
-
-		if (!props.noCalendar && handleKeyboardNavigation(event)) {
-			ignoreNextInputBlur.value = true
-			scheduleDialogInitialFocus()
+			requestCalendarOpen({ focusDialog: true })
 			return
 		}
 
@@ -1025,7 +1139,7 @@
 	 * Manual input validation on blur
 	 */
 	const validateManualInput = (value: string): boolean | Promise<boolean> => {
-		clearValidation()
+		clearValidationState()
 
 		// Vérifier les cas de champ vide ou incomplet
 		const emptyCheck = validateEmptyOrIncompleteDate(
@@ -1037,7 +1151,7 @@
 
 		// Gérer les erreurs pour champ vide requis
 		if (!emptyCheck.isValid && !props.disableErrorHandling && emptyCheck.errorMessage) {
-			errors.value.push(locales.required)
+			addValidationError(locales.required)
 		}
 
 		// Si on ne doit pas continuer la validation (champ vide/incomplet)
@@ -1049,7 +1163,7 @@
 		const formatValidation = validateDateFormatUtil(value, props.format, props.dateFormatReturn, props.required, hasInteracted.value, props.disableErrorHandling)
 		if (!formatValidation.isValid) {
 			if (!props.disableErrorHandling && formatValidation.message) {
-				errors.value.push(formatValidation.message)
+				addValidationError(formatValidation.message)
 			}
 			return false
 		}
@@ -1059,7 +1173,7 @@
 		if (!date) {
 			// La date n'a pas pu être parsée
 			if (!props.disableErrorHandling) {
-				errors.value.push(locales.invalidDateFormatWithFormat(props.format))
+				addValidationError(locales.invalidDateFormatWithFormat(props.format))
 			}
 			return false
 		}
@@ -1087,17 +1201,11 @@
 			const safeWarningRules = adaptCustomRules(currentCustomWarningRules, props.format)
 
 			// Appeler validateField pour évaluer les règles
-			const result = validateField(
+			return validateCustomDateRules(
 				date,
 				safeCustomRules as ValidationRule[],
 				safeWarningRules as ValidationRule[],
-			)
-
-			if (result instanceof Promise) {
-				return result.then(resolvedResult => !resolvedResult.hasError)
-			}
-
-			return !result.hasError
+			).then(result => !result.hasError)
 		}
 
 		return errors.value.length === 0
@@ -1130,8 +1238,7 @@
 		// Ne pas traiter les mises à jour internes pour éviter les boucles
 		if (isUpdatingFromInternal.value) return
 
-		updateModel(value)
-		syncModelValueToState(value)
+		syncDateTextInputValue(value)
 	}
 
 	const handleClear = () => {
@@ -1143,7 +1250,7 @@
 			displayFormattedDate.value = ''
 		})
 
-		clearValidation()
+		clearValidationState()
 	}
 
 	// Sync from external v-model
@@ -1162,31 +1269,11 @@
 		isDatePickerVisible,
 		(visible) => {
 			if (!visible) {
-				dialogInitialFocusToken += 1
-				clearDialogInitialFocusTimeouts()
-				ignoreNextInputBlur.value = false
-				shouldFocusDialogOnOpen.value = false
-				ignoreNextCalendarModelSync.value = false
-				keyboardNavigatedDate.value = null
+				resetTransientCalendarState()
+				return
 			}
 
-			if (visible) {
-				// Réinitialiser le view mode à l'ouverture pour éviter les problèmes de navigation
-				resetViewMode()
-				nextTick(() => {
-					refreshVisibleCalendarUi()
-					setTimeout(() => {
-						if (isDatePickerVisible.value) {
-							ignoreNextCalendarModelSync.value = false
-						}
-					}, 0)
-
-					if (shouldFocusDialogOnOpen.value) {
-						shouldFocusDialogOnOpen.value = false
-						scheduleDialogInitialDayFocus()
-					}
-				})
-			}
+			handleDatePickerOpened()
 		},
 	)
 
@@ -1229,14 +1316,14 @@
 			return await Promise.resolve(dateTextInputRef.value?.validateOnSubmit() || false)
 		}
 		const textInputValid = await Promise.resolve(dateCalendarTextInputRef.value?.validateOnSubmit() || false)
-		await Promise.resolve(validateDates(true))
+		await runCurrentValueValidation(true)
 		return textInputValid && errors.value.length === 0
 	}
 
 	// Reset hook utilisé par SyForm.reset() via useValidatable
 	const reset = () => {
 		// 1) Nettoyer l'état de validation et d'interaction
-		clearValidation()
+		clearValidationState()
 		isDatePickerVisible.value = false
 		hasInteracted.value = false
 		isManualInputActive.value = false
@@ -1261,7 +1348,7 @@
 	}
 
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit, clearValidation, reset)
+	useValidatable(validateOnSubmit, clearValidationState, reset)
 
 	defineExpose({
 		validateOnSubmit,
@@ -1282,7 +1369,7 @@
 		toggleDatePicker,
 		validateField,
 		clearValidation,
-		validateDates,
+		validateDates: validateCurrentValue,
 		formatDateInput,
 		emitBlur: emitBlurEvent,
 		validateDateFormat: (value: string) => validateDateFormatUtil(value, props.format, props.dateFormatReturn, props.required, hasInteracted.value, props.disableErrorHandling),
@@ -1388,11 +1475,11 @@
 						:density="props.density"
 						:hint="props.hint"
 						:persistent-hint="props.persistentHint"
-						@update:model-value="updateDisplayFormattedDate"
+						@keydown.capture="handleMenuKeydown"
+						@update:model-value="handleCalendarModelValueUpdate"
 						@update:view-mode="handleViewModeUpdateWrapper"
 						@update:month="onUpdateMonth"
 						@update:year="onUpdateYear"
-						@click:date="updateSelectedDates"
 						@focus="props.displayHolidayDays ? markHolidayDays : undefined"
 						@update:month-year="props.displayHolidayDays ? markHolidayDays : undefined"
 					>
