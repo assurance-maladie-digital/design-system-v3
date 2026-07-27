@@ -40,7 +40,6 @@
 	import dayjs from 'dayjs'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { VDatePicker } from 'vuetify/components'
-	import { useInputHandler } from '../composables/useInputHandler'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import type { DateObjectValue, DatePickerCommonProps } from '../types'
@@ -263,7 +262,6 @@
 	// Force re-render of DateTextInput/SyTextField when needed (e.g., after reset)
 	const fieldKey = ref(0)
 	const isManualInputActive = ref(false)
-	const isFormatting = ref(false)
 	const isUpdatingFromInternal = ref(false)
 	const hasInteracted = ref(false)
 	const ignoreNextInputBlur = ref(false)
@@ -705,34 +703,6 @@
 		return { formatted: result, cursorPos: Math.min(newCursorPos, result.length) }
 	}
 
-	// Handle manual typing sync → model/selection
-	watch(textInputValue, (newValue) => {
-		// En mode plage, on laisse DateTextInput + handleDateTextInputUpdate
-		// piloter la mise à jour du modèle et de selectedDates
-		if (props.displayRange) return
-		if (isUpdatingFromInternal.value) return
-		const date = parseDate(newValue, props.format)
-		if (date) {
-			const formattedValue = props.dateFormatReturn ? formatDate(date, returnFormat.value) : formatDate(date, props.format)
-			updateModel(formattedValue)
-			withInternalUpdate(() => {
-				selectedDates.value = date
-				displayFormattedDate.value = formatDate(date, props.format)
-			})
-		}
-		else if (newValue) {
-			updateModel(newValue)
-			withInternalUpdate(() => (displayFormattedDate.value = newValue))
-		}
-		else {
-			updateModel(null)
-			withInternalUpdate(() => {
-				displayFormattedDate.value = ''
-				selectedDates.value = null
-			})
-		}
-	})
-
 	/**
 	 * UI updates after picking
 	 */
@@ -949,30 +919,6 @@
 		},
 	})
 
-	/**
-	 * Input handling (text field)
-	 */
-	const inputHandler = useInputHandler({
-		format: computed(() => props.format),
-		displayRange: computed(() => props.displayRange),
-		dateFormatReturn: props.dateFormatReturn,
-		disableErrorHandling: computed(() => props.disableErrorHandling),
-		parseDate,
-		formatDate,
-		generateDateRange: dateSelectionResult.generateDateRange,
-		isDateComplete: (val: string) => isDateCompleteUtil(val, props.format),
-		displayFormattedDate,
-		selectedDates,
-		isFormatting,
-		isManualInputActive,
-		isUpdatingFromInternal,
-		clearValidation: clearValidationState,
-		validateField: (value, rules, warningRules) => validateCustomDateRules(value, rules, warningRules),
-		updateModel: value => updateModel(value as DateModelValue),
-		emitInput: value => emit('input', value),
-		inputRef: dateCalendarTextInputRef as Ref<ComponentPublicInstance | null>,
-	})
-
 	const handleKeydown = (event: KeyboardEvent) => {
 		if (props.readonly) return
 
@@ -1032,25 +978,28 @@
 		await handleInputBlur()
 	}
 
-	const handleInput = (eventOrValue: Event | string) => {
+	const handleNoCalendarTextInputDisplayValueChange = (value: string) => {
 		if (props.readonly) return
 
-		if (eventOrValue instanceof Event) {
-			inputHandler.handleInput(eventOrValue)
-			return
-		}
+		textInputValue.value = value
+		emit('input', value)
+	}
 
-		textInputValue.value = eventOrValue
+	const handleTextInputDisplayValueChange = (value: string) => {
+		if (props.readonly) return
 
-		if (props.displayRange && typeof eventOrValue === 'string') {
-			if (eventOrValue.includes(locales.rangeSeparator)) {
-				const [startDateStr = '', endDateStr = ''] = eventOrValue.split(locales.rangeSeparator).map(s => s.trim())
-				if (startDateStr && endDateStr && !endDateStr.includes('_')) {
-					const startDate = parseDate(startDateStr, props.format)
-					const endDate = parseDate(endDateStr, props.format)
-					if (startDate && endDate) {
-						void updateSelectedDates([startDate, endDate])
-					}
+		textInputValue.value = value
+		emit('input', value)
+
+		if (isUpdatingFromInternal.value) return
+
+		if (props.displayRange && value.includes(locales.rangeSeparator)) {
+			const [startDateStr = '', endDateStr = ''] = value.split(locales.rangeSeparator).map(s => s.trim())
+			if (startDateStr && endDateStr && !endDateStr.includes('_')) {
+				const startDate = parseDate(startDateStr, props.format)
+				const endDate = parseDate(endDateStr, props.format)
+				if (startDate && endDate) {
+					void updateSelectedDates([startDate, endDate])
 				}
 			}
 		}
@@ -1404,12 +1353,15 @@
 			<DateTextInput
 				ref="dateTextInputRef"
 				:key="fieldKey"
-				v-model="textInputValue"
+				:model-value="textInputValue"
 				:class="[messageClasses, 'label-hidden-on-focus']"
 				v-bind="dateTextInputProps"
 				@clear="handleClear"
+				@update:model-value="handleDateTextInputUpdate"
+				@date-selected="handleDateSelected"
+				@input="handleNoCalendarTextInputDisplayValueChange"
 				@focus="emit('focus')"
-				@blur="emit('blur')"
+				@blur="handleInputBlur"
 			/>
 		</template>
 
@@ -1446,7 +1398,7 @@
 							@update:model-value="handleDateTextInputUpdate"
 							@focus="openDatePickerOnFocus"
 							@blur="handleCalendarInputBlur"
-							@input="handleInput"
+							@input="handleTextInputDisplayValueChange"
 							@keydown="handleKeydown"
 							@date-selected="handleDateSelected"
 							@prepend-icon-click="openDatePickerOnIconClick"
