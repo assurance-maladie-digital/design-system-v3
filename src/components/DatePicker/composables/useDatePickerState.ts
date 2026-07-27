@@ -143,6 +143,14 @@ export const resolveDatePickerStateFromModelValue = ({
 
 	let selectedDates = initializeSelectedDates(newValue ?? null, format, dateFormatReturn)
 
+	if (!displayRange && !selectedDates && typeof newValue === 'string') {
+		return {
+			selectedDates: null,
+			textInputValue: newValue,
+			displayFormattedDate: newValue,
+		}
+	}
+
 	if (displayRange && Array.isArray(selectedDates) && selectedDates.length === 2) {
 		const startDate = selectedDates[0]
 		const endDate = selectedDates[1]

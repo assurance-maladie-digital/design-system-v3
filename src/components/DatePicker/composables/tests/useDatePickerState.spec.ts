@@ -47,5 +47,27 @@ describe('useDatePickerState', () => {
 			expect(mockGenerateDateRange).toHaveBeenCalledWith(startDate, endDate)
 			expect(selectedDates.value).toEqual([startDate, intermediateDate, endDate])
 		})
+
+		it('préserve une chaîne invalide en mode date simple', () => {
+			const selectedDates = ref<Date | (Date | null)[] | null>(null)
+
+			mockInitializeSelectedDates.mockReturnValue(null)
+
+			const { syncFromModelValue, textInputValue, displayFormattedDate } = useDatePickerState({
+				selectedDates,
+				format,
+				displayRange: false,
+				parseDate: mockParseDate,
+				formatDate: mockFormatDate,
+				initializeSelectedDates: mockInitializeSelectedDates,
+				validateDates: mockValidateDates,
+			})
+
+			syncFromModelValue('invalid-date')
+
+			expect(selectedDates.value).toBeNull()
+			expect(textInputValue.value).toBe('invalid-date')
+			expect(displayFormattedDate.value).toBe('invalid-date')
+		})
 	})
 })

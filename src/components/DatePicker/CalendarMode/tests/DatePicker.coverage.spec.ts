@@ -76,7 +76,8 @@ describe('DatePicker.vue - coverage', () => {
 		await nextTick()
 		vi.runAllTimers()
 		await nextTick()
-		expect(w.exists()).toBe(true)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		expect((w.vm as any).textInputValue).toBe('invalid-date')
 		w.unmount()
 	})
 

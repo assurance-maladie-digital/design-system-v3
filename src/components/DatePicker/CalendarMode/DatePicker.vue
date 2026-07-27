@@ -18,7 +18,7 @@
 	import type { ViewMode } from '../composables/useDatePickerViewMode'
 	import type { CalendarModeProps, DateObjectValue } from '../types'
 	import { DatePickerCommonDefaults } from '../types'
-	import { formatDateRangeDisplay, getDisplayedMonthYearState } from '../utils/dateFormattingUtils'
+	import { getDisplayedMonthYearState } from '../utils/dateFormattingUtils'
 	import { reapplyDatePickerAccessibility, waitForTransitionEnd } from '../utils/datePickerDomUtils'
 	import { useComplexDatePickerProps } from './props/complexDatePickerProps'
 	import { useDateTextInputProps } from './props/dateTextInputProps'
@@ -375,18 +375,7 @@
 			// Mettre à jour textInputValue pour le DateTextInput
 			try {
 				isUpdatingFromInternal.value = true
-				if (Array.isArray(newValue) && props.displayRange && newValue.length >= 2 && props.noCalendar) {
-					// Cas spécifique noCalendar + displayRange : conserver la chaîne de plage complète
-					const start = newValue[0]
-					const end = newValue[newValue.length - 1]
-					if (start && end) {
-						textInputValue.value = formatDateRangeDisplay(start, end, props.format, formatDate)
-					}
-				}
-				else {
-					// Cas générique : déléguer au composable pour synchroniser l'input
-					syncTextInputFromSelection()
-				}
+				syncTextInputFromSelection()
 			}
 			finally {
 				queueMicrotask(() => {
@@ -446,33 +435,8 @@
 		try {
 			isUpdatingFromInternal.value = true
 
-			// Mettre à jour le modèle avec la valeur reçue du DateTextInput
 			await updateModel(value)
-
-			// Mettre à jour selectedDates en fonction de la valeur reçue
-			if (!value) {
-				selectedDates.value = null
-				displayFormattedDate.value = ''
-			}
-			else if (Array.isArray(value) && props.displayRange) {
-				// Pour les plages de dates
-				const [startDateStr, endDateStr] = value
-				const startDate = parseDate(startDateStr, props.dateFormatReturn || props.format)
-				const endDate = parseDate(endDateStr, props.dateFormatReturn || props.format)
-
-				if (startDate && endDate) {
-					selectedDates.value = generateDateRange(startDate, endDate)
-					displayFormattedDate.value = formatDateRangeDisplay(startDate, endDate, props.format, formatDate)
-				}
-			}
-			else if (typeof value === 'string') {
-				// Pour une date unique
-				const date = parseDate(value, props.dateFormatReturn || props.format)
-				if (date) {
-					selectedDates.value = date
-					displayFormattedDate.value = formatDate(date, props.format)
-				}
-			}
+			syncFromModelValue(value)
 		}
 		finally {
 			queueMicrotask(() => {
@@ -853,36 +817,6 @@
 
 		// Synchroniser les dates sélectionnées avec le modèle
 		syncFromModelValue(newValue)
-
-		// Mettre à jour textInputValue pour le DateTextInput en mode no-calendar
-		if (props.noCalendar) {
-			try {
-				isUpdatingFromInternal.value = true
-
-				if (!newValue) {
-					textInputValue.value = ''
-				}
-				else if (Array.isArray(newValue) && props.displayRange) {
-				// Pour les plages de dates, on ne modifie pas directement textInputValue
-				// car le DateTextInput gère son propre formatage
-				}
-				else if (typeof newValue === 'string') {
-					// Pour une date unique
-					const date = parseDate(newValue, props.dateFormatReturn || props.format)
-					if (date) {
-						textInputValue.value = formatDate(date, props.format)
-					}
-					else {
-						textInputValue.value = newValue
-					}
-				}
-			}
-			finally {
-				setTimeout(() => {
-					isUpdatingFromInternal.value = false
-				}, 0)
-			}
-		}
 	}, { immediate: true })
 
 	// Reset month/year names when clearing the date
