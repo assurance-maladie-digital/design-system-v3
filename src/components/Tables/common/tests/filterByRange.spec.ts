@@ -1,4 +1,5 @@
-import { flushPromises, mount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 import { afterAll, describe, expect, it, vi } from 'vitest'
 import SyTable from '../../SyTable/SyTable.vue'
 import DateFilter from '../filters/DateFilter.vue'
@@ -86,7 +87,7 @@ describe('SyTable - filterByRange', () => {
 
 		const endDate = wrapper.find('input[aria-label="Fin"]')
 		await endDate.setValue('01/01/2000')
-		await flushPromises()
+		await nextTick()
 
 		const textContent = wrapper.text()
 
@@ -117,7 +118,7 @@ describe('SyTable - filterByRange', () => {
 
 		const startDate = wrapper.find('input[aria-label="Début"]')
 		await startDate.setValue('01/01/1995')
-		await flushPromises()
+		await nextTick()
 
 		const textContent = wrapper.text()
 
@@ -148,11 +149,11 @@ describe('SyTable - filterByRange', () => {
 
 		const startDate = wrapper.find('input[aria-label="Début"]')
 		await startDate.setValue('01/01/1989')
-		await flushPromises()
+		await nextTick()
 
 		const endDate = wrapper.find('input[aria-label="Fin"]')
 		await endDate.setValue('01/01/2000')
-		await flushPromises()
+		await nextTick()
 
 		const textContent = wrapper.text()
 
@@ -178,11 +179,11 @@ describe('SyTable - filterByRange', () => {
 
 		const startDate = wrapper.find('input[aria-label="Début"]')
 		await startDate.setValue('01/01/1990')
-		await flushPromises()
+		await nextTick()
 
 		const endDate = wrapper.find('input[aria-label="Fin"]')
 		await endDate.setValue('01/01/2000')
-		await flushPromises()
+		await nextTick()
 
 		const textContent = wrapper.text()
 
@@ -196,7 +197,7 @@ describe('SyTable - filterByRange', () => {
 		})
 
 		await endDate.setValue('01/01/1995')
-		await flushPromises()
+		await nextTick()
 
 		filteredNames = ['Alice']
 		filteredNames.forEach((element) => {

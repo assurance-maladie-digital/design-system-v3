@@ -418,13 +418,13 @@
 	})
 
 	// Gestionnaire pour les mises à jour du DateTextInput en mode no-calendar
-	const handleDateTextInputUpdate = async (value: DateModelValue) => {
+	const handleDateTextInputUpdate = (value: DateModelValue) => {
 		if (isUpdatingFromInternal.value && !props.noCalendar) return
 
 		try {
 			isUpdatingFromInternal.value = true
 
-			await updateModel(value)
+			updateModel(value)
 			syncFromModelValue(value)
 		}
 		finally {

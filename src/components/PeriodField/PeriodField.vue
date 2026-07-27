@@ -261,6 +261,23 @@
 		await validateBothDates()
 	}
 
+	function emitPeriodValue() {
+		emit('update:modelValue', {
+			from: formattedFromDate.value,
+			to: formattedToDate.value,
+		})
+	}
+
+	function handleFromDateUpdate(value: DateInput) {
+		internalFromDate.value = value
+		emitPeriodValue()
+	}
+
+	function handleToDateUpdate(value: DateInput) {
+		internalToDate.value = value
+		emitPeriodValue()
+	}
+
 	// Watch pour les changements des dates - validation croisée
 	watch(formattedFromDate, async () => {
 		await validateFields()
@@ -274,14 +291,6 @@
 		if (formattedFromDate.value && fromDateRef.value) {
 			await fromDateRef.value.validateOnSubmit()
 		}
-	})
-
-	// Watch pour les changements internes - Mise à jour du modèle
-	watch([internalFromDate, internalToDate], () => {
-		emit('update:modelValue', {
-			from: formattedFromDate.value,
-			to: formattedToDate.value,
-		})
 	})
 
 	// Watch pour les changements externes - Synchronisation
@@ -349,7 +358,7 @@
 		<div class="period-field__col">
 			<DatePicker
 				ref="fromDateRef"
-				v-model="internalFromDate"
+				:model-value="internalFromDate"
 				:custom-rules="fromDateRules"
 				:custom-warning-rules="props.customWarningRules"
 				:date-format-return="props.dateFormatReturn"
@@ -372,13 +381,14 @@
 				:bg-color="props.bgColor"
 				:density="props.density"
 				:hide-details="props.hideDetails"
+				@update:model-value="handleFromDateUpdate"
 				@closed="handleFromDateClosed"
 			/>
 		</div>
 		<div class="period-field__col">
 			<DatePicker
 				ref="toDateRef"
-				v-model="internalToDate"
+				:model-value="internalToDate"
 				:custom-rules="toDateRules"
 				:custom-warning-rules="props.customWarningRules"
 				:date-format-return="props.dateFormatReturn"
@@ -401,6 +411,7 @@
 				:bg-color="props.bgColor"
 				:density="props.density"
 				:hide-details="props.hideDetails"
+				@update:model-value="handleToDateUpdate"
 				@closed="handleToDateClosed"
 			/>
 		</div>
