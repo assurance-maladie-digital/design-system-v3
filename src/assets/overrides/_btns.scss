@@ -4,12 +4,15 @@
 	font-weight: 700 !important;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	height: 44px !important;
 }
 
-.theme-cnam .v-btn,
-.theme-pa .v-btn {
-	padding: 0 var(--spacing-4) !important;
+.v-btn.v-btn--density-default{
+	height: auto !important;
+}
+
+// le v-btn de vuetify a déjà un padding horizontale de 8px donc en total le padding lateral sera de 16px
+.v-btn__content {
+	padding: var(--spacing-3) var(--spacing-2)!important;
 }
 
 .v-btn.v-tab {
