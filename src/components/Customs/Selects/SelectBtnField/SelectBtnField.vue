@@ -386,7 +386,7 @@
 	border: 1px solid rgb(var(--v-theme-primary));
 	min-height: 56px;
 	border-radius: var(--radius-md) !important;
-    align-content: center;
+	align-content: center;
 	cursor: pointer;
 	position: relative;
 	transition: background-color 0.2s, color 0.2s;
