@@ -386,6 +386,7 @@
 	border: 1px solid rgb(var(--v-theme-primary));
 	min-height: 56px;
 	border-radius: var(--radius-md) !important;
+    align-content: center;
 	cursor: pointer;
 	position: relative;
 	transition: background-color 0.2s, color 0.2s;
@@ -414,12 +415,12 @@
 
 	&:hover::before {
 		/* stylelint-disable-next-line custom-property-pattern */
-		background-color: rgba(var(--v-theme-interactionDarkHover), 0.2);
+		background-color: rgba(var(--v-theme-interactionDark), 0.2);
 	}
 
 	&--selected:hover::before {
 		/* stylelint-disable-next-line custom-property-pattern */
-		background-color: rgba(var(--v-theme-interactionLightenHover), 0.2);
+		background-color: rgba(var(--v-theme-interactionLighten), 0.2);
 	}
 }
 
