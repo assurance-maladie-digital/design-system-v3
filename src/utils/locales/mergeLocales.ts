@@ -15,8 +15,8 @@ export type DeepPartial<T> = T extends (...args: never[]) => unknown
  * Fusionne profondément un objet de locales partiellement renseigné avec les valeurs par défaut.
  *
  * Les clés fournies dans `overrides` écrasent celles par défaut (y compris les fonctions),
- * les objets imbriqués sont fusionnés récursivement, et les tableaux sont concaténés
- * (comportement par défaut de `deepmerge`).
+ * les objets imbriqués sont fusionnés récursivement, et les tableaux sont **remplacés**
+ * (et non concaténés) afin qu'une surcharge de liste soit prévisible.
  *
  * @example
  * mergeLocales(defaultLocales, { thanks: 'Merci' })

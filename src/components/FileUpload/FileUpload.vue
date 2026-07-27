@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { useWidthable, type Widthable } from '@/composables/widthable'
-	import { ref, useAttrs, useId, watch } from 'vue'
+	import { computed, ref, useAttrs, useId, watch } from 'vue'
 	import { useTheme } from 'vuetify'
 	import FileUploadContent, { type FileUploadContentSlots } from './FileUploadContent.vue'
 	import { locales as defaultLocales } from './locales'
@@ -21,12 +21,14 @@
 		disabled: false,
 		multiple: false,
 		fileSizeMax: 10_485_760,
-		fileSizeUnits: () => defaultLocales.fileSizeUnits,
+		fileSizeUnits: undefined,
 		allowedExtensions: () => ['pdf', 'jpg', 'jpeg', 'png'],
 		locales: () => ({}),
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)
+
+	const resolvedFileSizeUnits = computed(() => props.fileSizeUnits ?? locales.value.fileSizeUnits)
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: File[]): void
@@ -78,7 +80,7 @@
 			files = files.slice(0, 1)
 		}
 		const { errors, validFiles } = validateFiles(
-			files, props.fileSizeMax, props.allowedExtensions, props.fileSizeUnits, locales.value,
+			files, props.fileSizeMax, props.allowedExtensions, resolvedFileSizeUnits.value, locales.value,
 		)
 
 		if (errors.length) {
@@ -152,7 +154,7 @@
 					:allowed-extensions="allowedExtensions"
 					:multiple="multiple"
 					:file-size-max="fileSizeMax"
-					:file-size-units="fileSizeUnits"
+					:file-size-units="resolvedFileSizeUnits"
 					:locales="locales"
 				>
 					<template

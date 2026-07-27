@@ -175,11 +175,11 @@ describe('FileList', () => {
 		})
 
 		const item1 = wrapper.findAll('.file-item').at(0)
-		expect(item1!.find('.file-item__action-upload').text()).toContain('Importer le fichier')
+		expect(item1!.find('.file-item__action-upload').text()).toContain('Déposer')
 
 		const item2 = wrapper.findAll('.file-item').at(1)
-		expect(item2!.find('.file-item__action-preview').text()).toContain('Voir le fichier')
-		expect(item2!.find('.file-item__action-delete').text()).toContain('Supprimer le fichier')
+		expect(item2!.find('.file-item__action-preview').text()).toContain('Afficher')
+		expect(item2!.find('.file-item__action-delete').text()).toContain('Effacer')
 	})
 
 	it('shows when a file is optional', () => {

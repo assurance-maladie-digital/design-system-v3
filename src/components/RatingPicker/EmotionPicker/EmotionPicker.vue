@@ -29,7 +29,7 @@
 		},
 		itemLabels: {
 			type: Array as PropType<string[]>,
-			default: () => defaultLocales.defaultEmotionLabels,
+			default: undefined,
 		},
 		readonly: {
 			type: Boolean,
@@ -50,6 +50,8 @@
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)
+
+	const resolvedItemLabels = computed(() => props.itemLabels ?? locales.value.defaultEmotionLabels)
 
 	const sadIcon = mdiEmoticonSadOutline
 	const neutralIcon = mdiEmoticonNeutralOutline
@@ -92,10 +94,10 @@
 
 	const getEmotionLabel = (value: number) => {
 		if (props.length === 2) {
-			const filteredLabels = props.itemLabels.filter((_, index) => index !== 1)
+			const filteredLabels = resolvedItemLabels.value.filter((_, index) => index !== 1)
 			return filteredLabels[value]
 		}
-		return props.itemLabels[value]
+		return resolvedItemLabels.value[value]
 	}
 
 	const {

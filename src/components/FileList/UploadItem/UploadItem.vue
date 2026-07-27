@@ -12,6 +12,7 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { useLocales } from '@/composables/useLocales'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
+	import { computed } from 'vue'
 
 	type FileState = 'initial' | 'success' | 'error' | 'loading'
 
@@ -48,12 +49,16 @@
 		showPreviewBtn: false,
 		tag: 'div',
 		locales: () => ({}),
-		seeLabel: defaultLocales.see,
-		deleteLabel: defaultLocales.delete,
-		importLabel: defaultLocales.import,
+		seeLabel: undefined,
+		deleteLabel: undefined,
+		importLabel: undefined,
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)
+
+	const resolvedSeeLabel = computed(() => props.seeLabel ?? locales.value.see)
+	const resolvedDeleteLabel = computed(() => props.deleteLabel ?? locales.value.delete)
+	const resolvedImportLabel = computed(() => props.importLabel ?? locales.value.import)
 
 	defineSlots<{
 		'file-icon'(props: { state: FileState }): void
@@ -145,7 +150,7 @@
 					:aria-label="`${locales.import} ${title}`"
 					@click="$emit('upload', itemId)"
 				>
-					<span>{{ importLabel }}</span>
+					<span>{{ resolvedImportLabel }}</span>
 					<template #prepend>
 						<SyIcon
 							color="primary"
@@ -161,7 +166,7 @@
 					:aria-label="`${locales.see} ${fileName}`"
 					@click="$emit('preview', itemId)"
 				>
-					<span>{{ seeLabel }}</span>
+					<span>{{ resolvedSeeLabel }}</span>
 					<template #prepend>
 						<SyIcon
 							color="primary"
@@ -177,7 +182,7 @@
 					:aria-label="`${locales.delete} ${fileName}`"
 					@click="$emit('delete', itemId)"
 				>
-					<span>{{ deleteLabel }}</span>
+					<span>{{ resolvedDeleteLabel }}</span>
 					<template #prepend>
 						<SyIcon
 							color="error"

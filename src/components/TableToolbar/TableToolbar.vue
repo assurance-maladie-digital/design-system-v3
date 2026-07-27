@@ -22,14 +22,17 @@
 		nbTotal: 0,
 		nbFiltered: undefined,
 		search: undefined,
-		searchLabel: defaultLocales.search,
+		searchLabel: undefined,
 		showAddButton: false,
-		addButtonLabel: defaultLocales.addBtnLabel,
+		addButtonLabel: undefined,
 		loading: false,
 		locales: () => ({}),
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)
+
+	const resolvedSearchLabel = computed(() => props.searchLabel ?? locales.value.search)
+	const resolvedAddButtonLabel = computed(() => props.addButtonLabel ?? locales.value.addBtnLabel)
 
 	defineEmits<{
 		(e: 'update:search', value: string): void
@@ -88,7 +91,7 @@
 				:class="textFieldClasses"
 				:disabled="loading"
 				:append-inner-icon="mdiMagnify"
-				:label="searchLabel"
+				:label="resolvedSearchLabel"
 				data-test-id="search-input"
 				@update:model-value="$emit('update:search', $event)"
 			/>
@@ -110,7 +113,7 @@
 					v-show="!display.xs.value"
 					v-bind="options.addIconLabel"
 				>
-					{{ addButtonLabel }}
+					{{ resolvedAddButtonLabel }}
 				</span>
 			</VBtn>
 

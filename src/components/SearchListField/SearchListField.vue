@@ -39,7 +39,7 @@
 		},
 		listLabel: {
 			type: String,
-			default: defaultLocales.searchListTitle,
+			default: undefined,
 		},
 		locales: {
 			type: Object as PropType<DeepPartial<typeof defaultLocales>>,
@@ -48,6 +48,8 @@
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)
+
+	const resolvedListLabel = computed(() => props.listLabel ?? locales.value.searchListTitle)
 
 	const emit = defineEmits(['update:modelValue'])
 
@@ -135,7 +137,7 @@
 			<legend
 				class="d-sr-only"
 			>
-				{{ props.listLabel }}
+				{{ resolvedListLabel }}
 			</legend>
 
 			<p
