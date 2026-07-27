@@ -7,7 +7,6 @@ describe('useDatePickerState', () => {
 	const mockFormatDate = vi.fn()
 	const mockInitializeSelectedDates = vi.fn()
 	const mockValidateDates = vi.fn()
-	const mockUpdateModel = vi.fn()
 	const mockGenerateDateRange = vi.fn()
 
 	const format = 'DD/MM/YYYY'
@@ -39,7 +38,6 @@ describe('useDatePickerState', () => {
 				formatDate: mockFormatDate,
 				initializeSelectedDates: mockInitializeSelectedDates,
 				validateDates: mockValidateDates,
-				updateModel: mockUpdateModel,
 				generateDateRange: mockGenerateDateRange,
 			})
 

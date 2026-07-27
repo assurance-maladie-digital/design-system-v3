@@ -19,6 +19,7 @@
 	import type { CalendarModeProps, DateObjectValue } from '../types'
 	import { DatePickerCommonDefaults } from '../types'
 	import { formatDateRangeDisplay, getDisplayedMonthYearState } from '../utils/dateFormattingUtils'
+	import { reapplyDatePickerAccessibility, waitForTransitionEnd } from '../utils/datePickerDomUtils'
 	import { useComplexDatePickerProps } from './props/complexDatePickerProps'
 	import { useDateTextInputProps } from './props/dateTextInputProps'
 	import { useSyTextFieldProps } from './props/syTextFieldProps'
@@ -103,54 +104,12 @@
 	 * puis la réapplique dans le prochain tick. Cela évite les erreurs de patch Vue
 	 * dues au reparentage de nœuds du virtual DOM.
 	 */
-	const reapplyAccessibility = () => {
-		const rootEl = datePickerDialogRef.value
-		if (!rootEl) return
-
-		const activeElement = document.activeElement instanceof HTMLElement
-			? document.activeElement
-			: null
-		const activeDay = activeElement?.closest<HTMLElement>('.v-date-picker-month__day[data-v-date]')
-		const activeMonthButton = activeElement?.closest<HTMLButtonElement>('.v-date-picker-months .v-btn')
-		const activeYearButton = activeElement?.closest<HTMLButtonElement>('.v-date-picker-years .v-btn')
-		const shouldRestoreButtonFocus = activeElement?.tagName === 'BUTTON'
-		const dayDate = activeDay?.getAttribute('data-v-date')
-		const monthLabel = activeMonthButton?.getAttribute('aria-label') ?? activeMonthButton?.textContent?.trim() ?? ''
-		const yearLabel = activeYearButton?.getAttribute('aria-label') ?? activeYearButton?.textContent?.trim() ?? ''
-		cleanupGridSemantics(rootEl)
-		nextTick(() => {
-			updateAccessibility(rootEl, currentViewMode.value)
-			nextTick(() => {
-				if (!activeElement || (!rootEl.contains(activeElement) && !dayDate && !monthLabel && !yearLabel)) return
-
-				if (dayDate) {
-					const dayCell = rootEl.querySelector<HTMLElement>(`.v-date-picker-month__day[data-v-date="${dayDate}"]`)
-					const focusTarget = shouldRestoreButtonFocus
-						? dayCell?.querySelector<HTMLElement>('button')
-						: dayCell
-					focusTarget?.focus({ preventScroll: true })
-					return
-				}
-
-				if (monthLabel) {
-					const monthButtons = Array.from(rootEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-months .v-btn'))
-					const target = monthButtons.find(button =>
-						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === monthLabel,
-					)
-					target?.focus({ preventScroll: true })
-					return
-				}
-
-				if (yearLabel) {
-					const yearButtons = Array.from(rootEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-years .v-btn'))
-					const target = yearButtons.find(button =>
-						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === yearLabel,
-					)
-					target?.focus({ preventScroll: true })
-				}
-			})
-		})
-	}
+	const reapplyAccessibility = () => reapplyDatePickerAccessibility({
+		rootEl: datePickerDialogRef.value,
+		currentViewMode: currentViewMode.value,
+		cleanupGridSemantics,
+		updateAccessibility,
+	})
 
 	const datePickerDialogRef = ref<HTMLElement | null>(null)
 	const datePickerDialogId = `${datePickerContentId}-dialog`
@@ -477,7 +436,6 @@
 		formatDate,
 		initializeSelectedDates,
 		validateDates,
-		updateModel,
 		generateDateRange,
 	})
 
@@ -777,23 +735,6 @@
 		// Fonction qui retourne l'état de la date sélectionnée
 		() => selectedDates.value,
 	)
-
-	const waitForTransitionEnd = (container: HTMLElement, callback: () => void) => {
-		if (container.classList.contains('v-enter-active') || container.classList.contains('fade-transition-enter-active')) {
-			let fired = false
-			const handler = () => {
-				if (fired) return
-				fired = true
-				clearTimeout(fallbackId)
-				callback()
-			}
-			const fallbackId = setTimeout(handler, 400)
-			container.addEventListener('transitionend', handler, { once: true })
-		}
-		else {
-			callback()
-		}
-	}
 
 	const handleViewModeUpdateWrapper = (mode: ViewMode) => {
 		handleViewModeUpdate(mode)
