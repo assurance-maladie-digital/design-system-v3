@@ -21,8 +21,8 @@ import {
       <ul>
         <li><strong>Formattage sous forme de liste  </strong> : Utilisation de balises HTML sémantiques pour structurer les éléments de la liste de fichiers.</li>
         <li><strong>Boutons</strong> : Utilisation de <code>&lt;button&gt;</code> pour les actions associées à chaque fichier, avec des étiquettes claires qui reprennent l'action et le nom du fichier.</li>
-        <li><strong>Aria-label</strong>: On utilise les méthodes <code>importAriaLabel()</code> pour générer les etiquettes ARIA des champs avec le titre et  <code>seeAriaLabel()</code> et <code>deleteAriaLabel()</code> pour les étiquettes ARIA avec le nom du fichier.</li>
-        <li><strong>SeeLabel, ImportLabel, DeleteLabel </strong> : Utilisation de ces propriétés pour fournir des étiquettes claires et descriptives pour les actions associées à chaque fichier.</li>
+        <li><strong>Aria-label</strong> : Les <code>aria-label</code> sont construits en combinant le label résolu (via <code>resolvedImportLabel</code>, <code>resolvedSeeLabel</code>, <code>resolvedDeleteLabel</code>) avec le titre ou le nom du fichier correspondant.</li>
+        <li><strong>SeeLabel, ImportLabel, DeleteLabel</strong> : Utilisation de ces propriétés pour fournir des étiquettes claires et descriptives pour les actions associées à chaque fichier. À défaut, ce sont les locales (<code>see</code>, <code>import</code>, <code>delete</code>) qui sont utilisées.</li>
 
       </ul>
     </CriteriaCard>

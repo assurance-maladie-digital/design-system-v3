@@ -144,10 +144,10 @@
 			</div>
 			<div class="file-item__actions">
 				<VBtn
-					v-if="(state === 'initial' || state == 'error') && showUploadBtn"
+					v-if="(state === 'initial' || state === 'error') && showUploadBtn"
 					class="file-item__action file-item__action-upload text-primary"
 					variant="text"
-					:aria-label="`${locales.import} ${title}`"
+					:aria-label="`${resolvedImportLabel} ${title}`"
 					@click="$emit('upload', itemId)"
 				>
 					<span>{{ resolvedImportLabel }}</span>
@@ -163,7 +163,7 @@
 					v-if="state === 'success' && showPreviewBtn"
 					class="file-item__action file-item__action-preview text-primary"
 					variant="text"
-					:aria-label="`${locales.see} ${fileName}`"
+					:aria-label="`${resolvedSeeLabel} ${fileName}`"
 					@click="$emit('preview', itemId)"
 				>
 					<span>{{ resolvedSeeLabel }}</span>
@@ -179,7 +179,7 @@
 					v-if="state === 'success' && showDeleteBtn"
 					class="file-item__action file-item__action-delete text-error"
 					variant="text"
-					:aria-label="`${locales.delete} ${fileName}`"
+					:aria-label="`${resolvedDeleteLabel} ${fileName}`"
 					@click="$emit('delete', itemId)"
 				>
 					<span>{{ resolvedDeleteLabel }}</span>
