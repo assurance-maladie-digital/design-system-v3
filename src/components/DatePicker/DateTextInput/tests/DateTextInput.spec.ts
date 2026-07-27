@@ -129,6 +129,20 @@ describe('DateTextInput.clean', () => {
 		expect(input.element.value).toBe('17/12/1986')
 	})
 
+	it('re-emits the clear event from the underlying text field', async () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			modelValue: '01/01/2025',
+		})
+
+		const textField = wrapper.findComponent(SyTextField)
+		textField.vm.$emit('clear')
+		await flushPromises()
+
+		expect(wrapper.emitted('clear')).toBeTruthy()
+	})
+
 	it('auto-clamps invalid day on blur in single mode', async () => {
 		const wrapper = mountComponent({
 			label: 'Date',

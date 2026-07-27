@@ -110,16 +110,20 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 	}
 
 	const focusYearButton = (root: HTMLElement): boolean => {
-		const activeYear = root.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
-		if (focusElement(activeYear)) return true
-
 		const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
 		const targetYear = String(targetDate.getFullYear())
 		const yearButtons = Array.from(root.querySelectorAll<HTMLElement>('.v-date-picker-years .v-btn'))
+		const getButtonYear = (button: HTMLElement) => {
+			const label = `${button.getAttribute('aria-label') ?? ''} ${button.textContent ?? ''}`.trim()
+			return label.match(/\b\d{4}\b/g)?.at(-1) ?? null
+		}
 		const matchingYear = yearButtons.find(button =>
-			(button.getAttribute('aria-label') ?? button.textContent ?? '').trim() === targetYear,
+			getButtonYear(button) === targetYear,
 		)
-		return focusElement(matchingYear ?? null)
+		if (focusElement(matchingYear ?? null)) return true
+
+		const activeYear = root.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
+		return focusElement(activeYear)
 	}
 
 	const focusCurrentGridSelection = (root: HTMLElement): boolean => {

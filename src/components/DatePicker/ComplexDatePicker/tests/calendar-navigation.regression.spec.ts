@@ -156,7 +156,7 @@ describe('Calendar Navigation Regression Tests', () => {
 		// Le model doit être un array
 		const emitted = wrapper.emitted('update:modelValue')
 		expect(emitted).toBeTruthy()
-		const value = emitted && emitted[0] && emitted[0][0]
+		const value = emitted && emitted[emitted.length - 1] && emitted[emitted.length - 1][0]
 		expect(Array.isArray(value)).toBe(true)
 		if (Array.isArray(value)) {
 			expect(value).toHaveLength(2)

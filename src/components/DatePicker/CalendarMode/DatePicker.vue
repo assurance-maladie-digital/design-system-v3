@@ -20,6 +20,7 @@
 	import { DatePickerCommonDefaults } from '../types'
 	import { getDisplayedMonthYearState } from '../utils/dateFormattingUtils'
 	import { reapplyDatePickerAccessibility, waitForTransitionEnd } from '../utils/datePickerDomUtils'
+	import { areDateModelValuesEqual } from '../utils/dateModelValueUtils'
 	import { useComplexDatePickerProps } from './props/complexDatePickerProps'
 	import { useDateTextInputProps } from './props/dateTextInputProps'
 	import { useSyTextFieldProps } from './props/syTextFieldProps'
@@ -84,12 +85,6 @@
 
 	// Utiliser useDatePickerDerivedValues pour centraliser les computed partagés
 	const { minDate, maxDate } = useDatePickerDerivedValues(props)
-
-	// Utilisation du composable pour l'affichage formaté des dates
-	const { displayedDateString } = useDisplayedDateString({
-		selectedDates,
-		todayInString,
-	})
 
 	const onblur = ref(false)
 
@@ -314,7 +309,7 @@
 	// Fonction centralisée pour mettre à jour le modèle
 	const updateModel = async (value: DateModelValue) => {
 		// Éviter les mises à jour inutiles
-		if (JSON.stringify(value) === JSON.stringify(props.modelValue)) return
+		if (areDateModelValuesEqual(value, props.modelValue)) return
 
 		try {
 			isUpdatingFromInternal.value = true
@@ -382,6 +377,13 @@
 		computed(() => props.format),
 		computed(() => props.displayRange),
 	)
+
+	// Utilisation du composable pour l'affichage formaté des dates
+	const { displayedDateString } = useDisplayedDateString({
+		selectedDates,
+		rangeBoundaryDates,
+		todayInString,
+	})
 
 	const {
 		textInputValue,

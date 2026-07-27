@@ -843,6 +843,42 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.displayFormattedDate).toBe('15/06/2025')
 	})
 
+	it('manual range input updates the emitted model with the latest boundaries', async () => {
+		const wrapper = mountComponent({
+			label: 'Test',
+			format: 'DD/MM/YYYY',
+			displayRange: true,
+			modelValue: ['01/01/2023', '05/01/2023'],
+		})
+
+		await flushPromises()
+
+		const input = wrapper.findComponent({ name: 'DateTextInput' })
+		input.vm.$emit('input', '01/02/2023 - 05/02/2023')
+		await flushPromises()
+
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toEqual(['01/02/2023', '05/02/2023'])
+	})
+
+	it('clear event clears range selection in noCalendar mode', async () => {
+		const wrapper = mountComponent({
+			label: 'Test',
+			format: 'DD/MM/YYYY',
+			noCalendar: true,
+			displayRange: true,
+			modelValue: ['01/01/2025', '10/01/2025'],
+		})
+
+		await flushPromises()
+
+		const input = wrapper.findComponent({ name: 'DateTextInput' })
+		input.vm.$emit('clear')
+		await flushPromises()
+
+		expect(wrapper.vm.selectedDates).toBeNull()
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBeNull()
+	})
+
 	it('reset avec disabled incrémente fieldKey', async () => {
 		const wrapper = mountComponent({ label: 'Test', format: 'DD/MM/YYYY', disabled: true })
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any

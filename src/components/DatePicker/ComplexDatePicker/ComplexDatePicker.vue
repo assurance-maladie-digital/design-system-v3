@@ -55,6 +55,7 @@
 		getDisplayedMonthYearState,
 	} from '../utils/dateFormattingUtils'
 	import { reapplyDatePickerAccessibility, waitForTransitionEnd } from '../utils/datePickerDomUtils'
+	import { areDateModelValuesEqual } from '../utils/dateModelValueUtils'
 	import { validateEmptyOrIncompleteDate, adaptCustomRules } from '../utils/validationUtils'
 	import type { ValidationRule } from '@/composables/validation/useValidation'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -80,13 +81,6 @@
 			queueMicrotask(() => (isUpdatingFromInternal.value = false))
 		}
 	}
-
-	// const unifyAfterCalendarUpdate = async () => {
-	// 	if (!isDatePickerVisible.value) return
-	// 	await nextTick()
-	// 	customizeMonthButton()
-	// 	markHolidayDays()
-	// }
 
 	/**
 	 * Calendar current month / year
@@ -373,16 +367,28 @@
 
 	const updateModel = (value: DateModelValue) => {
 		// Prevent redundant emits
-		if (JSON.stringify(value) === JSON.stringify(props.modelValue)) return
+		if (areDateModelValuesEqual(value, props.modelValue)) return
 		withInternalUpdate(() => emit('update:modelValue', value))
+	}
+
+	const isModelValueAlreadySynced = (value: DateInput | undefined) =>
+		areDateModelValuesEqual(value, formattedDate.value)
+
+	const shouldUpdateModelFromDateSelected = (value: DateModelValue) => {
+		if (value === null) return true
+		if (!props.displayRange) return true
+
+		return Array.isArray(value) && value.length === 2
 	}
 
 	// Keep and expose this so consumers can listen to `date-selected`
 	const handleDateSelected = (value: DateModelValue) => {
 		if (props.readonly) return
 
-		updateModel(value)
-		syncFromModelValue(value)
+		if (shouldUpdateModelFromDateSelected(value)) {
+			updateModel(value)
+		}
+		syncModelValueToState(value)
 		emit('date-selected', value)
 	}
 	// Range handling
@@ -455,24 +461,42 @@
 		})
 	}
 
-	const updateSelectedDates = async (date: Date | null) => {
-		if (date !== null) {
+	const validateSelectionDates = async (dates: Date[]) => {
+		for (const date of dates) {
 			const { hasError, state } = await Promise.resolve(validateField(date, props.customRules, props.customWarningRules))
 			if (hasError) {
 				errors.value = state.errors
+				warnings.value = state.warnings
+				return false
+			}
+		}
+
+		return true
+	}
+
+	const updateSelectedDates = async (value: Date | Date[] | null) => {
+		if (value !== null) {
+			const datesToValidate = Array.isArray(value)
+				? value.filter((date): date is Date => date instanceof Date)
+				: [value]
+
+			const isSelectionValid = await validateSelectionDates(datesToValidate)
+			if (!isSelectionValid) {
 				return
 			}
 		}
 
-		dateSelectionResult.updateSelectedDates(date)
+		dateSelectionResult.updateSelectedDates(value)
 
-		if (date !== null && isDatePickerVisible.value && !props.noCalendar && !props.displayRange) {
+		if (value instanceof Date && isDatePickerVisible.value && !props.noCalendar && !props.displayRange) {
 			commitCalendarSelection()
 		}
 	}
 
 	watch(selectedDates, (newValue) => {
-		validateDates()
+		if (!isUpdatingFromInternal.value) {
+			validateDates()
+		}
 		const firstSelectedDate = newValue === null
 			? null
 			: Array.isArray(newValue)
@@ -898,14 +922,10 @@
 					const startDate = parseDate(startDateStr, props.format)
 					const endDate = parseDate(endDateStr, props.format)
 					if (startDate && endDate) {
-						selectedDates.value = dateSelectionResult.generateDateRange(startDate, endDate)
-						validateDates()
+						void updateSelectedDates([startDate, endDate])
 					}
 				}
 			}
-		}
-		else {
-			validateDates()
 		}
 	}
 
@@ -1114,11 +1134,24 @@
 		syncModelValueToState(value)
 	}
 
+	const handleClear = () => {
+		if (props.readonly) return
+
+		withInternalUpdate(() => {
+			dateSelectionResult.updateSelectedDates(null)
+			textInputValue.value = ''
+			displayFormattedDate.value = ''
+		})
+
+		clearValidation()
+	}
+
 	// Sync from external v-model
 	watch(
 		() => props.modelValue,
 		(newValue) => {
 			if (isUpdatingFromInternal.value) return
+			if (isModelValueAlreadySynced(newValue) && currentMonth.value !== null && currentYear.value !== null) return
 			syncModelValueToState(newValue)
 		},
 		{ immediate: true },
@@ -1257,6 +1290,7 @@
 		// Expose for consumers
 		handleDateSelected,
 		updateSelectedDates,
+		handleClear,
 		resetViewMode,
 		reset,
 	})
@@ -1273,6 +1307,7 @@
 				v-model="textInputValue"
 				:class="[messageClasses, 'label-hidden-on-focus']"
 				v-bind="dateTextInputProps"
+				@clear="handleClear"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
 			/>
@@ -1306,6 +1341,7 @@
 							:model-value="textInputValue"
 							:class="[messageClasses, 'label-hidden-on-focus']"
 							v-bind="dateTextInputMenuProps"
+							@clear="handleClear"
 							@mousedown="openDatePickerFromInputClick"
 							@update:model-value="handleDateTextInputUpdate"
 							@focus="openDatePickerOnFocus"

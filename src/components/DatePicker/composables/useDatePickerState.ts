@@ -165,7 +165,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 
 	const textInputValue = ref('')
 	const displayFormattedDate = ref('')
-	const isSyncingFromModelValue = ref(false)
+	const syncingFromModelValueCount = ref(0)
 
 	const formattedDate = computed<DateModelValue>(() => {
 		if (!selectedDates.value) return ''
@@ -212,7 +212,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 	watch(
 		formattedDate,
 		(newValue) => {
-			if (isSyncingFromModelValue.value) {
+			if (syncingFromModelValueCount.value > 0) {
 				return
 			}
 
@@ -229,7 +229,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 
 	const syncFromModelValue = (newValue: DateInput | undefined) => {
 		try {
-			isSyncingFromModelValue.value = true
+			syncingFromModelValueCount.value++
 
 			const resolvedState = resolveDatePickerStateFromModelValue({
 				newValue,
@@ -251,7 +251,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 		}
 		finally {
 			queueMicrotask(() => {
-				isSyncingFromModelValue.value = false
+				syncingFromModelValueCount.value = Math.max(0, syncingFromModelValueCount.value - 1)
 			})
 		}
 	}

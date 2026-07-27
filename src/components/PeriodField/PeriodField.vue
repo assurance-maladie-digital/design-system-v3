@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-	/* eslint-disable @typescript-eslint/no-explicit-any -- Nécessaire pour gérer différents types d'entrée */
 	import { ref, watch, computed, onMounted, readonly as readonlyState } from 'vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
@@ -13,6 +12,7 @@
 
 	type DateInput = string | null
 	type PeriodValue = { from: DateInput, to: DateInput }
+	type DateFieldLike = DateInput | { selectedDates?: Date | null }
 
 	const props = withDefaults(defineProps<{
 		bgColor?: string
@@ -94,11 +94,11 @@
 	 * @param value - La valeur de date à formater
 	 * @returns La date formatée ou null
 	 */
-	function formatDateValue(value: any): string | null {
+	function formatDateValue(value: DateFieldLike | undefined): string | null {
 		if (!value) return null
 		if (typeof value === 'string') return value
-		if (value.selectedDates) {
-			const date = new Date(value.selectedDates)
+		if (value.selectedDates instanceof Date) {
+			const date = value.selectedDates
 			const day = date.getDate().toString().padStart(2, '0')
 			const month = (date.getMonth() + 1).toString().padStart(2, '0')
 			const year = date.getFullYear()
@@ -132,7 +132,7 @@
 						fieldIdentifier: 'fromDate',
 					},
 				},
-				...(props.required && !props.disableErrorHandling
+				...(props.required
 					? [{
 						type: 'required',
 						options: {
@@ -153,7 +153,7 @@
 						},
 					}]
 					: []),
-				...(!props.disableErrorHandling ? props.customRules : []),
+				...props.customRules,
 			]
 			: [],
 	)

@@ -58,6 +58,7 @@
 		(e: 'focus'): void
 		(e: 'blur'): void
 		(e: 'input', value: string): void
+		(e: 'clear'): void
 		(e: 'date-selected', value: DateModelValue): void
 		(e: 'prepend-icon-click', event: MouseEvent): void
 		(e: 'append-icon-click', event: MouseEvent): void
@@ -1164,6 +1165,7 @@
 			@mousedown="onMouseDown"
 			@keydown="handleKeydown"
 			@paste="handlePaste"
+			@clear="emit('clear')"
 			@prepend-icon-click="emit('prepend-icon-click', $event)"
 			@append-icon-click="emit('append-icon-click', $event)"
 		/>

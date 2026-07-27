@@ -18,6 +18,7 @@ export const reapplyDatePickerAccessibility = ({
 	cleanupGridSemantics,
 	updateAccessibility,
 }: ReapplyDatePickerAccessibilityOptions) => {
+	if (typeof document === 'undefined') return
 	if (!rootEl) return
 
 	const activeElement = document.activeElement instanceof HTMLElement
@@ -83,6 +84,7 @@ export const waitForTransitionEnd = (container: HTMLElement, callback: () => voi
 
 			fired = true
 			clearTimeout(fallbackId)
+			container.removeEventListener('transitionend', handler)
 			callback()
 		}
 		const fallbackId = setTimeout(handler, fallbackMs)
