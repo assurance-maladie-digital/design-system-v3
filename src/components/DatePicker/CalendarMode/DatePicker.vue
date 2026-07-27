@@ -553,7 +553,7 @@
 		if (!props.noCalendar && newValue) {
 			displayFormattedDate.value = newValue
 		}
-	})
+	}, { immediate: true })
 
 	// Watcher indépendant pour gérer le clearing (extrait du watcher imbriqué)
 	watch(displayFormattedDate, (newValue) => {
@@ -575,13 +575,6 @@
 			syncFromModelValue(props.modelValue)
 		}
 	})
-
-	// Fonction pour mettre à jour displayFormattedDate quand le VDatePicker change
-	const updateDisplayFormattedDate = () => {
-		if (displayFormattedDateComputed.value) {
-			displayFormattedDate.value = displayFormattedDateComputed.value
-		}
-	}
 
 	// Le composable useDateSelection est déjà initialisé plus haut dans le code
 
@@ -638,11 +631,6 @@
 	onMounted(() => {
 		// Configurer l'observateur pour le bouton du mois
 		setupMonthButtonObserver()
-
-		// Initialiser l'affichage formaté
-		if (displayFormattedDateComputed.value) {
-			displayFormattedDate.value = displayFormattedDateComputed.value
-		}
 
 		// Validation au montage pour afficher les erreurs sur les dates pré-remplies invalides
 		// Aligné sur le comportement de ComplexDatePicker
@@ -1061,7 +1049,6 @@
 						@update:month="onUpdateMonth"
 						@update:year="onUpdateYear"
 						@click:date="updateSelectedDates"
-						@update:model-value="updateDisplayFormattedDate"
 						@focus="markHolidayDays"
 						@update:month-year="markHolidayDays"
 					>

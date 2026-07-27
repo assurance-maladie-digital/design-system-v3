@@ -407,15 +407,8 @@
 		emit('date-selected', value)
 	}
 	// Range handling
-	const rangeBoundaryDates = ref<[Date | null, Date | null] | null>(null)
 	const dateSelectionResult = useDateSelection(parseDate, selectedDates, computed(() => props.format), computed(() => props.displayRange))
-	watch(
-		() => dateSelectionResult.rangeBoundaryDates.value,
-		(newValue) => {
-			rangeBoundaryDates.value = newValue
-		},
-		{ immediate: true },
-	)
+	const { rangeBoundaryDates } = dateSelectionResult
 
 	const {
 		textInputValue,
