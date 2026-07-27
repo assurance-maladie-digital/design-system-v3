@@ -503,43 +503,42 @@
 
 	watch(selectedDates, (newValue) => {
 		validateDates()
-		if (newValue !== null) {
-			const firstSelectedDate = Array.isArray(newValue)
+		const firstSelectedDate = newValue === null
+			? null
+			: Array.isArray(newValue)
 				? (newValue.find(date => date instanceof Date) as Date | null) ?? null
 				: newValue
-			keyboardNavigatedDate.value = firstSelectedDate
+		keyboardNavigatedDate.value = firstSelectedDate
 
-			if (ignoreNextCalendarModelSync.value && isDatePickerVisible.value) {
-				ignoreNextCalendarModelSync.value = false
-				withInternalUpdate(() => {
-					syncTextInputFromSelection()
-				})
-				return
-			}
-
-			if (!isDatePickerVisible.value) {
-				updateModel(formattedDate.value)
-			}
+		if (newValue !== null && ignoreNextCalendarModelSync.value && isDatePickerVisible.value) {
+			ignoreNextCalendarModelSync.value = false
 			withInternalUpdate(() => {
 				syncTextInputFromSelection()
 			})
-
-			if (firstSelectedDate) syncDisplayedMonthYearFromDate(firstSelectedDate)
-			if (isDatePickerVisible.value) {
-				nextTick(() => refreshVisibleCalendarUi())
-			}
+			return
 		}
-		else {
-			keyboardNavigatedDate.value = null
+
+		if (newValue === null) {
 			updateModel(null)
-			withInternalUpdate(() => {
-				syncTextInputFromSelection()
-			})
+		}
+		else if (!isDatePickerVisible.value) {
+			updateModel(formattedDate.value)
+		}
+
+		withInternalUpdate(() => {
+			syncTextInputFromSelection()
+		})
+
+		if (firstSelectedDate) {
+			syncDisplayedMonthYearFromDate(firstSelectedDate)
+		}
+		else if (newValue === null) {
 			// Reset month/year names when clearing the date
 			syncDisplayedMonthYearFromDate(new Date())
-			if (isDatePickerVisible.value) {
-				nextTick(() => refreshVisibleCalendarUi())
-			}
+		}
+
+		if (isDatePickerVisible.value) {
+			nextTick(() => refreshVisibleCalendarUi())
 		}
 	})
 
@@ -1222,15 +1221,8 @@
 		ignoreNextCalendarModelSync.value = false
 
 		selectedDates.value = todaySelection.selectedDates
-		withInternalUpdate(() => {
-			textInputValue.value = todaySelection.displayValue
-			displayFormattedDate.value = todaySelection.displayValue
-		})
-		updateModel(todaySelection.modelValue)
-		emit('date-selected', todaySelection.modelValue)
-
-		syncDisplayedMonthYearFromDate(new Date())
-		closeAndRestoreFocus()
+		syncDisplayedMonthYearFromDate(todaySelection.today)
+		commitCalendarSelection()
 	}
 
 	/**
