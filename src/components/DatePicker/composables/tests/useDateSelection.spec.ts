@@ -118,6 +118,19 @@ describe('useDateSelection', () => {
 			expect(rangeBoundaryDates.value).toEqual([date1, date2])
 		})
 
+		it('devrait utiliser les bornes min/max réelles quand un tableau non trié contient plus de deux dates', () => {
+			const date1 = new Date('2023-01-01')
+			const date2 = new Date('2023-01-03')
+			const date3 = new Date('2023-01-05')
+
+			const { updateSelectedDates, rangeBoundaryDates } = useDateSelection(mockParseDate, selectedDates, format, true)
+
+			updateSelectedDates([date2, date1, date3])
+
+			expect(rangeBoundaryDates.value).toEqual([date1, date3])
+			expect(selectedDates.value).toHaveLength(5)
+		})
+
 		it('devrait traiter une chaîne de caractères en mode non-plage', () => {
 			const date = new Date('2023-01-01')
 

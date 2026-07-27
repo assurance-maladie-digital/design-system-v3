@@ -53,7 +53,9 @@ export function useDateSelection(
 		}
 
 		if (Array.isArray(input)) {
-			const dates = input.filter((date): date is Date => date instanceof Date)
+			const dates = input
+				.filter((date): date is Date => date instanceof Date)
+				.sort((a, b) => a.getTime() - b.getTime())
 			if (dates.length === 0) {
 				clearSelection()
 				return

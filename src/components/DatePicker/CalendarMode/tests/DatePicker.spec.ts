@@ -1033,6 +1033,30 @@ describe('DatePicker - Coverage branches', () => {
 		w.unmount()
 	})
 
+	it('handleDateTextInputUpdate ne valide pas immédiatement en mode noCalendar si isValidateOnBlur=false', async () => {
+		const w = mount(DatePicker, {
+			props: {
+				label: 'Date',
+				modelValue: '',
+				format: 'DD/MM/YYYY',
+				noCalendar: true,
+				isValidateOnBlur: false,
+				customRules: [{
+					type: 'custom',
+					options: {
+						validate: () => false,
+						message: 'Erreur custom',
+					},
+				}],
+			},
+		})
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await (w.vm as any).handleDateTextInputUpdate('10/01/2025')
+		await flushPromises()
+		expect(w.vm.errorMessages).toEqual([])
+		w.unmount()
+	})
+
 	it('watcher selectedDates resets currentMonthName to today when cleared', async () => {
 		const w = mount(DatePicker, {
 			props: { label: 'Date', modelValue: '01/06/2024', format: 'DD/MM/YYYY' },

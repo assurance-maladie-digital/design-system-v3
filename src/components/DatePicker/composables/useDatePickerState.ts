@@ -9,6 +9,7 @@ export interface UseDatePickerStateOptions {
 	format: MaybeRef<string>
 	dateFormatReturn?: string
 	displayRange?: MaybeRef<boolean>
+	validateOnSyncFromModelValue?: MaybeRef<boolean>
 	parseDate: (value: string, format: string) => Date | null
 	formatDate: (date: Date | null, format: string) => string
 	initializeSelectedDates: (value: DateInput | null, format: string, dateFormatReturn?: string) => Date | (Date | null)[] | null
@@ -73,26 +74,28 @@ const getTextInputValueFromFormattedModelValue = (
 	parseDate: (value: string, format: string) => Date | null,
 	formatDate: (date: Date | null, format: string) => string,
 ): string => {
+	const formatReturnedDateString = (value: string) => {
+		if (!dateFormatReturn) {
+			return value
+		}
+
+		const date = parseDate(value, dateFormatReturn)
+		return date ? formatDate(date, format) : value
+	}
+
 	if (!formattedModelValue || formattedModelValue === '') {
 		return ''
 	}
 
 	if (Array.isArray(formattedModelValue) && formattedModelValue.length === 2) {
-		const startStr = dateFormatReturn
-			? formatDate(parseDate(formattedModelValue[0]!, dateFormatReturn), format)
-			: formattedModelValue[0]!
-		const endStr = dateFormatReturn
-			? formatDate(parseDate(formattedModelValue[1]!, dateFormatReturn), format)
-			: formattedModelValue[1]!
+		const startStr = formatReturnedDateString(formattedModelValue[0]!)
+		const endStr = formatReturnedDateString(formattedModelValue[1]!)
 
 		return `${startStr}${locales.rangeSeparator}${endStr}`
 	}
 
 	if (typeof formattedModelValue === 'string' && dateFormatReturn) {
-		const date = parseDate(formattedModelValue, dateFormatReturn)
-		if (date) {
-			return formatDate(date, format)
-		}
+		return formatReturnedDateString(formattedModelValue)
 	}
 
 	return typeof formattedModelValue === 'string' ? formattedModelValue : ''
@@ -152,6 +155,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 		format,
 		dateFormatReturn,
 		displayRange = false,
+		validateOnSyncFromModelValue = true,
 		parseDate,
 		formatDate,
 		initializeSelectedDates,
@@ -161,6 +165,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 
 	const textInputValue = ref('')
 	const displayFormattedDate = ref('')
+	const isSyncingFromModelValue = ref(false)
 
 	const formattedDate = computed<DateModelValue>(() => {
 		if (!selectedDates.value) return ''
@@ -207,6 +212,10 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 	watch(
 		formattedDate,
 		(newValue) => {
+			if (isSyncingFromModelValue.value) {
+				return
+			}
+
 			textInputValue.value = getTextInputValueFromFormattedModelValue(
 				newValue,
 				dateFormatReturn,
@@ -219,20 +228,32 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 	)
 
 	const syncFromModelValue = (newValue: DateInput | undefined) => {
-		const resolvedState = resolveDatePickerStateFromModelValue({
-			newValue,
-			format: unref(format),
-			dateFormatReturn,
-			displayRange: unref(displayRange),
-			formatDate,
-			initializeSelectedDates,
-			generateDateRange,
-		})
+		try {
+			isSyncingFromModelValue.value = true
 
-		selectedDates.value = resolvedState.selectedDates
-		textInputValue.value = resolvedState.textInputValue
-		displayFormattedDate.value = resolvedState.textInputValue
-		validateDates()
+			const resolvedState = resolveDatePickerStateFromModelValue({
+				newValue,
+				format: unref(format),
+				dateFormatReturn,
+				displayRange: unref(displayRange),
+				formatDate,
+				initializeSelectedDates,
+				generateDateRange,
+			})
+
+			selectedDates.value = resolvedState.selectedDates
+			textInputValue.value = resolvedState.textInputValue
+			displayFormattedDate.value = resolvedState.textInputValue
+
+			if (unref(validateOnSyncFromModelValue)) {
+				validateDates()
+			}
+		}
+		finally {
+			queueMicrotask(() => {
+				isSyncingFromModelValue.value = false
+			})
+		}
 	}
 
 	const syncTextInputFromSelection = () => {

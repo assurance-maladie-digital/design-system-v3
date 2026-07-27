@@ -402,6 +402,7 @@
 		format: computed(() => props.format),
 		dateFormatReturn: props.dateFormatReturn,
 		displayRange: computed(() => props.displayRange),
+		validateOnSyncFromModelValue: computed(() => !props.noCalendar),
 		parseDate,
 		formatDate,
 		initializeSelectedDates,

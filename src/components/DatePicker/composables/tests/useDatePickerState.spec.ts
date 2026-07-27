@@ -69,5 +69,70 @@ describe('useDatePickerState', () => {
 			expect(textInputValue.value).toBe('invalid-date')
 			expect(displayFormattedDate.value).toBe('invalid-date')
 		})
+
+		it('ne valide pas pendant syncFromModelValue quand validateOnSyncFromModelValue=false', () => {
+			const selectedDates = ref<Date | (Date | null)[] | null>(null)
+			const parsedDate = new Date('2025-01-10')
+
+			mockInitializeSelectedDates.mockReturnValue(parsedDate)
+			mockFormatDate.mockReturnValue('10/01/2025')
+
+			const { syncFromModelValue } = useDatePickerState({
+				selectedDates,
+				format,
+				displayRange: false,
+				validateOnSyncFromModelValue: false,
+				parseDate: mockParseDate,
+				formatDate: mockFormatDate,
+				initializeSelectedDates: mockInitializeSelectedDates,
+				validateDates: mockValidateDates,
+			})
+
+			syncFromModelValue('10/01/2025')
+
+			expect(mockValidateDates).not.toHaveBeenCalled()
+		})
+	})
+
+	describe('formattedDate watcher', () => {
+		it('retombe sur la valeur source quand dateFormatReturn contient une borne invalide', () => {
+			const startDate = new Date('2025-01-05')
+			const endDate = new Date('2025-01-10')
+			const selectedDates = ref<Date | (Date | null)[] | null>([startDate, endDate])
+			const rangeBoundaryDates = ref<[Date | null, Date | null] | null>([startDate, endDate])
+
+			mockFormatDate.mockImplementation((date: Date | null, currentFormat: string) => {
+				if (date?.getTime() === startDate.getTime()) {
+					return currentFormat === 'YYYY-MM-DD' ? 'invalid-start' : '05/01/2025'
+				}
+				if (date?.getTime() === endDate.getTime()) {
+					return currentFormat === 'YYYY-MM-DD' ? '2025-01-10' : '10/01/2025'
+				}
+
+				return ''
+			})
+
+			mockParseDate.mockImplementation((value: string) => {
+				if (value === '2025-01-10') {
+					return endDate
+				}
+
+				return null
+			})
+
+			const { textInputValue } = useDatePickerState({
+				selectedDates,
+				rangeBoundaryDates,
+				format,
+				dateFormatReturn: 'YYYY-MM-DD',
+				displayRange: true,
+				parseDate: mockParseDate,
+				formatDate: mockFormatDate,
+				initializeSelectedDates: mockInitializeSelectedDates,
+				validateDates: mockValidateDates,
+			})
+
+			expect(textInputValue.value).toBe('invalid-start - 10/01/2025')
+		})
 	})
 })
