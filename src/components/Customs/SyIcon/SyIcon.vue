@@ -120,33 +120,33 @@
 // l'override global `_btns.scss` ne le couvre PAS. On ajoute donc le ring DS ici, aligné sur la
 // convention bouton (offset 3px, comme `_btns.scss`) ; radius pour épouser la forme.
 .v-icon[role='button'] {
-    position: relative;
-    cursor: pointer;
+	position: relative;
+	cursor: pointer;
 
-    &:focus-visible {
-        outline: 2px solid rgb(var(--v-theme-primary));
-        outline-offset: 3px;
-        border-radius: var(--radius-circle);
-    }
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 3px;
+		border-radius: var(--radius-circle);
+	}
 
-    // Pseudo-élément pour la zone de hover
-    &::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: calc(100% + 16px);
-        height: calc(100% + 16px);
-        border-radius: var(--radius-circle);
-        background: transparent;
-        transition: background 0.2s ease;
-        z-index: -1;
-    }
+	// Pseudo-élément pour la zone de hover
+	&::before {
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: calc(100% + 16px);
+		height: calc(100% + 16px);
+		border-radius: var(--radius-circle);
+		background: transparent;
+		transition: background 0.2s ease;
+		z-index: -1;
+	}
 
-    &:hover::before {
-        background: rgba(var(--v-theme-interactionDark), 0.08);
-    }
+	&:hover::before {
+		background: rgba(var(--v-theme-interactionDark), 0.08);
+	}
 
 	&:active::before {
 		background: rgba(var(--v-theme-interactionDark), 0.2) !important;
@@ -155,6 +155,6 @@
 
 // Sur fond sombre, le ring passe en onPrimary, comme les boutons/liens.
 .v-theme--dark .v-icon[role='button']:focus-visible {
-    outline-color: rgb(var(--v-theme-onPrimary));
+	outline-color: rgb(var(--v-theme-onPrimary));
 }
 </style>
