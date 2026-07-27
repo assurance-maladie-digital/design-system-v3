@@ -340,4 +340,19 @@ describe('SyInputSelect', () => {
 			wrapper.unmount()
 		})
 	})
+
+	describe('locales', () => {
+		it('surcharge l\'aria-label du bouton d\'effacement via `locales`', () => {
+			const wrapper = mount(SyInputSelect, {
+				props: {
+					items: [{ text: 'Option 1', value: '1' }],
+					modelValue: '1',
+					clearable: true,
+					locales: { clearLabel: 'EFFACER_X' },
+				},
+			})
+
+			expect(wrapper.html()).toContain('EFFACER_X')
+		})
+	})
 })

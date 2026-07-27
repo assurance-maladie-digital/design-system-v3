@@ -13,6 +13,23 @@ const meta = {
 	title: 'Composants/Formulaires/FileUpload',
 	component: FileUpload,
 	argTypes: {
+		'locales': {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (titres, boutons, messages d\'erreur liés au téléversement). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant. La prop accepte un objet partiel : seules les clés renseignées surchargent les valeurs par défaut, le reste est conservé.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	fileUploadTitle: string,
+	or: string,
+	chooseFile: (multiple: boolean) => string,
+	infoText: (max: string, ext: string[]) => string,
+	fileSizeUnits: unknown[],
+	dropFilesHere: (multiple: boolean) => string,
+	errorSize: (fileName: string, max: string) => string,
+	errorExtension: (fileName: string, ext: string[]) => string,
+}` },
+				category: 'props',
+			},
+		},
 		'modelValue': {
 			description: 'La/Les fichiers de l\'utilisateur',
 			control: 'file',
@@ -174,29 +191,6 @@ const meta = {
 				category: 'slots',
 				type: {
 					summary: undefined,
-				},
-			},
-		},
-		'locales': {
-			description: 'Traductions',
-			control: false,
-			table: {
-				category: 'props',
-				type: {
-					summary: undefined,
-				},
-				defaultValue: {
-					summary: `Locales`,
-					detail: `{
-	or: 'Ou',
-	chooseFile: (multiple: boolean) => multiple ? 'Choisir des fichiers' : 'Choisir un fichier',
-	infoText: (max: string, ext: string[]): string =>
-		\`Taille max. : \${max}. \${ext.length === 1 ? 'Format accepté' : 'Formats acceptés'} : \${ext.join(', ')}\`,
-	fileSizeUnits: ['o', 'Ko', 'Mo', 'Go', 'To'],
-	dropFilesHere: (multiple: boolean): string => (!multiple ? 'Déposer votre fichier ici' : 'Déposer vos fichiers ici'),
-	errorSize: (fileName: string, max: string): string => \`Le fichier \${fileName} est trop volumineux. Taille max. : \${max}\`,
-	errorExtension: (fileName: string, ext: string[]): string => \`Le fichier \${fileName} a une extension invalide. Extensions acceptées : \${ext.join(', ')}\`,
-}`,
 				},
 			},
 		},

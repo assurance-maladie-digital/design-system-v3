@@ -5,10 +5,12 @@
 	import type { RouteLocationRaw } from 'vue-router'
 	import Logo from '../Logo/Logo.vue'
 	import { dividerDimensionsMapping } from './dividerDimensionsMapping'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
 	import { secondaryLogoMapping } from './secondaryLogoMapping'
 	import type { Theme } from './types'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(
 		defineProps<{
@@ -24,6 +26,7 @@
 			}
 			headingLevelTitle?: 1 | 2 | 3 | 4 | 5 | 6
 			headingLevelSubtitle?: 1 | 2 | 3 | 4
+			locales?: DeepPartial<typeof defaultLocales>
 		}>(), {
 			theme: 'default',
 			serviceTitle: undefined,
@@ -35,8 +38,10 @@
 			homeLink: () => ({
 				href: '/',
 			}),
-
+			locales: () => ({}),
 		})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const slots = defineSlots<{
 		'default'(): unknown
@@ -45,7 +50,7 @@
 
 	const service = computed(() => {
 		if (props.theme === 'compte-entreprise') {
-			const { title, subTitle } = locales.compteEntreprise
+			const { title, subTitle } = locales.value.compteEntreprise
 
 			return {
 				title,
@@ -132,7 +137,7 @@
 
 	const secondaryLogoLabel = computed(() => {
 		return hasSecondaryLogoLink.value && secondaryLogo.value
-			? `${locales.homeLinkPrefix} ${secondaryLogo.value.alt}`
+			? `${locales.value.homeLinkPrefix} ${secondaryLogo.value.alt}`
 			: null
 	})
 
@@ -210,7 +215,7 @@
 				:hide-signature="hideSignature"
 				:hide-organism="isCompteAmeliMobile"
 				:risque-pro="isRisquePro"
-				:aria-label="homeLink?.ariaLabel + ' Retour vers accueil du site'"
+				:aria-label="homeLink?.ariaLabel + ' ' + locales.homeLinkLabel"
 				:avatar="avatar"
 				:size="logoSize"
 				:class="{ 'mr-2': avatar }"

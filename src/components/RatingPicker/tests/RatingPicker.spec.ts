@@ -175,8 +175,11 @@ describe('RatingPicker', () => {
 		await wrapper.setProps({ twoEmotions: false })
 		await wrapper.setProps({ itemLabels: undefined })
 		expect(wrapper.findComponent(EmotionPicker).props('length')).toBe(3)
+		// Quand aucun itemLabels n'est fourni, RatingPicker transmet `undefined` :
+		// EmotionPicker résout lui-même le défaut via la locale `defaultEmotionLabels`
+		// (surchargeable par `locales`). Voir EmotionPicker.vue > resolvedItemLabels.
 		expect(
 			wrapper.findComponent(EmotionPicker).props('itemLabels'),
-		).toEqual(locales.defaultEmotionLabels)
+		).toBeUndefined()
 	})
 })

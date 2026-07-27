@@ -1561,4 +1561,36 @@ describe('SySelect.vue', () => {
 			wrapper.unmount()
 		})
 	})
+
+	describe('locales', () => {
+		it('utilise la locale `selectPlaceholder` comme nom accessible de repli', () => {
+			const wrapper = mount(SySelect, {
+				attachTo: document.body,
+				props: {
+					label: '',
+					items: [{ text: 'A', value: 'a' }],
+					locales: { selectPlaceholder: 'REPLI_X' },
+				},
+			})
+
+			expect(wrapper.html()).toContain('REPLI_X')
+			wrapper.unmount()
+		})
+
+		it('utilise la locale `fieldError` pour le message générique en erreur', () => {
+			const wrapper = mount(SySelect, {
+				attachTo: document.body,
+				props: {
+					label: 'Champ',
+					items: [{ text: 'A', value: 'a' }],
+					hasError: true,
+					hideDetails: true,
+					locales: { fieldError: 'ERREUR_X' },
+				},
+			})
+
+			expect(wrapper.html()).toContain('ERREUR_X')
+			wrapper.unmount()
+		})
+	})
 })

@@ -3,6 +3,7 @@
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import useCustomizableOptions from '@/composables/useCustomizableOptions'
+	import { useLocales } from '@/composables/useLocales'
 	import {
 		mdiCloseCircle,
 		mdiEyeOffOutline,
@@ -10,7 +11,7 @@
 	} from '@mdi/js'
 	import { computed, nextTick, readonly as readonlyState, ref, toRef, useId, watch } from 'vue'
 	import { config } from './config'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
 	import type { PasswordFieldProps } from './types'
 	import { usePasswordField } from './usePasswordFieldValidation'
 
@@ -25,8 +26,11 @@
 		autocompleteType: 'current-password',
 		helpText: undefined,
 		hideDetails: false,
+		locales: () => ({}),
 		...validationPropsDefaults,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const options = useCustomizableOptions(config, props)
 	const emit = defineEmits(['update:modelValue'])
@@ -50,7 +54,7 @@
 	const alertMessage = ref('')
 	const fieldKey = ref(0)
 	const focused = ref(false)
-	const btnLabel = locales.showPassword
+	const btnLabel = locales.value.showPassword
 
 	const showClear = computed(() => {
 		if (!props.clearable) return false
@@ -78,7 +82,7 @@
 
 	function togglePasswordVisibility() {
 		showEyeIcon.value = !showEyeIcon.value
-		alertMessage.value = showEyeIcon.value ? locales.showedPassword : locales.hidedPassword
+		alertMessage.value = showEyeIcon.value ? locales.value.showedPassword : locales.value.hidedPassword
 		nextTick(() => {
 			const inputElement = document.getElementById(passwordFieldId.value)
 			const statusId = `${passwordFieldId.value}-status`
@@ -129,6 +133,7 @@
 		hasWarningProp: toRef(props, 'hasWarning'),
 		hasSuccessProp: toRef(props, 'hasSuccess'),
 		maxErrors: toRef(props, 'maxErrors'),
+		locales,
 	})
 
 	defineExpose({

@@ -9,6 +9,8 @@
 	import { RATING_ENUM_VALUES, RatingEnum, AlertTypeEnum } from './Rating'
 	import { propValidator } from '@/utils/propValidator'
 	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = defineProps({
 		type: {
@@ -53,10 +55,12 @@
 			default: true,
 		},
 		locales: {
-			type: Object as PropType<typeof defaultLocales>,
-			default: () => defaultLocales,
+			type: Object as PropType<DeepPartial<typeof defaultLocales>>,
+			default: () => ({}),
 		},
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emit = defineEmits<{
 		(e: 'update:modelValue', value: number): void
@@ -147,7 +151,7 @@
 			:readonly="props.readonly || (props.lockAfterSelection && hasAnswered)"
 			:item-labels="props.itemLabels || undefined"
 			:lock-after-selection="props.lockAfterSelection"
-			:locales="props.locales"
+			:locales="locales"
 			@update:model-value="setValue"
 		>
 			<template #label>
@@ -162,7 +166,7 @@
 			:type="AlertTypeEnum.SUCCESS"
 			role="status"
 		>
-			{{ props.locales.thanks }}
+			{{ locales.thanks }}
 		</SyAlert>
 
 		<div

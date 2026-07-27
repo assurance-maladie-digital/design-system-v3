@@ -5,6 +5,9 @@
 	import { config } from './config'
 	import type { TabItem } from './types'
 	import { useTabTransition } from './useTabTransition'
+	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(defineProps<{
 		items: TabItem[]
@@ -15,6 +18,7 @@
 		confirmationMessage?: string
 		/** Si activé, le contenu des onglets ne sera rendu que lorsqu'ils deviendront actifs */
 		lazy?: boolean
+		locales?: DeepPartial<typeof defaultLocales>
 		vuetifyOptions?: {
 			sheet?: {
 				theme?: string
@@ -38,7 +42,10 @@
 		confirmationMessage: 'Voulez-vous vraiment changer d\'onglet ?',
 		lazy: false,
 		vuetifyOptions: () => ({}),
+		locales: () => ({}),
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	// Disable automatic attribute inheritance since we handle it manually
 	defineOptions({
@@ -353,7 +360,7 @@
 						:is="isNavigationMode ? 'nav' : 'div'"
 						ref="tablist"
 						:role="isNavigationMode ? 'navigation' : 'tablist'"
-						:aria-label="isNavigationMode ? 'Menu de navigation' : 'Onglets de navigation'"
+						:aria-label="isNavigationMode ? locales.navigationMode : locales.tablistMode"
 						class="sy-tabs__list"
 					>
 						<template

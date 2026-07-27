@@ -15,6 +15,18 @@ const meta: Meta<typeof SySelect> = {
 	},
 	argTypes: {
 		...getValidationDocumentation('string'),
+		locales: {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés et messages de validation). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant. La prop accepte un objet partiel : seules les clés renseignées surchargent les valeurs par défaut, le reste est conservé.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	requiredField: (label: string) => string,
+	clear: string,
+	removeChip: (label: string) => string,
+}` },
+				category: 'props',
+			},
+		},
 		selectedValue: { control: 'text' },
 		items: { control: 'object' },
 		displayAsterisk: { control: 'boolean' },

@@ -11,6 +11,20 @@ const meta: Meta<typeof UploadWorkflow> = {
 		controls: { exclude: ['update:modelValue', 'error', 'preview'] },
 	},
 	argTypes: {
+		'locales': {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (titres et libellés des boutons du workflow d\'import). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant. La prop accepte un objet partiel : seules les clés renseignées surchargent les valeurs par défaut, le reste est conservé.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	title: (plural: boolean) => string,
+	importTitle: string,
+	modalTitle: string,
+	cancelBtn: string,
+	confirmBtn: string,
+}` },
+				category: 'props',
+			},
+		},
 		'modelValue': {
 			description: 'La valeur du modèle pour le champ.',
 			control: false,
@@ -152,27 +166,6 @@ const meta: Meta<typeof UploadWorkflow> = {
 	confirmBtn: {
 		color: 'accent',
 	},
-}`,
-				},
-			},
-		},
-		'locales': {
-			description: 'Les locales pour les textes.',
-			control: 'object',
-			table: {
-				category: 'props',
-				type: {
-					summary: 'object',
-				},
-				defaultValue: {
-					summary: '{}',
-					detail: `{
-	title: (plural: boolean): string =>
-		\`Document\${plural ? 's' : ''} à nous transmettre\`,
-	importTitle: 'Importer des fichiers',
-	modalTitle: 'Fichier transmis',
-	cancelBtn: 'Retour',
-	confirmBtn: 'Confirmer',
 }`,
 				},
 			},

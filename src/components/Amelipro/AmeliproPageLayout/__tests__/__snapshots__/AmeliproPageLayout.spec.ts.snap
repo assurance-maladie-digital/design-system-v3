@@ -111,6 +111,7 @@ exports[`AmeliproPageLayout > Snapshots > renders the component with all propert
           a11ycompliance="conforme"
           backoffice="false"
           configurationlabel="Configuration"
+          locales="[object Object]"
           noa11y="false"
           noabout="false"
           nocgu="false"

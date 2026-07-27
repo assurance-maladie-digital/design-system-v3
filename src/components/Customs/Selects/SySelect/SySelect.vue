@@ -7,14 +7,16 @@
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+	import { useLocales } from '@/composables/useLocales'
 	import type { ColorType, IconType, VariantStyle } from '@/types/vuetifyTypes'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
 	import { computed, nextTick, onBeforeUnmount, onMounted, readonly as readonlyState, ref, useAttrs, useId, watch, watchEffect } from 'vue'
 	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { useSySelectValidation } from './composables/useSySelectValidation'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
 
 	export type ItemType = {
 		[key: string]: unknown
@@ -54,6 +56,7 @@
 			tooltipLocation?: 'top' | 'bottom' | 'start' | 'end'
 			noIcon?: boolean
 			disableClickButton?: boolean
+			locales?: DeepPartial<typeof defaultLocales>
 		} & FieldValidationProps>(),
 		{
 			modelValue: null,
@@ -85,9 +88,12 @@
 			tooltipLocation: 'top',
 			noIcon: false,
 			disableClickButton: true,
+			locales: () => ({}),
 			...validationPropsDefaults,
 		},
 	)
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	// pr récupérer proprement aria-label
 	const attrs = useAttrs()
@@ -136,7 +142,7 @@
 	const selectedItem = ref<SelectItemValueType | SelectItemArrayType>(props.modelValue)
 	const menuMinWidth = ref<number | null>(null)
 
-	const { focused, validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess, validationIcon } = useSySelectValidation(props)
+	const { focused, validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess, validationIcon } = useSySelectValidation(props, locales)
 
 	const labelWidth = ref(0)
 	const list = ref<VList | null>(null)
@@ -210,7 +216,7 @@
 		// message d'aide si aucun label fourni
 		if (typeof props.helpText === 'string' && props.helpText.trim()) return props.helpText.trim()
 
-		return 'Selectionnez une option'
+		return locales.value.selectPlaceholder
 	})
 
 	const selectItem = (item: ItemType | null | undefined, event?: Event) => {
@@ -522,7 +528,7 @@
 	const liveRegionMessage = computed(() => {
 		if (!hasError.value) return ''
 
-		return formattedErrorMessages.value || 'Le champ contient une erreur.'
+		return formattedErrorMessages.value || locales.value.fieldError
 	})
 
 	watch(() => props.modelValue, (newValue) => {

@@ -3,15 +3,16 @@
 		inheritAttrs: false,
 	})
 
-	import { computed, nextTick, readonly as readonlyState, ref, toRef, useAttrs, useId, watch } from 'vue'
-	import { mdiCloseCircle } from '@mdi/js'
-	import { type VTextarea } from 'vuetify/components'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import useTextActions from './useTextActions'
-	import { useSyTextAreaValidation } from './composables/useSyTextAreaValidation'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
-	import { locales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import { mdiCloseCircle } from '@mdi/js'
+	import { computed, nextTick, readonly as readonlyState, ref, toRef, useAttrs, useId, watch } from 'vue'
+	import { type VTextarea } from 'vuetify/components'
+	import { useSyTextAreaValidation } from './composables/useSyTextAreaValidation'
+	import { locales as defaultLocales } from './locales'
 	import { type SyTextAreaOwnProps } from './types'
+	import useTextActions from './useTextActions'
 
 	type VTextareaProps = VTextarea['$props']
 
@@ -32,8 +33,11 @@
 		helpText: '',
 		hideDetails: false,
 		displayAsterisk: false,
+		locales: () => ({}),
 		...validationPropsDefaults,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: string): void
@@ -165,7 +169,7 @@
 		hasSuccess,
 		validationIcon,
 		mergedVuetifyRules,
-	} = useSyTextAreaValidation(props, { internalValue, hasInteracted })
+	} = useSyTextAreaValidation(props, { internalValue, hasInteracted }, locales)
 
 	const computedLabel = computed(() =>
 		props.displayAsterisk && props.required ? `${props.label} *` : props.label,

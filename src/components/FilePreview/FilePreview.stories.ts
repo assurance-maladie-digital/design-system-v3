@@ -9,6 +9,19 @@ const meta: Meta = {
 	title: 'Composants/Données/FilePreview',
 	component: FilePreview,
 	argTypes: {
+		locales: {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (messages de prévisualisation et de chargement). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant. La prop accepte un objet partiel : seules les clés renseignées surchargent les valeurs par défaut, le reste est conservé.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	previewNotAvailable: string,
+	previewTypeNotAvailable: string,
+	loadingDocument: string,
+	documentError: string,
+}` },
+				category: 'props',
+			},
+		},
 		file: {
 			control: false,
 			table: {
@@ -34,25 +47,6 @@ const meta: Meta = {
 				category: 'props',
 			},
 			description: 'Configuration des attributs pour les balises `object` et `img`. Par défaut, l\'image a une description vide.',
-		},
-		locales: {
-			description: 'Traductions',
-			control: {
-				type: 'object',
-			},
-			table: {
-				category: 'props',
-				type: {
-					summary: 'Record<string, string>',
-				},
-				defaultValue: {
-					summary: 'locales',
-					detail: `{
-	previewNotAvailable: 'Impossible de prévisualiser le fichier.',
-	previewTypeNotAvailable: 'Impossible de prévisualiser ce type de fichier.',
-}`,
-				},
-			},
 		},
 		default: {
 			control: {

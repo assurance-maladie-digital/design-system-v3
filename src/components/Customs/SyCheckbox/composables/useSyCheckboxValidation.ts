@@ -31,6 +31,9 @@ export function useSyCheckboxValidation(
 	props: SyCheckboxValidationProps,
 	model: Ref<boolean | unknown[] | null>,
 	focused: Ref<boolean>,
+	locales: Ref<{
+		requiredField: (label: string | undefined) => string
+	}>,
 ): UseSyCheckboxValidationReturn {
 	// « required » pour une case = doit être cochée (true).
 	// En mode multiple (modelValue = tableau), cela signifie qu'au moins un
@@ -41,7 +44,7 @@ export function useSyCheckboxValidation(
 					type: 'custom',
 					options: {
 						validate: (value: unknown) => (Array.isArray(value) ? value.length > 0 : value === true),
-						message: `Le champ ${props.label || 'ce champ'} est requis.`,
+						message: locales.value.requiredField(props.label),
 						fieldIdentifier: props.label,
 					},
 				}]

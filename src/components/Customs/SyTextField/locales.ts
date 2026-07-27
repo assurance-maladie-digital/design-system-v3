@@ -1,4 +1,6 @@
 export const locales = {
+	// Message de validation : champ requis
+	requiredField: (label?: string) => `Le champ ${label || 'ce champ'} est requis.`,
 	// Bouton d'incrément du mode number (spinner ↑)
 	increment: (label?: string) => (label ? `Augmenter ${label}` : 'Augmenter'),
 	// Bouton de décrément du mode number (spinner ↓)

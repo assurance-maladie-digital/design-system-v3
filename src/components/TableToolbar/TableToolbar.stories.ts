@@ -9,6 +9,18 @@ const meta = {
 	title: 'Composants/Tableaux/TableToolbar',
 	component: TableToolbar,
 	argTypes: {
+		'locales': {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés de la barre d\'outils : recherche, ajout, compteur de lignes). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant. La prop accepte un objet partiel : seules les clés renseignées surchargent les valeurs par défaut, le reste est conservé.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	rowText: (lignes: string, plural: boolean) => string,
+	search: string,
+	addBtnLabel: string,
+}` },
+				category: 'props',
+			},
+		},
 		'nbTotal': {
 			description: 'Le nombre total de résultats',
 			type: 'number',
@@ -63,26 +75,6 @@ const meta = {
 				type: 'boolean',
 			},
 			defaultValue: false,
-		},
-		'locales': {
-			description: 'Traductions',
-			control: {
-				type: 'object',
-			},
-			table: {
-				type: {
-					summary: 'object',
-				},
-				defaultValue: {
-					summary: 'Locales',
-					detail: `{
-	rowText: (lignes: string, plural: boolean): string =>
-\`\${lignes} ligne\${plural ? 's' : ''}\`,
-	search: 'Rechercher',
-	addBtnLabel: 'Ajouter',
-}`,
-				},
-			},
 		},
 		'vuetifyOptions': {
 			control: 'object',

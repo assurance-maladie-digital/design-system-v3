@@ -521,4 +521,31 @@ describe('SearchListField.vue', () => {
 			expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([[2]])
 		})
 	})
+
+	describe('locales', () => {
+		it('utilise la locale `searchListTitle` pour le legend quand `listLabel` n\'est pas fourni', () => {
+			const wrapper = mount(SearchListField, {
+				props: {
+					label: 'Filtre',
+					items: [{ label: 'Item 1', value: 1 }],
+					locales: { searchListTitle: 'TITRE_PERSO' },
+				},
+			})
+
+			expect(wrapper.find('legend').text()).toBe('TITRE_PERSO')
+		})
+
+		it('la prop `listLabel` reste prioritaire sur la locale', () => {
+			const wrapper = mount(SearchListField, {
+				props: {
+					label: 'Filtre',
+					items: [{ label: 'Item 1', value: 1 }],
+					listLabel: 'TITRE_PROP',
+					locales: { searchListTitle: 'TITRE_LOCALE' },
+				},
+			})
+
+			expect(wrapper.find('legend').text()).toBe('TITRE_PROP')
+		})
+	})
 })

@@ -26,6 +26,23 @@ const meta: Meta<typeof PeriodField> = {
 		controls: { exclude: ['modelValue'] },
 	},
 	argTypes: {
+		locales: {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (messages de validation des dates de début et de fin). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant. La prop accepte un objet partiel : seules les clés renseignées surchargent les valeurs par défaut, le reste est conservé.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	fromAfterTo: string,
+	fromValid: string,
+	fromRequired: string,
+	fromFilled: string,
+	toBeforeFrom: string,
+	toValid: string,
+	toRequired: string,
+	toFilled: string,
+}` },
+				category: 'props',
+			},
+		},
 		modelValue: {
 			control: 'text',
 			description: 'Valeur du champ',

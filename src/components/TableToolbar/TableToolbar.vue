@@ -6,6 +6,8 @@
 	import { config } from './config'
 	import { locales as defaultLocales } from './locales'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(defineProps<{
 		nbTotal?: number
@@ -15,17 +17,22 @@
 		showAddButton?: boolean
 		addButtonLabel?: string
 		loading?: boolean
-		locales?: typeof defaultLocales
+		locales?: DeepPartial<typeof defaultLocales>
 	} & CustomizableOptions>(), {
 		nbTotal: 0,
 		nbFiltered: undefined,
 		search: undefined,
-		searchLabel: defaultLocales.search,
+		searchLabel: undefined,
 		showAddButton: false,
-		addButtonLabel: defaultLocales.addBtnLabel,
+		addButtonLabel: undefined,
 		loading: false,
-		locales: () => defaultLocales,
+		locales: () => ({}),
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
+
+	const resolvedSearchLabel = computed(() => props.searchLabel ?? locales.value.search)
+	const resolvedAddButtonLabel = computed(() => props.addButtonLabel ?? locales.value.addBtnLabel)
 
 	defineEmits<{
 		(e: 'update:search', value: string): void
@@ -51,7 +58,7 @@
 
 	const displayNbRows = computed(() => {
 		const lines = props.nbFiltered ? `${props.nbFiltered}/${props.nbTotal}` : String(props.nbTotal)
-		return props.locales.rowText(
+		return locales.value.rowText(
 			lines,
 			props.nbTotal > 1,
 		)
@@ -84,7 +91,7 @@
 				:class="textFieldClasses"
 				:disabled="loading"
 				:append-inner-icon="mdiMagnify"
-				:label="searchLabel"
+				:label="resolvedSearchLabel"
 				data-test-id="search-input"
 				@update:model-value="$emit('update:search', $event)"
 			/>
@@ -106,7 +113,7 @@
 					v-show="!display.xs.value"
 					v-bind="options.addIconLabel"
 				>
-					{{ addButtonLabel }}
+					{{ resolvedAddButtonLabel }}
 				</span>
 			</VBtn>
 

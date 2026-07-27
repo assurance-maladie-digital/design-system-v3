@@ -332,4 +332,34 @@ describe('FileUpload', () => {
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([[file1, file2]])
 		expect(wrapper.emitted('error')).toBeFalsy()
 	})
+
+	describe('locales', () => {
+		it('utilise la locale `fileSizeUnits` (remplacement, pas concaténation)', () => {
+			const wrapper = mount(FileUpload, {
+				props: {
+					modelValue: [],
+					// 10 Mo (10_485_760) → index 2 des unités → « CC »
+					locales: { fileSizeUnits: ['AA', 'BB', 'CC'] },
+				},
+			})
+
+			const html = wrapper.html()
+			expect(html).toContain('10 CC')
+			expect(html).not.toContain('10 Mo')
+		})
+
+		it('la prop `fileSizeUnits` reste prioritaire sur la locale', () => {
+			const wrapper = mount(FileUpload, {
+				props: {
+					modelValue: [],
+					fileSizeUnits: ['XA', 'XB', 'XC'],
+					locales: { fileSizeUnits: ['LA', 'LB', 'LC'] },
+				},
+			})
+
+			const html = wrapper.html()
+			expect(html).toContain('10 XC')
+			expect(html).not.toContain('10 LC')
+		})
+	})
 })

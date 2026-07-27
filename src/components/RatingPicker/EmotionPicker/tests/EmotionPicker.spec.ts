@@ -195,4 +195,31 @@ describe('EmotionPicker', () => {
 			expect(items[1]?.attributes('aria-checked')).toBe('false')
 		})
 	})
+
+	describe('locales', () => {
+		it('utilise la locale `defaultEmotionLabels` quand `itemLabels` n\'est pas fourni', () => {
+			const wrapper = mount(EmotionPicker, {
+				props: {
+					locales: { defaultEmotionLabels: ['AAA', 'BBB', 'CCC'] },
+				},
+			})
+
+			const html = wrapper.html()
+			expect(html).toContain('AAA')
+			expect(html).toContain('CCC')
+		})
+
+		it('la prop `itemLabels` reste prioritaire sur la locale', () => {
+			const wrapper = mount(EmotionPicker, {
+				props: {
+					itemLabels: ['P1', 'P2', 'P3'],
+					locales: { defaultEmotionLabels: ['L1', 'L2', 'L3'] },
+				},
+			})
+
+			const html = wrapper.html()
+			expect(html).toContain('P3')
+			expect(html).not.toContain('L3')
+		})
+	})
 })
