@@ -380,6 +380,22 @@ describe('DatePicker', () => {
 		expect(vm.selectedDates.getDate()).toBe(15)
 	})
 
+	it('updateSelectedDates normalizes a single-date array to a Date in single mode', () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+		})
+		const vm = wrapper.vm as DatePickerInstance
+		const selectedDate = new Date(2026, 6, 1)
+
+		vm.updateSelectedDates([selectedDate])
+
+		expect(vm.selectedDates).toBeInstanceOf(Date)
+		if (!(vm.selectedDates instanceof Date)) {
+			throw new Error('Expected selectedDates to be a Date after a single-date array selection')
+		}
+		expect(vm.selectedDates.getTime()).toBe(selectedDate.getTime())
+	})
+
 	it('updateSelectedDates does not update selectedDates for an invalid date string', () => {
 		const wrapper = mountComponent({
 			format: 'DD/MM/YYYY',
@@ -1054,6 +1070,34 @@ describe('DatePicker - Coverage branches', () => {
 		await (w.vm as any).handleDateTextInputUpdate('10/01/2025')
 		await flushPromises()
 		expect(w.vm.errorMessages).toEqual([])
+		w.unmount()
+	})
+
+	it('closes the calendar and emits the selected date even when a custom rule marks July 1, 2026 invalid', async () => {
+		const w = mount(DatePicker, {
+			props: {
+				label: 'Date',
+				modelValue: '',
+				format: 'DD/MM/YYYY',
+				customRules: [{
+					type: 'notBeforeToday',
+					options: {
+						message: 'La date ne peut pas être antérieure à aujourd\'hui',
+					},
+				}],
+			},
+		})
+
+		w.vm.isDatePickerVisible = true
+		await nextTick()
+
+		w.vm.updateSelectedDates([new Date(2026, 6, 1)])
+		await flushPromises()
+
+		expect(w.vm.isDatePickerVisible).toBe(false)
+		expect(w.emitted('update:modelValue')?.at(-1)?.[0]).toBe('01/07/2026')
+		expect(w.vm.errorMessages).toContain('La date ne peut pas être antérieure à aujourd\'hui')
+
 		w.unmount()
 	})
 

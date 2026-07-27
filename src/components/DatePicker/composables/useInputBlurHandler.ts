@@ -57,6 +57,82 @@ export const useInputBlurHandler = (options: {
 	// Utiliser useDateRangeValidation pour centraliser la validation des plages
 	const { isRangeValid } = useDateRangeValidation(selectedDates, unref(displayRange))
 
+	const setRangeValidationError = () => {
+		if (errors && errors.value) {
+			errors.value = [locales.endBeforeStart]
+		}
+	}
+
+	const formatForModel = (date: Date) =>
+		dateFormatReturn
+			? formatDate(date, dateFormatReturn)
+			: formatDate(date, unref(format))
+
+	const splitRangeValue = (value: string) => {
+		const [startDateStr = '', endDateStr = ''] = value.split(locales.rangeSeparator)
+		return {
+			startDateStr: startDateStr.trim(),
+			endDateStr: endDateStr.trim(),
+		}
+	}
+
+	const syncSingleDateToModel = (value: string) => {
+		const validation = validateDateFormat(value)
+		if (!validation.isValid) return
+
+		const date = parseDate(value, unref(format))
+		if (!date) return
+
+		try {
+			isUpdatingFromInternal.value = true
+			selectedDates.value = date
+			updateModel(formatForModel(date))
+		}
+		finally {
+			queueMicrotask(() => {
+				isUpdatingFromInternal.value = false
+			})
+		}
+	}
+
+	const syncRangeToModel = (value: string) => {
+		const { startDateStr, endDateStr } = splitRangeValue(value)
+		if (!startDateStr || !endDateStr) return
+
+		const startValidation = validateDateFormat(startDateStr)
+		const endValidation = validateDateFormat(endDateStr)
+		if (!startValidation.isValid || !endValidation.isValid) return
+
+		const startDate = parseDate(startDateStr, unref(format))
+		const endDate = parseDate(endDateStr, unref(format))
+		if (!startDate || !endDate) return
+
+		if (!isRangeValid(startDate, endDate)) {
+			setRangeValidationError()
+			return
+		}
+
+		try {
+			isUpdatingFromInternal.value = true
+			selectedDates.value = [startDate, endDate]
+			updateModel([formatForModel(startDate), formatForModel(endDate)])
+		}
+		finally {
+			setTimeout(() => {
+				isUpdatingFromInternal.value = false
+			}, 0)
+		}
+	}
+
+	const syncDisplayValueToModel = (value: string) => {
+		if (value.includes(locales.rangeSeparator)) {
+			syncRangeToModel(value)
+			return
+		}
+
+		syncSingleDateToModel(value)
+	}
+
 	/**
 	 * Gère la perte de focus du champ de saisie de date
 	 */
@@ -77,80 +153,7 @@ export const useInputBlurHandler = (options: {
 				return
 			}
 
-			// Vérifier si c'est une plage de dates (contient un séparateur)
-			if (displayFormattedDate.value.includes(locales.rangeSeparator)) {
-				const parts = displayFormattedDate.value.split(locales.rangeSeparator)
-				const startDateStr = parts[0]?.trim() || ''
-				const endDateStr = parts[1]?.trim() || ''
-
-				// Si les deux dates sont présentes, valider et mettre à jour
-				if (startDateStr && endDateStr) {
-					const startValidation = validateDateFormat(startDateStr)
-					const endValidation = validateDateFormat(endDateStr)
-
-					if (startValidation.isValid && endValidation.isValid) {
-						const startDate = parseDate(startDateStr, unref(format))
-						const endDate = parseDate(endDateStr, unref(format))
-
-						if (startDate && endDate) {
-							// Utiliser isRangeValid depuis useDateRangeValidation pour centraliser la validation
-							if (isRangeValid(startDate, endDate)) {
-								try {
-									isUpdatingFromInternal.value = true
-									selectedDates.value = [startDate, endDate]
-
-									// Formater les dates selon le format de retour
-									const formattedStartDate = dateFormatReturn
-										? formatDate(startDate, dateFormatReturn)
-										: formatDate(startDate, unref(format))
-									const formattedEndDate = dateFormatReturn
-										? formatDate(endDate, dateFormatReturn)
-										: formatDate(endDate, unref(format))
-
-									// Mettre à jour le modèle avec un tableau de dates formatées
-									updateModel([formattedStartDate, formattedEndDate])
-								}
-								finally {
-									setTimeout(() => {
-										isUpdatingFromInternal.value = false
-									}, 0)
-								}
-							}
-							else {
-								// Ajouter un message d'erreur si la date de fin est antérieure à la date de début
-								if (errors && errors.value) {
-									errors.value = [locales.endBeforeStart]
-								}
-							}
-						}
-					}
-				}
-			}
-			else {
-				// Traitement pour une date unique
-				const validation = validateDateFormat(displayFormattedDate.value)
-				if (validation.isValid) {
-					const date = parseDate(displayFormattedDate.value, unref(format))
-					if (date) {
-						// Si la date est valide, mettre à jour selectedDates et le modèle
-						try {
-							isUpdatingFromInternal.value = true
-							selectedDates.value = date
-
-							// Si on a un format de retour, formater la date dans ce format
-							const formattedValue = dateFormatReturn
-								? formatDate(date, dateFormatReturn)
-								: formatDate(date, unref(format))
-							updateModel(formattedValue)
-						}
-						finally {
-							queueMicrotask(() => {
-								isUpdatingFromInternal.value = false
-							})
-						}
-					}
-				}
-			}
+			syncDisplayValueToModel(displayFormattedDate.value)
 		}
 		else if (!unref(required)) {
 			// Si le champ est vide et non requis, réinitialiser le modèle

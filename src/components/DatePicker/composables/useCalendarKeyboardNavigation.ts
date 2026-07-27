@@ -81,12 +81,20 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		cell.focus({ preventScroll: true })
 	}
 
-	const handleMonthDialogNavigation = (event: KeyboardEvent): boolean => {
-		const targetBtn = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>('.v-date-picker-months button')
+	const getDialogButtons = (selector: string) => {
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		return Array.from((rootEl ?? document).querySelectorAll<HTMLButtonElement>(selector)).filter(btn => !btn.disabled)
+	}
+
+	const handleGridDialogNavigation = (
+		event: KeyboardEvent,
+		selector: string,
+		focusButton: (button: HTMLButtonElement | undefined | null) => void,
+	): boolean => {
+		const targetBtn = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>(selector)
 		if (!targetBtn) return false
 
-		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
-		const buttons = Array.from((rootEl ?? document).querySelectorAll<HTMLButtonElement>('.v-date-picker-months button')).filter(btn => !btn.disabled)
+		const buttons = getDialogButtons(selector)
 		if (buttons.length === 0) return false
 
 		const currentIndex = buttons.indexOf(targetBtn)
@@ -98,7 +106,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		if (key === 'Enter' || key === ' ') {
 			event.preventDefault()
 			targetBtn.click()
-			focusMonthButton(targetBtn)
+			focusButton(targetBtn)
 			return true
 		}
 
@@ -111,7 +119,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 		const moveIndex = (delta: number) => {
 			const nextIndex = Math.min(Math.max(currentIndex + delta, 0), buttons.length - 1)
-			focusMonthButton(buttons[nextIndex])
+			focusButton(buttons[nextIndex])
 		}
 
 		switch (key) {
@@ -128,71 +136,21 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 				moveIndex(columns)
 				return true
 			case 'Home':
-				focusMonthButton(buttons[0])
+				focusButton(buttons[0])
 				return true
 			case 'End':
-				focusMonthButton(buttons[buttons.length - 1])
+				focusButton(buttons[buttons.length - 1])
 				return true
 		}
 
 		return false
 	}
 
-	const handleYearDialogNavigation = (event: KeyboardEvent): boolean => {
-		const targetBtn = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>('.v-date-picker-years button')
-		if (!targetBtn) return false
+	const handleMonthDialogNavigation = (event: KeyboardEvent): boolean =>
+		handleGridDialogNavigation(event, '.v-date-picker-months button', focusMonthButton)
 
-		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
-		const buttons = Array.from((rootEl ?? document).querySelectorAll<HTMLButtonElement>('.v-date-picker-years button')).filter(btn => !btn.disabled)
-		if (buttons.length === 0) return false
-
-		const currentIndex = buttons.indexOf(targetBtn)
-		if (currentIndex === -1) return false
-
-		const key = event.key
-
-		if (key === 'Enter' || key === ' ') {
-			event.preventDefault()
-			targetBtn.click()
-			focusYearButton(targetBtn)
-			return true
-		}
-
-		if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(key)) return false
-
-		event.preventDefault()
-
-		const firstRowTop = buttons[0]?.offsetTop ?? 0
-		const columns = buttons.filter(btn => btn.offsetTop === firstRowTop).length || 3
-
-		const moveIndex = (delta: number) => {
-			const nextIndex = Math.min(Math.max(currentIndex + delta, 0), buttons.length - 1)
-			focusYearButton(buttons[nextIndex])
-		}
-
-		switch (key) {
-			case 'ArrowLeft':
-				moveIndex(-1)
-				return true
-			case 'ArrowRight':
-				moveIndex(1)
-				return true
-			case 'ArrowUp':
-				moveIndex(-columns)
-				return true
-			case 'ArrowDown':
-				moveIndex(columns)
-				return true
-			case 'Home':
-				focusYearButton(buttons[0])
-				return true
-			case 'End':
-				focusYearButton(buttons[buttons.length - 1])
-				return true
-		}
-
-		return false
-	}
+	const handleYearDialogNavigation = (event: KeyboardEvent): boolean =>
+		handleGridDialogNavigation(event, '.v-date-picker-years button', focusYearButton)
 
 	const getBaseDateFromEvent = (event: KeyboardEvent): { date: Date | null, fromDayCell: boolean } => {
 		const target = event.target as HTMLElement | null
@@ -474,35 +432,21 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		handleEnterSpaceNavigation(keyboardEvent)
 	}
 
+	const getListenerHost = (): HTMLElement | Document => {
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		const containerEl = getKeyboardContainer(rootEl)
+		const datePickerEl = rootEl?.querySelector<HTMLElement>('.v-date-picker') ?? rootEl
+
+		return containerEl ?? datePickerEl ?? document
+	}
+
 	const attachListeners = () => {
 		if (isListenerAttached) return
 
 		// Utiliser un watcher pour attendre que le VDatePicker soit disponible
 		const tryAttach = () => {
-			const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
-
-			// Le listener doit s'attacher au dialog du DatePicker, pas aux gridcells qui
-			// peuvent aussi porter tabindex="-1" pour la navigation assistée.
-			const containerEl = getKeyboardContainer(rootEl)
-
-			// Chercher le VDatePicker lui-même
-			const datePickerEl = rootEl?.querySelector('.v-date-picker') || rootEl
-
-			if (containerEl) {
-				// Attacher sur le conteneur du focusTrap (plus prioritaire que le document)
-				containerEl.addEventListener('keydown', keydownListener as EventListener, true)
-				isListenerAttached = true
-			}
-			else if (datePickerEl) {
-				// Attacher sur le VDatePicker directement
-				datePickerEl.addEventListener('keydown', keydownListener as EventListener, true)
-				isListenerAttached = true
-			}
-			else {
-				// Fallback : attacher sur le document
-				document.addEventListener('keydown', keydownListener as EventListener, true)
-				isListenerAttached = true
-			}
+			getListenerHost().addEventListener('keydown', keydownListener as EventListener, true)
+			isListenerAttached = true
 		}
 
 		// Attendre plusieurs ticks pour être sûr que le focusTrap est déjà attaché.
@@ -519,22 +463,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		}
 
 		if (!isListenerAttached) return
-		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
-
-		const containerEl = getKeyboardContainer(rootEl)
-
-		// Chercher le VDatePicker lui-même
-		const datePickerEl = rootEl?.querySelector('.v-date-picker') || rootEl
-
-		if (containerEl) {
-			containerEl.removeEventListener('keydown', keydownListener as EventListener, true)
-		}
-		else if (datePickerEl) {
-			datePickerEl.removeEventListener('keydown', keydownListener as EventListener, true)
-		}
-		else {
-			document.removeEventListener('keydown', keydownListener as EventListener, true)
-		}
+		getListenerHost().removeEventListener('keydown', keydownListener as EventListener, true)
 
 		isListenerAttached = false
 	}

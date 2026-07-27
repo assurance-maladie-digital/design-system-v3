@@ -84,28 +84,34 @@
 
 				// Traiter la valeur de période
 				if (typeof val === 'object') {
-					// Créer un nouvel objet de valeur de filtre
 					const filterValue = {
 						from: val.from,
 						to: val.to,
 					}
-
-					// Créer ou mettre à jour le filtre
 					const existingFilterIndex = props.filters.findIndex(f => f.key === key)
-					const newFilters = [...props.filters]
 
 					if (existingFilterIndex >= 0) {
-						newFilters[existingFilterIndex]!.value = filterValue
+						const newFilters = props.filters.map((filter, index) =>
+							index === existingFilterIndex
+								? {
+									...filter,
+									value: filterValue,
+								}
+								: filter,
+						)
+
+						emit('update:filters', newFilters)
 					}
 					else {
-						newFilters.push({
-							key,
-							value: filterValue,
-							type: 'period',
-						})
+						emit('update:filters', [
+							...props.filters,
+							{
+								key,
+								value: filterValue,
+								type: 'period',
+							},
+						])
 					}
-
-					emit('update:filters', newFilters)
 				}
 			}
 			catch (error) {

@@ -446,6 +446,33 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.currentMonthName).toBeTruthy()
 	})
 
+	it('closes the calendar and emits an invalid selected date when July 1, 2026 violates notBeforeToday', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			customRules: [{
+				type: 'notBeforeToday',
+				options: {
+					message: 'La date ne peut pas être antérieure à aujourd\'hui',
+				},
+			}],
+		})
+
+		wrapper.vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const datePicker = wrapper.findComponent({ name: 'VDatePicker' })
+		expect(datePicker.exists()).toBe(true)
+
+		await datePicker.vm.$emit('update:model-value', new Date(2026, 6, 1))
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('01/07/2026')
+		expect(wrapper.vm.errorMessages).toContain('La date ne peut pas être antérieure à aujourd\'hui')
+	})
+
 	it('initializes from external modelValue with dateFormatReturn in single mode', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',

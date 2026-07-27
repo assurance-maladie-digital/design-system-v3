@@ -217,7 +217,7 @@
 		},
 		onSelectDate: (date: Date) => {
 			keyboardNavigatedDate.value = null
-			updateSelectedDates([date])
+			updateSelectedDates(date)
 			nextTick(() => closeDatePicker())
 		},
 	})
@@ -352,17 +352,6 @@
 			reapplyAccessibility()
 		}
 
-		// Ne valider automatiquement que si isValidateOnBlur est true ET pas en validation initiale
-		if (props.isValidateOnBlur && !isInitialValidation.value) {
-			// Valider les dates avec le flux spécifique CalendarMode
-			await validateCalendarValue()
-		}
-		// Marquer les jours fériés après la mise à jour des dates
-		markHolidayDays()
-		if (isDatePickerVisible.value) {
-			updateSelectedDayAria()
-		}
-
 		if (shouldUpdateModel) {
 			if (newValue === null) {
 				await updateModel(null)
@@ -373,6 +362,18 @@
 		}
 
 		syncTextInputFromSelection()
+
+		// Ne valider automatiquement que si isValidateOnBlur est true ET pas en validation initiale
+		if (props.isValidateOnBlur && !isInitialValidation.value) {
+			// Valider les dates avec le flux spécifique CalendarMode
+			await validateCalendarValue()
+		}
+
+		// Marquer les jours fériés après la mise à jour des dates
+		markHolidayDays()
+		if (isDatePickerVisible.value) {
+			updateSelectedDayAria()
+		}
 	})
 
 	const messageClasses = computed(() => ({
@@ -383,12 +384,27 @@
 	}))
 
 	// Utilisation du composable pour gérer la sélection de dates
-	const { updateSelectedDates, rangeBoundaryDates, generateDateRange, resetRange } = useDateSelection(
+	const {
+		updateSelectedDates: syncSelectionState,
+		rangeBoundaryDates,
+		generateDateRange,
+		resetRange,
+	} = useDateSelection(
 		parseDate,
 		selectedDates,
 		computed(() => props.format),
 		computed(() => props.displayRange),
 	)
+
+	const updateSelectedDates = (value: Date | Date[] | string | null | undefined) => {
+		if (!props.displayRange && Array.isArray(value)) {
+			const firstSelectedDate = value.find((date): date is Date => date instanceof Date) ?? null
+			syncSelectionState(firstSelectedDate)
+			return
+		}
+
+		syncSelectionState(value)
+	}
 
 	// Utilisation du composable pour l'affichage formaté des dates
 	const { displayedDateString } = useDisplayedDateString({

@@ -27,12 +27,72 @@ export type DatePickerValidationOptions = {
 	revalidateOnCustomRulesChange?: boolean
 }
 
+type DateSelectionValue = DateObjectValue
+
 const emptyValidationResult = (): ValidationResult => ({
 	hasError: false,
 	hasWarning: false,
 	hasSuccess: false,
 	state: {
 		errors: [],
+		warnings: [],
+		successes: [],
+	},
+})
+
+const successValidationResult = (): ValidationResult => ({
+	hasError: false,
+	hasWarning: false,
+	hasSuccess: true,
+	state: {
+		errors: [],
+		warnings: [],
+		successes: [],
+	},
+})
+
+const dedupeMessages = (messages: string[]) => [...new Set(messages)]
+
+const isSelectionEmpty = (value: DateSelectionValue): boolean =>
+	value === null || (Array.isArray(value) && value.length === 0)
+
+const isIncompleteRangeSelection = (
+	value: DateSelectionValue,
+	displayRange: boolean,
+	forceValidation: boolean,
+): boolean =>
+	displayRange
+	&& Array.isArray(value)
+	&& value.length === 2
+	&& !!value[0]
+	&& !value[1]
+	&& !forceValidation
+
+const getDatesToValidate = (value: DateSelectionValue): Date[] =>
+	(Array.isArray(value) ? value.filter(Boolean) : [value]).filter((date): date is Date => date instanceof Date)
+
+const addUniqueMessage = (messages: Ref<string[]>, message: string) => {
+	if (!messages.value.includes(message)) {
+		messages.value.push(message)
+	}
+}
+
+const syncValidationCollections = (
+	errors: Ref<string[]>,
+	warnings: Ref<string[]>,
+	successes: Ref<string[]>,
+) => {
+	errors.value = dedupeMessages(errors.value)
+	warnings.value = dedupeMessages(warnings.value)
+	successes.value = dedupeMessages(successes.value)
+}
+
+const createRequiredValidationResult = (shouldDisplayErrors: boolean): ValidationResult => ({
+	hasError: true,
+	hasWarning: false,
+	hasSuccess: false,
+	state: {
+		errors: shouldDisplayErrors ? [locales.required] : [],
 		warnings: [],
 		successes: [],
 	},
@@ -55,6 +115,12 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 	} = validation
 
 	const clearValidation = baseClearValidation
+	const isReadonlyValidationSkipped = () => options.skipValidationWhenReadonly && unref(options.readonly)
+	const shouldDisplayErrors = () => !unref(options.disableErrorHandling)
+	const isRequiredSelectionMissing = (forceValidation: boolean) =>
+		(forceValidation || !options.isUpdatingFromInternal.value)
+		&& unref(options.required)
+		&& isSelectionEmpty(options.selectedDates.value)
 
 	if (options.skipValidationWhenReadonly) {
 		watch(() => unref(options.readonly), (newValue) => {
@@ -72,11 +138,45 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 		warningRules: ValidationRule[] = [],
 		successRules: ValidationRule[] = [],
 	): Promise<ValidationResult> | ValidationResult => {
-		if (options.skipValidationWhenReadonly && unref(options.readonly)) {
+		if (isReadonlyValidationSkipped()) {
 			return emptyValidationResult()
 		}
 
 		return baseValidateField(value, rules, warningRules, successRules)
+	}
+
+	const applyRangeValidation = (initialIsValid: boolean): ValidationResult => {
+		let finalIsValid = initialIsValid
+
+		if (unref(options.displayRange) && Array.isArray(options.selectedDates.value) && options.selectedDates.value.length >= 2) {
+			const startDate = options.selectedDates.value[0]
+			const endDate = options.selectedDates.value[options.selectedDates.value.length - 1]
+
+			if (startDate && endDate && startDate.getTime() > endDate.getTime()) {
+				addUniqueMessage(errors, locales.endBeforeStart)
+				finalIsValid = false
+			}
+			else if (!options.currentRangeIsValid.value) {
+				const rangeError = options.getRangeValidationError.value
+				if (rangeError) {
+					addUniqueMessage(errors, rangeError)
+					finalIsValid = false
+				}
+			}
+		}
+
+		syncValidationCollections(errors, warnings, successes)
+
+		return {
+			hasError: !finalIsValid,
+			hasWarning: warnings.value.length > 0,
+			hasSuccess: successes.value.length > 0 && finalIsValid && warnings.value.length === 0,
+			state: {
+				errors: errors.value,
+				warnings: warnings.value,
+				successes: successes.value,
+			},
+		}
 	}
 
 	// Validation des dates (fusionnée de useDateValidation)
@@ -92,127 +192,49 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 		// Réinitialiser la validation
 		clearValidation()
 
-		// Si la gestion des erreurs est désactivée, on effectue la validation interne
-		// mais on n'ajoute pas les messages d'erreur
-		const shouldDisplayErrors = !unref(options.disableErrorHandling)
-
 		// Vérifier si le champ est requis et vide
-		if ((forceValidation || !options.isUpdatingFromInternal.value) && unref(options.required) && (!options.selectedDates.value || (Array.isArray(options.selectedDates.value) && options.selectedDates.value.length === 0))) {
+		if (isRequiredSelectionMissing(forceValidation)) {
 			// Respecter isInitialValidation pour ne pas afficher l'erreur au chargement initial
 			if (options.isInitialValidation?.value && !forceValidation) {
 				return emptyValidationResult()
 			}
-			if (shouldDisplayErrors) {
-				errors.value.push(locales.required)
-				return {
-					hasError: true,
-					hasWarning: false,
-					hasSuccess: false,
-					state: {
-						errors: [locales.required],
-						warnings: [],
-						successes: [],
-					},
-				}
+
+			if (shouldDisplayErrors()) {
+				addUniqueMessage(errors, locales.required)
 			}
-			else {
-				return {
-					hasError: true,
-					hasWarning: false,
-					hasSuccess: false,
-					state: {
-						errors: [],
-						warnings: [],
-						successes: [],
-					},
-				}
-			}
+
+			return createRequiredValidationResult(shouldDisplayErrors())
 		}
 
 		if (!options.selectedDates.value) {
-			return {
-				hasError: false,
-				hasWarning: false,
-				hasSuccess: true,
-				state: {
-					errors: [],
-					warnings: [],
-					successes: [],
-				},
-			}
+			return successValidationResult()
 		}
 
 		// Détecter si nous sommes en train de saisir une plage incomplète
-		if (unref(options.displayRange) && Array.isArray(options.selectedDates.value)
-			&& options.selectedDates.value.length === 2 && options.selectedDates.value[0] && !options.selectedDates.value[1]
-			&& !forceValidation) {
+		if (isIncompleteRangeSelection(options.selectedDates.value, unref(options.displayRange), forceValidation)) {
 			return emptyValidationResult()
 		}
 
 		// Préparer les dates à valider
-		const datesToValidate = Array.isArray(options.selectedDates.value)
-			? options.selectedDates.value.filter(Boolean)
-			: [options.selectedDates.value]
+		const datesToValidate = getDatesToValidate(options.selectedDates.value)
 
-		const finalizeValidation = (isValid: boolean): ValidationResult => {
-			let finalIsValid = isValid
-
-			// Vérifier la validité de la plage de dates si en mode plage
-			if (unref(options.displayRange) && Array.isArray(options.selectedDates.value) && options.selectedDates.value.length >= 2) {
-				const startDate = options.selectedDates.value[0]
-				const endDate = options.selectedDates.value[options.selectedDates.value.length - 1]
-
-				if (startDate && endDate && startDate.getTime() > endDate.getTime()) {
-					const rangeError = locales.endBeforeStart
-					if (!errors.value.includes(rangeError)) {
-						errors.value.push(rangeError)
-						finalIsValid = false
-					}
-				}
-				else if (!options.currentRangeIsValid.value) {
-					const rangeError = options.getRangeValidationError.value
-					if (rangeError && !errors.value.includes(rangeError)) {
-						errors.value.push(rangeError)
-						finalIsValid = false
-					}
-				}
-			}
-
-			errors.value = [...new Set(errors.value)]
-			warnings.value = [...new Set(warnings.value)]
-			successes.value = [...new Set(successes.value)]
-
-			return {
-				hasError: !finalIsValid,
-				hasWarning: warnings.value.length > 0,
-				hasSuccess: successes.value.length > 0 && finalIsValid && warnings.value.length === 0,
-				state: {
-					errors: errors.value,
-					warnings: warnings.value,
-					successes: successes.value,
-				},
-			}
+		if (!shouldDisplayErrors()) {
+			return applyRangeValidation(true)
 		}
 
-		if (!shouldDisplayErrors) {
-			return finalizeValidation(true)
-		}
-
-		const validationResults = datesToValidate
-			.filter(Boolean)
-			.map(date => validateField(date, customRules, customWarningRules))
+		const validationResults = datesToValidate.map(date => validateField(date, customRules, customWarningRules))
 
 		if (validationResults.some(result => result instanceof Promise)) {
 			return Promise
 				.all(validationResults.map(result => Promise.resolve(result)))
 				.then((resolvedResults) => {
 					const hasError = resolvedResults.some(result => result.hasError)
-					return finalizeValidation(!hasError)
+					return applyRangeValidation(!hasError)
 				})
 		}
 
 		const hasError = (validationResults as ValidationResult[]).some(result => result.hasError)
-		return finalizeValidation(!hasError)
+		return applyRangeValidation(!hasError)
 	}
 
 	// Validation CalendarMode required flow
@@ -226,9 +248,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 		}
 
 		clearValidation()
-
-		const shouldDisplayErrors = !unref(options.disableErrorHandling)
-		const hasNoSelection = !options.selectedDates.value || (Array.isArray(options.selectedDates.value) && options.selectedDates.value.length === 0)
+		const hasNoSelection = isSelectionEmpty(options.selectedDates.value)
 
 		if ((forceValidation || !options.isUpdatingFromInternal.value) && unref(options.required) && hasNoSelection) {
 			if (unref(options.readonly)) {
@@ -242,8 +262,8 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 			if (options.isInitialValidation?.value) {
 				return
 			}
-			if (shouldDisplayErrors) {
-				errors.value.push(locales.required)
+			if (shouldDisplayErrors()) {
+				addUniqueMessage(errors, locales.required)
 			}
 			return
 		}
@@ -251,20 +271,18 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 		if (!options.selectedDates.value) {
 			if (!options.customRules.value || options.customRules.value.length === 0) return
 
-			if (shouldDisplayErrors && (!options.isInitialValidation?.value || forceValidation)) {
+			if (shouldDisplayErrors() && (!options.isInitialValidation?.value || forceValidation)) {
 				await validateField(
 					options.selectedDates.value,
 					options.customRules.value,
 					options.customWarningRules.value,
 				)
-				errors.value = [...new Set(errors.value)]
-				warnings.value = [...new Set(warnings.value)]
-				successes.value = [...new Set(successes.value)]
+				syncValidationCollections(errors, warnings, successes)
 			}
 			return
 		}
 
-		if (shouldDisplayErrors && (!options.isInitialValidation?.value || forceValidation)) {
+		if (shouldDisplayErrors() && (!options.isInitialValidation?.value || forceValidation)) {
 			return await Promise.resolve(validateDates(forceValidation))
 		}
 	}
@@ -279,9 +297,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 			queueMicrotask(async () => {
 				clearValidation()
 
-				const datesToValidate = Array.isArray(options.selectedDates.value)
-					? options.selectedDates.value
-					: [options.selectedDates.value]
+				const datesToValidate = getDatesToValidate(options.selectedDates.value)
 
 				for (const date of datesToValidate) {
 					await Promise.resolve(validateField(

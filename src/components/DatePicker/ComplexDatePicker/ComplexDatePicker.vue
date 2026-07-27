@@ -171,7 +171,7 @@
 	const scheduleDialogInitialDayFocus = () => {
 		clearDialogInitialFocusTimeouts()
 		focusInitialDayIfVisible()
-		;[75, 200].forEach(delay => {
+		;[75, 200].forEach((delay) => {
 			dialogInitialFocusTimeouts.push(setTimeout(focusInitialDayIfVisible, delay))
 		})
 	}
@@ -607,7 +607,7 @@
 
 	const updateSelectedDates = async (
 		value: Date | Date[] | null,
-		options: { commitSelection?: boolean } = {},
+		options: { commitSelection?: boolean, allowInvalidSelection?: boolean } = {},
 	) => {
 		if (value !== null) {
 			const datesToValidate = Array.isArray(value)
@@ -616,7 +616,9 @@
 
 			const isSelectionValid = await validateSelectionDates(datesToValidate)
 			if (!isSelectionValid) {
-				return false
+				if (!options.allowInvalidSelection) {
+					return false
+				}
 			}
 		}
 
@@ -637,7 +639,10 @@
 			return
 		}
 
-		const didUpdateSelection = await updateSelectedDates(value, { commitSelection: false })
+		const didUpdateSelection = await updateSelectedDates(value, {
+			commitSelection: false,
+			allowInvalidSelection: true,
+		})
 		if (!didUpdateSelection) {
 			return
 		}
