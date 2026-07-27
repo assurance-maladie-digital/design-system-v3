@@ -241,11 +241,12 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 		return validateCurrentSelectionRules(customRules, customWarningRules)
 	}
 
-	const shouldSkipCalendarModeRequiredValidation = (forceValidation: boolean, hasNoSelection: boolean) => {
-		if (!(forceValidation || !options.isUpdatingFromInternal.value) || !unref(options.required) || !hasNoSelection) {
-			return false
-		}
+	const isCalendarModeRequiredSelectionCheck = (forceValidation: boolean, hasNoSelection: boolean) =>
+		(forceValidation || !options.isUpdatingFromInternal.value)
+		&& unref(options.required)
+		&& hasNoSelection
 
+	const shouldDeferCalendarModeRequiredValidation = () => {
 		if (unref(options.readonly)) {
 			return true
 		}
@@ -262,11 +263,11 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 	}
 
 	const validateCalendarModeRequiredSelection = (forceValidation: boolean, hasNoSelection: boolean) => {
-		if (!(forceValidation || !options.isUpdatingFromInternal.value) || !unref(options.required) || !hasNoSelection) {
+		if (!isCalendarModeRequiredSelectionCheck(forceValidation, hasNoSelection)) {
 			return false
 		}
 
-		if (shouldSkipCalendarModeRequiredValidation(forceValidation, hasNoSelection)) {
+		if (shouldDeferCalendarModeRequiredValidation()) {
 			return true
 		}
 
