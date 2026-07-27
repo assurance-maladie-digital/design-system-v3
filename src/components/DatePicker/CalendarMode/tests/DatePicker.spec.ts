@@ -189,6 +189,48 @@ describe('DatePicker', () => {
 		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('2025-04-30')
 	})
 
+	it('emits dateFormatReturn while keeping display format in calendar mode', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('15/01/2025')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(input.element.value).toBe('15/01/2025')
+		const emitted = wrapper.emitted('update:modelValue')
+		expect(emitted).toBeTruthy()
+		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('2025-01-15')
+	})
+
+	it('reformats external modelValue from dateFormatReturn in calendar mode', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			modelValue: '2025-01-15',
+		})
+
+		await flushPromises()
+
+		expect(wrapper.find('input').element.value).toBe('15/01/2025')
+	})
+
+	it('reformats external range modelValue from dateFormatReturn in calendar mode', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			displayRange: true,
+			modelValue: ['2025-01-15', '2025-01-20'],
+		})
+
+		await flushPromises()
+
+		expect(wrapper.find('input').element.value).toBe('15/01/2025 - 20/01/2025')
+	})
+
 	it('preserves autoClamp in combined range mode', async () => {
 		const wrapper = mountComponent({
 			format: 'DD/MM/YYYY',

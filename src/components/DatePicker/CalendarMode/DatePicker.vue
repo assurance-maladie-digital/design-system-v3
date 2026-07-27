@@ -371,23 +371,12 @@
 			if (!props.displayRange || isRangeComplete) {
 				await updateModel(formattedDate.value)
 			}
-
-			// Mettre à jour textInputValue pour le DateTextInput
-			try {
-				isUpdatingFromInternal.value = true
-				syncTextInputFromSelection()
-			}
-			finally {
-				queueMicrotask(() => {
-					isUpdatingFromInternal.value = false
-				})
-			}
 		}
 		else {
 			updateModel(null)
-			// Réinitialiser textInputValue
-			textInputValue.value = ''
 		}
+
+		syncTextInputFromSelection()
 
 		// Réinitialiser le flag de protection une fois le modèle mis à jour
 		preventCloseOnKeyboardNavigation.value = false
@@ -453,63 +442,6 @@
 		await updateModel(value)
 	}
 
-	watch(textInputValue, async (newValue) => {
-		// Éviter les mises à jour récursives
-		if (isUpdatingFromInternal.value || props.noCalendar) return
-
-		// Parse la date avec le format d'affichage
-		const date = parseDate(newValue, props.format)
-		if (date) {
-			// Si on a un format de retour, formater la date dans ce format
-			const formattedValue = props.dateFormatReturn
-				? formatDate(date, props.dateFormatReturn)
-				: formatDate(date, props.format)
-			await updateModel(formattedValue)
-
-			// Mettre à jour selectedDates sans déclencher de watchers supplémentaires
-			try {
-				isUpdatingFromInternal.value = true
-				selectedDates.value = date
-				// Mettre à jour l'affichage formaté
-				displayFormattedDate.value = formatDate(date, props.format)
-			}
-			finally {
-				queueMicrotask(() => {
-					isUpdatingFromInternal.value = false
-				})
-			}
-		}
-		else if (newValue) {
-			// Même si la date n'est pas valide, conserver la valeur saisie
-			// pour éviter que la date ne disparaisse
-			await updateModel(newValue)
-			// Mettre à jour l'affichage formaté pour qu'il corresponde à ce qui est saisi
-			try {
-				isUpdatingFromInternal.value = true
-				displayFormattedDate.value = newValue
-			}
-			finally {
-				queueMicrotask(() => {
-					isUpdatingFromInternal.value = false
-				})
-			}
-		}
-		else {
-			await updateModel(null)
-			// Réinitialiser l'affichage formaté
-			try {
-				isUpdatingFromInternal.value = true
-				displayFormattedDate.value = ''
-				selectedDates.value = null
-			}
-			finally {
-				queueMicrotask(() => {
-					isUpdatingFromInternal.value = false
-				})
-			}
-		}
-	})
-
 	// Date(s) formatée(s) en chaîne de caractères pour l'affichage (centralisée dans useDatePickerState)
 	const displayFormattedDateComputed = displayFormattedFromSelectedDates
 
@@ -519,24 +451,21 @@
 		}
 	}, { immediate: true })
 
-	// Watcher indépendant pour gérer le clearing (extrait du watcher imbriqué)
-	watch(displayFormattedDate, (newValue) => {
+	watch(displayFormattedDate, (newValue, oldValue) => {
 		if (!newValue) {
+			if (
+				isInteractionDisabled.value
+				&& !props.noCalendar
+				&& !props.useCombinedMode
+				&& !!oldValue
+				&& props.modelValue
+			) {
+				syncFromModelValue(props.modelValue)
+				return
+			}
+
 			if (selectedDates.value !== null) selectedDates.value = null
 			resetRange()
-		}
-	})
-
-	watch(displayFormattedDate, (newValue, oldValue) => {
-		if (
-			isInteractionDisabled.value
-			&& !props.noCalendar
-			&& !props.useCombinedMode
-			&& !newValue
-			&& !!oldValue
-			&& props.modelValue
-		) {
-			syncFromModelValue(props.modelValue)
 		}
 	})
 

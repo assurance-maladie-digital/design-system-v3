@@ -43,31 +43,6 @@ interface ResolvedDatePickerState {
 	displayFormattedDate: string
 }
 
-const getFormattedModelValueFromSelection = (
-	selectedDates: Date | (Date | null)[] | null,
-	displayRange: boolean,
-	dateFormatReturn: string | undefined,
-	format: string,
-	formatDate: (date: Date | null, format: string) => string,
-): DateModelValue => {
-	if (!selectedDates) return ''
-
-	const returnFormat = dateFormatReturn || format
-
-	if (displayRange && Array.isArray(selectedDates) && selectedDates.length >= 2) {
-		return [
-			formatDate(selectedDates[0]!, returnFormat),
-			formatDate(selectedDates[selectedDates.length - 1]!, returnFormat),
-		] as [string, string]
-	}
-
-	if (Array.isArray(selectedDates)) {
-		return ''
-	}
-
-	return formatDate(selectedDates, returnFormat)
-}
-
 const getTextInputValueFromSelection = (
 	selectedDates: Date | (Date | null)[] | null,
 	displayRange: boolean,
@@ -160,14 +135,6 @@ export const resolveDatePickerStateFromModelValue = ({
 		}
 	}
 
-	const formattedModelValue = getFormattedModelValueFromSelection(
-		selectedDates,
-		displayRange,
-		dateFormatReturn,
-		format,
-		formatDate,
-	)
-
 	const textInputValue = getTextInputValueFromSelection(
 		selectedDates,
 		displayRange,
@@ -175,20 +142,10 @@ export const resolveDatePickerStateFromModelValue = ({
 		formatDate,
 	)
 
-	let displayFormattedDate = ''
-
-	if (Array.isArray(formattedModelValue)) {
-		const [startValue = '', endValue = ''] = formattedModelValue
-		displayFormattedDate = `${startValue}${locales.rangeSeparator}${endValue}`
-	}
-	else if (typeof formattedModelValue === 'string') {
-		displayFormattedDate = formattedModelValue
-	}
-
 	return {
 		selectedDates,
 		textInputValue,
-		displayFormattedDate,
+		displayFormattedDate: textInputValue,
 	}
 }
 
