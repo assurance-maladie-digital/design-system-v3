@@ -59,14 +59,11 @@
 				{{ locales.or }}
 			</slot>
 		</span>
-
-		<span
-			class="sy-file-upload-btn bg-primary text-white"
-		>
+		<VBtn color="primary">
 			<slot name="button-text">
 				{{ locales.chooseFile(multiple) }}
 			</slot>
-		</span>
+		</VBtn>
 
 		<span
 			class="mt-4 sy-file-upload-caption"
