@@ -357,6 +357,10 @@
 	})
 
 	const getPlainItemText = (item: unknown) => {
+		// Handle primitive types (string/number items)
+		if (typeof item === 'string' || typeof item === 'number') {
+			return item
+		}
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		const itemObj = item as Record<string, any>
 		// Use plainTextKey if available and allowHtml is true, otherwise use textKey
@@ -381,7 +385,7 @@
 		if (props.multiple) {
 			if (!selectedItem.value || (Array.isArray(selectedItem.value) && selectedItem.value.length === 0)) {
 				// Find default option and return its text
-				const defaultOption = props.items.find(item => isDefaultOption(item))
+				const defaultOption = formattedItems.value.find(item => isDefaultOption(item))
 				if (defaultOption) {
 					return getPlainItemText(defaultOption) as string
 				}
@@ -401,7 +405,7 @@
 		}
 		else {
 			// For single selection
-			if (!selectedItem.value) return ''
+			if (selectedItem.value === null || selectedItem.value === undefined) return ''
 
 			if (props.returnObject) {
 				return getPlainItemText(selectedItem.value)
@@ -449,7 +453,7 @@
 
 	const formattedItems = computed(() => {
 		return props.items.map((item) => {
-			if (typeof item === 'string') {
+			if (typeof item === 'string' || typeof item === 'number') {
 				return { [props.textKey]: item, [props.valueKey]: item }
 			}
 			return item
@@ -571,7 +575,7 @@
 			return !selectedItem.value || (Array.isArray(selectedItem.value) && selectedItem.value.length === 0)
 		}
 
-		if (!selectedItem.value) return false
+		if (selectedItem.value === null || selectedItem.value === undefined) return false
 
 		if (props.multiple && Array.isArray(selectedItem.value)) {
 			return selectedItem.value.some((selected) => {
