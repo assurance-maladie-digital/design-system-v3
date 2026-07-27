@@ -60,7 +60,7 @@
 			menuId: 'sy-autocomplete-menu',
 			modelValue: null,
 			multiple: false,
-			noDataText: defaultLocales.noData,
+			noDataText: undefined,
 			helpText: '',
 			selectionText: undefined,
 			placeholder: '',
@@ -77,6 +77,8 @@
 	)
 
 	const locales = useLocales(defaultLocales, () => props.locales)
+
+	const resolvedNoDataText = computed(() => props.noDataText ?? locales.value.noData)
 
 	const emit = defineEmits(['update:modelValue', 'search'])
 
@@ -329,7 +331,7 @@
 		if (props.loading) return locales.value.loading
 		const count = filteredItems.value.length
 		if (!props.filter) return ''
-		if (count === 0) return props.hideNoData ? locales.value.noData : props.noDataText
+		if (count === 0) return props.hideNoData ? locales.value.noData : resolvedNoDataText.value
 		return locales.value.nAvailable(count)
 	})
 
@@ -501,7 +503,7 @@
 				<slot name="prepend-item" />
 				<template v-if="filteredItems.length === 0 && !hideNoData && !loading">
 					<VListItem
-						:title="noDataText"
+						:title="resolvedNoDataText"
 						disabled
 						tag="li"
 					/>
