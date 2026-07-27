@@ -337,44 +337,48 @@
 	}
 
 	// Watcher pour mettre à jour le modèle lorsque les dates sélectionnées changent
-	watch(selectedDates, async (newValue) => {
-		const firstSelectedDate = Array.isArray(newValue)
-			? newValue[0] ?? null
-			: newValue
-		const shouldUpdateModel = newValue === null
-			|| !props.displayRange
-			|| (Array.isArray(newValue) && newValue.length >= 2)
+	watch(
+		selectedDates,
+		async (newValue) => {
+			const firstSelectedDate = Array.isArray(newValue)
+				? newValue[0] ?? null
+				: newValue
+			const shouldUpdateModel = newValue === null
+				|| !props.displayRange
+				|| (Array.isArray(newValue) && newValue.length >= 2)
 
-		keyboardNavigatedDate.value = firstSelectedDate
+			keyboardNavigatedDate.value = firstSelectedDate
 
-		// Vider la grille ARIA injectée avant que Vuetify ne re-render le calendrier
-		if (isDatePickerVisible.value) {
-			reapplyAccessibility()
-		}
-
-		if (shouldUpdateModel) {
-			if (newValue === null) {
-				await updateModel(null)
+			// Vider la grille ARIA injectée avant que Vuetify ne re-render le calendrier
+			if (isDatePickerVisible.value) {
+				reapplyAccessibility()
 			}
-			else {
-				await updateModel(formattedDate.value)
+
+			if (shouldUpdateModel) {
+				if (newValue === null) {
+					await updateModel(null)
+				}
+				else {
+					await updateModel(formattedDate.value)
+				}
 			}
-		}
 
-		syncTextInputFromSelection()
+			syncTextInputFromSelection()
 
-		// Ne valider automatiquement que si isValidateOnBlur est true ET pas en validation initiale
-		if (props.isValidateOnBlur && !isInitialValidation.value) {
-			// Valider les dates avec le flux spécifique CalendarMode
-			await validateCalendarValue()
-		}
+			// Ne valider automatiquement que si isValidateOnBlur est true ET pas en validation initiale
+			if (props.isValidateOnBlur && !isInitialValidation.value) {
+				// Valider les dates avec le flux spécifique CalendarMode
+				await validateCalendarValue()
+			}
 
-		// Marquer les jours fériés après la mise à jour des dates
-		markHolidayDays()
-		if (isDatePickerVisible.value) {
-			updateSelectedDayAria()
-		}
-	})
+			// Marquer les jours fériés après la mise à jour des dates
+			markHolidayDays()
+			if (isDatePickerVisible.value) {
+				updateSelectedDayAria()
+			}
+		},
+		{ flush: 'sync' },
+	)
 
 	const messageClasses = computed(() => ({
 		'dp-width': true,

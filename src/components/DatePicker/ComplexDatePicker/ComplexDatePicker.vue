@@ -606,13 +606,19 @@
 	}
 
 	const updateSelectedDates = async (
-		value: Date | Date[] | null,
+		value: Date | (Date | null)[] | null,
 		options: { commitSelection?: boolean, allowInvalidSelection?: boolean } = {},
 	) => {
+		const normalizedValue = Array.isArray(value)
+			? value.filter((date): date is Date => date instanceof Date)
+			: value
+
 		if (value !== null) {
-			const datesToValidate = Array.isArray(value)
-				? value.filter((date): date is Date => date instanceof Date)
-				: [value]
+			const datesToValidate: Date[] = Array.isArray(normalizedValue)
+				? normalizedValue
+				: normalizedValue instanceof Date
+					? [normalizedValue]
+					: []
 
 			const isSelectionValid = await validateSelectionDates(datesToValidate)
 			if (!isSelectionValid) {
@@ -622,10 +628,10 @@
 			}
 		}
 
-		dateSelectionResult.updateSelectedDates(value)
+		dateSelectionResult.updateSelectedDates(normalizedValue)
 
 		const shouldCommitSelection = options.commitSelection
-			?? (value instanceof Date && isDatePickerVisible.value && !props.noCalendar && !props.displayRange)
+			?? (normalizedValue instanceof Date && isDatePickerVisible.value && !props.noCalendar && !props.displayRange)
 
 		if (shouldCommitSelection) {
 			commitCalendarSelection()
@@ -634,20 +640,22 @@
 		return true
 	}
 
-	const handleCalendarModelValueUpdate = async (value: Date | Date[] | null) => {
-		if (consumeCalendarModelSyncIgnore()) {
-			return
-		}
+	const handleCalendarModelValueUpdate = (value: Date | (Date | null)[] | null) => {
+		void (async () => {
+			if (consumeCalendarModelSyncIgnore()) {
+				return
+			}
 
-		const didUpdateSelection = await updateSelectedDates(value, {
-			commitSelection: false,
-			allowInvalidSelection: true,
-		})
-		if (!didUpdateSelection) {
-			return
-		}
+			const didUpdateSelection = await updateSelectedDates(value, {
+				commitSelection: false,
+				allowInvalidSelection: true,
+			})
+			if (!didUpdateSelection) {
+				return
+			}
 
-		commitCalendarSelection()
+			commitCalendarSelection()
+		})()
 	}
 
 	watch(selectedDates, (newValue) => {
