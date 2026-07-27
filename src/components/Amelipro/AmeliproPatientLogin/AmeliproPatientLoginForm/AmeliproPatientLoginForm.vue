@@ -99,7 +99,7 @@
 		textColor: 'ap-blue-darken-1',
 	}
 
-	const vitalCardBtnText = computed(() => (props.autoCompleteCardItems ? 'Lire carte virtuelle' : 'Lire la carte'))
+	const vitalCardBtnText = computed(() => (props.autoCompleteCardItems ? locales.value.readVirtualCardLabel : locales.value.readCardLabel))
 
 	const clickVitalCard = () => emit('click:vital-card', `${props.uniqueId}-vital-card-btn`)
 	const clickVitalCardApp = () => emit('click:vital-card-app', `${props.uniqueId}-vital-card-app-btn`)
@@ -173,7 +173,7 @@
 					v-bind="noVitalCard ? undefined : isSecondaryBtnProps"
 					@click="clickVitalCardApp"
 				>
-					Lire appli carte vitale
+					{{ locales.readVitalCardAppLabel }}
 				</AmeliproBtn>
 
 				<AmeliproMessage
@@ -210,7 +210,7 @@
 					:unique-id="`${uniqueId}-nir-btn`"
 					@click="submitNir"
 				>
-					Valider le NIR
+					{{ locales.validateNirLabel }}
 				</AmeliproBtn>
 
 				<AmeliproMessage
@@ -237,7 +237,7 @@
 				>
 					<span class="loader" />
 				</span>
-				Veuillez patienter pendant le chargement...
+				{{ locales.loadingText }}
 			</p>
 		</div>
 	</div>

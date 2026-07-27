@@ -216,7 +216,7 @@
 		// message d'aide si aucun label fourni
 		if (typeof props.helpText === 'string' && props.helpText.trim()) return props.helpText.trim()
 
-		return 'Selectionnez une option'
+		return locales.value.selectPlaceholder
 	})
 
 	const selectItem = (item: ItemType | null | undefined, event?: Event) => {
@@ -528,7 +528,7 @@
 	const liveRegionMessage = computed(() => {
 		if (!hasError.value) return ''
 
-		return formattedErrorMessages.value || 'Le champ contient une erreur.'
+		return formattedErrorMessages.value || locales.value.fieldError
 	})
 
 	watch(() => props.modelValue, (newValue) => {

@@ -208,7 +208,7 @@
 				height="7"
 				color="primary"
 				rounded="true"
-				:aria-label="title ? `Chargement de ${title}` : 'Chargement en cours'"
+				:aria-label="locales.loadingLabel(title)"
 			/>
 		</div>
 	</component>

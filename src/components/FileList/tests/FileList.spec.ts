@@ -207,4 +207,17 @@ describe('FileList', () => {
 		const item2 = wrapper.findAll('.file-item').at(1)
 		expect(item2!.text()).not.toContain(locales.optionalDocument)
 	})
+
+	it('uses the `loadingLabel` locale for the progress bar aria-label', () => {
+		const wrapper = mount(FileList, {
+			props: {
+				uploadList: [
+					{ id: 'file1', title: 'file1', state: 'loading' },
+				],
+				locales: { loadingLabel: (title?: string) => `CHARGEMENT_X ${title ?? ''}`.trim() },
+			},
+		})
+
+		expect(wrapper.html()).toContain('CHARGEMENT_X')
+	})
 })
