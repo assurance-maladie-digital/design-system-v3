@@ -20,7 +20,6 @@
 
 			{ 'sy-back-btn--dark': dark },
 		]"
-		:ripple="false"
 	>
 		<slot name="icon">
 			<SyIcon
