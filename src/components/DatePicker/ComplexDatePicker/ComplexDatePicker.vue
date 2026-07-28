@@ -1548,7 +1548,6 @@
 						:density="props.density"
 						:hint="props.hint"
 						:persistent-hint="props.persistentHint"
-						@keydown.capture="handleMenuKeydown"
 						@update:model-value="updateDisplayFormattedDate"
 						@update:view-mode="handleViewModeUpdateWrapper"
 						@update:month="onUpdateMonth"

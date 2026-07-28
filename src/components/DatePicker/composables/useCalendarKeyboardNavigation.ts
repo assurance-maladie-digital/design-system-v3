@@ -557,9 +557,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		if (dayCell) {
 			focusDayCell(dayCell)
 			setTimeout(() => {
-				if (document.activeElement !== dayCell || !dayCell.isConnected) {
-					focusDateButton(targetDate)
-				}
+				focusDateButton(targetDate)
 			}, 0)
 			return
 		}
