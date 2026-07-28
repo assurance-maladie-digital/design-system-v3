@@ -132,21 +132,21 @@ export const DesignSystem: StoryObj = {
                   <h3 class="text-h5 font-weight-bold mb-6 text-primary">Design System</h3>
                   <VRow>
                       <VCol cols="12" md="4">
-                          <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/design-tokens-introduction--docs">
+                          <VCard class="pa-0 h-100 card-hover accueil" elevation="0" href="/?path=/docs/design-tokens-introduction--docs">
 							  <img src="/home-card-tokens.svg" alt="Design Tokens" class="w-100" />
 							  <VCardTitle><b>Design Tokens</b></VCardTitle>
                               <VCardText>Les Design Tokens fournissent des recommandations claires et des bonnes pratiques pour assurer l'uniformité et la qualité des interfaces numériques.</VCardText>
                           </VCard>
                       </VCol>
                       <VCol cols="12" md="4">
-						  <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/composants-vue-d-ensemble--docs">
+						  <VCard class="pa-0 h-100 card-hover accueil" elevation="0" href="/?path=/docs/composants-vue-d-ensemble--docs">
 							  <img src="/home-card-components.svg" alt="Components" class="w-100" />
                               <VCardTitle><b>Composants</b></VCardTitle>
                               <VCardText>Les Composants assurent une expérience utilisateur homogène en offrant des éléments réutilisables et standardisés.</VCardText>
                           </VCard>
                       </VCol>
                       <VCol cols="12" md="4">
-						  <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/templates-vue-d-ensemble--docs">
+						  <VCard class="pa-0 h-100 card-hover accueil" elevation="0" href="/?path=/docs/templates-vue-d-ensemble--docs">
 							  <img src="/home-card-templates.svg" alt="Templates" class="w-100" />
                               <VCardTitle><b>Templates</b></VCardTitle>
                               <VCardText>Les Templates facilitent la mise en page en proposant des structures prédéfinies garantissant cohérence et efficacité dans la conception des interfaces.</VCardText>
