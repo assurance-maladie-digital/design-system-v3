@@ -49,11 +49,16 @@ const getLogicalFocusOrder = (
 	const gridTarget = getDayGridFocusTarget(root, getInitialFocusDate)
 	if (!gridTarget) return focusables
 
+	const todayButton = root.querySelector<HTMLElement>(TODAY_BUTTON_SELECTOR)
 	const order: HTMLElement[] = []
 	let insertedGrid = false
 
 	for (const focusable of focusables) {
-		if (!insertedGrid && Boolean(focusable.compareDocumentPosition(dayGrid) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+		if (
+			!insertedGrid
+			&& todayButton
+			&& focusable === todayButton
+		) {
 			order.push(gridTarget)
 			insertedGrid = true
 		}
@@ -167,6 +172,8 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 
 		const isFromGrid = Boolean(target?.closest(DATE_PICKER_GRID_SOURCE_SELECTOR))
 		const isFromTodayButton = Boolean(target?.closest(TODAY_BUTTON_SELECTOR))
+		const gridTarget = root.querySelector<HTMLElement>('.v-date-picker-month [role="gridcell"][tabindex="-1"], .v-date-picker-month [data-v-date][tabindex="-1"]')
+			?? getDayGridFocusTarget(root, getInitialFocusDate)
 
 		// Tab depuis la grille → bouton Aujourd'hui
 		if (!event.shiftKey && isFromGrid && todayButton) {
@@ -174,16 +181,20 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 			return
 		}
 
-		// Shift+Tab depuis la grille → dernier focusable avant la grille en DOM
+		// Shift+Tab depuis la grille → précédent élément logique avant la grille
 		if (event.shiftKey && isFromGrid && active) {
 			const gridContainer = active.closest(DATE_PICKER_GRID_SELECTOR)
+			const gridIndex = gridTarget ? focusables.indexOf(gridTarget) : -1
+			const startIndex = gridIndex !== -1 ? gridIndex : focusables.indexOf(active)
 
-			const precedingOutsideGrid = focusables.filter((el) => {
-				const isInsideGrid = gridContainer ? gridContainer.contains(el) : false
-				return !isInsideGrid && Boolean(active.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_PRECEDING)
-			})
-
-			precedingOutsideGrid.at(-1)?.focus({ preventScroll: true })
+			for (let offset = 1; offset <= focusables.length; offset++) {
+				const candidate = focusables[(startIndex - offset + focusables.length) % focusables.length]
+				if (!candidate) continue
+				if (!gridContainer?.contains(candidate)) {
+					candidate.focus({ preventScroll: true })
+					break
+				}
+			}
 			return
 		}
 

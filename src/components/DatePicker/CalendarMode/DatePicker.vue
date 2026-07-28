@@ -163,8 +163,9 @@
 		onClose: () => closeDatePicker(),
 		restoreFocus: () => queueMicrotask(() => focusCalendarInput()),
 		getInitialFocusDate: () => {
-			const value = selectedDates.value
-			const selected = Array.isArray(value) ? value[0] ?? null : value
+			const value = keyboardNavigatedDate.value
+				?? (Array.isArray(selectedDates.value) ? selectedDates.value[0] ?? null : selectedDates.value)
+			const selected = value
 			return selected ?? new Date()
 		},
 	})

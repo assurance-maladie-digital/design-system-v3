@@ -677,8 +677,9 @@
 		onClose: () => closeAndRestoreFocus(),
 		restoreFocus: () => scheduleCalendarInputFocusRestore(),
 		getInitialFocusDate: () => {
-			const value = selectedDates.value
-			const selected = Array.isArray(value) ? value[0] ?? null : value
+			const value = keyboardNavigatedDate.value
+				?? (Array.isArray(selectedDates.value) ? selectedDates.value[0] ?? null : selectedDates.value)
+			const selected = value
 			return selected ?? new Date()
 		},
 	})
@@ -836,7 +837,7 @@
 					const displayedState = getDisplayedMonthYearState(date)
 					if (currentMonth.value !== displayedState.month || currentYear.value !== displayedState.year) {
 						syncDisplayedMonthYearFromDate(date)
-						nextTick(() => refreshVisibleCalendarUi())
+						nextTick(() => refreshVisibleCalendarUi({ focusDay: true }))
 					}
 				}
 			})
