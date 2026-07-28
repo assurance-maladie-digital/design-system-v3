@@ -86,6 +86,10 @@ pre.prismjs {
 	background-color: var(--hover-color);
 }
 
+.v-card.home-card {
+	border-radius: 0 !important;
+}
+
 @keyframes fadeIn {
 	from {
 		opacity: 0;
