@@ -58,6 +58,9 @@ export default {
 		'onSubmit': fn(),
 		'onReset': fn(),
 	},
+// `as` (et non `satisfies`) : les `argTypes` documentent des événements
+// (`update:modelValue`, `submit`, `reset`), que le type strict `Meta<typeof SyForm>`
+// n'autorise pas comme clés (props/slots uniquement). Escape hatch assumé.
 } as Meta<typeof SyForm>
 
 type Story = StoryObj<typeof SyForm>

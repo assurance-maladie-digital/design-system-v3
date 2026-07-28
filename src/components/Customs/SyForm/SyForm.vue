@@ -9,8 +9,8 @@
 		validateOnSubmit: true,
 	})
 
+	// `update:modelValue` est déjà généré par `defineModel` — ne pas le redéclarer ici.
 	const emit = defineEmits<{
-		(e: 'update:modelValue', value: boolean): void
 		(e: 'submit', value: { isValid: boolean }): void
 		(e: 'reset'): void
 	}>()
@@ -21,16 +21,25 @@
 	const form = ref<InstanceType<typeof VForm> | null>(null)
 	const vFormStatus = ref<boolean | null>(null)
 
-	const { validateAll, clearAll, resetAll, valide } = useFormValidation()
+	const { validateAll, clearAll, resetAll, valide, validatableComponents } = useFormValidation()
 
 	watch([valide, vFormStatus], ([newValide, newVFormStatus]) => {
+		// Un champ invalide (custom ou Vuetify natif) → formulaire invalide.
 		if (newVFormStatus === false || newValide === false) {
 			model.value = false
 		}
-		else {
-			model.value = newValide === true
+		// Aucun champ custom enregistré → la validité vient des seuls champs Vuetify
+		// natifs (`vFormStatus`, `boolean | null`), plutôt qu'un `true` par vacuité.
+		else if (validatableComponents.value.length === 0) {
+			model.value = newVFormStatus
 		}
-	})
+		// Sinon on préserve le tri-état de l'agrégat custom : `true` si tout est validé,
+		// `null` tant qu'au moins un champ est vierge (« inconnu », à ne pas confondre
+		// avec « invalide »). Le v-model reste donc fidèle à son type `boolean | null`.
+		else {
+			model.value = newValide
+		}
+	}, { immediate: true })
 	const isValid = ref<boolean>(true)
 
 	// Methode de validation globale qui combine Vuetify et nos composants personnalises

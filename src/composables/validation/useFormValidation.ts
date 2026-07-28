@@ -107,6 +107,11 @@ export function useFormValidation() {
 	}
 
 	const valide = computed<boolean | null>(() => {
+		// Aucun composant custom enregistré → l'agrégat n'a aucune information :
+		// on renvoie `null` (« inconnu ») plutôt que `true` par vacuité.
+		if (validatableComponents.value.length === 0) {
+			return null
+		}
 		const hasError = validatableComponents.value.some(component => component.valide === false)
 		if (hasError) {
 			return false
