@@ -1197,6 +1197,13 @@ $ap-grey-mid: #d6d6d6;
 	border-radius: 50%;
 }
 
+:deep(.v-date-picker-month__day[role='gridcell']:focus-visible) {
+	background-color: rgb(255 193 7 / 10%);
+	border: 2px dotted rgb(var(--v-theme-grey-darken60));
+	border-radius: 50%;
+	outline: none;
+}
+
 /* Disable ripple effect on month and year buttons */
 :deep(.v-date-picker-controls__month-btn),
 :deep(.v-date-picker-controls__mode-btn) {
