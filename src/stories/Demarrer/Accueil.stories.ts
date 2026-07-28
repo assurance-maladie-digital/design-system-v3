@@ -132,28 +132,28 @@ export const DesignSystem: StoryObj = {
                   <h3 class="text-h5 font-weight-bold mb-6 text-primary">Design System</h3>
                   <VRow>
                       <VCol cols="12" md="4">
-                          <VCard class="pa-0 h-100 card-hover accueil" elevation="0" href="/?path=/docs/design-tokens-introduction--docs">
+                          <VCard class="pa-0 h-100 card-hover home-card" elevation="0" href="/?path=/docs/design-tokens-introduction--docs">
 							  <img src="/home-card-tokens.svg" alt="Design Tokens" class="w-100" />
 							  <VCardTitle><b>Design Tokens</b></VCardTitle>
                               <VCardText>Les Design Tokens fournissent des recommandations claires et des bonnes pratiques pour assurer l'uniformité et la qualité des interfaces numériques.</VCardText>
                           </VCard>
                       </VCol>
                       <VCol cols="12" md="4">
-						  <VCard class="pa-0 h-100 card-hover accueil" elevation="0" href="/?path=/docs/composants-vue-d-ensemble--docs">
+						  <VCard class="pa-0 h-100 card-hover home-card" elevation="0" href="/?path=/docs/composants-vue-d-ensemble--docs">
 							  <img src="/home-card-components.svg" alt="Components" class="w-100" />
                               <VCardTitle><b>Composants</b></VCardTitle>
                               <VCardText>Les Composants assurent une expérience utilisateur homogène en offrant des éléments réutilisables et standardisés.</VCardText>
                           </VCard>
                       </VCol>
                       <VCol cols="12" md="4">
-						  <VCard class="pa-0 h-100 card-hover accueil" elevation="0" href="/?path=/docs/templates-vue-d-ensemble--docs">
+						  <VCard class="pa-0 h-100 card-hover home-card" elevation="0" href="/?path=/docs/templates-vue-d-ensemble--docs">
 							  <img src="/home-card-templates.svg" alt="Templates" class="w-100" />
                               <VCardTitle><b>Templates</b></VCardTitle>
                               <VCardText>Les Templates facilitent la mise en page en proposant des structures prédéfinies garantissant cohérence et efficacité dans la conception des interfaces.</VCardText>
                           </VCard>
                       </VCol>
                       <VCol cols="12" md="4">
-						  <VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/guide-du-dev-démarrage-installation--docs">
+						  <VCard class="pa-0 h-100 card-hover home-card" elevation="0" href="/?path=/docs/guide-du-dev-démarrage-installation--docs">
 							  <img src="/home-card-dev.svg" alt="Guide du dev" class="w-100" />
                               <VCardTitle><b>Guides du dev</b></VCardTitle>
                               <VCardText>Les Guides du Dev accompagnent les équipes techniques dans l'implémentation du Design System en garantissant une intégration fluide et efficace.</VCardText>
@@ -182,7 +182,7 @@ export const Guidelines: StoryObj = {
 					<h3 class="text-h5 font-weight-bold mb-6 text-primary">Guidelines</h3>
 					<VRow>
 						<VCol cols="12" md="4">
-							<VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/accessibilit%C3%A9-introduction--docs">
+							<VCard class="pa-0 h-100 card-hover home-card" elevation="0" href="/?path=/docs/accessibilit%C3%A9-introduction--docs">
 								<img src="/home-card-access.svg" alt="Accessibilité" class="w-100"/>
 								<VCardTitle><b>Accessibilité</b></VCardTitle>
 								<VCardText>L'Accessibilité permet de concevoir des interfaces inclusives respectant les
@@ -191,7 +191,7 @@ export const Guidelines: StoryObj = {
 							</VCard>
 						</VCol>
 						<VCol cols="12" md="4">
-							<VCard class="pa-0 h-100 card-hover" elevation="0" href="/?path=/docs/%C3%A9co-conception-introduction--introduction">
+							<VCard class="pa-0 h-100 card-hover home-card" elevation="0" href="/?path=/docs/%C3%A9co-conception-introduction--introduction">
 								<img src="/home-card-eco.svg" alt="Eco-conception" class="w-100"/>
 								<VCardTitle><b>Éco-conception</b></VCardTitle>
 								<VCardText>L'éco-conception vise à réduire l'impact environnemental des interfaces

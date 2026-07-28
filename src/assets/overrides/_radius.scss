@@ -115,10 +115,6 @@ $radius-keys: (0, 'sm', 'md', 'lg', 'xl', 'pill', 'circle');
 
 .v-card {
 	border-radius: var(--radius-lg) !important;
-
-	&.accueil {
-		border-radius: 0 !important;
-	}
 }
 
 .v-alert {
