@@ -345,6 +345,8 @@ a {
 
 	.back-to-top {
 		border-radius: var(--v-radius-rounded) !important;
+		height: 36px !important;
+		width: 36px !important;
 	}
 
 	button.v-btn:hover {

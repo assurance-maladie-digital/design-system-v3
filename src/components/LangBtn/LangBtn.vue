@@ -148,6 +148,7 @@
 					:aria-owns="menuId"
 					:aria-expanded="isMenuOpen"
 					class="vd-lang-btn"
+					:ripple="false"
 				>
 					{{ currentLangData.name }}
 					<SyIcon
@@ -206,13 +207,6 @@
 	font-size: var(--v-fontSize-corpsDeTexte);
 	text-transform: none;
 	letter-spacing: inherit;
-
-	&:deep() {
-		.v-btn__underlay,
-		.v-btn__overlay {
-			display: none;
-		}
-	}
 }
 
 .v-theme--dark .vd-lang-btn {

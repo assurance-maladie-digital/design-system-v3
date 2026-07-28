@@ -281,6 +281,10 @@ h2 {
 	flex-shrink: 0;
 }
 
+.sy-dialog-box-close-btn {
+	height: 36px !important;
+}
+
 .sy-dialog-box-draggable .sy-dialog-box-title {
 	cursor: grab;
 
