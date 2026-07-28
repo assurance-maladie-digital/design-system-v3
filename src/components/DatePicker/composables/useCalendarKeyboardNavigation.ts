@@ -62,6 +62,16 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		button.focus({ preventScroll: true })
 	}
 
+	const focusDayCell = (cell: HTMLElement | undefined | null) => {
+		if (!cell) return
+
+		if (!cell.hasAttribute('tabindex')) {
+			cell.setAttribute('tabindex', '-1')
+		}
+
+		cell.focus({ preventScroll: true })
+	}
+
 	const handleMonthDialogNavigation = (event: KeyboardEvent): boolean => {
 		const targetBtn = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>('.v-date-picker-months button')
 		if (!targetBtn) return false
@@ -246,8 +256,8 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		// 1. Chercher par data-v-date
 		const dataDateElements = rootEl.querySelectorAll(`[data-v-date="${iso}"]`)
 		for (const el of Array.from(dataDateElements)) {
-			const btn = (el.tagName === 'BUTTON' ? el : el.querySelector('button')) as HTMLElement
-			if (btn && isActiveContext(btn)) candidates.push(btn)
+			const cell = el.closest<HTMLElement>('[role="gridcell"]') ?? (el as HTMLElement)
+			if (cell && isActiveContext(cell)) candidates.push(cell)
 		}
 
 		// 2. Chercher par texte ou aria-label si vide
@@ -258,20 +268,20 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 				const text = btn.textContent?.trim() || ''
 				const ariaLabel = btn.getAttribute('aria-label') || ''
 				if (text === dayNum.toString() || new RegExp(`\\b${dayNum}\\b`).test(ariaLabel)) {
-					candidates.push(btn)
+					candidates.push(btn.closest<HTMLElement>('[role="gridcell"]') ?? btn.closest<HTMLElement>('.v-date-picker-month__day') ?? btn)
 				}
 			}
 		}
 
 		// Filtrer ceux qui ne sont pas visibles
-		const visibleCandidates = candidates.filter((btn) => {
+		const visibleCandidates = candidates.filter((cell) => {
 			// Autoriser les éléments en transition (opacity peut être 0 au tout début)
-			const windowItem = btn.closest('.v-window-item')
+			const windowItem = cell.closest('.v-window-item')
 			const isEntering = windowItem && Array.from(windowItem.classList).some(c => c.includes('enter-active') || c.includes('enter-to'))
 
-			if (!isEntering && btn.offsetParent === null) return false
+			if (!isEntering && cell.offsetParent === null) return false
 
-			const style = window.getComputedStyle(btn)
+			const style = window.getComputedStyle(cell)
 			return style.display !== 'none' && style.visibility !== 'hidden'
 		})
 
@@ -285,7 +295,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 			const bestCandidate = visibleCandidates[0]
 			if (bestCandidate) {
-				bestCandidate.focus({ preventScroll: true })
+				focusDayCell(bestCandidate)
 
 				// Revérifier le focus après la durée typique d'une transition Vuetify (~350ms)
 				// car le DOM peut être re-rendu et l'élément détruit, ou le focus perdu pendant l'animation.
@@ -528,17 +538,16 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 		const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
 		const iso = toISO(targetDate)
-		let dayBtn = rootEl.querySelector<HTMLElement>(`[data-v-date="${iso}"] button`)
-		if (!dayBtn) {
+		let dayCell = rootEl.querySelector<HTMLElement>(`[data-v-date="${iso}"][role="gridcell"], [data-v-date="${iso}"]`)
+		if (!dayCell) {
 			// Fallback: lire le mois affiché depuis le DOM et focusser le 1er jour non-adjacent
 			const allDates = Array.from(rootEl.querySelectorAll<HTMLElement>('[data-v-date]'))
 			const nonAdjacent = allDates.filter(el => !el.classList.contains('v-date-picker-month__day--adjacent'))
 			if (nonAdjacent.length > 0) {
-				const firstEl = nonAdjacent[0]!
-				dayBtn = firstEl.querySelector<HTMLElement>('button')
+				dayCell = nonAdjacent[0]!
 			}
 		}
-		dayBtn?.focus({ preventScroll: true })
+		focusDayCell(dayCell)
 	}
 
 	watch(isDatePickerVisible, (visible) => {

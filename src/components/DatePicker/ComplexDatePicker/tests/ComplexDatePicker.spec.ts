@@ -987,7 +987,7 @@ describe('ComplexDatePicker.clean', () => {
 		const selectedDayCell = focused.closest('.v-date-picker-month__day') as HTMLElement | null
 		expect(selectedDayCell).not.toBeNull()
 		expect(selectedDayCell?.closest('.v-date-picker-month')).not.toBeNull()
-		expect(focused.tagName).toBe('BUTTON')
+		expect(focused.getAttribute('role') ?? focused.closest('[role="gridcell"]')?.getAttribute('role')).toBe('gridcell')
 
 		wrapper.unmount()
 	})

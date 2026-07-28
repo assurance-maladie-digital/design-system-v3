@@ -50,9 +50,12 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 	const focusDayButton = (root: HTMLElement): boolean => {
 		const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
 		const iso = dayjs(targetDate).format('YYYY-MM-DD')
-		const dayBtn = root.querySelector<HTMLElement>(`[data-v-date="${iso}"] button`)
+		const dayCell = root.querySelector<HTMLElement>(`[data-v-date="${iso}"][role="gridcell"], [data-v-date="${iso}"]`)
+		if (dayCell && !dayCell.hasAttribute('tabindex')) {
+			dayCell.setAttribute('tabindex', '-1')
+		}
 
-		return focusElement(dayBtn)
+		return focusElement(dayCell)
 	}
 
 	const focusMonthButton = (root: HTMLElement): boolean => {
