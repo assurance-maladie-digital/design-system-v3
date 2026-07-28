@@ -1174,8 +1174,8 @@ $ap-grey-mid: #d6d6d6;
 	}
 
 	:deep(.v-btn.v-btn--density-default) {
-	display: flex;
-	align-items: center;
+		display: flex;
+		align-items: center;
 	}
 }
 
