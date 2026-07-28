@@ -1198,8 +1198,8 @@ $ap-grey-mid: #d6d6d6;
 }
 
 :deep(.v-date-picker-month__day[role='gridcell']:focus-visible) {
-	background-color: rgb(255 193 7 / 10%);
-	border: 2px dotted rgb(var(--v-theme-grey-darken60));
+	background-color: rgb(var(--v-theme-primary));
+	border: 2px solid rgb(var(--v-theme-primary));
 	border-radius: 50%;
 	outline: none;
 }
