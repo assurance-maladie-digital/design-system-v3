@@ -1592,6 +1592,11 @@ $ap-grey-mid: #d6d6d6;
 	height: 36px !important;
 }
 
+:deep(.v-btn.v-btn--density-default) {
+	display: flex;
+	align-items: center;
+}
+
 .date-picker-title {
 	display: block;
 	text-transform: lowercase;

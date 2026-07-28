@@ -1172,6 +1172,11 @@ $ap-grey-mid: #d6d6d6;
 	:deep(.v-btn) {
 		height: 36px !important;
 	}
+
+	:deep(.v-btn.v-btn--density-default) {
+	display: flex;
+	align-items: center;
+	}
 }
 
 /* En mode calendar, le champ est readonly : pas de cursor pointer sur l'input et les icônes */
