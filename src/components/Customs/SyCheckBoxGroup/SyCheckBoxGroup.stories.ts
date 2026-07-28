@@ -27,6 +27,18 @@ Il permet de choisir **une ou plusieurs valeurs** parmi une liste d'options.
 	},
 	argTypes: {
 		...getValidationDocumentation(),
+		locales: {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés et messages de validation). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant. La prop accepte un objet partiel : seules les clés renseignées surchargent les valeurs par défaut, le reste est conservé.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	requiredField: (label: string) => string,
+	labelledbyMessage: string,
+	optionLabel: (value: unknown) => string,
+}` },
+				category: 'props',
+			},
+		},
 		modelValue: { control: false },
 		helpText: {
 			description: 'Texte d\'aide affiché sous le groupe (disparaît en cas de message de validation)',

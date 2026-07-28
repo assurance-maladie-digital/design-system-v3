@@ -4,9 +4,13 @@ import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import { mdiAlertCircle, mdiAlertOutline, mdiCheck } from '@mdi/js'
 import { type ValidationRule } from '@/composables/validation/useValidation'
 import { useValidation, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
-import { useValidatable } from '@/composables/validation/useValidatable'
 
-export function useSyAutocompleteValidation(props: FieldValidationProps) {
+export function useSyAutocompleteValidation(
+	props: FieldValidationProps,
+	locales: Ref<{
+		requiredField: (label: string | undefined) => string
+	}>,
+) {
 	const hasInteracted = ref(false)
 	const focused = ref(false)
 
@@ -15,7 +19,7 @@ export function useSyAutocompleteValidation(props: FieldValidationProps) {
 			? [{
 					type: 'required',
 					options: {
-						message: `Le champ ${props.label || 'ce champ'} est requis.`,
+						message: locales.value.requiredField(props.label),
 						fieldIdentifier: props.label,
 					},
 				}]
@@ -79,8 +83,6 @@ export function useSyAutocompleteValidation(props: FieldValidationProps) {
 		focused.value = false
 		validate()
 	}
-
-	useValidatable(validateOnSubmit, clearValidation)
 
 	return {
 		focused,

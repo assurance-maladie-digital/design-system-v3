@@ -1,5 +1,6 @@
 ﻿import { formatDate } from '@/utils/formatDate'
 import dayjs from 'dayjs'
+import { locales } from '../locales'
 import type { DatePickerRule } from '../types'
 
 /**
@@ -53,7 +54,7 @@ export const validateEmptyOrIncompleteDate = (
 		return {
 			shouldContinue: false,
 			isValid: false,
-			errorMessage: 'Ce champ est requis',
+			errorMessage: locales.fieldRequired,
 		}
 	}
 

@@ -6,7 +6,9 @@
 	import { mdiChevronDown, mdiCloseCircle } from '@mdi/js'
 	import { computed, nextTick, onMounted, readonly as readonlyState, ref, useId, useSlots, watch } from 'vue'
 	import { useSyAutocompleteValidation } from './composables/useSyAutocompleteValidation'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 	import type { ItemType, SelectArray, SelectValue } from './types'
 	import { ariaManager } from './utils/ariaManager'
 	import { useItemUtils } from './utils/useItemUtils'
@@ -37,6 +39,7 @@
 		selectionText?: (selected: SelectArray) => string
 		textKey?: string
 		valueKey?: string
+		locales?: DeepPartial<typeof defaultLocales>
 	}
 
 	const props = withDefaults(
@@ -57,7 +60,7 @@
 			menuId: 'sy-autocomplete-menu',
 			modelValue: null,
 			multiple: false,
-			noDataText: locales.noData,
+			noDataText: undefined,
 			helpText: '',
 			selectionText: undefined,
 			placeholder: '',
@@ -69,8 +72,13 @@
 			// Diverge du défaut global (true) : modelValue ne change que lors d'une sélection (pas à chaque frappe),
 			// donc valider sur ce changement donne un retour immédiat après sélection sans erreurs prématurées pendant la saisie.
 			isValidateOnBlur: false,
+			locales: () => ({}),
 		},
 	)
+
+	const locales = useLocales(defaultLocales, () => props.locales)
+
+	const resolvedNoDataText = computed(() => props.noDataText ?? locales.value.noData)
 
 	const emit = defineEmits(['update:modelValue', 'search'])
 
@@ -103,7 +111,7 @@
 		displayHasWarning,
 		displayHasSuccess,
 		validationIcon,
-	} = useSyAutocompleteValidation(props)
+	} = useSyAutocompleteValidation(props, locales)
 
 	const formattedItems = computed(() => props.items.map((item) => {
 		if (typeof item === 'string') {
@@ -320,11 +328,11 @@
 
 	const resultsLiveText = computed(() => {
 		if (!hasInteracted.value) return
-		if (props.loading) return 'Chargement des résultats'
+		if (props.loading) return locales.value.loading
 		const count = filteredItems.value.length
 		if (!props.filter) return ''
-		if (count === 0) return props.hideNoData ? 'Aucun résultat' : props.noDataText
-		return `${count} option${count > 1 ? 's' : ''} disponible${count > 1 ? 's' : ''}`
+		if (count === 0) return resolvedNoDataText.value
+		return locales.value.nAvailable(count)
 	})
 
 	onMounted(() => {
@@ -495,7 +503,7 @@
 				<slot name="prepend-item" />
 				<template v-if="filteredItems.length === 0 && !hideNoData && !loading">
 					<VListItem
-						:title="noDataText"
+						:title="resolvedNoDataText"
 						disabled
 						tag="li"
 					/>

@@ -5,6 +5,9 @@
 	import { mdiChevronDown, mdiCloseCircle, mdiInformation } from '@mdi/js'
 	import { computed, onMounted, readonly as readonlyState, ref, useId, watch } from 'vue'
 	import defaultOptions from './config'
+	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		modelValue?: Record<string, unknown> | string | null
@@ -22,6 +25,7 @@
 		customRules?: ValidationRule[]
 		disableErrorHandling?: boolean
 		bgColor?: string
+		locales?: DeepPartial<typeof defaultLocales>
 	}>(), {
 
 		modelValue: null,
@@ -39,7 +43,10 @@
 		customRules: () => [],
 		disableErrorHandling: false,
 		bgColor: 'white',
+		locales: () => ({}),
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const options = useCustomizableOptions(defaultOptions, props)
 
@@ -174,7 +181,7 @@
 		? [{
 			type: 'required',
 			options: {
-				message: `Le champ ${props.label || 'ce champ'} est requis.`,
+				message: locales.value.requiredField(props.label),
 				fieldIdentifier: props.label,
 			},
 		}]
@@ -270,7 +277,7 @@
 			<SyIcon
 				v-if="selectedItemText && props.clearable"
 				:icon="mdiCloseCircle"
-				aria-label="Supprimer"
+				:aria-label="locales.clearLabel"
 				role="button"
 				@click.stop.prevent="selectItem(null)"
 			/>

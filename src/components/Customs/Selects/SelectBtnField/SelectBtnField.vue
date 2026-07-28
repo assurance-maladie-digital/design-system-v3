@@ -5,6 +5,9 @@
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import { useSelectBtnFieldValidation } from './composables/useSelectBtnFieldValidation'
 	import type { SelectBtnItem, SelectBtnValue } from './types'
+	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: SelectBtnValue
@@ -15,6 +18,7 @@
 		inline?: boolean
 		helpText?: string
 		hideDetails?: boolean
+		locales?: DeepPartial<typeof defaultLocales>
 	} & FieldValidationProps>(), {
 		modelValue: null,
 		items: () => [],
@@ -24,6 +28,7 @@
 		inline: false,
 		helpText: undefined,
 		hideDetails: false,
+		locales: () => ({}),
 		...validationPropsDefaults,
 		isValidateOnBlur: false, // La validation se déclenche immédiatement à la sélection
 	})
@@ -36,6 +41,8 @@
 	const listRef = ref<HTMLElement | null>(null)
 	const optionsRef = ref<Array<HTMLElement>>([])
 
+	const locales = useLocales(defaultLocales, () => props.locales)
+
 	const {
 		focused,
 		validate,
@@ -46,7 +53,7 @@
 		hasError,
 		hasWarning,
 		hasSuccess,
-	} = useSelectBtnFieldValidation(props)
+	} = useSelectBtnFieldValidation(props, locales)
 
 	defineExpose({
 		validateOnSubmit: validate,

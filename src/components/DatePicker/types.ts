@@ -86,6 +86,7 @@ export interface DatePickerCommonProps {
  * Props spécifiques à DateTextInput
  */
 export interface DateTextInputProps extends Omit<DatePickerCommonProps, 'displayAsterisk' | 'displayHolidayDays' | 'displayTodayButton' | 'displayWeekendDays' | 'headingLevel' | 'hideDetails' | 'noCalendar' | 'period' | 'showWeekNumber' | 'textFieldActivator' | 'width'> {
+	disableClickButton?: boolean
 	externalErrorMessages?: string[]
 }
 

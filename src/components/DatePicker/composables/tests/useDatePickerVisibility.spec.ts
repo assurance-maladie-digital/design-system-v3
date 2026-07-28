@@ -254,6 +254,66 @@ describe('useDatePickerVisibility', () => {
 		})
 	})
 
+	describe('handleKeyboardNavigation', () => {
+		it('ouvre le CalendarMode sur ArrowDown', () => {
+			const { handleKeyboardNavigation } = useDatePickerVisibility({
+				isDatePickerVisible,
+				isManualInputActive,
+				hasInteracted,
+				updateAccessibility: mockUpdateAccessibility,
+				validateDates: mockValidateDates,
+				emitClosed: mockEmitClosed,
+				emitFocus: mockEmitFocus,
+			})
+
+			const event = new KeyboardEvent('keydown', { key: 'ArrowDown' })
+			const preventDefaultSpy = vi.spyOn(event, 'preventDefault')
+
+			expect(handleKeyboardNavigation(event)).toBe(true)
+			expect(preventDefaultSpy).toHaveBeenCalledTimes(1)
+			expect(isDatePickerVisible.value).toBe(true)
+		})
+
+		it('n’ouvre pas le CalendarMode sur ArrowDown si readonly=true', () => {
+			const { handleKeyboardNavigation } = useDatePickerVisibility({
+				readonly: true,
+				isDatePickerVisible,
+				isManualInputActive,
+				hasInteracted,
+				updateAccessibility: mockUpdateAccessibility,
+				validateDates: mockValidateDates,
+				emitClosed: mockEmitClosed,
+				emitFocus: mockEmitFocus,
+			})
+
+			const event = new KeyboardEvent('keydown', { key: 'ArrowDown' })
+			const preventDefaultSpy = vi.spyOn(event, 'preventDefault')
+
+			expect(handleKeyboardNavigation(event)).toBe(false)
+			expect(preventDefaultSpy).not.toHaveBeenCalled()
+			expect(isDatePickerVisible.value).toBe(false)
+		})
+
+		it('n’ouvre pas le CalendarMode sur Espace', () => {
+			const { handleKeyboardNavigation } = useDatePickerVisibility({
+				isDatePickerVisible,
+				isManualInputActive,
+				hasInteracted,
+				updateAccessibility: mockUpdateAccessibility,
+				validateDates: mockValidateDates,
+				emitClosed: mockEmitClosed,
+				emitFocus: mockEmitFocus,
+			})
+
+			const event = new KeyboardEvent('keydown', { key: ' ' })
+			const preventDefaultSpy = vi.spyOn(event, 'preventDefault')
+
+			expect(handleKeyboardNavigation(event)).toBe(false)
+			expect(preventDefaultSpy).not.toHaveBeenCalled()
+			expect(isDatePickerVisible.value).toBe(false)
+		})
+	})
+
 	describe('handleClickOutside', () => {
 		it('ne devrait rien faire si le CalendarMode est fermé', () => {
 			const { handleClickOutside } = useDatePickerVisibility({
@@ -332,6 +392,7 @@ describe('useDatePickerVisibility', () => {
 
 			handleClickOutside(event)
 
+			expect(isDatePickerVisible.value).toBe(false)
 			expect(mockEmitClosed).toHaveBeenCalledTimes(1)
 			expect(mockValidateDates).toHaveBeenCalledTimes(1)
 		})

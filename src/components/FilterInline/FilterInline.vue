@@ -5,14 +5,18 @@
 	import ChipList from '../ChipList/ChipList.vue'
 	import { locales as defaultLocales } from './locales'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: FilterProp
-		locales?: typeof defaultLocales
+		locales?: DeepPartial<typeof defaultLocales>
 	}>(), {
 		modelValue: () => [],
-		locales: () => defaultLocales,
+		locales: () => ({}),
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: FilterProp): void

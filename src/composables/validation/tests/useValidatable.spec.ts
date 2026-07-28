@@ -74,6 +74,44 @@ describe('useValidatable', () => {
 		expect(form.validatableComponents.value).toHaveLength(0)
 	})
 
+	it('does NOT de-duplicate: two useValidatable() calls in the same instance register twice', async () => {
+		// Contract: useValidatable registers once per call. It is each component's
+		// responsibility to have a single registration path (see
+		// formComponentsRegistration.spec.ts). This test pins the behaviour so the
+		// framework does not silently absorb duplicate calls and hide the bug.
+		const firstValidate = vi.fn(() => true)
+		const secondValidate = vi.fn(() => true)
+
+		const ChildComponent = defineComponent({
+			name: 'DoubleValidatableChild',
+			setup() {
+				useValidatable(firstValidate)
+				useValidatable(secondValidate)
+				return () => null
+			},
+		})
+
+		const ParentWithForm = defineComponent({
+			name: 'ParentWithFormForDoubleValidatable',
+			setup() {
+				const form = useFormValidation()
+				return { form }
+			},
+			render() {
+				return h(ChildComponent)
+			},
+		})
+
+		const wrapper = mount(ParentWithForm)
+		const form = (wrapper.vm as { form: FormValidationApi }).form
+
+		expect(form.validatableComponents.value).toHaveLength(2)
+
+		wrapper.unmount()
+		await flushPromises()
+		expect(form.validatableComponents.value).toHaveLength(0)
+	})
+
 	it('does nothing harmful when no form provider is present', async () => {
 		const OrphanComponent = defineComponent({
 			name: 'OrphanValidatable',

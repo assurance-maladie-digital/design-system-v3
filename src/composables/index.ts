@@ -9,3 +9,6 @@ export * from './widthable'
 
 // usePagination Amelipro
 export * from './usePagination'
+
+// Locales
+export * from './useLocales'

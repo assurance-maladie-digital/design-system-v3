@@ -10,6 +10,9 @@
 	import { vMaska } from 'maska/vue'
 	import imgVital from '@/assets/amelipro/img/idpa/carte-vitale.svg'
 	import apcvLogo from '@/assets/amelipro/img/idpa/apcv_logo.svg'
+	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = defineProps({
 		autoCompleteCardItems: {
@@ -72,7 +75,13 @@
 			type: String,
 			default: undefined,
 		},
+		locales: {
+			type: Object as PropType<DeepPartial<typeof defaultLocales>>,
+			default: () => ({}),
+		},
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emit = defineEmits(['click:vital-card', 'click:vital-card-app', 'submit:nir', 'update:model-value'])
 
@@ -90,7 +99,7 @@
 		textColor: 'ap-blue-darken-1',
 	}
 
-	const vitalCardBtnText = computed(() => (props.autoCompleteCardItems ? 'Lire carte virtuelle' : 'Lire la carte'))
+	const vitalCardBtnText = computed(() => (props.autoCompleteCardItems ? locales.value.readVirtualCardLabel : locales.value.readCardLabel))
 
 	const clickVitalCard = () => emit('click:vital-card', `${props.uniqueId}-vital-card-btn`)
 	const clickVitalCardApp = () => emit('click:vital-card-app', `${props.uniqueId}-vital-card-app-btn`)
@@ -113,7 +122,7 @@
 				class="mt-4"
 			>
 				<img
-					alt="Carte Vitale"
+					:alt="locales.vitalCardAlt"
 					class="mx-auto mb-6 d-block"
 					:src="imgVital"
 				>
@@ -122,7 +131,7 @@
 					v-if="autoCompleteCardItems"
 					v-model="currentValue.autoCompleteValue"
 					:items="autoCompleteCardItems"
-					label="Sélectionnez une carte :"
+					:label="locales.cardSelectLabel"
 					:rules="rulesAutoCompleteCard"
 					:unique-id="`${uniqueId}-select-card`"
 				/>
@@ -164,7 +173,7 @@
 					v-bind="noVitalCard ? undefined : isSecondaryBtnProps"
 					@click="clickVitalCardApp"
 				>
-					Lire appli carte vitale
+					{{ locales.readVitalCardAppLabel }}
 				</AmeliproBtn>
 
 				<AmeliproMessage
@@ -189,7 +198,7 @@
 					classes="mt-6"
 					clearable
 					:counter="13"
-					label="Saisir son NIR :"
+					:label="locales.nirInputLabel"
 					:rules="rulesNir"
 					:unique-id="`${uniqueId}-nir`"
 					@keypress.enter.prevent="submitNir"
@@ -201,7 +210,7 @@
 					:unique-id="`${uniqueId}-nir-btn`"
 					@click="submitNir"
 				>
-					Valider le NIR
+					{{ locales.validateNirLabel }}
 				</AmeliproBtn>
 
 				<AmeliproMessage
@@ -228,7 +237,7 @@
 				>
 					<span class="loader" />
 				</span>
-				Veuillez patienter pendant le chargement...
+				{{ locales.loadingText }}
 			</p>
 		</div>
 	</div>

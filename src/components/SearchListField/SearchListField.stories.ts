@@ -15,6 +15,17 @@ const meta = {
 		}),
 	],
 	argTypes: {
+		locales: {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (titre de la liste et compteur d\'éléments). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant. La prop accepte un objet partiel : seules les clés renseignées surchargent les valeurs par défaut, le reste est conservé.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	searchListTitle: string,
+	nbItems: (count: number) => string,
+}` },
+				category: 'props',
+			},
+		},
 		modelValue: {
 			default: '[]',
 		},

@@ -1,5 +1,6 @@
 import { type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 import { type locales as defaultLocales } from './locales'
+import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 export type DisplayFormat = 'code' | 'code-abbreviation' | 'code-country' | 'country' | 'abbreviation'
 export type Indicatif = {
@@ -26,5 +27,5 @@ export type PhoneFieldProps = FieldValidationProps & {
 	autocompleteCountryCode?: string
 	autocompletePhone?: string
 	withoutFieldset?: boolean
-	locales?: typeof defaultLocales
+	locales?: DeepPartial<typeof defaultLocales>
 }

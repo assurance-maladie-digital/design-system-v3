@@ -1,4 +1,5 @@
 import { computed, ref } from 'vue'
+import type { Ref } from 'vue'
 import { mdiAlertCircle, mdiAlertOutline, mdiCheck } from '@mdi/js'
 import { useValidation, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 import type { ValidationRule } from '@/composables/validation/useValidation'
@@ -11,14 +12,19 @@ import type { ValidationRule } from '@/composables/validation/useValidation'
  * - validation immédiate à la sélection (isValidateOnBlur à `false` par défaut, comme un groupe de boutons),
  * - intégration automatique au SyForm via le useValidatable interne à useValidation.
  */
-export function useSelectBtnFieldValidation(props: FieldValidationProps & { modelValue?: unknown }) {
+export function useSelectBtnFieldValidation(
+	props: FieldValidationProps & { modelValue?: unknown },
+	locales: Ref<{
+		requiredField: (label: string | undefined) => string
+	}>,
+) {
 	const focused = ref(false)
 
 	const defaultRules = computed<ValidationRule[]>(() => props.required
 		? [{
 				type: 'required',
 				options: {
-					message: `Le champ ${props.label || 'ce champ'} est requis.`,
+					message: locales.value.requiredField(props.label),
 					fieldIdentifier: props.label,
 				},
 			}]
