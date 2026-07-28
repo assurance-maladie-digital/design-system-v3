@@ -27,6 +27,49 @@ const getFocusableElements = (root: HTMLElement): HTMLElement[] => {
 	)
 }
 
+const getDayGridFocusTarget = (root: HTMLElement, getInitialFocusDate?: () => Date): HTMLElement | null => {
+	const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
+	const iso = dayjs(targetDate).format('YYYY-MM-DD')
+	const dayCell = root.querySelector<HTMLElement>(`[data-v-date="${iso}"][role="gridcell"], [data-v-date="${iso}"]`)
+	if (dayCell && !dayCell.hasAttribute('tabindex')) {
+		dayCell.setAttribute('tabindex', '-1')
+	}
+
+	return dayCell
+}
+
+const getLogicalFocusOrder = (
+	root: HTMLElement,
+	getInitialFocusDate?: () => Date,
+): HTMLElement[] => {
+	const focusables = getFocusableElements(root)
+	const dayGrid = root.querySelector<HTMLElement>('.v-date-picker-month')
+	if (!dayGrid) return focusables
+
+	const gridTarget = getDayGridFocusTarget(root, getInitialFocusDate)
+	if (!gridTarget) return focusables
+
+	const order: HTMLElement[] = []
+	let insertedGrid = false
+
+	for (const focusable of focusables) {
+		if (!insertedGrid && Boolean(focusable.compareDocumentPosition(dayGrid) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+			order.push(gridTarget)
+			insertedGrid = true
+		}
+
+		if (!dayGrid.contains(focusable)) {
+			order.push(focusable)
+		}
+	}
+
+	if (!insertedGrid) {
+		order.push(gridTarget)
+	}
+
+	return order
+}
+
 const focusElement = (element: HTMLElement | null | undefined): boolean => {
 	if (!element) return false
 	element.focus({ preventScroll: true })
@@ -48,13 +91,7 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 	}
 
 	const focusDayButton = (root: HTMLElement): boolean => {
-		const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
-		const iso = dayjs(targetDate).format('YYYY-MM-DD')
-		const dayCell = root.querySelector<HTMLElement>(`[data-v-date="${iso}"][role="gridcell"], [data-v-date="${iso}"]`)
-		if (dayCell && !dayCell.hasAttribute('tabindex')) {
-			dayCell.setAttribute('tabindex', '-1')
-		}
-
+		const dayCell = getDayGridFocusTarget(root, getInitialFocusDate)
 		return focusElement(dayCell)
 	}
 
@@ -120,7 +157,7 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 
 		const target = event.target as HTMLElement | null
 		const todayButton = root.querySelector<HTMLElement>(TODAY_BUTTON_SELECTOR)
-		const focusables = getFocusableElements(root)
+		const focusables = getLogicalFocusOrder(root, getInitialFocusDate)
 		const firstFocusable = focusables[0]
 		const lastFocusable = focusables.at(-1)
 

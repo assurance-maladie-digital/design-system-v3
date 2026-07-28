@@ -547,14 +547,24 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		const iso = toISO(targetDate)
 		let dayCell = rootEl.querySelector<HTMLElement>(`[data-v-date="${iso}"][role="gridcell"], [data-v-date="${iso}"]`)
 		if (!dayCell) {
-			// Fallback: lire le mois affiché depuis le DOM et focusser le 1er jour non-adjacent
 			const allDates = Array.from(rootEl.querySelectorAll<HTMLElement>('[data-v-date]'))
 			const nonAdjacent = allDates.filter(el => !el.classList.contains('v-date-picker-month__day--adjacent'))
 			if (nonAdjacent.length > 0) {
 				dayCell = nonAdjacent[0]!
 			}
 		}
-		focusDayCell(dayCell)
+
+		if (dayCell) {
+			focusDayCell(dayCell)
+			setTimeout(() => {
+				if (document.activeElement !== dayCell || !dayCell.isConnected) {
+					focusDateButton(targetDate)
+				}
+			}, 0)
+			return
+		}
+
+		focusDateButton(targetDate)
 	}
 
 	watch(isDatePickerVisible, (visible) => {
