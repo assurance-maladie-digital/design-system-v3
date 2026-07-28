@@ -1,6 +1,5 @@
 <script setup lang="ts">
-	import { computed, ref } from 'vue'
-
+	import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 	type Domain = 'strategy' | 'architecture' | 'ux' | 'backend' | 'maintenance'
 	type Level = 1 | 2
 
@@ -132,13 +131,36 @@
 
 	const hoveredSelection = ref<Selection | null>(null)
 	const selectedSelection = ref<Selection | null>(null)
+	const selectedLevel = ref<Level | null>(null)
+
+	const schemaContainerRef = ref<HTMLElement | null>(null)
+
+	function resetGraph() {
+		hoveredSelection.value = null
+		selectedSelection.value = null
+		selectedLevel.value = null
+	}
+
+	function handleOutsideClick(event: MouseEvent) {
+		const target = event.target
+
+		if (!(target instanceof Node))
+			return
+
+		if (!schemaContainerRef.value?.contains(target))
+			resetGraph()
+	}
+
+	onMounted(() => {
+		document.addEventListener('click', handleOutsideClick)
+	})
+
+	onBeforeUnmount(() => {
+		document.removeEventListener('click', handleOutsideClick)
+	})
 
 	const activeSelection = computed(
 		() => hoveredSelection.value ?? selectedSelection.value,
-	)
-
-	const activeDomain = computed(
-		() => activeSelection.value?.domain ?? null,
 	)
 
 	const selectedData = computed(() => {
@@ -184,17 +206,44 @@
 	}
 
 	function selectDomain(domain: Domain, level: Level) {
+		selectedLevel.value = level
 		selectedSelection.value = { domain, level }
 		emit('select', selectedSelection.value)
 	}
 
+	function selectLevel(level: Level) {
+		selectedLevel.value = level
+		selectedSelection.value = null
+		hoveredSelection.value = null
+	}
+
 	function isSelected(domain: Domain, level: Level) {
+		if (selectedLevel.value)
+			return false
+
 		return activeSelection.value?.domain === domain && activeSelection.value.level === level
+	}
+
+	function isMuted(domain: Domain, level: Level) {
+		if (selectedLevel.value)
+			return selectedLevel.value !== level
+
+		if (!activeSelection.value || activeSelection.value.level !== level)
+			return false
+
+		return !isSelected(domain, level)
+	}
+
+	function isLevelMuted(level: Level) {
+		return selectedLevel.value !== null && selectedLevel.value !== level
 	}
 </script>
 
 <template>
-	<div class="eco-schema-layout">
+	<div
+		ref="schemaContainerRef"
+		class="eco-schema-layout"
+	>
 		<!-- eslint-disable vuejs-accessibility/no-static-element-interactions -->
 		<svg
 			class="eco-schema"
@@ -213,7 +262,7 @@
 			<!-- Niveau 1 : segments intérieurs -->
 			<g
 				class="schema-domain schema-domain--strategy schema-domain--interactive schema-domain--level-1"
-				:class="{ 'schema-domain--active': isSelected('strategy', 1), 'schema-domain--muted': activeSelection && !isSelected('strategy', 1) }"
+				:class="{ 'schema-domain--active': isSelected('strategy', 1), 'schema-domain--muted': isMuted('strategy', 1) }"
 				tabindex="0"
 				role="button"
 				aria-label="Stratégie, niveau 1"
@@ -233,7 +282,7 @@
 			</g>
 			<g
 				class="schema-domain schema-domain--architecture schema-domain--interactive schema-domain--level-1"
-				:class="{ 'schema-domain--active': isSelected('architecture', 1), 'schema-domain--muted': activeSelection && !isSelected('architecture', 1) }"
+				:class="{ 'schema-domain--active': isSelected('architecture', 1), 'schema-domain--muted': isMuted('architecture', 1) }"
 				tabindex="0"
 				role="button"
 				aria-label="Cadrage et architecture, niveau 1"
@@ -253,7 +302,7 @@
 			</g>
 			<g
 				class="schema-domain schema-domain--ux schema-domain--interactive schema-domain--level-1"
-				:class="{ 'schema-domain--active': isSelected('ux', 1), 'schema-domain--muted': activeSelection && !isSelected('ux', 1) }"
+				:class="{ 'schema-domain--active': isSelected('ux', 1), 'schema-domain--muted': isMuted('ux', 1) }"
 				tabindex="0"
 				role="button"
 				aria-label="UX, UI et développement front, niveau 1"
@@ -273,7 +322,7 @@
 			</g>
 			<g
 				class="schema-domain schema-domain--backend schema-domain--interactive schema-domain--level-1"
-				:class="{ 'schema-domain--active': isSelected('backend', 1), 'schema-domain--muted': activeSelection && !isSelected('backend', 1) }"
+				:class="{ 'schema-domain--active': isSelected('backend', 1), 'schema-domain--muted': isMuted('backend', 1) }"
 				tabindex="0"
 				role="button"
 				aria-label="Développement back, niveau 1"
@@ -293,7 +342,7 @@
 			</g>
 			<g
 				class="schema-domain schema-domain--maintenance schema-domain--interactive schema-domain--level-1"
-				:class="{ 'schema-domain--active': isSelected('maintenance', 1), 'schema-domain--muted': activeSelection && !isSelected('maintenance', 1) }"
+				:class="{ 'schema-domain--active': isSelected('maintenance', 1), 'schema-domain--muted': isMuted('maintenance', 1) }"
 				tabindex="0"
 				role="button"
 				aria-label="Maintenance et run, niveau 1"
@@ -314,14 +363,22 @@
 
 			<!-- Anneau Niveau 2 -->
 			<path
+				class="schema-level-selector"
+				:class="{ 'schema-level-selector--active': selectedLevel === 2, 'schema-level-element--muted': isLevelMuted(2) }"
 				d="M918 617C918 752.31 808.31 862 673 862C537.69 862 428 752.31 428 617C428 481.69 537.69 372 673 372C808.31 372 918 481.69 918 617ZM476 617C476 725.8 564.2 814 673 814C781.8 814 870 725.8 870 617C870 508.2 781.8 420 673 420C564.2 420 476 508.2 476 617Z"
 				fill="#1E3A8A"
+				tabindex="0"
+				role="button"
+				aria-label="Afficher le niveau 2"
+				@click="selectLevel(2)"
+				@keydown.enter.prevent="selectLevel(2)"
+				@keydown.space.prevent="selectLevel(2)"
 			/>
 
 			<!-- Niveau 2 : segments extérieurs interactifs -->
 			<g
 				class="schema-domain schema-domain--strategy schema-domain--interactive schema-domain--level-2"
-				:class="{ 'schema-domain--active': isSelected('strategy', 2), 'schema-domain--muted': activeSelection && !isSelected('strategy', 2) }"
+				:class="{ 'schema-domain--active': isSelected('strategy', 2), 'schema-domain--muted': isMuted('strategy', 2) }"
 				tabindex="0"
 				role="button"
 				:aria-label="'Stratégie'"
@@ -341,7 +398,7 @@
 			</g>
 			<g
 				class="schema-domain schema-domain--architecture schema-domain--interactive schema-domain--level-2"
-				:class="{ 'schema-domain--active': isSelected('architecture', 2), 'schema-domain--muted': activeSelection && !isSelected('architecture', 2) }"
+				:class="{ 'schema-domain--active': isSelected('architecture', 2), 'schema-domain--muted': isMuted('architecture', 2) }"
 				tabindex="0"
 				role="button"
 				:aria-label="'Cadrage et architecture'"
@@ -361,7 +418,7 @@
 			</g>
 			<g
 				class="schema-domain schema-domain--ux schema-domain--interactive schema-domain--level-2"
-				:class="{ 'schema-domain--active': isSelected('ux', 2), 'schema-domain--muted': activeSelection && !isSelected('ux', 2) }"
+				:class="{ 'schema-domain--active': isSelected('ux', 2), 'schema-domain--muted': isMuted('ux', 2) }"
 				tabindex="0"
 				role="button"
 				:aria-label="'UX, UI et développement front'"
@@ -381,7 +438,7 @@
 			</g>
 			<g
 				class="schema-domain schema-domain--backend schema-domain--interactive schema-domain--level-2"
-				:class="{ 'schema-domain--active': isSelected('backend', 2), 'schema-domain--muted': activeSelection && !isSelected('backend', 2) }"
+				:class="{ 'schema-domain--active': isSelected('backend', 2), 'schema-domain--muted': isMuted('backend', 2) }"
 				tabindex="0"
 				role="button"
 				:aria-label="'Développement back'"
@@ -401,7 +458,7 @@
 			</g>
 			<g
 				class="schema-domain schema-domain--maintenance schema-domain--interactive schema-domain--level-2"
-				:class="{ 'schema-domain--active': isSelected('maintenance', 2), 'schema-domain--muted': activeSelection && !isSelected('maintenance', 2) }"
+				:class="{ 'schema-domain--active': isSelected('maintenance', 2), 'schema-domain--muted': isMuted('maintenance', 2) }"
 				tabindex="0"
 				role="button"
 				:aria-label="'Maintenance et run'"
@@ -422,10 +479,18 @@
 
 			<!-- Centre -->
 			<circle
+				class="schema-level-selector"
+				:class="{ 'schema-level-selector--active': selectedLevel === 1, 'schema-level-element--muted': isLevelMuted(1) }"
 				cx="673"
 				cy="617"
 				r="100"
 				fill="#BBF7D0"
+				tabindex="0"
+				role="button"
+				aria-label="Afficher le niveau 1"
+				@click="selectLevel(1)"
+				@keydown.enter.prevent="selectLevel(1)"
+				@keydown.space.prevent="selectLevel(1)"
 			/>
 
 			<!-- Textes des niveaux -->
@@ -437,6 +502,7 @@
 					x="673"
 					y="620"
 					class="schema-level-text__title schema-level-text__title--level-1"
+					:class="{ 'schema-level-element--muted': isLevelMuted(1) }"
 					text-anchor="middle"
 				>
 					Niveau #1
@@ -446,6 +512,7 @@
 					x="673"
 					y="405"
 					class="schema-level-text__title schema-level-text__title--level-2"
+					:class="{ 'schema-level-element--muted': isLevelMuted(2) }"
 					text-anchor="middle"
 				>
 					Niveau #2
@@ -464,16 +531,17 @@
 			<!-- Pastilles de scores dynamiques -->
 			<g
 				class="schema-domain schema-domain--strategy schema-score"
-				:class="{ 'schema-domain--active': activeDomain === 'strategy', 'schema-domain--muted': activeDomain && activeDomain !== 'strategy' }"
 				aria-hidden="true"
 			>
 				<circle
+					:class="{ 'schema-level-element--muted': isLevelMuted(1) }"
 					cx="714.165"
 					cy="470.68"
 					r="22"
 					fill="#8B5CF6"
 				/>
 				<text
+					:class="{ 'schema-level-element--muted': isLevelMuted(1) }"
 					x="714.165"
 					y="470.68"
 					class="schema-score__text schema-score__text--light"
@@ -482,12 +550,14 @@
 				</text>
 
 				<circle
+					:class="{ 'schema-level-element--muted': isLevelMuted(2) }"
 					cx="756.955"
 					cy="318.585"
 					r="22"
 					fill="white"
 				/>
 				<text
+					:class="{ 'schema-level-element--muted': isLevelMuted(2) }"
 					x="756.955"
 					y="318.585"
 					class="schema-score__text"
@@ -499,16 +569,17 @@
 
 			<g
 				class="schema-domain schema-domain--architecture schema-score"
-				:class="{ 'schema-domain--active': activeDomain === 'architecture', 'schema-domain--muted': activeDomain && activeDomain !== 'architecture' }"
 				aria-hidden="true"
 			>
 				<circle
+					:class="{ 'schema-level-element--muted': isLevelMuted(1) }"
 					cx="814.769"
 					cy="562.175"
 					r="22"
 					fill="#EAB308"
 				/>
 				<text
+					:class="{ 'schema-level-element--muted': isLevelMuted(1) }"
 					x="814.769"
 					y="562.175"
 					class="schema-score__text schema-score__text--light"
@@ -517,12 +588,14 @@
 				</text>
 
 				<circle
+					:class="{ 'schema-level-element--muted': isLevelMuted(2) }"
 					cx="962.133"
 					cy="505.186"
 					r="22"
 					fill="white"
 				/>
 				<text
+					:class="{ 'schema-level-element--muted': isLevelMuted(2) }"
 					x="962.133"
 					y="505.186"
 					class="schema-score__text"
@@ -534,16 +607,17 @@
 
 			<g
 				class="schema-domain schema-domain--ux schema-score"
-				:class="{ 'schema-domain--active': activeDomain === 'ux', 'schema-domain--muted': activeDomain && activeDomain !== 'ux' }"
 				aria-hidden="true"
 			>
 				<circle
+					:class="{ 'schema-level-element--muted': isLevelMuted(1) }"
 					cx="675.28"
 					cy="768.983"
 					r="22"
 					fill="#EC4899"
 				/>
 				<text
+					:class="{ 'schema-level-element--muted': isLevelMuted(1) }"
 					x="675.28"
 					y="768.983"
 					class="schema-score__text schema-score__text--light"
@@ -552,12 +626,14 @@
 				</text>
 
 				<circle
+					:class="{ 'schema-level-element--muted': isLevelMuted(2) }"
 					cx="677.649"
 					cy="926.965"
 					r="26"
 					fill="white"
 				/>
 				<text
+					:class="{ 'schema-level-element--muted': isLevelMuted(2) }"
 					x="677.649"
 					y="926.965"
 					class="schema-score__text"
@@ -569,16 +645,17 @@
 
 			<g
 				class="schema-domain schema-domain--backend schema-score"
-				:class="{ 'schema-domain--active': activeDomain === 'backend', 'schema-domain--muted': activeDomain && activeDomain !== 'backend' }"
 				aria-hidden="true"
 			>
 				<circle
+					:class="{ 'schema-level-element--muted': isLevelMuted(1) }"
 					cx="521.611"
 					cy="603.385"
 					r="22"
 					fill="#5BC0EB"
 				/>
 				<text
+					:class="{ 'schema-level-element--muted': isLevelMuted(1) }"
 					x="521.611"
 					y="603.385"
 					class="schema-score__text schema-score__text--light"
@@ -587,12 +664,14 @@
 				</text>
 
 				<circle
+					:class="{ 'schema-level-element--muted': isLevelMuted(2) }"
 					cx="364.246"
 					cy="589.233"
 					r="22"
 					fill="white"
 				/>
 				<text
+					:class="{ 'schema-level-element--muted': isLevelMuted(2) }"
 					x="364.246"
 					y="589.233"
 					class="schema-score__text"
@@ -604,16 +683,17 @@
 
 			<g
 				class="schema-domain schema-domain--maintenance schema-score"
-				:class="{ 'schema-domain--active': activeDomain === 'maintenance', 'schema-domain--muted': activeDomain && activeDomain !== 'maintenance' }"
 				aria-hidden="true"
 			>
 				<circle
+					:class="{ 'schema-level-element--muted': isLevelMuted(1) }"
 					cx="593.09"
 					cy="487.7"
 					r="22"
 					fill="#C2412D"
 				/>
 				<text
+					:class="{ 'schema-level-element--muted': isLevelMuted(1) }"
 					x="593.09"
 					y="487.7"
 					class="schema-score__text schema-score__text--light"
@@ -622,12 +702,14 @@
 				</text>
 
 				<circle
+					:class="{ 'schema-level-element--muted': isLevelMuted(2) }"
 					cx="510.026"
 					cy="353.297"
 					r="22"
 					fill="white"
 				/>
 				<text
+					:class="{ 'schema-level-element--muted': isLevelMuted(2) }"
 					x="510.026"
 					y="353.297"
 					class="schema-score__text"
@@ -924,6 +1006,29 @@
 </template>
 
 <style scoped>
+.schema-level-selector {
+	cursor: pointer;
+	outline: none;
+	transition:
+		opacity 180ms ease,
+		filter 180ms ease;
+}
+
+.schema-level-selector:hover,
+.schema-level-selector--active {
+	filter: drop-shadow(0 6px 8px rgb(15 23 42 / 24%));
+}
+
+.schema-level-selector:focus-visible {
+	filter:
+		drop-shadow(0 0 2px #0c419a)
+		drop-shadow(0 0 8px #0c419a);
+}
+
+.schema-level-element--muted {
+	opacity: 0.2;
+}
+
 .schema-score {
 	pointer-events: none;
 }
