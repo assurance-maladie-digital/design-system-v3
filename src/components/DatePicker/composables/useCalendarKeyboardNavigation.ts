@@ -52,6 +52,15 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	let isListenerAttached = false
 	let attachTimeoutId: ReturnType<typeof setTimeout> | undefined
 
+	const getKeyboardContainer = (rootEl: HTMLElement | undefined) => {
+		if (!rootEl) return undefined
+
+		return rootEl.closest<HTMLElement>('[role="dialog"][tabindex="-1"]')
+			?? rootEl.parentElement?.closest<HTMLElement>('[role="dialog"][tabindex="-1"]')
+			?? rootEl.querySelector<HTMLElement>(':scope > [role="dialog"][tabindex="-1"]')
+			?? undefined
+	}
+
 	const focusMonthButton = (button: HTMLButtonElement | undefined | null) => {
 		button?.focus({ preventScroll: true })
 	}
@@ -472,9 +481,9 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		const tryAttach = () => {
 			const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
 
-			// Chercher le conteneur parent avec tabindex="-1" (le focusTrap)
-			const containerEl = rootEl?.parentElement?.querySelector('[tabindex="-1"]') as HTMLElement | undefined
-				|| rootEl?.closest('[tabindex="-1"]') as HTMLElement | undefined
+			// Le listener doit s'attacher au dialog du DatePicker, pas aux gridcells qui
+			// peuvent aussi porter tabindex="-1" pour la navigation assistée.
+			const containerEl = getKeyboardContainer(rootEl)
 
 			// Chercher le VDatePicker lui-même
 			const datePickerEl = rootEl?.querySelector('.v-date-picker') || rootEl
@@ -512,9 +521,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		if (!isListenerAttached) return
 		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
 
-		// Chercher le conteneur parent avec tabindex="-1" (le focusTrap)
-		const containerEl = rootEl?.parentElement?.querySelector('[tabindex="-1"]') as HTMLElement | undefined
-			|| rootEl?.closest('[tabindex="-1"]') as HTMLElement | undefined
+		const containerEl = getKeyboardContainer(rootEl)
 
 		// Chercher le VDatePicker lui-même
 		const datePickerEl = rootEl?.querySelector('.v-date-picker') || rootEl

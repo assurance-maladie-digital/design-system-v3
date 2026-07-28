@@ -770,6 +770,58 @@ describe('useCalendarKeyboardNavigation', () => {
 		vi.useRealTimers()
 	})
 
+	it('attaches the keydown listener to the dialog container rather than a gridcell with tabindex -1', () => {
+		vi.useFakeTimers()
+		const isDatePickerVisible = ref(true)
+
+		const dialogEl = document.createElement('div')
+		dialogEl.setAttribute('role', 'dialog')
+		dialogEl.setAttribute('tabindex', '-1')
+
+		const rootEl = document.createElement('div')
+		const datePickerEl = document.createElement('div')
+		datePickerEl.className = 'v-date-picker'
+		const dayCell = document.createElement('div')
+		dayCell.className = 'v-date-picker-month__day'
+		dayCell.setAttribute('data-v-date', '2026-07-28')
+		dayCell.setAttribute('role', 'gridcell')
+		dayCell.setAttribute('tabindex', '-1')
+		const dayButton = document.createElement('button')
+		dayButton.type = 'button'
+		dayCell.appendChild(dayButton)
+		datePickerEl.appendChild(dayCell)
+		rootEl.appendChild(datePickerEl)
+		dialogEl.appendChild(rootEl)
+		document.body.appendChild(dialogEl)
+
+		const dialogAddSpy = vi.spyOn(dialogEl, 'addEventListener')
+		const cellAddSpy = vi.spyOn(dayCell, 'addEventListener')
+
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef: ref({ $el: rootEl } as unknown as ComponentPublicInstance),
+					getCurrentDate: vi.fn(() => new Date(2026, 6, 28)),
+					setCurrentDate: vi.fn(),
+				})
+				result.attachListeners()
+				return () => null
+			},
+		})
+
+		mount(TestComponent)
+		vi.advanceTimersByTime(150)
+
+		expect(dialogAddSpy).toHaveBeenCalledWith('keydown', expect.any(Function), true)
+		expect(cellAddSpy).not.toHaveBeenCalled()
+
+		dialogAddSpy.mockRestore()
+		cellAddSpy.mockRestore()
+		document.body.removeChild(dialogEl)
+		vi.useRealTimers()
+	})
+
 	it('does not attach listener when already attached', () => {
 		vi.useFakeTimers()
 		const isDatePickerVisible = ref(true)

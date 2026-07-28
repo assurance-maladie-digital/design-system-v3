@@ -453,6 +453,13 @@ const cleanupGridSemanticsForMonth = (daysContainer: HTMLElement) => {
 			child.remove()
 		}
 	})
+
+	daysContainer.querySelectorAll<HTMLButtonElement>('.v-date-picker-month__day button').forEach((button) => {
+		if (button.dataset.gridcellManagedTabindex === 'true') {
+			button.removeAttribute('tabindex')
+			delete button.dataset.gridcellManagedTabindex
+		}
+	})
 }
 
 const applyGridSemantics = (pickerEl: HTMLElement) => {
@@ -523,6 +530,8 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 				button.removeAttribute('aria-rowindex')
 				button.removeAttribute('aria-colindex')
 				button.removeAttribute('aria-selected')
+				button.setAttribute('tabindex', '-1')
+				button.dataset.gridcellManagedTabindex = 'true'
 				row.appendChild(cell)
 			})
 			daysContainer.appendChild(row)
