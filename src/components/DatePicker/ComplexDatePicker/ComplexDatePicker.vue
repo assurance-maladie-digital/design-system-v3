@@ -129,6 +129,13 @@
 	const shouldRestoreFocusToInput = ref(false)
 	const shouldFocusDialogOnOpen = ref(false)
 	const keyboardNavigatedDate = ref<Date | null>(null)
+	let dialogInitialFocusToken = 0
+	let dialogInitialFocusTimeouts: ReturnType<typeof setTimeout>[] = []
+
+	const clearDialogInitialFocusTimeouts = () => {
+		dialogInitialFocusTimeouts.forEach(clearTimeout)
+		dialogInitialFocusTimeouts = []
+	}
 
 	const scheduleCalendarInputFocusRestore = () => {
 		shouldRestoreFocusToInput.value = true
@@ -154,6 +161,21 @@
 				}, attempt < 3 ? 16 : 50)
 			})
 		})
+	}
+
+	const scheduleDialogInitialDayFocus = () => {
+		dialogInitialFocusToken += 1
+		const token = dialogInitialFocusToken
+
+		clearDialogInitialFocusTimeouts()
+
+		const runFocus = () => {
+			if (!isDatePickerVisible.value || token !== dialogInitialFocusToken) return
+			focusInitialDay()
+		}
+
+		runFocus()
+		dialogInitialFocusTimeouts.push(setTimeout(runFocus, 120))
 	}
 
 	const closeDatePicker = async (options: { restoreFocus?: boolean } = {}) => {
@@ -729,6 +751,7 @@
 	})
 
 	onBeforeUnmount(() => {
+		clearDialogInitialFocusTimeouts()
 		datePickerMenuRef.value?.removeEventListener('keydown', handleMenuKeydown, true)
 	})
 
@@ -1278,6 +1301,8 @@
 		isDatePickerVisible,
 		(visible) => {
 			if (!visible) {
+				dialogInitialFocusToken += 1
+				clearDialogInitialFocusTimeouts()
 				ignoreNextInputBlur.value = false
 				shouldFocusDialogOnOpen.value = false
 				ignoreNextCalendarModelSync.value = false
@@ -1297,9 +1322,7 @@
 
 					if (shouldFocusDialogOnOpen.value) {
 						shouldFocusDialogOnOpen.value = false
-						focusInitialDay()
-						setTimeout(() => focusInitialDay(), 75)
-						setTimeout(() => focusInitialDay(), 200)
+						scheduleDialogInitialDayFocus()
 					}
 				})
 			}
