@@ -1315,11 +1315,12 @@ $ap-grey-mid: #d6d6d6;
 }
 
 :deep(.v-date-picker-month__day .v-btn:hover) {
-	background-color: rgb(var(--v-theme-background));
+	background-color: rgb(var(--v-theme-background)) 0.12;
+	color: rgb(var(--v-theme-onBackground));
 }
 
 :deep(.v-date-picker-month__day--adjacent) {
-	opacity: 0.7;
+	opacity: 0.84;
 }
 
 :deep(.v-date-picker-month__day--adjacent:has(.v-btn:focus-visible)) {
