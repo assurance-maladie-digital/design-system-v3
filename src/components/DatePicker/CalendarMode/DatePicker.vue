@@ -1199,9 +1199,9 @@ $ap-grey-mid: #d6d6d6;
 }
 
 :deep(.v-date-picker-month__day[role='gridcell']:focus-visible) {
-	border: 2px solid rgb(var(--v-theme-primary));
 	border-radius: 50%;
-	outline: none;
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 1px;
 }
 
 /* Disable ripple effect on month and year buttons */
@@ -1354,6 +1354,15 @@ $ap-grey-mid: #d6d6d6;
 	opacity: 0.9;
 }
 
+:deep(.v-date-picker-month__day--selected .v-btn) {
+	background-color: rgb(var(--v-theme-primaryVariant)) !important;
+	color: rgb(var(--v-theme-onPrimaryVariant)) !important;
+}
+
+:deep(.v-date-picker-month__day--selected .v-btn .v-btn__content) {
+	color: rgb(var(--v-theme-onPrimaryVariant)) !important;
+}
+
 .fade-enter-active,
 .fade-leave-active {
 	transition: opacity 0.5s ease;
@@ -1365,12 +1374,16 @@ $ap-grey-mid: #d6d6d6;
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
-	background-color: $ap-grey-mid;
+	background-color: rgb(var(--v-theme-surface));
+	box-shadow: inset 0 0 0 1px rgb(var(--v-theme-onSurfaceVariant));
+	color: rgb(var(--v-theme-onSurface));
 }
 
 /* div avant la class .v-date-picker-month__day--week-end */
 :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
-	background-color: $ap-grey-mid;
+	background-color: rgb(var(--v-theme-surface));
+	box-shadow: inset 0 0 0 1px rgb(var(--v-theme-onSurfaceVariant));
+	color: rgb(var(--v-theme-onSurface));
 }
 
 :deep(.v-date-picker-controls__mode-btn) {
