@@ -108,9 +108,9 @@
 	// Gestion de la soumission du formulaire
 	const handleSubmit = async () => {
 		if (props.validateOnSubmit !== false) {
-			const isValid = await validate()
-			emit('submit', { isValid })
-			return isValid
+			const submitIsValid = await validate()
+			emit('submit', { isValid: submitIsValid })
+			return submitIsValid
 		}
 		emit('submit', { isValid: true })
 		return true

@@ -59,7 +59,7 @@ export function useCustomValidation(
 
 	const isPristine = ref(true)
 
-	async function validate() {
+	async function runValidation() {
 		if (readonly?.value || disabled?.value) {
 			errors.value = []
 			warnings.value = []
@@ -83,6 +83,23 @@ export function useCustomValidation(
 		hasSuccess.value = result.hasSuccess
 
 		return result
+	}
+
+	// Plusieurs watchers peuvent déclencher `validate()` dans le même tick
+	// (options, règles, modelValue, focus). On mutualise l'exécution en cours
+	// pour éviter des appels concurrents redondants sur les mêmes refs.
+	let pendingValidation: ReturnType<typeof runValidation> | null = null
+
+	async function validate() {
+		if (pendingValidation) return pendingValidation
+
+		pendingValidation = runValidation()
+		try {
+			return await pendingValidation
+		}
+		finally {
+			pendingValidation = null
+		}
 	}
 
 	useValidatable(
@@ -119,6 +136,10 @@ export function useCustomValidation(
 		warnings.value = []
 		successes.value = []
 		hasSuccess.value = false
+		// Repasser en état vierge : sans ça, un champ précédemment invalidé
+		// (isPristine=false) rapporterait `valide=true` après nettoyage au lieu
+		// de `null`, alors qu'il n'a pas été revalidé (cf. le reset de useValidatable).
+		isPristine.value = true
 	}
 
 	return { validate, hasSuccess, clearValidation }
