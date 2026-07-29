@@ -74,8 +74,6 @@ button:focus-visible {
 :where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-outlined,
 :where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-text,
 :where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-tonal {
-	
-
 	&.v-btn--disabled {
 		border-color: rgba(var(--v-theme-disabled)) !important;
 		color: rgba(var(--v-theme-onDisabled)) !important;
