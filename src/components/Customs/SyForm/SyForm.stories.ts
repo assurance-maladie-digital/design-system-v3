@@ -75,7 +75,6 @@ export const Basic: Story = {
 		setup() {
 			const name = ref('')
 			const email = ref('')
-			const form = ref<{ validate: () => Promise<boolean>, reset: () => void, clearValidation: () => void } | null>(null)
 
 			// Règles de validation selon le design system
 			const emailRules = [
@@ -92,10 +91,10 @@ export const Basic: Story = {
 				}
 			}
 
-			return { name, email, emailRules, form, submitForm, args }
+			return { name, email, emailRules, submitForm, args }
 		},
 		template: `
-      <SyForm ref="form" v-bind="args" @submit="submitForm">
+      <SyForm v-bind="args" @submit="submitForm">
         <div class="d-flex flex-column gap-4">
           <SyTextField v-model="name" label="Nom" required class="mb-2" />
           <SyTextField v-model="email" label="Email" :custom-rules="emailRules" class="mb-2" />
@@ -112,7 +111,7 @@ export const Basic: Story = {
 				name: 'Template',
 				code: `
 <template>
-      <SyForm ref="form" @submit="onSubmit">
+      <SyForm @submit="submitForm">
         <div class="d-flex flex-column gap-4">
           <SyTextField v-model="name" label="Nom" required class="mb-2" />
           <SyTextField v-model="email" label="Email" :custom-rules="emailRules" class="mb-2" />
@@ -128,6 +127,7 @@ export const Basic: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
+import { ref } from 'vue'
 
 const name = ref('')
 const email = ref('')
@@ -138,7 +138,7 @@ const emailRules = [
 	{ type: 'required', options: { message: "L'email est obligatoire" } },
 ]
 
-const onSubmit = (event: { isValid: boolean }) => {
+const submitForm = (event: { isValid: boolean }) => {
   if (event.isValid) {
     alert('Formulaire valide !')
   }
@@ -365,7 +365,7 @@ export const MixedFields: Story = {
       <SyForm ref="form" @submit="submitForm">
         <div class="d-flex flex-column gap-4">
           <SyTextField v-model="formData.name" label="Nom complet" required class="mb-2" />
-          <SyTextField v-model="formData.email" label="Email" :customRules="emailCustomRules" class="mb-2" />
+          <SyTextField v-model="formData.email" label="Email" :custom-rules="emailCustomRules" class="mb-2" />
           <SySelect v-model="formData.country" :items="countries" label="Pays" required class="mb-2" />
           <div class="d-flex gap-3">
             <v-btn type="submit" color="primary">Enregistrer</v-btn>
@@ -378,41 +378,42 @@ export const MixedFields: Story = {
 			{
 				name: 'Script',
 				code: `
-		<script setup lang="ts">
+<script setup lang="ts">
+import { ref } from 'vue'
 
-			const formData = ref({
-				name: '',
-				email: '',
-				country: '',
-			})
+const formData = ref({
+	name: '',
+	email: '',
+	country: '',
+})
 
-			const countries = [
-				{ text: 'France', value: 'fr' },
-				{ text: 'Allemagne', value: 'de' },
-				{ text: 'Espagne', value: 'es' },
-				{ text: 'Italie', value: 'it' },
-			]
+const countries = [
+	{ text: 'France', value: 'fr' },
+	{ text: 'Allemagne', value: 'de' },
+	{ text: 'Espagne', value: 'es' },
+	{ text: 'Italie', value: 'it' },
+]
 
-			const emailCustomRules = [
-				{
-					type: 'email',
-					options: {
-						message: "L'email n'est pas valide:",
-						successMessage: "L'email est valide:",
-					},
-				},
-				{ type: 'required', options: { message: "L'email est obligatoire" } },
-			]
+const emailCustomRules = [
+	{
+		type: 'email',
+		options: {
+			message: "L'email n'est pas valide",
+			successMessage: "L'email est valide",
+		},
+	},
+	{ type: 'required', options: { message: "L'email est obligatoire" } },
+]
 
-			const submitForm = (event: { isValid: boolean }) => {
-				if (event.isValid) {
-					alert('Formulaire valide ! Données: ' + JSON.stringify(formData.value))
-				}
-				else {
-					alert('Formulaire invalide, veuillez corriger les erreurs.')
-				}
-			}
-		</script>
+const submitForm = (event: { isValid: boolean }) => {
+	if (event.isValid) {
+		alert('Formulaire valide ! Données: ' + JSON.stringify(formData.value))
+	}
+	else {
+		alert('Formulaire invalide, veuillez corriger les erreurs.')
+	}
+}
+</script>
 `,
 			},
 		],
@@ -495,8 +496,10 @@ export const Reset: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
+
 const name = ref('')
 const email = ref('')
+const form = ref<{ reset: () => void, clearValidation: () => void } | null>(null)
 
 // Règles de validation selon le design system
 const emailRules = [
@@ -504,7 +507,7 @@ const emailRules = [
 	{ type: 'required', options: { message: "L'email est obligatoire" } },
 ]
 
-const onSubmit = (event: { isValid: boolean }) => {
+const submitForm = (event: { isValid: boolean }) => {
   if (event.isValid) {
     alert('Formulaire valide !')
   }
@@ -516,6 +519,10 @@ const onSubmit = (event: { isValid: boolean }) => {
 function clearAll() {
   form.value?.reset()
   form.value?.clearValidation()
+}
+
+function onFormReset() {
+  alert('Formulaire réinitialisé !')
 }
 </script>
 `,
