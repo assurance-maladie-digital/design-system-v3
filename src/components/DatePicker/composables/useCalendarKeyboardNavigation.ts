@@ -102,6 +102,26 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			.filter(btn => isActiveTransitionContext(btn))
 	}
 
+	const getInitialDialogDate = () => getInitialFocusDate ? getInitialFocusDate() : new Date()
+
+	const resolveMonthButtonFromState = (buttons: HTMLElement[]) => {
+		const activeButton = buttons.find(button => button.classList.contains('v-btn--active'))
+		if (activeButton) return activeButton
+
+		const targetMonth = getInitialDialogDate().getMonth()
+		return buttons[targetMonth] ?? null
+	}
+
+	const resolveYearButtonFromState = (buttons: HTMLElement[]) => {
+		const activeButton = buttons.find(button => button.classList.contains('v-btn--active'))
+		if (activeButton) return activeButton
+
+		const targetYear = String(getInitialDialogDate().getFullYear())
+		return buttons.find(button =>
+			(button.getAttribute('aria-label') ?? button.textContent ?? '').includes(targetYear),
+		) ?? null
+	}
+
 	const updateLastFocusedDialogButton = (target: EventTarget | null) => {
 		const element = target instanceof HTMLElement ? target : null
 		if (!element) return
@@ -127,6 +147,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		targetButton: HTMLElement | null,
 		lastFocusedButton: HTMLElement | null,
 		selector: string,
+		fallbackResolver: (buttons: HTMLElement[]) => HTMLElement | null,
 	) => {
 		if (lastFocusedButton && buttons.includes(lastFocusedButton)) {
 			return lastFocusedButton
@@ -141,7 +162,11 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			return activeButton
 		}
 
-		return targetButton && buttons.includes(targetButton) ? targetButton : null
+		if (targetButton && buttons.includes(targetButton)) {
+			return targetButton
+		}
+
+		return fallbackResolver(buttons)
 	}
 
 	const isDialogViewOpen = (selector: string) => getNavigableButtons(selector).length > 0
@@ -151,7 +176,13 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		const buttons = getNavigableButtons(MONTH_BUTTON_SELECTOR)
 		if (buttons.length === 0 || !isDialogViewOpen(MONTH_BUTTON_SELECTOR)) return false
 
-		const currentButton = resolveCurrentDialogButton(buttons, targetBtn, lastFocusedMonthButton, MONTH_BUTTON_SELECTOR)
+		const currentButton = resolveCurrentDialogButton(
+			buttons,
+			targetBtn,
+			lastFocusedMonthButton,
+			MONTH_BUTTON_SELECTOR,
+			resolveMonthButtonFromState,
+		)
 		const currentIndex = currentButton ? buttons.indexOf(currentButton) : -1
 		if (currentIndex === -1) return false
 
@@ -209,7 +240,13 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		const buttons = getNavigableButtons(YEAR_BUTTON_SELECTOR)
 		if (buttons.length === 0 || !isDialogViewOpen(YEAR_BUTTON_SELECTOR)) return false
 
-		const currentButton = resolveCurrentDialogButton(buttons, targetBtn, lastFocusedYearButton, YEAR_BUTTON_SELECTOR)
+		const currentButton = resolveCurrentDialogButton(
+			buttons,
+			targetBtn,
+			lastFocusedYearButton,
+			YEAR_BUTTON_SELECTOR,
+			resolveYearButtonFromState,
+		)
 		const currentIndex = currentButton ? buttons.indexOf(currentButton) : -1
 		if (currentIndex === -1) return false
 

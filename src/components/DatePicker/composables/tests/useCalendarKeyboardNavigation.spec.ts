@@ -727,6 +727,55 @@ describe('useCalendarKeyboardNavigation', () => {
 		vi.useRealTimers()
 	})
 
+	it('handles month dialog navigation from the initial focused month even without focusin', () => {
+		vi.useFakeTimers()
+		const isDatePickerVisible = ref(true)
+
+		let savedKeydownListener: ((e: KeyboardEvent) => void) | null = null
+		const addEventListenerSpy = vi.spyOn(document, 'addEventListener').mockImplementation((type, listener) => {
+			if (type === 'keydown') savedKeydownListener = listener as (e: KeyboardEvent) => void
+		})
+
+		let attachListeners!: () => void
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef: ref(null),
+					getCurrentDate: vi.fn(() => null),
+					setCurrentDate: vi.fn(),
+					getInitialFocusDate: () => new Date(2026, 8, 12),
+				})
+				attachListeners = result.attachListeners
+				return () => null
+			},
+		})
+		mount(TestComponent)
+		attachListeners()
+		vi.advanceTimersByTime(150)
+
+		const monthsContainer = document.createElement('div')
+		monthsContainer.className = 'v-date-picker-months'
+		const buttons = Array.from({ length: 12 }, (_, i) => {
+			const b = document.createElement('button')
+			b.textContent = `Month ${i + 1}`
+			monthsContainer.appendChild(b)
+			return b
+		})
+		document.body.appendChild(monthsContainer)
+
+		const focusSpy = vi.spyOn(buttons[9]!, 'focus')
+		const keydownEvent = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })
+		Object.defineProperty(keydownEvent, 'target', { value: monthsContainer })
+		savedKeydownListener!(keydownEvent)
+
+		expect(focusSpy).toHaveBeenCalled()
+
+		document.body.removeChild(monthsContainer)
+		addEventListenerSpy.mockRestore()
+		vi.useRealTimers()
+	})
+
 	it('handles ArrowLeft/Right in year dialog', () => {
 		vi.useFakeTimers()
 		const isDatePickerVisible = ref(true)
@@ -831,6 +880,55 @@ describe('useCalendarKeyboardNavigation', () => {
 		buttons[0]!.focus()
 
 		const focusSpy = vi.spyOn(buttons[1]!, 'focus')
+		const keydownEvent = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })
+		Object.defineProperty(keydownEvent, 'target', { value: yearsContainer })
+		savedKeydownListener!(keydownEvent)
+
+		expect(focusSpy).toHaveBeenCalled()
+
+		document.body.removeChild(yearsContainer)
+		addEventListenerSpy.mockRestore()
+		vi.useRealTimers()
+	})
+
+	it('handles year dialog navigation from the initial focused year even without focusin', () => {
+		vi.useFakeTimers()
+		const isDatePickerVisible = ref(true)
+
+		let savedKeydownListener: ((e: KeyboardEvent) => void) | null = null
+		const addEventListenerSpy = vi.spyOn(document, 'addEventListener').mockImplementation((type, listener) => {
+			if (type === 'keydown') savedKeydownListener = listener as (e: KeyboardEvent) => void
+		})
+
+		let attachListeners!: () => void
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef: ref(null),
+					getCurrentDate: vi.fn(() => null),
+					setCurrentDate: vi.fn(),
+					getInitialFocusDate: () => new Date(2026, 0, 12),
+				})
+				attachListeners = result.attachListeners
+				return () => null
+			},
+		})
+		mount(TestComponent)
+		attachListeners()
+		vi.advanceTimersByTime(150)
+
+		const yearsContainer = document.createElement('div')
+		yearsContainer.className = 'v-date-picker-years'
+		const buttons = Array.from({ length: 4 }, (_, i) => {
+			const b = document.createElement('button')
+			b.textContent = `${2025 + i}`
+			yearsContainer.appendChild(b)
+			return b
+		})
+		document.body.appendChild(yearsContainer)
+
+		const focusSpy = vi.spyOn(buttons[2]!, 'focus')
 		const keydownEvent = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })
 		Object.defineProperty(keydownEvent, 'target', { value: yearsContainer })
 		savedKeydownListener!(keydownEvent)
