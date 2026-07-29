@@ -1,3 +1,5 @@
+package: []
+
 overrides:
   esbuild: ">=0.28.1"
   undici: ">=6.27.0 <8"
