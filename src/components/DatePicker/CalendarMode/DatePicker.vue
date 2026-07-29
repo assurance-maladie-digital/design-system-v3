@@ -1123,12 +1123,12 @@
 						@update:model-value="updateDisplayFormattedDate"
 						@focus="markHolidayDays"
 						@update:month-year="markHolidayDays"
-						>
-							<template #title>
-								<span :id="datePickerTitleId">
-									{{ locales.calendarTitle }}
-								</span>
-							</template>
+					>
+						<template #title>
+							<span :id="datePickerTitleId">
+								{{ locales.calendarTitle }}
+							</span>
+						</template>
 						<template #header>
 							<SyHeading
 								:id="datePickerHeadingId"

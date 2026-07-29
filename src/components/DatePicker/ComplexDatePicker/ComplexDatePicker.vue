@@ -1556,15 +1556,15 @@
 						@click:date="updateSelectedDates"
 						@focus="props.displayHolidayDays ? markHolidayDays : undefined"
 						@update:month-year="props.displayHolidayDays ? markHolidayDays : undefined"
-						>
-							<template #title>
-								<span
-									:id="datePickerTitleId"
-									class="date-picker-title"
-								>
-									{{ locales.calendarTitle }}
-								</span>
-							</template>
+					>
+						<template #title>
+							<span
+								:id="datePickerTitleId"
+								class="date-picker-title"
+							>
+								{{ locales.calendarTitle }}
+							</span>
+						</template>
 						<template #header>
 							<SyHeading
 								:id="datePickerHeadingId"
