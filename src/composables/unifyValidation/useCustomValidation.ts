@@ -59,7 +59,7 @@ export function useCustomValidation(
 
 	const isPristine = ref(true)
 
-	async function runValidation() {
+	async function validate() {
 		if (readonly?.value || disabled?.value) {
 			errors.value = []
 			warnings.value = []
@@ -83,23 +83,6 @@ export function useCustomValidation(
 		hasSuccess.value = result.hasSuccess
 
 		return result
-	}
-
-	// Plusieurs watchers peuvent déclencher `validate()` dans le même tick
-	// (options, règles, modelValue, focus). On mutualise l'exécution en cours
-	// pour éviter des appels concurrents redondants sur les mêmes refs.
-	let pendingValidation: ReturnType<typeof runValidation> | null = null
-
-	async function validate() {
-		if (pendingValidation) return pendingValidation
-
-		pendingValidation = runValidation()
-		try {
-			return await pendingValidation
-		}
-		finally {
-			pendingValidation = null
-		}
 	}
 
 	useValidatable(
