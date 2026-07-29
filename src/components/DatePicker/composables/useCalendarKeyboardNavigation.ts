@@ -61,11 +61,11 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			?? undefined
 	}
 
-	const focusMonthButton = (button: HTMLButtonElement | undefined | null) => {
+	const focusMonthButton = (button: HTMLElement | undefined | null) => {
 		button?.focus({ preventScroll: true })
 	}
 
-	const focusYearButton = (button: HTMLButtonElement | undefined | null) => {
+	const focusYearButton = (button: HTMLElement | undefined | null) => {
 		if (!button) return
 		button.scrollIntoView({ block: 'nearest', inline: 'nearest' })
 		button.focus({ preventScroll: true })
@@ -81,12 +81,25 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		cell.focus({ preventScroll: true })
 	}
 
+	const isActiveTransitionContext = (el: Element) => {
+		const windowItem = el.closest('.v-window-item')
+		if (!windowItem) return true
+		const classes = Array.from(windowItem.classList)
+		return !classes.some(c => c.includes('leave-active') || c.includes('leave-to') || c === 'v-window-item--leave')
+	}
+
+	const getNavigableButtons = (selector: string): HTMLElement[] => {
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		return Array.from((rootEl ?? document).querySelectorAll<HTMLElement>(selector))
+			.filter(btn => !btn.hasAttribute('disabled'))
+			.filter(btn => isActiveTransitionContext(btn))
+	}
+
 	const handleMonthDialogNavigation = (event: KeyboardEvent): boolean => {
-		const targetBtn = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>('.v-date-picker-months button')
+		const targetBtn = (event.target as HTMLElement | null)?.closest<HTMLElement>('.v-date-picker-months .v-btn, .v-date-picker-months button')
 		if (!targetBtn) return false
 
-		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
-		const buttons = Array.from((rootEl ?? document).querySelectorAll<HTMLButtonElement>('.v-date-picker-months button')).filter(btn => !btn.disabled)
+		const buttons = getNavigableButtons('.v-date-picker-months .v-btn, .v-date-picker-months button')
 		if (buttons.length === 0) return false
 
 		const currentIndex = buttons.indexOf(targetBtn)
@@ -97,6 +110,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		// Enter/Space : click manuel sans scroll pour garantir l'activation
 		if (key === 'Enter' || key === ' ') {
 			event.preventDefault()
+			event.stopPropagation()
 			targetBtn.click()
 			focusMonthButton(targetBtn)
 			return true
@@ -105,6 +119,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(key)) return false
 
 		event.preventDefault()
+		event.stopPropagation()
 
 		const firstRowTop = buttons[0]?.offsetTop ?? 0
 		const columns = buttons.filter(btn => btn.offsetTop === firstRowTop).length || 3
@@ -139,11 +154,10 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	}
 
 	const handleYearDialogNavigation = (event: KeyboardEvent): boolean => {
-		const targetBtn = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>('.v-date-picker-years button')
+		const targetBtn = (event.target as HTMLElement | null)?.closest<HTMLElement>('.v-date-picker-years .v-btn, .v-date-picker-years button')
 		if (!targetBtn) return false
 
-		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
-		const buttons = Array.from((rootEl ?? document).querySelectorAll<HTMLButtonElement>('.v-date-picker-years button')).filter(btn => !btn.disabled)
+		const buttons = getNavigableButtons('.v-date-picker-years .v-btn, .v-date-picker-years button')
 		if (buttons.length === 0) return false
 
 		const currentIndex = buttons.indexOf(targetBtn)
@@ -153,6 +167,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 		if (key === 'Enter' || key === ' ') {
 			event.preventDefault()
+			event.stopPropagation()
 			targetBtn.click()
 			focusYearButton(targetBtn)
 			return true
@@ -161,6 +176,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(key)) return false
 
 		event.preventDefault()
+		event.stopPropagation()
 
 		const firstRowTop = buttons[0]?.offsetTop ?? 0
 		const columns = buttons.filter(btn => btn.offsetTop === firstRowTop).length || 3
@@ -312,7 +328,11 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 				// où le jour adjacent initialement focusé est remplacé par le DOM du mois suivant.
 				if (attempt <= 1) {
 					setTimeout(() => {
-						if (token === latestFocusToken && (document.activeElement !== bestCandidate || !bestCandidate.isConnected)) {
+						if (
+							token === latestFocusToken
+							&& typeof document !== 'undefined'
+							&& (document.activeElement !== bestCandidate || !bestCandidate.isConnected)
+						) {
 							// Forcer un retry silencieux
 							focusDateButton(date, 2, token)
 						}
@@ -477,7 +497,6 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	const attachListeners = () => {
 		if (isListenerAttached) return
 
-		// Utiliser un watcher pour attendre que le VDatePicker soit disponible
 		const tryAttach = () => {
 			const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
 
@@ -505,10 +524,13 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			}
 		}
 
-		// Attendre plusieurs ticks pour être sûr que le focusTrap est déjà attaché.
-		// L'id est conservé pour pouvoir annuler le timer au démontage et éviter que
-		// tryAttach ne s'exécute après la destruction du composant (accès à `document`).
-		attachTimeoutId = setTimeout(tryAttach, 100)
+		// Attacher immédiatement pour que la navigation clavier soit disponible dès l'ouverture.
+		// Si le DOM n'est pas encore entièrement prêt, on conserve un retry léger.
+		tryAttach()
+
+		if (!isListenerAttached) {
+			attachTimeoutId = setTimeout(tryAttach, 50)
+		}
 	}
 
 	const detachListeners = () => {

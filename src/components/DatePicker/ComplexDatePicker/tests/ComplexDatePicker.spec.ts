@@ -1076,6 +1076,70 @@ describe('ComplexDatePicker.clean', () => {
 		wrapper.unmount()
 	})
 
+	it('navigates between month buttons with arrow keys in months view', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			modelValue: '12/09/2005',
+		}, { attachTo: document.body })
+
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: 'Enter' })
+		await nextTick()
+		await flushPromises()
+
+		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
+		await vDatePickerWrapper.find('.v-date-picker-controls__month-btn').trigger('click')
+		await nextTick()
+		await flushPromises()
+
+		const dialogContent = vDatePickerWrapper.element.parentElement as HTMLElement
+		const activeMonthButton = dialogContent.querySelector('.v-date-picker-months .v-btn--active') as HTMLElement | null
+		expect(activeMonthButton).not.toBeNull()
+
+		activeMonthButton?.focus()
+		activeMonthButton?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }))
+		await flushPromises()
+
+		const focused = document.activeElement as HTMLElement
+		expect(focused).not.toBe(activeMonthButton)
+		expect(focused.closest('.v-date-picker-months')).not.toBeNull()
+
+		wrapper.unmount()
+	})
+
+	it('navigates between year buttons with arrow keys in years view', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			modelValue: '12/09/2005',
+		}, { attachTo: document.body })
+
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: 'Enter' })
+		await nextTick()
+		await flushPromises()
+
+		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
+		await vDatePickerWrapper.find('.custom-year-btn').trigger('click')
+		await nextTick()
+		await flushPromises()
+
+		const dialogContent = vDatePickerWrapper.element.parentElement as HTMLElement
+		const activeYearButton = dialogContent.querySelector('.v-date-picker-years .v-btn--active') as HTMLElement | null
+		expect(activeYearButton).not.toBeNull()
+
+		activeYearButton?.focus()
+		activeYearButton?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, cancelable: true }))
+		await flushPromises()
+
+		const focused = document.activeElement as HTMLElement
+		expect(focused).not.toBe(activeYearButton)
+		expect(focused.closest('.v-date-picker-years')).not.toBeNull()
+
+		wrapper.unmount()
+	})
+
 	it('updates the displayed month and refocuses the target day when keyboard navigation crosses to the next month', async () => {
 		vi.useFakeTimers()
 
