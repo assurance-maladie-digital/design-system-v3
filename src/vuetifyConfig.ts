@@ -33,6 +33,8 @@ export const createVuetifyInstance = () => createVuetify({
 		VTooltip: {
 			interactive: true,
 			closeDelay: 200,
+		VBtn: {
+			ripple: false,
 		},
 	},
 	locale: {

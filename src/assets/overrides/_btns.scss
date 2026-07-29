@@ -4,12 +4,11 @@
 	font-weight: 700 !important;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	display: inline-flex !important;
-	padding: var(--spacing-3) var(--spacing-4) !important;
+	padding: 0 var(--spacing-4) !important;
+}
 
-	&.v-tab {
-		text-transform: uppercase !important;
-	}
+v-btn.v-tab {
+	text-transform: uppercase !important;
 }
 
 // Ring de focus : couvre les VBtn rendus en <button> ET en lien (<a>, via to/href),

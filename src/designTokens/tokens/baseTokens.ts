@@ -1,6 +1,9 @@
 export const baseTokens = {
 	color: {
 		none: 'rgba(255,255,255,0)',
+		black: {
+			base: '#000000',
+		},
 		orange: {
 			darken80: '#2D100B',
 			darken60: '#5A2017',
@@ -166,27 +169,6 @@ export const baseTokens = {
 			alpha20: 'rgba(255,255,255,0.2)',
 			alpha08: 'rgba(255,255,255,0.08)',
 			alpha00: 'rgba(255,255,255,0)',
-		},
-		transparentBlue: {
-			alpha40: 'rgba(12,65,154,0.4)',
-			alpha20: 'rgba(12,65,154,0.2)',
-			alpha18: 'rgba(12,65,154,0.18)',
-			alpha08: 'rgba(12,65,154,0.08)',
-			alpha00: 'rgba(12,65,154,0)',
-		},
-		transparentCyan: {
-			alpha00: 'rgba(0,132,178,0)',
-			alpha08: 'rgba(0,132,178,0.08)',
-			alpha18: 'rgba(0,132,178,0.18)',
-			alpha20: 'rgba(0,132,178,0.2)',
-			alpha40: 'rgba(0,132,178,0.4)',
-		},
-		transparentBlack: {
-			alpha00: 'rgba(0,0,0,0)',
-			alpha08: 'rgba(0,0,0,0.08)',
-			alpha18: 'rgba(0,0,0,0.18)',
-			alpha20: 'rgba(0,0,0,0.2)',
-			alpha40: 'rgba(0,0,0,0.4)',
 		},
 		amber: {
 			darken80: '#502C01',
