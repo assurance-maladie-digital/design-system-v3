@@ -50,6 +50,7 @@
 	]
 
 	function handleSubmit({ isValid }: { isValid: boolean }) {
+		formValid.value = isValid
 		if (isValid) {
 			submitted.value = true
 		}
@@ -64,6 +65,7 @@
 		careType.value = null
 		acceptTerms.value = false
 		submitted.value = false
+		formValid.value = false
 	}
 </script>
 
