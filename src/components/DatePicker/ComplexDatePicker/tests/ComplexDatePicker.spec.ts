@@ -3,6 +3,7 @@ import { mount, flushPromises, VueWrapper, type MountingOptions } from '@vue/tes
 import { describe, it, expect, afterEach, vi } from 'vitest'
 import { nextTick } from 'vue'
 import ComplexDatePicker from '../ComplexDatePicker.vue'
+import { locales } from '../../locales'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- VueWrapper<any> est le pattern standard pour les composants Vue avec defineExpose complexe
 let wrapper: VueWrapper<any> | null = null
@@ -83,7 +84,11 @@ describe('ComplexDatePicker.clean', () => {
 		expect(dialog).not.toBeNull()
 		expect(dialog?.getAttribute('role')).toBe('dialog')
 		expect(dialog?.getAttribute('aria-modal')).toBeNull()
-		expect(dialog?.getAttribute('aria-labelledby')).toBe(wrapper.vm.datePickerHeadingId)
+		expect(dialog?.getAttribute('aria-labelledby')).toBe(wrapper.vm.datePickerTitleId)
+
+		const title = document.getElementById(wrapper.vm.datePickerTitleId)
+		expect(title).not.toBeNull()
+		expect(title?.textContent?.trim()).toBe(locales.calendarTitle)
 
 		const heading = document.getElementById(wrapper.vm.datePickerHeadingId)
 		expect(heading).not.toBeNull()
@@ -987,7 +992,7 @@ describe('ComplexDatePicker.clean', () => {
 		const selectedDayCell = focused.closest('.v-date-picker-month__day') as HTMLElement | null
 		expect(selectedDayCell).not.toBeNull()
 		expect(selectedDayCell?.closest('.v-date-picker-month')).not.toBeNull()
-		expect(focused.tagName).toBe('BUTTON')
+		expect(focused.getAttribute('role') ?? focused.closest('[role="gridcell"]')?.getAttribute('role')).toBe('gridcell')
 
 		wrapper.unmount()
 	})
@@ -1068,6 +1073,39 @@ describe('ComplexDatePicker.clean', () => {
 		expect(focused.getAttribute('aria-label')).toBe('2005')
 		expect(focused.getAttribute('aria-pressed')).toBe('true')
 
+		wrapper.unmount()
+	})
+
+	it('updates the displayed month and refocuses the target day when keyboard navigation crosses to the next month', async () => {
+		vi.useFakeTimers()
+
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			modelValue: '30/06/2024',
+		}, { attachTo: document.body })
+
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: 'Enter' })
+		await nextTick()
+		await flushPromises()
+		await vi.advanceTimersByTimeAsync(600)
+		await flushPromises()
+
+		const focusedDay = document.activeElement as HTMLElement | null
+		expect(focusedDay?.closest('[data-v-date="2024-06-30"]')).not.toBeNull()
+
+		focusedDay?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }))
+		await flushPromises()
+		await vi.advanceTimersByTimeAsync(800)
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.vm.currentMonth).toBe('6')
+		expect(wrapper.vm.currentYear).toBe('2024')
+		expect(document.activeElement?.closest('[data-v-date="2024-07-01"]')).not.toBeNull()
+
+		vi.useRealTimers()
 		wrapper.unmount()
 	})
 })

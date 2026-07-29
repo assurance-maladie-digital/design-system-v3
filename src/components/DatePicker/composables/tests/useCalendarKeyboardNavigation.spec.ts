@@ -129,6 +129,75 @@ describe('useCalendarKeyboardNavigation', () => {
 		vi.useRealTimers()
 	})
 
+	it('uses the current navigation state for successive arrow presses before DOM focus catches up', () => {
+		vi.useFakeTimers()
+		const isDatePickerVisible = ref(true)
+		const rootEl = document.createElement('div')
+		const currentDate = ref(new Date(2023, 0, 10))
+
+		const makeDayCell = (iso: string, day: string) => {
+			const cell = document.createElement('div')
+			cell.className = 'v-date-picker-month__day'
+			cell.setAttribute('data-v-date', iso)
+			cell.setAttribute('role', 'gridcell')
+			const button = document.createElement('button')
+			button.type = 'button'
+			button.textContent = day
+			cell.appendChild(button)
+			rootEl.appendChild(cell)
+			return button
+		}
+
+		const initialButton = makeDayCell('2023-01-10', '10')
+		const day11Button = makeDayCell('2023-01-11', '11')
+		const day12Button = makeDayCell('2023-01-12', '12')
+
+		const focus11Spy = vi.spyOn(day11Button.parentElement as HTMLElement, 'focus')
+		const focus12Spy = vi.spyOn(day12Button.parentElement as HTMLElement, 'focus')
+
+		let savedListener: ((e: KeyboardEvent) => void) | null = null
+		const addSpy = vi.spyOn(rootEl, 'addEventListener').mockImplementation((type, listener) => {
+			if (type === 'keydown') savedListener = listener as (e: KeyboardEvent) => void
+		})
+
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef: ref({ $el: rootEl } as unknown as ComponentPublicInstance),
+					getCurrentDate: () => currentDate.value,
+					setCurrentDate: (date: Date) => {
+						currentDate.value = date
+					},
+				})
+				result.attachListeners()
+				return () => null
+			},
+		})
+
+		mount(TestComponent)
+		vi.advanceTimersByTime(150)
+
+		const fireArrowRight = () => {
+			const event = new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true })
+			Object.defineProperty(event, 'target', { value: initialButton })
+			savedListener!(event)
+		}
+
+		fireArrowRight()
+		expect(currentDate.value.getDate()).toBe(11)
+		expect(focus11Spy).toHaveBeenCalledWith({ preventScroll: true })
+
+		// Deuxième appui immédiat : le target DOM est encore l'ancien bouton, mais
+		// la navigation doit repartir de l'état courant (11) et avancer au 12.
+		fireArrowRight()
+		expect(currentDate.value.getDate()).toBe(12)
+		expect(focus12Spy).toHaveBeenCalledWith({ preventScroll: true })
+
+		addSpy.mockRestore()
+		vi.useRealTimers()
+	})
+
 	it('preserves day-of-month on PageUp/PageDown and clamps when needed', () => {
 		vi.useFakeTimers()
 		const isDatePickerVisible = ref(true)
@@ -701,6 +770,58 @@ describe('useCalendarKeyboardNavigation', () => {
 		vi.useRealTimers()
 	})
 
+	it('attaches the keydown listener to the dialog container rather than a gridcell with tabindex -1', () => {
+		vi.useFakeTimers()
+		const isDatePickerVisible = ref(true)
+
+		const dialogEl = document.createElement('div')
+		dialogEl.setAttribute('role', 'dialog')
+		dialogEl.setAttribute('tabindex', '-1')
+
+		const rootEl = document.createElement('div')
+		const datePickerEl = document.createElement('div')
+		datePickerEl.className = 'v-date-picker'
+		const dayCell = document.createElement('div')
+		dayCell.className = 'v-date-picker-month__day'
+		dayCell.setAttribute('data-v-date', '2026-07-28')
+		dayCell.setAttribute('role', 'gridcell')
+		dayCell.setAttribute('tabindex', '-1')
+		const dayButton = document.createElement('button')
+		dayButton.type = 'button'
+		dayCell.appendChild(dayButton)
+		datePickerEl.appendChild(dayCell)
+		rootEl.appendChild(datePickerEl)
+		dialogEl.appendChild(rootEl)
+		document.body.appendChild(dialogEl)
+
+		const dialogAddSpy = vi.spyOn(dialogEl, 'addEventListener')
+		const cellAddSpy = vi.spyOn(dayCell, 'addEventListener')
+
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef: ref({ $el: rootEl } as unknown as ComponentPublicInstance),
+					getCurrentDate: vi.fn(() => new Date(2026, 6, 28)),
+					setCurrentDate: vi.fn(),
+				})
+				result.attachListeners()
+				return () => null
+			},
+		})
+
+		mount(TestComponent)
+		vi.advanceTimersByTime(150)
+
+		expect(dialogAddSpy).toHaveBeenCalledWith('keydown', expect.any(Function), true)
+		expect(cellAddSpy).not.toHaveBeenCalled()
+
+		dialogAddSpy.mockRestore()
+		cellAddSpy.mockRestore()
+		document.body.removeChild(dialogEl)
+		vi.useRealTimers()
+	})
+
 	it('does not attach listener when already attached', () => {
 		vi.useFakeTimers()
 		const isDatePickerVisible = ref(true)
@@ -745,12 +866,13 @@ describe('useCalendarKeyboardNavigation', () => {
 		// Simulate a day button for 2023-06-15
 		const dayCell = document.createElement('div')
 		dayCell.setAttribute('data-v-date', '2023-06-15')
+		dayCell.setAttribute('role', 'gridcell')
 		const dayBtn = document.createElement('button')
 		dayBtn.type = 'button'
 		dayCell.appendChild(dayBtn)
 		rootEl.appendChild(dayCell)
 
-		const focusSpy = vi.spyOn(dayBtn, 'focus')
+		const focusSpy = vi.spyOn(dayCell, 'focus')
 
 		let focusInitialDay!: () => void
 		const TestComponent = defineComponent({
@@ -770,6 +892,7 @@ describe('useCalendarKeyboardNavigation', () => {
 
 		focusInitialDay()
 		expect(focusSpy).toHaveBeenCalledWith({ preventScroll: true })
+		expect(dayCell.getAttribute('tabindex')).toBe('-1')
 	})
 
 	it('focusInitialDay does nothing when rootEl is missing', () => {
@@ -804,6 +927,7 @@ describe('useCalendarKeyboardNavigation', () => {
 		const adjCell = document.createElement('div')
 		adjCell.setAttribute('data-v-date', '2026-09-28')
 		adjCell.className = 'v-date-picker-month__day v-date-picker-month__day--adjacent'
+		adjCell.setAttribute('role', 'gridcell')
 		const adjBtn = document.createElement('button')
 		adjBtn.type = 'button'
 		adjCell.appendChild(adjBtn)
@@ -813,6 +937,7 @@ describe('useCalendarKeyboardNavigation', () => {
 		const adjCell2 = document.createElement('div')
 		adjCell2.setAttribute('data-v-date', '2026-09-29')
 		adjCell2.className = 'v-date-picker-month__day v-date-picker-month__day--adjacent'
+		adjCell2.setAttribute('role', 'gridcell')
 		const adjBtn2 = document.createElement('button')
 		adjBtn2.type = 'button'
 		adjCell2.appendChild(adjBtn2)
@@ -822,6 +947,7 @@ describe('useCalendarKeyboardNavigation', () => {
 		const adjCell3 = document.createElement('div')
 		adjCell3.setAttribute('data-v-date', '2026-09-30')
 		adjCell3.className = 'v-date-picker-month__day v-date-picker-month__day--adjacent'
+		adjCell3.setAttribute('role', 'gridcell')
 		const adjBtn3 = document.createElement('button')
 		adjBtn3.type = 'button'
 		adjCell3.appendChild(adjBtn3)
@@ -831,6 +957,7 @@ describe('useCalendarKeyboardNavigation', () => {
 		const octCell = document.createElement('div')
 		octCell.setAttribute('data-v-date', '2026-10-01')
 		octCell.className = 'v-date-picker-month__day'
+		octCell.setAttribute('role', 'gridcell')
 		const octBtn = document.createElement('button')
 		octBtn.type = 'button'
 		octCell.appendChild(octBtn)
@@ -840,13 +967,14 @@ describe('useCalendarKeyboardNavigation', () => {
 		const octCell2 = document.createElement('div')
 		octCell2.setAttribute('data-v-date', '2026-10-02')
 		octCell2.className = 'v-date-picker-month__day'
+		octCell2.setAttribute('role', 'gridcell')
 		const octBtn2 = document.createElement('button')
 		octBtn2.type = 'button'
 		octCell2.appendChild(octBtn2)
 		rootEl.appendChild(octCell2)
 
-		const adjFocusSpy = vi.spyOn(adjBtn, 'focus')
-		const octFocusSpy = vi.spyOn(octBtn, 'focus')
+		const adjFocusSpy = vi.spyOn(adjCell, 'focus')
+		const octFocusSpy = vi.spyOn(octCell, 'focus')
 
 		let focusInitialDay!: () => void
 		const TestComponent = defineComponent({
@@ -904,12 +1032,13 @@ describe('useCalendarKeyboardNavigation', () => {
 
 		const dayCell = document.createElement('div')
 		dayCell.setAttribute('data-v-date', '2023-06-15')
+		dayCell.setAttribute('role', 'gridcell')
 		const dayBtn = document.createElement('button')
 		dayBtn.type = 'button'
 		dayCell.appendChild(dayBtn)
 		rootEl.appendChild(dayCell)
 
-		const focusSpy = vi.spyOn(dayBtn, 'focus')
+		const focusSpy = vi.spyOn(dayCell, 'focus')
 
 		const TestComponent = defineComponent({
 			setup() {

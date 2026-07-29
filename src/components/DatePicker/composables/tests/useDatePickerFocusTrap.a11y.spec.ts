@@ -100,8 +100,10 @@ describe('useDatePickerFocusTrap – a11y keyboard navigation', () => {
 		grid.className = 'v-date-picker-month'
 		const selectedDayWrapper = document.createElement('div')
 		selectedDayWrapper.setAttribute('data-v-date', '2024-06-20')
+		selectedDayWrapper.setAttribute('role', 'gridcell')
+		selectedDayWrapper.focus = vi.fn()
 		const selectedDay = document.createElement('button')
-		selectedDay.focus = vi.fn()
+		selectedDay.setAttribute('tabindex', '-1')
 		selectedDayWrapper.appendChild(selectedDay)
 		grid.appendChild(selectedDayWrapper)
 
@@ -136,7 +138,7 @@ describe('useDatePickerFocusTrap – a11y keyboard navigation', () => {
 
 		handleMenuKeydown(event)
 
-		expect(selectedDay.focus).toHaveBeenCalled()
+		expect(selectedDayWrapper.focus).toHaveBeenCalled()
 		expect(firstDay.focus).not.toHaveBeenCalled()
 	})
 
@@ -152,8 +154,10 @@ describe('useDatePickerFocusTrap – a11y keyboard navigation', () => {
 		grid.className = 'v-date-picker-month'
 		const selectedDayWrapper = document.createElement('div')
 		selectedDayWrapper.setAttribute('data-v-date', '2024-06-15')
+		selectedDayWrapper.setAttribute('role', 'gridcell')
+		selectedDayWrapper.focus = vi.fn()
 		const selectedDay = document.createElement('button')
-		selectedDay.focus = vi.fn()
+		selectedDay.setAttribute('tabindex', '-1')
 		selectedDayWrapper.appendChild(selectedDay)
 		grid.appendChild(selectedDayWrapper)
 		rootEl.appendChild(grid)
@@ -173,7 +177,7 @@ describe('useDatePickerFocusTrap – a11y keyboard navigation', () => {
 
 		handleMenuKeydown(event)
 
-		expect(selectedDay.focus).toHaveBeenCalled()
+		expect(selectedDayWrapper.focus).toHaveBeenCalled()
 	})
 
 	it('exposes a logical cyclic tab order: today → months → prev → next → selected day', () => {
@@ -183,8 +187,10 @@ describe('useDatePickerFocusTrap – a11y keyboard navigation', () => {
 		grid.className = 'v-date-picker-month'
 		const selectedDayWrapper = document.createElement('div')
 		selectedDayWrapper.setAttribute('data-v-date', '2024-06-20')
+		selectedDayWrapper.setAttribute('role', 'gridcell')
+		selectedDayWrapper.focus = vi.fn()
 		const selectedDay = document.createElement('button')
-		selectedDay.focus = vi.fn()
+		selectedDay.setAttribute('tabindex', '-1')
 		selectedDayWrapper.appendChild(selectedDay)
 		grid.appendChild(selectedDayWrapper)
 		rootEl.appendChild(grid)
@@ -243,7 +249,7 @@ describe('useDatePickerFocusTrap – a11y keyboard navigation', () => {
 		event = new KeyboardEvent('keydown', { key: 'Tab' })
 		Object.defineProperty(event, 'target', { value: nextButton })
 		handleMenuKeydown(event)
-		expect(selectedDay.focus).toHaveBeenCalled()
+		expect(selectedDayWrapper.focus).toHaveBeenCalled()
 	})
 
 	it('reverses the tab order with Shift+Tab', () => {

@@ -31,7 +31,7 @@ import {
 				</ul>
 			</li>
 			<li><strong>Panneau</strong> : calendrier exposé dans un vrai <code>dialog</code> modal, contenant la grille de jours et ses contrôles.</li>
-			<li><strong>Relations</strong> : <code>aria-controls</code> relie l’enveloppe activatrice du champ readonly au <code>dialog</code> lorsqu’il est ouvert; <code>aria-owns/expanded/haspopup</code> ne sont pas surchargés sur l’input natif.</li>
+			<li><strong>Relations</strong> : <code>aria-controls</code> relie l’enveloppe activatrice du champ readonly au <code>dialog</code> lorsqu’il est ouvert; le <code>dialog</code> est nommé par un titre stable « Calendrier » via <code>aria-labelledby</code>; <code>aria-owns/expanded/haspopup</code> ne sont pas surchargés sur l’input natif.</li>
 			<li><strong>États</strong> : <code>aria-disabled</code> / <code>aria-readonly</code> alignés sur les props, messages d’erreur/avertissement/succès annoncés via la zone de messages du champ.</li>
 		</ul>
 	</CriteriaCard>

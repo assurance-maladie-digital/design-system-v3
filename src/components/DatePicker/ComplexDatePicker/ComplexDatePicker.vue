@@ -129,6 +129,13 @@
 	const shouldRestoreFocusToInput = ref(false)
 	const shouldFocusDialogOnOpen = ref(false)
 	const keyboardNavigatedDate = ref<Date | null>(null)
+	let dialogInitialFocusToken = 0
+	let dialogInitialFocusTimeouts: ReturnType<typeof setTimeout>[] = []
+
+	const clearDialogInitialFocusTimeouts = () => {
+		dialogInitialFocusTimeouts.forEach(clearTimeout)
+		dialogInitialFocusTimeouts = []
+	}
 
 	const scheduleCalendarInputFocusRestore = () => {
 		shouldRestoreFocusToInput.value = true
@@ -154,6 +161,21 @@
 				}, attempt < 3 ? 16 : 50)
 			})
 		})
+	}
+
+	const scheduleDialogInitialDayFocus = () => {
+		dialogInitialFocusToken += 1
+		const token = dialogInitialFocusToken
+
+		clearDialogInitialFocusTimeouts()
+
+		const runFocus = () => {
+			if (!isDatePickerVisible.value || token !== dialogInitialFocusToken) return
+			focusInitialDay()
+		}
+
+		runFocus()
+		dialogInitialFocusTimeouts.push(setTimeout(runFocus, 120))
 	}
 
 	const closeDatePicker = async (options: { restoreFocus?: boolean } = {}) => {
@@ -647,6 +669,7 @@
 	const datePickerMenuRef = ref<HTMLElement | null>(null)
 	const datePickerContentId = `date-picker-${useId()}`
 	const datePickerDialogId = `${datePickerContentId}-dialog`
+	const datePickerTitleId = `${datePickerContentId}-title`
 	const datePickerHeadingId = `${datePickerContentId}-heading`
 
 	const { handleMenuKeydown } = useDatePickerFocusTrap({
@@ -655,8 +678,9 @@
 		onClose: () => closeAndRestoreFocus(),
 		restoreFocus: () => scheduleCalendarInputFocusRestore(),
 		getInitialFocusDate: () => {
-			const value = selectedDates.value
-			const selected = Array.isArray(value) ? value[0] ?? null : value
+			const value = keyboardNavigatedDate.value
+				?? (Array.isArray(selectedDates.value) ? selectedDates.value[0] ?? null : selectedDates.value)
+			const selected = value
 			return selected ?? new Date()
 		},
 	})
@@ -729,6 +753,7 @@
 	})
 
 	onBeforeUnmount(() => {
+		clearDialogInitialFocusTimeouts()
 		datePickerMenuRef.value?.removeEventListener('keydown', handleMenuKeydown, true)
 	})
 
@@ -813,7 +838,7 @@
 					const displayedState = getDisplayedMonthYearState(date)
 					if (currentMonth.value !== displayedState.month || currentYear.value !== displayedState.year) {
 						syncDisplayedMonthYearFromDate(date)
-						nextTick(() => refreshVisibleCalendarUi())
+						nextTick(() => refreshVisibleCalendarUi({ focusDay: true }))
 					}
 				}
 			})
@@ -1278,6 +1303,8 @@
 		isDatePickerVisible,
 		(visible) => {
 			if (!visible) {
+				dialogInitialFocusToken += 1
+				clearDialogInitialFocusTimeouts()
 				ignoreNextInputBlur.value = false
 				shouldFocusDialogOnOpen.value = false
 				ignoreNextCalendarModelSync.value = false
@@ -1297,9 +1324,7 @@
 
 					if (shouldFocusDialogOnOpen.value) {
 						shouldFocusDialogOnOpen.value = false
-						focusInitialDay()
-						setTimeout(() => focusInitialDay(), 75)
-						setTimeout(() => focusInitialDay(), 200)
+						scheduleDialogInitialDayFocus()
 					}
 				})
 			}
@@ -1497,7 +1522,7 @@
 					ref="datePickerMenuRef"
 					tabindex="-1"
 					role="dialog"
-					:aria-labelledby="datePickerHeadingId"
+					:aria-labelledby="datePickerTitleId"
 				>
 					<VDatePicker
 						:id="datePickerContentId"
@@ -1524,7 +1549,6 @@
 						:density="props.density"
 						:hint="props.hint"
 						:persistent-hint="props.persistentHint"
-						@keydown.capture="handleMenuKeydown"
 						@update:model-value="updateDisplayFormattedDate"
 						@update:view-mode="handleViewModeUpdateWrapper"
 						@update:month="onUpdateMonth"
@@ -1534,7 +1558,10 @@
 						@update:month-year="props.displayHolidayDays ? markHolidayDays : undefined"
 					>
 						<template #title>
-							<span class="date-picker-title">
+							<span
+								:id="datePickerTitleId"
+								class="date-picker-title"
+							>
 								{{ locales.calendarTitle }}
 							</span>
 						</template>
@@ -1615,6 +1642,12 @@ $ap-grey-mid: #d6d6d6;
 	background-color: rgb(255 193 7 / 10%);
 	border: 2px dotted rgb(var(--v-theme-grey-darken60));
 	border-radius: 50%;
+}
+
+:deep(.v-date-picker-month__day[role='gridcell']:focus-visible) {
+	border-radius: 50%;
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 1px;
 }
 
 :deep(.v-date-picker-controls .v-btn:last-child) {
@@ -1715,7 +1748,12 @@ $ap-grey-mid: #d6d6d6;
 }
 
 :deep(.v-date-picker-month__day--adjacent) {
-	opacity: 0.7;
+	opacity: 1;
+
+	.v-btn__content {
+		color: rgb(var(--v-theme-onSurfaceVariant));
+		opacity: 1;
+	}
 }
 
 :deep(.v-date-picker-month__day--adjacent:has(.v-btn:focus-visible)) {
@@ -1727,7 +1765,8 @@ $ap-grey-mid: #d6d6d6;
 	background-color: transparent !important;
 
 	.v-btn__content {
-		opacity: 0.5;
+		color: rgb(var(--v-theme-onSurfaceVariant));
+		opacity: 1;
 	}
 }
 
@@ -1736,13 +1775,26 @@ $ap-grey-mid: #d6d6d6;
 	opacity: 0.9;
 }
 
+:deep(.v-date-picker-month__day--selected .v-btn) {
+	background-color: rgb(var(--v-theme-primaryVariant)) !important;
+	color: rgb(var(--v-theme-onPrimaryVariant)) !important;
+}
+
+:deep(.v-date-picker-month__day--selected .v-btn .v-btn__content) {
+	color: rgb(var(--v-theme-onPrimaryVariant)) !important;
+}
+
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
-	background-color: $ap-grey-mid;
+	background-color: rgb(var(--v-theme-surface));
+	box-shadow: inset 0 0 0 1px rgb(var(--v-theme-onSurfaceVariant));
+	color: rgb(var(--v-theme-onSurface));
 }
 
 /* day before weekend */
 :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
-	background-color: $ap-grey-mid;
+	background-color: rgb(var(--v-theme-surface));
+	box-shadow: inset 0 0 0 1px rgb(var(--v-theme-onSurfaceVariant));
+	color: rgb(var(--v-theme-onSurface));
 }
 
 :deep(.v-date-picker-controls__mode-btn) {

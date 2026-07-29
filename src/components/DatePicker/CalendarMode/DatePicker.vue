@@ -154,6 +154,7 @@
 
 	const datePickerDialogRef = ref<HTMLElement | null>(null)
 	const datePickerDialogId = `${datePickerContentId}-dialog`
+	const datePickerTitleId = `${datePickerContentId}-title`
 	const datePickerHeadingId = `${datePickerContentId}-heading`
 
 	const isDatePickerVisible = ref(false)
@@ -163,8 +164,9 @@
 		onClose: () => closeDatePicker(),
 		restoreFocus: () => queueMicrotask(() => focusCalendarInput()),
 		getInitialFocusDate: () => {
-			const value = selectedDates.value
-			const selected = Array.isArray(value) ? value[0] ?? null : value
+			const value = keyboardNavigatedDate.value
+				?? (Array.isArray(selectedDates.value) ? selectedDates.value[0] ?? null : selectedDates.value)
+			const selected = value
 			return selected ?? new Date()
 		},
 	})
@@ -1094,7 +1096,7 @@
 					ref="datePickerDialogRef"
 					role="dialog"
 					aria-modal="true"
-					:aria-labelledby="datePickerHeadingId"
+					:aria-labelledby="datePickerTitleId"
 					tabindex="-1"
 				>
 					<VDatePicker
@@ -1123,7 +1125,9 @@
 						@update:month-year="markHolidayDays"
 					>
 						<template #title>
-							{{ locales.calendarTitle }}
+							<span :id="datePickerTitleId">
+								{{ locales.calendarTitle }}
+							</span>
 						</template>
 						<template #header>
 							<SyHeading
@@ -1195,6 +1199,12 @@ $ap-grey-mid: #d6d6d6;
 	background-color: rgb(255 193 7 / 10%);
 	border: 2px dotted rgb(var(--v-theme-grey-darken60));
 	border-radius: 50%;
+}
+
+:deep(.v-date-picker-month__day[role='gridcell']:focus-visible) {
+	border-radius: 50%;
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 1px;
 }
 
 /* Disable ripple effect on month and year buttons */
@@ -1320,7 +1330,12 @@ $ap-grey-mid: #d6d6d6;
 }
 
 :deep(.v-date-picker-month__day--adjacent) {
-	opacity: 0.84;
+	opacity: 1;
+
+	.v-btn__content {
+		color: rgb(var(--v-theme-onSurfaceVariant));
+		opacity: 1;
+	}
 }
 
 :deep(.v-date-picker-month__day--adjacent:has(.v-btn:focus-visible)) {
@@ -1332,13 +1347,23 @@ $ap-grey-mid: #d6d6d6;
 	background-color: transparent !important;
 
 	.v-btn__content {
-		opacity: 0.5;
+		color: rgb(var(--v-theme-onSurfaceVariant));
+		opacity: 1;
 	}
 }
 
 :deep(.v-date-picker-month__day--selected .v-btn:hover) {
 	background-color: rgb(var(--v-theme-primaryVariant)) !important;
 	opacity: 0.9;
+}
+
+:deep(.v-date-picker-month__day--selected .v-btn) {
+	background-color: rgb(var(--v-theme-primaryVariant)) !important;
+	color: rgb(var(--v-theme-onPrimaryVariant)) !important;
+}
+
+:deep(.v-date-picker-month__day--selected .v-btn .v-btn__content) {
+	color: rgb(var(--v-theme-onPrimaryVariant)) !important;
 }
 
 .fade-enter-active,
@@ -1352,12 +1377,16 @@ $ap-grey-mid: #d6d6d6;
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
-	background-color: $ap-grey-mid;
+	background-color: rgb(var(--v-theme-surface));
+	box-shadow: inset 0 0 0 1px rgb(var(--v-theme-onSurfaceVariant));
+	color: rgb(var(--v-theme-onSurface));
 }
 
 /* div avant la class .v-date-picker-month__day--week-end */
 :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
-	background-color: $ap-grey-mid;
+	background-color: rgb(var(--v-theme-surface));
+	box-shadow: inset 0 0 0 1px rgb(var(--v-theme-onSurfaceVariant));
+	color: rgb(var(--v-theme-onSurface));
 }
 
 :deep(.v-date-picker-controls__mode-btn) {

@@ -303,6 +303,7 @@ describe('useDatePickerAccessibility', () => {
 		const dayButtons = Array.from(dayCells[0]?.querySelectorAll('button') ?? [])
 		expect(dayButtons[0]?.getAttribute('role')).toBeNull()
 		expect(dayButtons[0]?.getAttribute('aria-selected')).toBeNull()
+		expect(dayButtons[0]?.getAttribute('tabindex')).toBe('-1')
 	})
 
 	it('cleanupGridSemantics flattens injected rows', async () => {
@@ -327,6 +328,7 @@ describe('useDatePickerAccessibility', () => {
 
 		const daysContainer = monthElAfter.querySelector('.v-date-picker-month__days') as HTMLElement
 		expect(daysContainer.children.length).toBe(2)
+		expect(daysContainer.querySelector('button')?.getAttribute('tabindex')).toBeNull()
 	})
 
 	it('wraps flat div structure into ARIA rows with display: contents', async () => {

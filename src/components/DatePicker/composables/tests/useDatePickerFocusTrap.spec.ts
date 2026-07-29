@@ -417,10 +417,14 @@ describe('useDatePickerFocusTrap', () => {
 
 		const grid = document.createElement('div')
 		grid.className = 'v-date-picker-month'
+		const selectedDayCell = document.createElement('div')
+		selectedDayCell.setAttribute('data-v-date', '2024-06-20')
+		selectedDayCell.setAttribute('role', 'gridcell')
+		selectedDayCell.focus = vi.fn()
 		const selectedDay = document.createElement('button')
-		selectedDay.setAttribute('data-v-date', '2024-06-20')
-		selectedDay.focus = vi.fn()
-		grid.appendChild(selectedDay)
+		selectedDay.setAttribute('tabindex', '-1')
+		selectedDayCell.appendChild(selectedDay)
+		grid.appendChild(selectedDayCell)
 		rootEl.appendChild(grid)
 
 		const todayButton = document.createElement('button')
@@ -447,7 +451,7 @@ describe('useDatePickerFocusTrap', () => {
 
 		handleMenuKeydown(event)
 
-		expect(selectedDay.focus).toHaveBeenCalled()
+		expect(selectedDayCell.focus).toHaveBeenCalled()
 		expect(todayButton.focus).not.toHaveBeenCalled()
 	})
 
