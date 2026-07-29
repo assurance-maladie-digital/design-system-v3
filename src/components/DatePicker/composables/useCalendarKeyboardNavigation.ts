@@ -58,13 +58,14 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	const YEAR_PROXY_SELECTOR = '[data-sy-date-picker-option="year"]'
 	const MONTH_BUTTON_SELECTOR = '.v-date-picker-months .v-btn, .v-date-picker-months button'
 	const YEAR_BUTTON_SELECTOR = '.v-date-picker-years .v-btn, .v-date-picker-years button'
+	const getDialogQueryRoot = (root: HTMLElement | undefined) => root ?? document
 
 	const getMonthItemSelector = (root: HTMLElement | undefined) => (
-		root?.querySelector(MONTH_PROXY_SELECTOR) ? MONTH_PROXY_SELECTOR : MONTH_BUTTON_SELECTOR
+		getDialogQueryRoot(root).querySelector(MONTH_PROXY_SELECTOR) ? MONTH_PROXY_SELECTOR : MONTH_BUTTON_SELECTOR
 	)
 
 	const getYearItemSelector = (root: HTMLElement | undefined) => (
-		root?.querySelector(YEAR_PROXY_SELECTOR) ? YEAR_PROXY_SELECTOR : YEAR_BUTTON_SELECTOR
+		getDialogQueryRoot(root).querySelector(YEAR_PROXY_SELECTOR) ? YEAR_PROXY_SELECTOR : YEAR_BUTTON_SELECTOR
 	)
 
 	const getKeyboardContainer = (rootEl: HTMLElement | undefined) => {
@@ -128,8 +129,14 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 	const getInitialDialogDate = () => getInitialFocusDate ? getInitialFocusDate() : new Date()
 
+	const isActiveDialogItem = (item: HTMLElement) => (
+		item.getAttribute('aria-pressed') === 'true'
+		|| item.classList.contains('v-btn--active')
+		|| item.querySelector('button.v-btn--active') !== null
+	)
+
 	const resolveMonthButtonFromState = (buttons: HTMLElement[]) => {
-		const activeButton = buttons.find(button => button.classList.contains('v-btn--active'))
+		const activeButton = buttons.find(button => isActiveDialogItem(button))
 		if (activeButton) return activeButton
 
 		const targetMonth = getInitialDialogDate().getMonth()
@@ -137,7 +144,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	}
 
 	const resolveYearButtonFromState = (buttons: HTMLElement[]) => {
-		const activeButton = buttons.find(button => button.classList.contains('v-btn--active'))
+		const activeButton = buttons.find(button => isActiveDialogItem(button))
 		if (activeButton) return activeButton
 
 		const targetYear = String(getInitialDialogDate().getFullYear())

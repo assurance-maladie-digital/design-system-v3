@@ -19,6 +19,9 @@ const YEAR_CONTROL_SELECTOR = [
 
 const MONTH_OPTION_PROXY_SELECTOR = '[data-sy-date-picker-option="month"]'
 const YEAR_OPTION_PROXY_SELECTOR = '[data-sy-date-picker-option="year"]'
+const OPTION_BUTTON_MANAGED_TABINDEX_DATASET = 'optionManagedTabindex'
+const OPTION_BUTTON_PREVIOUS_TABINDEX_DATASET = 'optionPreviousTabindex'
+const GENERATED_OPTION_PROXY_DATASET = 'syDatePickerGeneratedOptionProxy'
 
 const PREV_MONTH_BUTTON_SELECTOR = [
 	'[data-testid="prev-month"]',
@@ -469,6 +472,25 @@ const cleanupOptionProxies = (container: HTMLElement) => {
 	Array.from(container.querySelectorAll<HTMLElement>(MONTH_OPTION_PROXY_SELECTOR))
 		.concat(Array.from(container.querySelectorAll<HTMLElement>(YEAR_OPTION_PROXY_SELECTOR)))
 		.forEach((proxy) => {
+			const button = getOptionButton(proxy)
+			if (button) {
+				restoreManagedButtonTabindex(button)
+			}
+
+			proxy.onclick = null
+			proxy.onkeydown = null
+			proxy.onfocus = null
+			proxy.removeAttribute('role')
+			proxy.removeAttribute('aria-label')
+			proxy.removeAttribute('title')
+			proxy.removeAttribute('aria-pressed')
+			proxy.removeAttribute('tabindex')
+
+			if (proxy.dataset[GENERATED_OPTION_PROXY_DATASET] !== 'true') {
+				delete proxy.dataset.syDatePickerOption
+				return
+			}
+
 			const parent = proxy.parentElement
 			if (!parent) return
 
@@ -476,6 +498,7 @@ const cleanupOptionProxies = (container: HTMLElement) => {
 				parent.insertBefore(proxy.firstChild, proxy)
 			}
 
+			delete proxy.dataset[GENERATED_OPTION_PROXY_DATASET]
 			proxy.remove()
 		})
 }
@@ -489,65 +512,114 @@ const updateProxyActivation = (container: HTMLElement, activeProxy: HTMLElement)
 	})
 }
 
+const getOptionButton = (host: HTMLElement): HTMLButtonElement | null => {
+	if (host instanceof HTMLButtonElement) return host
+
+	return Array.from(host.children).find(
+		(child): child is HTMLButtonElement => child instanceof HTMLButtonElement,
+	) ?? null
+}
+
+const isOptionActive = (host: HTMLElement, button: HTMLButtonElement | null) => (
+	host.getAttribute('aria-pressed') === 'true'
+	|| host.classList.contains('v-btn--active')
+	|| button?.classList.contains('v-btn--active') === true
+	|| button?.getAttribute('aria-pressed') === 'true'
+)
+
+const setManagedButtonTabindex = (button: HTMLButtonElement) => {
+	if (button.dataset[OPTION_BUTTON_MANAGED_TABINDEX_DATASET] === 'true') return
+
+	const previousTabindex = button.getAttribute('tabindex')
+	button.dataset[OPTION_BUTTON_PREVIOUS_TABINDEX_DATASET] = previousTabindex ?? ''
+	button.setAttribute('tabindex', '-1')
+	button.dataset[OPTION_BUTTON_MANAGED_TABINDEX_DATASET] = 'true'
+}
+
+const restoreManagedButtonTabindex = (button: HTMLButtonElement) => {
+	if (button.dataset[OPTION_BUTTON_MANAGED_TABINDEX_DATASET] !== 'true') return
+
+	const previousTabindex = button.dataset[OPTION_BUTTON_PREVIOUS_TABINDEX_DATASET] ?? ''
+	if (previousTabindex) {
+		button.setAttribute('tabindex', previousTabindex)
+	}
+	else {
+		button.removeAttribute('tabindex')
+	}
+
+	delete button.dataset[OPTION_BUTTON_MANAGED_TABINDEX_DATASET]
+	delete button.dataset[OPTION_BUTTON_PREVIOUS_TABINDEX_DATASET]
+}
+
 const ensureOptionProxies = (
 	container: HTMLElement,
 	kind: 'month' | 'year',
 	getDefaultActiveIndex: (buttons: HTMLButtonElement[]) => number,
 ) => {
 	const content = container.querySelector<HTMLElement>(`.v-date-picker-${kind}s__content`) ?? container
-	const directButtons = Array.from(content.querySelectorAll<HTMLButtonElement>(':scope > .v-btn, :scope > button'))
-	if (directButtons.length === 0) return
+	const optionHosts = Array.from(content.children).flatMap((child) => {
+		if (!(child instanceof HTMLElement)) return []
+
+		if (child instanceof HTMLButtonElement) {
+			const proxy = document.createElement('div')
+			proxy.dataset.syDatePickerOption = kind
+			proxy.dataset[GENERATED_OPTION_PROXY_DATASET] = 'true'
+			proxy.className = `sy-date-picker-option-proxy sy-date-picker-option-proxy--${kind}`
+			child.parentNode?.insertBefore(proxy, child)
+			proxy.appendChild(child)
+			return [{ host: proxy, button: child }]
+		}
+
+		const button = getOptionButton(child)
+		if (!button) return []
+
+		return [{ host: child, button }]
+	})
+	if (optionHosts.length === 0) return
+
+	const directButtons = optionHosts.map(({ button }) => button)
 
 	const activeIndex = (() => {
-		const activeButtonIndex = directButtons.findIndex(button => button.classList.contains('v-btn--active'))
+		const activeButtonIndex = optionHosts.findIndex(({ host, button }) => isOptionActive(host, button))
 		if (activeButtonIndex !== -1) return activeButtonIndex
 
 		const fallbackIndex = getDefaultActiveIndex(directButtons)
 		return fallbackIndex >= 0 ? fallbackIndex : 0
 	})()
 
-	directButtons.forEach((button, index) => {
-		let proxy = button.parentElement?.matches(`[data-sy-date-picker-option="${kind}"]`)
-			? button.parentElement as HTMLElement
-			: null
-
-		if (!proxy) {
-			proxy = document.createElement('div')
-			proxy.dataset.syDatePickerOption = kind
-			proxy.className = `sy-date-picker-option-proxy sy-date-picker-option-proxy--${kind}`
-			button.parentNode?.insertBefore(proxy, button)
-			proxy.appendChild(button)
-		}
-
+	optionHosts.forEach(({ host, button }, index) => {
 		const label = button.getAttribute('aria-label') ?? compactText(button.textContent)
-		proxy.setAttribute('role', 'button')
-		proxy.setAttribute('aria-label', label)
-		proxy.setAttribute('title', label)
-		proxy.setAttribute('aria-pressed', String(button.classList.contains('v-btn--active')))
-		proxy.tabIndex = index === activeIndex ? 0 : -1
+		host.dataset.syDatePickerOption = kind
+		host.setAttribute('role', 'button')
+		host.setAttribute('aria-label', label)
+		host.setAttribute('title', label)
+		host.setAttribute('aria-pressed', String(isOptionActive(host, button)))
+		host.tabIndex = index === activeIndex ? 0 : -1
+		setManagedButtonTabindex(button)
 
-		proxy.onclick = (event: MouseEvent) => {
+		host.onclick = (event: MouseEvent) => {
 			if (event.target instanceof Node && button.contains(event.target)) {
-				updateProxyActivation(container, proxy)
+				updateProxyActivation(container, host)
+				host.focus({ preventScroll: true })
 				return
 			}
 
 			button.click()
-			updateProxyActivation(container, proxy)
-			proxy.focus({ preventScroll: true })
+			updateProxyActivation(container, host)
+			host.focus({ preventScroll: true })
 		}
 
-		proxy.onkeydown = (event: KeyboardEvent) => {
+		host.onkeydown = (event: KeyboardEvent) => {
 			if (event.key !== 'Enter' && event.key !== ' ') return
 
 			event.preventDefault()
 			button.click()
-			updateProxyActivation(container, proxy)
-			proxy.focus({ preventScroll: true })
+			updateProxyActivation(container, host)
+			host.focus({ preventScroll: true })
 		}
 
-		proxy.onfocus = () => {
-			updateProxyActivation(container, proxy)
+		host.onfocus = () => {
+			updateProxyActivation(container, host)
 		}
 	})
 }

@@ -202,9 +202,42 @@ describe('useDatePickerAccessibility', () => {
 		expect(monthProxies[1]?.getAttribute('aria-pressed')).toBe('true')
 		expect(monthProxies[1]?.tabIndex).toBe(0)
 		expect(monthProxies[0]?.tabIndex).toBe(-1)
+		expect(monthProxies[0]?.querySelector('button')?.getAttribute('tabindex')).toBe('-1')
 		expect(yearProxies[1]?.getAttribute('aria-pressed')).toBe('true')
 		expect(yearProxies[1]?.tabIndex).toBe(0)
 		expect(yearProxies[0]?.tabIndex).toBe(-1)
+		expect(yearProxies[0]?.querySelector('button')?.getAttribute('tabindex')).toBe('-1')
+	})
+
+	it('reuses existing month and year item wrappers when Vuetify provides them', async () => {
+		document.body.innerHTML = `
+			<div class="v-date-picker">
+				<div class="v-date-picker-months">
+					<div class="v-date-picker-months__content">
+						<div class="v-date-picker-months__month"><button class="v-btn">janv.</button></div>
+						<div class="v-date-picker-months__month"><button class="v-btn v-btn--active">févr.</button></div>
+					</div>
+				</div>
+				<div class="v-date-picker-years">
+					<div class="v-date-picker-years__content">
+						<div class="v-date-picker-years__year"><button class="v-btn">2024</button></div>
+						<div class="v-date-picker-years__year v-date-picker-years__year--current"><button class="v-btn v-btn--active">2025</button></div>
+					</div>
+				</div>
+			</div>
+		`
+
+		await updateAccessibility()
+
+		const monthWrappers = Array.from(document.querySelectorAll<HTMLElement>('.v-date-picker-months__month'))
+		const yearWrappers = Array.from(document.querySelectorAll<HTMLElement>('.v-date-picker-years__year'))
+
+		expect(monthWrappers[0]?.dataset.syDatePickerOption).toBe('month')
+		expect(monthWrappers[1]?.tabIndex).toBe(0)
+		expect(monthWrappers[0]?.querySelector('button')?.getAttribute('tabindex')).toBe('-1')
+		expect(yearWrappers[0]?.dataset.syDatePickerOption).toBe('year')
+		expect(yearWrappers[1]?.tabIndex).toBe(0)
+		expect(yearWrappers[0]?.querySelector('button')?.getAttribute('tabindex')).toBe('-1')
 	})
 
 	it('delegates Enter and Space on month/year proxies to the wrapped buttons', async () => {
