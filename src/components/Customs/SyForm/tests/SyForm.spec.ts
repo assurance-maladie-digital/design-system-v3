@@ -460,4 +460,40 @@ describe('SyForm', () => {
 		expect(submitHandler).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ isValid: false }))
 		expect(wrapper.vm.formValide).toBe(false)
 	})
+
+	it('reset() returns a live-validated required field to a neutral (pristine) state, not invalid', async () => {
+		const TestWrapper = {
+			components: { SyForm, SyTextField },
+			template: `
+					<SyForm v-model="formValide" ref="form">
+						<SyTextField v-model="text" required label="Nom" :is-validate-on-blur="false" />
+					</SyForm>
+				`,
+			data() {
+				return {
+					text: '',
+					formValide: null as boolean | null,
+				}
+			},
+		}
+
+		const wrapper = mount(TestWrapper)
+		await flushPromises()
+
+		// Saisie d'une valeur valide → validation live → formulaire valide
+		const textFieldInput = wrapper.findComponent(SyTextField).find('input')
+		await textFieldInput.setValue('John Doe')
+		await flushPromises()
+		expect(wrapper.vm.formValide).toBe(true)
+
+		// Reset via la méthode exposée (équivalent d'un bouton type="reset")
+		;(wrapper.vm.$refs.form as InstanceType<typeof SyForm>).reset()
+		await flushPromises()
+		await nextTick()
+		await flushPromises()
+
+		// Le reset doit ramener le champ à un état neutre/vierge, pas le ré-invalider
+		expect(wrapper.vm.formValide).toBe(null)
+		expect(wrapper.findComponent(SyTextField).text()).not.toContain('Le champ est obligatoire')
+	})
 })

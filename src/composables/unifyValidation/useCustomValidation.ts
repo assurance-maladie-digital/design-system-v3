@@ -1,6 +1,6 @@
 import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 import { useValidatable } from '@/composables/validation/useValidatable'
-import { reactive, watch, computed, ref } from 'vue'
+import { reactive, watch, computed, ref, nextTick } from 'vue'
 import type { Ref } from 'vue'
 
 /**
@@ -85,6 +85,13 @@ export function useCustomValidation(
 		return result
 	}
 
+	// Le reset (via useValidatable) remet `modelValue` à `undefined`. En validation
+	// live (isValidateOnBlur === false), le watch(modelValue) relancerait aussitôt
+	// `validate()` et, pour un champ requis, ré-invaliderait le champ au lieu de le
+	// ramener à un état neutre/pristine. On neutralise donc la validation déclenchée
+	// par ce reset précis.
+	let skipValidationForReset = false
+
 	useValidatable(
 		async () => {
 			const result = await validate()
@@ -97,7 +104,16 @@ export function useCustomValidation(
 			isPristine.value = true
 			hasSuccess.value = false
 		},
-		() => modelValue.value = undefined,
+		() => {
+			skipValidationForReset = true
+			modelValue.value = undefined
+			// Filet de sécurité : si la valeur était déjà `undefined`, le watch ne se
+			// déclenche pas — on lève la garde au tick suivant pour ne pas ignorer une
+			// modification utilisateur ultérieure.
+			nextTick(() => {
+				skipValidationForReset = false
+			})
+		},
 		computed(() => isPristine.value ? null : errors.value.length < 1),
 		computed(() => !disableErrorHandling.value || errors.value.length > 0),
 	)
@@ -109,6 +125,10 @@ export function useCustomValidation(
 	})
 
 	watch(modelValue, () => {
+		if (skipValidationForReset) {
+			skipValidationForReset = false
+			return
+		}
 		if (!isValidateOnBlur.value && !disableErrorHandling.value) {
 			validate()
 		}
