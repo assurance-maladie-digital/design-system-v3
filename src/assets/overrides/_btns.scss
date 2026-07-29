@@ -7,10 +7,10 @@
 	display: inline-flex !important;
 	height: 44px !important;
 	padding: var(--spacing-3) var(--spacing-4) !important;
-}
 
-.v-btn.v-tab {
-	text-transform: uppercase !important;
+	&.v-tab {
+		text-transform: uppercase !important;
+	}
 }
 
 // Ring de focus : couvre les VBtn rendus en <button> ET en lien (<a>, via to/href),
@@ -30,12 +30,11 @@ button:focus-visible {
 	outline-color: rgb(var(--v-theme-onPrimary));
 }
 
-.v-btn:focus-visible .v-btn__overlay {
-	opacity: 0 !important;
-}
-
-.v-btn:focus-visible::after {
-	opacity: 0 !important;
+.v-btn:focus-visible {
+	.v-btn__overlay,
+	&::after {
+		opacity: 0 !important;
+	}
 }
 
 // Overlay base configuration
@@ -46,10 +45,11 @@ button:focus-visible {
 }
 
 // Elevated buttons
-.v-btn--variant-elevated {
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-elevated {
 	&.v-btn--disabled {
 		background-color: rgba(var(--v-theme-disabled)) !important;
 		color: rgba(var(--v-theme-onDisabled)) !important;
+		opacity: 1;
 	}
 
 	.v-btn__content {
@@ -71,14 +71,15 @@ button:focus-visible {
 }
 
 // Outlined, Text and Tonal buttons
-.v-btn--variant-outlined,
-.v-btn--variant-text,
-.v-btn--variant-tonal {
-	opacity: 1 !important;
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-outlined,
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-text,
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-tonal {
+	
 
 	&.v-btn--disabled {
 		border-color: rgba(var(--v-theme-disabled)) !important;
 		color: rgba(var(--v-theme-onDisabled)) !important;
+		opacity: 1;
 	}
 
 	&:hover .v-btn__overlay {
@@ -93,7 +94,6 @@ button:focus-visible {
 		transition: opacity 0.2s ease, background 0s;
 	}
 
-	// Interaction sur les boutons en version dark
 	&[class*='--dark'] {
 		&:hover .v-btn__overlay {
 			background: rgba(var(--v-theme-interactionLighten), 0.2) !important;
