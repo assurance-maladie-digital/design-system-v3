@@ -40,7 +40,6 @@
 			model.value = newValide
 		}
 	}, { immediate: true })
-	const isValid = ref<boolean>(true)
 
 	// Methode de validation globale qui combine Vuetify et nos composants personnalises
 	const validate = async () => {
@@ -71,9 +70,7 @@
 		const customComponentsValid = await validateAll()
 
 		// Le formulaire est valide si les deux sont valides
-		isValid.value = vuetifyValid && customComponentsValid
-
-		return isValid.value
+		return vuetifyValid && customComponentsValid
 	}
 
 	const reset = () => {
@@ -83,7 +80,6 @@
 		// Reset field values and validations for Vuetify form
 		form.value?.reset()
 		form.value?.resetValidation()
-		isValid.value = true
 		// Notify consumers so they can clear external models (e.g., v-model refs)
 		emit('reset')
 	}
@@ -93,7 +89,6 @@
 		// Clear Vuetify internal validation state
 		form.value?.resetValidation()
 		// Clear custom components validation states registered in the form
-		isValid.value = true
 		clearAll()
 	}
 
@@ -101,7 +96,6 @@
 		clearAll()
 		resetAll()
 		form.value?.resetValidation()
-		isValid.value = true
 		emit('reset')
 	}
 
@@ -132,7 +126,6 @@
 		@reset="handleReset"
 	>
 		<slot
-			:is-valid="isValid"
 			:validate="validate"
 			:reset="reset"
 			:clear="clearValidation"
