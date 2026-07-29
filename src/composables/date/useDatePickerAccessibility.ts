@@ -17,6 +17,9 @@ const YEAR_CONTROL_SELECTOR = [
 	'.v-date-picker-controls__year-btn',
 ].join(',')
 
+const MONTH_OPTION_PROXY_SELECTOR = '[data-sy-date-picker-option="month"]'
+const YEAR_OPTION_PROXY_SELECTOR = '[data-sy-date-picker-option="year"]'
+
 const PREV_MONTH_BUTTON_SELECTOR = [
 	'[data-testid="prev-month"]',
 	'.v-date-picker-controls__month button:first-of-type',
@@ -440,14 +443,6 @@ const createAriaRow = (className?: string): HTMLElement => {
 	return row
 }
 
-const createAriaGridCell = (className?: string): HTMLElement => {
-	const cell = document.createElement('div')
-	cell.setAttribute('role', 'gridcell')
-	cell.style.display = 'contents'
-	if (className) cell.className = className
-	return cell
-}
-
 const cleanupGridSemanticsForMonth = (daysContainer: HTMLElement) => {
 	Array.from(daysContainer.children).forEach((child) => {
 		if (
@@ -470,84 +465,91 @@ const cleanupGridSemanticsForMonth = (daysContainer: HTMLElement) => {
 	})
 }
 
-const cleanupGridSemanticsForSelectorButtons = (container: HTMLElement, rowClassName: string, cellClassName: string) => {
-	Array.from(container.children).forEach((child) => {
-		if (
-			child instanceof HTMLElement
-			&& child.getAttribute('role') === 'row'
-			&& child.style.display === 'contents'
-			&& child.classList.contains(rowClassName)
-		) {
-			const cells = Array.from(child.children).filter(
-				(cell): cell is HTMLElement => (
-					cell instanceof HTMLElement
-					&& cell.getAttribute('role') === 'gridcell'
-					&& cell.style.display === 'contents'
-					&& cell.classList.contains(cellClassName)
-				),
-			)
+const cleanupOptionProxies = (container: HTMLElement) => {
+	Array.from(container.querySelectorAll<HTMLElement>(MONTH_OPTION_PROXY_SELECTOR))
+		.concat(Array.from(container.querySelectorAll<HTMLElement>(YEAR_OPTION_PROXY_SELECTOR)))
+		.forEach((proxy) => {
+			const parent = proxy.parentElement
+			if (!parent) return
 
-			cells.forEach((cell) => {
-				while (cell.firstChild) {
-					container.appendChild(cell.firstChild)
-				}
-				cell.remove()
-			})
+			while (proxy.firstChild) {
+				parent.insertBefore(proxy.firstChild, proxy)
+			}
 
-			child.remove()
-		}
+			proxy.remove()
+		})
+}
+
+const updateProxyActivation = (container: HTMLElement, activeProxy: HTMLElement) => {
+	const proxies = Array.from(container.querySelectorAll<HTMLElement>(MONTH_OPTION_PROXY_SELECTOR))
+		.concat(Array.from(container.querySelectorAll<HTMLElement>(YEAR_OPTION_PROXY_SELECTOR)))
+
+	proxies.forEach((proxy) => {
+		proxy.tabIndex = proxy === activeProxy ? 0 : -1
 	})
 }
 
-const getGridColumnCount = (items: HTMLElement[], fallbackColumnCount: number) => {
-	const firstRowTop = items[0]?.offsetTop
-	if (firstRowTop === undefined) return fallbackColumnCount
-
-	const measuredColumnCount = items.filter(item => item.offsetTop === firstRowTop).length
-	return measuredColumnCount || fallbackColumnCount
-}
-
-const applySelectorGridSemantics = (
+const ensureOptionProxies = (
 	container: HTMLElement,
-	buttons: HTMLElement[],
-	label: string,
-	rowClassName: string,
-	cellClassName: string,
-	fallbackColumnCount: number,
+	kind: 'month' | 'year',
+	getDefaultActiveIndex: (buttons: HTMLButtonElement[]) => number,
 ) => {
-	container.setAttribute('role', 'grid')
-	container.setAttribute('aria-label', label)
-	container.removeAttribute('aria-readonly')
-	container.removeAttribute('aria-rowcount')
-	container.removeAttribute('aria-colcount')
+	const content = container.querySelector<HTMLElement>(`.v-date-picker-${kind}s__content`) ?? container
+	const directButtons = Array.from(content.querySelectorAll<HTMLButtonElement>(':scope > .v-btn, :scope > button'))
+	if (directButtons.length === 0) return
 
-	cleanupGridSemanticsForSelectorButtons(container, rowClassName, cellClassName)
+	const activeIndex = (() => {
+		const activeButtonIndex = directButtons.findIndex(button => button.classList.contains('v-btn--active'))
+		if (activeButtonIndex !== -1) return activeButtonIndex
 
-	const columns = getGridColumnCount(buttons, fallbackColumnCount)
+		const fallbackIndex = getDefaultActiveIndex(directButtons)
+		return fallbackIndex >= 0 ? fallbackIndex : 0
+	})()
 
-	for (let i = 0; i < buttons.length; i += columns) {
-		const row = createAriaRow(rowClassName)
-		const chunk = buttons.slice(i, i + columns)
+	directButtons.forEach((button, index) => {
+		let proxy = button.parentElement?.matches(`[data-sy-date-picker-option="${kind}"]`)
+			? button.parentElement as HTMLElement
+			: null
 
-		chunk.forEach((button) => {
-			button.removeAttribute('aria-rowindex')
-			button.removeAttribute('aria-colindex')
-			button.removeAttribute('aria-selected')
+		if (!proxy) {
+			proxy = document.createElement('div')
+			proxy.dataset.syDatePickerOption = kind
+			proxy.className = `sy-date-picker-option-proxy sy-date-picker-option-proxy--${kind}`
+			button.parentNode?.insertBefore(proxy, button)
+			proxy.appendChild(button)
+		}
 
-			const cell = createAriaGridCell(cellClassName)
-			if (button.classList.contains('v-btn--active')) {
-				cell.setAttribute('aria-selected', 'true')
+		const label = button.getAttribute('aria-label') ?? compactText(button.textContent)
+		proxy.setAttribute('role', 'button')
+		proxy.setAttribute('aria-label', label)
+		proxy.setAttribute('title', label)
+		proxy.setAttribute('aria-pressed', String(button.classList.contains('v-btn--active')))
+		proxy.tabIndex = index === activeIndex ? 0 : -1
+
+		proxy.onclick = (event: MouseEvent) => {
+			if (event.target instanceof Node && button.contains(event.target)) {
+				updateProxyActivation(container, proxy)
+				return
 			}
-			else {
-				cell.removeAttribute('aria-selected')
-			}
 
-			cell.appendChild(button)
-			row.appendChild(cell)
-		})
+			button.click()
+			updateProxyActivation(container, proxy)
+			proxy.focus({ preventScroll: true })
+		}
 
-		container.appendChild(row)
-	}
+		proxy.onkeydown = (event: KeyboardEvent) => {
+			if (event.key !== 'Enter' && event.key !== ' ') return
+
+			event.preventDefault()
+			button.click()
+			updateProxyActivation(container, proxy)
+			proxy.focus({ preventScroll: true })
+		}
+
+		proxy.onfocus = () => {
+			updateProxyActivation(container, proxy)
+		}
+	})
 }
 
 const applyGridSemantics = (pickerEl: HTMLElement) => {
@@ -627,34 +629,18 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 	})
 
 	pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-months').forEach((monthsContainer) => {
-		const buttons = Array.from(monthsContainer.querySelectorAll<HTMLElement>(':scope > button, :scope > .v-btn'))
-			.filter(button => !button.closest('[role="row"]'))
-
-		if (buttons.length === 0) return
-
-		applySelectorGridSemantics(
+		ensureOptionProxies(
 			monthsContainer,
-			buttons,
-			locales.selectMonth(),
-			'v-date-picker-months__row',
-			'v-date-picker-months__cell',
-			3,
+			'month',
+			buttons => buttons.findIndex(button => button.classList.contains('v-btn--active')),
 		)
 	})
 
 	pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-years').forEach((yearsContainer) => {
-		const buttons = Array.from(yearsContainer.querySelectorAll<HTMLElement>(':scope > button, :scope > .v-btn'))
-			.filter(button => !button.closest('[role="row"]'))
-
-		if (buttons.length === 0) return
-
-		applySelectorGridSemantics(
+		ensureOptionProxies(
 			yearsContainer,
-			buttons,
-			locales.selectYear(),
-			'v-date-picker-years__row',
-			'v-date-picker-years__cell',
-			3,
+			'year',
+			buttons => buttons.findIndex(button => button.classList.contains('v-btn--active')),
 		)
 	})
 }
@@ -670,19 +656,8 @@ const cleanupGridSemantics = (root: ParentNode = document) => {
 		pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-month__days').forEach((daysContainer) => {
 			cleanupGridSemanticsForMonth(daysContainer)
 		})
-		pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-months').forEach((monthsContainer) => {
-			cleanupGridSemanticsForSelectorButtons(
-				monthsContainer,
-				'v-date-picker-months__row',
-				'v-date-picker-months__cell',
-			)
-		})
-		pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-years').forEach((yearsContainer) => {
-			cleanupGridSemanticsForSelectorButtons(
-				yearsContainer,
-				'v-date-picker-years__row',
-				'v-date-picker-years__cell',
-			)
+		pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-months, .v-date-picker-years').forEach((container) => {
+			cleanupOptionProxies(container)
 		})
 	})
 }

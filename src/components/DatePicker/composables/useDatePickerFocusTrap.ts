@@ -14,6 +14,8 @@ interface UseDatePickerFocusTrapOptions {
 const DATE_PICKER_GRID_SELECTOR = '.v-date-picker-month, .v-date-picker-months, .v-date-picker-years'
 const DATE_PICKER_GRID_SOURCE_SELECTOR = '.v-date-picker-months, .v-date-picker-years, .v-date-picker-month'
 const TODAY_BUTTON_SELECTOR = '.date-picker__today-button'
+const MONTH_PROXY_SELECTOR = '[data-sy-date-picker-option="month"]'
+const YEAR_PROXY_SELECTOR = '[data-sy-date-picker-option="year"]'
 
 const getFocusableElements = (root: HTMLElement): HTMLElement[] => {
 	const allFocusable = Array.from(
@@ -101,22 +103,35 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 	}
 
 	const focusMonthButton = (root: HTMLElement): boolean => {
-		const activeMonth = root.querySelector<HTMLElement>('.v-date-picker-months .v-btn--active')
+		const activeMonth = root.querySelector<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"][aria-pressed="true"]')
+			?? root.querySelector<HTMLElement>('.v-date-picker-months .v-btn--active')
 		if (focusElement(activeMonth)) return true
 
 		const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
-		const monthButtons = Array.from(root.querySelectorAll<HTMLElement>('.v-date-picker-months .v-btn'))
-		return focusElement(monthButtons[targetDate.getMonth()] ?? null)
+		const monthButtons = Array.from(root.querySelectorAll<HTMLElement>(`.v-date-picker-months ${MONTH_PROXY_SELECTOR}`))
+		if (monthButtons.length > 0) {
+			return focusElement(monthButtons[targetDate.getMonth()] ?? null)
+		}
+
+		const fallbackButtons = Array.from(root.querySelectorAll<HTMLElement>('.v-date-picker-months .v-btn'))
+		return focusElement(fallbackButtons[targetDate.getMonth()] ?? null)
 	}
 
 	const focusYearButton = (root: HTMLElement): boolean => {
-		const activeYear = root.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
+		const activeYear = root.querySelector<HTMLElement>('.v-date-picker-years [aria-pressed="true"]')
+			?? root.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
 		if (focusElement(activeYear)) return true
 
 		const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
 		const targetYear = String(targetDate.getFullYear())
-		const yearButtons = Array.from(root.querySelectorAll<HTMLElement>('.v-date-picker-years .v-btn'))
-		const matchingYear = yearButtons.find(button =>
+		const yearButtons = Array.from(root.querySelectorAll<HTMLElement>(`.v-date-picker-years ${YEAR_PROXY_SELECTOR}`))
+		const matchingProxy = yearButtons.find(button =>
+			(button.getAttribute('aria-label') ?? button.textContent ?? '').trim() === targetYear,
+		)
+		if (focusElement(matchingProxy ?? null)) return true
+
+		const fallbackButtons = Array.from(root.querySelectorAll<HTMLElement>('.v-date-picker-years .v-btn'))
+		const matchingYear = fallbackButtons.find(button =>
 			(button.getAttribute('aria-label') ?? button.textContent ?? '').trim() === targetYear,
 		)
 		return focusElement(matchingYear ?? null)

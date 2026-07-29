@@ -995,8 +995,8 @@
 			? document.activeElement
 			: null
 		const activeDay = activeElement?.closest<HTMLElement>('.v-date-picker-month__day[data-v-date]')
-		const activeMonthButton = activeElement?.closest<HTMLButtonElement>('.v-date-picker-months .v-btn')
-		const activeYearButton = activeElement?.closest<HTMLButtonElement>('.v-date-picker-years .v-btn')
+		const activeMonthButton = activeElement?.closest<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"], .v-date-picker-months .v-btn')
+		const activeYearButton = activeElement?.closest<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn')
 		const shouldRestoreButtonFocus = activeElement?.tagName === 'BUTTON'
 		const dayDate = activeDay?.getAttribute('data-v-date')
 		const monthLabel = activeMonthButton?.getAttribute('aria-label') ?? activeMonthButton?.textContent?.trim() ?? ''
@@ -1017,7 +1017,7 @@
 				}
 
 				if (monthLabel) {
-					const monthButtons = Array.from(rootEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-months .v-btn'))
+					const monthButtons = Array.from(rootEl.querySelectorAll<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"], .v-date-picker-months .v-btn'))
 					const target = monthButtons.find(button =>
 						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === monthLabel,
 					)
@@ -1026,7 +1026,7 @@
 				}
 
 				if (yearLabel) {
-					const yearButtons = Array.from(rootEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-years .v-btn'))
+					const yearButtons = Array.from(rootEl.querySelectorAll<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn'))
 					const target = yearButtons.find(button =>
 						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === yearLabel,
 					)
@@ -1079,13 +1079,14 @@
 				if (!monthsContainer) return
 
 				const focusActiveMonth = () => {
-					const active = rootEl.querySelector<HTMLElement>('.v-date-picker-months .v-btn--active')
+					const active = rootEl.querySelector<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"][aria-pressed="true"]')
+						?? rootEl.querySelector<HTMLElement>('.v-date-picker-months .v-btn--active')
 					if (active) {
 						active.focus({ preventScroll: true })
 						return
 					}
 					const monthIndex = currentMonth.value !== null ? Number(currentMonth.value) : new Date().getMonth()
-					const monthBtns = rootEl.querySelectorAll<HTMLElement>('.v-date-picker-months .v-btn')
+					const monthBtns = rootEl.querySelectorAll<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"], .v-date-picker-months .v-btn')
 					monthBtns[monthIndex]?.focus({ preventScroll: true })
 				}
 
@@ -1100,17 +1101,18 @@
 				if (!yearsContainer) return
 
 				const focusActiveYear = () => {
-					const active = rootEl.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
+					const active = rootEl.querySelector<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"][aria-pressed="true"]')
+						?? rootEl.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
 					if (active) {
 						active.focus({ preventScroll: true })
 						return
 					}
-					const currentYearBtn = rootEl.querySelector<HTMLElement>('.v-date-picker-years .v-date-picker-years__year--current .v-btn')
+					const currentYearBtn = rootEl.querySelector<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-date-picker-years__year--current .v-btn')
 					if (currentYearBtn) {
 						currentYearBtn.focus({ preventScroll: true })
 						return
 					}
-					const firstBtn = rootEl.querySelector<HTMLElement>('.v-date-picker-years .v-btn')
+					const firstBtn = rootEl.querySelector<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn')
 					firstBtn?.focus({ preventScroll: true })
 				}
 

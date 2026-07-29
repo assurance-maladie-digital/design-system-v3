@@ -54,8 +54,18 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	let lastFocusedMonthButton: HTMLElement | null = null
 	let lastFocusedYearButton: HTMLElement | null = null
 
+	const MONTH_PROXY_SELECTOR = '[data-sy-date-picker-option="month"]'
+	const YEAR_PROXY_SELECTOR = '[data-sy-date-picker-option="year"]'
 	const MONTH_BUTTON_SELECTOR = '.v-date-picker-months .v-btn, .v-date-picker-months button'
 	const YEAR_BUTTON_SELECTOR = '.v-date-picker-years .v-btn, .v-date-picker-years button'
+
+	const getMonthItemSelector = (root: HTMLElement | undefined) => (
+		root?.querySelector(MONTH_PROXY_SELECTOR) ? MONTH_PROXY_SELECTOR : MONTH_BUTTON_SELECTOR
+	)
+
+	const getYearItemSelector = (root: HTMLElement | undefined) => (
+		root?.querySelector(YEAR_PROXY_SELECTOR) ? YEAR_PROXY_SELECTOR : YEAR_BUTTON_SELECTOR
+	)
 
 	const getKeyboardContainer = (rootEl: HTMLElement | undefined) => {
 		if (!rootEl) return undefined
@@ -67,13 +77,27 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	}
 
 	const focusMonthButton = (button: HTMLElement | undefined | null) => {
-		lastFocusedMonthButton = button ?? null
-		button?.focus({ preventScroll: true })
+		if (!button) return
+
+		lastFocusedMonthButton = button
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		const itemSelector = getMonthItemSelector(rootEl)
+		const items = getNavigableButtons(itemSelector)
+		items.forEach((item) => {
+			item.tabIndex = item === button ? 0 : -1
+		})
+		button.focus({ preventScroll: true })
 	}
 
 	const focusYearButton = (button: HTMLElement | undefined | null) => {
 		if (!button) return
 		lastFocusedYearButton = button
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		const itemSelector = getYearItemSelector(rootEl)
+		const items = getNavigableButtons(itemSelector)
+		items.forEach((item) => {
+			item.tabIndex = item === button ? 0 : -1
+		})
 		button.scrollIntoView({ block: 'nearest', inline: 'nearest' })
 		button.focus({ preventScroll: true })
 	}
@@ -126,13 +150,14 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		const element = target instanceof HTMLElement ? target : null
 		if (!element) return
 
-		const monthButton = element.closest<HTMLElement>(MONTH_BUTTON_SELECTOR)
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		const monthButton = element.closest<HTMLElement>(getMonthItemSelector(rootEl))
 		if (monthButton) {
 			lastFocusedMonthButton = monthButton
 			return
 		}
 
-		const yearButton = element.closest<HTMLElement>(YEAR_BUTTON_SELECTOR)
+		const yearButton = element.closest<HTMLElement>(getYearItemSelector(rootEl))
 		if (yearButton) {
 			lastFocusedYearButton = yearButton
 		}
@@ -172,15 +197,17 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	const isDialogViewOpen = (selector: string) => getNavigableButtons(selector).length > 0
 
 	const handleMonthDialogNavigation = (event: KeyboardEvent): boolean => {
-		const targetBtn = (event.target as HTMLElement | null)?.closest<HTMLElement>(MONTH_BUTTON_SELECTOR)
-		const buttons = getNavigableButtons(MONTH_BUTTON_SELECTOR)
-		if (buttons.length === 0 || !isDialogViewOpen(MONTH_BUTTON_SELECTOR)) return false
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		const itemSelector = getMonthItemSelector(rootEl)
+		const targetBtn = (event.target as HTMLElement | null)?.closest<HTMLElement>(itemSelector)
+		const buttons = getNavigableButtons(itemSelector)
+		if (buttons.length === 0 || !isDialogViewOpen(itemSelector)) return false
 
 		const currentButton = resolveCurrentDialogButton(
 			buttons,
-			targetBtn,
+			targetBtn ?? null,
 			lastFocusedMonthButton,
-			MONTH_BUTTON_SELECTOR,
+			itemSelector,
 			resolveMonthButtonFromState,
 		)
 		const currentIndex = currentButton ? buttons.indexOf(currentButton) : -1
@@ -193,7 +220,11 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			event.preventDefault()
 			event.stopPropagation()
 			const buttonToActivate = targetBtn ?? currentButton
-			buttonToActivate.click()
+			if (!buttonToActivate) return false
+			const targetAction = buttonToActivate.matches(MONTH_PROXY_SELECTOR)
+				? buttonToActivate.querySelector<HTMLElement>('button')
+				: buttonToActivate
+			targetAction?.click()
 			focusMonthButton(buttonToActivate)
 			return true
 		}
@@ -236,15 +267,17 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	}
 
 	const handleYearDialogNavigation = (event: KeyboardEvent): boolean => {
-		const targetBtn = (event.target as HTMLElement | null)?.closest<HTMLElement>(YEAR_BUTTON_SELECTOR)
-		const buttons = getNavigableButtons(YEAR_BUTTON_SELECTOR)
-		if (buttons.length === 0 || !isDialogViewOpen(YEAR_BUTTON_SELECTOR)) return false
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		const itemSelector = getYearItemSelector(rootEl)
+		const targetBtn = (event.target as HTMLElement | null)?.closest<HTMLElement>(itemSelector)
+		const buttons = getNavigableButtons(itemSelector)
+		if (buttons.length === 0 || !isDialogViewOpen(itemSelector)) return false
 
 		const currentButton = resolveCurrentDialogButton(
 			buttons,
-			targetBtn,
+			targetBtn ?? null,
 			lastFocusedYearButton,
-			YEAR_BUTTON_SELECTOR,
+			itemSelector,
 			resolveYearButtonFromState,
 		)
 		const currentIndex = currentButton ? buttons.indexOf(currentButton) : -1
@@ -256,7 +289,11 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			event.preventDefault()
 			event.stopPropagation()
 			const buttonToActivate = targetBtn ?? currentButton
-			buttonToActivate.click()
+			if (!buttonToActivate) return false
+			const targetAction = buttonToActivate.matches(YEAR_PROXY_SELECTOR)
+				? buttonToActivate.querySelector<HTMLElement>('button')
+				: buttonToActivate
+			targetAction?.click()
 			focusYearButton(buttonToActivate)
 			return true
 		}

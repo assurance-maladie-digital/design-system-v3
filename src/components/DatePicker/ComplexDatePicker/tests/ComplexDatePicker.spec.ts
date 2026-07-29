@@ -1030,9 +1030,9 @@ describe('ComplexDatePicker.clean', () => {
 		await flushPromises()
 
 		const focused = document.activeElement as HTMLElement
-		const activeMonthButton = dialogContent.querySelector('.v-date-picker-months .v-btn--active') as HTMLElement | null
+		const activeMonthButton = dialogContent.querySelector('.v-date-picker-months [data-sy-date-picker-option="month"][aria-pressed="true"]') as HTMLElement | null
 		expect(focused).toBe(activeMonthButton)
-		expect(focused.classList.contains('v-btn--active')).toBe(true)
+		expect(focused.getAttribute('aria-pressed')).toBe('true')
 
 		wrapper.unmount()
 	})
