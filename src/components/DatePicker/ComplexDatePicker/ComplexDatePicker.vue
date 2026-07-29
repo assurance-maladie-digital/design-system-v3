@@ -669,6 +669,7 @@
 	const datePickerMenuRef = ref<HTMLElement | null>(null)
 	const datePickerContentId = `date-picker-${useId()}`
 	const datePickerDialogId = `${datePickerContentId}-dialog`
+	const datePickerTitleId = `${datePickerContentId}-title`
 	const datePickerHeadingId = `${datePickerContentId}-heading`
 
 	const { handleMenuKeydown } = useDatePickerFocusTrap({
@@ -1521,7 +1522,7 @@
 					ref="datePickerMenuRef"
 					tabindex="-1"
 					role="dialog"
-					:aria-labelledby="datePickerHeadingId"
+					:aria-labelledby="datePickerTitleId"
 				>
 					<VDatePicker
 						:id="datePickerContentId"
@@ -1555,12 +1556,15 @@
 						@click:date="updateSelectedDates"
 						@focus="props.displayHolidayDays ? markHolidayDays : undefined"
 						@update:month-year="props.displayHolidayDays ? markHolidayDays : undefined"
-					>
-						<template #title>
-							<span class="date-picker-title">
-								{{ locales.calendarTitle }}
-							</span>
-						</template>
+						>
+							<template #title>
+								<span
+									:id="datePickerTitleId"
+									class="date-picker-title"
+								>
+									{{ locales.calendarTitle }}
+								</span>
+							</template>
 						<template #header>
 							<SyHeading
 								:id="datePickerHeadingId"

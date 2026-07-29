@@ -2,6 +2,7 @@ import { mount, flushPromises, type VueWrapper } from '@vue/test-utils'
 import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest'
 import { nextTick } from 'vue'
 import DatePicker from '../DatePicker.vue'
+import { locales } from '../../locales'
 
 type DatePickerInstance = InstanceType<typeof DatePicker>
 
@@ -49,6 +50,21 @@ describe('DatePicker', () => {
 		expect(heading).not.toBeNull()
 		expect(heading?.getAttribute('aria-live')).toBeNull()
 		expect(heading?.getAttribute('aria-atomic')).toBeNull()
+	})
+
+	it('uses a stable dialog title instead of the dynamic date heading as accessible name', async () => {
+		const wrapper = mountComponent()
+		const vm = wrapper.vm as DatePickerInstance
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const dialog = document.querySelector<HTMLElement>(`#${vm.datePickerDialogId}`)
+		expect(dialog?.getAttribute('aria-labelledby')).toBe(vm.datePickerTitleId)
+
+		const title = document.querySelector<HTMLElement>(`#${vm.datePickerTitleId}`)
+		expect(title).not.toBeNull()
+		expect(title?.textContent?.trim()).toBe(locales.calendarTitle)
 	})
 
 	it('links the readonly activator wrapper to the exposed dialog when the calendar is open', async () => {

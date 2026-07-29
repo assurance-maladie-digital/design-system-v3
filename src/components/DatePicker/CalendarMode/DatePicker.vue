@@ -154,6 +154,7 @@
 
 	const datePickerDialogRef = ref<HTMLElement | null>(null)
 	const datePickerDialogId = `${datePickerContentId}-dialog`
+	const datePickerTitleId = `${datePickerContentId}-title`
 	const datePickerHeadingId = `${datePickerContentId}-heading`
 
 	const isDatePickerVisible = ref(false)
@@ -1095,7 +1096,7 @@
 					ref="datePickerDialogRef"
 					role="dialog"
 					aria-modal="true"
-					:aria-labelledby="datePickerHeadingId"
+					:aria-labelledby="datePickerTitleId"
 					tabindex="-1"
 				>
 					<VDatePicker
@@ -1122,10 +1123,12 @@
 						@update:model-value="updateDisplayFormattedDate"
 						@focus="markHolidayDays"
 						@update:month-year="markHolidayDays"
-					>
-						<template #title>
-							{{ locales.calendarTitle }}
-						</template>
+						>
+							<template #title>
+								<span :id="datePickerTitleId">
+									{{ locales.calendarTitle }}
+								</span>
+							</template>
 						<template #header>
 							<SyHeading
 								:id="datePickerHeadingId"

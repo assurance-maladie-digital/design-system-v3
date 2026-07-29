@@ -3,6 +3,7 @@ import { mount, flushPromises, VueWrapper, type MountingOptions } from '@vue/tes
 import { describe, it, expect, afterEach, vi } from 'vitest'
 import { nextTick } from 'vue'
 import ComplexDatePicker from '../ComplexDatePicker.vue'
+import { locales } from '../../locales'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- VueWrapper<any> est le pattern standard pour les composants Vue avec defineExpose complexe
 let wrapper: VueWrapper<any> | null = null
@@ -83,7 +84,11 @@ describe('ComplexDatePicker.clean', () => {
 		expect(dialog).not.toBeNull()
 		expect(dialog?.getAttribute('role')).toBe('dialog')
 		expect(dialog?.getAttribute('aria-modal')).toBeNull()
-		expect(dialog?.getAttribute('aria-labelledby')).toBe(wrapper.vm.datePickerHeadingId)
+		expect(dialog?.getAttribute('aria-labelledby')).toBe(wrapper.vm.datePickerTitleId)
+
+		const title = document.getElementById(wrapper.vm.datePickerTitleId)
+		expect(title).not.toBeNull()
+		expect(title?.textContent?.trim()).toBe(locales.calendarTitle)
 
 		const heading = document.getElementById(wrapper.vm.datePickerHeadingId)
 		expect(heading).not.toBeNull()
