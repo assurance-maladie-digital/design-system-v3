@@ -69,7 +69,7 @@
 			color: '#8B5CF6',
 			level1: {
 				value: 'wip',
-				status: 'Work in Progress',
+				status: 'WIP : Travail en cours de réalisation',
 				action: { label: 'Consulter les travaux du niveau 1', link: level1Link },
 				path: 'M673 425C708.325 425 742.966 434.746 773.11 453.165L731.397 521.429C713.814 510.685 693.607 505 673 505L673 425Z',
 				fill: '#D1BEFB',
@@ -96,7 +96,7 @@
 			color: '#EAB308',
 			level1: {
 				value: 'wip',
-				status: 'Work in Progress',
+				status: 'WIP : Travail en cours de réalisation',
 				action: { label: 'Consulter les travaux du niveau 1', link: level1Link },
 				path: 'M777.979 456.241C811.652 478.23 837.57 510.238 852.076 547.747C866.581 585.257 868.943 626.374 858.826 665.298L781.399 645.174C787.3 622.468 785.922 598.483 777.461 576.603C768.999 554.722 753.88 536.051 734.238 523.224L777.979 456.241Z',
 				fill: '#F7E19C',
@@ -150,7 +150,7 @@
 			color: '#5BC0EB',
 			level1: {
 				value: 'wip',
-				status: 'Work in Progress',
+				status: 'WIP : Travail en cours de réalisation',
 				action: { label: 'Consulter les travaux du niveau 1', link: level1Link },
 				path: 'M488.706 670.85C475.122 624.359 479.61 574.452 501.272 531.132L572.825 566.91C560.189 592.181 557.571 621.293 565.495 648.412L488.706 670.85Z',
 				fill: '#BDE6F7',
@@ -177,7 +177,7 @@
 			color: '#C2412D',
 			level1: {
 				value: 'wip',
-				status: 'Work in Progress',
+				status: 'WIP : Travail en cours de réalisation',
 				action: { label: 'Consulter les travaux du niveau 1', link: level1Link },
 				path: 'M503.925 526.019C519.894 496.342 543.393 471.391 572.061 453.674C600.729 435.957 633.555 426.097 667.241 425.086L669.64 505.05C649.991 505.64 630.842 511.391 614.119 521.727C597.396 532.062 583.688 546.616 574.373 563.928L503.925 526.019Z',
 				fill: '#E7B3AB',
@@ -661,6 +661,7 @@
 	grid-template-columns: minmax(0, 1.4fr) minmax(260px, 360px);
 	align-items: center;
 	width: 100%;
+	min-height: 640px;
 }
 
 .eco-schema {
@@ -673,6 +674,7 @@
 }
 
 .schema-legend {
+	min-height: 360px;
 	padding: 1.5rem;
 	background: white;
 	border: 1px solid #e2e8f0;

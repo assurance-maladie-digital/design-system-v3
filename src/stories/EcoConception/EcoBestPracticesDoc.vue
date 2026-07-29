@@ -629,14 +629,14 @@
 
 						<div class="detail-badges">
 							<span
-								class="practice-level"
+								class="practice-chip"
 								:class="getLevelClass(selectedPractice)"
 							>
 								{{ getLevelLabel(selectedPractice) }}
 							</span>
 
 							<span
-								class="practice-audience"
+								class="practice-chip"
 								:class="getAudienceClass(selectedPractice.audience)"
 							>
 								{{ getAudienceLabel(selectedPractice.audience) }}

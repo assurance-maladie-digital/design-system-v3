@@ -2,10 +2,11 @@ import type { StoryObj } from '@storybook/vue3-vite'
 import GraphiqueEcoConception from './GraphiqueEcoConception.vue'
 
 const meta = {
-	title: 'Éco-conception/Introduction/test',
+	title: 'Éco-conception/Introduction',
 	component: GraphiqueEcoConception,
 	parameters: {
 		layout: 'fullscreen',
+		docsOnly: true,
 
 	},
 }
@@ -31,7 +32,7 @@ export const Default: Story = {
 			}
 		},
 		template: `
-            <div style="width: 100%; height: 560px; margin-bottom: 7rem;">
+            <div style="width: 100%; margin-bottom: 7rem;">
                 <GraphiqueEcoConception v-bind="args" />
             </div>
         `,

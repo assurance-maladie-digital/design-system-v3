@@ -1,18 +1,20 @@
 import { Meta, Story } from '@storybook/addon-docs/blocks';
 import * as EcoStories from './ecoconception-best-practices.stories.ts';
+import '@/stories/styles/shared.css';
+
 
 <Meta title="Éco-conception/Bonnes pratiques essentielles" />
 
 <div className="header eco-header">
-  <h1 className="eco-title">Bonnes pratiques d'écoconception</h1>
+  <h1>Bonnes pratiques d'écoconception</h1>
 </div>
-<div className="eco-wide-doc">
+<div>
   <Story of={EcoStories.BonnesPratiquesEssentielles} />
 </div>
 
 <style>
 {`
-.eco-header{
+.eco-header {
  padding-left: 16px;
 }
 `}
