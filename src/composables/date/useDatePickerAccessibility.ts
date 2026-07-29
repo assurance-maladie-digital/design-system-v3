@@ -440,6 +440,14 @@ const createAriaRow = (className?: string): HTMLElement => {
 	return row
 }
 
+const createAriaGridCell = (className?: string): HTMLElement => {
+	const cell = document.createElement('div')
+	cell.setAttribute('role', 'gridcell')
+	cell.style.display = 'contents'
+	if (className) cell.className = className
+	return cell
+}
+
 const cleanupGridSemanticsForMonth = (daysContainer: HTMLElement) => {
 	Array.from(daysContainer.children).forEach((child) => {
 		if (
@@ -460,6 +468,86 @@ const cleanupGridSemanticsForMonth = (daysContainer: HTMLElement) => {
 			delete button.dataset.gridcellManagedTabindex
 		}
 	})
+}
+
+const cleanupGridSemanticsForSelectorButtons = (container: HTMLElement, rowClassName: string, cellClassName: string) => {
+	Array.from(container.children).forEach((child) => {
+		if (
+			child instanceof HTMLElement
+			&& child.getAttribute('role') === 'row'
+			&& child.style.display === 'contents'
+			&& child.classList.contains(rowClassName)
+		) {
+			const cells = Array.from(child.children).filter(
+				(cell): cell is HTMLElement => (
+					cell instanceof HTMLElement
+					&& cell.getAttribute('role') === 'gridcell'
+					&& cell.style.display === 'contents'
+					&& cell.classList.contains(cellClassName)
+				),
+			)
+
+			cells.forEach((cell) => {
+				while (cell.firstChild) {
+					container.appendChild(cell.firstChild)
+				}
+				cell.remove()
+			})
+
+			child.remove()
+		}
+	})
+}
+
+const getGridColumnCount = (items: HTMLElement[], fallbackColumnCount: number) => {
+	const firstRowTop = items[0]?.offsetTop
+	if (firstRowTop === undefined) return fallbackColumnCount
+
+	const measuredColumnCount = items.filter(item => item.offsetTop === firstRowTop).length
+	return measuredColumnCount || fallbackColumnCount
+}
+
+const applySelectorGridSemantics = (
+	container: HTMLElement,
+	buttons: HTMLElement[],
+	label: string,
+	rowClassName: string,
+	cellClassName: string,
+	fallbackColumnCount: number,
+) => {
+	container.setAttribute('role', 'grid')
+	container.setAttribute('aria-label', label)
+	container.removeAttribute('aria-readonly')
+	container.removeAttribute('aria-rowcount')
+	container.removeAttribute('aria-colcount')
+
+	cleanupGridSemanticsForSelectorButtons(container, rowClassName, cellClassName)
+
+	const columns = getGridColumnCount(buttons, fallbackColumnCount)
+
+	for (let i = 0; i < buttons.length; i += columns) {
+		const row = createAriaRow(rowClassName)
+		const chunk = buttons.slice(i, i + columns)
+
+		chunk.forEach((button) => {
+			button.removeAttribute('aria-rowindex')
+			button.removeAttribute('aria-colindex')
+			button.removeAttribute('aria-selected')
+
+			const cell = createAriaGridCell(cellClassName)
+			if (button.classList.contains('v-btn--active')) {
+				cell.setAttribute('aria-selected', 'true')
+			}
+			else {
+				cell.removeAttribute('aria-selected')
+			}
+
+			cell.appendChild(button)
+			row.appendChild(cell)
+		})
+
+		container.appendChild(row)
+	}
 }
 
 const applyGridSemantics = (pickerEl: HTMLElement) => {
@@ -537,6 +625,38 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 			daysContainer.appendChild(row)
 		}
 	})
+
+	pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-months').forEach((monthsContainer) => {
+		const buttons = Array.from(monthsContainer.querySelectorAll<HTMLElement>(':scope > button, :scope > .v-btn'))
+			.filter(button => !button.closest('[role="row"]'))
+
+		if (buttons.length === 0) return
+
+		applySelectorGridSemantics(
+			monthsContainer,
+			buttons,
+			locales.selectMonth(),
+			'v-date-picker-months__row',
+			'v-date-picker-months__cell',
+			3,
+		)
+	})
+
+	pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-years').forEach((yearsContainer) => {
+		const buttons = Array.from(yearsContainer.querySelectorAll<HTMLElement>(':scope > button, :scope > .v-btn'))
+			.filter(button => !button.closest('[role="row"]'))
+
+		if (buttons.length === 0) return
+
+		applySelectorGridSemantics(
+			yearsContainer,
+			buttons,
+			locales.selectYear(),
+			'v-date-picker-years__row',
+			'v-date-picker-years__cell',
+			3,
+		)
+	})
 }
 
 const cleanupGridSemantics = (root: ParentNode = document) => {
@@ -549,6 +669,20 @@ const cleanupGridSemantics = (root: ParentNode = document) => {
 	pickerEls.forEach((pickerEl) => {
 		pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-month__days').forEach((daysContainer) => {
 			cleanupGridSemanticsForMonth(daysContainer)
+		})
+		pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-months').forEach((monthsContainer) => {
+			cleanupGridSemanticsForSelectorButtons(
+				monthsContainer,
+				'v-date-picker-months__row',
+				'v-date-picker-months__cell',
+			)
+		})
+		pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-years').forEach((yearsContainer) => {
+			cleanupGridSemanticsForSelectorButtons(
+				yearsContainer,
+				'v-date-picker-years__row',
+				'v-date-picker-years__cell',
+			)
 		})
 	})
 }
