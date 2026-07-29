@@ -1108,6 +1108,46 @@ describe('ComplexDatePicker.clean', () => {
 		wrapper.unmount()
 	})
 
+	it('keeps navigating between month buttons with repeated arrow keys even if the event target stays stale', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			modelValue: '12/09/2005',
+		}, { attachTo: document.body })
+
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: 'Enter' })
+		await nextTick()
+		await flushPromises()
+
+		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
+		await vDatePickerWrapper.find('.v-date-picker-controls__month-btn').trigger('click')
+		await nextTick()
+		await flushPromises()
+
+		const dialogContent = vDatePickerWrapper.element.parentElement as HTMLElement
+		const activeMonthButton = dialogContent.querySelector('.v-date-picker-months .v-btn--active') as HTMLElement | null
+		expect(activeMonthButton).not.toBeNull()
+
+		activeMonthButton?.focus()
+		activeMonthButton?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }))
+		await flushPromises()
+
+		const firstFocusedButton = document.activeElement as HTMLElement
+		expect(firstFocusedButton).not.toBe(activeMonthButton)
+		expect(firstFocusedButton.closest('.v-date-picker-months')).not.toBeNull()
+
+		activeMonthButton?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }))
+		await flushPromises()
+
+		const secondFocusedButton = document.activeElement as HTMLElement
+		expect(secondFocusedButton).not.toBe(activeMonthButton)
+		expect(secondFocusedButton).not.toBe(firstFocusedButton)
+		expect(secondFocusedButton.closest('.v-date-picker-months')).not.toBeNull()
+
+		wrapper.unmount()
+	})
+
 	it('navigates between year buttons with arrow keys in years view', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
@@ -1130,12 +1170,52 @@ describe('ComplexDatePicker.clean', () => {
 		expect(activeYearButton).not.toBeNull()
 
 		activeYearButton?.focus()
-		activeYearButton?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, cancelable: true }))
+		activeYearButton?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }))
 		await flushPromises()
 
 		const focused = document.activeElement as HTMLElement
 		expect(focused).not.toBe(activeYearButton)
 		expect(focused.closest('.v-date-picker-years')).not.toBeNull()
+
+		wrapper.unmount()
+	})
+
+	it('keeps navigating between year buttons with repeated arrow keys even if the event target stays stale', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			modelValue: '12/09/2005',
+		}, { attachTo: document.body })
+
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: 'Enter' })
+		await nextTick()
+		await flushPromises()
+
+		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
+		await vDatePickerWrapper.find('.custom-year-btn').trigger('click')
+		await nextTick()
+		await flushPromises()
+
+		const dialogContent = vDatePickerWrapper.element.parentElement as HTMLElement
+		const activeYearButton = dialogContent.querySelector('.v-date-picker-years .v-btn--active') as HTMLElement | null
+		expect(activeYearButton).not.toBeNull()
+
+		activeYearButton?.focus()
+		activeYearButton?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }))
+		await flushPromises()
+
+		const firstFocusedButton = document.activeElement as HTMLElement
+		expect(firstFocusedButton).not.toBe(activeYearButton)
+		expect(firstFocusedButton.closest('.v-date-picker-years')).not.toBeNull()
+
+		activeYearButton?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true, cancelable: true }))
+		await flushPromises()
+
+		const secondFocusedButton = document.activeElement as HTMLElement
+		expect(secondFocusedButton).not.toBe(activeYearButton)
+		expect(secondFocusedButton).not.toBe(firstFocusedButton)
+		expect(secondFocusedButton.closest('.v-date-picker-years')).not.toBeNull()
 
 		wrapper.unmount()
 	})
