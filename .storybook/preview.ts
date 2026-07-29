@@ -157,7 +157,7 @@ const preview: Preview = {
 					// Use alphabetical order for components but keep categories grouped in this order
 					[
 						'Vue d\'ensemble',
-						'Statut des composants',
+						'Data',
 						'Structure', ['FooterBar', 'FooterWrapper', 'HeaderBar', 'HeaderLoading', 'HeaderToolbar', 'SubHeader'],
 						'Layout', ['PageContainer'],
 						'Navigation', ['ContextualMenu', 'ExternalLinks', 'SkipLink', 'SocialMediaLinks', 'SyPagination', 'SyTabs'],
