@@ -4,7 +4,8 @@ import SyForm from '../SyForm.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import NirField from '@/components/NirField/NirField.vue'
 import { VTextField } from 'vuetify/components/VTextField'
-import { nextTick } from 'vue'
+import { defineComponent, h, nextTick } from 'vue'
+import { useValidatable } from '@/composables/validation/useValidatable'
 
 describe('SyForm', () => {
 	it('modelValue should reflect validity of the form', async () => {
@@ -495,5 +496,116 @@ describe('SyForm', () => {
 		// Le reset doit ramener le champ à un état neutre/vierge, pas le ré-invalider
 		expect(wrapper.vm.formValide).toBe(null)
 		expect(wrapper.findComponent(SyTextField).text()).not.toContain('Le champ est obligatoire')
+	})
+
+	// Contrat de compatibilité avec les composants non migrés (« legacy ») :
+	// ceux enregistrés via useValidatable() sans fournir d'état réactif `valide`
+	// (ex. les DatePickers) n'alimentent pas le v-model tri-état de SyForm. Le
+	// formulaire ne peut donc pas conclure « valide » en temps réel (reste `null`),
+	// mais la soumission — qui s'appuie sur validateOnSubmit() — fonctionne.
+	//
+	// Ces tests VERROUILLENT ce comportement : s'ils changent (ex. migration des
+	// DatePickers vers le tri-état), c'est un choix volontaire à acter ici.
+	const LegacyField = defineComponent({
+		name: 'LegacyField',
+		props: { valid: { type: Boolean, default: true } },
+		setup(props) {
+			// Legacy : n'expose que validateOnSubmit, aucun état réactif `valide`.
+			useValidatable(() => props.valid)
+			return () => h('div', { class: 'legacy-field' }, 'legacy')
+		},
+	})
+
+	it('keeps the live tri-state v-model at null when a legacy field (no reactive `valide`) is registered, while submission still works', async () => {
+		const submitHandler = vi.fn()
+		const TestWrapper = {
+			components: { SyForm, LegacyField },
+			template: `
+					<SyForm v-model="formValide" ref="form" @submit="submitHandler">
+						<LegacyField :valid="true" />
+					</SyForm>
+				`,
+			data() {
+				return { formValide: null as boolean | null }
+			},
+			methods: { submitHandler },
+		}
+
+		const wrapper = mount(TestWrapper)
+		await flushPromises()
+
+		// Un champ sans `valide` réactif → SyForm ne peut pas conclure « valide »
+		expect(wrapper.vm.formValide).toBe(null)
+
+		// La soumission fonctionne malgré tout (via validateOnSubmit)
+		await wrapper.find('form').trigger('submit.prevent')
+		await flushPromises()
+		expect(submitHandler).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ isValid: true }))
+
+		// …et le v-model live reste `null`, même après une soumission valide
+		expect(wrapper.vm.formValide).toBe(null)
+
+		wrapper.unmount()
+	})
+
+	it('a legacy invalid field reports invalid on submit but the live v-model stays null', async () => {
+		const submitHandler = vi.fn()
+		const TestWrapper = {
+			components: { SyForm, LegacyField },
+			template: `
+					<SyForm v-model="formValide" ref="form" @submit="submitHandler">
+						<LegacyField :valid="false" />
+					</SyForm>
+				`,
+			data() {
+				return { formValide: null as boolean | null }
+			},
+			methods: { submitHandler },
+		}
+
+		const wrapper = mount(TestWrapper)
+		await flushPromises()
+
+		// Pas d'état live : « inconnu », pas « invalide »
+		expect(wrapper.vm.formValide).toBe(null)
+
+		await wrapper.find('form').trigger('submit.prevent')
+		await flushPromises()
+		expect(submitHandler).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ isValid: false }))
+
+		// Le v-model live ne bascule pas à false (le champ legacy ne publie rien)
+		expect(wrapper.vm.formValide).toBe(null)
+
+		wrapper.unmount()
+	})
+
+	it('a fully valid migrated field cannot bring the tri-state v-model to true while a legacy field coexists', async () => {
+		const TestWrapper = {
+			components: { SyForm, SyTextField, LegacyField },
+			template: `
+					<SyForm v-model="formValide" ref="form">
+						<SyTextField v-model="text" required label="Nom" />
+						<LegacyField :valid="true" />
+					</SyForm>
+				`,
+			data() {
+				return { text: '', formValide: null as boolean | null }
+			},
+		}
+
+		const wrapper = mount(TestWrapper)
+		await flushPromises()
+
+		// Le champ migré devient valide…
+		const textFieldInput = wrapper.findComponent(SyTextField).find('input')
+		await textFieldInput.trigger('focus')
+		await textFieldInput.setValue('John Doe')
+		await textFieldInput.trigger('blur')
+		await flushPromises()
+
+		// …mais le formulaire reste `null` car le champ legacy est « inconnu »
+		expect(wrapper.vm.formValide).toBe(null)
+
+		wrapper.unmount()
 	})
 })
