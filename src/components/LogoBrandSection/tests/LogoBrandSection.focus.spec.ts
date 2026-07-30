@@ -16,7 +16,7 @@ describe('LogoBrandSection - Focus', () => {
 		expect(link.attributes('href')).toBe('/')
 	})
 
-	// Régression #2441 : avec `homeLink.to` et sans vue-router enregistré, le conteneur retombait
+	// avec `homeLink.to` et sans vue-router enregistré, le conteneur retombait
 	// sur un `<div>` — visuellement cliquable (cursor: pointer) mais impossible à atteindre au
 	// clavier (RGAA 7.3). On vérifie qu'un vrai `<a href>` est rendu à la place.
 	it('falls back to a real focusable anchor when homeLink.to is set without vue-router', () => {

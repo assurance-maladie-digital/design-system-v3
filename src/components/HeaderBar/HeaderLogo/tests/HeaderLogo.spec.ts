@@ -97,7 +97,7 @@ describe('HeaderLogo', () => {
 		expect(wrapper.find('router-link-stub').attributes('to')).toBe('/')
 	})
 
-	// Régression #2441 : sans `RouterLink` enregistré, le conteneur retombait sur un `<div>` —
+	// sans `RouterLink` enregistré, le conteneur retombait sur un `<div>` —
 	// visuellement cliquable (cursor: pointer) mais impossible à atteindre au clavier (RGAA 7.3).
 	// On vérifie qu'un vrai `<a href>` est rendu à la place.
 	it('render a focusable anchor when there is no `RouterLink` component registered', async () => {
