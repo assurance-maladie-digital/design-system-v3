@@ -446,6 +446,21 @@ const createAriaRow = (className?: string): HTMLElement => {
 	return row
 }
 
+const cleanupGridSemanticsForSelector = (container: HTMLElement) => {
+	Array.from(container.children).forEach((child) => {
+		if (
+			child instanceof HTMLElement
+			&& child.getAttribute('role') === 'row'
+			&& child.style.display === 'contents'
+		) {
+			while (child.firstChild) {
+				container.appendChild(child.firstChild)
+			}
+			child.remove()
+		}
+	})
+}
+
 const cleanupGridSemanticsForMonth = (daysContainer: HTMLElement) => {
 	Array.from(daysContainer.children).forEach((child) => {
 		if (
@@ -469,6 +484,8 @@ const cleanupGridSemanticsForMonth = (daysContainer: HTMLElement) => {
 }
 
 const cleanupOptionProxies = (container: HTMLElement) => {
+	cleanupGridSemanticsForSelector(container)
+
 	Array.from(container.querySelectorAll<HTMLElement>(MONTH_OPTION_PROXY_SELECTOR))
 		.concat(Array.from(container.querySelectorAll<HTMLElement>(YEAR_OPTION_PROXY_SELECTOR)))
 		.forEach((proxy) => {
@@ -484,6 +501,7 @@ const cleanupOptionProxies = (container: HTMLElement) => {
 			proxy.removeAttribute('aria-label')
 			proxy.removeAttribute('title')
 			proxy.removeAttribute('aria-pressed')
+			proxy.removeAttribute('aria-selected')
 			proxy.removeAttribute('tabindex')
 
 			if (proxy.dataset[GENERATED_OPTION_PROXY_DATASET] !== 'true') {
@@ -509,6 +527,7 @@ const updateProxyActivation = (container: HTMLElement, activeProxy: HTMLElement)
 
 	proxies.forEach((proxy) => {
 		proxy.tabIndex = proxy === activeProxy ? 0 : -1
+		proxy.setAttribute('aria-selected', String(proxy === activeProxy))
 	})
 }
 
@@ -590,10 +609,11 @@ const ensureOptionProxies = (
 	optionHosts.forEach(({ host, button }, index) => {
 		const label = button.getAttribute('aria-label') ?? compactText(button.textContent)
 		host.dataset.syDatePickerOption = kind
-		host.setAttribute('role', 'button')
+		host.setAttribute('role', 'gridcell')
 		host.setAttribute('aria-label', label)
 		host.setAttribute('title', label)
 		host.setAttribute('aria-pressed', String(isOptionActive(host, button)))
+		host.setAttribute('aria-selected', String(index === activeIndex))
 		host.tabIndex = index === activeIndex ? 0 : -1
 		setManagedButtonTabindex(button)
 
@@ -622,6 +642,26 @@ const ensureOptionProxies = (
 			updateProxyActivation(container, host)
 		}
 	})
+
+	container.setAttribute('role', 'grid')
+	container.setAttribute('aria-label', kind === 'month' ? locales.selectMonth() : locales.selectYear())
+	container.removeAttribute('aria-readonly')
+	container.removeAttribute('aria-rowcount')
+	container.removeAttribute('aria-colcount')
+
+	cleanupGridSemanticsForSelector(content)
+
+	const hosts = Array.from(content.querySelectorAll<HTMLElement>(`[data-sy-date-picker-option="${kind}"]`))
+	const firstRowTop = hosts[0]?.offsetTop ?? 0
+	const columns = hosts.filter(host => host.offsetTop === firstRowTop).length || 3
+
+	for (let i = 0; i < hosts.length; i += columns) {
+		const row = createAriaRow(`v-date-picker-${kind}s__row`)
+		hosts.slice(i, i + columns).forEach((host) => {
+			row.appendChild(host)
+		})
+		content.appendChild(row)
+	}
 }
 
 const applyGridSemantics = (pickerEl: HTMLElement) => {

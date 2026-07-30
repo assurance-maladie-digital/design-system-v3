@@ -198,7 +198,7 @@ describe('useDatePickerAccessibility', () => {
 
 		expect(monthProxies).toHaveLength(3)
 		expect(yearProxies).toHaveLength(3)
-		expect(monthProxies[0]?.getAttribute('role')).toBe('button')
+		expect(monthProxies[0]?.getAttribute('role')).toBe('gridcell')
 		expect(monthProxies[1]?.getAttribute('aria-pressed')).toBe('true')
 		expect(monthProxies[1]?.tabIndex).toBe(0)
 		expect(monthProxies[0]?.tabIndex).toBe(-1)
