@@ -334,8 +334,8 @@ export const Default: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Sélectionner une date"
-						placeholder="Sélectionner une date"
+						label="Date (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 					  />
 				</template>
@@ -398,15 +398,15 @@ export const Required: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						placeholder="Sélectionner une date"
-						label="Sélectionner une date"
+						placeholder="JJ/MM/AAAA"
+						label="Date (JJ/MM/AAAA)"
 						required
 						format="DD/MM/YYYY"
 					  />
 					  	<DatePicker
 						v-model="date"
-						label="Sélectionner une date"
-						placeholder="Sélectionner une date"
+						label="Date (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						required
 						displayAsterisk
 						format="DD/MM/YYYY"
@@ -474,8 +474,8 @@ export const DateRange: Story = {
 				<template>
 					<DatePicker
 						v-model="dateRange"
-						label="Sélectionner une période"
-						placeholder="Sélectionner une période"
+						label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						displayRange
 					/>
@@ -541,8 +541,8 @@ export const WithCustomPeriod: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						placeholder="Sélectionner une date"
-						label="Sélectionner une date"
+						placeholder="JJ/MM/AAAA"
+						label="Date (JJ/MM/AAAA)"
 						format="DD/MM/YYYY"
 						:period="{
 							min: '01/01/1995',
@@ -655,8 +655,8 @@ export const WithAppendIcon: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						placeholder="Sélectionner une date"
-						label="Sélectionner une date"
+						placeholder="JJ/MM/AAAA"
+						label="Date (JJ/MM/AAAA)"
 						format="DD/MM/YYYY"
 						displayAppendIcon
 					/>
@@ -722,8 +722,8 @@ export const WithoutIcon: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						placeholder="Sélectionner une date"
-						label="Sélectionner une date"
+						placeholder="JJ/MM/AAAA"
+						label="Date (JJ/MM/AAAA)"
 						format="DD/MM/YYYY"
 						:displayIcon="false"
 					/>
@@ -789,8 +789,8 @@ export const BirthDate: Story = {
 				<template>
 					<DatePicker
 						v-model="birthDate"
-						placeholder="Date de naissance"
-						label="Date de naissance"
+						placeholder="JJ/MM/AAAA"
+						label="Date de naissance (JJ/MM/AAAA)"
 						format="DD/MM/YYYY"
 						isBirthDate
 					/>
@@ -1081,32 +1081,32 @@ export const DifferentFormats: Story = {
 					<div class="d-flex flex-column gap-4">
 						<DatePicker
 							v-model="value1"
-							placeholder="Format JJ/MM/AAAA"
-							label="Format JJ/MM/AAAA"
+							placeholder="JJ/MM/AAAA"
+							label="Date (JJ/MM/AAAA)"
 							format="DD/MM/YYYY"
 						/>
 						<DatePicker
 							v-model="value2"
-							placeholder="Format MM/JJ/AAAA"
-							label="Format MM/JJ/AAAA"
+							placeholder="MM/JJ/AAAA"
+							label="Date (MM/JJ/AAAA)"
 							format="MM/DD/YYYY"
 						/>
 						<DatePicker
 							v-model="value3"
-							placeholder="Format AAAA-MM-JJ"
-							label="Format AAAA-MM-JJ"
+							placeholder="AAAA-MM-JJ"
+							label="Date (AAAA-MM-JJ)"
 							format="YYYY-MM-DD"
 						/>
 						<DatePicker
 							v-model="value4"
-							placeholder="Format JJ-MM-AA"
-							label="Format JJ-MM-AA"
+							placeholder="JJ-MM-AA"
+							label="Date (JJ-MM-AA)"
 							format="DD-MM-YY"
 						/>
 						<DatePicker
 							v-model="value5"
-							placeholder="Format JJ.MM.AAAA"
-							label="Format JJ.MM.AAAA"
+							placeholder="JJ.MM.AAAA"
+							label="Date (JJ.MM.AAAA)"
 							format="DD.MM.YYYY"
 						/>
 					</div>
@@ -1145,36 +1145,36 @@ export const DifferentFormats: Story = {
               <div class="d-flex flex-column gap-4 pa-4">
                 <DatePicker
                     v-model="value1"
-                    placeholder="Format JJ/MM/AAAA"
-                    label="Format JJ/MM/AAAA"
+                    placeholder="JJ/MM/AAAA"
+                    label="Date (JJ/MM/AAAA)"
                     format="DD/MM/YYYY"
                     class="py-4"
                 />
                 <DatePicker
                     v-model="value2"
-                    placeholder="Format MM/JJ/AAAA"
-                    label="Format MM/JJ/AAAA"
+                    placeholder="MM/JJ/AAAA"
+                    label="Date (MM/JJ/AAAA)"
                     format="MM/DD/YYYY"
 					class="py-4"
                 />
                 <DatePicker
                     v-model="value3"
-                    placeholder="Format YYYY-MM-DD"
-                    label="Format YYYY-MM-DD"
+                    placeholder="AAAA-MM-JJ"
+                    label="Date (AAAA-MM-JJ)"
                     format="YYYY-MM-DD"
 					class="py-4"
                 />
                 <DatePicker
                     v-model="value4"
-                    placeholder="Format DD-MM-YY"
-					label="Format DD-MM-YY"
+                    placeholder="JJ-MM-AA"
+					label="Date (JJ-MM-AA)"
                     format="DD-MM-YY"
 					class="py-4"
                 />
                 <DatePicker
                     v-model="value5"
-                    placeholder="Format DD.MM.YYYY"
-					label="Format DD.MM.YYYY"
+                    placeholder="JJ.MM.AAAA"
+					label="Date (JJ.MM.AAAA)"
                     format="DD.MM.YYYY"
 					class="py-4"
                 />
@@ -1195,16 +1195,16 @@ export const WithDateFormatReturn: Story = {
                 <span class="mb-4">Date de retour : {{ value1 }}</span>
                 <DatePicker
                     v-model="value1"
-                    placeholder="Format JJ/MM/AAAA, retour par défaut"
-                    label="Format JJ/MM/AAAA, retour par défaut"
+                    placeholder="JJ/MM/AAAA"
+                    label="Date (JJ/MM/AAAA)"
                     format="DD/MM/YYYY"
                 />
 
                 <span class="mb-4">Date de retour : {{ value2 }}</span>
                 <DatePicker
                     v-model="value2"
-                    placeholder="Format JJ/MM/AAAA, retour MM/DD/YYYY"
-                    label="Format JJ/MM/AAAA, retour MM/DD/YYYY"
+                    placeholder="JJ/MM/AAAA"
+                    label="Date (JJ/MM/AAAA)"
                     format="DD/MM/YYYY"
                     date-format-return="MM/DD/YYYY"
                 />
@@ -1212,8 +1212,8 @@ export const WithDateFormatReturn: Story = {
                 <span class="mb-4">Date de retour : {{ value3 }}</span>
                 <DatePicker
                     v-model="value3"
-                    placeholder="Format JJ/MM/AAAA, retour YYYY-MM-DD"
-                    label="Format JJ/MM/AAAA, retour YYYY-MM-DD"
+                    placeholder="JJ/MM/AAAA"
+                    label="Date (JJ/MM/AAAA)"
                     format="DD/MM/YYYY"
                     date-format-return="YYYY-MM-DD"
                 />
@@ -1271,16 +1271,16 @@ export const WithDateFormatReturn: Story = {
                 <span class="mb-4">Date de retour : {{ value1 }}</span>
                 <DatePicker
                     v-model="value1"
-                    placeholder="Format JJ/MM/AAAA, retour par défaut"
-                    label="Format JJ/MM/AAAA, retour par défaut"
+                    placeholder="JJ/MM/AAAA"
+                    label="Date (JJ/MM/AAAA)"
                     format="DD/MM/YYYY"
                 />
 
                 <span class="mb-4">Date de retour : {{ value2 }}</span>
                 <DatePicker
                     v-model="value2"
-                    placeholder="Format JJ/MM/AAAA, retour MM/DD/YYYY"
-                    label="Format JJ/MM/AAAA, retour MM/DD/YYYY"
+                    placeholder="JJ/MM/AAAA"
+                    label="Date (JJ/MM/AAAA)"
                     format="DD/MM/YYYY"
 					date-format-return="MM/DD/YYYY"
                 />
@@ -1289,8 +1289,8 @@ export const WithDateFormatReturn: Story = {
                 <span class="mb-4">Date de retour : {{ value3 }}</span>
                 <DatePicker
                     v-model="value3"
-                    placeholder="Format JJ/MM/AAAA, retour YYYY-MM-DD"
-                    label="Format JJ/MM/AAAA, retour YYYY-MM-DD"
+                    placeholder="JJ/MM/AAAA"
+                    label="Date (JJ/MM/AAAA)"
                     format="DD/MM/YYYY"
 					date-format-return="YYYY-MM-DD"
                 />
@@ -1310,8 +1310,8 @@ export const WithDayjsFormat: Story = {
 					<div>
 						<DatePicker
 							v-model="date"
-							placeholder="Sélectionner une date"
-							label="Sélectionner une date"
+							placeholder="JJ/MM/AAAA"
+							label="Date (JJ/MM/AAAA)"
 							format="DD/MM/YYYY"
 						/>
 						<p class="mt-4">Date formatée avec dayjs: {{ formattedDate }}</p>
@@ -1352,8 +1352,8 @@ export const WithDayjsFormat: Story = {
 	},
 	args: {
 		headingLevel: 3,
-		placeholder: 'Sélectionner une date',
-		label: 'Sélectionner une date',
+		placeholder: 'JJ/MM/AAAA',
+		label: 'Date (JJ/MM/AAAA)',
 		format: 'DD/MM/YYYY',
 		isBirthDate: false,
 		showWeekNumber: false,
@@ -1397,8 +1397,8 @@ export const WithDayjsFormat: Story = {
 				<div class="pa-4">
 					<DatePicker
 						v-model="date"
-						placeholder="Sélectionner une date"
-						label="Sélectionner une date"
+						placeholder="JJ/MM/AAAA"
+						label="Date (JJ/MM/AAAA)"
 						format="DD/MM/YYYY"
 					/>
 					<p class="mt-4">Date formatée avec dayjs: {{ formattedDate }}</p>
@@ -1419,8 +1419,8 @@ export const UTC: Story = {
 					<div>
 						<DatePicker
 							v-model="dateString"
-							placeholder="Sélectionner une date"
-							label="Sélectionner une date"
+							placeholder="JJ/MM/AAAA"
+							label="Date (JJ/MM/AAAA)"
 							format="DD/MM/YYYY"
 						/>
 
@@ -1912,8 +1912,8 @@ export const WithFormSubmission: Story = {
 									v-model="date1"
 									required
 									format="DD/MM/YYYY"
-									placeholder="Date requise"
-									label="Date requise au format DD/MM/YYYY "
+									placeholder="JJ/MM/AAAA"
+									label="Date (JJ/MM/AAAA)"
 								/>
 							</div>
 							<div>
@@ -1923,8 +1923,8 @@ export const WithFormSubmission: Story = {
 									v-model="date2"
 									required
 									format="DD/MM/YYYY"
-									placeholder="Date requise"
-									label="Date requise au format DD/MM/YYYY"
+									placeholder="JJ/MM/AAAA"
+									label="Date (JJ/MM/AAAA)"
 									no-calendar
 								/>
 							</div>
@@ -2002,8 +2002,8 @@ export const WithFormSubmission: Story = {
 								v-model="date1"
 								required
 								format="DD/MM/YYYY"
-								placeholder="Date requise"
-								label="Date requise au format DD/MM/YYYY"
+								placeholder="JJ/MM/AAAA"
+								label="Date (JJ/MM/AAAA)"
 							/>
 						</div>
 						<div>
@@ -2013,8 +2013,8 @@ export const WithFormSubmission: Story = {
 								v-model="date2"
 								required
 								format="DD/MM/YYYY"
-								placeholder="Date requise"
-								label="Date requise au format DD/MM/YYYY"
+								placeholder="JJ/MM/AAAA"
+								label="Date (JJ/MM/AAAA)"
 								no-calendar
 							/>
 						</div>
