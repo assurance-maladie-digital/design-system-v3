@@ -121,7 +121,7 @@
 	}
 
 	// cursor: pointer uniquement quand le conteneur est interactif (a, router-link)
-	a&,
+	&:is(a),
 	&[href] {
 		cursor: pointer;
 	}
