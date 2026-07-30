@@ -1149,6 +1149,7 @@
 									type="button"
 									size="x-small"
 									color="primary"
+									variant="outlined"
 									:title="todayButtonLabel"
 									:aria-label="todayButtonLabel"
 									class="date-picker__today-button my-2 pa-2 mt-2"
