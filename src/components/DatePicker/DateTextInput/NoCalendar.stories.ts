@@ -11,8 +11,6 @@ interface DatePickerProps {
 	'format'?: string
 	'dateFormatReturn'?: string
 	'density'?: 'default' | 'comfortable' | 'compact'
-	'isBirthDate'?: boolean
-	'birthDate'?: boolean
 	'showWeekNumber'?: boolean
 	'required'?: boolean
 	'displayRange'?: boolean
@@ -69,7 +67,7 @@ const meta = {
 		},
 		docs: {
 			description: {
-				component: '\n## DatePicker en mode text input (noCalendar) - Incompatibilités entre props\n\n### Contrôle d\'affichage des icônes\n- `noIcon: true` masque toutes les icônes, rendant `displayIcon`, `displayAppendIcon` et `displayPrependIcon` sans effet\n- `displayIcon: false` désactive les icônes, rendant `displayAppendIcon` et `displayPrependIcon` sans effet\n- `displayAppendIcon` et `displayPrependIcon` sont mutuellement exclusifs; si les deux sont définis à `true`, `displayAppendIcon` est prioritaire\n\n### Validation et états de champ\n- `readonly: true` désactive toutes les validations, y compris `required` et les règles personnalisées\n- `disabled` et `readonly` sont mutuellement exclusifs\n- `disableErrorHandling: true` peut créer une incohérence avec `showSuccessMessages: true`\n\n### Format et saisie\n- `birthDate` et `isBirthDate` sont des alias, utiliser l\'un ou l\'autre mais pas les deux\n- `displayRange: true` nécessite que modelValue soit un tableau de deux dates `[startDate, endDate]`\n- `autoClamp: true` peut court-circuiter certaines validations manuelles\n',
+				component: '\n## DatePicker en mode text input (noCalendar) - Incompatibilités entre props\n\n### Contrôle d\'affichage des icônes\n- `noIcon: true` masque toutes les icônes, rendant `displayIcon`, `displayAppendIcon` et `displayPrependIcon` sans effet\n- `displayIcon: false` désactive les icônes, rendant `displayAppendIcon` et `displayPrependIcon` sans effet\n- `displayAppendIcon` et `displayPrependIcon` sont mutuellement exclusifs; si les deux sont définis à `true`, `displayAppendIcon` est prioritaire\n\n### Validation et états de champ\n- `readonly: true` désactive toutes les validations, y compris `required` et les règles personnalisées\n- `disabled` et `readonly` sont mutuellement exclusifs\n- `disableErrorHandling: true` peut créer une incohérence avec `showSuccessMessages: true`\n\n### Format et saisie\n- `displayRange: true` nécessite que modelValue soit un tableau de deux dates `[startDate, endDate]`\n- `autoClamp: true` peut court-circuiter certaines validations manuelles\n',
 			},
 		},
 	},
@@ -230,16 +228,6 @@ const meta = {
 		'displayAsterisk': {
 			control: 'boolean',
 			description: 'Affiche un astérisque (*) à côté du label pour indiquer visuellement que le champ est obligatoire',
-			defaultValue: false,
-		},
-		'birthDate': {
-			control: 'boolean',
-			description: '⚠️ **DEPRECATED** — Utilisez `isBirthDate` à la place.',
-			defaultValue: false,
-		},
-		'isBirthDate': {
-			control: 'boolean',
-			description: 'Active le mode date de naissance qui commence la navigation du calendrier à l\'année en cours moins 30 ans',
 			defaultValue: false,
 		},
 		'width': {
