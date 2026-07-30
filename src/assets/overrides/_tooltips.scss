@@ -11,3 +11,7 @@
 .v-theme--ap.v-tooltip .v-overlay__content {
 	font-size: var(--v-fontSize-liensEtLibelles);
 }
+
+.v-tooltip[role='tooltip']:not(.v-overlay--active) {
+	display: none;
+}
