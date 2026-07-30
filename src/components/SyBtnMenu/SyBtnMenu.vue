@@ -196,17 +196,27 @@
 							</span>
 							<span
 								:class="`text-${props?.options['btn']?.textColor}`"
-								class="subtitle text-grey text-darken-2 font-weight-regular"
+								class="subtitle text-grey-darken-2 font-weight-regular"
 							>
 								{{ props.secondaryInfo }}
 							</span>
 						</span>
 						<span
 							v-if="isMobileVersion && !iconOnly"
-							:class="`text-${props?.options['btn']?.textColor}`"
-							class="font-weight-bold text-caption"
+							class="d-flex flex-column align-end py-1"
 						>
-							{{ props.primaryInfo }}
+							<span
+								:class="`text-${props?.options['btn']?.textColor}`"
+								class="font-weight-bold text-caption"
+							>
+								{{ props.primaryInfo }}
+							</span>
+							<span
+								:class="`text-${props?.options['btn']?.textColor}`"
+								class="subtitle text-grey-darken-2 font-weight-regular"
+							>
+								{{ props.secondaryInfo }}
+							</span>
 						</span>
 						<slot name="append-icon" />
 					</span>

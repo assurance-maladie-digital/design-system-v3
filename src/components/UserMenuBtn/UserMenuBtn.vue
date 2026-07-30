@@ -47,7 +47,6 @@
 	<SyBtnMenu
 		v-model="modelValue"
 		:hide-icon="hideUserIcon"
-		:icon-only="isMobileView"
 		:is-mobile-view="isMobileView"
 		:menu-items="menuItems"
 		:options="options"
