@@ -1209,6 +1209,17 @@ $ap-grey-mid: #d6d6d6;
 	outline-offset: 1px;
 }
 
+:deep(.v-date-picker-months [data-sy-date-picker-option='month'][role='gridcell']:focus-visible),
+:deep(.v-date-picker-years [data-sy-date-picker-option='year'][role='gridcell']:focus-visible) {
+	outline: none;
+}
+
+:deep(.v-date-picker-months [data-sy-date-picker-option='month'][role='gridcell']:focus-visible .v-btn),
+:deep(.v-date-picker-years [data-sy-date-picker-option='year'][role='gridcell']:focus-visible .v-btn) {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 1px;
+}
+
 /* Disable ripple effect on month and year buttons */
 :deep(.v-date-picker-controls__month-btn),
 :deep(.v-date-picker-controls__mode-btn) {
