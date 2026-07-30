@@ -16,6 +16,46 @@ describe('LogoBrandSection - Focus', () => {
 		expect(link.attributes('href')).toBe('/')
 	})
 
+	// Régression #2441 : avec `homeLink.to` et sans vue-router enregistré, le conteneur retombait
+	// sur un `<div>` — visuellement cliquable (cursor: pointer) mais impossible à atteindre au
+	// clavier (RGAA 7.3). On vérifie qu'un vrai `<a href>` est rendu à la place.
+	it('falls back to a real focusable anchor when homeLink.to is set without vue-router', () => {
+		const wrapper = mount(LogoBrandSection, {
+			props: { homeLink: { to: '/accueil' } },
+		})
+		const link = wrapper.find('.vd-home-link')
+
+		expect(link.element.tagName).toBe('A')
+		expect(link.attributes('href')).toBe('/accueil')
+	})
+
+	it('resolves the fallback href from an object route location', () => {
+		const wrapper = mount(LogoBrandSection, {
+			props: { homeLink: { to: { path: '/accueil' } } },
+		})
+
+		expect(wrapper.find('.vd-home-link').attributes('href')).toBe('/accueil')
+	})
+
+	it('falls back to homeLink.href for a named route that only the router can resolve', () => {
+		const wrapper = mount(LogoBrandSection, {
+			props: { homeLink: { to: { name: 'home' }, href: '/racine' } },
+		})
+		const link = wrapper.find('.vd-home-link')
+
+		expect(link.element.tagName).toBe('A')
+		expect(link.attributes('href')).toBe('/racine')
+	})
+
+	it('keeps using RouterLink when it is registered', () => {
+		const wrapper = mount(LogoBrandSection, {
+			global: { stubs: { RouterLink: true } },
+			props: { homeLink: { to: '/accueil' } },
+		})
+
+		expect(wrapper.find('router-link-stub').attributes('to')).toBe('/accueil')
+	})
+
 	it('renders a non-focusable div container when homeLink has no href/to', () => {
 		const wrapper = mount(LogoBrandSection, {
 			props: { homeLink: {} },

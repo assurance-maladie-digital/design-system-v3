@@ -121,12 +121,43 @@
 			if (hasRouterLink) {
 				return 'router-link'
 			}
-			return 'div'
+			// Sans vue-router, on retombe sur un vrai `<a href>` : un `<div>` serait cliquable
+			// visuellement (cursor: pointer) mais ni focusable ni activable au clavier (RGAA 7.3).
+			return 'a'
 		}
 		if (props.homeLink?.href) {
 			return 'a'
 		}
 		return 'div'
+	})
+
+	// `href` de repli utilisé quand `to` est fourni mais que vue-router n'est pas disponible.
+	// On résout les formes sérialisables de `RouteLocationRaw` ; pour une route nommée, seul le
+	// router sait construire l'URL, on retombe donc sur `href` puis sur la racine du site.
+	const fallbackHomeHref = computed(() => {
+		const to = props.homeLink?.to
+
+		if (typeof to === 'string') {
+			return to
+		}
+
+		if (to && typeof to === 'object' && 'path' in to && typeof to.path === 'string') {
+			return to.path
+		}
+
+		return props.homeLink?.href ?? '/'
+	})
+
+	const homeHref = computed(() => {
+		return props.homeLink?.to ? fallbackHomeHref.value : props.homeLink?.href
+	})
+
+	// Le libellé du lien d'accueil : sans `ariaLabel`, on n'annonce que le libellé générique
+	// (une concaténation naïve produisait « undefined Retour vers accueil du site »).
+	const homeLinkLabel = computed(() => {
+		return [props.homeLink?.ariaLabel, locales.value.homeLinkLabel]
+			.filter(Boolean)
+			.join(' ')
 	})
 
 	const secondaryLogoCtnComponent = computed(() => {
@@ -208,14 +239,14 @@
 		<component
 			:is="logoContainerComponent"
 			:to="logoContainerComponent === 'router-link' ? homeLink?.to : undefined"
-			:href="logoContainerComponent === 'a' ? homeLink?.href : undefined"
+			:href="logoContainerComponent === 'a' ? homeHref : undefined"
 			class="vd-home-link"
 		>
 			<Logo
 				:hide-signature="hideSignature"
 				:hide-organism="isCompteAmeliMobile"
 				:risque-pro="isRisquePro"
-				:aria-label="homeLink?.ariaLabel + ' ' + locales.homeLinkLabel"
+				:aria-label="homeLinkLabel"
 				:avatar="avatar"
 				:size="logoSize"
 				:class="{ 'mr-2': avatar }"
@@ -242,7 +273,7 @@
 				v-if="secondaryLogo"
 				:aria-label="secondaryLogoLabel"
 				:to="secondaryLogoCtnComponent === 'router-link' ? homeLink?.to : undefined"
-				:href="secondaryLogoCtnComponent === 'a' ? homeLink?.href : undefined"
+				:href="secondaryLogoCtnComponent === 'a' ? homeHref : undefined"
 				class="vd-home-link"
 			>
 				<img

@@ -42,12 +42,35 @@
 			if (hasRouterLink) {
 				return 'router-link'
 			}
-			return 'div'
+			// Sans vue-router, on retombe sur un vrai `<a href>` : un `<div>` serait cliquable
+			// visuellement (cursor: pointer) mais ni focusable ni activable au clavier (RGAA 7.3).
+			return 'a'
 		}
 		if (props.homeLink?.href) {
 			return 'a'
 		}
 		return 'div'
+	})
+
+	// `href` de repli utilisé quand `to` est fourni mais que vue-router n'est pas disponible.
+	// On résout les formes sérialisables de `RouteLocationRaw` ; pour une route nommée, seul le
+	// router sait construire l'URL, on retombe donc sur `href` puis sur la racine du site.
+	const fallbackHomeHref = computed(() => {
+		const to = props.homeLink?.to
+
+		if (typeof to === 'string') {
+			return to
+		}
+
+		if (to && typeof to === 'object' && 'path' in to && typeof to.path === 'string') {
+			return to.path
+		}
+
+		return props.homeLink?.href ?? '/'
+	})
+
+	const homeHref = computed(() => {
+		return props.homeLink?.to ? fallbackHomeHref.value : props.homeLink?.href
 	})
 </script>
 
@@ -55,8 +78,8 @@
 	<component
 		:is="routeType"
 		v-bind="{
-			to: 'to' in homeLink ? homeLink?.to : undefined,
-			href: 'href' in homeLink ? homeLink?.href : undefined,
+			to: routeType === 'router-link' ? homeLink?.to : undefined,
+			href: routeType === 'a' ? homeHref : undefined,
 			'aria-label': 'aria-label' in homeLink ? homeLink?.['aria-label'] : undefined,
 		}"
 		class="logo"
