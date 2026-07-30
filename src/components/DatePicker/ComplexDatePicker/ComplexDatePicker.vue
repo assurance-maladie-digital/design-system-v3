@@ -1771,17 +1771,17 @@ $ap-grey-mid: #d6d6d6;
 }
 
 :deep(.v-date-picker-month__day--selected .v-btn:hover) {
-	background-color: rgb(var(--v-theme-primaryVariant)) !important;
+	background-color: rgb(var(--v-theme-primary)) !important;
 	opacity: 0.9;
 }
 
 :deep(.v-date-picker-month__day--selected .v-btn) {
-	background-color: rgb(var(--v-theme-primaryVariant)) !important;
-	color: rgb(var(--v-theme-onPrimaryVariant)) !important;
+	background-color: rgb(var(--v-theme-primary)) !important;
+	color: rgb(var(--v-theme-onPrimary)) !important;
 }
 
 :deep(.v-date-picker-month__day--selected .v-btn .v-btn__content) {
-	color: rgb(var(--v-theme-onPrimaryVariant)) !important;
+	color: rgb(var(--v-theme-onPrimary)) !important;
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
