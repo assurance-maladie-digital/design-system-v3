@@ -178,7 +178,7 @@ const meta = {
 		},
 		'isBirthDate': {
 			control: 'boolean',
-			description: 'Active le mode date de naissance qui commence la navigation du calendrier à l\'année en cours moins 30 ans',
+			description: 'Active le mode date de naissance qui ouvre le calendrier sur la vue de sélection d\'année (au lieu de la vue mensuelle), permettant une navigation année → mois → jour',
 			defaultValue: false,
 		},
 		'showWeekNumber': {
