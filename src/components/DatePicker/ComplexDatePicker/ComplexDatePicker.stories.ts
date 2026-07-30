@@ -372,8 +372,8 @@ export const Default: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Sélectionner une date"
-						placeholder="Sélectionner une date"
+						label="Date (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						useCombinedMode
 						format="DD/MM/YYYY"
 					/>
@@ -394,8 +394,8 @@ export const Default: Story = {
 		],
 	},
 	args: {
-		'label': 'Sélectionner une date',
-		'placeholder': 'Sélectionner une date',
+		'label': 'Date (JJ/MM/AAAA)',
+		'placeholder': 'JJ/MM/AAAA',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
 		'showWeekNumber': false,
@@ -443,16 +443,16 @@ export const Required: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Sélectionner une date"
-						placeholder="Sélectionner une date"
+						label="Date (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						useCombinedMode
 						required
 						format="DD/MM/YYYY"
 					/>
 					<DatePicker
 						v-model="date"
-						label="Sélectionner une date"
-						placeholder="Sélectionner une date"
+						label="Date (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						useCombinedMode
 						required
 						displayAsterisk
@@ -475,7 +475,7 @@ export const Required: Story = {
 		],
 	},
 	args: {
-		'label': 'Sélectionner une date',
+		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
 		'showWeekNumber': false,
@@ -526,8 +526,8 @@ export const DateRange: Story = {
 				<template>
 					<DatePicker
 						v-model="dateRange"
-						label="Sélectionner une période"
-						placeholder="Sélectionner une période"
+						label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						display-range
 						use-combined-mode
@@ -549,8 +549,8 @@ export const DateRange: Story = {
 		],
 	},
 	args: {
-		'label': 'Sélectionner une période',
-		'placeholder': 'Sélectionner une période',
+		'label': 'Période (JJ/MM/AAAA - JJ/MM/AAAA)',
+		'placeholder': 'JJ/MM/AAAA - JJ/MM/AAAA',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -596,8 +596,8 @@ export const BirthDate: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date de naissance"
-						placeholder="Date de naissance"
+						label="Date de naissance (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						isBirthDate
 						useCombinedMode
@@ -619,8 +619,8 @@ export const BirthDate: Story = {
 		],
 	},
 	args: {
-		label: 'Date de naissance',
-		placeholder: 'Date de naissance',
+		label: 'Date de naissance (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		isBirthDate: true,
 		showWeekNumber: false,
@@ -660,8 +660,8 @@ export const WithValidation: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date requise"
-						placeholder="Date requise"
+						label="Date (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						required
 						:customRules="customRules"
@@ -700,8 +700,8 @@ export const WithValidation: Story = {
 		],
 	},
 	args: {
-		label: 'Date requise',
-		placeholder: 'Date requise',
+		label: 'Date (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		required: true,
 		useCombinedMode: true,
@@ -748,24 +748,24 @@ export const DifferentFormats: Story = {
 					<div class="d-flex flex-column">
 						<DatePicker
 							v-model="europeanDate"
-							label="Format européen"
-							placeholder="Format européen"
+							label="Date (JJ/MM/AAAA)"
+							placeholder="JJ/MM/AAAA"
 							format="DD/MM/YYYY"
 							class="mb-4"
 							useCombinedMode
 						/>
 						<DatePicker
 							v-model="americanDate"
-							label="Format américain"
-							placeholder="Format américain"
+							label="Date (MM/JJ/AAAA)"
+							placeholder="MM/JJ/AAAA"
 							format="MM/DD/YYYY"
 							class="mb-4"
 							useCombinedMode
 						/>
 						<DatePicker
 							v-model="isoDate"
-							label="Format ISO"
-							placeholder="Format ISO"
+							label="Date (AAAA-MM-JJ)"
+							placeholder="AAAA-MM-JJ"
 							format="YYYY-MM-DD"
 							useCombinedMode
 						/>
@@ -802,24 +802,24 @@ export const DifferentFormats: Story = {
               <div class="d-flex flex-column pa-4">
                 <DatePicker
                   v-model="europeanDate"
-				  label="Format européen"
-                  placeholder="Format européen"
+				  label="Date (JJ/MM/AAAA)"
+                  placeholder="JJ/MM/AAAA"
                   format="DD/MM/YYYY"
                   class="mb-4"
 				  useCombinedMode
                 />
                 <DatePicker
                   v-model="americanDate"
-				  label="Format américain"
-                  placeholder="Format américain"
+				  label="Date (MM/JJ/AAAA)"
+                  placeholder="MM/JJ/AAAA"
                   format="MM/DD/YYYY"
                   class="mb-4"
 				  useCombinedMode
                 />
                 <DatePicker
                   v-model="isoDate"
-				  label="Format ISO"
-                  placeholder="Format ISO"
+				  label="Date (AAAA-MM-JJ)"
+                  placeholder="AAAA-MM-JJ"
                   format="YYYY-MM-DD"
 				  useCombinedMode
                 />
@@ -839,8 +839,8 @@ export const WithDateFormatReturn: Story = {
 					<div class="d-flex flex-column">
 						<DatePicker
 							v-model="date"
-							label="Format d'affichage: JJ/MM/AAAA, Format de retour: AAAA-MM-JJ"
-							placeholder="Format d'affichage: JJ/MM/AAAA, Format de retour: AAAA-MM-JJ"
+							label="Date (JJ/MM/AAAA)"
+							placeholder="JJ/MM/AAAA"
 							format="DD/MM/YYYY"
 							dateFormatReturn="YYYY-MM-DD"
 							class="mb-4"
@@ -875,8 +875,8 @@ export const WithDateFormatReturn: Story = {
               <div class="d-flex flex-column pa-4">
                 <DatePicker
                   v-model="date"
-				  label="Format d'affichage: JJ/MM/AAAA, Format de retour: AAAA-MM-JJ"
-                  placeholder="Format d'affichage: JJ/MM/AAAA, Format de retour: AAAA-MM-JJ"
+				  label="Date (JJ/MM/AAAA)"
+                  placeholder="JJ/MM/AAAA"
                   format="DD/MM/YYYY"
                   dateFormatReturn="YYYY-MM-DD"
 				  useCombinedMode
@@ -897,8 +897,8 @@ export const DisablePickerInteraction: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Saisie manuelle uniquement"
-						placeholder="Saisie manuelle uniquement"
+						label="Date (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						noCalendar
@@ -920,8 +920,8 @@ export const DisablePickerInteraction: Story = {
 		],
 	},
 	args: {
-		label: 'Saisie manuelle uniquement',
-		placeholder: 'Saisie manuelle uniquement',
+		label: 'Date (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		displayIcon: true,
 		useCombinedMode: true,
@@ -957,8 +957,8 @@ export const AutoFormattingInput: Story = {
 					<div class="d-flex flex-column">
 						<DatePicker
 							v-model="date"
-							label="Saisie avec formatage automatique"
-							placeholder="Saisie avec formatage automatique"
+							label="Date (JJ-MM-AAAA)"
+							placeholder="JJ-MM-AAAA"
 							format="DD-MM-YYYY"
 							useCombinedMode
 						/>
@@ -980,8 +980,8 @@ export const AutoFormattingInput: Story = {
 		],
 	},
 	args: {
-		label: 'Saisie avec formatage automatique',
-		placeholder: 'Saisie avec formatage automatique',
+		label: 'Date (JJ-MM-AAAA)',
+		placeholder: 'JJ-MM-AAAA',
 		format: 'DD-MM-YYYY',
 		useCombinedMode: true,
 	},
@@ -1011,8 +1011,8 @@ export const CustomDateFormat: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Format AAAA.MM.JJ"
-						placeholder="Format AAAA.MM.JJ"
+						label="Date (AAAA.MM.JJ)"
+						placeholder="AAAA.MM.JJ"
 						format="AAAA.MM.JJ"
 						useCombinedMode
 					/>
@@ -1033,8 +1033,8 @@ export const CustomDateFormat: Story = {
 		],
 	},
 	args: {
-		label: 'Format AAAA.MM.JJ',
-		placeholder: 'Format AAAA.MM.JJ',
+		label: 'Date (AAAA.MM.JJ)',
+		placeholder: 'AAAA.MM.JJ',
 		format: 'YYYY.MM.DD',
 		useCombinedMode: true,
 	},
@@ -1300,64 +1300,6 @@ export const WithCustomPeriod: Story = {
 	},
 }
 
-export const WithTextFieldActivator: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<DatePicker
-						v-model="date"
-						label="Cliquez sur le champ pour ouvrir"
-						placeholder="Cliquez sur le champ pour ouvrir"
-						format="DD/MM/YYYY"
-						useCombinedMode
-						textFieldActivator
-					/>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { DatePicker } from '@cnamts/synapse'
-					import { ref } from 'vue'
-					
-					const date = ref('')
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		label: 'Cliquez sur le champ pour ouvrir',
-		placeholder: 'Cliquez sur le champ pour ouvrir',
-		format: 'DD/MM/YYYY',
-		useCombinedMode: true,
-		textFieldActivator: true,
-	},
-	render: (args) => {
-		return {
-			components: { DatePicker },
-			setup() {
-				const value = ref('')
-				return { args, value }
-			},
-			template: `
-              <div class="d-flex flex-wrap align-center pa-4">
-                <DatePicker v-bind="args" v-model="value"/>
-                <div class="ml-4 mt-4">
-                  <p>Valeur actuelle: {{ value }}</p>
-                  <p>Le calendrier s'ouvre au clic sur l'ensemble du champ.</p>
-                </div>
-              </div>
-            `,
-		}
-	},
-}
-
 export const AutoClampFeature: Story = {
 	parameters: {
 		sourceCode: [
@@ -1371,8 +1313,8 @@ export const AutoClampFeature: Story = {
 						<h4 class="mt-4">Format JJ/MM/AAAA (séparateur /)</h4>
 						<DatePicker
 							v-model="dateSlash"
-							label="Saisie avec auto clamp - séparateur /"
-							placeholder="Saisie avec auto clamp - séparateur /"
+							label="Date (JJ/MM/AAAA)"
+							placeholder="JJ/MM/AAAA"
 							format="DD/MM/YYYY"
 							useCombinedMode
 							autoClamp
@@ -1381,8 +1323,8 @@ export const AutoClampFeature: Story = {
 						<h4 class="mt-4">Format JJ-MM-AAAA (séparateur -)</h4>
 						<DatePicker
 							v-model="dateDash"
-							label="Saisie avec auto clamp - séparateur -"
-							placeholder="Saisie avec auto clamp - séparateur -"
+							label="Date (JJ-MM-AAAA)"
+							placeholder="JJ-MM-AAAA"
 							format="DD-MM-YYYY"
 							useCombinedMode
 							autoClamp
@@ -1391,8 +1333,8 @@ export const AutoClampFeature: Story = {
 						<h4 class="mt-4">Format AAAA.MM.JJ (séparateur .)</h4>
 						<DatePicker
 							v-model="dateDot"
-							label="Saisie avec auto clamp - séparateur ."
-							placeholder="Saisie avec auto clamp - séparateur ."
+							label="Date (AAAA.MM.JJ)"
+							placeholder="AAAA.MM.JJ"
 							format="YYYY.MM.DD"
 							useCombinedMode
 							autoClamp
@@ -1433,8 +1375,8 @@ export const AutoClampFeature: Story = {
                 <h4 class="mb-2">Format JJ/MM/AAAA (séparateur /)</h4>
                 <DatePicker
                   v-model="dateSlash"
-				  label="Saisie avec auto clamp - séparateur /"
-                  placeholder="Saisie avec auto clamp - séparateur /"
+				  label="Date (JJ/MM/AAAA)"
+                  placeholder="JJ/MM/AAAA"
                   format="DD/MM/YYYY"
                   useCombinedMode
                   autoClamp
@@ -1444,8 +1386,8 @@ export const AutoClampFeature: Story = {
                 <h4 class="mb-2">Format JJ-MM-AAAA (séparateur -)</h4>
                 <DatePicker
                   v-model="dateDash"
-				  label="Saisie avec auto clamp - séparateur -"
-                  placeholder="Saisie avec auto clamp - séparateur -"
+				  label="Date (JJ-MM-AAAA)"
+                  placeholder="JJ-MM-AAAA"
                   format="DD-MM-YYYY"
                   useCombinedMode
                   autoClamp
@@ -1455,8 +1397,8 @@ export const AutoClampFeature: Story = {
                 <h4 class="mb-2">Format AAAA.MM.JJ (séparateur .)</h4>
                 <DatePicker
                   v-model="dateDot"
-				  label="Saisie avec auto clamp - séparateur ."
-                  placeholder="Saisie avec auto clamp - séparateur ."
+				  label="Date (AAAA.MM.JJ)"
+                  placeholder="AAAA.MM.JJ"
                   format="YYYY.MM.DD"
                   useCombinedMode
                   autoClamp
@@ -1479,8 +1421,8 @@ export const WithFormSubmission: Story = {
 						<DatePicker
 							ref="datePicker"
 							v-model="date"
-							label="Date requise"
-							placeholder="Date requise"
+							label="Date (JJ/MM/AAAA)"
+							placeholder="JJ/MM/AAAA"
 							format="DD/MM/YYYY"
 							required
 							class="mb-4"
@@ -1544,8 +1486,8 @@ export const WithFormSubmission: Story = {
                   <DatePicker
                     ref="datePicker"
                     v-model="date"
-					label="Date requise"
-                    placeholder="Date requise"
+					label="Date (JJ/MM/AAAA)"
+                    placeholder="JJ/MM/AAAA"
                     format="DD/MM/YYYY"
                     required
 					class="mb-4"
@@ -1571,8 +1513,8 @@ export const CustomRules: Story = {
 					<template>
 						<DatePicker
 							v-model="date"
-							label="Date de rendez-vous"
-							placeholder="Date requise"
+							label="Date de rendez-vous (JJ/MM/AAAA)"
+							placeholder="JJ/MM/AAAA"
 							format="DD/MM/YYYY"
 							required
 							class="mb-4"
@@ -1629,7 +1571,7 @@ export const CustomRules: Story = {
 						:custom-rules="customRules"
 						required
 						use-combined-mode
-						label="Date de rendez-vous"
+						label="Date de rendez-vous (JJ/MM/AAAA)"
 				placeholder="JJ/MM/AAAA"
 			/>
 				</div>
@@ -1647,8 +1589,8 @@ export const CustomWarningRules: Story = {
 					<template>
 						<DatePicker
 							v-model="date"
-							label="Date requise"
-							placeholder="Date requise"
+							label="Date (JJ/MM/AAAA)"
+							placeholder="JJ/MM/AAAA"
 							format="DD/MM/YYYY"
 							required
 							class="mb-4"
@@ -1728,7 +1670,7 @@ export const CustomWarningRules: Story = {
 						:custom-warning-rules="customWarningRules"
 						required
 						use-combined-mode
-						label="Date de rendez-vous"
+						label="Date de rendez-vous (JJ/MM/AAAA)"
 						placeholder="JJ/MM/AAAA"
 				/>
 				</div>
