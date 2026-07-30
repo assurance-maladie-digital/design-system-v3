@@ -132,4 +132,36 @@ describe('TableToolbar', () => {
 
 		expect(wrapper.emitted('add')).toBeTruthy()
 	})
+
+	describe('locales', () => {
+		it('utilise les locales `search` / `addBtnLabel` pour les libellés', () => {
+			const wrapper = mount(TableToolbar, {
+				props: {
+					showAddButton: true,
+					locales: { search: 'RECHERCHE_PERSO', addBtnLabel: 'AJOUT_PERSO' },
+				},
+			})
+
+			const html = wrapper.html()
+			expect(html).toContain('RECHERCHE_PERSO')
+			expect(html).toContain('AJOUT_PERSO')
+		})
+
+		it('les props `searchLabel` / `addButtonLabel` restent prioritaires sur les locales', () => {
+			const wrapper = mount(TableToolbar, {
+				props: {
+					showAddButton: true,
+					searchLabel: 'RECHERCHE_PROP',
+					addButtonLabel: 'AJOUT_PROP',
+					locales: { search: 'RECHERCHE_LOCALE', addBtnLabel: 'AJOUT_LOCALE' },
+				},
+			})
+
+			const html = wrapper.html()
+			expect(html).toContain('RECHERCHE_PROP')
+			expect(html).toContain('AJOUT_PROP')
+			expect(html).not.toContain('RECHERCHE_LOCALE')
+			expect(html).not.toContain('AJOUT_LOCALE')
+		})
+	})
 })

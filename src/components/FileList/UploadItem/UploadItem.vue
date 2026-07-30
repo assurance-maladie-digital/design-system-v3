@@ -10,6 +10,9 @@
 	import { cnamContextualTokens } from '@/designTokens/tokens/cnam/cnamContextual'
 	import { locales as defaultLocales } from './locales'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
+	import { computed } from 'vue'
 
 	type FileState = 'initial' | 'success' | 'error' | 'loading'
 
@@ -19,7 +22,7 @@
 		(e: 'delete', item: string): void
 	}>()
 
-	withDefaults(defineProps<{
+	const props = withDefaults(defineProps<{
 		itemId: string
 		title: string
 		fileName?: string
@@ -31,7 +34,7 @@
 		showDeleteBtn?: boolean
 		showPreviewBtn?: boolean
 		tag?: string
-		locales?: typeof defaultLocales
+		locales?: DeepPartial<typeof defaultLocales>
 		seeLabel?: string
 		deleteLabel?: string
 		importLabel?: string
@@ -45,11 +48,17 @@
 		showDeleteBtn: true,
 		showPreviewBtn: false,
 		tag: 'div',
-		locales: () => defaultLocales,
-		seeLabel: defaultLocales.see,
-		deleteLabel: defaultLocales.delete,
-		importLabel: defaultLocales.import,
+		locales: () => ({}),
+		seeLabel: undefined,
+		deleteLabel: undefined,
+		importLabel: undefined,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
+
+	const resolvedSeeLabel = computed(() => props.seeLabel ?? locales.value.see)
+	const resolvedDeleteLabel = computed(() => props.deleteLabel ?? locales.value.delete)
+	const resolvedImportLabel = computed(() => props.importLabel ?? locales.value.import)
 
 	defineSlots<{
 		'file-icon'(props: { state: FileState }): void
@@ -135,13 +144,13 @@
 			</div>
 			<div class="file-item__actions">
 				<VBtn
-					v-if="(state === 'initial' || state == 'error') && showUploadBtn"
+					v-if="(state === 'initial' || state === 'error') && showUploadBtn"
 					class="file-item__action file-item__action-upload text-primary"
 					variant="text"
-					:aria-label="`${locales.import} ${title}`"
+					:aria-label="`${resolvedImportLabel} ${title}`"
 					@click="$emit('upload', itemId)"
 				>
-					<span>{{ importLabel }}</span>
+					<span>{{ resolvedImportLabel }}</span>
 					<template #prepend>
 						<SyIcon
 							color="primary"
@@ -154,10 +163,10 @@
 					v-if="state === 'success' && showPreviewBtn"
 					class="file-item__action file-item__action-preview text-primary"
 					variant="text"
-					:aria-label="`${locales.see} ${fileName}`"
+					:aria-label="`${resolvedSeeLabel} ${fileName}`"
 					@click="$emit('preview', itemId)"
 				>
-					<span>{{ seeLabel }}</span>
+					<span>{{ resolvedSeeLabel }}</span>
 					<template #prepend>
 						<SyIcon
 							color="primary"
@@ -170,10 +179,10 @@
 					v-if="state === 'success' && showDeleteBtn"
 					class="file-item__action file-item__action-delete text-error"
 					variant="text"
-					:aria-label="`${locales.delete} ${fileName}`"
+					:aria-label="`${resolvedDeleteLabel} ${fileName}`"
 					@click="$emit('delete', itemId)"
 				>
-					<span>{{ deleteLabel }}</span>
+					<span>{{ resolvedDeleteLabel }}</span>
 					<template #prepend>
 						<SyIcon
 							color="error"
@@ -199,7 +208,7 @@
 				height="7"
 				color="primary"
 				rounded="true"
-				:aria-label="title ? `Chargement de ${title}` : 'Chargement en cours'"
+				:aria-label="locales.loadingLabel(title)"
 			/>
 		</div>
 	</component>

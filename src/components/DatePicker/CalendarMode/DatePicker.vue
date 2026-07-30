@@ -111,8 +111,8 @@
 			? document.activeElement
 			: null
 		const activeDay = activeElement?.closest<HTMLElement>('.v-date-picker-month__day[data-v-date]')
-		const activeMonthButton = activeElement?.closest<HTMLButtonElement>('.v-date-picker-months .v-btn')
-		const activeYearButton = activeElement?.closest<HTMLButtonElement>('.v-date-picker-years .v-btn')
+		const activeMonthButton = activeElement?.closest<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"], .v-date-picker-months .v-btn')
+		const activeYearButton = activeElement?.closest<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn')
 		const shouldRestoreButtonFocus = activeElement?.tagName === 'BUTTON'
 		const dayDate = activeDay?.getAttribute('data-v-date')
 		const monthLabel = activeMonthButton?.getAttribute('aria-label') ?? activeMonthButton?.textContent?.trim() ?? ''
@@ -133,7 +133,7 @@
 				}
 
 				if (monthLabel) {
-					const monthButtons = Array.from(rootEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-months .v-btn'))
+					const monthButtons = Array.from(rootEl.querySelectorAll<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"], .v-date-picker-months .v-btn'))
 					const target = monthButtons.find(button =>
 						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === monthLabel,
 					)
@@ -142,7 +142,7 @@
 				}
 
 				if (yearLabel) {
-					const yearButtons = Array.from(rootEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-years .v-btn'))
+					const yearButtons = Array.from(rootEl.querySelectorAll<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn'))
 					const target = yearButtons.find(button =>
 						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === yearLabel,
 					)
@@ -154,6 +154,7 @@
 
 	const datePickerDialogRef = ref<HTMLElement | null>(null)
 	const datePickerDialogId = `${datePickerContentId}-dialog`
+	const datePickerTitleId = `${datePickerContentId}-title`
 	const datePickerHeadingId = `${datePickerContentId}-heading`
 
 	const isDatePickerVisible = ref(false)
@@ -163,8 +164,9 @@
 		onClose: () => closeDatePicker(),
 		restoreFocus: () => queueMicrotask(() => focusCalendarInput()),
 		getInitialFocusDate: () => {
-			const value = selectedDates.value
-			const selected = Array.isArray(value) ? value[0] ?? null : value
+			const value = keyboardNavigatedDate.value
+				?? (Array.isArray(selectedDates.value) ? selectedDates.value[0] ?? null : selectedDates.value)
+			const selected = value
 			return selected ?? new Date()
 		},
 	})
@@ -821,13 +823,14 @@
 				if (!monthsContainer) return
 
 				const focusActiveMonth = () => {
-					const active = root.querySelector<HTMLElement>('.v-date-picker-months .v-btn--active')
+					const active = root.querySelector<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"][aria-pressed="true"]')
+						?? root.querySelector<HTMLElement>('.v-date-picker-months .v-btn--active')
 					if (active) {
 						active.focus({ preventScroll: true })
 						return
 					}
 					const monthIndex = currentMonth.value !== null ? Number(currentMonth.value) : new Date().getMonth()
-					const monthBtns = root.querySelectorAll<HTMLElement>('.v-date-picker-months .v-btn')
+					const monthBtns = root.querySelectorAll<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"], .v-date-picker-months .v-btn')
 					monthBtns[monthIndex]?.focus({ preventScroll: true })
 				}
 
@@ -843,17 +846,18 @@
 				if (!yearsContainer) return
 
 				const focusActiveYear = () => {
-					const active = root.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
+					const active = root.querySelector<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"][aria-pressed="true"]')
+						?? root.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
 					if (active) {
 						active.focus({ preventScroll: true })
 						return
 					}
-					const currentYearBtn = root.querySelector<HTMLElement>('.v-date-picker-years .v-date-picker-years__year--current .v-btn')
+					const currentYearBtn = root.querySelector<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-date-picker-years__year--current .v-btn')
 					if (currentYearBtn) {
 						currentYearBtn.focus({ preventScroll: true })
 						return
 					}
-					const firstBtn = root.querySelector<HTMLElement>('.v-date-picker-years .v-btn')
+					const firstBtn = root.querySelector<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn')
 					firstBtn?.focus({ preventScroll: true })
 				}
 
@@ -865,6 +869,10 @@
 	const handleInputBlur = async () => {
 		emit('blur')
 		onblur.value = true
+		// Ne pas valider si le DatePicker est ouvert : le blur est causé par
+		// l'ouverture du calendrier (VMenu prend le focus), pas par l'utilisateur
+		// qui quitterait le champ.
+		if (isDatePickerVisible.value) return
 		// Ne pas valider si isValidateOnBlur est false
 		if (props.isValidateOnBlur) {
 			await validateCalendarModeDates(true)
@@ -1090,7 +1098,7 @@
 					ref="datePickerDialogRef"
 					role="dialog"
 					aria-modal="true"
-					:aria-labelledby="datePickerHeadingId"
+					:aria-labelledby="datePickerTitleId"
 					tabindex="-1"
 				>
 					<VDatePicker
@@ -1119,7 +1127,9 @@
 						@update:month-year="markHolidayDays"
 					>
 						<template #title>
-							{{ locales.calendarTitle }}
+							<span :id="datePickerTitleId">
+								{{ locales.calendarTitle }}
+							</span>
 						</template>
 						<template #header>
 							<SyHeading
@@ -1191,6 +1201,23 @@ $ap-grey-mid: #d6d6d6;
 	background-color: rgb(255 193 7 / 10%);
 	border: 2px dotted rgb(var(--v-theme-grey-darken60));
 	border-radius: 50%;
+}
+
+:deep(.v-date-picker-month__day[role='gridcell']:focus-visible) {
+	border-radius: 50%;
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 1px;
+}
+
+:deep(.v-date-picker-months [data-sy-date-picker-option='month'][role='gridcell']:focus-visible),
+:deep(.v-date-picker-years [data-sy-date-picker-option='year'][role='gridcell']:focus-visible) {
+	outline: none;
+}
+
+:deep(.v-date-picker-months [data-sy-date-picker-option='month'][role='gridcell']:focus-visible .v-btn),
+:deep(.v-date-picker-years [data-sy-date-picker-option='year'][role='gridcell']:focus-visible .v-btn) {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 1px;
 }
 
 /* Disable ripple effect on month and year buttons */
@@ -1311,11 +1338,17 @@ $ap-grey-mid: #d6d6d6;
 }
 
 :deep(.v-date-picker-month__day .v-btn:hover) {
-	background-color: rgb(var(--v-theme-background));
+	background-color: rgb(var(--v-theme-background)) 0.12;
+	color: rgb(var(--v-theme-onBackground));
 }
 
 :deep(.v-date-picker-month__day--adjacent) {
-	opacity: 0.7;
+	opacity: 1;
+
+	.v-btn__content {
+		color: rgb(var(--v-theme-onSurfaceVariant));
+		opacity: 1;
+	}
 }
 
 :deep(.v-date-picker-month__day--adjacent:has(.v-btn:focus-visible)) {
@@ -1327,13 +1360,23 @@ $ap-grey-mid: #d6d6d6;
 	background-color: transparent !important;
 
 	.v-btn__content {
-		opacity: 0.5;
+		color: rgb(var(--v-theme-onSurfaceVariant));
+		opacity: 1;
 	}
 }
 
 :deep(.v-date-picker-month__day--selected .v-btn:hover) {
 	background-color: rgb(var(--v-theme-primaryVariant)) !important;
 	opacity: 0.9;
+}
+
+:deep(.v-date-picker-month__day--selected .v-btn) {
+	background-color: rgb(var(--v-theme-primaryVariant)) !important;
+	color: rgb(var(--v-theme-onPrimaryVariant)) !important;
+}
+
+:deep(.v-date-picker-month__day--selected .v-btn .v-btn__content) {
+	color: rgb(var(--v-theme-onPrimaryVariant)) !important;
 }
 
 .fade-enter-active,
@@ -1347,12 +1390,16 @@ $ap-grey-mid: #d6d6d6;
 }
 
 :deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
-	background-color: $ap-grey-mid;
+	background-color: rgb(var(--v-theme-surface));
+	box-shadow: inset 0 0 0 1px rgb(var(--v-theme-onSurfaceVariant));
+	color: rgb(var(--v-theme-onSurface));
 }
 
 /* div avant la class .v-date-picker-month__day--week-end */
 :deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
-	background-color: $ap-grey-mid;
+	background-color: rgb(var(--v-theme-surface));
+	box-shadow: inset 0 0 0 1px rgb(var(--v-theme-onSurfaceVariant));
+	color: rgb(var(--v-theme-onSurface));
 }
 
 :deep(.v-date-picker-controls__mode-btn) {

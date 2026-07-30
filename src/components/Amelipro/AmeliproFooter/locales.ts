@@ -1,6 +1,5 @@
 import { A11yComplianceEnum } from './A11yComplianceEnum'
 import imgUrl from '@/assets/amelipro/img/cartouche_nouveauTEL.svg'
-
 export const locales = {
 	a11yLabel: (complianceLabel: string): string => `Accessibilité\xa0: ${complianceLabel}`,
 	aboutLabel: 'À propos',
@@ -12,4 +11,6 @@ export const locales = {
 	[A11yComplianceEnum.NON_COMPLIANT]: 'non conforme',
 	[A11yComplianceEnum.PARTIALLY_COMPLIANT]: 'partiellement conforme',
 	[A11yComplianceEnum.FULLY_COMPLIANT]: 'conforme',
+	phoneLink: 'tel:3608',
+	phoneAltText: 'au 3608 : Service gratuit + prix appel',
 }

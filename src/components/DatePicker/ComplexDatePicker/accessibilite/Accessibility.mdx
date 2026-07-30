@@ -22,8 +22,8 @@ import {
 	<CriteriaCard title="Structure sémantique" icon="">
 		<ul>
 			<li><strong>Champ</strong> : l’input réellement focusé porte la sémantique <code>combobox</code> et expose <code>aria-haspopup="dialog"</code>, <code>aria-expanded</code> et <code>aria-controls</code> quand le calendrier est ouvert. À la différence du mode calendrier simple, ce mode permet la saisie libre, justifiant l'utilisation du pattern combobox.</li>
-			<li><strong>Panneau</strong> : calendrier exposé comme un vrai <code>dialog</code> modal, contenant la grille de jours et les actions associées.</li>
-			<li><strong>Relations</strong> : l’activateur référence le dialog via <code>aria-controls</code> quand ouvert; le dialog est nommé via <code>aria-labelledby</code> sur son heading visible.</li>
+			<li><strong>Panneau</strong> : calendrier exposé comme un <code>dialog</code>, contenant la grille de jours et les actions associées.</li>
+			<li><strong>Relations</strong> : l’activateur référence le dialog via <code>aria-controls</code> quand ouvert; le dialog est nommé via <code>aria-labelledby</code> sur un titre stable « Calendrier ».</li>
 			<li><strong>États</strong> : <code>aria-expanded</code> synchronisé, <code>aria-disabled</code> / <code>aria-readonly</code> propagés aux champs et messages.</li>
 		</ul>
 	</CriteriaCard>
@@ -72,5 +72,25 @@ import {
 - Tests : <code>ComplexDatePicker.a11y.spec.ts</code> (axe) et <code>ComplexDatePicker.spec.ts</code> couvrent ouverture, focus et validation combinée.
 - Références : WAI-ARIA combobox + grid pour les schémas combobox + calendrier.
 </ResourcesSection>
+
+<div style={{ margin: '3rem 0', padding: '1.5rem', backgroundColor: '#fff3e0', borderLeft: '4px solid #f57c00', borderRadius: '4px' }}>
+<h2 style={{ color: '#e65100', marginTop: 0 }}>Faux positif connu (outillage) : aria-controls</h2>
+<ul>
+<li>L'addon d'accessibilité de Storybook peut signaler <code>aria-controls</code> comme invalide (élément référencé introuvable) lorsque le calendrier est ouvert.</li>
+<li>Cause : Vuetify téléporte le contenu de <code>VMenu</code>/<code>VDatePicker</code> dans <code>.v-overlay-container</code>, ajouté sous <code>&lt;body&gt;</code>, en dehors de <code>#storybook-root</code> — le périmètre par défaut scanné par l'addon.</li>
+<li>Vérification manuelle (DevTools, calendrier ouvert) : <code>document.getElementById(input.getAttribute('aria-controls'))</code> retourne bien l'élément <code>role="dialog"</code> correspondant. Le composant est donc conforme, la référence <code>aria-controls</code> est valide dans le DOM réel.</li>
+<li>Ce n'est pas un bug du composant mais une limite du scanner face au contenu téléporté hors de son conteneur d'origine.</li>
+</ul>
+</div>
+
+<div style={{ margin: '3rem 0', padding: '1.5rem', backgroundColor: '#fff3e0', borderLeft: '4px solid #f57c00', borderRadius: '4px' }}>
+<h2 style={{ color: '#e65100', marginTop: 0 }}>Faux positif connu (outillage) : boutons de jour « non atteignables au clavier »</h2>
+<ul>
+<li>Des audits automatisés (ex. Tanaguru) peuvent signaler les boutons <code>.v-date-picker-month__day-btn</code> de la grille (jusqu'à 42, un par jour affiché) comme non atteignables au clavier, car ils portent <code>tabindex="-1"</code>.</li>
+<li>Cause : la navigation dans la grille n'utilise pas le <code>tabindex="0"</code> natif du bouton, mais une gestion de focus entièrement pilotée en JS (<code>focusDayCell</code> dans <code>useCalendarKeyboardNavigation.ts</code>, interception <code>Tab</code>/flèches dans <code>useDatePickerFocusTrap.ts</code>) : c'est la <strong>cellule</strong> (<code>role="gridcell"</code>) qui reçoit le focus programmatique, pas le bouton lui-même. C'est un pattern APG valide (gestion de focus managée) que les scanners statiques ne savent pas simuler.</li>
+<li>Vérification manuelle (navigation clavier réelle, sans clic souris) : les flèches déplacent bien <code>document.activeElement</code> vers la cellule ciblée, et le nom accessible du jour (ex. « lundi 29 juin 2026 », porté par le <code>&lt;button&gt;</code> interne) est correctement restitué par le lecteur d'écran malgré le focus posé sur la cellule parente.</li>
+<li>Ce n'est pas un bug du composant : la navigation clavier est fonctionnelle et le contenu est correctement annoncé ; c'est une limite des outils d'audit statiques face à un focus managé en JavaScript.</li>
+</ul>
+</div>
 
 </AccessibilityGuideLayout>

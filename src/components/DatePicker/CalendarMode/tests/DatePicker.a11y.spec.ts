@@ -157,7 +157,7 @@ describe('DatePicker (CalendarMode) – accessibility (axe)', () => {
 		expect(dialog).not.toBeNull()
 		expect(dialog?.getAttribute('role')).toBe('dialog')
 		expect(dialog?.getAttribute('aria-modal')).toBe('true')
-		expect(dialog?.getAttribute('aria-labelledby')).toBe(wrapper.vm.datePickerHeadingId)
+		expect(dialog?.getAttribute('aria-labelledby')).toBe(wrapper.vm.datePickerTitleId)
 
 		const activatorWrapper = wrapper.find(`[aria-controls="${wrapper.vm.datePickerDialogId}"]`)
 		expect(activatorWrapper.exists()).toBe(true)

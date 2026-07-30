@@ -54,7 +54,7 @@ describe('ComplexDatePicker – accessibility (axe)', () => {
 		const dialog = document.body.querySelector<HTMLElement>(`#${wrapper.vm.datePickerDialogId}`)
 		expect(dialog).not.toBeNull()
 		expect(dialog?.getAttribute('role')).toBe('dialog')
-		expect(dialog?.getAttribute('aria-labelledby')).toBe(wrapper.vm.datePickerHeadingId)
+		expect(dialog?.getAttribute('aria-labelledby')).toBe(wrapper.vm.datePickerTitleId)
 		expect(dialog?.getAttribute('aria-modal')).toBeNull()
 
 		const ignoredRules = ['region']

@@ -5,7 +5,6 @@
 	import { locales } from './locales'
 	import { useValidation } from '@/composables/unifyValidation/useValidation'
 	import { useNirValidation, type NirValidationProps } from './useNirValidation'
-	import { useValidatable } from '@/composables/validation/useValidatable'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: string | undefined | null
@@ -278,8 +277,6 @@
 		return validateFields(true)
 	}
 
-	useValidatable(validateOnSubmit, clearValidation)
-
 	const hasMessages = computed(() => {
 		if (props.disableErrorHandling) return false
 		return hasFieldErrors.value
@@ -470,7 +467,7 @@
 				:readonly="props.readonly"
 				:is-clearable="props.clearable"
 				:counter="props.counter"
-				:hint="props.numberHint || locales.numberHint"
+				:hint="props.numberHint || props.customLocale.numberHint"
 				:persistent-hint="props.persistentHint"
 				:persistent-placeholder="props.persistentPlaceholder"
 				class="number-field"
@@ -508,7 +505,7 @@
 				:readonly="props.readonly"
 				:is-clearable="props.clearable"
 				:counter="props.counter"
-				:hint="props.keyHint || locales.keyHint"
+				:hint="props.keyHint || props.customLocale.keyHint"
 				:persistent-hint="props.persistentHint"
 				:persistent-placeholder="props.persistentPlaceholder"
 				:aria-required="ariaRequired"

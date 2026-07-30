@@ -4,6 +4,9 @@
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import { useFieldValidation } from '@/composables'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const { parseDate } = useFieldValidation()
 
@@ -33,6 +36,7 @@
 		required?: boolean
 		showSuccessMessages?: boolean
 		showWeekNumber?: boolean
+		locales?: DeepPartial<typeof defaultLocales>
 	}>(), {
 		bgColor: 'white',
 		customRules: () => [],
@@ -56,7 +60,10 @@
 		required: false,
 		showSuccessMessages: false,
 		showWeekNumber: false,
+		locales: () => ({}),
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emit = defineEmits(['update:modelValue'])
 
@@ -119,8 +126,8 @@
 							if (parsedToDate.value === null) return true
 							return value <= parsedToDate.value
 						},
-						message: 'La date de début ne peut pas être supérieure à la date de fin.',
-						successMessage: 'La date de début est valide.',
+						message: locales.value.fromAfterTo,
+						successMessage: locales.value.fromValid,
 						fieldIdentifier: 'fromDate',
 					},
 				},
@@ -139,8 +146,8 @@
 								}
 								return true
 							},
-							message: 'La date de début est requise.',
-							successMessage: 'La date de début est renseignée.',
+							message: locales.value.fromRequired,
+							successMessage: locales.value.fromFilled,
 							fieldIdentifier: 'fromDate',
 						},
 					}]
@@ -167,8 +174,8 @@
 							if (parsedFromDate.value === null) return true
 							return value >= parsedFromDate.value
 						},
-						message: 'La date de fin ne peut pas être inférieure à la date de début.',
-						successMessage: 'La date de fin est valide.',
+						message: locales.value.toBeforeFrom,
+						successMessage: locales.value.toValid,
 						fieldIdentifier: 'toDate',
 					},
 				},
@@ -187,8 +194,8 @@
 								}
 								return true
 							},
-							message: 'La date de fin est requise.',
-							successMessage: 'La date de fin est renseignée.',
+							message: locales.value.toRequired,
+							successMessage: locales.value.toFilled,
 							fieldIdentifier: 'toDate',
 						},
 					}]

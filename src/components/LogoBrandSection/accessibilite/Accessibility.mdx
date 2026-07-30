@@ -27,8 +27,8 @@ import {
 	<CriteriaSection>
 		<CriteriaCard title="Liens et navigation">
 			<ul>
-				<li><strong>Composant dynamique</strong> : Détecte automatiquement <code>router-link</code>, <code>&lt;a&gt;</code> ou <code>&lt;div&gt;</code> selon <code>homeLink</code>.</li>
-				<li><strong>Label du lien principal</strong> : <code>ariaLabel</code> concaténé avec " Retour vers accueil du site".</li>
+				<li><strong>Composant dynamique</strong> : Détecte automatiquement <code>router-link</code>, <code>&lt;a&gt;</code> ou <code>&lt;div&gt;</code> selon <code>homeLink</code>. Avec <code>homeLink.to</code> mais sans <code>vue-router</code> enregistré, le repli est un <code>&lt;a href&gt;</code> (et non un <code>&lt;div&gt;</code>) afin de rester focusable et activable au clavier (RGAA 7.3).</li>
+				<li><strong>Label du lien principal</strong> : <code>ariaLabel</code> concaténé avec " Retour vers accueil du site" (le libellé générique seul si <code>ariaLabel</code> n'est pas fourni).</li>
 				<li><strong>Label du logo secondaire</strong> : Calculé avec <code>homeLinkPrefix</code> et <code>alt</code> du logo.</li>
 				<li><strong>Lien secondaire</strong> : Uniquement pour les thèmes <code>ameli-pro</code> et <code>ameli</code>.</li>
 			</ul>

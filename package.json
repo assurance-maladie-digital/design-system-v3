@@ -108,6 +108,7 @@
     "marked": "^16.0.0",
     "postcss-html": "^1.7.0",
     "postcss-scss": "^4.0.9",
+    "remark-gfm": "^4.0.1",
     "resize-observer-polyfill": "^1.5.1",
     "sass": "^1.99.0",
     "sass-embedded": "1.83.0",
@@ -146,39 +147,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "overrides": {
-    "esbuild": ">=0.28.1",
-    "parse5": "7.1.2",
-    "npm": "^11.8.1",
-    "undici": ">=6.27.0 <8",
-    "rollup": "^4.59.0",
-    "immutable": ">=5.1.5"
-  },
-  "pnpm": {
-    "overrides": {
-      "esbuild": ">=0.28.1",
-      "undici": ">=6.27.0 <8",
-      "glob": ">=10.5.0",
-      "js-yaml": ">=4.1.1",
-      "parse5": "7.1.2",
-      "npm": "^11.8.1",
-      "minimatch": ">=10.2.3",
-      "immutable": ">=5.1.5",
-      "flatted": ">=3.4.2",
-      "handlebars": ">=4.7.9",
-      "lodash": ">=4.18.0",
-      "follow-redirects": ">=1.16.0",
-      "uuid": ">=14.0.0",
-      "@cypress/request>uuid": "8.3.2",
-      "postcss": ">=8.5.10",
-      "fast-uri": ">=3.1.2",
-      "js-cookie": ">=3.0.7",
-      "qs": ">=6.15.2",
-      "tmp": ">=0.2.6"
-    },
-    "patchedDependencies": {
-      "vuetify@3.12.2": "patches/vuetify@3.12.2.patch"
-    }
   }
 }

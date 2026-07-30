@@ -8,11 +8,12 @@
 	import { defaultMonthPickerVisualProps } from './MonthPickerVisual/MonthPickerVisualProps'
 	import { useMonthPickerValidation } from './useMonthPickerValidation'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
+	import { useLocales } from '@/composables/useLocales'
 	import type { MonthPickerProps } from './types'
 
 	const props = withDefaults(defineProps<MonthPickerProps>(), {
 		modelValue: undefined,
-		locales: () => defaultLocales,
+		locales: () => ({}),
 		helpText: 'Format MM/AAAA',
 		...validationPropsDefaults,
 		...defaultMonthPickerVisualProps,
@@ -22,7 +23,9 @@
 		displayAsterisk: false,
 	})
 
-	provide(localesKey, computed(() => props.locales))
+	const locales = useLocales(defaultLocales, () => props.locales)
+
+	provide(localesKey, locales)
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: string | undefined): void
@@ -73,7 +76,7 @@
 		hasSuccessProp: toRef(props, 'hasSuccess'),
 		maxErrors: toRef(props, 'maxErrors'),
 		focused,
-		locales: toRef(props, 'locales'),
+		locales,
 	})
 
 	const inputProps = computed(() => ({

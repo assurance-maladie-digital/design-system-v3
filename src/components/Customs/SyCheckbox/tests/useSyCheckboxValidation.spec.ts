@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { defineComponent, ref, nextTick, type Ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { useSyCheckboxValidation, type UseSyCheckboxValidationReturn } from '../composables/useSyCheckboxValidation'
+import { locales as defaultLocales } from '../locales'
 import type { SyCheckboxValidationProps } from '../types'
 
 function createProps(overrides: Partial<SyCheckboxValidationProps> = {}): SyCheckboxValidationProps {
@@ -27,7 +28,7 @@ function withValidation(props: SyCheckboxValidationProps, model: Ref<boolean | n
 	let result!: UseSyCheckboxValidationReturn
 	const Harness = defineComponent({
 		setup() {
-			result = useSyCheckboxValidation(props, model, ref(false))
+			result = useSyCheckboxValidation(props, model, ref(false), ref(defaultLocales))
 			return () => null
 		},
 	})

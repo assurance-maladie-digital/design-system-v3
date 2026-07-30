@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { ref, nextTick } from 'vue'
 import { useLunarCalendarValidation } from '../useLunarCalendarValidation'
+import { locales as defaultLocales } from '../locales'
 import type { LunarCalendarProps } from '../types'
 
 function createProps(overrides: Partial<LunarCalendarProps> = {}): LunarCalendarProps {
@@ -33,7 +34,7 @@ describe('useLunarCalendarValidation', () => {
 		it('ne retourne pas d\'erreur si la valeur est vide', async () => {
 			const modelValue = ref('')
 			const props = createProps()
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			await validation.validate()
 			await nextTick()
@@ -44,7 +45,7 @@ describe('useLunarCalendarValidation', () => {
 		it('accepte une date au format DD/MM/YYYY', async () => {
 			const modelValue = ref('25/12/2000')
 			const props = createProps()
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			await validation.validate()
 			await nextTick()
@@ -55,7 +56,7 @@ describe('useLunarCalendarValidation', () => {
 		it('retourne une erreur si le format est invalide', async () => {
 			const modelValue = ref('25122000')
 			const props = createProps()
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			await validation.validate()
 			await nextTick()
@@ -67,7 +68,7 @@ describe('useLunarCalendarValidation', () => {
 		it('retourne une erreur si la date est incomplète', async () => {
 			const modelValue = ref('25/12/200')
 			const props = createProps()
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			await validation.validate()
 			await nextTick()
@@ -80,7 +81,7 @@ describe('useLunarCalendarValidation', () => {
 		it('ne retourne pas d\'erreur si non requis et vide', async () => {
 			const modelValue = ref('')
 			const props = createProps({ required: false })
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			await validation.validate()
 			await nextTick()
@@ -91,7 +92,7 @@ describe('useLunarCalendarValidation', () => {
 		it('retourne une erreur si requis et vide', async () => {
 			const modelValue = ref('')
 			const props = createProps({ required: true, label: 'Date' })
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			await validation.validate()
 			await nextTick()
@@ -103,7 +104,7 @@ describe('useLunarCalendarValidation', () => {
 		it('utilise le label dans le message d\'erreur', async () => {
 			const modelValue = ref('')
 			const props = createProps({ required: true, label: 'Date de naissance' })
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			await validation.validate()
 			await nextTick()
@@ -116,7 +117,7 @@ describe('useLunarCalendarValidation', () => {
 		it('retourne une erreur si l\'année est inférieure à minYear', async () => {
 			const modelValue = ref('25/12/1999')
 			const props = createProps({ minYear: 2000 })
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			await validation.validate()
 			await nextTick()
@@ -128,7 +129,7 @@ describe('useLunarCalendarValidation', () => {
 		it('accepte l\'année égale à minYear', async () => {
 			const modelValue = ref('25/12/2000')
 			const props = createProps({ minYear: 2000 })
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			await validation.validate()
 			await nextTick()
@@ -139,7 +140,7 @@ describe('useLunarCalendarValidation', () => {
 		it('accepte l\'année supérieure à minYear', async () => {
 			const modelValue = ref('25/12/2020')
 			const props = createProps({ minYear: 2000 })
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			await validation.validate()
 			await nextTick()
@@ -150,7 +151,7 @@ describe('useLunarCalendarValidation', () => {
 		it('ignore minYear si le format est invalide', async () => {
 			const modelValue = ref('invalid')
 			const props = createProps({ minYear: 2000 })
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			await validation.validate()
 			await nextTick()
@@ -165,7 +166,7 @@ describe('useLunarCalendarValidation', () => {
 		it('retourne une erreur si l\'année est supérieure à maxYear', async () => {
 			const modelValue = ref('25/12/2021')
 			const props = createProps({ maxYear: 2020 })
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			await validation.validate()
 			await nextTick()
@@ -177,7 +178,7 @@ describe('useLunarCalendarValidation', () => {
 		it('accepte l\'année égale à maxYear', async () => {
 			const modelValue = ref('25/12/2020')
 			const props = createProps({ maxYear: 2020 })
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			await validation.validate()
 			await nextTick()
@@ -188,7 +189,7 @@ describe('useLunarCalendarValidation', () => {
 		it('accepte l\'année inférieure à maxYear', async () => {
 			const modelValue = ref('25/12/2010')
 			const props = createProps({ maxYear: 2020 })
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			await validation.validate()
 			await nextTick()
@@ -201,7 +202,7 @@ describe('useLunarCalendarValidation', () => {
 		it('retourne une erreur si l\'année est hors plage (inférieure)', async () => {
 			const modelValue = ref('25/12/1999')
 			const props = createProps({ minYear: 2000, maxYear: 2020 })
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			await validation.validate()
 			await nextTick()
@@ -213,7 +214,7 @@ describe('useLunarCalendarValidation', () => {
 		it('retourne une erreur si l\'année est hors plage (supérieure)', async () => {
 			const modelValue = ref('25/12/2021')
 			const props = createProps({ minYear: 2000, maxYear: 2020 })
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			await validation.validate()
 			await nextTick()
@@ -225,7 +226,7 @@ describe('useLunarCalendarValidation', () => {
 		it('accepte une date dans la plage', async () => {
 			const modelValue = ref('25/12/2010')
 			const props = createProps({ minYear: 2000, maxYear: 2020 })
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			await validation.validate()
 			await nextTick()
@@ -238,7 +239,7 @@ describe('useLunarCalendarValidation', () => {
 		it('efface les erreurs après clearValidation', async () => {
 			const modelValue = ref('invalid')
 			const props = createProps()
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			await validation.validate()
 			await nextTick()
@@ -256,7 +257,7 @@ describe('useLunarCalendarValidation', () => {
 		it('retourne true si la validation réussit', async () => {
 			const modelValue = ref('25/12/2000')
 			const props = createProps()
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			const result = await validation.validate()
 
@@ -266,7 +267,7 @@ describe('useLunarCalendarValidation', () => {
 		it('retourne false si la validation échoue', async () => {
 			const modelValue = ref('invalid')
 			const props = createProps()
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			const result = await validation.validate()
 
@@ -278,7 +279,7 @@ describe('useLunarCalendarValidation', () => {
 		it('exposed focused ref', () => {
 			const modelValue = ref('')
 			const props = createProps()
-			const validation = useLunarCalendarValidation(modelValue, props)
+			const validation = useLunarCalendarValidation(modelValue, props, ref(defaultLocales))
 
 			expect(validation.focused).toBeDefined()
 			expect(validation.focused.value).toBe(false)

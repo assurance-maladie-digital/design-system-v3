@@ -16,6 +16,20 @@ const meta = {
 	},
 	argTypes: {
 		...getValidationDocumentation('date'),
+		locales: {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (messages de validation). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant. La prop accepte un objet partiel : seules les clés renseignées surchargent les valeurs par défaut, le reste est conservé.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	invalidDate: string,
+	yearBetween: (min: number | string, max: number | string) => string,
+	yearMin: (min: number | string) => string,
+	yearMax: (max: number | string) => string,
+	requiredField: (label: string) => string,
+}` },
+				category: 'props',
+			},
+		},
 		modelValue: {
 			description: 'La valeur du calendrier lunaire au format DD/MM/YYYY',
 			control: { type: 'text' },

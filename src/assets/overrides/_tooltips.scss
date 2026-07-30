@@ -12,15 +12,6 @@
 	font-size: var(--v-fontSize-liensEtLibelles);
 }
 
-// errreur Aria accessibility
-.v-tooltip[role='tooltip'] {
+.v-tooltip[role='tooltip']:not(.v-overlay--active) {
 	display: none;
-
-	.v-overlay__content {
-		display: block !important;
-	}
-
-	&.v-overlay--active {
-		display: block;
-	}
 }

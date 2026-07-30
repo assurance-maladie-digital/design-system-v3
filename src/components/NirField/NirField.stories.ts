@@ -380,7 +380,7 @@ const meta: Meta<typeof NirField> = {
 			},
 		},
 		customLocale: {
-			description: 'Objet permettant de surcharger les messages du composant. Clés supportées : `errorRequiredNumber`, `errorInvalidNumber`, `errorRequiredKey`, `errorInvalidKey`, `successNumberValid`, `successKeyValid`.',
+			description: 'Objet permettant de surcharger les chaînes affichées à l\'utilisateur (libellés, hints et messages de validation). Clés supportées : `errorRequiredNumber`, `errorInvalidNumber`, `errorRequiredKey`, `errorInvalidKey`, `successNumberValid`, `successKeyValid`, `numberLabel`, `keyLabel`, `numberHint`, `keyHint`, `autoFocusNotice`.',
 			control: 'object',
 			table: {
 				type: {

@@ -8,7 +8,9 @@
 	import { useSyCheckboxA11y } from './composables/useSyCheckboxA11y'
 	import { cnamSemanticTokens } from '@/designTokens/tokens/cnam/cnamSemantic'
 	import type { SyCheckboxProps } from './types'
+	import { locales as defaultLocales } from './locales'
 	import { vRgaaSvgFix } from '@/directives/rgaaSvgFix'
+	import { useLocales } from '@/composables/useLocales'
 
 	const props = withDefaults(
 		defineProps<SyCheckboxProps>(),
@@ -33,10 +35,13 @@
 			cycleIndeterminate: false,
 			displayAsterisk: false,
 			decorative: false,
+			locales: () => ({}),
 			...validationPropsDefaults,
 			isValidateOnBlur: false,
 		},
 	)
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emit = defineEmits(['update:modelValue', 'update:indeterminate'])
 
@@ -76,7 +81,7 @@
 		hasError,
 		hasWarning,
 		hasSuccess,
-	} = useSyCheckboxValidation(props, model, focused)
+	} = useSyCheckboxValidation(props, model, focused, locales)
 
 	// Texte d'aide affiché sous la case, tant qu'aucun message de validation n'est présent
 	const showHelpText = computed(() =>

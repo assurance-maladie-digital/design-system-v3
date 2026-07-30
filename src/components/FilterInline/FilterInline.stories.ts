@@ -13,6 +13,16 @@ const meta = {
 	title: 'Composants/Filtres/FilterInline',
 	component: FilterInline,
 	argTypes: {
+		'locales': {
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés du badge de filtre). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant. La prop accepte un objet partiel : seules les clés renseignées surchargent les valeurs par défaut, le reste est conservé.',
+			control: 'object',
+			table: {
+				type: { summary: 'object', detail: `{
+	badgeLabel: (count: number) => string,
+}` },
+				category: 'props',
+			},
+		},
 		'modelValue': {
 			description: 'Valeur des filtres',
 			control: {
@@ -32,25 +42,6 @@ const meta = {
 				},
 				defaultValue: {
 					summary: '[]',
-				},
-			},
-		},
-		'locales': {
-			description: 'Traductions',
-			control: {
-				type: 'object',
-			},
-			table: {
-				category: 'props',
-				type: {
-					summary: 'Record<string, Function>',
-				},
-				defaultValue: {
-					summary: 'locales',
-					detail: `{
-	badgeLabel: (count: number): string =>
-		\`\${count} filtre\${count > 1 ? 's' : ''}\`,
-}`,
 				},
 			},
 		},

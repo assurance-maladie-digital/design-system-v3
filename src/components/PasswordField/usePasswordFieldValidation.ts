@@ -1,7 +1,7 @@
 import { mdiAlertCircle, mdiAlert, mdiCheck } from '@mdi/js'
 import { computed, ref, type Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
-import { locales } from './locales'
+import type { locales as defaultLocales } from './locales'
 import type { ValidationRule } from '@/composables/validation/useValidation'
 import { useValidation } from '@/composables/unifyValidation/useValidation'
 
@@ -27,6 +27,7 @@ export function usePasswordField(params: {
 	hasWarningProp: Ref<boolean | undefined>
 	hasSuccessProp: Ref<boolean | undefined>
 	maxErrors: Ref<number | undefined>
+	locales: Ref<typeof defaultLocales>
 }) {
 	const alertMessage = ref('')
 
@@ -37,7 +38,7 @@ export function usePasswordField(params: {
 			rules.push({
 				type: 'required',
 				options: {
-					message: locales.required,
+					message: params.locales.value.required,
 					fieldIdentifier: params.label.value || 'password',
 				},
 			})

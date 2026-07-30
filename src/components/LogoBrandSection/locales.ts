@@ -11,4 +11,5 @@ export const locales = {
 		},
 		subTitle: 'Vos démarches maladie et risques professionnels',
 	},
+	homeLinkLabel: 'Retour vers accueil du site',
 }

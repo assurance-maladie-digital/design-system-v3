@@ -78,6 +78,22 @@ export const Right: Story = {
 	},
 }
 
+// --- Interactive (RGAA 10.13.2) ---
+export const Interactive: Story = {
+	args: { text: 'Ce tooltip reste ouvert au survol — vous pouvez sélectionner et copier ce texte.', activator: 'Hover me', location: 'top', disabled: false },
+	parameters: {
+		docs: {
+			source: {
+				code: `<v-tooltip text="Ce tooltip reste ouvert au survol" location="top">
+    <template v-slot:activator="{ props }">
+        <v-btn v-bind="props" color="primary">Hover me</v-btn>
+    </template>
+</v-tooltip>`,
+			},
+		},
+	},
+}
+
 // --- Disabled ---
 export const Disabled: Story = {
 	args: { text: 'Tooltip disabled', activator: 'Hover me', location: 'top', disabled: true },
