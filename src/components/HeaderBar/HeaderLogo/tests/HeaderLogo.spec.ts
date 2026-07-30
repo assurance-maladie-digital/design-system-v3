@@ -106,7 +106,7 @@ describe('HeaderLogo', () => {
 				logoAlt: 'Test aria label',
 				headingLevelTitle: 2,
 				homeLink: {
-					to: '/accueil',
+					'to': '/accueil',
 					'aria-label': 'Test aria label',
 				},
 			},
