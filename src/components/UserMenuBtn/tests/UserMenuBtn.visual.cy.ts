@@ -47,6 +47,22 @@ describe('UserMenuBtn - Visual regression tests', () => {
 	})
 })
 
+describe('UserMenuBtn - Mobile visual regression tests', () => {
+	it('displays full name and additional info in mobile view', () => {
+		cy.mountWithVuetify(UserMenuBtn, {
+			props: {
+				menuItems: defaultMenuItems,
+				fullName: 'Jean Dupont',
+				additionalInformation: 'N° 123456789',
+				isMobileView: true,
+			},
+		})
+
+		cy.get('.user-menu-btn').should('be.visible')
+		cy.matchImageSnapshot('user-menu-btn-mobile-with-info', cy.get('.user-menu-btn'))
+	})
+})
+
 describe('UserMenuBtn - Focus visual regression tests', () => {
 	// Activateur (SyBtnMenu) : ring standard global (2px primary, offset 3px). Capture
 	// `.v-application` pour ne pas rogner le ring outset.

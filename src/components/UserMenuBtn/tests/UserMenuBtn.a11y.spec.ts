@@ -28,4 +28,23 @@ describe('UserMenuBtn – accessibility (axe)', () => {
 			ignoreRules: ['region'],
 		})
 	})
+
+	it('has no obvious axe violations in mobile view with text instead of icon-only', async () => {
+		const wrapper = mount(UserMenuBtn, {
+			props: {
+				modelValue: null,
+				menuItems: [{ text: 'Profil', value: 'profile' }],
+				additionalInformation: 'Informations utilisateur',
+				fullName: 'John Doe',
+				hideLogoutBtn: false,
+				isMobileView: true,
+				hideUserIcon: false,
+			},
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'UserMenuBtn – mobile view', {
+			ignoreRules: ['region'],
+		})
+	})
 })

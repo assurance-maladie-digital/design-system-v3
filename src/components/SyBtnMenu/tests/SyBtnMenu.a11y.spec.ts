@@ -35,4 +35,30 @@ describe('SyBtnMenu – accessibility (axe)', () => {
 
 		wrapper.unmount()
 	})
+
+	it('has no obvious axe violations in mobile view with primary and secondary info', async () => {
+		const wrapper = mount(SyBtnMenu, {
+			props: {
+				primaryInfo: 'John Doe',
+				secondaryInfo: 'Additional Info',
+				menuItems: [
+					{ text: 'Profil', value: 'profile' },
+				],
+				isMobileView: true,
+			},
+			attachTo: document.body,
+		})
+
+		const activator = wrapper.find('.sy-user-menu-btn')
+		if (activator.exists()) {
+			await activator.trigger('click')
+		}
+
+		const results = await axe(document.body)
+		assertNoA11yViolations(results, 'SyBtnMenu – mobile view', {
+			ignoreRules: ['region'],
+		})
+
+		wrapper.unmount()
+	})
 })

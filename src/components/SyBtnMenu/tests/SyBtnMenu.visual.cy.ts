@@ -11,6 +11,21 @@ const focusVisible = (selector: string) =>
 		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
 	})
 
+describe('SyBtnMenu - Mobile visual regression tests', () => {
+	it('displays primary and secondary info in mobile view', () => {
+		cy.mountWithVuetify(SyBtnMenu, {
+			props: {
+				primaryInfo: 'Jean Dupont',
+				secondaryInfo: 'Administrateur',
+				isMobileView: true,
+			},
+		})
+
+		cy.get('.sy-user-menu-btn').should('be.visible')
+		cy.matchImageSnapshot('sy-btn-menu-mobile-with-info', cy.get('.sy-user-menu-btn'))
+	})
+})
+
 describe('SyBtnMenu - Focus visual regression tests', () => {
 	it('shows the focus ring on the activator button', () => {
 		cy.mountWithVuetify(SyBtnMenu, {
