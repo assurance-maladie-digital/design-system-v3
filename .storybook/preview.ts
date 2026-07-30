@@ -99,7 +99,10 @@ const preview: Preview = {
 		interactions: {
 			disable: true,
 		},
-		docs: { controls: { sort: 'alpha' } },
+		docs: {
+			controls: { sort: 'alpha' },
+			argTypes: { sort: 'alpha' },
+		},
 		options: {
 			storySort: {
 				method: 'alpha',
@@ -158,6 +161,7 @@ const preview: Preview = {
 				date: /Date$/i,
 			},
 			disableSaveFromUI: true,
+			sort: 'alpha',
 		},
 		backgrounds: {
 			options: {
