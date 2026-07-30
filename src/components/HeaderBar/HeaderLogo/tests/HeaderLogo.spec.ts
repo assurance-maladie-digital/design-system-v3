@@ -103,11 +103,11 @@ describe('HeaderLogo', () => {
 	it('render a focusable anchor when there is no `RouterLink` component registered', async () => {
 		const wrapper = mount(HeaderLogo, {
 			props: {
-				ariaLabel: 'Test aria label',
 				logoAlt: 'Test aria label',
 				headingLevelTitle: 2,
 				homeLink: {
 					to: '/accueil',
+					'aria-label': 'Test aria label',
 				},
 			},
 		})

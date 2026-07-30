@@ -12,3 +12,6 @@ export * from './usePagination'
 
 // Locales
 export * from './useLocales'
+
+// Home link fallback
+export * from './useHomeLinkFallback'

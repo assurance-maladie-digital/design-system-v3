@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { LogoSize } from '@/components/Logo/LogoSize'
 	import { cnamLightTheme } from '@/designTokens/tokens/cnam/cnamLightTheme'
-	import { computed, getCurrentInstance } from 'vue'
+	import { computed } from 'vue'
 	import type { RouteLocationRaw } from 'vue-router'
 	import Logo from '../Logo/Logo.vue'
 	import { dividerDimensionsMapping } from './dividerDimensionsMapping'
@@ -10,6 +10,7 @@
 	import type { Theme } from './types'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 	import { useLocales } from '@/composables/useLocales'
+	import { useHomeLinkFallback } from '@/composables/useHomeLinkFallback'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(
@@ -114,43 +115,7 @@
 		)
 	})
 
-	const logoContainerComponent = computed(() => {
-		if (props.homeLink?.to) {
-			const componentsRegistered = getCurrentInstance()?.appContext?.components
-			const hasRouterLink = componentsRegistered && 'RouterLink' in componentsRegistered
-			if (hasRouterLink) {
-				return 'router-link'
-			}
-			// Sans vue-router, on retombe sur un vrai `<a href>` : un `<div>` serait cliquable
-			// visuellement (cursor: pointer) mais ni focusable ni activable au clavier (RGAA 7.3).
-			return 'a'
-		}
-		if (props.homeLink?.href) {
-			return 'a'
-		}
-		return 'div'
-	})
-
-	// `href` de repli utilisé quand `to` est fourni mais que vue-router n'est pas disponible.
-	// On résout les formes sérialisables de `RouteLocationRaw` ; pour une route nommée, seul le
-	// router sait construire l'URL, on retombe donc sur `href` puis sur la racine du site.
-	const fallbackHomeHref = computed(() => {
-		const to = props.homeLink?.to
-
-		if (typeof to === 'string') {
-			return to
-		}
-
-		if (to && typeof to === 'object' && 'path' in to && typeof to.path === 'string') {
-			return to.path
-		}
-
-		return props.homeLink?.href ?? '/'
-	})
-
-	const homeHref = computed(() => {
-		return props.homeLink?.to ? fallbackHomeHref.value : props.homeLink?.href
-	})
+	const { containerComponent: logoContainerComponent, homeHref } = useHomeLinkFallback(() => props.homeLink)
 
 	// Le libellé du lien d'accueil : sans `ariaLabel`, on n'annonce que le libellé générique
 	// (une concaténation naïve produisait « undefined Retour vers accueil du site »).
@@ -354,7 +319,9 @@
 		flex: none;
 	}
 
-	.vd-home-link {
+	// cursor: pointer uniquement quand le conteneur est interactif (a, router-link)
+	a.vd-home-link,
+	.vd-home-link[href] {
 		cursor: pointer;
 	}
 }
