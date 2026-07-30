@@ -21,6 +21,7 @@ export const useSyTextFieldProps = (
 	'required': props.required,
 	'disabled': props.disabled,
 	'disable-click-button': props.textFieldActivator,
+	'allow-icon-button-when-readonly': true,
 	'readonly': true,
 	'label': labelWithAsterisk.value,
 	'placeholder': props.placeholder,

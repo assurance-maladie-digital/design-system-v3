@@ -78,6 +78,7 @@
 			displayAsterisk: false,
 			noIcon: false,
 			disableClickButton: true,
+			allowIconButtonWhenReadonly: false,
 			autocomplete: 'off',
 			helpText: '',
 			maxlength: undefined,
@@ -219,6 +220,10 @@
 		model.value = ''
 	}
 
+	const isIconButtonDisabled = computed(() => (
+		props.disabled || (props.readonly && !props.allowIconButtonWhenReadonly)
+	))
+
 	watch(model, (newValue) => {
 		if (props.isClearable && newValue === '') {
 			emit('clear')
@@ -229,12 +234,12 @@
 		target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement
 
 	const handlePrependIconClick = (event: MouseEvent) => {
-		if (props.disabled || props.readonly) return
+		if (isIconButtonDisabled.value) return
 		emit('prepend-icon-click', event)
 	}
 
 	const handleAppendIconClick = (event: MouseEvent) => {
-		if (props.disabled || props.readonly) return
+		if (isIconButtonDisabled.value) return
 		emit('append-icon-click', event)
 	}
 
@@ -677,8 +682,8 @@
 						v-else-if="props.prependIcon && !props.noIcon"
 						type="button"
 						class="sy-text-field__icon-button"
-						:disabled="props.disabled || props.readonly"
-						:aria-disabled="props.disabled || props.readonly ? 'true' : undefined"
+						:disabled="isIconButtonDisabled"
+						:aria-disabled="isIconButtonDisabled ? 'true' : undefined"
 						:aria-label="ICON_ACTION_LABELS[props.prependIcon](props.label)"
 						:title="ICON_ACTION_LABELS[props.prependIcon](props.label)"
 						@mousedown.prevent.stop
@@ -729,8 +734,8 @@
 						v-else-if="props.appendIcon && !props.noIcon"
 						type="button"
 						class="sy-text-field__icon-button"
-						:disabled="props.disabled || props.readonly"
-						:aria-disabled="props.disabled || props.readonly ? 'true' : undefined"
+						:disabled="isIconButtonDisabled"
+						:aria-disabled="isIconButtonDisabled ? 'true' : undefined"
 						:aria-label="ICON_ACTION_LABELS[props.appendIcon](props.label)"
 						:title="ICON_ACTION_LABELS[props.appendIcon](props.label)"
 						@mousedown.prevent.stop

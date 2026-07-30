@@ -61,6 +61,7 @@ export type SyTextFieldProps = {
 	displayAsterisk?: boolean
 	noIcon?: boolean
 	disableClickButton?: boolean
+	allowIconButtonWhenReadonly?: boolean
 	autocomplete?: string
 	helpText?: string
 	maxlength?: string | number
