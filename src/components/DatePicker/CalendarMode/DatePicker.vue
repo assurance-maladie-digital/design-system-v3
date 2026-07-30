@@ -1399,7 +1399,7 @@ $ap-grey-mid: #d6d6d6;
 }
 
 :deep(.custom-year-btn::after) {
-	background-color: $ap-grey-mid;
+	background-color: rgb(var(--v-theme-primary));
 	padding: 10px 40px;
 	text-decoration: none;
 	display: inline-block;
@@ -1409,7 +1409,7 @@ $ap-grey-mid: #d6d6d6;
 }
 
 :deep(.custom-month-btn::after) {
-	background-color: $ap-grey-mid;
+	background-color: rgb(var(--v-theme-primary));
 	text-decoration: none;
 	display: inline-block;
 	cursor: pointer;
@@ -1440,6 +1440,26 @@ $ap-grey-mid: #d6d6d6;
 
 :deep(.v-picker__body .v-btn--active .v-btn__overlay) {
 	opacity: 0;
+}
+
+/* Month/year grid buttons: primary color, inverted when selected */
+:deep(.v-date-picker-months .v-btn),
+:deep(.v-date-picker-years .v-btn) {
+	color: rgb(var(--v-theme-primary));
+
+	.v-btn__content {
+		color: rgb(var(--v-theme-primary));
+	}
+}
+
+:deep(.v-date-picker-months .v-btn--active),
+:deep(.v-date-picker-years .v-btn--active) {
+	background-color: rgb(var(--v-theme-primary)) !important;
+	color: rgb(var(--v-theme-onPrimary)) !important;
+
+	.v-btn__content {
+		color: rgb(var(--v-theme-onPrimary)) !important;
+	}
 }
 
 .date-picker-overlay-content .v-date-picker {
