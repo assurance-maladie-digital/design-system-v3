@@ -111,8 +111,8 @@
 			? document.activeElement
 			: null
 		const activeDay = activeElement?.closest<HTMLElement>('.v-date-picker-month__day[data-v-date]')
-		const activeMonthButton = activeElement?.closest<HTMLButtonElement>('.v-date-picker-months .v-btn')
-		const activeYearButton = activeElement?.closest<HTMLButtonElement>('.v-date-picker-years .v-btn')
+		const activeMonthButton = activeElement?.closest<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"], .v-date-picker-months .v-btn')
+		const activeYearButton = activeElement?.closest<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn')
 		const shouldRestoreButtonFocus = activeElement?.tagName === 'BUTTON'
 		const dayDate = activeDay?.getAttribute('data-v-date')
 		const monthLabel = activeMonthButton?.getAttribute('aria-label') ?? activeMonthButton?.textContent?.trim() ?? ''
@@ -133,7 +133,7 @@
 				}
 
 				if (monthLabel) {
-					const monthButtons = Array.from(rootEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-months .v-btn'))
+					const monthButtons = Array.from(rootEl.querySelectorAll<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"], .v-date-picker-months .v-btn'))
 					const target = monthButtons.find(button =>
 						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === monthLabel,
 					)
@@ -142,7 +142,7 @@
 				}
 
 				if (yearLabel) {
-					const yearButtons = Array.from(rootEl.querySelectorAll<HTMLButtonElement>('.v-date-picker-years .v-btn'))
+					const yearButtons = Array.from(rootEl.querySelectorAll<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn'))
 					const target = yearButtons.find(button =>
 						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === yearLabel,
 					)
@@ -823,13 +823,14 @@
 				if (!monthsContainer) return
 
 				const focusActiveMonth = () => {
-					const active = root.querySelector<HTMLElement>('.v-date-picker-months .v-btn--active')
+					const active = root.querySelector<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"][aria-pressed="true"]')
+						?? root.querySelector<HTMLElement>('.v-date-picker-months .v-btn--active')
 					if (active) {
 						active.focus({ preventScroll: true })
 						return
 					}
 					const monthIndex = currentMonth.value !== null ? Number(currentMonth.value) : new Date().getMonth()
-					const monthBtns = root.querySelectorAll<HTMLElement>('.v-date-picker-months .v-btn')
+					const monthBtns = root.querySelectorAll<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"], .v-date-picker-months .v-btn')
 					monthBtns[monthIndex]?.focus({ preventScroll: true })
 				}
 
@@ -845,17 +846,18 @@
 				if (!yearsContainer) return
 
 				const focusActiveYear = () => {
-					const active = root.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
+					const active = root.querySelector<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"][aria-pressed="true"]')
+						?? root.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
 					if (active) {
 						active.focus({ preventScroll: true })
 						return
 					}
-					const currentYearBtn = root.querySelector<HTMLElement>('.v-date-picker-years .v-date-picker-years__year--current .v-btn')
+					const currentYearBtn = root.querySelector<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-date-picker-years__year--current .v-btn')
 					if (currentYearBtn) {
 						currentYearBtn.focus({ preventScroll: true })
 						return
 					}
-					const firstBtn = root.querySelector<HTMLElement>('.v-date-picker-years .v-btn')
+					const firstBtn = root.querySelector<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn')
 					firstBtn?.focus({ preventScroll: true })
 				}
 
@@ -1203,6 +1205,17 @@ $ap-grey-mid: #d6d6d6;
 
 :deep(.v-date-picker-month__day[role='gridcell']:focus-visible) {
 	border-radius: 50%;
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 1px;
+}
+
+:deep(.v-date-picker-months [data-sy-date-picker-option='month'][role='gridcell']:focus-visible),
+:deep(.v-date-picker-years [data-sy-date-picker-option='year'][role='gridcell']:focus-visible) {
+	outline: none;
+}
+
+:deep(.v-date-picker-months [data-sy-date-picker-option='month'][role='gridcell']:focus-visible .v-btn),
+:deep(.v-date-picker-years [data-sy-date-picker-option='year'][role='gridcell']:focus-visible .v-btn) {
 	outline: 2px solid rgb(var(--v-theme-primary));
 	outline-offset: 1px;
 }

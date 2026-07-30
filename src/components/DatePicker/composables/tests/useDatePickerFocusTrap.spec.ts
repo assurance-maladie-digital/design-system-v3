@@ -369,6 +369,53 @@ describe('useDatePickerFocusTrap', () => {
 		expect((monthsGrid.children[8] as HTMLButtonElement).focus).toHaveBeenCalled()
 	})
 
+	it('should focus the active month proxy when present', () => {
+		const rootEl = document.createElement('div')
+
+		const todayButton = document.createElement('button')
+		todayButton.className = 'date-picker__today-button'
+		rootEl.appendChild(todayButton)
+
+		const monthsGrid = document.createElement('div')
+		monthsGrid.className = 'v-date-picker-months'
+		const monthsContent = document.createElement('div')
+		monthsContent.className = 'v-date-picker-months__content'
+
+		for (let i = 0; i < 12; i++) {
+			const proxy = document.createElement('div')
+			proxy.dataset.syDatePickerOption = 'month'
+			proxy.setAttribute('role', 'button')
+			proxy.setAttribute('aria-pressed', i === 8 ? 'true' : 'false')
+			proxy.focus = vi.fn()
+
+			const monthButton = document.createElement('button')
+			monthButton.className = i === 8 ? 'v-btn v-btn--active' : 'v-btn'
+			monthButton.textContent = `${i}`
+			proxy.appendChild(monthButton)
+			monthsContent.appendChild(proxy)
+		}
+
+		monthsGrid.appendChild(monthsContent)
+		rootEl.appendChild(monthsGrid)
+
+		datePickerRef.value = { $el: rootEl } as unknown as ComponentPublicInstance
+
+		const { handleMenuKeydown } = useDatePickerFocusTrap({
+			isDatePickerVisible,
+			datePickerRef,
+			getInitialFocusDate: () => new Date(2024, 8, 15),
+		})
+
+		vi.spyOn(document, 'activeElement', 'get').mockReturnValue(todayButton)
+
+		const event = new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true })
+		Object.defineProperty(event, 'target', { value: todayButton })
+
+		handleMenuKeydown(event)
+
+		expect((monthsContent.children[8] as HTMLDivElement).focus).toHaveBeenCalled()
+	})
+
 	it('should focus selected year when Shift+Tab from Today button in year view', () => {
 		const rootEl = document.createElement('div')
 
@@ -410,6 +457,54 @@ describe('useDatePickerFocusTrap', () => {
 		handleMenuKeydown(event)
 
 		expect(year2005.focus).toHaveBeenCalled()
+	})
+
+	it('should focus the active year proxy when present', () => {
+		const rootEl = document.createElement('div')
+
+		const todayButton = document.createElement('button')
+		todayButton.className = 'date-picker__today-button'
+		rootEl.appendChild(todayButton)
+
+		const yearsGrid = document.createElement('div')
+		yearsGrid.className = 'v-date-picker-years'
+		const yearsContent = document.createElement('div')
+		yearsContent.className = 'v-date-picker-years__content'
+
+		;['2004', '2005', '2006'].forEach((year) => {
+			const proxy = document.createElement('div')
+			proxy.dataset.syDatePickerOption = 'year'
+			proxy.setAttribute('role', 'button')
+			proxy.setAttribute('aria-label', year)
+			proxy.setAttribute('aria-pressed', year === '2005' ? 'true' : 'false')
+			proxy.focus = vi.fn()
+
+			const yearButton = document.createElement('button')
+			yearButton.className = year === '2005' ? 'v-btn v-btn--active' : 'v-btn'
+			yearButton.textContent = year
+			proxy.appendChild(yearButton)
+			yearsContent.appendChild(proxy)
+		})
+
+		yearsGrid.appendChild(yearsContent)
+		rootEl.appendChild(yearsGrid)
+
+		datePickerRef.value = { $el: rootEl } as unknown as ComponentPublicInstance
+
+		const { handleMenuKeydown } = useDatePickerFocusTrap({
+			isDatePickerVisible,
+			datePickerRef,
+			getInitialFocusDate: () => new Date(2005, 8, 15),
+		})
+
+		vi.spyOn(document, 'activeElement', 'get').mockReturnValue(todayButton)
+
+		const event = new KeyboardEvent('keydown', { key: 'Tab', shiftKey: true })
+		Object.defineProperty(event, 'target', { value: todayButton })
+
+		handleMenuKeydown(event)
+
+		expect((yearsContent.children[1] as HTMLDivElement).focus).toHaveBeenCalled()
 	})
 
 	it('should focus selected day when Tab wraps from last focusable to grid', () => {
