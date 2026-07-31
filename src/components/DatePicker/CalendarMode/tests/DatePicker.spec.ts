@@ -841,6 +841,22 @@ describe('DatePicker - Events & Interactions', () => {
 		expect(evWrapper.vm.isDatePickerVisible).toBe(false)
 	})
 
+	it('renders a keyboard-accessible calendar icon button on the activator', async () => {
+		const wrapper = mount(DatePicker, {
+			props: { label: 'Date de départ', modelValue: '', format: 'DD/MM/YYYY' },
+		})
+
+		await nextTick()
+
+		const iconButton = wrapper.find('.sy-text-field__icon-button')
+		expect(iconButton.exists()).toBe(true)
+		expect(iconButton.attributes('type')).toBe('button')
+		expect(iconButton.attributes('disabled')).toBeUndefined()
+		expect(iconButton.attributes('aria-label')).toBe('Date de départ - ouvrir le calendrier')
+
+		wrapper.unmount()
+	})
+
 	it('openDatePickerOnIconClick ne fait rien si disabled', async () => {
 		const w = mount(DatePicker, {
 			props: { label: 'Date', modelValue: '', format: 'DD/MM/YYYY', disabled: true },
