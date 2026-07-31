@@ -1,6 +1,5 @@
 export const baseTokens = {
 	color: {
-		none: 'rgba(255,255,255,0)',
 		black: {
 			base: '#000000',
 		},

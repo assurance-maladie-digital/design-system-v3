@@ -42,6 +42,17 @@ button:focus-visible {
 	transition: opacity 0.2s ease, background 0s 0.2s;
 }
 
+// Composants Vuetify dont l'état sélectionné n'a pas d'autre rendu que cette surcouche : le
+// `background: transparent` ci-dessus la rendait invisible (l'opacité, elle, survit), et l'élément
+// sélectionné devenait indiscernable des autres. On se limite volontairement à ces trois
+// conteneurs : ailleurs, le design system dessine ses propres états sélectionnés et la surcouche
+// native n'est pas souhaitée (tuiles Amelipro, jour courant du DatePicker, activateurs de menu).
+.v-btn-toggle .v-btn--active > .v-btn__overlay,
+.v-pagination__item--is-active .v-btn__overlay,
+.v-tabs .v-btn--active > .v-btn__overlay {
+	background: currentcolor !important;
+}
+
 // Elevated buttons
 :where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-elevated {
 	&.v-btn--disabled {
@@ -73,7 +84,6 @@ button:focus-visible {
 :where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-text,
 :where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-tonal {
 	&.v-btn--disabled {
-		border-color: rgba(var(--v-theme-disabled)) !important;
 		color: rgba(var(--v-theme-onDisabled)) !important;
 		opacity: 1;
 	}
@@ -103,4 +113,11 @@ button:focus-visible {
 	// 		transition: opacity 0.2s ease, background 0s;
 	// 	}
 	// }
+}
+
+// `outlined` est la seule des trois variantes à avoir une bordure : la teinter n'a de sens que
+// pour elle. `text` et `tonal` n'en ont pas, et le fond de `tonal` vient de son `.v-btn__underlay`
+// en `currentColor`, déjà grisé par le `color` forcé ci-dessus.
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-outlined.v-btn--disabled {
+	border-color: rgba(var(--v-theme-disabled)) !important;
 }
