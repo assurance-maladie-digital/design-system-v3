@@ -90,17 +90,17 @@ button:focus-visible {
 		transition: opacity 0.2s ease, background 0s;
 	}
 
-	&[class*='--dark'] {
-		&:hover .v-btn__overlay {
-			background: rgba(var(--v-theme-interactionLighten), 0.2) !important;
-			opacity: 1;
-			transition: opacity 0.2s ease, background 0s;
-		}
+	// &[class*='--dark'] {
+	// 	&:hover .v-btn__overlay {
+	// 		background: rgba(var(--v-theme-interactionLighten), 0.2) !important;
+	// 		opacity: 1;
+	// 		transition: opacity 0.2s ease, background 0s;
+	// 	}
 
-		&:active .v-btn__overlay {
-			background: rgba(var(--v-theme-interactionLighten), 0.4) !important;
-			opacity: 1;
-			transition: opacity 0.2s ease, background 0s;
-		}
-	}
+	// 	&:active .v-btn__overlay {
+	// 		background: rgba(var(--v-theme-interactionLighten), 0.4) !important;
+	// 		opacity: 1;
+	// 		transition: opacity 0.2s ease, background 0s;
+	// 	}
+	// }
 }
