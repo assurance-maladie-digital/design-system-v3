@@ -570,8 +570,8 @@
 		manualValidation: {
 			required: computed(() => props.required),
 			disableErrorHandling: computed(() => props.disableErrorHandling),
-			customRules: props.customRules ?? [],
-			customWarningRules: props.customWarningRules ?? [],
+			customRules: computed(() => props.customRules ?? []),
+			customWarningRules: computed(() => props.customWarningRules ?? []),
 			hasInteracted,
 			errors,
 			clearValidation,
@@ -1136,7 +1136,11 @@
 	 */
 	const isOnError = computed(() => warningMessages.value.length === 0 && successMessages.value.length === 0 && errorMessages.value.length > 0)
 	const isOnWarning = computed(() => errorMessages.value.length === 0 && successMessages.value.length === 0 && warningMessages.value.length > 0)
-	const isOnSuccess = bridgeValidation.validation.hasSuccess
+	const isOnSuccess = computed(() =>
+		bridgeValidation.validation.hasSuccess.value
+		&& errorMessages.value.length === 0
+		&& warningMessages.value.length === 0,
+	)
 
 	// Props regroupées pour SyTextField
 	const syTextFieldProps = computed(() => useSyTextFieldProps(props, errorMessages, warningMessages, successMessages, isOnSuccess, ariaLabel.value))

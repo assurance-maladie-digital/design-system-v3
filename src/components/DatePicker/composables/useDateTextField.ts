@@ -1,4 +1,4 @@
-﻿import { type Ref, type MaybeRef, unref } from 'vue'
+﻿import { type Ref, type MaybeRef, unref, toValue } from 'vue'
 import type { ValidationResult, ValidationRule } from '@/composables/validation/useValidation'
 import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 import { validateDateFormat, isDateComplete } from './useDateFormatUtils'
@@ -9,8 +9,8 @@ import type { DatePickerRule } from '../types'
 export interface UseDateTextFieldManualValidationOptions {
 	required: MaybeRef<boolean>
 	disableErrorHandling: MaybeRef<boolean>
-	customRules: DatePickerRule[]
-	customWarningRules: DatePickerRule[]
+	customRules: MaybeRef<DatePickerRule[]>
+	customWarningRules: MaybeRef<DatePickerRule[]>
 	hasInteracted: Ref<boolean>
 	errors: Ref<string[]>
 	clearValidation: () => void
@@ -108,8 +108,8 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 
 		// Valider les règles personnalisées
 		if (!unref(manualValidation.disableErrorHandling)) {
-			const currentCustomRules = manualValidation.customRules
-			const currentCustomWarningRules = manualValidation.customWarningRules
+			const currentCustomRules = toValue(manualValidation.customRules)
+			const currentCustomWarningRules = toValue(manualValidation.customWarningRules)
 
 			// Filtrer les règles qui sont prêtes (ont une date définie)
 			const readyRules = currentCustomRules.filter((rule) => {
