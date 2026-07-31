@@ -266,7 +266,7 @@
 			'accent': rgb(var(--v-theme-onWarningVariant)),
 			'border': rgb(var(--v-theme-onWarningVariant)),
 			'icon': rgb(var(--v-theme-onWarningVariant)),
-			'icon-bg': rgb(var(--v-theme-warningVariantLigthen)),
+			'icon-bg': rgb(var(--v-theme-warningVariantLighten)),
 		)
 	);
 	@include redesign(
