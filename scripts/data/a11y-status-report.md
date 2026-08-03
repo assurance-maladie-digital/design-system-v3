@@ -1,6 +1,6 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 15/07/2026
+Généré le: 03/08/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
@@ -78,8 +78,9 @@ Généré le: 15/07/2026
 | **Tables/SyServerTable** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
 | **Tables/SyTable** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
 | **TableToolbar** | ❌ Non | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
+| **tests** | ❌ Non | ✅ Non | ❌ Manquante | ❌ Non | ❌ |
 | **ToolbarContainer** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 55 / 77 (71.43%)**
+**Total des composants conformes : 55 / 78 (70.51%)**
