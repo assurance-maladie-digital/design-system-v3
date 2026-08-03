@@ -141,14 +141,11 @@
 		transition: background-color 0.15s ease;
 	}
 
+	// Fond réservé au survol : au focus clavier, on ne veut que le ring (ci-dessus), pas de fond.
 	.v-table tbody > tr.sy-table__clickable-row:hover > td,
 	.v-table tbody > tr.sy-table__clickable-row:hover > .v-data-table__td,
-	.v-table tbody > tr.sy-table__clickable-row:focus-visible > td,
-	.v-table tbody > tr.sy-table__clickable-row:focus-visible > .v-data-table__td,
 	.v-data-table__tbody > tr.sy-table__clickable-row:hover > td,
-	.v-data-table__tbody > tr.sy-table__clickable-row:hover > .v-data-table__td,
-	.v-data-table__tbody > tr.sy-table__clickable-row:focus-visible > td,
-	.v-data-table__tbody > tr.sy-table__clickable-row:focus-visible > .v-data-table__td {
+	.v-data-table__tbody > tr.sy-table__clickable-row:hover > .v-data-table__td {
 		background-color: rgba(var(--v-theme-primary), 0.08) !important;
 	}
 }

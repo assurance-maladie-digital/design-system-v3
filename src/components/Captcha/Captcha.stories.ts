@@ -82,11 +82,44 @@ export default {
 			},
 		},
 		'locales': {
-			description: 'Les locales à utiliser pour le composant. Voir le fichier locales.ts pour l\'exemple des clés disponibles.',
-			control: false,
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés, textes alternatifs et messages du captcha). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant. La prop accepte un objet partiel : seules les clés renseignées surchargent les valeurs par défaut, le reste est conservé.',
+			control: 'object',
 			table: {
-				type: { summary: 'object' },
-				defaultValue: { summary: 'locales (importé depuis le fichier locales.ts)' },
+				type: { summary: 'object', detail: `{
+	hardToRead: string,
+	image: {
+		new: string,
+		change: string,
+		textfieldLabel: string,
+	},
+	audio: {
+		new: string,
+		change: string,
+		textfieldLabel: string,
+		loading: string,
+	},
+	choiceCaptcha: {
+		image: string,
+		audio: string,
+	},
+	helpDesk: (phoneNumber: string) => string,
+	pause: string,
+	play: string,
+	renew: string,
+	validate: string,
+	captchaImgLoading: string,
+	captchaImgAlt: string,
+	information: {
+		securityCheck: string,
+		btnAriaLabel: string,
+		tooltip: string,
+		imageInstruction: string,
+		audioInstruction: string,
+	},
+	defaultErrorMessage: string,
+	required: string,
+	choiceCaptchaTitle: string,
+}` },
 				category: 'props',
 			},
 		},
@@ -144,22 +177,6 @@ export default {
 			control: false,
 			table: {
 				type: { summary: 'string' },
-				category: 'expose',
-			},
-		},
-		'clearValidation': {
-			description: 'Méthode exposée pour effacer la validation du captcha.',
-			control: false,
-			table: {
-				type: { summary: '() => void' },
-				category: 'expose',
-			},
-		},
-		'validateOnSubmit': {
-			description: 'Méthode exposée pour déclencher les règles de validation.',
-			control: false,
-			table: {
-				type: { summary: '() => Promise<boolean>' },
 				category: 'expose',
 			},
 		},

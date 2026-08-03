@@ -1,3 +1,6 @@
+import dayjs from 'dayjs'
+import { locales } from '../locales'
+
 /**
  * Utilitaires de formatage de dates pour les composants DatePicker
  * Extrait et centralisé à partir des différents composables
@@ -29,6 +32,34 @@ export interface FormatDateOptions {
    * Caractère à utiliser pour les positions non remplies
    */
 	placeholderChar?: string
+}
+
+export interface DisplayedMonthYearState {
+	month: string
+	year: string
+	monthName: string
+	yearName: string
+}
+
+export const getDisplayedMonthYearState = (date: Date): DisplayedMonthYearState => {
+	const month = date.getMonth().toString()
+	const year = date.getFullYear().toString()
+
+	return {
+		month,
+		year,
+		monthName: dayjs(date).format('MMMM'),
+		yearName: year,
+	}
+}
+
+export const formatDateRangeDisplay = (
+	startDate: Date,
+	endDate: Date,
+	format: string,
+	formatDate: (date: Date | null, format: string) => string,
+) => {
+	return `${formatDate(startDate, format)}${locales.rangeSeparator}${formatDate(endDate, format)}`
 }
 
 /**
@@ -214,7 +245,7 @@ export const getDateDescription = (
 ): string => {
 	// Si la chaîne est vide, retourner un message simple
 	if (!dateStr.trim()) {
-		return 'Aucune date saisie'
+		return locales.noDateEntered
 	}
 
 	// Déterminer le séparateur utilisé dans le format
@@ -225,7 +256,7 @@ export const getDateDescription = (
 	const formatParts = format.split(separator)
 
 	// Créer une description en fonction du format
-	let description = 'Date en cours de saisie: '
+	let description = ''
 
 	for (let i = 0; i < formatParts.length; i++) {
 		if (i >= dateParts.length) break
@@ -240,21 +271,21 @@ export const getDateDescription = (
 
 		switch (formatPart) {
 			case 'D':
-				description += `jour ${part}, `
+				description += `${locales.dayDescription(part)}, `
 				break
 			case 'M':
-				description += `mois ${part}, `
+				description += `${locales.monthDescription(part)}, `
 				break
 			case 'Y':
-				description += `année ${part}, `
+				description += `${locales.yearDescription(part)}, `
 				break
 		}
 	}
 
 	// Supprimer la virgule finale si elle existe
-	return description.endsWith(', ')
-		? description.slice(0, -2)
-		: description
+	return description
+		? locales.partialDateDescription(description.endsWith(', ') ? description.slice(0, -2) : description)
+		: locales.dateInputDescription
 }
 
 /**

@@ -105,19 +105,31 @@ li {
 }
 
 a {
-	transition: 0.15s;
+	// Ne transitionne que le soulignement (sinon `all` anime l'outline → flash noir au focus)
+	transition: border-color 0.15s;
 	padding-top: 1px; // Add top padding to account for bottom border
 	border-bottom: 1px solid transparent;
 	color: black;
 
-	&:hover,
-	&:focus {
+	// Soulignement en survol uniquement ; le focus utilise le ring (indicateur unique)
+	&:hover {
 		border-color: currentcolor;
+	}
+
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 3px;
+		border-radius: 2px;
 	}
 }
 
 .v-theme--dark a :deep() {
 	color: white;
+}
+
+// En contexte sombre (ex. footer), le ring de focus des liens passe en onPrimary
+.v-theme--dark a:focus-visible {
+	outline-color: rgb(var(--v-theme-onPrimary));
 }
 
 .vd-collapse-list a {
@@ -147,7 +159,7 @@ a {
 
 		&:focus-visible {
 			outline: 2px solid rgb(var(--v-theme-primary));
-			outline-offset: 2px;
+			outline-offset: 3px;
 			border-radius: 4px;
 		}
 	}
@@ -162,20 +174,16 @@ a {
 	.v-icon {
 		color: rgb(0 0 0 / 54%) !important;
 	}
-
-	// Ensure focus is visible on the disclosure button
-	.v-expansion-panel-title__overlay {
-		background-color: transparent;
-
-		&:focus-visible {
-			background-color: rgba(var(--v-theme-primary), 0.08);
-		}
-	}
 }
 
 .v-theme--dark .vd-collapse-list-mobile :deep() {
 	button {
 		color: white !important;
+	}
+
+	// Ring du titre du panel en onPrimary sur fond sombre
+	.v-expansion-panel-title:focus-visible {
+		outline-color: rgb(var(--v-theme-onPrimary));
 	}
 }
 </style>

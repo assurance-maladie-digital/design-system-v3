@@ -46,3 +46,22 @@ describe('SubHeader - Visual regression tests', () => {
 		cy.matchImageSnapshot('sub-header-loading', cy.get('.v-application'))
 	})
 })
+
+// Déclenche :focus-visible via l'option native focus({ focusVisible: true }).
+const focusVisible = (selector: string) =>
+	cy.get(selector).then(($el) => {
+		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
+	})
+
+describe('SubHeader - Focus visual regression tests', () => {
+	// Fond primary : le back button a un ring onPrimary (blanc), visible sur le bleu.
+	it('shows the onPrimary focus ring on the back button', () => {
+		cy.mountWithVuetify(SubHeader, {
+			props: { titleText: 'Titre de la page' },
+		})
+
+		focusVisible('.vd-sub-header-back-btn')
+		cy.wait(100)
+		cy.matchImageSnapshot('sub-header-focus-back-btn', cy.get('.v-application'))
+	})
+})

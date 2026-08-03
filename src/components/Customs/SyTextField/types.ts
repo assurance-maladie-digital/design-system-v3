@@ -1,5 +1,6 @@
 import type { FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 import type { SyTextFieldLocales } from './locales'
+import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 export type IconType = 'info' | 'success' | 'warning' | 'error' | 'close' | 'calendar' | undefined
 export type VariantStyle = 'outlined' | 'plain' | 'underlined' | 'filled' | 'solo' | 'solo-inverted' | 'solo-filled'
@@ -60,11 +61,12 @@ export type SyTextFieldProps = {
 	displayAsterisk?: boolean
 	noIcon?: boolean
 	disableClickButton?: boolean
+	allowIconButtonWhenReadonly?: boolean
 	autocomplete?: string
 	helpText?: string
 	maxlength?: string | number
 	title?: string | false
 	hideDetails?: boolean | 'auto'
-	/** Surcharge des libellés d'accessibilité (boutons +/-, vider, chargement). */
-	locales?: Partial<SyTextFieldLocales>
+	/** Surcharge des libellés d'accessibilité (boutons +/-, vider, chargement) et des messages de validation. */
+	locales?: DeepPartial<SyTextFieldLocales>
 } & FieldValidationProps

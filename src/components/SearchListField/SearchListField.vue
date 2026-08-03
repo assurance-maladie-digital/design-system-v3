@@ -5,6 +5,8 @@
 	import type { PropType } from 'vue'
 	import type { SearchListItem } from './types'
 	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	import { SyTextField, SyCheckbox } from '@/components'
 	import slugify from 'slugify'
@@ -37,13 +39,17 @@
 		},
 		listLabel: {
 			type: String,
-			default: defaultLocales.searchListTitle,
+			default: undefined,
 		},
 		locales: {
-			type: Object as PropType<typeof defaultLocales>,
-			default: () => defaultLocales,
+			type: Object as PropType<DeepPartial<typeof defaultLocales>>,
+			default: () => ({}),
 		},
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
+
+	const resolvedListLabel = computed(() => props.listLabel ?? locales.value.searchListTitle)
 
 	const emit = defineEmits(['update:modelValue'])
 
@@ -131,7 +137,7 @@
 			<legend
 				class="d-sr-only"
 			>
-				{{ props.listLabel }}
+				{{ resolvedListLabel }}
 			</legend>
 
 			<p
@@ -209,8 +215,17 @@
 		background-color: rgba(var(--v-theme-primary), 0.08);
 	}
 
+	// La ligne entière (`<label>`) est la cible cliquable : le ring DS épouse donc toute la
+	// ligne. Offset inset (-2px) pour ne jamais toucher/rogner les lignes voisines empilées.
 	&:has(:focus-visible) {
-		outline: 2px solid rgba(var(--v-theme-primary));
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: -2px;
+	}
+
+	// On neutralise le ring propre de SyCheckbox (`.v-selection-control--focus-visible`, offset
+	// 2px sur la case) pour éviter un double contour : le ring de ligne suffit.
+	:deep(.v-selection-control--focus-visible) {
+		outline: none;
 	}
 
 	span {

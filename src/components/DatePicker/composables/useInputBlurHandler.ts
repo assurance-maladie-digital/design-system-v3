@@ -1,7 +1,7 @@
 import { type Ref, ref, unref, type MaybeRef } from 'vue'
 import { type DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 import { type DateObjectValue } from '../types'
-import { DATE_PICKER_MESSAGES } from '../constants/messages'
+import { locales } from '../locales'
 import { useDateRangeValidation } from './useDateRangeValidation'
 
 /**
@@ -78,8 +78,8 @@ export const useInputBlurHandler = (options: {
 			}
 
 			// Vérifier si c'est une plage de dates (contient un séparateur)
-			if (displayFormattedDate.value.includes(' - ')) {
-				const parts = displayFormattedDate.value.split(' - ')
+			if (displayFormattedDate.value.includes(locales.rangeSeparator)) {
+				const parts = displayFormattedDate.value.split(locales.rangeSeparator)
 				const startDateStr = parts[0]?.trim() || ''
 				const endDateStr = parts[1]?.trim() || ''
 
@@ -119,7 +119,7 @@ export const useInputBlurHandler = (options: {
 							else {
 								// Ajouter un message d'erreur si la date de fin est antérieure à la date de début
 								if (errors && errors.value) {
-									errors.value = [DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START]
+									errors.value = [locales.endBeforeStart]
 								}
 							}
 						}

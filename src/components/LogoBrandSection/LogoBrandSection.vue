@@ -1,14 +1,17 @@
 <script setup lang="ts">
 	import { LogoSize } from '@/components/Logo/LogoSize'
 	import { cnamLightTheme } from '@/designTokens/tokens/cnam/cnamLightTheme'
-	import { computed, getCurrentInstance } from 'vue'
+	import { computed } from 'vue'
 	import type { RouteLocationRaw } from 'vue-router'
 	import Logo from '../Logo/Logo.vue'
 	import { dividerDimensionsMapping } from './dividerDimensionsMapping'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
 	import { secondaryLogoMapping } from './secondaryLogoMapping'
 	import type { Theme } from './types'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
+	import { useLocales } from '@/composables/useLocales'
+	import { useHomeLinkFallback } from '@/composables/useHomeLinkFallback'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(
 		defineProps<{
@@ -24,6 +27,7 @@
 			}
 			headingLevelTitle?: 1 | 2 | 3 | 4 | 5 | 6
 			headingLevelSubtitle?: 1 | 2 | 3 | 4
+			locales?: DeepPartial<typeof defaultLocales>
 		}>(), {
 			theme: 'default',
 			serviceTitle: undefined,
@@ -35,8 +39,10 @@
 			homeLink: () => ({
 				href: '/',
 			}),
-
+			locales: () => ({}),
 		})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const slots = defineSlots<{
 		'default'(): unknown
@@ -45,7 +51,7 @@
 
 	const service = computed(() => {
 		if (props.theme === 'compte-entreprise') {
-			const { title, subTitle } = locales.compteEntreprise
+			const { title, subTitle } = locales.value.compteEntreprise
 
 			return {
 				title,
@@ -109,19 +115,14 @@
 		)
 	})
 
-	const logoContainerComponent = computed(() => {
-		if (props.homeLink?.to) {
-			const componentsRegistered = getCurrentInstance()?.appContext?.components
-			const hasRouterLink = componentsRegistered && 'RouterLink' in componentsRegistered
-			if (hasRouterLink) {
-				return 'router-link'
-			}
-			return 'div'
-		}
-		if (props.homeLink?.href) {
-			return 'a'
-		}
-		return 'div'
+	const { containerComponent: logoContainerComponent, homeHref } = useHomeLinkFallback(() => props.homeLink)
+
+	// Le libellé du lien d'accueil : sans `ariaLabel`, on n'annonce que le libellé générique
+	// (une concaténation naïve produisait « undefined Retour vers accueil du site »).
+	const homeLinkLabel = computed(() => {
+		return [props.homeLink?.ariaLabel, locales.value.homeLinkLabel]
+			.filter(Boolean)
+			.join(' ')
 	})
 
 	const secondaryLogoCtnComponent = computed(() => {
@@ -132,7 +133,7 @@
 
 	const secondaryLogoLabel = computed(() => {
 		return hasSecondaryLogoLink.value && secondaryLogo.value
-			? `${locales.homeLinkPrefix} ${secondaryLogo.value.alt}`
+			? `${locales.value.homeLinkPrefix} ${secondaryLogo.value.alt}`
 			: null
 	})
 
@@ -203,14 +204,14 @@
 		<component
 			:is="logoContainerComponent"
 			:to="logoContainerComponent === 'router-link' ? homeLink?.to : undefined"
-			:href="logoContainerComponent === 'a' ? homeLink?.href : undefined"
+			:href="logoContainerComponent === 'a' ? homeHref : undefined"
 			class="vd-home-link"
 		>
 			<Logo
 				:hide-signature="hideSignature"
 				:hide-organism="isCompteAmeliMobile"
 				:risque-pro="isRisquePro"
-				:aria-label="homeLink?.ariaLabel + ' Retour vers accueil du site'"
+				:aria-label="homeLinkLabel"
 				:avatar="avatar"
 				:size="logoSize"
 				:class="{ 'mr-2': avatar }"
@@ -237,7 +238,7 @@
 				v-if="secondaryLogo"
 				:aria-label="secondaryLogoLabel"
 				:to="secondaryLogoCtnComponent === 'router-link' ? homeLink?.to : undefined"
-				:href="secondaryLogoCtnComponent === 'a' ? homeLink?.href : undefined"
+				:href="secondaryLogoCtnComponent === 'a' ? homeHref : undefined"
 				class="vd-home-link"
 			>
 				<img
@@ -318,7 +319,9 @@
 		flex: none;
 	}
 
-	.vd-home-link {
+	// cursor: pointer uniquement quand le conteneur est interactif (a, router-link)
+	a.vd-home-link,
+	.vd-home-link[href] {
 		cursor: pointer;
 	}
 }

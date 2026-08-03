@@ -3,3 +3,5 @@ export const locales = {
 	maxLines: (maxLines: number) => `Ce champ ne peut pas dépasser ${maxLines} lignes`,
 	clearField: 'Effacer le champ',
 }
+
+export type SyTextAreaLocales = typeof locales

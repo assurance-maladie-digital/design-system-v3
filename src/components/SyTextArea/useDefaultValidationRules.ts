@@ -1,5 +1,5 @@
 import { computed, type Ref } from 'vue'
-import { locales } from './locales'
+import { locales as defaultLocales } from './locales'
 import type { ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
 
 export type TextareaRule = (value: string) => boolean | string
@@ -8,13 +8,14 @@ export function useDefaultValidationRules(params: {
 	required: Ref<boolean>
 	maxLines: Ref<number | undefined>
 	hasInteracted: Ref<boolean>
+	locales: Ref<typeof defaultLocales>
 }) {
 	const vuetifyRules = computed<TextareaRule[]>(() => {
 		const rules: TextareaRule[] = []
 
 		rules.push((value: string) => {
 			if (params.required.value && params.hasInteracted.value && !value) {
-				return locales.required
+				return params.locales.value.required
 			}
 			return true
 		})
@@ -26,7 +27,7 @@ export function useDefaultValidationRules(params: {
 
 			const lines = value.split('\n').length
 			if (lines > params.maxLines.value) {
-				return locales.maxLines(params.maxLines.value)
+				return params.locales.value.maxLines(params.maxLines.value)
 			}
 
 			return true
@@ -42,7 +43,7 @@ export function useDefaultValidationRules(params: {
 			rules.push({
 				type: 'required',
 				options: {
-					message: locales.required,
+					message: params.locales.value.required,
 				},
 			})
 		}
@@ -53,7 +54,7 @@ export function useDefaultValidationRules(params: {
 				options: {
 					validate: (value: string) => {
 						const lines = value.split('\n').length
-						return lines <= params.maxLines.value! || locales.maxLines(params.maxLines.value!)
+						return lines <= params.maxLines.value! || params.locales.value.maxLines(params.maxLines.value!)
 					},
 				},
 			})

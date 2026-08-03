@@ -1,10 +1,13 @@
 <script setup lang="ts">
 	import useCustomizableOptions from '@/composables/useCustomizableOptions'
-	import { computed, getCurrentInstance, onMounted, onUnmounted, ref, watch } from 'vue'
+	import { computed, getCurrentInstance, onMounted, onUnmounted, ref, useId, watch } from 'vue'
 	import type { Router } from 'vue-router'
 	import { config } from './config'
 	import type { TabItem } from './types'
 	import { useTabTransition } from './useTabTransition'
+	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(defineProps<{
 		items: TabItem[]
@@ -15,6 +18,7 @@
 		confirmationMessage?: string
 		/** Si activé, le contenu des onglets ne sera rendu que lorsqu'ils deviendront actifs */
 		lazy?: boolean
+		locales?: DeepPartial<typeof defaultLocales>
 		vuetifyOptions?: {
 			sheet?: {
 				theme?: string
@@ -38,7 +42,10 @@
 		confirmationMessage: 'Voulez-vous vraiment changer d\'onglet ?',
 		lazy: false,
 		vuetifyOptions: () => ({}),
+		locales: () => ({}),
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	// Disable automatic attribute inheritance since we handle it manually
 	defineOptions({
@@ -60,6 +67,10 @@
 	}>()
 
 	const options = useCustomizableOptions(config, { vuetifyOptions: props.vuetifyOptions })
+
+	// Préfixe unique par instance : évite les collisions d'ids (tab-x / panel-x) quand
+	// plusieurs SyTabs coexistent sur la même page (sinon le focus/aria télescope).
+	const uid = useId()
 
 	// Détecte automatiquement si le composant est utilisé pour la navigation
 	const isNavigationMode = computed(() => props.items.some(item => !!item.to || !!item.href))
@@ -144,7 +155,7 @@
 				// Espace doit forcer le clic pour éviter le scroll
 				if (event.key === ' ') {
 					event.preventDefault()
-					document.getElementById(`tab-${index}`)?.click()
+					document.getElementById(`${uid}-tab-${index}`)?.click()
 				}
 			}
 			else {
@@ -202,7 +213,7 @@
 		focusedItemIndex.value = newIndex
 
 		// Focus sur le nouvel élément
-		const tabButton = document.getElementById(`tab-${newIndex}`)
+		const tabButton = document.getElementById(`${uid}-tab-${newIndex}`)
 		if (tabButton) {
 			tabButton.focus()
 			// Activer automatiquement seulement en mode onglets locaux
@@ -349,7 +360,7 @@
 						:is="isNavigationMode ? 'nav' : 'div'"
 						ref="tablist"
 						:role="isNavigationMode ? 'navigation' : 'tablist'"
-						:aria-label="isNavigationMode ? 'Menu de navigation' : 'Onglets de navigation'"
+						:aria-label="isNavigationMode ? locales.navigationMode : locales.tablistMode"
 						class="sy-tabs__list"
 					>
 						<template
@@ -359,7 +370,7 @@
 							<!-- Use RouterLink for internal navigation -->
 							<RouterLink
 								v-if="item.to && router && !item.disabled"
-								:id="`tab-${index}`"
+								:id="`${uid}-tab-${index}`"
 								:to="item.to"
 								class="sy-tabs__button"
 								:class="{
@@ -369,7 +380,7 @@
 								:role="isNavigationMode ? undefined : 'tab'"
 								:aria-current="isNavigationMode && activeItemIndex === index ? 'page' : undefined"
 								:aria-selected="!isNavigationMode ? activeItemIndex === index : undefined"
-								:aria-controls="!isNavigationMode ? `panel-${index}` : undefined"
+								:aria-controls="!isNavigationMode ? `${uid}-panel-${index}` : undefined"
 								:aria-disabled="item.disabled || undefined"
 								:tabindex="(activeItemIndex === index && !item.disabled) ? 0 : -1"
 								@click="item.disabled ? undefined : setActiveItem(index)"
@@ -397,7 +408,7 @@
 							<!-- Use regular anchor for external links -->
 							<a
 								v-else-if="item.href && !item.disabled"
-								:id="`tab-${index}`"
+								:id="`${uid}-tab-${index}`"
 								:href="item.href"
 								class="sy-tabs__button"
 								:class="{
@@ -407,7 +418,7 @@
 								:role="isNavigationMode ? undefined : 'tab'"
 								:aria-current="isNavigationMode && activeItemIndex === index ? 'page' : undefined"
 								:aria-selected="!isNavigationMode ? activeItemIndex === index : undefined"
-								:aria-controls="!isNavigationMode ? `panel-${index}` : undefined"
+								:aria-controls="!isNavigationMode ? `${uid}-panel-${index}` : undefined"
 								:aria-disabled="item.disabled || undefined"
 								:tabindex="(activeItemIndex === index && !item.disabled) ? 0 : -1"
 								@click="(event) => {
@@ -443,7 +454,7 @@
 							<!-- Version désactivée du RouterLink -->
 							<button
 								v-else-if="item.to && router && item.disabled"
-								:id="`tab-${index}`"
+								:id="`${uid}-tab-${index}`"
 								class="sy-tabs__button"
 								:class="{
 									'sy-tabs__button--active': activeItemIndex === index,
@@ -452,7 +463,7 @@
 								:role="isNavigationMode ? undefined : 'tab'"
 								:aria-current="isNavigationMode && activeItemIndex === index ? 'page' : undefined"
 								:aria-selected="!isNavigationMode ? activeItemIndex === index : undefined"
-								:aria-controls="!isNavigationMode ? `panel-${index}` : undefined"
+								:aria-controls="!isNavigationMode ? `${uid}-panel-${index}` : undefined"
 								aria-disabled="true"
 								tabindex="-1"
 								disabled
@@ -474,7 +485,7 @@
 							<!-- Version désactivée du lien -->
 							<button
 								v-else-if="item.href && item.disabled"
-								:id="`tab-${index}`"
+								:id="`${uid}-tab-${index}`"
 								class="sy-tabs__button"
 								:class="{
 									'sy-tabs__button--active': activeItemIndex === index,
@@ -483,7 +494,7 @@
 								:role="isNavigationMode ? undefined : 'tab'"
 								:aria-current="isNavigationMode && activeItemIndex === index ? 'page' : undefined"
 								:aria-selected="!isNavigationMode ? activeItemIndex === index : undefined"
-								:aria-controls="!isNavigationMode ? `panel-${index}` : undefined"
+								:aria-controls="!isNavigationMode ? `${uid}-panel-${index}` : undefined"
 								aria-disabled="true"
 								tabindex="-1"
 								disabled
@@ -505,7 +516,7 @@
 							<!-- Fallback button pour les onglets standards -->
 							<button
 								v-else
-								:id="`tab-${index}`"
+								:id="`${uid}-tab-${index}`"
 								class="sy-tabs__button"
 								:class="{
 									'sy-tabs__button--active': activeItemIndex === index,
@@ -514,7 +525,7 @@
 								:role="isNavigationMode ? undefined : 'tab'"
 								:aria-current="isNavigationMode && activeItemIndex === index ? 'page' : undefined"
 								:aria-selected="!isNavigationMode ? activeItemIndex === index : undefined"
-								:aria-controls="!isNavigationMode ? `panel-${index}` : undefined"
+								:aria-controls="!isNavigationMode ? `${uid}-panel-${index}` : undefined"
 								:aria-disabled="item.disabled || undefined"
 								:tabindex="(activeItemIndex === index && !item.disabled) ? 0 : -1"
 								:disabled="item.disabled"
@@ -552,16 +563,16 @@
 	<div class="sy-tabs-panels">
 		<div
 			v-for="(item, index) in items"
-			:id="`panel-${index}`"
-			:key="`panel-${index}`"
+			:id="`${uid}-panel-${index}`"
+			:key="`${uid}-panel-${index}`"
 			class="sy-tabs-panel"
 			:role="!isNavigationMode ? 'tabpanel' : undefined"
-			:aria-labelledby="!isNavigationMode ? `tab-${index}` : undefined"
+			:aria-labelledby="!isNavigationMode ? `${uid}-tab-${index}` : undefined"
 			:hidden="activeItemIndex !== index"
 		>
 			<template v-if="!lazy || renderedPanels.has(index)">
 				<slot
-					:name="`panel-${index}`"
+					:name="`${uid}-panel-${index}`"
 					:active="activeItemIndex === index"
 				>
 					{{ item.content || '' }}
@@ -621,7 +632,7 @@
 	}
 
 	&:focus-visible:not(.sy-tabs__button--disabled) {
-		outline: 3px solid v-bind("options.tab['active-color']");
+		outline: 2px solid v-bind("options.tab['active-color']");
 		outline-offset: -3px;
 	}
 

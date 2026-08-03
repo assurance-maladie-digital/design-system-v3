@@ -1,10 +1,12 @@
 <script lang="ts" setup>
 	import { vMaska } from 'maska/vue'
-	import { computed } from 'vue'
+	import { computed, readonly as readonlyState } from 'vue'
 	import SyTextField from '../Customs/SyTextField/SyTextField.vue'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import { useLunarCalendarValidation } from './useLunarCalendarValidation'
 	import type { LunarCalendarProps } from './types'
+	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales.ts'
 
 	const model = defineModel<string>()
 	const mask = '##/##/####'
@@ -36,14 +38,23 @@
 		name: undefined,
 		hideDetails: false,
 		autocomplete: 'off',
+		locales: () => ({}),
 		...validationPropsDefaults,
 	})
 
-	const { focused, validate, errors, warnings, successes, hasError, hasWarning, hasSuccess, clearValidation } = useLunarCalendarValidation(computed(() => model.value), props)
+	const locales = useLocales(defaultLocales, () => props.locales)
+
+	const { focused, validate, errors, warnings, successes, hasError, hasWarning, hasSuccess, clearValidation } = useLunarCalendarValidation(computed(() => model.value), props, locales)
 
 	defineExpose({
 		validateOnSubmit: validate,
 		clearValidation,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 	})
 
 </script>

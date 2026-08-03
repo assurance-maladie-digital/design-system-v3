@@ -1,18 +1,16 @@
-import { cnamSemanticTokens } from '@/designTokens'
-
 export const config = {
 	sheet: {
-		theme: 'dark',
+		theme: 'light',
 		dense: true,
-		color: cnamSemanticTokens.colors.background.accentContrasted,
+		color: 'rgb(var(--v-theme-primaryVariant))',
 	},
 	tabs: {
 		'height': '53',
 		'show-arrows': true,
 	},
 	tab: {
-		'base-color': cnamSemanticTokens.colors.text.subduedOnDark,
-		'slider-color': '#fff',
+		'base-color': 'rgb(var(--v-theme-surface), 0.7)',
+		'slider-color': 'rgb(var(--v-theme-surface))',
 		'ripple': false,
 	},
 }

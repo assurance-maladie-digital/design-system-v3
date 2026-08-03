@@ -1,4 +1,5 @@
-import { Meta } from '@storybook/addon-docs/blocks';
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+import * as Graphique from './Graphique.stories';
 import '@/stories/styles/shared.css';
 
 
@@ -24,7 +25,6 @@ import '@/stories/styles/shared.css';
       --transition-speed: 0.3s;
       --border-radius: 8px;
     }
-
 
 .eco-subtitle {
   margin-bottom: 2.5rem;
@@ -105,102 +105,107 @@ font-size: 1.25rem;
   color: #0C419A;
   margin-top: 0;
 }
+
+.eco-level-description {
+	margin: 0;
+	line-height: 1.5;
+}
+
+.graphique {
+margin-top: 36px;
+}
 `}
 </style>
+
 <div className="eco-page">
+
 <div className="header">
-<h1 className="eco-title">Ecoconception numérique</h1>
-<p className="eco-subtitle">
-  Concevoir des services numériques plus sobres et respectueux de l'environnement.
-</p>
+  <h1 className="eco-title">Ecoconception numérique</h1>
+  <p className="eco-subtitle">Concevoir des services numériques plus sobres et respectueux de l'environnement.</p>
 </div>
-
-
-
 <h2 className="eco-section-title">Notre démarche</h2>
 
-<p>
-  La Studio Design propose une démarche écoconception permettant de faciliter
-  l’intégration des bonnes pratiques associées dans la fabrication des projets
-  ( de leur conception à leur développement Front).
-</p>
+<p>La Studio Design propose une démarche d’écoconception permettant de faciliter l’intégration d’une sélection de bonnes pratiques essentielles associées à la  fabrication des projets, de leur gouvernance à leur maintenance. En partant du référentiel interne d’écoconception, nous avons défini deux niveaux d’exigence de conformité, couvrant cinq domaines d’intervention tout au long du cycle de vie d’un service numérique :</p>
+
+  <p className="eco-level-description"><strong>Niveau #1 :</strong> une sélection de 20 bonnes pratiques essentielles, faciles à mettre en œuvre pour commencer la démarche ;</p>
+  <p className="eco-level-description"><strong>Niveau #2 :</strong> le reste des bonnes pratiques du référentiel interne d’écoconception complet, inscrivant les projets dans une démarche avancée.</p>
+<div className="graphique">
+  <Story of={Graphique.Default} />
+
+</div>
+
+<h2 className="eco-section-title">Notre offre</h2>
+
 
 <div className="cards-grid">
   <div className="card">
-<div className="card-icon">
-<img src="/public.svg" alt="Public" />
-
-</div>
+    <div className="card-icon">
+      <img src="/public.svg" alt="Public" />
+    </div>
 
     <h3>Bonnes pratiques<br />d’écoconception</h3>
-    <p>
-      Une sélection de bonnes pratiques essentielles UX UI Dev Front avec une
-      documentation détaillée pour embarquer facilement l’écoconception dans la
-      fabrication de vos produits numériques.
-    </p>
+
+    <p>Une sélection de bonnes pratiques essentielles UX UI Dev Front avec une documentation détaillée pour embarquer facilement l’écoconception dans la fabrication de vos produits numériques.</p>
+
     <a href="/?path=/docs/éco-conception-bonnes-pratiques-essentielles--docs">Découvrir →</a>
   </div>
 
   <div className="card">
-<div className="card-icon">
-<img src="/code.svg" alt="Code" />
+    <div className="card-icon">
+      <img src="/code.svg" alt="Code" />
+    </div>
 
-</div>
     <h3>Auto-évaluation Dev Front</h3>
-    <p>
-      Un outil d’auto-évaluation automatique, permettant d’évaluer la conformité
-      du produit numérique vis-à-vis des bonnes pratiques de développement front.
-    </p>
+
+    <p>Un outil d’auto-évaluation automatique, permettant d’évaluer la conformité du produit numérique vis-à-vis des bonnes pratiques de développement front.</p>
+
     <a href="/?path=/docs/éco-conception-auto-évaluation-dev-front--docs">Commencer →</a>
   </div>
 
   <div className="card">
-<div className="card-icon">
-<img src="/add_reaction.svg" alt="UX" />
+    <div className="card-icon">
+      <img src="/add_reaction.svg" alt="UX" />
+    </div>
 
-</div>
     <h3>Auto-évaluation<br />UX</h3>
-    <p>
-      Un kit d’auto-évaluation manuelle permettant de vérifier si votre produit
-      numérique respecte les bonnes pratiques essentielles d’écoconception vis-à-vis
-      de l’expérience utilisateur.
-    </p>
+
+    <p>Un kit d’auto-évaluation manuelle permettant de vérifier si votre produit numérique respecte les bonnes pratiques essentielles d’écoconception vis-à-vis de l’expérience utilisateur.</p>
+
     <a href="/?path=/docs/éco-conception-auto-évaluation-ux--docs">Commencer →</a>
   </div>
 </div>
 
 <div className="alert">
-  <h3>A noter</h3>
-  <p>
-    Ces bonnes pratiques s'appuient sur le référentiel interne d’écoconception CNAM,
-    qui est lui-même une réponse concrète aux Principes Directeurs SI « Sobriété
-    Numérique » et qui s’inscrit dans la stratégie de responsabilité numérique de la CNAM.
-  </p>
+  <h3>À noter</h3>
+  <p>Ces bonnes pratiques s'appuient sur le référentiel interne d’écoconception CNAM, qui est lui-même une réponse concrète aux Principes Directeurs SI « Sobriété Numérique » et qui s’inscrit dans la stratégie de responsabilité numérique de la CNAM.</p>
 </div>
 
 <h2 className="eco-section-title">D’autres ressources disponibles</h2>
 
-<p>
-  Si vous souhaitez en savoir plus sur l’écoconception numérique, voici quelques ressources à consulter.
-</p>
+<p>Si vous souhaitez en savoir plus sur l’écoconception numérique, voici quelques ressources à consulter.</p>
 
 <div className="cards-grid">
   <div className="card">
     <h3>Référentiel interne CNAM<br />d’écoconception</h3>
-    <p>
-      Ce référentiel interne d’écoconception recense l’ensemble des bonnes pratiques
-      à chaque phase d’un projet : de sa gouvernance à sa maintenance.
-    </p>
-   <a   href="mailto:studio-design.cnam@assurance-maladie.fr?subject=Demande%20de%20référentiel%20d%27écoconception">Contacter le Studio Design →</a>
+
+    <p>Ce référentiel interne d’écoconception recense l’ensemble des bonnes pratiques à chaque phase d’un projet : de sa gouvernance à sa maintenance.</p>
+
+    <a href="mailto:studio-design.cnam@assurance-maladie.fr?subject=Demande%20de%20référentiel%20d%27écoconception">Contacter le Studio Design →</a>
   </div>
 
   <div className="card">
     <h3>RGESN</h3>
-    <p>
-      Le référentiel général d’écoconception de service numérique version 2024 est
-      un engagement de la feuille de route gouvernementale “Numérique et Environnement”.
-    </p>
-       <a href="https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/" target="_blank" rel="noopener noreferrer">Consulter →</a>
+
+    <p>Le référentiel général d’écoconception de service numérique version 2024 est un engagement de la feuille de route gouvernementale « Numérique et Environnement ».</p>
+
+    <a
+      href="https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Consulter →
+    </a>
   </div>
 </div>
+
 </div>

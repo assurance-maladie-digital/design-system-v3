@@ -1,4 +1,4 @@
-import { computed, ref, toRef, type ComputedRef, type Ref } from 'vue'
+import { computed, toRef, type ComputedRef, type Ref } from 'vue'
 import { useValidation, type ValidationRule } from '@/composables/unifyValidation/useValidation'
 import type { SyCheckBoxGroupValidationProps } from '../types'
 
@@ -31,18 +31,17 @@ export interface UseSyCheckBoxGroupValidationReturn {
 export function useSyCheckBoxGroupValidation(
 	props: SyCheckBoxGroupValidationProps,
 	model: Ref<(string | number) | (string | number)[] | null>,
-	focused?: Ref<boolean>,
+	focused: Ref<boolean>,
+	locales: Ref<{
+		requiredField: (identifier: string | undefined) => string
+	}>,
 ): UseSyCheckBoxGroupValidationReturn {
-	// Utiliser la variable focused passée en paramètre, sinon en créer une locale
-	const focusedRef = focused !== undefined ? focused : ref(false)
-
-	// Construction des règles de validation par défaut (required)
 	const defaultRules = computed<ValidationRule[]>(() =>
 		props.required
 			? [{
 					type: 'required',
 					options: {
-						message: `Le champ ${props.fieldIdentifier || props.label || 'ce champ'} est requis.`,
+						message: locales.value.requiredField(props.fieldIdentifier || props.label),
 						fieldIdentifier: props.label,
 					},
 				}]
@@ -84,7 +83,7 @@ export function useSyCheckBoxGroupValidation(
 		hasWarningProp: toRef(() => props.hasWarning ?? false),
 		hasSuccessProp: toRef(() => props.hasSuccess ?? false),
 		maxErrors: toRef(() => props.maxErrors ?? 1),
-		focused: focusedRef,
+		focused,
 	})
 
 	const validateOnSubmit = async (): Promise<boolean> => {
@@ -102,6 +101,6 @@ export function useSyCheckBoxGroupValidation(
 		hasWarning,
 		hasSuccess,
 		defaultRules,
-		focused: focusedRef,
+		focused,
 	}
 }

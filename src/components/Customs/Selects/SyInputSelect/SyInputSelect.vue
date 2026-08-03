@@ -1,10 +1,13 @@
 <script lang="ts" setup>
-	import { mdiChevronDown, mdiInformation, mdiCloseCircle } from '@mdi/js'
-	import { computed, onMounted, ref, useId, watch } from 'vue'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import { mdiChevronDown, mdiCloseCircle, mdiInformation } from '@mdi/js'
+	import { computed, onMounted, readonly as readonlyState, ref, useId, watch } from 'vue'
 	import defaultOptions from './config'
-	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		modelValue?: Record<string, unknown> | string | null
@@ -22,6 +25,7 @@
 		customRules?: ValidationRule[]
 		disableErrorHandling?: boolean
 		bgColor?: string
+		locales?: DeepPartial<typeof defaultLocales>
 	}>(), {
 
 		modelValue: null,
@@ -39,7 +43,10 @@
 		customRules: () => [],
 		disableErrorHandling: false,
 		bgColor: 'white',
+		locales: () => ({}),
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const options = useCustomizableOptions(defaultOptions, props)
 
@@ -174,7 +181,7 @@
 		? [{
 			type: 'required',
 			options: {
-				message: `Le champ ${props.label || 'ce champ'} est requis.`,
+				message: locales.value.requiredField(props.label),
 				fieldIdentifier: props.label,
 			},
 		}]
@@ -222,6 +229,9 @@
 		validateOnSubmit,
 		validateField,
 		checkForErrors,
+		errors: readonlyState(validation.errors),
+		warnings: readonlyState(validation.warnings),
+		successes: readonlyState(validation.successes),
 	})
 </script>
 
@@ -267,7 +277,7 @@
 			<SyIcon
 				v-if="selectedItemText && props.clearable"
 				:icon="mdiCloseCircle"
-				aria-label="Supprimer"
+				:aria-label="locales.clearLabel"
 				role="button"
 				@click.stop.prevent="selectItem(null)"
 			/>
@@ -353,5 +363,21 @@
 
 .text-color {
 	color: rgb(var(--v-theme-primary));
+}
+
+.sy-input-select:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 3px;
+}
+
+.v-list-item:focus-visible {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: -3px;
+
+	// Pas de double indicateur : on masque l'overlay de fond de Vuetify au focus
+	// (comme `_menus.scss`), le ring suffit.
+	:deep(.v-list-item__overlay) {
+		opacity: 0 !important;
+	}
 }
 </style>

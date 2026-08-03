@@ -178,7 +178,7 @@
 			role="textbox"
 			:aria-label="inputAriaLabel"
 			:title="labelId"
-			tabindex="0"
+			tabindex="-1"
 			@keydown="handleKeydown"
 		>
 			<slot />

@@ -1,34 +1,22 @@
 <script setup lang="ts">
-	import { computed, nextTick, ref, toRef, useId, watch } from 'vue'
-	import { mdiCloseCircle } from '@mdi/js'
-	import type { VTextarea } from 'vuetify/components'
-	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import useTextActions from './useTextActions'
-	import { useSyTextAreaValidation } from './composables/useSyTextAreaValidation'
-	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
-	import { useValidatable } from '@/composables/validation/useValidatable'
-	import { locales } from './locales'
+	defineOptions({
+		inheritAttrs: false,
+	})
 
-	const props = withDefaults(defineProps<{
-		uniqueId?: string
-		counter?: boolean | number | string
-		modelValue?: string
-		trim?: boolean
-		replaceTabs?: number
-		required?: boolean
-		maxLines?: number
-		autoWrap?: number
-		normalize?: boolean
-		validateOn?: VTextarea['validateOn']
-		variant?: VTextarea['variant']
-		color?: string
-		label: string
-		bgColor?: string
-		clearable?: boolean
-		helpText?: string
-		hideDetails?: boolean
-		displayAsterisk?: boolean
-	} & FieldValidationProps>(), {
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
+	import { useLocales } from '@/composables/useLocales'
+	import { mdiCloseCircle } from '@mdi/js'
+	import { computed, nextTick, readonly as readonlyState, ref, toRef, useAttrs, useId, watch } from 'vue'
+	import { type VTextarea } from 'vuetify/components'
+	import { useSyTextAreaValidation } from './composables/useSyTextAreaValidation'
+	import { locales as defaultLocales } from './locales'
+	import { type SyTextAreaOwnProps } from './types'
+	import useTextActions from './useTextActions'
+
+	type VTextareaProps = VTextarea['$props']
+
+	const props = withDefaults(defineProps<SyTextAreaOwnProps>(), {
 		uniqueId: undefined,
 		modelValue: '',
 		trim: false,
@@ -45,17 +33,67 @@
 		helpText: '',
 		hideDetails: false,
 		displayAsterisk: false,
+		locales: () => ({}),
 		...validationPropsDefaults,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: string): void
 		(e: 'clear'): void
 	}>()
 
+	const attrs = useAttrs()
+
 	const textAreaRef = ref<VTextarea | null>(null)
 	const hasInteracted = ref(false)
 	const id = computed(() => props.uniqueId || useId())
+
+	const wrapperOnlyPropKeys = new Set([
+		'uniqueId',
+		'trim',
+		'replaceTabs',
+		'maxLines',
+		'autoWrap',
+		'normalize',
+		'label',
+		'modelValue',
+		'variant',
+		'color',
+		'bgColor',
+		'counter',
+		'validateOn',
+		'disabled',
+		'readonly',
+		'required',
+		'clearable',
+		'hideDetails',
+		'helpText',
+		'errorMessages',
+		'maxErrors',
+		'rules',
+		'displayAsterisk',
+		'customRules',
+		'customSuccessRules',
+		'customWarningRules',
+		'disableErrorHandling',
+		'hasError',
+		'hasSuccess',
+		'hasWarning',
+		'isValidateOnBlur',
+		'showSuccessMessages',
+		'successMessages',
+		'useVuetifyValidation',
+		'warningMessages',
+	])
+
+	const forwardedTextareaProps = computed(() => ({
+		...Object.fromEntries(
+			Object.entries(props).filter(([key]) => !wrapperOnlyPropKeys.has(key)),
+		),
+		...attrs,
+	}) as Partial<VTextareaProps>)
 
 	const internalValue = ref(props.modelValue)
 
@@ -131,7 +169,7 @@
 		hasSuccess,
 		validationIcon,
 		mergedVuetifyRules,
-	} = useSyTextAreaValidation(props, { internalValue, hasInteracted })
+	} = useSyTextAreaValidation(props, { internalValue, hasInteracted }, locales)
 
 	const computedLabel = computed(() =>
 		props.displayAsterisk && props.required ? `${props.label} *` : props.label,
@@ -173,12 +211,16 @@
 		return validate()
 	}
 
-	useValidatable(validateOnSubmit, clearValidation)
-
 	defineExpose({
 		validateOnSubmit,
 		clearField,
 		clearValidation,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 	})
 
 </script>
@@ -186,6 +228,7 @@
 <template>
 	<div class="sy-textarea">
 		<VTextarea
+			v-bind="forwardedTextareaProps"
 			:id="id"
 			ref="textAreaRef"
 			:model-value="internalValue"
@@ -299,8 +342,6 @@
 
 .success-field {
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-success)) !important;
-
 		--v-medium-emphasis-opacity: 1;
 	}
 
@@ -325,8 +366,6 @@
 
 .warning-field {
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-onWarningVariant)) !important;
-
 		--v-medium-emphasis-opacity: 1;
 	}
 

@@ -5,6 +5,9 @@
 	import AmeliproIconBtn from '../AmeliproIconBtn/AmeliproIconBtn.vue'
 	import type { AmeliproMenuItem } from './types'
 	import type { RouteLocationRaw } from 'vue-router'
+	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = defineProps({
 		homeHref: {
@@ -27,7 +30,13 @@
 			type: String,
 			required: true,
 		},
+		locales: {
+			type: Object as PropType<DeepPartial<typeof defaultLocales>>,
+			default: () => ({}),
+		},
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const reactiveItems = reactive<AmeliproMenuItem[]>(props.items)
 
@@ -70,7 +79,7 @@
 		class="d-flex justify-center amelipro-menu"
 	>
 		<AmeliproIconBtn
-			btn-label="Menu du service"
+			:btn-label="locales.serviceMenuLabel"
 			class="amelipro-menu__btn--open"
 			icon="menuSquare"
 			icon-bg-color="transparent"
@@ -84,7 +93,7 @@
 
 		<VNavigationDrawer
 			:id="`${uniqueId}-drawer`"
-			aria-label="Menu du service"
+			:aria-label="locales.serviceMenuLabel"
 			aria-modal="true"
 			color="ap-blue-darken-2"
 			hide-overlay
@@ -105,7 +114,7 @@
 				</h2>
 
 				<AmeliproIconBtn
-					btn-label="Fermer le menu"
+					:btn-label="locales.closeMenuLabel"
 					class="menu-btn-close"
 					icon-bg-color="transparent"
 					icon-color="ap-white"
@@ -299,7 +308,7 @@
 					@keydown.tab.exact.prevent="setFocus(`${uniqueId}-close-menu-btn`)"
 				>
 					<img
-						alt="Accueil Amelipro"
+						:alt="locales.homeAlt"
 						class="home-menu-btn__img"
 						src="@/assets/amelipro/img/logo-menu.svg"
 					>

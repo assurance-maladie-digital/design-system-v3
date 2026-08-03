@@ -3,18 +3,20 @@
 	defineOptions({
 		inheritAttrs: false,
 	})
-	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
-	import { ref, useId, watch, watchEffect, onMounted, onBeforeUnmount, computed, nextTick, useAttrs } from 'vue'
-	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
+	import IconSlot from '@/components/Common/IconSlot/IconSlot.vue'
+	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+	import { useLocales } from '@/composables/useLocales'
 	import type { ColorType, IconType, VariantStyle } from '@/types/vuetifyTypes'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
+	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
+	import { computed, nextTick, onBeforeUnmount, onMounted, readonly as readonlyState, ref, useAttrs, useId, watch, watchEffect } from 'vue'
 	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
-	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
-	import IconSlot from '@/components/Common/IconSlot/IconSlot.vue'
-	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import { locales } from './locales'
-	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { useSySelectValidation } from './composables/useSySelectValidation'
+	import { locales as defaultLocales } from './locales'
 
 	export type ItemType = {
 		[key: string]: unknown
@@ -26,7 +28,7 @@
 	const props = withDefaults(
 		defineProps<{
 			modelValue?: Record<string, unknown> | string | number | null | SelectItemArrayType
-			items?: ItemType[]
+			items?: Array<ItemType | string | number>
 			label?: string
 			menuId?: string
 			outlined?: boolean
@@ -54,6 +56,7 @@
 			tooltipLocation?: 'top' | 'bottom' | 'start' | 'end'
 			noIcon?: boolean
 			disableClickButton?: boolean
+			locales?: DeepPartial<typeof defaultLocales>
 		} & FieldValidationProps>(),
 		{
 			modelValue: null,
@@ -85,9 +88,12 @@
 			tooltipLocation: 'top',
 			noIcon: false,
 			disableClickButton: true,
+			locales: () => ({}),
 			...validationPropsDefaults,
 		},
 	)
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	// pr récupérer proprement aria-label
 	const attrs = useAttrs()
@@ -136,7 +142,7 @@
 	const selectedItem = ref<SelectItemValueType | SelectItemArrayType>(props.modelValue)
 	const menuMinWidth = ref<number | null>(null)
 
-	const { focused, validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess, validationIcon } = useSySelectValidation(props)
+	const { focused, validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess, validationIcon } = useSySelectValidation(props, locales)
 
 	const labelWidth = ref(0)
 	const list = ref<VList | null>(null)
@@ -210,7 +216,7 @@
 		// message d'aide si aucun label fourni
 		if (typeof props.helpText === 'string' && props.helpText.trim()) return props.helpText.trim()
 
-		return 'Selectionnez une option'
+		return locales.value.selectPlaceholder
 	})
 
 	const selectItem = (item: ItemType | null | undefined, event?: Event) => {
@@ -357,13 +363,21 @@
 	})
 
 	const getPlainItemText = (item: unknown) => {
+		// Handle primitive types (string/number items)
+		if (typeof item === 'string' || typeof item === 'number') {
+			return String(item)
+		}
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
 		const itemObj = item as Record<string, any>
 		// Use plainTextKey if available and allowHtml is true, otherwise use textKey
-		if (props.plainTextKey && props.allowHtml && itemObj[props.plainTextKey]) {
-			return itemObj[props.plainTextKey]
+		if (props.plainTextKey && props.allowHtml) {
+			const plainText = itemObj[props.plainTextKey]
+			if (plainText !== undefined && plainText !== null && plainText !== '') {
+				return String(plainText)
+			}
 		}
-		return itemObj[props.textKey]
+		const text = itemObj[props.textKey]
+		return text !== undefined && text !== null ? String(text) : ''
 	}
 
 	const selectedItemText = computed(() => {
@@ -381,7 +395,7 @@
 		if (props.multiple) {
 			if (!selectedItem.value || (Array.isArray(selectedItem.value) && selectedItem.value.length === 0)) {
 				// Find default option and return its text
-				const defaultOption = props.items.find(item => isDefaultOption(item))
+				const defaultOption = formattedItems.value.find(item => isDefaultOption(item))
 				if (defaultOption) {
 					return getPlainItemText(defaultOption) as string
 				}
@@ -395,19 +409,19 @@
 				if (props.returnObject) {
 					return getPlainItemText(selected)
 				}
-				const foundItem = props.items.find((item: ItemType) => item[props.valueKey] === selected)
+				const foundItem = formattedItems.value.find((item: ItemType) => item[props.valueKey] === selected)
 				return foundItem ? getPlainItemText(foundItem) : ''
 			}).join(', ')
 		}
 		else {
 			// For single selection
-			if (!selectedItem.value) return ''
+			if (selectedItem.value === null || selectedItem.value === undefined) return ''
 
 			if (props.returnObject) {
 				return getPlainItemText(selectedItem.value)
 			}
 
-			const foundItem = props.items.find(item => item[props.valueKey] === selectedItem.value)
+			const foundItem = formattedItems.value.find(item => item[props.valueKey] === selectedItem.value)
 			return foundItem ? getPlainItemText(foundItem) : ''
 		}
 	})
@@ -449,7 +463,7 @@
 
 	const formattedItems = computed(() => {
 		return props.items.map((item) => {
-			if (typeof item === 'string') {
+			if (typeof item === 'string' || typeof item === 'number') {
 				return { [props.textKey]: item, [props.valueKey]: item }
 			}
 			return item
@@ -522,7 +536,7 @@
 	const liveRegionMessage = computed(() => {
 		if (!hasError.value) return ''
 
-		return formattedErrorMessages.value || 'Le champ contient une erreur.'
+		return formattedErrorMessages.value || locales.value.fieldError
 	})
 
 	watch(() => props.modelValue, (newValue) => {
@@ -554,10 +568,14 @@
 	})
 
 	// Function to check if an item is the default option (e.g., "-choisir-")
-	const isDefaultOption = (item: ItemType) => {
+	const isDefaultOption = (item: ItemType | string | number) => {
+		// Normalize string/number items to objects for consistent access
+		const itemObj = typeof item === 'string' || typeof item === 'number'
+			? { [props.textKey]: item, [props.valueKey]: item }
+			: item
 		// Check if this is the first item and has a placeholder-like text
-		const itemText = item[props.textKey] as string
-		return itemText.includes('-') && (itemText.includes('choisir') || itemText.includes('sélectionner'))
+		const itemText = itemObj[props.textKey] as string
+		return typeof itemText === 'string' && itemText.includes('-') && (itemText.includes('choisir') || itemText.includes('sélectionner'))
 	}
 
 	// Function to check if an item is selected
@@ -567,7 +585,7 @@
 			return !selectedItem.value || (Array.isArray(selectedItem.value) && selectedItem.value.length === 0)
 		}
 
-		if (!selectedItem.value) return false
+		if (selectedItem.value === null || selectedItem.value === undefined) return false
 
 		if (props.multiple && Array.isArray(selectedItem.value)) {
 			return selectedItem.value.some((selected) => {
@@ -606,10 +624,12 @@
 
 		if (typeof safeItem === 'object') {
 			// Handle object type
-			return (safeItem as Record<string, unknown>)[props.textKey] as string
+			const text = (safeItem as Record<string, unknown>)[props.textKey]
+			return text !== undefined && text !== null ? String(text) : ''
 		}
 		// Handle primitive types
-		return props.items.find((i: ItemType) => i[props.valueKey] === safeItem)?.[props.textKey] as string || ''
+		const foundText = formattedItems.value.find((i: ItemType) => i[props.valueKey] === safeItem)?.[props.textKey]
+		return foundText !== undefined && foundText !== null ? String(foundText) : ''
 	}
 
 	// Function to remove a chip
@@ -846,6 +866,13 @@
 		isOpen,
 		closeList,
 		validateOnSubmit: validate,
+		clearValidation,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 	})
 
 	// on reprend la mm methode que pour le datepicker : useDatePickerAccesssibity (updateAccessibility)
@@ -1358,8 +1385,10 @@
 	background-color: rgb(0 0 0 / 8%);
 }
 
-.v-list-item.active {
-	background-color: rgb(0 0 0 / 8%);
+/* `.active` couvre aussi l'option active au clavier (aria-activedescendant) : pas de fond ici,
+   sinon le focus afficherait un fond gris. Le fond de sélection vient de `--selected`. */
+.v-list-item.active:not(.v-list-item--selected) {
+	background-color: transparent;
 }
 
 .help-text {
@@ -1382,12 +1411,12 @@
 	color: rgba(var(--v-theme-onSurface), var(--v-disabled-opacity));
 }
 
-/* Ensure focus styles match selection styles for keyboard navigation */
+/* Focus = anneau seul (pas de fond) ; le fond gris reste réservé au survol (:hover) et à la
+   sélection (.active / --selected). */
 .v-list-item:focus-visible,
 .v-list-item.keyboard-focused {
 	outline: 2px solid rgb(var(--v-theme-primary));
 	outline-offset: -2px;
-	background-color: rgb(0 0 0 / 8%);
 }
 
 .v-list-item :deep(.v-list-item__overlay) {
@@ -1439,6 +1468,14 @@
 
 	.v-icon {
 		position: static;
+	}
+
+	// `<button>` natif (pas un `.v-btn`) → non couvert par `_btns.scss`. Ring DS primary,
+	// collé (offset 1px) car bouton-icône positionné dans le bord du champ.
+	&:focus-visible {
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 1px;
+		border-radius: 4px;
 	}
 }
 

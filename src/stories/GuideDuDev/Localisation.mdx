@@ -1,0 +1,91 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+import '../styles/shared.css';
+
+<Meta title="Guide Du Dev/Démarrage/Localisation" />
+
+
+<div className="header">
+  <h1>Localisation (prop <code>locales</code>)</h1>
+</div>
+
+La plupart des composants du design system affichent des chaînes en français (libellés, messages de validation, textes d'accessibilité…).
+Pour permettre à une application consommatrice de traduire ou de personnaliser ces chaînes, chaque composant concerné expose une prop **`locales`**.
+
+Cette prop fonctionne sur le même principe que `vuetifyOptions` : le design system **fusionne** l'objet que vous fournissez avec les valeurs par défaut définies dans le fichier `locales.ts` du composant. Vous n'avez ainsi à renseigner que les clés que vous souhaitez surcharger.
+
+## Surcharge partielle
+
+La prop `locales` accepte un **objet partiel** : seules les clés renseignées surchargent les valeurs par défaut, toutes les autres sont conservées.
+
+<Source dark code={`
+<BackBtn :locales="{ label: 'Précédent' }" />
+`} />
+
+Dans cet exemple :
+
+> Seule la clé `label` est remplacée (`'Retour'` → `'Précédent'`).
+
+> Toutes les autres chaînes du composant (s'il y en avait) gardent leur valeur par défaut.
+
+Inutile de repasser l'intégralité du fichier `locales.ts` : transmettez uniquement ce qui change.
+
+## Fusion profonde
+
+La fusion est **récursive**. Pour les composants dont les chaînes sont organisées en objets imbriqués (par exemple `Captcha` ou `LogoBrandSection`), vous pouvez surcharger une seule feuille sans avoir à redéfinir tout le sous-objet.
+
+<Source dark code={`
+<Captcha
+    :locales="{
+        image: { textfieldLabel: 'Saisir les caractères' }
+    }"
+/>
+`} />
+
+Dans cet exemple :
+
+> Seul `image.textfieldLabel` est remplacé.
+
+> Les autres clés de `image` (`new`, `change`) et tous les autres groupes (`audio`, `information`, etc.) restent inchangés.
+
+<Source dark code={`
+<LogoBrandSection
+    theme="compte-entreprise"
+    :locales="{
+        compteEntreprise: { title: { highlight: 'société' } }
+    }"
+/>
+`} />
+
+Ici, seul `compteEntreprise.title.highlight` change ; `compteEntreprise.title.text` et `compteEntreprise.subTitle` conservent leur valeur par défaut.
+
+## Fonctions et tableaux
+
+Certaines chaînes sont des **fonctions** (messages paramétrés) ou des **tableaux** :
+
+- Une fonction fournie dans `locales` **remplace** la fonction par défaut.
+- Un tableau fourni est **concaténé** avec le tableau par défaut (clés de type listes de libellés, ex. `RatingPicker.defaultEmotionLabels`).
+
+<Source dark code={`
+<RatingPicker
+    type="emotion"
+    :locales="{
+        thanks: 'Merci pour votre retour',
+        ratingAriaLabel: (index, length) => ('Note ' + index + ' sur ' + length)
+    }"
+/>
+`} />
+
+## Valeurs par défaut
+
+Les valeurs par défaut de chaque composant sont définies dans son fichier `locales.ts` (par exemple `src/components/RatingPicker/locales.ts`).
+Sans la prop `locales`, le composant utilise ces valeurs françaises telles quelles.
+
+## Composants concernés
+
+Sont concernés tous les composants qui exposent une prop `locales` : champs de formulaire (`SyTextField`, `SySelect`, `SyAutocomplete`, `SyCheckbox`, `SyRadioGroup`, `PasswordField`, `PhoneField`, `Captcha`, `PeriodField`, `MonthPicker`…), composants de données (`FileUpload`, `FilePreview`, `FileList`, `RatingPicker`, `TableToolbar`…), structures (`LogoBrandSection`, `AmeliproFooter`, `AmeliproMenu`, `FilterSideBar`…) et autres (`BackBtn`, `DownloadBtn`, `IconSlot`, `SyTabs`…).
+
+Pour connaître les clés surchargeables d'un composant précis, consultez sa documentation Storybook (la prop `locales` y décrit sa forme) ou son fichier `locales.ts`.
+
+## Conclusion
+
+La prop `locales` offre une flexibilité maximale pour traduire ou personnaliser les chaînes affichées, sans avoir à réécrire l'ensemble des valeurs. Grâce à la fusion profonde, vous surchargez uniquement ce qui vous intéresse, au niveau de granularité de votre choix, et le composant conserve ses valeurs par défaut pour tout le reste.

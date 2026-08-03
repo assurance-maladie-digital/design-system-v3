@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 
-	import { computed, nextTick, onMounted, onUpdated, ref } from 'vue'
+	import { computed, nextTick, onMounted, onUpdated, readonly as readonlyState, ref } from 'vue'
 	import type { VRadioGroup } from 'vuetify/components'
 	import { VMessages } from 'vuetify/components'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
-	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useSyRadioGroupValidation } from './composables/useSyRadioGroupValidation'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(
 		defineProps<{
@@ -23,6 +24,7 @@
 			name?: string
 			options?: Array<{ label: string, value: PropertyKey }>
 			title?: string
+			locales?: DeepPartial<typeof defaultLocales>
 		} & FieldValidationProps>(),
 		{
 			ariaLabel: undefined,
@@ -38,10 +40,13 @@
 			name: undefined,
 			options: () => [],
 			title: undefined,
+			locales: () => ({}),
 			...validationPropsDefaults,
 			isValidateOnBlur: false, // La validation se déclenche immédiatement à la sélection pour les radios
 		},
 	)
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emit = defineEmits(['update:modelValue', 'change'])
 	const radioGroupRef = ref<VRadioGroup | null>(null)
@@ -69,10 +74,8 @@
 		hasError,
 		hasWarning,
 		hasSuccess,
-	} = useSyRadioGroupValidation(props, model, focused)
-
-	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit)
+		clearValidation,
+	} = useSyRadioGroupValidation(props, model, focused, locales)
 
 	const hasMessages = computed(() =>
 		errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0,
@@ -123,6 +126,13 @@
 
 	defineExpose({
 		validateOnSubmit,
+		clearValidation,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 	})
 
 </script>
@@ -151,36 +161,37 @@
 		:error-messages="hasError ? errors : undefined"
 		:aria-describedby="messageId"
 	>
-		<v-radio
-			v-for="opt in props.options"
-			:key="opt.value"
-			:value="opt.value"
-			role="radio"
-			:label="opt.label"
-			:aria-checked="getAriaChecked(opt.value)"
-			@focus="focused = true"
-			@blur="focused = false"
-		/>
 		<template
 			v-if="$slots.label"
 			#label
 		>
 			<slot name="label" />
 		</template>
-		<template
-			v-if="$slots.default"
-			#default
-		>
-			<slot />
+
+		<template #default>
+			<slot>
+				<v-radio
+					v-for="opt in props.options"
+					:key="opt.value"
+					:value="opt.value"
+					role="radio"
+					:label="opt.label"
+					:aria-checked="getAriaChecked(opt.value)"
+					@focus="focused = true"
+					@blur="focused = false"
+				/>
+			</slot>
+
+			<span
+				v-if="messageId && props.required && !props.ariaLabel && !props.ariaLabelledby"
+				:id="messageId"
+				class="d-sr-only"
+			>
+				{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '')
+				}}</span>.
+			</span>
 		</template>
-		<span
-			v-if="messageId && props.required && !props.ariaLabel && !props.ariaLabelledby"
-			:id="messageId"
-			class="d-sr-only"
-		>
-			{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '')
-			}}</span>.
-		</span>
+
 		<template
 			v-if="(!hasError && (hasWarning || (hasSuccess && props.showSuccessMessages))) || showHelpTextAsMessage"
 			#details
@@ -219,6 +230,12 @@
 
 :deep(.v-selection-control--error .v-selection-control__input) {
 	color: rgb(var(--v-theme-error));
+}
+
+:deep(.v-selection-control--focus-visible) {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 2px;
+	border-radius: 4px;
 }
 
 :deep(.sy-radio-group__messages) {

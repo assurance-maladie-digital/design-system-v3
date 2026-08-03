@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed, provide, ref, toRef, useAttrs, type ComponentPublicInstance } from 'vue'
+	import { computed, provide, readonly as readonlyState, ref, toRef, useAttrs, type ComponentPublicInstance } from 'vue'
 	import MonthPickerInput from './MonthPickerText/MonthPickerInput.vue'
 	import MonthPickerVisual from './MonthPickerVisual/MonthPickerVisual.vue'
 	import { watch } from 'vue'
@@ -8,11 +8,12 @@
 	import { defaultMonthPickerVisualProps } from './MonthPickerVisual/MonthPickerVisualProps'
 	import { useMonthPickerValidation } from './useMonthPickerValidation'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
+	import { useLocales } from '@/composables/useLocales'
 	import type { MonthPickerProps } from './types'
 
 	const props = withDefaults(defineProps<MonthPickerProps>(), {
 		modelValue: undefined,
-		locales: () => defaultLocales,
+		locales: () => ({}),
 		helpText: 'Format MM/AAAA',
 		...validationPropsDefaults,
 		...defaultMonthPickerVisualProps,
@@ -22,7 +23,9 @@
 		displayAsterisk: false,
 	})
 
-	provide(localesKey, computed(() => props.locales))
+	const locales = useLocales(defaultLocales, () => props.locales)
+
+	provide(localesKey, locales)
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: string | undefined): void
@@ -73,7 +76,7 @@
 		hasSuccessProp: toRef(props, 'hasSuccess'),
 		maxErrors: toRef(props, 'maxErrors'),
 		focused,
-		locales: toRef(props, 'locales'),
+		locales,
 	})
 
 	const inputProps = computed(() => ({
@@ -91,9 +94,9 @@
 	}))
 
 	defineExpose({
-		errors,
-		warnings,
-		successes,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
 		hasError,
 		hasWarning,
 		hasSuccess,

@@ -1,90 +1,258 @@
-import { type Ref } from 'vue'
-import type { ComponentPublicInstance } from 'vue'
+import { type ComponentPublicInstance, type Ref } from 'vue'
+
+import dayjs from 'dayjs'
 
 interface UseDatePickerFocusTrapOptions {
 	isDatePickerVisible: Ref<boolean>
 	datePickerRef: Ref<ComponentPublicInstance | null>
-	onClose?: () => void
+	onClose?: () => void | Promise<void>
 	restoreFocus?: () => void
+	// Renvoie la date sur laquelle placer le focus (date sélectionnée ou aujourd'hui)
+	getInitialFocusDate?: () => Date
 }
 
+const DATE_PICKER_GRID_SELECTOR = '.v-date-picker-month, .v-date-picker-months, .v-date-picker-years'
+const DATE_PICKER_GRID_SOURCE_SELECTOR = '.v-date-picker-months, .v-date-picker-years, .v-date-picker-month'
+const TODAY_BUTTON_SELECTOR = '.date-picker__today-button'
+const MONTH_PROXY_SELECTOR = '[data-sy-date-picker-option="month"]'
+const YEAR_PROXY_SELECTOR = '[data-sy-date-picker-option="year"]'
+
 const getFocusableElements = (root: HTMLElement): HTMLElement[] => {
-	const allFocusable = Array.from(root.querySelectorAll<HTMLElement>('button,[href],input,select,textarea,[tabindex]'))
-	return allFocusable.filter(el => !el.hasAttribute('disabled') && el.getAttribute('aria-hidden') !== 'true' && el.tabIndex !== -1)
+	const allFocusable = Array.from(
+		root.querySelectorAll<HTMLElement>('button,[href],input,select,textarea,[tabindex]'),
+	)
+
+	return allFocusable.filter(el =>
+		!el.hasAttribute('disabled')
+		&& el.getAttribute('aria-hidden') !== 'true'
+		&& el.tabIndex !== -1,
+	)
+}
+
+const getDayGridFocusTarget = (root: HTMLElement, getInitialFocusDate?: () => Date): HTMLElement | null => {
+	const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
+	const iso = dayjs(targetDate).format('YYYY-MM-DD')
+	const dayCell = root.querySelector<HTMLElement>(`[data-v-date="${iso}"][role="gridcell"], [data-v-date="${iso}"]`)
+	if (dayCell && !dayCell.hasAttribute('tabindex')) {
+		dayCell.setAttribute('tabindex', '-1')
+	}
+
+	return dayCell
+}
+
+const getLogicalFocusOrder = (
+	root: HTMLElement,
+	getInitialFocusDate?: () => Date,
+): HTMLElement[] => {
+	const focusables = getFocusableElements(root)
+	const dayGrid = root.querySelector<HTMLElement>('.v-date-picker-month')
+	if (!dayGrid) return focusables
+
+	const gridTarget = getDayGridFocusTarget(root, getInitialFocusDate)
+	if (!gridTarget) return focusables
+
+	const todayButton = root.querySelector<HTMLElement>(TODAY_BUTTON_SELECTOR)
+	const order: HTMLElement[] = []
+	let insertedGrid = false
+
+	for (const focusable of focusables) {
+		if (
+			!insertedGrid
+			&& todayButton
+			&& focusable === todayButton
+		) {
+			order.push(gridTarget)
+			insertedGrid = true
+		}
+
+		if (!dayGrid.contains(focusable)) {
+			order.push(focusable)
+		}
+	}
+
+	if (!insertedGrid) {
+		order.push(gridTarget)
+	}
+
+	return order
+}
+
+const focusElement = (element: HTMLElement | null | undefined): boolean => {
+	if (!element) return false
+	element.focus({ preventScroll: true })
+	return true
 }
 
 export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
-	const { isDatePickerVisible, datePickerRef, onClose, restoreFocus } = options
+	const {
+		isDatePickerVisible,
+		datePickerRef,
+		onClose,
+		restoreFocus,
+		getInitialFocusDate,
+	} = options
+
+	const getRootElement = (): HTMLElement | null => {
+		const root = datePickerRef.value?.$el
+		return root instanceof HTMLElement ? root : null
+	}
+
+	const focusDayButton = (root: HTMLElement): boolean => {
+		const dayCell = getDayGridFocusTarget(root, getInitialFocusDate)
+		return focusElement(dayCell)
+	}
+
+	const focusMonthButton = (root: HTMLElement): boolean => {
+		const activeMonth = root.querySelector<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"][aria-pressed="true"]')
+			?? root.querySelector<HTMLElement>('.v-date-picker-months .v-btn--active')
+		if (focusElement(activeMonth)) return true
+
+		const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
+		const monthButtons = Array.from(root.querySelectorAll<HTMLElement>(`.v-date-picker-months ${MONTH_PROXY_SELECTOR}`))
+		if (monthButtons.length > 0) {
+			return focusElement(monthButtons[targetDate.getMonth()] ?? null)
+		}
+
+		const fallbackButtons = Array.from(root.querySelectorAll<HTMLElement>('.v-date-picker-months .v-btn'))
+		return focusElement(fallbackButtons[targetDate.getMonth()] ?? null)
+	}
+
+	const focusYearButton = (root: HTMLElement): boolean => {
+		const activeYear = root.querySelector<HTMLElement>('.v-date-picker-years [aria-pressed="true"]')
+			?? root.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
+		if (focusElement(activeYear)) return true
+
+		const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
+		const targetYear = String(targetDate.getFullYear())
+		const yearButtons = Array.from(root.querySelectorAll<HTMLElement>(`.v-date-picker-years ${YEAR_PROXY_SELECTOR}`))
+		const matchingProxy = yearButtons.find(button =>
+			(button.getAttribute('aria-label') ?? button.textContent ?? '').trim() === targetYear,
+		)
+		if (focusElement(matchingProxy ?? null)) return true
+
+		const fallbackButtons = Array.from(root.querySelectorAll<HTMLElement>('.v-date-picker-years .v-btn'))
+		const matchingYear = fallbackButtons.find(button =>
+			(button.getAttribute('aria-label') ?? button.textContent ?? '').trim() === targetYear,
+		)
+		return focusElement(matchingYear ?? null)
+	}
+
+	const focusCurrentGridSelection = (root: HTMLElement): boolean => {
+		if (root.querySelector('.v-date-picker-years')) {
+			return focusYearButton(root)
+		}
+
+		if (root.querySelector('.v-date-picker-months')) {
+			return focusMonthButton(root)
+		}
+
+		return focusDayButton(root)
+	}
 
 	const handleMenuKeydown = (event: KeyboardEvent) => {
 		if (!isDatePickerVisible.value) return
 
-		// Ne gérer que Escape et Tab, laisser toutes les autres touches passer
 		if (event.key === 'Escape' || event.key === 'Esc') {
-			isDatePickerVisible.value = false
-			onClose?.()
-			restoreFocus?.()
+			if (onClose) {
+				void onClose()
+			}
+			else {
+				isDatePickerVisible.value = false
+				restoreFocus?.()
+			}
 			event.preventDefault()
 			event.stopPropagation()
 			return
 		}
 
-		// Pour Tab, on gère mais on laisse les autres touches (flèches, etc.) passer complètement
-		if (event.key !== 'Tab') {
-			// Laisser toutes les autres touches passer sans aucune intervention
-			return
-		}
+		if (event.key !== 'Tab') return
 
-		if (event.ctrlKey || event.altKey || event.metaKey) return // Laisser les combinaisons système
+		if (event.ctrlKey || event.altKey || event.metaKey) return
 
-		const root = (datePickerRef.value as ComponentPublicInstance | null)?.$el as HTMLElement | undefined
+		const root = getRootElement()
 		if (!root) return
 
-		// Empêcher la fermeture du menu avec Tab et garder le focus à l'intérieur
 		event.preventDefault()
 		event.stopPropagation()
 
 		const target = event.target as HTMLElement | null
-		const todayButton = root.querySelector<HTMLElement>('.date-picker__today-button')
-		const focusables = getFocusableElements(root)
+		const todayButton = root.querySelector<HTMLElement>(TODAY_BUTTON_SELECTOR)
+		const focusables = getLogicalFocusOrder(root, getInitialFocusDate)
 		const firstFocusable = focusables[0]
-		if (!firstFocusable) {
-			// Aucun focusable : rester dans le menu via le bouton Aujourd'hui si présent
-			todayButton?.focus({ preventScroll: true })
-			return
-		}
+		const lastFocusable = focusables.at(-1)
+
+		if (!firstFocusable) return
 
 		const active = document.activeElement as HTMLElement | null
 
-		// Si on appuie sur Tab (sans Shift) depuis la grille des jours, des mois ou des années,
-		// on force le focus vers le bouton Aujourd'hui (s'il existe)
-		const isFromGrid = Boolean(
-			target?.closest('.v-date-picker-months')
-			|| target?.closest('.v-date-picker-years')
-			|| target?.closest('.v-date-picker-month'),
-		)
+		const isFromGrid = Boolean(target?.closest(DATE_PICKER_GRID_SOURCE_SELECTOR))
+		const isFromTodayButton = Boolean(target?.closest(TODAY_BUTTON_SELECTOR))
+		const gridTarget = root.querySelector<HTMLElement>('.v-date-picker-month [role="gridcell"][tabindex="-1"], .v-date-picker-month [data-v-date][tabindex="-1"]')
+			?? getDayGridFocusTarget(root, getInitialFocusDate)
 
+		// Tab depuis la grille → bouton Aujourd'hui
 		if (!event.shiftKey && isFromGrid && todayButton) {
 			todayButton.focus({ preventScroll: true })
 			return
 		}
 
-		if (!event.shiftKey && active === focusables.at(-1)) {
-			firstFocusable.focus({ preventScroll: true })
+		// Shift+Tab depuis la grille → précédent élément logique avant la grille
+		if (event.shiftKey && isFromGrid && active) {
+			const gridContainer = active.closest(DATE_PICKER_GRID_SELECTOR)
+			const gridIndex = gridTarget ? focusables.indexOf(gridTarget) : -1
+			const startIndex = gridIndex !== -1 ? gridIndex : focusables.indexOf(active)
+
+			for (let offset = 1; offset <= focusables.length; offset++) {
+				const candidate = focusables[(startIndex - offset + focusables.length) % focusables.length]
+				if (!candidate) continue
+				if (!gridContainer?.contains(candidate)) {
+					candidate.focus({ preventScroll: true })
+					break
+				}
+			}
 			return
 		}
 
-		if (event.shiftKey && active === focusables[0]) {
-			focusables.at(-1)?.focus({ preventScroll: true })
+		// Shift+Tab depuis le bouton Aujourd'hui → jour sélectionné dans la grille
+		if (event.shiftKey && isFromTodayButton) {
+			if (focusCurrentGridSelection(root)) return
+		}
+
+		const currentIndex = active ? focusables.indexOf(active) : -1
+
+		if (currentIndex === -1 && active) {
+			const preceding = focusables.filter(el =>
+				Boolean(active.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_PRECEDING),
+			)
+
+			const following = focusables.filter(el =>
+				Boolean(active.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING),
+			)
+
+			if (event.shiftKey) {
+				const prev = preceding.at(-1) ?? lastFocusable
+				prev?.focus({ preventScroll: true })
+			}
+			else {
+				const next = following[0] ?? firstFocusable
+				next.focus({ preventScroll: true })
+			}
+
 			return
 		}
 
-		// Comportement par défaut : laisser Tab circuler mais au sein du menu
-		const baseActive = active ?? firstFocusable
-		const currentIndex = focusables.indexOf(baseActive)
 		const safeIndex = currentIndex === -1 ? 0 : currentIndex
-		const nextIndex = event.shiftKey ? (safeIndex - 1 + focusables.length) % focusables.length : (safeIndex + 1) % focusables.length
+
+		const nextIndex = event.shiftKey
+			? (safeIndex - 1 + focusables.length) % focusables.length
+			: (safeIndex + 1) % focusables.length
+
 		const nextFocusable = focusables[nextIndex]
+
+		if (nextFocusable?.closest(DATE_PICKER_GRID_SELECTOR)) {
+			if (focusCurrentGridSelection(root)) return
+		}
+
 		nextFocusable?.focus({ preventScroll: true })
 	}
 

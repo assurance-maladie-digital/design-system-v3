@@ -136,3 +136,26 @@ describe('ExternalLinks', () => {
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 })
+
+// Le ring de focus est scopé (jsdom ne calcule pas :focus-visible) : on vérifie le
+// prérequis — l'activateur est un <button> natif focusable.
+describe('ExternalLinks - focus', () => {
+	const items = [
+		{ text: 'Ameli', href: 'https://www.ameli.fr' },
+		{ text: 'Service Public', href: 'https://www.service-public.fr' },
+	]
+
+	it('renders the activator as a native <button> so the focus ring applies', () => {
+		const wrapper = mount(ExternalLinks, { props: { items } })
+		expect(wrapper.get('.sy-external-links-btn').element.tagName).toBe('BUTTON')
+		wrapper.unmount()
+	})
+
+	it('is focusable', () => {
+		const wrapper = mount(ExternalLinks, { props: { items }, attachTo: document.body })
+		const button = wrapper.get('.sy-external-links-btn').element as HTMLButtonElement
+		button.focus()
+		expect(document.activeElement).toBe(button)
+		wrapper.unmount()
+	})
+})

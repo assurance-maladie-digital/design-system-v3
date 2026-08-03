@@ -4,6 +4,8 @@
 	import { locales as defaultLocales } from '../locales'
 	import { propValidator } from '@/utils/propValidator'
 	import { useRatingFocus } from '../useRatingFocus'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 	import {
 		mdiEmoticonHappyOutline,
 		mdiEmoticonSadOutline,
@@ -27,7 +29,7 @@
 		},
 		itemLabels: {
 			type: Array as PropType<string[]>,
-			default: () => defaultLocales.defaultEmotionLabels,
+			default: undefined,
 		},
 		readonly: {
 			type: Boolean,
@@ -42,10 +44,14 @@
 			default: true,
 		},
 		locales: {
-			type: Object as PropType<typeof defaultLocales>,
-			default: () => defaultLocales,
+			type: Object as PropType<DeepPartial<typeof defaultLocales>>,
+			default: () => ({}),
 		},
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
+
+	const resolvedItemLabels = computed(() => props.itemLabels ?? locales.value.defaultEmotionLabels)
 
 	const sadIcon = mdiEmoticonSadOutline
 	const neutralIcon = mdiEmoticonNeutralOutline
@@ -88,10 +94,10 @@
 
 	const getEmotionLabel = (value: number) => {
 		if (props.length === 2) {
-			const filteredLabels = props.itemLabels.filter((_, index) => index !== 1)
+			const filteredLabels = resolvedItemLabels.value.filter((_, index) => index !== 1)
 			return filteredLabels[value]
 		}
-		return props.itemLabels[value]
+		return resolvedItemLabels.value[value]
 	}
 
 	const {
@@ -180,7 +186,7 @@
 			class="locking-state text-caption"
 			:class="{'d-sr-only': internalValue !== -1}"
 		>
-			{{ internalValue === -1 ? props.locales.toValidate : props.locales.validated }}
+			{{ internalValue === -1 ? locales.toValidate : locales.validated }}
 		</p>
 	</fieldset>
 </template>
@@ -221,7 +227,7 @@
 	}
 
 	&:focus-visible {
-		outline: 2px solid currentcolor;
+		outline: 2px solid rgb(var(--v-theme-primary));
 		outline-offset: 2px;
 	}
 
@@ -229,8 +235,10 @@
 		border-color: currentcolor !important;
 	}
 
+	// Fond coloré de l'émotion : survol et sélection (`--active`) uniquement. PAS au focus :
+	// l'indicateur de focus clavier est le ring primary (ci-dessus), sans changement de fond —
+	// standard DS.
 	&--active,
-	&:focus,
 	&:hover {
 		&.sad {
 			background: rgb(var(--v-theme-errorVariantLighten));

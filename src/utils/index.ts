@@ -44,3 +44,8 @@ export { throttleDisplayFn }
 // Data utilities
 // ===========================
 export { deepCopy } from './functions/deepCopy'
+
+// ===========================
+// Locales utilities
+// ===========================
+export { mergeLocales, type DeepPartial } from './locales/mergeLocales'

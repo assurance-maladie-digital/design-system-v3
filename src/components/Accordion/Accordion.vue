@@ -225,11 +225,6 @@
 	&:first-child {
 		border-top-left-radius: var(--radius-md);
 		border-top-right-radius: var(--radius-md);
-
-		.sy-accordion-button--focused:not(:focus-visible) {
-			border-top-left-radius: inherit;
-			border-top-right-radius: inherit;
-		}
 	}
 
 	&:last-child {
@@ -295,27 +290,15 @@
 	}
 }
 
-/* Style pour l'accordéon ouvert (focus programmatique) */
-.sy-accordion .sy-accordion-item {
-	.sy-accordion-button--focused:not(:focus-visible) {
-		border-top-left-radius: inherit;
-		border-top-right-radius: inherit;
-	}
-}
-
+/* Ring DS de focus (clavier réel `:focus-visible` OU surbrillance programmatique via la
+   communication inter-accordéons `--focused`). L'`.sy-accordion-item` a `overflow: hidden`,
+   donc un ring en offset positif serait rogné : on utilise un outline inset (offset négatif)
+   qui reste dans le bouton. Focus = ring seul, pas de background (réservé au hover/actif). */
+.sy-accordion-button:focus-visible,
 .sy-accordion-button--focused:not(:focus-visible) {
-	background-color: rgba(var(--accordion-focus-color), 0.15);
-	border: 3px solid rgb(var(--accordion-focus-color));
+	outline: 2px solid rgb(var(--accordion-focus-color));
+	outline-offset: -2px;
 	z-index: 1;
-}
-
-/* Style pour l'état de focus lors de la navigation au clavier */
-.sy-accordion-button:focus-visible {
-	outline: none;
-	position: relative;
-	background-color: rgba(var(--accordion-focus-color), 0.15);
-	border: 3px solid rgb(var(--accordion-focus-color));
-	transition: background-color 0.2s ease;
 }
 
 .sy-accordion-content {
@@ -330,11 +313,11 @@
 	overflow: auto;
 }
 
+/* Région de contenu focusable (tabindex 0 à l'ouverture) : ring inset pour ne pas être rogné
+   par l'`overflow: hidden` de l'item. */
 .sy-accordion-content:focus-visible {
 	outline: 2px solid rgb(var(--accordion-focus-color));
-	border-top: 2px solid rgb(var(--accordion-focus-color));
-	outline-offset: 2px;
-	margin-top: 2px;
+	outline-offset: -2px;
 }
 
 .sy-accordion-content-inner {
@@ -345,7 +328,9 @@
 	margin: 0;
 }
 
-/* Style pour les éléments interactifs à l'intérieur du contenu */
+/* Éléments interactifs dans le contenu : ring DS simple (les boutons/liens natifs sont déjà
+   couverts par les overrides globaux `_btns.scss`/`_links.scss`). Pas de `box-shadow` glow :
+   un seul indicateur de focus. */
 .sy-accordion-content a:focus-visible,
 .sy-accordion-content button:focus-visible,
 .sy-accordion-content input:focus-visible,
@@ -353,7 +338,6 @@
 .sy-accordion-content textarea:focus-visible {
 	outline: 2px solid rgb(var(--accordion-focus-color));
 	outline-offset: 2px;
-	box-shadow: 0 0 0 2px rgba(var(--accordion-focus-color), 0.3);
 }
 
 .sy-accordion-content-item {

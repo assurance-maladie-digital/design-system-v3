@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-	import { computed, ref } from 'vue'
+	import { computed, readonly as readonlyState, ref } from 'vue'
 	import { VMessages } from 'vuetify/components'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
-	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useSyCheckBoxGroupValidation } from './composables/useSyCheckBoxGroupValidation'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
 	import type { SyCheckBoxGroupProps } from './types'
+	import { useLocales } from '@/composables/useLocales'
 
 	const props = withDefaults(
 		defineProps<SyCheckBoxGroupProps>(),
@@ -27,8 +27,11 @@
 			title: undefined,
 			...validationPropsDefaults,
 			isValidateOnBlur: false,
+			locales: () => ({}),
 		},
 	)
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emit = defineEmits(['update:modelValue'])
 
@@ -58,7 +61,7 @@
 		hasWarning,
 		hasSuccess,
 		defaultRules,
-	} = useSyCheckBoxGroupValidation(props, model, focused)
+	} = useSyCheckBoxGroupValidation(props, model, focused, locales)
 
 	const reset = () => {
 		clearValidation()
@@ -122,14 +125,17 @@
 		return ids.length > 0 ? ids.join(' ') : undefined
 	})
 
-	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit, clearValidation, reset)
-
 	defineExpose({
 		validateOnSubmit,
 		clearValidation,
 		reset,
 		defaultRules,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 		checkErrorOnBlur: () => {
 			focused.value = false
 			if (props.isValidateOnBlur) {
@@ -173,7 +179,7 @@
 				:disabled="props.disabled || opt.disabled"
 				:readonly="props.readonly || opt.readonly"
 				:name="opt.name || props.name"
-				:aria-label="opt.ariaLabel || `Option ${opt.value}`"
+				:aria-label="opt.ariaLabel || locales.optionLabel(opt.value)"
 				:title="opt.title"
 				:hide-details="props.hideDetails"
 				:density="props.density"

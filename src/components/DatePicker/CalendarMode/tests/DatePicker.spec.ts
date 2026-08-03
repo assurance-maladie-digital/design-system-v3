@@ -1,7 +1,8 @@
 import { mount, flushPromises, type VueWrapper } from '@vue/test-utils'
-import { describe, it, expect, afterEach, beforeEach } from 'vitest'
+import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest'
 import { nextTick } from 'vue'
 import DatePicker from '../DatePicker.vue'
+import { locales } from '../../locales'
 
 type DatePickerInstance = InstanceType<typeof DatePicker>
 
@@ -36,6 +37,61 @@ describe('DatePicker', () => {
 		expect(wrapper.exists()).toBe(true)
 		const input = wrapper.find('input')
 		expect(input.exists()).toBe(true)
+	})
+
+	it('keeps the visible calendar heading free of live-region attributes', async () => {
+		const wrapper = mountComponent()
+		const vm = wrapper.vm as DatePickerInstance
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const heading = document.querySelector<HTMLElement>(`#${vm.datePickerHeadingId}`)
+		expect(heading).not.toBeNull()
+		expect(heading?.getAttribute('aria-live')).toBeNull()
+		expect(heading?.getAttribute('aria-atomic')).toBeNull()
+	})
+
+	it('uses a stable dialog title instead of the dynamic date heading as accessible name', async () => {
+		const wrapper = mountComponent()
+		const vm = wrapper.vm as DatePickerInstance
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const dialog = document.querySelector<HTMLElement>(`#${vm.datePickerDialogId}`)
+		expect(dialog?.getAttribute('aria-labelledby')).toBe(vm.datePickerTitleId)
+
+		const title = document.querySelector<HTMLElement>(`#${vm.datePickerTitleId}`)
+		expect(title).not.toBeNull()
+		expect(title?.textContent?.trim()).toBe(locales.calendarTitle)
+	})
+
+	it('links the readonly activator wrapper to the exposed dialog when the calendar is open', async () => {
+		const wrapper = mountComponent()
+		const vm = wrapper.vm as DatePickerInstance
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const activatorWrapper = wrapper.find(`[aria-controls="${vm.datePickerDialogId}"]`)
+		expect(activatorWrapper.exists()).toBe(true)
+	})
+
+	it('removes aria-controls from the activator wrapper when the calendar closes', async () => {
+		const wrapper = mountComponent()
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+		expect(wrapper.find(`[aria-controls="${vm.datePickerDialogId}"]`).exists()).toBe(true)
+
+		vm.isDatePickerVisible = false
+		await nextTick()
+		await flushPromises()
+
+		expect(wrapper.find(`[aria-controls="${vm.datePickerDialogId}"]`).exists()).toBe(false)
 	})
 
 	/**
@@ -441,8 +497,174 @@ describe('DatePicker', () => {
 		vm.isDatePickerVisible = true
 		vm.handleClickOutside({ target: outsideElement } as unknown as MouseEvent)
 
+		expect(vm.isDatePickerVisible).toBe(false)
 		const closedEvents = wrapper.emitted('closed')
 		expect(closedEvents).toBeTruthy()
+	})
+
+	it('emits closed when visibility is externally toggled to false', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+
+		vm.isDatePickerVisible = false
+		await flushPromises()
+
+		const closedEvents = wrapper.emitted('closed')
+		expect(closedEvents).toBeTruthy()
+		expect(closedEvents).toHaveLength(1)
+	})
+
+	it('does not render the today button when displayTodayButton is false', async () => {
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '',
+				format: 'DD/MM/YYYY',
+				displayTodayButton: false,
+			},
+			attachTo: document.body,
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		expect(document.body.querySelector('.date-picker__today-button')).toBeNull()
+
+		wrapper.unmount()
+	})
+
+	it('restores focus to the input and emits closed when Escape closes the open dialog', async () => {
+		vi.useFakeTimers()
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '',
+				format: 'DD/MM/YYYY',
+			},
+			attachTo: document.body,
+		})
+		const vm = wrapper.vm as DatePickerInstance
+		const focusSpy = vi.spyOn(HTMLInputElement.prototype, 'focus')
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const dialog = document.body.querySelector<HTMLElement>(`#${vm.datePickerDialogId}`)
+		expect(dialog).not.toBeNull()
+
+		dialog?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
+		await flushPromises()
+		await vi.runAllTimersAsync()
+		await nextTick()
+
+		expect(vm.isDatePickerVisible).toBe(false)
+		expect(wrapper.emitted('closed')).toBeTruthy()
+		expect(focusSpy).toHaveBeenCalled()
+
+		focusSpy.mockRestore()
+		vi.useRealTimers()
+		wrapper.unmount()
+	})
+
+	it('does not change the selected date when navigating the calendar with arrow keys (calendar-only mode)', async () => {
+		vi.useFakeTimers()
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '15/06/2024',
+				format: 'DD/MM/YYYY',
+			},
+			attachTo: document.body,
+		})
+
+		const input = wrapper.find('input')
+		expect(input.element.value).toBe('15/06/2024')
+
+		// Ouvre le calendrier via l'activator (mode calendar-only : pas de noCalendar, pas de useCombinedMode)
+		await input.trigger('click')
+		await nextTick()
+		await flushPromises()
+		// Laisse le listener de navigation clavier s'attacher (setTimeout différé)
+		await vi.runAllTimersAsync()
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		// Le focus initial doit être placé sur un bouton de jour du calendrier
+		const focusedDay = document.activeElement as HTMLElement | null
+		expect(focusedDay).not.toBeNull()
+		expect(focusedDay?.closest('.v-date-picker-month__day')).not.toBeNull()
+
+		// Capture de la valeur avant navigation, via le DOM uniquement
+		const valueBefore = input.element.value
+		const emittedBefore = wrapper.emitted('update:modelValue')?.length ?? 0
+
+		// Plusieurs navigations clavier vers la droite : doivent uniquement déplacer le focus,
+		// sans modifier la date sélectionnée ni émettre de mise à jour du modèle.
+		for (let i = 1; i <= 5; i++) {
+			const day = document.activeElement as HTMLElement | null
+			day?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }))
+			await flushPromises()
+			await vi.runAllTimersAsync()
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+		}
+
+		// La valeur affichée dans l'activator ne doit pas changer
+		expect(input.element.value).toBe(valueBefore)
+		// Aucun update:modelValue supplémentaire ne doit être émis suite aux navigations fléchées
+		const emittedAfter = wrapper.emitted('update:modelValue')?.length ?? 0
+		expect(emittedAfter).toBe(emittedBefore)
+
+		vi.useRealTimers()
+		wrapper.unmount()
+	})
+
+	it('updates the displayed month when keyboard navigation crosses to an adjacent next-month day', async () => {
+		vi.useFakeTimers()
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '30/06/2024',
+				format: 'DD/MM/YYYY',
+			},
+			attachTo: document.body,
+		})
+
+		const input = wrapper.find('input')
+		await input.trigger('click')
+		await nextTick()
+		await flushPromises()
+		await vi.runAllTimersAsync()
+		await flushPromises()
+
+		const vm = wrapper.vm as DatePickerInstance & {
+			currentMonth: string | null
+			currentYear: string | null
+		}
+
+		const focusedDay = document.activeElement as HTMLElement | null
+		expect(focusedDay?.closest('[data-v-date="2024-06-30"]')).not.toBeNull()
+
+		focusedDay?.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true, cancelable: true }))
+		await flushPromises()
+		await vi.runAllTimersAsync()
+		await flushPromises()
+		await wrapper.vm.$nextTick()
+
+		expect(vm.currentMonth).toBe('6')
+		expect(vm.currentYear).toBe('2024')
+		expect(document.activeElement?.closest('[data-v-date="2024-07-01"]')).not.toBeNull()
+
+		vi.useRealTimers()
+		wrapper.unmount()
 	})
 
 	it('handleSelectToday selects today and keeps the component usable', async () => {
@@ -564,6 +786,20 @@ describe('DatePicker - Events & Interactions', () => {
 		expect(evWrapper.vm.isDatePickerVisible).toBe(false)
 	})
 
+	it('handleInputKeydown Enter ouvre le calendrier et prevent le comportement par défaut', async () => {
+		const event = new KeyboardEvent('keydown', {
+			key: 'Enter',
+			cancelable: true,
+		})
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await (evWrapper.vm as any).handleInputKeydown(event)
+		await flushPromises()
+
+		expect(evWrapper.vm.isDatePickerVisible).toBe(true)
+		expect(event.defaultPrevented).toBe(true)
+	})
+
 	it('onUpdateMonth met à jour currentMonth et currentMonthName', async () => {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		;(evWrapper.vm as any).onUpdateMonth('5')
@@ -584,6 +820,41 @@ describe('DatePicker - Events & Interactions', () => {
 		;(evWrapper.vm as any).openDatePickerOnFocus()
 		await nextTick()
 		expect(evWrapper.emitted('focus')).toBeTruthy()
+	})
+
+	it('openDatePickerOnFocus does not open the calendar in current calendar mode behavior', async () => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(evWrapper.vm as any).openDatePickerOnFocus()
+		await nextTick()
+		expect(evWrapper.vm.isDatePickerVisible).toBe(false)
+	})
+
+	it('openDatePickerOnIconClick toggles the calendar when interaction is enabled', async () => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await (evWrapper.vm as any).openDatePickerOnIconClick()
+		await flushPromises()
+		expect(evWrapper.vm.isDatePickerVisible).toBe(true)
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await (evWrapper.vm as any).openDatePickerOnIconClick()
+		await flushPromises()
+		expect(evWrapper.vm.isDatePickerVisible).toBe(false)
+	})
+
+	it('renders a keyboard-accessible calendar icon button on the activator', async () => {
+		const wrapper = mount(DatePicker, {
+			props: { label: 'Date de départ', modelValue: '', format: 'DD/MM/YYYY' },
+		})
+
+		await nextTick()
+
+		const iconButton = wrapper.find('.sy-text-field__icon-button')
+		expect(iconButton.exists()).toBe(true)
+		expect(iconButton.attributes('type')).toBe('button')
+		expect(iconButton.attributes('disabled')).toBeUndefined()
+		expect(iconButton.attributes('aria-label')).toBe('Date de départ - ouvrir le calendrier')
+
+		wrapper.unmount()
 	})
 
 	it('openDatePickerOnIconClick ne fait rien si disabled', async () => {

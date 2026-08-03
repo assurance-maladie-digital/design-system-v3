@@ -30,6 +30,10 @@ const expectedPropOptions: ExpectedPropOptions<typeof AmeliproMenu> = {
 		type: String,
 		required: true,
 	},
+	locales: {
+		type: Object,
+		default: () => ({}),
+	},
 }
 
 const requiredPropValues = (): ComponentProps<typeof AmeliproMenu> => ({ uniqueId: 'required-unique-id' })

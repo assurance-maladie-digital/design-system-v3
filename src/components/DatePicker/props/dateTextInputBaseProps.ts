@@ -15,6 +15,7 @@ export const useDateTextInputBaseProps = (
 	'custom-warning-rules': props.customWarningRules,
 	'disabled': props.disabled,
 	'readonly': props.readonly,
+	'disable-click-button': false,
 	'is-outlined': props.isOutlined,
 	'display-icon': props.displayIcon,
 	'display-append-icon': props.displayAppendIcon,

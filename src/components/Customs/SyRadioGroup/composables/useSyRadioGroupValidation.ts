@@ -35,6 +35,7 @@ export interface UseSyRadioGroupValidationReturn {
 	hasSuccess: ComputedRef<boolean | undefined>
 	defaultRules: ComputedRef<ValidationRule[]>
 	focused: Ref<boolean>
+	clearValidation: () => void
 }
 
 /**
@@ -53,7 +54,10 @@ export interface UseSyRadioGroupValidationReturn {
 export function useSyRadioGroupValidation(
 	props: SyRadioGroupValidationProps,
 	model: Ref<PropertyKey | null>,
-	focused?: Ref<boolean>,
+	focused: Ref<boolean>,
+	locales: Ref<{
+		requiredField: (label: string | undefined) => string
+	}>,
 ): UseSyRadioGroupValidationReturn {
 	// Utiliser la variable focused passée en paramètre, sinon en créer une locale
 	const focusedRef = focused || ref(false)
@@ -64,7 +68,7 @@ export function useSyRadioGroupValidation(
 			? [{
 					type: 'required',
 					options: {
-						message: `Le champ ${props.fieldIdentifier || props.label || 'ce champ'} est requis.`,
+						message: locales.value.requiredField(props.fieldIdentifier || props.label),
 						fieldIdentifier: props.label,
 					},
 				}]
@@ -84,6 +88,7 @@ export function useSyRadioGroupValidation(
 		hasError,
 		hasWarning,
 		hasSuccess,
+		clearValidation,
 	} = useValidation({
 		modelValue: model,
 		readonly: toRef(() => props.readonly ?? false),
@@ -123,5 +128,6 @@ export function useSyRadioGroupValidation(
 		hasSuccess,
 		defaultRules,
 		focused: focusedRef,
+		clearValidation,
 	}
 }

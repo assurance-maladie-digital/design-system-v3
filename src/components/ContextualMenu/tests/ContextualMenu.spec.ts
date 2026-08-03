@@ -239,3 +239,29 @@ describe('ContextualMenu', () => {
 		})
 	})
 })
+
+// Le ring de focus est scopé (jsdom ne calcule pas :focus-visible) : on vérifie le
+// prérequis — des liens <a> natifs focusables.
+describe('ContextualMenu - focus', () => {
+	const items = [
+		{ text: 'Accueil', hash: '#accueil' },
+		{ text: 'Compte', hash: '#compte' },
+	]
+
+	it('renders native <a> links so the focus ring applies', () => {
+		const wrapper = mount(ContextualMenu, { props: { ariaLabel: 'Menu', items } })
+		expect(wrapper.get('.vd-contextual-menu a').element.tagName).toBe('A')
+		wrapper.unmount()
+	})
+
+	it('is focusable', () => {
+		const wrapper = mount(ContextualMenu, {
+			props: { ariaLabel: 'Menu', items },
+			attachTo: document.body,
+		})
+		const link = wrapper.get('.vd-contextual-menu a').element as HTMLAnchorElement
+		link.focus()
+		expect(document.activeElement).toBe(link)
+		wrapper.unmount()
+	})
+})

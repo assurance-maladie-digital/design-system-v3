@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed, ref, useId, watch } from 'vue'
+	import { computed, readonly as readonlyState, ref, useId, watch } from 'vue'
 	import type { VCheckbox } from 'vuetify/components/VCheckbox'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiCheckboxBlankOutline, mdiCheckboxMarked, mdiMinusBox } from '@mdi/js'
@@ -8,7 +8,9 @@
 	import { useSyCheckboxA11y } from './composables/useSyCheckboxA11y'
 	import { cnamSemanticTokens } from '@/designTokens/tokens/cnam/cnamSemantic'
 	import type { SyCheckboxProps } from './types'
+	import { locales as defaultLocales } from './locales'
 	import { vRgaaSvgFix } from '@/directives/rgaaSvgFix'
+	import { useLocales } from '@/composables/useLocales'
 
 	const props = withDefaults(
 		defineProps<SyCheckboxProps>(),
@@ -27,15 +29,19 @@
 			id: undefined,
 			name: undefined,
 			value: undefined,
-			trueValue: () => true,
-			falseValue: () => false,
+			trueValue: undefined,
+			falseValue: undefined,
+			multiple: undefined,
 			cycleIndeterminate: false,
 			displayAsterisk: false,
 			decorative: false,
+			locales: () => ({}),
 			...validationPropsDefaults,
 			isValidateOnBlur: false,
 		},
 	)
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emit = defineEmits(['update:modelValue', 'update:indeterminate'])
 
@@ -75,7 +81,7 @@
 		hasError,
 		hasWarning,
 		hasSuccess,
-	} = useSyCheckboxValidation(props, model, focused)
+	} = useSyCheckboxValidation(props, model, focused, locales)
 
 	// Texte d'aide affiché sous la case, tant qu'aucun message de validation n'est présent
 	const showHelpText = computed(() =>
@@ -93,12 +99,21 @@
 			internalIndeterminate.value = false
 			emit('update:indeterminate', false)
 		}
-		model.value = false
+		model.value = isMultiple.value ? [] : false
 	}
+
+	const isMultiple = computed(() => !!props.multiple || (props.multiple == null && Array.isArray(props.modelValue)))
+
+	const isChecked = computed(() => {
+		if (isMultiple.value) {
+			return Array.isArray(props.modelValue) && props.modelValue.includes(props.value)
+		}
+		return !!props.modelValue
+	})
 
 	const ariaChecked = computed(() => {
 		if (internalIndeterminate.value) return 'mixed'
-		return model.value ? 'true' : 'false'
+		return isChecked.value ? 'true' : 'false'
 	})
 
 	const labelColor = computed(() => {
@@ -151,7 +166,9 @@
 	}
 
 	const handleActivation = (event: Event) => {
-		if (!props.cycleIndeterminate) {
+		// Le cycle tri-state (false → indéterminé → true) n'a de sens qu'en mode booléen :
+		// en mode multiple le modèle est un tableau, on laisse le toggle standard opérer.
+		if (!props.cycleIndeterminate || isMultiple.value) {
 			return
 		}
 
@@ -165,6 +182,12 @@
 		clearValidation,
 		reset,
 		toggleMixed,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 	})
 </script>
 
@@ -177,8 +200,8 @@
 			aria-hidden="true"
 		>
 			<SyIcon
-				:icon="internalIndeterminate ? mdiMinusBox : (model ? mdiCheckboxMarked : mdiCheckboxBlankOutline)"
-				:color="(model || internalIndeterminate) ? props.color : '#727273'"
+				:icon="internalIndeterminate ? mdiMinusBox : (isChecked ? mdiCheckboxMarked : mdiCheckboxBlankOutline)"
+				:color="(isChecked || internalIndeterminate) ? props.color : '#727273'"
 				:class="{'text-disabled': props.disabled}"
 				:decorative="true"
 				class="mr-2"
@@ -222,6 +245,8 @@
 			:error-messages="errors"
 			:messages="hasError ? errors : (hasWarning ? warnings : (hasSuccess && props.showSuccessMessages ? successes : []))"
 			:indeterminate="internalIndeterminate"
+			:value="isMultiple ? props.value : undefined"
+			:multiple="isMultiple ? props.multiple : undefined"
 			:true-value="props.trueValue"
 			:false-value="props.falseValue"
 			:aria-checked="ariaChecked"

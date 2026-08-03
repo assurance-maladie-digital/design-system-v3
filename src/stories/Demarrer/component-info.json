@@ -1,16 +1,32 @@
 {
-  "date": "2026-07-15T13:57:00.294Z",
-  "totalCount": 77,
+  "date": "2026-08-03T12:02:06.856Z",
+  "totalCount": 78,
   "results": [
     {
       "componentName": "Accordion",
       "storybookTitle": "Composants/Données/Accordion",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "06/07/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
+        {
+          "date": "2026-07-17",
+          "message": "use useId (#2402)"
+        },
+        {
+          "date": "2026-07-16",
+          "message": "fix(Accordion): add overflow auto to open content for better visibility (#2401)"
+        },
+        {
+          "date": "2026-07-16",
+          "message": "Mise à jour des radius (#2393)"
+        },
         {
           "date": "2026-07-06",
           "message": "Feat/accordion icon right and compact mode (#2356)"
@@ -34,25 +50,20 @@
         {
           "date": "2026-03-25",
           "message": "[Accordeon] Ajout du vmodel (#2021)"
-        },
-        {
-          "date": "2026-03-11",
-          "message": "Hx: replace hx to SyHeading (#1874)"
-        },
-        {
-          "date": "2026-02-04",
-          "message": "Fix post audit et renomage du SyBtnSelect en SyBtnMenu (#1759)"
-        },
-        {
-          "date": "2026-01-20",
-          "message": "update vue-tsconfig (#1739)"
-        },
-        {
-          "date": "2026-01-14",
-          "message": "Accordion : add slots  (#1707)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "9cdd71c032483c4b1424f42ee0426e3eba378856",
           "date": "2026-03-25 14:15:29 +0100",
@@ -147,11 +158,23 @@
       "componentName": "BackBtn",
       "storybookTitle": "Composants/Boutons/BackBtn",
       "status": "actif",
-      "functionalVersion": "1.0.22",
-      "functionalDate": "12/03/2026",
-      "a11yVersion": "1.0.23",
-      "a11yDate": "30/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
+        {
+          "date": "2026-07-21",
+          "message": "configuration colo (#2406)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -179,21 +202,20 @@
         {
           "date": "2026-02-12",
           "message": "SyIcon: replace VIcon to SyIcon (#1793)"
-        },
-        {
-          "date": "2025-11-07",
-          "message": "Feat/989 ajout de tests unitaires pour le composant ameliprodisclosure (#1212)"
-        },
-        {
-          "date": "2025-10-27",
-          "message": "BackBtn : fix display (#1327)"
-        },
-        {
-          "date": "2025-10-20",
-          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
           "date": "2026-03-30 08:20:25 +0100",
@@ -266,11 +288,15 @@
       "componentName": "BackToTopBtn",
       "storybookTitle": "Composants/Boutons/BackToTopBtn",
       "status": "actif",
-      "functionalVersion": "1.0.20",
-      "functionalDate": "12/02/2026",
-      "a11yVersion": "1.0.23",
-      "a11yDate": "30/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -306,13 +332,20 @@
         {
           "date": "2025-02-20",
           "message": "Add usages pages (#387)"
-        },
-        {
-          "date": "2025-01-08",
-          "message": "Ajout d'une configuration pour stylelint (#323)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "5f99cd9f1384e5cabcd71e416cfa15c1d072c704",
           "date": "2026-03-30 08:23:27 +0100",
@@ -407,11 +440,23 @@
       "componentName": "Captcha",
       "storybookTitle": "Composants/Formulaires/Captcha",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "02/07/2026",
-      "a11yVersion": "1.0.24",
-      "a11yDate": "30/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -439,21 +484,20 @@
         {
           "date": "2026-03-19",
           "message": "Corrige les warnings présent lors de l'exécution des tests (#1998)"
-        },
-        {
-          "date": "2026-03-18",
-          "message": "SyAutocomplete: improve loading state (#1987)"
-        },
-        {
-          "date": "2026-03-12",
-          "message": "Update Vuetify 3.12.2 (#1951)"
-        },
-        {
-          "date": "2026-02-12",
-          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "8cfc8188ea78ca5d067d5d4ebc73a09b395a18da",
           "date": "2026-06-16 14:55:28 +0200",
@@ -570,11 +614,15 @@
       "componentName": "ChipList",
       "storybookTitle": "Composants/Données/ChipList",
       "status": "actif",
-      "functionalVersion": "1.0.27",
-      "functionalDate": "20/05/2026",
-      "a11yVersion": "1.0.24",
-      "a11yDate": "30/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -610,13 +658,20 @@
         {
           "date": "2025-10-20",
           "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
-        },
-        {
-          "date": "2025-08-12",
-          "message": "ChipList : fix after audit v1 (#948)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "1fe640369828a904bf352c1ad78f9a9b5cf7a4f6",
           "date": "2026-03-30 15:47:27 +0100",
@@ -711,11 +766,15 @@
       "componentName": "CollapsibleList",
       "storybookTitle": "Composants/Données/CollapsibleList",
       "status": "actif",
-      "functionalVersion": "1.0.22",
-      "functionalDate": "11/03/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -751,13 +810,20 @@
         {
           "date": "2025-01-10",
           "message": "fix action code ex (#333)"
-        },
-        {
-          "date": "2025-01-08",
-          "message": "Ajout d'une configuration pour stylelint (#323)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
           "date": "2026-02-11 12:51:15 +0100",
@@ -808,11 +874,15 @@
       "componentName": "ContextualMenu",
       "storybookTitle": "Composants/Navigation/ContextualMenu",
       "status": "actif",
-      "functionalVersion": "0.0.8-alpha",
-      "functionalDate": "08/01/2025",
-      "a11yVersion": "1.0.21",
-      "a11yDate": "24/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -847,6 +917,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "1a732dfede955fc81c25240d65240888a8f6f5e2",
           "date": "2026-02-24 11:11:24 +0100",
@@ -919,11 +1000,15 @@
       "componentName": "CookieBanner",
       "storybookTitle": "Composants/Feedback/CookieBanner",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "26/06/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-08",
           "message": "Feat/improve suivi comp (#2378)"
@@ -959,13 +1044,20 @@
         {
           "date": "2025-10-20",
           "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
-        },
-        {
-          "date": "2025-08-01",
-          "message": "Retirer les important des styles de typographies (#867)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "462a742899258fad303074faa447e8c8a2b109b2",
           "date": "2026-03-11 11:00:31 +0100",
@@ -1104,11 +1196,15 @@
       "componentName": "CookiesSelection",
       "storybookTitle": "Composants/Feedback/CookiesSelection",
       "status": "actif",
-      "functionalVersion": "1.0.26",
-      "functionalDate": "28/04/2026",
-      "a11yVersion": "1.0.17",
-      "a11yDate": "06/01/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-05-29",
           "message": "Feat/add cypress test (#2203)"
@@ -1144,13 +1240,20 @@
         {
           "date": "2025-04-14",
           "message": "Amélioration des tests avec vitest (#525)"
-        },
-        {
-          "date": "2025-03-26",
-          "message": "Ajout des règles de validation manquantes (#461)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "462a742899258fad303074faa447e8c8a2b109b2",
           "date": "2026-03-11 11:00:31 +0100",
@@ -1234,11 +1337,15 @@
       "componentName": "CopyBtn",
       "storybookTitle": "Composants/Boutons/CopyBtn",
       "status": "actif",
-      "functionalVersion": "1.0.27",
-      "functionalDate": "20/05/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -1274,13 +1381,20 @@
         {
           "date": "2026-02-12",
           "message": "SyIcon: replace VIcon to SyIcon (#1793)"
-        },
-        {
-          "date": "2025-12-10",
-          "message": "Fix Vuetify sass warn (#1594)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "1c6d06aa176680c4bc2e300ffa0d467f9b97c744",
           "date": "2026-03-06 09:53:08 +0100",
@@ -1386,11 +1500,27 @@
       "componentName": "Customs/Selects/SelectBtnField",
       "storybookTitle": "Composants/Formulaires/Selects/SelectBtnField",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "16/06/2026",
-      "a11yVersion": "1.0.24",
-      "a11yDate": "30/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
+        {
+          "date": "2026-07-16",
+          "message": "Mise à jour des radius (#2393)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -1414,25 +1544,20 @@
         {
           "date": "2026-05-13",
           "message": "SelectBtnField : Migration composant (#2171)"
-        },
-        {
-          "date": "2026-04-23",
-          "message": "SelectBtnField : Bug lors de l'utilisation de multiple (#2130)"
-        },
-        {
-          "date": "2026-04-21",
-          "message": "Tokens simplify v2 (#2102)"
-        },
-        {
-          "date": "2026-01-20",
-          "message": "update vue-tsconfig (#1739)"
-        },
-        {
-          "date": "2025-12-05",
-          "message": "SelectBtnField fix des retours d'audits (#1543)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "3b4a99c7a74f7c09dafd40f6e5ba439c8e54dac2",
           "date": "2026-06-16 17:04:44 +0200",
@@ -1560,11 +1685,35 @@
       "componentName": "Customs/Selects/SyAutocomplete",
       "storybookTitle": "Composants/Formulaires/Selects/SyAutocomplete",
       "status": "actif",
-      "functionalVersion": "1.1.0",
-      "functionalDate": "01/06/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
       "a11yVersion": "1.0.27",
       "a11yDate": "13/05/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "SySelect: fix selection display when items is a string array (#2425)"
+        },
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-24",
+          "message": "Fix de l'enregitrement des composants au SyForm (#2421)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
+        {
+          "date": "2026-07-17",
+          "message": "use useId (#2402)"
+        },
         {
           "date": "2026-07-08",
           "message": "Feat/improve suivi comp (#2378)"
@@ -1580,33 +1729,20 @@
         {
           "date": "2026-06-01",
           "message": "[SyTextField] Ajout de stories concernant la validation (#2181)"
-        },
-        {
-          "date": "2026-05-29",
-          "message": "Feat/add cypress test (#2203)"
-        },
-        {
-          "date": "2026-05-22",
-          "message": "SyTextArea: improve validation (#2195)"
-        },
-        {
-          "date": "2026-05-20",
-          "message": "Implémentation des nouveaux tokens (#2164)"
-        },
-        {
-          "date": "2026-05-13",
-          "message": "Autocomplete: add prepend item slot (#2176)"
-        },
-        {
-          "date": "2026-05-12",
-          "message": "SyAutocomplete: improve validation (#2169)"
-        },
-        {
-          "date": "2026-04-30",
-          "message": "Fix/success state display (#2158)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "cae900d3b63f33c6f5eb30abd4c014eb58729468",
           "date": "2026-06-01 11:06:12 +0200",
@@ -1734,11 +1870,27 @@
       "componentName": "Customs/Selects/SyInputSelect",
       "storybookTitle": "Composants/Formulaires/Selects/SyInputSelect",
       "status": "déprécié",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "02/07/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
+        {
+          "date": "2026-07-17",
+          "message": "use useId (#2402)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -1762,31 +1914,37 @@
         {
           "date": "2026-03-05",
           "message": "BugFix : Correction sur différents composant AP (#1933)"
-        },
-        {
-          "date": "2026-03-04",
-          "message": "Feat/143 migration error page (#1896)"
-        },
-        {
-          "date": "2026-02-12",
-          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
-        },
-        {
-          "date": "2026-01-28",
-          "message": "fix doc (#1765)"
-        },
-        {
-          "date": "2026-01-20",
-          "message": "update vue-tsconfig (#1739)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+          "date": "2026-07-27 14:32:02 +0200",
+          "dateFr": "27/07/2026",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+          "version": "1.1.2",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "b76045911a704d35026f9a97a68716da6323f256",
           "date": "2026-07-02 10:31:06 +0200",
           "dateFr": "02/07/2026",
           "message": "Migration du composant `SyInputSelect` (#2348)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -1842,11 +2000,31 @@
       "componentName": "Customs/Selects/SySelect",
       "storybookTitle": "Composants/Formulaires/Selects/SySelect",
       "status": "actif",
-      "functionalVersion": "1.1.0",
-      "functionalDate": "03/06/2026",
-      "a11yVersion": "1.0.25",
-      "a11yDate": "21/04/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "SySelect: fix selection display when items is a string array (#2425)"
+        },
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
+        {
+          "date": "2026-07-17",
+          "message": "use useId (#2402)"
+        },
         {
           "date": "2026-07-08",
           "message": "Feat/improve suivi comp (#2378)"
@@ -1866,29 +2044,53 @@
         {
           "date": "2026-06-02",
           "message": "Validation: success message false by default (#2231)"
-        },
-        {
-          "date": "2026-06-01",
-          "message": "[SyTextField] Ajout de stories concernant la validation (#2181)"
-        },
-        {
-          "date": "2026-05-29",
-          "message": "Feat/add cypress test (#2203)"
-        },
-        {
-          "date": "2026-05-22",
-          "message": "SyTextArea: improve validation (#2195)"
-        },
-        {
-          "date": "2026-05-20",
-          "message": "Implémentation des nouveaux tokens (#2164)"
-        },
-        {
-          "date": "2026-05-13",
-          "message": "Autocomplete: add prepend item slot (#2176)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "45ce4db94c37746d9e3c0b3d9883d27eae0841e7",
+          "date": "2026-07-27 14:56:33 +0200",
+          "dateFr": "27/07/2026",
+          "message": "SySelect: fix selection display when items is a string array (#2425)",
+          "version": "1.1.2",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+          "date": "2026-07-27 14:32:02 +0200",
+          "dateFr": "27/07/2026",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+          "version": "1.1.2",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "d80a8e818663520dde7be8fd994b0340c35922b2",
+          "date": "2026-07-17 08:55:42 +0200",
+          "dateFr": "17/07/2026",
+          "message": "use useId (#2402)",
+          "version": "1.1.2",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "6a3052d6b95758d0342b712a62cb6a02d040c136",
           "date": "2026-06-03 17:32:15 +0200",
@@ -2159,11 +2361,27 @@
       "componentName": "Customs/SyCheckbox",
       "storybookTitle": "Composants/Formulaires/SyCheckbox",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "02/07/2026",
-      "a11yVersion": "1.1.1",
-      "a11yDate": "08/07/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "[SyCheckbox] multiple (#2410)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-08",
           "message": "Feat/improve suivi comp (#2378)"
@@ -2187,31 +2405,37 @@
         {
           "date": "2026-06-05",
           "message": "Filtres : corrections de bugs (#2245)"
-        },
-        {
-          "date": "2026-06-02",
-          "message": "Validation: success message false by default (#2231)"
-        },
-        {
-          "date": "2026-05-29",
-          "message": "Feat/add cypress test (#2203)"
-        },
-        {
-          "date": "2026-05-20",
-          "message": "Implémentation des nouveaux tokens (#2164)"
-        },
-        {
-          "date": "2026-05-20",
-          "message": "Feat/improve tests (#2192)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "d8257e99afab773ca4986c43262aeba95297a8ce",
+          "date": "2026-07-23 15:47:19 +0200",
+          "dateFr": "23/07/2026",
+          "message": "[SyCheckbox] multiple (#2410)",
+          "version": "1.1.2",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "7f2a9c3ab64afbcceb675f6207bcef447a508ec8",
           "date": "2026-07-08 14:17:13 +0200",
           "dateFr": "08/07/2026",
           "message": "[SyCheckbox] fix des retours d'accessibilitées (#2366)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -2222,7 +2446,7 @@
           "date": "2026-06-24 14:14:23 +0200",
           "dateFr": "24/06/2026",
           "message": "Update migration doc + restructure Guide du dev (#2318)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -2233,7 +2457,7 @@
           "date": "2026-06-23 15:07:43 +0200",
           "dateFr": "23/06/2026",
           "message": "fix(SyCheckbox): improve focus styling (#2311)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -2399,11 +2623,27 @@
       "componentName": "Customs/SyCheckBoxGroup",
       "storybookTitle": "Composants/Formulaires/SyCheckBoxGroup",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "12/06/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
       "a11yVersion": "1.0.21",
       "a11yDate": "23/02/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-24",
+          "message": "Fix de l'enregitrement des composants au SyForm (#2421)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-09",
           "message": "Validation: fix empty array on multiple (#2380)"
@@ -2427,31 +2667,37 @@
         {
           "date": "2026-06-02",
           "message": "Validation: success message false by default (#2231)"
-        },
-        {
-          "date": "2026-05-29",
-          "message": "Feat/add cypress test (#2203)"
-        },
-        {
-          "date": "2026-05-20",
-          "message": "Implémentation des nouveaux tokens (#2164)"
-        },
-        {
-          "date": "2026-04-30",
-          "message": "Fix/success state display (#2158)"
-        },
-        {
-          "date": "2026-04-03",
-          "message": "Amelioration du système de validation (#1902)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+          "date": "2026-07-27 14:32:02 +0200",
+          "dateFr": "27/07/2026",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+          "version": "1.1.2",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "7f2a9c3ab64afbcceb675f6207bcef447a508ec8",
           "date": "2026-07-08 14:17:13 +0200",
           "dateFr": "08/07/2026",
           "message": "[SyCheckbox] fix des retours d'accessibilitées (#2366)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -2548,11 +2794,15 @@
       "componentName": "Customs/SyIcon",
       "storybookTitle": "Composants/Données/SyIcon",
       "status": "actif",
-      "functionalVersion": "1.1.0",
-      "functionalDate": "03/06/2026",
-      "a11yVersion": "1.0.23",
-      "a11yDate": "30/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -2591,6 +2841,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "d56383f77b97cf18f4a14e05c37e6f0e165d5024",
           "date": "2026-05-29 11:29:33 +0200",
@@ -2718,11 +2979,15 @@
       "componentName": "Customs/SyIconButton",
       "storybookTitle": "Composants/Boutons/SyIconButton",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "07/07/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
       "a11yVersion": "1.0.23",
       "a11yDate": "23/03/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-07",
           "message": "SyTable/SyServerTable row editing + global actions (#2338)"
@@ -2742,11 +3007,22 @@
       ],
       "a11yCommits": [
         {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "dbafe6cb9c1b46af7f14e4e822970a19eaae6c19",
           "date": "2026-07-07 15:06:32 +0200",
           "dateFr": "07/07/2026",
           "message": "SyTable/SyServerTable row editing + global actions (#2338)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -2757,7 +3033,7 @@
           "date": "2026-06-23 15:27:49 +0200",
           "dateFr": "23/06/2026",
           "message": "display version badge in docs (#2308)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -2780,11 +3056,19 @@
       "componentName": "Customs/SyPagination",
       "storybookTitle": "Composants/Navigation/SyPagination",
       "status": "actif",
-      "functionalVersion": "1.0.25",
-      "functionalDate": "21/04/2026",
-      "a11yVersion": "1.0.22",
-      "a11yDate": "02/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
+        {
+          "date": "2026-07-17",
+          "message": "use useId (#2402)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -2815,6 +3099,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "1275e63b08841dd1f5676390fca6e44656e7d7a6",
           "date": "2026-03-17 13:54:00 +0100",
@@ -2898,11 +3193,27 @@
       "componentName": "Customs/SyRadioGroup",
       "storybookTitle": "Composants/Formulaires/SyRadioGroup",
       "status": "actif",
-      "functionalVersion": "1.1.0",
-      "functionalDate": "02/06/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-24",
+          "message": "Fix de l'enregitrement des composants au SyForm (#2421)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -2926,25 +3237,31 @@
         {
           "date": "2026-05-18",
           "message": "Feat/add new validation system on SyRadioGroup (#2167)"
-        },
-        {
-          "date": "2026-04-30",
-          "message": "Fix/success state display (#2158)"
-        },
-        {
-          "date": "2026-04-03",
-          "message": "Amelioration du système de validation (#1902)"
-        },
-        {
-          "date": "2026-02-23",
-          "message": "SyCheckBoxGroup component (#1783)"
-        },
-        {
-          "date": "2026-01-20",
-          "message": "update vue-tsconfig (#1739)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+          "date": "2026-07-27 14:32:02 +0200",
+          "dateFr": "27/07/2026",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+          "version": "1.1.2",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "f2954834a6d8b90883f4bd405e728db1eadbdb7e",
           "date": "2026-05-18 08:48:09 +0200",
@@ -3017,11 +3334,19 @@
       "componentName": "Customs/SyTabs",
       "storybookTitle": "Composants/Navigation/SyTabs",
       "status": "actif",
-      "functionalVersion": "1.0.27",
-      "functionalDate": "20/05/2026",
-      "a11yVersion": "1.0.25",
-      "a11yDate": "20/04/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -3053,17 +3378,31 @@
         {
           "date": "2026-01-20",
           "message": "update vue-tsconfig (#1739)"
-        },
-        {
-          "date": "2025-12-19",
-          "message": "fix: update key binding for tab items to use item label for better uniqueness (#1655)"
-        },
-        {
-          "date": "2025-11-26",
-          "message": "SyTabs : add tab-prepend and tab-append slots (#1511)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+          "date": "2026-07-27 14:32:02 +0200",
+          "dateFr": "27/07/2026",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+          "version": "1.1.2",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "c2b48d9293c9a62a5401fd577ca2c04894ad9539",
           "date": "2026-05-20 11:04:29 +0200",
@@ -3202,11 +3541,27 @@
       "componentName": "Customs/SyTextField",
       "storybookTitle": "Composants/Formulaires/SyTextField",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "16/06/2026",
-      "a11yVersion": "1.0.24",
-      "a11yDate": "03/04/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "31/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "23/07/2026",
       "commits": [
+        {
+          "date": "2026-07-31",
+          "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)"
+        },
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -3230,25 +3585,42 @@
         {
           "date": "2026-06-10",
           "message": "SyTextField: fix bugs (#2247)"
-        },
-        {
-          "date": "2026-06-03",
-          "message": "NirField: Improve validation  (#2228)"
-        },
-        {
-          "date": "2026-06-02",
-          "message": "Validation: success message false by default (#2231)"
-        },
-        {
-          "date": "2026-06-01",
-          "message": "[SyTextField] Ajout de stories concernant la validation (#2181)"
-        },
-        {
-          "date": "2026-05-29",
-          "message": "Feat/add cypress test (#2203)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "611b0627edc2976b1cd4129f701dd228394d52d8",
+          "date": "2026-07-31 12:04:52 +0200",
+          "dateFr": "31/07/2026",
+          "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)",
+          "version": "1.1.2",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "f2ae3fd9d1c349db938de16033ed24455131653c",
+          "date": "2026-07-23 11:35:27 +0200",
+          "dateFr": "23/07/2026",
+          "message": "WIP: Feat/a11y complex date picker (#2390)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "5acaaeebed1360943f0cddf52b2f5394d1dc0075",
           "date": "2026-06-10 11:59:21 +0200",
@@ -3618,11 +3990,19 @@
       "componentName": "DataList",
       "storybookTitle": "Composants/Données/DataList",
       "status": "actif",
-      "functionalVersion": "1.0.16",
-      "functionalDate": "11/12/2025",
-      "a11yVersion": "1.0.23",
-      "a11yDate": "30/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "17/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
+        {
+          "date": "2026-07-17",
+          "message": "use useId (#2402)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -3654,17 +4034,20 @@
         {
           "date": "2025-06-03",
           "message": "add file for texts (#673)"
-        },
-        {
-          "date": "2025-04-14",
-          "message": "remove old classes prefix and add newest (#532)"
-        },
-        {
-          "date": "2025-01-10",
-          "message": "fix action code ex (#333)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
           "date": "2026-03-30 08:20:25 +0100",
@@ -3739,9 +4122,13 @@
       "status": "actif",
       "functionalVersion": "1.0.16",
       "functionalDate": "11/12/2025",
-      "a11yVersion": "1.0.23",
-      "a11yDate": "30/03/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -3777,13 +4164,20 @@
         {
           "date": "2025-01-10",
           "message": "fix action code ex (#333)"
-        },
-        {
-          "date": "2024-12-20",
-          "message": "fix: update import statements to use named imports for various components (#292)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
           "date": "2026-03-30 08:20:25 +0100",
@@ -3823,11 +4217,15 @@
       "componentName": "DataListItem",
       "storybookTitle": null,
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "02/07/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
       "a11yVersion": "1.0.23",
       "a11yDate": "30/03/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -3865,65 +4263,132 @@
           "message": "DataList/DataListGroup: add components + composable (#165)"
         }
       ],
-      "a11yCommits": []
+      "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "moyenne",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        }
+      ]
     },
     {
       "componentName": "DatePicker/CalendarMode",
       "storybookTitle": "Composants/Formulaires/DatePicker/CalendarMode",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "30/06/2026",
-      "a11yVersion": "1.0.25",
-      "a11yDate": "20/04/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "31/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "30/07/2026",
       "commits": [
         {
-          "date": "2026-07-08",
-          "message": "Feat/improve suivi comp (#2378)"
+          "date": "2026-07-31",
+          "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)"
         },
         {
-          "date": "2026-07-02",
-          "message": "update storybook and fix links (#2354)"
+          "date": "2026-07-30",
+          "message": "DatePicker: simplify weekend day styling (#2447)"
         },
         {
-          "date": "2026-06-30",
-          "message": "Feat/wip refacto dp 3 (#2207)"
+          "date": "2026-07-30",
+          "message": "DatePicker: standardize label and placeholder text format across all stories (#2452)"
         },
         {
-          "date": "2026-06-02",
-          "message": "Validation: success message false by default (#2231)"
+          "date": "2026-07-30",
+          "message": "DatePicker: improve keyboard navigation in month and year selection v… (#2437)"
         },
         {
-          "date": "2026-06-01",
-          "message": "migration datePicker (#2216)"
+          "date": "2026-07-29",
+          "message": "fix datepicker nvda arrow navigation (#2433)"
         },
         {
-          "date": "2026-05-20",
-          "message": "Implémentation des nouveaux tokens (#2164)"
+          "date": "2026-07-28",
+          "message": "DatePicker: improve calendar day hover state styling and adjacent day opacity (#2429)"
         },
         {
-          "date": "2026-05-19",
-          "message": "Feat/improve dp tests (#2187)"
+          "date": "2026-07-27",
+          "message": "DatePicker: prevent validation on blur when calendar is open and hide asterisk in CalendarMode (#2428)"
         },
         {
-          "date": "2026-05-19",
-          "message": "add validationBridge and continue refacto (#2177)"
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
         },
         {
-          "date": "2026-04-30",
-          "message": "Clean date picker and fix invalid date (#2149)"
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
         },
         {
-          "date": "2026-04-30",
-          "message": "Fix/success state display (#2158)"
+          "date": "2026-07-17",
+          "message": "use useId (#2402)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "611b0627edc2976b1cd4129f701dd228394d52d8",
+          "date": "2026-07-31 12:04:52 +0200",
+          "dateFr": "31/07/2026",
+          "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)",
+          "version": "1.1.2",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "ca247e44235ed5f1d1ff7d2841255a47c9a72929",
+          "date": "2026-07-30 09:30:20 +0200",
+          "dateFr": "30/07/2026",
+          "message": "DatePicker: improve keyboard navigation in month and year selection v… (#2437)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "8b9c9f0c45c60a909aa89d25645a761f3e497fad",
+          "date": "2026-07-29 14:53:56 +0200",
+          "dateFr": "29/07/2026",
+          "message": "fix datepicker nvda arrow navigation (#2433)",
+          "version": "1.1.2",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "f2ae3fd9d1c349db938de16033ed24455131653c",
+          "date": "2026-07-23 11:35:27 +0200",
+          "dateFr": "23/07/2026",
+          "message": "WIP: Feat/a11y complex date picker (#2390)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "f632ce4fe5248ce7bb02a97cd2cb29cdf76b473e",
           "date": "2026-06-30 14:31:34 +0200",
           "dateFr": "30/06/2026",
           "message": "Feat/wip refacto dp 3 (#2207)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -4034,53 +4499,119 @@
       "componentName": "DatePicker/ComplexDatePicker",
       "storybookTitle": "Composants/Formulaires/DatePicker/CombinedMode",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "30/06/2026",
-      "a11yVersion": "1.0.24",
-      "a11yDate": "01/04/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "30/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "30/07/2026",
       "commits": [
         {
-          "date": "2026-07-08",
-          "message": "Feat/improve suivi comp (#2378)"
+          "date": "2026-07-31",
+          "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)"
         },
         {
-          "date": "2026-07-02",
-          "message": "update storybook and fix links (#2354)"
+          "date": "2026-07-31",
+          "message": "DatePicker: remove textFieldActivator documentation section from ComplexDatePicker (#2460)"
         },
         {
-          "date": "2026-06-30",
-          "message": "Feat/wip refacto dp 3 (#2207)"
+          "date": "2026-07-30",
+          "message": "DatePicker: simplify weekend day styling (#2447)"
         },
         {
-          "date": "2026-06-02",
-          "message": "Validation: success message false by default (#2231)"
+          "date": "2026-07-30",
+          "message": "DatePicker: standardize label and placeholder text format across all stories (#2452)"
         },
         {
-          "date": "2026-06-01",
-          "message": "migration datePicker (#2216)"
+          "date": "2026-07-30",
+          "message": "DatePicker: improve keyboard navigation in month and year selection v… (#2437)"
         },
         {
-          "date": "2026-05-20",
-          "message": "Implémentation des nouveaux tokens (#2164)"
+          "date": "2026-07-29",
+          "message": "fix datepicker nvda arrow navigation (#2433)"
         },
         {
-          "date": "2026-05-19",
-          "message": "Feat/improve dp tests (#2187)"
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
         },
         {
-          "date": "2026-05-19",
-          "message": "add validationBridge and continue refacto (#2177)"
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
         },
         {
-          "date": "2026-04-30",
-          "message": "Clean date picker and fix invalid date (#2149)"
+          "date": "2026-07-17",
+          "message": "use useId (#2402)"
         },
         {
-          "date": "2026-04-21",
-          "message": "Tokens simplify v2 (#2102)"
+          "date": "2026-07-16",
+          "message": "Mise à jour des radius (#2393)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "6fc4e15b014bb96534f21f5070a2ce4226866f4f",
+          "date": "2026-07-30 13:56:16 +0200",
+          "dateFr": "30/07/2026",
+          "message": "DatePicker: add documentation for known false positives in accessibility tooling (aria-controls and keyboard navigation) (#2446)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "ca247e44235ed5f1d1ff7d2841255a47c9a72929",
+          "date": "2026-07-30 09:30:20 +0200",
+          "dateFr": "30/07/2026",
+          "message": "DatePicker: improve keyboard navigation in month and year selection v… (#2437)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "8b9c9f0c45c60a909aa89d25645a761f3e497fad",
+          "date": "2026-07-29 14:53:56 +0200",
+          "dateFr": "29/07/2026",
+          "message": "fix datepicker nvda arrow navigation (#2433)",
+          "version": "1.1.2",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "f2ae3fd9d1c349db938de16033ed24455131653c",
+          "date": "2026-07-23 11:35:27 +0200",
+          "dateFr": "23/07/2026",
+          "message": "WIP: Feat/a11y complex date picker (#2390)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "d80a8e818663520dde7be8fd994b0340c35922b2",
+          "date": "2026-07-17 08:55:42 +0200",
+          "dateFr": "17/07/2026",
+          "message": "use useId (#2402)",
+          "version": "1.1.2",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "bfc61d4def7a5d1b29f3777ab2f57eff5e88152a",
           "date": "2026-04-01 14:41:22 +0200",
@@ -4186,11 +4717,31 @@
       "componentName": "DatePicker/DateTextInput",
       "storybookTitle": "Composants/Formulaires/DatePicker/DateInput",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "30/06/2026",
-      "a11yVersion": "1.0.24",
-      "a11yDate": "01/04/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "31/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "23/07/2026",
       "commits": [
+        {
+          "date": "2026-07-31",
+          "message": "DatePicker: wrap customRules and customWarningRules in computed and fix isOnSuccess validation state (#2461)"
+        },
+        {
+          "date": "2026-07-31",
+          "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)"
+        },
+        {
+          "date": "2026-07-30",
+          "message": "DatePicker: standardize label and placeholder text format across all stories (#2452)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-08",
           "message": "Feat/improve suivi comp (#2378)"
@@ -4210,35 +4761,37 @@
         {
           "date": "2026-05-20",
           "message": "Implémentation des nouveaux tokens (#2164)"
-        },
-        {
-          "date": "2026-05-19",
-          "message": "DateTextInput: fix autoClamp default value and prevent double model emission on blur (#2189)"
-        },
-        {
-          "date": "2026-05-19",
-          "message": "add validationBridge and continue refacto (#2177)"
-        },
-        {
-          "date": "2026-04-30",
-          "message": "Clean date picker and fix invalid date (#2149)"
-        },
-        {
-          "date": "2026-04-30",
-          "message": "Fix/success state display (#2158)"
-        },
-        {
-          "date": "2026-04-21",
-          "message": "Tokens simplify v2 (#2102)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "f2ae3fd9d1c349db938de16033ed24455131653c",
+          "date": "2026-07-23 11:35:27 +0200",
+          "dateFr": "23/07/2026",
+          "message": "WIP: Feat/a11y complex date picker (#2390)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "f632ce4fe5248ce7bb02a97cd2cb29cdf76b473e",
           "date": "2026-06-30 14:31:34 +0200",
           "dateFr": "30/06/2026",
           "message": "Feat/wip refacto dp 3 (#2207)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -4410,6 +4963,10 @@
       "a11yDate": "25/02/2026",
       "commits": [
         {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
+        {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
         },
@@ -4422,17 +4979,37 @@
           "message": "Page de declaration access (#812)"
         }
       ],
-      "a11yCommits": []
+      "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        }
+      ]
     },
     {
       "componentName": "DiacriticPicker",
       "storybookTitle": "Composants/Formulaires/DiacriticPicker",
       "status": "actif",
-      "functionalVersion": "0.0.1",
-      "functionalDate": "14/05/2025",
-      "a11yVersion": "1.0.24",
-      "a11yDate": "30/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
+        {
+          "date": "2026-07-17",
+          "message": "use useId (#2402)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -4464,13 +5041,20 @@
         {
           "date": "2025-05-14",
           "message": "fix title (#588)"
-        },
-        {
-          "date": "2025-05-14",
-          "message": "DiacriticPicker PA (#584)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "d8ba7ec7683ccf3a0f0607adbd6731da5bbfab85",
           "date": "2026-03-30 10:39:46 +0100",
@@ -4543,11 +5127,19 @@
       "componentName": "DialogBox",
       "storybookTitle": "Composants/Feedback/DialogBox",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "17/06/2026",
-      "a11yVersion": "1.0.22",
-      "a11yDate": "10/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "23/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-23",
+          "message": "expose Vuetify props on SyTextArea and DialogBox (#2415)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-07",
           "message": "SyTable/SyServerTable row editing + global actions (#2338)"
@@ -4579,17 +5171,20 @@
         {
           "date": "2026-04-30",
           "message": "DialogBox : Migration Theme AmeliPro (#2148)"
-        },
-        {
-          "date": "2026-04-21",
-          "message": "Ajout de test de non régression visuels (#2067)"
-        },
-        {
-          "date": "2026-04-21",
-          "message": "Tokens simplify v2 (#2102)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "b0221cd52fae1f509f414d6bf018ddb5810af83f",
           "date": "2026-06-17 10:49:31 +0200",
@@ -4772,11 +5367,19 @@
       "componentName": "DownloadBtn",
       "storybookTitle": "Composants/Boutons/DownloadBtn",
       "status": "actif",
-      "functionalVersion": "1.0.22",
-      "functionalDate": "12/03/2026",
-      "a11yVersion": "1.0.23",
-      "a11yDate": "30/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -4808,17 +5411,20 @@
         {
           "date": "2025-10-20",
           "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
-        },
-        {
-          "date": "2025-09-17",
-          "message": "Rendre la dialogbox déplaçable (#1109)"
-        },
-        {
-          "date": "2025-09-10",
-          "message": "DownloadBtn: fix color (#1093)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
           "date": "2026-03-30 08:20:25 +0100",
@@ -4904,9 +5510,13 @@
       "status": "actif",
       "functionalVersion": "1.0.23",
       "functionalDate": "25/03/2026",
-      "a11yVersion": "1.0.21",
-      "a11yDate": "26/02/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -4942,13 +5552,20 @@
         {
           "date": "2026-03-04",
           "message": "Feat/143 migration error page (#1896)"
-        },
-        {
-          "date": "2026-02-18",
-          "message": "Feat/1784 migration error page (#1823)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "a9dea254e921bf06a6b343e07fae495ba0ce0ee2",
           "date": "2026-03-25 10:38:49 +0100",
@@ -5087,11 +5704,15 @@
       "componentName": "ExternalLinks",
       "storybookTitle": "Composants/Navigation/ExternalLinks",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "06/07/2026",
-      "a11yVersion": "1.0.23",
-      "a11yDate": "30/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-06",
           "message": "Feat/migration external links (#2339)"
@@ -5127,19 +5748,26 @@
         {
           "date": "2025-10-20",
           "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
-        },
-        {
-          "date": "2025-10-16",
-          "message": "Feat/733 base pour ajout de tests unitaires (#1021)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "ab8872050a245b8e750b776979c26552b703abdb",
           "date": "2026-07-06 10:18:16 +0200",
           "dateFr": "06/07/2026",
           "message": "Feat/migration external links (#2339)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -5272,11 +5900,19 @@
       "componentName": "FileList",
       "storybookTitle": "Composants/Données/FileList",
       "status": "actif",
-      "functionalVersion": "1.0.27",
-      "functionalDate": "20/05/2026",
-      "a11yVersion": "1.0.22",
-      "a11yDate": "10/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -5308,17 +5944,31 @@
         {
           "date": "2026-02-12",
           "message": "SyIcon: replace VIcon to SyIcon (#1793)"
-        },
-        {
-          "date": "2026-01-20",
-          "message": "update vue-tsconfig (#1739)"
-        },
-        {
-          "date": "2025-10-20",
-          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+          "date": "2026-07-27 14:32:02 +0200",
+          "dateFr": "27/07/2026",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+          "version": "1.1.2",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "a69581185b256b0fff68004ae93d99f6e48f51e5",
           "date": "2026-03-25 16:57:56 +0100",
@@ -5402,11 +6052,19 @@
       "componentName": "FilePreview",
       "storybookTitle": "Composants/Données/FilePreview",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "07/07/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-07",
           "message": "FilePreview: add readonly + mandatory + pdf.js (#2344)"
@@ -5438,11 +6096,22 @@
       ],
       "a11yCommits": [
         {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
           "hash": "4d4bee7db90d75e5fabec97b8ed43991cf3cfaef",
           "date": "2026-07-07 15:23:08 +0200",
           "dateFr": "07/07/2026",
           "message": "FilePreview: add readonly + mandatory + pdf.js (#2344)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -5487,11 +6156,19 @@
       "componentName": "FileUpload",
       "storybookTitle": "Composants/Formulaires/FileUpload",
       "status": "actif",
-      "functionalVersion": "1.0.27",
-      "functionalDate": "20/05/2026",
-      "a11yVersion": "1.0.22",
-      "a11yDate": "10/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -5523,17 +6200,20 @@
         {
           "date": "2026-02-18",
           "message": "UploadWorkflow: add preview event + info-text (#1846)"
-        },
-        {
-          "date": "2026-02-12",
-          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
-        },
-        {
-          "date": "2025-10-20",
-          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "175ca0d27910a1bf459f0fbe10e7d0812b0b0c92",
           "date": "2026-03-10 11:51:12 +0100",
@@ -5573,11 +6253,19 @@
       "componentName": "FilterInline",
       "storybookTitle": "Composants/Filtres/FilterInline",
       "status": "actif",
-      "functionalVersion": "1.1.0",
-      "functionalDate": "05/06/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -5609,17 +6297,20 @@
         {
           "date": "2026-03-04",
           "message": "SearchListField: fix emit shallow copy of array in SearchListField to prevent mutatio… (#1926)"
-        },
-        {
-          "date": "2026-02-12",
-          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
-        },
-        {
-          "date": "2026-01-13",
-          "message": "FilterInline: incoherence graphique (#1710)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "b649f01a6d7adfcd44a3fdc04bdad87599caa30e",
           "date": "2026-03-04 17:08:50 +0100",
@@ -5725,11 +6416,19 @@
       "componentName": "FilterSideBar",
       "storybookTitle": "Composants/Filtres/FilterSideBar",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "17/06/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -5761,17 +6460,20 @@
         {
           "date": "2026-05-20",
           "message": "Implémentation des nouveaux tokens (#2164)"
-        },
-        {
-          "date": "2026-04-28",
-          "message": "[build] Optimisation du build (#2110)"
-        },
-        {
-          "date": "2026-04-15",
-          "message": "FilterSideBar: custom ZIndex (#2097)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "596a998a8a033ec57791d75acf24b6d4a435be26",
           "date": "2026-06-17 09:38:08 +0200",
@@ -5888,11 +6590,15 @@
       "componentName": "FooterBar",
       "storybookTitle": "Composants/Structure/FooterBar",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "15/07/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-15",
           "message": "mdijs in peerDependencies (#2350)"
@@ -5928,13 +6634,20 @@
         {
           "date": "2026-02-26",
           "message": "FooterBar: Twitter icon to X (#1893)"
-        },
-        {
-          "date": "2026-01-20",
-          "message": "update vue-tsconfig (#1739)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "2c8a6f60bc679dfafc2795c019f0fe075c9f0771",
           "date": "2026-03-11 14:47:28 +0100",
@@ -6053,9 +6766,13 @@
       "status": "actif",
       "functionalVersion": "1.0.27",
       "functionalDate": "20/05/2026",
-      "a11yVersion": "1.0.23",
-      "a11yDate": "30/03/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -6091,13 +6808,20 @@
         {
           "date": "2025-06-03",
           "message": "add file for texts (#673)"
-        },
-        {
-          "date": "2025-04-14",
-          "message": "Amélioration des tests avec vitest (#525)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
           "date": "2026-03-30 08:20:25 +0100",
@@ -6181,11 +6905,15 @@
       "componentName": "HeaderBar",
       "storybookTitle": "Composants/Structure/HeaderBar",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "15/07/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "30/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-15",
           "message": "mdijs in peerDependencies (#2350)"
@@ -6221,19 +6949,37 @@
         {
           "date": "2026-04-21",
           "message": "Tokens simplify v2 (#2102)"
-        },
-        {
-          "date": "2026-04-09",
-          "message": "HeaderBar: Ajout de la story appendSlot dans le theme ameliPro (#2074)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "43ecbd9871d2da61c693351d6c13ae521d23235c",
+          "date": "2026-07-30 14:51:52 +0200",
+          "dateFr": "30/07/2026",
+          "message": "A11y: Fix homeLink focus (#2443)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "ac297075e94eb8b9fbf9a969f2a3dd074b2dc0f9",
           "date": "2026-07-10 16:49:34 +0200",
           "dateFr": "10/07/2026",
           "message": "[logo] charger uniquement les images de logo si elles sont affiché (#2359)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -6584,11 +7330,19 @@
       "componentName": "HeaderNavigationBar",
       "storybookTitle": "Composants/Structure/HeaderBar/HeaderNavigationBar",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "10/07/2026",
-      "a11yVersion": "1.0.25",
-      "a11yDate": "20/04/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "28/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "28/07/2026",
       "commits": [
+        {
+          "date": "2026-07-28",
+          "message": "fix header navigation bar color to variable (#2431)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-10",
           "message": "[logo] charger uniquement les images de logo si elles sont affiché (#2359)"
@@ -6620,23 +7374,37 @@
         {
           "date": "2026-04-21",
           "message": "Tokens simplify v2 (#2102)"
-        },
-        {
-          "date": "2026-03-25",
-          "message": "Feat/turn heading level optional (#2025)"
-        },
-        {
-          "date": "2026-03-11",
-          "message": "Hx: replace hx to SyHeading (#1874)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "481c8fc57505e697f05b4cf623dc78f4fc0e65d2",
+          "date": "2026-07-28 11:31:28 +0200",
+          "dateFr": "28/07/2026",
+          "message": "fix header navigation bar color to variable (#2431)",
+          "version": "1.1.2",
+          "confidence": "moyenne",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "moyenne",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "ac297075e94eb8b9fbf9a969f2a3dd074b2dc0f9",
           "date": "2026-07-10 16:49:34 +0200",
           "dateFr": "10/07/2026",
           "message": "[logo] charger uniquement les images de logo si elles sont affiché (#2359)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -6747,11 +7515,15 @@
       "componentName": "HeaderToolbar",
       "storybookTitle": "Composants/Structure/HeaderToolbar",
       "status": "actif",
-      "functionalVersion": "1.0.25",
-      "functionalDate": "21/04/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -6787,13 +7559,20 @@
         {
           "date": "2025-06-03",
           "message": "add file for texts (#673)"
-        },
-        {
-          "date": "2025-04-14",
-          "message": "Fix/header toolbar (#519)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "c2b48d9293c9a62a5401fd577ca2c04894ad9539",
           "date": "2026-05-20 11:04:29 +0200",
@@ -6877,11 +7656,15 @@
       "componentName": "LangBtn",
       "storybookTitle": "Composants/Boutons/LangBtn",
       "status": "actif",
-      "functionalVersion": "1.0.26",
-      "functionalDate": "28/04/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -6917,13 +7700,20 @@
         {
           "date": "2025-08-01",
           "message": "Retirer les important des styles de typographies (#867)"
-        },
-        {
-          "date": "2025-06-03",
-          "message": "add file for texts (#673)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
           "date": "2026-02-11 12:51:15 +0100",
@@ -7031,9 +7821,13 @@
       "status": "actif",
       "functionalVersion": "1.0.18",
       "functionalDate": "20/01/2026",
-      "a11yVersion": "1.0.24",
-      "a11yDate": "30/03/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -7069,13 +7863,20 @@
         {
           "date": "2024-12-20",
           "message": "fix: update import statements to use named imports for various components (#292)"
-        },
-        {
-          "date": "2024-11-21",
-          "message": "Feat/header (#202)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "d8ba7ec7683ccf3a0f0607adbd6731da5bbfab85",
           "date": "2026-03-30 10:39:46 +0100",
@@ -7126,11 +7927,19 @@
       "componentName": "LogoBrandSection",
       "storybookTitle": "Composants/Données/LogoBrandSection",
       "status": "actif",
-      "functionalVersion": "1.0.25",
-      "functionalDate": "21/04/2026",
-      "a11yVersion": "1.0.24",
-      "a11yDate": "30/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "30/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -7162,17 +7971,42 @@
         {
           "date": "2025-08-01",
           "message": "Retirer les important des styles de typographies (#867)"
-        },
-        {
-          "date": "2025-07-30",
-          "message": "update LogoBrandSection audit (#816)"
-        },
-        {
-          "date": "2025-06-03",
-          "message": "add file for texts (#673)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "43ecbd9871d2da61c693351d6c13ae521d23235c",
+          "date": "2026-07-30 14:51:52 +0200",
+          "dateFr": "30/07/2026",
+          "message": "A11y: Fix homeLink focus (#2443)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+          "date": "2026-07-27 14:32:02 +0200",
+          "dateFr": "27/07/2026",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+          "version": "1.1.2",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "c5a2297435779e2698442027eaa64ec319a83ad5",
           "date": "2026-05-20 17:19:08 +0200",
@@ -7256,11 +8090,23 @@
       "componentName": "LunarCalendar",
       "storybookTitle": "Composants/Formulaires/LunarCalendar",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "12/06/2026",
-      "a11yVersion": "1.0.23",
-      "a11yDate": "30/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -7291,6 +8137,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
           "date": "2026-03-30 08:20:25 +0100",
@@ -7482,11 +8339,27 @@
       "componentName": "MonthPicker",
       "storybookTitle": "Composants/Formulaires/MonthPicker",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "16/06/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
       "a11yVersion": "1.0.23",
       "a11yDate": "25/03/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
+        {
+          "date": "2026-07-16",
+          "message": "Mise à jour des radius (#2393)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -7510,21 +8383,20 @@
         {
           "date": "2026-05-20",
           "message": "Implémentation des nouveaux tokens (#2164)"
-        },
-        {
-          "date": "2026-04-21",
-          "message": "Tokens simplify v2 (#2102)"
-        },
-        {
-          "date": "2026-04-03",
-          "message": "Amelioration du système de validation (#1902)"
-        },
-        {
-          "date": "2026-03-25",
-          "message": "MonthPicker (#1863)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "8cfc8188ea78ca5d067d5d4ebc73a09b395a18da",
           "date": "2026-06-16 14:55:28 +0200",
@@ -7575,11 +8447,31 @@
       "componentName": "NirField",
       "storybookTitle": "Composants/Formulaires/NirField",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "22/06/2026",
-      "a11yVersion": "1.1.1",
-      "a11yDate": "23/06/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-24",
+          "message": "Fix de l'enregitrement des composants au SyForm (#2421)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
+        {
+          "date": "2026-07-16",
+          "message": "Mise à jour des radius (#2393)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -7599,35 +8491,37 @@
         {
           "date": "2026-06-16",
           "message": "Suppression de tous les imports de styles non necessaires (#2271)"
-        },
-        {
-          "date": "2026-06-03",
-          "message": "NirField: Improve validation  (#2228)"
-        },
-        {
-          "date": "2026-06-02",
-          "message": "Validation: success message false by default (#2231)"
-        },
-        {
-          "date": "2026-05-29",
-          "message": "Feat/add cypress test (#2203)"
-        },
-        {
-          "date": "2026-05-20",
-          "message": "Implémentation des nouveaux tokens (#2164)"
-        },
-        {
-          "date": "2026-04-23",
-          "message": "Fix/nir field validation without key (#2133)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+          "date": "2026-07-27 14:32:02 +0200",
+          "dateFr": "27/07/2026",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+          "version": "1.1.2",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "72d4870d1f431046843afc9dcc01cb9c52a874bc",
           "date": "2026-06-23 16:30:57 +0200",
           "dateFr": "23/06/2026",
           "message": "nirField improve auto focus accessibility (#2303)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -7795,9 +8689,13 @@
       "status": "actif",
       "functionalVersion": "1.0.22",
       "functionalDate": "11/03/2026",
-      "a11yVersion": "1.0.21",
-      "a11yDate": "26/02/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -7833,13 +8731,20 @@
         {
           "date": "2026-01-12",
           "message": "add custom illustation stories (#1706)"
-        },
-        {
-          "date": "2025-12-04",
-          "message": "Fix/error page safe phone links (#1556)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "5ded9eca4a95c2ee3083fee246d6dc7e8e792d44",
           "date": "2026-06-17 14:14:22 +0200",
@@ -7967,11 +8872,15 @@
       "componentName": "NotificationBar",
       "storybookTitle": "Composants/Feedback/NotificationBar",
       "status": "actif",
-      "functionalVersion": "1.0.27",
-      "functionalDate": "20/05/2026",
-      "a11yVersion": "1.0.21",
-      "a11yDate": "18/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -8007,13 +8916,20 @@
         {
           "date": "2026-02-12",
           "message": "SyIcon: replace VIcon to SyIcon (#1793)"
-        },
-        {
-          "date": "2026-01-09",
-          "message": "NotificationBar ajout de la fonctionnalité d'affichage des notifications en liste (#1686)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "3eddae09328b268b33a250314782e19d6fd4412b",
           "date": "2026-02-18 14:55:20 +0100",
@@ -8238,11 +9154,19 @@
       "componentName": "PaginatedTable",
       "storybookTitle": "Composants/Tableaux/PaginatedTable",
       "status": "déprécié",
-      "functionalVersion": "1.0.27",
-      "functionalDate": "20/05/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
+        {
+          "date": "2026-07-17",
+          "message": "use useId (#2402)"
+        },
         {
           "date": "2026-07-08",
           "message": "Feat/improve suivi comp (#2378)"
@@ -8274,17 +9198,20 @@
         {
           "date": "2026-04-28",
           "message": "[build] Optimisation du build (#2110)"
-        },
-        {
-          "date": "2026-04-21",
-          "message": "Tokens simplify v2 (#2102)"
-        },
-        {
-          "date": "2026-03-05",
-          "message": "BugFix : Correction sur différents composant AP (#1933)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "8c2f5cc85c4c5705daecafc3f00727b7f4b6ef89",
           "date": "2026-05-29 09:22:51 +0200",
@@ -8423,11 +9350,27 @@
       "componentName": "PasswordField",
       "storybookTitle": "Composants/Formulaires/PasswordField",
       "status": "actif",
-      "functionalVersion": "1.1.0",
-      "functionalDate": "05/06/2026",
-      "a11yVersion": "1.1.1",
-      "a11yDate": "03/07/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
+        {
+          "date": "2026-07-17",
+          "message": "use useId (#2402)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -8451,31 +9394,26 @@
         {
           "date": "2026-05-20",
           "message": "Implémentation des nouveaux tokens (#2164)"
-        },
-        {
-          "date": "2026-05-20",
-          "message": "Feat/improve tests (#2192)"
-        },
-        {
-          "date": "2026-04-30",
-          "message": "Fix/success state display (#2158)"
-        },
-        {
-          "date": "2026-04-21",
-          "message": "Tokens simplify v2 (#2102)"
-        },
-        {
-          "date": "2026-04-03",
-          "message": "Amelioration du système de validation (#1902)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "fe709542b28b9e7e3ed8876a8258920c11778c12",
           "date": "2026-07-03 11:28:48 +0200",
           "dateFr": "03/07/2026",
           "message": "ajout doc aria pressed (#2362)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -8608,11 +9546,19 @@
       "componentName": "PeriodField",
       "storybookTitle": "Composants/Formulaires/PeriodField",
       "status": "actif",
-      "functionalVersion": "1.1.0",
-      "functionalDate": "02/06/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
       "a11yVersion": "1.0.24",
       "a11yDate": "01/04/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -8644,14 +9590,6 @@
         {
           "date": "2026-03-12",
           "message": "Update Vuetify 3.12.2 (#1951)"
-        },
-        {
-          "date": "2026-03-11",
-          "message": "Hx: replace hx to SyHeading (#1874)"
-        },
-        {
-          "date": "2026-01-20",
-          "message": "update vue-tsconfig (#1739)"
         }
       ],
       "a11yCommits": [
@@ -8738,11 +9676,23 @@
       "componentName": "PhoneField",
       "storybookTitle": "Composants/Formulaires/PhoneField",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "11/06/2026",
-      "a11yVersion": "1.0.21",
-      "a11yDate": "25/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -8770,21 +9720,20 @@
         {
           "date": "2026-04-21",
           "message": "Tokens simplify v2 (#2102)"
-        },
-        {
-          "date": "2026-04-03",
-          "message": "Amelioration du système de validation (#1902)"
-        },
-        {
-          "date": "2026-03-10",
-          "message": "PhoneField: fix errors display (#1928)"
-        },
-        {
-          "date": "2026-02-24",
-          "message": "PhoneField: model story fix + actions (#1877)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "0623c31856bc1545e6df01135176b7c4ec45bddf",
           "date": "2026-06-11 15:53:58 +0200",
@@ -8912,11 +9861,15 @@
       "componentName": "RangeField",
       "storybookTitle": "Composants/Formulaires/RangeField",
       "status": "actif",
-      "functionalVersion": "1.0.27",
-      "functionalDate": "20/05/2026",
-      "a11yVersion": "1.0.23",
-      "a11yDate": "30/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -8952,13 +9905,20 @@
         {
           "date": "2026-01-20",
           "message": "update vue-tsconfig (#1739)"
-        },
-        {
-          "date": "2025-11-28",
-          "message": "RangeField: correction anomalie graphique (#1534)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
           "date": "2026-03-30 08:20:25 +0100",
@@ -9053,11 +10013,19 @@
       "componentName": "RatingPicker",
       "storybookTitle": "Composants/Feedback/RatingPicker",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "15/07/2026",
-      "a11yVersion": "1.1.1",
-      "a11yDate": "30/06/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-15",
           "message": "[RatingPicker] Iso Maquettes (#2389)"
@@ -9089,23 +10057,37 @@
         {
           "date": "2026-04-21",
           "message": "Tokens simplify v2 (#2102)"
-        },
-        {
-          "date": "2026-01-20",
-          "message": "update vue-tsconfig (#1739)"
-        },
-        {
-          "date": "2025-12-04",
-          "message": "centrer le rating picker (#1551)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+          "date": "2026-07-27 14:32:02 +0200",
+          "dateFr": "27/07/2026",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+          "version": "1.1.2",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "7ddc61cf5874855db49eb1c6128bdcb8d451b47d",
           "date": "2026-07-15 14:44:47 +0200",
           "dateFr": "15/07/2026",
           "message": "[RatingPicker] Iso Maquettes (#2389)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -9116,7 +10098,7 @@
           "date": "2026-06-30 11:48:21 +0200",
           "dateFr": "30/06/2026",
           "message": "[RatingPicker] fix des problèmes d'accessibilitées (#2335)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -9249,11 +10231,19 @@
       "componentName": "SearchListField",
       "storybookTitle": "Composants/Filtres/SearchListField",
       "status": "actif",
-      "functionalVersion": "1.1.0",
-      "functionalDate": "05/06/2026",
-      "a11yVersion": "1.1.1",
-      "a11yDate": "08/07/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -9285,23 +10275,26 @@
         {
           "date": "2026-02-12",
           "message": "SyIcon: replace VIcon to SyIcon (#1793)"
-        },
-        {
-          "date": "2026-01-20",
-          "message": "update vue-tsconfig (#1739)"
-        },
-        {
-          "date": "2025-12-12",
-          "message": "Feat/fix tests warnings (#1605)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "7f2a9c3ab64afbcceb675f6207bcef447a508ec8",
           "date": "2026-07-08 14:17:13 +0200",
           "dateFr": "08/07/2026",
           "message": "[SyCheckbox] fix des retours d'accessibilitées (#2366)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -9401,11 +10394,15 @@
       "componentName": "SkipLink",
       "storybookTitle": "Composants/Navigation/SkipLink",
       "status": "actif",
-      "functionalVersion": "1.0.25",
-      "functionalDate": "21/04/2026",
-      "a11yVersion": "1.0.23",
-      "a11yDate": "30/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -9441,13 +10438,20 @@
         {
           "date": "2025-01-08",
           "message": "Ajout d'une configuration pour stylelint (#323)"
-        },
-        {
-          "date": "2024-12-20",
-          "message": "fix: update import statements to use named imports for various components (#292)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
           "date": "2026-03-30 08:20:25 +0100",
@@ -9520,11 +10524,15 @@
       "componentName": "SocialMediaLinks",
       "storybookTitle": "Composants/Navigation/SocialMediaLinks",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "01/07/2026",
-      "a11yVersion": "1.0.21",
-      "a11yDate": "24/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -9560,13 +10568,20 @@
         {
           "date": "2025-10-20",
           "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
-        },
-        {
-          "date": "2025-07-25",
-          "message": "update packages + fix tests + CI improvements (#837)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "ef48368488700f0d387dc01a8d0b55c7e9d421e0",
           "date": "2026-02-26 18:04:01 +0100",
@@ -9652,9 +10667,13 @@
       "status": "actif",
       "functionalVersion": "1.1.1",
       "functionalDate": "17/06/2026",
-      "a11yVersion": "1.0.21",
-      "a11yDate": "26/02/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -9693,6 +10712,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "5ded9eca4a95c2ee3083fee246d6dc7e8e792d44",
           "date": "2026-06-17 14:14:22 +0200",
@@ -9776,11 +10806,15 @@
       "componentName": "SubHeader",
       "storybookTitle": "Composants/Structure/SubHeader",
       "status": "actif",
-      "functionalVersion": "1.0.27",
-      "functionalDate": "20/05/2026",
-      "a11yVersion": "1.0.23",
-      "a11yDate": "30/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -9816,13 +10850,20 @@
         {
           "date": "2026-01-07",
           "message": "correction adresse en trop (#1696)"
-        },
-        {
-          "date": "2026-01-06",
-          "message": "Fix/subheader anomalie (#1608)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
           "date": "2026-03-30 08:20:25 +0100",
@@ -9906,11 +10947,15 @@
       "componentName": "SyAlert",
       "storybookTitle": "Composants/Feedback/SyAlert",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "15/07/2026",
-      "a11yVersion": "1.0.23",
-      "a11yDate": "30/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-15",
           "message": "[RatingPicker] Iso Maquettes (#2389)"
@@ -9946,19 +10991,26 @@
         {
           "date": "2026-03-19",
           "message": "Corrige les warnings présent lors de l'exécution des tests (#1998)"
-        },
-        {
-          "date": "2026-03-02",
-          "message": "add deprecation notice story (#1895)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "7ddc61cf5874855db49eb1c6128bdcb8d451b47d",
           "date": "2026-07-15 14:44:47 +0200",
           "dateFr": "15/07/2026",
           "message": "[RatingPicker] Iso Maquettes (#2389)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -10036,11 +11088,19 @@
       "componentName": "SyBtnMenu",
       "storybookTitle": "Composants/Navigation/SyBtnMenu",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "30/06/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
+        {
+          "date": "2026-07-17",
+          "message": "use useId (#2402)"
+        },
         {
           "date": "2026-07-08",
           "message": "Feat/improve suivi comp (#2378)"
@@ -10067,6 +11127,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "98df1befa47e47eea9bdaf42c8fe2719de427082",
           "date": "2026-03-04 13:28:25 +0100",
@@ -10142,11 +11213,35 @@
       "componentName": "SyTextArea",
       "storybookTitle": "Composants/Formulaires/SyTextArea",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "15/07/2026",
-      "a11yVersion": "1.0.23",
-      "a11yDate": "30/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-24",
+          "message": "Fix de l'enregitrement des composants au SyForm (#2421)"
+        },
+        {
+          "date": "2026-07-24",
+          "message": "SyTextArea: fix success/warning color text (#2419)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "expose Vuetify props on SyTextArea and DialogBox (#2415)"
+        },
+        {
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-15",
           "message": "[RatingPicker] Iso Maquettes (#2389)"
@@ -10162,33 +11257,31 @@
         {
           "date": "2026-05-29",
           "message": "Feat/add cypress test (#2203)"
-        },
-        {
-          "date": "2026-05-26",
-          "message": "migration text area (#2206)"
-        },
-        {
-          "date": "2026-05-22",
-          "message": "SyTextArea: improve validation (#2195)"
-        },
-        {
-          "date": "2026-05-20",
-          "message": "Implémentation des nouveaux tokens (#2164)"
-        },
-        {
-          "date": "2026-04-30",
-          "message": "Fix/success state display (#2158)"
-        },
-        {
-          "date": "2026-04-03",
-          "message": "Amelioration du système de validation (#1902)"
-        },
-        {
-          "date": "2026-01-20",
-          "message": "update vue-tsconfig (#1739)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "6ba17d94f51a82d2ee9d3a4972eb40275a218231",
+          "date": "2026-07-23 11:48:40 +0200",
+          "dateFr": "23/07/2026",
+          "message": "expose Vuetify props on SyTextArea and DialogBox (#2415)",
+          "version": "1.1.2",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "bd6207d1753d49a55c203d88270dac9f6380b5ec",
           "date": "2026-05-26 17:15:04 +0200",
@@ -10272,11 +11365,19 @@
       "componentName": "Tables/SyServerTable",
       "storybookTitle": "Composants/Tableaux/SyServerTable",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "07/07/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "17/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
+        {
+          "date": "2026-07-17",
+          "message": "use useId (#2402)"
+        },
         {
           "date": "2026-07-07",
           "message": "SyTable/SyServerTable row editing + global actions (#2338)"
@@ -10308,23 +11409,26 @@
         {
           "date": "2026-04-17",
           "message": "SyTable / SyServerTable: add page input option (#2104)"
-        },
-        {
-          "date": "2026-04-16",
-          "message": "SyTable/SyServerTable: fix display on resize column (#2100)"
-        },
-        {
-          "date": "2026-04-08",
-          "message": "SyTable + SyServerTable: add clickable row (#2075)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "dbafe6cb9c1b46af7f14e4e822970a19eaae6c19",
           "date": "2026-07-07 15:06:32 +0200",
           "dateFr": "07/07/2026",
           "message": "SyTable/SyServerTable row editing + global actions (#2338)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -10457,11 +11561,19 @@
       "componentName": "Tables/SyTable",
       "storybookTitle": "Composants/Tableaux/SyTable",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "07/07/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "17/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
+        {
+          "date": "2026-07-17",
+          "message": "use useId (#2402)"
+        },
         {
           "date": "2026-07-07",
           "message": "SyTable/SyServerTable row editing + global actions (#2338)"
@@ -10493,23 +11605,26 @@
         {
           "date": "2026-04-17",
           "message": "SyTable / SyServerTable: add page input option (#2104)"
-        },
-        {
-          "date": "2026-04-16",
-          "message": "SyTable/SyServerTable: fix display on resize column (#2100)"
-        },
-        {
-          "date": "2026-04-08",
-          "message": "SyTable + SyServerTable: add clickable row (#2075)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "dbafe6cb9c1b46af7f14e4e822970a19eaae6c19",
           "date": "2026-07-07 15:06:32 +0200",
           "dateFr": "07/07/2026",
           "message": "SyTable/SyServerTable row editing + global actions (#2338)",
-          "version": "1.1.1",
+          "version": "1.1.2",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -10642,11 +11757,19 @@
       "componentName": "TableToolbar",
       "storybookTitle": "Composants/Tableaux/TableToolbar",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "08/07/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-08",
           "message": "TableToolbar: ajout SyTable (#2326)"
@@ -10678,17 +11801,20 @@
         {
           "date": "2026-02-19",
           "message": "TableToolbar: fix story SlotFilter (#1857)"
-        },
-        {
-          "date": "2026-02-12",
-          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
-        },
-        {
-          "date": "2025-12-10",
-          "message": "Fix Vuetify sass warn (#1594)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
           "date": "2026-02-11 12:51:15 +0100",
@@ -10769,14 +11895,34 @@
       ]
     },
     {
+      "componentName": "tests",
+      "storybookTitle": null,
+      "status": "actif",
+      "functionalVersion": null,
+      "functionalDate": null,
+      "a11yVersion": null,
+      "a11yDate": null,
+      "commits": [
+        {
+          "date": "2026-07-23",
+          "message": "Uniformise les exposes liées a la validation (#2399)"
+        }
+      ],
+      "a11yCommits": []
+    },
+    {
       "componentName": "ToolbarContainer",
       "storybookTitle": "Composants/Layout/ToolbarContainer",
       "status": "actif",
-      "functionalVersion": "1.0.2",
-      "functionalDate": "17/06/2025",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "22/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -10803,6 +11949,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "a17600f594579c27dae95dd9be5c212676d7524d",
           "date": "2026-03-30 08:22:52 +0100",
@@ -10853,11 +12010,19 @@
       "componentName": "UploadWorkflow",
       "storybookTitle": "Composants/Formulaires/UploadWorkflow",
       "status": "actif",
-      "functionalVersion": "1.0.25",
-      "functionalDate": "13/04/2026",
-      "a11yVersion": "1.0.22",
-      "a11yDate": "10/03/2026",
+      "functionalVersion": "1.1.2",
+      "functionalDate": "27/07/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-27",
+          "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+        },
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -10889,17 +12054,20 @@
         {
           "date": "2026-03-11",
           "message": "Hx: replace hx to SyHeading (#1874)"
-        },
-        {
-          "date": "2026-03-03",
-          "message": "UploadWorkflow: suppression ombre bouton  (#1919)"
-        },
-        {
-          "date": "2026-02-19",
-          "message": "fix doc (#1858)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "462a742899258fad303074faa447e8c8a2b109b2",
           "date": "2026-03-11 11:00:31 +0100",
@@ -10974,9 +12142,13 @@
       "status": "actif",
       "functionalVersion": "1.0.25",
       "functionalDate": "21/04/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-07-22",
+          "message": "Components: fix focus display (#2383)"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -11012,13 +12184,20 @@
         {
           "date": "2026-01-14",
           "message": "UserMenuBtn: Ajout de la possibilité de naviguer avec vue-router (#1717)"
-        },
-        {
-          "date": "2025-10-20",
-          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+          "date": "2026-07-22 11:00:09 +0200",
+          "dateFr": "22/07/2026",
+          "message": "Components: fix focus display (#2383)",
+          "version": "1.1.2",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "98df1befa47e47eea9bdaf42c8fe2719de427082",
           "date": "2026-03-04 13:28:25 +0100",

@@ -8,6 +8,8 @@
 	import { config } from './config'
 	import { locales as defaultLocales } from './locales'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	type State = 'idle' | 'loading' | 'success' | 'error'
 
@@ -21,7 +23,7 @@
 		fallbackFilename?: string
 		backgroundColor?: string
 		dark?: boolean
-		locales?: typeof defaultLocales
+		locales?: DeepPartial<typeof defaultLocales>
 	}
 
 	defineOptions({
@@ -32,8 +34,10 @@
 		fallbackFilename: undefined,
 		backgroundColor: 'white',
 		dark: false,
-		locales: () => defaultLocales,
+		locales: () => ({}),
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emits = defineEmits(['error', 'success'])
 	const attrs = useAttrs()
@@ -96,6 +100,7 @@
 		v-bind="btnOptions"
 		:loading="state === 'loading'"
 		class="sy-download-btn"
+		:class="{ 'sy-download-btn--dark': isDark }"
 		:color="buttonColor"
 		:style="`background-color: ${buttonBgColor}`"
 		data-testid="download-btn"
@@ -147,10 +152,11 @@
 }
 
 .sy-download-btn:focus-visible {
-	outline: 0;
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: 3px;
 }
 
-.sy-download-btn:focus-visible::after {
-	opacity: 1;
+.sy-download-btn--dark:focus-visible {
+	outline-color: rgb(var(--v-theme-onPrimary));
 }
 </style>

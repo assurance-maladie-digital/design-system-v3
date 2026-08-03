@@ -29,6 +29,12 @@ import { createVuetify } from 'vuetify'
 export const createVuetifyInstance = () => createVuetify({
 	components,
 	directives,
+	defaults: {
+		VTooltip: {
+			interactive: true,
+			closeDelay: 200,
+		},
+	},
 	locale: {
 		locale: 'fr',
 		messages: { fr },

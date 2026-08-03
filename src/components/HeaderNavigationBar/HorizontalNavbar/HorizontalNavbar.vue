@@ -245,8 +245,8 @@
 					:confirm-tab-change="props.confirmTabChange"
 					:confirmation-message="formattedConfirmationMessage"
 					:vuetify-options="{
-						sheet: { theme: 'dark', color: '#07275C' },
-						tab: { 'base-color': '#B5BECE', 'active-color': '#ffffff', 'slider-color': '#fff' },
+						sheet: { theme: 'light', color: 'rgb(var(--v-theme-primaryVariant))' },
+						tab: { 'base-color': 'rgb(var(--v-theme-surface), 0.7)', 'active-color': 'rgb(var(--v-theme-surface))', 'slider-color': 'rgb(var(--v-theme-surface))' },
 						tabs: { height: '60' }
 					}"
 					@update:model-value="async (val) => {
@@ -308,60 +308,5 @@
 	cursor: pointer;
 	display: flex;
 	align-items: stretch;
-}
-
-.horizontal-menu__link {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 0 16px;
-	min-height: 53px; /* Correspond à la hauteur définie dans config.ts */
-	font-size: 0.875rem;
-	font-weight: 700;
-	text-decoration: none;
-	color: v-bind("options.tab['base-color']"); /* Utilise la couleur du texte définie dans les options */
-	transition: color 0.2s ease;
-
-	&:hover {
-		color: rgb(var(--v-theme-onPrimary));
-	}
-
-	&:focus-visible {
-		outline: 3px solid #fff; /* Bordure blanche pour un ratio de contraste élevé */
-		outline-offset: -3px;
-		box-shadow: 0 0 0 1px #07275c; /* Contour secondaire pour améliorer la visibilité */
-	}
-
-	&--active,
-	&[aria-current='page'] {
-		color: rgb(var(--v-theme-onPrimary));
-		border-bottom: 3px solid #fff; /* Bordure solide et plus visible pour les éléments actifs */
-		box-shadow: 0 3px 0 0 #fff; /* Double effet pour être sûr que la bordure est bien visible */
-
-		&:focus-visible {
-			outline: 3px solid #fff;
-			outline-offset: 12px;
-		}
-	}
-}
-
-.horizontal-menu__panel-link {
-	display: inline-block;
-	padding: 8px 16px;
-	margin-top: 8px;
-	background-color: v-bind('options.sheet.color');
-	color: rgb(var(--v-theme-onPrimary));
-	text-decoration: none;
-	border-radius: 4px;
-	transition: background-color 0.2s ease;
-
-	&:hover {
-		filter: brightness(90%);
-	}
-
-	&:focus-visible {
-		outline: 3px solid #fff;
-		outline-offset: 2px;
-	}
 }
 </style>

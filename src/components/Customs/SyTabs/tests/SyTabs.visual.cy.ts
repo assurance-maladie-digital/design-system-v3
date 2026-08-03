@@ -28,3 +28,22 @@ describe('SyTabs - Visual regression tests', () => {
 		cy.matchImageSnapshot('sy-tabs-second-active', cy.get('.sy-tabs'))
 	})
 })
+
+// Déclenche :focus-visible via l'option native focus({ focusVisible: true }).
+const focusVisible = (selector: string) =>
+	cy.get(selector).then(($el) => {
+		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
+	})
+
+describe('SyTabs - Focus visual regression tests', () => {
+	// Ring 2px inset (offset -3px), couleur active-color (primary par défaut).
+	it('shows the focus ring on a tab', () => {
+		cy.mountWithVuetify(SyTabs, {
+			props: { items: defaultItems },
+		})
+
+		focusVisible('.sy-tabs__button')
+		cy.wait(100)
+		cy.matchImageSnapshot('sy-tabs-focus', cy.get('.sy-tabs'))
+	})
+})

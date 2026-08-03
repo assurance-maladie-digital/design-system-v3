@@ -12,15 +12,8 @@ interface PhoneFieldInstance extends ComponentPublicInstance {
 	dialCodeList: unknown[]
 	hasError: boolean
 	errors: string[]
-	validation: {
-		clearValidation: () => void
-		errors: string[]
-		warnings: string[]
-		successes: string[]
-		hasError: boolean
-		hasWarning: boolean
-		hasSuccess: boolean
-	}
+	warnings: string[]
+	successes: string[]
 	validateOnSubmit: () => Promise<boolean>
 	phoneMask: string
 	clearValidation: () => void
@@ -278,7 +271,9 @@ describe('PhoneField', () => {
 
 		expect(wrapper.vm.phoneMask).toBeDefined()
 		expect(wrapper.vm.dialCodeList).toBeDefined()
-		expect(wrapper.vm.validation).toBeDefined()
+		expect(wrapper.vm.errors).toBeDefined()
+		expect(wrapper.vm.warnings).toBeDefined()
+		expect(wrapper.vm.successes).toBeDefined()
 		expect(wrapper.vm.validateOnSubmit).toBeDefined()
 	})
 
@@ -943,19 +938,6 @@ describe('PhoneField', () => {
 
 			const textField = wrapper.findComponent({ name: 'SyTextField' })
 			expect(textField.props('errorMessages')).toBeTruthy()
-		})
-
-		it('initializes with disableErrorHandling prop', async () => {
-			const wrapper = mount(PhoneField, {
-				props: {
-					required: true,
-					modelValue: '',
-					isValidateOnBlur: true,
-					disableErrorHandling: true,
-				},
-			})
-
-			expect(wrapper.vm.validation).toBeDefined()
 		})
 
 		it('validates as part of a form submission', async () => {

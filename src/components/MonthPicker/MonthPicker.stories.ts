@@ -8,20 +8,11 @@ const meta: Meta<typeof MonthPicker> = {
 	title: 'Composants/Formulaires/MonthPicker',
 	component: MonthPicker,
 	argTypes: {
-		...getValidationDocumentation('base'),
-		'modelValue': {
-			control: 'text',
-			description: 'Valeur du sélecteur de mois au format "MM/YYYY".',
-			table: {
-				type: { summary: 'string' },
-			},
-		},
 		'locales': {
-			description: 'Objet de traduction pour le sélecteur de mois. Par défaut, les traductions françaises sont utilisées.',
+			description: 'Surcharge des chaînes affichées à l\'utilisateur (libellés des boutons et sélecteurs du composant, messages vocalisés pour l\'année et le mois, message de champ requis). Les valeurs par défaut sont définies dans le fichier `locales.ts` du composant. La prop accepte un objet partiel : seules les clés renseignées surchargent les valeurs par défaut, le reste est conservé.',
+			control: 'object',
 			table: {
-				type: {
-					summary: 'object',
-					detail: `{
+				type: { summary: 'object', detail: `{
 	btnLabel: string,
 	headerSelectYear: string,
 	headerSelectMonth: string,
@@ -32,8 +23,16 @@ const meta: Meta<typeof MonthPicker> = {
 	monthBtnLabelSelected: (selectedMonth: string) => string,
 	monthBtnLabelUnselected: (selectedMonth: string) => string,
 	fieldRequired: (label: string) => string,
-}`,
-				},
+}` },
+				category: 'props',
+			},
+		},
+		...getValidationDocumentation('base'),
+		'modelValue': {
+			control: 'text',
+			description: 'Valeur du sélecteur de mois au format "MM/YYYY".',
+			table: {
+				type: { summary: 'string' },
 			},
 		},
 		'clearable': {

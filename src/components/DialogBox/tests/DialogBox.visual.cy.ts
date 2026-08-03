@@ -16,6 +16,12 @@ function waitForDialogTransitionEnd() {
 		.and('not.have.class', 'dialog-transition-enter-active')
 }
 
+// Déclenche `:focus-visible` via l'option native focus({ focusVisible: true }).
+const focusVisible = (selector: string) =>
+	cy.get(selector).then(($el) => {
+		($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
+	})
+
 describe('DialogBox - Visual regression tests', () => {
 	it('displays the opened dialog box', () => {
 		cy.mountWithVuetify(DialogBox, {
@@ -96,5 +102,54 @@ describe('DialogBox - Visual regression tests', () => {
 		cy.get('.v-dialog').should('be.visible')
 		waitForDialogTransitionEnd()
 		cy.matchImageSnapshot('dialog-box-scrollable')
+	})
+
+	// Bouton de validation standalone → ring DS via l'override global `_btns.scss` (2px primary,
+	// offset 3px). DialogBox ne redéfinit plus de ring scoped pour ces boutons.
+	it('shows the global DS ring on a focused confirm button', () => {
+		cy.mountWithVuetify(DialogBox, {
+			...dialogTransitionOptions,
+			props: {
+				'modelValue': true,
+				'title': 'Confirmer la suppression',
+				'onUpdate:modelValue': () => {},
+			},
+			slots: {
+				default: () => h('p', 'Êtes-vous sûr de vouloir supprimer cet élément ?'),
+			},
+		})
+
+		cy.get('.v-dialog').should('be.visible')
+		waitForDialogTransitionEnd()
+		focusVisible('[data-test-id="confirm-btn"]')
+		cy.wait(150)
+		cy.matchImageSnapshot('dialog-box-confirm-focus')
+	})
+
+	// Région scrollable focusable au clavier (tabindex 0, role="region") → nouveau ring DS inset.
+	it('shows the DS ring on the focused scrollable content region', () => {
+		cy.mountWithVuetify(DialogBox, {
+			...dialogTransitionOptions,
+			props: {
+				'modelValue': true,
+				'title': 'Dialog scrollable',
+				'scrollable': true,
+				'onUpdate:modelValue': () => {},
+			},
+			slots: {
+				default: () => h(
+					'div',
+					Array.from({ length: 20 }, (_, index) =>
+						h('p', { class: 'mb-4' }, `Ligne de contenu numéro ${index + 1}`),
+					),
+				),
+			},
+		})
+
+		cy.get('.v-dialog').should('be.visible')
+		waitForDialogTransitionEnd()
+		focusVisible('.sy-dialog-box-content--scrollable')
+		cy.wait(150)
+		cy.matchImageSnapshot('dialog-box-scrollable-focus')
 	})
 })

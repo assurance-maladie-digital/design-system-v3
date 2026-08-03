@@ -1,18 +1,19 @@
 <script lang="ts" setup>
-	import {
-		mdiEyeOutline,
-		mdiEyeOffOutline,
-		mdiCloseCircle,
-	} from '@mdi/js'
-	import { computed, ref, useId, watch, nextTick, toRef } from 'vue'
-	import { usePasswordField } from './usePasswordFieldValidation'
-	import { config } from './config'
-	import { locales } from './locales'
+	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import useCustomizableOptions from '@/composables/useCustomizableOptions'
-	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { useLocales } from '@/composables/useLocales'
+	import {
+		mdiCloseCircle,
+		mdiEyeOffOutline,
+		mdiEyeOutline,
+	} from '@mdi/js'
+	import { computed, nextTick, readonly as readonlyState, ref, toRef, useId, watch } from 'vue'
+	import { config } from './config'
+	import { locales as defaultLocales } from './locales'
 	import type { PasswordFieldProps } from './types'
+	import { usePasswordField } from './usePasswordFieldValidation'
 
 	const props = withDefaults(defineProps<PasswordFieldProps>(), {
 		modelValue: null,
@@ -25,8 +26,11 @@
 		autocompleteType: 'current-password',
 		helpText: undefined,
 		hideDetails: false,
+		locales: () => ({}),
 		...validationPropsDefaults,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const options = useCustomizableOptions(config, props)
 	const emit = defineEmits(['update:modelValue'])
@@ -50,7 +54,7 @@
 	const alertMessage = ref('')
 	const fieldKey = ref(0)
 	const focused = ref(false)
-	const btnLabel = locales.showPassword
+	const btnLabel = locales.value.showPassword
 
 	const showClear = computed(() => {
 		if (!props.clearable) return false
@@ -78,7 +82,7 @@
 
 	function togglePasswordVisibility() {
 		showEyeIcon.value = !showEyeIcon.value
-		alertMessage.value = showEyeIcon.value ? locales.showedPassword : locales.hidedPassword
+		alertMessage.value = showEyeIcon.value ? locales.value.showedPassword : locales.value.hidedPassword
 		nextTick(() => {
 			const inputElement = document.getElementById(passwordFieldId.value)
 			const statusId = `${passwordFieldId.value}-status`
@@ -129,12 +133,13 @@
 		hasWarningProp: toRef(props, 'hasWarning'),
 		hasSuccessProp: toRef(props, 'hasSuccess'),
 		maxErrors: toRef(props, 'maxErrors'),
+		locales,
 	})
 
 	defineExpose({
-		errors,
-		warnings,
-		successes,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
 		hasError,
 		hasWarning,
 		hasSuccess,
@@ -208,6 +213,7 @@
 				<VBtn
 					type="button"
 					class="password-toggle-button"
+					size="small"
 					:aria-label="btnLabel"
 					:aria-pressed="showEyeIcon"
 					:aria-controls="passwordFieldId"
@@ -219,6 +225,7 @@
 					<SyIcon
 						:icon="showEyeIcon ? mdiEyeOutline : mdiEyeOffOutline"
 						color="rgb(0 0 0 / 70%)"
+						size="26"
 						:aria-hidden="true"
 						decorative
 					/>
@@ -252,14 +259,13 @@
 	border: none;
 	background: transparent;
 	cursor: pointer;
-	padding: 4px;
+	padding: 0;
 	border-radius: 4px;
-	outline: none;
 	transition: background-color 0.2s ease;
 
 	&:focus-visible {
-		background-color: rgb(0 0 0 / 8%);
-		box-shadow: 0 0 0 2px rgb(25 118 210 / 50%);
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 1px;
 	}
 
 	&:hover {
@@ -337,8 +343,9 @@
 	padding: 0;
 
 	&:focus-visible {
-		background-color: rgb(0 0 0 / 8%);
-		box-shadow: 0 0 0 2px rgb(25 118 210 / 50%);
+		outline: 2px solid rgb(var(--v-theme-primary));
+		outline-offset: 1px;
+		border-radius: 4px;
 	}
 
 	:deep(.v-icon__svg) {

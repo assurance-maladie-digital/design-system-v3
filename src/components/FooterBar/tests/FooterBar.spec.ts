@@ -172,4 +172,51 @@ describe('FooterBar', () => {
 			mobileSrc: expect.stringContaining('logo-mobile.svg'),
 		})
 	})
+
+	// Le ring de focus est géré globalement (_btns.scss) : ces tests vérifient les
+	// prérequis structurels (jsdom ne calcule pas le style :focus-visible).
+	describe('focus', () => {
+		// Le bouton "haut de page" (#scroll-btn) n'apparaît qu'en mode étendu (slot par défaut).
+		const mountExtended = (props = {}) =>
+			mount(FooterBar, {
+				props,
+				slots: { default: 'Contenu du footer' },
+			})
+
+		it('renders the back-to-top as a native <button> so the global focus ring applies', () => {
+			const wrapper = mountExtended()
+
+			const scrollBtn = wrapper.find('#scroll-btn')
+			expect(scrollBtn.exists()).toBe(true)
+			expect(scrollBtn.element.tagName).toBe('BUTTON')
+		})
+
+		it('carries the v-theme--dark class by default (onPrimary focus ring)', () => {
+			const wrapper = mountExtended()
+
+			expect(wrapper.find('.vd-footer-bar').classes()).toContain('v-theme--dark')
+		})
+
+		it('carries the v-theme--light class in light mode (primary focus ring)', () => {
+			const wrapper = mountExtended({ light: true })
+
+			const footer = wrapper.find('.vd-footer-bar')
+			expect(footer.classes()).toContain('v-theme--light')
+			expect(footer.classes()).not.toContain('v-theme--dark')
+		})
+
+		it('back-to-top button is focusable', () => {
+			const wrapper = mount(FooterBar, {
+				attachTo: document.body,
+				slots: { default: 'Contenu du footer' },
+			})
+
+			const button = wrapper.find('#scroll-btn').element as HTMLButtonElement
+			button.focus()
+
+			expect(document.activeElement).toBe(button)
+
+			wrapper.unmount()
+		})
+	})
 })

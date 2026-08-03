@@ -2,7 +2,7 @@ import { ref, computed } from 'vue'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { extractRangeParts as extractRangePartsUtil, hasRangeSeparator as hasRangeSeparatorUtil, isValidDateRange } from '../utils/dateFormattingUtils'
-import { DATE_PICKER_MESSAGES } from '../constants/messages'
+import { locales } from '../locales'
 import { useKeyboardEvents } from './useKeyboardEvents'
 
 // Initialiser les plugins dayjs
@@ -25,7 +25,7 @@ export function useDateRangeInput(
 	// Stockage temporaire pour la deuxième date saisie
 	const secondDate = ref<Date | null>(null)
 	// Séparateur de plage
-	const rangeSeparator = DATE_PICKER_MESSAGES.RANGE_SEPARATOR
+	const rangeSeparator = locales.rangeSeparator
 
 	// Utiliser useKeyboardEvents pour centraliser la gestion des événements clavier
 	const { handlePaste: handlePasteFromKeyboardEvents, handleKeyDown: handleKeyDownFromKeyboardEvents } = useKeyboardEvents({

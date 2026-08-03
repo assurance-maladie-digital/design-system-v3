@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { mdiCached, mdiImageOutline, mdiPause } from '@mdi/js'
-	import { computed, ref, toRef, watch } from 'vue'
+	import { computed, readonly as readonlyState, ref, toRef, watch } from 'vue'
 	import CaptchaAlert from './CaptchaAlert.vue'
 	import CaptchaBase from './CaptchaBase.vue'
 	import CaptchaBtn from './CaptchaBtn.vue'
@@ -14,6 +14,7 @@
 	import { useCaptchaValidation } from './useCaptchaValidation'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
+	import { useLocales } from '@/composables/useLocales'
 
 	const props = withDefaults(defineProps<CaptchaProps>(), {
 		modelValue: undefined,
@@ -22,9 +23,11 @@
 		tagTitle: 'h3',
 		isClearable: false,
 		locale: navigator.language,
-		locales: () => defaultLocales,
+		locales: () => ({}),
 		...validationPropsDefaults,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const emit = defineEmits<{
 		(e: 'update:modelValue', modelValue: string | null): void
@@ -99,7 +102,7 @@
 		showSuccessMessages: toRef(props, 'showSuccessMessages'),
 		disableErrorHandling: toRef(props, 'disableErrorHandling'),
 		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
-		label: computed(() => type.value === 'image' ? props.locales.image.textfieldLabel : props.locales.audio.textfieldLabel),
+		label: computed(() => type.value === 'image' ? locales.value.image.textfieldLabel : locales.value.audio.textfieldLabel),
 		rules: toRef(props, 'rules'),
 		customRules: toRef(props, 'customRules'),
 		customWarningRules: toRef(props, 'customWarningRules'),
@@ -112,7 +115,7 @@
 		hasSuccessProp: toRef(props, 'hasSuccess'),
 		maxErrors: toRef(props, 'maxErrors'),
 		focused,
-		locales: toRef(props, 'locales'),
+		locales,
 	})
 
 	function onFocus() {
@@ -134,6 +137,12 @@
 		clearValidation,
 		reset,
 		captchaId: id,
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
+		hasError: readonlyState(hasError),
+		hasWarning: readonlyState(hasWarning),
+		hasSuccess: readonlyState(hasSuccess),
 	})
 
 </script>

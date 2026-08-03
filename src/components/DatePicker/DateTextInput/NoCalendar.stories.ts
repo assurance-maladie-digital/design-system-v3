@@ -11,8 +11,6 @@ interface DatePickerProps {
 	'format'?: string
 	'dateFormatReturn'?: string
 	'density'?: 'default' | 'comfortable' | 'compact'
-	'isBirthDate'?: boolean
-	'birthDate'?: boolean
 	'showWeekNumber'?: boolean
 	'required'?: boolean
 	'displayRange'?: boolean
@@ -69,7 +67,7 @@ const meta = {
 		},
 		docs: {
 			description: {
-				component: '\n## DatePicker en mode text input (noCalendar) - Incompatibilités entre props\n\n### Contrôle d\'affichage des icônes\n- `noIcon: true` masque toutes les icônes, rendant `displayIcon`, `displayAppendIcon` et `displayPrependIcon` sans effet\n- `displayIcon: false` désactive les icônes, rendant `displayAppendIcon` et `displayPrependIcon` sans effet\n- `displayAppendIcon` et `displayPrependIcon` sont mutuellement exclusifs; si les deux sont définis à `true`, `displayAppendIcon` est prioritaire\n\n### Validation et états de champ\n- `readonly: true` désactive toutes les validations, y compris `required` et les règles personnalisées\n- `disabled` et `readonly` sont mutuellement exclusifs\n- `disableErrorHandling: true` peut créer une incohérence avec `showSuccessMessages: true`\n\n### Format et saisie\n- `birthDate` et `isBirthDate` sont des alias, utiliser l\'un ou l\'autre mais pas les deux\n- `displayRange: true` nécessite que modelValue soit un tableau de deux dates `[startDate, endDate]`\n- `autoClamp: true` peut court-circuiter certaines validations manuelles\n',
+				component: '\n## DatePicker en mode text input (noCalendar) - Incompatibilités entre props\n\n### Contrôle d\'affichage des icônes\n- `noIcon: true` masque toutes les icônes, rendant `displayIcon`, `displayAppendIcon` et `displayPrependIcon` sans effet\n- `displayIcon: false` désactive les icônes, rendant `displayAppendIcon` et `displayPrependIcon` sans effet\n- `displayAppendIcon` et `displayPrependIcon` sont mutuellement exclusifs; si les deux sont définis à `true`, `displayAppendIcon` est prioritaire\n\n### Validation et états de champ\n- `readonly: true` désactive toutes les validations, y compris `required` et les règles personnalisées\n- `disabled` et `readonly` sont mutuellement exclusifs\n- `disableErrorHandling: true` peut créer une incohérence avec `showSuccessMessages: true`\n\n### Format et saisie\n- `displayRange: true` nécessite que modelValue soit un tableau de deux dates `[startDate, endDate]`\n- `autoClamp: true` peut court-circuiter certaines validations manuelles\n',
 			},
 		},
 	},
@@ -232,16 +230,6 @@ const meta = {
 			description: 'Affiche un astérisque (*) à côté du label pour indiquer visuellement que le champ est obligatoire',
 			defaultValue: false,
 		},
-		'birthDate': {
-			control: 'boolean',
-			description: '⚠️ **DEPRECATED** — Utilisez `isBirthDate` à la place.',
-			defaultValue: false,
-		},
-		'isBirthDate': {
-			control: 'boolean',
-			description: 'Active le mode date de naissance qui commence la navigation du calendrier à l\'année en cours moins 30 ans',
-			defaultValue: false,
-		},
 		'width': {
 			control: 'text',
 			description: 'Largeur du champ (peut être en px, %, em, rem ou toute unité CSS valide)',
@@ -292,7 +280,7 @@ export const Default: Story = {
 							format="DD/MM/YYYY"
 							date-format-return=""
 							placeholder="JJ/MM/AAAA"
-							label="Date avec règles de validation"
+							label="Date (JJ/MM/AAAA)"
 							required
 							is-outlined
 							display-icon
@@ -375,7 +363,7 @@ export const Required: Story = {
 							v-model="date"
 							format="DD/MM/YYYY"
 							placeholder="JJ/MM/AAAA"
-							label="Date avec règles de validation"
+							label="Date (JJ/MM/AAAA)"
 							required
 							is-outlined
 							:no-calendar="true"
@@ -385,7 +373,7 @@ export const Required: Story = {
 							v-model="date"
 							format="DD/MM/YYYY"
 							placeholder="JJ/MM/AAAA"
-							label="Date avec règles de validation"
+							label="Date (JJ/MM/AAAA)"
 							required
 							is-outlined
 							:no-calendar="true"
@@ -477,7 +465,7 @@ export const EuropeanFormat: Story = {
 						format: 'DD/MM/YYYY',
 						dateFormatReturn: 'YYYY/MM/DD',
 						placeholder: 'JJ/MM/AAAA',
-						label: 'Date avec règles de validation',
+						label: 'Date (JJ/MM/AAAA)',
 						required: true,
 						noIcon: true,
 					}
@@ -730,8 +718,8 @@ export const WithErrorDisabled: Story = {
 							<DatePicker
 								v-model="date1"
 								format="DD/MM/YYYY"
-								placeholder="Date requise sans erreur"
-								label="Date requise sans erreur"
+								placeholder="JJ/MM/AAAA"
+								label="Date (JJ/MM/AAAA)"
 								required
 								no-icon
 								no-calendar
@@ -743,8 +731,8 @@ export const WithErrorDisabled: Story = {
 							<DatePicker
 								v-model="date2"
 								format="DD/MM/YYYY"
-								placeholder="Date requise avec erreur"
-								label="Date requise avec erreur"
+								placeholder="JJ/MM/AAAA"
+								label="Date (JJ/MM/AAAA)"
 								required
 								no-icon
 								no-calendar
@@ -760,8 +748,8 @@ export const WithErrorDisabled: Story = {
 		noCalendar: true,
 		format: 'DD/MM/YYYY',
 		dateFormatReturn: 'YYYY/MM/DD',
-		placeholder: 'Date requise sans erreur',
-		label: 'Date requise sans erreur',
+		placeholder: 'JJ/MM/AAAA',
+		label: 'Date (JJ/MM/AAAA)',
 		required: true,
 		noIcon: true,
 		disableErrorHandling: true,
@@ -794,8 +782,8 @@ export const WithErrorDisabled: Story = {
 							<DatePicker
 								v-model="date2"
 								format="DD/MM/YYYY"
-								placeholder="Date requise avec erreur"
-								label="Date requise avec erreur"
+								placeholder="JJ/MM/AAAA"
+								label="Date (JJ/MM/AAAA)"
 								required
 								no-icon
 								no-calendar
@@ -896,8 +884,8 @@ export const AutoClampFeature: Story = {
                 <h4 class="mb-2">Format JJ/MM/AAAA (séparateur /)</h4>
                 <DatePicker
                   v-model="dateSlash"
-                  placeholder="Saisie avec auto clamp - séparateur /"
-				  label="Date"
+                  placeholder="JJ/MM/AAAA"
+				  label="Date (JJ/MM/AAAA)"
                   format="DD/MM/YYYY"
                   noCalendar
                   autoClamp
@@ -907,8 +895,8 @@ export const AutoClampFeature: Story = {
                 <h4 class="mb-2">Format JJ-MM-AAAA (séparateur -)</h4>
                 <DatePicker
                   v-model="dateDash"
-                  placeholder="Saisie avec auto clamp - séparateur -"
-				  label="Date"
+                  placeholder="JJ-MM-AAAA"
+				  label="Date (JJ-MM-AAAA)"
                   format="DD-MM-YYYY"
                   noCalendar
                   autoClamp
@@ -918,8 +906,8 @@ export const AutoClampFeature: Story = {
                 <h4 class="mb-2">Format AAAA.MM.JJ (séparateur .)</h4>
                 <DatePicker
                   v-model="dateDot"
-                  placeholder="Saisie avec auto clamp - séparateur ."
-				  label="Date"
+                  placeholder="AAAA.MM.JJ"
+				  label="Date (AAAA.MM.JJ)"
                   format="YYYY.MM.DD"
                   noCalendar
                   autoClamp
@@ -929,8 +917,8 @@ export const AutoClampFeature: Story = {
                 <h4 class="mb-2">Mode plage de dates (séparateur /)</h4>
                 <DatePicker
                   v-model="dateRange"
-                  placeholder="Saisie plage avec auto clamp"
-				  label="Date"
+                  placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
+				  label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
                   format="DD/MM/YYYY"
                   displayRange
                   noCalendar
@@ -953,31 +941,36 @@ export const DifferentFormats: Story = {
 					<div class="d-flex flex-column gap-4">
 						<DatePicker
 							v-model="value1"
-							placeholder="Format JJ/MM/AAAA"
+							placeholder="JJ/MM/AAAA"
+							label="Date (JJ/MM/AAAA)"
 							format="DD/MM/YYYY"
 							no-calendar
 						/>
 						<DatePicker
 							v-model="value2"
-							placeholder="Format MM/JJ/AAAA"
+							placeholder="MM/JJ/AAAA"
+							label="Date (MM/JJ/AAAA)"
 							format="MM/DD/YYYY"
 							no-calendar
 						/>
 						<DatePicker
 							v-model="value3"
-							placeholder="Format AAAA-MM-JJ"
+							placeholder="AAAA-MM-JJ"
+							label="Date (AAAA-MM-JJ)"
 							format="YYYY-MM-DD"
 							no-calendar
 						/>
 						<DatePicker
 							v-model="value4"
-							placeholder="Format JJ-MM-AA"
+							placeholder="JJ-MM-AA"
+							label="Date (JJ-MM-AA)"
 							format="DD-MM-YY"
 							no-calendar
 						/>
 						<DatePicker
 							v-model="value5"
-							placeholder="Format JJ.MM.AAAA"
+							placeholder="JJ.MM.AAAA"
+							label="Date (JJ.MM.AAAA)"
 							format="DD.MM.YYYY"
 							no-calendar
 						/>
@@ -1017,40 +1010,40 @@ export const DifferentFormats: Story = {
               <div class="d-flex flex-column gap-4 pa-4">
                 <DatePicker
                     v-model="value1"
-                    placeholder="Format JJ/MM/AAAA"
-					label="Date"
+                    placeholder="JJ/MM/AAAA"
+					label="Date (JJ/MM/AAAA)"
                     format="DD/MM/YYYY"
                     no-calendar
                     class="py-4"
                 />
                 <DatePicker
                     v-model="value2"
-                    placeholder="Format MM/JJ/AAAA"
-					label="Date"
+                    placeholder="MM/JJ/AAAA"
+					label="Date (MM/JJ/AAAA)"
                     format="MM/DD/YYYY"
 					no-calendar
 					class="py-4"
                 />
                 <DatePicker
                     v-model="value3"
-                    placeholder="Format AAAA-MM-JJ"
-					label="Date"
+                    placeholder="AAAA-MM-JJ"
+					label="Date (AAAA-MM-JJ)"
                     format="YYYY-MM-DD"
 					no-calendar
 					class="py-4"
                 />
                 <DatePicker
                     v-model="value4"
-                    placeholder="Format JJ-MM-AA"
-					label="Date"
+                    placeholder="JJ-MM-AA"
+					label="Date (JJ-MM-AA)"
                     format="DD-MM-YY"
 					no-calendar
 					class="py-4"
                 />
                 <DatePicker
                     v-model="value5"
-                    placeholder="Format JJ.MM.AAAA"
-					label="Date"
+                    placeholder="JJ.MM.AAAA"
+					label="Date (JJ.MM.AAAA)"
                     format="DD.MM.YYYY"
 					no-calendar
 					class="py-4"

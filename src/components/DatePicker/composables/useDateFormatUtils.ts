@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
-import { DATE_PICKER_MESSAGES } from '../constants/messages'
+import { locales } from '../locales'
 
 // Initialiser le plugin dayjs nécessaire pour la validation des formats de date
 dayjs.extend(customParseFormat)
@@ -20,14 +20,14 @@ export const validateDateFormat = (
 	if (!dateStr) {
 		return {
 			isValid: !required || !hasInteracted || disableErrorHandling,
-			message: (required && hasInteracted && !disableErrorHandling) ? DATE_PICKER_MESSAGES.ERROR_REQUIRED : '',
+			message: (required && hasInteracted && !disableErrorHandling) ? locales.required : '',
 		}
 	}
 
 	if (!/^[\d/.-]*$/.test(dateStr)) {
 		return {
 			isValid: disableErrorHandling,
-			message: disableErrorHandling ? '' : DATE_PICKER_MESSAGES.ERROR_INVALID_FORMAT_WITH_FORMAT(format),
+			message: disableErrorHandling ? '' : locales.invalidDateFormatWithFormat(format),
 		}
 	}
 
@@ -37,7 +37,7 @@ export const validateDateFormat = (
 	if (!isValid) {
 		return {
 			isValid: disableErrorHandling,
-			message: disableErrorHandling ? '' : DATE_PICKER_MESSAGES.ERROR_INVALID_FORMAT_WITH_FORMAT(format),
+			message: disableErrorHandling ? '' : locales.invalidDateFormatWithFormat(format),
 		}
 	}
 
