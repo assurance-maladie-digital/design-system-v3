@@ -26,6 +26,17 @@ describe('BackBtn', () => {
 		expect(wrapper.find('VIcon').exists()).toBe(false)
 	})
 
+	it('applies correct button classes based on props', () => {
+		const wrapper = mount(BackBtn, {
+			component: {
+				VIcon,
+				VBtn,
+			},
+			props: { dark: false, hideBackIcon: false },
+		})
+		expect(wrapper.find('.sy-back-btn').classes()).toContain('pr-1')
+	})
+
 	it('applies correct button classes when dark is true and hideBackIcon is false', () => {
 		const wrapper = mount(BackBtn, {
 			component: {
