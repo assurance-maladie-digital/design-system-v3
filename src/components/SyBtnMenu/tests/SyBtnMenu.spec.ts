@@ -232,6 +232,41 @@ describe('SyBtnMenu', () => {
 			wrapper.unmount()
 		})
 
+		// La classe porte le style qui annule le padding haut de la liste : sans elle, une bande
+		// blanche apparaît au-dessus du fond du bloc d'identité.
+		it('flags the list when it starts with the identity block', async () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: {
+					primaryInfo: 'Jean Dupont',
+					iconOnly: true,
+					showIdentityInList: true,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.find('.sy-user-menu-btn').trigger('click')
+
+			expect(document.body.querySelector('.sy-user-menu-list--with-identity')).not.toBeNull()
+
+			wrapper.unmount()
+		})
+
+		it('does not flag the list when the identity block is absent', async () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: {
+					primaryInfo: 'Jean Dupont',
+					menuItems: ['Option 1'],
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.find('.sy-user-menu-btn').trigger('click')
+
+			expect(document.body.querySelector('.sy-user-menu-list--with-identity')).toBeNull()
+
+			wrapper.unmount()
+		})
+
 		it('does not show the identity block when showIdentityInList is false (default)', async () => {
 			const wrapper = mount(SyBtnMenu, {
 				props: {

@@ -236,34 +236,43 @@
 				</VBtn>
 			</template>
 			<slot name="content">
-				<slot
-					v-if="hasIdentityInList"
-					name="header-list-item"
-				>
-					<div
-						class="sy-user-menu-identity px-4 py-3"
-						v-bind="props.options['identityListItem']"
-					>
-						<p class="text-body-2 font-weight-bold mb-0">
-							{{ props.primaryInfo }}
-						</p>
-						<p
-							v-if="secondaryInfo"
-							class="text-caption text-grey-darken-2 font-weight-regular mb-0"
-						>
-							{{ props.secondaryInfo }}
-						</p>
-					</div>
-				</slot>
 				<VList
 					v-if="hasListContent"
 					ref="menu"
 					tag="ul"
 					role="menu"
+					:class="{ 'sy-user-menu-list--with-identity': hasIdentityInList }"
 					v-bind="props.options['list']"
 					:aria-labelledby="generatedId"
 					:aria-activedescendant="getSelectedValue() ? `item-${slugify(getSelectedValue()!)}` : undefined"
 				>
+					<slot
+						v-if="hasIdentityInList"
+						name="header-list-item"
+					>
+						<!-- `role="menu"` n'admet que des `menuitem`, `group` et `separator` : ce bloc
+							est un rappel visuel de l'identité, déjà portée par le nom accessible de
+							l'activateur (`activatorLabel`). On le retire donc de l'arbre d'accessibilité
+							plutôt que de l'y exposer comme un enfant non conforme, ce qui fausserait aussi
+							le nombre d'éléments annoncé pour le menu. -->
+						<li
+							class="sy-user-menu-identity px-4 py-3"
+							role="presentation"
+							aria-hidden="true"
+							v-bind="props.options['identityListItem']"
+						>
+							<p class="text-body-2 font-weight-bold mb-0">
+								{{ props.primaryInfo }}
+							</p>
+							<p
+								v-if="secondaryInfo"
+								class="text-caption text-grey-darken-2 font-weight-regular mb-0"
+							>
+								{{ props.secondaryInfo }}
+							</p>
+						</li>
+					</slot>
+
 					<VListItem
 						v-for="(item, index) in formattedItems"
 						:id="`item-${slugify(item[props.textKey] as string)}`"
@@ -339,5 +348,21 @@
 
 :deep(.v-list-item__prepend) {
 	display: unset !important;
+}
+
+// Le contenu du VMenu est téléporté hors du composant, mais ces deux éléments sont rendus par
+// son propre template (et par la racine de `VList`) : ils portent l'attribut de scope, les
+// styles scopés les atteignent donc sans passer par un override global.
+.sy-user-menu-list--with-identity {
+	// Le bloc d'identité est le premier élément de la liste : le padding vertical de `.v-list`
+	// laisserait sinon une bande blanche au-dessus de son fond.
+	padding-top: 0;
+}
+
+.sy-user-menu-identity {
+	background: rgb(var(--v-theme-grey-lighten90));
+
+	// Rétablit l'espacement de liste supprimé ci-dessus, entre le bloc et le premier item.
+	margin-bottom: 8px;
 }
 </style>
