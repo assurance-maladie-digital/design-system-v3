@@ -59,3 +59,29 @@ export const TertiaryDisabled: Story = {
 	args: { label: 'Button tertiary disabled', color: 'primary', variant: 'text', disabled: true },
 	parameters: { docs: { source: { code: `<v-btn color="primary" variant="text" disabled>Button</v-btn>` } } },
 }
+
+// --- Sizes ---
+export const Sizes: Story = {
+	render: () => ({
+		template: `
+            <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
+                <v-btn color="primary" variant="elevated" size="x-small">X-Small</v-btn>
+                <v-btn color="primary" variant="elevated" size="small">Small</v-btn>
+                <v-btn color="primary" variant="elevated" size="default">Default</v-btn>
+                <v-btn color="primary" variant="elevated" size="large">Large</v-btn>
+                <v-btn color="primary" variant="elevated" size="x-large">X-Large</v-btn>
+            </div>
+        `,
+	}),
+	parameters: {
+		docs: {
+			source: {
+				code: `<v-btn size="x-small">X-Small</v-btn>
+<v-btn size="small">Small</v-btn>
+<v-btn size="default">Default</v-btn>
+<v-btn size="large">Large</v-btn>
+<v-btn size="x-large">X-Large</v-btn>`,
+			},
+		},
+	},
+}

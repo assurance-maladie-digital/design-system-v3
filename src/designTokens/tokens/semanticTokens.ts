@@ -44,17 +44,6 @@ export const semanticTokens = {
 			warning: baseTokens.color.yellow.base,
 			warningVariant: baseTokens.color.yellow.lighten80,
 		},
-		interaction: {
-			darkEnabled: baseTokens.color.transparentBlue.alpha00,
-			darkHover: baseTokens.color.transparentBlue.alpha08,
-			darkPressed: baseTokens.color.transparentBlue.alpha20,
-			darkenEnabled: baseTokens.color.transparentBlack.alpha00,
-			darkenHover: baseTokens.color.transparentBlack.alpha20,
-			darkenPressed: baseTokens.color.transparentBlack.alpha40,
-			lightenEnabled: baseTokens.color.none,
-			lightenHover: baseTokens.color.white.alpha20,
-			lightenPressed: baseTokens.color.white.alpha40,
-		},
 	},
 	ap: {
 		color: {
@@ -98,17 +87,6 @@ export const semanticTokens = {
 			successVariant: baseTokens.color.forestGreen.lighten90,
 			warning: baseTokens.color.yellow.base,
 			warningVariant: baseTokens.color.yellow.lighten80,
-		},
-		interaction: {
-			darkEnabled: baseTokens.color.transparentCyan.alpha00,
-			darkHover: baseTokens.color.transparentCyan.alpha08,
-			darkPressed: baseTokens.color.transparentCyan.alpha18,
-			darkenEnabled: baseTokens.color.transparentBlack.alpha00,
-			darkenHover: baseTokens.color.transparentBlack.alpha20,
-			darkenPressed: baseTokens.color.transparentBlack.alpha40,
-			lightenEnabled: baseTokens.color.none,
-			lightenHover: baseTokens.color.white.alpha20,
-			lightenPressed: baseTokens.color.white.alpha38,
 		},
 	},
 } as const
