@@ -21,4 +21,5 @@ export const defaultOptions = {
 		color: 'primary',
 		class: 'mr-4',
 	},
+	identityListItem: {},
 } as const

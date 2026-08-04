@@ -206,6 +206,106 @@ describe('SyBtnMenu', () => {
 		wrapper.unmount()
 	})
 
+	// showIdentityInList : en mode icône seule, l'identité (primaryInfo/secondaryInfo)
+	// est masquée dans l'activateur ; elle doit alors réapparaître en tête du menu.
+	// Le menu (VMenu) est téléporté hors de l'arbre DOM du wrapper : on interroge
+	// document.body (cf. tests existants sur .v-list-item__prepend plus haut).
+	describe('identity in list', () => {
+		it('shows primaryInfo and secondaryInfo in the menu when iconOnly and showIdentityInList are true', async () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: {
+					primaryInfo: 'Jean Dupont',
+					secondaryInfo: 'Administrateur',
+					iconOnly: true,
+					showIdentityInList: true,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.find('.sy-user-menu-btn').trigger('click')
+
+			const identity = document.body.querySelector('.sy-user-menu-identity')
+			expect(identity).not.toBeNull()
+			expect(identity?.textContent).toContain('Jean Dupont')
+			expect(identity?.textContent).toContain('Administrateur')
+
+			wrapper.unmount()
+		})
+
+		it('does not show the identity block when showIdentityInList is false (default)', async () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: {
+					primaryInfo: 'Jean Dupont',
+					secondaryInfo: 'Administrateur',
+					iconOnly: true,
+					hideLogoutBtn: true,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.find('.sy-user-menu-btn').trigger('click')
+
+			expect(document.body.querySelector('.sy-user-menu-identity')).toBeNull()
+
+			wrapper.unmount()
+		})
+
+		it('does not show the identity block when iconOnly is false, even if showIdentityInList is true', async () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: {
+					primaryInfo: 'Jean Dupont',
+					showIdentityInList: true,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.find('.sy-user-menu-btn').trigger('click')
+
+			expect(document.body.querySelector('.sy-user-menu-identity')).toBeNull()
+
+			wrapper.unmount()
+		})
+
+		it('enables the menu (not disabled) when only the identity block would be shown', async () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: {
+					primaryInfo: 'Jean Dupont',
+					iconOnly: true,
+					showIdentityInList: true,
+					hideLogoutBtn: true,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.find('.sy-user-menu-btn').trigger('click')
+
+			expect(document.body.querySelector('.sy-user-menu-identity')).not.toBeNull()
+
+			wrapper.unmount()
+		})
+
+		it('allows overriding the identity block via the header-list-item slot', async () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: {
+					primaryInfo: 'Jean Dupont',
+					iconOnly: true,
+					showIdentityInList: true,
+				},
+				slots: {
+					'header-list-item': '<div class="custom-identity">Custom</div>',
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.find('.sy-user-menu-btn').trigger('click')
+
+			expect(document.body.querySelector('.custom-identity')).not.toBeNull()
+			expect(document.body.querySelector('.sy-user-menu-identity')).toBeNull()
+
+			wrapper.unmount()
+		})
+	})
+
 	// Le ring de focus est géré globalement (_btns.scss) sur le bouton natif ;
 	// jsdom ne calcule pas :focus-visible, on vérifie donc les prérequis structurels.
 	describe('focus', () => {

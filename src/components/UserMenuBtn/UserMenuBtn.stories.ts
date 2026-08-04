@@ -81,6 +81,7 @@ const meta = {
 	icon: Record<string, any>,
 	logoutListItem: Record<string, any>,
 	logoutIcon: Record<string, any>,
+	identityListItem: Record<string, any>,
 }`,
 				},
 				defaultValue: {
@@ -108,6 +109,7 @@ const meta = {
 		color: 'primary',
 		class: 'mr-4',
 	},
+	identityListItem: {},
 }`,
 				},
 			},

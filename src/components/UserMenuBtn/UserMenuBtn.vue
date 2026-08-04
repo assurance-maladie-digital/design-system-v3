@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed } from 'vue'
+	import { computed, useSlots } from 'vue'
 	import type { RouteLocationRaw } from 'vue-router'
 	import SyBtnMenu from '@/components/SyBtnMenu/SyBtnMenu.vue'
 	import { useDisplay } from 'vuetify'
@@ -35,12 +35,18 @@
 	defineEmits(['logout'])
 
 	const { smAndDown } = useDisplay()
+	const slots = useSlots()
 
 	const options = useCustomizableOptions(defaultOptions, props)
 
 	const isMobileView = computed(() => {
 		return props.isMobileView || smAndDown.value
 	})
+
+	// Le slot par défaut permet au consommateur de remplacer entièrement le contenu du
+	// menu (cf. story "Slot") : dans ce cas, le bloc d'identité auto-généré ne doit pas
+	// s'ajouter par-dessus ce contenu personnalisé en version mobile.
+	const hasCustomContent = computed(() => Boolean(slots.default))
 </script>
 
 <template>
@@ -53,6 +59,7 @@
 		:options="options"
 		:primary-info="fullName"
 		:secondary-info="additionalInformation"
+		:show-identity-in-list="!hasCustomContent"
 		class="user-menu-btn"
 	>
 		<template #append-icon>

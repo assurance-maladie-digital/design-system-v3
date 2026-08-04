@@ -63,6 +63,10 @@
 			type: Boolean,
 			default: false,
 		},
+		showIdentityInList: {
+			type: Boolean,
+			default: false,
+		},
 		options: {
 			type: Object,
 			default: () => ({ menu: {}, btn: {}, list: {} }),
@@ -106,8 +110,15 @@
 		return isMobileVersion.value ? 'pa-1' : 'pa-1 pa-sm-3'
 	})
 
+	// Bloc d'identité (primaryInfo / secondaryInfo) affiché en tête du menu déroulant
+	// lorsque le bouton est en mode icône seule (iconOnly) : l'identité, masquée dans
+	// l'activateur, est alors reportée dans le menu pour rester accessible.
+	const hasIdentityInList = computed(() => {
+		return props.showIdentityInList && props.iconOnly && Boolean(props.primaryInfo)
+	})
+
 	const hasListContent = computed(() => {
-		return Boolean(slots.default || !props.hideLogoutBtn)
+		return Boolean(slots.default || !props.hideLogoutBtn || hasIdentityInList.value)
 	})
 
 	const isMobileVersion = computed(() => {
@@ -213,6 +224,25 @@
 				</VBtn>
 			</template>
 			<slot name="content">
+				<slot
+					v-if="hasIdentityInList"
+					name="header-list-item"
+				>
+					<div
+						class="sy-user-menu-identity px-4 py-3"
+						v-bind="props.options['identityListItem']"
+					>
+						<p class="text-body-2 font-weight-bold mb-0">
+							{{ props.primaryInfo }}
+						</p>
+						<p
+							v-if="secondaryInfo"
+							class="text-caption text-grey-darken-2 font-weight-regular mb-0"
+						>
+							{{ props.secondaryInfo }}
+						</p>
+					</div>
+				</slot>
 				<VList
 					v-if="hasListContent"
 					ref="menu"

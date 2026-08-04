@@ -13,6 +13,12 @@
 	.v-list-item:focus-visible .v-list-item__overlay {
 		opacity: 0 !important;
 	}
+
+	// Bloc d'identité (nom + info complémentaire) affiché en tête du menu en version
+	// mobile/icône seule : fond distinct du reste de la liste, cf. maquette responsive.
+	.sy-user-menu-identity {
+		background: rgb(var(--v-theme-grey-lighten90));
+	}
 }
 
 // HeaderToolbar : menus déroulants téléportés (left-dropdown / mobile-burger).
