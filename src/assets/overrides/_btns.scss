@@ -80,9 +80,9 @@ button:focus-visible {
 }
 
 // Outlined, Text and Tonal buttons
-:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-outlined,
-:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-text,
-:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-tonal {
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026, .v-theme--dark).v-btn--variant-outlined,
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026, .v-theme--dark).v-btn--variant-text,
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026, .v-theme--dark).v-btn--variant-tonal {
 	&.v-btn--disabled {
 		color: rgba(var(--v-theme-onDisabled)) !important;
 		opacity: 1;
@@ -100,19 +100,19 @@ button:focus-visible {
 		transition: opacity 0.2s ease, background 0s;
 	}
 
-	// &[class*='--dark'] {
-	// 	&:hover .v-btn__overlay {
-	// 		background: rgba(var(--v-theme-interactionLighten), 0.2) !important;
-	// 		opacity: 1;
-	// 		transition: opacity 0.2s ease, background 0s;
-	// 	}
+	&.v-theme--dark {
+		&:hover .v-btn__overlay {
+			background: rgba(var(--v-theme-interactionLighten), 0.2) !important;
+			opacity: 1;
+			transition: opacity 0.2s ease, background 0s;
+		}
 
-	// 	&:active .v-btn__overlay {
-	// 		background: rgba(var(--v-theme-interactionLighten), 0.4) !important;
-	// 		opacity: 1;
-	// 		transition: opacity 0.2s ease, background 0s;
-	// 	}
-	// }
+		&:active .v-btn__overlay {
+			background: rgba(var(--v-theme-interactionLighten), 0.4) !important;
+			opacity: 1;
+			transition: opacity 0.2s ease, background 0s;
+		}
+	}
 }
 
 // `outlined` est la seule des trois variantes à avoir une bordure : la teinter n'a de sens que
