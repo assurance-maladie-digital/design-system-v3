@@ -37,6 +37,18 @@ export const createVuetifyInstance = () => createVuetify({
 		VBtn: {
 			ripple: false,
 		},
+		VCheckbox: {
+			baseColor: 'rgb(var(--v-border-color))',
+		},
+		VCheckboxBtn: {
+			baseColor: 'rgb(var(--v-border-color))',
+		},
+		VField: {
+			baseColor: 'rgb(var(--v-border-color))',
+		},
+		VSelectionControl: {
+			baseColor: 'rgb(var(--v-border-color))',
+		},
 	},
 	locale: {
 		locale: 'fr',
