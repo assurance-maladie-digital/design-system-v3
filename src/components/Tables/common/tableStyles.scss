@@ -1,14 +1,31 @@
+$sy-table-radius: 8px;
+$sy-table-border: 1px solid rgb(var(--v-theme-disabled));
+
 @mixin tablestyles {
 	.v-table {
-		border: 1px solid rgb(var(--v-theme-disabled));
+		border: $sy-table-border;
+		border-radius: $sy-table-radius;
+		overflow: hidden;
 
-		--sy-table-header-bg-pinned: color-mix(in srgb, rgb(var(--v-theme-infoVariant)) 20%, white);
+		--sy-table-header-bg-pinned: color-mix(in srgb, rgb(var(--v-theme-infoVariant)) 20%, rgb(var(--v-theme-surface)));
 
 		// Standardisation des z-index pour les tableaux
 		--sy-table-z-base: 1;
 		--sy-table-z-pinned-cell: calc(var(--sy-table-z-base) + 2);
 		--sy-table-z-pinned-header: calc(var(--sy-table-z-base) + 4);
 		--sy-table-z-progress: calc(var(--sy-table-z-base) + 5);
+	}
+
+	.sy-table-bulk-actions {
+		border: $sy-table-border;
+		border-bottom: 0;
+		border-radius: $sy-table-radius $sy-table-radius 0 0;
+	}
+
+	.sy-table-bulk-actions + .v-table {
+		border-top: 0;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
 	}
 
 	table thead tr {

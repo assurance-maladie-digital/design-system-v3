@@ -135,7 +135,7 @@ export const Default: Story = {
 		template: `
 			<div>
 				<!-- Conteneur scrollable : la barre d'actions reste « sticky » en haut -->
-				<div style="max-height: 360px; overflow: auto; border: 1px solid rgba(0,0,0,0.12); border-radius: 4px;">
+				<div style="max-height: 360px; overflow: auto; border-radius: 4px;">
 					<SyServerTable v-bind="args" v-model="selected" :headers="headers" :items="items" :server-items-length="items.length" :loading="state === StateEnum.PENDING">
 						<template #bulk-actions="{ selected, count, clearSelection }">
 							<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="openEdit(selected, clearSelection)">
