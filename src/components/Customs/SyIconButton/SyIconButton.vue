@@ -26,13 +26,13 @@
 		:variant="props.variant ?? 'text'"
 		:size="props.size"
 		class="rounded-circle"
+    :color="props.color"
 		icon
 		@click="$emit('click-icon-button')"
 	>
 		<SyIcon
 			:icon="props.icon"
 			:size="props.size"
-			:color="props.color"
 			:decorative="true"
 		/>
 	</v-btn>
