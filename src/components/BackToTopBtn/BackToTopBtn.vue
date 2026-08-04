@@ -134,15 +134,4 @@
 	opacity: 1;
 	float: right;
 }
-
-.v-btn--variant-outlined {
-	background: white;
-}
-
-.vd-back-to-top-btn:deep() {
-	.v-btn__underlay,
-	.v-btn__overlay {
-		display: none;
-	}
-}
 </style>
