@@ -334,4 +334,76 @@ describe('SyBtnMenu', () => {
 			wrapper.unmount()
 		})
 	})
+	// Le nom accessible du bouton doit rester le même quel que soit le format : ce que la version
+	// compacte masque visuellement est reporté dans le libellé lu par les lecteurs d'écran. Sans
+	// ça, en icône seule le bouton s'annonce « Menu utilisateur » sans dire de quel compte il
+	// s'agit — le bloc d'identité en tête du menu n'y répond pas, il n'est jamais annoncé en
+	// navigation clavier.
+	describe('activator accessible name', () => {
+		const srOnlyText = (wrapper: ReturnType<typeof mount>) =>
+			wrapper.get('.sy-user-menu-btn .d-sr-only').text()
+
+		it('keeps the plain label when the identity is visible in the activator', () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: {
+					label: 'Menu utilisateur',
+					primaryInfo: 'Jean Dupont',
+					secondaryInfo: 'Administrateur',
+				},
+				attachTo: document.body,
+			})
+
+			expect(srOnlyText(wrapper)).toBe('Menu utilisateur')
+
+			wrapper.unmount()
+		})
+
+		it('carries the whole identity when the activator is icon only', () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: {
+					label: 'Menu utilisateur',
+					primaryInfo: 'Jean Dupont',
+					secondaryInfo: 'Administrateur',
+					iconOnly: true,
+				},
+				attachTo: document.body,
+			})
+
+			expect(srOnlyText(wrapper)).toBe('Menu utilisateur, Jean Dupont, Administrateur')
+
+			wrapper.unmount()
+		})
+
+		it('carries the secondary info only when the mobile version hides it', () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: {
+					label: 'Menu utilisateur',
+					primaryInfo: 'Jean Dupont',
+					secondaryInfo: 'Administrateur',
+					isMobileView: true,
+				},
+				attachTo: document.body,
+			})
+
+			// `primaryInfo` reste affiché dans le bouton : l'ajouter le ferait annoncer deux fois.
+			expect(srOnlyText(wrapper)).toBe('Menu utilisateur, Administrateur')
+
+			wrapper.unmount()
+		})
+
+		it('omits missing values instead of leaving empty separators', () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: {
+					label: 'Menu utilisateur',
+					primaryInfo: 'Jean Dupont',
+					iconOnly: true,
+				},
+				attachTo: document.body,
+			})
+
+			expect(srOnlyText(wrapper)).toBe('Menu utilisateur, Jean Dupont')
+
+			wrapper.unmount()
+		})
+	})
 })

@@ -117,6 +117,18 @@
 		return props.showIdentityInList && props.iconOnly && Boolean(props.primaryInfo)
 	})
 
+	const activatorLabel = computed(() => {
+		if (props.iconOnly) {
+			return [props.label, props.primaryInfo, props.secondaryInfo].filter(Boolean).join(', ')
+		}
+
+		if (isMobileVersion.value) {
+			return [props.label, props.secondaryInfo].filter(Boolean).join(', ')
+		}
+
+		return props.label
+	})
+
 	const hasListContent = computed(() => {
 		return Boolean(slots.default || !props.hideLogoutBtn || hasIdentityInList.value)
 	})
@@ -194,7 +206,7 @@
 						class="d-flex align-center ga-2"
 					>
 						<slot name="prepend-icon" />
-						<span class="d-sr-only">{{ props.label }}</span>
+						<span class="d-sr-only">{{ activatorLabel }}</span>
 						<span
 							v-if="!isMobileVersion && !iconOnly"
 							class="d-flex flex-column align-end py-1"
