@@ -1,6 +1,17 @@
 {
   "Accordion": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9cdd71c032483c4b1424f42ee0426e3eba378856",
       "date": "2026-03-25 14:15:29 +0100",
       "dateFr": "25/03/2026",
@@ -1452,6 +1463,17 @@
   ],
   "AmeliproMenu": [
     {
+      "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+      "date": "2026-07-27 14:32:02 +0200",
+      "dateFr": "27/07/2026",
+      "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "fbcbbcd13559fa78c8a2528919dd2f5280ac65ad",
       "date": "2025-11-24 09:19:48 +0100",
       "dateFr": "24/11/2025",
@@ -2704,6 +2726,17 @@
   ],
   "BackBtn": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
       "date": "2026-03-30 08:20:25 +0100",
       "dateFr": "30/03/2026",
@@ -2771,6 +2804,17 @@
     }
   ],
   "BackToTopBtn": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "5f99cd9f1384e5cabcd71e416cfa15c1d072c704",
       "date": "2026-03-30 08:23:27 +0100",
@@ -2861,6 +2905,17 @@
     }
   ],
   "Captcha": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "8cfc8188ea78ca5d067d5d4ebc73a09b395a18da",
       "date": "2026-06-16 14:55:28 +0200",
@@ -2974,6 +3029,17 @@
   ],
   "CaptchaAlert": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "8cfc8188ea78ca5d067d5d4ebc73a09b395a18da",
       "date": "2026-06-16 14:55:28 +0200",
       "dateFr": "16/06/2026",
@@ -3085,6 +3151,17 @@
     }
   ],
   "CaptchaBase": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "8cfc8188ea78ca5d067d5d4ebc73a09b395a18da",
       "date": "2026-06-16 14:55:28 +0200",
@@ -3198,6 +3275,17 @@
   ],
   "CaptchaBtn": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "8cfc8188ea78ca5d067d5d4ebc73a09b395a18da",
       "date": "2026-06-16 14:55:28 +0200",
       "dateFr": "16/06/2026",
@@ -3309,6 +3397,17 @@
     }
   ],
   "CaptchaForm": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "8cfc8188ea78ca5d067d5d4ebc73a09b395a18da",
       "date": "2026-06-16 14:55:28 +0200",
@@ -3422,6 +3521,17 @@
   ],
   "CaptchaHelpdesk": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "8cfc8188ea78ca5d067d5d4ebc73a09b395a18da",
       "date": "2026-06-16 14:55:28 +0200",
       "dateFr": "16/06/2026",
@@ -3533,6 +3643,17 @@
     }
   ],
   "CaptchaImg": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "8cfc8188ea78ca5d067d5d4ebc73a09b395a18da",
       "date": "2026-06-16 14:55:28 +0200",
@@ -3646,6 +3767,17 @@
   ],
   "CaptchaInformation": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "8cfc8188ea78ca5d067d5d4ebc73a09b395a18da",
       "date": "2026-06-16 14:55:28 +0200",
       "dateFr": "16/06/2026",
@@ -3758,6 +3890,17 @@
   ],
   "ChipList": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "1fe640369828a904bf352c1ad78f9a9b5cf7a4f6",
       "date": "2026-03-30 15:47:27 +0100",
       "dateFr": "30/03/2026",
@@ -3848,6 +3991,17 @@
   ],
   "CollapsibleList": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
       "date": "2026-02-11 12:51:15 +0100",
       "dateFr": "11/02/2026",
@@ -3894,6 +4048,17 @@
   ],
   "IconSlot": [
     {
+      "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+      "date": "2026-07-27 14:32:02 +0200",
+      "dateFr": "27/07/2026",
+      "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "c3265eb88d01ee106e4db7f1a7d28cd960e48bb4",
       "date": "2026-01-30 12:33:02 +0100",
       "dateFr": "30/01/2026",
@@ -3906,6 +4071,17 @@
     }
   ],
   "ContextualMenu": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "1a732dfede955fc81c25240d65240888a8f6f5e2",
       "date": "2026-02-24 11:11:24 +0100",
@@ -3975,6 +4151,17 @@
   ],
   "DeepMenu": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "1a732dfede955fc81c25240d65240888a8f6f5e2",
       "date": "2026-02-24 11:11:24 +0100",
       "dateFr": "24/02/2026",
@@ -4042,6 +4229,17 @@
     }
   ],
   "CookieBanner": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "462a742899258fad303074faa447e8c8a2b109b2",
       "date": "2026-03-11 11:00:31 +0100",
@@ -4177,6 +4375,17 @@
   ],
   "CookiesInformation": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "462a742899258fad303074faa447e8c8a2b109b2",
       "date": "2026-03-11 11:00:31 +0100",
       "dateFr": "11/03/2026",
@@ -4244,6 +4453,17 @@
     }
   ],
   "CookiesSelection": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "462a742899258fad303074faa447e8c8a2b109b2",
       "date": "2026-03-11 11:00:31 +0100",
@@ -4348,6 +4568,17 @@
   ],
   "CopyBtn": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "1c6d06aa176680c4bc2e300ffa0d467f9b97c744",
       "date": "2026-03-06 09:53:08 +0100",
       "dateFr": "06/03/2026",
@@ -4448,6 +4679,17 @@
     }
   ],
   "SelectBtnField": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "3b4a99c7a74f7c09dafd40f6e5ba439c8e54dac2",
       "date": "2026-06-16 17:04:44 +0200",
@@ -4572,6 +4814,17 @@
   ],
   "SyAutocomplete": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "cae900d3b63f33c6f5eb30abd4c014eb58729468",
       "date": "2026-06-01 11:06:12 +0200",
       "dateFr": "01/06/2026",
@@ -4695,11 +4948,33 @@
   ],
   "SyInputSelect": [
     {
+      "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+      "date": "2026-07-27 14:32:02 +0200",
+      "dateFr": "27/07/2026",
+      "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "b76045911a704d35026f9a97a68716da6323f256",
       "date": "2026-07-02 10:31:06 +0200",
       "dateFr": "02/07/2026",
       "message": "Migration du composant `SyInputSelect` (#2348)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -4751,6 +5026,50 @@
     }
   ],
   "SySelect": [
+    {
+      "hash": "45ce4db94c37746d9e3c0b3d9883d27eae0841e7",
+      "date": "2026-07-27 14:56:33 +0200",
+      "dateFr": "27/07/2026",
+      "message": "SySelect: fix selection display when items is a string array (#2425)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+      "date": "2026-07-27 14:32:02 +0200",
+      "dateFr": "27/07/2026",
+      "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "d80a8e818663520dde7be8fd994b0340c35922b2",
+      "date": "2026-07-17 08:55:42 +0200",
+      "dateFr": "17/07/2026",
+      "message": "use useId (#2402)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "6a3052d6b95758d0342b712a62cb6a02d040c136",
       "date": "2026-06-03 17:32:15 +0200",
@@ -5018,11 +5337,33 @@
   ],
   "SyCheckBoxGroup": [
     {
+      "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+      "date": "2026-07-27 14:32:02 +0200",
+      "dateFr": "27/07/2026",
+      "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "7f2a9c3ab64afbcceb675f6207bcef447a508ec8",
       "date": "2026-07-08 14:17:13 +0200",
       "dateFr": "08/07/2026",
       "message": "[SyCheckbox] fix des retours d'accessibilitées (#2366)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "forte",
       "keywords": true,
       "patterns": false,
@@ -5042,11 +5383,33 @@
   ],
   "SyCheckbox": [
     {
+      "hash": "d8257e99afab773ca4986c43262aeba95297a8ce",
+      "date": "2026-07-23 15:47:19 +0200",
+      "dateFr": "23/07/2026",
+      "message": "[SyCheckbox] multiple (#2410)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "7f2a9c3ab64afbcceb675f6207bcef447a508ec8",
       "date": "2026-07-08 14:17:13 +0200",
       "dateFr": "08/07/2026",
       "message": "[SyCheckbox] fix des retours d'accessibilitées (#2366)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
@@ -5057,7 +5420,7 @@
       "date": "2026-06-24 14:14:23 +0200",
       "dateFr": "24/06/2026",
       "message": "Update migration doc + restructure Guide du dev (#2318)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -5068,7 +5431,7 @@
       "date": "2026-06-23 15:07:43 +0200",
       "dateFr": "23/06/2026",
       "message": "fix(SyCheckbox): improve focus styling (#2311)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "forte",
       "keywords": true,
       "patterns": false,
@@ -5266,6 +5629,17 @@
   ],
   "SyIcon": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "d56383f77b97cf18f4a14e05c37e6f0e165d5024",
       "date": "2026-05-29 11:29:33 +0200",
       "dateFr": "29/05/2026",
@@ -5388,6 +5762,17 @@
     }
   ],
   "SyIconAccessibility": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "d56383f77b97cf18f4a14e05c37e6f0e165d5024",
       "date": "2026-05-29 11:29:33 +0200",
@@ -5512,11 +5897,22 @@
   ],
   "SyIconButton": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "dbafe6cb9c1b46af7f14e4e822970a19eaae6c19",
       "date": "2026-07-07 15:06:32 +0200",
       "dateFr": "07/07/2026",
       "message": "SyTable/SyServerTable row editing + global actions (#2338)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -5527,7 +5923,7 @@
       "date": "2026-06-23 15:27:49 +0200",
       "dateFr": "23/06/2026",
       "message": "display version badge in docs (#2308)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -5546,6 +5942,17 @@
     }
   ],
   "SyPagination": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "1275e63b08841dd1f5676390fca6e44656e7d7a6",
       "date": "2026-03-17 13:54:00 +0100",
@@ -5626,6 +6033,28 @@
   ],
   "SyRadioGroup": [
     {
+      "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+      "date": "2026-07-27 14:32:02 +0200",
+      "dateFr": "27/07/2026",
+      "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "f2954834a6d8b90883f4bd405e728db1eadbdb7e",
       "date": "2026-05-18 08:48:09 +0200",
       "dateFr": "18/05/2026",
@@ -5693,6 +6122,28 @@
     }
   ],
   "SyTabs": [
+    {
+      "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+      "date": "2026-07-27 14:32:02 +0200",
+      "dateFr": "27/07/2026",
+      "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "c2b48d9293c9a62a5401fd577ca2c04894ad9539",
       "date": "2026-05-20 11:04:29 +0200",
@@ -5827,6 +6278,39 @@
     }
   ],
   "FieldState": [
+    {
+      "hash": "611b0627edc2976b1cd4129f701dd228394d52d8",
+      "date": "2026-07-31 12:04:52 +0200",
+      "dateFr": "31/07/2026",
+      "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "f2ae3fd9d1c349db938de16033ed24455131653c",
+      "date": "2026-07-23 11:35:27 +0200",
+      "dateFr": "23/07/2026",
+      "message": "WIP: Feat/a11y complex date picker (#2390)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "5acaaeebed1360943f0cddf52b2f5394d1dc0075",
       "date": "2026-06-10 11:59:21 +0200",
@@ -6193,6 +6677,39 @@
   ],
   "SyTextField": [
     {
+      "hash": "611b0627edc2976b1cd4129f701dd228394d52d8",
+      "date": "2026-07-31 12:04:52 +0200",
+      "dateFr": "31/07/2026",
+      "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "f2ae3fd9d1c349db938de16033ed24455131653c",
+      "date": "2026-07-23 11:35:27 +0200",
+      "dateFr": "23/07/2026",
+      "message": "WIP: Feat/a11y complex date picker (#2390)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "5acaaeebed1360943f0cddf52b2f5394d1dc0075",
       "date": "2026-06-10 11:59:21 +0200",
       "dateFr": "10/06/2026",
@@ -6558,6 +7075,17 @@
   ],
   "DataList": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
       "date": "2026-03-30 08:20:25 +0100",
       "dateFr": "30/03/2026",
@@ -6650,6 +7178,17 @@
   ],
   "DataListGroup": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
       "date": "2026-03-30 08:20:25 +0100",
       "dateFr": "30/03/2026",
@@ -6683,13 +7222,81 @@
       "a11yLabel": false
     }
   ],
+  "DataListItem": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    }
+  ],
   "DatePicker": [
+    {
+      "hash": "611b0627edc2976b1cd4129f701dd228394d52d8",
+      "date": "2026-07-31 12:04:52 +0200",
+      "dateFr": "31/07/2026",
+      "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "ca247e44235ed5f1d1ff7d2841255a47c9a72929",
+      "date": "2026-07-30 09:30:20 +0200",
+      "dateFr": "30/07/2026",
+      "message": "DatePicker: improve keyboard navigation in month and year selection v… (#2437)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "8b9c9f0c45c60a909aa89d25645a761f3e497fad",
+      "date": "2026-07-29 14:53:56 +0200",
+      "dateFr": "29/07/2026",
+      "message": "fix datepicker nvda arrow navigation (#2433)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "f2ae3fd9d1c349db938de16033ed24455131653c",
+      "date": "2026-07-23 11:35:27 +0200",
+      "dateFr": "23/07/2026",
+      "message": "WIP: Feat/a11y complex date picker (#2390)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "f632ce4fe5248ce7bb02a97cd2cb29cdf76b473e",
       "date": "2026-06-30 14:31:34 +0200",
       "dateFr": "30/06/2026",
       "message": "Feat/wip refacto dp 3 (#2207)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -6797,6 +7404,72 @@
   ],
   "ComplexDatePicker": [
     {
+      "hash": "6fc4e15b014bb96534f21f5070a2ce4226866f4f",
+      "date": "2026-07-30 13:56:16 +0200",
+      "dateFr": "30/07/2026",
+      "message": "DatePicker: add documentation for known false positives in accessibility tooling (aria-controls and keyboard navigation) (#2446)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "ca247e44235ed5f1d1ff7d2841255a47c9a72929",
+      "date": "2026-07-30 09:30:20 +0200",
+      "dateFr": "30/07/2026",
+      "message": "DatePicker: improve keyboard navigation in month and year selection v… (#2437)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "8b9c9f0c45c60a909aa89d25645a761f3e497fad",
+      "date": "2026-07-29 14:53:56 +0200",
+      "dateFr": "29/07/2026",
+      "message": "fix datepicker nvda arrow navigation (#2433)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "f2ae3fd9d1c349db938de16033ed24455131653c",
+      "date": "2026-07-23 11:35:27 +0200",
+      "dateFr": "23/07/2026",
+      "message": "WIP: Feat/a11y complex date picker (#2390)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "d80a8e818663520dde7be8fd994b0340c35922b2",
+      "date": "2026-07-17 08:55:42 +0200",
+      "dateFr": "17/07/2026",
+      "message": "use useId (#2402)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "bfc61d4def7a5d1b29f3777ab2f57eff5e88152a",
       "date": "2026-04-01 14:41:22 +0200",
       "dateFr": "01/04/2026",
@@ -6896,13 +7569,466 @@
       "a11yLabel": false
     }
   ],
-  "DateTextInput": [
+  "DatePickerLiveRegion": [
+    {
+      "hash": "611b0627edc2976b1cd4129f701dd228394d52d8",
+      "date": "2026-07-31 12:04:52 +0200",
+      "dateFr": "31/07/2026",
+      "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "6fc4e15b014bb96534f21f5070a2ce4226866f4f",
+      "date": "2026-07-30 13:56:16 +0200",
+      "dateFr": "30/07/2026",
+      "message": "DatePicker: add documentation for known false positives in accessibility tooling (aria-controls and keyboard navigation) (#2446)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "ca247e44235ed5f1d1ff7d2841255a47c9a72929",
+      "date": "2026-07-30 09:30:20 +0200",
+      "dateFr": "30/07/2026",
+      "message": "DatePicker: improve keyboard navigation in month and year selection v… (#2437)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "8b9c9f0c45c60a909aa89d25645a761f3e497fad",
+      "date": "2026-07-29 14:53:56 +0200",
+      "dateFr": "29/07/2026",
+      "message": "fix datepicker nvda arrow navigation (#2433)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "f2ae3fd9d1c349db938de16033ed24455131653c",
+      "date": "2026-07-23 11:35:27 +0200",
+      "dateFr": "23/07/2026",
+      "message": "WIP: Feat/a11y complex date picker (#2390)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "d80a8e818663520dde7be8fd994b0340c35922b2",
+      "date": "2026-07-17 08:55:42 +0200",
+      "dateFr": "17/07/2026",
+      "message": "use useId (#2402)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "f632ce4fe5248ce7bb02a97cd2cb29cdf76b473e",
       "date": "2026-06-30 14:31:34 +0200",
       "dateFr": "30/06/2026",
       "message": "Feat/wip refacto dp 3 (#2207)",
-      "version": "1.1.1",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "649a041438673664012b80d0e2ae74b7ba18d2b4",
+      "date": "2026-04-22 11:43:04 +0200",
+      "dateFr": "22/04/2026",
+      "message": "DatePicker: fix VMenu template syntax (#2129)",
+      "version": "1.0.25",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "f2e75c4313e579c69a4471d51ce3f2f1899f597c",
+      "date": "2026-04-21 09:57:46 +0200",
+      "dateFr": "21/04/2026",
+      "message": "Tokens simplify v2 (#2102)",
+      "version": "1.0.25",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "c7d5d6808a432dd319821980564f035869530c40",
+      "date": "2026-04-20 11:55:30 +0200",
+      "dateFr": "20/04/2026",
+      "message": "Feat/improve sy tabs a11y (#2111)",
+      "version": "1.0.25",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "3e904dddd4068d07eac77c3a97e8883573fa5758",
+      "date": "2026-04-03 19:11:40 +0200",
+      "dateFr": "03/04/2026",
+      "message": "Amelioration du système de validation (#1902)",
+      "version": "1.0.24",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "bfc61d4def7a5d1b29f3777ab2f57eff5e88152a",
+      "date": "2026-04-01 14:41:22 +0200",
+      "dateFr": "01/04/2026",
+      "message": "Feat/improve date pickers accessibility (#1964)",
+      "version": "1.0.24",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "175ca0d27910a1bf459f0fbe10e7d0812b0b0c92",
+      "date": "2026-03-10 11:51:12 +0100",
+      "dateFr": "10/03/2026",
+      "message": "UploadWorkflow: Tests et page d'accessibilité (#1923)",
+      "version": "1.0.22",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "4a570b68d34003a73920f3411093e1dfa777e310",
+      "date": "2026-03-02 17:14:05 +0100",
+      "dateFr": "02/03/2026",
+      "message": "Feat/fix a11y tests (#1883)",
+      "version": "1.0.22",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "c436586292ca72c4d82809711b9ef7cdcbdcc09a",
+      "date": "2026-02-25 16:19:14 +0100",
+      "dateFr": "25/02/2026",
+      "message": "add a11y ci (#1881)",
+      "version": "1.0.21",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
+      "date": "2026-02-11 12:51:15 +0100",
+      "dateFr": "11/02/2026",
+      "message": "Accessibilité: file reorganization accessibility (#1792)",
+      "version": "1.0.20",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
+      "date": "2026-01-30 15:10:51 +0100",
+      "dateFr": "30/01/2026",
+      "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
+      "version": "1.0.18",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "517a9b37efc6ae9bb4139cb9a69b37eab3711d28",
+      "date": "2026-01-16 09:28:09 +0100",
+      "dateFr": "16/01/2026",
+      "message": "Corrige les différences graphiques sur le DatePicker (#1670)",
+      "version": "1.0.17",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
+      "date": "2026-01-06 11:55:17 +0100",
+      "dateFr": "06/01/2026",
+      "message": "Feat/add accessibility in ci (#1663)",
+      "version": "1.0.17",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
+      "date": "2025-12-22 14:37:18 +0100",
+      "dateFr": "22/12/2025",
+      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
+      "version": "1.0.17",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "dfd126d73e2c465e0911070afee57a791c5cae2c",
+      "date": "2025-12-15 09:36:48 +0100",
+      "dateFr": "15/12/2025",
+      "message": "Refactor DatePicker components to enforce required label prop and allow to not show the placeholder (#1609)",
+      "version": "1.0.16",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "8a3708a8c1435413ad5403f6cb39bd727159df18",
+      "date": "2025-12-08 15:45:15 +0100",
+      "dateFr": "08/12/2025",
+      "message": "Feat/improve dp (#1540)",
+      "version": "1.0.16",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "e8bd3742c7b7be52d59307d1ed9b6c5179c8f64e",
+      "date": "2025-11-05 10:46:17 +0100",
+      "dateFr": "05/11/2025",
+      "message": "fix monthname on navigation in datePickers (#1415)",
+      "version": "1.0.12",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "35c62cc0e150ad7000a1496266bdc873872ff6c2",
+      "date": "2025-11-04 13:56:18 +0100",
+      "dateFr": "04/11/2025",
+      "message": "DatePicker : improve accessibility (#1399)",
+      "version": "1.0.12",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "7414f9a8cc7c172cb9aa99aab8819f411f5bb110",
+      "date": "2025-10-13 11:36:04 +0200",
+      "dateFr": "13/10/2025",
+      "message": "DatePicker title (#1262)",
+      "version": "1.0.10",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "53c3e7d241081558f320f927d765e1018c9eb9ec",
+      "date": "2025-10-06 09:14:07 +0200",
+      "dateFr": "06/10/2025",
+      "message": "add props density to datePickers (#1231)",
+      "version": "1.0.10",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "550ede1ed9b34999a53d1a87472487dc4ffb5233",
+      "date": "2025-09-23 09:08:16 +0200",
+      "dateFr": "23/09/2025",
+      "message": "fix readonly style on dateInput (#1140)",
+      "version": "1.0.10",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "cec51db1ac5f8495e6d4e7b9fd727433b3ac7d37",
+      "date": "2025-09-02 15:44:48 +0200",
+      "dateFr": "02/09/2025",
+      "message": "Feat/fix date text input edition (#1029)",
+      "version": "1.0.7",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "4eaa364402f6eb38ecc6fd2351fdb1333195d391",
+      "date": "2025-08-20 09:30:55 +0200",
+      "dateFr": "20/08/2025",
+      "message": "improve dp keyboard navigation (#975)",
+      "version": "1.0.7",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "88c74a321378e10f0571dde4821c16953b790dae",
+      "date": "2025-08-19 17:46:15 +0200",
+      "dateFr": "19/08/2025",
+      "message": "Feat/improve combined mode handling error (#973)",
+      "version": "1.0.7",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "d2b2badd75f5b77223985dca95feb2675fea560a",
+      "date": "2025-08-01 09:49:02 +0200",
+      "dateFr": "01/08/2025",
+      "message": "Fix/range on date input (#860)",
+      "version": "1.0.6",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "11bdd743786bdb4c84f94f0d39cc1a31f54de623",
+      "date": "2025-07-09 10:47:54 +0200",
+      "dateFr": "09/07/2025",
+      "message": "improve access on datePicker (#772)",
+      "version": "1.0.3",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "54b9bca097ab6d40d93fe7a9e5f0ea7b85803158",
+      "date": "2025-07-04 14:16:37 +0200",
+      "dateFr": "04/07/2025",
+      "message": "fix the problem with displaying datePicker boxes when several are open (#759)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "c0da961282b8da1897f96d2fce82c928adddcd58",
+      "date": "2025-07-04 09:55:25 +0200",
+      "dateFr": "04/07/2025",
+      "message": "fix label and placeholder in datePickersa componants (#746)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "fc05bc61ccbb1ce3471c55a5f44ba15531b2af29",
+      "date": "2025-06-26 14:29:14 +0200",
+      "dateFr": "26/06/2025",
+      "message": "add autoClamp on datePicker (#723)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "bc629568c7534d980c6fd969751929e658c3f8b5",
+      "date": "2025-06-18 10:45:45 +0200",
+      "dateFr": "18/06/2025",
+      "message": "Feat/improve dp input management (#696)",
+      "version": "1.0.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "f91cf53148117aa6f78a5073fb25778aed52222a",
+      "date": "2025-06-02 14:41:53 +0200",
+      "dateFr": "02/06/2025",
+      "message": "Feat/improve dp doc orga (#671)",
+      "version": "1.0.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "f1384e4430380e37ef475f2a924039341233e794",
+      "date": "2025-06-02 11:55:50 +0200",
+      "dateFr": "02/06/2025",
+      "message": "Feat/complex dp(WIP) (#582)",
+      "version": "1.0.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "DateTextInput": [
+    {
+      "hash": "f2ae3fd9d1c349db938de16033ed24455131653c",
+      "date": "2026-07-23 11:35:27 +0200",
+      "dateFr": "23/07/2026",
+      "message": "WIP: Feat/a11y complex date picker (#2390)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "f632ce4fe5248ce7bb02a97cd2cb29cdf76b473e",
+      "date": "2026-06-30 14:31:34 +0200",
+      "dateFr": "30/06/2026",
+      "message": "Feat/wip refacto dp 3 (#2207)",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -7063,7 +8189,31 @@
       "a11yLabel": false
     }
   ],
+  "DeclarationAccessibilityPage": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    }
+  ],
   "DiacriticPicker": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "d8ba7ec7683ccf3a0f0607adbd6731da5bbfab85",
       "date": "2026-03-30 10:39:46 +0100",
@@ -7132,6 +8282,17 @@
     }
   ],
   "DialogBox": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "b0221cd52fae1f509f414d6bf018ddb5810af83f",
       "date": "2026-06-17 10:49:31 +0200",
@@ -7311,6 +8472,17 @@
   ],
   "DownloadBtn": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
       "date": "2026-03-30 08:20:25 +0100",
       "dateFr": "30/03/2026",
@@ -7389,6 +8561,17 @@
     }
   ],
   "ErrorPage": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "a9dea254e921bf06a6b343e07fae495ba0ce0ee2",
       "date": "2026-03-25 10:38:49 +0100",
@@ -7524,11 +8707,22 @@
   ],
   "ExternalLinks": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "ab8872050a245b8e750b776979c26552b703abdb",
       "date": "2026-07-06 10:18:16 +0200",
       "dateFr": "06/07/2026",
       "message": "Feat/migration external links (#2339)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -7658,6 +8852,28 @@
   ],
   "FileList": [
     {
+      "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+      "date": "2026-07-27 14:32:02 +0200",
+      "dateFr": "27/07/2026",
+      "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "a69581185b256b0fff68004ae93d99f6e48f51e5",
       "date": "2026-03-25 16:57:56 +0100",
       "dateFr": "25/03/2026",
@@ -7737,6 +8953,17 @@
   ],
   "UploadItem": [
     {
+      "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+      "date": "2026-07-27 14:32:02 +0200",
+      "dateFr": "27/07/2026",
+      "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "a69581185b256b0fff68004ae93d99f6e48f51e5",
       "date": "2026-03-25 16:57:56 +0100",
       "dateFr": "25/03/2026",
@@ -7783,11 +9010,22 @@
   ],
   "FilePreview": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "4d4bee7db90d75e5fabec97b8ed43991cf3cfaef",
       "date": "2026-07-07 15:23:08 +0200",
       "dateFr": "07/07/2026",
       "message": "FilePreview: add readonly + mandatory + pdf.js (#2344)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -7829,6 +9067,17 @@
   ],
   "FileUpload": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "175ca0d27910a1bf459f0fbe10e7d0812b0b0c92",
       "date": "2026-03-10 11:51:12 +0100",
       "dateFr": "10/03/2026",
@@ -7864,6 +9113,17 @@
   ],
   "FileUploadContent": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "175ca0d27910a1bf459f0fbe10e7d0812b0b0c92",
       "date": "2026-03-10 11:51:12 +0100",
       "dateFr": "10/03/2026",
@@ -7898,6 +9158,17 @@
     }
   ],
   "FilterInline": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "b649f01a6d7adfcd44a3fdc04bdad87599caa30e",
       "date": "2026-03-04 17:08:50 +0100",
@@ -7999,6 +9270,17 @@
     }
   ],
   "FilterSideBar": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "596a998a8a033ec57791d75acf24b6d4a435be26",
       "date": "2026-06-17 09:38:08 +0200",
@@ -8112,6 +9394,17 @@
   ],
   "FooterBar": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "2c8a6f60bc679dfafc2795c019f0fe075c9f0771",
       "date": "2026-03-11 14:47:28 +0100",
       "dateFr": "11/03/2026",
@@ -8224,6 +9517,17 @@
   ],
   "FranceConnectBtn": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
       "date": "2026-03-30 08:20:25 +0100",
       "dateFr": "30/03/2026",
@@ -8303,11 +9607,33 @@
   ],
   "HeaderBar": [
     {
+      "hash": "43ecbd9871d2da61c693351d6c13ae521d23235c",
+      "date": "2026-07-30 14:51:52 +0200",
+      "dateFr": "30/07/2026",
+      "message": "A11y: Fix homeLink focus (#2443)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "ac297075e94eb8b9fbf9a969f2a3dd074b2dc0f9",
       "date": "2026-07-10 16:49:34 +0200",
       "dateFr": "10/07/2026",
       "message": "[logo] charger uniquement les images de logo si elles sont affiché (#2359)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -8525,6 +9851,17 @@
   ],
   "HeaderBurgerMenu": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
       "date": "2026-02-11 12:51:15 +0100",
       "dateFr": "11/02/2026",
@@ -8648,6 +9985,17 @@
   ],
   "HeaderMenuItem": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "432611b8bc2b890087900b80e0bbb0d7e8d769fe",
       "date": "2025-10-09 15:19:10 +0200",
       "dateFr": "09/10/2025",
@@ -8742,11 +10090,33 @@
   ],
   "HeaderLogo": [
     {
+      "hash": "43ecbd9871d2da61c693351d6c13ae521d23235c",
+      "date": "2026-07-30 14:51:52 +0200",
+      "dateFr": "30/07/2026",
+      "message": "A11y: Fix homeLink focus (#2443)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "ac297075e94eb8b9fbf9a969f2a3dd074b2dc0f9",
       "date": "2026-07-10 16:49:34 +0200",
       "dateFr": "10/07/2026",
       "message": "[logo] charger uniquement les images de logo si elles sont affiché (#2359)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -8831,6 +10201,17 @@
     }
   ],
   "HeaderMenuBtn": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "0b1c71ab78e9b3d5b2c07e433fafa1acbd1560aa",
       "date": "2025-04-18 07:55:43 +0000",
@@ -8946,11 +10327,33 @@
   ],
   "HeaderNavigationBar": [
     {
+      "hash": "481c8fc57505e697f05b4cf623dc78f4fc0e65d2",
+      "date": "2026-07-28 11:31:28 +0200",
+      "dateFr": "28/07/2026",
+      "message": "fix header navigation bar color to variable (#2431)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "ac297075e94eb8b9fbf9a969f2a3dd074b2dc0f9",
       "date": "2026-07-10 16:49:34 +0200",
       "dateFr": "10/07/2026",
       "message": "[logo] charger uniquement les images de logo si elles sont affiché (#2359)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -9058,6 +10461,28 @@
   ],
   "HorizontalNavbar": [
     {
+      "hash": "481c8fc57505e697f05b4cf623dc78f4fc0e65d2",
+      "date": "2026-07-28 11:31:28 +0200",
+      "dateFr": "28/07/2026",
+      "message": "fix header navigation bar color to variable (#2431)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "c5a2297435779e2698442027eaa64ec319a83ad5",
       "date": "2026-05-20 17:19:08 +0200",
       "dateFr": "20/05/2026",
@@ -9125,6 +10550,17 @@
     }
   ],
   "HeaderToolbar": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "c2b48d9293c9a62a5401fd577ca2c04894ad9539",
       "date": "2026-05-20 11:04:29 +0200",
@@ -9204,6 +10640,17 @@
     }
   ],
   "LangBtn": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
       "date": "2026-02-11 12:51:15 +0100",
@@ -9306,6 +10753,17 @@
   ],
   "Logo": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "d8ba7ec7683ccf3a0f0607adbd6731da5bbfab85",
       "date": "2026-03-30 10:39:46 +0100",
       "dateFr": "30/03/2026",
@@ -9351,6 +10809,39 @@
     }
   ],
   "LogoBrandSection": [
+    {
+      "hash": "43ecbd9871d2da61c693351d6c13ae521d23235c",
+      "date": "2026-07-30 14:51:52 +0200",
+      "dateFr": "30/07/2026",
+      "message": "A11y: Fix homeLink focus (#2443)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+      "date": "2026-07-27 14:32:02 +0200",
+      "dateFr": "27/07/2026",
+      "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "c5a2297435779e2698442027eaa64ec319a83ad5",
       "date": "2026-05-20 17:19:08 +0200",
@@ -9430,6 +10921,17 @@
     }
   ],
   "LunarCalendar": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
       "date": "2026-03-30 08:20:25 +0100",
@@ -9567,6 +11069,17 @@
   ],
   "MonthPicker": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "8cfc8188ea78ca5d067d5d4ebc73a09b395a18da",
       "date": "2026-06-16 14:55:28 +0200",
       "dateFr": "16/06/2026",
@@ -9613,6 +11126,17 @@
   ],
   "MonthPickerInput": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "594765e21910b5342aa5793317f0d78743a54f57",
       "date": "2026-03-25 14:55:44 +0100",
       "dateFr": "25/03/2026",
@@ -9625,6 +11149,17 @@
     }
   ],
   "MonthPickerVisual": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "594765e21910b5342aa5793317f0d78743a54f57",
       "date": "2026-03-25 14:55:44 +0100",
@@ -9639,6 +11174,17 @@
   ],
   "MonthSelector": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "594765e21910b5342aa5793317f0d78743a54f57",
       "date": "2026-03-25 14:55:44 +0100",
       "dateFr": "25/03/2026",
@@ -9651,6 +11197,17 @@
     }
   ],
   "VisualPickerFooter": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "594765e21910b5342aa5793317f0d78743a54f57",
       "date": "2026-03-25 14:55:44 +0100",
@@ -9665,6 +11222,17 @@
   ],
   "VisualPickerHeader": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "594765e21910b5342aa5793317f0d78743a54f57",
       "date": "2026-03-25 14:55:44 +0100",
       "dateFr": "25/03/2026",
@@ -9677,6 +11245,17 @@
     }
   ],
   "YearSelector": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "594765e21910b5342aa5793317f0d78743a54f57",
       "date": "2026-03-25 14:55:44 +0100",
@@ -9691,11 +11270,33 @@
   ],
   "NirField": [
     {
+      "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+      "date": "2026-07-27 14:32:02 +0200",
+      "dateFr": "27/07/2026",
+      "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "72d4870d1f431046843afc9dcc01cb9c52a874bc",
       "date": "2026-06-23 16:30:57 +0200",
       "dateFr": "23/06/2026",
       "message": "nirField improve auto focus accessibility (#2303)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
@@ -9858,6 +11459,17 @@
   ],
   "NotFoundPage": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "5ded9eca4a95c2ee3083fee246d6dc7e8e792d44",
       "date": "2026-06-17 14:14:22 +0200",
       "dateFr": "17/06/2026",
@@ -9981,6 +11593,17 @@
   ],
   "Notification": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "f592e6c39d43a258449ff46582666dda7b0953a3",
       "date": "2026-01-09 14:32:52 +0100",
       "dateFr": "09/01/2026",
@@ -9993,6 +11616,17 @@
     }
   ],
   "NotificationBar": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "3eddae09328b268b33a250314782e19d6fd4412b",
       "date": "2026-02-18 14:55:20 +0100",
@@ -10163,6 +11797,17 @@
   ],
   "PaginatedTable": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "8c2f5cc85c4c5705daecafc3f00727b7f4b6ef89",
       "date": "2026-05-29 09:22:51 +0200",
       "dateFr": "29/05/2026",
@@ -10296,6 +11941,17 @@
     }
   ],
   "Pagination": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "8c2f5cc85c4c5705daecafc3f00727b7f4b6ef89",
       "date": "2026-05-29 09:22:51 +0200",
@@ -10431,11 +12087,22 @@
   ],
   "PasswordField": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "fe709542b28b9e7e3ed8876a8258920c11778c12",
       "date": "2026-07-03 11:28:48 +0200",
       "dateFr": "03/07/2026",
       "message": "ajout doc aria pressed (#2362)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
@@ -10644,6 +12311,17 @@
   ],
   "PhoneField": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "0623c31856bc1545e6df01135176b7c4ec45bddf",
       "date": "2026-06-11 15:53:58 +0200",
       "dateFr": "11/06/2026",
@@ -10767,6 +12445,17 @@
   ],
   "RangeField": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
       "date": "2026-03-30 08:20:25 +0100",
       "dateFr": "30/03/2026",
@@ -10857,6 +12546,17 @@
   ],
   "RangeSlider": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "292f8da5bbc6b80c823aa5e4de6de25376bc2a52",
       "date": "2025-10-10 13:49:20 +0200",
       "dateFr": "10/10/2025",
@@ -10892,11 +12592,33 @@
   ],
   "EmotionPicker": [
     {
+      "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+      "date": "2026-07-27 14:32:02 +0200",
+      "dateFr": "27/07/2026",
+      "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "7ddc61cf5874855db49eb1c6128bdcb8d451b47d",
       "date": "2026-07-15 14:44:47 +0200",
       "dateFr": "15/07/2026",
       "message": "[RatingPicker] Iso Maquettes (#2389)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -10907,7 +12629,7 @@
       "date": "2026-06-30 11:48:21 +0200",
       "dateFr": "30/06/2026",
       "message": "[RatingPicker] fix des problèmes d'accessibilitées (#2335)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
@@ -11004,11 +12726,33 @@
   ],
   "NumberPicker": [
     {
+      "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+      "date": "2026-07-27 14:32:02 +0200",
+      "dateFr": "27/07/2026",
+      "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "7ddc61cf5874855db49eb1c6128bdcb8d451b47d",
       "date": "2026-07-15 14:44:47 +0200",
       "dateFr": "15/07/2026",
       "message": "[RatingPicker] Iso Maquettes (#2389)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -11019,7 +12763,7 @@
       "date": "2026-06-30 11:48:21 +0200",
       "dateFr": "30/06/2026",
       "message": "[RatingPicker] fix des problèmes d'accessibilitées (#2335)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
@@ -11105,11 +12849,33 @@
   ],
   "RatingPicker": [
     {
+      "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
+      "date": "2026-07-27 14:32:02 +0200",
+      "dateFr": "27/07/2026",
+      "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "7ddc61cf5874855db49eb1c6128bdcb8d451b47d",
       "date": "2026-07-15 14:44:47 +0200",
       "dateFr": "15/07/2026",
       "message": "[RatingPicker] Iso Maquettes (#2389)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -11120,7 +12886,7 @@
       "date": "2026-06-30 11:48:21 +0200",
       "dateFr": "30/06/2026",
       "message": "[RatingPicker] fix des problèmes d'accessibilitées (#2335)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
@@ -11254,7 +13020,7 @@
       "date": "2026-07-15 14:44:47 +0200",
       "dateFr": "15/07/2026",
       "message": "[RatingPicker] Iso Maquettes (#2389)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -11265,7 +13031,7 @@
       "date": "2026-06-30 11:48:21 +0200",
       "dateFr": "30/06/2026",
       "message": "[RatingPicker] fix des problèmes d'accessibilitées (#2335)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
@@ -11362,11 +13128,22 @@
   ],
   "SearchListField": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "7f2a9c3ab64afbcceb675f6207bcef447a508ec8",
       "date": "2026-07-08 14:17:13 +0200",
       "dateFr": "08/07/2026",
       "message": "[SyCheckbox] fix des retours d'accessibilitées (#2366)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "forte",
       "keywords": true,
       "patterns": false,
@@ -11463,6 +13240,17 @@
   ],
   "SkipLink": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
       "date": "2026-03-30 08:20:25 +0100",
       "dateFr": "30/03/2026",
@@ -11530,6 +13318,17 @@
     }
   ],
   "SocialMediaLinks": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "ef48368488700f0d387dc01a8d0b55c7e9d421e0",
       "date": "2026-02-26 18:04:01 +0100",
@@ -11610,6 +13409,17 @@
   ],
   "StatusPage": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "5ded9eca4a95c2ee3083fee246d6dc7e8e792d44",
       "date": "2026-06-17 14:14:22 +0200",
       "dateFr": "17/06/2026",
@@ -11688,6 +13498,17 @@
     }
   ],
   "SubHeader": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
       "date": "2026-03-30 08:20:25 +0100",
@@ -11768,11 +13589,22 @@
   ],
   "SyAlert": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "7ddc61cf5874855db49eb1c6128bdcb8d451b47d",
       "date": "2026-07-15 14:44:47 +0200",
       "dateFr": "15/07/2026",
       "message": "[RatingPicker] Iso Maquettes (#2389)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -11847,6 +13679,17 @@
   ],
   "SyBtnMenu": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "98df1befa47e47eea9bdaf42c8fe2719de427082",
       "date": "2026-03-04 13:28:25 +0100",
       "dateFr": "04/03/2026",
@@ -11894,6 +13737,28 @@
     }
   ],
   "SyTextArea": [
+    {
+      "hash": "6ba17d94f51a82d2ee9d3a4972eb40275a218231",
+      "date": "2026-07-23 11:48:40 +0200",
+      "dateFr": "23/07/2026",
+      "message": "expose Vuetify props on SyTextArea and DialogBox (#2415)",
+      "version": "1.1.2",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "bd6207d1753d49a55c203d88270dac9f6380b5ec",
       "date": "2026-05-26 17:15:04 +0200",
@@ -11974,6 +13839,17 @@
   ],
   "TableToolbar": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
       "date": "2026-02-11 12:51:15 +0100",
       "dateFr": "11/02/2026",
@@ -12053,11 +13929,22 @@
   ],
   "SyServerTable": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "dbafe6cb9c1b46af7f14e4e822970a19eaae6c19",
       "date": "2026-07-07 15:06:32 +0200",
       "dateFr": "07/07/2026",
       "message": "SyTable/SyServerTable row editing + global actions (#2338)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -12187,11 +14074,22 @@
   ],
   "SyTable": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "dbafe6cb9c1b46af7f14e4e822970a19eaae6c19",
       "date": "2026-07-07 15:06:32 +0200",
       "dateFr": "07/07/2026",
       "message": "SyTable/SyServerTable row editing + global actions (#2338)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -12321,11 +14219,22 @@
   ],
   "SyTableFilter": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "dbafe6cb9c1b46af7f14e4e822970a19eaae6c19",
       "date": "2026-07-07 15:06:32 +0200",
       "dateFr": "07/07/2026",
       "message": "SyTable/SyServerTable row editing + global actions (#2338)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -12598,11 +14507,22 @@
   ],
   "SyTablePagination": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "dbafe6cb9c1b46af7f14e4e822970a19eaae6c19",
       "date": "2026-07-07 15:06:32 +0200",
       "dateFr": "07/07/2026",
       "message": "SyTable/SyServerTable row editing + global actions (#2338)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -12875,11 +14795,22 @@
   ],
   "TableBulkActions": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "dbafe6cb9c1b46af7f14e4e822970a19eaae6c19",
       "date": "2026-07-07 15:06:32 +0200",
       "dateFr": "07/07/2026",
       "message": "SyTable/SyServerTable row editing + global actions (#2338)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -13152,11 +15083,22 @@
   ],
   "TableHeader": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "dbafe6cb9c1b46af7f14e4e822970a19eaae6c19",
       "date": "2026-07-07 15:06:32 +0200",
       "dateFr": "07/07/2026",
       "message": "SyTable/SyServerTable row editing + global actions (#2338)",
-      "version": "1.1.1",
+      "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -13639,6 +15581,17 @@
   ],
   "OrganizeColumns": [
     {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "129060e2b8a94d277d8a03fd98eb169ad72ebcdb",
       "date": "2026-02-12 10:01:33 +0100",
       "dateFr": "12/02/2026",
@@ -13662,6 +15615,17 @@
     }
   ],
   "ToolbarContainer": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "a17600f594579c27dae95dd9be5c212676d7524d",
       "date": "2026-03-30 08:22:52 +0100",
@@ -13708,6 +15672,17 @@
     }
   ],
   "UploadWorkflow": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "462a742899258fad303074faa447e8c8a2b109b2",
       "date": "2026-03-11 11:00:31 +0100",
@@ -13776,6 +15751,17 @@
     }
   ],
   "UserMenuBtn": [
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.2",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "98df1befa47e47eea9bdaf42c8fe2719de427082",
       "date": "2026-03-04 13:28:25 +0100",
