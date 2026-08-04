@@ -4,12 +4,12 @@
 	import { nextTick, ref, toRef, useId, watch } from 'vue'
 	import type { VBtn, VDialog } from 'vuetify/components'
 	import { useDisplay } from 'vuetify/lib/framework.mjs'
-	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
 	import { config } from './config'
 	import { locales } from './locales'
 	import type { DialogBoxOwnProps } from './types'
 	import { useDraggable } from './useDraggable'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
+	import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
 
 	const props = withDefaults(defineProps<DialogBoxOwnProps>(), {
 		title: undefined,
@@ -163,19 +163,14 @@
 
 				<VSpacer v-bind="options.spacer" />
 
-				<VBtn
+				<SyIconButton
 					v-if="!props.persistent"
 					class="sy-dialog-box-close-btn"
 					v-bind="options.closeBtn"
-					:aria-label="locales.closeBtn"
+					:icon="closeIcon"
+					label="locales.closeBtn"
 					@click.stop="dialog = false"
-				>
-					<SyIcon
-						:icon="closeIcon"
-						:decorative="true"
-						v-bind="options.icon"
-					/>
-				</VBtn>
+				/>
 			</VCardTitle>
 
 			<div
