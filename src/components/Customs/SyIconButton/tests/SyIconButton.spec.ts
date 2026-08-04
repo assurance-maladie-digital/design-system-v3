@@ -110,20 +110,19 @@ describe('SyIconButton', () => {
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 
+	it('passes the color prop to v-btn', () => {
+		const wrapper = mount(SyIconButton, {
+			props: {
+				icon: 'mdi-close',
+				label: 'Fermer',
+				variant: 'outlined',
+				color: 'primary',
+			},
+			...globalStubs,
+		})
 
-    it('passes the color prop to v-btn', () => {
-        const wrapper = mount(SyIconButton, {
-            props: {
-                icon: 'mdi-close',
-                label: 'Fermer',
-                variant: 'outlined',
-                color: 'primary',
-            },
-            ...globalStubs,
-        })
-
-        expect(wrapper.html()).toMatchSnapshot()
-    })
+		expect(wrapper.html()).toMatchSnapshot()
+	})
 
 	it('passes the variant prop to v-btn', () => {
 		const wrapper = mount(SyIconButton, {
