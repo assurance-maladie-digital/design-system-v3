@@ -60,6 +60,48 @@ export const TertiaryDisabled: Story = {
 	parameters: { docs: { source: { code: `<v-btn color="primary" variant="text" disabled>Button</v-btn>` } } },
 }
 
+// --- Primary ---
+export const PrimaryDestructive: Story = {
+	args: { label: 'Button primary', color: 'error', variant: 'elevated', disabled: false },
+	parameters: { docs: { source: { code: `<v-btn color="error" variant="elevated">Button</v-btn>` } } },
+}
+export const PrimaryDestructiveLoading: Story = {
+	args: { label: 'Button primary loading', color: 'error', variant: 'elevated', disabled: false, loading: true },
+	parameters: { docs: { source: { code: `<v-btn color="error" variant="elevated" loading>Button</v-btn>` } } },
+}
+export const PrimaryDestructiveDisabled: Story = {
+	args: { label: 'Button primary disabled', color: 'error', variant: 'elevated', disabled: true },
+	parameters: { docs: { source: { code: `<v-btn color="error" variant="elevated" disabled>Button</v-btn>` } } },
+}
+
+// --- Secondary ---
+export const SecondaryDestructive: Story = {
+	args: { label: 'Button secondary ', color: 'error', variant: 'outlined', disabled: false },
+	parameters: { docs: { source: { code: `<v-btn color="error" variant="outlined">Button</v-btn>` } } },
+}
+export const SecondaryDestructiveLoading: Story = {
+	args: { label: 'Button secondary loading', color: 'error', variant: 'outlined', disabled: false, loading: true },
+	parameters: { docs: { source: { code: `<v-btn color="error" variant="outlined" loading>Button</v-btn>` } } },
+}
+export const SecondaryDestructiveDisabled: Story = {
+	args: { label: 'Button secondary disabled', color: 'error', variant: 'outlined', disabled: true },
+	parameters: { docs: { source: { code: `<v-btn color="error" variant="outlined" disabled>Button</v-btn>` } } },
+}
+
+// --- Tertiary ---
+export const TertiaryDestructive: Story = {
+	args: { label: 'Button tertiary', color: 'error', variant: 'text', disabled: false },
+	parameters: { docs: { source: { code: `<v-btn color="error" variant="text">Button</v-btn>` } } },
+}
+export const TertiaryDestructiveLoading: Story = {
+	args: { label: 'Button tertiary loading', color: 'error', variant: 'text', disabled: false, loading: true },
+	parameters: { docs: { source: { code: `<v-btn color="error" variant="text" loading>Button</v-btn>` } } },
+}
+export const TertiaryDestructiveDisabled: Story = {
+	args: { label: 'Button tertiary disabled', color: 'error', variant: 'text', disabled: true },
+	parameters: { docs: { source: { code: `<v-btn color="error" variant="text" disabled>Button</v-btn>` } } },
+}
+
 // --- Sizes ---
 export const Sizes: Story = {
 	render: () => ({

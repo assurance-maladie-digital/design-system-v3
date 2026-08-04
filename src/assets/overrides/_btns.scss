@@ -113,6 +113,15 @@ button:focus-visible {
 			transition: opacity 0.2s ease, background 0s;
 		}
 	}
+	&.text-error {
+		&:hover .v-btn__overlay {
+			background: rgba(var(--v-theme-error), 0.08) !important;
+		}
+
+		&:active .v-btn__overlay {
+			background: rgba(var(--v-theme-error), 0.2) !important;
+		}
+	}
 }
 
 // `outlined` est la seule des trois variantes à avoir une bordure : la teinter n'a de sens que

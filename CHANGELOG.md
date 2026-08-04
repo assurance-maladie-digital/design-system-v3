@@ -9,7 +9,7 @@
   </thead>
   <tbody>
     <tr style="vertical-align: top;">
-      <td>- DatePicker: improve aceessibility and documentation
+      <td>- DatePicker: improve accessibility and documentation
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2456">#2456</a>
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2460">#2460</a>
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2457">#2457</a>
