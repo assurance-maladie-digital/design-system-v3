@@ -26,7 +26,7 @@
 		:variant="props.variant ?? 'text'"
 		:size="props.size"
 		class="rounded-circle"
-    :color="props.color"
+		:color="props.color"
 		icon
 		@click="$emit('click-icon-button')"
 	>
