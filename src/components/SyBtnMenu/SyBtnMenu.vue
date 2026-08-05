@@ -226,7 +226,7 @@
 							</span>
 							<span
 								:class="`text-${props?.options['btn']?.textColor}`"
-								class="subtitle text-grey text-darken-2 font-weight-regular"
+								class="subtitle text-grey-darken-2 font-weight-regular"
 							>
 								{{ props.secondaryInfo }}
 							</span>
@@ -272,7 +272,7 @@
 							</p>
 							<p
 								v-if="secondaryInfo"
-								class="text-caption text-grey-darken-2 font-weight-regular mb-0"
+								class="text-caption text-grey-darken-3 font-weight-regular mb-0"
 							>
 								{{ props.secondaryInfo }}
 							</p>
