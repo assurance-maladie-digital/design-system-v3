@@ -90,6 +90,9 @@
 			@reset="resetForm"
 		>
 			<div class="d-flex flex-column gap-4">
+				<p class="text-body-2 mb-2">
+					Les champs marqués d'un astérisque (*) sont obligatoires.
+				</p>
 				<v-chip
 					:color="validity.color"
 					size="small"
@@ -104,11 +107,14 @@
 					:items="civilities"
 					label="Civilité"
 					required
+					display-asterisk
 					class="mb-2"
 				/>
 				<SyTextField
 					v-model="form.lastName"
 					label="Nom"
+					required
+					display-asterisk
 					:custom-rules="requiredRule"
 					class="mb-2"
 				/>
@@ -133,6 +139,7 @@
 				<NirField
 					v-model="form.nir"
 					:required="true"
+					display-asterisk
 					number-label="Numéro de sécurité sociale"
 					class="mb-2"
 				/>
@@ -141,6 +148,7 @@
 					label="Situation professionnelle"
 					:options="situations"
 					required
+					display-asterisk
 					class="mb-2"
 				/>
 				<SyCheckBoxGroup
@@ -153,6 +161,7 @@
 					v-model="form.consent"
 					label="J'accepte les conditions d'utilisation"
 					required
+					display-asterisk
 				/>
 
 				<div class="d-flex gap-3 mt-2">

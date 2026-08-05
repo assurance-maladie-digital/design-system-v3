@@ -9,6 +9,10 @@
 	import { useLocales } from '@/composables/useLocales'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
+	defineOptions({
+		inheritAttrs: false,
+	})
+
 	const props = withDefaults(
 		defineProps<{
 			ariaLabel?: string
@@ -139,6 +143,7 @@
 
 <template>
 	<v-radio-group
+		v-bind="$attrs"
 		:id="props.id"
 		ref="radioGroupRef"
 		v-model="model"

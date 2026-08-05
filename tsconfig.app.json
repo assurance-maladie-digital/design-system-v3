@@ -29,6 +29,7 @@
     "cypress/**/*",
     "tests/**",
     "**/__tests__/**",
+    "**/*.fixture.vue",
     "**/*.spec.ts",
     "**/*.test.ts"
   ]
