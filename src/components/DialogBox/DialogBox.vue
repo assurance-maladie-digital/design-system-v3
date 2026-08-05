@@ -168,8 +168,8 @@
 					class="sy-dialog-box-close-btn"
 					v-bind="options.closeBtn"
 					:icon="closeIcon"
-					label="locales.closeBtn"
-					@click.stop="dialog = false"
+					:label="locales.closeBtn"
+					@click-icon-button="dialog = false"
 				/>
 			</VCardTitle>
 
