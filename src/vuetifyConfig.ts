@@ -96,6 +96,7 @@ export const createVuetifyInstance = () => createVuetify({
 					...createFlattenTheme(apColorsTokens2026),
 				},
 				variables: {
+					'border-color': cnamColorsTokens.grey.base,
 					'font-family': '"Arial", sans-serif',
 					...createFlattenTheme(apContextualTokens),
 				},
@@ -108,6 +109,7 @@ export const createVuetifyInstance = () => createVuetify({
 					...createFlattenTheme(apColorsTokens),
 				},
 				variables: {
+					'border-color': cnamColorsTokens.grey.base,
 					'font-family': '"Arial", sans-serif',
 					...createFlattenTheme(apContextualTokens),
 				},
