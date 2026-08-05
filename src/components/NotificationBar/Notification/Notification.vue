@@ -111,7 +111,6 @@
 		display: flex;
 		align-items: center;
 		width: 100%;
-		transform: translateX(-50%);
 		padding: var(--v-gap-2) var(--v-gap-4);
 		margin-block: var(--v-gap-1);
 		gap: var(--v-gap-2) var(--v-gap-4);
