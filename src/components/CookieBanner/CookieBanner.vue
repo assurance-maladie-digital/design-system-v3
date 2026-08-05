@@ -10,6 +10,7 @@
 	import { locales } from './locales'
 	import CookiesSelection from '../CookiesSelection/CookiesSelection.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
+	import SyIconButton from '../Customs/SyIconButton/SyIconButton.vue'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		items?: CookiesItems
@@ -220,19 +221,14 @@
 							label="Bouton de retour en arrière."
 						/>
 					</VBtn>
-					<VBtn
+					<SyIconButton
 						v-else
+						class="vd-cookie-banner-close-btn"
 						v-bind="options.closeBtn"
-						ref="closeBtnRef"
-						:aria-label="locales.closeBtn"
-						@click="reject"
-					>
-						<SyIcon
-							v-bind="options.icon"
-							:icon="mdiClose"
-							label="Bouton de fermeture."
-						/>
-					</VBtn>
+						:icon="mdiClose"
+						:label="locales.closeBtn"
+						@click-icon-button="reject"
+					/>
 				</div>
 				<div class="vd-cookie-banner-content">
 					<Transition name="height">
