@@ -8,6 +8,7 @@ html.theme-cnam {
 	--button-bg: #0c419a;
 	--button-text: #fff;
 	--body-font-family: 'Arial';
+    --interactionDarken: #000000;
 }
 
 /* Theme-aware styles for PA */
@@ -20,6 +21,7 @@ html.theme-pa {
 	--button-bg: #0c419a;
 	--button-text: #fff;
 	--body-font-family: 'Arial';
+    --interactionDarken: #000000;
 }
 
 html.theme-ap {
@@ -31,6 +33,7 @@ html.theme-ap {
 	--button-bg: #0084b2;
 	--button-text: #fff;
 	--body-font-family: 'Arial';
+    --interactionDarken: #000000;
 }
 
 /* Base styles */
@@ -71,15 +74,28 @@ pre.prismjs {
 }
 
 #file-test-upload::file-selector-button {
-	border: none;
-	margin-right: 12px;
-	background: var(--button-bg);
-	padding: 8px 12px;
-	border-radius: var(--border-radius);
-	color: var(--button-text);
-	cursor: pointer;
-	font-weight: bold;
-	box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%), 0 2px 2px 0 rgb(0 0 0 / 14%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    border: none;
+    margin-right: 12px;
+    background: var(--button-bg);
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    color: var(--button-text);
+    cursor: pointer;
+    font-weight: bold;
+
+    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%),
+    0 2px 2px 0 rgb(0 0 0 / 14%),
+    0 1px 5px 0 rgb(0 0 0 / 12%);
+
+    transition: background-color 0.2s ease;
+}
+
+#file-test-upload::file-selector-button:hover {
+    background: color-mix(in srgb, var(--button-bg) 80%, var(--interactionDarken));
+}
+
+#file-test-upload::file-selector-button:active {
+    background: color-mix(in srgb, var(--button-bg) 60%, var(--interactionDarken));
 }
 
 .card-hover:hover {
