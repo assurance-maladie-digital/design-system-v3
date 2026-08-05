@@ -2,7 +2,7 @@
 import { mount, shallowMount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 
-import { defineComponent } from 'vue'
+import { defineComponent, nextTick } from 'vue'
 import { VCard } from 'vuetify/components'
 import DialogBox from '../DialogBox.vue'
 import { locales } from '../locales'
@@ -113,6 +113,27 @@ describe('DialogBox', () => {
 			await modal.vm.$nextTick()
 
 			expect(title).toBe('Test title')
+			wrapper.unmount()
+		})
+
+		it('adds an accessible label to the close button', async () => {
+			const wrapper = mount(DialogBox, {
+				attachTo: document.body,
+				props: {
+					modelValue: true,
+				},
+			})
+
+			await nextTick()
+
+			const closeButton = document.querySelector(
+				'.sy-dialog-box-close-btn',
+			)
+
+			expect(closeButton).not.toBeNull()
+			expect(closeButton?.getAttribute('aria-label'))
+				.toBe(locales.closeBtn)
+
 			wrapper.unmount()
 		})
 	})
