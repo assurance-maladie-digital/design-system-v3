@@ -54,7 +54,8 @@ button:focus-visible {
 }
 
 // Elevated buttons
-:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-elevated {
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-elevated,
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-flat {
 	&.v-btn--disabled {
 		background-color: rgba(var(--v-theme-disabled)) !important;
 		color: rgba(var(--v-theme-onDisabled)) !important;
