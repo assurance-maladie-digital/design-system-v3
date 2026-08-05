@@ -60,12 +60,12 @@
 			</slot>
 		</span>
 
-		<span
-			class="sy-file-upload-btn bg-primary text-white"
-		>
-			<slot name="button-text">
-				{{ locales.chooseFile(multiple) }}
-			</slot>
+		<span class="sy-file-upload-btn bg-primary text-white">
+			<span class="sy-file-upload-btn__content">
+				<slot name="button-text">
+					{{ locales.chooseFile(multiple) }}
+				</slot>
+			</span>
 		</span>
 
 		<span
@@ -100,10 +100,38 @@
 }
 
 .sy-file-upload-btn {
+	position: relative;
+	overflow: hidden;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	border-radius: var(--v-radius-rounded);
-	transition: background 0.25s;
 	font-weight: 700 !important;
 	font-size: var(--v-fontSize-corpsDeTexte);
 	padding: 10px 16px;
+
+	&::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: transparent;
+		border-radius: inherit;
+		pointer-events: none;
+		transition: background-color 0.2s ease;
+		z-index: 0;
+	}
+
+	&:hover::before {
+		background: rgba(var(--v-theme-interactionDarken), 0.2);
+	}
+
+	&:active::before {
+		background: rgba(var(--v-theme-interactionDarken), 0.4);
+	}
+
+	&__content {
+		position: relative;
+		z-index: 1;
+	}
 }
 </style>
