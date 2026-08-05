@@ -84,13 +84,13 @@ describe('DownloadBtn - focus', () => {
 
 	it('uses dark theme in dark mode (onPrimary focus ring)', () => {
 		const wrapper = mount(DownloadBtn, { props: { filePromise, dark: true } })
-        expect(wrapper.get('.sy-download-btn').attributes('theme'))
-            .toBeUndefined()
+		expect(wrapper.get('.sy-download-btn').attributes('theme'))
+			.toBeUndefined()
 
-        expect(wrapper.html())
-            .toContain('v-theme--dark')
+		expect(wrapper.html())
+			.toContain('v-theme--dark')
 
-        wrapper.unmount()
+		wrapper.unmount()
 	})
 
 	it('is focusable', () => {
