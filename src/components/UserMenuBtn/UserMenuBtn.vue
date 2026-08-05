@@ -104,7 +104,8 @@
 .vd-user-icon {
 	width: 40px;
 	height: 40px;
-	background: rgb(var(--v-theme-grey-lighten90));
+	background: rgb(var(--v-theme-primary));
+  color: rgb(var(--v-theme-onPrimary));
 	border-radius: 50%;
 
 	svg,

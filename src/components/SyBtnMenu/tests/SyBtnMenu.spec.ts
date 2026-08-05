@@ -232,37 +232,61 @@ describe('SyBtnMenu', () => {
 			wrapper.unmount()
 		})
 
-		// La classe porte le style qui annule le padding haut de la liste : sans elle, une bande
-		// blanche apparaît au-dessus du fond du bloc d'identité.
-		it('flags the list when it starts with the identity block', async () => {
+		it('keeps the icon-only activator circular', () => {
 			const wrapper = mount(SyBtnMenu, {
-				props: {
-					primaryInfo: 'Jean Dupont',
-					iconOnly: true,
-					showIdentityInList: true,
-				},
+				props: { primaryInfo: 'Jean Dupont', iconOnly: true },
 				attachTo: document.body,
 			})
 
-			await wrapper.find('.sy-user-menu-btn').trigger('click')
-
-			expect(document.body.querySelector('.sy-user-menu-list--with-identity')).not.toBeNull()
+			expect(wrapper.get('.sy-user-menu-btn').classes()).toContain('rounded-circle')
 
 			wrapper.unmount()
 		})
 
-		it('does not flag the list when the identity block is absent', async () => {
+		it('does not force the circle on the full-width activator', () => {
 			const wrapper = mount(SyBtnMenu, {
-				props: {
-					primaryInfo: 'Jean Dupont',
-					menuItems: ['Option 1'],
-				},
+				props: { primaryInfo: 'Jean Dupont' },
 				attachTo: document.body,
 			})
 
-			await wrapper.find('.sy-user-menu-btn').trigger('click')
+			expect(wrapper.get('.sy-user-menu-btn').classes()).not.toContain('rounded-circle')
 
-			expect(document.body.querySelector('.sy-user-menu-list--with-identity')).toBeNull()
+			wrapper.unmount()
+		})
+
+		// L'état « menu ouvert » de l'activateur est stylé via `[aria-expanded="true"]` : si VMenu
+		// cessait de poser cet attribut, le fond disparaîtrait sans que rien n'échoue.
+		it('marks the activator as expanded while the menu is open', async () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: { primaryInfo: 'Jean Dupont', menuItems: ['Option 1'] },
+				attachTo: document.body,
+			})
+
+			const activator = wrapper.get('.sy-user-menu-btn')
+			expect(activator.attributes('aria-expanded')).toBe('false')
+
+			await activator.trigger('click')
+
+			expect(activator.attributes('aria-expanded')).toBe('true')
+
+			wrapper.unmount()
+		})
+
+		it('exposes aria-controls only once the menu it references exists', async () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: { primaryInfo: 'Jean Dupont', menuItems: ['Option 1'] },
+				attachTo: document.body,
+			})
+
+			const activator = wrapper.get('.sy-user-menu-btn')
+			expect(activator.attributes('aria-controls')).toBeUndefined()
+			expect(activator.attributes('aria-owns')).toBeUndefined()
+
+			await activator.trigger('click')
+
+			const controls = activator.attributes('aria-controls')
+			expect(controls).toBeTruthy()
+			expect(document.getElementById(controls!)).not.toBeNull()
 
 			wrapper.unmount()
 		})
@@ -315,6 +339,34 @@ describe('SyBtnMenu', () => {
 			await wrapper.find('.sy-user-menu-btn').trigger('click')
 
 			expect(document.body.querySelector('.sy-user-menu-identity')).not.toBeNull()
+
+			wrapper.unmount()
+		})
+
+		// Contrat ARIA de l'encart : il est rendu *dans* la liste pour la maquette, mais un
+		// conteneur `role="menu"` n'admet que des `menuitem`, `group` et `separator`. Il est donc
+		// retiré de l'arbre d'accessibilité — l'identité restant annoncée par le nom accessible de
+		// l'activateur. Sans ce test, retirer `aria-hidden` passerait inaperçu et rendrait la
+		// structure du menu non conforme.
+		it('keeps the identity block out of the accessibility tree', async () => {
+			const wrapper = mount(SyBtnMenu, {
+				props: {
+					primaryInfo: 'Jean Dupont',
+					secondaryInfo: 'Administrateur',
+					iconOnly: true,
+					showIdentityInList: true,
+				},
+				attachTo: document.body,
+			})
+
+			await wrapper.find('.sy-user-menu-btn').trigger('click')
+
+			const identity = document.body.querySelector('.sy-user-menu-identity')!
+			expect(identity.getAttribute('aria-hidden')).toBe('true')
+			expect(identity.getAttribute('role')).toBe('presentation')
+			// Rendu dans la liste (maquette), mais sans y être exposé comme un élément de menu.
+			expect(identity.closest('[role="menu"]')).not.toBeNull()
+			expect(identity.matches('[role="menuitem"]')).toBe(false)
 
 			wrapper.unmount()
 		})

@@ -183,6 +183,7 @@
 			:disabled="!hasListContent"
 			location="bottom end"
 			transition="fade-transition"
+			offset="8"
 			v-bind="props.options['menu']"
 			scroll-strategy="none"
 			z-index="9999"
@@ -190,7 +191,7 @@
 			<template #activator="{ props: menuProps }">
 				<VBtn
 					:id="generatedId"
-					:class="btnPadding"
+					:class="[btnPadding, { 'rounded-circle': iconOnly }]"
 					:height="iconOnly ? 'auto' : undefined"
 					:icon="iconOnly"
 					:size="iconOnly ? 'x-large' : 'default'"
@@ -198,6 +199,12 @@
 					class="sy-user-menu-btn"
 					v-bind="{
 						...menuProps,
+						// VMenu pose `aria-controls` et `aria-owns` en permanence,
+						// alors que l'overlay n'est monté qu'à la première ouverture : tant que le menu
+						// est fermé, ces attributs pointent vers un identifiant absent du document.
+						// On ne les expose donc que lorsque la cible existe réellement.
+						'aria-controls': isOpen ? menuProps['aria-controls'] : undefined,
+						'aria-owns': isOpen ? menuProps['aria-owns'] : undefined,
 						...props.options['btn'],
 					}"
 				>
@@ -241,7 +248,6 @@
 					ref="menu"
 					tag="ul"
 					role="menu"
-					:class="{ 'sy-user-menu-list--with-identity': hasIdentityInList }"
 					v-bind="props.options['list']"
 					:aria-labelledby="generatedId"
 					:aria-activedescendant="getSelectedValue() ? `item-${slugify(getSelectedValue()!)}` : undefined"
@@ -327,19 +333,23 @@
 .sy-user-menu-btn {
 	padding: 12px !important;
 
-	&:hover::before {
-		background: #000;
-		opacity: 0.05;
-	}
-
 	.subtitle {
 		font-size: 0.875rem;
 		line-height: 1.5;
 	}
 }
 
-:deep(.sy-user-menu-btn:focus > .v-btn__overlay) {
-	opacity: 0 !important;
+.sy-user-menu-btn:hover :deep(.v-btn__overlay) {
+	background: rgba(var(--v-theme-interactionDark), 0.2) !important;
+}
+
+.sy-user-menu-btn:active :deep(.v-btn__overlay) {
+	background: rgba(var(--v-theme-interactionDark), 0.4) !important;
+}
+
+.sy-user-menu-btn[aria-expanded='true'] :deep(.v-btn__overlay) {
+	background: rgba(var(--v-theme-interactionDark), 0.2) !important;
+	opacity: 1;
 }
 
 .item-title {
@@ -350,19 +360,19 @@
 	display: unset !important;
 }
 
-// Le contenu du VMenu est téléporté hors du composant, mais ces deux éléments sont rendus par
-// son propre template (et par la racine de `VList`) : ils portent l'attribut de scope, les
-// styles scopés les atteignent donc sans passer par un override global.
-.sy-user-menu-list--with-identity {
-	// Le bloc d'identité est le premier élément de la liste : le padding vertical de `.v-list`
-	// laisserait sinon une bande blanche au-dessus de son fond.
-	padding-top: 0;
-}
-
+// Le contenu du VMenu est téléporté hors du composant, mais ce bloc est rendu par son propre
+// template : il porte l'attribut de scope, les styles scopés l'atteignent donc sans passer par
+// un override global.
+// Le fond reprend le niveau d'interaction de l'activateur (survol / menu ouvert), et l'encart est
+// détaché des bords de la liste — le padding vertical de `.v-list` fournit l'espace en haut, la
+// marge celui des côtés et du bas.
 .sy-user-menu-identity {
-	background: rgb(var(--v-theme-grey-lighten90));
+	margin: 0 8px 8px;
+	background: rgba(var(--v-theme-interactionDark), 0.2);
 
-	// Rétablit l'espacement de liste supprimé ci-dessus, entre le bloc et le premier item.
-	margin-bottom: 8px;
+	// Même arrondi que la liste : Vuetify pose 4px sur `.v-menu > .v-overlay__content` et la
+	// `.v-list` en hérite. `inherit` reprend donc la valeur calculée du parent et suivra
+	// automatiquement si l'arrondi du menu change.
+	border-radius: inherit;
 }
 </style>
