@@ -43,6 +43,9 @@ export const createVuetifyInstance = () => createVuetify({
 		VCheckboxBtn: {
 			baseColor: 'rgb(var(--v-border-color))',
 		},
+		VRadio: {
+			baseColor: 'rgb(var(--v-border-color))',
+		},
 		VField: {
 			baseColor: 'rgb(var(--v-border-color))',
 		},

@@ -10,7 +10,7 @@
 	import { useLocales } from '@/composables/useLocales'
 	import type { ColorType, IconType, VariantStyle } from '@/types/vuetifyTypes'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
-	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiCloseCircle, mdiInformationOutline } from '@mdi/js'
+	import { mdiAlertCircle, mdiAlertOutline, mdiCheck, mdiChevronDown, mdiClose, mdiInformationOutline } from '@mdi/js'
 	import { computed, nextTick, onBeforeUnmount, onMounted, readonly as readonlyState, ref, useAttrs, useId, watch, watchEffect } from 'vue'
 	import type { VList, VTextField } from 'vuetify/components'
 	import { VChip } from 'vuetify/components'
@@ -1103,7 +1103,7 @@
 							>
 								<SyIcon
 									class="sy-select__clear-icon"
-									:icon="mdiCloseCircle"
+									:icon="mdiClose"
 									:decorative="true"
 									width="24"
 								/>
@@ -1233,6 +1233,10 @@
 .sy-select {
 	display: block;
 
+	:deep(.v-icon) {
+		opacity: 1 !important;
+	}
+
 	:deep(.v-input__prepend > .v-icon__svg),
 	:deep(.v-input__append > .v-icon__svg) {
 		fill: rgb(var(--v-theme-onSurface));
@@ -1242,7 +1246,6 @@
 	:deep(.v-input__append .v-icon:focus-visible) {
 		outline: 2px solid rgb(var(--v-theme-primary));
 		outline-offset: 2px;
-		opacity: 1;
 	}
 }
 
@@ -1256,10 +1259,6 @@
 	}
 
 	:deep(.v-icon.arrow .v-icon__svg) {
-		fill: rgb(var(--v-theme-primary)) !important;
-	}
-
-	:deep(.sy-select__clear-icon .v-icon__svg) {
 		fill: rgb(var(--v-theme-primary)) !important;
 	}
 
@@ -1322,10 +1321,6 @@
 	}
 
 	:deep(.v-icon.arrow .v-icon__svg) {
-		fill: rgb(var(--v-theme-onSurface)) !important;
-	}
-
-	:deep(.sy-select__clear-icon .v-icon__svg) {
 		fill: rgb(var(--v-theme-onSurface)) !important;
 	}
 
@@ -1445,7 +1440,10 @@
 
 .sy-select__clear-icon {
 	color: rgb(var(--v-theme-onSurface)) !important;
-	opacity: var(--v-medium-emphasis-opacity) !important;
+}
+
+:deep(.sy-select__clear-icon .v-icon__svg) {
+	fill: rgb(var(--v-theme-onSurface)) !important;
 }
 
 /* Style spécifique pour les chips */

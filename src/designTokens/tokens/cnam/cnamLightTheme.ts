@@ -5,7 +5,7 @@ export const cnamLightTheme = {
 
 	// Border
 	border: baseTokens.color.blue.base,
-	borderVariant: baseTokens.color.grey.lighten40,
+	borderVariant: baseTokens.color.grey.base,
 	borderBright: baseTokens.color.white.base,
 	borderDim: baseTokens.color.white.alpha40,
 

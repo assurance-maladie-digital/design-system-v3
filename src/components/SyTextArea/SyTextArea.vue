@@ -6,7 +6,7 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
-	import { mdiCloseCircle } from '@mdi/js'
+	import { mdiClose } from '@mdi/js'
 	import { computed, nextTick, readonly as readonlyState, ref, toRef, useAttrs, useId, watch } from 'vue'
 	import { type VTextarea } from 'vuetify/components'
 	import { useSyTextAreaValidation } from './composables/useSyTextAreaValidation'
@@ -265,7 +265,7 @@
 			@click="clearField"
 		>
 			<SyIcon
-				:icon="mdiCloseCircle"
+				:icon="mdiClose"
 				class="sy-textarea__clear-icon"
 				:decorative="true"
 			/>
@@ -285,6 +285,10 @@
 	position: relative;
 }
 
+:deep(.v-icon) {
+	opacity: 1 !important;
+}
+
 .sy-textarea__state-icon {
 	position: absolute;
 	top: 12px;
@@ -292,13 +296,6 @@
 	pointer-events: none;
 	z-index: 1;
 }
-
-/* stylelint-disable selector-class-pattern */
-.text-onWarningVariant.sy-textarea__state-icon,
-.text-onSuccessVariant.sy-textarea__state-icon {
-	opacity: 0.6;
-}
-/* stylelint-enable selector-class-pattern */
 
 .sy-textarea__clear-button {
 	position: absolute;
@@ -316,11 +313,6 @@
 
 .sy-textarea__clear-icon {
 	color: rgb(var(--v-theme-iconBase)) !important;
-	opacity: var(--v-medium-emphasis-opacity);
-
-	&:hover {
-		opacity: 1;
-	}
 }
 
 .sy-textarea:has(.sy-textarea__state-icon) .sy-textarea__clear-button {

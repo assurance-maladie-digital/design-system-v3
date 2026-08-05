@@ -4,7 +4,7 @@ export const semanticTokens = {
 	CNAM: {
 		color: {
 			border: baseTokens.color.blue.base,
-			borderVariant: baseTokens.color.grey.lighten40,
+			borderVariant: baseTokens.color.grey.base,
 			disabled: baseTokens.color.grey.lighten80,
 			inverseSurface: baseTokens.color.grey.base,
 			onDisabled: baseTokens.color.grey.lighten40,
@@ -48,7 +48,7 @@ export const semanticTokens = {
 	ap: {
 		color: {
 			border: baseTokens.color.cyan.darken20,
-			borderVariant: baseTokens.color.grey.lighten40,
+			borderVariant: baseTokens.color.grey.base,
 			disabled: baseTokens.color.grey.lighten80,
 			inverseSurface: baseTokens.color.grey.base,
 			onDisabled: baseTokens.color.grey.lighten40,

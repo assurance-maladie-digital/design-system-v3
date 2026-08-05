@@ -70,11 +70,8 @@ export function useSyTextFieldValidation(params: {
 		if (hasError.value) return 'error'
 		if (hasWarning.value) return 'warning'
 		if (hasSuccess.value) return 'success'
-		return 'rgba(0, 0, 0, 1)'
+		return 'rgb(var(--v-theme-onSurface))'
 	})
-
-	// Le bouton clear garde toujours une couleur neutre, quel que soit l'état de validation
-	const clearButtonColorClass = computed(() => 'text-iconBase')
 
 	const hasMessages = computed(() => {
 		return (params.errorMessages.value?.length ?? 0) > 0 || hasError.value || hasWarning.value || (hasSuccess.value && params.showSuccessMessages.value)
@@ -88,7 +85,6 @@ export function useSyTextFieldValidation(params: {
 		hasWarning,
 		hasSuccess,
 		iconColor,
-		clearButtonColorClass,
 		hasMessages,
 		state,
 		validate,

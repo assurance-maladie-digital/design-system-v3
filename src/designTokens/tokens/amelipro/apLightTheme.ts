@@ -5,7 +5,7 @@ export const apLightTheme = {
 
 	// Border
 	border: baseTokens.color.cyan.darken40,
-	borderVariant: baseTokens.color.grey.lighten40,
+	borderVariant: baseTokens.color.grey.base,
 	borderBright: baseTokens.color.white.base,
 	borderDim: baseTokens.color.white.alpha40,
 
