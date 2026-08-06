@@ -129,6 +129,14 @@
 		background: rgba(var(--v-theme-interactionDarken), 0.4);
 	}
 
+	// Dropzone désactivée : on neutralise les états d'interaction ici plutôt que par un
+	// `pointer-events: none` sur la zone, qui rendrait au passage le `cursor` inopérant et le
+	// texte non sélectionnable. Les actions elles-mêmes sont déjà verrouillées côté script
+	.sy-file-upload--disabled &:hover::before,
+	.sy-file-upload--disabled &:active::before {
+		background: transparent;
+	}
+
 	&__content {
 		position: relative;
 		z-index: 1;

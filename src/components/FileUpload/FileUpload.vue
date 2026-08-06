@@ -208,7 +208,6 @@
 	&.sy-file-upload--disabled {
 		opacity: 0.5;
 		cursor: default;
-		pointer-events: none;
 
 		&:hover,
 		&:focus-within,
