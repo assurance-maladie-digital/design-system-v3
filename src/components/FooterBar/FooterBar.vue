@@ -214,6 +214,7 @@
 						v-if="!props.hideSocialMediaLinks"
 						:links="props.socialMediaLinks"
 						class="mr-8 social"
+						:dark="true"
 					/>
 				</div>
 

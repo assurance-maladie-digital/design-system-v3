@@ -33,6 +33,7 @@ const meta = {
 		],
 		headingLevel: 6,
 		useNativeHeading: true,
+		dark: false,
 	},
 	argTypes: {
 		socialMediaLinks: {
@@ -55,6 +56,14 @@ const meta = {
 				defaultValue: { summary: 'true' },
 			},
 		},
+		dark: {
+			control: { type: 'boolean' },
+			description: 'Détermine si les liens vers les réseaux sociaux doivent être affichés en mode sombre.',
+			table: {
+				type: { summary: 'Boolean' },
+				defaultValue: { summary: 'false' },
+			},
+		},
 	},
 } as Meta<typeof SocialMediaLinks>
 
@@ -70,6 +79,7 @@ export const Default: Story = {
 				code: `<template>
 	<SocialMediaLinks 
 		:links="links" 
+		:dark="false"
 		:heading-level="6"
 		:use-native-heading="true"
 	/>
@@ -124,6 +134,7 @@ export const Default: Story = {
 				href: 'https://x.com/Assur_Maladie',
 			},
 		],
+		dark: false,
 	},
 	render: (args) => {
 		return {
@@ -135,9 +146,98 @@ export const Default: Story = {
 				<div class="d-flex flex-wrap align-center pa-4">
                 	<SocialMediaLinks 
 						:links="args.links"
+						:dark="args.dark"
 						:heading-level="args.headingLevel"
 						:use-native-heading="args.useNativeHeading"
 					/>
+				</div>
+            `,
+		}
+	},
+}
+
+export const Dark: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<SocialMediaLinks 
+		:links="links" 
+		:dark="true"
+		:heading-level="6"
+		:use-native-heading="true"
+	/>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+	import { SocialMediaLinks } from '@cnamts/synapse'
+	import { mdiFacebook, mdiLinkedin } from '@mdi/js'
+	
+	const xIcon = 'M14.234 10.162 22.977 0h-2.072l-7.591 8.824L7.251 0H.258l9.168 13.343L.258 24H2.33l8.016-9.318L16.749 24h6.993zm-2.837 3.299-.929-1.329L3.076 1.56h3.182l5.965 8.532.929 1.329 7.754 11.09h-3.182z'
+	
+	const links = [
+		{
+			icon: mdiLinkedin,
+			name: 'LinkedIn',
+			href: 'https://www.linkedin.com/company/assurance-maladie/',
+		},
+		{
+			icon: mdiFacebook,
+			name: 'Facebook',
+			href: 'https://www.facebook.com/AssurMaladie/',
+		},
+		{
+			icon: xIcon,
+			name: 'X',
+			href: 'https://x.com/Assur_Maladie',
+		},
+	]
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		links: [
+			{
+				icon: mdiLinkedin,
+				name: 'LinkedIn',
+				href: 'https://www.linkedin.com/company/assurance-maladie/',
+			},
+			{
+				icon: mdiFacebook,
+				name: 'Facebook',
+				href: 'https://www.facebook.com/AssurMaladie/',
+			},
+			{
+				icon: xIcon,
+				name: 'X',
+				href: 'https://x.com/Assur_Maladie',
+			},
+		],
+		dark: true,
+	},
+	render: (args) => {
+		return {
+			components: { SocialMediaLinks },
+			setup() {
+				return { args }
+			},
+			template: `
+				<VSheet color="primary" class="pa-4 d-flex flex-wrap align-center">
+					<SocialMediaLinks
+						:links="args.links"
+						:dark="args.dark"
+						:heading-level="args.headingLevel"
+						:use-native-heading="args.useNativeHeading"
+					/>
+				</VSheet>
+				<div class="d-flex flex-wrap align-center pa-4">
+                
 				</div>
             `,
 		}
