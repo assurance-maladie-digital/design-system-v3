@@ -121,6 +121,10 @@
 		z-index: 0;
 	}
 
+	// Ce « bouton » est un `<span>` dans la dropzone : il n'est pas couvert par `_btns.scss`, d'où
+	// cette surcouche maison. Les valeurs sont en revanche celles de la variante `elevated`
+	// (`_btns.scss`, `interactionDarken` à 0.2 puis 0.4) : à répercuter ici en cas d'ajustement
+	// de la charte, rien ne les synchronise.
 	&:hover::before {
 		background: rgba(var(--v-theme-interactionDarken), 0.2);
 	}
