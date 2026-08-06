@@ -118,11 +118,11 @@
 	})
 
 	const activatorLabel = computed(() => {
-		if (props.iconOnly) {
+		if (props.iconOnly && !hasIdentityInList.value) {
 			return [props.label, props.primaryInfo, props.secondaryInfo].filter(Boolean).join(', ')
 		}
 
-		if (isMobileVersion.value) {
+		if (isMobileVersion.value && !props.iconOnly) {
 			return [props.label, props.secondaryInfo].filter(Boolean).join(', ')
 		}
 
@@ -142,6 +142,7 @@
 	})
 
 	const generatedId = ref(`custom-btn-select-${useId()}`)
+	const identityId = computed(() => `${generatedId.value}-identity`)
 
 	function getSelectedValue() {
 		if (!selectedItem.value) return undefined
@@ -252,21 +253,22 @@
 					:aria-labelledby="generatedId"
 					:aria-activedescendant="getSelectedValue() ? `item-${slugify(getSelectedValue()!)}` : undefined"
 				>
-					<slot
+					<!-- Encart d'identité visible :
+						il doit donc rester restituable — masquer un contenu affiché contrevient au
+						critère RGAA 10.8. C'est pourquoi l'identité est retirée du nom accessible de
+						l'activateur, pour ne pas être annoncée deux fois.
+						`role="presentation"` retire le `<li>` de l'arbre d'accessibilité **sans masquer
+						son contenu** (contrairement à `aria-hidden`) : le texte reste exposé, et le
+						`role="menu"` — qui n'admet que des `menuitem`, `group` et `separator` — ne
+						compte pas l'encart parmi ses options. -->
+					<li
 						v-if="hasIdentityInList"
-						name="header-list-item"
+						:id="identityId"
+						class="sy-user-menu-identity px-4 py-3"
+						role="presentation"
+						v-bind="props.options['identityListItem']"
 					>
-						<!-- `role="menu"` n'admet que des `menuitem`, `group` et `separator` : ce bloc
-							est un rappel visuel de l'identité, déjà portée par le nom accessible de
-							l'activateur (`activatorLabel`). On le retire donc de l'arbre d'accessibilité
-							plutôt que de l'y exposer comme un enfant non conforme, ce qui fausserait aussi
-							le nombre d'éléments annoncé pour le menu. -->
-						<li
-							class="sy-user-menu-identity px-4 py-3"
-							role="presentation"
-							aria-hidden="true"
-							v-bind="props.options['identityListItem']"
-						>
+						<slot name="header-list-item">
 							<p class="text-body-2 font-weight-bold mb-0">
 								{{ props.primaryInfo }}
 							</p>
@@ -276,8 +278,8 @@
 							>
 								{{ props.secondaryInfo }}
 							</p>
-						</li>
-					</slot>
+						</slot>
+					</li>
 
 					<VListItem
 						v-for="(item, index) in formattedItems"

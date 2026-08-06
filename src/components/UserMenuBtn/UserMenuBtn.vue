@@ -25,7 +25,7 @@
 		hideLogoutBtn: false,
 		isMobileView: false,
 		hideUserIcon: false,
-		logoutText: 'Logout',
+		logoutText: 'Se déconnecter',
 	})
 
 	const modelValue = defineModel<MenuItem | null>({

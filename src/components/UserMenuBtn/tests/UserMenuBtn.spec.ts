@@ -118,7 +118,7 @@ describe('UserMenuBtn', () => {
 	})
 
 	it('possède la prop logoutText  par défaut', async () => {
-		const defaultLogoutText = 'Logout'
+		const defaultLogoutText = 'Se déconnecter'
 		const wrapper = mount(UserMenuBtn, {
 			props: {
 				modelValue: null,
