@@ -1,13 +1,16 @@
 <script setup lang="ts">
+	import { useLocales } from '@/composables'
 	import type { CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import useCustomizableOptions from '@/composables/useCustomizableOptions'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import type { DeepPartial } from '@/utils'
 	import { mdiClose, mdiArrowULeftBottom } from '@mdi/js'
 	import { computed, ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import type { CookiesItems } from '../CookiesSelection/types'
 	import { config } from './config'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
+	import type { CookieBannerLocales } from './locales'
 	import CookiesSelection from '../CookiesSelection/CookiesSelection.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 	import SyIconButton from '../Customs/SyIconButton/SyIconButton.vue'
@@ -16,12 +19,16 @@
 		items?: CookiesItems
 		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 		headingLevelInformation?: 1 | 2 | 3 | 4 | 5 | 6
+		locales?: DeepPartial<CookieBannerLocales>
 
 	}>(), {
 		items: undefined,
 		headingLevel: 2,
 		headingLevelInformation: 3,
+		locales: () => ({}),
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const options = useCustomizableOptions(config, props)
 
@@ -197,14 +204,14 @@
 				ref="bannerRef"
 				class="vd-cookie-banner__inner"
 				role="dialog"
-				:aria-label="locales.label"
+				:aria-label="locales.label()"
 			>
 				<div class="d-flex align-start flex-nowrap pa-0 mb-6">
 					<SyHeading
 						:class="headingLevel === 2 ? 'text-h5 font-weight-bold' : 'font-weight-bold'"
 						:level="headingLevel"
 					>
-						{{ locales.title }}
+						{{ locales.title() }}
 					</SyHeading>
 
 					<VSpacer v-bind="options.spacer" />
@@ -212,7 +219,7 @@
 					<VBtn
 						v-if="showCookiesSelection"
 						v-bind="options.backBtn"
-						:aria-label="locales.backBtn"
+						:aria-label="locales.backBtn()"
 						@click="showCookiesSelection = false"
 					>
 						<SyIcon
@@ -226,7 +233,7 @@
 						class="vd-cookie-banner-close-btn"
 						v-bind="options.closeBtn"
 						:icon="mdiClose"
-						:label="locales.closeBtn"
+						:label="locales.closeBtn()"
 						@click-icon-button="reject"
 					/>
 				</div>
@@ -252,7 +259,7 @@
 						<div v-else>
 							<slot>
 								<p>
-									{{ locales.description }}
+									{{ locales.description() }}
 								</p>
 							</slot>
 
@@ -267,7 +274,7 @@
 									:width="btnWidth"
 									@click="customize"
 								>
-									{{ locales.customizeBtnText }}
+									{{ locales.customizeBtnText() }}
 								</VBtn>
 
 								<VBtn
@@ -276,7 +283,7 @@
 									:width="btnWidth"
 									@click="reject"
 								>
-									{{ locales.rejectBtnText }}
+									{{ locales.rejectBtnText() }}
 								</VBtn>
 
 								<VBtn
@@ -285,7 +292,7 @@
 									:width="btnWidth"
 									@click="accept"
 								>
-									{{ locales.acceptBtnText }}
+									{{ locales.acceptBtnText() }}
 								</VBtn>
 							</div>
 						</div>
