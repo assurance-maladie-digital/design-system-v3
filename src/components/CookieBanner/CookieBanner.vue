@@ -225,7 +225,7 @@
 						<SyIcon
 							v-bind="options.icon"
 							:icon="mdiArrowULeftBottom"
-							label="Bouton de retour en arrière."
+							:label="locales.iconLabel"
 						/>
 					</VBtn>
 					<SyIconButton

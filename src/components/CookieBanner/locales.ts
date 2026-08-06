@@ -3,6 +3,7 @@ export const locales = {
 	title: 'À propos des cookies',
 	closeBtn: 'Continuer sans accepter',
 	backBtn: 'Précédent',
+	iconLabel: 'Bouton de retour en arrière.',
 	description:
 		'Ce site utilise des cookies qui nous permettent de vous proposer une expérience en ligne optimale en enregistrant certaines informations lors de votre navigation.',
 	moreInformationLabel: 'En savoir plus',
