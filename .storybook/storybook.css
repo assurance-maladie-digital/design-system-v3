@@ -74,28 +74,27 @@ pre.prismjs {
 }
 
 #file-test-upload::file-selector-button {
-    border: none;
-    margin-right: 12px;
-    background: var(--button-bg);
-    padding: 8px 12px;
-    border-radius: var(--border-radius);
-    color: var(--button-text);
-    cursor: pointer;
-    font-weight: bold;
-
-    box-shadow: 0 3px 1px -2px rgb(0 0 0 / 20%),
-    0 2px 2px 0 rgb(0 0 0 / 14%),
-    0 1px 5px 0 rgb(0 0 0 / 12%);
-
-    transition: background-color 0.2s ease;
+	border: none;
+	margin-right: 12px;
+	background: var(--button-bg);
+	padding: 8px 12px;
+	border-radius: var(--border-radius);
+	color: var(--button-text);
+	cursor: pointer;
+	font-weight: bold;
+	box-shadow:
+		0 3px 1px -2px rgb(0 0 0 / 20%),
+		0 2px 2px 0 rgb(0 0 0 / 14%),
+		0 1px 5px 0 rgb(0 0 0 / 12%);
+	transition: background-color 0.2s ease;
 }
 
 #file-test-upload::file-selector-button:hover {
-    background: color-mix(in srgb, var(--button-bg) 80%, var(--interactionDarken));
+	background: color-mix(in srgb, var(--button-bg) 80%, var(--interactionDarken));
 }
 
 #file-test-upload::file-selector-button:active {
-    background: color-mix(in srgb, var(--button-bg) 60%, var(--interactionDarken));
+	background: color-mix(in srgb, var(--button-bg) 60%, var(--interactionDarken));
 }
 
 .card-hover:hover {
@@ -182,7 +181,6 @@ pre.prismjs {
 		margin-top: -22px !important;
 	}
 
-
 	/* Make sure the menu content is visible */
 	.storybook-docs-mode .v-menu__content {
 		position: absolute !important;
@@ -214,7 +212,8 @@ pre.prismjs {
 	}
 }
 
-#story--composants-tableaux-sytable--default, #story--composants-tableaux-syservertable--default {
+#story--composants-tableaux-sytable--default,
+#story--composants-tableaux-syservertable--default {
 	.v-list {
 		margin-top: -217px !important;
 		left: auto !important;
