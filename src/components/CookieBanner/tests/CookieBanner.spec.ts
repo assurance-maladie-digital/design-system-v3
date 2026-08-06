@@ -187,7 +187,7 @@ describe('CookieBanner', () => {
 
 		expect(closeButton).not.toBeNull()
 		expect(closeButton?.getAttribute('aria-label'))
-			.toBe(locales.closeBtn())
+			.toBe(locales.closeBtn)
 
 		wrapper.unmount()
 	})
