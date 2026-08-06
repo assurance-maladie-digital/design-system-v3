@@ -48,6 +48,7 @@
 	const buttonColor = computed(() => isDark.value ? 'white' : options.value.btn.color)
 	const buttonBgColor = computed(() => isDark.value ? 'transparent' : props.backgroundColor)
 	const iconColor = computed(() => isDark.value ? 'white' : options.value.icon.color)
+	const buttonTheme = computed(() => isDark.value ? 'dark' : undefined)
 
 	/**
 	 * Get filename and content type from headers
@@ -100,7 +101,7 @@
 		v-bind="btnOptions"
 		:loading="state === 'loading'"
 		class="sy-download-btn"
-		:class="{ 'sy-download-btn--dark': isDark }"
+		:theme="buttonTheme"
 		:color="buttonColor"
 		:style="`background-color: ${buttonBgColor}`"
 		data-testid="download-btn"
@@ -144,19 +145,12 @@
 	}
 }
 
-.v-btn:deep() {
-	.v-btn__underlay,
-	.v-btn__overlay {
-		display: none;
-	}
-}
-
 .sy-download-btn:focus-visible {
 	outline: 2px solid rgb(var(--v-theme-primary));
 	outline-offset: 3px;
-}
 
-.sy-download-btn--dark:focus-visible {
-	outline-color: rgb(var(--v-theme-onPrimary));
+	&.v-theme--dark {
+		outline-color: rgb(var(--v-theme-onPrimary));
+	}
 }
 </style>
