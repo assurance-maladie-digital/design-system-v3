@@ -20,6 +20,12 @@ import * as SyAlertStories from './SyAlert.stories';
 
 <Canvas of={SyAlertStories.Default}  />
 
+## Densité compacte
+
+Utilisez la prop <code>density="compact"</code> pour les messages courts affichés dans un espace contraint. Elle réduit les espacements et la taille de l’icône, sans modifier le contenu ni le comportement d’annonce.
+
+<Canvas of={SyAlertStories.Compact} />
+
 ## Annonce aux technologies d’assistance
 
 `SyAlert` utilise <code>role="alert"</code> par défaut. Pour un message de confirmation ou d’information non urgent, vous pouvez personnaliser les props <code>role</code> et <code>ariaLive</code> avec <code>role="status"</code> et <code>aria-live="polite"</code> dans le template.

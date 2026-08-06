@@ -49,6 +49,22 @@ describe('SyAlert - Visual regression tests', () => {
 		cy.get('.v-alert').should('be.visible')
 		cy.matchImageSnapshot('sy-alert-closable', cy.get('.v-alert'))
 	})
+
+	it('displays all densities for comparison', () => {
+		cy.mountWithVuetify({
+			components: { SyAlert },
+			template: `
+				<div class="sy-alert-density-comparison">
+					<SyAlert density="default" type="info">Densité par défaut</SyAlert>
+					<SyAlert density="comfortable" type="info">Densité confortable</SyAlert>
+					<SyAlert density="compact" type="info">Densité compacte</SyAlert>
+				</div>
+			`,
+		})
+
+		cy.get('.sy-alert-density-comparison').should('be.visible')
+		cy.matchImageSnapshot('sy-alert-densities', cy.get('.sy-alert-density-comparison'))
+	})
 })
 
 describe('SyAlert - Focus visual regression tests', () => {

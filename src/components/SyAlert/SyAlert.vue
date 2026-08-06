@@ -22,12 +22,14 @@
 	const props = withDefaults(defineProps<{
 		type?: 'success' | 'info' | 'warning' | 'error'
 		closable?: boolean
+		density?: 'default' | 'comfortable' | 'compact'
 		variant?: 'tonal' | 'outlined'
 		role?: string
 		ariaLive?: 'off' | 'polite' | 'assertive'
 	}>(), {
 		type: 'info',
 		closable: false,
+		density: 'default',
 		variant: 'tonal',
 		role: 'alert',
 		ariaLive: undefined,
@@ -75,7 +77,8 @@
 			:type="props.type"
 			:closable="props.closable"
 			:variant="props.variant"
-			:class="`alert alert--${props.type}`"
+			:density="props.density"
+			:class="['alert', `alert--${props.type}`]"
 			:color="props.type"
 			:border="props.variant === 'tonal' ? 'start' : false"
 		>
@@ -131,6 +134,34 @@
 
 .alert {
 	padding: var(--v-padding-4);
+}
+
+.v-alert--density-comfortable {
+	padding: var(--v-padding-3);
+
+	:deep(.v-alert__prepend) {
+		margin-inline-end: var(--v-padding-3);
+	}
+
+	.alert-icon {
+		width: 3rem !important;
+		height: 3rem !important;
+		display: grid;
+		place-items: center;
+	}
+}
+
+.v-alert--density-compact {
+	padding: var(--v-padding-2);
+
+	:deep(.v-alert__prepend) {
+		margin-inline-end: var(--v-padding-2);
+	}
+
+	.alert-icon {
+		width: 2rem !important;
+		height: 2rem !important;
+	}
 }
 
 .alert-icon {
@@ -211,7 +242,7 @@
 
 @media screen and (width >= 441px) {
 	.alert {
-		.alert-icon {
+		&:not(.v-alert--density-compact, .v-alert--density-comfortable) .alert-icon {
 			width: 3.5rem !important;
 			height: 3.5rem !important;
 			display: grid;
