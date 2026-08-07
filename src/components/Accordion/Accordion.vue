@@ -23,6 +23,7 @@
 		groupId?: string
 		iconPosition?: 'left' | 'right'
 		compact?: boolean
+		density?: 'default' | 'comfortable' | 'compact'
 		vuetifyOptions?: {
 			accordion?: {
 				backgroundColor?: string
@@ -39,6 +40,7 @@
 		groupId: 'default',
 		iconPosition: 'left',
 		compact: false,
+		density: 'default',
 		vuetifyOptions: () => ({}),
 	})
 
@@ -83,7 +85,12 @@
 <template>
 	<div
 		class="sy-accordion"
-		:class="{ 'sy-accordion--compact': compact }"
+		:class="{
+			'sy-accordion--compact': compact,
+			'sy-accordion--density-comfortable': density === 'comfortable',
+			'sy-accordion--density-compact': density === 'compact',
+			'sy-accordion--density-default': density === 'default',
+		}"
 		:style="{
 			'--accordion-hover-color': `var(--v-theme-${options.accordion.hoverColor})`,
 			'--accordion-focus-color': `var(--v-theme-${options.accordion.focusColor})`,
@@ -260,6 +267,28 @@
 	outline: 2px solid transparent;
 	outline-offset: 2px;
 	position: relative;
+}
+
+.sy-accordion--density-comfortable {
+	.sy-accordion-button,
+	.sy-accordion-content-inner {
+		padding: 12px;
+	}
+
+	.sy-accordion-title {
+		font-size: 20px;
+	}
+}
+
+.sy-accordion--density-compact {
+	.sy-accordion-button,
+	.sy-accordion-content-inner {
+		padding: 8px;
+	}
+
+	.sy-accordion-title {
+		font-size: 16px;
+	}
 }
 
 .sy-accordion-title {

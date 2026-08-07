@@ -58,6 +58,15 @@ const meta: Meta<typeof Accordion> = {
 				defaultValue: { summary: '[]' },
 			},
 		},
+		density: {
+			control: { type: 'select' },
+			options: ['default', 'comfortable', 'compact'],
+			description: 'Densité de l\'accordéon',
+			table: {
+				type: { summary: '\'default\' | \'comfortable\' | \'compact\'' },
+				defaultValue: { summary: 'default' },
+			},
+		},
 	},
 }
 
@@ -101,7 +110,6 @@ export const Default: Story = {
         `,
 	}),
 }
-
 export const IconPosition: Story = {
 	parameters: {
 		sourceCode: [
@@ -685,5 +693,69 @@ export const WithCustomContent: Story = {
                 </Accordion>
             </div>
         `,
+	}),
+}
+
+export const Density: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<Accordion
+		:items="[
+			{ id: 'default-item', title: 'Densité par défaut', content: 'Le contenu utilise un espacement de 16 px.' }
+		]"
+		density="default"
+	/>
+	<Accordion
+		:items="[
+			{ id: 'comfortable-item', title: 'Densité confortable', content: 'Le contenu utilise un espacement de 12 px et un titre de 15 px.' }
+		]"
+		density="comfortable"
+	/>
+	<Accordion
+		:items="[
+			{ id: 'compact-item', title: 'Densité compacte', content: 'Le contenu utilise un espacement de 8 px et un titre de 14 px.' }
+		]"
+		density="compact"
+	/>
+</template>`,
+			},
+		],
+	},
+	args: {
+		items: [
+			{ id: 'density-story-item-1', title: 'Première section', content: 'Contenu de la première section.' },
+			{ id: 'density-story-item-2', title: 'Deuxième section', content: 'Contenu de la deuxième section.' },
+		],
+	},
+	render: args => ({
+		components: { Accordion },
+		setup() {
+			const densities = [
+				{ value: 'default' as const, label: 'Densité par défaut' },
+				{ value: 'comfortable' as const, label: 'Densité confortable' },
+				{ value: 'compact' as const, label: 'Densité compacte' },
+			]
+
+			return { args, densities }
+		},
+		template: `
+<div class="pa-4">
+	<div
+		v-for="density in densities"
+		:key="density.value"
+		class="mb-6"
+	>
+		<h3 class="mb-2">{{ density.label }}</h3>
+		<Accordion
+			v-bind="args"
+			:density="density.value"
+			:group-id="\`density-story-\${density.value}\`"
+		/>
+	</div>
+</div>
+				`,
 	}),
 }
