@@ -698,6 +698,9 @@ export const WithCustomContent: Story = {
 
 export const Density: Story = {
 	parameters: {
+		controls: {
+			exclude: ['density', 'groupId'],
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -725,6 +728,7 @@ export const Density: Story = {
 		],
 	},
 	args: {
+		compact: true,
 		items: [
 			{ id: 'density-story-item-1', title: 'Première section', content: 'Contenu de la première section.' },
 			{ id: 'density-story-item-2', title: 'Deuxième section', content: 'Contenu de la deuxième section.' },
@@ -751,6 +755,11 @@ export const Density: Story = {
 		<h3 class="mb-2">{{ density.label }}</h3>
 		<Accordion
 			v-bind="args"
+			:items="args.items.map(item => ({
+				...item,
+				title: \`\${item.title} | density : \${density.value}\`,
+				id: \`\${item.id}-\${density.value}\`
+			}))"
 			:density="density.value"
 			:group-id="\`density-story-\${density.value}\`"
 		/>
