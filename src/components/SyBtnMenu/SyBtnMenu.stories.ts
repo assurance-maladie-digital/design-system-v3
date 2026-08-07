@@ -23,6 +23,11 @@ const meta: Meta<typeof SyBtnMenu> = {
 		hideIcon: { control: 'boolean' },
 		hideLogoutBtn: { control: 'boolean' },
 		isMobileView: { control: 'boolean' },
+		iconOnly: { control: 'boolean' },
+		showIdentityInList: {
+			control: 'boolean',
+			description: 'Affiche `primaryInfo` / `secondaryInfo` en tête du menu déroulant lorsque le bouton est en mode icône seule (`icon-only`), l\'identité étant alors masquée dans l\'activateur.',
+		},
 		options: { control: 'object' },
 	},
 }
@@ -299,6 +304,71 @@ const items = ['Option 1', 'Option 2']
 		primaryInfo: 'Jane Doe',
 		menuItems: ['Option 1', 'Option 2'],
 		iconOnly: true,
+	},
+	render: (args) => {
+		return {
+			components: { SyBtnMenu, SyIcon },
+			setup() {
+				return { args, mdiAccount }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <SyBtnMenu v-bind="args">
+                  <template #prepend-icon>
+					<SyIcon :icon="mdiAccount" color="secondary" decorative />
+                  </template>
+                </SyBtnMenu>
+              </div>
+            `,
+		}
+	},
+}
+
+export const WithIdentityInList: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyBtnMenu
+  	:primary-info="primaryInfo"
+  	:secondary-info="secondaryInfo"
+  	:menu-items="items"
+  	icon-only
+  	show-identity-in-list
+  >
+    <template #prepend-icon>
+	<SyIcon :icon="mdiAccount" color="secondary" decorative />
+    </template>
+  </SyBtnMenu>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { SyBtnMenu } from '@cnamts/synapse'
+import { mdiAccount } from '@mdi/js'
+
+const primaryInfo = 'Jane Doe'
+const secondaryInfo = 'Informations complémentaires'
+const items = ['Option 1', 'Option 2']
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		primaryInfo: 'Jane Doe',
+		secondaryInfo: 'Informations complémentaires',
+		menuItems: ['Option 1', 'Option 2'],
+		iconOnly: true,
+		showIdentityInList: true,
 	},
 	render: (args) => {
 		return {
