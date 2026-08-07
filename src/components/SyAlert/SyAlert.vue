@@ -223,7 +223,7 @@
 @mixin redesign($type, $map) {
 	&.alert--#{$type}.v-alert--variant-tonal {
 		background: map.get($map, 'background') !important;
-		color: rgb(var(--v-theme-onSurface)) !important;
+		color: rgb(var(--v-theme-on-surface)) !important;
 
 		:deep(.v-alert__border) {
 			border-color: map.get($map, 'border') !important;
@@ -262,41 +262,41 @@
 	@include redesign(
 		'warning',
 		(
-			'background': rgb(var(--v-theme-warningVariant)),
-			'accent': rgb(var(--v-theme-onWarningVariant)),
-			'border': rgb(var(--v-theme-onWarningVariant)),
-			'icon': rgb(var(--v-theme-onWarningVariant)),
-			'icon-bg': rgb(var(--v-theme-warningVariantLighten)),
+			'background': rgb(var(--v-theme-warning-variant)),
+			'accent': rgb(var(--v-theme-on-warning-variant)),
+			'border': rgb(var(--v-theme-on-warning-variant)),
+			'icon': rgb(var(--v-theme-on-warning-variant)),
+			'icon-bg': rgb(var(--v-theme-warning-variant-lighten)),
 		)
 	);
 	@include redesign(
 		'success',
 		(
-			'background': rgb(var(--v-theme-successVariant)),
-			'accent': rgb(var(--v-theme-onSuccessVariant)),
-			'border': rgb(var(--v-theme-onSuccessVariant)),
-			'icon':rgb(var(--v-theme-onSuccessVariant)),
-			'icon-bg': rgb(var(--v-theme-successVariantLighten)),
+			'background': rgb(var(--v-theme-success-variant)),
+			'accent': rgb(var(--v-theme-on-success-variant)),
+			'border': rgb(var(--v-theme-on-success-variant)),
+			'icon':rgb(var(--v-theme-on-success-variant)),
+			'icon-bg': rgb(var(--v-theme-success-variant-lighten)),
 		)
 	);
 	@include redesign(
 		'error',
 		(
-			'background': rgb(var(--v-theme-errorVariant)),
+			'background': rgb(var(--v-theme-error-variant)),
 			'accent': rgb(var(--v-theme-error)),
 			'border': rgb(var(--v-theme-error)),
 			'icon':rgb(var(--v-theme-error)),
-			'icon-bg': rgb(var(--v-theme-errorVariantLighten)),
+			'icon-bg': rgb(var(--v-theme-error-variant-lighten)),
 		)
 	);
 	@include redesign(
 		'info',
 		(
-			'background': rgb(var(--v-theme-infoVariant)),
+			'background': rgb(var(--v-theme-info-variant)),
 			'accent': rgb(var(--v-theme-info)),
 			'border': rgb(var(--v-theme-info)),
 			'icon':rgb(var(--v-theme-info)),
-			'icon-bg': rgb(var(--v-theme-infoVariantLighten)),
+			'icon-bg': rgb(var(--v-theme-info-variant-lighten)),
 		)
 	);
 }

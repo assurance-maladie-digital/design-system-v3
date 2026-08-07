@@ -107,6 +107,6 @@
 
 // Sur fond sombre, le ring passe en onPrimary, comme les boutons/liens.
 .v-theme--dark .v-icon[role='button']:focus-visible {
-	outline-color: rgb(var(--v-theme-onPrimary));
+	outline-color: rgb(var(--v-theme-on-primary));
 }
 </style>

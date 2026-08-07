@@ -195,7 +195,7 @@ $list-max-height: 248px;
 	// viewport). L'ancien ring via `::after` était masqué par l'override global
 	// `_btns.scss` (`.v-btn:focus-visible::after { opacity: 0 !important }`) → outline.
 	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-onPrimary));
+		outline: 2px solid rgb(var(--v-theme-on-primary));
 		outline-offset: -3px;
 	}
 
@@ -204,7 +204,7 @@ $list-max-height: 248px;
 	&:active,
 	&:focus {
 		.sy-external-links-btn-text {
-			color: rgb(var(--v-theme-onPrimary)) !important;
+			color: rgb(var(--v-theme-on-primary)) !important;
 		}
 	}
 
@@ -245,7 +245,7 @@ $list-max-height: 248px;
 }
 
 .sy-external-links-btn-text {
-	color: rgb(var(--v-theme-onPrimary)) !important;
+	color: rgb(var(--v-theme-on-primary)) !important;
 }
 
 .sy-external-links-list-item {

@@ -110,6 +110,8 @@ export const Default: Story = {
 			btn: {
 				icon: true,
 				variant: 'text',
+				color: 'primary',
+				color: 'primary',
 				density: 'comfortable',
 			},
 			icon: {

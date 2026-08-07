@@ -121,18 +121,18 @@
 
 	&:hover {
 		/* stylelint-disable-next-line custom-property-pattern */
-		background-color: rgb(var(--v-theme-interactiveHover, 227, 234, 252));
+		background-color: rgb(var(--v-theme-interactive-hover, 227, 234, 252));
 	}
 }
 
 .year-selector__year--selected {
 	/* stylelint-disable-next-line custom-property-pattern */
-	background-color: rgb(var(--v-theme-accentPrimary, 12, 65, 154));
+	background-color: rgb(var(--v-theme-accent-primary, 12, 65, 154));
 	color: white;
 
 	&:hover {
 		/* stylelint-disable-next-line custom-property-pattern */
-		background-color: rgb(var(--v-theme-primaryVariant, 7, 39, 92));
+		background-color: rgb(var(--v-theme-primary-variant, 7, 39, 92));
 	}
 }
 

@@ -251,7 +251,7 @@
 }
 
 .warning-field :deep(.v-messages__message) {
-	color: rgb(var(--v-theme-onWarningVariant)) !important;
+	color: rgb(var(--v-theme-on-warning-variant)) !important;
 }
 
 .error-field :deep(.v-messages__message) {
@@ -263,7 +263,7 @@
 }
 
 .success-field :deep(.v-messages__message) {
-	color: rgb(var(--v-theme-onSuccessVariant)) !important;
+	color: rgb(var(--v-theme-on-success-variant)) !important;
 }
 
 :deep(.v-messages__message) {

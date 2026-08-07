@@ -21,10 +21,14 @@ import {
 	apColorsTokens2026,
 	apLightTheme,
 } from './designTokens'
-import { createFlattenTheme, createFontVariables } from './designTokens/utils'
+import { createFlattenTheme, createFontVariables, toKebabCase } from './designTokens/utils'
 import { fr } from 'vuetify/locale'
 
 import { createVuetify } from 'vuetify'
+
+const createKebabThemeColors = (colors: Record<string, string>) => Object.fromEntries(
+	Object.entries(colors).map(([name, value]) => [toKebabCase(name), value]),
+)
 
 export const createVuetifyInstance = () => createVuetify({
 	components,
@@ -62,11 +66,11 @@ export const createVuetifyInstance = () => createVuetify({
 		themes: {
 			cnam: {
 				dark: false,
-				colors: {
+				colors: createKebabThemeColors({
 					...cnamLightTheme,
 					...cnamDarkTheme,
 					...createFlattenTheme(cnamColorsTokens),
-				},
+				}),
 				variables: {
 					'border-color': cnamColorsTokens.grey.base,
 					'font-family': cnamFontsTokens.family.primary,
@@ -76,11 +80,11 @@ export const createVuetifyInstance = () => createVuetify({
 			},
 			pa: {
 				dark: false,
-				colors: {
+				colors: createKebabThemeColors({
 					...paLightTheme,
 					...paDarkTheme,
 					...createFlattenTheme(paColorsTokens),
-				},
+				}),
 				variables: {
 					'border-color': paColorsTokens.grey.base,
 					'font-family': paFontsTokens.family.primary,
@@ -90,11 +94,11 @@ export const createVuetifyInstance = () => createVuetify({
 			},
 			ap2026: {
 				dark: false,
-				colors: {
+				colors: createKebabThemeColors({
 					...apLightTheme2026,
 					...apDarkTheme,
 					...createFlattenTheme(apColorsTokens2026),
-				},
+				}),
 				variables: {
 					'border-color': cnamColorsTokens.grey.base,
 					'font-family': '"Arial", sans-serif',
@@ -103,11 +107,11 @@ export const createVuetifyInstance = () => createVuetify({
 			},
 			ap: {
 				dark: false,
-				colors: {
+				colors: createKebabThemeColors({
 					...apLightTheme,
 					...apDarkTheme,
 					...createFlattenTheme(apColorsTokens),
-				},
+				}),
 				variables: {
 					'border-color': cnamColorsTokens.grey.base,
 					'font-family': '"Arial", sans-serif',

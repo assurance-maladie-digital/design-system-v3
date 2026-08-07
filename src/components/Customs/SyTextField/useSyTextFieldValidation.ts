@@ -70,7 +70,7 @@ export function useSyTextFieldValidation(params: {
 		if (hasError.value) return 'error'
 		if (hasWarning.value) return 'warning'
 		if (hasSuccess.value) return 'success'
-		return 'rgb(var(--v-theme-onSurface))'
+		return 'rgb(var(--v-theme-on-surface))'
 	})
 
 	const hasMessages = computed(() => {

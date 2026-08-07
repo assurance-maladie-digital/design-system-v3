@@ -295,7 +295,7 @@
 }
 
 .amelipro-state-tile__pdf-download--white {
-	color: rgb(var(--v-theme-apWhite-base));
+	color: rgb(var(--v-theme-ap-white-base));
 }
 
 .amelipro-state-tile {
@@ -315,7 +315,7 @@
 		}
 
 		& .amelipro-state-tile__pdf-download--white {
-			color: rgb(var(--v-theme-apWhite-base));
+			color: rgb(var(--v-theme-ap-white-base));
 		}
 	}
 }

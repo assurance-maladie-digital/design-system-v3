@@ -82,7 +82,7 @@ export function usePasswordField(params: {
 		if (hasError.value) return 'error'
 		if (hasWarning.value) return 'onWarningVariant'
 		if (hasSuccess.value) return 'onSuccessVariant'
-		return 'rgb(var(--v-theme-onSurface))'
+		return 'rgb(var(--v-theme-on-surface))'
 	})
 
 	return {

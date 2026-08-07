@@ -129,7 +129,7 @@
 		if (hasError.value) return 'error'
 		if (hasWarning.value) return 'onWarningVariant'
 		if (hasSuccess.value) return 'onSuccessVariant'
-		return 'rgb(var(--v-theme-onSurface))'
+		return 'rgb(var(--v-theme-on-surface))'
 	})
 
 	const variant = computed(() => {
@@ -1239,7 +1239,7 @@
 
 	:deep(.v-input__prepend > .v-icon__svg),
 	:deep(.v-input__append > .v-icon__svg) {
-		fill: rgb(var(--v-theme-onSurface));
+		fill: rgb(var(--v-theme-on-surface));
 	}
 
 	:deep(.v-input__prepend .v-icon:focus-visible),
@@ -1251,7 +1251,7 @@
 
 .warning-field {
 	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-onWarningVariant)) !important;
+		fill: rgb(var(--v-theme-on-warning-variant)) !important;
 	}
 
 	:deep(.v-icon.arrow) {
@@ -1263,14 +1263,14 @@
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-onWarningVariant)) !important;
+		color: rgb(var(--v-theme-on-warning-variant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 
 		.v-field__outline {
 			--v-field-border-opacity: 1;
 
-			color: rgb(var(--v-theme-onWarningVariant)) !important;
+			color: rgb(var(--v-theme-on-warning-variant)) !important;
 		}
 	}
 
@@ -1278,7 +1278,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-onWarningVariant)) !important;
+			color: rgb(var(--v-theme-on-warning-variant)) !important;
 		}
 	}
 }
@@ -1303,36 +1303,36 @@
 	}
 
 	:deep(.v-icon.arrow) {
-		color: rgb(var(--v-theme-onSurfaceVariant)) !important;
+		color: rgb(var(--v-theme-on-surface-variant)) !important;
 	}
 
 	:deep(.v-icon.arrow .v-icon__svg) {
-		fill: rgb(var(--v-theme-onSurfaceVariant)) !important;
+		fill: rgb(var(--v-theme-on-surface-variant)) !important;
 	}
 }
 
 .success-field {
 	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-onSuccessVariant)) !important;
+		fill: rgb(var(--v-theme-on-success-variant)) !important;
 	}
 
 	:deep(.v-icon.arrow) {
-		color: rgb(var(--v-theme-onSurface)) !important;
+		color: rgb(var(--v-theme-on-surface)) !important;
 	}
 
 	:deep(.v-icon.arrow .v-icon__svg) {
-		fill: rgb(var(--v-theme-onSurface)) !important;
+		fill: rgb(var(--v-theme-on-surface)) !important;
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-onSuccessVariant)) !important;
+		color: rgb(var(--v-theme-on-success-variant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 
 		.v-field__outline {
 			--v-field-border-opacity: 1;
 
-			color: rgb(var(--v-theme-onSuccessVariant)) !important;
+			color: rgb(var(--v-theme-on-success-variant)) !important;
 		}
 	}
 
@@ -1340,7 +1340,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-onSuccessVariant)) !important;
+			color: rgb(var(--v-theme-on-success-variant)) !important;
 		}
 	}
 }
@@ -1357,7 +1357,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgba(var(--v-theme-onSurface), var(--v-medium-emphasis-opacity)) !important;
+			color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity)) !important;
 		}
 	}
 }
@@ -1387,23 +1387,23 @@
 }
 
 .help-text {
-	color: rgba(var(--v-theme-onSurface), var(--v-medium-emphasis-opacity));
+	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
 	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
 }
 
 .help-text.text-disabled {
-	color: rgba(var(--v-theme-onSurface), var(--v-disabled-opacity));
+	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
 }
 
 .help-text-below {
-	color: rgba(var(--v-theme-onSurface), var(--v-medium-emphasis-opacity));
+	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
 	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
 }
 
 .help-text-below.text-disabled {
-	color: rgba(var(--v-theme-onSurface), var(--v-disabled-opacity));
+	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
 }
 
 /* Focus = anneau seul (pas de fond) ; le fond gris reste réservé au survol (:hover) et à la
@@ -1439,11 +1439,11 @@
 }
 
 .sy-select__clear-icon {
-	color: rgb(var(--v-theme-onSurface)) !important;
+	color: rgb(var(--v-theme-on-surface)) !important;
 }
 
 :deep(.sy-select__clear-icon .v-icon__svg) {
-	fill: rgb(var(--v-theme-onSurface)) !important;
+	fill: rgb(var(--v-theme-on-surface)) !important;
 }
 
 /* Style spécifique pour les chips */
@@ -1495,7 +1495,7 @@
 
 .sy-select :deep(.v-field__input) {
 	opacity: 1;
-	color: rgb(var(--v-theme-onSurface)) !important;
+	color: rgb(var(--v-theme-on-surface)) !important;
 	cursor: pointer;
 	caret-color: transparent;
 	padding-right: 25px;

@@ -35,7 +35,7 @@ export const cnamLightTheme = {
 	surfaceBright: baseTokens.color.blue.lighten97,
 	surfaceDim: baseTokens.color.blue.lighten90,
 	onSurface: baseTokens.color.grey.darken60,
-	onSurfaceVariant: baseTokens.color.grey.base,
+	onSurfaceVariant: baseTokens.color.grey.lighten90,
 
 	// Background
 	background: baseTokens.color.blue.lighten90,

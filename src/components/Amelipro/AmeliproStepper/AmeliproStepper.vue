@@ -364,7 +364,7 @@
 		}
 
 		& span {
-			color: rgb(var(--v-theme-apWhite-base));
+			color: rgb(var(--v-theme-ap-white-base));
 		}
 	}
 
@@ -390,7 +390,7 @@
 	background-color: rgb(var(--v-theme-primary));
 	border-top-left-radius: 8px;
 	border-top-right-radius: 8px;
-	color: rgb(var(--v-theme-apWhite-base));
+	color: rgb(var(--v-theme-ap-white-base));
 	text-align: center;
 	z-index: 1;
 }

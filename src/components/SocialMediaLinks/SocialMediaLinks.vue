@@ -91,7 +91,7 @@ li {
 }
 
 .vd-social-media-links-icon {
-	color: rgb(var(--v-theme-onSurfaceVariant)) !important;
+	color: rgb(var(--v-theme-on-surface-variant)) !important;
 }
 
 .vd-social-media-links-icon--x {

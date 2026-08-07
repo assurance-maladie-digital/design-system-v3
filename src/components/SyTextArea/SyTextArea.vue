@@ -181,7 +181,7 @@
 		if (hasError.value) return 'error'
 		if (hasWarning.value) return 'onWarningVariant'
 		if (hasSuccess.value) return 'onSuccessVariant'
-		return 'rgb(var(--v-theme-onSurface))'
+		return 'rgb(var(--v-theme-on-surface))'
 	})
 
 	const counter = computed(() => props.counter === false ? undefined : props.counter)
@@ -312,7 +312,7 @@
 }
 
 .sy-textarea__clear-icon {
-	color: rgb(var(--v-theme-iconBase)) !important;
+	color: rgb(var(--v-theme-icon-base)) !important;
 }
 
 .sy-textarea:has(.sy-textarea__state-icon) .sy-textarea__clear-button {
@@ -340,11 +340,11 @@
 	:deep(.v-field__outline) {
 		--v-field-border-opacity: 1;
 
-		color: rgb(var(--v-theme-onSuccessVariant)) !important;
+		color: rgb(var(--v-theme-on-success-variant)) !important;
 	}
 
 	:deep(.v-label.v-field-label) {
-		color: rgb(var(--v-theme-onSuccessVariant)) !important;
+		color: rgb(var(--v-theme-on-success-variant)) !important;
 	}
 
 	:deep(.v-messages) {
@@ -352,7 +352,7 @@
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-onSuccessVariant)) !important;
+		color: rgb(var(--v-theme-on-success-variant)) !important;
 	}
 }
 
@@ -364,11 +364,11 @@
 	:deep(.v-field__outline) {
 		--v-field-border-opacity: 1;
 
-		color: rgb(var(--v-theme-onWarningVariant)) !important;
+		color: rgb(var(--v-theme-on-warning-variant)) !important;
 	}
 
 	:deep(.v-label.v-field-label) {
-		color: rgb(var(--v-theme-onWarningVariant)) !important;
+		color: rgb(var(--v-theme-on-warning-variant)) !important;
 	}
 
 	:deep(.v-messages) {
@@ -376,7 +376,7 @@
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-onWarningVariant)) !important;
+		color: rgb(var(--v-theme-on-warning-variant)) !important;
 	}
 }
 </style>

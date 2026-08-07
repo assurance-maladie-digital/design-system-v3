@@ -16,15 +16,15 @@ const expectedPropOptions: ExpectedPropOptions<typeof AmeliproTooltips> = {
 	},
 	iconBgColor: {
 		type: String,
-		default: 'ap-white',
+		default: 'ap-blue-darken-1',
 	},
 	iconColor: {
 		type: String,
-		default: 'ap-parme-darken-1',
+		default: 'ap-white',
 	},
 	iconHoverBgColor: {
 		type: String,
-		default: 'ap-parme-darken-1',
+		default: 'ap-blue-darken-1',
 	},
 	iconHoverColor: {
 		type: String,

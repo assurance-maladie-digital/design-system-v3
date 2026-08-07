@@ -392,7 +392,7 @@
 }
 
 .phone-field__clear-icon {
-	color: rgb(var(--v-theme-onSurface)) !important;
+	color: rgb(var(--v-theme-on-surface)) !important;
 	opacity: var(--v-medium-emphasis-opacity) !important;
 }
 
@@ -407,6 +407,6 @@
 }
 
 :deep(.phone-field__clear-icon .v-icon__svg) {
-	fill: rgb(var(--v-theme-onSurface)) !important;
+	fill: rgb(var(--v-theme-on-surface)) !important;
 }
 </style>

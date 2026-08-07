@@ -129,7 +129,7 @@ a {
 
 // En contexte sombre (ex. footer), le ring de focus des liens passe en onPrimary
 .v-theme--dark a:focus-visible {
-	outline-color: rgb(var(--v-theme-onPrimary));
+	outline-color: rgb(var(--v-theme-on-primary));
 }
 
 .vd-collapse-list a {
@@ -183,7 +183,7 @@ a {
 
 	// Ring du titre du panel en onPrimary sur fond sombre
 	.v-expansion-panel-title:focus-visible {
-		outline-color: rgb(var(--v-theme-onPrimary));
+		outline-color: rgb(var(--v-theme-on-primary));
 	}
 }
 </style>

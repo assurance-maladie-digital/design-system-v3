@@ -696,11 +696,11 @@
 }
 
 .sy-server-table--pinned-left-shadow :deep(.sy-table__pinned--left) {
-	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-onSurfaceVariant), 0.6);
+	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-on-surface-variant), 0.6);
 }
 
 .sy-server-table--pinned-right-shadow :deep(.sy-table__pinned--right) {
-	box-shadow: -2px 0 6px -4px rgba(var(--v-theme-onSurfaceVariant), 0.6);
+	box-shadow: -2px 0 6px -4px rgba(var(--v-theme-on-surface-variant), 0.6);
 }
 
 .sy-server-table--pinned-select-left :deep(.v-data-table__th--select),
@@ -741,7 +741,7 @@
 .sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
 .sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left :deep(.v-data-table__tbody .v-data-table__tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
 .sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left :deep(.v-data-table__tbody tr:not(.v-data-table-rows-loading) > td:first-child) {
-	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-onSurfaceVariant), 0.6);
+	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-on-surface-variant), 0.6);
 }
 /* stylelint-enable @stylistic/max-line-length */
 

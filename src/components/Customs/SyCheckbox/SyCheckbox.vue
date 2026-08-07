@@ -122,9 +122,9 @@
 		case 'error':
 			return 'rgb(var(--v-theme-error))'
 		case 'onSuccessVariant':
-			return 'rgb(var(--v-theme-onSuccessVariant))'
+			return 'rgb(var(--v-theme-on-success-variant))'
 		case 'onWarningVariant':
-			return 'rgb(var(--v-theme-onWarningVariant))'
+			return 'rgb(var(--v-theme-on-warning-variant))'
 		case 'primary':
 			return cnamSemanticTokens.colors.text.base
 		default:
@@ -298,19 +298,19 @@
 }
 
 .success-field :deep(.v-messages__message) {
-	color: rgb(var(--v-theme-onSuccessVariant)) !important;
+	color: rgb(var(--v-theme-on-success-variant)) !important;
 }
 
 .success-field :deep(.v-selection-control__input) {
-	color: rgb(var(--v-theme-onSuccessVariant));
+	color: rgb(var(--v-theme-on-success-variant));
 }
 
 .warning-field :deep(.v-messages__message) {
-	color: rgb(var(--v-theme-onWarningVariant)) !important;
+	color: rgb(var(--v-theme-on-warning-variant)) !important;
 }
 
 .warning-field :deep(.v-selection-control__input) {
-	color: rgb(var(--v-theme-onWarningVariant));
+	color: rgb(var(--v-theme-on-warning-variant));
 }
 
 :deep(.v-input--dirty .v-selection-control__input) {

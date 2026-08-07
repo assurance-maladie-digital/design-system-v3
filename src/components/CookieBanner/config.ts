@@ -10,7 +10,7 @@ export const config = {
 		rounded: true,
 		elevation: 2,
 		class: 'pa-8',
-		color: 'rgb(var(--v-theme-infoVariant))',
+		color: 'rgb(var(--v-theme-info-variant))',
 	},
 	closeBtn: {
 		icon: true,

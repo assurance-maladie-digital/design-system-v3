@@ -51,6 +51,11 @@ describe('SySelect.vue', () => {
 
 		// SyIcon renders a v-icon with aria-label
 		expect(wrapper.findAll('[aria-label="Test - info"]').length).toBe(2)
+		const tooltipIcons = wrapper.findAllComponents({ name: 'IconSlot' })
+		expect(tooltipIcons).toHaveLength(2)
+		tooltipIcons.forEach(tooltipIcon => {
+			expect(tooltipIcon.findComponent({ name: 'SyIcon' }).props('color')).toBe('primary')
+		})
 		wrapper.unmount()
 	})
 

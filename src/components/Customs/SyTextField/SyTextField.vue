@@ -660,8 +660,9 @@
 							<template #activator="{ props: tooltipProps }">
 								<SyIcon
 									v-bind="tooltipProps"
+									class="sy-text-field__tooltip-icon"
 									:label="props.label ? `${props.label} - info` : 'Info'"
-									:color="iconColor"
+									color="primary"
 									:icon="ICONS.info"
 									role="button"
 									:decorative="false"
@@ -712,8 +713,9 @@
 							<template #activator="{ props: tooltipProps }">
 								<SyIcon
 									v-bind="tooltipProps"
+									class="sy-text-field__tooltip-icon"
 									:label="props.label ? `${props.label} - info` : 'Info'"
-									:color="iconColor"
+									color="primary"
 									:icon="ICONS.info"
 									role="button"
 									:decorative="false"
@@ -872,22 +874,22 @@
 
 .warning-field {
 	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-onWarningVariant)) !important;
+		fill: rgb(var(--v-theme-on-warning-variant)) !important;
 	}
 
 	:deep(.v-label.v-field-label) {
-		color: rgb(var(--v-theme-borderWarning)) !important;
+		color: rgb(var(--v-theme-border-warning)) !important;
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-onWarningVariant)) !important;
+		color: rgb(var(--v-theme-on-warning-variant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 
 		.v-field__outline {
 			--v-field-border-opacity: 1;
 
-			color: rgb(var(--v-theme-onWarningVariant)) !important;
+			color: rgb(var(--v-theme-on-warning-variant)) !important;
 		}
 	}
 
@@ -895,7 +897,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-onWarningVariant)) !important;
+			color: rgb(var(--v-theme-on-warning-variant)) !important;
 		}
 	}
 }
@@ -933,22 +935,22 @@
 
 .success-field {
 	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-onSuccessVariant)) !important;
+		fill: rgb(var(--v-theme-on-success-variant)) !important;
 	}
 
 	:deep(.v-label.v-field-label) {
-		color: rgb(var(--v-theme-borderSuccess)) !important;
+		color: rgb(var(--v-theme-border-success)) !important;
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-onSuccessVariant)) !important;
+		color: rgb(var(--v-theme-on-success-variant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 
 		.v-field__outline {
 			--v-field-border-opacity: 1;
 
-			color: rgb(var(--v-theme-onSuccessVariant)) !important;
+			color: rgb(var(--v-theme-on-success-variant)) !important;
 		}
 	}
 
@@ -956,13 +958,13 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-onSuccessVariant)) !important;
+			color: rgb(var(--v-theme-on-success-variant)) !important;
 		}
 	}
 }
 
 .basic-field {
-	:deep(.v-icon__svg) {
+	:deep(.v-icon:not(.sy-text-field__tooltip-icon) .v-icon__svg) {
 		fill: rgb(var(--v-theme-on-surface));
 	}
 
@@ -979,7 +981,7 @@
 }
 
 :deep(.sy-text-field__clear .v-icon__svg) {
-	fill: rgb(var(--v-theme-onSurface)) !important;
+	fill: rgb(var(--v-theme-on-surface)) !important;
 }
 
 .sy-text-field__spinner {
@@ -998,7 +1000,7 @@
 	padding: 0;
 	border: none;
 	background: transparent;
-	color: rgb(var(--v-theme-onSurface));
+	color: rgb(var(--v-theme-on-surface));
 	cursor: pointer;
 }
 

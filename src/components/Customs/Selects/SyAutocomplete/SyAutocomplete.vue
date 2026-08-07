@@ -581,10 +581,10 @@
 .v-icon.arrow {
 	position: absolute;
 	right: 10px;
-	color: rgb(var(--v-theme-onSurface)) !important;
+	color: rgb(var(--v-theme-on-surface)) !important;
 
 	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-onSurface)) !important;
+		fill: rgb(var(--v-theme-on-surface)) !important;
 	}
 }
 
@@ -619,10 +619,10 @@
 }
 
 .sy-autocomplete__clear-icon {
-	color: rgb(var(--v-theme-onSurface)) !important;
+	color: rgb(var(--v-theme-on-surface)) !important;
 
 	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-onSurface)) !important;
+		fill: rgb(var(--v-theme-on-surface)) !important;
 	}
 }
 
@@ -713,8 +713,8 @@ li.sy-autocomplete__option--focused {
 
 :deep(.error-field .v-icon.arrow),
 :deep(.error-field .v-icon.arrow .v-icon__svg) {
-	color: rgb(var(--v-theme-onSurfaceVariant)) !important;
-	fill: rgb(var(--v-theme-onSurfaceVariant)) !important;
+	color: rgb(var(--v-theme-on-surface-variant)) !important;
+	fill: rgb(var(--v-theme-on-surface-variant)) !important;
 }
 
 :deep(.warning-field .v-icon.arrow),
@@ -725,7 +725,7 @@ li.sy-autocomplete__option--focused {
 
 :deep(.success-field .v-icon.arrow),
 :deep(.success-field .v-icon.arrow .v-icon__svg) {
-	color: rgb(var(--v-theme-onSurface)) !important;
-	fill: rgb(var(--v-theme-onSurface)) !important;
+	color: rgb(var(--v-theme-on-surface)) !important;
+	fill: rgb(var(--v-theme-on-surface)) !important;
 }
 </style>

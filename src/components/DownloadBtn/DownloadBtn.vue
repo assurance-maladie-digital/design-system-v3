@@ -157,6 +157,6 @@
 }
 
 .sy-download-btn--dark:focus-visible {
-	outline-color: rgb(var(--v-theme-onPrimary));
+	outline-color: rgb(var(--v-theme-on-primary));
 }
 </style>
