@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, type PropType } from 'vue'
+	import { type PropType } from 'vue'
 	import { locales } from './locales'
 	import type { SocialMediaLink } from './types'
 	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
@@ -24,15 +24,12 @@
 		},
 	})
 
-	const isDark = computed(() => props.dark ?? false)
-	const buttonTheme = computed(() => isDark.value ? 'dark' : undefined)
-
 </script>
 
 <template>
 	<div
-		class="d-flex flex-column"
-		:class="{ 'v-theme--dark': isDark }"
+		class="vd-social-media-links d-flex flex-column"
+		:class="{ 'vd-social-media-links--dark': props.dark }"
 	>
 		<component
 			:is="props.useNativeHeading ? `h${props.headingLevel}` : 'span'"
@@ -50,7 +47,7 @@
 			>
 				<VBtn
 					:id="`social-btn-${index}`"
-					:theme="buttonTheme"
+					:theme="dark ? 'dark' : undefined"
 					:href="social.href"
 					target="_blank"
 					rel="noopener noreferrer"
@@ -98,10 +95,6 @@ li {
 	letter-spacing: normal;
 }
 
-.v-theme--dark .vd-social-media-links-label.text--primary {
-	color: white;
-}
-
 .vd-social-media-links-icon {
 	color: rgb(var(--v-theme-onSurfaceVariant)) !important;
 }
@@ -119,25 +112,25 @@ li {
 	&:focus-visible {
 		outline: 2px solid rgb(var(--v-theme-primary));
 		outline-offset: -1px;
+	}
+}
 
-		&.v-theme--dark :deep() {
-			outline: 2px solid white;
-			outline-offset: -1px;
-		}
+.vd-social-media-links--dark {
+	.vd-social-media-links-label.text--primary {
+		color: rgb(var(--v-theme-onPrimary));
 	}
 
-	&.v-theme--dark :deep() {
-		.v-btn--variant-text:hover {
-			background: rgba(white, 0.1);
-		}
+	:deep(.v-btn--variant-text:hover) {
+		background: rgb(255 255 255 / 10%);
+	}
 
-		svg {
-			fill: rgb(var(--v-theme-onPrimary));
-		}
+	:deep(.vd-social-media-links-icon) {
+		color: rgb(var(--v-theme-onPrimary)) !important;
+	}
 
-		.vd-social-media-links-label {
-			color: rgb(var(--v-theme-onPrimary));
-		}
+	:deep(.v-btn--icon:focus-visible) {
+		outline: 2px solid rgb(var(--v-theme-onPrimary));
+		outline-offset: -1px;
 	}
 }
 
