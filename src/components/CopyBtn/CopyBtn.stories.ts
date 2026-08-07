@@ -111,7 +111,6 @@ export const Default: Story = {
 				icon: true,
 				variant: 'text',
 				color: 'primary',
-				color: 'primary',
 				density: 'comfortable',
 			},
 			icon: {

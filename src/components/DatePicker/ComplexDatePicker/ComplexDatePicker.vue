@@ -1764,7 +1764,7 @@ $ap-grey-mid: #d6d6d6;
 	opacity: 1;
 
 	.v-btn__content {
-		color: rgb(var(--v-theme-on-surface-variant));
+		color: rgb(var(--v-theme-grey-base));
 		opacity: 1;
 	}
 }
