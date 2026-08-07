@@ -236,9 +236,6 @@ export const Dark: Story = {
 						:use-native-heading="args.useNativeHeading"
 					/>
 				</VSheet>
-				<div class="d-flex flex-wrap align-center pa-4">
-                
-				</div>
             `,
 		}
 	},
