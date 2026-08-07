@@ -30,4 +30,23 @@ describe('SocialMediaLinks - Visual regression tests', () => {
 		cy.get('.vd-social-media-links-content').should('be.visible')
 		cy.matchImageSnapshot('social-media-links-no-native-heading', cy.get('.vd-social-media-links-content').parent().parent())
 	})
+
+	it('displays the social media links in dark mode', () => {
+		cy.mountWithVuetify(
+			h('div', { style: 'background-color: #1e1e2e; padding: 16px;' }, [
+				h(SocialMediaLinks, {
+					links: defaultLinks,
+					dark: true,
+				}),
+			]),
+		)
+
+		cy.get('.vd-social-media-links').should('be.visible')
+		cy.get('.vd-social-media-links').should('have.class', 'v-theme--dark')
+
+		cy.matchImageSnapshot(
+			'social-media-links-dark',
+			cy.get('.vd-social-media-links'),
+		)
+	})
 })
