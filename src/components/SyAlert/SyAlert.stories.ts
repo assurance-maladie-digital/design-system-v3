@@ -186,7 +186,7 @@ export const Outlined: Story = {
 	},
 }
 
-export const Compact: Story = {
+export const Density: Story = {
 	args: {
 		type: 'info',
 		default: 'Contenu de l’alerte',
