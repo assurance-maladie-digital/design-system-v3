@@ -167,8 +167,8 @@ describe('SocialMediaLinks', () => {
 			},
 		})
 
-		const container = wrapper.find('.d-flex.flex-column')
-		expect(container.classes()).toContain('v-theme--dark')
+		const container = wrapper.find('.vd-social-media-links')
+		expect(container.classes()).toContain('vd-social-media-links--dark')
 
 		const button = wrapper.findComponent({ name: 'VBtn' })
 		expect(button.props('theme')).toBe('dark')
