@@ -42,7 +42,8 @@ describe('SocialMediaLinks - Visual regression tests', () => {
 		)
 
 		cy.get('.vd-social-media-links').should('be.visible')
-		cy.get('.vd-social-media-links').should('have.class', 'v-theme--dark')
+		cy.get('.vd-social-media-links')
+			.should('have.class', 'vd-social-media-links--dark')
 
 		cy.matchImageSnapshot(
 			'social-media-links-dark',
