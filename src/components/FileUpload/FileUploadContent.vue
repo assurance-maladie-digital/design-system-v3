@@ -60,12 +60,12 @@
 			</slot>
 		</span>
 
-		<span
-			class="sy-file-upload-btn bg-primary text-white"
-		>
-			<slot name="button-text">
-				{{ locales.chooseFile(multiple) }}
-			</slot>
+		<span class="sy-file-upload-btn bg-primary text-white">
+			<span class="sy-file-upload-btn__content">
+				<slot name="button-text">
+					{{ locales.chooseFile(multiple) }}
+				</slot>
+			</span>
 		</span>
 
 		<span
@@ -100,10 +100,50 @@
 }
 
 .sy-file-upload-btn {
+	position: relative;
+	overflow: hidden;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	border-radius: var(--v-radius-rounded);
-	transition: background 0.25s;
 	font-weight: 700 !important;
 	font-size: var(--v-fontSize-corpsDeTexte);
 	padding: 10px 16px;
+
+	&::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background: transparent;
+		border-radius: inherit;
+		pointer-events: none;
+		transition: background-color 0.2s ease;
+		z-index: 0;
+	}
+
+	// Ce « bouton » est un `<span>` dans la dropzone : il n'est pas couvert par `_btns.scss`, d'où
+	// cette surcouche maison. Les valeurs sont en revanche celles de la variante `elevated`
+	// (`_btns.scss`, `interactionDarken` à 0.2 puis 0.4) : à répercuter ici en cas d'ajustement
+	// de la charte, rien ne les synchronise.
+	&:hover::before {
+		background: rgba(var(--v-theme-interactionDarken), 0.2);
+	}
+
+	&:active::before {
+		background: rgba(var(--v-theme-interactionDarken), 0.4);
+	}
+
+	// Dropzone désactivée : on neutralise les états d'interaction ici plutôt que par un
+	// `pointer-events: none` sur la zone, qui rendrait au passage le `cursor` inopérant et le
+	// texte non sélectionnable. Les actions elles-mêmes sont déjà verrouillées côté script
+	.sy-file-upload--disabled &:hover::before,
+	.sy-file-upload--disabled &:active::before {
+		background: transparent;
+	}
+
+	&__content {
+		position: relative;
+		z-index: 1;
+	}
 }
 </style>

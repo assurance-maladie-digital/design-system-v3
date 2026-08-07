@@ -206,13 +206,6 @@
 	font-size: var(--v-fontSize-corpsDeTexte);
 	text-transform: none;
 	letter-spacing: inherit;
-
-	&:deep() {
-		.v-btn__underlay,
-		.v-btn__overlay {
-			display: none;
-		}
-	}
 }
 
 .v-theme--dark .vd-lang-btn {

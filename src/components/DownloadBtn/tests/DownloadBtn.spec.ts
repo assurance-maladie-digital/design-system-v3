@@ -82,9 +82,29 @@ describe('DownloadBtn - focus', () => {
 		wrapper.unmount()
 	})
 
-	it('carries the --dark class in dark mode (onPrimary focus ring)', () => {
-		const wrapper = mount(DownloadBtn, { props: { filePromise, dark: true } })
-		expect(wrapper.get('.sy-download-btn').classes()).toContain('sy-download-btn--dark')
+	it('uses dark theme in dark mode (onPrimary focus ring)', () => {
+		const wrapper = mount(DownloadBtn, {
+			props: { filePromise, dark: true },
+			attachTo: document.body,
+		})
+
+		const downloadButton = wrapper.get('.sy-download-btn')
+
+		expect(downloadButton.classes()).toContain('v-theme--dark')
+
+		wrapper.unmount()
+	})
+
+	it('does not use dark theme in light mode', () => {
+		const wrapper = mount(DownloadBtn, {
+			props: { filePromise, dark: false },
+			attachTo: document.body,
+		})
+
+		const downloadButton = wrapper.get('.sy-download-btn')
+
+		expect(downloadButton.classes()).not.toContain('v-theme--dark')
+
 		wrapper.unmount()
 	})
 

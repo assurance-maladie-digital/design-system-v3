@@ -1,26 +1,34 @@
 <script setup lang="ts">
+	import { useLocales } from '@/composables'
 	import type { CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import useCustomizableOptions from '@/composables/useCustomizableOptions'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import type { DeepPartial } from '@/utils'
 	import { mdiClose, mdiArrowULeftBottom } from '@mdi/js'
 	import { computed, ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import type { CookiesItems } from '../CookiesSelection/types'
 	import { config } from './config'
-	import { locales } from './locales'
+	import { locales as defaultLocales } from './locales'
+	import type { CookieBannerLocales } from './locales'
 	import CookiesSelection from '../CookiesSelection/CookiesSelection.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
+	import SyIconButton from '../Customs/SyIconButton/SyIconButton.vue'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		items?: CookiesItems
 		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 		headingLevelInformation?: 1 | 2 | 3 | 4 | 5 | 6
+		locales?: DeepPartial<CookieBannerLocales>
 
 	}>(), {
 		items: undefined,
 		headingLevel: 2,
 		headingLevelInformation: 3,
+		locales: () => ({}),
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const options = useCustomizableOptions(config, props)
 
@@ -217,22 +225,18 @@
 						<SyIcon
 							v-bind="options.icon"
 							:icon="mdiArrowULeftBottom"
-							label="Bouton de retour en arrière."
+							:label="locales.iconLabel"
 						/>
 					</VBtn>
-					<VBtn
+					<SyIconButton
 						v-else
 						v-bind="options.closeBtn"
 						ref="closeBtnRef"
-						:aria-label="locales.closeBtn"
-						@click="reject"
-					>
-						<SyIcon
-							v-bind="options.icon"
-							:icon="mdiClose"
-							label="Bouton de fermeture."
-						/>
-					</VBtn>
+						class="vd-cookie-banner-close-btn"
+						:icon="mdiClose"
+						:label="locales.closeBtn"
+						@click-icon-button="reject"
+					/>
 				</div>
 				<div class="vd-cookie-banner-content">
 					<Transition name="height">

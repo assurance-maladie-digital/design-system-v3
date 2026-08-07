@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import type { PropType } from 'vue'
+	import { type PropType } from 'vue'
 	import { locales } from './locales'
 	import type { SocialMediaLink } from './types'
 	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
@@ -18,11 +18,19 @@
 			type: Boolean,
 			default: true,
 		},
+		dark: {
+			type: Boolean,
+			default: false,
+		},
 	})
+
 </script>
 
 <template>
-	<div class="d-flex flex-column">
+	<div
+		class="vd-social-media-links d-flex flex-column"
+		:class="{ 'vd-social-media-links--dark': props.dark }"
+	>
 		<component
 			:is="props.useNativeHeading ? `h${props.headingLevel}` : 'span'"
 			class="vd-social-media-links-label text--primary"
@@ -39,6 +47,7 @@
 			>
 				<VBtn
 					:id="`social-btn-${index}`"
+					:theme="dark ? 'dark' : undefined"
 					:href="social.href"
 					target="_blank"
 					rel="noopener noreferrer"
@@ -86,10 +95,6 @@ li {
 	letter-spacing: normal;
 }
 
-.v-theme--dark .vd-social-media-links-label.text--primary {
-	color: white;
-}
-
 .vd-social-media-links-icon {
 	color: rgb(var(--v-theme-on-surface-variant)) !important;
 }
@@ -110,13 +115,21 @@ li {
 	}
 }
 
-.v-theme--dark {
-	.v-btn--variant-text:hover :deep() {
-		background: rgba(white, 0.1);
+.vd-social-media-links--dark {
+	.vd-social-media-links-label.text--primary {
+		color: rgb(var(--v-theme-onPrimary));
 	}
 
-	.v-btn--icon:focus-visible {
-		outline: 2px solid white;
+	:deep(.v-btn--variant-text:hover) {
+		background: rgb(255 255 255 / 10%);
+	}
+
+	:deep(.vd-social-media-links-icon) {
+		color: rgb(var(--v-theme-onPrimary)) !important;
+	}
+
+	:deep(.v-btn--icon:focus-visible) {
+		outline: 2px solid rgb(var(--v-theme-onPrimary));
 		outline-offset: -1px;
 	}
 }
