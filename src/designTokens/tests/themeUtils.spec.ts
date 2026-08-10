@@ -28,7 +28,7 @@ describe('design token utils', () => {
 
 	it('converts theme color names to kebab-case for CSS variables', () => {
 		expect(toKebabCase('onSurfaceVariant')).toBe('on-surface-variant')
-		expect(toKebabCase('greyDarken60')).toBe('grey-darken-60')
+		expect(toKebabCase('greyDarken60')).toBe('grey-darken60')
 	})
 
 	it('generates CSS color variables without uppercase characters', () => {
