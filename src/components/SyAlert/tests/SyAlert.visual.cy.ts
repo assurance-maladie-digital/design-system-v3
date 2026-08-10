@@ -1,4 +1,5 @@
 import SyAlert from '../SyAlert.vue'
+import { defineComponent, h } from 'vue'
 
 // Déclenche :focus-visible via l'option native focus({ focusVisible: true }).
 const focusVisible = (selector: string) =>
@@ -48,6 +49,21 @@ describe('SyAlert - Visual regression tests', () => {
 
 		cy.get('.v-alert').should('be.visible')
 		cy.matchImageSnapshot('sy-alert-closable', cy.get('.v-alert'))
+	})
+
+	it('displays all densities for comparison', () => {
+		const DensityComparison = defineComponent({
+			render: () => h('div', { class: 'sy-alert-density-comparison' }, [
+				h(SyAlert, { density: 'default', type: 'info' }, () => 'Densité par défaut'),
+				h(SyAlert, { density: 'comfortable', type: 'info' }, () => 'Densité confortable'),
+				h(SyAlert, { density: 'compact', type: 'info' }, () => 'Densité compacte'),
+			]),
+		})
+
+		cy.mountWithVuetify(DensityComparison)
+
+		cy.get('.sy-alert-density-comparison').should('be.visible')
+		cy.matchImageSnapshot('sy-alert-densities', cy.get('.sy-alert-density-comparison'))
 	})
 })
 
