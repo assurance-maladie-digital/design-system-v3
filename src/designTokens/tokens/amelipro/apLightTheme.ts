@@ -41,7 +41,7 @@ export const apLightTheme = {
 	background: baseTokens.color.cyan.lighten97,
 	backgroundVariant: baseTokens.color.white.base,
 	onBackground: baseTokens.color.grey.darken60,
-	onBackgroundVariant: baseTokens.color.grey.lighten40,
+	onBackgroundVariant: baseTokens.color.grey.base,
 
 	// Feedback
 	info: baseTokens.color.parma.darken40,

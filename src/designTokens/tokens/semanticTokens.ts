@@ -13,6 +13,8 @@ export const semanticTokens = {
 			onSecondary: baseTokens.color.white.base,
 			onSecondaryVariant: baseTokens.color.white.base,
 			onSurfaceVariant: baseTokens.color.grey.lighten90,
+			onBackground: baseTokens.color.grey.darken60,
+			onBackgroundVariant: baseTokens.color.grey.base,
 			overlay: baseTokens.color.grey.alpha40,
 			primary: baseTokens.color.blue.base,
 			primaryVariant: baseTokens.color.blue.darken40,
@@ -25,7 +27,6 @@ export const semanticTokens = {
 		background: {
 			background: baseTokens.color.blue.lighten90,
 			backgroundVariant: baseTokens.color.white.base,
-			onBackgroundVariant: baseTokens.color.grey.lighten40,
 		},
 		feedback: {
 			error: baseTokens.color.orange.darken20,
@@ -57,6 +58,8 @@ export const semanticTokens = {
 			onSecondary: baseTokens.color.white.base,
 			onSecondaryVariant: baseTokens.color.white.base,
 			onSurfaceVariant: baseTokens.color.grey.lighten90,
+			onBackground: baseTokens.color.grey.darken60,
+			onBackgroundVariant: baseTokens.color.grey.base,
 			overlay: baseTokens.color.grey.alpha40,
 			primary: baseTokens.color.cyan.darken20,
 			primaryVariant: baseTokens.color.cyan.darken40,
@@ -69,7 +72,6 @@ export const semanticTokens = {
 		background: {
 			background: baseTokens.color.cyan.lighten97,
 			backgroundVariant: baseTokens.color.white.base,
-			onBackgroundVariant: baseTokens.color.grey.lighten40,
 		},
 		feedback: {
 			error: baseTokens.color.red.darken20,

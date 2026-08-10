@@ -41,7 +41,7 @@ export const cnamLightTheme = {
 	background: baseTokens.color.blue.lighten90,
 	onBackground: baseTokens.color.grey.darken60,
 	backgroundVariant: baseTokens.color.white.base,
-	onBackgroundVariant: baseTokens.color.grey.lighten40,
+	onBackgroundVariant: baseTokens.color.grey.base,
 
 	// Feedback
 	info: baseTokens.color.blue.base,
