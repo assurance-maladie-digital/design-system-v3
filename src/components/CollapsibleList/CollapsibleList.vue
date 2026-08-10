@@ -181,7 +181,7 @@ a {
 		color: white !important;
 	}
 
-	// Ring du titre du panel en onPrimary sur fond sombre
+	// Ring du titre du panel en on-primary sur fond sombre
 	.v-expansion-panel-title:focus-visible {
 		outline-color: rgb(var(--v-theme-on-primary));
 	}

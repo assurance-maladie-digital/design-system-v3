@@ -117,7 +117,7 @@ li {
 
 .vd-social-media-links--dark {
 	.vd-social-media-links-label.text--primary {
-		color: rgb(var(--v-theme-onPrimary));
+		color: rgb(var(--v-theme-on-primary));
 	}
 
 	:deep(.v-btn--variant-text:hover) {
@@ -125,11 +125,11 @@ li {
 	}
 
 	:deep(.vd-social-media-links-icon) {
-		color: rgb(var(--v-theme-onPrimary)) !important;
+		color: rgb(var(--v-theme-on-primary)) !important;
 	}
 
 	:deep(.v-btn--icon:focus-visible) {
-		outline: 2px solid rgb(var(--v-theme-onPrimary));
+		outline: 2px solid rgb(var(--v-theme-on-primary));
 		outline-offset: -1px;
 	}
 }

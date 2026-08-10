@@ -193,7 +193,7 @@
 	}
 
 	// Ring DS. Le fond de l'alerte reste clair même en thème dark → ring en primary
-	// (pas onPrimary) pour rester visible. Le `::after` natif du VBtn est masqué par
+	// (pas on-primary) pour rester visible. Le `::after` natif du VBtn est masqué par
 	// l'override global `_btns.scss`. (Avant : `var(--v-theme-primary)` sur un triplet
 	// RGB était invalide → le ring retombait en noir.)
 	&:focus-visible {

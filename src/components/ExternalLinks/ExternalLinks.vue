@@ -183,7 +183,7 @@ $list-max-height: 248px;
 	border-radius: 0 !important;
 	box-shadow: none !important;
 
-	// Ring DS. Le bouton a un fond primary → ring en onPrimary (blanc), inset pour
+	// Ring DS. Le bouton a un fond primary → ring en on-primary (blanc), inset pour
 	// rester visible sur le navy et ne pas être rogné (onglet ancré au bord du
 	// viewport). L'ancien ring via `::after` était masqué par l'override global
 	// `_btns.scss` (`.v-btn:focus-visible::after { opacity: 0 !important }`) → outline.

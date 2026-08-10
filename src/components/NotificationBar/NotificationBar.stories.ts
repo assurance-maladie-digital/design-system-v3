@@ -649,13 +649,13 @@ export const WithClearQueue: Story = (args) => {
                 Ajouter info
               </VBtn>
               <VBtn
-                  color="onSuccessVariant"
+                  color="on-success-variant"
                   @click="envoyerNotification('Notification succès', 'success')"
               >
                 Ajouter succès
               </VBtn>
               <VBtn
-                  color="onWarningVariant"
+                  color="on-warning-variant"
                   @click="envoyerNotification('Notification avertissement', 'warning')"
               >
                 Ajouter avertissement
@@ -719,13 +719,13 @@ export const showAll: Story = (args) => {
 				Ajouter info
 			  </VBtn>
 			  <VBtn
-				  color="onSuccessVariant"
+				  color="on-success-variant"
 				  @click="envoyerNotification('Notification succès', 'success')"
 			  >
 				Ajouter succès
 			  </VBtn>
 			  <VBtn
-				  color="onWarningVariant"
+				  color="on-warning-variant"
 				  @click="envoyerNotification('Notification avertissement', 'warning')"
 			  >
 				Ajouter avertissement
@@ -769,14 +769,14 @@ showAll.parameters = {
 						Ajouter une notification info
 					</VBtn>
 					<VBtn
-						color="onSuccessVariant"
-						@click="envoyerNotification('Notification succès', 'onSuccessVariant')"
+						color="on-success-variant"
+						@click="envoyerNotification('Notification succès', 'on-success-variant')"
 					>
 						Ajouter une notification succès
 					</VBtn>
 					<VBtn
-						color="onWarningVariant"
-						@click="envoyerNotification('Notification avertissement', 'onWarningVariant')"
+						color="on-warning-variant"
+						@click="envoyerNotification('Notification avertissement', 'on-warning-variant')"
 					>
 						Ajouter une notification avertissement
 					</VBtn>

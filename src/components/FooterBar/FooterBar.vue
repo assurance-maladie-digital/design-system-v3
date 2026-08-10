@@ -376,7 +376,7 @@ a {
 		}
 	}
 
-	// Ring de focus des liens en onPrimary sur le footer sombre
+	// Ring de focus des liens en on-primary sur le footer sombre
 	.vd-footer-bar-links a:focus-visible {
 		outline-color: rgb(var(--v-theme-on-primary));
 	}

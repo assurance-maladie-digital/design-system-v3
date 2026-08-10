@@ -59,7 +59,7 @@ describe('NotificationBar - Visual regression tests', () => {
 		cy.matchImageSnapshot('notification-bar-multiple', cy.get('.v-application'))
 	})
 
-	// Bouton « Fermer » : ring DS contrasté sur le fond coloré de la barre (onPrimary sur info).
+	// Bouton « Fermer » : ring DS contrasté sur le fond coloré de la barre (on-primary sur info).
 	// Largeur/offset (3px) et masquage overlay/::after hérités du global ; seule la couleur est
 	// surchargée par type.
 	it('shows the DS ring on a focused close button', () => {

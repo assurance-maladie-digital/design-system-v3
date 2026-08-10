@@ -10,12 +10,12 @@ import '../styles/shared.css';
 
 Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (cnam, pa, amelipro)&nbsp;: seules sont listées celles dont la **valeur est préservée à l'identique** dans chaque thème (ancien `*Semantic.ts` → nouveau `*LightTheme.ts`). Les nouveaux tokens sont exposés comme couleurs de thème (`var(--v-theme-<token>)`, classes `text-<token>`, `bg-<token>`…).
 
-> **Success (`text` / `border` / `icon`)** — ces tokens correspondent à `onSuccessVariant`.
+> **Success (`text` / `border` / `icon`)** — ces tokens correspondent à `on-success-variant`.
 
-> **Premier plan feedback** — `onInfoVariant`, `onSuccessVariant`, `onWarningVariant`, `onErrorVariant` sont les couleurs de **texte / icône / bordure** à poser sur les fonds `infoVariant` / `successVariant` / `warningVariant` / `errorVariant`.
+> **Premier plan feedback** — `on-info-variant`, `on-success-variant`, `on-warning-variant`, `on-error-variant` sont les couleurs de **texte / icône / bordure** à poser sur les fonds `info-variant` / `success-variant` / `warning-variant` / `error-variant`.
 >
-> - `onSuccessVariant` et `onWarningVariant` reprennent la valeur des anciens `text/border.success` et `.warning`.
-> - `onInfoVariant` et `onErrorVariant` sont des nuances **plus foncées introduites par la refonte**, **sans équivalent ancien** (l'ancien texte info/error utilisait la couleur principale → voir `info` / `error`).
+> - `on-success-variant` et `on-warning-variant` reprennent la valeur des anciens `text/border.success` et `.warning`.
+> - `on-info-variant` et `on-error-variant` sont des nuances **plus foncées introduites par la refonte**, **sans équivalent ancien** (l'ancien texte info/error utilisait la couleur principale → voir `info` / `error`).
 
 ## Background
 
@@ -37,15 +37,15 @@ Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (
     </tr>
     <tr>
       <td><code>colors.background.mainAlt</code></td>
-      <td><code>backgroundVariant</code></td>
+      <td><code>background-variant</code></td>
     </tr>
     <tr>
       <td><code>colors.background.surfaceAlt</code></td>
-      <td><code>surfaceDim</code></td>
+      <td><code>surface-dim</code></td>
     </tr>
     <tr>
       <td><code>colors.background.raised</code></td>
-      <td><code>surfaceBright</code></td>
+      <td><code>surface-bright</code></td>
     </tr>
     <tr>
       <td><code>colors.background.accent</code></td>
@@ -53,7 +53,7 @@ Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (
     </tr>
     <tr>
       <td><code>colors.background.info</code></td>
-      <td><code>infoVariant</code></td>
+      <td><code>info-variant</code></td>
     </tr>
     <tr>
       <td><code>colors.background.infoContrasted</code></td>
@@ -65,7 +65,7 @@ Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (
     </tr>
     <tr>
       <td><code>colors.background.warning</code></td>
-      <td><code>warningVariant</code></td>
+      <td><code>warning-variant</code></td>
     </tr>
     <tr>
       <td><code>colors.background.warningContrasted</code></td>
@@ -94,7 +94,7 @@ Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (
   <tbody>
     <tr>
       <td><code>colors.border.base</code></td>
-      <td><code>borderVariant</code></td>
+      <td><code>border-variant</code></td>
     </tr>
     <tr>
       <td><code>colors.border.subdued</code></td>
@@ -106,7 +106,7 @@ Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (
     </tr>
     <tr>
       <td><code>colors.border.accentPrimaryContrasted</code></td>
-      <td><code>primaryVariant</code></td>
+      <td><code>primary-variant</code></td>
     </tr>
     <tr>
       <td><code>colors.border.accentPrimaryOnDark</code></td>
@@ -114,19 +114,19 @@ Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (
     </tr>
     <tr>
       <td><code>colors.border.info</code></td>
-      <td><code>info</code><br /><small>(ou <code>onInfoVariant</code> pour une bordure sur fond <code>infoVariant</code>)</small></td>
+      <td><code>info</code><br /><small>(ou <code>on-info-variant</code> pour une bordure sur fond <code>info-variant</code>)</small></td>
     </tr>
     <tr>
       <td><code>colors.border.success</code></td>
-      <td><code>onSuccessVariant</code></td>
+      <td><code>on-success-variant</code></td>
     </tr>
     <tr>
       <td><code>colors.border.warning</code></td>
-      <td><code>onWarningVariant</code></td>
+      <td><code>on-warning-variant</code></td>
     </tr>
     <tr>
       <td><code>colors.border.error</code></td>
-      <td><code>error</code><br /><small>(ou <code>onErrorVariant</code> pour une bordure sur fond <code>errorVariant</code>)</small></td>
+      <td><code>error</code><br /><small>(ou <code>on-error-variant</code> pour une bordure sur fond <code>error-variant</code>)</small></td>
     </tr>
     <tr>
       <td><code>colors.border.disabled</code></td>
@@ -155,35 +155,35 @@ Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (
     </tr>
     <tr>
       <td><code>colors.text.accentPrimaryContrasted</code></td>
-      <td><code>primaryVariant</code></td>
+      <td><code>primary-variant</code></td>
     </tr>
     <tr>
       <td><code>colors.text.subdued</code></td>
-      <td><code>onSurfaceVariant</code></td>
+      <td><code>on-surface-variant</code></td>
     </tr>
     <tr>
       <td><code>colors.text.info</code></td>
-      <td><code>info</code><br /><small>(ou <code>onInfoVariant</code> pour un texte sur fond <code>infoVariant</code>)</small></td>
+      <td><code>info</code><br /><small>(ou <code>on-info-variant</code> pour un texte sur fond <code>info-variant</code>)</small></td>
     </tr>
     <tr>
       <td><code>colors.text.success</code></td>
-      <td><code>onSuccessVariant</code></td>
+      <td><code>on-success-variant</code></td>
     </tr>
     <tr>
       <td><code>colors.text.warning</code></td>
-      <td><code>onWarningVariant</code></td>
+      <td><code>on-warning-variant</code></td>
     </tr>
     <tr>
       <td><code>colors.text.error</code></td>
-      <td><code>error</code><br /><small>(ou <code>onErrorVariant</code> pour un texte sur fond <code>errorVariant</code>)</small></td>
+      <td><code>error</code><br /><small>(ou <code>on-error-variant</code> pour un texte sur fond <code>error-variant</code>)</small></td>
     </tr>
     <tr>
       <td><code>colors.text.disabled</code></td>
-      <td><code>onDisabled</code></td>
+      <td><code>on-disabled</code></td>
     </tr>
     <tr>
       <td><code>colors.text.onDark</code></td>
-      <td><code>onPrimary</code></td>
+      <td><code>on-primary</code></td>
     </tr>
   </tbody>
 </table>
@@ -204,7 +204,7 @@ Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (
     </tr>
     <tr>
       <td><code>colors.icon.subdued</code></td>
-      <td><code>onSurfaceVariant</code></td>
+      <td><code>on-surface-variant</code></td>
     </tr>
     <tr>
       <td><code>colors.icon.accentPrimary</code></td>
@@ -212,27 +212,27 @@ Ces correspondances sont **vérifiées contre le code dans les trois thèmes** (
     </tr>
     <tr>
       <td><code>colors.icon.accentPrimaryContrasted</code></td>
-      <td><code>primaryVariant</code></td>
+      <td><code>primary-variant</code></td>
     </tr>
     <tr>
       <td><code>colors.icon.info</code></td>
-      <td><code>info</code><br /><small>(ou <code>onInfoVariant</code> pour une icône sur fond <code>infoVariant</code>)</small></td>
+      <td><code>info</code><br /><small>(ou <code>on-info-variant</code> pour une icône sur fond <code>info-variant</code>)</small></td>
     </tr>
     <tr>
       <td><code>colors.icon.success</code></td>
-      <td><code>onSuccessVariant</code></td>
+      <td><code>on-success-variant</code></td>
     </tr>
     <tr>
       <td><code>colors.icon.error</code></td>
-      <td><code>error</code><br /><small>(ou <code>onErrorVariant</code> pour une icône sur fond <code>errorVariant</code>)</small></td>
+      <td><code>error</code><br /><small>(ou <code>on-error-variant</code> pour une icône sur fond <code>error-variant</code>)</small></td>
     </tr>
     <tr>
       <td><code>colors.icon.onDark</code></td>
-      <td><code>onPrimary</code></td>
+      <td><code>on-primary</code></td>
     </tr>
     <tr>
       <td><code>colors.icon.disabled</code></td>
-      <td><code>onDisabled</code></td>
+      <td><code>on-disabled</code></td>
     </tr>
   </tbody>
 </table>

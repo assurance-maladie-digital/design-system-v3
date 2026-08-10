@@ -30,17 +30,17 @@
 	}
 
 	const BACKGROUND_COLORS: Record<NonEmptyChipState, string> = {
-		success: 'successVariant',
-		warning: 'warningVariant',
-		error: 'errorVariant',
-		info: 'infoVariant',
+		success: 'success-variant',
+		warning: 'warning-variant',
+		error: 'error-variant',
+		info: 'info-variant',
 	} as const
 
 	const ICON_COLORS: Record<NonEmptyChipState, string> = {
-		success: 'onSuccessVariant',
-		warning: 'onWarningVariant',
-		error: 'onErrorVariant',
-		info: 'onInfoVariant',
+		success: 'on-success-variant',
+		warning: 'on-warning-variant',
+		error: 'on-error-variant',
+		info: 'on-info-variant',
 	} as const
 
 	const props = withDefaults(defineProps<Props & CustomizableOptions>(), {

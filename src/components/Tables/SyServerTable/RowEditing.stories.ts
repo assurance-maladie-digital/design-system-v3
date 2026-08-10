@@ -137,7 +137,7 @@ export const Default: Story = {
 						<SyIconButton :icon="mdiDelete" label="Supprimer" density="comfortable" color="error" @click-icon-button="remove" />
 					</template>
 					<template v-else>
-						<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="onSuccessVariant" style="opacity: 0.6" @click-icon-button="save" />
+						<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="on-success-variant" style="opacity: 0.6" @click-icon-button="save" />
 						<SyIconButton :icon="mdiClose" label="Annuler" density="comfortable" @click-icon-button="cancel" />
 					</template>
 				</template>
@@ -168,7 +168,7 @@ export const Default: Story = {
 				<SyIconButton :icon="mdiDelete" label="Supprimer" density="comfortable" color="error" @click-icon-button="remove" />
 			</template>
 			<template v-else>
-				<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="onSuccessVariant" style="opacity: 0.6" @click-icon-button="save" />
+				<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="on-success-variant" style="opacity: 0.6" @click-icon-button="save" />
 				<SyIconButton :icon="mdiClose" label="Annuler" density="comfortable" @click-icon-button="cancel" />
 			</template>
 		</template>
@@ -273,7 +273,7 @@ export const CustomEditor: Story = {
 						<SyIconButton :icon="mdiPencil" label="Éditer" density="comfortable" @click-icon-button="edit" />
 					</template>
 					<template v-else>
-						<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="onSuccessVariant" style="opacity: 0.6" @click-icon-button="save" />
+						<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="on-success-variant" style="opacity: 0.6" @click-icon-button="save" />
 						<SyIconButton :icon="mdiClose" label="Annuler" density="comfortable" @click-icon-button="cancel" />
 					</template>
 				</template>
@@ -310,7 +310,7 @@ export const CustomEditor: Story = {
 				<SyIconButton :icon="mdiPencil" label="Éditer" density="comfortable" @click-icon-button="edit" />
 			</template>
 			<template v-else>
-				<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="onSuccessVariant" style="opacity: 0.6" @click-icon-button="save" />
+				<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="on-success-variant" style="opacity: 0.6" @click-icon-button="save" />
 				<SyIconButton :icon="mdiClose" label="Annuler" density="comfortable" @click-icon-button="cancel" />
 			</template>
 		</template>
@@ -430,7 +430,7 @@ export const NonPrimitiveEditor: Story = {
 						<SyIconButton :icon="mdiPencil" label="Éditer" density="comfortable" @click-icon-button="edit" />
 					</template>
 					<template v-else>
-						<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="onSuccessVariant" style="opacity: 0.6" @click-icon-button="save" />
+						<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="on-success-variant" style="opacity: 0.6" @click-icon-button="save" />
 						<SyIconButton :icon="mdiClose" label="Annuler" density="comfortable" @click-icon-button="cancel" />
 					</template>
 				</template>
@@ -457,7 +457,7 @@ export const NonPrimitiveEditor: Story = {
 				<SyIconButton :icon="mdiPencil" label="Éditer" density="comfortable" @click-icon-button="edit" />
 			</template>
 			<template v-else>
-				<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="onSuccessVariant" style="opacity: 0.6" @click-icon-button="save" />
+				<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="on-success-variant" style="opacity: 0.6" @click-icon-button="save" />
 				<SyIconButton :icon="mdiClose" label="Annuler" density="comfortable" @click-icon-button="cancel" />
 			</template>
 		</template>
