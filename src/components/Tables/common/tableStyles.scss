@@ -37,10 +37,6 @@ $sy-table-border: 1px solid rgb(var(--v-theme-disabled));
 		background-color: rgb(var(--v-theme-info-variant-lighten));
 	}
 
-	caption {
-		background-color: rgb(var(--v-theme-info-variant-lighten));
-	}
-
 	table thead tr.headers,
 	table thead tr.reset {
 		background-color: rgba(var(--v-theme-info-variant), 0.2);

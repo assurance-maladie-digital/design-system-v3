@@ -67,6 +67,6 @@ describe('design token utils', () => {
 					main: undefined,
 				},
 			},
-		} as unknown as Parameters<typeof generateThemeVariables>[0])).toThrowError('Missing semantic token "main" in category "background"')
+		} as unknown as Parameters<typeof generateThemeVariables>[0])).toThrow('Missing semantic token "main" in category "background"')
 	})
 })
