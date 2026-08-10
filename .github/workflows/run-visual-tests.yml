@@ -26,7 +26,10 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
       - name: Install Arial font
-        run: sudo apt-get update && sudo apt-get install -y ttf-mscorefonts-installer
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ttf-mscorefonts-installer
+          sudo fc-cache -f
       - name: Verify Arial font
         run: fc-match --format='%{family}\n' Arial | grep -Fx 'Arial'
       - name: Get pnpm store directory
