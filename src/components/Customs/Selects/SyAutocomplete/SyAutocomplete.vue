@@ -87,6 +87,14 @@
 
 	const isOpen = ref(false)
 	const search = ref('')
+	// Miroir inscriptible de `modelValue` : la validation (et le reset côté formulaire)
+	// peuvent y écrire. L'écriture émet `update:modelValue` vers le parent — c'est le
+	// contrat `v-model` — et le `watch(props.modelValue)` ci-dessous resynchronise
+	// `selected`. Ainsi le formulaire peut réinitialiser la valeur du champ.
+	const modelValue = computed({
+		get: () => props.modelValue,
+		set: value => emit('update:modelValue', value),
+	})
 	const selected = ref<SelectValue | SelectArray>(props.modelValue as SelectValue | SelectArray)
 	const suppressNextInput = ref(false)
 	const suppressMenuOpen = ref(false)
@@ -111,7 +119,7 @@
 		displayHasWarning,
 		displayHasSuccess,
 		validationIcon,
-	} = useSyAutocompleteValidation(props, locales)
+	} = useSyAutocompleteValidation(props, modelValue, locales)
 
 	const formattedItems = computed(() => props.items.map((item) => {
 		if (typeof item === 'string') {

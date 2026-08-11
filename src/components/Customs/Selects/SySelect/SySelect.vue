@@ -142,7 +142,12 @@
 	const selectedItem = ref<SelectItemValueType | SelectItemArrayType>(props.modelValue)
 	const menuMinWidth = ref<number | null>(null)
 
-	const { focused, validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess, validationIcon } = useSySelectValidation(props, locales)
+	const modelValue = computed({
+		get: () => props.modelValue,
+		set: value => emit('update:modelValue', value),
+	})
+
+	const { focused, validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess, validationIcon } = useSySelectValidation(props, modelValue, locales)
 
 	const labelWidth = ref(0)
 	const list = ref<VList | null>(null)
@@ -961,8 +966,8 @@
 				>
 					<VTextField
 						:id="inputId"
-						v-model="selectedItemText"
 						v-click-outside="closeList"
+						:model-value="selectedItemText"
 						:title="accessibleLabel"
 						:color="props.color"
 						:disabled="disabled"

@@ -1,4 +1,4 @@
-import { onMounted, onBeforeUnmount, getCurrentInstance, inject, provide, type InjectionKey } from 'vue'
+import { onMounted, onBeforeUnmount, getCurrentInstance, reactive, type Ref, toValue, watch, inject, provide, type InjectionKey } from 'vue'
 import { useValidatableComponent } from './useFormValidation'
 
 // Injection key set by every field that registers with a form. A field rendered
@@ -35,12 +35,14 @@ const FieldNestingKey: InjectionKey<boolean> = Symbol('FieldNesting')
  * }
  *
  * // Enregistrer le composant auprès du formulaire parent
- * useValidatable(validateOnSubmit, clearValidation, reset)
+ * useValidatable(validateOnSubmit, clearValidation, reset, hasError)
  */
 export function useValidatable(
 	validateMethod: () => Promise<boolean> | boolean,
 	clearValidation?: () => void,
 	reset?: () => void,
+	valide?: Ref<boolean | null>,
+	active: Ref<boolean | null> | boolean = true,
 ) {
 	const { register, unregister } = useValidatableComponent()
 	const instance = getCurrentInstance()
@@ -57,17 +59,18 @@ export function useValidatable(
 	}
 
 	// Keep a stable object reference for register/unregister symmetry
-	const componentRef = {
+	const componentRef = reactive({
 		validateOnSubmit: validateMethod,
 		clearValidation,
 		reset,
+		valide,
 		$props: {
 			label: typeof instance?.props?.label === 'string' ? instance.props.label : undefined,
 		},
-	}
+	})
 
 	onMounted(() => {
-		if (instance) {
+		if (instance && toValue(active)) {
 			register(componentRef)
 		}
 	})
@@ -75,6 +78,17 @@ export function useValidatable(
 	onBeforeUnmount(() => {
 		if (instance) {
 			unregister(componentRef)
+		}
+	})
+
+	watch(() => toValue(active), (newActive) => {
+		if (instance) {
+			if (newActive) {
+				register(componentRef)
+			}
+			else {
+				unregister(componentRef)
+			}
 		}
 	})
 

@@ -1,8 +1,9 @@
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { VList } from 'vuetify/components'
 import { nextTick } from 'vue'
 import SySelect from '../SySelect.vue'
+import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
 type ItemType = {
 	[key: string]: unknown
@@ -1869,5 +1870,170 @@ describe('SySelect.vue - Number items', () => {
 		})
 		expect(wrapper.find('input').element.value).toBe('0')
 		wrapper.unmount()
+	})
+})
+
+describe('SySelect.vue — reset via SyForm', () => {
+	// Le reset du formulaire (SyForm.reset()) déclenche deux choses :
+	//  - VForm.reset() de Vuetify, qui reset le <VTextField> interne ;
+	//  - resetAll() du registre custom, qui écrit `modelValue.value = undefined`
+	//    via useCustomValidation.
+	// Historiquement les deux produisaient un warning Vue « computed value is
+	// readonly » / « Set operation on key "modelValue" failed: target is
+	// readonly », parce que `selectedItemText` était lié en `v-model` (computed
+	// sans setter) et que le `modelValue` de validation était un miroir readonly
+	// de la prop. Le fix : `:model-value` one-way sur le VTextField interne, et
+	// un `modelValue` inscriptible (computed get/set qui émet update:modelValue).
+
+	const items = [{ text: 'Option 1', value: '1' }]
+
+	it('le reset du formulaire émet update:modelValue(undefined) — le champ est inscriptible côté form', async () => {
+		const wrapper = mount({
+			components: { SyForm, SySelect },
+			data: () => ({ value: '1' }),
+			template: `
+				<SyForm ref="form">
+					<SySelect ref="select" v-model="value" :items="items" text-key="text" label="x" />
+				</SyForm>
+			`,
+			setup() {
+				return { items }
+			},
+		}, { attachTo: document.body })
+
+		await flushPromises()
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(wrapper.vm.$refs.form as any).reset()
+		await flushPromises()
+
+		const select = wrapper.findComponent(SySelect)
+		const emitted = select.emitted('update:modelValue') ?? []
+		// Le reset doit pouvoir écrire la valeur du champ : on reçoit bien
+		// update:modelValue(undefined) (et pas un warning readonly silencieux).
+		expect(emitted.some((e: unknown[]) => e[0] === undefined)).toBe(true)
+
+		wrapper.unmount()
+	})
+
+	it('ne produit aucun warning « readonly » au reset du formulaire', async () => {
+		const warnings: string[] = []
+		const spy = vi.spyOn(console, 'warn').mockImplementation((...args) => {
+			warnings.push(args.map(String).join(' '))
+		})
+
+		const wrapper = mount({
+			components: { SyForm, SySelect },
+			data: () => ({ value: '1' }),
+			template: `
+				<SyForm ref="form">
+					<SySelect v-model="value" :items="items" text-key="text" label="x" />
+				</SyForm>
+			`,
+			setup() {
+				return { items }
+			},
+		}, { attachTo: document.body })
+
+		await flushPromises()
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(wrapper.vm.$refs.form as any).reset()
+		await flushPromises()
+
+		spy.mockRestore()
+		wrapper.unmount()
+
+		const readonlyWarnings = warnings.filter(message => /readonly/i.test(message))
+		expect(readonlyWarnings).toEqual([])
+	})
+
+	it('le reset natif du <form> (bouton type="reset") ne produit pas de warning « readonly »', async () => {
+		const warnings: string[] = []
+		const spy = vi.spyOn(console, 'warn').mockImplementation((...args) => {
+			warnings.push(args.map(String).join(' '))
+		})
+
+		const wrapper = mount({
+			components: { SyForm, SySelect },
+			data: () => ({ value: '1' }),
+			template: `
+				<SyForm>
+					<form>
+						<SySelect v-model="value" :items="items" text-key="text" label="x" />
+					</form>
+				</SyForm>
+			`,
+			setup() {
+				return { items }
+			},
+		}, { attachTo: document.body })
+
+		await flushPromises()
+		// Simule un clic sur <button type="reset"> : le navigateur déclenche
+		// l'événement `reset` du <form>.
+		wrapper.find('form').element.dispatchEvent(new Event('reset', { bubbles: true, cancelable: true }))
+		await flushPromises()
+
+		spy.mockRestore()
+		wrapper.unmount()
+
+		const readonlyWarnings = warnings.filter(message => /readonly/i.test(message))
+		expect(readonlyWarnings).toEqual([])
+	})
+})
+
+describe('SySelect.vue — utilisation sans model-value / v-model', () => {
+	// Le composant doit rester utilisable quand le parent ne pilote pas la valeur
+	// (pas de `v-model`, pas de prop `model-value`). Le `modelValue` de validation
+	// étant un computed get/set qui ne fait qu'émettre `update:modelValue`, aucun
+	// warning « readonly » ne doit survenir, et la sélection reste fonctionnelle.
+
+	it('fonctionne sans model-value : la sélection émet update:modelValue', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				items: [{ text: 'Option 1', value: '1' }],
+				textKey: 'text',
+				label: 'x',
+			},
+			attachTo: document.body,
+		})
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- accès à l'instance
+		const instance = wrapper.vm as any
+		instance.selectItem({ text: 'Option 1', value: '1' })
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['1'])
+
+		wrapper.unmount()
+	})
+
+	it('le reset via SyForm ne produit pas de warning « readonly » sans v-model', async () => {
+		const warnings: string[] = []
+		const spy = vi.spyOn(console, 'warn').mockImplementation((...args) => {
+			warnings.push(args.map(String).join(' '))
+		})
+
+		const wrapper = mount({
+			components: { SyForm, SySelect },
+			setup() {
+				return { items: [{ text: 'Option 1', value: '1' }] }
+			},
+			template: `
+				<SyForm ref="form">
+					<SySelect :items="items" text-key="text" label="x" />
+				</SyForm>
+			`,
+		}, { attachTo: document.body })
+
+		await flushPromises()
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- accès au ref du formulaire
+		;(wrapper.vm.$refs.form as any).reset()
+		await flushPromises()
+
+		spy.mockRestore()
+		wrapper.unmount()
+
+		const readonlyWarnings = warnings.filter(message => /readonly/i.test(message))
+		expect(readonlyWarnings).toEqual([])
 	})
 })
