@@ -64,6 +64,10 @@ export default defineConfig({
 		specPattern: 'src/**/*.cy.ts',
 		supportFile: 'cypress/support/component.ts',
 		indexHtmlFile: 'cypress/support/component-index.html',
+		retries: {
+			runMode: 2,
+			openMode: 0,
+		},
 		video: false,
 		allowCypressEnv: false,
 		setupNodeEvents(on) {
