@@ -566,7 +566,7 @@
 											class="ml-1"
 										/>
 									</span>
-									<v-menu
+									<VMenu
 										v-if="itemsSelectMenu && index === 1"
 										v-model="menuOpen"
 										location="bottom"
@@ -579,7 +579,7 @@
 										:theme="theme.global.name.value"
 										@update:model-value="onLeftMenuModel"
 									>
-										<v-list
+										<VList
 											id="left-dropdown-menu"
 											ref="leftMenuListRef"
 											role="menu"
@@ -589,7 +589,7 @@
 											:aria-activedescendant="activeDescendantId || undefined"
 											@keydown="handleMenuKeydown"
 										>
-											<v-list-item
+											<VListItem
 												v-for="(subItem, subIndex) in itemsSelectMenu"
 												:id="`menu-item-${subIndex}`"
 												:key="subIndex"
@@ -616,9 +616,9 @@
 														{{ subItem.text }}
 													</span>
 												</v-list-item-title>
-											</v-list-item>
-										</v-list>
-									</v-menu>
+											</VListItem>
+										</VList>
+									</VMenu>
 									<span
 										v-else
 										class="link"
@@ -637,7 +637,7 @@
 					v-if="smAndDown"
 					class="mobile-burger"
 				>
-					<v-menu
+					<VMenu
 						v-model="mobileMenuOpen"
 						location="bottom right"
 						origin="top right"
@@ -670,7 +670,7 @@
 								/>
 							</button>
 						</template>
-						<v-list
+						<VList
 							id="mobile-right-menu"
 							ref="mobileRightMenuRef"
 							role="menu"
@@ -679,7 +679,7 @@
 							:aria-label="props.ariaRightLabel"
 							@keydown="handleMobileMenuKeydown"
 						>
-							<v-list-item
+							<VListItem
 								v-for="(item, index) in props.rightMenu"
 								:id="`mobile-item-${index}`"
 								:key="index"
@@ -703,9 +703,9 @@
 									/>
 									{{ item.title }}
 								</v-list-item-title>
-							</v-list-item>
-						</v-list>
-					</v-menu>
+							</VListItem>
+						</VList>
+					</VMenu>
 				</div>
 				<slot
 					v-if="!smAndDown"
