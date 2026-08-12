@@ -7,6 +7,11 @@
 	padding: 0 var(--spacing-4) !important;
 }
 
+.v-btn.v-btn--size-x-small,
+.v-btn.v-btn--size-small {
+	min-height: 20px;
+}
+
 .v-btn.v-tab {
 	text-transform: uppercase !important;
 }
