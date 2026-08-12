@@ -1,13 +1,19 @@
 <script lang="ts" setup>
 
-	import { computed, nextTick, onMounted, onUpdated, readonly as readonlyState, ref } from 'vue'
-	import type { VRadioGroup } from 'vuetify/components'
-	import { VMessages } from 'vuetify/components'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
-	import { useSyRadioGroupValidation } from './composables/useSyRadioGroupValidation'
-	import { locales as defaultLocales } from './locales'
 	import { useLocales } from '@/composables/useLocales'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
+	import { computed, nextTick, onMounted, onUpdated, readonly as readonlyState, ref } from 'vue'
+	import { VMessages } from 'vuetify/components/VMessages'
+	import { VRadio } from 'vuetify/components/VRadio'
+	import { VRadioGroup } from 'vuetify/components/VRadioGroup'
+	import { useSyRadioGroupValidation } from './composables/useSyRadioGroupValidation'
+	import { locales as defaultLocales } from './locales'
+	import { useAttrs } from 'vue'
+
+	defineOptions({
+		inheritAttrs: false,
+	})
 
 	const props = withDefaults(
 		defineProps<{
@@ -45,6 +51,8 @@
 			isValidateOnBlur: false, // La validation se déclenche immédiatement à la sélection pour les radios
 		},
 	)
+
+	const attrs = useAttrs()
 
 	const locales = useLocales(defaultLocales, () => props.locales)
 
@@ -138,86 +146,89 @@
 </script>
 
 <template>
-	<v-radio-group
-		:id="props.id"
-		ref="radioGroupRef"
-		v-model="model"
-		:class="{
-			'warning-field': hasWarning && !hasError,
-			'success-field': hasSuccess && !hasError && !hasWarning,
-			'error-field': hasError,
-		}"
-		:label="generatedLabel"
-		:name="props.name"
-		:aria-label="props.ariaLabel"
-		:aria-labelledby="props.ariaLabelledby"
-		:title="props.title"
-		:color="props.color"
-		:disabled="props.disabled"
-		:readonly="props.readonly"
-		:hide-details="showHelpTextAsMessage ? false : props.hideDetails"
-		:density="props.density"
-		:error="hasError"
-		:error-messages="hasError ? errors : undefined"
-		:aria-describedby="messageId"
-	>
-		<template
-			v-if="$slots.label"
-			#label
+	<div class="sy-radio-group">
+		<VRadioGroup
+			v-bind="attrs"
+			:id="props.id"
+			ref="radioGroupRef"
+			v-model="model"
+			:class="{
+				'warning-field': hasWarning && !hasError,
+				'success-field': hasSuccess && !hasError && !hasWarning,
+				'error-field': hasError,
+			}"
+			:label="generatedLabel"
+			:name="props.name"
+			:aria-label="props.ariaLabel"
+			:aria-labelledby="props.ariaLabelledby"
+			:title="props.title"
+			:color="props.color"
+			:disabled="props.disabled"
+			:readonly="props.readonly"
+			:hide-details="showHelpTextAsMessage ? false : props.hideDetails"
+			:density="props.density"
+			:error="hasError"
+			:error-messages="hasError ? errors : undefined"
+			:aria-describedby="messageId"
 		>
-			<slot name="label" />
-		</template>
-
-		<template #default>
-			<slot>
-				<v-radio
-					v-for="opt in props.options"
-					:key="opt.value"
-					:value="opt.value"
-					role="radio"
-					:label="opt.label"
-					:aria-checked="getAriaChecked(opt.value)"
-					@focus="focused = true"
-					@blur="focused = false"
-				/>
-			</slot>
-
-			<span
-				v-if="messageId && props.required && !props.ariaLabel && !props.ariaLabelledby"
-				:id="messageId"
-				class="d-sr-only"
+			<template
+				v-if="$slots.label"
+				#label
 			>
-				{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '')
-				}}</span>.
-			</span>
-		</template>
+				<slot name="label" />
+			</template>
 
-		<template
-			v-if="(!hasError && (hasWarning || (hasSuccess && props.showSuccessMessages))) || showHelpTextAsMessage"
-			#details
-		>
-			<div class="v-input__details sy-radio-group__messages">
-				<VMessages
-					v-if="!hasError && (hasWarning || (hasSuccess && props.showSuccessMessages))"
-					:active="hasWarning || (hasSuccess && successes.length > 0)"
-					:messages="hasWarning ? warnings : successes"
-				/>
-				<div
-					v-if="showHelpTextAsMessage"
-					class="sy-radio-group__help-text"
-					:class="{ 'text-disabled': props.disabled }"
+			<template #default>
+				<slot>
+					<VRadio
+						v-for="opt in props.options"
+						:key="opt.value"
+						:value="opt.value"
+						role="radio"
+						:label="opt.label"
+						:aria-checked="getAriaChecked(opt.value)"
+						@focus="focused = true"
+						@blur="focused = false"
+					/>
+				</slot>
+
+				<span
+					v-if="messageId && props.required && !props.ariaLabel && !props.ariaLabelledby"
+					:id="messageId"
+					class="d-sr-only"
 				>
-					{{ props.helpText }}
+					{{ locales.labelledbyMessage }} <span v-if="props.label">{{ props.label + (props.displayAsterisk ? '*' : '')
+					}}</span>.
+				</span>
+			</template>
+
+			<template
+				v-if="(!hasError && (hasWarning || (hasSuccess && props.showSuccessMessages))) || showHelpTextAsMessage"
+				#details
+			>
+				<div class="v-input__details sy-radio-group__messages">
+					<VMessages
+						v-if="!hasError && (hasWarning || (hasSuccess && props.showSuccessMessages))"
+						:active="hasWarning || (hasSuccess && successes.length > 0)"
+						:messages="hasWarning ? warnings : successes"
+					/>
+					<div
+						v-if="showHelpTextAsMessage"
+						class="sy-radio-group__help-text"
+						:class="{ 'text-disabled': props.disabled }"
+					>
+						{{ props.helpText }}
+					</div>
 				</div>
-			</div>
-		</template>
-	</v-radio-group>
-	<div
-		v-if="showHelpTextBelow"
-		class="help-text-below px-1 mt-1"
-		:class="{ 'text-disabled': props.disabled }"
-	>
-		{{ props.helpText }}
+			</template>
+		</VRadioGroup>
+		<div
+			v-if="showHelpTextBelow"
+			class="help-text-below px-1 mt-1"
+			:class="{ 'text-disabled': props.disabled }"
+		>
+			{{ props.helpText }}
+		</div>
 	</div>
 </template>
 
