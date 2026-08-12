@@ -21,13 +21,7 @@
 		},
 		// Propriétés customisables des champs de saisie
 		inputConfig: {
-			type: Object as () => {
-				disableErrorHandling?: boolean
-				variant?: string
-				hideDetails?: boolean
-				density?: 'default' | 'comfortable' | 'compact'
-				clearable?: boolean
-			},
+			type: Object as () => Record<string, unknown>,
 			default: () => ({}),
 		},
 		// Propriétés de configuration des champs de saisie

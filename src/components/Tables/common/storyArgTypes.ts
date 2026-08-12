@@ -105,6 +105,15 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 		description: 'Texte de la légende du tableau',
 		control: { type: 'text' },
 	},
+	'filterInputConfig': {
+		description: 'Configuration des champs de filtre, indexée par la clé (`key`) de chaque colonne. Chaque entrée accepte les options de `SyTextField`, notamment `maxlength`, `variant`, `density`, `hideDetails`, `backgroundColor`, `clearable`, `disableErrorHandling` et `debounceTime`.',
+		control: { type: 'object' },
+		table: {
+			category: 'props',
+			type: { summary: 'Record<string, TableFilterInputConfig>', detail: '{ [columnKey: string]: { maxlength?: number, variant?: string, density?: \'default\' | \'comfortable\' | \'compact\', hideDetails?: boolean, backgroundColor?: string, clearable?: boolean, disableErrorHandling?: boolean, debounceTime?: number } }' },
+			defaultValue: { summary: 'undefined' },
+		},
+	},
 	'enableColumnControls': {
 		description: 'Allow the users to re-organize the columns',
 		table: {

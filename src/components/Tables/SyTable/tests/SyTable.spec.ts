@@ -4,6 +4,7 @@ import { LocalStorageUtility } from '@/utils/localStorageUtility'
 import type { DataOptions, FilterOption } from '@/components/Tables/common/types'
 
 import SyTable from '../SyTable.vue'
+import SyTableFilter from '../../common/SyTableFilter.vue'
 import { VCard } from 'vuetify/components'
 
 vi.mock('@/utils/localStorageUtility')
@@ -275,6 +276,56 @@ describe('SyTable', () => {
 		await vi.dynamicImportSettled()
 		const filterComponents = wrapper.findAllComponents({ name: 'SyTableFilter' })
 		expect(filterComponents.length).toBeGreaterThan(0)
+	})
+
+	it('passes each column filterInputConfig to its filter', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: {} as DataOptions,
+				showFilters: true,
+				suffix: 'filter-config',
+				headers: [
+					{ title: 'Name', key: 'name', filterable: true, filterType: 'text' },
+					{ title: 'Age', key: 'age', filterable: true, filterType: 'number' },
+				],
+				items: fakeItems,
+				filterInputConfig: {
+					name: { maxlength: 8 },
+					age: { maxlength: 6 },
+				},
+			},
+		})
+
+		await vi.dynamicImportSettled()
+		const filters = wrapper.findAllComponents(SyTableFilter)
+
+		expect(filters.find(filter => filter.props('header').key === 'name')?.props('inputConfig')).toEqual({ maxlength: 8 })
+		expect(filters.find(filter => filter.props('header').key === 'age')?.props('inputConfig')).toEqual({ maxlength: 6 })
+	})
+
+	it('uses value-based identifier when key is missing for filterInputConfig', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: {} as DataOptions,
+				showFilters: true,
+				suffix: 'filter-config-value-fallback',
+				headers: [
+					{ title: 'Name', value: 'name', filterable: true, filterType: 'text' },
+					{ title: 'Age', value: 'age', filterable: true, filterType: 'number' },
+				],
+				items: fakeItems,
+				filterInputConfig: {
+					name: { maxlength: 8 },
+					age: { maxlength: 6 },
+				},
+			},
+		})
+
+		await vi.dynamicImportSettled()
+		const filters = wrapper.findAllComponents(SyTableFilter)
+
+		expect(filters.find(filter => String(filter.props('header').value ?? '') === 'name')?.props('inputConfig')).toEqual({ maxlength: 8 })
+		expect(filters.find(filter => String(filter.props('header').value ?? '') === 'age')?.props('inputConfig')).toEqual({ maxlength: 6 })
 	})
 
 	it('should apply filters correctly', async () => {

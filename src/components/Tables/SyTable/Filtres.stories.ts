@@ -1649,11 +1649,27 @@ export const CustomFilterInputs: Story = {
 					])
 					
 					const filterInputConfig = ref({
-						variant: 'outlined',
-						density: 'comfortable',
-						hideDetails: true,
-						clearable: false,
-						disableErrorHandling: true,
+						firstname: {
+							variant: 'outlined',
+							density: 'comfortable',
+							hideDetails: true,
+							clearable: false,
+							disableErrorHandling: true,
+						},
+						lastname: {
+							variant: 'outlined',
+							density: 'comfortable',
+							hideDetails: true,
+							clearable: false,
+							disableErrorHandling: true,
+						},
+						email: {
+							variant: 'outlined',
+							density: 'comfortable',
+							hideDetails: true,
+							clearable: false,
+							disableErrorHandling: true,
+						},
 					})
 				</script>
 				`,
@@ -1719,11 +1735,27 @@ export const CustomFilterInputs: Story = {
 			filters: [],
 		},
 		'filterInputConfig': {
-			variant: 'outlined',
-			density: 'comfortable',
-			hideDetails: true,
-			clearable: false,
-			disableErrorHandling: true,
+			firstname: {
+				variant: 'outlined',
+				density: 'comfortable',
+				hideDetails: true,
+				clearable: false,
+				disableErrorHandling: true,
+			},
+			lastname: {
+				variant: 'outlined',
+				density: 'comfortable',
+				hideDetails: true,
+				clearable: false,
+				disableErrorHandling: true,
+			},
+			email: {
+				variant: 'outlined',
+				density: 'comfortable',
+				hideDetails: true,
+				clearable: false,
+				disableErrorHandling: true,
+			},
 		},
 		'showFilters': true,
 		'suffix': 'filter-text-table',

@@ -485,6 +485,62 @@ describe('SyServerTable', () => {
 		activeWrappers.push(wrapper)
 	})
 
+	it('passes each column filterInputConfig to its filter', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				showFilters: true,
+				serverItemsLength: fakeItems.length,
+				suffix: 'filter-config',
+				headers: [
+					{ title: 'Name', key: 'name', filterable: true, filterType: 'text' },
+					{ title: 'Age', key: 'age', filterable: true, filterType: 'number' },
+				],
+				items: fakeItems,
+				filterInputConfig: {
+					name: { maxlength: 8 },
+					age: { maxlength: 6 },
+				},
+			},
+		})
+
+		await vi.dynamicImportSettled()
+		const filters = wrapper.findAllComponents(SyTableFilter)
+
+		expect(filters.find(filter => filter.props('header').key === 'name')?.props('inputConfig')).toEqual({ maxlength: 8 })
+		expect(filters.find(filter => filter.props('header').key === 'age')?.props('inputConfig')).toEqual({ maxlength: 6 })
+
+		activeWrappers.push(wrapper)
+	})
+
+	it('uses value-based identifier when key is missing for filterInputConfig', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				showFilters: true,
+				serverItemsLength: fakeItems.length,
+				suffix: 'filter-config-value-fallback',
+				headers: [
+					{ title: 'Name', value: 'name', filterable: true, filterType: 'text' },
+					{ title: 'Age', value: 'age', filterable: true, filterType: 'number' },
+				],
+				items: fakeItems,
+				filterInputConfig: {
+					name: { maxlength: 8 },
+					age: { maxlength: 6 },
+				},
+			},
+		})
+
+		await vi.dynamicImportSettled()
+		const filters = wrapper.findAllComponents(SyTableFilter)
+
+		expect(filters.find(filter => String(filter.props('header').value ?? '') === 'name')?.props('inputConfig')).toEqual({ maxlength: 8 })
+		expect(filters.find(filter => String(filter.props('header').value ?? '') === 'age')?.props('inputConfig')).toEqual({ maxlength: 6 })
+
+		activeWrappers.push(wrapper)
+	})
+
 	it('updates filters when SyTableFilter emits update:filters', async () => {
 		const wrapper = mount(SyServerTable, {
 			props: {

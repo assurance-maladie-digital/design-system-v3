@@ -15,6 +15,10 @@ type FilterValue =
 	| undefined
 export type TableDensityType = 'default' | 'comfortable' | 'compact'
 
+export type TableFilterInputConfig = Record<string, unknown> & {
+	debounceTime?: number
+}
+
 export interface FilterOption {
 	key: string
 	value: FilterValue
@@ -51,6 +55,7 @@ export type DataTableHeaders = {
 	key?: string
 	filterable?: boolean
 	filterType?: FilterType
+	filterConfig?: TableFilterInputConfig
 	filterOptions?: Array<{ text: string, value: unknown }>
 	multiple?: boolean
 	chips?: boolean
@@ -75,6 +80,7 @@ export type TableColumnHeader = {
 	key?: string | null
 	filterable?: boolean
 	filterType?: FilterType
+	filterConfig?: TableFilterInputConfig
 	filterOptions?: Array<{ text: string, value: unknown }>
 	multiple?: boolean
 	chips?: boolean
@@ -99,7 +105,7 @@ export type SyTableProps = {
 	saveState?: boolean
 	caption?: string
 	showFilters?: boolean
-	filterInputConfig?: Record<string, unknown>
+	filterInputConfig?: Record<string, TableFilterInputConfig>
 	density?: TableDensityType
 	striped?: boolean
 	resizableColumns?: boolean
@@ -133,7 +139,7 @@ export type SyServerTableProps = {
 	caption?: string
 	showFilters?: boolean
 	resizableColumns?: boolean
-	filterInputConfig?: Record<string, unknown>
+	filterInputConfig?: Record<string, TableFilterInputConfig>
 	density?: TableDensityType
 	striped?: boolean
 	enableColumnControls?: boolean

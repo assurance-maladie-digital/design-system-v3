@@ -1,5 +1,5 @@
 import { computed, ref, watch, type Ref } from 'vue'
-import type { DataTableHeaders, TableColumnHeader } from './types'
+import type { DataTableHeaders, TableColumnHeader, TableFilterInputConfig } from './types'
 import { sortHeaders } from './organizeColumns/sortHeaders'
 
 /**
@@ -16,7 +16,7 @@ export function useTableHeaders({
 }: {
 	headersProp: Readonly<Ref<DataTableHeaders[] | undefined>>
 	storedHeaders?: DataTableHeaders[]
-	filterInputConfig?: Record<string, unknown>
+	filterInputConfig?: Record<string, TableFilterInputConfig>
 }) {
 	function normalizeHeader(header: DataTableHeaders): DataTableHeaders {
 		const mapped = {
@@ -108,13 +108,20 @@ export function useTableHeaders({
 		const filterType = column.filterType || 'text'
 
 		// Get column-specific filter config or empty object
-		const columnFilterConfig = column.key && filterInputConfig[column.key as string] ? filterInputConfig[column.key as string] : {}
+		const columnIdentifier = typeof column.key === 'string' && column.key
+			? column.key
+			: typeof column.value === 'string' && column.value
+				? column.value
+				: undefined
+		const columnFilterConfig = columnIdentifier && filterInputConfig[columnIdentifier as string]
+			? filterInputConfig[columnIdentifier as string]
+			: {}
 
 		// Return enhanced header with filter properties
 		return {
 			...(column as object),
 			filterType,
-			filterConfig: columnFilterConfig as Record<string, unknown>,
+			filterConfig: columnFilterConfig as TableFilterInputConfig,
 		} as TableColumnHeader
 	}
 

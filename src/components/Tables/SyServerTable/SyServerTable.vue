@@ -9,7 +9,7 @@
 	import { locales } from '../common/locales'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
 	import { useTableProps } from '../common/tableProps'
-	import type { DataOptions, Item, Items, SyServerTableProps } from '../common/types'
+	import type { DataOptions, Item, Items, SyServerTableProps, TableColumnHeader, TableFilterInputConfig } from '../common/types'
 	import { useTableFilter } from '../common/useTableFilter'
 	import { usePagination } from '../common/usePagination'
 	import { useTableOptions } from '../common/useTableOptions'
@@ -118,6 +118,10 @@
 		storedHeaders: storedOptions.headers,
 		filterInputConfig: props.filterInputConfig,
 	})
+
+	function getFilterInputConfig(column: TableColumnHeader): TableFilterInputConfig | undefined {
+		return getEnhancedHeader(column).filterConfig
+	}
 
 	// Keep last non-undefined items to avoid clearing the table during refetches
 	const lastNonUndefinedItems = ref<Items>([])
@@ -492,7 +496,7 @@
 									:filterable="true"
 									:filters="filters"
 									:header="getEnhancedHeader(column)"
-									:input-config="props.filterInputConfig"
+									:input-config="getFilterInputConfig(column)"
 									@update:filters="filters = $event"
 								>
 									<template #custom-filter="filterSlotProps">
@@ -547,8 +551,8 @@
 							<SyTableFilter
 								v-if="header.filterable"
 								:filters="filters"
-								:header="header"
-								:input-config="props.filterInputConfig"
+								:header="getEnhancedHeader(header)"
+								:input-config="getFilterInputConfig(header)"
 								@update:filters="filters = $event"
 							>
 								<template #custom-filter="customFilterSlotProps">
