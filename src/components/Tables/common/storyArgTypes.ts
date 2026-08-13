@@ -258,6 +258,13 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 			type: { summary: '(item: Record<string, unknown>) => void' },
 		},
 	},
+	'onUpdate:modelValue': {
+		description: 'Émis lorsque la sélection change (`showSelect` ou `showSelectSingle`). Reçoit la liste des lignes sélectionnées.',
+		table: {
+			category: 'events',
+			type: { summary: '(selection: Record<string, unknown>[]) => void' },
+		},
+	},
 	'onEdit': {
 		description: 'Émis à l\'entrée en édition inline d\'une ligne.',
 		table: {

@@ -192,6 +192,12 @@ export const Default: Story = {
 		'density': 'default',
 		'striped': false,
 		'onUpdate:options': fn(),
+		'onUpdate:modelValue': fn(),
+		'onRow-click': fn(),
+		'onEdit': fn(),
+		'onSave': fn(),
+		'onCancel': fn(),
+		'onDelete': fn(),
 	},
 	render: (args) => {
 		return {
@@ -445,6 +451,12 @@ export const ManyServerTables: Story = {
 		'density': 'default',
 		'striped': false,
 		'onUpdate:options': fn(),
+		'onUpdate:modelValue': fn(),
+		'onRow-click': fn(),
+		'onEdit': fn(),
+		'onSave': fn(),
+		'onCancel': fn(),
+		'onDelete': fn(),
 	},
 	render: (args) => {
 		return {

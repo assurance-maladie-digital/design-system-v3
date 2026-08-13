@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { mdiCheck, mdiClose, mdiDelete, mdiPencil } from '@mdi/js'
+import { fn } from 'storybook/test'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
 import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
@@ -98,11 +99,18 @@ const baseItems = [
  */
 export const Default: Story = {
 	args: {
-		suffix: 'server-row-editing',
-		serverItemsLength: baseItems.length,
-		editable: true,
-		selectionKey: 'id',
-		hideDefaultFooter: true,
+		'suffix': 'server-row-editing',
+		'serverItemsLength': baseItems.length,
+		'editable': true,
+		'selectionKey': 'id',
+		'hideDefaultFooter': true,
+		'onUpdate:options': fn(),
+		'onUpdate:modelValue': fn(),
+		'onRow-click': fn(),
+		'onEdit': fn(),
+		'onSave': fn(),
+		'onCancel': fn(),
+		'onDelete': fn(),
 	},
 	render: args => ({
 		components: { SyServerTable, SyIconButton },
@@ -233,11 +241,18 @@ export const Default: Story = {
  */
 export const CustomEditor: Story = {
 	args: {
-		suffix: 'server-row-editing-custom',
-		serverItemsLength: baseItems.length,
-		editable: true,
-		selectionKey: 'id',
-		hideDefaultFooter: true,
+		'suffix': 'server-row-editing-custom',
+		'serverItemsLength': baseItems.length,
+		'editable': true,
+		'selectionKey': 'id',
+		'hideDefaultFooter': true,
+		'onUpdate:options': fn(),
+		'onUpdate:modelValue': fn(),
+		'onRow-click': fn(),
+		'onEdit': fn(),
+		'onSave': fn(),
+		'onCancel': fn(),
+		'onDelete': fn(),
 	},
 	render: args => ({
 		components: { SyServerTable, SyIconButton },
@@ -376,11 +391,18 @@ export const CustomEditor: Story = {
  */
 export const NonPrimitiveEditor: Story = {
 	args: {
-		suffix: 'server-row-editing-nonprimitive',
-		serverItemsLength: 2,
-		editable: true,
-		selectionKey: 'id',
-		hideDefaultFooter: true,
+		'suffix': 'server-row-editing-nonprimitive',
+		'serverItemsLength': 2,
+		'editable': true,
+		'selectionKey': 'id',
+		'hideDefaultFooter': true,
+		'onUpdate:options': fn(),
+		'onUpdate:modelValue': fn(),
+		'onRow-click': fn(),
+		'onEdit': fn(),
+		'onSave': fn(),
+		'onCancel': fn(),
+		'onDelete': fn(),
 	},
 	render: args => ({
 		components: { SyServerTable, SyIconButton, DatePicker },

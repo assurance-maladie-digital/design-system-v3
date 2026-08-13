@@ -151,6 +151,11 @@ export const ClickableRow: Story = {
 		'striped': false,
 		'onUpdate:options': fn(),
 		'onRow-click': fn(),
+		'onUpdate:modelValue': fn(),
+		'onEdit': fn(),
+		'onSave': fn(),
+		'onCancel': fn(),
+		'onDelete': fn(),
 	},
 	render: args => ({
 		components: {
@@ -355,6 +360,12 @@ export const ExpandableRows: Story = {
 		'density': 'default',
 		'striped': false,
 		'onUpdate:options': fn(),
+		'onUpdate:modelValue': fn(),
+		'onRow-click': fn(),
+		'onEdit': fn(),
+		'onSave': fn(),
+		'onCancel': fn(),
+		'onDelete': fn(),
 	},
 	render: args => ({
 		components: { SyServerTable },
