@@ -607,6 +607,59 @@ describe('SyTable', () => {
 		expect(dataTable.props('modelValue')).toEqual([2])
 	})
 
+	it('keeps only one radio checked in single-select mode', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				items: fakeItems,
+				showSelectSingle: true,
+				modelValue: [fakeItems[0]!.id],
+				suffix: 'radio-sync',
+			},
+		})
+
+		let radios = wrapper.findAll('input[type="radio"]')
+		expect(radios).toHaveLength(3)
+		expect((radios[0]!.element as HTMLInputElement).checked).toBe(true)
+		expect((radios[1]!.element as HTMLInputElement).checked).toBe(false)
+		expect((radios[2]!.element as HTMLInputElement).checked).toBe(false)
+
+		await wrapper.setProps({ modelValue: [fakeItems[1]!.id] })
+		await wrapper.vm.$nextTick()
+
+		radios = wrapper.findAll('input[type="radio"]')
+		expect((radios[0]!.element as HTMLInputElement).checked).toBe(false)
+		expect((radios[1]!.element as HTMLInputElement).checked).toBe(true)
+		expect((radios[2]!.element as HTMLInputElement).checked).toBe(false)
+	})
+
+	it('clicking a radio updates the selection model and deselects the previous row', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				'items': fakeItems,
+				'showSelectSingle': true,
+				'modelValue': [],
+				'suffix': 'radio-click',
+				'onUpdate:modelValue': (value: unknown) => wrapper.setProps({ modelValue: value as unknown[] | undefined }),
+			},
+		})
+
+		const radios = wrapper.findAll('input[type="radio"]')
+		await radios[0]!.trigger('click')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([[fakeItems[0]!.id]])
+
+		await radios[1]!.trigger('click')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([[fakeItems[1]!.id]])
+		expect((radios[0]!.element as HTMLInputElement).checked).toBe(false)
+		expect((radios[1]!.element as HTMLInputElement).checked).toBe(true)
+
+		// Re-clicking the already selected radio must not deselect it
+		await radios[1]!.trigger('click')
+		expect(wrapper.emitted('update:modelValue')).toHaveLength(2)
+		expect((radios[1]!.element as HTMLInputElement).checked).toBe(true)
+	})
+
 	it('should hide a column when hideColumn is called', async () => {
 		// Create a mock for OrganizeColumns component
 		const mockOrganizeColumns = {
