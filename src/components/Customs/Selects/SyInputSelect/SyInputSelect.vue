@@ -236,7 +236,7 @@
 </script>
 
 <template>
-	<v-input
+	<VInput
 		:id="inputId"
 		v-model="selectedItem"
 		:error-messages="localErrorMessages"
@@ -309,7 +309,7 @@
 				</VListItemTitle>
 			</VListItem>
 		</VList>
-	</v-input>
+	</VInput>
 </template>
 
 <style lang="scss" scoped>

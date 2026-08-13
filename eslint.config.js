@@ -46,7 +46,7 @@ export default ts.config(
 				},
 			],
 			'vue/multi-word-component-names': 0,
-			'vue/component-name-in-template-casing': ['error', 'PascalCase'],
+			'vue/component-name-in-template-casing': ['error', 'PascalCase', { registeredComponentsOnly: false }],
 			'vue/script-indent': ['error', 'tab', { baseIndent: 1 }],
 			'vue/html-indent': ['error', 'tab'],
 			'vue/html-comment-indent': ['error', 'tab'],

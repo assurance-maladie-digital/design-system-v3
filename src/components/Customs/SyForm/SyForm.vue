@@ -102,7 +102,7 @@
 </script>
 
 <template>
-	<v-form
+	<VForm
 		ref="form"
 		@submit.prevent="handleSubmit"
 		@reset="handleReset"
@@ -113,5 +113,5 @@
 			:reset="reset"
 			:clear="clearValidation"
 		/>
-	</v-form>
+	</VForm>
 </template>

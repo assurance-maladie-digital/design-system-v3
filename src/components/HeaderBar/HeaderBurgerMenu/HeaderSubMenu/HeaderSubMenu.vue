@@ -72,7 +72,7 @@
 				:decorative="true"
 			/>
 		</button>
-		<transition name="slide-fade">
+		<Transition name="slide-fade">
 			<div
 				v-show="menuOpen"
 				:id="submenuId"
@@ -88,7 +88,7 @@
 					<slot />
 				</component>
 			</div>
-		</transition>
+		</Transition>
 	</component>
 </template>
 

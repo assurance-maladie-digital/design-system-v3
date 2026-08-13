@@ -196,31 +196,31 @@
 		</div>
 
 		<div class="actions mb-4">
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				class="mr-2"
 				@click="resetDates"
 			>
 				Réinitialiser
-			</v-btn>
+			</VBtn>
 
-			<v-btn
+			<VBtn
 				size="small"
 				color="onSuccessVariant"
 				class="mr-2"
 				@click="setTestDates"
 			>
 				Dates valides
-			</v-btn>
+			</VBtn>
 
-			<v-btn
+			<VBtn
 				size="small"
 				color="error"
 				@click="setInvalidDates"
 			>
 				Dates invalides
-			</v-btn>
+			</VBtn>
 		</div>
 
 		<div class="current-values mt-4">

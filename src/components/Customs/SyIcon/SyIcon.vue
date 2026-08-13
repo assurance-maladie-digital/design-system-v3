@@ -81,7 +81,7 @@
 </script>
 
 <template>
-	<v-icon
+	<VIcon
 		ref="svg"
 		v-rgaa-svg-fix="rgaaSvgFixConfig"
 		:color="props.color"
@@ -91,7 +91,7 @@
 		:aria-hidden="resolvedDecorative ? true : undefined"
 	>
 		{{ icon }}
-	</v-icon>
+	</VIcon>
 </template>
 
 <style lang="scss" scoped>
