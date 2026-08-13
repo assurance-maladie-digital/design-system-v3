@@ -661,7 +661,7 @@ export const Default: Story = {
 	}),
 }
 
-export const notLogged: Story = {
+export const NotLogged: Story = {
 	args: {
 		'noSubPart': true,
 		'uniqueId': 'amelipro-header-not-logged-id',
@@ -703,7 +703,7 @@ export const notLogged: Story = {
 	}),
 }
 
-export const other: Story = {
+export const Other: Story = {
 	args: {
 		'headerTitle': 'Titre du site',
 		'noSubPart': true,

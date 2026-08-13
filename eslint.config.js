@@ -1,5 +1,6 @@
 import js from '@eslint/js'
 import eslintPluginVue from 'eslint-plugin-vue'
+import eslintpluginStorybook from 'eslint-plugin-storybook'
 import ts from 'typescript-eslint'
 import stylistic from '@stylistic/eslint-plugin'
 import pluginVueA11y from 'eslint-plugin-vuejs-accessibility'
@@ -22,6 +23,7 @@ export default ts.config(
 	...ts.configs.recommended,
 	...eslintPluginVue.configs['flat/recommended'],
 	...pluginVueA11y.configs['flat/recommended'],
+	eslintpluginStorybook.configs['flat/recommended'],
 	stylistic.configs.customize({
 		indent: 'tab',
 		quotes: 'single',

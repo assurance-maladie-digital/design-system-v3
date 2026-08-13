@@ -71,7 +71,7 @@ export const Default: Story = {
 	}),
 }
 
-export const small: Story = {
+export const Small: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -112,7 +112,7 @@ export const small: Story = {
 	}),
 }
 
-export const xSmall: Story = {
+export const XSmall: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -153,7 +153,7 @@ export const xSmall: Story = {
 	}),
 }
 
-export const hideSignature: Story = {
+export const HideSignature: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -194,7 +194,7 @@ export const hideSignature: Story = {
 	}),
 }
 
-export const hideOrganism: Story = {
+export const HideOrganism: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -235,7 +235,7 @@ export const hideOrganism: Story = {
 	}),
 }
 
-export const risquePro: Story = {
+export const RisquePro: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -276,7 +276,7 @@ export const risquePro: Story = {
 	}),
 }
 
-export const avatar: Story = {
+export const Avatar: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -317,7 +317,7 @@ export const avatar: Story = {
 	}),
 }
 
-export const dark: Story = {
+export const Dark: Story = {
 	parameters: {
 		sourceCode: [
 			{
