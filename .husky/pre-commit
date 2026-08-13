@@ -1,10 +1,26 @@
-pnpm run lint:fix
+# Lint uniquement les fichiers déjà indexés dans le commit.
+# Les modifications non stage ne doivent pas faire échouer le hook.
+files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(js|jsx|ts|tsx|vue)$' | tr '\n' ' ')
 
-# Lint uniquement les fichiers modifiés dans le commit
-#files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(js|jsx|ts|tsx|vue)$' | tr '\n' ' ')
-#if [ -n "$files" ]; then
-#    pnpm exec eslint --fix $files
-#fi
+if [ -n "$files" ]; then
+    pnpm exec eslint --fix $files
+
+    if ! git diff --quiet -- $files; then
+        echo "🚫 Commit bloqué : ESLint a appliqué des corrections automatiques sur des fichiers du commit."
+        echo "Vérifiez les modifications, ajoutez-les au stage puis recommencez le commit."
+        exit 1
+    fi
+fi
+
+# Blocage explicite pour le fichier de playground local : seulement les changements déjà indexés
+# déclenchent le blocage. Les modifications non stage restent autorisées.
+if git diff --cached --quiet -- dev/Playground.vue; then
+    :
+else
+    echo "🚫 Commit bloqué : dev/Playground.vue ne doit pas être inclus dans le commit."
+    echo "Les modifications non stage sur ce fichier restent autorisées, mais pas les changements indexés."
+    exit 1
+fi
 
 local_branch_name="$(git rev-parse --abbrev-ref HEAD)"
 
