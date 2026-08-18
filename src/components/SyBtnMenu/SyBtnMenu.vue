@@ -63,6 +63,10 @@
 			type: Boolean,
 			default: false,
 		},
+		showIdentityInList: {
+			type: Boolean,
+			default: false,
+		},
 		options: {
 			type: Object,
 			default: () => ({ menu: {}, btn: {}, list: {} }),
@@ -106,8 +110,27 @@
 		return isMobileVersion.value ? 'pa-1' : 'pa-1 pa-sm-3'
 	})
 
+	// Bloc d'identité (primaryInfo / secondaryInfo) affiché en tête du menu déroulant
+	// lorsque le bouton est en mode icône seule (iconOnly) : l'identité, masquée dans
+	// l'activateur, est alors reportée dans le menu pour rester accessible.
+	const hasIdentityInList = computed(() => {
+		return props.showIdentityInList && props.iconOnly && Boolean(props.primaryInfo)
+	})
+
+	const activatorLabel = computed(() => {
+		if (props.iconOnly && !hasIdentityInList.value) {
+			return [props.label, props.primaryInfo, props.secondaryInfo].filter(Boolean).join(', ')
+		}
+
+		if (isMobileVersion.value && !props.iconOnly) {
+			return [props.label, props.secondaryInfo].filter(Boolean).join(', ')
+		}
+
+		return props.label
+	})
+
 	const hasListContent = computed(() => {
-		return Boolean(slots.default || !props.hideLogoutBtn)
+		return Boolean(slots.default || !props.hideLogoutBtn || hasIdentityInList.value)
 	})
 
 	const isMobileVersion = computed(() => {
@@ -119,6 +142,7 @@
 	})
 
 	const generatedId = ref(`custom-btn-select-${useId()}`)
+	const identityId = computed(() => `${generatedId.value}-identity`)
 
 	function getSelectedValue() {
 		if (!selectedItem.value) return undefined
@@ -160,6 +184,7 @@
 			:disabled="!hasListContent"
 			location="bottom end"
 			transition="fade-transition"
+			offset="8"
 			v-bind="props.options['menu']"
 			scroll-strategy="none"
 			z-index="9999"
@@ -167,7 +192,7 @@
 			<template #activator="{ props: menuProps }">
 				<VBtn
 					:id="generatedId"
-					:class="btnPadding"
+					:class="[btnPadding, { 'rounded-circle': iconOnly }]"
 					:height="iconOnly ? 'auto' : undefined"
 					:icon="iconOnly"
 					:size="iconOnly ? 'x-large' : 'default'"
@@ -175,6 +200,12 @@
 					class="sy-user-menu-btn"
 					v-bind="{
 						...menuProps,
+						// VMenu pose `aria-controls` et `aria-owns` en permanence,
+						// alors que l'overlay n'est monté qu'à la première ouverture : tant que le menu
+						// est fermé, ces attributs pointent vers un identifiant absent du document.
+						// On ne les expose donc que lorsque la cible existe réellement.
+						'aria-controls': isOpen ? menuProps['aria-controls'] : undefined,
+						'aria-owns': isOpen ? menuProps['aria-owns'] : undefined,
 						...props.options['btn'],
 					}"
 				>
@@ -183,7 +214,7 @@
 						class="d-flex align-center ga-2"
 					>
 						<slot name="prepend-icon" />
-						<span class="d-sr-only">{{ props.label }}</span>
+						<span class="d-sr-only">{{ activatorLabel }}</span>
 						<span
 							v-if="!isMobileVersion && !iconOnly"
 							class="d-flex flex-column align-end py-1"
@@ -196,7 +227,7 @@
 							</span>
 							<span
 								:class="`text-${props?.options['btn']?.textColor}`"
-								class="subtitle text-grey text-darken-2 font-weight-regular"
+								class="subtitle text-grey-darken-2 font-weight-regular"
 							>
 								{{ props.secondaryInfo }}
 							</span>
@@ -222,6 +253,34 @@
 					:aria-labelledby="generatedId"
 					:aria-activedescendant="getSelectedValue() ? `item-${slugify(getSelectedValue()!)}` : undefined"
 				>
+					<!-- Encart d'identité visible :
+						il doit donc rester restituable — masquer un contenu affiché contrevient au
+						critère RGAA 10.8. C'est pourquoi l'identité est retirée du nom accessible de
+						l'activateur, pour ne pas être annoncée deux fois.
+						`role="presentation"` retire le `<li>` de l'arbre d'accessibilité **sans masquer
+						son contenu** (contrairement à `aria-hidden`) : le texte reste exposé, et le
+						`role="menu"` — qui n'admet que des `menuitem`, `group` et `separator` — ne
+						compte pas l'encart parmi ses options. -->
+					<li
+						v-if="hasIdentityInList"
+						:id="identityId"
+						class="sy-user-menu-identity px-4 py-3"
+						role="presentation"
+						v-bind="props.options['identityListItem']"
+					>
+						<slot name="header-list-item">
+							<p class="text-body-2 font-weight-bold mb-0">
+								{{ props.primaryInfo }}
+							</p>
+							<p
+								v-if="secondaryInfo"
+								class="text-caption text-grey-darken-3 font-weight-regular mb-0"
+							>
+								{{ props.secondaryInfo }}
+							</p>
+						</slot>
+					</li>
+
 					<VListItem
 						v-for="(item, index) in formattedItems"
 						:id="`item-${slugify(item[props.textKey] as string)}`"
@@ -276,19 +335,23 @@
 .sy-user-menu-btn {
 	padding: 12px !important;
 
-	&:hover::before {
-		background: #000;
-		opacity: 0.05;
-	}
-
 	.subtitle {
 		font-size: 0.875rem;
 		line-height: 1.5;
 	}
 }
 
-:deep(.sy-user-menu-btn:focus > .v-btn__overlay) {
-	opacity: 0 !important;
+.sy-user-menu-btn:hover :deep(.v-btn__overlay) {
+	background: rgba(var(--v-theme-interactionDark), 0.2) !important;
+}
+
+.sy-user-menu-btn:active :deep(.v-btn__overlay) {
+	background: rgba(var(--v-theme-interactionDark), 0.4) !important;
+}
+
+.sy-user-menu-btn[aria-expanded='true'] :deep(.v-btn__overlay) {
+	background: rgba(var(--v-theme-interactionDark), 0.2) !important;
+	opacity: 1;
 }
 
 .item-title {
@@ -297,5 +360,21 @@
 
 :deep(.v-list-item__prepend) {
 	display: unset !important;
+}
+
+// Le contenu du VMenu est téléporté hors du composant, mais ce bloc est rendu par son propre
+// template : il porte l'attribut de scope, les styles scopés l'atteignent donc sans passer par
+// un override global.
+// Le fond reprend le niveau d'interaction de l'activateur (survol / menu ouvert), et l'encart est
+// détaché des bords de la liste — le padding vertical de `.v-list` fournit l'espace en haut, la
+// marge celui des côtés et du bas.
+.sy-user-menu-identity {
+	margin: 0 8px 8px;
+	background: rgba(var(--v-theme-interactionDark), 0.2);
+
+	// Même arrondi que la liste : Vuetify pose 4px sur `.v-menu > .v-overlay__content` et la
+	// `.v-list` en hérite. `inherit` reprend donc la valeur calculée du parent et suivra
+	// automatiquement si l'arrondi du menu change.
+	border-radius: inherit;
 }
 </style>

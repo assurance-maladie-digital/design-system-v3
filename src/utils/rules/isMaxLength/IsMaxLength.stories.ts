@@ -53,7 +53,7 @@ export const Default: StoryObj<unknown> = {
 	},
 }
 
-export const ignoreSpaces: StoryObj<unknown> = {
+export const IgnoreSpaces: StoryObj<unknown> = {
 	render: () => {
 		return {
 			components: { VTextField },

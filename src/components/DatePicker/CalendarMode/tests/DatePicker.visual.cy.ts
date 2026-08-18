@@ -2,6 +2,10 @@ import DatePicker from '../DatePicker.vue'
 
 type CalendarViewMode = 'month' | 'months' | 'year'
 
+const freezeDate = () => {
+	cy.clock(new Date(2025, 5, 15, 12).getTime(), ['Date'])
+}
+
 const fixedOverlayProps = {
 	label: 'Date de rendez-vous',
 	format: 'DD/MM/YYYY',
@@ -27,6 +31,7 @@ const activeElementSelectorByViewMode: Record<CalendarViewMode, string> = {
 }
 
 const openCalendarModeDialogInView = (viewMode: CalendarViewMode) => {
+	freezeDate()
 	cy.mountWithVuetify(DatePicker, {
 		props: fixedOverlayProps,
 	}).then(async ({ wrapper }) => {
@@ -42,14 +47,13 @@ const openCalendarModeDialogInView = (viewMode: CalendarViewMode) => {
 		await vm.$nextTick()
 	})
 
-	cy.wait(250, { log: false })
+	cy.get('.date-picker-overlay-content').filter(':visible').should('have.length', 1).as('visibleOverlay')
 	cy.document({ log: false }).then((doc) => {
 		if (doc.activeElement instanceof HTMLElement) {
 			doc.activeElement.blur()
 		}
 	})
-	cy.get(activeElementSelectorByViewMode[viewMode]).should('be.visible').focus()
-	cy.get('.date-picker-overlay-content').filter(':visible').should('have.length', 1).as('visibleOverlay')
+	cy.get(activeElementSelectorByViewMode[viewMode]).should('be.visible').focus().should('be.focused')
 	cy.get(overlayPanelSelectorByViewMode[viewMode]).should('be.visible')
 	cy.matchImageSnapshot(snapshotNameByViewMode[viewMode], cy.get('@visibleOverlay'))
 }
@@ -107,29 +111,28 @@ describe('DatePicker (CalendarMode) - Focus visual regression tests', () => {
 	// réduit à 1px pour ne pas déborder sur les cellules voisines. On ouvre le calendrier
 	// (le champ est l'activateur du VMenu) puis on focus une cellule de jour.
 	it('shows the ring on a focused calendar day cell', () => {
+		freezeDate()
 		cy.mountWithVuetify(DatePicker, {
 			props: { label: 'Date' },
 		})
-
-		cy.get('.v-field').first().click()
+		cy.get('.sy-text-field__icon-button').click()
 		cy.get('.v-date-picker-month__day .v-btn', { timeout: 8000 }).should('be.visible')
 
 		focusVisible('.v-date-picker-month__day .v-btn')
-		cy.wait(150)
+		cy.get('.v-date-picker-month__day .v-btn').should('be.focused')
 		cy.matchImageSnapshot('date-picker-calendar-day-focus', cy.get('.v-application'))
 	})
 
 	// Bouton « Aujourd'hui » : ring standard global (offset 3px, bouton autonome).
 	it('shows the ring on the today button', () => {
+		freezeDate()
 		cy.mountWithVuetify(DatePicker, {
 			props: { label: 'Date' },
 		})
-
-		cy.get('.v-field').first().click()
-		cy.get('.date-picker__today-button', { timeout: 8000 }).should('be.visible')
+		cy.get('.sy-text-field__icon-button').click()
+		cy.get('.date-picker__today-button').should('be.visible')
 
 		focusVisible('.date-picker__today-button')
-		cy.wait(150)
 		cy.matchImageSnapshot('date-picker-today-button-focus', cy.get('.v-application'))
 	})
 })

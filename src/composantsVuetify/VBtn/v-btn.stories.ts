@@ -8,9 +8,9 @@ const meta: Meta = {
 			return { args }
 		},
 		template: `
-      <v-btn :color="args.color" :variant="args.variant" :disabled="args.disabled" :loading="args.loading">
+      <VBtn :color="args.color" :variant="args.variant" :disabled="args.disabled" :loading="args.loading">
         {{ args.label }}
-      </v-btn>
+      </VBtn>
     `,
 	}),
 }
@@ -107,11 +107,11 @@ export const Sizes: Story = {
 	render: () => ({
 		template: `
             <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
-                <v-btn color="primary" variant="elevated" size="x-small">X-Small</v-btn>
-                <v-btn color="primary" variant="elevated" size="small">Small</v-btn>
-                <v-btn color="primary" variant="elevated" size="default">Default</v-btn>
-                <v-btn color="primary" variant="elevated" size="large">Large</v-btn>
-                <v-btn color="primary" variant="elevated" size="x-large">X-Large</v-btn>
+                <VBtn color="primary" variant="elevated" size="x-small">X-Small</VBtn>
+                <VBtn color="primary" variant="elevated" size="small">Small</VBtn>
+                <VBtn color="primary" variant="elevated" size="default">Default</VBtn>
+                <VBtn color="primary" variant="elevated" size="large">Large</VBtn>
+                <VBtn color="primary" variant="elevated" size="x-large">X-Large</VBtn>
             </div>
         `,
 	}),

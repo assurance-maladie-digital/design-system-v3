@@ -8,11 +8,11 @@ const meta: Meta = {
 			return { args }
 		},
 		template: `
-            <v-tooltip :text="args.text" :location="args.location" :disabled="args.disabled">
+            <VTooltip :text="args.text" :location="args.location" :disabled="args.disabled">
                 <template v-slot:activator="{ props }">
-                    <v-btn v-bind="props" color="primary">{{ args.activator }}</v-btn>
+                    <VBtn v-bind="props" color="primary">{{ args.activator }}</VBtn>
                 </template>
-            </v-tooltip>
+            </VTooltip>
         `,
 	}),
 }
