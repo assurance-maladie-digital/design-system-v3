@@ -7,7 +7,7 @@
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import SyTablePagination from '../common/SyTablePagination.vue'
 	import TableBulkActions from '../common/TableBulkActions.vue'
-	import TableHeader from '../common/TableHeader.vue'
+	import TableHeader, { type HeaderPropsRaw } from '../common/TableHeader.vue'
 	import { locales } from '../common/locales'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
 	import { useTableAccessibility } from '../common/tableAccessibilityUtils'
@@ -411,9 +411,9 @@
 									},
 								]"
 								:style="{
-									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
-									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
-									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
+									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth } : {}),
+									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth } : {}),
+									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width } : {}),
 									...(pinnedMeta.left[column.key!] !== undefined
 										? { position: 'sticky', left: `${pinnedMeta.left[column.key!] }px`, zIndex: 'var(--sy-table-z-pinned-header)', background: 'var(--sy-table-header-bg-pinned)' }
 										: {}),
@@ -444,7 +444,7 @@
 										:table="table"
 										:header-params="slotProps"
 										:column="column"
-										:header-props-raw="getHeaderForColumn(column)?.headerProps as any"
+										:header-props-raw="getHeaderForColumn(column)?.headerProps as HeaderPropsRaw"
 										:resizable-columns="props.resizableColumns"
 										:wrap-title="props.resizableColumns || !!getHeaderForColumn(column)?.maxWidth"
 									>
@@ -473,9 +473,9 @@
 						>
 							<th
 								:style="{
-									...(getHeaderForColumn(column)?.maxWidth && !props.resizableColumns ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
-									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
-									width: (reactiveColumnWidths[column.key!] || getHeaderForColumn(column)?.width) as any || undefined,
+									...(getHeaderForColumn(column)?.maxWidth && !props.resizableColumns ? { maxWidth: getHeaderForColumn(column)?.maxWidth } : {}),
+									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth } : {}),
+									width: (reactiveColumnWidths[column.key!] || getHeaderForColumn(column)?.width) || undefined,
 								}"
 							>
 								<!-- Check if the column is filterable based on the headers prop -->

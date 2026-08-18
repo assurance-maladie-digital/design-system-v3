@@ -2,8 +2,7 @@ import { computed, nextTick, onMounted, onUnmounted, ref, type Ref } from 'vue'
 import type { DataTableHeaders, TableColumnHeader } from './types'
 
 // Fonction de throttling simple pour optimiser les performances
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const useThrottleFn = <T extends (...args: any[]) => void>(fn: T, delay: number): T => {
+const useThrottleFn = <T extends (...args: unknown[]) => void>(fn: T, delay: number): T => {
 	let lastCall = 0
 	return ((...args: Parameters<T>) => {
 		const now = Date.now()

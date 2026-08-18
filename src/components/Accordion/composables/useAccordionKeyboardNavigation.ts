@@ -3,8 +3,7 @@ import { type Ref } from 'vue'
 export interface AccordionItem {
 	id: string
 	title: string
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
-	content: any
+	content: unknown
 	headingLevel?: number
 	disabled?: boolean
 }
