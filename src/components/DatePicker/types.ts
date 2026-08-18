@@ -21,8 +21,7 @@ export type DateValue = DateObjectValue
 export interface DatePickerRuleOptions {
 	message?: string
 	date?: string | Date
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	validate?: ((value: any) => boolean | string) | ((value: any) => Promise<boolean | string>)
+	validate?: (value: unknown) => boolean | string | Promise<boolean | string>
 	[key: string]: unknown
 }
 

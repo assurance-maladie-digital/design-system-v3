@@ -27,8 +27,7 @@ export type SyTextFieldProps = {
 	bgColor?: string
 	centerAffix?: boolean
 	counter?: string | number | boolean
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-	counterValue?: number | ((value: any) => number)
+	counterValue?: number | ((value: string) => number)
 	density?: 'default' | 'comfortable' | 'compact'
 	direction?: 'horizontal' | 'vertical'
 	isDirty?: boolean

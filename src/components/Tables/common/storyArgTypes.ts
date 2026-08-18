@@ -219,7 +219,7 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 					column: HeaderColumn,
 					headers: HeaderColumn[][],
 					columns: HeaderColumn[],
-					locales: Record<string, string | ((...args: any[]) => string)>,
+					locales: Record<string, string | ((...args: unknown[]) => string)>,
 					sortBy: DataOptions['sortBy'],
 					someSelected: boolean,
 					allSelected: boolean

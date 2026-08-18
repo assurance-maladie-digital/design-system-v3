@@ -42,7 +42,7 @@
 	})
 
 	const localStorageUtility = new LocalStorageUtility()
-	const localOptions = ref({})
+	const localOptions = ref<Partial<DataOptions>>({})
 
 	// Generate a unique ID for this table instance
 	const uniqueTableId = ref(`paginated-table-${useId()}`)
@@ -77,9 +77,9 @@
 		return headers
 	})
 
-	const optionsFacade = computed(() => {
+	const optionsFacade = computed<Partial<DataOptions>>(() => {
 		return {
-			page: options.value.page || componentAttributes['page'],
+			page: options.value.page || (componentAttributes['page'] as number | undefined),
 			itemsPerPage: options.value.itemsPerPage || props.itemsPerPage,
 			sortBy: options.value.sortBy,
 			groupBy: options.value.groupBy,
@@ -122,7 +122,7 @@
 		{ deep: true },
 	)
 
-	localOptions.value = localStorageUtility.getItem(storageKey.value) ?? optionsFacade.value
+	localOptions.value = localStorageUtility.getItem<Partial<DataOptions>>(storageKey.value) ?? optionsFacade.value
 
 	onMounted(() => {
 		const table = document.querySelector(`#${uniqueTableId.value} table`)
