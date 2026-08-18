@@ -50,7 +50,6 @@ const serverHeaders = [
  * cocher. La sélection reste un `v-model` local (indépendant du « fetch »).
  */
 export const RowSelection: Story = {
-	name: 'Row Selection',
 	parameters: {
 		a11y: {
 			disable: true,
@@ -172,7 +171,6 @@ export const RowSelection: Story = {
  * seule ligne (boutons radio). Le `v-model` contient au plus un élément.
  */
 export const SingleRowSelection: Story = {
-	name: 'Single Row Selection',
 	parameters: {
 		a11y: {
 			disable: true,

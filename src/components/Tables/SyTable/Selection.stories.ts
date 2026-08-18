@@ -42,7 +42,6 @@ type Story = StoryObj<typeof meta>
  * La sélection est un `v-model` (tableau des lignes sélectionnées).
  */
 export const RowSelection: Story = {
-	name: 'Row Selection',
 	parameters: {
 		a11y: {
 			disable: true,
@@ -140,7 +139,6 @@ export const RowSelection: Story = {
  * (boutons radio). Le `v-model` contient au plus un élément.
  */
 export const SingleRowSelection: Story = {
-	name: 'Single Row Selection',
 	parameters: {
 		a11y: {
 			disable: true,

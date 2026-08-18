@@ -161,7 +161,6 @@ export const Default: Story = {
 }
 
 export const Error: Story = {
-	name: 'Error',
 	parameters: {
 		sourceCode: [
 			{
@@ -200,7 +199,6 @@ export const Error: Story = {
 }
 
 export const Loading: Story = {
-	name: 'Loading',
 	parameters: {
 		sourceCode: [
 			{

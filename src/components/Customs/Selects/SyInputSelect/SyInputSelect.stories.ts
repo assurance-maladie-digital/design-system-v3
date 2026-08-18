@@ -229,7 +229,7 @@ const items = [
 	},
 }
 
-export const withCustomError: Story = {
+export const WithCustomError: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -303,7 +303,7 @@ export const withCustomError: Story = {
 	},
 }
 
-export const withCustomKey: Story = {
+export const WithCustomKey: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -360,7 +360,7 @@ export const withCustomKey: Story = {
 	},
 }
 
-export const withCustomStyles: Story = {
+export const WithCustomStyles: Story = {
 	parameters: {
 		sourceCode: [
 			{
