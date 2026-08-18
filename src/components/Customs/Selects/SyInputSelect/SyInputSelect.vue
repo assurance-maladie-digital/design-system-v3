@@ -277,7 +277,8 @@
 			<SyIcon
 				v-if="selectedItemText && props.clearable"
 				:icon="mdiCloseCircle"
-				:aria-label="locales.clearLabel"
+				:label="locales.clearLabel"
+				:decorative="false"
 				role="button"
 				@click.stop.prevent="selectItem(null)"
 			/>
