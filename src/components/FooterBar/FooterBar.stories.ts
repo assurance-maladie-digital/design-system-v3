@@ -1,6 +1,6 @@
 import FooterBar from '../FooterBar/FooterBar.vue'
 import Logo from '../Logo/Logo.vue'
-import CollapsibleList from '../CollapsibleList/CollapsibleList.vue'
+import CollapsibleListComponent from '../CollapsibleList/CollapsibleList.vue'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { fn } from 'storybook/test'
 import { mdiLinkedin, mdiFacebook, mdiYoutube } from '@mdi/js'
@@ -378,7 +378,7 @@ export const Default: Story = {
 	},
 }
 
-export const changeLinks: Story = {
+export const ChangeLinks: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -454,7 +454,7 @@ export const changeLinks: Story = {
 	},
 }
 
-export const slotPrepend: Story = {
+export const SlotPrepend: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -522,7 +522,7 @@ export const slotPrepend: Story = {
 	},
 }
 
-export const slotAppend: Story = {
+export const SlotAppend: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -593,7 +593,7 @@ export const slotAppend: Story = {
 	},
 }
 
-export const extendedMode: Story = {
+export const ExtendedMode: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -653,7 +653,7 @@ export const extendedMode: Story = {
 	},
 }
 
-export const slotLogo: Story = {
+export const SlotLogo: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -737,7 +737,7 @@ export const slotLogo: Story = {
 	},
 }
 
-export const collapsibleList: Story = {
+export const CollapsibleList: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -849,7 +849,7 @@ export const collapsibleList: Story = {
 	},
 	render(args) {
 		return {
-			components: { FooterBar, CollapsibleList },
+			components: { FooterBar, CollapsibleList: CollapsibleListComponent },
 			setup() {
 				return { args, remboursementItems, healthItems }
 			},
@@ -877,7 +877,7 @@ export const collapsibleList: Story = {
 	},
 }
 
-export const hideSectionLogo: Story = {
+export const HideSectionLogo: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -940,7 +940,7 @@ export const hideSectionLogo: Story = {
 	},
 }
 
-export const hideSectionSocialMediaLinks: Story = {
+export const HideSectionSocialMediaLinks: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -1005,7 +1005,7 @@ export const hideSectionSocialMediaLinks: Story = {
 	},
 }
 
-export const customSocialMediaLinks: Story = {
+export const CustomSocialMediaLinks: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -1118,7 +1118,7 @@ export const customSocialMediaLinks: Story = {
 	},
 }
 
-export const lightTheme: Story = {
+export const LightTheme: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -1181,7 +1181,7 @@ export const lightTheme: Story = {
 	},
 }
 
-export const customTheme: Story = {
+export const CustomTheme: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -1375,7 +1375,7 @@ export const BackOffice: Story = {
 		}
 	},
 }
-export const withPhoneNumber: Story = {
+export const WithPhoneNumber: Story = {
 	parameters: {
 		sourceCode: [
 			{

@@ -138,7 +138,7 @@
 </script>
 
 <template>
-	<v-radio-group
+	<VRadioGroup
 		:id="props.id"
 		ref="radioGroupRef"
 		v-model="model"
@@ -170,7 +170,7 @@
 
 		<template #default>
 			<slot>
-				<v-radio
+				<VRadio
 					v-for="opt in props.options"
 					:key="opt.value"
 					:value="opt.value"
@@ -211,7 +211,7 @@
 				</div>
 			</div>
 		</template>
-	</v-radio-group>
+	</VRadioGroup>
 	<div
 		v-if="showHelpTextBelow"
 		class="help-text-below px-1 mt-1"

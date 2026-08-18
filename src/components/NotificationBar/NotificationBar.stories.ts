@@ -684,7 +684,7 @@ WithClearQueue.args = {
 	bottom: true,
 }
 
-export const showAll: Story = (args) => {
+export const ShowAll: Story = (args) => {
 	return {
 		components: { NotificationBar, VBtn },
 		setup() {
@@ -749,13 +749,13 @@ export const showAll: Story = (args) => {
 	}
 }
 
-showAll.args = {
+ShowAll.args = {
 	...Default.args,
 	showAll: true,
 	bottom: true,
 }
 
-showAll.parameters = {
+ShowAll.parameters = {
 	sourceCode: [
 		{
 			name: 'Template',

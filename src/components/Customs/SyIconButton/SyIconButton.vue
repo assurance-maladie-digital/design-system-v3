@@ -19,7 +19,7 @@
 </script>
 
 <template>
-	<v-btn
+	<VBtn
 		:disabled="props.disabled"
 		:aria-label="props.label"
 		:title="props.label"
@@ -35,7 +35,7 @@
 			:size="props.size"
 			:decorative="true"
 		/>
-	</v-btn>
+	</VBtn>
 </template>
 
 <style scoped lang="scss">

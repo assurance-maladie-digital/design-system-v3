@@ -74,20 +74,20 @@
 					required
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date1 = ''"
 			>
 				Vider le champ
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date1 = today"
 			>
 				Remplir le champ
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date1 }}
 			</div>
@@ -119,20 +119,20 @@
 					:show-success-messages="true"
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date2 = '13/04/2025'"
 			>
 				Samedi (13/04/2025)
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date2 = '15/04/2025'"
 			>
 				Mardi (15/04/2025)
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date2 }}
 			</div>
@@ -164,27 +164,27 @@
 					:show-success-messages="true"
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date3 = today"
 			>
 				Aujourd'hui
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date3 = tomorrow"
 			>
 				Demain
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date3 = yesterday"
 			>
 				Hier
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date3 }}
 			</div>
@@ -216,27 +216,27 @@
 					:show-success-messages="true"
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date4 = today"
 			>
 				Aujourd'hui
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date4 = tomorrow"
 			>
 				Demain
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date4 = yesterday"
 			>
 				Hier
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date4 }}
 			</div>
@@ -269,20 +269,20 @@
 					:show-success-messages="true"
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date5 = '15/04/2025'"
 			>
 				15/04/2025
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date5 = '31/12/2024'"
 			>
 				31/12/2024
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date5 }}
 			</div>
@@ -315,20 +315,20 @@
 					:show-success-messages="true"
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date6 = '15/04/2025'"
 			>
 				15/04/2025
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date6 = '01/01/2026'"
 			>
 				01/01/2026
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date6 }}
 			</div>
@@ -361,20 +361,20 @@
 					:show-success-messages="true"
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date7 = '25/12/2025'"
 			>
 				25/12/2025
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date7 = '26/12/2025'"
 			>
 				26/12/2025
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date7 }}
 			</div>
@@ -419,20 +419,20 @@
 					:show-success-messages="true"
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date8 = '15/04/2025'"
 			>
 				15/04/2025
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date8 = '15/12/2024'"
 			>
 				15/12/2024
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date8 }}
 			</div>
@@ -481,20 +481,20 @@
 					:show-success-messages="true"
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date9 = '15/04/2025'"
 			>
 				15/04/2025
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date9 = '15/12/2026'"
 			>
 				15/12/2026
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date9 }}
 			</div>
@@ -530,27 +530,27 @@
 					:show-success-messages="true"
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date10 = today"
 			>
 				Aujourd'hui
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date10 = '13/04/2025'"
 			>
 				Weekend
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date10 = nextYear"
 			>
 				Futur
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date10 }}
 			</div>

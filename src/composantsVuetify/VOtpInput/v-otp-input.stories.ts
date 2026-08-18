@@ -8,7 +8,7 @@ const meta: Meta = {
 			return { args }
 		},
 		template: `
-      <v-otp-input 
+      <VOtpInput 
         :length="args.length" 
         :disabled="args.disabled"
         :error="args.error"

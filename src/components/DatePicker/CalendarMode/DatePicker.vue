@@ -1145,7 +1145,7 @@
 							#actions
 						>
 							<div class="d-flex justify-center align-center w-100">
-								<v-btn
+								<VBtn
 									type="button"
 									size="x-small"
 									color="primary"
@@ -1163,7 +1163,7 @@
 										:icon="mdiCalendarMonthOutline"
 									/>
 									{{ locales.buttonToday }}
-								</v-btn>
+								</VBtn>
 							</div>
 						</template>
 					</VDatePicker>
