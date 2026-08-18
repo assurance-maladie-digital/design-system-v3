@@ -28,9 +28,9 @@ const meta: Meta = {
 			return { args }
 		},
 		template: `
-      <v-btn :color="args.color" :variant="args.variant" :disabled="args.disabled" :loading="args.loading">
+      <VBtn :color="args.color" :variant="args.variant" :disabled="args.disabled" :loading="args.loading">
         {{ args.label }}
-      </v-btn>
+      </VBtn>
     `,
 	}),
 }
@@ -41,85 +41,85 @@ type Story = StoryObj<typeof meta>
 // --- Primary ---
 export const Primary: Story = {
 	args: { label: 'Button primary', color: 'primary', variant: 'elevated', disabled: false },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="elevated">Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<VBtn color="primary" variant="elevated">Button</VBtn>` } } },
 }
 export const PrimaryLoading: Story = {
 	args: { label: 'Button primary loading', color: 'primary', variant: 'elevated', disabled: false, loading: true },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="elevated" loading>Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<VBtn color="primary" variant="elevated" loading>Button</VBtn>` } } },
 }
 export const PrimaryDisabled: Story = {
 	args: { label: 'Button primary disabled', color: 'primary', variant: 'elevated', disabled: true },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="elevated" disabled>Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<VBtn color="primary" variant="elevated" disabled>Button</VBtn>` } } },
 }
 
 // --- Secondary ---
 export const Secondary: Story = {
 	args: { label: 'Button secondary ', color: 'primary', variant: 'outlined', disabled: false },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="outlined">Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<VBtn color="primary" variant="outlined">Button</VBtn>` } } },
 }
 export const SecondaryLoading: Story = {
 	args: { label: 'Button secondary loading', color: 'primary', variant: 'outlined', disabled: false, loading: true },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="outlined" loading>Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<VBtn color="primary" variant="outlined" loading>Button</VBtn>` } } },
 }
 export const SecondaryDisabled: Story = {
 	args: { label: 'Button secondary disabled', color: 'primary', variant: 'outlined', disabled: true },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="outlined" disabled>Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<VBtn color="primary" variant="outlined" disabled>Button</VBtn>` } } },
 }
 
 // --- Tertiary ---
 export const Tertiary: Story = {
 	args: { label: 'Button tertiary', color: 'primary', variant: 'text', disabled: false },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="text">Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<VBtn color="primary" variant="text">Button</VBtn>` } } },
 }
 export const TertiaryLoading: Story = {
 	args: { label: 'Button tertiary loading', color: 'primary', variant: 'text', disabled: false, loading: true },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="text" loading>Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<VBtn color="primary" variant="text" loading>Button</VBtn>` } } },
 }
 export const TertiaryDisabled: Story = {
 	args: { label: 'Button tertiary disabled', color: 'primary', variant: 'text', disabled: true },
-	parameters: { docs: { source: { code: `<v-btn color="primary" variant="text" disabled>Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<VBtn color="primary" variant="text" disabled>Button</VBtn>` } } },
 }
 
 // --- Primary ---
 export const PrimaryDestructive: Story = {
 	args: { label: 'Button primary', color: 'error', variant: 'elevated', disabled: false },
-	parameters: { docs: { source: { code: `<v-btn color="error" variant="elevated">Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<VBtn color="error" variant="elevated">Button</VBtn>` } } },
 }
 export const PrimaryDestructiveLoading: Story = {
 	args: { label: 'Button primary loading', color: 'error', variant: 'elevated', disabled: false, loading: true },
-	parameters: { docs: { source: { code: `<v-btn color="error" variant="elevated" loading>Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<VBtn color="error" variant="elevated" loading>Button</VBtn>` } } },
 }
 export const PrimaryDestructiveDisabled: Story = {
 	args: { label: 'Button primary disabled', color: 'error', variant: 'elevated', disabled: true },
-	parameters: { docs: { source: { code: `<v-btn color="error" variant="elevated" disabled>Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<VBtn color="error" variant="elevated" disabled>Button</VBtn>` } } },
 }
 
 // --- Secondary ---
 export const SecondaryDestructive: Story = {
 	args: { label: 'Button secondary ', color: 'error', variant: 'outlined', disabled: false },
-	parameters: { docs: { source: { code: `<v-btn color="error" variant="outlined">Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<VBtn color="error" variant="outlined">Button</VBtn>` } } },
 }
 export const SecondaryDestructiveLoading: Story = {
 	args: { label: 'Button secondary loading', color: 'error', variant: 'outlined', disabled: false, loading: true },
-	parameters: { docs: { source: { code: `<v-btn color="error" variant="outlined" loading>Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<VBtn color="error" variant="outlined" loading>Button</VBtn>` } } },
 }
 export const SecondaryDestructiveDisabled: Story = {
 	args: { label: 'Button secondary disabled', color: 'error', variant: 'outlined', disabled: true },
-	parameters: { docs: { source: { code: `<v-btn color="error" variant="outlined" disabled>Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<VBtn color="error" variant="outlined" disabled>Button</VBtn>` } } },
 }
 
 // --- Tertiary ---
 export const TertiaryDestructive: Story = {
 	args: { label: 'Button tertiary', color: 'error', variant: 'text', disabled: false },
-	parameters: { docs: { source: { code: `<v-btn color="error" variant="text">Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<VBtn color="error" variant="text">Button</VBtn>` } } },
 }
 export const TertiaryDestructiveLoading: Story = {
 	args: { label: 'Button tertiary loading', color: 'error', variant: 'text', disabled: false, loading: true },
-	parameters: { docs: { source: { code: `<v-btn color="error" variant="text" loading>Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<VBtn color="error" variant="text" loading>Button</VBtn>` } } },
 }
 export const TertiaryDestructiveDisabled: Story = {
 	args: { label: 'Button tertiary disabled', color: 'error', variant: 'text', disabled: true },
-	parameters: { docs: { source: { code: `<v-btn color="error" variant="text" disabled>Button</v-btn>` } } },
+	parameters: { docs: { source: { code: `<VBtn color="error" variant="text" disabled>Button</VBtn>` } } },
 }
 
 // --- Variants ---
@@ -130,21 +130,21 @@ export const Variants: Story = {
 		},
 		template: `
 			<div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
-				<v-btn v-for="variant in variants" :key="variant" color="primary" :variant="variant">
+				<VBtn v-for="variant in variants" :key="variant" color="primary" :variant="variant">
 					{{ variant }}
-				</v-btn>
+				</VBtn>
 			</div>
 		`,
 	}),
 	parameters: {
 		docs: {
 			source: {
-				code: `<v-btn variant="elevated">Elevated</v-btn>
-<v-btn variant="flat">Flat</v-btn>
-<v-btn variant="tonal">Tonal</v-btn>
-<v-btn variant="outlined">Outlined</v-btn>
-<v-btn variant="text">Text</v-btn>
-<v-btn variant="plain">Plain</v-btn>`,
+				code: `<VBtn variant="elevated">Elevated</VBtn>
+<VBtn variant="flat">Flat</VBtn>
+<VBtn variant="tonal">Tonal</VBtn>
+<VBtn variant="outlined">Outlined</VBtn>
+<VBtn variant="text">Text</VBtn>
+<VBtn variant="plain">Plain</VBtn>`,
 			},
 		},
 	},
@@ -160,9 +160,9 @@ export const Densities: Story = {
 				<div v-for="density in densities" :key="density" style="display: flex; flex-direction: column; gap: 12px;">
 					<div style="font-weight: 600; text-transform: capitalize;">{{ density }}</div>
 					<div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
-						<v-btn v-for="variant in variants" :key="variant + '-' + density" color="primary" :variant="variant" :density="density">
+						<VBtn v-for="variant in variants" :key="variant + '-' + density" color="primary" :variant="variant" :density="density">
 							{{ variant }}
-						</v-btn>
+						</VBtn>
 					</div>
 				</div>
 			</div>
@@ -171,9 +171,9 @@ export const Densities: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `<v-btn variant="elevated" density="default">Default</v-btn>
-<v-btn variant="outlined" density="comfortable">Comfortable</v-btn>
-<v-btn variant="text" density="compact">Compact</v-btn>`,
+				code: `<VBtn variant="elevated" density="default">Default</VBtn>
+<VBtn variant="outlined" density="comfortable">Comfortable</VBtn>
+<VBtn variant="text" density="compact">Compact</VBtn>`,
 			},
 		},
 	},
@@ -184,22 +184,22 @@ export const Sizes: Story = {
 	render: () => ({
 		template: `
             <div style="display: flex; gap: 16px; align-items: center; flex-wrap: wrap;">
-                <v-btn color="primary" variant="elevated" size="x-small">X-Small</v-btn>
-                <v-btn color="primary" variant="elevated" size="small">Small</v-btn>
-                <v-btn color="primary" variant="elevated" size="default">Default</v-btn>
-                <v-btn color="primary" variant="elevated" size="large">Large</v-btn>
-                <v-btn color="primary" variant="elevated" size="x-large">X-Large</v-btn>
+                <VBtn color="primary" variant="elevated" size="x-small">X-Small</VBtn>
+                <VBtn color="primary" variant="elevated" size="small">Small</VBtn>
+                <VBtn color="primary" variant="elevated" size="default">Default</VBtn>
+                <VBtn color="primary" variant="elevated" size="large">Large</VBtn>
+                <VBtn color="primary" variant="elevated" size="x-large">X-Large</VBtn>
             </div>
         `,
 	}),
 	parameters: {
 		docs: {
 			source: {
-				code: `<v-btn size="x-small">X-Small</v-btn>
-<v-btn size="small">Small</v-btn>
-<v-btn size="default">Default</v-btn>
-<v-btn size="large">Large</v-btn>
-<v-btn size="x-large">X-Large</v-btn>`,
+				code: `<VBtn size="x-small">X-Small</VBtn>
+<VBtn size="small">Small</VBtn>
+<VBtn size="default">Default</VBtn>
+<VBtn size="large">Large</VBtn>
+<VBtn size="x-large">X-Large</VBtn>`,
 			},
 		},
 	},
@@ -218,9 +218,9 @@ export const SizeDensityMatrix: Story = {
 				</div>
 				<template v-for="size in sizes" :key="size">
 					<div style="font-weight: 600;">{{ size }}</div>
-					<v-btn v-for="density in densities" :key="density" color="primary" variant="elevated" :density="density" :size="size">
+					<VBtn v-for="density in densities" :key="density" color="primary" variant="elevated" :density="density" :size="size">
 						Action
-					</v-btn>
+					</VBtn>
 				</template>
 			</div>
 		`,
@@ -228,9 +228,9 @@ export const SizeDensityMatrix: Story = {
 	parameters: {
 		docs: {
 			source: {
-				code: `<v-btn size="large" density="default">Action</v-btn>
-<v-btn size="large" density="comfortable">Action</v-btn>
-<v-btn size="large" density="compact">Action</v-btn>`,
+				code: `<VBtn size="large" density="default">Action</VBtn>
+<VBtn size="large" density="comfortable">Action</VBtn>
+<VBtn size="large" density="compact">Action</VBtn>`,
 			},
 		},
 	},
@@ -247,17 +247,17 @@ export const IconOnly: Story = {
 			return { mdiClose }
 		},
 		template: `
-			<v-btn icon color="primary" aria-label="Fermer" title="Fermer">
+			<VBtn icon color="primary" aria-label="Fermer" title="Fermer">
 				<SyIcon :icon="mdiClose" decorative />
-			</v-btn>
+			</VBtn>
 		`,
 	}),
 	parameters: {
 		docs: {
 			source: {
-				code: `<v-btn icon color="primary" aria-label="Fermer" title="Fermer">
+				code: `<VBtn icon color="primary" aria-label="Fermer" title="Fermer">
   <SyIcon :icon="mdiClose" decorative />
-</v-btn>`,
+</VBtn>`,
 			},
 		},
 	},
@@ -270,23 +270,23 @@ export const PrependIcon: Story = {
 			return { mdiPlus }
 		},
 		template: `
-			<v-btn color="primary" variant="elevated">
+			<VBtn color="primary" variant="elevated">
 				<template #prepend>
 					<SyIcon :icon="mdiPlus" decorative />
 				</template>
 				Ajouter
-			</v-btn>
+			</VBtn>
 		`,
 	}),
 	parameters: {
 		docs: {
 			source: {
-				code: `<v-btn color="primary" variant="elevated">
+				code: `<VBtn color="primary" variant="elevated">
   <template #prepend>
     <SyIcon :icon="mdiPlus" decorative />
   </template>
   Ajouter
-</v-btn>`,
+</VBtn>`,
 			},
 		},
 	},
@@ -299,23 +299,23 @@ export const AppendIcon: Story = {
 			return { mdiArrowRight }
 		},
 		template: `
-			<v-btn color="primary" variant="outlined">
+			<VBtn color="primary" variant="outlined">
 				Continuer
 				<template #append>
 					<SyIcon :icon="mdiArrowRight" decorative />
 				</template>
-			</v-btn>
+			</VBtn>
 		`,
 	}),
 	parameters: {
 		docs: {
 			source: {
-				code: `<v-btn color="primary" variant="outlined">
+				code: `<VBtn color="primary" variant="outlined">
   Continuer
   <template #append>
     <SyIcon :icon="mdiArrowRight" decorative />
   </template>
-</v-btn>`,
+</VBtn>`,
 			},
 		},
 	},
