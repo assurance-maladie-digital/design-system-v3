@@ -1538,7 +1538,7 @@ export const CustomFilterSlot: Story = {
 							<div class="custom-filter-info mb-2">
 								Filtre personnalisé :
 							</div>
-							<v-select
+							<VSelect
 								v-model="customFilterValue"
 								:items="statusOptions"
 								label="Statut"

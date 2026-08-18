@@ -873,7 +873,7 @@ export const WithPsInfo: Story = {
             </div>
 
             <div class="d-flex bg-primary-lighten-3" style="border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;">
-                <v-btn
+                <VBtn
                     class="text-none font-weight-bold flex-grow-1"
                     color="primary"
                     variant="text"
@@ -881,9 +881,9 @@ export const WithPsInfo: Story = {
                     @click="handleAccount"
                 >
                     Mon Compte
-                </v-btn>
+                </VBtn>
 
-                <v-btn
+                <VBtn
                     class="text-none font-weight-bold flex-grow-1"
                     color="primary"
                     variant="text"
@@ -891,7 +891,7 @@ export const WithPsInfo: Story = {
                     @click="handleLogout"
                 >
                     Déconnexion
-                </v-btn>
+                </VBtn>
             </div>
         </template>
     </UserMenuBtn>

@@ -112,7 +112,7 @@ export const ColorIntegration: StoryObj = {
 	tags: ['!dev'],
 }
 
-export const mainColors: StoryObj = {
+export const MainColors: StoryObj = {
 	render: () => {
 		return {
 			components: { ColorDisplay },
@@ -328,10 +328,10 @@ export const Disabled: StoryObj = {
 	tags: ['!dev'],
 }
 
-export const mainSection = {
+export const MainSection = {
 	render() {
 		return h(createSection('Couleurs de base', [
-			mainColors,
+			MainColors,
 			ColorOn,
 		]))
 	},
