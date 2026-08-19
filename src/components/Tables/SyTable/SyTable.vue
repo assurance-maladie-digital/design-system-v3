@@ -140,15 +140,6 @@
 	const { toggleAllRows, getItemValue } = useTableCheckbox({
 		items: filteredItems,
 		modelValue: model,
-		updateModelValue: (value) => {
-			if (props.showSelectSingle && Array.isArray(value)) {
-				// In single-select mode, always keep at most one selected value
-				model.value = value.length > 0 ? [value[0]] : []
-			}
-			else {
-				model.value = value
-			}
-		},
 		selectionKey: toRef(props, 'selectionKey'),
 	})
 
@@ -348,7 +339,6 @@
 		</TableBulkActions>
 
 		<VDataTable
-			ref="table"
 			v-model="model"
 			color="primary"
 			:headers="displayHeadersWithPinned"
@@ -612,7 +602,7 @@
 					color="primary"
 					density="compact"
 					hide-details
-					@click="!isSelected(internalItem) && toggleSelect(internalItem)"
+					@change="event => (event.target as HTMLInputElement).checked && toggleSelect(internalItem)"
 				/>
 				<SyCheckbox
 					v-else

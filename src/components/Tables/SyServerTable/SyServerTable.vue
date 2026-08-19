@@ -155,15 +155,6 @@
 	const { getItemValue, toggleAllRows } = useTableCheckbox({
 		items: displayedItems,
 		modelValue: model,
-		updateModelValue: (value) => {
-			if (props.showSelectSingle && Array.isArray(value)) {
-				// In single-select mode, always keep at most one selected value
-				model.value = value.length > 0 ? [value[0]] : []
-			}
-			else {
-				model.value = value
-			}
-		},
 		selectionKey: toRef(props, 'selectionKey'),
 	})
 
@@ -365,7 +356,6 @@
 		</TableBulkActions>
 
 		<VDataTableServer
-			ref="table"
 			v-bind="propsFacade"
 			v-model="model"
 			:headers="displayHeadersWithPinned"
@@ -632,7 +622,7 @@
 					color="primary"
 					density="compact"
 					hide-details
-					@click="!isSelected(internalItem) && toggleSelect(internalItem)"
+					@change="event => (event.target as HTMLInputElement).checked && toggleSelect(internalItem)"
 				/>
 				<SyCheckbox
 					v-else
