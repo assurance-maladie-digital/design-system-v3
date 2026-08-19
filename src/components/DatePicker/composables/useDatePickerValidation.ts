@@ -1,9 +1,15 @@
 import { computed, ref, watch, unref, type ComputedRef, type Ref, type MaybeRef } from 'vue'
 import { type ValidationResult, type ValidationRule, type VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 import { useCustomValidation } from '@/composables/unifyValidation/useCustomValidation'
+import {
+	normalizeMessages as normalizeMessagesUtil,
+	useDisplayMessages,
+} from '@/composables/unifyValidation/messageUtils'
 import { locales } from '../locales'
 import type { DateObjectValue, DatePickerRule } from '../types'
 import { useDateRangeValidation } from './useDateRangeValidation'
+import { validateDateFormat, isDateComplete } from './useDateFormatUtils'
+import { adaptCustomRules, validateEmptyOrIncompleteDate } from '../utils/validationUtils'
 
 export type DatePickerValidationRule = DatePickerRule
 
@@ -37,6 +43,9 @@ export type DatePickerValidationOptions = {
 	onblur?: Ref<boolean>
 	fieldIdentifier?: string
 	revalidateOnCustomRulesChange?: boolean
+	displayFormat?: MaybeRef<string>
+	parseDate?: (dateStr: string, format: string) => Date | null
+	hasInteracted?: Ref<boolean>
 	formRegistration?: {
 		validateOnSubmit?: () => Promise<boolean> | boolean
 		clearValidation?: () => void
@@ -64,6 +73,7 @@ export interface DatePickerValidationController {
 		successRules?: ValidationRule[],
 	) => ValidationResult | Promise<ValidationResult>
 	validateDates: (forceValidation?: boolean) => ValidationResult | Promise<ValidationResult>
+	validateTextInput: (value: string) => Promise<boolean>
 	validateCalendarModeDates: (forceValidation?: boolean) => void | ValidationResult | Promise<ValidationResult | void>
 	isRangeValid: ReturnType<typeof useDateRangeValidation>['isRangeValid']
 }
@@ -137,6 +147,7 @@ export const createInactiveDatePickerValidationController = (): Pick<
 	| 'replaceErrors'
 	| 'validateField'
 	| 'validateDates'
+	| 'validateTextInput'
 	| 'validateCalendarModeDates'
 > => {
 	const validationState = createInactiveValidationState()
@@ -158,6 +169,7 @@ export const createInactiveDatePickerValidationController = (): Pick<
 		replaceErrors: validationState.replaceErrors,
 		validateField: validationState.validateField,
 		validateDates: validationState.validate,
+		validateTextInput: async () => true,
 		validateCalendarModeDates: validationState.validateSubmit,
 	}
 }
@@ -192,17 +204,10 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 
 	const clearValidation = () => validation.clearValidation()
 
-	const limitMessages = (messages: string[]): string[] => {
-		const max = options.maxErrors ? unref(options.maxErrors) : undefined
-		return max && max > 0 ? messages.slice(0, max) : messages
-	}
-
-	const normalizeMessages = (messages: string[]): string[] => limitMessages(
-		[...new Set(messages.filter(Boolean))],
-	)
+	const getMaxErrors = (): number | undefined => options.maxErrors ? unref(options.maxErrors) : undefined
 
 	const replaceErrors = (messages: string[]): void => {
-		errors.value = normalizeMessages(messages)
+		errors.value = normalizeMessagesUtil(messages, getMaxErrors())
 	}
 
 	const pushError = (message?: string): void => {
@@ -213,33 +218,26 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		replaceErrors([...errors.value, message])
 	}
 
-	const mergeMessages = (
-		externalMessages: string[] | null | undefined,
-		internalMessages: string[],
-	): string[] => limitMessages([
-		...new Set([
-			...(externalMessages ?? []),
-			...internalMessages,
-		]),
-	])
-
-	const displayErrors = computed(() => mergeMessages(options.errorMessages?.value, errors.value))
-	const displayWarnings = computed(() => mergeMessages(options.warningMessages?.value, warnings.value))
-	const displaySuccesses = computed(() => mergeMessages(options.successMessages?.value, successes.value))
-	const displayHasError = computed(() =>
-		displayErrors.value.length > 0 || Boolean(unref(options.hasErrorProp)),
-	)
-	const displayHasWarning = computed(() =>
-		displayWarnings.value.length > 0 || Boolean(unref(options.hasWarningProp)),
-	)
-	const displayHasSuccess = computed(() => (
-		(
-			validation.hasSuccess.value
-			|| (options.successMessages?.value?.length ?? 0) > 0
-		)
-		&& !displayHasError.value
-		&& !displayHasWarning.value
-	) || Boolean(unref(options.hasSuccessProp)))
+	const {
+		displayErrors,
+		displayWarnings,
+		displaySuccesses,
+		displayHasError,
+		displayHasWarning,
+		displayHasSuccess,
+	} = useDisplayMessages({
+		errors,
+		warnings,
+		successes,
+		externalErrors: () => options.errorMessages?.value,
+		externalWarnings: () => options.warningMessages?.value,
+		externalSuccesses: () => options.successMessages?.value,
+		maxErrors: () => options.maxErrors ? unref(options.maxErrors) : undefined,
+		hasErrorProp: () => Boolean(unref(options.hasErrorProp)),
+		hasWarningProp: () => Boolean(unref(options.hasWarningProp)),
+		hasSuccessProp: () => Boolean(unref(options.hasSuccessProp)),
+		internalHasSuccess: validation.hasSuccess,
+	})
 
 	// Utiliser useDateRangeValidation pour centraliser la validation des plages
 	const { isRangeValid: isDateRangeValid } = useDateRangeValidation(
@@ -522,6 +520,158 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		})
 	}
 
+	// --- Validation de saisie texte (flow noCalendar / DateTextInput) ---
+
+	const getReadyCustomRules = (): DatePickerRule[] | null => {
+		const currentCustomRules = options.customRules.value
+		const readyRules = currentCustomRules.filter((rule) => {
+			if (rule.type === 'notBeforeDate' || rule.type === 'notAfterDate' || rule.type === 'exactDate') {
+				return rule.options && rule.options.date !== undefined
+			}
+			return true
+		})
+		if (readyRules.length === 0 && currentCustomRules.length > 0) {
+			return null
+		}
+		return readyRules
+	}
+
+	const validateCustomRulesForDate = (date: Date): boolean | Promise<boolean> => {
+		if (shouldDisplayErrors() === false) {
+			return !displayHasError.value
+		}
+		const readyRules = getReadyCustomRules()
+		if (readyRules === null) {
+			return true
+		}
+		const format = unref(options.displayFormat) ?? ''
+		const safeCustomRules = adaptCustomRules(readyRules, format) as ValidationRule[]
+		const safeWarningRules = adaptCustomRules(options.customWarningRules.value, format) as ValidationRule[]
+		const safeSuccessRules = adaptCustomRules(options.customSuccessRules?.value ?? [], format) as ValidationRule[]
+		const result = validateField(date, safeCustomRules, safeWarningRules, safeSuccessRules)
+
+		if (result instanceof Promise) {
+			return result.then(resolvedResult => !resolvedResult.hasError)
+		}
+		return !result.hasError
+	}
+
+	const validateSingleTextInput = async (value: string): Promise<boolean> => {
+		const format = unref(options.displayFormat) ?? ''
+		const emptyCheck = validateEmptyOrIncompleteDate(
+			value,
+			unref(options.required),
+			(dateValue: string) => isDateComplete(dateValue, format),
+			options.hasInteracted?.value ?? false,
+		)
+
+		if (!emptyCheck.isValid && emptyCheck.errorMessage && shouldDisplayErrors()) {
+			pushError(emptyCheck.errorMessage)
+		}
+
+		if (!emptyCheck.shouldContinue) {
+			return emptyCheck.isValid
+		}
+
+		const formatValidation = validateDateFormat(
+			value,
+			format,
+			format,
+			unref(options.required),
+			options.hasInteracted?.value ?? false,
+			!shouldDisplayErrors(),
+		)
+		if (!formatValidation.isValid) {
+			if (shouldDisplayErrors()) {
+				pushError(formatValidation.message)
+			}
+			return false
+		}
+
+		const date = options.parseDate?.(value, format) ?? null
+		if (!date) {
+			if (shouldDisplayErrors()) {
+				pushError(locales.invalidDateFormatWithFormat(format))
+			}
+			return false
+		}
+
+		return !!(await validateCustomRulesForDate(date))
+	}
+
+	const validateTextInput = async (value: string): Promise<boolean> => {
+		clearValidation()
+
+		// Empty / skeleton input
+		if (!value || value.trim() === '') {
+			if (unref(options.required) && (options.hasInteracted?.value ?? false) && !unref(options.readonly) && shouldDisplayErrors()) {
+				pushError(locales.required)
+				return false
+			}
+			if (options.customRules.value.length > 0 && (options.hasInteracted?.value ?? false)) {
+				const format = unref(options.displayFormat) ?? ''
+				const safeCustomRules = adaptCustomRules(options.customRules.value, format) as ValidationRule[]
+				const safeWarningRules = adaptCustomRules(options.customWarningRules.value, format) as ValidationRule[]
+				const safeSuccessRules = adaptCustomRules(options.customSuccessRules?.value ?? [], format) as ValidationRule[]
+				const result = await validateField(
+					null,
+					safeCustomRules,
+					safeWarningRules,
+					safeSuccessRules,
+				)
+				return !result.hasError
+			}
+			return true
+		}
+
+		// Range input
+		if (unref(options.displayRange) && value.includes(locales.rangeSeparator)) {
+			const [startDateText = '', endDateText = ''] = value.split(locales.rangeSeparator)
+
+			if (startDateText && !endDateText) {
+				return await validateSingleTextInput(startDateText)
+			}
+
+			if (!(startDateText && endDateText)) {
+				return !displayHasError.value
+			}
+
+			const format = unref(options.displayFormat) ?? ''
+			const startFormatValidation = validateDateFormat(startDateText, format, format, unref(options.required), options.hasInteracted?.value ?? false, !shouldDisplayErrors())
+			const endFormatValidation = validateDateFormat(endDateText, format, format, unref(options.required), options.hasInteracted?.value ?? false, !shouldDisplayErrors())
+			if (!startFormatValidation.isValid) {
+				if (shouldDisplayErrors()) pushError(startFormatValidation.message)
+				return false
+			}
+			if (!endFormatValidation.isValid) {
+				if (shouldDisplayErrors()) pushError(endFormatValidation.message)
+				return false
+			}
+
+			const startDate = options.parseDate?.(startDateText, format) ?? null
+			const endDate = options.parseDate?.(endDateText, format) ?? null
+
+			if (!(startDate && endDate)) {
+				return !displayHasError.value
+			}
+
+			if (startDate.getTime() > endDate.getTime() && shouldDisplayErrors()) {
+				pushError(locales.endBeforeStart)
+				return false
+			}
+
+			const startDateIsValid = await validateCustomRulesForDate(startDate)
+			if (startDateIsValid) {
+				await validateCustomRulesForDate(endDate)
+			}
+
+			return !displayHasError.value
+		}
+
+		// Single date input
+		return await validateSingleTextInput(value)
+	}
+
 	return {
 		errors,
 		warnings,
@@ -537,6 +687,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		replaceErrors,
 		validateField,
 		validateDates,
+		validateTextInput,
 		validateCalendarModeDates,
 		isRangeValid: isDateRangeValid,
 	}

@@ -1,9 +1,6 @@
 ﻿import { type Ref, type MaybeRef, unref } from 'vue'
 import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
-import { useDatePickerManualValidation, type DatePickerManualValidationOptions } from './useDatePickerManualValidation'
 import { locales } from '../locales'
-
-export type UseDateTextFieldManualValidationOptions = Omit<DatePickerManualValidationOptions, 'displayFormat'>
 
 export interface UseDateTextFieldSubmitOptions {
 	isValidating: Ref<boolean>
@@ -29,21 +26,16 @@ export interface UseDateTextInputControllerOptions {
 	isRange: Ref<boolean>
 	displayFormat: Ref<string>
 	autoClampDate: (dateStr: string, format: string) => { clampedDate: string, adjusted: boolean }
-	manualValidation: UseDateTextFieldManualValidationOptions
 	submit: UseDateTextFieldSubmitOptions
 	reset: UseDateTextFieldResetOptions
 }
 
 /**
  * Contrôleur interne du flux DateTextInput.
- * Centralise l'auto-clamp, la validation manuelle, la soumission et le reset.
+ * Centralise l'auto-clamp, la soumission et le reset.
  */
 export const useDateTextInputController = (options: UseDateTextInputControllerOptions) => {
-	const { autoClamp, isRange, displayFormat, autoClampDate, manualValidation, submit, reset: resetOptions } = options
-	const { validateManualInput } = useDatePickerManualValidation({
-		...manualValidation,
-		displayFormat,
-	})
+	const { autoClamp, isRange, displayFormat, autoClampDate, submit, reset: resetOptions } = options
 
 	const validateOnSubmit = async () => {
 		const { isValidating, hasInteracted, inputValue, runRules } = submit
@@ -122,7 +114,6 @@ export const useDateTextInputController = (options: UseDateTextInputControllerOp
 
 	return {
 		clampIfNeeded,
-		validateManualInput,
 		validateOnSubmit,
 		reset,
 	}

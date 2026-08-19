@@ -9,7 +9,7 @@ describe('useDatePickerInputBlurHandler', () => {
 	const mockParseDate = vi.fn()
 	const mockFormatDate = vi.fn()
 	const mockUpdateModel = vi.fn()
-	const mockValidateManualInput = vi.fn()
+	const mockValidateTextInput = vi.fn()
 	const mockEmitBlur = vi.fn()
 	const displayFormattedDate = ref('')
 	const hasInteracted = ref(false)
@@ -24,7 +24,7 @@ describe('useDatePickerInputBlurHandler', () => {
 		mockParseDate.mockReset()
 		mockFormatDate.mockReset()
 		mockUpdateModel.mockReset()
-		mockValidateManualInput.mockReset()
+		mockValidateTextInput.mockReset()
 		mockEmitBlur.mockReset()
 		displayFormattedDate.value = ''
 		hasInteracted.value = false
@@ -35,7 +35,7 @@ describe('useDatePickerInputBlurHandler', () => {
 
 		// Configuration par défaut des mocks
 		mockValidateDateFormat.mockReturnValue({ isValid: true, message: '' })
-		mockValidateManualInput.mockReturnValue(true)
+		mockValidateTextInput.mockReturnValue(true)
 	})
 
 	describe('handleInputBlur', () => {
@@ -51,7 +51,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				parseDate: mockParseDate,
 				formatDate: mockFormatDate,
 				updateModel: mockUpdateModel,
-				validateManualInput: mockValidateManualInput,
+				validateTextInput: mockValidateTextInput,
 				emitBlur: mockEmitBlur,
 			})
 
@@ -81,7 +81,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				parseDate: mockParseDate,
 				formatDate: mockFormatDate,
 				updateModel: mockUpdateModel,
-				validateManualInput: mockValidateManualInput,
+				validateTextInput: mockValidateTextInput,
 				emitBlur: mockEmitBlur,
 			})
 
@@ -115,7 +115,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				parseDate: mockParseDate,
 				formatDate: mockFormatDate,
 				updateModel: mockUpdateModel,
-				validateManualInput: mockValidateManualInput,
+				validateTextInput: mockValidateTextInput,
 				emitBlur: mockEmitBlur,
 			})
 
@@ -141,7 +141,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				parseDate: mockParseDate,
 				formatDate: mockFormatDate,
 				updateModel: mockUpdateModel,
-				validateManualInput: mockValidateManualInput,
+				validateTextInput: mockValidateTextInput,
 				emitBlur: mockEmitBlur,
 			})
 
@@ -171,7 +171,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				parseDate: mockParseDate,
 				formatDate: mockFormatDate,
 				updateModel: mockUpdateModel,
-				validateManualInput: mockValidateManualInput,
+				validateTextInput: mockValidateTextInput,
 				emitBlur: mockEmitBlur,
 			})
 
@@ -199,7 +199,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				parseDate: mockParseDate,
 				formatDate: mockFormatDate,
 				updateModel: mockUpdateModel,
-				validateManualInput: mockValidateManualInput,
+				validateTextInput: mockValidateTextInput,
 				emitBlur: mockEmitBlur,
 			})
 
@@ -223,7 +223,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				parseDate: mockParseDate,
 				formatDate: mockFormatDate,
 				updateModel: mockUpdateModel,
-				validateManualInput: mockValidateManualInput,
+				validateTextInput: mockValidateTextInput,
 				emitBlur: mockEmitBlur,
 			})
 
@@ -254,7 +254,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				parseDate: mockParseDate,
 				formatDate: mockFormatDate,
 				updateModel: mockUpdateModel,
-				validateManualInput: mockValidateManualInput,
+				validateTextInput: mockValidateTextInput,
 				emitBlur: mockEmitBlur,
 			})
 
@@ -281,22 +281,22 @@ describe('useDatePickerInputBlurHandler', () => {
 				parseDate: mockParseDate,
 				formatDate: mockFormatDate,
 				updateModel: mockUpdateModel,
-				validateManualInput: mockValidateManualInput,
+				validateTextInput: mockValidateTextInput,
 				emitBlur: mockEmitBlur,
 			})
 
 			handleInputBlur()
 
 			// Avec nos modifications, on met à jour directement le modèle avec null
-			// au lieu d'appeler validateManualInput
+			// au lieu d'appeler validateTextInput
 			expect(mockUpdateModel).toHaveBeenCalledWith(null)
 		})
 
-		it('attend validateManualInput quand il est asynchrone', async () => {
+		it('attend validateTextInput quand il est asynchrone', async () => {
 			displayFormattedDate.value = '01/01/2023'
 
 			let resolveValidation: ((value: boolean) => void) | undefined
-			mockValidateManualInput.mockImplementation(() => new Promise<boolean>((resolve) => {
+			mockValidateTextInput.mockImplementation(() => new Promise<boolean>((resolve) => {
 				resolveValidation = resolve
 			}))
 
@@ -312,7 +312,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				parseDate: mockParseDate,
 				formatDate: mockFormatDate,
 				updateModel: mockUpdateModel,
-				validateManualInput: mockValidateManualInput,
+				validateTextInput: mockValidateTextInput,
 				emitBlur: mockEmitBlur,
 			})
 
@@ -328,7 +328,7 @@ describe('useDatePickerInputBlurHandler', () => {
 			await blurPromise
 
 			expect(resolved).toBe(true)
-			expect(mockValidateManualInput).toHaveBeenCalledWith('01/01/2023')
+			expect(mockValidateTextInput).toHaveBeenCalledWith('01/01/2023')
 		})
 	})
 
@@ -363,7 +363,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				parseDate: mockParseDate,
 				formatDate: mockFormatDate,
 				updateModel: mockUpdateModel,
-				validateManualInput: mockValidateManualInput,
+				validateTextInput: mockValidateTextInput,
 				emitBlur: mockEmitBlur,
 			})
 
@@ -410,7 +410,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				parseDate: mockParseDate,
 				formatDate: mockFormatDate,
 				updateModel: mockUpdateModel,
-				validateManualInput: mockValidateManualInput,
+				validateTextInput: mockValidateTextInput,
 				emitBlur: mockEmitBlur,
 			})
 
@@ -448,7 +448,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				parseDate: mockParseDate,
 				formatDate: mockFormatDate,
 				updateModel: mockUpdateModel,
-				validateManualInput: mockValidateManualInput,
+				validateTextInput: mockValidateTextInput,
 				emitBlur: mockEmitBlur,
 			})
 
@@ -481,7 +481,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				parseDate: mockParseDate,
 				formatDate: mockFormatDate,
 				updateModel: mockUpdateModel,
-				validateManualInput: mockValidateManualInput,
+				validateTextInput: mockValidateTextInput,
 				emitBlur: mockEmitBlur,
 			})
 
