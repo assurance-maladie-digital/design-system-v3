@@ -252,7 +252,7 @@
 	)
 	const { currentRangeIsValid, getRangeValidationError } = useDateRangeValidation(
 		selectedDates as Ref<DateObjectValue>,
-		props.displayRange,
+		computed(() => props.displayRange),
 	)
 	// Force re-render of DateTextInput/SyTextField when needed (e.g., after reset)
 	const fieldKey = ref(0)
