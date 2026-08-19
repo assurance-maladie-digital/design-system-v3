@@ -500,6 +500,7 @@
 		parseDate,
 		formatDate,
 		validateDates,
+		clearValidation,
 		generateDateRange: dateSelectionResult.generateDateRange,
 	})
 
