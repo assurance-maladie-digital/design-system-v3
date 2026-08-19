@@ -18,6 +18,7 @@
 	import type { CalendarModeProps, DateObjectValue } from '../types'
 	import { DatePickerCommonDefaults } from '../types'
 	import { formatDateRangeDisplay, getDisplayedMonthYearState, resolveDatePickerStateFromModelValue } from '../utils/dateFormattingUtils'
+	import { isModelValueEqual } from '../utils/validationUtils'
 	import { buildCalendarModeComplexDatePickerProps } from './props/buildCalendarModeComplexDatePickerProps'
 	import { buildCalendarModeDateTextInputProps } from './props/buildCalendarModeDateTextInputProps'
 	import { buildCalendarModeActivatorTextFieldProps } from './props/buildCalendarModeActivatorTextFieldProps'
@@ -387,7 +388,7 @@
 
 	const finalizeDatePickerClose = async () => {
 		emit('closed')
-		await validateDates()
+		await validateCalendarModeDates()
 	}
 
 	const closeDatePicker = async () => {
@@ -409,7 +410,7 @@
 	// Fonction centralisée pour mettre à jour le modèle
 	const updateModel = async (value: DateModelValue) => {
 		// Éviter les mises à jour inutiles
-		if (JSON.stringify(value) === JSON.stringify(props.modelValue)) return
+		if (isModelValueEqual(value, props.modelValue)) return
 
 		try {
 			isUpdatingFromInternal.value = true
@@ -418,7 +419,7 @@
 				await closeDatePicker()
 			}
 			else {
-				await validateDates()
+				await validateCalendarModeDates()
 			}
 		}
 		finally {
@@ -446,11 +447,6 @@
 			reapplyAccessibility()
 		}
 
-		// Ne valider automatiquement que si isValidateOnBlur est true ET pas en validation initiale
-		if (props.isValidateOnBlur && !isInitialValidation.value) {
-			// Valider les dates avec le flux spécifique CalendarMode
-			await validateCalendarModeDates()
-		}
 		// Marquer les jours fériés après la mise à jour des dates
 		markHolidayDays()
 		if (isDatePickerVisible.value) {
@@ -468,7 +464,12 @@
 			syncInputFromSelectionValue(newValue)
 		}
 		else {
-			updateModel(null)
+			await updateModel(null)
+			// updateModel peut ne pas valider si le calendrier n'est pas visible
+			// ou si la valeur du modèle n'a pas changé — validation explicite pour le cas null
+			if (props.isValidateOnBlur && !isInitialValidation.value) {
+				await validateCalendarModeDates()
+			}
 			// Réinitialiser textInputValue
 			textInputValue.value = ''
 			displayFormattedDate.value = ''
@@ -929,7 +930,6 @@
 			setTimeout(() => {
 				requestAnimationFrame(() => {
 					focusCalendarInput()
-					isDatePickerVisible.value = false
 				})
 			}, 0)
 		}
