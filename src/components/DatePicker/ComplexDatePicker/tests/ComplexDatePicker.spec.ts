@@ -462,6 +462,33 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.isDatePickerVisible).toBe(false)
 	})
 
+	it('waits for a complete range before emitting the model and uses dateFormatReturn for calendar ranges', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			displayRange: true,
+		}, { attachTo: document.body })
+
+		wrapper.vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		await wrapper.vm.updateSelectedDates(new Date(2026, 6, 1))
+		await flushPromises()
+
+		expect(wrapper.find('input').element.value).toBe('01/07/2026')
+		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+
+		await wrapper.vm.updateSelectedDates(new Date(2026, 6, 5))
+		await flushPromises()
+
+		expect(wrapper.find('input').element.value).toBe('01/07/2026 - 05/07/2026')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toEqual(['2026-07-01', '2026-07-05'])
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+	})
+
 	it('keeps the dialog open and does not emit model update when a calendar selection fails customRules', async () => {
 		vi.useFakeTimers()
 		vi.setSystemTime(new Date(2026, 7, 19, 12, 0, 0))
@@ -508,6 +535,24 @@ describe('ComplexDatePicker.clean', () => {
 
 		const input = wrapper.find('input')
 		expect((input.element as HTMLInputElement).value).toBe('01/01/2025 - 10/01/2025')
+	})
+
+	it('refreshes range boundaries when a manual range replaces an existing one', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			displayRange: true,
+			modelValue: ['2025-01-01', '2025-01-05'],
+		})
+
+		await flushPromises()
+
+		wrapper.findComponent({ name: 'DateTextInput' }).vm.$emit('input', '01/02/2025 - 05/02/2025')
+		await flushPromises()
+
+		expect(wrapper.vm.displayFormattedDate).toBe('01/02/2025 - 05/02/2025')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toEqual(['2025-02-01', '2025-02-05'])
 	})
 
 	it('generates all intermediate dates when selecting a range in range mode', async () => {

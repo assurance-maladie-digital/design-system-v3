@@ -48,12 +48,40 @@ export function useDateSelection(
 		resetRange()
 	}
 
+	const startRangeSelection = (date: Date) => {
+		rangeBoundaryDates.value = [date, null]
+		selectedDates.value = [date]
+	}
+
 	const applyRangeSelection = (startDate: Date, endDate: Date) => {
 		rangeBoundaryDates.value = [startDate, endDate]
 
 		selectedDates.value = startDate.getTime() <= endDate.getTime()
 			? generateDateRange(startDate, endDate)
 			: [startDate, endDate]
+	}
+
+	const getPendingRangeStart = (): Date | null => {
+		if (rangeBoundaryDates.value?.[0] && !rangeBoundaryDates.value[1]) {
+			return rangeBoundaryDates.value[0]
+		}
+
+		if (Array.isArray(selectedDates.value) && selectedDates.value.length === 1) {
+			return selectedDates.value[0] ?? null
+		}
+
+		return null
+	}
+
+	const applyProgressiveRangeSelection = (date: Date) => {
+		const pendingStart = getPendingRangeStart()
+
+		if (!pendingStart) {
+			startRangeSelection(date)
+			return
+		}
+
+		applyRangeSelection(pendingStart, date)
 	}
 
 	const toDate = (value: Date | string | null | undefined): Date | null => {
@@ -95,16 +123,26 @@ export function useDateSelection(
 				return
 			}
 
-			if (unref(displayRange) && dates.length >= 2) {
-				dates.sort((a, b) => a.getTime() - b.getTime())
-				const startDate = dates[0]!
-				const endDate = dates[dates.length - 1]!
-				applyRangeSelection(startDate, endDate)
+			if (unref(displayRange)) {
+				if (dates.length >= 2) {
+					dates.sort((a, b) => a.getTime() - b.getTime())
+					const startDate = dates[0]!
+					const endDate = dates[dates.length - 1]!
+					applyRangeSelection(startDate, endDate)
+				}
+				else {
+					startRangeSelection(dates[0]!)
+				}
 			}
 			else {
 				selectedDates.value = dates
 				resetRange()
 			}
+			return
+		}
+
+		if (unref(displayRange) && input instanceof Date) {
+			applyProgressiveRangeSelection(input)
 			return
 		}
 

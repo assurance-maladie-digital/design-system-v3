@@ -564,6 +564,7 @@
 
 	const handleSelectedDatesChange = (value: Exclude<DateObjectValue, null>): void => {
 		const baseDate = getSelectedBaseDate(value)
+		const isCompletedRangeSelection = props.displayRange && hasCompletedRangeSelection(value)
 
 		if (consumeIgnoredCalendarModelSync()) {
 			keyboardNavigatedDate.value = baseDate
@@ -571,9 +572,12 @@
 			return
 		}
 
-		updateModel(formattedDate.value)
 		syncSelectionDisplay()
 		syncVisibleCalendarState(baseDate)
+
+		if (!props.displayRange || isCompletedRangeSelection) {
+			updateModel(formattedDate.value)
+		}
 
 		if (shouldCloseAfterSelection(value)) {
 			closeAndRestoreFocus()
@@ -923,7 +927,7 @@
 					const startDate = parseDate(startDateStr, props.format)
 					const endDate = parseDate(endDateStr, props.format)
 					if (startDate && endDate) {
-						selectedDates.value = dateSelectionResult.generateDateRange(startDate, endDate)
+						dateSelectionResult.updateSelectedDates([startDate, endDate])
 						validateDates()
 					}
 				}
