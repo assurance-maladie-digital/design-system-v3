@@ -60,27 +60,36 @@ export interface UseDisplayMessagesOptions {
 export function useDisplayMessages(options: UseDisplayMessagesOptions) {
 	const displayErrors = computed(() => {
 		const max = toValue(options.maxErrors)
+		const internal = toValue(options.disableErrorHandling) !== true
+			? options.errors.value
+			: []
 		return mergeMessages(
 			toValue(options.externalErrors) ?? null,
-			options.errors.value,
+			internal,
 			max,
 		)
 	})
 
 	const displayWarnings = computed(() => {
 		const max = toValue(options.maxErrors)
+		const internal = toValue(options.disableErrorHandling) !== true
+			? options.warnings.value
+			: []
 		return mergeMessages(
 			toValue(options.externalWarnings) ?? null,
-			options.warnings.value,
+			internal,
 			max,
 		)
 	})
 
 	const displaySuccesses = computed(() => {
 		const max = toValue(options.maxErrors)
+		const internal = toValue(options.disableErrorHandling) !== true
+			? options.successes.value
+			: []
 		return mergeMessages(
 			toValue(options.externalSuccesses) ?? null,
-			options.successes.value,
+			internal,
 			max,
 		)
 	})

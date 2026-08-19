@@ -237,6 +237,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		hasWarningProp: () => Boolean(unref(options.hasWarningProp)),
 		hasSuccessProp: () => Boolean(unref(options.hasSuccessProp)),
 		internalHasSuccess: validation.hasSuccess,
+		disableErrorHandling: () => Boolean(unref(options.disableErrorHandling)),
 	})
 
 	// Utiliser useDateRangeValidation pour centraliser la validation des plages
@@ -425,6 +426,16 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			return emptyValidationResult()
 		}
 
+		// En mode Vuetify natif, déléguer entièrement la validation à useCustomValidation
+		if (unref(options.useVuetifyValidation)) {
+			clearValidation()
+			const dates = getDatesToValidate()
+			if (dates.length === 0) {
+				return emptyValidationResult()
+			}
+			return Promise.resolve(validation.validateValue(dates[0]))
+		}
+
 		// Réinitialiser la validation
 		clearValidation()
 
@@ -473,6 +484,11 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 
 		if (unref(options.noCalendar)) {
 			return
+		}
+
+		// En mode Vuetify natif, déléguer à validateDates qui gère le court-circuit
+		if (unref(options.useVuetifyValidation)) {
+			return await Promise.resolve(validateDates(forceValidation))
 		}
 
 		clearValidation()
@@ -601,6 +617,12 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 
 	const validateTextInput = async (value: string): Promise<boolean> => {
 		clearValidation()
+
+		// En mode Vuetify natif, déléguer à useCustomValidation
+		if (unref(options.useVuetifyValidation)) {
+			const result = await Promise.resolve(validation.validateValue(value))
+			return !result.hasError
+		}
 
 		// Empty / skeleton input
 		if (!value || value.trim() === '') {
