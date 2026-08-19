@@ -40,7 +40,6 @@
 	import dayjs from 'dayjs'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { VDatePicker } from 'vuetify/components'
-	import { useInputHandler } from '../composables/useInputHandler'
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import type { DateObjectValue, DatePickerCommonProps } from '../types'
@@ -268,7 +267,6 @@
 	// Force re-render of DateTextInput/SyTextField when needed (e.g., after reset)
 	const fieldKey = ref(0)
 	const isManualInputActive = ref(false)
-	const isFormatting = ref(false)
 	const isUpdatingFromInternal = ref(false)
 	const hasInteracted = ref(false)
 	const preventCloseOnInternalUpdate = ref(false)
@@ -860,30 +858,6 @@
 		},
 	})
 
-	/**
-	 * Input handling (text field)
-	 */
-	const inputHandler = useInputHandler({
-		format: computed(() => props.format),
-		displayRange: computed(() => props.displayRange),
-		dateFormatReturn: props.dateFormatReturn,
-		disableErrorHandling: computed(() => props.disableErrorHandling),
-		parseDate,
-		formatDate,
-		generateDateRange: dateSelectionResult.generateDateRange,
-		isDateComplete: (val: string) => isDateCompleteUtil(val, props.format),
-		displayFormattedDate,
-		selectedDates,
-		isFormatting,
-		isManualInputActive,
-		isUpdatingFromInternal,
-		clearValidation,
-		validateField: (value, rules, warningRules) => validateField(value, rules, warningRules),
-		updateModel: value => updateModel(value as DateModelValue),
-		emitInput: value => emit('input', value),
-		inputRef: dateCalendarTextInputRef as Ref<ComponentPublicInstance | null>,
-	})
-
 	const handleKeydown = (event: KeyboardEvent) => {
 		if (props.readonly) return
 
@@ -952,19 +926,14 @@
 		await handleInputBlur()
 	}
 
-	const handleInput = (eventOrValue: Event | string) => {
+	const handleInput = (value: string) => {
 		if (props.readonly) return
 
-		if (eventOrValue instanceof Event) {
-			inputHandler.handleInput(eventOrValue)
-			return
-		}
+		textInputValue.value = value
 
-		textInputValue.value = eventOrValue
-
-		if (props.displayRange && typeof eventOrValue === 'string') {
-			if (eventOrValue.includes(locales.rangeSeparator)) {
-				const [startDateStr = '', endDateStr = ''] = eventOrValue.split(locales.rangeSeparator).map(s => s.trim())
+		if (props.displayRange) {
+			if (value.includes(locales.rangeSeparator)) {
+				const [startDateStr = '', endDateStr = ''] = value.split(locales.rangeSeparator).map(s => s.trim())
 				if (startDateStr && endDateStr && !endDateStr.includes('_')) {
 					const startDate = parseDate(startDateStr, props.format)
 					const endDate = parseDate(endDateStr, props.format)
