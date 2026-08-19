@@ -34,7 +34,6 @@ export interface UseDateTextFieldResetOptions {
 	isFormatting: Ref<boolean>
 	inputValue: Ref<string>
 	selectedDates: Ref<unknown>
-	resetState: () => void
 	emitModel: (value: DateModelValue) => void
 }
 
@@ -202,7 +201,6 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 			isFormatting,
 			inputValue,
 			selectedDates,
-			resetState,
 			emitModel,
 		} = resetOptions
 
@@ -220,7 +218,6 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 		isFormatting.value = true
 		inputValue.value = ''
 		selectedDates.value = null
-		resetState()
 		isFormatting.value = false
 
 		// 3) Synchroniser le modèle externe
@@ -237,5 +234,3 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 		reset,
 	}
 }
-
-export default useDateTextField
