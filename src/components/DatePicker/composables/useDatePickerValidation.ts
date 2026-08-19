@@ -178,6 +178,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 	const errors = ref<string[]>([])
 	const warnings = ref<string[]>([])
 	const successes = ref<string[]>([])
+	let currentValidationToken = 0
 	const validation = useCustomValidation(
 		computed(() => options.selectedDates.value),
 		options.customRules as Ref<ValidationRule[]>,
@@ -316,6 +317,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		rules = options.customRules.value,
 		warningRules = options.customWarningRules.value,
 		successRules = options.customSuccessRules?.value ?? [],
+		token = currentValidationToken,
 	): ValidationResult[] | Promise<ValidationResult[]> => {
 		const syncResults: ValidationResult[] = []
 
@@ -325,9 +327,11 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 				const startIndex = syncResults.length
 				return (async () => {
 					const results = [...syncResults, await result]
+					if (token !== currentValidationToken) return results
 					for (let i = startIndex + 1; i < dates.length; i++) {
 						results.push(await Promise.resolve(validateField(dates[i], rules, warningRules, successRules)))
 					}
+					if (token !== currentValidationToken) return results
 					return accumulateValidationResults(results)
 				})()
 			}
@@ -338,7 +342,9 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 	}
 
 	const revalidateSelectedDates = (): void => {
+		const token = ++currentValidationToken
 		queueMicrotask(async () => {
+			if (token !== currentValidationToken) return
 			const dates = getDatesToValidate()
 			const results: ValidationResult[] = []
 
@@ -349,9 +355,11 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 					options.customWarningRules.value,
 					options.customSuccessRules?.value ?? [],
 				))
+				if (token !== currentValidationToken) return
 				results.push(result)
 			}
 
+			if (token !== currentValidationToken) return
 			accumulateValidationResults(results)
 		})
 	}
@@ -452,6 +460,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 
 	// Validation des dates (fusionnée de useDateValidation)
 	const validateDates = (forceValidation = false): ValidationResult | Promise<ValidationResult> => {
+		const token = ++currentValidationToken
 		const customRules = options.customRules.value
 		const customWarningRules = options.customWarningRules.value
 
@@ -466,7 +475,25 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			if (dates.length === 0) {
 				return emptyValidationResult()
 			}
-			return Promise.resolve(validation.validateValue(dates[0]))
+			// Valider toutes les dates (important pour le mode range)
+			const results = dates.map(date => validation.validateValue(date))
+			if (results.some(r => r instanceof Promise)) {
+				return Promise.all(results).then((resolved) => {
+					if (token !== currentValidationToken) return emptyValidationResult()
+					const allErrors: string[] = []
+					for (const result of resolved) {
+						allErrors.push(...result.state.errors)
+					}
+					replaceErrors(allErrors)
+					return buildValidationResult(allErrors.length === 0)
+				})
+			}
+			const allErrors: string[] = []
+			for (const result of results) {
+				allErrors.push(...result.state.errors)
+			}
+			replaceErrors(allErrors)
+			return buildValidationResult(allErrors.length === 0)
 		}
 
 		// Réinitialiser la validation
@@ -494,6 +521,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			customRules,
 			customWarningRules,
 			options.customSuccessRules?.value ?? [],
+			token,
 		)
 
 		if (validationResults instanceof Promise) {

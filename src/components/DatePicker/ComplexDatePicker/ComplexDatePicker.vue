@@ -54,6 +54,7 @@
 		getDisplayedMonthYearState,
 		resolveDatePickerStateFromModelValue,
 	} from '../utils/dateFormattingUtils'
+	import { isModelValueEqual } from '../utils/validationUtils'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
@@ -428,7 +429,7 @@
 
 	const updateModel = (value: DateModelValue) => {
 		// Prevent redundant emits
-		if (JSON.stringify(value) === JSON.stringify(props.modelValue)) return
+		if (isModelValueEqual(value, props.modelValue)) return
 		withInternalUpdate(() => emit('update:modelValue', value))
 	}
 
