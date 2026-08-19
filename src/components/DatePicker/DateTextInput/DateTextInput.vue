@@ -93,7 +93,7 @@
 
 	const { currentRangeIsValid, getRangeValidationError } = useDateRangeValidation(
 		selectedDates,
-		props.displayRange,
+		computed(() => props.displayRange),
 	)
 
 	const {
@@ -131,7 +131,7 @@
 		getRangeValidationError,
 		skipValidationWhenReadonly: true,
 		readonly: readonly,
-		fieldIdentifier: props.label || props.placeholder || 'Date',
+		fieldIdentifier: computed(() => props.label || props.placeholder || 'Date'),
 		displayFormat: computed(() => displayFormat.value),
 		parseDate,
 		hasInteracted,

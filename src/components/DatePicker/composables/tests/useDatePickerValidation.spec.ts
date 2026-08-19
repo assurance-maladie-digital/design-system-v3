@@ -522,4 +522,212 @@ describe('useDatePickerValidation', () => {
 			expect(errors.value).toContain('Nouvelle erreur')
 		})
 	})
+
+	describe('régression : accumulation des erreurs multi-dates (fix #1)', () => {
+		it('devrait accumuler les erreurs de toutes les dates en mode plage', () => {
+			const start = new Date('2023-01-01')
+			const end = new Date('2023-06-15')
+			const options = createOptions({
+				displayRange: ref(true),
+				maxErrors: ref(10),
+				selectedDates: ref([start, end]),
+				customRules: ref([
+					{
+						type: 'custom',
+						options: {
+							validate: (value: unknown) => {
+								if (value instanceof Date && value.getTime() === start.getTime()) return 'Erreur date début'
+								if (value instanceof Date && value.getTime() === end.getTime()) return 'Erreur date fin'
+								return true
+							},
+						},
+					},
+				]),
+			})
+			const { validateDates, errors } = useDatePickerValidation(options)
+
+			validateDates()
+
+			expect(errors.value).toContain('Erreur date début')
+			expect(errors.value).toContain('Erreur date fin')
+			expect(errors.value.length).toBe(2)
+		})
+
+		it('devrait accumuler les erreurs même avec des règles async', async () => {
+			const start = new Date('2023-01-01')
+			const end = new Date('2023-06-15')
+			const options = createOptions({
+				displayRange: ref(true),
+				maxErrors: ref(10),
+				selectedDates: ref([start, end]),
+				customRules: ref([
+					{
+						type: 'custom',
+						options: {
+							validate: async (value: unknown) => {
+								if (value instanceof Date && value.getTime() === start.getTime()) return 'Erreur async début'
+								if (value instanceof Date && value.getTime() === end.getTime()) return 'Erreur async fin'
+								return true
+							},
+						},
+					},
+				]),
+			})
+			const { validateDates, errors } = useDatePickerValidation(options)
+
+			const result = validateDates()
+			expect(result).toBeInstanceOf(Promise)
+			await result
+
+			expect(errors.value).toContain('Erreur async début')
+			expect(errors.value).toContain('Erreur async fin')
+		})
+	})
+
+	describe('régression : détection de plage incomplète (fix #4)', () => {
+		it('devrait détecter une plage incomplète avec un seul élément [date]', () => {
+			const options = createOptions({
+				displayRange: ref(true),
+				selectedDates: ref([new Date('2023-01-01')]),
+				required: ref(true),
+			})
+			const { validateDates, errors } = useDatePickerValidation(options)
+
+			// Sans forceValidation, une plage incomplète ne doit pas afficher d'erreur required
+			const result = validateDates()
+
+			expect(result).toMatchObject({ hasError: false })
+			expect(errors.value).not.toContain(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
+		})
+
+		it('devrait valider la date présente même avec forceValidation sur une plage incomplète', () => {
+			const date = new Date('2023-01-01')
+			const options = createOptions({
+				displayRange: ref(true),
+				selectedDates: ref([date]),
+				required: ref(true),
+				customRules: ref([
+					{
+						type: 'custom',
+						options: {
+							validate: (value: unknown) => {
+								if (value instanceof Date && value.getTime() === date.getTime()) return 'Erreur sur date présente'
+								return true
+							},
+						},
+					},
+				]),
+			})
+			const { validateDates, errors } = useDatePickerValidation(options)
+
+			// Avec forceValidation, la validation ne doit pas être court-circuitée
+			const result = validateDates(true)
+
+			expect(result).toMatchObject({ hasError: true })
+			expect(errors.value).toContain('Erreur sur date présente')
+		})
+
+		it('devrait détecter une plage incomplète avec [date, null]', () => {
+			const options = createOptions({
+				displayRange: ref(true),
+				selectedDates: ref([new Date('2023-01-01'), null]),
+				required: ref(true),
+			})
+			const { validateDates, errors } = useDatePickerValidation(options)
+
+			const result = validateDates()
+
+			expect(result).toMatchObject({ hasError: false })
+			expect(errors.value).not.toContain(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
+		})
+	})
+
+	describe('régression : validation des deux dates de plage même si la première échoue (fix #6)', () => {
+		it('devrait afficher les erreurs custom des deux dates via validateDates', () => {
+			const start = new Date('2023-01-01')
+			const end = new Date('2023-06-15')
+			const options = createOptions({
+				displayRange: ref(true),
+				maxErrors: ref(10),
+				selectedDates: ref([start, end]),
+				customRules: ref([
+					{
+						type: 'custom',
+						options: {
+							validate: (value: unknown) => {
+								if (value instanceof Date && value.getTime() === start.getTime()) return 'Erreur début'
+								if (value instanceof Date && value.getTime() === end.getTime()) return 'Erreur fin'
+								return true
+							},
+						},
+					},
+				]),
+			})
+			const { validateDates, errors } = useDatePickerValidation(options)
+
+			validateDates()
+
+			expect(errors.value).toContain('Erreur début')
+			expect(errors.value).toContain('Erreur fin')
+			expect(errors.value.length).toBe(2)
+		})
+
+		it('devrait préserver l\'erreur endBeforeStart avec les erreurs custom via validateDates', () => {
+			const options = createOptions({
+				displayRange: ref(true),
+				maxErrors: ref(10),
+				selectedDates: ref([new Date('2023-06-15'), new Date('2023-01-01')]),
+				customRules: ref([
+					{
+						type: 'custom',
+						options: {
+							validate: () => 'Erreur custom',
+						},
+					},
+				]),
+			})
+			const { validateDates, errors } = useDatePickerValidation(options)
+
+			validateDates()
+
+			expect(errors.value).toContain(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
+			expect(errors.value).toContain('Erreur custom')
+		})
+	})
+
+	describe('régression : pas de flicker dans revalidateSelectedDates (fix #9)', () => {
+		it('ne devrait pas effacer les erreurs avant de revalider', async () => {
+			const customRules = ref<DatePickerRule[]>([
+				{
+					type: 'custom',
+					options: { validate: () => 'Erreur persistante' },
+				},
+			])
+			const options = createOptions({
+				selectedDates: ref(new Date('2023-01-01')),
+				customRules,
+				revalidateOnCustomRulesChange: true,
+			})
+			const { validateDates, errors } = useDatePickerValidation(options)
+
+			// Validation initiale
+			validateDates()
+			expect(errors.value).toContain('Erreur persistante')
+
+			// Changer les règles déclenche revalidateSelectedDates
+			customRules.value = [
+				{
+					type: 'custom',
+					options: { validate: () => 'Nouvelle erreur persistante' },
+				},
+			]
+
+			await nextTick()
+			await new Promise<void>(resolve => queueMicrotask(() => resolve()))
+
+			// Les erreurs doivent être mises à jour sans passer par un état vide
+			expect(errors.value).toContain('Nouvelle erreur persistante')
+			expect(errors.value.length).toBeGreaterThan(0)
+		})
+	})
 })

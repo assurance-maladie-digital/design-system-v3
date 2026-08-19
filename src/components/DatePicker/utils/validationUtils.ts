@@ -21,11 +21,9 @@ export const adaptCustomRules = (rules: DatePickerRule[] = [], format: string): 
 			safeCopy.options = { ...rule.options }
 
 			safeCopy.options.validate = (val: unknown) => {
-				// Si la valeur est une Date mais que la fonction originale attend une chaîne
-				// (détecté par la présence de includes dans le code source)
-				if (val instanceof Date && originalValidate.toString().includes('.includes')) {
-					// Convertir la date en chaîne au format spécifié
-					return originalValidate(format ? formatDate(dayjs(val), format) : val.toISOString())
+				if (val instanceof Date) {
+					const formatted = format ? formatDate(dayjs(val), format) : val.toISOString()
+					return originalValidate(formatted)
 				}
 				return originalValidate(val)
 			}
