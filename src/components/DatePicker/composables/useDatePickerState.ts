@@ -12,6 +12,7 @@ export interface UseDatePickerStateOptions {
 	parseDate: (value: string, format: string) => Date | null
 	formatDate: (date: Date | null, format: string) => string
 	validateDates: (forceValidation?: boolean) => void
+	clearValidation?: () => void
 	generateDateRange?: (start: Date, end: Date) => Date[]
 }
 
@@ -34,6 +35,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 		parseDate,
 		formatDate,
 		validateDates,
+		clearValidation,
 		generateDateRange,
 	} = options
 
@@ -160,6 +162,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 		if (!newValue || newValue === '') {
 			selectedDates.value = null
 			clearSyncedValues()
+			clearValidation?.()
 			validateDates()
 			return
 		}
