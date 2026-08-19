@@ -3,13 +3,12 @@
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
-	import { computed, nextTick, onMounted, onUpdated, readonly as readonlyState, ref } from 'vue'
+	import { computed, nextTick, onMounted, onUpdated, readonly as readonlyState, ref, useAttrs } from 'vue'
 	import { VMessages } from 'vuetify/components/VMessages'
 	import { VRadio } from 'vuetify/components/VRadio'
 	import { VRadioGroup } from 'vuetify/components/VRadioGroup'
 	import { useSyRadioGroupValidation } from './composables/useSyRadioGroupValidation'
 	import { locales as defaultLocales } from './locales'
-	import { useAttrs } from 'vue'
 
 	defineOptions({
 		inheritAttrs: false,
