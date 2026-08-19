@@ -5,10 +5,11 @@ export { useDateInputEditing } from './useDateInputEditing'
 export { useDateRangeInput } from './useDateRangeInput'
 export { useDateAutoClamp } from './useDateAutoClamp'
 export { useDateTextField } from './useDateTextField'
+export { useDatePickerFormRegistration } from './useDatePickerFormRegistration'
 
 // Date selection and validation
 export { useDateSelection } from './useDateSelection'
-export { useDatePickerValidation } from './useDatePickerValidation'
+export { createInactiveDatePickerValidationController, useDatePickerValidation } from './useDatePickerValidation'
 export { validateDateFormat, isDateComplete } from './useDateFormatUtils'
 export { useDateRangeValidation } from './useDateRangeValidation'
 

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 	import {
+		createInactiveDatePickerValidationController,
 		useDateRangeInput,
 		useDateRangeValidation,
 		useDateInputEditing,
 		useDateAutoClamp,
+		useDatePickerFormRegistration,
 		useDateTextField,
 		useDatePickerValidation,
 		validateDateFormat,
@@ -13,7 +15,7 @@
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import type { ValidationRule, ValidationResult } from '@/composables/validation/useValidation'
-	import { useValidatable } from '@/composables/validation/useValidatable'
+	import type { DatePickerValidationController } from '../composables/useDatePickerValidation'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useSyTextFieldProps } from './props/syTextFieldProps'
 	import { locales } from '../locales'
@@ -113,49 +115,30 @@
 		state: { errors: [], warnings: [], successes: [] },
 	})
 
-	const inactiveValidationController = {
-		errors: ref<string[]>([]),
-		warnings: ref<string[]>([]),
-		clearValidation: () => {},
-		validateField: () => emptyValidationResult(),
-		validateDates: () => emptyValidationResult(),
-		validation: {
-			displaySuccesses: computed(() => [] as string[]),
-			hasSuccess: ref(false),
-		},
-		validationState: {
-			errors: ref<string[]>([]),
-			warnings: ref<string[]>([]),
-			successes: computed(() => [] as string[]),
-			hasSuccess: ref(false),
-			clear: () => {},
-			validate: () => emptyValidationResult(),
-			validateSubmit: () => emptyValidationResult(),
-			validateField: () => emptyValidationResult(),
-		},
-	}
+	const inactiveValidationController = createInactiveDatePickerValidationController()
 
-	const validationController = computed(() => (
+	const validationController = computed<DatePickerValidationController | typeof inactiveValidationController>(() => (
 		readonly.value ? inactiveValidationController : bridgeValidation
 	))
+	const validationMessages = computed(() => validationController.value.messages)
 
 	const errors = computed({
-		get: () => validationController.value.validationState.errors.value,
+		get: () => validationMessages.value.errors.value,
 		set: (value) => {
 			if (!readonly.value) {
-				validationController.value.validationState.errors.value = value
+				validationMessages.value.errors.value = value
 			}
 		},
 	})
 	const warnings = computed({
-		get: () => validationController.value.validationState.warnings.value,
+		get: () => validationMessages.value.warnings.value,
 		set: (value) => {
 			if (!readonly.value) {
-				validationController.value.validationState.warnings.value = value
+				validationMessages.value.warnings.value = value
 			}
 		},
 	})
-	const hasError = computed(() => !readonly.value && validationController.value.validationState.errors.value.length > 0)
+	const hasError = computed(() => !readonly.value && validationMessages.value.errors.value.length > 0)
 
 	const clearValidation = () => validationController.value.validationState.clear()
 
@@ -173,7 +156,7 @@
 	})
 	const warningMessages = warnings
 	const successMessages = computed((): string[] =>
-		validationController.value.validationState.successes.value ?? [],
+		validationMessages.value.successes.value ?? [],
 	)
 	const customValidationRules = computed(() => props.customRules)
 	const customValidationWarningRules = computed(() => props.customWarningRules)
@@ -684,9 +667,31 @@
 		return !value || value.trim() === '' || skeletonPattern.value.test(value)
 	}
 
+	function pushDisplayedError(message?: string): void {
+		if (!message || props.disableErrorHandling) {
+			return
+		}
+
+		errors.value.push(message)
+	}
+
+	function failWithDisplayedError(message?: string): false {
+		pushDisplayedError(message)
+		return false
+	}
+
+	function replaceWithDisplayedError(message?: string): false {
+		clearValidation()
+		return failWithDisplayedError(message)
+	}
+
+	function hasNoDisplayedError(): boolean {
+		return errors.value.length === 0
+	}
+
 	async function runEmptyInputRules(): Promise<boolean> {
 		if (required.value && hasInteracted.value && !readonly.value && !props.disableErrorHandling) {
-			errors.value.push(locales.required)
+			pushDisplayedError(locales.required)
 			return false
 		}
 
@@ -711,10 +716,7 @@
 
 		const formatValidationResult = validateDateFormatForSingleOrRange(value)
 		if (!formatValidationResult.isValid) {
-			if (!props.disableErrorHandling && formatValidationResult.message) {
-				errors.value.push(formatValidationResult.message)
-			}
-			return false
+			return failWithDisplayedError(formatValidationResult.message)
 		}
 
 		const startDate = parseDate(startDateText, displayFormat.value)
@@ -725,12 +727,11 @@
 		}
 
 		if (!isValidRange(startDate, endDate) && !props.disableErrorHandling) {
-			errors.value.push(locales.endBeforeStart)
-			return false
+			return failWithDisplayedError(locales.endBeforeStart)
 		}
 
 		await validateCustomValue(startDate)
-		if (errors.value.length === 0) {
+		if (hasNoDisplayedError()) {
 			await validateCustomValue(endDate)
 		}
 
@@ -756,18 +757,6 @@
 			}
 			isFormatting.value = false
 		}
-	}
-
-	async function validateDisplayValueOnBlur(value: string): Promise<boolean> {
-		const formatValidationResult = validateDateFormatForSingleOrRange(value)
-		const customRulesValidationResult = await validateCustomValue(value)
-
-		if (!formatValidationResult.isValid || customRulesValidationResult.hasError) {
-			await runRules(value)
-			return false
-		}
-
-		return true
 	}
 
 	function emitBlurRangeModel(value: string): void {
@@ -899,8 +888,7 @@
 
 		if (startDate && endDate) {
 			if (!isValidRange(startDate, endDate)) {
-				clearValidation()
-				errors.value.push(locales.endBeforeStart)
+				replaceWithDisplayedError(locales.endBeforeStart)
 			}
 			else {
 				emitRangeModelDates(startDate, endDate)
@@ -966,7 +954,7 @@
 		}
 
 		if (!isValidRange(dates[0], dates[1])) {
-			errors.value.push(locales.endBeforeStart)
+			pushDisplayedError(locales.endBeforeStart)
 		}
 	}
 
@@ -1169,14 +1157,13 @@
 
 		// Format invalide ou règles custom en erreur : runRules pousse déjà les messages attendus.
 		// On garde la valeur visible pour permettre la correction sans nettoyer le champ.
-		if (!(await validateDisplayValueOnBlur(inputValue.value))) {
+		if (!(await runRules(inputValue.value))) {
 			return
 		}
 
 		// On garde le verrou jusqu'au nextTick pour bloquer le watcher modelValue déclenché par emitModel.
 		await withFormattingLock(async () => {
 			emitBlurModel(inputValue.value)
-			await runRules(inputValue.value)
 		}, true)
 	}
 	watch(inputValue, async (nv, ov) => {
@@ -1238,7 +1225,11 @@
 
 	/** expose */
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit, clearValidation, reset)
+	useDatePickerFormRegistration({
+		validateOnSubmit,
+		clearValidation,
+		reset,
+	})
 
 	defineExpose({
 		validateOnSubmit,
@@ -1271,7 +1262,7 @@
 	const isOnError = computed(() => warningMessages.value.length === 0 && successMessages.value.length === 0 && errorMessages.value.length > 0)
 	const isOnWarning = computed(() => errorMessages.value.length === 0 && successMessages.value.length === 0 && warningMessages.value.length > 0)
 	const isOnSuccess = computed(() =>
-		validationController.value.validationState.hasSuccess.value
+		validationMessages.value.hasSuccess.value
 		&& errorMessages.value.length === 0
 		&& warningMessages.value.length === 0,
 	)

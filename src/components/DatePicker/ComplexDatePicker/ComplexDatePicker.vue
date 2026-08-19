@@ -19,6 +19,7 @@
 	import {
 		buildTodaySelectionState,
 		useCalendarKeyboardNavigation,
+		useDatePickerFormRegistration,
 		useDatePickerFocusTrap,
 		useDatePickerState,
 		useDatePickerValidation,
@@ -40,7 +41,6 @@
 	import dayjs from 'dayjs'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { VDatePicker } from 'vuetify/components'
-	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import type { DateObjectValue, DatePickerCommonProps } from '../types'
 	import { DatePickerCommonDefaults } from '../types'
@@ -267,6 +267,7 @@
 	const ignoreNextCalendarModelSync = ref(false)
 
 	const {
+		messages,
 		validationState,
 		validateField,
 		clearValidation,
@@ -287,15 +288,15 @@
 		readonly: computed(() => props.readonly),
 		skipValidationWhenReadonly: true,
 	})
-	const errors = validationState.errors
-	const errorMessages = computed(() => validationState.errors.value)
-	const warningMessages = computed(() => validationState.warnings.value)
+	const errors = messages.errors
+	const errorMessages = computed(() => messages.errors.value)
+	const warningMessages = computed(() => messages.warnings.value)
 
 	const messageClasses = computed(() => ({
 		'dp-width': true,
 		'v-messages__message--error': errorMessages.value.length > 0,
 		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length === 0,
-		'v-messages__message--success': validationState.hasSuccess.value,
+		'v-messages__message--success': messages.hasSuccess.value,
 	}))
 
 	// Props regroupées pour DateTextInput (mode noCalendar)
@@ -1361,7 +1362,7 @@
 	}
 
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit, clearValidation, reset)
+	useDatePickerFormRegistration({ validateOnSubmit, clearValidation, reset })
 
 	defineExpose({
 		validateOnSubmit,
