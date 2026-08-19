@@ -1,4 +1,7 @@
-import type { ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
+import type {
+	ValidationResult as LegacyValidationResult,
+	ValidationRule as SyValidationRule,
+} from '@/composables/validation/useValidation'
 import { computed, ref, toValue, type Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import { useCustomValidation } from './useCustomValidation'
@@ -6,6 +9,7 @@ import { useVuetifyValidation as useVuetifyValidationComposable } from './useVue
 
 export type { VuetifyValidationRule }
 export type { SyValidationRule as ValidationRule }
+export type { LegacyValidationResult as ValidationResult }
 
 export interface FieldValidationProps {
 	customRules?: SyValidationRule[]

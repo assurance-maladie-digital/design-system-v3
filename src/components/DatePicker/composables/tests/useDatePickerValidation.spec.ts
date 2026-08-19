@@ -96,6 +96,26 @@ describe('useDatePickerValidation', () => {
 			})
 			expect(errors.value).toContain('Erreur custom')
 		})
+
+		it('devrait supporter les règles Vuetify quand useVuetifyValidation est actif', async () => {
+			const options = createOptions({
+				useVuetifyValidation: ref(true),
+				rules: ref([
+					(value: unknown) => value instanceof Date || 'Erreur Vuetify',
+				]),
+			})
+			const { validateField, errors } = useDatePickerValidation(options)
+
+			const result = await validateField(null)
+
+			expect(result).toMatchObject({
+				hasError: true,
+				hasWarning: false,
+				hasSuccess: false,
+				state: { errors: ['Erreur Vuetify'] },
+			})
+			expect(errors.value).toEqual(['Erreur Vuetify'])
+		})
 	})
 
 	describe('public contract', () => {
