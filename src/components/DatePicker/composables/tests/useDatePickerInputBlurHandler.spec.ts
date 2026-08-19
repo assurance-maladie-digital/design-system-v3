@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { ref } from 'vue'
-import { useInputBlurHandler } from '../useInputBlurHandler'
+import { useDatePickerInputBlurHandler } from '../useDatePickerInputBlurHandler'
 import { DATE_PICKER_MESSAGES } from '../../constants/messages'
 
-describe('useInputBlurHandler', () => {
+describe('useDatePickerInputBlurHandler', () => {
 	// Mocks et setup
 	const mockValidateDateFormat = vi.fn()
 	const mockParseDate = vi.fn()
@@ -40,7 +40,7 @@ describe('useInputBlurHandler', () => {
 
 	describe('handleInputBlur', () => {
 		it('devrait émettre l\'événement blur et marquer l\'interaction', () => {
-			const { handleInputBlur } = useInputBlurHandler({
+			const { handleInputBlur } = useDatePickerInputBlurHandler({
 				format: 'DD/MM/YYYY',
 				displayFormattedDate,
 				hasInteracted,
@@ -70,7 +70,7 @@ describe('useInputBlurHandler', () => {
 			mockParseDate.mockReturnValue(date)
 			mockFormatDate.mockReturnValue('01/01/2023')
 
-			const { handleInputBlur } = useInputBlurHandler({
+			const { handleInputBlur } = useDatePickerInputBlurHandler({
 				format: 'DD/MM/YYYY',
 				displayFormattedDate,
 				hasInteracted,
@@ -103,7 +103,7 @@ describe('useInputBlurHandler', () => {
 			mockParseDate.mockReturnValue(date)
 			mockFormatDate.mockReturnValue('2023-01-01')
 
-			const { handleInputBlur } = useInputBlurHandler({
+			const { handleInputBlur } = useDatePickerInputBlurHandler({
 				format: 'DD/MM/YYYY',
 				dateFormatReturn: 'YYYY-MM-DD',
 				displayFormattedDate,
@@ -130,7 +130,7 @@ describe('useInputBlurHandler', () => {
 
 			mockValidateDateFormat.mockReturnValue({ isValid: false, message: 'Format de date invalide' })
 
-			const { handleInputBlur } = useInputBlurHandler({
+			const { handleInputBlur } = useDatePickerInputBlurHandler({
 				format: 'DD/MM/YYYY',
 				displayFormattedDate,
 				hasInteracted,
@@ -160,7 +160,7 @@ describe('useInputBlurHandler', () => {
 			mockValidateDateFormat.mockReturnValue({ isValid: true, message: '' })
 			mockParseDate.mockReturnValue(null)
 
-			const { handleInputBlur } = useInputBlurHandler({
+			const { handleInputBlur } = useDatePickerInputBlurHandler({
 				format: 'DD/MM/YYYY',
 				displayFormattedDate,
 				hasInteracted,
@@ -187,7 +187,7 @@ describe('useInputBlurHandler', () => {
 		it('devrait réinitialiser le modèle si le champ est vide et non requis', () => {
 			displayFormattedDate.value = ''
 
-			const { handleInputBlur } = useInputBlurHandler({
+			const { handleInputBlur } = useDatePickerInputBlurHandler({
 				format: 'DD/MM/YYYY',
 				required: false,
 				displayFormattedDate,
@@ -211,7 +211,7 @@ describe('useInputBlurHandler', () => {
 		it('ne devrait pas réinitialiser le modèle si le champ est vide mais requis', () => {
 			displayFormattedDate.value = ''
 
-			const { handleInputBlur } = useInputBlurHandler({
+			const { handleInputBlur } = useDatePickerInputBlurHandler({
 				format: 'DD/MM/YYYY',
 				required: true,
 				displayFormattedDate,
@@ -242,7 +242,7 @@ describe('useInputBlurHandler', () => {
 			const formattedDate = '01/01/2023'
 			mockFormatDate.mockReturnValue(formattedDate)
 
-			const { handleInputBlur } = useInputBlurHandler({
+			const { handleInputBlur } = useDatePickerInputBlurHandler({
 				format: 'DD/MM/YYYY',
 				displayFormattedDate,
 				hasInteracted,
@@ -269,7 +269,7 @@ describe('useInputBlurHandler', () => {
 		it('devrait mettre à jour le modèle avec null si displayFormattedDate est vide', () => {
 			displayFormattedDate.value = ''
 
-			const { handleInputBlur } = useInputBlurHandler({
+			const { handleInputBlur } = useDatePickerInputBlurHandler({
 				format: 'DD/MM/YYYY',
 				displayFormattedDate,
 				hasInteracted,
@@ -300,7 +300,7 @@ describe('useInputBlurHandler', () => {
 				resolveValidation = resolve
 			}))
 
-			const { handleInputBlur } = useInputBlurHandler({
+			const { handleInputBlur } = useDatePickerInputBlurHandler({
 				format: 'DD/MM/YYYY',
 				displayFormattedDate,
 				hasInteracted,
@@ -351,7 +351,7 @@ describe('useInputBlurHandler', () => {
 				.mockReturnValueOnce('01/01/2023') // Pour la date de début
 				.mockReturnValueOnce('10/01/2023') // Pour la date de fin
 
-			const { handleInputBlur } = useInputBlurHandler({
+			const { handleInputBlur } = useDatePickerInputBlurHandler({
 				format: 'DD/MM/YYYY',
 				displayFormattedDate,
 				hasInteracted,
@@ -397,7 +397,7 @@ describe('useInputBlurHandler', () => {
 				.mockReturnValueOnce('2023-01-01') // Pour la date de début avec format de retour
 				.mockReturnValueOnce('2023-01-10') // Pour la date de fin avec format de retour
 
-			const { handleInputBlur } = useInputBlurHandler({
+			const { handleInputBlur } = useDatePickerInputBlurHandler({
 				format: 'DD/MM/YYYY',
 				dateFormatReturn: 'YYYY-MM-DD',
 				displayFormattedDate,
@@ -436,7 +436,7 @@ describe('useInputBlurHandler', () => {
 
 			// Utiliser la constante importée au début du fichier
 
-			const { handleInputBlur } = useInputBlurHandler({
+			const { handleInputBlur } = useDatePickerInputBlurHandler({
 				format: 'DD/MM/YYYY',
 				displayFormattedDate,
 				hasInteracted,
@@ -469,7 +469,7 @@ describe('useInputBlurHandler', () => {
 				.mockReturnValueOnce({ isValid: true, message: '' }) // Pour la date de début
 				.mockReturnValueOnce({ isValid: false, message: 'Date invalide' }) // Pour la date de fin
 
-			const { handleInputBlur } = useInputBlurHandler({
+			const { handleInputBlur } = useDatePickerInputBlurHandler({
 				format: 'DD/MM/YYYY',
 				displayFormattedDate,
 				hasInteracted,

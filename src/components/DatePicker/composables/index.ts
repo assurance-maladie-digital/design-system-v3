@@ -4,8 +4,7 @@
 export { useDateInputEditing } from './useDateInputEditing'
 export { useDateRangeInput } from './useDateRangeInput'
 export { useDateAutoClamp } from './useDateAutoClamp'
-export { useDateTextField } from './useDateTextField'
-export { useDatePickerFormRegistration } from './useDatePickerFormRegistration'
+export { useDateTextInputController } from './useDateTextInputController'
 
 // Date selection and validation
 export { useDateSelection } from './useDateSelection'
@@ -17,7 +16,7 @@ export { useDateRangeValidation } from './useDateRangeValidation'
 export { useDatePickerViewMode } from './useDatePickerViewMode'
 export { useDatePickerVisibility } from './useDatePickerVisibility'
 export { useDisplayedDateString } from './useDisplayedDateString'
-export { useInputBlurHandler } from './useInputBlurHandler'
+export { useDatePickerInputBlurHandler } from './useDatePickerInputBlurHandler'
 export { useTodayButton, buildTodaySelectionState } from './useTodayButton'
 export { useMonthButtonCustomization } from './useMonthButtonCustomization'
 export { useDatePickerState } from './useDatePickerState'

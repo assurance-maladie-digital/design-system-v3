@@ -1,23 +1,20 @@
 <script setup lang="ts">
 	import {
-		createInactiveDatePickerValidationController,
 		useDateRangeInput,
 		useDateRangeValidation,
 		useDateInputEditing,
 		useDateAutoClamp,
-		useDatePickerFormRegistration,
-		useDateTextField,
+		useDateTextInputController,
 		useDatePickerValidation,
 		validateDateFormat,
 	} from '../composables'
-	import { ref, computed, watch, nextTick, onMounted, readonly as readonlyState, toRefs, useId } from 'vue'
+	import { ref, computed, watch, nextTick, readonly as readonlyState, toRefs, useId } from 'vue'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import type { ValidationRule, ValidationResult } from '@/composables/validation/useValidation'
-	import type { DatePickerValidationController } from '../composables/useDatePickerValidation'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
-	import { useSyTextFieldProps } from './props/syTextFieldProps'
+	import { buildDateTextInputTextFieldProps } from './props/buildDateTextInputTextFieldProps'
 	import { locales } from '../locales'
 	import type { DateInput, DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 	import type { DateObjectValue, DateTextInputProps } from '../types'
@@ -29,12 +26,17 @@
 	const props = withDefaults(defineProps<DateTextInputProps>(), {
 		autoClamp: false,
 		bgColor: 'white',
+		customSuccessRules: () => [],
 		customRules: () => [],
 		customWarningRules: () => [],
 		dateFormatReturn: undefined,
 		density: 'default',
 		disableErrorHandling: false,
 		disabled: false,
+		errorMessages: null,
+		hasError: false,
+		hasSuccess: false,
+		hasWarning: false,
 		disableClickButton: false,
 		displayAppendIcon: false,
 		displayIcon: true,
@@ -45,6 +47,7 @@
 		hint: undefined,
 		isOutlined: true,
 		isValidateOnBlur: true,
+		maxErrors: 1,
 		modelValue: undefined,
 		noIcon: false,
 		persistentHint: false,
@@ -52,7 +55,9 @@
 		readonly: false,
 		required: false,
 		showSuccessMessages: false,
+		successMessages: null,
 		title: false,
+		warningMessages: null,
 	})
 
 	const emit = defineEmits<{
@@ -98,7 +103,15 @@
 		required: computed(() => props.required),
 		displayRange: computed(() => props.displayRange),
 		customRules: computed(() => props.customRules ?? []),
+		customSuccessRules: computed(() => props.customSuccessRules ?? []),
 		customWarningRules: computed(() => props.customWarningRules ?? []),
+		errorMessages: computed(() => props.errorMessages ?? null),
+		hasErrorProp: computed(() => props.hasError),
+		hasSuccessProp: computed(() => props.hasSuccess),
+		hasWarningProp: computed(() => props.hasWarning),
+		warningMessages: computed(() => props.warningMessages ?? null),
+		successMessages: computed(() => props.successMessages ?? null),
+		maxErrors: computed(() => props.maxErrors),
 		selectedDates,
 		isUpdatingFromInternal,
 		currentRangeIsValid,
@@ -106,72 +119,68 @@
 		skipValidationWhenReadonly: true,
 		readonly: readonly,
 		fieldIdentifier: props.label || props.placeholder || 'Date',
+		formRegistration: {
+			validateOnSubmit: validateOnSubmitForForm,
+			clearValidation: clearValidationForForm,
+			reset: resetForForm,
+		},
 	})
 
-	const emptyValidationResult = (): ValidationResult => ({
-		hasError: false,
-		hasWarning: false,
-		hasSuccess: false,
-		state: { errors: [], warnings: [], successes: [] },
-	})
-
-	const inactiveValidationController = createInactiveDatePickerValidationController()
-
-	const validationController = computed<DatePickerValidationController | typeof inactiveValidationController>(() => (
-		readonly.value ? inactiveValidationController : bridgeValidation
-	))
-	const validationMessages = computed(() => validationController.value.messages)
+	const readonlyErrors = ref<string[]>([])
 
 	const errors = computed({
-		get: () => validationMessages.value.errors.value,
-		set: (value) => {
+		get: () => {
 			if (!readonly.value) {
-				validationMessages.value.errors.value = value
+				return bridgeValidation.errorMessages.value
 			}
+
+			return [...new Set([
+				...readonlyErrors.value,
+				...(props.errorMessages ?? []),
+			])]
+		},
+		set: (value) => {
+			if (readonly.value) {
+				readonlyErrors.value = value
+				return
+			}
+
+			bridgeValidation.validationState.errors.value = value
 		},
 	})
-	const warnings = computed({
-		get: () => validationMessages.value.warnings.value,
-		set: (value) => {
-			if (!readonly.value) {
-				validationMessages.value.warnings.value = value
-			}
-		},
-	})
-	const hasError = computed(() => !readonly.value && validationMessages.value.errors.value.length > 0)
+	const warningMessages = computed(() => bridgeValidation.warningMessages.value)
+	const successMessages = computed((): string[] =>
+		bridgeValidation.successMessages.value ?? [],
+	)
+	const hasError = computed(() => errors.value.length > 0)
 
-	const clearValidation = () => validationController.value.validationState.clear()
+	const clearValidation = () => {
+		readonlyErrors.value = []
+		bridgeValidation.validationState.clear()
+	}
 
-	const validateField = async (
+	const validateField = (
 		value: unknown,
 		rules?: ValidationRule[],
 		warningRules?: ValidationRule[],
-	): Promise<ValidationResult> => await validationController.value.validationState.validateField(value, rules, warningRules)
+		successRules?: ValidationRule[],
+	): Promise<ValidationResult> => Promise.resolve(
+		bridgeValidation.validationState.validateField(value, rules, warningRules, successRules),
+	)
 
 	// Agrégation des erreurs internes et externes avec déduplication
 	// Évite les doublons quand les mêmes customRules sont exécutées par le parent et l'enfant
 	const errorMessages = computed(() => {
-		const allErrors = [...errors.value, ...props.externalErrorMessages]
+		const allErrors = [...errors.value, ...(props.externalErrorMessages ?? [])]
 		return [...new Set(allErrors)] // Déduplication avec Set
 	})
-	const warningMessages = warnings
-	const successMessages = computed((): string[] =>
-		validationMessages.value.successes.value ?? [],
-	)
-	const customValidationRules = computed(() => props.customRules)
-	const customValidationWarningRules = computed(() => props.customWarningRules)
-
-	/**
-	 * Safe validate utility
-	 */
-	const safeValidateField = async (
-		value: unknown,
-		rules?: ValidationRule[],
-		warningRules?: ValidationRule[],
-	): Promise<ValidationResult> => await validateField(value, rules, warningRules) ?? emptyValidationResult()
-
 	const validateCustomValue = async (value: unknown): Promise<ValidationResult> => (
-		await safeValidateField(value, customValidationRules.value, customValidationWarningRules.value)
+		await validateField(
+			value,
+			props.customRules ?? [],
+			props.customWarningRules ?? [],
+			props.customSuccessRules ?? [],
+		)
 	)
 
 	/**
@@ -552,7 +561,7 @@
 	 * Small helpers to DRY (Don't Repeat Yourself 🥸) logic
 	 * =====================
 	 */
-	const { clampIfNeeded, validateManualInput, validateOnSubmit, reset } = useDateTextField({
+	const { clampIfNeeded, validateManualInput, validateOnSubmit, reset } = useDateTextInputController({
 		autoClamp: computed(() => props.autoClamp),
 		isRange,
 		displayFormat,
@@ -561,12 +570,13 @@
 			required: computed(() => props.required),
 			disableErrorHandling: computed(() => props.disableErrorHandling),
 			customRules: computed(() => props.customRules ?? []),
+			customSuccessRules: computed(() => props.customSuccessRules ?? []),
 			customWarningRules: computed(() => props.customWarningRules ?? []),
 			hasInteracted,
 			errors,
 			clearValidation,
 			parseDate,
-			validateField: safeValidateField,
+			validateField,
 		},
 		submit: {
 			isValidating,
@@ -623,7 +633,7 @@
 		emit('update:model-value', val)
 	}
 
-	function syncFromModelValue(modelValue: DateInput | undefined) {
+	function syncFromModelValue(modelValue: DateInput | undefined): string {
 		const nextState = resolveDatePickerStateFromModelValue({
 			modelValue,
 			displayRange: isRange.value,
@@ -642,14 +652,10 @@
 		inputValue.value = nextState.displayValue
 
 		if (isRange.value && Array.isArray(nextState.selectedDates) && nextState.selectedDates.length >= 2) {
-			try {
-				isUpdatingFromInternal.value = true
-				validationController.value.validationState.validate()
-			}
-			finally {
-				queueMicrotask(() => (isUpdatingFromInternal.value = false))
-			}
+			syncSelectedRangeValidation()
 		}
+
+		return nextState.displayValue
 	}
 
 	function getSkeletonPattern(format: string): RegExp {
@@ -685,8 +691,20 @@
 		return failWithDisplayedError(message)
 	}
 
-	function hasNoDisplayedError(): boolean {
-		return errors.value.length === 0
+	const hasCustomRules = (): boolean => (props.customRules?.length ?? 0) > 0
+
+	const splitRangeInputValue = (value: string): [string, string] => {
+		const [startDateText = '', endDateText = ''] = value.split(locales.rangeSeparator)
+		return [startDateText, endDateText]
+	}
+
+	const validateCustomDate = async (value: unknown): Promise<boolean> => {
+		const result = await validateCustomValue(value)
+		return !result.hasError
+	}
+
+	const runSingleInputRules = async (value: string): Promise<boolean> => {
+		return !!(await validateManualInput(value))
 	}
 
 	async function runEmptyInputRules(): Promise<boolean> {
@@ -695,19 +713,18 @@
 			return false
 		}
 
-		if (customValidationRules.value.length > 0 && hasInteracted.value) {
-			await validateCustomValue(null)
-			return !hasError.value
+		if (hasCustomRules() && hasInteracted.value) {
+			return await validateCustomDate(null)
 		}
 
 		return true
 	}
 
 	async function runRangeInputRules(value: string): Promise<boolean> {
-		const [startDateText = '', endDateText = ''] = value.split(locales.rangeSeparator)
+		const [startDateText, endDateText] = splitRangeInputValue(value)
 
 		if (startDateText && !endDateText) {
-			return !!(await validateManualInput(startDateText))
+			return await runSingleInputRules(startDateText)
 		}
 
 		if (!(startDateText && endDateText)) {
@@ -730,12 +747,20 @@
 			return failWithDisplayedError(locales.endBeforeStart)
 		}
 
-		await validateCustomValue(startDate)
-		if (hasNoDisplayedError()) {
-			await validateCustomValue(endDate)
+		const startDateIsValid = await validateCustomDate(startDate)
+		if (startDateIsValid) {
+			await validateCustomDate(endDate)
 		}
 
 		return !hasError.value
+	}
+
+	const runFilledInputRules = async (value: string): Promise<boolean> => {
+		if (isRange.value && value.includes(locales.rangeSeparator)) {
+			return await runRangeInputRules(value)
+		}
+
+		return await runSingleInputRules(value)
 	}
 
 	function isVisuallyEmptyInput(value: string): boolean {
@@ -933,7 +958,7 @@
 	function syncSelectedRangeValidation(): void {
 		try {
 			isUpdatingFromInternal.value = true
-			validationController.value.validationState.validate()
+			bridgeValidation.validationState.validate()
 		}
 		finally {
 			queueMicrotask(() => (isUpdatingFromInternal.value = false))
@@ -1051,6 +1076,112 @@
 		clearValidation()
 	}
 
+	async function handleDisabledInputChange(newValue: string, oldValue: string | undefined): Promise<boolean> {
+		if (!props.disabled) {
+			return false
+		}
+
+		if (isMaskedEmptyInput(newValue) && oldValue && props.modelValue) {
+			await restoreDisabledInputValue()
+		}
+
+		return true
+	}
+
+	function shouldSkipWatchedInputChange(newValue: string, oldValue: string | undefined): boolean {
+		if (pendingSyncedInputValue.value !== null && newValue === pendingSyncedInputValue.value) {
+			pendingSyncedInputValue.value = null
+			return true
+		}
+
+		return isFormatting.value
+			|| newValue === oldValue
+			|| isHandlingBackspace.value
+			|| isBootstrapping.value
+	}
+
+	async function resolveWatchedInputValue(newValue: string): Promise<string | null> {
+		if (await clearWatchedInputValue()) {
+			return null
+		}
+
+		return applyTypingAutoClamp(newValue)
+	}
+
+	async function processOverwriteInput(): Promise<void> {
+		if (isRange.value) {
+			await handleRangeOverwriteInput()
+			return
+		}
+
+		await handleSingleOverwriteInput()
+	}
+
+	type WatchedInputContext = {
+		value: string
+		previousValue: string | undefined
+		cursor: number
+		inputElement: HTMLInputElement | null
+	}
+
+	function createWatchedInputContext(
+		value: string,
+		previousValue: string | undefined,
+	): WatchedInputContext {
+		const inputElement = getNativeInputElement()
+		return {
+			value,
+			previousValue,
+			inputElement,
+			cursor: inputElement?.selectionStart ?? 0,
+		}
+	}
+
+	async function processTypedInput(
+		context: WatchedInputContext,
+	): Promise<void> {
+		if (isRange.value) {
+			handleRangeTypingInput(context.value, context.previousValue, context.cursor, context.inputElement)
+			return
+		}
+
+		await handleSingleTypingInput(context.value, context.cursor, context.inputElement)
+	}
+
+	async function processWatchedInputChange(
+		newValue: string,
+		oldValue: string | undefined,
+	): Promise<void> {
+		const value = await resolveWatchedInputValue(newValue)
+		if (value === null) {
+			return
+		}
+
+		if (isOverwriteEditing.value) {
+			await processOverwriteInput()
+			return
+		}
+
+		await processTypedInput(createWatchedInputContext(value, oldValue))
+	}
+
+	async function handleWatchedInputChange(newValue: string, oldValue: string | undefined): Promise<void> {
+		if (await handleDisabledInputChange(newValue, oldValue)) {
+			return
+		}
+
+		if (shouldSkipWatchedInputChange(newValue, oldValue)) return
+
+		try {
+			isFormatting.value = true
+			await processWatchedInputChange(newValue, oldValue)
+		}
+		finally {
+			await nextTick()
+			isFormatting.value = false
+		}
+	}
+
 	async function runRules(value: string): Promise<boolean> {
 		clearValidation()
 
@@ -1058,11 +1189,7 @@
 			return await runEmptyInputRules()
 		}
 
-		if (isRange.value && value.includes(locales.rangeSeparator)) {
-			return await runRangeInputRules(value)
-		}
-
-		return !!(await validateManualInput(value))
+		return await runFilledInputRules(value)
 	}
 
 	/**
@@ -1115,6 +1242,49 @@
 		return true
 	}
 
+	async function handleEmptyBlurValue(): Promise<void> {
+		emitModel(null)
+		await runRules('')
+	}
+
+	async function applyBlurAutoClamp(): Promise<void> {
+		// Le mode overwrite désactive le clamp pendant la frappe pour préserver le curseur.
+		// On l'applique donc avant la validation au blur, sinon une date comme 31/04
+		// sort en erreur avant d'atteindre la logique d'autoClamp.
+		// isFormatting bloque le watcher inputValue pour éviter une double émission du modèle.
+		await withFormattingLock(() => {
+			applyAutoClampOnCurrentInput(false)
+		})
+	}
+
+	async function emitValidatedBlurValue(): Promise<void> {
+		// On garde le verrou jusqu'au nextTick pour bloquer le watcher modelValue déclenché par emitModel.
+		await withFormattingLock(async () => {
+			emitBlurModel(inputValue.value)
+		}, true)
+	}
+
+	async function processBlurValue(): Promise<void> {
+		if (isVisuallyEmptyInput(inputValue.value)) {
+			await handleEmptyBlurValue()
+			return
+		}
+
+		await applyBlurAutoClamp()
+
+		if (!inputValue.value) {
+			return
+		}
+
+		// Format invalide ou règles custom en erreur : runRules pousse déjà les messages attendus.
+		// On garde la valeur visible pour permettre la correction sans nettoyer le champ.
+		if (!(await runRules(inputValue.value))) {
+			return
+		}
+
+		await emitValidatedBlurValue()
+	}
+
 	async function onFocus(event?: FocusEvent) {
 		if (!getEventInputElement(event)) return
 
@@ -1137,100 +1307,29 @@
 
 		if (!props.isValidateOnBlur) return
 
-		if (isVisuallyEmptyInput(inputValue.value)) {
-			emitModel(null)
-			await runRules('')
-			return
-		}
-
-		// Le mode overwrite désactive le clamp pendant la frappe pour préserver le curseur.
-		// On l'applique donc avant la validation au blur, sinon une date comme 31/04
-		// sort en erreur avant d'atteindre la logique d'autoClamp.
-		// isFormatting bloque le watcher inputValue pour éviter une double émission du modèle.
-		await withFormattingLock(() => {
-			applyAutoClampOnCurrentInput(false)
-		})
-
-		if (!inputValue.value) {
-			return
-		}
-
-		// Format invalide ou règles custom en erreur : runRules pousse déjà les messages attendus.
-		// On garde la valeur visible pour permettre la correction sans nettoyer le champ.
-		if (!(await runRules(inputValue.value))) {
-			return
-		}
-
-		// On garde le verrou jusqu'au nextTick pour bloquer le watcher modelValue déclenché par emitModel.
-		await withFormattingLock(async () => {
-			emitBlurModel(inputValue.value)
-		}, true)
+		await processBlurValue()
 	}
-	watch(inputValue, async (nv, ov) => {
-		if (props.disabled) {
-			if (isMaskedEmptyInput(nv) && ov && props.modelValue) {
-				await restoreDisabledInputValue()
-			}
-			return
-		}
-
-		// Prevent infinite loops but allow formatting
-		if (pendingSyncedInputValue.value !== null && nv === pendingSyncedInputValue.value) {
-			pendingSyncedInputValue.value = null
-			return
-		}
-
-		if (isFormatting.value || nv === ov || isHandlingBackspace.value || isBootstrapping.value) return
-		try {
-			isFormatting.value = true
-
-			if (await clearWatchedInputValue()) {
-				return
-			}
-
-			nv = applyTypingAutoClamp(nv)
-
-			const inputEl = getNativeInputElement()
-			const cursor = inputEl?.selectionStart ?? 0
-
-			if (isRange.value) {
-				// --- Branche RANGE ---
-				if (isOverwriteEditing.value) {
-					await handleRangeOverwriteInput()
-					return
-				}
-
-				if (typeof nv !== 'string') return
-				handleRangeTypingInput(nv, ov, cursor, inputEl)
-			}
-			else {
-				if (isOverwriteEditing.value) {
-					await handleSingleOverwriteInput()
-					return
-				}
-				await handleSingleTypingInput(nv, cursor, inputEl)
-			}
-		}
-		finally {
-			await nextTick()
-			isFormatting.value = false
-		}
-	})
+	watch(inputValue, handleWatchedInputChange)
 
 	watch(() => props.modelValue, (nv) => {
 		if (isFormatting.value) return
-		syncFromModelValue(nv)
-		runRules(inputValue.value)
+		const syncedDisplayValue = syncFromModelValue(nv)
+		void runRules(syncedDisplayValue)
 	})
+
+	function validateOnSubmitForForm() {
+		return validateOnSubmit()
+	}
+
+	function clearValidationForForm() {
+		clearValidation()
+	}
+
+	function resetForForm() {
+		reset()
+	}
 
 	/** expose */
-	// Intégration avec le système de validation du formulaire
-	useDatePickerFormRegistration({
-		validateOnSubmit,
-		clearValidation,
-		reset,
-	})
-
 	defineExpose({
 		validateOnSubmit,
 		reset,
@@ -1247,28 +1346,34 @@
 		},
 	})
 
-	onMounted(async () => {
-		syncFromModelValue(props.modelValue)
-
-		// Don't initialize skeleton on mount - let the native placeholder show
-		// Only initialize cursor position when user focuses on the input
-	})
+	syncFromModelValue(props.modelValue)
 
 	/**
 	 * =====================
 	 * UI state helpers
 	 * =====================
 	 */
-	const isOnError = computed(() => warningMessages.value.length === 0 && successMessages.value.length === 0 && errorMessages.value.length > 0)
-	const isOnWarning = computed(() => errorMessages.value.length === 0 && successMessages.value.length === 0 && warningMessages.value.length > 0)
+	const isOnError = computed(() => bridgeValidation.validation.hasError.value)
+	const isOnWarning = computed(() =>
+		bridgeValidation.validation.hasWarning.value && !bridgeValidation.validation.hasError.value,
+	)
 	const isOnSuccess = computed(() =>
-		validationMessages.value.hasSuccess.value
-		&& errorMessages.value.length === 0
-		&& warningMessages.value.length === 0,
+		bridgeValidation.validation.hasSuccess.value
+		&& !bridgeValidation.validation.hasError.value
+		&& !bridgeValidation.validation.hasWarning.value,
 	)
 
-	// Props regroupées pour SyTextField
-	const syTextFieldProps = computed(() => useSyTextFieldProps(props, errorMessages, warningMessages, successMessages, isOnSuccess, ariaLabel.value))
+	// Props du SyTextField rendu par DateTextInput
+	const textFieldProps = computed(() => buildDateTextInputTextFieldProps(
+		props,
+		errorMessages,
+		warningMessages,
+		successMessages,
+		isOnError,
+		isOnWarning,
+		isOnSuccess,
+		ariaLabel.value,
+	))
 
 	function onMouseDown(event: MouseEvent) {
 		emit('mousedown', event)
@@ -1287,7 +1392,7 @@
 				'success-field': isOnSuccess,
 			}"
 			color="primary"
-			v-bind="syTextFieldProps"
+			v-bind="textFieldProps"
 			@focus="onFocus"
 			@blur="onBlur"
 			@mousedown="onMouseDown"

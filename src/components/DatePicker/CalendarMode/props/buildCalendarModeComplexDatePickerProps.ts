@@ -1,6 +1,6 @@
 import type { DatePickerCommonProps } from '../../types'
 
-export const useComplexDatePickerProps = (props: DatePickerCommonProps) => ({
+export const buildCalendarModeComplexDatePickerProps = (props: DatePickerCommonProps) => ({
 	modelValue: props.modelValue,
 	format: props.format,
 	dateFormatReturn: props.dateFormatReturn,

@@ -1,5 +1,6 @@
 import { computed, ref, watch, unref, type ComputedRef, type Ref, type MaybeRef } from 'vue'
-import { useValidation, type ValidationResult, type ValidationRule } from '@/composables/validation/useValidation'
+import { type ValidationResult, type ValidationRule } from '@/composables/validation/useValidation'
+import { useCustomValidation } from '@/composables/unifyValidation/useCustomValidation'
 import { locales } from '../locales'
 import type { DateObjectValue, DatePickerRule } from '../types'
 import { useDateRangeValidation } from './useDateRangeValidation'
@@ -13,7 +14,15 @@ export type DatePickerValidationOptions = {
 	required: MaybeRef<boolean>
 	displayRange: MaybeRef<boolean>
 	customRules: Ref<DatePickerRule[]>
+	customSuccessRules?: Ref<DatePickerRule[]>
 	customWarningRules: Ref<DatePickerRule[]>
+	errorMessages?: Ref<string[] | null | undefined>
+	hasErrorProp?: MaybeRef<boolean>
+	hasSuccessProp?: MaybeRef<boolean>
+	hasWarningProp?: MaybeRef<boolean>
+	warningMessages?: Ref<string[] | null | undefined>
+	successMessages?: Ref<string[] | null | undefined>
+	maxErrors?: MaybeRef<number>
 	selectedDates: Ref<DateObjectValue>
 	isUpdatingFromInternal: Ref<boolean>
 	currentRangeIsValid: Ref<boolean>
@@ -26,12 +35,17 @@ export type DatePickerValidationOptions = {
 	onblur?: Ref<boolean>
 	fieldIdentifier?: string
 	revalidateOnCustomRulesChange?: boolean
+	formRegistration?: {
+		validateOnSubmit?: () => Promise<boolean> | boolean
+		clearValidation?: () => void
+		reset?: () => void
+	}
 }
 
 export interface DatePickerValidationStateController {
 	errors: Ref<string[]>
 	warnings: Ref<string[]>
-	successes: ComputedRef<string[]>
+	successes: Ref<string[]> | ComputedRef<string[]>
 	hasSuccess: Ref<boolean> | ComputedRef<boolean>
 	clear: () => void
 	validate: (forceValidation?: boolean) => ValidationResult | Promise<ValidationResult>
@@ -45,22 +59,31 @@ export interface DatePickerValidationStateController {
 }
 
 export interface DatePickerValidationMessagesController {
-	errors: Ref<string[]>
-	warnings: Ref<string[]>
+	errors: Ref<string[]> | ComputedRef<string[]>
+	warnings: Ref<string[]> | ComputedRef<string[]>
 	successes: Ref<string[]> | ComputedRef<string[]>
+	hasError: Ref<boolean> | ComputedRef<boolean>
+	hasWarning: Ref<boolean> | ComputedRef<boolean>
+	hasSuccess: Ref<boolean> | ComputedRef<boolean>
+}
+
+export interface DatePickerValidationAdapter {
+	hasError: Ref<boolean> | ComputedRef<boolean>
+	hasWarning: Ref<boolean> | ComputedRef<boolean>
+	displaySuccesses: Ref<string[]> | ComputedRef<string[]>
 	hasSuccess: Ref<boolean> | ComputedRef<boolean>
 }
 
 export interface DatePickerValidationController {
-	validation: ReturnType<typeof useValidation>
+	validation: DatePickerValidationAdapter
 	validationState: DatePickerValidationStateController
 	messages: DatePickerValidationMessagesController
 	errors: Ref<string[]>
 	warnings: Ref<string[]>
 	successes: Ref<string[]>
-	errorMessages: Ref<string[]>
-	warningMessages: Ref<string[]>
-	successMessages: ComputedRef<string[]>
+	errorMessages: Ref<string[]> | ComputedRef<string[]>
+	warningMessages: Ref<string[]> | ComputedRef<string[]>
+	successMessages: Ref<string[]> | ComputedRef<string[]>
 	clearValidation: () => void
 	validateField: DatePickerValidationStateController['validateField']
 	validateDates: DatePickerValidationStateController['validate']
@@ -136,18 +159,25 @@ export const createInactiveDatePickerValidationController = (): Pick<
 	| 'validateCalendarModeDates'
 > => {
 	const validationState = createInactiveValidationState()
+	const displaySuccesses = validationState.successes
+	const hasError = computed(() => false)
+	const hasWarning = computed(() => false)
 	const messages = {
 		errors: validationState.errors,
 		warnings: validationState.warnings,
-		successes: validationState.successes,
+		successes: displaySuccesses,
+		hasError,
+		hasWarning,
 		hasSuccess: validationState.hasSuccess,
 	}
 
 	return {
 		validation: {
-			displaySuccesses: validationState.successes,
+			hasError,
+			hasWarning,
+			displaySuccesses,
 			hasSuccess: validationState.hasSuccess,
-		} as ReturnType<typeof useValidation>,
+		},
 		validationState,
 		messages,
 		errors: validationState.errors,
@@ -164,22 +194,65 @@ export const createInactiveDatePickerValidationController = (): Pick<
 }
 
 export function useDatePickerValidation(options: DatePickerValidationOptions): DatePickerValidationController {
-	// Utiliser useValidation pour la validation de base
-	const validation = useValidation({
-		showSuccessMessages: options.showSuccessMessages,
-		fieldIdentifier: options.fieldIdentifier ?? 'Date',
-		disableErrorHandling: options.disableErrorHandling,
-	})
-
-	const {
+	const errors = ref<string[]>([])
+	const warnings = ref<string[]>([])
+	const successes = ref<string[]>([])
+	const validation = useCustomValidation(
+		computed(() => options.selectedDates.value),
+		options.customRules as Ref<ValidationRule[]>,
+		options.customWarningRules as Ref<ValidationRule[]>,
+		(options.customSuccessRules as Ref<ValidationRule[]>) ?? ref<ValidationRule[]>([]),
 		errors,
 		warnings,
 		successes,
-		validateField: baseValidateField,
-		clearValidation: baseClearValidation,
-	} = validation
+		computed(() => unref(options.showSuccessMessages)),
+		computed(() => options.fieldIdentifier ?? 'Date'),
+		ref(false),
+		computed(() => options.isValidateOnBlur?.value ?? true),
+		computed(() => unref(options.disableErrorHandling)),
+		computed(() => Boolean(unref(options.readonly))),
+		ref(false),
+		{
+			registerWithForm: Boolean(options.formRegistration),
+			reactiveValidation: false,
+			formRegistration: options.formRegistration,
+		},
+	)
 
-	const clearValidation = () => baseClearValidation()
+	const clearValidation = () => validation.clearValidation()
+
+	const limitMessages = (messages: string[]): string[] => {
+		const max = options.maxErrors ? unref(options.maxErrors) : undefined
+		return max && max > 0 ? messages.slice(0, max) : messages
+	}
+
+	const mergeMessages = (
+		externalMessages: string[] | null | undefined,
+		internalMessages: string[],
+	): string[] => limitMessages([
+		...new Set([
+			...(externalMessages ?? []),
+			...internalMessages,
+		]),
+	])
+
+	const displayErrors = computed(() => mergeMessages(options.errorMessages?.value, errors.value))
+	const displayWarnings = computed(() => mergeMessages(options.warningMessages?.value, warnings.value))
+	const displaySuccesses = computed(() => mergeMessages(options.successMessages?.value, successes.value))
+	const displayHasError = computed(() =>
+		displayErrors.value.length > 0 || Boolean(unref(options.hasErrorProp)),
+	)
+	const displayHasWarning = computed(() =>
+		displayWarnings.value.length > 0 || Boolean(unref(options.hasWarningProp)),
+	)
+	const displayHasSuccess = computed(() => (
+		(
+			validation.hasSuccess.value
+			|| (options.successMessages?.value?.length ?? 0) > 0
+		)
+		&& !displayHasError.value
+		&& !displayHasWarning.value
+	) || Boolean(unref(options.hasSuccessProp)))
 
 	// Utiliser useDateRangeValidation pour centraliser la validation des plages
 	const { isRangeValid: isDateRangeValid } = useDateRangeValidation(
@@ -207,7 +280,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			return emptyValidationResult()
 		}
 
-		return baseValidateField(value, rules, warningRules, successRules)
+		return validation.validateValue(value, rules, warningRules, successRules)
 	}
 
 	const shouldDisplayErrors = (): boolean => !unref(options.disableErrorHandling)
@@ -238,6 +311,36 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		if (!errors.value.includes(message)) {
 			errors.value.push(message)
 		}
+	}
+
+	const validateSelectedDates = (
+		dates = getDatesToValidate(),
+		rules = options.customRules.value,
+		warningRules = options.customWarningRules.value,
+		successRules = options.customSuccessRules?.value ?? [],
+	): ValidationResult[] | Promise<ValidationResult[]> => {
+		const results = dates.map(date => validateField(date, rules, warningRules, successRules))
+
+		if (results.some(result => result instanceof Promise)) {
+			return Promise.all(results.map(result => Promise.resolve(result)))
+		}
+
+		return results as ValidationResult[]
+	}
+
+	const revalidateSelectedDates = (): void => {
+		queueMicrotask(async () => {
+			clearValidation()
+
+			for (const date of getDatesToValidate()) {
+				await Promise.resolve(validateField(
+					date,
+					options.customRules.value,
+					options.customWarningRules.value,
+					options.customSuccessRules?.value ?? [],
+				))
+			}
+		})
 	}
 
 	const dedupeValidationState = (): void => {
@@ -363,19 +466,23 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			return applyRangeValidationErrors(true)
 		}
 
-		const validationResults = getDatesToValidate()
-			.map(date => validateField(date, customRules, customWarningRules))
+		const validationResults = validateSelectedDates(
+			getDatesToValidate(),
+			customRules,
+			customWarningRules,
+			options.customSuccessRules?.value ?? [],
+		)
 
-		if (validationResults.some(result => result instanceof Promise)) {
+		if (validationResults instanceof Promise) {
 			return Promise
-				.all(validationResults.map(result => Promise.resolve(result)))
+				.resolve(validationResults)
 				.then((resolvedResults) => {
 					const hasError = resolvedResults.some(result => result.hasError)
 					return applyRangeValidationErrors(!hasError)
 				})
 		}
 
-		const hasError = (validationResults as ValidationResult[]).some(result => result.hasError)
+		const hasError = validationResults.some(result => result.hasError)
 		return applyRangeValidationErrors(!hasError)
 	}
 
@@ -421,21 +528,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 				return
 			}
 
-			queueMicrotask(async () => {
-				clearValidation()
-
-				const datesToValidate = Array.isArray(options.selectedDates.value)
-					? options.selectedDates.value
-					: [options.selectedDates.value]
-
-				for (const date of datesToValidate) {
-					await Promise.resolve(validateField(
-						date,
-						options.customRules.value,
-						options.customWarningRules.value,
-					))
-				}
-			})
+			revalidateSelectedDates()
 		}, { deep: true })
 	}
 
@@ -451,7 +544,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 	const validationState = {
 		errors,
 		warnings,
-		successes: validation.displaySuccesses,
+		successes,
 		hasSuccess: validation.hasSuccess,
 		clear: clearValidation,
 		validate: validateDates,
@@ -459,22 +552,29 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		validateField,
 	}
 	const messages = {
-		errors,
-		warnings,
-		successes: validation.displaySuccesses,
-		hasSuccess: validation.hasSuccess,
+		errors: displayErrors,
+		warnings: displayWarnings,
+		successes: displaySuccesses,
+		hasError: displayHasError,
+		hasWarning: displayHasWarning,
+		hasSuccess: displayHasSuccess,
 	}
 
 	return {
-		validation,
+		validation: {
+			hasError: displayHasError,
+			hasWarning: displayHasWarning,
+			displaySuccesses,
+			hasSuccess: displayHasSuccess,
+		},
 		validationState,
 		messages,
 		errors,
 		warnings,
 		successes,
-		errorMessages: errors,
-		warningMessages: warnings,
-		successMessages: validation.displaySuccesses,
+		errorMessages: displayErrors,
+		warningMessages: displayWarnings,
+		successMessages: displaySuccesses,
 		clearValidation,
 		validateField,
 		validateDates,
