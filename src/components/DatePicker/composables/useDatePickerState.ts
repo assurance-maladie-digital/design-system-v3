@@ -1,7 +1,7 @@
 import { computed, ref, unref, watch, type Ref, type ComputedRef, type MaybeRef } from 'vue'
 import type { DateInput, DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 import { locales } from '../locales'
-import { formatDateRangeDisplay } from '../utils/dateFormattingUtils'
+import { formatDateRangeDisplay, resolveDatePickerStateFromModelValue } from '../utils/dateFormattingUtils'
 
 export interface UseDatePickerStateOptions {
 	selectedDates: Ref<Date | (Date | null)[] | null>
@@ -11,7 +11,6 @@ export interface UseDatePickerStateOptions {
 	displayRange?: MaybeRef<boolean>
 	parseDate: (value: string, format: string) => Date | null
 	formatDate: (date: Date | null, format: string) => string
-	initializeSelectedDates: (value: DateInput | null, format: string, dateFormatReturn?: string) => Date | (Date | null)[] | null
 	validateDates: (forceValidation?: boolean) => void
 	updateModel: (value: DateModelValue) => void
 	generateDateRange?: (start: Date, end: Date) => Date[]
@@ -37,7 +36,6 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 		displayRange = false,
 		parseDate,
 		formatDate,
-		initializeSelectedDates,
 		validateDates,
 		// updateModel,
 		generateDateRange,
@@ -130,41 +128,20 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 			return
 		}
 
-		selectedDates.value = initializeSelectedDates(newValue ?? null, unref(format), dateFormatReturn)
+		const nextState = resolveDatePickerStateFromModelValue({
+			modelValue: newValue as DateModelValue,
+			displayRange: unref(displayRange),
+			displayFormat: unref(format),
+			returnFormat: dateFormatReturn || unref(format),
+			parseDate,
+			formatDate,
+			generateDateRange,
+			preserveInvalidValue: true,
+		})
 
-		if (unref(displayRange) && Array.isArray(selectedDates.value) && selectedDates.value.length === 2) {
-			const startDate = selectedDates.value[0]
-			const endDate = selectedDates.value[1]
-			if (startDate && endDate && generateDateRange) {
-				// Regenerate intermediate dates for Vuetify range selection
-				selectedDates.value = generateDateRange(startDate, endDate)
-			}
-		}
-
-		if (selectedDates.value) {
-			if (unref(displayRange) && Array.isArray(selectedDates.value) && selectedDates.value.length >= 2) {
-				const startDate = selectedDates.value[0]
-				const endDate = selectedDates.value[selectedDates.value.length - 1]
-				if (startDate && endDate) {
-					textInputValue.value = formatDateRangeDisplay(startDate, endDate, unref(format), formatDate)
-				}
-			}
-			else {
-				const firstDate = Array.isArray(selectedDates.value)
-					? selectedDates.value[0]
-					: selectedDates.value
-				if (firstDate) {
-					textInputValue.value = formatDate(firstDate, unref(format))
-				}
-			}
-			if (Array.isArray(formattedDate.value)) {
-				// Pour les plages, formater avec le séparateur standard " - "
-				displayFormattedDate.value = formattedDate.value.join(locales.rangeSeparator)
-			}
-			else {
-				displayFormattedDate.value = (formattedDate.value as string) || ''
-			}
-		}
+		selectedDates.value = nextState.selectedDates
+		textInputValue.value = nextState.displayValue
+		displayFormattedDate.value = nextState.displayValue
 		validateDates()
 	}
 

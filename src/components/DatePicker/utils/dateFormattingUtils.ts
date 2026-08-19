@@ -1,5 +1,7 @@
 import dayjs from 'dayjs'
 import { locales } from '../locales'
+import type { DateInput } from '@/composables/date/useDateInitializationDayjs'
+import type { DateObjectValue } from '../types'
 
 /**
  * Utilitaires de formatage de dates pour les composants DatePicker
@@ -41,6 +43,22 @@ export interface DisplayedMonthYearState {
 	yearName: string
 }
 
+export interface ResolveDatePickerStateOptions {
+	modelValue: DateInput | undefined
+	displayRange: boolean
+	displayFormat: string
+	returnFormat: string
+	parseDate: (value: string, format: string) => Date | null
+	formatDate: (date: Date | null, format: string) => string
+	generateDateRange?: (start: Date, end: Date) => Date[]
+	preserveInvalidValue?: boolean
+}
+
+export interface ResolvedDatePickerState {
+	selectedDates: DateObjectValue
+	displayValue: string
+}
+
 export const getDisplayedMonthYearState = (date: Date): DisplayedMonthYearState => {
 	const month = date.getMonth().toString()
 	const year = date.getFullYear().toString()
@@ -60,6 +78,79 @@ export const formatDateRangeDisplay = (
 	formatDate: (date: Date | null, format: string) => string,
 ) => {
 	return `${formatDate(startDate, format)}${locales.rangeSeparator}${formatDate(endDate, format)}`
+}
+
+const parseModelDate = (
+	value: string,
+	returnFormat: string,
+	displayFormat: string,
+	parseDate: (value: string, format: string) => Date | null,
+): Date | null => {
+	return parseDate(value, returnFormat) || parseDate(value, displayFormat)
+}
+
+export const resolveDatePickerStateFromModelValue = ({
+	modelValue,
+	displayRange,
+	displayFormat,
+	returnFormat,
+	parseDate,
+	formatDate,
+	generateDateRange,
+	preserveInvalidValue = false,
+}: ResolveDatePickerStateOptions): ResolvedDatePickerState => {
+	if (!modelValue || modelValue === '') {
+		return {
+			selectedDates: null,
+			displayValue: '',
+		}
+	}
+
+	if (displayRange && Array.isArray(modelValue)) {
+		const [startValue = '', endValue = ''] = modelValue
+		const startDate = startValue ? parseModelDate(startValue, returnFormat, displayFormat, parseDate) : null
+		const endDate = endValue ? parseModelDate(endValue, returnFormat, displayFormat, parseDate) : null
+
+		if (startDate && endDate) {
+			return {
+				selectedDates: generateDateRange ? generateDateRange(startDate, endDate) : [startDate, endDate],
+				displayValue: formatDateRangeDisplay(startDate, endDate, displayFormat, formatDate),
+			}
+		}
+
+		if (startDate) {
+			return {
+				selectedDates: [startDate],
+				displayValue: formatDate(startDate, displayFormat),
+			}
+		}
+
+		return {
+			selectedDates: null,
+			displayValue: preserveInvalidValue ? `${startValue}${locales.rangeSeparator}${endValue}`.trim() : '',
+		}
+	}
+
+	if (typeof modelValue === 'string') {
+		const date = parseModelDate(modelValue, returnFormat, displayFormat, parseDate)
+
+		if (date) {
+			return {
+				selectedDates: date,
+				displayValue: formatDate(date, displayFormat),
+			}
+		}
+
+		return {
+			selectedDates: null,
+			displayValue: preserveInvalidValue ? modelValue : '',
+		}
+	}
+
+	return {
+		selectedDates: null,
+		displayValue: '',
+	}
 }
 
 /**

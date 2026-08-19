@@ -1,5 +1,5 @@
 import { mount, flushPromises } from '@vue/test-utils'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import DateTextInput from '../DateTextInput.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 
@@ -79,6 +79,24 @@ describe('DateTextInput.clean', () => {
 		const emitted = wrapper.emitted('update:model-value')
 		expect(emitted).toBeTruthy()
 		expect(emitted && emitted[0]?.[0]).toBe('2025-01-01')
+	})
+
+	it('emits display text through input and return format through update:model-value in range mode', async () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			displayRange: true,
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('01/07/2026 - 10/07/2026')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(wrapper.emitted('input')?.at(-1)?.[0]).toBe('01/07/2026 - 10/07/2026')
+		expect(wrapper.emitted('update:model-value')?.at(-1)?.[0]).toEqual(['2026-07-01', '2026-07-10'])
+		expect(input.element.value).toBe('01/07/2026 - 10/07/2026')
 	})
 
 	it('correctly handles European format with YYYY/MM/DD return format on blur', async () => {
@@ -490,6 +508,9 @@ describe('DateTextInput.clean', () => {
 	})
 
 	it('validateOnSubmit fails with a future date and notAfterToday custom rule', async () => {
+		vi.useFakeTimers()
+		vi.setSystemTime(new Date(2026, 7, 19, 12, 0, 0))
+
 		const wrapper = mountComponent({
 			label: 'Date',
 			format: 'DD/MM/YYYY',
@@ -506,6 +527,8 @@ describe('DateTextInput.clean', () => {
 
 		const result = await wrapper.vm.validateOnSubmit()
 		expect(result).toBe(false)
+
+		vi.useRealTimers()
 	})
 
 	it('does not validate on blur when isValidateOnBlur is false but validateOnSubmit still applies', async () => {

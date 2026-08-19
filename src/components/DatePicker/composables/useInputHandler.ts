@@ -436,9 +436,5 @@ export function useInputHandler(options: InputHandlerOptions) {
 
 	return {
 		handleInput,
-		updateModelFromSelectedDates,
-		updateCursorPosition,
-		formatRangeInput,
-		updateSelectedDatesFromFormattedValue,
 	}
 }
