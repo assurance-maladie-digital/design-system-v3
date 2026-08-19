@@ -333,10 +333,12 @@
 
 	const {
 		messages,
-		validationState,
 		clearValidation,
 		validateDates,
 		validateCalendarModeDates,
+		errors,
+		warnings,
+		successes,
 		errorMessages,
 		warningMessages,
 		successMessages,
@@ -377,7 +379,7 @@
 
 	const finalizeDatePickerClose = async () => {
 		emit('closed')
-		await validationState.validate()
+		await validateDates()
 	}
 
 	const closeDatePicker = async () => {
@@ -874,7 +876,7 @@
 		}
 		else {
 			// Quand isValidateOnBlur est false, on s'assure qu'il n'y a pas d'erreurs
-			validationState.clear()
+			clearValidation()
 		}
 	}
 
@@ -967,9 +969,9 @@
 		isDatePickerVisible,
 		selectedDates,
 		errorMessages,
-		errors: readonlyState(validationState.errors),
-		warnings: readonlyState(validationState.warnings),
-		successes: readonlyState(successMessages),
+		errors: readonlyState(errors),
+		warnings: readonlyState(warnings),
+		successes: readonlyState(successes),
 		handleClickOutside,
 		initializeSelectedDates,
 		updateAccessibility,

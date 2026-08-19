@@ -1,28 +1,9 @@
-﻿import { type Ref, type MaybeRef, unref, toValue } from 'vue'
-import type { ValidationResult, ValidationRule } from '@/composables/validation/useValidation'
+﻿import { type Ref, type MaybeRef, unref } from 'vue'
 import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
-import { validateDateFormat, isDateComplete } from './useDateFormatUtils'
-import { validateEmptyOrIncompleteDate, adaptCustomRules } from '../utils/validationUtils'
+import { useDatePickerManualValidation, type DatePickerManualValidationOptions } from './useDatePickerManualValidation'
 import { locales } from '../locales'
-import type { DatePickerRule } from '../types'
 
-export interface UseDateTextFieldManualValidationOptions {
-	required: MaybeRef<boolean>
-	disableErrorHandling: MaybeRef<boolean>
-	customRules: MaybeRef<DatePickerRule[]>
-	customSuccessRules: MaybeRef<DatePickerRule[]>
-	customWarningRules: MaybeRef<DatePickerRule[]>
-	hasInteracted: Ref<boolean>
-	errors: Ref<string[]>
-	clearValidation: () => void
-	parseDate: (dateStr: string, format: string) => Date | null
-	validateField: (
-		value: unknown,
-		rules?: ValidationRule[],
-		warningRules?: ValidationRule[],
-		successRules?: ValidationRule[],
-	) => Promise<ValidationResult> | ValidationResult
-}
+export type UseDateTextFieldManualValidationOptions = Omit<DatePickerManualValidationOptions, 'displayFormat'>
 
 export interface UseDateTextFieldSubmitOptions {
 	isValidating: Ref<boolean>
@@ -59,105 +40,10 @@ export interface UseDateTextInputControllerOptions {
  */
 export const useDateTextInputController = (options: UseDateTextInputControllerOptions) => {
 	const { autoClamp, isRange, displayFormat, autoClampDate, manualValidation, submit, reset: resetOptions } = options
-	const {
-		required,
-		disableErrorHandling,
-		customRules,
-		customSuccessRules,
-		customWarningRules,
-		hasInteracted,
-		errors,
-		clearValidation,
-		parseDate,
-		validateField,
-	} = manualValidation
-
-	const isErrorHandlingDisabled = () => unref(disableErrorHandling)
-
-	const pushValidationError = (message?: string) => {
-		if (!isErrorHandlingDisabled() && message) {
-			errors.value.push(message)
-		}
-	}
-
-	const getReadyCustomRules = (): DatePickerRule[] | null => {
-		const currentCustomRules = toValue(customRules)
-		const readyRules = currentCustomRules.filter((rule) => {
-			if (rule.type === 'notBeforeDate' || rule.type === 'notAfterDate' || rule.type === 'exactDate') {
-				return rule.options && rule.options.date !== undefined
-			}
-
-			return true
-		})
-
-		if (readyRules.length === 0 && currentCustomRules.length > 0) {
-			return null
-		}
-
-		return readyRules
-	}
-
-	const validateCustomRulesForDate = (date: Date): boolean | Promise<boolean> => {
-		if (isErrorHandlingDisabled()) {
-			return errors.value.length === 0
-		}
-
-		const readyRules = getReadyCustomRules()
-		if (readyRules === null) {
-			return true
-		}
-
-		const safeCustomRules = adaptCustomRules(readyRules, displayFormat.value) as ValidationRule[]
-		const safeWarningRules = adaptCustomRules(toValue(customWarningRules), displayFormat.value) as ValidationRule[]
-		const safeSuccessRules = adaptCustomRules(toValue(customSuccessRules), displayFormat.value) as ValidationRule[]
-		const result = validateField(date, safeCustomRules, safeWarningRules, safeSuccessRules)
-
-		if (result instanceof Promise) {
-			return result.then(resolvedResult => !resolvedResult.hasError)
-		}
-
-		return !result.hasError
-	}
-
-	const validateManualInput = (value: string): boolean | Promise<boolean> => {
-		clearValidation()
-
-		const emptyCheck = validateEmptyOrIncompleteDate(
-			value,
-			unref(required),
-			(val: string) => isDateComplete(val, displayFormat.value),
-			hasInteracted.value,
-		)
-
-		if (!emptyCheck.isValid && emptyCheck.errorMessage) {
-			pushValidationError(locales.required)
-		}
-
-		if (!emptyCheck.shouldContinue) {
-			return emptyCheck.isValid
-		}
-
-		const formatValidation = validateDateFormat(
-			value,
-			displayFormat.value,
-			displayFormat.value,
-			unref(required),
-			hasInteracted.value,
-			isErrorHandlingDisabled(),
-		)
-		if (!formatValidation.isValid) {
-			pushValidationError(formatValidation.message)
-			return false
-		}
-
-		const date = parseDate(value, displayFormat.value)
-		if (!date) {
-			pushValidationError(locales.invalidDateFormatWithFormat(displayFormat.value))
-			return false
-		}
-
-		return validateCustomRulesForDate(date)
-	}
+	const { validateManualInput } = useDatePickerManualValidation({
+		...manualValidation,
+		displayFormat,
+	})
 
 	const validateOnSubmit = async () => {
 		const { isValidating, hasInteracted, inputValue, runRules } = submit
