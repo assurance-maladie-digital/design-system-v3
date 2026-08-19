@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { ref, nextTick } from 'vue'
-import { useDatePickerValidation } from '../useDatePickerValidation'
+import { createInactiveDatePickerValidationController, useDatePickerValidation } from '../useDatePickerValidation'
 import { DATE_PICKER_MESSAGES } from '../../constants/messages'
 import type { DatePickerRule } from '../../types'
 
@@ -69,11 +69,13 @@ describe('useDatePickerValidation', () => {
 			const options = createOptions()
 			const {
 				errors,
+				successMessages,
 				warnings,
 				validateField,
 				validateDates,
 				validateCalendarModeDates,
 				clearValidation,
+				messages,
 				validationState,
 			} = useDatePickerValidation(options)
 
@@ -83,6 +85,40 @@ describe('useDatePickerValidation', () => {
 			expect(validationState.validate).toBe(validateDates)
 			expect(validationState.validateSubmit).toBe(validateCalendarModeDates)
 			expect(validationState.clear).toBe(clearValidation)
+			expect(messages.errors).toBe(errors)
+			expect(messages.warnings).toBe(warnings)
+			expect(messages.successes).toBe(successMessages)
+			expect(messages.hasSuccess).toBeTypeOf('object')
+		})
+
+		it('expose aussi un controller inactif partageant le même contrat', async () => {
+			const controller = createInactiveDatePickerValidationController()
+
+			expect(controller.messages.errors.value).toEqual([])
+			expect(controller.messages.warnings.value).toEqual([])
+			expect(controller.messages.successes.value).toEqual([])
+			expect(controller.messages.hasSuccess.value).toBe(false)
+			expect(controller.validationState.errors.value).toEqual([])
+			expect(controller.validationState.warnings.value).toEqual([])
+			expect(controller.validationState.successes.value).toEqual([])
+			expect(controller.validationState.hasSuccess.value).toBe(false)
+
+			const validateResult = controller.validationState.validate()
+			const submitResult = controller.validationState.validateSubmit()
+			const fieldResult = controller.validationState.validateField(new Date('2023-01-01'))
+
+			expect(validateResult).toEqual({
+				hasError: false,
+				hasWarning: false,
+				hasSuccess: false,
+				state: { errors: [], warnings: [], successes: [] },
+			})
+			expect(submitResult).toEqual(validateResult)
+			expect(fieldResult).toEqual(validateResult)
+
+			controller.validationState.clear()
+			await nextTick()
+			expect(controller.validationState.errors.value).toEqual([])
 		})
 	})
 

@@ -1,4 +1,4 @@
-import { watch, unref, type Ref, type MaybeRef } from 'vue'
+import { computed, ref, watch, unref, type ComputedRef, type Ref, type MaybeRef } from 'vue'
 import { useValidation, type ValidationResult, type ValidationRule } from '@/composables/validation/useValidation'
 import { locales } from '../locales'
 import type { DateObjectValue, DatePickerRule } from '../types'
@@ -26,6 +26,46 @@ export type DatePickerValidationOptions = {
 	onblur?: Ref<boolean>
 	fieldIdentifier?: string
 	revalidateOnCustomRulesChange?: boolean
+}
+
+export interface DatePickerValidationStateController {
+	errors: Ref<string[]>
+	warnings: Ref<string[]>
+	successes: ComputedRef<string[]>
+	hasSuccess: Ref<boolean> | ComputedRef<boolean>
+	clear: () => void
+	validate: (forceValidation?: boolean) => ValidationResult | Promise<ValidationResult>
+	validateSubmit: (forceValidation?: boolean) => void | ValidationResult | Promise<ValidationResult | void>
+	validateField: (
+		value: unknown,
+		rules?: ValidationRule[],
+		warningRules?: ValidationRule[],
+		successRules?: ValidationRule[],
+	) => ValidationResult | Promise<ValidationResult>
+}
+
+export interface DatePickerValidationMessagesController {
+	errors: Ref<string[]>
+	warnings: Ref<string[]>
+	successes: Ref<string[]> | ComputedRef<string[]>
+	hasSuccess: Ref<boolean> | ComputedRef<boolean>
+}
+
+export interface DatePickerValidationController {
+	validation: ReturnType<typeof useValidation>
+	validationState: DatePickerValidationStateController
+	messages: DatePickerValidationMessagesController
+	errors: Ref<string[]>
+	warnings: Ref<string[]>
+	successes: Ref<string[]>
+	errorMessages: Ref<string[]>
+	warningMessages: Ref<string[]>
+	successMessages: ComputedRef<string[]>
+	clearValidation: () => void
+	validateField: DatePickerValidationStateController['validateField']
+	validateDates: DatePickerValidationStateController['validate']
+	validateCalendarModeDates: DatePickerValidationStateController['validateSubmit']
+	isRangeValid: ReturnType<typeof useDateRangeValidation>['isRangeValid']
 }
 
 const emptyValidationResult = (): ValidationResult => ({
@@ -61,7 +101,69 @@ const requiredValidationResult = (shouldDisplayErrors: boolean): ValidationResul
 	},
 })
 
-export function useDatePickerValidation(options: DatePickerValidationOptions) {
+const createInactiveValidationState = (): DatePickerValidationStateController => {
+	const errors = ref<string[]>([])
+	const warnings = ref<string[]>([])
+	const successes = computed(() => [] as string[])
+	const hasSuccess = computed(() => false)
+
+	return {
+		errors,
+		warnings,
+		successes,
+		hasSuccess,
+		clear: () => {},
+		validate: () => emptyValidationResult(),
+		validateSubmit: () => emptyValidationResult(),
+		validateField: () => emptyValidationResult(),
+	}
+}
+
+export const createInactiveDatePickerValidationController = (): Pick<
+	DatePickerValidationController,
+	| 'validation'
+	| 'validationState'
+	| 'messages'
+	| 'errors'
+	| 'warnings'
+	| 'successes'
+	| 'errorMessages'
+	| 'warningMessages'
+	| 'successMessages'
+	| 'clearValidation'
+	| 'validateField'
+	| 'validateDates'
+	| 'validateCalendarModeDates'
+> => {
+	const validationState = createInactiveValidationState()
+	const messages = {
+		errors: validationState.errors,
+		warnings: validationState.warnings,
+		successes: validationState.successes,
+		hasSuccess: validationState.hasSuccess,
+	}
+
+	return {
+		validation: {
+			displaySuccesses: validationState.successes,
+			hasSuccess: validationState.hasSuccess,
+		} as ReturnType<typeof useValidation>,
+		validationState,
+		messages,
+		errors: validationState.errors,
+		warnings: validationState.warnings,
+		successes: validationState.successes,
+		errorMessages: validationState.errors,
+		warningMessages: validationState.warnings,
+		successMessages: validationState.successes,
+		clearValidation: validationState.clear,
+		validateField: validationState.validateField,
+		validateDates: validationState.validate,
+		validateCalendarModeDates: validationState.validateSubmit,
+	}
+}
+
+export function useDatePickerValidation(options: DatePickerValidationOptions): DatePickerValidationController {
 	// Utiliser useValidation pour la validation de base
 	const validation = useValidation({
 		showSuccessMessages: options.showSuccessMessages,
@@ -356,10 +458,17 @@ export function useDatePickerValidation(options: DatePickerValidationOptions) {
 		validateSubmit: validateCalendarModeDates,
 		validateField,
 	}
+	const messages = {
+		errors,
+		warnings,
+		successes: validation.displaySuccesses,
+		hasSuccess: validation.hasSuccess,
+	}
 
 	return {
 		validation,
 		validationState,
+		messages,
 		errors,
 		warnings,
 		successes,
