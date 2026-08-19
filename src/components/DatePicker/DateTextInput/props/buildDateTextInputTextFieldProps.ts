@@ -1,11 +1,13 @@
 import type { Ref } from 'vue'
 import type { DateTextInputProps } from '../../types'
 
-export const useSyTextFieldProps = (
+export const buildDateTextInputTextFieldProps = (
 	props: DateTextInputProps,
 	errorMessages: Ref<string[]>,
 	warningMessages: Ref<string[]>,
 	successMessages: Ref<string[]>,
+	isOnError: Ref<boolean>,
+	isOnWarning: Ref<boolean>,
 	isOnSuccess: Ref<boolean>,
 	ariaLabel: string,
 ) => ({
@@ -22,6 +24,8 @@ export const useSyTextFieldProps = (
 	'variant-style': props.isOutlined ? 'outlined' : 'underlined',
 	'warning-messages': warningMessages.value,
 	'success-messages': successMessages.value,
+	'has-error': isOnError.value,
+	'has-warning': isOnWarning.value,
 	'has-success': isOnSuccess.value,
 	'show-success-messages': props.showSuccessMessages,
 	'bg-color': props.bgColor,

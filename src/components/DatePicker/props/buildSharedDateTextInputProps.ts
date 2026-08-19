@@ -1,10 +1,12 @@
 import { type Ref } from 'vue'
 import type { DatePickerCommonProps } from '../types'
 
-export const useDateTextInputBaseProps = (
+export const buildSharedDateTextInputProps = (
 	props: DatePickerCommonProps,
 	labelWithAsterisk: Ref<string | undefined>,
 	errorMessages: Ref<string[]>,
+	warningMessages: Ref<string[]>,
+	successMessages: Ref<string[]>,
 ) => ({
 	'date-format-return': props.dateFormatReturn,
 	'format': props.format,
@@ -12,6 +14,7 @@ export const useDateTextInputBaseProps = (
 	'placeholder': props.placeholder,
 	'required': props.required,
 	'custom-rules': props.customRules,
+	'custom-success-rules': props.customSuccessRules,
 	'custom-warning-rules': props.customWarningRules,
 	'disabled': props.disabled,
 	'readonly': props.readonly,
@@ -27,9 +30,15 @@ export const useDateTextInputBaseProps = (
 	'density': props.density,
 	'hide-details': props.hideDetails,
 	'auto-clamp': props.autoClamp,
-	'external-error-messages': errorMessages.value,
+	'error-messages': errorMessages.value,
+	'has-error': props.hasError,
+	'has-warning': props.hasWarning,
+	'has-success': props.hasSuccess,
+	'warning-messages': warningMessages.value,
+	'success-messages': successMessages.value,
 	'display-asterisk': props.displayAsterisk,
 	'is-validate-on-blur': props.isValidateOnBlur,
+	'max-errors': props.maxErrors,
 	'title': props.title || props.placeholder || undefined,
 	'hint': props.hint,
 	'persistent-hint': props.persistentHint,

@@ -4,12 +4,13 @@ import { type DateObjectValue } from '../types'
 import { locales } from '../locales'
 
 /**
- * Composable pour gérer le comportement lors de la perte de focus d'un champ de date
+ * Gère le commit au blur du champ texte utilisé par le DatePicker
+ * quand la saisie manuelle doit synchroniser le modèle/calendrier.
  *
  * @param options - Options de configuration
  * @returns Fonction pour gérer la perte de focus
  */
-export const useInputBlurHandler = (options: {
+export const useDatePickerInputBlurHandler = (options: {
 	// Propriétés de configuration
 	format: MaybeRef<string>
 	dateFormatReturn?: string

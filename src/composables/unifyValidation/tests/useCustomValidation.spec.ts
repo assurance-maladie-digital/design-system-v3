@@ -1,7 +1,10 @@
-import { describe, it, expect } from 'vitest'
+/* eslint-disable vue/one-component-per-file */
+
+import { describe, it, expect, vi } from 'vitest'
 import { defineComponent, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { useCustomValidation } from '../useCustomValidation'
+import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 import type { ValidationRule } from '@/composables/validation/useValidation'
 
 // Helper to run a composable inside a Vue component context
@@ -293,6 +296,161 @@ describe('useCustomValidation', () => {
 		args.modelValue.value = ''
 		await nextTick()
 		expect(args.errors.value).toEqual([])
+	})
+
+	it('does not trigger reactive validation when reactiveValidation is false', async () => {
+		const args = defaultArgs()
+		args.focused.value = true
+		args.modelValue.value = 'initial'
+		withSetup(() =>
+			useCustomValidation(
+				args.modelValue,
+				args.customRules,
+				args.customWarningRules,
+				args.customSuccessRules,
+				args.errors,
+				args.warnings,
+				args.successes,
+				args.showSuccessMessages,
+				args.label,
+				args.focused,
+				args.isValidateOnBlur,
+				args.disableErrorHandling,
+				undefined,
+				undefined,
+				{ reactiveValidation: false },
+			),
+		)
+
+		args.focused.value = false
+		args.modelValue.value = ''
+		await nextTick()
+
+		expect(args.errors.value).toEqual([])
+		expect(args.warnings.value).toEqual([])
+		expect(args.successes.value).toEqual([])
+	})
+
+	it('does not register itself in SyForm when registerWithForm is false', async () => {
+		const args = defaultArgs()
+		args.modelValue.value = ''
+
+		let validation!: ReturnType<typeof useCustomValidation>
+
+		const FieldUnderTest = defineComponent({
+			setup() {
+				validation = useCustomValidation(
+					args.modelValue,
+					args.customRules,
+					args.customWarningRules,
+					args.customSuccessRules,
+					args.errors,
+					args.warnings,
+					args.successes,
+					args.showSuccessMessages,
+					args.label,
+					args.focused,
+					args.isValidateOnBlur,
+					args.disableErrorHandling,
+					undefined,
+					undefined,
+					{ registerWithForm: false },
+				)
+
+				return {}
+			},
+			template: '<div data-test="field-under-test" />',
+		})
+
+		const wrapper = mount(defineComponent({
+			components: { SyForm, FieldUnderTest },
+			template: `
+				<SyForm data-test="syform">
+					<FieldUnderTest />
+				</SyForm>
+			`,
+		}))
+
+		await nextTick()
+
+		const syFormVm = wrapper.getComponent(SyForm).vm as {
+			validate: () => Promise<boolean>
+		}
+
+		const valid = await syFormVm.validate()
+		expect(valid).toBe(true)
+		expect(args.errors.value).toEqual([])
+
+		const manualResult = await validation.validate()
+		expect(manualResult.hasError).toBe(true)
+		expect(args.errors.value).toContain('Requis')
+
+		wrapper.unmount()
+	})
+
+	it('uses provided SyForm registration callbacks when present', async () => {
+		const args = defaultArgs()
+		const validateOnSubmit = vi.fn(async () => true)
+		const clearValidation = vi.fn()
+		const reset = vi.fn()
+
+		const FieldUnderTest = defineComponent({
+			setup() {
+				useCustomValidation(
+					args.modelValue,
+					args.customRules,
+					args.customWarningRules,
+					args.customSuccessRules,
+					args.errors,
+					args.warnings,
+					args.successes,
+					args.showSuccessMessages,
+					args.label,
+					args.focused,
+					args.isValidateOnBlur,
+					args.disableErrorHandling,
+					undefined,
+					undefined,
+					{
+						formRegistration: {
+							validateOnSubmit,
+							clearValidation,
+							reset,
+						},
+					},
+				)
+
+				return {}
+			},
+			template: '<div data-test="field-under-test" />',
+		})
+
+		const wrapper = mount(defineComponent({
+			components: { SyForm, FieldUnderTest },
+			template: `
+				<SyForm data-test="syform">
+					<FieldUnderTest />
+				</SyForm>
+			`,
+		}))
+
+		await nextTick()
+
+		const syFormVm = wrapper.getComponent(SyForm).vm as {
+			validate: () => Promise<boolean>
+			clearValidation: () => void
+			reset: () => void
+		}
+
+		expect(await syFormVm.validate()).toBe(true)
+		syFormVm.clearValidation()
+		syFormVm.reset()
+
+		expect(validateOnSubmit).toHaveBeenCalledTimes(1)
+		expect(clearValidation).toHaveBeenCalled()
+		expect(reset).toHaveBeenCalledTimes(1)
+
+		wrapper.unmount()
 	})
 
 	it('re-creates the validator when customRules change and auto-validates when dirty', async () => {

@@ -1,8 +1,10 @@
-import { describe, it, expect } from 'vitest'
-import { ref, nextTick } from 'vue'
+import { describe, it, expect, vi } from 'vitest'
+import { ref, nextTick, defineComponent } from 'vue'
+import { mount } from '@vue/test-utils'
 import { createInactiveDatePickerValidationController, useDatePickerValidation } from '../useDatePickerValidation'
 import { DATE_PICKER_MESSAGES } from '../../constants/messages'
 import type { DatePickerRule } from '../../types'
+import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
 describe('useDatePickerValidation', () => {
 	const createOptions = (overrides = {}) => ({
@@ -12,7 +14,15 @@ describe('useDatePickerValidation', () => {
 		required: ref(false),
 		displayRange: ref(false),
 		customRules: ref([]),
+		customSuccessRules: ref([]),
 		customWarningRules: ref([]),
+		errorMessages: ref<string[] | null>(null),
+		hasErrorProp: ref(false),
+		hasSuccessProp: ref(false),
+		hasWarningProp: ref(false),
+		warningMessages: ref<string[] | null>(null),
+		successMessages: ref<string[] | null>(null),
+		maxErrors: ref(1),
 		selectedDates: ref<Date | (Date | null)[] | null>(null),
 		isUpdatingFromInternal: ref(false),
 		currentRangeIsValid: ref(true),
@@ -26,6 +36,30 @@ describe('useDatePickerValidation', () => {
 		fieldIdentifier: 'Date',
 		revalidateOnCustomRulesChange: false,
 		...overrides,
+	})
+
+	// eslint-disable-next-line vue/one-component-per-file
+	const FieldUnderTest = (validateOnSubmit: () => Promise<boolean>) => defineComponent({
+		setup() {
+			useDatePickerValidation(createOptions({
+				formRegistration: {
+					validateOnSubmit,
+				},
+			}))
+
+			return {}
+		},
+		template: '<div data-test="field-under-test" />',
+	})
+
+	// eslint-disable-next-line vue/one-component-per-file
+	const SyFormHost = (fieldComponent: ReturnType<typeof defineComponent>) => defineComponent({
+		components: { SyForm, FieldUnderTest: fieldComponent },
+		template: `
+			<SyForm data-test="syform">
+				<FieldUnderTest />
+			</SyForm>
+		`,
 	})
 
 	describe('validateField', () => {
@@ -69,8 +103,10 @@ describe('useDatePickerValidation', () => {
 			const options = createOptions()
 			const {
 				errors,
+				errorMessages,
 				successMessages,
 				warnings,
+				warningMessages,
 				validateField,
 				validateDates,
 				validateCalendarModeDates,
@@ -85,8 +121,8 @@ describe('useDatePickerValidation', () => {
 			expect(validationState.validate).toBe(validateDates)
 			expect(validationState.validateSubmit).toBe(validateCalendarModeDates)
 			expect(validationState.clear).toBe(clearValidation)
-			expect(messages.errors).toBe(errors)
-			expect(messages.warnings).toBe(warnings)
+			expect(messages.errors).toBe(errorMessages)
+			expect(messages.warnings).toBe(warningMessages)
 			expect(messages.successes).toBe(successMessages)
 			expect(messages.hasSuccess).toBeTypeOf('object')
 		})
@@ -119,6 +155,93 @@ describe('useDatePickerValidation', () => {
 			controller.validationState.clear()
 			await nextTick()
 			expect(controller.validationState.errors.value).toEqual([])
+		})
+
+		it('enregistre validateOnSubmit dans SyForm via le bridge quand formRegistration est fourni', async () => {
+			const validateOnSubmit = vi.fn(async () => true)
+			const wrapper = mount(SyFormHost(FieldUnderTest(validateOnSubmit)))
+
+			await nextTick()
+
+			const syFormVm = wrapper.getComponent(SyForm).vm as {
+				validate: () => Promise<boolean>
+			}
+
+			expect(await syFormVm.validate()).toBe(true)
+			expect(validateOnSubmit).toHaveBeenCalledTimes(1)
+
+			wrapper.unmount()
+		})
+	})
+
+	describe('message aggregation', () => {
+		it('fusionne les messages injectés et internes en respectant maxErrors', () => {
+			const options = createOptions({
+				maxErrors: ref(2),
+				errorMessages: ref(['Erreur injectée']),
+				selectedDates: ref(new Date('2023-01-01')),
+				customRules: ref([
+					{
+						type: 'custom',
+						options: {
+							validate: () => 'Erreur interne',
+						},
+					},
+				]),
+			})
+			const { validateDates, errorMessages, validationState } = useDatePickerValidation(options)
+
+			validateDates()
+
+			expect(validationState.errors.value).toEqual(['Erreur interne'])
+			expect(errorMessages.value).toEqual(['Erreur injectée', 'Erreur interne'])
+		})
+
+		it('surface les règles de succès et les succès injectés via le contrat agrégé', () => {
+			const options = createOptions({
+				showSuccessMessages: ref(true),
+				maxErrors: ref(2),
+				selectedDates: ref(new Date('2023-01-01')),
+				successMessages: ref(['Succès injecté']),
+				customSuccessRules: ref([
+					{
+						type: 'custom',
+						options: {
+							validate: () => true,
+							successMessage: 'Succès interne',
+						},
+					},
+				]),
+			})
+			const { validateDates, successMessages, messages } = useDatePickerValidation(options)
+
+			validateDates()
+
+			expect(successMessages.value).toEqual(['Succès injecté', 'Succès interne'])
+			expect(messages.hasSuccess.value).toBe(true)
+		})
+
+		it('applique les overrides hasError et hasWarning via le contrat de messages', () => {
+			const options = createOptions({
+				hasErrorProp: ref(true),
+				hasWarningProp: ref(true),
+			})
+			const { messages, validation } = useDatePickerValidation(options)
+
+			expect(messages.hasError.value).toBe(true)
+			expect(messages.hasWarning.value).toBe(true)
+			expect(validation.hasError.value).toBe(true)
+			expect(validation.hasWarning.value).toBe(true)
+		})
+
+		it('applique hasSuccess forcé sans modifier les messages exposés', () => {
+			const options = createOptions({
+				hasSuccessProp: ref(true),
+			})
+			const { messages, successMessages } = useDatePickerValidation(options)
+
+			expect(messages.hasSuccess.value).toBe(true)
+			expect(successMessages.value).toEqual([])
 		})
 	})
 
