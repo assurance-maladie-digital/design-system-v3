@@ -1,4 +1,4 @@
-import type { MaybeRefOrGetter } from 'vue'
+import type { MaybeRefOrGetter, Ref } from 'vue'
 import { toRef } from 'vue'
 import type { Item, Items } from './types'
 
@@ -10,11 +10,7 @@ interface UseTableCheckboxOptions {
 	/**
 	 * The model value for selected items
 	 */
-	modelValue: MaybeRefOrGetter<unknown[]>
-	/**
-	 * Function to update the model value
-	 */
-	updateModelValue: (value: unknown[]) => void
+	modelValue: Ref<unknown[]>
 	/**
 	 * Optional key to use for item selection value. If not provided, falls back to `id` then the full object.
 	 */
@@ -22,7 +18,7 @@ interface UseTableCheckboxOptions {
 }
 export function useTableCheckbox(options: UseTableCheckboxOptions) {
 	const itemsRef = toRef(options.items)
-	const modelValueRef = toRef(options.modelValue)
+	const modelValueRef = options.modelValue
 	const selectionKeyRef = toRef(options as { selectionKey?: MaybeRefOrGetter<string | undefined> }, 'selectionKey')
 
 	/**
@@ -55,12 +51,12 @@ export function useTableCheckbox(options: UseTableCheckboxOptions) {
 
 		if (modelValueRef.value.length === items.length) {
 			// If all items are selected, deselect all
-			options.updateModelValue([])
+			modelValueRef.value = []
 		}
 		else {
 			// Otherwise, select all items
 			// We need to map the items to their values to ensure proper selection
-			options.updateModelValue(items.map(item => getItemValue(item)))
+			modelValueRef.value = items.map(item => getItemValue(item))
 		}
 	}
 

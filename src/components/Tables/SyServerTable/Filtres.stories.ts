@@ -1,10 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { fn } from 'storybook/test'
 import { ref } from 'vue'
 import dayjs from 'dayjs'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
 import type { FilterOption, FilterType } from '../common/types'
 import { useServerTableDemo } from '../common/serverStoryHelpers'
 
@@ -274,8 +273,8 @@ export const ServerFilterByText: Story = {
 		],
 	},
 	args: {
-		'serverItemsLength': 15,
-		'headers': [
+		serverItemsLength: 15,
+		headers: [
 			{
 				title: 'Prénom',
 				key: 'firstname',
@@ -295,23 +294,17 @@ export const ServerFilterByText: Story = {
 				filterType: 'text',
 			},
 		],
-		'caption': '',
-		'options': {
+		caption: '',
+		options: {
 			itemsPerPage: 5,
 			page: 1,
 			filters: [],
 		},
-		'showFilters': true,
-		'suffix': 'server-filter-text',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		showFilters: true,
+		suffix: 'server-filter-text',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -495,7 +488,7 @@ export const ServerFilterByNumber: Story = {
 		],
 	},
 	args: {
-		'headers': [
+		headers: [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -515,24 +508,18 @@ export const ServerFilterByNumber: Story = {
 				filterType: 'number',
 			},
 		],
-		'caption': '',
-		'options': {
+		caption: '',
+		options: {
 			itemsPerPage: 5,
 			page: 1,
 			filters: [],
 		},
-		'serverItemsLength': 15,
-		'showFilters': true,
-		'suffix': 'server-filter-number',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		serverItemsLength: 15,
+		showFilters: true,
+		suffix: 'server-filter-number',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -729,7 +716,7 @@ export const ServerFilterBySelect: Story = {
 		],
 	},
 	args: {
-		'headers': [
+		headers: [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -766,24 +753,18 @@ export const ServerFilterBySelect: Story = {
 				],
 			},
 		],
-		'caption': '',
-		'options': {
+		caption: '',
+		options: {
 			itemsPerPage: 5,
 			page: 1,
 			filters: [],
 		},
-		'serverItemsLength': 15,
-		'showFilters': true,
-		'suffix': 'server-filter-select',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		serverItemsLength: 15,
+		showFilters: true,
+		suffix: 'server-filter-select',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -988,7 +969,7 @@ export const ServerFilterBySelectMultiple: Story = {
 		],
 	},
 	args: {
-		'headers': [
+		headers: [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -1025,24 +1006,18 @@ export const ServerFilterBySelectMultiple: Story = {
 				],
 			},
 		],
-		'caption': '',
-		'options': {
+		caption: '',
+		options: {
 			itemsPerPage: 5,
 			page: 1,
 			filters: [],
 		},
-		'serverItemsLength': 15,
-		'showFilters': true,
-		'suffix': 'server-filter-select',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		serverItemsLength: 15,
+		showFilters: true,
+		suffix: 'server-filter-select',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -1187,7 +1162,7 @@ export const ServerFilterByAutocomplete: Story = {
 		],
 	},
 	args: {
-		'headers': [
+		headers: [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -1220,16 +1195,10 @@ export const ServerFilterByAutocomplete: Story = {
 				],
 			},
 		],
-		'serverItemsLength': 0,
-		'suffix': 'server-filter-autocomplete',
-		'showFilters': true,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		serverItemsLength: 0,
+		suffix: 'server-filter-autocomplete',
+		showFilters: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -1391,9 +1360,9 @@ export const ServerFilterByExacteDate: Story = {
 		],
 	},
 	args: {
-		'serverItemsLength': 5,
-		'showFilters': true,
-		'headers': [
+		serverItemsLength: 5,
+		showFilters: true,
+		headers: [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -1408,22 +1377,16 @@ export const ServerFilterByExacteDate: Story = {
 				dateFormat: 'DD/MM/YYYY',
 			},
 		],
-		'options': {
+		options: {
 			itemsPerPage: 5,
 			page: 1,
 			filters: [],
 		},
-		'caption': '',
-		'suffix': 'server-filter-date',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		caption: '',
+		suffix: 'server-filter-date',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -1602,9 +1565,9 @@ export const ServerFilterByPeriod: Story = {
 		],
 	},
 	args: {
-		'serverItemsLength': 5,
-		'showFilters': true,
-		'headers': [
+		serverItemsLength: 5,
+		showFilters: true,
+		headers: [
 			{
 				title: 'Nom',
 				key: 'name',
@@ -1619,22 +1582,16 @@ export const ServerFilterByPeriod: Story = {
 				dateFormat: 'DD/MM/YYYY',
 			},
 		],
-		'options': {
+		options: {
 			itemsPerPage: 5,
 			page: 1,
 			filters: [],
 		},
-		'caption': '',
-		'suffix': 'server-filter-date',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		caption: '',
+		suffix: 'server-filter-date',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -1839,8 +1796,8 @@ export const CustomFilterSlot: Story = {
 		],
 	},
 	args: {
-		'serverItemsLength': 6,
-		'headers': [
+		serverItemsLength: 6,
+		headers: [
 			{
 				title: 'Nom',
 				key: 'lastname',
@@ -1860,7 +1817,7 @@ export const CustomFilterSlot: Story = {
 				filterType: 'custom' as FilterType,
 			},
 		],
-		'items': [
+		items: [
 			{
 				firstname: 'Virginie',
 				lastname: 'Beauchesne',
@@ -1892,23 +1849,17 @@ export const CustomFilterSlot: Story = {
 				status: 'En attente',
 			},
 		],
-		'caption': '',
-		'options': {
+		caption: '',
+		options: {
 			itemsPerPage: 4,
 			page: 1,
 			filters: [],
 		},
-		'showFilters': true,
-		'suffix': 'server-custom-filter-slot',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		showFilters: true,
+		suffix: 'server-custom-filter-slot',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -2139,8 +2090,8 @@ export const CustomFilterInputs: Story = {
 		],
 	},
 	args: {
-		'serverItemsLength': 15,
-		'headers': [
+		serverItemsLength: 15,
+		headers: [
 			{
 				title: 'Prénom',
 				key: 'firstname',
@@ -2160,30 +2111,24 @@ export const CustomFilterInputs: Story = {
 				filterType: 'text',
 			},
 		],
-		'caption': '',
-		'options': {
+		caption: '',
+		options: {
 			itemsPerPage: 5,
 			page: 1,
 			filters: [],
 		},
-		'filterInputConfig': {
+		filterInputConfig: {
 			variant: 'outlined',
 			density: 'comfortable',
 			hideDetails: true,
 			clearable: false,
 			disableErrorHandling: true,
 		},
-		'showFilters': true,
-		'suffix': 'server-filter-text',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		showFilters: true,
+		suffix: 'server-filter-text',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },

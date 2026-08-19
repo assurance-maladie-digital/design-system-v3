@@ -1,13 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { computed, ref } from 'vue'
-import { fn } from 'storybook/test'
 import { mdiChevronLeft, mdiChevronRight, mdiDelete, mdiPencil } from '@mdi/js'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
 import DialogBox from '@/components/DialogBox/DialogBox.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
 import { useServerEditingDemo } from '../common/serverStoryHelpers'
 
 const meta = {
@@ -87,19 +86,13 @@ const statutOptions = [
  */
 export const Default: Story = {
 	args: {
-		'suffix': 'server-bulk-actions',
-		'caption': 'Liste des patients',
-		'serverItemsLength': manyItems.length,
-		'showSelect': true,
-		'selectionKey': 'id',
-		'hideDefaultFooter': true,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		suffix: 'server-bulk-actions',
+		caption: 'Liste des patients',
+		serverItemsLength: manyItems.length,
+		showSelect: true,
+		selectionKey: 'id',
+		hideDefaultFooter: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable, DialogBox, SySelect },
@@ -279,19 +272,13 @@ export const Default: Story = {
  */
 export const SequentialEdit: Story = {
 	args: {
-		'suffix': 'server-bulk-actions-sequential',
-		'caption': 'Liste des patients',
-		'serverItemsLength': baseItems.length,
-		'showSelect': true,
-		'selectionKey': 'id',
-		'hideDefaultFooter': true,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		suffix: 'server-bulk-actions-sequential',
+		caption: 'Liste des patients',
+		serverItemsLength: baseItems.length,
+		showSelect: true,
+		selectionKey: 'id',
+		hideDefaultFooter: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable, DialogBox, SyTextField, SySelect },

@@ -1,10 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SyServerTable from './SyServerTable.vue'
 import { ref } from 'vue'
-import { fn } from 'storybook/test'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
 
 interface TextItem {
 	example: string
@@ -68,16 +67,10 @@ type Story = StoryObj<typeof meta>
 
 export const TextFilterRules: Story = {
 	args: {
-		'serverItemsLength': 9,
-		'suffix': 'text-filter-rules',
-		'showFilters': true,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		serverItemsLength: 9,
+		suffix: 'text-filter-rules',
+		showFilters: true,
+		...commonTableEventArgs(),
 	},
 	parameters: {
 		docs: {
@@ -229,16 +222,10 @@ export const TextFilterRules: Story = {
 
 export const NumberFilterRules: Story = {
 	args: {
-		'serverItemsLength': 8,
-		'suffix': 'number-filter-rules',
-		'showFilters': true,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		serverItemsLength: 8,
+		suffix: 'number-filter-rules',
+		showFilters: true,
+		...commonTableEventArgs(),
 	},
 	parameters: {
 		docs: {
@@ -384,16 +371,10 @@ export const NumberFilterRules: Story = {
 
 export const SelectFilterRules: Story = {
 	args: {
-		'serverItemsLength': 5,
-		'suffix': 'select-filter-rules',
-		'showFilters': true,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		serverItemsLength: 5,
+		suffix: 'select-filter-rules',
+		showFilters: true,
+		...commonTableEventArgs(),
 	},
 	parameters: {
 		docs: {
@@ -511,16 +492,10 @@ export const SelectFilterRules: Story = {
 }
 export const DateFilterRules = {
 	args: {
-		'serverItemsLength': 10,
-		'suffix': 'date-filter-rules',
-		'showFilters': true,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		serverItemsLength: 10,
+		suffix: 'date-filter-rules',
+		showFilters: true,
+		...commonTableEventArgs(),
 	},
 	parameters: {
 		docs: {

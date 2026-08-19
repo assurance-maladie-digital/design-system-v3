@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { fn } from 'storybook/test'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
 import { serverUsers } from '../common/storyData'
 import { useServerTableDemo } from '../common/serverStoryHelpers'
 
@@ -123,24 +122,18 @@ export const ServerSortBy: Story = {
 		],
 	},
 	args: {
-		'options': {
+		options: {
 			itemsPerPage: 5,
 			sortBy: [{ key: 'lastname', order: 'desc' }],
 			page: 1,
 		},
-		'headers': serverHeaders,
-		'caption': '',
-		'serverItemsLength': 15,
-		'suffix': 'server-sort',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		headers: serverHeaders,
+		caption: '',
+		serverItemsLength: 15,
+		suffix: 'server-sort',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -227,7 +220,7 @@ export const ServerMultiSort: Story = {
 		],
 	},
 	args: {
-		'options': {
+		options: {
 			itemsPerPage: 5,
 			multiSort: true,
 			sortBy: [
@@ -236,20 +229,14 @@ export const ServerMultiSort: Story = {
 			],
 			page: 1,
 		},
-		'headers': serverHeaders,
-		'caption': '',
-		'serverItemsLength': 7,
-		'suffix': 'server-multi-sort',
-		'density': 'default',
-		'striped': false,
-		'multiSort': true,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		headers: serverHeaders,
+		caption: '',
+		serverItemsLength: 7,
+		suffix: 'server-multi-sort',
+		density: 'default',
+		striped: false,
+		multiSort: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },

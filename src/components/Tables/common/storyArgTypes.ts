@@ -1,4 +1,5 @@
 import type { Meta } from '@storybook/vue3-vite'
+import { fn } from 'storybook/test'
 
 /**
  * Définitions `argTypes` Storybook communes aux tableaux (SyTable, SyServerTable).
@@ -259,10 +260,10 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 		},
 	},
 	'onUpdate:modelValue': {
-		description: 'Émis lorsque la sélection change (`showSelect` ou `showSelectSingle`). Reçoit la liste des lignes sélectionnées.',
+		description: 'Émis lorsque la sélection change (`showSelect` ou `showSelectSingle`). Reçoit la liste des valeurs de sélection des lignes sélectionnées (déterminées par `selectionKey`, `id` par défaut, sinon l\'objet complet).',
 		table: {
 			category: 'events',
-			type: { summary: '(selection: Record<string, unknown>[]) => void' },
+			type: { summary: '(selection: unknown[]) => void' },
 		},
 	},
 	'onEdit': {
@@ -293,4 +294,22 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 			type: { summary: '(item: Record<string, unknown>) => void' },
 		},
 	},
+}
+
+/**
+ * Handlers d'événements communs à étaler dans les `args` des stories des tableaux.
+ *
+ * Usine plutôt qu'objet statique : chaque story reçoit des spies `fn()` frais
+ * afin que les logs d'actions Storybook ne se mélangent pas entre stories.
+ */
+export function commonTableEventArgs() {
+	return {
+		'onUpdate:options': fn(),
+		'onUpdate:modelValue': fn(),
+		'onRow-click': fn(),
+		'onEdit': fn(),
+		'onSave': fn(),
+		'onCancel': fn(),
+		'onDelete': fn(),
+	}
 }

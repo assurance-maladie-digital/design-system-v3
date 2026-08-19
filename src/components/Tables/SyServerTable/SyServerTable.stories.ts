@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SyServerTable from './SyServerTable.vue'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
 import { StateEnum } from '../common/constants/StateEnum'
 import type { DataOptions } from '../common/types'
 import { ref, watch } from 'vue'
 import type { VDataTable } from 'vuetify/components'
-import { fn } from 'storybook/test'
 
 interface User {
 	[key: string]: string
@@ -176,28 +175,22 @@ export const Default: Story = {
 		],
 	},
 	args: {
-		'options': {
+		options: {
 			itemsPerPage: 5,
 			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
-		'headers': [
+		headers: [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
-		'caption': '',
-		'serverItemsLength': 15,
-		'suffix': 'server-default',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		caption: '',
+		serverItemsLength: 15,
+		suffix: 'server-default',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: (args) => {
 		return {
@@ -440,23 +433,17 @@ export const ManyServerTables: Story = {
 		],
 	},
 	args: {
-		'serverItemsLength': 15, // Add required serverItemsLength property
-		'headers': [
+		serverItemsLength: 15, // Add required serverItemsLength property
+		headers: [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
-		'caption': '',
-		'suffix': 'multi',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		caption: '',
+		suffix: 'multi',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: (args) => {
 		return {

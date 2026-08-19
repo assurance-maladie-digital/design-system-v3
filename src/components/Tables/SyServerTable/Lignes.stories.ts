@@ -1,10 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { computed, defineComponent, ref } from 'vue'
-import { fn } from 'storybook/test'
 import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
 import { StateEnum } from '../common/constants/StateEnum'
 import type { DataOptions } from '../common/types'
 import { serverUsers } from '../common/storyData'
@@ -141,21 +140,15 @@ export const ClickableRow: Story = {
 		],
 	},
 	args: {
-		'headers': serverHeaders,
-		'items': clickableUsers,
-		'serverItemsLength': 4,
-		'options': { itemsPerPage: 5, filters: [] },
-		'clickableRow': true,
-		'suffix': 'clickable-row-server-table',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
-		'onRow-click': fn(),
-		'onUpdate:modelValue': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		headers: serverHeaders,
+		items: clickableUsers,
+		serverItemsLength: 4,
+		options: { itemsPerPage: 5, filters: [] },
+		clickableRow: true,
+		suffix: 'clickable-row-server-table',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: {
@@ -347,25 +340,19 @@ export const ExpandableRows: Story = {
 		],
 	},
 	args: {
-		'options': {
+		options: {
 			itemsPerPage: 5,
 			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
-		'headers': serverHeaders,
-		'caption': '',
-		'serverItemsLength': 15,
-		'showExpand': true,
-		'suffix': 'server-expandable',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
-		'onUpdate:modelValue': fn(),
-		'onRow-click': fn(),
-		'onEdit': fn(),
-		'onSave': fn(),
-		'onCancel': fn(),
-		'onDelete': fn(),
+		headers: serverHeaders,
+		caption: '',
+		serverItemsLength: 15,
+		showExpand: true,
+		suffix: 'server-expandable',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
