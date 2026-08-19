@@ -4,7 +4,6 @@
 export { useDateInputEditing } from './useDateInputEditing'
 export { useDateRangeInput } from './useDateRangeInput'
 export { useDateAutoClamp } from './useDateAutoClamp'
-export { useDatePickerManualValidation } from './useDatePickerManualValidation'
 export { useDateTextInputController } from './useDateTextInputController'
 
 // Date selection and validation

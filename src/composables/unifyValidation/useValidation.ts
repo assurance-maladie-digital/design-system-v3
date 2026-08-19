@@ -6,6 +6,7 @@ import { computed, ref, toValue, type Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import { useCustomValidation } from './useCustomValidation'
 import { useVuetifyValidation as useVuetifyValidationComposable } from './useVuetifyValidation'
+import { mergeMessages } from './messageUtils'
 
 export type { VuetifyValidationRule }
 export type { SyValidationRule as ValidationRule }
@@ -170,7 +171,7 @@ export function useValidation(params: {
 		}
 
 		const max = params.maxErrors?.value
-		return max && max > 0 ? [...new Set(errorslist)].slice(0, max) : [...new Set(errorslist)]
+		return mergeMessages(null, errorslist, max)
 	})
 
 	const warnings = computed(() => {
@@ -179,7 +180,7 @@ export function useValidation(params: {
 			warningsList.push(...innerWarnings.value)
 		}
 		const max = params.maxErrors?.value
-		return max && max > 0 ? [...new Set(warningsList)].slice(0, max) : [...new Set(warningsList)]
+		return mergeMessages(null, warningsList, max)
 	})
 	const successes = computed(() => {
 		const successesList = [...params.successMessages?.value || []]
@@ -187,7 +188,7 @@ export function useValidation(params: {
 			successesList.push(...innerSuccesses.value)
 		}
 		const max = params.maxErrors?.value
-		return max && max > 0 ? [...new Set(successesList)].slice(0, max) : [...new Set(successesList)]
+		return mergeMessages(null, successesList, max)
 	})
 	const internalHasSuccess = computed(() => customValidator.hasSuccess.value)
 

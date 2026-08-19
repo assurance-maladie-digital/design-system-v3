@@ -29,7 +29,7 @@ export const useDatePickerInputBlurHandler = (options: {
 	parseDate: (dateStr: string, format: string) => Date | null
 	formatDate: (date: Date, format: string) => string
 	updateModel: (value: DateModelValue) => void
-	validateManualInput: (value: string) => boolean | Promise<boolean>
+	validateTextInput: (value: string) => Promise<boolean>
 
 	// Émetteurs d'événements
 	emitBlur: () => void
@@ -48,7 +48,7 @@ export const useDatePickerInputBlurHandler = (options: {
 		parseDate,
 		formatDate,
 		updateModel,
-		validateManualInput,
+		validateTextInput,
 		emitBlur,
 	} = options
 
@@ -157,7 +157,7 @@ export const useDatePickerInputBlurHandler = (options: {
 		}
 
 		if (displayFormattedDate.value) {
-			await Promise.resolve(validateManualInput(displayFormattedDate.value))
+			await Promise.resolve(validateTextInput(displayFormattedDate.value))
 		}
 	}
 

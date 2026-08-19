@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import type { StoryObj } from '@storybook/vue3-vite'
-import DatePicker from './DatePicker.vue'
+import DatePicker from './CalendarMode/DatePicker.vue'
 
 export default {
 	title: 'datePickers',
