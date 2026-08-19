@@ -313,6 +313,7 @@
 
 	// Variable pour éviter les mises à jour récursives
 	const isUpdatingFromInternal = ref(false)
+	const fieldKey = ref(0)
 	const keyboardNavigatedDate = ref<Date | null>(null)
 	const preventCloseOnKeyboardNavigation = ref(false)
 	const isInitialValidation = ref(true)
@@ -428,6 +429,7 @@
 
 	// Watcher pour mettre à jour le modèle lorsque les dates sélectionnées changent
 	watch(selectedDates, async (newValue) => {
+		if (isUpdatingFromInternal.value) return
 		if (!newValue) {
 			keyboardNavigatedDate.value = null
 			syncDisplayedMonthYearFromDate(new Date())
@@ -721,13 +723,17 @@
 
 	function resetField() {
 		clearValidation()
-		nextTick(() => {
+		isDatePickerVisible.value = false
+		keyboardNavigatedDate.value = null
+
+		withInternalUpdate(() => {
 			selectedDates.value = null
 			textInputValue.value = ''
 			displayFormattedDate.value = ''
-			isDatePickerVisible.value = false
-			keyboardNavigatedDate.value = null
+			emit('update:modelValue', null)
 		})
+
+		fieldKey.value++
 	}
 
 	const openDatePicker = async () => {
@@ -1044,6 +1050,7 @@
 					>
 						<SyTextField
 							:id="`${datePickerContentId}-input`"
+							:key="fieldKey"
 							ref="dateCalendarTextInputRef"
 							v-model="displayFormattedDate"
 							:class="[messageClasses, 'label-hidden-on-focus']"
