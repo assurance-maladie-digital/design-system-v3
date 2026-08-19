@@ -376,6 +376,7 @@
 		formRegistration: {
 			validateOnSubmit,
 			clearValidation: clearValidationForForm,
+			reset: resetField,
 		},
 	})
 	const isOnSuccess = hasSuccess
@@ -511,6 +512,7 @@
 		parseDate,
 		formatDate,
 		validateDates,
+		clearValidation,
 		generateDateRange,
 	})
 
@@ -715,6 +717,17 @@
 
 	function clearValidationForForm() {
 		clearValidation()
+	}
+
+	function resetField() {
+		clearValidation()
+		nextTick(() => {
+			selectedDates.value = null
+			textInputValue.value = ''
+			displayFormattedDate.value = ''
+			isDatePickerVisible.value = false
+			keyboardNavigatedDate.value = null
+		})
 	}
 
 	const openDatePicker = async () => {
