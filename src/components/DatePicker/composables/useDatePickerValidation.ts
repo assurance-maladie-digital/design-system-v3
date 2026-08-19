@@ -41,7 +41,7 @@ export type DatePickerValidationOptions = {
 	isInitialValidation?: Ref<boolean>
 	isValidateOnBlur?: Ref<boolean>
 	onblur?: Ref<boolean>
-	fieldIdentifier?: string
+	fieldIdentifier?: MaybeRef<string>
 	revalidateOnCustomRulesChange?: boolean
 	displayFormat?: MaybeRef<string>
 	parseDate?: (dateStr: string, format: string) => Date | null
@@ -187,7 +187,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		warnings,
 		successes,
 		computed(() => unref(options.showSuccessMessages)),
-		computed(() => options.fieldIdentifier ?? 'Date'),
+		computed(() => unref(options.fieldIdentifier) ?? 'Date'),
 		ref(false),
 		computed(() => options.isValidateOnBlur?.value ?? true),
 		computed(() => unref(options.disableErrorHandling)),
@@ -243,7 +243,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 	// Utiliser useDateRangeValidation pour centraliser la validation des plages
 	const { isRangeValid: isDateRangeValid } = useDateRangeValidation(
 		options.selectedDates,
-		unref(options.displayRange),
+		options.displayRange,
 	)
 
 	if (options.skipValidationWhenReadonly) {
@@ -277,9 +277,9 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 	const isIncompleteRangeSelection = (forceValidation: boolean): boolean => (
 		unref(options.displayRange)
 		&& Array.isArray(options.selectedDates.value)
-		&& options.selectedDates.value.length === 2
+		&& options.selectedDates.value.length >= 1
 		&& !!options.selectedDates.value[0]
-		&& !options.selectedDates.value[1]
+		&& (options.selectedDates.value.length < 2 || !options.selectedDates.value[options.selectedDates.value.length - 1])
 		&& !forceValidation
 	)
 
@@ -293,33 +293,66 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			: [options.selectedDates.value]
 	}
 
+	const accumulateValidationResults = (resolvedResults: ValidationResult[]): ValidationResult[] => {
+		const allErrors: string[] = []
+		const allWarnings: string[] = []
+		const allSuccesses: string[] = []
+
+		for (const result of resolvedResults) {
+			allErrors.push(...result.state.errors)
+			allWarnings.push(...result.state.warnings)
+			allSuccesses.push(...result.state.successes)
+		}
+
+		replaceErrors(allErrors)
+		warnings.value = [...new Set(allWarnings.filter(Boolean))]
+		successes.value = [...new Set(allSuccesses.filter(Boolean))]
+
+		return resolvedResults
+	}
+
 	const validateSelectedDates = (
 		dates = getDatesToValidate(),
 		rules = options.customRules.value,
 		warningRules = options.customWarningRules.value,
 		successRules = options.customSuccessRules?.value ?? [],
 	): ValidationResult[] | Promise<ValidationResult[]> => {
-		const results = dates.map(date => validateField(date, rules, warningRules, successRules))
+		const syncResults: ValidationResult[] = []
 
-		if (results.some(result => result instanceof Promise)) {
-			return Promise.all(results.map(result => Promise.resolve(result)))
+		for (const date of dates) {
+			const result = validateField(date, rules, warningRules, successRules)
+			if (result instanceof Promise) {
+				const startIndex = syncResults.length
+				return (async () => {
+					const results = [...syncResults, await result]
+					for (let i = startIndex + 1; i < dates.length; i++) {
+						results.push(await Promise.resolve(validateField(dates[i], rules, warningRules, successRules)))
+					}
+					return accumulateValidationResults(results)
+				})()
+			}
+			syncResults.push(result)
 		}
 
-		return results as ValidationResult[]
+		return accumulateValidationResults(syncResults)
 	}
 
 	const revalidateSelectedDates = (): void => {
 		queueMicrotask(async () => {
-			clearValidation()
+			const dates = getDatesToValidate()
+			const results: ValidationResult[] = []
 
-			for (const date of getDatesToValidate()) {
-				await Promise.resolve(validateField(
+			for (const date of dates) {
+				const result = await Promise.resolve(validateField(
 					date,
 					options.customRules.value,
 					options.customWarningRules.value,
 					options.customSuccessRules?.value ?? [],
 				))
+				results.push(result)
 			}
+
+			accumulateValidationResults(results)
 		})
 	}
 
@@ -677,15 +710,20 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 				return !displayHasError.value
 			}
 
+			const rangeErrors: string[] = []
 			if (startDate.getTime() > endDate.getTime() && shouldDisplayErrors()) {
-				pushError(locales.endBeforeStart)
-				return false
+				rangeErrors.push(locales.endBeforeStart)
 			}
 
-			const startDateIsValid = await validateCustomRulesForDate(startDate)
-			if (startDateIsValid) {
-				await validateCustomRulesForDate(endDate)
-			}
+			await validateCustomRulesForDate(startDate)
+			const startErrors = [...errors.value]
+			const startWarnings = [...warnings.value]
+			const startSuccesses = [...successes.value]
+
+			await validateCustomRulesForDate(endDate)
+			replaceErrors([...rangeErrors, ...startErrors, ...errors.value])
+			warnings.value = [...new Set([...startWarnings, ...warnings.value].filter(Boolean))]
+			successes.value = [...new Set([...startSuccesses, ...successes.value].filter(Boolean))]
 
 			return !displayHasError.value
 		}

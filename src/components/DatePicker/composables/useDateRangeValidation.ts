@@ -1,4 +1,4 @@
-import { computed, type Ref } from 'vue'
+import { computed, unref, type Ref, type MaybeRef } from 'vue'
 import { locales } from '../locales'
 import type { DateObjectValue } from '../types'
 
@@ -8,7 +8,7 @@ import type { DateObjectValue } from '../types'
  */
 export function useDateRangeValidation(
 	selectedDates: Ref<DateObjectValue>,
-	displayRange: boolean,
+	displayRange: MaybeRef<boolean>,
 ) {
 	/**
 	 * Vérifie si une plage de dates est valide (date de début avant date de fin)
@@ -22,7 +22,7 @@ export function useDateRangeValidation(
 	 * Variable réactive pour suivre la validité de la plage de dates actuelle
 	 */
 	const currentRangeIsValid = computed(() => {
-		if (!displayRange || !selectedDates.value) return true
+		if (!unref(displayRange) || !selectedDates.value) return true
 		if (!Array.isArray(selectedDates.value)) return true
 		if (selectedDates.value.length < 2) return true
 

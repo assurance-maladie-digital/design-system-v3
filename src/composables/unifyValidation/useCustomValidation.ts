@@ -1,6 +1,6 @@
 import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 import { useValidatable } from '@/composables/validation/useValidatable'
-import { reactive, ref, watch } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import type { Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 
@@ -39,9 +39,9 @@ export function useCustomValidation(
 	const hasSuccess = ref(false)
 
 	const validatorOptions = reactive({
-		showSuccessMessages: showSuccessMessages.value,
-		fieldIdentifier: label.value,
-		disableErrorHandling: disableErrorHandling.value,
+		showSuccessMessages: computed(() => showSuccessMessages.value),
+		fieldIdentifier: computed(() => label.value),
+		disableErrorHandling: computed(() => disableErrorHandling.value),
 	})
 
 	const validator = useValidation(validatorOptions)
@@ -171,20 +171,6 @@ export function useCustomValidation(
 
 	if (options.reactiveValidation !== false) {
 		watch(
-			() => [showSuccessMessages.value, label.value, disableErrorHandling.value],
-			() => {
-				validatorOptions.showSuccessMessages = showSuccessMessages.value
-				validatorOptions.fieldIdentifier = label.value
-				validatorOptions.disableErrorHandling = disableErrorHandling.value
-
-				const isDirty = errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0 || hasSuccess.value
-				if (isDirty) {
-					validate()
-				}
-			},
-		)
-
-		watch(
 			() => [customRules?.value, customWarningRules?.value, customSuccessRules?.value],
 			() => {
 				const isDirty = errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0 || hasSuccess.value
@@ -193,6 +179,16 @@ export function useCustomValidation(
 				}
 			},
 			{ deep: true },
+		)
+
+		watch(
+			() => [showSuccessMessages.value, label.value, disableErrorHandling.value],
+			() => {
+				const isDirty = errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0 || hasSuccess.value
+				if (isDirty) {
+					validate()
+				}
+			},
 		)
 
 		watch(focused, (newVal) => {

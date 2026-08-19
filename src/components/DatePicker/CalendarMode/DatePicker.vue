@@ -11,7 +11,7 @@
 	import { VDatePicker } from 'vuetify/components'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
-	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useSelectedDayAria, useTodayButton } from '../composables'
+	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerValidation, useDatePickerViewMode, useDateRangeValidation, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useSelectedDayAria, useTodayButton } from '../composables'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { locales } from '../locales'
 	import type { ViewMode } from '../composables/useDatePickerViewMode'
@@ -317,8 +317,10 @@
 	const keyboardNavigatedDate = ref<Date | null>(null)
 	const preventCloseOnKeyboardNavigation = ref(false)
 	const isInitialValidation = ref(true)
-	const currentRangeIsValid = ref(true)
-	const getRangeValidationError = ref('')
+	const { currentRangeIsValid, getRangeValidationError } = useDateRangeValidation(
+		selectedDates as Ref<DateObjectValue>,
+		computed(() => props.displayRange),
+	)
 
 	const withInternalUpdate = (fn: () => void) => {
 		try {
