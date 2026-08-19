@@ -48,6 +48,8 @@ export interface DatePickerValidationStateController {
 	successes: Ref<string[]> | ComputedRef<string[]>
 	hasSuccess: Ref<boolean> | ComputedRef<boolean>
 	clear: () => void
+	pushError: (message?: string) => void
+	replaceErrors: (messages: string[]) => void
 	validate: (forceValidation?: boolean) => ValidationResult | Promise<ValidationResult>
 	validateSubmit: (forceValidation?: boolean) => void | ValidationResult | Promise<ValidationResult | void>
 	validateField: (
@@ -85,6 +87,8 @@ export interface DatePickerValidationController {
 	warningMessages: Ref<string[]> | ComputedRef<string[]>
 	successMessages: Ref<string[]> | ComputedRef<string[]>
 	clearValidation: () => void
+	pushError: DatePickerValidationStateController['pushError']
+	replaceErrors: DatePickerValidationStateController['replaceErrors']
 	validateField: DatePickerValidationStateController['validateField']
 	validateDates: DatePickerValidationStateController['validate']
 	validateCalendarModeDates: DatePickerValidationStateController['validateSubmit']
@@ -136,6 +140,8 @@ const createInactiveValidationState = (): DatePickerValidationStateController =>
 		successes,
 		hasSuccess,
 		clear: () => {},
+		pushError: () => {},
+		replaceErrors: () => {},
 		validate: () => emptyValidationResult(),
 		validateSubmit: () => emptyValidationResult(),
 		validateField: () => emptyValidationResult(),
@@ -154,6 +160,8 @@ export const createInactiveDatePickerValidationController = (): Pick<
 	| 'warningMessages'
 	| 'successMessages'
 	| 'clearValidation'
+	| 'pushError'
+	| 'replaceErrors'
 	| 'validateField'
 	| 'validateDates'
 	| 'validateCalendarModeDates'
@@ -187,6 +195,8 @@ export const createInactiveDatePickerValidationController = (): Pick<
 		warningMessages: validationState.warnings,
 		successMessages: validationState.successes,
 		clearValidation: validationState.clear,
+		pushError: validationState.pushError,
+		replaceErrors: validationState.replaceErrors,
 		validateField: validationState.validateField,
 		validateDates: validationState.validate,
 		validateCalendarModeDates: validationState.validateSubmit,
@@ -226,6 +236,22 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		return max && max > 0 ? messages.slice(0, max) : messages
 	}
 
+	const normalizeMessages = (messages: string[]): string[] => limitMessages(
+		[...new Set(messages.filter(Boolean))],
+	)
+
+	const replaceErrors = (messages: string[]): void => {
+		errors.value = normalizeMessages(messages)
+	}
+
+	const pushError = (message?: string): void => {
+		if (!message) {
+			return
+		}
+
+		replaceErrors([...errors.value, message])
+	}
+
 	const mergeMessages = (
 		externalMessages: string[] | null | undefined,
 		internalMessages: string[],
@@ -263,7 +289,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 	if (options.skipValidationWhenReadonly) {
 		watch(() => unref(options.readonly), (newValue) => {
 			if (newValue) {
-				errors.value = []
+				replaceErrors([])
 				warnings.value = []
 				successes.value = []
 			}
@@ -307,12 +333,6 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			: [options.selectedDates.value]
 	}
 
-	const pushUniqueError = (message: string): void => {
-		if (!errors.value.includes(message)) {
-			errors.value.push(message)
-		}
-	}
-
 	const validateSelectedDates = (
 		dates = getDatesToValidate(),
 		rules = options.customRules.value,
@@ -344,7 +364,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 	}
 
 	const dedupeValidationState = (): void => {
-		errors.value = [...new Set(errors.value)]
+		replaceErrors(errors.value)
 		warnings.value = [...new Set(warnings.value)]
 		successes.value = [...new Set(successes.value)]
 	}
@@ -372,13 +392,13 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			const endDate = options.selectedDates.value[options.selectedDates.value.length - 1]
 
 			if (startDate && endDate && startDate.getTime() > endDate.getTime()) {
-				pushUniqueError(locales.endBeforeStart)
+				pushError(locales.endBeforeStart)
 				isValid = false
 			}
 			else if (!options.currentRangeIsValid.value) {
 				const rangeError = options.getRangeValidationError.value
 				if (rangeError) {
-					pushUniqueError(rangeError)
+					pushError(rangeError)
 					isValid = false
 				}
 			}
@@ -403,7 +423,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		}
 
 		if (shouldDisplayErrors()) {
-			errors.value.push(locales.required)
+			pushError(locales.required)
 		}
 
 		return requiredValidationResult(shouldDisplayErrors())
@@ -431,7 +451,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		}
 
 		if (shouldDisplayErrors()) {
-			errors.value.push(locales.required)
+			pushError(locales.required)
 		}
 
 		return true
@@ -547,6 +567,8 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		successes,
 		hasSuccess: validation.hasSuccess,
 		clear: clearValidation,
+		pushError,
+		replaceErrors,
 		validate: validateDates,
 		validateSubmit: validateCalendarModeDates,
 		validateField,
@@ -576,6 +598,8 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		warningMessages: displayWarnings,
 		successMessages: displaySuccesses,
 		clearValidation,
+		pushError,
+		replaceErrors,
 		validateField,
 		validateDates,
 		validateCalendarModeDates,

@@ -96,7 +96,17 @@
 		props.displayRange,
 	)
 
-	const bridgeValidation = useDatePickerValidation({
+	const {
+		validation,
+		errorMessages: bridgedErrorMessages,
+		warningMessages: bridgedWarningMessages,
+		successMessages: bridgedSuccessMessages,
+		clearValidation: clearBridgeValidation,
+		replaceErrors: replaceBridgeErrors,
+		pushError: pushBridgeError,
+		validateField: validateBridgeField,
+		validateDates: validateBridgeDates,
+	} = useDatePickerValidation({
 		showSuccessMessages: computed(() => props.showSuccessMessages),
 		disableErrorHandling: computed(() => props.disableErrorHandling),
 		noCalendar: true,
@@ -128,35 +138,49 @@
 
 	const readonlyErrors = ref<string[]>([])
 
-	const errors = computed({
-		get: () => {
-			if (!readonly.value) {
-				return bridgeValidation.errorMessages.value
-			}
+	const internalErrorMessages = computed(() => {
+		if (!readonly.value) {
+			return bridgedErrorMessages.value
+		}
 
-			return [...new Set([
-				...readonlyErrors.value,
-				...(props.errorMessages ?? []),
-			])]
-		},
-		set: (value) => {
-			if (readonly.value) {
-				readonlyErrors.value = value
-				return
-			}
-
-			bridgeValidation.validationState.errors.value = value
-		},
+		return [...new Set([
+			...readonlyErrors.value,
+			...(props.errorMessages ?? []),
+		])]
 	})
-	const warningMessages = computed(() => bridgeValidation.warningMessages.value)
+	const warningMessages = computed(() => bridgedWarningMessages.value)
 	const successMessages = computed((): string[] =>
-		bridgeValidation.successMessages.value ?? [],
+		bridgedSuccessMessages.value ?? [],
 	)
-	const hasError = computed(() => errors.value.length > 0)
+	const hasError = computed(() => internalErrorMessages.value.length > 0)
+
+	const replaceInternalErrors = (messages: string[]) => {
+		const nextErrors = [...new Set(messages)]
+
+		if (readonly.value) {
+			readonlyErrors.value = nextErrors
+			return
+		}
+
+		replaceBridgeErrors(nextErrors)
+	}
+
+	const pushInternalError = (message?: string) => {
+		if (!message) {
+			return
+		}
+
+		if (readonly.value) {
+			replaceInternalErrors([...readonlyErrors.value, message])
+			return
+		}
+
+		pushBridgeError(message)
+	}
 
 	const clearValidation = () => {
 		readonlyErrors.value = []
-		bridgeValidation.validationState.clear()
+		clearBridgeValidation()
 	}
 
 	const validateField = (
@@ -165,13 +189,13 @@
 		warningRules?: ValidationRule[],
 		successRules?: ValidationRule[],
 	): Promise<ValidationResult> => Promise.resolve(
-		bridgeValidation.validationState.validateField(value, rules, warningRules, successRules),
+		validateBridgeField(value, rules, warningRules, successRules),
 	)
 
 	// Agrégation des erreurs internes et externes avec déduplication
 	// Évite les doublons quand les mêmes customRules sont exécutées par le parent et l'enfant
 	const errorMessages = computed(() => {
-		const allErrors = [...errors.value, ...(props.externalErrorMessages ?? [])]
+		const allErrors = [...internalErrorMessages.value, ...(props.externalErrorMessages ?? [])]
 		return [...new Set(allErrors)] // Déduplication avec Set
 	})
 	const validateCustomValue = async (value: unknown): Promise<ValidationResult> => (
@@ -573,8 +597,9 @@
 			customSuccessRules: computed(() => props.customSuccessRules ?? []),
 			customWarningRules: computed(() => props.customWarningRules ?? []),
 			hasInteracted,
-			errors,
+			hasError: () => hasError.value,
 			clearValidation,
+			pushError: pushInternalError,
 			parseDate,
 			validateField,
 		},
@@ -673,22 +698,17 @@
 		return !value || value.trim() === '' || skeletonPattern.value.test(value)
 	}
 
-	function pushDisplayedError(message?: string): void {
+	function failWithDisplayedError(message?: string, options: { replace?: boolean } = {}): false {
 		if (!message || props.disableErrorHandling) {
-			return
+			return false
 		}
 
-		errors.value.push(message)
-	}
+		if (options.replace) {
+			clearValidation()
+		}
 
-	function failWithDisplayedError(message?: string): false {
-		pushDisplayedError(message)
+		pushInternalError(message)
 		return false
-	}
-
-	function replaceWithDisplayedError(message?: string): false {
-		clearValidation()
-		return failWithDisplayedError(message)
 	}
 
 	const hasCustomRules = (): boolean => (props.customRules?.length ?? 0) > 0
@@ -698,19 +718,18 @@
 		return [startDateText, endDateText]
 	}
 
-	const validateCustomDate = async (value: unknown): Promise<boolean> => {
-		const result = await validateCustomValue(value)
-		return !result.hasError
+	async function validateCustomDate(value: unknown): Promise<boolean> {
+		const validationResult = await validateCustomValue(value)
+		return !validationResult.hasError
 	}
 
-	const runSingleInputRules = async (value: string): Promise<boolean> => {
+	async function runSingleInputRules(value: string): Promise<boolean> {
 		return !!(await validateManualInput(value))
 	}
 
 	async function runEmptyInputRules(): Promise<boolean> {
 		if (required.value && hasInteracted.value && !readonly.value && !props.disableErrorHandling) {
-			pushDisplayedError(locales.required)
-			return false
+			return failWithDisplayedError(locales.required)
 		}
 
 		if (hasCustomRules() && hasInteracted.value) {
@@ -755,7 +774,13 @@
 		return !hasError.value
 	}
 
-	const runFilledInputRules = async (value: string): Promise<boolean> => {
+	async function runRules(value: string): Promise<boolean> {
+		clearValidation()
+
+		if (isEmptyOrSkeletonInput(value)) {
+			return await runEmptyInputRules()
+		}
+
 		if (isRange.value && value.includes(locales.rangeSeparator)) {
 			return await runRangeInputRules(value)
 		}
@@ -913,7 +938,7 @@
 
 		if (startDate && endDate) {
 			if (!isValidRange(startDate, endDate)) {
-				replaceWithDisplayedError(locales.endBeforeStart)
+				failWithDisplayedError(locales.endBeforeStart, { replace: true })
 			}
 			else {
 				emitRangeModelDates(startDate, endDate)
@@ -958,7 +983,7 @@
 	function syncSelectedRangeValidation(): void {
 		try {
 			isUpdatingFromInternal.value = true
-			bridgeValidation.validationState.validate()
+			validateBridgeDates()
 		}
 		finally {
 			queueMicrotask(() => (isUpdatingFromInternal.value = false))
@@ -979,7 +1004,7 @@
 		}
 
 		if (!isValidRange(dates[0], dates[1])) {
-			pushDisplayedError(locales.endBeforeStart)
+			failWithDisplayedError(locales.endBeforeStart)
 		}
 	}
 
@@ -1182,16 +1207,6 @@
 		}
 	}
 
-	async function runRules(value: string): Promise<boolean> {
-		clearValidation()
-
-		if (isEmptyOrSkeletonInput(value)) {
-			return await runEmptyInputRules()
-		}
-
-		return await runFilledInputRules(value)
-	}
-
 	/**
 	 * =====================
 	 * Handlers (routeurs)
@@ -1353,14 +1368,14 @@
 	 * UI state helpers
 	 * =====================
 	 */
-	const isOnError = computed(() => bridgeValidation.validation.hasError.value)
+	const isOnError = computed(() => validation.hasError.value)
 	const isOnWarning = computed(() =>
-		bridgeValidation.validation.hasWarning.value && !bridgeValidation.validation.hasError.value,
+		validation.hasWarning.value && !validation.hasError.value,
 	)
 	const isOnSuccess = computed(() =>
-		bridgeValidation.validation.hasSuccess.value
-		&& !bridgeValidation.validation.hasError.value
-		&& !bridgeValidation.validation.hasWarning.value,
+		validation.hasSuccess.value
+		&& !validation.hasError.value
+		&& !validation.hasWarning.value,
 	)
 
 	// Props du SyTextField rendu par DateTextInput

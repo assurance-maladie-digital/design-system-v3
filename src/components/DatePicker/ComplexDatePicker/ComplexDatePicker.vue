@@ -21,6 +21,7 @@
 		useCalendarKeyboardNavigation,
 		useDatePickerInputBlurHandler,
 		useDatePickerFocusTrap,
+		useDatePickerManualValidation,
 		useDatePickerState,
 		useDatePickerValidation,
 		useDatePickerViewMode,
@@ -33,7 +34,6 @@
 		useSelectedDayAria,
 		useTodayButton,
 		validateDateFormat as validateDateFormatUtil,
-		isDateComplete as isDateCompleteUtil,
 		useDatePickerDerivedValues,
 	} from '../composables'
 	import type { ViewMode } from '../composables/useDatePickerViewMode'
@@ -55,8 +55,6 @@
 		getDisplayedMonthYearState,
 		resolveDatePickerStateFromModelValue,
 	} from '../utils/dateFormattingUtils'
-	import { validateEmptyOrIncompleteDate, adaptCustomRules } from '../utils/validationUtils'
-	import type { ValidationRule } from '@/composables/validation/useValidation'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
@@ -267,10 +265,14 @@
 
 	const {
 		messages,
-		validationState,
 		validateField,
 		clearValidation,
 		validateDates,
+		pushError,
+		replaceErrors,
+		errors,
+		warnings,
+		successes,
 		errorMessages,
 		warningMessages,
 		successMessages,
@@ -303,7 +305,6 @@
 			reset,
 		},
 	})
-	const errors = validationState.errors
 
 	const messageClasses = computed(() => ({
 		'dp-width': true,
@@ -512,6 +513,53 @@
 		})
 	}
 
+	const resolveTextInputState = (modelValue: DateModelValue) => resolveDatePickerStateFromModelValue({
+		modelValue,
+		displayRange: props.displayRange,
+		displayFormat: props.format,
+		returnFormat: returnFormat.value,
+		parseDate,
+		formatDate,
+		generateDateRange: dateSelectionResult.generateDateRange,
+	})
+
+	const applyResolvedTextInputState = (modelValue: DateModelValue): void => {
+		const nextState = resolveTextInputState(modelValue)
+		selectedDates.value = nextState.selectedDates
+		displayFormattedDate.value = nextState.displayValue
+	}
+
+	const getSingleTextInputModelValue = (value: string): DateModelValue => {
+		const date = parseDate(value, props.format)
+		if (date) {
+			return props.dateFormatReturn
+				? formatDate(date, returnFormat.value)
+				: formatDate(date, props.format)
+		}
+
+		return value || null
+	}
+
+	const syncSingleTextInputFlow = (value: string): void => {
+		const nextModelValue = getSingleTextInputModelValue(value)
+		updateModel(nextModelValue)
+
+		if (nextModelValue === null) {
+			syncManualInputState('', null)
+			return
+		}
+
+		if (typeof nextModelValue === 'string') {
+			const parsedDate = parseDate(value, props.format)
+			if (parsedDate) {
+				syncManualInputState(formatDate(parsedDate, props.format), parsedDate)
+				return
+			}
+
+			syncManualInputState(value)
+		}
+	}
+
 	const formatDateInput = (input: string, cursorPosition?: number) => {
 		const result = formatDateInputUtil(input, props.format, { cursorPosition })
 		const separator = props.format.match(/[^DMY]/i)?.[0] || '/'
@@ -589,27 +637,41 @@
 		}
 	}
 
+	const validateCalendarSelection = async (date: Date): Promise<boolean> => {
+		const validationResult = await Promise.resolve(validateField(
+			date,
+			props.customRules,
+			props.customWarningRules,
+			props.customSuccessRules,
+		))
+
+		if (!validationResult.hasError) {
+			return true
+		}
+
+		replaceErrors(validationResult.state.errors)
+		return false
+	}
+
+	const commitSingleCalendarSelection = (date: Date): void => {
+		syncSelectionDisplay()
+		updateModel(formatDate(date, returnFormat.value))
+		closeAndRestoreFocus()
+	}
+
 	const updateSelectedDates = async (date: Date | null) => {
 		ignoreNextCalendarModelSync.value = false
 
-		if (date !== null) {
-			const validationResult = await Promise.resolve(validateField(
-				date,
-				props.customRules,
-				props.customWarningRules,
-				props.customSuccessRules,
-			))
-			if (validationResult.hasError) {
-				errors.value = validationResult.state.errors
-				return
-			}
+		if (date !== null && !(await validateCalendarSelection(date))) {
+			return
 		}
+
 		dateSelectionResult.updateSelectedDates(date)
+
 		if (date !== null && isDatePickerVisible.value && !props.displayRange) {
-			syncSelectionDisplay()
-			updateModel(formatDate(date, returnFormat.value))
-			closeAndRestoreFocus()
+			commitSingleCalendarSelection(date)
 		}
+
 		// Validate immediately to surface messages
 		queueMicrotask(() => validateDates(true))
 	}
@@ -682,15 +744,18 @@
 		syncVisibleCalendarState(null)
 	}
 
-	watch(selectedDates, (newValue) => {
+	const syncFromSelectedDatesChange = (newValue: DateObjectValue): void => {
 		validateDates()
+
 		if (newValue !== null) {
 			handleSelectedDatesChange(newValue)
 		}
 		else {
 			handleClearedSelectedDates()
 		}
-	})
+	}
+
+	watch(selectedDates, syncFromSelectedDatesChange)
 
 	// Handle manual typing sync → model/selection
 	watch(textInputValue, (newValue) => {
@@ -698,20 +763,7 @@
 		// piloter la mise à jour du modèle et de selectedDates
 		if (props.displayRange) return
 		if (isUpdatingFromInternal.value) return
-		const date = parseDate(newValue, props.format)
-		if (date) {
-			const formattedValue = props.dateFormatReturn ? formatDate(date, returnFormat.value) : formatDate(date, props.format)
-			updateModel(formattedValue)
-			syncManualInputState(formatDate(date, props.format), date)
-		}
-		else if (newValue) {
-			updateModel(newValue)
-			syncManualInputState(newValue)
-		}
-		else {
-			updateModel(null)
-			syncManualInputState('', null)
-		}
+		syncSingleTextInputFlow(newValue)
 	})
 
 	const updateDisplayFormattedDate = () => {
@@ -1047,22 +1099,28 @@
 
 		textInputValue.value = value
 
-		if (props.displayRange) {
-			if (value.includes(locales.rangeSeparator)) {
-				const [startDateStr = '', endDateStr = ''] = value.split(locales.rangeSeparator).map(s => s.trim())
-				if (startDateStr && endDateStr && !endDateStr.includes('_')) {
-					const startDate = parseDate(startDateStr, props.format)
-					const endDate = parseDate(endDateStr, props.format)
-					if (startDate && endDate) {
-						dateSelectionResult.updateSelectedDates([startDate, endDate])
-						validateDates()
-					}
-				}
-			}
-		}
-		else {
+		if (!props.displayRange) {
 			validateDates()
+			return
 		}
+
+		if (!value.includes(locales.rangeSeparator)) {
+			return
+		}
+
+		const [startDateStr = '', endDateStr = ''] = value.split(locales.rangeSeparator).map(s => s.trim())
+		if (!(startDateStr && endDateStr) || endDateStr.includes('_')) {
+			return
+		}
+
+		const startDate = parseDate(startDateStr, props.format)
+		const endDate = parseDate(endDateStr, props.format)
+		if (!(startDate && endDate)) {
+			return
+		}
+
+		dateSelectionResult.updateSelectedDates([startDate, endDate])
+		validateDates()
 	}
 
 	/**
@@ -1252,89 +1310,20 @@
 		}
 	}
 
-	/**
-	 * Manual input validation on blur
-	 */
-	const validateManualInput = (value: string): boolean | Promise<boolean> => {
-		clearValidation()
-
-		// Vérifier les cas de champ vide ou incomplet
-		const emptyCheck = validateEmptyOrIncompleteDate(
-			value,
-			props.required,
-			(val: string) => isDateCompleteUtil(val, props.format),
-			hasInteracted.value,
-		)
-
-		// Gérer les erreurs pour champ vide requis
-		if (!emptyCheck.isValid && !props.disableErrorHandling && emptyCheck.errorMessage) {
-			errors.value.push(locales.required)
-		}
-
-		// Si on ne doit pas continuer la validation (champ vide/incomplet)
-		if (!emptyCheck.shouldContinue) {
-			return emptyCheck.isValid
-		}
-
-		// Valider le format de la date
-		const formatValidation = validateDateFormatUtil(value, props.format, props.dateFormatReturn, props.required, hasInteracted.value, props.disableErrorHandling)
-		if (!formatValidation.isValid) {
-			if (!props.disableErrorHandling && formatValidation.message) {
-				errors.value.push(formatValidation.message)
-			}
-			return false
-		}
-
-		// Si le format est valide, vérifier si la date peut être parsée
-		const date = parseDate(value, props.format)
-		if (!date) {
-			// La date n'a pas pu être parsée
-			if (!props.disableErrorHandling) {
-				errors.value.push(locales.invalidDateFormatWithFormat(props.format))
-			}
-			return false
-		}
-
-		// Valider les règles personnalisées
-		if (!props.disableErrorHandling) {
-			const currentCustomRules = props.customRules
-			const currentCustomWarningRules = props.customWarningRules
-
-			// Filtrer les règles qui sont prêtes (ont une date définie)
-			const readyRules = currentCustomRules.filter((rule) => {
-				if (rule.type === 'notBeforeDate' || rule.type === 'notAfterDate' || rule.type === 'exactDate') {
-					return rule.options && rule.options.date !== undefined
-				}
-				return true
-			})
-
-			// Si aucune règle n'est prête, skip la validation
-			if (readyRules.length === 0 && currentCustomRules.length > 0) {
-				return true
-			}
-
-			// Adapter les règles prêtes pour maintenir la compatibilité avec les tests existants
-			const safeCustomRules = adaptCustomRules(readyRules, props.format)
-			const safeWarningRules = adaptCustomRules(currentCustomWarningRules, props.format)
-			const safeSuccessRules = adaptCustomRules(props.customSuccessRules ?? [], props.format)
-
-			// Appeler validateField pour évaluer les règles
-			const result = validateField(
-				date,
-				safeCustomRules as ValidationRule[],
-				safeWarningRules as ValidationRule[],
-				safeSuccessRules as ValidationRule[],
-			)
-
-			if (result instanceof Promise) {
-				return result.then(resolvedResult => !resolvedResult.hasError)
-			}
-
-			return !result.hasError
-		}
-
-		return errors.value.length === 0
-	}
+	const { validateManualInput } = useDatePickerManualValidation({
+		displayFormat: computed(() => props.format),
+		required: computed(() => props.required),
+		disableErrorHandling: computed(() => props.disableErrorHandling),
+		customRules: computed(() => props.customRules),
+		customSuccessRules: computed(() => props.customSuccessRules ?? []),
+		customWarningRules: computed(() => props.customWarningRules),
+		hasInteracted,
+		hasError: () => errorMessages.value.length > 0,
+		clearValidation,
+		pushError,
+		parseDate,
+		validateField,
+	})
 
 	const emitBlurEvent = () => emit('blur')
 
@@ -1347,7 +1336,7 @@
 		isManualInputActive,
 		isUpdatingFromInternal,
 		selectedDates,
-		errors,
+		replaceErrors,
 		validateDateFormat: (value: string) => validateDateFormatUtil(value, props.format, props.dateFormatReturn, props.required, hasInteracted.value, props.disableErrorHandling),
 		parseDate,
 		formatDate,
@@ -1367,18 +1356,7 @@
 			isUpdatingFromInternal.value = true
 
 			updateModel(value)
-			const nextState = resolveDatePickerStateFromModelValue({
-				modelValue: value,
-				displayRange: props.displayRange,
-				displayFormat: props.format,
-				returnFormat: returnFormat.value,
-				parseDate,
-				formatDate,
-				generateDateRange: dateSelectionResult.generateDateRange,
-			})
-
-			selectedDates.value = nextState.selectedDates
-			displayFormattedDate.value = nextState.displayValue
+			applyResolvedTextInputState(value)
 		}
 		finally {
 			queueMicrotask(() => {
@@ -1429,6 +1407,16 @@
 	})
 	const { displayedDateString } = useDisplayedDateString({ selectedDates, rangeBoundaryDates, todayInString })
 
+	const applyTodaySelection = (todaySelection: ReturnType<typeof buildTodaySelectionState>): void => {
+		selectedDates.value = todaySelection.selectedDates
+		withInternalUpdate(() => {
+			textInputValue.value = todaySelection.displayValue
+			displayFormattedDate.value = todaySelection.displayValue
+		})
+		updateModel(todaySelection.modelValue)
+		emit('date-selected', todaySelection.modelValue)
+	}
+
 	const handleSelectToday = () => {
 		const todaySelection = buildTodaySelectionState({
 			displayRange: props.displayRange,
@@ -1439,24 +1427,7 @@
 
 		ignoreNextCalendarModelSync.value = false
 
-		if (props.displayRange) {
-			selectedDates.value = todaySelection.selectedDates
-			withInternalUpdate(() => {
-				textInputValue.value = todaySelection.displayValue
-				displayFormattedDate.value = todaySelection.displayValue
-			})
-			updateModel(todaySelection.modelValue)
-			emit('date-selected', todaySelection.modelValue)
-		}
-		else {
-			selectedDates.value = todaySelection.selectedDates
-			withInternalUpdate(() => {
-				textInputValue.value = todaySelection.displayValue
-				displayFormattedDate.value = todaySelection.displayValue
-			})
-			updateModel(todaySelection.modelValue)
-			emit('date-selected', todaySelection.modelValue)
-		}
+		applyTodaySelection(todaySelection)
 
 		syncDisplayedMonthYearFromDate(new Date())
 
@@ -1513,9 +1484,9 @@
 		isDatePickerVisible,
 		selectedDates,
 		errorMessages,
-		errors: readonly(validationState.errors),
-		warnings: readonly(validationState.warnings),
-		successes: readonly(validationState.successes),
+		errors: readonly(errors),
+		warnings: readonly(warnings),
+		successes: readonly(successes),
 		handleClickOutside,
 		initializeSelectedDates,
 		handleSelectToday,

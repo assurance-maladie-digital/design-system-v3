@@ -1,4 +1,4 @@
-import { type Ref, ref, unref, type MaybeRef } from 'vue'
+import { type Ref, unref, type MaybeRef } from 'vue'
 import { type DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 import { type DateObjectValue } from '../types'
 import { locales } from '../locales'
@@ -22,7 +22,7 @@ export const useDatePickerInputBlurHandler = (options: {
 	isManualInputActive: Ref<boolean>
 	isUpdatingFromInternal: Ref<boolean>
 	selectedDates: Ref<DateObjectValue>
-	errors?: Ref<string[]>
+	replaceErrors?: (messages: string[]) => void
 
 	// Fonctions
 	validateDateFormat: (dateStr: string) => { isValid: boolean, message: string }
@@ -43,7 +43,7 @@ export const useDatePickerInputBlurHandler = (options: {
 		isManualInputActive,
 		isUpdatingFromInternal,
 		selectedDates,
-		errors = ref([]),
+		replaceErrors = () => {},
 		validateDateFormat,
 		parseDate,
 		formatDate,
@@ -84,7 +84,7 @@ export const useDatePickerInputBlurHandler = (options: {
 
 	const updateRangeModel = (startDate: Date, endDate: Date) => {
 		if (!isRangeValid(startDate, endDate)) {
-			errors.value = [locales.endBeforeStart]
+			replaceErrors([locales.endBeforeStart])
 			return
 		}
 
