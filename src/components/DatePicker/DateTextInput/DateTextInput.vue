@@ -106,57 +106,64 @@
 		fieldIdentifier: props.label || props.placeholder || 'Date',
 	})
 
-	const readonlyValidation = {
+	const emptyValidationResult = (): ValidationResult => ({
+		hasError: false,
+		hasWarning: false,
+		hasSuccess: false,
+		state: { errors: [], warnings: [], successes: [] },
+	})
+
+	const inactiveValidationController = {
 		errors: ref<string[]>([]),
 		warnings: ref<string[]>([]),
-		successes: ref<string[]>([]),
-		displaySuccesses: computed(() => []),
-		hasError: ref(false),
 		clearValidation: () => {},
-		validateField: () => ({
-			hasError: false,
-			hasWarning: false,
-			hasSuccess: false,
-			state: { errors: [], warnings: [], successes: [] },
-		} as ValidationResult),
+		validateField: () => emptyValidationResult(),
+		validateDates: () => emptyValidationResult(),
+		validation: {
+			displaySuccesses: computed(() => [] as string[]),
+			hasSuccess: ref(false),
+		},
+		validationState: {
+			errors: ref<string[]>([]),
+			warnings: ref<string[]>([]),
+			successes: computed(() => [] as string[]),
+			hasSuccess: ref(false),
+			clear: () => {},
+			validate: () => emptyValidationResult(),
+			validateSubmit: () => emptyValidationResult(),
+			validateField: () => emptyValidationResult(),
+		},
 	}
 
+	const validationController = computed(() => (
+		readonly.value ? inactiveValidationController : bridgeValidation
+	))
+
 	const errors = computed({
-		get: () => readonly.value ? readonlyValidation.errors.value : bridgeValidation.errors.value,
+		get: () => validationController.value.validationState.errors.value,
 		set: (value) => {
-			if (!readonly.value) bridgeValidation.errors.value = value
+			if (!readonly.value) {
+				validationController.value.validationState.errors.value = value
+			}
 		},
 	})
 	const warnings = computed({
-		get: () => readonly.value ? readonlyValidation.warnings.value : bridgeValidation.warnings.value,
+		get: () => validationController.value.validationState.warnings.value,
 		set: (value) => {
-			if (!readonly.value) bridgeValidation.warnings.value = value
+			if (!readonly.value) {
+				validationController.value.validationState.warnings.value = value
+			}
 		},
 	})
-	const hasError = computed(() => {
-		if (readonly.value) return false
-		return bridgeValidation.errors.value.length > 0
-	})
+	const hasError = computed(() => !readonly.value && validationController.value.validationState.errors.value.length > 0)
 
-	const clearValidation = () => {
-		if (readonly.value) {
-			readonlyValidation.clearValidation()
-		}
-		else {
-			bridgeValidation.clearValidation()
-		}
-	}
+	const clearValidation = () => validationController.value.validationState.clear()
 
 	const validateField = async (
 		value: unknown,
 		rules?: ValidationRule[],
 		warningRules?: ValidationRule[],
-	): Promise<ValidationResult> => {
-		if (readonly.value) {
-			return readonlyValidation.validateField()
-		}
-		return await bridgeValidation.validateField(value, rules, warningRules)
-	}
+	): Promise<ValidationResult> => await validationController.value.validationState.validateField(value, rules, warningRules)
 
 	// Agrégation des erreurs internes et externes avec déduplication
 	// Évite les doublons quand les mêmes customRules sont exécutées par le parent et l'enfant
@@ -166,7 +173,7 @@
 	})
 	const warningMessages = warnings
 	const successMessages = computed((): string[] =>
-		readonly.value ? [] : (bridgeValidation.validation.displaySuccesses.value ?? []),
+		validationController.value.validationState.successes.value ?? [],
 	)
 	const customValidationRules = computed(() => props.customRules)
 	const customValidationWarningRules = computed(() => props.customWarningRules)
@@ -178,12 +185,7 @@
 		value: unknown,
 		rules?: ValidationRule[],
 		warningRules?: ValidationRule[],
-	): Promise<ValidationResult> => {
-		if (readonly.value) {
-			return { hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }
-		}
-		return await validateField(value, rules, warningRules) ?? { hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }
-	}
+	): Promise<ValidationResult> => await validateField(value, rules, warningRules) ?? emptyValidationResult()
 
 	const validateCustomValue = async (value: unknown): Promise<ValidationResult> => (
 		await safeValidateField(value, customValidationRules.value, customValidationWarningRules.value)
@@ -196,9 +198,7 @@
 	 */
 	const {
 		handleRangeInput,
-		resetState,
 		isValidRange,
-		initializeWithDates,
 		formatRangeForDisplay,
 		parseRangeInput,
 		handlePaste: handlePasteRange,
@@ -599,7 +599,6 @@
 			isFormatting,
 			inputValue,
 			selectedDates,
-			resetState,
 			emitModel,
 		},
 	})
@@ -657,7 +656,7 @@
 		if (isRange.value && Array.isArray(nextState.selectedDates) && nextState.selectedDates.length >= 2) {
 			try {
 				isUpdatingFromInternal.value = true
-				bridgeValidation.validateDates()
+				validationController.value.validationState.validate()
 			}
 			finally {
 				queueMicrotask(() => (isUpdatingFromInternal.value = false))
@@ -815,7 +814,6 @@
 				const endDate = parseDate(endDateText, returnFormat.value)
 
 				if (startDate && endDate) {
-					initializeWithDates(startDate, endDate)
 					selectedDates.value = [startDate, endDate]
 					inputValue.value = formatRangeForDisplay(startDate, endDate)
 					await runRules(inputValue.value)
@@ -843,7 +841,6 @@
 		await runRules('')
 
 		if (isRange.value) {
-			resetState()
 			selectedDates.value = null
 		}
 
@@ -943,7 +940,7 @@
 	function syncSelectedRangeValidation(): void {
 		try {
 			isUpdatingFromInternal.value = true
-			bridgeValidation.validateDates()
+			validationController.value.validationState.validate()
 		}
 		finally {
 			queueMicrotask(() => (isUpdatingFromInternal.value = false))
@@ -1264,7 +1261,7 @@
 	const isOnError = computed(() => warningMessages.value.length === 0 && successMessages.value.length === 0 && errorMessages.value.length > 0)
 	const isOnWarning = computed(() => errorMessages.value.length === 0 && successMessages.value.length === 0 && warningMessages.value.length > 0)
 	const isOnSuccess = computed(() =>
-		bridgeValidation.validation.hasSuccess.value
+		validationController.value.validationState.hasSuccess.value
 		&& errorMessages.value.length === 0
 		&& warningMessages.value.length === 0,
 	)

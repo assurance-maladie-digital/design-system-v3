@@ -305,10 +305,20 @@
 	const currentRangeIsValid = ref(true)
 	const getRangeValidationError = ref('')
 
+	const withInternalUpdate = (fn: () => void) => {
+		try {
+			isUpdatingFromInternal.value = true
+			fn()
+		}
+		finally {
+			queueMicrotask(() => {
+				isUpdatingFromInternal.value = false
+			})
+		}
+	}
+
 	const {
-		validation,
-		errors,
-		warnings,
+		validationState,
 		clearValidation,
 		validateDates,
 		validateCalendarModeDates,
@@ -332,16 +342,17 @@
 		onblur,
 		revalidateOnCustomRulesChange: false,
 	})
+	const errors = validationState.errors
 
-	const errorMessages = errors
-	const warningMessages = warnings
-	const successMessages = validation.displaySuccesses
-	const isOnSuccess = validation.hasSuccess
+	const errorMessages = validationState.errors
+	const warningMessages = validationState.warnings
+	const successMessages = validationState.successes
+	const isOnSuccess = validationState.hasSuccess
 	const isHandlingProgrammaticClose = ref(false)
 
 	const finalizeDatePickerClose = async () => {
 		emit('closed')
-		await validateDates()
+		await validationState.validate()
 	}
 
 	const closeDatePicker = async () => {
@@ -418,28 +429,7 @@
 				await updateModel(formattedDate.value)
 			}
 
-			// Mettre à jour textInputValue pour le DateTextInput
-			try {
-				isUpdatingFromInternal.value = true
-				if (Array.isArray(newValue) && props.displayRange && newValue.length >= 2 && props.noCalendar) {
-					// Cas spécifique noCalendar + displayRange : conserver la chaîne de plage complète
-					const start = newValue[0]
-					const end = newValue[newValue.length - 1]
-					if (start && end) {
-						textInputValue.value = formatDateRangeDisplay(start, end, props.format, formatDate)
-					}
-				}
-				else {
-					// Cas générique : déléguer au composable pour synchroniser l'input
-					syncTextInputFromSelection()
-				}
-				syncDisplayFormattedFromSelection()
-			}
-			finally {
-				queueMicrotask(() => {
-					isUpdatingFromInternal.value = false
-				})
-			}
+			syncInputFromSelectionValue(newValue)
 		}
 		else {
 			updateModel(null)
@@ -483,12 +473,37 @@
 		parseDate,
 		formatDate,
 		validateDates,
-		updateModel,
 		generateDateRange,
 	})
 
 	const syncDisplayFormattedFromSelection = () => {
 		displayFormattedDate.value = displayFormattedFromSelectedDates.value || ''
+	}
+
+	const syncInputFromSelectionValue = (value: DateObjectValue) => {
+		withInternalUpdate(() => {
+			if (Array.isArray(value) && props.displayRange && value.length >= 2 && props.noCalendar) {
+				const start = value[0]
+				const end = value[value.length - 1]
+				if (start && end) {
+					textInputValue.value = formatDateRangeDisplay(start, end, props.format, formatDate)
+				}
+			}
+			else {
+				syncTextInputFromSelection()
+			}
+
+			syncDisplayFormattedFromSelection()
+		})
+	}
+
+	const syncManualInputState = (displayValue: string, selectedDate?: Date | null) => {
+		withInternalUpdate(() => {
+			displayFormattedDate.value = displayValue
+			if (selectedDate !== undefined) {
+				selectedDates.value = selectedDate
+			}
+		})
 	}
 
 	// Gestionnaire pour les mises à jour du DateTextInput en mode no-calendar
@@ -540,47 +555,17 @@
 				: formatDate(date, props.format)
 			await updateModel(formattedValue)
 
-			// Mettre à jour selectedDates sans déclencher de watchers supplémentaires
-			try {
-				isUpdatingFromInternal.value = true
-				selectedDates.value = date
-				// Mettre à jour l'affichage formaté
-				displayFormattedDate.value = formatDate(date, props.format)
-			}
-			finally {
-				queueMicrotask(() => {
-					isUpdatingFromInternal.value = false
-				})
-			}
+			syncManualInputState(formatDate(date, props.format), date)
 		}
 		else if (newValue) {
 			// Même si la date n'est pas valide, conserver la valeur saisie
 			// pour éviter que la date ne disparaisse
 			await updateModel(newValue)
-			// Mettre à jour l'affichage formaté pour qu'il corresponde à ce qui est saisi
-			try {
-				isUpdatingFromInternal.value = true
-				displayFormattedDate.value = newValue
-			}
-			finally {
-				queueMicrotask(() => {
-					isUpdatingFromInternal.value = false
-				})
-			}
+			syncManualInputState(newValue)
 		}
 		else {
 			await updateModel(null)
-			// Réinitialiser l'affichage formaté
-			try {
-				isUpdatingFromInternal.value = true
-				displayFormattedDate.value = ''
-				selectedDates.value = null
-			}
-			finally {
-				queueMicrotask(() => {
-					isUpdatingFromInternal.value = false
-				})
-			}
+			syncManualInputState('', null)
 		}
 	})
 
@@ -604,11 +589,6 @@
 			syncFromModelValue(props.modelValue)
 		}
 	})
-
-	// Fonction pour mettre à jour displayFormattedDate quand le VDatePicker change
-	const updateDisplayFormattedDate = () => {
-		syncDisplayFormattedFromSelection()
-	}
 
 	// Le composable useDateSelection est déjà initialisé plus haut dans le code
 
@@ -861,7 +841,7 @@
 		}
 		else {
 			// Quand isValidateOnBlur est false, on s'assure qu'il n'y a pas d'erreurs
-			clearValidation()
+			validationState.clear()
 		}
 	}
 
@@ -954,8 +934,8 @@
 		isDatePickerVisible,
 		selectedDates,
 		errorMessages,
-		errors: readonlyState(errors),
-		warnings: readonlyState(warnings),
+		errors: readonlyState(validationState.errors),
+		warnings: readonlyState(validationState.warnings),
 		successes: readonlyState(successMessages),
 		handleClickOutside,
 		initializeSelectedDates,
@@ -1056,7 +1036,7 @@
 						@update:month="onUpdateMonth"
 						@update:year="onUpdateYear"
 						@click:date="updateSelectedDates"
-						@update:model-value="updateDisplayFormattedDate"
+						@update:model-value="syncDisplayFormattedFromSelection"
 						@focus="markHolidayDays"
 						@update:month-year="markHolidayDays"
 					>

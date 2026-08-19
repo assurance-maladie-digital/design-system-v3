@@ -50,6 +50,7 @@
 	import { locales } from '../locales'
 	import { mdiCalendarMonthOutline } from '@mdi/js'
 	import {
+		formatDateInput as formatDateInputUtil,
 		formatDateRangeDisplay,
 		getDateDescription as getDateDescriptionUtil,
 		getDisplayedMonthYearState,
@@ -80,13 +81,6 @@
 			queueMicrotask(() => (isUpdatingFromInternal.value = false))
 		}
 	}
-
-	// const unifyAfterCalendarUpdate = async () => {
-	// 	if (!isDatePickerVisible.value) return
-	// 	await nextTick()
-	// 	customizeMonthButton()
-	// 	markHolidayDays()
-	// }
 
 	/**
 	 * Calendar current month / year
@@ -269,14 +263,11 @@
 	const isManualInputActive = ref(false)
 	const isUpdatingFromInternal = ref(false)
 	const hasInteracted = ref(false)
-	const preventCloseOnInternalUpdate = ref(false)
 	const ignoreNextInputBlur = ref(false)
 	const ignoreNextCalendarModelSync = ref(false)
 
 	const {
-		validation,
-		errors,
-		warnings,
+		validationState,
 		validateField,
 		clearValidation,
 		validateDates,
@@ -296,14 +287,15 @@
 		readonly: computed(() => props.readonly),
 		skipValidationWhenReadonly: true,
 	})
-	const errorMessages = computed(() => errors.value)
-	const warningMessages = computed(() => warnings.value)
+	const errors = validationState.errors
+	const errorMessages = computed(() => validationState.errors.value)
+	const warningMessages = computed(() => validationState.warnings.value)
 
 	const messageClasses = computed(() => ({
 		'dp-width': true,
 		'v-messages__message--error': errorMessages.value.length > 0,
 		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length === 0,
-		'v-messages__message--success': validation.hasSuccess.value,
+		'v-messages__message--success': validationState.hasSuccess.value,
 	}))
 
 	// Props regroupées pour DateTextInput (mode noCalendar)
@@ -431,19 +423,35 @@
 		parseDate,
 		formatDate,
 		validateDates,
-		updateModel,
 		generateDateRange: dateSelectionResult.generateDateRange,
 	})
-
-	const syncDisplayFormattedFromSelection = () => {
-		displayFormattedDate.value = displayFormattedFromSelectedDates.value || ''
-	}
 
 	const syncSelectionDisplay = () => {
 		withInternalUpdate(() => {
 			syncTextInputFromSelection()
+			displayFormattedDate.value = displayFormattedFromSelectedDates.value || ''
 		})
-		syncDisplayFormattedFromSelection()
+	}
+
+	const syncManualInputState = (displayValue: string, selectedDate?: Date | null) => {
+		withInternalUpdate(() => {
+			displayFormattedDate.value = displayValue
+			if (selectedDate !== undefined) {
+				selectedDates.value = selectedDate
+			}
+		})
+	}
+
+	const formatDateInput = (input: string, cursorPosition?: number) => {
+		const result = formatDateInputUtil(input, props.format, { cursorPosition })
+		const separator = props.format.match(/[^DMY]/i)?.[0] || '/'
+		const escapedSeparator = separator.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+		const formatted = result.formatted.replace(new RegExp(`[${escapedSeparator}_]+$`), '')
+
+		return {
+			formatted,
+			cursorPos: Math.min(result.cursorPos, formatted.length),
+		}
 	}
 
 	const getSelectedBaseDate = (value: DateObjectValue = selectedDates.value): Date | null => {
@@ -531,75 +539,63 @@
 		queueMicrotask(() => validateDates(true))
 	}
 
+	const consumeIgnoredCalendarModelSync = (): boolean => {
+		if (!(ignoreNextCalendarModelSync.value && isDatePickerVisible.value)) {
+			return false
+		}
+
+		ignoreNextCalendarModelSync.value = false
+		return true
+	}
+
+	const syncVisibleCalendarState = (baseDate: Date | null): void => {
+		keyboardNavigatedDate.value = baseDate
+		syncDisplayedMonthYearFromDate(baseDate ?? new Date())
+
+		if (isDatePickerVisible.value) {
+			nextTick(() => refreshVisibleCalendarUi())
+		}
+	}
+
+	const shouldCloseAfterSelection = (value: DateObjectValue): boolean => (
+		isDatePickerVisible.value
+		&& (!props.displayRange || hasCompletedRangeSelection(value))
+	)
+
+	const handleSelectedDatesChange = (value: Exclude<DateObjectValue, null>): void => {
+		const baseDate = getSelectedBaseDate(value)
+
+		if (consumeIgnoredCalendarModelSync()) {
+			keyboardNavigatedDate.value = baseDate
+			syncSelectionDisplay()
+			return
+		}
+
+		updateModel(formattedDate.value)
+		syncSelectionDisplay()
+		syncVisibleCalendarState(baseDate)
+
+		if (shouldCloseAfterSelection(value)) {
+			closeAndRestoreFocus()
+		}
+	}
+
+	const handleClearedSelectedDates = (): void => {
+		updateModel(null)
+		syncSelectionDisplay()
+		displayFormattedDate.value = ''
+		syncVisibleCalendarState(null)
+	}
+
 	watch(selectedDates, (newValue) => {
 		validateDates()
 		if (newValue !== null) {
-			keyboardNavigatedDate.value = getSelectedBaseDate(newValue)
-			if (ignoreNextCalendarModelSync.value && isDatePickerVisible.value) {
-				ignoreNextCalendarModelSync.value = false
-				syncSelectionDisplay()
-				return
-			}
-
-			if (!preventCloseOnInternalUpdate.value) {
-				updateModel(formattedDate.value)
-			}
-			syncSelectionDisplay()
-
-			const baseDate = getSelectedBaseDate(newValue)
-			if (baseDate) syncDisplayedMonthYearFromDate(baseDate)
-			if (isDatePickerVisible.value) {
-				nextTick(() => refreshVisibleCalendarUi())
-			}
-
-			if (
-				isDatePickerVisible.value
-				&& !preventCloseOnInternalUpdate.value
-				&& (!props.displayRange || hasCompletedRangeSelection(newValue))
-			) {
-				closeAndRestoreFocus()
-			}
+			handleSelectedDatesChange(newValue)
 		}
 		else {
-			keyboardNavigatedDate.value = null
-			updateModel(null)
-			syncSelectionDisplay()
-			displayFormattedDate.value = ''
-			// Reset month/year names when clearing the date
-			syncDisplayedMonthYearFromDate(new Date())
-			if (isDatePickerVisible.value) {
-				nextTick(() => refreshVisibleCalendarUi())
-			}
+			handleClearedSelectedDates()
 		}
 	})
-
-	const formatDateInput = (input: string, cursorPosition?: number): { formatted: string, cursorPos: number } => {
-		const cleanedInput = input.replace(/[^\d]/g, '')
-		const separator = props.format.match(/[^DMY]/)?.[0] || '/'
-		const inputBeforeCursor = input.substring(0, cursorPosition || 0)
-		const digitsBeforeCursor = inputBeforeCursor.replace(/[^\d]/g, '').length
-
-		let result = ''
-		let digitIndex = 0
-		for (let i = 0; i < props.format.length && digitIndex < cleanedInput.length; i++) {
-			const formatChar = props.format[i]?.toUpperCase()
-			if (formatChar && ['D', 'M', 'Y'].includes(formatChar)) {
-				result += cleanedInput[digitIndex]
-				digitIndex++
-			}
-			else {
-				result += separator
-			}
-		}
-
-		let newCursorPos = digitsBeforeCursor
-		for (let i = 0, digitCount = 0; i < props.format.length && digitCount < digitsBeforeCursor; i++) {
-			if (!['D', 'M', 'Y'].includes(props.format[i]!.toUpperCase())) newCursorPos++
-			else digitCount++
-		}
-
-		return { formatted: result, cursorPos: Math.min(newCursorPos, result.length) }
-	}
 
 	// Handle manual typing sync → model/selection
 	watch(textInputValue, (newValue) => {
@@ -611,30 +607,20 @@
 		if (date) {
 			const formattedValue = props.dateFormatReturn ? formatDate(date, returnFormat.value) : formatDate(date, props.format)
 			updateModel(formattedValue)
-			withInternalUpdate(() => {
-				selectedDates.value = date
-				displayFormattedDate.value = formatDate(date, props.format)
-			})
+			syncManualInputState(formatDate(date, props.format), date)
 		}
 		else if (newValue) {
 			updateModel(newValue)
-			withInternalUpdate(() => (displayFormattedDate.value = newValue))
+			syncManualInputState(newValue)
 		}
 		else {
 			updateModel(null)
-			withInternalUpdate(() => {
-				displayFormattedDate.value = ''
-				selectedDates.value = null
-			})
+			syncManualInputState('', null)
 		}
 	})
 
-	/**
-	 * UI updates after picking
-	 */
 	const updateDisplayFormattedDate = () => {
-		if (ignoreNextCalendarModelSync.value) {
-			ignoreNextCalendarModelSync.value = false
+		if (consumeIgnoredCalendarModelSync()) {
 			return
 		}
 
@@ -650,7 +636,6 @@
 			updateModel(selectionCommit.modelValue)
 			emit('date-selected', selectionCommit.modelValue)
 			closeAndRestoreFocus()
-
 			validateDates()
 		})
 	}
@@ -756,7 +741,7 @@
 
 	onMounted(() => {
 		setupMonthButtonObserver()
-		syncDisplayFormattedFromSelection()
+		displayFormattedDate.value = displayFormattedFromSelectedDates.value || ''
 		validateDates()
 		nextTick(syncComboboxInputSemantics)
 		nextTick(syncDialogKeydownListener)
@@ -1239,14 +1224,7 @@
 	watch(
 		() => props.modelValue,
 		(newValue) => {
-			if (isUpdatingFromInternal.value) {
-				if (preventCloseOnInternalUpdate.value) {
-					return
-				}
-				// Internal model sync is not a reliable dialog-close signal.
-				// Actual user selections already close through selectedDates/updateDisplayFormattedDate.
-				return
-			}
+			if (isUpdatingFromInternal.value) return
 			withInternalUpdate(() => syncFromModelValue(newValue))
 		},
 		{ immediate: true },
@@ -1386,9 +1364,9 @@
 		isDatePickerVisible,
 		selectedDates,
 		errorMessages,
-		errors: readonly(errors),
-		warnings: readonly(warnings),
-		successes: readonly(validation.displaySuccesses),
+		errors: readonly(validationState.errors),
+		warnings: readonly(validationState.warnings),
+		successes: readonly(validationState.successes),
 		handleClickOutside,
 		initializeSelectedDates,
 		handleSelectToday,

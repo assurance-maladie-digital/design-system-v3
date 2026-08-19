@@ -64,6 +64,28 @@ describe('useDatePickerValidation', () => {
 		})
 	})
 
+	describe('validationState', () => {
+		it('expose un contrat unifié pour les composants', () => {
+			const options = createOptions()
+			const {
+				errors,
+				warnings,
+				validateField,
+				validateDates,
+				validateCalendarModeDates,
+				clearValidation,
+				validationState,
+			} = useDatePickerValidation(options)
+
+			expect(validationState.errors).toBe(errors)
+			expect(validationState.warnings).toBe(warnings)
+			expect(validationState.validateField).toBe(validateField)
+			expect(validationState.validate).toBe(validateDates)
+			expect(validationState.validateSubmit).toBe(validateCalendarModeDates)
+			expect(validationState.clear).toBe(clearValidation)
+		})
+	})
+
 	describe('validateDates', () => {
 		it('devrait retourner un résultat vide en mode noCalendar', () => {
 			const options = createOptions({ noCalendar: ref(true) })
