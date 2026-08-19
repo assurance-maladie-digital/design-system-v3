@@ -12,7 +12,6 @@
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
-	import type { ValidationRule, ValidationResult } from '@/composables/unifyValidation/useValidation'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { buildDateTextInputTextFieldProps } from './props/buildDateTextInputTextFieldProps'
 	import { locales } from '../locales'
@@ -90,6 +89,7 @@
 	 */
 	const selectedDates = ref<DateObjectValue>(null)
 	const isUpdatingFromInternal = ref(false)
+	const hasInteracted = ref(false)
 
 	const { currentRangeIsValid, getRangeValidationError } = useDateRangeValidation(
 		selectedDates,
@@ -103,11 +103,10 @@
 		errorMessages: bridgedErrorMessages,
 		warningMessages: bridgedWarningMessages,
 		successMessages: bridgedSuccessMessages,
-		clearValidation: clearBridgeValidation,
-		replaceErrors: replaceBridgeErrors,
-		pushError: pushBridgeError,
-		validateField: validateBridgeField,
+		clearValidation,
+		pushError,
 		validateDates: validateBridgeDates,
+		validateTextInput: bridgeValidateTextInput,
 	} = useDatePickerValidation({
 		showSuccessMessages: computed(() => props.showSuccessMessages),
 		disableErrorHandling: computed(() => props.disableErrorHandling),
@@ -133,6 +132,9 @@
 		skipValidationWhenReadonly: true,
 		readonly: readonly,
 		fieldIdentifier: props.label || props.placeholder || 'Date',
+		displayFormat: computed(() => displayFormat.value),
+		parseDate,
+		hasInteracted,
 		formRegistration: {
 			validateOnSubmit: validateOnSubmitForForm,
 			clearValidation: clearValidationForForm,
@@ -140,76 +142,17 @@
 		},
 	})
 
-	const readonlyErrors = ref<string[]>([])
-
-	const internalErrorMessages = computed(() => {
-		if (!readonly.value) {
-			return bridgedErrorMessages.value
-		}
-
-		return [...new Set([
-			...readonlyErrors.value,
-			...(props.errorMessages ?? []),
-		])]
-	})
 	const warningMessages = computed(() => bridgedWarningMessages.value)
 	const successMessages = computed((): string[] =>
 		bridgedSuccessMessages.value ?? [],
-	)
-	const hasError = computed(() => internalErrorMessages.value.length > 0)
-
-	const replaceInternalErrors = (messages: string[]) => {
-		const nextErrors = [...new Set(messages)]
-
-		if (readonly.value) {
-			readonlyErrors.value = nextErrors
-			return
-		}
-
-		replaceBridgeErrors(nextErrors)
-	}
-
-	const pushInternalError = (message?: string) => {
-		if (!message) {
-			return
-		}
-
-		if (readonly.value) {
-			replaceInternalErrors([...readonlyErrors.value, message])
-			return
-		}
-
-		pushBridgeError(message)
-	}
-
-	const clearValidation = () => {
-		readonlyErrors.value = []
-		clearBridgeValidation()
-	}
-
-	const validateField = (
-		value: unknown,
-		rules?: ValidationRule[],
-		warningRules?: ValidationRule[],
-		successRules?: ValidationRule[],
-	): Promise<ValidationResult> => Promise.resolve(
-		validateBridgeField(value, rules, warningRules, successRules),
 	)
 
 	// Agrégation des erreurs internes et externes avec déduplication
 	// Évite les doublons quand les mêmes customRules sont exécutées par le parent et l'enfant
 	const errorMessages = computed(() => {
-		const allErrors = [...internalErrorMessages.value, ...(props.externalErrorMessages ?? [])]
+		const allErrors = [...bridgedErrorMessages.value, ...(props.externalErrorMessages ?? [])]
 		return [...new Set(allErrors)] // Déduplication avec Set
 	})
-	const validateCustomValue = async (value: unknown): Promise<ValidationResult> => (
-		await validateField(
-			value,
-			props.customRules ?? [],
-			props.customWarningRules ?? [],
-			props.customSuccessRules ?? [],
-		)
-	)
 
 	/**
 	 * =====================
@@ -231,7 +174,6 @@
 	 */
 	// isUpdatingFromInternal est déjà déclaré plus haut pour le Bridge
 	const isFocused = ref(false)
-	const hasInteracted = ref(false)
 	const ariaLabel = ref(props.label || props.placeholder || locales.label)
 
 	function validateDateFormatForSingleOrRange(input: string): { isValid: boolean, message: string } {
@@ -589,24 +531,11 @@
 	 * Small helpers to DRY (Don't Repeat Yourself 🥸) logic
 	 * =====================
 	 */
-	const { clampIfNeeded, validateManualInput, validateOnSubmit, reset } = useDateTextInputController({
+	const { clampIfNeeded, validateOnSubmit, reset } = useDateTextInputController({
 		autoClamp: computed(() => props.autoClamp),
 		isRange,
 		displayFormat,
 		autoClampDate,
-		manualValidation: {
-			required: computed(() => props.required),
-			disableErrorHandling: computed(() => props.disableErrorHandling),
-			customRules: computed(() => props.customRules ?? []),
-			customSuccessRules: computed(() => props.customSuccessRules ?? []),
-			customWarningRules: computed(() => props.customWarningRules ?? []),
-			hasInteracted,
-			hasError: () => hasError.value,
-			clearValidation,
-			pushError: pushInternalError,
-			parseDate,
-			validateField,
-		},
 		submit: {
 			isValidating,
 			hasInteracted,
@@ -698,10 +627,6 @@
 
 	const skeletonPattern = computed(() => getSkeletonPattern(displayFormat.value))
 
-	function isEmptyOrSkeletonInput(value: string): boolean {
-		return !value || value.trim() === '' || skeletonPattern.value.test(value)
-	}
-
 	function failWithDisplayedError(message?: string, options: { replace?: boolean } = {}): false {
 		if (!message || props.disableErrorHandling) {
 			return false
@@ -711,85 +636,17 @@
 			clearValidation()
 		}
 
-		pushInternalError(message)
+		pushError(message)
 		return false
 	}
 
-	const hasCustomRules = (): boolean => (props.customRules?.length ?? 0) > 0
-
-	const splitRangeInputValue = (value: string): [string, string] => {
-		const [startDateText = '', endDateText = ''] = value.split(locales.rangeSeparator)
-		return [startDateText, endDateText]
-	}
-
-	async function validateCustomDate(value: unknown): Promise<boolean> {
-		const validationResult = await validateCustomValue(value)
-		return !validationResult.hasError
-	}
-
-	async function runSingleInputRules(value: string): Promise<boolean> {
-		return !!(await validateManualInput(value))
-	}
-
-	async function runEmptyInputRules(): Promise<boolean> {
-		if (required.value && hasInteracted.value && !readonly.value && !props.disableErrorHandling) {
-			return failWithDisplayedError(locales.required)
-		}
-
-		if (hasCustomRules() && hasInteracted.value) {
-			return await validateCustomDate(null)
-		}
-
-		return true
-	}
-
-	async function runRangeInputRules(value: string): Promise<boolean> {
-		const [startDateText, endDateText] = splitRangeInputValue(value)
-
-		if (startDateText && !endDateText) {
-			return await runSingleInputRules(startDateText)
-		}
-
-		if (!(startDateText && endDateText)) {
-			return !hasError.value
-		}
-
-		const formatValidationResult = validateDateFormatForSingleOrRange(value)
-		if (!formatValidationResult.isValid) {
-			return failWithDisplayedError(formatValidationResult.message)
-		}
-
-		const startDate = parseDate(startDateText, displayFormat.value)
-		const endDate = parseDate(endDateText, displayFormat.value)
-
-		if (!(startDate && endDate)) {
-			return !hasError.value
-		}
-
-		if (!isValidRange(startDate, endDate) && !props.disableErrorHandling) {
-			return failWithDisplayedError(locales.endBeforeStart)
-		}
-
-		const startDateIsValid = await validateCustomDate(startDate)
-		if (startDateIsValid) {
-			await validateCustomDate(endDate)
-		}
-
-		return !hasError.value
-	}
-
 	async function runRules(value: string): Promise<boolean> {
-		clearValidation()
-
-		if (isEmptyOrSkeletonInput(value)) {
-			return await runEmptyInputRules()
+		// Skeleton input (placeholders like __/__/____) is treated as empty by the bridge
+		if (skeletonPattern.value.test(value)) {
+			value = ''
 		}
 
-		if (isRange.value && value.includes(locales.rangeSeparator)) {
-			return await runRangeInputRules(value)
-		}
-
-		return await runSingleInputRules(value)
+		return await bridgeValidateTextInput(value)
 	}
 
 	function isVisuallyEmptyInput(value: string): boolean {
@@ -1351,6 +1208,7 @@
 	/** expose */
 	defineExpose({
 		validateOnSubmit,
+		validateTextInput: bridgeValidateTextInput,
 		reset,
 		errors: readonlyState(errorMessages),
 		warnings: readonlyState(warningMessages),

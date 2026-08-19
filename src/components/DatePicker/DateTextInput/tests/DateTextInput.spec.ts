@@ -652,15 +652,14 @@ describe('DateTextInput.clean', () => {
 		expect(input.element.value).toContain('_')
 	})
 
-	it('readonly : validateField retourne un résultat sans erreur', async () => {
+	it('readonly : validateTextInput retourne un résultat sans erreur', async () => {
 		const wrapper = mountComponent({
 			format: 'DD/MM/YYYY',
 			readonly: true,
 		})
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const result = await (wrapper.vm as any).validateField('01/01/2025')
-		expect(result).toBeDefined()
-		expect(result.hasError).toBe(false)
+		const result = await (wrapper.vm as any).validateTextInput('01/01/2025')
+		expect(result).toBe(true)
 	})
 
 	it('watcher modelValue met à jour inputValue pour une plage de dates', async () => {

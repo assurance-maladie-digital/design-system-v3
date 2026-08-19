@@ -21,7 +21,6 @@
 		useCalendarKeyboardNavigation,
 		useDatePickerInputBlurHandler,
 		useDatePickerFocusTrap,
-		useDatePickerManualValidation,
 		useDatePickerState,
 		useDatePickerValidation,
 		useDatePickerViewMode,
@@ -267,7 +266,6 @@
 		validateField,
 		clearValidation,
 		validateDates,
-		pushError,
 		replaceErrors,
 		errors,
 		warnings,
@@ -278,6 +276,7 @@
 		errorMessages,
 		warningMessages,
 		successMessages,
+		validateTextInput,
 	} = useDatePickerValidation({
 		showSuccessMessages: computed(() => props.showSuccessMessages),
 		disableErrorHandling: computed(() => props.disableErrorHandling),
@@ -303,6 +302,9 @@
 		revalidateOnCustomRulesChange: true,
 		readonly: computed(() => props.readonly),
 		skipValidationWhenReadonly: true,
+		displayFormat: computed(() => props.format),
+		parseDate,
+		hasInteracted,
 		formRegistration: {
 			validateOnSubmit,
 			clearValidation: clearValidationForForm,
@@ -1314,21 +1316,6 @@
 		}
 	}
 
-	const { validateManualInput } = useDatePickerManualValidation({
-		displayFormat: computed(() => props.format),
-		required: computed(() => props.required),
-		disableErrorHandling: computed(() => props.disableErrorHandling),
-		customRules: computed(() => props.customRules),
-		customSuccessRules: computed(() => props.customSuccessRules ?? []),
-		customWarningRules: computed(() => props.customWarningRules),
-		hasInteracted,
-		hasError: () => errorMessages.value.length > 0,
-		clearValidation,
-		pushError,
-		parseDate,
-		validateField,
-	})
-
 	const emitBlurEvent = () => emit('blur')
 
 	const { handleInputBlur } = useDatePickerInputBlurHandler({
@@ -1345,7 +1332,7 @@
 		parseDate,
 		formatDate,
 		updateModel,
-		validateManualInput,
+		validateTextInput,
 		emitBlur: emitBlurEvent,
 	})
 
