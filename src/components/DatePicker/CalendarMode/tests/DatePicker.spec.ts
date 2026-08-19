@@ -215,6 +215,40 @@ describe('DatePicker', () => {
 		wrapper.unmount()
 	})
 
+	it('waits for a complete range before emitting the model and uses dateFormatReturn for calendar ranges', async () => {
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '',
+				format: 'DD/MM/YYYY',
+				dateFormatReturn: 'YYYY-MM-DD',
+				displayRange: true,
+			},
+			attachTo: document.body,
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		vm.updateSelectedDates(new Date(2026, 6, 1))
+		await flushPromises()
+
+		expect(wrapper.find('input').element.value).toBe('01/07/2026')
+		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+		expect(vm.isDatePickerVisible).toBe(true)
+
+		vm.updateSelectedDates(new Date(2026, 6, 5))
+		await flushPromises()
+
+		expect(wrapper.find('input').element.value).toBe('01/07/2026 - 05/07/2026')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toEqual(['2026-07-01', '2026-07-05'])
+		expect(vm.isDatePickerVisible).toBe(false)
+
+		wrapper.unmount()
+	})
+
 	it('still emits the selected value and surfaces an error when a calendar selection fails customRules', async () => {
 		vi.useFakeTimers()
 		vi.setSystemTime(new Date(2026, 7, 19, 12, 0, 0))
