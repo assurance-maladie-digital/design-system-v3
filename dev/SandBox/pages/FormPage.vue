@@ -58,9 +58,9 @@
 	}
 
 	function handleReset() {
-		syFormRef.value?.reset()
 		selectedDate.value = null
 		ratingValue.value = -1
+		ratingType.value = RatingEnum.STARS
 		beneficiaryName.value = ''
 		beneficiarySSN.value = ''
 		careType.value = null
