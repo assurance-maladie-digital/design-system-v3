@@ -14,8 +14,6 @@ export interface UseDateTextFieldManualValidationOptions {
 	hasInteracted: Ref<boolean>
 	errors: Ref<string[]>
 	clearValidation: () => void
-	validateDateFormat: (dateStr: string) => { isValid: boolean, message: string }
-	isDateComplete: (value: string) => boolean
 	parseDate: (dateStr: string, format: string) => Date | null
 	validateField: (value: unknown, rules?: ValidationRule[], warningRules?: ValidationRule[]) => Promise<ValidationResult> | ValidationResult
 }
@@ -46,8 +44,8 @@ export interface UseDateTextFieldOptions {
 	displayFormat: Ref<string>
 	autoClampDate: (dateStr: string, format: string) => { clampedDate: string, adjusted: boolean }
 	manualValidation: UseDateTextFieldManualValidationOptions
-	submit?: UseDateTextFieldSubmitOptions
-	reset?: UseDateTextFieldResetOptions
+	submit: UseDateTextFieldSubmitOptions
+	reset: UseDateTextFieldResetOptions
 }
 
 /**
@@ -57,128 +55,144 @@ export interface UseDateTextFieldOptions {
  */
 export const useDateTextField = (options: UseDateTextFieldOptions) => {
 	const { autoClamp, isRange, displayFormat, autoClampDate, manualValidation, submit, reset: resetOptions } = options
+	const {
+		required,
+		disableErrorHandling,
+		customRules,
+		customWarningRules,
+		hasInteracted,
+		errors,
+		clearValidation,
+		parseDate,
+		validateField,
+	} = manualValidation
 
-	// Fonction locale de validation manuelle pour remplacer useManualDateValidation
-	const validateManualInput = (value: string): boolean | Promise<boolean> => {
-		manualValidation.clearValidation()
+	const isErrorHandlingDisabled = () => unref(disableErrorHandling)
 
-		// Vérifier les cas de champ vide ou incomplet
-		const emptyCheck = validateEmptyOrIncompleteDate(
-			value,
-			unref(manualValidation.required),
-			(val: string) => isDateComplete(val, displayFormat.value),
-			manualValidation.hasInteracted.value,
-		)
+	const pushValidationError = (message?: string) => {
+		if (!isErrorHandlingDisabled() && message) {
+			errors.value.push(message)
+		}
+	}
 
-		// Gérer les erreurs pour champ vide requis
-		if (!emptyCheck.isValid && !unref(manualValidation.disableErrorHandling) && emptyCheck.errorMessage) {
-			manualValidation.errors.value.push(locales.required)
+	const getReadyCustomRules = (): DatePickerRule[] | null => {
+		const currentCustomRules = toValue(customRules)
+		const readyRules = currentCustomRules.filter((rule) => {
+			if (rule.type === 'notBeforeDate' || rule.type === 'notAfterDate' || rule.type === 'exactDate') {
+				return rule.options && rule.options.date !== undefined
+			}
+
+			return true
+		})
+
+		if (readyRules.length === 0 && currentCustomRules.length > 0) {
+			return null
 		}
 
-		// Si on ne doit pas continuer la validation (champ vide/incomplet)
+		return readyRules
+	}
+
+	const validateCustomRulesForDate = (date: Date): boolean | Promise<boolean> => {
+		if (isErrorHandlingDisabled()) {
+			return errors.value.length === 0
+		}
+
+		const readyRules = getReadyCustomRules()
+		if (readyRules === null) {
+			return true
+		}
+
+		const safeCustomRules = adaptCustomRules(readyRules, displayFormat.value) as ValidationRule[]
+		const safeWarningRules = adaptCustomRules(toValue(customWarningRules), displayFormat.value) as ValidationRule[]
+		const result = validateField(date, safeCustomRules, safeWarningRules)
+
+		if (result instanceof Promise) {
+			return result.then(resolvedResult => !resolvedResult.hasError)
+		}
+
+		return !result.hasError
+	}
+
+	const validateManualInput = (value: string): boolean | Promise<boolean> => {
+		clearValidation()
+
+		const emptyCheck = validateEmptyOrIncompleteDate(
+			value,
+			unref(required),
+			(val: string) => isDateComplete(val, displayFormat.value),
+			hasInteracted.value,
+		)
+
+		if (!emptyCheck.isValid && emptyCheck.errorMessage) {
+			pushValidationError(locales.required)
+		}
+
 		if (!emptyCheck.shouldContinue) {
 			return emptyCheck.isValid
 		}
 
-		// Valider le format de la date
 		const formatValidation = validateDateFormat(
 			value,
 			displayFormat.value,
 			displayFormat.value,
-			unref(manualValidation.required),
-			manualValidation.hasInteracted.value,
-			unref(manualValidation.disableErrorHandling),
+			unref(required),
+			hasInteracted.value,
+			isErrorHandlingDisabled(),
 		)
 		if (!formatValidation.isValid) {
-			if (!unref(manualValidation.disableErrorHandling) && formatValidation.message) {
-				manualValidation.errors.value.push(formatValidation.message)
-			}
+			pushValidationError(formatValidation.message)
 			return false
 		}
 
-		// Si le format est valide, vérifier si la date peut être parsée
-		const date = manualValidation.parseDate(value, displayFormat.value)
+		const date = parseDate(value, displayFormat.value)
 		if (!date) {
-			// La date n'a pas pu être parsée
-			if (!unref(manualValidation.disableErrorHandling)) {
-				manualValidation.errors.value.push(locales.invalidDateFormatWithFormat(displayFormat.value))
-			}
+			pushValidationError(locales.invalidDateFormatWithFormat(displayFormat.value))
 			return false
 		}
 
-		// Valider les règles personnalisées
-		if (!unref(manualValidation.disableErrorHandling)) {
-			const currentCustomRules = toValue(manualValidation.customRules)
-			const currentCustomWarningRules = toValue(manualValidation.customWarningRules)
-
-			// Filtrer les règles qui sont prêtes (ont une date définie)
-			const readyRules = currentCustomRules.filter((rule) => {
-				if (rule.type === 'notBeforeDate' || rule.type === 'notAfterDate' || rule.type === 'exactDate') {
-					return rule.options && rule.options.date !== undefined
-				}
-				return true
-			})
-
-			// Si aucune règle n'est prête, skip la validation
-			if (readyRules.length === 0 && currentCustomRules.length > 0) {
-				return true
-			}
-
-			// Adapter les règles prêtes pour maintenir la compatibilité avec les tests existants
-			const safeCustomRules = adaptCustomRules(readyRules, displayFormat.value)
-			const safeWarningRules = adaptCustomRules(currentCustomWarningRules, displayFormat.value)
-
-			// Appeler validateField pour évaluer les règles
-			const result = manualValidation.validateField(
-				date,
-				safeCustomRules as ValidationRule[],
-				safeWarningRules as ValidationRule[],
-			)
-
-			if (result instanceof Promise) {
-				return result.then(resolvedResult => !resolvedResult.hasError)
-			}
-
-			return !result.hasError
-		}
-
-		return manualValidation.errors.value.length === 0
+		return validateCustomRulesForDate(date)
 	}
 
 	const validateOnSubmit = async () => {
-		if (!submit) return true
 		const { isValidating, hasInteracted, inputValue, runRules } = submit
 		isValidating.value = true
 		hasInteracted.value = true
-		const ok = await runRules(inputValue.value)
-		isValidating.value = false
-		return ok
+
+		try {
+			return await runRules(inputValue.value)
+		}
+		finally {
+			isValidating.value = false
+		}
+	}
+
+	const clampDatePart = (value: string): string => {
+		if (!value) return value
+
+		return autoClampDate(value, displayFormat.value).clampedDate
+	}
+
+	const clampRangeInput = (raw: string): string => {
+		const [rawStartDate = '', rawEndDate = ''] = raw.split(locales.rangeSeparator).map(dateText => dateText.trim())
+		const clampedStartDate = clampDatePart(rawStartDate)
+		const clampedEndDate = clampDatePart(rawEndDate)
+
+		return clampedEndDate
+			? `${clampedStartDate}${locales.rangeSeparator}${clampedEndDate}`
+			: `${clampedStartDate}${locales.rangeSeparator}`
 	}
 
 	const clampIfNeeded = (raw: string): string => {
 		if (!unref(autoClamp) || !raw) return raw
 
 		if (isRange.value && raw.includes(locales.rangeSeparator)) {
-			const [rawStartDate = '', rawEndDate = ''] = raw.split(locales.rangeSeparator).map(dateText => dateText.trim())
-			const startDateValidation = rawStartDate
-				? autoClampDate(rawStartDate, displayFormat.value)
-				: { adjusted: false, clampedDate: rawStartDate }
-			const endDateValidation = rawEndDate
-				? autoClampDate(rawEndDate, displayFormat.value)
-				: { adjusted: false, clampedDate: rawEndDate }
-
-			const formattedStartDate = startDateValidation.clampedDate || ''
-			const formattedEndDate = endDateValidation.clampedDate || ''
-
-			return formattedEndDate ? `${formattedStartDate}${locales.rangeSeparator}${formattedEndDate}` : `${formattedStartDate}${locales.rangeSeparator}`
+			return clampRangeInput(raw)
 		}
 
-		const dateValidationResult = autoClampDate(raw, displayFormat.value)
-		return dateValidationResult.clampedDate
+		return clampDatePart(raw)
 	}
 
 	const reset = () => {
-		if (!resetOptions) return
 		const {
 			clearValidation,
 			isFocused,

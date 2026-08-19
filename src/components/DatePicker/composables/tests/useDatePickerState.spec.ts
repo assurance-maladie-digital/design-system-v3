@@ -5,7 +5,6 @@ import { useDatePickerState } from '../useDatePickerState'
 describe('useDatePickerState', () => {
 	const mockParseDate = vi.fn()
 	const mockFormatDate = vi.fn()
-	const mockInitializeSelectedDates = vi.fn()
 	const mockValidateDates = vi.fn()
 	const mockUpdateModel = vi.fn()
 	const mockGenerateDateRange = vi.fn()
@@ -23,7 +22,11 @@ describe('useDatePickerState', () => {
 			const endDate = new Date('2023-01-05')
 			const intermediateDate = new Date('2023-01-03')
 
-			mockInitializeSelectedDates.mockReturnValue([startDate, endDate])
+			mockParseDate.mockImplementation((value) => {
+				if (value === '01/01/2023') return startDate
+				if (value === '05/01/2023') return endDate
+				return null
+			})
 			mockFormatDate.mockImplementation((date) => {
 				if (date === startDate) return '01/01/2023'
 				if (date === endDate) return '05/01/2023'
@@ -37,7 +40,6 @@ describe('useDatePickerState', () => {
 				displayRange: true,
 				parseDate: mockParseDate,
 				formatDate: mockFormatDate,
-				initializeSelectedDates: mockInitializeSelectedDates,
 				validateDates: mockValidateDates,
 				updateModel: mockUpdateModel,
 				generateDateRange: mockGenerateDateRange,
@@ -45,7 +47,8 @@ describe('useDatePickerState', () => {
 
 			syncFromModelValue(['01/01/2023', '05/01/2023'])
 
-			expect(mockInitializeSelectedDates).toHaveBeenCalled()
+			expect(mockParseDate).toHaveBeenCalledWith('01/01/2023', format)
+			expect(mockParseDate).toHaveBeenCalledWith('05/01/2023', format)
 			expect(mockGenerateDateRange).toHaveBeenCalledWith(startDate, endDate)
 			expect(selectedDates.value).toEqual([startDate, intermediateDate, endDate])
 		})

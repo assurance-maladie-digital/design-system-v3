@@ -444,6 +444,56 @@ describe('ComplexDatePicker.clean', () => {
 		expect((input.element as HTMLInputElement).value).toBe('02/01/2025')
 	})
 
+	it('emits dateFormatReturn and closes the dialog when a visible calendar selection is valid', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+		}, { attachTo: document.body })
+
+		wrapper.vm.isDatePickerVisible = true
+		await nextTick()
+
+		await wrapper.vm.updateSelectedDates(new Date(2026, 6, 1))
+		await flushPromises()
+
+		expect(wrapper.vm.displayFormattedDate).toBe('01/07/2026')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2026-07-01')
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+	})
+
+	it('keeps the dialog open and does not emit model update when a calendar selection fails customRules', async () => {
+		vi.useFakeTimers()
+		vi.setSystemTime(new Date(2026, 7, 19, 12, 0, 0))
+
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			customRules: [
+				{
+					type: 'notBeforeToday',
+					options: {
+						message: 'La date ne peut pas être antérieure à aujourd\'hui',
+					},
+				},
+			],
+		}, { attachTo: document.body })
+
+		wrapper.vm.isDatePickerVisible = true
+		await nextTick()
+
+		await wrapper.vm.updateSelectedDates(new Date(2026, 7, 18))
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+		expect(wrapper.vm.displayFormattedDate).toBe('')
+		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+		expect(wrapper.vm.errorMessages).toContain('La date ne peut pas être antérieure à aujourd\'hui')
+
+		vi.useRealTimers()
+	})
+
 	it('initializes selection correctly from range modelValue in range mode', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',

@@ -189,6 +189,71 @@ describe('DatePicker', () => {
 		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('2025-04-30')
 	})
 
+	it('emits dateFormatReturn and closes the dialog when a visible calendar selection is valid', async () => {
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '',
+				format: 'DD/MM/YYYY',
+				dateFormatReturn: 'YYYY-MM-DD',
+			},
+			attachTo: document.body,
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		await vm.updateSelectedDates(new Date(2026, 6, 1))
+		await flushPromises()
+
+		expect(wrapper.find('input').element.value).toBe('01/07/2026')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2026-07-01')
+		expect(vm.isDatePickerVisible).toBe(false)
+
+		wrapper.unmount()
+	})
+
+	it('still emits the selected value and surfaces an error when a calendar selection fails customRules', async () => {
+		vi.useFakeTimers()
+		vi.setSystemTime(new Date(2026, 7, 19, 12, 0, 0))
+
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '',
+				format: 'DD/MM/YYYY',
+				dateFormatReturn: 'YYYY-MM-DD',
+				customRules: [
+					{
+						type: 'notBeforeToday',
+						options: {
+							message: 'La date ne peut pas être antérieure à aujourd\'hui',
+						},
+					},
+				],
+			},
+			attachTo: document.body,
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		await vm.updateSelectedDates(new Date(2026, 7, 18))
+		await flushPromises()
+
+		expect(vm.isDatePickerVisible).toBe(false)
+		expect(wrapper.find('input').element.value).toBe('18/08/2026')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2026-08-18')
+		expect(vm.errorMessages).toContain('La date ne peut pas être antérieure à aujourd\'hui')
+
+		vi.useRealTimers()
+		wrapper.unmount()
+	})
+
 	it('preserves autoClamp in combined range mode', async () => {
 		const wrapper = mountComponent({
 			format: 'DD/MM/YYYY',

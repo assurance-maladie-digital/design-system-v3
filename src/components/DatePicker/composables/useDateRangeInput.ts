@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { extractRangeParts as extractRangePartsUtil, hasRangeSeparator as hasRangeSeparatorUtil, isValidDateRange } from '../utils/dateFormattingUtils'
@@ -28,23 +28,9 @@ export function useDateRangeInput(
 	const rangeSeparator = locales.rangeSeparator
 
 	// Utiliser useKeyboardEvents pour centraliser la gestion des événements clavier
-	const { handlePaste: handlePasteFromKeyboardEvents, handleKeyDown: handleKeyDownFromKeyboardEvents } = useKeyboardEvents({
+	const { handlePaste: handlePasteFromKeyboardEvents } = useKeyboardEvents({
 		allowedCharacters: /^\d$/,
 	})
-
-	/**
-	 * Vérifie si une chaîne de caractères contient un séparateur de plage
-	 */
-	const hasRangeSeparator = (value: string): boolean => {
-		return hasRangeSeparatorUtil(value, rangeSeparator)
-	}
-
-	/**
-	 * Extrait les deux parties d'une plage de dates
-	 */
-	const extractRangeParts = (value: string): [string, string] => {
-		return extractRangePartsUtil(value, rangeSeparator)
-	}
 
 	/**
 	 * Formate une plage de dates pour l'affichage
@@ -63,8 +49,8 @@ export function useDateRangeInput(
 		if (!value) return [null, null]
 
 		// Si la valeur contient un séparateur de plage
-		if (hasRangeSeparator(value)) {
-			const [startStr, endStr] = extractRangeParts(value)
+		if (hasRangeSeparatorUtil(value, rangeSeparator)) {
+			const [startStr, endStr] = extractRangePartsUtil(value, rangeSeparator)
 			const startDate = parseDate(startStr, format)
 			const endDate = parseDate(endStr, format)
 			return [startDate, endDate]
@@ -129,8 +115,8 @@ export function useDateRangeInput(
 		}
 
 		// Si la valeur contient déjà un séparateur de plage
-		if (hasRangeSeparator(safeNewValue)) {
-			const [startStr, endStr] = extractRangeParts(safeNewValue)
+		if (hasRangeSeparatorUtil(safeNewValue, rangeSeparator)) {
+			const [startStr, endStr] = extractRangePartsUtil(safeNewValue, rangeSeparator)
 			const startDate = parseDate(startStr, format)
 			const endDate = parseDate(endStr, format)
 
@@ -243,56 +229,6 @@ export function useDateRangeInput(
 	}
 
 	/**
-	 * Vérifie si la plage actuelle est valide
-	 */
-	const currentRangeIsValid = computed(() => {
-		return isValidRange(firstDate.value, secondDate.value)
-	})
-
-	/**
-	 * Gère l'événement keydown pour filtrer les caractères non numériques
-	 *
-	 * @param event - Événement keydown
-	 */
-	const handleKeydown = (event: KeyboardEvent & { target: HTMLInputElement }): void => {
-		// Utiliser handleKeyDownFromKeyboardEvents pour filtrer les caractères
-		handleKeyDownFromKeyboardEvents(event)
-
-		// Gérer les touches spéciales pour le mode plage (suppression des séparateurs)
-		if (isRangeMode && event.key === 'Backspace') {
-			const input = event.target
-			if (!input.selectionStart || input.selectionStart !== input.selectionEnd) {
-				return
-			}
-
-			const cursorPos = input.selectionStart
-
-			// Si on est juste après un séparateur de plage
-			if (cursorPos >= rangeSeparator.length
-				&& input.value.substring(cursorPos - rangeSeparator.length, cursorPos) === rangeSeparator) {
-				// Empêcher le comportement par défaut
-				event.preventDefault()
-
-				// Supprimer le séparateur complet
-				const newValue = input.value.substring(0, cursorPos - rangeSeparator.length)
-					+ input.value.substring(cursorPos)
-
-				// Mettre à jour la valeur (via l'événement input)
-				const inputEvent = new InputEvent('input', { bubbles: true, cancelable: true, data: newValue })
-				Object.defineProperty(inputEvent, 'target', { value: input, enumerable: true })
-				input.value = newValue
-				input.dispatchEvent(inputEvent)
-
-				// Positionner le curseur
-				setTimeout(() => {
-					const newCursorPos = cursorPos - rangeSeparator.length
-					input.setSelectionRange(newCursorPos, newCursorPos)
-				}, 0)
-			}
-		}
-	}
-
-	/**
 	 * Gère l'événement paste pour filtrer les caractères non numériques
 	 * Utilise handlePasteFromKeyboardEvents pour centraliser la logique
 	 *
@@ -303,20 +239,12 @@ export function useDateRangeInput(
 	}
 
 	return {
-		isEditingSecondDate,
-		firstDate,
-		secondDate,
-		rangeSeparator,
-		hasRangeSeparator,
-		extractRangeParts,
 		formatRangeForDisplay,
 		parseRangeInput,
 		handleRangeInput,
 		initializeWithDates,
 		resetState,
 		isValidRange,
-		currentRangeIsValid,
-		handleKeydown,
 		handlePaste,
 	}
 }

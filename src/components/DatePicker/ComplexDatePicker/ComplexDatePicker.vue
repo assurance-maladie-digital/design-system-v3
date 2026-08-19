@@ -54,6 +54,7 @@
 		formatDateRangeDisplay,
 		getDateDescription as getDateDescriptionUtil,
 		getDisplayedMonthYearState,
+		resolveDatePickerStateFromModelValue,
 	} from '../utils/dateFormattingUtils'
 	import { validateEmptyOrIncompleteDate, adaptCustomRules } from '../utils/validationUtils'
 	import type { ValidationRule } from '@/composables/validation/useValidation'
@@ -431,18 +432,86 @@
 		displayRange: computed(() => props.displayRange),
 		parseDate,
 		formatDate,
-		initializeSelectedDates,
 		validateDates,
 		updateModel,
 		generateDateRange: dateSelectionResult.generateDateRange,
 	})
 
-	// Display helpers (centralised in useDatePickerState)
-	const displayFormattedDateComputed = displayFormattedFromSelectedDates
+	const syncDisplayFormattedFromSelection = () => {
+		displayFormattedDate.value = displayFormattedFromSelectedDates.value || ''
+	}
 
-	watch(displayFormattedDateComputed, (newValue) => {
-		if (!props.noCalendar && newValue) displayFormattedDate.value = newValue
-	})
+	const syncSelectionDisplay = () => {
+		withInternalUpdate(() => {
+			syncTextInputFromSelection()
+		})
+		syncDisplayFormattedFromSelection()
+	}
+
+	const getSelectedBaseDate = (value: DateObjectValue = selectedDates.value): Date | null => {
+		if (!value) return null
+
+		return Array.isArray(value)
+			? (value.find(date => date instanceof Date) as Date | null) ?? null
+			: value
+	}
+
+	const hasCompletedRangeSelection = (value: DateObjectValue = selectedDates.value): boolean => {
+		if (!props.displayRange) return false
+
+		const hasRangeBoundarySelection = Boolean(
+			rangeBoundaryDates.value?.[0] && rangeBoundaryDates.value?.[1],
+		)
+		const hasArrayRangeSelection = Boolean(
+			Array.isArray(value) && value.length >= 2 && value[0] && value[value.length - 1],
+		)
+
+		return hasRangeBoundarySelection || hasArrayRangeSelection
+	}
+
+	const buildCalendarSelectionCommit = (): { displayValue: string, modelValue: DateModelValue } | null => {
+		if (props.displayRange) {
+			if (rangeBoundaryDates.value?.[0] && rangeBoundaryDates.value?.[1]) {
+				return {
+					displayValue: formatDateRangeDisplay(
+						rangeBoundaryDates.value[0],
+						rangeBoundaryDates.value[1],
+						props.format,
+						formatDate,
+					),
+					modelValue: [
+						formatDate(rangeBoundaryDates.value[0], returnFormat.value),
+						formatDate(rangeBoundaryDates.value[1], returnFormat.value),
+					] as [string, string],
+				}
+			}
+
+			if (Array.isArray(selectedDates.value) && selectedDates.value.length >= 2) {
+				return {
+					displayValue: formatDateRangeDisplay(
+						selectedDates.value[0]!,
+						selectedDates.value[selectedDates.value.length - 1]!,
+						props.format,
+						formatDate,
+					),
+					modelValue: [
+						formatDate(selectedDates.value[0]!, props.format),
+						formatDate(selectedDates.value[selectedDates.value.length - 1]!, props.format),
+					] as [string, string],
+				}
+			}
+
+			return null
+		}
+
+		const displayValue = displayFormattedFromSelectedDates.value || ''
+		if (!displayValue || !formattedDate.value) return null
+
+		return {
+			displayValue,
+			modelValue: formattedDate.value,
+		}
+	}
 
 	const updateSelectedDates = async (date: Date | null) => {
 		ignoreNextCalendarModelSync.value = false
@@ -456,11 +525,8 @@
 		}
 		dateSelectionResult.updateSelectedDates(date)
 		if (date !== null && isDatePickerVisible.value && !props.displayRange) {
-			withInternalUpdate(() => {
-				syncTextInputFromSelection()
-			})
+			syncSelectionDisplay()
 			updateModel(formatDate(date, returnFormat.value))
-			displayFormattedDate.value = formatDate(date, props.format)
 			closeAndRestoreFocus()
 		}
 		// Validate immediately to surface messages
@@ -470,46 +536,28 @@
 	watch(selectedDates, (newValue) => {
 		validateDates()
 		if (newValue !== null) {
-			keyboardNavigatedDate.value = Array.isArray(newValue)
-				? (newValue.find(date => date instanceof Date) as Date | null) ?? null
-				: newValue
+			keyboardNavigatedDate.value = getSelectedBaseDate(newValue)
 			if (ignoreNextCalendarModelSync.value && isDatePickerVisible.value) {
 				ignoreNextCalendarModelSync.value = false
-				withInternalUpdate(() => {
-					syncTextInputFromSelection()
-				})
+				syncSelectionDisplay()
 				return
 			}
 
 			if (!preventCloseOnInternalUpdate.value) {
 				updateModel(formattedDate.value)
 			}
-			withInternalUpdate(() => {
-				syncTextInputFromSelection()
-			})
+			syncSelectionDisplay()
 
-			let baseDate: Date | null = null
-			if (Array.isArray(newValue)) {
-				baseDate = (newValue.find(date => date instanceof Date) as Date | null) ?? null
-			}
-			else {
-				baseDate = newValue
-			}
+			const baseDate = getSelectedBaseDate(newValue)
 			if (baseDate) syncDisplayedMonthYearFromDate(baseDate)
 			if (isDatePickerVisible.value) {
 				nextTick(() => refreshVisibleCalendarUi())
 			}
 
-			const hasCompletedRangeSelection = props.displayRange
-				&& (
-					(rangeBoundaryDates.value?.[0] && rangeBoundaryDates.value?.[1])
-					|| (Array.isArray(newValue) && newValue.length >= 2 && newValue[0] && newValue[newValue.length - 1])
-				)
-
 			if (
 				isDatePickerVisible.value
 				&& !preventCloseOnInternalUpdate.value
-				&& (!props.displayRange || hasCompletedRangeSelection)
+				&& (!props.displayRange || hasCompletedRangeSelection(newValue))
 			) {
 				closeAndRestoreFocus()
 			}
@@ -517,9 +565,8 @@
 		else {
 			keyboardNavigatedDate.value = null
 			updateModel(null)
-			withInternalUpdate(() => {
-				syncTextInputFromSelection()
-			})
+			syncSelectionDisplay()
+			displayFormattedDate.value = ''
 			// Reset month/year names when clearing the date
 			syncDisplayedMonthYearFromDate(new Date())
 			if (isDatePickerVisible.value) {
@@ -594,52 +641,17 @@
 		}
 
 		queueMicrotask(() => {
-			let formattedValue = ''
+			const selectionCommit = buildCalendarSelectionCommit()
+			if (!selectionCommit) {
+				syncSelectionDisplay()
+				validateDates()
+				return
+			}
 
-			if (props.displayRange) {
-				if (rangeBoundaryDates.value?.[0] && rangeBoundaryDates.value?.[1]) {
-					formattedValue = formatDateRangeDisplay(
-						rangeBoundaryDates.value[0],
-						rangeBoundaryDates.value[1],
-						props.format,
-						formatDate,
-					)
-					displayFormattedDate.value = textInputValue.value = formattedValue
-					const formattedDates = [
-						formatDate(rangeBoundaryDates.value[0], returnFormat.value),
-						formatDate(rangeBoundaryDates.value[1], returnFormat.value),
-					] as [string, string]
-					updateModel(formattedDates)
-					emit('date-selected', formattedDates)
-					closeAndRestoreFocus()
-				}
-				else if (Array.isArray(selectedDates.value) && selectedDates.value.length >= 2) {
-					const formattedDates = [
-						formatDate(selectedDates.value[0]!, props.format),
-						formatDate(selectedDates.value[selectedDates.value.length - 1]!, props.format),
-					] as [string, string]
-					formattedValue = formatDateRangeDisplay(
-						selectedDates.value[0]!,
-						selectedDates.value[selectedDates.value.length - 1]!,
-						props.format,
-						formatDate,
-					)
-					displayFormattedDate.value = textInputValue.value = formattedValue
-					updateModel(formattedDates)
-					emit('date-selected', formattedDates)
-					closeAndRestoreFocus()
-				}
-				else {
-					formattedValue = displayFormattedDateComputed.value || ''
-					displayFormattedDate.value = textInputValue.value = formattedValue
-				}
-			}
-			else {
-				formattedValue = displayFormattedDateComputed.value || ''
-				displayFormattedDate.value = textInputValue.value = formattedValue
-				closeAndRestoreFocus()
-				emit('date-selected', formattedDate.value)
-			}
+			displayFormattedDate.value = textInputValue.value = selectionCommit.displayValue
+			updateModel(selectionCommit.modelValue)
+			emit('date-selected', selectionCommit.modelValue)
+			closeAndRestoreFocus()
 
 			validateDates()
 		})
@@ -746,7 +758,7 @@
 
 	onMounted(() => {
 		setupMonthButtonObserver()
-		if (displayFormattedDateComputed.value) displayFormattedDate.value = displayFormattedDateComputed.value
+		syncDisplayFormattedFromSelection()
 		validateDates()
 		nextTick(syncComboboxInputSemantics)
 		nextTick(syncDialogKeydownListener)
@@ -1233,48 +1245,19 @@
 		try {
 			isUpdatingFromInternal.value = true
 
-			// 1) Propager la valeur brute vers le v-model externe
 			updateModel(value)
+			const nextState = resolveDatePickerStateFromModelValue({
+				modelValue: value,
+				displayRange: props.displayRange,
+				displayFormat: props.format,
+				returnFormat: returnFormat.value,
+				parseDate,
+				formatDate,
+				generateDateRange: dateSelectionResult.generateDateRange,
+			})
 
-			// 2) Mettre à jour selectedDates / displayFormattedDate pour refléter la saisie manuelle
-			if (!value) {
-				selectedDates.value = null
-				displayFormattedDate.value = ''
-				return
-			}
-
-			if (Array.isArray(value) && props.displayRange) {
-				const [startStr, endStr] = value
-				const rf = returnFormat.value
-				const startDate = startStr ? parseDate(startStr, rf) || parseDate(startStr, props.format) : null
-				const endDate = endStr ? parseDate(endStr, rf) || parseDate(endStr, props.format) : null
-
-				if (startDate && endDate) {
-					selectedDates.value = dateSelectionResult.generateDateRange(startDate, endDate)
-					displayFormattedDate.value = formatDateRangeDisplay(startDate, endDate, props.format, formatDate)
-				}
-				else if (startDate) {
-					// Première date saisie uniquement
-					selectedDates.value = [startDate]
-					displayFormattedDate.value = formatDate(startDate, props.format)
-				}
-				else {
-					selectedDates.value = null
-					displayFormattedDate.value = ''
-				}
-			}
-			else if (typeof value === 'string') {
-				const rf = returnFormat.value
-				const date = parseDate(value, rf) || parseDate(value, props.format)
-				if (date) {
-					selectedDates.value = date
-					displayFormattedDate.value = formatDate(date, props.format)
-				}
-				else {
-					selectedDates.value = null
-					displayFormattedDate.value = ''
-				}
-			}
+			selectedDates.value = nextState.selectedDates
+			displayFormattedDate.value = nextState.displayValue
 		}
 		finally {
 			queueMicrotask(() => {
