@@ -4,7 +4,6 @@
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useDateInitialization, type DateInput, type DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
-	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { mdiCalendarMonthOutline } from '@mdi/js'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -12,7 +11,7 @@
 	import { VDatePicker } from 'vuetify/components'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
-	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useSelectedDayAria, useTodayButton } from '../composables'
+	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerFormRegistration, useDatePickerState, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useSelectedDayAria, useTodayButton } from '../composables'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { locales } from '../locales'
 	import type { ViewMode } from '../composables/useDatePickerViewMode'
@@ -318,6 +317,7 @@
 	}
 
 	const {
+		messages,
 		validationState,
 		clearValidation,
 		validateDates,
@@ -342,12 +342,12 @@
 		onblur,
 		revalidateOnCustomRulesChange: false,
 	})
-	const errors = validationState.errors
+	const errors = messages.errors
 
-	const errorMessages = validationState.errors
-	const warningMessages = validationState.warnings
-	const successMessages = validationState.successes
-	const isOnSuccess = validationState.hasSuccess
+	const errorMessages = messages.errors
+	const warningMessages = messages.warnings
+	const successMessages = messages.successes
+	const isOnSuccess = messages.hasSuccess
 	const isHandlingProgrammaticClose = ref(false)
 
 	const finalizeDatePickerClose = async () => {
@@ -683,7 +683,7 @@
 	}
 
 	// Intégration avec le système de validation du formulaire
-	useValidatable(validateOnSubmit, clearValidation)
+	useDatePickerFormRegistration({ validateOnSubmit, clearValidation })
 
 	const openDatePicker = async () => {
 		if (isInteractionDisabled.value) return

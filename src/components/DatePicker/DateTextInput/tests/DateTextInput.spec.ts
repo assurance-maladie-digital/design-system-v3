@@ -531,6 +531,38 @@ describe('DateTextInput.clean', () => {
 		vi.useRealTimers()
 	})
 
+	it('does not commit the model on blur when a custom rule fails', async () => {
+		vi.useFakeTimers()
+		try {
+			vi.setSystemTime(new Date(2026, 7, 19, 12, 0, 0))
+
+			const wrapper = mountComponent({
+				label: 'Date',
+				format: 'DD/MM/YYYY',
+				customRules: [
+					{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd\'hui' } },
+				],
+			})
+
+			const input = wrapper.find('input')
+			await input.setValue('01/01/2100')
+			const modelEmissionsBeforeBlur = wrapper.emitted('update:model-value')?.length ?? 0
+
+			await input.trigger('blur')
+			await flushPromises()
+
+			const modelEmissionsAfterBlur = wrapper.emitted('update:model-value')?.length ?? 0
+			expect(modelEmissionsAfterBlur).toBe(modelEmissionsBeforeBlur)
+
+			const textField = wrapper.findComponent(SyTextField)
+			const errorMessages = textField.props('errorMessages') as string[] | undefined
+			expect(errorMessages).toContain('La date ne peut pas être après aujourd\'hui')
+		}
+		finally {
+			vi.useRealTimers()
+		}
+	})
+
 	it('does not validate on blur when isValidateOnBlur is false but validateOnSubmit still applies', async () => {
 		const wrapper = mountComponent({
 			label: 'Date',
