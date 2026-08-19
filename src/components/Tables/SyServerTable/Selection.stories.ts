@@ -145,6 +145,7 @@ export const RowSelection: Story = {
 					:server-items-length="totalItems"
 					:loading="state === StateEnum.PENDING"
 					@update:options="fetchData"
+					@update:model-value="args['onUpdate:modelValue']"
 				/>
 				<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
 					<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
@@ -259,6 +260,7 @@ export const SingleRowSelection: Story = {
 					:server-items-length="totalItems"
 					:loading="state === StateEnum.PENDING"
 					@update:options="fetchData"
+					@update:model-value="args['onUpdate:modelValue']"
 				/>
 				<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
 					<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
