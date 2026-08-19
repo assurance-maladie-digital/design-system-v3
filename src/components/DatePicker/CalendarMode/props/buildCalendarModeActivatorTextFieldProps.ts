@@ -2,12 +2,14 @@ import type { Ref } from 'vue'
 import type { DatePickerCommonProps } from '../../types'
 import { locales } from '../../locales'
 
-export const useSyTextFieldProps = (
+export const buildCalendarModeActivatorTextFieldProps = (
 	props: DatePickerCommonProps,
 	labelWithAsterisk: Ref<string | undefined>,
 	errorMessages: Ref<string[]>,
 	warningMessages: Ref<string[]>,
 	successMessages: Ref<string[]>,
+	hasError: Ref<boolean>,
+	hasWarning: Ref<boolean>,
 	isOnSuccess: Ref<boolean>,
 ) => ({
 	'aria-label': labelWithAsterisk.value || props.placeholder || locales.label,
@@ -16,7 +18,8 @@ export const useSyTextFieldProps = (
 	'error-messages': errorMessages.value,
 	'warning-messages': warningMessages.value,
 	'success-messages': successMessages.value,
-	'has-error': errorMessages.value.length > 0,
+	'has-error': hasError.value,
+	'has-warning': hasWarning.value,
 	'has-success': isOnSuccess.value,
 	'required': props.required,
 	'disabled': props.disabled,

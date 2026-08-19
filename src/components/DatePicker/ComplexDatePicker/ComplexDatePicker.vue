@@ -19,7 +19,7 @@
 	import {
 		buildTodaySelectionState,
 		useCalendarKeyboardNavigation,
-		useDatePickerFormRegistration,
+		useDatePickerInputBlurHandler,
 		useDatePickerFocusTrap,
 		useDatePickerState,
 		useDatePickerValidation,
@@ -29,7 +29,6 @@
 		useDateSelection,
 		useDisplayedDateString,
 		useHolidayHighlighting,
-		useInputBlurHandler,
 		useMonthButtonCustomization,
 		useSelectedDayAria,
 		useTodayButton,
@@ -45,8 +44,8 @@
 	import type { DateObjectValue, DatePickerCommonProps } from '../types'
 	import { DatePickerCommonDefaults } from '../types'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
-	import { useDateTextInputProps } from './props/dateTextInputProps'
-	import { useDateTextInputMenuProps } from './props/dateTextInputMenuProps'
+	import { buildComplexDatePickerTextInputProps } from './props/buildComplexDatePickerTextInputProps'
+	import { buildComplexDatePickerMenuTextInputProps } from './props/buildComplexDatePickerMenuTextInputProps'
 	import { locales } from '../locales'
 	import { mdiCalendarMonthOutline } from '@mdi/js'
 	import {
@@ -272,6 +271,9 @@
 		validateField,
 		clearValidation,
 		validateDates,
+		errorMessages,
+		warningMessages,
+		successMessages,
 	} = useDatePickerValidation({
 		showSuccessMessages: computed(() => props.showSuccessMessages),
 		disableErrorHandling: computed(() => props.disableErrorHandling),
@@ -279,7 +281,15 @@
 		required: computed(() => props.required),
 		displayRange: computed(() => props.displayRange),
 		customRules: computed(() => props.customRules),
+		customSuccessRules: computed(() => props.customSuccessRules ?? []),
 		customWarningRules: computed(() => props.customWarningRules),
+		errorMessages: computed(() => props.errorMessages ?? null),
+		hasErrorProp: computed(() => props.hasError),
+		hasSuccessProp: computed(() => props.hasSuccess),
+		hasWarningProp: computed(() => props.hasWarning),
+		warningMessages: computed(() => props.warningMessages ?? null),
+		successMessages: computed(() => props.successMessages ?? null),
+		maxErrors: computed(() => props.maxErrors),
 		selectedDates,
 		isUpdatingFromInternal,
 		currentRangeIsValid,
@@ -287,23 +297,38 @@
 		revalidateOnCustomRulesChange: true,
 		readonly: computed(() => props.readonly),
 		skipValidationWhenReadonly: true,
+		formRegistration: {
+			validateOnSubmit,
+			clearValidation: clearValidationForForm,
+			reset,
+		},
 	})
-	const errors = messages.errors
-	const errorMessages = computed(() => messages.errors.value)
-	const warningMessages = computed(() => messages.warnings.value)
+	const errors = validationState.errors
 
 	const messageClasses = computed(() => ({
 		'dp-width': true,
-		'v-messages__message--error': errorMessages.value.length > 0,
-		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length === 0,
-		'v-messages__message--success': messages.hasSuccess.value,
+		'v-messages__message--error': messages.hasError.value,
+		'v-messages__message--warning': messages.hasWarning.value && !messages.hasError.value,
+		'v-messages__message--success': messages.hasSuccess.value && !messages.hasError.value && !messages.hasWarning.value,
 	}))
 
-	// Props regroupées pour DateTextInput (mode noCalendar)
-	const dateTextInputProps = computed(() => useDateTextInputProps(props, labelWithAsterisk, errorMessages))
+	// Props du champ texte utilisé dans le flux noCalendar
+	const noCalendarTextInputProps = computed(() => buildComplexDatePickerTextInputProps(
+		props,
+		labelWithAsterisk,
+		errorMessages,
+		warningMessages,
+		successMessages,
+	))
 
-	// Props regroupées pour DateTextInput (mode VMenu)
-	const dateTextInputMenuProps = computed(() => useDateTextInputMenuProps(props, labelWithAsterisk, errorMessages))
+	// Props du champ texte utilisé comme activateur du menu calendrier
+	const menuTextInputProps = computed(() => buildComplexDatePickerMenuTextInputProps(
+		props,
+		labelWithAsterisk,
+		errorMessages,
+		warningMessages,
+		successMessages,
+	))
 
 	const syncDisplayedMonthYearFromDate = (date: Date) => {
 		const displayedState = getDisplayedMonthYearState(date)
@@ -345,10 +370,42 @@
 		}
 	}
 
+	const prepareCalendarInteraction = (options: {
+		ignoreBlur?: boolean
+		focusDialog?: boolean
+		ignoreCalendarModelSync?: boolean
+	} = {}) => {
+		if (options.ignoreBlur) {
+			ignoreNextInputBlur.value = true
+		}
+
+		if (options.focusDialog) {
+			scheduleDialogInitialFocus()
+		}
+
+		if (options.ignoreCalendarModelSync) {
+			ignoreNextCalendarModelSync.value = true
+		}
+	}
+
+	const requestDatePickerOpen = (options: {
+		ignoreBlur?: boolean
+		focusDialog?: boolean
+		ignoreCalendarModelSync?: boolean
+	} = {}): boolean => {
+		if (isInteractionDisabled.value) return false
+
+		prepareCalendarInteraction(options)
+		openDatePicker()
+		return true
+	}
+
 	const openDatePickerOnIconClick = () => {
 		if (isInteractionDisabled.value) return
-		ignoreNextInputBlur.value = true
-		ignoreNextCalendarModelSync.value = true
+		prepareCalendarInteraction({
+			ignoreBlur: true,
+			ignoreCalendarModelSync: true,
+		})
 		openDatePickerOnIconClickFromVisibility()
 	}
 
@@ -359,7 +416,7 @@
 		// Ne pas ouvrir le calendrier si le clic vient du bouton clear
 		if (event && (event.target as HTMLElement)?.closest('.sy-text-field__clear')) return
 
-		openDatePicker()
+		requestDatePickerOpen()
 	}
 
 	const updateModel = (value: DateModelValue) => {
@@ -367,6 +424,18 @@
 		if (JSON.stringify(value) === JSON.stringify(props.modelValue)) return
 		withInternalUpdate(() => emit('update:modelValue', value))
 	}
+
+	const calendarSelectedDates = computed<DateObjectValue>({
+		get: () => selectedDates.value,
+		set: (value) => {
+			if (ignoreNextCalendarModelSync.value) {
+				ignoreNextCalendarModelSync.value = false
+				return
+			}
+
+			selectedDates.value = value
+		},
+	})
 
 	// Keep and expose this so consumers can listen to `date-selected`
 	const handleDateSelected = (value: DateModelValue) => {
@@ -524,7 +593,12 @@
 		ignoreNextCalendarModelSync.value = false
 
 		if (date !== null) {
-			const validationResult = await Promise.resolve(validateField(date, props.customRules, props.customWarningRules))
+			const validationResult = await Promise.resolve(validateField(
+				date,
+				props.customRules,
+				props.customWarningRules,
+				props.customSuccessRules,
+			))
 			if (validationResult.hasError) {
 				errors.value = validationResult.state.errors
 				return
@@ -541,7 +615,7 @@
 	}
 
 	const consumeIgnoredCalendarModelSync = (): boolean => {
-		if (!(ignoreNextCalendarModelSync.value && isDatePickerVisible.value)) {
+		if (!ignoreNextCalendarModelSync.value) {
 			return false
 		}
 
@@ -558,10 +632,27 @@
 		}
 	}
 
+	const syncSelectionState = (baseDate: Date | null): void => {
+		syncSelectionDisplay()
+		syncVisibleCalendarState(baseDate)
+	}
+
 	const shouldCloseAfterSelection = (value: DateObjectValue): boolean => (
 		isDatePickerVisible.value
 		&& (!props.displayRange || hasCompletedRangeSelection(value))
 	)
+
+	const shouldEmitSelectionModel = (isCompletedRangeSelection: boolean): boolean => (
+		!props.displayRange || isCompletedRangeSelection
+	)
+
+	const applyCalendarSelectionCommit = (selectionCommit: { displayValue: string, modelValue: DateModelValue }): void => {
+		displayFormattedDate.value = textInputValue.value = selectionCommit.displayValue
+		updateModel(selectionCommit.modelValue)
+		emit('date-selected', selectionCommit.modelValue)
+		closeAndRestoreFocus()
+		validateDates()
+	}
 
 	const handleSelectedDatesChange = (value: Exclude<DateObjectValue, null>): void => {
 		const baseDate = getSelectedBaseDate(value)
@@ -573,10 +664,9 @@
 			return
 		}
 
-		syncSelectionDisplay()
-		syncVisibleCalendarState(baseDate)
+		syncSelectionState(baseDate)
 
-		if (!props.displayRange || isCompletedRangeSelection) {
+		if (shouldEmitSelectionModel(isCompletedRangeSelection)) {
 			updateModel(formattedDate.value)
 		}
 
@@ -637,11 +727,7 @@
 				return
 			}
 
-			displayFormattedDate.value = textInputValue.value = selectionCommit.displayValue
-			updateModel(selectionCommit.modelValue)
-			emit('date-selected', selectionCommit.modelValue)
-			closeAndRestoreFocus()
-			validateDates()
+			applyCalendarSelectionCommit(selectionCommit)
 		})
 	}
 
@@ -774,6 +860,34 @@
 		{ flush: 'post' },
 	)
 
+	const handleDatePickerClosed = () => {
+		dialogInitialFocusToken += 1
+		clearDialogInitialFocusTimeouts()
+		ignoreNextInputBlur.value = false
+		shouldFocusDialogOnOpen.value = false
+		ignoreNextCalendarModelSync.value = false
+		keyboardNavigatedDate.value = null
+	}
+
+	const handleDatePickerOpened = () => {
+		resetViewMode()
+		const baseDate = getSelectedBaseDate()
+		keyboardNavigatedDate.value = baseDate
+
+		if (baseDate) {
+			syncDisplayedMonthYearFromDate(baseDate)
+		}
+
+		nextTick(() => {
+			refreshVisibleCalendarUi({ focusDay: shouldFocusDialogOnOpen.value })
+
+			if (shouldFocusDialogOnOpen.value) {
+				shouldFocusDialogOnOpen.value = false
+				scheduleDialogInitialDayFocus()
+			}
+		})
+	}
+
 	watch(isDatePickerVisible, (visible) => {
 		if (visible) return
 
@@ -856,16 +970,19 @@
 
 		if (!props.noCalendar && (event.key === 'Enter' || event.key === 'ArrowDown') && !isInteractionDisabled.value) {
 			event.preventDefault()
-			ignoreNextInputBlur.value = true
-			scheduleDialogInitialFocus()
-			ignoreNextCalendarModelSync.value = true
-			openDatePicker()
+			requestDatePickerOpen({
+				ignoreBlur: true,
+				focusDialog: true,
+				ignoreCalendarModelSync: true,
+			})
 			return
 		}
 
 		if (!props.noCalendar && handleKeyboardNavigation(event)) {
-			ignoreNextInputBlur.value = true
-			scheduleDialogInitialFocus()
+			prepareCalendarInteraction({
+				ignoreBlur: true,
+				focusDialog: true,
+			})
 			return
 		}
 
@@ -913,6 +1030,15 @@
 		}
 
 		ignoreNextInputBlur.value = false
+
+		const input = getCalendarInputElement()
+		if (input) {
+			withInternalUpdate(() => {
+				displayFormattedDate.value = input.value
+				textInputValue.value = input.value
+			})
+		}
+
 		await handleInputBlur()
 	}
 
@@ -1007,6 +1133,33 @@
 		})
 	}
 
+	const syncOptionProxySelection = (kind: 'month' | 'year', selectedLabel: string | null | undefined) => {
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		const normalizedLabel = selectedLabel?.trim()
+		if (!rootEl || !normalizedLabel) return
+
+		const selector = kind === 'month'
+			? '.v-date-picker-months [data-sy-date-picker-option="month"]'
+			: '.v-date-picker-years [data-sy-date-picker-option="year"]'
+		const options = Array.from(rootEl.querySelectorAll<HTMLElement>(selector))
+
+		options.forEach((option) => {
+			const optionLabel = option.getAttribute('aria-label')?.trim()
+				?? option.textContent?.trim()
+				?? ''
+			const isSelected = optionLabel === normalizedLabel
+			option.setAttribute('aria-pressed', String(isSelected))
+			option.setAttribute('aria-selected', String(isSelected))
+			option.tabIndex = isSelected ? 0 : -1
+
+			const button = option.querySelector<HTMLElement>('button')
+			if (!button) return
+
+			button.setAttribute('aria-pressed', String(isSelected))
+			button.tabIndex = -1
+		})
+	}
+
 	const waitForTransitionEnd = (container: HTMLElement, callback: () => void) => {
 		if (container.classList.contains('v-enter-active') || container.classList.contains('fade-transition-enter-active')) {
 			let fired = false
@@ -1070,20 +1223,27 @@
 				if (!rootEl) return
 				const yearsContainer = rootEl.querySelector<HTMLElement>('.v-date-picker-years')
 				if (!yearsContainer) return
+				const baseDate = getSelectedBaseDate() ?? new Date()
+				syncDisplayedMonthYearFromDate(baseDate)
 
 				const focusActiveYear = () => {
+					const selectedYear = String(getSelectedBaseDate()?.getFullYear() ?? Number(currentYear.value ?? new Date().getFullYear()))
+					syncOptionProxySelection('year', selectedYear)
+					const yearButtons = Array.from(rootEl.querySelectorAll<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn'))
+					const selectedYearButton = yearButtons.find(button =>
+						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === selectedYear,
+					)
+					if (selectedYearButton) {
+						selectedYearButton.focus({ preventScroll: true })
+						return
+					}
 					const active = rootEl.querySelector<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"][aria-pressed="true"]')
 						?? rootEl.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
 					if (active) {
 						active.focus({ preventScroll: true })
 						return
 					}
-					const currentYearBtn = rootEl.querySelector<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-date-picker-years__year--current .v-btn')
-					if (currentYearBtn) {
-						currentYearBtn.focus({ preventScroll: true })
-						return
-					}
-					const firstBtn = rootEl.querySelector<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn')
+					const firstBtn = yearButtons[0]
 					firstBtn?.focus({ preventScroll: true })
 				}
 
@@ -1156,12 +1316,14 @@
 			// Adapter les règles prêtes pour maintenir la compatibilité avec les tests existants
 			const safeCustomRules = adaptCustomRules(readyRules, props.format)
 			const safeWarningRules = adaptCustomRules(currentCustomWarningRules, props.format)
+			const safeSuccessRules = adaptCustomRules(props.customSuccessRules ?? [], props.format)
 
 			// Appeler validateField pour évaluer les règles
 			const result = validateField(
 				date,
 				safeCustomRules as ValidationRule[],
 				safeWarningRules as ValidationRule[],
+				safeSuccessRules as ValidationRule[],
 			)
 
 			if (result instanceof Promise) {
@@ -1176,7 +1338,7 @@
 
 	const emitBlurEvent = () => emit('blur')
 
-	const { handleInputBlur } = useInputBlurHandler({
+	const { handleInputBlur } = useDatePickerInputBlurHandler({
 		format: computed(() => props.format),
 		dateFormatReturn: props.dateFormatReturn,
 		required: computed(() => props.required),
@@ -1240,30 +1402,11 @@
 		isDatePickerVisible,
 		(visible) => {
 			if (!visible) {
-				dialogInitialFocusToken += 1
-				clearDialogInitialFocusTimeouts()
-				ignoreNextInputBlur.value = false
-				shouldFocusDialogOnOpen.value = false
-				ignoreNextCalendarModelSync.value = false
-				keyboardNavigatedDate.value = null
+				handleDatePickerClosed()
 			}
 
 			if (visible) {
-				// Réinitialiser le view mode à l'ouverture pour éviter les problèmes de navigation
-				resetViewMode()
-				nextTick(() => {
-					refreshVisibleCalendarUi()
-					setTimeout(() => {
-						if (isDatePickerVisible.value) {
-							ignoreNextCalendarModelSync.value = false
-						}
-					}, 0)
-
-					if (shouldFocusDialogOnOpen.value) {
-						shouldFocusDialogOnOpen.value = false
-						scheduleDialogInitialDayFocus()
-					}
-				})
+				handleDatePickerOpened()
 			}
 		},
 	)
@@ -1325,17 +1468,21 @@
 	/**
 	 * Public API
 	 */
-	const validateOnSubmit = async (): Promise<boolean> => {
+	async function validateOnSubmit(): Promise<boolean> {
 		if (props.noCalendar) {
 			return await Promise.resolve(dateTextInputRef.value?.validateOnSubmit() || false)
 		}
 		const textInputValid = await Promise.resolve(dateCalendarTextInputRef.value?.validateOnSubmit() || false)
 		await Promise.resolve(validateDates(true))
-		return textInputValid && errors.value.length === 0
+		return textInputValid && errorMessages.value.length === 0
+	}
+
+	function clearValidationForForm() {
+		clearValidation()
 	}
 
 	// Reset hook utilisé par SyForm.reset() via useValidatable
-	const reset = () => {
+	function reset() {
 		// 1) Nettoyer l'état de validation et d'interaction
 		clearValidation()
 		isDatePickerVisible.value = false
@@ -1360,9 +1507,6 @@
 		// 3) Forcer la recréation du champ pour réinitialiser l'état interne de Vuetify
 		fieldKey.value++
 	}
-
-	// Intégration avec le système de validation du formulaire
-	useDatePickerFormRegistration({ validateOnSubmit, clearValidation, reset })
 
 	defineExpose({
 		validateOnSubmit,
@@ -1406,7 +1550,7 @@
 				:key="fieldKey"
 				v-model="textInputValue"
 				:class="[messageClasses, 'label-hidden-on-focus']"
-				v-bind="dateTextInputProps"
+				v-bind="noCalendarTextInputProps"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
 			/>
@@ -1439,7 +1583,7 @@
 							:key="fieldKey"
 							:model-value="textInputValue"
 							:class="[messageClasses, 'label-hidden-on-focus']"
-							v-bind="dateTextInputMenuProps"
+							v-bind="menuTextInputProps"
 							@mousedown="openDatePickerFromInputClick"
 							@update:model-value="handleDateTextInputUpdate"
 							@focus="openDatePickerOnFocus"
@@ -1464,7 +1608,7 @@
 					<VDatePicker
 						:id="datePickerContentId"
 						ref="datePickerRef"
-						v-model="selectedDates"
+						v-model="calendarSelectedDates"
 						control-variant="modal"
 						color="primary"
 						:class="props.displayWeekendDays ? 'weekend' : ''"

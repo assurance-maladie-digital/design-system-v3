@@ -7,6 +7,16 @@ import { useKeyboardEvents } from './useKeyboardEvents'
 // Initialiser les plugins dayjs
 dayjs.extend(customParseFormat)
 
+type RangeDates = [Date | null, Date | null]
+
+type RangeInputResult = {
+	formattedValue: string
+	dates: RangeDates
+	isComplete: boolean
+	justCompletedFirstDate?: boolean
+	cursorPosition?: number
+}
+
 /**
  * Composable pour gérer la saisie manuelle des plages de dates
  * Permet de saisir et formater correctement une plage de dates au format "date1 - date2"
@@ -26,6 +36,106 @@ export function useDateRangeInput(
 	})
 
 	const toSafeString = (value: string | unknown): string => typeof value === 'string' ? value : ''
+	const parseSingleDate = (value: string): Date | null => parseDate(value, format)
+	const hasRangeSeparator = (value: string): boolean => hasRangeSeparatorUtil(value, rangeSeparator)
+	const extractRangeParts = (value: string): [string, string] => extractRangePartsUtil(value, rangeSeparator)
+
+	const buildRangeInputResult = ({
+		formattedValue,
+		dates,
+		isComplete,
+		justCompletedFirstDate,
+		cursorPosition,
+	}: RangeInputResult): RangeInputResult => ({
+		formattedValue,
+		dates,
+		isComplete,
+		justCompletedFirstDate,
+		cursorPosition,
+	})
+
+	const parseDatesFromRangeValue = (value: string): { startStr: string, endStr: string, dates: RangeDates } => {
+		const [startStr, endStr] = extractRangeParts(value)
+		return {
+			startStr,
+			endStr,
+			dates: [parseSingleDate(startStr), parseSingleDate(endStr)],
+		}
+	}
+
+	const formatSingleModeResult = (value: string, cursorPosition?: number): RangeInputResult => {
+		const date = parseSingleDate(value)
+
+		return buildRangeInputResult({
+			formattedValue: date ? formatDate(date, format) : value,
+			dates: [date, null],
+			isComplete: !!date,
+			cursorPosition,
+		})
+	}
+
+	const computeRangeCursorPosition = (
+		previousValue: string,
+		cursorPosition: number | undefined,
+		startStr: string,
+		formattedStart: string,
+		endStr: string,
+	): number | undefined => {
+		if (cursorPosition === undefined) {
+			return cursorPosition
+		}
+
+		const separatorPosition = previousValue.indexOf(rangeSeparator)
+		if (separatorPosition === -1 || cursorPosition <= separatorPosition) {
+			if (startStr === formattedStart) {
+				return cursorPosition
+			}
+
+			const relativePosition = Math.min(cursorPosition, startStr.length)
+			return Math.min(relativePosition, formattedStart.length)
+		}
+
+		const positionAfterSeparator = cursorPosition - (separatorPosition + rangeSeparator.length)
+		return formattedStart.length + rangeSeparator.length + Math.min(positionAfterSeparator, endStr.length)
+	}
+
+	const formatExistingRangeResult = (
+		previousValue: string,
+		nextValue: string,
+		cursorPosition?: number,
+	): RangeInputResult => {
+		const { startStr, endStr, dates: [startDate, endDate] } = parseDatesFromRangeValue(nextValue)
+		const formattedStart = startDate ? formatDate(startDate, format) : startStr
+
+		return buildRangeInputResult({
+			formattedValue: `${formattedStart}${rangeSeparator}${endStr}`,
+			dates: [startDate, endDate],
+			isComplete: !!startDate && !!endDate,
+			cursorPosition: computeRangeCursorPosition(previousValue, cursorPosition, startStr, formattedStart, endStr),
+		})
+	}
+
+	const formatRangeStartResult = (value: string, cursorPosition?: number): RangeInputResult => {
+		const date = parseSingleDate(value)
+
+		if (date && value.length >= format.length) {
+			const formattedDate = formatDate(date, format)
+			return buildRangeInputResult({
+				formattedValue: `${formattedDate}${rangeSeparator}`,
+				dates: [date, null],
+				isComplete: false,
+				justCompletedFirstDate: true,
+				cursorPosition: formattedDate.length + rangeSeparator.length,
+			})
+		}
+
+		return buildRangeInputResult({
+			formattedValue: value,
+			dates: [date, null],
+			isComplete: false,
+			cursorPosition,
+		})
+	}
 
 	/**
 	 * Formate une plage de dates pour l'affichage
@@ -44,16 +154,12 @@ export function useDateRangeInput(
 		if (!value) return [null, null]
 
 		// Si la valeur contient un séparateur de plage
-		if (hasRangeSeparatorUtil(value, rangeSeparator)) {
-			const [startStr, endStr] = extractRangePartsUtil(value, rangeSeparator)
-			const startDate = parseDate(startStr, format)
-			const endDate = parseDate(endStr, format)
-			return [startDate, endDate]
+		if (hasRangeSeparator(value)) {
+			return parseDatesFromRangeValue(value).dates
 		}
 
 		// Si la valeur ne contient pas de séparateur, c'est une seule date
-		const singleDate = parseDate(value, format)
-		return [singleDate, null]
+		return [parseSingleDate(value), null]
 	}
 
 	/**
@@ -63,89 +169,25 @@ export function useDateRangeInput(
 	 * @param cursorPosition Position actuelle du curseur (optionnel)
 	 * @returns Objet contenant les informations sur la plage de dates
 	 */
-	const handleRangeInput = (inputValue: string | unknown, newValue: string | unknown, cursorPosition?: number): {
-		formattedValue: string
-		dates: [Date | null, Date | null]
-		isComplete: boolean
-		justCompletedFirstDate?: boolean
-		cursorPosition?: number
-	} => {
+	const handleRangeInput = (
+		inputValue: string | unknown,
+		newValue: string | unknown,
+		cursorPosition?: number,
+	): RangeInputResult => {
 		const safeInputValue = toSafeString(inputValue)
 		const safeNewValue = toSafeString(newValue)
 
 		// Si le mode plage n'est pas activé, traiter comme une date unique
 		if (!isRangeMode) {
-			const date = parseDate(safeNewValue, format)
-			return {
-				formattedValue: date ? formatDate(date, format) : safeNewValue,
-				dates: [date, null],
-				isComplete: !!date,
-				cursorPosition: cursorPosition,
-			}
+			return formatSingleModeResult(safeNewValue, cursorPosition)
 		}
 
 		// Si la valeur contient déjà un séparateur de plage
-		if (hasRangeSeparatorUtil(safeNewValue, rangeSeparator)) {
-			const [startStr, endStr] = extractRangePartsUtil(safeNewValue, rangeSeparator)
-			const startDate = parseDate(startStr, format)
-			const endDate = parseDate(endStr, format)
-
-			// Formater correctement la valeur
-			const formattedStart = startDate ? formatDate(startDate, format) : startStr
-			const formattedValue = `${formattedStart}${rangeSeparator}${endStr}`
-
-			// Calculer la nouvelle position du curseur en fonction de la position actuelle
-			let newCursorPosition = cursorPosition
-
-			// Si la position du curseur est dans la première partie de la date
-			if (cursorPosition !== undefined) {
-				const separatorPos = safeInputValue.indexOf(rangeSeparator)
-				if (separatorPos !== -1 && cursorPosition <= separatorPos) {
-					// Ajuster la position si la première partie a été formatée
-					if (startStr !== formattedStart) {
-						// Conserver la position relative dans la première partie
-						const relativePos = Math.min(cursorPosition, startStr.length)
-						newCursorPosition = Math.min(relativePos, formattedStart.length)
-					}
-				}
-				else if (separatorPos !== -1) {
-					// Le curseur est dans la seconde partie
-					// Conserver la position relative après le séparateur
-					const posAfterSeparator = cursorPosition - (separatorPos + rangeSeparator.length)
-					newCursorPosition = formattedStart.length + rangeSeparator.length + Math.min(posAfterSeparator, endStr.length)
-				}
-			}
-
-			return {
-				formattedValue,
-				dates: [startDate, endDate],
-				isComplete: !!startDate && !!endDate,
-				cursorPosition: newCursorPosition,
-			}
+		if (hasRangeSeparator(safeNewValue)) {
+			return formatExistingRangeResult(safeInputValue, safeNewValue, cursorPosition)
 		}
 
-		// Si nous éditons la première date
-		const date = parseDate(safeNewValue, format)
-
-		// Si la première date est complète, passer à la saisie de la deuxième date
-		if (date && safeNewValue.length >= format.length) {
-			const formattedDate = formatDate(date, format)
-
-			return {
-				formattedValue: `${formattedDate}${rangeSeparator}`,
-				dates: [date, null],
-				isComplete: false,
-				justCompletedFirstDate: true,
-				cursorPosition: formattedDate.length + rangeSeparator.length,
-			}
-		}
-
-		return {
-			formattedValue: safeNewValue,
-			dates: [date, null],
-			isComplete: false,
-			cursorPosition: cursorPosition,
-		}
+		return formatRangeStartResult(safeNewValue, cursorPosition)
 	}
 
 	/**

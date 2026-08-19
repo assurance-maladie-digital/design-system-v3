@@ -42,11 +42,16 @@ export interface DatePickerCommonProps {
 	/** @deprecated Utilisez isBirthDate à la place */
 	birthDate?: boolean
 	customRules?: DatePickerRule[]
+	customSuccessRules?: DatePickerRule[]
 	customWarningRules?: DatePickerRule[]
 	dateFormatReturn?: string
 	density?: 'default' | 'comfortable' | 'compact'
 	disableErrorHandling?: boolean
 	disabled?: boolean
+	errorMessages?: string[] | null
+	hasError?: boolean
+	hasSuccess?: boolean
+	hasWarning?: boolean
 	displayAppendIcon?: boolean
 	displayAsterisk?: boolean
 	displayHolidayDays?: boolean
@@ -63,6 +68,7 @@ export interface DatePickerCommonProps {
 	isOutlined?: boolean
 	isValidateOnBlur?: boolean
 	label?: string
+	maxErrors?: number
 	modelValue?: import('@/composables/date/useDateInitializationDayjs').DateInput
 	noCalendar?: boolean
 	noIcon?: boolean
@@ -75,9 +81,11 @@ export interface DatePickerCommonProps {
 	readonly?: boolean
 	required?: boolean
 	showSuccessMessages?: boolean
+	successMessages?: string[] | null
 	showWeekNumber?: boolean
 	textFieldActivator?: boolean
 	title?: string | false
+	warningMessages?: string[] | null
 	width?: string
 }
 
@@ -104,11 +112,16 @@ export const DatePickerCommonDefaults = {
 	bgColor: 'white',
 	birthDate: false,
 	customRules: () => [],
+	customSuccessRules: () => [],
 	customWarningRules: () => [],
 	dateFormatReturn: '',
 	density: 'default' as const,
 	disableErrorHandling: false,
 	disabled: false,
+	errorMessages: null,
+	hasError: false,
+	hasSuccess: false,
+	hasWarning: false,
 	displayAppendIcon: false,
 	displayAsterisk: false,
 	displayHolidayDays: true,
@@ -123,6 +136,7 @@ export const DatePickerCommonDefaults = {
 	hint: undefined,
 	isBirthDate: false,
 	label: undefined,
+	maxErrors: 1,
 	isOutlined: true,
 	isValidateOnBlur: true,
 	modelValue: undefined,
@@ -134,8 +148,10 @@ export const DatePickerCommonDefaults = {
 	readonly: false,
 	required: false,
 	showSuccessMessages: false,
+	successMessages: null,
 	showWeekNumber: false,
 	textFieldActivator: false,
 	title: false,
+	warningMessages: null,
 	width: '100%',
 } as const

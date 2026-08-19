@@ -11,16 +11,16 @@
 	import { VDatePicker } from 'vuetify/components'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
-	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerFormRegistration, useDatePickerState, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useSelectedDayAria, useTodayButton } from '../composables'
+	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useSelectedDayAria, useTodayButton } from '../composables'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { locales } from '../locales'
 	import type { ViewMode } from '../composables/useDatePickerViewMode'
 	import type { CalendarModeProps, DateObjectValue } from '../types'
 	import { DatePickerCommonDefaults } from '../types'
 	import { formatDateRangeDisplay, getDisplayedMonthYearState, resolveDatePickerStateFromModelValue } from '../utils/dateFormattingUtils'
-	import { useComplexDatePickerProps } from './props/complexDatePickerProps'
-	import { useDateTextInputProps } from './props/dateTextInputProps'
-	import { useSyTextFieldProps } from './props/syTextFieldProps'
+	import { buildCalendarModeComplexDatePickerProps } from './props/buildCalendarModeComplexDatePickerProps'
+	import { buildCalendarModeDateTextInputProps } from './props/buildCalendarModeDateTextInputProps'
+	import { buildCalendarModeActivatorTextFieldProps } from './props/buildCalendarModeActivatorTextFieldProps'
 
 	// Initialiser les plugins dayjs
 	dayjs.extend(customParseFormat)
@@ -67,14 +67,29 @@
 			: label
 	})
 
-	// Props regroupées pour DateTextInput
-	const dateTextInputProps = computed(() => useDateTextInputProps(props, labelWithAsterisk, errorMessages))
+	// Props du champ texte utilisé dans le flux noCalendar
+	const noCalendarTextInputProps = computed(() => buildCalendarModeDateTextInputProps(
+		props,
+		labelWithAsterisk,
+		errorMessages,
+		warningMessages,
+		successMessages,
+	))
 
-	// Props regroupées pour ComplexDatePicker
-	const complexDatePickerProps = computed(() => useComplexDatePickerProps(props))
+	// Props du ComplexDatePicker utilisé dans le flux combinedMode
+	const combinedModeDatePickerProps = computed(() => buildCalendarModeComplexDatePickerProps(props))
 
-	// Props regroupées pour SyTextField (mode VMenu)
-	const syTextFieldProps = computed(() => useSyTextFieldProps(props, labelWithAsterisk, errorMessages, warningMessages, successMessages, isOnSuccess))
+	// Props du champ activateur utilisé quand le calendrier s'ouvre dans le menu
+	const menuActivatorTextFieldProps = computed(() => buildCalendarModeActivatorTextFieldProps(
+		props,
+		labelWithAsterisk,
+		errorMessages,
+		warningMessages,
+		successMessages,
+		messages.hasError,
+		messages.hasWarning,
+		isOnSuccess,
+	))
 
 	const selectedDates = ref<Date | (Date | null)[] | null>(
 		initializeSelectedDates(props.modelValue as DateInput | null, props.format, props.dateFormatReturn),
@@ -322,6 +337,9 @@
 		clearValidation,
 		validateDates,
 		validateCalendarModeDates,
+		errorMessages,
+		warningMessages,
+		successMessages,
 	} = useDatePickerValidation({
 		showSuccessMessages: computed(() => props.showSuccessMessages),
 		disableErrorHandling: computed(() => props.disableErrorHandling),
@@ -329,7 +347,15 @@
 		required: computed(() => props.required),
 		displayRange: computed(() => props.displayRange),
 		customRules: computed(() => props.customRules),
+		customSuccessRules: computed(() => props.customSuccessRules ?? []),
 		customWarningRules: computed(() => props.customWarningRules),
+		errorMessages: computed(() => props.errorMessages ?? null),
+		hasErrorProp: computed(() => props.hasError),
+		hasSuccessProp: computed(() => props.hasSuccess),
+		hasWarningProp: computed(() => props.hasWarning),
+		warningMessages: computed(() => props.warningMessages ?? null),
+		successMessages: computed(() => props.successMessages ?? null),
+		maxErrors: computed(() => props.maxErrors),
 		selectedDates: selectedDates as Ref<DateObjectValue>,
 		isUpdatingFromInternal,
 		currentRangeIsValid,
@@ -341,12 +367,11 @@
 		isValidateOnBlur: computed(() => props.isValidateOnBlur),
 		onblur,
 		revalidateOnCustomRulesChange: false,
+		formRegistration: {
+			validateOnSubmit,
+			clearValidation: clearValidationForForm,
+		},
 	})
-	const errors = messages.errors
-
-	const errorMessages = messages.errors
-	const warningMessages = messages.warnings
-	const successMessages = messages.successes
 	const isOnSuccess = messages.hasSuccess
 	const isHandlingProgrammaticClose = ref(false)
 
@@ -444,9 +469,9 @@
 
 	const messageClasses = computed(() => ({
 		'dp-width': true,
-		'v-messages__message--success': successMessages.value.length > 0,
-		'v-messages__message--error': errorMessages.value.length > 0,
-		'v-messages__message--warning': warningMessages.value.length > 0 && errorMessages.value.length < 1,
+		'v-messages__message--success': messages.hasSuccess.value && !messages.hasError.value && !messages.hasWarning.value,
+		'v-messages__message--error': messages.hasError.value,
+		'v-messages__message--warning': messages.hasWarning.value && !messages.hasError.value,
 	}))
 
 	// Utilisation du composable pour gérer la sélection de dates
@@ -665,7 +690,7 @@
 		})
 	})
 
-	const validateOnSubmit = async () => {
+	async function validateOnSubmit() {
 		// Si le mode noCalendar est activé, on délègue la validation au DateTextInput
 		if (props.noCalendar) {
 			return await dateTextInputRef.value?.validateOnSubmit()
@@ -679,11 +704,12 @@
 		isInitialValidation.value = false
 		await validateCalendarModeDates(true)
 		// Retourner directement un booléen pour maintenir la compatibilité avec les tests existants
-		return errors.value.length === 0
+		return errorMessages.value.length === 0
 	}
 
-	// Intégration avec le système de validation du formulaire
-	useDatePickerFormRegistration({ validateOnSubmit, clearValidation })
+	function clearValidationForForm() {
+		clearValidation()
+	}
 
 	const openDatePicker = async () => {
 		if (isInteractionDisabled.value) return
@@ -960,7 +986,7 @@
 				ref="dateTextInputRef"
 				v-model="textInputValue"
 				:class="[messageClasses, 'label-hidden-on-focus']"
-				v-bind="dateTextInputProps"
+				v-bind="noCalendarTextInputProps"
 				@update:model-value="handleDateTextInputUpdate"
 				@date-selected="handleDateTextInputSelection"
 				@blur="handleInputBlur"
@@ -970,7 +996,7 @@
 		<template v-else-if="props.useCombinedMode">
 			<ComplexDatePicker
 				ref="complexDatePickerRef"
-				v-bind="complexDatePickerProps"
+				v-bind="combinedModeDatePickerProps"
 				@update:model-value="emit('update:modelValue', $event)"
 				@focus="emit('focus')"
 				@blur="emit('blur')"
@@ -1002,7 +1028,7 @@
 							ref="dateCalendarTextInputRef"
 							v-model="displayFormattedDate"
 							:class="[messageClasses, 'label-hidden-on-focus']"
-							v-bind="syTextFieldProps"
+							v-bind="menuActivatorTextFieldProps"
 							@click="openDatePickerOnClick"
 							@focus="openDatePickerOnFocus"
 							@blur="handleInputBlur"

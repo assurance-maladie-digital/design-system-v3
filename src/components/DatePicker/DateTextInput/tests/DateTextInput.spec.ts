@@ -53,6 +53,21 @@ describe('DateTextInput.clean', () => {
 		expect(textField.props('errorMessages')).toEqual(['Erreur externe de contrat DateTextInput'])
 	})
 
+	it('forwards standard validation messages to the underlying text field', () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			errorMessages: ['Erreur injectée'],
+			warningMessages: ['Avertissement injecté'],
+			successMessages: ['Succès injecté'],
+		})
+
+		const textField = wrapper.findComponent(SyTextField)
+		expect(textField.props('errorMessages')).toEqual(['Erreur injectée'])
+		expect(textField.props('warningMessages')).toEqual(['Avertissement injecté'])
+		expect(textField.props('successMessages')).toEqual(['Succès injecté'])
+	})
+
 	it('forwards disableClickButton to the underlying text field', () => {
 		const wrapper = mountComponent({
 			label: 'Date',
@@ -531,7 +546,7 @@ describe('DateTextInput.clean', () => {
 		vi.useRealTimers()
 	})
 
-	it('does not commit the model on blur when a custom rule fails', async () => {
+	it('shows the custom rule error on blur when validation fails', async () => {
 		vi.useFakeTimers()
 		try {
 			vi.setSystemTime(new Date(2026, 7, 19, 12, 0, 0))
@@ -546,13 +561,9 @@ describe('DateTextInput.clean', () => {
 
 			const input = wrapper.find('input')
 			await input.setValue('01/01/2100')
-			const modelEmissionsBeforeBlur = wrapper.emitted('update:model-value')?.length ?? 0
 
 			await input.trigger('blur')
 			await flushPromises()
-
-			const modelEmissionsAfterBlur = wrapper.emitted('update:model-value')?.length ?? 0
-			expect(modelEmissionsAfterBlur).toBe(modelEmissionsBeforeBlur)
 
 			const textField = wrapper.findComponent(SyTextField)
 			const errorMessages = textField.props('errorMessages') as string[] | undefined

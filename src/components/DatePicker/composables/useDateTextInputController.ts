@@ -10,12 +10,18 @@ export interface UseDateTextFieldManualValidationOptions {
 	required: MaybeRef<boolean>
 	disableErrorHandling: MaybeRef<boolean>
 	customRules: MaybeRef<DatePickerRule[]>
+	customSuccessRules: MaybeRef<DatePickerRule[]>
 	customWarningRules: MaybeRef<DatePickerRule[]>
 	hasInteracted: Ref<boolean>
 	errors: Ref<string[]>
 	clearValidation: () => void
 	parseDate: (dateStr: string, format: string) => Date | null
-	validateField: (value: unknown, rules?: ValidationRule[], warningRules?: ValidationRule[]) => Promise<ValidationResult> | ValidationResult
+	validateField: (
+		value: unknown,
+		rules?: ValidationRule[],
+		warningRules?: ValidationRule[],
+		successRules?: ValidationRule[],
+	) => Promise<ValidationResult> | ValidationResult
 }
 
 export interface UseDateTextFieldSubmitOptions {
@@ -37,7 +43,7 @@ export interface UseDateTextFieldResetOptions {
 	emitModel: (value: DateModelValue) => void
 }
 
-export interface UseDateTextFieldOptions {
+export interface UseDateTextInputControllerOptions {
 	autoClamp: MaybeRef<boolean>
 	isRange: Ref<boolean>
 	displayFormat: Ref<string>
@@ -48,16 +54,16 @@ export interface UseDateTextFieldOptions {
 }
 
 /**
- * Composable de haut niveau pour la saisie de date dans un champ texte.
- * Pour l'instant il encapsule uniquement la logique d'autoClamp
- * afin de pouvoir être partagé entre les différents scénarios (single / range).
+ * Contrôleur interne du flux DateTextInput.
+ * Centralise l'auto-clamp, la validation manuelle, la soumission et le reset.
  */
-export const useDateTextField = (options: UseDateTextFieldOptions) => {
+export const useDateTextInputController = (options: UseDateTextInputControllerOptions) => {
 	const { autoClamp, isRange, displayFormat, autoClampDate, manualValidation, submit, reset: resetOptions } = options
 	const {
 		required,
 		disableErrorHandling,
 		customRules,
+		customSuccessRules,
 		customWarningRules,
 		hasInteracted,
 		errors,
@@ -103,7 +109,8 @@ export const useDateTextField = (options: UseDateTextFieldOptions) => {
 
 		const safeCustomRules = adaptCustomRules(readyRules, displayFormat.value) as ValidationRule[]
 		const safeWarningRules = adaptCustomRules(toValue(customWarningRules), displayFormat.value) as ValidationRule[]
-		const result = validateField(date, safeCustomRules, safeWarningRules)
+		const safeSuccessRules = adaptCustomRules(toValue(customSuccessRules), displayFormat.value) as ValidationRule[]
+		const result = validateField(date, safeCustomRules, safeWarningRules, safeSuccessRules)
 
 		if (result instanceof Promise) {
 			return result.then(resolvedResult => !resolvedResult.hasError)

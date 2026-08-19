@@ -432,12 +432,6 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 		// Filtrer ceux qui ne sont pas visibles
 		const visibleCandidates = candidates.filter((cell) => {
-			// Autoriser les éléments en transition (opacity peut être 0 au tout début)
-			const windowItem = cell.closest('.v-window-item')
-			const isEntering = windowItem && Array.from(windowItem.classList).some(c => c.includes('enter-active') || c.includes('enter-to'))
-
-			if (!isEntering && cell.offsetParent === null) return false
-
 			const style = window.getComputedStyle(cell)
 			return style.display !== 'none' && style.visibility !== 'hidden'
 		})
