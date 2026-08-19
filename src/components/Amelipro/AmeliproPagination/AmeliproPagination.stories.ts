@@ -29,7 +29,6 @@ export default meta
 type Story = StoryObj<typeof AmeliproPagination>
 
 export const Default: Story = {
-	name: 'Default',
 	args: {
 		items: [
 			{ key: 1 },

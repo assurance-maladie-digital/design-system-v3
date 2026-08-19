@@ -602,7 +602,7 @@
 												}"
 												@click="handleSubMenuItemClick(subItem)"
 											>
-												<v-list-item-title
+												<VListItemTitle
 													class="text-primary"
 													role="presentation"
 												>
@@ -615,7 +615,7 @@
 													<span>
 														{{ subItem.text }}
 													</span>
-												</v-list-item-title>
+												</VListItemTitle>
 											</VListItem>
 										</VList>
 									</VMenu>
@@ -694,7 +694,7 @@
 								tabindex="0"
 								@click="mobileMenuOpen = false"
 							>
-								<v-list-item-title class="text-primary">
+								<VListItemTitle class="text-primary">
 									<SyIcon
 										:icon="mdiChevronRight"
 										size="small"
@@ -702,7 +702,7 @@
 										class="mr-1"
 									/>
 									{{ item.title }}
-								</v-list-item-title>
+								</VListItemTitle>
 							</VListItem>
 						</VList>
 					</VMenu>

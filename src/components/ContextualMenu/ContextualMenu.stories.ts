@@ -349,7 +349,7 @@ section p {
 	},
 }
 
-export const levels: Story = {
+export const Levels: Story = {
 	args: {
 		'ariaLabel': 'Menu contextuel',
 		'items': [
