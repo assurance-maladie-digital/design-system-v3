@@ -353,6 +353,8 @@
 		customRules: computed(() => props.customRules),
 		customSuccessRules: computed(() => props.customSuccessRules ?? []),
 		customWarningRules: computed(() => props.customWarningRules),
+		useVuetifyValidation: computed(() => props.useVuetifyValidation ?? false),
+		rules: computed(() => props.rules),
 		errorMessages: computed(() => props.errorMessages ?? null),
 		hasErrorProp: computed(() => props.hasError),
 		hasSuccessProp: computed(() => props.hasSuccess),

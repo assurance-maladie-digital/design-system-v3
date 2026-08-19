@@ -2,6 +2,7 @@ import { useValidation, type ValidationRule } from '@/composables/validation/use
 import { useValidatable } from '@/composables/validation/useValidatable'
 import { reactive, ref, watch } from 'vue'
 import type { Ref } from 'vue'
+import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 
 export interface UseCustomValidationOptions {
 	registerWithForm?: boolean
@@ -11,6 +12,8 @@ export interface UseCustomValidationOptions {
 		clearValidation?: () => void
 		reset?: () => void
 	}
+	useVuetifyValidation?: Ref<boolean>
+	rules?: Ref<VuetifyValidationRule[] | undefined>
 }
 
 /**
@@ -63,6 +66,52 @@ export function useCustomValidation(
 		return result
 	}
 
+	const applyVuetifyValidationResult = (vuetifyErrors: string[]) => {
+		errors.value = vuetifyErrors
+		warnings.value = []
+		successes.value = []
+		hasSuccess.value = false
+
+		return {
+			hasError: vuetifyErrors.length > 0,
+			hasWarning: false,
+			hasSuccess: false,
+			state: {
+				errors: vuetifyErrors,
+				warnings: [] as string[],
+				successes: [] as string[],
+			},
+		}
+	}
+
+	const normalizeVuetifyRuleResult = (result: unknown): string | null => {
+		if (result === true) {
+			return null
+		}
+
+		if (typeof result === 'string') {
+			return result
+		}
+
+		return ''
+	}
+
+	const validateVuetifyValue = async (
+		value: unknown,
+		rules: VuetifyValidationRule[] = [],
+	) => {
+		const results = await Promise.all(
+			rules.map(async (rule) => {
+				const rawResult = typeof rule === 'function' ? await rule(value) : rule
+				return normalizeVuetifyRuleResult(rawResult)
+			}),
+		)
+
+		return applyVuetifyValidationResult(
+			results.filter((message): message is string => message !== null),
+		)
+	}
+
 	function validateValue(
 		value = modelValue.value,
 		rules = customRules?.value,
@@ -75,6 +124,10 @@ export function useCustomValidation(
 			successes.value = []
 			hasSuccess.value = false
 			return emptyValidationResult()
+		}
+
+		if (options.useVuetifyValidation?.value) {
+			return validateVuetifyValue(value, options.rules?.value ?? [])
 		}
 
 		const result = validator.validateField(
