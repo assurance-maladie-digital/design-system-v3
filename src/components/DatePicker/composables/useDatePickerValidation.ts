@@ -42,56 +42,27 @@ export type DatePickerValidationOptions = {
 	}
 }
 
-export interface DatePickerValidationStateController {
+export interface DatePickerValidationController {
 	errors: Ref<string[]>
 	warnings: Ref<string[]>
-	successes: Ref<string[]> | ComputedRef<string[]>
+	successes: Ref<string[]>
+	hasError: Ref<boolean> | ComputedRef<boolean>
+	hasWarning: Ref<boolean> | ComputedRef<boolean>
 	hasSuccess: Ref<boolean> | ComputedRef<boolean>
-	clear: () => void
+	errorMessages: Ref<string[]> | ComputedRef<string[]>
+	warningMessages: Ref<string[]> | ComputedRef<string[]>
+	successMessages: Ref<string[]> | ComputedRef<string[]>
+	clearValidation: () => void
 	pushError: (message?: string) => void
 	replaceErrors: (messages: string[]) => void
-	validate: (forceValidation?: boolean) => ValidationResult | Promise<ValidationResult>
-	validateSubmit: (forceValidation?: boolean) => void | ValidationResult | Promise<ValidationResult | void>
 	validateField: (
 		value: unknown,
 		rules?: ValidationRule[],
 		warningRules?: ValidationRule[],
 		successRules?: ValidationRule[],
 	) => ValidationResult | Promise<ValidationResult>
-}
-
-export interface DatePickerValidationMessagesController {
-	errors: Ref<string[]> | ComputedRef<string[]>
-	warnings: Ref<string[]> | ComputedRef<string[]>
-	successes: Ref<string[]> | ComputedRef<string[]>
-	hasError: Ref<boolean> | ComputedRef<boolean>
-	hasWarning: Ref<boolean> | ComputedRef<boolean>
-	hasSuccess: Ref<boolean> | ComputedRef<boolean>
-}
-
-export interface DatePickerValidationAdapter {
-	hasError: Ref<boolean> | ComputedRef<boolean>
-	hasWarning: Ref<boolean> | ComputedRef<boolean>
-	displaySuccesses: Ref<string[]> | ComputedRef<string[]>
-	hasSuccess: Ref<boolean> | ComputedRef<boolean>
-}
-
-export interface DatePickerValidationController {
-	validation: DatePickerValidationAdapter
-	validationState: DatePickerValidationStateController
-	messages: DatePickerValidationMessagesController
-	errors: Ref<string[]>
-	warnings: Ref<string[]>
-	successes: Ref<string[]>
-	errorMessages: Ref<string[]> | ComputedRef<string[]>
-	warningMessages: Ref<string[]> | ComputedRef<string[]>
-	successMessages: Ref<string[]> | ComputedRef<string[]>
-	clearValidation: () => void
-	pushError: DatePickerValidationStateController['pushError']
-	replaceErrors: DatePickerValidationStateController['replaceErrors']
-	validateField: DatePickerValidationStateController['validateField']
-	validateDates: DatePickerValidationStateController['validate']
-	validateCalendarModeDates: DatePickerValidationStateController['validateSubmit']
+	validateDates: (forceValidation?: boolean) => ValidationResult | Promise<ValidationResult>
+	validateCalendarModeDates: (forceValidation?: boolean) => void | ValidationResult | Promise<ValidationResult | void>
 	isRangeValid: ReturnType<typeof useDateRangeValidation>['isRangeValid']
 }
 
@@ -128,7 +99,7 @@ const requiredValidationResult = (shouldDisplayErrors: boolean): ValidationResul
 	},
 })
 
-const createInactiveValidationState = (): DatePickerValidationStateController => {
+const createInactiveValidationState = () => {
 	const errors = ref<string[]>([])
 	const warnings = ref<string[]>([])
 	const successes = computed(() => [] as string[])
@@ -150,12 +121,12 @@ const createInactiveValidationState = (): DatePickerValidationStateController =>
 
 export const createInactiveDatePickerValidationController = (): Pick<
 	DatePickerValidationController,
-	| 'validation'
-	| 'validationState'
-	| 'messages'
 	| 'errors'
 	| 'warnings'
 	| 'successes'
+	| 'hasError'
+	| 'hasWarning'
+	| 'hasSuccess'
 	| 'errorMessages'
 	| 'warningMessages'
 	| 'successMessages'
@@ -167,30 +138,16 @@ export const createInactiveDatePickerValidationController = (): Pick<
 	| 'validateCalendarModeDates'
 > => {
 	const validationState = createInactiveValidationState()
-	const displaySuccesses = validationState.successes
 	const hasError = computed(() => false)
 	const hasWarning = computed(() => false)
-	const messages = {
-		errors: validationState.errors,
-		warnings: validationState.warnings,
-		successes: displaySuccesses,
-		hasError,
-		hasWarning,
-		hasSuccess: validationState.hasSuccess,
-	}
 
 	return {
-		validation: {
-			hasError,
-			hasWarning,
-			displaySuccesses,
-			hasSuccess: validationState.hasSuccess,
-		},
-		validationState,
-		messages,
 		errors: validationState.errors,
 		warnings: validationState.warnings,
 		successes: validationState.successes,
+		hasError,
+		hasWarning,
+		hasSuccess: validationState.hasSuccess,
 		errorMessages: validationState.errors,
 		warningMessages: validationState.warnings,
 		successMessages: validationState.successes,
@@ -561,39 +518,13 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		})
 	}
 
-	const validationState = {
+	return {
 		errors,
 		warnings,
 		successes,
-		hasSuccess: validation.hasSuccess,
-		clear: clearValidation,
-		pushError,
-		replaceErrors,
-		validate: validateDates,
-		validateSubmit: validateCalendarModeDates,
-		validateField,
-	}
-	const messages = {
-		errors: displayErrors,
-		warnings: displayWarnings,
-		successes: displaySuccesses,
 		hasError: displayHasError,
 		hasWarning: displayHasWarning,
 		hasSuccess: displayHasSuccess,
-	}
-
-	return {
-		validation: {
-			hasError: displayHasError,
-			hasWarning: displayHasWarning,
-			displaySuccesses,
-			hasSuccess: displayHasSuccess,
-		},
-		validationState,
-		messages,
-		errors,
-		warnings,
-		successes,
 		errorMessages: displayErrors,
 		warningMessages: displayWarnings,
 		successMessages: displaySuccesses,

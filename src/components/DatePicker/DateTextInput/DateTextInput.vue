@@ -97,7 +97,9 @@
 	)
 
 	const {
-		validation,
+		hasError: bridgeHasError,
+		hasWarning: bridgeHasWarning,
+		hasSuccess: bridgeHasSuccess,
 		errorMessages: bridgedErrorMessages,
 		warningMessages: bridgedWarningMessages,
 		successMessages: bridgedSuccessMessages,
@@ -1368,14 +1370,14 @@
 	 * UI state helpers
 	 * =====================
 	 */
-	const isOnError = computed(() => validation.hasError.value)
+	const isOnError = computed(() => bridgeHasError.value)
 	const isOnWarning = computed(() =>
-		validation.hasWarning.value && !validation.hasError.value,
+		bridgeHasWarning.value && !bridgeHasError.value,
 	)
 	const isOnSuccess = computed(() =>
-		validation.hasSuccess.value
-		&& !validation.hasError.value
-		&& !validation.hasWarning.value,
+		bridgeHasSuccess.value
+		&& !bridgeHasError.value
+		&& !bridgeHasWarning.value,
 	)
 
 	// Props du SyTextField rendu par DateTextInput

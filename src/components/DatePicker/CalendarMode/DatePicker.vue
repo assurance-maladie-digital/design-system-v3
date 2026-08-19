@@ -86,8 +86,8 @@
 		errorMessages,
 		warningMessages,
 		successMessages,
-		messages.hasError,
-		messages.hasWarning,
+		hasError,
+		hasWarning,
 		isOnSuccess,
 	))
 
@@ -332,13 +332,15 @@
 	}
 
 	const {
-		messages,
 		clearValidation,
 		validateDates,
 		validateCalendarModeDates,
 		errors,
 		warnings,
 		successes,
+		hasError,
+		hasWarning,
+		hasSuccess,
 		errorMessages,
 		warningMessages,
 		successMessages,
@@ -374,7 +376,7 @@
 			clearValidation: clearValidationForForm,
 		},
 	})
-	const isOnSuccess = messages.hasSuccess
+	const isOnSuccess = hasSuccess
 	const isHandlingProgrammaticClose = ref(false)
 
 	const finalizeDatePickerClose = async () => {
@@ -471,9 +473,9 @@
 
 	const messageClasses = computed(() => ({
 		'dp-width': true,
-		'v-messages__message--success': messages.hasSuccess.value && !messages.hasError.value && !messages.hasWarning.value,
-		'v-messages__message--error': messages.hasError.value,
-		'v-messages__message--warning': messages.hasWarning.value && !messages.hasError.value,
+		'v-messages__message--success': hasSuccess.value && !hasError.value && !hasWarning.value,
+		'v-messages__message--error': hasError.value,
+		'v-messages__message--warning': hasWarning.value && !hasError.value,
 	}))
 
 	// Utilisation du composable pour gérer la sélection de dates

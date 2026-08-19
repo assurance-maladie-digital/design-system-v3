@@ -264,7 +264,6 @@
 	const ignoreNextCalendarModelSync = ref(false)
 
 	const {
-		messages,
 		validateField,
 		clearValidation,
 		validateDates,
@@ -273,6 +272,9 @@
 		errors,
 		warnings,
 		successes,
+		hasError,
+		hasWarning,
+		hasSuccess,
 		errorMessages,
 		warningMessages,
 		successMessages,
@@ -308,9 +310,9 @@
 
 	const messageClasses = computed(() => ({
 		'dp-width': true,
-		'v-messages__message--error': messages.hasError.value,
-		'v-messages__message--warning': messages.hasWarning.value && !messages.hasError.value,
-		'v-messages__message--success': messages.hasSuccess.value && !messages.hasError.value && !messages.hasWarning.value,
+		'v-messages__message--error': hasError.value,
+		'v-messages__message--warning': hasWarning.value && !hasError.value,
+		'v-messages__message--success': hasSuccess.value && !hasError.value && !hasWarning.value,
 	}))
 
 	// Props du champ texte utilisé dans le flux noCalendar
