@@ -2,6 +2,23 @@
 import dayjs from 'dayjs'
 import { locales } from '../locales'
 import type { DatePickerRule } from '../types'
+import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
+
+/**
+ * Compare deux valeurs DateModelValue de manière robuste.
+ * Contrairement à JSON.stringify, cette fonction est insensible au timezone
+ * et ne dépend pas de la sérialisation.
+ */
+export const isModelValueEqual = (a: DateModelValue | undefined, b: DateModelValue | undefined): boolean => {
+	if (a === b) return true
+	if (a === null || a === undefined || b === null || b === undefined) return false
+	if (Array.isArray(a) && Array.isArray(b)) {
+		if (a.length !== b.length) return false
+		return a.every((val, i) => val === b[i])
+	}
+	if (Array.isArray(a) || Array.isArray(b)) return false
+	return a === b
+}
 
 /**
  * Adapte les règles personnalisées pour assurer la compatibilité avec différents types de valeurs
