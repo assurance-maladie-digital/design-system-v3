@@ -12,13 +12,10 @@ export interface UseDatePickerStateOptions {
 	parseDate: (value: string, format: string) => Date | null
 	formatDate: (date: Date | null, format: string) => string
 	validateDates: (forceValidation?: boolean) => void
-	updateModel: (value: DateModelValue) => void
 	generateDateRange?: (start: Date, end: Date) => Date[]
 }
 
 export interface UseDatePickerStateResult {
-	selectedDates: Ref<Date | (Date | null)[] | null>
-	rangeBoundaryDates?: Ref<[Date | null, Date | null] | null>
 	textInputValue: Ref<string>
 	displayFormattedDate: Ref<string>
 	formattedDate: Ref<DateModelValue>
@@ -37,84 +34,124 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 		parseDate,
 		formatDate,
 		validateDates,
-		// updateModel,
 		generateDateRange,
 	} = options
 
 	const textInputValue = ref('')
 	const displayFormattedDate = ref('')
+	const displayFormatValue = (): string => unref(format)
+	const returnFormatValue = (): string => dateFormatReturn || displayFormatValue()
 
-	const formattedDate = computed<DateModelValue>(() => {
-		if (!selectedDates.value) return ''
-		const rf = dateFormatReturn || unref(format)
-
-		if (unref(displayRange) && rangeBoundaryDates?.value) {
-			return [
-				formatDate(rangeBoundaryDates.value[0], rf),
-				formatDate(rangeBoundaryDates.value[1], rf),
-			] as [string, string]
+	const getRangeDates = (value: Date | (Date | null)[] | null): [Date | null, Date | null] | null => {
+		if (!Array.isArray(value) || value.length < 2) {
+			return null
 		}
 
-		if (Array.isArray(selectedDates.value)) {
-			if (selectedDates.value.length >= 2) {
-				return [
-					formatDate(selectedDates.value[0]!, rf),
-					formatDate(selectedDates.value[selectedDates.value.length - 1]!, rf),
-				] as [string, string]
-			}
+		return [value[0] ?? null, value[value.length - 1] ?? null]
+	}
+
+	const formatRangeModelValue = (startDate: Date | null, endDate: Date | null, outputFormat: string): [string, string] | null => {
+		if (!startDate || !endDate) {
+			return null
+		}
+
+		return [
+			formatDate(startDate, outputFormat),
+			formatDate(endDate, outputFormat),
+		]
+	}
+
+	const formatSelectionForModelValue = (): DateModelValue => {
+		const value = selectedDates.value
+		if (!value) return ''
+
+		const outputFormat = returnFormatValue()
+
+		if (unref(displayRange) && rangeBoundaryDates?.value) {
+			return formatRangeModelValue(
+				rangeBoundaryDates.value[0],
+				rangeBoundaryDates.value[1],
+				outputFormat,
+			) ?? ''
+		}
+
+		const rangeDates = getRangeDates(value)
+		if (rangeDates) {
+			return formatRangeModelValue(rangeDates[0], rangeDates[1], outputFormat) ?? ''
+		}
+
+		return Array.isArray(value) ? '' : formatDate(value, outputFormat)
+	}
+
+	const formatSelectionForDisplayValue = (value = selectedDates.value): string | null => {
+		if (!value) return null
+
+		const rangeDates = getRangeDates(value)
+		if (rangeDates?.[0] && rangeDates[1]) {
+			return formatDateRangeDisplay(
+				rangeDates[0],
+				rangeDates[1],
+				displayFormatValue(),
+				formatDate,
+			)
+		}
+
+		const firstDate = Array.isArray(value) ? (value[0] ?? null) : value
+		return firstDate ? formatDate(firstDate, displayFormatValue()) : null
+	}
+
+	const formatModelValueForInput = (value: DateModelValue): string => {
+		if (!value) {
 			return ''
 		}
 
-		return formatDate(selectedDates.value, rf)
+		if (Array.isArray(value) && value.length === 2) {
+			if (!dateFormatReturn) {
+				return `${value[0]}${locales.rangeSeparator}${value[1]}`
+			}
+
+			const startDate = parseDate(value[0]!, dateFormatReturn)
+			const endDate = parseDate(value[1]!, dateFormatReturn)
+			return startDate && endDate
+				? formatDateRangeDisplay(startDate, endDate, displayFormatValue(), formatDate)
+				: ''
+		}
+
+		if (typeof value === 'string') {
+			if (!dateFormatReturn) {
+				return value
+			}
+
+			const date = parseDate(value, dateFormatReturn)
+			return date ? formatDate(date, displayFormatValue()) : ''
+		}
+
+		return ''
+	}
+
+	const clearSyncedValues = (): void => {
+		textInputValue.value = ''
+		displayFormattedDate.value = ''
+	}
+
+	const applyResolvedState = (nextState: { selectedDates: Date | (Date | null)[] | null, displayValue: string }): void => {
+		selectedDates.value = nextState.selectedDates
+		textInputValue.value = nextState.displayValue
+		displayFormattedDate.value = nextState.displayValue
+	}
+
+	const formattedDate = computed<DateModelValue>(() => {
+		return formatSelectionForModelValue()
 	})
 
 	const displayFormattedFromSelectedDates = computed<string | null>(() => {
-		if (!selectedDates.value) return null
-
-		if (Array.isArray(selectedDates.value)) {
-			if (selectedDates.value.length >= 2) {
-				return formatDateRangeDisplay(
-					selectedDates.value[0]!,
-					selectedDates.value[selectedDates.value.length - 1]!,
-					unref(format),
-					formatDate,
-				)
-			}
-			return formatDate(selectedDates.value[0]!, unref(format))
-		}
-
-		return formatDate(selectedDates.value, unref(format))
+		return formatSelectionForDisplayValue()
 	})
 
 	watch(
 		formattedDate,
 		(newValue) => {
-			if (!newValue || newValue === '') {
-				textInputValue.value = ''
-				return
-			}
-			if (Array.isArray(newValue) && newValue.length === 2) {
-				// Mode plage : afficher "startDate - endDate" dans l'input
-				const startStr = dateFormatReturn
-					? formatDate(parseDate(newValue[0]!, dateFormatReturn), unref(format))
-					: newValue[0]!
-				const endStr = dateFormatReturn
-					? formatDate(parseDate(newValue[1]!, dateFormatReturn), unref(format))
-					: newValue[1]!
-				textInputValue.value = `${startStr}${locales.rangeSeparator}${endStr}`
-			}
-			else if (typeof newValue === 'string') {
-				if (dateFormatReturn) {
-					const date = parseDate(newValue, dateFormatReturn)
-					if (date) {
-						const formattedForDisplay = formatDate(date, unref(format))
-						textInputValue.value = formattedForDisplay
-					}
-				}
-				else {
-					textInputValue.value = newValue
-				}
-			}
+			textInputValue.value = formatModelValueForInput(newValue)
 		},
 		{ immediate: true },
 	)
@@ -122,8 +159,7 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 	const syncFromModelValue = (newValue: DateInput | undefined) => {
 		if (!newValue || newValue === '') {
 			selectedDates.value = null
-			textInputValue.value = ''
-			displayFormattedDate.value = ''
+			clearSyncedValues()
 			validateDates()
 			return
 		}
@@ -139,43 +175,23 @@ export const useDatePickerState = (options: UseDatePickerStateOptions): UseDateP
 			preserveInvalidValue: true,
 		})
 
-		selectedDates.value = nextState.selectedDates
-		textInputValue.value = nextState.displayValue
-		displayFormattedDate.value = nextState.displayValue
+		applyResolvedState(nextState)
 		validateDates()
 	}
 
 	const syncTextInputFromSelection = () => {
-		const value = selectedDates.value
-		if (!value) {
+		const formattedForInput = formatSelectionForDisplayValue()
+		if (formattedForInput === null) {
 			textInputValue.value = ''
 			return
 		}
 
-		if (unref(displayRange) && Array.isArray(value) && value.length >= 2) {
-			const startDate = value[0]
-			const endDate = value[value.length - 1]
-			if (startDate && endDate) {
-				const formattedForInput = formatDateRangeDisplay(startDate, endDate, unref(format), formatDate)
-				if (textInputValue.value !== formattedForInput) {
-					textInputValue.value = formattedForInput
-				}
-				return
-			}
-		}
-
-		const firstDate = Array.isArray(value) ? (value[0] ?? null) : value
-		if (!firstDate) return
-
-		const formattedForInput = formatDate(firstDate, unref(format))
 		if (textInputValue.value !== formattedForInput) {
 			textInputValue.value = formattedForInput
 		}
 	}
 
 	return {
-		selectedDates,
-		rangeBoundaryDates,
 		textInputValue,
 		displayFormattedDate,
 		formattedDate,
