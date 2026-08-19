@@ -1,5 +1,5 @@
 import { type MaybeRef, toValue, unref } from 'vue'
-import type { ValidationResult, ValidationRule } from '@/composables/validation/useValidation'
+import type { ValidationResult, ValidationRule } from '@/composables/unifyValidation/useValidation'
 import { validateDateFormat, isDateComplete } from './useDateFormatUtils'
 import { adaptCustomRules, validateEmptyOrIncompleteDate } from '../utils/validationUtils'
 import { locales } from '../locales'

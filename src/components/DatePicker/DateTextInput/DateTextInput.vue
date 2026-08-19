@@ -12,7 +12,7 @@
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
-	import type { ValidationRule, ValidationResult } from '@/composables/validation/useValidation'
+	import type { ValidationRule, ValidationResult } from '@/composables/unifyValidation/useValidation'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { buildDateTextInputTextFieldProps } from './props/buildDateTextInputTextFieldProps'
 	import { locales } from '../locales'
@@ -117,6 +117,8 @@
 		customRules: computed(() => props.customRules ?? []),
 		customSuccessRules: computed(() => props.customSuccessRules ?? []),
 		customWarningRules: computed(() => props.customWarningRules ?? []),
+		useVuetifyValidation: computed(() => props.useVuetifyValidation ?? false),
+		rules: computed(() => props.rules),
 		errorMessages: computed(() => props.errorMessages ?? null),
 		hasErrorProp: computed(() => props.hasError),
 		hasSuccessProp: computed(() => props.hasSuccess),

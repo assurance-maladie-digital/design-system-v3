@@ -1,5 +1,5 @@
 import { computed, ref, watch, unref, type ComputedRef, type Ref, type MaybeRef } from 'vue'
-import { type ValidationResult, type ValidationRule } from '@/composables/validation/useValidation'
+import { type ValidationResult, type ValidationRule, type VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 import { useCustomValidation } from '@/composables/unifyValidation/useCustomValidation'
 import { locales } from '../locales'
 import type { DateObjectValue, DatePickerRule } from '../types'
@@ -28,6 +28,8 @@ export type DatePickerValidationOptions = {
 	currentRangeIsValid: Ref<boolean>
 	getRangeValidationError: Ref<string>
 	readonly?: MaybeRef<boolean>
+	useVuetifyValidation?: MaybeRef<boolean>
+	rules?: Ref<VuetifyValidationRule[] | undefined>
 	skipValidationWhenReadonly?: boolean
 	useCalendarModeRequiredFlow?: boolean
 	isInitialValidation?: Ref<boolean>
@@ -183,6 +185,8 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			registerWithForm: Boolean(options.formRegistration),
 			reactiveValidation: false,
 			formRegistration: options.formRegistration,
+			useVuetifyValidation: computed(() => Boolean(unref(options.useVuetifyValidation))),
+			rules: options.rules,
 		},
 	)
 

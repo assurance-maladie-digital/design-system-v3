@@ -80,11 +80,13 @@ export interface DatePickerCommonProps {
 	placeholder?: string
 	readonly?: boolean
 	required?: boolean
+	rules?: import('@/composables/unifyValidation/useValidation').VuetifyValidationRule[]
 	showSuccessMessages?: boolean
 	successMessages?: string[] | null
 	showWeekNumber?: boolean
 	textFieldActivator?: boolean
 	title?: string | false
+	useVuetifyValidation?: boolean
 	warningMessages?: string[] | null
 	width?: string
 }
@@ -147,11 +149,13 @@ export const DatePickerCommonDefaults = {
 	placeholder: undefined,
 	readonly: false,
 	required: false,
+	rules: undefined,
 	showSuccessMessages: false,
 	successMessages: null,
 	showWeekNumber: false,
 	textFieldActivator: false,
 	title: false,
+	useVuetifyValidation: false,
 	warningMessages: null,
 	width: '100%',
 } as const
