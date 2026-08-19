@@ -17,6 +17,7 @@ describe('useDatePickerInputBlurHandler', () => {
 	const isUpdatingFromInternal = ref(false)
 	const selectedDates = ref<Date | Date[] | null>(null)
 	const replaceErrors = vi.fn()
+	const mockWithInternalUpdate = vi.fn((fn: () => void) => fn())
 
 	beforeEach(() => {
 		// Réinitialiser les mocks et les refs avant chaque test
@@ -32,6 +33,8 @@ describe('useDatePickerInputBlurHandler', () => {
 		isUpdatingFromInternal.value = false
 		selectedDates.value = null
 		replaceErrors.mockReset()
+		mockWithInternalUpdate.mockReset()
+		mockWithInternalUpdate.mockImplementation((fn: () => void) => fn())
 
 		// Configuration par défaut des mocks
 		mockValidateDateFormat.mockReturnValue({ isValid: true, message: '' })
@@ -46,6 +49,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				hasInteracted,
 				isManualInputActive,
 				isUpdatingFromInternal,
+				withInternalUpdate: mockWithInternalUpdate,
 				selectedDates,
 				validateDateFormat: mockValidateDateFormat,
 				parseDate: mockParseDate,
@@ -76,6 +80,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				hasInteracted,
 				isManualInputActive,
 				isUpdatingFromInternal,
+				withInternalUpdate: mockWithInternalUpdate,
 				selectedDates,
 				validateDateFormat: mockValidateDateFormat,
 				parseDate: mockParseDate,
@@ -92,7 +97,7 @@ describe('useDatePickerInputBlurHandler', () => {
 			expect(mockFormatDate).toHaveBeenCalledWith(date, 'DD/MM/YYYY')
 			expect(selectedDates.value).toBe(date)
 			expect(mockUpdateModel).toHaveBeenCalledWith('01/01/2023')
-			expect(isUpdatingFromInternal.value).toBe(true) // Sera réinitialisé par le setTimeout
+			expect(mockWithInternalUpdate).toHaveBeenCalled() // withInternalUpdate wraps the update
 		})
 
 		it('devrait utiliser le format de retour si spécifié', () => {
@@ -110,6 +115,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				hasInteracted,
 				isManualInputActive,
 				isUpdatingFromInternal,
+				withInternalUpdate: mockWithInternalUpdate,
 				selectedDates,
 				validateDateFormat: mockValidateDateFormat,
 				parseDate: mockParseDate,
@@ -136,6 +142,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				hasInteracted,
 				isManualInputActive,
 				isUpdatingFromInternal,
+				withInternalUpdate: mockWithInternalUpdate,
 				selectedDates,
 				validateDateFormat: mockValidateDateFormat,
 				parseDate: mockParseDate,
@@ -166,6 +173,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				hasInteracted,
 				isManualInputActive,
 				isUpdatingFromInternal,
+				withInternalUpdate: mockWithInternalUpdate,
 				selectedDates,
 				validateDateFormat: mockValidateDateFormat,
 				parseDate: mockParseDate,
@@ -194,6 +202,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				hasInteracted,
 				isManualInputActive,
 				isUpdatingFromInternal,
+				withInternalUpdate: mockWithInternalUpdate,
 				selectedDates,
 				validateDateFormat: mockValidateDateFormat,
 				parseDate: mockParseDate,
@@ -218,6 +227,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				hasInteracted,
 				isManualInputActive,
 				isUpdatingFromInternal,
+				withInternalUpdate: mockWithInternalUpdate,
 				selectedDates,
 				validateDateFormat: mockValidateDateFormat,
 				parseDate: mockParseDate,
@@ -248,6 +258,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				hasInteracted,
 				isManualInputActive,
 				isUpdatingFromInternal,
+				withInternalUpdate: mockWithInternalUpdate,
 				selectedDates,
 				replaceErrors,
 				validateDateFormat: mockValidateDateFormat,
@@ -275,6 +286,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				hasInteracted,
 				isManualInputActive,
 				isUpdatingFromInternal,
+				withInternalUpdate: mockWithInternalUpdate,
 				selectedDates,
 				replaceErrors,
 				validateDateFormat: mockValidateDateFormat,
@@ -306,6 +318,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				hasInteracted,
 				isManualInputActive,
 				isUpdatingFromInternal,
+				withInternalUpdate: mockWithInternalUpdate,
 				selectedDates,
 				replaceErrors,
 				validateDateFormat: mockValidateDateFormat,
@@ -357,6 +370,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				hasInteracted,
 				isManualInputActive,
 				isUpdatingFromInternal,
+				withInternalUpdate: mockWithInternalUpdate,
 				selectedDates,
 				replaceErrors,
 				validateDateFormat: mockValidateDateFormat,
@@ -377,7 +391,7 @@ describe('useDatePickerInputBlurHandler', () => {
 			expect(mockFormatDate).toHaveBeenCalledWith(endDate, 'DD/MM/YYYY')
 			expect(selectedDates.value).toEqual([startDate, endDate])
 			expect(mockUpdateModel).toHaveBeenCalledWith(['01/01/2023', '10/01/2023'])
-			expect(isUpdatingFromInternal.value).toBe(true) // Sera réinitialisé par le setTimeout
+			expect(mockWithInternalUpdate).toHaveBeenCalled() // withInternalUpdate wraps the range update
 		})
 
 		it('devrait utiliser le format de retour pour les plages de dates si spécifié', () => {
@@ -404,6 +418,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				hasInteracted,
 				isManualInputActive,
 				isUpdatingFromInternal,
+				withInternalUpdate: mockWithInternalUpdate,
 				selectedDates,
 				replaceErrors,
 				validateDateFormat: mockValidateDateFormat,
@@ -442,6 +457,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				hasInteracted,
 				isManualInputActive,
 				isUpdatingFromInternal,
+				withInternalUpdate: mockWithInternalUpdate,
 				selectedDates,
 				replaceErrors,
 				validateDateFormat: mockValidateDateFormat,
@@ -475,6 +491,7 @@ describe('useDatePickerInputBlurHandler', () => {
 				hasInteracted,
 				isManualInputActive,
 				isUpdatingFromInternal,
+				withInternalUpdate: mockWithInternalUpdate,
 				selectedDates,
 				replaceErrors,
 				validateDateFormat: mockValidateDateFormat,
