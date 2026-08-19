@@ -11,10 +11,9 @@
 	import { VDatePicker } from 'vuetify/components'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
-	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerValidation, useDatePickerViewMode, useDateRangeValidation, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useSelectedDayAria, useTodayButton } from '../composables'
+	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerCalendar, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerSyncGuard, useDatePickerValidation, useDatePickerViewMode, useDateRangeValidation, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useSelectedDayAria, useTodayButton } from '../composables'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { locales } from '../locales'
-	import type { ViewMode } from '../composables/useDatePickerViewMode'
 	import type { CalendarModeProps, DateObjectValue } from '../types'
 	import { DatePickerCommonDefaults } from '../types'
 	import { formatDateRangeDisplay, getDisplayedMonthYearState, resolveDatePickerStateFromModelValue } from '../utils/dateFormattingUtils'
@@ -106,60 +105,6 @@
 	const datePickerRef = ref<ComponentPublicInstance | null>(null)
 	const complexDatePickerRef = ref<null | ComponentPublicInstance<typeof ComplexDatePicker>>()
 	const datePickerContentId = `date-picker-${useId()}`
-
-	/**
-	 * Nettoie la sémantique grid ARIA injectée avant que Vuetify ne re-render le mois,
-	 * puis la réapplique dans le prochain tick. Cela évite les erreurs de patch Vue
-	 * dues au reparentage de nœuds du virtual DOM.
-	 */
-	const reapplyAccessibility = () => {
-		const rootEl = datePickerDialogRef.value
-		if (!rootEl) return
-
-		const activeElement = document.activeElement instanceof HTMLElement
-			? document.activeElement
-			: null
-		const activeDay = activeElement?.closest<HTMLElement>('.v-date-picker-month__day[data-v-date]')
-		const activeMonthButton = activeElement?.closest<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"], .v-date-picker-months .v-btn')
-		const activeYearButton = activeElement?.closest<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn')
-		const shouldRestoreButtonFocus = activeElement?.tagName === 'BUTTON'
-		const dayDate = activeDay?.getAttribute('data-v-date')
-		const monthLabel = activeMonthButton?.getAttribute('aria-label') ?? activeMonthButton?.textContent?.trim() ?? ''
-		const yearLabel = activeYearButton?.getAttribute('aria-label') ?? activeYearButton?.textContent?.trim() ?? ''
-		cleanupGridSemantics(rootEl)
-		nextTick(() => {
-			updateAccessibility(rootEl, currentViewMode.value)
-			nextTick(() => {
-				if (!activeElement || (!rootEl.contains(activeElement) && !dayDate && !monthLabel && !yearLabel)) return
-
-				if (dayDate) {
-					const dayCell = rootEl.querySelector<HTMLElement>(`.v-date-picker-month__day[data-v-date="${dayDate}"]`)
-					const focusTarget = shouldRestoreButtonFocus
-						? dayCell?.querySelector<HTMLElement>('button')
-						: dayCell
-					focusTarget?.focus({ preventScroll: true })
-					return
-				}
-
-				if (monthLabel) {
-					const monthButtons = Array.from(rootEl.querySelectorAll<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"], .v-date-picker-months .v-btn'))
-					const target = monthButtons.find(button =>
-						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === monthLabel,
-					)
-					target?.focus({ preventScroll: true })
-					return
-				}
-
-				if (yearLabel) {
-					const yearButtons = Array.from(rootEl.querySelectorAll<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn'))
-					const target = yearButtons.find(button =>
-						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === yearLabel,
-					)
-					target?.focus({ preventScroll: true })
-				}
-			})
-		})
-	}
 
 	const datePickerDialogRef = ref<HTMLElement | null>(null)
 	const datePickerDialogId = `${datePickerContentId}-dialog`
@@ -313,7 +258,7 @@
 	}>()
 
 	// Variable pour éviter les mises à jour récursives
-	const isUpdatingFromInternal = ref(false)
+	const { isUpdatingFromInternal, withInternalUpdate } = useDatePickerSyncGuard()
 	const fieldKey = ref(0)
 	const keyboardNavigatedDate = ref<Date | null>(null)
 	const preventCloseOnKeyboardNavigation = ref(false)
@@ -322,18 +267,6 @@
 		selectedDates as Ref<DateObjectValue>,
 		computed(() => props.displayRange),
 	)
-
-	const withInternalUpdate = (fn: () => void) => {
-		try {
-			isUpdatingFromInternal.value = true
-			fn()
-		}
-		finally {
-			queueMicrotask(() => {
-				isUpdatingFromInternal.value = false
-			})
-		}
-	}
 
 	const {
 		clearValidation,
@@ -423,10 +356,11 @@
 			}
 		}
 		finally {
-			// S'assurer que le flag est toujours réinitialisé
-			queueMicrotask(() => {
+			// Reset via setTimeout(0) (macrotask) pour garantir que tous les
+			// watchers Vue (microtask) voient le flag avant son reset
+			setTimeout(() => {
 				isUpdatingFromInternal.value = false
-			})
+			}, 0)
 		}
 	}
 
@@ -573,9 +507,9 @@
 			displayFormattedDate.value = nextState.displayValue
 		}
 		finally {
-			queueMicrotask(() => {
+			setTimeout(() => {
 				isUpdatingFromInternal.value = false
-			})
+			}, 0)
 		}
 	}
 
@@ -746,38 +680,6 @@
 		}
 	}
 
-	// Fonction pour mettre à jour le mois quand on navigue via les flèches
-	const onUpdateMonth = (month: string) => {
-		if (currentMonth.value === month) return
-		currentMonth.value = month
-		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
-		handleMonthUpdate()
-		nextTick(() => {
-			if (isDatePickerVisible.value) {
-				customizeMonthButton()
-				markHolidayDays()
-				updateSelectedDayAria()
-				nextTick(focusInitialDay)
-			}
-		})
-	}
-
-	// Fonction pour mettre à jour l'année quand on navigue via les flèches
-	const onUpdateYear = (year: string) => {
-		currentYear.value = year
-		currentYearName.value = year
-
-		handleYearUpdate()
-		nextTick(() => {
-			if (isDatePickerVisible.value) {
-				customizeMonthButton()
-				markHolidayDays()
-				updateSelectedDayAria()
-				nextTick(focusInitialDay)
-			}
-		})
-	}
-
 	// Marquage des jours fériés partagé via le composable dédié
 	const { markHolidayDays } = useHolidayHighlighting({
 		currentMonth,
@@ -801,93 +703,35 @@
 		() => selectedDates.value,
 	)
 
-	const waitForTransitionEnd = (container: HTMLElement, callback: () => void) => {
-		if (container.classList.contains('v-enter-active') || container.classList.contains('fade-transition-enter-active')) {
-			let fired = false
-			const handler = () => {
-				if (fired) return
-				fired = true
-				clearTimeout(fallbackId)
-				callback()
+	const {
+		reapplyAccessibility,
+		handleViewModeUpdateWrapper,
+		onUpdateMonth,
+		onUpdateYear,
+	} = useDatePickerCalendar({
+		getRootEl: () => datePickerDialogRef.value,
+		isDatePickerVisible,
+		currentViewMode,
+		handleViewModeUpdate,
+		handleMonthUpdate,
+		handleYearUpdate,
+		currentMonth,
+		currentMonthName,
+		currentYear,
+		currentYearName,
+		updateAccessibility,
+		cleanupGridSemantics,
+		focusInitialDay,
+		refreshCalendarUi: (options) => {
+			if (!isDatePickerVisible.value) return
+			customizeMonthButton()
+			markHolidayDays()
+			updateSelectedDayAria()
+			if (options.focusDay) {
+				nextTick(focusInitialDay)
 			}
-			const fallbackId = setTimeout(handler, 400)
-			container.addEventListener('transitionend', handler, { once: true })
-		}
-		else {
-			callback()
-		}
-	}
-
-	const handleViewModeUpdateWrapper = (mode: ViewMode) => {
-		handleViewModeUpdate(mode)
-		if (isDatePickerVisible.value) {
-			reapplyAccessibility()
-		}
-		if (mode === 'month') {
-			nextTick(() => {
-				if (isDatePickerVisible.value) {
-					const root = datePickerDialogRef.value
-					if (!root) return
-					const monthContainer = root.querySelector<HTMLElement>('.v-date-picker-month')
-					if (!monthContainer) {
-						focusInitialDay()
-						return
-					}
-
-					waitForTransitionEnd(monthContainer, () => focusInitialDay())
-				}
-			})
-		}
-		if (mode === 'months') {
-			nextTick(() => {
-				const root = datePickerDialogRef.value
-				if (!root) return
-				const monthsContainer = root.querySelector<HTMLElement>('.v-date-picker-months')
-				if (!monthsContainer) return
-
-				const focusActiveMonth = () => {
-					const active = root.querySelector<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"][aria-pressed="true"]')
-						?? root.querySelector<HTMLElement>('.v-date-picker-months .v-btn--active')
-					if (active) {
-						active.focus({ preventScroll: true })
-						return
-					}
-					const monthIndex = currentMonth.value !== null ? Number(currentMonth.value) : new Date().getMonth()
-					const monthBtns = root.querySelectorAll<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"], .v-date-picker-months .v-btn')
-					monthBtns[monthIndex]?.focus({ preventScroll: true })
-				}
-
-				waitForTransitionEnd(monthsContainer, focusActiveMonth)
-			})
-		}
-
-		if (mode === 'year') {
-			nextTick(() => {
-				const root = datePickerDialogRef.value
-				if (!root) return
-				const yearsContainer = root.querySelector<HTMLElement>('.v-date-picker-years')
-				if (!yearsContainer) return
-
-				const focusActiveYear = () => {
-					const active = root.querySelector<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"][aria-pressed="true"]')
-						?? root.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
-					if (active) {
-						active.focus({ preventScroll: true })
-						return
-					}
-					const currentYearBtn = root.querySelector<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-date-picker-years__year--current .v-btn')
-					if (currentYearBtn) {
-						currentYearBtn.focus({ preventScroll: true })
-						return
-					}
-					const firstBtn = root.querySelector<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn')
-					firstBtn?.focus({ preventScroll: true })
-				}
-
-				waitForTransitionEnd(yearsContainer, focusActiveYear)
-			})
-		}
-	}
+		},
+	})
 
 	const handleInputBlur = async () => {
 		emit('blur')

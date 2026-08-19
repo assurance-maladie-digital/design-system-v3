@@ -6,6 +6,12 @@ export { useDateRangeInput } from './useDateRangeInput'
 export { useDateAutoClamp } from './useDateAutoClamp'
 export { useDateTextInputController } from './useDateTextInputController'
 
+// Sync guard (anti-loop flags + interaction state)
+export { useDatePickerSyncGuard } from './useDatePickerSyncGuard'
+
+// Shared calendar logic (accessibility, view mode, month/year navigation)
+export { useDatePickerCalendar } from './useDatePickerCalendar'
+
 // Date selection and validation
 export { useDateSelection } from './useDateSelection'
 export { createInactiveDatePickerValidationController, useDatePickerValidation } from './useDatePickerValidation'

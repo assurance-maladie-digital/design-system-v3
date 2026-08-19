@@ -34,8 +34,9 @@
 		useTodayButton,
 		validateDateFormat as validateDateFormatUtil,
 		useDatePickerDerivedValues,
+		useDatePickerSyncGuard,
+		useDatePickerCalendar,
 	} from '../composables'
-	import type { ViewMode } from '../composables/useDatePickerViewMode'
 	import dayjs from 'dayjs'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { VDatePicker } from 'vuetify/components'
@@ -66,18 +67,17 @@
 	const { initializeSelectedDates } = useDateInitialization()
 	const { updateAccessibility, cleanupGridSemantics } = useDatePickerAccessibility()
 
-	/**
-	 * Utils
-	 */
-	const withInternalUpdate = (fn: () => void) => {
-		try {
-			isUpdatingFromInternal.value = true
-			fn()
-		}
-		finally {
-			queueMicrotask(() => (isUpdatingFromInternal.value = false))
-		}
-	}
+	const {
+		isUpdatingFromInternal,
+		withInternalUpdate,
+		ignoreNextInputBlur,
+		ignoreNextCalendarModelSync,
+		consumeIgnoreNextInputBlur,
+		consumeIgnoreNextCalendarModelSync,
+		hasInteracted,
+		isManualInputActive,
+		resetInteractionState,
+	} = useDatePickerSyncGuard()
 
 	/**
 	 * Calendar current month / year
@@ -257,11 +257,6 @@
 	)
 	// Force re-render of DateTextInput/SyTextField when needed (e.g., after reset)
 	const fieldKey = ref(0)
-	const isManualInputActive = ref(false)
-	const isUpdatingFromInternal = ref(false)
-	const hasInteracted = ref(false)
-	const ignoreNextInputBlur = ref(false)
-	const ignoreNextCalendarModelSync = ref(false)
 
 	const {
 		validateField,
@@ -337,14 +332,6 @@
 		warningMessages,
 		successMessages,
 	))
-
-	const syncDisplayedMonthYearFromDate = (date: Date) => {
-		const displayedState = getDisplayedMonthYearState(date)
-		currentMonth.value = displayedState.month
-		currentMonthName.value = displayedState.monthName
-		currentYear.value = displayedState.year
-		currentYearName.value = displayedState.yearName
-	}
 
 	const {
 		toggleDatePicker,
@@ -436,8 +423,7 @@
 	const calendarSelectedDates = computed<DateObjectValue>({
 		get: () => selectedDates.value,
 		set: (value) => {
-			if (ignoreNextCalendarModelSync.value) {
-				ignoreNextCalendarModelSync.value = false
+			if (consumeIgnoreNextCalendarModelSync()) {
 				return
 			}
 
@@ -857,39 +843,6 @@
 		),
 	})
 
-	// Fonction pour mettre à jour le mois quand on navigue via les flèches
-	const onUpdateMonth = (month: string) => {
-		if (currentMonth.value === month) return
-		currentMonth.value = month
-		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
-		handleMonthUpdate()
-		nextTick(() => refreshVisibleCalendarUi({ focusDay: true }))
-	}
-
-	// Fonction pour mettre à jour l'année quand on navigue via les flèches
-	const onUpdateYear = (year: string) => {
-		const oldYear = currentYear.value
-		currentYear.value = year
-		currentYearName.value = year
-
-		const curMonth = parseInt(currentMonth.value ?? '0', 10)
-		const newYear = parseInt(year, 10)
-		const prevYear = parseInt(oldYear ?? '0', 10)
-
-		// Bridges Dec -> Jan and Jan -> Dec when navigating years
-		if (newYear > prevYear && curMonth === 11) {
-			currentMonth.value = '0'
-			currentMonthName.value = dayjs().month(0).format('MMMM')
-		}
-		else if (newYear < prevYear && curMonth === 0) {
-			currentMonth.value = '11'
-			currentMonthName.value = dayjs().month(11).format('MMMM')
-		}
-
-		handleYearUpdate()
-		nextTick(() => refreshVisibleCalendarUi({ focusDay: true }))
-	}
-
 	onMounted(() => {
 		setupMonthButtonObserver()
 		displayFormattedDate.value = displayFormattedFromSelectedDates.value || ''
@@ -1083,13 +1036,10 @@
 	}
 
 	const handleCalendarInputBlur = async () => {
-		if (ignoreNextInputBlur.value && isDatePickerVisible.value) {
-			ignoreNextInputBlur.value = false
+		if (consumeIgnoreNextInputBlur() && isDatePickerVisible.value) {
 			emitBlurEvent()
 			return
 		}
-
-		ignoreNextInputBlur.value = false
 
 		const input = getCalendarInputElement()
 		if (input) {
@@ -1150,54 +1100,57 @@
 			() => selectedDates.value,
 		)
 
-	const reapplyAccessibility = () => {
-		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
-		if (!rootEl) return
-
-		const activeElement = document.activeElement instanceof HTMLElement
-			? document.activeElement
-			: null
-		const activeDay = activeElement?.closest<HTMLElement>('.v-date-picker-month__day[data-v-date]')
-		const activeMonthButton = activeElement?.closest<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"], .v-date-picker-months .v-btn')
-		const activeYearButton = activeElement?.closest<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn')
-		const shouldRestoreButtonFocus = activeElement?.tagName === 'BUTTON'
-		const dayDate = activeDay?.getAttribute('data-v-date')
-		const monthLabel = activeMonthButton?.getAttribute('aria-label') ?? activeMonthButton?.textContent?.trim() ?? ''
-		const yearLabel = activeYearButton?.getAttribute('aria-label') ?? activeYearButton?.textContent?.trim() ?? ''
-		cleanupGridSemantics(rootEl)
-		nextTick(() => {
-			updateAccessibility(rootEl, currentViewMode.value)
-			nextTick(() => {
-				if (!activeElement || (!rootEl.contains(activeElement) && !dayDate && !monthLabel && !yearLabel)) return
-
-				if (dayDate) {
-					const dayCell = rootEl.querySelector<HTMLElement>(`.v-date-picker-month__day[data-v-date="${dayDate}"]`)
-					const focusTarget = shouldRestoreButtonFocus
-						? dayCell?.querySelector<HTMLElement>('button')
-						: dayCell
-					focusTarget?.focus({ preventScroll: true })
-					return
-				}
-
-				if (monthLabel) {
-					const monthButtons = Array.from(rootEl.querySelectorAll<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"], .v-date-picker-months .v-btn'))
-					const target = monthButtons.find(button =>
-						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === monthLabel,
-					)
-					target?.focus({ preventScroll: true })
-					return
-				}
-
-				if (yearLabel) {
-					const yearButtons = Array.from(rootEl.querySelectorAll<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn'))
-					const target = yearButtons.find(button =>
-						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === yearLabel,
-					)
-					target?.focus({ preventScroll: true })
-				}
-			})
-		})
-	}
+	const {
+		handleViewModeUpdateWrapper,
+		syncDisplayedMonthYearFromDate,
+		onUpdateMonth,
+		onUpdateYear,
+	} = useDatePickerCalendar({
+		getRootEl: () => datePickerRef.value?.$el as HTMLElement | undefined,
+		isDatePickerVisible,
+		currentViewMode,
+		handleViewModeUpdate,
+		handleMonthUpdate,
+		handleYearUpdate,
+		currentMonth,
+		currentMonthName,
+		currentYear,
+		currentYearName,
+		updateAccessibility,
+		cleanupGridSemantics,
+		focusInitialDay,
+		refreshCalendarUi: refreshVisibleCalendarUi,
+		onYearViewOpen: () => {
+			const baseDate = getSelectedBaseDate() ?? new Date()
+			syncDisplayedMonthYearFromDate(baseDate)
+		},
+		onYearViewFocus: (rootEl) => {
+			const selectedYear = String(getSelectedBaseDate()?.getFullYear() ?? Number(currentYear.value ?? new Date().getFullYear()))
+			syncOptionProxySelection('year', selectedYear)
+			const yearButtons = Array.from(rootEl.querySelectorAll<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn'))
+			const selectedYearButton = yearButtons.find(button =>
+				(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === selectedYear,
+			)
+			if (selectedYearButton) {
+				selectedYearButton.focus({ preventScroll: true })
+				return true
+			}
+			return false
+		},
+		onYearChangeBridge: (newYearStr, oldYearStr) => {
+			const curMonth = parseInt(currentMonth.value ?? '0', 10)
+			const newYear = parseInt(newYearStr, 10)
+			const prevYear = parseInt(oldYearStr ?? '0', 10)
+			if (newYear > prevYear && curMonth === 11) {
+				currentMonth.value = '0'
+				currentMonthName.value = dayjs().month(0).format('MMMM')
+			}
+			else if (newYear < prevYear && curMonth === 0) {
+				currentMonth.value = '11'
+				currentMonthName.value = dayjs().month(11).format('MMMM')
+			}
+		},
+	})
 
 	const syncOptionProxySelection = (kind: 'month' | 'year', selectedLabel: string | null | undefined) => {
 		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
@@ -1226,98 +1179,6 @@
 		})
 	}
 
-	const waitForTransitionEnd = (container: HTMLElement, callback: () => void) => {
-		if (container.classList.contains('v-enter-active') || container.classList.contains('fade-transition-enter-active')) {
-			let fired = false
-			const handler = () => {
-				if (fired) return
-				fired = true
-				clearTimeout(fallbackId)
-				callback()
-			}
-			const fallbackId = setTimeout(handler, 400)
-			container.addEventListener('transitionend', handler, { once: true })
-		}
-		else {
-			callback()
-		}
-	}
-
-	const handleViewModeUpdateWrapper = (mode: ViewMode) => {
-		handleViewModeUpdate(mode)
-		reapplyAccessibility()
-		if (mode === 'month') {
-			nextTick(() => {
-				if (isDatePickerVisible.value) {
-					const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
-					if (!rootEl) return
-					const monthContainer = rootEl.querySelector<HTMLElement>('.v-date-picker-month')
-					if (!monthContainer) {
-						focusInitialDay()
-						return
-					}
-
-					waitForTransitionEnd(monthContainer, () => focusInitialDay())
-				}
-			})
-		}
-		if (mode === 'months') {
-			nextTick(() => {
-				const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
-				if (!rootEl) return
-				const monthsContainer = rootEl.querySelector<HTMLElement>('.v-date-picker-months')
-				if (!monthsContainer) return
-
-				const focusActiveMonth = () => {
-					const active = rootEl.querySelector<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"][aria-pressed="true"]')
-						?? rootEl.querySelector<HTMLElement>('.v-date-picker-months .v-btn--active')
-					if (active) {
-						active.focus({ preventScroll: true })
-						return
-					}
-					const monthIndex = currentMonth.value !== null ? Number(currentMonth.value) : new Date().getMonth()
-					const monthBtns = rootEl.querySelectorAll<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"], .v-date-picker-months .v-btn')
-					monthBtns[monthIndex]?.focus({ preventScroll: true })
-				}
-
-				waitForTransitionEnd(monthsContainer, focusActiveMonth)
-			})
-		}
-		if (mode === 'year') {
-			nextTick(() => {
-				const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
-				if (!rootEl) return
-				const yearsContainer = rootEl.querySelector<HTMLElement>('.v-date-picker-years')
-				if (!yearsContainer) return
-				const baseDate = getSelectedBaseDate() ?? new Date()
-				syncDisplayedMonthYearFromDate(baseDate)
-
-				const focusActiveYear = () => {
-					const selectedYear = String(getSelectedBaseDate()?.getFullYear() ?? Number(currentYear.value ?? new Date().getFullYear()))
-					syncOptionProxySelection('year', selectedYear)
-					const yearButtons = Array.from(rootEl.querySelectorAll<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"], .v-date-picker-years .v-btn'))
-					const selectedYearButton = yearButtons.find(button =>
-						(button.getAttribute('aria-label') ?? button.textContent?.trim() ?? '') === selectedYear,
-					)
-					if (selectedYearButton) {
-						selectedYearButton.focus({ preventScroll: true })
-						return
-					}
-					const active = rootEl.querySelector<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"][aria-pressed="true"]')
-						?? rootEl.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
-					if (active) {
-						active.focus({ preventScroll: true })
-						return
-					}
-					const firstBtn = yearButtons[0]
-					firstBtn?.focus({ preventScroll: true })
-				}
-
-				waitForTransitionEnd(yearsContainer, focusActiveYear)
-			})
-		}
-	}
-
 	const emitBlurEvent = () => emit('blur')
 
 	const { handleInputBlur } = useDatePickerInputBlurHandler({
@@ -1328,6 +1189,7 @@
 		hasInteracted,
 		isManualInputActive,
 		isUpdatingFromInternal,
+		withInternalUpdate,
 		selectedDates,
 		replaceErrors,
 		validateDateFormat: (value: string) => validateDateFormatUtil(value, props.format, props.dateFormatReturn, props.required, hasInteracted.value, props.disableErrorHandling),
@@ -1345,17 +1207,10 @@
 		// Ne pas traiter les mises à jour internes pour éviter les boucles
 		if (isUpdatingFromInternal.value) return
 
-		try {
-			isUpdatingFromInternal.value = true
-
+		withInternalUpdate(() => {
 			updateModel(value)
 			applyResolvedTextInputState(value)
-		}
-		finally {
-			queueMicrotask(() => {
-				isUpdatingFromInternal.value = false
-			})
-		}
+		})
 	}
 
 	// Sync from external v-model
@@ -1450,8 +1305,7 @@
 		// 1) Nettoyer l'état de validation et d'interaction
 		clearValidation()
 		isDatePickerVisible.value = false
-		hasInteracted.value = false
-		isManualInputActive.value = false
+		resetInteractionState()
 
 		if (isInteractionDisabled.value) {
 			fieldKey.value++

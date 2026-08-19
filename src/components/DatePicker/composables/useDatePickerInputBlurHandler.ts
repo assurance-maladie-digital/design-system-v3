@@ -25,6 +25,7 @@ export const useDatePickerInputBlurHandler = (options: {
 	replaceErrors?: (messages: string[]) => void
 
 	// Fonctions
+	withInternalUpdate: (fn: () => void) => void
 	validateDateFormat: (dateStr: string) => { isValid: boolean, message: string }
 	parseDate: (dateStr: string, format: string) => Date | null
 	formatDate: (date: Date, format: string) => string
@@ -41,9 +42,9 @@ export const useDatePickerInputBlurHandler = (options: {
 		displayFormattedDate,
 		hasInteracted,
 		isManualInputActive,
-		isUpdatingFromInternal,
 		selectedDates,
 		replaceErrors = () => {},
+		withInternalUpdate,
 		validateDateFormat,
 		parseDate,
 		formatDate,
@@ -63,25 +64,6 @@ export const useDatePickerInputBlurHandler = (options: {
 			: formatDate(date, unref(format))
 	}
 
-	const withInternalUpdate = (fn: () => void, resetMode: 'microtask' | 'timeout' = 'microtask') => {
-		try {
-			isUpdatingFromInternal.value = true
-			fn()
-		}
-		finally {
-			if (resetMode === 'timeout') {
-				setTimeout(() => {
-					isUpdatingFromInternal.value = false
-				}, 0)
-			}
-			else {
-				queueMicrotask(() => {
-					isUpdatingFromInternal.value = false
-				})
-			}
-		}
-	}
-
 	const updateRangeModel = (startDate: Date, endDate: Date) => {
 		if (!isRangeValid(startDate, endDate)) {
 			replaceErrors([locales.endBeforeStart])
@@ -91,7 +73,7 @@ export const useDatePickerInputBlurHandler = (options: {
 		withInternalUpdate(() => {
 			selectedDates.value = [startDate, endDate]
 			updateModel([formatForModel(startDate), formatForModel(endDate)])
-		}, 'timeout')
+		})
 	}
 
 	const updateSingleModel = (date: Date) => {
