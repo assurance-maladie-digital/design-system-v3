@@ -18,7 +18,7 @@
 	import type { ViewMode } from '../composables/useDatePickerViewMode'
 	import type { CalendarModeProps, DateObjectValue } from '../types'
 	import { DatePickerCommonDefaults } from '../types'
-	import { formatDateRangeDisplay, getDisplayedMonthYearState } from '../utils/dateFormattingUtils'
+	import { formatDateRangeDisplay, getDisplayedMonthYearState, resolveDatePickerStateFromModelValue } from '../utils/dateFormattingUtils'
 	import { useComplexDatePickerProps } from './props/complexDatePickerProps'
 	import { useDateTextInputProps } from './props/dateTextInputProps'
 	import { useSyTextFieldProps } from './props/syTextFieldProps'
@@ -385,6 +385,11 @@
 
 	// Watcher pour mettre à jour le modèle lorsque les dates sélectionnées changent
 	watch(selectedDates, async (newValue) => {
+		if (!newValue) {
+			keyboardNavigatedDate.value = null
+			syncDisplayedMonthYearFromDate(new Date())
+		}
+
 		keyboardNavigatedDate.value = Array.isArray(newValue)
 			? newValue[0] ?? null
 			: newValue
@@ -428,6 +433,7 @@
 					// Cas générique : déléguer au composable pour synchroniser l'input
 					syncTextInputFromSelection()
 				}
+				syncDisplayFormattedFromSelection()
 			}
 			finally {
 				queueMicrotask(() => {
@@ -439,6 +445,7 @@
 			updateModel(null)
 			// Réinitialiser textInputValue
 			textInputValue.value = ''
+			displayFormattedDate.value = ''
 		}
 
 		// Réinitialiser le flag de protection une fois le modèle mis à jour
@@ -475,11 +482,14 @@
 		displayRange: computed(() => props.displayRange),
 		parseDate,
 		formatDate,
-		initializeSelectedDates,
 		validateDates,
 		updateModel,
 		generateDateRange,
 	})
+
+	const syncDisplayFormattedFromSelection = () => {
+		displayFormattedDate.value = displayFormattedFromSelectedDates.value || ''
+	}
 
 	// Gestionnaire pour les mises à jour du DateTextInput en mode no-calendar
 	const handleDateTextInputUpdate = async (value: DateModelValue) => {
@@ -488,33 +498,19 @@
 		try {
 			isUpdatingFromInternal.value = true
 
-			// Mettre à jour le modèle avec la valeur reçue du DateTextInput
 			await updateModel(value)
+			const nextState = resolveDatePickerStateFromModelValue({
+				modelValue: value,
+				displayRange: props.displayRange,
+				displayFormat: props.format,
+				returnFormat: props.dateFormatReturn || props.format,
+				parseDate,
+				formatDate,
+				generateDateRange,
+			})
 
-			// Mettre à jour selectedDates en fonction de la valeur reçue
-			if (!value) {
-				selectedDates.value = null
-				displayFormattedDate.value = ''
-			}
-			else if (Array.isArray(value) && props.displayRange) {
-				// Pour les plages de dates
-				const [startDateStr, endDateStr] = value
-				const startDate = parseDate(startDateStr, props.dateFormatReturn || props.format)
-				const endDate = parseDate(endDateStr, props.dateFormatReturn || props.format)
-
-				if (startDate && endDate) {
-					selectedDates.value = generateDateRange(startDate, endDate)
-					displayFormattedDate.value = formatDateRangeDisplay(startDate, endDate, props.format, formatDate)
-				}
-			}
-			else if (typeof value === 'string') {
-				// Pour une date unique
-				const date = parseDate(value, props.dateFormatReturn || props.format)
-				if (date) {
-					selectedDates.value = date
-					displayFormattedDate.value = formatDate(date, props.format)
-				}
-			}
+			selectedDates.value = nextState.selectedDates
+			displayFormattedDate.value = nextState.displayValue
 		}
 		finally {
 			queueMicrotask(() => {
@@ -588,15 +584,6 @@
 		}
 	})
 
-	// Date(s) formatée(s) en chaîne de caractères pour l'affichage (centralisée dans useDatePickerState)
-	const displayFormattedDateComputed = displayFormattedFromSelectedDates
-
-	watch(displayFormattedDateComputed, (newValue) => {
-		if (!props.noCalendar && newValue) {
-			displayFormattedDate.value = newValue
-		}
-	})
-
 	// Watcher indépendant pour gérer le clearing (extrait du watcher imbriqué)
 	watch(displayFormattedDate, (newValue) => {
 		if (!newValue) {
@@ -620,9 +607,7 @@
 
 	// Fonction pour mettre à jour displayFormattedDate quand le VDatePicker change
 	const updateDisplayFormattedDate = () => {
-		if (displayFormattedDateComputed.value) {
-			displayFormattedDate.value = displayFormattedDateComputed.value
-		}
+		syncDisplayFormattedFromSelection()
 	}
 
 	// Le composable useDateSelection est déjà initialisé plus haut dans le code
@@ -681,10 +666,7 @@
 		// Configurer l'observateur pour le bouton du mois
 		setupMonthButtonObserver()
 
-		// Initialiser l'affichage formaté
-		if (displayFormattedDateComputed.value) {
-			displayFormattedDate.value = displayFormattedDateComputed.value
-		}
+		syncDisplayFormattedFromSelection()
 
 		// Validation au montage pour afficher les erreurs sur les dates pré-remplies invalides
 		// Aligné sur le comportement de ComplexDatePicker
@@ -914,58 +896,10 @@
 	})
 
 	watch(() => props.modelValue, (newValue) => {
-		if (isUpdatingFromInternal.value) {
-			if (props.displayRange) {
-				if (Array.isArray(newValue) && newValue.length >= 2) {
-					// Synchroniser les dates de plage avec le modèle
-					syncFromModelValue(newValue)
-				}
-			}
-			return
-		}
+		if (isUpdatingFromInternal.value) return
 
-		// Synchroniser les dates sélectionnées avec le modèle
 		syncFromModelValue(newValue)
-
-		// Mettre à jour textInputValue pour le DateTextInput en mode no-calendar
-		if (props.noCalendar) {
-			try {
-				isUpdatingFromInternal.value = true
-
-				if (!newValue) {
-					textInputValue.value = ''
-				}
-				else if (Array.isArray(newValue) && props.displayRange) {
-				// Pour les plages de dates, on ne modifie pas directement textInputValue
-				// car le DateTextInput gère son propre formatage
-				}
-				else if (typeof newValue === 'string') {
-					// Pour une date unique
-					const date = parseDate(newValue, props.dateFormatReturn || props.format)
-					if (date) {
-						textInputValue.value = formatDate(date, props.format)
-					}
-					else {
-						textInputValue.value = newValue
-					}
-				}
-			}
-			finally {
-				setTimeout(() => {
-					isUpdatingFromInternal.value = false
-				}, 0)
-			}
-		}
 	}, { immediate: true })
-
-	// Reset month/year names when clearing the date
-	watch(selectedDates, (newValue) => {
-		if (!newValue) {
-			keyboardNavigatedDate.value = null
-			const today = new Date()
-			syncDisplayedMonthYearFromDate(today)
-		}
-	})
 
 	const toggleDatePicker = async () => {
 		if (isInteractionDisabled.value) return

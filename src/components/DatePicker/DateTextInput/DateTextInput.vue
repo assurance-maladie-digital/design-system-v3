@@ -7,7 +7,6 @@
 		useDateTextField,
 		useDatePickerValidation,
 		validateDateFormat,
-		isDateComplete,
 	} from '../composables'
 	import { ref, computed, watch, nextTick, onMounted, readonly as readonlyState, toRefs, useId } from 'vue'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
@@ -18,9 +17,10 @@
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useSyTextFieldProps } from './props/syTextFieldProps'
 	import { locales } from '../locales'
-	import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
+	import type { DateInput, DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 	import type { DateObjectValue, DateTextInputProps } from '../types'
 	import DatePickerLiveRegion from '../DatePickerLiveRegion.vue'
+	import { resolveDatePickerStateFromModelValue } from '../utils/dateFormattingUtils'
 
 	dayjs.extend(customParseFormat)
 
@@ -168,6 +168,8 @@
 	const successMessages = computed((): string[] =>
 		readonly.value ? [] : (bridgeValidation.validation.displaySuccesses.value ?? []),
 	)
+	const customValidationRules = computed(() => props.customRules)
+	const customValidationWarningRules = computed(() => props.customWarningRules)
 
 	/**
 	 * Safe validate utility
@@ -182,6 +184,10 @@
 		}
 		return await validateField(value, rules, warningRules) ?? { hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [], warnings: [], successes: [] } }
 	}
+
+	const validateCustomValue = async (value: unknown): Promise<ValidationResult> => (
+		await safeValidateField(value, customValidationRules.value, customValidationWarningRules.value)
+	)
 
 	/**
 	 * =====================
@@ -575,8 +581,6 @@
 			hasInteracted,
 			errors,
 			clearValidation,
-			validateDateFormat: validateDateFormatForSingleOrRange,
-			isDateComplete: (val: string) => isDateComplete(val, displayFormat.value),
 			parseDate,
 			validateField: safeValidateField,
 		},
@@ -604,59 +608,428 @@
 		return formatDate(date, returnFormat.value)
 	}
 
+	function toModelDateText(date: Date, fallbackDisplayText?: string): string {
+		if (returnFormat.value !== displayFormat.value) {
+			return toReturnFormat(date)
+		}
+
+		return fallbackDisplayText ?? formatDate(date, displayFormat.value)
+	}
+
+	function emitSingleModelDate(date: Date, fallbackDisplayText?: string): string {
+		const modelDateText = toModelDateText(date, fallbackDisplayText)
+		emitModel(modelDateText)
+		return modelDateText
+	}
+
+	function emitRangeModelDates(
+		startDate: Date,
+		endDate: Date,
+		fallbackDisplayRange?: readonly [string, string],
+	): [string, string] {
+		const modelDateRange: [string, string] = [
+			toModelDateText(startDate, fallbackDisplayRange?.[0]),
+			toModelDateText(endDate, fallbackDisplayRange?.[1]),
+		]
+
+		emitModel(modelDateRange)
+		return modelDateRange
+	}
+
 	function emitModel(val: DateModelValue) {
 		emit('update:model-value', val)
+	}
+
+	function syncFromModelValue(modelValue: DateInput | undefined) {
+		const nextState = resolveDatePickerStateFromModelValue({
+			modelValue,
+			displayRange: isRange.value,
+			displayFormat: displayFormat.value,
+			returnFormat: returnFormat.value,
+			parseDate,
+			formatDate,
+			preserveInvalidValue: true,
+		})
+
+		selectedDates.value = nextState.selectedDates
+		inputValue.value = nextState.displayValue
+
+		if (isRange.value && Array.isArray(nextState.selectedDates) && nextState.selectedDates.length >= 2) {
+			try {
+				isUpdatingFromInternal.value = true
+				bridgeValidation.validateDates()
+			}
+			finally {
+				queueMicrotask(() => (isUpdatingFromInternal.value = false))
+			}
+		}
+	}
+
+	function getSkeletonPattern(format: string): RegExp {
+		const formatSeparators = format.replace(/[A-Za-z]/g, '')
+		const allowedChars = ['_', ' ', ...new Set(formatSeparators.split(''))]
+			.map(char => char.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+			.join('')
+
+		return new RegExp(`^[${allowedChars}]+$`)
+	}
+
+	const skeletonPattern = computed(() => getSkeletonPattern(displayFormat.value))
+
+	function isEmptyOrSkeletonInput(value: string): boolean {
+		return !value || value.trim() === '' || skeletonPattern.value.test(value)
+	}
+
+	async function runEmptyInputRules(): Promise<boolean> {
+		if (required.value && hasInteracted.value && !readonly.value && !props.disableErrorHandling) {
+			errors.value.push(locales.required)
+			return false
+		}
+
+		if (customValidationRules.value.length > 0 && hasInteracted.value) {
+			await validateCustomValue(null)
+			return !hasError.value
+		}
+
+		return true
+	}
+
+	async function runRangeInputRules(value: string): Promise<boolean> {
+		const [startDateText = '', endDateText = ''] = value.split(locales.rangeSeparator)
+
+		if (startDateText && !endDateText) {
+			return !!(await validateManualInput(startDateText))
+		}
+
+		if (!(startDateText && endDateText)) {
+			return !hasError.value
+		}
+
+		const formatValidationResult = validateDateFormatForSingleOrRange(value)
+		if (!formatValidationResult.isValid) {
+			if (!props.disableErrorHandling && formatValidationResult.message) {
+				errors.value.push(formatValidationResult.message)
+			}
+			return false
+		}
+
+		const startDate = parseDate(startDateText, displayFormat.value)
+		const endDate = parseDate(endDateText, displayFormat.value)
+
+		if (!(startDate && endDate)) {
+			return !hasError.value
+		}
+
+		if (!isValidRange(startDate, endDate) && !props.disableErrorHandling) {
+			errors.value.push(locales.endBeforeStart)
+			return false
+		}
+
+		await validateCustomValue(startDate)
+		if (errors.value.length === 0) {
+			await validateCustomValue(endDate)
+		}
+
+		return !hasError.value
+	}
+
+	function isVisuallyEmptyInput(value: string): boolean {
+		return !value || value.trim() === '' || !value.replace(/[_\s/-]/g, '')
+	}
+
+	async function withFormattingLock<T>(
+		callback: () => Promise<T> | T,
+		releaseOnNextTick = false,
+	): Promise<T> {
+		isFormatting.value = true
+
+		try {
+			return await callback()
+		}
+		finally {
+			if (releaseOnNextTick) {
+				await nextTick()
+			}
+			isFormatting.value = false
+		}
+	}
+
+	async function validateDisplayValueOnBlur(value: string): Promise<boolean> {
+		const formatValidationResult = validateDateFormatForSingleOrRange(value)
+		const customRulesValidationResult = await validateCustomValue(value)
+
+		if (!formatValidationResult.isValid || customRulesValidationResult.hasError) {
+			await runRules(value)
+			return false
+		}
+
+		return true
+	}
+
+	function emitBlurRangeModel(value: string): void {
+		if (!value.includes(locales.rangeSeparator)) {
+			emitModel(value)
+			return
+		}
+
+		const dateRangeParts = value.split(locales.rangeSeparator)
+		if (dateRangeParts.length !== 2) {
+			emitModel(value)
+			return
+		}
+
+		const [startDateText, endDateText] = dateRangeParts
+		const startDate = dayjs(startDateText!, displayFormat.value, true)
+		const endDate = dayjs(endDateText!, displayFormat.value, true)
+
+		if (startDate.isValid() && endDate.isValid()) {
+			emitRangeModelDates(startDate.toDate(), endDate.toDate(), [startDateText!, endDateText!])
+			return
+		}
+
+		emitModel([startDateText!, endDateText!])
+	}
+
+	function emitBlurModel(value: string): void {
+		if (isRange.value) {
+			emitBlurRangeModel(value)
+			return
+		}
+
+		const parsedDate = dayjs(value, displayFormat.value, true).toDate()
+		emitSingleModelDate(parsedDate, value)
+	}
+
+	function isMaskedEmptyInput(value: string): boolean {
+		return !value || value.trim() === '' || /^[_/\-.\s]+$/.test(value)
+	}
+
+	async function restoreDisabledInputValue(): Promise<void> {
+		const modelValue = props.modelValue
+		if (!modelValue) return
+
+		await withFormattingLock(async () => {
+			if (isRange.value && Array.isArray(modelValue) && modelValue.length === 2) {
+				const [startDateText, endDateText] = modelValue
+				const startDate = parseDate(startDateText, returnFormat.value)
+				const endDate = parseDate(endDateText, returnFormat.value)
+
+				if (startDate && endDate) {
+					initializeWithDates(startDate, endDate)
+					selectedDates.value = [startDate, endDate]
+					inputValue.value = formatRangeForDisplay(startDate, endDate)
+					await runRules(inputValue.value)
+				}
+
+				return
+			}
+
+			const rawValue = typeof modelValue === 'string' ? modelValue : ''
+			const parsedDate = dayjs(rawValue, displayFormat.value, true)
+			inputValue.value = parsedDate.isValid()
+				? parsedDate.format(displayFormat.value)
+				: rawValue
+
+			await runRules(inputValue.value)
+		})
+	}
+
+	async function clearWatchedInputValue(): Promise<boolean> {
+		if (!isMaskedEmptyInput(inputValue.value)) {
+			return false
+		}
+
+		emitModel(null)
+		await runRules('')
+
+		if (isRange.value) {
+			resetState()
+			selectedDates.value = null
+		}
+
+		return true
+	}
+
+	function applyTypingAutoClamp(value: string): string {
+		if (!props.autoClamp || isOverwriteEditing.value) {
+			return value
+		}
+
+		const clampedValue = clampIfNeeded(value)
+		if (clampedValue === value) {
+			return value
+		}
+
+		inputValue.value = clampedValue
+
+		if (isRange.value) {
+			const [startDate, endDate] = parseRangeInput(clampedValue)
+			if (startDate && endDate) emitRangeModelDates(startDate, endDate)
+			else if (startDate) emitModel(toReturnFormat(startDate))
+		}
+		else {
+			const parsedDate = parseDate(clampedValue, displayFormat.value)
+			if (parsedDate) emitSingleModelDate(parsedDate)
+		}
+
+		return clampedValue
+	}
+
+	async function emitCompletedSingleInput(formattedValue: string, fallbackDisplayText = formattedValue): Promise<void> {
+		const formatValidationResult = validateDateFormatForSingleOrRange(formattedValue)
+		if (!formatValidationResult.isValid) {
+			return
+		}
+
+		const parsedDate = parseDate(formattedValue, displayFormat.value)
+		if (!parsedDate) {
+			return
+		}
+
+		const formattedDateOutput = toModelDateText(parsedDate, fallbackDisplayText)
+		await nextTick()
+		emitModel(formattedDateOutput)
+		emit('date-selected', formattedDateOutput)
+	}
+
+	async function handleRangeOverwriteInput(): Promise<void> {
+		const [startDate, endDate] = parseRangeInput(inputValue.value)
+
+		if (startDate && endDate) {
+			if (!isValidRange(startDate, endDate)) {
+				clearValidation()
+				errors.value.push(locales.endBeforeStart)
+			}
+			else {
+				emitRangeModelDates(startDate, endDate)
+				await runRules(inputValue.value)
+			}
+			return
+		}
+
+		if (startDate) {
+			emit('date-selected', formatDate(startDate, returnFormat.value))
+			clearValidation()
+			return
+		}
+
+		clearValidation()
+	}
+
+	async function handleSingleOverwriteInput(): Promise<void> {
+		const formattedValue = inputValue.value
+		const isComplete = !!formattedValue && !formattedValue.includes('_')
+
+		if (!isComplete) {
+			clearValidation()
+			return
+		}
+
+		await emitCompletedSingleInput(formattedValue)
+		await runRules(formattedValue)
+	}
+
+	function formatRangeTypingValue(value: string): string {
+		if (value.includes(locales.rangeSeparator)) {
+			const [startDateText, endDateText = ''] = value.split(locales.rangeSeparator)
+			const formattedStartDate = startDateText ? formatDateInput(startDateText).formatted : ''
+			const formattedEndDate = endDateText ? formatDateInput(endDateText).formatted : ''
+			return `${formattedStartDate}${locales.rangeSeparator}${formattedEndDate}`
+		}
+
+		return formatDateInput(value).formatted
+	}
+
+	function syncSelectedRangeValidation(): void {
+		try {
+			isUpdatingFromInternal.value = true
+			bridgeValidation.validateDates()
+		}
+		finally {
+			queueMicrotask(() => (isUpdatingFromInternal.value = false))
+		}
+	}
+
+	function applyRangeCursorPosition(inputElement: HTMLInputElement | null, cursorPosition?: number): void {
+		if (cursorPosition === undefined || isHandlingBackspace.value) {
+			return
+		}
+
+		queueMicrotask(() => setInputSelectionRange(inputElement, cursorPosition))
+	}
+
+	function handleCompletedRangeSelection(dates: [Date | null, Date | null]): void {
+		if (!(dates[0] && dates[1])) {
+			return
+		}
+
+		if (!isValidRange(dates[0], dates[1])) {
+			errors.value.push(locales.endBeforeStart)
+		}
+	}
+
+	function handlePartialRangeSelection(dates: [Date | null, Date | null], justCompletedFirstDate?: boolean): void {
+		if (justCompletedFirstDate && dates[0]) {
+			emit('date-selected', toReturnFormat(dates[0]))
+		}
+	}
+
+	function clearRangeSelection(): void {
+		selectedDates.value = null
+
+		if (props.modelValue !== null) {
+			emitModel(null)
+		}
+	}
+
+	function applyRangeInputResult(
+		result: ReturnType<typeof handleRangeInput>,
+		inputElement: HTMLInputElement | null,
+	): void {
+		inputValue.value = result.formattedValue
+
+		if (result.dates[0]) {
+			selectedDates.value = result.dates
+			syncSelectedRangeValidation()
+
+			if (result.isComplete) {
+				handleCompletedRangeSelection(result.dates)
+			}
+			else {
+				handlePartialRangeSelection(result.dates, result.justCompletedFirstDate)
+			}
+		}
+		else {
+			clearRangeSelection()
+		}
+
+		emit('input', result.formattedValue)
+		applyRangeCursorPosition(inputElement, result.cursorPosition)
+	}
+
+	function handleRangeTypingInput(
+		value: string,
+		previousValue: string | undefined,
+		cursor: number,
+		inputElement: HTMLInputElement | null,
+	): void {
+		const formattedValue = formatRangeTypingValue(value)
+		const result = previousValue
+			? handleRangeInput(previousValue, formattedValue, cursor)
+			: handleRangeInput('', formattedValue)
+
+		applyRangeInputResult(result, inputElement)
 	}
 
 	async function runRules(value: string): Promise<boolean> {
 		clearValidation()
 
-		// Vérifier si la valeur est vide ou est un squelette (ex: "__//____" pour DD/MM/YYYY)
-		// Un squelette ne contient que des underscores, des espaces et les séparateurs du format
-		const formatSeparators = props.format.replace(/[A-Za-z]/g, '')
-		// Créer un pattern qui autorise uniquement underscores, espaces et séparateurs du format
-		const allowedChars = ['_', ' ', ...new Set(formatSeparators.split(''))].map(char => char.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('')
-		const skeletonPattern = new RegExp(`^[${allowedChars}]+$`)
-		const isEmptyOrSkeleton = !value || value.trim() === '' || skeletonPattern.test(value)
-
-		if (isEmptyOrSkeleton) {
-			if (required.value && hasInteracted.value && !readonly.value && !props.disableErrorHandling) {
-				errors.value.push(locales.required)
-				return false
-			}
-			// Permettre aux custom rules de s'exécuter même sur des champs vides
-			// Mais seulement si l'utilisateur a interagi avec le champ
-			if (props.customRules && props.customRules.length > 0 && hasInteracted.value) {
-				// Exécuter les custom rules sur la valeur vide
-				await safeValidateField(null, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
-				return !hasError.value
-			}
-			return true
+		if (isEmptyOrSkeletonInput(value)) {
+			return await runEmptyInputRules()
 		}
 
 		if (isRange.value && value.includes(locales.rangeSeparator)) {
-			const [startDateText, endDateText] = value.split(locales.rangeSeparator)
-			if (startDateText && !endDateText) return !!(await validateManualInput(startDateText))
-
-			if (startDateText && endDateText) {
-				const formatValidationResult = validateDateFormatForSingleOrRange(value)
-				if (!formatValidationResult.isValid) {
-					if (!props.disableErrorHandling && formatValidationResult.message) errors.value.push(formatValidationResult.message)
-					return false
-				}
-				const startDate = parseDate(startDateText, displayFormat.value)
-				const endDate = parseDate(endDateText, displayFormat.value)
-				if (startDate && endDate) {
-					// Vérifier que la plage est valide avant d'appliquer les règles personnalisées
-					if (!isValidRange(startDate, endDate) && !props.disableErrorHandling) {
-						errors.value.push(locales.endBeforeStart)
-						return false
-					}
-					await safeValidateField(startDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
-					if (errors.value.length === 0) await safeValidateField(endDate, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
-				}
-			}
-			return !hasError.value
+			return await runRangeInputRules(value)
 		}
 
 		return !!(await validateManualInput(value))
@@ -701,12 +1074,12 @@
 		isFormatting.value = true
 		if (isRange.value) {
 			const [startDate, endDate] = parseRangeInput(inputValue.value)
-			if (startDate && endDate) emitModel([toReturnFormat(startDate), toReturnFormat(endDate)])
+			if (startDate && endDate) emitRangeModelDates(startDate, endDate)
 			else if (startDate) emit('date-selected', toReturnFormat(startDate))
 		}
 		else {
 			const parsedDate = parseDate(inputValue.value, displayFormat.value)
-			if (parsedDate) emitModel(returnFormat.value !== displayFormat.value ? toReturnFormat(parsedDate) : formatDate(parsedDate, displayFormat.value))
+			if (parsedDate) emitSingleModelDate(parsedDate)
 		}
 
 		return true
@@ -734,10 +1107,9 @@
 
 		if (!props.isValidateOnBlur) return
 
-		// Handle empty input
-		if (!inputValue.value || inputValue.value.trim() === '' || !inputValue.value.replace(/[_\s/-]/g, '')) {
+		if (isVisuallyEmptyInput(inputValue.value)) {
 			emitModel(null)
-			runRules('')
+			await runRules('')
 			return
 		}
 
@@ -745,122 +1117,31 @@
 		// On l'applique donc avant la validation au blur, sinon une date comme 31/04
 		// sort en erreur avant d'atteindre la logique d'autoClamp.
 		// isFormatting bloque le watcher inputValue pour éviter une double émission du modèle.
-		isFormatting.value = true
-		applyAutoClampOnCurrentInput(false)
-		isFormatting.value = false
+		await withFormattingLock(() => {
+			applyAutoClampOnCurrentInput(false)
+		})
 
-		if (inputValue.value) {
-			const formatValidationResult = validateDateFormatForSingleOrRange(inputValue.value)
-			const customRulesValidationResult = await safeValidateField(inputValue.value, computed(() => props.customRules).value, computed(() => props.customWarningRules).value)
-
-			if (formatValidationResult.isValid && !customRulesValidationResult.hasError && !isRange.value) {
-				const parsedDate = dayjs(inputValue.value, displayFormat.value, true).toDate()
-				// Guard isFormatting to prevent the modelValue watcher from
-				// rewriting inputValue in reaction to our own emit.
-				try {
-					isFormatting.value = true
-					emitModel(returnFormat.value !== displayFormat.value ? dayjs(parsedDate).format(returnFormat.value) : inputValue.value)
-				}
-				catch (error) {
-					isFormatting.value = false
-					throw error
-				}
-			}
-			else if (formatValidationResult.isValid && !customRulesValidationResult.hasError && isRange.value) {
-				if (typeof inputValue.value === 'string' && inputValue.value.includes(locales.rangeSeparator)) {
-					const dateRangeParts = inputValue.value.split(locales.rangeSeparator)
-					if (dateRangeParts.length === 2) {
-						const sd = dayjs(dateRangeParts[0]!, displayFormat.value, true)
-						const ed = dayjs(dateRangeParts[1]!, displayFormat.value, true)
-						// Guard isFormatting to prevent the modelValue watcher from
-						// rewriting inputValue in reaction to our own emit.
-						try {
-							isFormatting.value = true
-							if (sd.isValid() && ed.isValid()) {
-								const emittedRange: [string, string] = [
-									returnFormat.value !== displayFormat.value ? sd.format(returnFormat.value) : dateRangeParts[0]!,
-									returnFormat.value !== displayFormat.value ? ed.format(returnFormat.value) : dateRangeParts[1]!,
-								]
-								emitModel(emittedRange)
-							}
-							else {
-								emitModel([dateRangeParts[0]!, dateRangeParts[1]!])
-							}
-						}
-						catch (error) {
-							isFormatting.value = false
-							throw error
-						}
-					}
-					else emitModel(inputValue.value)
-				}
-				else emitModel(inputValue.value)
-			}
-			else {
-				// Format invalide ou règles custom en erreur : runRules appelle validateManualInput
-				// qui pousse déjà le message de format — ne pas pousser formatValidationResult.message
-				// en plus pour éviter les doublons dans errors.value.
-				// Keep the invalid input visible so the user can correct it.
-				// Do NOT emit null — that would trigger the modelValue watcher
-				// which clears inputValue and hides the error message.
-				runRules(inputValue.value)
-				return
-			}
+		if (!inputValue.value) {
+			return
 		}
 
-		runRules(inputValue.value)
+		// Format invalide ou règles custom en erreur : runRules pousse déjà les messages attendus.
+		// On garde la valeur visible pour permettre la correction sans nettoyer le champ.
+		if (!(await validateDisplayValueOnBlur(inputValue.value))) {
+			return
+		}
 
-		// Release isFormatting after the current microtask so that
-		// the modelValue watcher (triggered synchronously by emitModel)
-		// stays blocked, but future external changes are allowed.
-		try {
-			await nextTick()
-		}
-		finally {
-			isFormatting.value = false
-		}
+		// On garde le verrou jusqu'au nextTick pour bloquer le watcher modelValue déclenché par emitModel.
+		await withFormattingLock(async () => {
+			emitBlurModel(inputValue.value)
+			await runRules(inputValue.value)
+		}, true)
 	}
 	watch(inputValue, async (nv, ov) => {
 		if (props.disabled) {
-			const isEmpty = !nv || nv.trim() === '' || /^[_/\-.\s]+$/.test(nv)
-
-			if (isEmpty && ov && props.modelValue) {
-				isFormatting.value = true
-
-				const mv = props.modelValue
-
-				// --- RANGE ---
-				if (isRange.value && Array.isArray(mv) && mv.length === 2) {
-					const [start, end] = mv
-					const sd = parseDate(start, returnFormat.value)
-					const ed = parseDate(end, returnFormat.value)
-
-					if (sd && ed) {
-						initializeWithDates(sd, ed)
-						selectedDates.value = [sd, ed]
-						inputValue.value = formatRangeForDisplay(sd, ed)
-						runRules(inputValue.value)
-					}
-				}
-
-				// --- SINGLE ---
-				else {
-					const raw = typeof mv === 'string' ? mv : ''
-					const parsed = dayjs(raw, displayFormat.value, true)
-
-					if (parsed.isValid()) {
-						inputValue.value = parsed.format(displayFormat.value)
-						runRules(inputValue.value)
-					}
-					else {
-						inputValue.value = raw
-						runRules(raw)
-					}
-				}
-
-				isFormatting.value = false
+			if (isMaskedEmptyInput(nv) && ov && props.modelValue) {
+				await restoreDisabledInputValue()
 			}
-
 			return
 		}
 
@@ -869,33 +1150,11 @@
 		try {
 			isFormatting.value = true
 
-			if (!nv || nv.trim() === '' || nv.match(/^[_/\-.\s]+$/)) {
-				emitModel(null)
-				runRules('')
-				if (isRange.value) {
-					resetState()
-					selectedDates.value = null
-				}
+			if (await clearWatchedInputValue()) {
 				return
 			}
 
-			// clamp while typing → désactivé pendant overwrite pour éviter les sauts de curseur
-			if (props.autoClamp && !isOverwriteEditing.value) {
-				const clamped = clampIfNeeded(nv)
-				if (clamped !== nv) {
-					nv = clamped
-					inputValue.value = clamped
-					if (isRange.value) {
-						const [startDate, endDate] = parseRangeInput(clamped)
-						if (startDate && endDate) emitModel([toReturnFormat(startDate), toReturnFormat(endDate)])
-						else if (startDate) emitModel(toReturnFormat(startDate))
-					}
-					else {
-						const parsedDate = parseDate(clamped, displayFormat.value)
-						if (parsedDate) emitModel(returnFormat.value !== displayFormat.value ? toReturnFormat(parsedDate) : formatDate(parsedDate, displayFormat.value))
-					}
-				}
-			}
+			nv = applyTypingAutoClamp(nv)
 
 			const inputEl = getNativeInputElement()
 			const cursor = inputEl?.selectionStart ?? 0
@@ -903,93 +1162,16 @@
 			if (isRange.value) {
 				// --- Branche RANGE ---
 				if (isOverwriteEditing.value) {
-					const [sd, ed] = parseRangeInput(inputValue.value)
-					if (sd && ed) {
-						if (!isValidRange(sd, ed)) {
-							clearValidation()
-							errors.value.push(locales.endBeforeStart)
-						}
-						else {
-							const rf = returnFormat.value
-							emitModel([formatDate(sd, rf), formatDate(ed, rf)])
-							runRules(inputValue.value)
-						}
-					}
-					else if (sd) {
-						emit('date-selected', formatDate(sd, returnFormat.value))
-						clearValidation()
-					}
-					else {
-						clearValidation()
-					}
+					await handleRangeOverwriteInput()
 					return
 				}
 
 				if (typeof nv !== 'string') return
-				let formatted = ''
-				if (nv.includes(locales.rangeSeparator)) {
-					const [startDateText, endDateText = ''] = nv.split(locales.rangeSeparator)
-					const formattedStartDate = startDateText ? formatDateInput(startDateText).formatted : ''
-					const formattedEndDate = endDateText ? formatDateInput(endDateText).formatted : ''
-					formatted = `${formattedStartDate}${locales.rangeSeparator}${formattedEndDate}`
-				}
-				else {
-					formatted = formatDateInput(nv).formatted
-				}
-
-				const result = !ov ? handleRangeInput('', formatted) : handleRangeInput(ov, formatted, cursor)
-				inputValue.value = result.formattedValue
-
-				if (result.dates[0]) {
-					selectedDates.value = result.dates
-					try {
-						isUpdatingFromInternal.value = true
-						;(bridgeValidation).validateDates()
-					}
-					finally {
-						queueMicrotask(() => (isUpdatingFromInternal.value = false))
-					}
-
-					if (result.isComplete && result.dates[1]) {
-						const [sd, ed] = result.dates
-						if (!isValidRange(sd, ed)) errors.value.push(locales.endBeforeStart)
-					}
-					else if (result.justCompletedFirstDate) {
-						emit('date-selected', toReturnFormat(result.dates[0]))
-					}
-				}
-				else {
-					selectedDates.value = null
-					if (props.modelValue !== null) emitModel(null)
-				}
-
-				emit('input', result.formattedValue)
-				if (result.cursorPosition !== undefined && !isHandlingBackspace.value) {
-					queueMicrotask(() => setInputSelectionRange(inputEl, result.cursorPosition!))
-				}
+				handleRangeTypingInput(nv, ov, cursor, inputEl)
 			}
 			else {
 				if (isOverwriteEditing.value) {
-					const formatted = inputValue.value
-					const complete = formatted && !formatted.includes('_')
-					if (complete) {
-						const formatValidationResult = validateDateFormatForSingleOrRange(formatted)
-						if (formatValidationResult.isValid) {
-							const parsedDate = parseDate(formatted, displayFormat.value)
-							if (parsedDate) {
-								const formattedDateOutput = returnFormat.value !== displayFormat.value
-									? formatDate(parsedDate, returnFormat.value)
-									: formatDate(parsedDate, displayFormat.value)
-								await nextTick()
-								emitModel(formattedDateOutput)
-								emit('date-selected', formattedDateOutput)
-							}
-						}
-						runRules(formatted)
-					}
-					else {
-						clearValidation()
-					}
+					await handleSingleOverwriteInput()
 					return
 				}
 				const { formatted, cursorPos } = formatDateInput(nv, cursor)
@@ -1004,18 +1186,8 @@
 				// Only emit model value for complete dates
 				const complete = !formatted.includes('_')
 				if (complete) {
-					const formatValidationResult = validateDateFormatForSingleOrRange(formatted)
-					if (formatValidationResult.isValid) {
-						const isDateValid = dayjs(formatted, displayFormat.value, true).isValid()
-						if (isDateValid) {
-							const parsedDate = dayjs(formatted, displayFormat.value).toDate()
-							const formattedDateOutput = dateFormatReturn.value ? dayjs(parsedDate).format(returnFormat.value) : formatted
-							await nextTick()
-							emitModel(formattedDateOutput)
-							emit('date-selected', formattedDateOutput)
-						}
-					}
-					runRules(formatted)
+					await emitCompletedSingleInput(formatted, formatted)
+					await runRules(formatted)
 				}
 				else {
 					// For incomplete dates, clear validation but don't emit model value
@@ -1031,57 +1203,8 @@
 
 	watch(() => props.modelValue, (nv) => {
 		if (isFormatting.value) return
-		if (!nv) {
-			inputValue.value = ''
-			return
-		}
-
-		if (isRange.value && Array.isArray(nv)) {
-			const arr = nv as string[]
-			if (arr.length === 2) {
-				const [sa, ea] = arr
-				const sd = parseDate(sa, returnFormat.value)
-				const ed = parseDate(ea, returnFormat.value)
-				if (sd && ed) {
-					initializeWithDates(sd, ed)
-					selectedDates.value = [sd, ed]
-					try {
-						isUpdatingFromInternal.value = true
-						;(bridgeValidation).validateDates()
-					}
-					finally { queueMicrotask(() => (isUpdatingFromInternal.value = false)) }
-					inputValue.value = formatRangeForDisplay(sd, ed)
-					runRules(inputValue.value)
-				}
-			}
-			else if (arr.length === 1 && arr[0]) {
-				const sd = parseDate(arr[0], returnFormat.value)
-				if (sd) {
-					initializeWithDates(sd, null)
-					selectedDates.value = [sd]
-					inputValue.value = formatRangeForDisplay(sd, null)
-				}
-			}
-		}
-		else {
-			const s = typeof nv === 'string' ? nv : ''
-			// Try parsing with returnFormat first (as that's how we emit dates)
-			// Then fallback to displayFormat for backward compatibility
-			let d = dayjs(s, returnFormat.value, true).isValid() ? dayjs(s, returnFormat.value).toDate() : null
-			if (!d && returnFormat.value !== displayFormat.value) {
-				d = dayjs(s, displayFormat.value, true).isValid() ? dayjs(s, displayFormat.value).toDate() : null
-			}
-			if (d) {
-				// Just update the display - don't emit here to avoid loops
-				// The parent is responsible for providing the value in the correct format
-				inputValue.value = dayjs(d).format(displayFormat.value)
-				runRules(inputValue.value)
-			}
-			else {
-				inputValue.value = s
-				runRules(s)
-			}
-		}
+		syncFromModelValue(nv)
+		runRules(inputValue.value)
 	})
 
 	/** expose */
@@ -1105,25 +1228,7 @@
 	})
 
 	onMounted(async () => {
-		// Initialisation depuis le modelValue s'il existe
-		if (props.modelValue) {
-			if (isRange.value && Array.isArray(props.modelValue) && props.modelValue.length === 2) {
-				const [startDateString, endDateString] = props.modelValue
-				const startDate = parseDate(startDateString, returnFormat.value)
-				const endDate = parseDate(endDateString, returnFormat.value)
-				if (startDate && endDate) {
-					selectedDates.value = [startDate, endDate]
-					inputValue.value = `${formatDate(startDate, displayFormat.value)}${locales.rangeSeparator}${formatDate(endDate, displayFormat.value)}`
-				}
-			}
-			else {
-				const dateString = typeof props.modelValue === 'string' ? props.modelValue : ''
-				const parsedDate = dayjs(dateString, displayFormat.value, true).isValid()
-					? dayjs(dateString, displayFormat.value).toDate()
-					: null
-				inputValue.value = parsedDate ? dayjs(parsedDate).format(displayFormat.value) : dateString
-			}
-		}
+		syncFromModelValue(props.modelValue)
 
 		// Don't initialize skeleton on mount - let the native placeholder show
 		// Only initialize cursor position when user focuses on the input
