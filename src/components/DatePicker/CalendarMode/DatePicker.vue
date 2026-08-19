@@ -84,12 +84,6 @@
 	// Utiliser useDatePickerDerivedValues pour centraliser les computed partagés
 	const { minDate, maxDate } = useDatePickerDerivedValues(props)
 
-	// Utilisation du composable pour l'affichage formaté des dates
-	const { displayedDateString } = useDisplayedDateString({
-		selectedDates,
-		todayInString,
-	})
-
 	const onblur = ref(false)
 
 	const dateTextInputRef = ref<null | ComponentPublicInstance<typeof DateTextInput>>()
@@ -264,8 +258,14 @@
 		},
 		onSelectDate: (date: Date) => {
 			keyboardNavigatedDate.value = null
-			updateSelectedDates([date])
-			nextTick(() => closeDatePicker())
+			updateSelectedDates(date)
+
+			const isCompletedRangeSelection = !props.displayRange
+				|| Boolean(rangeBoundaryDates.value?.[0] && rangeBoundaryDates.value?.[1])
+
+			if (isCompletedRangeSelection) {
+				nextTick(() => closeDatePicker())
+			}
 		},
 	})
 
@@ -456,6 +456,13 @@
 		computed(() => props.format),
 		computed(() => props.displayRange),
 	)
+
+	// Utilisation du composable pour l'affichage formaté des dates
+	const { displayedDateString } = useDisplayedDateString({
+		selectedDates,
+		rangeBoundaryDates,
+		todayInString,
+	})
 
 	const {
 		textInputValue,

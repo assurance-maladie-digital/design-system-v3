@@ -230,6 +230,7 @@
 	const inputValue = ref('')
 	const inputRef = ref<InstanceType<typeof SyTextField> | null>(null)
 	const isFormatting = ref(false)
+	const pendingSyncedInputValue = ref<string | null>(null)
 	// Force re-render of SyTextField when needed (e.g., after reset)
 	const fieldKey = ref(0)
 	const isValidating = ref(false)
@@ -649,6 +650,10 @@
 			formatDate,
 			preserveInvalidValue: true,
 		})
+
+		if (inputValue.value !== nextState.displayValue) {
+			pendingSyncedInputValue.value = nextState.displayValue
+		}
 
 		selectedDates.value = nextState.selectedDates
 		inputValue.value = nextState.displayValue
@@ -1183,6 +1188,11 @@
 		}
 
 		// Prevent infinite loops but allow formatting
+		if (pendingSyncedInputValue.value !== null && nv === pendingSyncedInputValue.value) {
+			pendingSyncedInputValue.value = null
+			return
+		}
+
 		if (isFormatting.value || nv === ov || isHandlingBackspace.value || isBootstrapping.value) return
 		try {
 			isFormatting.value = true
