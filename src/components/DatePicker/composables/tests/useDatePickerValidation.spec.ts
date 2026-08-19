@@ -98,12 +98,18 @@ describe('useDatePickerValidation', () => {
 		})
 	})
 
-	describe('validationState', () => {
-		it('expose un contrat unifié pour les composants', () => {
+	describe('public contract', () => {
+		it('expose un contrat top-level unifié pour les composants', () => {
 			const options = createOptions()
 			const {
 				errors,
 				errorMessages,
+				hasError,
+				hasSuccess,
+				hasWarning,
+				pushError,
+				replaceErrors,
+				successes,
 				successMessages,
 				warnings,
 				warningMessages,
@@ -111,37 +117,39 @@ describe('useDatePickerValidation', () => {
 				validateDates,
 				validateCalendarModeDates,
 				clearValidation,
-				messages,
-				validationState,
 			} = useDatePickerValidation(options)
 
-			expect(validationState.errors).toBe(errors)
-			expect(validationState.warnings).toBe(warnings)
-			expect(validationState.validateField).toBe(validateField)
-			expect(validationState.validate).toBe(validateDates)
-			expect(validationState.validateSubmit).toBe(validateCalendarModeDates)
-			expect(validationState.clear).toBe(clearValidation)
-			expect(messages.errors).toBe(errorMessages)
-			expect(messages.warnings).toBe(warningMessages)
-			expect(messages.successes).toBe(successMessages)
-			expect(messages.hasSuccess).toBeTypeOf('object')
+			expect(errorMessages).toBeTypeOf('object')
+			expect(warningMessages).toBeTypeOf('object')
+			expect(successMessages).toBeTypeOf('object')
+			expect(errors.value).toEqual([])
+			expect(warnings.value).toEqual([])
+			expect(successes.value).toEqual([])
+			expect(hasError).toBeTypeOf('object')
+			expect(hasWarning).toBeTypeOf('object')
+			expect(hasSuccess).toBeTypeOf('object')
+			expect(pushError).toBeTypeOf('function')
+			expect(replaceErrors).toBeTypeOf('function')
+			expect(validateField).toBeTypeOf('function')
+			expect(validateDates).toBeTypeOf('function')
+			expect(validateCalendarModeDates).toBeTypeOf('function')
+			expect(clearValidation).toBeTypeOf('function')
 		})
 
 		it('expose aussi un controller inactif partageant le même contrat', async () => {
 			const controller = createInactiveDatePickerValidationController()
 
-			expect(controller.messages.errors.value).toEqual([])
-			expect(controller.messages.warnings.value).toEqual([])
-			expect(controller.messages.successes.value).toEqual([])
-			expect(controller.messages.hasSuccess.value).toBe(false)
-			expect(controller.validationState.errors.value).toEqual([])
-			expect(controller.validationState.warnings.value).toEqual([])
-			expect(controller.validationState.successes.value).toEqual([])
-			expect(controller.validationState.hasSuccess.value).toBe(false)
+			expect(controller.errorMessages.value).toEqual([])
+			expect(controller.warningMessages.value).toEqual([])
+			expect(controller.successMessages.value).toEqual([])
+			expect(controller.hasSuccess.value).toBe(false)
+			expect(controller.errors.value).toEqual([])
+			expect(controller.warnings.value).toEqual([])
+			expect(controller.successes.value).toEqual([])
 
-			const validateResult = controller.validationState.validate()
-			const submitResult = controller.validationState.validateSubmit()
-			const fieldResult = controller.validationState.validateField(new Date('2023-01-01'))
+			const validateResult = controller.validateDates()
+			const submitResult = controller.validateCalendarModeDates()
+			const fieldResult = controller.validateField(new Date('2023-01-01'))
 
 			expect(validateResult).toEqual({
 				hasError: false,
@@ -152,9 +160,9 @@ describe('useDatePickerValidation', () => {
 			expect(submitResult).toEqual(validateResult)
 			expect(fieldResult).toEqual(validateResult)
 
-			controller.validationState.clear()
+			controller.clearValidation()
 			await nextTick()
-			expect(controller.validationState.errors.value).toEqual([])
+			expect(controller.errors.value).toEqual([])
 		})
 
 		it('enregistre validateOnSubmit dans SyForm via le bridge quand formRegistration est fourni', async () => {
@@ -189,11 +197,11 @@ describe('useDatePickerValidation', () => {
 					},
 				]),
 			})
-			const { validateDates, errorMessages, validationState } = useDatePickerValidation(options)
+			const { validateDates, errorMessages, errors } = useDatePickerValidation(options)
 
 			validateDates()
 
-			expect(validationState.errors.value).toEqual(['Erreur interne'])
+			expect(errors.value).toEqual(['Erreur interne'])
 			expect(errorMessages.value).toEqual(['Erreur injectée', 'Erreur interne'])
 		})
 
@@ -213,34 +221,32 @@ describe('useDatePickerValidation', () => {
 					},
 				]),
 			})
-			const { validateDates, successMessages, messages } = useDatePickerValidation(options)
+			const { validateDates, successMessages, hasSuccess } = useDatePickerValidation(options)
 
 			validateDates()
 
 			expect(successMessages.value).toEqual(['Succès injecté', 'Succès interne'])
-			expect(messages.hasSuccess.value).toBe(true)
+			expect(hasSuccess.value).toBe(true)
 		})
 
-		it('applique les overrides hasError et hasWarning via le contrat de messages', () => {
+		it('applique les overrides hasError et hasWarning via le contrat top-level', () => {
 			const options = createOptions({
 				hasErrorProp: ref(true),
 				hasWarningProp: ref(true),
 			})
-			const { messages, validation } = useDatePickerValidation(options)
+			const { hasError, hasWarning } = useDatePickerValidation(options)
 
-			expect(messages.hasError.value).toBe(true)
-			expect(messages.hasWarning.value).toBe(true)
-			expect(validation.hasError.value).toBe(true)
-			expect(validation.hasWarning.value).toBe(true)
+			expect(hasError.value).toBe(true)
+			expect(hasWarning.value).toBe(true)
 		})
 
 		it('applique hasSuccess forcé sans modifier les messages exposés', () => {
 			const options = createOptions({
 				hasSuccessProp: ref(true),
 			})
-			const { messages, successMessages } = useDatePickerValidation(options)
+			const { hasSuccess, successMessages } = useDatePickerValidation(options)
 
-			expect(messages.hasSuccess.value).toBe(true)
+			expect(hasSuccess.value).toBe(true)
 			expect(successMessages.value).toEqual([])
 		})
 	})
