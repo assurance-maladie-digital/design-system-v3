@@ -1021,6 +1021,46 @@
 		applyRangeInputResult(result, inputElement)
 	}
 
+	async function applySingleCursorPosition(
+		inputElement: HTMLInputElement | null,
+		cursorPosition: number,
+		shouldMoveCursor: boolean,
+	): Promise<void> {
+		if (!shouldMoveCursor || isHandlingBackspace.value) {
+			return
+		}
+
+		await nextTick()
+		setInputSelectionRange(inputElement, cursorPosition)
+	}
+
+	function isCompleteSingleDate(value: string): boolean {
+		return !value.includes('_')
+	}
+
+	async function handleSingleTypingInput(
+		value: string,
+		cursor: number,
+		inputElement: HTMLInputElement | null,
+	): Promise<void> {
+		const { formatted, cursorPos } = formatDateInput(value, cursor)
+		const hasFormattingChange = formatted !== value
+
+		if (hasFormattingChange) {
+			inputValue.value = formatted
+			await applySingleCursorPosition(inputElement, cursorPos, true)
+		}
+
+		if (isCompleteSingleDate(formatted)) {
+			await emitCompletedSingleInput(formatted, formatted)
+			await runRules(formatted)
+			return
+		}
+
+		// For incomplete dates, clear validation but don't emit model value
+		clearValidation()
+	}
+
 	async function runRules(value: string): Promise<boolean> {
 		clearValidation()
 
@@ -1174,25 +1214,7 @@
 					await handleSingleOverwriteInput()
 					return
 				}
-				const { formatted, cursorPos } = formatDateInput(nv, cursor)
-				if (formatted !== nv) {
-					inputValue.value = formatted
-					if (!isHandlingBackspace.value) {
-						await nextTick()
-						setInputSelectionRange(inputEl, cursorPos)
-					}
-				}
-
-				// Only emit model value for complete dates
-				const complete = !formatted.includes('_')
-				if (complete) {
-					await emitCompletedSingleInput(formatted, formatted)
-					await runRules(formatted)
-				}
-				else {
-					// For incomplete dates, clear validation but don't emit model value
-					clearValidation()
-				}
+				await handleSingleTypingInput(nv, cursor, inputEl)
 			}
 		}
 		finally {
