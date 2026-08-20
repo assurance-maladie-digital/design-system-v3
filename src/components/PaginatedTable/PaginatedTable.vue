@@ -4,6 +4,9 @@
 	import { LocalStorageUtility } from '@/utils/localStorageUtility'
 	import Pagination from './Pagination.vue'
 	import type { VDataTable } from 'vuetify/components/VDataTable'
+	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = defineProps({
 		serverItemsLength: {
@@ -30,11 +33,17 @@
 			type: Boolean,
 			default: false,
 		},
+		locales: {
+			type: Object as () => DeepPartial<typeof defaultLocales>,
+			default: () => ({}),
+		},
 	})
 
 	defineOptions({
 		inheritAttrs: false,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
@@ -156,12 +165,12 @@
 
 		const fieldLabels = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
 		fieldLabels.forEach((fieldLabel) => {
-			fieldLabel.setAttribute('aria-label', 'éléments par page')
+			fieldLabel.setAttribute('aria-label', locales.value.itemsPerPageLabel)
 		})
 
 		const fieldTitles = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
 		fieldTitles.forEach((fieldTitle) => {
-			fieldTitle.setAttribute('title', 'éléments par page')
+			fieldTitle.setAttribute('title', locales.value.itemsPerPageLabel)
 		})
 
 		const th = document.querySelectorAll(`#${uniqueTableId.value} th`)
