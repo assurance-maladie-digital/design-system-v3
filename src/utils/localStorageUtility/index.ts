@@ -8,6 +8,10 @@ interface ControlItem {
 
 /** @see https://gist.github.com/paulirish/5558557 */
 function isStorageAvailable(): boolean {
+	if (typeof localStorage === 'undefined') {
+		return false
+	}
+
 	try {
 		const item = 'test'
 
