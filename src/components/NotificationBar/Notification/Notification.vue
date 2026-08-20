@@ -100,7 +100,10 @@
 					{{ props.closeBtnText }}
 				</template>
 				<template v-else>
-					<SyIcon	:icon="mdiClose" />
+					<SyIcon
+						:icon="mdiClose"
+						decorative
+					/>
 				</template>
 			</VBtn>
 		</div>

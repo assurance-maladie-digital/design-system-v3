@@ -41,7 +41,7 @@ describe('useValidation (unifyValidation)', () => {
 	describe('disableErrorHandling', () => {
 		it('returns a stub with empty refs and false computed values when disableErrorHandling is true', () => {
 			const params = makeParams({ disableErrorHandling: ref(true) })
-			const result = useValidation(params as Parameters<typeof useValidation>[0])
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
 			expect(result.errors.value).toEqual([])
 			expect(result.warnings.value).toEqual([])
@@ -53,7 +53,7 @@ describe('useValidation (unifyValidation)', () => {
 
 		it('stub validate() always returns true when disableErrorHandling is true', async () => {
 			const params = makeParams({ disableErrorHandling: ref(true) })
-			const result = useValidation(params as Parameters<typeof useValidation>[0])
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
 			const valid = await result.validate()
 			expect(valid).toBe(true)

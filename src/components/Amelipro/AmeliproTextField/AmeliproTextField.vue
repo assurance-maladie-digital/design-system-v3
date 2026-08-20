@@ -12,6 +12,7 @@
 	import { notBeforeDate } from '@/utils/amelipro/rules/notBeforeDate'
 	import { isRequired } from '@/utils/rules/isRequired'
 	import { mdiCheck, mdiClose, mdiEye, mdiEyeOff } from '@mdi/js'
+	import { vMaska } from 'maska/vue'
 
 	const props = defineProps({
 		required: {
@@ -77,6 +78,10 @@
 		label: {
 			type: String,
 			required: true,
+		},
+		mask: {
+			type: [String, Object] as PropType<string | Record<string, unknown>>,
+			default: undefined,
 		},
 		labelMaxWidth: {
 			type: String,
@@ -230,7 +235,7 @@
 		})
 	})
 
-	const emit = defineEmits(['change', 'update:model-value'])
+	const emit = defineEmits(['change', 'update:model-value', 'keypress'])
 	const emitChangeEvent = (): void => {
 		emit('change', inputValue.value, props.uniqueId)
 	}
@@ -353,6 +358,7 @@
 				:id="uniqueId"
 				ref="inputTextField"
 				v-model="inputValue"
+				v-maska="props.mask"
 				:aria-describedby="displayError ? errorId : undefined"
 				:aria-invalid="displayError ? true : undefined"
 				:required="required"
@@ -376,6 +382,7 @@
 				@blur="focused = false"
 				@change="emitChangeEvent"
 				@focus="focused = true"
+				@keypress="emit('keypress', $event)"
 			>
 				<template
 					v-if="isPassword && inputValue"
