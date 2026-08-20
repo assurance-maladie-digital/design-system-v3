@@ -10,6 +10,7 @@ import type { DateObjectValue, DatePickerRule } from '../types'
 import { useDateRangeValidation } from './useDateRangeValidation'
 import { validateDateFormat, isDateComplete } from './useDateFormatUtils'
 import { adaptCustomRules, validateEmptyOrIncompleteDate } from '../utils/validationUtils'
+import { isValidDateRange } from '../utils/dateFormattingUtils'
 
 export type DatePickerValidationRule = DatePickerRule
 
@@ -31,8 +32,6 @@ export type DatePickerValidationOptions = {
 	maxErrors?: MaybeRef<number>
 	selectedDates: Ref<DateObjectValue>
 	isUpdatingFromInternal: Ref<boolean>
-	currentRangeIsValid: Ref<boolean>
-	getRangeValidationError: Ref<string>
 	readonly?: MaybeRef<boolean>
 	useVuetifyValidation?: MaybeRef<boolean>
 	rules?: Ref<VuetifyValidationRule[] | undefined>
@@ -392,16 +391,9 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			const startDate = options.selectedDates.value[0]
 			const endDate = options.selectedDates.value[options.selectedDates.value.length - 1]
 
-			if (startDate && endDate && startDate.getTime() > endDate.getTime()) {
+			if (startDate && endDate && !isValidDateRange(startDate, endDate)) {
 				pushError(locales.endBeforeStart)
 				isValid = false
-			}
-			else if (!options.currentRangeIsValid.value) {
-				const rangeError = options.getRangeValidationError.value
-				if (rangeError) {
-					pushError(rangeError)
-					isValid = false
-				}
 			}
 		}
 
@@ -588,14 +580,23 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		}, { deep: true })
 	}
 
-	// Watcher sur selectedDates pour la validation automatique (seulement si pas de mode CalendarMode spécifique)
-	if (!options.useCalendarModeRequiredFlow) {
-		watch(options.selectedDates, (newDates) => {
+	// Validation automatique centralisée sur changement de selectedDates
+	// Garantit que tout changement de dates déclenche la validation, même sans appel explicite
+	watch(options.selectedDates, (newDates) => {
+		// CalendarMode: respecter isUpdatingFromInternal et ne valider que pour le cas null
+		if (options.useCalendarModeRequiredFlow) {
+			if (options.isUpdatingFromInternal.value) return
 			if (newDates === null || (Array.isArray(newDates) && newDates.length === 0)) {
-				clearValidation()
+				if (options.isValidateOnBlur?.value && !options.isInitialValidation?.value) {
+					validateCalendarModeDates()
+				}
 			}
-		})
-	}
+			return
+		}
+
+		// Non-CalendarMode: valider sur tout changement
+		validateDates()
+	})
 
 	// --- Validation de saisie texte (flow noCalendar / DateTextInput) ---
 
@@ -739,7 +740,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			}
 
 			const rangeErrors: string[] = []
-			if (startDate.getTime() > endDate.getTime() && shouldDisplayErrors()) {
+			if (!isValidDateRange(startDate, endDate) && shouldDisplayErrors()) {
 				rangeErrors.push(locales.endBeforeStart)
 			}
 

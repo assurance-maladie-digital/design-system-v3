@@ -25,7 +25,6 @@
 		useDatePickerValidation,
 		useDatePickerViewMode,
 		useDatePickerVisibility,
-		useDateRangeValidation,
 		useDateSelection,
 		useDisplayedDateString,
 		useHolidayHighlighting,
@@ -251,10 +250,6 @@
 	const selectedDates = ref<Date | (Date | null)[] | null>(
 		initializeSelectedDates(props.modelValue as DateInput | null, props.format, props.dateFormatReturn),
 	)
-	const { currentRangeIsValid, getRangeValidationError } = useDateRangeValidation(
-		selectedDates as Ref<DateObjectValue>,
-		computed(() => props.displayRange),
-	)
 	// Force re-render of DateTextInput/SyTextField when needed (e.g., after reset)
 	const fieldKey = ref(0)
 
@@ -293,8 +288,6 @@
 		maxErrors: computed(() => props.maxErrors),
 		selectedDates,
 		isUpdatingFromInternal,
-		currentRangeIsValid,
-		getRangeValidationError,
 		revalidateOnCustomRulesChange: true,
 		readonly: computed(() => props.readonly),
 		skipValidationWhenReadonly: true,
@@ -739,8 +732,6 @@
 	}
 
 	const syncFromSelectedDatesChange = (newValue: DateObjectValue): void => {
-		validateDates()
-
 		if (newValue !== null) {
 			handleSelectedDatesChange(newValue)
 		}
@@ -1508,7 +1499,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '../styles/datePickerShared.scss';
+@use '../styles/datePickerShared';
 
 .dp-width {
 	width: v-bind('props.width');

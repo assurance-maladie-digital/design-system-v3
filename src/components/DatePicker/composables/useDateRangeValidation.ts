@@ -1,6 +1,7 @@
 import { computed, unref, type Ref, type MaybeRef } from 'vue'
 import { locales } from '../locales'
 import type { DateObjectValue } from '../types'
+import { isValidDateRange } from '../utils/dateFormattingUtils'
 
 /**
  * Composable pour gérer la validation des plages de dates
@@ -12,11 +13,9 @@ export function useDateRangeValidation(
 ) {
 	/**
 	 * Vérifie si une plage de dates est valide (date de début avant date de fin)
+	 * Délègue à la fonction partagée isValidDateRange (dateFormattingUtils.ts)
 	 */
-	const isRangeValid = (startDate: Date | null | undefined, endDate: Date | null | undefined): boolean => {
-		if (!startDate || !endDate) return true // Si une des dates est manquante, considérer comme valide
-		return startDate.getTime() <= endDate.getTime()
-	}
+	const isRangeValid = isValidDateRange
 
 	/**
 	 * Variable réactive pour suivre la validité de la plage de dates actuelle

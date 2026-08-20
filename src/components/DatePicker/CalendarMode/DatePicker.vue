@@ -11,7 +11,7 @@
 	import { VDatePicker } from 'vuetify/components'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
-	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerCalendar, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerSyncGuard, useDatePickerValidation, useDatePickerViewMode, useDateRangeValidation, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useSelectedDayAria, useTodayButton } from '../composables'
+	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerCalendar, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerSyncGuard, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useSelectedDayAria, useTodayButton } from '../composables'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { locales } from '../locales'
 	import type { CalendarModeProps, DateObjectValue } from '../types'
@@ -263,10 +263,6 @@
 	const keyboardNavigatedDate = ref<Date | null>(null)
 	const preventCloseOnKeyboardNavigation = ref(false)
 	const isInitialValidation = ref(true)
-	const { currentRangeIsValid, getRangeValidationError } = useDateRangeValidation(
-		selectedDates as Ref<DateObjectValue>,
-		computed(() => props.displayRange),
-	)
 
 	const {
 		clearValidation,
@@ -301,8 +297,6 @@
 		maxErrors: computed(() => props.maxErrors),
 		selectedDates: selectedDates as Ref<DateObjectValue>,
 		isUpdatingFromInternal,
-		currentRangeIsValid,
-		getRangeValidationError,
 		readonly: computed(() => props.readonly),
 		skipValidationWhenReadonly: true,
 		useCalendarModeRequiredFlow: true,
@@ -399,11 +393,6 @@
 		}
 		else {
 			await updateModel(null)
-			// updateModel peut ne pas valider si le calendrier n'est pas visible
-			// ou si la valeur du modèle n'a pas changé — validation explicite pour le cas null
-			if (props.isValidateOnBlur && !isInitialValidation.value) {
-				await validateCalendarModeDates()
-			}
 			// Réinitialiser textInputValue
 			textInputValue.value = ''
 			displayFormattedDate.value = ''
@@ -993,7 +982,7 @@
 </template>
 
 <style lang="scss" scoped>
-@use '../styles/datePickerShared.scss';
+@use '../styles/datePickerShared';
 
 /* En mode calendar, le champ est readonly : pas de cursor pointer sur l'input et les icônes */
 :deep(.v-field__input),

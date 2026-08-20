@@ -356,7 +356,7 @@ describe('useDatePickerValidation', () => {
 			expect(errors.value).toContain(DATE_PICKER_MESSAGES.ERROR_END_BEFORE_START)
 		})
 
-		it('devrait utiliser le message d\'erreur de plage externe si la plage est invalide', () => {
+		it('devrait ne pas pousser d\'erreur de plage quand les dates sont valides même si currentRangeIsValid est faux', () => {
 			const options = createOptions({
 				displayRange: ref(true),
 				selectedDates: ref([new Date('2023-01-01'), new Date('2023-01-10')]),
@@ -367,7 +367,7 @@ describe('useDatePickerValidation', () => {
 
 			validateDates()
 
-			expect(errors.value).toContain('Plage externe invalide')
+			expect(errors.value).not.toContain('Plage externe invalide')
 		})
 
 		it('devrait gérer les règles custom asynchrones', async () => {
@@ -728,6 +728,67 @@ describe('useDatePickerValidation', () => {
 			// Les erreurs doivent être mises à jour sans passer par un état vide
 			expect(errors.value).toContain('Nouvelle erreur persistante')
 			expect(errors.value.length).toBeGreaterThan(0)
+		})
+	})
+
+	describe('régression : validation automatique sur changement de selectedDates (watcher centralisé)', () => {
+		it('devrait valider automatiquement quand selectedDates change (non-CalendarMode)', async () => {
+			const customRules = ref<DatePickerRule[]>([
+				{
+					type: 'custom',
+					options: { validate: () => 'Erreur auto' },
+				},
+			])
+			const selectedDates = ref<Date | (Date | null)[] | null>(null)
+			const options = createOptions({
+				selectedDates,
+				customRules,
+			})
+			const { errors } = useDatePickerValidation(options)
+
+			// Aucun appel explicite à validateDates()
+			selectedDates.value = new Date('2023-01-01')
+			await nextTick()
+
+			expect(errors.value).toContain('Erreur auto')
+		})
+
+		it('devrait valider automatiquement en mode CalendarMode quand selectedDates devient null', async () => {
+			const selectedDates = ref<Date | (Date | null)[] | null>(new Date('2023-01-01'))
+			const isInitialValidation = ref(false)
+			const options = createOptions({
+				selectedDates,
+				required: ref(true),
+				useCalendarModeRequiredFlow: true,
+				isInitialValidation,
+				isValidateOnBlur: ref(true),
+			})
+			const { errors } = useDatePickerValidation(options)
+
+			// Aucun appel explicite à validateCalendarModeDates()
+			selectedDates.value = null
+			await nextTick()
+
+			expect(errors.value).toContain(DATE_PICKER_MESSAGES.ERROR_REQUIRED)
+		})
+
+		it('ne devrait pas valider en mode CalendarMode quand isUpdatingFromInternal est true', async () => {
+			const selectedDates = ref<Date | (Date | null)[] | null>(new Date('2023-01-01'))
+			const isUpdatingFromInternal = ref(true)
+			const options = createOptions({
+				selectedDates,
+				required: ref(true),
+				useCalendarModeRequiredFlow: true,
+				isUpdatingFromInternal,
+				isInitialValidation: ref(false),
+				isValidateOnBlur: ref(true),
+			})
+			const { errors } = useDatePickerValidation(options)
+
+			selectedDates.value = null
+			await nextTick()
+
+			expect(errors.value).toHaveLength(0)
 		})
 	})
 })

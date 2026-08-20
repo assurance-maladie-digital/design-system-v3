@@ -1,6 +1,7 @@
 import { ref, unref } from 'vue'
 import type { Ref, MaybeRef } from 'vue'
 import { locales } from '../locales'
+import { isValidDateRange } from '../utils/dateFormattingUtils'
 
 /**
  * Composable pour gérer la sélection de dates dans les composants CalendarMode
@@ -56,7 +57,7 @@ export function useDateSelection(
 	const applyRangeSelection = (startDate: Date, endDate: Date) => {
 		rangeBoundaryDates.value = [startDate, endDate]
 
-		selectedDates.value = startDate.getTime() <= endDate.getTime()
+		selectedDates.value = isValidDateRange(startDate, endDate)
 			? generateDateRange(startDate, endDate)
 			: [startDate, endDate]
 	}

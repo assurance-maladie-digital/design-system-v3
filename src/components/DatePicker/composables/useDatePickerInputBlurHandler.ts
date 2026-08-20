@@ -2,6 +2,7 @@ import { type Ref, unref, type MaybeRef } from 'vue'
 import { type DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 import { type DateObjectValue } from '../types'
 import { locales } from '../locales'
+import { isValidDateRange } from '../utils/dateFormattingUtils'
 
 /**
  * Gère le commit au blur du champ texte utilisé par le DatePicker
@@ -53,11 +54,6 @@ export const useDatePickerInputBlurHandler = (options: {
 		emitBlur,
 	} = options
 
-	const isRangeValid = (startDate: Date | null | undefined, endDate: Date | null | undefined): boolean => {
-		if (!startDate || !endDate) return true
-		return startDate.getTime() <= endDate.getTime()
-	}
-
 	const formatForModel = (date: Date): string => {
 		return dateFormatReturn
 			? formatDate(date, dateFormatReturn)
@@ -65,7 +61,7 @@ export const useDatePickerInputBlurHandler = (options: {
 	}
 
 	const updateRangeModel = (startDate: Date, endDate: Date) => {
-		if (!isRangeValid(startDate, endDate)) {
+		if (!isValidDateRange(startDate, endDate)) {
 			replaceErrors([locales.endBeforeStart])
 			return
 		}

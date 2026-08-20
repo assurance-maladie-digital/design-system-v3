@@ -412,7 +412,7 @@ export const hasRangeSeparator = (value: string, separator = ' - '): boolean => 
  * @param endDate - Date de fin
  * @returns Booléen indiquant si la plage est valide
  */
-export const isValidDateRange = (startDate: Date | null, endDate: Date | null): boolean => {
+export const isValidDateRange = (startDate: Date | null | undefined, endDate: Date | null | undefined): boolean => {
 	if (!startDate || !endDate) return true
 	return startDate.getTime() <= endDate.getTime()
 }
