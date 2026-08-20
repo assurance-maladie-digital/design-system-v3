@@ -285,3 +285,8 @@ Conventions **standard**, appliquées par le hook Husky de pre-commit ([.husky/p
 - **setTimeout / queueMicrotask** pour « attendre que Vue mette à jour » — préférer `nextTick()` ou restructurer la réactivité.
 - **Nouveau composable** pour de la logique qui tient en 3 lignes et n'est utilisée qu'à un seul endroit.
 - **Commentaires explicatifs** sur du code évident — le code doit s'expliquer de lui-même.
+
+### En review
+
+- **Sourcer les affirmations avancées** : quand on invoque une bonne pratique, une spécificité Vue/Vuetify, une règle RGAA ou un comportement framework, **citer la source** (doc Vue, doc Vuetify, RGAA, issue GitHub, PR liée). Éviter les « c'est comme ça dans Vue » sans référence — ça permet au relecteur de vérifier et d'apprendre, et ça distingue les contraintes réelles des opinions.
+- **Du factuel, pas de l'expectative** : avant de déclarer qu'il y a un problème, **vérifier dans le code** (lire le fichier, checker les tests, reproduire). Pas de supposition présentée comme fait. Si on n'est pas sûr, le dire explicitement (« à vérifier », « hypothèse ») plutôt qu'affirmer.
