@@ -8,7 +8,7 @@ export type ColorType = 'primary' | 'secondary' | 'success' | 'info' | 'warning'
 export type ValidateOnType = 'eager' | 'lazy' | 'blur' | 'input' | 'submit' | 'invalid-input' | 'blur lazy' | 'input lazy' | 'submit lazy' | 'invalid-input lazy' | 'blur eager' | 'input eager' | 'submit eager' | 'invalid-input eager' | 'lazy blur' | 'lazy input' | 'lazy submit' | 'lazy invalid-input' | 'eager blur' | 'eager input' | 'eager submit' | 'eager invalid-input' | undefined
 
 export type SyTextFieldProps = {
-	modelValue?: string | number | null | undefined
+	modelValue?: string | number | null | undefined | string[]
 	prependIcon?: IconType
 	appendIcon?: IconType
 	prependInnerIcon?: IconType
@@ -27,7 +27,7 @@ export type SyTextFieldProps = {
 	bgColor?: string
 	centerAffix?: boolean
 	counter?: string | number | boolean
-	counterValue?: number | ((value: string) => number)
+	counterValue?: number | ((value: string | number | null | undefined | string[]) => number)
 	density?: 'default' | 'comfortable' | 'compact'
 	direction?: 'horizontal' | 'vertical'
 	isDirty?: boolean

@@ -4,7 +4,7 @@ import type { ValidationRule as SyValidationRule, VuetifyValidationRule } from '
 import type { SyTextFieldLocales } from './locales'
 
 export function useSyTextFieldValidation(params: {
-	modelValue: Ref<string | number | null | undefined>
+	modelValue: Ref<string | number | null | undefined | string[]>
 	readonly: Ref<boolean>
 	disabled: Ref<boolean>
 	required: Ref<boolean>

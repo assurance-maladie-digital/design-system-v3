@@ -154,7 +154,7 @@
 	const TEL_ALLOWED_CHARACTERS_PATTERN = /[^0-9+().\-\s]/g
 	const TEL_ALLOWED_SINGLE_CHARACTER_PATTERN = /^[0-9+().\-\s]$/
 
-	const sanitizeTelValue = (value: string | number | null | undefined) => {
+	const sanitizeTelValue = (value: string | number | null | undefined | string[]) => {
 		if (props.type !== 'tel' || typeof value !== 'string') {
 			return value
 		}
@@ -162,7 +162,8 @@
 		return value.replace(TEL_ALLOWED_CHARACTERS_PATTERN, '')
 	}
 
-	const sanitizeTypedValue = (value: string | number | null | undefined) => {
+	const sanitizeTypedValue = (value: string | number | null | undefined | string[]) => {
+		if (Array.isArray(value)) return value
 		return sanitizeTelValue(sanitizeNumberValue(value))
 	}
 
