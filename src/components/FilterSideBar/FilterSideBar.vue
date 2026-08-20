@@ -74,16 +74,16 @@
 
 	watch(drawer, (e) => {
 		if (e) {
-			drawerRef!.value!.$el.nextElementSibling.focus()
+			drawerRef.value?.$el?.nextElementSibling?.focus()
 		}
 		else {
-			drawerBtnRef.value!.$el.focus()
+			drawerBtnRef.value?.$el?.focus()
 		}
 	})
 
 	onMounted(() => {
-		const filterIconSVG = drawerRef!.value!.$el.nextElementSibling.querySelectorAll('svg[role="img"]')
-		filterIconSVG.forEach((svg) => {
+		const filterIconSVG = drawerRef.value?.$el?.nextElementSibling?.querySelectorAll('svg[role="img"]')
+		filterIconSVG?.forEach((svg) => {
 			svg.removeAttribute('role')
 		})
 	})
