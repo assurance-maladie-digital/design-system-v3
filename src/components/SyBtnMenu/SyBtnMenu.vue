@@ -161,7 +161,7 @@
 		}
 		else {
 			await nextTick()
-			document.getElementById(generatedId.value)!.focus()
+			document.getElementById(generatedId.value)?.focus()
 		}
 	})
 
