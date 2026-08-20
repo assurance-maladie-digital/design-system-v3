@@ -482,6 +482,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			}
 			const allErrors: string[] = []
 			for (const result of results) {
+				if (result instanceof Promise) continue
 				allErrors.push(...result.state.errors)
 			}
 			replaceErrors(allErrors)
