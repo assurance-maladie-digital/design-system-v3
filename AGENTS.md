@@ -236,7 +236,10 @@ Règles à fort impact, non redites ailleurs :
 - **pnpm uniquement** (jamais npm/yarn) ; `vue`/`vuetify` restent externes.
 - Ne pas committer de baselines de tests visuels générées sous **WSL** (cf. §6).
 - Ne pas créer de fichiers markdown de documentation « de changement » non demandés.
-- **Pas de code mort** : pas de `console.log`, `debugger`, commentaires temporaires ou branches inatteignables laissées dans le code.
+- **Pas de code mort** : pas de `console.log`, `debugger`, commentaires temporaires ou branches inatteignables laissés dans le code.
+- **Discipline dépendances** : ne pas ajouter de nouvelle dépendance sans justification explicite. Chaque dep ajoute du poids au bundle des consommateurs. Privilégier une solution locale (composable, utilitaire) à un package externe pour de la logique simple. Les deps ajoutées doivent être en `peerDependencies` si elles sont partagées avec le consommateur (ex. `vue`, `vuetify`), en `dependencies` sinon.
+- **Discipline TypeScript** : `any` est interdit dans le nouveau code (utiliser `unknown` + type guard si besoin). Les assertions de type (`as`) sont à éviter sauf cas justifié (interopérabilité Vuetify). Préférer l'inférence de type aux annotations explicites quand le type est évident. Tout type exporté doit être explicite et documenté.
+- **Sécurité** : `v-html` est **interdit** sauf cas validé en review (contenu statique ou sanitizé). Ne jamais interpoler du contenu utilisateur sans échappement. Les inputs utilisateur doivent être validés avant stockage dans l'état du composant.
 
 ---
 
@@ -290,3 +293,17 @@ Conventions **standard**, appliquées par le hook Husky de pre-commit ([.husky/p
 
 - **Sourcer les affirmations avancées** : quand on invoque une bonne pratique, une spécificité Vue/Vuetify, une règle RGAA ou un comportement framework, **citer la source** (doc Vue, doc Vuetify, RGAA, issue GitHub, PR liée). Éviter les « c'est comme ça dans Vue » sans référence — ça permet au relecteur de vérifier et d'apprendre, et ça distingue les contraintes réelles des opinions.
 - **Du factuel, pas de l'expectative** : avant de déclarer qu'il y a un problème, **vérifier dans le code** (lire le fichier, checker les tests, reproduire). Pas de supposition présentée comme fait. Si on n'est pas sûr, le dire explicitement (« à vérifier », « hypothèse ») plutôt qu'affirmer.
+
+### Pièges réactivité Vue 3 (spécifique à ce projet)
+
+- **`watch` vs `watchEffect`** : `watch` pour réagir à un changement précis ; `watchEffect` pour synchroniser un effet avec plusieurs dépendances. Ne pas mélanger les deux.
+- **Perte de réactivité** : `unref()` fige la valeur — ne l'utiliser que dans des contextes non réactifs (handlers d'événements, callbacks). Pour préserver la réactivité, passer des `ref`/`computed` ou des getters.
+- **`reactive()` vs `ref()`** : préférer `ref` pour les valeurs primitives et les objets simples. `reactive` pour les objets complexes mutés en place. Ne pas déstructurer un `reactive` (perte de réactivité) — utiliser `toRefs`.
+- **Computed avec effet de bord** : un `computed` ne doit jamais muter d'état. Si on a besoin d'un effet, c'est un `watch`.
+- **`v-model` sur composant personnalisé** : toujours utiliser `defineModel()` ou le pattern `modelValue` + `update:modelValue`. Ne pas bricoler avec des watchers bidirectionnels.
+
+### Scope des modifications
+
+- **Ne toucher que ce qui est nécessaire à la tâche** : pas de reformatage de code non concerné, pas de renommage de variables « au passage », pas de suppression de commentaires dans des fichiers non modifiés.
+- **Si un problème est découvert en passant** : le signaler (commentaire de review, issue) mais ne pas le corriger dans la même PR sauf si c'est directement lié. Une PR = un périmètre.
+- **Diff minimal** : le reviewer doit pouvoir lire le diff en moins de 5 minutes. Si le diff dépasse 300 lignes, justifier pourquoi.
