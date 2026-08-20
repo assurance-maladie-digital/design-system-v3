@@ -5,9 +5,9 @@
  * @example
  * devWarn('[SyIcon] L\'icône n\'est pas décorative mais aucun label n\'a été fourni.')
  */
-export function devWarn(message: string): void {
+export function devWarn(message: string, error?: unknown): void {
 	if (import.meta.env.DEV) {
 		// eslint-disable-next-line no-console
-		console.warn(message)
+		console.warn(message, ...(error !== undefined ? [error] : []))
 	}
 }
