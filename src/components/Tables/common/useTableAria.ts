@@ -119,6 +119,11 @@ export function useTableAria({
 		const tableElement = table.value?.$el?.querySelector('table')
 		if (!tableElement) return
 
+		// Réinitialiser le registre : les éléments précédents peuvent avoir été
+		// retirés du DOM par Vuetify lors d'un re-render, et les listeners sont
+		// déjà retirés ci-dessous avant d'être ré-ajoutsés.
+		elementsWithListeners.value = []
+
 		const headerCells = tableElement.querySelectorAll('thead tr.headers th')
 		headerCells.forEach((cell) => {
 			// Try to find column key from various sources
