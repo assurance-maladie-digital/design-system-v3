@@ -30,16 +30,6 @@ Composables utilitaires réutilisables dans les projets consommateurs et les com
 
 ---
 
-### 📅 [DatePicker](./DatePicker/README.md)
-
-Documentation du composant le plus complexe du Design System.
-
-| Fichier | Contenu |
-|---|---|
-| [Architecture & composables](./DatePicker/architecture.md) | Les 3 modes, carte des 27 composables, flux de données, formats |
-| [Audit & dette technique](./DatePicker/audit.md) | Analyse critique, bugs potentiels, recommandations Lead Tech |
-
----
 
 ### 🎨 [Theming & Tokens](./Theming/README.md)
 
