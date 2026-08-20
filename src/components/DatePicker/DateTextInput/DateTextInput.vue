@@ -1,7 +1,6 @@
 <script setup lang="ts">
 	import {
 		useDateRangeInput,
-		useDateRangeValidation,
 		useDateInputEditing,
 		useDateAutoClamp,
 		useDateTextInputController,
@@ -91,11 +90,6 @@
 	const isUpdatingFromInternal = ref(false)
 	const hasInteracted = ref(false)
 
-	const { currentRangeIsValid, getRangeValidationError } = useDateRangeValidation(
-		selectedDates,
-		computed(() => props.displayRange),
-	)
-
 	const {
 		hasError: bridgeHasError,
 		hasWarning: bridgeHasWarning,
@@ -127,8 +121,6 @@
 		maxErrors: computed(() => props.maxErrors),
 		selectedDates,
 		isUpdatingFromInternal,
-		currentRangeIsValid,
-		getRangeValidationError,
 		skipValidationWhenReadonly: true,
 		readonly: readonly,
 		fieldIdentifier: computed(() => props.label || props.placeholder || 'Date'),
