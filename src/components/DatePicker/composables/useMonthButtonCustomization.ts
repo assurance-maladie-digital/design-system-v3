@@ -98,6 +98,9 @@ export function useMonthButtonCustomization(
 		buttonElement.dataset.datePickerCustomizationSignature = signature
 	}
 
+	// En contexte de test unitaire, getCurrentInstance() retourne null car le composable
+	// peut être appelé hors d'un composant Vue. Le guard évite l'appel à onBeforeUnmount
+	// qui nécessite une instance active.
 	if (getCurrentInstance()) {
 		onBeforeUnmount(() => {
 			monthButtonObservers.forEach(observer => observer.disconnect())
