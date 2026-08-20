@@ -123,5 +123,6 @@ Dépendances déclarées par `@cnamts/synapse` et paquets à installer côté pr
 |---|---|
 | [`peerDependencies`](./Dependances/README.md#peerdependencies-actuelles) | Liste à jour (`vue`, `vuetify`, `@mdi/js`) et rôle de chacune |
 | [`@mdi/js` en peer](./Dependances/README.md#changement--mdijs-devient-une-peerdependency) | PR #2350 — passage de `dependencies` à `peerDependencies`, externalisation du build, impact consommateurs |
+| [Patches pnpm](./Dependances/README.md#patches-appliqués-via-pnpm) | Patch Vuetify (fix SCSS `@use`), patch undici orphelin — contenu, justification, procédure de mise à jour |
 
 ---

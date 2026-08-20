@@ -105,3 +105,79 @@ import { mdiPencil, mdiDelete } from '@mdi/js'
 
 > En cas d'avertissement `unmet peer dependency @mdi/js` lors de l'installation de
 > `@cnamts/synapse`, ajoutez simplement `@mdi/js` aux dépendances de votre projet.
+
+---
+
+## Patches appliqués via pnpm
+
+Le projet utilise le mécanisme [`patchedDependencies`](https://pnpm.io/settings#patcheddependencies)
+de pnpm pour modifier des paquets tiers sans maintenir un fork. Les patches vivent dans
+le dossier [`patches/`](../../patches/) et sont déclarés dans
+[`pnpm-workspace.yaml`](../../pnpm-workspace.yaml).
+
+### Patch Vuetify `vuetify@3.12.2` — actif
+
+**Fichier** : [`patches/vuetify@3.12.2.patch`](../../patches/vuetify@3.12.2.patch)
+**Déclaration** : `pnpm-workspace.yaml` → `patchedDependencies: vuetify@3.12.2: patches/vuetify@3.12.2.patch`
+
+#### Ce que fait le patch
+
+Le patch modifie un seul fichier : `lib/components/VOtpInput/VOtpInput.sass`.
+
+Il supprime le point-virgule final de la directive `@use 'sass:math';` :
+
+```diff
+-@use 'sass:math';
++@use 'sass:math'
+```
+
+#### Pourquoi
+
+Dart Sass ≥ 1.45 émet un avertissement de déprécation (`@use` rules should not end
+with a semicolon) pour les directives `@use` terminées par un point-virgule. Vuetify 3.12.2
+ne corrige pas ce problème dans `VOtpInput.sass`. Le patch évite le bruit dans les logs
+de build et garantit la compatibilité avec les versions futures de Dart Sass qui
+supprimeront cette tolérance syntaxique.
+
+#### Impact et maintenance
+
+- **Impact** : aucun changement fonctionnel. Le rendu de `VOtpInput` est identique.
+- **Risque de conflit** : très faible. Le patch ne touche qu'une ligne de SCSS.
+- **Montée de version Vuetify** : lors d'une mise à jour de Vuetify, vérifier que le
+  fichier `VOtpInput.sass` n'a pas été modifié upstream. Si Vuetify corrige le problème,
+  le patch peut être supprimé. Sinon, régénérer le patch avec
+  `pnpm patch vuetify@<nouvelle-version>`.
+- **Procédure de mise à jour** :
+  1. Mettre à jour la version dans `package.json` et `pnpm-workspace.yaml` (section
+     `patchedDependencies`).
+  2. Lancer `pnpm install`.
+  3. Si le patch ne s'applique plus, utiliser `pnpm patch vuetify@<nouvelle-version>`,
+     recréer le patch, et mettre à jour le fichier dans `patches/`.
+  4. Valider avec `pnpm build` que le build passe sans avertissement Sass.
+
+### Patch undici `undici@7.15.0` — inactif (orphelin)
+
+**Fichier** : [`patches/undici@7.15.0.patch`](../../patches/undici@7.15.0.patch)
+**Déclaration** : aucune (non déclaré dans `pnpm-workspace.yaml`).
+
+#### Ce que fait le patch
+
+Il ajoute un polyfill pour `globalThis.File` lorsque celui-ci est `undefined` dans
+`lib/web/webidl/index.js` d'undici.
+
+```js
+if (typeof globalThis.File === 'undefined') {
+  globalThis.File = class {
+    constructor() {}
+  }
+}
+```
+
+#### Statut
+
+Ce patch n'est **pas appliqué** par pnpm car il n'est pas déclaré dans
+`patchedDependencies`. Il est probablement un vestige d'un fix temporaire pour un
+problème de compatibilité Node.js / `happy-dom` dans les tests.
+
+**Action recommandée** : supprimer ce fichier ou le déclarer dans
+`pnpm-workspace.yaml` si le problème de `globalThis.File` refait surface. A discuter
