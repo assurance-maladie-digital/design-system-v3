@@ -595,6 +595,13 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		}
 
 		// Non-CalendarMode: valider sur tout changement
+		// En mode noCalendar, validateDates() est un no-op (retourne early) —
+		// il faut donc explicitement nettoyer la validation quand les dates sont vidées
+		if (unref(options.noCalendar) && (newDates === null || (Array.isArray(newDates) && newDates.length === 0))) {
+			clearValidation()
+			return
+		}
+
 		validateDates()
 	})
 

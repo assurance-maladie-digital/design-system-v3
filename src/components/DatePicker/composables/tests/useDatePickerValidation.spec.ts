@@ -790,5 +790,31 @@ describe('useDatePickerValidation', () => {
 
 			expect(errors.value).toHaveLength(0)
 		})
+
+		it('devrait nettoyer la validation quand selectedDates devient null en mode noCalendar', async () => {
+			const customRules = ref<DatePickerRule[]>([
+				{
+					type: 'custom',
+					options: { validate: () => 'Erreur persistante' },
+				},
+			])
+			const selectedDates = ref<Date | (Date | null)[] | null>(new Date('2023-01-01'))
+			const options = createOptions({
+				selectedDates,
+				customRules,
+				noCalendar: ref(true),
+			})
+			const { errors, pushError } = useDatePickerValidation(options)
+
+			// Simuler une erreur existante
+			pushError('Erreur manuelle')
+			expect(errors.value).toHaveLength(1)
+
+			// selectedDates → null doit nettoyer la validation (validateDates est no-op en noCalendar)
+			selectedDates.value = null
+			await nextTick()
+
+			expect(errors.value).toHaveLength(0)
+		})
 	})
 })
