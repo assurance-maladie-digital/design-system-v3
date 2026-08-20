@@ -8,6 +8,7 @@
 
 	import { type NavigationItem } from '../types'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import { devWarn } from '@/utils/devWarn'
 	import { config } from './config'
 
 	// Type des méthodes exposées
@@ -150,7 +151,7 @@
 				await router.push(item.to)
 			}
 			catch (error) {
-				console.error('Erreur de navigation:', error)
+				devWarn(`Erreur de navigation: ${error}`)
 			}
 			return
 		}

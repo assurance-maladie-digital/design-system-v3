@@ -109,6 +109,7 @@
 				}
 			}
 			catch (error) {
+				// eslint-disable-next-line no-console
 				console.error('Erreur dans la mise à jour du filtre de période:', error)
 			}
 		},

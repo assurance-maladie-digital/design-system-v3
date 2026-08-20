@@ -30,6 +30,12 @@ export default ts.config(
 		semi: false,
 		jsx: false,
 	}),
+	// Global rules
+	{
+		rules: {
+			'no-console': 'error',
+		},
+	},
 	// Overrides
 	{
 		// Vue Overrides
@@ -54,7 +60,6 @@ export default ts.config(
 			'vue/html-comment-indent': ['error', 'tab'],
 			'vue/no-v-html': 0,
 			'@stylistic/indent': 0,
-			'no-console': ['error', { allow: ['warn', 'error'] }],
 			'no-explicit-any': 0,
 			'vuejs-accessibility/interactive-supports-focus': 0,
 		},
