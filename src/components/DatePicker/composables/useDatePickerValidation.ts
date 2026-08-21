@@ -35,6 +35,7 @@ export type DatePickerValidationOptions = {
 	readonly?: MaybeRef<boolean>
 	useVuetifyValidation?: MaybeRef<boolean>
 	rules?: Ref<VuetifyValidationRule[] | undefined>
+	modelValue?: MaybeRef<unknown>
 	skipValidationWhenReadonly?: boolean
 	useCalendarModeRequiredFlow?: boolean
 	isInitialValidation?: Ref<boolean>
@@ -463,30 +464,21 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		// En mode Vuetify natif, déléguer entièrement la validation à useCustomValidation
 		if (unref(options.useVuetifyValidation)) {
 			clearValidation()
-			const dates = getDatesToValidate()
-			if (dates.length === 0) {
+			const hasInteracted = options.hasInteracted?.value ?? false
+			if (!hasInteracted && !forceValidation) {
 				return emptyValidationResult()
 			}
-			// Valider toutes les dates (important pour le mode range)
-			const results = dates.map(date => validation.validateValue(date))
-			if (results.some(r => r instanceof Promise)) {
-				return Promise.all(results).then((resolved) => {
+			const value = unref(options.modelValue) ?? ''
+			const result = validation.validateValue(value)
+			if (result instanceof Promise) {
+				return result.then((resolved) => {
 					if (token !== currentValidationToken) return emptyValidationResult()
-					const allErrors: string[] = []
-					for (const result of resolved) {
-						allErrors.push(...result.state.errors)
-					}
-					replaceErrors(allErrors)
-					return buildValidationResult(allErrors.length === 0)
+					replaceErrors(resolved.state.errors)
+					return buildValidationResult(resolved.state.errors.length === 0)
 				})
 			}
-			const allErrors: string[] = []
-			for (const result of results) {
-				if (result instanceof Promise) continue
-				allErrors.push(...result.state.errors)
-			}
-			replaceErrors(allErrors)
-			return buildValidationResult(allErrors.length === 0)
+			replaceErrors(result.state.errors)
+			return buildValidationResult(result.state.errors.length === 0)
 		}
 
 		// Réinitialiser la validation
@@ -690,6 +682,14 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 
 		// En mode Vuetify natif, déléguer à useCustomValidation
 		if (unref(options.useVuetifyValidation)) {
+			const hasInteracted = options.hasInteracted?.value ?? false
+			if (!hasInteracted && !shouldDisplayErrors()) {
+				return true
+			}
+			if (!hasInteracted) {
+				clearValidation()
+				return true
+			}
 			const result = await Promise.resolve(validation.validateValue(value))
 			return !result.hasError
 		}
