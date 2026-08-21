@@ -112,6 +112,7 @@
 		customWarningRules: computed(() => props.customWarningRules ?? []),
 		useVuetifyValidation: computed(() => props.useVuetifyValidation ?? false),
 		rules: computed(() => props.rules),
+		modelValue: computed(() => props.modelValue),
 		errorMessages: computed(() => props.errorMessages ?? null),
 		hasErrorProp: computed(() => props.hasError),
 		hasSuccessProp: computed(() => props.hasSuccess),

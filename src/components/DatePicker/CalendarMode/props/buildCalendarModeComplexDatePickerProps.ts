@@ -35,4 +35,6 @@ export const buildCalendarModeComplexDatePickerProps = (props: DatePickerCommonP
 	hint: props.hint,
 	persistentHint: props.persistentHint,
 	period: props.period,
+	useVuetifyValidation: props.useVuetifyValidation,
+	rules: props.rules,
 })
