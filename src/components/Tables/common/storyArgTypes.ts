@@ -126,7 +126,7 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 		},
 	},
 	'showSelectSingle': {
-		description: 'Affiche des boutons radio pour sélectionner une seule ligne à la fois',
+		description: 'Affiche des boutons radio pour sélectionner une unique ligne',
 		control: { type: 'boolean' },
 		table: {
 			category: 'props',
