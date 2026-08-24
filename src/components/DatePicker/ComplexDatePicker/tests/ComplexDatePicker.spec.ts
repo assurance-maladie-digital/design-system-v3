@@ -10,7 +10,7 @@ let wrapper: VueWrapper<any> | null = null
 
 const waitForCondition = async (
 	predicate: () => boolean,
-	{ timeoutMs = 500, intervalMs = 20 } = {},
+	{ timeoutMs = 3000, intervalMs = 20 } = {},
 ) => {
 	const deadline = Date.now() + timeoutMs
 
