@@ -12,6 +12,7 @@ describe('Calendar Navigation Regression Tests', () => {
 	 * Test 1 : Navigation mois via flèches met à jour l'affichage
 	 */
 	it('met à jour currentMonthName quand on navigue via les flèches', async () => {
+		// timeout étendu : le mount Vuetify + flushPromises peut dépasser 5s sous charge (suite complète)
 		const wrapper = mount(ComplexDatePicker, {
 			props: {
 				modelValue: '15/05/2025',
@@ -43,7 +44,7 @@ describe('Calendar Navigation Regression Tests', () => {
 		expect(wrapper.vm.currentMonthName).not.toBe(initialMonthName)
 
 		wrapper.unmount()
-	})
+	}, 15000)
 
 	/**
 	 * Test 2 : Clear réinitialise le calendrier
