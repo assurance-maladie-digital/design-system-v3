@@ -696,8 +696,8 @@
 						formatDate,
 					),
 					modelValue: [
-						formatDate(selectedDates.value[0]!, props.format),
-						formatDate(selectedDates.value[selectedDates.value.length - 1]!, props.format),
+						formatDate(selectedDates.value[0]!, returnFormat.value),
+						formatDate(selectedDates.value[selectedDates.value.length - 1]!, returnFormat.value),
 					] as [string, string],
 				}
 			}
@@ -1140,6 +1140,11 @@
 				displayFormattedDate.value = input.value
 				textInputValue.value = input.value
 			})
+		}
+
+		if (!props.isValidateOnBlur) {
+			clearValidation()
+			return
 		}
 
 		await handleInputBlur()

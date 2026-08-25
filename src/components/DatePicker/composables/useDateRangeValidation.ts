@@ -1,7 +1,6 @@
 import { computed, unref, type Ref, type MaybeRef } from 'vue'
-import { locales } from '../locales'
 import type { DateObjectValue } from '../types'
-import { isValidDateRange } from '../utils/dateFormattingUtils'
+import { isValidDateRange, getRangeValidationError } from '../utils/dateFormattingUtils'
 
 /**
  * Composable pour gérer la validation des plages de dates
@@ -35,14 +34,16 @@ export function useDateRangeValidation(
 	/**
 	 * Fonction pour obtenir un message d'erreur si la plage n'est pas valide
 	 */
-	const getRangeValidationError = computed((): string => {
+	const getRangeValidationErrorComputed = computed((): string => {
 		if (currentRangeIsValid.value) return ''
-		return locales.endBeforeStartEqual
+		const startDate = Array.isArray(selectedDates.value) ? selectedDates.value[0] : null
+		const endDate = Array.isArray(selectedDates.value) ? selectedDates.value[selectedDates.value.length - 1] : null
+		return getRangeValidationError(startDate, endDate) ?? ''
 	})
 
 	return {
 		isRangeValid,
 		currentRangeIsValid,
-		getRangeValidationError,
+		getRangeValidationError: getRangeValidationErrorComputed,
 	}
 }
