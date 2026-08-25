@@ -128,6 +128,28 @@ describe('SyServerTable', () => {
 		activeWrappers.push(wrapper)
 	})
 
+	it('applies ARIA row metadata to the rendered table', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				serverItemsLength: fakeItems.length,
+				suffix: 'table-aria',
+				headers,
+				items: fakeItems,
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		const table = wrapper.find('table')
+		expect(table.attributes('aria-rowcount')).toBe('4')
+		expect(table.find('thead tr').attributes('aria-rowindex')).toBe('1')
+		expect(table.find('tbody tr').attributes('aria-rowindex')).toBe('2')
+
+		activeWrappers.push(wrapper)
+	})
+
 	it('accepts both old and new headers format', async () => {
 		const wrapper = mount(SyServerTable, {
 			props: {

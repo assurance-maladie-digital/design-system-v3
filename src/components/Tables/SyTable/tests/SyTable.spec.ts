@@ -90,6 +90,25 @@ describe('SyTable', () => {
 		expect(wrapper.text()).toContain('John Doe')
 	})
 
+	it('applies ARIA row metadata to the rendered table', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: {} as DataOptions,
+				suffix: 'table-aria',
+				headers,
+				items: fakeItems,
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		await wrapper.vm.$nextTick()
+
+		const table = wrapper.find('table')
+		expect(table.attributes('aria-rowcount')).toBe('4')
+		expect(table.find('thead tr').attributes('aria-rowindex')).toBe('1')
+		expect(table.find('tbody tr').attributes('aria-rowindex')).toBe('2')
+	})
+
 	it('accepts both old and new headers format', () => {
 		const wrapper = mount(SyTable, {
 			props: {

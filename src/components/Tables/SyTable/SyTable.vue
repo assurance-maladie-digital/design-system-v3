@@ -339,6 +339,7 @@
 		</TableBulkActions>
 
 		<VDataTable
+			ref="table"
 			v-model="model"
 			color="primary"
 			:headers="displayHeadersWithPinned"

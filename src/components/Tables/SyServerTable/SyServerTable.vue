@@ -356,6 +356,7 @@
 		</TableBulkActions>
 
 		<VDataTableServer
+			ref="table"
 			v-bind="propsFacade"
 			v-model="model"
 			:headers="displayHeadersWithPinned"
