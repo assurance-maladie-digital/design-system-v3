@@ -184,7 +184,7 @@ describe('ServiceMenu', () => {
 			expect(vueWrapper.findComponent({ name: 'AmeliproIconBtn' }).exists()).toBe(false)
 		})
 
-		// TODO: à corriger
+		// Note: à corriger
 		it.skip('slot message est transmis à ServiceMenuContent (mobile)', async () => {
 			vueWrapper = mount(ServiceMenu, {
 				global: { stubs: { VMenu: VMenuMock } },
@@ -230,7 +230,7 @@ describe('ServiceMenu', () => {
 		})
 	})
 
-	// TODO: à corriger
+	// Note: à corriger
 	describe.skip('Other', () => {
 		it('setMenuAttrs() ajoute les attributs d’accessibilité sur le menu', () => {
 			vueWrapper = mount(ServiceMenu, {

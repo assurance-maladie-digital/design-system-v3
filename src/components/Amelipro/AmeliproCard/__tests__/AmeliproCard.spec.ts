@@ -223,7 +223,7 @@ describe('AmeliproCard', () => {
 			})
 
 			it.skip('prop headerRightWidth & slot headerRight set attribute style', async () => {
-				// TODO: à réparer (problème de propagation mdAndUp ou slot)
+				// Note: à réparer (problème de propagation mdAndUp ou slot)
 				// Par défaut, mdAndUp est false, donc width: 100%
 				await displayWrapper.vm.setMdAndUp(false)
 				expect(vueWrapper.find('.amelipro-card__header-slot-wrapper--left').attributes('style')).toBe('width: 100%;')
@@ -303,7 +303,7 @@ describe('AmeliproCard', () => {
 			})
 
 			it.skip('prop headerRightWidth & slot headerRight set attribute style', async () => {
-				// TODO: à réparer (problème de propagation mdAndUp ou slot)
+				// Note: à réparer (problème de propagation mdAndUp ou slot)
 				await displayWrapper.vm.setMdAndUp(false)
 				expect(vueWrapper.find('.amelipro-card__header__slot-wrapper--right').attributes('style')).toBe('width: 100%;')
 

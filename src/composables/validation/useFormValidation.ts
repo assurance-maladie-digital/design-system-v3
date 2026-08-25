@@ -1,4 +1,5 @@
 import { provide, inject, ref, type InjectionKey, type Ref } from 'vue'
+import { devWarn } from '@/utils/devWarn'
 
 // Type pour les composants pouvant être validés
 export type ValidatableComponent = {
@@ -56,7 +57,7 @@ export function useFormValidation() {
 					component.clearValidation()
 				}
 				catch (error) {
-					console.warn('Error clearing validation for field: ' + (component?.$props?.label ?? 'unknown'), error)
+					devWarn('Error clearing validation for field: ' + (component?.$props?.label ?? 'unknown'), error)
 				}
 			}
 		})
@@ -70,7 +71,7 @@ export function useFormValidation() {
 					component.reset()
 				}
 				catch (error) {
-					console.warn('Error resetting field: ' + (component?.$props?.label ?? 'unknown'), error)
+					devWarn('Error resetting field: ' + (component?.$props?.label ?? 'unknown'), error)
 				}
 			}
 		})

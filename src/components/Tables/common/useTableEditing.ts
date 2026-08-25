@@ -1,5 +1,6 @@
 import { computed, ref, shallowRef, toValue, type ComputedRef, type MaybeRefOrGetter, type Ref } from 'vue'
 import type { DataTableHeaders, Item } from './types'
+import { devWarn } from '@/utils/devWarn'
 
 /**
  * Indique si une valeur peut être éditée par l'éditeur texte par défaut
@@ -100,7 +101,7 @@ export function useTableEditing({ getItemValue, headers, editable, hasEditSlot }
 			if (warnedColumns.has(colKey)) continue
 			if (!isEditableAsText(item[colKey]) && !(hasEditSlot?.(colKey) ?? false)) {
 				warnedColumns.add(colKey)
-				console.warn(
+				devWarn(
 					`[SyTable] La colonne « ${colKey} » a une valeur non primitive : l'éditeur par défaut ne peut pas l'éditer. Fournissez un slot #edit.${colKey} avec un éditeur adapté (SySelect, DatePicker…).`,
 				)
 			}

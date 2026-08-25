@@ -101,7 +101,7 @@ describe('AmeliproStatus', () => {
 				await vueWrapper.setProps({ paddingX, paddingY })
 				expect(vueWrapper.find('p').attributes('style')).toBe('border: 2px solid transparent; border-radius: 16px; padding: 15px 16px;')
 
-				// TODO: type 'canceled' => borderColor: 'bg-ap-grey-lighten-1' => pourquoi #000 ?
+				// Note: type 'canceled' => borderColor: 'bg-ap-grey-lighten-1' => pourquoi #000 ?
 				const { type } = modifiedPropValues()
 				await vueWrapper.setProps({ type })
 				expect(vueWrapper.find('p').attributes('style')).toBe('border: 2px solid #000; border-radius: 16px; padding: 15px 16px;')

@@ -577,12 +577,10 @@ const options = [
 
 const onUpdate = (value: string | null) => {
 	lastEvent.value = \`update:modelValue: \${value}\`
-	console.log('update:modelValue', value)
 }
 
 const onChange = (value: string | null) => {
 	lastEvent.value = \`change: \${value}\`
-	console.log('change', value)
 }
 </script>`,
 			},

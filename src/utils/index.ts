@@ -17,6 +17,7 @@ export { parseDate } from './parseDate'
 // ===========================
 export { propValidator } from './propValidator'
 export { ruleMessage } from './ruleMessage'
+export { devWarn } from './devWarn'
 
 // Date validation
 export { isDateAfter } from './functions/validation/isDateAfter'
