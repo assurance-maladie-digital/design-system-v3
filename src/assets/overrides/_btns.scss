@@ -103,13 +103,13 @@ button:focus-visible {
 
 	&.v-theme--dark {
 		&:hover .v-btn__overlay {
-			background: rgba(var(--v-theme-interactionLighten), 0.2) !important;
+			background: rgba(var(--v-theme-interaction-lighten), 0.2) !important;
 			opacity: 1;
 			transition: opacity 0.2s ease, background 0s;
 		}
 
 		&:active .v-btn__overlay {
-			background: rgba(var(--v-theme-interactionLighten), 0.4) !important;
+			background: rgba(var(--v-theme-interaction-lighten), 0.4) !important;
 			opacity: 1;
 			transition: opacity 0.2s ease, background 0s;
 		}
