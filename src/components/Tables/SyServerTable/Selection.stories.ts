@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
-import { fn } from 'storybook/test'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
 import { serverUsers } from '../common/storyData'
 import { useServerTableDemo } from '../common/serverStoryHelpers'
 
@@ -119,15 +118,15 @@ export const RowSelection: Story = {
 		],
 	},
 	args: {
-		'options': { itemsPerPage: 5, page: 1 },
-		'headers': serverHeaders,
-		'caption': '',
-		'serverItemsLength': 15,
-		'suffix': 'selection-server-table',
-		'density': 'default',
-		'striped': false,
-		'showSelect': true,
-		'onUpdate:options': fn(),
+		options: { itemsPerPage: 5, page: 1 },
+		headers: serverHeaders,
+		caption: '',
+		serverItemsLength: 15,
+		suffix: 'selection-server-table',
+		density: 'default',
+		striped: false,
+		showSelect: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -146,6 +145,7 @@ export const RowSelection: Story = {
 					:server-items-length="totalItems"
 					:loading="state === StateEnum.PENDING"
 					@update:options="fetchData"
+					@update:model-value="args['onUpdate:modelValue']"
 				/>
 				<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
 					<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
@@ -233,15 +233,15 @@ export const SingleRowSelection: Story = {
 		],
 	},
 	args: {
-		'options': { itemsPerPage: 5, page: 1 },
-		'headers': serverHeaders,
-		'caption': '',
-		'serverItemsLength': 15,
-		'suffix': 'selection-server-table',
-		'density': 'default',
-		'striped': false,
-		'showSelectSingle': true,
-		'onUpdate:options': fn(),
+		options: { itemsPerPage: 5, page: 1 },
+		headers: serverHeaders,
+		caption: '',
+		serverItemsLength: 15,
+		suffix: 'selection-server-table',
+		density: 'default',
+		striped: false,
+		showSelectSingle: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -260,6 +260,7 @@ export const SingleRowSelection: Story = {
 					:server-items-length="totalItems"
 					:loading="state === StateEnum.PENDING"
 					@update:options="fetchData"
+					@update:model-value="args['onUpdate:modelValue']"
 				/>
 				<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
 					<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>

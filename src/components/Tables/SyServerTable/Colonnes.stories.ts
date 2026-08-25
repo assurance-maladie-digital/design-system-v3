@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { fn } from 'storybook/test'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
 import type { DataTableHeaders } from '../common/types'
 import { serverUsers, wideHeaders, wideServerUsers } from '../common/storyData'
 import { useServerTableDemo } from '../common/serverStoryHelpers'
@@ -125,18 +124,18 @@ export const DataAlignment: Story = {
 		],
 	},
 	args: {
-		'options': {
+		options: {
 			itemsPerPage: 5,
 			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
-		'headers': alignmentHeaders,
-		'caption': '',
-		'serverItemsLength': 3,
-		'suffix': 'server-data-alignment',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
+		headers: alignmentHeaders,
+		caption: '',
+		serverItemsLength: 3,
+		suffix: 'server-data-alignment',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -224,19 +223,19 @@ export const ResizableColumns: Story = {
 		],
 	},
 	args: {
-		'options': {
+		options: {
 			itemsPerPage: 5,
 			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
-		'headers': serverHeaders,
-		'caption': '',
-		'serverItemsLength': 15,
-		'suffix': 'server-resizable-columns',
-		'density': 'default',
-		'striped': false,
-		'resizableColumns': true,
-		'onUpdate:options': fn(),
+		headers: serverHeaders,
+		caption: '',
+		serverItemsLength: 15,
+		suffix: 'server-resizable-columns',
+		density: 'default',
+		striped: false,
+		resizableColumns: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -335,16 +334,16 @@ export const PinnedColumns: Story = {
 		],
 	},
 	args: {
-		'options': { itemsPerPage: 5, page: 1 },
-		'headers': wideHeaders,
-		'serverItemsLength': 30,
-		'suffix': 'server-pinned-columns',
-		'showSelect': true,
-		'stickySelect': true,
-		'pinnedColumns': [
+		options: { itemsPerPage: 5, page: 1 },
+		headers: wideHeaders,
+		serverItemsLength: 30,
+		suffix: 'server-pinned-columns',
+		showSelect: true,
+		stickySelect: true,
+		pinnedColumns: [
 			{ key: 'actions', side: 'right' },
 		],
-		'onUpdate:options': fn(),
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -434,19 +433,19 @@ export const ColumnControls: Story = {
 		],
 	},
 	args: {
-		'options': {
+		options: {
 			itemsPerPage: 5,
 			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
-		'headers': serverHeaders,
-		'caption': '',
-		'serverItemsLength': 15,
-		'suffix': 'server-control-columns',
-		'density': 'default',
-		'striped': false,
-		'enableColumnControls': true,
-		'onUpdate:options': fn(),
+		headers: serverHeaders,
+		caption: '',
+		serverItemsLength: 15,
+		suffix: 'server-control-columns',
+		density: 'default',
+		striped: false,
+		enableColumnControls: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },

@@ -6,6 +6,7 @@ import SyServerTable from './SyServerTable.vue'
 import DialogBox from '@/components/DialogBox/DialogBox.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
+import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
 import { useServerEditingDemo } from '../common/serverStoryHelpers'
 
 const meta = {
@@ -21,6 +22,7 @@ const meta = {
 		controls: { hideNoControlsWarning: true },
 	},
 	argTypes: {
+		...commonTableArgTypes,
 		'bulk-actions': {
 			description: 'Barre affichée quand des lignes sont sélectionnées. Le composant ne fournit que la sélection ; **le projet rend ses propres actions** (éditer, supprimer, exporter…) et pilote leur UX (DialogBox, drawer, page…).',
 			control: undefined,
@@ -90,6 +92,7 @@ export const Default: Story = {
 		showSelect: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable, DialogBox, SySelect },
@@ -275,6 +278,7 @@ export const SequentialEdit: Story = {
 		showSelect: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable, DialogBox, SyTextField, SySelect },
