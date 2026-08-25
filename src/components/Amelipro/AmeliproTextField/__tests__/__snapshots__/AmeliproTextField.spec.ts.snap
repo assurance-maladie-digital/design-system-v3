@@ -86,7 +86,6 @@ exports[`AmeliproTextField > Snapshots > renders the component with all properti
 
 exports[`AmeliproTextField > Snapshots > renders the component with only required properties filled in 1`] = `
 <div
-  class=""
   id="required-unique-id-container"
   style="margin-bottom: 12px;"
 >

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /* eslint-disable vuejs-accessibility/label-has-for */
-	import { computed, onMounted, type PropType, ref } from 'vue'
+	import { computed, onMounted, type PropType, ref, useAttrs } from 'vue'
 	import type { IndexedObject, ValidateOnType } from '../types'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 	import type { InputTextField } from './types'
@@ -139,6 +139,11 @@
 			},
 		},
 	})
+
+	defineOptions({
+		inheritAttrs: false,
+	})
+	const attrs = useAttrs()
 
 	const show = ref(false)
 	const inputTextField = ref<InputTextField>({ errorMessages: [], isValid: true })
@@ -317,6 +322,7 @@
 
 <template>
 	<div
+		v-bind="attrs"
 		:id="`${uniqueId}-container`"
 		:class="classes"
 		:style="globalFieldStyles"
