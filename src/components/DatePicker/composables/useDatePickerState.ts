@@ -3,6 +3,15 @@ import type { DateInput, DateModelValue } from '@/composables/date/useDateInitia
 import { locales } from '../locales'
 import { formatDateRangeDisplay, resolveDatePickerStateFromModelValue } from '../utils/dateFormattingUtils'
 
+/**
+ * Options du composable `useDatePickerState`.
+ *
+ * ## Rôle dans l'architecture validation
+ * `validateDates` et `clearValidation` sont des fonctions déléguées par le composant
+ * appelant. En pratique, le composant passe `() => validate()` pour `validateDates`.
+ * Le composable appelle ces fonctions après avoir mis à jour `selectedDates` pour
+ * déclencher la validation des nouvelles dates. Il ne connaît pas le flow interne.
+ */
 export interface UseDatePickerStateOptions {
 	selectedDates: Ref<Date | (Date | null)[] | null>
 	rangeBoundaryDates?: Ref<[Date | null, Date | null] | null>
@@ -11,7 +20,9 @@ export interface UseDatePickerStateOptions {
 	displayRange?: MaybeRef<boolean>
 	parseDate: (value: string, format: string) => Date | null
 	formatDate: (date: Date | null, format: string) => string
+	/** Fonction de validation déléguée — en pratique `() => validate()`. Appelée après mise à jour des dates. */
 	validateDates: (forceValidation?: boolean) => void
+	/** Vide l'état de validation. Déléguée par le composant appelant. */
 	clearValidation?: () => void
 	generateDateRange?: (start: Date, end: Date) => Date[]
 }

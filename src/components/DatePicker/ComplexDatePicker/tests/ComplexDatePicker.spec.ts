@@ -808,7 +808,7 @@ describe('ComplexDatePicker.clean', () => {
 			new Date(2025, 0, 1),
 		]
 
-		const result = await wrapper.vm.validateDates(true)
+		const result = await wrapper.vm.validate({ force: true })
 		expect(result.hasError).toBe(true)
 		expect(result.state.errors.length).toBeGreaterThan(0)
 	})
@@ -826,7 +826,7 @@ describe('ComplexDatePicker.clean', () => {
 			null,
 		]
 
-		const result = wrapper.vm.validateDates()
+		const result = wrapper.vm.validate()
 		expect(result.hasError).toBe(false)
 		expect(wrapper.vm.errorMessages.length).toBe(0)
 	})
@@ -840,7 +840,7 @@ describe('ComplexDatePicker.clean', () => {
 
 		// Simuler une erreur required
 		wrapper.vm.selectedDates = null
-		await wrapper.vm.validateDates(true)
+		await wrapper.vm.validate({ force: true })
 		expect(wrapper.vm.errorMessages.length).toBeGreaterThan(0)
 
 		// Ouvrir le calendrier puis réinitialiser

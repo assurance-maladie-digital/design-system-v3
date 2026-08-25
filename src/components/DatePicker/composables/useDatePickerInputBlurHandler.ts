@@ -8,6 +8,17 @@ import { isValidDateRange } from '../utils/dateFormattingUtils'
  * Gère le commit au blur du champ texte utilisé par le DatePicker
  * quand la saisie manuelle doit synchroniser le modèle/calendrier.
  *
+ * ## Rôle dans l'architecture validation
+ * Reçoit deux fonctions de validation en paramètres :
+ * - `validateTextInput(value)` : en pratique, c'est `(value) => validate({ textValue: value })`
+ *   fournie par le composant appelant. Déclenche le flow de validation texte.
+ * - `replaceErrors(messages)` : remplace directement les erreurs affichées, utilisée
+ *   pour les erreurs de plage (endBeforeStart) détectées localement sans passer par
+ *   le flow de validation complet.
+ *
+ * Le composable ne connaît pas le flow interne — il se contente d'appeler
+ * ces fonctions au moment du blur après avoir synchronisé le modèle.
+ *
  * @param options - Options de configuration
  * @returns Fonction pour gérer la perte de focus
  */
@@ -23,6 +34,7 @@ export const useDatePickerInputBlurHandler = (options: {
 	isManualInputActive: Ref<boolean>
 	isUpdatingFromInternal: Ref<boolean>
 	selectedDates: Ref<DateObjectValue>
+	/** Remplace les erreurs affichées. Utilisé pour les erreurs de plage locales (endBeforeStart). */
 	replaceErrors?: (messages: string[]) => void
 
 	// Fonctions
@@ -31,6 +43,7 @@ export const useDatePickerInputBlurHandler = (options: {
 	parseDate: (dateStr: string, format: string) => Date | null
 	formatDate: (date: Date, format: string) => string
 	updateModel: (value: DateModelValue) => void
+	/** Validation texte déléguée — en pratique `(value) => validate({ textValue: value })`. */
 	validateTextInput: (value: string) => Promise<boolean>
 
 	// Émetteurs d'événements
@@ -135,6 +148,27 @@ export const useDatePickerInputBlurHandler = (options: {
 		}
 
 		if (displayFormattedDate.value) {
+			// validateTextInput treats incomplete dates as valid (for typing flow),
+			// but at blur the user is done: check format validity first.
+			// If the format is invalid (including incomplete dates), push the error
+			// and skip validateTextInput which would incorrectly mark it as valid.
+			const value = displayFormattedDate.value
+			if (value.includes(locales.rangeSeparator)) {
+				const [startStr = '', endStr = ''] = value.split(locales.rangeSeparator).map(s => s?.trim() || '')
+				const startValid = validateDateFormat(startStr).isValid
+				const endValid = endStr ? validateDateFormat(endStr).isValid : true
+				if (!startValid || !endValid) {
+					replaceErrors([locales.invalidDateFormatWithFormat(unref(format))])
+					return
+				}
+			}
+			else {
+				const formatValidation = validateDateFormat(value)
+				if (!formatValidation.isValid) {
+					replaceErrors([formatValidation.message])
+					return
+				}
+			}
 			await Promise.resolve(validateTextInput(displayFormattedDate.value))
 		}
 	}

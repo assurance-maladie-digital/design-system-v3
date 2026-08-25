@@ -4,8 +4,33 @@ import type { DateInput } from '@/composables/date/useDateInitializationDayjs'
 import type { DateObjectValue } from '../types'
 
 /**
- * Utilitaires de formatage de dates pour les composants DatePicker
- * Extrait et centralisé à partir des différents composables
+ * dateFormattingUtils — Utilitaires de formatage et de résolution d'état pour les DatePicker.
+ *
+ * ## Fonctions principales
+ *
+ * - `formatDateInput` : Formate une saisie utilisateur en ajoutant les séparateurs du format
+ *   (ex: `12032025` → `12/03/2025`). Gère le maintien de la position du curseur via une
+ *   carte de correspondance (positionMap) entre la chaîne brute et la chaîne formatée.
+ *   Supporte l'expansion automatique des années sur 2 chiffres (YY → YYYY) pendant la saisie.
+ *
+ * - `resolveDatePickerStateFromModelValue` : Résout l'état interne (selectedDates + displayValue)
+ *   à partir du `modelValue` reçu. Gère les 3 cas : null, string (date simple), string[] (plage).
+ *   Tente le parsing avec le format de retour puis le format d'affichage en fallback.
+ *
+ * - `getDisplayedMonthYearState` : Extrait le mois, l'année et leurs noms formatés depuis une Date.
+ *   Utilisé par `syncDisplayedMonthYearFromDate` dans `useDatePickerCalendar`.
+ *
+ * - `formatDateRangeDisplay` : Formate une plage de dates pour l'affichage (start - end).
+ *
+ * - `getDateDescription` : Génère une description textuelle de la date pour les lecteurs d'écran
+ *   (ex: « Jour 12, Mois 03, Année 2025 »). Utilisé par la live region d'accessibilité.
+ *
+ * ## Types exportés
+ *
+ * - `FormatDateInputResult` / `FormatDateOptions` : Résultat et options du formatage d'input.
+ * - `DisplayedMonthYearState` : État mois/année affichés dans le calendrier.
+ * - `ResolveDatePickerStateOptions` / `ResolvedDatePickerState` : Options et résultat de la
+ *   résolution d'état depuis le modelValue.
  */
 
 /**

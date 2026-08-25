@@ -1,3 +1,32 @@
+/**
+ * useDatePickerFocusTrap — Gestion du focus dans le dialog du calendrier.
+ *
+ * ## Rôle
+ *
+ * Ce composable implémente le **focus trap** du calendrier DatePicker, conforme
+ * au pattern APG (ARIA Authoring Practices Guide) du W3C pour les date pickers.
+ *
+ * Il garantit que :
+ * - **Tab / Shift+Tab** cyclent à l'intérieur du dialog (le focus ne sort jamais)
+ * - **Escape** ferme le calendrier et restaure le focus sur l'input
+ * - Le **tab order logique** respecte l'ordre visuel : entête → grille des jours → bouton Aujourd'hui
+ *
+ * ## Ordre logique du focus
+ *
+ * Le composable construit un ordre de tabulation personnalisé via `getLogicalFocusOrder` :
+ * 1. Boutons d'entête (mois/année précédents, suivants, titre)
+ * 2. **Grille des jours** (un seul jour reçoit `tabindex=0`, les autres `-1`)
+ * 3. Bouton « Aujourd'hui »
+ *
+ * La grille est traitée comme un **roving tabindex** : un seul jour est focusable
+ * via Tab, la navigation intra-grille se fait par flèches (géré par `useCalendarKeyboardNavigation`).
+ *
+ * ## Sélecteurs
+ *
+ * Le composable utilise des sélecteurs spécifiques pour les proxies personnalisés
+ * (`data-sy-date-picker-option`) créés par `useMonthButtonCustomization`, avec
+ * fallback sur les boutons natifs Vuetify (`.v-btn`).
+ */
 import { type ComponentPublicInstance, type Ref } from 'vue'
 
 import dayjs from 'dayjs'

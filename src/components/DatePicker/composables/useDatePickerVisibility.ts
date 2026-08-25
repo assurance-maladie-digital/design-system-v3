@@ -1,7 +1,13 @@
 import { type Ref, nextTick, onMounted, onBeforeUnmount, unref, type MaybeRef } from 'vue'
 
 /**
- * Composable pour gérer la visibilité et les interactions avec le CalendarMode
+ * Composable pour gérer la visibilité et les interactions avec le CalendarMode.
+ *
+ * ## Rôle dans l'architecture validation
+ * Reçoit `validateDates` en paramètre — c'est un alias de compatibilité qui délègue
+ * à `validate()` dans le composant appelant. Le composable ne sait pas quel flow
+ * est utilisé ; il se contente d'appeler la fonction fournie après la fermeture
+ * du calendrier pour déclencher la validation des dates sélectionnées.
  *
  * @param options - Options de configuration
  * @returns Fonctions pour gérer la visibilité du CalendarMode
@@ -19,6 +25,10 @@ export const useDatePickerVisibility = (options: {
 
 	// Fonctions
 	updateAccessibility: () => void
+	/**
+	 * Fonction de validation déléguée — en pratique, c'est `() => validate()`
+	 * fournie par le composant appelant. Appelée après fermeture du calendrier.
+	 */
 	validateDates: () => void
 
 	// Émetteurs d'événements
