@@ -112,6 +112,17 @@ export function useTableAria({
 		})
 	}
 
+	// Nettoyer les écouteurs d'événements des éléments enregistrés
+	const cleanupListeners = () => {
+		elementsWithListeners.value.forEach((element) => {
+			if (element) {
+				element.removeEventListener('focus', handleInteractiveElementFocus)
+				element.removeEventListener('blur', handleInteractiveElementBlur)
+			}
+		})
+		elementsWithListeners.value = []
+	}
+
 	// Update ARIA sort attributes on header cells
 	const updateHeaderAria = async () => {
 		await nextTick()
@@ -119,10 +130,8 @@ export function useTableAria({
 		const tableElement = table.value?.$el?.querySelector('table')
 		if (!tableElement) return
 
-		// Réinitialiser le registre : les éléments précédents peuvent avoir été
-		// retirés du DOM par Vuetify lors d'un re-render, et les listeners sont
-		// déjà retirés ci-dessous avant d'être ré-ajoutsés.
-		elementsWithListeners.value = []
+		// Nettoyer les anciens listeners avant de reconstruire le registre
+		cleanupListeners()
 
 		const headerCells = tableElement.querySelectorAll('thead tr.headers th')
 		headerCells.forEach((cell) => {
@@ -155,12 +164,6 @@ export function useTableAria({
 			// Only apply to non-checkbox columns
 			if (!cell.querySelector('input[type="checkbox"]')) {
 				const interactiveElements = cell.querySelectorAll('button, [tabindex]:not([tabindex="-1"])')
-
-				// Remove existing event listeners to avoid duplicates
-				interactiveElements.forEach((element) => {
-					element.removeEventListener('focus', handleInteractiveElementFocus)
-					element.removeEventListener('blur', handleInteractiveElementBlur)
-				})
 
 				interactiveElements.forEach((element, index) => {
 					if (index === 0) {
@@ -277,13 +280,7 @@ export function useTableAria({
 
 	// Nettoyer les écouteurs d'événements lors du démontage du composant
 	onUnmounted(() => {
-		elementsWithListeners.value.forEach((element) => {
-			if (element) {
-				element.removeEventListener('focus', handleInteractiveElementFocus)
-				element.removeEventListener('blur', handleInteractiveElementBlur)
-			}
-		})
-		elementsWithListeners.value = []
+		cleanupListeners()
 	})
 
 	return {
