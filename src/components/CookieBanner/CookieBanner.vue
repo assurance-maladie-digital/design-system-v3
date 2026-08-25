@@ -201,7 +201,7 @@
 		<VSheet
 			ref="vsheetRef"
 			v-bind="{ ...options.banner, ...attrs }"
-			class="vd-cookie-banner"
+			:class="['vd-cookie-banner', options.banner?.class, attrs.class]"
 		>
 			<div
 				ref="bannerRef"
