@@ -158,7 +158,7 @@ export const Required: Story = {
 		template: `
 		<SyForm ref="form" @submit="onSubmit">
           <SyRadioGroup v-model="selected" required v-bind="args" />
-          <v-btn type="submit" class="mt-2 mr-2" color="primary">Valider</v-btn>
+          <VBtn type="submit" class="mt-2 mr-2" color="primary">Valider</VBtn>
           </SyForm>
         `,
 	}),
@@ -577,12 +577,10 @@ const options = [
 
 const onUpdate = (value: string | null) => {
 	lastEvent.value = \`update:modelValue: \${value}\`
-	console.log('update:modelValue', value)
 }
 
 const onChange = (value: string | null) => {
 	lastEvent.value = \`change: \${value}\`
-	console.log('change', value)
 }
 </script>`,
 			},

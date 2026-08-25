@@ -90,6 +90,25 @@ describe('SyTable', () => {
 		expect(wrapper.text()).toContain('John Doe')
 	})
 
+	it('applies ARIA row metadata to the rendered table', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: {} as DataOptions,
+				suffix: 'table-aria',
+				headers,
+				items: fakeItems,
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		await wrapper.vm.$nextTick()
+
+		const table = wrapper.find('table')
+		expect(table.attributes('aria-rowcount')).toBe('4')
+		expect(table.find('thead tr').attributes('aria-rowindex')).toBe('1')
+		expect(table.find('tbody tr').attributes('aria-rowindex')).toBe('2')
+	})
+
 	it('accepts both old and new headers format', () => {
 		const wrapper = mount(SyTable, {
 			props: {
@@ -605,6 +624,90 @@ describe('SyTable', () => {
 		// Check that the VDataTable has the correct model value
 		const dataTable = wrapper.findComponent({ name: 'VDataTable' })
 		expect(dataTable.props('modelValue')).toEqual([2])
+	})
+
+	it('keeps only one radio checked in single-select mode', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				items: fakeItems,
+				showSelectSingle: true,
+				modelValue: [fakeItems[0]!.id],
+				suffix: 'radio-sync',
+			},
+		})
+
+		let radios = wrapper.findAll('input[type="radio"]')
+		expect(radios).toHaveLength(3)
+		expect((radios[0]!.element as HTMLInputElement).checked).toBe(true)
+		expect((radios[1]!.element as HTMLInputElement).checked).toBe(false)
+		expect((radios[2]!.element as HTMLInputElement).checked).toBe(false)
+
+		await wrapper.setProps({ modelValue: [fakeItems[1]!.id] })
+		await wrapper.vm.$nextTick()
+
+		radios = wrapper.findAll('input[type="radio"]')
+		expect((radios[0]!.element as HTMLInputElement).checked).toBe(false)
+		expect((radios[1]!.element as HTMLInputElement).checked).toBe(true)
+		expect((radios[2]!.element as HTMLInputElement).checked).toBe(false)
+	})
+
+	it('checking a radio updates the selection and deselects the previous row', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				'items': fakeItems,
+				'showSelectSingle': true,
+				'modelValue': [],
+				'suffix': 'radio-click',
+				'onUpdate:modelValue': (value: unknown) => wrapper.setProps({ modelValue: value as unknown[] | undefined }),
+			},
+		})
+
+		const radios = wrapper.findAll<HTMLInputElement>('input[type="radio"]')
+		const selectRadio = (radio: HTMLInputElement) => {
+			radio.checked = true
+			radio.dispatchEvent(new Event('change', { bubbles: true }))
+		}
+
+		selectRadio(radios[0]!.element)
+		await wrapper.vm.$nextTick()
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([[fakeItems[0]!.id]])
+
+		selectRadio(radios[1]!.element)
+		await wrapper.vm.$nextTick()
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([[fakeItems[1]!.id]])
+		expect(radios[0]!.element.checked).toBe(false)
+		expect(radios[1]!.element.checked).toBe(true)
+	})
+
+	it('ignores change events from a deselected radio', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				headers,
+				'items': fakeItems,
+				'showSelectSingle': true,
+				'modelValue': [fakeItems[1]!.id],
+				'suffix': 'radio-switch',
+				'onUpdate:modelValue': (value: unknown) => wrapper.setProps({ modelValue: value as unknown[] | undefined }),
+			},
+		})
+
+		const radios = wrapper.findAll<HTMLInputElement>('input[type="radio"]')
+		const dispatchChange = (radio: HTMLInputElement, checked: boolean) => {
+			radio.checked = checked
+			radio.dispatchEvent(new Event('change', { bubbles: true }))
+		}
+
+		dispatchChange(radios[0]!.element, true)
+		dispatchChange(radios[1]!.element, false)
+		await wrapper.vm.$nextTick()
+
+		// The deselected radio must not restore the previous selection.
+		expect(wrapper.emitted('update:modelValue')).toHaveLength(1)
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([[fakeItems[0]!.id]])
+		expect(radios[0]!.element.checked).toBe(true)
+		expect(radios[1]!.element.checked).toBe(false)
 	})
 
 	it('should hide a column when hideColumn is called', async () => {

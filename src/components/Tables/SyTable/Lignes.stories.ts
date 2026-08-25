@@ -269,7 +269,7 @@ export const ExpandableRows: Story = {
 				suffix="expand-table"
 			>
 				<template #item.data-table-expand="{ internalItem, isExpanded, toggleExpand }">
-					<v-btn
+					<VBtn
 						:append-icon="isExpanded(internalItem) ? mdiChevronUp : mdiChevronDown"
 						:text="isExpanded(internalItem) ? 'Fermer' : \`Plus d'info\`"
 						class="text-none"

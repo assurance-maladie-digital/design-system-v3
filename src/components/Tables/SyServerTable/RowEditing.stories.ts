@@ -4,7 +4,7 @@ import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
 import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
 import { useServerEditingDemo } from '../common/serverStoryHelpers'
 
 const meta = {
@@ -103,6 +103,7 @@ export const Default: Story = {
 		editable: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable, SyIconButton },
@@ -238,6 +239,7 @@ export const CustomEditor: Story = {
 		editable: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable, SyIconButton },
@@ -381,6 +383,7 @@ export const NonPrimitiveEditor: Story = {
 		editable: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable, SyIconButton, DatePicker },

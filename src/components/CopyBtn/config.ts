@@ -14,7 +14,7 @@ export const config = {
 		rounded: 'pill',
 	},
 	icon: {
-		// TODO refactor to use our theme color
+		// Note: 'grey-darken-20' est utilisé en attendant de migrer vers une couleur du thème DS
 		color: 'grey-darken-20',
 	},
 }

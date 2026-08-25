@@ -5,6 +5,7 @@
 	import { locales } from './locales'
 	import { useValidation } from '@/composables/unifyValidation/useValidation'
 	import { useNirValidation, type NirValidationProps } from './useNirValidation'
+	import { devWarn } from '@/utils/devWarn'
 
 	const props = withDefaults(defineProps<{
 		modelValue?: string | undefined | null
@@ -173,7 +174,7 @@
 			const input = field.value?.$el?.querySelector?.('input') as HTMLInputElement | null
 
 			if (!input) {
-				console.error('[NirField] focusField: impossible de trouver l\'élément <input> dans le champ cible.')
+				devWarn('[NirField] focusField: impossible de trouver l\'élément <input> dans le champ cible.')
 				return
 			}
 

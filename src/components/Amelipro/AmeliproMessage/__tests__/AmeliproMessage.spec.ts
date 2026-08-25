@@ -439,7 +439,7 @@ describe('AmeliproMessage', () => {
 		})
 	})
 
-	// TODO: Slots
+	// Note: Slots
 	describe.skip('Slots', () => {
 		describe.skip('#default')
 	})

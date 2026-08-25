@@ -236,7 +236,7 @@
 </script>
 
 <template>
-	<v-input
+	<VInput
 		:id="inputId"
 		v-model="selectedItem"
 		:error-messages="localErrorMessages"
@@ -277,7 +277,8 @@
 			<SyIcon
 				v-if="selectedItemText && props.clearable"
 				:icon="mdiCloseCircle"
-				:aria-label="locales.clearLabel"
+				:label="locales.clearLabel"
+				:decorative="false"
 				role="button"
 				@click.stop.prevent="selectItem(null)"
 			/>
@@ -309,7 +310,7 @@
 				</VListItemTitle>
 			</VListItem>
 		</VList>
-	</v-input>
+	</VInput>
 </template>
 
 <style lang="scss" scoped>

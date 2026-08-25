@@ -13,7 +13,6 @@ export const config = {
 		color: 'rgb(var(--v-theme-infoVariant))',
 	},
 	closeBtn: {
-		icon: true,
 		variant: 'text',
 		width: '32px',
 		height: '32px',

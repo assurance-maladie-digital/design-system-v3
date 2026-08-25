@@ -125,7 +125,7 @@ export const FauxPositifsCards: StoryObj = {
 				<div class="audit-dashboard pa-4">
 					<div class="d-flex flex-wrap align-center justify-space-between mb-6">
 						<div class="d-flex flex-wrap">
-							<v-select
+							<VSelect
 								v-model="tanaguruCategoryFilter"
 								:items="tanaguruCategoryOptions"
 								item-title="title"
@@ -137,9 +137,9 @@ export const FauxPositifsCards: StoryObj = {
 								style="max-width: 250px; min-width: 250px"
 								density="comfortable"
 								variant="outlined"
-							></v-select>
+							></VSelect>
 
-							<v-text-field
+							<VTextField
 								v-model="search"
 								label="Rechercher (composant, problème Tanaguru)"
 								append-inner-icon="mdi-magnify"
@@ -149,27 +149,27 @@ export const FauxPositifsCards: StoryObj = {
 								style="max-width: 350px; min-width: 350px"
 								density="comfortable"
 								variant="outlined"
-							></v-text-field>
+							></VTextField>
 						</div>
 					</div>
 
 					<div class="component-grid mb-6">
 
-						<v-row>
-							<v-col
+						<VRow>
+							<VCol
 								v-for="item in paginatedItems"
 								:key="item.component"
 								cols="12"
 								sm="12"
 								md="6"
 							>
-								<v-card
+								<VCard
 									class="component-card"
 									elevation="2"
 									height="100%"
 								>
-									<v-card-item>
-										<v-card-title
+									<VCardItem>
+										<VCardTitle
 											:aria-label="'Composant : ' + item.component"
 											:title="'Composant : ' + item.component"
 											role="heading"
@@ -177,10 +177,10 @@ export const FauxPositifsCards: StoryObj = {
 											class="text-truncate"
 											v-html="highlightMatch(item.component, search)"
 										/>
-									</v-card-item>
+									</VCardItem>
 
-									<v-card-text>
-										<v-chip
+									<VCardText>
+										<VChip
 											:color="tanaguruCategories[item.tanaguruCategory].color"
 											variant="flat"
 											class="mb-2"
@@ -188,7 +188,7 @@ export const FauxPositifsCards: StoryObj = {
 											:title="'Catégorie Tanaguru : ' + tanaguruCategories[item.tanaguruCategory].label"
 										>
 											{{ tanaguruCategories[item.tanaguruCategory].label }}
-										</v-chip>
+										</VChip>
 
 										<dl class="mt-1">
 											<dt class="text-subtitle-3 font-weight-bold">Problème Tanaguru :</dt>
@@ -196,18 +196,18 @@ export const FauxPositifsCards: StoryObj = {
 											<dt class="text-subtitle-3 font-weight-bold">Explication :</dt>
 											<dd class="text-body-3">{{ item.explanation }}</dd>
 										</dl>
-									</v-card-text>
-								</v-card>
-							</v-col>
-						</v-row>
+									</VCardText>
+								</VCard>
+							</VCol>
+						</VRow>
 
 						<div class="d-flex justify-center mt-4">
-							<v-pagination
+							<VPagination
 								v-model="page"
 								:length="Math.ceil(filteredItems.length / itemsPerPage)"
 								total-visible="7"
 								rounded
-							></v-pagination>
+							></VPagination>
 						</div>
 
 						<div class="d-flex pa-2 justify-space-between">

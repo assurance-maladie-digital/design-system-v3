@@ -152,4 +152,42 @@ describe('SocialMediaLinks', () => {
 		const socialMediaLinks = wrapper.find('.d-flex.flex-column')
 		expect(socialMediaLinks.exists()).toBe(true)
 	})
+
+	it('renders in dark mode', () => {
+		const links = [
+			{ href: 'https://x.com', name: 'X', icon: xIcon },
+		]
+
+		wrapper = mount(SocialMediaLinks, {
+			props: {
+				links,
+				dark: true,
+				headingLevel: 6,
+				useNativeHeading: true,
+			},
+		})
+
+		const container = wrapper.find('.vd-social-media-links')
+		expect(container.classes()).toContain('vd-social-media-links--dark')
+
+		const button = wrapper.findComponent({ name: 'VBtn' })
+		expect(button.props('theme')).toBe('dark')
+	})
+
+	it('does not use dark theme when dark prop is false', () => {
+		const links = [
+			{ href: 'https://x.com', name: 'X', icon: xIcon },
+		]
+
+		wrapper = mount(SocialMediaLinks, {
+			props: {
+				links,
+				dark: false,
+			},
+		})
+
+		const button = wrapper.findComponent({ name: 'VBtn' })
+
+		expect(button.props('theme')).not.toBe('dark')
+	})
 })

@@ -14,6 +14,9 @@ describe('HeaderLogo', () => {
 		window.happyDOM.setInnerWidth(600)
 
 		const mobileWrapper = mount(HeaderLogo, {
+			props: {
+				logoAlt: 'Logo',
+			},
 			attachTo: document.body,
 		})
 
@@ -30,6 +33,9 @@ describe('HeaderLogo', () => {
 		window.happyDOM.setInnerWidth(1200)
 
 		const desktopWrapper = mount(HeaderLogo, {
+			props: {
+				logoAlt: 'Logo',
+			},
 			attachTo: document.body,
 		})
 
@@ -165,6 +171,9 @@ describe('HeaderLogo', () => {
 
 	it('should use browser-native source selection for desktop and mobile svg files', async () => {
 		const wrapper = mount(HeaderLogo, {
+			props: {
+				logoAlt: 'Logo',
+			},
 			attachTo: document.body,
 		})
 

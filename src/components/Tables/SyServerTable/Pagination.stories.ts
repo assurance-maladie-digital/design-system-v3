@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { fn } from 'storybook/test'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
 import { serverUsers } from '../common/storyData'
 import { useServerTableDemo } from '../common/serverStoryHelpers'
 
@@ -115,19 +114,19 @@ export const ItemsPerPageOptions: Story = {
 		],
 	},
 	args: {
-		'options': {
+		options: {
 			itemsPerPage: 5,
 			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
-		'itemsPerPageOptions': [5, 10, 15],
-		'headers': serverHeaders,
-		'caption': '',
-		'serverItemsLength': 15,
-		'suffix': 'server-default',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
+		itemsPerPageOptions: [5, 10, 15],
+		headers: serverHeaders,
+		caption: '',
+		serverItemsLength: 15,
+		suffix: 'server-default',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -211,14 +210,14 @@ export const HideDefaultFooter: Story = {
 		],
 	},
 	args: {
-		'options': { itemsPerPage: -1, page: 1 },
-		'headers': serverHeaders,
-		'serverItemsLength': 6,
-		'suffix': 'server-hide-footer',
-		'density': 'default',
-		'striped': false,
-		'hideDefaultFooter': true,
-		'onUpdate:options': fn(),
+		options: { itemsPerPage: -1, page: 1 },
+		headers: serverHeaders,
+		serverItemsLength: 6,
+		suffix: 'server-hide-footer',
+		density: 'default',
+		striped: false,
+		hideDefaultFooter: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -301,14 +300,14 @@ export const PageInput: Story = {
 		],
 	},
 	args: {
-		'options': { itemsPerPage: 5, page: 1 },
-		'headers': serverHeaders,
-		'serverItemsLength': 11,
-		'suffix': 'server-page-input',
-		'density': 'default',
-		'striped': false,
-		'pageInput': true,
-		'onUpdate:options': fn(),
+		options: { itemsPerPage: 5, page: 1 },
+		headers: serverHeaders,
+		serverItemsLength: 11,
+		suffix: 'server-page-input',
+		density: 'default',
+		striped: false,
+		pageInput: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },

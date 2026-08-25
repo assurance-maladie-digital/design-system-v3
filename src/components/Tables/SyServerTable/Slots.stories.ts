@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { fn } from 'storybook/test'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
 import { serverUsers } from '../common/storyData'
 import { useServerTableDemo } from '../common/serverStoryHelpers'
 
@@ -143,14 +142,14 @@ export const SlotItem: Story = {
 		],
 	},
 	args: {
-		'options': { ...defaultSortOptions },
-		'headers': serverHeaders,
-		'caption': '',
-		'serverItemsLength': 15,
-		'suffix': 'server-slot-item',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
+		options: { ...defaultSortOptions },
+		headers: serverHeaders,
+		caption: '',
+		serverItemsLength: 15,
+		suffix: 'server-slot-item',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -221,14 +220,14 @@ export const SlotHeaders: Story = {
 		],
 	},
 	args: {
-		'options': { ...defaultSortOptions },
-		'headers': serverHeaders,
-		'caption': '',
-		'serverItemsLength': 15,
-		'suffix': 'server-slot-headers',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
+		options: { ...defaultSortOptions },
+		headers: serverHeaders,
+		caption: '',
+		serverItemsLength: 15,
+		suffix: 'server-slot-headers',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -293,14 +292,14 @@ export const SlotHeader: Story = {
 		],
 	},
 	args: {
-		'options': { ...defaultSortOptions },
-		'headers': serverHeaders,
-		'caption': '',
-		'serverItemsLength': 15,
-		'suffix': 'server-slot-header',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
+		options: { ...defaultSortOptions },
+		headers: serverHeaders,
+		caption: '',
+		serverItemsLength: 15,
+		suffix: 'server-slot-header',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -395,18 +394,18 @@ export const ComplexItemsDisplay: Story = {
 		],
 	},
 	args: {
-		'options': {
+		options: {
 			itemsPerPage: 5,
 			sortBy: [{ key: 'title', order: 'asc' }],
 			page: 1,
 		},
-		'headers': projectHeaders,
-		'caption': '',
-		'serverItemsLength': 6,
-		'suffix': 'server-complex-item',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
+		headers: projectHeaders,
+		caption: '',
+		serverItemsLength: 6,
+		suffix: 'server-complex-item',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },

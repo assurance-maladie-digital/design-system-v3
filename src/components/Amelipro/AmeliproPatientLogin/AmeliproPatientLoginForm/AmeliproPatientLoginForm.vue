@@ -7,7 +7,6 @@
 	import type { AutoCompleteItem } from '../../AmeliproAutoCompleteField/types'
 	import type { IPatientLoginForm } from './types'
 	import type { ValidationRule } from '@/utils/rules/types'
-	import { vMaska } from 'maska/vue'
 	import imgVital from '@/assets/amelipro/img/idpa/carte-vitale.svg'
 	import apcvLogo from '@/assets/amelipro/img/idpa/apcv_logo.svg'
 	import { locales as defaultLocales } from './locales'
@@ -193,7 +192,7 @@
 			>
 				<AmeliproTextField
 					v-model="currentValue.fieldValue"
-					v-maska="mask"
+					:mask="mask"
 					required
 					classes="mt-6"
 					clearable

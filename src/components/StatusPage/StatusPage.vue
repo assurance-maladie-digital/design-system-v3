@@ -72,7 +72,8 @@
 		headingLevel: 1,
 	})
 
-	const uniqueId = computed(() => props.uniqueId ?? useId())
+	const _generatedId = useId()
+	const uniqueId = computed(() => props.uniqueId ?? _generatedId)
 
 	const emit = defineEmits(['btn-click'])
 	const emitClickEvent = (): void => {

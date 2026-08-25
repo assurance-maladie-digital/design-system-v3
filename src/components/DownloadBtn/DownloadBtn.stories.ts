@@ -130,8 +130,8 @@ export const Default: Story = {
 				code: `<template>
 	<DownloadBtn
 		:file-promise="download"
-		@error="console.log('error')"
-		@success="console.log('success')"
+		@error="onError"
+		@success="onSuccess"
 	>
 		Télécharger
 	</DownloadBtn>
@@ -147,6 +147,9 @@ export const Default: Story = {
 	const download = () => {
         return axios.get('https://run.mocky.io/v3/884c25f5-6dc2-4c01-b8d9-26c54042f94f')
 	}
+	
+	const onError = () => {}
+	const onSuccess = () => {}
 </script>
 				`,
 			},
@@ -161,7 +164,6 @@ export const Default: Story = {
 }
 
 export const Error: Story = {
-	name: 'Error',
 	parameters: {
 		sourceCode: [
 			{
@@ -169,8 +171,8 @@ export const Error: Story = {
 				code: `<template>
 	<DownloadBtn
 		:file-promise="download"
-		@error="console.log('error')"
-		@success="console.log('success')"
+		@error="onError"
+		@success="onSuccess"
 	>
 		Télécharger
 	</DownloadBtn>
@@ -186,6 +188,9 @@ export const Error: Story = {
 	const download = () => {
         return axios.get('https://')
 	}
+	
+	const onError = () => {}
+	const onSuccess = () => {}
 </script>
 				`,
 			},
@@ -200,7 +205,6 @@ export const Error: Story = {
 }
 
 export const Loading: Story = {
-	name: 'Loading',
 	parameters: {
 		sourceCode: [
 			{
@@ -208,8 +212,8 @@ export const Loading: Story = {
 				code: `<template>
 	<DownloadBtn
 		:file-promise="download"
-		@error="console.log('error')"
-		@success="console.log('success')"
+		@error="onError"
+		@success="onSuccess"
 	>
 		Télécharger
 	</DownloadBtn>
@@ -254,8 +258,8 @@ export const Dark: Story = {
 		<DownloadBtn
 			dark
 			:file-promise="download"
-			@error="console.log('error')"
-			@success="console.log('success')"
+			@error="onError"
+			@success="onSuccess"
 		>
 			Télécharger
 		</DownloadBtn>
@@ -272,6 +276,9 @@ export const Dark: Story = {
 	const download = () => {
         return new Promise(() => { setTimeout(() => {}, 100000) })
 	}
+	
+	const onError = () => {}
+	const onSuccess = () => {}
 </script>
 				`,
 			},
@@ -394,8 +401,8 @@ export const Customization: Story = {
 	<DownloadBtn
 		:file-promise="download"
 		:vuetify-options="vuetifyOptions"
-		@error="console.log('error')"
-		@success="console.log('success')"
+		@error="onError"
+		@success="onSuccess"
 	>
 		Télécharger
 	</DownloadBtn>
@@ -411,6 +418,9 @@ export const Customization: Story = {
 	const download = () => {
         return axios.get('https://run.mocky.io/v3/884c25f5-6dc2-4c01-b8d9-26c54042f94f')
 	}
+	
+	const onError = () => {}
+	const onSuccess = () => {}
     
     const vuetifyOptions = {
 		btn: {

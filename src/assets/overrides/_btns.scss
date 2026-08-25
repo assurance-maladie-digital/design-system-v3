@@ -1,13 +1,15 @@
+// Base button styles
 .v-btn {
 	text-transform: inherit !important;
 	font-weight: 700 !important;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	padding: 0 var(--spacing-4) !important;
 }
 
-.theme-cnam .v-btn,
-.theme-pa .v-btn {
-	padding: 0 var(--spacing-4) !important;
+.v-btn.v-btn--size-x-small,
+.v-btn.v-btn--size-small {
+	min-height: 20px;
 }
 
 .v-btn.v-tab {
@@ -31,10 +33,107 @@ button:focus-visible {
 	outline-color: rgb(var(--v-theme-onPrimary));
 }
 
-.v-btn:focus-visible .v-btn__overlay {
-	opacity: 0 !important;
+.v-btn:focus-visible {
+	.v-btn__overlay,
+	&::after {
+		opacity: 0 !important;
+	}
 }
 
-.v-btn:focus-visible::after {
-	opacity: 0 !important;
+// Overlay base configuration
+.v-btn__overlay {
+	opacity: 0;
+	background: transparent !important;
+	transition: opacity 0.2s ease, background 0s 0.2s;
+}
+
+// Composants Vuetify dont l'état sélectionné n'a pas d'autre rendu que cette surcouche : le
+// `background: transparent` ci-dessus la rendait invisible (l'opacité, elle, survit), et l'élément
+// sélectionné devenait indiscernable des autres. On se limite volontairement à ces trois
+// conteneurs : ailleurs, le design system dessine ses propres états sélectionnés et la surcouche
+// native n'est pas souhaitée (tuiles Amelipro, jour courant du DatePicker, activateurs de menu).
+.v-btn-toggle .v-btn--active > .v-btn__overlay,
+.v-pagination__item--is-active .v-btn__overlay,
+.v-tabs .v-btn--active > .v-btn__overlay {
+	background: currentcolor !important;
+}
+
+// Elevated/Flat buttons
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-elevated,
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-flat {
+	&.v-btn--disabled {
+		background-color: rgba(var(--v-theme-disabled)) !important;
+		color: rgba(var(--v-theme-onDisabled)) !important;
+		opacity: 1;
+	}
+
+	.v-btn__content {
+		position: relative;
+		z-index: 1;
+	}
+
+	&:hover .v-btn__overlay {
+		background: rgba(var(--v-theme-interactionDarken), 0.2) !important;
+		opacity: 1;
+		transition: opacity 0.2s ease, background 0s;
+	}
+
+	&:active .v-btn__overlay {
+		background: rgba(var(--v-theme-interactionDarken), 0.4) !important;
+		opacity: 1;
+		transition: opacity 0.2s ease, background 0s;
+	}
+}
+
+// Outlined, Text and Tonal buttons
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026, .v-theme--dark).v-btn--variant-outlined,
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026, .v-theme--dark).v-btn--variant-text,
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026, .v-theme--dark).v-btn--variant-tonal {
+	&.v-btn--disabled {
+		color: rgba(var(--v-theme-onDisabled)) !important;
+		opacity: 1;
+	}
+
+	&:hover .v-btn__overlay {
+		background: rgba(var(--v-theme-interactionDark), 0.08) !important;
+		opacity: 1;
+		transition: opacity 0.2s ease, background 0s;
+	}
+
+	&:active .v-btn__overlay {
+		background: rgba(var(--v-theme-interactionDark), 0.2) !important;
+		opacity: 1;
+		transition: opacity 0.2s ease, background 0s;
+	}
+
+	&.v-theme--dark {
+		&:hover .v-btn__overlay {
+			background: rgba(var(--v-theme-interactionLighten), 0.2) !important;
+			opacity: 1;
+			transition: opacity 0.2s ease, background 0s;
+		}
+
+		&:active .v-btn__overlay {
+			background: rgba(var(--v-theme-interactionLighten), 0.4) !important;
+			opacity: 1;
+			transition: opacity 0.2s ease, background 0s;
+		}
+	}
+
+	&.text-error {
+		&:hover .v-btn__overlay {
+			background: rgba(var(--v-theme-error), 0.08) !important;
+		}
+
+		&:active .v-btn__overlay {
+			background: rgba(var(--v-theme-error), 0.2) !important;
+		}
+	}
+}
+
+// `outlined` est la seule des trois variantes à avoir une bordure : la teinter n'a de sens que
+// pour elle. `text` et `tonal` n'en ont pas, et le fond de `tonal` vient de son `.v-btn__underlay`
+// en `currentColor`, déjà grisé par le `color` forcé ci-dessus.
+:where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-outlined.v-btn--disabled {
+	border-color: rgba(var(--v-theme-disabled)) !important;
 }

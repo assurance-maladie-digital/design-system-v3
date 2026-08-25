@@ -9,7 +9,17 @@ Ce composant utilise directement le composant natif `v-btn` de Vuetify avec les 
 Pour l'API complète du composant, consulter la [documentation Vuetify](https://vuetifyjs.com/en/api/v-btn/#props).
 </div>
 
-## Primary
+## Hiérarchie des actions
+
+Choisir la hiérarchie selon l'importance de l'action dans son contexte :
+
+- **Primary** : action principale.
+- **Secondary** : action alternative.
+- **Tertiary** : action secondaire, peu mise en avant.
+
+Les versions destructives utilisent la couleur `error` et doivent être réservées aux actions irréversibles ou à risque.
+
+### Primary
 
 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', padding: '24px' }}>
   <Canvas of={VBtnStories.Primary} />
@@ -17,7 +27,7 @@ Pour l'API complète du composant, consulter la [documentation Vuetify](https://
   <Canvas of={VBtnStories.PrimaryDisabled} />
 </div>
 
-## Secondary
+### Secondary
 
 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', padding: '24px' }}>
   <Canvas of={VBtnStories.Secondary} />
@@ -25,7 +35,7 @@ Pour l'API complète du composant, consulter la [documentation Vuetify](https://
   <Canvas of={VBtnStories.SecondaryDisabled} />
 </div>
 
-## Tertiary
+### Tertiary
 
 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', padding: '24px' }}>
   <Canvas of={VBtnStories.Tertiary} />
@@ -33,10 +43,70 @@ Pour l'API complète du composant, consulter la [documentation Vuetify](https://
   <Canvas of={VBtnStories.TertiaryDisabled} />
 </div>
 
-## Variants disponibles
+### Primary Destructive
 
-- `elevated` – Bouton avec ombre (défaut)
-- `outlined` – Fond transparent avec bordure
-- `tonal` – Fond teinté de la couleur
-- `text` – Sans fond ni bordure
-- `plain` – Sans fond ni bordure, opacité réduite
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', padding: '24px' }}>
+    <Canvas of={VBtnStories.PrimaryDestructive} />
+    <Canvas of={VBtnStories.PrimaryDestructiveLoading} />
+    <Canvas of={VBtnStories.PrimaryDestructiveDisabled} />
+</div>
+
+### Secondary Destructive
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', padding: '24px' }}>
+    <Canvas of={VBtnStories.SecondaryDestructive} />
+    <Canvas of={VBtnStories.SecondaryDestructiveLoading} />
+    <Canvas of={VBtnStories.SecondaryDestructiveDisabled} />
+</div>
+
+### Tertiary Destructive
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', padding: '24px' }}>
+    <Canvas of={VBtnStories.TertiaryDestructive} />
+    <Canvas of={VBtnStories.TertiaryDestructiveLoading} />
+    <Canvas of={VBtnStories.TertiaryDestructiveDisabled} />
+</div>
+
+
+## Variantes
+
+La prop `variant` définit le traitement visuel du bouton. Utiliser les variantes de hiérarchie ci-dessus par défaut et ne choisir une autre variante que lorsqu'elle répond à un besoin d'interface identifié.
+
+<Canvas of={VBtnStories.Variants} />
+
+## Densité et taille
+
+`density` compacte verticalement le bouton sans modifier son échelle générale. Les valeurs disponibles sont `default`, `comfortable` et `compact`.
+
+<Canvas of={VBtnStories.Densities} />
+
+La prop `size` règle l'échelle globale du bouton. Les valeurs disponibles sont `x-small`, `small`, `default`, `large` et `x-large`.
+
+Les deux props peuvent être combinées selon le contexte. Par exemple :
+
+```vue
+<v-btn variant="outlined" density="compact" size="large">Action</v-btn>
+```
+
+<Canvas of={VBtnStories.Sizes} />
+
+## Référence : `size` et `density`
+
+`size` définit l'échelle générale du bouton : texte, icônes, espacements et hauteur de référence évoluent ensemble. `density` ajuste uniquement son compactage vertical. Une même taille reste donc identifiable, quelle que soit sa densité.
+
+<Canvas of={VBtnStories.SizeDensityMatrix} />
+
+## Bouton icône
+
+Les slots `prepend` et `append` ajoutent une icône avant ou après le libellé. Utiliser `SyIcon` (plutôt que `v-icon` ou les props `prepend-icon`/`append-icon`) : Vuetify pose un `role="img"` sur le `<svg>` interne des icônes même lorsqu'elles sont décoratives, ce que `SyIcon` neutralise via la directive `v-rgaa-svg-fix`. Le texte porte le sens de l'action : l'icône reste décorative (`decorative`).
+
+<div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', alignItems: 'center', padding: '24px' }}>
+  <Canvas of={VBtnStories.PrependIcon} />
+  <Canvas of={VBtnStories.AppendIcon} />
+</div>
+
+La prop `icon` transforme le bouton en bouton d'icône : il ne contient qu'une icône et n'affiche pas de libellé visible. Sans texte visible, le nom accessible doit être fourni manuellement via `aria-label` sur le `v-btn`, l'icône restant décorative.
+
+<Canvas of={VBtnStories.IconOnly} />
+
+> Pour un bouton icône seule, préférer le composant [`SyIconButton`](?path=/docs/composants-boutons-syiconbutton--docs) du design system : il impose un `label` obligatoire et gère l'accessibilité (`aria-label`, icône décorative) automatiquement.

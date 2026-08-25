@@ -563,9 +563,9 @@ export const Customization: Story = {
 		:maxWidth="600"
 		:minWidth="400"
 		:width="'50%'"
-		@upload="console.log"
-		@delete="console.log"
-		@preview="console.log"
+		@upload="onUpload"
+		@delete="onDelete"
+		@preview="onPreview"
 	>
 		<template #file-icon-residenceCertificate>
 			<VIcon
@@ -602,6 +602,9 @@ const uploadList = ref([
 	},
 ])
 
+const onUpload = () => {}
+const onDelete = () => {}
+const onPreview = () => {}
 </script>
 				`,
 			},

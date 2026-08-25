@@ -488,7 +488,7 @@ export const WithNumber: Story = {
 					padding-top: 32px;
 				  "
 				>
-					<v-avatar
+					<VAvatar
 						color="primary"
 						variant="outlined"
 			            size="32"
@@ -502,11 +502,11 @@ export const WithNumber: Story = {
 						"
 					>
 						1
-					</v-avatar>
+					</VAvatar>
 
-					<v-card-text>
+					<VCardText>
 						Cette carte est numérotée.
-					</v-card-text>
+					</VCardText>
 				</VCard>
             </div>
         `,

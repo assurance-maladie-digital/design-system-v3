@@ -43,6 +43,41 @@ describe('DownloadBtn - Visual regression tests', () => {
 	})
 })
 
+describe('DownloadBtn - Hover visual regression tests', () => {
+	it('shows the hover state in light mode', () => {
+		cy.mountWithVuetify(DownloadBtn, {
+			props: {
+				filePromise: fakeFilePromise,
+			},
+		})
+
+		cy.get('.sy-download-btn')
+			.should('be.visible')
+			.trigger('mouseover')
+
+		cy.wait(100)
+		cy.matchImageSnapshot('download-btn-hover-light', cy.get('.v-application'))
+	})
+
+	it('shows the hover state in dark mode', () => {
+		cy.mountWithVuetify(
+			h(VSheet, { color: 'primary', class: 'pa-4', style: 'display: inline-block;' }, () => [
+				h(DownloadBtn, {
+					filePromise: fakeFilePromise,
+					dark: true,
+				}),
+			]),
+		)
+
+		cy.get('.sy-download-btn')
+			.should('be.visible')
+			.trigger('mouseover')
+
+		cy.wait(100)
+		cy.matchImageSnapshot('download-btn-hover-dark', cy.get('.v-application'))
+	})
+})
+
 describe('DownloadBtn - Focus visual regression tests', () => {
 	// Mode clair (outlined primary) : ring primary, offset 3px. Capture `.v-application`
 	// pour ne pas rogner le ring outset.

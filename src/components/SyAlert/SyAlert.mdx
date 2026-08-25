@@ -11,14 +11,20 @@ import * as SyAlertStories from './SyAlert.stories';
 </div>
 
 {/* func-version-start */}
-<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.1.2 - 22/07/2026</p>
+<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.1.4 - 07/08/2026</p>
 {/* func-version-end */}
 {/* a11y-version-start */}
-<p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.1.2 - 22/07/2026</p>
+<p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.1.3 - 10/08/2026</p>
 {/* a11y-version-end */}
 
 
 <Canvas of={SyAlertStories.Default}  />
+
+## Densité
+
+Utilisez la prop <code>density="compact"</code> pour les messages courts affichés dans un espace contraint. Elle réduit les espacements et la taille de l’icône, sans modifier le contenu ni le comportement d’annonce.
+
+<Canvas of={SyAlertStories.Density} />
 
 ## Annonce aux technologies d’assistance
 

@@ -197,7 +197,7 @@ export function useValidation(params: {
 		return 'default'
 	})
 
-	// TODO: vérifier si c'est la meilleure approche pour supprimer le succès en mode Vuetify
+	// Note: vérifier si c'est la meilleure approche pour supprimer le succès en mode Vuetify
 	const hasSuccess = computed(() => {
 		if (toValue(params.useVuetifyValidation)) {
 			return params.hasSuccessProp?.value ?? false

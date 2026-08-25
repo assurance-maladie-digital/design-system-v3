@@ -477,7 +477,7 @@ describe('AmeliproIllustratedRadioGroup', () => {
 			expect(inputWrappers().length).toBe(3)
 		})
 
-		// TODO: réparer ces tests. trigger('input') ne semble plus fonctionner
+		// Note: réparer ces tests. trigger('input') ne semble plus fonctionner
 		it.skip('should react to input event', async () => {
 			expect(vueWrapper.emitted('change:selected')).toBeUndefined()
 			expect(inputWrappers().at(0)?.exists()).toBe(true)

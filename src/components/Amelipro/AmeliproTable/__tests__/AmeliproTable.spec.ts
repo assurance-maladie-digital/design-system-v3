@@ -465,9 +465,9 @@ describe('AmeliproTable', () => {
 		})
 	})
 
-	// TODO:
+	// Note:
 	// describe.skip('Setting props should update props or attributes of inner components', () => {	})
 
-	// TODO:
+	// Note:
 	// describe.skip('Slots', () => {	})
 })

@@ -1,4 +1,4 @@
-import { ref, nextTick, type Ref, onBeforeUnmount } from 'vue'
+import { ref, nextTick, type Ref, onBeforeUnmount, getCurrentInstance } from 'vue'
 import { expandMonthAccessibleName } from '@/composables/date/useDatePickerAccessibility'
 import { locales } from '../locales'
 
@@ -98,10 +98,15 @@ export function useMonthButtonCustomization(
 		buttonElement.dataset.datePickerCustomizationSignature = signature
 	}
 
-	onBeforeUnmount(() => {
-		monthButtonObservers.forEach(observer => observer.disconnect())
-		monthButtonObservers.length = 0
-	})
+	// En contexte de test unitaire, getCurrentInstance() retourne null car le composable
+	// peut être appelé hors d'un composant Vue. Le guard évite l'appel à onBeforeUnmount
+	// qui nécessite une instance active.
+	if (getCurrentInstance()) {
+		onBeforeUnmount(() => {
+			monthButtonObservers.forEach(observer => observer.disconnect())
+			monthButtonObservers.length = 0
+		})
+	}
 
 	/**
 	 * Retourne un nom personnalisé pour le mois en fonction de sa valeur

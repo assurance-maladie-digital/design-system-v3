@@ -150,8 +150,10 @@
 .notification-bar-transition {
 	width: min(calc(100% - 16px), 960px);
 	position: fixed;
+	left: 0;
+	right: 0;
+	margin: auto;
 	z-index: 2000;
-	left: 50%;
 }
 
 /* Fade transition for notifications */

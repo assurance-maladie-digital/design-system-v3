@@ -19,6 +19,15 @@ describe('Alert', () => {
 		expect(wrapper.classes()).toContain('sy-alert')
 	})
 
+	it.each(['comfortable', 'compact'] as const)('forwards the %s density', (density) => {
+		const wrapper = mount(SyAlert, {
+			props: { density },
+			slots: { default: 'slot content' },
+		})
+
+		expect(wrapper.get('.v-alert').classes()).toContain(`v-alert--density-${density}`)
+	})
+
 	it('show and hide correctly when modelValue is updated', async () => {
 		const wrapper = mount(SyAlert, {
 			props: {

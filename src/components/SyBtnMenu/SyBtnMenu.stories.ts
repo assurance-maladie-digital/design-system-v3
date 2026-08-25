@@ -23,6 +23,11 @@ const meta: Meta<typeof SyBtnMenu> = {
 		hideIcon: { control: 'boolean' },
 		hideLogoutBtn: { control: 'boolean' },
 		isMobileView: { control: 'boolean' },
+		iconOnly: { control: 'boolean' },
+		showIdentityInList: {
+			control: 'boolean',
+			description: 'Affiche `primaryInfo` / `secondaryInfo` en tête du menu déroulant lorsque le bouton est en mode icône seule (`icon-only`), l\'identité étant alors masquée dans l\'activateur.',
+		},
 		options: { control: 'object' },
 	},
 }
@@ -319,6 +324,71 @@ const items = ['Option 1', 'Option 2']
 	},
 }
 
+export const WithIdentityInList: Story = {
+	parameters: {
+		a11y: {
+			disable: true,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <SyBtnMenu
+  	:primary-info="primaryInfo"
+  	:secondary-info="secondaryInfo"
+  	:menu-items="items"
+  	icon-only
+  	show-identity-in-list
+  >
+    <template #prepend-icon>
+	<SyIcon :icon="mdiAccount" color="secondary" decorative />
+    </template>
+  </SyBtnMenu>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { SyBtnMenu } from '@cnamts/synapse'
+import { mdiAccount } from '@mdi/js'
+
+const primaryInfo = 'Jane Doe'
+const secondaryInfo = 'Informations complémentaires'
+const items = ['Option 1', 'Option 2']
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		primaryInfo: 'Jane Doe',
+		secondaryInfo: 'Informations complémentaires',
+		menuItems: ['Option 1', 'Option 2'],
+		iconOnly: true,
+		showIdentityInList: true,
+	},
+	render: (args) => {
+		return {
+			components: { SyBtnMenu, SyIcon },
+			setup() {
+				return { args, mdiAccount }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <SyBtnMenu v-bind="args">
+                  <template #prepend-icon>
+					<SyIcon :icon="mdiAccount" color="secondary" decorative />
+                  </template>
+                </SyBtnMenu>
+              </div>
+            `,
+		}
+	},
+}
+
 export const WithLogoutItemSlot: Story = {
 	parameters: {
 		a11y: {
@@ -334,7 +404,7 @@ export const WithLogoutItemSlot: Story = {
   	:menu-items="items"
   >
     <template #footer-list-item>
-      <VListItem @click="console.log('logout')">
+      <VListItem @click="onLogout">
         <VListItemTitle>Logout</VListItemTitle>
       </VListItem>
     </template>
@@ -350,6 +420,8 @@ import { SyBtnMenu } from '@cnamts/synapse'
 
 const primaryInfo = 'Mes options'
 const items = ['Option 1', 'Option 2']
+
+const onLogout = () => {}
 </script>
 				`,
 			},
@@ -363,13 +435,14 @@ const items = ['Option 1', 'Option 2']
 		return {
 			components: { SyBtnMenu, VListItem, VListItemTitle },
 			setup() {
-				return { args }
+				const onLogout = () => {}
+				return { args, onLogout }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <SyBtnMenu v-bind="args">
                   <template #footer-list-item>
-                    <VListItem @click="console.log('logout')">
+                    <VListItem @click="onLogout">
                       <VListItemTitle>Logout</VListItemTitle>
                     </VListItem>
                   </template>
@@ -466,7 +539,7 @@ export const WithMultipleSlots: Story = {
 	<SyIcon :icon="mdiAccount" decorative />
     </template>
     <template #footer-list-item>
-      <VListItem @click="console.log('logout')">
+      <VListItem @click="onLogout">
         <VListItemTitle>Se déconnecter</VListItemTitle>
       </VListItem>
     </template>
@@ -483,6 +556,8 @@ import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Information principale'
 const menuItems = ['Option 1', 'Option 2']
+
+const onLogout = () => {}
 </script>
 				`,
 			},
@@ -495,7 +570,8 @@ const menuItems = ['Option 1', 'Option 2']
 		return {
 			components: { SyBtnMenu, SyIcon, VListItem, VListItemTitle },
 			setup() {
-				return { args, mdiAccount }
+				const onLogout = () => {}
+				return { args, mdiAccount, onLogout }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
@@ -504,7 +580,7 @@ const menuItems = ['Option 1', 'Option 2']
 					<SyIcon :icon="mdiAccount" decorative />
                   </template>
                   <template #footer-list-item>
-                    <VListItem @click="console.log('logout')">
+                    <VListItem @click="onLogout">
                       <VListItemTitle>Se déconnecter</VListItemTitle>
                     </VListItem>
                   </template>

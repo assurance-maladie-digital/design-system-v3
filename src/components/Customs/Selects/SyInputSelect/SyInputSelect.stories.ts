@@ -229,7 +229,7 @@ const items = [
 	},
 }
 
-export const withCustomError: Story = {
+export const WithCustomError: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -303,7 +303,7 @@ export const withCustomError: Story = {
 	},
 }
 
-export const withCustomKey: Story = {
+export const WithCustomKey: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -360,7 +360,7 @@ export const withCustomKey: Story = {
 	},
 }
 
-export const withCustomStyles: Story = {
+export const WithCustomStyles: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -531,7 +531,6 @@ const validateForm = async (): Promise<void> => {
   
   // Si tout est valide
   formSubmitted.value = true
-  console.log('Formulaire soumis:', formData.value)
 }
 </script>
         `,
@@ -567,7 +566,6 @@ const validateForm = async (): Promise<void> => {
 
 					// Vérifier que selectField n'est pas null avant d'appeler validateOnSubmit
 					if (!selectField.value) {
-						console.error('La référence au champ de sélection est nulle')
 						return
 					}
 
@@ -580,7 +578,6 @@ const validateForm = async (): Promise<void> => {
 
 					// Si tout est valide
 					formSubmitted.value = true
-					console.log('Formulaire soumis:', formData.value)
 				}
 
 				return { args, form, selectField, formData, errorMessages, formSubmitted, validateForm }

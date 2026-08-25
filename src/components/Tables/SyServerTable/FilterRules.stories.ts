@@ -3,6 +3,7 @@ import SyServerTable from './SyServerTable.vue'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
+import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
 
 interface TextItem {
 	example: string
@@ -55,6 +56,9 @@ const meta = {
 		layout: 'fullscreen',
 		controls: { hideNoControlsWarning: true },
 	},
+	argTypes: {
+		...commonTableArgTypes,
+	},
 } satisfies Meta<typeof SyServerTable & typeof VDataTable>
 
 export default meta
@@ -66,6 +70,7 @@ export const TextFilterRules: Story = {
 		serverItemsLength: 9,
 		suffix: 'text-filter-rules',
 		showFilters: true,
+		...commonTableEventArgs(),
 	},
 	parameters: {
 		docs: {
@@ -220,6 +225,7 @@ export const NumberFilterRules: Story = {
 		serverItemsLength: 8,
 		suffix: 'number-filter-rules',
 		showFilters: true,
+		...commonTableEventArgs(),
 	},
 	parameters: {
 		docs: {
@@ -368,6 +374,7 @@ export const SelectFilterRules: Story = {
 		serverItemsLength: 5,
 		suffix: 'select-filter-rules',
 		showFilters: true,
+		...commonTableEventArgs(),
 	},
 	parameters: {
 		docs: {
@@ -488,6 +495,7 @@ export const DateFilterRules = {
 		serverItemsLength: 10,
 		suffix: 'date-filter-rules',
 		showFilters: true,
+		...commonTableEventArgs(),
 	},
 	parameters: {
 		docs: {

@@ -2,6 +2,7 @@
 	import type { ComponentPublicInstance } from 'vue'
 	import type { IconValue } from 'vuetify/lib/composables/icons.mjs'
 	import { vRgaaSvgFix } from '@/directives/rgaaSvgFix'
+	import { devWarn } from '@/utils/devWarn'
 	import { computed, onMounted, onUpdated, ref, watch } from 'vue'
 
 	/**
@@ -21,7 +22,7 @@
 	 */
 	const checkAccessibility = (icon: IconValue, decorative: boolean | undefined, label: string | undefined) => {
 		if (decorative === false && !label) {
-			console.error(`L'icône "${icon}" n'est pas décorative, mais aucun texte alternatif (label) n'a été fourni.`)
+			devWarn(`L'icône "${icon}" n'est pas décorative, mais aucun texte alternatif (label) n'a été fourni.`)
 		}
 	}
 
@@ -81,7 +82,7 @@
 </script>
 
 <template>
-	<v-icon
+	<VIcon
 		ref="svg"
 		v-rgaa-svg-fix="rgaaSvgFixConfig"
 		:color="props.color"
@@ -91,7 +92,7 @@
 		:aria-hidden="resolvedDecorative ? true : undefined"
 	>
 		{{ icon }}
-	</v-icon>
+	</VIcon>
 </template>
 
 <style lang="scss" scoped>

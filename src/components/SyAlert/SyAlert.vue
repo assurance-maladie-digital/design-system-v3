@@ -22,12 +22,14 @@
 	const props = withDefaults(defineProps<{
 		type?: 'success' | 'info' | 'warning' | 'error'
 		closable?: boolean
+		density?: 'default' | 'comfortable' | 'compact'
 		variant?: 'tonal' | 'outlined'
 		role?: string
 		ariaLive?: 'off' | 'polite' | 'assertive'
 	}>(), {
 		type: 'info',
 		closable: false,
+		density: 'default',
 		variant: 'tonal',
 		role: 'alert',
 		ariaLive: undefined,
@@ -75,7 +77,8 @@
 			:type="props.type"
 			:closable="props.closable"
 			:variant="props.variant"
-			:class="`alert alert--${props.type}`"
+			:density="props.density"
+			:class="['alert', `alert--${props.type}`]"
 			:color="props.type"
 			:border="props.variant === 'tonal' ? 'start' : false"
 		>
@@ -131,6 +134,22 @@
 
 .alert {
 	padding: var(--v-padding-4);
+}
+
+.v-alert--density-comfortable {
+	padding-block: var(--v-padding-3);
+
+	:deep(.v-alert__prepend) {
+		margin-inline-end: var(--v-padding-3);
+	}
+}
+
+.v-alert--density-compact {
+	padding-block: var(--v-padding-2);
+
+	:deep(.v-alert__prepend) {
+		margin-inline-end: var(--v-padding-2);
+	}
 }
 
 .alert-icon {
@@ -195,12 +214,31 @@
 
 		:deep(.v-alert__content) {
 			align-self: flex-start !important;
-			margin-top: var(--v-padding-4);
 		}
 
 		:deep(.v-alert__close) {
-			margin-top: var(--v-padding-4);
 			align-self: flex-end;
+		}
+
+		&.v-alert--density-default {
+			:deep(.v-alert__content),
+			:deep(.v-alert__close) {
+				margin-top: var(--v-padding-4);
+			}
+		}
+
+		&.v-alert--density-comfortable {
+			:deep(.v-alert__content),
+			:deep(.v-alert__close) {
+				margin-top: var(--v-padding-3);
+			}
+		}
+
+		&.v-alert--density-compact {
+			:deep(.v-alert__content),
+			:deep(.v-alert__close) {
+				margin-top: var(--v-padding-2);
+			}
 		}
 
 		.v-alert__prepend > .v-icon {
@@ -212,10 +250,23 @@
 @media screen and (width >= 441px) {
 	.alert {
 		.alert-icon {
-			width: 3.5rem !important;
-			height: 3.5rem !important;
 			display: grid;
 			place-items: center;
+		}
+
+		&.v-alert--density-default .alert-icon {
+			width: 3.5rem !important;
+			height: 3.5rem !important;
+		}
+
+		&.v-alert--density-comfortable .alert-icon {
+			width: 3rem !important;
+			height: 3rem !important;
+		}
+
+		&.v-alert--density-compact .alert-icon {
+			width: 2rem !important;
+			height: 2rem !important;
 		}
 	}
 }
@@ -266,7 +317,7 @@
 			'accent': rgb(var(--v-theme-onWarningVariant)),
 			'border': rgb(var(--v-theme-onWarningVariant)),
 			'icon': rgb(var(--v-theme-onWarningVariant)),
-			'icon-bg': rgb(var(--v-theme-warningVariantLigthen)),
+			'icon-bg': rgb(var(--v-theme-warningVariantLighten)),
 		)
 	);
 	@include redesign(

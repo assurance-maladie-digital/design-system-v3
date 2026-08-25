@@ -56,6 +56,14 @@ const meta = {
 				},
 			},
 		},
+		density: {
+			description: 'Densité de l’alerte.',
+			control: 'select',
+			options: ['default', 'comfortable', 'compact'],
+			table: {
+				category: 'props',
+			},
+		},
 	},
 } as Meta<typeof SyAlert>
 
@@ -109,7 +117,7 @@ export const Default: Story = {
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center justify-center">
-					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable" :role="args.role" :aria-live="args.ariaLive" style="width: 100%">
+					<SyAlert v-model="args.modelValue" :type="args.type" :variant="args.variant" :closable="args.closable" :density="args.density" :role="args.role" :aria-live="args.ariaLive" style="width: 100%">
 						<template #default>{{ args.default }}</template>
 					</SyAlert>
 					<VBtn v-if="!args.modelValue" color="primary" @click="args.modelValue = true" class="ma-6">
@@ -172,6 +180,45 @@ export const Outlined: Story = {
 					<VBtn v-if="!args.modelValue" color="primary" @click="args.modelValue = true" class="ma-6">
 						Réinitialiser
 					</VBtn>
+				</div>
+			`,
+		}
+	},
+}
+
+export const Density: Story = {
+	args: {
+		type: 'info',
+		default: 'Contenu de l’alerte',
+	},
+	parameters: {
+		controls: {
+			exclude: ['density'],
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div class="d-flex flex-column ga-4">
+		<SyAlert density="default" type="info">Densité par défaut</SyAlert>
+		<SyAlert density="comfortable" type="info">Densité confortable</SyAlert>
+		<SyAlert density="compact" type="info">Densité compacte</SyAlert>
+	</div>
+</template>`,
+			},
+		],
+	},
+	render: (args) => {
+		return {
+			components: { SyAlert },
+			setup() {
+				return { args }
+			},
+			template: `
+				<div class="d-flex flex-column ga-4">
+					<SyAlert v-bind="args" density="default">Densité par défaut</SyAlert>
+					<SyAlert v-bind="args" density="comfortable">Densité confortable</SyAlert>
+					<SyAlert v-bind="args" density="compact">Densité compacte</SyAlert>
 				</div>
 			`,
 		}

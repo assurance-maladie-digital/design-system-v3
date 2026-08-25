@@ -62,17 +62,17 @@
 </script>
 
 <template>
-	<v-container class="sy-icon-accessibility pa-4">
+	<VContainer class="sy-icon-accessibility pa-4">
 		<!-- En-tête et principes d'accessibilité -->
-		<v-card
+		<VCard
 			class="mb-6"
 			variant="outlined"
 		>
-			<v-card-title class="text-h5 primary lighten-4 py-3 px-4">
+			<VCardTitle class="text-h5 primary lighten-4 py-3 px-4">
 				Guide d'accessibilité pour SyIcon
-			</v-card-title>
+			</VCardTitle>
 
-			<v-card-text>
+			<VCardText>
 				<h3 class="text-h6 mb-3 font-weight-medium">
 					Principes d'accessibilité
 				</h3>
@@ -81,7 +81,7 @@
 					en fonction de la nature de l'icône (décorative ou informative).
 				</p>
 
-				<v-alert
+				<VAlert
 					class="mb-4"
 					color="warning"
 					variant="tonal"
@@ -89,63 +89,63 @@
 				>
 					<strong>Important :</strong> Si une icône est marquée comme non décorative (<code>:decorative="false"</code>) mais qu'aucun label n'est fourni,
 					un message d'erreur sera affiché dans la console : <code>L'icône "[nom-de-l'icône]" n'est pas décorative, mais aucun texte alternatif (label) n'a été fourni.</code>
-				</v-alert>
+				</VAlert>
 
-				<v-list
+				<VList
 					class="mb-4 bg-grey-lighten-4 rounded"
 					density="compact"
 				>
-					<v-list-item>
-						<v-list-item-title class="font-weight-bold">
+					<VListItem>
+						<VListItemTitle class="font-weight-bold">
 							Icônes décoratives
-						</v-list-item-title>
-						<v-list-item-subtitle>
+						</VListItemTitle>
+						<VListItemSubtitle>
 							Invisibles pour les lecteurs d'écran (role="presentation", aria-hidden="true")
-						</v-list-item-subtitle>
-					</v-list-item>
-					<v-divider />
-					<v-list-item>
-						<v-list-item-title class="font-weight-bold">
+						</VListItemSubtitle>
+					</VListItem>
+					<VDivider />
+					<VListItem>
+						<VListItemTitle class="font-weight-bold">
 							Icônes informatives
-						</v-list-item-title>
-						<v-list-item-subtitle>
+						</VListItemTitle>
+						<VListItemSubtitle>
 							Annoncées par les lecteurs d'écran avec un label explicite (role="img", aria-label="[label]")
-						</v-list-item-subtitle>
-					</v-list-item>
-				</v-list>
+						</VListItemSubtitle>
+					</VListItem>
+				</VList>
 
-				<v-alert
+				<VAlert
 					class="mb-4"
 					color="info"
 					variant="tonal"
 					density="comfortable"
 				>
 					La directive <code>v-rgaa-svg-fix</code> est également appliquée pour garantir la compatibilité avec les lecteurs d'écran.
-				</v-alert>
-			</v-card-text>
-		</v-card>
+				</VAlert>
+			</VCardText>
+		</VCard>
 
 		<!-- Démonstration interactive -->
-		<v-card
+		<VCard
 			class="mb-6"
 			variant="outlined"
 		>
-			<v-card-title class="text-h6 secondary lighten-4 py-3 px-4">
+			<VCardTitle class="text-h6 secondary lighten-4 py-3 px-4">
 				Démonstration interactive
-			</v-card-title>
+			</VCardTitle>
 
-			<v-card-text>
+			<VCardText>
 				<p class="mb-4">
 					Modifiez les paramètres ci-dessous pour voir comment les attributs d'accessibilité sont générés :
 				</p>
 
-				<v-row>
+				<VRow>
 					<!-- Configuration -->
-					<v-col
+					<VCol
 						cols="12"
 						md="6"
 					>
-						<v-card
+						<VCard
 							variant="flat"
 							class="pa-4 border rounded"
 						>
@@ -153,23 +153,23 @@
 								Configuration
 							</h4>
 
-							<v-radio-group
+							<VRadioGroup
 								v-model="decorative"
 								inline
 								label="Type d'icône :"
 								class="mb-4"
 							>
-								<v-radio
+								<VRadio
 									:value="true"
 									label="Décorative"
 								/>
-								<v-radio
+								<VRadio
 									:value="false"
 									label="Informative"
 								/>
-							</v-radio-group>
+							</VRadioGroup>
 
-							<v-select
+							<VSelect
 								v-model="selectedIconIndex"
 								label="Sélectionnez une icône"
 								:items="iconOptions"
@@ -181,7 +181,7 @@
 								@update:model-value="updateSelectedIcon"
 							/>
 
-							<v-text-field
+							<VTextField
 								v-if="decorative === false"
 								v-model="label"
 								label="Label d'accessibilité"
@@ -190,15 +190,15 @@
 								hint="Ce texte sera lu par les lecteurs d'écran"
 								persistent-hint
 							/>
-						</v-card>
-					</v-col>
+						</VCard>
+					</VCol>
 
 					<!-- Aperçu -->
-					<v-col
+					<VCol
 						cols="12"
 						md="6"
 					>
-						<v-card
+						<VCard
 							variant="flat"
 							class="pa-4 border rounded"
 						>
@@ -207,7 +207,7 @@
 							</h4>
 
 							<div class="d-flex align-center gap-4 mb-4">
-								<v-card
+								<VCard
 									class="pa-6 d-flex justify-center align-center"
 									width="100"
 									height="100"
@@ -219,24 +219,24 @@
 										size="x-large"
 										color="primary"
 									/>
-								</v-card>
+								</VCard>
 								<div>
-									<v-chip
+									<VChip
 										v-if="decorative"
 										color="success"
 										variant="outlined"
 										class="ml-10 mb-2"
 									>
 										Icône décorative
-									</v-chip>
-									<v-chip
+									</VChip>
+									<VChip
 										v-else
 										color="info"
 										variant="outlined"
 										class="ml-10 mb-2"
 									>
 										Icône informative
-									</v-chip>
+									</VChip>
 									<p
 										v-if="!decorative"
 										class="text-body-2"
@@ -245,56 +245,56 @@
 									</p>
 								</div>
 							</div>
-						</v-card>
-					</v-col>
-				</v-row>
-			</v-card-text>
-		</v-card>
+						</VCard>
+					</VCol>
+				</VRow>
+			</VCardText>
+		</VCard>
 
 		<!-- Résultats -->
-		<v-card
+		<VCard
 			class="mb-6"
 			variant="outlined"
 		>
-			<v-card-title class="text-h6 accent lighten-4 py-3 px-4">
+			<VCardTitle class="text-h6 accent lighten-4 py-3 px-4">
 				Résultats
-			</v-card-title>
+			</VCardTitle>
 
-			<v-card-text>
-				<v-row>
-					<v-col
+			<VCardText>
+				<VRow>
+					<VCol
 						cols="12"
 						md="6"
 					>
 						<h4 class="text-subtitle-1 mb-3 font-weight-medium">
 							Attributs ARIA générés
 						</h4>
-						<v-card
+						<VCard
 							class="pa-4 rounded bg-grey-lighten-4"
 							variant="flat"
 						>
 							<pre><code>{{ JSON.stringify(ariaAttributes, null, 2) }}</code></pre>
-						</v-card>
-					</v-col>
+						</VCard>
+					</VCol>
 
-					<v-col
+					<VCol
 						cols="12"
 						md="6"
 					>
 						<h4 class="text-subtitle-1 mb-3 font-weight-medium">
 							Code HTML généré
 						</h4>
-						<v-card
+						<VCard
 							class="pa-4 rounded bg-grey-lighten-4"
 							variant="flat"
 						>
 							<pre><code>{{ generatedHtml }}</code></pre>
-						</v-card>
-					</v-col>
-				</v-row>
-			</v-card-text>
-		</v-card>
-	</v-container>
+						</VCard>
+					</VCol>
+				</VRow>
+			</VCardText>
+		</VCard>
+	</VContainer>
 </template>
 
 <style scoped>

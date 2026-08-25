@@ -34,6 +34,9 @@ export const createVuetifyInstance = () => createVuetify({
 			interactive: true,
 			closeDelay: 200,
 		},
+		VBtn: {
+			ripple: false,
+		},
 	},
 	locale: {
 		locale: 'fr',
