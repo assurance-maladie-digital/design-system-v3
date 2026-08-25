@@ -70,7 +70,7 @@
 	import type { DateInput, DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 	import type { DateObjectValue, DateTextInputProps } from '../types'
 	import DatePickerLiveRegion from '../DatePickerLiveRegion.vue'
-	import { resolveDatePickerStateFromModelValue } from '../utils/dateFormattingUtils'
+	import { resolveDatePickerStateFromModelValue, getRangeValidationError } from '../utils/dateFormattingUtils'
 
 	dayjs.extend(customParseFormat)
 
@@ -205,7 +205,6 @@
 	// si l'utilisateur édite la date de début ou de fin.
 	const {
 		handleRangeInput,
-		isValidRange,
 		formatRangeForDisplay,
 		parseRangeInput,
 		handlePaste: handlePasteRange,
@@ -851,8 +850,9 @@
 		const [startDate, endDate] = parseRangeInput(inputValue.value)
 
 		if (startDate && endDate) {
-			if (!isValidRange(startDate, endDate)) {
-				failWithDisplayedError(locales.endBeforeStart, { replace: true })
+			const rangeError = getRangeValidationError(startDate, endDate)
+			if (rangeError) {
+				failWithDisplayedError(rangeError, { replace: true })
 			}
 			else {
 				emitRangeModelDates(startDate, endDate)
@@ -917,8 +917,9 @@
 			return
 		}
 
-		if (!isValidRange(dates[0], dates[1])) {
-			failWithDisplayedError(locales.endBeforeStart)
+		const rangeError = getRangeValidationError(dates[0], dates[1])
+		if (rangeError) {
+			failWithDisplayedError(rangeError)
 		}
 	}
 

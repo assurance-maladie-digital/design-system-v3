@@ -88,7 +88,7 @@ export const validateEmptyOrIncompleteDate = (
 		return {
 			shouldContinue: false,
 			isValid: false,
-			errorMessage: locales.fieldRequired,
+			errorMessage: locales.required,
 		}
 	}
 
