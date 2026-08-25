@@ -1,5 +1,5 @@
 {
-  "date": "2026-08-03T12:02:02.618Z",
+  "date": "2026-08-25T13:33:04.081Z",
   "compliantCount": 55,
   "totalCount": 78,
   "percentage": "70.51",
@@ -12,7 +12,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Données/Accordion",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -23,8 +23,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Boutons/BackBtn",
       "hasManualAudit": true,
-      "version": "1.1.2",
-      "versionDate": "22/07/2026"
+      "version": "1.1.3",
+      "versionDate": "10/08/2026"
     },
     {
       "componentName": "BackToTopBtn",
@@ -34,8 +34,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Boutons/BackToTopBtn",
       "hasManualAudit": true,
-      "version": "1.1.2",
-      "versionDate": "22/07/2026"
+      "version": "1.1.3",
+      "versionDate": "10/08/2026"
     },
     {
       "componentName": "Captcha",
@@ -45,7 +45,7 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Formulaires/Captcha",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -56,8 +56,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Données/ChipList",
       "hasManualAudit": true,
-      "version": "1.1.2",
-      "versionDate": "22/07/2026"
+      "version": "1.1.3",
+      "versionDate": "10/08/2026"
     },
     {
       "componentName": "CollapsibleList",
@@ -67,7 +67,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Données/CollapsibleList",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -78,7 +78,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Navigation/ContextualMenu",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -89,8 +89,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Feedback/CookieBanner",
       "hasManualAudit": true,
-      "version": "1.1.2",
-      "versionDate": "22/07/2026"
+      "version": "1.1.3",
+      "versionDate": "10/08/2026"
     },
     {
       "componentName": "CookiesSelection",
@@ -100,8 +100,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Feedback/CookiesSelection",
       "hasManualAudit": false,
-      "version": "1.1.2",
-      "versionDate": "22/07/2026"
+      "version": "1.1.3",
+      "versionDate": "10/08/2026"
     },
     {
       "componentName": "CopyBtn",
@@ -111,7 +111,7 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Boutons/CopyBtn",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -122,7 +122,7 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Formulaires/Selects/SelectBtnField",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -144,8 +144,8 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Formulaires/Selects/SyInputSelect",
       "hasManualAudit": false,
-      "version": "1.1.2",
-      "versionDate": "22/07/2026"
+      "version": "1.1.3",
+      "versionDate": "10/08/2026"
     },
     {
       "componentName": "Customs/Selects/SySelect",
@@ -155,7 +155,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/Selects/SySelect",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -166,7 +166,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/SyCheckbox",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -199,7 +199,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Données/SyIcon",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -221,7 +221,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Navigation/SyPagination",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -232,7 +232,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/SyRadioGroup",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -243,7 +243,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Navigation/SyTabs",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -254,7 +254,7 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Formulaires/SyTextField",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "23/07/2026"
     },
     {
@@ -265,7 +265,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Données/DataList",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -276,7 +276,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Données/DataListGroup",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -298,8 +298,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/DatePicker/CalendarMode",
       "hasManualAudit": false,
-      "version": "1.1.2",
-      "versionDate": "30/07/2026"
+      "version": "1.1.3",
+      "versionDate": "10/08/2026"
     },
     {
       "componentName": "DatePicker/ComplexDatePicker",
@@ -309,8 +309,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/DatePicker/CombinedMode",
       "hasManualAudit": false,
-      "version": "1.1.2",
-      "versionDate": "30/07/2026"
+      "version": "1.1.3",
+      "versionDate": "10/08/2026"
     },
     {
       "componentName": "DatePicker/DateTextInput",
@@ -320,7 +320,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/DatePicker/DateInput",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "23/07/2026"
     },
     {
@@ -342,7 +342,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/DiacriticPicker",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -353,7 +353,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Feedback/DialogBox",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -364,8 +364,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Boutons/DownloadBtn",
       "hasManualAudit": true,
-      "version": "1.1.2",
-      "versionDate": "22/07/2026"
+      "version": "1.1.3",
+      "versionDate": "10/08/2026"
     },
     {
       "componentName": "ErrorPage",
@@ -375,7 +375,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Templates/ErrorPage",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -386,7 +386,7 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Navigation/ExternalLinks",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -397,7 +397,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Données/FileList",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -408,7 +408,7 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Données/FilePreview",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -419,7 +419,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/FileUpload",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -430,7 +430,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Filtres/FilterInline",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -441,7 +441,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Filtres/FilterSideBar",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -452,8 +452,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Structure/FooterBar",
       "hasManualAudit": false,
-      "version": "1.1.2",
-      "versionDate": "22/07/2026"
+      "version": "1.1.3",
+      "versionDate": "10/08/2026"
     },
     {
       "componentName": "FranceConnectBtn",
@@ -463,7 +463,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Boutons/FranceConnectBtn",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -474,8 +474,8 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Structure/HeaderBar",
       "hasManualAudit": true,
-      "version": "1.1.2",
-      "versionDate": "30/07/2026"
+      "version": "1.1.3",
+      "versionDate": "10/08/2026"
     },
     {
       "componentName": "HeaderLoading",
@@ -496,7 +496,7 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Structure/HeaderBar/HeaderNavigationBar",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "28/07/2026"
     },
     {
@@ -507,7 +507,7 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Structure/HeaderToolbar",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -518,8 +518,8 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Boutons/LangBtn",
       "hasManualAudit": true,
-      "version": "1.1.2",
-      "versionDate": "22/07/2026"
+      "version": "1.1.3",
+      "versionDate": "10/08/2026"
     },
     {
       "componentName": "Logo",
@@ -529,7 +529,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Données/Logo",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -540,7 +540,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Données/LogoBrandSection",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "30/07/2026"
     },
     {
@@ -551,8 +551,8 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Formulaires/LunarCalendar",
       "hasManualAudit": false,
-      "version": "1.1.2",
-      "versionDate": "22/07/2026"
+      "version": "1.1.3",
+      "versionDate": "10/08/2026"
     },
     {
       "componentName": "MaintenancePage",
@@ -584,7 +584,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/NirField",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -595,7 +595,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Templates/NotFoundPage",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -606,7 +606,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Feedback/NotificationBar",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -628,7 +628,7 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Tableaux/PaginatedTable",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -639,7 +639,7 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Formulaires/PasswordField",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -661,7 +661,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/PhoneField",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -672,7 +672,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/RangeField",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -683,7 +683,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Feedback/RatingPicker",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -694,7 +694,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Filtres/SearchListField",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -705,7 +705,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Navigation/SkipLink",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -716,7 +716,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Navigation/SocialMediaLinks",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -727,7 +727,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Templates/StatusPage",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -738,7 +738,7 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Structure/SubHeader",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -749,8 +749,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Feedback/SyAlert",
       "hasManualAudit": true,
-      "version": "1.1.2",
-      "versionDate": "22/07/2026"
+      "version": "1.1.3",
+      "versionDate": "10/08/2026"
     },
     {
       "componentName": "SyBtnMenu",
@@ -760,8 +760,8 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Navigation/SyBtnMenu",
       "hasManualAudit": true,
-      "version": "1.1.2",
-      "versionDate": "22/07/2026"
+      "version": "1.1.3",
+      "versionDate": "07/08/2026"
     },
     {
       "componentName": "SyHeading",
@@ -782,7 +782,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/SyTextArea",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -793,7 +793,7 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Tableaux/SyServerTable",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -804,7 +804,7 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Tableaux/SyTable",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -815,8 +815,8 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Tableaux/TableToolbar",
       "hasManualAudit": true,
-      "version": "1.1.2",
-      "versionDate": "22/07/2026"
+      "version": "1.1.3",
+      "versionDate": "10/08/2026"
     },
     {
       "componentName": "tests",
@@ -837,7 +837,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Layout/ToolbarContainer",
       "hasManualAudit": true,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -848,7 +848,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/UploadWorkflow",
       "hasManualAudit": false,
-      "version": "1.1.2",
+      "version": "1.1.3",
       "versionDate": "22/07/2026"
     },
     {
@@ -859,8 +859,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Boutons/UserMenuBtn",
       "hasManualAudit": false,
-      "version": "1.1.2",
-      "versionDate": "22/07/2026"
+      "version": "1.1.3",
+      "versionDate": "10/08/2026"
     }
   ]
 }
