@@ -32,7 +32,7 @@ import type { DateObjectValue, DatePickerRule } from '../types'
 import { useDateRangeValidation } from './useDateRangeValidation'
 import { validateDateFormat, isDateComplete } from './useDateFormatUtils'
 import { adaptCustomRules, validateEmptyOrIncompleteDate } from '../utils/validationUtils'
-import { isValidDateRange } from '../utils/dateFormattingUtils'
+import { getRangeValidationError } from '../utils/dateFormattingUtils'
 
 export type DatePickerValidationRule = DatePickerRule
 
@@ -608,9 +608,12 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			const startDate = options.selectedDates.value[0]
 			const endDate = options.selectedDates.value[options.selectedDates.value.length - 1]
 
-			if (startDate && endDate && !isValidDateRange(startDate, endDate)) {
-				pushError(locales.endBeforeStart)
-				isValid = false
+			if (startDate && endDate) {
+				const rangeError = getRangeValidationError(startDate, endDate)
+				if (rangeError) {
+					pushError(rangeError)
+					isValid = false
+				}
 			}
 		}
 
@@ -1075,8 +1078,9 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 
 			// Valider la plage (start <= end)
 			const rangeErrors: string[] = []
-			if (!isValidDateRange(startDate, endDate) && shouldDisplayErrors()) {
-				rangeErrors.push(locales.endBeforeStart)
+			const rangeError = getRangeValidationError(startDate, endDate)
+			if (rangeError && shouldDisplayErrors()) {
+				rangeErrors.push(rangeError)
 			}
 
 			// Valider les custom rules pour chaque date, puis fusionner les résultats

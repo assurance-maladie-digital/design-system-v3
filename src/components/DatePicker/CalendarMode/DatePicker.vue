@@ -357,7 +357,7 @@
 		isInitialValidation,
 		isValidateOnBlur: computed(() => props.isValidateOnBlur),
 		onblur,
-		revalidateOnCustomRulesChange: false,
+		revalidateOnCustomRulesChange: true,
 		formRegistration: {
 			validateOnSubmit,
 			clearValidation: clearValidationForForm,
@@ -921,6 +921,9 @@
 		openDatePicker,
 		updateSelectedDates,
 		handleSelectToday,
+		validate,
+		clearValidation,
+		reset: resetField,
 	})
 </script>
 

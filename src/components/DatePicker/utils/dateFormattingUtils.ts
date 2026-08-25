@@ -441,3 +441,17 @@ export const isValidDateRange = (startDate: Date | null | undefined, endDate: Da
 	if (!startDate || !endDate) return true
 	return startDate.getTime() <= endDate.getTime()
 }
+
+/**
+ * Retourne le message d'erreur de plage si invalide, sinon null.
+ * Centralise la logique `isValidDateRange + locales.endBeforeStartEqual` dupliquée à 5 endroits.
+ */
+export const getRangeValidationError = (
+	startDate: Date | null | undefined,
+	endDate: Date | null | undefined,
+): string | null => {
+	if (!isValidDateRange(startDate, endDate)) {
+		return locales.endBeforeStartEqual
+	}
+	return null
+}
