@@ -336,6 +336,32 @@ describe('DateTextInput.clean', () => {
 		expect(errorMessages && errorMessages.length).toBeGreaterThan(0)
 	})
 
+	it('shows an error for incomplete date at blur (single digit)', async () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			required: false,
+		})
+
+		const input = wrapper.find('input')
+		await input.trigger('focus')
+		await flushPromises()
+		// Simulate typing a single digit "1" in overwrite mode
+		await input.trigger('keydown', { key: '1' })
+		await flushPromises()
+		// Value should be "1_/__/____" (skeleton with one digit)
+		await input.trigger('blur')
+		await flushPromises()
+
+		const textField = wrapper.findComponent(SyTextField)
+		const errorMessages = textField.props('errorMessages') as string[] | undefined
+		expect(errorMessages && errorMessages.length).toBeGreaterThan(0)
+
+		// Should NOT emit a model value for an incomplete date
+		const modelEmitted = wrapper.emitted('update:model-value')
+		expect(modelEmitted).toBeFalsy()
+	})
+
 	it('shows required error message when empty and required in single mode', async () => {
 		const wrapper = mountComponent({
 			label: 'Date',
@@ -658,7 +684,7 @@ describe('DateTextInput.clean', () => {
 			readonly: true,
 		})
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const result = await (wrapper.vm as any).validateTextInput('01/01/2025')
+		const result = await (wrapper.vm as any).validate({ textValue: '01/01/2025' })
 		expect(result).toBe(true)
 	})
 

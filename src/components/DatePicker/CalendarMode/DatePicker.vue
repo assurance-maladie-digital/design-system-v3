@@ -1,4 +1,43 @@
 <script lang="ts" setup>
+	/**
+	 * DatePicker (CalendarMode) — Composant racine du système DatePicker.
+	 *
+	 * ## Architecture à 3 modes
+	 *
+	 * Ce composant agit comme un routeur qui délègue à l'un de trois sous-composants
+	 * selon la configuration des props :
+	 *
+	 * 1. **Mode `noCalendar`** : Délègue entièrement à `DateTextInput` (saisie texte uniquement,
+	 *    sans calendrier). Utile pour les formulaires compacts ou les dates très contraintes.
+	 *
+	 * 2. **Mode `useCombinedMode`** : Délègue à `ComplexDatePicker`, qui combine un champ
+	 *    texte (saisie manuelle) avec un calendrier popup. C'est le mode le plus riche :
+	 *    l'utilisateur peut taper une date OU la sélectionner au calendrier.
+	 *
+	 * 3. **Mode calendrier (par défaut)** : Affiche un `SyTextField` readonly qui ouvre un
+	 *    `VMenu` contenant un `VDatePicker` Vuetify. L'utilisateur sélectionne uniquement
+	 *    via le calendrier. Ce mode gère lui-même l'accessibilité, la navigation clavier,
+	 *    le marquage des jours fériés, et la personnalisation des boutons mois/année.
+	 *
+	 * ## Patterns clés
+	 *
+	 * - **Sync guard** (`useDatePickerSyncGuard`) : Empêche les boucles de réactivité entre
+	 *   les watchers de `selectedDates`, `textInputValue`, et `modelValue`. Le flag
+	 *   `isUpdatingFromInternal` est reset via `setTimeout(0)` (macrotask) pour garantir
+	 *   que tous les watchers Vue (microtask) voient le flag avant son reset.
+	 *
+	 * - **Validation orchestrée** (`useDatePickerValidation`) : Le point d'entrée `validate()`
+	 *   route vers différents flows selon le contexte : `validateDates` (calendrier),
+	 *   `validateTextInput` (texte), `validateCalendarModeDates` (gestion required spécifique).
+	 *
+	 * - **Accessibilité** : Le composant patche le DOM de Vuetify après rendu pour ajouter
+	 *   les attributs ARIA manquants (rôles grid/gridcell, labels, focus management).
+	 *   Voir `useDatePickerAccessibility`, `useDatePickerFocusTrap`, `useCalendarKeyboardNavigation`.
+	 *
+	 * - **Mode birthDate** : Quand `isBirthDate` est true, le calendrier s'ouvre en vue année
+	 *   (puis mois, puis jour) pour faciliter la sélection de dates éloignées dans le temps.
+	 *   Géré par `useDatePickerViewMode`.
+	 */
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
@@ -91,6 +130,12 @@
 		isOnSuccess,
 	))
 
+	// ─── État central : dates sélectionnées ───────────────────────────
+	// Source de vérité pour la sélection courante. Peut être :
+	// - null (aucune sélection)
+	// - Date (sélection simple)
+	// - (Date | null)[] (sélection en plage — displayRange)
+	// Les watchers sur cette ref déclenchent la validation et la sync du modèle.
 	const selectedDates = ref<Date | (Date | null)[] | null>(
 		initializeSelectedDates(props.modelValue as DateInput | null, props.format, props.dateFormatReturn),
 	)
@@ -111,6 +156,11 @@
 	const datePickerTitleId = `${datePickerContentId}-title`
 	const datePickerHeadingId = `${datePickerContentId}-heading`
 
+	// ─── Calendrier : visibilité, focus trap & navigation clavier ─────
+	// Le focus trap garantit que le focus reste dans le dialog du calendrier
+	// tant qu'il est ouvert (Tab/Shift+Tab cyclent à l'intérieur).
+	// La navigation par flèches (Up/Down/Left/Right/Enter/Escape) est gérée
+	// par useCalendarKeyboardNavigation, conforme au pattern APG du W3C.
 	const isDatePickerVisible = ref(false)
 	const { handleMenuKeydown } = useDatePickerFocusTrap({
 		isDatePickerVisible,
@@ -160,7 +210,8 @@
 		removeDatePickerKeydownListener()
 	})
 
-	// Utiliser le calendarKeyboardNavigation normalement
+	// Navigation clavier dans la grille du calendrier (flèches + Enter + Escape).
+	// Conforme au pattern APG (ARIA Authoring Practices Guide) du W3C.
 	const { focusInitialDay } = useCalendarKeyboardNavigation({
 		isDatePickerVisible,
 		datePickerRef,
@@ -257,17 +308,19 @@
 		(e: 'date-selected', value: DateModelValue): void
 	}>()
 
-	// Variable pour éviter les mises à jour récursives
+	// ─── Sync guard & validation ──────────────────────────────────────
+	// Le sync guard centralise les flags anti-boucle (isUpdatingFromInternal,
+	// ignoreNextInputBlur, etc.) et l'état d'interaction (hasInteracted,
+	// isManualInputActive). Voir useDatePickerSyncGuard pour le détail.
 	const { isUpdatingFromInternal, withInternalUpdate } = useDatePickerSyncGuard()
-	const fieldKey = ref(0)
-	const keyboardNavigatedDate = ref<Date | null>(null)
-	const preventCloseOnKeyboardNavigation = ref(false)
-	const isInitialValidation = ref(true)
+	const fieldKey = ref(0) // Incrémenté pour forcer le re-render du SyTextField (reset)
+	const keyboardNavigatedDate = ref<Date | null>(null) // Date survolée par navigation clavier (distincte de selectedDates)
+	const preventCloseOnKeyboardNavigation = ref(false) // Empêche la fermeture auto pendant la navigation clavier
+	const isInitialValidation = ref(true) // Skip la validation required au montage
 
 	const {
 		clearValidation,
-		validateDates,
-		validateCalendarModeDates,
+		validate,
 		errors,
 		warnings,
 		successes,
@@ -316,9 +369,13 @@
 
 	const finalizeDatePickerClose = async () => {
 		emit('closed')
-		await validateCalendarModeDates()
+		await validate({ calendarMode: true })
 	}
 
+	// Fermeture programmatique du calendrier.
+	// Le flag isHandlingProgrammaticClose empêche le watcher isDatePickerVisible
+	// de double-valider (le watcher appelle finalizeDatePickerClose, or on
+	// l'appelle déjà ici). Reset via queueMicrotask après la fermeture.
 	const closeDatePicker = async () => {
 		if (!isDatePickerVisible.value) return
 
@@ -347,7 +404,7 @@
 				await closeDatePicker()
 			}
 			else {
-				await validateCalendarModeDates()
+				await validate({ calendarMode: true })
 			}
 		}
 		finally {
@@ -359,7 +416,15 @@
 		}
 	}
 
-	// Watcher pour mettre à jour le modèle lorsque les dates sélectionnées changent
+	// ─── Watcher principal : sync modèle + validation sur changement de sélection ──
+	// Ce watcher est le cœur de la réactivité du composant. Il :
+	// 1. Met à jour keyboardNavigatedDate pour la navigation clavier
+	// 2. Re-applique l'accessibilité ARIA après re-render Vuetify
+	// 3. Marque les jours fériés et met à jour l'aria-selected du jour
+	// 4. Met à jour le modèle (emit update:modelValue) si la sélection est complète
+	// 5. Synchronise l'affichage du champ texte avec la sélection
+	// Le guard isUpdatingFromInternal empêche ce watcher de se déclencher
+	// quand la mise à jour vient d'une sync interne (et non de l'utilisateur).
 	watch(selectedDates, async (newValue) => {
 		if (isUpdatingFromInternal.value) return
 		if (!newValue) {
@@ -410,7 +475,10 @@
 		'v-messages__message--warning': hasWarning.value && !hasError.value,
 	}))
 
-	// Utilisation du composable pour gérer la sélection de dates
+	// ─── Sélection de dates & gestion des plages ──────────────────────
+	// useDateSelection gère la logique de sélection simple vs plage (range).
+	// En mode range, la sélection est progressive : 1er clic = début, 2e clic = fin.
+	// generateDateRange produit toutes les dates intermédiaires pour VDatePicker.
 	const { updateSelectedDates, rangeBoundaryDates, generateDateRange, resetRange } = useDateSelection(
 		parseDate,
 		selectedDates,
@@ -440,7 +508,7 @@
 		displayRange: computed(() => props.displayRange),
 		parseDate,
 		formatDate,
-		validateDates,
+		validateDates: () => validate(),
 		clearValidation,
 		generateDateRange,
 	})
@@ -611,15 +679,24 @@
 		}
 	}
 
+	// ─── Lifecycle & validation initiale ─────────────────────────────
+	// Au montage : setup l'observer pour personnaliser les boutons mois/année,
+	// sync l'affichage, et valide les dates pré-remplies (ex: modelValue injecté
+	// par un composant parent comme PeriodField avec des customRules).
+	// On utilise le flow standard (sans calendarMode) pour que les custom rules
+	// s'exécutent même pendant l'initialisation.
 	onMounted(() => {
 		// Configurer l'observateur pour le bouton du mois
 		setupMonthButtonObserver()
 
 		syncDisplayFormattedFromSelection()
 
-		// Validation au montage pour afficher les erreurs sur les dates pré-remplies invalides
-		// Aligné sur le comportement de ComplexDatePicker
-		validateDates()
+		// Validation au montage pour afficher les erreurs sur les dates pré-remplies invalides.
+		// On utilise le flow standard (sans calendarMode) car le flow CalendarMode skippait
+		// la validation au montage à cause du flag isInitialValidation, empêchant les custom rules
+		// des composants parents (ex: PeriodField) de s'exécuter.
+		// Aligné sur le comportement de ComplexDatePicker.
+		validate()
 
 		// Après la validation initiale, désactiver le flag
 		nextTick(() => {
@@ -636,10 +713,11 @@
 		else if (props.useCombinedMode) {
 			return await complexDatePickerRef.value?.validateOnSubmit()
 		}
-		// Forcer la validation pour ignorer les conditions de validation interactive
-		// S'assurer que isInitialValidation est false pour que la validation required fonctionne
+		// Forcer la validation pour ignorer les conditions de validation interactive.
+		// calendarMode: true → utilise le flow CalendarMode (gestion required spécifique).
+		// S'assurer que isInitialValidation est false pour que la validation required fonctionne.
 		isInitialValidation.value = false
-		await validateCalendarModeDates(true)
+		await validate({ force: true, calendarMode: true })
 		// Retourner directement un booléen pour maintenir la compatibilité avec les tests existants
 		return errorMessages.value.length === 0
 	}
@@ -732,7 +810,7 @@
 		if (isDatePickerVisible.value) return
 		// Ne pas valider si isValidateOnBlur est false
 		if (props.isValidateOnBlur) {
-			await validateCalendarModeDates(true)
+			await validate({ force: true, calendarMode: true })
 		}
 		else {
 			// Quand isValidateOnBlur est false, on s'assure qu'il n'y a pas d'erreurs
@@ -823,6 +901,12 @@
 		}
 	}
 
+	// ─── API publique exposée au parent ──────────────────────────────
+	// Le parent (ex: SyForm, PeriodField) utilise ces méthodes pour :
+	// - validateOnSubmit() : valider avant soumission de formulaire
+	// - handleClickOutside() : fermer le calendrier sur clic extérieur
+	// - openDatePicker() : ouvrir programmatiquement
+	// - updateSelectedDates() : modifier la sélection depuis l'extérieur
 	defineExpose({
 		validateOnSubmit,
 		isDatePickerVisible,
@@ -841,6 +925,12 @@
 </script>
 
 <template>
+	<!--
+		Template à 3 modes :
+		1. noCalendar → DateTextInput (saisie texte uniquement)
+		2. useCombinedMode → ComplexDatePicker (texte + calendrier popup)
+		3. Par défaut → SyTextField readonly + VMenu + VDatePicker (calendrier uniquement)
+	-->
 	<div class="date-picker-container">
 		<template v-if="props.noCalendar">
 			<DateTextInput

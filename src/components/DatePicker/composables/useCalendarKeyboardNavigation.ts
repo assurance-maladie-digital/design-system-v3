@@ -1,3 +1,43 @@
+/**
+ * useCalendarKeyboardNavigation — Navigation clavier par flèches dans la grille du calendrier.
+ *
+ * ## Rôle
+ *
+ * Ce composable implémente la **navigation par flèches** (Up/Down/Left/Right)
+ * dans la grille des jours du VDatePicker, conforme au pattern APG (ARIA Authoring
+ * Practices Guide) du W3C pour les date pickers dialog.
+ *
+ * ## Navigation gérée
+ *
+ * - **Flèches directionnelles** : déplacent le focus jour par jour dans la grille.
+ *   - Left/Right : jour précédent/suivant
+ *   - Up/Down : semaine précédente/suivante
+ * - **Home/End** : premier/dernier jour de la semaine affichée
+ * - **PageUp/PageDown** : mois précédent/suivant
+ * - **Enter/Space** : sélectionne la date focalisée (déclenche `onSelectDate`)
+ * - **Escape** : ferme le calendrier (délégué au focus trap)
+ *
+ * Le composable gère aussi la navigation par flèches dans les vues mois et année
+ * (roving tabindex), en maintenant `tabindex=0` sur l'élément actif et `-1` sur les autres.
+ *
+ * ## Roving tabindex
+ *
+ * La grille utilise un **roving tabindex** : un seul jour a `tabindex=0` (le jour actif),
+ * tous les autres ont `tabindex=-1`. Quand l'utilisateur navigue par flèches, le composable
+ * déplace `tabindex=0` vers le nouveau jour et lui donne le focus.
+ *
+ * ## Synchronisation avec VDatePicker
+ *
+ * Quand la navigation par flèches fait sortir le jour du mois actuellement affiché,
+ * le composable appelle `setCurrentDate` qui déclenche `syncDisplayedMonthYearFromDate`
+ * pour changer le mois affiché par VDatePicker, puis re-focalise le bon jour après
+ * le re-render (via double `nextTick`).
+ *
+ * ## Sélecteurs
+ *
+ * Utilise des sélecteurs pour les proxies personnalisés (`data-sy-date-picker-option`)
+ * avec fallback sur les boutons natifs Vuetify, similaire à `useDatePickerFocusTrap`.
+ */
 import {
 	type Ref,
 	type ComponentPublicInstance,

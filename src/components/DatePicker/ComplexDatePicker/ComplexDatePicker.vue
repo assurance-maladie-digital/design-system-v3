@@ -1,4 +1,48 @@
 ﻿	<script lang="ts" setup>
+	/**
+	 * ComplexDatePicker — DatePicker combiné (champ texte + calendrier popup).
+	 *
+	 * ## Rôle
+	 *
+	 * Contrairement à `CalendarMode/DatePicker` qui n'offre qu'un calendrier (champ readonly),
+	 * ComplexDatePicker permet à l'utilisateur de **taper une date manuellement** dans un champ
+	 * texte ET de **la sélectionner via un calendrier popup**. Les deux modes sont synchronisés :
+	 * - Saisie texte → parse → mise à jour de `selectedDates` → calendrier reflète la sélection
+	 * - Sélection calendrier → formatage → mise à jour du champ texte → emit `update:modelValue`
+	 *
+	 * ## Architecture interne
+	 *
+	 * Le composant délègue à deux sous-composants selon `noCalendar` :
+	 * - `noCalendar = true` → `DateTextInput` seul (saisie texte uniquement)
+	 * - `noCalendar = false` → `DateTextInput` (activateur) + `VMenu` + `VDatePicker`
+	 *
+	 * ## Différences clés avec CalendarMode/DatePicker
+	 *
+	 * 1. **Saisie texte bidirectionnelle** : Le champ texte est éditable (pas readonly).
+	 *    L'utilisateur peut taper, effacer, coller. La logique de formatage masqué (DD/MM/YYYY)
+	 *    est gérée par `DateTextInput`.
+	 *
+	 * 2. **Sémantique combobox** : L'input a `role="combobox"` + `aria-haspopup="dialog"`
+	 *    (pattern APG). Voir `syncComboboxInputSemantics`.
+	 *
+	 * 3. **Gestion du blur plus complexe** : Quand le calendrier s'ouvre, l'input perd le focus
+	 *    (VMenu prend le focus). Le flag `ignoreNextInputBlur` empêche la validation prématurée.
+	 *    Voir `handleCalendarInputBlur` et `useDatePickerInputBlurHandler`.
+	 *
+	 * 4. **Sélection progressive en mode range** : Le 1er clic définit le début, le 2e la fin.
+	 *    Le calendrier ne se ferme qu'une fois la plage complète.
+	 *
+	 * 5. **`datePickerKey`** : Force le re-render du VDatePicker après un clear (fix bug production
+	 *    où Vue optimise et ne détecte pas le passage de `selectedDates` à null).
+	 *
+	 * ## Patterns partagés avec CalendarMode
+	 *
+	 * - Sync guard (`useDatePickerSyncGuard`) : flags anti-boucle identiques
+	 * - Validation (`useDatePickerValidation`) : même orchestrateur, mais sans `calendarMode: true`
+	 *   (ComplexDatePicker utilise le flow standard `validateDates`)
+	 * - Accessibilité : `useDatePickerFocusTrap`, `useCalendarKeyboardNavigation`, patchs ARIA
+	 * - Mode birthDate : `useDatePickerViewMode` (année → mois → jour)
+	 */
 	import {
 		type ComponentPublicInstance,
 		computed,
@@ -66,6 +110,12 @@
 	const { initializeSelectedDates } = useDateInitialization()
 	const { updateAccessibility, cleanupGridSemantics } = useDatePickerAccessibility()
 
+	// ─── Sync guard : flags anti-boucle & état d'interaction ──────────
+	// Ces flags coordonnent la réactivité entre les watchers de selectedDates,
+	// textInputValue, modelValue, et les événements blur/input du calendrier.
+	// - isUpdatingFromInternal : empêche les watchers de se redéclencher pendant une sync interne
+	// - ignoreNextInputBlur : consommé une fois, empêche la validation au blur causé par l'ouverture du calendrier
+	// - ignoreNextCalendarModelSync : empêche le setter de calendarSelectedDates de reboucler
 	const {
 		isUpdatingFromInternal,
 		withInternalUpdate,
@@ -78,9 +128,10 @@
 		resetInteractionState,
 	} = useDatePickerSyncGuard()
 
-	/**
-	 * Calendar current month / year
-	 */
+	// ─── Mois/année affichés dans le calendrier ───────────────────────
+	// Synchronisés depuis selectedDates (watcher dédié) et depuis la navigation
+	// VDatePicker (onUpdateMonth/onUpdateYear). Utilisés par markHolidayDays,
+	// customizeMonthButton, et syncDisplayedMonthYearFromDate.
 	const currentMonth = ref<string | null>(null)
 	const currentYear = ref<string | null>(null)
 	const currentMonthName = ref<string | null>(null)
@@ -116,6 +167,13 @@
 		}
 	}
 
+	// ─── Gestion fine du focus (spécifique ComplexDatePicker) ─────────
+	// Le focus est plus complexe ici car l'input est éditable : il faut distinguer
+	// le blur causé par l'ouverture du calendrier (à ignorer) du blur réel (à valider).
+	// - shouldRestoreFocusToInput : après fermeture du calendrier, redonne le focus à l'input
+	// - shouldFocusDialogOnOpen : à l'ouverture, place le focus sur le jour initial du calendrier
+	// - dialogInitialFocusToken : annule les timeouts de focus obsolètes (ex: si l'utilisateur
+	//   ferme/reouvre rapidement)
 	const shouldRestoreFocusToInput = ref(false)
 	const shouldFocusDialogOnOpen = ref(false)
 	const keyboardNavigatedDate = ref<Date | null>(null)
@@ -168,6 +226,9 @@
 		dialogInitialFocusTimeouts.push(setTimeout(runFocus, 120))
 	}
 
+	// Fermeture du calendrier. Contrairement à CalendarMode, pas de flag
+	// isHandlingProgrammaticClose car le watcher isDatePickerVisible gère
+	// directement le restoreFocus via shouldRestoreFocusToInput.
 	const closeDatePicker = async (options: { restoreFocus?: boolean } = {}) => {
 		if (!isDatePickerVisible.value) return
 
@@ -178,11 +239,13 @@
 			scheduleCalendarInputFocusRestore()
 		}
 
-		await validateDates()
+		await validate()
 	}
 
 	const closeAndRestoreFocus = () => closeDatePicker({ restoreFocus: true })
 
+	// Applique les attributs ARIA combobox sur l'input (pattern APG date picker).
+	// Re-appliqué à chaque changement de visibilité/disabled/readonly via watcher.
 	const syncComboboxInputSemantics = () => {
 		const input = getCalendarInputElement()
 		if (!input) return
@@ -244,19 +307,27 @@
 	 */
 	const isDatePickerVisible = ref(false)
 
-	/**
-	 * Selection state
-	 */
+	// ─── État central : dates sélectionnées ───────────────────────────
+	// Source de vérité pour la sélection courante (null | Date | Date[]).
+	// Le watcher sur cette ref (syncFromSelectedDatesChange) orchestre :
+	// - la sync de l'affichage (syncSelectionDisplay)
+	// - la mise à jour du modèle (updateModel)
+	// - la fermeture du calendrier si la sélection est complète
 	const selectedDates = ref<Date | (Date | null)[] | null>(
 		initializeSelectedDates(props.modelValue as DateInput | null, props.format, props.dateFormatReturn),
 	)
-	// Force re-render of DateTextInput/SyTextField when needed (e.g., after reset)
+	// Force le re-render du DateTextInput/SyTextField (ex: après reset ou clear).
+	// Aussi utilisé pour forcer le re-render du VDatePicker après clear (datePickerKey).
 	const fieldKey = ref(0)
 
+	// --- Validation setup ---
+	// `validate` est le point d'entrée unifié (route vers validateDates / validateTextInput).
+	// `validateField` et `replaceErrors` sont conservés pour validateCalendarSelection
+	// et useDatePickerInputBlurHandler qui ont besoin d'un accès bas niveau.
 	const {
+		validate,
 		validateField,
 		clearValidation,
-		validateDates,
 		replaceErrors,
 		errors,
 		warnings,
@@ -267,7 +338,6 @@
 		errorMessages,
 		warningMessages,
 		successMessages,
-		validateTextInput,
 	} = useDatePickerValidation({
 		showSuccessMessages: computed(() => props.showSuccessMessages),
 		disableErrorHandling: computed(() => props.disableErrorHandling),
@@ -342,7 +412,9 @@
 		isManualInputActive,
 		hasInteracted,
 		updateAccessibility,
-		validateDates,
+		// Alias de compatibilité : le composable appelle validateDates() après fermeture,
+		// ce qui déclenche validate() (flow standard) dans ce composant.
+		validateDates: () => validate(),
 		emitClosed: () => emit('closed'),
 		emitFocus: () => emit('focus'),
 	})
@@ -414,6 +486,9 @@
 		withInternalUpdate(() => emit('update:modelValue', value))
 	}
 
+	// Proxy computed pour VDatePicker v-model : permet d'intercepter les mises à jour
+	// du calendrier et de les ignorer si nécessaire (ignoreNextCalendarModelSync).
+	// Sans cela, VDatePicker rebouclerait sur selectedDates à chaque ouverture/fermeture.
 	const calendarSelectedDates = computed<DateObjectValue>({
 		get: () => selectedDates.value,
 		set: (value) => {
@@ -480,7 +555,9 @@
 		displayRange: computed(() => props.displayRange),
 		parseDate,
 		formatDate,
-		validateDates,
+		// Alias de compatibilité : le composable appelle validateDates() après
+		// mise à jour des dates, ce qui déclenche validate() (flow standard).
+		validateDates: () => validate(),
 		clearValidation,
 		generateDateRange: dateSelectionResult.generateDateRange,
 	})
@@ -550,8 +627,20 @@
 
 	const formatDateInput = (input: string, cursorPosition?: number) => {
 		const result = formatDateInputUtil(input, props.format, { cursorPosition })
+
+		// Extrait le séparateur du format (ex: DD/MM/YYYY → '/', DD-MM-YYYY → '-').
+		// [^DMY] = tout caractère qui n'est pas D, M ou Y (insensible à la casse via le flag "i").
+		// ?. [0] = premier caractère non-lettre trouvé, ou '/' par défaut si aucun séparateur.
 		const separator = props.format.match(/[^DMY]/i)?.[0] || '/'
+
+		// Échappe les caractères spéciaux de regex dans le séparateur (ex: '.' → '\.', '/' → '/').
+		// [.*+?^${}()|[\]\\] = liste des métacaractères regex à échapper avec '\\$&'.
+		// Nécessaire car le séparateur est injecté dans une RegExp ci-dessous.
 		const escapedSeparator = separator.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+		// Supprime les séparateurs et placeholders ('_') en fin de chaîne (ex: "01/__/___" → "01").
+		// [escapedSeparator_]+$ = un ou plusieurs caractères parmi le séparateur et '_' à la fin ($).
+		// Cela évite d'afficher des séparateurs orphelins quand la saisie est partielle.
 		const formatted = result.formatted.replace(new RegExp(`[${escapedSeparator}_]+$`), '')
 
 		return {
@@ -661,7 +750,7 @@
 		}
 
 		// Validate immediately to surface messages
-		queueMicrotask(() => validateDates(true))
+		queueMicrotask(() => validate({ force: true }))
 	}
 
 	const consumeIgnoredCalendarModelSync = (): boolean => {
@@ -701,7 +790,7 @@
 		updateModel(selectionCommit.modelValue)
 		emit('date-selected', selectionCommit.modelValue)
 		closeAndRestoreFocus()
-		validateDates()
+		validate()
 	}
 
 	const handleSelectedDatesChange = (value: Exclude<DateObjectValue, null>): void => {
@@ -741,6 +830,10 @@
 		}
 	}
 
+	// ─── Watchers de synchronisation ──────────────────────────────────
+	// Watcher 1 : selectedDates → sync affichage + modèle + fermeture calendrier
+	// Watcher 2 : textInputValue → sync modèle depuis saisie texte (mode simple uniquement)
+	// Watcher 3 : displayFormattedDate → mise à jour de la description accessibilité (live region)
 	watch(selectedDates, syncFromSelectedDatesChange)
 
 	// Handle manual typing sync → model/selection
@@ -761,7 +854,6 @@
 			const selectionCommit = buildCalendarSelectionCommit()
 			if (!selectionCommit) {
 				syncSelectionDisplay()
-				validateDates()
 				return
 			}
 
@@ -838,7 +930,7 @@
 	onMounted(() => {
 		setupMonthButtonObserver()
 		displayFormattedDate.value = displayFormattedFromSelectedDates.value || ''
-		validateDates()
+		validate()
 		nextTick(syncComboboxInputSemantics)
 		nextTick(syncDialogKeydownListener)
 	})
@@ -967,6 +1059,10 @@
 		},
 	})
 
+	// ─── Gestion clavier spécifique au champ texte du calendrier ──────
+	// Gère : Enter/ArrowDown (ouvrir calendrier + focus dialog),
+	// Backspace (effacer en sautant les séparateurs de date),
+	// ArrowLeft/ArrowRight (naviguer en sautant les séparateurs).
 	const handleKeydown = (event: KeyboardEvent) => {
 		if (props.readonly) return
 
@@ -1027,6 +1123,11 @@
 		}
 	}
 
+	// Gestionnaire de blur pour le champ texte du calendrier.
+	// Si le blur est causé par l'ouverture du calendrier (ignoreNextInputBlur),
+	// on l'ignore et on émet juste l'événement blur sans valider.
+	// Sinon, on synchronise la valeur saisie et on délègue à handleInputBlur
+	// (useDatePickerInputBlurHandler) qui valide et met à jour le modèle.
 	const handleCalendarInputBlur = async () => {
 		if (consumeIgnoreNextInputBlur() && isDatePickerVisible.value) {
 			emitBlurEvent()
@@ -1044,13 +1145,17 @@
 		await handleInputBlur()
 	}
 
+	// Gestionnaire d'input live (pendant la frappe).
+	// En mode simple : valide immédiatement (pour afficher les erreurs de format en temps réel).
+	// En mode range : attend que la plage soit complète (séparateur présent + 2 dates valides)
+	// avant de mettre à jour selectedDates et de valider.
 	const handleInput = (value: string) => {
 		if (props.readonly) return
 
 		textInputValue.value = value
 
 		if (!props.displayRange) {
-			validateDates()
+			validate()
 			return
 		}
 
@@ -1070,7 +1175,7 @@
 		}
 
 		dateSelectionResult.updateSelectedDates([startDate, endDate])
-		validateDates()
+		validate()
 	}
 
 	/**
@@ -1173,6 +1278,10 @@
 
 	const emitBlurEvent = () => emit('blur')
 
+	// --- Blur handler ---
+	// useDatePickerInputBlurHandler reçoit des wrappers qui délèuent à validate() :
+	// - validateTextInput → validate({ textValue }) pour la validation texte au blur
+	// - replaceErrors → accès direct pour les erreurs de plage locales
 	const { handleInputBlur } = useDatePickerInputBlurHandler({
 		format: computed(() => props.format),
 		dateFormatReturn: props.dateFormatReturn,
@@ -1188,7 +1297,8 @@
 		parseDate,
 		formatDate,
 		updateModel,
-		validateTextInput,
+		// Wrapper : délègue au flow texte de validate()
+		validateTextInput: (value: string) => validate({ textValue: value }) as Promise<boolean>,
 		emitBlur: emitBlurEvent,
 	})
 
@@ -1276,15 +1386,15 @@
 		}
 	}
 
-	/**
-	 * Public API
-	 */
+	// ─── API publique exposée au parent ──────────────────────────────
+	// Le parent (ex: CalendarMode en useCombinedMode, SyForm, PeriodField) utilise
+	// ces méthodes pour valider, réinitialiser, ouvrir/fermer le calendrier, etc.
 	async function validateOnSubmit(): Promise<boolean> {
 		if (props.noCalendar) {
 			return await Promise.resolve(dateTextInputRef.value?.validateOnSubmit() || false)
 		}
 		const textInputValid = await Promise.resolve(dateCalendarTextInputRef.value?.validateOnSubmit() || false)
-		await Promise.resolve(validateDates(true))
+		await Promise.resolve(validate({ force: true }))
 		return textInputValid && errorMessages.value.length === 0
 	}
 
@@ -1335,9 +1445,8 @@
 		currentMonth,
 		currentMonthName,
 		toggleDatePicker,
-		validateField,
+		validate,
 		clearValidation,
-		validateDates,
 		formatDateInput,
 		emitBlur: emitBlurEvent,
 		validateDateFormat: (value: string) => validateDateFormatUtil(value, props.format, props.dateFormatReturn, props.required, hasInteracted.value, props.disableErrorHandling),

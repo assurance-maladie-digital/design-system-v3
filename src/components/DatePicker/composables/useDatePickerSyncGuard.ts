@@ -2,16 +2,27 @@ import { ref, type Ref } from 'vue'
 
 /**
  * Centralise les flags de coordination anti-boucle et d'interaction
- * utilisés par les composants DatePicker.
+ * utilisés par les composants DatePicker (ComplexDatePicker, CalendarMode/DatePicker,
+ * DateTextInput).
  *
- * Avant ce composable, chaque composant déclarait ses propres refs
- * (`isUpdatingFromInternal`, `isManualInputActive`, `hasInteracted`,
- * `ignoreNextInputBlur`, `ignoreNextCalendarModelSync`) avec des
- * mécanismes de reset incohérents (`queueMicrotask` vs `setTimeout(0)`).
+ * ## Flags anti-boucle
  *
- * Le reset unifié utilise `setTimeout(0)` qui garantit que tous les
- * watchers Vue (flush en microtask) voient le flag `true` avant son
- * reset, éliminant les bugs subtils de boucles de réactivité.
+ * - `isUpdatingFromInternal` : Marque une mise à jour comme provenant de l'intérieur
+ *   du composant (via `withInternalUpdate`). Les watchers qui synchronisent le modèle
+ *   vérifient ce flag pour éviter de re-traiter une valeur qu'ils viennent d'émettre.
+ *   Le reset via `queueMicrotask` garantit que les watchers Vue (flush en microtask)
+ *   voient le flag `true` avant son reset.
+ *
+ * - `ignoreNextInputBlur` / `ignoreNextCalendarModelSync` : Flags one-shot qui
+ *   demandent d'ignorer le prochain événement de blur ou de sync modèle. Consommés
+ *   automatiquement au prochain read via `consumeIgnoreNext*`.
+ *
+ * ## État d'interaction
+ *
+ * - `hasInteracted` : Indique que l'utilisateur a interagi avec le champ (focus + saisie).
+ *   Utilisé par la validation pour distinguer un champ vierge d'un champ abandonné.
+ * - `isManualInputActive` : Indique que l'utilisateur est en train de saisir manuellement
+ *   (par opposition à une sélection via calendrier). Désactivé au blur.
  */
 export interface DatePickerSyncGuard {
 	// Anti-loop flag — prevents watchers from re-processing internal updates
