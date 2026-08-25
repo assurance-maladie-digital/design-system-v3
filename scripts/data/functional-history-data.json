@@ -1,9 +1,9 @@
 {
   "Accordion": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "07/08/2026",
+    "dateIso": "2026-08-07 16:34:33 +0200",
+    "message": "[Accordion] Ajout de la props density (#2482)"
   },
   "AmeliproAccordion": {
     "version": "1.0.25",
@@ -198,7 +198,7 @@
     "message": "Tokens simplify v2 (#2102)"
   },
   "AmeliproFooter": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
@@ -258,7 +258,7 @@
     "message": "Tokens simplify v2 (#2102)"
   },
   "AmeliproMenu": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
@@ -342,16 +342,16 @@
     "message": "Tokens simplify v2 (#2102)"
   },
   "AmeliproPatientLogin": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "20/08/2026",
+    "dateIso": "2026-08-20 12:20:15 +0200",
+    "message": "Fix tests warning (#2498)"
   },
   "AmeliproPatientLoginForm": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "20/08/2026",
+    "dateIso": "2026-08-20 12:20:15 +0200",
+    "message": "Fix tests warning (#2498)"
   },
   "AmeliproPostalAddressCityRow": {
     "version": "1.0.25",
@@ -432,10 +432,10 @@
     "message": "Tokens simplify v2 (#2102)"
   },
   "AmeliproTextField": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 10:33:40 +0200",
+    "message": "[SyRadioGroup] héritage des attributs (#2493)"
   },
   "AmeliproTileBtn": {
     "version": "1.0.25",
@@ -456,10 +456,10 @@
     "message": "Feat/amelipro components ok (#803)"
   },
   "AmeliproUpload": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 08:58:16 +0200",
+    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "ServiceBtn": {
     "version": "1.0.3",
@@ -480,10 +480,10 @@
     "message": "Feat/amelipro components ok (#803)"
   },
   "ServiceMenuContent": {
-    "version": "1.0.3",
-    "date": "18/07/2025",
-    "dateIso": "2025-07-18 17:11:17 +0200",
-    "message": "Feat/amelipro components ok (#803)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 08:58:16 +0200",
+    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "StructureBtn": {
     "version": "1.0.25",
@@ -534,115 +534,115 @@
     "message": "Feat/amelipro components ok (#803)"
   },
   "BackBtn": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "05/08/2026",
+    "dateIso": "2026-08-05 11:05:17 +0200",
+    "message": "Ajout des interactions sur le composant `BackBtn` (#2466)"
   },
   "BackToTopBtn": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "05/08/2026",
+    "dateIso": "2026-08-05 11:10:24 +0200",
+    "message": "Ajout des interactions sur le composant `BackToTopBtn` (#2467)"
   },
   "Captcha": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "CaptchaAlert": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "CaptchaBase": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "CaptchaBtn": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "CaptchaForm": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "CaptchaHelpdesk": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "CaptchaImg": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "CaptchaInformation": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
-  "volumeUp": {
-    "version": "1.0.13",
-    "date": "14/11/2025",
-    "dateIso": "2025-11-14 11:01:33 +0100",
-    "message": "captcha (#1230)"
+  "VolumeUp": {
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "ChipList": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "CollapsibleList": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "IconSlot": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "ContextualMenu": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "DeepMenu": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "CookieBanner": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 10:33:40 +0200",
+    "message": "[SyRadioGroup] héritage des attributs (#2493)"
   },
   "CookiesInformation": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "CookiesSelection": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
@@ -654,103 +654,103 @@
     "message": "cookies selection (#256)"
   },
   "CopyBtn": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 08:58:16 +0200",
+    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "SelectBtnField": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "04/08/2026",
+    "dateIso": "2026-08-04 09:24:53 +0200",
+    "message": "interaction vbtn (#2435)"
   },
   "SyAutocomplete": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "SyInputSelect": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "20/08/2026",
+    "dateIso": "2026-08-20 12:20:15 +0200",
+    "message": "Fix tests warning (#2498)"
   },
   "SySelect": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:56:33 +0200",
     "message": "SySelect: fix selection display when items is a string array (#2425)"
   },
   "SyCheckBoxGroup": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "SyCheckbox": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "SyForm": {
-    "version": "1.0.16",
-    "date": "12/12/2025",
-    "dateIso": "2025-12-12 12:02:19 +0100",
-    "message": "Fix: add reset event and clearValidation method to SyForm (#1602)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "SyIcon": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 08:58:16 +0200",
+    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "SyIconAccessibility": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 08:58:16 +0200",
+    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "SyIconButton": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "SyPagination": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "SyRadioGroup": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 10:33:40 +0200",
+    "message": "[SyRadioGroup] héritage des attributs (#2493)"
   },
   "SyTabs": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "FieldState": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "31/07/2026",
     "dateIso": "2026-07-31 12:04:52 +0200",
     "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)"
   },
   "SyTextField": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "31/07/2026",
     "dateIso": "2026-07-31 12:04:52 +0200",
     "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)"
   },
   "DataList": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "17/07/2026",
     "dateIso": "2026-07-17 08:55:42 +0200",
     "message": "use useId (#2402)"
@@ -768,52 +768,52 @@
     "message": "DataListItem : déprécier renderHtmlValue et ajouter un slo… (#1573)"
   },
   "DataListItem": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 08:58:16 +0200",
+    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "DatePicker": {
-    "version": "1.1.2",
-    "date": "31/07/2026",
-    "dateIso": "2026-07-31 12:04:52 +0200",
-    "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "ComplexDatePicker": {
-    "version": "1.1.2",
-    "date": "30/07/2026",
-    "dateIso": "2026-07-30 15:59:30 +0200",
-    "message": "DatePicker: simplify weekend day styling (#2447)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "DatePickerLiveRegion": {
-    "version": "1.1.2",
-    "date": "31/07/2026",
-    "dateIso": "2026-07-31 12:04:52 +0200",
-    "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "DateTextInput": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "31/07/2026",
     "dateIso": "2026-07-31 15:06:51 +0200",
     "message": "DatePicker: wrap customRules and customWarningRules in computed and fix isOnSuccess validation state (#2461)"
   },
   "BidirectionalComplexValidation": {
-    "version": "1.1.2",
-    "date": "30/06/2026",
-    "dateIso": "2026-06-30 14:31:34 +0200",
-    "message": "Feat/wip refacto dp 3 (#2207)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "DatePickerBidirectionalValidation": {
-    "version": "1.1.2",
-    "date": "30/06/2026",
-    "dateIso": "2026-06-30 14:31:34 +0200",
-    "message": "Feat/wip refacto dp 3 (#2207)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "DatePickerValidationExamples": {
-    "version": "1.1.2",
-    "date": "30/06/2026",
-    "dateIso": "2026-06-30 14:31:34 +0200",
-    "message": "Feat/wip refacto dp 3 (#2207)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "ComplexDatePickerPlayground": {
     "version": "1.0.25",
@@ -834,22 +834,22 @@
     "message": "Page de declaration access (#812)"
   },
   "DiacriticPicker": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "DialogBox": {
-    "version": "1.1.2",
-    "date": "23/07/2026",
-    "dateIso": "2026-07-23 11:48:40 +0200",
-    "message": "expose Vuetify props on SyTextArea and DialogBox (#2415)"
+    "version": "1.1.4",
+    "date": "05/08/2026",
+    "dateIso": "2026-08-05 15:08:26 +0200",
+    "message": "Ajout des interactions sur le composant `DialogBox` (#2469)"
   },
   "DownloadBtn": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "06/08/2026",
+    "dateIso": "2026-08-06 10:17:41 +0200",
+    "message": "Ajout des interactions sur le composant `DownloadBtn` (#2475)"
   },
   "ErrorPage": {
     "version": "1.0.23",
@@ -858,58 +858,58 @@
     "message": "Feat/turn heading level optional (#2025)"
   },
   "ExternalLinks": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "06/08/2026",
+    "dateIso": "2026-08-06 17:01:59 +0200",
+    "message": "Add interaction on ExternalLinks (#2479)"
   },
   "FileList": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "UploadItem": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "FilePreview": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "FileUpload": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "06/08/2026",
+    "dateIso": "2026-08-06 14:59:09 +0200",
+    "message": "Ajout des interactions sur le composant `FileUpload` (#2474)"
   },
   "FileUploadContent": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "06/08/2026",
+    "dateIso": "2026-08-06 14:59:09 +0200",
+    "message": "Ajout des interactions sur le composant `FileUpload` (#2474)"
   },
   "FilterInline": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "FilterSideBar": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "FooterBar": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "07/08/2026",
+    "dateIso": "2026-08-07 11:22:22 +0200",
+    "message": "Ajout des interactions sur le composant `SocialMediaLinks` (#2480)"
   },
   "FranceConnectBtn": {
     "version": "1.0.27",
@@ -918,16 +918,16 @@
     "message": "Implémentation des nouveaux tokens (#2164)"
   },
   "HeaderBar": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "HeaderBurgerMenu": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "HeaderMenuItem": {
     "version": "1.0.27",
@@ -942,19 +942,19 @@
     "message": "Tokens simplify v2 (#2102)"
   },
   "HeaderSubMenu": {
-    "version": "1.0.27",
-    "date": "20/05/2026",
-    "dateIso": "2026-05-20 17:19:08 +0200",
-    "message": "Implémentation des nouveaux tokens (#2164)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "HeaderLogo": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "HeaderMenuBtn": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
@@ -966,28 +966,28 @@
     "message": "Feat/improve header loding after audit (#974)"
   },
   "HeaderNavigationBar": {
-    "version": "1.1.2",
-    "date": "28/07/2026",
-    "dateIso": "2026-07-28 11:31:28 +0200",
-    "message": "fix header navigation bar color to variable (#2431)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 08:58:16 +0200",
+    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "HorizontalNavbar": {
-    "version": "1.1.2",
-    "date": "28/07/2026",
-    "dateIso": "2026-07-28 11:31:28 +0200",
-    "message": "fix header navigation bar color to variable (#2431)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 08:58:16 +0200",
+    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "HeaderToolbar": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "13/08/2026",
+    "dateIso": "2026-08-13 15:55:47 +0200",
+    "message": "fix/components-name-format"
   },
   "LangBtn": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "05/08/2026",
+    "dateIso": "2026-08-05 11:36:40 +0200",
+    "message": "Ajout des interactions sur le composant `LangBtn` (#2473)"
   },
   "Logo": {
     "version": "1.0.18",
@@ -996,13 +996,13 @@
     "message": "update vue-tsconfig (#1739)"
   },
   "LogoBrandSection": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "LunarCalendar": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
@@ -1014,52 +1014,52 @@
     "message": "Corrige les warnings présent lors de l'exécution des tests (#1998)"
   },
   "MonthPicker": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "MonthPickerInput": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "MonthPickerVisual": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "MonthSelector": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "VisualPickerFooter": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "VisualPickerHeader": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "YearSelector": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "NirField": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 08:58:16 +0200",
+    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "NotFoundPage": {
     "version": "1.0.22",
@@ -1068,16 +1068,16 @@
     "message": "Hx: replace hx to SyHeading (#1874)"
   },
   "Notification": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "20/08/2026",
+    "dateIso": "2026-08-20 12:20:15 +0200",
+    "message": "Fix tests warning (#2498)"
   },
   "NotificationBar": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "20/08/2026",
+    "dateIso": "2026-08-20 12:20:15 +0200",
+    "message": "Fix tests warning (#2498)"
   },
   "PageContainer": {
     "version": "1.1.1",
@@ -1086,43 +1086,43 @@
     "message": "migration ameliproPageLayout (#2259)"
   },
   "PaginatedTable": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "Pagination": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "PasswordField": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "PeriodField": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "PhoneField": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "RangeField": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "RangeSlider": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
@@ -1134,67 +1134,67 @@
     "message": "Implémentation des nouveaux tokens (#2164)"
   },
   "EmotionPicker": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "04/08/2026",
+    "dateIso": "2026-08-04 09:24:53 +0200",
+    "message": "interaction vbtn (#2435)"
   },
   "NumberPicker": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "RatingPicker": {
-    "version": "1.1.2",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.4",
+    "date": "04/08/2026",
+    "dateIso": "2026-08-04 09:24:53 +0200",
+    "message": "interaction vbtn (#2435)"
   },
   "StarsPicker": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "SearchListField": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "SkipLink": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "SocialMediaLinks": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "07/08/2026",
+    "dateIso": "2026-08-07 11:22:22 +0200",
+    "message": "Ajout des interactions sur le composant `SocialMediaLinks` (#2480)"
   },
   "StatusPage": {
-    "version": "1.1.1",
-    "date": "17/06/2026",
-    "dateIso": "2026-06-17 14:14:22 +0200",
-    "message": "migration ameliproPageLayout (#2259)"
+    "version": "1.1.4",
+    "date": "19/08/2026",
+    "dateIso": "2026-08-19 11:12:48 +0200",
+    "message": "[VBtn] doc (#2492)"
   },
   "SubHeader": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "SyAlert": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "07/08/2026",
+    "dateIso": "2026-08-07 15:40:09 +0200",
+    "message": "[SyAlert] Ajout de la props density (#2478)"
   },
   "SyBtnMenu": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
@@ -1206,103 +1206,103 @@
     "message": "Feat/turn heading level optional (#2025)"
   },
   "SyTextArea": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "TableToolbar": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "SyServerTable": {
-    "version": "1.1.2",
-    "date": "17/07/2026",
-    "dateIso": "2026-07-17 08:55:42 +0200",
-    "message": "use useId (#2402)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 11:04:33 +0200",
+    "message": "[Table] selection avec éléments radio en mode selection unique (#2494)"
   },
   "SyTable": {
-    "version": "1.1.2",
-    "date": "17/07/2026",
-    "dateIso": "2026-07-17 08:55:42 +0200",
-    "message": "use useId (#2402)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 11:04:33 +0200",
+    "message": "[Table] selection avec éléments radio en mode selection unique (#2494)"
   },
   "SyTableFilter": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 11:04:33 +0200",
+    "message": "[Table] selection avec éléments radio en mode selection unique (#2494)"
   },
   "SyTablePagination": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 11:04:33 +0200",
+    "message": "[Table] selection avec éléments radio en mode selection unique (#2494)"
   },
   "TableBulkActions": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 11:04:33 +0200",
+    "message": "[Table] selection avec éléments radio en mode selection unique (#2494)"
   },
   "TableHeader": {
-    "version": "1.1.2",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 11:04:33 +0200",
+    "message": "[Table] selection avec éléments radio en mode selection unique (#2494)"
   },
   "AutocompleteFilter": {
-    "version": "1.0.26",
-    "date": "30/04/2026",
-    "dateIso": "2026-04-30 16:00:51 +0200",
-    "message": "Clean date picker and fix invalid date (#2149)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 08:58:16 +0200",
+    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "DateFilter": {
-    "version": "1.0.26",
-    "date": "30/04/2026",
-    "dateIso": "2026-04-30 16:00:51 +0200",
-    "message": "Clean date picker and fix invalid date (#2149)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 08:58:16 +0200",
+    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "NumberFilter": {
-    "version": "1.0.26",
-    "date": "30/04/2026",
-    "dateIso": "2026-04-30 16:00:51 +0200",
-    "message": "Clean date picker and fix invalid date (#2149)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 08:58:16 +0200",
+    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "PeriodFilter": {
-    "version": "1.0.26",
-    "date": "30/04/2026",
-    "dateIso": "2026-04-30 16:00:51 +0200",
-    "message": "Clean date picker and fix invalid date (#2149)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 08:58:16 +0200",
+    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "SelectFilter": {
-    "version": "1.0.26",
-    "date": "30/04/2026",
-    "dateIso": "2026-04-30 16:00:51 +0200",
-    "message": "Clean date picker and fix invalid date (#2149)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 08:58:16 +0200",
+    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "TextFilter": {
-    "version": "1.0.26",
-    "date": "30/04/2026",
-    "dateIso": "2026-04-30 16:00:51 +0200",
-    "message": "Clean date picker and fix invalid date (#2149)"
+    "version": "1.1.4",
+    "date": "25/08/2026",
+    "dateIso": "2026-08-25 08:58:16 +0200",
+    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "OrganizeColumns": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "ToolbarContainer": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "22/07/2026",
     "dateIso": "2026-07-22 11:00:09 +0200",
     "message": "Components: fix focus display (#2383)"
   },
   "UploadWorkflow": {
-    "version": "1.1.2",
+    "version": "1.1.3",
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
