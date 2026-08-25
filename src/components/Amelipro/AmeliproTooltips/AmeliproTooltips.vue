@@ -15,15 +15,15 @@
 		},
 		iconBgColor: {
 			type: String,
-			default: 'ap-blue-darken-1',
+			default: 'ap-white',
 		},
 		iconColor: {
 			type: String,
-			default: 'ap-white',
+			default: 'ap-parme-darken-1',
 		},
 		iconHoverBgColor: {
 			type: String,
-			default: 'ap-blue-darken-1',
+			default: 'ap-parme-darken-1',
 		},
 		iconHoverColor: {
 			type: String,
