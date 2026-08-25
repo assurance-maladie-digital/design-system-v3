@@ -1,3 +1,48 @@
+/**
+ * Index des composables DatePicker — Hub d'export centralisé.
+ *
+ * ## Architecture des composables
+ *
+ * Les composables du DatePicker sont organisés par responsabilité :
+ *
+ * ### Saisie texte & édition
+ * - `useDateInputEditing` : Formatage masqué en temps réel (insertion automatique des séparateurs)
+ * - `useDateRangeInput` : Saisie de plages de dates (parsing, formatage, validation range)
+ * - `useDateAutoClamp` : Auto-correction des dates invalides (ex: 32/01 → 01/02)
+ * - `useDateTextInputController` : Contrôleur haut niveau (validateOnSubmit, clamp, reset)
+ *
+ * ### Coordination réactive
+ * - `useDatePickerSyncGuard` : Flags anti-boucle (isUpdatingFromInternal, ignoreNextInputBlur, etc.)
+ *   et état d'interaction (hasInteracted, isManualInputActive). Le reset unifié via
+ *   `queueMicrotask` garantit que tous les watchers Vue voient les flags avant leur reset.
+ *
+ * ### Logique calendrier partagée
+ * - `useDatePickerCalendar` : Centralise la logique VDatePicker partagée entre
+ *   ComplexDatePicker et CalendarMode/DatePicker (accessibilité, view mode, month/year nav)
+ *
+ * ### Sélection & validation
+ * - `useDateSelection` : Gestion de la sélection (simple vs range), génération de plages
+ * - `useDatePickerValidation` : Orchestrateur de validation (route vers validateDates / validateTextInput)
+ * - `validateDateFormat` / `isDateComplete` : Utilitaires de validation de format (fonctions pures)
+ * - `useDateRangeValidation` : Validation spécifique aux plages (start < end)
+ *
+ * ### UI & interaction
+ * - `useDatePickerViewMode` : Gestion du mode d'affichage (year → months → month), birthDate
+ * - `useDatePickerVisibility` : Ouverture/fermeture du calendrier, focus, click outside
+ * - `useDisplayedDateString` : Formatage de la chaîne affichée dans le champ texte
+ * - `useDatePickerInputBlurHandler` : Validation au blur du champ texte (sync modèle + validation)
+ * - `useTodayButton` / `buildTodaySelectionState` : Bouton « Aujourd'hui »
+ * - `useMonthButtonCustomization` : Personnalisation des boutons mois/année (proxys ARIA)
+ * - `useDatePickerState` : État interne (selectedDates, textInputValue, displayFormattedDate)
+ * - `useHolidayHighlighting` : Marquage des jours fériés dans le calendrier
+ * - `useSelectedDayAria` : Mise à jour de `aria-selected` sur le jour sélectionné
+ * - `useDatePickerFocusTrap` : Focus trap dans le dialog (Tab/Shift+Tab/Escape)
+ * - `useCalendarKeyboardNavigation` : Navigation par flèches dans la grille (APG)
+ *
+ * ### Valeurs dérivées
+ * - `useDatePickerDerivedValues` : Computed partagés (returnFormat, minDate, maxDate)
+ */
+
 // Export all composables from CalendarMode/composables
 
 // Date input and editing

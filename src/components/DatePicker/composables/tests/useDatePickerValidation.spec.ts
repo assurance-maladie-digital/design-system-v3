@@ -167,7 +167,7 @@ describe('useDatePickerValidation', () => {
 			expect(controller.warnings.value).toEqual([])
 			expect(controller.successes.value).toEqual([])
 
-			const validateResult = controller.validateDates()
+			const validateResult = await controller.validate()
 			const submitResult = controller.validateCalendarModeDates()
 			const fieldResult = controller.validateField(new Date('2023-01-01'))
 

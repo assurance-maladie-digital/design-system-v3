@@ -1,4 +1,56 @@
 <script setup lang="ts">
+	/**
+	 * DateTextInput — Champ de saisie de date avec formatage masqué.
+	 *
+	 * ## Rôle
+	 *
+	 * Ce composant est le « moteur de saisie texte » du système DatePicker. Il gère :
+	 * - Le **formatage masqué en temps réel** : l'utilisateur tape des chiffres, les séparateurs
+	 *   (/, -, espace) sont insérés automatiquement. Le masque (ex: DD/MM/YYYY) est dérivé du
+	 *   format d'affichage. Voir `useDateInputEditing` et les handlers overwrite ci-dessous.
+	 * - La **validation texte** : format, required, custom rules, range. Déléguée à
+	 *   `useDatePickerValidation` en mode `noCalendar: true` (bridge).
+	 * - L'**auto-clamp** : si activé, corrige automatiquement les dates invalides (ex: 32/01 → 01/02).
+	 * - La **saisie de plages (range)** : deux dates séparées par `locales.rangeSeparator`,
+	 *   avec formatage et validation dédiés. Voir `useDateRangeInput`.
+	 *
+	 * ## Architecture interne
+	 *
+	 * Le composant utilise deux modes de saisie clavier :
+	 * 1. **Mode insertion** (par défaut) : `useDateInputEditing` formate la valeur à chaque frappe
+	 *    via un watcher sur `inputValue`. Le curseur est repositionné après formatage.
+	 * 2. **Mode overwrite** : Quand le champ est vide ou contient uniquement le squelette (___/___/___),
+	 *    les chiffres tapés remplacent les `_` un par un (style OTP/phone). Géré par
+	 *    `handleSingleDateKeyboardInput` / `handleRangeDateKeyboardInput`.
+	 *
+	 * Le flag `isOverwriteEditing` empêche le watcher de re-formater pendant que le handler
+	 * clavier gère la frappe en mode overwrite.
+	 *
+	 * ## Intégration
+	 *
+	 * DateTextInput est utilisé par :
+	 * - `CalendarMode/DatePicker` en mode `noCalendar` (saisie texte seule)
+	 * - `ComplexDatePicker` comme champ activateur du calendrier (saisie texte + ouverture calendrier)
+	 * - `ComplexDatePicker` en mode `noCalendar` (saisie texte seule)
+	 *
+	 * ## Patterns clés
+	 *
+	 * - **Bridge de validation** : `useDatePickerValidation` est appelé avec `noCalendar: true`,
+	 *   ce qui active le flow `validateTextInput`. `bridgeValidate({ textValue })` est le point
+	 *   d'entrée pour valider la saisie texte. `pushError` permet d'injecter des erreurs locales
+	 *   (ex: format invalide) sans passer par le flow complet.
+	 *
+	 * - **Déduplication des erreurs** : `errorMessages` fusionne les erreurs du bridge et les
+	 *   `externalErrorMessages` du parent, avec déduplication via `Set` (évite les doublons
+	 *   quand les mêmes customRules sont exécutées par le parent et l'enfant).
+	 *
+	 * - **Squelette de format** : `skeletonFromFormat` remplace les lettres du format (D,M,Y...)
+	 *   par `_`, conservant les séparateurs. Ex: `DD/MM/YYYY` → `__/__/____`.
+	 *   Le `skeletonPattern` (RegExp) détecte si la valeur est « visuellement vide » (que des `_`).
+	 *
+	 * - **Lock de formatage** : `isFormatting` et `withFormattingLock` empêchent le watcher
+	 *   `inputValue` de se redéclencher pendant que le composant applique un formatage.
+	 */
 	import {
 		useDateRangeInput,
 		useDateInputEditing,
@@ -6,6 +58,7 @@
 		useDateTextInputController,
 		useDatePickerValidation,
 		validateDateFormat,
+		isDateComplete,
 	} from '../composables'
 	import { ref, computed, watch, nextTick, readonly as readonlyState, toRefs, useId } from 'vue'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
@@ -69,11 +122,7 @@
 		(e: 'mousedown', event: MouseEvent): void
 	}>()
 
-	/**
-	 * =====================
-	 * Derived flags / utils
-	 * =====================
-	 */
+	// ─── Flags dérivés & utilitaires de format ────────────────────────
 	const { displayRange, format: displayFormat, dateFormatReturn, required, readonly } = toRefs(props)
 	const isRange = computed(() => !!displayRange.value)
 	const returnFormat = computed(() => dateFormatReturn.value || displayFormat.value)
@@ -81,15 +130,19 @@
 	const { parseDate, formatDate } = useDateFormat()
 	const { autoClampDate } = useDateAutoClamp()
 
-	/**
-	 * =====================
-	 * Validation setup (using DatePickerValidationBridge)
-	 * =====================
-	 */
+	// ─── Validation bridge (flow texte noCalendar) ───────────────────
+	// DateTextInput utilise useDatePickerValidation en mode noCalendar.
+	// `bridgeValidate` route vers le flow texte (validateTextInput).
+	// `pushError` permet d'injecter des erreurs locales sans le flow complet.
 	const selectedDates = ref<DateObjectValue>(null)
 	const isUpdatingFromInternal = ref(false)
 	const hasInteracted = ref(false)
 
+	// --- Validation bridge ---
+	// DateTextInput utilise useDatePickerValidation en mode noCalendar (pas de calendrier).
+	// `bridgeValidate` est le point d'entrée unifié qui route vers le flow texte.
+	// `pushError` est conservé pour failWithDisplayedError() qui a besoin d'un accès direct
+	// pour afficher des erreurs locales (ex: format invalide) sans passer par le flow complet.
 	const {
 		hasError: bridgeHasError,
 		hasWarning: bridgeHasWarning,
@@ -99,8 +152,7 @@
 		successMessages: bridgedSuccessMessages,
 		clearValidation,
 		pushError,
-		validateDates: validateBridgeDates,
-		validateTextInput: bridgeValidateTextInput,
+		validate: bridgeValidate,
 	} = useDatePickerValidation({
 		showSuccessMessages: computed(() => props.showSuccessMessages),
 		disableErrorHandling: computed(() => props.disableErrorHandling),
@@ -147,11 +199,10 @@
 		return [...new Set(allErrors)] // Déduplication avec Set
 	})
 
-	/**
-	 * =====================
-	 * Range input + validations
-	 * =====================
-	 */
+	// ─── Saisie de plages (range) ────────────────────────────────────
+	// useDateRangeInput gère le parsing, le formatage et la validation des plages.
+	// handleRangeInput compare la valeur précédente avec la nouvelle pour déterminer
+	// si l'utilisateur édite la date de début ou de fin.
 	const {
 		handleRangeInput,
 		isValidRange,
@@ -160,12 +211,10 @@
 		handlePaste: handlePasteRange,
 	} = useDateRangeInput(displayFormat.value, isRange.value, parseDate, formatDate)
 
-	/**
-	 * =====================
-	 * Format + manual validation
-	 * =====================
-	 */
-	// isUpdatingFromInternal est déjà déclaré plus haut pour le Bridge
+	// ─── Formatage masqué & validation manuelle ──────────────────────
+	// isFocused suit l'état de focus pour différencier validation live vs validation blur.
+	// isFormatting verrouille le watcher inputValue pendant le formatage automatique.
+	// isOverwriteEditing bascule en mode overwrite (remplacement des `_` du squelette).
 	const isFocused = ref(false)
 	const ariaLabel = ref(props.label || props.placeholder || locales.label)
 
@@ -204,9 +253,14 @@
 		accessiblePlaceholders: true,
 	})
 
-	const isOverwriteEditing = ref(false) // garde-fou pour ne pas re-formater au watch pendant qu'on gère le clavier
+	// Garde-fou : empêche le watcher inputValue de re-formater pendant que le handler
+	// clavier gère la frappe en mode overwrite (remplacement des `_` du squelette).
+	const isOverwriteEditing = ref(false)
 
-	// Helpers overwrite
+	// ─── Helpers overwrite : manipulation du squelette de format ──────
+	// Ces fonctions gèrent le remplacement caractère par caractère dans le squelette.
+	// isSeparator détecte les séparateurs (/, -, espace) à ne pas remplacer.
+	// nextEditableIndex / prevEditableIndex trouvent la prochaine position `_` éditable.
 	const isDigitKey = (e: KeyboardEvent) =>
 		e.key.length === 1 && e.key >= '0' && e.key <= '9'
 
@@ -262,11 +316,10 @@
 		inputElement.setSelectionRange(start, end)
 	}
 
-	/**
-	 * =====================
-	 * Bootstrapping caret (DEBUT DE L'INPUT)
-	 * =====================
-	 */
+	// ─── Bootstrap du curseur à la première position éditable ────────
+	// À l'obtention du focus, si le champ est vide, on injecte le squelette
+	// (___/___/___) et on place le curseur sur le premier `_`. Le double rAF
+	// laisse Vuetify terminer ses mises à jour DOM avant de positionner le curseur.
 	const isBootstrapping = ref(false)
 
 	async function initializeCursorAtFirstEditablePosition(options: { focus?: boolean } = {}) {
@@ -295,7 +348,9 @@
 		})
 	}
 
-	// Handlers overwrite (single)
+	// ─── Handlers clavier overwrite (mode single) ────────────────────
+	// Gère la frappe chiffre par chiffre en remplaçant les `_` du squelette.
+	// Backspace remet `_` à la position précédente. Les touches non-digit sont bloquées.
 	function handleSingleDateKeyboardInput(keyboardEvent: KeyboardEvent & { target: HTMLInputElement }) {
 		const inputElement = keyboardEvent.target
 		if (keyboardEvent.ctrlKey || keyboardEvent.metaKey || keyboardEvent.altKey) return
@@ -392,7 +447,10 @@
 		if (keyboardEvent.key.length === 1) keyboardEvent.preventDefault()
 	}
 
-	// Handlers overwrite (range)
+	// ─── Handlers clavier overwrite (mode range) ─────────────────────
+	// Similaire au mode single mais gère deux squelettes séparés par rangeSeparator.
+	// Détermine si le curseur est sur la date de début ou de fin, puis applique
+	// l'overwrite sur la bonne partie.
 	function handleRangeDateKeyboardInput(keyboardEvent: KeyboardEvent & { target: HTMLInputElement }) {
 		const inputElement = keyboardEvent.target
 		if (keyboardEvent.ctrlKey || keyboardEvent.metaKey || keyboardEvent.altKey) return
@@ -519,11 +577,11 @@
 		if (keyboardEvent.key.length === 1) keyboardEvent.preventDefault()
 	}
 
-	/**
-	 * =====================
-	 * Small helpers to DRY (Don't Repeat Yourself 🥸) logic
-	 * =====================
-	 */
+	// ─── Contrôleur texte (auto-clamp, submit, reset) ───────────────
+	// useDateTextInputController centralise :
+	// - clampIfNeeded : auto-correction des dates invalides (ex: 32/01 → 01/02)
+	// - validateOnSubmit : validation forcée pour la soumission de formulaire
+	// - reset : réinitialisation complète du champ (valeur, validation, état)
 	const { clampIfNeeded, validateOnSubmit, reset } = useDateTextInputController({
 		autoClamp: computed(() => props.autoClamp),
 		isRange,
@@ -639,7 +697,9 @@
 			value = ''
 		}
 
-		return await bridgeValidateTextInput(value)
+		// Délègue au flow texte de validate() via le bridge.
+		// Les skeleton inputs (__/__/____) sont traités comme champs vides.
+		return await (bridgeValidate({ textValue: value }) as Promise<boolean>)
 	}
 
 	function isVisuallyEmptyInput(value: string): boolean {
@@ -837,7 +897,7 @@
 	function syncSelectedRangeValidation(): void {
 		try {
 			isUpdatingFromInternal.value = true
-			validateBridgeDates()
+			bridgeValidate()
 		}
 		finally {
 			queueMicrotask(() => (isUpdatingFromInternal.value = false))
@@ -1061,11 +1121,7 @@
 		}
 	}
 
-	/**
-	 * =====================
-	 * Handlers (routeurs)
-	 * =====================
-	 */
+	// ─── Handlers routeurs (délèguent selon le mode single/range) ────
 	function handleKeydown(evt: KeyboardEvent) {
 		if (props.readonly) return
 		if (!getEventInputElement(evt)) return
@@ -1139,6 +1195,15 @@
 			return
 		}
 
+		// Incomplete date at blur → error, don't emit model.
+		// validateEmptyOrIncompleteDate treats incomplete dates as valid (for typing),
+		// but at blur the user is done: an incomplete date must be an error.
+		// Skip this check for range mode (handled separately by range validation).
+		if (!isRange.value && !isDateComplete(inputValue.value, displayFormat.value)) {
+			failWithDisplayedError(locales.invalidDateFormatWithFormat(displayFormat.value), { replace: true })
+			return
+		}
+
 		await applyBlurAutoClamp()
 
 		if (!inputValue.value) {
@@ -1201,7 +1266,7 @@
 	/** expose */
 	defineExpose({
 		validateOnSubmit,
-		validateTextInput: bridgeValidateTextInput,
+		validate: bridgeValidate,
 		reset,
 		errors: readonlyState(errorMessages),
 		warnings: readonlyState(warningMessages),
