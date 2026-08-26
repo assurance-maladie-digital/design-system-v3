@@ -50,7 +50,7 @@
 	import { VDatePicker } from 'vuetify/components'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
-	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerCalendar, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerSyncGuard, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useSelectedDayAria, useTodayButton } from '../composables'
+	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerCalendar, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerSyncGuard, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useSelectedDayAria, useTodayButton } from '../composables'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { locales } from '../locales'
 	import type { CalendarModeProps, DateObjectValue } from '../types'
@@ -60,7 +60,10 @@
 	import { buildCalendarModeComplexDatePickerProps } from './props/buildCalendarModeComplexDatePickerProps'
 	import { buildCalendarModeDateTextInputProps } from './props/buildCalendarModeDateTextInputProps'
 	import { buildCalendarModeActivatorTextFieldProps } from './props/buildCalendarModeActivatorTextFieldProps'
-	import DatePickerControls from '../datePicker-v2/components/DatePickerControls.vue'
+	import DatePickerControls from '../datePickerSlots/components/DatePickerControls.vue'
+	import DatePickerDay from '../datePickerSlots/components/DatePickerDay.vue'
+	import DatePickerMonthOption from '../datePickerSlots/components/DatePickerMonthOption.vue'
+	import DatePickerYearOption from '../datePickerSlots/components/DatePickerYearOption.vue'
 
 	// Initialiser les plugins dayjs
 	dayjs.extend(customParseFormat)
@@ -442,8 +445,6 @@
 			reapplyAccessibility()
 		}
 
-		// Marquer les jours fériés après la mise à jour des dates
-		markHolidayDays()
 		if (isDatePickerVisible.value) {
 			updateSelectedDayAria()
 		}
@@ -664,7 +665,6 @@
 			reapplyAccessibility()
 			nextTick(() => {
 				if (isDatePickerVisible.value) {
-					markHolidayDays()
 					updateSelectedDayAria()
 				}
 			})
@@ -736,16 +736,6 @@
 		}
 	}
 
-	// Marquage des jours fériés partagé via le composable dédié
-	const { markHolidayDays } = useHolidayHighlighting({
-		currentMonth,
-		currentYear,
-		isDisplayHolidayDays: () => props.displayHolidayDays,
-		rootElement: computed(
-			() => datePickerRef.value?.$el as HTMLElement | null,
-		),
-	})
-
 	const { updateSelectedDayAria } = useSelectedDayAria({
 		rootElement: computed(
 			() => datePickerRef.value?.$el as HTMLElement | null,
@@ -780,7 +770,6 @@
 		focusInitialDay,
 		refreshCalendarUi: (options) => {
 			if (!isDatePickerVisible.value) return
-			markHolidayDays()
 			updateSelectedDayAria()
 			if (options.focusDay) {
 				nextTick(focusInitialDay)
@@ -809,8 +798,6 @@
 		if (isVisible) {
 			// Réinitialiser le view mode à l'ouverture pour éviter les problèmes de navigation
 			resetViewMode()
-			// Marquer les jours fériés lorsque le calendrier devient visible
-			markHolidayDays()
 			updateSelectedDayAria()
 		}
 		if (!isVisible && props.isBirthDate) {
@@ -1004,14 +991,11 @@
 						:class="displayWeekendDays ? 'weekend' : ''"
 						:max="maxDate"
 						:min="minDate"
-						:display-holiday-days="props.displayHolidayDays"
 						@update:view-mode="handleViewModeUpdateWrapper"
 						@update:month="onUpdateMonth"
 						@update:year="onUpdateYear"
 						@click:date="updateSelectedDates"
 						@update:model-value="syncDisplayFormattedFromSelection"
-						@focus="markHolidayDays"
-						@update:month-year="markHolidayDays"
 					>
 						<template #title>
 							<span :id="datePickerTitleId">
@@ -1023,6 +1007,22 @@
 								:slot-props="{ viewMode, disabled, monthYearText, monthText, yearText, openMonths, openYears, prevMonth, nextMonth, prevYear, nextYear }"
 								:displayed-month="currentMonth !== null ? Number(currentMonth) : null"
 								:displayed-year="currentYear !== null ? Number(currentYear) : null"
+							/>
+						</template>
+						<template #day="{ props: dayProps, item }">
+							<DatePickerDay
+								:slot-props="{ props: dayProps, item, i: 0 }"
+								:display-holiday-days="props.displayHolidayDays"
+							/>
+						</template>
+						<template #month="{ month, i, props: monthProps }">
+							<DatePickerMonthOption
+								:slot-props="{ month, i, props: monthProps }"
+							/>
+						</template>
+						<template #year="{ year, i, props: yearProps }">
+							<DatePickerYearOption
+								:slot-props="{ year, i, props: yearProps }"
 							/>
 						</template>
 						<template #header>

@@ -33,7 +33,6 @@
  * - `useDatePickerInputBlurHandler` : Validation au blur du champ texte (sync modèle + validation)
  * - `useTodayButton` / `buildTodaySelectionState` : Bouton « Aujourd'hui »
  * - `useDatePickerState` : État interne (selectedDates, textInputValue, displayFormattedDate)
- * - `useHolidayHighlighting` : Marquage des jours fériés dans le calendrier
  * - `useSelectedDayAria` : Mise à jour de `aria-selected` sur le jour sélectionné
  * - `useDatePickerFocusTrap` : Focus trap dans le dialog (Tab/Shift+Tab/Escape)
  * - `useCalendarKeyboardNavigation` : Navigation par flèches dans la grille (APG)
@@ -69,7 +68,6 @@ export { useDisplayedDateString } from './useDisplayedDateString'
 export { useDatePickerInputBlurHandler } from './useDatePickerInputBlurHandler'
 export { useTodayButton, buildTodaySelectionState } from './useTodayButton'
 export { useDatePickerState } from './useDatePickerState'
-export { useHolidayHighlighting } from './useHolidayHighlighting'
 export { useSelectedDayAria } from './useSelectedDayAria'
 export { useDatePickerFocusTrap } from './useDatePickerFocusTrap'
 export * from './useCalendarKeyboardNavigation'

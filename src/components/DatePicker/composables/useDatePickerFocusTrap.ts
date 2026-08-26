@@ -61,7 +61,16 @@ const getFocusableElements = (root: HTMLElement): HTMLElement[] => {
 const getDayGridFocusTarget = (root: HTMLElement, getInitialFocusDate?: () => Date): HTMLElement | null => {
 	const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
 	const iso = dayjs(targetDate).format('YYYY-MM-DD')
-	const dayCell = root.querySelector<HTMLElement>(`[data-v-date="${iso}"][role="gridcell"], [data-v-date="${iso}"]`)
+	let dayCell = root.querySelector<HTMLElement>(`[data-v-date="${iso}"][role="gridcell"], [data-v-date="${iso}"]`)
+
+	if (!dayCell) {
+		const allDates = Array.from(root.querySelectorAll<HTMLElement>('[data-v-date]'))
+		const nonAdjacent = allDates.filter(el => !el.classList.contains('v-date-picker-month__day--adjacent'))
+		if (nonAdjacent.length > 0) {
+			dayCell = nonAdjacent[0] ?? null
+		}
+	}
+
 	if (dayCell && !dayCell.hasAttribute('tabindex')) {
 		dayCell.setAttribute('tabindex', '-1')
 	}
