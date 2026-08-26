@@ -162,8 +162,8 @@
 		const isEmptyHeaderTest = !props.header || Object.keys(props.header).length === 0
 		const isTestEnvironment = import.meta.env.VITEST
 
-		// Si la valeur est vide ou '0', on supprime le filtre
-		if (value === '' || value === '0') {
+		// Si la valeur est vide, on supprime le filtre (0 est une valeur filtrable valide)
+		if (value === '') {
 			// Émettre un tableau vide pour supprimer le filtre
 			emit('update:filters', props.filters.filter(f => f.key !== filterKey))
 			return

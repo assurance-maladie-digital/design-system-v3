@@ -91,15 +91,17 @@ describe('NumberFilter.vue', () => {
 		expect(wrapper.emitted('update:filters')![1]?.[0]).toEqual([])
 	})
 
-	it('emits update:filters event to remove filter when value is 0', async () => {
+	it('keeps filter when value is 0', async () => {
 		// First set a value
 		const syTextField = wrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('update:modelValue', 42)
+		syTextField.vm.$emit('update:modelValue', 42)
 
 		// Then set to 0
-		await syTextField.vm.$emit('update:modelValue', 0)
+		syTextField.vm.$emit('update:modelValue', 0)
 
-		expect(wrapper.emitted('update:filters')![1]?.[0]).toEqual([])
+		expect(wrapper.emitted('update:filters')![1]?.[0]).toEqual([
+			{ key: 'test', value: 0, type: 'number' as FilterType },
+		])
 	})
 
 	it('handles clear button click', async () => {
