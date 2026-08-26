@@ -46,11 +46,11 @@
 	import { mdiCalendarMonthOutline } from '@mdi/js'
 	import dayjs from 'dayjs'
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
-	import { computed, nextTick, onBeforeUnmount, onMounted, readonly as readonlyState, ref, useId, watch, type ComponentPublicInstance, type Ref } from 'vue'
+	import { computed, nextTick, onBeforeUnmount, onMounted, readonly as readonlyState, ref, watch, type ComponentPublicInstance, type Ref } from 'vue'
 	import { VDatePicker } from 'vuetify/components'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
-	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerCalendar, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerSyncGuard, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useSelectedDayAria, useTodayButton } from '../composables'
+	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerCalendar, useDatePickerDerivedValues, useDatePickerFocusTarget, useDatePickerFocusTrap, useDatePickerIds, useDatePickerState, useDatePickerSyncGuard, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useSelectedDayAria, useTodayButton } from '../composables'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { locales } from '../locales'
 	import type { CalendarModeProps, DateObjectValue } from '../types'
@@ -153,12 +153,9 @@
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
 	const datePickerRef = ref<ComponentPublicInstance | null>(null)
 	const complexDatePickerRef = ref<null | ComponentPublicInstance<typeof ComplexDatePicker>>()
-	const datePickerContentId = `date-picker-${useId()}`
+	const { contentId: datePickerContentId, dialogId: datePickerDialogId, titleId: datePickerTitleId, headingId: datePickerHeadingId, inputId: datePickerInputId } = useDatePickerIds()
 
 	const datePickerDialogRef = ref<HTMLElement | null>(null)
-	const datePickerDialogId = `${datePickerContentId}-dialog`
-	const datePickerTitleId = `${datePickerContentId}-title`
-	const datePickerHeadingId = `${datePickerContentId}-heading`
 
 	// ─── Calendrier : visibilité, focus trap & navigation clavier ─────
 	// Le focus trap garantit que le focus reste dans le dialog du calendrier
@@ -214,76 +211,6 @@
 		removeDatePickerKeydownListener()
 	})
 
-	// Navigation clavier dans la grille du calendrier (flèches + Enter + Escape).
-	// Conforme au pattern APG (ARIA Authoring Practices Guide) du W3C.
-	const { focusInitialDay } = useCalendarKeyboardNavigation({
-		isDatePickerVisible,
-		datePickerRef,
-		getInitialFocusDate: () => {
-			const selected = keyboardNavigatedDate.value
-				?? (Array.isArray(selectedDates.value) ? selectedDates.value[0] ?? null : selectedDates.value)
-			const target = selected ?? new Date()
-
-			// Si la date cible est dans le mois affiché, l'utiliser
-			if (currentMonth.value !== null && currentYear.value !== null) {
-				const sameMonth = target.getMonth() === Number(currentMonth.value)
-				const sameYear = target.getFullYear() === Number(currentYear.value)
-				if (sameMonth && sameYear) {
-					return target
-				}
-			}
-
-			// Fallback: 1er du mois actuellement affiché
-			if (currentMonth.value !== null && currentYear.value !== null) {
-				return new Date(Number(currentYear.value), Number(currentMonth.value), 1)
-			}
-
-			return target
-		},
-		getCurrentDate: () => {
-			const value = keyboardNavigatedDate.value
-				?? (Array.isArray(selectedDates.value) ? selectedDates.value[0] ?? null : selectedDates.value)
-			if (value) {
-				const date = value
-				// Vérifier si la date sélectionnée est dans le mois actuellement affiché
-				if (date && currentMonth.value !== null && currentYear.value !== null) {
-					const sameMonth = date.getMonth() === Number(currentMonth.value)
-					const sameYear = date.getFullYear() === Number(currentYear.value)
-					if (sameMonth && sameYear) {
-						return date
-					}
-				}
-			}
-
-			// Fallback: retourner le 1er du mois actuellement affiché
-			if (currentMonth.value !== null && currentYear.value !== null) {
-				return new Date(Number(currentYear.value), Number(currentMonth.value), 1)
-			}
-
-			return null
-		},
-		setCurrentDate: (date: Date) => {
-			keyboardNavigatedDate.value = date
-			syncDisplayedMonthYearFromDate(date)
-
-			// S'assurer que le VDatePicker affiche le bon mois après navigation clavier
-			nextTick(() => {
-				syncDisplayedMonthYearFromDate(date)
-			})
-		},
-		onSelectDate: (date: Date) => {
-			keyboardNavigatedDate.value = null
-			updateSelectedDates(date)
-
-			const isCompletedRangeSelection = !props.displayRange
-				|| Boolean(rangeBoundaryDates.value?.[0] && rangeBoundaryDates.value?.[1])
-
-			if (isCompletedRangeSelection) {
-				nextTick(() => closeDatePicker())
-			}
-		},
-	})
-
 	// Fonction pour sélectionner la date du jour
 	const handleSelectToday = () => {
 		const todaySelection = buildTodaySelectionState({
@@ -321,6 +248,42 @@
 	const keyboardNavigatedDate = ref<Date | null>(null) // Date survolée par navigation clavier (distincte de selectedDates)
 	const preventCloseOnKeyboardNavigation = ref(false) // Empêche la fermeture auto pendant la navigation clavier
 	const isInitialValidation = ref(true) // Skip la validation required au montage
+
+	const { getInitialFocusDate, getCurrentDate } = useDatePickerFocusTarget({
+		keyboardNavigatedDate,
+		selectedDates: selectedDates as Ref<DateObjectValue>,
+		currentMonth,
+		currentYear,
+	})
+
+	// Navigation clavier dans la grille du calendrier (flèches + Enter + Escape).
+	// Conforme au pattern APG (ARIA Authoring Practices Guide) du W3C.
+	const { focusInitialDay } = useCalendarKeyboardNavigation({
+		isDatePickerVisible,
+		datePickerRef,
+		getInitialFocusDate,
+		getCurrentDate,
+		setCurrentDate: (date: Date) => {
+			keyboardNavigatedDate.value = date
+			syncDisplayedMonthYearFromDate(date)
+
+			// S'assurer que le VDatePicker affiche le bon mois après navigation clavier
+			nextTick(() => {
+				syncDisplayedMonthYearFromDate(date)
+			})
+		},
+		onSelectDate: (date: Date) => {
+			keyboardNavigatedDate.value = null
+			updateSelectedDates(date)
+
+			const isCompletedRangeSelection = !props.displayRange
+				|| Boolean(rangeBoundaryDates.value?.[0] && rangeBoundaryDates.value?.[1])
+
+			if (isCompletedRangeSelection) {
+				nextTick(() => closeDatePicker())
+			}
+		},
+	})
 
 	const {
 		clearValidation,
@@ -950,7 +913,7 @@
 						v-bind="{ ...menuProps, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': isDatePickerVisible ? datePickerDialogId : undefined }"
 					>
 						<SyTextField
-							:id="`${datePickerContentId}-input`"
+							:id="datePickerInputId"
 							:key="fieldKey"
 							ref="dateCalendarTextInputRef"
 							v-model="displayFormattedDate"

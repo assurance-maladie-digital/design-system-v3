@@ -74,3 +74,9 @@ export * from './useCalendarKeyboardNavigation'
 
 // Derived values (shared computed)
 export { useDatePickerDerivedValues } from './useDatePickerDerivedValues'
+
+// Shared IDs
+export { useDatePickerIds } from './useDatePickerIds'
+
+// Shared focus target logic
+export { useDatePickerFocusTarget } from './useDatePickerFocusTarget'
