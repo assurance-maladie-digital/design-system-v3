@@ -13,10 +13,12 @@ export function useTableHeaders({
 	headersProp,
 	storedHeaders,
 	filterInputConfig = {},
+	componentName = 'SyTable',
 }: {
 	headersProp: Readonly<Ref<DataTableHeaders[] | undefined>>
 	storedHeaders?: DataTableHeaders[]
 	filterInputConfig?: Record<string, TableFilterInputConfig>
+	componentName?: string
 }) {
 	function normalizeHeader(header: DataTableHeaders): DataTableHeaders {
 		const mapped = {
@@ -140,6 +142,30 @@ export function useTableHeaders({
 		if (!normalizedInternalHeaders.value) return []
 		return normalizedInternalHeaders.value.filter(header => header.filterable)
 	})
+
+	// `filterInputConfig` doit être indexé par clé de colonne : avertit une seule fois si l'ancien format (options à la racine) est détecté
+	let hasWarnedInvalidFilterInputConfig = false
+
+	watch(filterableHeaders, (headers) => {
+		if (hasWarnedInvalidFilterInputConfig) return
+		const configKeys = Object.keys(filterInputConfig)
+		if (configKeys.length === 0 || headers.length === 0) return
+
+		const columnIdentifiers = new Set(
+			headers
+				.map(header => (typeof header.key === 'string' && header.key) || (typeof header.value === 'string' && header.value))
+				.filter((identifier): identifier is string => !!identifier),
+		)
+
+		const hasUnknownKey = configKeys.some(key => !columnIdentifiers.has(key))
+		if (hasUnknownKey) {
+			hasWarnedInvalidFilterInputConfig = true
+			console.warn(
+				`[${componentName}] La prop \`filterInputConfig\` doit être indexée par la clé (ou value) de chaque colonne filtrable, ex. { [columnKey]: { maxlength: 10 } }. `
+				+ 'L\'ancien format (options placées directement à la racine) n\'est plus supporté.',
+			)
+		}
+	}, { immediate: true })
 
 	/**
 	 * Get header by key

@@ -486,6 +486,8 @@ describe('SyServerTable', () => {
 	})
 
 	it('passes each column filterInputConfig to its filter', async () => {
+		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
 		const wrapper = mount(SyServerTable, {
 			props: {
 				options: {} as DataOptions,
@@ -509,11 +511,15 @@ describe('SyServerTable', () => {
 
 		expect(filters.find(filter => filter.props('header').key === 'name')?.props('inputConfig')).toEqual({ maxlength: 8 })
 		expect(filters.find(filter => filter.props('header').key === 'age')?.props('inputConfig')).toEqual({ maxlength: 6 })
+		expect(warnSpy).not.toHaveBeenCalled()
 
+		warnSpy.mockRestore()
 		activeWrappers.push(wrapper)
 	})
 
 	it('uses value-based identifier when key is missing for filterInputConfig', async () => {
+		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
 		const wrapper = mount(SyServerTable, {
 			props: {
 				options: {} as DataOptions,
@@ -537,7 +543,35 @@ describe('SyServerTable', () => {
 
 		expect(filters.find(filter => String(filter.props('header').value ?? '') === 'name')?.props('inputConfig')).toEqual({ maxlength: 8 })
 		expect(filters.find(filter => String(filter.props('header').value ?? '') === 'age')?.props('inputConfig')).toEqual({ maxlength: 6 })
+		expect(warnSpy).not.toHaveBeenCalled()
 
+		warnSpy.mockRestore()
+		activeWrappers.push(wrapper)
+	})
+
+	it('warns when filterInputConfig uses the legacy (non per-column) format', async () => {
+		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				showFilters: true,
+				serverItemsLength: fakeItems.length,
+				suffix: 'filter-config-legacy-format',
+				headers: [
+					{ title: 'Name', key: 'name', filterable: true, filterType: 'text' },
+				],
+				items: fakeItems,
+				// Ancien format : options placées à la racine, sans clé de colonne
+				filterInputConfig: { maxlength: 8 } as unknown as Record<string, { maxlength: number }>,
+			},
+		})
+
+		await vi.dynamicImportSettled()
+
+		expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('[SyServerTable]'))
+
+		warnSpy.mockRestore()
 		activeWrappers.push(wrapper)
 	})
 

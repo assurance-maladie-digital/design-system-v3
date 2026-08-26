@@ -116,6 +116,7 @@
 		headersProp: toRef(props, 'headers'),
 		storedHeaders: storedOptions.headers,
 		filterInputConfig: props.filterInputConfig,
+		componentName: 'SyTable',
 	})
 
 	function getFilterInputConfig(column: TableColumnHeader): TableFilterInputConfig | undefined {
