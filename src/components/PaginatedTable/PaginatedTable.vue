@@ -4,6 +4,9 @@
 	import { LocalStorageUtility } from '@/utils/localStorageUtility'
 	import Pagination from './Pagination.vue'
 	import type { VDataTable } from 'vuetify/components/VDataTable'
+	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = defineProps({
 		serverItemsLength: {
@@ -30,11 +33,17 @@
 			type: Boolean,
 			default: false,
 		},
+		locales: {
+			type: Object as () => DeepPartial<typeof defaultLocales>,
+			default: () => ({}),
+		},
 	})
 
 	defineOptions({
 		inheritAttrs: false,
 	})
+
+	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const options = defineModel<Partial<DataOptions>>('options', {
 		required: false,
@@ -68,7 +77,7 @@
 				...header,
 				title: title,
 				headerProps: {
-					'aria-label': sort ? `${title}, trier en fonction de cette colonne` : undefined,
+					'aria-label': sort ? locales.value.sortColumnLabel(title) : undefined,
 					'aria-sort': sort ? (sort.order === 'asc' ? 'ascending' : 'descending') : 'none',
 					'scope': 'col',
 				},
@@ -131,38 +140,28 @@
 		caption.textContent = props.caption
 		table?.prepend(caption)
 
-		const inputs = document.querySelectorAll(`#${uniqueTableId.value} input`)
-		inputs.forEach((input) => {
-			(input as HTMLElement).removeAttribute('aria-describedby')
-		})
+		// Target the items-per-page select input specifically in the footer
+		const itemsPerPageInput = document.querySelector(`#${uniqueTableId.value} .v-data-table-footer__items-per-page input`) as HTMLInputElement | null
+		if (itemsPerPageInput) {
+			itemsPerPageInput.removeAttribute('aria-describedby')
+			itemsPerPageInput.setAttribute('aria-label', locales.value.itemsPerPageLabel)
+			itemsPerPageInput.setAttribute('title', locales.value.itemsPerPageLabel)
+		}
 
-		const fields = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
-		fields.forEach((field) => {
-			const element = field as HTMLElement
-			element.setAttribute('tabindex', '0')
+		const itemsPerPageField = document.querySelector(`#${uniqueTableId.value} .v-data-table-footer__items-per-page .v-field`) as HTMLElement | null
+		if (itemsPerPageField) {
+			itemsPerPageField.setAttribute('tabindex', '0')
 
-			// Remove immediately if it exists
-			if (element.hasAttribute('aria-controls')) {
-				element.removeAttribute('aria-controls')
+			if (itemsPerPageField.hasAttribute('aria-controls')) {
+				itemsPerPageField.removeAttribute('aria-controls')
 			}
 
-			// Check again after a delay
 			setTimeout(() => {
-				if (element.hasAttribute('aria-controls')) {
-					element.removeAttribute('aria-controls')
+				if (itemsPerPageField.hasAttribute('aria-controls')) {
+					itemsPerPageField.removeAttribute('aria-controls')
 				}
 			}, 500)
-		})
-
-		const fieldLabels = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
-		fieldLabels.forEach((fieldLabel) => {
-			fieldLabel.setAttribute('aria-label', 'éléments par page')
-		})
-
-		const fieldTitles = document.querySelectorAll(`#${uniqueTableId.value} .v-field`)
-		fieldTitles.forEach((fieldTitle) => {
-			fieldTitle.setAttribute('title', 'éléments par page')
-		})
+		}
 
 		const th = document.querySelectorAll(`#${uniqueTableId.value} th`)
 		for (const el of th) {
