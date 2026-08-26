@@ -72,7 +72,6 @@
 		useDateSelection,
 		useDisplayedDateString,
 		useHolidayHighlighting,
-		useMonthButtonCustomization,
 		useSelectedDayAria,
 		useTodayButton,
 		validateDateFormat as validateDateFormatUtil,
@@ -103,6 +102,7 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 	import DatePickerLiveRegion from '../DatePickerLiveRegion.vue'
+	import DatePickerControls from '../datePicker-v2/components/DatePickerControls.vue'
 
 	dayjs.extend(customParseFormat)
 
@@ -130,8 +130,8 @@
 
 	// ─── Mois/année affichés dans le calendrier ───────────────────────
 	// Synchronisés depuis selectedDates (watcher dédié) et depuis la navigation
-	// VDatePicker (onUpdateMonth/onUpdateYear). Utilisés par markHolidayDays,
-	// customizeMonthButton, et syncDisplayedMonthYearFromDate.
+	// VDatePicker (onUpdateMonth/onUpdateYear). Utilisés par markHolidayDays
+	// et syncDisplayedMonthYearFromDate.
 	const currentMonth = ref<string | null>(null)
 	const currentYear = ref<string | null>(null)
 	const currentMonthName = ref<string | null>(null)
@@ -422,7 +422,6 @@
 	const refreshVisibleCalendarUi = (options: { focusDay?: boolean } = {}) => {
 		if (!isDatePickerVisible.value) return
 
-		customizeMonthButton()
 		markHolidayDays()
 		updateSelectedDayAria()
 
@@ -928,7 +927,6 @@
 	})
 
 	onMounted(() => {
-		setupMonthButtonObserver()
 		displayFormattedDate.value = displayFormattedFromSelectedDates.value || ''
 		validate()
 		nextTick(syncComboboxInputSemantics)
@@ -1182,16 +1180,6 @@
 		dateSelectionResult.updateSelectedDates([startDate, endDate])
 		validate()
 	}
-
-	/**
-	 * Month/year controls customization
-	 */
-	const { customizeMonthButton, setupMonthButtonObserver } = useMonthButtonCustomization(
-		() => isDatePickerVisible.value,
-		currentMonthName,
-		currentYearName,
-		() => datePickerRef.value?.$el as HTMLElement | undefined,
-	)
 
 	/**
 	 * View mode handling
@@ -1569,6 +1557,13 @@
 							>
 								{{ locales.calendarTitle }}
 							</span>
+						</template>
+						<template #controls="{ viewMode, disabled, monthYearText, monthText, yearText, openMonths, openYears, prevMonth, nextMonth, prevYear, nextYear }">
+							<DatePickerControls
+								:slot-props="{ viewMode, disabled, monthYearText, monthText, yearText, openMonths, openYears, prevMonth, nextMonth, prevYear, nextYear }"
+								:displayed-month="currentMonth !== null ? Number(currentMonth) : null"
+								:displayed-year="currentYear !== null ? Number(currentYear) : null"
+							/>
 						</template>
 						<template #header>
 							<SyHeading

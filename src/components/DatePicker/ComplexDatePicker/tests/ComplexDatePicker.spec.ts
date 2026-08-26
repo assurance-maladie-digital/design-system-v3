@@ -1108,7 +1108,7 @@ describe('ComplexDatePicker.clean', () => {
 
 		// ouvre la page des mois
 		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
-		const monthBtn = vDatePickerWrapper.find('.v-date-picker-controls__month-btn')
+		const monthBtn = vDatePickerWrapper.find('.sy-date-picker-controls__month-btn')
 		monthBtn.trigger('click')
 		await nextTick()
 		await flushPromises()
@@ -1148,7 +1148,7 @@ describe('ComplexDatePicker.clean', () => {
 
 		// ouvre la page des mois
 		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
-		const yearBtn = vDatePickerWrapper.find('.custom-year-btn')
+		const yearBtn = vDatePickerWrapper.find('.sy-date-picker-controls__year-btn')
 		yearBtn.trigger('click')
 		await nextTick()
 		await flushPromises()
@@ -1184,7 +1184,7 @@ describe('ComplexDatePicker.clean', () => {
 		await flushPromises()
 
 		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
-		await vDatePickerWrapper.find('.v-date-picker-controls__month-btn').trigger('click')
+		await vDatePickerWrapper.find('.sy-date-picker-controls__month-btn').trigger('click')
 		await nextTick()
 		await flushPromises()
 
@@ -1216,7 +1216,7 @@ describe('ComplexDatePicker.clean', () => {
 		await flushPromises()
 
 		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
-		await vDatePickerWrapper.find('.v-date-picker-controls__month-btn').trigger('click')
+		await vDatePickerWrapper.find('.sy-date-picker-controls__month-btn').trigger('click')
 		await nextTick()
 		await flushPromises()
 
@@ -1256,7 +1256,7 @@ describe('ComplexDatePicker.clean', () => {
 		await flushPromises()
 
 		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
-		await vDatePickerWrapper.find('.custom-year-btn').trigger('click')
+		await vDatePickerWrapper.find('.sy-date-picker-controls__year-btn').trigger('click')
 		await nextTick()
 		await flushPromises()
 
@@ -1288,7 +1288,7 @@ describe('ComplexDatePicker.clean', () => {
 		await flushPromises()
 
 		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
-		await vDatePickerWrapper.find('.custom-year-btn').trigger('click')
+		await vDatePickerWrapper.find('.sy-date-picker-controls__year-btn').trigger('click')
 		await nextTick()
 		await flushPromises()
 
