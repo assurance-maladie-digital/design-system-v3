@@ -52,7 +52,6 @@
 		readonly,
 		ref,
 		type Ref,
-		useId,
 		watch,
 	} from 'vue'
 	import {
@@ -77,6 +76,8 @@
 		useDatePickerDerivedValues,
 		useDatePickerSyncGuard,
 		useDatePickerCalendar,
+		useDatePickerIds,
+		useDatePickerFocusTarget,
 	} from '../composables'
 	import dayjs from 'dayjs'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
@@ -882,10 +883,7 @@
 	const menuActivatorRef = ref<HTMLElement | undefined>(undefined)
 	const datePickerRef = ref<null | ComponentPublicInstance<typeof VDatePicker>>()
 	const datePickerMenuRef = ref<HTMLElement | null>(null)
-	const datePickerContentId = `date-picker-${useId()}`
-	const datePickerDialogId = `${datePickerContentId}-dialog`
-	const datePickerTitleId = `${datePickerContentId}-title`
-	const datePickerHeadingId = `${datePickerContentId}-heading`
+	const { contentId: datePickerContentId, dialogId: datePickerDialogId, titleId: datePickerTitleId, headingId: datePickerHeadingId } = useDatePickerIds()
 
 	const { handleMenuKeydown } = useDatePickerFocusTrap({
 		isDatePickerVisible,
@@ -984,50 +982,18 @@
 		setTimeout(() => restoreCalendarInputFocus(), 300)
 	}, { flush: 'post' })
 
+	const { getInitialFocusDate, getCurrentDate } = useDatePickerFocusTarget({
+		keyboardNavigatedDate,
+		selectedDates: selectedDates as Ref<DateObjectValue>,
+		currentMonth,
+		currentYear,
+	})
+
 	const { focusInitialDay } = useCalendarKeyboardNavigation({
 		isDatePickerVisible,
 		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
-		getInitialFocusDate: () => {
-			const selected = keyboardNavigatedDate.value
-				?? (Array.isArray(selectedDates.value) ? selectedDates.value[0] ?? null : selectedDates.value)
-			const target = selected ?? new Date()
-
-			// Si la date cible est dans le mois affiché, l'utiliser
-			if (currentMonth.value !== null && currentYear.value !== null) {
-				const sameMonth = target.getMonth() === Number(currentMonth.value)
-				const sameYear = target.getFullYear() === Number(currentYear.value)
-				if (sameMonth && sameYear) {
-					return target
-				}
-			}
-
-			// Fallback: 1er du mois actuellement affiché
-			if (currentMonth.value !== null && currentYear.value !== null) {
-				return new Date(Number(currentYear.value), Number(currentMonth.value), 1)
-			}
-
-			return target
-		},
-		getCurrentDate: () => {
-			const value = keyboardNavigatedDate.value
-				?? (Array.isArray(selectedDates.value) ? selectedDates.value[0] ?? null : selectedDates.value)
-			if (value) {
-				const date = value
-				if (currentMonth.value !== null && currentYear.value !== null) {
-					const sameMonth = date.getMonth() === Number(currentMonth.value)
-					const sameYear = date.getFullYear() === Number(currentYear.value)
-					if (sameMonth && sameYear) {
-						return date
-					}
-				}
-			}
-
-			if (currentMonth.value !== null && currentYear.value !== null) {
-				return new Date(Number(currentYear.value), Number(currentMonth.value), 1)
-			}
-
-			return null
-		},
+		getInitialFocusDate,
+		getCurrentDate,
 		setCurrentDate: (date: Date) => {
 			keyboardNavigatedDate.value = date
 
