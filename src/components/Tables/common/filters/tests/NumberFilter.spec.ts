@@ -51,7 +51,7 @@ describe('NumberFilter.vue', () => {
 
 	it('emits update:filters event when number value changes', async () => {
 		const syTextField = wrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('update:modelValue', 42)
+		syTextField.vm.$emit('update:modelValue', 42)
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
 		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
@@ -61,7 +61,7 @@ describe('NumberFilter.vue', () => {
 
 	it('emits update:filters event when string number value changes', async () => {
 		const syTextField = wrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('update:modelValue', '42')
+		syTextField.vm.$emit('update:modelValue', '42')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
 		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
@@ -72,10 +72,10 @@ describe('NumberFilter.vue', () => {
 	it('emits update:filters event to remove filter when value is null', async () => {
 		// First set a value
 		const syTextField = wrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('update:modelValue', 42)
+		syTextField.vm.$emit('update:modelValue', 42)
 
 		// Then clear it
-		await syTextField.vm.$emit('update:modelValue', null)
+		syTextField.vm.$emit('update:modelValue', null)
 
 		expect(wrapper.emitted('update:filters')![1]?.[0]).toEqual([])
 	})
@@ -83,10 +83,10 @@ describe('NumberFilter.vue', () => {
 	it('emits update:filters event to remove filter when value is empty string', async () => {
 		// First set a value
 		const syTextField = wrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('update:modelValue', 42)
+		syTextField.vm.$emit('update:modelValue', 42)
 
 		// Then clear it
-		await syTextField.vm.$emit('update:modelValue', '')
+		syTextField.vm.$emit('update:modelValue', '')
 
 		expect(wrapper.emitted('update:filters')![1]?.[0]).toEqual([])
 	})
@@ -106,7 +106,7 @@ describe('NumberFilter.vue', () => {
 
 	it('handles clear button click', async () => {
 		const syTextField = wrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('click:clear')
+		syTextField.vm.$emit('click:clear')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
 		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([])
@@ -117,7 +117,7 @@ describe('NumberFilter.vue', () => {
 		await wrapper.setProps({ filters: existingFilters })
 
 		const syTextField = wrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('update:modelValue', 20)
+		syTextField.vm.$emit('update:modelValue', 20)
 
 		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
 			{ key: 'test', value: 20, type: 'number' as FilterType },
@@ -164,7 +164,7 @@ describe('NumberFilter.vue', () => {
 	// Tests for operator functionality
 	it('handles less than operator correctly', async () => {
 		const syTextField = wrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('update:modelValue', '<42')
+		syTextField.vm.$emit('update:modelValue', '<42')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
 		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
@@ -174,7 +174,7 @@ describe('NumberFilter.vue', () => {
 
 	it('handles less than or equal operator correctly', async () => {
 		const syTextField = wrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('update:modelValue', '<=42')
+		syTextField.vm.$emit('update:modelValue', '<=42')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
 		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
@@ -184,7 +184,7 @@ describe('NumberFilter.vue', () => {
 
 	it('handles greater than operator correctly', async () => {
 		const syTextField = wrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('update:modelValue', '>42')
+		syTextField.vm.$emit('update:modelValue', '>42')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
 		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
@@ -194,7 +194,7 @@ describe('NumberFilter.vue', () => {
 
 	it('handles greater than or equal operator correctly', async () => {
 		const syTextField = wrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('update:modelValue', '>=42')
+		syTextField.vm.$emit('update:modelValue', '>=42')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
 		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
@@ -206,7 +206,7 @@ describe('NumberFilter.vue', () => {
 	it('validates input to only allow digits, decimal separators, and operators', async () => {
 		const syTextField = wrapper.findComponent(SyTextField)
 		// Input with invalid characters
-		await syTextField.vm.$emit('update:modelValue', '>42abc')
+		syTextField.vm.$emit('update:modelValue', '>42abc')
 
 		// Should filter out invalid characters
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
@@ -217,7 +217,7 @@ describe('NumberFilter.vue', () => {
 
 	it('allows decimal separator in input', async () => {
 		const syTextField = wrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('update:modelValue', '42.5')
+		syTextField.vm.$emit('update:modelValue', '42.5')
 
 		expect(wrapper.emitted('update:filters')).toBeTruthy()
 		expect(wrapper.emitted('update:filters')![0]?.[0]).toEqual([
@@ -225,7 +225,7 @@ describe('NumberFilter.vue', () => {
 		])
 
 		// Test with comma as decimal separator
-		await syTextField.vm.$emit('update:modelValue', '42,5')
+		syTextField.vm.$emit('update:modelValue', '42,5')
 
 		expect(wrapper.emitted('update:filters')![1]?.[0]).toEqual([
 			{ key: 'test', value: 42.5, type: 'number' as FilterType },
@@ -252,7 +252,7 @@ describe('NumberFilter.vue', () => {
 		})
 
 		const syTextField = debounceWrapper.findComponent(SyTextField)
-		await syTextField.vm.$emit('update:modelValue', '42')
+		syTextField.vm.$emit('update:modelValue', '42')
 
 		// No immediate emission
 		expect(debounceWrapper.emitted('update:filters')).toBeFalsy()
