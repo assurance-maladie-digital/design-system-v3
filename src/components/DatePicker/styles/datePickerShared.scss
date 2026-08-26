@@ -42,8 +42,8 @@
 }
 
 /* Disable ripple effect on month and year buttons */
-:deep(.v-date-picker-controls__month-btn),
-:deep(.v-date-picker-controls__mode-btn) {
+:deep(.sy-date-picker-controls__month-btn),
+:deep(.sy-date-picker-controls__year-btn) {
 	.v-ripple__container,
 	.v-ripple__animation {
 		display: none !important;
@@ -192,35 +192,8 @@
 	background-color: #d4d6d6;
 }
 
-:deep(.v-date-picker-controls__mode-btn) {
-	transform: none !important;
-}
-
 :deep(.v-btn--variant-text .v-btn__overlay) {
 	padding: 13px;
-}
-
-:deep(.custom-year-btn) {
-	width: auto;
-	height: 28px;
-}
-
-:deep(.custom-year-btn::after) {
-	background-color: rgb(var(--v-theme-primary));
-	padding: 10px 40px;
-	text-decoration: none;
-	display: inline-block;
-	margin-left: -22px !important;
-	cursor: pointer;
-	border-radius: 9999px;
-}
-
-:deep(.custom-month-btn::after) {
-	background-color: rgb(var(--v-theme-primary));
-	text-decoration: none;
-	display: inline-block;
-	cursor: pointer;
-	border-radius: 9999px !important;
 }
 
 :deep(.v-picker__body .v-btn:focus-visible) {

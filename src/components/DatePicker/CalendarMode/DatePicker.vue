@@ -50,7 +50,7 @@
 	import { VDatePicker } from 'vuetify/components'
 	import SyTextField from '../../Customs/SyTextField/SyTextField.vue'
 	import ComplexDatePicker from '../ComplexDatePicker/ComplexDatePicker.vue'
-	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerCalendar, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerSyncGuard, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useMonthButtonCustomization, useSelectedDayAria, useTodayButton } from '../composables'
+	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerCalendar, useDatePickerDerivedValues, useDatePickerFocusTrap, useDatePickerState, useDatePickerSyncGuard, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useHolidayHighlighting, useSelectedDayAria, useTodayButton } from '../composables'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { locales } from '../locales'
 	import type { CalendarModeProps, DateObjectValue } from '../types'
@@ -60,6 +60,7 @@
 	import { buildCalendarModeComplexDatePickerProps } from './props/buildCalendarModeComplexDatePickerProps'
 	import { buildCalendarModeDateTextInputProps } from './props/buildCalendarModeDateTextInputProps'
 	import { buildCalendarModeActivatorTextFieldProps } from './props/buildCalendarModeActivatorTextFieldProps'
+	import DatePickerControls from '../datePicker-v2/components/DatePickerControls.vue'
 
 	// Initialiser les plugins dayjs
 	dayjs.extend(customParseFormat)
@@ -643,14 +644,6 @@
 
 	// todayInString est maintenant fourni par le composable useTodayButton
 
-	// Utilisation du composable pour personnaliser les boutons du mois et de l'année
-	const { customizeMonthButton, setupMonthButtonObserver } = useMonthButtonCustomization(
-		() => isDatePickerVisible.value,
-		currentMonthName,
-		currentYearName,
-		() => datePickerDialogRef.value,
-	)
-
 	const syncDisplayedMonthYearFromDate = (date: Date) => {
 		const displayedState = getDisplayedMonthYearState(date)
 		const hasMonthChanged = currentMonth.value !== displayedState.month
@@ -671,7 +664,6 @@
 			reapplyAccessibility()
 			nextTick(() => {
 				if (isDatePickerVisible.value) {
-					customizeMonthButton()
 					markHolidayDays()
 					updateSelectedDayAria()
 				}
@@ -680,15 +672,11 @@
 	}
 
 	// ─── Lifecycle & validation initiale ─────────────────────────────
-	// Au montage : setup l'observer pour personnaliser les boutons mois/année,
-	// sync l'affichage, et valide les dates pré-remplies (ex: modelValue injecté
+	// Au montage : sync l'affichage, et valide les dates pré-remplies (ex: modelValue injecté
 	// par un composant parent comme PeriodField avec des customRules).
 	// On utilise le flow standard (sans calendarMode) pour que les custom rules
 	// s'exécutent même pendant l'initialisation.
 	onMounted(() => {
-		// Configurer l'observateur pour le bouton du mois
-		setupMonthButtonObserver()
-
 		syncDisplayFormattedFromSelection()
 
 		// Validation au montage pour afficher les erreurs sur les dates pré-remplies invalides.
@@ -792,7 +780,6 @@
 		focusInitialDay,
 		refreshCalendarUi: (options) => {
 			if (!isDatePickerVisible.value) return
-			customizeMonthButton()
 			markHolidayDays()
 			updateSelectedDayAria()
 			if (options.focusDay) {
@@ -824,7 +811,6 @@
 			resetViewMode()
 			// Marquer les jours fériés lorsque le calendrier devient visible
 			markHolidayDays()
-			customizeMonthButton()
 			updateSelectedDayAria()
 		}
 		if (!isVisible && props.isBirthDate) {
@@ -870,7 +856,6 @@
 	const openDatePickerOnClick = () => {
 		if (isInteractionDisabled.value) return
 		openDatePicker()
-		customizeMonthButton()
 	}
 
 	// Ne plus ouvrir automatiquement le calendrier au focus, juste émettre l'événement
@@ -1032,6 +1017,13 @@
 							<span :id="datePickerTitleId">
 								{{ locales.calendarTitle }}
 							</span>
+						</template>
+						<template #controls="{ viewMode, disabled, monthYearText, monthText, yearText, openMonths, openYears, prevMonth, nextMonth, prevYear, nextYear }">
+							<DatePickerControls
+								:slot-props="{ viewMode, disabled, monthYearText, monthText, yearText, openMonths, openYears, prevMonth, nextMonth, prevYear, nextYear }"
+								:displayed-month="currentMonth !== null ? Number(currentMonth) : null"
+								:displayed-year="currentYear !== null ? Number(currentYear) : null"
+							/>
 						</template>
 						<template #header>
 							<SyHeading
