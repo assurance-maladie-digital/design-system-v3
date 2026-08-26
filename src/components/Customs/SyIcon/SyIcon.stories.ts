@@ -32,9 +32,9 @@ const meta = {
 			},
 			description: 'Rôle ARIA de l\'icône (img, button, presentation)',
 		},
-		autoDetectButton: {
+		autoDetectInteractive: {
 			control: { type: 'boolean' },
-			description: 'Active la détection automatique du rôle bouton pour les icônes interactives',
+			description: 'Détecte automatiquement si l’icône est interactive à partir des événements qui lui sont associés',
 			default: false,
 		},
 		color: {
@@ -149,35 +149,6 @@ export const WithSize: Story = {
 	}),
 }
 
-export const WithRoleButton: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				language: 'vue',
-				code: `<template>
-  <SyIcon :icon="mdiStar" role="button" />
-</template>`,
-			},
-		],
-	},
-	args: {
-		icon: mdiStar,
-		role: 'button',
-	},
-	render: args => ({
-		components: { SyIcon },
-		setup() {
-			return { args, mdiStar }
-		},
-		template: `
-			<div class="pa-4">
-				<SyIcon v-bind="args" />
-			</div>
-		`,
-	}),
-}
-
 export const Decorative: Story = {
 	parameters: {
 		sourceCode: [
@@ -249,7 +220,7 @@ export const ExplicitButtonRole: Story = {
 	}),
 }
 
-export const AutoDetectButtonRole: Story = {
+export const Interactive: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -260,7 +231,7 @@ export const AutoDetectButtonRole: Story = {
 						<SyIcon 
 							:icon="mdiClose" 
 							:decorative="false" 
-							:auto-detect-button="true" 
+							:auto-detect-interactive="true" 
 							label="Fermer" 
 							@click="handleClick" 
 						/>
@@ -271,7 +242,7 @@ export const AutoDetectButtonRole: Story = {
 	args: {
 		icon: mdiClose,
 		decorative: false,
-		autoDetectButton: true,
+		autoDetectInteractive: true,
 		label: 'Fermer',
 	},
 	render: args => ({

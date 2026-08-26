@@ -30,7 +30,7 @@
 		label?: string
 		decorative?: boolean
 		role?: 'img' | 'button' | 'presentation'
-		autoDetectButton?: boolean
+		autoDetectInteractive?: boolean
 		color?: string
 		size?: string
 		width?: string
@@ -43,7 +43,7 @@
 		return {
 			isDecorative: resolvedDecorative.value,
 			role: props.role,
-			autoDetectButton: props.autoDetectButton,
+			autoDetectInteractive: props.autoDetectInteractive,
 		}
 	})
 
