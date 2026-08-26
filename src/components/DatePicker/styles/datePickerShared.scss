@@ -18,7 +18,7 @@
 }
 
 /* Style pour les jours fériés */
-:deep(.holiday-day) {
+:deep(.v-date-picker-month__day .v-btn.holiday-day) {
 	background-color: rgb(255 193 7 / 10%);
 	border: 2px dotted rgb(var(--v-theme-grey-darken60));
 	border-radius: 50%;
