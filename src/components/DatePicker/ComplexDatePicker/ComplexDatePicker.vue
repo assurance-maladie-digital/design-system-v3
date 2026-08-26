@@ -71,7 +71,6 @@
 		useDatePickerVisibility,
 		useDateSelection,
 		useDisplayedDateString,
-		useHolidayHighlighting,
 		useSelectedDayAria,
 		useTodayButton,
 		validateDateFormat as validateDateFormatUtil,
@@ -102,7 +101,10 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 	import DatePickerLiveRegion from '../DatePickerLiveRegion.vue'
-	import DatePickerControls from '../datePicker-v2/components/DatePickerControls.vue'
+	import DatePickerControls from '../datePickerSlots/components/DatePickerControls.vue'
+	import DatePickerDay from '../datePickerSlots/components/DatePickerDay.vue'
+	import DatePickerMonthOption from '../datePickerSlots/components/DatePickerMonthOption.vue'
+	import DatePickerYearOption from '../datePickerSlots/components/DatePickerYearOption.vue'
 
 	dayjs.extend(customParseFormat)
 
@@ -130,8 +132,7 @@
 
 	// ─── Mois/année affichés dans le calendrier ───────────────────────
 	// Synchronisés depuis selectedDates (watcher dédié) et depuis la navigation
-	// VDatePicker (onUpdateMonth/onUpdateYear). Utilisés par markHolidayDays
-	// et syncDisplayedMonthYearFromDate.
+	// VDatePicker (onUpdateMonth/onUpdateYear). Utilisés par syncDisplayedMonthYearFromDate.
 	const currentMonth = ref<string | null>(null)
 	const currentYear = ref<string | null>(null)
 	const currentMonthName = ref<string | null>(null)
@@ -422,7 +423,6 @@
 	const refreshVisibleCalendarUi = (options: { focusDay?: boolean } = {}) => {
 		if (!isDatePickerVisible.value) return
 
-		markHolidayDays()
 		updateSelectedDayAria()
 
 		if (options.focusDay) {
@@ -907,18 +907,6 @@
 			datePickerMenuRef.value.addEventListener('keydown', handleMenuKeydown, true)
 		}
 	}
-
-	/**
-	 * Holiday marking (partagé via useHolidayHighlighting)
-	 */
-	const { markHolidayDays } = useHolidayHighlighting({
-		currentMonth,
-		currentYear,
-		isDisplayHolidayDays: () => props.displayHolidayDays,
-		rootElement: computed(
-			() => datePickerRef.value?.$el as HTMLElement | null,
-		),
-	})
 
 	const { updateSelectedDayAria } = useSelectedDayAria({
 		rootElement: computed(
@@ -1549,8 +1537,6 @@
 						@update:month="onUpdateMonth"
 						@update:year="onUpdateYear"
 						@click:date="updateSelectedDates"
-						@focus="props.displayHolidayDays ? markHolidayDays : undefined"
-						@update:month-year="props.displayHolidayDays ? markHolidayDays : undefined"
 					>
 						<template #title>
 							<span
@@ -1559,6 +1545,22 @@
 							>
 								{{ locales.calendarTitle }}
 							</span>
+						</template>
+						<template #day="{ props: dayProps, item }">
+							<DatePickerDay
+								:slot-props="{ props: dayProps, item, i: 0 }"
+								:display-holiday-days="props.displayHolidayDays"
+							/>
+						</template>
+						<template #month="{ month, i, props: monthProps }">
+							<DatePickerMonthOption
+								:slot-props="{ month, i, props: monthProps }"
+							/>
+						</template>
+						<template #year="{ year, i, props: yearProps }">
+							<DatePickerYearOption
+								:slot-props="{ year, i, props: yearProps }"
+							/>
 						</template>
 						<template #controls="{ viewMode, disabled, monthYearText, monthText, yearText, openMonths, openYears, prevMonth, nextMonth, prevYear, nextYear }">
 							<DatePickerControls

@@ -19,12 +19,6 @@ const YEAR_CONTROL_SELECTOR = [
 	'.sy-date-picker-controls__year-btn',
 ].join(',')
 
-const MONTH_OPTION_PROXY_SELECTOR = '[data-sy-date-picker-option="month"]'
-const YEAR_OPTION_PROXY_SELECTOR = '[data-sy-date-picker-option="year"]'
-const OPTION_BUTTON_MANAGED_TABINDEX_DATASET = 'optionManagedTabindex'
-const OPTION_BUTTON_PREVIOUS_TABINDEX_DATASET = 'optionPreviousTabindex'
-const GENERATED_OPTION_PROXY_DATASET = 'syDatePickerGeneratedOptionProxy'
-
 const PREV_MONTH_BUTTON_SELECTOR = [
 	'[data-testid="prev-month"]',
 	'.v-date-picker-controls__month button:first-of-type',
@@ -485,164 +479,22 @@ const cleanupGridSemanticsForMonth = (daysContainer: HTMLElement) => {
 	})
 }
 
-const cleanupOptionProxies = (container: HTMLElement) => {
-	cleanupGridSemanticsForSelector(container)
-
-	Array.from(container.querySelectorAll<HTMLElement>(MONTH_OPTION_PROXY_SELECTOR))
-		.concat(Array.from(container.querySelectorAll<HTMLElement>(YEAR_OPTION_PROXY_SELECTOR)))
-		.forEach((proxy) => {
-			const button = getOptionButton(proxy)
-			if (button) {
-				restoreManagedButtonTabindex(button)
-			}
-
-			proxy.onclick = null
-			proxy.onkeydown = null
-			proxy.onfocus = null
-			proxy.removeAttribute('role')
-			proxy.removeAttribute('aria-label')
-			proxy.removeAttribute('title')
-			proxy.removeAttribute('aria-pressed')
-			proxy.removeAttribute('aria-selected')
-			proxy.removeAttribute('tabindex')
-
-			if (proxy.dataset[GENERATED_OPTION_PROXY_DATASET] !== 'true') {
-				delete proxy.dataset.syDatePickerOption
-				return
-			}
-
-			const parent = proxy.parentElement
-			if (!parent) return
-
-			while (proxy.firstChild) {
-				parent.insertBefore(proxy.firstChild, proxy)
-			}
-
-			delete proxy.dataset[GENERATED_OPTION_PROXY_DATASET]
-			proxy.remove()
-		})
-}
-
-const updateProxyActivation = (container: HTMLElement, activeProxy: HTMLElement) => {
-	const proxies = Array.from(container.querySelectorAll<HTMLElement>(MONTH_OPTION_PROXY_SELECTOR))
-		.concat(Array.from(container.querySelectorAll<HTMLElement>(YEAR_OPTION_PROXY_SELECTOR)))
-
-	proxies.forEach((proxy) => {
-		proxy.tabIndex = proxy === activeProxy ? 0 : -1
-		proxy.setAttribute('aria-selected', String(proxy === activeProxy))
-	})
-}
-
-const getOptionButton = (host: HTMLElement): HTMLButtonElement | null => {
-	if (host instanceof HTMLButtonElement) return host
-
-	return Array.from(host.children).find(
-		(child): child is HTMLButtonElement => child instanceof HTMLButtonElement,
-	) ?? null
-}
-
-const isOptionActive = (host: HTMLElement, button: HTMLButtonElement | null) => (
-	host.getAttribute('aria-pressed') === 'true'
-	|| host.classList.contains('v-btn--active')
-	|| button?.classList.contains('v-btn--active') === true
-	|| button?.getAttribute('aria-pressed') === 'true'
-)
-
-const setManagedButtonTabindex = (button: HTMLButtonElement) => {
-	if (button.dataset[OPTION_BUTTON_MANAGED_TABINDEX_DATASET] === 'true') return
-
-	const previousTabindex = button.getAttribute('tabindex')
-	button.dataset[OPTION_BUTTON_PREVIOUS_TABINDEX_DATASET] = previousTabindex ?? ''
-	button.setAttribute('tabindex', '-1')
-	button.dataset[OPTION_BUTTON_MANAGED_TABINDEX_DATASET] = 'true'
-}
-
-const restoreManagedButtonTabindex = (button: HTMLButtonElement) => {
-	if (button.dataset[OPTION_BUTTON_MANAGED_TABINDEX_DATASET] !== 'true') return
-
-	const previousTabindex = button.dataset[OPTION_BUTTON_PREVIOUS_TABINDEX_DATASET] ?? ''
-	if (previousTabindex) {
-		button.setAttribute('tabindex', previousTabindex)
-	}
-	else {
-		button.removeAttribute('tabindex')
-	}
-
-	delete button.dataset[OPTION_BUTTON_MANAGED_TABINDEX_DATASET]
-	delete button.dataset[OPTION_BUTTON_PREVIOUS_TABINDEX_DATASET]
-}
-
-const ensureOptionProxies = (
+const applyOptionGridStructure = (
 	container: HTMLElement,
 	kind: 'month' | 'year',
-	getDefaultActiveIndex: (buttons: HTMLButtonElement[]) => number,
 ) => {
 	const content = container.querySelector<HTMLElement>(`.v-date-picker-${kind}s__content`) ?? container
-	const optionHosts = Array.from(content.children).flatMap((child) => {
-		if (!(child instanceof HTMLElement)) return []
+	const gridcells = Array.from(content.querySelectorAll<HTMLElement>(`[data-sy-date-picker-option="${kind}"]`))
+	if (gridcells.length === 0) return
 
-		if (child instanceof HTMLButtonElement) {
-			const proxy = document.createElement('div')
-			proxy.dataset.syDatePickerOption = kind
-			proxy.dataset[GENERATED_OPTION_PROXY_DATASET] = 'true'
-			proxy.className = `sy-date-picker-option-proxy sy-date-picker-option-proxy--${kind}`
-			child.parentNode?.insertBefore(proxy, child)
-			proxy.appendChild(child)
-			return [{ host: proxy, button: child }]
-		}
+	const activeIndex = gridcells.findIndex(cell =>
+		cell.getAttribute('aria-pressed') === 'true'
+		|| cell.querySelector('.v-btn--active') !== null,
+	)
+	const fallbackIndex = activeIndex >= 0 ? activeIndex : 0
 
-		const button = getOptionButton(child)
-		if (!button) return []
-
-		return [{ host: child, button }]
-	})
-	if (optionHosts.length === 0) return
-
-	const directButtons = optionHosts.map(({ button }) => button)
-
-	const activeIndex = (() => {
-		const activeButtonIndex = optionHosts.findIndex(({ host, button }) => isOptionActive(host, button))
-		if (activeButtonIndex !== -1) return activeButtonIndex
-
-		const fallbackIndex = getDefaultActiveIndex(directButtons)
-		return fallbackIndex >= 0 ? fallbackIndex : 0
-	})()
-
-	optionHosts.forEach(({ host, button }, index) => {
-		const label = button.getAttribute('aria-label') ?? compactText(button.textContent)
-		host.dataset.syDatePickerOption = kind
-		host.setAttribute('role', 'gridcell')
-		host.setAttribute('aria-label', label)
-		host.setAttribute('title', label)
-		host.setAttribute('aria-pressed', String(isOptionActive(host, button)))
-		host.setAttribute('aria-selected', String(index === activeIndex))
-		host.tabIndex = index === activeIndex ? 0 : -1
-		setManagedButtonTabindex(button)
-
-		host.onclick = (event: MouseEvent) => {
-			if (event.target instanceof Node && button.contains(event.target)) {
-				updateProxyActivation(container, host)
-				host.focus({ preventScroll: true })
-				return
-			}
-
-			button.click()
-			updateProxyActivation(container, host)
-			host.focus({ preventScroll: true })
-		}
-
-		host.onkeydown = (event: KeyboardEvent) => {
-			if (event.key !== 'Enter' && event.key !== ' ') return
-
-			event.preventDefault()
-			button.click()
-			updateProxyActivation(container, host)
-			host.focus({ preventScroll: true })
-		}
-
-		host.onfocus = () => {
-			updateProxyActivation(container, host)
-		}
+	gridcells.forEach((cell, index) => {
+		cell.tabIndex = index === fallbackIndex ? 0 : -1
 	})
 
 	container.setAttribute('role', 'grid')
@@ -653,17 +505,22 @@ const ensureOptionProxies = (
 
 	cleanupGridSemanticsForSelector(content)
 
-	const hosts = Array.from(content.querySelectorAll<HTMLElement>(`[data-sy-date-picker-option="${kind}"]`))
-	const firstRowTop = hosts[0]?.offsetTop ?? 0
-	const columns = hosts.filter(host => host.offsetTop === firstRowTop).length || 3
+	const firstRowTop = gridcells[0]?.offsetTop ?? 0
+	const columns = gridcells.filter(cell => cell.offsetTop === firstRowTop).length || 3
 
-	for (let i = 0; i < hosts.length; i += columns) {
+	for (let i = 0; i < gridcells.length; i += columns) {
 		const row = createAriaRow(`v-date-picker-${kind}s__row`)
-		hosts.slice(i, i + columns).forEach((host) => {
-			row.appendChild(host)
+		gridcells.slice(i, i + columns).forEach((cell) => {
+			row.appendChild(cell)
 		})
 		content.appendChild(row)
 	}
+}
+
+const cleanupOptionGrid = (container: HTMLElement) => {
+	cleanupGridSemanticsForSelector(container)
+	container.removeAttribute('role')
+	container.removeAttribute('aria-label')
 }
 
 const applyGridSemantics = (pickerEl: HTMLElement) => {
@@ -743,19 +600,11 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 	})
 
 	pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-months').forEach((monthsContainer) => {
-		ensureOptionProxies(
-			monthsContainer,
-			'month',
-			buttons => buttons.findIndex(button => button.classList.contains('v-btn--active')),
-		)
+		applyOptionGridStructure(monthsContainer, 'month')
 	})
 
 	pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-years').forEach((yearsContainer) => {
-		ensureOptionProxies(
-			yearsContainer,
-			'year',
-			buttons => buttons.findIndex(button => button.classList.contains('v-btn--active')),
-		)
+		applyOptionGridStructure(yearsContainer, 'year')
 	})
 }
 
@@ -771,7 +620,7 @@ const cleanupGridSemantics = (root: ParentNode = document) => {
 			cleanupGridSemanticsForMonth(daysContainer)
 		})
 		pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-months, .v-date-picker-years').forEach((container) => {
-			cleanupOptionProxies(container)
+			cleanupOptionGrid(container)
 		})
 	})
 }

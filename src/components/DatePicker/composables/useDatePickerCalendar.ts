@@ -38,7 +38,7 @@ export interface UseDatePickerCalendarOptions {
 
 	/**
 	 * Rafraîchit l'UI du calendrier après un changement de mois/année.
-	 * Typiquement : markHolidayDays + updateSelectedDayAria.
+	 * Typiquement : updateSelectedDayAria + focus.
 	 */
 	refreshCalendarUi: (options: { focusDay?: boolean }) => void
 
