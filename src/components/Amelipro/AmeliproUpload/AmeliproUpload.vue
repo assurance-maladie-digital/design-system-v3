@@ -1,4 +1,3 @@
-<!-- eslint-disable no-console -->
 <script setup lang="ts">
 /* eslint-disable vuejs-accessibility/no-static-element-interactions, vuejs-accessibility/label-has-for */
 	import type { ErrorBucket, Registrable } from './types'
@@ -23,6 +22,7 @@
 	import AmeliproIcon from '../AmeliproIcon/AmeliproIcon.vue'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 	import { isRequiredFn } from '@/utils/rules/isRequired'
+	import { devWarn } from '@/utils/devWarn'
 	import bgPJ from '@/assets/amelipro/img/bg-pieces-jointe.svg'
 
 	type FileInfo = { name: string, size: number, type: string, hash: string }
@@ -284,7 +284,7 @@
 			updateFilesModel = true
 		}
 		else {
-			console.warn('AmeliproUpload:doRemoveFile: index out of bounds', index)
+			devWarn(`AmeliproUpload:doRemoveFile: index out of bounds ${index}`)
 		}
 
 		if (updateFilesModel) {

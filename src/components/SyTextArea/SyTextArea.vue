@@ -6,7 +6,7 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
-	import { mdiCloseCircle } from '@mdi/js'
+	import { mdiClose } from '@mdi/js'
 	import { computed, nextTick, readonly as readonlyState, ref, toRef, useAttrs, useId, watch } from 'vue'
 	import { type VTextarea } from 'vuetify/components'
 	import { useSyTextAreaValidation } from './composables/useSyTextAreaValidation'
@@ -179,9 +179,9 @@
 
 	const validationIconColor = computed(() => {
 		if (hasError.value) return 'error'
-		if (hasWarning.value) return 'onWarningVariant'
-		if (hasSuccess.value) return 'onSuccessVariant'
-		return 'rgb(var(--v-theme-onSurface))'
+		if (hasWarning.value) return 'on-warning-variant'
+		if (hasSuccess.value) return 'on-success-variant'
+		return 'rgb(var(--v-theme-on-surface))'
 	})
 
 	const counter = computed(() => props.counter === false ? undefined : props.counter)
@@ -265,7 +265,7 @@
 			@click="clearField"
 		>
 			<SyIcon
-				:icon="mdiCloseCircle"
+				:icon="mdiClose"
 				class="sy-textarea__clear-icon"
 				:decorative="true"
 			/>
@@ -285,6 +285,10 @@
 	position: relative;
 }
 
+:deep(.v-icon) {
+	opacity: 1 !important;
+}
+
 .sy-textarea__state-icon {
 	position: absolute;
 	top: 12px;
@@ -292,13 +296,6 @@
 	pointer-events: none;
 	z-index: 1;
 }
-
-/* stylelint-disable selector-class-pattern */
-.text-onWarningVariant.sy-textarea__state-icon,
-.text-onSuccessVariant.sy-textarea__state-icon {
-	opacity: 0.6;
-}
-/* stylelint-enable selector-class-pattern */
 
 .sy-textarea__clear-button {
 	position: absolute;
@@ -315,12 +312,7 @@
 }
 
 .sy-textarea__clear-icon {
-	color: rgb(var(--v-theme-iconBase)) !important;
-	opacity: var(--v-medium-emphasis-opacity);
-
-	&:hover {
-		opacity: 1;
-	}
+	color: rgb(var(--v-theme-icon-base)) !important;
 }
 
 .sy-textarea:has(.sy-textarea__state-icon) .sy-textarea__clear-button {
@@ -348,11 +340,11 @@
 	:deep(.v-field__outline) {
 		--v-field-border-opacity: 1;
 
-		color: rgb(var(--v-theme-onSuccessVariant)) !important;
+		color: rgb(var(--v-theme-on-success-variant)) !important;
 	}
 
 	:deep(.v-label.v-field-label) {
-		color: rgb(var(--v-theme-onSuccessVariant)) !important;
+		color: rgb(var(--v-theme-on-success-variant)) !important;
 	}
 
 	:deep(.v-messages) {
@@ -360,7 +352,7 @@
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-onSuccessVariant)) !important;
+		color: rgb(var(--v-theme-on-success-variant)) !important;
 	}
 }
 
@@ -372,11 +364,11 @@
 	:deep(.v-field__outline) {
 		--v-field-border-opacity: 1;
 
-		color: rgb(var(--v-theme-onWarningVariant)) !important;
+		color: rgb(var(--v-theme-on-warning-variant)) !important;
 	}
 
 	:deep(.v-label.v-field-label) {
-		color: rgb(var(--v-theme-onWarningVariant)) !important;
+		color: rgb(var(--v-theme-on-warning-variant)) !important;
 	}
 
 	:deep(.v-messages) {
@@ -384,7 +376,7 @@
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-onWarningVariant)) !important;
+		color: rgb(var(--v-theme-on-warning-variant)) !important;
 	}
 }
 </style>

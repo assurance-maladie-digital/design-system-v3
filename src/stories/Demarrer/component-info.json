@@ -1,16 +1,20 @@
 {
-  "date": "2026-08-03T12:02:06.856Z",
+  "date": "2026-08-25T13:33:07.437Z",
   "totalCount": 78,
   "results": [
     {
       "componentName": "Accordion",
       "storybookTitle": "Composants/Données/Accordion",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "07/08/2026",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-07",
+          "message": "[Accordion] Ajout de la props density (#2482)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -46,10 +50,6 @@
         {
           "date": "2026-05-04",
           "message": "migration accordion (#2160)"
-        },
-        {
-          "date": "2026-03-25",
-          "message": "[Accordeon] Ajout du vmodel (#2021)"
         }
       ],
       "a11yCommits": [
@@ -58,7 +58,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -158,11 +158,19 @@
       "componentName": "BackBtn",
       "storybookTitle": "Composants/Boutons/BackBtn",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
-      "a11yDate": "22/07/2026",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "05/08/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-08-10",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)"
+        },
+        {
+          "date": "2026-08-05",
+          "message": "Ajout des interactions sur le composant `BackBtn` (#2466)"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
@@ -194,23 +202,26 @@
         {
           "date": "2026-04-21",
           "message": "Ajout de test de non régression visuels (#2067)"
-        },
-        {
-          "date": "2026-03-12",
-          "message": "Update Vuetify 3.12.2 (#1951)"
-        },
-        {
-          "date": "2026-02-12",
-          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
+          "date": "2026-08-10 15:30:55 +0200",
+          "dateFr": "10/08/2026",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -288,11 +299,19 @@
       "componentName": "BackToTopBtn",
       "storybookTitle": "Composants/Boutons/BackToTopBtn",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
-      "a11yDate": "22/07/2026",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "05/08/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-08-10",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)"
+        },
+        {
+          "date": "2026-08-05",
+          "message": "Ajout des interactions sur le composant `BackToTopBtn` (#2467)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -324,23 +343,26 @@
         {
           "date": "2025-06-03",
           "message": "add file for texts (#673)"
-        },
-        {
-          "date": "2025-04-14",
-          "message": "Amélioration des tests avec vitest (#525)"
-        },
-        {
-          "date": "2025-02-20",
-          "message": "Add usages pages (#387)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
+          "date": "2026-08-10 15:30:55 +0200",
+          "dateFr": "10/08/2026",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -440,11 +462,15 @@
       "componentName": "Captcha",
       "storybookTitle": "Composants/Formulaires/Captcha",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "13/08/2026",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-13",
+          "message": "fix/components-name-format"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
@@ -480,19 +506,26 @@
         {
           "date": "2026-04-03",
           "message": "Amelioration du système de validation (#1902)"
-        },
-        {
-          "date": "2026-03-19",
-          "message": "Corrige les warnings présent lors de l'exécution des tests (#1998)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
+          "date": "2026-08-13 15:55:47 +0200",
+          "dateFr": "13/08/2026",
+          "message": "fix/components-name-format",
+          "version": "1.1.3",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -614,11 +647,15 @@
       "componentName": "ChipList",
       "storybookTitle": "Composants/Données/ChipList",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
-      "a11yDate": "22/07/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-08-10",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -654,19 +691,26 @@
         {
           "date": "2025-12-23",
           "message": "espacement icon chiplist (#1668)"
-        },
-        {
-          "date": "2025-10-20",
-          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
+          "date": "2026-08-10 15:30:55 +0200",
+          "dateFr": "10/08/2026",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -766,9 +810,9 @@
       "componentName": "CollapsibleList",
       "storybookTitle": "Composants/Données/CollapsibleList",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -818,7 +862,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -874,11 +918,15 @@
       "componentName": "ContextualMenu",
       "storybookTitle": "Composants/Navigation/ContextualMenu",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-13",
+          "message": "refactor: standardize story export names to PascalCase"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -922,7 +970,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -1000,11 +1048,27 @@
       "componentName": "CookieBanner",
       "storybookTitle": "Composants/Feedback/CookieBanner",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
-      "a11yDate": "22/07/2026",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "25/08/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "[SyRadioGroup] héritage des attributs (#2493)"
+        },
+        {
+          "date": "2026-08-25",
+          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+        },
+        {
+          "date": "2026-08-10",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)"
+        },
+        {
+          "date": "2026-08-06",
+          "message": "Ajout des interactions sur le composant `CookieBanner` (#2477)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -1028,31 +1092,37 @@
         {
           "date": "2026-05-29",
           "message": "Feat/add cypress test (#2203)"
-        },
-        {
-          "date": "2026-03-11",
-          "message": "Hx: replace hx to SyHeading (#1874)"
-        },
-        {
-          "date": "2026-02-23",
-          "message": "fix: Correction of incorrect CookiesBanner Events (#1849)"
-        },
-        {
-          "date": "2026-01-20",
-          "message": "update vue-tsconfig (#1739)"
-        },
-        {
-          "date": "2025-10-20",
-          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
+          "date": "2026-08-10 15:30:55 +0200",
+          "dateFr": "10/08/2026",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
+          "hash": "499a1aa0772107eb411333e91a6741a2695ed0fa",
+          "date": "2026-08-06 15:19:01 +0200",
+          "dateFr": "06/08/2026",
+          "message": "Ajout des interactions sur le composant `CookieBanner` (#2477)",
+          "version": "1.1.3",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -1196,11 +1266,15 @@
       "componentName": "CookiesSelection",
       "storybookTitle": "Composants/Feedback/CookiesSelection",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
-      "a11yDate": "22/07/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-08-10",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -1236,19 +1310,26 @@
         {
           "date": "2025-07-25",
           "message": "update packages + fix tests + CI improvements (#837)"
-        },
-        {
-          "date": "2025-04-14",
-          "message": "Amélioration des tests avec vitest (#525)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
+          "date": "2026-08-10 15:30:55 +0200",
+          "dateFr": "10/08/2026",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -1337,11 +1418,15 @@
       "componentName": "CopyBtn",
       "storybookTitle": "Composants/Boutons/CopyBtn",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "25/08/2026",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -1377,10 +1462,6 @@
         {
           "date": "2026-03-06",
           "message": "Copybtn: Migration de composant (#1741)"
-        },
-        {
-          "date": "2026-02-12",
-          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
         }
       ],
       "a11yCommits": [
@@ -1389,7 +1470,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -1500,11 +1581,19 @@
       "componentName": "Customs/Selects/SelectBtnField",
       "storybookTitle": "Composants/Formulaires/Selects/SelectBtnField",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "04/08/2026",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-13",
+          "message": "refactor: standardize story export names to PascalCase"
+        },
+        {
+          "date": "2026-08-04",
+          "message": "interaction vbtn (#2435)"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
@@ -1536,14 +1625,6 @@
         {
           "date": "2026-05-20",
           "message": "Implémentation des nouveaux tokens (#2164)"
-        },
-        {
-          "date": "2026-05-20",
-          "message": "Feat/improve tests (#2192)"
-        },
-        {
-          "date": "2026-05-13",
-          "message": "SelectBtnField : Migration composant (#2171)"
         }
       ],
       "a11yCommits": [
@@ -1552,7 +1633,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -1685,11 +1766,15 @@
       "componentName": "Customs/Selects/SyAutocomplete",
       "storybookTitle": "Composants/Formulaires/Selects/SyAutocomplete",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
       "a11yVersion": "1.0.27",
       "a11yDate": "13/05/2026",
       "commits": [
+        {
+          "date": "2026-08-12",
+          "message": "refactor: replace KebabCase to PascaleCase component calls"
+        },
         {
           "date": "2026-07-27",
           "message": "SySelect: fix selection display when items is a string array (#2425)"
@@ -1725,19 +1810,26 @@
         {
           "date": "2026-06-02",
           "message": "Validation: success message false by default (#2231)"
-        },
-        {
-          "date": "2026-06-01",
-          "message": "[SyTextField] Ajout de stories concernant la validation (#2181)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "7dab36881ad0d0ba95dcbbff4810c1f7d34d72f5",
+          "date": "2026-08-12 16:12:41 +0200",
+          "dateFr": "12/08/2026",
+          "message": "refactor: replace KebabCase to PascaleCase component calls",
+          "version": "1.1.3",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -1870,11 +1962,31 @@
       "componentName": "Customs/Selects/SyInputSelect",
       "storybookTitle": "Composants/Formulaires/Selects/SyInputSelect",
       "status": "déprécié",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
-      "a11yDate": "22/07/2026",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "20/08/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+        },
+        {
+          "date": "2026-08-20",
+          "message": "Fix tests warning (#2498)"
+        },
+        {
+          "date": "2026-08-13",
+          "message": "refactor: standardize story export names to PascalCase"
+        },
+        {
+          "date": "2026-08-13",
+          "message": "fix/components-name-format"
+        },
+        {
+          "date": "2026-08-10",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
@@ -1894,35 +2006,37 @@
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
-        },
-        {
-          "date": "2026-07-02",
-          "message": "Migration du composant `SyInputSelect` (#2348)"
-        },
-        {
-          "date": "2026-05-29",
-          "message": "Feat/add cypress test (#2203)"
-        },
-        {
-          "date": "2026-04-21",
-          "message": "Tokens simplify v2 (#2102)"
-        },
-        {
-          "date": "2026-04-03",
-          "message": "Amelioration du système de validation (#1902)"
-        },
-        {
-          "date": "2026-03-05",
-          "message": "BugFix : Correction sur différents composant AP (#1933)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "8cd25df337dd7df9a09d92eeecbeb80ebf74c9e3",
+          "date": "2026-08-20 12:20:15 +0200",
+          "dateFr": "20/08/2026",
+          "message": "Fix tests warning (#2498)",
+          "version": "1.1.3",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
+          "date": "2026-08-10 15:30:55 +0200",
+          "dateFr": "10/08/2026",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
           "date": "2026-07-27 14:32:02 +0200",
           "dateFr": "27/07/2026",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -1933,7 +2047,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -2000,11 +2114,15 @@
       "componentName": "Customs/Selects/SySelect",
       "storybookTitle": "Composants/Formulaires/Selects/SySelect",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-13",
+          "message": "refactor: standardize story export names to PascalCase"
+        },
         {
           "date": "2026-07-27",
           "message": "SySelect: fix selection display when items is a string array (#2425)"
@@ -2040,10 +2158,6 @@
         {
           "date": "2026-06-03",
           "message": "[SySelect]: permettre un meilleur rendu du composant en l'abscence de css (#2232)"
-        },
-        {
-          "date": "2026-06-02",
-          "message": "Validation: success message false by default (#2231)"
         }
       ],
       "a11yCommits": [
@@ -2052,7 +2166,7 @@
           "date": "2026-07-27 14:56:33 +0200",
           "dateFr": "27/07/2026",
           "message": "SySelect: fix selection display when items is a string array (#2425)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -2063,7 +2177,7 @@
           "date": "2026-07-27 14:32:02 +0200",
           "dateFr": "27/07/2026",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -2074,7 +2188,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -2085,7 +2199,7 @@
           "date": "2026-07-17 08:55:42 +0200",
           "dateFr": "17/07/2026",
           "message": "use useId (#2402)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -2361,9 +2475,9 @@
       "componentName": "Customs/SyCheckbox",
       "storybookTitle": "Composants/Formulaires/SyCheckbox",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -2413,7 +2527,7 @@
           "date": "2026-07-23 15:47:19 +0200",
           "dateFr": "23/07/2026",
           "message": "[SyCheckbox] multiple (#2410)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -2424,7 +2538,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -2623,11 +2737,15 @@
       "componentName": "Customs/SyCheckBoxGroup",
       "storybookTitle": "Composants/Formulaires/SyCheckBoxGroup",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
       "a11yVersion": "1.0.21",
       "a11yDate": "23/02/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
@@ -2663,10 +2781,6 @@
         {
           "date": "2026-06-12",
           "message": "Feat/migrate sy check box group validation (#2260)"
-        },
-        {
-          "date": "2026-06-02",
-          "message": "Validation: success message false by default (#2231)"
         }
       ],
       "a11yCommits": [
@@ -2675,7 +2789,7 @@
           "date": "2026-07-27 14:32:02 +0200",
           "dateFr": "27/07/2026",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -2686,7 +2800,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -2720,11 +2834,19 @@
       "componentName": "Customs/SyForm",
       "storybookTitle": "Composants/Formulaires/SyForm",
       "status": "actif",
-      "functionalVersion": "1.0.16",
-      "functionalDate": "12/12/2025",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "13/08/2026",
       "a11yVersion": "1.0.21",
       "a11yDate": "25/02/2026",
       "commits": [
+        {
+          "date": "2026-08-13",
+          "message": "fix/components-name-format"
+        },
+        {
+          "date": "2026-08-12",
+          "message": "refactor: replace KebabCase to PascaleCase component calls"
+        },
         {
           "date": "2026-07-02",
           "message": "update storybook and fix links (#2354)"
@@ -2794,11 +2916,19 @@
       "componentName": "Customs/SyIcon",
       "storybookTitle": "Composants/Données/SyIcon",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "25/08/2026",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+        },
+        {
+          "date": "2026-08-13",
+          "message": "fix/components-name-format"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -2830,23 +2960,26 @@
         {
           "date": "2025-07-31",
           "message": "Feat/improve tests (#884)"
-        },
-        {
-          "date": "2025-07-18",
-          "message": "Fix/sy select after audit (#787)"
-        },
-        {
-          "date": "2025-07-09",
-          "message": "add syIcon componant (#768)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
+          "date": "2026-08-13 15:55:47 +0200",
+          "dateFr": "13/08/2026",
+          "message": "fix/components-name-format",
+          "version": "1.1.3",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -2979,11 +3112,23 @@
       "componentName": "Customs/SyIconButton",
       "storybookTitle": "Composants/Boutons/SyIconButton",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "22/07/2026",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "13/08/2026",
       "a11yVersion": "1.0.23",
       "a11yDate": "23/03/2026",
       "commits": [
+        {
+          "date": "2026-08-13",
+          "message": "fix/components-name-format"
+        },
+        {
+          "date": "2026-08-04",
+          "message": "Add Destructive VBtn version (#2464)"
+        },
+        {
+          "date": "2026-08-04",
+          "message": "interaction vbtn (#2435)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -3007,11 +3152,33 @@
       ],
       "a11yCommits": [
         {
+          "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
+          "date": "2026-08-13 15:55:47 +0200",
+          "dateFr": "13/08/2026",
+          "message": "fix/components-name-format",
+          "version": "1.1.3",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "c78863eecebea48a511266cdcca492913112e4f4",
+          "date": "2026-08-04 13:28:20 +0200",
+          "dateFr": "04/08/2026",
+          "message": "Add Destructive VBtn version (#2464)",
+          "version": "1.1.3",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -3056,9 +3223,9 @@
       "componentName": "Customs/SyPagination",
       "storybookTitle": "Composants/Navigation/SyPagination",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -3104,7 +3271,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -3193,11 +3360,27 @@
       "componentName": "Customs/SyRadioGroup",
       "storybookTitle": "Composants/Formulaires/SyRadioGroup",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "25/08/2026",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "[SyRadioGroup] héritage des attributs (#2493)"
+        },
+        {
+          "date": "2026-08-25",
+          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+        },
+        {
+          "date": "2026-08-13",
+          "message": "fix/components-name-format"
+        },
+        {
+          "date": "2026-08-12",
+          "message": "refactor: replace KebabCase to PascaleCase component calls"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
@@ -3221,31 +3404,26 @@
         {
           "date": "2026-06-24",
           "message": "Update migration doc + restructure Guide du dev (#2318)"
-        },
-        {
-          "date": "2026-06-02",
-          "message": "Validation: success message false by default (#2231)"
-        },
-        {
-          "date": "2026-05-29",
-          "message": "Feat/add cypress test (#2203)"
-        },
-        {
-          "date": "2026-05-20",
-          "message": "Implémentation des nouveaux tokens (#2164)"
-        },
-        {
-          "date": "2026-05-18",
-          "message": "Feat/add new validation system on SyRadioGroup (#2167)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "a216fc35e26df993b7be4d403abcc5d65b5a8e36",
+          "date": "2026-08-25 10:33:40 +0200",
+          "dateFr": "25/08/2026",
+          "message": "[SyRadioGroup] héritage des attributs (#2493)",
+          "version": "1.1.3",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
           "date": "2026-07-27 14:32:02 +0200",
           "dateFr": "27/07/2026",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -3256,7 +3434,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -3334,9 +3512,9 @@
       "componentName": "Customs/SyTabs",
       "storybookTitle": "Composants/Navigation/SyTabs",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -3386,7 +3564,7 @@
           "date": "2026-07-27 14:32:02 +0200",
           "dateFr": "27/07/2026",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -3397,7 +3575,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -3541,9 +3719,9 @@
       "componentName": "Customs/SyTextField",
       "storybookTitle": "Composants/Formulaires/SyTextField",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "31/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "23/07/2026",
       "commits": [
         {
@@ -3593,7 +3771,7 @@
           "date": "2026-07-31 12:04:52 +0200",
           "dateFr": "31/07/2026",
           "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -3604,7 +3782,7 @@
           "date": "2026-07-23 11:35:27 +0200",
           "dateFr": "23/07/2026",
           "message": "WIP: Feat/a11y complex date picker (#2390)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -3615,7 +3793,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -3990,9 +4168,9 @@
       "componentName": "DataList",
       "storybookTitle": "Composants/Données/DataList",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "17/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -4042,7 +4220,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -4122,7 +4300,7 @@
       "status": "actif",
       "functionalVersion": "1.0.16",
       "functionalDate": "11/12/2025",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -4172,7 +4350,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -4217,11 +4395,15 @@
       "componentName": "DataListItem",
       "storybookTitle": null,
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "22/07/2026",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "25/08/2026",
       "a11yVersion": "1.0.23",
       "a11yDate": "30/03/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -4257,10 +4439,6 @@
         {
           "date": "2025-01-08",
           "message": "Ajout d'une configuration pour stylelint (#323)"
-        },
-        {
-          "date": "2024-11-05",
-          "message": "DataList/DataListGroup: add components + composable (#165)"
         }
       ],
       "a11yCommits": [
@@ -4269,7 +4447,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
@@ -4281,11 +4459,27 @@
       "componentName": "DatePicker/CalendarMode",
       "storybookTitle": "Composants/Formulaires/DatePicker/CalendarMode",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "31/07/2026",
-      "a11yVersion": "1.1.2",
-      "a11yDate": "30/07/2026",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "13/08/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-08-18",
+          "message": "test(DatePicker): improve visual tests (#2495)"
+        },
+        {
+          "date": "2026-08-13",
+          "message": "fix/components-name-format"
+        },
+        {
+          "date": "2026-08-10",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)"
+        },
+        {
+          "date": "2026-08-04",
+          "message": "interaction vbtn (#2435)"
+        },
         {
           "date": "2026-07-31",
           "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)"
@@ -4309,31 +4503,26 @@
         {
           "date": "2026-07-28",
           "message": "DatePicker: improve calendar day hover state styling and adjacent day opacity (#2429)"
-        },
-        {
-          "date": "2026-07-27",
-          "message": "DatePicker: prevent validation on blur when calendar is open and hide asterisk in CalendarMode (#2428)"
-        },
-        {
-          "date": "2026-07-23",
-          "message": "Uniformise les exposes liées a la validation (#2399)"
-        },
-        {
-          "date": "2026-07-22",
-          "message": "Components: fix focus display (#2383)"
-        },
-        {
-          "date": "2026-07-17",
-          "message": "use useId (#2402)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
+          "date": "2026-08-10 15:30:55 +0200",
+          "dateFr": "10/08/2026",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "611b0627edc2976b1cd4129f701dd228394d52d8",
           "date": "2026-07-31 12:04:52 +0200",
           "dateFr": "31/07/2026",
           "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -4344,7 +4533,7 @@
           "date": "2026-07-30 09:30:20 +0200",
           "dateFr": "30/07/2026",
           "message": "DatePicker: improve keyboard navigation in month and year selection v… (#2437)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -4355,7 +4544,7 @@
           "date": "2026-07-29 14:53:56 +0200",
           "dateFr": "29/07/2026",
           "message": "fix datepicker nvda arrow navigation (#2433)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -4366,7 +4555,7 @@
           "date": "2026-07-23 11:35:27 +0200",
           "dateFr": "23/07/2026",
           "message": "WIP: Feat/a11y complex date picker (#2390)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -4377,7 +4566,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -4499,11 +4688,39 @@
       "componentName": "DatePicker/ComplexDatePicker",
       "storybookTitle": "Composants/Formulaires/DatePicker/CombinedMode",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "30/07/2026",
-      "a11yVersion": "1.1.2",
-      "a11yDate": "30/07/2026",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "13/08/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "refactor(DatePicker): use separate v-model refs in Required story and improve labels (#2511)"
+        },
+        {
+          "date": "2026-08-25",
+          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+        },
+        {
+          "date": "2026-08-18",
+          "message": "test(DatePicker): improve visual tests (#2495)"
+        },
+        {
+          "date": "2026-08-13",
+          "message": "fix/components-name-format"
+        },
+        {
+          "date": "2026-08-12",
+          "message": "refactor: replace KebabCase to PascaleCase component calls"
+        },
+        {
+          "date": "2026-08-10",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)"
+        },
+        {
+          "date": "2026-08-04",
+          "message": "interaction vbtn (#2435)"
+        },
         {
           "date": "2026-07-31",
           "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)"
@@ -4515,43 +4732,26 @@
         {
           "date": "2026-07-30",
           "message": "DatePicker: simplify weekend day styling (#2447)"
-        },
-        {
-          "date": "2026-07-30",
-          "message": "DatePicker: standardize label and placeholder text format across all stories (#2452)"
-        },
-        {
-          "date": "2026-07-30",
-          "message": "DatePicker: improve keyboard navigation in month and year selection v… (#2437)"
-        },
-        {
-          "date": "2026-07-29",
-          "message": "fix datepicker nvda arrow navigation (#2433)"
-        },
-        {
-          "date": "2026-07-23",
-          "message": "Uniformise les exposes liées a la validation (#2399)"
-        },
-        {
-          "date": "2026-07-22",
-          "message": "Components: fix focus display (#2383)"
-        },
-        {
-          "date": "2026-07-17",
-          "message": "use useId (#2402)"
-        },
-        {
-          "date": "2026-07-16",
-          "message": "Mise à jour des radius (#2393)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
+          "date": "2026-08-10 15:30:55 +0200",
+          "dateFr": "10/08/2026",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "6fc4e15b014bb96534f21f5070a2ce4226866f4f",
           "date": "2026-07-30 13:56:16 +0200",
           "dateFr": "30/07/2026",
           "message": "DatePicker: add documentation for known false positives in accessibility tooling (aria-controls and keyboard navigation) (#2446)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -4562,7 +4762,7 @@
           "date": "2026-07-30 09:30:20 +0200",
           "dateFr": "30/07/2026",
           "message": "DatePicker: improve keyboard navigation in month and year selection v… (#2437)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -4573,7 +4773,7 @@
           "date": "2026-07-29 14:53:56 +0200",
           "dateFr": "29/07/2026",
           "message": "fix datepicker nvda arrow navigation (#2433)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -4584,7 +4784,7 @@
           "date": "2026-07-23 11:35:27 +0200",
           "dateFr": "23/07/2026",
           "message": "WIP: Feat/a11y complex date picker (#2390)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -4595,7 +4795,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -4606,7 +4806,7 @@
           "date": "2026-07-17 08:55:42 +0200",
           "dateFr": "17/07/2026",
           "message": "use useId (#2402)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -4717,9 +4917,9 @@
       "componentName": "DatePicker/DateTextInput",
       "storybookTitle": "Composants/Formulaires/DatePicker/DateInput",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "31/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "23/07/2026",
       "commits": [
         {
@@ -4769,7 +4969,7 @@
           "date": "2026-07-23 11:35:27 +0200",
           "dateFr": "23/07/2026",
           "message": "WIP: Feat/a11y complex date picker (#2390)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -4780,7 +4980,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -4963,6 +5163,10 @@
       "a11yDate": "25/02/2026",
       "commits": [
         {
+          "date": "2026-08-10",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)"
+        },
+        {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
         },
@@ -4981,11 +5185,22 @@
       ],
       "a11yCommits": [
         {
+          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
+          "date": "2026-08-10 15:30:55 +0200",
+          "dateFr": "10/08/2026",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -4997,11 +5212,15 @@
       "componentName": "DiacriticPicker",
       "storybookTitle": "Composants/Formulaires/DiacriticPicker",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-12",
+          "message": "refactor: replace KebabCase to PascaleCase component calls"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -5037,10 +5256,6 @@
         {
           "date": "2025-05-14",
           "message": "Diacritic: fix key = function (#595)"
-        },
-        {
-          "date": "2025-05-14",
-          "message": "fix title (#588)"
         }
       ],
       "a11yCommits": [
@@ -5049,7 +5264,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -5127,11 +5342,15 @@
       "componentName": "DialogBox",
       "storybookTitle": "Composants/Feedback/DialogBox",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "23/07/2026",
-      "a11yVersion": "1.1.2",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "05/08/2026",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-05",
+          "message": "Ajout des interactions sur le composant `DialogBox` (#2469)"
+        },
         {
           "date": "2026-07-23",
           "message": "expose Vuetify props on SyTextArea and DialogBox (#2415)"
@@ -5167,19 +5386,26 @@
         {
           "date": "2026-05-20",
           "message": "Implémentation des nouveaux tokens (#2164)"
-        },
-        {
-          "date": "2026-04-30",
-          "message": "DialogBox : Migration Theme AmeliPro (#2148)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "30980ea7b507740d586d1cf742fc41eef49b6b3c",
+          "date": "2026-08-05 15:08:26 +0200",
+          "dateFr": "05/08/2026",
+          "message": "Ajout des interactions sur le composant `DialogBox` (#2469)",
+          "version": "1.1.3",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -5367,11 +5593,27 @@
       "componentName": "DownloadBtn",
       "storybookTitle": "Composants/Boutons/DownloadBtn",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
-      "a11yDate": "22/07/2026",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "06/08/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+        },
+        {
+          "date": "2026-08-13",
+          "message": "refactor: standardize story export names to PascalCase"
+        },
+        {
+          "date": "2026-08-10",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)"
+        },
+        {
+          "date": "2026-08-06",
+          "message": "Ajout des interactions sur le composant `DownloadBtn` (#2475)"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
@@ -5395,31 +5637,26 @@
         {
           "date": "2026-03-12",
           "message": "Update Vuetify 3.12.2 (#1951)"
-        },
-        {
-          "date": "2026-03-05",
-          "message": "DownLoadBtn : Migration de composant AP (#1931)"
-        },
-        {
-          "date": "2026-02-12",
-          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
-        },
-        {
-          "date": "2026-01-20",
-          "message": "update vue-tsconfig (#1739)"
-        },
-        {
-          "date": "2025-10-20",
-          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
+          "date": "2026-08-10 15:30:55 +0200",
+          "dateFr": "10/08/2026",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -5510,7 +5747,7 @@
       "status": "actif",
       "functionalVersion": "1.0.23",
       "functionalDate": "25/03/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -5560,7 +5797,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -5704,11 +5941,15 @@
       "componentName": "ExternalLinks",
       "storybookTitle": "Composants/Navigation/ExternalLinks",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "06/08/2026",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-06",
+          "message": "Add interaction on ExternalLinks (#2479)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -5744,10 +5985,6 @@
         {
           "date": "2025-12-02",
           "message": "ExternalLink: correction ombre et espacement caracteres (#1542)"
-        },
-        {
-          "date": "2025-10-20",
-          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
         }
       ],
       "a11yCommits": [
@@ -5756,7 +5993,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -5900,11 +6137,15 @@
       "componentName": "FileList",
       "storybookTitle": "Composants/Données/FileList",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
@@ -5940,10 +6181,6 @@
         {
           "date": "2026-03-25",
           "message": "FileList: amélioration label actions (#1985)"
-        },
-        {
-          "date": "2026-02-12",
-          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
         }
       ],
       "a11yCommits": [
@@ -5952,7 +6189,7 @@
           "date": "2026-07-27 14:32:02 +0200",
           "dateFr": "27/07/2026",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -5963,7 +6200,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -6052,9 +6289,9 @@
       "componentName": "FilePreview",
       "storybookTitle": "Composants/Données/FilePreview",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -6100,7 +6337,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -6156,11 +6393,15 @@
       "componentName": "FileUpload",
       "storybookTitle": "Composants/Formulaires/FileUpload",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "06/08/2026",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-06",
+          "message": "Ajout des interactions sur le composant `FileUpload` (#2474)"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
@@ -6196,10 +6437,6 @@
         {
           "date": "2026-03-03",
           "message": "UploadWorkflow: suppression ombre bouton  (#1919)"
-        },
-        {
-          "date": "2026-02-18",
-          "message": "UploadWorkflow: add preview event + info-text (#1846)"
         }
       ],
       "a11yCommits": [
@@ -6208,7 +6445,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -6253,9 +6490,9 @@
       "componentName": "FilterInline",
       "storybookTitle": "Composants/Filtres/FilterInline",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -6305,7 +6542,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -6416,9 +6653,9 @@
       "componentName": "FilterSideBar",
       "storybookTitle": "Composants/Filtres/FilterSideBar",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -6468,7 +6705,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -6590,11 +6827,23 @@
       "componentName": "FooterBar",
       "storybookTitle": "Composants/Structure/FooterBar",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
-      "a11yDate": "22/07/2026",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "07/08/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-08-13",
+          "message": "refactor: standardize story export names to PascalCase"
+        },
+        {
+          "date": "2026-08-10",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)"
+        },
+        {
+          "date": "2026-08-07",
+          "message": "Ajout des interactions sur le composant `SocialMediaLinks` (#2480)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -6622,27 +6871,26 @@
         {
           "date": "2026-05-20",
           "message": "Implémentation des nouveaux tokens (#2164)"
-        },
-        {
-          "date": "2026-04-21",
-          "message": "Tokens simplify v2 (#2102)"
-        },
-        {
-          "date": "2026-03-11",
-          "message": "Migration du footer (#1845)"
-        },
-        {
-          "date": "2026-02-26",
-          "message": "FooterBar: Twitter icon to X (#1893)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
+          "date": "2026-08-10 15:30:55 +0200",
+          "dateFr": "10/08/2026",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -6766,7 +7014,7 @@
       "status": "actif",
       "functionalVersion": "1.0.27",
       "functionalDate": "20/05/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -6816,7 +7064,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -6905,11 +7153,23 @@
       "componentName": "HeaderBar",
       "storybookTitle": "Composants/Structure/HeaderBar",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
-      "a11yDate": "30/07/2026",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "13/08/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-08-20",
+          "message": "Fix tests warning (#2498)"
+        },
+        {
+          "date": "2026-08-13",
+          "message": "fix/components-name-format"
+        },
+        {
+          "date": "2026-08-10",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -6937,27 +7197,26 @@
         {
           "date": "2026-05-29",
           "message": "Feat/add cypress test (#2203)"
-        },
-        {
-          "date": "2026-05-20",
-          "message": "Implémentation des nouveaux tokens (#2164)"
-        },
-        {
-          "date": "2026-04-21",
-          "message": "Ajout de test de non régression visuels (#2067)"
-        },
-        {
-          "date": "2026-04-21",
-          "message": "Tokens simplify v2 (#2102)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
+          "date": "2026-08-10 15:30:55 +0200",
+          "dateFr": "10/08/2026",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "43ecbd9871d2da61c693351d6c13ae521d23235c",
           "date": "2026-07-30 14:51:52 +0200",
           "dateFr": "30/07/2026",
           "message": "A11y: Fix homeLink focus (#2443)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -6968,7 +7227,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -7330,11 +7589,15 @@
       "componentName": "HeaderNavigationBar",
       "storybookTitle": "Composants/Structure/HeaderBar/HeaderNavigationBar",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "28/07/2026",
-      "a11yVersion": "1.1.2",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "25/08/2026",
+      "a11yVersion": "1.1.3",
       "a11yDate": "28/07/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+        },
         {
           "date": "2026-07-28",
           "message": "fix header navigation bar color to variable (#2431)"
@@ -7370,10 +7633,6 @@
         {
           "date": "2026-05-20",
           "message": "Feat/improve tests (#2192)"
-        },
-        {
-          "date": "2026-04-21",
-          "message": "Tokens simplify v2 (#2102)"
         }
       ],
       "a11yCommits": [
@@ -7382,7 +7641,7 @@
           "date": "2026-07-28 11:31:28 +0200",
           "dateFr": "28/07/2026",
           "message": "fix header navigation bar color to variable (#2431)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
@@ -7393,7 +7652,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
@@ -7515,11 +7774,19 @@
       "componentName": "HeaderToolbar",
       "storybookTitle": "Composants/Structure/HeaderToolbar",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "13/08/2026",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-13",
+          "message": "fix/components-name-format"
+        },
+        {
+          "date": "2026-08-12",
+          "message": "refactor: replace KebabCase to PascaleCase component calls"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -7551,23 +7818,37 @@
         {
           "date": "2025-10-20",
           "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
-        },
-        {
-          "date": "2025-09-29",
-          "message": "HeaderToolbar: fix after audit v1 (#1112)"
-        },
-        {
-          "date": "2025-06-03",
-          "message": "add file for texts (#673)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
+          "date": "2026-08-13 15:55:47 +0200",
+          "dateFr": "13/08/2026",
+          "message": "fix/components-name-format",
+          "version": "1.1.3",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "7dab36881ad0d0ba95dcbbff4810c1f7d34d72f5",
+          "date": "2026-08-12 16:12:41 +0200",
+          "dateFr": "12/08/2026",
+          "message": "refactor: replace KebabCase to PascaleCase component calls",
+          "version": "1.1.3",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -7656,11 +7937,19 @@
       "componentName": "LangBtn",
       "storybookTitle": "Composants/Boutons/LangBtn",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
-      "a11yDate": "22/07/2026",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "05/08/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-08-10",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)"
+        },
+        {
+          "date": "2026-08-05",
+          "message": "Ajout des interactions sur le composant `LangBtn` (#2473)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -7692,23 +7981,26 @@
         {
           "date": "2026-01-20",
           "message": "update vue-tsconfig (#1739)"
-        },
-        {
-          "date": "2025-10-20",
-          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
-        },
-        {
-          "date": "2025-08-01",
-          "message": "Retirer les important des styles de typographies (#867)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
+          "date": "2026-08-10 15:30:55 +0200",
+          "dateFr": "10/08/2026",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -7821,9 +8113,13 @@
       "status": "actif",
       "functionalVersion": "1.0.18",
       "functionalDate": "20/01/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-13",
+          "message": "refactor: standardize story export names to PascalCase"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -7859,10 +8155,6 @@
         {
           "date": "2025-06-03",
           "message": "add file for texts (#673)"
-        },
-        {
-          "date": "2024-12-20",
-          "message": "fix: update import statements to use named imports for various components (#292)"
         }
       ],
       "a11yCommits": [
@@ -7871,7 +8163,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -7927,9 +8219,9 @@
       "componentName": "LogoBrandSection",
       "storybookTitle": "Composants/Données/LogoBrandSection",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "30/07/2026",
       "commits": [
         {
@@ -7979,7 +8271,7 @@
           "date": "2026-07-30 14:51:52 +0200",
           "dateFr": "30/07/2026",
           "message": "A11y: Fix homeLink focus (#2443)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -7990,7 +8282,7 @@
           "date": "2026-07-27 14:32:02 +0200",
           "dateFr": "27/07/2026",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -8001,7 +8293,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -8090,11 +8382,19 @@
       "componentName": "LunarCalendar",
       "storybookTitle": "Composants/Formulaires/LunarCalendar",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
-      "a11yDate": "22/07/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-08-20",
+          "message": "Fix tests warning (#2498)"
+        },
+        {
+          "date": "2026-08-10",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
@@ -8126,23 +8426,26 @@
         {
           "date": "2026-04-03",
           "message": "Amelioration du système de validation (#1902)"
-        },
-        {
-          "date": "2026-01-20",
-          "message": "update vue-tsconfig (#1739)"
-        },
-        {
-          "date": "2025-12-09",
-          "message": "Ajout du composant de calendrier lunaire (#1550)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
+          "date": "2026-08-10 15:30:55 +0200",
+          "dateFr": "10/08/2026",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -8339,7 +8642,7 @@
       "componentName": "MonthPicker",
       "storybookTitle": "Composants/Formulaires/MonthPicker",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
       "a11yVersion": "1.0.23",
       "a11yDate": "25/03/2026",
@@ -8391,7 +8694,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -8447,11 +8750,19 @@
       "componentName": "NirField",
       "storybookTitle": "Composants/Formulaires/NirField",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "25/08/2026",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+        },
+        {
+          "date": "2026-08-20",
+          "message": "Fix tests warning (#2498)"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
@@ -8483,14 +8794,6 @@
         {
           "date": "2026-06-22",
           "message": "add customRulesPrecedence prop documentation in stories (#2302)"
-        },
-        {
-          "date": "2026-06-22",
-          "message": "Feat/fix custom rules precedence on nirfield (#2291)"
-        },
-        {
-          "date": "2026-06-16",
-          "message": "Suppression de tous les imports de styles non necessaires (#2271)"
         }
       ],
       "a11yCommits": [
@@ -8499,7 +8802,7 @@
           "date": "2026-07-27 14:32:02 +0200",
           "dateFr": "27/07/2026",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -8510,7 +8813,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -8689,7 +8992,7 @@
       "status": "actif",
       "functionalVersion": "1.0.22",
       "functionalDate": "11/03/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -8739,7 +9042,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -8872,11 +9175,23 @@
       "componentName": "NotificationBar",
       "storybookTitle": "Composants/Feedback/NotificationBar",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "20/08/2026",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-20",
+          "message": "Fix tests warning (#2498)"
+        },
+        {
+          "date": "2026-08-13",
+          "message": "refactor: standardize story export names to PascalCase"
+        },
+        {
+          "date": "2026-08-05",
+          "message": "fix(NotificationBar): adjust positioning styles for better alignment (#2472)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -8904,18 +9219,6 @@
         {
           "date": "2026-04-21",
           "message": "Tokens simplify v2 (#2102)"
-        },
-        {
-          "date": "2026-03-24",
-          "message": "add tests (#2011)"
-        },
-        {
-          "date": "2026-03-24",
-          "message": "add story slot (#2008)"
-        },
-        {
-          "date": "2026-02-12",
-          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
         }
       ],
       "a11yCommits": [
@@ -8924,7 +9227,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -9154,11 +9457,15 @@
       "componentName": "PaginatedTable",
       "storybookTitle": "Composants/Tableaux/PaginatedTable",
       "status": "déprécié",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -9194,10 +9501,6 @@
         {
           "date": "2026-05-05",
           "message": "SySelect: add validation + stories (#2151)"
-        },
-        {
-          "date": "2026-04-28",
-          "message": "[build] Optimisation du build (#2110)"
         }
       ],
       "a11yCommits": [
@@ -9206,7 +9509,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -9350,9 +9653,9 @@
       "componentName": "PasswordField",
       "storybookTitle": "Composants/Formulaires/PasswordField",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -9402,7 +9705,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -9546,11 +9849,19 @@
       "componentName": "PeriodField",
       "storybookTitle": "Composants/Formulaires/PeriodField",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
       "a11yVersion": "1.0.24",
       "a11yDate": "01/04/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+        },
+        {
+          "date": "2026-08-12",
+          "message": "refactor: replace KebabCase to PascaleCase component calls"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
@@ -9582,17 +9893,20 @@
         {
           "date": "2026-05-29",
           "message": "Feat/add cypress test (#2203)"
-        },
-        {
-          "date": "2026-04-03",
-          "message": "Amelioration du système de validation (#1902)"
-        },
-        {
-          "date": "2026-03-12",
-          "message": "Update Vuetify 3.12.2 (#1951)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9df69d6c84d0c1383cd62b5441d0a027a07a01f7",
+          "date": "2026-08-25 08:58:16 +0200",
+          "dateFr": "25/08/2026",
+          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)",
+          "version": "1.1.3",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "bfc61d4def7a5d1b29f3777ab2f57eff5e88152a",
           "date": "2026-04-01 14:41:22 +0200",
@@ -9676,9 +9990,9 @@
       "componentName": "PhoneField",
       "storybookTitle": "Composants/Formulaires/PhoneField",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -9728,7 +10042,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -9861,9 +10175,9 @@
       "componentName": "RangeField",
       "storybookTitle": "Composants/Formulaires/RangeField",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -9913,7 +10227,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -10013,11 +10327,15 @@
       "componentName": "RatingPicker",
       "storybookTitle": "Composants/Feedback/RatingPicker",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "04/08/2026",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-04",
+          "message": "interaction vbtn (#2435)"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
@@ -10053,10 +10371,6 @@
         {
           "date": "2026-05-20",
           "message": "Feat/improve tests (#2192)"
-        },
-        {
-          "date": "2026-04-21",
-          "message": "Tokens simplify v2 (#2102)"
         }
       ],
       "a11yCommits": [
@@ -10065,7 +10379,7 @@
           "date": "2026-07-27 14:32:02 +0200",
           "dateFr": "27/07/2026",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -10076,7 +10390,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -10231,9 +10545,9 @@
       "componentName": "SearchListField",
       "storybookTitle": "Composants/Filtres/SearchListField",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -10283,7 +10597,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -10394,9 +10708,9 @@
       "componentName": "SkipLink",
       "storybookTitle": "Composants/Navigation/SkipLink",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -10446,7 +10760,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -10524,11 +10838,15 @@
       "componentName": "SocialMediaLinks",
       "storybookTitle": "Composants/Navigation/SocialMediaLinks",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "07/08/2026",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-07",
+          "message": "Ajout des interactions sur le composant `SocialMediaLinks` (#2480)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -10564,10 +10882,6 @@
         {
           "date": "2026-01-20",
           "message": "update vue-tsconfig (#1739)"
-        },
-        {
-          "date": "2025-10-20",
-          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)"
         }
       ],
       "a11yCommits": [
@@ -10576,7 +10890,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -10665,11 +10979,15 @@
       "componentName": "StatusPage",
       "storybookTitle": "Templates/StatusPage",
       "status": "actif",
-      "functionalVersion": "1.1.1",
-      "functionalDate": "17/06/2026",
-      "a11yVersion": "1.1.2",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "19/08/2026",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-19",
+          "message": "[VBtn] doc (#2492)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -10705,10 +11023,6 @@
         {
           "date": "2026-03-04",
           "message": "Feat/143 migration error page (#1896)"
-        },
-        {
-          "date": "2026-02-18",
-          "message": "Feat/1784 migration error page (#1823)"
         }
       ],
       "a11yCommits": [
@@ -10717,7 +11031,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -10806,9 +11120,9 @@
       "componentName": "SubHeader",
       "storybookTitle": "Composants/Structure/SubHeader",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -10858,7 +11172,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -10947,11 +11261,23 @@
       "componentName": "SyAlert",
       "storybookTitle": "Composants/Feedback/SyAlert",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
-      "a11yDate": "22/07/2026",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "07/08/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-08-10",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)"
+        },
+        {
+          "date": "2026-08-07",
+          "message": "[SyAlert] Ajout de la props density (#2478)"
+        },
+        {
+          "date": "2026-08-04",
+          "message": "interaction vbtn (#2435)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -10979,27 +11305,37 @@
         {
           "date": "2026-05-20",
           "message": "Implémentation des nouveaux tokens (#2164)"
-        },
-        {
-          "date": "2026-04-21",
-          "message": "Ajout de test de non régression visuels (#2067)"
-        },
-        {
-          "date": "2026-04-21",
-          "message": "Tokens simplify v2 (#2102)"
-        },
-        {
-          "date": "2026-03-19",
-          "message": "Corrige les warnings présent lors de l'exécution des tests (#1998)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
+          "date": "2026-08-10 15:30:55 +0200",
+          "dateFr": "10/08/2026",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
+          "hash": "1fc52297b3b59207665ab797522e03309e6a18a7",
+          "date": "2026-08-07 15:40:09 +0200",
+          "dateFr": "07/08/2026",
+          "message": "[SyAlert] Ajout de la props density (#2478)",
+          "version": "1.1.3",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -11088,11 +11424,15 @@
       "componentName": "SyBtnMenu",
       "storybookTitle": "Composants/Navigation/SyBtnMenu",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
-      "a11yDate": "22/07/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "07/08/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -11128,11 +11468,22 @@
       ],
       "a11yCommits": [
         {
+          "hash": "39f7e1db8d96b9422e2b972fd423def3aa25a678",
+          "date": "2026-08-07 15:13:49 +0200",
+          "dateFr": "07/08/2026",
+          "message": "UserMenuBtn: improve responsive + a11y (#2470)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -11213,9 +11564,9 @@
       "componentName": "SyTextArea",
       "storybookTitle": "Composants/Formulaires/SyTextArea",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
@@ -11265,7 +11616,7 @@
           "date": "2026-07-23 11:48:40 +0200",
           "dateFr": "23/07/2026",
           "message": "expose Vuetify props on SyTextArea and DialogBox (#2415)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -11276,7 +11627,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -11365,11 +11716,27 @@
       "componentName": "Tables/SyServerTable",
       "storybookTitle": "Composants/Tableaux/SyServerTable",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "17/07/2026",
-      "a11yVersion": "1.1.2",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "25/08/2026",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "[Table] selection avec éléments radio en mode selection unique (#2494)"
+        },
+        {
+          "date": "2026-08-13",
+          "message": "refactor: standardize story export names to PascalCase"
+        },
+        {
+          "date": "2026-08-12",
+          "message": "refactor: replace KebabCase to PascaleCase component calls"
+        },
+        {
+          "date": "2026-08-04",
+          "message": "fix tables display (#2465)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -11393,31 +11760,26 @@
         {
           "date": "2026-05-29",
           "message": "Tables : Migration Ameli pro (#2186)"
-        },
-        {
-          "date": "2026-05-18",
-          "message": "Add hideDefaultFooter prop to SyTable and SyServerTable components (#2184)"
-        },
-        {
-          "date": "2026-04-28",
-          "message": "[build] Optimisation du build (#2110)"
-        },
-        {
-          "date": "2026-04-21",
-          "message": "Tokens simplify v2 (#2102)"
-        },
-        {
-          "date": "2026-04-17",
-          "message": "SyTable / SyServerTable: add page input option (#2104)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "5b17a07d9bf312bb7dc65d81737c16aee9486f99",
+          "date": "2026-08-25 11:04:33 +0200",
+          "dateFr": "25/08/2026",
+          "message": "[Table] selection avec éléments radio en mode selection unique (#2494)",
+          "version": "1.1.3",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -11561,11 +11923,27 @@
       "componentName": "Tables/SyTable",
       "storybookTitle": "Composants/Tableaux/SyTable",
       "status": "actif",
-      "functionalVersion": "1.1.2",
-      "functionalDate": "17/07/2026",
-      "a11yVersion": "1.1.2",
+      "functionalVersion": "1.1.4",
+      "functionalDate": "25/08/2026",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "[Table] selection avec éléments radio en mode selection unique (#2494)"
+        },
+        {
+          "date": "2026-08-13",
+          "message": "refactor: standardize story export names to PascalCase"
+        },
+        {
+          "date": "2026-08-12",
+          "message": "refactor: replace KebabCase to PascaleCase component calls"
+        },
+        {
+          "date": "2026-08-04",
+          "message": "fix tables display (#2465)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -11589,31 +11967,26 @@
         {
           "date": "2026-05-29",
           "message": "Tables : Migration Ameli pro (#2186)"
-        },
-        {
-          "date": "2026-05-18",
-          "message": "Add hideDefaultFooter prop to SyTable and SyServerTable components (#2184)"
-        },
-        {
-          "date": "2026-04-28",
-          "message": "[build] Optimisation du build (#2110)"
-        },
-        {
-          "date": "2026-04-21",
-          "message": "Tokens simplify v2 (#2102)"
-        },
-        {
-          "date": "2026-04-17",
-          "message": "SyTable / SyServerTable: add page input option (#2104)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "5b17a07d9bf312bb7dc65d81737c16aee9486f99",
+          "date": "2026-08-25 11:04:33 +0200",
+          "dateFr": "25/08/2026",
+          "message": "[Table] selection avec éléments radio en mode selection unique (#2494)",
+          "version": "1.1.3",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -11757,11 +12130,15 @@
       "componentName": "TableToolbar",
       "storybookTitle": "Composants/Tableaux/TableToolbar",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
-      "a11yDate": "22/07/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-08-10",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
@@ -11797,19 +12174,26 @@
         {
           "date": "2026-03-12",
           "message": "Update Vuetify 3.12.2 (#1951)"
-        },
-        {
-          "date": "2026-02-19",
-          "message": "TableToolbar: fix story SlotFilter (#1857)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
+          "date": "2026-08-10 15:30:55 +0200",
+          "dateFr": "10/08/2026",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -11914,11 +12298,15 @@
       "componentName": "ToolbarContainer",
       "storybookTitle": "Composants/Layout/ToolbarContainer",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-04",
+          "message": "interaction vbtn (#2435)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -11954,7 +12342,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -12010,11 +12398,23 @@
       "componentName": "UploadWorkflow",
       "storybookTitle": "Composants/Formulaires/UploadWorkflow",
       "status": "actif",
-      "functionalVersion": "1.1.2",
+      "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.2",
+      "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+        },
+        {
+          "date": "2026-08-20",
+          "message": "Fix tests warning (#2498)"
+        },
+        {
+          "date": "2026-08-06",
+          "message": "Ajout des interactions sur le composant `FileUpload` (#2474)"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
@@ -12042,18 +12442,6 @@
         {
           "date": "2026-05-20",
           "message": "Feat/improve tests (#2192)"
-        },
-        {
-          "date": "2026-04-13",
-          "message": "Fix/uploadworklist undefined map (#2084)"
-        },
-        {
-          "date": "2026-03-25",
-          "message": "FileList: amélioration label actions (#1985)"
-        },
-        {
-          "date": "2026-03-11",
-          "message": "Hx: replace hx to SyHeading (#1874)"
         }
       ],
       "a11yCommits": [
@@ -12062,7 +12450,7 @@
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -12142,9 +12530,21 @@
       "status": "actif",
       "functionalVersion": "1.0.25",
       "functionalDate": "21/04/2026",
-      "a11yVersion": "1.1.2",
-      "a11yDate": "22/07/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-08-25",
+          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+        },
+        {
+          "date": "2026-08-12",
+          "message": "refactor: replace KebabCase to PascaleCase component calls"
+        },
+        {
+          "date": "2026-08-10",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)"
+        },
         {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)"
@@ -12172,27 +12572,37 @@
         {
           "date": "2026-03-04",
           "message": "Feat/add icons in user btn list (#1869)"
-        },
-        {
-          "date": "2026-02-12",
-          "message": "SyIcon: replace VIcon to SyIcon (#1793)"
-        },
-        {
-          "date": "2026-02-04",
-          "message": "Fix post audit et renomage du SyBtnSelect en SyBtnMenu (#1759)"
-        },
-        {
-          "date": "2026-01-14",
-          "message": "UserMenuBtn: Ajout de la possibilité de naviguer avec vue-router (#1717)"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
+          "date": "2026-08-10 15:30:55 +0200",
+          "dateFr": "10/08/2026",
+          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
+          "hash": "39f7e1db8d96b9422e2b972fd423def3aa25a678",
+          "date": "2026-08-07 15:13:49 +0200",
+          "dateFr": "07/08/2026",
+          "message": "UserMenuBtn: improve responsive + a11y (#2470)",
+          "version": "1.1.3",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
-          "version": "1.1.2",
+          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,

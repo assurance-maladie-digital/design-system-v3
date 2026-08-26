@@ -11,5 +11,5 @@ a:focus-visible {
 
 // Sur fond sombre (thème dark), le ring passe en onPrimary, comme pour les boutons.
 .v-theme--dark a:focus-visible {
-	outline-color: rgb(var(--v-theme-onPrimary));
+	outline-color: rgb(var(--v-theme-on-primary));
 }

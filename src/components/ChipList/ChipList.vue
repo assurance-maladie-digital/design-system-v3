@@ -30,17 +30,17 @@
 	}
 
 	const BACKGROUND_COLORS: Record<NonEmptyChipState, string> = {
-		success: 'successVariant',
-		warning: 'warningVariant',
-		error: 'errorVariant',
-		info: 'infoVariant',
+		success: 'success-variant',
+		warning: 'warning-variant',
+		error: 'error-variant',
+		info: 'info-variant',
 	} as const
 
 	const ICON_COLORS: Record<NonEmptyChipState, string> = {
-		success: 'onSuccessVariant',
-		warning: 'onWarningVariant',
-		error: 'onErrorVariant',
-		info: 'onInfoVariant',
+		success: 'on-success-variant',
+		warning: 'on-warning-variant',
+		error: 'on-error-variant',
+		info: 'on-info-variant',
 	} as const
 
 	const props = withDefaults(defineProps<Props & CustomizableOptions>(), {
@@ -348,29 +348,29 @@
 	// global `_btns.scss` déborderait sur les voisins). Couleur contrastée sur le fond du chip :
 	// `onPrimary` par défaut (chip `color: primary`), surchargée par état plus bas.
 	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-onPrimary)) !important;
+		outline: 2px solid rgb(var(--v-theme-on-primary)) !important;
 		outline-offset: -1px !important;
 	}
 }
 
 .sy-chip-success {
-	color: rgb(var(--v-theme-onSuccessVariant)) !important;
-	border: 1px solid rgb(var(--v-theme-onSuccessVariant)) !important;
+	color: rgb(var(--v-theme-on-success-variant)) !important;
+	border: 1px solid rgb(var(--v-theme-on-success-variant)) !important;
 }
 
 .sy-chip-error {
-	color: rgb(var(--v-theme-onErrorVariant)) !important;
-	border: 1px solid rgb(var(--v-theme-onErrorVariant)) !important;
+	color: rgb(var(--v-theme-on-error-variant)) !important;
+	border: 1px solid rgb(var(--v-theme-on-error-variant)) !important;
 }
 
 .sy-chip-info {
-	color: rgb(var(--v-theme-onInfoVariant)) !important;
-	border: 1px solid rgb(var(--v-theme-onInfoVariant)) !important;
+	color: rgb(var(--v-theme-on-info-variant)) !important;
+	border: 1px solid rgb(var(--v-theme-on-info-variant)) !important;
 }
 
 .sy-chip-warning {
-	color: rgb(var(--v-theme-onWarningVariant)) !important;
-	border: 1px solid rgb(var(--v-theme-onWarningVariant)) !important;
+	color: rgb(var(--v-theme-on-warning-variant)) !important;
+	border: 1px solid rgb(var(--v-theme-on-warning-variant)) !important;
 }
 
 .overflow-chip {
@@ -394,22 +394,22 @@
 
 // Styles spécifiques pour améliorer le contraste de focus selon le thème du chip
 .sy-chip-success .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-onSuccessVariant)) !important;
+	outline: 2px solid rgb(var(--v-theme-on-success-variant)) !important;
 	outline-offset: -1px !important;
 }
 
 .sy-chip-info .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-onInfoVariant)) !important;
+	outline: 2px solid rgb(var(--v-theme-on-info-variant)) !important;
 	outline-offset: -1px !important;
 }
 
 .sy-chip-warning .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-onWarningVariant)) !important;
+	outline: 2px solid rgb(var(--v-theme-on-warning-variant)) !important;
 	outline-offset: -1px !important;
 }
 
 .sy-chip-error .remove-chip:focus-visible {
-	outline: 2px solid rgb(var(--v-theme-onErrorVariant)) !important;
+	outline: 2px solid rgb(var(--v-theme-on-error-variant)) !important;
 	outline-offset: -1px !important;
 }
 </style>

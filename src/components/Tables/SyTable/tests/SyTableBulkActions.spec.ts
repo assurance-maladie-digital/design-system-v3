@@ -115,4 +115,14 @@ describe('SyTable — barre de sélection multiple (actions pilotées par le pro
 			expect(checkbox.getAttribute('aria-label')).toBeTruthy()
 		})
 	})
+
+	it('les radios de sélection unique ont un libellé accessible', () => {
+		const wrapper = mountTable({ showSelect: false, showSelectSingle: true, modelValue: [2] })
+
+		const rowRadios = [...wrapper.element.querySelectorAll('td .v-selection-control input[type="radio"]')]
+		expect(rowRadios).toHaveLength(3)
+		rowRadios.forEach((radio) => {
+			expect(radio.getAttribute('aria-label')).toBeTruthy()
+		})
+	})
 })

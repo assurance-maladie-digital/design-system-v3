@@ -50,7 +50,7 @@ describe('ChipList - Visual regression tests', () => {
 		cy.matchImageSnapshot('chip-list-state-icons', cy.get('.sy-chip-list'))
 	})
 
-	// Ring DS de la croix : inset (offset -2px) contrasté sur le fond du chip (onPrimary sur
+	// Ring DS de la croix : inset (offset -2px) contrasté sur le fond du chip (on-primary sur
 	// chip primary), pour rester dans le chip sans déborder sur les voisins.
 	it('shows the DS ring on a focused remove button', () => {
 		cy.mountWithVuetify(ChipList, {

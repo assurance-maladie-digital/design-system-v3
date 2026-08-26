@@ -295,15 +295,15 @@ export const Default: Story = {
 	const modelValue = ref(true)
 
 	const onAccept = () => {
-		console.log('Accept')
+		// Gestion de l'acceptation des cookies
 	}
 
 	const onReject = () => {
-		console.log('Reject')
+		// Gestion du refus des cookies
 	}
 
 	const onCustomize = () => {
-		console.log('Customize')
+		// Gestion de la personnalisation des cookies
 	}
 	
 	const items = {
@@ -586,7 +586,7 @@ export const Customization: Story = {
 		onCustomize: fn(),
 		vuetifyOptions: {
 			banner: {
-				color: 'rgb(var(--v-theme-infoVariant))',
+				color: 'rgb(var(--v-theme-info-variant))',
 			},
 			customizeBtn: {
 				variant: 'text',

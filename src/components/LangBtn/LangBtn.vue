@@ -209,6 +209,6 @@
 }
 
 .v-theme--dark .vd-lang-btn {
-	color: rgb(var(--v-theme-onPrimary)) !important;
+	color: rgb(var(--v-theme-on-primary)) !important;
 }
 </style>

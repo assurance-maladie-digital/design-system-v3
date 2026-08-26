@@ -2,6 +2,7 @@
 	import { computed } from 'vue'
 	import type { FilterOption, TableColumnHeader } from '../types'
 	import PeriodField from '@/components/PeriodField/PeriodField.vue'
+	import { devWarn } from '@/utils/devWarn'
 
 	const props = defineProps({
 		header: {
@@ -109,7 +110,7 @@
 				}
 			}
 			catch (error) {
-				console.error('Erreur dans la mise à jour du filtre de période:', error)
+				devWarn('Erreur dans la mise à jour du filtre de période:', error)
 			}
 		},
 	})

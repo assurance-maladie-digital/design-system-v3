@@ -404,7 +404,7 @@ export const WithLogoutItemSlot: Story = {
   	:menu-items="items"
   >
     <template #footer-list-item>
-      <VListItem @click="console.log('logout')">
+      <VListItem @click="onLogout">
         <VListItemTitle>Logout</VListItemTitle>
       </VListItem>
     </template>
@@ -420,6 +420,8 @@ import { SyBtnMenu } from '@cnamts/synapse'
 
 const primaryInfo = 'Mes options'
 const items = ['Option 1', 'Option 2']
+
+const onLogout = () => {}
 </script>
 				`,
 			},
@@ -433,13 +435,14 @@ const items = ['Option 1', 'Option 2']
 		return {
 			components: { SyBtnMenu, VListItem, VListItemTitle },
 			setup() {
-				return { args }
+				const onLogout = () => {}
+				return { args, onLogout }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <SyBtnMenu v-bind="args">
                   <template #footer-list-item>
-                    <VListItem @click="console.log('logout')">
+                    <VListItem @click="onLogout">
                       <VListItemTitle>Logout</VListItemTitle>
                     </VListItem>
                   </template>
@@ -536,7 +539,7 @@ export const WithMultipleSlots: Story = {
 	<SyIcon :icon="mdiAccount" decorative />
     </template>
     <template #footer-list-item>
-      <VListItem @click="console.log('logout')">
+      <VListItem @click="onLogout">
         <VListItemTitle>Se déconnecter</VListItemTitle>
       </VListItem>
     </template>
@@ -553,6 +556,8 @@ import { mdiAccount } from '@mdi/js'
 
 const primaryInfo = 'Information principale'
 const menuItems = ['Option 1', 'Option 2']
+
+const onLogout = () => {}
 </script>
 				`,
 			},
@@ -565,7 +570,8 @@ const menuItems = ['Option 1', 'Option 2']
 		return {
 			components: { SyBtnMenu, SyIcon, VListItem, VListItemTitle },
 			setup() {
-				return { args, mdiAccount }
+				const onLogout = () => {}
+				return { args, mdiAccount, onLogout }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
@@ -574,7 +580,7 @@ const menuItems = ['Option 1', 'Option 2']
 					<SyIcon :icon="mdiAccount" decorative />
                   </template>
                   <template #footer-list-item>
-                    <VListItem @click="console.log('logout')">
+                    <VListItem @click="onLogout">
                       <VListItemTitle>Se déconnecter</VListItemTitle>
                     </VListItem>
                   </template>

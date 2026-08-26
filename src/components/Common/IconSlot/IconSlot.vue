@@ -63,7 +63,7 @@
 				<SyIcon
 					v-bind="tooltipProps"
 					:label="label ? locales.infoWithLabel(label) : locales.info"
-					:color="iconColor"
+					color="primary"
 					:icon="icons.info"
 					role="button"
 					:decorative="false"

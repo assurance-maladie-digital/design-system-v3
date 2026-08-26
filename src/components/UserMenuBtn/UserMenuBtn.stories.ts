@@ -802,11 +802,11 @@ export const WithPsInfo: Story = {
     const lastConnexion = ref('01/01/2024')
 
     const handleAccount = () => {
-        console.log('Mon Compte clicked')
+        // Navigation vers le compte utilisateur
     }
 
     const handleLogout = () => {
-        console.log('Déconnexion clicked')
+        // Déconnexion de l'utilisateur
     }
 </script>`,
 			},
@@ -833,11 +833,11 @@ export const WithPsInfo: Story = {
 				}
 
 				const handleAccount = () => {
-					console.log('Mon Compte clicked')
+					// Navigation vers le compte utilisateur
 				}
 
 				const handleLogout = () => {
-					console.log('Déconnexion clicked')
+					// Déconnexion de l'utilisateur
 				}
 
 				return { args, userDetails, handleAccount, handleLogout }

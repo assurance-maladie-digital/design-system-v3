@@ -2,6 +2,7 @@
 	import type { ComponentPublicInstance } from 'vue'
 	import type { IconValue } from 'vuetify/lib/composables/icons.mjs'
 	import { vRgaaSvgFix } from '@/directives/rgaaSvgFix'
+	import { devWarn } from '@/utils/devWarn'
 	import { computed, onMounted, onUpdated, ref, watch } from 'vue'
 
 	/**
@@ -21,7 +22,7 @@
 	 */
 	const checkAccessibility = (icon: IconValue, decorative: boolean | undefined, label: string | undefined) => {
 		if (decorative === false && !label) {
-			console.error(`L'icône "${icon}" n'est pas décorative, mais aucun texte alternatif (label) n'a été fourni.`)
+			devWarn(`L'icône "${icon}" n'est pas décorative, mais aucun texte alternatif (label) n'a été fourni.`)
 		}
 	}
 
@@ -107,6 +108,6 @@
 
 // Sur fond sombre, le ring passe en onPrimary, comme les boutons/liens.
 .v-theme--dark .v-icon[role='button']:focus-visible {
-	outline-color: rgb(var(--v-theme-onPrimary));
+	outline-color: rgb(var(--v-theme-on-primary));
 }
 </style>

@@ -4,11 +4,11 @@ import { defineComponent, inject, onMounted, ref, type Ref } from 'vue'
 import HeaderBar from '../HeaderBar.vue'
 import { registerHeaderMenuKey } from '../consts'
 
-describe('HeaderBar', () => {
-	vi.mock('@/utils/functions/throttleDisplayFn/throttleDisplayFn.ts', () => ({
-		default: (fn: (...args: unknown[]) => void) => fn,
-	}))
+vi.mock('@/utils/functions/throttleDisplayFn/throttleDisplayFn.ts', () => ({
+	default: (fn: (...args: unknown[]) => void) => fn,
+}))
 
+describe('HeaderBar', () => {
 	afterAll(() => {
 		vi.restoreAllMocks()
 		document.body.innerHTML = ''

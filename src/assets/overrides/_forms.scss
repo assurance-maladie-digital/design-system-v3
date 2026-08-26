@@ -11,6 +11,14 @@
 	min-height: 40px;
 }
 
+.v-checkbox,
+.v-checkbox-btn,
+.v-radio {
+	.v-selection-control__input > .v-icon {
+		opacity: 1;
+	}
+}
+
 // AP theme: inset the loader bar to match the larger field border-radius (12px)
 .theme-ap,
 .theme-ap2026 {

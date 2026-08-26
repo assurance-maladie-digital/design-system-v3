@@ -369,29 +369,29 @@ a {
 .vd-footer-bar.v-theme--dark :deep() {
 	.vd-footer-bar-links li,
 	.vd-footer-bar-links a {
-		color: rgb(var(--v-theme-onPrimary));
+		color: rgb(var(--v-theme-on-primary));
 
 		&.version {
 			color: rgb(var(--v-theme-surface));
 		}
 	}
 
-	// Ring de focus des liens en onPrimary sur le footer sombre
+	// Ring de focus des liens en on-primary sur le footer sombre
 	.vd-footer-bar-links a:focus-visible {
-		outline-color: rgb(var(--v-theme-onPrimary));
+		outline-color: rgb(var(--v-theme-on-primary));
 	}
 
 	p,
 	.text--primary {
-		color: rgba(var(--v-theme-onPrimary));
+		color: rgba(var(--v-theme-on-primary));
 	}
 
 	.text--secondary {
-		color: rgba(var(--v-theme-onPrimary));
+		color: rgba(var(--v-theme-on-primary));
 	}
 
 	a.text--primary {
-		color: rgb(var(--v-theme-onPrimary));
+		color: rgb(var(--v-theme-on-primary));
 	}
 
 	.v-divider {
@@ -399,7 +399,7 @@ a {
 	}
 
 	svg {
-		fill: rgb(var(--v-theme-onPrimary));
+		fill: rgb(var(--v-theme-on-primary));
 	}
 }
 

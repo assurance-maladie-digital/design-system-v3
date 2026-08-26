@@ -3,6 +3,7 @@
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { computed, onMounted, provide, ref, toRef, useAttrs, useId, useSlots, watch } from 'vue'
 	import type { VDataTableServer } from 'vuetify/components/VDataTable'
+	import { VRadio } from 'vuetify/components/VRadio'
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import SyTablePagination from '../common/SyTablePagination.vue'
 	import TableBulkActions from '../common/TableBulkActions.vue'
@@ -155,15 +156,6 @@
 	const { getItemValue, toggleAllRows } = useTableCheckbox({
 		items: displayedItems,
 		modelValue: model,
-		updateModelValue: (value) => {
-			if (props.showSelectSingle && Array.isArray(value)) {
-				// In single-select mode, always keep at most one selected value
-				model.value = value.length > 0 ? [value[0]] : []
-			}
-			else {
-				model.value = value
-			}
-		},
 		selectionKey: toRef(props, 'selectionKey'),
 	})
 
@@ -617,12 +609,23 @@
 				/>
 			</template>
 
-			<!-- Checkbox de sélection de ligne (SyCheckbox) avec libellé accessible -->
 			<template
 				v-if="props.showSelect || props.showSelectSingle"
-				#[`item.data-table-select`]="{ internalItem, isSelected, toggleSelect, index }"
+				#[`item.data-table-select`]="{ item, internalItem, isSelected, toggleSelect, index }"
 			>
+				<VRadio
+					v-if="props.showSelectSingle"
+					:name="uniqueTableId + '-select-single'"
+					:model-value="isSelected(internalItem) ? getItemValue(item as Item) : null"
+					:value="getItemValue(item as Item)"
+					:aria-label="`${locales.selectRow} ${index + 1}`"
+					color="primary"
+					density="compact"
+					hide-details
+					@change="event => (event.target as HTMLInputElement).checked && toggleSelect(internalItem)"
+				/>
 				<SyCheckbox
+					v-else
 					:model-value="isSelected(internalItem)"
 					:aria-label="`${locales.selectRow} ${index + 1}`"
 					color="primary"
@@ -695,11 +698,11 @@
 }
 
 .sy-server-table--pinned-left-shadow :deep(.sy-table__pinned--left) {
-	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-onSurfaceVariant), 0.6);
+	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-on-surface-variant), 0.6);
 }
 
 .sy-server-table--pinned-right-shadow :deep(.sy-table__pinned--right) {
-	box-shadow: -2px 0 6px -4px rgba(var(--v-theme-onSurfaceVariant), 0.6);
+	box-shadow: -2px 0 6px -4px rgba(var(--v-theme-on-surface-variant), 0.6);
 }
 
 .sy-server-table--pinned-select-left :deep(.v-data-table__th--select),
@@ -740,7 +743,7 @@
 .sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
 .sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left :deep(.v-data-table__tbody .v-data-table__tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
 .sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left :deep(.v-data-table__tbody tr:not(.v-data-table-rows-loading) > td:first-child) {
-	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-onSurfaceVariant), 0.6);
+	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-on-surface-variant), 0.6);
 }
 /* stylelint-enable @stylistic/max-line-length */
 

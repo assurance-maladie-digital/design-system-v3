@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 import SyTable from './SyTable.vue'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
 import { users, usersHeaders } from '../common/storyData'
 
 const meta = {
@@ -110,6 +110,7 @@ export const RowSelection: Story = {
 		striped: false,
 		showSelect: true,
 		showFilters: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyTable },
@@ -120,7 +121,13 @@ export const RowSelection: Story = {
 		},
 		template: `
 			<div>
-				<SyTable v-model:options="args.options" v-model="selection" v-bind="args" suffix="selection-table" />
+				<SyTable
+					v-model:options="args.options"
+					v-model="selection"
+					v-bind="args"
+					suffix="selection-table"
+					@update:model-value="args['onUpdate:modelValue']"
+				/>
 				<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
 					<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
 					<div v-for="(item, index) in selection" :key="index" class="mb-2 pa-2 bg-grey-lighten-3">
@@ -207,6 +214,7 @@ export const SingleRowSelection: Story = {
 		striped: false,
 		showSelectSingle: true,
 		showFilters: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyTable },
@@ -217,7 +225,13 @@ export const SingleRowSelection: Story = {
 		},
 		template: `
 			<div>
-				<SyTable v-model:options="args.options" v-model="selection" v-bind="args" suffix="selection-table" />
+				<SyTable
+					v-model:options="args.options"
+					v-model="selection"
+					v-bind="args"
+					suffix="selection-table"
+					@update:model-value="args['onUpdate:modelValue']"
+				/>
 				<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
 					<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
 					<div v-for="(item, index) in selection" :key="index" class="mb-2 pa-2 bg-grey-lighten-3">

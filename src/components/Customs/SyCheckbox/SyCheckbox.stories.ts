@@ -598,9 +598,9 @@ export const CustomColors: Story = {
 				code: `
 <ul style="list-style: none; margin: 0; padding: 0;">
 	<li><SyCheckbox v-model="checked1" label="Couleur primaire (par défaut)" /></li>
-	<li><SyCheckbox v-model="checked3" label="Couleur succès" color="onSuccessVariant" /></li>
+	<li><SyCheckbox v-model="checked3" label="Couleur succès" color="on-success-variant" /></li>
 	<li><SyCheckbox v-model="checked4" label="Couleur erreur" color="error" /></li>
-	<li><SyCheckbox v-model="checked5" label="Couleur avertissement" color="onWarningVariant" /></li>
+	<li><SyCheckbox v-model="checked5" label="Couleur avertissement" color="on-warning-variant" /></li>
 </ul>`,
 			},
 		],
@@ -626,9 +626,9 @@ Le composant SyCheckbox peut être personnalisé avec différentes couleurs pour
 		template: `
 			<ul style="list-style: none; margin: 0; padding: 0;">
 				<li><SyCheckbox v-model="checked1" label="Couleur primaire (par défaut)" /></li>
-				<li><SyCheckbox v-model="checked3" label="Couleur succès" color="onSuccessVariant" /></li>
+				<li><SyCheckbox v-model="checked3" label="Couleur succès" color="on-success-variant" /></li>
 				<li><SyCheckbox v-model="checked4" label="Couleur erreur" color="error" /></li>
-				<li><SyCheckbox v-model="checked5" label="Couleur avertissement" color="onWarningVariant" /></li>
+				<li><SyCheckbox v-model="checked5" label="Couleur avertissement" color="on-warning-variant" /></li>
 			</ul>
 		`,
 	}),

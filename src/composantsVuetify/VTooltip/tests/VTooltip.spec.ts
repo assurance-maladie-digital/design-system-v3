@@ -10,7 +10,7 @@ describe('VTooltip – accessibilité', () => {
 	describe('survol (RGAA 10.13.2)', () => {
 		const TooltipHost = defineComponent({
 			render() {
-				return h(VTooltip, { text: 'Contenu du tooltip', location: 'top' }, {
+				return h(VTooltip, { text: 'Contenu du tooltip', location: 'top', interactive: true, closeDelay: 200 }, {
 					activator: ({ props }: { props: Record<string, unknown> }) =>
 						h(VBtn, { ...props, class: 'test-activator' }, () => 'Hover me'),
 				})
@@ -29,7 +29,6 @@ describe('VTooltip – accessibilité', () => {
 
 		const mountHost = () => {
 			wrapper = mount(TooltipHost, {
-				global: { plugins: [createVuetifyInstance()] },
 				attachTo: document.body,
 			})
 

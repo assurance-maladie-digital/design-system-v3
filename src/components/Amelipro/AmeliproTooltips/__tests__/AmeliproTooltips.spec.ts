@@ -106,12 +106,7 @@ describe('AmeliproTooltips', () => {
 				// On ne devrait théoriquement pas avoir besoin de ça, mais dans les faits...
 				document.body.innerHTML = ''
 
-				// console.log({ nb: document.querySelectorAll('.amelipro-tooltip__text').length });
-
 				vueWrapper = mount(AmeliproTooltips, { props: requiredPropValues() })
-
-				// Visiblement, VTooltip créé un tooltip dans le body dès qu'il est monté
-				// console.log({ nb: document.querySelectorAll('.amelipro-tooltip__text').length });
 			})
 
 			afterEach(() => {

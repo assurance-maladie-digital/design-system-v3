@@ -95,13 +95,13 @@ describe('AmeliproHeaderBrandSection', () => {
 				expect(vueWrapper.find('a.header-home-link').exists()).toBe(true)
 			})
 
-			// TODO: corriger le rendu du Component
+			// Note: corriger le rendu du Component
 			it.skip('prop homeHref undefined uses RouterLink', () => {
 				expect(vueWrapper.findComponent(RouterLink).exists()).toBe(true)
 			})
 		})
 
-		// TODO: corriger le rendu du slot pour le titre
+		// Note: corriger le rendu du slot pour le titre
 		describe.skip('Titre', () => {
 			beforeEach(() => {
 				vueWrapper = shallowMount(AmeliproHeaderBrandSection, { props: requiredPropValues() })
@@ -115,7 +115,7 @@ describe('AmeliproHeaderBrandSection', () => {
 			})
 		})
 
-		// TODO: corriger le rendu du slot pour le sous-titre
+		// Note: corriger le rendu du slot pour le sous-titre
 		describe.skip('Sous-titre', () => {
 			beforeEach(() => {
 				vueWrapper = shallowMount(AmeliproHeaderBrandSection, { props: requiredPropValues() })

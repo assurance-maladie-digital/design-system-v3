@@ -168,7 +168,7 @@ describe('AmeliproMailTile', () => {
 
 			const { mailInfo } = modifiedPropValues()
 			await vueWrapper.setProps({ mailInfo })
-			// TODO: test ne passe pas, la prop ne semble pas réactive
+			// Note: test ne passe pas, la prop ne semble pas réactive
 			// expect(vueWrapper.find('.mail-status-btn').attributes('aria-label')).toBe('Message non lu')
 		})
 
@@ -177,7 +177,7 @@ describe('AmeliproMailTile', () => {
 
 			const { mailInfo } = modifiedPropValues()
 			await vueWrapper.setProps({ mailInfo })
-			// TODO: test ne passe pas, la prop ne semble pas réactive
+			// Note: test ne passe pas, la prop ne semble pas réactive
 			// expect(vueWrapper.find('.mail-status-btn').attributes('aria-pressed')).toBe('false')
 		})
 
@@ -187,7 +187,7 @@ describe('AmeliproMailTile', () => {
 			const { mailInfo } = modifiedPropValues()
 			expect(mailInfo.readValue).toBe(false)
 			await vueWrapper.setProps({ mailInfo })
-			// TODO: test ne passe pas, la prop ne semble pas réactive
+			// Note: test ne passe pas, la prop ne semble pas réactive
 			// expect(vueWrapper.find('.mail-status-btn').classes('mail-status-btn--not-read')).toBe(true)
 		})
 	})

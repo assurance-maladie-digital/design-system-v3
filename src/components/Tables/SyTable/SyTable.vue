@@ -1,31 +1,33 @@
 <script setup lang="ts">
-	import { computed, onMounted, provide, ref, toRef, useAttrs, useId, useSlots, watch } from 'vue'
-	import type { VDataTable } from 'vuetify/components/VDataTable'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+	import { computed, onMounted, provide, ref, toRef, useAttrs, useId, useSlots, watch } from 'vue'
+	import { VBtn } from 'vuetify/components/VBtn'
+	import type { VDataTable } from 'vuetify/components/VDataTable'
+	import { VRadio } from 'vuetify/components/VRadio'
 	import SyTableFilter from '../common/SyTableFilter.vue'
-	import TableHeader from '../common/TableHeader.vue'
 	import SyTablePagination from '../common/SyTablePagination.vue'
+	import TableBulkActions from '../common/TableBulkActions.vue'
+	import TableHeader from '../common/TableHeader.vue'
 	import { locales } from '../common/locales'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
+	import { useTableAccessibility } from '../common/tableAccessibilityUtils'
 	import { useTableProps } from '../common/tableProps'
 	import type { DataOptions, Item, SyTableProps } from '../common/types'
-	import { useTableFilter } from '../common/useTableFilter'
+	import type { ClickableTableRowPropsInput } from '../common/useClickableTableRow'
+	import { useClickableTableRow } from '../common/useClickableTableRow'
 	import { usePagination } from '../common/usePagination'
-	import { useTableOptions } from '../common/useTableOptions'
+	import { usePinnedColumns } from '../common/usePinnedColumns'
+	import useStoredOptions from '../common/useStoredOptions'
+	import { useTableAria } from '../common/useTableAria'
+	import { useTableBulkActions } from '../common/useTableBulkActions'
+	import { useTableCheckbox } from '../common/useTableCheckbox'
+	import { isEditableAsText, useTableEditing } from '../common/useTableEditing'
+	import { useTableFilter } from '../common/useTableFilter'
 	import { useTableHeaders } from '../common/useTableHeaders'
 	import { useTableItems } from '../common/useTableItems'
-	import { useTableCheckbox } from '../common/useTableCheckbox'
-	import { useTableAria } from '../common/useTableAria'
-	import { useTableAccessibility } from '../common/tableAccessibilityUtils'
-	import useStoredOptions from '../common/useStoredOptions'
-	import { usePinnedColumns } from '../common/usePinnedColumns'
-	import { useClickableTableRow } from '../common/useClickableTableRow'
+	import { useTableOptions } from '../common/useTableOptions'
 	import { useTableRowCheckboxAccessibility } from '../common/useTableRowCheckboxAccessibility'
-	import type { ClickableTableRowPropsInput } from '../common/useClickableTableRow'
-	import { isEditableAsText, useTableEditing } from '../common/useTableEditing'
-	import { useTableBulkActions } from '../common/useTableBulkActions'
-	import TableBulkActions from '../common/TableBulkActions.vue'
 
 	const props = withDefaults(defineProps<SyTableProps>(), {
 		caption: '',
@@ -139,15 +141,6 @@
 	const { toggleAllRows, getItemValue } = useTableCheckbox({
 		items: filteredItems,
 		modelValue: model,
-		updateModelValue: (value) => {
-			if (props.showSelectSingle && Array.isArray(value)) {
-				// In single-select mode, always keep at most one selected value
-				model.value = value.length > 0 ? [value[0]] : []
-			}
-			else {
-				model.value = value
-			}
-		},
 		selectionKey: toRef(props, 'selectionKey'),
 	})
 
@@ -596,12 +589,23 @@
 				/>
 			</template>
 
-			<!-- Checkbox de sélection de ligne (SyCheckbox) avec libellé accessible -->
 			<template
 				v-if="props.showSelect || props.showSelectSingle"
-				#[`item.data-table-select`]="{ internalItem, isSelected, toggleSelect, index }"
+				#[`item.data-table-select`]="{ item, internalItem, isSelected, toggleSelect, index }"
 			>
+				<VRadio
+					v-if="props.showSelectSingle"
+					:name="uniqueTableId + '-select-single'"
+					:model-value="isSelected(internalItem) ? getItemValue(item as Item) : null"
+					:value="getItemValue(item as Item)"
+					:aria-label="`${locales.selectRow} ${index + 1}`"
+					color="primary"
+					density="compact"
+					hide-details
+					@change="event => (event.target as HTMLInputElement).checked && toggleSelect(internalItem)"
+				/>
 				<SyCheckbox
+					v-else
 					:model-value="isSelected(internalItem)"
 					:aria-label="`${locales.selectRow} ${index + 1}`"
 					color="primary"

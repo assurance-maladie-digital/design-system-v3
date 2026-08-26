@@ -278,5 +278,5 @@ describe('AmeliproUpload', () => {
 		})
 	})
 
-	// TODO: Events
+	// Note: Events
 })

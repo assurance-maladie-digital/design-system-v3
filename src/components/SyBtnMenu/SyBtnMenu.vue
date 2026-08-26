@@ -342,15 +342,15 @@
 }
 
 .sy-user-menu-btn:hover :deep(.v-btn__overlay) {
-	background: rgba(var(--v-theme-interactionDark), 0.2) !important;
+	background: rgba(var(--v-theme-interaction-dark), 0.2) !important;
 }
 
 .sy-user-menu-btn:active :deep(.v-btn__overlay) {
-	background: rgba(var(--v-theme-interactionDark), 0.4) !important;
+	background: rgba(var(--v-theme-interaction-dark), 0.4) !important;
 }
 
 .sy-user-menu-btn[aria-expanded='true'] :deep(.v-btn__overlay) {
-	background: rgba(var(--v-theme-interactionDark), 0.2) !important;
+	background: rgba(var(--v-theme-interaction-dark), 0.2) !important;
 	opacity: 1;
 }
 
@@ -370,7 +370,7 @@
 // marge celui des côtés et du bas.
 .sy-user-menu-identity {
 	margin: 0 8px 8px;
-	background: rgba(var(--v-theme-interactionDark), 0.2);
+	background: rgba(var(--v-theme-interaction-dark), 0.2);
 
 	// Même arrondi que la liste : Vuetify pose 4px sur `.v-menu > .v-overlay__content` et la
 	// `.v-list` en hérite. `inherit` reprend donc la valeur calculée du parent et suivra

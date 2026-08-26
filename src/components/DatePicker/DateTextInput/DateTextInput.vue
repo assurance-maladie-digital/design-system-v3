@@ -1224,10 +1224,10 @@
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-onSuccessVariant)) !important;
+		color: rgb(var(--v-theme-on-success-variant)) !important;
 
 		.v-field__outline {
-			color: rgb(var(--v-theme-onSuccessVariant)) !important;
+			color: rgb(var(--v-theme-on-success-variant)) !important;
 		}
 	}
 
@@ -1235,7 +1235,7 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-onSuccessVariant)) !important;
+			color: rgb(var(--v-theme-on-success-variant)) !important;
 		}
 	}
 }
