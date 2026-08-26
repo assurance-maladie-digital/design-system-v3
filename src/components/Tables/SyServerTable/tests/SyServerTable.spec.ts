@@ -509,8 +509,8 @@ describe('SyServerTable', () => {
 		await vi.dynamicImportSettled()
 		const filters = wrapper.findAllComponents(SyTableFilter)
 
-		expect(filters.find(filter => filter.props('header').key === 'name')?.props('inputConfig')).toEqual({ maxlength: 8 })
-		expect(filters.find(filter => filter.props('header').key === 'age')?.props('inputConfig')).toEqual({ maxlength: 6 })
+		expect(filters.find(filter => filter.props('header').key === 'name')?.props('header').filterConfig).toEqual({ maxlength: 8 })
+		expect(filters.find(filter => filter.props('header').key === 'age')?.props('header').filterConfig).toEqual({ maxlength: 6 })
 		expect(warnSpy).not.toHaveBeenCalled()
 
 		warnSpy.mockRestore()
@@ -541,8 +541,8 @@ describe('SyServerTable', () => {
 		await vi.dynamicImportSettled()
 		const filters = wrapper.findAllComponents(SyTableFilter)
 
-		expect(filters.find(filter => String(filter.props('header').value ?? '') === 'name')?.props('inputConfig')).toEqual({ maxlength: 8 })
-		expect(filters.find(filter => String(filter.props('header').value ?? '') === 'age')?.props('inputConfig')).toEqual({ maxlength: 6 })
+		expect(filters.find(filter => String(filter.props('header').value ?? '') === 'name')?.props('header').filterConfig).toEqual({ maxlength: 8 })
+		expect(filters.find(filter => String(filter.props('header').value ?? '') === 'age')?.props('header').filterConfig).toEqual({ maxlength: 6 })
 		expect(warnSpy).not.toHaveBeenCalled()
 
 		warnSpy.mockRestore()

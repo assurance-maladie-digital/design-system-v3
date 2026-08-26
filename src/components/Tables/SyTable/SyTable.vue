@@ -9,7 +9,7 @@
 	import { locales } from '../common/locales'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
 	import { useTableProps } from '../common/tableProps'
-	import type { DataOptions, Item, SyTableProps, TableColumnHeader, TableFilterInputConfig } from '../common/types'
+	import type { DataOptions, Item, SyTableProps } from '../common/types'
 	import { useTableFilter } from '../common/useTableFilter'
 	import { usePagination } from '../common/usePagination'
 	import { useTableOptions } from '../common/useTableOptions'
@@ -118,10 +118,6 @@
 		filterInputConfig: props.filterInputConfig,
 		componentName: 'SyTable',
 	})
-
-	function getFilterInputConfig(column: TableColumnHeader): TableFilterInputConfig | undefined {
-		return getEnhancedHeader(column).filterConfig
-	}
 
 	const { filteredItems } = useTableItems({
 		items: computed(() => props.items),
@@ -466,7 +462,6 @@
 									:filterable="true"
 									:filters="filters"
 									:header="getEnhancedHeader(column)"
-									:input-config="getFilterInputConfig(column)"
 									@update:filters="filters = $event"
 								>
 									<template #custom-filter="customFilterSlotProps">
@@ -532,7 +527,6 @@
 								v-if="header.filterable"
 								:filters="filters"
 								:header="getEnhancedHeader(header)"
-								:input-config="getFilterInputConfig(header)"
 								@update:filters="filters = $event"
 							>
 								<template #custom-filter="filterSlotProps">

@@ -11,7 +11,7 @@
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
 	import { useTableAccessibility } from '../common/tableAccessibilityUtils'
 	import { useTableProps } from '../common/tableProps'
-	import type { DataOptions, Item, Items, SyServerTableProps, TableColumnHeader, TableFilterInputConfig } from '../common/types'
+	import type { DataOptions, Item, Items, SyServerTableProps } from '../common/types'
 	import type { ClickableTableRowPropsInput } from '../common/useClickableTableRow'
 	import { useClickableTableRow } from '../common/useClickableTableRow'
 	import { usePagination } from '../common/usePagination'
@@ -119,10 +119,6 @@
 		filterInputConfig: props.filterInputConfig,
 		componentName: 'SyServerTable',
 	})
-
-	function getFilterInputConfig(column: TableColumnHeader): TableFilterInputConfig | undefined {
-		return getEnhancedHeader(column).filterConfig
-	}
 
 	// Keep last non-undefined items to avoid clearing the table during refetches
 	const lastNonUndefinedItems = ref<Items>([])
@@ -497,7 +493,6 @@
 									:filterable="true"
 									:filters="filters"
 									:header="getEnhancedHeader(column)"
-									:input-config="getFilterInputConfig(column)"
 									@update:filters="filters = $event"
 								>
 									<template #custom-filter="filterSlotProps">
@@ -553,7 +548,6 @@
 								v-if="header.filterable"
 								:filters="filters"
 								:header="getEnhancedHeader(header)"
-								:input-config="getFilterInputConfig(header)"
 								@update:filters="filters = $event"
 							>
 								<template #custom-filter="customFilterSlotProps">
