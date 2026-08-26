@@ -24,7 +24,7 @@
  * ## Sélecteurs
  *
  * Le composable utilise des sélecteurs spécifiques pour les proxies personnalisés
- * (`data-sy-date-picker-option`) créés par `useMonthButtonCustomization`, avec
+ * (`data-sy-date-picker-option`) créés par `useDatePickerAccessibility`, avec
  * fallback sur les boutons natifs Vuetify (`.v-btn`).
  */
 import { type ComponentPublicInstance, type Ref } from 'vue'
