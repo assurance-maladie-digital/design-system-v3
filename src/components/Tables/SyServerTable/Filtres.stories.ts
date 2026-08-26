@@ -2131,7 +2131,7 @@ export const CustomFilterInputs: Story = {
 			page: 1,
 			filters: [],
 		},
-		'filterInputConfig': {
+		filterInputConfig: {
 			firstname: {
 				variant: 'outlined',
 				density: 'comfortable',

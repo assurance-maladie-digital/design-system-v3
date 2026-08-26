@@ -160,6 +160,7 @@ export function useTableHeaders({
 		const hasUnknownKey = configKeys.some(key => !columnIdentifiers.has(key))
 		if (hasUnknownKey) {
 			hasWarnedInvalidFilterInputConfig = true
+			// eslint-disable-next-line no-console
 			console.warn(
 				`[${componentName}] La prop \`filterInputConfig\` doit être indexée par la clé (ou value) de chaque colonne filtrable, ex. { [columnKey]: { maxlength: 10 } }. `
 				+ 'L\'ancien format (options placées directement à la racine) n\'est plus supporté.',
