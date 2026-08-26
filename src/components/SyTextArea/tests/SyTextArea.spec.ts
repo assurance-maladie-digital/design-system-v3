@@ -486,7 +486,7 @@ describe('SyTextArea', () => {
 
 		expect(wrapper.find('.warning-field').exists()).toBe(true)
 		expect(wrapper.find('.sy-textarea__state-icon').exists()).toBe(true)
-		expect(wrapper.findComponent(SyIcon).props('color')).toBe('onWarningVariant')
+		expect(wrapper.findComponent(SyIcon).props('color')).toBe('on-warning-variant')
 	})
 
 	it('applies error visual state and error icon when validation fails', async () => {

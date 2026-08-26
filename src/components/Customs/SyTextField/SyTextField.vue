@@ -8,7 +8,6 @@
 		mdiCheck,
 		mdiInformationOutline,
 		mdiClose,
-		mdiCloseCircle,
 		mdiAlertCircle,
 		mdiCalendar,
 		mdiChevronUp,
@@ -168,7 +167,7 @@
 	}
 
 	const focused = ref(false)
-	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess, iconColor, clearButtonColorClass, state, hasMessages, clearValidation } = useSyTextFieldValidation({
+	const { validate, errors, warnings, successes, hasError, hasWarning, hasSuccess, iconColor, state, hasMessages, clearValidation } = useSyTextFieldValidation({
 		modelValue: model,
 		readonly: toRef(props, 'readonly'),
 		disabled: toRef(props, 'disabled'),
@@ -661,8 +660,9 @@
 							<template #activator="{ props: tooltipProps }">
 								<SyIcon
 									v-bind="tooltipProps"
+									class="sy-text-field__tooltip-icon"
 									:label="props.label ? `${props.label} - info` : 'Info'"
-									:color="iconColor"
+									color="primary"
 									:icon="ICONS.info"
 									role="button"
 									:decorative="false"
@@ -713,8 +713,9 @@
 							<template #activator="{ props: tooltipProps }">
 								<SyIcon
 									v-bind="tooltipProps"
+									class="sy-text-field__tooltip-icon"
 									:label="props.label ? `${props.label} - info` : 'Info'"
-									:color="iconColor"
+									color="primary"
 									:icon="ICONS.info"
 									role="button"
 									:decorative="false"
@@ -783,10 +784,9 @@
 					<VBtn
 						v-if="showClear"
 						class="v-btn v-btn--density-compact mr-1 sy-text-field__clear"
-						:class="clearButtonColorClass"
 						:aria-label="locales.clear(props.label)"
 						:title="props.label ? `Vider ${props.label}` : 'Vider'"
-						:icon="mdiCloseCircle"
+						:icon="mdiClose"
 						variant="text"
 						:ripple="false"
 						@click.stop="clearField"
@@ -868,30 +868,28 @@
 	width: 100%;
 }
 
-.warning-field {
-	:deep(.v-input__details > .v-icon),
-	:deep(.v-input__prepend > .v-icon),
-	:deep(.v-input__append > .v-icon) {
-		opacity: 1 !important;
-	}
+:deep(.v-icon) {
+	opacity: 1 !important;
+}
 
+.warning-field {
 	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-onWarningVariant)) !important;
+		fill: rgb(var(--v-theme-on-warning-variant)) !important;
 	}
 
 	:deep(.v-label.v-field-label) {
-		color: rgb(var(--v-theme-borderWarning)) !important;
+		color: rgb(var(--v-theme-border-warning)) !important;
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-onWarningVariant)) !important;
+		color: rgb(var(--v-theme-on-warning-variant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 
 		.v-field__outline {
 			--v-field-border-opacity: 1;
 
-			color: rgb(var(--v-theme-onWarningVariant)) !important;
+			color: rgb(var(--v-theme-on-warning-variant)) !important;
 		}
 	}
 
@@ -899,25 +897,19 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-onWarningVariant)) !important;
+			color: rgb(var(--v-theme-on-warning-variant)) !important;
 		}
 	}
 }
 
 /* stylelint-disable-next-line selector-class-pattern */
-.text-iconBase {
+.text-icon-base {
 	:deep(.v-icon__svg) {
 		fill: rgb(var(--v-theme-primary)) !important;
 	}
 }
 
 .error-field {
-	:deep(.v-input__details > .v-icon),
-	:deep(.v-input__prepend > .v-icon),
-	:deep(.v-input__append > .v-icon) {
-		opacity: 1 !important;
-	}
-
 	:deep(.v-icon__svg) {
 		fill: rgb(var(--v-theme-error)) !important;
 	}
@@ -942,29 +934,23 @@
 }
 
 .success-field {
-	:deep(.v-input__details > .v-icon),
-	:deep(.v-input__prepend > .v-icon),
-	:deep(.v-input__append > .v-icon) {
-		opacity: 1 !important;
-	}
-
 	:deep(.v-icon__svg) {
-		fill: rgb(var(--v-theme-onSuccessVariant)) !important;
+		fill: rgb(var(--v-theme-on-success-variant)) !important;
 	}
 
 	:deep(.v-label.v-field-label) {
-		color: rgb(var(--v-theme-borderSuccess)) !important;
+		color: rgb(var(--v-theme-border-success)) !important;
 	}
 
 	:deep(.v-field) {
-		color: rgb(var(--v-theme-onSuccessVariant)) !important;
+		color: rgb(var(--v-theme-on-success-variant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 
 		.v-field__outline {
 			--v-field-border-opacity: 1;
 
-			color: rgb(var(--v-theme-onSuccessVariant)) !important;
+			color: rgb(var(--v-theme-on-success-variant)) !important;
 		}
 	}
 
@@ -972,14 +958,14 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgb(var(--v-theme-onSuccessVariant)) !important;
+			color: rgb(var(--v-theme-on-success-variant)) !important;
 		}
 	}
 }
 
 .basic-field {
-	:deep(.v-icon__svg) {
-		fill: rgb(0 0 0 / 70%);
+	:deep(.v-icon:not(.sy-text-field__tooltip-icon) .v-icon__svg) {
+		fill: rgb(var(--v-theme-on-surface));
 	}
 
 	:deep(.v-field--focused .v-field__outline) {
@@ -991,13 +977,11 @@
 	:deep(.v-input__append .v-icon:focus-visible) {
 		outline: 2px solid rgb(var(--v-theme-primary));
 		outline-offset: 2px;
-		opacity: 1;
 	}
 }
 
-:deep(.sy-text-field__clear .v-icon__svg),
-:deep(.v-field__clearable .v-icon__svg) {
-	fill: rgba(var(--v-theme-onSurface), 0.6) !important;
+:deep(.sy-text-field__clear .v-icon__svg) {
+	fill: rgb(var(--v-theme-on-surface)) !important;
 }
 
 .sy-text-field__spinner {
@@ -1016,7 +1000,7 @@
 	padding: 0;
 	border: none;
 	background: transparent;
-	color: rgba(var(--v-theme-onSurface), 0.6);
+	color: rgb(var(--v-theme-on-surface));
 	cursor: pointer;
 }
 
@@ -1052,10 +1036,6 @@
 :deep(.v-field__clearable),
 :deep(.v-field__clearable *) {
 	transition: none !important;
-}
-
-:deep(.v-field__clearable .v-icon) {
-	opacity: 1 !important;
 }
 
 // Quand le helpText occupe la position du message (état neutre ou succès sans message texte),

@@ -246,7 +246,7 @@
 					:confirm-tab-change="props.confirmTabChange"
 					:confirmation-message="formattedConfirmationMessage"
 					:vuetify-options="{
-						sheet: { theme: 'light', color: 'rgb(var(--v-theme-primaryVariant))' },
+						sheet: { theme: 'light', color: 'rgb(var(--v-theme-primary-variant))' },
 						tab: { 'base-color': 'rgb(var(--v-theme-surface), 0.7)', 'active-color': 'rgb(var(--v-theme-surface))', 'slider-color': 'rgb(var(--v-theme-surface))' },
 						tabs: { height: '60' }
 					}"

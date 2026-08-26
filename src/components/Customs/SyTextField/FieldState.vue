@@ -36,11 +36,11 @@
 }
 
 .success-icon :deep(.v-icon__svg) {
-	fill: rgb(var(--v-theme-onSuccessVariant)) !important;
+	fill: rgb(var(--v-theme-on-success-variant)) !important;
 }
 
 .warning-icon :deep(.v-icon__svg) {
-	fill: rgb(var(--v-theme-onWarningVariant)) !important;
+	fill: rgb(var(--v-theme-on-warning-variant)) !important;
 }
 
 .error-icon :deep(.v-icon__svg) {

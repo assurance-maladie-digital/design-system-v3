@@ -204,7 +204,7 @@
 
 			<VBtn
 				size="small"
-				color="onSuccessVariant"
+				color="on-success-variant"
 				class="mr-2"
 				@click="setTestDates"
 			>

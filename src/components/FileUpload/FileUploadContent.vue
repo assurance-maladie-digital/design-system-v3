@@ -96,7 +96,7 @@
 
 .sy-file-upload-caption {
 	font-size: 0.875rem;
-	color: rgb(var(--v-theme-onSurfaceVariant));
+	color: rgb(var(--v-theme-on-surface-variant));
 }
 
 .sy-file-upload-btn {
@@ -126,11 +126,11 @@
 	// (`_btns.scss`, `interactionDarken` à 0.2 puis 0.4) : à répercuter ici en cas d'ajustement
 	// de la charte, rien ne les synchronise.
 	&:hover::before {
-		background: rgba(var(--v-theme-interactionDarken), 0.2);
+		background: rgba(var(--v-theme-interaction-darken), 0.2);
 	}
 
 	&:active::before {
-		background: rgba(var(--v-theme-interactionDarken), 0.4);
+		background: rgba(var(--v-theme-interaction-darken), 0.4);
 	}
 
 	// Dropzone désactivée : on neutralise les états d'interaction ici plutôt que par un

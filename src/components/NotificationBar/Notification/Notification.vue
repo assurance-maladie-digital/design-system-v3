@@ -130,41 +130,41 @@
 	/* stylelint-disable custom-property-pattern */
 	.notification--info {
 		background-color: rgb(var(--v-theme-info));
-		color: rgb(var(--v-theme-onPrimary));
+		color: rgb(var(--v-theme-on-primary));
 
 		:deep(button:focus-visible),
 		:deep(a:focus-visible) {
-			outline-color: rgb(var(--v-theme-onPrimary));
+			outline-color: rgb(var(--v-theme-on-primary));
 		}
 	}
 
 	.notification--success {
 		background-color: rgb(var(--v-theme-success, '86, 194, 113'));
-		color: rgb(var(--v-theme-onSuccess));
+		color: rgb(var(--v-theme-on-success));
 
 		:deep(button:focus-visible),
 		:deep(a:focus-visible) {
-			outline-color: rgb(var(--v-theme-onSuccess));
+			outline-color: rgb(var(--v-theme-on-success));
 		}
 	}
 
 	.notification--warning {
 		background-color: rgb(var(--v-theme-warning));
-		color: rgb(var(--v-theme-onWarning));
+		color: rgb(var(--v-theme-on-warning));
 
 		:deep(button:focus-visible),
 		:deep(a:focus-visible) {
-			outline-color: rgb(var(--v-theme-onSurface));
+			outline-color: rgb(var(--v-theme-on-surface));
 		}
 	}
 
 	.notification--error {
 		background-color: rgb(var(--v-theme-error));
-		color: rgb(var(--v-theme-onPrimary));
+		color: rgb(var(--v-theme-on-primary));
 
 		:deep(button:focus-visible),
 		:deep(a:focus-visible) {
-			outline-color: rgb(var(--v-theme-onPrimary));
+			outline-color: rgb(var(--v-theme-on-primary));
 		}
 	}
 
