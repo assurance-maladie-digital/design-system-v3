@@ -32,7 +32,6 @@
  * - `useDisplayedDateString` : Formatage de la chaîne affichée dans le champ texte
  * - `useDatePickerInputBlurHandler` : Validation au blur du champ texte (sync modèle + validation)
  * - `useTodayButton` / `buildTodaySelectionState` : Bouton « Aujourd'hui »
- * - `useMonthButtonCustomization` : Personnalisation des boutons mois/année (proxys ARIA)
  * - `useDatePickerState` : État interne (selectedDates, textInputValue, displayFormattedDate)
  * - `useHolidayHighlighting` : Marquage des jours fériés dans le calendrier
  * - `useSelectedDayAria` : Mise à jour de `aria-selected` sur le jour sélectionné
@@ -69,7 +68,6 @@ export { useDatePickerVisibility } from './useDatePickerVisibility'
 export { useDisplayedDateString } from './useDisplayedDateString'
 export { useDatePickerInputBlurHandler } from './useDatePickerInputBlurHandler'
 export { useTodayButton, buildTodaySelectionState } from './useTodayButton'
-export { useMonthButtonCustomization } from './useMonthButtonCustomization'
 export { useDatePickerState } from './useDatePickerState'
 export { useHolidayHighlighting } from './useHolidayHighlighting'
 export { useSelectedDayAria } from './useSelectedDayAria'

@@ -38,7 +38,7 @@ export interface UseDatePickerCalendarOptions {
 
 	/**
 	 * Rafraîchit l'UI du calendrier après un changement de mois/année.
-	 * Typiquement : customizeMonthButton + markHolidayDays + updateSelectedDayAria.
+	 * Typiquement : markHolidayDays + updateSelectedDayAria.
 	 */
 	refreshCalendarUi: (options: { focusDay?: boolean }) => void
 
@@ -271,7 +271,10 @@ export const useDatePickerCalendar = (options: UseDatePickerCalendarOptions): Us
 		currentMonth.value = month
 		currentMonthName.value = dayjs().month(parseInt(month, 10)).format('MMMM')
 		handleMonthUpdate()
-		nextTick(() => refreshCalendarUi({ focusDay: true }))
+
+		const activeEl = document.activeElement
+		const isNavButton = activeEl?.closest('[data-testid="prev-month"], [data-testid="next-month"]')
+		nextTick(() => refreshCalendarUi({ focusDay: !isNavButton }))
 	}
 
 	/**
@@ -283,11 +286,13 @@ export const useDatePickerCalendar = (options: UseDatePickerCalendarOptions): Us
 		currentYear.value = year
 		currentYearName.value = year
 
-		// Hook optionnel pour le pont Dec↔Jan (ComplexDatePicker)
 		onYearChangeBridge?.(year, oldYear)
 
 		handleYearUpdate()
-		nextTick(() => refreshCalendarUi({ focusDay: true }))
+
+		const activeEl = document.activeElement
+		const isNavButton = activeEl?.closest('[data-testid="prev-month"], [data-testid="next-month"]')
+		nextTick(() => refreshCalendarUi({ focusDay: !isNavButton }))
 	}
 
 	return {
