@@ -301,7 +301,7 @@ export const Default: Story = {
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'placeholder': 'JJ/MM/AAAA',
-		'label': 'Date avec règles de validation',
+		'label': 'Date (JJ/MM/AAAA)',
 		'required': true,
 		'disabled': false,
 		'readonly': false,
@@ -390,7 +390,7 @@ export const Required: Story = {
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'placeholder': 'JJ/MM/AAAA',
-		'label': 'Date avec règles de validation',
+		'label': 'Date (JJ/MM/AAAA)',
 		'required': true,
 		'disabled': false,
 		'readonly': false,
@@ -479,7 +479,7 @@ export const EuropeanFormat: Story = {
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': 'YYYY/MM/DD',
 		'placeholder': 'JJ/MM/AAAA',
-		'label': 'Date avec règles de validation',
+		'label': 'Date (JJ/MM/AAAA)',
 		'required': true,
 		'noIcon': true,
 		'onUpdate:modelValue': fn(),
@@ -520,7 +520,8 @@ export const CustomRules: Story = {
 						v-model="date"
 						date-format-return="DD/MM/YYYY"
 						format="DD/MM/YYYY"
-						placeholder="DD/MM/YYYY"
+						placeholder="JJ/MM/AAAA"
+						label="Date avec règles personnalisées (JJ/MM/AAAA)"
 						required
 						no-calendar
 						:custom-rules="[{
@@ -542,8 +543,8 @@ export const CustomRules: Story = {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': 'DD/MM/YYYY',
-		'label': 'Date avec règles personnalisées',
-		'placeholder': 'DD/MM/YYYY',
+		'label': 'Date avec règles personnalisées (JJ/MM/AAAA)',
+		'placeholder': 'JJ/MM/AAAA',
 		'required': true,
 		'customRules': [{
 			type: 'custom',
@@ -588,25 +589,26 @@ export const WarningRules: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
-					<DatePicker
-						v-model="date"
-						format="DD/MM/YYYY"
-						placeholder="JJ/MM/AAAA"
-						no-calendar
-						:custom-warning-rules="[{
-							type: 'custom',
-							options: {
-								validate: value => !value || !value.includes('2025'),
-								warningMessage: 'Les dates en 2025 ne sont pas autorisées',
-								successMessage: 'Date hors 2025',
-								fieldIdentifier: 'date',
-								isWarning: true
-							}
-						}]"
-					/>
-				</template>
-				`,
+        <template>
+          <DatePicker
+            v-model="date"
+            format="DD/MM/YYYY"
+            placeholder="JJ/MM/AAAA"
+            label="Date avec règles d'avertissement (JJ/MM/AAAA)"
+            no-calendar
+            :custom-warning-rules="[{
+              type: 'custom',
+              options: {
+                validate: value => !value || !value.includes('2025'),
+                warningMessage: 'Les dates en 2025 ne sont pas autorisées',
+                successMessage: 'Date hors 2025',
+                fieldIdentifier: 'date',
+                isWarning: true
+              }
+            }]"
+          />
+        </template>
+        `,
 			},
 		],
 	},
@@ -614,7 +616,7 @@ export const WarningRules: Story = {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
 		'placeholder': 'JJ/MM/AAAA',
-		'label': 'Date avec règles d\'avertissement',
+		'label': 'Date avec règles d\'avertissement (JJ/MM/AAAA)',
 		'customWarningRules': [{
 			type: 'custom',
 			options: {
@@ -637,18 +639,18 @@ export const WarningRules: Story = {
 				return { args, date }
 			},
 			template: `
-				<div style="padding: 20px;">
-					<h4 class="mb-0">Format avec règles d'avertissement :</h4>
-					<p class="mb-4">Les dates en 2025 ne sont pas autorisées</p>
-					<DatePicker
-						v-model="date"
-						v-bind="args"
-					/>
-					<div style="margin-top: 10px; font-family: monospace; color: #666;">
-						Valeur : {{ date }}
-					</div>
-				</div>
-			`,
+        <div style="padding: 20px;">
+          <h4 class="mb-0">Format avec règles d'avertissement :</h4>
+          <p class="mb-4">Les dates en 2025 ne sont pas autorisées</p>
+          <DatePicker
+            v-model="date"
+            v-bind="args"
+          />
+          <div style="margin-top: 10px; font-family: monospace; color: #666;">
+            Valeur : {{ date }}
+          </div>
+        </div>
+      `,
 		}
 	},
 }
@@ -659,16 +661,17 @@ export const WithAppendIcon: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
-					<DatePicker
-						v-model="date"
-						format="DD/MM/YYYY"
-						placeholder="JJ/MM/AAAA"
-						no-calendar
-						display-append-icon
-					/>
-				</template>
-				`,
+        <template>
+          <DatePicker
+            v-model="date"
+            format="DD/MM/YYYY"
+            placeholder="JJ/MM/AAAA"
+            label="Date avec icône en suffixe (JJ/MM/AAAA)"
+            no-calendar
+            display-append-icon
+          />
+        </template>
+        `,
 			},
 		],
 	},
@@ -676,7 +679,7 @@ export const WithAppendIcon: Story = {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
 		'placeholder': 'JJ/MM/AAAA',
-		'label': 'Date avec icône en suffixe',
+		'label': 'Date avec icône en suffixe (JJ/MM/AAAA)',
 		'displayAppendIcon': true,
 		'onUpdate:modelValue': fn(),
 		'onFocus': fn(),
@@ -690,17 +693,17 @@ export const WithAppendIcon: Story = {
 				return { args, date }
 			},
 			template: `
-				<div style="padding: 20px;">
-					<h4 class="mb-4">Format avec icône en suffixe</h4>
-					<DatePicker
-						v-model="date"
-						v-bind="args"
-					/>
-					<div style="margin-top: 10px; font-family: monospace; color: #666;">
-						Valeur : {{ date }}
-					</div>
-				</div>
-			`,
+        <div style="padding: 20px;">
+          <h4 class="mb-4">Format avec icône en suffixe</h4>
+          <DatePicker
+            v-model="date"
+            v-bind="args"
+          />
+          <div style="margin-top: 10px; font-family: monospace; color: #666;">
+            Valeur : {{ date }}
+          </div>
+        </div>
+      `,
 		}
 	},
 }
@@ -711,36 +714,36 @@ export const WithErrorDisabled: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
-					<div class="d-flex">
-						<div class="mr-4" style="width: 300px;">
-							<p class="mb-3">Avec <code>disableErrorHandling</code>:</p>
-							<DatePicker
-								v-model="date1"
-								format="DD/MM/YYYY"
-								placeholder="JJ/MM/AAAA"
-								label="Date (JJ/MM/AAAA)"
-								required
-								no-icon
-								no-calendar
-								:disableErrorHandling="true"
-							/>
-						</div>
-						<div style="width: 300px;">
-							<p class="mb-3">Sans <code>disableErrorHandling</code>:</p>
-							<DatePicker
-								v-model="date2"
-								format="DD/MM/YYYY"
-								placeholder="JJ/MM/AAAA"
-								label="Date (JJ/MM/AAAA)"
-								required
-								no-icon
-								no-calendar
-							/>
-						</div>
-					</div>
-				</template>
-				`,
+        <template>
+          <div class="d-flex">
+            <div class="mr-4" style="width: 300px;">
+              <p class="mb-3">Avec <code>disableErrorHandling</code>:</p>
+              <DatePicker
+                v-model="date1"
+                format="DD/MM/YYYY"
+                placeholder="JJ/MM/AAAA"
+                label="Date (JJ/MM/AAAA)"
+                required
+                no-icon
+                no-calendar
+                :disableErrorHandling="true"
+              />
+            </div>
+            <div style="width: 300px;">
+              <p class="mb-3">Sans <code>disableErrorHandling</code>:</p>
+              <DatePicker
+                v-model="date2"
+                format="DD/MM/YYYY"
+                placeholder="JJ/MM/AAAA"
+                label="Date (JJ/MM/AAAA)"
+                required
+                no-icon
+                no-calendar
+              />
+            </div>
+          </div>
+        </template>
+        `,
 			},
 		],
 	},
@@ -763,38 +766,38 @@ export const WithErrorDisabled: Story = {
 				return { args, date1, date2 }
 			},
 			template: `
-				<div style="padding: 20px;">
-					<h4 class="mb-4">DateTextInput avec désactivation des erreurs</h4>
-					<div class="d-flex mb-4">
-						<div class="mr-4" style="width: 300px;">
-							<p class="mb-3">Avec <code>disableErrorHandling</code>:</p>
-							<DatePicker
-								v-model="date1"
-								v-bind="args"
-							/>
-							<div style="margin-top: 10px; font-family: monospace; color: #666;">
-								Valeur : {{ date1 }}
-							</div>
-						</div>
-						
-						<div style="width: 300px;">
-							<p class="mb-3">Sans <code>disableErrorHandling</code>:</p>
-							<DatePicker
-								v-model="date2"
-								format="DD/MM/YYYY"
-								placeholder="JJ/MM/AAAA"
-								label="Date (JJ/MM/AAAA)"
-								required
-								no-icon
-								no-calendar
-							/>
-							<div style="margin-top: 10px; font-family: monospace; color: #666;">
-								Valeur : {{ date2 }}
-							</div>
-						</div>
-					</div>
-				</div>
-			`,
+        <div style="padding: 20px;">
+          <h4 class="mb-4">DateTextInput avec désactivation des erreurs</h4>
+          <div class="d-flex mb-4">
+            <div class="mr-4" style="width: 300px;">
+              <p class="mb-3">Avec <code>disableErrorHandling</code>:</p>
+              <DatePicker
+                v-model="date1"
+                v-bind="args"
+              />
+              <div style="margin-top: 10px; font-family: monospace; color: #666;">
+                Valeur : {{ date1 }}
+              </div>
+            </div>
+            
+            <div style="width: 300px;">
+              <p class="mb-3">Sans <code>disableErrorHandling</code>:</p>
+              <DatePicker
+                v-model="date2"
+                format="DD/MM/YYYY"
+                placeholder="JJ/MM/AAAA"
+                label="Date (JJ/MM/AAAA)"
+                required
+                no-icon
+                no-calendar
+              />
+              <div style="margin-top: 10px; font-family: monospace; color: #666;">
+                Valeur : {{ date2 }}
+              </div>
+            </div>
+          </div>
+        </div>
+      `,
 		}
 	},
 }
@@ -805,64 +808,68 @@ export const AutoClampFeature: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
-					<div class="d-flex flex-column">
-						<h3>Démonstration de l'auto clamp dans DateTextInput</h3>
-						
-						<h4 class="mt-4">Format JJ/MM/AAAA (séparateur /)</h4>
-						<DatePicker
-							v-model="dateSlash"
-							placeholder="Saisie avec auto clamp - séparateur /"
-							format="DD/MM/YYYY"
-							noCalendar
-							autoClamp
-						/>
-						
-						<h4 class="mt-4">Format JJ-MM-AAAA (séparateur -)</h4>
-						<DatePicker
-							v-model="dateDash"
-							placeholder="Saisie avec auto clamp - séparateur -"
-							format="DD-MM-YYYY"
-							noCalendar
-							autoClamp
+        <template>
+          <div class="d-flex flex-column">
+            <h3>Démonstration de l'auto clamp dans DateTextInput</h3>
+            
+            <h4 class="mt-4">Format JJ/MM/AAAA (séparateur /)</h4>
+            <DatePicker
+              v-model="dateSlash"
+              placeholder="JJ/MM/AAAA"
+              label="Date (JJ/MM/AAAA)"
+              format="DD/MM/YYYY"
+              noCalendar
+              autoClamp
+            />
+            
+            <h4 class="mt-4">Format JJ-MM-AAAA (séparateur -)</h4>
+            <DatePicker
+              v-model="dateDash"
+              placeholder="JJ-MM-AAAA"
+              label="Date (JJ-MM-AAAA)"
+              format="DD-MM-YYYY"
+              noCalendar
+              autoClamp
 
-						/>
-						
-						<h4 class="mt-4">Format YYYY.MM.DD (séparateur .)</h4>
-						<DatePicker
-							v-model="dateDot"
-							placeholder="Saisie avec auto clamp - séparateur ."
-							format="YYYY.MM.DD"
-							noCalendar
-							autoClamp
-						/>
-						
-						<h4 class="mt-4">Mode plage de dates (séparateur /)</h4>
-						<DatePicker
-							v-model="dateRange"
-							placeholder="Saisie plage avec auto clamp"
-							format="DD/MM/YYYY"
-							displayRange
-							noCalendar
-							autoClamp
-						/>
-					</div>
-				</template>
-				`,
+            />
+            
+            <h4 class="mt-4">Format YYYY.MM.DD (séparateur .)</h4>
+            <DatePicker
+              v-model="dateDot"
+              placeholder="AAAA.MM.JJ"
+              label="Date (AAAA.MM.JJ)"
+              format="YYYY.MM.DD"
+              noCalendar
+              autoClamp
+            />
+            
+            <h4 class="mt-4">Mode plage de dates (séparateur /)</h4>
+            <DatePicker
+              v-model="dateRange"
+              placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
+              label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
+              format="DD/MM/YYYY"
+              displayRange
+              noCalendar
+              autoClamp
+            />
+          </div>
+        </template>
+        `,
 			},
 			{
 				name: 'Script',
 				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const dateSlash = ref('')
-					const dateDash = ref('')
-					const dateDot = ref('')
-					const dateRange = ref('')
-				</script>
-				`,
+        <script setup lang="ts">
+          import { ref } from 'vue'
+          import { DatePicker } from '@cnamts/synapse'
+          
+          const dateSlash = ref('')
+          const dateDash = ref('')
+          const dateDot = ref('')
+          const dateRange = ref('')
+        </script>
+        `,
 			},
 		],
 	},
@@ -877,56 +884,56 @@ export const AutoClampFeature: Story = {
 				return { dateSlash, dateDash, dateDot, dateRange }
 			},
 			template: `
-              <div class="d-flex flex-column pa-4">
-                <h3>Démonstration de l'auto clamp dans DateTextInput</h3>
-                <div class="mb-4 mt-2">Saisissez uniquement des chiffres - les séparateurs seront ajoutés automatiquement selon le format défini</div>
-                
-                <h4 class="mb-2">Format JJ/MM/AAAA (séparateur /)</h4>
-                <DatePicker
-                  v-model="dateSlash"
-                  placeholder="JJ/MM/AAAA"
-				  label="Date (JJ/MM/AAAA)"
-                  format="DD/MM/YYYY"
-                  noCalendar
-                  autoClamp
-                />
-                <div class="caption mb-4">Valeur actuelle: {{ dateSlash || 'aucune date saisie' }}</div>
-                
-                <h4 class="mb-2">Format JJ-MM-AAAA (séparateur -)</h4>
-                <DatePicker
-                  v-model="dateDash"
-                  placeholder="JJ-MM-AAAA"
-				  label="Date (JJ-MM-AAAA)"
-                  format="DD-MM-YYYY"
-                  noCalendar
-                  autoClamp
-                />
-                <div class="caption mb-4">Valeur actuelle: {{ dateDash || 'aucune date saisie' }}</div>
-                
-                <h4 class="mb-2">Format AAAA.MM.JJ (séparateur .)</h4>
-                <DatePicker
-                  v-model="dateDot"
-                  placeholder="AAAA.MM.JJ"
-				  label="Date (AAAA.MM.JJ)"
-                  format="YYYY.MM.DD"
-                  noCalendar
-                  autoClamp
-                />
-                <div class="caption mb-4">Valeur actuelle: {{ dateDot || 'aucune date saisie' }}</div>
-                
-                <h4 class="mb-2">Mode plage de dates (séparateur /)</h4>
-                <DatePicker
-                  v-model="dateRange"
-                  placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
-				  label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
-                  format="DD/MM/YYYY"
-                  displayRange
-                  noCalendar
-                  autoClamp
-                />
-                <div class="caption mb-4">Valeur actuelle: {{ dateRange || 'aucune plage saisie' }}</div>
-              </div>
-            `,
+        <div class="d-flex flex-column pa-4">
+          <h3>Démonstration de l'auto clamp dans DateTextInput</h3>
+          <div class="mb-4 mt-2">Saisissez uniquement des chiffres - les séparateurs seront ajoutés automatiquement selon le format défini</div>
+          
+          <h4 class="mb-2">Format JJ/MM/AAAA (séparateur /)</h4>
+          <DatePicker
+            v-model="dateSlash"
+            placeholder="JJ/MM/AAAA"
+            label="Date (JJ/MM/AAAA)"
+            format="DD/MM/YYYY"
+            noCalendar
+            autoClamp
+          />
+          <div class="caption mb-4">Valeur actuelle: {{ dateSlash || 'aucune date saisie' }}</div>
+          
+          <h4 class="mb-2">Format JJ-MM-AAAA (séparateur -)</h4>
+          <DatePicker
+            v-model="dateDash"
+            placeholder="JJ-MM-AAAA"
+            label="Date (JJ-MM-AAAA)"
+            format="DD-MM-YYYY"
+            noCalendar
+            autoClamp
+          />
+          <div class="caption mb-4">Valeur actuelle: {{ dateDash || 'aucune date saisie' }}</div>
+          
+          <h4 class="mb-2">Format AAAA.MM.JJ (séparateur .)</h4>
+          <DatePicker
+            v-model="dateDot"
+            placeholder="AAAA.MM.JJ"
+            label="Date (AAAA.MM.JJ)"
+            format="YYYY.MM.DD"
+            noCalendar
+            autoClamp
+          />
+          <div class="caption mb-4">Valeur actuelle: {{ dateDot || 'aucune date saisie' }}</div>
+          
+          <h4 class="mb-2">Mode plage de dates (séparateur /)</h4>
+          <DatePicker
+            v-model="dateRange"
+            placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
+            label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
+            format="DD/MM/YYYY"
+            displayRange
+            noCalendar
+            autoClamp
+          />
+          <div class="caption mb-4">Valeur actuelle: {{ dateRange || 'aucune plage saisie' }}</div>
+        </div>
+      `,
 		}
 	},
 }
