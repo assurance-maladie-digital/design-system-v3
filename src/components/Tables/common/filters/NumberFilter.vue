@@ -54,7 +54,7 @@
 	const inputValue = ref(props.filterValue || '')
 	const debounceTimer = ref<number | null>(null)
 	const textFieldProps = computed(() => {
-		const bgColor = props.inputConfig.bgColor ?? props.inputConfig['backgroundColor'] ?? props.backgroundColor
+		const bgColor = props.inputConfig.bgColor ?? props.inputConfig.backgroundColor ?? props.backgroundColor
 		const inputConfig = Object.fromEntries(
 			Object.entries(props.inputConfig).filter(([key]) => !['debounceTime', 'bgColor', 'backgroundColor'].includes(key)),
 		)

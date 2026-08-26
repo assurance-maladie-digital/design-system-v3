@@ -17,6 +17,9 @@ export type TableDensityType = 'default' | 'comfortable' | 'compact'
 
 export type TableFilterInputConfig = Record<string, unknown> & {
 	debounceTime?: number
+	bgColor?: string
+	/** @deprecated Utiliser `bgColor`. Conservé pour compatibilité ascendante. */
+	backgroundColor?: string
 }
 
 export interface FilterOption {
