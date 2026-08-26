@@ -518,7 +518,8 @@ const applyOptionGridStructure = (
 }
 
 const cleanupOptionGrid = (container: HTMLElement) => {
-	cleanupGridSemanticsForSelector(container)
+	const content = container.querySelector<HTMLElement>('.v-date-picker-months__content, .v-date-picker-years__content') ?? container
+	cleanupGridSemanticsForSelector(content)
 	container.removeAttribute('role')
 	container.removeAttribute('aria-label')
 }
