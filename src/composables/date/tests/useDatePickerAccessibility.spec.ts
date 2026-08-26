@@ -154,21 +154,21 @@ describe('useDatePickerAccessibility', () => {
 		expect(yearButtons[1]?.getAttribute('aria-label')).toBeTruthy()
 	})
 
-	it('creates focus proxies for month and year options with roving tabindex', async () => {
+	it('sets roving tabindex on month and year gridcells from slots', async () => {
 		document.body.innerHTML = `
 			<div class="v-date-picker">
 				<div class="v-date-picker-months">
 					<div class="v-date-picker-months__content">
-						<button class="v-btn">janv.</button>
-						<button class="v-btn v-btn--active">févr.</button>
-						<button class="v-btn">mars</button>
+						<div role="gridcell" data-sy-date-picker-option="month" aria-pressed="false"><button class="v-btn" tabindex="-1">janv.</button></div>
+						<div role="gridcell" data-sy-date-picker-option="month" aria-pressed="true"><button class="v-btn v-btn--active" tabindex="-1">févr.</button></div>
+						<div role="gridcell" data-sy-date-picker-option="month" aria-pressed="false"><button class="v-btn" tabindex="-1">mars</button></div>
 					</div>
 				</div>
 				<div class="v-date-picker-years">
 					<div class="v-date-picker-years__content">
-						<button class="v-btn">2024</button>
-						<button class="v-btn v-btn--active">2025</button>
-						<button class="v-btn">2026</button>
+						<div role="gridcell" data-sy-date-picker-option="year" aria-pressed="false"><button class="v-btn" tabindex="-1">2024</button></div>
+						<div role="gridcell" data-sy-date-picker-option="year" aria-pressed="true"><button class="v-btn v-btn--active" tabindex="-1">2025</button></div>
+						<div role="gridcell" data-sy-date-picker-option="year" aria-pressed="false"><button class="v-btn" tabindex="-1">2026</button></div>
 					</div>
 				</div>
 			</div>
@@ -176,35 +176,30 @@ describe('useDatePickerAccessibility', () => {
 
 		await updateAccessibility()
 
-		const monthProxies = Array.from(document.querySelectorAll<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"]'))
-		const yearProxies = Array.from(document.querySelectorAll<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"]'))
+		const monthCells = Array.from(document.querySelectorAll<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"]'))
+		const yearCells = Array.from(document.querySelectorAll<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"]'))
 
-		expect(monthProxies).toHaveLength(3)
-		expect(yearProxies).toHaveLength(3)
-		expect(monthProxies[0]?.getAttribute('role')).toBe('gridcell')
-		expect(monthProxies[1]?.getAttribute('aria-pressed')).toBe('true')
-		expect(monthProxies[1]?.tabIndex).toBe(0)
-		expect(monthProxies[0]?.tabIndex).toBe(-1)
-		expect(monthProxies[0]?.querySelector('button')?.getAttribute('tabindex')).toBe('-1')
-		expect(yearProxies[1]?.getAttribute('aria-pressed')).toBe('true')
-		expect(yearProxies[1]?.tabIndex).toBe(0)
-		expect(yearProxies[0]?.tabIndex).toBe(-1)
-		expect(yearProxies[0]?.querySelector('button')?.getAttribute('tabindex')).toBe('-1')
+		expect(monthCells).toHaveLength(3)
+		expect(yearCells).toHaveLength(3)
+		expect(monthCells[0]?.getAttribute('role')).toBe('gridcell')
+		expect(monthCells[1]?.getAttribute('aria-pressed')).toBe('true')
+		expect(monthCells[1]?.tabIndex).toBe(0)
+		expect(monthCells[0]?.tabIndex).toBe(-1)
+		expect(yearCells[1]?.getAttribute('aria-pressed')).toBe('true')
+		expect(yearCells[1]?.tabIndex).toBe(0)
+		expect(yearCells[0]?.tabIndex).toBe(-1)
+
+		const monthsContainer = document.querySelector('.v-date-picker-months') as HTMLElement
+		expect(monthsContainer.getAttribute('role')).toBe('grid')
 	})
 
-	it('reuses existing month and year item wrappers when Vuetify provides them', async () => {
+	it('wraps month and year gridcells in ARIA rows', async () => {
 		document.body.innerHTML = `
 			<div class="v-date-picker">
 				<div class="v-date-picker-months">
 					<div class="v-date-picker-months__content">
-						<div class="v-date-picker-months__month"><button class="v-btn">janv.</button></div>
-						<div class="v-date-picker-months__month"><button class="v-btn v-btn--active">févr.</button></div>
-					</div>
-				</div>
-				<div class="v-date-picker-years">
-					<div class="v-date-picker-years__content">
-						<div class="v-date-picker-years__year"><button class="v-btn">2024</button></div>
-						<div class="v-date-picker-years__year v-date-picker-years__year--current"><button class="v-btn v-btn--active">2025</button></div>
+						<div role="gridcell" data-sy-date-picker-option="month" aria-pressed="false"><button class="v-btn" tabindex="-1">janv.</button></div>
+						<div role="gridcell" data-sy-date-picker-option="month" aria-pressed="true"><button class="v-btn v-btn--active" tabindex="-1">févr.</button></div>
 					</div>
 				</div>
 			</div>
@@ -212,30 +207,26 @@ describe('useDatePickerAccessibility', () => {
 
 		await updateAccessibility()
 
-		const monthWrappers = Array.from(document.querySelectorAll<HTMLElement>('.v-date-picker-months__month'))
-		const yearWrappers = Array.from(document.querySelectorAll<HTMLElement>('.v-date-picker-years__year'))
+		const content = document.querySelector('.v-date-picker-months__content') as HTMLElement
+		const rows = Array.from(content.querySelectorAll<HTMLElement>('[role="row"]'))
+		expect(rows.length).toBeGreaterThanOrEqual(1)
+		expect(rows[0]?.style.display).toBe('contents')
 
-		expect(monthWrappers[0]?.dataset.syDatePickerOption).toBe('month')
-		expect(monthWrappers[1]?.tabIndex).toBe(0)
-		expect(monthWrappers[0]?.querySelector('button')?.getAttribute('tabindex')).toBe('-1')
-		expect(yearWrappers[0]?.dataset.syDatePickerOption).toBe('year')
-		expect(yearWrappers[1]?.tabIndex).toBe(0)
-		expect(yearWrappers[0]?.querySelector('button')?.getAttribute('tabindex')).toBe('-1')
+		const cellsInRows = Array.from(content.querySelectorAll<HTMLElement>('[role="row"] [data-sy-date-picker-option="month"]'))
+		expect(cellsInRows).toHaveLength(2)
 	})
 
-	it('delegates Enter and Space on month/year proxies to the wrapped buttons', async () => {
+	it('sets grid role and aria-label on month/year containers', async () => {
 		document.body.innerHTML = `
 			<div class="v-date-picker">
 				<div class="v-date-picker-months">
 					<div class="v-date-picker-months__content">
-						<button class="v-btn">janv.</button>
-						<button class="v-btn v-btn--active">févr.</button>
+						<div role="gridcell" data-sy-date-picker-option="month" aria-pressed="false"><button class="v-btn" tabindex="-1">janv.</button></div>
 					</div>
 				</div>
 				<div class="v-date-picker-years">
 					<div class="v-date-picker-years__content">
-						<button class="v-btn">2024</button>
-						<button class="v-btn v-btn--active">2025</button>
+						<div role="gridcell" data-sy-date-picker-option="year" aria-pressed="false"><button class="v-btn" tabindex="-1">2024</button></div>
 					</div>
 				</div>
 			</div>
@@ -243,23 +234,13 @@ describe('useDatePickerAccessibility', () => {
 
 		await updateAccessibility()
 
-		const monthProxy = document.querySelector('.v-date-picker-months [data-sy-date-picker-option="month"]') as HTMLElement
-		const monthButton = monthProxy.querySelector('button') as HTMLButtonElement
-		const yearProxy = document.querySelector('.v-date-picker-years [data-sy-date-picker-option="year"]') as HTMLElement
-		const yearButton = yearProxy.querySelector('button') as HTMLButtonElement
+		const monthsContainer = document.querySelector('.v-date-picker-months') as HTMLElement
+		const yearsContainer = document.querySelector('.v-date-picker-years') as HTMLElement
 
-		const monthActivateSpy = vi.fn()
-		const yearActivateSpy = vi.fn()
-		monthButton.addEventListener('click', monthActivateSpy)
-		yearButton.addEventListener('click', yearActivateSpy)
-
-		monthProxy.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true }))
-		yearProxy.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', bubbles: true, cancelable: true }))
-
-		expect(monthActivateSpy).toHaveBeenCalledTimes(1)
-		expect(yearActivateSpy).toHaveBeenCalledTimes(1)
-		expect(monthProxy.tabIndex).toBe(0)
-		expect(yearProxy.tabIndex).toBe(0)
+		expect(monthsContainer.getAttribute('role')).toBe('grid')
+		expect(monthsContainer.getAttribute('aria-label')).toBeTruthy()
+		expect(yearsContainer.getAttribute('role')).toBe('grid')
+		expect(yearsContainer.getAttribute('aria-label')).toBeTruthy()
 	})
 
 	it('announces the target month when clicking a navigation button', async () => {
@@ -422,19 +403,13 @@ describe('useDatePickerAccessibility', () => {
 		expect(daysContainer.querySelector('button')?.getAttribute('tabindex')).toBeNull()
 	})
 
-	it('cleanupGridSemantics unwraps month and year proxies', async () => {
+	it('cleanupGridSemantics removes grid role and ARIA rows from month/year containers', async () => {
 		document.body.innerHTML = `
 			<div class="v-date-picker">
 				<div class="v-date-picker-months">
 					<div class="v-date-picker-months__content">
-						<button class="v-btn">janv.</button>
-						<button class="v-btn v-btn--active">févr.</button>
-					</div>
-				</div>
-				<div class="v-date-picker-years">
-					<div class="v-date-picker-years__content">
-						<button class="v-btn">2024</button>
-						<button class="v-btn v-btn--active">2025</button>
+						<div role="gridcell" data-sy-date-picker-option="month" aria-pressed="false"><button class="v-btn" tabindex="-1">janv.</button></div>
+						<div role="gridcell" data-sy-date-picker-option="month" aria-pressed="true"><button class="v-btn v-btn--active" tabindex="-1">févr.</button></div>
 					</div>
 				</div>
 			</div>
@@ -442,15 +417,19 @@ describe('useDatePickerAccessibility', () => {
 
 		await updateAccessibility()
 
-		expect(document.querySelectorAll('.v-date-picker-months [data-sy-date-picker-option="month"]')).toHaveLength(2)
-		expect(document.querySelectorAll('.v-date-picker-years [data-sy-date-picker-option="year"]')).toHaveLength(2)
+		const monthsContainer = document.querySelector('.v-date-picker-months') as HTMLElement
+		expect(monthsContainer.getAttribute('role')).toBe('grid')
+		expect(monthsContainer.querySelectorAll('[role="row"]')).toHaveLength(1)
 
 		await cleanupGridSemantics()
 
-		expect(document.querySelectorAll('.v-date-picker-months [data-sy-date-picker-option="month"]')).toHaveLength(0)
-		expect(document.querySelectorAll('.v-date-picker-years [data-sy-date-picker-option="year"]')).toHaveLength(0)
-		expect(document.querySelectorAll('.v-date-picker-months button')).toHaveLength(2)
-		expect(document.querySelectorAll('.v-date-picker-years button')).toHaveLength(2)
+		const monthsContainerAfter = document.querySelector('.v-date-picker-months') as HTMLElement
+		expect(monthsContainerAfter.getAttribute('role')).toBeNull()
+		expect(monthsContainerAfter.getAttribute('aria-label')).toBeNull()
+		expect(monthsContainerAfter.querySelectorAll('[role="row"]')).toHaveLength(0)
+
+		// Gridcells from slots are preserved (they are declarative, not generated)
+		expect(monthsContainerAfter.querySelectorAll('[data-sy-date-picker-option="month"]')).toHaveLength(2)
 	})
 
 	it('wraps flat div structure into ARIA rows with display: contents', async () => {
