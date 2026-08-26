@@ -9,12 +9,14 @@ import type { ViewMode } from '@/components/DatePicker/composables/useDatePicker
 const MONTH_CONTROL_SELECTOR = [
 	'[data-testid="month-btn"]',
 	'.v-date-picker-controls__month-btn',
+	'.sy-date-picker-controls__month-btn',
 ].join(',')
 
 const YEAR_CONTROL_SELECTOR = [
 	'[data-testid="year-btn"]',
 	'.v-date-picker-controls__mode-btn',
 	'.v-date-picker-controls__year-btn',
+	'.sy-date-picker-controls__year-btn',
 ].join(',')
 
 const MONTH_OPTION_PROXY_SELECTOR = '[data-sy-date-picker-option="month"]'
