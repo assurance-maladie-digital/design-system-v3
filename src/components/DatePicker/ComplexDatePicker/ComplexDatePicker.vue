@@ -980,6 +980,8 @@
 				shouldFocusDialogOnOpen.value = false
 				scheduleDialogInitialDayFocus()
 			}
+
+			ignoreNextCalendarModelSync.value = false
 		})
 	}
 
