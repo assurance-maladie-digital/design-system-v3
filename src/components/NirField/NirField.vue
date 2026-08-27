@@ -408,10 +408,8 @@
 	} satisfies {
 		validateOnSubmit: () => Promise<boolean>
 		clearValidation: () => void
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-		numberMask: { mask: string, preProcess: (value: string) => string, tokens: Record<string, any> }
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-		keyMask: { mask: string, tokens: Record<string, any> }
+		numberMask: { mask: string, preProcess: (value: string) => string, tokens: Record<string, unknown> }
+		keyMask: { mask: string, tokens: Record<string, unknown> }
 		numberValidation: ReturnType<typeof useValidation>
 		keyValidation: ReturnType<typeof useValidation>
 		errors: { number: Readonly<Ref<readonly string[]>>, key: Readonly<Ref<readonly string[]>> }

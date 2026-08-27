@@ -341,8 +341,7 @@
 	}
 
 	const getItemText = (item: unknown) => {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-		return (item as Record<string, any>)[props.textKey]
+		return (item as Record<string, unknown>)[props.textKey] as string | undefined
 	}
 
 	watchEffect(() => {
@@ -367,8 +366,7 @@
 		if (typeof item === 'string' || typeof item === 'number') {
 			return String(item)
 		}
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-		const itemObj = item as Record<string, any>
+		const itemObj = item as Record<string, unknown>
 		// Use plainTextKey if available and allowHtml is true, otherwise use textKey
 		if (props.plainTextKey && props.allowHtml) {
 			const plainText = itemObj[props.plainTextKey]

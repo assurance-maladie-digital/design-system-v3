@@ -20,7 +20,7 @@ export const adaptCustomRules = (rules: DatePickerRule[] = [], format: string): 
 			// Remplacer la fonction validate par une version sécurisée
 			safeCopy.options = { ...rule.options }
 
-			safeCopy.options.validate = ((val: unknown) => {
+			safeCopy.options.validate = (val: unknown) => {
 				// Si la valeur est une Date mais que la fonction originale attend une chaîne
 				// (détecté par la présence de includes dans le code source)
 				if (val instanceof Date && originalValidate.toString().includes('.includes')) {
@@ -28,8 +28,7 @@ export const adaptCustomRules = (rules: DatePickerRule[] = [], format: string): 
 					return originalValidate(format ? formatDate(dayjs(val), format) : val.toISOString())
 				}
 				return originalValidate(val)
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			}) as (value: any) => boolean | string
+			}
 			return safeCopy
 		}
 		return rule
