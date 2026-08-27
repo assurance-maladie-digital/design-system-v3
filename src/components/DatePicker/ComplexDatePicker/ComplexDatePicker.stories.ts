@@ -1068,8 +1068,8 @@ export const ReadonlyMode: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date en lecture seule"
-						placeholder="Date en lecture seule"
+						label="Date en lecture seule (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						readonly
@@ -1096,8 +1096,8 @@ export const ReadonlyMode: Story = {
 		],
 	},
 	args: {
-		label: 'Date en lecture seule',
-		placeholder: 'Date en lecture seule',
+		label: 'Date en lecture seule (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
 		readonly: true,
@@ -1136,8 +1136,8 @@ export const AppendIcon: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date avec icône à la fin"
-						placeholder="Date avec icône à la fin"
+						label="Date avec icône à la fin (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						:displayPrependIcon="false"
@@ -1160,8 +1160,8 @@ export const AppendIcon: Story = {
 		],
 	},
 	args: {
-		label: 'Date avec icône à la fin',
-		placeholder: 'Date avec icône à la fin',
+		label: 'Date avec icône à la fin (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
 		displayPrependIcon: false,
@@ -1196,8 +1196,8 @@ export const WithCustomPeriod: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date avec icône à la fin"
-						placeholder="Date avec icône à la fin"
+						label="Date (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						:period="{
@@ -1246,8 +1246,8 @@ export const WithCustomPeriod: Story = {
 		],
 	},
 	args: {
-		label: 'Date avec icône à la fin',
-		placeholder: 'Date avec icône à la fin',
+		label: 'Date (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
 		period: {

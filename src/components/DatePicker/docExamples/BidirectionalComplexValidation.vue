@@ -167,7 +167,8 @@
 					ref="startDatePickerRef"
 					v-model="startDate"
 					:heading-level="2"
-					label="Date de début"
+					label="Date de début (JJ/MM/AAAA)"
+					placeholder="JJ/MM/AAAA"
 					:custom-rules="startDateRules"
 					use-combined-mode
 					required
@@ -185,8 +186,9 @@
 					ref="endDatePickerRef"
 					v-model="endDate"
 					:heading-level="2"
+					label="Date de fin (JJ/MM/AAAA)"
+					placeholder="JJ/MM/AAAA"
 					:heading-level-complex-date-picker="2"
-					label="Date de fin"
 					:custom-rules="endDateRules"
 					use-combined-mode
 					required
