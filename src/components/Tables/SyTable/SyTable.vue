@@ -117,7 +117,7 @@
 	const { headers, displayHeaders, getEnhancedHeader, getHeaderForColumn } = useTableHeaders({
 		headersProp: toRef(props, 'headers'),
 		storedHeaders: storedOptions.headers,
-		filterInputConfig: props.filterInputConfig,
+		filterInputConfig: () => props.filterInputConfig,
 		componentName: 'SyTable',
 	})
 

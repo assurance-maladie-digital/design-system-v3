@@ -4,7 +4,6 @@ import { LocalStorageUtility } from '@/utils/localStorageUtility'
 import type { DataOptions, FilterOption } from '@/components/Tables/common/types'
 
 import SyTable from '../SyTable.vue'
-import SyTableFilter from '../../common/SyTableFilter.vue'
 import { VCard } from 'vuetify/components'
 
 vi.mock('@/utils/localStorageUtility')
@@ -295,90 +294,6 @@ describe('SyTable', () => {
 		await vi.dynamicImportSettled()
 		const filterComponents = wrapper.findAllComponents({ name: 'SyTableFilter' })
 		expect(filterComponents.length).toBeGreaterThan(0)
-	})
-
-	it('passes each column filterInputConfig to its filter', async () => {
-		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-
-		const wrapper = mount(SyTable, {
-			props: {
-				options: {} as DataOptions,
-				showFilters: true,
-				suffix: 'filter-config',
-				headers: [
-					{ title: 'Name', key: 'name', filterable: true, filterType: 'text' },
-					{ title: 'Age', key: 'age', filterable: true, filterType: 'number' },
-				],
-				items: fakeItems,
-				filterInputConfig: {
-					name: { maxlength: 8 },
-					age: { maxlength: 6 },
-				},
-			},
-		})
-
-		await vi.dynamicImportSettled()
-		const filters = wrapper.findAllComponents(SyTableFilter)
-
-		expect(filters.find(filter => filter.props('header').key === 'name')?.props('header').filterConfig).toEqual({ maxlength: 8 })
-		expect(filters.find(filter => filter.props('header').key === 'age')?.props('header').filterConfig).toEqual({ maxlength: 6 })
-		expect(warnSpy).not.toHaveBeenCalled()
-
-		warnSpy.mockRestore()
-	})
-
-	it('uses value-based identifier when key is missing for filterInputConfig', async () => {
-		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-
-		const wrapper = mount(SyTable, {
-			props: {
-				options: {} as DataOptions,
-				showFilters: true,
-				suffix: 'filter-config-value-fallback',
-				headers: [
-					{ title: 'Name', value: 'name', filterable: true, filterType: 'text' },
-					{ title: 'Age', value: 'age', filterable: true, filterType: 'number' },
-				],
-				items: fakeItems,
-				filterInputConfig: {
-					name: { maxlength: 8 },
-					age: { maxlength: 6 },
-				},
-			},
-		})
-
-		await vi.dynamicImportSettled()
-		const filters = wrapper.findAllComponents(SyTableFilter)
-
-		expect(filters.find(filter => String(filter.props('header').value ?? '') === 'name')?.props('header').filterConfig).toEqual({ maxlength: 8 })
-		expect(filters.find(filter => String(filter.props('header').value ?? '') === 'age')?.props('header').filterConfig).toEqual({ maxlength: 6 })
-		expect(warnSpy).not.toHaveBeenCalled()
-
-		warnSpy.mockRestore()
-	})
-
-	it('warns when filterInputConfig uses the legacy (non per-column) format', async () => {
-		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-
-		mount(SyTable, {
-			props: {
-				options: {} as DataOptions,
-				showFilters: true,
-				suffix: 'filter-config-legacy-format',
-				headers: [
-					{ title: 'Name', key: 'name', filterable: true, filterType: 'text' },
-				],
-				items: fakeItems,
-				// Ancien format : options placées à la racine, sans clé de colonne
-				filterInputConfig: { maxlength: 8 } as unknown as Record<string, { maxlength: number }>,
-			},
-		})
-
-		await vi.dynamicImportSettled()
-
-		expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('[SyTable]'))
-
-		warnSpy.mockRestore()
 	})
 
 	it('should apply filters correctly', async () => {

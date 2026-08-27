@@ -509,7 +509,6 @@ describe('SyServerTable', () => {
 
 	it('passes each column filterInputConfig to its filter', async () => {
 		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
-
 		const wrapper = mount(SyServerTable, {
 			props: {
 				options: {} as DataOptions,
@@ -594,6 +593,44 @@ describe('SyServerTable', () => {
 		expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('[SyServerTable]'))
 
 		warnSpy.mockRestore()
+		activeWrappers.push(wrapper)
+	})
+
+	it('passes and updates filterInputConfig on filter components', async () => {
+		const filterInputConfig = {
+			name: { variant: 'outlined' },
+		}
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				showFilters: true,
+				serverItemsLength: 10,
+				suffix: 'filter-input-config-test',
+				headers: [{
+					title: 'Name',
+					key: 'name',
+					filterable: true,
+					filterType: 'text',
+				}],
+				items: fakeItems,
+				filterInputConfig,
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		const filter = wrapper.findComponent(SyTableFilter)
+		expect(filter.exists()).toBe(true)
+		expect(filter.props('header').filterConfig).toEqual(filterInputConfig.name)
+
+		const updatedFilterInputConfig = {
+			name: { variant: 'solo' },
+		}
+		await wrapper.setProps({ filterInputConfig: updatedFilterInputConfig })
+
+		expect(filter.props('header').filterConfig).toEqual(updatedFilterInputConfig.name)
+
 		activeWrappers.push(wrapper)
 	})
 

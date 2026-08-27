@@ -1,13 +1,16 @@
-import { computed, ref, watch, type Ref } from 'vue'
+import { computed, ref, toValue, watch, type MaybeRefOrGetter } from 'vue'
 import type { DataTableHeaders, TableColumnHeader, TableFilterInputConfig } from './types'
 import { sortHeaders } from './organizeColumns/sortHeaders'
 
 /**
- * Composable for processing and enhancing table headers
+ * Composable for merging, normalizing and enhancing table headers.
  *
- * @param headersProp - Reference to headers from props
- * @param filterInputConfig - Configuration for filter inputs
- * @returns Header utilities and computed properties
+ * @param headersProp - Headers provided by the table props.
+ * @param storedHeaders - Optional headers restored from table state persistence. When both
+ *   sources are defined, persisted headers provide the base order and prop values override
+ *   matching headers. This value is not reactive because persistence is initialized once.
+ * @param filterInputConfig - Optional filter-input configuration indexed by column key.
+ * @returns Reactive header collections and utilities for retrieving or enhancing headers.
  */
 export function useTableHeaders({
 	headersProp,
@@ -15,9 +18,9 @@ export function useTableHeaders({
 	filterInputConfig = {},
 	componentName = 'SyTable',
 }: {
-	headersProp: Readonly<Ref<DataTableHeaders[] | undefined>>
+	headersProp: MaybeRefOrGetter<DataTableHeaders[] | undefined>
 	storedHeaders?: DataTableHeaders[]
-	filterInputConfig?: Record<string, TableFilterInputConfig>
+	filterInputConfig?: MaybeRefOrGetter<Record<string, TableFilterInputConfig> | undefined>
 	componentName?: string
 }) {
 	function normalizeHeader(header: DataTableHeaders): DataTableHeaders {
@@ -52,7 +55,7 @@ export function useTableHeaders({
 	}
 
 	const mergedHeaders = computed(() => {
-		const incoming = headersProp?.value
+		const incoming = toValue(headersProp)
 		const stored = Array.isArray(storedHeaders) ? storedHeaders : undefined
 
 		// Si aucun header, rien à faire
@@ -115,8 +118,9 @@ export function useTableHeaders({
 			: typeof column.value === 'string' && column.value
 				? column.value
 				: undefined
-		const columnFilterConfig = columnIdentifier && filterInputConfig[columnIdentifier as string]
-			? filterInputConfig[columnIdentifier as string]
+		const filterConfig = toValue(filterInputConfig) ?? {}
+		const columnFilterConfig = columnIdentifier && filterConfig[columnIdentifier]
+			? filterConfig[columnIdentifier]
 			: {}
 
 		// Return enhanced header with filter properties
@@ -148,7 +152,7 @@ export function useTableHeaders({
 
 	watch(filterableHeaders, (headers) => {
 		if (hasWarnedInvalidFilterInputConfig) return
-		const configKeys = Object.keys(filterInputConfig)
+		const configKeys = Object.keys(toValue(filterInputConfig) ?? {})
 		if (configKeys.length === 0 || headers.length === 0) return
 
 		const columnIdentifiers = new Set(
