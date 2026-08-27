@@ -124,7 +124,7 @@ describe('SubHeader', () => {
 		expect(wrapper.emitted('back')).toBeTruthy()
 	})
 
-	// Le back button a un ring onPrimary scopé (fond primary). jsdom ne calcule pas
+	// Le back button a un ring on-primary scopé (fond primary). jsdom ne calcule pas
 	// :focus-visible : on vérifie le prérequis — c'est un <button> natif focusable.
 	it('renders the back button as a native <button> (focus ring target)', () => {
 		const wrapper = mount(SubHeader, {

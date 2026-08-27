@@ -61,7 +61,7 @@ describe('ToolbarContainer - Focus visual regression tests', () => {
 		cy.matchImageSnapshot('toolbar-container-focus-light', cy.get('.v-application'))
 	})
 
-	// Sur fond sombre (thème dark), le ring passe en onPrimary (blanc) — cf. le compound
+	// Sur fond sombre (thème dark), le ring passe en on-primary (blanc) — cf. le compound
 	// `.v-theme--dark button:focus-visible` de l'override global.
 	it('shows the onPrimary ring on the focused tool (dark background)', () => {
 		const DarkToolbar = defineComponent({

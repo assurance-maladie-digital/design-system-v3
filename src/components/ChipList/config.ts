@@ -1,8 +1,7 @@
 type VuetifyVariant = 'flat' | 'text' | 'elevated' | 'tonal' | 'outlined' | 'plain'
 
 type PropsList = {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
-	[key: string]: any
+	[key: string]: unknown
 }
 
 interface ComponentConfig {

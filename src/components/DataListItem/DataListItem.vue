@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
+	import { devWarn } from '@/utils/devWarn'
 	import { computed } from 'vue'
 	import { useTheme } from 'vuetify'
 	import SyIcon from '../Customs/SyIcon/SyIcon.vue'
@@ -29,8 +30,8 @@
 		renderHtmlValue: false,
 	})
 
-	if (import.meta.env.DEV && props.renderHtmlValue) {
-		console.warn('[DataListItem] La prop "renderHtmlValue" est dépréciée. Utilisez le slot "value" pour rendre du HTML en toute sécurité.')
+	if (props.renderHtmlValue) {
+		devWarn('[DataListItem] La prop "renderHtmlValue" est dépréciée. Utilisez le slot "value" pour rendre du HTML en toute sécurité.')
 	}
 
 	const emits = defineEmits(['click:action'])

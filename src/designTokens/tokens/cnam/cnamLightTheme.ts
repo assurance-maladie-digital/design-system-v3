@@ -5,7 +5,7 @@ export const cnamLightTheme = {
 
 	// Border
 	border: baseTokens.color.blue.base,
-	borderVariant: baseTokens.color.grey.lighten40,
+	borderVariant: baseTokens.color.grey.base,
 	borderBright: baseTokens.color.white.base,
 	borderDim: baseTokens.color.white.alpha40,
 
@@ -35,13 +35,13 @@ export const cnamLightTheme = {
 	surfaceBright: baseTokens.color.blue.lighten97,
 	surfaceDim: baseTokens.color.blue.lighten90,
 	onSurface: baseTokens.color.grey.darken60,
-	onSurfaceVariant: baseTokens.color.grey.base,
+	onSurfaceVariant: baseTokens.color.grey.lighten90,
 
 	// Background
 	background: baseTokens.color.blue.lighten90,
 	onBackground: baseTokens.color.grey.darken60,
 	backgroundVariant: baseTokens.color.white.base,
-	onBackgroundVariant: baseTokens.color.grey.lighten40,
+	onBackgroundVariant: baseTokens.color.grey.base,
 
 	// Feedback
 	info: baseTokens.color.blue.base,

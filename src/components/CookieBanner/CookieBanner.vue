@@ -5,7 +5,7 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import type { DeepPartial } from '@/utils'
 	import { mdiClose, mdiArrowULeftBottom } from '@mdi/js'
-	import { computed, ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
+	import { computed, ref, onMounted, onUnmounted, watch, nextTick, useAttrs } from 'vue'
 	import { useDisplay } from 'vuetify'
 	import type { CookiesItems } from '../CookiesSelection/types'
 	import { config } from './config'
@@ -14,6 +14,8 @@
 	import CookiesSelection from '../CookiesSelection/CookiesSelection.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 	import SyIconButton from '../Customs/SyIconButton/SyIconButton.vue'
+
+	defineOptions({ inheritAttrs: false })
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		items?: CookiesItems
@@ -28,6 +30,7 @@
 		locales: () => ({}),
 	})
 
+	const attrs = useAttrs()
 	const locales = useLocales(defaultLocales, () => props.locales)
 
 	const options = useCustomizableOptions(config, props)
@@ -197,8 +200,8 @@
 	>
 		<VSheet
 			ref="vsheetRef"
-			v-bind="options.banner"
-			class="vd-cookie-banner"
+			v-bind="{ ...options.banner, ...attrs }"
+			:class="['vd-cookie-banner', options.banner?.class, attrs.class]"
 		>
 			<div
 				ref="bannerRef"

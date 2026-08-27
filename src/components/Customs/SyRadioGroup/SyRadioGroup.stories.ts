@@ -291,7 +291,7 @@ export const CustomColors: Story = {
                     />
                     <SyRadioGroup 
                       v-model="value3" 
-                      color="onSuccessVariant" 
+					  color="on-success-variant"
                       label="Couleur succès" 
                       :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" 
                       :show-success-messages="false"
@@ -305,7 +305,7 @@ export const CustomColors: Story = {
                     />
                       <SyRadioGroup 
                         v-model="value5" 
-                        color="onWarningVariant" 
+						color="on-warning-variant"
                         label="Couleur avertissement" 
                         :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" 
                         :show-success-messages="false"
@@ -364,7 +364,7 @@ Le composant SyRadioGroup peut être personnalisé avec différentes couleurs po
                 />
               <SyRadioGroup
                   v-model="value3"
-                  color="onSuccessVariant"
+                  color="on-success-variant"
                     label="Couleur succès" 
                     :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" 
                     :show-success-messages="false" 
@@ -378,7 +378,7 @@ Le composant SyRadioGroup peut être personnalisé avec différentes couleurs po
                 />
                   <SyRadioGroup
                       v-model="value5"
-                      color="onWarningVariant"
+                      color="on-warning-variant"
                       label="Couleur avertissement" 
                       :options="[{label:'Value 1',value:'a'},{label:'Value 2',value:'b'}]" 
                       :show-success-messages="false" 
@@ -577,12 +577,10 @@ const options = [
 
 const onUpdate = (value: string | null) => {
 	lastEvent.value = \`update:modelValue: \${value}\`
-	console.log('update:modelValue', value)
 }
 
 const onChange = (value: string | null) => {
 	lastEvent.value = \`change: \${value}\`
-	console.log('change', value)
 }
 </script>`,
 			},

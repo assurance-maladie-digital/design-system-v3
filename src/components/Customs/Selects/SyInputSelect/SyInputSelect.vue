@@ -95,9 +95,8 @@
 
 	const inputId = `sy-input-select-${useId()}`
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-	const selectItem = async (item: any) => {
-		selectedItem.value = item
+	const selectItem = async (item: unknown) => {
+		selectedItem.value = item as Record<string, unknown> | string | null
 		emit('update:modelValue', item)
 		isOpen.value = false
 		await validateField(item)
@@ -105,14 +104,12 @@
 	}
 
 	const getItemText = (item: unknown) => {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-		return (item as Record<string, any>)[props.textKey]
+		return (item as Record<string, unknown>)[props.textKey] as string | undefined
 	}
 
 	const selectedItemText = computed(() => {
 		if (selectedItem.value && typeof selectedItem.value === 'object') {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-			return (selectedItem.value as Record<string, any>)[props.textKey]
+			return (selectedItem.value as Record<string, unknown>)[props.textKey] as string | undefined
 		}
 		return labelWithAsterisk.value
 	})
@@ -277,7 +274,8 @@
 			<SyIcon
 				v-if="selectedItemText && props.clearable"
 				:icon="mdiCloseCircle"
-				:aria-label="locales.clearLabel"
+				:label="locales.clearLabel"
+				:decorative="false"
 				role="button"
 				@click.stop.prevent="selectItem(null)"
 			/>

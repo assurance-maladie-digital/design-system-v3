@@ -132,7 +132,7 @@ async function getLastFunctionalCommit(filePaths) {
 	}
 }
 
-const packageVersionCache = new Map()
+let currentPackageVersion
 let releaseTagsPromise = null
 
 async function getReleaseTags() {
@@ -166,18 +166,17 @@ function getNextReleaseTag(commitDate, tagInfos) {
 	return null
 }
 
-async function getPackageVersionAtCommit(hash) {
-	if (packageVersionCache.has(hash)) return packageVersionCache.get(hash)
+// Version actuellement déclarée dans package.json (fichier de travail), pas celle au commit :
+// un changement sans tag de release postérieur est encore en attente de la prochaine version.
+function getCurrentPackageVersion() {
+	if (currentPackageVersion !== undefined) return currentPackageVersion
 	try {
-		const { stdout } = await execFileAsync('git', ['show', `${hash}:package.json`], { cwd: rootDir })
-		const parsed = JSON.parse(stdout)
-		const version = parsed.version ? parsed.version.replace(/^v/i, '') : null
-		packageVersionCache.set(hash, version)
-		return version
+		const parsed = JSON.parse(readFileSync(resolve(rootDir, 'package.json'), 'utf8'))
+		currentPackageVersion = parsed.version ? parsed.version.replace(/^v/i, '') : null
 	} catch {
-		packageVersionCache.set(hash, null)
-		return null
+		currentPackageVersion = null
 	}
+	return currentPackageVersion
 }
 
 async function main() {
@@ -209,7 +208,7 @@ async function main() {
 			const releaseTags = await getReleaseTags()
 			let version = getNextReleaseTag(commit.date, releaseTags)
 			if (!version) {
-				version = await getPackageVersionAtCommit(commit.hash)
+				version = getCurrentPackageVersion()
 			} else {
 				version = version.replace(/^v/i, '')
 			}

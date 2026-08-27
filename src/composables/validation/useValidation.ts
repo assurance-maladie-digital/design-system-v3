@@ -1,4 +1,5 @@
 import { ref, computed, unref, type MaybeRef, type Ref } from 'vue'
+import { devWarn } from '@/utils/devWarn'
 import { useFieldValidation, type RuleOptions, type ValidationResult as FieldValidationResult } from '../rules/useFieldValidation'
 
 type builtInDateRuleType =
@@ -120,7 +121,8 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 	): FieldValidationResult[] | Promise<FieldValidationResult[]> => {
 		for (const rule of rules) {
 			if ('validator' in rule) {
-				console.error('[useValidation] "validator" en top level de ValidationRule n\'est plus supporté. Utilisez rule.options.validate à la place.')
+				devWarn('[useValidation] "validator" en top level de ValidationRule n\'est plus supporté. Utilisez rule.options.validate à la place.')
+				return []
 			}
 		}
 

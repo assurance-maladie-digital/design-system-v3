@@ -473,7 +473,7 @@
 		padding: 0 38px;
 
 		& .v-btn:focus {
-			outline-color: rgb(var(--v-theme-apWhite-base));
+			outline-color: rgb(var(--v-theme-ap-white-base));
 		}
 	}
 

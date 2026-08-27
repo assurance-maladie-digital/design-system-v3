@@ -127,6 +127,6 @@
 }
 
 .v-theme--dark .sy-toolbar:has(:focus-visible)::after {
-	border-color: rgb(var(--v-theme-onPrimary));
+	border-color: rgb(var(--v-theme-on-primary));
 }
 </style>

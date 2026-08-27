@@ -215,11 +215,11 @@
 	}
 
 	&.neutral {
-		color: rgb(var(--v-theme-onWarningVariant)) !important;
+		color: rgb(var(--v-theme-on-warning-variant)) !important;
 	}
 
 	&.happy {
-		color: rgb(var(--v-theme-onSuccessVariant)) !important;
+		color: rgb(var(--v-theme-on-success-variant)) !important;
 	}
 
 	&--active.sy-emotion-picker__item--disabled .v-icon {
@@ -241,15 +241,15 @@
 	&--active,
 	&:hover {
 		&.sad {
-			background: rgb(var(--v-theme-errorVariantLighten));
+			background: rgb(var(--v-theme-error-variant-lighten));
 		}
 
 		&.neutral {
-			background: rgb(var(--v-theme-warningVariantLighten));
+			background: rgb(var(--v-theme-warning-variant-lighten));
 		}
 
 		&.happy {
-			background: rgb(var(--v-theme-successVariantLighten));
+			background: rgb(var(--v-theme-success-variant-lighten));
 		}
 	}
 

@@ -442,15 +442,15 @@ export const Required: Story = {
 				code: `
 				<template>
 					<DatePicker
-						v-model="date"
+						v-model="date1"
 						label="Date (JJ/MM/AAAA)"
 						placeholder="JJ/MM/AAAA"
 						useCombinedMode
 						required
 						format="DD/MM/YYYY"
-					/>
+					/>	
 					<DatePicker
-						v-model="date"
+						v-model="date2"
 						label="Date (JJ/MM/AAAA)"
 						placeholder="JJ/MM/AAAA"
 						useCombinedMode
@@ -502,15 +502,16 @@ export const Required: Story = {
 		return {
 			components: { DatePicker },
 			setup() {
-				const value = ref('')
-				return { args, value }
+				const value1 = ref('')
+				const value2 = ref('')
+				return { args, value1, value2 }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-				<h4 class="mb-4">Sans astérisque :</h4>
-                <DatePicker v-bind="args" v-model="value"/>
-				<h4 class="mb-4">Avec astérisque :</h4>
-				<DatePicker v-bind="args" displayAsterisk v-model="value"/>
+				<h4 class="mb-4">Sans astérisque & isValidateOnBlur à true (par defaut):</h4>
+                <DatePicker v-bind="args" v-model="value1"/>
+				<h4 class="mb-4">Avec astérisque & isValidateOnBlur à false:</h4>
+				<DatePicker v-bind="args" displayAsterisk  v-model="value2" :isValidateOnBlur='false'/>
               </div>
             `,
 		}
@@ -1067,8 +1068,8 @@ export const ReadonlyMode: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date en lecture seule"
-						placeholder="Date en lecture seule"
+						label="Date en lecture seule (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						readonly
@@ -1095,8 +1096,8 @@ export const ReadonlyMode: Story = {
 		],
 	},
 	args: {
-		label: 'Date en lecture seule',
-		placeholder: 'Date en lecture seule',
+		label: 'Date en lecture seule (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
 		readonly: true,
@@ -1135,8 +1136,8 @@ export const AppendIcon: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date avec icône à la fin"
-						placeholder="Date avec icône à la fin"
+						label="Date avec icône à la fin (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						:displayPrependIcon="false"
@@ -1159,8 +1160,8 @@ export const AppendIcon: Story = {
 		],
 	},
 	args: {
-		label: 'Date avec icône à la fin',
-		placeholder: 'Date avec icône à la fin',
+		label: 'Date avec icône à la fin (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
 		displayPrependIcon: false,
@@ -1195,8 +1196,8 @@ export const WithCustomPeriod: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date avec icône à la fin"
-						placeholder="Date avec icône à la fin"
+						label="Date (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						:period="{
@@ -1245,8 +1246,8 @@ export const WithCustomPeriod: Story = {
 		],
 	},
 	args: {
-		label: 'Date avec icône à la fin',
-		placeholder: 'Date avec icône à la fin',
+		label: 'Date (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
 		period: {

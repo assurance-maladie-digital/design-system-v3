@@ -4,7 +4,7 @@ export const semanticTokens = {
 	CNAM: {
 		color: {
 			border: baseTokens.color.blue.base,
-			borderVariant: baseTokens.color.grey.lighten40,
+			borderVariant: baseTokens.color.grey.base,
 			disabled: baseTokens.color.grey.lighten80,
 			inverseSurface: baseTokens.color.grey.base,
 			onDisabled: baseTokens.color.grey.lighten40,
@@ -12,7 +12,9 @@ export const semanticTokens = {
 			onPrimaryVariant: baseTokens.color.white.base,
 			onSecondary: baseTokens.color.white.base,
 			onSecondaryVariant: baseTokens.color.white.base,
-			onSurfaceVariant: baseTokens.color.grey.base,
+			onSurfaceVariant: baseTokens.color.grey.lighten90,
+			onBackground: baseTokens.color.grey.darken60,
+			onBackgroundVariant: baseTokens.color.grey.base,
 			overlay: baseTokens.color.grey.alpha40,
 			primary: baseTokens.color.blue.base,
 			primaryVariant: baseTokens.color.blue.darken40,
@@ -25,7 +27,6 @@ export const semanticTokens = {
 		background: {
 			background: baseTokens.color.blue.lighten90,
 			backgroundVariant: baseTokens.color.white.base,
-			onBackgroundVariant: baseTokens.color.grey.lighten40,
 		},
 		feedback: {
 			error: baseTokens.color.orange.darken20,
@@ -48,7 +49,7 @@ export const semanticTokens = {
 	ap: {
 		color: {
 			border: baseTokens.color.cyan.darken20,
-			borderVariant: baseTokens.color.grey.lighten40,
+			borderVariant: baseTokens.color.grey.base,
 			disabled: baseTokens.color.grey.lighten80,
 			inverseSurface: baseTokens.color.grey.base,
 			onDisabled: baseTokens.color.grey.lighten40,
@@ -56,7 +57,9 @@ export const semanticTokens = {
 			onPrimaryVariant: baseTokens.color.white.base,
 			onSecondary: baseTokens.color.white.base,
 			onSecondaryVariant: baseTokens.color.white.base,
-			onSurfaceVariant: baseTokens.color.grey.base,
+			onSurfaceVariant: baseTokens.color.grey.lighten90,
+			onBackground: baseTokens.color.grey.darken60,
+			onBackgroundVariant: baseTokens.color.grey.base,
 			overlay: baseTokens.color.grey.alpha40,
 			primary: baseTokens.color.cyan.darken20,
 			primaryVariant: baseTokens.color.cyan.darken40,
@@ -69,7 +72,6 @@ export const semanticTokens = {
 		background: {
 			background: baseTokens.color.cyan.lighten97,
 			backgroundVariant: baseTokens.color.white.base,
-			onBackgroundVariant: baseTokens.color.grey.lighten40,
 		},
 		feedback: {
 			error: baseTokens.color.red.darken20,

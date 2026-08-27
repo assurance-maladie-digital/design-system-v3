@@ -7,6 +7,11 @@
 	padding: 0 var(--spacing-4) !important;
 }
 
+.v-btn.v-btn--size-x-small,
+.v-btn.v-btn--size-small {
+	min-height: 20px;
+}
+
 .v-btn.v-tab {
 	text-transform: uppercase !important;
 }
@@ -25,7 +30,7 @@ button:focus-visible {
 .v-theme--dark .v-btn:focus-visible,
 .v-theme--dark button:focus-visible,
 .v-btn.v-theme--dark:focus-visible {
-	outline-color: rgb(var(--v-theme-onPrimary));
+	outline-color: rgb(var(--v-theme-on-primary));
 }
 
 .v-btn:focus-visible {
@@ -58,7 +63,7 @@ button:focus-visible {
 :where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026).v-btn--variant-flat {
 	&.v-btn--disabled {
 		background-color: rgba(var(--v-theme-disabled)) !important;
-		color: rgba(var(--v-theme-onDisabled)) !important;
+		color: rgba(var(--v-theme-on-disabled)) !important;
 		opacity: 1;
 	}
 
@@ -68,13 +73,13 @@ button:focus-visible {
 	}
 
 	&:hover .v-btn__overlay {
-		background: rgba(var(--v-theme-interactionDarken), 0.2) !important;
+		background: rgba(var(--v-theme-interaction-darken), 0.2) !important;
 		opacity: 1;
 		transition: opacity 0.2s ease, background 0s;
 	}
 
 	&:active .v-btn__overlay {
-		background: rgba(var(--v-theme-interactionDarken), 0.4) !important;
+		background: rgba(var(--v-theme-interaction-darken), 0.4) !important;
 		opacity: 1;
 		transition: opacity 0.2s ease, background 0s;
 	}
@@ -85,31 +90,31 @@ button:focus-visible {
 :where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026, .v-theme--dark).v-btn--variant-text,
 :where(.v-theme--cnam, .v-theme--pa, .v-theme--ap, .v-theme--ap2026, .v-theme--dark).v-btn--variant-tonal {
 	&.v-btn--disabled {
-		color: rgba(var(--v-theme-onDisabled)) !important;
+		color: rgba(var(--v-theme-on-disabled)) !important;
 		opacity: 1;
 	}
 
 	&:hover .v-btn__overlay {
-		background: rgba(var(--v-theme-interactionDark), 0.08) !important;
+		background: rgba(var(--v-theme-interaction-dark), 0.08) !important;
 		opacity: 1;
 		transition: opacity 0.2s ease, background 0s;
 	}
 
 	&:active .v-btn__overlay {
-		background: rgba(var(--v-theme-interactionDark), 0.2) !important;
+		background: rgba(var(--v-theme-interaction-dark), 0.2) !important;
 		opacity: 1;
 		transition: opacity 0.2s ease, background 0s;
 	}
 
 	&.v-theme--dark {
 		&:hover .v-btn__overlay {
-			background: rgba(var(--v-theme-interactionLighten), 0.2) !important;
+			background: rgba(var(--v-theme-interaction-lighten), 0.2) !important;
 			opacity: 1;
 			transition: opacity 0.2s ease, background 0s;
 		}
 
 		&:active .v-btn__overlay {
-			background: rgba(var(--v-theme-interactionLighten), 0.4) !important;
+			background: rgba(var(--v-theme-interaction-lighten), 0.4) !important;
 			opacity: 1;
 			transition: opacity 0.2s ease, background 0s;
 		}

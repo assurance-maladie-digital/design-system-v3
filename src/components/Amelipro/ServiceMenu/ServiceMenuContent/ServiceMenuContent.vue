@@ -47,26 +47,8 @@
 		return listsStyleRules
 	})
 
-	// TODO : Pour améliorer l'accessibilité du menu de service, il faut que le focus fasse une boucle de tabulation entre le premier et le dernier élément focusable
-	// le code ci-dessous permettait de gérer le focus vers le premier élément lorsqu'un bouton de retour à l'accueil existait, ce qui n'est plus le cas aujourd'hui, il faut donc trouver une nouvelle manière de faire
-	// const menuLastFocussableId = (): string => {
-	// 	const element = document.querySelector('#service-menu')?.querySelectorAll('button, a')
-	// 	const elementId = element?.item(element.length - 1).getAttribute('id')
-
-	// 	return elementId !== null && elementId !== undefined ? elementId : ''
-	// }
-
-	// const setFocus = (id : string): void => {
-	// 	let element
-	// 	element = document.querySelector('#service-menu-dialog-close-btn') as HTMLElement
-	// 	if (!breakpointHelper.isDesktop() && element !== null && element !== undefined) {
-	// 		element.focus()
-	// 	}
-	// 	if (id !== null && id !== undefined && id !== '') {
-	// 		element = document.getElementById(id) as HTMLElement
-	// 		element.focus()
-	// 	}
-	// }
+	// Note: Amélioration a11y — le focus devrait faire une boucle de tabulation entre
+	// le premier et le dernier élément focusable du menu de service.
 </script>
 
 <template>
