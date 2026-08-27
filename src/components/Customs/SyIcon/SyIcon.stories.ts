@@ -149,6 +149,35 @@ export const WithSize: Story = {
 	}),
 }
 
+export const WithRoleButton: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				language: 'vue',
+				code: `<template>
+  <SyIcon :icon="mdiStar" role="button" />
+</template>`,
+			},
+		],
+	},
+	args: {
+		icon: mdiStar,
+		role: 'button',
+	},
+	render: args => ({
+		components: { SyIcon },
+		setup() {
+			return { args, mdiStar }
+		},
+		template: `
+			<div class="pa-4">
+				<SyIcon v-bind="args" />
+			</div>
+		`,
+	}),
+}
+
 export const Decorative: Story = {
 	parameters: {
 		sourceCode: [
