@@ -32,7 +32,7 @@ const meta = {
 			},
 			description: 'Rôle ARIA de l\'icône (img, button, presentation)',
 		},
-		autoDetectInteractive: {
+		autoDetectButton: {
 			control: { type: 'boolean' },
 			description: 'Détecte automatiquement si l’icône est interactive à partir des événements qui lui sont associés',
 			default: false,
@@ -220,7 +220,7 @@ export const ExplicitButtonRole: Story = {
 	}),
 }
 
-export const Interactive: Story = {
+export const AutoDetectButtonRole: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -231,7 +231,7 @@ export const Interactive: Story = {
 						<SyIcon 
 							:icon="mdiClose" 
 							:decorative="false" 
-							:auto-detect-interactive="true" 
+							:auto-detect-button="true" 
 							label="Fermer" 
 							@click="handleClick" 
 						/>
@@ -242,7 +242,7 @@ export const Interactive: Story = {
 	args: {
 		icon: mdiClose,
 		decorative: false,
-		autoDetectInteractive: true,
+		autoDetectButton: true,
 		label: 'Fermer',
 	},
 	render: args => ({
