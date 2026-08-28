@@ -53,7 +53,7 @@
 	import { buildTodaySelectionState, useCalendarKeyboardNavigation, useDatePickerCalendar, useDatePickerDerivedValues, useDatePickerFocusTarget, useDatePickerFocusTrap, useDatePickerIds, useDatePickerState, useDatePickerSyncGuard, useDatePickerValidation, useDatePickerViewMode, useDateSelection, useDisplayedDateString, useSelectedDayAria, useTodayButton } from '../composables'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { locales } from '../locales'
-	import type { CalendarModeProps, DateObjectValue } from '../types'
+	import type { CalendarModeDatePickerPublicApi, CalendarModeProps, DateObjectValue } from '../types'
 	import { DatePickerCommonDefaults } from '../types'
 	import { formatDateRangeDisplay, getDisplayedMonthYearState, resolveDatePickerStateFromModelValue } from '../utils/dateFormattingUtils'
 	import { isModelValueEqual } from '../utils/validationUtils'
@@ -147,7 +147,7 @@
 	// Utiliser useDatePickerDerivedValues pour centraliser les computed partagés
 	const { minDate, maxDate } = useDatePickerDerivedValues(props)
 
-	const onblur = ref(false)
+	const hasBlurred = ref(false)
 
 	const dateTextInputRef = ref<null | ComponentPublicInstance<typeof DateTextInput>>()
 	const dateCalendarTextInputRef = ref<null | ComponentPublicInstance<typeof SyTextField>>()
@@ -323,7 +323,7 @@
 		useCalendarModeRequiredFlow: true,
 		isInitialValidation,
 		isValidateOnBlur: computed(() => props.isValidateOnBlur),
-		onblur,
+		hasBlurred,
 		revalidateOnCustomRulesChange: true,
 		formRegistration: {
 			validateOnSubmit,
@@ -742,7 +742,7 @@
 
 	const handleInputBlur = async () => {
 		emit('blur')
-		onblur.value = true
+		hasBlurred.value = true
 		// Ne pas valider si le DatePicker est ouvert : le blur est causé par
 		// l'ouverture du calendrier (VMenu prend le focus), pas par l'utilisateur
 		// qui quitterait le champ.
@@ -842,7 +842,7 @@
 	// - handleClickOutside() : fermer le calendrier sur clic extérieur
 	// - openDatePicker() : ouvrir programmatiquement
 	// - updateSelectedDates() : modifier la sélection depuis l'extérieur
-	defineExpose({
+	const publicApi: CalendarModeDatePickerPublicApi = {
 		validateOnSubmit,
 		isDatePickerVisible,
 		selectedDates,
@@ -859,7 +859,9 @@
 		validate,
 		clearValidation,
 		reset: resetField,
-	})
+	}
+
+	defineExpose(publicApi)
 </script>
 
 <template>

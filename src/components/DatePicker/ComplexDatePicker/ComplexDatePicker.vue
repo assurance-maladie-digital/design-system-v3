@@ -83,7 +83,7 @@
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { VDatePicker } from 'vuetify/components'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
-	import type { DateObjectValue, DatePickerCommonProps } from '../types'
+	import type { ComplexDatePickerPublicApi, DateObjectValue, DatePickerCommonProps } from '../types'
 	import { DatePickerCommonDefaults } from '../types'
 	import { useDatePickerAccessibility } from '@/composables/date/useDatePickerAccessibility'
 	import { buildComplexDatePickerTextInputProps } from './props/buildComplexDatePickerTextInputProps'
@@ -625,36 +625,25 @@
 		}
 	}
 
-	const formatDateInput = (input: string, cursorPosition?: number) => {
-		const result = formatDateInputUtil(input, props.format, { cursorPosition })
-
-		// Extrait le séparateur du format (ex: DD/MM/YYYY → '/', DD-MM-YYYY → '-').
-		// [^DMY] = tout caractère qui n'est pas D, M ou Y (insensible à la casse via le flag "i").
-		// ?. [0] = premier caractère non-lettre trouvé, ou '/' par défaut si aucun séparateur.
-		const separator = props.format.match(/[^DMY]/i)?.[0] || '/'
-
-		// Échappe les caractères spéciaux de regex dans le séparateur (ex: '.' → '\.', '/' → '/').
-		// [.*+?^${}()|[\]\\] = liste des métacaractères regex à échapper avec '\\$&'.
-		// Nécessaire car le séparateur est injecté dans une RegExp ci-dessous.
-		const escapedSeparator = separator.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-
-		// Supprime les séparateurs et placeholders ('_') en fin de chaîne (ex: "01/__/___" → "01").
-		// [escapedSeparator_]+$ = un ou plusieurs caractères parmi le séparateur et '_' à la fin ($).
-		// Cela évite d'afficher des séparateurs orphelins quand la saisie est partielle.
-		const formatted = result.formatted.replace(new RegExp(`[${escapedSeparator}_]+$`), '')
-
-		return {
-			formatted,
-			cursorPos: Math.min(result.cursorPos, formatted.length),
-		}
-	}
-
 	const getSelectedBaseDate = (value: DateObjectValue = selectedDates.value): Date | null => {
 		if (!value) return null
 
 		return Array.isArray(value)
 			? (value.find(date => date instanceof Date) as Date | null) ?? null
 			: value
+	}
+
+	const formatDateInput = (input: string, cursorPosition?: number) => {
+		const result = formatDateInputUtil(input, props.format, { cursorPosition })
+
+		const separator = props.format.match(/[^DMY]/i)?.[0] || '/'
+		const escapedSeparator = separator.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+		const formatted = result.formatted.replace(new RegExp(`[${escapedSeparator}_]+$`), '')
+
+		return {
+			formatted,
+			cursorPos: Math.min(result.cursorPos, formatted.length),
+		}
 	}
 
 	const hasCompletedRangeSelection = (value: DateObjectValue = selectedDates.value): boolean => {
@@ -1097,6 +1086,7 @@
 		}
 
 		if (!props.isValidateOnBlur) {
+			emitBlurEvent()
 			clearValidation()
 			return
 		}
@@ -1377,7 +1367,7 @@
 		fieldKey.value++
 	}
 
-	defineExpose({
+	const publicApi: ComplexDatePickerPublicApi = {
 		validateOnSubmit,
 		isDatePickerVisible,
 		selectedDates,
@@ -1405,7 +1395,9 @@
 		updateSelectedDates,
 		resetViewMode,
 		reset,
-	})
+	}
+
+	defineExpose(publicApi)
 </script>
 
 <template>

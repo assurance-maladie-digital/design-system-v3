@@ -254,12 +254,8 @@
 		await toDateValidation.validateField(parsedToDate.value, toDateRules.value, props.customWarningRules)
 	}
 
-	// Gestionnaires d'événements closed
-	async function handleFromDateClosed() {
-		await validateBothDates()
-	}
-
-	async function handleToDateClosed() {
+	// Les deux champs partagent le même cycle de revalidation à la fermeture.
+	async function handleDateClosed() {
 		await validateBothDates()
 	}
 
@@ -374,7 +370,7 @@
 				:bg-color="props.bgColor"
 				:density="props.density"
 				:hide-details="props.hideDetails"
-				@closed="handleFromDateClosed"
+				@closed="handleDateClosed"
 			/>
 		</div>
 		<div class="period-field__col">
@@ -403,7 +399,7 @@
 				:bg-color="props.bgColor"
 				:density="props.density"
 				:hide-details="props.hideDetails"
-				@closed="handleToDateClosed"
+				@closed="handleDateClosed"
 			/>
 		</div>
 	</div>
