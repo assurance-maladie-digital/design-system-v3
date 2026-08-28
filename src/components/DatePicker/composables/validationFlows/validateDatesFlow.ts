@@ -43,24 +43,12 @@ export function createValidateDatesFlow(ctx: ValidationContext) {
 	)
 
 	/**
-	 * True si on doit valider le required :
-	 * - forceValidation ou pas une mise à jour interne (pour éviter les boucles)
-	 * - ET le champ est required
-	 * - ET aucune sélection n'est présente
-	 */
-	const shouldValidateRequired = (forceValidation: boolean): boolean => (
-		(forceValidation || !options.isUpdatingFromInternal.value)
-		&& unref(options.required)
-		&& ctx.hasNoSelection()
-	)
-
-	/**
 	 * Valide le required : si le champ est required et vide, retourne un résultat d'erreur.
 	 * Respecte isInitialValidation (pas d'erreur affichée au montage) et shouldDisplayErrors.
 	 * Retourne null si le required ne s'applique pas (pas de validation à faire).
 	 */
 	const validateRequiredSelection = (forceValidation: boolean): null | ValidationResult => {
-		if (!shouldValidateRequired(forceValidation)) {
+		if (!ctx.shouldValidateRequired(forceValidation)) {
 			return null
 		}
 

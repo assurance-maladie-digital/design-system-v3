@@ -74,6 +74,8 @@ export const useDatePickerInputBlurHandler = (options: {
 	}
 
 	const updateRangeModel = (startDate: Date, endDate: Date) => {
+		// Note : on appelle getRangeValidationError directement (et non useDateRangeValidation)
+		// car les dates sont locales/temporaires et ne sont pas encore dans selectedDates.
 		const rangeError = getRangeValidationError(startDate, endDate)
 		if (rangeError) {
 			replaceErrors([rangeError])
