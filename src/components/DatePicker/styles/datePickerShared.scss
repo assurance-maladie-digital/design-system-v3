@@ -18,7 +18,7 @@
 }
 
 /* Style pour les jours fériés */
-:deep(.v-date-picker-month__day .v-btn.holiday-day) {
+:deep(.holiday-day) {
 	background-color: rgb(255 193 7 / 10%);
 	border: 2px dotted rgb(var(--v-theme-grey-darken60));
 	border-radius: 50%;
@@ -42,8 +42,8 @@
 }
 
 /* Disable ripple effect on month and year buttons */
-:deep(.sy-date-picker-controls__month-btn),
-:deep(.sy-date-picker-controls__year-btn) {
+:deep(.v-date-picker-controls__month-btn),
+:deep(.v-date-picker-controls__mode-btn) {
 	.v-ripple__container,
 	.v-ripple__animation {
 		display: none !important;
@@ -64,13 +64,13 @@
 .v-messages__message--success {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-onSuccessVariant)) !important;
+		color: rgb(var(--v-theme-on-success-variant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-onSuccessVariant)) !important;
+		color: rgb(var(--v-theme-on-success-variant)) !important;
 	}
 }
 
@@ -92,17 +92,17 @@
 
 .v-messages__message--warning {
 	:deep(.v-input__control) {
-		color: rgb(var(--v-theme-onWarningVariant)) !important;
+		color: rgb(var(--v-theme-on-warning-variant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-onWarningVariant)) !important;
+		color: rgb(var(--v-theme-on-warning-variant)) !important;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-onWarningVariant)) !important;
+		color: rgb(var(--v-theme-on-warning-variant)) !important;
 	}
 }
 
@@ -150,7 +150,7 @@
 	opacity: 1;
 
 	.v-btn__content {
-		color: rgb(var(--v-theme-onSurfaceVariant));
+		color: rgb(var(--v-theme-grey-base));
 		opacity: 1;
 	}
 }
@@ -164,7 +164,7 @@
 	background-color: transparent !important;
 
 	.v-btn__content {
-		color: rgb(var(--v-theme-onSurfaceVariant));
+		color: rgb(var(--v-theme-on-surface-variant));
 		opacity: 1;
 	}
 }
@@ -176,15 +176,47 @@
 
 :deep(.v-date-picker-month__day--selected .v-btn) {
 	background-color: rgb(var(--v-theme-primary)) !important;
-	color: rgb(var(--v-theme-onPrimary)) !important;
+	color: rgb(var(--v-theme-on-primary)) !important;
 }
 
 :deep(.v-date-picker-month__day--selected .v-btn .v-btn__content) {
-	color: rgb(var(--v-theme-onPrimary)) !important;
+	color: rgb(var(--v-theme-on-primary)) !important;
 }
 
-:deep(.weekend .v-date-picker-month__day .v-btn.weekend-day) {
+:deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
 	background-color: #d4d6d6;
+}
+
+/* div avant la class .v-date-picker-month__day--week-end */
+:deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
+	background-color: #d4d6d6;
+}
+
+:deep(.v-date-picker-controls__mode-btn) {
+	transform: none !important;
+}
+
+:deep(.custom-year-btn) {
+	width: auto;
+	height: 28px;
+}
+
+:deep(.custom-year-btn::after) {
+	background-color: rgb(var(--v-theme-primary));
+	padding: 10px 40px;
+	text-decoration: none;
+	display: inline-block;
+	margin-left: -22px !important;
+	cursor: pointer;
+	border-radius: 9999px;
+}
+
+:deep(.custom-month-btn::after) {
+	background-color: rgb(var(--v-theme-primary));
+	text-decoration: none;
+	display: inline-block;
+	cursor: pointer;
+	border-radius: 9999px !important;
 }
 
 :deep(.v-btn--variant-text .v-btn__overlay) {
@@ -230,10 +262,10 @@
 :deep(.v-date-picker-months .v-btn--active),
 :deep(.v-date-picker-years .v-btn--active) {
 	background-color: rgb(var(--v-theme-primary)) !important;
-	color: rgb(var(--v-theme-onPrimary)) !important;
+	color: rgb(var(--v-theme-on-primary)) !important;
 
 	.v-btn__content {
-		color: rgb(var(--v-theme-onPrimary)) !important;
+		color: rgb(var(--v-theme-on-primary)) !important;
 	}
 }
 
