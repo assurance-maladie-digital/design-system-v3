@@ -15,6 +15,7 @@ type GeneratedComponentStatus = {
 	componentName: string
 	storybookTitle: string
 	propsDocumentationLabel: string
+	hasPropsDocumentation: boolean
 	hasSourceTab: boolean
 	requiredStoriesStatus: string
 	hasUxUsagePage: boolean
@@ -24,7 +25,15 @@ type GeneratedComponentStatus = {
 	criticality: string
 	isFullyCompliant: boolean
 	score: number
-
+	hasUnitTest: boolean
+	hasA11yTest: boolean
+	hasCypressTest: boolean
+	functionalVersion: string | null
+	functionalDate: string | null
+	figmaUrl: string
+	hasAp2026Theme: boolean
+	storybookId: string
+	category: string
 }
 
 type CodeQualityReport = {
