@@ -36,7 +36,7 @@ function hasArgTypeDescription(storyContent, itemName) {
 	const escapedName = escapeRegExp(itemName)
 
 	const itemRegex = new RegExp(
-		`(?:['"\`]${escapedName}['"\`]|${escapedName})\\s*:\\s*{[\\s\\S]*?description\\s*:`,
+		`(?:['"\`]${escapedName}['"\`]|${escapedName})\\s*:\\s*{[^}]*?description\\s*:`,
 		'm',
 	)
 
