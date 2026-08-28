@@ -1066,4 +1066,9 @@
 .fade-leave-to {
 	opacity: 0;
 }
+
+:deep(.v-date-picker-month__day .v-btn:hover) {
+	background-color: rgb(var(--v-theme-background)) 0.12;
+	color: rgb(var(--v-theme-on-background));
+}
 </style>
