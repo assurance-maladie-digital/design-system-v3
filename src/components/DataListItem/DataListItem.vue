@@ -8,7 +8,7 @@
 	import { locales } from './locales'
 
 	const props = withDefaults(defineProps<CustomizableOptions & {
-		label: string
+		label?: string
 		value?: string | number
 		action?: string
 		placeholder?: string
