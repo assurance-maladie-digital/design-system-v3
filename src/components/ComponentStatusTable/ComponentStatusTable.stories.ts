@@ -19,4 +19,5 @@ export const Default: StoryObj = {
 			},
 		},
 	},
+	tags: ['dev'],
 }
