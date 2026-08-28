@@ -100,7 +100,6 @@ function hasPlayground(content, docsContent = '') {
 	const combined = `${content}\n${docsContent}`
 
 	return /export\s+const\s+Playground\b/i.test(combined)
-		|| /playground/i.test(combined)
 		|| /<Canvas\s+of=/i.test(combined)
 		|| /<Controls\s+of=/i.test(combined)
 }
