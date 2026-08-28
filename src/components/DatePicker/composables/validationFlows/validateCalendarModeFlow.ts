@@ -37,18 +37,6 @@ export function createValidateCalendarModeFlow(
 	)
 
 	/**
-	 * True si on doit valider le required :
-	 * - forceValidation ou pas une mise à jour interne (pour éviter les boucles)
-	 * - ET le champ est required
-	 * - ET aucune sélection n'est présente
-	 */
-	const shouldValidateRequired = (forceValidation: boolean): boolean => (
-		(forceValidation || !options.isUpdatingFromInternal.value)
-		&& unref(options.required)
-		&& ctx.hasNoSelection()
-	)
-
-	/**
 	 * Logique spécifique CalendarMode pour le required.
 	 * CalendarMode a un flow différent : il ne faut pas afficher l'erreur required
 	 * dans certains cas (readonly, blur sans validateOnBlur, validation initiale).
@@ -57,7 +45,7 @@ export function createValidateCalendarModeFlow(
 	 * de le faire après les custom rules pour éviter qu'applyValidationResult l'écrase.
 	 */
 	const shouldSkipCalendarModeRequiredError = (forceValidation: boolean): boolean => {
-		if (!shouldValidateRequired(forceValidation)) {
+		if (!ctx.shouldValidateRequired(forceValidation)) {
 			return false
 		}
 
@@ -111,12 +99,12 @@ export function createValidateCalendarModeFlow(
 					options.customWarningRules.value,
 				)
 				// Pousser l'erreur required APRÈS les custom rules pour éviter qu'applyValidationResult l'écrase
-				if (shouldValidateRequired(forceValidation) && ctx.shouldDisplayErrors()) {
+				if (ctx.shouldValidateRequired(forceValidation) && ctx.shouldDisplayErrors()) {
 					ctx.pushError(locales.required)
 				}
 				ctx.dedupeValidationState()
 			}
-			else if (shouldValidateRequired(forceValidation) && ctx.shouldDisplayErrors()) {
+			else if (ctx.shouldValidateRequired(forceValidation) && ctx.shouldDisplayErrors()) {
 				ctx.pushError(locales.required)
 			}
 			return

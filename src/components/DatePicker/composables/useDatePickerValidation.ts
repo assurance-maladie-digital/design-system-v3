@@ -30,7 +30,6 @@ import {
 import { locales } from '../locales'
 import type { DateObjectValue, DatePickerRule } from '../types'
 import { useDateRangeValidation } from './useDateRangeValidation'
-import { getRangeValidationError } from '../utils/dateFormattingUtils'
 
 export type DatePickerValidationRule = DatePickerRule
 
@@ -366,7 +365,11 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 	// --- Validation des plages de dates ---
 	// useDateRangeValidation vérifie si la plage [start, end] est valide (start <= end).
 	// Exposé via isRangeValid dans le contrôleur pour que les composants puissent le consulter.
-	const { isRangeValid: isDateRangeValid } = useDateRangeValidation(
+	const {
+		isRangeValid: isDateRangeValid,
+		currentRangeIsValid,
+		getRangeValidationError: rangeValidationError,
+	} = useDateRangeValidation(
 		options.selectedDates,
 		options.displayRange,
 	)
@@ -414,6 +417,12 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			: [options.selectedDates.value]
 	}
 
+	const shouldValidateRequired = (forceValidation: boolean): boolean => (
+		(forceValidation || !options.isUpdatingFromInternal.value)
+		&& unref(options.required)
+		&& hasNoSelection()
+	)
+
 	const dedupeValidationState = (): void => {
 		replaceErrors(errors.value)
 		warnings.value = [...new Set(warnings.value)]
@@ -438,16 +447,11 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 	const applyRangeValidationErrors = (initialIsValid: boolean): ValidationResult => {
 		let isValid = initialIsValid
 
-		if (unref(options.displayRange) && Array.isArray(options.selectedDates.value) && options.selectedDates.value.length >= 2) {
-			const startDate = options.selectedDates.value[0]
-			const endDate = options.selectedDates.value[options.selectedDates.value.length - 1]
-
-			if (startDate && endDate) {
-				const rangeError = getRangeValidationError(startDate, endDate)
-				if (rangeError) {
-					pushError(rangeError)
-					isValid = false
-				}
+		if (!currentRangeIsValid.value) {
+			const rangeError = rangeValidationError.value
+			if (rangeError) {
+				pushError(rangeError)
+				isValid = false
 			}
 		}
 
@@ -476,6 +480,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		shouldDisplayErrors,
 		hasNoSelection,
 		getDatesToValidate,
+		shouldValidateRequired,
 		dedupeValidationState,
 		buildValidationResult,
 		applyRangeValidationErrors,
