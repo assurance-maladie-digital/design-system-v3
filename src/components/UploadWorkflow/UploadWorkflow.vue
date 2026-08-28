@@ -23,7 +23,7 @@
 		defineProps<
 			Widthable &
 			CustomizableOptions & {
-				uploadList: UploadItem[]
+				uploadList?: UploadItem[]
 				sectionTitle?: string
 				showFilePreview?: boolean
 				infoText?: string
