@@ -20,9 +20,26 @@ import '../../stories/styles/shared.css';
 
 Il est généralement placé en haut de la page et est caché visuellement. Lorsqu'il est activé, il devient visible et permet à l'utilisateur de sauter directement à une section de contenu.
 
-Quand l'utilisateur change de page ou de vue, le focus est automatiquement placé sur l'élément de saut pour lui permettre de naviguer rapidement dans la page.
+Pour proposer plusieurs destinations, utilisez la prop `skipLinks` avec un tableau d'objets contenant `label` et `target`. Cette prop remplace le lien unique configuré avec `label` et `target`.
+
+## Personnalisation des textes
+
+Les textes par défaut du composant peuvent être surchargés via la prop `locales`, ce qui est utile pour l'internationalisation. La prop `label` reste prioritaire sur `locales.label`.
+
+<Source dark code={`
+<template>
+  <SkipLink
+    target="#main-content"
+    :locales="{ label: 'Skip to main content', ariaLabel: 'Skip links' }"
+  />
+</template>
+`} />
 
 <Canvas of={SkipLinkStories.Default}  />
+
+## Exemple d'utilisation avec plusieurs liens
+
+<Canvas of={SkipLinkStories.MultipleLinks} />
 
 ## API
 
