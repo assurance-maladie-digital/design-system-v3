@@ -546,7 +546,7 @@ export const WithCustomPeriod: Story = {
 						format="DD/MM/YYYY"
 						:period="{
 							min: '01/01/1995',
-							max: '12/31/2005',
+							max: '31/12/2005',
 						}"
 						:customRules="[
 							{
@@ -601,7 +601,7 @@ export const WithCustomPeriod: Story = {
 		'onClosed': fn(),
 		'period': {
 			min: '01/01/1995',
-			max: '12/31/2005',
+			max: '31/12/2005',
 		},
 		'customRules': [
 			{

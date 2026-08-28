@@ -52,7 +52,9 @@ export function createValidateCalendarModeFlow(
 	 * Logique spécifique CalendarMode pour le required.
 	 * CalendarMode a un flow différent : il ne faut pas afficher l'erreur required
 	 * dans certains cas (readonly, blur sans validateOnBlur, validation initiale).
-	 * Si aucune condition de skip ne s'applique, pousse l'erreur required et retourne true.
+	 * Retourne true si on doit skipper la validation required, false sinon.
+	 * Ne pousse PAS l'erreur required — c'est la responsabilité de l'appelant
+	 * de le faire après les custom rules pour éviter qu'applyValidationResult l'écrase.
 	 */
 	const shouldSkipCalendarModeRequiredError = (forceValidation: boolean): boolean => {
 		if (!shouldValidateRequired(forceValidation)) {
@@ -71,11 +73,7 @@ export function createValidateCalendarModeFlow(
 			return true
 		}
 
-		if (ctx.shouldDisplayErrors()) {
-			ctx.pushError(locales.required)
-		}
-
-		return true
+		return false
 	}
 
 	const validateCalendarModeDates = async (forceValidation = false) => {
@@ -96,22 +94,30 @@ export function createValidateCalendarModeFlow(
 		ctx.clearValidation()
 
 		// Vérifier le required avec la logique spécifique CalendarMode
-		if (shouldSkipCalendarModeRequiredError(forceValidation)) {
+		const skipRequired = shouldSkipCalendarModeRequiredError(forceValidation)
+		if (skipRequired) {
 			return
 		}
 
 		// Si pas de sélection : valider avec null si des customRules existent
 		// (permet aux custom rules de s'exécuter sur les champs vides)
 		if (ctx.hasNoSelection()) {
-			if (!options.customRules.value || options.customRules.value.length === 0) return
+			const hasCustomRules = options.customRules.value && options.customRules.value.length > 0
 
-			if (shouldRunDisplayedValidation(forceValidation)) {
+			if (hasCustomRules && shouldRunDisplayedValidation(forceValidation)) {
 				await ctx.validateField(
 					options.selectedDates.value,
 					options.customRules.value,
 					options.customWarningRules.value,
 				)
+				// Pousser l'erreur required APRÈS les custom rules pour éviter qu'applyValidationResult l'écrase
+				if (shouldValidateRequired(forceValidation) && ctx.shouldDisplayErrors()) {
+					ctx.pushError(locales.required)
+				}
 				ctx.dedupeValidationState()
+			}
+			else if (shouldValidateRequired(forceValidation) && ctx.shouldDisplayErrors()) {
+				ctx.pushError(locales.required)
 			}
 			return
 		}
