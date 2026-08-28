@@ -27,20 +27,27 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 	const { options } = ctx
 
 	/**
-	 * Filtre les custom rules pour ne garder que celles qui sont "prêtes".
+	 * Filtre un tableau de règles pour ne garder que celles qui sont "prêtes".
 	 * Une règle notBeforeDate/notAfterDate/exactDate est "prête" si son options.date est défini.
+	 */
+	const filterReadyRules = (rules: DatePickerRule[]): DatePickerRule[] => {
+		return rules.filter((rule) => {
+			if (rule.type === 'notBeforeDate' || rule.type === 'notAfterDate' || rule.type === 'exactDate') {
+				return rule.options && rule.options.date !== undefined
+			}
+			return true
+		})
+	}
+
+	/**
+	 * Filtre les custom rules pour ne garder que celles qui sont "prêtes".
 	 * Si aucune règle n'est prête alors qu'il y en a, retourne null pour skip la validation
 	 * (évite l'erreur "Configuration de la règle invalide" quand les computed réactifs
 	 * ne sont pas encore mis à jour, ex: dateA pas encore sélectionnée pour dateBRules).
 	 */
 	const getReadyCustomRules = (): DatePickerRule[] | null => {
 		const currentCustomRules = options.customRules.value
-		const readyRules = currentCustomRules.filter((rule) => {
-			if (rule.type === 'notBeforeDate' || rule.type === 'notAfterDate' || rule.type === 'exactDate') {
-				return rule.options && rule.options.date !== undefined
-			}
-			return true
-		})
+		const readyRules = filterReadyRules(currentCustomRules)
 		if (readyRules.length === 0 && currentCustomRules.length > 0) {
 			return null
 		}
@@ -77,7 +84,7 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 		if (readyRules === null) {
 			return true
 		}
-		const adapted = getAdaptedRules(readyRules, options.customWarningRules.value, options.customSuccessRules?.value ?? [])
+		const adapted = getAdaptedRules(readyRules, filterReadyRules(options.customWarningRules.value), filterReadyRules(options.customSuccessRules?.value ?? []))
 		const result = ctx.validateField(date, adapted.customRules, adapted.warningRules, adapted.successRules)
 
 		if (result instanceof Promise) {
@@ -169,7 +176,7 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 			// Si des customRules existent et que l'utilisateur a interagi, les exécuter sur null
 			// (permet aux règles métier de valider les champs vides, ex: date obligatoire conditionnelle)
 			if (options.customRules.value.length > 0 && (options.hasInteracted?.value ?? false)) {
-				const adapted = getAdaptedRules(options.customRules.value, options.customWarningRules.value, options.customSuccessRules?.value ?? [])
+				const adapted = getAdaptedRules(filterReadyRules(options.customRules.value), filterReadyRules(options.customWarningRules.value), filterReadyRules(options.customSuccessRules?.value ?? []))
 				const result = await ctx.validateField(
 					null,
 					adapted.customRules,
