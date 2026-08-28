@@ -71,7 +71,7 @@ export type DatePickerValidationOptions = {
 	useCalendarModeRequiredFlow?: boolean
 	isInitialValidation?: Ref<boolean>
 	isValidateOnBlur?: Ref<boolean>
-	onblur?: Ref<boolean>
+	hasBlurred?: Ref<boolean>
 	fieldIdentifier?: MaybeRef<string>
 	revalidateOnCustomRulesChange?: boolean
 	displayFormat?: MaybeRef<string>

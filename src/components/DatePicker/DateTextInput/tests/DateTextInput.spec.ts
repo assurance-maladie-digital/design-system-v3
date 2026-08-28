@@ -1,7 +1,9 @@
 import { mount, flushPromises } from '@vue/test-utils'
 import { describe, it, expect, vi } from 'vitest'
+import { defineComponent, ref } from 'vue'
 import DateTextInput from '../DateTextInput.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
 describe('DateTextInput.clean', () => {
 	const mountComponent = (props: Record<string, unknown>) => mount(DateTextInput, {
@@ -276,6 +278,75 @@ describe('DateTextInput.clean', () => {
 
 		const validResult = await wrapper.vm.validateOnSubmit()
 		expect(validResult).toBe(true)
+	})
+
+	it('registers with SyForm and blocks submit until a valid date is entered', async () => {
+		const Host = defineComponent({
+			components: { DateTextInput, SyForm },
+			setup() {
+				const value = ref<string | null>(null)
+				const submitPayload = ref<{ isValid: boolean } | null>(null)
+
+				return {
+					submitPayload,
+					value,
+					handleSubmit: (payload: { isValid: boolean }) => {
+						submitPayload.value = payload
+					},
+				}
+			},
+			template: `
+				<SyForm @submit="handleSubmit">
+					<DateTextInput v-model="value" label="Date" format="DD/MM/YYYY" required />
+				</SyForm>
+			`,
+		})
+
+		const host = mount(Host)
+		const form = host.getComponent(SyForm)
+		const dateInput = host.getComponent(DateTextInput)
+
+		expect(await (form.vm as InstanceType<typeof SyForm>).validate()).toBe(false)
+		expect(host.vm.submitPayload).toBeNull()
+
+		const input = dateInput.find('input')
+		await input.setValue('26/08/2026')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(await (form.vm as InstanceType<typeof SyForm>).validate()).toBe(true)
+
+		await form.trigger('submit')
+		await flushPromises()
+
+		expect(host.vm.submitPayload).toEqual({ isValid: true })
+		host.unmount()
+	})
+
+	it('applies Vuetify rules through validateOnSubmit without SyForm', async () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			useVuetifyValidation: true,
+			rules: [
+				(value: unknown) => Boolean(value) || 'Erreur Vuetify DateTextInput',
+			],
+		})
+
+		expect(await wrapper.vm.validateOnSubmit()).toBe(false)
+
+		let textField = wrapper.findComponent(SyTextField)
+		expect(textField.props('errorMessages')).toContain('Erreur Vuetify DateTextInput')
+
+		const input = wrapper.find('input')
+		await input.setValue('26/08/2026')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(await wrapper.vm.validateOnSubmit()).toBe(true)
+
+		textField = wrapper.findComponent(SyTextField)
+		expect(textField.props('errorMessages')).not.toContain('Erreur Vuetify DateTextInput')
 	})
 
 	it('emits a range model for a valid date range', async () => {

@@ -1,8 +1,9 @@
 import { mount, flushPromises, type VueWrapper } from '@vue/test-utils'
 import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest'
-import { nextTick } from 'vue'
+import { nextTick, defineComponent, ref } from 'vue'
 import DatePicker from '../DatePicker.vue'
 import { locales } from '../../locales'
+import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
 type DatePickerInstance = InstanceType<typeof DatePicker>
 
@@ -288,6 +289,72 @@ describe('DatePicker', () => {
 		wrapper.unmount()
 	})
 
+	describe('SyForm integration', () => {
+		it('registers with SyForm and blocks submit while the field is invalid', async () => {
+			const Host = defineComponent({
+				components: { DatePicker, SyForm },
+				setup() {
+					const value = ref<string | null>(null)
+					const submitPayload = ref<{ isValid: boolean } | null>(null)
+
+					return {
+						submitPayload,
+						value,
+						handleSubmit: (payload: { isValid: boolean }) => {
+							submitPayload.value = payload
+						},
+					}
+				},
+				template: `
+					<SyForm @submit="handleSubmit">
+						<DatePicker v-model="value" label="Date Field" required />
+					</SyForm>
+				`,
+			})
+
+			const host = mount(Host)
+			const form = host.getComponent(SyForm)
+			const datePicker = host.getComponent(DatePicker)
+
+			expect(await (form.vm as InstanceType<typeof SyForm>).validate()).toBe(false)
+			expect(host.vm.submitPayload).toBeNull()
+
+			const input = datePicker.find('input')
+			await input.setValue('26/08/2026')
+			await input.trigger('blur')
+			await flushPromises()
+
+			expect(await (form.vm as InstanceType<typeof SyForm>).validate()).toBe(true)
+
+			await form.trigger('submit')
+			await flushPromises()
+
+			expect(host.vm.submitPayload).toEqual({ isValid: true })
+			host.unmount()
+		})
+	})
+
+	describe('Unified Vuetify validation', () => {
+		it('applies Vuetify rules through validateOnSubmit without SyForm', async () => {
+			const wrapper = mountComponent({
+				label: 'Date Field',
+				useVuetifyValidation: true,
+				rules: [
+					(value: unknown) => Boolean(value) || 'Erreur Vuetify DatePicker',
+				],
+			})
+
+			expect(await wrapper.vm.validateOnSubmit()).toBe(false)
+			expect(wrapper.vm.errorMessages).toContain('Erreur Vuetify DatePicker')
+
+			await wrapper.vm.updateSelectedDates(new Date(2026, 7, 26))
+			await flushPromises()
+
+			expect(await wrapper.vm.validateOnSubmit()).toBe(true)
+			expect(wrapper.vm.errorMessages).not.toContain('Erreur Vuetify DatePicker')
+		})
+	})
+
 	it('preserves autoClamp in combined range mode', async () => {
 		const wrapper = mountComponent({
 			format: 'DD/MM/YYYY',
@@ -447,6 +514,19 @@ describe('DatePicker', () => {
 		vm.updateSelectedDates('invalid-date')
 
 		expect(vm.selectedDates).toBeNull()
+	})
+
+	it('exposes the expected public API contract for parent refs', () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		expect(typeof vm.validateOnSubmit).toBe('function')
+		expect(typeof vm.openDatePicker).toBe('function')
+		expect(typeof vm.updateSelectedDates).toBe('function')
+		expect(typeof vm.clearValidation).toBe('function')
+		expect(typeof vm.reset).toBe('function')
 	})
 
 	it('validateOnSubmit returns false and sets error messages when required and empty', async () => {
@@ -1061,6 +1141,23 @@ describe('DatePicker - Coverage branches', () => {
 		await flushPromises()
 		expect(w.emitted('blur')).toBeTruthy()
 		expect(w.vm.errorMessages.length).toBe(0)
+		w.unmount()
+	})
+
+	it('emits blur from the activator input even when isValidateOnBlur is false', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '', format: 'DD/MM/YYYY', required: true, isValidateOnBlur: false },
+		})
+
+		const input = w.find('input')
+		await input.trigger('focus')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(w.emitted('blur')).toBeTruthy()
+		expect(w.emitted('blur')).toHaveLength(1)
+		expect(w.vm.errorMessages.length).toBe(0)
+
 		w.unmount()
 	})
 

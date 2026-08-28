@@ -63,7 +63,7 @@ export function createValidateCalendarModeFlow(
 			return true
 		}
 
-		if (options.onblur?.value && !options.isValidateOnBlur?.value) {
+		if (options.hasBlurred?.value && !options.isValidateOnBlur?.value) {
 			return true
 		}
 

@@ -1,9 +1,10 @@
 import { VDatePicker } from 'vuetify/components'
 import { mount, flushPromises, VueWrapper, type MountingOptions } from '@vue/test-utils'
 import { describe, it, expect, afterEach, vi } from 'vitest'
-import { nextTick } from 'vue'
+import { nextTick, defineComponent, ref } from 'vue'
 import ComplexDatePicker from '../ComplexDatePicker.vue'
 import { locales } from '../../locales'
+import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- VueWrapper<any> est le pattern standard pour les composants Vue avec defineExpose complexe
 let wrapper: VueWrapper<any> | null = null
@@ -377,6 +378,23 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.isDatePickerVisible).toBe(false)
 	})
 
+	it('emits blur in combined mode even when isValidateOnBlur is false', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			isValidateOnBlur: false,
+		})
+
+		const input = wrapper.find('input')
+		await input.trigger('focus')
+		await input.trigger('blur')
+		await flushPromises()
+
+		const emittedBlur = wrapper.emitted('blur')
+		expect(emittedBlur).toBeTruthy()
+		expect(emittedBlur).toHaveLength(1)
+	})
+
 	it('handleDateSelected updates model, selection and emits event in single mode', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
@@ -707,6 +725,83 @@ describe('ComplexDatePicker.clean', () => {
 
 		const result = await wrapper.vm.validateOnSubmit()
 		expect(result).toBe(false)
+	})
+
+	it('registers with SyForm and blocks submit until a valid date is entered', async () => {
+		const Host = defineComponent({
+			components: { ComplexDatePicker, SyForm },
+			setup() {
+				const value = ref<string | null>(null)
+				const submitPayload = ref<{ isValid: boolean } | null>(null)
+
+				return {
+					submitPayload,
+					value,
+					handleSubmit: (payload: { isValid: boolean }) => {
+						submitPayload.value = payload
+					},
+				}
+			},
+			template: `
+				<SyForm @submit="handleSubmit">
+					<ComplexDatePicker v-model="value" label="Date Field" required />
+				</SyForm>
+			`,
+		})
+
+		const host = mount(Host)
+		const form = host.getComponent(SyForm)
+		const datePicker = host.getComponent(ComplexDatePicker)
+
+		expect(await (form.vm as InstanceType<typeof SyForm>).validate()).toBe(false)
+		expect(host.vm.submitPayload).toBeNull()
+
+		const input = datePicker.find('input')
+		await input.setValue('26/08/2026')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(await (form.vm as InstanceType<typeof SyForm>).validate()).toBe(true)
+
+		await form.trigger('submit')
+		await flushPromises()
+
+		expect(host.vm.submitPayload).toEqual({ isValid: true })
+		host.unmount()
+	})
+
+	it('applies Vuetify rules through validateOnSubmit without SyForm', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			useVuetifyValidation: true,
+			rules: [
+				(value: unknown) => Boolean(value) || 'Erreur Vuetify ComplexDatePicker',
+			],
+		})
+
+		expect(await wrapper.vm.validateOnSubmit()).toBe(false)
+		expect(wrapper.vm.errorMessages).toContain('Erreur Vuetify ComplexDatePicker')
+
+		await wrapper.vm.updateSelectedDates(new Date(2026, 7, 26))
+		await flushPromises()
+
+		expect(await wrapper.vm.validateOnSubmit()).toBe(true)
+		expect(wrapper.vm.errorMessages).not.toContain('Erreur Vuetify ComplexDatePicker')
+	})
+
+	it('exposes the expected public API contract for parent refs', () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+		})
+
+		expect(typeof wrapper.vm.validateOnSubmit).toBe('function')
+		expect(typeof wrapper.vm.openDatePicker).toBe('function')
+		expect(typeof wrapper.vm.toggleDatePicker).toBe('function')
+		expect(typeof wrapper.vm.clearValidation).toBe('function')
+		expect(typeof wrapper.vm.emitBlur).toBe('function')
+		expect(typeof wrapper.vm.formatDateInput).toBe('function')
+		expect(typeof wrapper.vm.reset).toBe('function')
 	})
 
 	it('validateOnSubmit returns true when a valid value is present in text-only mode', async () => {

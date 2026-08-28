@@ -32,7 +32,7 @@ describe('useDatePickerValidation', () => {
 		useCalendarModeRequiredFlow: false,
 		isInitialValidation: ref(false),
 		isValidateOnBlur: ref(true),
-		onblur: ref(false),
+		hasBlurred: ref(false),
 		fieldIdentifier: 'Date',
 		revalidateOnCustomRulesChange: false,
 		...overrides,

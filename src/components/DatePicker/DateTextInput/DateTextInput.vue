@@ -68,7 +68,7 @@
 	import { buildDateTextInputTextFieldProps } from './props/buildDateTextInputTextFieldProps'
 	import { locales } from '../locales'
 	import type { DateInput, DateModelValue } from '@/composables/date/useDateInitializationDayjs'
-	import type { DateObjectValue, DateTextInputProps } from '../types'
+	import type { DateObjectValue, DateTextInputProps, DateTextInputPublicApi } from '../types'
 	import DatePickerLiveRegion from '../DatePickerLiveRegion.vue'
 	import { resolveDatePickerStateFromModelValue, getRangeValidationError } from '../utils/dateFormattingUtils'
 
@@ -1264,8 +1264,7 @@
 		reset()
 	}
 
-	/** expose */
-	defineExpose({
+	const publicApi: DateTextInputPublicApi = {
 		validateOnSubmit,
 		validate: bridgeValidate,
 		reset,
@@ -1280,7 +1279,10 @@
 			const el = getNativeInputElement()
 			el?.blur()
 		},
-	})
+	}
+
+	/** expose */
+	defineExpose(publicApi)
 
 	syncFromModelValue(props.modelValue)
 
