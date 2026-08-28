@@ -3,7 +3,10 @@ import './storybook.css'
 import type { Preview } from '@storybook/vue3-vite'
 import { setup } from '@storybook/vue3-vite'
 import { createVuetifyInstance } from '../src/vuetifyConfig'
-
+import {
+	useComponentStatus,
+	type StatutResult,
+} from '../src/composables/useComponentStatus'
 const vuetify = createVuetifyInstance()
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -25,9 +28,11 @@ const applyTheme = (theme: string) => {
 if (typeof window !== 'undefined' && !initialized) {
 	initialized = true
 
-	const channel = (window as any).__STORYBOOK_ADDONS_CHANNEL__
+	const channel = (window as { __STORYBOOK_ADDONS_CHANNEL__?: {
+		on?: (event: string, callback: (data: { globals?: { theme?: string } }) => void) => void
+	} }).__STORYBOOK_ADDONS_CHANNEL__
 
-	channel?.on('globalsUpdated', (data: any) => {
+	channel?.on('globalsUpdated', (data) => {
 		const theme = data?.globals?.theme
 		if (theme) applyTheme(theme)
 	})
@@ -92,6 +97,30 @@ const preview: Preview = {
 				document.body.classList.add('storybook-docs-mode')
 			}
 
+			if (typeof window !== 'undefined') {
+				try {
+					const channel = (
+						window as Window & {
+							__STORYBOOK_ADDONS_CHANNEL__?: {
+								emit: (event: string, result: StatutResult) => void
+							}
+						}
+					).__STORYBOOK_ADDONS_CHANNEL__
+
+					const result = useComponentStatus(context)
+
+					channel?.emit('conformite-design-system/result', result)
+				}
+				catch (error) {
+					// eslint-disable-next-line no-console
+					console.error(
+						'[ComponentStatus] Erreur pendant l’analyse :',
+						context.id,
+						error,
+					)
+				}
+			}
+
 			return story()
 		},
 	],
@@ -131,6 +160,7 @@ const preview: Preview = {
 					// Use alphabetical order for components but keep categories grouped in this order
 					[
 						'Vue d\'ensemble',
+						'Matrice de conformité',
 						'Structure', ['FooterBar', 'FooterWrapper', 'HeaderBar', 'HeaderLoading', 'HeaderToolbar', 'SubHeader'],
 						'Layout', ['PageContainer'],
 						'Navigation', ['ContextualMenu', 'ExternalLinks', 'SkipLink', 'SocialMediaLinks', 'SyPagination', 'SyTabs'],

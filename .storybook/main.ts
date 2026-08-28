@@ -2,8 +2,22 @@ import type { StorybookConfig } from '@storybook/vue3-vite'
 import { mergeConfig } from 'vite'
 import remarkGfm from 'remark-gfm'
 
+const isDev = process.env.NODE_ENV === 'development'
+
+const stories = [
+	'../src/**/*.mdx',
+	'../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+]
+
+if (!isDev) {
+	stories.push(
+		'!../src/components/ComponentStatusTable/**/*.mdx',
+		'!../src/components/ComponentStatusTable/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+	)
+}
+
 const config: StorybookConfig = {
-	stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+	stories,
 	staticDirs: ['./public'],
 	addons: [
 		'@storybook/addon-links',
