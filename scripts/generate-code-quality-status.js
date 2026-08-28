@@ -147,7 +147,7 @@ function getVisualThemeStatus(componentName, content) {
 
 function getThemeModeStatus(content) {
 	if (/ap2026/i.test(content)) return 'AmeliPro 2026'
-	if (/amelipro|ap/i.test(content)) return 'AmeliPro'
+	if (/amelipro|\bap\b/i.test(content)) return 'AmeliPro'
 	if (/pa/i.test(content)) return 'PA'
 	return 'CNAM'
 }
