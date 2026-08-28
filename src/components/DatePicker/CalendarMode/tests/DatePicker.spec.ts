@@ -68,6 +68,36 @@ describe('DatePicker', () => {
 		expect(title?.textContent?.trim()).toBe(locales.calendarTitle)
 	})
 
+	it('keeps saturday and sunday weekend styling with a custom period in december 2005', async () => {
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '15/12/2005',
+				format: 'DD/MM/YYYY',
+				period: {
+					min: '01/01/1995',
+					max: '12/31/2005',
+				},
+			},
+			attachTo: document.body,
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const saturday = document.querySelector('[data-v-date="2005-12-03"] .v-btn')
+		const sunday = document.querySelector('[data-v-date="2005-12-04"] .v-btn')
+		const monday = document.querySelector('[data-v-date="2005-12-05"] .v-btn')
+
+		expect(saturday?.classList.contains('weekend-day')).toBe(true)
+		expect(sunday?.classList.contains('weekend-day')).toBe(true)
+		expect(monday?.classList.contains('weekend-day')).toBe(false)
+
+		wrapper.unmount()
+	})
+
 	it('links the readonly activator wrapper to the exposed dialog when the calendar is open', async () => {
 		const wrapper = mountComponent()
 		const vm = wrapper.vm as DatePickerInstance
