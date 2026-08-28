@@ -183,12 +183,7 @@
 	color: rgb(var(--v-theme-onPrimary)) !important;
 }
 
-:deep(.weekend .v-date-picker-month__day--week-end .v-btn) {
-	background-color: #d4d6d6;
-}
-
-/* day before weekend */
-:deep(.weekend .v-date-picker-month__day:has(+ .v-date-picker-month__day--week-end) .v-btn) {
+:deep(.weekend .v-date-picker-month__day .v-btn.weekend-day) {
 	background-color: #d4d6d6;
 }
 
