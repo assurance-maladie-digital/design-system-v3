@@ -28,9 +28,11 @@ const applyTheme = (theme: string) => {
 if (typeof window !== 'undefined' && !initialized) {
 	initialized = true
 
-	const channel = (window as any).__STORYBOOK_ADDONS_CHANNEL__
+	const channel = (window as { __STORYBOOK_ADDONS_CHANNEL__?: {
+		on?: (event: string, callback: (data: { globals?: { theme?: string } }) => void) => void
+	} }).__STORYBOOK_ADDONS_CHANNEL__
 
-	channel?.on('globalsUpdated', (data: any) => {
+	channel?.on('globalsUpdated', (data) => {
 		const theme = data?.globals?.theme
 		if (theme) applyTheme(theme)
 	})
@@ -110,6 +112,7 @@ const preview: Preview = {
 					channel?.emit('conformite-design-system/result', result)
 				}
 				catch (error) {
+					// eslint-disable-next-line no-console
 					console.error(
 						'[ComponentStatus] Erreur pendant l’analyse :',
 						context.id,
@@ -157,7 +160,7 @@ const preview: Preview = {
 					// Use alphabetical order for components but keep categories grouped in this order
 					[
 						'Vue d\'ensemble',
-						'Data',
+						'Matrice de conformité',
 						'Structure', ['FooterBar', 'FooterWrapper', 'HeaderBar', 'HeaderLoading', 'HeaderToolbar', 'SubHeader'],
 						'Layout', ['PageContainer'],
 						'Navigation', ['ContextualMenu', 'ExternalLinks', 'SkipLink', 'SocialMediaLinks', 'SyPagination', 'SyTabs'],
