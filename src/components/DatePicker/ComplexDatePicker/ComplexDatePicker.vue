@@ -1104,7 +1104,7 @@
 		textInputValue.value = value
 
 		if (!props.displayRange) {
-			validate()
+			validate({ textValue: value })
 			return
 		}
 

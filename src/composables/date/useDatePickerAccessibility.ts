@@ -549,7 +549,7 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 		)
 
 		const dayCells = allChildren.filter(cell =>
-			cell.hasAttribute('data-v-date'),
+			!cell.classList.contains('v-date-picker-month__weekday'),
 		)
 
 		const colCount = weekdayCells.length || 7
@@ -576,11 +576,9 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 			const chunk = dayCells.slice(i, i + colCount)
 			chunk.forEach((cell) => {
 				const button = cell.querySelector<HTMLButtonElement>('button')
-				if (!button) return
-
 				cell.setAttribute('role', 'gridcell')
 				const isSelected = cell.classList.contains('v-date-picker-month__day--selected')
-					|| button.classList.contains('v-btn--active')
+					|| button?.classList.contains('v-btn--active')
 				if (isSelected) {
 					cell.setAttribute('aria-selected', 'true')
 				}
@@ -588,12 +586,15 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 					cell.removeAttribute('aria-selected')
 				}
 
-				button.removeAttribute('role')
-				button.removeAttribute('aria-rowindex')
-				button.removeAttribute('aria-colindex')
-				button.removeAttribute('aria-selected')
-				button.setAttribute('tabindex', '-1')
-				button.dataset.gridcellManagedTabindex = 'true'
+				if (button) {
+					button.removeAttribute('role')
+					button.removeAttribute('aria-rowindex')
+					button.removeAttribute('aria-colindex')
+					button.removeAttribute('aria-selected')
+					button.setAttribute('tabindex', '-1')
+					button.dataset.gridcellManagedTabindex = 'true'
+				}
+
 				row.appendChild(cell)
 			})
 			daysContainer.appendChild(row)
