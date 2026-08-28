@@ -1,22 +1,27 @@
-import { computed, ref, watch, type Ref } from 'vue'
-import type { DataTableHeaders, TableColumnHeader } from './types'
+import { computed, ref, toValue, watch, type MaybeRefOrGetter } from 'vue'
+import type { DataTableHeaders, TableColumnHeader, TableFilterInputConfig } from './types'
 import { sortHeaders } from './organizeColumns/sortHeaders'
 
 /**
- * Composable for processing and enhancing table headers
+ * Composable for merging, normalizing and enhancing table headers.
  *
- * @param headersProp - Reference to headers from props
- * @param filterInputConfig - Configuration for filter inputs
- * @returns Header utilities and computed properties
+ * @param headersProp - Headers provided by the table props.
+ * @param storedHeaders - Optional headers restored from table state persistence. When both
+ *   sources are defined, persisted headers provide the base order and prop values override
+ *   matching headers. This value is not reactive because persistence is initialized once.
+ * @param filterInputConfig - Optional filter-input configuration indexed by column key.
+ * @returns Reactive header collections and utilities for retrieving or enhancing headers.
  */
 export function useTableHeaders({
 	headersProp,
 	storedHeaders,
 	filterInputConfig = {},
+	componentName = 'SyTable',
 }: {
-	headersProp: Readonly<Ref<DataTableHeaders[] | undefined>>
+	headersProp: MaybeRefOrGetter<DataTableHeaders[] | undefined>
 	storedHeaders?: DataTableHeaders[]
-	filterInputConfig?: Record<string, unknown>
+	filterInputConfig?: MaybeRefOrGetter<Record<string, TableFilterInputConfig> | undefined>
+	componentName?: string
 }) {
 	function normalizeHeader(header: DataTableHeaders): DataTableHeaders {
 		const mapped = {
@@ -50,7 +55,7 @@ export function useTableHeaders({
 	}
 
 	const mergedHeaders = computed(() => {
-		const incoming = headersProp?.value
+		const incoming = toValue(headersProp)
 		const stored = Array.isArray(storedHeaders) ? storedHeaders : undefined
 
 		// Si aucun header, rien à faire
@@ -108,13 +113,21 @@ export function useTableHeaders({
 		const filterType = column.filterType || 'text'
 
 		// Get column-specific filter config or empty object
-		const columnFilterConfig = column.key && filterInputConfig[column.key as string] ? filterInputConfig[column.key as string] : {}
+		const columnIdentifier = typeof column.key === 'string' && column.key
+			? column.key
+			: typeof column.value === 'string' && column.value
+				? column.value
+				: undefined
+		const filterConfig = toValue(filterInputConfig) ?? {}
+		const columnFilterConfig = columnIdentifier && filterConfig[columnIdentifier]
+			? filterConfig[columnIdentifier]
+			: {}
 
 		// Return enhanced header with filter properties
 		return {
 			...(column as object),
 			filterType,
-			filterConfig: columnFilterConfig as Record<string, unknown>,
+			filterConfig: columnFilterConfig as TableFilterInputConfig,
 		} as TableColumnHeader
 	}
 
@@ -133,6 +146,31 @@ export function useTableHeaders({
 		if (!normalizedInternalHeaders.value) return []
 		return normalizedInternalHeaders.value.filter(header => header.filterable)
 	})
+
+	// `filterInputConfig` doit être indexé par clé de colonne : avertit une seule fois si l'ancien format (options à la racine) est détecté
+	let hasWarnedInvalidFilterInputConfig = false
+
+	watch(filterableHeaders, (headers) => {
+		if (hasWarnedInvalidFilterInputConfig) return
+		const configKeys = Object.keys(toValue(filterInputConfig) ?? {})
+		if (configKeys.length === 0 || headers.length === 0) return
+
+		const columnIdentifiers = new Set(
+			headers
+				.map(header => (typeof header.key === 'string' && header.key) || (typeof header.value === 'string' && header.value))
+				.filter((identifier): identifier is string => !!identifier),
+		)
+
+		const hasUnknownKey = configKeys.some(key => !columnIdentifiers.has(key))
+		if (hasUnknownKey) {
+			hasWarnedInvalidFilterInputConfig = true
+			// eslint-disable-next-line no-console
+			console.warn(
+				`[${componentName}] La prop \`filterInputConfig\` doit être indexée par la clé (ou value) de chaque colonne filtrable, ex. { [columnKey]: { maxlength: 10 } }. `
+				+ 'L\'ancien format (options placées directement à la racine) n\'est plus supporté.',
+			)
+		}
+	}, { immediate: true })
 
 	/**
 	 * Get header by key

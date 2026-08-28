@@ -41,7 +41,33 @@ Le multi-tri est également supporté. Vous pouvez activer cette fonctionnalité
 
 ### Filtres des colonnes
 
-Le composant permet d'appliquer des filtres sur les colonnes. Vous pouvez définir des filtres personnalisés pour chaque colonne en utilisant la prop `show-filters`. Voir d'autres exemples de filtres dans les stories.
+Le composant permet d'appliquer des filtres sur les colonnes avec la prop `show-filters`. Déclarez les colonnes filtrables dans `headers`, puis configurez chaque champ avec `filter-input-config`. La configuration est indexée par la `key` de la colonne.
+
+Les filtres texte et numériques acceptent notamment `maxlength` pour limiter la saisie. Les autres options de champ disponibles sont `variant`, `density`, `hideDetails`, `backgroundColor`, `clearable`, `disableErrorHandling` et `debounceTime`.
+
+<Source dark code={`
+const headers = [
+  { title: 'Nom', key: 'lastname', filterable: true, filterType: 'text' },
+  { title: 'Référence', key: 'reference', filterable: true, filterType: 'number' },
+]
+
+const filterInputConfig = {
+  lastname: { maxlength: 80 },
+  reference: { maxlength: 10 },
+}
+`}/>
+
+<Source dark code={`
+<SyTable
+  :items="items"
+  :headers="headers"
+  :filter-input-config="filterInputConfig"
+  show-filters
+  suffix="dossiers"
+/>
+`}/>
+
+`maxlength` limite la saisie dans le champ ; les contraintes métier restent à valider côté application et côté serveur. Voir d'autres exemples de filtres dans les stories.
 
 ### Resize des colonnes
 

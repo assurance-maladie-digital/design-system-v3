@@ -117,7 +117,8 @@
 	const { headers, displayHeaders, getEnhancedHeader, getHeaderForColumn } = useTableHeaders({
 		headersProp: toRef(props, 'headers'),
 		storedHeaders: storedOptions.headers,
-		filterInputConfig: props.filterInputConfig,
+		filterInputConfig: () => props.filterInputConfig,
+		componentName: 'SyTable',
 	})
 
 	const { filteredItems } = useTableItems({
@@ -454,7 +455,6 @@
 									:filterable="true"
 									:filters="filters"
 									:header="getEnhancedHeader(column)"
-									:input-config="props.filterInputConfig"
 									@update:filters="filters = $event"
 								>
 									<template #custom-filter="customFilterSlotProps">
@@ -519,8 +519,7 @@
 							<SyTableFilter
 								v-if="header.filterable"
 								:filters="filters"
-								:header="header"
-								:input-config="props.filterInputConfig"
+								:header="getEnhancedHeader(header)"
 								@update:filters="filters = $event"
 							>
 								<template #custom-filter="filterSlotProps">

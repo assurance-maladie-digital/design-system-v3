@@ -507,6 +507,133 @@ describe('SyServerTable', () => {
 		activeWrappers.push(wrapper)
 	})
 
+	it('passes each column filterInputConfig to its filter', async () => {
+		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				showFilters: true,
+				serverItemsLength: fakeItems.length,
+				suffix: 'filter-config',
+				headers: [
+					{ title: 'Name', key: 'name', filterable: true, filterType: 'text' },
+					{ title: 'Age', key: 'age', filterable: true, filterType: 'number' },
+				],
+				items: fakeItems,
+				filterInputConfig: {
+					name: { maxlength: 8 },
+					age: { maxlength: 6 },
+				},
+			},
+		})
+
+		await vi.dynamicImportSettled()
+		const filters = wrapper.findAllComponents(SyTableFilter)
+
+		expect(filters.find(filter => filter.props('header').key === 'name')?.props('header').filterConfig).toEqual({ maxlength: 8 })
+		expect(filters.find(filter => filter.props('header').key === 'age')?.props('header').filterConfig).toEqual({ maxlength: 6 })
+		expect(warnSpy).not.toHaveBeenCalled()
+
+		warnSpy.mockRestore()
+		activeWrappers.push(wrapper)
+	})
+
+	it('uses value-based identifier when key is missing for filterInputConfig', async () => {
+		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				showFilters: true,
+				serverItemsLength: fakeItems.length,
+				suffix: 'filter-config-value-fallback',
+				headers: [
+					{ title: 'Name', value: 'name', filterable: true, filterType: 'text' },
+					{ title: 'Age', value: 'age', filterable: true, filterType: 'number' },
+				],
+				items: fakeItems,
+				filterInputConfig: {
+					name: { maxlength: 8 },
+					age: { maxlength: 6 },
+				},
+			},
+		})
+
+		await vi.dynamicImportSettled()
+		const filters = wrapper.findAllComponents(SyTableFilter)
+
+		expect(filters.find(filter => String(filter.props('header').value ?? '') === 'name')?.props('header').filterConfig).toEqual({ maxlength: 8 })
+		expect(filters.find(filter => String(filter.props('header').value ?? '') === 'age')?.props('header').filterConfig).toEqual({ maxlength: 6 })
+		expect(warnSpy).not.toHaveBeenCalled()
+
+		warnSpy.mockRestore()
+		activeWrappers.push(wrapper)
+	})
+
+	it('warns when filterInputConfig uses the legacy (non per-column) format', async () => {
+		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				showFilters: true,
+				serverItemsLength: fakeItems.length,
+				suffix: 'filter-config-legacy-format',
+				headers: [
+					{ title: 'Name', key: 'name', filterable: true, filterType: 'text' },
+				],
+				items: fakeItems,
+				// Ancien format : options placées à la racine, sans clé de colonne
+				filterInputConfig: { maxlength: 8 } as unknown as Record<string, { maxlength: number }>,
+			},
+		})
+
+		await vi.dynamicImportSettled()
+
+		expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('[SyServerTable]'))
+
+		warnSpy.mockRestore()
+		activeWrappers.push(wrapper)
+	})
+
+	it('passes and updates filterInputConfig on filter components', async () => {
+		const filterInputConfig = {
+			name: { variant: 'outlined' },
+		}
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				showFilters: true,
+				serverItemsLength: 10,
+				suffix: 'filter-input-config-test',
+				headers: [{
+					title: 'Name',
+					key: 'name',
+					filterable: true,
+					filterType: 'text',
+				}],
+				items: fakeItems,
+				filterInputConfig,
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		const filter = wrapper.findComponent(SyTableFilter)
+		expect(filter.exists()).toBe(true)
+		expect(filter.props('header').filterConfig).toEqual(filterInputConfig.name)
+
+		const updatedFilterInputConfig = {
+			name: { variant: 'solo' },
+		}
+		await wrapper.setProps({ filterInputConfig: updatedFilterInputConfig })
+
+		expect(filter.props('header').filterConfig).toEqual(updatedFilterInputConfig.name)
+
+		activeWrappers.push(wrapper)
+	})
+
 	it('updates filters when SyTableFilter emits update:filters', async () => {
 		const wrapper = mount(SyServerTable, {
 			props: {
