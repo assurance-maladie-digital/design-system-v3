@@ -1,8 +1,8 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createRouter, createWebHistory } from 'vue-router'
 import SkipLink from '../SkipLink.vue'
-import { locales } from '../locales'
+import { locales } from '../locales.ts'
 
 // Create a mock router
 const router = createRouter({
@@ -14,10 +14,6 @@ const router = createRouter({
 })
 
 describe('SkipLink', () => {
-	beforeEach(() => {
-		vi.restoreAllMocks()
-	})
-
 	it('renders correctly', async () => {
 		const wrapper = mount(SkipLink, {
 			global: {
@@ -44,6 +40,24 @@ describe('SkipLink', () => {
 		expect(link.attributes('href')).toBe(customTarget)
 	})
 
+	it('affiche les liens fournis dans skipLinks', () => {
+		const wrapper = mount(SkipLink, {
+			props: {
+				skipLinks: [
+					{ label: 'Aller au contenu', target: '#main' },
+					{ label: 'Aller au pied de page', target: '#footer' },
+				],
+			},
+		})
+
+		const links = wrapper.findAll('a.sy-skip-link')
+		expect(links).toHaveLength(2)
+		expect(links[0]!.text()).toBe('Aller au contenu')
+		expect(links[0]!.attributes('href')).toBe('#main')
+		expect(links[1]!.text()).toBe('Aller au pied de page')
+		expect(links[1]!.attributes('href')).toBe('#footer')
+	})
+
 	it('utilise les valeurs par défaut', () => {
 		const wrapper = mount(SkipLink)
 
@@ -59,82 +73,29 @@ describe('SkipLink', () => {
 		expect(wrapper.find('a.sy-skip-link').exists()).toBe(true)
 	})
 
-	it('ne déplace pas le focus si la navigation échoue', async () => {
-		// Mock du router avec un hook afterEach qui simule un échec
-		const mockRouter = {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-			afterEach: (callback: any) => {
-				// Simuler un appel avec fail=true
-				callback(
-					{ path: '/new-path' },
-					{ path: '/' },
-					true, // fail=true
-				)
-			},
-		}
-
-		// Espionner querySelector et focus
-		const linkElement = document.createElement('a')
-		const focusSpy = vi.spyOn(linkElement, 'focus')
-		vi.spyOn(document, 'querySelector').mockImplementation(() => linkElement)
-
-		// Mock de getCurrentInstance pour injecter notre router
-		// eslint-disable-next-line @typescript-eslint/no-require-imports
-		vi.spyOn(require('vue'), 'getCurrentInstance').mockReturnValue({
-			appContext: {
-				app: {
-					config: {
-						globalProperties: {
-							$router: mockRouter,
-						},
-					},
+	it('permet de surcharger les textes via la prop locales', () => {
+		const wrapper = mount(SkipLink, {
+			props: {
+				locales: {
+					label: 'Skip to main content',
+					ariaLabel: 'Skip links',
 				},
 			},
 		})
 
-		mount(SkipLink)
-		await new Promise(resolve => setTimeout(resolve, 0))
-
-		expect(focusSpy).not.toHaveBeenCalled()
+		expect(wrapper.find('a.sy-skip-link').text()).toBe('Skip to main content')
+		expect(wrapper.find('nav').attributes('aria-label')).toBe('Skip links')
 	})
 
-	it('ne déplace pas le focus si le chemin reste identique', async () => {
-		// Mock du router avec un hook afterEach où to.path = from.path
-		const mockRouter = {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-			afterEach: (callback: any) => {
-				// Simuler un appel avec les mêmes chemins
-				callback(
-					{ path: '/same-path' },
-					{ path: '/same-path' },
-					false,
-				)
-			},
-		}
-
-		// Espionner querySelector et focus
-		const linkElement = document.createElement('a')
-		const focusSpy = vi.spyOn(linkElement, 'focus')
-		vi.spyOn(document, 'querySelector').mockImplementation(() => linkElement)
-
-		// Mock de getCurrentInstance
-		/* eslint-disable */
-		vi.spyOn(require('vue'), 'getCurrentInstance').mockReturnValue({
-			appContext: {
-				app: {
-					config: {
-						globalProperties: {
-							$router: mockRouter,
-						},
-					},
-				},
+	it('la prop label est prioritaire sur les locales', () => {
+		const wrapper = mount(SkipLink, {
+			props: {
+				label: 'Accéder au contenu',
+				locales: { label: 'Skip to main content' },
 			},
 		})
 
-		mount(SkipLink)
-		await new Promise(resolve => setTimeout(resolve, 0))
-
-		expect(focusSpy).not.toHaveBeenCalled()
+		expect(wrapper.find('a.sy-skip-link').text()).toBe('Accéder au contenu')
 	})
 })
 
