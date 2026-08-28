@@ -6,8 +6,6 @@ import type {
 	StatutResult,
 } from './types'
 
-const channel = addons.getChannel()
-
 export const ConformitePanel = ({
 	active,
 }: ConformitePanelProps) => {
@@ -24,7 +22,7 @@ export const ConformitePanel = ({
 
 	React.useEffect(() => {
 		if (active) {
-			channel.emit(
+			addons.getChannel().emit(
 				'conformite-design-system/request',
 			)
 		}
