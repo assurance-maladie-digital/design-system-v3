@@ -48,6 +48,23 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 	}
 
 	/**
+	 * Adapte les règles DatePicker (custom, warning, success) au format ValidationRule[]
+	 * en utilisant le format d'affichage courant.
+	 */
+	const getAdaptedRules = (
+		customRules: DatePickerRule[],
+		warningRules: DatePickerRule[],
+		successRules: DatePickerRule[],
+	): { customRules: ValidationRule[], warningRules: ValidationRule[], successRules: ValidationRule[] } => {
+		const format = unref(options.displayFormat) ?? ''
+		return {
+			customRules: adaptCustomRules(customRules, format) as ValidationRule[],
+			warningRules: adaptCustomRules(warningRules, format) as ValidationRule[],
+			successRules: adaptCustomRules(successRules, format) as ValidationRule[],
+		}
+	}
+
+	/**
 	 * Valide une date (objet Date) avec les custom rules filtrées et adaptées.
 	 * Retourne true si valide, false si erreur.
 	 * Si shouldDisplayErrors est false, retourne juste l'état sans afficher.
@@ -60,11 +77,8 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 		if (readyRules === null) {
 			return true
 		}
-		const format = unref(options.displayFormat) ?? ''
-		const safeCustomRules = adaptCustomRules(readyRules, format) as ValidationRule[]
-		const safeWarningRules = adaptCustomRules(options.customWarningRules.value, format) as ValidationRule[]
-		const safeSuccessRules = adaptCustomRules(options.customSuccessRules?.value ?? [], format) as ValidationRule[]
-		const result = ctx.validateField(date, safeCustomRules, safeWarningRules, safeSuccessRules)
+		const adapted = getAdaptedRules(readyRules, options.customWarningRules.value, options.customSuccessRules?.value ?? [])
+		const result = ctx.validateField(date, adapted.customRules, adapted.warningRules, adapted.successRules)
 
 		if (result instanceof Promise) {
 			return result.then(resolvedResult => !resolvedResult.hasError)
@@ -155,15 +169,12 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 			// Si des customRules existent et que l'utilisateur a interagi, les exécuter sur null
 			// (permet aux règles métier de valider les champs vides, ex: date obligatoire conditionnelle)
 			if (options.customRules.value.length > 0 && (options.hasInteracted?.value ?? false)) {
-				const format = unref(options.displayFormat) ?? ''
-				const safeCustomRules = adaptCustomRules(options.customRules.value, format) as ValidationRule[]
-				const safeWarningRules = adaptCustomRules(options.customWarningRules.value, format) as ValidationRule[]
-				const safeSuccessRules = adaptCustomRules(options.customSuccessRules?.value ?? [], format) as ValidationRule[]
+				const adapted = getAdaptedRules(options.customRules.value, options.customWarningRules.value, options.customSuccessRules?.value ?? [])
 				const result = await ctx.validateField(
 					null,
-					safeCustomRules,
-					safeWarningRules,
-					safeSuccessRules,
+					adapted.customRules,
+					adapted.warningRules,
+					adapted.successRules,
 				)
 				return !result.hasError
 			}
@@ -206,6 +217,8 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 			}
 
 			// Valider la plage (start <= end)
+			// Note : on appelle getRangeValidationError directement (et non useDateRangeValidation)
+			// car les dates sont parsées depuis le texte et ne sont pas encore dans selectedDates.
 			const rangeErrors: string[] = []
 			const rangeError = getRangeValidationError(startDate, endDate)
 			if (rangeError && ctx.shouldDisplayErrors()) {

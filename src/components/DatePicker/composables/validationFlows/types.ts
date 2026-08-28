@@ -49,6 +49,7 @@ export interface ValidationContext {
 	shouldDisplayErrors: () => boolean
 	hasNoSelection: () => boolean
 	getDatesToValidate: () => Date[]
+	shouldValidateRequired: (forceValidation: boolean) => boolean
 
 	// Shared result builders
 	dedupeValidationState: () => void
