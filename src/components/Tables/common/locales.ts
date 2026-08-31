@@ -19,7 +19,7 @@ export const locales = {
 		previous: 'Précédent',
 		next: 'Suivant',
 		all: 'Tous',
-		showingItems: (start: number, end: number, total: number) => `${start}-${end} sur ${total} éléments`,
+		showingItems: (start: number, end: number, total: number) => `${start}-${end} sur ${total} ${total > 1 ? 'éléments' : 'élément'}`,
 		pageText: (page: number) => `${page}`,
 		pageAriaLabel: (page: number) => `Page ${page}`,
 		currentPageAriaLabel: (page: number) => `Page courante, Page ${page}`,
