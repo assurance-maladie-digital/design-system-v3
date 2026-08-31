@@ -186,7 +186,7 @@ export const FromApi: Story = {
 			const file = ref<File | Blob | undefined>()
 
 			onMounted(() => {
-				fetch('https://picsum.photos/seed/picsum/750/350')
+				fetch('https://placehold.co/400x300')
 					.then(res => res.blob())
 					.then(blob => file.value = blob)
 			})
@@ -210,7 +210,7 @@ import { FilePreview } from '@cnamts/synapse'
 const file = ref<File | Blob | undefined>()
 
 onMounted(() => {
-	fetch('https://picsum.photos/seed/picsum/750/350')
+	fetch('https://placehold.co/400x300')
 		.then(res => res.blob())
 		.then(blob => file.value = blob)
 })`,
