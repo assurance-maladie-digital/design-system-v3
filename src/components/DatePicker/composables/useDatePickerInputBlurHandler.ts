@@ -149,6 +149,11 @@ export const useDatePickerInputBlurHandler = (options: {
 			// Si le champ est vide et non requis, réinitialiser le modèle
 			updateModel(null)
 		}
+		else if (unref(required)) {
+			// Si le champ est vide et requis, déclencher la validation pour afficher l'erreur required
+			await Promise.resolve(validateTextInput(''))
+			return
+		}
 
 		if (displayFormattedDate.value) {
 			// validateTextInput treats incomplete dates as valid (for typing flow),
