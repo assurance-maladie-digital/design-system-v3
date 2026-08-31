@@ -126,7 +126,6 @@
 </template>
 
 <style scoped lang="scss">
-
 	.sy-date-picker-controls {
 		display: flex;
 		align-items: center;

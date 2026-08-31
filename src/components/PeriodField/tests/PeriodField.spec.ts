@@ -291,7 +291,7 @@ describe('PeriodField.vue', () => {
 			expect(await wrapper.vm.validateOnSubmit()).toBe(false)
 			await flushPromises()
 
-			expect(wrapper.text()).toContain('La date est requise.')
+			expect(wrapper.text()).toContain('La date de fin est requise.')
 			expect(wrapper.vm.isValid).toBe(false)
 
 			await wrapper.setProps({
