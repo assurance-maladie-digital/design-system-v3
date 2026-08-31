@@ -91,6 +91,7 @@ export const Default: Story = {
 		components: { FilePreview },
 		template: `
 			<div>
+				<label for="file-test-upload">Fichier à prévisualiser</label>
 				<input type="file" @change="file = $event.target.files[0]" id="file-test-upload" />
 				<FilePreview v-bind="args" :file >
 					<template #default v-if="args.default">
@@ -105,15 +106,13 @@ export const Default: Story = {
 		},
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 <div>
-	<input type="file" @change="file = $event.target.files[0]" />
+	<label for="file-upload">Fichier à prévisualiser</label>
+	<input type="file" id="file-upload" @change="file = $event.target.files[0]" />
 	<FilePreview :file="file" />
 </div>
 				`,
@@ -284,9 +283,6 @@ export const ReadOnly: Story = {
 		},
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -361,9 +357,6 @@ export const MandatoryReading: Story = {
 		},
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
