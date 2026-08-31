@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
-import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls } from '../common/storyArgTypes'
 import { serverUsers } from '../common/storyData'
 import { useServerTableDemo } from '../common/serverStoryHelpers'
 
@@ -15,6 +15,7 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: commonTableExcludedControls },
 	},
 	argTypes: {
 		...commonTableArgTypes,

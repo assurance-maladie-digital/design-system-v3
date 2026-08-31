@@ -261,42 +261,49 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 			type: { summary: 'slot', detail: '{ selected: Record<string, unknown>[], count: number, clearSelection: () => void }' },
 		},
 	},
-	'onRow-click': {
+	'update:options': {
+		description: 'Émis lorsque les options du tableau changent (pagination, tri, filtres…).',
+		table: {
+			category: 'events',
+			type: { summary: '(options: DataOptions) => void' },
+		},
+	},
+	'row-click': {
 		description: 'Émis lorsqu\'une ligne est activée alors que `clickableRow` est à `true`. Reçoit l\'objet de la ligne en paramètre. Les interactions avec des éléments déjà interactifs dans la ligne ne déclenchent pas cet événement.',
 		table: {
 			category: 'events',
 			type: { summary: '(item: Record<string, unknown>) => void' },
 		},
 	},
-	'onUpdate:modelValue': {
+	'update:modelValue': {
 		description: 'Émis lorsque la sélection change (`showSelect` ou `showSelectSingle`). Reçoit la liste des valeurs de sélection des lignes sélectionnées (déterminées par `selectionKey`, `id` par défaut, sinon l\'objet complet).',
 		table: {
 			category: 'events',
 			type: { summary: '(selection: unknown[]) => void' },
 		},
 	},
-	'onEdit': {
+	'edit': {
 		description: 'Émis à l\'entrée en édition inline d\'une ligne.',
 		table: {
 			category: 'events',
 			type: { summary: '(item: Record<string, unknown>) => void' },
 		},
 	},
-	'onSave': {
+	'save': {
 		description: 'Émis à la validation de l\'édition inline. Reçoit la ligne mise à jour et l\'originale.',
 		table: {
 			category: 'events',
 			type: { summary: '(updated: Record<string, unknown>, original: Record<string, unknown> | null) => void' },
 		},
 	},
-	'onCancel': {
+	'cancel': {
 		description: 'Émis à l\'annulation de l\'édition inline.',
 		table: {
 			category: 'events',
 			type: { summary: '(item: Record<string, unknown> | null) => void' },
 		},
 	},
-	'onDelete': {
+	'delete': {
 		description: 'Émis au clic sur l\'action de suppression d\'une ligne.',
 		table: {
 			category: 'events',
@@ -304,6 +311,21 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 		},
 	},
 }
+
+/**
+ * Clés `onXxx` synthétiques (déclarées dans `commonTableEventArgs`) à exclure des Controls :
+ * elles ne servent qu'à attacher les spies aux events Vue et dupliquent les entrées `argTypes`
+ * ci-dessus définies sous leur nom brut (`edit`, `save`…) tel que détecté par le docgen.
+ */
+export const commonTableExcludedControls = [
+	'onUpdate:options',
+	'onUpdate:modelValue',
+	'onRow-click',
+	'onEdit',
+	'onSave',
+	'onCancel',
+	'onDelete',
+]
 
 /**
  * Handlers d'événements communs à étaler dans les `args` des stories des tableaux.

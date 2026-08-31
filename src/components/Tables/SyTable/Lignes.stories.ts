@@ -4,7 +4,7 @@ import { fn } from 'storybook/test'
 import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
 import type { VDataTable } from 'vuetify/components'
 import SyTable from './SyTable.vue'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableExcludedControls } from '../common/storyArgTypes'
 import { users, usersHeaders } from '../common/storyData'
 
 const meta = {
@@ -17,6 +17,7 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: commonTableExcludedControls },
 	},
 	argTypes: {
 		...commonTableArgTypes,

@@ -4,7 +4,7 @@ import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
 import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
-import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls } from '../common/storyArgTypes'
 import { useServerEditingDemo } from '../common/serverStoryHelpers'
 
 const meta = {
@@ -17,7 +17,7 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
-		controls: { hideNoControlsWarning: true },
+		controls: { hideNoControlsWarning: true, exclude: commonTableExcludedControls },
 	},
 	argTypes: {
 		...commonTableArgTypes,
@@ -37,7 +37,7 @@ const meta = {
 				type: { summary: 'slot', detail: '{ item, value: unknown, update: (value: unknown) => void }' },
 			},
 		},
-		'onEdit': {
+		'edit': {
 			action: 'edit',
 			description: 'Émis à l\'entrée en édition inline d\'une ligne.',
 			table: {
@@ -45,7 +45,7 @@ const meta = {
 				type: { summary: '(item: Record<string, unknown>) => void' },
 			},
 		},
-		'onSave': {
+		'save': {
 			action: 'save',
 			description: 'Émis à la validation de l\'édition inline. Reçoit la ligne mise à jour et l\'originale.',
 			table: {
@@ -53,7 +53,7 @@ const meta = {
 				type: { summary: '(updated: Record<string, unknown>, original: Record<string, unknown> | null) => void' },
 			},
 		},
-		'onCancel': {
+		'cancel': {
 			action: 'cancel',
 			description: 'Émis à l\'annulation de l\'édition inline.',
 			table: {
@@ -61,7 +61,7 @@ const meta = {
 				type: { summary: '(item: Record<string, unknown> | null) => void' },
 			},
 		},
-		'onDelete': {
+		'delete': {
 			action: 'delete',
 			description: 'Émis au clic sur l\'action de suppression d\'une ligne.',
 			table: {

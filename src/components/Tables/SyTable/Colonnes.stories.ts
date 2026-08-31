@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { fn } from 'storybook/test'
 import type { VDataTable } from 'vuetify/components'
 import SyTable from './SyTable.vue'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableExcludedControls } from '../common/storyArgTypes'
 import type { DataTableHeaders } from '../common/types'
 import { users, usersHeaders, wideHeaders, wideUsers } from '../common/storyData'
 
@@ -16,6 +16,7 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: commonTableExcludedControls },
 	},
 	argTypes: {
 		...commonTableArgTypes,

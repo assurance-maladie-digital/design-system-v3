@@ -3,7 +3,7 @@ import { computed, defineComponent, ref } from 'vue'
 import { mdiChevronDown, mdiChevronUp } from '@mdi/js'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
-import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls } from '../common/storyArgTypes'
 import { StateEnum } from '../common/constants/StateEnum'
 import type { DataOptions } from '../common/types'
 import { serverUsers } from '../common/storyData'
@@ -19,6 +19,7 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: commonTableExcludedControls },
 	},
 	argTypes: {
 		...commonTableArgTypes,
