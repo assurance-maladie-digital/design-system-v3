@@ -41,7 +41,7 @@ import {
         <li><strong>Intégration native</strong> : Utilisation de l'élément <code>&lt;object&gt;</code></li>
         <li><strong>Type explicite</strong> : Déclaration du MIME type <code>application/pdf</code></li>
         <li><strong>Fallback accessible</strong> : Message affiché lorsque la prévisualisation n'est pas disponible</li>
-        <li><strong>Compatibilité variable</strong> : Le rendu dépend du navigateur et du lecteur PDF disponible</li>
+        <li><strong>Compatibilité variable</strong> : Le rendu dépend du navigateur et du lecteur PDF disponible ; sans lecteur intégré, l'aperçu bascule automatiquement sur pdf.js (voir la carte suivante)</li>
       </ul>
     </CriteriaCard>
 
@@ -49,8 +49,10 @@ import {
       <ul>
         <li><strong>Rendu visuel uniquement</strong> : avec <code>readonly</code> ou <code>track-consultation</code>, le PDF est rendu via <strong>pdf.js</strong> dans des <code>&lt;canvas&gt;</code>, <strong>sans couche de texte</strong> (le conteneur des pages est <code>aria-hidden="true"</code>).</li>
         <li><strong>Non restitué par les lecteurs d'écran</strong> : le contenu du document n'est pas lisible par les technologies d'assistance ; pas de sélection ni de recherche de texte.</li>
+        <li><strong>Nom accessible</strong> : le conteneur scrollable porte <code>role="document"</code>, <code>tabindex="0"</code> et le libellé <code>documentLabel</code> (« Aperçu du document » par défaut, surchargeable via la prop <code>locales</code>). Il est donc atteignable au clavier et annoncé, même si son contenu ne l'est pas.</li>
         <li><strong>Alternative obligatoire</strong> : fournir une version accessible du contenu (texte/HTML équivalent, lien de téléchargement du PDF source…). La prévisualisation pdf.js ne doit <strong>jamais</strong> être l'unique moyen d'accès à l'information.</li>
         <li><strong>À réserver</strong> aux besoins spécifiques de ces modes (masquer le téléchargement/l'impression, suivi de lecture obligatoire) ; sinon préférer l'aperçu natif <code>&lt;object&gt;</code>.</li>
+        <li><strong>Également utilisé en repli automatique</strong> : sur les navigateurs sans lecteur PDF intégré (Chrome sur Android), l'aperçu bascule seul sur pdf.js. Ces limites s'appliquent alors <strong>sans que la prop ait été activée</strong> : l'alternative accessible au document reste indispensable.</li>
       </ul>
     </CriteriaCard>
 
