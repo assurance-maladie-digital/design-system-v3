@@ -5,14 +5,23 @@ import remarkGfm from 'remark-gfm'
 const isDev = process.env.NODE_ENV === 'development'
 
 const stories = [
-	'../src/**/*.mdx',
-	'../src/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+	// Fichiers directement dans src/
+	'../src/*.mdx',
+	'../src/*.stories.@(js|jsx|mjs|ts|tsx)',
+
+	// Tous les dossiers de src/ sauf components/
+	'../src/!(components)/**/*.mdx',
+	'../src/!(components)/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+
+	// components/ sauf ComponentStatusTable/
+	'../src/components/!(ComponentStatusTable)/**/*.mdx',
+	'../src/components/!(ComponentStatusTable)/**/*.stories.@(js|jsx|mjs|ts|tsx)',
 ]
 
-if (!isDev) {
+if (isDev) {
 	stories.push(
-		'!../src/components/ComponentStatusTable/**/*.mdx',
-		'!../src/components/ComponentStatusTable/**/*.stories.@(js|jsx|mjs|ts|tsx)',
+		'../src/components/ComponentStatusTable/**/*.mdx',
+		'../src/components/ComponentStatusTable/**/*.stories.@(js|jsx|mjs|ts|tsx)',
 	)
 }
 
