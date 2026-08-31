@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import FilePreview from '../FilePreview.vue'
+import { locales } from '../locales'
 
 const { getDocumentMock } = vi.hoisted(() => {
 	const mockPage = {
@@ -38,6 +39,19 @@ describe('FilePreview — rendu pdf.js (suivi de consultation & lecture seule)',
 		expect(wrapper.find('.sy-file-preview__pdf-viewer').exists()).toBe(true)
 		expect(wrapper.find('object').exists()).toBe(false)
 		expect(getDocumentMock).toHaveBeenCalled()
+	})
+
+	it('nomme le viewer d\'après le document, et non par un message d\'erreur', async () => {
+		const wrapper = mount(FilePreview, {
+			props: { file: pdfFile(), readonly: true, pdfWorkerSrc: 'worker' },
+		})
+		await flushPromises()
+
+		const viewer = wrapper.find('.sy-file-preview__pdf-viewer')
+		expect(viewer.attributes('aria-label')).toBe(locales.documentLabel)
+		expect(viewer.attributes('aria-label')).not.toBe(locales.previewNotAvailable)
+
+		wrapper.unmount()
 	})
 
 	it('émet @loaded avec le nombre de pages', async () => {

@@ -257,7 +257,7 @@
 			class="sy-file-preview__pdf-viewer"
 			:style="viewerStyle"
 			role="document"
-			:aria-label="locales.previewNotAvailable"
+			:aria-label="locales.documentLabel"
 			tabindex="0"
 			@scroll="onViewerScroll"
 		>

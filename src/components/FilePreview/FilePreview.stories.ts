@@ -16,6 +16,7 @@ const meta: Meta = {
 				type: { summary: 'object', detail: `{
 	previewNotAvailable: string,
 	previewTypeNotAvailable: string,
+	documentLabel: string,
 	loadingDocument: string,
 	documentError: string,
 	downloadDocument: string,
