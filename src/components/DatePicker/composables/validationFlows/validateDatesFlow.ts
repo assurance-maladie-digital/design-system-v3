@@ -220,6 +220,7 @@ export function createValidateDatesFlow(ctx: ValidationContext) {
 			return Promise
 				.resolve(validationResults)
 				.then((resolvedResults) => {
+					if (token !== ctx.currentValidationToken.value) return emptyValidationResult()
 					const hasError = resolvedResults.some(result => result.hasError)
 					return ctx.applyRangeValidationErrors(!hasError)
 				})
