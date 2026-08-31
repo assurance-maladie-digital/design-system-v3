@@ -3,4 +3,5 @@ export const locales = {
 	previewTypeNotAvailable: 'Impossible de prévisualiser ce type de fichier.',
 	loadingDocument: 'Chargement du document…',
 	documentError: 'Le document n\'a pas pu être affiché.',
+	downloadDocument: 'Télécharger le document',
 }

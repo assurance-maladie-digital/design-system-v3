@@ -57,15 +57,43 @@
 	const isImage = computed(() => props.file ? /^image\//.test(props.file.type) : false)
 	const filePreviewOptions = computed(() => deepmerge(config, props.options || {}))
 
+	const {
+		isLoading,
+		hasError,
+		isComplete,
+		render,
+		checkScrollComplete,
+	} = usePdfConsultation()
+
+	// Certains navigateurs — Chrome sur Android notamment — n'embarquent aucun lecteur
+	// PDF : une balise <object type="application/pdf"> n'y affiche rien. La propriété
+	// standard `navigator.pdfViewerEnabled` signale cette absence ; on bascule alors sur
+	// le rendu pdf.js, qui fonctionne partout. Si la propriété n'existe pas (navigateur
+	// ancien, SSR), on conserve le rendu natif historique.
+	const hasNativePdfViewer = typeof navigator === 'undefined' || navigator.pdfViewerEnabled !== false
+
 	// Suivi de consultation (scroll → fin de lecture), uniquement pour les PDF
 	const isTracking = computed(() => props.trackConsultation && isPdf.value)
-	// Rendu embarqué pdf.js : requis par le suivi de consultation ET par la lecture seule
-	const isEmbedded = computed(() => (props.trackConsultation || props.readonly) && isPdf.value)
+	// Rendu embarqué pdf.js : requis par le suivi de consultation, par la lecture seule,
+	// et utilisé en repli quand le navigateur ne sait pas afficher un PDF nativement.
+	const isEmbedded = computed(() => isPdf.value
+		&& (props.trackConsultation || props.readonly || !hasNativePdfViewer))
 
-	// `fileURL` (URL objet) n'est consommée que par <img> (images) et <object> (PDF en
-	// mode natif). En rendu embarqué pdf.js (readonly / track-consultation), c'est le
-	// viewer qui affiche le PDF via arrayBuffer() → créer une URL objet serait inutile.
-	const needsObjectUrl = computed(() => isImage.value || (isPdf.value && !isEmbedded.value))
+	// Le rendu pdf.js a échoué : on propose un téléchargement pour ne pas laisser
+	// l'utilisateur sans accès au document. Jamais en lecture seule, où le téléchargement
+	// est justement l'action que l'on retire.
+	const canDownloadOnError = computed(() => isEmbedded.value && hasError.value && !props.readonly)
+
+	// `fileURL` (URL objet) n'est consommée que par <img> (images), <object> (PDF en mode
+	// natif) et le lien de secours ci-dessus. En rendu embarqué pdf.js (readonly /
+	// track-consultation), c'est le viewer qui affiche le PDF via arrayBuffer() → créer
+	// une URL objet serait inutile.
+	const needsObjectUrl = computed(() => isImage.value
+		|| (isPdf.value && !isEmbedded.value)
+		|| canDownloadOnError.value)
+
+	// `File` porte un nom, pas `Blob` : on retombe sur un nom générique.
+	const downloadName = computed(() => (props.file instanceof File ? props.file.name : 'document.pdf'))
 
 	const getFileURL = () => {
 		// Révoque et réinitialise l'URL précédente : sans cela, chaque changement de
@@ -90,14 +118,6 @@
 	// --- Suivi de consultation (pdf.js) --------------------------------------
 	const viewerRef = ref<HTMLElement>()
 	const pagesHostRef = ref<HTMLElement>()
-
-	const {
-		isLoading,
-		hasError,
-		isComplete,
-		render,
-		checkScrollComplete,
-	} = usePdfConsultation()
 
 	const viewerStyle = computed(() => ({
 		height: filePreviewOptions.value.pdf?.height ?? '556px',
@@ -181,12 +201,23 @@
 			>
 				{{ locales.loadingDocument }}
 			</p>
-			<p
+			<div
 				v-else-if="hasError"
-				class="sy-file-preview__status pa-4 text-center mb-0"
+				class="sy-file-preview__status pa-4 text-center"
 			>
-				{{ locales.documentError }}
-			</p>
+				<p class="mb-0">
+					{{ locales.documentError }}
+				</p>
+
+				<a
+					v-if="canDownloadOnError && fileURL"
+					class="sy-file-preview__download d-inline-block mt-2"
+					:href="fileURL"
+					:download="downloadName"
+				>
+					{{ locales.downloadDocument }}
+				</a>
+			</div>
 		</div>
 
 		<object
@@ -241,6 +272,10 @@
 }
 
 .sy-file-preview__status {
+	color: rgb(var(--v-theme-primary));
+}
+
+.sy-file-preview__download {
 	color: rgb(var(--v-theme-primary));
 }
 </style>

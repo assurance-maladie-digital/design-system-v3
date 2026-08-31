@@ -18,6 +18,7 @@ const meta: Meta = {
 	previewTypeNotAvailable: string,
 	loadingDocument: string,
 	documentError: string,
+	downloadDocument: string,
 }` },
 				category: 'props',
 			},

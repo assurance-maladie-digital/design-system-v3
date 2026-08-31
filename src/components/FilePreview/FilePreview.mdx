@@ -89,6 +89,17 @@ Vous pouvez utiliser ce composant en combinaison avec `FileUpload` pour afficher
 	}}
 />
 
+## Navigateurs sans lecteur PDF intégré (Chrome sur Android…)
+
+Par défaut, l'aperçu d'un PDF s'appuie sur le lecteur natif du navigateur (`<object type="application/pdf">`). Certains navigateurs — **Chrome sur Android** en particulier — n'embarquent aucun lecteur PDF : l'aperçu y restait vide.
+
+Le composant détecte ce cas via la propriété standard `navigator.pdfViewerEnabled` et bascule alors **automatiquement** sur le rendu **pdf.js**, sans configuration ni prop à activer.
+
+- Les navigateurs disposant d'un lecteur natif (Chrome, Edge, Firefox sur desktop, Safari…) conservent l'`<object>` et sa barre d'outils : **aucun changement de comportement**.
+- Le repli n'active **ni** le suivi de consultation **ni** la lecture seule : seul le mode de rendu change.
+- Dans ce mode, la barre d'outils native (téléchargement, impression) n'existe pas. Si le rendu pdf.js échoue malgré tout, un **lien de téléchargement** est proposé à la place — sauf en `readonly`, où le téléchargement est justement l'action que l'on retire.
+- pdf.js n'est chargé qu'**à la demande** : les navigateurs avec lecteur natif ne téléchargent rien de plus.
+
 ## Aperçu en lecture seule (sans téléchargement)
 
 Par défaut, l'aperçu PDF utilise le lecteur natif du navigateur (`<object>`), qui affiche une barre d'outils (téléchargement, impression, annotation…). Le viewer natif **ne permet pas** de masquer ces actions de façon fiable (`#toolbar=0` n'est pas honoré partout, et `Ctrl/Cmd+S` reste possible).
@@ -154,7 +165,7 @@ L'événement **`@loaded`** (décrit dans la section [Aperçu en lecture seule](
 
 ### Points d'attention
 
-- **Rétrocompatibilité** : `track-consultation` et `readonly` sont `false` par défaut → comportement actuel (`<object>`) inchangé. N'ont d'effet que sur les fichiers PDF.
+- **Rétrocompatibilité** : `track-consultation` et `readonly` sont `false` par défaut → rendu natif (`<object>`) inchangé sur les navigateurs qui affichent les PDF, repli pdf.js automatique sur les autres (voir [Navigateurs sans lecteur PDF intégré](#navigateurs-sans-lecteur-pdf-intégré-chrome-sur-android)). N'ont d'effet que sur les fichiers PDF.
 - **Combinables** : `readonly` et `track-consultation` reposent sur le même rendu pdf.js et se cumulent — par ex. un contrat à lire en entier **sans** pouvoir le télécharger : `<FilePreview readonly track-consultation v-model:complete="hasRead" />`.
 - **Worker pdf.js** : le worker bundlé est utilisé par défaut. Si votre chaîne de build ne le résout pas, fournissez une URL via la prop `pdf-worker-src`.
 - **Accessibilité** : le rendu pdf.js (canvas) n'est pas restituable au lecteur d'écran ; prévoyez un accès alternatif au contenu si nécessaire (lien de téléchargement…).
