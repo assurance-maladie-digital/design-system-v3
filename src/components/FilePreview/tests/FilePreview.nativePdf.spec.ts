@@ -34,16 +34,39 @@ function setNativePdfViewer(value: boolean | undefined): void {
 	Object.defineProperty(navigator, 'pdfViewerEnabled', { value, configurable: true })
 }
 
+/** Simule l'UA du navigateur. */
+function setUserAgent(value: string): void {
+	Object.defineProperty(navigator, 'userAgent', { value, configurable: true })
+}
+
+const DESKTOP_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36'
+const ANDROID_CHROME_UA = 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36'
+const ANDROID_FIREFOX_UA = 'Mozilla/5.0 (Android 14; Mobile; rv:140.0) Gecko/140.0 Firefox/140.0'
+
+/** Simule `navigator.userAgentData` (User-Agent Client Hints), absent de jsdom. */
+function setUserAgentData(value: { mobile: boolean } | undefined): void {
+	if (value === undefined) {
+		Reflect.deleteProperty(navigator, 'userAgentData')
+		return
+	}
+	Object.defineProperty(navigator, 'userAgentData', { value, configurable: true })
+}
+
 describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)', () => {
 	const originalCreateObjectURL = URL.createObjectURL
+
+	const originalUserAgent = navigator.userAgent
 
 	beforeEach(() => {
 		getDocumentMock.mockClear()
 		URL.createObjectURL = vi.fn(() => 'blob:fallback')
+		setUserAgent(DESKTOP_UA)
 	})
 
 	afterEach(() => {
 		setNativePdfViewer(undefined)
+		setUserAgentData(undefined)
+		setUserAgent(originalUserAgent)
 		URL.createObjectURL = originalCreateObjectURL
 	})
 
@@ -86,8 +109,69 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		wrapper.unmount()
 	})
 
+	it('bascule sur pdf.js sur un navigateur mobile qui déclare pourtant un lecteur natif', async () => {
+		// Cas réel de #2508 : Chrome sur Android annonce pdfViewerEnabled === true
+		// alors qu'il n'affiche aucun PDF embarqué.
+		setNativePdfViewer(true)
+		setUserAgentData({ mobile: true })
+
+		const wrapper = mount(FilePreview, { props: { file: pdfFile(), pdfWorkerSrc: 'worker' } })
+		await flushPromises()
+
+		expect(wrapper.find('.sy-file-preview__pdf-viewer').exists()).toBe(true)
+		expect(wrapper.find('object').exists()).toBe(false)
+		expect(getDocumentMock).toHaveBeenCalled()
+
+		wrapper.unmount()
+	})
+
+	it('conserve l\'<object> natif sur un navigateur desktop annoncé par les client hints', async () => {
+		setNativePdfViewer(true)
+		setUserAgentData({ mobile: false })
+
+		const wrapper = mount(FilePreview, { props: { file: pdfFile() } })
+		await flushPromises()
+
+		expect(wrapper.find('object').exists()).toBe(true)
+		expect(getDocumentMock).not.toHaveBeenCalled()
+
+		wrapper.unmount()
+	})
+
+	it('conserve l\'<object> natif sur Firefox Android, qui affiche bien les PDF', async () => {
+		setNativePdfViewer(true)
+		setUserAgentData(undefined)
+		setUserAgent(ANDROID_FIREFOX_UA)
+
+		const wrapper = mount(FilePreview, { props: { file: pdfFile() } })
+		await flushPromises()
+
+		expect(wrapper.find('object').exists()).toBe(true)
+		expect(getDocumentMock).not.toHaveBeenCalled()
+
+		wrapper.unmount()
+	})
+
+	it('bascule sur pdf.js sur Chrome Android même sans client hints (page servie en http)', async () => {
+		// `navigator.userAgentData` n'est exposé qu'en contexte sécurisé : sur un Storybook
+		// local ouvert en http:// depuis un mobile, seul l'UA reste exploitable.
+		setNativePdfViewer(true)
+		setUserAgentData(undefined)
+		setUserAgent(ANDROID_CHROME_UA)
+
+		const wrapper = mount(FilePreview, { props: { file: pdfFile(), pdfWorkerSrc: 'worker' } })
+		await flushPromises()
+
+		expect(wrapper.find('.sy-file-preview__pdf-viewer').exists()).toBe(true)
+		expect(wrapper.find('object').exists()).toBe(false)
+		expect(getDocumentMock).toHaveBeenCalled()
+
+		wrapper.unmount()
+	})
+
 	it('n\'affecte pas les images', async () => {
-		setNativePdfViewer(false)
+		setNativePdfViewer(true)
+		setUserAgentData({ mobile: true })
 
 		const image = new File(['img'], 'photo.png', { type: 'image/png' })
 		const wrapper = mount(FilePreview, { props: { file: image } })

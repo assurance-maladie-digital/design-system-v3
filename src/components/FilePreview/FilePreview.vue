@@ -65,12 +65,34 @@
 		checkScrollComplete,
 	} = usePdfConsultation()
 
-	// Certains navigateurs — Chrome sur Android notamment — n'embarquent aucun lecteur
-	// PDF : une balise <object type="application/pdf"> n'y affiche rien. La propriété
-	// standard `navigator.pdfViewerEnabled` signale cette absence ; on bascule alors sur
-	// le rendu pdf.js, qui fonctionne partout. Si la propriété n'existe pas (navigateur
-	// ancien, SSR), on conserve le rendu natif historique.
-	const hasNativePdfViewer = typeof navigator === 'undefined' || navigator.pdfViewerEnabled !== false
+	/** `navigator.userAgentData` n'est pas typé par lib.dom (User-Agent Client Hints). */
+	type NavigatorWithUAData = Navigator & { userAgentData?: { mobile?: boolean } }
+
+	/**
+	 * Sans lecteur PDF intégré, un `<object type="application/pdf">` n'affiche rien — pas
+	 * même son contenu de repli, ou n'affiche que celui-ci. Trois signaux successifs,
+	 * car aucun ne suffit seul :
+	 *
+	 * - `navigator.pdfViewerEnabled === false` : le navigateur déclare lui-même l'absence
+	 *   de lecteur intégré ;
+	 * - `userAgentData.mobile === true` : Chrome sur Android déclare `pdfViewerEnabled`
+	 *   à `true` alors qu'il n'affiche aucun PDF embarqué (#2508). Sa déclaration étant
+	 *   fausse, on ne fait pas confiance au rendu natif sur un navigateur mobile ;
+	 * - à défaut, l'UA : `userAgentData` n'est exposé qu'en contexte sécurisé, donc absent
+	 *   dès qu'une page est servie en `http://` (Storybook local ouvert depuis un mobile,
+	 *   intranet…). On y repère les navigateurs Chromium sur Android, les seuls concernés.
+	 *
+	 * Firefox Android et Safari iOS affichent bien les PDF embarqués : ils ne portent pas
+	 * le jeton `Chrome/` et conservent donc le rendu natif, comme les navigateurs desktop.
+	 */
+	const hasNativePdfViewer = ((): boolean => {
+		if (typeof navigator === 'undefined') return true
+		const nav = navigator as NavigatorWithUAData
+		if (nav.pdfViewerEnabled === false) return false
+		if (nav.userAgentData?.mobile === true) return false
+		const ua = nav.userAgent ?? ''
+		return !(ua.includes('Android') && ua.includes('Chrome/'))
+	})()
 
 	// Suivi de consultation (scroll → fin de lecture), uniquement pour les PDF
 	const isTracking = computed(() => props.trackConsultation && isPdf.value)
