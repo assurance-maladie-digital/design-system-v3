@@ -21,6 +21,11 @@ vi.mock('pdfjs-dist', () => ({
 }))
 vi.mock('pdfjs-dist/build/pdf.worker.min.mjs?url', () => ({ default: 'worker-url' }))
 
+/** Attend le déclenchement de la sonde de rendu natif (délai de 400 ms côté composant). */
+function waitForProbe(): Promise<void> {
+	return new Promise(resolve => setTimeout(resolve, 450))
+}
+
 function pdfFile(): File {
 	return new File(['%PDF-1.4 dummy'], 'contrat.pdf', { type: 'application/pdf' })
 }
@@ -165,6 +170,51 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		expect(wrapper.find('.sy-file-preview__pdf-viewer').exists()).toBe(true)
 		expect(wrapper.find('object').exists()).toBe(false)
 		expect(getDocumentMock).toHaveBeenCalled()
+
+		wrapper.unmount()
+	})
+
+	it('bascule sur pdf.js quand l\'<object> affiche son contenu de repli (sonde de rendu)', async () => {
+		// Aucun signal déclaratif ne trahit ce navigateur : seul le résultat réel le fait.
+		setNativePdfViewer(true)
+		setUserAgentData({ mobile: false })
+		setUserAgent(DESKTOP_UA)
+
+		const wrapper = mount(FilePreview, { props: { file: pdfFile(), pdfWorkerSrc: 'worker' } })
+		await flushPromises()
+
+		expect(wrapper.find('object').exists()).toBe(true)
+		expect(getDocumentMock).not.toHaveBeenCalled()
+
+		// Le paragraphe de repli occupe une boîte : le PDF n'est pas affiché.
+		const fallback = wrapper.find('object p').element
+		fallback.getBoundingClientRect = () => ({ height: 18 } as DOMRect)
+
+		await waitForProbe()
+		await flushPromises()
+
+		expect(wrapper.find('.sy-file-preview__pdf-viewer').exists()).toBe(true)
+		expect(wrapper.find('object').exists()).toBe(false)
+		expect(getDocumentMock).toHaveBeenCalled()
+
+		wrapper.unmount()
+	})
+
+	it('conserve l\'<object> quand le contenu de repli n\'est pas rendu', async () => {
+		setNativePdfViewer(true)
+		setUserAgentData({ mobile: false })
+		setUserAgent(DESKTOP_UA)
+
+		// jsdom renvoie une hauteur nulle : le lecteur natif a pris la main.
+		const wrapper = mount(FilePreview, { props: { file: pdfFile() } })
+		await flushPromises()
+
+		await waitForProbe()
+		await flushPromises()
+
+		expect(wrapper.find('object').exists()).toBe(true)
+		expect(wrapper.find('.sy-file-preview__pdf-viewer').exists()).toBe(false)
+		expect(getDocumentMock).not.toHaveBeenCalled()
 
 		wrapper.unmount()
 	})

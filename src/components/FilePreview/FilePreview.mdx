@@ -101,6 +101,8 @@ Le composant détecte ce cas et bascule alors **automatiquement** sur le rendu *
 
 - Les navigateurs disposant d'un lecteur natif (Chrome, Edge, Firefox sur desktop, Safari…) conservent l'`<object>` et sa barre d'outils : **aucun changement de comportement**.
 - Firefox Android et Safari iOS affichent correctement les PDF embarqués et conservent eux aussi le rendu natif : ils ne portent pas le jeton `Chrome/`.
+À ces signaux déclaratifs s'ajoute une **sonde du rendu réel** : un `<object>` qui n'affiche pas le PDF rend son contenu de repli, lequel occupe alors une boîte dans la page. Le composant le mesure peu après l'affichage et bascule sur pdf.js le cas échéant. C'est ce filet qui couvre les navigateurs dont la déclaration est fausse et que les deux signaux précédents laisseraient passer.
+
 - Le repli n'active **ni** le suivi de consultation **ni** la lecture seule : seul le mode de rendu change.
 - Dans ce mode, la barre d'outils native (téléchargement, impression) n'existe pas. Si le rendu pdf.js échoue malgré tout, un **lien de téléchargement** est proposé à la place — sauf en `readonly`, où le téléchargement est justement l'action que l'on retire.
 - pdf.js n'est chargé qu'**à la demande** : les navigateurs avec lecteur natif ne téléchargent rien de plus.

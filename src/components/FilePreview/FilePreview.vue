@@ -94,12 +94,61 @@
 		return !(ua.includes('Android') && ua.includes('Chrome/'))
 	})()
 
+	/**
+	 * Filet de sécurité : aucune déclaration du navigateur n'est fiable (Chrome sur
+	 * Android annonce un lecteur PDF qu'il n'a pas), on observe donc le résultat réel.
+	 *
+	 * Un `<object>` qui n'affiche pas le PDF rend son contenu de repli : ce paragraphe
+	 * occupe alors une boîte dans la page. Quand le lecteur natif prend la main, le
+	 * contenu de repli n'est pas rendu et n'a aucune boîte. Une hauteur non nulle après
+	 * chargement signe donc l'échec du rendu natif, quel que soit le navigateur.
+	 */
+	const nativePdfFailed = ref(false)
+	const objectFallbackRef = ref<HTMLElement>()
+	// Tant que la sonde n'a pas tranché, le contenu de repli est masqué : sans cela son
+	// message d'échec s'affiche le temps de la mesure, avant d'être remplacé par le PDF.
+	const nativePdfProbeDone = ref(false)
+	let nativePdfProbe: ReturnType<typeof setTimeout> | undefined
+
+	// Laisse au lecteur natif le temps de remplacer le contenu de repli. La source étant
+	// une URL objet (aucun aller-retour réseau), ce délai reste imperceptible.
+	const NATIVE_PDF_PROBE_DELAY = 400
+
+	const cancelNativePdfProbe = (): void => {
+		if (nativePdfProbe === undefined) return
+		clearTimeout(nativePdfProbe)
+		nativePdfProbe = undefined
+	}
+
+	const probeNativePdfRendering = (): void => {
+		nativePdfProbe = undefined
+		const fallback = objectFallbackRef.value
+		if (!fallback || nativePdfFailed.value) return
+		if (fallback.getBoundingClientRect().height > 0) {
+			nativePdfFailed.value = true
+		}
+		// Le rendu natif a fonctionné : le repli n'a aucune boîte, on peut le démasquer
+		// sans rien afficher, et il redevient visible si le PDF disparaît par la suite.
+		nativePdfProbeDone.value = true
+	}
+
 	// Suivi de consultation (scroll → fin de lecture), uniquement pour les PDF
 	const isTracking = computed(() => props.trackConsultation && isPdf.value)
 	// Rendu embarqué pdf.js : requis par le suivi de consultation, par la lecture seule,
 	// et utilisé en repli quand le navigateur ne sait pas afficher un PDF nativement.
 	const isEmbedded = computed(() => isPdf.value
-		&& (props.trackConsultation || props.readonly || !hasNativePdfViewer))
+		&& (props.trackConsultation || props.readonly || !hasNativePdfViewer || nativePdfFailed.value))
+
+	// Sonde le rendu natif à chaque fois que l'<object> est (ré)affiché.
+	watch([() => props.file, isEmbedded], async () => {
+		cancelNativePdfProbe()
+		if (!isPdf.value || isEmbedded.value) return
+		nativePdfProbeDone.value = false
+		await nextTick()
+		nativePdfProbe = setTimeout(probeNativePdfRendering, NATIVE_PDF_PROBE_DELAY)
+	}, { immediate: true })
+
+	onUnmounted(cancelNativePdfProbe)
 
 	// Le rendu pdf.js a échoué : on propose un téléchargement pour ne pas laisser
 	// l'utilisateur sans accès au document. Jamais en lecture seule, où le téléchargement
@@ -249,7 +298,11 @@
 			type="application/pdf"
 			@load="revokeFileURL"
 		>
-			<p class="mb-0">{{ locales.previewNotAvailable }}</p>
+			<p
+				ref="objectFallbackRef"
+				class="mb-0"
+				:class="{ 'sy-file-preview__object-fallback--probing': !nativePdfProbeDone }"
+			>{{ locales.previewNotAvailable }}</p>
 		</object>
 
 		<img
@@ -295,6 +348,12 @@
 
 .sy-file-preview__status {
 	color: rgb(var(--v-theme-primary));
+}
+
+// `visibility` et non `display` : le contenu de repli doit conserver sa boîte pour
+// rester mesurable par la sonde de rendu natif.
+.sy-file-preview__object-fallback--probing {
+	visibility: hidden;
 }
 
 .sy-file-preview__download {
