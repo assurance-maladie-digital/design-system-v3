@@ -151,6 +151,7 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 	}
 
 	const validateTextInput = async (value: string): Promise<boolean> => {
+		++ctx.currentValidationToken.value
 		ctx.clearValidation()
 
 		// 1. Mode Vuetify natif
