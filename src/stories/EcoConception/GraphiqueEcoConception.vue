@@ -58,7 +58,7 @@
 		select: [selection: Selection]
 	}>()
 
-	const level1Link = '/?path=/docs/éco-conception-bonnes-pratiques-essentielles--docs'
+	const level1Link = '/?path=/docs/éco-conception-bonnes-pratiques--docs'
 	const level2Link = 'mailto:studio-design.cnam@assurance-maladie.fr?subject=Demande%20de%20référentiel%20d%27écoconception'
 
 	const domains: DomainConfig[] = [
@@ -660,6 +660,7 @@
 	display: grid;
 	grid-template-columns: minmax(0, 1.4fr) minmax(260px, 360px);
 	align-items: center;
+	column-gap: 24px;
 	width: 100%;
 	min-height: 640px;
 }
@@ -681,7 +682,6 @@
 	border-radius: 8px;
 	box-shadow: 0 4px 8px rgb(15 23 42 / 12%);
 	color: #1e293b;
-	margin-left: 1.5rem;
 }
 
 .schema-legend__title {
@@ -882,6 +882,7 @@
 @media (width <= 900px) {
 	.eco-schema-layout {
 		grid-template-columns: 1fr;
+		row-gap: 24px;
 	}
 }
 
