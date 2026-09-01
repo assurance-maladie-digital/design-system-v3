@@ -120,6 +120,7 @@
 		(e: 'prepend-icon-click', event: MouseEvent): void
 		(e: 'append-icon-click', event: MouseEvent): void
 		(e: 'mousedown', event: MouseEvent): void
+		(e: 'keydown', event: KeyboardEvent): void
 	}>()
 
 	// ─── Flags dérivés & utilitaires de format ────────────────────────
@@ -1126,6 +1127,10 @@
 	function handleKeydown(evt: KeyboardEvent) {
 		if (props.readonly) return
 		if (!getEventInputElement(evt)) return
+
+		emit('keydown', evt)
+
+		if (evt.defaultPrevented) return
 
 		const inputEvent = evt as KeyboardEvent & { target: HTMLInputElement }
 
