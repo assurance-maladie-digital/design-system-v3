@@ -741,7 +741,8 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 		const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
 		const iso = toISO(targetDate)
-		let dayCell = rootEl.querySelector<HTMLElement>(`[data-v-date="${iso}"][role="gridcell"], [data-v-date="${iso}"]`)
+		const targetDay = rootEl.querySelector<HTMLElement>(`[data-v-date="${iso}"][role="gridcell"], [data-v-date="${iso}"]`)
+		let dayCell = targetDay?.closest<HTMLElement>('[role="gridcell"]') ?? targetDay
 		if (!dayCell) {
 			const allDates = Array.from(rootEl.querySelectorAll<HTMLElement>('[data-v-date]'))
 			const nonAdjacent = allDates.filter(el => !el.classList.contains('v-date-picker-month__day--adjacent'))

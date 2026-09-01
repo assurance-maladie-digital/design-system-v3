@@ -125,7 +125,6 @@
 		ignoreNextInputBlur,
 		ignoreNextCalendarModelSync,
 		consumeIgnoreNextInputBlur,
-		consumeIgnoreNextCalendarModelSync,
 		hasInteracted,
 		isManualInputActive,
 		resetInteractionState,
@@ -198,24 +197,6 @@
 
 	const scheduleDialogInitialFocus = () => {
 		shouldFocusDialogOnOpen.value = true
-	}
-
-	const restoreCalendarInputFocus = (attempt = 0) => {
-		nextTick(() => {
-			requestAnimationFrame(() => {
-				focusCalendarInput()
-
-				const input = getCalendarInputElement()
-				if (!input) return
-
-				if (document.activeElement === input) return
-				if (attempt >= 8) return
-
-				setTimeout(() => {
-					restoreCalendarInputFocus(attempt + 1)
-				}, attempt < 3 ? 16 : 50)
-			})
-		})
 	}
 
 	const scheduleDialogInitialDayFocus = () => {
@@ -506,7 +487,7 @@
 	const calendarSelectedDates = computed<DateObjectValue>({
 		get: () => selectedDates.value,
 		set: (value) => {
-			if (consumeIgnoreNextCalendarModelSync()) {
+			if (ignoreNextCalendarModelSync.value) {
 				return
 			}
 
@@ -849,7 +830,7 @@
 	})
 
 	const updateDisplayFormattedDate = () => {
-		if (consumeIgnoredCalendarModelSync()) {
+		if (ignoreNextCalendarModelSync.value) {
 			return
 		}
 
@@ -953,6 +934,17 @@
 		keyboardNavigatedDate.value = null
 	}
 
+	const handleMenuAfterLeave = () => {
+		if (!shouldRestoreFocusToInput.value || isDatePickerVisible.value) return
+
+		shouldRestoreFocusToInput.value = false
+		focusCalendarInput()
+	}
+
+	const handleMenuVisibilityUpdate = (visible: boolean) => {
+		isDatePickerVisible.value = visible
+	}
+
 	const handleDatePickerOpened = () => {
 		resetViewMode()
 		const baseDate = getSelectedBaseDate()
@@ -969,21 +961,8 @@
 				shouldFocusDialogOnOpen.value = false
 				scheduleDialogInitialDayFocus()
 			}
-
-			ignoreNextCalendarModelSync.value = false
 		})
 	}
-
-	watch(isDatePickerVisible, (visible) => {
-		if (visible) return
-
-		if (!shouldRestoreFocusToInput.value) return
-
-		shouldRestoreFocusToInput.value = false
-		restoreCalendarInputFocus()
-		setTimeout(() => restoreCalendarInputFocus(), 150)
-		setTimeout(() => restoreCalendarInputFocus(), 300)
-	}, { flush: 'post' })
 
 	const { getInitialFocusDate, getCurrentDate } = useDatePickerFocusTarget({
 		keyboardNavigatedDate,
@@ -1028,6 +1007,7 @@
 
 		if (!props.noCalendar && (event.key === 'Enter' || event.key === 'ArrowDown') && !isInteractionDisabled.value) {
 			event.preventDefault()
+
 			requestDatePickerOpen({
 				ignoreBlur: true,
 				focusDialog: true,
@@ -1086,7 +1066,7 @@
 	// Sinon, on synchronise la valeur saisie et on délègue à handleInputBlur
 	// (useDatePickerInputBlurHandler) qui valide et met à jour le modèle.
 	const handleCalendarInputBlur = async () => {
-		if (consumeIgnoreNextInputBlur() && isDatePickerVisible.value) {
+		if (consumeIgnoreNextInputBlur()) {
 			emitBlurEvent()
 			return
 		}
@@ -1432,7 +1412,7 @@
 
 		<template v-else>
 			<VMenu
-				v-model="isDatePickerVisible"
+				:model-value="isDatePickerVisible"
 				:activator="menuActivatorRef"
 				:min-width="0"
 				location="bottom"
@@ -1443,13 +1423,15 @@
 				transition="fade-transition"
 				:offset="[0, 10]"
 				content-class="date-picker-overlay-content"
+				@update:model-value="handleMenuVisibilityUpdate"
+				@after-leave="handleMenuAfterLeave"
 			>
 				<template #activator="{ props: menuProps }">
 					<div
 						ref="menuActivatorRef"
 						class="date-text-input-activator"
 						:title="props.placeholder || locales.label"
-						v-bind="{ ...menuProps, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': isDatePickerVisible ? datePickerDialogId : undefined }"
+						v-bind="{ ...menuProps, onKeydown: undefined, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': isDatePickerVisible ? datePickerDialogId : undefined }"
 						@focus="redirectActivatorFocus"
 					>
 						<DateTextInput
