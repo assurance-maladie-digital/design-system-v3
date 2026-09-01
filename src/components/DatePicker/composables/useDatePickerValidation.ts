@@ -517,6 +517,12 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			return
 		}
 
+		// Skip validation when the update is internal (from withInternalUpdate).
+		// This prevents concurrent validateDates + validateTextInput when the blur
+		// handler updates selectedDates inside withInternalUpdate and then calls
+		// validateTextInput separately.
+		if (options.isUpdatingFromInternal.value) return
+
 		if (unref(options.noCalendar) && (newDates === null || (Array.isArray(newDates) && newDates.length === 0))) {
 			clearValidation()
 			return
