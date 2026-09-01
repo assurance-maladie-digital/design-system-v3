@@ -155,6 +155,8 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		}
 
 		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		// Le marqueur conserve l'anneau du DS après un focus programmatique et suit
+		// la cellule active pendant la navigation clavier.
 		if (showFocusRing || rootEl?.querySelector('.sy-date-picker-keyboard-focus')) {
 			rootEl?.querySelectorAll('.sy-date-picker-keyboard-focus').forEach((element) => {
 				element.classList.remove('sy-date-picker-keyboard-focus')
@@ -779,6 +781,8 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			nextTick(() => {
 				attachListeners()
 				nextTick(() => {
+					// Ce composable est l'unique propriétaire du focus initial dans la grille.
+					// L'intention clavier est consommée après le rendu de VDatePicker.
 					const showFocusRing = focusInitialDayOnOpen?.value ?? false
 					if (focusInitialDayOnOpen) focusInitialDayOnOpen.value = false
 					focusInitialDay({ showFocusRing })
