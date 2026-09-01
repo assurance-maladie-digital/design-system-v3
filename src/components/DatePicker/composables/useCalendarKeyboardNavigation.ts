@@ -63,6 +63,9 @@ export interface CalendarKeyboardNavigationOptions {
 
 	// Renvoie la date sur laquelle placer le focus à l'ouverture (date sélectionnée ou aujourd'hui)
 	getInitialFocusDate?: () => Date
+
+	// Indique qu'une ouverture clavier doit afficher l'anneau de focus du DS.
+	focusInitialDayOnOpen?: Ref<boolean>
 }
 
 export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigationOptions) => {
@@ -73,6 +76,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		setCurrentDate,
 		getInitialFocusDate,
 		onSelectDate,
+		focusInitialDayOnOpen,
 	} = options
 
 	const addDays = (date: Date, amount: number) => dayjs(date).add(amount, 'day').toDate()
@@ -774,7 +778,11 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		if (visible) {
 			nextTick(() => {
 				attachListeners()
-				nextTick(focusInitialDay)
+				nextTick(() => {
+					const showFocusRing = focusInitialDayOnOpen?.value ?? false
+					if (focusInitialDayOnOpen) focusInitialDayOnOpen.value = false
+					focusInitialDay({ showFocusRing })
+				})
 			})
 		}
 		else {
