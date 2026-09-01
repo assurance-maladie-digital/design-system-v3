@@ -156,6 +156,9 @@
 	const focusCalendarInput = () => {
 		const input = getCalendarInputElement()
 		if (input) {
+			if (document.activeElement !== input) {
+				isProgrammaticFocus.value = true
+			}
 			input.focus()
 			const caretPosition = input.value.length
 			if (typeof input.setSelectionRange === 'function') {
@@ -165,6 +168,7 @@
 		}
 
 		if (typeof dateCalendarTextInputRef.value?.focus === 'function') {
+			isProgrammaticFocus.value = true
 			dateCalendarTextInputRef.value.focus()
 		}
 	}
@@ -178,6 +182,7 @@
 	//   ferme/reouvre rapidement)
 	const shouldRestoreFocusToInput = ref(false)
 	const shouldFocusDialogOnOpen = ref(false)
+	const isProgrammaticFocus = ref(false)
 	const keyboardNavigatedDate = ref<Date | null>(null)
 	let dialogInitialFocusToken = 0
 	let dialogInitialFocusTimeouts: ReturnType<typeof setTimeout>[] = []
@@ -420,6 +425,15 @@
 		emitClosed: () => emit('closed'),
 		emitFocus: () => emit('focus'),
 	})
+
+	const handleDateTextInputFocus = () => {
+		if (isProgrammaticFocus.value) {
+			isProgrammaticFocus.value = false
+			return
+		}
+
+		openDatePickerOnFocus()
+	}
 
 	const refreshVisibleCalendarUi = (options: { focusDay?: boolean } = {}) => {
 		if (!isDatePickerVisible.value) return
@@ -1446,7 +1460,7 @@
 							v-bind="menuTextInputProps"
 							@mousedown="openDatePickerFromInputClick"
 							@update:model-value="handleDateTextInputUpdate"
-							@focus="openDatePickerOnFocus"
+							@focus="handleDateTextInputFocus"
 							@blur="handleCalendarInputBlur"
 							@input="handleInput"
 							@keydown="handleKeydown"
