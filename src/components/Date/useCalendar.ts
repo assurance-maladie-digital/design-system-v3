@@ -114,7 +114,7 @@ export default function useCalendar(
 			isWeekend: rawDate.getDay() === 0 || rawDate.getDay() === 6,
 			isSelected: isDaySelected(rawDate),
 			isStartRange: range?.[0]?.toDateString() === rawDate.toDateString(),
-			isInRange: range ? rawDate > range[0] && rawDate < range[1] : false,
+			isInRange: range?.[0] && range[1] ? rawDate > range[0] && rawDate < range[1] : false,
 			isEndRange: range?.[1]?.toDateString() === rawDate.toDateString(),
 		}))
 	})
