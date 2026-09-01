@@ -681,6 +681,7 @@
 	border-radius: 8px;
 	box-shadow: 0 4px 8px rgb(15 23 42 / 12%);
 	color: #1e293b;
+	margin-left: 1.5rem;
 }
 
 .schema-legend__title {

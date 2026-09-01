@@ -97,7 +97,7 @@
     ],
     "priority": "Moyenne",
     "difficulty": "Moyenne",
-    "essential": false
+    "essential": true
   },
   {
     "id": "animations",
@@ -127,7 +127,7 @@
     ],
     "priority": "Moyenne",
     "difficulty": "Faible",
-    "essential": false
+    "essential": true
   },
   {
     "id": "design-system",
@@ -159,7 +159,7 @@
     ],
     "priority": "Moyenne",
     "difficulty": "Moyenne",
-    "essential": false
+    "essential": true
   },
   {
     "id": "images-compression",
@@ -468,7 +468,7 @@
     ],
     "priority": "Moyenne",
     "difficulty": "Moyenne",
-    "essential": false
+    "essential": true
   },
   {
     "id": "notifications",
@@ -531,7 +531,7 @@
     ],
     "priority": "Moyenne",
     "difficulty": "Moyenne",
-    "essential": false
+    "essential": true
   },
   {
     "id": "minify",
@@ -717,7 +717,7 @@
     ],
     "priority": "Moyenne",
     "difficulty": "Moyenne",
-    "essential": false
+    "essential": true
   },
   {
     "id": "static-hosting",
@@ -771,7 +771,7 @@
     ],
     "priority": "Moyenne",
     "difficulty": "Moyenne",
-    "essential": false
+    "essential": true
   },
   {
     "id": "cache",
@@ -967,7 +967,7 @@
     ],
     "priority": "Moyenne",
     "difficulty": "Moyenne",
-    "essential": false
+    "essential": true
   },
   {
     "id": "async-processing",
