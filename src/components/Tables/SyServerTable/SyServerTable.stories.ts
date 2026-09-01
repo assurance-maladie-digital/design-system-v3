@@ -43,8 +43,26 @@ const meta = {
 			},
 		},
 		serverItemsLength: {
-			description: 'Nombre total d\'éléments à afficher',
+			description: 'Nombre total d\'éléments disponibles côté serveur, utilisé pour calculer la pagination.',
 			control: { type: 'number' },
+			table: {
+				category: 'props',
+				type: { summary: 'number' },
+				defaultValue: {
+					summary: '0',
+				},
+			},
+		},
+		showFilters: {
+			description: 'Affiche une ligne de filtres au-dessus des données. Les colonnes filtrables sont déclarées dans `headers` et configurables via `filterInputConfig`.',
+			control: { type: 'boolean' },
+			table: {
+				category: 'props',
+				type: { summary: 'boolean' },
+				defaultValue: {
+					summary: 'false',
+				},
+			},
 		},
 	},
 } satisfies Meta<typeof SyServerTable & typeof VDataTable>

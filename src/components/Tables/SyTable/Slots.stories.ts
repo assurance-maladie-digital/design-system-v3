@@ -334,10 +334,11 @@ export const ComplexItemsDisplay: Story = {
 		],
 	},
 	args: {
-		headers: projectHeaders,
-		items: projects,
-		caption: 'Périodes des projets en cours',
-		suffix: 'items-display-cell-table',
+		'headers': projectHeaders,
+		'items': projects,
+		'caption': 'Périodes des projets en cours',
+		'suffix': 'items-display-cell-table',
+		'onUpdate:options': fn(),
 	},
 	render: args => ({
 		components: { SyTable },

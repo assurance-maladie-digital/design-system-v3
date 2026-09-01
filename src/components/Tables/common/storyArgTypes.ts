@@ -11,10 +11,19 @@ import { fn } from 'storybook/test'
  */
 export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 	'headers': {
-		description: 'Liste des colonnes du tableau (voir : https://vuetifyjs.com/en/api/v-data-table/#props-headers)',
+		description: 'Liste des colonnes du tableau (voir : https://vuetifyjs.com/en/api/v-data-table/#props-headers).',
 		control: { type: 'object' },
 		table: {
 			category: 'props',
+		},
+	},
+	'headersSlot': {
+		name: 'headers',
+		description: 'Remplace entièrement le rendu de la ligne d\'en-tête (voir : https://vuetifyjs.com/en/api/v-data-table/#slots-headers).',
+		control: undefined,
+		table: {
+			category: 'slots',
+			type: { summary: 'slot' },
 		},
 	},
 	'density': {
@@ -153,6 +162,17 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 			},
 		},
 	},
+	'stickyBulkActions': {
+		description: 'Rend la barre d\'actions groupées sticky en haut du tableau quand le slot `bulk-actions` est affiché.',
+		control: { type: 'boolean' },
+		table: {
+			category: 'props',
+			type: { summary: 'boolean' },
+			defaultValue: {
+				summary: 'true',
+			},
+		},
+	},
 	'pinnedColumns': {
 		description: 'Liste des colonnes à épingler (sticky). Chaque entrée peut être une clé de colonne (string) ou un objet `{ key: string, side?: \'left\' | \'right\' }`. Par défaut, les colonnes sont épinglées à gauche.',
 		control: { type: 'object' },
@@ -217,7 +237,7 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 		},
 	},
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// @ts-ignore - 'cookie-description-${cookieName}' storybook can't infer dynamic slot name
+	// @ts-ignore - storybook can't infer dynamic slot name
 	'header.<columnKey>': {
 		description: 'Slot permettant de personnaliser le rendu de l\'en-tête d\'une colonne spécifique. Remplacer `<columnKey>` par la clé de la colonne souhaitée.',
 		control: undefined,
@@ -243,6 +263,48 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 		table: {
 			category: 'slots',
 			type: { summary: 'slot', detail: '{ item, isEditing: boolean, edit: () => void, save: () => void, cancel: () => void, remove: () => void }' },
+		},
+	},
+	'item': {
+		description: 'Remplace entièrement le rendu d\'une ligne (voir : https://vuetifyjs.com/en/api/v-data-table/#slots-item).',
+		control: undefined,
+		table: {
+			category: 'slots',
+			type: { summary: 'slot' },
+		},
+	},
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore - storybook can't infer dynamic slot name
+	'item.<columnKey>': {
+		description: 'Slot permettant de personnaliser l\'affichage d\'une cellule spécifique (hors édition). Remplacer `<columnKey>` par la clé de la colonne souhaitée. Reçoit les mêmes `cellProps` que le slot d\'édition `#edit.<columnKey>` (`item`, `column`, `index`…).',
+		control: undefined,
+		table: {
+			category: 'slots',
+			type: { summary: 'slot', detail: '{ item, column, index, ... }' },
+		},
+	},
+	'filter.custom': {
+		description: 'Personnalise le champ de filtre d\'une colonne dont le header porte `filterable: \'custom\'`.',
+		control: undefined,
+		table: {
+			category: 'slots',
+			type: { summary: 'slot', detail: '{ header: HeaderColumn, value: unknown, updateFilter: (value: unknown) => void }' },
+		},
+	},
+	'item.data-table-expand': {
+		description: 'Personnalise le déclencheur d\'expansion d\'une ligne (voir : https://vuetifyjs.com/en/api/v-data-table/#slots-item-data-table-expand). Nécessite `show-expand`.',
+		control: undefined,
+		table: {
+			category: 'slots',
+			type: { summary: 'slot', detail: '{ internalItem, isExpanded: (item) => boolean, toggleExpand: (item) => void }' },
+		},
+	},
+	'expanded-row': {
+		description: 'Personnalise le contenu déplié d\'une ligne (voir : https://vuetifyjs.com/en/api/v-data-table/#slots-expanded-row). Nécessite `show-expand`.',
+		control: undefined,
+		table: {
+			category: 'slots',
+			type: { summary: 'slot', detail: '{ columns: HeaderColumn[], item }' },
 		},
 	},
 	'edit.<columnKey>': {
@@ -316,6 +378,10 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
  * Clés `onXxx` synthétiques (déclarées dans `commonTableEventArgs`) à exclure des Controls :
  * elles ne servent qu'à attacher les spies aux events Vue et dupliquent les entrées `argTypes`
  * ci-dessus définies sous leur nom brut (`edit`, `save`…) tel que détecté par le docgen.
+ *
+ * S'y ajoutent les noms de slots dynamiques bruts (expressions de template littérales,
+ * non résolues par le docgen) qui dupliquent nos entrées manuelles `item.<columnKey>` /
+ * `edit.<columnKey>` ci-dessus.
  */
 export const commonTableExcludedControls = [
 	'onUpdate:options',
@@ -325,6 +391,9 @@ export const commonTableExcludedControls = [
 	'onSave',
 	'onCancel',
 	'onDelete',
+	'`item.${colKey}`',
+	'`edit.${colKey}`',
+	'slotName',
 ]
 
 /**
