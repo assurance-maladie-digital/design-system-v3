@@ -13,9 +13,13 @@ import { ref, type Ref } from 'vue'
  *   Le reset via `queueMicrotask` garantit que les watchers Vue (flush en microtask)
  *   voient le flag `true` avant son reset.
  *
- * - `ignoreNextInputBlur` / `ignoreNextCalendarModelSync` : Flags one-shot qui
- *   demandent d'ignorer le prochain événement de blur ou de sync modèle. Consommés
- *   automatiquement au prochain read via `consumeIgnoreNext*`.
+ * - `ignoreNextInputBlur` : flag one-shot consommé par `consumeIgnoreNextInputBlur`
+ *   pour ignorer le blur provoqué par une ouverture programmatique.
+ *
+ * - `ignoreNextCalendarModelSync` : garde une synchronisation initiale de VDatePicker
+ *   de manière à ne pas la confondre avec une sélection utilisateur. Le composant appelant
+ *   définit son cycle de vie : consommation ponctuelle ou remise à `false` à la sélection/
+ *   fermeture.
  *
  * ## État d'interaction
  *
@@ -29,7 +33,7 @@ export interface DatePickerSyncGuard {
 	isUpdatingFromInternal: Ref<boolean>
 	withInternalUpdate: (fn: () => void) => void
 
-	// One-shot consume flags — set to ignore a specific event, auto-consumed on read
+	// Sync guards — the input blur is one-shot; callers define the calendar sync lifecycle.
 	ignoreNextInputBlur: Ref<boolean>
 	ignoreNextCalendarModelSync: Ref<boolean>
 	consumeIgnoreNextInputBlur: () => boolean
@@ -83,8 +87,8 @@ export const useDatePickerSyncGuard = (): DatePickerSyncGuard => {
 	}
 
 	/**
-	 * Consomme le flag "ignorer le prochain sync du modèle calendrier".
-	 * Retourne `true` si le sync devait être ignoré, et reset le flag.
+	 * Consomme une garde de synchronisation du modèle calendrier.
+	 * Les appelants qui couvrent une phase complète peuvent la remettre à `false` eux-mêmes.
 	 */
 	const consumeIgnoreNextCalendarModelSync = (): boolean => {
 		if (ignoreNextCalendarModelSync.value) {
