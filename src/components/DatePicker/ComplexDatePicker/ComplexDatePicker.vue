@@ -207,7 +207,7 @@
 
 		const runFocus = () => {
 			if (!isDatePickerVisible.value || token !== dialogInitialFocusToken) return
-			focusInitialDay()
+			focusInitialDay({ showFocusRing: true })
 		}
 
 		runFocus()

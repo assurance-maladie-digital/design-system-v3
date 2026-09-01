@@ -143,11 +143,19 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		button.focus({ preventScroll: true })
 	}
 
-	const focusDayCell = (cell: HTMLElement | undefined | null) => {
+	const focusDayCell = (cell: HTMLElement | undefined | null, showFocusRing = false) => {
 		if (!cell) return
 
 		if (!cell.hasAttribute('tabindex')) {
 			cell.setAttribute('tabindex', '-1')
+		}
+
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		if (showFocusRing || rootEl?.querySelector('.sy-date-picker-keyboard-focus')) {
+			rootEl?.querySelectorAll('.sy-date-picker-keyboard-focus').forEach((element) => {
+				element.classList.remove('sy-date-picker-keyboard-focus')
+			})
+			cell.classList.add('sy-date-picker-keyboard-focus')
 		}
 
 		cell.focus({ preventScroll: true })
@@ -419,7 +427,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 	let latestFocusToken = 0
 
-	const focusDateButton = (date: Date, attempt = 0, token?: number) => {
+	const focusDateButton = (date: Date, attempt = 0, token?: number, showFocusRing = false) => {
 		if (attempt === 0) {
 			latestFocusToken++
 			token = latestFocusToken
@@ -431,7 +439,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
 		if (!rootEl) {
 			if (attempt < 15) {
-				setTimeout(() => focusDateButton(date, attempt + 1, token), attempt === 0 ? 10 : 30)
+				setTimeout(() => focusDateButton(date, attempt + 1, token, showFocusRing), attempt === 0 ? 10 : 30)
 			}
 			return
 		}
@@ -486,7 +494,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 			const bestCandidate = visibleCandidates[0]
 			if (bestCandidate) {
-				focusDayCell(bestCandidate)
+				focusDayCell(bestCandidate, showFocusRing)
 
 				// Revérifier le focus après la durée typique d'une transition Vuetify (~350ms)
 				// car le DOM peut être re-rendu et l'élément détruit, ou le focus perdu pendant l'animation.
@@ -500,7 +508,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 							&& (document.activeElement !== bestCandidate || !bestCandidate.isConnected)
 						) {
 							// Forcer un retry silencieux
-							focusDateButton(date, 2, token)
+							focusDateButton(date, 2, token, showFocusRing)
 						}
 					}, 350)
 				}
@@ -509,7 +517,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		}
 
 		if (attempt < 15) {
-			setTimeout(() => focusDateButton(date, attempt + 1, token), attempt === 0 ? 10 : 30)
+			setTimeout(() => focusDateButton(date, attempt + 1, token, showFocusRing), attempt === 0 ? 10 : 30)
 		}
 	}
 
@@ -735,7 +743,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		lastFocusedYearButton = null
 	}
 
-	const focusInitialDay = () => {
+	const focusInitialDay = (options: { showFocusRing?: boolean } = {}) => {
 		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
 		if (!rootEl) return
 
@@ -752,14 +760,14 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		}
 
 		if (dayCell) {
-			focusDayCell(dayCell)
+			focusDayCell(dayCell, options.showFocusRing)
 			setTimeout(() => {
-				focusDateButton(targetDate)
+				focusDateButton(targetDate, 0, undefined, options.showFocusRing)
 			}, 0)
 			return
 		}
 
-		focusDateButton(targetDate)
+		focusDateButton(targetDate, 0, undefined, options.showFocusRing)
 	}
 
 	watch(isDatePickerVisible, (visible) => {
