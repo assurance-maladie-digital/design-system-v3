@@ -168,6 +168,7 @@ describe('ComplexDatePicker.clean', () => {
 
 		expect(wrapper.vm.isDatePickerVisible).toBe(true)
 		expect(document.activeElement?.closest('[role="dialog"]')).not.toBeNull()
+		expect(document.activeElement?.classList.contains('sy-date-picker-keyboard-focus')).toBe(true)
 		wrapper.unmount()
 	})
 
@@ -303,6 +304,7 @@ describe('ComplexDatePicker.clean', () => {
 		expect(input.attributes('aria-expanded')).toBe('true')
 		expect(document.activeElement?.getAttribute('role')).toBe('gridcell')
 		expect(document.activeElement?.classList.contains('v-date-picker-month__day')).toBe(true)
+		expect(document.activeElement?.classList.contains('sy-date-picker-keyboard-focus')).toBe(true)
 		wrapper.unmount()
 	})
 

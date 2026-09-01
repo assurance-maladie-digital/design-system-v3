@@ -183,13 +183,6 @@
 	const shouldFocusDialogOnOpen = ref(false)
 	const isProgrammaticFocus = ref(false)
 	const keyboardNavigatedDate = ref<Date | null>(null)
-	let dialogInitialFocusToken = 0
-	let dialogInitialFocusTimeouts: ReturnType<typeof setTimeout>[] = []
-
-	const clearDialogInitialFocusTimeouts = () => {
-		dialogInitialFocusTimeouts.forEach(clearTimeout)
-		dialogInitialFocusTimeouts = []
-	}
 
 	const scheduleCalendarInputFocusRestore = () => {
 		shouldRestoreFocusToInput.value = true
@@ -197,21 +190,6 @@
 
 	const scheduleDialogInitialFocus = () => {
 		shouldFocusDialogOnOpen.value = true
-	}
-
-	const scheduleDialogInitialDayFocus = () => {
-		dialogInitialFocusToken += 1
-		const token = dialogInitialFocusToken
-
-		clearDialogInitialFocusTimeouts()
-
-		const runFocus = () => {
-			if (!isDatePickerVisible.value || token !== dialogInitialFocusToken) return
-			focusInitialDay({ showFocusRing: true })
-		}
-
-		runFocus()
-		dialogInitialFocusTimeouts.push(setTimeout(runFocus, 120))
 	}
 
 	// Fermeture du calendrier. Contrairement à CalendarMode, pas de flag
@@ -904,7 +882,6 @@
 	})
 
 	onBeforeUnmount(() => {
-		clearDialogInitialFocusTimeouts()
 		datePickerMenuRef.value?.removeEventListener('keydown', handleMenuKeydown, true)
 	})
 
@@ -926,8 +903,6 @@
 	)
 
 	const handleDatePickerClosed = () => {
-		dialogInitialFocusToken += 1
-		clearDialogInitialFocusTimeouts()
 		ignoreNextInputBlur.value = false
 		shouldFocusDialogOnOpen.value = false
 		ignoreNextCalendarModelSync.value = false
@@ -955,12 +930,7 @@
 		}
 
 		nextTick(() => {
-			refreshVisibleCalendarUi({ focusDay: shouldFocusDialogOnOpen.value })
-
-			if (shouldFocusDialogOnOpen.value) {
-				shouldFocusDialogOnOpen.value = false
-				scheduleDialogInitialDayFocus()
-			}
+			refreshVisibleCalendarUi()
 		})
 	}
 
@@ -975,6 +945,7 @@
 		isDatePickerVisible,
 		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
 		getInitialFocusDate,
+		focusInitialDayOnOpen: shouldFocusDialogOnOpen,
 		getCurrentDate,
 		setCurrentDate: (date: Date) => {
 			keyboardNavigatedDate.value = date
