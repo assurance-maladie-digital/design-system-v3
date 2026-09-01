@@ -76,6 +76,10 @@
 		fileURL.value = URL.createObjectURL(props.file)
 	}
 
+	// L'URL objet reste valide tant que le fichier est affiché : la révoquer au
+	// chargement casserait les actions du viewer natif qui la re-sollicitent
+	// (téléchargement, impression, rechargement). Elle est libérée au changement
+	// de fichier et au démontage.
 	const revokeFileURL = () => {
 		if (!fileURL.value) return
 		URL.revokeObjectURL(fileURL.value)
@@ -194,7 +198,6 @@
 			:data="fileURL"
 			v-bind="filePreviewOptions.pdf"
 			type="application/pdf"
-			@load="revokeFileURL"
 		>
 			<p class="mb-0">{{ locales.previewNotAvailable }}</p>
 		</object>
@@ -204,7 +207,6 @@
 			:src="fileURL"
 			:alt="filePreviewOptions.image.alt || ''"
 			v-bind="filePreviewOptions.image"
-			@load="revokeFileURL"
 		>
 
 		<slot v-else>

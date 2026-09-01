@@ -104,6 +104,35 @@ describe('FilePreview', async () => {
 		URL.revokeObjectURL = origRevoke
 	})
 
+	it('keeps the object URL alive after the preview has loaded', async () => {
+		// Régression : révoquer l'URL sur @load cassait les actions du viewer natif
+		// (téléchargement, impression, rechargement) qui re-sollicitent l'URL.
+		const origCreate = URL.createObjectURL
+		const origRevoke = URL.revokeObjectURL
+		const revokeSpy = vi.fn()
+		URL.createObjectURL = vi.fn().mockReturnValue('blob:alive')
+		URL.revokeObjectURL = revokeSpy
+
+		const localWrapper = mount(FilePreview, { props: { file: testFilePdf } })
+		await localWrapper.vm.$nextTick()
+
+		await localWrapper.find('object').trigger('load')
+
+		expect(revokeSpy).not.toHaveBeenCalled()
+		expect(localWrapper.find('object').attributes('data')).toBe('blob:alive')
+
+		await localWrapper.setProps({ file: testFileImg })
+		await localWrapper.find('img').trigger('load')
+
+		expect(revokeSpy).toHaveBeenCalledTimes(1)
+		expect(revokeSpy).toHaveBeenCalledWith('blob:alive')
+		expect(localWrapper.find('img').attributes('src')).toBe('blob:alive')
+
+		localWrapper.unmount()
+		URL.createObjectURL = origCreate
+		URL.revokeObjectURL = origRevoke
+	})
+
 	it('with options', async () => {
 		await wrapper.setProps({
 			file: testFileImg,
