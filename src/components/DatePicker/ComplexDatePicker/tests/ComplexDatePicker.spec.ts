@@ -156,6 +156,21 @@ describe('ComplexDatePicker.clean', () => {
 		focusSpy.mockRestore()
 	})
 
+	it('moves focus to a calendar gridcell when opened with ArrowDown', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+		}, { attachTo: document.body })
+
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: 'ArrowDown' })
+		await waitForCondition(() => document.activeElement?.getAttribute('role') === 'gridcell')
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+		expect(document.activeElement?.closest('[role="dialog"]')).not.toBeNull()
+		wrapper.unmount()
+	})
+
 	it('does not clear the input value when the calendar is opened with ArrowDown', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
@@ -263,6 +278,104 @@ describe('ComplexDatePicker.clean', () => {
 
 		expect(wrapper.vm.isDatePickerVisible).toBe(false)
 		expect(input.attributes('aria-expanded')).toBe('false')
+	})
+
+	it('keeps the calendar open when ArrowDown reopens it immediately after a date selection', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			textFieldActivator: true,
+			required: true,
+		}, { attachTo: document.body })
+
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: 'ArrowDown' })
+		await flushPromises()
+
+		await wrapper.vm.updateSelectedDates(new Date(2025, 0, 15))
+		await waitForCondition(() => wrapper?.vm.isDatePickerVisible === false)
+
+		await input.trigger('keydown', { key: 'ArrowDown' })
+		await new Promise(resolve => setTimeout(resolve, 350))
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+		expect(input.attributes('aria-expanded')).toBe('true')
+		expect(document.activeElement?.getAttribute('role')).toBe('gridcell')
+		expect(document.activeElement?.classList.contains('v-date-picker-month__day')).toBe(true)
+		wrapper.unmount()
+	})
+
+	it('keeps the calendar open when Enter reopens it immediately after a date selection', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			textFieldActivator: true,
+			required: true,
+		}, { attachTo: document.body })
+
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: 'ArrowDown' })
+		await flushPromises()
+
+		await wrapper.vm.updateSelectedDates(new Date(2025, 0, 15))
+		await waitForCondition(() => wrapper?.vm.isDatePickerVisible === false)
+
+		await input.trigger('keydown', { key: 'Enter' })
+		await new Promise(resolve => setTimeout(resolve, 350))
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+		expect(input.attributes('aria-expanded')).toBe('true')
+		wrapper.unmount()
+	})
+
+	it('keeps the calendar open when its icon reopens it immediately after a date selection', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			textFieldActivator: true,
+			required: true,
+		}, { attachTo: document.body })
+
+		const input = wrapper.find('input')
+		const calendarButton = wrapper.find('button.sy-text-field__icon-button')
+		await input.trigger('keydown', { key: 'ArrowDown' })
+		await flushPromises()
+
+		await wrapper.vm.updateSelectedDates(new Date(2025, 0, 15))
+		await waitForCondition(() => wrapper?.vm.isDatePickerVisible === false)
+
+		await calendarButton.trigger('click')
+		await new Promise(resolve => setTimeout(resolve, 350))
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+		expect(input.attributes('aria-expanded')).toBe('true')
+		wrapper.unmount()
+	})
+
+	it('keeps the calendar open when Vuetify synchronizes the selected date on reopen', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			modelValue: '15/01/2025',
+			textFieldActivator: true,
+			required: true,
+		}, { attachTo: document.body })
+
+		const calendarButton = wrapper.find('button.sy-text-field__icon-button')
+		await calendarButton.trigger('click')
+		await flushPromises()
+
+		const datePicker = wrapper.findComponent(VDatePicker)
+		expect(datePicker.exists()).toBe(true)
+
+		await datePicker.vm.$emit('update:modelValue', new Date(2025, 0, 15))
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+		wrapper.unmount()
 	})
 
 	it('keeps manual input state stable when keyboard interaction is used afterwards', async () => {
