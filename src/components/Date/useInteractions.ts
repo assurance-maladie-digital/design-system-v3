@@ -1,0 +1,99 @@
+import { computed, ref, nextTick } from 'vue'
+import type { Ref } from 'vue'
+import { getISODatePart } from './utils'
+
+export default function useInteractions(
+	displayedMonth: Ref<Date | undefined>,
+	rootElement: Ref<HTMLElement | undefined>,
+) {
+	/** The month displayed by the calendar, falling back to the current month */
+	const displayedView = computed(() => displayedMonth.value ?? new Date())
+
+	/** Is the date outside the month primarily displayed by the calendar */
+	function isOutsideDisplayedMonth(date: Date): boolean {
+		return date.getFullYear() !== displayedView.value.getFullYear()
+			|| date.getMonth() !== displayedView.value.getMonth()
+	}
+
+	/** First day of the displayed month, as an ISO date */
+	const firstDayOfDisplayedMonth = computed(() => getISODatePart(new Date(
+		displayedView.value.getFullYear(),
+		displayedView.value.getMonth(),
+		1,
+	)))
+
+	/** Day focused by the user via keyboard navigation or click */
+	const userFocusedDay = ref<string>()
+
+	/**
+	 * The focused day: the day focused by the user if it belongs to the
+	 * displayed month, otherwise the first day of the displayed month.
+	 */
+	const focusedDay = computed({
+		get: () => {
+			const userDay = userFocusedDay.value
+			return userDay && !isOutsideDisplayedMonth(new Date(userDay))
+				? userDay
+				: firstDayOfDisplayedMonth.value
+		},
+		set: (value: string) => {
+			userFocusedDay.value = value
+		},
+	})
+
+	/** Focus a day, displaying its month if it is outside the displayed one */
+	function focusDay(date: Date) {
+		focusedDay.value = getISODatePart(date)
+		if (isOutsideDisplayedMonth(date)) {
+			displayedMonth.value = date
+		}
+	}
+
+	function moveFocusedDayBy(days: number) {
+		const currentFocusedDate = new Date(focusedDay.value)
+		currentFocusedDate.setDate(currentFocusedDate.getDate() + days)
+		focusDay(currentFocusedDate)
+		moveFocusToFocusedDay()
+	}
+
+	function nextDay() {
+		moveFocusedDayBy(1)
+	}
+
+	function previousDay() {
+		moveFocusedDayBy(-1)
+	}
+
+	function nextWeek() {
+		moveFocusedDayBy(7)
+	}
+
+	function previousWeek() {
+		moveFocusedDayBy(-7)
+	}
+
+	/**
+	 * Move the DOM focus to the focused day, once the grid has been re-rendered.
+	 * During a month slide, both grids are in the DOM and the overflow days of
+	 * the leaving grid duplicate the boundary day: exclude it, as its inert
+	 * attribute makes focus() a silent no-op.
+	 */
+	async function moveFocusToFocusedDay() {
+		await nextTick()
+		const focusedElement = rootElement.value?.querySelector<HTMLElement>(`table:not([inert]) .day-${focusedDay.value}`)
+		if (!focusedElement) {
+			throw new Error(`Unable to focus the day: ${focusedDay.value}`)
+		}
+		focusedElement.focus()
+	}
+
+	return {
+		focusedDay,
+		focusDay,
+		firstDayOfDisplayedMonth,
+		nextDay,
+		previousDay,
+		nextWeek,
+		previousWeek,
+	}
+}

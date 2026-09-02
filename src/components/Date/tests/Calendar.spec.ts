@@ -1,6 +1,6 @@
 import { mount, type MountingOptions, type VueWrapper } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { nextTick } from 'vue'
+import { defineComponent, nextTick } from 'vue'
 import type Calendar from '../Calendar.vue'
 
 const displayedMonth = new Date(2024, 5, 15, 12)
@@ -123,5 +123,51 @@ describe('Calendar', () => {
 
 		expect(wrapper.find('[data-date="2024-06-15"] .custom-day').text()).toBe('Jour personnalise')
 		expect(wrapper.find('[data-date="2024-06-15"] .sy-calendar__day-content').exists()).toBe(false)
+	})
+
+	it('moves the focused day with arrow keys', async () => {
+		const wrapper = await mountCalendar({ displayedMonth })
+		// No user interaction yet: the first day of the month is the focused day
+		expect(wrapper.find('[data-date="2024-06-01"]').attributes('tabindex')).toBe('0')
+
+		await wrapper.find('[data-date="2024-06-01"]').trigger('keydown.arrow-right')
+		await wrapper.find('[data-date="2024-06-02"]').trigger('keydown.arrow-down')
+
+		expect(wrapper.find('[data-date="2024-06-01"]').attributes('tabindex')).toBe('-1')
+		expect(wrapper.find('[data-date="2024-06-02"]').attributes('tabindex')).toBe('-1')
+		expect(wrapper.find('[data-date="2024-06-09"]').attributes('tabindex')).toBe('0')
+	})
+
+	it('displays the next month when the navigation leaves the displayed month', async () => {
+		const { default: Calendar } = await import('../Calendar.vue')
+		const host = defineComponent({
+			components: { Calendar },
+			data: () => ({ month: displayedMonth }),
+			template: '<Calendar v-model:displayed-month="month" />',
+		})
+		wrapper = mount(host)
+
+		// Move the focus to the last day of the displayed month
+		await wrapper.find('[data-date="2024-06-30"]').trigger('click')
+		await wrapper.find('[data-date="2024-06-30"]').trigger('keydown.arrow-right')
+
+		expect(wrapper.find('.sy-calendar').attributes('aria-label')).toBe('juillet 2024')
+		expect(wrapper.find('[data-date="2024-07-01"]').attributes('tabindex')).toBe('0')
+	})
+
+	it('displays the previous month when clicking a day from the previous month', async () => {
+		const { default: Calendar } = await import('../Calendar.vue')
+		const host = defineComponent({
+			components: { Calendar },
+			data: () => ({ month: displayedMonth }),
+			template: '<Calendar v-model:displayed-month="month" />',
+		})
+		wrapper = mount(host)
+
+		// 2024-05-27 is displayed in the June grid as an overflow day
+		await wrapper.find('[data-date="2024-05-27"]').trigger('click')
+
+		expect(wrapper.find('.sy-calendar').attributes('aria-label')).toBe('mai 2024')
+		expect(wrapper.find('[data-date="2024-05-27"]').attributes('tabindex')).toBe('0')
 	})
 })

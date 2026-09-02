@@ -4,6 +4,21 @@ import { getISODatePart } from './utils'
 /** Minimal number of rows always displayed */
 const totalRows = 6
 
+export type FeaturedDaysInWeek = {
+	rawDate: Date
+	isPreviousMonth: boolean
+	isNextMonth: boolean
+	isCurrentMonth: boolean
+	day: number
+	ISO8601: string
+	isSelected: boolean
+	isStartRange: boolean
+	isEndRange: boolean
+	isInRange: boolean
+	isToday: boolean
+	isWeekend: boolean
+}
+
 /**
  * Get the days to display in a calendar grid
  */
@@ -79,21 +94,6 @@ export default function useCalendar(
 		return dates
 	})
 
-	type FeaturedDaysInWeek = {
-		rawDate: Date
-		isPreviousMonth: boolean
-		isNextMonth: boolean
-		isCurrentMonth: boolean
-		day: number
-		ISO8601: string
-		isSelected: boolean
-		isStartRange: boolean
-		isEndRange: boolean
-		isInRange: boolean
-		isToday: boolean
-		isWeekend: boolean
-	}
-
 	/**
 	 * The displayed days with some flags and data used for th display
 	 */
@@ -134,5 +134,6 @@ export default function useCalendar(
 	return {
 		displayedWeeks,
 		localizedFullMonth,
+		month: dateView,
 	}
 }
