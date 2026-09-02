@@ -31,10 +31,6 @@ const meta = {
 				},
 			},
 		},
-		showFilters: {
-			description: 'Affiche les filtres au-dessus du tableau',
-			control: { type: 'boolean' },
-		},
 	},
 } satisfies Meta<typeof SyTable & typeof VDataTable>
 

@@ -6,8 +6,8 @@ import { fn } from 'storybook/test'
  *
  * Ce module centralise toutes les entrées `argTypes` partagées entre les deux
  * fichiers de stories. Les entrées spécifiques à chaque tableau (`items`,
- * `serverItemsLength`, `showFilters`) restent définies dans leurs fichiers
- * respectifs et sont fusionnées via un spread : `{ ...commonTableArgTypes, ... }`.
+ * `serverItemsLength`) restent définies dans leurs fichiers respectifs et
+ * sont fusionnées via un spread : `{ ...commonTableArgTypes, ... }`.
  */
 export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 	'headers': {
@@ -125,7 +125,7 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 		},
 	},
 	'enableColumnControls': {
-		description: 'Allow the users to re-organize the columns',
+		description: 'Permet aux utilisateurs de réorganiser les colonnes',
 		table: {
 			defaultValue: {
 				summary: 'false',
@@ -149,6 +149,17 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 		table: {
 			category: 'props',
 			type: { summary: 'boolean' },
+		},
+	},
+	'showFilters': {
+		description: 'Affiche une ligne de filtres au-dessus des données. Les colonnes filtrables sont déclarées dans `headers` et configurables via `filterInputConfig`.',
+		control: { type: 'boolean' },
+		table: {
+			category: 'props',
+			type: { summary: 'boolean' },
+			defaultValue: {
+				summary: 'false',
+			},
 		},
 	},
 	'stickySelect': {
