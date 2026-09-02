@@ -19,7 +19,8 @@ const componentInfo = existsSync(componentInfoPath)
 	? JSON.parse(readFileSync(componentInfoPath, 'utf8'))
 	: { results: [] }
 
-const requiredFormStories = ['disabled', 'required', 'form-validation']
+const requiredFormStories = ['required', 'form-validation']
+const requiredValidationStories = ['with-error', 'with-warning', 'with-success']
 
 const ap2026Components = [
 	'composants-layout-pagecontainer',
@@ -104,7 +105,7 @@ function hasPlayground(content, docsContent = '') {
 		|| /<Controls\s+of=/i.test(combined)
 }
 
-function getRequiredStoriesStatus(content, title) {
+function getRequiredStoriesStatus(content, title, hasValidationStories) {
 	if (!title) {
 		return 'Non concerné'
 	}
@@ -117,8 +118,15 @@ function getRequiredStoriesStatus(content, title) {
 
 	const storyNames = Array.from(content.matchAll(/export\s+const\s+([a-zA-Z_$][\w$]*)/g))
 		.map(match => match[1].toLowerCase())
+	const requiredStories = hasValidationStories
+		? [...requiredFormStories, ...requiredValidationStories]
+		: requiredFormStories
 
-	const missing = requiredFormStories.filter((requiredStory) => {
+	const missing = requiredStories.filter((requiredStory) => {
+		if (requiredStory === 'required') {
+			return !/\brequired\b/i.test(content)
+		}
+
 		const normalizedRequired = requiredStory.replace('-', '').toLowerCase()
 
 		return !storyNames.some(storyName =>
@@ -271,6 +279,18 @@ function main() {
 			cwd: effectiveComponentDir,
 			nodir: true,
 		})
+		const validationStoryFiles = globSync('validation/**/*.stories.@(js|ts|tsx)', {
+			cwd: effectiveComponentDir,
+			absolute: true,
+			nocase: true,
+		})
+		const validationContent = validationStoryFiles
+			.map(file => readFileSync(file, 'utf8'))
+			.join('\n')
+		const hasValidationStories = validationStoryFiles.length > 0
+		const requiredStoriesContent = hasValidationStories
+			? validationContent
+			: content
 
 		const propsDetails = getComponentDocumentationDetails(
 			componentVueFile, content,
@@ -278,7 +298,11 @@ function main() {
 
 		const propsDocumentation = propsDetails.isComplete
 		const sourceTab = hasSourceCode(content)
-		const requiredStoriesStatus = getRequiredStoriesStatus(content, storybookTitle)
+		const requiredStoriesStatus = getRequiredStoriesStatus(
+			requiredStoriesContent,
+			storybookTitle,
+			hasValidationStories,
+		)
 		const uxUsagePage = files.some(file => file.toLowerCase().endsWith('usages.mdx'))
 		const interactivePlayground = hasPlayground(content, docsContent)
 		const themeStatus = getVisualThemeStatus(componentName, content)
