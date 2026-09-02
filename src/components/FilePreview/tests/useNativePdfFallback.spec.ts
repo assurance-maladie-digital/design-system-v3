@@ -1,5 +1,5 @@
 import { describe, it, expect, afterEach } from 'vitest'
-import { defineComponent, h, ref } from 'vue'
+import { defineComponent, h, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { useNativePdfFallback } from '../useNativePdfFallback'
 
@@ -17,11 +17,22 @@ function withSetup<T>(setup: () => T): { result: T, wrapper: ReturnType<typeof m
 
 const DESKTOP_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36'
 const ANDROID_CHROME_UA = 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36'
+const ANDROID_FIREFOX_UA = 'Mozilla/5.0 (Android 14; Mobile; rv:140.0) Gecko/140.0 Firefox/140.0'
+const IOS_SAFARI_UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Mobile/15E148 Safari/604.1'
 
 const originalUserAgent = navigator.userAgent
 
 function setUserAgent(value: string): void {
 	Object.defineProperty(navigator, 'userAgent', { value, configurable: true })
+}
+
+/** Simule `navigator.userAgentData` (User-Agent Client Hints), absent de jsdom. */
+function setUserAgentData(value: { mobile: boolean } | undefined): void {
+	if (value === undefined) {
+		Reflect.deleteProperty(navigator, 'userAgentData')
+		return
+	}
+	Object.defineProperty(navigator, 'userAgentData', { value, configurable: true })
 }
 
 function setNativePdfViewer(value: boolean | undefined): void {
@@ -48,6 +59,7 @@ const pdfFile = (): File => new File(['%PDF-1.4'], 'contrat.pdf', { type: 'appli
 
 afterEach(() => {
 	setNativePdfViewer(undefined)
+	setUserAgentData(undefined)
 	setUserAgent(originalUserAgent)
 })
 
@@ -80,6 +92,35 @@ describe('useNativePdfFallback', () => {
 		const { result, wrapper } = withSetup(() => useNativePdfFallback(ref(pdfFile()), true))
 
 		expect(result.prefersPdfJs.value).toBe(true)
+
+		wrapper.unmount()
+	})
+
+	it('conserve le rendu natif sur Firefox Android, qui affiche bien les PDF', () => {
+		setNativePdfViewer(true)
+		setUserAgent(ANDROID_FIREFOX_UA)
+
+		const { result, wrapper } = withSetup(() => useNativePdfFallback(ref(pdfFile()), true))
+
+		expect(result.prefersPdfJs.value).toBe(false)
+
+		wrapper.unmount()
+	})
+
+	it.each([
+		['Firefox Android', ANDROID_FIREFOX_UA],
+		['Safari iOS', IOS_SAFARI_UA],
+	])('ignore les Client Hints : %s reste en rendu natif malgré `mobile: true`', (_name, userAgent) => {
+		// La détection ne s'appuie volontairement pas sur `userAgentData.mobile` : ce
+		// signal disqualifierait tout mobile, alors que seuls les Chromium sur Android
+		// n'affichent pas les PDF embarqués (#2508).
+		setNativePdfViewer(true)
+		setUserAgentData({ mobile: true })
+		setUserAgent(userAgent)
+
+		const { result, wrapper } = withSetup(() => useNativePdfFallback(ref(pdfFile()), true))
+
+		expect(result.prefersPdfJs.value).toBe(false)
 
 		wrapper.unmount()
 	})
@@ -127,6 +168,31 @@ describe('useNativePdfFallback', () => {
 
 		expect(result.prefersPdfJs.value).toBe(false)
 		expect(result.probeDone.value).toBe(false)
+
+		wrapper.unmount()
+	})
+
+	it('conserve la bascule pdf.js après un changement de fichier', async () => {
+		// Ne pas savoir afficher un PDF est une propriété du navigateur, pas du document :
+		// rejouer la sonde réafficherait l'<object> en échec à chaque nouveau fichier.
+		setNativePdfViewer(true)
+		setUserAgent(DESKTOP_UA)
+
+		const file = ref<File | undefined>(pdfFile())
+		const { result, wrapper } = withSetup(() => useNativePdfFallback(file, true))
+		result.fallbackRef.value = fallbackElement(18)
+
+		await waitForProbe()
+
+		expect(result.prefersPdfJs.value).toBe(true)
+
+		file.value = new File(['%PDF-1.4'], 'avenant.pdf', { type: 'application/pdf' })
+		await nextTick()
+		// Même si le nouveau document s'afficherait nativement, le verdict reste acquis.
+		result.fallbackRef.value = fallbackElement(0)
+		await waitForProbe()
+
+		expect(result.prefersPdfJs.value).toBe(true)
 
 		wrapper.unmount()
 	})
