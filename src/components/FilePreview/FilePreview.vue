@@ -82,7 +82,7 @@
 	 */
 	const hasNativePdfViewer = ((): boolean => {
 		if (typeof navigator === 'undefined') return true
-		if (!navigator.pdfViewerEnabled) return false
+		if (navigator.pdfViewerEnabled === false) return false
 		const ua = navigator.userAgent ?? ''
 		return !(ua.includes('Android') && ua.includes('Chrome/'))
 	})()

@@ -21,9 +21,12 @@ vi.mock('pdfjs-dist', () => ({
 }))
 vi.mock('pdfjs-dist/build/pdf.worker.min.mjs?url', () => ({ default: 'worker-url' }))
 
-/** Attend le déclenchement de la sonde de rendu natif (délai de 400 ms côté composant). */
+/** Délai après lequel le composant sonde le rendu natif (`NATIVE_PDF_PROBE_DELAY`). */
+const NATIVE_PDF_PROBE_DELAY = 400
+
+/** Attend le déclenchement de la sonde, avec une marge sur l'ordonnancement du timer. */
 function waitForProbe(): Promise<void> {
-	return new Promise(resolve => setTimeout(resolve, 450))
+	return new Promise(resolve => setTimeout(resolve, NATIVE_PDF_PROBE_DELAY + 50))
 }
 
 function pdfFile(): File {
