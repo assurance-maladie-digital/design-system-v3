@@ -50,12 +50,19 @@ function fallbackElement(height: number): HTMLElement {
 	return element
 }
 
-/** Laisse le temps à la sonde (400 ms côté composable) de se déclencher. */
-function waitForProbe(): Promise<void> {
-	return new Promise(resolve => setTimeout(resolve, 450))
-}
+/** Délais de la sonde côté composable : mesure initiale, puis confirmation. */
+const PROBE_DELAY = 400
+const PROBE_CONFIRM_DELAY = 800
 
-const pdfFile = (): File => new File(['%PDF-1.4'], 'contrat.pdf', { type: 'application/pdf' })
+const wait = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms))
+
+/** Attend la mesure initiale, avec une marge sur l'ordonnancement du timer. */
+const waitForProbe = (): Promise<void> => wait(PROBE_DELAY + 50)
+
+/** Attend le verdict complet : mesure initiale puis confirmation. */
+const waitForConfirmedProbe = (): Promise<void> => wait(PROBE_DELAY + PROBE_CONFIRM_DELAY + 100)
+
+const pdfFile = (name = 'contrat.pdf'): File => new File(['%PDF-1.4'], name, { type: 'application/pdf' })
 
 afterEach(() => {
 	setNativePdfViewer(undefined)
@@ -125,7 +132,7 @@ describe('useNativePdfFallback', () => {
 		wrapper.unmount()
 	})
 
-	it('bascule sur pdf.js quand la sonde mesure le contenu de repli', async () => {
+	it('bascule sur pdf.js quand le repli est encore mesurable à la confirmation', async () => {
 		setNativePdfViewer(true)
 		setUserAgent(DESKTOP_UA)
 
@@ -134,9 +141,35 @@ describe('useNativePdfFallback', () => {
 
 		expect(result.probeDone.value).toBe(false)
 
+		// La mesure initiale ne tranche pas : elle laisse sa chance à un lecteur lent.
 		await waitForProbe()
 
+		expect(result.prefersPdfJs.value).toBe(false)
+		expect(result.probeDone.value).toBe(false)
+
+		await waitForConfirmedProbe()
+
 		expect(result.prefersPdfJs.value).toBe(true)
+		expect(result.probeDone.value).toBe(true)
+
+		wrapper.unmount()
+	})
+
+	it('conserve le rendu natif d\'un lecteur lent, arrivé après la mesure initiale', async () => {
+		setNativePdfViewer(true)
+		setUserAgent(DESKTOP_UA)
+
+		const { result, wrapper } = withSetup(() => useNativePdfFallback(ref(pdfFile()), true))
+		// Appareil lent : le repli occupe encore une boîte au moment de la mesure initiale.
+		result.fallbackRef.value = fallbackElement(18)
+
+		await waitForProbe()
+
+		// Le lecteur natif finit par afficher : le repli perd sa boîte avant la confirmation.
+		result.fallbackRef.value = fallbackElement(0)
+		await waitForConfirmedProbe()
+
+		expect(result.prefersPdfJs.value).toBe(false)
 		expect(result.probeDone.value).toBe(true)
 
 		wrapper.unmount()
@@ -149,6 +182,7 @@ describe('useNativePdfFallback', () => {
 		const { result, wrapper } = withSetup(() => useNativePdfFallback(ref(pdfFile()), true))
 		result.fallbackRef.value = fallbackElement(0)
 
+		// Un rendu natif réussi est constaté dès la mesure initiale, sans confirmation.
 		await waitForProbe()
 
 		expect(result.prefersPdfJs.value).toBe(false)
@@ -164,10 +198,30 @@ describe('useNativePdfFallback', () => {
 		const { result, wrapper } = withSetup(() => useNativePdfFallback(ref(pdfFile()), false))
 		result.fallbackRef.value = fallbackElement(18)
 
-		await waitForProbe()
+		await waitForConfirmedProbe()
 
 		expect(result.prefersPdfJs.value).toBe(false)
 		expect(result.probeDone.value).toBe(false)
+
+		wrapper.unmount()
+	})
+
+	it('accepte des délais de sonde personnalisés', async () => {
+		setNativePdfViewer(true)
+		setUserAgent(DESKTOP_UA)
+
+		const { result, wrapper } = withSetup(() => useNativePdfFallback(
+			ref(pdfFile()),
+			true,
+			{ delay: 40, confirmDelay: 60 },
+		))
+		result.fallbackRef.value = fallbackElement(18)
+
+		// Verdict rendu bien avant les délais par défaut (400 + 800 ms).
+		await wait(160)
+
+		expect(result.prefersPdfJs.value).toBe(true)
+		expect(result.probeDone.value).toBe(true)
 
 		wrapper.unmount()
 	})
@@ -182,11 +236,11 @@ describe('useNativePdfFallback', () => {
 		const { result, wrapper } = withSetup(() => useNativePdfFallback(file, true))
 		result.fallbackRef.value = fallbackElement(18)
 
-		await waitForProbe()
+		await waitForConfirmedProbe()
 
 		expect(result.prefersPdfJs.value).toBe(true)
 
-		file.value = new File(['%PDF-1.4'], 'avenant.pdf', { type: 'application/pdf' })
+		file.value = pdfFile('avenant.pdf')
 		await nextTick()
 
 		// Décision neuve : le rendu natif est retenté pour ce document.
@@ -210,12 +264,12 @@ describe('useNativePdfFallback', () => {
 		const { result, wrapper } = withSetup(() => useNativePdfFallback(file, true))
 		result.fallbackRef.value = fallbackElement(18)
 
-		await waitForProbe()
+		await waitForConfirmedProbe()
 
-		file.value = new File(['%PDF-1.4'], 'avenant.pdf', { type: 'application/pdf' })
+		file.value = pdfFile('avenant.pdf')
 		await nextTick()
 		result.fallbackRef.value = fallbackElement(18)
-		await waitForProbe()
+		await waitForConfirmedProbe()
 
 		expect(result.prefersPdfJs.value).toBe(true)
 
@@ -230,7 +284,7 @@ describe('useNativePdfFallback', () => {
 
 		expect(result.prefersPdfJs.value).toBe(true)
 
-		file.value = new File(['%PDF-1.4'], 'avenant.pdf', { type: 'application/pdf' })
+		file.value = pdfFile('avenant.pdf')
 		await nextTick()
 
 		expect(result.prefersPdfJs.value).toBe(true)
@@ -246,7 +300,7 @@ describe('useNativePdfFallback', () => {
 		result.fallbackRef.value = fallbackElement(18)
 
 		wrapper.unmount()
-		await waitForProbe()
+		await waitForConfirmedProbe()
 
 		expect(result.prefersPdfJs.value).toBe(false)
 		expect(result.probeDone.value).toBe(false)

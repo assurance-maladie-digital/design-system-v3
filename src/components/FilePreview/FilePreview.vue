@@ -3,7 +3,7 @@
 	import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
 	import { config } from './config'
 	import { locales as defaultLocales } from './locales'
-	import { useNativePdfFallback } from './useNativePdfFallback'
+	import { useNativePdfFallback, type PdfProbeDelays } from './useNativePdfFallback'
 	import { usePdfConsultation } from './usePdfConsultation'
 	import { useLocales } from '@/composables/useLocales'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
@@ -13,6 +13,8 @@
 		options?: {
 			pdf?: Record<string, string>
 			image?: Record<string, string>
+			/** Délais de la sonde de rendu natif (appareils lents à afficher les PDF). */
+			pdfProbe?: PdfProbeDelays
 		}
 		locales?: DeepPartial<typeof defaultLocales>
 		/** Active le suivi de consultation du PDF (rendu via pdf.js, chargé à la demande). */
@@ -78,6 +80,7 @@
 	} = useNativePdfFallback(
 		() => props.file,
 		() => isPdf.value && !props.trackConsultation && !props.readonly,
+		() => filePreviewOptions.value.pdfProbe,
 	)
 
 	// Rendu embarqué pdf.js : requis par le suivi de consultation, par la lecture seule,

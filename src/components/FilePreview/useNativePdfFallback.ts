@@ -1,5 +1,16 @@
 import { type ComputedRef, type MaybeRefOrGetter, type Ref, computed, nextTick, onUnmounted, ref, toValue, watch } from 'vue'
 
+/** Délais de la sonde de rendu natif, en millisecondes. */
+export interface PdfProbeDelays {
+	/** Attente avant la mesure initiale du contenu de repli. Défaut : 400. */
+	delay?: number
+	/**
+	 * Attente supplémentaire avant la mesure qui confirme l'échec. À augmenter si le
+	 * lecteur natif est lent à afficher le document sur les appareils cibles. Défaut : 800.
+	 */
+	confirmDelay?: number
+}
+
 export interface UseNativePdfFallback {
 	/** Le rendu pdf.js doit remplacer l'`<object>` natif. */
 	prefersPdfJs: ComputedRef<boolean>
@@ -31,7 +42,11 @@ function hasNativePdfViewer(): boolean {
 
 // Laisse au lecteur natif le temps de remplacer le contenu de repli. La source étant
 // une URL objet (aucun aller-retour réseau), ce délai reste imperceptible.
-const PROBE_DELAY = 400
+const DEFAULT_PROBE_DELAY = 400
+
+// Sursis avant de conclure à l'échec : sur un appareil lent, le lecteur natif peut
+// n'avoir pas encore affiché le document.
+const DEFAULT_PROBE_CONFIRM_DELAY = 800
 
 /**
  * Décide quel moteur de rendu PDF utiliser : le lecteur natif du navigateur
@@ -40,16 +55,20 @@ const PROBE_DELAY = 400
  * Aucune déclaration du navigateur n'étant fiable (Chrome sur Android annonce un
  * lecteur PDF qu'il n'a pas), la décision *a priori* est doublée d'une **sonde du
  * rendu réel** : un `<object>` qui n'affiche pas le PDF rend son contenu de repli,
- * lequel occupe alors une boîte dans la page. Une hauteur non nulle après chargement
- * signe l'échec du rendu natif, quel que soit le navigateur.
+ * lequel occupe alors une boîte dans la page. Une hauteur non nulle signe l'échec du
+ * rendu natif, quel que soit le navigateur — mais seulement si elle est confirmée par
+ * une seconde mesure : sur un appareil lent, le lecteur natif peut n'avoir pas encore
+ * affiché le document.
  *
  * @param file - Document affiché : la sonde est relancée à chaque changement.
  * @param isNativeWanted - `true` quand le rendu natif est celui qu'on chercherait à
  * utiliser (fichier PDF, et pdf.js non demandé explicitement par le consommateur).
+ * @param delays - Délais de la sonde, pour les parcs d'appareils lents.
  */
 export function useNativePdfFallback(
 	file: MaybeRefOrGetter<File | Blob | undefined>,
 	isNativeWanted: MaybeRefOrGetter<boolean>,
+	delays: MaybeRefOrGetter<PdfProbeDelays | undefined> = undefined,
 ): UseNativePdfFallback {
 	const isNativeUnsupported = !hasNativePdfViewer()
 	const nativeRenderingFailed = ref(false)
@@ -73,15 +92,26 @@ export function useNativePdfFallback(
 		probeTimeout = undefined
 	}
 
-	const probe = (): void => {
+	const probe = (isConfirmation: boolean): void => {
 		probeTimeout = undefined
 		const fallback = fallbackRef.value
 		if (!fallback || nativeRenderingFailed.value) return
-		if (fallback.getBoundingClientRect().height > 0) {
-			nativeRenderingFailed.value = true
+
+		if (fallback.getBoundingClientRect().height === 0) {
+			// Le rendu natif a fonctionné : le repli n'a aucune boîte, on peut le démasquer
+			// sans rien afficher, et il redevient visible si le PDF disparaît par la suite.
+			probeDone.value = true
+			return
 		}
-		// Le rendu natif a fonctionné : le repli n'a aucune boîte, on peut le démasquer
-		// sans rien afficher, et il redevient visible si le PDF disparaît par la suite.
+
+		if (!isConfirmation) {
+			// Repli encore visible : on remesure avant de trancher. Il reste masqué
+			// entre-temps, rien ne clignote à l'écran.
+			probeTimeout = setTimeout(() => probe(true), toValue(delays)?.confirmDelay ?? DEFAULT_PROBE_CONFIRM_DELAY)
+			return
+		}
+
+		nativeRenderingFailed.value = true
 		probeDone.value = true
 	}
 
@@ -101,7 +131,7 @@ export function useNativePdfFallback(
 		probeDone.value = false
 		await nextTick()
 		if (!isMounted) return
-		probeTimeout = setTimeout(probe, PROBE_DELAY)
+		probeTimeout = setTimeout(() => probe(false), toValue(delays)?.delay ?? DEFAULT_PROBE_DELAY)
 	}, { immediate: true })
 
 	onUnmounted(() => {

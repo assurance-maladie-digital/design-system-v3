@@ -100,6 +100,24 @@ Le composant détecte ce cas et bascule alors **automatiquement** sur le rendu *
 
 À ces signaux s'ajoute une **sonde du rendu réel** : un `<object>` qui n'affiche pas le PDF rend son contenu de repli, lequel occupe alors une boîte dans la page. Le composant le mesure peu après l'affichage et bascule sur pdf.js le cas échéant. C'est ce filet qui couvre les navigateurs dont la déclaration est fausse, ou dont l'UA ne trahit rien (Chrome Android en « site pour ordinateur »).
 
+Un repli encore mesurable ne suffit pas à conclure : sur un appareil lent, le lecteur natif peut n'avoir pas encore affiché le document. La bascule n'a donc lieu qu'après une **seconde mesure de confirmation** — un rendu natif réussi, lui, est constaté dès la première. Les deux délais (en millisecondes) s'ajustent via `options.pdfProbe` si le parc d'appareils visé est particulièrement lent :
+
+<Source dark code={`
+<template>
+  <FilePreview
+    :file="file"
+    :options="{ pdfProbe: { delay: 600, confirmDelay: 1500 } }"
+  />
+</template>
+`} />
+
+| Option | Défaut | Rôle |
+| --- | --- | --- |
+| `pdfProbe.delay` | `400` | Attente avant la mesure initiale du contenu de repli. |
+| `pdfProbe.confirmDelay` | `800` | Attente supplémentaire avant la mesure qui confirme l'échec. |
+
+Contrairement à `options.pdf`, ces valeurs ne sont pas passées en attributs de l'`<object>`.
+
 - Les navigateurs disposant d'un lecteur natif (Chrome, Edge, Firefox sur desktop, Safari…) conservent l'`<object>` et sa barre d'outils : **aucun changement de comportement**.
 - Firefox Android et Safari iOS affichent correctement les PDF embarqués et conservent eux aussi le rendu natif : ils ne portent pas le jeton `Chrome/`.
 - Le repli n'active **ni** le suivi de consultation **ni** la lecture seule : seul le mode de rendu change.

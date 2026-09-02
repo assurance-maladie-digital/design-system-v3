@@ -21,12 +21,17 @@ vi.mock('pdfjs-dist', () => ({
 }))
 vi.mock('pdfjs-dist/build/pdf.worker.min.mjs?url', () => ({ default: 'worker-url' }))
 
-/** Délai après lequel le composant sonde le rendu natif (`NATIVE_PDF_PROBE_DELAY`). */
-const NATIVE_PDF_PROBE_DELAY = 400
+/** Délais de la sonde de rendu natif, côté `useNativePdfFallback`. */
+const PROBE_DELAY = 400
+const PROBE_CONFIRM_DELAY = 800
 
-/** Attend le déclenchement de la sonde, avec une marge sur l'ordonnancement du timer. */
+/**
+ * Attend le verdict complet de la sonde : mesure initiale, puis confirmation — un repli
+ * encore mesurable n'entraîne la bascule qu'après cette seconde mesure. Marge incluse
+ * sur l'ordonnancement des timers.
+ */
 function waitForProbe(): Promise<void> {
-	return new Promise(resolve => setTimeout(resolve, NATIVE_PDF_PROBE_DELAY + 50))
+	return new Promise(resolve => setTimeout(resolve, PROBE_DELAY + PROBE_CONFIRM_DELAY + 100))
 }
 
 function pdfFile(): File {
@@ -132,6 +137,38 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		expect(wrapper.find('.sy-file-preview__pdf-viewer').exists()).toBe(true)
 		expect(wrapper.find('object').exists()).toBe(false)
 		expect(getDocumentMock).toHaveBeenCalled()
+
+		wrapper.unmount()
+	})
+
+	it('respecte les délais de sonde passés dans `options.pdfProbe`', async () => {
+		setNativePdfViewer(true)
+		setUserAgent(DESKTOP_UA)
+
+		const wrapper = mount(FilePreview, {
+			props: {
+				file: pdfFile(),
+				pdfWorkerSrc: 'worker',
+				options: { pdfProbe: { delay: 20, confirmDelay: 20 } },
+			},
+		})
+		await flushPromises()
+
+		const object = wrapper.find('object')
+		// Les délais ne doivent pas finir en attributs de l'<object>, contrairement à
+		// `options.pdf` qui, lui, est bindé sur l'élément.
+		expect(object.attributes('delay')).toBeUndefined()
+		expect(object.attributes('confirmdelay')).toBeUndefined()
+
+		const fallback = object.find('p').element
+		fallback.getBoundingClientRect = () => ({ height: 18 } as DOMRect)
+
+		// Verdict rendu bien avant les délais par défaut (400 + 800 ms).
+		await new Promise(resolve => setTimeout(resolve, 120))
+		await flushPromises()
+
+		expect(wrapper.find('.sy-file-preview__pdf-viewer').exists()).toBe(true)
+		expect(wrapper.find('object').exists()).toBe(false)
 
 		wrapper.unmount()
 	})
