@@ -302,6 +302,23 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		wrapper.unmount()
 	})
 
+	it('affiche l\'erreur et le lien de secours si le fichier n\'est plus lisible', async () => {
+		// `Blob.arrayBuffer()` rejette quand la source a disparu depuis sa sélection
+		// (fichier déplacé, support retiré) : cet échec doit être traité comme les autres.
+		setNativePdfViewer(false)
+		const file = pdfFile()
+		file.arrayBuffer = () => Promise.reject(new Error('NotReadableError'))
+
+		const wrapper = mount(FilePreview, { props: { file, pdfWorkerSrc: 'worker' } })
+		await flushPromises()
+
+		expect(wrapper.text()).toContain(locales.documentError)
+		expect(wrapper.text()).not.toContain(locales.loadingDocument)
+		expect(wrapper.find('.sy-file-preview__download').exists()).toBe(true)
+
+		wrapper.unmount()
+	})
+
 	it('ne propose pas de téléchargement en lecture seule, même en cas d\'échec', async () => {
 		getDocumentMock.mockReturnValueOnce({ promise: Promise.reject(new Error('rendu impossible')) })
 

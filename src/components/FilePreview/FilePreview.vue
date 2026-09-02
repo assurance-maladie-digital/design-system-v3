@@ -207,8 +207,7 @@
 		if (!isEmbedded.value || !props.file || !pagesHostRef.value) {
 			return
 		}
-		const data = await props.file.arrayBuffer()
-		const pageCount = await render(data, pagesHostRef.value, {
+		const pageCount = await render(props.file, pagesHostRef.value, {
 			workerSrc: props.pdfWorkerSrc,
 		})
 		if (pageCount !== null) {
