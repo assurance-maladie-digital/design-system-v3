@@ -172,9 +172,9 @@ describe('useNativePdfFallback', () => {
 		wrapper.unmount()
 	})
 
-	it('conserve la bascule pdf.js après un changement de fichier', async () => {
-		// Ne pas savoir afficher un PDF est une propriété du navigateur, pas du document :
-		// rejouer la sonde réafficherait l'<object> en échec à chaque nouveau fichier.
+	it('resonde au changement de fichier : l\'échec n\'est pas hérité par le suivant', async () => {
+		// Un échec peut tenir au document (PDF refusé par le lecteur natif) autant qu'au
+		// navigateur : le verdict ne doit pas être acquis pour les fichiers suivants.
 		setNativePdfViewer(true)
 		setUserAgent(DESKTOP_UA)
 
@@ -188,9 +188,50 @@ describe('useNativePdfFallback', () => {
 
 		file.value = new File(['%PDF-1.4'], 'avenant.pdf', { type: 'application/pdf' })
 		await nextTick()
-		// Même si le nouveau document s'afficherait nativement, le verdict reste acquis.
+
+		// Décision neuve : le rendu natif est retenté pour ce document.
+		expect(result.prefersPdfJs.value).toBe(false)
+		expect(result.probeDone.value).toBe(false)
+
 		result.fallbackRef.value = fallbackElement(0)
 		await waitForProbe()
+
+		expect(result.prefersPdfJs.value).toBe(false)
+		expect(result.probeDone.value).toBe(true)
+
+		wrapper.unmount()
+	})
+
+	it('rebascule sur pdf.js si le fichier suivant échoue lui aussi', async () => {
+		setNativePdfViewer(true)
+		setUserAgent(DESKTOP_UA)
+
+		const file = ref<File | undefined>(pdfFile())
+		const { result, wrapper } = withSetup(() => useNativePdfFallback(file, true))
+		result.fallbackRef.value = fallbackElement(18)
+
+		await waitForProbe()
+
+		file.value = new File(['%PDF-1.4'], 'avenant.pdf', { type: 'application/pdf' })
+		await nextTick()
+		result.fallbackRef.value = fallbackElement(18)
+		await waitForProbe()
+
+		expect(result.prefersPdfJs.value).toBe(true)
+
+		wrapper.unmount()
+	})
+
+	it('ne resonde pas sur un navigateur sans lecteur natif : pas de retour à l\'<object>', async () => {
+		setNativePdfViewer(false)
+
+		const file = ref<File | undefined>(pdfFile())
+		const { result, wrapper } = withSetup(() => useNativePdfFallback(file, true))
+
+		expect(result.prefersPdfJs.value).toBe(true)
+
+		file.value = new File(['%PDF-1.4'], 'avenant.pdf', { type: 'application/pdf' })
+		await nextTick()
 
 		expect(result.prefersPdfJs.value).toBe(true)
 

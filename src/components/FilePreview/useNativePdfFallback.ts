@@ -85,9 +85,16 @@ export function useNativePdfFallback(
 		probeDone.value = true
 	}
 
-	// Sonde le rendu natif à chaque fois que l'<object> est (ré)affiché. Un échec reste
-	// acquis d'un fichier à l'autre : ne pas savoir afficher un PDF est une propriété du
-	// navigateur, pas du document — le rejouer ferait clignoter l'aperçu à chaque fichier.
+	// Un échec de rendu peut tenir au document (PDF que le lecteur natif refuse) ou à une
+	// mesure faussée autant qu'au navigateur : chaque nouveau fichier repart donc d'une
+	// décision neuve, plutôt que d'hériter d'un verdict qui ne le concerne pas. Les
+	// navigateurs sans lecteur natif, eux, sont déjà écartés par `isNativeUnsupported` :
+	// ils ne repassent pas par la sonde.
+	watch(() => toValue(file), () => {
+		nativeRenderingFailed.value = false
+	})
+
+	// Sonde le rendu natif à chaque fois que l'<object> est (ré)affiché.
 	watch([() => toValue(file), isNativeRendered], async ([, isRendered]) => {
 		cancelProbe()
 		if (!isRendered) return
