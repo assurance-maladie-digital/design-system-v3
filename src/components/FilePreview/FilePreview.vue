@@ -3,6 +3,7 @@
 	import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
 	import { config } from './config'
 	import { locales as defaultLocales } from './locales'
+	import { useNativePdfFallback } from './useNativePdfFallback'
 	import { usePdfConsultation } from './usePdfConsultation'
 	import { useLocales } from '@/composables/useLocales'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
@@ -65,83 +66,24 @@
 		checkScrollComplete,
 	} = usePdfConsultation()
 
-	/**
-	 * Sans lecteur PDF intégré, un `<object type="application/pdf">` n'affiche rien — pas
-	 * même son contenu de repli, ou n'affiche que celui-ci. Deux signaux successifs :
-	 *
-	 * - `navigator.pdfViewerEnabled === false` : le navigateur déclare lui-même l'absence
-	 *   de lecteur intégré ;
-	 * - à défaut, l'UA : Chrome sur Android déclare `pdfViewerEnabled` à `true` alors qu'il
-	 *   n'affiche aucun PDF embarqué (#2508). On y repère les navigateurs Chromium sur
-	 *   Android, les seuls concernés ; même réduite, leur UA conserve `Android` et `Chrome/`.
-	 *
-	 * Firefox Android et Safari iOS affichent bien les PDF embarqués : ils ne portent pas
-	 * le jeton `Chrome/` et conservent donc le rendu natif, comme les navigateurs desktop.
-	 * Les navigateurs qu'aucun de ces signaux ne trahit (Chrome Android en « site pour
-	 * ordinateur », qui annonce une UA desktop) sont rattrapés par la sonde ci-dessous.
-	 */
-	const hasNativePdfViewer = ((): boolean => {
-		if (typeof navigator === 'undefined') return true
-		if (navigator.pdfViewerEnabled === false) return false
-		const ua = navigator.userAgent ?? ''
-		return !(ua.includes('Android') && ua.includes('Chrome/'))
-	})()
-
-	/**
-	 * Filet de sécurité : aucune déclaration du navigateur n'est fiable (Chrome sur
-	 * Android annonce un lecteur PDF qu'il n'a pas), on observe donc le résultat réel.
-	 *
-	 * Un `<object>` qui n'affiche pas le PDF rend son contenu de repli : ce paragraphe
-	 * occupe alors une boîte dans la page. Quand le lecteur natif prend la main, le
-	 * contenu de repli n'est pas rendu et n'a aucune boîte. Une hauteur non nulle après
-	 * chargement signe donc l'échec du rendu natif, quel que soit le navigateur.
-	 */
-	const nativePdfFailed = ref(false)
-	const objectFallbackRef = ref<HTMLElement>()
-	// Tant que la sonde n'a pas tranché, le contenu de repli est masqué : sans cela son
-	// message d'échec s'affiche le temps de la mesure, avant d'être remplacé par le PDF.
-	const nativePdfProbeDone = ref(false)
-	let nativePdfProbe: ReturnType<typeof setTimeout> | undefined
-
-	// Laisse au lecteur natif le temps de remplacer le contenu de repli. La source étant
-	// une URL objet (aucun aller-retour réseau), ce délai reste imperceptible.
-	const NATIVE_PDF_PROBE_DELAY = 400
-
-	const cancelNativePdfProbe = (): void => {
-		if (nativePdfProbe === undefined) return
-		clearTimeout(nativePdfProbe)
-		nativePdfProbe = undefined
-	}
-
-	const probeNativePdfRendering = (): void => {
-		nativePdfProbe = undefined
-		const fallback = objectFallbackRef.value
-		if (!fallback || nativePdfFailed.value) return
-		if (fallback.getBoundingClientRect().height > 0) {
-			nativePdfFailed.value = true
-		}
-		// Le rendu natif a fonctionné : le repli n'a aucune boîte, on peut le démasquer
-		// sans rien afficher, et il redevient visible si le PDF disparaît par la suite.
-		nativePdfProbeDone.value = true
-	}
-
 	// Suivi de consultation (scroll → fin de lecture), uniquement pour les PDF
 	const isTracking = computed(() => props.trackConsultation && isPdf.value)
+
+	// Quel moteur de rendu PDF utiliser ? Le composable isole cette règle : signaux du
+	// navigateur, puis sonde du rendu réel de l'<object>.
+	const {
+		prefersPdfJs,
+		probeDone: nativePdfProbeDone,
+		fallbackRef: objectFallbackRef,
+	} = useNativePdfFallback(
+		() => props.file,
+		() => isPdf.value && !props.trackConsultation && !props.readonly,
+	)
+
 	// Rendu embarqué pdf.js : requis par le suivi de consultation, par la lecture seule,
 	// et utilisé en repli quand le navigateur ne sait pas afficher un PDF nativement.
 	const isEmbedded = computed(() => isPdf.value
-		&& (props.trackConsultation || props.readonly || !hasNativePdfViewer || nativePdfFailed.value))
-
-	// Sonde le rendu natif à chaque fois que l'<object> est (ré)affiché.
-	watch([() => props.file, isEmbedded], async () => {
-		cancelNativePdfProbe()
-		if (!isPdf.value || isEmbedded.value) return
-		nativePdfProbeDone.value = false
-		await nextTick()
-		nativePdfProbe = setTimeout(probeNativePdfRendering, NATIVE_PDF_PROBE_DELAY)
-	}, { immediate: true })
-
-	onUnmounted(cancelNativePdfProbe)
+		&& (props.trackConsultation || props.readonly || prefersPdfJs.value))
 
 	// Le rendu pdf.js a échoué : on propose un téléchargement pour ne pas laisser
 	// l'utilisateur sans accès au document. Jamais en lecture seule, où le téléchargement
