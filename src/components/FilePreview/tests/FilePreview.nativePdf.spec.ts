@@ -211,6 +211,97 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		wrapper.unmount()
 	})
 
+	it('conserve l\'URL objet après le chargement de l\'<object> natif', async () => {
+		// Régression : révoquer l'URL sur @load cassait les actions du lecteur natif
+		// (téléchargement, impression, rechargement), qui la re-sollicitent.
+		const revokeSpy = vi.fn()
+		const originalRevoke = URL.revokeObjectURL
+		URL.revokeObjectURL = revokeSpy
+		setNativePdfViewer(true)
+		setUserAgent(DESKTOP_UA)
+
+		const wrapper = mount(FilePreview, { props: { file: pdfFile() } })
+		await flushPromises()
+
+		const object = wrapper.find('object')
+		await object.trigger('load')
+
+		expect(revokeSpy).not.toHaveBeenCalled()
+		expect(object.attributes('data')).toBe('blob:fallback')
+
+		wrapper.unmount()
+		URL.revokeObjectURL = originalRevoke
+	})
+
+	it('propose un lien de téléchargement en repli automatique, sans attendre une erreur', async () => {
+		// Le repli n'a pas été demandé : l'utilisateur perd la barre d'outils native
+		// (téléchargement, impression) et un canvas non restitué la remplace.
+		setNativePdfViewer(false)
+
+		const wrapper = mount(FilePreview, { props: { file: pdfFile(), pdfWorkerSrc: 'worker' } })
+		await flushPromises()
+
+		expect(wrapper.find('.sy-file-preview__pdf-viewer').exists()).toBe(true)
+
+		const link = wrapper.find('.sy-file-preview__download')
+		expect(link.exists()).toBe(true)
+		expect(link.text()).toBe(locales.downloadDocument)
+		expect(link.attributes('href')).toBe('blob:fallback')
+		expect(link.attributes('download')).toBe('contrat.pdf')
+
+		wrapper.unmount()
+	})
+
+	it('ne propose pas ce lien quand le rendu pdf.js a été demandé', async () => {
+		setNativePdfViewer(true)
+
+		const wrapper = mount(FilePreview, {
+			props: { file: pdfFile(), readonly: true, pdfWorkerSrc: 'worker' },
+		})
+		await flushPromises()
+
+		expect(wrapper.find('.sy-file-preview__download').exists()).toBe(false)
+
+		await wrapper.setProps({ readonly: false, trackConsultation: true })
+		await flushPromises()
+
+		expect(wrapper.find('.sy-file-preview__download').exists()).toBe(false)
+
+		wrapper.unmount()
+	})
+
+	it('expose le slot `alternative` en rendu pdf.js, restitué aux lecteurs d\'écran', async () => {
+		setNativePdfViewer(false)
+
+		const wrapper = mount(FilePreview, {
+			props: { file: pdfFile(), pdfWorkerSrc: 'worker' },
+			slots: { alternative: '<p>Équivalent texte du contrat.</p>' },
+		})
+		await flushPromises()
+
+		const alternative = wrapper.find('.sy-file-preview__alternative')
+		expect(alternative.exists()).toBe(true)
+		expect(alternative.text()).toBe('Équivalent texte du contrat.')
+		expect(alternative.attributes('aria-hidden')).toBeUndefined()
+
+		wrapper.unmount()
+	})
+
+	it('n\'expose pas le slot `alternative` en rendu natif', async () => {
+		setNativePdfViewer(true)
+
+		const wrapper = mount(FilePreview, {
+			props: { file: pdfFile() },
+			slots: { alternative: '<p>Équivalent texte du contrat.</p>' },
+		})
+		await flushPromises()
+
+		expect(wrapper.find('object').exists()).toBe(true)
+		expect(wrapper.find('.sy-file-preview__alternative').exists()).toBe(false)
+
+		wrapper.unmount()
+	})
+
 	it('ne propose pas de téléchargement en lecture seule, même en cas d\'échec', async () => {
 		getDocumentMock.mockReturnValueOnce({ promise: Promise.reject(new Error('rendu impossible')) })
 

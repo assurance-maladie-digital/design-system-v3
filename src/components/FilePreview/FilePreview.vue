@@ -148,13 +148,24 @@
 	// est justement l'action que l'on retire.
 	const canDownloadOnError = computed(() => isEmbedded.value && hasError.value && !props.readonly)
 
+	// Le rendu pdf.js se fait en <canvas>, non restitué aux lecteurs d'écran : le slot
+	// `alternative` permet au consommateur d'exposer un équivalent accessible du document.
+	// Repli subi : le consommateur n'a demandé ni `readonly` ni `track-consultation`, mais
+	// le navigateur impose pdf.js. Il perd alors la barre d'outils native (téléchargement,
+	// impression) et le texte restitué aux lecteurs d'écran ; le lien de téléchargement
+	// rétablit au moins l'accès au document source.
+	const isNativePdfFallback = computed(() => isEmbedded.value
+		&& !props.trackConsultation
+		&& !props.readonly)
+
 	// `fileURL` (URL objet) n'est consommée que par <img> (images), <object> (PDF en mode
 	// natif) et le lien de secours ci-dessus. En rendu embarqué pdf.js (readonly /
 	// track-consultation), c'est le viewer qui affiche le PDF via arrayBuffer() → créer
 	// une URL objet serait inutile.
 	const needsObjectUrl = computed(() => isImage.value
 		|| (isPdf.value && !isEmbedded.value)
-		|| canDownloadOnError.value)
+		|| canDownloadOnError.value
+		|| isNativePdfFallback.value)
 
 	// `File` porte un nom, pas `Blob` : on retombe sur un nom générique.
 	const downloadName = computed(() => (props.file instanceof File ? props.file.name : 'document.pdf'))
@@ -168,6 +179,10 @@
 		fileURL.value = URL.createObjectURL(props.file)
 	}
 
+	// L'URL objet reste valide tant que le fichier est affiché : la révoquer au chargement
+	// casserait tout ce qui la re-sollicite ensuite — actions du lecteur natif
+	// (téléchargement, impression, rechargement) et lien de secours après un repli.
+	// Elle est libérée au changement de fichier et au démontage.
 	const revokeFileURL = () => {
 		if (!fileURL.value) return
 		URL.revokeObjectURL(fileURL.value)
@@ -289,7 +304,6 @@
 			:data="fileURL"
 			v-bind="filePreviewOptions.pdf"
 			type="application/pdf"
-			@load="revokeFileURL"
 		>
 			<p
 				ref="objectFallbackRef"
@@ -303,7 +317,6 @@
 			:src="fileURL"
 			:alt="filePreviewOptions.image.alt || ''"
 			v-bind="filePreviewOptions.image"
-			@load="revokeFileURL"
 		>
 
 		<slot v-else>
@@ -311,6 +324,24 @@
 				{{ locales.previewTypeNotAvailable }}
 			</p>
 		</slot>
+
+		<template v-if="isEmbedded">
+			<div
+				v-if="$slots.alternative"
+				class="sy-file-preview__alternative"
+			>
+				<slot name="alternative" />
+			</div>
+
+			<a
+				v-if="isNativePdfFallback && !hasError && fileURL"
+				class="sy-file-preview__download d-inline-block mt-2"
+				:href="fileURL"
+				:download="downloadName"
+			>
+				{{ locales.downloadDocument }}
+			</a>
+		</template>
 	</div>
 </template>
 
@@ -347,6 +378,10 @@
 // rester mesurable par la sonde de rendu natif.
 .sy-file-preview__object-fallback--probing {
 	visibility: hidden;
+}
+
+.sy-file-preview__alternative {
+	margin-top: 8px;
 }
 
 .sy-file-preview__download {

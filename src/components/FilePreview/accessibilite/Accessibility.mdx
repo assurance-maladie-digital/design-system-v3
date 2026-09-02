@@ -51,9 +51,10 @@ import {
         <li><strong>Rendu visuel uniquement</strong> : avec <code>readonly</code> ou <code>track-consultation</code>, le PDF est rendu via <strong>pdf.js</strong> dans des <code>&lt;canvas&gt;</code>, <strong>sans couche de texte</strong> (le conteneur des pages est <code>aria-hidden="true"</code>).</li>
         <li><strong>Non restitué par les lecteurs d'écran</strong> : le contenu du document n'est pas lisible par les technologies d'assistance ; pas de sélection ni de recherche de texte.</li>
         <li><strong>Nom accessible</strong> : le conteneur scrollable porte <code>role="document"</code>, <code>tabindex="0"</code> et le libellé <code>documentLabel</code> (« Aperçu du document » par défaut, surchargeable via la prop <code>locales</code>). Il est donc atteignable au clavier et annoncé, même si son contenu ne l'est pas.</li>
-        <li><strong>Alternative obligatoire</strong> : fournir une version accessible du contenu (texte/HTML équivalent, lien de téléchargement du PDF source…). La prévisualisation pdf.js ne doit <strong>jamais</strong> être l'unique moyen d'accès à l'information.</li>
+        <li><strong>Alternative obligatoire</strong> : fournir une version accessible du contenu (texte/HTML équivalent, lien de téléchargement du PDF source…) via le slot <code>alternative</code>, rendu sous l'aperçu dès que pdf.js est utilisé et restitué normalement aux lecteurs d'écran. La prévisualisation pdf.js ne doit <strong>jamais</strong> être l'unique moyen d'accès à l'information.</li>
         <li><strong>À réserver</strong> aux besoins spécifiques de ces modes (masquer le téléchargement/l'impression, suivi de lecture obligatoire) ; sinon préférer l'aperçu natif <code>&lt;object&gt;</code>.</li>
         <li><strong>Également utilisé en repli automatique</strong> : sur les navigateurs Chromium sur Android (Chrome, Edge, Samsung Internet), l'aperçu bascule seul sur pdf.js. Ces limites s'appliquent alors <strong>sans que la prop ait été activée</strong> : l'alternative accessible au document reste indispensable.</li>
+        <li><strong>Accès au document en repli automatique</strong> : ce repli étant subi, le composant affiche de lui-même un <strong>lien de téléchargement</strong> du document source sous l'aperçu, ce qui restitue l'accès qu'offrait la barre d'outils native. Il n'est pas affiché quand pdf.js a été demandé explicitement (<code>readonly</code>, <code>track-consultation</code>).</li>
       </ul>
     </CriteriaCard>
 
@@ -85,7 +86,7 @@ import {
       <li>Renseigner systématiquement <code>options.image.alt</code> pour les images informatives.</li>
       <li>Prévoir un message explicite pour les formats non pris en charge.</li>
       <li>Ne pas utiliser la prévisualisation comme unique moyen d'accéder au document.</li>
-      <li><strong>Modes <code>readonly</code> / <code>track-consultation</code> (pdf.js)</strong> : le rendu <code>&lt;canvas&gt;</code> n'est <strong>pas accessible</strong> aux lecteurs d'écran — fournir impérativement une alternative textuelle et/ou un accès au document source.</li>
+      <li><strong>Rendu pdf.js</strong> (<code>readonly</code>, <code>track-consultation</code> ou repli automatique) : le rendu <code>&lt;canvas&gt;</code> n'est <strong>pas accessible</strong> aux lecteurs d'écran — renseigner impérativement le slot <code>alternative</code> avec un équivalent textuel et/ou un accès au document source.</li>
       <li>Fournir un lien de téléchargement complémentaire lorsque cela est pertinent.</li>
       <li>Tester les PDF sur plusieurs navigateurs car leur rendu dépend des capacités natives.</li>
       <li>Vérifier que le contraste des contenus affichés respecte les exigences d'accessibilité.</li>
