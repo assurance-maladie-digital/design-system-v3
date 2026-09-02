@@ -40,8 +40,9 @@ import {
       <ul>
         <li><strong>Intégration native</strong> : Utilisation de l'élément <code>&lt;object&gt;</code></li>
         <li><strong>Type explicite</strong> : Déclaration du MIME type <code>application/pdf</code></li>
-        <li><strong>Fallback accessible</strong> : Message affiché lorsque la prévisualisation n'est pas disponible</li>
-        <li><strong>Compatibilité variable</strong> : Le rendu dépend du navigateur et du lecteur PDF disponible ; sans lecteur intégré, l'aperçu bascule automatiquement sur pdf.js (voir la carte suivante)</li>
+        <li><strong>Rendu délégué au navigateur</strong> : le PDF est affiché par le lecteur intégré au navigateur (Chrome, Edge, Firefox et Safari sur desktop ; Firefox et Safari sur mobile). Sa couche texte, sa barre d'outils et sa navigation clavier appartiennent à ce lecteur : le composant ne peut ni les garantir ni les modifier, d'où la nécessité de tester le rendu sur les navigateurs cibles du projet.</li>
+        <li><strong>Repli automatique sur pdf.js</strong> : les navigateurs Chromium sur Android n'affichent aucun PDF embarqué. Le composant le détecte et bascule seul sur le rendu pdf.js, <strong>sans que <code>readonly</code> ni <code>track-consultation</code> soient activés</strong> : les limites d'accessibilité de la carte suivante s'appliquent alors, et l'alternative accessible au document devient indispensable.</li>
+        <li><strong>Contenu de repli de l'<code>&lt;object&gt;</code></strong> : le message « Impossible de prévisualiser le fichier. » (surchargeable via <code>locales.previewNotAvailable</code>) reste dans le DOM comme dernier recours, mais n'est plus le comportement attendu depuis le repli pdf.js : il ne s'affiche que si ce dernier échoue lui aussi.</li>
       </ul>
     </CriteriaCard>
 
@@ -52,7 +53,7 @@ import {
         <li><strong>Nom accessible</strong> : le conteneur scrollable porte <code>role="document"</code>, <code>tabindex="0"</code> et le libellé <code>documentLabel</code> (« Aperçu du document » par défaut, surchargeable via la prop <code>locales</code>). Il est donc atteignable au clavier et annoncé, même si son contenu ne l'est pas.</li>
         <li><strong>Alternative obligatoire</strong> : fournir une version accessible du contenu (texte/HTML équivalent, lien de téléchargement du PDF source…). La prévisualisation pdf.js ne doit <strong>jamais</strong> être l'unique moyen d'accès à l'information.</li>
         <li><strong>À réserver</strong> aux besoins spécifiques de ces modes (masquer le téléchargement/l'impression, suivi de lecture obligatoire) ; sinon préférer l'aperçu natif <code>&lt;object&gt;</code>.</li>
-        <li><strong>Également utilisé en repli automatique</strong> : sur les navigateurs sans lecteur PDF intégré (Chrome sur Android), l'aperçu bascule seul sur pdf.js. Ces limites s'appliquent alors <strong>sans que la prop ait été activée</strong> : l'alternative accessible au document reste indispensable.</li>
+        <li><strong>Également utilisé en repli automatique</strong> : sur les navigateurs Chromium sur Android (Chrome, Edge, Samsung Internet), l'aperçu bascule seul sur pdf.js. Ces limites s'appliquent alors <strong>sans que la prop ait été activée</strong> : l'alternative accessible au document reste indispensable.</li>
       </ul>
     </CriteriaCard>
 
