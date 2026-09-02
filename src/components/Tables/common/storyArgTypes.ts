@@ -5,9 +5,11 @@ import { fn } from 'storybook/test'
  * Définitions `argTypes` Storybook communes aux tableaux (SyTable, SyServerTable).
  *
  * Ce module centralise toutes les entrées `argTypes` partagées entre les deux
- * fichiers de stories. Les entrées spécifiques à chaque tableau (`items`,
- * `serverItemsLength`) restent définies dans leurs fichiers respectifs et
- * sont fusionnées via un spread : `{ ...commonTableArgTypes, ... }`.
+ * fichiers de stories, fusionnées via un spread : `{ ...commonTableArgTypes, ... }`.
+ *
+ * `items` diffère selon le tableau (valeur par défaut `[]` pour SyTable,
+ * `undefined` pour SyServerTable qui ajoute `serverItemsLength`) : voir
+ * `syTableItemsArgTypes` / `syServerTableItemsArgTypes` ci-dessous.
  */
 export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 	'headers': {
@@ -381,6 +383,45 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 		table: {
 			category: 'events',
 			type: { summary: '(item: Record<string, unknown>) => void' },
+		},
+	},
+}
+
+/**
+ * `argTypes` de `items` communes à toutes les stories `SyTable` (valeur par
+ * défaut `[]`, tableau non paginé côté serveur).
+ */
+export const syTableItemsArgTypes: NonNullable<Meta['argTypes']> = {
+	items: {
+		description: 'Liste des éléments à afficher dans le tableau',
+		control: { type: 'object' },
+		table: {
+			category: 'props',
+			defaultValue: { summary: '[]' },
+		},
+	},
+}
+
+/**
+ * `argTypes` de `items` et `serverItemsLength` communes à toutes les stories
+ * `SyServerTable` (valeur par défaut `undefined`, pagination gérée côté serveur).
+ */
+export const syServerTableItemsArgTypes: NonNullable<Meta['argTypes']> = {
+	items: {
+		description: 'Liste des éléments à afficher dans le tableau',
+		control: { type: 'object' },
+		table: {
+			category: 'props',
+			defaultValue: { summary: 'undefined' },
+		},
+	},
+	serverItemsLength: {
+		description: 'Nombre total d\'éléments disponibles côté serveur, utilisé pour calculer la pagination.',
+		control: { type: 'number' },
+		table: {
+			category: 'props',
+			type: { summary: 'number' },
+			defaultValue: { summary: '0' },
 		},
 	},
 }

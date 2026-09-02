@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
-import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls, syServerTableItemsArgTypes } from '../common/storyArgTypes'
 import { serverUsers } from '../common/storyData'
 import { useServerTableDemo } from '../common/serverStoryHelpers'
 
@@ -19,18 +19,7 @@ const meta = {
 	},
 	argTypes: {
 		...commonTableArgTypes,
-		items: {
-			description: 'Liste des éléments à afficher dans le tableau',
-			control: { type: 'object' },
-			table: {
-				category: 'props',
-				defaultValue: { summary: 'undefined' },
-			},
-		},
-		serverItemsLength: {
-			description: 'Nombre total d\'éléments à afficher',
-			control: { type: 'number' },
-		},
+		...syServerTableItemsArgTypes,
 	},
 } satisfies Meta<typeof SyServerTable & typeof VDataTable>
 

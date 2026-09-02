@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { fn } from 'storybook/test'
 import type { VDataTable } from 'vuetify/components'
 import SyTable from './SyTable.vue'
-import { commonTableArgTypes, commonTableExcludedControls } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableExcludedControls, syTableItemsArgTypes } from '../common/storyArgTypes'
 import { manyUsers, users, usersHeaders } from '../common/storyData'
 
 const meta = {
@@ -19,14 +19,7 @@ const meta = {
 	},
 	argTypes: {
 		...commonTableArgTypes,
-		items: {
-			description: 'Liste des éléments à afficher dans le tableau',
-			control: { type: 'object' },
-			table: {
-				category: 'props',
-				defaultValue: { summary: '[]' },
-			},
-		},
+		...syTableItemsArgTypes,
 	},
 } satisfies Meta<typeof SyTable & typeof VDataTable>
 

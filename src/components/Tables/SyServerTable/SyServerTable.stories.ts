@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SyServerTable from './SyServerTable.vue'
-import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls, syServerTableItemsArgTypes } from '../common/storyArgTypes'
 import { StateEnum } from '../common/constants/StateEnum'
 import type { DataOptions } from '../common/types'
 import { ref, watch } from 'vue'
@@ -32,27 +32,7 @@ const meta = {
 	},
 	argTypes: {
 		...commonTableArgTypes,
-		items: {
-			description: 'Liste des éléments à afficher dans le tableau',
-			control: { type: 'object' },
-			table: {
-				category: 'props',
-				defaultValue: {
-					summary: 'undefined',
-				},
-			},
-		},
-		serverItemsLength: {
-			description: 'Nombre total d\'éléments disponibles côté serveur, utilisé pour calculer la pagination.',
-			control: { type: 'number' },
-			table: {
-				category: 'props',
-				type: { summary: 'number' },
-				defaultValue: {
-					summary: '0',
-				},
-			},
-		},
+		...syServerTableItemsArgTypes,
 	},
 } satisfies Meta<typeof SyServerTable & typeof VDataTable>
 
