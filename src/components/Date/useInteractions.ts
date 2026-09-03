@@ -1,15 +1,13 @@
 import { computed, ref, nextTick, type MaybeRefOrGetter } from 'vue'
 import type { Ref } from 'vue'
 import { getISODatePart, parseISODatePart } from './utils'
-import useRange from './useRange'
-import type { locales as defaultLocales } from './locales'
+import useRangeSelection from './useRangeSelection'
 
 export default function useInteractions(
 	displayedMonth: Ref<Date | undefined>,
 	rootElement: Ref<HTMLElement | undefined>,
 	selectRange: MaybeRefOrGetter<boolean | undefined>,
 	selectedRange: MaybeRefOrGetter<[Date, Date] | undefined>,
-	locales: MaybeRefOrGetter<typeof defaultLocales>,
 	emits: {
 		(event: 'click:day', value: Date): void
 		(event: 'update:selectedRange', value: [Date, Date]): void
@@ -96,19 +94,14 @@ export default function useInteractions(
 
 	const {
 		isSelecting,
-		isPreviewed,
-		isPreviewStart,
-		isPreviewEnd,
-		isRangeEdge,
+		committedInterval,
+		previewedInterval,
 		previewRange,
 		selectDay,
 		cancelSelection,
-		rangeAnnouncement,
-		getAriaLabelForRange,
-	} = useRange(
+	} = useRangeSelection(
 		selectRange,
 		selectedRange,
-		locales,
 		range => emits('update:selectedRange', range),
 	)
 
@@ -167,12 +160,8 @@ export default function useInteractions(
 		firstDayOfDisplayedMonth,
 		keyboardInteractions,
 		click,
-		isPreviewed,
-		isPreviewStart,
-		isPreviewEnd,
-		isRangeEdge,
+		committedInterval,
+		previewedInterval,
 		previewRange,
-		rangeAnnouncement,
-		getAriaLabelForRange,
 	}
 }

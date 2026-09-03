@@ -3,6 +3,7 @@
 	import useInteractions from './useInteractions'
 	import useMonthTransition from './useMonthTransition'
 	import useCalendar from './useCalendar'
+	import type { FeaturedDaysInWeek } from './useCalendar'
 	import { useLocales } from '@/composables/useLocales'
 	import { locales as defaultLocales } from './locales'
 	import { ref, computed, useId } from 'vue'
@@ -22,12 +23,6 @@
 
 	const displayedMonth = defineModel<Date | undefined>('displayedMonth')
 
-	const { displayedWeeks, localizedFullMonth } = useCalendar(
-		displayedMonth,
-		() => props.selectedDays,
-		() => props.selectedRange,
-	)
-
 	const rootElement = ref<HTMLElement>()
 
 	const locales = useLocales(defaultLocales, () => props.locales)
@@ -37,21 +32,47 @@
 		firstDayOfDisplayedMonth,
 		keyboardInteractions,
 		click,
-		isPreviewed,
-		isPreviewStart,
-		isPreviewEnd,
-		isRangeEdge,
 		previewRange,
-		rangeAnnouncement,
-		getAriaLabelForRange,
+		committedInterval,
+		previewedInterval,
 	} = useInteractions(
 		displayedMonth,
 		rootElement,
 		() => props.selectRange,
 		() => props.selectedRange,
-		locales,
 		emits,
 	)
+
+	const { displayedWeeks, localizedFullMonth } = useCalendar(
+		displayedMonth,
+		() => props.selectedDays,
+		committedInterval,
+		previewedInterval,
+	)
+
+	/** Screen reader announcement of the selected range */
+	const rangeAnnouncement = computed(() => {
+		const range = props.selectedRange
+		if (!range) return ''
+		const [start, end] = range
+		return locales.value.rangeSelected(
+			start.toLocaleDateString('fr-FR'),
+			end.toLocaleDateString('fr-FR'),
+		)
+	})
+
+	/** Screen reader label describing the day's position in the selected range */
+	function getAriaLabelForRange(day: FeaturedDaysInWeek) {
+		const dayInfo = localizedDays[day.rawDate.getDay()]!
+		const dayWithName = {
+			...day,
+			dayName: dayInfo.long,
+		}
+		if (day.isRangeStart) return locales.value.rangeStartLabel(dayWithName)
+		if (day.isRangeEnd) return locales.value.rangeEndLabel(dayWithName)
+		if (day.isInRange) return locales.value.rangeIncludedLabel(dayWithName)
+		return undefined
+	}
 
 	const { transitionProps } = useMonthTransition(displayedMonth)
 
@@ -124,18 +145,18 @@
 								'sy-calendar__day--today': day.isToday,
 								'sy-calendar__day--selected': day.isSelected,
 								'sy-calendar__day--other-month': day.isPreviousMonth || day.isNextMonth,
-								'sy-calendar__day--start-range': day.isStartRange,
-								'sy-calendar__day--end-range': day.isEndRange,
+								'sy-calendar__day--start-range': day.isRangeStart,
+								'sy-calendar__day--end-range': day.isRangeEnd,
 								'sy-calendar__day--in-range': day.isInRange,
 								'sy-calendar__day--weekend': day.isWeekend,
-								'sy-calendar__day--preview': isPreviewed(day.ISO8601),
-								'sy-calendar__day--preview-start': isPreviewStart(day.ISO8601),
-								'sy-calendar__day--preview-end': isPreviewEnd(day.ISO8601),
+								'sy-calendar__day--preview': day.isPreviewed,
+								'sy-calendar__day--preview-start': day.isPreviewStart,
+								'sy-calendar__day--preview-end': day.isPreviewEnd,
 							}]"
 							:data-date="day.ISO8601"
-							:tabindex="focusedDay === day.ISO8601 || isRangeEdge(day) ? 0 : -1"
+							:tabindex="focusedDay === day.ISO8601 || day.isRangeStart || day.isRangeEnd ? 0 : -1"
 							:aria-current="day.isToday ? 'date' : undefined"
-							:aria-selected="day.isSelected || isRangeEdge(day) ? true : undefined"
+							:aria-selected="day.isSelected || day.isRangeStart || day.isRangeEnd ? true : undefined"
 							:aria-label="getAriaLabelForRange(day)"
 							role="gridcell"
 							v-bind="keyboardInteractions"

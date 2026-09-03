@@ -103,6 +103,7 @@ describe('Calendar', () => {
 	it('marks today, selected days, range boundaries, and weekends', async () => {
 		const wrapper = await mountCalendar({
 			displayedMonth,
+			selectRange: true,
 			selectedDays: [new Date(2024, 5, 10, 12)],
 			selectedRange: [new Date(2024, 5, 12, 12), new Date(2024, 5, 14, 12)],
 		})

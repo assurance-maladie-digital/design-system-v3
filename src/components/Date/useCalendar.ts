@@ -12,20 +12,25 @@ export type FeaturedDaysInWeek = {
 	day: number
 	ISO8601: string
 	isSelected: boolean
-	isStartRange: boolean
-	isEndRange: boolean
-	isInRange: boolean
 	isToday: boolean
 	isWeekend: boolean
+	isRangeStart: boolean
+	isRangeEnd: boolean
+	isInRange: boolean
+	isPreviewed: boolean
+	isPreviewStart: boolean
+	isPreviewEnd: boolean
 }
 
 /**
- * Get the days to display in a calendar grid
+ * Get the days to display in a calendar grid, with all their display flags:
+ * structural (today, weekend...), selection, committed range and range preview
  */
 export default function useCalendar(
 	month: MaybeRefOrGetter<Date | undefined>,
 	selectedDays: MaybeRefOrGetter<Date[] | undefined>,
-	selectedRange: MaybeRefOrGetter<[Date | undefined, Date | undefined] | undefined>,
+	rangeInterval: MaybeRefOrGetter<[string, string] | null>,
+	previewInterval: MaybeRefOrGetter<[string, string] | null>,
 ) {
 	/** Date of reference for the view */
 	const dateView = computed<Date>(() => toValue(month) ?? new Date())
@@ -100,10 +105,8 @@ export default function useCalendar(
 	const displayedDays = computed<FeaturedDaysInWeek[]>(() => {
 		const firstDay = dayOfTheMonth.value[0]!
 		const lastDay = dayOfTheMonth.value.at(-1)!
-		const range = toValue(selectedRange)
-		// Day-granularity ISO bounds: range dates may carry a time component
-		const startIso = range?.[0] ? getISODatePart(range[0]) : undefined
-		const endIso = range?.[1] ? getISODatePart(range[1]) : undefined
+		const range = toValue(rangeInterval)
+		const preview = toValue(previewInterval)
 		const days = [...daysBeforeStartOfMonth.value, ...dayOfTheMonth.value, ...daysAfterEndOfMonth.value]
 
 		return days.map((rawDate) => {
@@ -118,9 +121,12 @@ export default function useCalendar(
 				isToday: rawDate.toDateString() === new Date().toDateString(),
 				isWeekend: rawDate.getDay() === 0 || rawDate.getDay() === 6,
 				isSelected: isDaySelected(rawDate),
-				isStartRange: startIso === isoDate,
-				isInRange: startIso !== undefined && endIso !== undefined && isoDate > startIso && isoDate < endIso,
-				isEndRange: endIso === isoDate,
+				isRangeStart: range !== null && isoDate === range[0],
+				isRangeEnd: range !== null && isoDate === range[1],
+				isInRange: range !== null && isoDate > range[0] && isoDate < range[1],
+				isPreviewed: preview !== null && isoDate >= preview[0] && isoDate <= preview[1],
+				isPreviewStart: preview !== null && isoDate === preview[0],
+				isPreviewEnd: preview !== null && isoDate === preview[1],
 			}
 		})
 	})
