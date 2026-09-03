@@ -43,7 +43,7 @@ Vous pouvez afficher une image ou un fichier PDF récupéré depuis une API sous
 			const file = ref<File | Blob | undefined>()
 
 			onMounted(() => {
-				fetch('https://picsum.photos/seed/picsum/750/350')
+				fetch('https://placehold.co/400x300')
 					.then(res => res.blob())
 					.then(blob => file.value = blob)
 			})
@@ -88,6 +88,59 @@ Vous pouvez utiliser ce composant en combinaison avec `FileUpload` pour afficher
 		`,
 	}}
 />
+
+## Navigateurs sans lecteur PDF intégré (Chrome sur Android…)
+
+Par défaut, l'aperçu d'un PDF s'appuie sur le lecteur natif du navigateur (`<object type="application/pdf">`). Certains navigateurs — **Chrome sur Android** en particulier — n'embarquent aucun lecteur PDF : l'aperçu y restait vide.
+
+Le composant détecte ce cas et bascule alors **automatiquement** sur le rendu **pdf.js**, sans configuration ni prop à activer. La détection s'appuie sur deux signaux déclaratifs :
+
+- `navigator.pdfViewerEnabled === false` : le navigateur déclare lui-même l'absence de lecteur intégré ;
+- à défaut, l'`userAgent` : Chrome sur Android déclare `pdfViewerEnabled` à `true` **alors qu'il n'affiche aucun PDF embarqué**. Le jeton `Android` combiné à `Chrome/` y repère les navigateurs Chromium sur Android, les seuls concernés — même réduite, leur UA conserve ces deux jetons.
+
+À ces signaux s'ajoute une **sonde du rendu réel** : un `<object>` qui n'affiche pas le PDF rend son contenu de repli, lequel occupe alors une boîte dans la page. Le composant le mesure peu après l'affichage et bascule sur pdf.js le cas échéant. C'est ce filet qui couvre les navigateurs dont la déclaration est fausse, ou dont l'UA ne trahit rien (Chrome Android en « site pour ordinateur »).
+
+Un repli encore mesurable ne suffit pas à conclure : sur un appareil lent, le lecteur natif peut n'avoir pas encore affiché le document. La bascule n'a donc lieu qu'après une **seconde mesure de confirmation** — un rendu natif réussi, lui, est constaté dès la première. Les deux délais (en millisecondes) s'ajustent via `options.pdfProbe` si le parc d'appareils visé est particulièrement lent :
+
+<Source dark code={`
+<template>
+  <FilePreview
+    :file="file"
+    :options="{ pdfProbe: { delay: 600, confirmDelay: 1500 } }"
+  />
+</template>
+`} />
+
+| Option | Défaut | Rôle |
+| --- | --- | --- |
+| `pdfProbe.delay` | `400` | Attente avant la mesure initiale du contenu de repli. |
+| `pdfProbe.confirmDelay` | `800` | Attente supplémentaire avant la mesure qui confirme l'échec. |
+
+Contrairement à `options.pdf`, ces valeurs ne sont pas passées en attributs de l'`<object>`.
+
+- Les navigateurs disposant d'un lecteur natif (Chrome, Edge, Firefox sur desktop, Safari…) conservent l'`<object>` et sa barre d'outils : **aucun changement de comportement**.
+- Firefox Android et Safari iOS affichent correctement les PDF embarqués et conservent eux aussi le rendu natif : ils ne portent pas le jeton `Chrome/`.
+- Le repli n'active **ni** le suivi de consultation **ni** la lecture seule : seul le mode de rendu change.
+- pdf.js n'est chargé qu'**à la demande** : les navigateurs avec lecteur natif ne téléchargent rien de plus.
+
+### Ce que le repli fait perdre, et comment le compenser
+
+Le rendu pdf.js remplace le lecteur natif par des `<canvas>` : ni barre d'outils (téléchargement, impression), ni texte restitué aux lecteurs d'écran. Comme ce repli est **subi** — le consommateur n'a demandé ni `readonly` ni `track-consultation` — le composant compense automatiquement :
+
+- un **lien de téléchargement** du document source est affiché sous l'aperçu, dès le repli et sans attendre une erreur de rendu. Il n'apparaît pas quand pdf.js a été demandé explicitement : en `readonly` le téléchargement est justement l'action que l'on retire, et en `track-consultation` l'usage est celui du consommateur ;
+- si le rendu pdf.js échoue lui aussi, le même lien accompagne le message d'erreur (sauf en `readonly`).
+
+Le canvas restant **non restitué aux technologies d'assistance**, fournissez l'équivalent accessible du document via le slot **`alternative`**, affiché sous l'aperçu dès que le rendu pdf.js est utilisé (repli automatique, `readonly` ou `track-consultation`) :
+
+<Source dark code={`
+<template>
+  <FilePreview :file="file">
+    <template #alternative>
+      <p>Résumé accessible du contrat, ou lien vers sa version HTML.</p>
+    </template>
+  </FilePreview>
+</template>
+`} />
 
 ## Aperçu en lecture seule (sans téléchargement)
 
@@ -154,7 +207,7 @@ L'événement **`@loaded`** (décrit dans la section [Aperçu en lecture seule](
 
 ### Points d'attention
 
-- **Rétrocompatibilité** : `track-consultation` et `readonly` sont `false` par défaut → comportement actuel (`<object>`) inchangé. N'ont d'effet que sur les fichiers PDF.
+- **Rétrocompatibilité** : `track-consultation` et `readonly` sont `false` par défaut → rendu natif (`<object>`) inchangé sur les navigateurs qui affichent les PDF, repli pdf.js automatique sur les autres (voir [Navigateurs sans lecteur PDF intégré](#navigateurs-sans-lecteur-pdf-intégré-chrome-sur-android)). N'ont d'effet que sur les fichiers PDF.
 - **Combinables** : `readonly` et `track-consultation` reposent sur le même rendu pdf.js et se cumulent — par ex. un contrat à lire en entier **sans** pouvoir le télécharger : `<FilePreview readonly track-consultation v-model:complete="hasRead" />`.
 - **Worker pdf.js** : le worker bundlé est utilisé par défaut. Si votre chaîne de build ne le résout pas, fournissez une URL via la prop `pdf-worker-src`.
 - **Accessibilité** : le rendu pdf.js (canvas) n'est pas restituable au lecteur d'écran ; prévoyez un accès alternatif au contenu si nécessaire (lien de téléchargement…).

@@ -7,10 +7,14 @@ exports[`FilePreview > renders correctly with a pdf 1`] = `
     type="application/pdf"
     width="100%"
   >
-    <p class="mb-0">
+    <p class="
+      mb-0
+      sy-file-preview__object-fallback--probing
+    ">
       Impossible de prévisualiser le fichier.
     </p>
   </object>
+  <!-- v-if -->
 </div>
 `;
 
@@ -20,6 +24,7 @@ exports[`FilePreview > renders correctly with an image 1`] = `
     alt=""
     style="width: 100%;"
   />
+  <!-- v-if -->
 </div>
 `;
 
@@ -29,5 +34,6 @@ exports[`FilePreview > with options 1`] = `
     alt="Photo de paysage montagneux."
     style="width: 100%;"
   />
+  <!-- v-if -->
 </div>
 `;

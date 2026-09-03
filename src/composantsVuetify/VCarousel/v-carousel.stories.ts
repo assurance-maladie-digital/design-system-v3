@@ -309,9 +309,9 @@ export const WithImages: Story = {
 		components: { VCarousel, VCarouselItem },
 		setup() {
 			const images = [
-				'https://picsum.photos/800/400?random=1',
-				'https://picsum.photos/800/400?random=2',
-				'https://picsum.photos/800/400?random=3',
+				'https://placehold.co/800x400?text=1',
+				'https://placehold.co/800x400?text=2',
+				'https://placehold.co/800x400?text=3',
 			]
 			return { args, images }
 		},

@@ -16,8 +16,10 @@ const meta: Meta = {
 				type: { summary: 'object', detail: `{
 	previewNotAvailable: string,
 	previewTypeNotAvailable: string,
+	documentLabel: string,
 	loadingDocument: string,
 	documentError: string,
+	downloadDocument: string,
 }` },
 				category: 'props',
 			},
@@ -89,6 +91,7 @@ export const Default: Story = {
 		components: { FilePreview },
 		template: `
 			<div>
+				<label for="file-test-upload">Fichier à prévisualiser</label>
 				<input type="file" @change="file = $event.target.files[0]" id="file-test-upload" />
 				<FilePreview v-bind="args" :file >
 					<template #default v-if="args.default">
@@ -103,15 +106,13 @@ export const Default: Story = {
 		},
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 <div>
-	<input type="file" @change="file = $event.target.files[0]" />
+	<label for="file-upload">Fichier à prévisualiser</label>
+	<input type="file" id="file-upload" @change="file = $event.target.files[0]" />
 	<FilePreview :file="file" />
 </div>
 				`,
@@ -185,7 +186,7 @@ export const FromApi: Story = {
 			const file = ref<File | Blob | undefined>()
 
 			onMounted(() => {
-				fetch('https://picsum.photos/seed/picsum/750/350')
+				fetch('https://placehold.co/400x300')
 					.then(res => res.blob())
 					.then(blob => file.value = blob)
 			})
@@ -209,7 +210,7 @@ import { FilePreview } from '@cnamts/synapse'
 const file = ref<File | Blob | undefined>()
 
 onMounted(() => {
-	fetch('https://picsum.photos/seed/picsum/750/350')
+	fetch('https://placehold.co/400x300')
 		.then(res => res.blob())
 		.then(blob => file.value = blob)
 })`,
@@ -282,9 +283,6 @@ export const ReadOnly: Story = {
 		},
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -359,9 +357,6 @@ export const MandatoryReading: Story = {
 		},
 	}),
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
