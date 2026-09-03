@@ -56,7 +56,7 @@ const DESKTOP_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/
 const ANDROID_CHROME_UA = 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Mobile Safari/537.36'
 const ANDROID_FIREFOX_UA = 'Mozilla/5.0 (Android 14; Mobile; rv:140.0) Gecko/140.0 Firefox/140.0'
 
-describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)', () => {
+describe('FilePreview — pdf.js fallback when no native PDF viewer (Chrome on Android)', () => {
 	const originalCreateObjectURL = URL.createObjectURL
 
 	const originalUserAgent = navigator.userAgent
@@ -73,7 +73,7 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		URL.createObjectURL = originalCreateObjectURL
 	})
 
-	it('bascule sur le rendu pdf.js quand le navigateur n\'affiche pas les PDF nativement', async () => {
+	it('switches to the pdf.js renderer when the browser does not display PDFs natively', async () => {
 		setNativePdfViewer(false)
 
 		const wrapper = mount(FilePreview, { props: { file: pdfFile(), pdfWorkerSrc: 'worker' } })
@@ -87,7 +87,7 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		wrapper.unmount()
 	})
 
-	it('conserve l\'<object> natif quand le navigateur sait afficher les PDF', async () => {
+	it('keeps the native <object> when the browser can display PDFs', async () => {
 		setNativePdfViewer(true)
 
 		const wrapper = mount(FilePreview, { props: { file: pdfFile() } })
@@ -100,7 +100,7 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		wrapper.unmount()
 	})
 
-	it('conserve l\'<object> natif quand `pdfViewerEnabled` n\'existe pas (rétrocompatibilité)', async () => {
+	it('keeps the native <object> when `pdfViewerEnabled` is missing (backward compatibility)', async () => {
 		setNativePdfViewer(undefined)
 
 		const wrapper = mount(FilePreview, { props: { file: pdfFile() } })
@@ -112,7 +112,7 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		wrapper.unmount()
 	})
 
-	it('conserve l\'<object> natif sur Firefox Android, qui affiche bien les PDF', async () => {
+	it('keeps the native <object> on Firefox Android, which does display PDFs', async () => {
 		setNativePdfViewer(true)
 		setUserAgent(ANDROID_FIREFOX_UA)
 
@@ -125,7 +125,7 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		wrapper.unmount()
 	})
 
-	it('bascule sur pdf.js sur Chrome Android, qui annonce à tort un lecteur natif', async () => {
+	it('switches to pdf.js on Chrome Android, which wrongly claims a native viewer', async () => {
 		// Cas réel de #2508 : Chrome sur Android annonce pdfViewerEnabled === true
 		// alors qu'il n'affiche aucun PDF embarqué.
 		setNativePdfViewer(true)
@@ -141,7 +141,7 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		wrapper.unmount()
 	})
 
-	it('respecte les délais de sonde passés dans `options.pdfProbe`', async () => {
+	it('honours the probe delays passed through `options.pdfProbe`', async () => {
 		setNativePdfViewer(true)
 		setUserAgent(DESKTOP_UA)
 
@@ -173,7 +173,7 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		wrapper.unmount()
 	})
 
-	it('bascule sur pdf.js quand l\'<object> affiche son contenu de repli (sonde de rendu)', async () => {
+	it('switches to pdf.js when the <object> renders its fallback content (render probe)', async () => {
 		// Aucun signal déclaratif ne trahit ce navigateur : seul le résultat réel le fait.
 		setNativePdfViewer(true)
 		setUserAgent(DESKTOP_UA)
@@ -198,7 +198,7 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		wrapper.unmount()
 	})
 
-	it('conserve l\'<object> quand le contenu de repli n\'est pas rendu', async () => {
+	it('keeps the <object> when the fallback content is not rendered', async () => {
 		setNativePdfViewer(true)
 		setUserAgent(DESKTOP_UA)
 
@@ -216,7 +216,7 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		wrapper.unmount()
 	})
 
-	it('n\'affecte pas les images', async () => {
+	it('does not affect images', async () => {
 		setNativePdfViewer(true)
 		setUserAgent(ANDROID_CHROME_UA)
 
@@ -231,7 +231,7 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		wrapper.unmount()
 	})
 
-	it('propose un lien de téléchargement si le rendu pdf.js échoue', async () => {
+	it('offers a download link when the pdf.js rendering fails', async () => {
 		setNativePdfViewer(false)
 		getDocumentMock.mockReturnValueOnce({ promise: Promise.reject(new Error('rendu impossible')) })
 
@@ -248,7 +248,7 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		wrapper.unmount()
 	})
 
-	it('conserve l\'URL objet après le chargement de l\'<object> natif', async () => {
+	it('keeps the object URL alive after the native <object> has loaded', async () => {
 		// Régression : révoquer l'URL sur @load cassait les actions du lecteur natif
 		// (téléchargement, impression, rechargement), qui la re-sollicitent.
 		const revokeSpy = vi.fn()
@@ -270,7 +270,7 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		URL.revokeObjectURL = originalRevoke
 	})
 
-	it('propose un lien de téléchargement en repli automatique, sans attendre une erreur', async () => {
+	it('offers a download link on automatic fallback, without waiting for an error', async () => {
 		// Le repli n'a pas été demandé : l'utilisateur perd la barre d'outils native
 		// (téléchargement, impression) et un canvas non restitué la remplace.
 		setNativePdfViewer(false)
@@ -289,7 +289,7 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		wrapper.unmount()
 	})
 
-	it('ne propose pas ce lien quand le rendu pdf.js a été demandé', async () => {
+	it('does not offer that link when the pdf.js rendering was requested', async () => {
 		setNativePdfViewer(true)
 
 		const wrapper = mount(FilePreview, {
@@ -307,7 +307,7 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		wrapper.unmount()
 	})
 
-	it('expose le slot `alternative` en rendu pdf.js, restitué aux lecteurs d\'écran', async () => {
+	it('exposes the `alternative` slot in pdf.js rendering, available to screen readers', async () => {
 		setNativePdfViewer(false)
 
 		const wrapper = mount(FilePreview, {
@@ -324,7 +324,7 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		wrapper.unmount()
 	})
 
-	it('n\'expose pas le slot `alternative` en rendu natif', async () => {
+	it('does not expose the `alternative` slot in native rendering', async () => {
 		setNativePdfViewer(true)
 
 		const wrapper = mount(FilePreview, {
@@ -339,7 +339,7 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		wrapper.unmount()
 	})
 
-	it('affiche l\'erreur et le lien de secours si le fichier n\'est plus lisible', async () => {
+	it('shows the error and the fallback link when the file is no longer readable', async () => {
 		// `Blob.arrayBuffer()` rejette quand la source a disparu depuis sa sélection
 		// (fichier déplacé, support retiré) : cet échec doit être traité comme les autres.
 		setNativePdfViewer(false)
@@ -356,7 +356,7 @@ describe('FilePreview — repli pdf.js sans lecteur PDF natif (Chrome Android)',
 		wrapper.unmount()
 	})
 
-	it('ne propose pas de téléchargement en lecture seule, même en cas d\'échec', async () => {
+	it('offers no download in readonly mode, even on failure', async () => {
 		getDocumentMock.mockReturnValueOnce({ promise: Promise.reject(new Error('rendu impossible')) })
 
 		const wrapper = mount(FilePreview, {

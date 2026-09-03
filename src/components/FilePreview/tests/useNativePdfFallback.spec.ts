@@ -71,7 +71,7 @@ afterEach(() => {
 })
 
 describe('useNativePdfFallback', () => {
-	it('préfère le rendu natif quand le navigateur déclare un lecteur PDF', () => {
+	it('prefers native rendering when the browser declares a PDF viewer', () => {
 		setNativePdfViewer(true)
 		setUserAgent(DESKTOP_UA)
 
@@ -82,7 +82,7 @@ describe('useNativePdfFallback', () => {
 		wrapper.unmount()
 	})
 
-	it('préfère pdf.js quand le navigateur déclare ne pas savoir afficher les PDF', () => {
+	it('prefers pdf.js when the browser declares it cannot display PDFs', () => {
 		setNativePdfViewer(false)
 
 		const { result, wrapper } = withSetup(() => useNativePdfFallback(ref(pdfFile()), true))
@@ -92,7 +92,7 @@ describe('useNativePdfFallback', () => {
 		wrapper.unmount()
 	})
 
-	it('préfère pdf.js sur Chrome Android, dont la déclaration est fausse', () => {
+	it('prefers pdf.js on Chrome Android, whose declaration is wrong', () => {
 		setNativePdfViewer(true)
 		setUserAgent(ANDROID_CHROME_UA)
 
@@ -103,7 +103,7 @@ describe('useNativePdfFallback', () => {
 		wrapper.unmount()
 	})
 
-	it('conserve le rendu natif sur Firefox Android, qui affiche bien les PDF', () => {
+	it('keeps native rendering on Firefox Android, which does display PDFs', () => {
 		setNativePdfViewer(true)
 		setUserAgent(ANDROID_FIREFOX_UA)
 
@@ -117,7 +117,7 @@ describe('useNativePdfFallback', () => {
 	it.each([
 		['Firefox Android', ANDROID_FIREFOX_UA],
 		['Safari iOS', IOS_SAFARI_UA],
-	])('ignore les Client Hints : %s reste en rendu natif malgré `mobile: true`', (_name, userAgent) => {
+	])('ignores Client Hints: %s keeps native rendering despite `mobile: true`', (_name, userAgent) => {
 		// La détection ne s'appuie volontairement pas sur `userAgentData.mobile` : ce
 		// signal disqualifierait tout mobile, alors que seuls les Chromium sur Android
 		// n'affichent pas les PDF embarqués (#2508).
@@ -132,7 +132,7 @@ describe('useNativePdfFallback', () => {
 		wrapper.unmount()
 	})
 
-	it('bascule sur pdf.js quand le repli est encore mesurable à la confirmation', async () => {
+	it('switches to pdf.js when the fallback content is still measurable at confirmation', async () => {
 		setNativePdfViewer(true)
 		setUserAgent(DESKTOP_UA)
 
@@ -155,7 +155,7 @@ describe('useNativePdfFallback', () => {
 		wrapper.unmount()
 	})
 
-	it('conserve le rendu natif d\'un lecteur lent, arrivé après la mesure initiale', async () => {
+	it('keeps native rendering for a slow viewer that shows up after the initial measurement', async () => {
 		setNativePdfViewer(true)
 		setUserAgent(DESKTOP_UA)
 
@@ -175,7 +175,7 @@ describe('useNativePdfFallback', () => {
 		wrapper.unmount()
 	})
 
-	it('conserve le rendu natif quand le contenu de repli n\'occupe aucune boîte', async () => {
+	it('keeps native rendering when the fallback content takes up no box', async () => {
 		setNativePdfViewer(true)
 		setUserAgent(DESKTOP_UA)
 
@@ -191,7 +191,7 @@ describe('useNativePdfFallback', () => {
 		wrapper.unmount()
 	})
 
-	it('ne sonde pas quand le rendu natif n\'est pas celui recherché (pdf.js demandé)', async () => {
+	it('does not probe when native rendering is not the one sought (pdf.js requested)', async () => {
 		setNativePdfViewer(true)
 		setUserAgent(DESKTOP_UA)
 
@@ -206,7 +206,7 @@ describe('useNativePdfFallback', () => {
 		wrapper.unmount()
 	})
 
-	it('accepte des délais de sonde personnalisés', async () => {
+	it('accepts custom probe delays', async () => {
 		setNativePdfViewer(true)
 		setUserAgent(DESKTOP_UA)
 
@@ -226,7 +226,7 @@ describe('useNativePdfFallback', () => {
 		wrapper.unmount()
 	})
 
-	it('resonde au changement de fichier : l\'échec n\'est pas hérité par le suivant', async () => {
+	it('probes again on file change: the failure is not inherited by the next file', async () => {
 		// Un échec peut tenir au document (PDF refusé par le lecteur natif) autant qu'au
 		// navigateur : le verdict ne doit pas être acquis pour les fichiers suivants.
 		setNativePdfViewer(true)
@@ -256,7 +256,7 @@ describe('useNativePdfFallback', () => {
 		wrapper.unmount()
 	})
 
-	it('rebascule sur pdf.js si le fichier suivant échoue lui aussi', async () => {
+	it('switches back to pdf.js when the next file fails as well', async () => {
 		setNativePdfViewer(true)
 		setUserAgent(DESKTOP_UA)
 
@@ -276,7 +276,7 @@ describe('useNativePdfFallback', () => {
 		wrapper.unmount()
 	})
 
-	it('ne resonde pas sur un navigateur sans lecteur natif : pas de retour à l\'<object>', async () => {
+	it('does not probe again on a browser without a native viewer: no return to the <object>', async () => {
 		setNativePdfViewer(false)
 
 		const file = ref<File | undefined>(pdfFile())
@@ -292,7 +292,7 @@ describe('useNativePdfFallback', () => {
 		wrapper.unmount()
 	})
 
-	it('n\'exécute pas la sonde après le démontage', async () => {
+	it('does not run the probe after unmount', async () => {
 		setNativePdfViewer(true)
 		setUserAgent(DESKTOP_UA)
 
