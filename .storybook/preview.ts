@@ -150,7 +150,7 @@ const preview: Preview = {
 					'Éco-conception',
 					[
 						'Introduction',
-						'Bonnes pratiques essentielles',
+						'Bonnes pratiques',
 						'Auto-évaluation Dev Front',
 						'Auto-évaluation UX',
 					],
