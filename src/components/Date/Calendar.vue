@@ -88,8 +88,7 @@
 								'sy-calendar__day--in-range': day.isInRange,
 								'sy-calendar__day--weekend': day.isWeekend,
 								'sy-calendar__day--start-selection-range': day.rawDate === startRange?.rawDate,
-								'sy-calendar__day--end-selection-range': day.rawDate === endRange?.rawDate,
-								'sy-calendar__day--end-selection-range-preview': day.ISO8601 === dayHovered?.ISO8601,
+								'sy-calendar__day--hovered': day.ISO8601 === dayHovered?.ISO8601,
 							}]"
 							:data-date="day.ISO8601"
 							:tabindex="focusedDay === day.ISO8601? 0 : -1"
@@ -173,19 +172,22 @@
 
 // Either boundary of the pending selection: selectors below are symmetric,
 // so the preview also works when hovering a day before the start
-$boundary: ':is(.sy-calendar__day--start-selection-range, .sy-calendar__day--end-selection-range-preview)';
+$boundary: ':is(.sy-calendar__day--start-selection-range, .sy-calendar__day--hovered)';
 
-#{$boundary} > div,
-// days between the boundaries within the same week
-#{$boundary} ~ td:has(~ #{$boundary}) > div,
-// days after the first boundary, when the second is in a later week
-tr:has(~ tr #{$boundary}) #{$boundary} ~ td > div,
-// full weeks between the two boundary weeks
-tr:has(#{$boundary}) ~ tr:has(~ tr #{$boundary}) td > div,
-// days before the second boundary, when the first is in an earlier week
-tr:has(#{$boundary}) ~ tr td:has(~ #{$boundary}) > div {
-	background-color: pink;
-	color: white;
+// Only preview the range while a selection is actually in progress
+.sy-calendar:has(.sy-calendar__day--start-selection-range) {
+	#{$boundary} > div,
+	// days between the boundaries within the same week
+	#{$boundary} ~ td:has(~ #{$boundary}) > div,
+	// days after the first boundary, when the second is in a later week
+	tr:has(~ tr #{$boundary}) #{$boundary} ~ td > div,
+	// full weeks between the two boundary weeks
+	tr:has(#{$boundary}) ~ tr:has(~ tr #{$boundary}) td > div,
+	// days before the second boundary, when the first is in an earlier week
+	tr:has(#{$boundary}) ~ tr td:has(~ #{$boundary}) > div {
+		background-color: pink;
+		color: white;
+	}
 }
 
 .sy-calendar__day--in-range > div {
