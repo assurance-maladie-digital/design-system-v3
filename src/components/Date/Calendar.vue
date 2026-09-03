@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { localizedDays } from './utils'
-	import useKeyboardInteractions from './useInteractions'
+	import useInteractions from './useInteractions'
 	import useMonthTransition from './useMonthTransition'
 	import useCalendar from './useCalendar'
 	import { ref } from 'vue'
@@ -8,12 +8,14 @@
 
 	const props = defineProps<{
 		selectedDays?: Date[]
-		selectedRange?: [Date | undefined, Date | undefined]
+		selectedRange?: [Date, Date]
 		ariaLabelledby?: string
+		selectRange?: boolean
 	}>()
 
 	const emits = defineEmits<{
 		'click:day': [value: Date]
+		'update:selectedRange': [value: [Date, Date]]
 	}>()
 
 	const displayedMonth = defineModel<Date | undefined>('displayedMonth')
@@ -26,18 +28,16 @@
 
 	const rootElement = ref<HTMLElement>()
 
-	// handle select
-	function select(day: FeaturedDaysInWeek) {
-		focusDay(day.rawDate)
-		emits('click:day', day.rawDate)
-	}
-
-	const { focusedDay, focusDay, firstDayOfDisplayedMonth, nextDay, previousDay, nextWeek, previousWeek } = useKeyboardInteractions(
+	const { focusedDay, firstDayOfDisplayedMonth, keyboardInteractions, click, startRange } = useInteractions(
 		displayedMonth,
 		rootElement,
+		() => props.selectRange,
+		emits,
 	)
 
 	const { transitionProps } = useMonthTransition(displayedMonth)
+
+	const dayHovered = ref<FeaturedDaysInWeek | undefined>()
 
 </script>
 <template>
@@ -46,22 +46,26 @@
 		class="sy-calendar__wrapper"
 	>
 		<Transition v-bind="transitionProps">
-			<!-- eslint-disable-next-line vue/require-toggle-inside-transition -- keyed swap on month change -->
 			<table
 				:key="firstDayOfDisplayedMonth"
 				class="sy-calendar"
 				:aria-labelledby="props.ariaLabelledby"
 				:aria-label="props.ariaLabelledby ? undefined : localizedFullMonth"
+				role="grid"
 			>
 				<thead>
 					<tr class="sy-calendar__weekdays">
 						<th
 							v-for="day in localizedDays"
 							:key="day.long"
-							:abbr="day.long"
 							scope="col"
 						>
-							{{ day.short }}
+							<div aria-hidden="true">
+								{{ day.short }}
+							</div>
+							<div class="d-sr-only">
+								{{ day.long }}
+							</div>
 						</th>
 					</tr>
 				</thead>
@@ -75,34 +79,35 @@
 							v-for="day in week"
 							:key="day.ISO8601"
 							class="sy-calendar__day"
-							:class="`day-${day.ISO8601}`"
+							:class="[`day-${day.ISO8601}`, {
+								'sy-calendar__day--today': day.isToday,
+								'sy-calendar__day--selected': day.isSelected,
+								'sy-calendar__day--other-month': day.isPreviousMonth || day.isNextMonth,
+								'sy-calendar__day--start-range': day.isStartRange,
+								'sy-calendar__day--end-range': day.isEndRange,
+								'sy-calendar__day--in-range': day.isInRange,
+								'sy-calendar__day--weekend': day.isWeekend,
+								'sy-calendar__day--start-selection-range': day.rawDate === startRange?.rawDate,
+								'sy-calendar__day--end-selection-range': day.rawDate === endRange?.rawDate,
+								'sy-calendar__day--end-selection-range-preview': day.ISO8601 === dayHovered?.ISO8601,
+							}]"
 							:data-date="day.ISO8601"
 							:tabindex="focusedDay === day.ISO8601? 0 : -1"
-							@keydown.arrow-right.prevent="nextDay"
-							@keydown.arrow-left.prevent="previousDay"
-							@keydown.arrow-down.prevent="nextWeek"
-							@keydown.arrow-up.prevent="previousWeek"
-							@click="select(day)"
-							@space="select(day)"
+							:aria-current="day.isToday ? 'date' : undefined"
+							:aria-selected="day.isSelected ? 'true' : undefined"
+							v-bind="keyboardInteractions"
+							@click="() => click(day)"
+							@keydown.enter="() => click(day)"
+							@mouseenter="() => dayHovered = day"
+							@mouseleave="() => dayHovered = undefined"
+							@focusin="() => dayHovered = day"
+							@focusout="() => dayHovered = undefined"
 						>
 							<slot
 								:name="`day-${day.ISO8601}`"
 								v-bind="day"
 							>
-								<div
-									:class="{
-										'sy-calendar__day-content': true,
-										'sy-calendar__day-content--today': day.isToday,
-										'sy-calendar__day-content--selected': day.isSelected,
-										'sy-calendar__day-content--other-month': day.isPreviousMonth || day.isNextMonth,
-										'sy-calendar__day-content--start-range': day.isStartRange,
-										'sy-calendar__day-content--end-range': day.isEndRange,
-										'sy-calendar__day-content--in-range': day.isInRange,
-										'sy-calendar__day-content--weekend': day.isWeekend,
-									}"
-									:aria-current="day.isToday ? 'date' : undefined"
-									:aria-selected="day.isSelected"
-								>
+								<div class="sy-calendar__day-content">
 									{{ day.day }}
 								</div>
 							</slot>
@@ -129,44 +134,61 @@
 	color: rgb(var(--v-theme-blue-darken40));
 }
 
-.sy-calendar__day-content--weekend {
+.sy-calendar__day--weekend > div {
 	color: rgb(var(--v-theme-blue-lighten20));
 }
 
-.sy-calendar__day-content--today {
+.sy-calendar__day--today > div {
 	background-color: rgb(var(--v-theme-surface-light));
 	border-radius: 99px;
 	font-weight: bold;
 }
 
-.sy-calendar__day-content--selected {
+.sy-calendar__day--selected > div {
 	background-color: rgb(var(--v-theme-primary));
 	border-radius: 99px;
 	font-weight: bold;
 	color: white;
 }
 
-.sy-calendar__day-content--other-month {
+.sy-calendar__day--other-month > div {
 	opacity: 0.6;
 }
 
-.sy-calendar__day-content--start-range {
+.sy-calendar__day--start-range > div {
 	border-top-left-radius: 50%;
 	border-bottom-left-radius: 50%;
 }
 
-.sy-calendar__day-content--end-range {
+.sy-calendar__day--end-range > div {
 	border-top-right-radius: 50%;
 	border-bottom-right-radius: 50%;
 }
 
-.sy-calendar__day-content.sy-calendar__day-content--start-range,
-.sy-calendar__day-content.sy-calendar__day-content--end-range {
+.sy-calendar__day--start-range > div,
+.sy-calendar__day--end-range > div {
 	background-color: rgb(var(--v-theme-primary));
 	color: white;
 }
 
-.sy-calendar__day-content--in-range {
+// Either boundary of the pending selection: selectors below are symmetric,
+// so the preview also works when hovering a day before the start
+$boundary: ':is(.sy-calendar__day--start-selection-range, .sy-calendar__day--end-selection-range-preview)';
+
+#{$boundary} > div,
+// days between the boundaries within the same week
+#{$boundary} ~ td:has(~ #{$boundary}) > div,
+// days after the first boundary, when the second is in a later week
+tr:has(~ tr #{$boundary}) #{$boundary} ~ td > div,
+// full weeks between the two boundary weeks
+tr:has(#{$boundary}) ~ tr:has(~ tr #{$boundary}) td > div,
+// days before the second boundary, when the first is in an earlier week
+tr:has(#{$boundary}) ~ tr td:has(~ #{$boundary}) > div {
+	background-color: pink;
+	color: white;
+}
+
+.sy-calendar__day--in-range > div {
 	background-color: rgb(var(--v-theme-blue-lighten20));
 	color: white;
 }

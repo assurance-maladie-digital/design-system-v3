@@ -19,6 +19,8 @@
 	])
 
 	const range = ref<[Date, Date]>([new Date('2026-12-04'), new Date('2026-12-15')])
+
+	const selectedRange = ref<[Date, Date]>()
 </script>
 
 <template>
@@ -40,6 +42,12 @@
 				</div>
 			</template>
 		</Calendar>
+
+		<Calendar
+			v-model:selected-range="selectedRange"
+			:displayed-month="displayedMonth"
+			select-range
+		/>
 	</div>
 </template>
 
