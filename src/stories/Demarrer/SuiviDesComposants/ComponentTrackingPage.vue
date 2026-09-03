@@ -4,6 +4,13 @@
 	import infoData from '../component-info.json'
 	import { locales } from './locales'
 
+	interface ComponentCommit {
+		date: string
+		message: string
+		/** Version dans laquelle le commit a été publié. */
+		version?: string
+	}
+
 	interface ComponentInfo {
 		componentName: string
 		storybookTitle?: string
@@ -12,8 +19,8 @@
 		functionalDate?: string
 		a11yVersion?: string
 		a11yDate?: string
-		commits?: Array<{ date: string, message: string }>
-		a11yCommits?: Array<{ date: string, message: string }>
+		commits?: ComponentCommit[]
+		a11yCommits?: ComponentCommit[]
 	}
 
 	interface FilterState {
@@ -99,23 +106,29 @@
 		}
 	}, { deep: true })
 
-	const versions = computed(() => {
-		const filteredResults = filters.selectedComponents.length > 0
-			? results.filter(r => filters.selectedComponents.includes(r.componentName))
-			: results
-		return [...new Set(filteredResults.map(r => r.functionalVersion).filter(Boolean) as string[])].sort(
-			(a, b) => b.localeCompare(a, undefined, { numeric: true }),
-		)
-	})
+	const scopedResults = computed(() => filters.selectedComponents.length > 0
+		? results.filter(r => filters.selectedComponents.includes(r.componentName))
+		: results)
 
-	const a11yVersions = computed(() => {
-		const filteredResults = filters.selectedComponents.length > 0
-			? results.filter(r => filters.selectedComponents.includes(r.componentName))
-			: results
-		return [...new Set(filteredResults.map(r => r.a11yVersion).filter(Boolean) as string[])].sort(
-			(a, b) => b.localeCompare(a, undefined, { numeric: true }),
-		)
-	})
+	const commitsOf = (item: ComponentInfo, tab: 'functional' | 'a11y'): ComponentCommit[] =>
+		(tab === 'functional' ? item.commits : item.a11yCommits) ?? []
+
+	// Les pré-versions (`0.0.15-alpha`…) précèdent la première publication stable de la
+	// librairie : les proposer au filtre encombre la liste sans concerner les consommateurs.
+	const isStableVersion = (version: string): boolean => !version.includes('-')
+
+	// Toutes les versions stables qui contiennent au moins un changement. Les lister depuis
+	// la version de *dernière* modification de chaque composant en masquait la majorité :
+	// une version disparaissait du filtre dès que tous ses composants avaient rebougé.
+	const versionsFromCommits = (tab: 'functional' | 'a11y'): string[] => [
+		...new Set(
+			scopedResults.value.flatMap(r => commitsOf(r, tab).map(c => c.version).filter(Boolean) as string[]),
+		),
+	].filter(isStableVersion).sort((a, b) => b.localeCompare(a, undefined, { numeric: true }))
+
+	const versions = computed(() => versionsFromCommits('functional'))
+
+	const a11yVersions = computed(() => versionsFromCommits('a11y'))
 
 	const slug = (title: string) =>
 		title.toLowerCase().replace(/[\s/'’()&,.]+/g, '-').replace(/^-+|-+$/g, '')
@@ -148,6 +161,13 @@
 		return `${msg.slice(0, index)}<a href="${REPO}/pull/${m[1]}" target="_blank" rel="noopener noreferrer">#${m[1]}</a>${msg.slice(index + m[0].length)}`
 	}
 
+	// Un composant est retenu s'il a changé dans la version filtrée — et non si c'est sa
+	// version de dernière modification, qui ignorait tout son historique antérieur.
+	const matchesVersion = (item: ComponentInfo, tab: 'functional' | 'a11y', versionFilter: string): boolean =>
+		versionFilter === ''
+		|| versionFilter === '__ALL__'
+		|| commitsOf(item, tab).some(commit => commit.version === versionFilter)
+
 	const filteredRows = computed(() => {
 		// Si "Toutes les versions" est sélectionné et aucun composant n'est choisi, afficher tous les composants
 		if (filters.selectedComponents.length === 0
@@ -166,8 +186,8 @@
 				item =>
 					(filters.selectedComponents.length === 0
 						|| filters.selectedComponents.includes(item.componentName))
-					&& (filters.versionFilter === '' || filters.versionFilter === '__ALL__' || item.functionalVersion === filters.versionFilter)
-					&& (filters.a11yVersionFilter === '' || filters.a11yVersionFilter === '__ALL__' || item.a11yVersion === filters.a11yVersionFilter)
+					&& matchesVersion(item, 'functional', filters.versionFilter)
+					&& matchesVersion(item, 'a11y', filters.a11yVersionFilter)
 					// Only apply deprecated filter if components are selected
 					&& (filters.selectedComponents.length === 0 || filters.includeDeprecated || item.status === 'actif'),
 			)
@@ -177,6 +197,38 @@
 				return versionB.localeCompare(versionA, undefined, { numeric: true })
 			})
 	})
+
+	// Une version filtrée ne doit montrer que ce qu'elle contient : sans ce tri, la carte
+	// listait tout l'historique du composant, quelle que soit la version sélectionnée.
+	/**
+	 * Version qui s'applique à un onglet. Les deux filtres portent la même numérotation de
+	 * release : une version choisie sur un axe s'applique donc aussi à l'autre onglet tant
+	 * que celui-ci n'a pas son propre choix, sinon l'onglet non filtré réaffichait tout
+	 * l'historique. `__ALL__` reste un choix explicite : il n'hérite de rien.
+	 */
+	const versionFilterForTab = (tab: 'functional' | 'a11y'): string => {
+		const own = tab === 'functional' ? filters.versionFilter : filters.a11yVersionFilter
+		if (own !== '') return own === '__ALL__' ? '' : own
+
+		const other = tab === 'functional' ? filters.a11yVersionFilter : filters.versionFilter
+		return other === '__ALL__' ? '' : other
+	}
+
+	const visibleCommits = (item: ComponentInfo, tab: 'functional' | 'a11y'): ComponentCommit[] => {
+		const commits = commitsOf(item, tab)
+		const versionFilter = versionFilterForTab(tab)
+		if (versionFilter === '') return commits
+		return commits.filter(commit => commit.version === versionFilter)
+	}
+
+	// Distingue « ce composant n'a pas d'historique » de « rien dans la version filtrée » :
+	// une carte retenue sur son axe fonctionnel peut n'avoir aucun changement a11y publié.
+	const emptyCommitsMessage = (tab: 'functional' | 'a11y'): string => {
+		const versionFilter = versionFilterForTab(tab)
+		return versionFilter === ''
+			? locales.commits.empty
+			: locales.commits.emptyForVersion(versionFilter)
+	}
 
 	const tabClass = (tab: 'functional' | 'a11y', activeTab: 'functional' | 'a11y') =>
 		`ci-tab ${activeTab === tab ? 'active' : ''} ${tab === 'a11y' ? 'a11y' : ''}`
@@ -402,11 +454,11 @@
 						</span>
 					</div>
 					<ul
-						v-if="(getCardTab(item.componentName) === 'functional' ? item.commits : item.a11yCommits)?.length"
+						v-if="visibleCommits(item, getCardTab(item.componentName)).length"
 						class="ci-commits"
 					>
 						<li
-							v-for="(c, i) in getCardTab(item.componentName) === 'functional' ? item.commits : item.a11yCommits"
+							v-for="(c, i) in visibleCommits(item, getCardTab(item.componentName))"
 							:key="i"
 						>
 							<span class="c-date">{{ formatDate(c.date) }}</span>
@@ -420,7 +472,7 @@
 						v-else
 						class="ci-empty"
 					>
-						{{ locales.commits.empty }}
+						{{ emptyCommitsMessage(getCardTab(item.componentName)) }}
 					</p>
 				</div>
 			</div>

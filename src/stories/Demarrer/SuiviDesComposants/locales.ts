@@ -23,6 +23,7 @@ export const locales = {
 	},
 	commits: {
 		empty: 'Aucun commit à afficher.',
+		emptyForVersion: (version: string): string => `Aucun changement publié dans la version ${version}.`,
 	},
 	emptyState: {
 		message: 'Veuillez sélectionner vos composants dans la barre de recherche',

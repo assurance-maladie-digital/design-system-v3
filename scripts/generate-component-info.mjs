@@ -4,7 +4,7 @@
  * Génère src/stories/Demarrer/component-info.json :
  * pour chaque composant (set de a11y-status.json), son titre Storybook (pour le lien),
  * son statut, sa dernière mise à jour fonctionnelle (functional-history-data.json),
- * sa dernière mise à jour accessibilité (a11y-history-data.json), ses 10 derniers
+ * sa dernière mise à jour accessibilité (a11y-history-data.json), ses derniers
  * commits fonctionnels et ses commits accessibilité (a11y-commits-data.json).
  *
  * Usage : node generate-component-info.mjs
@@ -14,6 +14,7 @@ import fs from 'fs';
 import path from 'path';
 import { execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
+import { getNextReleaseTag, getReleaseTags } from './lib/releaseTags.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -26,6 +27,9 @@ const a11yCommitsPath = path.join(dataDir, 'a11y-commits-data.json');
 const outputPath = path.join(root, 'src/stories/Demarrer/component-info.json');
 
 const a11yStatus = JSON.parse(fs.readFileSync(a11yStatusPath, 'utf8'));
+const currentPackageVersion = JSON.parse(
+  fs.readFileSync(path.join(root, 'package.json'), 'utf8'),
+).version.replace(/^v/i, '');
 const funcHistory = fs.existsSync(funcHistoryPath)
   ? JSON.parse(fs.readFileSync(funcHistoryPath, 'utf8'))
   : {};
@@ -69,22 +73,48 @@ function isDeprecated(componentPath) {
   );
 }
 
-function getLast10FunctionalCommits(componentPath) {
+// Version publiee dans laquelle un commit est sorti. Meme convention que le badge
+// fonctionnel (functional-history-report.mjs) : premiere release posterieure au commit,
+// sinon version courante de package.json (changement en attente de publication).
+function getCommitVersion(commitDate) {
+  const tag = getNextReleaseTag(commitDate, getReleaseTags(root));
+  if (tag) return tag.replace(/^v/i, '');
+  return currentPackageVersion;
+}
+
+// Nombre de commits fonctionnels conservés par composant. Le suivi des composants filtre
+// par version : un plafond trop bas amputait les versions anciennes, dont les commits
+// sortaient de la fenêtre pour les composants les plus actifs.
+const MAX_COMMITS_PER_COMPONENT = 25;
+
+// Fenêtre d'historique brute a lire avant filtrage : les commits a11y, release et doc en
+// sont ecartes, il en faut donc bien plus que le plafond conserve.
+const RAW_HISTORY_WINDOW = 150;
+
+function getRecentFunctionalCommits(componentPath) {
   if (!fs.existsSync(path.join(root, componentPath))) return [];
   try {
-    // On récupère un large historique puis on filtre, pour obtenir 10 commits fonctionnels.
     const out = execFileSync(
       'git',
-      ['log', '-60', '--date=short', '--pretty=format:%ad%s', '--', componentPath],
+      ['log', `-${RAW_HISTORY_WINDOW}`, '--date=iso', '--pretty=format:%ad|%s', '--', componentPath],
       { cwd: root, encoding: 'utf8' },
     );
-    // --date=short : la date fait toujours 10 caracteres (YYYY-MM-DD), le reste est le message.
     return out
       .split('\n')
       .filter(Boolean)
-      .map((line) => ({ date: line.slice(0, 10), message: line.slice(10) }))
+      .map((line) => {
+        const separator = line.indexOf('|');
+        const date = line.slice(0, separator);
+        return {
+          // La date affichee reste au format court ; la date iso complete sert a departager
+          // les commits et les tags publies le meme jour.
+          date: date.slice(0, 10),
+          message: line.slice(separator + 1),
+          version: getCommitVersion(date),
+        };
+      })
       .filter((c) => isFunctional(c.message.trim()))
-      .slice(0, 10);
+      .slice(0, MAX_COMMITS_PER_COMPONENT);
   } catch {
     return [];
   }
@@ -123,7 +153,7 @@ const results = a11yStatus.results.map((r) => {
     functionalDate: func ? func.date : null,
     a11yVersion: a11y ? a11y.version : null,
     a11yDate: a11y ? a11y.date : null,
-    commits: getLast10FunctionalCommits(componentPath),
+    commits: getRecentFunctionalCommits(componentPath),
     a11yCommits: a11yCommitList || [],
   };
 });
