@@ -6,7 +6,6 @@
 	import { useLocales } from '@/composables/useLocales'
 	import { locales as defaultLocales } from './locales'
 	import { ref, computed, useId } from 'vue'
-	import type { FeaturedDaysInWeek } from './useCalendar'
 
 	const props = defineProps<{
 		selectedDays?: Date[]
@@ -33,60 +32,39 @@
 
 	const locales = useLocales(defaultLocales, () => props.locales)
 
-	const { focusedDay, firstDayOfDisplayedMonth, keyboardInteractions, click, isPreviewed, previewRange } = useInteractions(
+	const {
+		focusedDay,
+		firstDayOfDisplayedMonth,
+		keyboardInteractions,
+		click,
+		isPreviewed,
+		isPreviewStart,
+		isPreviewEnd,
+		isRangeEdge,
+		previewRange,
+		rangeAnnouncement,
+		getAriaLabelForRange,
+	} = useInteractions(
 		displayedMonth,
 		rootElement,
 		() => props.selectRange,
+		() => props.selectedRange,
+		locales,
 		emits,
 	)
 
 	const { transitionProps } = useMonthTransition(displayedMonth)
 
-	const rangeAnnouncement = computed(() => {
-		if (!props.selectedRange) return ''
-		const [start, end] = props.selectedRange
-		return locales.value.rangeSelected(start.toLocaleDateString('fr-FR'), end.toLocaleDateString('fr-FR'))
-	})
-
-	const getAriaLabelForRange = (day: FeaturedDaysInWeek) => {
-		if (!props.selectRange) return undefined
-		const dayIndex = day.rawDate.getDay()
-		const dayInfo = localizedDays[dayIndex]!
-		const dayWithName = {
-			...day,
-			dayName: dayInfo.long,
-		}
-		if (day.isStartRange) return locales.value.rangeStartLabel(dayWithName)
-		if (day.isEndRange) return locales.value.rangeEndLabel(dayWithName)
-		if (day.isInRange) return locales.value.rangeIncludedLabel(dayWithName)
-		return undefined
-	}
-
-	const getCalendarAriaLabel = () => {
-		if (props.ariaLabelledby) return undefined
-		return `${locales.value.calendarAriaLabel}, ${localizedFullMonth.value}`
-	}
-
 	const instructionsId = `sy-calendar-instructions-${useId()}`
 
 	const calendarInstructions = computed(() => {
-		const rangeInstructions = props.selectRange
-			? `${locales.value.useSpaceToSelect}, ${locales.value.useShiftArrowsToExtendRange}`
-			: locales.value.useSpaceToSelect
-		return `${locales.value.useArrowsToNavigate}, ${rangeInstructions}.`
+		const parts = [
+			locales.value.useArrowsToNavigate,
+			locales.value.useSpaceToSelect,
+			...(props.selectRange ? [locales.value.useShiftArrowsToExtendRange] : []),
+		]
+		return `${parts.join(', ')}.`
 	})
-
-	const getDayTabIndex = (day: FeaturedDaysInWeek) => {
-		if (focusedDay.value === day.ISO8601) return 0
-		if (props.selectRange && (day.isStartRange || day.isEndRange)) return 0
-		return -1
-	}
-
-	const getAriaSelected = (day: FeaturedDaysInWeek): boolean | undefined => {
-		if (day.isSelected) return true
-		if (props.selectRange && (day.isStartRange || day.isEndRange)) return true
-		return undefined
-	}
 
 </script>
 <template>
@@ -112,7 +90,7 @@
 				:key="firstDayOfDisplayedMonth"
 				class="sy-calendar"
 				:aria-labelledby="props.ariaLabelledby"
-				:aria-label="getCalendarAriaLabel()"
+				:aria-label="props.ariaLabelledby ? undefined : localizedFullMonth"
 				:aria-describedby="instructionsId"
 				role="grid"
 			>
@@ -151,11 +129,13 @@
 								'sy-calendar__day--in-range': day.isInRange,
 								'sy-calendar__day--weekend': day.isWeekend,
 								'sy-calendar__day--preview': isPreviewed(day.ISO8601),
+								'sy-calendar__day--preview-start': isPreviewStart(day.ISO8601),
+								'sy-calendar__day--preview-end': isPreviewEnd(day.ISO8601),
 							}]"
 							:data-date="day.ISO8601"
-							:tabindex="getDayTabIndex(day)"
+							:tabindex="focusedDay === day.ISO8601 || isRangeEdge(day) ? 0 : -1"
 							:aria-current="day.isToday ? 'date' : undefined"
-							:aria-selected="getAriaSelected(day)"
+							:aria-selected="day.isSelected || isRangeEdge(day) ? true : undefined"
 							:aria-label="getAriaLabelForRange(day)"
 							role="gridcell"
 							v-bind="keyboardInteractions"
@@ -218,14 +198,23 @@
 	opacity: 0.6;
 }
 
+.sy-calendar__day--in-range > div {
+	background-color: rgb(var(--v-theme-blue-lighten20));
+	color: white;
+}
+
 .sy-calendar__day--start-range > div {
 	border-top-left-radius: 50%;
 	border-bottom-left-radius: 50%;
+	/* stylelint-disable-next-line property-no-unknown */
+	corner-shape: squircle;
 }
 
 .sy-calendar__day--end-range > div {
 	border-top-right-radius: 50%;
 	border-bottom-right-radius: 50%;
+	/* stylelint-disable-next-line property-no-unknown */
+	corner-shape: squircle;
 }
 
 .sy-calendar__day--start-range > div,
@@ -240,9 +229,18 @@
 	color: white;
 }
 
-.sy-calendar__day--in-range > div {
-	background-color: rgb(var(--v-theme-blue-lighten20));
-	color: white;
+.sy-calendar__day--preview-start > div {
+	border-top-left-radius: 50%;
+	border-bottom-left-radius: 50%;
+	/* stylelint-disable-next-line property-no-unknown */
+	corner-shape: squircle;
+}
+
+.sy-calendar__day--preview-end > div {
+	border-top-right-radius: 50%;
+	border-bottom-right-radius: 50%;
+	/* stylelint-disable-next-line property-no-unknown */
+	corner-shape: squircle;
 }
 
 .sy-calendar__day {

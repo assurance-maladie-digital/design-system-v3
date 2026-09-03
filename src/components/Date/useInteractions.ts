@@ -1,12 +1,15 @@
 import { computed, ref, nextTick, type MaybeRefOrGetter } from 'vue'
 import type { Ref } from 'vue'
-import { getISODatePart } from './utils'
+import { getISODatePart, parseISODatePart } from './utils'
 import useRange from './useRange'
+import type { locales as defaultLocales } from './locales'
 
 export default function useInteractions(
 	displayedMonth: Ref<Date | undefined>,
 	rootElement: Ref<HTMLElement | undefined>,
 	selectRange: MaybeRefOrGetter<boolean | undefined>,
+	selectedRange: MaybeRefOrGetter<[Date, Date] | undefined>,
+	locales: MaybeRefOrGetter<typeof defaultLocales>,
 	emits: {
 		(event: 'click:day', value: Date): void
 		(event: 'update:selectedRange', value: [Date, Date]): void
@@ -38,7 +41,7 @@ export default function useInteractions(
 	const focusedDay = computed({
 		get: () => {
 			const userDay = userFocusedDay.value
-			return userDay && !isOutsideDisplayedMonth(new Date(userDay))
+			return userDay && !isOutsideDisplayedMonth(parseISODatePart(userDay))
 				? userDay
 				: firstDayOfDisplayedMonth.value
 		},
@@ -56,20 +59,20 @@ export default function useInteractions(
 	}
 
 	function moveFocusedDayBy(days: number) {
-		const currentFocusedDate = new Date(focusedDay.value)
+		const currentFocusedDate = parseISODatePart(focusedDay.value)
 		currentFocusedDate.setDate(currentFocusedDate.getDate() + days)
 		focusDay(currentFocusedDate)
 		moveFocusToFocusedDay()
 	}
 
 	function firstDay() {
-		const date = new Date(firstDayOfDisplayedMonth.value)
+		const date = parseISODatePart(firstDayOfDisplayedMonth.value)
 		focusDay(date)
 		moveFocusToFocusedDay()
 	}
 
 	function lastDay() {
-		const date = new Date(firstDayOfDisplayedMonth.value)
+		const date = parseISODatePart(firstDayOfDisplayedMonth.value)
 		date.setMonth(date.getMonth() + 1)
 		date.setDate(0)
 		focusDay(date)
@@ -91,14 +94,27 @@ export default function useInteractions(
 		focusedElement.focus()
 	}
 
-	const { isSelecting, isPreviewed, previewRange, selectDay } = useRange(
+	const {
+		isSelecting,
+		isPreviewed,
+		isPreviewStart,
+		isPreviewEnd,
+		isRangeEdge,
+		previewRange,
+		selectDay,
+		cancelSelection,
+		rangeAnnouncement,
+		getAriaLabelForRange,
+	} = useRange(
 		selectRange,
+		selectedRange,
+		locales,
 		range => emits('update:selectedRange', range),
 	)
 
 	/** Shift + arrow: extend the pending range preview instead of moving alone */
 	function extendRangeBy(days: number) {
-		const date = new Date(focusedDay.value)
+		const date = parseISODatePart(focusedDay.value)
 		date.setDate(date.getDate() + days)
 		previewRange(date)
 		focusDay(date)
@@ -122,7 +138,11 @@ export default function useInteractions(
 		'ArrowUp': arrowAction(-7),
 		'Home': firstDay,
 		'End': lastDay,
-		' ': () => click(new Date(focusedDay.value)),
+		' ': () => click(parseISODatePart(focusedDay.value)),
+		// Cancel the pending selection, no-op if none is in progress
+		'Escape': () => {
+			if (isSelecting.value) cancelSelection()
+		},
 	}
 
 	const keyboardInteractions = {
@@ -148,6 +168,11 @@ export default function useInteractions(
 		keyboardInteractions,
 		click,
 		isPreviewed,
+		isPreviewStart,
+		isPreviewEnd,
+		isRangeEdge,
 		previewRange,
+		rangeAnnouncement,
+		getAriaLabelForRange,
 	}
 }

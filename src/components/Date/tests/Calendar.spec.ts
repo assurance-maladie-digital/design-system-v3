@@ -8,8 +8,6 @@ const displayedMonth = new Date(2024, 5, 15, 12)
 const today = new Date(2024, 5, 15, 12)
 const originalLanguage = Object.getOwnPropertyDescriptor(navigator, 'language')
 
-const calendarAriaLabel = (month: string) => `Calendrier, ${month}`
-
 describe('Calendar', () => {
 	let wrapper: VueWrapper<InstanceType<typeof Calendar>> | null = null
 
@@ -43,7 +41,7 @@ describe('Calendar', () => {
 	it('renders a six-week grid starting on Monday with localized weekday headings', async () => {
 		const wrapper = await mountCalendar({ displayedMonth })
 
-		expect(wrapper.find('.sy-calendar').attributes('aria-label')).toBe(calendarAriaLabel('juin 2024'))
+		expect(wrapper.find('.sy-calendar').attributes('aria-label')).toBe('juin 2024')
 		const instructionsId = wrapper.find('.sy-calendar').attributes('aria-describedby')!
 		expect(wrapper.find(`#${instructionsId}`).classes()).toContain('d-sr-only')
 		expect(wrapper.find(`#${instructionsId}`).text()).toBe('Utilisez les flèches pour naviguer, Espace pour sélectionner.')
@@ -71,7 +69,7 @@ describe('Calendar', () => {
 		await wrapper.setProps({ displayedMonth: new Date(2024, 11, 15, 12) })
 		await nextTick()
 
-		expect(wrapper.find('.sy-calendar').attributes('aria-label')).toBe(calendarAriaLabel('décembre 2024'))
+		expect(wrapper.find('.sy-calendar').attributes('aria-label')).toBe('décembre 2024')
 		expect(wrapper.findAll('.sy-calendar__week').at(0)?.findAll('.sy-calendar__day').map(day => day.attributes('data-date')))
 			.toEqual(['2024-11-25', '2024-11-26', '2024-11-27', '2024-11-28', '2024-11-29', '2024-11-30', '2024-12-01'])
 		expect(wrapper.find('[data-date="2024-06-15"]').exists()).toBe(false)
@@ -81,13 +79,13 @@ describe('Calendar', () => {
 	it('falls back to the mocked current month when displayedMonth is undefined', async () => {
 		const wrapper = await mountCalendar()
 
-		expect(wrapper.find('.sy-calendar').attributes('aria-label')).toBe(calendarAriaLabel('juin 2024'))
+		expect(wrapper.find('.sy-calendar').attributes('aria-label')).toBe('juin 2024')
 		expect(wrapper.find('[data-date="2024-06-15"]').exists()).toBe(true)
 
 		await wrapper.setProps({ displayedMonth: undefined })
 		await nextTick()
 
-		expect(wrapper.find('.sy-calendar').attributes('aria-label')).toBe(calendarAriaLabel('juin 2024'))
+		expect(wrapper.find('.sy-calendar').attributes('aria-label')).toBe('juin 2024')
 	})
 
 	it('uses aria-labelledby in preference to the localized accessible name', async () => {
@@ -116,6 +114,10 @@ describe('Calendar', () => {
 		expect(wrapper.find('[data-date="2024-06-12"]').classes()).toContain('sy-calendar__day--start-range')
 		expect(wrapper.find('[data-date="2024-06-13"]').classes()).toContain('sy-calendar__day--in-range')
 		expect(wrapper.find('[data-date="2024-06-14"]').classes()).toContain('sy-calendar__day--end-range')
+		// Regression: a range boundary must not be flagged as in-range, even when
+		// the range dates carry a time component (12:00 here) while grid days are midnight
+		expect(wrapper.find('[data-date="2024-06-12"]').classes()).not.toContain('sy-calendar__day--in-range')
+		expect(wrapper.find('[data-date="2024-06-14"]').classes()).not.toContain('sy-calendar__day--in-range')
 		expect(wrapper.find('[data-date="2024-06-01"]').classes()).toContain('sy-calendar__day--weekend')
 		expect(wrapper.find('[data-date="2024-05-31"]').classes()).toContain('sy-calendar__day--other-month')
 	})
@@ -157,7 +159,7 @@ describe('Calendar', () => {
 		await wrapper.find('[data-date="2024-06-30"]').trigger('click')
 		await wrapper.find('[data-date="2024-06-30"]').trigger('keydown', { key: 'ArrowRight' })
 
-		expect(wrapper.find('.sy-calendar').attributes('aria-label')).toBe(calendarAriaLabel('juillet 2024'))
+		expect(wrapper.find('.sy-calendar').attributes('aria-label')).toBe('juillet 2024')
 		expect(wrapper.find('[data-date="2024-07-01"]').attributes('tabindex')).toBe('0')
 	})
 
@@ -173,7 +175,7 @@ describe('Calendar', () => {
 		// 2024-05-27 is displayed in the June grid as an overflow day
 		await wrapper.find('[data-date="2024-05-27"]').trigger('click')
 
-		expect(wrapper.find('.sy-calendar').attributes('aria-label')).toBe(calendarAriaLabel('mai 2024'))
+		expect(wrapper.find('.sy-calendar').attributes('aria-label')).toBe('mai 2024')
 		expect(wrapper.find('[data-date="2024-05-27"]').attributes('tabindex')).toBe('0')
 	})
 
@@ -185,15 +187,32 @@ describe('Calendar', () => {
 
 		expect(wrapper.emitted('update:selectedRange')).toBeUndefined()
 		expect(wrapper.find('[data-date="2024-06-01"]').classes()).toContain('sy-calendar__day--preview')
+		// Single-day preview: the day is both boundaries of the pending range
+		expect(wrapper.find('[data-date="2024-06-01"]').classes()).toContain('sy-calendar__day--preview-start')
+		expect(wrapper.find('[data-date="2024-06-01"]').classes()).toContain('sy-calendar__day--preview-end')
 
 		await wrapper.find('[data-date="2024-06-01"]').trigger('keydown', { key: 'ArrowRight' })
 		await wrapper.find('[data-date="2024-06-02"]').trigger('keydown', { key: 'ArrowRight' })
 		await wrapper.find('[data-date="2024-06-03"]').trigger('keydown', { key: ' ' })
 
 		const emitted = wrapper.emitted('update:selectedRange')
+		const { getISODatePart } = await import('../utils')
 		expect(emitted).toHaveLength(1)
-		expect((emitted![0]![0] as [Date, Date]).map(date => date.toISOString().slice(0, 10)))
+		expect((emitted![0]![0] as [Date, Date]).map(getISODatePart))
 			.toEqual(['2024-06-01', '2024-06-03'])
+	})
+
+	it('marks the boundaries of the previewed range', async () => {
+		const wrapper = await mountCalendar({ displayedMonth, selectRange: true })
+
+		await wrapper.find('[data-date="2024-06-10"]').trigger('click')
+		await wrapper.find('[data-date="2024-06-15"]').trigger('mouseenter')
+
+		expect(wrapper.find('[data-date="2024-06-10"]').classes()).toContain('sy-calendar__day--preview-start')
+		expect(wrapper.find('[data-date="2024-06-12"]').classes()).toContain('sy-calendar__day--preview')
+		expect(wrapper.find('[data-date="2024-06-12"]').classes()).not.toContain('sy-calendar__day--preview-start')
+		expect(wrapper.find('[data-date="2024-06-12"]').classes()).not.toContain('sy-calendar__day--preview-end')
+		expect(wrapper.find('[data-date="2024-06-15"]').classes()).toContain('sy-calendar__day--preview-end')
 	})
 
 	it('selects the focused day with Space outside range mode, per the APG grid pattern', async () => {
@@ -203,8 +222,9 @@ describe('Calendar', () => {
 		await wrapper.find('[data-date="2024-06-01"]').trigger('keydown', { key: ' ' })
 
 		const emitted = wrapper.emitted('click:day')
+		const { getISODatePart } = await import('../utils')
 		expect(emitted).toHaveLength(1)
-		expect((emitted![0]![0] as Date).toISOString().slice(0, 10)).toBe('2024-06-01')
+		expect(getISODatePart(emitted![0]![0] as Date)).toBe('2024-06-01')
 		expect(wrapper.emitted('update:selectedRange')).toBeUndefined()
 	})
 })

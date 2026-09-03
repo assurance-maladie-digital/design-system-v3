@@ -1,5 +1,4 @@
 export const locales = {
-	calendarAriaLabel: 'Calendrier',
 	useArrowsToNavigate: 'Utilisez les flèches pour naviguer',
 	useSpaceToSelect: 'Espace pour sélectionner',
 	useShiftArrowsToExtendRange: 'Maj + Flèches pour étendre la sélection',

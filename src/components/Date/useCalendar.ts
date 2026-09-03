@@ -101,22 +101,28 @@ export default function useCalendar(
 		const firstDay = dayOfTheMonth.value[0]!
 		const lastDay = dayOfTheMonth.value.at(-1)!
 		const range = toValue(selectedRange)
+		// Day-granularity ISO bounds: range dates may carry a time component
+		const startIso = range?.[0] ? getISODatePart(range[0]) : undefined
+		const endIso = range?.[1] ? getISODatePart(range[1]) : undefined
 		const days = [...daysBeforeStartOfMonth.value, ...dayOfTheMonth.value, ...daysAfterEndOfMonth.value]
 
-		return days.map(rawDate => ({
-			rawDate,
-			isPreviousMonth: rawDate < firstDay,
-			isNextMonth: rawDate > lastDay,
-			isCurrentMonth: rawDate >= firstDay && rawDate <= lastDay,
-			day: rawDate.getDate(),
-			ISO8601: getISODatePart(rawDate),
-			isToday: rawDate.toDateString() === new Date().toDateString(),
-			isWeekend: rawDate.getDay() === 0 || rawDate.getDay() === 6,
-			isSelected: isDaySelected(rawDate),
-			isStartRange: range?.[0]?.toDateString() === rawDate.toDateString(),
-			isInRange: range?.[0] && range[1] ? rawDate > range[0] && rawDate < range[1] : false,
-			isEndRange: range?.[1]?.toDateString() === rawDate.toDateString(),
-		}))
+		return days.map((rawDate) => {
+			const isoDate = getISODatePart(rawDate)
+			return {
+				rawDate,
+				isPreviousMonth: rawDate < firstDay,
+				isNextMonth: rawDate > lastDay,
+				isCurrentMonth: rawDate >= firstDay && rawDate <= lastDay,
+				day: rawDate.getDate(),
+				ISO8601: isoDate,
+				isToday: rawDate.toDateString() === new Date().toDateString(),
+				isWeekend: rawDate.getDay() === 0 || rawDate.getDay() === 6,
+				isSelected: isDaySelected(rawDate),
+				isStartRange: startIso === isoDate,
+				isInRange: startIso !== undefined && endIso !== undefined && isoDate > startIso && isoDate < endIso,
+				isEndRange: endIso === isoDate,
+			}
+		})
 	})
 
 	type DisplayedFeaturedDaysInWeek = [FeaturedDaysInWeek, FeaturedDaysInWeek, FeaturedDaysInWeek, FeaturedDaysInWeek, FeaturedDaysInWeek, FeaturedDaysInWeek, FeaturedDaysInWeek]
