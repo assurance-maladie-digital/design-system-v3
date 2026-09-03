@@ -197,6 +197,7 @@
 					:icon="iconOnly"
 					:size="iconOnly ? 'x-large' : 'default'"
 					:width="iconOnly ? 'auto' : undefined"
+					color="primary"
 					class="sy-user-menu-btn"
 					v-bind="{
 						...menuProps,
@@ -332,26 +333,9 @@
 	}
 }
 
-.sy-user-menu-btn {
-	padding: 12px !important;
-
-	.subtitle {
+.subtitle {
 		font-size: 0.875rem;
 		line-height: 1.5;
-	}
-}
-
-.sy-user-menu-btn:hover :deep(.v-btn__overlay) {
-	background: rgba(var(--v-theme-interaction-dark), 0.2) !important;
-}
-
-.sy-user-menu-btn:active :deep(.v-btn__overlay) {
-	background: rgba(var(--v-theme-interaction-dark), 0.4) !important;
-}
-
-.sy-user-menu-btn[aria-expanded='true'] :deep(.v-btn__overlay) {
-	background: rgba(var(--v-theme-interaction-dark), 0.2) !important;
-	opacity: 1;
 }
 
 .item-title {
