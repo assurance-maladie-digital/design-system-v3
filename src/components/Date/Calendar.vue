@@ -78,15 +78,6 @@
 
 	const instructionsId = `sy-calendar-instructions-${useId()}`
 
-	const calendarInstructions = computed(() => {
-		const parts = [
-			locales.value.useArrowsToNavigate,
-			locales.value.useSpaceToSelect,
-			...(props.selectRange ? [locales.value.useShiftArrowsToExtendRange] : []),
-		]
-		return `${parts.join(', ')}.`
-	})
-
 </script>
 <template>
 	<div
@@ -104,7 +95,7 @@
 			:id="instructionsId"
 			class="d-sr-only"
 		>
-			{{ calendarInstructions }}
+			{{ locales.calendarInstructions }}
 		</div>
 		<Transition v-bind="transitionProps">
 			<table
@@ -161,7 +152,6 @@
 							role="gridcell"
 							v-bind="keyboardInteractions"
 							@click="() => click(day.rawDate)"
-							@keydown.enter="() => click(day.rawDate)"
 							@mouseenter="() => previewRange(day.rawDate)"
 							@mouseleave="() => previewRange(null)"
 							@focusin="() => previewRange(day.rawDate)"

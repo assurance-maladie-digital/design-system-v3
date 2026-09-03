@@ -228,4 +228,16 @@ describe('Calendar', () => {
 		expect(getISODatePart(emitted![0]![0] as Date)).toBe('2024-06-01')
 		expect(wrapper.emitted('update:selectedRange')).toBeUndefined()
 	})
+
+	it('selects the focused day with Enter, through the shared keyboard interactions', async () => {
+		const wrapper = await mountCalendar({ displayedMonth })
+
+		// No user interaction yet: the first day of the month is the focused day
+		await wrapper.find('[data-date="2024-06-01"]').trigger('keydown', { key: 'Enter' })
+
+		const emitted = wrapper.emitted('click:day')
+		const { getISODatePart } = await import('../utils')
+		expect(emitted).toHaveLength(1)
+		expect(getISODatePart(emitted![0]![0] as Date)).toBe('2024-06-01')
+	})
 })

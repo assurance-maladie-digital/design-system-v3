@@ -1,4 +1,4 @@
-import { computed, ref, nextTick, type MaybeRefOrGetter } from 'vue'
+import { computed, nextTick, ref, type MaybeRefOrGetter } from 'vue'
 import type { Ref } from 'vue'
 import { getISODatePart, parseISODatePart } from './utils'
 import useRangeSelection from './useRangeSelection'
@@ -105,33 +105,16 @@ export default function useInteractions(
 		range => emits('update:selectedRange', range),
 	)
 
-	/** Shift + arrow: extend the pending range preview instead of moving alone */
-	function extendRangeBy(days: number) {
-		const date = parseISODatePart(focusedDay.value)
-		date.setDate(date.getDate() + days)
-		previewRange(date)
-		focusDay(date)
-	}
-
-	function arrowAction(days: number) {
-		return (event?: KeyboardEvent) => {
-			if (event?.shiftKey && isSelecting.value) {
-				extendRangeBy(days)
-			}
-			else {
-				moveFocusedDayBy(days)
-			}
-		}
-	}
-
-	const keyboardActions: Record<string, (event?: KeyboardEvent) => void> = {
-		'ArrowRight': arrowAction(1),
-		'ArrowLeft': arrowAction(-1),
-		'ArrowDown': arrowAction(7),
-		'ArrowUp': arrowAction(-7),
+	/** Arrows move the focus: the pending range preview follows it (focusin binding) */
+	const keyboardActions: Record<string, () => void> = {
+		'ArrowRight': () => moveFocusedDayBy(1),
+		'ArrowLeft': () => moveFocusedDayBy(-1),
+		'ArrowDown': () => moveFocusedDayBy(7),
+		'ArrowUp': () => moveFocusedDayBy(-7),
 		'Home': firstDay,
 		'End': lastDay,
 		' ': () => click(parseISODatePart(focusedDay.value)),
+		'Enter': () => click(parseISODatePart(focusedDay.value)),
 		// Cancel the pending selection, no-op if none is in progress
 		'Escape': () => {
 			if (isSelecting.value) cancelSelection()
@@ -143,7 +126,7 @@ export default function useInteractions(
 			const action = keyboardActions[event.key]
 			if (action) {
 				event.preventDefault()
-				action(event)
+				action()
 			}
 		},
 	}

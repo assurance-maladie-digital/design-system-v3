@@ -8,7 +8,6 @@ export type FeaturedDaysInWeek = {
 	rawDate: Date
 	isPreviousMonth: boolean
 	isNextMonth: boolean
-	isCurrentMonth: boolean
 	day: number
 	ISO8601: string
 	isSelected: boolean
@@ -115,7 +114,6 @@ export default function useCalendar(
 				rawDate,
 				isPreviousMonth: rawDate < firstDay,
 				isNextMonth: rawDate > lastDay,
-				isCurrentMonth: rawDate >= firstDay && rawDate <= lastDay,
 				day: rawDate.getDate(),
 				ISO8601: isoDate,
 				isToday: rawDate.toDateString() === new Date().toDateString(),
