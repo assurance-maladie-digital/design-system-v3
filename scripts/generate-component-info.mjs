@@ -42,8 +42,25 @@ const a11yCommits = fs.existsSync(a11yCommitsPath)
 
 // Filtres identiques au badge fonctionnel (functional-history-report.mjs) : on ne garde que
 // les modifications FONCTIONNELLES en excluant l'a11y, les release/ci/doc et les commits doc-only.
+// Ces trois expressions portent sur le MESSAGE de commit, jamais sur les fichiers touchés.
+
+// Commit d'accessibilité : il alimente déjà l'historique a11y, on ne le compte pas deux fois.
+// Couvre les formulations rencontrées dans l'historique du dépôt — « a11y », « accessibilité »
+// (sans accent final pour attraper le mot sous toutes ses formes), « WCAG », « aria-label »
+// ou « aria label » (d'où `[-\s]`, qui évite de matcher « arial »), « contraste », « audit
+// accessibilité » (le `.` couvre l'espace, le tiret ou les deux-points) et « RGAA ».
 const a11yOnlyRegex = /a11y|accessibilit|wcag|aria[-\s]|contraste|audit.access|rgaa/i;
+
+// Commit de release, d'outillage ou de doc, reconnu à son PRÉFIXE de type conventionnel
+// (`^`) : « chore: », « docs(readme): », « ci! », « build », « release », « bump »,
+// « renovate », et les messages automatiques de Renovate (« update dependency X »,
+// « update pnpm monorepo »). Le groupe `(\([^)]+\))?` accepte la portée optionnelle
+// `(scope)`, et `[!:\s]` le `!` d'un breaking change, le `:` ou une simple espace.
 const releaseOrDocRegex = /^(chore|docs?|ci|build|release|bump|renovate|update dependency|update .* monorepo)(\([^)]+\))?[!:\s]/i;
+
+// Commit sans préfixe conventionnel mais sans impact fonctionnel : mise à jour d'un badge
+// de version, du changelog, passage de lint ou retouche de doc / de tokens. Recherché
+// n'importe où dans le message, ces commits n'étant pas préfixés.
 const docOnlyMessageRegex = /version badge|add.*badge|badge.*version|update.*changelog|run lint|improve.*doc|improve.*token/i;
 
 const isFunctional = (msg) =>

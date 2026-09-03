@@ -4,6 +4,12 @@
 	import infoData from '../component-info.json'
 	import { locales } from './locales'
 
+	/** Axe d'historique d'un composant : évolutions fonctionnelles ou accessibilité. */
+	type TrackingTab = 'functional' | 'a11y'
+
+	/** Valeur sentinelle des options « tout » des deux filtres. */
+	const ALL_OPTION = '__ALL__'
+
 	interface ComponentCommit {
 		date: string
 		message: string
@@ -27,7 +33,7 @@
 		selectedComponents: string[]
 		versionFilter: string
 		includeDeprecated: boolean
-		cardTabs: Record<string, 'functional' | 'a11y'>
+		cardTabs: Record<string, TrackingTab>
 	}
 
 	const filters = reactive<FilterState>({
@@ -37,27 +43,19 @@
 		cardTabs: {},
 	})
 
-	// Watch for null from SyAutocomplete and convert to empty array
-	watch(() => filters.selectedComponents, (newVal) => {
-		if (newVal === null) {
-			filters.selectedComponents = []
-		}
-	})
-
-	// Remove deprecated components from selection when switch is turned off
+	// Retire les dépréciés de la sélection quand le commutateur est éteint.
 	watch(() => filters.includeDeprecated, (includeDeprecated) => {
-		if (!includeDeprecated && filters.selectedComponents.length > 0) {
-			filters.selectedComponents = filters.selectedComponents.filter((compName) => {
-				const component = results.find(r => r.componentName === compName)
-				return component?.status === 'actif'
-			})
-		}
+		if (includeDeprecated || filters.selectedComponents.length === 0) return
+		setSelection(selectedComponentNames.value.filter((componentName) => {
+			const component = results.find(r => r.componentName === componentName)
+			return component?.status === 'actif'
+		}))
 	})
 
-	const getCardTab = (componentName: string): 'functional' | 'a11y' =>
+	const getCardTab = (componentName: string): TrackingTab =>
 		filters.cardTabs[componentName] || 'functional'
 
-	const setCardTab = (componentName: string, tab: 'functional' | 'a11y') => {
+	const setCardTab = (componentName: string, tab: TrackingTab) => {
 		filters.cardTabs[componentName] = tab
 	}
 
@@ -73,7 +71,7 @@
 	const componentOptions = computed(() => {
 		const allOption = {
 			text: locales.autocomplete.selectAll,
-			value: '__ALL__',
+			value: ALL_OPTION,
 		}
 
 		const componentItems = results
@@ -87,23 +85,47 @@
 		return [allOption, ...componentItems]
 	})
 
-	// Handle select all / deselect all
-	watch(() => filters.selectedComponents, (newVal, oldVal) => {
-		// Check if "__ALL__" was just added
-		if (newVal.includes('__ALL__') && !oldVal?.includes('__ALL__')) {
-			// Select all available components
-			const availableComponents = results
-				.filter(item => filters.includeDeprecated || item.status === 'actif')
-				.map(item => item.componentName)
-			filters.selectedComponents = availableComponents
-		}
-	}, { deep: true })
+	const availableComponentNames = computed(() => results
+		.filter(item => filters.includeDeprecated || item.status === 'actif')
+		.map(item => item.componentName))
 
-	const scopedResults = computed(() => filters.selectedComponents.length > 0
-		? results.filter(r => filters.selectedComponents.includes(r.componentName))
+	/** Sélection réelle : la sentinelle « tout » n'est pas un composant. */
+	const selectedComponentNames = computed(() =>
+		filters.selectedComponents.filter(value => value !== ALL_OPTION),
+	)
+
+	// `ALL_OPTION` est conservée dans le modèle tant que tous les composants sont
+	// sélectionnés : sans elle, l'option « Sélectionner tous » ne se cochait jamais,
+	// puisqu'elle était remplacée par la liste des composants dès le clic.
+	const setSelection = (componentNames: string[]): void => {
+		const isComplete = componentNames.length > 0
+			&& componentNames.length === availableComponentNames.value.length
+		filters.selectedComponents = isComplete ? [ALL_OPTION, ...componentNames] : componentNames
+	}
+
+	const onSelectionChange = (selection: string[] | null): void => {
+		const next = selection ?? []
+		const wasAllChecked = filters.selectedComponents.includes(ALL_OPTION)
+		const isAllChecked = next.includes(ALL_OPTION)
+
+		// Clic direct sur l'option « tout » : elle coche ou décoche la liste entière.
+		if (isAllChecked && !wasAllChecked) {
+			setSelection(availableComponentNames.value)
+			return
+		}
+		if (!isAllChecked && wasAllChecked) {
+			filters.selectedComponents = []
+			return
+		}
+
+		setSelection(next.filter(value => value !== ALL_OPTION))
+	}
+
+	const scopedResults = computed(() => selectedComponentNames.value.length > 0
+		? results.filter(r => selectedComponentNames.value.includes(r.componentName))
 		: results)
 
-	const commitsOf = (item: ComponentInfo, tab: 'functional' | 'a11y'): ComponentCommit[] =>
+	const commitsOf = (item: ComponentInfo, tab: TrackingTab): ComponentCommit[] =>
 		(tab === 'functional' ? item.commits : item.a11yCommits) ?? []
 
 	// Les pré-versions (`0.0.15-alpha`…) précèdent la première publication stable de la
@@ -123,12 +145,16 @@
 		),
 	].filter(isStableVersion).sort((a, b) => b.localeCompare(a, undefined, { numeric: true })))
 
+	// Reproduit la normalisation des identifiants Storybook : toute suite d'espaces et de
+	// ponctuation devient un tiret unique, puis les tirets de bord sont retirés.
 	const slug = (title: string) =>
 		title.toLowerCase().replace(/[\s/'’()&,.]+/g, '-').replace(/^-+|-+$/g, '')
 
 	const getUrl = (componentName: string, storybookTitle?: string) =>
 		storybookTitle
 			? `/?path=/docs/${slug(storybookTitle)}--docs`
+			// Repli sans titre Storybook : le chemin est deviné en ne gardant que
+			// l'alphanumérique du nom de composant (`Customs/SyTabs` -> `customssytabs`).
 			: `/?path=/docs/composants-${componentName.toLowerCase().replace(/[^a-z0-9]/g, '')}--docs`
 
 	const REPO = 'https://github.com/assurance-maladie-digital/design-system-v3'
@@ -148,6 +174,7 @@
 	}
 
 	const renderMessage = (msg: string) => {
+		// Première référence de PR du message (`#2482`), transformée en lien vers GitHub.
 		const m = msg.match(/#(\d+)/)
 		if (!m) return msg
 		const index = m.index ?? 0
@@ -159,7 +186,7 @@
 	// historique antérieur.
 	const matchesVersion = (item: ComponentInfo, versionFilter: string): boolean =>
 		versionFilter === ''
-		|| versionFilter === '__ALL__'
+		|| versionFilter === ALL_OPTION
 		|| [...commitsOf(item, 'functional'), ...commitsOf(item, 'a11y')]
 			.some(commit => commit.version === versionFilter)
 
@@ -174,7 +201,7 @@
 
 	const filteredRows = computed(() => {
 		// « Toutes les versions » sans composant choisi : on affiche tout le catalogue.
-		if (filters.selectedComponents.length === 0 && filters.versionFilter === '__ALL__') {
+		if (selectedComponentNames.value.length === 0 && filters.versionFilter === ALL_OPTION) {
 			return [...results].filter(isVisibleStatus).sort(byMostRecentVersion)
 		}
 
@@ -183,8 +210,8 @@
 		return [...results]
 			.filter(
 				item =>
-					(filters.selectedComponents.length === 0
-						|| filters.selectedComponents.includes(item.componentName))
+					(selectedComponentNames.value.length === 0
+						|| selectedComponentNames.value.includes(item.componentName))
 					&& matchesVersion(item, filters.versionFilter)
 					&& isVisibleStatus(item),
 			)
@@ -196,10 +223,10 @@
 	// Le filtre unique s'applique aux deux onglets : `__ALL__` et l'absence de choix
 	// laissent l'historique complet.
 	const activeVersion = computed(() =>
-		filters.versionFilter === '__ALL__' ? '' : filters.versionFilter,
+		filters.versionFilter === ALL_OPTION ? '' : filters.versionFilter,
 	)
 
-	const visibleCommits = (item: ComponentInfo, tab: 'functional' | 'a11y'): ComponentCommit[] => {
+	const visibleCommits = (item: ComponentInfo, tab: TrackingTab): ComponentCommit[] => {
 		const commits = commitsOf(item, tab)
 		if (activeVersion.value === '') return commits
 		return commits.filter(commit => commit.version === activeVersion.value)
@@ -223,11 +250,11 @@
 			? locales.lastUpdate.functional
 			: locales.lastUpdate.a11y
 
-	const tabClass = (tab: 'functional' | 'a11y', activeTab: 'functional' | 'a11y') =>
+	const tabClass = (tab: TrackingTab, activeTab: TrackingTab) =>
 		`ci-tab ${activeTab === tab ? 'active' : ''} ${tab === 'a11y' ? 'a11y' : ''}`
 
 	const hasActiveFilter = computed(() =>
-		filters.selectedComponents.length > 0 || activeVersion.value !== '',
+		selectedComponentNames.value.length > 0 || activeVersion.value !== '',
 	)
 
 	// Keyboard navigation for cards
@@ -277,7 +304,7 @@
 		<div class="ci-filters">
 			<div class="ci-filters-row">
 				<SyAutocomplete
-					v-model="filters.selectedComponents"
+					:model-value="filters.selectedComponents"
 					:items="componentOptions"
 					:multiple="true"
 					:chips="true"
@@ -290,6 +317,7 @@
 					:placeholder="locales.autocomplete.placeholder"
 					menu-id="component-tracking-search"
 					style="width: 100%;"
+					@update:model-value="onSelectionChange"
 				/>
 			</div>
 			<div class="ci-filters-row">

@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import ComponentTrackingPage from '../ComponentTrackingPage.vue'
+import SyAutocomplete from '@/components/Customs/Selects/SyAutocomplete/SyAutocomplete.vue'
 import { locales } from '../locales'
 
 vi.mock('../../component-info.json', () => ({
@@ -71,6 +72,20 @@ function versionOptions(wrapper: ReturnType<typeof mount>): (string | undefined)
 	const select = wrapper.findAll('select')
 		.find(s => s.attributes('aria-label') === locales.filters.versionLabel)
 	return select?.findAll('option').map(o => o.attributes('value')) ?? []
+}
+
+/** Simule un changement de sélection émis par l'autocomplétion des composants. */
+async function selectComponents(
+	wrapper: ReturnType<typeof mount>,
+	selection: string[] | null,
+): Promise<void> {
+	await wrapper.findComponent(SyAutocomplete).vm.$emit('update:modelValue', selection)
+	await wrapper.vm.$nextTick()
+}
+
+/** Sélection courante transmise à l'autocomplétion. */
+function currentSelection(wrapper: ReturnType<typeof mount>): string[] {
+	return wrapper.findComponent(SyAutocomplete).props('modelValue') as string[]
 }
 
 /** Active ou désactive le commutateur « Inclure les composants dépréciés ». */
@@ -243,6 +258,68 @@ describe('ComponentTrackingPage — filtrage des changements par version', () =>
 		const a11yLine = wrapper.find('.ci-version-line')
 		expect(a11yLine.text()).toContain(locales.lastUpdate.a11y)
 		expect(a11yLine.text()).toContain('v1.1.3')
+
+		wrapper.unmount()
+	})
+	it('garde l\'option « tout » cochée après un clic dessus', async () => {
+		const wrapper = mount(ComponentTrackingPage)
+
+		await selectComponents(wrapper, ['__ALL__'])
+
+		const selection = currentSelection(wrapper)
+		// Sans la sentinelle dans le modèle, la case ne pouvait pas s'afficher cochée.
+		expect(selection).toContain('__ALL__')
+		expect(selection).toContain('Accordion')
+		expect(selection).toContain('DataListItem')
+
+		wrapper.unmount()
+	})
+
+	it('vide la sélection quand l\'option « tout » est décochée', async () => {
+		const wrapper = mount(ComponentTrackingPage)
+
+		await selectComponents(wrapper, ['__ALL__'])
+		await selectComponents(wrapper, currentSelection(wrapper).filter(v => v !== '__ALL__'))
+
+		expect(currentSelection(wrapper)).toEqual([])
+
+		wrapper.unmount()
+	})
+
+	it('décoche l\'option « tout » dès qu\'un composant est retiré', async () => {
+		const wrapper = mount(ComponentTrackingPage)
+
+		await selectComponents(wrapper, ['__ALL__'])
+		await selectComponents(wrapper, currentSelection(wrapper).filter(v => v !== 'Accordion'))
+
+		const selection = currentSelection(wrapper)
+		expect(selection).not.toContain('__ALL__')
+		expect(selection).not.toContain('Accordion')
+		expect(selection).toContain('DataListItem')
+
+		wrapper.unmount()
+	})
+
+	it('recoche l\'option « tout » quand tous les composants sont sélectionnés un à un', async () => {
+		const wrapper = mount(ComponentTrackingPage)
+
+		// Les dépréciés étant exclus, seuls Accordion et DataListItem sont disponibles.
+		await selectComponents(wrapper, ['Accordion'])
+		expect(currentSelection(wrapper)).not.toContain('__ALL__')
+
+		await selectComponents(wrapper, ['Accordion', 'DataListItem'])
+		expect(currentSelection(wrapper)).toContain('__ALL__')
+
+		wrapper.unmount()
+	})
+
+	it('traite une sélection nulle comme une sélection vide', async () => {
+		const wrapper = mount(ComponentTrackingPage)
+
+		await selectComponents(wrapper, ['Accordion'])
+		await selectComponents(wrapper, null)
+
+		expect(currentSelection(wrapper)).toEqual([])
 
 		wrapper.unmount()
 	})
