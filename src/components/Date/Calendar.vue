@@ -3,7 +3,9 @@
 	import useInteractions from './useInteractions'
 	import useMonthTransition from './useMonthTransition'
 	import useCalendar from './useCalendar'
-	import { ref } from 'vue'
+	import { useLocales } from '@/composables/useLocales'
+	import { locales as defaultLocales } from './locales'
+	import { ref, computed, useId } from 'vue'
 	import type { FeaturedDaysInWeek } from './useCalendar'
 
 	const props = defineProps<{
@@ -11,6 +13,7 @@
 		selectedRange?: [Date, Date]
 		ariaLabelledby?: string
 		selectRange?: boolean
+		locales?: typeof defaultLocales
 	}>()
 
 	const emits = defineEmits<{
@@ -28,7 +31,9 @@
 
 	const rootElement = ref<HTMLElement>()
 
-	const { focusedDay, firstDayOfDisplayedMonth, keyboardInteractions, click, startRange } = useInteractions(
+	const locales = useLocales(defaultLocales, () => props.locales)
+
+	const { focusedDay, firstDayOfDisplayedMonth, keyboardInteractions, click, isPreviewed, previewRange } = useInteractions(
 		displayedMonth,
 		rootElement,
 		() => props.selectRange,
@@ -37,7 +42,51 @@
 
 	const { transitionProps } = useMonthTransition(displayedMonth)
 
-	const dayHovered = ref<FeaturedDaysInWeek | undefined>()
+	const rangeAnnouncement = computed(() => {
+		if (!props.selectedRange) return ''
+		const [start, end] = props.selectedRange
+		return locales.value.rangeSelected(start.toLocaleDateString('fr-FR'), end.toLocaleDateString('fr-FR'))
+	})
+
+	const getAriaLabelForRange = (day: FeaturedDaysInWeek) => {
+		if (!props.selectRange) return undefined
+		const dayIndex = day.rawDate.getDay()
+		const dayInfo = localizedDays[dayIndex]!
+		const dayWithName = {
+			...day,
+			dayName: dayInfo.long,
+		}
+		if (day.isStartRange) return locales.value.rangeStartLabel(dayWithName)
+		if (day.isEndRange) return locales.value.rangeEndLabel(dayWithName)
+		if (day.isInRange) return locales.value.rangeIncludedLabel(dayWithName)
+		return undefined
+	}
+
+	const getCalendarAriaLabel = () => {
+		if (props.ariaLabelledby) return undefined
+		return `${locales.value.calendarAriaLabel}, ${localizedFullMonth.value}`
+	}
+
+	const instructionsId = `sy-calendar-instructions-${useId()}`
+
+	const calendarInstructions = computed(() => {
+		const rangeInstructions = props.selectRange
+			? `${locales.value.useSpaceToSelect}, ${locales.value.useShiftArrowsToExtendRange}`
+			: locales.value.useSpaceToSelect
+		return `${locales.value.useArrowsToNavigate}, ${rangeInstructions}.`
+	})
+
+	const getDayTabIndex = (day: FeaturedDaysInWeek) => {
+		if (focusedDay.value === day.ISO8601) return 0
+		if (props.selectRange && (day.isStartRange || day.isEndRange)) return 0
+		return -1
+	}
+
+	const getAriaSelected = (day: FeaturedDaysInWeek): boolean | undefined => {
+		if (day.isSelected) return true
+		if (props.selectRange && (day.isStartRange || day.isEndRange)) return true
+		return undefined
+	}
 
 </script>
 <template>
@@ -45,12 +94,26 @@
 		ref="rootElement"
 		class="sy-calendar__wrapper"
 	>
+		<div
+			aria-live="polite"
+			aria-atomic="true"
+			class="d-sr-only"
+		>
+			{{ rangeAnnouncement }}
+		</div>
+		<div
+			:id="instructionsId"
+			class="d-sr-only"
+		>
+			{{ calendarInstructions }}
+		</div>
 		<Transition v-bind="transitionProps">
 			<table
 				:key="firstDayOfDisplayedMonth"
 				class="sy-calendar"
 				:aria-labelledby="props.ariaLabelledby"
-				:aria-label="props.ariaLabelledby ? undefined : localizedFullMonth"
+				:aria-label="getCalendarAriaLabel()"
+				:aria-describedby="instructionsId"
 				role="grid"
 			>
 				<thead>
@@ -87,20 +150,21 @@
 								'sy-calendar__day--end-range': day.isEndRange,
 								'sy-calendar__day--in-range': day.isInRange,
 								'sy-calendar__day--weekend': day.isWeekend,
-								'sy-calendar__day--start-selection-range': day.rawDate === startRange?.rawDate,
-								'sy-calendar__day--hovered': day.ISO8601 === dayHovered?.ISO8601,
+								'sy-calendar__day--preview': isPreviewed(day.ISO8601),
 							}]"
 							:data-date="day.ISO8601"
-							:tabindex="focusedDay === day.ISO8601? 0 : -1"
+							:tabindex="getDayTabIndex(day)"
 							:aria-current="day.isToday ? 'date' : undefined"
-							:aria-selected="day.isSelected ? 'true' : undefined"
+							:aria-selected="getAriaSelected(day)"
+							:aria-label="getAriaLabelForRange(day)"
+							role="gridcell"
 							v-bind="keyboardInteractions"
-							@click="() => click(day)"
-							@keydown.enter="() => click(day)"
-							@mouseenter="() => dayHovered = day"
-							@mouseleave="() => dayHovered = undefined"
-							@focusin="() => dayHovered = day"
-							@focusout="() => dayHovered = undefined"
+							@click="() => click(day.rawDate)"
+							@keydown.enter="() => click(day.rawDate)"
+							@mouseenter="() => previewRange(day.rawDate)"
+							@mouseleave="() => previewRange(null)"
+							@focusin="() => previewRange(day.rawDate)"
+							@focusout="() => previewRange(null)"
 						>
 							<slot
 								:name="`day-${day.ISO8601}`"
@@ -170,24 +234,10 @@
 	color: white;
 }
 
-// Either boundary of the pending selection: selectors below are symmetric,
-// so the preview also works when hovering a day before the start
-$boundary: ':is(.sy-calendar__day--start-selection-range, .sy-calendar__day--hovered)';
-
-// Only preview the range while a selection is actually in progress
-.sy-calendar:has(.sy-calendar__day--start-selection-range) {
-	#{$boundary} > div,
-	// days between the boundaries within the same week
-	#{$boundary} ~ td:has(~ #{$boundary}) > div,
-	// days after the first boundary, when the second is in a later week
-	tr:has(~ tr #{$boundary}) #{$boundary} ~ td > div,
-	// full weeks between the two boundary weeks
-	tr:has(#{$boundary}) ~ tr:has(~ tr #{$boundary}) td > div,
-	// days before the second boundary, when the first is in an earlier week
-	tr:has(#{$boundary}) ~ tr td:has(~ #{$boundary}) > div {
-		background-color: pink;
-		color: white;
-	}
+// Pending range selection preview
+.sy-calendar__day--preview > div {
+	background-color: pink;
+	color: white;
 }
 
 .sy-calendar__day--in-range > div {

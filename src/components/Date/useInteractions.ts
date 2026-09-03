@@ -1,6 +1,7 @@
-import { computed, ref, nextTick, toValue, type MaybeRefOrGetter } from 'vue'
+import { computed, ref, nextTick, type MaybeRefOrGetter } from 'vue'
 import type { Ref } from 'vue'
 import { getISODatePart } from './utils'
+import useRange from './useRange'
 
 export default function useInteractions(
 	displayedMonth: Ref<Date | undefined>,
@@ -90,13 +91,38 @@ export default function useInteractions(
 		focusedElement.focus()
 	}
 
-	const keyboardActions: Record<string, () => void> = {
-		ArrowRight: () => moveFocusedDayBy(1),
-		ArrowLeft: () => moveFocusedDayBy(-1),
-		ArrowDown: () => moveFocusedDayBy(7),
-		ArrowUp: () => moveFocusedDayBy(-7),
-		Home: firstDay,
-		End: lastDay,
+	const { isSelecting, isPreviewed, previewRange, selectDay } = useRange(
+		selectRange,
+		range => emits('update:selectedRange', range),
+	)
+
+	/** Shift + arrow: extend the pending range preview instead of moving alone */
+	function extendRangeBy(days: number) {
+		const date = new Date(focusedDay.value)
+		date.setDate(date.getDate() + days)
+		previewRange(date)
+		focusDay(date)
+	}
+
+	function arrowAction(days: number) {
+		return (event?: KeyboardEvent) => {
+			if (event?.shiftKey && isSelecting.value) {
+				extendRangeBy(days)
+			}
+			else {
+				moveFocusedDayBy(days)
+			}
+		}
+	}
+
+	const keyboardActions: Record<string, (event?: KeyboardEvent) => void> = {
+		'ArrowRight': arrowAction(1),
+		'ArrowLeft': arrowAction(-1),
+		'ArrowDown': arrowAction(7),
+		'ArrowUp': arrowAction(-7),
+		'Home': firstDay,
+		'End': lastDay,
+		' ': () => click(new Date(focusedDay.value)),
 	}
 
 	const keyboardInteractions = {
@@ -104,33 +130,15 @@ export default function useInteractions(
 			const action = keyboardActions[event.key]
 			if (action) {
 				event.preventDefault()
-				action()
+				action(event)
 			}
 		},
 	}
 
-	const startRange = ref<{ rawDate: Date } | null>(null)
-
-	function handleRangeSelection(day: { rawDate: Date }) {
-		const rangeStart = startRange.value
-		if (!rangeStart) {
-			startRange.value = day
-			return
-		}
-
-		const selectedRange: [Date, Date] = day.rawDate < rangeStart.rawDate
-			? [day.rawDate, rangeStart.rawDate]
-			: [rangeStart.rawDate, day.rawDate]
-		emits('update:selectedRange', selectedRange)
-		startRange.value = null
-	}
-
-	function click(day: { rawDate: Date }) {
-		focusDay(day.rawDate)
-		emits('click:day', day.rawDate)
-		if (toValue(selectRange)) {
-			handleRangeSelection(day)
-		}
+	function click(date: Date) {
+		focusDay(date)
+		emits('click:day', date)
+		selectDay(date)
 	}
 
 	return {
@@ -139,6 +147,7 @@ export default function useInteractions(
 		firstDayOfDisplayedMonth,
 		keyboardInteractions,
 		click,
-		startRange,
+		isPreviewed,
+		previewRange,
 	}
 }
