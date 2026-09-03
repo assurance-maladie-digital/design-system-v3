@@ -5,16 +5,27 @@ import { fn } from 'storybook/test'
  * Définitions `argTypes` Storybook communes aux tableaux (SyTable, SyServerTable).
  *
  * Ce module centralise toutes les entrées `argTypes` partagées entre les deux
- * fichiers de stories. Les entrées spécifiques à chaque tableau (`items`,
- * `serverItemsLength`, `showFilters`) restent définies dans leurs fichiers
- * respectifs et sont fusionnées via un spread : `{ ...commonTableArgTypes, ... }`.
+ * fichiers de stories, fusionnées via un spread : `{ ...commonTableArgTypes, ... }`.
+ *
+ * `items` diffère selon le tableau (valeur par défaut `[]` pour SyTable,
+ * `undefined` pour SyServerTable qui ajoute `serverItemsLength`) : voir
+ * `syTableItemsArgTypes` / `syServerTableItemsArgTypes` ci-dessous.
  */
 export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 	'headers': {
-		description: 'Liste des colonnes du tableau (voir : https://vuetifyjs.com/en/api/v-data-table/#props-headers)',
+		description: 'Liste des colonnes du tableau (voir : https://vuetifyjs.com/en/api/v-data-table/#props-headers).',
 		control: { type: 'object' },
 		table: {
 			category: 'props',
+		},
+	},
+	'headersSlot': {
+		name: 'headers',
+		description: 'Remplace entièrement le rendu de la ligne d\'en-tête (voir : https://vuetifyjs.com/en/api/v-data-table/#slots-headers).',
+		control: undefined,
+		table: {
+			category: 'slots',
+			type: { summary: 'slot' },
 		},
 	},
 	'density': {
@@ -116,7 +127,7 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 		},
 	},
 	'enableColumnControls': {
-		description: 'Allow the users to re-organize the columns',
+		description: 'Permet aux utilisateurs de réorganiser les colonnes',
 		table: {
 			defaultValue: {
 				summary: 'false',
@@ -142,6 +153,17 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 			type: { summary: 'boolean' },
 		},
 	},
+	'showFilters': {
+		description: 'Affiche une ligne de filtres au-dessus des données. Les colonnes filtrables sont déclarées dans `headers` et configurables via `filterInputConfig`.',
+		control: { type: 'boolean' },
+		table: {
+			category: 'props',
+			type: { summary: 'boolean' },
+			defaultValue: {
+				summary: 'false',
+			},
+		},
+	},
 	'stickySelect': {
 		description: 'Rend la colonne de sélection (cases à cocher) sticky à gauche quand showSelect ou showSelectSingle est activé.',
 		control: { type: 'boolean' },
@@ -150,6 +172,17 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 			type: { summary: 'boolean' },
 			defaultValue: {
 				summary: 'false',
+			},
+		},
+	},
+	'stickyBulkActions': {
+		description: 'Rend la barre d\'actions groupées sticky en haut du tableau quand le slot `bulk-actions` est affiché.',
+		control: { type: 'boolean' },
+		table: {
+			category: 'props',
+			type: { summary: 'boolean' },
+			defaultValue: {
+				summary: 'true',
 			},
 		},
 	},
@@ -217,7 +250,7 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 		},
 	},
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// @ts-ignore - 'cookie-description-${cookieName}' storybook can't infer dynamic slot name
+	// @ts-ignore - storybook can't infer dynamic slot name
 	'header.<columnKey>': {
 		description: 'Slot permettant de personnaliser le rendu de l\'en-tête d\'une colonne spécifique. Remplacer `<columnKey>` par la clé de la colonne souhaitée.',
 		control: undefined,
@@ -245,6 +278,48 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 			type: { summary: 'slot', detail: '{ item, isEditing: boolean, edit: () => void, save: () => void, cancel: () => void, remove: () => void }' },
 		},
 	},
+	'item': {
+		description: 'Remplace entièrement le rendu d\'une ligne (voir : https://vuetifyjs.com/en/api/v-data-table/#slots-item).',
+		control: undefined,
+		table: {
+			category: 'slots',
+			type: { summary: 'slot' },
+		},
+	},
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore - storybook can't infer dynamic slot name
+	'item.<columnKey>': {
+		description: 'Slot permettant de personnaliser l\'affichage d\'une cellule spécifique (hors édition). Remplacer `<columnKey>` par la clé de la colonne souhaitée. Reçoit les mêmes `cellProps` que le slot d\'édition `#edit.<columnKey>` (`item`, `column`, `index`…).',
+		control: undefined,
+		table: {
+			category: 'slots',
+			type: { summary: 'slot', detail: '{ item, column, index, ... }' },
+		},
+	},
+	'filter.custom': {
+		description: 'Personnalise le champ de filtre d\'une colonne dont le header porte `filterable: \'custom\'`.',
+		control: undefined,
+		table: {
+			category: 'slots',
+			type: { summary: 'slot', detail: '{ header: HeaderColumn, value: unknown, updateFilter: (value: unknown) => void }' },
+		},
+	},
+	'item.data-table-expand': {
+		description: 'Personnalise le déclencheur d\'expansion d\'une ligne (voir : https://vuetifyjs.com/en/api/v-data-table/#slots-item-data-table-expand). Nécessite `show-expand`.',
+		control: undefined,
+		table: {
+			category: 'slots',
+			type: { summary: 'slot', detail: '{ internalItem, isExpanded: (item) => boolean, toggleExpand: (item) => void }' },
+		},
+	},
+	'expanded-row': {
+		description: 'Personnalise le contenu déplié d\'une ligne (voir : https://vuetifyjs.com/en/api/v-data-table/#slots-expanded-row). Nécessite `show-expand`.',
+		control: undefined,
+		table: {
+			category: 'slots',
+			type: { summary: 'slot', detail: '{ columns: HeaderColumn[], item }' },
+		},
+	},
 	'edit.<columnKey>': {
 		description: 'Personnalise l\'éditeur d\'une cellule en édition inline. Remplacer `<columnKey>` par la clé de la colonne. Par défaut un `SyTextField`.',
 		control: undefined,
@@ -261,42 +336,49 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 			type: { summary: 'slot', detail: '{ selected: Record<string, unknown>[], count: number, clearSelection: () => void }' },
 		},
 	},
-	'onRow-click': {
+	'update:options': {
+		description: 'Émis lorsque les options du tableau changent (pagination, tri, filtres…).',
+		table: {
+			category: 'events',
+			type: { summary: '(options: DataOptions) => void' },
+		},
+	},
+	'row-click': {
 		description: 'Émis lorsqu\'une ligne est activée alors que `clickableRow` est à `true`. Reçoit l\'objet de la ligne en paramètre. Les interactions avec des éléments déjà interactifs dans la ligne ne déclenchent pas cet événement.',
 		table: {
 			category: 'events',
 			type: { summary: '(item: Record<string, unknown>) => void' },
 		},
 	},
-	'onUpdate:modelValue': {
+	'update:modelValue': {
 		description: 'Émis lorsque la sélection change (`showSelect` ou `showSelectSingle`). Reçoit la liste des valeurs de sélection des lignes sélectionnées (déterminées par `selectionKey`, `id` par défaut, sinon l\'objet complet).',
 		table: {
 			category: 'events',
 			type: { summary: '(selection: unknown[]) => void' },
 		},
 	},
-	'onEdit': {
+	'edit': {
 		description: 'Émis à l\'entrée en édition inline d\'une ligne.',
 		table: {
 			category: 'events',
 			type: { summary: '(item: Record<string, unknown>) => void' },
 		},
 	},
-	'onSave': {
+	'save': {
 		description: 'Émis à la validation de l\'édition inline. Reçoit la ligne mise à jour et l\'originale.',
 		table: {
 			category: 'events',
 			type: { summary: '(updated: Record<string, unknown>, original: Record<string, unknown> | null) => void' },
 		},
 	},
-	'onCancel': {
+	'cancel': {
 		description: 'Émis à l\'annulation de l\'édition inline.',
 		table: {
 			category: 'events',
 			type: { summary: '(item: Record<string, unknown> | null) => void' },
 		},
 	},
-	'onDelete': {
+	'delete': {
 		description: 'Émis au clic sur l\'action de suppression d\'une ligne.',
 		table: {
 			category: 'events',
@@ -304,6 +386,67 @@ export const commonTableArgTypes: NonNullable<Meta['argTypes']> = {
 		},
 	},
 }
+
+/**
+ * `argTypes` de `items` communes à toutes les stories `SyTable` (valeur par
+ * défaut `[]`, tableau non paginé côté serveur).
+ */
+export const syTableItemsArgTypes: NonNullable<Meta['argTypes']> = {
+	items: {
+		description: 'Liste des éléments à afficher dans le tableau',
+		control: { type: 'object' },
+		table: {
+			category: 'props',
+			defaultValue: { summary: '[]' },
+		},
+	},
+}
+
+/**
+ * `argTypes` de `items` et `serverItemsLength` communes à toutes les stories
+ * `SyServerTable` (valeur par défaut `undefined`, pagination gérée côté serveur).
+ */
+export const syServerTableItemsArgTypes: NonNullable<Meta['argTypes']> = {
+	items: {
+		description: 'Liste des éléments à afficher dans le tableau',
+		control: { type: 'object' },
+		table: {
+			category: 'props',
+			defaultValue: { summary: 'undefined' },
+		},
+	},
+	serverItemsLength: {
+		description: 'Nombre total d\'éléments disponibles côté serveur, utilisé pour calculer la pagination.',
+		control: { type: 'number' },
+		table: {
+			category: 'props',
+			type: { summary: 'number' },
+			defaultValue: { summary: '0' },
+		},
+	},
+}
+
+/**
+ * Clés `onXxx` synthétiques (déclarées dans `commonTableEventArgs`) à exclure des Controls :
+ * elles ne servent qu'à attacher les spies aux events Vue et dupliquent les entrées `argTypes`
+ * ci-dessus définies sous leur nom brut (`edit`, `save`…) tel que détecté par le docgen.
+ *
+ * S'y ajoutent les noms de slots dynamiques bruts (expressions de template littérales,
+ * non résolues par le docgen) qui dupliquent nos entrées manuelles `item.<columnKey>` /
+ * `edit.<columnKey>` ci-dessus.
+ */
+export const commonTableExcludedControls = [
+	'onUpdate:options',
+	'onUpdate:modelValue',
+	'onRow-click',
+	'onEdit',
+	'onSave',
+	'onCancel',
+	'onDelete',
+	'`item.${colKey}`',
+	'`edit.${colKey}`',
+	'slotName',
+]
 
 /**
  * Handlers d'événements communs à étaler dans les `args` des stories des tableaux.

@@ -3,6 +3,7 @@ import SyTable from './SyTable.vue'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
+import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls } from '../common/storyArgTypes'
 
 const meta = {
 	title: 'Composants/Tableaux/SyTable/Filtres/Rules',
@@ -14,7 +15,10 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
-		controls: { hideNoControlsWarning: true },
+		controls: { hideNoControlsWarning: true, exclude: commonTableExcludedControls },
+	},
+	argTypes: {
+		...commonTableArgTypes,
 	},
 } satisfies Meta<typeof SyTable & typeof VDataTable>
 
@@ -26,6 +30,7 @@ export const TextFilterRules: Story = {
 	args: {
 		suffix: 'filter-rules',
 		showFilters: true,
+		...commonTableEventArgs(),
 	},
 	parameters: {
 		a11y: {
@@ -136,6 +141,7 @@ export const NumberFilterRules: Story = {
 	args: {
 		suffix: 'number-filter-rules',
 		showFilters: true,
+		...commonTableEventArgs(),
 	},
 	parameters: {
 		a11y: {
@@ -245,6 +251,7 @@ export const SelectFilterRules: Story = {
 	args: {
 		suffix: 'select-filter-rules',
 		showFilters: true,
+		...commonTableEventArgs(),
 	},
 	parameters: {
 		a11y: {
@@ -319,6 +326,7 @@ export const DateFilterRules: Story = {
 	args: {
 		suffix: 'date-filter-rules',
 		showFilters: true,
+		...commonTableEventArgs(),
 	},
 	parameters: {
 		a11y: {
