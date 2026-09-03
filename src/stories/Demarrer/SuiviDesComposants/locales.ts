@@ -5,14 +5,12 @@ export const locales = {
 		selectAll: 'Sélectionner tous',
 	},
 	filters: {
-		selectFunctionalVersion: 'Sélectionner une version fonctionnelle',
-		selectA11yVersion: 'Sélectionner une version a11y',
+		selectVersion: 'Sélectionner une version',
 		allVersions: 'Toutes les versions',
 		allStatuses: 'Tous les statuts',
-		functionalLabel: 'Filtrer par version fonctionnelle',
-		a11yLabel: 'Filtrer par version accessibilité',
+		versionLabel: 'Filtrer par version',
 		statusLabel: 'Filtrer par statut',
-		includeDeprecated: 'Inclure les dépréciés',
+		includeDeprecated: 'Inclure les composants dépréciés',
 		resetFilters: 'Effacer les filtres',
 	},
 	status: {
@@ -37,6 +35,10 @@ export const locales = {
 	},
 	version: {
 		unknown: 'Version non renseignée',
+	},
+	lastUpdate: {
+		functional: 'Dernière mise à jour fonctionnelle :',
+		a11y: 'Dernière mise à jour accessibilité :',
 	},
 	meta: {
 		components: 'composants',

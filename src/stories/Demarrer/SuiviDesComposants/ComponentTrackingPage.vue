@@ -26,7 +26,6 @@
 	interface FilterState {
 		selectedComponents: string[]
 		versionFilter: string
-		a11yVersionFilter: string
 		includeDeprecated: boolean
 		cardTabs: Record<string, 'functional' | 'a11y'>
 	}
@@ -34,7 +33,6 @@
 	const filters = reactive<FilterState>({
 		selectedComponents: [],
 		versionFilter: '',
-		a11yVersionFilter: '',
 		includeDeprecated: false,
 		cardTabs: {},
 	})
@@ -56,12 +54,8 @@
 		}
 	})
 
-	const defaultTab = computed<'functional' | 'a11y'>(() =>
-		filters.a11yVersionFilter ? 'a11y' : 'functional',
-	)
-
 	const getCardTab = (componentName: string): 'functional' | 'a11y' =>
-		filters.cardTabs[componentName] || defaultTab.value
+		filters.cardTabs[componentName] || 'functional'
 
 	const setCardTab = (componentName: string, tab: 'functional' | 'a11y') => {
 		filters.cardTabs[componentName] = tab
@@ -70,7 +64,6 @@
 	const resetFilters = () => {
 		filters.selectedComponents = []
 		filters.versionFilter = ''
-		filters.a11yVersionFilter = ''
 		filters.includeDeprecated = false
 		filters.cardTabs = {}
 	}
@@ -117,18 +110,18 @@
 	// librairie : les proposer au filtre encombre la liste sans concerner les consommateurs.
 	const isStableVersion = (version: string): boolean => !version.includes('-')
 
-	// Toutes les versions stables qui contiennent au moins un changement. Les lister depuis
+	// Toutes les versions stables qui contiennent au moins un changement, fonctionnel ou
+	// accessibilité — le filtre est unique et s'applique aux deux onglets. Les lister depuis
 	// la version de *dernière* modification de chaque composant en masquait la majorité :
 	// une version disparaissait du filtre dès que tous ses composants avaient rebougé.
-	const versionsFromCommits = (tab: 'functional' | 'a11y'): string[] => [
+	const versions = computed(() => [
 		...new Set(
-			scopedResults.value.flatMap(r => commitsOf(r, tab).map(c => c.version).filter(Boolean) as string[]),
+			scopedResults.value.flatMap(r => [
+				...commitsOf(r, 'functional'),
+				...commitsOf(r, 'a11y'),
+			].map(c => c.version).filter(Boolean) as string[]),
 		),
-	].filter(isStableVersion).sort((a, b) => b.localeCompare(a, undefined, { numeric: true }))
-
-	const versions = computed(() => versionsFromCommits('functional'))
-
-	const a11yVersions = computed(() => versionsFromCommits('a11y'))
+	].filter(isStableVersion).sort((a, b) => b.localeCompare(a, undefined, { numeric: true })))
 
 	const slug = (title: string) =>
 		title.toLowerCase().replace(/[\s/'’()&,.]+/g, '-').replace(/^-+|-+$/g, '')
@@ -161,22 +154,28 @@
 		return `${msg.slice(0, index)}<a href="${REPO}/pull/${m[1]}" target="_blank" rel="noopener noreferrer">#${m[1]}</a>${msg.slice(index + m[0].length)}`
 	}
 
-	// Un composant est retenu s'il a changé dans la version filtrée — et non si c'est sa
-	// version de dernière modification, qui ignorait tout son historique antérieur.
-	const matchesVersion = (item: ComponentInfo, tab: 'functional' | 'a11y', versionFilter: string): boolean =>
+	// Un composant est retenu s'il a changé dans la version filtrée, sur l'un ou l'autre
+	// axe — et non si c'est sa version de dernière modification, ce qui ignorait tout son
+	// historique antérieur.
+	const matchesVersion = (item: ComponentInfo, versionFilter: string): boolean =>
 		versionFilter === ''
 		|| versionFilter === '__ALL__'
-		|| commitsOf(item, tab).some(commit => commit.version === versionFilter)
+		|| [...commitsOf(item, 'functional'), ...commitsOf(item, 'a11y')]
+			.some(commit => commit.version === versionFilter)
+
+	// Le commutateur vaut sur tous les chemins d'affichage : il n'était appliqué que si des
+	// composants étaient sélectionnés, si bien qu'un filtre par version laissait passer les
+	// dépréciés, commutateur éteint.
+	const isVisibleStatus = (item: ComponentInfo): boolean =>
+		filters.includeDeprecated || item.status === 'actif'
+
+	const byMostRecentVersion = (a: ComponentInfo, b: ComponentInfo): number =>
+		(b.functionalVersion || '0.0.0').localeCompare(a.functionalVersion || '0.0.0', undefined, { numeric: true })
 
 	const filteredRows = computed(() => {
-		// Si "Toutes les versions" est sélectionné et aucun composant n'est choisi, afficher tous les composants
-		if (filters.selectedComponents.length === 0
-			&& (filters.versionFilter === '__ALL__' || filters.a11yVersionFilter === '__ALL__')) {
-			return [...results].sort((a, b) => {
-				const versionA = a.functionalVersion || '0.0.0'
-				const versionB = b.functionalVersion || '0.0.0'
-				return versionB.localeCompare(versionA, undefined, { numeric: true })
-			})
+		// « Toutes les versions » sans composant choisi : on affiche tout le catalogue.
+		if (filters.selectedComponents.length === 0 && filters.versionFilter === '__ALL__') {
+			return [...results].filter(isVisibleStatus).sort(byMostRecentVersion)
 		}
 
 		if (!hasActiveFilter.value) return []
@@ -186,57 +185,49 @@
 				item =>
 					(filters.selectedComponents.length === 0
 						|| filters.selectedComponents.includes(item.componentName))
-					&& matchesVersion(item, 'functional', filters.versionFilter)
-					&& matchesVersion(item, 'a11y', filters.a11yVersionFilter)
-					// Only apply deprecated filter if components are selected
-					&& (filters.selectedComponents.length === 0 || filters.includeDeprecated || item.status === 'actif'),
+					&& matchesVersion(item, filters.versionFilter)
+					&& isVisibleStatus(item),
 			)
-			.sort((a, b) => {
-				const versionA = a.functionalVersion || '0.0.0'
-				const versionB = b.functionalVersion || '0.0.0'
-				return versionB.localeCompare(versionA, undefined, { numeric: true })
-			})
+			.sort(byMostRecentVersion)
 	})
 
 	// Une version filtrée ne doit montrer que ce qu'elle contient : sans ce tri, la carte
 	// listait tout l'historique du composant, quelle que soit la version sélectionnée.
-	/**
-	 * Version qui s'applique à un onglet. Les deux filtres portent la même numérotation de
-	 * release : une version choisie sur un axe s'applique donc aussi à l'autre onglet tant
-	 * que celui-ci n'a pas son propre choix, sinon l'onglet non filtré réaffichait tout
-	 * l'historique. `__ALL__` reste un choix explicite : il n'hérite de rien.
-	 */
-	const versionFilterForTab = (tab: 'functional' | 'a11y'): string => {
-		const own = tab === 'functional' ? filters.versionFilter : filters.a11yVersionFilter
-		if (own !== '') return own === '__ALL__' ? '' : own
-
-		const other = tab === 'functional' ? filters.a11yVersionFilter : filters.versionFilter
-		return other === '__ALL__' ? '' : other
-	}
+	// Le filtre unique s'applique aux deux onglets : `__ALL__` et l'absence de choix
+	// laissent l'historique complet.
+	const activeVersion = computed(() =>
+		filters.versionFilter === '__ALL__' ? '' : filters.versionFilter,
+	)
 
 	const visibleCommits = (item: ComponentInfo, tab: 'functional' | 'a11y'): ComponentCommit[] => {
 		const commits = commitsOf(item, tab)
-		const versionFilter = versionFilterForTab(tab)
-		if (versionFilter === '') return commits
-		return commits.filter(commit => commit.version === versionFilter)
+		if (activeVersion.value === '') return commits
+		return commits.filter(commit => commit.version === activeVersion.value)
 	}
 
 	// Distingue « ce composant n'a pas d'historique » de « rien dans la version filtrée » :
 	// une carte retenue sur son axe fonctionnel peut n'avoir aucun changement a11y publié.
-	const emptyCommitsMessage = (tab: 'functional' | 'a11y'): string => {
-		const versionFilter = versionFilterForTab(tab)
-		return versionFilter === ''
-			? locales.commits.empty
-			: locales.commits.emptyForVersion(versionFilter)
-	}
+	const emptyCommitsMessage = (): string => activeVersion.value === ''
+		? locales.commits.empty
+		: locales.commits.emptyForVersion(activeVersion.value)
+
+	const cardVersion = (item: ComponentInfo): string | undefined =>
+		getCardTab(item.componentName) === 'functional' ? item.functionalVersion : item.a11yVersion
+
+	const cardDate = (item: ComponentInfo): string | undefined =>
+		getCardTab(item.componentName) === 'functional' ? item.functionalDate : item.a11yDate
+
+	// Même formulation que les badges des pages de composant (`*.mdx`).
+	const lastUpdateLabel = (item: ComponentInfo): string =>
+		getCardTab(item.componentName) === 'functional'
+			? locales.lastUpdate.functional
+			: locales.lastUpdate.a11y
 
 	const tabClass = (tab: 'functional' | 'a11y', activeTab: 'functional' | 'a11y') =>
 		`ci-tab ${activeTab === tab ? 'active' : ''} ${tab === 'a11y' ? 'a11y' : ''}`
 
 	const hasActiveFilter = computed(() =>
-		filters.selectedComponents.length > 0
-		|| (filters.versionFilter !== '' && filters.versionFilter !== '__ALL__')
-		|| (filters.a11yVersionFilter !== '' && filters.a11yVersionFilter !== '__ALL__'),
+		filters.selectedComponents.length > 0 || activeVersion.value !== '',
 	)
 
 	// Keyboard navigation for cards
@@ -305,41 +296,19 @@
 				<select
 					v-model="filters.versionFilter"
 					class="ci-select"
-					:aria-label="locales.filters.functionalLabel"
+					:aria-label="locales.filters.versionLabel"
 				>
 					<option
 						value=""
 						disabled
 					>
-						{{ locales.filters.selectFunctionalVersion }}
+						{{ locales.filters.selectVersion }}
 					</option>
 					<option value="__ALL__">
 						{{ locales.filters.allVersions }}
 					</option>
 					<option
 						v-for="v in versions"
-						:key="v"
-						:value="v"
-					>
-						v{{ v }}
-					</option>
-				</select>
-				<select
-					v-model="filters.a11yVersionFilter"
-					class="ci-select"
-					:aria-label="locales.filters.a11yLabel"
-				>
-					<option
-						value=""
-						disabled
-					>
-						{{ locales.filters.selectA11yVersion }}
-					</option>
-					<option value="__ALL__">
-						{{ locales.filters.allVersions }}
-					</option>
-					<option
-						v-for="v in a11yVersions"
 						:key="v"
 						:value="v"
 					>
@@ -433,12 +402,13 @@
 				</div>
 				<div class="ci-card-body">
 					<div class="ci-version-line">
+						<span class="ci-version-label">{{ lastUpdateLabel(item) }}</span>
 						<span
-							v-if="getCardTab(item.componentName) === 'functional' ? item.functionalVersion : item.a11yVersion"
+							v-if="cardVersion(item)"
 							class="ci-tag"
 							:class="getCardTab(item.componentName) === 'functional' ? 'func' : 'a11y'"
 						>
-							v{{ getCardTab(item.componentName) === 'functional' ? item.functionalVersion : item.a11yVersion }}
+							v{{ cardVersion(item) }}
 						</span>
 						<span
 							v-else
@@ -447,10 +417,10 @@
 							{{ locales.version.unknown }}
 						</span>
 						<span
-							v-if="getCardTab(item.componentName) === 'functional' ? item.functionalVersion : item.a11yVersion"
+							v-if="cardVersion(item)"
 							class="ci-date"
 						>
-							{{ formatDate(getCardTab(item.componentName) === 'functional' ? item.functionalDate : item.a11yDate) }}
+							{{ formatDate(cardDate(item)) }}
 						</span>
 					</div>
 					<ul
@@ -472,7 +442,7 @@
 						v-else
 						class="ci-empty"
 					>
-						{{ emptyCommitsMessage(getCardTab(item.componentName)) }}
+						{{ emptyCommitsMessage() }}
 					</p>
 				</div>
 			</div>
@@ -516,9 +486,15 @@
 		flex-wrap: wrap;
 	}
 
-	.ci-filters-row .ci-select,
 	.ci-filters-row .ci-switch {
 		flex: 1;
+		min-width: 0;
+	}
+
+	/* Base fixe plutôt que `flex: 1` : depuis la suppression du second filtre, le select
+	s'étirait sur la moitié de la ligne pour des options de quelques caractères. */
+	.ci-filters-row .ci-select {
+		flex: 0 1 16rem;
 		min-width: 0;
 	}
 
@@ -798,8 +774,14 @@
 	.ci-version-line {
 		display: flex;
 		align-items: center;
-		gap: 0.6rem;
+		flex-wrap: wrap;
+		gap: 0.4rem 0.6rem;
 		margin-bottom: 0.75rem;
+	}
+
+	.ci-version-label {
+		font-size: 0.8125rem;
+		color: #525252;
 	}
 
 	.ci-tag {

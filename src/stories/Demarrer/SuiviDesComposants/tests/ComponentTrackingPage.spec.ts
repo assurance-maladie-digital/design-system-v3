@@ -41,19 +41,41 @@ vi.mock('../../component-info.json', () => ({
 				],
 				a11yCommits: [],
 			},
+			{
+				componentName: 'PaginatedTable',
+				storybookTitle: 'Composants/Données/PaginatedTable',
+				status: 'déprécié',
+				functionalVersion: '1.1.2',
+				functionalDate: '06/07/2026',
+				a11yVersion: '1.1.2',
+				a11yDate: '06/07/2026',
+				commits: [
+					{ date: '2026-07-06', message: 'dépréciation du composant', version: '1.1.2' },
+				],
+				a11yCommits: [],
+			},
 		],
 	},
 }))
 
-/** Sélectionne une version dans l'un des deux filtres, comme le ferait l'utilisateur. */
-async function selectVersion(
-	wrapper: ReturnType<typeof mount>,
-	ariaLabel: string,
-	version: string,
-): Promise<void> {
-	const select = wrapper.findAll('select').find(s => s.attributes('aria-label') === ariaLabel)
-	if (!select) throw new Error(`Filtre introuvable : ${ariaLabel}`)
+/** Sélectionne une version dans le filtre, comme le ferait l'utilisateur. */
+async function selectVersion(wrapper: ReturnType<typeof mount>, version: string): Promise<void> {
+	const select = wrapper.findAll('select')
+		.find(s => s.attributes('aria-label') === locales.filters.versionLabel)
+	if (!select) throw new Error('Filtre de version introuvable')
 	await select.setValue(version)
+}
+
+/** Options proposées par le filtre de version. */
+function versionOptions(wrapper: ReturnType<typeof mount>): (string | undefined)[] {
+	const select = wrapper.findAll('select')
+		.find(s => s.attributes('aria-label') === locales.filters.versionLabel)
+	return select?.findAll('option').map(o => o.attributes('value')) ?? []
+}
+
+/** Active ou désactive le commutateur « Inclure les composants dépréciés ». */
+async function toggleDeprecated(wrapper: ReturnType<typeof mount>, included: boolean): Promise<void> {
+	await wrapper.find('#include-deprecated').setValue(included)
 }
 
 /** Bascule la première carte sur l'onglet demandé, comme le ferait l'utilisateur. */
@@ -67,7 +89,7 @@ describe('ComponentTrackingPage — filtrage des changements par version', () =>
 	it('n\'affiche que les commits de la version fonctionnelle sélectionnée', async () => {
 		const wrapper = mount(ComponentTrackingPage)
 
-		await selectVersion(wrapper, locales.filters.functionalLabel, '1.1.4')
+		await selectVersion(wrapper, '1.1.4')
 
 		const text = wrapper.text()
 		expect(text).toContain('ajout de la prop density')
@@ -77,10 +99,11 @@ describe('ComponentTrackingPage — filtrage des changements par version', () =>
 		wrapper.unmount()
 	})
 
-	it('n\'affiche que les commits de la version accessibilité sélectionnée', async () => {
+	it('n\'affiche que les commits accessibilité de la version sélectionnée', async () => {
 		const wrapper = mount(ComponentTrackingPage)
 
-		await selectVersion(wrapper, locales.filters.a11yLabel, '1.1.3')
+		await selectVersion(wrapper, '1.1.3')
+		await openTab(wrapper, locales.tabs.a11y)
 
 		const text = wrapper.text()
 		expect(text).toContain('restitution du focus')
@@ -92,7 +115,7 @@ describe('ComponentTrackingPage — filtrage des changements par version', () =>
 	it('affiche tout l\'historique quand « Toutes les versions » est sélectionné', async () => {
 		const wrapper = mount(ComponentTrackingPage)
 
-		await selectVersion(wrapper, locales.filters.functionalLabel, '__ALL__')
+		await selectVersion(wrapper, '__ALL__')
 
 		const text = wrapper.text()
 		expect(text).toContain('ajout de la prop density')
@@ -105,9 +128,7 @@ describe('ComponentTrackingPage — filtrage des changements par version', () =>
 	it('propose les versions absentes des badges, mais présentes dans l\'historique', async () => {
 		const wrapper = mount(ComponentTrackingPage)
 
-		const select = wrapper.findAll('select')
-			.find(s => s.attributes('aria-label') === locales.filters.functionalLabel)
-		const offered = select?.findAll('option').map(o => o.attributes('value'))
+		const offered = versionOptions(wrapper)
 
 		// 1.1.2 n'est la version de dernière modification d'aucun composant : elle était
 		// pourtant proposée à tort comme absente avant le correctif.
@@ -120,9 +141,7 @@ describe('ComponentTrackingPage — filtrage des changements par version', () =>
 	it('ne propose pas les pré-versions dans le filtre', async () => {
 		const wrapper = mount(ComponentTrackingPage)
 
-		const select = wrapper.findAll('select')
-			.find(s => s.attributes('aria-label') === locales.filters.functionalLabel)
-		const offered = select?.findAll('option').map(o => o.attributes('value'))
+		const offered = versionOptions(wrapper)
 
 		expect(offered).not.toContain('0.0.15-alpha')
 		expect(offered).toContain('1.1.2')
@@ -133,7 +152,7 @@ describe('ComponentTrackingPage — filtrage des changements par version', () =>
 	it('retient les composants qui ont changé dans la version, pas seulement ceux dont c\'est la dernière version', async () => {
 		const wrapper = mount(ComponentTrackingPage)
 
-		await selectVersion(wrapper, locales.filters.functionalLabel, '1.1.2')
+		await selectVersion(wrapper, '1.1.2')
 
 		const text = wrapper.text()
 		// Accordion (dernière version 1.1.4) et DataListItem ont tous deux changé en 1.1.2.
@@ -143,24 +162,11 @@ describe('ComponentTrackingPage — filtrage des changements par version', () =>
 
 		wrapper.unmount()
 	})
-	it('applique la version fonctionnelle sélectionnée à l\'onglet accessibilité', async () => {
-		const wrapper = mount(ComponentTrackingPage)
-
-		await selectVersion(wrapper, locales.filters.functionalLabel, '1.1.3')
-		await openTab(wrapper, locales.tabs.a11y)
-
-		const text = wrapper.text()
-		expect(text).toContain('restitution du focus')
-		expect(text).not.toContain('libellé du bouton')
-
-		wrapper.unmount()
-	})
-
 	it('signale une version sans changement sur l\'onglet concerné', async () => {
 		const wrapper = mount(ComponentTrackingPage)
 
 		// 1.1.4 contient un changement fonctionnel pour Accordion, aucun changement a11y.
-		await selectVersion(wrapper, locales.filters.functionalLabel, '1.1.4')
+		await selectVersion(wrapper, '1.1.4')
 		await openTab(wrapper, locales.tabs.a11y)
 
 		expect(wrapper.text()).toContain(locales.commits.emptyForVersion('1.1.4'))
@@ -169,16 +175,74 @@ describe('ComponentTrackingPage — filtrage des changements par version', () =>
 		wrapper.unmount()
 	})
 
-	it('respecte « Toutes les versions » choisi explicitement sur l\'autre axe', async () => {
+	it('retient un composant dont seul l\'axe accessibilité a changé dans la version', async () => {
 		const wrapper = mount(ComponentTrackingPage)
 
-		await selectVersion(wrapper, locales.filters.functionalLabel, '1.1.3')
-		await selectVersion(wrapper, locales.filters.a11yLabel, '__ALL__')
+		// 1.0.23 n'apparaît que dans l'historique a11y d'Accordion.
+		expect(versionOptions(wrapper)).toContain('1.0.23')
+
+		await selectVersion(wrapper, '1.0.23')
 		await openTab(wrapper, locales.tabs.a11y)
 
 		const text = wrapper.text()
-		expect(text).toContain('restitution du focus')
 		expect(text).toContain('libellé du bouton')
+		expect(text).not.toContain('restitution du focus')
+
+		wrapper.unmount()
+	})
+	it('exclut les composants dépréciés tant que le commutateur est éteint', async () => {
+		const wrapper = mount(ComponentTrackingPage)
+
+		await selectVersion(wrapper, '1.1.2')
+
+		const text = wrapper.text()
+		expect(text).toContain('mode compact')
+		expect(text).not.toContain('dépréciation du composant')
+
+		wrapper.unmount()
+	})
+
+	it('affiche les composants dépréciés quand le commutateur est allumé', async () => {
+		const wrapper = mount(ComponentTrackingPage)
+
+		await selectVersion(wrapper, '1.1.2')
+		await toggleDeprecated(wrapper, true)
+
+		expect(wrapper.text()).toContain('dépréciation du composant')
+
+		wrapper.unmount()
+	})
+
+	it('exclut aussi les dépréciés avec « Toutes les versions »', async () => {
+		const wrapper = mount(ComponentTrackingPage)
+
+		await selectVersion(wrapper, '__ALL__')
+
+		expect(wrapper.text()).toContain('mode compact')
+		expect(wrapper.text()).not.toContain('dépréciation du composant')
+
+		await toggleDeprecated(wrapper, true)
+
+		expect(wrapper.text()).toContain('dépréciation du composant')
+
+		wrapper.unmount()
+	})
+	it('annonce la dernière mise à jour de l\'axe affiché, devant le tag de version', async () => {
+		const wrapper = mount(ComponentTrackingPage)
+
+		await selectVersion(wrapper, '1.1.4')
+
+		const line = wrapper.find('.ci-version-line')
+		expect(line.text()).toContain(locales.lastUpdate.functional)
+		expect(line.text()).toContain('v1.1.4')
+		// Le libellé précède le tag, comme sur les pages de composant.
+		expect(line.text().indexOf(locales.lastUpdate.functional)).toBeLessThan(line.text().indexOf('v1.1.4'))
+
+		await openTab(wrapper, locales.tabs.a11y)
+
+		const a11yLine = wrapper.find('.ci-version-line')
+		expect(a11yLine.text()).toContain(locales.lastUpdate.a11y)
+		expect(a11yLine.text()).toContain('v1.1.3')
 
 		wrapper.unmount()
 	})
