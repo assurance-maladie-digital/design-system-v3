@@ -334,8 +334,8 @@
 }
 
 .subtitle {
-		font-size: 0.875rem;
-		line-height: 1.5;
+	font-size: 0.875rem;
+	line-height: 1.5;
 }
 
 .item-title {
