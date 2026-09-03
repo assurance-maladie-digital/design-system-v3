@@ -21,7 +21,7 @@ vi.mock('pdfjs-dist', () => ({
 vi.mock('pdfjs-dist/build/pdf.worker.min.mjs?url', () => ({ default: 'worker-url' }))
 
 describe('usePdfConsultation', () => {
-	it('render : rend toutes les pages et renvoie le nombre de pages (source binaire)', async () => {
+	it('render: renders every page and returns the page count (binary source)', async () => {
 		const { render, isLoading, hasError } = usePdfConsultation()
 		const host = document.createElement('div')
 
@@ -33,7 +33,7 @@ describe('usePdfConsultation', () => {
 		expect(hasError.value).toBe(false)
 	})
 
-	it('render : accepte aussi une URL (string)', async () => {
+	it('render: also accepts a URL (string)', async () => {
 		const { render } = usePdfConsultation()
 		const host = document.createElement('div')
 
@@ -42,7 +42,7 @@ describe('usePdfConsultation', () => {
 		expect(getDocumentMock).toHaveBeenCalledWith({ url: 'document.pdf' })
 	})
 
-	it('render : passe hasError à true si pdf.js échoue', async () => {
+	it('render: sets hasError to true when pdf.js fails', async () => {
 		getDocumentMock.mockReturnValueOnce({ promise: Promise.reject(new Error('boom')) } as never)
 
 		const { render, hasError } = usePdfConsultation()
@@ -84,7 +84,7 @@ describe('usePdfConsultation', () => {
 		expect(host.querySelectorAll('canvas.sy-file-preview__page')).toHaveLength(3)
 	})
 
-	it('checkScrollComplete : passe isComplete à true uniquement quand le bas est atteint', () => {
+	it('checkScrollComplete: sets isComplete to true only when the bottom is reached', () => {
 		const { isComplete, checkScrollComplete } = usePdfConsultation()
 		const viewport = { scrollTop: 0, clientHeight: 100, scrollHeight: 500 } as HTMLElement
 
