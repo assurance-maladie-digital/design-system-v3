@@ -1,5 +1,4 @@
 <script setup lang="ts">
-	import { localizedDays } from './utils'
 	import useInteractions from './useInteractions'
 	import useMonthTransition from './useMonthTransition'
 	import useCalendar from './useCalendar'
@@ -26,6 +25,9 @@
 	const rootElement = ref<HTMLElement>()
 
 	const locales = useLocales(defaultLocales, () => props.locales)
+	const locale = (): string => typeof navigator === 'undefined'
+		? locales.value.fallbackLocale
+		: navigator.language ?? locales.value.fallbackLocale
 
 	const {
 		focusedDay,
@@ -49,13 +51,15 @@
 		() => props.selectRange,
 		() => props.selectedRange,
 		locales,
+		locale,
 	)
 
-	const { displayedWeeks, localizedFullMonth } = useCalendar(
+	const { displayedWeeks, localizedDays, localizedFullMonth } = useCalendar(
 		displayedMonth,
 		() => props.selectedDays,
 		committedRange,
 		previewedRange,
+		locale,
 	)
 
 	const { transitionProps } = useMonthTransition(displayedMonth)

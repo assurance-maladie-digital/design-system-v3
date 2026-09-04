@@ -1,5 +1,5 @@
 import { computed, toValue, type MaybeRefOrGetter } from 'vue'
-import { getISODatePart, type ISODate } from './utils'
+import { getISODatePart, getLocalizedDays, type ISODate } from './utils'
 
 /** Minimal number of rows always displayed */
 const totalRows = 6
@@ -30,6 +30,7 @@ export default function useCalendar(
 	selectedDays: MaybeRefOrGetter<Date[] | undefined>,
 	committedRange: MaybeRefOrGetter<[ISODate, ISODate] | null>,
 	previewedRange: MaybeRefOrGetter<[ISODate, ISODate] | null>,
+	locale: MaybeRefOrGetter<string>,
 ) {
 	/** Date of reference for the view */
 	const dateView = computed<Date>(() => toValue(month) ?? new Date())
@@ -47,9 +48,12 @@ export default function useCalendar(
 	const displayedMonth = computed(() => dateView.value.getMonth())
 	const displayedYear = computed(() => dateView.value.getFullYear())
 
+	/** Localized weekday names, from Monday to Sunday */
+	const localizedDays = computed(() => getLocalizedDays(toValue(locale)))
+
 	/** The month and year in full letters */
 	const localizedFullMonth = computed(() => Intl.DateTimeFormat(
-		typeof navigator === 'undefined' ? 'fr-FR' : navigator.language,
+		toValue(locale),
 		{ month: 'long', year: 'numeric' },
 	).format(dateView.value))
 
@@ -143,6 +147,7 @@ export default function useCalendar(
 
 	return {
 		displayedWeeks,
+		localizedDays,
 		localizedFullMonth,
 	}
 }

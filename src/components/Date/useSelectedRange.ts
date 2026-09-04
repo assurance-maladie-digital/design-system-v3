@@ -1,5 +1,5 @@
 import { computed, toValue, type ComputedRef, type MaybeRefOrGetter } from 'vue'
-import { getISODatePart, localizedDays, type ISODate } from './utils'
+import { getISODatePart, type ISODate } from './utils'
 import { locales as defaultLocales } from './locales'
 import type { FeaturedDaysInWeek } from './useCalendar'
 
@@ -11,6 +11,7 @@ export default function useSelectedRange(
 	selectRange: MaybeRefOrGetter<boolean | undefined>,
 	selectedRange: MaybeRefOrGetter<[Date, Date] | undefined>,
 	locales: ComputedRef<typeof defaultLocales>,
+	locale: MaybeRefOrGetter<string>,
 ) {
 	/** Committed range as ordered day-granularity ISO bounds */
 	const committedRange = computed<[ISODate, ISODate] | null>(() => {
@@ -28,17 +29,16 @@ export default function useSelectedRange(
 		if (!range) return ''
 		const [start, end] = range
 		return locales.value.rangeSelected(
-			start.toLocaleDateString('fr-FR'),
-			end.toLocaleDateString('fr-FR'),
+			start.toLocaleDateString(toValue(locale)),
+			end.toLocaleDateString(toValue(locale)),
 		)
 	})
 
 	/** Screen reader label describing the day's position in the selected range */
 	function getAriaLabelForRange(day: FeaturedDaysInWeek) {
-		const dayInfo = localizedDays[day.rawDate.getDay()]!
 		const dayWithName = {
 			...day,
-			dayName: dayInfo.long,
+			dayName: day.rawDate.toLocaleDateString(toValue(locale), { weekday: 'long' }),
 		}
 		if (day.isRangeStart) return locales.value.rangeStartLabel(dayWithName)
 		if (day.isRangeEnd) return locales.value.rangeEndLabel(dayWithName)
