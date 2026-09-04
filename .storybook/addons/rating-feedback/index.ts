@@ -1,0 +1,90 @@
+import React from 'react'
+import { createPortal } from 'react-dom'
+import { addons, types, useStorybookApi, useStorybookState } from 'storybook/manager-api'
+import { locales } from './locales'
+
+const ADDON_ID = 'rating-feedback'
+const TOOL_ID = `${ADDON_ID}/tool`
+const FEEDBACK_STORY_ID = 'internes-ratingfeedback--default'
+
+const RatingFeedbackModal = ({ component, onClose }: {
+	component: string
+	onClose: () => void
+}) => {
+	React.useEffect(() => {
+		const onKeydown = (event: KeyboardEvent) => {
+			if (event.key === 'Escape') onClose()
+		}
+
+		window.addEventListener('keydown', onKeydown)
+		return () => window.removeEventListener('keydown', onKeydown)
+	}, [onClose])
+
+	return createPortal(
+		React.createElement('div', {
+			style: {
+				alignItems: 'center', background: 'rgb(0 0 0 / 45%)', display: 'flex',
+				inset: 0, justifyContent: 'center', padding: 24, position: 'fixed', zIndex: 10000,
+			},
+		}, React.createElement('section', {
+			'aria-labelledby': 'rating-feedback-title',
+			'aria-modal': true,
+			'role': 'dialog',
+			'style': {
+				background: '#fff', borderRadius: 8, boxShadow: '0 8px 32px rgb(0 0 0 / 25%)',
+				color: '#242424', maxWidth: '100%', overflow: 'hidden', padding: 24, width: 560,
+			},
+		},
+		React.createElement('div', {
+			style: { alignItems: 'flex-start', display: 'flex', gap: 16, justifyContent: 'space-between' },
+		},
+		React.createElement('h2', { id: 'rating-feedback-title', style: { fontSize: 20, margin: 0 } }, locales.title(component)),
+		React.createElement('button', {
+			'aria-label': locales.close,
+			'onClick': onClose,
+			'style': { background: 'transparent', border: 0, cursor: 'pointer', fontSize: 32, lineHeight: 1 },
+			'type': 'button',
+		}, '×')),
+		React.createElement('iframe', {
+			src: `iframe.html?id=${FEEDBACK_STORY_ID}&viewMode=story&args=component:${encodeURIComponent(component)}`,
+			style: { border: 0, height: 370, marginTop: 16, width: '100%' },
+			title: locales.formTitle,
+		}))),
+		document.body,
+	)
+}
+
+const RatingFeedbackTool = () => {
+	const api = useStorybookApi()
+	const { storyId } = useStorybookState()
+	const [isOpen, setIsOpen] = React.useState(false)
+	const story = storyId ? api.getData(storyId) : undefined
+
+	if (!story?.title.startsWith('Composants/')) return null
+
+	const component = story.title.split('/').at(-1) ?? story.name
+
+	return React.createElement(React.Fragment, null,
+		React.createElement('button', {
+			'aria-label': locales.open,
+			'onClick': () => setIsOpen(true),
+			'style': {
+				alignItems: 'center', background: 'transparent', border: 0, color: 'inherit',
+				cursor: 'pointer', display: 'flex', font: 'inherit', fontWeight: 600,
+				gap: 6, height: '100%', padding: '0 10px',
+			},
+			'title': locales.open,
+		}, 'Donnez nous votre avis'),
+		isOpen ? React.createElement(RatingFeedbackModal, { component, onClose: () => setIsOpen(false) }) : null,
+	)
+}
+
+export const registerRatingFeedbackAddon = () => {
+	addons.register(ADDON_ID, () => {
+		addons.add(TOOL_ID, {
+			type: types.TOOL,
+			title: locales.open,
+			render: () => React.createElement(RatingFeedbackTool),
+		})
+	})
+}
