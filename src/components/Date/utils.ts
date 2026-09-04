@@ -1,0 +1,31 @@
+const monday = new Date(2024, 5, 3) // a Monday
+
+/** Day-granularity ISO date, e.g. "2024-06-15" */
+export type ISODate = string
+/** Localized weekday names, from Monday to Sunday */
+export function getLocalizedDays(locale: string): { long: string, short: string }[] {
+	return Array.from({ length: 7 }, (_, i) => {
+		const date = new Date(monday)
+		date.setDate(monday.getDate() + i)
+		return {
+			long: date.toLocaleDateString(locale, { weekday: 'long' }),
+			short: date.toLocaleDateString(locale, { weekday: 'short' }),
+		}
+	})
+}
+
+/**
+ * Get the ISO date string (YYYY-MM-DD)
+ */
+export function getISODatePart(date: Date): string {
+	return `${date.getFullYear().toString().padStart(4, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`
+}
+
+/**
+ * Parse an ISO date string (YYYY-MM-DD) into a Date at local midnight,
+ * unlike new Date('YYYY-MM-DD') which parses it as UTC
+ */
+export function parseISODatePart(isoDate: string): Date {
+	const [year, month, day] = isoDate.split('-')
+	return new Date(Number(year), Number(month) - 1, Number(day))
+}
