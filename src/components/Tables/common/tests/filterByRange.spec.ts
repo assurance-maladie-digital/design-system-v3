@@ -1,5 +1,5 @@
 import { flushPromises, mount } from '@vue/test-utils'
-import { afterAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterAll, describe, expect, it, vi } from 'vitest'
 import SyTable from '../../SyTable/SyTable.vue'
 import DateFilter from '../filters/DateFilter.vue'
 import NumberFilter from '../filters/NumberFilter.vue'
@@ -65,13 +65,6 @@ const items = [
 ]
 
 describe('SyTable - filterByRange', () => {
-	// `saveState` est actif par défaut : sans nettoyage, les filtres persistés par
-	// un test sont restaurés par le suivant (même `suffix`) et faussent le jeu de
-	// lignes initial.
-	beforeEach(() => {
-		localStorage.clear()
-	})
-
 	afterAll(() => {
 		vi.resetModules()
 	})

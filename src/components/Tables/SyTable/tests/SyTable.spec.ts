@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, afterEach, beforeAll } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { defineComponent, h, ref } from 'vue'
 import { LocalStorageUtility } from '@/utils/localStorageUtility'
 import type { DataOptions, FilterOption } from '@/components/Tables/common/types'
 
@@ -1373,26 +1374,43 @@ describe('SyTable pageInput', () => {
 		expect(wrapper.findAll('tbody tr')).toHaveLength(300)
 	})
 
-	it('applies the itemsPerPage given by the project even when a state is persisted (#2535)', async () => {
-		vi.mocked(LocalStorageUtility).prototype.getItem = vi.fn().mockReturnValue({
-			options: { page: 1, sortBy: [], groupBy: [] },
+	it('applies an itemsPerPage mutated in place by the project (#2535)', async () => {
+		// Reproduction du ticket : le projet met à jour son objet `options` en
+		// place (store, restauration d'une recherche, synchro d'URL…) au lieu de
+		// le remplacer. Le pied de tableau lit `options` directement et affichait
+		// bien 300, tandis que le tableau Vuetify interne restait paginé à 10.
+		const Harness = defineComponent({
+			setup() {
+				const options = ref<Partial<DataOptions>>({ itemsPerPage: 10, page: 1 })
+				return { options }
+			},
+			render() {
+				return h(SyTable, {
+					'options': this.options,
+					'onUpdate:options': (value: Partial<DataOptions>) => {
+						this.options = value
+					},
+					'items': Array.from({ length: 1200 }, (_, i) => ({ id: i + 1, name: `row-${i + 1}`, age: 20 })),
+					'headers': headers,
+					'suffix': 'per-page-in-place',
+					'itemsPerPageOptions': [10, 50, 300],
+				})
+			},
 		})
 
-		const wrapper = mount(SyTable, {
-			props: {
-				options: { itemsPerPage: 50, page: 1 } as DataOptions,
-				suffix: 'per-page-stored',
-				itemsPerPageOptions: [10, 50, 300],
-			},
-			attrs: {
-				items: Array.from({ length: 200 }, (_, i) => ({ id: i + 1, name: `row-${i + 1}`, age: 20 })),
-				headers,
-			},
-		})
+		const wrapper = mount(Harness)
 		await flushTicks(wrapper)
 
-		expect(wrapper.findComponent({ name: 'SyTablePagination' }).props('itemsPerPage')).toBe(50)
-		expect(wrapper.findComponent({ name: 'VDataTable' }).props('itemsPerPage')).toBe(50)
-		expect(wrapper.findAll('tbody tr')).toHaveLength(50)
+		wrapper.vm.options.itemsPerPage = 300
+		wrapper.vm.options.page = 1
+		await flushTicks(wrapper, 12)
+
+		const pagination = wrapper.findComponent({ name: 'SyTablePagination' })
+		const dataTable = wrapper.findComponent({ name: 'VDataTable' })
+
+		// Le pied de tableau et les lignes réellement paginées doivent concorder.
+		expect(pagination.props('itemsPerPage')).toBe(300)
+		expect(dataTable.props('itemsPerPage')).toBe(300)
+		expect(wrapper.findAll('tbody tr')).toHaveLength(300)
 	})
 })

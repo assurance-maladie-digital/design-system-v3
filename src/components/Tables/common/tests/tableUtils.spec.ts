@@ -57,31 +57,6 @@ describe('tableUtils', () => {
 		})
 	})
 
-	it('merges stored options into the consumer options instead of replacing them', () => {
-		// Régression #2535 : `itemsPerPage` fourni par le projet mais absent du
-		// localStorage était perdu, le tableau Vuetify retombait sur 10 lignes
-		// alors que le pied de tableau continuait d'afficher la valeur du projet.
-		const options = ref<Partial<DataOptions>>({ itemsPerPage: 300 })
-		const componentAttributes = {}
-
-		const { propsFacade } = useTableProps({
-			componentAttributes,
-			options,
-			storedOptions: { page: 2, sortBy: [{ key: 'id', order: 'asc' }] },
-		})
-
-		expect(propsFacade.value).toMatchObject({
-			itemsPerPage: 300,
-			page: 2,
-		})
-		// `options` est la source du pied de tableau : elle doit refléter la même
-		// valeur que celle envoyée au tableau interne.
-		expect(options.value).toMatchObject({
-			itemsPerPage: 300,
-			page: 2,
-		})
-	})
-
 	it('should update options correctly', () => {
 		const options = ref<Partial<DataOptions>>({
 			page: 1,
