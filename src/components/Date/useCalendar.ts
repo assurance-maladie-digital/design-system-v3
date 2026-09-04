@@ -1,5 +1,5 @@
 import { computed, toValue, type MaybeRefOrGetter } from 'vue'
-import { getISODatePart } from './utils'
+import { getISODatePart, type ISODate } from './utils'
 
 /** Minimal number of rows always displayed */
 const totalRows = 6
@@ -28,8 +28,8 @@ export type FeaturedDaysInWeek = {
 export default function useCalendar(
 	month: MaybeRefOrGetter<Date | undefined>,
 	selectedDays: MaybeRefOrGetter<Date[] | undefined>,
-	rangeInterval: MaybeRefOrGetter<[string, string] | null>,
-	previewInterval: MaybeRefOrGetter<[string, string] | null>,
+	committedRange: MaybeRefOrGetter<[ISODate, ISODate] | null>,
+	previewedRange: MaybeRefOrGetter<[ISODate, ISODate] | null>,
 ) {
 	/** Date of reference for the view */
 	const dateView = computed<Date>(() => toValue(month) ?? new Date())
@@ -104,8 +104,8 @@ export default function useCalendar(
 	const displayedDays = computed<FeaturedDaysInWeek[]>(() => {
 		const firstDay = dayOfTheMonth.value[0]!
 		const lastDay = dayOfTheMonth.value.at(-1)!
-		const range = toValue(rangeInterval)
-		const preview = toValue(previewInterval)
+		const range = toValue(committedRange)
+		const preview = toValue(previewedRange)
 		const days = [...daysBeforeStartOfMonth.value, ...dayOfTheMonth.value, ...daysAfterEndOfMonth.value]
 
 		return days.map((rawDate) => {

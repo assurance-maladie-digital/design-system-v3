@@ -7,7 +7,6 @@ export default function useInteractions(
 	displayedMonth: Ref<Date | undefined>,
 	rootElement: Ref<HTMLElement | undefined>,
 	selectRange: MaybeRefOrGetter<boolean | undefined>,
-	selectedRange: MaybeRefOrGetter<[Date, Date] | undefined>,
 	emits: {
 		(event: 'click:day', value: Date): void
 		(event: 'update:selectedRange', value: [Date, Date]): void
@@ -94,14 +93,12 @@ export default function useInteractions(
 
 	const {
 		isSelecting,
-		committedInterval,
-		previewedInterval,
+		previewedRange,
 		previewRange,
 		selectDay,
 		cancelSelection,
 	} = useRangeSelection(
 		selectRange,
-		selectedRange,
 		range => emits('update:selectedRange', range),
 	)
 
@@ -145,8 +142,7 @@ export default function useInteractions(
 		firstDayOfDisplayedMonth,
 		keyboardInteractions,
 		click,
-		committedInterval,
-		previewedInterval,
+		previewedRange,
 		previewRange,
 	}
 }

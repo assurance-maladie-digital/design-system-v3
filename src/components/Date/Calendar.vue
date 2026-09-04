@@ -3,10 +3,10 @@
 	import useInteractions from './useInteractions'
 	import useMonthTransition from './useMonthTransition'
 	import useCalendar from './useCalendar'
-	import type { FeaturedDaysInWeek } from './useCalendar'
+	import useSelectedRange from './useSelectedRange'
 	import { useLocales } from '@/composables/useLocales'
 	import { locales as defaultLocales } from './locales'
-	import { ref, computed, useId } from 'vue'
+	import { ref, useId } from 'vue'
 
 	const props = defineProps<{
 		selectedDays?: Date[]
@@ -33,46 +33,30 @@
 		keyboardInteractions,
 		click,
 		previewRange,
-		committedInterval,
-		previewedInterval,
+		previewedRange,
 	} = useInteractions(
 		displayedMonth,
 		rootElement,
 		() => props.selectRange,
-		() => props.selectedRange,
 		emits,
+	)
+
+	const {
+		committedRange,
+		rangeAnnouncement,
+		getAriaLabelForRange,
+	} = useSelectedRange(
+		() => props.selectRange,
+		() => props.selectedRange,
+		locales,
 	)
 
 	const { displayedWeeks, localizedFullMonth } = useCalendar(
 		displayedMonth,
 		() => props.selectedDays,
-		committedInterval,
-		previewedInterval,
+		committedRange,
+		previewedRange,
 	)
-
-	/** Screen reader announcement of the selected range */
-	const rangeAnnouncement = computed(() => {
-		const range = props.selectedRange
-		if (!range) return ''
-		const [start, end] = range
-		return locales.value.rangeSelected(
-			start.toLocaleDateString('fr-FR'),
-			end.toLocaleDateString('fr-FR'),
-		)
-	})
-
-	/** Screen reader label describing the day's position in the selected range */
-	function getAriaLabelForRange(day: FeaturedDaysInWeek) {
-		const dayInfo = localizedDays[day.rawDate.getDay()]!
-		const dayWithName = {
-			...day,
-			dayName: dayInfo.long,
-		}
-		if (day.isRangeStart) return locales.value.rangeStartLabel(dayWithName)
-		if (day.isRangeEnd) return locales.value.rangeEndLabel(dayWithName)
-		if (day.isInRange) return locales.value.rangeIncludedLabel(dayWithName)
-		return undefined
-	}
 
 	const { transitionProps } = useMonthTransition(displayedMonth)
 

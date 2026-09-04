@@ -1,4 +1,7 @@
 const monday = new Date(2024, 5, 3) // a Monday
+
+/** Day-granularity ISO date, e.g. "2024-06-15" */
+export type ISODate = string
 export const localizedDays = Array.from({ length: 7 }, (_, i) => {
 	const date = new Date(monday)
 	date.setDate(monday.getDate() + i)
