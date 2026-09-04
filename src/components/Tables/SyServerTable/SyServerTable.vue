@@ -147,7 +147,7 @@
 			: lastNonUndefinedLength.value
 	})
 
-	const { page, pageCount, itemsPerPageValue, updateItemsPerPage, onUpdateOptions } = usePagination({
+	const { page, pageCount, itemsPerPageValue, updateItemsPerPage } = usePagination({
 		options,
 		itemsLength: displayedItemsLength,
 		updateOptions,
@@ -373,7 +373,11 @@
 			:multi-sort="props.multiSort"
 			:must-sort="props.mustSort"
 			:show-expand="props.showExpand"
-			@update:options="onUpdateOptions"
+			:page="page"
+			:items-per-page="itemsPerPageValue"
+			@update:page="updateOptions({ page: $event })"
+			@update:items-per-page="updateItemsPerPage"
+			@update:options="updateOptions"
 		>
 			<template #top>
 				<caption
