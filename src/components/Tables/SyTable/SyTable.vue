@@ -131,7 +131,7 @@
 
 	// Use the pagination composable
 	const itemsLength = computed(() => filteredItems.value.length)
-	const { page, pageCount, itemsPerPageValue, updateItemsPerPage, updatePage, onUpdateOptions } = usePagination({
+	const { page, pageCount, itemsPerPageValue, updateItemsPerPage } = usePagination({
 		options,
 		itemsLength,
 		updateOptions,
@@ -357,9 +357,9 @@
 			:show-expand="props.showExpand"
 			:page="page"
 			:items-per-page="itemsPerPageValue"
-			@update:page="updatePage"
+			@update:page="updateOptions({ page: $event })"
 			@update:items-per-page="updateItemsPerPage"
-			@update:options="onUpdateOptions"
+			@update:options="updateOptions"
 		>
 			<template #top>
 				<caption

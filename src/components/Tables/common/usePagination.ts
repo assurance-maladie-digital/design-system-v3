@@ -25,16 +25,9 @@ export function usePagination({
 	itemsLength: Ref<number>
 	updateOptions: (opts: Partial<DataOptions>) => void
 }) {
-	// Current page with getter/setter
-	const page = computed({
-		get: () => options.value.page || 1,
-		set: (newPage: number) => {
-			options.value = {
-				...options.value,
-				page: newPage,
-			}
-		},
-	})
+	// Page courante, avec valeur par défaut. Lecture seule : toute écriture passe
+	// par `updateOptions`, `options` étant l'unique source de vérité.
+	const page = computed(() => options.value.page || 1)
 
 	// Items per page with fallback to default
 	const itemsPerPageValue = computed(() => {
@@ -55,22 +48,10 @@ export function usePagination({
    * Update items per page from pagination component
    */
 	function updateItemsPerPage(newItemsPerPage: number) {
-		options.value = {
-			...options.value,
+		updateOptions({
 			itemsPerPage: newItemsPerPage,
 			page: 1, // Reset to first page when changing items per page
-		}
-	}
-
-	/**
-   * Update page from the Vuetify table (clamping) or from the footer
-   */
-	function updatePage(newPage: number) {
-		updateOptions({ page: newPage })
-	}
-
-	function onUpdateOptions(newOptions: Partial<DataOptions>) {
-		updateOptions(newOptions)
+		})
 	}
 
 	return {
@@ -78,7 +59,5 @@ export function usePagination({
 		pageCount,
 		itemsPerPageValue,
 		updateItemsPerPage,
-		updatePage,
-		onUpdateOptions,
 	}
 }

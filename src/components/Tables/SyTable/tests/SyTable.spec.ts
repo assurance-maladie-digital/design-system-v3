@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach, beforeAll } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import { defineComponent, h, ref } from 'vue'
 import { LocalStorageUtility } from '@/utils/localStorageUtility'
 import type { DataOptions, FilterOption } from '@/components/Tables/common/types'
@@ -49,10 +49,6 @@ const headers: TestDataTableHeaders[] = [
 		key: 'age',
 	},
 ]
-
-async function flushTicks(wrapper: { vm: { $nextTick: () => Promise<unknown> } }, count = 6): Promise<void> {
-	for (let i = 0; i < count; i++) await wrapper.vm.$nextTick()
-}
 
 describe('SyTable', () => {
 	beforeAll(() => {
@@ -1359,7 +1355,7 @@ describe('SyTable pageInput', () => {
 		const dataTable = () => wrapper.findComponent({ name: 'VDataTable' })
 
 		pagination().vm.$emit('update:items-per-page', 300)
-		await flushTicks(wrapper)
+		await flushPromises()
 
 		expect(pagination().props('itemsPerPage')).toBe(300)
 		expect(dataTable().props('itemsPerPage')).toBe(300)
@@ -1367,7 +1363,7 @@ describe('SyTable pageInput', () => {
 
 		// Nouvelle recherche : le projet remplace le jeu de lignes.
 		await wrapper.setProps({ items: rows(900, 'new') } as never)
-		await flushTicks(wrapper)
+		await flushPromises()
 
 		expect(pagination().props('itemsPerPage')).toBe(300)
 		expect(dataTable().props('itemsPerPage')).toBe(300)
@@ -1399,11 +1395,11 @@ describe('SyTable pageInput', () => {
 		})
 
 		const wrapper = mount(Harness)
-		await flushTicks(wrapper)
+		await flushPromises()
 
 		wrapper.vm.options.itemsPerPage = 300
 		wrapper.vm.options.page = 1
-		await flushTicks(wrapper, 12)
+		await flushPromises()
 
 		const pagination = wrapper.findComponent({ name: 'SyTablePagination' })
 		const dataTable = wrapper.findComponent({ name: 'VDataTable' })

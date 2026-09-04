@@ -147,7 +147,7 @@
 			: lastNonUndefinedLength.value
 	})
 
-	const { page, pageCount, itemsPerPageValue, updateItemsPerPage, updatePage, onUpdateOptions } = usePagination({
+	const { page, pageCount, itemsPerPageValue, updateItemsPerPage } = usePagination({
 		options,
 		itemsLength: displayedItemsLength,
 		updateOptions,
@@ -375,9 +375,9 @@
 			:show-expand="props.showExpand"
 			:page="page"
 			:items-per-page="itemsPerPageValue"
-			@update:page="updatePage"
+			@update:page="updateOptions({ page: $event })"
 			@update:items-per-page="updateItemsPerPage"
-			@update:options="onUpdateOptions"
+			@update:options="updateOptions"
 		>
 			<template #top>
 				<caption

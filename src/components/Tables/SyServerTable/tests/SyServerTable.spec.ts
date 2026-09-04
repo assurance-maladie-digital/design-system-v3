@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach, beforeAll, beforeEach } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import { LocalStorageUtility } from '@/utils/localStorageUtility'
 import type { DataOptions, FilterOption } from '@/components/Tables/common/types'
 
@@ -1643,7 +1643,7 @@ describe('SyServerTable pageInput', () => {
 		const dataTable = () => wrapper.findComponent({ name: 'VDataTableServer' })
 
 		pagination().vm.$emit('update:items-per-page', 300)
-		for (let i = 0; i < 6; i++) await wrapper.vm.$nextTick()
+		await flushPromises()
 
 		const emitted = wrapper.emitted('update:options')!
 		const lastEmit = emitted[emitted.length - 1]![0] as DataOptions
@@ -1652,9 +1652,9 @@ describe('SyServerTable pageInput', () => {
 
 		// Le projet renvoie la page demandée, puis relance la recherche.
 		await wrapper.setProps({ items: rows(300, 'row') } as never)
-		for (let i = 0; i < 6; i++) await wrapper.vm.$nextTick()
+		await flushPromises()
 		await wrapper.setProps({ items: rows(300, 'new') } as never)
-		for (let i = 0; i < 6; i++) await wrapper.vm.$nextTick()
+		await flushPromises()
 
 		expect(pagination().props('itemsPerPage')).toBe(300)
 		expect(dataTable().props('itemsPerPage')).toBe(300)
