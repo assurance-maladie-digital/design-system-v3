@@ -106,7 +106,7 @@ export default function useInteractions(
 	)
 
 	/** Arrows move the focus: the pending range preview follows it (focusin binding) */
-	const keyboardActions: Record<string, () => void> = {
+	const keyboardActions: Record<string, (event: KeyboardEvent) => void> = {
 		'ArrowRight': () => moveFocusedDayBy(1),
 		'ArrowLeft': () => moveFocusedDayBy(-1),
 		'ArrowDown': () => moveFocusedDayBy(7),
@@ -115,19 +115,21 @@ export default function useInteractions(
 		'End': lastDay,
 		' ': () => click(parseISODatePart(focusedDay.value)),
 		'Enter': () => click(parseISODatePart(focusedDay.value)),
-		// Cancel the pending selection, no-op if none is in progress
-		'Escape': () => {
-			if (isSelecting.value) cancelSelection()
+		// Stops the propagation only when a selection is actually cancelled, so
+		// an embedding picker still receives Escape when there is nothing to cancel
+		'Escape': (event) => {
+			if (!isSelecting.value) return
+			event.stopPropagation()
+			cancelSelection()
 		},
 	}
 
 	const keyboardInteractions = {
 		onKeydown(event: KeyboardEvent) {
 			const action = keyboardActions[event.key]
-			if (action) {
-				event.preventDefault()
-				action()
-			}
+			if (!action) return
+			event.preventDefault()
+			action(event)
 		},
 	}
 

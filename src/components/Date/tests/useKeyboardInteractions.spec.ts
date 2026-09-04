@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { nextTick, ref } from 'vue'
 import useKeyboardInteractions from '../useInteractions'
 
@@ -27,7 +27,7 @@ describe('useKeyboardInteractions', () => {
 		expect(focusedDay.value).toBe('2024-06-02')
 	})
 
-	it('cancels the pending range selection on Escape', () => {
+	it('cancels the pending range selection on Escape and consumes the event', () => {
 		const displayedMonth = ref<Date | undefined>(new Date(2024, 5, 15))
 		const { keyboardInteractions, click, previewRange, previewedInterval } = useKeyboardInteractions(displayedMonth, ref(), true, undefined, () => {})
 
@@ -35,8 +35,23 @@ describe('useKeyboardInteractions', () => {
 		previewRange(new Date(2024, 5, 15))
 		expect(previewedInterval.value).toEqual(['2024-06-10', '2024-06-15'])
 
-		keyboardInteractions.onKeydown(new KeyboardEvent('keydown', { key: 'Escape', cancelable: true }))
+		const event = new KeyboardEvent('keydown', { key: 'Escape', cancelable: true })
+		const stopPropagation = vi.spyOn(event, 'stopPropagation')
+		keyboardInteractions.onKeydown(event)
 
 		expect(previewedInterval.value).toBeNull()
+		// The event must not reach an embedding picker (e.g. to close its menu)
+		expect(stopPropagation).toHaveBeenCalled()
+	})
+
+	it('lets Escape propagate when no selection is in progress', () => {
+		const displayedMonth = ref<Date | undefined>(new Date(2024, 5, 15))
+		const { keyboardInteractions } = useKeyboardInteractions(displayedMonth, ref(), true, undefined, () => {})
+
+		const event = new KeyboardEvent('keydown', { key: 'Escape', cancelable: true })
+		const stopPropagation = vi.spyOn(event, 'stopPropagation')
+		keyboardInteractions.onKeydown(event)
+
+		expect(stopPropagation).not.toHaveBeenCalled()
 	})
 })
