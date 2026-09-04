@@ -141,7 +141,7 @@
   "peerDependencies": {
     "@mdi/js": "^7.4.47",
     "vue": "^3.5.18",
-    "vuetify": "3.12.2"
+    "vuetify": "3.13.3"
   },
   "dependencies": {
     "@emotion/css": "^11.13.5",
