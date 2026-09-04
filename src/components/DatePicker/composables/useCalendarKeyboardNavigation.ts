@@ -1,3 +1,43 @@
+/**
+ * useCalendarKeyboardNavigation — Navigation clavier par flèches dans la grille du calendrier.
+ *
+ * ## Rôle
+ *
+ * Ce composable implémente la **navigation par flèches** (Up/Down/Left/Right)
+ * dans la grille des jours du VDatePicker, conforme au pattern APG (ARIA Authoring
+ * Practices Guide) du W3C pour les date pickers dialog.
+ *
+ * ## Navigation gérée
+ *
+ * - **Flèches directionnelles** : déplacent le focus jour par jour dans la grille.
+ *   - Left/Right : jour précédent/suivant
+ *   - Up/Down : semaine précédente/suivante
+ * - **Home/End** : premier/dernier jour de la semaine affichée
+ * - **PageUp/PageDown** : mois précédent/suivant
+ * - **Enter/Space** : sélectionne la date focalisée (déclenche `onSelectDate`)
+ * - **Escape** : ferme le calendrier (délégué au focus trap)
+ *
+ * Le composable gère aussi la navigation par flèches dans les vues mois et année
+ * (roving tabindex), en maintenant `tabindex=0` sur l'élément actif et `-1` sur les autres.
+ *
+ * ## Roving tabindex
+ *
+ * La grille utilise un **roving tabindex** : un seul jour a `tabindex=0` (le jour actif),
+ * tous les autres ont `tabindex=-1`. Quand l'utilisateur navigue par flèches, le composable
+ * déplace `tabindex=0` vers le nouveau jour et lui donne le focus.
+ *
+ * ## Synchronisation avec VDatePicker
+ *
+ * Quand la navigation par flèches fait sortir le jour du mois actuellement affiché,
+ * le composable appelle `setCurrentDate` qui déclenche `syncDisplayedMonthYearFromDate`
+ * pour changer le mois affiché par VDatePicker, puis re-focalise le bon jour après
+ * le re-render (via double `nextTick`).
+ *
+ * ## Sélecteurs
+ *
+ * Utilise des sélecteurs pour les proxies personnalisés (`data-sy-date-picker-option`)
+ * avec fallback sur les boutons natifs Vuetify, similaire à `useDatePickerFocusTrap`.
+ */
 import {
 	type Ref,
 	type ComponentPublicInstance,
@@ -23,6 +63,9 @@ export interface CalendarKeyboardNavigationOptions {
 
 	// Renvoie la date sur laquelle placer le focus à l'ouverture (date sélectionnée ou aujourd'hui)
 	getInitialFocusDate?: () => Date
+
+	// Indique qu'une ouverture clavier doit afficher l'anneau de focus du DS.
+	focusInitialDayOnOpen?: Ref<boolean>
 }
 
 export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigationOptions) => {
@@ -33,6 +76,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		setCurrentDate,
 		getInitialFocusDate,
 		onSelectDate,
+		focusInitialDayOnOpen,
 	} = options
 
 	const addDays = (date: Date, amount: number) => dayjs(date).add(amount, 'day').toDate()
@@ -103,11 +147,21 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		button.focus({ preventScroll: true })
 	}
 
-	const focusDayCell = (cell: HTMLElement | undefined | null) => {
+	const focusDayCell = (cell: HTMLElement | undefined | null, showFocusRing = false) => {
 		if (!cell) return
 
 		if (!cell.hasAttribute('tabindex')) {
 			cell.setAttribute('tabindex', '-1')
+		}
+
+		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
+		// Le marqueur conserve l'anneau du DS après un focus programmatique et suit
+		// la cellule active pendant la navigation clavier.
+		if (showFocusRing || rootEl?.querySelector('.sy-date-picker-keyboard-focus')) {
+			rootEl?.querySelectorAll('.sy-date-picker-keyboard-focus').forEach((element) => {
+				element.classList.remove('sy-date-picker-keyboard-focus')
+			})
+			cell.classList.add('sy-date-picker-keyboard-focus')
 		}
 
 		cell.focus({ preventScroll: true })
@@ -379,7 +433,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 	let latestFocusToken = 0
 
-	const focusDateButton = (date: Date, attempt = 0, token?: number) => {
+	const focusDateButton = (date: Date, attempt = 0, token?: number, showFocusRing = false) => {
 		if (attempt === 0) {
 			latestFocusToken++
 			token = latestFocusToken
@@ -391,7 +445,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
 		if (!rootEl) {
 			if (attempt < 15) {
-				setTimeout(() => focusDateButton(date, attempt + 1, token), attempt === 0 ? 10 : 30)
+				setTimeout(() => focusDateButton(date, attempt + 1, token, showFocusRing), attempt === 0 ? 10 : 30)
 			}
 			return
 		}
@@ -432,12 +486,6 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 		// Filtrer ceux qui ne sont pas visibles
 		const visibleCandidates = candidates.filter((cell) => {
-			// Autoriser les éléments en transition (opacity peut être 0 au tout début)
-			const windowItem = cell.closest('.v-window-item')
-			const isEntering = windowItem && Array.from(windowItem.classList).some(c => c.includes('enter-active') || c.includes('enter-to'))
-
-			if (!isEntering && cell.offsetParent === null) return false
-
 			const style = window.getComputedStyle(cell)
 			return style.display !== 'none' && style.visibility !== 'hidden'
 		})
@@ -452,7 +500,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 			const bestCandidate = visibleCandidates[0]
 			if (bestCandidate) {
-				focusDayCell(bestCandidate)
+				focusDayCell(bestCandidate, showFocusRing)
 
 				// Revérifier le focus après la durée typique d'une transition Vuetify (~350ms)
 				// car le DOM peut être re-rendu et l'élément détruit, ou le focus perdu pendant l'animation.
@@ -466,7 +514,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 							&& (document.activeElement !== bestCandidate || !bestCandidate.isConnected)
 						) {
 							// Forcer un retry silencieux
-							focusDateButton(date, 2, token)
+							focusDateButton(date, 2, token, showFocusRing)
 						}
 					}, 350)
 				}
@@ -475,7 +523,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		}
 
 		if (attempt < 15) {
-			setTimeout(() => focusDateButton(date, attempt + 1, token), attempt === 0 ? 10 : 30)
+			setTimeout(() => focusDateButton(date, attempt + 1, token, showFocusRing), attempt === 0 ? 10 : 30)
 		}
 	}
 
@@ -701,13 +749,14 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		lastFocusedYearButton = null
 	}
 
-	const focusInitialDay = () => {
+	const focusInitialDay = (options: { showFocusRing?: boolean } = {}) => {
 		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
 		if (!rootEl) return
 
 		const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
 		const iso = toISO(targetDate)
-		let dayCell = rootEl.querySelector<HTMLElement>(`[data-v-date="${iso}"][role="gridcell"], [data-v-date="${iso}"]`)
+		const targetDay = rootEl.querySelector<HTMLElement>(`[data-v-date="${iso}"][role="gridcell"], [data-v-date="${iso}"]`)
+		let dayCell = targetDay?.closest<HTMLElement>('[role="gridcell"]') ?? targetDay
 		if (!dayCell) {
 			const allDates = Array.from(rootEl.querySelectorAll<HTMLElement>('[data-v-date]'))
 			const nonAdjacent = allDates.filter(el => !el.classList.contains('v-date-picker-month__day--adjacent'))
@@ -717,21 +766,27 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		}
 
 		if (dayCell) {
-			focusDayCell(dayCell)
+			focusDayCell(dayCell, options.showFocusRing)
 			setTimeout(() => {
-				focusDateButton(targetDate)
+				focusDateButton(targetDate, 0, undefined, options.showFocusRing)
 			}, 0)
 			return
 		}
 
-		focusDateButton(targetDate)
+		focusDateButton(targetDate, 0, undefined, options.showFocusRing)
 	}
 
 	watch(isDatePickerVisible, (visible) => {
 		if (visible) {
 			nextTick(() => {
 				attachListeners()
-				nextTick(focusInitialDay)
+				nextTick(() => {
+					// Ce composable est l'unique propriétaire du focus initial dans la grille.
+					// L'intention clavier est consommée après le rendu de VDatePicker.
+					const showFocusRing = focusInitialDayOnOpen?.value ?? false
+					if (focusInitialDayOnOpen) focusInitialDayOnOpen.value = false
+					focusInitialDay({ showFocusRing })
+				})
 			})
 		}
 		else {

@@ -1,3 +1,32 @@
+/**
+ * useDatePickerFocusTrap — Gestion du focus dans le dialog du calendrier.
+ *
+ * ## Rôle
+ *
+ * Ce composable implémente le **focus trap** du calendrier DatePicker, conforme
+ * au pattern APG (ARIA Authoring Practices Guide) du W3C pour les date pickers.
+ *
+ * Il garantit que :
+ * - **Tab / Shift+Tab** cyclent à l'intérieur du dialog (le focus ne sort jamais)
+ * - **Escape** ferme le calendrier et restaure le focus sur l'input
+ * - Le **tab order logique** respecte l'ordre visuel : entête → grille des jours → bouton Aujourd'hui
+ *
+ * ## Ordre logique du focus
+ *
+ * Le composable construit un ordre de tabulation personnalisé via `getLogicalFocusOrder` :
+ * 1. Boutons d'entête (mois/année précédents, suivants, titre)
+ * 2. **Grille des jours** (un seul jour reçoit `tabindex=0`, les autres `-1`)
+ * 3. Bouton « Aujourd'hui »
+ *
+ * La grille est traitée comme un **roving tabindex** : un seul jour est focusable
+ * via Tab, la navigation intra-grille se fait par flèches (géré par `useCalendarKeyboardNavigation`).
+ *
+ * ## Sélecteurs
+ *
+ * Le composable utilise des sélecteurs spécifiques pour les proxies personnalisés
+ * (`data-sy-date-picker-option`) créés par `useDatePickerAccessibility`, avec
+ * fallback sur les boutons natifs Vuetify (`.v-btn`).
+ */
 import { type ComponentPublicInstance, type Ref } from 'vue'
 
 import dayjs from 'dayjs'
@@ -32,7 +61,16 @@ const getFocusableElements = (root: HTMLElement): HTMLElement[] => {
 const getDayGridFocusTarget = (root: HTMLElement, getInitialFocusDate?: () => Date): HTMLElement | null => {
 	const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
 	const iso = dayjs(targetDate).format('YYYY-MM-DD')
-	const dayCell = root.querySelector<HTMLElement>(`[data-v-date="${iso}"][role="gridcell"], [data-v-date="${iso}"]`)
+	let dayCell = root.querySelector<HTMLElement>(`[data-v-date="${iso}"][role="gridcell"], [data-v-date="${iso}"]`)
+
+	if (!dayCell) {
+		const allDates = Array.from(root.querySelectorAll<HTMLElement>('[data-v-date]'))
+		const nonAdjacent = allDates.filter(el => !el.classList.contains('v-date-picker-month__day--adjacent'))
+		if (nonAdjacent.length > 0) {
+			dayCell = nonAdjacent[0] ?? null
+		}
+	}
+
 	if (dayCell && !dayCell.hasAttribute('tabindex')) {
 		dayCell.setAttribute('tabindex', '-1')
 	}
@@ -118,10 +156,6 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 	}
 
 	const focusYearButton = (root: HTMLElement): boolean => {
-		const activeYear = root.querySelector<HTMLElement>('.v-date-picker-years [aria-pressed="true"]')
-			?? root.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
-		if (focusElement(activeYear)) return true
-
 		const targetDate = getInitialFocusDate ? getInitialFocusDate() : new Date()
 		const targetYear = String(targetDate.getFullYear())
 		const yearButtons = Array.from(root.querySelectorAll<HTMLElement>(`.v-date-picker-years ${YEAR_PROXY_SELECTOR}`))
@@ -135,6 +169,10 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 			(button.getAttribute('aria-label') ?? button.textContent ?? '').trim() === targetYear,
 		)
 		return focusElement(matchingYear ?? null)
+			|| focusElement(
+				root.querySelector<HTMLElement>('.v-date-picker-years [aria-pressed="true"]')
+				?? root.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active'),
+			)
 	}
 
 	const focusCurrentGridSelection = (root: HTMLElement): boolean => {

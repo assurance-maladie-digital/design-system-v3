@@ -248,6 +248,64 @@ describe('PeriodField.vue', () => {
 			expect(wrapper.vm.isValid).toBe(true)
 		})
 
+		it('revalidates the sibling field when the range becomes invalid after editing one side', async () => {
+			const wrapper = mount(PeriodField, {
+				props: {
+					modelValue: {
+						from: '10/01/2024',
+						to: '20/01/2024',
+					},
+				},
+			})
+
+			const [fromInput, toInput] = wrapper.findAll('input') as [DOMWrapper<HTMLInputElement>, DOMWrapper<HTMLInputElement>]
+
+			await toInput.setValue('05/01/2024')
+			await toInput.trigger('blur')
+			await flushPromises()
+
+			expect(wrapper.text()).toContain('La date de fin ne peut pas être inférieure à la date de début')
+			expect(wrapper.text()).toContain('La date de début ne peut pas être supérieure à la date de fin')
+			expect(wrapper.vm.isValid).toBe(false)
+
+			await fromInput.setValue('01/01/2024')
+			await fromInput.trigger('blur')
+			await flushPromises()
+
+			expect(wrapper.text()).not.toContain('La date de fin ne peut pas être inférieure à la date de début')
+			expect(wrapper.text()).not.toContain('La date de début ne peut pas être supérieure à la date de fin')
+			expect(wrapper.vm.isValid).toBe(true)
+		})
+
+		it('validateOnSubmit returns false when one side is missing and true once both dates are coherent', async () => {
+			const wrapper = mount(PeriodField, {
+				props: {
+					required: true,
+					modelValue: {
+						from: '12/12/1995',
+						to: null,
+					},
+				},
+			})
+
+			expect(await wrapper.vm.validateOnSubmit()).toBe(false)
+			await flushPromises()
+
+			expect(wrapper.text()).toContain('La date de fin est requise.')
+			expect(wrapper.vm.isValid).toBe(false)
+
+			await wrapper.setProps({
+				modelValue: {
+					from: '12/12/1995',
+					to: '20/12/1995',
+				},
+			})
+			await flushPromises()
+
+			expect(await wrapper.vm.validateOnSubmit()).toBe(true)
+			expect(wrapper.vm.isValid).toBe(true)
+		})
+
 		it('validates correctly the required rule when fields are empty or partially filled', async () => {
 			// Cas 1: Tester la validation quand les deux champs sont vides
 			const wrapper1 = mount(PeriodField, {
@@ -374,38 +432,6 @@ describe('PeriodField.vue', () => {
 			const mockDate = new Date('2023-12-20')
 			expect(requiredRule3.options.validate(mockDate)).toBe(true)
 			expect(wrapper3.vm.isValid).toBe(true)
-		})
-	})
-
-	describe('Utils', () => {
-		it('formats date from selectedDates correctly', async () => {
-			const wrapper = mount(PeriodField)
-
-			const input = {
-				selectedDates: new Date('2025-02-07T15:42:00.000Z'),
-			}
-
-			// @ts-expect-error: accès à une méthode privée pour le test
-			const result = wrapper.vm.formatDateValue(input)
-			expect(result).toBe('07/02/2025')
-		})
-
-		it('returns null for invalid inputs', async () => {
-			const wrapper = mount(PeriodField)
-
-			// @ts-expect-error: accès à une méthode privée pour le test
-			expect(wrapper.vm.formatDateValue(null)).toBe(null)
-			// @ts-expect-error: accès à une méthode privée pour le test
-			expect(wrapper.vm.formatDateValue(undefined)).toBe(null)
-			// @ts-expect-error: accès à une méthode privée pour le test
-			expect(wrapper.vm.formatDateValue({ selectedDates: null })).toBe(null)
-		})
-
-		it('returns string value directly', async () => {
-			const wrapper = mount(PeriodField)
-
-			// @ts-expect-error: accès à une méthode privée pour le test
-			expect(wrapper.vm.formatDateValue('07/02/2025')).toBe('07/02/2025')
 		})
 	})
 

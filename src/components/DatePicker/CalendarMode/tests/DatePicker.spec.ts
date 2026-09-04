@@ -1,8 +1,9 @@
 import { mount, flushPromises, type VueWrapper } from '@vue/test-utils'
 import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest'
-import { nextTick } from 'vue'
+import { nextTick, defineComponent, ref } from 'vue'
 import DatePicker from '../DatePicker.vue'
 import { locales } from '../../locales'
+import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
 type DatePickerInstance = InstanceType<typeof DatePicker>
 
@@ -65,6 +66,36 @@ describe('DatePicker', () => {
 		const title = document.querySelector<HTMLElement>(`#${vm.datePickerTitleId}`)
 		expect(title).not.toBeNull()
 		expect(title?.textContent?.trim()).toBe(locales.calendarTitle)
+	})
+
+	it('keeps saturday and sunday weekend styling with a custom period in december 2005', async () => {
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '15/12/2005',
+				format: 'DD/MM/YYYY',
+				period: {
+					min: '01/01/1995',
+					max: '12/31/2005',
+				},
+			},
+			attachTo: document.body,
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const saturday = document.querySelector('[data-v-date="2005-12-03"] .v-btn')
+		const sunday = document.querySelector('[data-v-date="2005-12-04"] .v-btn')
+		const monday = document.querySelector('[data-v-date="2005-12-05"] .v-btn')
+
+		expect(saturday?.classList.contains('weekend-day')).toBe(true)
+		expect(sunday?.classList.contains('weekend-day')).toBe(true)
+		expect(monday?.classList.contains('weekend-day')).toBe(false)
+
+		wrapper.unmount()
 	})
 
 	it('links the readonly activator wrapper to the exposed dialog when the calendar is open', async () => {
@@ -187,6 +218,171 @@ describe('DatePicker', () => {
 		const emitted = wrapper.emitted('update:modelValue')
 		expect(emitted).toBeTruthy()
 		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('2025-04-30')
+	})
+
+	it('emits dateFormatReturn and closes the dialog when a visible calendar selection is valid', async () => {
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '',
+				format: 'DD/MM/YYYY',
+				dateFormatReturn: 'YYYY-MM-DD',
+			},
+			attachTo: document.body,
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		await vm.updateSelectedDates(new Date(2026, 6, 1))
+		await flushPromises()
+
+		expect(wrapper.find('input').element.value).toBe('01/07/2026')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2026-07-01')
+		expect(vm.isDatePickerVisible).toBe(false)
+
+		wrapper.unmount()
+	})
+
+	it('waits for a complete range before emitting the model and uses dateFormatReturn for calendar ranges', async () => {
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '',
+				format: 'DD/MM/YYYY',
+				dateFormatReturn: 'YYYY-MM-DD',
+				displayRange: true,
+			},
+			attachTo: document.body,
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		vm.updateSelectedDates(new Date(2026, 6, 1))
+		await flushPromises()
+
+		expect(wrapper.find('input').element.value).toBe('01/07/2026')
+		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+		expect(vm.isDatePickerVisible).toBe(true)
+
+		vm.updateSelectedDates(new Date(2026, 6, 5))
+		await flushPromises()
+
+		expect(wrapper.find('input').element.value).toBe('01/07/2026 - 05/07/2026')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toEqual(['2026-07-01', '2026-07-05'])
+		expect(vm.isDatePickerVisible).toBe(false)
+
+		wrapper.unmount()
+	})
+
+	it('still emits the selected value and surfaces an error when a calendar selection fails customRules', async () => {
+		vi.useFakeTimers()
+		vi.setSystemTime(new Date(2026, 7, 19, 12, 0, 0))
+
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '',
+				format: 'DD/MM/YYYY',
+				dateFormatReturn: 'YYYY-MM-DD',
+				customRules: [
+					{
+						type: 'notBeforeToday',
+						options: {
+							message: 'La date ne peut pas être antérieure à aujourd\'hui',
+						},
+					},
+				],
+			},
+			attachTo: document.body,
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		await vm.updateSelectedDates(new Date(2026, 7, 18))
+		await flushPromises()
+
+		expect(vm.isDatePickerVisible).toBe(false)
+		expect(wrapper.find('input').element.value).toBe('18/08/2026')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2026-08-18')
+		expect(vm.errorMessages).toContain('La date ne peut pas être antérieure à aujourd\'hui')
+
+		vi.useRealTimers()
+		wrapper.unmount()
+	})
+
+	describe('SyForm integration', () => {
+		it('registers with SyForm and blocks submit while the field is invalid', async () => {
+			const Host = defineComponent({
+				components: { DatePicker, SyForm },
+				setup() {
+					const value = ref<string | null>(null)
+					const submitPayload = ref<{ isValid: boolean } | null>(null)
+
+					return {
+						submitPayload,
+						value,
+						handleSubmit: (payload: { isValid: boolean }) => {
+							submitPayload.value = payload
+						},
+					}
+				},
+				template: `
+					<SyForm @submit="handleSubmit">
+						<DatePicker v-model="value" label="Date Field" required />
+					</SyForm>
+				`,
+			})
+
+			const host = mount(Host)
+			const form = host.getComponent(SyForm)
+			const datePicker = host.getComponent(DatePicker)
+
+			expect(await (form.vm as InstanceType<typeof SyForm>).validate()).toBe(false)
+			expect(host.vm.submitPayload).toBeNull()
+
+			const input = datePicker.find('input')
+			await input.setValue('26/08/2026')
+			await input.trigger('blur')
+			await flushPromises()
+
+			expect(await (form.vm as InstanceType<typeof SyForm>).validate()).toBe(true)
+
+			await form.trigger('submit')
+			await flushPromises()
+
+			expect(host.vm.submitPayload).toEqual({ isValid: true })
+			host.unmount()
+		})
+	})
+
+	describe('Unified Vuetify validation', () => {
+		it('applies Vuetify rules through validateOnSubmit without SyForm', async () => {
+			const wrapper = mountComponent({
+				label: 'Date Field',
+				useVuetifyValidation: true,
+				rules: [
+					(value: unknown) => Boolean(value) || 'Erreur Vuetify DatePicker',
+				],
+			})
+
+			expect(await wrapper.vm.validateOnSubmit()).toBe(false)
+			expect(wrapper.vm.errorMessages).toContain('Erreur Vuetify DatePicker')
+
+			await wrapper.vm.updateSelectedDates(new Date(2026, 7, 26))
+			await flushPromises()
+
+			expect(await wrapper.vm.validateOnSubmit()).toBe(true)
+			expect(wrapper.vm.errorMessages).not.toContain('Erreur Vuetify DatePicker')
+		})
 	})
 
 	it('preserves autoClamp in combined range mode', async () => {
@@ -348,6 +544,19 @@ describe('DatePicker', () => {
 		vm.updateSelectedDates('invalid-date')
 
 		expect(vm.selectedDates).toBeNull()
+	})
+
+	it('exposes the expected public API contract for parent refs', () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		expect(typeof vm.validateOnSubmit).toBe('function')
+		expect(typeof vm.openDatePicker).toBe('function')
+		expect(typeof vm.updateSelectedDates).toBe('function')
+		expect(typeof vm.clearValidation).toBe('function')
+		expect(typeof vm.reset).toBe('function')
 	})
 
 	it('validateOnSubmit returns false and sets error messages when required and empty', async () => {
@@ -962,6 +1171,23 @@ describe('DatePicker - Coverage branches', () => {
 		await flushPromises()
 		expect(w.emitted('blur')).toBeTruthy()
 		expect(w.vm.errorMessages.length).toBe(0)
+		w.unmount()
+	})
+
+	it('emits blur from the activator input even when isValidateOnBlur is false', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '', format: 'DD/MM/YYYY', required: true, isValidateOnBlur: false },
+		})
+
+		const input = w.find('input')
+		await input.trigger('focus')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(w.emitted('blur')).toBeTruthy()
+		expect(w.emitted('blur')).toHaveLength(1)
+		expect(w.vm.errorMessages.length).toBe(0)
+
 		w.unmount()
 	})
 

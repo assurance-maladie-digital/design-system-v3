@@ -18,49 +18,51 @@ export interface DisplayedDateStringReturn {
  * Gère à la fois les dates uniques et les plages de dates
  */
 export function useDisplayedDateString(props: DisplayedDateStringProps): DisplayedDateStringReturn {
-	// Computed pour formater l'affichage des dates sélectionnées
+	const isUsableDateValue = (value: Date | string | null | undefined): boolean => {
+		if (value === null || value === undefined) return false
+		if (value instanceof Date) return !Number.isNaN(value.getTime())
+		return true
+	}
+
+	const formatRangeLabel = (start: Date | null | undefined, end: Date | null | undefined): string | null => {
+		if (!isUsableDateValue(start) || !isUsableDateValue(end)) return null
+
+		const startDate = dayjs(start)
+		const endDate = dayjs(end)
+
+		if (!startDate.isValid() || !endDate.isValid()) return null
+
+		return `${formatDateShort(startDate)}${locales.rangeSeparator}${formatDateRangeEnd(endDate)}`
+	}
+
+	const formatSingleLabel = (value: Date | null | undefined): string | null => {
+		if (!isUsableDateValue(value)) return null
+
+		const date = dayjs(value)
+		return date.isValid() ? formatDateLabel(date) : null
+	}
+
 	const displayedDateString = computed(() => {
-		// Si nous n'avons pas de date sélectionnée, afficher la date du jour
 		if (!props.selectedDates.value) return props.todayInString.value
 
-		// Priorité aux rangeBoundaryDates pour les plages
-		if (props.rangeBoundaryDates?.value && props.rangeBoundaryDates.value[0] && props.rangeBoundaryDates.value[1]) {
-			const startDate = dayjs(props.rangeBoundaryDates.value[0])
-			const endDate = dayjs(props.rangeBoundaryDates.value[1])
+		const boundaryRangeLabel = formatRangeLabel(
+			props.rangeBoundaryDates?.value?.[0],
+			props.rangeBoundaryDates?.value?.[1],
+		)
+		if (boundaryRangeLabel) return boundaryRangeLabel
 
-			if (startDate.isValid() && endDate.isValid()) {
-				return `${formatDateShort(startDate)}${locales.rangeSeparator}${formatDateRangeEnd(endDate)}`
-			}
-		}
-
-		// Si nous avons une plage de dates dans selectedDates
 		if (Array.isArray(props.selectedDates.value)) {
-			// Si nous avons les deux dates de la plage
-			if (props.selectedDates.value.length >= 2) {
-				const startDate = dayjs(props.selectedDates.value[0])
-				const endDate = dayjs(props.selectedDates.value[props.selectedDates.value.length - 1])
+			const [startDate] = props.selectedDates.value
+			const endDate = props.selectedDates.value[props.selectedDates.value.length - 1]
 
-				if (startDate.isValid() && endDate.isValid()) {
-					return `${formatDateShort(startDate)}${locales.rangeSeparator}${formatDateRangeEnd(endDate)}`
-				}
+			if (props.selectedDates.value.length >= 2) {
+				return formatRangeLabel(startDate, endDate) ?? props.todayInString.value
 			}
-			// Si nous n'avons qu'une seule date dans le tableau
-			else if (props.selectedDates.value.length === 1) {
-				const date = dayjs(props.selectedDates.value[0])
-				if (date.isValid()) {
-					return formatDateLabel(date)
-				}
-			}
-			return props.todayInString.value
+
+			return formatSingleLabel(startDate) ?? props.todayInString.value
 		}
-		// Si nous avons une seule date (pas dans un tableau)
-		else {
-			const date = dayjs(props.selectedDates.value)
-			if (date.isValid()) {
-				return formatDateLabel(date)
-			}
-			return props.todayInString.value
-		}
+
+		return formatSingleLabel(props.selectedDates.value) ?? props.todayInString.value
 	})
 
 	return {

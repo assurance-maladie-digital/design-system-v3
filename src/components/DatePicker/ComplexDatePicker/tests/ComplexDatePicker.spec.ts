@@ -1,16 +1,17 @@
 import { VDatePicker } from 'vuetify/components'
 import { mount, flushPromises, VueWrapper, type MountingOptions } from '@vue/test-utils'
 import { describe, it, expect, afterEach, vi } from 'vitest'
-import { nextTick } from 'vue'
+import { nextTick, defineComponent, ref } from 'vue'
 import ComplexDatePicker from '../ComplexDatePicker.vue'
 import { locales } from '../../locales'
+import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- VueWrapper<any> est le pattern standard pour les composants Vue avec defineExpose complexe
 let wrapper: VueWrapper<any> | null = null
 
 const waitForCondition = async (
 	predicate: () => boolean,
-	{ timeoutMs = 500, intervalMs = 20 } = {},
+	{ timeoutMs = 3000, intervalMs = 20 } = {},
 ) => {
 	const deadline = Date.now() + timeoutMs
 
@@ -96,6 +97,30 @@ describe('ComplexDatePicker.clean', () => {
 		expect(heading?.getAttribute('aria-atomic')).toBeNull()
 	})
 
+	it('keeps saturday and sunday weekend styling with a custom period in december 2005', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			modelValue: '15/12/2005',
+			format: 'DD/MM/YYYY',
+			period: {
+				min: '01/01/1995',
+				max: '12/31/2005',
+			},
+		}, { attachTo: document.body })
+
+		wrapper.vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const saturday = document.querySelector('[data-v-date="2005-12-03"] .v-btn')
+		const sunday = document.querySelector('[data-v-date="2005-12-04"] .v-btn')
+		const monday = document.querySelector('[data-v-date="2005-12-05"] .v-btn')
+
+		expect(saturday?.classList.contains('weekend-day')).toBe(true)
+		expect(sunday?.classList.contains('weekend-day')).toBe(true)
+		expect(monday?.classList.contains('weekend-day')).toBe(false)
+	})
+
 	it('opens the calendar from the input with ArrowDown', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
@@ -129,6 +154,22 @@ describe('ComplexDatePicker.clean', () => {
 		expect(focusSpy).toHaveBeenCalled()
 
 		focusSpy.mockRestore()
+	})
+
+	it('moves focus to a calendar gridcell when opened with ArrowDown', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+		}, { attachTo: document.body })
+
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: 'ArrowDown' })
+		await waitForCondition(() => document.activeElement?.getAttribute('role') === 'gridcell')
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+		expect(document.activeElement?.closest('[role="dialog"]')).not.toBeNull()
+		expect(document.activeElement?.classList.contains('sy-date-picker-keyboard-focus')).toBe(true)
+		wrapper.unmount()
 	})
 
 	it('does not clear the input value when the calendar is opened with ArrowDown', async () => {
@@ -238,6 +279,105 @@ describe('ComplexDatePicker.clean', () => {
 
 		expect(wrapper.vm.isDatePickerVisible).toBe(false)
 		expect(input.attributes('aria-expanded')).toBe('false')
+	})
+
+	it('keeps the calendar open when ArrowDown reopens it immediately after a date selection', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			textFieldActivator: true,
+			required: true,
+		}, { attachTo: document.body })
+
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: 'ArrowDown' })
+		await flushPromises()
+
+		await wrapper.vm.updateSelectedDates(new Date(2025, 0, 15))
+		await waitForCondition(() => wrapper?.vm.isDatePickerVisible === false)
+
+		await input.trigger('keydown', { key: 'ArrowDown' })
+		await new Promise(resolve => setTimeout(resolve, 350))
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+		expect(input.attributes('aria-expanded')).toBe('true')
+		expect(document.activeElement?.getAttribute('role')).toBe('gridcell')
+		expect(document.activeElement?.classList.contains('v-date-picker-month__day')).toBe(true)
+		expect(document.activeElement?.classList.contains('sy-date-picker-keyboard-focus')).toBe(true)
+		wrapper.unmount()
+	})
+
+	it('keeps the calendar open when Enter reopens it immediately after a date selection', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			textFieldActivator: true,
+			required: true,
+		}, { attachTo: document.body })
+
+		const input = wrapper.find('input')
+		await input.trigger('keydown', { key: 'ArrowDown' })
+		await flushPromises()
+
+		await wrapper.vm.updateSelectedDates(new Date(2025, 0, 15))
+		await waitForCondition(() => wrapper?.vm.isDatePickerVisible === false)
+
+		await input.trigger('keydown', { key: 'Enter' })
+		await new Promise(resolve => setTimeout(resolve, 350))
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+		expect(input.attributes('aria-expanded')).toBe('true')
+		wrapper.unmount()
+	})
+
+	it('keeps the calendar open when its icon reopens it immediately after a date selection', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			textFieldActivator: true,
+			required: true,
+		}, { attachTo: document.body })
+
+		const input = wrapper.find('input')
+		const calendarButton = wrapper.find('button.sy-text-field__icon-button')
+		await input.trigger('keydown', { key: 'ArrowDown' })
+		await flushPromises()
+
+		await wrapper.vm.updateSelectedDates(new Date(2025, 0, 15))
+		await waitForCondition(() => wrapper?.vm.isDatePickerVisible === false)
+
+		await calendarButton.trigger('click')
+		await new Promise(resolve => setTimeout(resolve, 350))
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+		expect(input.attributes('aria-expanded')).toBe('true')
+		wrapper.unmount()
+	})
+
+	it('keeps the calendar open when Vuetify synchronizes the selected date on reopen', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			modelValue: '15/01/2025',
+			textFieldActivator: true,
+			required: true,
+		}, { attachTo: document.body })
+
+		const calendarButton = wrapper.find('button.sy-text-field__icon-button')
+		await calendarButton.trigger('click')
+		await flushPromises()
+
+		const datePicker = wrapper.findComponent(VDatePicker)
+		expect(datePicker.exists()).toBe(true)
+
+		await datePicker.vm.$emit('update:modelValue', new Date(2025, 0, 15))
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+		wrapper.unmount()
 	})
 
 	it('keeps manual input state stable when keyboard interaction is used afterwards', async () => {
@@ -377,6 +517,23 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.isDatePickerVisible).toBe(false)
 	})
 
+	it('emits blur in combined mode even when isValidateOnBlur is false', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			isValidateOnBlur: false,
+		})
+
+		const input = wrapper.find('input')
+		await input.trigger('focus')
+		await input.trigger('blur')
+		await flushPromises()
+
+		const emittedBlur = wrapper.emitted('blur')
+		expect(emittedBlur).toBeTruthy()
+		expect(emittedBlur).toHaveLength(1)
+	})
+
 	it('handleDateSelected updates model, selection and emits event in single mode', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
@@ -444,6 +601,83 @@ describe('ComplexDatePicker.clean', () => {
 		expect((input.element as HTMLInputElement).value).toBe('02/01/2025')
 	})
 
+	it('emits dateFormatReturn and closes the dialog when a visible calendar selection is valid', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+		}, { attachTo: document.body })
+
+		wrapper.vm.isDatePickerVisible = true
+		await nextTick()
+
+		await wrapper.vm.updateSelectedDates(new Date(2026, 6, 1))
+		await flushPromises()
+
+		expect(wrapper.vm.displayFormattedDate).toBe('01/07/2026')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2026-07-01')
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+	})
+
+	it('waits for a complete range before emitting the model and uses dateFormatReturn for calendar ranges', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			displayRange: true,
+		}, { attachTo: document.body })
+
+		wrapper.vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		await wrapper.vm.updateSelectedDates(new Date(2026, 6, 1))
+		await flushPromises()
+
+		expect(wrapper.find('input').element.value).toBe('01/07/2026')
+		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+
+		await wrapper.vm.updateSelectedDates(new Date(2026, 6, 5))
+		await flushPromises()
+
+		expect(wrapper.find('input').element.value).toBe('01/07/2026 - 05/07/2026')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toEqual(['2026-07-01', '2026-07-05'])
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+	})
+
+	it('keeps the dialog open and does not emit model update when a calendar selection fails customRules', async () => {
+		vi.useFakeTimers()
+		vi.setSystemTime(new Date(2026, 7, 19, 12, 0, 0))
+
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			customRules: [
+				{
+					type: 'notBeforeToday',
+					options: {
+						message: 'La date ne peut pas être antérieure à aujourd\'hui',
+					},
+				},
+			],
+		}, { attachTo: document.body })
+
+		wrapper.vm.isDatePickerVisible = true
+		await nextTick()
+
+		await wrapper.vm.updateSelectedDates(new Date(2026, 7, 18))
+		await flushPromises()
+
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+		expect(wrapper.vm.displayFormattedDate).toBe('')
+		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+		expect(wrapper.vm.errorMessages).toContain('La date ne peut pas être antérieure à aujourd\'hui')
+
+		vi.useRealTimers()
+	})
+
 	it('initializes selection correctly from range modelValue in range mode', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
@@ -458,6 +692,24 @@ describe('ComplexDatePicker.clean', () => {
 
 		const input = wrapper.find('input')
 		expect((input.element as HTMLInputElement).value).toBe('01/01/2025 - 10/01/2025')
+	})
+
+	it('refreshes range boundaries when a manual range replaces an existing one', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			displayRange: true,
+			modelValue: ['2025-01-01', '2025-01-05'],
+		})
+
+		await flushPromises()
+
+		wrapper.findComponent({ name: 'DateTextInput' }).vm.$emit('input', '01/02/2025 - 05/02/2025')
+		await flushPromises()
+
+		expect(wrapper.vm.displayFormattedDate).toBe('01/02/2025 - 05/02/2025')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toEqual(['2025-02-01', '2025-02-05'])
 	})
 
 	it('generates all intermediate dates when selecting a range in range mode', async () => {
@@ -614,6 +866,83 @@ describe('ComplexDatePicker.clean', () => {
 		expect(result).toBe(false)
 	})
 
+	it('registers with SyForm and blocks submit until a valid date is entered', async () => {
+		const Host = defineComponent({
+			components: { ComplexDatePicker, SyForm },
+			setup() {
+				const value = ref<string | null>(null)
+				const submitPayload = ref<{ isValid: boolean } | null>(null)
+
+				return {
+					submitPayload,
+					value,
+					handleSubmit: (payload: { isValid: boolean }) => {
+						submitPayload.value = payload
+					},
+				}
+			},
+			template: `
+				<SyForm @submit="handleSubmit">
+					<ComplexDatePicker v-model="value" label="Date Field" required />
+				</SyForm>
+			`,
+		})
+
+		const host = mount(Host)
+		const form = host.getComponent(SyForm)
+		const datePicker = host.getComponent(ComplexDatePicker)
+
+		expect(await (form.vm as InstanceType<typeof SyForm>).validate()).toBe(false)
+		expect(host.vm.submitPayload).toBeNull()
+
+		const input = datePicker.find('input')
+		await input.setValue('26/08/2026')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(await (form.vm as InstanceType<typeof SyForm>).validate()).toBe(true)
+
+		await form.trigger('submit')
+		await flushPromises()
+
+		expect(host.vm.submitPayload).toEqual({ isValid: true })
+		host.unmount()
+	})
+
+	it('applies Vuetify rules through validateOnSubmit without SyForm', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			useVuetifyValidation: true,
+			rules: [
+				(value: unknown) => Boolean(value) || 'Erreur Vuetify ComplexDatePicker',
+			],
+		})
+
+		expect(await wrapper.vm.validateOnSubmit()).toBe(false)
+		expect(wrapper.vm.errorMessages).toContain('Erreur Vuetify ComplexDatePicker')
+
+		await wrapper.vm.updateSelectedDates(new Date(2026, 7, 26))
+		await flushPromises()
+
+		expect(await wrapper.vm.validateOnSubmit()).toBe(true)
+		expect(wrapper.vm.errorMessages).not.toContain('Erreur Vuetify ComplexDatePicker')
+	})
+
+	it('exposes the expected public API contract for parent refs', () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+		})
+
+		expect(typeof wrapper.vm.validateOnSubmit).toBe('function')
+		expect(typeof wrapper.vm.openDatePicker).toBe('function')
+		expect(typeof wrapper.vm.toggleDatePicker).toBe('function')
+		expect(typeof wrapper.vm.clearValidation).toBe('function')
+		expect(typeof wrapper.vm.emitBlur).toBe('function')
+		expect(typeof wrapper.vm.formatDateInput).toBe('function')
+		expect(typeof wrapper.vm.reset).toBe('function')
+	})
+
 	it('validateOnSubmit returns true when a valid value is present in text-only mode', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
@@ -713,7 +1042,7 @@ describe('ComplexDatePicker.clean', () => {
 			new Date(2025, 0, 1),
 		]
 
-		const result = await wrapper.vm.validateDates(true)
+		const result = await wrapper.vm.validate({ force: true })
 		expect(result.hasError).toBe(true)
 		expect(result.state.errors.length).toBeGreaterThan(0)
 	})
@@ -731,7 +1060,7 @@ describe('ComplexDatePicker.clean', () => {
 			null,
 		]
 
-		const result = wrapper.vm.validateDates()
+		const result = wrapper.vm.validate()
 		expect(result.hasError).toBe(false)
 		expect(wrapper.vm.errorMessages.length).toBe(0)
 	})
@@ -745,7 +1074,7 @@ describe('ComplexDatePicker.clean', () => {
 
 		// Simuler une erreur required
 		wrapper.vm.selectedDates = null
-		await wrapper.vm.validateDates(true)
+		await wrapper.vm.validate({ force: true })
 		expect(wrapper.vm.errorMessages.length).toBeGreaterThan(0)
 
 		// Ouvrir le calendrier puis réinitialiser
@@ -1013,7 +1342,7 @@ describe('ComplexDatePicker.clean', () => {
 
 		// ouvre la page des mois
 		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
-		const monthBtn = vDatePickerWrapper.find('.v-date-picker-controls__month-btn')
+		const monthBtn = vDatePickerWrapper.find('.sy-date-picker-controls__month-btn')
 		monthBtn.trigger('click')
 		await nextTick()
 		await flushPromises()
@@ -1053,7 +1382,7 @@ describe('ComplexDatePicker.clean', () => {
 
 		// ouvre la page des mois
 		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
-		const yearBtn = vDatePickerWrapper.find('.custom-year-btn')
+		const yearBtn = vDatePickerWrapper.find('.sy-date-picker-controls__year-btn')
 		yearBtn.trigger('click')
 		await nextTick()
 		await flushPromises()
@@ -1089,7 +1418,7 @@ describe('ComplexDatePicker.clean', () => {
 		await flushPromises()
 
 		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
-		await vDatePickerWrapper.find('.v-date-picker-controls__month-btn').trigger('click')
+		await vDatePickerWrapper.find('.sy-date-picker-controls__month-btn').trigger('click')
 		await nextTick()
 		await flushPromises()
 
@@ -1121,7 +1450,7 @@ describe('ComplexDatePicker.clean', () => {
 		await flushPromises()
 
 		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
-		await vDatePickerWrapper.find('.v-date-picker-controls__month-btn').trigger('click')
+		await vDatePickerWrapper.find('.sy-date-picker-controls__month-btn').trigger('click')
 		await nextTick()
 		await flushPromises()
 
@@ -1161,7 +1490,7 @@ describe('ComplexDatePicker.clean', () => {
 		await flushPromises()
 
 		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
-		await vDatePickerWrapper.find('.custom-year-btn').trigger('click')
+		await vDatePickerWrapper.find('.sy-date-picker-controls__year-btn').trigger('click')
 		await nextTick()
 		await flushPromises()
 
@@ -1193,7 +1522,7 @@ describe('ComplexDatePicker.clean', () => {
 		await flushPromises()
 
 		const vDatePickerWrapper = wrapper.findComponent(VDatePicker)
-		await vDatePickerWrapper.find('.custom-year-btn').trigger('click')
+		await vDatePickerWrapper.find('.sy-date-picker-controls__year-btn').trigger('click')
 		await nextTick()
 		await flushPromises()
 

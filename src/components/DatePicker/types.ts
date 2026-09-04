@@ -1,3 +1,7 @@
+import type { Ref } from 'vue'
+import type { ValidationResult, VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
+import type { DateInput, DateModelValue } from '@/composables/date/useDateInitializationDayjs'
+
 /**
  * Types pour les composants CalendarMode
  */
@@ -42,11 +46,16 @@ export interface DatePickerCommonProps {
 	/** @deprecated Utilisez isBirthDate à la place */
 	birthDate?: boolean
 	customRules?: DatePickerRule[]
+	customSuccessRules?: DatePickerRule[]
 	customWarningRules?: DatePickerRule[]
 	dateFormatReturn?: string
 	density?: 'default' | 'comfortable' | 'compact'
 	disableErrorHandling?: boolean
 	disabled?: boolean
+	errorMessages?: string[] | null
+	hasError?: boolean
+	hasSuccess?: boolean
+	hasWarning?: boolean
 	displayAppendIcon?: boolean
 	displayAsterisk?: boolean
 	displayHolidayDays?: boolean
@@ -63,7 +72,8 @@ export interface DatePickerCommonProps {
 	isOutlined?: boolean
 	isValidateOnBlur?: boolean
 	label?: string
-	modelValue?: import('@/composables/date/useDateInitializationDayjs').DateInput
+	maxErrors?: number
+	modelValue?: DateInput
 	noCalendar?: boolean
 	noIcon?: boolean
 	period?: {
@@ -74,10 +84,14 @@ export interface DatePickerCommonProps {
 	placeholder?: string
 	readonly?: boolean
 	required?: boolean
+	rules?: VuetifyValidationRule[]
 	showSuccessMessages?: boolean
+	successMessages?: string[] | null
 	showWeekNumber?: boolean
 	textFieldActivator?: boolean
 	title?: string | false
+	useVuetifyValidation?: boolean
+	warningMessages?: string[] | null
 	width?: string
 }
 
@@ -96,6 +110,86 @@ export interface CalendarModeProps extends DatePickerCommonProps {
 	useCombinedMode?: boolean
 }
 
+export interface DatePickerPublicValidateOptions {
+	force?: boolean
+	textValue?: string
+	calendarMode?: boolean
+}
+
+export type DatePickerPublicValidateResult = boolean | ValidationResult | Promise<boolean | ValidationResult>
+
+export interface FormattedDateInputResult {
+	formatted: string
+	cursorPos: number
+}
+
+export type DatePickerValidationMessagesRef = Readonly<Ref<readonly string[]>>
+
+export type InitializeSelectedDatesFn = (
+	modelValue: DateInput | null,
+	format: string,
+	dateFormatReturn?: string,
+) => DateObjectValue
+
+export interface DateTextInputPublicApi {
+	validateOnSubmit: () => Promise<boolean> | boolean
+	validate: (options?: DatePickerPublicValidateOptions) => DatePickerPublicValidateResult
+	reset: () => void
+	errors: DatePickerValidationMessagesRef
+	warnings: DatePickerValidationMessagesRef
+	successes: DatePickerValidationMessagesRef
+	focus: () => void
+	blur: () => void
+}
+
+export interface ComplexDatePickerPublicApi {
+	validateOnSubmit: () => Promise<boolean> | boolean
+	isDatePickerVisible: Ref<boolean>
+	selectedDates: Ref<DateObjectValue>
+	errorMessages: DatePickerValidationMessagesRef
+	errors: DatePickerValidationMessagesRef
+	warnings: DatePickerValidationMessagesRef
+	successes: DatePickerValidationMessagesRef
+	handleClickOutside: (event: MouseEvent) => void
+	initializeSelectedDates: InitializeSelectedDatesFn
+	handleSelectToday: () => void
+	updateAccessibility: () => void
+	openDatePicker: () => Promise<void> | void
+	updateDisplayFormattedDate: (value: string) => void
+	currentMonth: Ref<string | null>
+	currentMonthName: Ref<string | null>
+	toggleDatePicker: () => Promise<void> | void
+	validate: (options?: DatePickerPublicValidateOptions) => DatePickerPublicValidateResult
+	clearValidation: () => void
+	formatDateInput: (input: string, cursorPosition?: number) => FormattedDateInputResult
+	emitBlur: () => void
+	validateDateFormat: (value: string) => { isValid: boolean, message: string }
+	displayFormattedDate: Ref<string>
+	handleDateSelected: (value: DateModelValue) => void
+	updateSelectedDates: (value: Date | null) => Promise<void> | void
+	resetViewMode: () => void
+	reset: () => void
+}
+
+export interface CalendarModeDatePickerPublicApi {
+	validateOnSubmit: () => Promise<boolean> | boolean
+	isDatePickerVisible: Ref<boolean>
+	selectedDates: Ref<DateObjectValue>
+	errorMessages: DatePickerValidationMessagesRef
+	errors: DatePickerValidationMessagesRef
+	warnings: DatePickerValidationMessagesRef
+	successes: DatePickerValidationMessagesRef
+	handleClickOutside: (event: MouseEvent) => void
+	initializeSelectedDates: InitializeSelectedDatesFn
+	updateAccessibility: () => void
+	openDatePicker: () => Promise<void> | void
+	updateSelectedDates: (value: DateModelValue | Date) => Promise<void> | void
+	handleSelectToday: () => void
+	validate: (options?: DatePickerPublicValidateOptions) => DatePickerPublicValidateResult
+	clearValidation: () => void
+	reset: () => void
+}
+
 /**
  * Defaults communs entre CalendarMode et ComplexDatePicker
  */
@@ -104,11 +198,16 @@ export const DatePickerCommonDefaults = {
 	bgColor: 'white',
 	birthDate: false,
 	customRules: () => [],
+	customSuccessRules: () => [],
 	customWarningRules: () => [],
 	dateFormatReturn: '',
 	density: 'default' as const,
 	disableErrorHandling: false,
 	disabled: false,
+	errorMessages: null,
+	hasError: false,
+	hasSuccess: false,
+	hasWarning: false,
 	displayAppendIcon: false,
 	displayAsterisk: false,
 	displayHolidayDays: true,
@@ -123,6 +222,7 @@ export const DatePickerCommonDefaults = {
 	hint: undefined,
 	isBirthDate: false,
 	label: undefined,
+	maxErrors: 1,
 	isOutlined: true,
 	isValidateOnBlur: true,
 	modelValue: undefined,
@@ -133,9 +233,13 @@ export const DatePickerCommonDefaults = {
 	placeholder: undefined,
 	readonly: false,
 	required: false,
+	rules: undefined,
 	showSuccessMessages: false,
+	successMessages: null,
 	showWeekNumber: false,
 	textFieldActivator: false,
 	title: false,
+	useVuetifyValidation: false,
+	warningMessages: null,
 	width: '100%',
 } as const
