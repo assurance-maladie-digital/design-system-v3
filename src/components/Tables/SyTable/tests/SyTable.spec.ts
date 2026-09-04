@@ -49,6 +49,10 @@ const headers: TestDataTableHeaders[] = [
 	},
 ]
 
+async function flushTicks(wrapper: { vm: { $nextTick: () => Promise<unknown> } }, count = 6): Promise<void> {
+	for (let i = 0; i < count; i++) await wrapper.vm.$nextTick()
+}
+
 describe('SyTable', () => {
 	beforeAll(() => {
 		// Mock visualViewport for Vuetify's VMenu component
@@ -1332,5 +1336,63 @@ describe('SyTable pageInput', () => {
 		expect(emitted).toBeTruthy()
 		const lastEmit = emitted![emitted!.length - 1]![0] as DataOptions
 		expect(lastEmit.page).toBe(3)
+	})
+
+	it('keeps the footer and the paginated rows in sync when the items change (#2535)', async () => {
+		const rows = (count: number, tag: string) => Array.from(
+			{ length: count },
+			(_, i) => ({ id: i + 1, name: `${tag}-${i + 1}`, age: 20 }),
+		)
+
+		const wrapper = mount(SyTable, {
+			props: {
+				options: {} as DataOptions,
+				suffix: 'per-page-sync',
+				itemsPerPageOptions: [10, 50, 300],
+			},
+			attrs: { items: rows(1000, 'row'), headers },
+		})
+		await wrapper.vm.$nextTick()
+
+		const pagination = () => wrapper.findComponent({ name: 'SyTablePagination' })
+		const dataTable = () => wrapper.findComponent({ name: 'VDataTable' })
+
+		pagination().vm.$emit('update:items-per-page', 300)
+		await flushTicks(wrapper)
+
+		expect(pagination().props('itemsPerPage')).toBe(300)
+		expect(dataTable().props('itemsPerPage')).toBe(300)
+		expect(wrapper.findAll('tbody tr')).toHaveLength(300)
+
+		// Nouvelle recherche : le projet remplace le jeu de lignes.
+		await wrapper.setProps({ items: rows(900, 'new') } as never)
+		await flushTicks(wrapper)
+
+		expect(pagination().props('itemsPerPage')).toBe(300)
+		expect(dataTable().props('itemsPerPage')).toBe(300)
+		expect(wrapper.findAll('tbody tr')).toHaveLength(300)
+	})
+
+	it('applies the itemsPerPage given by the project even when a state is persisted (#2535)', async () => {
+		vi.mocked(LocalStorageUtility).prototype.getItem = vi.fn().mockReturnValue({
+			options: { page: 1, sortBy: [], groupBy: [] },
+		})
+
+		const wrapper = mount(SyTable, {
+			props: {
+				options: { itemsPerPage: 50, page: 1 } as DataOptions,
+				suffix: 'per-page-stored',
+				itemsPerPageOptions: [10, 50, 300],
+			},
+			attrs: {
+				items: Array.from({ length: 200 }, (_, i) => ({ id: i + 1, name: `row-${i + 1}`, age: 20 })),
+				headers,
+			},
+		})
+		await flushTicks(wrapper)
+
+		expect(wrapper.findComponent({ name: 'SyTablePagination' }).props('itemsPerPage')).toBe(50)
+		expect(wrapper.findComponent({ name: 'VDataTable' }).props('itemsPerPage')).toBe(50)
+		expect(wrapper.findAll('tbody tr')).toHaveLength(50)
 	})
 })

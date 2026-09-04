@@ -1,8 +1,16 @@
-import { computed, nextTick, ref, type Ref } from 'vue'
+import { computed, type Ref } from 'vue'
 import type { DataOptions } from './types'
 
 /**
  * Composable for managing table pagination
+ *
+ * `options` est l'unique source de vérité de la pagination : le pied de tableau
+ * (`SyTablePagination`) et le tableau Vuetify interne lisent tous les deux
+ * `options.page` / `options.itemsPerPage`. Les composants branchent
+ * `@update:page` et `@update:items-per-page` sur le tableau Vuetify pour que
+ * `useProxiedModel` fonctionne en mode « contrôlé » : sans ces écouteurs,
+ * Vuetify conserve une copie interne qui peut diverger durablement de
+ * `options` (pied affichant 300 lignes/page alors que le tableau en pagine 10).
  *
  * @param options - Reactive reference to table options
  * @param itemsLength - Total number of items (for client-side) or serverItemsLength (for server-side)
@@ -17,8 +25,6 @@ export function usePagination({
 	itemsLength: Ref<number>
 	updateOptions: (opts: Partial<DataOptions>) => void
 }) {
-	// Flag to indicate an ongoing items-per-page update cycle
-	const isUpdatingItemsPerPage = ref(false)
 	// Current page with getter/setter
 	const page = computed({
 		get: () => options.value.page || 1,
@@ -48,25 +54,22 @@ export function usePagination({
 	/**
    * Update items per page from pagination component
    */
-	async function updateItemsPerPage(newItemsPerPage: number) {
-		isUpdatingItemsPerPage.value = true
-		await nextTick()
+	function updateItemsPerPage(newItemsPerPage: number) {
 		options.value = {
 			...options.value,
 			itemsPerPage: newItemsPerPage,
-			page: 1,
+			page: 1, // Reset to first page when changing items per page
 		}
-		await nextTick()
-		isUpdatingItemsPerPage.value = false
+	}
+
+	/**
+   * Update page from the Vuetify table (clamping) or from the footer
+   */
+	function updatePage(newPage: number) {
+		updateOptions({ page: newPage })
 	}
 
 	function onUpdateOptions(newOptions: Partial<DataOptions>) {
-		if (isUpdatingItemsPerPage.value && typeof newOptions.itemsPerPage !== 'undefined') {
-			const rest = { ...newOptions }
-			delete (rest as Record<string, unknown>).itemsPerPage
-			updateOptions(rest)
-			return
-		}
 		updateOptions(newOptions)
 	}
 
@@ -75,7 +78,7 @@ export function usePagination({
 		pageCount,
 		itemsPerPageValue,
 		updateItemsPerPage,
-		isUpdatingItemsPerPage,
+		updatePage,
 		onUpdateOptions,
 	}
 }

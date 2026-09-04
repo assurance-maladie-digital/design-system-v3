@@ -15,7 +15,23 @@ export function useTableProps({
 		propsFacade: Ref<Record<string, unknown>>
 		updateOptions: (tableOptions: Partial<DataOptions>) => void
 	} {
-	const localOptions = ref<Partial<DataOptions>>(storedOptions || options.value || {})
+	// Les options restaurées du localStorage complètent celles passées par le
+	// projet, elles ne les remplacent pas : sinon toute clé absente du stockage
+	// (`itemsPerPage` en tête) était silencieusement perdue pour le tableau
+	// Vuetify interne, qui retombait alors sur son défaut de 10 lignes.
+	const initialOptions: Partial<DataOptions> = {
+		...(options.value || {}),
+		...(storedOptions || {}),
+	}
+
+	const localOptions = ref<Partial<DataOptions>>(initialOptions)
+
+	// `options` alimente le pied de tableau et `localOptions` le tableau Vuetify :
+	// les deux doivent partir de la même valeur, le watcher ci-dessous n'étant pas
+	// `immediate`.
+	if (Object.keys(initialOptions).length > 0) {
+		options.value = { ...initialOptions }
+	}
 
 	const propsFacade = computed(() => {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
