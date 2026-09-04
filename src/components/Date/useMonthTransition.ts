@@ -40,7 +40,6 @@ export default function useMonthTransition(displayedMonth: Ref<Date | undefined>
 	}))
 
 	return {
-		slideDirection,
 		transitionProps,
 	}
 }

@@ -144,6 +144,5 @@ export default function useCalendar(
 	return {
 		displayedWeeks,
 		localizedFullMonth,
-		month: dateView,
 	}
 }
