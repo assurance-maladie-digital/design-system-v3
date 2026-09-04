@@ -1,9 +1,9 @@
 <script setup lang="ts">
 	import { computed, inject, ref, useId, watch, type ComponentPublicInstance, type ComputedRef } from 'vue'
-	import MonthSelector from '@/components/Common/Calendar/MonthSelector.vue'
-	import YearSelector from '@/components/Common/Calendar/YearSelector.vue'
-	import VisualpickerHeader from '@/components/Common/Calendar/VisualPickerHeader.vue'
-	import VisualPickerFooter from '@/components/Common/Calendar/VisualPickerFooter.vue'
+	import MonthSelector from '@/components/Common/Calendar/MonthSelector/MonthSelector.vue'
+	import YearSelector from '@/components/Common/Calendar/YearSelector/YearSelector.vue'
+	import VisualpickerHeader from '@/components/Common/Calendar/PickerHeader/VisualPickerHeader.vue'
+	import VisualPickerFooter from '@/components/Common/Calendar/PickerFooter/VisualPickerFooter.vue'
 	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
 	import { locales as defaultLocales } from '../locales'
 	import { parseMonthYearString } from '@/components/Common/Calendar/utils'

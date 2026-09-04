@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { computed, inject, onMounted, onUnmounted, ref, watch } from 'vue'
 	import { useYearGrid } from './useYearGrid'
-	import { calendarLocalesKey } from './locales'
+	import { calendarLocalesKey } from '../locales'
 
 	const props = defineProps<{
 		min: number

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { onMounted, onUnmounted, useTemplateRef, inject } from 'vue'
 	import { useMonthGrid } from './useMonthGrid'
-	import { calendarLocalesKey } from './locales'
+	import { calendarLocalesKey } from '../locales'
 
 	const props = defineProps<{
 		modelValue: number | undefined
