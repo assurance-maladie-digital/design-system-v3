@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	import { onMounted, onUnmounted, useTemplateRef, inject } from 'vue'
 	import { useMonthGrid } from './useMonthGrid'
-	import { localesKey, type locales as defaultLocales } from '../locales'
+	import { calendarLocalesKey } from './locales'
 
 	const props = defineProps<{
 		modelValue: number | undefined
@@ -56,7 +56,7 @@
 		clearTimeout(focusTimeout)
 	})
 
-	const locales = inject<typeof defaultLocales>(localesKey)!
+	const locales = inject(calendarLocalesKey)!
 
 </script>
 

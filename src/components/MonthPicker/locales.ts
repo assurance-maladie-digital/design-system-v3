@@ -1,4 +1,3 @@
-export const localesKey = Symbol('month-picker-locales')
 export const locales = {
 	btnLabel: 'Ouvrir le sélecteur de mois',
 	headerSelectYear: 'Sélectionner une année',

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiChevronDown } from '@mdi/js'
-	import { computed, inject, type ComputedRef } from 'vue'
-	import { locales as defaultLocales, localesKey } from '../locales'
+	import { computed, inject } from 'vue'
+	import { calendarLocalesKey } from './locales'
 	import { dateToString } from './utils'
 
 	const props = defineProps<{
@@ -30,7 +30,7 @@
 
 	const formatter = Intl.DateTimeFormat(navigator.language, { month: 'long' })
 
-	const locales = inject<ComputedRef<typeof defaultLocales>>(localesKey)!
+	const locales = inject(calendarLocalesKey)!
 
 	const btnLabel = computed(() => {
 		if (props.view === 'months') {

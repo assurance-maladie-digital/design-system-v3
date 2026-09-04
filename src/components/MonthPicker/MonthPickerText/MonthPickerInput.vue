@@ -3,8 +3,9 @@
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { mdiCalendar } from '@mdi/js'
 	import { vMaska } from 'maska/vue'
-	import { inject, ref, useId, watch } from 'vue'
-	import { locales as defaultLocales, localesKey } from '../locales'
+	import { inject, ref, useId, watch, type ComputedRef } from 'vue'
+	import { locales as defaultLocales } from '../locales'
+	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
 	import type { TextFieldProps } from './useTextField'
 	import { useTextField } from './useTextField'
 
@@ -35,7 +36,8 @@
 		(e: 'update:modelValue', value: string | undefined): void
 	}>()
 
-	const locales = inject<typeof defaultLocales>(localesKey)!
+	// Le root MonthPicker fournit ses locales complètes via la clé partagée
+	const locales = inject<ComputedRef<typeof defaultLocales>>(calendarLocalesKey)!
 
 	const mask = '##/####'
 

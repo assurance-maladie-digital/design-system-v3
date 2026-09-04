@@ -3,7 +3,8 @@
 	import MonthPickerInput from './MonthPickerText/MonthPickerInput.vue'
 	import MonthPickerVisual from './MonthPickerVisual/MonthPickerVisual.vue'
 	import { watch } from 'vue'
-	import { locales as defaultLocales, localesKey } from './locales'
+	import { locales as defaultLocales } from './locales'
+	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
 	import { defaultTextFieldProps, useTextField } from './MonthPickerText/useTextField'
 	import { defaultMonthPickerVisualProps } from './MonthPickerVisual/MonthPickerVisualProps'
 	import { useMonthPickerValidation } from './useMonthPickerValidation'
@@ -25,7 +26,7 @@
 
 	const locales = useLocales(defaultLocales, () => props.locales)
 
-	provide(localesKey, locales)
+	provide(calendarLocalesKey, locales)
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: string | undefined): void

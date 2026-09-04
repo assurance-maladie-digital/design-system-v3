@@ -1,11 +1,12 @@
 <script setup lang="ts">
-	import { computed, inject, ref, useId, watch, type ComponentPublicInstance } from 'vue'
-	import MonthSelector from './MonthSelector.vue'
-	import YearSelector from './YearSelector.vue'
-	import VisualpickerHeader from './VisualPickerHeader.vue'
-	import VisualPickerFooter from './VisualPickerFooter.vue'
-	import { locales as defaultLocales, localesKey } from '../locales'
-	import { parseMonthYearString } from './utils'
+	import { computed, inject, ref, useId, watch, type ComponentPublicInstance, type ComputedRef } from 'vue'
+	import MonthSelector from '@/components/Common/Calendar/MonthSelector.vue'
+	import YearSelector from '@/components/Common/Calendar/YearSelector.vue'
+	import VisualpickerHeader from '@/components/Common/Calendar/VisualPickerHeader.vue'
+	import VisualPickerFooter from '@/components/Common/Calendar/VisualPickerFooter.vue'
+	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
+	import { locales as defaultLocales } from '../locales'
+	import { parseMonthYearString } from '@/components/Common/Calendar/utils'
 	import type { MonthPickerVisualProps } from './MonthPickerVisualProps'
 
 	const props = defineProps<{
@@ -23,7 +24,8 @@
 		(e: 'update:open', value: boolean): void
 	}>()
 
-	const locales = inject<typeof defaultLocales>(localesKey)!
+	// Le root MonthPicker fournit ses locales complètes via la clé partagée
+	const locales = inject<ComputedRef<typeof defaultLocales>>(calendarLocalesKey)!
 
 	const view = ref<'months' | 'years'>(props.initialView)
 	const open = ref(false)
