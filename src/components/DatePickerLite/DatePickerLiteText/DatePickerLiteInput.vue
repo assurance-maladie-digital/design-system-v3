@@ -12,8 +12,6 @@
 
 	const props = withDefaults(defineProps<{
 		modelValue: Date | undefined
-		/** Text content, two-way bound with the root (v-model:text-value): the root validates on it and the form reset clears it. */
-		textValue?: string | undefined
 		errorMessages?: string[] | null
 		warningMessages?: string[] | null
 		successMessages?: string[] | null
@@ -24,7 +22,6 @@
 		displayAsterisk?: boolean
 		hideDetails?: boolean
 	} & TextFieldProps>(), {
-		textValue: undefined,
 		errorMessages: null,
 		warningMessages: null,
 		successMessages: null,
@@ -57,20 +54,6 @@
 		},
 	)
 
-	// External clears (form reset writes undefined through the root's
-	// v-model:text-value) flow down; every other text change flows up from
-	// the input itself. Restricting the descending watch to clears avoids
-	// racing with the modelValue watch above (a stale textValue prop update
-	// must never overwrite a freshly formatted date).
-	watch(
-		() => props.textValue,
-		(newValue) => {
-			if (newValue === undefined && innerValue.value !== undefined) {
-				innerValue.value = undefined
-			}
-		},
-	)
-
 	watch(innerValue, (newValue) => {
 		// The raw text feeds the root's validation: incomplete or impossible
 		// input never parses to a Date, so rules must see the field content.
@@ -88,6 +71,7 @@
 	}, { immediate: true })
 
 	const toggleBtn = ref<HTMLButtonElement | null>(null)
+
 	const uniqueName = useId()
 	defineExpose({
 		toggleBtn,

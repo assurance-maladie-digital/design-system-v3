@@ -7,7 +7,7 @@
 	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
 	import { defaultTextFieldProps, useTextField } from '@/components/Common/Calendar/useTextField'
 	import { defaultMonthPickerVisualProps } from './MonthPickerVisual/MonthPickerVisualProps'
-	import { usePickerValidation } from '@/components/Common/Calendar/usePickerValidation'
+	import { useMonthPickerValidation } from './useMonthPickerValidation'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
 	import type { MonthPickerProps } from './types'
@@ -55,7 +55,7 @@
 
 	const focused = ref(false)
 
-	const { errors, warnings, successes, hasError, hasWarning, hasSuccess, validate, clearValidation } = usePickerValidation({
+	const { errors, warnings, successes, hasError, hasWarning, hasSuccess, validate, clearValidation } = useMonthPickerValidation({
 		modelValue: internalValue,
 		readonly: toRef(props, 'readonly'),
 		disabled: toRef(props, 'disabled'),

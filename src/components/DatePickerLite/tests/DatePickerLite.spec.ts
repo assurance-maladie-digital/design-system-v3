@@ -121,6 +121,90 @@ describe('DatePickerLite', () => {
 		})
 	})
 
+	describe('validation', () => {
+		it('show the error message when the typed date is incomplete', async () => {
+			const wrapper = mount(DatePickerLiteComponent, {
+				props: {
+					label: 'Début du projet',
+					customRules: [{
+						type: 'custom',
+						options: {
+							validate: (value: string | undefined) => /^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/.test(value ?? ''),
+							message: 'Invalid date format. Use DD/MM/YYYY.',
+						},
+					}],
+				},
+			})
+
+			const input = wrapper.find('input')
+			await input.trigger('focus')
+			await input.setValue('25/12/20')
+			await input.trigger('blur')
+
+			expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+			expect(wrapper.find('.v-field--error').exists()).toBe(true)
+			expect(wrapper.find('.v-input__details').text()).toBe('Invalid date format. Use DD/MM/YYYY.')
+
+			wrapper.unmount()
+		})
+
+		it('should not show an error message when the typed date is valid', async () => {
+			const wrapper = mount(DatePickerLiteComponent, {
+				props: {
+					label: 'Début du projet',
+					customRules: [{
+						type: 'custom',
+						options: {
+							validate: (value: string | undefined) => /^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/.test(value ?? ''),
+							message: 'Invalid date format. Use DD/MM/YYYY.',
+						},
+					}],
+				},
+			})
+
+			const input = wrapper.find('input')
+			await input.setValue('25/12/2026')
+			await input.trigger('blur')
+			await input.trigger('focus')
+
+			expect(wrapper.find('.v-field--error').exists()).toBe(false)
+			expect(wrapper.find('.v-input__details').text()).toBe('Format JJ/MM/AAAA')
+
+			wrapper.unmount()
+		})
+
+		it('shows the required error and clears it when a date is selected via the visual picker', async () => {
+			vi.useFakeTimers()
+			const wrapper = mount(DatePickerLiteComponent, {
+				props: {
+					label: 'Début du projet',
+					required: true,
+				},
+				attachTo: document.body,
+			})
+
+			const input = wrapper.find('input')
+			await input.trigger('focus')
+			await input.trigger('blur')
+			await nextTick()
+
+			expect(wrapper.find('.v-field--error').exists()).toBe(true)
+			expect(wrapper.find('.v-input__details').text()).toContain('Le champ Début du projet est requis.')
+
+			await openMenu(wrapper)
+			const dayButton = wrapper.findComponent({ name: 'Calendar' }).find('[data-date="2026-09-04"]')
+			await dayButton.trigger('click')
+			vi.advanceTimersByTime(1000)
+			await vi.runAllTimersAsync()
+			await nextTick()
+
+			expect(wrapper.find('.v-field--error').exists()).toBe(false)
+			expect(wrapper.find('input').element.value).toBe('04/09/2026')
+
+			wrapper.unmount()
+		})
+	})
+
 	describe('DatePickerLiteVisual', () => {
 		it('should emit update:modelValue when a day is selected in the calendar', async () => {
 			vi.useFakeTimers()

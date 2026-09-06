@@ -6,7 +6,7 @@
 	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
 	import { defaultTextFieldProps, useTextField } from '@/components/Common/Calendar/useTextField'
 	import { defaultDatePickerLiteVisualProps } from './DatePickerLiteVisual/DatePickerLiteVisualProps'
-	import { usePickerValidation } from '@/components/Common/Calendar/usePickerValidation'
+	import { useDatePickerValidation } from './useDatePickerValidation'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
 	import type { DatePickerLiteProps } from './types'
@@ -52,18 +52,17 @@
 		}
 	})
 
-	// Mirror of the text field content, two-way bound with the input
-	// (v-model:text-value): validation runs on it because incomplete input
-	// never parses to a Date (like MonthPicker), and the form reset clears
-	// it (the validation layer writes undefined) — the input then clears its
-	// text and re-emits update:modelValue with undefined if a date was
-	// selected.
+	// Mirror of the text field content, fed by the input's update:textValue
+	// event (one-way): validation runs on it because incomplete input never
+	// parses to a Date (like MonthPicker). The form reset is intercepted by
+	// useDatePickerValidation and delegated to the input's exposed reset().
 	const textValue = ref<string | undefined>(undefined)
 
 	const focused = ref(false)
 
-	const { errors, warnings, successes, hasError, hasWarning, hasSuccess, validate, clearValidation } = usePickerValidation({
+	const { errors, warnings, successes, hasError, hasWarning, hasSuccess, validate, clearValidation } = useDatePickerValidation({
 		modelValue: textValue,
+		onReset: () => internalValue.value = undefined,
 		readonly: toRef(props, 'readonly'),
 		disabled: toRef(props, 'disabled'),
 		required: toRef(props, 'required'),
@@ -118,8 +117,8 @@
 		<DatePickerLiteInput
 			ref="textInput"
 			v-model="internalValue"
-			v-model:text-value="textValue"
 			v-bind="inputProps"
+			@update:text-value="textValue = $event"
 			@focus="focused = true"
 			@blur="focused = false"
 		/>
@@ -134,7 +133,6 @@
 			:disabled
 			:readonly
 			@update:open="emits('update:open', $event)"
-			@update:model-value="validate"
 		/>
 	</div>
 </template>
