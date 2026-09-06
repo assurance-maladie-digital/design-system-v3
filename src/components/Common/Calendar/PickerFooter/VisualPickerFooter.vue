@@ -2,18 +2,26 @@
 	import { mdiCalendarMonthOutline } from '@mdi/js'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
+	const props = withDefaults(defineProps<{
+		/** Visible text of the button */
+		label?: string
+		/** aria-label and title of the button */
+		ariaLabel?: string
+		/** Serializes today's date into the host's model format */
+		format?: (date: Date) => string | Date
+	}>(), {
+		label: 'Mois actuel',
+		ariaLabel: 'Sélectionner le mois en cours',
+		format: (date: Date) => `${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`,
+	})
+
 	const emits = defineEmits<{
-		(e: 'update:modelValue', value: string): void
+		(e: 'update:modelValue', value: string | Date): void
 	}>()
 
-	function selectCurrentMonth() {
-		const currentMonth = new Date().getMonth() + 1
-		const currentYear = new Date().getFullYear()
-		emits('update:modelValue', `${String(currentMonth).padStart(2, '0')}/${currentYear}`)
+	function selectCurrent() {
+		emits('update:modelValue', props.format(new Date()))
 	}
-
-	const btnText = 'Mois actuel'
-	const btnLabel = `Sélectionner le mois en cours`
 </script>
 
 <template>
@@ -21,15 +29,15 @@
 		<button
 			class="month-picker-footer__current-month-btn"
 			type="button"
-			:aria-label="btnLabel"
-			:title="btnLabel"
-			@click="selectCurrentMonth"
+			:aria-label="props.ariaLabel"
+			:title="props.ariaLabel"
+			@click="selectCurrent"
 		>
 			<SyIcon
 				:icon="mdiCalendarMonthOutline"
 				decorative
 			/>
-			{{ btnText }}
+			{{ props.label }}
 		</button>
 	</div>
 </template>

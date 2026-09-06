@@ -1,10 +1,13 @@
 import type { ComputedRef, InjectionKey } from 'vue'
 
+/** Possible views of a calendar picker: days grid, months list, years list */
+export type PickerView = 'days' | 'months' | 'years'
+
 /**
- * Chaînes localisées consommées par les sous-composants du picker calendar
+ * Localized strings consumed by the calendar picker sub-components
  * (MonthSelector, YearSelector, VisualPickerHeader, VisualPickerFooter).
- * Le composant hôte (ex. MonthPicker) doit fournir via `provide(calendarLocalesKey, …)`
- * un objet satisfaisant cette interface.
+ * The host component (e.g. MonthPicker) must provide via `provide(calendarLocalesKey, …)`
+ * an object satisfying this interface.
  */
 export interface CalendarLocales {
 	monthSelectorLabel: string

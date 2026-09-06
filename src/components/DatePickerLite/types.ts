@@ -1,15 +1,15 @@
 import { type TextFieldProps } from '@/components/Common/Calendar/useTextField'
-import { type MonthPickerVisualProps } from './MonthPickerVisual/MonthPickerVisualProps'
 import { type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 import { locales as defaultLocales } from './locales'
 import type { DeepPartial } from '@/utils/locales/mergeLocales'
+import type { DatePickerLiteVisualProps } from './DatePickerLiteVisual/DatePickerLiteVisualProps'
 
-export type MonthPickerProps =
+export type DatePickerLiteProps =
 	TextFieldProps
 	& FieldValidationProps
-	& Partial<MonthPickerVisualProps>
+	& Partial<DatePickerLiteVisualProps>
 	& {
-		modelValue?: string
+		modelValue?: Date
 		locales?: DeepPartial<typeof defaultLocales>
 		disabled?: boolean
 		readonly?: boolean

@@ -4,7 +4,7 @@
 	import YearSelector from '@/components/Common/Calendar/YearSelector/YearSelector.vue'
 	import VisualpickerHeader from '@/components/Common/Calendar/PickerHeader/VisualPickerHeader.vue'
 	import VisualPickerFooter from '@/components/Common/Calendar/PickerFooter/VisualPickerFooter.vue'
-	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
+	import { calendarLocalesKey, type PickerView } from '@/components/Common/Calendar/locales'
 	import { locales as defaultLocales } from '../locales'
 	import { parseMonthYearString } from '@/components/Common/Calendar/utils'
 	import type { MonthPickerVisualProps } from './MonthPickerVisualProps'
@@ -24,10 +24,10 @@
 		(e: 'update:open', value: boolean): void
 	}>()
 
-	// Le root MonthPicker fournit ses locales complètes via la clé partagée
+	// The MonthPicker root provides its full locales through the shared key
 	const locales = inject<ComputedRef<typeof defaultLocales>>(calendarLocalesKey)!
 
-	const view = ref<'months' | 'years'>(props.initialView)
+	const view = ref<PickerView>(props.initialView)
 	const open = ref(false)
 	watch(open, (newValue) => {
 		if (newValue) {
@@ -73,8 +73,12 @@
 		}
 	}
 
-	function setDate(value: string) {
-		emitModelValue(value)
+	function setDate(value: string | Date) {
+		// The shared footer emits a Date when its `format` prop returns one;
+		// MonthPicker always uses the default MM/YYYY string format.
+		if (typeof value === 'string') {
+			emitModelValue(value)
+		}
 		open.value = false
 	}
 

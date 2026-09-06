@@ -1,23 +1,22 @@
 <script lang="ts" setup>
-	import { computed, provide, readonly as readonlyState, ref, toRef, useAttrs, type ComponentPublicInstance } from 'vue'
-	import MonthPickerInput from './MonthPickerText/MonthPickerInput.vue'
-	import MonthPickerVisual from './MonthPickerVisual/MonthPickerVisual.vue'
-	import { watch } from 'vue'
+	import { computed, provide, readonly as readonlyState, ref, toRef, useAttrs, watch, type ComponentPublicInstance } from 'vue'
+	import DatePickerLiteInput from './DatePickerLiteText/DatePickerLiteInput.vue'
+	import DatePickerLiteVisual from './DatePickerLiteVisual/DatePickerLiteVisual.vue'
 	import { locales as defaultLocales } from './locales'
 	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
 	import { defaultTextFieldProps, useTextField } from '@/components/Common/Calendar/useTextField'
-	import { defaultMonthPickerVisualProps } from './MonthPickerVisual/MonthPickerVisualProps'
+	import { defaultDatePickerLiteVisualProps } from './DatePickerLiteVisual/DatePickerLiteVisualProps'
 	import { usePickerValidation } from '@/components/Common/Calendar/usePickerValidation'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
-	import type { MonthPickerProps } from './types'
+	import type { DatePickerLiteProps } from './types'
 
-	const props = withDefaults(defineProps<MonthPickerProps>(), {
+	const props = withDefaults(defineProps<DatePickerLiteProps>(), {
 		modelValue: undefined,
 		locales: () => ({}),
-		helpText: 'Format MM/AAAA',
+		helpText: 'Format JJ/MM/AAAA',
 		...validationPropsDefaults,
-		...defaultMonthPickerVisualProps,
+		...defaultDatePickerLiteVisualProps,
 		...defaultTextFieldProps,
 		disabled: false,
 		readonly: false,
@@ -29,15 +28,15 @@
 	provide(calendarLocalesKey, locales)
 
 	const emits = defineEmits<{
-		(e: 'update:modelValue', value: string | undefined): void
+		(e: 'update:modelValue', value: Date | undefined): void
 		(e: 'update:open', value: boolean): void
 	}>()
 
 	const attrs = useAttrs()
-	const textInput = ref<ComponentPublicInstance<typeof MonthPickerInput> | null>(null)
+	const textInput = ref<ComponentPublicInstance<typeof DatePickerLiteInput> | null>(null)
 	const toggleBtn = computed(() => textInput.value?.toggleBtn)
 
-	const internalValue = ref<string | undefined>(undefined)
+	const internalValue = ref<Date | undefined>(undefined)
 
 	watch(
 		() => props.modelValue,
@@ -53,10 +52,18 @@
 		}
 	})
 
+	// Mirror of the text field content, two-way bound with the input
+	// (v-model:text-value): validation runs on it because incomplete input
+	// never parses to a Date (like MonthPicker), and the form reset clears
+	// it (the validation layer writes undefined) — the input then clears its
+	// text and re-emits update:modelValue with undefined if a date was
+	// selected.
+	const textValue = ref<string | undefined>(undefined)
+
 	const focused = ref(false)
 
 	const { errors, warnings, successes, hasError, hasWarning, hasSuccess, validate, clearValidation } = usePickerValidation({
-		modelValue: internalValue,
+		modelValue: textValue,
 		readonly: toRef(props, 'readonly'),
 		disabled: toRef(props, 'disabled'),
 		required: toRef(props, 'required'),
@@ -87,7 +94,7 @@
 		displayAsterisk: props.displayAsterisk,
 		errorMessages: errors.value,
 		warningMessages: warnings.value,
-		successMessages: successes.value,
+		successes: successes.value,
 		hasError: hasError.value,
 		hasWarning: hasWarning.value,
 		hasSuccess: hasSuccess.value,
@@ -107,15 +114,16 @@
 </script>
 
 <template>
-	<div class="month-picker">
-		<MonthPickerInput
+	<div class="date-picker-lite">
+		<DatePickerLiteInput
 			ref="textInput"
 			v-model="internalValue"
+			v-model:text-value="textValue"
 			v-bind="inputProps"
 			@focus="focused = true"
 			@blur="focused = false"
 		/>
-		<MonthPickerVisual
+		<DatePickerLiteVisual
 			v-model="internalValue"
 			:text-input
 			:toggle-btn

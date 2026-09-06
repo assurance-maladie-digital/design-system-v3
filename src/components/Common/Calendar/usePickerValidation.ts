@@ -2,9 +2,8 @@ import type { ValidationRule as SyValidationRule } from '@/composables/validatio
 import { useValidation } from '@/composables/unifyValidation/useValidation'
 import { computed, type Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
-import type { locales } from './locales'
 
-export function useMonthPickerValidation(args: {
+export function usePickerValidation(args: {
 	modelValue: Ref<unknown>
 	readonly: Ref<boolean>
 	disabled: Ref<boolean>
@@ -26,7 +25,7 @@ export function useMonthPickerValidation(args: {
 	hasSuccessProp?: Ref<boolean>
 	maxErrors?: Ref<number>
 	focused: Ref<boolean>
-	locales: Ref<typeof locales>
+	locales: Ref<{ fieldRequired: (label?: string) => string }>
 }) {
 	const allCustomRules = computed<SyValidationRule[]>(() => {
 		const base: SyValidationRule[] = args.required.value
