@@ -349,8 +349,7 @@
 // Le contenu du VMenu est téléporté hors du composant, mais ce bloc est rendu par son propre
 // template : il porte l'attribut de scope, les styles scopés l'atteignent donc sans passer par
 // un override global.
-// Le fond reprend le niveau d'interaction de l'activateur (survol / menu ouvert), et l'encart est
-// détaché des bords de la liste — le padding vertical de `.v-list` fournit l'espace en haut, la
+// L'encart est détaché des bords de la liste — le padding vertical de `.v-list` fournit l'espace en haut, la
 // marge celui des côtés et du bas.
 .sy-user-menu-identity {
 	margin: 0 8px 8px;
