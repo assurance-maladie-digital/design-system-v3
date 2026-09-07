@@ -170,7 +170,7 @@ export function createValidateDatesFlow(ctx: ValidationContext) {
 			if (!hasInteracted && !forceValidation) {
 				return emptyValidationResult()
 			}
-			const value = options.selectedDates.value ?? unref(options.modelValue) ?? ''
+			const value = unref(options.modelValue) ?? options.selectedDates.value ?? ''
 			const result = ctx.validation.validateValue(value)
 			if (result instanceof Promise) {
 				return result.then((resolved) => {
