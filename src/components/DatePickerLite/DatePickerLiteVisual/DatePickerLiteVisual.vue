@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, inject, nextTick, onUnmounted, ref, useId, useTemplateRef, watch, type ComponentPublicInstance, type ComputedRef } from 'vue'
+	import { computed, inject, onUnmounted, ref, useId, watch, type ComponentPublicInstance, type ComputedRef } from 'vue'
 	import MonthSelector from '@/components/Common/Calendar/MonthSelector/MonthSelector.vue'
 	import YearSelector from '@/components/Common/Calendar/YearSelector/YearSelector.vue'
 	import DatePickerLiteHeader from '@/components/DatePickerLite/DatePickerLiteHeader.vue'
@@ -28,7 +28,6 @@
 	const view = ref<PickerView>(props.initialView)
 	const open = ref(false)
 	const displayedMonth = ref<Date | undefined>(undefined)
-	const menu = useTemplateRef<HTMLElement>('menu')
 
 	let focusTimeout: ReturnType<typeof setTimeout> | undefined
 
@@ -44,7 +43,6 @@
 		if (newValue) {
 			view.value = props.initialView
 			displayedMonth.value = props.modelValue ? new Date(props.modelValue) : new Date()
-			focusInitialDay()
 		}
 		else {
 			props.toggleBtn!.focus()
@@ -52,63 +50,7 @@
 		emits('update:open', newValue)
 	})
 
-	// Unlike the selectors, the Calendar does not self-focus on mount:
-	// focus the selected day, or the single tabbable cell of the grid.
-	function focusInitialDay() {
-		if (props.initialView !== 'days') return
-		nextTick(() => {
-			const selectedDay = menu.value?.querySelector<HTMLElement>('.sy-calendar__day--selected')
-			const tabbableDay = selectedDay ?? menu.value?.querySelector<HTMLElement>('[data-date][tabindex="0"]')
-			tabbableDay?.focus()
-			// When the menu opens, the transition can cause the focus to be lost,
-			// so we ensure it is set after the transition begins (same as the selectors).
-			focusTimeout = setTimeout(() => {
-				tabbableDay?.focus()
-			}, 0)
-		})
-	}
-
 	const selectedDays = computed(() => props.modelValue ? [props.modelValue] : [])
-
-	const getFocusableElements = (root: HTMLElement): HTMLElement[] => Array.from(
-		root.querySelectorAll<HTMLElement>('button,[href],input,select,textarea,[tabindex]'),
-	).filter((element) => {
-		return !element.hasAttribute('disabled')
-			&& element.getAttribute('aria-hidden') !== 'true'
-			&& element.tabIndex !== -1
-	})
-
-	const handleMenuKeydown = (event: KeyboardEvent) => {
-		if (event.key !== 'Tab' || !menu.value) return
-
-		const focusables = getFocusableElements(menu.value)
-		if (focusables.length === 0) return
-
-		const activeElement = document.activeElement as HTMLElement | null
-		const firstFocusable = focusables[0]
-		const lastFocusable = focusables.at(-1)
-
-		if (!activeElement || !menu.value.contains(activeElement)) {
-			event.preventDefault()
-			firstFocusable.focus({ preventScroll: true })
-			return
-		}
-
-		const currentIndex = focusables.indexOf(activeElement)
-
-		if (event.shiftKey) {
-			if (currentIndex <= 0) {
-				event.preventDefault()
-				lastFocusable?.focus({ preventScroll: true })
-			}
-			return
-		}
-
-		if (currentIndex === focusables.length - 1) {
-			event.preventDefault()
-			firstFocusable.focus({ preventScroll: true })
-		}
-	}
 
 	const headerModelValue = computed<Date | undefined>(() => {
 		if (!props.modelValue) return undefined
@@ -168,11 +110,11 @@
 		:target="(textInput as ComponentPublicInstance)"
 		:activator="(toggleBtn as HTMLElement)"
 		:close-on-content-click="false"
+		retain-focus
 		:max-width="328"
 		:min-width="328"
 		:min-height="455"
 		disable-initial-focus
-		:retain-focus="false"
 		:disabled="props.disabled"
 		transition="fade-transition"
 		:activator-props="{
@@ -186,7 +128,6 @@
 			ref="menu"
 			class="date-picker-lite-menu"
 			:class="{ 'date-picker-lite-menu--readonly': props.readonly }"
-			@keydown="handleMenuKeydown"
 		>
 			<DatePickerLiteHeader
 				v-model:view="view"
