@@ -189,7 +189,6 @@
 	height: 32px;
 	margin: 1px auto;
 	padding: 0;
-	border: 2px solid transparent;
 	border-radius: 999px;
 	text-align: center;
 	color: rgb(var(--v-theme-primary-variant, 7, 39, 92));
@@ -203,9 +202,15 @@
 	background-color: rgb(var(--v-theme-interactive-hover, 227, 234, 252));
 }
 
+.sy-calendar__day:focus-visible {
+	outline: none;
+}
+
 .sy-calendar__day:focus-visible > .sy-calendar__day-content {
-	outline: 2px solid rgb(var(--v-theme-primary, 12, 65, 154));
-	outline-offset: 2px;
+	box-shadow:
+		0 0 0 2px rgb(var(--v-theme-primary, 12, 65, 154)),
+		inset 0 0 0 2px rgb(var(--v-theme-surface, 255, 255, 255));
+	outline: none;
 }
 
 .sy-calendar__day--weekend > .sy-calendar__day-content {
