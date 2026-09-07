@@ -1,6 +1,6 @@
 {
-  "date": "2026-09-03T08:00:44.011Z",
-  "totalCount": 78,
+  "date": "2026-09-07T13:17:07.778Z",
+  "totalCount": 77,
   "results": [
     {
       "componentName": "Accordion",
@@ -6959,6 +6959,11 @@
       "a11yDate": "22/07/2026",
       "commits": [
         {
+          "date": "2026-09-03",
+          "message": "Improve pdf display on android + fix uploadWorkfow (#2527)",
+          "version": "1.1.4"
+        },
+        {
           "date": "2026-08-05",
           "message": "Ajout des interactions sur le composant `DialogBox` (#2469)",
           "version": "1.1.4"
@@ -7077,11 +7082,6 @@
           "date": "2025-09-02",
           "message": "DialogBox Props autofocusValidateBtn (#1035)",
           "version": "1.0.7"
-        },
-        {
-          "date": "2025-07-25",
-          "message": "update packages + fix tests + CI improvements (#837)",
-          "version": "1.0.4"
         }
       ],
       "a11yCommits": [
@@ -8261,6 +8261,11 @@
       "a11yDate": "22/07/2026",
       "commits": [
         {
+          "date": "2026-09-03",
+          "message": "Improve pdf display on android + fix uploadWorkfow (#2527)",
+          "version": "1.1.4"
+        },
+        {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
           "version": "1.1.3"
@@ -8373,6 +8378,11 @@
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-09-03",
+          "message": "Improve pdf display on android + fix uploadWorkfow (#2527)",
+          "version": "1.1.4"
+        },
         {
           "date": "2026-08-06",
           "message": "Ajout des interactions sur le composant `FileUpload` (#2474)",
@@ -15704,6 +15714,16 @@
       "a11yDate": "22/07/2026",
       "commits": [
         {
+          "date": "2026-09-04",
+          "message": "SyTable/SyServerTable: fix items per page  (#2538)",
+          "version": "1.1.4"
+        },
+        {
+          "date": "2026-09-03",
+          "message": "[tables] refactor documentation (#2525)",
+          "version": "1.1.4"
+        },
+        {
           "date": "2026-08-28",
           "message": "[Tables] Ajout de la configuration individuel des filtres (#2490)",
           "version": "1.1.4"
@@ -15817,16 +15837,6 @@
           "date": "2026-01-13",
           "message": "fix: typo in doc (#1712)",
           "version": "1.0.17"
-        },
-        {
-          "date": "2025-12-12",
-          "message": "Tables fix des problèmes de mutation des items (#1600)",
-          "version": "1.0.16"
-        },
-        {
-          "date": "2025-12-11",
-          "message": "Ajout d'un slot header.xxx sur les tableau (#1578)",
-          "version": "1.0.16"
         }
       ],
       "a11yCommits": [
@@ -15996,6 +16006,16 @@
       "a11yDate": "22/07/2026",
       "commits": [
         {
+          "date": "2026-09-04",
+          "message": "SyTable/SyServerTable: fix items per page  (#2538)",
+          "version": "1.1.4"
+        },
+        {
+          "date": "2026-09-03",
+          "message": "[tables] refactor documentation (#2525)",
+          "version": "1.1.4"
+        },
+        {
           "date": "2026-08-28",
           "message": "[Tables] Ajout de la configuration individuel des filtres (#2490)",
           "version": "1.1.4"
@@ -16108,16 +16128,6 @@
         {
           "date": "2025-12-12",
           "message": "Tables fix des problèmes de mutation des items (#1600)",
-          "version": "1.0.16"
-        },
-        {
-          "date": "2025-12-11",
-          "message": "Ajout d'un slot header.xxx sur les tableau (#1578)",
-          "version": "1.0.16"
-        },
-        {
-          "date": "2025-11-25",
-          "message": "SyTable / SyServerTable : add show-select-single prop (#1484)",
           "version": "1.0.16"
         }
       ],
@@ -16509,23 +16519,6 @@
           "a11yLabel": false
         }
       ]
-    },
-    {
-      "componentName": "tests",
-      "storybookTitle": null,
-      "status": "actif",
-      "functionalVersion": null,
-      "functionalDate": null,
-      "a11yVersion": null,
-      "a11yDate": null,
-      "commits": [
-        {
-          "date": "2026-07-23",
-          "message": "Uniformise les exposes liées a la validation (#2399)",
-          "version": "1.1.3"
-        }
-      ],
-      "a11yCommits": []
     },
     {
       "componentName": "ToolbarContainer",

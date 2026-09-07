@@ -1,8 +1,8 @@
 {
-  "date": "2026-08-25T13:33:04.081Z",
-  "compliantCount": 55,
-  "totalCount": 78,
-  "percentage": "70.51",
+  "date": "2026-09-07T13:17:02.820Z",
+  "compliantCount": 56,
+  "totalCount": 77,
+  "percentage": "72.73",
   "results": [
     {
       "componentName": "Accordion",
@@ -403,9 +403,9 @@
     {
       "componentName": "FilePreview",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
+      "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false,
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Données/FilePreview",
       "hasManualAudit": true,
       "version": "1.1.3",
@@ -817,17 +817,6 @@
       "hasManualAudit": true,
       "version": "1.1.3",
       "versionDate": "10/08/2026"
-    },
-    {
-      "componentName": "tests",
-      "hasA11yTests": false,
-      "hasA11yDisabledInStories": false,
-      "mdxStatus": "Manquante",
-      "isFullyCompliant": false,
-      "storybookTitle": null,
-      "hasManualAudit": false,
-      "version": null,
-      "versionDate": null
     },
     {
       "componentName": "ToolbarContainer",
