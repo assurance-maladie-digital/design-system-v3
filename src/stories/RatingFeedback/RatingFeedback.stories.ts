@@ -6,7 +6,7 @@ import { RatingEnum } from '@/components/RatingPicker/Rating'
 import SyTextArea from '@/components/SyTextArea/SyTextArea.vue'
 import { locales } from '../../../.storybook/addons/rating-feedback/locales'
 
-const feedbackEndpoint = 'https://storybook.free.beeceptor.com/'
+const feedbackEndpoint = '/api/feedback'
 
 const meta = {
 	title: 'Internes/RatingFeedback',
@@ -34,8 +34,8 @@ const meta = {
 						body: JSON.stringify({
 							comment: comment.value,
 							component: args.component,
+							pageUrl: window.parent.location.href,
 							rating: rating.value,
-							submittedAt: new Date().toISOString(),
 						}),
 					})
 
