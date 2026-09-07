@@ -195,6 +195,25 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
 	})
 
+	it('accepts the first calendar selection after opening with ArrowDown', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+		}, { attachTo: document.body })
+
+		await wrapper.find('input').trigger('keydown', { key: 'ArrowDown' })
+		await nextTick()
+		await flushPromises()
+
+		const datePicker = wrapper.findComponent(VDatePicker)
+		datePicker.vm.$emit('update:modelValue', new Date(2026, 6, 1))
+		await flushPromises()
+
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2026-07-01')
+		wrapper.unmount()
+	})
+
 	it('does not open the calendar from the input with Space', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
@@ -257,6 +276,26 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.isDatePickerVisible).toBe(true)
 		expect((input.element as HTMLInputElement).value).toBe('01/01/2025')
 		expect(wrapper.vm.selectedDates).toBeInstanceOf(Date)
+	})
+
+	it('commits a date clicked after opening with the calendar button', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			modelValue: '01/01/2025',
+		}, { attachTo: document.body })
+
+		await wrapper.find('button.sy-text-field__icon-button').trigger('click')
+		await nextTick()
+		await flushPromises()
+
+		const dayButton = document.querySelector<HTMLButtonElement>('[data-v-date="2025-01-15"] .v-btn')
+		expect(dayButton).not.toBeNull()
+		dayButton?.click()
+		await flushPromises()
+
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2025-01-15')
 	})
 
 	it('returns focus to the input when a keyboard-opened date selection closes the dialog', async () => {
@@ -619,6 +658,27 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.isDatePickerVisible).toBe(false)
 	})
 
+	it('commits a date selected by clicking the calendar after keyboard opening', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			modelValue: '2025-01-01',
+		}, { attachTo: document.body })
+
+		await wrapper.find('input').trigger('keydown', { key: 'ArrowDown' })
+		await nextTick()
+		await flushPromises()
+
+		const dayButton = document.querySelector<HTMLButtonElement>('[data-v-date="2025-01-15"] .v-btn')
+		expect(dayButton).not.toBeNull()
+		dayButton?.click()
+		await flushPromises()
+
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2025-01-15')
+		wrapper.unmount()
+	})
+
 	it('waits for a complete range before emitting the model and uses dateFormatReturn for calendar ranges', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
@@ -673,6 +733,34 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.isDatePickerVisible).toBe(true)
 		expect(wrapper.vm.displayFormattedDate).toBe('')
 		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+		expect(wrapper.vm.errorMessages).toContain('La date ne peut pas être antérieure à aujourd\'hui')
+
+		vi.useRealTimers()
+	})
+
+	it('keeps the dialog open when VDatePicker emits an invalid calendar selection', async () => {
+		vi.useFakeTimers()
+		vi.setSystemTime(new Date(2026, 7, 19, 12, 0, 0))
+
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			customRules: [{
+				type: 'notBeforeToday',
+				options: { message: 'La date ne peut pas être antérieure à aujourd\'hui' },
+			}],
+		}, { attachTo: document.body })
+
+		wrapper.vm.isDatePickerVisible = true
+		await nextTick()
+		const datePicker = wrapper.findComponent(VDatePicker)
+		expect(datePicker.exists()).toBe(true)
+		datePicker.vm.$emit('update:modelValue', new Date(2026, 7, 18))
+		await flushPromises()
+
+		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+		expect(wrapper.vm.isDatePickerVisible).toBe(true)
 		expect(wrapper.vm.errorMessages).toContain('La date ne peut pas être antérieure à aujourd\'hui')
 
 		vi.useRealTimers()
@@ -1359,9 +1447,8 @@ describe('ComplexDatePicker.clean', () => {
 		await flushPromises()
 
 		const focused = document.activeElement as HTMLElement
-		const activeMonthButton = dialogContent.querySelector('.v-date-picker-months [data-sy-date-picker-option="month"][aria-pressed="true"]') as HTMLElement | null
-		expect(focused).toBe(activeMonthButton)
-		expect(focused.getAttribute('aria-pressed')).toBe('true')
+		const activeMonthCell = dialogContent.querySelector('.v-date-picker-months [data-sy-date-picker-option="month"][aria-selected="true"]') as HTMLElement | null
+		expect(focused).toBe(activeMonthCell)
 
 		wrapper.unmount()
 	})
@@ -1400,7 +1487,6 @@ describe('ComplexDatePicker.clean', () => {
 
 		const focused = document.activeElement as HTMLElement
 		expect(focused.getAttribute('aria-label')).toBe('2005')
-		expect(focused.getAttribute('aria-pressed')).toBe('true')
 
 		wrapper.unmount()
 	})

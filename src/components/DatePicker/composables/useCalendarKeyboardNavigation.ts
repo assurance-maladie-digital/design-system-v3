@@ -95,6 +95,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 
 	let isListenerAttached = false
 	let attachTimeoutId: ReturnType<typeof setTimeout> | undefined
+	let listenerTarget: EventTarget | null = null
 	let lastFocusedMonthButton: HTMLElement | null = null
 	let lastFocusedYearButton: HTMLElement | null = null
 
@@ -184,7 +185,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	const getInitialDialogDate = () => getInitialFocusDate ? getInitialFocusDate() : new Date()
 
 	const isActiveDialogItem = (item: HTMLElement) => (
-		item.getAttribute('aria-pressed') === 'true'
+		item.getAttribute('aria-selected') === 'true'
 		|| item.classList.contains('v-btn--active')
 		|| item.querySelector('button.v-btn--active') !== null
 	)
@@ -687,24 +688,10 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			// Chercher le VDatePicker lui-même
 			const datePickerEl = rootEl?.querySelector('.v-date-picker') || rootEl
 
-			if (containerEl) {
-				// Attacher sur le conteneur du focusTrap (plus prioritaire que le document)
-				containerEl.addEventListener('keydown', keydownListener as EventListener, true)
-				containerEl.addEventListener('focusin', focusinListener, true)
-				isListenerAttached = true
-			}
-			else if (datePickerEl) {
-				// Attacher sur le VDatePicker directement
-				datePickerEl.addEventListener('keydown', keydownListener as EventListener, true)
-				datePickerEl.addEventListener('focusin', focusinListener, true)
-				isListenerAttached = true
-			}
-			else {
-				// Fallback : attacher sur le document
-				document.addEventListener('keydown', keydownListener as EventListener, true)
-				document.addEventListener('focusin', focusinListener, true)
-				isListenerAttached = true
-			}
+			listenerTarget = containerEl ?? datePickerEl ?? document
+			listenerTarget.addEventListener('keydown', keydownListener as EventListener, true)
+			listenerTarget.addEventListener('focusin', focusinListener, true)
+			isListenerAttached = true
 		}
 
 		// Attacher immédiatement pour que la navigation clavier soit disponible dès l'ouverture.
@@ -724,25 +711,9 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 		}
 
 		if (!isListenerAttached) return
-		const rootEl = datePickerRef.value?.$el as HTMLElement | undefined
-
-		const containerEl = getKeyboardContainer(rootEl)
-
-		// Chercher le VDatePicker lui-même
-		const datePickerEl = rootEl?.querySelector('.v-date-picker') || rootEl
-
-		if (containerEl) {
-			containerEl.removeEventListener('keydown', keydownListener as EventListener, true)
-			containerEl.removeEventListener('focusin', focusinListener, true)
-		}
-		else if (datePickerEl) {
-			datePickerEl.removeEventListener('keydown', keydownListener as EventListener, true)
-			datePickerEl.removeEventListener('focusin', focusinListener, true)
-		}
-		else {
-			document.removeEventListener('keydown', keydownListener as EventListener, true)
-			document.removeEventListener('focusin', focusinListener, true)
-		}
+		listenerTarget?.removeEventListener('keydown', keydownListener as EventListener, true)
+		listenerTarget?.removeEventListener('focusin', focusinListener, true)
+		listenerTarget = null
 
 		isListenerAttached = false
 		lastFocusedMonthButton = null
@@ -790,6 +761,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 			})
 		}
 		else {
+			latestFocusToken++
 			detachListeners()
 		}
 	})
@@ -801,6 +773,7 @@ export const useCalendarKeyboardNavigation = (options: CalendarKeyboardNavigatio
 	})
 
 	onBeforeUnmount(() => {
+		latestFocusToken++
 		detachListeners()
 	})
 

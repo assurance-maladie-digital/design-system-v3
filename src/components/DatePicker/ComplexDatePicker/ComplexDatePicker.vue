@@ -42,8 +42,8 @@
 	 * 2. **Synchronisation Vuetify** : à la réouverture avec une date existante, VDatePicker peut
 	 *    réémettre sa valeur initiale. Cette émission met à jour l'affichage, sans être traitée comme
 	 *    une sélection utilisateur ni fermer le calendrier.
-	 * 3. **Sélection utilisateur** : `click:date` lève cette garde avant de valider, synchroniser le
-	 *    modèle et fermer le calendrier si la sélection est complète.
+	 * 3. **Sélection utilisateur** : la mise à jour du `v-model` de Vuetify lève la garde, valide,
+	 *    synchronise le modèle et ferme le calendrier si la sélection est complète.
 	 * 4. **Fermeture** : les intentions d'ouverture sont réinitialisées. Le focus est rendu au champ
 	 *    une seule fois après la transition de sortie du menu, sans pouvoir déclencher une réouverture.
 	 *
@@ -473,18 +473,12 @@
 		withInternalUpdate(() => emit('update:modelValue', value))
 	}
 
-	// Proxy v-model de VDatePicker. Lorsqu'un calendrier déjà sélectionné se rouvre,
-	// Vuetify peut réémettre sa valeur initiale : la garde ignore cette synchronisation
-	// jusqu'au `click:date` utilisateur, pour éviter une fermeture immédiate du menu.
-	const calendarSelectedDates = computed<DateObjectValue>({
-		get: () => selectedDates.value,
-		set: (value) => {
-			if (ignoreNextCalendarModelSync.value) {
-				return
-			}
-
-			selectedDates.value = value
-		},
+	// VDatePicker est contrôlé dès que `model-value` et son événement sont fournis.
+	// Cette ref est donc mise à jour immédiatement au clic, avant une éventuelle validation
+	// asynchrone ; sinon Vuetify réaffiche la valeur précédente entre le clic et la résolution.
+	const calendarSelectedDates = ref<DateObjectValue>(selectedDates.value)
+	watch(selectedDates, (value) => {
+		calendarSelectedDates.value = value
 	})
 
 	// Keep and expose this so consumers can listen to `date-selected`
@@ -712,7 +706,7 @@
 		closeAndRestoreFocus()
 	}
 
-	// `click:date` identifie une sélection réelle et clôt la phase de synchronisation d'ouverture.
+	// Alias interne conservé pour les appels programmatiques de sélection.
 	const updateSelectedDates = async (date: Date | null) => {
 		ignoreNextCalendarModelSync.value = false
 
@@ -728,6 +722,43 @@
 
 		// Validate immediately to surface messages
 		queueMicrotask(() => validate({ force: true }))
+	}
+
+	const isSameCalendarSelection = (first: DateObjectValue, second: DateObjectValue): boolean => {
+		if (first === second) return true
+		if (first instanceof Date && second instanceof Date) {
+			return first.getTime() === second.getTime()
+		}
+		if (Array.isArray(first) && Array.isArray(second)) {
+			return first.length === second.length && first.every((date, index) => {
+				const otherDate = second[index]
+				return date?.getTime() === otherDate?.getTime()
+			})
+		}
+		return false
+	}
+
+	const handleCalendarModelUpdate = async (value: DateObjectValue): Promise<void> => {
+		if (ignoreNextCalendarModelSync.value) {
+			ignoreNextCalendarModelSync.value = false
+			if (isSameCalendarSelection(value, selectedDates.value)) {
+				return
+			}
+		}
+
+		const previousSelection = selectedDates.value
+		calendarSelectedDates.value = value
+
+		const selectedDate = Array.isArray(value)
+			? value[value.length - 1] ?? null
+			: value
+
+		if (selectedDate && !(await validateCalendarSelection(selectedDate))) {
+			calendarSelectedDates.value = previousSelection
+			return
+		}
+
+		selectedDates.value = value
 	}
 
 	// Le watcher de sélection consomme l'émission initiale de Vuetify sans propager ni fermer.
@@ -1190,14 +1221,12 @@
 				?? option.textContent?.trim()
 				?? ''
 			const isSelected = optionLabel === normalizedLabel
-			option.setAttribute('aria-pressed', String(isSelected))
 			option.setAttribute('aria-selected', String(isSelected))
 			option.tabIndex = isSelected ? 0 : -1
 
 			const button = option.querySelector<HTMLElement>('button')
 			if (!button) return
 
-			button.setAttribute('aria-pressed', String(isSelected))
 			button.tabIndex = -1
 		})
 	}
@@ -1458,7 +1487,7 @@
 					<VDatePicker
 						:id="datePickerContentId"
 						ref="datePickerRef"
-						v-model="calendarSelectedDates"
+						:model-value="calendarSelectedDates"
 						control-variant="modal"
 						color="primary"
 						:class="props.displayWeekendDays ? 'weekend' : ''"
@@ -1480,11 +1509,10 @@
 						:density="props.density"
 						:hint="props.hint"
 						:persistent-hint="props.persistentHint"
-						@update:model-value="updateDisplayFormattedDate"
+						@update:model-value="handleCalendarModelUpdate"
 						@update:view-mode="handleViewModeUpdateWrapper"
 						@update:month="onUpdateMonth"
 						@update:year="onUpdateYear"
-						@click:date="updateSelectedDates"
 					>
 						<template #title>
 							<span

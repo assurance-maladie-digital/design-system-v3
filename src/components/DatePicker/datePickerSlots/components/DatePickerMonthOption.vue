@@ -11,13 +11,12 @@
 				isDisabled?: boolean
 			}
 			i: number
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			props: Record<string, any>
+			props: Record<string, unknown>
 		}
 	}
 
 	const props = defineProps<DatePickerMonthOptionProps>()
-	const isActive = computed(() => props.slotProps.props.active)
+	const isActive = computed(() => Boolean(props.slotProps.props.active))
 </script>
 
 <template>
@@ -26,7 +25,6 @@
 		data-sy-date-picker-option="month"
 		:aria-selected="isActive"
 		:aria-label="slotProps.month.label"
-		:aria-pressed="isActive"
 	>
 		<VBtn
 			v-bind="slotProps.props"
