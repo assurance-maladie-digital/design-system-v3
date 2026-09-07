@@ -18,7 +18,7 @@
 
 	interface DatePickerDayProps {
 		slotProps: {
-			props: { onClick: () => void }
+			props: Record<string, unknown>
 			item: DatePickerDayItem
 			i: number
 		}
@@ -36,6 +36,15 @@
 		const day = date.getDay()
 		return day === 0 || day === 6
 	}
+
+	const getAriaLabel = (item: DatePickerDayItem): string | undefined => {
+		const ariaLabel = props.slotProps.props['aria-label']
+		const defaultLabel = typeof ariaLabel === 'string' ? ariaLabel : undefined
+
+		return isHoliday(item.date)
+			? `${defaultLabel ?? item.localized} — ${locales.publicHoliday}`
+			: defaultLabel
+	}
 </script>
 
 <template>
@@ -45,9 +54,7 @@
 			'holiday-day': isHoliday(slotProps.item.date),
 			'weekend-day': isWeekend(slotProps.item.date),
 		}"
-		:aria-label="isHoliday(slotProps.item.date)
-			? `${slotProps.item.localized} — ${locales.publicHoliday}`
-			: undefined"
+		:aria-label="getAriaLabel(slotProps.item)"
 	>
 		{{ slotProps.item.localized }}
 	</VBtn>

@@ -4,7 +4,8 @@ import DatePickerDay from './DatePickerDay.vue'
 
 const createSlotProps = (date: Date) => ({
 	props: {
-		onClick: () => {},
+		'onClick': () => {},
+		'aria-label': `Jour ${date.getDate()}`,
 	},
 	item: {
 		date,
@@ -47,9 +48,23 @@ describe('DatePickerDay', () => {
 		expect(saturday.find('.v-btn').classes()).toContain('weekend-day')
 		expect(sunday.find('.v-btn').classes()).toContain('weekend-day')
 		expect(monday.find('.v-btn').classes()).not.toContain('weekend-day')
+		expect(monday.find('.v-btn').attributes('aria-label')).toBe('Jour 5')
 
 		saturday.unmount()
 		sunday.unmount()
 		monday.unmount()
+	})
+
+	it('enriches the Vuetify accessible name for public holidays', () => {
+		const holiday = mount(DatePickerDay, {
+			props: {
+				slotProps: createSlotProps(new Date(2025, 0, 1)),
+				displayHolidayDays: true,
+			},
+		})
+
+		expect(holiday.find('.v-btn').attributes('aria-label')).toBe('Jour 1 — jour férié')
+
+		holiday.unmount()
 	})
 })

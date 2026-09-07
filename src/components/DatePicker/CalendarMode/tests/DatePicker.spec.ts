@@ -2,6 +2,7 @@ import { mount, flushPromises, type VueWrapper } from '@vue/test-utils'
 import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest'
 import { nextTick, defineComponent, ref } from 'vue'
 import DatePicker from '../DatePicker.vue'
+import ComplexDatePicker from '../../ComplexDatePicker/ComplexDatePicker.vue'
 import { locales } from '../../locales'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
@@ -38,6 +39,31 @@ describe('DatePicker', () => {
 		expect(wrapper.exists()).toBe(true)
 		const input = wrapper.find('input')
 		expect(input.exists()).toBe(true)
+	})
+
+	it('forwards all validation props in combined mode', () => {
+		const customSuccessRules = [{ type: 'custom', options: { validate: () => true } }]
+		const wrapper = mountComponent({
+			useCombinedMode: true,
+			customSuccessRules,
+			errorMessages: ['Erreur externe'],
+			warningMessages: ['Avertissement externe'],
+			successMessages: ['Succès externe'],
+			hasError: true,
+			hasWarning: true,
+			hasSuccess: true,
+			maxErrors: 2,
+		})
+
+		const complexDatePicker = wrapper.findComponent(ComplexDatePicker)
+		expect(complexDatePicker.props('customSuccessRules')).toEqual(customSuccessRules)
+		expect(complexDatePicker.props('errorMessages')).toEqual(['Erreur externe'])
+		expect(complexDatePicker.props('warningMessages')).toEqual(['Avertissement externe'])
+		expect(complexDatePicker.props('successMessages')).toEqual(['Succès externe'])
+		expect(complexDatePicker.props('hasError')).toBe(true)
+		expect(complexDatePicker.props('hasWarning')).toBe(true)
+		expect(complexDatePicker.props('hasSuccess')).toBe(true)
+		expect(complexDatePicker.props('maxErrors')).toBe(2)
 	})
 
 	it('keeps the visible calendar heading free of live-region attributes', async () => {
@@ -181,6 +207,70 @@ describe('DatePicker', () => {
 		const emitted = wrapper.emitted('update:modelValue')
 		expect(emitted).toBeTruthy()
 		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('30/04/2025')
+	})
+
+	it('commits a date clicked in the combined calendar after keyboard opening', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			modelValue: '2025-01-01',
+			useCombinedMode: true,
+		}, { attachTo: document.body })
+
+		await wrapper.find('input').trigger('keydown', { key: 'ArrowDown' })
+		await nextTick()
+		await flushPromises()
+
+		const dayButton = document.querySelector<HTMLButtonElement>('[data-v-date="2025-01-15"] .v-btn')
+		expect(dayButton).not.toBeNull()
+		dayButton?.click()
+		await flushPromises()
+
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2025-01-15')
+	})
+
+	it('commits a date clicked in the combined calendar after icon opening', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			modelValue: '2025-01-01',
+			useCombinedMode: true,
+		}, { attachTo: document.body })
+
+		await wrapper.find('button.sy-text-field__icon-button').trigger('click')
+		await nextTick()
+		await flushPromises()
+
+		const dayButton = document.querySelector<HTMLButtonElement>('[data-v-date="2025-01-15"] .v-btn')
+		expect(dayButton).not.toBeNull()
+		dayButton?.click()
+		await flushPromises()
+
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2025-01-15')
+	})
+
+	it('keeps a clicked combined-calendar selection after parent v-model synchronization', async () => {
+		const Parent = defineComponent({
+			components: { DatePicker },
+			setup() {
+				const modelValue = ref('2025-01-01')
+				return { modelValue }
+			},
+			template: '<DatePicker v-model="modelValue" label="Date" format="DD/MM/YYYY" date-format-return="YYYY-MM-DD" use-combined-mode />',
+		})
+		const wrapper = mount(Parent, { attachTo: document.body })
+
+		await wrapper.find('button.sy-text-field__icon-button').trigger('click')
+		await nextTick()
+		await flushPromises()
+
+		const dayButton = document.querySelector<HTMLButtonElement>('[data-v-date="2025-01-15"] .v-btn')
+		expect(dayButton).not.toBeNull()
+		dayButton?.click()
+		await flushPromises()
+
+		expect(wrapper.vm.modelValue).toBe('2025-01-15')
+		wrapper.unmount()
 	})
 
 	it('preserves autoClamp with masked keyboard input in combined mode', async () => {

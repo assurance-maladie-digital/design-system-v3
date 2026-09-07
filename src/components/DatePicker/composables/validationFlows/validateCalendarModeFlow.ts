@@ -97,6 +97,7 @@ export function createValidateCalendarModeFlow(
 					options.selectedDates.value,
 					options.customRules.value,
 					options.customWarningRules.value,
+					options.customSuccessRules?.value ?? [],
 				)
 				// Pousser l'erreur required APRÈS les custom rules pour éviter qu'applyValidationResult l'écrase
 				if (ctx.shouldValidateRequired(forceValidation) && ctx.shouldDisplayErrors()) {

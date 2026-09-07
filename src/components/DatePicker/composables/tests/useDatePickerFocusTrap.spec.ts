@@ -385,7 +385,7 @@ describe('useDatePickerFocusTrap', () => {
 			const proxy = document.createElement('div')
 			proxy.dataset.syDatePickerOption = 'month'
 			proxy.setAttribute('role', 'button')
-			proxy.setAttribute('aria-pressed', i === 8 ? 'true' : 'false')
+			proxy.setAttribute('aria-selected', i === 8 ? 'true' : 'false')
 			proxy.focus = vi.fn()
 
 			const monthButton = document.createElement('button')
@@ -476,7 +476,7 @@ describe('useDatePickerFocusTrap', () => {
 			proxy.dataset.syDatePickerOption = 'year'
 			proxy.setAttribute('role', 'button')
 			proxy.setAttribute('aria-label', year)
-			proxy.setAttribute('aria-pressed', year === '2005' ? 'true' : 'false')
+			proxy.setAttribute('aria-selected', year === '2005' ? 'true' : 'false')
 			proxy.focus = vi.fn()
 
 			const yearButton = document.createElement('button')

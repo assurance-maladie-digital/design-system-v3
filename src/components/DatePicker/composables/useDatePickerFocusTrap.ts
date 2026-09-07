@@ -141,7 +141,7 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 	}
 
 	const focusMonthButton = (root: HTMLElement): boolean => {
-		const activeMonth = root.querySelector<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"][aria-pressed="true"]')
+		const activeMonth = root.querySelector<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"][aria-selected="true"]')
 			?? root.querySelector<HTMLElement>('.v-date-picker-months .v-btn--active')
 		if (focusElement(activeMonth)) return true
 
@@ -170,7 +170,7 @@ export function useDatePickerFocusTrap(options: UseDatePickerFocusTrapOptions) {
 		)
 		return focusElement(matchingYear ?? null)
 			|| focusElement(
-				root.querySelector<HTMLElement>('.v-date-picker-years [aria-pressed="true"]')
+				root.querySelector<HTMLElement>('.v-date-picker-years [aria-selected="true"]')
 				?? root.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active'),
 			)
 	}
