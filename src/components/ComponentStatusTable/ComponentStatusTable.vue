@@ -94,7 +94,7 @@
 		},
 		{
 			critere: 'Stories requises',
-			description: 'Vérifie la présence des stories importantes : Default, Disabled, Validation.',
+			description: 'Vérifie les cas Required et FormValidation. Si un dossier Validation existe, vérifie aussi WithError, WithWarning et WithSuccess.',
 			valeurs: 'Complètes / Partiel / Non concerné',
 		},
 		{
