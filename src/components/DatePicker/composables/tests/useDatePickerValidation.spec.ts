@@ -116,6 +116,24 @@ describe('useDatePickerValidation', () => {
 			})
 			expect(errors.value).toEqual(['Erreur Vuetify'])
 		})
+
+		it('devrait passer modelValue (string) aux règles Vuetify, pas selectedDates (Date)', async () => {
+			const selectedDates = ref<Date | Date[] | null>(new Date(2026, 7, 26))
+			const options = createOptions({
+				useVuetifyValidation: ref(true),
+				selectedDates,
+				modelValue: ref('26/08/2026'),
+				rules: ref([
+					(value: unknown) => typeof value === 'string' || 'La règle attend une string',
+				]),
+				hasInteracted: ref(true),
+			})
+			const { validate, errors } = useDatePickerValidation(options)
+
+			await validate({ force: true })
+
+			expect(errors.value).not.toContain('La règle attend une string')
+		})
 	})
 
 	describe('public contract', () => {
