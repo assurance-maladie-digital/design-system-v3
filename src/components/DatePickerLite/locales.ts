@@ -17,5 +17,7 @@ export const locales = {
 	dayBtnLabelUnselected: (monthYear: string) => `Sélectionner un mois, nous sommes actuellement en ${monthYear}`,
 	todayBtnLabel: 'Aujourd’hui',
 	todayBtnAriaLabel: 'Sélectionner la date du jour',
+	closeBtnLabel: 'Fermer',
+	closeBtnAriaLabel: 'Fermer le sélecteur de date',
 	fieldRequired: (label?: string) => `${label ? `Le champ ${label}` : 'Ce champ'} est requis.`,
 }

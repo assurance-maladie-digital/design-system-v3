@@ -41,4 +41,41 @@ describe('DatePickerLite - Focus', () => {
 
 		wrapper.unmount()
 	})
+
+	it('shows a close button before wrapping focus back to the top of the popin', async () => {
+		const wrapper = mount(DatePickerLite, {
+			props: { label: 'Date', modelValue: new Date(2026, 8, 4) },
+			attachTo: document.body,
+		})
+		await nextTick()
+		await nextTick()
+		await wrapper.find('.date-picker-lite-input__toggle-btn').trigger('click')
+		await nextTick()
+
+		const menu = document.body.querySelector('.date-picker-lite-menu') as HTMLElement
+		const focusables = Array.from(
+			menu.querySelectorAll<HTMLElement>('button,[href],input,select,textarea,[tabindex]'),
+		).filter((element) => {
+			const style = window.getComputedStyle(element)
+			return !element.hasAttribute('disabled')
+				&& element.getAttribute('aria-hidden') !== 'true'
+				&& element.tabIndex !== -1
+				&& style.visibility !== 'hidden'
+				&& style.display !== 'none'
+				&& Number.parseFloat(style.opacity) !== 0
+		})
+		const lastFocusable = focusables.at(-1)
+		expect(lastFocusable).toBeTruthy()
+
+		lastFocusable?.focus()
+		lastFocusable?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }))
+		await nextTick()
+
+		const closeButton = menu.querySelector('[data-close-picker]') as HTMLButtonElement | null
+		expect(closeButton).not.toBeNull()
+		expect(menu.classList.contains('date-picker-lite-menu--close-button-visible')).toBe(true)
+		expect(document.activeElement).toBe(closeButton)
+
+		wrapper.unmount()
+	})
 })
