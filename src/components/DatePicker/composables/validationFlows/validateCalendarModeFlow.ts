@@ -64,7 +64,7 @@ export function createValidateCalendarModeFlow(
 		return false
 	}
 
-	const validateCalendarModeDates = async (forceValidation = false) => {
+	const validateCalendarModeDates = async (forceValidation = false): Promise<ValidationResult | void> => {
 		// Si le flow CalendarMode n'est pas activé, utiliser le flow standard
 		if (!options.useCalendarModeRequiredFlow) {
 			return await Promise.resolve(validateDates(forceValidation))
