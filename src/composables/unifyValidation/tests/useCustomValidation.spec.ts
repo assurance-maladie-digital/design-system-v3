@@ -81,6 +81,36 @@ describe('useCustomValidation', () => {
 		expect(args.errors.value).toContain('Requis')
 	})
 
+	it('uses a visible error message when a Vuetify rule returns false', async () => {
+		const args = defaultArgs()
+		const useVuetifyValidation = ref(true)
+		const rules = ref([{ validate: () => false }])
+		const { result } = withSetup(() =>
+			useCustomValidation(
+				args.modelValue,
+				args.customRules,
+				args.customWarningRules,
+				args.customSuccessRules,
+				args.errors,
+				args.warnings,
+				args.successes,
+				args.showSuccessMessages,
+				args.label,
+				args.focused,
+				args.isValidateOnBlur,
+				args.disableErrorHandling,
+				undefined,
+				undefined,
+				{ useVuetifyValidation, rules },
+			),
+		)
+
+		const validationResult = await result.validate()
+
+		expect(validationResult.hasError).toBe(true)
+		expect(args.errors.value).toEqual(['La valeur est invalide.'])
+	})
+
 	it('validate() clears errors when value is valid', async () => {
 		const args = defaultArgs()
 		args.modelValue.value = 'some value'

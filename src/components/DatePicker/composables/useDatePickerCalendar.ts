@@ -215,7 +215,7 @@ export const useDatePickerCalendar = (options: UseDatePickerCalendarOptions): Us
 				if (!monthsContainer) return
 
 				const focusActiveMonth = () => {
-					const active = rootEl.querySelector<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"][aria-pressed="true"]')
+					const active = rootEl.querySelector<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"][aria-selected="true"]')
 						?? rootEl.querySelector<HTMLElement>('.v-date-picker-months .v-btn--active')
 					if (active) {
 						active.focus({ preventScroll: true })
@@ -243,7 +243,7 @@ export const useDatePickerCalendar = (options: UseDatePickerCalendarOptions): Us
 					// Hook optionnel : si il gère le focus, on s'arrête
 					if (onYearViewFocus && onYearViewFocus(rootEl)) return
 
-					const active = rootEl.querySelector<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"][aria-pressed="true"]')
+					const active = rootEl.querySelector<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"][aria-selected="true"]')
 						?? rootEl.querySelector<HTMLElement>('.v-date-picker-years .v-btn--active')
 					if (active) {
 						active.focus({ preventScroll: true })
