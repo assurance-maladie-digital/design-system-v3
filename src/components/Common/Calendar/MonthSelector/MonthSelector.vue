@@ -105,22 +105,20 @@
 .month-selector__month {
 	height: 40px;
 	padding-inline: 16px;
-	border: 2px solid #fff;
 	cursor: pointer;
 	text-align: center;
 	min-width: 33px;
 	font-size: var(--v-typography-body2-font-size, 1rem);
 	border-radius: 99px;
 	font-weight: bold;
+	color: rgb(var(--v-theme-primary, 12, 65, 154));
 
 	&:hover {
-		/* stylelint-disable-next-line custom-property-pattern */
 		background-color: rgb(var(--v-theme-interactive-hover, 227, 234, 252));
 	}
 }
 
 .month-selector__month--selected {
-	/* stylelint-disable-next-line custom-property-pattern */
 	background-color: rgb(var(--v-theme-primary, 12, 65, 154));
 	color: white;
 
@@ -130,8 +128,11 @@
 	}
 }
 
+.month-selector__month:focus-visible,
 .month-selector__month--active:focus-visible {
-	/* stylelint-disable-next-line custom-property-pattern */
-	outline: 2px solid rgb(var(--v-theme-primary, 12, 65, 154));
+	outline: none;
+	box-shadow:
+		inset 0 0 0 2px rgb(var(--v-theme-surface, 255, 255, 255)),
+		0 0 0 2px rgb(var(--v-theme-primary, 12, 65, 154));
 }
 </style>

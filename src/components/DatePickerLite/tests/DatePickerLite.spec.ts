@@ -1,8 +1,10 @@
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { nextTick, computed } from 'vue'
 import { DatePickerLite } from '@/components/index'
+import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
 import DatePickerLiteComponent from '../DatePickerLite.vue'
-import { nextTick } from 'vue'
+import DatePickerLiteHeader from '../DatePickerLiteHeader.vue'
 
 async function openMenu(wrapper: Awaited<ReturnType<typeof mount>>) {
 	await nextTick()
@@ -36,6 +38,70 @@ describe('DatePickerLite', () => {
 		expect(wrapper.find('.date-picker-lite').exists()).toBeTruthy()
 		expect(wrapper.find('input').element.value).toBe('11/11/2025')
 		expect(wrapper).toMatchSnapshot()
+		wrapper.unmount()
+	})
+
+	it('should render month and year labels from the displayed calendar month in the header', () => {
+		const wrapper = mount(DatePickerLiteHeader, {
+			props: {
+				modelValue: new Date(2026, 8, 4),
+				displayedMonth: new Date(2026, 11, 4),
+				view: 'days',
+				minYear: 1900,
+				maxYear: 2100,
+			},
+			global: {
+				provide: {
+					[calendarLocalesKey as symbol]: computed(() => ({
+						monthSelectorLabel: 'Sélectionner un mois',
+						yearSelectorLabel: 'Sélectionner une année',
+						yearBtnLabelSelected: (value: string) => `Année ${value}`,
+						yearBtnLabelUnselected: (value: string) => `Choisir ${value}`,
+						monthBtnLabelSelected: (value: string) => `Mois ${value}`,
+						monthBtnLabelUnselected: (value: string) => `Choisir ${value}`,
+						previousMonthBtnLabel: 'Mois précédent',
+						nextMonthBtnLabel: 'Mois suivant',
+					})),
+				},
+			},
+		})
+
+		const monthLabel = new Intl.DateTimeFormat(navigator.language, { month: 'short' }).format(new Date(2000, 11))
+		const shortMonthLabel = monthLabel.length >= 4 ? monthLabel.slice(0, 4) : monthLabel.padEnd(4, '.')
+		const yearLabel = '2026'
+
+		expect(wrapper.find('.visual-picker-month-btn').text()).toContain(shortMonthLabel)
+		expect(wrapper.find('.visual-picker-year-btn').text()).toContain(yearLabel)
+		wrapper.unmount()
+	})
+
+	it('should disable previous/next month navigation when the view is not the calendar days view', () => {
+		const wrapper = mount(DatePickerLiteHeader, {
+			props: {
+				modelValue: new Date(2026, 8, 4),
+				displayedMonth: new Date(2026, 11, 4),
+				view: 'months',
+				minYear: 1900,
+				maxYear: 2100,
+			},
+			global: {
+				provide: {
+					[calendarLocalesKey as symbol]: computed(() => ({
+						monthSelectorLabel: 'Sélectionner un mois',
+						yearSelectorLabel: 'Sélectionner une année',
+						yearBtnLabelSelected: (value: string) => `Année ${value}`,
+						yearBtnLabelUnselected: (value: string) => `Choisir ${value}`,
+						monthBtnLabelSelected: (value: string) => `Mois ${value}`,
+						monthBtnLabelUnselected: (value: string) => `Choisir ${value}`,
+						previousMonthBtnLabel: 'Mois précédent',
+						nextMonthBtnLabel: 'Mois suivant',
+					})),
+				},
+			},
+		})
+
+		expect(wrapper.find('.date-picker-lite-header__nav--prev').attributes('disabled')).toBeDefined()
+		expect(wrapper.find('.date-picker-lite-header__nav--next').attributes('disabled')).toBeDefined()
 		wrapper.unmount()
 	})
 
@@ -206,6 +272,95 @@ describe('DatePickerLite', () => {
 	})
 
 	describe('DatePickerLiteVisual', () => {
+		it('should render a dedicated month navigation header in the date picker', async () => {
+			vi.useFakeTimers()
+			const wrapper = mount(DatePickerLiteComponent, {
+				props: {
+					label: 'Début du projet',
+					modelValue: new Date(2026, 8, 4),
+				},
+				attachTo: document.body,
+			})
+
+			await openMenu(wrapper)
+			const menuEl = document.body.querySelector('.date-picker-lite-menu') as HTMLElement
+			expect(menuEl.querySelector('.date-picker-lite-header__nav--prev')).toBeTruthy()
+			expect(menuEl.querySelector('.date-picker-lite-header__nav--next')).toBeTruthy()
+			expect(menuEl.querySelector('.date-picker-lite-header__label')?.textContent).toContain(new Intl.DateTimeFormat(navigator.language, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(2026, 8, 4)))
+
+			await (menuEl.querySelector('.date-picker-lite-header__nav--next') as HTMLElement).click()
+			expect(wrapper.findComponent({ name: 'Calendar' }).find('tbody').attributes('data-month')).toBe('2026-10')
+
+			wrapper.unmount()
+		})
+
+		it('should toggle the month and year views open and closed', async () => {
+			vi.useFakeTimers()
+			const wrapper = mount(DatePickerLiteComponent, {
+				props: {
+					label: 'Début du projet',
+					modelValue: new Date(2026, 8, 4),
+				},
+				attachTo: document.body,
+			})
+
+			await openMenu(wrapper)
+
+			const monthToggle = document.body.querySelector('.visual-picker-month-btn') as HTMLElement
+			const yearToggle = document.body.querySelector('.visual-picker-year-btn') as HTMLElement
+
+			await monthToggle.click()
+			expect(wrapper.findComponent({ name: 'MonthSelector' }).isVisible()).toBeTruthy()
+
+			await monthToggle.click()
+			expect(wrapper.findComponent({ name: 'Calendar' }).isVisible()).toBeTruthy()
+
+			await yearToggle.click()
+			expect(wrapper.findComponent({ name: 'YearSelector' }).isVisible()).toBeTruthy()
+
+			await yearToggle.click()
+			expect(wrapper.findComponent({ name: 'Calendar' }).isVisible()).toBeTruthy()
+
+			wrapper.unmount()
+		})
+
+		it('should loop focus within the popup when tabbing', async () => {
+			vi.useFakeTimers()
+			const wrapper = mount(DatePickerLiteComponent, {
+				props: {
+					label: 'Début du projet',
+					modelValue: new Date(2026, 8, 4),
+				},
+				attachTo: document.body,
+			})
+
+			await openMenu(wrapper)
+
+			const menuEl = document.body.querySelector('.date-picker-lite-menu') as HTMLElement
+			const focusables = Array.from(
+				menuEl.querySelectorAll<HTMLElement>('button,[href],input,select,textarea,[tabindex]'),
+			).filter((el) => {
+				return !el.hasAttribute('disabled')
+					&& el.getAttribute('aria-hidden') !== 'true'
+					&& el.tabIndex !== -1
+			})
+
+			expect(focusables.length).toBeGreaterThan(1)
+
+			const firstFocusable = focusables[0]
+			const lastFocusable = focusables[focusables.length - 1]
+
+			lastFocusable.focus()
+			menuEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }))
+			expect(document.activeElement).toBe(firstFocusable)
+
+			firstFocusable.focus()
+			menuEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, shiftKey: true }))
+			expect(document.activeElement).toBe(lastFocusable)
+
+			wrapper.unmount()
+		})
+
 		it('should emit update:modelValue when a day is selected in the calendar', async () => {
 			vi.useFakeTimers()
 			const wrapper = mount(DatePickerLiteComponent, {
@@ -243,20 +398,20 @@ describe('DatePickerLite', () => {
 
 			await openMenu(wrapper)
 
-			const headerDate = wrapper.findComponent({ name: 'VisualPickerHeader' }).find('.visual-picker-header__date')
-			expect(headerDate.text()).toBe(new Intl.DateTimeFormat(navigator.language, { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(2026, 8, 4)))
+			const headerDate = wrapper.findComponent(DatePickerLiteHeader).find('.visual-picker-header__date')
+			expect(headerDate.text()).toBe(new Intl.DateTimeFormat(navigator.language, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(2026, 8, 4)))
 
-			const monthPillButton = wrapper.findComponent({ name: 'VisualPickerHeader' }).find('.visual-picker-month-btn')
+			const monthPillButton = wrapper.findComponent(DatePickerLiteHeader).find('.visual-picker-month-btn')
 			await monthPillButton.trigger('click')
 
 			const monthButton = wrapper.findComponent({ name: 'MonthSelector' }).find('.month-11')
 			await monthButton.trigger('click')
 
-			expect(headerDate.text()).toBe(new Intl.DateTimeFormat(navigator.language, { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(2026, 8, 4)))
+			expect(headerDate.text()).toBe(new Intl.DateTimeFormat(navigator.language, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(2026, 8, 4)))
 
 			await wrapper.setProps({ modelValue: new Date(2026, 10, 5) })
 
-			expect(headerDate.text()).toBe(new Intl.DateTimeFormat(navigator.language, { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(2026, 10, 5)))
+			expect(headerDate.text()).toBe(new Intl.DateTimeFormat(navigator.language, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(2026, 10, 5)))
 
 			wrapper.unmount()
 		})
@@ -274,7 +429,7 @@ describe('DatePickerLite', () => {
 
 			await openMenu(wrapper)
 
-			const monthButtonHeader = wrapper.findComponent({ name: 'VisualPickerHeader' }).find('.visual-picker-month-btn')
+			const monthButtonHeader = wrapper.findComponent(DatePickerLiteHeader).find('.visual-picker-month-btn')
 			await monthButtonHeader.trigger('click')
 			const monthButton = wrapper.findComponent({ name: 'MonthSelector' }).find('.month-11')
 			await monthButton.trigger('click')
@@ -320,11 +475,11 @@ describe('DatePickerLite', () => {
 			await openMenu(wrapper)
 			expect(wrapper.findComponent({ name: 'Calendar' }).isVisible()).toBeTruthy()
 
-			const monthPillButton = wrapper.findComponent({ name: 'VisualPickerHeader' }).find('.visual-picker-month-btn')
+			const monthPillButton = wrapper.findComponent(DatePickerLiteHeader).find('.visual-picker-month-btn')
 			await monthPillButton.trigger('click')
 
 			expect(wrapper.findComponent({ name: 'MonthSelector' }).isVisible()).toBeTruthy()
-			expect(wrapper.findComponent({ name: 'VisualPickerHeader' }).find('.visual-picker-header__date').text()).toBe(new Intl.DateTimeFormat(navigator.language, { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(2026, 8, 4)))
+			expect(wrapper.findComponent(DatePickerLiteHeader).find('.visual-picker-header__date').text()).toBe(new Intl.DateTimeFormat(navigator.language, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(2026, 8, 4)))
 
 			const monthButton = wrapper.findComponent({ name: 'MonthSelector' }).find('.month-11')
 			await monthButton.trigger('click')
@@ -348,11 +503,11 @@ describe('DatePickerLite', () => {
 
 			await openMenu(wrapper)
 
-			const yearPillButton = wrapper.findComponent({ name: 'VisualPickerHeader' }).find('.visual-picker-year-btn')
+			const yearPillButton = wrapper.findComponent(DatePickerLiteHeader).find('.visual-picker-year-btn')
 			await yearPillButton.trigger('click')
 
 			expect(wrapper.findComponent({ name: 'YearSelector' }).isVisible()).toBeTruthy()
-			expect(wrapper.findComponent({ name: 'VisualPickerHeader' }).find('.visual-picker-header__date').text()).toBe(new Intl.DateTimeFormat(navigator.language, { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(2026, 8, 4)))
+			expect(wrapper.findComponent(DatePickerLiteHeader).find('.visual-picker-header__date').text()).toBe(new Intl.DateTimeFormat(navigator.language, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(2026, 8, 4)))
 
 			const yearButton = wrapper.findComponent({ name: 'YearSelector' }).find('.year-2030')
 			await yearButton.trigger('click')

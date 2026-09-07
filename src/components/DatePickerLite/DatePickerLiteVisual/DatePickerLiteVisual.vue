@@ -2,7 +2,7 @@
 	import { computed, inject, nextTick, onUnmounted, ref, useId, useTemplateRef, watch, type ComponentPublicInstance, type ComputedRef } from 'vue'
 	import MonthSelector from '@/components/Common/Calendar/MonthSelector/MonthSelector.vue'
 	import YearSelector from '@/components/Common/Calendar/YearSelector/YearSelector.vue'
-	import VisualPickerHeader from '@/components/Common/Calendar/PickerHeader/VisualPickerHeader.vue'
+	import DatePickerLiteHeader from '@/components/DatePickerLite/DatePickerLiteHeader.vue'
 	import VisualPickerFooter from '@/components/Common/Calendar/PickerFooter/VisualPickerFooter.vue'
 	import Calendar from '@/components/Common/Calendar/Calendar/Calendar.vue'
 	import { calendarLocalesKey, type PickerView } from '@/components/Common/Calendar/locales'
@@ -70,27 +70,60 @@
 
 	const selectedDays = computed(() => props.modelValue ? [props.modelValue] : [])
 
-	const headerTitle = computed(() => {
-		if (view.value === 'days') return locales.value.headerSelectDay
-		if (view.value === 'months') return locales.value.headerSelectMonth
-		return locales.value.headerSelectYear
+	const getFocusableElements = (root: HTMLElement): HTMLElement[] => Array.from(
+		root.querySelectorAll<HTMLElement>('button,[href],input,select,textarea,[tabindex]'),
+	).filter((element) => {
+		return !element.hasAttribute('disabled')
+			&& element.getAttribute('aria-hidden') !== 'true'
+			&& element.tabIndex !== -1
 	})
 
-	// The header consumes a "MM/YYYY" string for its labels and aria logic.
-	// It intentionally follows the selected value, not calendar navigation.
-	const headerModelValue = computed(() => {
+	const handleMenuKeydown = (event: KeyboardEvent) => {
+		if (event.key !== 'Tab' || !menu.value) return
+
+		const focusables = getFocusableElements(menu.value)
+		if (focusables.length === 0) return
+
+		const activeElement = document.activeElement as HTMLElement | null
+		const firstFocusable = focusables[0]
+		const lastFocusable = focusables.at(-1)
+
+		if (!activeElement || !menu.value.contains(activeElement)) {
+			event.preventDefault()
+			firstFocusable.focus({ preventScroll: true })
+			return
+		}
+
+		const currentIndex = focusables.indexOf(activeElement)
+
+		if (event.shiftKey) {
+			if (currentIndex <= 0) {
+				event.preventDefault()
+				lastFocusable?.focus({ preventScroll: true })
+			}
+			return
+		}
+
+		if (currentIndex === focusables.length - 1) {
+			event.preventDefault()
+			firstFocusable.focus({ preventScroll: true })
+		}
+	}
+
+	const headerModelValue = computed<Date | undefined>(() => {
 		if (!props.modelValue) return undefined
-		return `${String(props.modelValue.getMonth() + 1).padStart(2, '0')}/${props.modelValue.getFullYear()}`
+		return new Date(props.modelValue)
 	})
 
-	// In days view, show the full selected date. When no date is selected,
-	// VisualPickerHeader falls back to its model-value based default.
-	const daysDateLabel = computed(() => {
-		const selected = props.modelValue
-		return selected
-			? new Intl.DateTimeFormat(navigator.language, { day: 'numeric', month: 'long', year: 'numeric' }).format(selected)
-			: undefined
-	})
+	function previousMonth() {
+		const current = displayedMonth.value ?? props.modelValue ?? new Date()
+		displayedMonth.value = new Date(current.getFullYear(), current.getMonth() - 1, 1)
+	}
+
+	function nextMonth() {
+		const current = displayedMonth.value ?? props.modelValue ?? new Date()
+		displayedMonth.value = new Date(current.getFullYear(), current.getMonth() + 1, 1)
+	}
 
 	function setYear(year: number) {
 		const current = displayedMonth.value ?? new Date()
@@ -153,16 +186,16 @@
 			ref="menu"
 			class="date-picker-lite-menu"
 			:class="{ 'date-picker-lite-menu--readonly': props.readonly }"
+			@keydown="handleMenuKeydown"
 		>
-			<VisualPickerHeader
-				:id
+			<DatePickerLiteHeader
 				v-model:view="view"
-				variant="buttons"
-				:title="headerTitle"
 				:model-value="headerModelValue"
-				:date-label="daysDateLabel"
+				:displayed-month="displayedMonth ?? (props.modelValue ? new Date(props.modelValue) : new Date())"
 				:min-year
 				:max-year
+				@previous-month="previousMonth"
+				@next-month="nextMonth"
 			/>
 			<YearSelector
 				v-if="view === 'years'"

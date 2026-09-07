@@ -2,56 +2,107 @@
 
 exports[`DatePickerLite > should open the menu when clicking on the toggle button 1`] = `
 <div class="date-picker-lite-menu">
-  <div class="visual-picker-header">
-    <div
-      class="visual-picker-header__title"
-      id="v-6-title"
-    >
+  <div class="date-picker-lite-header">
+    <div class="date-picker-lite-header__legend">
       Sélectionner une date
     </div>
-    <div class="visual-picker-header__date">
-      December 12, 2026
+    <div
+      aria-label="Saturday, December 12, 2026"
+      class="
+        date-picker-lite-header__label
+        visual-picker-header__date
+      "
+    >
+      Saturday, December 12, 2026
     </div>
-  </div>
-  <div class="visual-picker-subheader">
-    <button
-      aria-label="Sélectionner un mois, le mois sélectionné est December"
-      class="visual-picker-month-btn"
-      title="Sélectionner un mois, le mois sélectionné est December"
-      type="button"
-    >
-      December
-      <i
-        aria-hidden="true"
-        class="
-          M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z
-          mdi
-          notranslate
-          v-icon
-          v-icon--size-default
-          v-theme--light
-        "
-      ></i>
-    </button>
-    <button
-      aria-label="Sélectionner une année, l'année sélectionnée est 2026"
-      class="visual-picker-year-btn"
-      title="Sélectionner une année, l'année sélectionnée est 2026"
-      type="button"
-    >
-      2026
-      <i
-        aria-hidden="true"
-        class="
-          M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z
-          mdi
-          notranslate
-          v-icon
-          v-icon--size-default
-          v-theme--light
-        "
-      ></i>
-    </button>
+    <div class="date-picker-lite-header__controls">
+      <div class="date-picker-lite-header__selector">
+        <button
+          aria-label="Sélectionner un mois, le mois sélectionné est Dec."
+          aria-pressed="false"
+          class="visual-picker-month-btn"
+          title="Sélectionner un mois, le mois sélectionné est Dec."
+          type="button"
+        >
+          Dec.
+          <i
+            aria-hidden="true"
+            class="
+              M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z
+              mdi
+              notranslate
+              v-icon
+              v-icon--size-default
+              v-theme--light
+            "
+          ></i>
+        </button>
+        <button
+          aria-label="Sélectionner une année, l'année sélectionnée est 2026"
+          aria-pressed="false"
+          class="visual-picker-year-btn"
+          title="Sélectionner une année, l'année sélectionnée est 2026"
+          type="button"
+        >
+          2026
+          <i
+            aria-hidden="true"
+            class="
+              M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z
+              mdi
+              notranslate
+              v-icon
+              v-icon--size-default
+              v-theme--light
+            "
+          ></i>
+        </button>
+      </div>
+      <div class="date-picker-lite-header__nav-group">
+        <button
+          aria-label="Mois précédent"
+          class="
+            date-picker-lite-header__nav
+            date-picker-lite-header__nav--prev
+          "
+          title="Mois précédent"
+          type="button"
+        >
+          <i
+            aria-hidden="true"
+            class="
+              M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z
+              mdi
+              notranslate
+              v-icon
+              v-icon--size-default
+              v-theme--light
+            "
+          ></i>
+        </button>
+        <button
+          aria-label="Mois suivant"
+          class="
+            date-picker-lite-header__nav
+            date-picker-lite-header__nav--next
+          "
+          title="Mois suivant"
+          type="button"
+        >
+          <i
+            aria-hidden="true"
+            class="
+              M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z
+              mdi
+              notranslate
+              v-icon
+              v-icon--size-default
+              v-theme--light
+            "
+          ></i>
+        </button>
+      </div>
+    </div>
   </div>
   <div class="sy-calendar__wrapper">
     <div
@@ -81,7 +132,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
           <tr class="sy-calendar__weekdays">
             <th scope="col">
               <div aria-hidden="true">
-                Mon
+                M
               </div>
               <div class="d-sr-only">
                 Monday
@@ -89,7 +140,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
             </th>
             <th scope="col">
               <div aria-hidden="true">
-                Tue
+                T
               </div>
               <div class="d-sr-only">
                 Tuesday
@@ -97,7 +148,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
             </th>
             <th scope="col">
               <div aria-hidden="true">
-                Wed
+                W
               </div>
               <div class="d-sr-only">
                 Wednesday
@@ -105,7 +156,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
             </th>
             <th scope="col">
               <div aria-hidden="true">
-                Thu
+                T
               </div>
               <div class="d-sr-only">
                 Thursday
@@ -113,7 +164,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
             </th>
             <th scope="col">
               <div aria-hidden="true">
-                Fri
+                F
               </div>
               <div class="d-sr-only">
                 Friday
@@ -121,7 +172,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
             </th>
             <th scope="col">
               <div aria-hidden="true">
-                Sat
+                S
               </div>
               <div class="d-sr-only">
                 Saturday
@@ -129,7 +180,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
             </th>
             <th scope="col">
               <div aria-hidden="true">
-                Sun
+                S
               </div>
               <div class="d-sr-only">
                 Sunday
@@ -768,7 +819,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
           mdi
           notranslate
           v-icon
-          v-icon--size-default
+          v-icon--size-x-small
           v-theme--light
         "
       ></i>

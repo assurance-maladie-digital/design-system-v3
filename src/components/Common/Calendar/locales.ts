@@ -16,6 +16,9 @@ export interface CalendarLocales {
 	yearBtnLabelUnselected: (selectedYear: string) => string
 	monthBtnLabelSelected: (selectedMonth: string) => string
 	monthBtnLabelUnselected: (selectedMonth: string) => string
+	headerSelectDay?: string
+	previousMonthBtnLabel?: string
+	nextMonthBtnLabel?: string
 }
 
 export const calendarLocalesKey: InjectionKey<ComputedRef<CalendarLocales>> = Symbol('calendar-locales')

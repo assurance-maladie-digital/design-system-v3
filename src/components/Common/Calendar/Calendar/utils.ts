@@ -7,9 +7,11 @@ export function getLocalizedDays(locale: string): { long: string, short: string 
 	return Array.from({ length: 7 }, (_, i) => {
 		const date = new Date(monday)
 		date.setDate(monday.getDate() + i)
+		const long = date.toLocaleDateString(locale, { weekday: 'long' })
+		const short = date.toLocaleDateString(locale, { weekday: 'short' })
 		return {
-			long: date.toLocaleDateString(locale, { weekday: 'long' }),
-			short: date.toLocaleDateString(locale, { weekday: 'short' }),
+			long,
+			short: short.charAt(0).toLocaleUpperCase(locale),
 		}
 	})
 }

@@ -6,6 +6,8 @@ export const locales = {
 	yearBtnLabelUnselected: (selectedYear: string) => `Sélectionner une année, nous sommes actuellement en ${selectedYear}`,
 	monthBtnLabelSelected: (selectedMonth: string) => `Sélectionner un mois, le mois sélectionné est ${selectedMonth}`,
 	monthBtnLabelUnselected: (selectedMonth: string) => `Sélectionner un mois, nous sommes actuellement en ${selectedMonth}`,
+	previousMonthBtnLabel: 'Mois précédent',
+	nextMonthBtnLabel: 'Mois suivant',
 	// DatePickerLite own keys
 	btnLabel: 'Ouvrir le sélecteur de date',
 	headerSelectDay: 'Sélectionner une date',

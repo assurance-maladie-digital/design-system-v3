@@ -35,6 +35,7 @@
 		>
 			<SyIcon
 				:icon="mdiCalendarMonthOutline"
+				size="x-small"
 				decorative
 			/>
 			{{ props.label }}
@@ -54,11 +55,20 @@
 	margin-block: 8px;
 	padding: 8px;
 	text-align: center;
+	align-items: center;
 	font-weight: bold;
 	font-size: var(--v-typography-body2-font-size, 1rem);
+	border: 0;
 	border-radius: 99px;
+	background-color: transparent;
 	color: rgb(var(--v-theme-primary, 12, 65, 154));
+	cursor: pointer;
+	transition: background-color 0.2s ease;
 	margin-bottom: 2px;
+
+	&:hover {
+		background-color: rgba(var(--v-theme-primary, 12, 65, 154), 0.08);
+	}
 
 	&:focus-visible {
 		/* stylelint-disable-next-line custom-property-pattern */

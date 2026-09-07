@@ -86,77 +86,81 @@
 			{{ locales.calendarInstructions }}
 		</div>
 		<Transition v-bind="transitionProps">
-			<table
+			<div
 				:key="firstDayOfDisplayedMonth"
-				class="sy-calendar"
-				:aria-labelledby="props.ariaLabelledby"
-				:aria-label="props.ariaLabelledby ? undefined : localizedFullMonth"
-				:aria-describedby="instructionsId"
-				role="grid"
+				class="sy-calendar__table-wrapper"
 			>
-				<thead>
-					<tr class="sy-calendar__weekdays">
-						<th
-							v-for="day in localizedDays"
-							:key="day.long"
-							scope="col"
-						>
-							<div aria-hidden="true">
-								{{ day.short }}
-							</div>
-							<div class="d-sr-only">
-								{{ day.long }}
-							</div>
-						</th>
-					</tr>
-				</thead>
-				<tbody :data-month="firstDayOfDisplayedMonth.slice(0, 7)">
-					<tr
-						v-for="(week, weekIndex) in displayedWeeks"
-						:key="weekIndex"
-						class="sy-calendar__week"
-					>
-						<td
-							v-for="day in week"
-							:key="day.ISO8601"
-							class="sy-calendar__day"
-							:class="[`day-${day.ISO8601}`, {
-								'sy-calendar__day--today': day.isToday,
-								'sy-calendar__day--selected': day.isSelected,
-								'sy-calendar__day--other-month': day.isPreviousMonth || day.isNextMonth,
-								'sy-calendar__day--start-range': day.isRangeStart,
-								'sy-calendar__day--end-range': day.isRangeEnd,
-								'sy-calendar__day--in-range': day.isInRange,
-								'sy-calendar__day--weekend': day.isWeekend,
-								'sy-calendar__day--preview': day.isPreviewed,
-								'sy-calendar__day--preview-start': day.isPreviewStart,
-								'sy-calendar__day--preview-end': day.isPreviewEnd,
-							}]"
-							:data-date="day.ISO8601"
-							:tabindex="focusedDay === day.ISO8601 || day.isRangeStart || day.isRangeEnd ? 0 : -1"
-							:aria-current="day.isToday ? 'date' : undefined"
-							:aria-selected="day.isSelected || day.isRangeStart || day.isRangeEnd ? true : undefined"
-							:aria-label="getAriaLabelForRange(day)"
-							role="gridcell"
-							v-bind="keyboardInteractions"
-							@click="() => click(day.rawDate)"
-							@mouseenter="() => previewRange(day.rawDate)"
-							@mouseleave="() => previewRange(null)"
-							@focusin="() => previewRange(day.rawDate)"
-							@focusout="() => previewRange(null)"
-						>
-							<slot
-								:name="`day-${day.ISO8601}`"
-								v-bind="day"
+				<table
+					class="sy-calendar"
+					:aria-labelledby="props.ariaLabelledby"
+					:aria-label="props.ariaLabelledby ? undefined : localizedFullMonth"
+					:aria-describedby="instructionsId"
+					role="grid"
+				>
+					<thead>
+						<tr class="sy-calendar__weekdays">
+							<th
+								v-for="day in localizedDays"
+								:key="day.long"
+								scope="col"
 							>
-								<div class="sy-calendar__day-content">
-									{{ day.day }}
+								<div aria-hidden="true">
+									{{ day.short }}
 								</div>
-							</slot>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+								<div class="d-sr-only">
+									{{ day.long }}
+								</div>
+							</th>
+						</tr>
+					</thead>
+					<tbody :data-month="firstDayOfDisplayedMonth.slice(0, 7)">
+						<tr
+							v-for="(week, weekIndex) in displayedWeeks"
+							:key="weekIndex"
+							class="sy-calendar__week"
+						>
+							<td
+								v-for="day in week"
+								:key="day.ISO8601"
+								class="sy-calendar__day"
+								:class="[`day-${day.ISO8601}`, {
+									'sy-calendar__day--today': day.isToday,
+									'sy-calendar__day--selected': day.isSelected,
+									'sy-calendar__day--other-month': day.isPreviousMonth || day.isNextMonth,
+									'sy-calendar__day--start-range': day.isRangeStart,
+									'sy-calendar__day--end-range': day.isRangeEnd,
+									'sy-calendar__day--in-range': day.isInRange,
+									'sy-calendar__day--weekend': day.isWeekend,
+									'sy-calendar__day--preview': day.isPreviewed,
+									'sy-calendar__day--preview-start': day.isPreviewStart,
+									'sy-calendar__day--preview-end': day.isPreviewEnd,
+								}]"
+								:data-date="day.ISO8601"
+								:tabindex="focusedDay === day.ISO8601 || day.isRangeStart || day.isRangeEnd ? 0 : -1"
+								:aria-current="day.isToday ? 'date' : undefined"
+								:aria-selected="day.isSelected || day.isRangeStart || day.isRangeEnd ? true : undefined"
+								:aria-label="getAriaLabelForRange(day)"
+								role="gridcell"
+								v-bind="keyboardInteractions"
+								@click="() => click(day.rawDate)"
+								@mouseenter="() => previewRange(day.rawDate)"
+								@mouseleave="() => previewRange(null)"
+								@focusin="() => previewRange(day.rawDate)"
+								@focusout="() => previewRange(null)"
+							>
+								<slot
+									:name="`day-${day.ISO8601}`"
+									v-bind="day"
+								>
+									<div class="sy-calendar__day-content">
+										{{ day.day }}
+									</div>
+								</slot>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</Transition>
 	</div>
 </template>
@@ -169,11 +173,16 @@
 	border-spacing: 0;
 }
 
+.sy-calendar__table-wrapper {
+	padding: 0 12px 8px;
+}
+
 .sy-calendar__weekdays th {
 	padding-block: 8px 4px;
 	color: rgb(var(--v-theme-primary-variant, 7, 39, 92));
-	font-size: var(--v-typography-body2-font-size, 0.875rem);
-	font-weight: 600;
+	font-size: var(--v-typography-caption-font-size, 0.875rem);
+	font-weight: 400;
+	color: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
 }
 
 .sy-calendar__day {
@@ -191,7 +200,9 @@
 	padding: 0;
 	border-radius: 999px;
 	text-align: center;
-	color: rgb(var(--v-theme-primary-variant, 7, 39, 92));
+	color: rgb(var(--v-theme-primary, 12, 65, 154));
+	font-weight: bold;
+	font-size: 0.875rem;
 	transition:
 		background-color 0.2s ease,
 		border-color 0.2s ease,
@@ -199,7 +210,8 @@
 }
 
 .sy-calendar__day:hover > .sy-calendar__day-content {
-	background-color: rgb(var(--v-theme-interactive-hover, 227, 234, 252));
+	background-color: rgba(var(--v-theme-primary, 12, 65, 154), 0.12);
+	color: rgb(var(--v-theme-primary, 12, 65, 154));
 }
 
 .sy-calendar__day:focus-visible {
@@ -208,13 +220,14 @@
 
 .sy-calendar__day:focus-visible > .sy-calendar__day-content {
 	box-shadow:
-		0 0 0 2px rgb(var(--v-theme-primary, 12, 65, 154)),
-		inset 0 0 0 2px rgb(var(--v-theme-surface, 255, 255, 255));
+		inset 0 0 0 2px rgb(var(--v-theme-surface, 255, 255, 255)),
+		0 0 0 2px rgb(var(--v-theme-primary, 12, 65, 154));
 	outline: none;
 }
 
 .sy-calendar__day--weekend > .sy-calendar__day-content {
-	color: rgb(var(--v-theme-blue-lighten20, 64, 109, 186));
+
+	background-color: rgb(var(--v-theme-grey-lighten80, 221, 222, 222));
 }
 
 .sy-calendar__day--today > .sy-calendar__day-content {
@@ -231,7 +244,7 @@
 }
 
 .sy-calendar__day--other-month > .sy-calendar__day-content {
-	opacity: 0.6;
+	color: rgb(var(--v-theme-grey-base));
 }
 
 .sy-calendar__day--in-range > .sy-calendar__day-content {
