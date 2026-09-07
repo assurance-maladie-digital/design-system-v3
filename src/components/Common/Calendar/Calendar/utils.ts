@@ -8,10 +8,10 @@ export function getLocalizedDays(locale: string): { long: string, short: string 
 		const date = new Date(monday)
 		date.setDate(monday.getDate() + i)
 		const long = date.toLocaleDateString(locale, { weekday: 'long' })
-		const short = date.toLocaleDateString(locale, { weekday: 'short' })
+		const short = date.toLocaleDateString(locale, { weekday: 'short' }).charAt(0).toLocaleUpperCase(locale)
 		return {
 			long,
-			short: short.charAt(0).toLocaleUpperCase(locale),
+			short,
 		}
 	})
 }

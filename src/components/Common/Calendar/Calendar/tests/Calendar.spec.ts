@@ -53,13 +53,13 @@ describe('Calendar', () => {
 			long: heading.find('.d-sr-only').text(),
 			short: heading.find('[aria-hidden="true"]').text(),
 		}))).toEqual([
-			{ long: 'lundi', short: 'lun.' },
-			{ long: 'mardi', short: 'mar.' },
-			{ long: 'mercredi', short: 'mer.' },
-			{ long: 'jeudi', short: 'jeu.' },
-			{ long: 'vendredi', short: 'ven.' },
-			{ long: 'samedi', short: 'sam.' },
-			{ long: 'dimanche', short: 'dim.' },
+			{ long: 'lundi', short: 'L' },
+			{ long: 'mardi', short: 'M' },
+			{ long: 'mercredi', short: 'M' },
+			{ long: 'jeudi', short: 'J' },
+			{ long: 'vendredi', short: 'V' },
+			{ long: 'samedi', short: 'S' },
+			{ long: 'dimanche', short: 'D' },
 		])
 	})
 
