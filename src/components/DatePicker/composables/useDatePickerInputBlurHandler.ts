@@ -148,6 +148,9 @@ export const useDatePickerInputBlurHandler = (options: {
 		else if (!unref(required)) {
 			// Si le champ est vide et non requis, réinitialiser le modèle
 			updateModel(null)
+			// Valider avec les custom rules sur champ vide (ex: required conditionnel)
+			await Promise.resolve(validateTextInput(''))
+			return
 		}
 		else if (unref(required)) {
 			// Si le champ est vide et requis, déclencher la validation pour afficher l'erreur required

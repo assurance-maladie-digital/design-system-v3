@@ -116,7 +116,7 @@ export interface DatePickerPublicValidateOptions {
 	calendarMode?: boolean
 }
 
-export type DatePickerPublicValidateResult = boolean | ValidationResult | Promise<boolean | ValidationResult>
+export type DatePickerPublicValidateResult = boolean | ValidationResult | void | Promise<boolean | ValidationResult | void>
 
 export interface FormattedDateInputResult {
 	formatted: string
