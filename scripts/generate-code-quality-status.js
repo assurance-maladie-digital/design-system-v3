@@ -152,13 +152,6 @@ function getVisualThemeStatus(componentName, content) {
 	return hasDarkStory ? 'dark' : 'light'
 }
 
-function getThemeModeStatus(content) {
-	if (/ap2026/i.test(content)) return 'AmeliPro 2026'
-	if (/amelipro|\bap\b/i.test(content)) return 'AmeliPro'
-	if (/pa/i.test(content)) return 'PA'
-	return 'CNAM'
-}
-
 function getCriticality({
 	hasPropsDocumentation,
 	hasSourceTab,
@@ -306,7 +299,6 @@ function main() {
 		const uxUsagePage = files.some(file => file.toLowerCase().endsWith('usages.mdx'))
 		const interactivePlayground = hasPlayground(content, docsContent)
 		const themeStatus = getVisualThemeStatus(componentName, content)
-		const themeModeStatus = getThemeModeStatus(content)
 		const storyPath = slugify(storybookTitle)
 		const functionalInfo = getFunctionalInfo(componentName, storybookTitle)
 		const hasUnitTest = files.some(file =>
@@ -360,7 +352,6 @@ function main() {
 			hasUxUsagePage: uxUsagePage,
 			themeStatus,
 			hasAp2026Theme,
-			themeModeStatus,
 			hasInteractivePlayground: interactivePlayground,
 			criticality,
 			isFullyCompliant: !criticality,
