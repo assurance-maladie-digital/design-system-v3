@@ -3,8 +3,8 @@
 	import { mdiChevronDown } from '@mdi/js'
 	import { computed, inject, type ComputedRef } from 'vue'
 	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
+	import { dateToString } from '@/components/Common/Calendar/utils'
 	import { locales as defaultLocales } from '../locales'
-	import { dateToString } from './utils'
 
 	const props = defineProps<{
 		modelValue: string | undefined
@@ -29,7 +29,10 @@
 		else return dateToString(new Date())
 	})
 
-	const formatter = Intl.DateTimeFormat(navigator.language, { month: 'long' })
+	const formatter = new Intl.DateTimeFormat(
+		typeof navigator !== 'undefined' ? navigator.language : undefined,
+		{ month: 'long' },
+	)
 
 	const locales = inject<ComputedRef<typeof defaultLocales>>(calendarLocalesKey)!
 
