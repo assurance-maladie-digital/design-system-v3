@@ -747,6 +747,9 @@
 		// l'ouverture du calendrier (VMenu prend le focus), pas par l'utilisateur
 		// qui quitterait le champ.
 		if (isDatePickerVisible.value) return
+		// Ne pas valider si une mise à jour interne est en cours (ex: clear)
+		// — le blur déclenché par le bouton clear ne doit pas re-valider avec force.
+		if (isUpdatingFromInternal.value) return
 		// Ne pas valider si isValidateOnBlur est false
 		if (props.isValidateOnBlur) {
 			await validate({ force: true, calendarMode: true })
