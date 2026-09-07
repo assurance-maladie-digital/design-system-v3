@@ -42,7 +42,12 @@ describe('DatePickerLite - Focus', () => {
 		wrapper.unmount()
 	})
 
-	it('shows a close button before wrapping focus back to the top of the popin', async () => {
+	it('keeps a focusable close button as the last tab stop of the menu', async () => {
+		// The reveal of the close button (`:has(:focus-visible)`) and the focus
+		// wrap (Vuetify `retain-focus` trap) rely on native focus and layout,
+		// neither of which happy-dom provides: we check the structural
+		// prerequisites here, the visual rendering being covered by the Cypress
+		// visual tests.
 		const wrapper = mount(DatePickerLite, {
 			props: { label: 'Date', modelValue: new Date(2026, 8, 4) },
 			attachTo: document.body,
@@ -53,28 +58,20 @@ describe('DatePickerLite - Focus', () => {
 		await nextTick()
 
 		const menu = document.body.querySelector('.date-picker-lite-menu') as HTMLElement
-		const focusables = Array.from(
-			menu.querySelectorAll<HTMLElement>('button,[href],input,select,textarea,[tabindex]'),
-		).filter((element) => {
-			const style = window.getComputedStyle(element)
-			return !element.hasAttribute('disabled')
-				&& element.getAttribute('aria-hidden') !== 'true'
-				&& element.tabIndex !== -1
-				&& style.visibility !== 'hidden'
-				&& style.display !== 'none'
-				&& Number.parseFloat(style.opacity) !== 0
-		})
-		const lastFocusable = focusables.at(-1)
-		expect(lastFocusable).toBeTruthy()
-
-		lastFocusable?.focus()
-		lastFocusable?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }))
-		await nextTick()
-
 		const closeButton = menu.querySelector('[data-close-picker]') as HTMLButtonElement | null
 		expect(closeButton).not.toBeNull()
-		expect(menu.classList.contains('date-picker-lite-menu--close-button-visible')).toBe(true)
-		expect(document.activeElement).toBe(closeButton)
+		expect(closeButton!.tagName).toBe('BUTTON')
+		// Visually hidden until keyboard focus, but still in the tab order and
+		// the accessibility tree (opacity only, no aria-hidden / tabindex="-1")
+		expect(closeButton!.getAttribute('aria-hidden')).not.toBe('true')
+		expect(closeButton!.tabIndex).not.toBe(-1)
+
+		// Last tab stop of the menu: natural Tab reaches it after the footer,
+		// then the retain-focus trap wraps focus back to the top of the popin
+		const tabbables = Array.from(
+			menu.querySelectorAll<HTMLElement>('button,[href],input,select,textarea,[tabindex]'),
+		).filter(element => !element.hasAttribute('disabled') && element.tabIndex !== -1)
+		expect(tabbables.at(-1)).toBe(closeButton)
 
 		wrapper.unmount()
 	})
