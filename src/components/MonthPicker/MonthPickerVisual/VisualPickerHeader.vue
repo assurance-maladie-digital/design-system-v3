@@ -1,31 +1,22 @@
 <script setup lang="ts">
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiChevronDown } from '@mdi/js'
-	import { computed, inject } from 'vue'
-	import { calendarLocalesKey, type PickerView } from '../locales'
-	import { dateToString } from '../utils'
+	import { computed, inject, type ComputedRef } from 'vue'
+	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
+	import { locales as defaultLocales } from '../locales'
+	import { dateToString } from './utils'
 
-	const props = withDefaults(defineProps<{
+	const props = defineProps<{
 		modelValue: string | undefined
-		view: PickerView
+		view: 'months' | 'years'
 		title: string
 		minYear: number
 		maxYear: number
 		id: string
-		/** Overrides the big label (e.g. full date in days view); otherwise derived from modelValue */
-		dateLabel?: string
-		/** Overrides the pill text; otherwise derived from view and modelValue */
-		toggleLabel?: string
-		/** Overrides the pill aria-label; otherwise derived from locales and modelValue */
-		toggleAriaLabel?: string
-		/** 'toggle': a single pill cycling through views. 'buttons': separate month and year selector buttons, always visible */
-		variant?: 'toggle' | 'buttons'
-	}>(), {
-		variant: 'toggle',
-	})
+	}>()
 
 	const emits = defineEmits<{
-		(e: 'update:view', value: PickerView): void
+		(e: 'update:view', value: 'months' | 'years'): void
 	}>()
 
 	const localeDate = computed(() => {
@@ -40,7 +31,7 @@
 
 	const formatter = Intl.DateTimeFormat(navigator.language, { month: 'long' })
 
-	const locales = inject(calendarLocalesKey)!
+	const locales = inject<ComputedRef<typeof defaultLocales>>(calendarLocalesKey)!
 
 	const btnLabel = computed(() => {
 		if (props.view === 'months') {
@@ -76,31 +67,6 @@
 		}
 	})
 
-	// Next view when the pill is clicked: days → months, months → years, years → months
-	const nextView = computed<PickerView>(() => props.view === 'days' ? 'months' : props.view === 'months' ? 'years' : 'months')
-
-	const parsedMonth = computed(() => props.modelValue ? parseInt(props.modelValue.split('/')[0] || '', 10) : undefined)
-	const parsedYear = computed(() => props.modelValue ? parseInt(props.modelValue.split('/')[1] || '', 10) : undefined)
-
-	const monthLabel = computed(() => formatter.format(new Date(2000, (parsedMonth.value ?? new Date().getMonth() + 1) - 1)))
-	const yearLabel = computed(() => parsedYear.value ?? new Date().getFullYear())
-
-	const monthBtnAriaLabel = computed(() => {
-		const month = parsedMonth.value
-		if (month && !isNaN(month)) {
-			return locales.value.monthBtnLabelSelected(formatter.format(new Date(2000, month - 1)))
-		}
-		return locales.value.monthBtnLabelUnselected(formatter.format(new Date()))
-	})
-
-	const yearBtnAriaLabel = computed(() => {
-		const year = parsedYear.value
-		if (year && !isNaN(year) && year >= props.minYear && year <= props.maxYear) {
-			return locales.value.yearBtnLabelSelected(String(year))
-		}
-		return locales.value.yearBtnLabelUnselected(String(new Date().getFullYear()))
-	})
-
 </script>
 
 <template>
@@ -112,49 +78,20 @@
 			{{ title }}
 		</div>
 		<div class="visual-picker-header__date">
-			{{ props.dateLabel ?? localeDate }}
+			{{ localeDate }}
 		</div>
 	</div>
 	<div
 		class="visual-picker-subheader"
 	>
-		<template v-if="props.variant === 'buttons'">
-			<button
-				type="button"
-				class="visual-picker-month-btn"
-				:title="monthBtnAriaLabel"
-				:aria-label="monthBtnAriaLabel"
-				@click="emits('update:view', 'months')"
-			>
-				{{ monthLabel }}
-				<SyIcon
-					:icon="mdiChevronDown"
-					decorative
-				/>
-			</button>
-			<button
-				type="button"
-				class="visual-picker-year-btn"
-				:title="yearBtnAriaLabel"
-				:aria-label="yearBtnAriaLabel"
-				@click="emits('update:view', 'years')"
-			>
-				{{ yearLabel }}
-				<SyIcon
-					:icon="mdiChevronDown"
-					decorative
-				/>
-			</button>
-		</template>
 		<button
-			v-else
 			type="button"
 			class="visual-picker-year-btn"
-			:title="props.toggleAriaLabel ?? btnAriaLabel"
-			:aria-label="props.toggleAriaLabel ?? btnAriaLabel"
-			@click="emits('update:view', nextView)"
+			:title="btnAriaLabel"
+			:aria-label="btnAriaLabel"
+			@click="emits('update:view', props.view === 'months' ? 'years' : 'months')"
 		>
-			{{ props.toggleLabel ?? btnLabel }}
+			{{ btnLabel }}
 			<SyIcon
 				:icon="mdiChevronDown"
 				decorative
@@ -193,10 +130,8 @@
 	padding: 4px;
 	display: flex;
 	justify-content: center;
-	gap: 8px;
 }
 
-.visual-picker-month-btn,
 .visual-picker-year-btn {
 	display: flex;
 	gap: 4px;
@@ -208,7 +143,6 @@
 	cursor: pointer;
 
 	&:focus-visible {
-		/* stylelint-disable-next-line custom-property-pattern */
 		outline: 2px solid rgb(var(--v-theme-primary, 12, 65, 154));
 	}
 }

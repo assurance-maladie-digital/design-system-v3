@@ -179,7 +179,6 @@
 
 .sy-calendar__weekdays th {
 	padding-block: 8px 4px;
-	color: rgb(var(--v-theme-primary-variant, 7, 39, 92));
 	font-size: var(--v-typography-caption-font-size, 0.875rem);
 	font-weight: 400;
 	color: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity));
@@ -226,7 +225,6 @@
 }
 
 .sy-calendar__day--weekend > .sy-calendar__day-content {
-
 	background-color: rgb(var(--v-theme-grey-lighten80, 221, 222, 222));
 }
 
@@ -254,19 +252,13 @@
 }
 
 .sy-calendar__day--start-range > .sy-calendar__day-content {
-	border-top-left-radius: 999px;
-	border-bottom-left-radius: 999px;
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 0;
+	border-radius: 999px 0 0 999px;
 	background-color: rgb(var(--v-theme-primary, 12, 65, 154));
 	color: white;
 }
 
 .sy-calendar__day--end-range > .sy-calendar__day-content {
-	border-top-right-radius: 999px;
-	border-bottom-right-radius: 999px;
-	border-top-left-radius: 0;
-	border-bottom-left-radius: 0;
+	border-radius: 0 999px 999px 0;
 	background-color: rgb(var(--v-theme-primary, 12, 65, 154));
 	color: white;
 }
@@ -284,17 +276,11 @@
 }
 
 .sy-calendar__day--preview-start > .sy-calendar__day-content {
-	border-top-left-radius: 999px;
-	border-bottom-left-radius: 999px;
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 0;
+	border-radius: 999px 0 0 999px;
 }
 
 .sy-calendar__day--preview-end > .sy-calendar__day-content {
-	border-top-right-radius: 999px;
-	border-bottom-right-radius: 999px;
-	border-top-left-radius: 0;
-	border-bottom-left-radius: 0;
+	border-radius: 0 999px 999px 0;
 }
 
 // Month slide transition: the leaving grid is taken out of the flow

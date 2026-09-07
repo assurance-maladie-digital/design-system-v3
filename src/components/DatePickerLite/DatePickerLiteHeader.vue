@@ -152,7 +152,6 @@
 </template>
 
 <style scoped lang="scss">
-
 .date-picker-lite-header {
 	background-color: rgb(var(--v-theme-primary, 12, 65, 154));
 	color: rgb(var(--v-theme-on-primary, 255, 255, 255));
@@ -165,7 +164,7 @@
 	padding-top: 16px;
 	padding-bottom: 16px;
 	font-weight: 400;
-	letter-spacing: 0.1666666667em;
+	letter-spacing: 0.1667em;
 }
 
 .date-picker-lite-header__controls {
