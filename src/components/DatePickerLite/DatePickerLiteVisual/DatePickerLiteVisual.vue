@@ -12,7 +12,7 @@
 	import type { DatePickerLiteVisualProps } from './DatePickerLiteVisualProps'
 
 	const props = defineProps<{
-		textInput: ComponentPublicInstance | null
+		textInput: ComponentPublicInstance | HTMLElement | null
 		toggleBtn: HTMLElement | null
 		modelValue: Date | undefined
 		readonly: boolean
@@ -45,7 +45,7 @@
 			displayedMonth.value = props.modelValue ? new Date(props.modelValue) : new Date()
 		}
 		else {
-			props.toggleBtn!.focus()
+			props.toggleBtn?.focus()
 		}
 		emits('update:open', newValue)
 	})
@@ -103,7 +103,7 @@
 <template>
 	<VMenu
 		v-model="open"
-		:target="(textInput as ComponentPublicInstance)"
+		:target="(textInput as ComponentPublicInstance | HTMLElement)"
 		:activator="(toggleBtn as HTMLElement)"
 		:close-on-content-click="false"
 		retain-focus

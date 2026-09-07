@@ -9,7 +9,7 @@
 	import { useDatePickerValidation } from './useDatePickerValidation'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
-	import type { DatePickerLiteProps } from './types'
+	import type { DatePickerLiteInputSlotProps, DatePickerLiteProps } from './types'
 
 	const props = withDefaults(defineProps<DatePickerLiteProps>(), {
 		modelValue: undefined,
@@ -34,7 +34,11 @@
 
 	const attrs = useAttrs()
 	const textInput = ref<ComponentPublicInstance<typeof DatePickerLiteInput> | null>(null)
-	const toggleBtn = computed(() => textInput.value?.toggleBtn)
+	// Bouton d'ouverture enregistré par le slot `input` (`:ref="toggleBtnRef"`)
+	const customToggleBtn = ref<HTMLButtonElement | null>(null)
+	// Le menu s'ancre sur le wrapper du slot `input` (pleine largeur), fallback compris
+	const customInputEl = ref<HTMLElement | null>(null)
+	const toggleBtn = computed(() => customToggleBtn.value ?? textInput.value?.toggleBtn ?? null)
 
 	const internalValue = ref<Date | undefined>(undefined)
 
@@ -100,6 +104,26 @@
 		showSuccessMessages: props.showSuccessMessages,
 	}))
 
+	const inputSlotProps = computed<DatePickerLiteInputSlotProps>(() => ({
+		modelValue: internalValue.value,
+		updateModelValue: (value: Date | undefined) => {
+			internalValue.value = value
+		},
+		inputProps: inputProps.value,
+		textValue: textValue.value,
+		updateTextValue: (value: string | undefined) => {
+			textValue.value = value
+		},
+		setFocused: (value: boolean) => {
+			focused.value = value
+		},
+		toggleBtnRef: customToggleBtn,
+	}))
+
+	defineSlots<{
+		input(slotProps: DatePickerLiteInputSlotProps): void
+	}>()
+
 	defineExpose({
 		errors: readonlyState(errors),
 		warnings: readonlyState(warnings),
@@ -114,17 +138,27 @@
 
 <template>
 	<div class="date-picker-lite">
-		<DatePickerLiteInput
-			ref="textInput"
-			v-model="internalValue"
-			v-bind="inputProps"
-			@update:text-value="textValue = $event"
-			@focus="focused = true"
-			@blur="focused = false"
-		/>
+		<div
+			ref="customInputEl"
+			class="date-picker-lite__input"
+		>
+			<slot
+				name="input"
+				v-bind="inputSlotProps"
+			>
+				<DatePickerLiteInput
+					ref="textInput"
+					v-model="internalValue"
+					v-bind="inputProps"
+					@update:text-value="textValue = $event"
+					@focus="focused = true"
+					@blur="focused = false"
+				/>
+			</slot>
+		</div>
 		<DatePickerLiteVisual
 			v-model="internalValue"
-			:text-input
+			:text-input="customInputEl"
 			:toggle-btn
 			:min-year
 			:max-year
