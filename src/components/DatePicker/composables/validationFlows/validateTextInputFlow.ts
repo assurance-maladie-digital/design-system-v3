@@ -150,7 +150,8 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 
 		// 4. Valider avec les custom rules
 		const isValid = await validateCustomRulesForDate(date, token)
-		return token !== ctx.currentValidationToken.value || isValid
+		if (token !== ctx.currentValidationToken.value) return !ctx.displayHasError.value
+		return isValid
 	}
 
 	const validateTextInput = async (value: string): Promise<boolean> => {
@@ -164,11 +165,11 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 				return true
 			}
 			if (!hasInteracted) {
-				ctx.clearValidation()
 				return true
 			}
 			const result = await Promise.resolve(ctx.validation.validateValue(value))
-			return token !== ctx.currentValidationToken.value || !result.hasError
+			if (token !== ctx.currentValidationToken.value) return !ctx.displayHasError.value
+			return !result.hasError
 		}
 
 		// 2. Valeur vide → valider required + custom rules sur null
@@ -187,7 +188,8 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 					adapted.warningRules,
 					adapted.successRules,
 				)
-				return token !== ctx.currentValidationToken.value || !result.hasError
+				if (token !== ctx.currentValidationToken.value) return !ctx.displayHasError.value
+				return !result.hasError
 			}
 			return true
 		}
@@ -238,13 +240,13 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 
 			// Valider les custom rules pour chaque date, puis fusionner les résultats
 			await validateCustomRulesForDate(startDate, token)
-			if (token !== ctx.currentValidationToken.value) return true
+			if (token !== ctx.currentValidationToken.value) return !ctx.displayHasError.value
 			const startErrors = [...ctx.errors.value]
 			const startWarnings = [...ctx.warnings.value]
 			const startSuccesses = [...ctx.successes.value]
 
 			await validateCustomRulesForDate(endDate, token)
-			if (token !== ctx.currentValidationToken.value) return true
+			if (token !== ctx.currentValidationToken.value) return !ctx.displayHasError.value
 			// Fusionner : range errors + start errors + end errors
 			ctx.replaceErrors([...rangeErrors, ...startErrors, ...ctx.errors.value])
 			ctx.warnings.value = [...new Set([...startWarnings, ...ctx.warnings.value].filter(Boolean))]
