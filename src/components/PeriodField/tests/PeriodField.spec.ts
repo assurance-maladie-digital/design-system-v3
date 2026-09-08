@@ -277,6 +277,30 @@ describe('PeriodField.vue', () => {
 			expect(wrapper.vm.isValid).toBe(true)
 		})
 
+		it.each([false, true])('updates both range errors after model changes and clearing a bound (noCalendar: %s)', async (noCalendar) => {
+			const wrapper = mount(PeriodField, {
+				props: {
+					noCalendar,
+					modelValue: { from: '10/01/2024', to: '20/01/2024' },
+				},
+			})
+			await flushPromises()
+
+			await wrapper.setProps({ modelValue: { from: '25/01/2024', to: '20/01/2024' } })
+			await flushPromises()
+
+			const datePickers = wrapper.findAllComponents(DatePicker)
+			expect(datePickers[0]!.text()).toContain('La date de début ne peut pas être supérieure à la date de fin')
+			expect(datePickers[1]!.text()).toContain('La date de fin ne peut pas être inférieure à la date de début')
+
+			await wrapper.setProps({ modelValue: { from: null, to: '20/01/2024' } })
+			await flushPromises()
+
+			expect(wrapper.text()).not.toContain('La date de début ne peut pas être supérieure à la date de fin')
+			expect(wrapper.text()).not.toContain('La date de fin ne peut pas être inférieure à la date de début')
+			wrapper.unmount()
+		})
+
 		it('validateOnSubmit returns false when one side is missing and true once both dates are coherent', async () => {
 			const wrapper = mount(PeriodField, {
 				props: {
