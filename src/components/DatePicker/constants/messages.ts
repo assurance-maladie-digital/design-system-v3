@@ -15,7 +15,7 @@ export const DATE_PICKER_MESSAGES = {
 	ERROR_INVALID_RANGE: locales.invalidRange,
 	ERROR_START_DATE_MISSING: locales.startDateMissing,
 	ERROR_END_DATE_MISSING: locales.endDateMissing,
-	ERROR_END_BEFORE_START: locales.endBeforeStart,
+	ERROR_END_BEFORE_START: locales.endBeforeStartEqual,
 	ERROR_INVALID_FORMAT_START: locales.invalidStartDateFormat,
 	ERROR_INVALID_FORMAT_END: locales.invalidEndDateFormat,
 	SUCCESS_VALID_DATE: locales.validDate,

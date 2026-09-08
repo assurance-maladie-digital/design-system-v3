@@ -1,7 +1,9 @@
 import { mount, flushPromises } from '@vue/test-utils'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
+import { defineComponent, ref } from 'vue'
 import DateTextInput from '../DateTextInput.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
 describe('DateTextInput.clean', () => {
 	const mountComponent = (props: Record<string, unknown>) => mount(DateTextInput, {
@@ -53,6 +55,21 @@ describe('DateTextInput.clean', () => {
 		expect(textField.props('errorMessages')).toEqual(['Erreur externe de contrat DateTextInput'])
 	})
 
+	it('forwards standard validation messages to the underlying text field', () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			errorMessages: ['Erreur injectée'],
+			warningMessages: ['Avertissement injecté'],
+			successMessages: ['Succès injecté'],
+		})
+
+		const textField = wrapper.findComponent(SyTextField)
+		expect(textField.props('errorMessages')).toEqual(['Erreur injectée'])
+		expect(textField.props('warningMessages')).toEqual(['Avertissement injecté'])
+		expect(textField.props('successMessages')).toEqual(['Succès injecté'])
+	})
+
 	it('forwards disableClickButton to the underlying text field', () => {
 		const wrapper = mountComponent({
 			label: 'Date',
@@ -79,6 +96,24 @@ describe('DateTextInput.clean', () => {
 		const emitted = wrapper.emitted('update:model-value')
 		expect(emitted).toBeTruthy()
 		expect(emitted && emitted[0]?.[0]).toBe('2025-01-01')
+	})
+
+	it('emits display text through input and return format through update:model-value in range mode', async () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			displayRange: true,
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('01/07/2026 - 10/07/2026')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(wrapper.emitted('input')?.at(-1)?.[0]).toBe('01/07/2026 - 10/07/2026')
+		expect(wrapper.emitted('update:model-value')?.at(-1)?.[0]).toEqual(['2026-07-01', '2026-07-10'])
+		expect(input.element.value).toBe('01/07/2026 - 10/07/2026')
 	})
 
 	it('correctly handles European format with YYYY/MM/DD return format on blur', async () => {
@@ -245,6 +280,75 @@ describe('DateTextInput.clean', () => {
 		expect(validResult).toBe(true)
 	})
 
+	it('registers with SyForm and blocks submit until a valid date is entered', async () => {
+		const Host = defineComponent({
+			components: { DateTextInput, SyForm },
+			setup() {
+				const value = ref<string | null>(null)
+				const submitPayload = ref<{ isValid: boolean } | null>(null)
+
+				return {
+					submitPayload,
+					value,
+					handleSubmit: (payload: { isValid: boolean }) => {
+						submitPayload.value = payload
+					},
+				}
+			},
+			template: `
+				<SyForm @submit="handleSubmit">
+					<DateTextInput v-model="value" label="Date" format="DD/MM/YYYY" required />
+				</SyForm>
+			`,
+		})
+
+		const host = mount(Host)
+		const form = host.getComponent(SyForm)
+		const dateInput = host.getComponent(DateTextInput)
+
+		expect(await (form.vm as InstanceType<typeof SyForm>).validate()).toBe(false)
+		expect(host.vm.submitPayload).toBeNull()
+
+		const input = dateInput.find('input')
+		await input.setValue('26/08/2026')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(await (form.vm as InstanceType<typeof SyForm>).validate()).toBe(true)
+
+		await form.trigger('submit')
+		await flushPromises()
+
+		expect(host.vm.submitPayload).toEqual({ isValid: true })
+		host.unmount()
+	})
+
+	it('applies Vuetify rules through validateOnSubmit without SyForm', async () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			useVuetifyValidation: true,
+			rules: [
+				(value: unknown) => Boolean(value) || 'Erreur Vuetify DateTextInput',
+			],
+		})
+
+		expect(await wrapper.vm.validateOnSubmit()).toBe(false)
+
+		let textField = wrapper.findComponent(SyTextField)
+		expect(textField.props('errorMessages')).toContain('Erreur Vuetify DateTextInput')
+
+		const input = wrapper.find('input')
+		await input.setValue('26/08/2026')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(await wrapper.vm.validateOnSubmit()).toBe(true)
+
+		textField = wrapper.findComponent(SyTextField)
+		expect(textField.props('errorMessages')).not.toContain('Erreur Vuetify DateTextInput')
+	})
+
 	it('emits a range model for a valid date range', async () => {
 		const wrapper = mountComponent({
 			label: 'Plage de dates',
@@ -301,6 +405,32 @@ describe('DateTextInput.clean', () => {
 		const textField = wrapper.findComponent(SyTextField)
 		const errorMessages = textField.props('errorMessages') as string[] | undefined
 		expect(errorMessages && errorMessages.length).toBeGreaterThan(0)
+	})
+
+	it('shows an error for incomplete date at blur (single digit)', async () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			required: false,
+		})
+
+		const input = wrapper.find('input')
+		await input.trigger('focus')
+		await flushPromises()
+		// Simulate typing a single digit "1" in overwrite mode
+		await input.trigger('keydown', { key: '1' })
+		await flushPromises()
+		// Value should be "1_/__/____" (skeleton with one digit)
+		await input.trigger('blur')
+		await flushPromises()
+
+		const textField = wrapper.findComponent(SyTextField)
+		const errorMessages = textField.props('errorMessages') as string[] | undefined
+		expect(errorMessages && errorMessages.length).toBeGreaterThan(0)
+
+		// Should NOT emit a model value for an incomplete date
+		const modelEmitted = wrapper.emitted('update:model-value')
+		expect(modelEmitted).toBeFalsy()
 	})
 
 	it('shows required error message when empty and required in single mode', async () => {
@@ -490,6 +620,9 @@ describe('DateTextInput.clean', () => {
 	})
 
 	it('validateOnSubmit fails with a future date and notAfterToday custom rule', async () => {
+		vi.useFakeTimers()
+		vi.setSystemTime(new Date(2026, 7, 19, 12, 0, 0))
+
 		const wrapper = mountComponent({
 			label: 'Date',
 			format: 'DD/MM/YYYY',
@@ -506,6 +639,36 @@ describe('DateTextInput.clean', () => {
 
 		const result = await wrapper.vm.validateOnSubmit()
 		expect(result).toBe(false)
+
+		vi.useRealTimers()
+	})
+
+	it('shows the custom rule error on blur when validation fails', async () => {
+		vi.useFakeTimers()
+		try {
+			vi.setSystemTime(new Date(2026, 7, 19, 12, 0, 0))
+
+			const wrapper = mountComponent({
+				label: 'Date',
+				format: 'DD/MM/YYYY',
+				customRules: [
+					{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd\'hui' } },
+				],
+			})
+
+			const input = wrapper.find('input')
+			await input.setValue('01/01/2100')
+
+			await input.trigger('blur')
+			await flushPromises()
+
+			const textField = wrapper.findComponent(SyTextField)
+			const errorMessages = textField.props('errorMessages') as string[] | undefined
+			expect(errorMessages).toContain('La date ne peut pas être après aujourd\'hui')
+		}
+		finally {
+			vi.useRealTimers()
+		}
 	})
 
 	it('does not validate on blur when isValidateOnBlur is false but validateOnSubmit still applies', async () => {
@@ -586,15 +749,14 @@ describe('DateTextInput.clean', () => {
 		expect(input.element.value).toContain('_')
 	})
 
-	it('readonly : validateField retourne un résultat sans erreur', async () => {
+	it('readonly : validateTextInput retourne un résultat sans erreur', async () => {
 		const wrapper = mountComponent({
 			format: 'DD/MM/YYYY',
 			readonly: true,
 		})
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const result = await (wrapper.vm as any).validateField('01/01/2025')
-		expect(result).toBeDefined()
-		expect(result.hasError).toBe(false)
+		const result = await (wrapper.vm as any).validate({ textValue: '01/01/2025' })
+		expect(result).toBe(true)
 	})
 
 	it('watcher modelValue met à jour inputValue pour une plage de dates', async () => {

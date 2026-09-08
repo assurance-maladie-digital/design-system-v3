@@ -19,6 +19,9 @@ interface DatePickerProps {
 	'displayPrependIcon'?: boolean
 	'customRules'?: DatePickerRule[]
 	'customWarningRules'?: DatePickerRule[]
+	'errorMessages'?: string[] | null
+	'warningMessages'?: string[] | null
+	'successMessages'?: string[] | null
 	'disabled'?: boolean
 	'noIcon'?: boolean
 	'noCalendar'?: boolean
@@ -194,6 +197,21 @@ const meta = {
 			control: 'object',
 			description: 'Règles d\'avertissement pour afficher des messages d\'attention sans bloquer la validation',
 			defaultValue: [],
+		},
+		'errorMessages': {
+			control: 'object',
+			description: 'Messages d\'erreur injectés depuis le parent',
+			defaultValue: null,
+		},
+		'warningMessages': {
+			control: 'object',
+			description: 'Messages d\'avertissement injectés depuis le parent',
+			defaultValue: null,
+		},
+		'successMessages': {
+			control: 'object',
+			description: 'Messages de succès injectés depuis le parent',
+			defaultValue: null,
 		},
 		'displayPrependIcon': {
 			control: 'boolean',
@@ -425,6 +443,91 @@ export const Required: Story = {
 						v-model="date"
 						v-bind="args"
 						displayAsterisk
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const WithError: Story = {
+	args: {
+		...Default.args,
+		label: 'Date avec erreur injectée',
+		errorMessages: ['Date invalide côté métier'],
+		required: false,
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Expose le cas standard d’un message d’erreur injecté par le parent, comme sur les autres composants migrés.',
+			},
+		},
+	},
+}
+
+export const WithWarning: Story = {
+	args: {
+		...Default.args,
+		modelValue: '20/08/2026',
+		label: 'Date avec warning injecté',
+		warningMessages: ['Date inhabituelle, à vérifier'],
+		required: false,
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Expose le cas standard d’un message d’avertissement injecté par le parent.',
+			},
+		},
+	},
+	render(args) {
+		const date = ref<string | null>('20/08/2026')
+		return {
+			components: { DatePicker },
+			setup() {
+				return { args, date }
+			},
+			template: `
+				<div>
+					<DatePicker
+						v-model="date"
+						v-bind="args"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+export const WithSuccess: Story = {
+	args: {
+		...Default.args,
+		modelValue: '20/08/2026',
+		label: 'Date avec succès injecté',
+		showSuccessMessages: true,
+		successMessages: ['Date validée'],
+		required: false,
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Expose le cas standard d’un message de succès injecté par le parent.',
+			},
+		},
+	},
+	render(args) {
+		const date = ref<string | null>('20/08/2026')
+		return {
+			components: { DatePicker },
+			setup() {
+				return { args, date }
+			},
+			template: `
+				<div>
+					<DatePicker
+						v-model="date"
+						v-bind="args"
 					/>
 				</div>
 			`,

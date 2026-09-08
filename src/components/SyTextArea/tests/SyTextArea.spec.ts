@@ -177,12 +177,14 @@ describe('SyTextArea', () => {
 		await textarea.trigger('focus')
 		await textarea.setValue('content\ncontent\ncontent\ncontent\ncontent\ncontent')
 		await textarea.trigger('blur')
+		await flushPromises()
 
 		expect(wrapper.text()).toContain('Ce champ ne peut pas dépasser 5 lignes')
 
 		await textarea.trigger('focus')
 		await textarea.setValue('content\ncontent\ncontent\ncontent\ncontent')
 		await textarea.trigger('blur')
+		await flushPromises()
 
 		expect(wrapper.text()).not.toContain('Ce champ ne peut pas dépasser 5 lignes')
 	})

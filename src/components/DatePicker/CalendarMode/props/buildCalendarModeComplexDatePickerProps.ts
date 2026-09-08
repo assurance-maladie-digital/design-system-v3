@@ -1,12 +1,17 @@
 import type { DatePickerCommonProps } from '../../types'
 
-export const useComplexDatePickerProps = (props: DatePickerCommonProps) => ({
+export const buildCalendarModeComplexDatePickerProps = (props: DatePickerCommonProps) => ({
 	modelValue: props.modelValue,
 	format: props.format,
 	dateFormatReturn: props.dateFormatReturn,
 	required: props.required,
 	customRules: props.customRules,
+	customSuccessRules: props.customSuccessRules,
 	customWarningRules: props.customWarningRules,
+	errorMessages: props.errorMessages,
+	hasError: props.hasError,
+	hasSuccess: props.hasSuccess,
+	hasWarning: props.hasWarning,
 	disabled: props.disabled,
 	readonly: props.readonly,
 	isOutlined: props.isOutlined,
@@ -30,9 +35,14 @@ export const useComplexDatePickerProps = (props: DatePickerCommonProps) => ({
 	title: props.title,
 	autoClamp: props.autoClamp,
 	label: props.label,
+	maxErrors: props.maxErrors,
 	placeholder: props.placeholder,
 	isValidateOnBlur: props.isValidateOnBlur,
 	hint: props.hint,
 	persistentHint: props.persistentHint,
 	period: props.period,
+	useVuetifyValidation: props.useVuetifyValidation,
+	rules: props.rules,
+	warningMessages: props.warningMessages,
+	successMessages: props.successMessages,
 })

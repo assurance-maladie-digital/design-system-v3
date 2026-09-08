@@ -518,6 +518,85 @@ export const Required: Story = {
 	},
 }
 
+export const WithError: Story = {
+	args: {
+		...Default.args,
+		label: 'Date avec erreur injectée',
+		errorMessages: ['Date invalide côté métier'],
+		required: false,
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Expose le cas standard d’un message d’erreur injecté par le parent en mode combiné.',
+			},
+		},
+	},
+}
+
+export const WithWarning: Story = {
+	args: {
+		...Default.args,
+		modelValue: '20/08/2026',
+		label: 'Date avec warning injecté',
+		warningMessages: ['Date inhabituelle, à vérifier'],
+		required: false,
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Expose le cas standard d’un message d’avertissement injecté par le parent en mode combiné.',
+			},
+		},
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker },
+			setup() {
+				const value = ref('20/08/2026')
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePicker v-bind="args" v-model="value"/>
+              </div>
+            `,
+		}
+	},
+}
+
+export const WithSuccess: Story = {
+	args: {
+		...Default.args,
+		modelValue: '20/08/2026',
+		label: 'Date avec succès injecté',
+		showSuccessMessages: true,
+		successMessages: ['Date validée'],
+		required: false,
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Expose le cas standard d’un message de succès injecté par le parent en mode combiné.',
+			},
+		},
+	},
+	render: (args) => {
+		return {
+			components: { DatePicker },
+			setup() {
+				const value = ref('20/08/2026')
+				return { args, value }
+			},
+			template: `
+              <div class="d-flex flex-wrap align-center pa-4">
+                <DatePicker v-bind="args" v-model="value"/>
+              </div>
+            `,
+		}
+	},
+}
+
 export const DateRange: Story = {
 	parameters: {
 		sourceCode: [

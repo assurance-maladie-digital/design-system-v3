@@ -240,12 +240,10 @@
 
 	// Synchronisation lorsque l'une des dates change
 	async function validateBothDates() {
-		if (fromDateRef.value) {
-			fromDateRef.value.validateOnSubmit()
-		}
-		if (toDateRef.value) {
-			await toDateRef.value.validateOnSubmit()
-		}
+		await Promise.all([
+			fromDateRef.value?.validateOnSubmit(),
+			toDateRef.value?.validateOnSubmit(),
+		])
 	}
 
 	// Validation complète du PeriodField
@@ -254,29 +252,18 @@
 		await toDateValidation.validateField(parsedToDate.value, toDateRules.value, props.customWarningRules)
 	}
 
-	// Gestionnaires d'événements closed
-	async function handleFromDateClosed() {
-		await validateBothDates()
-	}
-
-	async function handleToDateClosed() {
+	// Les deux champs partagent le même cycle de revalidation à la fermeture.
+	async function handleDateClosed() {
 		await validateBothDates()
 	}
 
 	// Watch pour les changements des dates - validation croisée
-	watch(formattedFromDate, async () => {
+	watch([formattedFromDate, formattedToDate], async () => {
 		await validateFields()
-		if (formattedToDate.value && toDateRef.value) {
-			await toDateRef.value.validateOnSubmit()
+		if (formattedFromDate.value || formattedToDate.value) {
+			await validateBothDates()
 		}
-	})
-
-	watch(formattedToDate, async () => {
-		await validateFields()
-		if (formattedFromDate.value && fromDateRef.value) {
-			await fromDateRef.value.validateOnSubmit()
-		}
-	})
+	}, { flush: 'post' })
 
 	// Watch pour les changements internes - Mise à jour du modèle
 	watch([internalFromDate, internalToDate], () => {
@@ -374,7 +361,7 @@
 				:bg-color="props.bgColor"
 				:density="props.density"
 				:hide-details="props.hideDetails"
-				@closed="handleFromDateClosed"
+				@closed="handleDateClosed"
 			/>
 		</div>
 		<div class="period-field__col">
@@ -403,7 +390,7 @@
 				:bg-color="props.bgColor"
 				:density="props.density"
 				:hide-details="props.hideDetails"
-				@closed="handleToDateClosed"
+				@closed="handleDateClosed"
 			/>
 		</div>
 	</div>

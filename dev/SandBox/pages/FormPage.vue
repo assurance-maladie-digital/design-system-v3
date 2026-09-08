@@ -5,12 +5,13 @@
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyForm from '@/components/Customs/SyForm/SyForm.vue'
+	import NirField from '@/components/NirField/NirField.vue'
 	import { RatingEnum } from '@/components/RatingPicker/Rating'
 	import { mdiClipboardTextOutline, mdiCalendarRange, mdiStarOutline, mdiCheckCircle, mdiRefresh, mdiEyeOutline, mdiGestureTapButton, mdiAccountOutline, mdiShieldCheckOutline, mdiMedicalBag, mdiCurrencyEur } from '@mdi/js'
 
 	const formValid = ref(false)
 	const syFormRef = ref<InstanceType<typeof SyForm> | null>(null)
-	const selectedDate = ref<Date | null>(null)
+	const selectedDate = ref<string | null>(null)
 	const ratingValue = ref(-1)
 	const ratingType = ref<RatingEnum>(RatingEnum.STARS)
 	const beneficiaryName = ref('')
@@ -42,12 +43,12 @@
 		return `REM-${new Date().getFullYear()}-${num}`
 	})
 
-	const liveValues = [
-		{ label: 'Date de soins', get: () => selectedDate.value ? selectedDate.value.toLocaleDateString('fr-FR') : '—', icon: mdiCalendarRange },
+	const liveValues = computed(() => [
+		{ label: 'Date de soins', get: () => selectedDate.value || '—', icon: mdiCalendarRange },
 		{ label: 'Satisfaction', get: () => ratingValue.value === -1 ? '—' : `${ratingValue.value}/5`, icon: mdiStarOutline },
 		{ label: 'Bénéficiaire', get: () => beneficiaryName.value || '—', icon: mdiAccountOutline },
 		{ label: 'Type de soins', get: () => careTypes.find(t => t.value === careType.value)?.title || '—', icon: mdiMedicalBag },
-	]
+	])
 
 	function handleSubmit({ isValid }: { isValid: boolean }) {
 		formValid.value = isValid
@@ -57,9 +58,9 @@
 	}
 
 	function handleReset() {
-		syFormRef.value?.reset()
 		selectedDate.value = null
 		ratingValue.value = -1
+		ratingType.value = RatingEnum.STARS
 		beneficiaryName.value = ''
 		beneficiarySSN.value = ''
 		careType.value = null
@@ -121,7 +122,7 @@
 				<span class="font-weight-bold">{{ declarationRef }}</span>
 			</p>
 			<ul class="text-body-2">
-				<li>Date de soins : {{ selectedDate ? selectedDate.toLocaleDateString('fr-FR') : '—' }}</li>
+				<li>Date de soins : {{ selectedDate || '—' }}</li>
 				<li>Type : {{ careTypes.find(t => t.value === careType)?.title || '—' }}</li>
 				<li>Bénéficiaire : {{ beneficiaryName || '—' }}</li>
 				<li>Satisfaction : {{ ratingValue === -1 ? '—' : `${ratingValue}/5` }}</li>
@@ -170,10 +171,11 @@
 								cols="12"
 								sm="6"
 							>
-								<SyTextField
+								<NirField
 									v-model="beneficiarySSN"
 									label="Numéro de sécurité sociale"
-									placeholder="1 23 45 67 890 123 45"
+									number-label="Numéro de sécurité sociale"
+									:display-key="false"
 									variant="outlined"
 								/>
 							</VCol>

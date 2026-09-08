@@ -1,13 +1,15 @@
 import type { Ref } from 'vue'
 import type { DatePickerCommonProps } from '../../types'
-import { useDateTextInputBaseProps } from '../../props/dateTextInputBaseProps'
+import { buildSharedDateTextInputProps } from '../../props/buildSharedDateTextInputProps'
 
-export const useDateTextInputMenuProps = (
+export const buildComplexDatePickerMenuTextInputProps = (
 	props: DatePickerCommonProps,
 	labelWithAsterisk: Ref<string | undefined>,
 	errorMessages: Ref<string[]>,
+	warningMessages: Ref<string[]>,
+	successMessages: Ref<string[]>,
 ) => ({
-	...useDateTextInputBaseProps(props, labelWithAsterisk, errorMessages),
+	...buildSharedDateTextInputProps(props, labelWithAsterisk, errorMessages, warningMessages, successMessages),
 	'display-range': props.displayRange,
 	'density': props.density,
 	// Icône calendrier = bouton focusable au clavier (comme en CalendarMode), pas une

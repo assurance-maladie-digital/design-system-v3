@@ -12,6 +12,7 @@ describe('Calendar Navigation Regression Tests', () => {
 	 * Test 1 : Navigation mois via flèches met à jour l'affichage
 	 */
 	it('met à jour currentMonthName quand on navigue via les flèches', async () => {
+		// timeout étendu : le mount Vuetify + flushPromises peut dépasser 5s sous charge (suite complète)
 		const wrapper = mount(ComplexDatePicker, {
 			props: {
 				modelValue: '15/05/2025',
@@ -27,15 +28,23 @@ describe('Calendar Navigation Regression Tests', () => {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		;(wrapper.vm as any).isDatePickerVisible = true
 		await nextTick()
+		await flushPromises()
 
-		// Le mois affiché doit correspondre à la date sélectionnée (mai)
-		// Note: On ne peut pas tester directement le DOM interne de VDatePicker
-		// mais on peut vérifier que selectedDates est bien synchronisé
-		const emitted = wrapper.emitted('date-selected')
-		expect(emitted).toBeTruthy()
+		const initialMonthName = wrapper.vm.currentMonthName
+		expect(initialMonthName).toBeTruthy()
+
+		const datePicker = wrapper.findComponent({ name: 'VDatePicker' })
+		expect(datePicker.exists()).toBe(true)
+
+		await datePicker.vm.$emit('update:month', '5')
+		await nextTick()
+
+		expect(wrapper.vm.currentMonth).toBe('5')
+		expect(wrapper.vm.currentMonthName).toBeTruthy()
+		expect(wrapper.vm.currentMonthName).not.toBe(initialMonthName)
 
 		wrapper.unmount()
-	})
+	}, 15000)
 
 	/**
 	 * Test 2 : Clear réinitialise le calendrier

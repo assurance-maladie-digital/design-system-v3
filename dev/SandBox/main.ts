@@ -1,6 +1,6 @@
 import 'vuetify/styles'
 import { createApp } from 'vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import SandBoxLayout from './SandBoxLayout.vue'
 import { createVuetifyInstance } from '@/vuetifyConfig'
 
@@ -11,22 +11,27 @@ if (typeof document !== 'undefined') {
 }
 
 const router = createRouter({
-	history: createWebHistory(),
+	history: createWebHashHistory(),
 	routes: [
 		{
 			name: 'sandbox-home',
-			path: '/sandbox.html',
+			path: '/',
 			component: () => import('./pages/HomePage.vue'),
 		},
 		{
 			name: 'sandbox-form',
-			path: '/sandbox.html/form',
+			path: '/form',
 			component: () => import('./pages/FormPage.vue'),
 		},
 		{
 			name: 'sandbox-components',
-			path: '/sandbox.html/components',
+			path: '/components',
 			component: () => import('./pages/ComponentsPage.vue'),
+		},
+		{
+			name: 'sandbox-validation',
+			path: '/validation',
+			component: () => import('./pages/ValidationComparisonPage.vue'),
 		},
 	],
 })

@@ -173,10 +173,16 @@ describe('SyTable - filterByRange', () => {
 		})
 
 		const startDate = wrapper.find('input[aria-label="Début"]')
+		await startDate.trigger('focus')
 		await startDate.setValue('01/01/1990')
+		await startDate.trigger('blur')
+		await flushPromises()
 
 		const endDate = wrapper.find('input[aria-label="Fin"]')
+		await endDate.trigger('focus')
 		await endDate.setValue('01/01/2000')
+		await endDate.trigger('blur')
+		await flushPromises()
 
 		const textContent = wrapper.text()
 
@@ -189,7 +195,9 @@ describe('SyTable - filterByRange', () => {
 			expect(textContent).not.toContain(element)
 		})
 
+		await endDate.trigger('focus')
 		await endDate.setValue('01/01/1995')
+		await endDate.trigger('blur')
 		await flushPromises()
 
 		filteredNames = ['Alice']

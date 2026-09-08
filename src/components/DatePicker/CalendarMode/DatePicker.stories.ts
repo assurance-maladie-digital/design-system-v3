@@ -397,14 +397,14 @@ export const Required: Story = {
 				code: `
 				<template>
 					<DatePicker
-						v-model="date"
+						v-model="date1"
 						placeholder="JJ/MM/AAAA"
 						label="Date (JJ/MM/AAAA)"
 						required
 						format="DD/MM/YYYY"
 					  />
 					  	<DatePicker
-						v-model="date"
+						v-model="date2"
 						label="Date (JJ/MM/AAAA)"
 						placeholder="JJ/MM/AAAA"
 						required
@@ -450,15 +450,16 @@ export const Required: Story = {
 		return {
 			components: { DatePicker: DatePicker },
 			setup() {
-				const value = ref('')
-				return { args, value }
+				const value1 = ref('')
+				const value2 = ref('')
+				return { args, value1, value2 }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
 				<h4 class="mb-4">Sans astérisque :</h4>
-                <DatePicker v-bind="args" v-model="value"/>
+                <DatePicker v-bind="args" v-model="value1"/>
 				<h4 class="mb-4">Avec astérisque :</h4>
-				<DatePicker v-bind="args" v-model="value" displayAsterisk/>
+				<DatePicker v-bind="args" v-model="value2" displayAsterisk/>
               </div>
             `,
 		}
@@ -546,7 +547,7 @@ export const WithCustomPeriod: Story = {
 						format="DD/MM/YYYY"
 						:period="{
 							min: '01/01/1995',
-							max: '12/31/2005',
+							max: '31/12/2005',
 						}"
 						:customRules="[
 							{
@@ -601,7 +602,7 @@ export const WithCustomPeriod: Story = {
 		'onClosed': fn(),
 		'period': {
 			min: '01/01/1995',
-			max: '12/31/2005',
+			max: '31/12/2005',
 		},
 		'customRules': [
 			{

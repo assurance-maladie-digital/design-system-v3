@@ -16,6 +16,9 @@ Résumé : Explique comment utiliser la validation native Vuetify avec les compo
 ## 4. [Migration : Legacy → Unifié](migration-validation.md)
 Résumé : Guide étape par étape pour migrer l’ancien système de validation vers le système unifié, avec exemples avant/après et bonnes pratiques.
 
+## 5. [DatePicker : état de migration](migration-datepicker.md)
+Résumé : Documente l’architecture actuelle du DatePicker migré et explique pourquoi un bridge métier léger est conservé.
+
 ---
 
 > Sélectionnez la page correspondant à votre besoin pour plus de détails.
