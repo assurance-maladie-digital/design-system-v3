@@ -1,0 +1,24 @@
+{
+  // Programme utilisé par vite-plugin-dts pour l'émission des .d.ts.
+  // Identique à tsconfig.app.json, mais sans les fichiers de stories : ceux-ci
+  // importent Storybook, qui embarque @testing-library/user-event, lequel
+  // augmente globalement `Element` avec des `unique symbol` non exportés.
+  // En mode declaration, TS ne peut pas les nommer (TS2527/TS4023/TS4058) et
+  // abandonne l'émission des .d.ts des composants concernés.
+  // Le type-check des stories reste assuré par `vue-tsc -p tsconfig.app.json`.
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.dts.tsbuildinfo"
+  },
+  "exclude": [
+    "**/*.cy.ts",
+    "cypress/**/*",
+    "tests/**",
+    "**/__tests__/**",
+    "**/*.spec.ts",
+    "**/*.test.ts",
+    "**/*.stories.*",
+    "src/stories/**",
+    "src/components/Tables/common/storyArgTypes.ts"
+  ]
+}
