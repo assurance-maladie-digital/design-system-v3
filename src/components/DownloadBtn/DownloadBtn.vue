@@ -150,7 +150,7 @@
 	outline-offset: 3px;
 
 	&.v-theme--dark {
-		outline-color: rgb(var(--v-theme-onPrimary));
+		outline-color: rgb(var(--v-theme-on-primary));
 	}
 }
 </style>

@@ -58,8 +58,8 @@
 	color: rgb(var(--v-theme-primary));
 
 	&.v-theme--dark {
-		border-color: rgb(var(--v-theme-onPrimary));
-		color: rgb(var(--v-theme-onPrimary));
+		border-color: rgb(var(--v-theme-on-primary));
+		color: rgb(var(--v-theme-on-primary));
 	}
 }
 </style>

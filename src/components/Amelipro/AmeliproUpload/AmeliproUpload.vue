@@ -116,11 +116,16 @@
 	//
 	const warningMessagesBucket = ref<ErrorBucket[]>([])
 
+	interface VFileInputRef {
+		valid: boolean
+		reset: () => void
+		$el?: HTMLElement
+	}
+
 	/**
 	 * Référence à l'instance de VFileInput
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const vFileInput = ref<any>({ reset: () => undefined, valid: true })
+	const vFileInput = ref<VFileInputRef>({ reset: () => undefined, valid: true })
 
 	/**
 	 * Référence à la liste de fichiers importés
@@ -292,7 +297,8 @@
 		}
 
 		nextTick(() => {
-			vFileInput.value.$el.querySelector('input').value = ''
+			const input = vFileInput.value.$el?.querySelector('input') as HTMLInputElement | null
+			if (input) input.value = ''
 		})
 	}
 

@@ -160,7 +160,7 @@ export const WithSlotPrependIcon: Story = {
   	:menu-items="items"
   >
     <template #prepend-icon>
-	<SyIcon :icon="mdiAccount" color="secondary" decorative />
+	<SyIcon :icon="mdiAccount"  decorative />
     </template>
   </SyBtnMenu>
 </template>
@@ -197,7 +197,7 @@ const items = ['Option 1', 'Option 2']
               <div class="d-flex flex-wrap align-center pa-4">
                 <SyBtnMenu v-bind="args">
                   <template #prepend-icon>
-					<SyIcon :icon="mdiAccount" color="secondary" decorative/>
+					<SyIcon :icon="mdiAccount"  decorative/>
                   </template>
                 </SyBtnMenu>
               </div>
@@ -221,7 +221,7 @@ export const WithSlotAppendIcon: Story = {
   	:menu-items="items"
   >
     <template #append-icon>
-	<SyIcon :icon="mdiAccount" color="secondary" decorative />
+	<SyIcon :icon="mdiAccount"  decorative />
     </template>
   </SyBtnMenu>
 </template>
@@ -255,7 +255,7 @@ const items = ['Option 1', 'Option 2']
               <div class="d-flex flex-wrap align-center pa-4">
                 <SyBtnMenu v-bind="args">
                   <template #append-icon>
-					<SyIcon :icon="mdiAccount" color="secondary" decorative />
+					<SyIcon :icon="mdiAccount"  decorative />
                   </template>
                 </SyBtnMenu>
               </div>
@@ -280,7 +280,7 @@ export const WithIconOnly: Story = {
   	icon-only
   >
     <template #prepend-icon>
-	<SyIcon :icon="mdiAccount" color="secondary" decorative />
+	<SyIcon :icon="mdiAccount" decorative />
     </template>
   </SyBtnMenu>
 </template>
@@ -315,7 +315,7 @@ const items = ['Option 1', 'Option 2']
               <div class="d-flex flex-wrap align-center pa-4">
                 <SyBtnMenu v-bind="args">
                   <template #prepend-icon>
-					<SyIcon :icon="mdiAccount" color="secondary" decorative />
+					<SyIcon :icon="mdiAccount" decorative />
                   </template>
                 </SyBtnMenu>
               </div>
@@ -342,7 +342,7 @@ export const WithIdentityInList: Story = {
   	show-identity-in-list
   >
     <template #prepend-icon>
-	<SyIcon :icon="mdiAccount" color="secondary" decorative />
+	<SyIcon :icon="mdiAccount"  decorative />
     </template>
   </SyBtnMenu>
 </template>
@@ -380,7 +380,7 @@ const items = ['Option 1', 'Option 2']
               <div class="d-flex flex-wrap align-center pa-4">
                 <SyBtnMenu v-bind="args">
                   <template #prepend-icon>
-					<SyIcon :icon="mdiAccount" color="secondary" decorative />
+					<SyIcon :icon="mdiAccount"  decorative />
                   </template>
                 </SyBtnMenu>
               </div>
@@ -609,7 +609,7 @@ export const WithCustomStyles: Story = {
 	<SyIcon 
       	:icon="mdiAccount" 
       	class="mr-2"
-      	color="secondary"
+      	
 		decorative
       />
     </template>
@@ -648,7 +648,7 @@ const items = ['Option 1', 'Option 2']
 					<SyIcon
                         :icon="mdiAccount"
                         class="mr-2"
-                        color="secondary"
+                        
 						decorative
                     />
                   </template>

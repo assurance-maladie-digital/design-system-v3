@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { computed, ref, watch } from 'vue'
-	import type { FilterOption, TableColumnHeader } from '../types'
+	import type { FilterOption, TableColumnHeader, TableFilterInputConfig } from '../types'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 
 	const props = defineProps({
@@ -17,15 +17,7 @@
 			default: undefined,
 		},
 		inputConfig: {
-			type: Object as () => {
-				disableErrorHandling?: boolean
-				variant?: string
-				hideDetails?: boolean
-				density?: 'default' | 'comfortable' | 'compact'
-				backgroundColor?: string
-				clearable?: boolean
-				debounceTime?: number
-			},
+			type: Object as () => TableFilterInputConfig,
 			default: () => ({}),
 		},
 		disableErrorHandling: {
@@ -61,6 +53,22 @@
 	const emit = defineEmits(['update:filters'])
 	const inputValue = ref(props.filterValue || '')
 	const debounceTimer = ref<number | null>(null)
+	const textFieldProps = computed(() => {
+		const bgColor = props.inputConfig.bgColor ?? props.inputConfig.backgroundColor ?? props.backgroundColor
+		const inputConfig = Object.fromEntries(
+			Object.entries(props.inputConfig).filter(([key]) => !['debounceTime', 'bgColor', 'backgroundColor'].includes(key)),
+		)
+
+		return {
+			clearable: props.clearable,
+			density: props.density,
+			hideDetails: props.hideDetails,
+			disableErrorHandling: props.disableErrorHandling,
+			variant: props.variant,
+			bgColor: bgColor,
+			...inputConfig,
+		}
+	})
 
 	// Observer les changements du tableau de filtres pour détecter les réinitialisations
 	watch(() => props.filters, (newFilters) => {
@@ -161,14 +169,9 @@
 	<div class="text-filter-container">
 		<SyTextField
 			v-model="modelValue"
+			v-bind="textFieldProps"
 			:label="header.title || ''"
-			:clearable="inputConfig?.clearable ?? clearable"
-			:density="inputConfig?.density ?? density"
-			:hide-details="inputConfig?.hideDetails ?? hideDetails"
 			:hide-messages="header.hideMessages"
-			:disable-error-handling="inputConfig?.disableErrorHandling ?? disableErrorHandling"
-			:variant="inputConfig?.variant ?? variant"
-			:bg-color="inputConfig?.backgroundColor ?? backgroundColor"
 			class="filter-input"
 			@click:clear="handleClear"
 		/>

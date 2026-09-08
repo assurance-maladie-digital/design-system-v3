@@ -99,7 +99,7 @@ export function usePhoneFieldValidation(params: {
 		if (hasError.value) return 'error-field'
 		if (hasWarning.value) return 'warning-field'
 		if (hasSuccess.value) return 'success-field'
-		return 'text-iconBase'
+		return 'text-icon-base'
 	})
 
 	return {

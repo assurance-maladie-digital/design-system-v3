@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import dayjs from 'dayjs'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
-import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls, syServerTableItemsArgTypes } from '../common/storyArgTypes'
 import type { FilterOption, FilterType } from '../common/types'
 import { useServerTableDemo } from '../common/serverStoryHelpers'
 
@@ -17,23 +17,11 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: commonTableExcludedControls },
 	},
 	argTypes: {
 		...commonTableArgTypes,
-		items: {
-			description: 'Liste des éléments à afficher dans le tableau',
-			control: { type: 'object' },
-			table: {
-				category: 'props',
-				defaultValue: {
-					summary: 'undefined',
-				},
-			},
-		},
-		serverItemsLength: {
-			description: 'Nombre total d\'éléments à afficher',
-			control: { type: 'number' },
-		},
+		...syServerTableItemsArgTypes,
 	},
 } satisfies Meta<typeof SyServerTable & typeof VDataTable>
 
@@ -2001,12 +1989,26 @@ export const CustomFilterInputs: Story = {
 		  ]
 		  
 		  const filterInputConfig = {
-			filterInputConfig: {
-			variant: 'outlined',
-			density: 'comfortable',
-			hideDetails: true,
-			clearable: false,
-			disableErrorHandling: true,
+			firstname: {
+			  variant: 'outlined',
+			  density: 'comfortable',
+			  hideDetails: true,
+			  clearable: false,
+			  disableErrorHandling: true,
+			},
+			lastname: {
+			  variant: 'outlined',
+			  density: 'comfortable',
+			  hideDetails: true,
+			  clearable: false,
+			  disableErrorHandling: true,
+			},
+			email: {
+			  variant: 'outlined',
+			  density: 'comfortable',
+			  hideDetails: true,
+			  clearable: false,
+			  disableErrorHandling: true,
 			},
 		  }
 
@@ -2118,11 +2120,27 @@ export const CustomFilterInputs: Story = {
 			filters: [],
 		},
 		filterInputConfig: {
-			variant: 'outlined',
-			density: 'comfortable',
-			hideDetails: true,
-			clearable: false,
-			disableErrorHandling: true,
+			firstname: {
+				variant: 'outlined',
+				density: 'comfortable',
+				hideDetails: true,
+				clearable: false,
+				disableErrorHandling: true,
+			},
+			lastname: {
+				variant: 'outlined',
+				density: 'comfortable',
+				hideDetails: true,
+				clearable: false,
+				disableErrorHandling: true,
+			},
+			email: {
+				variant: 'outlined',
+				density: 'comfortable',
+				hideDetails: true,
+				clearable: false,
+				disableErrorHandling: true,
+			},
 		},
 		showFilters: true,
 		suffix: 'server-filter-text',

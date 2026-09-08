@@ -49,7 +49,7 @@
 	justify-content: center;
 	font-weight: 700;
 	background-color: rgb(var(--v-theme-primary));
-	color: rgb(var(--v-theme-onPrimary));
+	color: rgb(var(--v-theme-on-primary));
 	border: 2px solid transparent;
 	border-bottom:
 		solid 2px linear-gradient(
@@ -62,7 +62,7 @@
 	transition: color 0.15s 0.1s, background-color 0.15s 0.1s, border 0.15s 0.1s;
 
 	// Ring inset en currentColor (bouton bord-à-bord → un ring outset serait rogné) :
-	// blanc (onPrimary) sur fond primary, primary sur fond surface (état ouvert).
+	// blanc (on-primary) sur fond primary, primary sur fond surface (état ouvert).
 	&:focus-visible {
 		outline: 2px solid currentcolor;
 		outline-offset: -3px;
@@ -72,7 +72,7 @@
 .header-menu-btn__open {
 	background-color: rgb(var(--v-theme-surface));
 	color: rgb(var(--v-theme-primary));
-	border-color: rgb(var(--v-theme-onPrimary));
+	border-color: rgb(var(--v-theme-on-primary));
 }
 
 @media screen and (max-width: ($header-breakpoint + 1)) {

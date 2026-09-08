@@ -1,6 +1,6 @@
 import { ref, type Ref } from 'vue'
 
-type PdfSource = string | ArrayBuffer | Uint8Array
+type PdfSource = string | ArrayBuffer | Uint8Array | Blob
 
 interface RenderOptions {
 	/** URL du worker pdf.js (sinon worker bundlé par défaut). */
@@ -14,7 +14,10 @@ interface UsePdfConsultationReturn {
 	hasError: Ref<boolean>
 	/** L'utilisateur a atteint la fin du document. */
 	isComplete: Ref<boolean>
-	/** Rend le PDF (URL ou données binaires) dans `host`. Renvoie le nombre de pages, ou `null` en cas d'erreur. */
+	/**
+	 * Rend le PDF (URL, `Blob`/`File` ou données binaires) dans `host`. Renvoie le nombre
+	 * de pages, ou `null` en cas d'erreur.
+	 */
 	render: (source: PdfSource, host: HTMLElement, options?: RenderOptions) => Promise<number | null>
 	/** Met à jour `isComplete` selon la position de scroll du conteneur. */
 	checkScrollComplete: (viewport: HTMLElement, threshold?: number) => void
@@ -57,7 +60,13 @@ export function usePdfConsultation(): UsePdfConsultationReturn {
 				pdfjs.GlobalWorkerOptions.workerSrc = workerModule.default
 			}
 
-			const documentParams = typeof source === 'string' ? { url: source } : { data: source }
+			// Lecture du binaire à l'intérieur du `try` : `Blob.arrayBuffer()` rejette si la
+			// source n'est plus lisible (fichier déplacé depuis sa sélection), ce qui doit
+			// afficher l'erreur comme tout autre échec de rendu.
+			const data = source instanceof Blob ? await source.arrayBuffer() : source
+			if (isStale()) return null
+
+			const documentParams = typeof data === 'string' ? { url: data } : { data }
 			const pdf = await pdfjs.getDocument(documentParams).promise
 			// Un rendu plus récent a démarré pendant le chargement : on n'écrase pas son host.
 			if (isStale()) return null

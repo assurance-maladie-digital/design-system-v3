@@ -106,7 +106,7 @@
 }
 
 :deep(.v-field__clearable .v-icon__svg) {
-	fill: rgb(var(--v-theme-iconBase)) !important;
+	fill: rgb(var(--v-theme-icon-base)) !important;
 	opacity: var(--v-medium-emphasis-opacity) !important;
 }
 

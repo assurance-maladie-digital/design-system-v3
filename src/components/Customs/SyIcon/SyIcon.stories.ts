@@ -34,7 +34,7 @@ const meta = {
 		},
 		autoDetectButton: {
 			control: { type: 'boolean' },
-			description: 'Active la détection automatique du rôle bouton pour les icônes interactives',
+			description: 'Détecte automatiquement si l’icône est interactive à partir des événements qui lui sont associés',
 			default: false,
 		},
 		color: {
@@ -135,6 +135,35 @@ export const WithSize: Story = {
 		icon: mdiStar,
 		size: 'x-large',
 		decorative: true,
+	},
+	render: args => ({
+		components: { SyIcon },
+		setup() {
+			return { args, mdiStar }
+		},
+		template: `
+			<div class="pa-4">
+				<SyIcon v-bind="args" />
+			</div>
+		`,
+	}),
+}
+
+export const WithRoleButton: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				language: 'vue',
+				code: `<template>
+  <SyIcon :icon="mdiStar" role="button" />
+</template>`,
+			},
+		],
+	},
+	args: {
+		icon: mdiStar,
+		role: 'button',
 	},
 	render: args => ({
 		components: { SyIcon },

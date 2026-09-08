@@ -21,7 +21,7 @@ export default function useStoredOptions({
 	const localStorageUtility = new LocalStorageUtility()
 
 	const storedOptions: TableOptions
-		= (saveState.value ? localStorageUtility.getItem(toValue(key)) : {}) || {}
+		= (saveState.value ? localStorageUtility.getItem<TableOptions>(toValue(key)) : {}) || {}
 
 	function storeOptions(options: TableOptions): void {
 		if (saveState.value) {

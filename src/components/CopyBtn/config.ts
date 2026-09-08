@@ -10,6 +10,7 @@ export const config = {
 	btn: {
 		icon: true,
 		variant: 'text' as VariantType,
+		color: 'primary',
 		density: 'comfortable' as DensityType,
 		rounded: 'pill',
 	},

@@ -304,7 +304,7 @@
 		font-weight: 700 !important;
 
 		span {
-			color: rgb(var(--v-theme-risquePro));
+			color: rgb(var(--v-theme-risque-pro));
 		}
 	}
 

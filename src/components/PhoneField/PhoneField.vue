@@ -392,21 +392,11 @@
 }
 
 .phone-field__clear-icon {
-	color: rgb(var(--v-theme-onSurface)) !important;
+	color: rgb(var(--v-theme-on-surface)) !important;
 	opacity: var(--v-medium-emphasis-opacity) !important;
 }
 
-/* Icône de validation (état) : atténuée à ~0.6 sur PhoneField */
-.phone-field-number :deep(.field-state-icon .v-icon__svg) {
-	opacity: 0.6 !important;
-}
-
-/* …sauf en erreur, où l'icône reste à pleine opacité comme sur les autres composants */
-.phone-field-number :deep(.error-icon .v-icon__svg) {
-	opacity: 1 !important;
-}
-
 :deep(.phone-field__clear-icon .v-icon__svg) {
-	fill: rgb(var(--v-theme-onSurface)) !important;
+	fill: rgb(var(--v-theme-on-surface)) !important;
 }
 </style>

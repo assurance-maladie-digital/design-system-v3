@@ -159,7 +159,7 @@
 
 	:deep(.v-field .v-field__clearable),
 	:deep(.v-field .v-field__append-inner) {
-		color: rgb(var(--v-theme-onSurface)) !important;
+		color: rgb(var(--v-theme-on-surface)) !important;
 		opacity: var(--v-medium-emphasis-opacity) !important;
 	}
 }
@@ -173,7 +173,7 @@
 .sy-form-input :deep(.v-icon),
 .sy-form-input :deep(.v-field__clearable),
 .sy-form-input :deep(.v-field__append-inner) {
-	color: rgb(var(--v-theme-onSurface)) !important;
+	color: rgb(var(--v-theme-on-surface)) !important;
 }
 
 .sy-form-input--s {
@@ -186,23 +186,23 @@
 
 	p,
 	.text-primary {
-		color: rgba(var(--v-theme-onPrimary), 0.6) !important;
+		color: rgba(var(--v-theme-on-primary), 0.6) !important;
 	}
 
 	svg {
-		fill: rgb(var(--v-theme-onPrimary)) !important;
+		fill: rgb(var(--v-theme-on-primary)) !important;
 	}
 
 	.v-label {
-		color: rgba(var(--v-theme-onPrimary), 0.6) !important;
+		color: rgba(var(--v-theme-on-primary), 0.6) !important;
 	}
 
 	.v-field__input {
-		color: rgb(var(--v-theme-onPrimary)) !important;
+		color: rgb(var(--v-theme-on-primary)) !important;
 	}
 }
 
 .v-theme--dark button.v-btn:hover :deep() {
-	background: rgba(var(--v-theme-onPrimary), 0.1);
+	background: rgba(var(--v-theme-on-primary), 0.1);
 }
 </style>

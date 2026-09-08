@@ -53,24 +53,31 @@ Pour plus d'informations sur l'accessibilité, consultez la [page dédiée à l'
 
 <Canvas of={SyIconStories.WithSize} />
 
+### Icône avec le rôle button
+
+<Canvas of={SyIconStories.WithRoleButton} />
+> **Important :** Si l'icône doit être interactive (`role="button"`), privilégiez l'utilisation du composant [SyIconButton](/docs/composants-boutons-syiconbutton--docs) plutôt que SyIcon.
+
+SyIconButton est conçu pour les interactions utilisateur et intègre les comportements d'accessibilité ainsi que les états visuels tels que hover, pressed et focus. Le composant SyIcon est destiné à l'affichage d'une icône simple, non interactive.
+
 ## Exemple d'utilisation
 
 ```vue
 <template>
   <!-- Icône décorative (par défaut) -->
   <SyIcon icon="mdi-home" />
-  
+
   <!-- Icône avec couleur -->
   <SyIcon icon="mdi-alert" color="error" />
-  
+
   <!-- Icône avec taille personnalisée -->
   <SyIcon icon="mdi-star" size="x-large" />
-  
+
   <!-- Icône informative avec label d'accessibilité -->
-  <SyIcon 
-    icon="mdi-information" 
-    :decorative="false" 
-    label="Information importante" 
+  <SyIcon
+    icon="mdi-information"
+    :decorative="false"
+    label="Information importante"
   />
 </template>
 

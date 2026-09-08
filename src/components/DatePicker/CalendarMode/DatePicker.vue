@@ -1247,13 +1247,13 @@ $ap-grey-mid: #d6d6d6;
 .v-messages__message--success {
 	:deep(.v-input__control),
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-onSuccessVariant)) !important;
+		color: rgb(var(--v-theme-on-success-variant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-onSuccessVariant)) !important;
+		color: rgb(var(--v-theme-on-success-variant)) !important;
 	}
 }
 
@@ -1287,17 +1287,17 @@ $ap-grey-mid: #d6d6d6;
 
 .v-messages__message--warning {
 	:deep(.v-input__control) {
-		color: rgb(var(--v-theme-onWarningVariant)) !important;
+		color: rgb(var(--v-theme-on-warning-variant)) !important;
 
 		--v-medium-emphasis-opacity: 1;
 	}
 
 	:deep(.v-messages__message) {
-		color: rgb(var(--v-theme-onWarningVariant)) !important;
+		color: rgb(var(--v-theme-on-warning-variant)) !important;
 	}
 
 	.v-field--active & {
-		color: rgb(var(--v-theme-onWarningVariant)) !important;
+		color: rgb(var(--v-theme-on-warning-variant)) !important;
 	}
 }
 
@@ -1339,14 +1339,14 @@ $ap-grey-mid: #d6d6d6;
 
 :deep(.v-date-picker-month__day .v-btn:hover) {
 	background-color: rgb(var(--v-theme-background)) 0.12;
-	color: rgb(var(--v-theme-onBackground));
+	color: rgb(var(--v-theme-on-background));
 }
 
 :deep(.v-date-picker-month__day--adjacent) {
 	opacity: 1;
 
 	.v-btn__content {
-		color: rgb(var(--v-theme-onSurfaceVariant));
+		color: rgb(var(--v-theme-grey-base));
 		opacity: 1;
 	}
 }
@@ -1360,7 +1360,7 @@ $ap-grey-mid: #d6d6d6;
 	background-color: transparent !important;
 
 	.v-btn__content {
-		color: rgb(var(--v-theme-onSurfaceVariant));
+		color: rgb(var(--v-theme-on-surface-variant));
 		opacity: 1;
 	}
 }
@@ -1372,11 +1372,11 @@ $ap-grey-mid: #d6d6d6;
 
 :deep(.v-date-picker-month__day--selected .v-btn) {
 	background-color: rgb(var(--v-theme-primary)) !important;
-	color: rgb(var(--v-theme-onPrimary)) !important;
+	color: rgb(var(--v-theme-on-primary)) !important;
 }
 
 :deep(.v-date-picker-month__day--selected .v-btn .v-btn__content) {
-	color: rgb(var(--v-theme-onPrimary)) !important;
+	color: rgb(var(--v-theme-on-primary)) !important;
 }
 
 .fade-enter-active,
@@ -1468,10 +1468,10 @@ $ap-grey-mid: #d6d6d6;
 :deep(.v-date-picker-months .v-btn--active),
 :deep(.v-date-picker-years .v-btn--active) {
 	background-color: rgb(var(--v-theme-primary)) !important;
-	color: rgb(var(--v-theme-onPrimary)) !important;
+	color: rgb(var(--v-theme-on-primary)) !important;
 
 	.v-btn__content {
-		color: rgb(var(--v-theme-onPrimary)) !important;
+		color: rgb(var(--v-theme-on-primary)) !important;
 	}
 }
 

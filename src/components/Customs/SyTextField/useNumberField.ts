@@ -17,7 +17,7 @@ export function useNumberField(params: {
 	type: Ref<string | undefined>
 	disabled: Ref<boolean | undefined>
 	readonly: Ref<boolean | undefined>
-	model: Ref<string | number | null | undefined>
+	model: Ref<string | number | null | undefined | string[]>
 	attrs: Record<string, unknown>
 }) {
 	const isNumberField = computed(() => params.type.value === 'number')
@@ -25,7 +25,7 @@ export function useNumberField(params: {
 	const nativeInputType = computed(() => (isNumberField.value ? 'text' : params.type.value))
 
 	// Retire les caractères interdits puis ne conserve qu'un préfixe de nombre valide.
-	const sanitizeNumberValue = (value: string | number | null | undefined) => {
+	const sanitizeNumberValue = (value: string | number | null | undefined | string[]) => {
 		if (!isNumberField.value || typeof value !== 'string') {
 			return value
 		}

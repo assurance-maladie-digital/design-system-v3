@@ -88,19 +88,19 @@ a {
 
 .v-theme--dark {
 	a {
-		color: rgba(var(--v-theme-onPrimary), 0.7) !important;
+		color: rgba(var(--v-theme-on-primary), 0.7) !important;
 	}
 
 	a.active {
-		color: rgb(var(--v-theme-onPrimary)) !important;
+		color: rgb(var(--v-theme-on-primary)) !important;
 	}
 
 	a::before {
-		background: rgba(var(--v-theme-onPrimary), 0.6);
+		background: rgba(var(--v-theme-on-primary), 0.6);
 	}
 
 	a:focus-visible {
-		outline-color: rgb(var(--v-theme-onPrimary));
+		outline-color: rgb(var(--v-theme-on-primary));
 	}
 }
 </style>

@@ -408,10 +408,8 @@
 	} satisfies {
 		validateOnSubmit: () => Promise<boolean>
 		clearValidation: () => void
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-		numberMask: { mask: string, preProcess: (value: string) => string, tokens: Record<string, any> }
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-		keyMask: { mask: string, tokens: Record<string, any> }
+		numberMask: { mask: string, preProcess: (value: string) => string, tokens: Record<string, unknown> }
+		keyMask: { mask: string, tokens: Record<string, unknown> }
 		numberValidation: ReturnType<typeof useValidation>
 		keyValidation: ReturnType<typeof useValidation>
 		errors: { number: Readonly<Ref<readonly string[]>>, key: Readonly<Ref<readonly string[]>> }
@@ -699,7 +697,7 @@
 	letter-spacing: 0.0333em;
 	line-height: 16px;
 	padding-inline: 16px;
-	color: rgba(var(--v-theme-onSurface), var(--v-medium-emphasis-opacity));
+	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
 }
 
 .sy-number-errors,
@@ -709,11 +707,11 @@
 
 .sy-number-warnings,
 .sy-key-warnings {
-	color: rgb(var(--v-theme-onWarningVariant));
+	color: rgb(var(--v-theme-on-warning-variant));
 }
 
 .sy-number-success,
 .sy-key-success {
-	color: rgb(var(--v-theme-onSuccessVariant));
+	color: rgb(var(--v-theme-on-success-variant));
 }
 </style>

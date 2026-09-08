@@ -1,11 +1,13 @@
 import { addons } from 'storybook/manager-api'
 import type { API } from 'storybook/manager-api'
+import { registerConformiteAddon } from './addons/conformite'
 import cnamTheme from './CnamTheme'
 import paTheme from './PaTheme'
 import apTheme from './ApTheme'
 import ap2026Theme from './Ap2026Theme'
 
 const channel = addons.getChannel()
+registerConformiteAddon()
 
 type Theme = 'cnam' | 'pa' | 'ap' | 'ap2026'
 

@@ -8,7 +8,7 @@
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import SyTablePagination from '../common/SyTablePagination.vue'
 	import TableBulkActions from '../common/TableBulkActions.vue'
-	import TableHeader from '../common/TableHeader.vue'
+	import TableHeader, { type HeaderPropsRaw } from '../common/TableHeader.vue'
 	import { locales } from '../common/locales'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
 	import { useTableAccessibility } from '../common/tableAccessibilityUtils'
@@ -117,7 +117,8 @@
 	const { headers, displayHeaders, getEnhancedHeader, getHeaderForColumn } = useTableHeaders({
 		headersProp: toRef(props, 'headers'),
 		storedHeaders: storedOptions.headers,
-		filterInputConfig: props.filterInputConfig,
+		filterInputConfig: () => props.filterInputConfig,
+		componentName: 'SyTable',
 	})
 
 	const { filteredItems } = useTableItems({
@@ -130,7 +131,7 @@
 
 	// Use the pagination composable
 	const itemsLength = computed(() => filteredItems.value.length)
-	const { page, pageCount, itemsPerPageValue, updateItemsPerPage, onUpdateOptions } = usePagination({
+	const { page, pageCount, itemsPerPageValue, updateItemsPerPage } = usePagination({
 		options,
 		itemsLength,
 		updateOptions,
@@ -354,7 +355,11 @@
 			:multi-sort="props.multiSort"
 			:must-sort="props.mustSort"
 			:show-expand="props.showExpand"
-			@update:options="onUpdateOptions"
+			:page="page"
+			:items-per-page="itemsPerPageValue"
+			@update:page="updateOptions({ page: $event })"
+			@update:items-per-page="updateItemsPerPage"
+			@update:options="updateOptions"
 		>
 			<template #top>
 				<caption
@@ -382,9 +387,9 @@
 									},
 								]"
 								:style="{
-									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
-									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
-									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
+									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth } : {}),
+									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth } : {}),
+									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width } : {}),
 									...(pinnedMeta.left[column.key!] !== undefined
 										? { position: 'sticky', left: `${pinnedMeta.left[column.key!] }px`, zIndex: 'var(--sy-table-z-pinned-header)', background: 'var(--sy-table-header-bg-pinned)' }
 										: {}),
@@ -415,7 +420,7 @@
 										:table="table"
 										:header-params="slotProps"
 										:column="column"
-										:header-props-raw="(getHeaderForColumn(column)?.headerProps as any)"
+										:header-props-raw="(getHeaderForColumn(column)?.headerProps as HeaderPropsRaw)"
 										:resizable-columns="props.resizableColumns"
 										:wrap-title="props.resizableColumns || !!getHeaderForColumn(column)?.maxWidth"
 									>
@@ -444,9 +449,9 @@
 						>
 							<th
 								:style="{
-									...(getHeaderForColumn(column)?.maxWidth && !props.resizableColumns ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
-									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
-									width: (reactiveColumnWidths[column.key!] || getHeaderForColumn(column)?.width) as any || undefined,
+									...(getHeaderForColumn(column)?.maxWidth && !props.resizableColumns ? { maxWidth: getHeaderForColumn(column)?.maxWidth } : {}),
+									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth } : {}),
+									width: (reactiveColumnWidths[column.key!] || getHeaderForColumn(column)?.width) || undefined,
 								}"
 							>
 								<SyTableFilter
@@ -454,7 +459,6 @@
 									:filterable="true"
 									:filters="filters"
 									:header="getEnhancedHeader(column)"
-									:input-config="props.filterInputConfig"
 									@update:filters="filters = $event"
 								>
 									<template #custom-filter="customFilterSlotProps">
@@ -495,9 +499,9 @@
 							v-for="header in props.headers || []"
 							:key="header.key || header.value || ''"
 							:style="{
-								...(header.maxWidth ? { maxWidth: header.maxWidth as any } : {}),
-								...(header.minWidth ? { minWidth: header.minWidth as any } : {}),
-								...(header.width ? { width: header.width as any } : {}),
+								...(header.maxWidth ? { maxWidth: header.maxWidth } : {}),
+								...(header.minWidth ? { minWidth: header.minWidth } : {}),
+								...(header.width ? { width: header.width } : {}),
 							}"
 						>
 							<span class="font-weight-bold">{{ header.title }}</span>
@@ -511,16 +515,15 @@
 							v-for="header in props.headers || []"
 							:key="header.key || header.value || ''"
 							:style="{
-								...(header.maxWidth ? { maxWidth: header.maxWidth as any } : {}),
-								...(header.minWidth ? { minWidth: header.minWidth as any } : {}),
-								...(header.width ? { width: header.width as any } : {}),
+								...(header.maxWidth ? { maxWidth: header.maxWidth } : {}),
+								...(header.minWidth ? { minWidth: header.minWidth } : {}),
+								...(header.width ? { width: header.width } : {}),
 							}"
 						>
 							<SyTableFilter
 								v-if="header.filterable"
 								:filters="filters"
-								:header="header"
-								:input-config="props.filterInputConfig"
+								:header="getEnhancedHeader(header)"
 								@update:filters="filters = $event"
 							>
 								<template #custom-filter="filterSlotProps">

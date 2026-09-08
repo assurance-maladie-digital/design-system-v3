@@ -17,7 +17,7 @@ describe('TextFilter.vue', () => {
 				stubs: {
 					SyTextField: {
 						template: '<div class="sy-text-field-stub" data-testid="sy-text-field" :label="label" :clearable="clearable" :density="density" :hideDetails="hideDetails"></div>',
-						props: ['modelValue', 'label', 'clearable', 'density', 'hideDetails', 'hideMessages', 'disableErrorHandling', 'variant'],
+						props: ['modelValue', 'label', 'clearable', 'density', 'hideDetails', 'hideMessages', 'disableErrorHandling', 'variant', 'bgColor'],
 					},
 				},
 			},
@@ -42,6 +42,17 @@ describe('TextFilter.vue', () => {
 		expect(syTextField.attributes('clearable')).toBe('true')
 		expect(syTextField.attributes('density')).toBe('compact')
 		expect(syTextField.attributes('hidedetails')).toBe('true')
+	})
+
+	it('uses inputConfig.bgColor when provided', async () => {
+		await wrapper.setProps({
+			inputConfig: {
+				bgColor: 'red',
+			},
+		})
+
+		const syTextField = wrapper.findComponent(SyTextField)
+		expect(syTextField.props('bgColor')).toBe('red')
 	})
 
 	it('emits update:filters event when value changes', async () => {

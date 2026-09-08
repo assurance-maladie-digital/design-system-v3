@@ -42,7 +42,8 @@ ValidationExamples.parameters = {
 						<div class="mb-2">
 							<DatePicker
 								v-model="date1"
-								placeholder="Date requise"
+								label="Date requise (JJ/MM/AAAA)"
+								placeholder="JJ/MM/AAAA"
 								required
 							/>
 						</div>
@@ -165,7 +166,8 @@ BidirectionalValidation.parameters = {
 				<DatePicker
 					ref="startDatePickerRef"
 					v-model="startDate"
-					placeholder="Date de début"
+					label="Date de début (JJ/MM/AAAA)"
+					placeholder="JJ/MM/AAAA"
 					:custom-rules="startDateRules"
 					required
 					@update:model-value="validateEndDate"
@@ -178,7 +180,8 @@ BidirectionalValidation.parameters = {
 				<DatePicker
 					ref="endDatePickerRef"
 					v-model="endDate"
-					placeholder="Date de fin"
+					label="Date de fin (JJ/MM/AAAA)"
+					placeholder="JJ/MM/AAAA"
 					:custom-rules="endDateRules"
 					required
 					@update:model-value="validateStartDate"
@@ -457,7 +460,8 @@ BidirectionalComplexDatePickerValidation.parameters = {
 				<DatePicker
 					ref="startDatePickerRef"
 					v-model="startDate"
-					placeholder="Date de début"
+					label="Date de début (JJ/MM/AAAA)"
+					placeholder="JJ/MM/AAAA"
 					:custom-rules="startDateRules"
 					use-combined-mode
 					required
@@ -471,7 +475,8 @@ BidirectionalComplexDatePickerValidation.parameters = {
 				<DatePicker
 					ref="endDatePickerRef"
 					v-model="endDate"
-					placeholder="Date de fin"
+					label="Date de fin (JJ/MM/AAAA)"
+					placeholder="JJ/MM/AAAA"
 					:custom-rules="endDateRules"
 					use-combined-mode
 					required

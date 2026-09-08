@@ -103,7 +103,7 @@
 .visual-picker-header {
 	padding-block: 16px;
 	background-color: rgb(var(--v-theme-primary, '12, 65, 154'));
-	color: rgb(var(--v-theme-onPrimary));
+	color: rgb(var(--v-theme-on-primary));
 }
 
 .visual-picker-header__title {

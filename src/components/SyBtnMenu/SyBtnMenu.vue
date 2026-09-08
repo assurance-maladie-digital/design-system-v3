@@ -197,6 +197,7 @@
 					:icon="iconOnly"
 					:size="iconOnly ? 'x-large' : 'default'"
 					:width="iconOnly ? 'auto' : undefined"
+					color="primary"
 					class="sy-user-menu-btn"
 					v-bind="{
 						...menuProps,
@@ -332,26 +333,9 @@
 	}
 }
 
-.sy-user-menu-btn {
-	padding: 12px !important;
-
-	.subtitle {
-		font-size: 0.875rem;
-		line-height: 1.5;
-	}
-}
-
-.sy-user-menu-btn:hover :deep(.v-btn__overlay) {
-	background: rgba(var(--v-theme-interactionDark), 0.2) !important;
-}
-
-.sy-user-menu-btn:active :deep(.v-btn__overlay) {
-	background: rgba(var(--v-theme-interactionDark), 0.4) !important;
-}
-
-.sy-user-menu-btn[aria-expanded='true'] :deep(.v-btn__overlay) {
-	background: rgba(var(--v-theme-interactionDark), 0.2) !important;
-	opacity: 1;
+.subtitle {
+	font-size: 0.875rem;
+	line-height: 1.5;
 }
 
 .item-title {
@@ -365,12 +349,11 @@
 // Le contenu du VMenu est téléporté hors du composant, mais ce bloc est rendu par son propre
 // template : il porte l'attribut de scope, les styles scopés l'atteignent donc sans passer par
 // un override global.
-// Le fond reprend le niveau d'interaction de l'activateur (survol / menu ouvert), et l'encart est
-// détaché des bords de la liste — le padding vertical de `.v-list` fournit l'espace en haut, la
+// L'encart est détaché des bords de la liste — le padding vertical de `.v-list` fournit l'espace en haut, la
 // marge celui des côtés et du bas.
 .sy-user-menu-identity {
 	margin: 0 8px 8px;
-	background: rgba(var(--v-theme-interactionDark), 0.2);
+	background: rgba(var(--v-theme-interaction-dark), 0.2);
 
 	// Même arrondi que la liste : Vuetify pose 4px sur `.v-menu > .v-overlay__content` et la
 	// `.v-list` en hérite. `inherit` reprend donc la valeur calculée du parent et suivra

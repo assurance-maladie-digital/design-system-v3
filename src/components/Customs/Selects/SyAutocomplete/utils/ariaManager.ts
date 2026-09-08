@@ -116,8 +116,7 @@ export const ariaManager = {
 	},
 
 	setupAriaAttributesForAutocomplete(
-	/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-		textFieldRef: Ref<any>,
+		textFieldRef: Ref<{ $el?: HTMLElement } | null>,
 		isOpen: Ref<boolean>,
 		menuId: string,
 		activeDescendant: Ref<string>,

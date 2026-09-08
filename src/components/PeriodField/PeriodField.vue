@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-	/* eslint-disable @typescript-eslint/no-explicit-any -- Nécessaire pour gérer différents types d'entrée */
 	import { ref, watch, computed, onMounted, readonly as readonlyState } from 'vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import { useFieldValidation } from '@/composables'
@@ -93,11 +92,14 @@
 	 * @param value - La valeur de date à formater
 	 * @returns La date formatée ou null
 	 */
-	function formatDateValue(value: any): string | null {
+	function formatDateValue(value: unknown): string | null {
 		if (!value) return null
 		if (typeof value === 'string') return value
-		if (value.selectedDates) {
-			const date = new Date(value.selectedDates)
+		if (typeof value === 'object' && value !== null && 'selectedDates' in value) {
+			const selectedDates = (value as Record<string, unknown>).selectedDates
+			if (!selectedDates) return null
+			const date = new Date(String(selectedDates))
+			if (isNaN(date.getTime())) return null
 			const day = date.getDate().toString().padStart(2, '0')
 			const month = (date.getMonth() + 1).toString().padStart(2, '0')
 			const year = date.getFullYear()

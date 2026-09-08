@@ -1,42 +1,67 @@
 <script lang="ts" setup>
-	import { locales } from './locales'
-	import { ref } from 'vue'
+	import { locales as defaultLocales } from './locales'
+	import { useLocales } from '@/composables/useLocales'
+	import type { DeepPartial } from '@/utils/locales/mergeLocales'
+	import type { SkipLinkItem } from './types'
 
-	withDefaults(
+	const props = withDefaults(
 		defineProps<{
 			label?: string
+			skipLinks?: SkipLinkItem[]
 			target?: string
+			locales?: DeepPartial<typeof defaultLocales>
 		}>(),
 		{
-			label: locales.label,
+			label: undefined,
+			skipLinks: () => [],
 			target: '#main',
+			locales: () => ({}),
 		},
 	)
 
-	const skipLinkSpan = ref<HTMLLinkElement | null>(null)
+	const locales = useLocales(defaultLocales, () => props.locales)
 
-	// La ref du skip link est disponible si besoin
-	const skipLink = ref<HTMLAnchorElement | null>(null)
 </script>
 
 <template>
 	<nav
-		aria-label="Liens d'évitement"
+		:aria-label="locales.ariaLabel"
 		class="sy-skip-link-container"
 	>
-		<div ref="skipLinkSpan" />
+		<ul
+			v-if="skipLinks.length > 0"
+			class="sy-skip-link-list"
+		>
+			<li
+				v-for="(skipLinkItem, index) in skipLinks"
+				:key="`${skipLinkItem.target}-${index}`"
+			>
+				<a
+					:href="skipLinkItem.target"
+					class="sy-skip-link text-primary d-block d-sr-only-focusable px-2"
+				>
+					{{ skipLinkItem.label }}
+				</a>
+			</li>
+		</ul>
 
 		<a
-			ref="skipLink"
+			v-else
 			:href="target"
 			class="sy-skip-link text-primary d-block d-sr-only-focusable px-2"
 		>
-			<slot>{{ label }}</slot>
+			<slot>{{ label ?? locales.label }}</slot>
 		</a>
 	</nav>
 </template>
 
 <style lang="scss" scoped>
+.sy-skip-link-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
 .sy-skip-link {
 	z-index: 150;
 	position: fixed;

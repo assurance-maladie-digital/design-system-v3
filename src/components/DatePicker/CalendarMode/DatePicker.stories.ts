@@ -353,8 +353,8 @@ export const Default: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'label': 'Sélectionner une date',
-		'placeholder': 'Sélectionner une date',
+		'label': 'Date (JJ/MM/AAAA)',
+		'placeholder': 'JJ/MM/AAAA',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
 		'showWeekNumber': false,
@@ -426,8 +426,8 @@ export const Required: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'Sélectionner une date',
-		'label': 'Sélectionner une date',
+		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
 		'showWeekNumber': false,
@@ -497,8 +497,8 @@ export const DateRange: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'Sélectionner une période',
-		'label': 'Sélectionner une période',
+		'placeholder': 'JJ/MM/AAAA - JJ/MM/AAAA',
+		'label': 'Période (JJ/MM/AAAA - JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -582,8 +582,8 @@ export const WithCustomPeriod: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'Sélectionner une date',
-		'label': 'Sélectionner une date',
+		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
 		'showWeekNumber': false,
@@ -678,8 +678,8 @@ export const WithAppendIcon: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'Sélectionner une date',
-		'label': 'Sélectionner une date',
+		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -745,8 +745,8 @@ export const WithoutIcon: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'Sélectionner une date',
-		'label': 'Sélectionner une date',
+		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -812,8 +812,8 @@ export const BirthDate: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'Date de naissance',
-		'label': 'Date de naissance',
+		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date de naissance (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': true,
@@ -856,8 +856,9 @@ export const WithError: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						placeholder="notAfterToday"
-						label="notAfterToday"
+						placeholder="JJ/MM/AAAA"
+						label="Date (JJ/MM/AAAA)"
+						format="DD/MM/YYYY"
 						:custom-rules="[
 			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd'hui' } },
 		]"
@@ -880,8 +881,8 @@ export const WithError: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'Sélectionner une date',
-		'label': 'Sélectionner une date',
+		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -927,8 +928,9 @@ export const WithWarning: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						placeholder="Date avec avertissement"
-						label="Date avec avertissement"
+						placeholder="JJ/MM/AAAA"
+						label="Date avec avertissement (JJ/MM/AAAA)"
+						format="DD/MM/YYYY"
 						:custom-warning-rules="[
 							{ type: 'notBeforeDate', options: { 
 								warningMessage: 'Attention : la date est antérieure à la date de référence (01/01/2031)',
@@ -955,8 +957,8 @@ export const WithWarning: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'Date avec avertissement',
-		'label': 'Date avec avertissement',
+		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date avec avertissement (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -1008,8 +1010,9 @@ export const WithSuccess: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						placeholder="Date valide"
-						label="Date valide"
+						placeholder="JJ/MM/AAAA"
+						label="Date valide (JJ/MM/AAAA)"
+						format="DD/MM/YYYY"
 						required
 						:custom-rules="[
 							{ type: 'notWeekend', options: { message: 'La date ne peut pas être un weekend' } }
@@ -1033,8 +1036,8 @@ export const WithSuccess: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'Date valide',
-		'label': 'Date valide',
+		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date valide (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -1238,8 +1241,8 @@ export const WithDateFormatReturn: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'Sélectionner une date',
-		'label': 'Sélectionner une date',
+		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -1485,8 +1488,8 @@ export const UTC: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'Sélectionner une date',
-		'label': 'Sélectionner une date',
+		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -1588,7 +1591,8 @@ export const BidirectionalValidation: Story = {
 								<DatePicker
 									ref="startDatePickerRef"
 									v-model="startDate"
-									label="Date de début"
+									label="Date de début (JJ/MM/AAAA)"
+									placeholder="JJ/MM/AAAA"
 									:custom-rules="startDateRules"
 									required
 									@update:model-value="validateEndDate"
@@ -1599,7 +1603,8 @@ export const BidirectionalValidation: Story = {
 								<DatePicker
 									ref="endDatePickerRef"
 									v-model="endDate"
-									label="Date de fin"
+									label="Date de fin (JJ/MM/AAAA)"
+									placeholder="JJ/MM/AAAA"
 									:custom-rules="endDateRules"
 									required
 									@update:model-value="validateStartDate"
@@ -1866,8 +1871,8 @@ export const BidirectionalValidation: Story = {
 							<DatePicker
 								ref="startDatePickerRef"
 								v-model="startDate"
-								placeholder="Date de début"
-								label="Date de début"
+								label="Date de début (JJ/MM/AAAA)"
+								placeholder="JJ/MM/AAAA"
 								:custom-rules="startDateRules"
 								required
 								@update:model-value="validateEndDate"
@@ -1878,8 +1883,8 @@ export const BidirectionalValidation: Story = {
 							<DatePicker
 								ref="endDatePickerRef"
 								v-model="endDate"
-								placeholder="Date de fin"
-								label="Date de fin"
+								label="Date de fin (JJ/MM/AAAA)"
+								placeholder="JJ/MM/AAAA"
 								:custom-rules="endDateRules"
 								required
 								@update:model-value="validateStartDate"

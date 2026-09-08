@@ -5,7 +5,7 @@ export const apLightTheme = {
 
 	// Border
 	border: baseTokens.color.cyan.darken40,
-	borderVariant: baseTokens.color.grey.lighten40,
+	borderVariant: baseTokens.color.grey.base,
 	borderBright: baseTokens.color.white.base,
 	borderDim: baseTokens.color.white.alpha40,
 
@@ -35,13 +35,13 @@ export const apLightTheme = {
 	surfaceBright: baseTokens.color.cyan.lighten97,
 	surfaceDim: baseTokens.color.cyan.lighten90,
 	onSurface: baseTokens.color.grey.darken60,
-	onSurfaceVariant: baseTokens.color.grey.base,
+	onSurfaceVariant: baseTokens.color.grey.lighten90,
 
 	// Background
 	background: baseTokens.color.cyan.lighten97,
 	backgroundVariant: baseTokens.color.white.base,
 	onBackground: baseTokens.color.grey.darken60,
-	onBackgroundVariant: baseTokens.color.grey.lighten40,
+	onBackgroundVariant: baseTokens.color.grey.base,
 
 	// Feedback
 	info: baseTokens.color.parma.darken40,

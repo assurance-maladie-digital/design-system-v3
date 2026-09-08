@@ -7,7 +7,7 @@
 	import SyTableFilter from '../common/SyTableFilter.vue'
 	import SyTablePagination from '../common/SyTablePagination.vue'
 	import TableBulkActions from '../common/TableBulkActions.vue'
-	import TableHeader from '../common/TableHeader.vue'
+	import TableHeader, { type HeaderPropsRaw } from '../common/TableHeader.vue'
 	import { locales } from '../common/locales'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
 	import { useTableAccessibility } from '../common/tableAccessibilityUtils'
@@ -117,7 +117,8 @@
 	const { headers, displayHeaders, getEnhancedHeader, getHeaderForColumn } = useTableHeaders({
 		headersProp: toRef(props, 'headers'),
 		storedHeaders: storedOptions.headers,
-		filterInputConfig: props.filterInputConfig,
+		filterInputConfig: () => props.filterInputConfig,
+		componentName: 'SyServerTable',
 	})
 
 	// Keep last non-undefined items to avoid clearing the table during refetches
@@ -146,7 +147,7 @@
 			: lastNonUndefinedLength.value
 	})
 
-	const { page, pageCount, itemsPerPageValue, updateItemsPerPage, onUpdateOptions } = usePagination({
+	const { page, pageCount, itemsPerPageValue, updateItemsPerPage } = usePagination({
 		options,
 		itemsLength: displayedItemsLength,
 		updateOptions,
@@ -372,7 +373,11 @@
 			:multi-sort="props.multiSort"
 			:must-sort="props.mustSort"
 			:show-expand="props.showExpand"
-			@update:options="onUpdateOptions"
+			:page="page"
+			:items-per-page="itemsPerPageValue"
+			@update:page="updateOptions({ page: $event })"
+			@update:items-per-page="updateItemsPerPage"
+			@update:options="updateOptions"
 		>
 			<template #top>
 				<caption
@@ -411,9 +416,9 @@
 									},
 								]"
 								:style="{
-									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
-									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
-									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width as any } : {}),
+									...(getHeaderForColumn(column)?.maxWidth ? { maxWidth: getHeaderForColumn(column)?.maxWidth } : {}),
+									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth } : {}),
+									...(getHeaderForColumn(column)?.width ? { width: getHeaderForColumn(column)?.width } : {}),
 									...(pinnedMeta.left[column.key!] !== undefined
 										? { position: 'sticky', left: `${pinnedMeta.left[column.key!] }px`, zIndex: 'var(--sy-table-z-pinned-header)', background: 'var(--sy-table-header-bg-pinned)' }
 										: {}),
@@ -444,7 +449,7 @@
 										:table="table"
 										:header-params="slotProps"
 										:column="column"
-										:header-props-raw="getHeaderForColumn(column)?.headerProps as any"
+										:header-props-raw="getHeaderForColumn(column)?.headerProps as HeaderPropsRaw"
 										:resizable-columns="props.resizableColumns"
 										:wrap-title="props.resizableColumns || !!getHeaderForColumn(column)?.maxWidth"
 									>
@@ -473,9 +478,9 @@
 						>
 							<th
 								:style="{
-									...(getHeaderForColumn(column)?.maxWidth && !props.resizableColumns ? { maxWidth: getHeaderForColumn(column)?.maxWidth as any } : {}),
-									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth as any } : {}),
-									width: (reactiveColumnWidths[column.key!] || getHeaderForColumn(column)?.width) as any || undefined,
+									...(getHeaderForColumn(column)?.maxWidth && !props.resizableColumns ? { maxWidth: getHeaderForColumn(column)?.maxWidth } : {}),
+									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth } : {}),
+									width: (reactiveColumnWidths[column.key!] || getHeaderForColumn(column)?.width) || undefined,
 								}"
 							>
 								<!-- Check if the column is filterable based on the headers prop -->
@@ -484,7 +489,6 @@
 									:filterable="true"
 									:filters="filters"
 									:header="getEnhancedHeader(column)"
-									:input-config="props.filterInputConfig"
 									@update:filters="filters = $event"
 								>
 									<template #custom-filter="filterSlotProps">
@@ -539,8 +543,7 @@
 							<SyTableFilter
 								v-if="header.filterable"
 								:filters="filters"
-								:header="header"
-								:input-config="props.filterInputConfig"
+								:header="getEnhancedHeader(header)"
 								@update:filters="filters = $event"
 							>
 								<template #custom-filter="customFilterSlotProps">
@@ -699,11 +702,11 @@
 }
 
 .sy-server-table--pinned-left-shadow :deep(.sy-table__pinned--left) {
-	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-onSurfaceVariant), 0.6);
+	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-on-surface-variant), 0.6);
 }
 
 .sy-server-table--pinned-right-shadow :deep(.sy-table__pinned--right) {
-	box-shadow: -2px 0 6px -4px rgba(var(--v-theme-onSurfaceVariant), 0.6);
+	box-shadow: -2px 0 6px -4px rgba(var(--v-theme-on-surface-variant), 0.6);
 }
 
 .sy-server-table--pinned-select-left :deep(.v-data-table__th--select),
@@ -744,7 +747,7 @@
 .sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
 .sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left :deep(.v-data-table__tbody .v-data-table__tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
 .sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left :deep(.v-data-table__tbody tr:not(.v-data-table-rows-loading) > td:first-child) {
-	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-onSurfaceVariant), 0.6);
+	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-on-surface-variant), 0.6);
 }
 /* stylelint-enable @stylistic/max-line-length */
 

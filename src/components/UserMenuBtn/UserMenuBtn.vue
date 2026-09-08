@@ -105,7 +105,7 @@
 	width: 40px;
 	height: 40px;
 	background: rgb(var(--v-theme-primary));
-	color: rgb(var(--v-theme-onPrimary));
+	color: rgb(var(--v-theme-on-primary));
 	border-radius: 50%;
 
 	svg,

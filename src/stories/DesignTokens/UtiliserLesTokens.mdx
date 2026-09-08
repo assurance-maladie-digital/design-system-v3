@@ -77,7 +77,7 @@ Variables de thème `--v-theme-<nom>`. ⚠️ Si elles contiennent un **triplet 
 .element {
   color: rgb(var(--v-theme-primary));
   background-color: rgba(var(--v-theme-primary), 0.08); /* avec opacité */
-  border: 1px solid rgb(var(--v-theme-onSurface));
+  border: 1px solid rgb(var(--v-theme-on-surface));
 }
 `} />
 
@@ -114,13 +114,13 @@ Pour les couleurs de thème, deux familles de variables coexistent. **Une seule 
   <tbody>
     <tr>
       <td>Tokens sémantiques du DS</td>
-      <td><code>--v-theme-onSurface</code>, <code>--v-theme-onSurfaceVariant</code>, <code>--v-theme-onPrimary</code>… (<strong>camelCase</strong>)</td>
+      <td><code>--v-theme-on-surface</code>, <code>--v-theme-on-surface-variant</code>, <code>--v-theme-on-primary</code>… (<strong>camelCase</strong>)</td>
       <td>Définis par le Design System</td>
       <td>✅ Oui</td>
     </tr>
     <tr>
       <td>Contrastes auto-générés par Vuetify</td>
-      <td><code>--v-theme-on-surface</code>, <code>--v-theme-on-surfaceBright</code>… (<strong>kebab <code>on-</code></strong>)</td>
+      <td><code>--v-theme-on-surface</code>, <code>--v-theme-on-surface-bright</code>… (<strong>kebab <code>on-</code></strong>)</td>
       <td>Générés automatiquement par Vuetify (un <code>on-&lt;couleur&gt;</code> par couleur de thème)</td>
       <td>❌ Non (couleurs techniques, hors API)</td>
     </tr>

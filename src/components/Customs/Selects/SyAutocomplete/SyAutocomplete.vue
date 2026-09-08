@@ -3,7 +3,7 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { validationPropsDefaults, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
-	import { mdiChevronDown, mdiCloseCircle } from '@mdi/js'
+	import { mdiChevronDown, mdiClose } from '@mdi/js'
 	import { computed, nextTick, onMounted, readonly as readonlyState, ref, useId, useSlots, watch } from 'vue'
 	import { useSyAutocompleteValidation } from './composables/useSyAutocompleteValidation'
 	import { locales as defaultLocales } from './locales'
@@ -443,7 +443,7 @@
 							@click.stop.prevent="selectItem(null)"
 						>
 							<SyIcon
-								:icon="mdiCloseCircle"
+								:icon="mdiClose"
 								decorative
 								class="sy-autocomplete__clear-icon"
 							/>
@@ -561,6 +561,10 @@
 .sy-autocomplete {
 	width: 100%;
 	position: relative;
+
+	:deep(.v-icon) {
+		opacity: 1 !important;
+	}
 }
 
 .sy-autocomplete__sr-only {
@@ -577,6 +581,11 @@
 .v-icon.arrow {
 	position: absolute;
 	right: 10px;
+	color: rgb(var(--v-theme-on-surface)) !important;
+
+	:deep(.v-icon__svg) {
+		fill: rgb(var(--v-theme-on-surface)) !important;
+	}
 }
 
 .sy-autocomplete__clear-button {
@@ -610,8 +619,11 @@
 }
 
 .sy-autocomplete__clear-icon {
-	color: rgb(var(--v-theme-primary)) !important;
-	opacity: var(--v-medium-emphasis-opacity) !important;
+	color: rgb(var(--v-theme-on-surface)) !important;
+
+	:deep(.v-icon__svg) {
+		fill: rgb(var(--v-theme-on-surface)) !important;
+	}
 }
 
 .sy-autocomplete__chip {
@@ -701,31 +713,19 @@ li.sy-autocomplete__option--focused {
 
 :deep(.error-field .v-icon.arrow),
 :deep(.error-field .v-icon.arrow .v-icon__svg) {
-	color: rgb(var(--v-theme-iconSubdued)) !important;
-	fill: rgb(var(--v-theme-iconSubdued)) !important;
-}
-
-:deep(.error-field .sy-autocomplete__clear-icon .v-icon__svg) {
-	fill: rgb(var(--v-theme-iconBase)) !important;
+	color: rgb(var(--v-theme-on-surface-variant)) !important;
+	fill: rgb(var(--v-theme-on-surface-variant)) !important;
 }
 
 :deep(.warning-field .v-icon.arrow),
 :deep(.warning-field .v-icon.arrow .v-icon__svg) {
-	color: rgb(var(--v-theme-iconBase)) !important;
-	fill: rgb(var(--v-theme-iconBase)) !important;
-}
-
-:deep(.warning-field .sy-autocomplete__clear-icon .v-icon__svg) {
-	fill: rgb(var(--v-theme-iconBase)) !important;
+	color: rgb(var(--v-theme-primary)) !important;
+	fill: rgb(var(--v-theme-primary)) !important;
 }
 
 :deep(.success-field .v-icon.arrow),
 :deep(.success-field .v-icon.arrow .v-icon__svg) {
-	color: rgb(var(--v-theme-iconBase)) !important;
-	fill: rgb(var(--v-theme-iconBase)) !important;
-}
-
-:deep(.success-field .sy-autocomplete__clear-icon .v-icon__svg) {
-	fill: rgb(var(--v-theme-iconBase)) !important;
+	color: rgb(var(--v-theme-on-surface)) !important;
+	fill: rgb(var(--v-theme-on-surface)) !important;
 }
 </style>

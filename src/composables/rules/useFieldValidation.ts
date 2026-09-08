@@ -22,12 +22,11 @@ export type RuleOptions<T = any> = {
 	pattern?: RegExp
 	ignoreSpace?: boolean
 	isWarning?: boolean // Si true, la règle génère un warning au lieu d'une erreur
-	validate?: ((value: T) => boolean | string) | ((value: T) => Promise<boolean | string>) // Fonction de validation personnalisée pour les règles de type 'custom'
+	validate?: (value: T) => boolean | string | Promise<boolean | string> // Fonction de validation personnalisée pour les règles de type 'custom'
 	date?: string | Date // Date de référence pour les règles notBeforeDate et notAfterDate
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-export type ValidationRule = (value: any) => ValidationResult | Promise<ValidationResult>
+export type ValidationRule = (value: unknown) => ValidationResult | Promise<ValidationResult>
 
 export function useFieldValidation() {
 	const getValueLength = (value: string, ignoreSpace?: boolean): number => {
@@ -90,9 +89,12 @@ export function useFieldValidation() {
 		return date
 	}
 
+	const isDateInput = (value: unknown): value is string | Date => {
+		return typeof value === 'string' || value instanceof Date
+	}
+
 	const createRule = (type: string, options: RuleOptions = {}): ValidationRule => {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- This is a generic type
-		return (value: any): ValidationResult | Promise<ValidationResult> => {
+		return (value: unknown): ValidationResult | Promise<ValidationResult> => {
 			// Gestion des champs vides non obligatoires
 			if (type !== 'required' && typeof value === 'string' && value.trim() === '') {
 				return {}
@@ -179,6 +181,10 @@ export function useFieldValidation() {
 						return {}
 					}
 
+					if (!isDateInput(value)) {
+						return { error: 'Date invalide' }
+					}
+
 					const dateValue = parseDate(value)
 					if (!dateValue) {
 						return { error: 'Date invalide' }
@@ -193,6 +199,10 @@ export function useFieldValidation() {
 				case 'notBeforeToday': {
 					if (value === null || value === undefined || value === '') {
 						return {}
+					}
+
+					if (!isDateInput(value)) {
+						return { error: 'Date invalide' }
 					}
 
 					const dateValue = parseDate(value)
@@ -216,6 +226,10 @@ export function useFieldValidation() {
 				case 'notAfterToday': {
 					if (value === null || value === undefined || value === '') {
 						return {}
+					}
+
+					if (!isDateInput(value)) {
+						return { error: 'Date invalide' }
 					}
 
 					const dateValue = parseDate(value)
@@ -252,6 +266,10 @@ export function useFieldValidation() {
 					) {
 						return {}
 					}
+					if (!isDateInput(value)) {
+						return { error: 'Date invalide' }
+					}
+
 					const dateValue = parseDate(value)
 					if (!dateValue) {
 						return { error: 'Date invalide' }
@@ -293,6 +311,10 @@ export function useFieldValidation() {
 					) {
 						return {}
 					}
+					if (!isDateInput(value)) {
+						return { error: 'Date invalide' }
+					}
+
 					const dateValue = parseDate(value)
 					if (!dateValue) {
 						return { error: 'Date invalide' }
@@ -334,6 +356,10 @@ export function useFieldValidation() {
 					) {
 						return {}
 					}
+					if (!isDateInput(value)) {
+						return { error: 'Date invalide' }
+					}
+
 					const dateValue = parseDate(value)
 					if (!dateValue) {
 						return { error: 'Date invalide' }
@@ -367,6 +393,10 @@ export function useFieldValidation() {
 					const { isHolidayDay } = useHolidayDay()
 					if (value === null || value === undefined || value === '') {
 						return {}
+					}
+
+					if (!isDateInput(value)) {
+						return { error: 'Date invalide' }
 					}
 
 					const dateValue = parseDate(value)

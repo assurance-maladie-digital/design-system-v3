@@ -1,4 +1,4 @@
-import { type AxiosResponse } from 'axios'
+import { AxiosHeaders, type AxiosResponse } from 'axios'
 
 /** Returns a promise that returns a file */
 export function filePromise(): Promise<AxiosResponse<Blob>> {
@@ -12,10 +12,9 @@ export function filePromise(): Promise<AxiosResponse<Blob>> {
 				'content-disposition': 'attachment; filename="attestation.txt"',
 			},
 			config: {
-				headers: {
+				headers: new AxiosHeaders({
 					Accept: 'application/json, text/plain, */*',
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
-				} as any,
+				}),
 			},
 		})
 	})
@@ -43,10 +42,9 @@ export function filePromiseNoHeaders(): Promise<AxiosResponse<Blob>> {
 			statusText: 'OK',
 			headers: {},
 			config: {
-				headers: {
+				headers: new AxiosHeaders({
 					Accept: 'application/json, text/plain, */*',
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mock Axios headers
-				} as any,
+				}),
 			},
 		})
 	})

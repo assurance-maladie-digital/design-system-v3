@@ -1,8 +1,8 @@
 {
-  "date": "2026-08-25T13:33:04.081Z",
-  "compliantCount": 55,
-  "totalCount": 78,
-  "percentage": "70.51",
+  "date": "2026-09-08T07:36:59.599Z",
+  "compliantCount": 56,
+  "totalCount": 77,
+  "percentage": "72.73",
   "results": [
     {
       "componentName": "Accordion",
@@ -23,7 +23,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Boutons/BackBtn",
       "hasManualAudit": true,
-      "version": "1.1.3",
+      "version": "1.1.4",
       "versionDate": "10/08/2026"
     },
     {
@@ -34,7 +34,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Boutons/BackToTopBtn",
       "hasManualAudit": true,
-      "version": "1.1.3",
+      "version": "1.1.4",
       "versionDate": "10/08/2026"
     },
     {
@@ -56,7 +56,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Données/ChipList",
       "hasManualAudit": true,
-      "version": "1.1.3",
+      "version": "1.1.4",
       "versionDate": "10/08/2026"
     },
     {
@@ -89,7 +89,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Feedback/CookieBanner",
       "hasManualAudit": true,
-      "version": "1.1.3",
+      "version": "1.1.4",
       "versionDate": "10/08/2026"
     },
     {
@@ -100,7 +100,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Feedback/CookiesSelection",
       "hasManualAudit": false,
-      "version": "1.1.3",
+      "version": "1.1.4",
       "versionDate": "10/08/2026"
     },
     {
@@ -144,7 +144,7 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Formulaires/Selects/SyInputSelect",
       "hasManualAudit": false,
-      "version": "1.1.3",
+      "version": "1.1.4",
       "versionDate": "10/08/2026"
     },
     {
@@ -166,8 +166,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/SyCheckbox",
       "hasManualAudit": true,
-      "version": "1.1.3",
-      "versionDate": "22/07/2026"
+      "version": "1.1.4",
+      "versionDate": "27/08/2026"
     },
     {
       "componentName": "Customs/SyCheckBoxGroup",
@@ -298,7 +298,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/DatePicker/CalendarMode",
       "hasManualAudit": false,
-      "version": "1.1.3",
+      "version": "1.1.4",
       "versionDate": "10/08/2026"
     },
     {
@@ -309,7 +309,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/DatePicker/CombinedMode",
       "hasManualAudit": false,
-      "version": "1.1.3",
+      "version": "1.1.4",
       "versionDate": "10/08/2026"
     },
     {
@@ -364,7 +364,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Boutons/DownloadBtn",
       "hasManualAudit": true,
-      "version": "1.1.3",
+      "version": "1.1.4",
       "versionDate": "10/08/2026"
     },
     {
@@ -403,9 +403,9 @@
     {
       "componentName": "FilePreview",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
+      "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false,
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Données/FilePreview",
       "hasManualAudit": true,
       "version": "1.1.3",
@@ -452,7 +452,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Structure/FooterBar",
       "hasManualAudit": false,
-      "version": "1.1.3",
+      "version": "1.1.4",
       "versionDate": "10/08/2026"
     },
     {
@@ -474,7 +474,7 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Structure/HeaderBar",
       "hasManualAudit": true,
-      "version": "1.1.3",
+      "version": "1.1.4",
       "versionDate": "10/08/2026"
     },
     {
@@ -518,7 +518,7 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Boutons/LangBtn",
       "hasManualAudit": true,
-      "version": "1.1.3",
+      "version": "1.1.4",
       "versionDate": "10/08/2026"
     },
     {
@@ -551,7 +551,7 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Formulaires/LunarCalendar",
       "hasManualAudit": false,
-      "version": "1.1.3",
+      "version": "1.1.4",
       "versionDate": "10/08/2026"
     },
     {
@@ -628,8 +628,8 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Tableaux/PaginatedTable",
       "hasManualAudit": false,
-      "version": "1.1.3",
-      "versionDate": "22/07/2026"
+      "version": "1.1.4",
+      "versionDate": "26/08/2026"
     },
     {
       "componentName": "PasswordField",
@@ -705,8 +705,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Navigation/SkipLink",
       "hasManualAudit": true,
-      "version": "1.1.3",
-      "versionDate": "22/07/2026"
+      "version": "1.1.4",
+      "versionDate": "28/08/2026"
     },
     {
       "componentName": "SocialMediaLinks",
@@ -749,7 +749,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Feedback/SyAlert",
       "hasManualAudit": true,
-      "version": "1.1.3",
+      "version": "1.1.4",
       "versionDate": "10/08/2026"
     },
     {
@@ -760,7 +760,7 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Navigation/SyBtnMenu",
       "hasManualAudit": true,
-      "version": "1.1.3",
+      "version": "1.1.4",
       "versionDate": "07/08/2026"
     },
     {
@@ -815,19 +815,8 @@
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Tableaux/TableToolbar",
       "hasManualAudit": true,
-      "version": "1.1.3",
+      "version": "1.1.4",
       "versionDate": "10/08/2026"
-    },
-    {
-      "componentName": "tests",
-      "hasA11yTests": false,
-      "hasA11yDisabledInStories": false,
-      "mdxStatus": "Manquante",
-      "isFullyCompliant": false,
-      "storybookTitle": null,
-      "hasManualAudit": false,
-      "version": null,
-      "versionDate": null
     },
     {
       "componentName": "ToolbarContainer",
@@ -859,7 +848,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Boutons/UserMenuBtn",
       "hasManualAudit": false,
-      "version": "1.1.3",
+      "version": "1.1.4",
       "versionDate": "10/08/2026"
     }
   ]

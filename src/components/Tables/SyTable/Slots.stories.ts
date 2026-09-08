@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { fn } from 'storybook/test'
 import type { VDataTable } from 'vuetify/components'
 import SyTable from './SyTable.vue'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableExcludedControls, syTableItemsArgTypes } from '../common/storyArgTypes'
 import { manyUsers, users, usersHeaders } from '../common/storyData'
 
 const meta = {
@@ -15,17 +15,11 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: commonTableExcludedControls },
 	},
 	argTypes: {
 		...commonTableArgTypes,
-		items: {
-			description: 'Liste des éléments à afficher dans le tableau',
-			control: { type: 'object' },
-			table: {
-				category: 'props',
-				defaultValue: { summary: '[]' },
-			},
-		},
+		...syTableItemsArgTypes,
 	},
 } satisfies Meta<typeof SyTable & typeof VDataTable>
 
@@ -333,10 +327,11 @@ export const ComplexItemsDisplay: Story = {
 		],
 	},
 	args: {
-		headers: projectHeaders,
-		items: projects,
-		caption: 'Périodes des projets en cours',
-		suffix: 'items-display-cell-table',
+		'headers': projectHeaders,
+		'items': projects,
+		'caption': 'Périodes des projets en cours',
+		'suffix': 'items-display-cell-table',
+		'onUpdate:options': fn(),
 	},
 	render: args => ({
 		components: { SyTable },

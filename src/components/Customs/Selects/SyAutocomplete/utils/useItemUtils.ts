@@ -10,8 +10,7 @@ interface ItemUtilsProps {
 
 export function useItemUtils(props: ItemUtilsProps, formattedItems: ComputedRef<ItemType[]>) {
 	const getItemText = (item: unknown) => {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		return (item as Record<string, any>)[props.textKey]
+		return (item as Record<string, unknown>)[props.textKey] as string | undefined
 	}
 
 	const getPlainText = (item: ItemType): string => {

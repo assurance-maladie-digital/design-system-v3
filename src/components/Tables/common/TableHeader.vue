@@ -4,7 +4,7 @@
 	import { locales } from './locales'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 
-	type HeaderPropsRaw = {
+	export type HeaderPropsRaw = {
 		class?: string | string[]
 		style?: Record<string, string | number>
 	}

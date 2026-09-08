@@ -75,9 +75,9 @@ import {
 
     <CriteriaCard title="Description complémentaire (aria-describedby)">
       <ul>
-        <li><strong>Texte d'aide</strong> : Lorsque la prop <code>helpText</code> est fournie conjointement à une prop <code>id</code>, un élément de description est rendu sous la case à cocher avec l'identifiant <code>{id}-help-text</code>. L'attribut <code>aria-describedby</code> de l'input pointe automatiquement vers cet élément, permettant aux lecteurs d'écran d'en lire le contenu après le label.</li>
+        <li><strong>Texte d'aide</strong> : Lorsque la prop <code>helpText</code> est fournie conjointement à une prop <code>id</code>, un élément de description est rendu sous la case à cocher avec l'identifiant <code>\{id\}-help-text</code>. L'attribut <code>aria-describedby</code> de l'input pointe automatiquement vers cet élément, permettant aux lecteurs d'écran d'en lire le contenu après le label.</li>
         <li><strong>Labelisation externe</strong> : Lorsque la prop <code>ariaLabelledby</code> est renseignée, sa valeur est également injectée dans <code>aria-describedby</code> afin de conserver la relation de description programmatique.</li>
-        <li><strong>Valeurs composites</strong> : Si <code>ariaLabelledby</code> et <code>helpText</code> sont simultanément actifs, <code>aria-describedby</code> contient les deux identifiants séparés par un espace (<code>"{ariaLabelledby} {id}-help-text"</code>), conformément à la spécification WAI-ARIA.</li>
+        <li><strong>Valeurs composites</strong> : Si <code>ariaLabelledby</code> et <code>helpText</code> sont simultanément actifs, <code>aria-describedby</code> contient les deux identifiants séparés par un espace (<code>"\{ariaLabelledby\} \{\id\}-help-text"</code>), conformément à la spécification WAI-ARIA.</li>
         <li><strong>Masquage en cas d'erreur</strong> : Le <code>helpText</code> et sa référence dans <code>aria-describedby</code> sont automatiquement supprimés dès qu'un message de validation (erreur, avertissement ou succès) est affiché, évitant ainsi une description redondante ou contradictoire.</li>
       </ul>
     </CriteriaCard>

@@ -92,8 +92,7 @@ export default function useFilterable(model: Ref<FilterProp>) {
 		}
 
 		if (isObject) {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const typedValue = value as Record<string, any>
+			const typedValue = value as Record<string, unknown>
 			const isPeriodField
 				= typedValue.from !== undefined && typedValue.to !== undefined
 
@@ -106,10 +105,10 @@ export default function useFilterable(model: Ref<FilterProp>) {
 				}
 
 				const text = hasFrom && hasTo
-					? `${typedValue.from} – ${typedValue.to}`
+					? `${String(typedValue.from)} – ${String(typedValue.to)}`
 					: hasFrom
-						? `${typedValue.from} –`
-						: `– ${typedValue.to}`
+						? `${String(typedValue.from)} –`
+						: `– ${String(typedValue.to)}`
 
 				return [{ text, value: typedValue }]
 			}
@@ -150,18 +149,16 @@ export default function useFilterable(model: Ref<FilterProp>) {
 		}
 
 		if (isArray) {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const typedValue = value as any[]
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const chipValue = chip.value as any
+			const typedValue = value as unknown[]
+			const chipValue = chip.value as unknown
 
 			const filteredValue = typedValue.filter((item) => {
 				if (Array.isArray(chipValue)) {
 					return !chipValue.includes(item)
 				}
 
-				if (typeof item === 'object') {
-					return item.value !== chipValue.value
+				if (typeof item === 'object' && item !== null) {
+					return (item as Record<string, unknown>).value !== (chipValue as Record<string, unknown>).value
 				}
 
 				return item !== chipValue
@@ -177,10 +174,8 @@ export default function useFilterable(model: Ref<FilterProp>) {
 		}
 
 		if (isObject) {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const typedValue = value as Record<string, any>
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const chipValue = chip.value as any
+			const typedValue = value as Record<string, unknown>
+			const chipValue = chip.value as unknown
 			const isPeriodField
 				= typedValue.from !== undefined && typedValue.to !== undefined
 
@@ -200,7 +195,7 @@ export default function useFilterable(model: Ref<FilterProp>) {
 			}
 
 			// For other object types, delete the specific property
-			delete typedValue[chipValue]
+			delete typedValue[chipValue as string]
 			filter.value = typedValue
 		}
 	}

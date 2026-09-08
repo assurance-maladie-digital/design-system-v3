@@ -1,6 +1,6 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 25/08/2026
+Généré le: 08/09/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
@@ -40,7 +40,7 @@ Généré le: 25/08/2026
 | **ErrorPage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **ExternalLinks** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
 | **FileList** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
-| **FilePreview** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
+| **FilePreview** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **FileUpload** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **FilterInline** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **FilterSideBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -78,9 +78,8 @@ Généré le: 25/08/2026
 | **Tables/SyServerTable** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
 | **Tables/SyTable** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
 | **TableToolbar** | ❌ Non | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
-| **tests** | ❌ Non | ✅ Non | ❌ Manquante | ❌ Non | ❌ |
 | **ToolbarContainer** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 55 / 78 (70.51%)**
+**Total des composants conformes : 56 / 77 (72.73%)**

@@ -91,7 +91,7 @@ describe('DownloadBtn - Focus visual regression tests', () => {
 		cy.matchImageSnapshot('download-btn-focus-light', cy.get('.v-application'))
 	})
 
-	// Mode `dark` (prop) sur fond primary : ring onPrimary (blanc).
+	// Mode `dark` (prop) sur fond primary : ring on-primary (blanc).
 	it('shows the onPrimary ring on the button (dark)', () => {
 		cy.mountWithVuetify(
 			h(VSheet, { color: 'primary', class: 'pa-4', style: 'display: inline-block;' }, () => [

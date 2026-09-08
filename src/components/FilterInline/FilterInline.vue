@@ -94,7 +94,7 @@
 				/>
 				<slot
 					:props="{
-						modelValue: filter.value as any,
+						modelValue: filter.value,
 						'onUpdate:modelValue': (value: unknown) => {
 							if (value !== filter.value) {
 								filter.value = value

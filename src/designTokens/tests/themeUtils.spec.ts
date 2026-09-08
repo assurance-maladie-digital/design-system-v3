@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { generateThemeVariables } from '../utils/convertSemanticsToken'
-import { createFlattenTheme } from '@/designTokens/utils'
+import { createFlattenTheme, toKebabCase } from '@/designTokens/utils'
+import { createVuetifyInstance } from '@/vuetifyConfig'
 
 describe('design token utils', () => {
 	it('flattens nested theme objects without non-null assertions', () => {
@@ -23,6 +24,24 @@ describe('design token utils', () => {
 				base: undefined,
 			},
 		} as unknown as Parameters<typeof createFlattenTheme>[0])).toThrowError('Missing theme value for key "primary-base"')
+	})
+
+	it('converts theme color names to kebab-case for CSS variables', () => {
+		expect(toKebabCase('onSurfaceVariant')).toBe('on-surface-variant')
+		expect(toKebabCase('greyDarken60')).toBe('grey-darken60')
+	})
+
+	it('generates CSS color variables without uppercase characters', () => {
+		const vuetify = createVuetifyInstance()
+		const themes = vuetify.theme.themes.value
+
+		for (const [themeName, theme] of Object.entries(themes)) {
+			for (const colorName of Object.keys(theme.colors)) {
+				expect(colorName, `${themeName}: --v-theme-${colorName}`).toBe(colorName.toLowerCase())
+			}
+		}
+
+		expect(vuetify.theme.styles.value).not.toMatch(/--v-theme-[^\s:]*[A-Z][^\s:]*\s*:/)
 	})
 
 	it('generates semantic theme variables from token categories', () => {
@@ -48,6 +67,6 @@ describe('design token utils', () => {
 					main: undefined,
 				},
 			},
-		} as unknown as Parameters<typeof generateThemeVariables>[0])).toThrowError('Missing semantic token "main" in category "background"')
+		} as unknown as Parameters<typeof generateThemeVariables>[0])).toThrow('Missing semantic token "main" in category "background"')
 	})
 })

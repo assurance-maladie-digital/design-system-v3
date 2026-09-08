@@ -36,7 +36,7 @@ describe('ExternalLinks - Visual regression tests', () => {
 })
 
 describe('ExternalLinks - Focus visual regression tests', () => {
-	// Activateur : fond primary → ring onPrimary (blanc) inset au focus.
+	// Activateur : fond primary → ring on-primary (blanc) inset au focus.
 	it('shows the onPrimary ring on the activator tab', () => {
 		cy.mountWithVuetify(ExternalLinks, {
 			props: { items: defaultItems },

@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
 import FilePreview from '../FilePreview.vue'
+import { locales } from '../locales'
 
 const { getDocumentMock } = vi.hoisted(() => {
 	const mockPage = {
@@ -24,12 +25,12 @@ function pdfFile(): File {
 	return new File(['%PDF-1.4 dummy'], 'contrat.pdf', { type: 'application/pdf' })
 }
 
-describe('FilePreview — rendu pdf.js (suivi de consultation & lecture seule)', () => {
+describe('FilePreview — pdf.js rendering (consultation tracking & readonly)', () => {
 	beforeEach(() => {
 		getDocumentMock.mockClear()
 	})
 
-	it('rend le viewer pdf.js (et pas l\'<object>) quand trackConsultation est activé', async () => {
+	it('renders the pdf.js viewer (and not the <object>) when trackConsultation is enabled', async () => {
 		const wrapper = mount(FilePreview, {
 			props: { file: pdfFile(), trackConsultation: true, pdfWorkerSrc: 'worker' },
 		})
@@ -40,7 +41,20 @@ describe('FilePreview — rendu pdf.js (suivi de consultation & lecture seule)',
 		expect(getDocumentMock).toHaveBeenCalled()
 	})
 
-	it('émet @loaded avec le nombre de pages', async () => {
+	it('names the viewer after the document, not after an error message', async () => {
+		const wrapper = mount(FilePreview, {
+			props: { file: pdfFile(), readonly: true, pdfWorkerSrc: 'worker' },
+		})
+		await flushPromises()
+
+		const viewer = wrapper.find('.sy-file-preview__pdf-viewer')
+		expect(viewer.attributes('aria-label')).toBe(locales.documentLabel)
+		expect(viewer.attributes('aria-label')).not.toBe(locales.previewNotAvailable)
+
+		wrapper.unmount()
+	})
+
+	it('emits @loaded with the page count', async () => {
 		const wrapper = mount(FilePreview, {
 			props: { file: pdfFile(), trackConsultation: true, pdfWorkerSrc: 'worker' },
 		})
@@ -49,7 +63,7 @@ describe('FilePreview — rendu pdf.js (suivi de consultation & lecture seule)',
 		expect(wrapper.emitted('loaded')?.[0]).toEqual([2])
 	})
 
-	it('émet update:complete=true une seule fois quand la fin est atteinte (v-model:complete)', async () => {
+	it('emits update:complete=true once when the end is reached (v-model:complete)', async () => {
 		const wrapper = mount(FilePreview, {
 			props: { file: pdfFile(), trackConsultation: true, pdfWorkerSrc: 'worker' },
 		})
@@ -67,7 +81,7 @@ describe('FilePreview — rendu pdf.js (suivi de consultation & lecture seule)',
 		expect(wrapper.emitted('update:complete')?.[0]).toEqual([true])
 	})
 
-	it('readonly : rend le viewer pdf.js (pas d\'<object>) sans suivre la consultation', async () => {
+	it('readonly: renders the pdf.js viewer (no <object>) without tracking consultation', async () => {
 		const wrapper = mount(FilePreview, {
 			props: { file: pdfFile(), readonly: true, pdfWorkerSrc: 'worker' },
 		})
@@ -90,7 +104,7 @@ describe('FilePreview — rendu pdf.js (suivi de consultation & lecture seule)',
 		expect(wrapper.emitted('update:complete')).toBeUndefined()
 	})
 
-	it('ne crée pas d\'URL objet en rendu embarqué pdf.js (fileURL inutile)', async () => {
+	it('creates no object URL in embedded pdf.js rendering (fileURL is not needed)', async () => {
 		const orig = URL.createObjectURL
 		const createSpy = vi.fn(() => 'blob:x')
 		URL.createObjectURL = createSpy
@@ -107,7 +121,7 @@ describe('FilePreview — rendu pdf.js (suivi de consultation & lecture seule)',
 		URL.createObjectURL = orig
 	})
 
-	it('par défaut (trackConsultation=false) garde l\'<object> et ne charge pas pdf.js', async () => {
+	it('keeps the <object> and does not load pdf.js by default (trackConsultation=false)', async () => {
 		const wrapper = mount(FilePreview, {
 			props: { file: pdfFile() },
 		})
@@ -120,7 +134,7 @@ describe('FilePreview — rendu pdf.js (suivi de consultation & lecture seule)',
 		expect(wrapper.emitted('loaded')).toBeUndefined()
 	})
 
-	it('n\'active pas le suivi pour un fichier non-PDF', async () => {
+	it('does not enable tracking for a non-PDF file', async () => {
 		const image = new File(['img'], 'photo.png', { type: 'image/png' })
 		const wrapper = mount(FilePreview, {
 			props: { file: image, trackConsultation: true, pdfWorkerSrc: 'worker' },
@@ -132,7 +146,7 @@ describe('FilePreview — rendu pdf.js (suivi de consultation & lecture seule)',
 		expect(getDocumentMock).not.toHaveBeenCalled()
 	})
 
-	it('v-model:complete revient à false au changement de document', async () => {
+	it('v-model:complete goes back to false when the document changes', async () => {
 		const wrapper = mount(FilePreview, {
 			props: { file: pdfFile(), trackConsultation: true, pdfWorkerSrc: 'worker' },
 		})
@@ -153,7 +167,7 @@ describe('FilePreview — rendu pdf.js (suivi de consultation & lecture seule)',
 		expect(wrapper.emitted('update:complete')).toContainEqual([false])
 	})
 
-	it('readonly + trackConsultation : rendu embarqué ET suivi de consultation actif', async () => {
+	it('readonly + trackConsultation: embedded rendering AND consultation tracking enabled', async () => {
 		const wrapper = mount(FilePreview, {
 			props: { file: pdfFile(), readonly: true, trackConsultation: true, pdfWorkerSrc: 'worker' },
 		})
@@ -171,7 +185,7 @@ describe('FilePreview — rendu pdf.js (suivi de consultation & lecture seule)',
 		expect(wrapper.emitted('update:complete')?.at(-1)).toEqual([true])
 	})
 
-	it('readonly : bloque le menu contextuel (clic droit)', async () => {
+	it('readonly: blocks the context menu (right click)', async () => {
 		const wrapper = mount(FilePreview, {
 			props: { file: pdfFile(), readonly: true, pdfWorkerSrc: 'worker' },
 		})
@@ -184,7 +198,7 @@ describe('FilePreview — rendu pdf.js (suivi de consultation & lecture seule)',
 		expect(event.defaultPrevented).toBe(true)
 	})
 
-	it('ne bloque pas le menu contextuel en mode suivi seul (sans readonly)', async () => {
+	it('does not block the context menu in tracking-only mode (without readonly)', async () => {
 		const wrapper = mount(FilePreview, {
 			props: { file: pdfFile(), trackConsultation: true, pdfWorkerSrc: 'worker' },
 		})
@@ -197,7 +211,7 @@ describe('FilePreview — rendu pdf.js (suivi de consultation & lecture seule)',
 		expect(event.defaultPrevented).toBe(false)
 	})
 
-	it('active puis retire le blocage du menu contextuel quand readonly change', async () => {
+	it('adds then removes the context-menu blocking when readonly changes', async () => {
 		// trackConsultation garde le viewer monté quel que soit readonly : on teste donc
 		// bien le toggle de readonly sur un même élément DOM
 		const wrapper = mount(FilePreview, {
