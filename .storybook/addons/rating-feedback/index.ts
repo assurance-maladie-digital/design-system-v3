@@ -11,6 +11,9 @@ const RatingFeedbackModal = ({ component, onClose }: {
 	component: string
 	onClose: () => void
 }) => {
+	const [isSent, setIsSent] = React.useState(false)
+	const [isFormLoaded, setIsFormLoaded] = React.useState(false)
+
 	React.useEffect(() => {
 		const onKeydown = (event: KeyboardEvent) => {
 			if (event.key === 'Escape') onClose()
@@ -18,6 +21,19 @@ const RatingFeedbackModal = ({ component, onClose }: {
 
 		window.addEventListener('keydown', onKeydown)
 		return () => window.removeEventListener('keydown', onKeydown)
+	}, [onClose])
+
+	React.useEffect(() => {
+		const onMessage = (event: MessageEvent<{ type?: string }>) => {
+			if (event.origin !== window.location.origin || event.data?.type !== 'rating-feedback-sent') return
+
+			setIsSent(true)
+			const timeout = window.setTimeout(onClose, 1800)
+			return () => window.clearTimeout(timeout)
+		}
+
+		window.addEventListener('message', onMessage)
+		return () => window.removeEventListener('message', onMessage)
 	}, [onClose])
 
 	return createPortal(
@@ -32,7 +48,7 @@ const RatingFeedbackModal = ({ component, onClose }: {
 			'role': 'dialog',
 			'style': {
 				background: '#fff', borderRadius: 8, boxShadow: '0 8px 32px rgb(0 0 0 / 25%)',
-				color: '#242424', maxWidth: '100%', overflow: 'hidden', padding: 24, width: 560,
+				color: '#242424', maxWidth: '100%', overflow: 'visible', padding: 24, width: 560,
 			},
 		},
 		React.createElement('div', {
@@ -45,11 +61,32 @@ const RatingFeedbackModal = ({ component, onClose }: {
 			'style': { background: 'transparent', border: 0, cursor: 'pointer', fontSize: 32, lineHeight: 1 },
 			'type': 'button',
 		}, '×')),
-		React.createElement('iframe', {
-			src: `iframe.html?id=${FEEDBACK_STORY_ID}&viewMode=story&args=component:${encodeURIComponent(component)}`,
-			style: { border: 0, height: 370, marginTop: 16, width: '100%' },
-			title: locales.formTitle,
-		}))),
+		isSent
+			? React.createElement('p', {
+					role: 'status',
+					style: { fontSize: 18, margin: '32px 0', textAlign: 'center' },
+				}, locales.thanks)
+			: React.createElement('div', {
+					style: { minHeight: 500, position: 'relative' },
+				},
+				!isFormLoaded
+					? React.createElement('p', {
+							role: 'status',
+							style: { margin: 40, textAlign: 'center' },
+						}, locales.loading)
+					: null,
+				React.createElement('iframe', {
+					'aria-busy': !isFormLoaded,
+					'onLoad': () => setIsFormLoaded(true),
+					'scrolling': 'no',
+					'src': `iframe.html?id=${FEEDBACK_STORY_ID}&viewMode=story&args=component:${encodeURIComponent(component)}`,
+					'style': {
+						border: 0, height: 600, marginTop: 16,
+						opacity: isFormLoaded ? 1 : 0, overflow: 'hidden', width: '100%',
+					},
+					'title': locales.formTitle,
+				}))),
+		),
 		document.body,
 	)
 }

@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
-import { VBtn } from 'vuetify/components'
+import { VBtn, VSelect } from 'vuetify/components'
 import RatingPicker from '@/components/RatingPicker/RatingPicker.vue'
 import { RatingEnum } from '@/components/RatingPicker/Rating'
 import SyTextArea from '@/components/SyTextArea/SyTextArea.vue'
 import { locales } from '../../../.storybook/addons/rating-feedback/locales'
 
-const feedbackEndpoint = '/api/feedback'
+const feedbackRecipient = 'studio-design.cnam@assurance-maladie.fr'
 
 const meta = {
 	title: 'Internes/RatingFeedback',
@@ -18,36 +18,28 @@ const meta = {
 		component: '',
 	},
 	render: args => ({
-		components: { RatingPicker, SyTextArea, VBtn },
+		components: { RatingPicker, SyTextArea, VBtn, VSelect },
 		setup() {
 			const rating = ref(-1)
 			const comment = ref('')
-			const status = ref<'idle' | 'pending' | 'success' | 'error'>('idle')
+			const issueType = ref(locales.issueTypes[4])
+			const status = ref<'idle' | 'sending'>('idle')
 
-			const submit = async () => {
-				status.value = 'pending'
+			const submit = () => {
+				status.value = 'sending'
+				const subject = encodeURIComponent(issueType.value)
+				const body = encodeURIComponent([
+					`Composant : ${args.component}`,
+					`Note : ${rating.value}/5`,
+					'',
+					`Commentaire : ${comment.value || 'Aucun commentaire.'}`,
+				].join('\n'))
 
-				try {
-					const response = await fetch(feedbackEndpoint, {
-						method: 'POST',
-						headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify({
-							comment: comment.value,
-							component: args.component,
-							pageUrl: window.parent.location.href,
-							rating: rating.value,
-						}),
-					})
-
-					if (!response.ok) throw new Error(`HTTP ${response.status}`)
-					status.value = 'success'
-				}
-				catch {
-					status.value = 'error'
-				}
+				window.parent.postMessage({ type: 'rating-feedback-sent' }, window.location.origin)
+				window.location.href = `mailto:${feedbackRecipient}?subject=${subject}&body=${body}`
 			}
 
-			return { comment, locales, rating, RatingEnum, status, submit }
+			return { comment, issueType, locales, rating, RatingEnum, status, submit }
 		},
 		template: `
 			<div style="width: min(500px, calc(100vw - 48px)); padding: 8px;">
@@ -57,6 +49,13 @@ const meta = {
 					:label="locales.ratingLabel"
 					center
 				/>
+				<VSelect
+					v-model="issueType"
+					:items="locales.issueTypes"
+					:label="locales.issueTypeLabel"
+					class="mt-6"
+					density="comfortable"
+				/>
 				<SyTextArea
 					v-model="comment"
 					:label="locales.commentLabel"
@@ -65,28 +64,13 @@ const meta = {
 					rows="4"
 				/>
 				<VBtn
-					:disabled="rating === -1 || status === 'pending'"
-					:loading="status === 'pending'"
+					:disabled="rating === -1 || status === 'sending'"
 					class="mt-6"
 					color="primary"
 					@click="submit"
 				>
-					{{ status === 'pending' ? locales.sending : locales.send }}
+					{{ status === 'sending' ? locales.sending : locales.send }}
 				</VBtn>
-				<p
-					v-if="status === 'success'"
-					class="mt-4 text-success"
-					role="status"
-				>
-					{{ locales.success }}
-				</p>
-				<p
-					v-if="status === 'error'"
-					class="mt-4 text-error"
-					role="alert"
-				>
-					{{ locales.error }}
-				</p>
 			</div>
 		`,
 	}),
