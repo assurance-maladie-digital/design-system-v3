@@ -50,7 +50,11 @@
 	watch(
 		() => props.modelValue,
 		(newValue) => {
-			innerValue.value = newValue ? formatDate(newValue, DATE_FORMAT) : undefined
+			const formatted = newValue ? formatDate(newValue, DATE_FORMAT) : undefined
+			if (innerValue.value !== formatted) {
+				innerValue.value = formatted
+				emits('update:textValue', formatted)
+			}
 		},
 	)
 

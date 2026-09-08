@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed, provide, readonly as readonlyState, ref, toRef, useAttrs, watch, type ComponentPublicInstance } from 'vue'
+	import { computed, nextTick, provide, readonly as readonlyState, ref, toRef, useAttrs, watch, type ComponentPublicInstance } from 'vue'
 	import DatePickerLiteInput from './DatePickerLiteText/DatePickerLiteInput.vue'
 	import DatePickerLiteVisual from './DatePickerLiteVisual/DatePickerLiteVisual.vue'
 	import { locales as defaultLocales } from './locales'
@@ -50,10 +50,13 @@
 		{ immediate: true },
 	)
 
-	watch(internalValue, (newValue) => {
+	watch(internalValue, async (newValue) => {
 		if (!props.readonly && !props.disabled) {
 			emits('update:modelValue', newValue)
 		}
+		// Wait for DatePickerLiteInput to update textValue before validating
+		await nextTick()
+		validate()
 	})
 
 	// Mirror of the text field content, fed by the input's update:textValue
