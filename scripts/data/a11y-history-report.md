@@ -1,6 +1,6 @@
 # Rapport d’historique d’accessibilité par composant
 
-- Généré le: 2026-08-25T13:33:03.740Z
+- Généré le: 2026-09-08T07:36:58.660Z
 
 ## Accordion
 
@@ -471,7 +471,7 @@ Aucune amélioration d’accessibilité détectée.
 ## AmeliproMailTile
 
 - **25/08/2026** — refactor: enforce no-console rule and replace TODO with Note comments (#2501)  
-  Release: `1.1.3` · Hash: `9df69d6c84d0c1383cd62b5441d0a027a07a01f7` | pattern ARIA
+  Release: `v1.1.4` · Hash: `9df69d6c84d0c1383cd62b5441d0a027a07a01f7` | pattern ARIA
 
 - **27/11/2025** — Mise à jour des tests unitaires (#1407)  
   Release: `v1.0.16` · Hash: `d09cfcb7467140a25d1ad44012a1b66bddd844f2` | pattern ARIA
@@ -805,7 +805,7 @@ Aucune amélioration d’accessibilité détectée.
 ## AmeliproTextField
 
 - **20/08/2026** — Fix tests warning (#2498)  
-  Release: `1.1.3` · Hash: `8cd25df337dd7df9a09d92eeecbeb80ebf74c9e3` | pattern ARIA
+  Release: `v1.1.4` · Hash: `8cd25df337dd7df9a09d92eeecbeb80ebf74c9e3` | pattern ARIA
 
 - **17/12/2025** — Feat/1498 renommer props ariarequired (#1535)  
   Release: `v1.0.16` · Hash: `ddd68980d997e18bc0d4ddd60bc9919b3a5bad40` | mot-clé a11y · pattern ARIA
@@ -932,7 +932,7 @@ Aucune amélioration d’accessibilité détectée.
 ## BackBtn
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -958,7 +958,7 @@ Aucune amélioration d’accessibilité détectée.
 ## BackToTopBtn
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -990,7 +990,7 @@ Aucune amélioration d’accessibilité détectée.
 ## Captcha
 
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1028,7 +1028,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaAlert
 
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1066,7 +1066,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaBase
 
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1104,7 +1104,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaBtn
 
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1142,7 +1142,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaForm
 
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1180,7 +1180,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaHelpdesk
 
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1218,7 +1218,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaImg
 
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1256,7 +1256,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaInformation
 
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1298,7 +1298,7 @@ Aucune amélioration d’accessibilité détectée.
 ## ChipList
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -1346,11 +1346,18 @@ Aucune amélioration d’accessibilité détectée.
 
 ## IconSlot
 
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+
 - **27/07/2026** — Permettre de rendre configurable toutes les chaines de caractères (#2404)  
   Release: `v1.1.3` · Hash: `2528a80ea9667f0d693f03f149d76f0242e22d4f` | pattern ARIA
 
 - **30/01/2026** — SySelect: add slots/tooltips (#1767)  
   Release: `v1.0.18` · Hash: `c3265eb88d01ee106e4db7f1a7d28cd960e48bb4` | pattern ARIA
+
+## ComponentStatusTable
+
+Aucune amélioration d’accessibilité détectée.
 
 ## ContextualMenu
 
@@ -1401,10 +1408,10 @@ Aucune amélioration d’accessibilité détectée.
 ## CookieBanner
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **06/08/2026** — Ajout des interactions sur le composant `CookieBanner` (#2477)  
-  Release: `1.1.3` · Hash: `499a1aa0772107eb411333e91a6741a2695ed0fa` | pattern ARIA
+  Release: `v1.1.4` · Hash: `499a1aa0772107eb411333e91a6741a2695ed0fa` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1471,7 +1478,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CookiesSelection
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1578,7 +1585,7 @@ Aucune amélioration d’accessibilité détectée.
 ## SyAutocomplete
 
 - **12/08/2026** — refactor: replace KebabCase to PascaleCase component calls  
-  Release: `1.1.3` · Hash: `7dab36881ad0d0ba95dcbbff4810c1f7d34d72f5` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7dab36881ad0d0ba95dcbbff4810c1f7d34d72f5` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -1619,10 +1626,10 @@ Aucune amélioration d’accessibilité détectée.
 ## SyInputSelect
 
 - **20/08/2026** — Fix tests warning (#2498)  
-  Release: `1.1.3` · Hash: `8cd25df337dd7df9a09d92eeecbeb80ebf74c9e3` | pattern ARIA
+  Release: `v1.1.4` · Hash: `8cd25df337dd7df9a09d92eeecbeb80ebf74c9e3` | pattern ARIA
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **27/07/2026** — Permettre de rendre configurable toutes les chaines de caractères (#2404)  
   Release: `v1.1.3` · Hash: `2528a80ea9667f0d693f03f149d76f0242e22d4f` | pattern ARIA
@@ -1646,6 +1653,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `bb0f966392add9b7ded61f7edddd960556bc228c` | pattern ARIA
 
 ## SySelect
+
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
 
 - **27/07/2026** — SySelect: fix selection display when items is a string array (#2425)  
   Release: `v1.1.3` · Hash: `45ce4db94c37746d9e3c0b3d9883d27eae0841e7` | pattern ARIA
@@ -1747,6 +1757,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyCheckbox
 
+- **27/08/2026** — fix error on accessibility page (#2514)  
+  Release: `1.1.4` · Hash: `9099bd12f8b762c86fff317a56be129231501fbd` | mot-clé a11y · pattern ARIA
+
 - **23/07/2026** — [SyCheckbox] multiple (#2410)  
   Release: `v1.1.3` · Hash: `d8257e99afab773ca4986c43262aeba95297a8ce` | pattern ARIA
 
@@ -1817,8 +1830,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyIcon
 
+- **28/08/2026** — Ajout de documentation sur le composant `SyIcon` (#2483)  
+  Release: `1.1.4` · Hash: `1a820ea05380988c7263430d7046f5859bff97bd` | pattern ARIA
+
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -1858,8 +1877,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyIconAccessibility
 
+- **28/08/2026** — Ajout de documentation sur le composant `SyIcon` (#2483)  
+  Release: `1.1.4` · Hash: `1a820ea05380988c7263430d7046f5859bff97bd` | pattern ARIA
+
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -1900,10 +1925,10 @@ Aucune amélioration d’accessibilité détectée.
 ## SyIconButton
 
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **04/08/2026** — Add Destructive VBtn version (#2464)  
-  Release: `1.1.3` · Hash: `c78863eecebea48a511266cdcca492913112e4f4` | pattern ARIA
+  Release: `v1.1.4` · Hash: `c78863eecebea48a511266cdcca492913112e4f4` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1946,7 +1971,7 @@ Aucune amélioration d’accessibilité détectée.
 ## SyRadioGroup
 
 - **25/08/2026** — [SyRadioGroup] héritage des attributs (#2493)  
-  Release: `1.1.3` · Hash: `a216fc35e26df993b7be4d403abcc5d65b5a8e36` | pattern ARIA
+  Release: `v1.1.4` · Hash: `a216fc35e26df993b7be4d403abcc5d65b5a8e36` | pattern ARIA
 
 - **27/07/2026** — Permettre de rendre configurable toutes les chaines de caractères (#2404)  
   Release: `v1.1.3` · Hash: `2528a80ea9667f0d693f03f149d76f0242e22d4f` | pattern ARIA
@@ -2017,6 +2042,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.7` · Hash: `80bc09fa1699b9cb604e9e3a8604a1b42aaa3d5c` | pattern ARIA
 
 ## FieldState
+
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
 
 - **31/07/2026** — SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)  
   Release: `v1.1.3` · Hash: `611b0627edc2976b1cd4129f701dd228394d52d8` | pattern ARIA
@@ -2127,6 +2155,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.5-alpha` · Hash: `e39bb2110a601c9653031627a00509bd3e7eb3be` | pattern ARIA
 
 ## SyTextField
+
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
 
 - **31/07/2026** — SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)  
   Release: `v1.1.3` · Hash: `611b0627edc2976b1cd4129f701dd228394d52d8` | pattern ARIA
@@ -2289,7 +2320,7 @@ Aucune amélioration d’accessibilité détectée.
 ## DatePicker
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **31/07/2026** — SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)  
   Release: `v1.1.3` · Hash: `611b0627edc2976b1cd4129f701dd228394d52d8` | pattern ARIA
@@ -2339,7 +2370,7 @@ Aucune amélioration d’accessibilité détectée.
 ## ComplexDatePicker
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **30/07/2026** — DatePicker: add documentation for known false positives in accessibility tooling (aria-controls and keyboard navigation) (#2446)  
   Release: `v1.1.3` · Hash: `6fc4e15b014bb96534f21f5070a2ce4226866f4f` | mot-clé a11y · pattern ARIA
@@ -2389,7 +2420,7 @@ Aucune amélioration d’accessibilité détectée.
 ## DatePickerLiveRegion
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **31/07/2026** — SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)  
   Release: `v1.1.3` · Hash: `611b0627edc2976b1cd4129f701dd228394d52d8` | pattern ARIA
@@ -2584,7 +2615,7 @@ Aucune amélioration d’accessibilité détectée.
 ## DeclarationAccessibilityPage
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -2615,7 +2646,7 @@ Aucune amélioration d’accessibilité détectée.
 ## DialogBox
 
 - **05/08/2026** — Ajout des interactions sur le composant `DialogBox` (#2469)  
-  Release: `1.1.3` · Hash: `30980ea7b507740d586d1cf742fc41eef49b6b3c` | pattern ARIA
+  Release: `v1.1.4` · Hash: `30980ea7b507740d586d1cf742fc41eef49b6b3c` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -2671,7 +2702,7 @@ Aucune amélioration d’accessibilité détectée.
 ## DownloadBtn
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -2827,6 +2858,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## FilePreview
 
+- **03/09/2026** — Improve pdf display on android + fix uploadWorkfow (#2527)  
+  Release: `1.1.4` · Hash: `b70137c4b8130a223eb88d3a1427b943a36a79f6` | pattern ARIA
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
 
@@ -2844,6 +2878,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## FileUpload
 
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
 
@@ -2857,6 +2894,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.17` · Hash: `ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf` | mot-clé a11y
 
 ## FileUploadContent
+
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -2940,7 +2980,7 @@ Aucune amélioration d’accessibilité détectée.
 ## FooterBar
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -3004,7 +3044,7 @@ Aucune amélioration d’accessibilité détectée.
 ## HeaderBar
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **30/07/2026** — A11y: Fix homeLink focus (#2443)  
   Release: `v1.1.3` · Hash: `43ecbd9871d2da61c693351d6c13ae521d23235c` | mot-clé a11y · pattern ARIA
@@ -3075,7 +3115,7 @@ Aucune amélioration d’accessibilité détectée.
 ## HeaderBurgerMenu
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -3282,10 +3322,10 @@ Aucune amélioration d’accessibilité détectée.
 ## HeaderToolbar
 
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **12/08/2026** — refactor: replace KebabCase to PascaleCase component calls  
-  Release: `1.1.3` · Hash: `7dab36881ad0d0ba95dcbbff4810c1f7d34d72f5` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7dab36881ad0d0ba95dcbbff4810c1f7d34d72f5` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -3314,7 +3354,7 @@ Aucune amélioration d’accessibilité détectée.
 ## LangBtn
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -3398,7 +3438,7 @@ Aucune amélioration d’accessibilité détectée.
 ## LunarCalendar
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -3659,6 +3699,12 @@ Aucune amélioration d’accessibilité détectée.
 
 ## PaginatedTable
 
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+
+- **26/08/2026** — refactor(PaginatedTable): add locales support for accessibility labels (#2505)  
+  Release: `1.1.4` · Hash: `755b1137304028d3762733d9b5f297469e3023c6` | mot-clé a11y · pattern ARIA
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
 
@@ -3699,6 +3745,12 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.11-alpha` · Hash: `b4252a4f54c0bffe7c72b848d7d40417aa5a3fb0` | pattern ARIA
 
 ## Pagination
+
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+
+- **26/08/2026** — refactor(PaginatedTable): add locales support for accessibility labels (#2505)  
+  Release: `1.1.4` · Hash: `755b1137304028d3762733d9b5f297469e3023c6` | mot-clé a11y · pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -3783,7 +3835,7 @@ Aucune amélioration d’accessibilité détectée.
 ## PeriodField
 
 - **25/08/2026** — refactor: enforce no-console rule and replace TODO with Note comments (#2501)  
-  Release: `1.1.3` · Hash: `9df69d6c84d0c1383cd62b5441d0a027a07a01f7` | pattern ARIA
+  Release: `v1.1.4` · Hash: `9df69d6c84d0c1383cd62b5441d0a027a07a01f7` | pattern ARIA
 
 - **01/04/2026** — Feat/improve date pickers accessibility (#1964)  
   Release: `v1.0.24` · Hash: `bfc61d4def7a5d1b29f3777ab2f57eff5e88152a` | mot-clé a11y · pattern ARIA
@@ -4077,6 +4129,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SkipLink
 
+- **28/08/2026** — feat(SkipLink): add support for multiple skip links and enhance accessibility (#2515)  
+  Release: `1.1.4` · Hash: `9bc308f61597b0dea151c2ddd8f738bc824757e1` | mot-clé a11y · pattern ARIA
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
 
@@ -4179,10 +4234,10 @@ Aucune amélioration d’accessibilité détectée.
 ## SyAlert
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **07/08/2026** — [SyAlert] Ajout de la props density (#2478)  
-  Release: `1.1.3` · Hash: `1fc52297b3b59207665ab797522e03309e6a18a7` | pattern ARIA
+  Release: `v1.1.4` · Hash: `1fc52297b3b59207665ab797522e03309e6a18a7` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -4210,8 +4265,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyBtnMenu
 
+- **07/09/2026** — fix button color in syBtnMenu (#2536)  
+  Release: `1.1.4` · Hash: `b46884596483f9895fbb6bcd73ba948a49b543e7` | pattern ARIA
+
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+
 - **07/08/2026** — UserMenuBtn: improve responsive + a11y (#2470)  
-  Release: `1.1.3` · Hash: `39f7e1db8d96b9422e2b972fd423def3aa25a678` | mot-clé a11y · pattern ARIA
+  Release: `v1.1.4` · Hash: `39f7e1db8d96b9422e2b972fd423def3aa25a678` | mot-clé a11y · pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -4262,7 +4323,7 @@ Aucune amélioration d’accessibilité détectée.
 ## TableToolbar
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -4290,8 +4351,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyServerTable
 
+- **04/09/2026** — SyTable/SyServerTable: fix items per page  (#2538)  
+  Release: `1.1.4` · Hash: `2c90a270023a8f81debfab170380e16cdb6e0640` | pattern ARIA
+
 - **25/08/2026** — [Table] selection avec éléments radio en mode selection unique (#2494)  
-  Release: `1.1.3` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
+  Release: `v1.1.4` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -4335,7 +4399,7 @@ Aucune amélioration d’accessibilité détectée.
 ## SyTable
 
 - **25/08/2026** — [Table] selection avec éléments radio en mode selection unique (#2494)  
-  Release: `1.1.3` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
+  Release: `v1.1.4` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -4379,10 +4443,10 @@ Aucune amélioration d’accessibilité détectée.
 ## SyTableFilter
 
 - **25/08/2026** — fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)  
-  Release: `1.1.3` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
+  Release: `v1.1.4` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
 
 - **25/08/2026** — [Table] selection avec éléments radio en mode selection unique (#2494)  
-  Release: `1.1.3` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
+  Release: `v1.1.4` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -4465,10 +4529,10 @@ Aucune amélioration d’accessibilité détectée.
 ## SyTablePagination
 
 - **25/08/2026** — fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)  
-  Release: `1.1.3` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
+  Release: `v1.1.4` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
 
 - **25/08/2026** — [Table] selection avec éléments radio en mode selection unique (#2494)  
-  Release: `1.1.3` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
+  Release: `v1.1.4` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -4551,10 +4615,10 @@ Aucune amélioration d’accessibilité détectée.
 ## TableBulkActions
 
 - **25/08/2026** — fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)  
-  Release: `1.1.3` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
+  Release: `v1.1.4` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
 
 - **25/08/2026** — [Table] selection avec éléments radio en mode selection unique (#2494)  
-  Release: `1.1.3` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
+  Release: `v1.1.4` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -4637,10 +4701,10 @@ Aucune amélioration d’accessibilité détectée.
 ## TableHeader
 
 - **25/08/2026** — fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)  
-  Release: `1.1.3` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
+  Release: `v1.1.4` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
 
 - **25/08/2026** — [Table] selection avec éléments radio en mode selection unique (#2494)  
-  Release: `1.1.3` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
+  Release: `v1.1.4` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -4844,10 +4908,10 @@ Aucune amélioration d’accessibilité détectée.
 ## UserMenuBtn
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **07/08/2026** — UserMenuBtn: improve responsive + a11y (#2470)  
-  Release: `1.1.3` · Hash: `39f7e1db8d96b9422e2b972fd423def3aa25a678` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `39f7e1db8d96b9422e2b972fd423def3aa25a678` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
