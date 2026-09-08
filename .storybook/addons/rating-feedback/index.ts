@@ -60,9 +60,9 @@ const RatingFeedbackTool = () => {
 	const [isOpen, setIsOpen] = React.useState(false)
 	const story = storyId ? api.getData(storyId) : undefined
 
-	if (!story?.title.startsWith('Composants/')) return null
+	if (!storyId || storyId === FEEDBACK_STORY_ID) return null
 
-	const component = story.title.split('/').at(-1) ?? story.name
+	const component = story?.title.split('/').at(-1) ?? story?.name ?? storyId
 
 	return React.createElement(React.Fragment, null,
 		React.createElement('button', {
@@ -74,7 +74,7 @@ const RatingFeedbackTool = () => {
 				gap: 6, height: '100%', padding: '0 10px',
 			},
 			'title': locales.open,
-		}, 'Donnez nous votre avis'),
+		}, locales.open),
 		isOpen ? React.createElement(RatingFeedbackModal, { component, onClose: () => setIsOpen(false) }) : null,
 	)
 }
