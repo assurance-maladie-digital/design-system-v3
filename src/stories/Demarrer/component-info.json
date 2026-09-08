@@ -1,20 +1,20 @@
 {
-  "date": "2026-09-07T13:17:07.778Z",
+  "date": "2026-09-08T07:37:04.910Z",
   "totalCount": 77,
   "results": [
     {
       "componentName": "Accordion",
       "storybookTitle": "Composants/Données/Accordion",
       "status": "actif",
-      "functionalVersion": "1.1.4",
-      "functionalDate": "07/08/2026",
+      "functionalVersion": "1.1.5",
+      "functionalDate": "27/08/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-07",
@@ -225,7 +225,7 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "05/08/2026",
-      "a11yVersion": "1.1.3",
+      "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
         {
@@ -360,7 +360,7 @@
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
           "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -451,7 +451,7 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "05/08/2026",
-      "a11yVersion": "1.1.3",
+      "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
         {
@@ -556,7 +556,7 @@
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
           "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -784,7 +784,7 @@
           "date": "2026-08-13 15:55:47 +0200",
           "dateFr": "13/08/2026",
           "message": "fix/components-name-format",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -917,15 +917,15 @@
       "componentName": "ChipList",
       "storybookTitle": "Composants/Données/ChipList",
       "status": "actif",
-      "functionalVersion": "1.1.3",
-      "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.3",
+      "functionalVersion": "1.1.5",
+      "functionalDate": "27/08/2026",
+      "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-10",
@@ -1029,7 +1029,7 @@
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
           "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -1425,7 +1425,7 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "25/08/2026",
-      "a11yVersion": "1.1.3",
+      "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
         {
@@ -1545,7 +1545,7 @@
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
           "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -1556,7 +1556,7 @@
           "date": "2026-08-06 15:19:01 +0200",
           "dateFr": "06/08/2026",
           "message": "Ajout des interactions sur le composant `CookieBanner` (#2477)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -1713,7 +1713,7 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.3",
+      "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
         {
@@ -1793,7 +1793,7 @@
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
           "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -2381,15 +2381,15 @@
       "componentName": "Customs/Selects/SyAutocomplete",
       "storybookTitle": "Composants/Formulaires/Selects/SyAutocomplete",
       "status": "actif",
-      "functionalVersion": "1.1.3",
-      "functionalDate": "27/07/2026",
+      "functionalVersion": "1.1.5",
+      "functionalDate": "27/08/2026",
       "a11yVersion": "1.0.27",
       "a11yDate": "13/05/2026",
       "commits": [
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-12",
@@ -2518,7 +2518,7 @@
           "date": "2026-08-12 16:12:41 +0200",
           "dateFr": "12/08/2026",
           "message": "refactor: replace KebabCase to PascaleCase component calls",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -2662,15 +2662,15 @@
       "componentName": "Customs/Selects/SyInputSelect",
       "storybookTitle": "Composants/Formulaires/Selects/SyInputSelect",
       "status": "déprécié",
-      "functionalVersion": "1.1.4",
-      "functionalDate": "20/08/2026",
-      "a11yVersion": "1.1.3",
+      "functionalVersion": "1.1.5",
+      "functionalDate": "27/08/2026",
+      "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-25",
@@ -2789,7 +2789,7 @@
           "date": "2026-08-20 12:20:15 +0200",
           "dateFr": "20/08/2026",
           "message": "Fix tests warning (#2498)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -2800,7 +2800,7 @@
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
           "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -2889,15 +2889,15 @@
       "componentName": "Customs/Selects/SySelect",
       "storybookTitle": "Composants/Formulaires/Selects/SySelect",
       "status": "actif",
-      "functionalVersion": "1.1.3",
-      "functionalDate": "27/07/2026",
+      "functionalVersion": "1.1.5",
+      "functionalDate": "27/08/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-13",
@@ -3021,6 +3021,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
+          "date": "2026-08-26 13:27:43 +0200",
+          "dateFr": "26/08/2026",
+          "message": "[RGAA] Corrige les bordure des champs de formulaires (#2471)",
+          "version": "1.1.4",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "45ce4db94c37746d9e3c0b3d9883d27eae0841e7",
           "date": "2026-07-27 14:56:33 +0200",
@@ -3337,8 +3348,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.3",
-      "a11yDate": "22/07/2026",
+      "a11yVersion": "1.1.4",
+      "a11yDate": "27/08/2026",
       "commits": [
         {
           "date": "2026-07-27",
@@ -3467,6 +3478,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9099bd12f8b762c86fff317a56be129231501fbd",
+          "date": "2026-08-27 16:25:29 +0200",
+          "dateFr": "27/08/2026",
+          "message": "fix error on accessibility page (#2514)",
+          "version": "1.1.4",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "d8257e99afab773ca4986c43262aeba95297a8ce",
           "date": "2026-07-23 15:47:19 +0200",
@@ -3918,7 +3940,7 @@
         {
           "date": "2026-08-28",
           "message": "Ajout de documentation sur le composant `SyIcon` (#2483)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-25",
@@ -3983,11 +4005,33 @@
       ],
       "a11yCommits": [
         {
+          "hash": "1a820ea05380988c7263430d7046f5859bff97bd",
+          "date": "2026-08-28 14:20:23 +0200",
+          "dateFr": "28/08/2026",
+          "message": "Ajout de documentation sur le composant `SyIcon` (#2483)",
+          "version": "1.1.4",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
+          "date": "2026-08-26 13:27:43 +0200",
+          "dateFr": "26/08/2026",
+          "message": "[RGAA] Corrige les bordure des champs de formulaires (#2471)",
+          "version": "1.1.4",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
           "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
           "date": "2026-08-13 15:55:47 +0200",
           "dateFr": "13/08/2026",
           "message": "fix/components-name-format",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -4183,7 +4227,7 @@
           "date": "2026-08-13 15:55:47 +0200",
           "dateFr": "13/08/2026",
           "message": "fix/components-name-format",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -4194,7 +4238,7 @@
           "date": "2026-08-04 13:28:20 +0200",
           "dateFr": "04/08/2026",
           "message": "Add Destructive VBtn version (#2464)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -4508,7 +4552,7 @@
           "date": "2026-08-25 10:33:40 +0200",
           "dateFr": "25/08/2026",
           "message": "[SyRadioGroup] héritage des attributs (#2493)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -4875,15 +4919,15 @@
       "componentName": "Customs/SyTextField",
       "storybookTitle": "Composants/Formulaires/SyTextField",
       "status": "actif",
-      "functionalVersion": "1.1.3",
-      "functionalDate": "31/07/2026",
+      "functionalVersion": "1.1.5",
+      "functionalDate": "27/08/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "23/07/2026",
       "commits": [
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-07-31",
@@ -5007,6 +5051,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
+          "date": "2026-08-26 13:27:43 +0200",
+          "dateFr": "26/08/2026",
+          "message": "[RGAA] Corrige les bordure des champs de formulaires (#2471)",
+          "version": "1.1.4",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "611b0627edc2976b1cd4129f701dd228394d52d8",
           "date": "2026-07-31 12:04:52 +0200",
@@ -5792,13 +5847,13 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "13/08/2026",
-      "a11yVersion": "1.1.3",
+      "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
         {
           "date": "2026-08-27",
           "message": "refactor(DatePicker): standardize labels and placeholders with format hints across stories (#2513)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-18",
@@ -5927,7 +5982,7 @@
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
           "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -6106,13 +6161,13 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "13/08/2026",
-      "a11yVersion": "1.1.3",
+      "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
         {
           "date": "2026-08-27",
           "message": "refactor(DatePicker): standardize labels and placeholders with format hints across stories (#2513)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-25",
@@ -6241,7 +6296,7 @@
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
           "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -6426,7 +6481,7 @@
         {
           "date": "2026-08-27",
           "message": "refactor(DatePicker): standardize labels and placeholders with format hints across stories (#2513)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-07-31",
@@ -6780,7 +6835,7 @@
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
           "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -6961,7 +7016,7 @@
         {
           "date": "2026-09-03",
           "message": "Improve pdf display on android + fix uploadWorkfow (#2527)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-05",
@@ -7090,7 +7145,7 @@
           "date": "2026-08-05 15:08:26 +0200",
           "dateFr": "05/08/2026",
           "message": "Ajout des interactions sur le composant `DialogBox` (#2469)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -7289,15 +7344,15 @@
       "componentName": "DownloadBtn",
       "storybookTitle": "Composants/Boutons/DownloadBtn",
       "status": "actif",
-      "functionalVersion": "1.1.4",
-      "functionalDate": "06/08/2026",
-      "a11yVersion": "1.1.3",
+      "functionalVersion": "1.1.5",
+      "functionalDate": "27/08/2026",
+      "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-25",
@@ -7426,7 +7481,7 @@
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
           "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -8255,15 +8310,15 @@
       "componentName": "FilePreview",
       "storybookTitle": "Composants/Données/FilePreview",
       "status": "actif",
-      "functionalVersion": "1.1.3",
-      "functionalDate": "27/07/2026",
+      "functionalVersion": "1.1.5",
+      "functionalDate": "03/09/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-09-03",
           "message": "Improve pdf display on android + fix uploadWorkfow (#2527)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-07-27",
@@ -8312,6 +8367,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "b70137c4b8130a223eb88d3a1427b943a36a79f6",
+          "date": "2026-09-03 11:29:18 +0200",
+          "dateFr": "03/09/2026",
+          "message": "Improve pdf display on android + fix uploadWorkfow (#2527)",
+          "version": "1.1.4",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
@@ -8373,15 +8439,15 @@
       "componentName": "FileUpload",
       "storybookTitle": "Composants/Formulaires/FileUpload",
       "status": "actif",
-      "functionalVersion": "1.1.4",
-      "functionalDate": "06/08/2026",
+      "functionalVersion": "1.1.5",
+      "functionalDate": "03/09/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-09-03",
           "message": "Improve pdf display on android + fix uploadWorkfow (#2527)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-06",
@@ -8476,6 +8542,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
+          "date": "2026-08-26 13:27:43 +0200",
+          "dateFr": "26/08/2026",
+          "message": "[RGAA] Corrige les bordure des champs de formulaires (#2471)",
+          "version": "1.1.4",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
@@ -8525,15 +8602,15 @@
       "componentName": "FilterInline",
       "storybookTitle": "Composants/Filtres/FilterInline",
       "status": "actif",
-      "functionalVersion": "1.1.3",
-      "functionalDate": "27/07/2026",
+      "functionalVersion": "1.1.5",
+      "functionalDate": "27/08/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-07-27",
@@ -9019,7 +9096,7 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "07/08/2026",
-      "a11yVersion": "1.1.3",
+      "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
         {
@@ -9154,7 +9231,7 @@
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
           "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -9485,7 +9562,7 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "13/08/2026",
-      "a11yVersion": "1.1.3",
+      "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
         {
@@ -9620,7 +9697,7 @@
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
           "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -10421,7 +10498,7 @@
           "date": "2026-08-13 15:55:47 +0200",
           "dateFr": "13/08/2026",
           "message": "fix/components-name-format",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -10432,7 +10509,7 @@
           "date": "2026-08-12 16:12:41 +0200",
           "dateFr": "12/08/2026",
           "message": "refactor: replace KebabCase to PascaleCase component calls",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -10534,7 +10611,7 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "05/08/2026",
-      "a11yVersion": "1.1.3",
+      "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
         {
@@ -10669,7 +10746,7 @@
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
           "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -11129,7 +11206,7 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.3",
+      "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
         {
@@ -11199,7 +11276,7 @@
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
           "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -11565,15 +11642,15 @@
       "componentName": "NirField",
       "storybookTitle": "Composants/Formulaires/NirField",
       "status": "actif",
-      "functionalVersion": "1.1.4",
-      "functionalDate": "25/08/2026",
+      "functionalVersion": "1.1.5",
+      "functionalDate": "27/08/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-25",
@@ -12577,15 +12654,15 @@
       "componentName": "PaginatedTable",
       "storybookTitle": "Composants/Tableaux/PaginatedTable",
       "status": "déprécié",
-      "functionalVersion": "1.1.3",
-      "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.3",
-      "a11yDate": "22/07/2026",
+      "functionalVersion": "1.1.5",
+      "functionalDate": "27/08/2026",
+      "a11yVersion": "1.1.4",
+      "a11yDate": "26/08/2026",
       "commits": [
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-25",
@@ -12709,6 +12786,28 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
+          "date": "2026-08-26 13:27:43 +0200",
+          "dateFr": "26/08/2026",
+          "message": "[RGAA] Corrige les bordure des champs de formulaires (#2471)",
+          "version": "1.1.4",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "755b1137304028d3762733d9b5f297469e3023c6",
+          "date": "2026-08-26 09:09:15 +0200",
+          "dateFr": "26/08/2026",
+          "message": "refactor(PaginatedTable): add locales support for accessibility labels (#2505)",
+          "version": "1.1.4",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
@@ -13139,15 +13238,15 @@
       "componentName": "PeriodField",
       "storybookTitle": "Composants/Formulaires/PeriodField",
       "status": "actif",
-      "functionalVersion": "1.1.3",
-      "functionalDate": "27/07/2026",
+      "functionalVersion": "1.1.5",
+      "functionalDate": "27/08/2026",
       "a11yVersion": "1.0.24",
       "a11yDate": "01/04/2026",
       "commits": [
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-25",
@@ -13276,7 +13375,7 @@
           "date": "2026-08-25 08:58:16 +0200",
           "dateFr": "25/08/2026",
           "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -14355,8 +14454,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.3",
-      "a11yDate": "22/07/2026",
+      "a11yVersion": "1.1.4",
+      "a11yDate": "28/08/2026",
       "commits": [
         {
           "date": "2026-07-22",
@@ -14430,6 +14529,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9bc308f61597b0dea151c2ddd8f738bc824757e1",
+          "date": "2026-08-28 18:19:08 +0200",
+          "dateFr": "28/08/2026",
+          "message": "feat(SkipLink): add support for multiple skip links and enhance accessibility (#2515)",
+          "version": "1.1.4",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
@@ -15093,7 +15203,7 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "07/08/2026",
-      "a11yVersion": "1.1.3",
+      "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
         {
@@ -15228,7 +15338,7 @@
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
           "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -15239,7 +15349,7 @@
           "date": "2026-08-07 15:40:09 +0200",
           "dateFr": "07/08/2026",
           "message": "[SyAlert] Ajout de la props density (#2478)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -15339,11 +15449,16 @@
       "componentName": "SyBtnMenu",
       "storybookTitle": "Composants/Navigation/SyBtnMenu",
       "status": "actif",
-      "functionalVersion": "1.1.3",
-      "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.3",
+      "functionalVersion": "1.1.5",
+      "functionalDate": "07/09/2026",
+      "a11yVersion": "1.1.4",
       "a11yDate": "07/08/2026",
       "commits": [
+        {
+          "date": "2026-09-07",
+          "message": "fix button color in syBtnMenu (#2536)",
+          "version": "1.1.5"
+        },
         {
           "date": "2026-08-25",
           "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)",
@@ -15392,11 +15507,33 @@
       ],
       "a11yCommits": [
         {
+          "hash": "b46884596483f9895fbb6bcd73ba948a49b543e7",
+          "date": "2026-09-07 15:29:02 +0200",
+          "dateFr": "07/09/2026",
+          "message": "fix button color in syBtnMenu (#2536)",
+          "version": "1.1.4",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
+          "date": "2026-08-26 13:27:43 +0200",
+          "dateFr": "26/08/2026",
+          "message": "[RGAA] Corrige les bordure des champs de formulaires (#2471)",
+          "version": "1.1.4",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
           "hash": "39f7e1db8d96b9422e2b972fd423def3aa25a678",
           "date": "2026-08-07 15:13:49 +0200",
           "dateFr": "07/08/2026",
           "message": "UserMenuBtn: improve responsive + a11y (#2470)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -15708,30 +15845,30 @@
       "componentName": "Tables/SyServerTable",
       "storybookTitle": "Composants/Tableaux/SyServerTable",
       "status": "actif",
-      "functionalVersion": "1.1.4",
-      "functionalDate": "25/08/2026",
+      "functionalVersion": "1.1.5",
+      "functionalDate": "04/09/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-09-04",
           "message": "SyTable/SyServerTable: fix items per page  (#2538)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-09-03",
           "message": "[tables] refactor documentation (#2525)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-28",
           "message": "[Tables] Ajout de la configuration individuel des filtres (#2490)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-25",
@@ -15841,11 +15978,22 @@
       ],
       "a11yCommits": [
         {
+          "hash": "2c90a270023a8f81debfab170380e16cdb6e0640",
+          "date": "2026-09-04 15:53:57 +0200",
+          "dateFr": "04/09/2026",
+          "message": "SyTable/SyServerTable: fix items per page  (#2538)",
+          "version": "1.1.4",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
           "hash": "5b17a07d9bf312bb7dc65d81737c16aee9486f99",
           "date": "2026-08-25 11:04:33 +0200",
           "dateFr": "25/08/2026",
           "message": "[Table] selection avec éléments radio en mode selection unique (#2494)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -16000,30 +16148,30 @@
       "componentName": "Tables/SyTable",
       "storybookTitle": "Composants/Tableaux/SyTable",
       "status": "actif",
-      "functionalVersion": "1.1.4",
-      "functionalDate": "25/08/2026",
+      "functionalVersion": "1.1.5",
+      "functionalDate": "04/09/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-09-04",
           "message": "SyTable/SyServerTable: fix items per page  (#2538)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-09-03",
           "message": "[tables] refactor documentation (#2525)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-28",
           "message": "[Tables] Ajout de la configuration individuel des filtres (#2490)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
-          "version": "1.1.4"
+          "version": "1.1.5"
         },
         {
           "date": "2026-08-25",
@@ -16137,7 +16285,7 @@
           "date": "2026-08-25 11:04:33 +0200",
           "dateFr": "25/08/2026",
           "message": "[Table] selection avec éléments radio en mode selection unique (#2494)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
@@ -16294,7 +16442,7 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.3",
+      "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
         {
@@ -16424,7 +16572,7 @@
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
           "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -16844,9 +16992,14 @@
       "status": "actif",
       "functionalVersion": "1.0.25",
       "functionalDate": "21/04/2026",
-      "a11yVersion": "1.1.3",
+      "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-09-07",
+          "message": "fix button color in syBtnMenu (#2536)",
+          "version": "1.1.5"
+        },
         {
           "date": "2026-08-25",
           "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)",
@@ -16966,11 +17119,6 @@
           "date": "2024-12-20",
           "message": "fix: update import statements to use named imports for various components (#292)",
           "version": "0.0.6-alpha"
-        },
-        {
-          "date": "2024-12-11",
-          "message": "Custom to Sy components (#261)",
-          "version": "0.0.5-alpha"
         }
       ],
       "a11yCommits": [
@@ -16979,7 +17127,7 @@
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
           "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -16990,7 +17138,7 @@
           "date": "2026-08-07 15:13:49 +0200",
           "dateFr": "07/08/2026",
           "message": "UserMenuBtn: improve responsive + a11y (#2470)",
-          "version": "1.1.3",
+          "version": "1.1.4",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
