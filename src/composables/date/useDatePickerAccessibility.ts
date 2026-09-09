@@ -246,7 +246,7 @@ const ensureMonthAndYearSelectorLabels = (
 
 		button.setAttribute('aria-label', ariaLabel)
 		button.setAttribute('title', ariaLabel)
-		button.setAttribute('aria-pressed', String(button.classList.contains('v-btn--active')))
+		button.removeAttribute('aria-pressed')
 
 		if (!selectionListeners.has(button)) {
 			const handler = () => {
@@ -271,7 +271,7 @@ const ensureMonthAndYearSelectorLabels = (
 
 		button.setAttribute('aria-label', ariaLabel)
 		button.setAttribute('title', ariaLabel)
-		button.setAttribute('aria-pressed', String(button.classList.contains('v-btn--active')))
+		button.removeAttribute('aria-pressed')
 
 		if (!selectionListeners.has(button)) {
 			const handler = () => {
@@ -488,7 +488,7 @@ const applyOptionGridStructure = (
 	if (gridcells.length === 0) return
 
 	const activeIndex = gridcells.findIndex(cell =>
-		cell.getAttribute('aria-pressed') === 'true'
+		cell.getAttribute('aria-selected') === 'true'
 		|| cell.querySelector('.v-btn--active') !== null,
 	)
 	const fallbackIndex = activeIndex >= 0 ? activeIndex : 0

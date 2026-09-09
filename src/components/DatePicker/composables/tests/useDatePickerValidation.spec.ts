@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { ref, nextTick, defineComponent } from 'vue'
+import { computed, ref, nextTick, defineComponent } from 'vue'
 import { mount } from '@vue/test-utils'
 import { createInactiveDatePickerValidationController, useDatePickerValidation } from '../useDatePickerValidation'
 import { DATE_PICKER_MESSAGES } from '../../constants/messages'
@@ -115,6 +115,24 @@ describe('useDatePickerValidation', () => {
 				state: { errors: ['Erreur Vuetify'] },
 			})
 			expect(errors.value).toEqual(['Erreur Vuetify'])
+		})
+
+		it('devrait passer modelValue (string) aux règles Vuetify, pas selectedDates (Date)', async () => {
+			const selectedDates = ref<Date | Date[] | null>(new Date(2026, 7, 26))
+			const options = createOptions({
+				useVuetifyValidation: ref(true),
+				selectedDates,
+				modelValue: ref('26/08/2026'),
+				rules: ref([
+					(value: unknown) => typeof value === 'string' || 'La règle attend une string',
+				]),
+				hasInteracted: ref(true),
+			})
+			const { validate, errors } = useDatePickerValidation(options)
+
+			await validate({ force: true })
+
+			expect(errors.value).not.toContain('La règle attend une string')
 		})
 	})
 
@@ -815,6 +833,44 @@ describe('useDatePickerValidation', () => {
 			await nextTick()
 
 			expect(errors.value).toHaveLength(0)
+		})
+	})
+
+	describe('régression : validation texte asynchrone', () => {
+		it('ignore une plage obsolète après la validation asynchrone de sa date de début', async () => {
+			let releaseFirstDate!: () => void
+			const options = createOptions({
+				noCalendar: ref(true),
+				displayRange: ref(true),
+				displayFormat: computed(() => 'DD/MM/YYYY'),
+				hasInteracted: ref(true),
+				parseDate: (value: string) => {
+					const [day, month, year] = value.split('/').map(Number)
+					return day && month && year ? new Date(year, month - 1, day) : null
+				},
+				customRules: ref([{
+					type: 'custom',
+					options: {
+						validate: (value: unknown) => {
+							if (value === '01/01/2025') {
+								return new Promise<boolean>((resolve) => {
+									releaseFirstDate = () => resolve(true)
+								})
+							}
+							return value === '02/01/2025' ? 'Erreur périmée' : true
+						},
+					},
+				}]),
+			})
+			const { errors, validateTextInput } = useDatePickerValidation(options)
+
+			const staleRange = validateTextInput('01/01/2025 - 02/01/2025')
+			await Promise.resolve()
+			await validateTextInput('03/01/2025')
+			releaseFirstDate()
+			await staleRange
+
+			expect(errors.value).toEqual([])
 		})
 	})
 })

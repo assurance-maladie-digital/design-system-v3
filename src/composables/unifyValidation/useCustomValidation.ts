@@ -3,6 +3,7 @@ import { useValidatable } from '@/composables/validation/useValidatable'
 import { computed, reactive, ref, watch } from 'vue'
 import type { Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
+import { locales } from './locales'
 
 export interface UseCustomValidationOptions {
 	registerWithForm?: boolean
@@ -92,8 +93,8 @@ export function useCustomValidation(
 		if (typeof result === 'string') {
 			return result
 		}
-
-		return ''
+		// TOTO: Check avec Adrien
+		return locales.invalidValue
 	}
 
 	const validateVuetifyValue = async (

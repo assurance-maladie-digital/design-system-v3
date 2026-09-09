@@ -35,6 +35,18 @@
 	 * 5. **`datePickerKey`** : Force le re-render du VDatePicker après un clear (fix bug production
 	 *    où Vue optimise et ne détecte pas le passage de `selectedDates` à null).
 	 *
+	 * ## Transitions d'ouverture et de sélection
+	 *
+	 * 1. **Ouverture** : l'activateur prépare les effets attendus (blur à ignorer, focus initial
+	 *    au clavier et synchronisation Vuetify à ignorer), puis rend le menu visible.
+	 * 2. **Synchronisation Vuetify** : à la réouverture avec une date existante, VDatePicker peut
+	 *    réémettre sa valeur initiale. Cette émission met à jour l'affichage, sans être traitée comme
+	 *    une sélection utilisateur ni fermer le calendrier.
+	 * 3. **Sélection utilisateur** : la mise à jour du `v-model` de Vuetify lève la garde, valide,
+	 *    synchronise le modèle et ferme le calendrier si la sélection est complète.
+	 * 4. **Fermeture** : les intentions d'ouverture sont réinitialisées. Le focus est rendu au champ
+	 *    une seule fois après la transition de sortie du menu, sans pouvoir déclencher une réouverture.
+	 *
 	 * ## Patterns partagés avec CalendarMode
 	 *
 	 * - Sync guard (`useDatePickerSyncGuard`) : flags anti-boucle identiques
@@ -118,14 +130,14 @@
 	// textInputValue, modelValue, et les événements blur/input du calendrier.
 	// - isUpdatingFromInternal : empêche les watchers de se redéclencher pendant une sync interne
 	// - ignoreNextInputBlur : consommé une fois, empêche la validation au blur causé par l'ouverture du calendrier
-	// - ignoreNextCalendarModelSync : empêche le setter de calendarSelectedDates de reboucler
+	// - ignoreNextCalendarModelSync : garde la phase d'initialisation de VDatePicker à l'ouverture.
+	//   Elle est levée par une sélection réelle ou par la fermeture du menu.
 	const {
 		isUpdatingFromInternal,
 		withInternalUpdate,
 		ignoreNextInputBlur,
 		ignoreNextCalendarModelSync,
 		consumeIgnoreNextInputBlur,
-		consumeIgnoreNextCalendarModelSync,
 		hasInteracted,
 		isManualInputActive,
 		resetInteractionState,
@@ -156,6 +168,9 @@
 	const focusCalendarInput = () => {
 		const input = getCalendarInputElement()
 		if (input) {
+			if (document.activeElement !== input) {
+				isProgrammaticFocus.value = true
+			}
 			input.focus()
 			const caretPosition = input.value.length
 			if (typeof input.setSelectionRange === 'function') {
@@ -165,6 +180,7 @@
 		}
 
 		if (typeof dateCalendarTextInputRef.value?.focus === 'function') {
+			isProgrammaticFocus.value = true
 			dateCalendarTextInputRef.value.focus()
 		}
 	}
@@ -172,20 +188,14 @@
 	// ─── Gestion fine du focus (spécifique ComplexDatePicker) ─────────
 	// Le focus est plus complexe ici car l'input est éditable : il faut distinguer
 	// le blur causé par l'ouverture du calendrier (à ignorer) du blur réel (à valider).
-	// - shouldRestoreFocusToInput : après fermeture du calendrier, redonne le focus à l'input
-	// - shouldFocusDialogOnOpen : à l'ouverture, place le focus sur le jour initial du calendrier
-	// - dialogInitialFocusToken : annule les timeouts de focus obsolètes (ex: si l'utilisateur
-	//   ferme/reouvre rapidement)
+	// - shouldRestoreFocusToInput : demande un unique retour au champ après la transition de fermeture.
+	// - shouldFocusDialogOnOpen : intention d'ouverture clavier consommée une fois par
+	//   useCalendarKeyboardNavigation, seul responsable du focus dans la grille et de son style.
+	// - isProgrammaticFocus : empêche le focus restauré d'être interprété comme une activation utilisateur.
 	const shouldRestoreFocusToInput = ref(false)
 	const shouldFocusDialogOnOpen = ref(false)
+	const isProgrammaticFocus = ref(false)
 	const keyboardNavigatedDate = ref<Date | null>(null)
-	let dialogInitialFocusToken = 0
-	let dialogInitialFocusTimeouts: ReturnType<typeof setTimeout>[] = []
-
-	const clearDialogInitialFocusTimeouts = () => {
-		dialogInitialFocusTimeouts.forEach(clearTimeout)
-		dialogInitialFocusTimeouts = []
-	}
 
 	const scheduleCalendarInputFocusRestore = () => {
 		shouldRestoreFocusToInput.value = true
@@ -195,42 +205,8 @@
 		shouldFocusDialogOnOpen.value = true
 	}
 
-	const restoreCalendarInputFocus = (attempt = 0) => {
-		nextTick(() => {
-			requestAnimationFrame(() => {
-				focusCalendarInput()
-
-				const input = getCalendarInputElement()
-				if (!input) return
-
-				if (document.activeElement === input) return
-				if (attempt >= 8) return
-
-				setTimeout(() => {
-					restoreCalendarInputFocus(attempt + 1)
-				}, attempt < 3 ? 16 : 50)
-			})
-		})
-	}
-
-	const scheduleDialogInitialDayFocus = () => {
-		dialogInitialFocusToken += 1
-		const token = dialogInitialFocusToken
-
-		clearDialogInitialFocusTimeouts()
-
-		const runFocus = () => {
-			if (!isDatePickerVisible.value || token !== dialogInitialFocusToken) return
-			focusInitialDay()
-		}
-
-		runFocus()
-		dialogInitialFocusTimeouts.push(setTimeout(runFocus, 120))
-	}
-
-	// Fermeture du calendrier. Contrairement à CalendarMode, pas de flag
-	// isHandlingProgrammaticClose car le watcher isDatePickerVisible gère
-	// directement le restoreFocus via shouldRestoreFocusToInput.
+	// La restauration éventuelle du focus est différée jusqu'à `VMenu.after-leave`.
+	// À ce stade, le menu est entièrement démonté et le focus du champ ne peut plus le rouvrir.
 	const closeDatePicker = async (options: { restoreFocus?: boolean } = {}) => {
 		if (!isDatePickerVisible.value) return
 
@@ -421,6 +397,15 @@
 		emitFocus: () => emit('focus'),
 	})
 
+	const handleDateTextInputFocus = () => {
+		if (isProgrammaticFocus.value) {
+			isProgrammaticFocus.value = false
+			return
+		}
+
+		openDatePickerOnFocus()
+	}
+
 	const refreshVisibleCalendarUi = (options: { focusDay?: boolean } = {}) => {
 		if (!isDatePickerVisible.value) return
 
@@ -431,6 +416,8 @@
 		}
 	}
 
+	// Prépare une ouverture avant de rendre le menu visible : les effets de focus et la
+	// synchronisation initiale de Vuetify doivent être distingués d'une action utilisateur.
 	const prepareCalendarInteraction = (options: {
 		ignoreBlur?: boolean
 		focusDialog?: boolean
@@ -486,18 +473,12 @@
 		withInternalUpdate(() => emit('update:modelValue', value))
 	}
 
-	// Proxy computed pour VDatePicker v-model : permet d'intercepter les mises à jour
-	// du calendrier et de les ignorer si nécessaire (ignoreNextCalendarModelSync).
-	// Sans cela, VDatePicker rebouclerait sur selectedDates à chaque ouverture/fermeture.
-	const calendarSelectedDates = computed<DateObjectValue>({
-		get: () => selectedDates.value,
-		set: (value) => {
-			if (consumeIgnoreNextCalendarModelSync()) {
-				return
-			}
-
-			selectedDates.value = value
-		},
+	// VDatePicker est contrôlé dès que `model-value` et son événement sont fournis.
+	// Cette ref est donc mise à jour immédiatement au clic, avant une éventuelle validation
+	// asynchrone ; sinon Vuetify réaffiche la valeur précédente entre le clic et la résolution.
+	const calendarSelectedDates = ref<DateObjectValue>(selectedDates.value)
+	watch(selectedDates, (value) => {
+		calendarSelectedDates.value = value
 	})
 
 	// Keep and expose this so consumers can listen to `date-selected`
@@ -725,6 +706,7 @@
 		closeAndRestoreFocus()
 	}
 
+	// Alias interne conservé pour les appels programmatiques de sélection.
 	const updateSelectedDates = async (date: Date | null) => {
 		ignoreNextCalendarModelSync.value = false
 
@@ -742,6 +724,44 @@
 		queueMicrotask(() => validate({ force: true }))
 	}
 
+	const isSameCalendarSelection = (first: DateObjectValue, second: DateObjectValue): boolean => {
+		if (first === second) return true
+		if (first instanceof Date && second instanceof Date) {
+			return first.getTime() === second.getTime()
+		}
+		if (Array.isArray(first) && Array.isArray(second)) {
+			return first.length === second.length && first.every((date, index) => {
+				const otherDate = second[index]
+				return date?.getTime() === otherDate?.getTime()
+			})
+		}
+		return false
+	}
+
+	const handleCalendarModelUpdate = async (value: DateObjectValue): Promise<void> => {
+		if (ignoreNextCalendarModelSync.value) {
+			ignoreNextCalendarModelSync.value = false
+			if (isSameCalendarSelection(value, selectedDates.value)) {
+				return
+			}
+		}
+
+		const previousSelection = selectedDates.value
+		calendarSelectedDates.value = value
+
+		const selectedDate = Array.isArray(value)
+			? value[value.length - 1] ?? null
+			: value
+
+		if (selectedDate && !(await validateCalendarSelection(selectedDate))) {
+			calendarSelectedDates.value = previousSelection
+			return
+		}
+
+		selectedDates.value = value
+	}
+
+	// Le watcher de sélection consomme l'émission initiale de Vuetify sans propager ni fermer.
 	const consumeIgnoredCalendarModelSync = (): boolean => {
 		if (!ignoreNextCalendarModelSync.value) {
 			return false
@@ -820,9 +840,8 @@
 	}
 
 	// ─── Watchers de synchronisation ──────────────────────────────────
-	// Watcher 1 : selectedDates → sync affichage + modèle + fermeture calendrier
-	// Watcher 2 : textInputValue → sync modèle depuis saisie texte (mode simple uniquement)
-	// Watcher 3 : displayFormattedDate → mise à jour de la description accessibilité (live region)
+	// selectedDates propage une sélection normale; la valeur initiale de Vuetify est ignorée par
+	// la garde d'ouverture. textInputValue reste le chemin dédié aux saisies manuelles.
 	watch(selectedDates, syncFromSelectedDatesChange)
 
 	// Handle manual typing sync → model/selection
@@ -834,8 +853,10 @@
 		syncSingleTextInputFlow(newValue)
 	})
 
+	// Ignore l'émission de modèle de VDatePicker pendant son initialisation; toute autre émission
+	// constitue un commit calendrier et est traitée après la mise à jour réactive de la sélection.
 	const updateDisplayFormattedDate = () => {
-		if (consumeIgnoredCalendarModelSync()) {
+		if (ignoreNextCalendarModelSync.value) {
 			return
 		}
 
@@ -909,7 +930,6 @@
 	})
 
 	onBeforeUnmount(() => {
-		clearDialogInitialFocusTimeouts()
 		datePickerMenuRef.value?.removeEventListener('keydown', handleMenuKeydown, true)
 	})
 
@@ -930,15 +950,29 @@
 		{ flush: 'post' },
 	)
 
+	// La fermeture annule les intentions transitoires d'ouverture, y compris une sync Vuetify en cours.
 	const handleDatePickerClosed = () => {
-		dialogInitialFocusToken += 1
-		clearDialogInitialFocusTimeouts()
 		ignoreNextInputBlur.value = false
 		shouldFocusDialogOnOpen.value = false
 		ignoreNextCalendarModelSync.value = false
 		keyboardNavigatedDate.value = null
 	}
 
+	// Restaurer le focus après la transition évite que `textFieldActivator` interprète ce focus
+	// programmatique comme une nouvelle ouverture pendant que VMenu se ferme encore.
+	const handleMenuAfterLeave = () => {
+		if (!shouldRestoreFocusToInput.value || isDatePickerVisible.value) return
+
+		shouldRestoreFocusToInput.value = false
+		focusCalendarInput()
+	}
+
+	const handleMenuVisibilityUpdate = (visible: boolean) => {
+		isDatePickerVisible.value = visible
+	}
+
+	// L'ouverture synchronise seulement l'état affiché. Le composable de navigation clavier
+	// effectue le focus initial afin de centraliser ce comportement.
 	const handleDatePickerOpened = () => {
 		resetViewMode()
 		const baseDate = getSelectedBaseDate()
@@ -949,27 +983,9 @@
 		}
 
 		nextTick(() => {
-			refreshVisibleCalendarUi({ focusDay: shouldFocusDialogOnOpen.value })
-
-			if (shouldFocusDialogOnOpen.value) {
-				shouldFocusDialogOnOpen.value = false
-				scheduleDialogInitialDayFocus()
-			}
-
-			ignoreNextCalendarModelSync.value = false
+			refreshVisibleCalendarUi()
 		})
 	}
-
-	watch(isDatePickerVisible, (visible) => {
-		if (visible) return
-
-		if (!shouldRestoreFocusToInput.value) return
-
-		shouldRestoreFocusToInput.value = false
-		restoreCalendarInputFocus()
-		setTimeout(() => restoreCalendarInputFocus(), 150)
-		setTimeout(() => restoreCalendarInputFocus(), 300)
-	}, { flush: 'post' })
 
 	const { getInitialFocusDate, getCurrentDate } = useDatePickerFocusTarget({
 		keyboardNavigatedDate,
@@ -982,6 +998,7 @@
 		isDatePickerVisible,
 		datePickerRef: datePickerRef as unknown as Ref<ComponentPublicInstance | null>,
 		getInitialFocusDate,
+		focusInitialDayOnOpen: shouldFocusDialogOnOpen,
 		getCurrentDate,
 		setCurrentDate: (date: Date) => {
 			keyboardNavigatedDate.value = date
@@ -1014,6 +1031,7 @@
 
 		if (!props.noCalendar && (event.key === 'Enter' || event.key === 'ArrowDown') && !isInteractionDisabled.value) {
 			event.preventDefault()
+
 			requestDatePickerOpen({
 				ignoreBlur: true,
 				focusDialog: true,
@@ -1072,7 +1090,7 @@
 	// Sinon, on synchronise la valeur saisie et on délègue à handleInputBlur
 	// (useDatePickerInputBlurHandler) qui valide et met à jour le modèle.
 	const handleCalendarInputBlur = async () => {
-		if (consumeIgnoreNextInputBlur() && isDatePickerVisible.value) {
+		if (consumeIgnoreNextInputBlur()) {
 			emitBlurEvent()
 			return
 		}
@@ -1203,14 +1221,12 @@
 				?? option.textContent?.trim()
 				?? ''
 			const isSelected = optionLabel === normalizedLabel
-			option.setAttribute('aria-pressed', String(isSelected))
 			option.setAttribute('aria-selected', String(isSelected))
 			option.tabIndex = isSelected ? 0 : -1
 
 			const button = option.querySelector<HTMLElement>('button')
 			if (!button) return
 
-			button.setAttribute('aria-pressed', String(isSelected))
 			button.tabIndex = -1
 		})
 	}
@@ -1418,7 +1434,7 @@
 
 		<template v-else>
 			<VMenu
-				v-model="isDatePickerVisible"
+				:model-value="isDatePickerVisible"
 				:activator="menuActivatorRef"
 				:min-width="0"
 				location="bottom"
@@ -1429,13 +1445,16 @@
 				transition="fade-transition"
 				:offset="[0, 10]"
 				content-class="date-picker-overlay-content"
+				@update:model-value="handleMenuVisibilityUpdate"
+				@after-leave="handleMenuAfterLeave"
 			>
 				<template #activator="{ props: menuProps }">
+					<!-- VMenu ne gère pas les touches de l'activateur : le DatePicker les traite selon la sémantique de dialogue. -->
 					<div
 						ref="menuActivatorRef"
 						class="date-text-input-activator"
 						:title="props.placeholder || locales.label"
-						v-bind="{ ...menuProps, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': isDatePickerVisible ? datePickerDialogId : undefined }"
+						v-bind="{ ...menuProps, onKeydown: undefined, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': isDatePickerVisible ? datePickerDialogId : undefined }"
 						@focus="redirectActivatorFocus"
 					>
 						<DateTextInput
@@ -1446,7 +1465,7 @@
 							v-bind="menuTextInputProps"
 							@mousedown="openDatePickerFromInputClick"
 							@update:model-value="handleDateTextInputUpdate"
-							@focus="openDatePickerOnFocus"
+							@focus="handleDateTextInputFocus"
 							@blur="handleCalendarInputBlur"
 							@input="handleInput"
 							@keydown="handleKeydown"
@@ -1468,7 +1487,7 @@
 					<VDatePicker
 						:id="datePickerContentId"
 						ref="datePickerRef"
-						v-model="calendarSelectedDates"
+						:model-value="calendarSelectedDates"
 						control-variant="modal"
 						color="primary"
 						:class="props.displayWeekendDays ? 'weekend' : ''"
@@ -1490,11 +1509,10 @@
 						:density="props.density"
 						:hint="props.hint"
 						:persistent-hint="props.persistentHint"
-						@update:model-value="updateDisplayFormattedDate"
+						@update:model-value="handleCalendarModelUpdate"
 						@update:view-mode="handleViewModeUpdateWrapper"
 						@update:month="onUpdateMonth"
 						@update:year="onUpdateYear"
-						@click:date="updateSelectedDates"
 					>
 						<template #title>
 							<span

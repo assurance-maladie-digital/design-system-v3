@@ -64,7 +64,7 @@ export function createValidateCalendarModeFlow(
 		return false
 	}
 
-	const validateCalendarModeDates = async (forceValidation = false) => {
+	const validateCalendarModeDates = async (forceValidation = false): Promise<ValidationResult | void> => {
 		// Si le flow CalendarMode n'est pas activé, utiliser le flow standard
 		if (!options.useCalendarModeRequiredFlow) {
 			return await Promise.resolve(validateDates(forceValidation))
@@ -97,6 +97,7 @@ export function createValidateCalendarModeFlow(
 					options.selectedDates.value,
 					options.customRules.value,
 					options.customWarningRules.value,
+					options.customSuccessRules?.value ?? [],
 				)
 				// Pousser l'erreur required APRÈS les custom rules pour éviter qu'applyValidationResult l'écrase
 				if (ctx.shouldValidateRequired(forceValidation) && ctx.shouldDisplayErrors()) {

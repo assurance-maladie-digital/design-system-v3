@@ -24,7 +24,8 @@
 	border-radius: 50%;
 }
 
-:deep(.v-date-picker-month__day[role='gridcell']:focus-visible) {
+:deep(.v-date-picker-month__day[role='gridcell']:focus-visible),
+:deep(.v-date-picker-month__day[role='gridcell'].sy-date-picker-keyboard-focus) {
 	border-radius: 50%;
 	outline: 2px solid rgb(var(--v-theme-primary));
 	outline-offset: 1px;

@@ -240,12 +240,10 @@
 
 	// Synchronisation lorsque l'une des dates change
 	async function validateBothDates() {
-		if (fromDateRef.value) {
-			fromDateRef.value.validateOnSubmit()
-		}
-		if (toDateRef.value) {
-			await toDateRef.value.validateOnSubmit()
-		}
+		await Promise.all([
+			fromDateRef.value?.validateOnSubmit(),
+			toDateRef.value?.validateOnSubmit(),
+		])
 	}
 
 	// Validation complète du PeriodField
@@ -260,19 +258,12 @@
 	}
 
 	// Watch pour les changements des dates - validation croisée
-	watch(formattedFromDate, async () => {
+	watch([formattedFromDate, formattedToDate], async () => {
 		await validateFields()
-		if (formattedToDate.value && toDateRef.value) {
-			await toDateRef.value.validateOnSubmit()
+		if (formattedFromDate.value || formattedToDate.value) {
+			await validateBothDates()
 		}
-	})
-
-	watch(formattedToDate, async () => {
-		await validateFields()
-		if (formattedFromDate.value && fromDateRef.value) {
-			await fromDateRef.value.validateOnSubmit()
-		}
-	})
+	}, { flush: 'post' })
 
 	// Watch pour les changements internes - Mise à jour du modèle
 	watch([internalFromDate, internalToDate], () => {

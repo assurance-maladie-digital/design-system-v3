@@ -121,7 +121,7 @@ describe('useDatePickerAccessibility', () => {
 		expect(new Set(ids).size).toBe(4)
 	})
 
-	it('sets aria-pressed on active month/year selector buttons', async () => {
+	it('does not add aria-pressed to month/year selector buttons', async () => {
 		document.body.innerHTML = `
 			<div class="v-date-picker">
 				<div class="v-date-picker-months">
@@ -140,14 +140,14 @@ describe('useDatePickerAccessibility', () => {
 		await updateAccessibility()
 
 		const monthButtons = document.querySelectorAll('.v-date-picker-months button')
-		expect(monthButtons[0]?.getAttribute('aria-pressed')).toBe('false')
-		expect(monthButtons[1]?.getAttribute('aria-pressed')).toBe('true')
-		expect(monthButtons[2]?.getAttribute('aria-pressed')).toBe('false')
+		expect(monthButtons[0]?.getAttribute('aria-pressed')).toBeNull()
+		expect(monthButtons[1]?.getAttribute('aria-pressed')).toBeNull()
+		expect(monthButtons[2]?.getAttribute('aria-pressed')).toBeNull()
 
 		const yearButtons = document.querySelectorAll('.v-date-picker-years button')
-		expect(yearButtons[0]?.getAttribute('aria-pressed')).toBe('false')
-		expect(yearButtons[1]?.getAttribute('aria-pressed')).toBe('true')
-		expect(yearButtons[2]?.getAttribute('aria-pressed')).toBe('false')
+		expect(yearButtons[0]?.getAttribute('aria-pressed')).toBeNull()
+		expect(yearButtons[1]?.getAttribute('aria-pressed')).toBeNull()
+		expect(yearButtons[2]?.getAttribute('aria-pressed')).toBeNull()
 
 		// Les aria-label doivent toujours être présents
 		expect(monthButtons[1]?.getAttribute('aria-label')).toBeTruthy()
@@ -159,16 +159,16 @@ describe('useDatePickerAccessibility', () => {
 			<div class="v-date-picker">
 				<div class="v-date-picker-months">
 					<div class="v-date-picker-months__content">
-						<div role="gridcell" data-sy-date-picker-option="month" aria-pressed="false"><button class="v-btn" tabindex="-1">janv.</button></div>
-						<div role="gridcell" data-sy-date-picker-option="month" aria-pressed="true"><button class="v-btn v-btn--active" tabindex="-1">févr.</button></div>
-						<div role="gridcell" data-sy-date-picker-option="month" aria-pressed="false"><button class="v-btn" tabindex="-1">mars</button></div>
+						<div role="gridcell" data-sy-date-picker-option="month" aria-selected="false"><button class="v-btn" tabindex="-1">janv.</button></div>
+						<div role="gridcell" data-sy-date-picker-option="month" aria-selected="true"><button class="v-btn v-btn--active" tabindex="-1">févr.</button></div>
+						<div role="gridcell" data-sy-date-picker-option="month" aria-selected="false"><button class="v-btn" tabindex="-1">mars</button></div>
 					</div>
 				</div>
 				<div class="v-date-picker-years">
 					<div class="v-date-picker-years__content">
-						<div role="gridcell" data-sy-date-picker-option="year" aria-pressed="false"><button class="v-btn" tabindex="-1">2024</button></div>
-						<div role="gridcell" data-sy-date-picker-option="year" aria-pressed="true"><button class="v-btn v-btn--active" tabindex="-1">2025</button></div>
-						<div role="gridcell" data-sy-date-picker-option="year" aria-pressed="false"><button class="v-btn" tabindex="-1">2026</button></div>
+						<div role="gridcell" data-sy-date-picker-option="year" aria-selected="false"><button class="v-btn" tabindex="-1">2024</button></div>
+						<div role="gridcell" data-sy-date-picker-option="year" aria-selected="true"><button class="v-btn v-btn--active" tabindex="-1">2025</button></div>
+						<div role="gridcell" data-sy-date-picker-option="year" aria-selected="false"><button class="v-btn" tabindex="-1">2026</button></div>
 					</div>
 				</div>
 			</div>
@@ -182,10 +182,10 @@ describe('useDatePickerAccessibility', () => {
 		expect(monthCells).toHaveLength(3)
 		expect(yearCells).toHaveLength(3)
 		expect(monthCells[0]?.getAttribute('role')).toBe('gridcell')
-		expect(monthCells[1]?.getAttribute('aria-pressed')).toBe('true')
+		expect(monthCells[1]?.getAttribute('aria-selected')).toBe('true')
 		expect(monthCells[1]?.tabIndex).toBe(0)
 		expect(monthCells[0]?.tabIndex).toBe(-1)
-		expect(yearCells[1]?.getAttribute('aria-pressed')).toBe('true')
+		expect(yearCells[1]?.getAttribute('aria-selected')).toBe('true')
 		expect(yearCells[1]?.tabIndex).toBe(0)
 		expect(yearCells[0]?.tabIndex).toBe(-1)
 

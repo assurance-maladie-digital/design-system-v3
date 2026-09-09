@@ -55,8 +55,8 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 	}
 
 	/**
-	 * Adapte les règles DatePicker (custom, warning, success) au format ValidationRule[]
-	 * en utilisant le format d'affichage courant.
+	 * Adapte les règles DatePicker au format du validateur unifié.
+	 * Les règles personnalisées de saisie texte reçoivent une chaîne formatée.
 	 */
 	const getAdaptedRules = (
 		customRules: DatePickerRule[],
@@ -76,7 +76,7 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 	 * Retourne true si valide, false si erreur.
 	 * Si shouldDisplayErrors est false, retourne juste l'état sans afficher.
 	 */
-	const validateCustomRulesForDate = (date: Date): boolean | Promise<boolean> => {
+	const validateCustomRulesForDate = (date: Date, token: number): boolean | Promise<boolean> => {
 		if (ctx.shouldDisplayErrors() === false) {
 			return !ctx.displayHasError.value
 		}
@@ -88,7 +88,9 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 		const result = ctx.validateField(date, adapted.customRules, adapted.warningRules, adapted.successRules)
 
 		if (result instanceof Promise) {
-			return result.then(resolvedResult => !resolvedResult.hasError)
+			return result.then(resolvedResult => (
+				token === ctx.currentValidationToken.value && !resolvedResult.hasError
+			))
 		}
 		return !result.hasError
 	}
@@ -102,7 +104,7 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 	 * 3. Parse la date avec parseDate
 	 * 4. Valide la date parsée avec les custom rules (validateCustomRulesForDate)
 	 */
-	const validateSingleTextInput = async (value: string): Promise<boolean> => {
+	const validateSingleTextInput = async (value: string, token: number): Promise<boolean> => {
 		const format = unref(options.displayFormat) ?? ''
 
 		// 1. Vérifier si vide ou incomplet
@@ -147,10 +149,13 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 		}
 
 		// 4. Valider avec les custom rules
-		return !!(await validateCustomRulesForDate(date))
+		const isValid = await validateCustomRulesForDate(date, token)
+		if (token !== ctx.currentValidationToken.value) return !ctx.displayHasError.value
+		return isValid
 	}
 
 	const validateTextInput = async (value: string): Promise<boolean> => {
+		const token = ++ctx.currentValidationToken.value
 		ctx.clearValidation()
 
 		// 1. Mode Vuetify natif
@@ -160,10 +165,10 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 				return true
 			}
 			if (!hasInteracted) {
-				ctx.clearValidation()
 				return true
 			}
 			const result = await Promise.resolve(ctx.validation.validateValue(value))
+			if (token !== ctx.currentValidationToken.value) return !ctx.displayHasError.value
 			return !result.hasError
 		}
 
@@ -183,6 +188,7 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 					adapted.warningRules,
 					adapted.successRules,
 				)
+				if (token !== ctx.currentValidationToken.value) return !ctx.displayHasError.value
 				return !result.hasError
 			}
 			return true
@@ -194,7 +200,7 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 
 			// Si seulement la date de début est saisie, valider juste celle-ci
 			if (startDateText && !endDateText) {
-				return await validateSingleTextInput(startDateText)
+				return await validateSingleTextInput(startDateText, token)
 			}
 
 			// Si ni start ni end n'est saisie, retourner l'état courant
@@ -233,12 +239,14 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 			}
 
 			// Valider les custom rules pour chaque date, puis fusionner les résultats
-			await validateCustomRulesForDate(startDate)
+			await validateCustomRulesForDate(startDate, token)
+			if (token !== ctx.currentValidationToken.value) return !ctx.displayHasError.value
 			const startErrors = [...ctx.errors.value]
 			const startWarnings = [...ctx.warnings.value]
 			const startSuccesses = [...ctx.successes.value]
 
-			await validateCustomRulesForDate(endDate)
+			await validateCustomRulesForDate(endDate, token)
+			if (token !== ctx.currentValidationToken.value) return !ctx.displayHasError.value
 			// Fusionner : range errors + start errors + end errors
 			ctx.replaceErrors([...rangeErrors, ...startErrors, ...ctx.errors.value])
 			ctx.warnings.value = [...new Set([...startWarnings, ...ctx.warnings.value].filter(Boolean))]
@@ -248,7 +256,7 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 		}
 
 		// 4. Date unique
-		return await validateSingleTextInput(value)
+		return await validateSingleTextInput(value, token)
 	}
 
 	return { validateTextInput }
