@@ -1,6 +1,7 @@
 import { addons } from 'storybook/manager-api'
 import type { API } from 'storybook/manager-api'
 import { registerConformiteAddon } from './addons/conformite'
+import { registerRatingFeedbackAddon } from './addons/rating-feedback'
 import cnamTheme from './CnamTheme'
 import paTheme from './PaTheme'
 import apTheme from './ApTheme'
@@ -8,6 +9,7 @@ import ap2026Theme from './Ap2026Theme'
 
 const channel = addons.getChannel()
 registerConformiteAddon()
+registerRatingFeedbackAddon()
 
 type Theme = 'cnam' | 'pa' | 'ap' | 'ap2026'
 
@@ -84,8 +86,8 @@ const hiddenIdsByTheme: Record<Theme, string[]> = {
 
 const allowedEquivalenceIdsByTheme: Partial<Record<Theme, string[]>> = {
 	ap: [
-			'guide-du-dev-équivalence-des-composants-amelipro',
-		],
+		'guide-du-dev-équivalence-des-composants-amelipro',
+	],
 
 	pa: [
 		'guide-du-dev-équivalence-des-composants-portail-agent',
