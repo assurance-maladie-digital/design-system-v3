@@ -873,4 +873,171 @@ describe('useDatePickerValidation', () => {
 			expect(errors.value).toEqual([])
 		})
 	})
+
+	describe('régression : courses asynchrones sur validateDates', () => {
+		it('un résultat async stale de validateDates n\'écrase pas un résultat sync plus récent', async () => {
+			let resolveSlow!: (v: boolean) => void
+			const date = new Date('2023-06-15')
+			const options = createOptions({
+				selectedDates: ref(date),
+				customRules: ref([{
+					type: 'custom',
+					options: {
+						validate: () => new Promise<boolean>((resolve) => {
+							resolveSlow = resolve
+						}),
+						message: 'Erreur async stale',
+					},
+				}]),
+			})
+			const { errors, validateDates } = useDatePickerValidation(options)
+
+			const slowPromise = validateDates(true)
+			expect(slowPromise).toBeInstanceOf(Promise)
+
+			// Remplace par une règle sync et revalide
+			options.customRules.value = [{
+				type: 'custom',
+				options: {
+					validate: () => false,
+					message: 'Erreur sync immédiate',
+				},
+			}]
+			const fastResult = await validateDates(true)
+			expect(fastResult).toMatchObject({ hasError: true })
+			expect(errors.value).toContain('Erreur sync immédiate')
+
+			// Résout la validation stale
+			resolveSlow(false)
+			await slowPromise
+
+			expect(errors.value).toContain('Erreur sync immédiate')
+			expect(errors.value).not.toContain('Erreur async stale')
+		})
+
+		it('deux validations async concurrentes sur validateDates gardent le dernier résultat', async () => {
+			let resolveFirst!: (v: boolean) => void
+			let resolveSecond!: (v: boolean) => void
+			const date = new Date('2023-06-15')
+			const options = createOptions({
+				selectedDates: ref(date),
+				customRules: ref([{
+					type: 'custom',
+					options: {
+						validate: () => new Promise<boolean>((resolve) => {
+							resolveFirst = resolve
+						}),
+						message: 'Erreur première',
+					},
+				}]),
+			})
+			const { errors, validateDates } = useDatePickerValidation(options)
+
+			const firstPromise = validateDates(true)
+
+			options.customRules.value = [{
+				type: 'custom',
+				options: {
+					validate: () => new Promise<boolean>((resolve) => {
+						resolveSecond = resolve
+					}),
+					message: 'Erreur seconde',
+				},
+			}]
+			const secondPromise = validateDates(true)
+
+			resolveSecond(false)
+			await secondPromise
+			expect(errors.value).toContain('Erreur seconde')
+
+			resolveFirst(false)
+			await firstPromise
+
+			expect(errors.value).toContain('Erreur seconde')
+			expect(errors.value).not.toContain('Erreur première')
+		})
+
+		it('clearValidation invalide une validateDates async en cours', async () => {
+			let resolveSlow!: (v: boolean) => void
+			const date = new Date('2023-06-15')
+			const options = createOptions({
+				selectedDates: ref(date),
+				customRules: ref([{
+					type: 'custom',
+					options: {
+						validate: () => new Promise<boolean>((resolve) => {
+							resolveSlow = resolve
+						}),
+						message: 'Erreur async après clear',
+					},
+				}]),
+			})
+			const { errors, validateDates, clearValidation } = useDatePickerValidation(options)
+
+			const slowPromise = validateDates(true)
+
+			clearValidation()
+			expect(errors.value).toEqual([])
+
+			resolveSlow(false)
+			await slowPromise
+
+			expect(errors.value).toEqual([])
+		})
+	})
+
+	describe('régression : revalidateSelectedDates avec token', () => {
+		it('revalidateSelectedDates ignore les résultats stale si une nouvelle validation a lieu', async () => {
+			let resolveSlow!: (v: boolean) => void
+			const date = new Date('2023-06-15')
+			const options = createOptions({
+				selectedDates: ref(date),
+				revalidateOnCustomRulesChange: true,
+				customRules: ref([{
+					type: 'custom',
+					options: {
+						validate: () => new Promise<boolean>((resolve) => {
+							resolveSlow = resolve
+						}),
+						message: 'Erreur revalidation stale',
+					},
+				}]),
+			})
+			const { errors, validateDates, clearValidation } = useDatePickerValidation(options)
+
+			// Déclenche la revalidation (via le watcher sur customRules)
+			// en changeant les règles
+			options.customRules.value = [{
+				type: 'custom',
+				options: {
+					validate: () => new Promise<boolean>((resolve) => {
+						resolveSlow = resolve
+					}),
+					message: 'Erreur revalidation stale',
+				},
+			}]
+			await nextTick()
+			await Promise.resolve()
+
+			// Lance une nouvelle validation synchrone qui invalide le token
+			options.customRules.value = [{
+				type: 'custom',
+				options: {
+					validate: () => false,
+					message: 'Erreur sync récente',
+				},
+			}]
+			await validateDates(true)
+
+			// La revalidation stale se résout — ne doit pas écraser
+			resolveSlow(false)
+			await nextTick()
+			await Promise.resolve()
+
+			expect(errors.value).toContain('Erreur sync récente')
+			expect(errors.value).not.toContain('Erreur revalidation stale')
+
+			clearValidation()
+		})
+	})
 })
