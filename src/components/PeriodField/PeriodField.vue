@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-	import { ref, watch, computed, onMounted, readonly as readonlyState } from 'vue'
+	import { ref, watch, computed, onMounted, toRef, readonly as readonlyState } from 'vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import { useFieldValidation } from '@/composables'
-	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import { useValidation, type ValidationRule } from '@/composables/unifyValidation/useValidation'
 	import { locales as defaultLocales } from './locales'
 	import { useLocales } from '@/composables/useLocales'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
@@ -73,19 +73,6 @@
 	// Valeurs internes pour les dates
 	const internalFromDate = ref<string | null>(null)
 	const internalToDate = ref<string | null>(null)
-
-	// Utiliser le composable de validation
-	const fromDateValidation = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
-		fieldIdentifier: 'fromDate',
-		disableErrorHandling: props.disableErrorHandling,
-	})
-
-	const toDateValidation = useValidation({
-		showSuccessMessages: props.showSuccessMessages,
-		fieldIdentifier: 'toDate',
-		disableErrorHandling: props.disableErrorHandling,
-	})
 
 	/**
 	 * Formate une valeur de date en chaîne de caractères au format spécifié
@@ -207,6 +194,35 @@
 			: [],
 	)
 
+	const validationParams = {
+		readonly: toRef(props, 'readonly'),
+		disabled: toRef(props, 'disabled'),
+		required: toRef(props, 'required'),
+		showSuccessMessages: toRef(props, 'showSuccessMessages'),
+		disableErrorHandling: toRef(props, 'disableErrorHandling'),
+		customWarningRules: toRef(props, 'customWarningRules'),
+		isValidateOnBlur: ref(true),
+		focused: ref(false),
+	}
+
+	// Les DatePicker conservent leur enregistrement au formulaire et le watcher
+	// de période orchestre la revalidation croisée des deux bornes.
+	const validationOptions = { registerWithForm: false, reactiveValidation: false }
+	const fromDateValidation = useValidation({
+		...validationParams,
+		useVuetifyValidation: false,
+		modelValue: parsedFromDate,
+		customRules: fromDateRules,
+		label: ref('fromDate'),
+	}, validationOptions)
+	const toDateValidation = useValidation({
+		...validationParams,
+		useVuetifyValidation: false,
+		modelValue: parsedToDate,
+		customRules: toDateRules,
+		label: ref('toDate'),
+	}, validationOptions)
+
 	// Vérification de la validité du formulaire en utilisant les validations
 	const isValid = computed(() => {
 		// Si aucune date n'est renseignée et que ce n'est pas required, c'est valide
@@ -248,8 +264,8 @@
 
 	// Validation complète du PeriodField
 	async function validateFields() {
-		await fromDateValidation.validateField(parsedFromDate.value, fromDateRules.value, props.customWarningRules)
-		await toDateValidation.validateField(parsedToDate.value, toDateRules.value, props.customWarningRules)
+		await fromDateValidation.validate()
+		await toDateValidation.validate()
 	}
 
 	// Les deux champs partagent le même cycle de revalidation à la fermeture.
@@ -258,7 +274,17 @@
 	}
 
 	// Watch pour les changements des dates - validation croisée
-	watch([formattedFromDate, formattedToDate], async () => {
+	watch([
+		formattedFromDate,
+		formattedToDate,
+		fromDateRules,
+		toDateRules,
+		() => props.customWarningRules,
+		() => props.showSuccessMessages,
+		() => props.disableErrorHandling,
+		() => props.readonly,
+		() => props.disabled,
+	], async () => {
 		await validateFields()
 		if (formattedFromDate.value || formattedToDate.value) {
 			await validateBothDates()

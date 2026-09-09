@@ -4,7 +4,7 @@ import type {
 } from '@/composables/validation/useValidation'
 import { computed, ref, toValue, type Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
-import { useCustomValidation } from './useCustomValidation'
+import { useCustomValidation, type UseCustomValidationOptions } from './useCustomValidation'
 import { useVuetifyValidation as useVuetifyValidationComposable } from './useVuetifyValidation'
 import { mergeMessages } from './messageUtils'
 
@@ -44,6 +44,8 @@ export interface FieldValidationProps {
  * errorMessages/warningMessages/successMessages sont des messages externes injectés par le parent
  * et ne déclenchent aucun calcul de validation.
  * Expose aussi une interface unifiée pour les erreurs, avertissements, succès et la validation à la demande.
+ * Les options permettent aux champs composites de déléguer l'enregistrement Synapse
+ * au formulaire à leurs enfants et d'orchestrer eux-mêmes la revalidation.
  */
 export const validationPropsDefaults = {
 	readonly: false,
@@ -100,7 +102,7 @@ export function useValidation(params: {
 	customWarningRules?: Ref<SyValidationRule[]>
 	customSuccessRules?: Ref<SyValidationRule[]>
 	rules: Ref<VuetifyValidationRule[] | undefined>
-})) {
+}), options: Pick<UseCustomValidationOptions, 'registerWithForm' | 'reactiveValidation'> = {}) {
 	const vuetifyErrors = ref<string[]>([])
 	const customErrors = ref<string[]>([])
 	const innerWarnings = ref<string[]>([])
@@ -140,6 +142,7 @@ export function useValidation(params: {
 		params.disableErrorHandling,
 		params.readonly,
 		params.disabled,
+		options,
 	)
 
 	async function validate(): Promise<boolean> {

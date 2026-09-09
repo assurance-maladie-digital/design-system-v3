@@ -460,6 +460,48 @@ describe('PeriodField.vue', () => {
 	})
 
 	describe('Custom Rules', () => {
+		it('revalidates the public state when custom rules change without changing dates', async () => {
+			const wrapper = mount(PeriodField, {
+				props: { modelValue: { from: '10/01/2024', to: '20/01/2024' } },
+			})
+			await flushPromises()
+			expect(wrapper.vm.isValid).toBe(true)
+
+			await wrapper.setProps({ customRules: [{
+				type: 'custom',
+				options: { validate: async () => false, message: 'Période indisponible' },
+			}] })
+			await flushPromises()
+			expect(wrapper.text()).toContain('Période indisponible')
+			expect(wrapper.vm.errors.fromDate.value).toContain('Période indisponible')
+			expect(wrapper.vm.errors.toDate.value).toContain('Période indisponible')
+			expect(wrapper.vm.isValid).toBe(false)
+
+			await wrapper.setProps({ customRules: [] })
+			await flushPromises()
+			expect(wrapper.text()).not.toContain('Période indisponible')
+			expect(wrapper.vm.isValid).toBe(true)
+			wrapper.unmount()
+		})
+
+		it('reacts to success message options and preserves the public clear method', async () => {
+			const wrapper = mount(PeriodField, {
+				props: { modelValue: { from: '10/01/2024', to: '20/01/2024' } },
+			})
+			await flushPromises()
+			expect(wrapper.vm.successes.fromDate.value).toEqual([])
+
+			await wrapper.setProps({ showSuccessMessages: true })
+			await flushPromises()
+			expect(wrapper.vm.successes.fromDate.value.length).toBeGreaterThan(0)
+			expect(wrapper.vm.successes.toDate.value.length).toBeGreaterThan(0)
+
+			wrapper.vm.clearValidation()
+			expect(wrapper.vm.successes.fromDate.value).toEqual([])
+			expect(wrapper.vm.successes.toDate.value).toEqual([])
+			wrapper.unmount()
+		})
+
 		it('applies custom validation rules', async () => {
 			const wrapper = mount(PeriodField, {
 				props: {

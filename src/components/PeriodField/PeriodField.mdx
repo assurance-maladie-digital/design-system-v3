@@ -22,6 +22,16 @@ import * as PeriodFieldStories from "./PeriodField.stories.ts";
 
 <Controls of={PeriodFieldStories.Default}/>
 
+## Validation
+
+La validation des deux bornes utilise le système unifié Synapse, avec des règles
+croisées pour vérifier leur ordre. Les changements de règles et d'options de
+validation sont pris en compte sans modifier la période. Les DatePicker internes
+conservent leur enregistrement dans `SyForm`.
+
+Les méthodes `validateOnSubmit()` et `clearValidation()`, ainsi que les états
+`isValid`, `errors`, `warnings` et `successes`, restent disponibles.
+
 ## Utilisation de base
 
 <Source
