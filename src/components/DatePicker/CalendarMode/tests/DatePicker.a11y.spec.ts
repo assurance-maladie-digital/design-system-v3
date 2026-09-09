@@ -152,6 +152,9 @@ describe('DatePicker (CalendarMode) – accessibility (axe)', () => {
 
 		wrapper.vm.isDatePickerVisible = true
 		await nextTick()
+		// Apply ARIA semantics before running axe so we test the patched markup
+		wrapper.vm.updateAccessibility()
+		await nextTick()
 
 		const dialog = document.body.querySelector<HTMLElement>(`#${wrapper.vm.datePickerDialogId}`)
 		expect(dialog).not.toBeNull()

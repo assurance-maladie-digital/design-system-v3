@@ -39,6 +39,7 @@
 	 *   Géré par `useDatePickerViewMode`.
 	 */
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
+	import { devWarn } from '@/utils/devWarn'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { useDateInitialization, type DateInput, type DateModelValue } from '@/composables/date/useDateInitializationDayjs'
@@ -82,6 +83,11 @@
 		...DatePickerCommonDefaults,
 		useCombinedMode: false,
 	})
+
+	// Avertissement de déprécation pour birthDate
+	if (props.birthDate) {
+		devWarn('[DatePicker] La prop "birthDate" est dépréciée. Utilisez "isBirthDate" à la place.')
+	}
 
 	// Guard centralisé pour disabled/readonly
 	const isInteractionDisabled = computed(() => props.disabled || props.readonly)
@@ -658,11 +664,11 @@
 	async function validateOnSubmit() {
 		// Si le mode noCalendar est activé, on délègue la validation au DateTextInput
 		if (props.noCalendar) {
-			return await dateTextInputRef.value?.validateOnSubmit()
+			return await dateTextInputRef.value?.validateOnSubmit() ?? false
 		}
 		// Si le mode combiné est activé, on délègue la validation au ComplexDatePicker
 		else if (props.useCombinedMode) {
-			return await complexDatePickerRef.value?.validateOnSubmit()
+			return await complexDatePickerRef.value?.validateOnSubmit() ?? false
 		}
 		// Forcer la validation pour ignorer les conditions de validation interactive.
 		// calendarMode: true → utilise le flow CalendarMode (gestion required spécifique).

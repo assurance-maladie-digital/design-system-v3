@@ -1380,4 +1380,22 @@ describe('DatePicker - Coverage branches', () => {
 		expect(w.emitted('closed')).toBeFalsy()
 		w.unmount()
 	})
+
+	it('blur is emitted but validation is skipped when isUpdatingFromInternal is true', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '01/01/2023', format: 'DD/MM/YYYY', required: true, isValidateOnBlur: true },
+		})
+		const vm = w.vm as InstanceType<typeof DatePicker>
+		// Simulate isUpdatingFromInternal being true (e.g. after clear)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(vm as any).isUpdatingFromInternal = true
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await (vm as any).handleInputBlur()
+		await flushPromises()
+		// blur event is still emitted (happens before the guard)
+		expect(w.emitted('blur')).toBeTruthy()
+		// but validation should not run (no error messages pushed)
+		expect(w.emitted('update:errorMessages')).toBeFalsy()
+		w.unmount()
+	})
 })

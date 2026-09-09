@@ -591,13 +591,21 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 					button.removeAttribute('aria-rowindex')
 					button.removeAttribute('aria-colindex')
 					button.removeAttribute('aria-selected')
-					button.setAttribute('tabindex', '-1')
+					button.setAttribute('tabindex', isSelected ? '0' : '-1')
 					button.dataset.gridcellManagedTabindex = 'true'
 				}
 
 				row.appendChild(cell)
 			})
 			daysContainer.appendChild(row)
+		}
+
+		// If no date is selected, give the first day button tabindex="0"
+		// so keyboard users can Tab into the grid
+		const firstButton = daysContainer.querySelector<HTMLButtonElement>('.v-date-picker-month__day button[data-gridcell-managed-tabindex="true"][tabindex="-1"]')
+		const hasTabbableButton = daysContainer.querySelector<HTMLButtonElement>('.v-date-picker-month__day button[data-gridcell-managed-tabindex="true"][tabindex="0"]')
+		if (firstButton && !hasTabbableButton) {
+			firstButton.setAttribute('tabindex', '0')
 		}
 	})
 

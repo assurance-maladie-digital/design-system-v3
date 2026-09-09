@@ -65,9 +65,9 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 	): { customRules: ValidationRule[], warningRules: ValidationRule[], successRules: ValidationRule[] } => {
 		const format = unref(options.displayFormat) ?? ''
 		return {
-			customRules: adaptCustomRules(customRules, format) as ValidationRule[],
-			warningRules: adaptCustomRules(warningRules, format) as ValidationRule[],
-			successRules: adaptCustomRules(successRules, format) as ValidationRule[],
+			customRules: adaptCustomRules(customRules, format) as unknown as ValidationRule[],
+			warningRules: adaptCustomRules(warningRules, format) as unknown as ValidationRule[],
+			successRules: adaptCustomRules(successRules, format) as unknown as ValidationRule[],
 		}
 	}
 

@@ -1667,4 +1667,13 @@ describe('ComplexDatePicker.clean', () => {
 		vi.useRealTimers()
 		wrapper.unmount()
 	})
+
+	it('isSameCalendarSelection compares at day level not getTime', () => {
+		const w = mountComponent({ label: 'Date', format: 'DD/MM/YYYY' })
+		const d1 = new Date(2024, 5, 15, 0, 0, 0, 0)
+		const d2 = new Date(2024, 5, 15, 12, 30, 0, 500)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const result = (w.vm as any).isSameCalendarSelection(d1, d2)
+		expect(result).toBe(true)
+	})
 })

@@ -162,7 +162,7 @@ export interface DatePickerValidationController {
 	successMessages: Ref<string[]> | ComputedRef<string[]>
 
 	/** Point d'entrée unifié : route vers le bon flow selon les options. */
-	validate: (options?: ValidateOptions) => ValidationResult | Promise<ValidationResult | void> | Promise<boolean>
+	validate: (options?: ValidateOptions) => ValidationResult | Promise<ValidationResult> | Promise<boolean>
 	clearValidation: () => void
 	isRangeValid: ReturnType<typeof useDateRangeValidation>['isRangeValid']
 
@@ -177,7 +177,7 @@ export interface DatePickerValidationController {
 	) => ValidationResult | Promise<ValidationResult>
 	validateDates: (forceValidation?: boolean) => ValidationResult | Promise<ValidationResult>
 	validateTextInput: (value: string) => Promise<boolean>
-	validateCalendarModeDates: (forceValidation?: boolean) => void | ValidationResult | Promise<ValidationResult | void>
+	validateCalendarModeDates: (forceValidation?: boolean) => ValidationResult | Promise<ValidationResult>
 }
 
 // --- Fabriques de ValidationResult statiques ---
@@ -532,7 +532,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 	})
 
 	// --- Point d'entrée unifié : validate() ---
-	const validate = (opts: ValidateOptions = {}): ValidationResult | Promise<ValidationResult | void> | Promise<boolean> => {
+	const validate = (opts: ValidateOptions = {}): ValidationResult | Promise<ValidationResult> | Promise<boolean> => {
 		if (opts.textValue !== undefined) {
 			return validateTextInput(opts.textValue)
 		}

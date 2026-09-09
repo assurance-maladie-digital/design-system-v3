@@ -93,7 +93,7 @@ export function useCustomValidation(
 		if (typeof result === 'string') {
 			return result
 		}
-		// TOTO: Check avec Adrien
+		// TODO: Check avec Adrien
 		return locales.invalidValue
 	}
 

@@ -583,7 +583,7 @@ const createEndDateValidationRule = () => ({
   options: {
     validate: (value: string) => {
       if (!value) return true
-      if (!startDate.value) return 'Veuillez d\\'abord sélectionner une date de début'
+      if (!startDate.value) return 'Veuillez d\u2019abord sélectionner une date de début'
       const start = parseDate(startDate.value, 'DD/MM/YYYY')
       const end = parseDate(value, 'DD/MM/YYYY')
       if (!start || !end) return true
@@ -657,7 +657,7 @@ watch(endDate, () => {
 					options: {
 						validate: (value: string) => {
 							if (!value) return true
-							if (!startDate.value) return 'Veuillez d\'abord sélectionner une date de début'
+							if (!startDate.value) return 'Veuillez d\u2019abord sélectionner une date de début'
 							const start = parseDate(startDate.value, 'DD/MM/YYYY')
 							const end = parseDate(value, 'DD/MM/YYYY')
 							if (!start || !end) return true
