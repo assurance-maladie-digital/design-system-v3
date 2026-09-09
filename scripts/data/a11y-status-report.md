@@ -1,13 +1,13 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 08/09/2026
+Généré le: 09/09/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
 | **Accordion** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **BackBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **BackToTopBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **Captcha** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
+| **Captcha** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **ChipList** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **CollapsibleList** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **ContextualMenu** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -82,4 +82,4 @@ Généré le: 08/09/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 56 / 77 (72.73%)**
+**Total des composants conformes : 57 / 77 (74.03%)**
