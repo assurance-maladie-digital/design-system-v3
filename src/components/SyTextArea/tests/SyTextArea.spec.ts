@@ -177,6 +177,12 @@ describe('SyTextArea', () => {
 		await textarea.trigger('focus')
 		await textarea.setValue('content\ncontent\ncontent\ncontent\ncontent\ncontent')
 		await textarea.trigger('blur')
+		// Ajout pour useCustomValidation.ts:195-199 : watch(focused, (newVal) => {
+		//     if (isValidateOnBlur.value && !newVal && !disableErrorHandling.value) {
+		//         validate()
+		//     }
+		// })
+		// Pour eviter de demander à chaque composant de connaître et d'appeler validate() explicitement.
 		await flushPromises()
 
 		expect(wrapper.text()).toContain('Ce champ ne peut pas dépasser 5 lignes')
