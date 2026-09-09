@@ -143,7 +143,7 @@ export function useCustomValidation(
 
 		return applyValidationResult(result)
 	}
-	const validate = () => validateValue()
+	const validate = () => validateValue(modelValue.value)
 
 	function clearValidation() {
 		errors.value = []
