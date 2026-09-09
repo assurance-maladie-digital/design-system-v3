@@ -108,12 +108,22 @@ const MAX_COMMITS_PER_COMPONENT = 25;
 // sont ecartes, il en faut donc bien plus que le plafond conserve.
 const RAW_HISTORY_WINDOW = 150;
 
+// Meme perimetre de fichiers que functional-history-report.mjs : seuls les sources du
+// composant comptent comme modification fonctionnelle. Sans ce filtre, un commit qui ne
+// touche que la doc (release, injection de badges) remonte dans le suivi des composants.
+const sourcePathspecs = (componentPath) => [
+  ...['vue', 'ts', 'js', 'scss', 'css'].map((ext) => `:(glob)${componentPath}/**/*.${ext}`),
+  `:(exclude,glob)${componentPath}/**/*.stories.*`,
+  `:(exclude,glob)${componentPath}/**/*.spec.*`,
+  `:(exclude,glob)${componentPath}/**/*.cy.*`,
+];
+
 function getRecentFunctionalCommits(componentPath) {
   if (!fs.existsSync(path.join(root, componentPath))) return [];
   try {
     const out = execFileSync(
       'git',
-      ['log', `-${RAW_HISTORY_WINDOW}`, '--date=iso', '--pretty=format:%ad|%s', '--', componentPath],
+      ['log', `-${RAW_HISTORY_WINDOW}`, '--date=iso', '--pretty=format:%ad|%s', '--', ...sourcePathspecs(componentPath)],
       { cwd: root, encoding: 'utf8' },
     );
     return out
