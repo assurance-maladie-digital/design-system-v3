@@ -817,4 +817,241 @@ describe('useCustomValidation', () => {
 		const validationResult = await result.validate()
 		expect(validationResult.hasError).toBe(false)
 	})
+
+	describe('courses asynchrones', () => {
+		it('un résultat async stale n\'écrase pas un résultat sync plus récent', async () => {
+			let resolveSlow!: (v: boolean) => void
+			const args = defaultArgs()
+			args.modelValue.value = 'test'
+			args.customRules.value = [{
+				type: 'custom',
+				options: {
+					validate: () => new Promise<boolean>((resolve) => { resolveSlow = resolve }),
+					message: 'Erreur async stale',
+				},
+			}]
+			const { result } = withSetup(() =>
+				useCustomValidation(
+					args.modelValue,
+					args.customRules,
+					args.customWarningRules,
+					args.customSuccessRules,
+					args.errors,
+					args.warnings,
+					args.successes,
+					args.showSuccessMessages,
+					args.label,
+					args.focused,
+					args.isValidateOnBlur,
+					args.disableErrorHandling,
+				),
+			)
+
+			// Lance la validation async (lente)
+			const slowPromise = result.validate()
+
+			// Remplace immédiatement par une règle sync et revalide
+			args.customRules.value = [{
+				type: 'custom',
+				options: {
+					validate: () => false,
+					message: 'Erreur sync immédiate',
+				},
+			}]
+			const fastResult = await result.validate()
+			expect(fastResult.hasError).toBe(true)
+			expect(args.errors.value).toContain('Erreur sync immédiate')
+
+			// Résout la validation stale — ne doit pas écraser le résultat sync
+			resolveSlow(false)
+			await slowPromise
+
+			expect(args.errors.value).toContain('Erreur sync immédiate')
+			expect(args.errors.value).not.toContain('Erreur async stale')
+		})
+
+		it('un résultat async stale n\'écrase pas un résultat async plus récent', async () => {
+			let resolveFirst!: (v: boolean) => void
+			let resolveSecond!: (v: boolean) => void
+			const args = defaultArgs()
+			args.modelValue.value = 'test'
+			args.customRules.value = [{
+				type: 'custom',
+				options: {
+					validate: () => new Promise<boolean>((resolve) => { resolveFirst = resolve }),
+					message: 'Erreur première',
+				},
+			}]
+			const { result } = withSetup(() =>
+				useCustomValidation(
+					args.modelValue,
+					args.customRules,
+					args.customWarningRules,
+					args.customSuccessRules,
+					args.errors,
+					args.warnings,
+					args.successes,
+					args.showSuccessMessages,
+					args.label,
+					args.focused,
+					args.isValidateOnBlur,
+					args.disableErrorHandling,
+				),
+			)
+
+			const firstPromise = result.validate()
+
+			args.customRules.value = [{
+				type: 'custom',
+				options: {
+					validate: () => new Promise<boolean>((resolve) => { resolveSecond = resolve }),
+					message: 'Erreur seconde',
+				},
+			}]
+			const secondPromise = result.validate()
+
+			resolveSecond(false)
+			await secondPromise
+			expect(args.errors.value).toContain('Erreur seconde')
+
+			resolveFirst(false)
+			await firstPromise
+
+			expect(args.errors.value).toContain('Erreur seconde')
+			expect(args.errors.value).not.toContain('Erreur première')
+		})
+
+		it('clearValidation() invalide une validation async en cours', async () => {
+			let resolveSlow!: (v: boolean) => void
+			const args = defaultArgs()
+			args.modelValue.value = 'test'
+			args.customRules.value = [{
+				type: 'custom',
+				options: {
+					validate: () => new Promise<boolean>((resolve) => { resolveSlow = resolve }),
+					message: 'Erreur async après clear',
+				},
+			}]
+			const { result } = withSetup(() =>
+				useCustomValidation(
+					args.modelValue,
+					args.customRules,
+					args.customWarningRules,
+					args.customSuccessRules,
+					args.errors,
+					args.warnings,
+					args.successes,
+					args.showSuccessMessages,
+					args.label,
+					args.focused,
+					args.isValidateOnBlur,
+					args.disableErrorHandling,
+				),
+			)
+
+			const slowPromise = result.validate()
+
+			result.clearValidation()
+			expect(args.errors.value).toEqual([])
+
+			resolveSlow(false)
+			await slowPromise
+
+			expect(args.errors.value).toEqual([])
+		})
+
+		it('le passage en readonly invalide une validation async en cours', async () => {
+			let resolveSlow!: (v: boolean) => void
+			const readonly = ref(false)
+			const args = defaultArgs()
+			args.modelValue.value = 'test'
+			args.customRules.value = [{
+				type: 'custom',
+				options: {
+					validate: () => new Promise<boolean>((resolve) => { resolveSlow = resolve }),
+					message: 'Erreur async après readonly',
+				},
+			}]
+			const { result } = withSetup(() =>
+				useCustomValidation(
+					args.modelValue,
+					args.customRules,
+					args.customWarningRules,
+					args.customSuccessRules,
+					args.errors,
+					args.warnings,
+					args.successes,
+					args.showSuccessMessages,
+					args.label,
+					args.focused,
+					args.isValidateOnBlur,
+					args.disableErrorHandling,
+					readonly,
+				),
+			)
+
+			const slowPromise = result.validate()
+
+			readonly.value = true
+			await nextTick()
+
+			expect(args.errors.value).toEqual([])
+
+			resolveSlow(false)
+			await slowPromise
+
+			expect(args.errors.value).toEqual([])
+		})
+
+		it('plusieurs validate() concurrents avec des modelValues différents gardent le dernier résultat', async () => {
+			const resolvers: Array<(v: boolean) => void> = []
+			let callIndex = 0
+			const args = defaultArgs()
+			args.modelValue.value = 'a'
+			args.customRules.value = [{
+				type: 'custom',
+				options: {
+					validate: () => {
+						const idx = callIndex
+						callIndex++
+						return new Promise<boolean>((resolve) => {
+							resolvers[idx] = resolve
+						})
+					},
+					message: 'Erreur concurrente',
+				},
+			}]
+			const { result } = withSetup(() =>
+				useCustomValidation(
+					args.modelValue,
+					args.customRules,
+					args.customWarningRules,
+					args.customSuccessRules,
+					args.errors,
+					args.warnings,
+					args.successes,
+					args.showSuccessMessages,
+					args.label,
+					args.focused,
+					args.isValidateOnBlur,
+					args.disableErrorHandling,
+				),
+			)
+
+			const p1 = result.validate()
+			args.modelValue.value = 'b'
+			const p2 = result.validate()
+			args.modelValue.value = 'c'
+			const p3 = result.validate()
+
+			resolvers[2]!(false)
+			resolvers[0]!(false)
+			resolvers[1]!(false)
+
+			await Promise.all([p1, p2, p3])
+
+			expect(args.errors.value).toContain('Erreur concurrente')
+			expect(args.errors.value).toHaveLength(1)
+		})
+	})
 })
