@@ -63,6 +63,7 @@ export type DatePickerValidationOptions = {
 	selectedDates: Ref<DateObjectValue>
 	isUpdatingFromInternal: Ref<boolean>
 	readonly?: MaybeRef<boolean>
+	disabled?: MaybeRef<boolean>
 	useVuetifyValidation?: MaybeRef<boolean>
 	rules?: Ref<VuetifyValidationRule[] | undefined>
 	modelValue?: MaybeRef<unknown>
@@ -297,7 +298,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		computed(() => options.isValidateOnBlur?.value ?? true),
 		computed(() => unref(options.disableErrorHandling)),
 		computed(() => Boolean(unref(options.readonly))),
-		ref(false), // disabled — non géré ici
+		computed(() => Boolean(unref(options.disabled))),
 		{
 			registerWithForm: Boolean(options.formRegistration),
 			reactiveValidation: false, // Désactivé : le DatePicker gère ses propres watchers
@@ -310,7 +311,10 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 	// --- Mutateurs d'erreur ---
 
 	/** Vide toutes les refs d'erreurs / warnings / succès. */
-	const clearValidation = () => validation.clearValidation()
+	const clearValidation = () => {
+		currentValidationToken.value++
+		validation.clearValidation()
+	}
 
 	/** Retourne la limite d'erreurs à afficher, ou undefined si pas de limite. */
 	const getMaxErrors = (): number | undefined => options.maxErrors ? unref(options.maxErrors) : undefined
@@ -374,18 +378,16 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		options.displayRange,
 	)
 
-	// --- Watcher : nettoyage auto quand passage en readonly ---
-	// Si skipValidationWhenReadonly est activé, on vide les erreurs quand le composant
-	// devient readonly. Évite d'afficher des erreurs sur un champ que l'utilisateur ne peut pas corriger.
-	if (options.skipValidationWhenReadonly) {
-		watch(() => unref(options.readonly), (newValue) => {
-			if (newValue) {
-				replaceErrors([])
-				warnings.value = []
-				successes.value = []
-			}
-		})
-	}
+	watch([
+		() => unref(options.readonly),
+		() => unref(options.disabled),
+		() => unref(options.disableErrorHandling),
+	], () => {
+		if ((options.skipValidationWhenReadonly && unref(options.readonly))
+			|| unref(options.disabled) || unref(options.disableErrorHandling)) {
+			clearValidation()
+		}
+	}, { flush: 'sync' })
 
 	// --- Validation bas niveau : wrapper autour de useCustomValidation ---
 	const validateField = (
@@ -466,7 +468,8 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		successes,
 		currentValidationToken,
 		validation,
-		clearValidation,
+		// Les flows nettoient les messages sans annuler leur propre exécution.
+		clearValidation: validation.clearValidation,
 		replaceErrors,
 		pushError,
 		getMaxErrors,
