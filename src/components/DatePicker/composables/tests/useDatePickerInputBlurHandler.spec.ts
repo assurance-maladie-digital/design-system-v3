@@ -217,7 +217,7 @@ describe('useDatePickerInputBlurHandler', () => {
 			expect(mockUpdateModel).toHaveBeenCalledWith(null)
 		})
 
-		it('devrait appeler validateTextInput sur champ vide non-required pour les custom rules', async () => {
+		it('ne devrait pas appeler validateTextInput sur champ vide non-required', async () => {
 			displayFormattedDate.value = ''
 			hasInteracted.value = true
 
@@ -241,7 +241,7 @@ describe('useDatePickerInputBlurHandler', () => {
 			await handleInputBlur()
 
 			expect(mockUpdateModel).toHaveBeenCalledWith(null)
-			expect(mockValidateTextInput).toHaveBeenCalledWith('')
+			expect(mockValidateTextInput).not.toHaveBeenCalled()
 		})
 
 		it('ne devrait pas réinitialiser le modèle si le champ est vide mais requis', () => {

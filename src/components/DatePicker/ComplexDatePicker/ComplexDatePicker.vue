@@ -92,6 +92,7 @@
 		useDatePickerFocusTarget,
 	} from '../composables'
 	import dayjs from 'dayjs'
+	import { devWarn } from '@/utils/devWarn'
 	import DateTextInput from '../DateTextInput/DateTextInput.vue'
 	import { VDatePicker } from 'vuetify/components'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
@@ -152,6 +153,11 @@
 	const currentYearName = ref<string | null>(null)
 
 	const props = withDefaults(defineProps<DatePickerCommonProps>(), DatePickerCommonDefaults)
+
+	// Avertissement de déprécation pour birthDate
+	if (props.birthDate) {
+		devWarn('[ComplexDatePicker] La prop "birthDate" est dépréciée. Utilisez "isBirthDate" à la place.')
+	}
 
 	// Guard centralisé pour disabled/readonly
 	const isInteractionDisabled = computed(() => props.disabled || props.readonly)
@@ -727,12 +733,21 @@
 	const isSameCalendarSelection = (first: DateObjectValue, second: DateObjectValue): boolean => {
 		if (first === second) return true
 		if (first instanceof Date && second instanceof Date) {
-			return first.getTime() === second.getTime()
+			// Normaliser au jour pour éviter les fermetures intempestives
+			// si Vuetify ré-émet avec des heures/ms différentes
+			return first.getFullYear() === second.getFullYear()
+				&& first.getMonth() === second.getMonth()
+				&& first.getDate() === second.getDate()
 		}
 		if (Array.isArray(first) && Array.isArray(second)) {
 			return first.length === second.length && first.every((date, index) => {
 				const otherDate = second[index]
-				return date?.getTime() === otherDate?.getTime()
+				if (date instanceof Date && otherDate instanceof Date) {
+					return date.getFullYear() === otherDate.getFullYear()
+						&& date.getMonth() === otherDate.getMonth()
+						&& date.getDate() === otherDate.getDate()
+				}
+				return date === otherDate
 			})
 		}
 		return false
@@ -1346,9 +1361,9 @@
 	// ces méthodes pour valider, réinitialiser, ouvrir/fermer le calendrier, etc.
 	async function validateOnSubmit(): Promise<boolean> {
 		if (props.noCalendar) {
-			return await Promise.resolve(dateTextInputRef.value?.validateOnSubmit() || false)
+			return await Promise.resolve(dateTextInputRef.value?.validateOnSubmit() ?? false)
 		}
-		const textInputValid = await Promise.resolve(dateCalendarTextInputRef.value?.validateOnSubmit() || false)
+		const textInputValid = await Promise.resolve(dateCalendarTextInputRef.value?.validateOnSubmit() ?? false)
 		await Promise.resolve(validate({ force: true }))
 		return textInputValid && errorMessages.value.length === 0
 	}

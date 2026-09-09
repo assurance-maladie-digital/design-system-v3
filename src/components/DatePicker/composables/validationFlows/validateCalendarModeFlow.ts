@@ -1,6 +1,7 @@
 import { unref } from 'vue'
 import type { ValidationResult } from '@/composables/unifyValidation/useValidation'
 import { locales } from '../../locales'
+import { emptyValidationResult } from './validationResultFactories'
 import type { ValidationContext } from './types'
 
 /**
@@ -64,14 +65,16 @@ export function createValidateCalendarModeFlow(
 		return false
 	}
 
-	const validateCalendarModeDates = async (forceValidation = false): Promise<ValidationResult | void> => {
+	const validateCalendarModeDates = async (forceValidation = false): Promise<ValidationResult> => {
+		const token = ++ctx.currentValidationToken.value
+
 		// Si le flow CalendarMode n'est pas activé, utiliser le flow standard
 		if (!options.useCalendarModeRequiredFlow) {
 			return await Promise.resolve(validateDates(forceValidation))
 		}
 
 		if (unref(options.noCalendar)) {
-			return
+			return emptyValidationResult()
 		}
 
 		// En mode Vuetify natif, déléguer à validateDates qui gère le court-circuit
@@ -84,7 +87,7 @@ export function createValidateCalendarModeFlow(
 		// Vérifier le required avec la logique spécifique CalendarMode
 		const skipRequired = shouldSkipCalendarModeRequiredError(forceValidation)
 		if (skipRequired) {
-			return
+			return emptyValidationResult()
 		}
 
 		// Si pas de sélection : valider avec null si des customRules existent
@@ -99,6 +102,7 @@ export function createValidateCalendarModeFlow(
 					options.customWarningRules.value,
 					options.customSuccessRules?.value ?? [],
 				)
+				if (token !== ctx.currentValidationToken.value) return emptyValidationResult()
 				// Pousser l'erreur required APRÈS les custom rules pour éviter qu'applyValidationResult l'écrase
 				if (ctx.shouldValidateRequired(forceValidation) && ctx.shouldDisplayErrors()) {
 					ctx.pushError(locales.required)
@@ -108,13 +112,14 @@ export function createValidateCalendarModeFlow(
 			else if (ctx.shouldValidateRequired(forceValidation) && ctx.shouldDisplayErrors()) {
 				ctx.pushError(locales.required)
 			}
-			return
+			return ctx.buildValidationResult(ctx.shouldDisplayErrors() ? false : true)
 		}
 
 		// Si des dates sont sélectionnées, utiliser le flow standard
 		if (shouldRunDisplayedValidation(forceValidation)) {
 			return await Promise.resolve(validateDates(forceValidation))
 		}
+		return emptyValidationResult()
 	}
 
 	return { validateCalendarModeDates }
