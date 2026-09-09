@@ -304,6 +304,7 @@
 		warningMessages,
 		successMessages,
 	} = useDatePickerValidation({
+		disabled: computed(() => props.disabled),
 		showSuccessMessages: computed(() => props.showSuccessMessages),
 		disableErrorHandling: computed(() => props.disableErrorHandling),
 		noCalendar: computed(() => props.noCalendar),

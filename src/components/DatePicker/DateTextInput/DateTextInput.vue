@@ -155,6 +155,7 @@
 		pushError,
 		validate: bridgeValidate,
 	} = useDatePickerValidation({
+		disabled: computed(() => props.disabled),
 		showSuccessMessages: computed(() => props.showSuccessMessages),
 		disableErrorHandling: computed(() => props.disableErrorHandling),
 		noCalendar: true,
@@ -1256,6 +1257,18 @@
 		const syncedDisplayValue = syncFromModelValue(nv)
 		void runRules(syncedDisplayValue)
 	})
+
+	watch([
+		() => props.customRules,
+		() => props.customWarningRules,
+		() => props.customSuccessRules,
+		() => props.rules,
+		() => props.useVuetifyValidation,
+	], () => {
+		if (hasInteracted.value || errorMessages.value.length || warningMessages.value.length || successMessages.value.length) {
+			void runRules(inputValue.value)
+		}
+	}, { deep: true })
 
 	function validateOnSubmitForForm() {
 		return validateOnSubmit()

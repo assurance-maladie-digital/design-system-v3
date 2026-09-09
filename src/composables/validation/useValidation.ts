@@ -81,6 +81,7 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 	)
 
 	const clearValidation = () => {
+		currentValidationToken++
 		errors.value = []
 		warnings.value = []
 		successes.value = []
@@ -202,8 +203,8 @@ export function useValidation(options: ValidationOptions = { showSuccessMessages
 		warningRules: ValidationRule[] = [],
 		successRules: ValidationRule[] = [],
 	): ValidationResult | Promise<ValidationResult> => {
-		const token = ++currentValidationToken
 		clearValidation()
+		const token = currentValidationToken
 
 		if (unref(options.disableErrorHandling)) return buildResult()
 

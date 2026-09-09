@@ -1,6 +1,6 @@
 import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 import { useValidatable } from '@/composables/validation/useValidatable'
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, reactive, ref, watch } from 'vue'
 import type { Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import { locales } from './locales'
@@ -38,6 +38,8 @@ export function useCustomValidation(
 	options: UseCustomValidationOptions = {},
 ) {
 	const hasSuccess = ref(false)
+	let currentValidationToken = 0
+	let pendingValidationToken: number | undefined
 
 	const validatorOptions = reactive({
 		showSuccessMessages: computed(() => showSuccessMessages.value),
@@ -67,12 +69,7 @@ export function useCustomValidation(
 		return result
 	}
 
-	const applyVuetifyValidationResult = (vuetifyErrors: string[]) => {
-		errors.value = vuetifyErrors
-		warnings.value = []
-		successes.value = []
-		hasSuccess.value = false
-
+	const buildVuetifyValidationResult = (vuetifyErrors: string[]) => {
 		return {
 			hasError: vuetifyErrors.length > 0,
 			hasWarning: false,
@@ -100,15 +97,23 @@ export function useCustomValidation(
 	const validateVuetifyValue = async (
 		value: unknown,
 		rules: VuetifyValidationRule[] = [],
+		token = currentValidationToken,
 	) => {
 		const results = await Promise.all(
 			rules.map(async (rule) => {
-				const rawResult = typeof rule === 'function' ? await rule(value) : rule
-				return normalizeVuetifyRuleResult(rawResult)
+				try {
+					const rawResult = typeof rule === 'function' ? await rule(value) : rule
+					return normalizeVuetifyRuleResult(rawResult)
+				}
+				catch (err) {
+					return err instanceof Error ? err.message : locales.invalidValue
+				}
 			}),
 		)
 
-		return applyVuetifyValidationResult(
+		if (token !== currentValidationToken) return emptyValidationResult()
+
+		return buildVuetifyValidationResult(
 			results.filter((message): message is string => message !== null),
 		)
 	}
@@ -119,27 +124,23 @@ export function useCustomValidation(
 		warningRules = customWarningRules?.value,
 		successRules = customSuccessRules?.value,
 	) {
-		if (readonly?.value || disabled?.value) {
-			errors.value = []
-			warnings.value = []
-			successes.value = []
-			hasSuccess.value = false
+		const token = ++currentValidationToken
+		if (readonly?.value || disabled?.value || disableErrorHandling.value) {
+			clearValidation()
 			return emptyValidationResult()
 		}
 
-		if (options.useVuetifyValidation?.value) {
-			return validateVuetifyValue(value, options.rules?.value ?? [])
-		}
-
-		const result = validator.validateField(
-			value,
-			rules,
-			warningRules,
-			successRules,
-		)
+		const result = options.useVuetifyValidation?.value
+			? validateVuetifyValue(value, options.rules?.value ?? [], token)
+			: validator.validateField(value, rules, warningRules, successRules)
 
 		if (result instanceof Promise) {
-			return result.then(applyValidationResult)
+			pendingValidationToken = token
+			return result.then(resolved => token === currentValidationToken
+				? applyValidationResult(resolved)
+				: emptyValidationResult()).finally(() => {
+				if (pendingValidationToken === token) pendingValidationToken = undefined
+			})
 		}
 
 		return applyValidationResult(result)
@@ -147,11 +148,19 @@ export function useCustomValidation(
 	const validate = () => validateValue(modelValue.value)
 
 	function clearValidation() {
+		currentValidationToken++
+		pendingValidationToken = undefined
+		validator.clearValidation()
 		errors.value = []
 		warnings.value = []
 		successes.value = []
 		hasSuccess.value = false
 	}
+
+	onBeforeUnmount(clearValidation)
+	watch([() => readonly?.value, () => disabled?.value, disableErrorHandling], () => {
+		if (readonly?.value || disabled?.value || disableErrorHandling.value) clearValidation()
+	}, { flush: 'sync' })
 
 	const validateOnSubmit = options.formRegistration?.validateOnSubmit ?? (async () => {
 		const result = await validate()
@@ -172,20 +181,20 @@ export function useCustomValidation(
 
 	if (options.reactiveValidation !== false) {
 		watch(
-			() => [customRules?.value, customWarningRules?.value, customSuccessRules?.value],
+			() => [customRules?.value, customWarningRules?.value, customSuccessRules?.value, options.rules?.value, options.useVuetifyValidation?.value],
 			() => {
-				const isDirty = errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0 || hasSuccess.value
+				const isDirty = pendingValidationToken !== undefined || errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0 || hasSuccess.value
 				if (isDirty) {
 					validate()
 				}
 			},
-			{ deep: true },
+			{ deep: true, flush: 'sync' },
 		)
 
 		watch(
 			() => [showSuccessMessages.value, label.value, disableErrorHandling.value],
 			() => {
-				const isDirty = errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0 || hasSuccess.value
+				const isDirty = pendingValidationToken !== undefined || errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0 || hasSuccess.value
 				if (isDirty) {
 					validate()
 				}
@@ -199,10 +208,11 @@ export function useCustomValidation(
 		})
 
 		watch(modelValue, () => {
+			if (pendingValidationToken !== undefined) clearValidation()
 			if (!isValidateOnBlur.value && !disableErrorHandling.value) {
 				validate()
 			}
-		})
+		}, { flush: 'sync' })
 	}
 
 	return { validate, validateValue, hasSuccess, clearValidation }

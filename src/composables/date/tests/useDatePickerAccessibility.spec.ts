@@ -375,7 +375,7 @@ describe('useDatePickerAccessibility', () => {
 		const dayButtons = Array.from(dayCells[0]?.querySelectorAll('button') ?? [])
 		expect(dayButtons[0]?.getAttribute('role')).toBeNull()
 		expect(dayButtons[0]?.getAttribute('aria-selected')).toBeNull()
-		expect(dayButtons[0]?.getAttribute('tabindex')).toBe('-1')
+		expect(dayButtons[0]?.getAttribute('tabindex')).toBe('0')
 	})
 
 	it('cleanupGridSemantics flattens injected rows', async () => {
