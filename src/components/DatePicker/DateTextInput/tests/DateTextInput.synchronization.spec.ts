@@ -1,12 +1,38 @@
 import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { defineComponent, ref } from 'vue'
 import DateTextInput from '../DateTextInput.vue'
+import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
 enableAutoUnmount(afterEach)
 
 const validRange = '10/01/2024 - 20/01/2024'
 
 describe('DateTextInput synchronization', () => {
+	const SyFormDateTextInputHost = defineComponent({
+		components: { DateTextInput, SyForm },
+		props: {
+			customRules: {
+				type: Array,
+				default: () => [],
+			},
+		},
+		setup() {
+			const model = ref('10/01/2024')
+
+			return { model }
+		},
+		template: `
+			<SyForm ref="form">
+				<DateTextInput
+					v-model="model"
+					label="Date"
+					:custom-rules="customRules"
+				/>
+			</SyForm>
+		`,
+	})
+
 	it('preserves partial text until the parent supplies a replacement', async () => {
 		const wrapper = mount(DateTextInput, { props: { label: 'Période', displayRange: true } })
 		await wrapper.get('input').setValue('10/01/2024 - 2')
@@ -114,5 +140,33 @@ describe('DateTextInput synchronization', () => {
 		if (action === 'reset') expect(wrapper.get('input').element.value).toBe('')
 		expect(wrapper.text()).not.toContain('Validation obsolète')
 		wrapper.unmount()
+	})
+
+	it('does not restore async errors after SyForm reset', async () => {
+		let resolveRule: (valid: boolean) => void = () => {}
+		const pending = new Promise<boolean>((resolve) => {
+			resolveRule = resolve
+		})
+		const validate = vi.fn(() => pending)
+		const wrapper = mount(SyFormDateTextInputHost, {
+			props: {
+				customRules: [{ type: 'custom', options: { validate, message: 'Validation obsolète' } }],
+			},
+		})
+		await flushPromises()
+
+		const formVm = wrapper.getComponent(SyForm).vm as InstanceType<typeof SyForm>
+		const submission = formVm.validate()
+		await flushPromises()
+		expect(validate).toHaveBeenCalledWith('10/01/2024')
+
+		formVm.reset()
+		await flushPromises()
+		resolveRule(false)
+		await submission
+		await flushPromises()
+
+		expect(wrapper.get('input').element.value).toBe('')
+		expect(wrapper.text()).not.toContain('Validation obsolète')
 	})
 })
