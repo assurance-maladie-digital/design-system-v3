@@ -1,4 +1,5 @@
 import { fn } from 'storybook/test'
+import { ref, watch } from 'vue'
 import DatePickerLite from './DatePickerLite.vue'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
@@ -49,11 +50,21 @@ const meta: Meta<typeof DatePickerLite> = {
 		},
 		...getValidationDocumentation('base'),
 		'modelValue': {
-			control: 'date',
-			description: 'Date sélectionnée. La valeur est renvoyée au format JavaScript Date, ou undefined si le champ est vide.',
+			control: 'object',
+			description: 'Date sélectionnée en mode simple, ou plage de dates [start, end] en mode range. La valeur est renvoyée au format JavaScript Date, ou undefined si le champ est vide.',
 			table: {
-				type: { summary: 'Date | undefined' },
+				type: { summary: 'Date | [Date, Date] | undefined' },
 				defaultValue: { summary: 'undefined' },
+				category: 'props',
+			},
+		},
+		'mode': {
+			control: 'select',
+			options: ['single', 'range'],
+			description: 'Active le mode de saisie. En mode range, le champ attend une plage de dates au format JJ/MM/AAAA - JJ/MM/AAAA.',
+			table: {
+				type: { summary: '"single" | "range"' },
+				defaultValue: { summary: '"single"' },
 				category: 'props',
 			},
 		},
@@ -216,6 +227,26 @@ export const Default: Story = {
 			},
 		}],
 	},
+	render: args => ({
+		components: { DatePickerLite },
+		setup() {
+			const value = ref<Date | undefined>(args.modelValue as Date | undefined)
+			watch(
+				() => args.modelValue,
+				(nextValue) => {
+					value.value = nextValue as Date | undefined
+				},
+				{ immediate: true },
+			)
+			return { args, value }
+		},
+		template: `
+			<DatePickerLite
+				v-bind="args"
+				v-model="value"
+			/>
+		`,
+	}),
 	parameters: {
 		sourceCode: [
 			{
@@ -245,6 +276,67 @@ export const Default: Story = {
 							message: 'Le format doit être JJ/MM/AAAA (ex: 25/12/2026).',
 						},
 					}]
+				</script>
+				`,
+			},
+		],
+	},
+}
+
+export const Range: Story = {
+	args: {
+		'mode': 'range',
+		'modelValue': [new Date(2025, 8, 3), new Date(2025, 8, 10)],
+		'label': 'Période',
+		'helpText': 'Format JJ/MM/AAAA - JJ/MM/AAAA',
+		'onUpdate:modelValue': fn(),
+		'onUpdate:open': fn(),
+	},
+	render: args => ({
+		components: { DatePickerLite },
+		setup() {
+			const value = ref<[Date, Date] | undefined>(args.modelValue as [Date, Date] | undefined)
+			watch(
+				() => args.modelValue,
+				(nextValue) => {
+					value.value = nextValue as [Date, Date] | undefined
+				},
+				{ immediate: true },
+			)
+			return { args, value }
+		},
+		template: `
+			<DatePickerLite
+				v-bind="args"
+				v-model="value"
+			/>
+		`,
+	}),
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePickerLite
+						v-model="selectedRange"
+						mode="range"
+						label="Période"
+						help-text="Format JJ/MM/AAAA - JJ/MM/AAAA"
+					/>
+				</template>
+				`,
+			}, {
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DatePickerLite } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const selectedRange = ref<[Date, Date] | undefined>([
+						new Date(2025, 8, 3),
+						new Date(2025, 8, 10),
+					])
 				</script>
 				`,
 			},

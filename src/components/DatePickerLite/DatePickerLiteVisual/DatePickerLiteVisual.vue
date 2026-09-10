@@ -1,103 +1,73 @@
 <script setup lang="ts">
 	import { mdiClose } from '@mdi/js'
-	import { computed, inject, ref, useId, watch, type ComponentPublicInstance, type ComputedRef } from 'vue'
+	import { computed, inject, toRef, useId, type ComponentPublicInstance, type ComputedRef } from 'vue'
 	import MonthSelector from '@/components/Common/Calendar/MonthSelector/MonthSelector.vue'
 	import YearSelector from '@/components/Common/Calendar/YearSelector/YearSelector.vue'
 	import DatePickerLiteHeader from '@/components/DatePickerLite/DatePickerLiteHeader.vue'
 	import VisualPickerFooter from '@/components/Common/Calendar/PickerFooter/VisualPickerFooter.vue'
 	import Calendar from '@/components/Common/Calendar/Calendar/Calendar.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import { calendarLocalesKey, type PickerView } from '@/components/Common/Calendar/locales'
+	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
 	import { locales as defaultLocales } from '../locales'
+	import type { DatePickerLiteRange } from '../types'
 	import type { DatePickerLiteVisualProps } from './DatePickerLiteVisualProps'
+	import { useDatePickerLiteDialog } from './useDatePickerLiteDialog'
+	import { useDatePickerLiteNavigation } from './useDatePickerLiteNavigation'
+	import { useDatePickerLiteSelection } from './useDatePickerLiteSelection'
 
 	const props = defineProps<{
 		/** used to position the menu */
 		textInput: ComponentPublicInstance | HTMLElement | null
 		/** used to reset the focus on closed */
 		toggleBtn: HTMLElement | null
-		modelValue: Date | undefined
+		modelValue: Date | DatePickerLiteRange | undefined
 		readonly: boolean
 		disabled: boolean
 	} & DatePickerLiteVisualProps>()
 
 	const emits = defineEmits<{
-		(e: 'update:modelValue', value: Date | undefined): void
+		(e: 'update:modelValue', value: Date | DatePickerLiteRange | undefined): void
 		(e: 'update:open', value: boolean): void
 	}>()
 
 	// The DatePickerLite root provides its full locales through the shared key
 	const locales = inject<ComputedRef<typeof defaultLocales>>(calendarLocalesKey)!
 
-	const view = ref<PickerView>(props.initialView)
-	const open = ref(false)
-	const displayedMonth = ref<Date | undefined>(undefined)
-
-	watch(
-		() => props.modelValue,
-		(newValue) => {
-			displayedMonth.value = newValue ? new Date(newValue) : new Date()
-		},
-		{ immediate: true },
-	)
-
-	watch(open, (newValue) => {
-		if (newValue) {
-			view.value = props.initialView
-			displayedMonth.value = props.modelValue ? new Date(props.modelValue) : new Date()
-		}
-		else {
-			props.toggleBtn?.focus()
-		}
-		emits('update:open', newValue)
+	const {
+		selectedDate,
+		selectedDateRange,
+		selectedDates,
+		headerDate,
+	} = useDatePickerLiteSelection({
+		modelValue: toRef(props, 'modelValue'),
+		mode: toRef(props, 'mode'),
 	})
 
-	const selectedDays = computed(() => props.modelValue ? [props.modelValue] : [])
-
-	const headerModelValue = computed<Date | undefined>(() => {
-		if (!props.modelValue) return undefined
-		return new Date(props.modelValue)
+	const {
+		view,
+		visibleMonth,
+		currentMonth,
+		visibleMonthIndex,
+		visibleYear,
+		resetViewOnOpen,
+		previousMonth,
+		nextMonth,
+		setYear,
+		setMonth,
+	} = useDatePickerLiteNavigation({
+		modelValue: computed(() => selectedDate.value),
+		initialView: toRef(props, 'initialView'),
 	})
 
-	function previousMonth() {
-		const current = displayedMonth.value ?? props.modelValue ?? new Date()
-		displayedMonth.value = new Date(current.getFullYear(), current.getMonth() - 1, 1)
-	}
-
-	function nextMonth() {
-		const current = displayedMonth.value ?? props.modelValue ?? new Date()
-		displayedMonth.value = new Date(current.getFullYear(), current.getMonth() + 1, 1)
-	}
-
-	function setYear(year: number) {
-		const current = displayedMonth.value ?? new Date()
-		displayedMonth.value = new Date(year, current.getMonth(), 1)
-		view.value = 'months'
-	}
-
-	function setMonth(month: number) {
-		const current = displayedMonth.value ?? new Date()
-		displayedMonth.value = new Date(current.getFullYear(), month - 1, 1)
-		view.value = 'days'
-	}
-
-	function setDay(value: Date) {
-		if (!props.readonly && !props.disabled) {
-			emits('update:modelValue', value)
-		}
-		open.value = false
-	}
-
-	// The shared footer emits `string | Date`; DatePickerLite always passes a Date-returning format
-	function setDayFromFooter(value: string | Date) {
-		if (value instanceof Date) {
-			setDay(value)
-		}
-	}
-
-	function toTodayDate(date: Date): Date {
-		return date
-	}
+	const { open, setDay, handleRangeSelected, setDayFromFooter } = useDatePickerLiteDialog({
+		mode: toRef(props, 'mode'),
+		readonly: toRef(props, 'readonly'),
+		disabled: toRef(props, 'disabled'),
+		toggleBtn: toRef(props, 'toggleBtn'),
+		resetViewOnOpen,
+		onUpdateModelValue: value => emits('update:modelValue', value),
+		onUpdateOpen: value => emits('update:open', value),
+	})
 
 	const id = useId()
 </script>
@@ -132,8 +102,8 @@
 			<div class="date-picker-lite-menu__content">
 				<DatePickerLiteHeader
 					v-model:view="view"
-					:model-value="headerModelValue"
-					:displayed-month="displayedMonth ?? (props.modelValue ? new Date(props.modelValue) : new Date())"
+					:model-value="headerDate"
+					:displayed-month="currentMonth"
 					:min-year
 					:max-year
 					@previous-month="previousMonth"
@@ -141,7 +111,7 @@
 				/>
 				<YearSelector
 					v-if="view === 'years'"
-					:model-value="displayedMonth?.getFullYear()"
+					:model-value="visibleYear"
 					:min="minYear"
 					:max="maxYear"
 					:order="yearsOrder"
@@ -149,19 +119,22 @@
 				/>
 				<MonthSelector
 					v-else-if="view === 'months'"
-					:model-value="((displayedMonth ?? new Date()).getMonth() + 1)"
+					:model-value="visibleMonthIndex"
 					@update:model-value="setMonth"
 				/>
 				<Calendar
 					v-else
-					v-model:displayed-month="displayedMonth"
-					:selected-days="selectedDays"
+					v-model:displayed-month="visibleMonth"
+					:selected-days="selectedDates"
+					:selected-range="selectedDateRange"
+					:select-range="props.mode === 'range'"
 					@click:day="setDay"
+					@update:selected-range="handleRangeSelected"
 				/>
 				<VisualPickerFooter
 					:label="locales.todayBtnLabel"
 					:aria-label="locales.todayBtnAriaLabel"
-					:format="toTodayDate"
+					:format="date => date"
 					@update:model-value="setDayFromFooter"
 				/>
 			</div>

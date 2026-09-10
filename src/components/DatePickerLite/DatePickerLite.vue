@@ -1,6 +1,14 @@
 <script lang="ts" setup>
+	/**
+	 * Handle the validation and the syncronisation beweens the sub component
+	 * Do not handle :
+	 * - The text input format
+	 * - The visual rendering
+	 */
+
 	import { computed, nextTick, provide, readonly as readonlyState, ref, toRef, useAttrs, watch, type ComponentPublicInstance } from 'vue'
 	import DatePickerLiteInput from './DatePickerLiteText/DatePickerLiteInput.vue'
+	import DatePickerLiteInputRange from './DatePickerLiteText/DatePickerLiteInputRange.vue'
 	import DatePickerLiteVisual from './DatePickerLiteVisual/DatePickerLiteVisual.vue'
 	import { locales as defaultLocales } from './locales'
 	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
@@ -9,7 +17,8 @@
 	import { useDatePickerValidation } from './useDatePickerValidation'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
-	import type { DatePickerLiteInputSlotProps, DatePickerLiteProps } from './types'
+	import { useDatePickerModel } from './useDatePickerModel'
+	import type { DatePickerLiteInputSlotProps, DatePickerLiteProps, DatePickerLiteRange } from './types'
 
 	// Attributes (including listeners such as @input) are forwarded to the field through
 	// inputProps; otherwise they would also land on the root div (duplicate via bubbling)
@@ -22,6 +31,7 @@
 		...validationPropsDefaults,
 		...defaultDatePickerLiteVisualProps,
 		...defaultTextFieldProps,
+		mode: 'single',
 		disabled: false,
 		readonly: false,
 		displayAsterisk: false,
@@ -36,7 +46,7 @@
 	}>()
 
 	const attrs = useAttrs()
-	const textInput = ref<ComponentPublicInstance<typeof DatePickerLiteInput> | null>(null)
+	const textInput = ref<ComponentPublicInstance<typeof DatePickerLiteInput | typeof DatePickerLiteInputRange> | null>(null)
 	// Opening button tracked by the `input` slot (`:ref="toggleBtnRef"`)
 	const customToggleBtn = ref<HTMLButtonElement | null>(null)
 	// The menu anchors to the `input` slot wrapper (full width), with the fallback included
@@ -45,7 +55,12 @@
 
 	// defineModel handles controlled/uncontrolled state without echoing back to the parent;
 	// readonly/disabled remain enforced at the source (DatePickerLiteVisual, readonly field)
-	const internalValue = defineModel<Date>()
+	const internalValue = defineModel<Date | DatePickerLiteRange>()
+
+	const { modelValueForInput } = useDatePickerModel(
+		toRef(props, 'mode'),
+		internalValue,
+	)
 
 	watch(internalValue, async () => {
 		// Wait for DatePickerLiteInput to update textValue before validating
@@ -55,7 +70,7 @@
 
 	// Raw text content, used as the validation base (an incomplete entry never parses to Date).
 	// Default value comes from the exposed ref on DatePickerLiteInput (replaces update:textValue).
-	// The `input` slot is driven by the consumer through updateTextValue.
+	// A custom input owns its text representation and reports it through updateTextValue.
 	const slotTextValue = ref<string | undefined>(undefined)
 	const textValue = computed(() => textInput.value ? textInput.value.textValue : slotTextValue.value)
 
@@ -103,7 +118,7 @@
 
 	const inputSlotProps = computed<DatePickerLiteInputSlotProps>(() => ({
 		modelValue: internalValue.value,
-		updateModelValue: (value: Date | undefined) => {
+		updateModelValue: (value: Date | DatePickerLiteRange | undefined) => {
 			internalValue.value = value
 		},
 		inputProps: inputProps.value,
@@ -142,9 +157,18 @@
 				name="input"
 				v-bind="inputSlotProps"
 			>
-				<DatePickerLiteInput
+				<DatePickerLiteInputRange
+					v-if="props.mode === 'range'"
 					ref="textInput"
-					v-model="internalValue"
+					v-model="modelValueForInput"
+					v-bind="inputProps"
+					@focus="focused = true"
+					@blur="focused = false"
+				/>
+				<DatePickerLiteInput
+					v-else
+					ref="textInput"
+					v-model="modelValueForInput"
 					v-bind="inputProps"
 					@focus="focused = true"
 					@blur="focused = false"
@@ -155,6 +179,7 @@
 			v-model="internalValue"
 			:text-input="customInputEl"
 			:toggle-btn
+			:mode="props.mode"
 			:min-year
 			:max-year
 			:years-order

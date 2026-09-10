@@ -33,7 +33,13 @@ export default function useCalendar(
 	locale: MaybeRefOrGetter<string>,
 ) {
 	/** Date of reference for the view */
-	const dateView = computed<Date>(() => toValue(month) ?? new Date())
+	const dateView = computed<Date>(() => {
+		const value = toValue(month)
+		if (value instanceof Date && Number.isFinite(value.getTime())) {
+			return value
+		}
+		return new Date()
+	})
 
 	/**
 	 * Is the day selected, do not account for the ranges

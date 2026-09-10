@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { nextTick, computed } from 'vue'
+import { nextTick, computed, ref } from 'vue'
 import { DatePickerLite } from '@/components/index'
 import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
 import DatePickerLiteComponent from '../DatePickerLite.vue'
@@ -381,6 +381,56 @@ describe('DatePickerLite', () => {
 
 			expect(wrapper.emitted('update:modelValue')).toEqual([[new Date(2026, 8, 4)]])
 			expect(wrapper.emitted('update:open')).toEqual([[true], [false]])
+			expect(wrapper.find('input').element.value).toBe('04/09/2026')
+
+			wrapper.unmount()
+		})
+
+		it('should work in single mode without a parent ref bound to v-model', async () => {
+			vi.useFakeTimers()
+			vi.setSystemTime(new Date(2026, 8, 1))
+			const wrapper = mount(DatePickerLiteComponent, {
+				props: {
+					label: 'Début du projet',
+				},
+				attachTo: document.body,
+			})
+
+			await openMenu(wrapper)
+
+			const dayButton = wrapper.findComponent({ name: 'Calendar' }).find('[data-date="2026-09-04"]')
+			await dayButton.trigger('click')
+			vi.advanceTimersByTime(1000)
+			await vi.runAllTimersAsync()
+			await nextTick()
+
+			expect(wrapper.emitted('update:modelValue')).toEqual([[new Date(2026, 8, 4)]])
+			expect(wrapper.find('input').element.value).toBe('04/09/2026')
+
+			wrapper.unmount()
+		})
+
+		it('keeps the input text in sync when the parent updates the single-date value through v-model', async () => {
+			vi.useFakeTimers()
+			const selectedDate = ref(new Date(2026, 8, 1))
+			const wrapper = mount({
+				components: { DatePickerLite: DatePickerLiteComponent },
+				template: '<DatePickerLite v-model="selectedDate" label="Début du projet" />',
+				setup() {
+					return { selectedDate }
+				},
+			}, {
+				attachTo: document.body,
+			})
+
+			await openMenu(wrapper)
+			const dayButton = wrapper.findComponent({ name: 'Calendar' }).find('[data-date="2026-09-04"]')
+			await dayButton.trigger('click')
+			vi.advanceTimersByTime(1000)
+			await vi.runAllTimersAsync()
+			await nextTick()
+
+			expect((wrapper.vm as { selectedDate: Date }).selectedDate).toEqual(new Date(2026, 8, 4))
 			expect(wrapper.find('input').element.value).toBe('04/09/2026')
 
 			wrapper.unmount()
