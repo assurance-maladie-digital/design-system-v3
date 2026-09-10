@@ -105,8 +105,8 @@ export function useCustomValidation(
 					const rawResult = typeof rule === 'function' ? await rule(value) : rule
 					return normalizeVuetifyRuleResult(rawResult)
 				}
-				catch (err) {
-					return err instanceof Error ? err.message : locales.invalidValue
+				catch {
+					return locales.invalidValue
 				}
 			}),
 		)
