@@ -18,7 +18,7 @@ export default defineConfig({
 			name: 'logos/[name].[contenthash:8].[ext]',
 		}),
 		dts({
-			exclude: ['**/*.stories.ts', '**/*.spec.ts', 'src/stories/**'],
+			exclude: ['**/*.stories.ts', '**/*.spec.ts', '**/tests/**', 'src/stories/**'],
 			entryRoot: 'src',
 			outDir: 'dist',
 			tsconfigPath: 'tsconfig.dts.json',
