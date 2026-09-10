@@ -11,6 +11,16 @@
 
 import { execFileSync } from 'child_process';
 
+/**
+ * Marqueur porté par un commit qu'aucune release publiée ne contient encore.
+ * Partagé par le rapport a11y et les badges `.mdx` pour une formulation unique.
+ * Le pendant côté Vue vit dans les `locales.ts` des composants concernés.
+ */
+export const PENDING_LABEL = 'prochaine version';
+
+/** Badge d'un composant dont aucune modification n'est encore sortie en release. */
+export const NO_RELEASE_LABEL = 'aucune version publiée';
+
 const tagsCache = new Map();
 
 /**
@@ -70,4 +80,45 @@ export function getNextReleaseTag(commitDate, tagInfos) {
     }
   }
   return null;
+}
+
+function compareSemver(a, b) {
+  const parse = (v) => v.replace(/^v/i, '').split('.').map((n) => Number.parseInt(n, 10) || 0);
+  const [aMajor, aMinor, aPatch] = parse(a);
+  const [bMajor, bMinor, bPatch] = parse(b);
+  return aMajor - bMajor || aMinor - bMinor || aPatch - bPatch;
+}
+
+/**
+ * Repli pour un commit sans tag postérieur, à partir de la version de `package.json`.
+ *
+ * Elle n'est retenue que si elle dépasse le dernier tag : entre deux releases,
+ * `package.json` contient encore la version **déjà publiée**, et s'y fier attribuerait le
+ * commit à une release antérieure à lui. `null` signifie « pas encore publié ».
+ *
+ * @param {string | null} packageVersion - Version lue dans `package.json`.
+ * @param {Array<{ tag: string }>} tagInfos - Sortie de `getReleaseTags`.
+ * @returns {string | null}
+ */
+export function getPendingVersion(packageVersion, tagInfos) {
+  if (!packageVersion) return null;
+  const latest = tagInfos.at(-1);
+  if (!latest) return packageVersion;
+  return compareSemver(packageVersion, latest.tag) > 0 ? packageVersion : null;
+}
+
+/**
+ * Version d'un commit : la première release publiée après lui, ou à défaut la prochaine
+ * version si `package.json` a déjà été bumpé (cas de la PR de release, où les badges sont
+ * régénérés avant la pose du tag). `null` = le commit n'est dans aucune version connue.
+ *
+ * @param {string} commitDate - Date du commit, parsable par `new Date()`.
+ * @param {Array<{ tag: string, date: string }>} tagInfos - Sortie de `getReleaseTags`.
+ * @param {string | null} packageVersion - Version lue dans `package.json`.
+ * @returns {string | null}
+ */
+export function resolveCommitVersion(commitDate, tagInfos, packageVersion) {
+  const tag = getNextReleaseTag(commitDate, tagInfos);
+  if (tag) return tag.replace(/^v/i, '');
+  return getPendingVersion(packageVersion, tagInfos);
 }

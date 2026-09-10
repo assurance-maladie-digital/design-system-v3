@@ -2950,6 +2950,17 @@
   ],
   "Captcha": [
     {
+      "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
+      "date": "2026-09-09 16:07:21 +0200",
+      "dateFr": "09/09/2026",
+      "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
       "dateFr": "13/08/2026",
@@ -3083,6 +3094,17 @@
     }
   ],
   "CaptchaAlert": [
+    {
+      "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
+      "date": "2026-09-09 16:07:21 +0200",
+      "dateFr": "09/09/2026",
+      "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
@@ -3218,6 +3240,17 @@
   ],
   "CaptchaBase": [
     {
+      "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
+      "date": "2026-09-09 16:07:21 +0200",
+      "dateFr": "09/09/2026",
+      "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
       "dateFr": "13/08/2026",
@@ -3351,6 +3384,17 @@
     }
   ],
   "CaptchaBtn": [
+    {
+      "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
+      "date": "2026-09-09 16:07:21 +0200",
+      "dateFr": "09/09/2026",
+      "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
@@ -3486,6 +3530,17 @@
   ],
   "CaptchaForm": [
     {
+      "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
+      "date": "2026-09-09 16:07:21 +0200",
+      "dateFr": "09/09/2026",
+      "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
       "dateFr": "13/08/2026",
@@ -3619,6 +3674,17 @@
     }
   ],
   "CaptchaHelpdesk": [
+    {
+      "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
+      "date": "2026-09-09 16:07:21 +0200",
+      "dateFr": "09/09/2026",
+      "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
@@ -3754,6 +3820,17 @@
   ],
   "CaptchaImg": [
     {
+      "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
+      "date": "2026-09-09 16:07:21 +0200",
+      "dateFr": "09/09/2026",
+      "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
       "dateFr": "13/08/2026",
@@ -3887,6 +3964,17 @@
     }
   ],
   "CaptchaInformation": [
+    {
+      "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
+      "date": "2026-09-09 16:07:21 +0200",
+      "dateFr": "09/09/2026",
+      "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
@@ -4195,7 +4283,7 @@
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
       "message": "[RGAA] Corrige les bordure des champs de formulaires (#2471)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -5251,7 +5339,7 @@
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
       "message": "[RGAA] Corrige les bordure des champs de formulaires (#2471)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -5618,7 +5706,7 @@
       "date": "2026-08-27 16:25:29 +0200",
       "dateFr": "27/08/2026",
       "message": "fix error on accessibility page (#2514)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
@@ -5875,7 +5963,7 @@
       "date": "2026-08-28 14:20:23 +0200",
       "dateFr": "28/08/2026",
       "message": "Ajout de documentation sur le composant `SyIcon` (#2483)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -5886,7 +5974,7 @@
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
       "message": "[RGAA] Corrige les bordure des champs de formulaires (#2471)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -6042,7 +6130,7 @@
       "date": "2026-08-28 14:20:23 +0200",
       "dateFr": "28/08/2026",
       "message": "Ajout de documentation sur le composant `SyIcon` (#2483)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -6053,7 +6141,7 @@
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
       "message": "[RGAA] Corrige les bordure des champs de formulaires (#2471)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -6624,7 +6712,7 @@
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
       "message": "[RGAA] Corrige les bordure des champs de formulaires (#2471)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -7033,7 +7121,7 @@
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
       "message": "[RGAA] Corrige les bordure des champs de formulaires (#2471)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -9443,7 +9531,7 @@
       "date": "2026-09-03 11:29:18 +0200",
       "dateFr": "03/09/2026",
       "message": "Improve pdf display on android + fix uploadWorkfow (#2527)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -9511,7 +9599,7 @@
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
       "message": "[RGAA] Corrige les bordure des champs de formulaires (#2471)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -9568,7 +9656,7 @@
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
       "message": "[RGAA] Corrige les bordure des champs de formulaires (#2471)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -12340,7 +12428,7 @@
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
       "message": "[RGAA] Corrige les bordure des champs de formulaires (#2471)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -12351,7 +12439,7 @@
       "date": "2026-08-26 09:09:15 +0200",
       "dateFr": "26/08/2026",
       "message": "refactor(PaginatedTable): add locales support for accessibility labels (#2505)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
@@ -12507,7 +12595,7 @@
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
       "message": "[RGAA] Corrige les bordure des champs de formulaires (#2471)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -12518,7 +12606,7 @@
       "date": "2026-08-26 09:09:15 +0200",
       "dateFr": "26/08/2026",
       "message": "refactor(PaginatedTable): add locales support for accessibility labels (#2505)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
@@ -13838,7 +13926,7 @@
       "date": "2026-08-28 18:19:08 +0200",
       "dateFr": "28/08/2026",
       "message": "feat(SkipLink): add support for multiple skip links and enhance accessibility (#2515)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
@@ -14310,7 +14398,7 @@
       "date": "2026-09-07 15:29:02 +0200",
       "dateFr": "07/09/2026",
       "message": "fix button color in syBtnMenu (#2536)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -14321,7 +14409,7 @@
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
       "message": "[RGAA] Corrige les bordure des champs de formulaires (#2471)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -14604,7 +14692,7 @@
       "date": "2026-09-04 15:53:57 +0200",
       "dateFr": "04/09/2026",
       "message": "SyTable/SyServerTable: fix items per page  (#2538)",
-      "version": "1.1.4",
+      "version": "1.1.5",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,

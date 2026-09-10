@@ -2,6 +2,7 @@ import { execFile } from 'node:child_process'
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { basename, dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { PENDING_LABEL, resolveCommitVersion } from './lib/releaseTags.mjs'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const dataDir = resolve(rootDir, 'scripts/data')
@@ -195,16 +196,6 @@ async function getReleaseTags() {
 	return releaseTagsPromise
 }
 
-function getNextReleaseTag(commitDate, tagInfos) {
-	const commitTime = new Date(commitDate).getTime()
-	for (const tag of tagInfos) {
-		if (new Date(tag.date).getTime() > commitTime) {
-			return tag.tag
-		}
-	}
-	return null
-}
-
 async function getPackageVersionAtCommit(hash) {
 	if (packageVersionCache.has(hash)) return packageVersionCache.get(hash)
 	try {
@@ -296,10 +287,11 @@ async function analyzeComponent(component) {
 
 		if (confidence) {
 			const releaseTags = await getReleaseTags()
-			let version = getNextReleaseTag(commit.date, releaseTags)
-			if (!version) {
-				version = await getPackageVersionAtCommit(commit.hash)
-			}
+			const version = resolveCommitVersion(
+				commit.date,
+				releaseTags,
+				await getPackageVersionAtCommit(commit.hash),
+			)
 			results.push({
 				...commit,
 				confidence,
@@ -322,8 +314,10 @@ function buildJsonData(components) {
 		// Ne retient que la dernière correction "fiable" (confiance forte ou moyenne).
 		// On ignore les commits "faible" (pattern aria-* seul : bumps de dépendance,
 		// refontes de tokens, snapshots…) qui ne sont pas de vraies corrections a11y.
+		// `c.version` exclut en plus les corrections qu'aucune version ne contient encore :
+		// le badge annonce la dernière mise à jour **publiée**.
 		const reliable = component.commits.find(
-			c => c.confidence === 'forte' || c.confidence === 'moyenne',
+			c => c.version && (c.confidence === 'forte' || c.confidence === 'moyenne'),
 		)
 		if (!reliable) continue
 		data[component.name] = {
@@ -387,7 +381,7 @@ function buildMarkdown(components) {
 			if (commit.patterns) badges.push('pattern ARIA')
 			if (commit.a11yLabel) badges.push('label PR a11y')
 			const formattedDate = new Date(commit.date).toLocaleDateString('fr-FR')
-			const versionInfo = commit.version ? `Release: \`${commit.version}\` · ` : ''
+			const versionInfo = commit.version ? `Release: \`v${commit.version}\` · ` : `Release: _${PENDING_LABEL}_ · `
 			lines.push(`- **${formattedDate}** — ${commit.message}  `)
 			lines.push(`  ${versionInfo}Hash: \`${commit.hash}\` | ${badges.length ? badges.join(' · ') : 'signal détecté'}`)
 			if (commit.labels) {

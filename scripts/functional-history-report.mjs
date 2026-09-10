@@ -14,20 +14,13 @@ import { execFile } from 'node:child_process'
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { basename, dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { isComponentSourceFile, isFunctionalMessage } from './lib/filters.mjs'
+import { resolveCommitVersion } from './lib/releaseTags.mjs'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const dataDir = resolve(rootDir, 'scripts/data')
 const outputJsonPath = resolve(dataDir, 'functional-history-data.json')
 const componentsDir = resolve(rootDir, 'src/components')
-
-// Mots-clés qui signalent un commit purement a11y (à exclure du badge fonctionnel)
-const a11yOnlyRegex = /a11y|accessibilit|wcag|aria[-\s]|contraste|audit.access|rgaa/i
-
-// Mots-clés qui signalent un commit de release/ci/doc (à exclure)
-const releaseOrDocRegex = /^(chore|docs?|ci|build|release|bump|renovate|update dependency|update .* monorepo)(\([^)]+\))?[!:\s]/i
-
-// Commits qui ne touchent que de la doc/config (message contient ces mots)
-const docOnlyMessageRegex = /version badge|add.*badge|badge.*version|update.*changelog|run lint|improve.*doc|improve.*token/i
 
 function execFileAsync(cmd, args, options) {
 	return new Promise((res, rej) => {
@@ -65,9 +58,6 @@ function discoverComponents() {
 	}))
 }
 
-// Fichiers sources pertinents (pas de doc, pas de config)
-const sourceExtensions = ['.vue', '.ts', '.js', '.scss', '.css']
-
 async function getChangedFiles(hash) {
 	try {
 		const { stdout } = await execFileAsync(
@@ -80,16 +70,11 @@ async function getChangedFiles(hash) {
 	}
 }
 
-async function getLastFunctionalCommit(filePaths) {
+async function getLastFunctionalCommit(filePaths, isEligible = () => true) {
 	if (!filePaths.length) return null
 
 	// On ne passe en argument que les fichiers sources réels (pas de stories, tests, .mdx)
-	const sourceFiles = filePaths.filter(p => {
-		if (!sourceExtensions.some(ext => p.endsWith(ext))) return false
-		if (p.includes('.stories.')) return false
-		if (p.includes('.spec.') || p.includes('.cy.') || p.includes('__tests__')) return false
-		return true
-	})
+	const sourceFiles = filePaths.filter(isComponentSourceFile)
 	if (!sourceFiles.length) return null
 
 	const args = [
@@ -108,23 +93,20 @@ async function getLastFunctionalCommit(filePaths) {
 		})
 
 		for (const commit of commits) {
-			const msg = commit.message.trim()
 			// Exclure les commits purement a11y, release, ci, doc
-			if (a11yOnlyRegex.test(msg)) continue
-			if (releaseOrDocRegex.test(msg)) continue
-			if (docOnlyMessageRegex.test(msg)) continue
+			if (!isFunctionalMessage(commit.message)) continue
 			// Vérifier que le commit touche bien un .vue/.ts dans le dossier du composant
 			const changed = await getChangedFiles(commit.hash)
 			const toSlash = p => p.split('\\').join('/')
 			const componentDirRelative = toSlash(relative(rootDir, dirname(sourceFiles[0])))
 			const touchesComponentSource = changed.some(f => {
 				const normalized = toSlash(f)
-				// Doit être un fichier source (pas .mdx/.md/.stories/.spec)
-				if (!/\.(vue|ts|js|scss|css)$/.test(normalized)) return false
-				if (normalized.includes('.stories.') || normalized.includes('.spec.') || normalized.includes('.cy.')) return false
+				// Même périmètre que la sélection des fichiers ci-dessus : sans ce partage,
+				// les deux contrôles divergeaient (`__tests__` filtré ici, pas là).
+				if (!isComponentSourceFile(normalized)) return false
 				return normalized.startsWith(componentDirRelative + '/')
 			})
-			if (touchesComponentSource) return commit
+			if (touchesComponentSource && isEligible(commit)) return commit
 		}
 		return null
 	} catch {
@@ -154,16 +136,6 @@ async function getReleaseTags() {
 		return tagInfos.sort((a, b) => new Date(a.date) - new Date(b.date))
 	})()
 	return releaseTagsPromise
-}
-
-function getNextReleaseTag(commitDate, tagInfos) {
-	const commitTime = new Date(commitDate).getTime()
-	for (const tag of tagInfos) {
-		if (new Date(tag.date).getTime() > commitTime) {
-			return tag.tag
-		}
-	}
-	return null
 }
 
 // Version actuellement déclarée dans package.json (fichier de travail), pas celle au commit :
@@ -201,19 +173,18 @@ async function main() {
 	const newData = {}
 	let found = 0
 
+	const releaseTags = await getReleaseTags()
+	// Le badge annonce la dernière modification **publiée** : un commit qu'aucune version ne
+	// contient encore est ignoré ici, il reste visible dans la liste des commits du suivi où
+	// il est marqué « prochaine version ».
+	const versionOf = commit => resolveCommitVersion(commit.date, releaseTags, getCurrentPackageVersion())
+
 	for (const component of components) {
 		console.info(`⏳ Analyse de ${component.name}...`)
-		const commit = await getLastFunctionalCommit(component.files)
+		const commit = await getLastFunctionalCommit(component.files, c => versionOf(c) !== null)
 		if (commit) {
-			const releaseTags = await getReleaseTags()
-			let version = getNextReleaseTag(commit.date, releaseTags)
-			if (!version) {
-				version = getCurrentPackageVersion()
-			} else {
-				version = version.replace(/^v/i, '')
-			}
 			newData[component.name] = {
-				version: version ?? null,
+				version: versionOf(commit),
 				date: new Date(commit.date).toLocaleDateString('fr-FR'),
 				dateIso: commit.date,
 				message: commit.message,

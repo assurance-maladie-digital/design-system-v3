@@ -23,7 +23,6 @@
 		hasCypressTest?: boolean
 		criticality?: string
 		functionalVersion?: string
-		functionalDate?: string
 	}
 	const searchTerm = ref('')
 	const selectedCategory = ref('Toutes')
@@ -413,9 +412,6 @@
 					<span class="functional-version">
 						v{{ item.functionalVersion }}
 					</span>
-					<span class="functional-date">
-						{{ item.functionalDate }}
-					</span>
 				</div>
 
 				<span v-else>-</span>
@@ -541,10 +537,5 @@
 	color: #1e7e34;
 	font-weight: 700;
 	font-size: 12px;
-}
-
-.functional-date {
-	font-size: 12px;
-	color: #6b7280;
 }
 </style>

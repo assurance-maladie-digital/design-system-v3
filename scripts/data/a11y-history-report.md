@@ -1,6 +1,6 @@
 # Rapport d’historique d’accessibilité par composant
 
-- Généré le: 2026-09-08T07:36:58.660Z
+- Généré le: 2026-09-10T08:52:30.346Z
 
 ## Accordion
 
@@ -989,6 +989,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## Captcha
 
+- **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
+  Release: _prochaine version_ · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
@@ -1026,6 +1029,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.13` · Hash: `d121c7051da4b06d660b4b8bc52fceb37cfa36eb` | pattern ARIA
 
 ## CaptchaAlert
+
+- **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
+  Release: _prochaine version_ · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
 
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
@@ -1065,6 +1071,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## CaptchaBase
 
+- **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
+  Release: _prochaine version_ · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
@@ -1102,6 +1111,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.13` · Hash: `d121c7051da4b06d660b4b8bc52fceb37cfa36eb` | pattern ARIA
 
 ## CaptchaBtn
+
+- **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
+  Release: _prochaine version_ · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
 
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
@@ -1141,6 +1153,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## CaptchaForm
 
+- **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
+  Release: _prochaine version_ · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
@@ -1178,6 +1193,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.13` · Hash: `d121c7051da4b06d660b4b8bc52fceb37cfa36eb` | pattern ARIA
 
 ## CaptchaHelpdesk
+
+- **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
+  Release: _prochaine version_ · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
 
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
@@ -1217,6 +1235,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## CaptchaImg
 
+- **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
+  Release: _prochaine version_ · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
@@ -1254,6 +1275,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.13` · Hash: `d121c7051da4b06d660b4b8bc52fceb37cfa36eb` | pattern ARIA
 
 ## CaptchaInformation
+
+- **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
+  Release: _prochaine version_ · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
 
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
@@ -1347,7 +1371,7 @@ Aucune amélioration d’accessibilité détectée.
 ## IconSlot
 
 - **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
-  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
 
 - **27/07/2026** — Permettre de rendre configurable toutes les chaines de caractères (#2404)  
   Release: `v1.1.3` · Hash: `2528a80ea9667f0d693f03f149d76f0242e22d4f` | pattern ARIA
@@ -1655,7 +1679,7 @@ Aucune amélioration d’accessibilité détectée.
 ## SySelect
 
 - **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
-  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
 
 - **27/07/2026** — SySelect: fix selection display when items is a string array (#2425)  
   Release: `v1.1.3` · Hash: `45ce4db94c37746d9e3c0b3d9883d27eae0841e7` | pattern ARIA
@@ -1758,7 +1782,7 @@ Aucune amélioration d’accessibilité détectée.
 ## SyCheckbox
 
 - **27/08/2026** — fix error on accessibility page (#2514)  
-  Release: `1.1.4` · Hash: `9099bd12f8b762c86fff317a56be129231501fbd` | mot-clé a11y · pattern ARIA
+  Release: `v1.1.5` · Hash: `9099bd12f8b762c86fff317a56be129231501fbd` | mot-clé a11y · pattern ARIA
 
 - **23/07/2026** — [SyCheckbox] multiple (#2410)  
   Release: `v1.1.3` · Hash: `d8257e99afab773ca4986c43262aeba95297a8ce` | pattern ARIA
@@ -1831,10 +1855,10 @@ Aucune amélioration d’accessibilité détectée.
 ## SyIcon
 
 - **28/08/2026** — Ajout de documentation sur le composant `SyIcon` (#2483)  
-  Release: `1.1.4` · Hash: `1a820ea05380988c7263430d7046f5859bff97bd` | pattern ARIA
+  Release: `v1.1.5` · Hash: `1a820ea05380988c7263430d7046f5859bff97bd` | pattern ARIA
 
 - **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
-  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
 
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
@@ -1878,10 +1902,10 @@ Aucune amélioration d’accessibilité détectée.
 ## SyIconAccessibility
 
 - **28/08/2026** — Ajout de documentation sur le composant `SyIcon` (#2483)  
-  Release: `1.1.4` · Hash: `1a820ea05380988c7263430d7046f5859bff97bd` | pattern ARIA
+  Release: `v1.1.5` · Hash: `1a820ea05380988c7263430d7046f5859bff97bd` | pattern ARIA
 
 - **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
-  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
 
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
@@ -2044,7 +2068,7 @@ Aucune amélioration d’accessibilité détectée.
 ## FieldState
 
 - **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
-  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
 
 - **31/07/2026** — SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)  
   Release: `v1.1.3` · Hash: `611b0627edc2976b1cd4129f701dd228394d52d8` | pattern ARIA
@@ -2157,7 +2181,7 @@ Aucune amélioration d’accessibilité détectée.
 ## SyTextField
 
 - **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
-  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
 
 - **31/07/2026** — SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)  
   Release: `v1.1.3` · Hash: `611b0627edc2976b1cd4129f701dd228394d52d8` | pattern ARIA
@@ -2859,7 +2883,7 @@ Aucune amélioration d’accessibilité détectée.
 ## FilePreview
 
 - **03/09/2026** — Improve pdf display on android + fix uploadWorkfow (#2527)  
-  Release: `1.1.4` · Hash: `b70137c4b8130a223eb88d3a1427b943a36a79f6` | pattern ARIA
+  Release: `v1.1.5` · Hash: `b70137c4b8130a223eb88d3a1427b943a36a79f6` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -2879,7 +2903,7 @@ Aucune amélioration d’accessibilité détectée.
 ## FileUpload
 
 - **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
-  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -2896,7 +2920,7 @@ Aucune amélioration d’accessibilité détectée.
 ## FileUploadContent
 
 - **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
-  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -3700,10 +3724,10 @@ Aucune amélioration d’accessibilité détectée.
 ## PaginatedTable
 
 - **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
-  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
 
 - **26/08/2026** — refactor(PaginatedTable): add locales support for accessibility labels (#2505)  
-  Release: `1.1.4` · Hash: `755b1137304028d3762733d9b5f297469e3023c6` | mot-clé a11y · pattern ARIA
+  Release: `v1.1.5` · Hash: `755b1137304028d3762733d9b5f297469e3023c6` | mot-clé a11y · pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -3747,10 +3771,10 @@ Aucune amélioration d’accessibilité détectée.
 ## Pagination
 
 - **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
-  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
 
 - **26/08/2026** — refactor(PaginatedTable): add locales support for accessibility labels (#2505)  
-  Release: `1.1.4` · Hash: `755b1137304028d3762733d9b5f297469e3023c6` | mot-clé a11y · pattern ARIA
+  Release: `v1.1.5` · Hash: `755b1137304028d3762733d9b5f297469e3023c6` | mot-clé a11y · pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -4130,7 +4154,7 @@ Aucune amélioration d’accessibilité détectée.
 ## SkipLink
 
 - **28/08/2026** — feat(SkipLink): add support for multiple skip links and enhance accessibility (#2515)  
-  Release: `1.1.4` · Hash: `9bc308f61597b0dea151c2ddd8f738bc824757e1` | mot-clé a11y · pattern ARIA
+  Release: `v1.1.5` · Hash: `9bc308f61597b0dea151c2ddd8f738bc824757e1` | mot-clé a11y · pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -4266,10 +4290,10 @@ Aucune amélioration d’accessibilité détectée.
 ## SyBtnMenu
 
 - **07/09/2026** — fix button color in syBtnMenu (#2536)  
-  Release: `1.1.4` · Hash: `b46884596483f9895fbb6bcd73ba948a49b543e7` | pattern ARIA
+  Release: `v1.1.5` · Hash: `b46884596483f9895fbb6bcd73ba948a49b543e7` | pattern ARIA
 
 - **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
-  Release: `1.1.4` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
 
 - **07/08/2026** — UserMenuBtn: improve responsive + a11y (#2470)  
   Release: `v1.1.4` · Hash: `39f7e1db8d96b9422e2b972fd423def3aa25a678` | mot-clé a11y · pattern ARIA
@@ -4352,7 +4376,7 @@ Aucune amélioration d’accessibilité détectée.
 ## SyServerTable
 
 - **04/09/2026** — SyTable/SyServerTable: fix items per page  (#2538)  
-  Release: `1.1.4` · Hash: `2c90a270023a8f81debfab170380e16cdb6e0640` | pattern ARIA
+  Release: `v1.1.5` · Hash: `2c90a270023a8f81debfab170380e16cdb6e0640` | pattern ARIA
 
 - **25/08/2026** — [Table] selection avec éléments radio en mode selection unique (#2494)  
   Release: `v1.1.4` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
