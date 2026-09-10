@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-09T14:50:21.712Z",
+  "date": "2026-09-10T07:32:06.031Z",
   "compliantCount": 57,
   "totalCount": 77,
   "percentage": "74.03",
@@ -45,7 +45,7 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/Captcha",
       "hasManualAudit": false,
-      "version": "1.1.5",
+      "version": null,
       "versionDate": "09/09/2026"
     },
     {

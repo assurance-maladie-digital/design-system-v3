@@ -1,6 +1,6 @@
 # Rapport d’historique d’accessibilité par composant
 
-- Généré le: 2026-09-09T14:50:21.441Z
+- Généré le: 2026-09-10T07:32:05.311Z
 
 ## Accordion
 
@@ -990,7 +990,7 @@ Aucune amélioration d’accessibilité détectée.
 ## Captcha
 
 - **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
-  Release: `1.1.5` · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+  Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
 
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
@@ -1031,7 +1031,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaAlert
 
 - **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
-  Release: `1.1.5` · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+  Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
 
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
@@ -1072,7 +1072,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaBase
 
 - **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
-  Release: `1.1.5` · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+  Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
 
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
@@ -1113,7 +1113,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaBtn
 
 - **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
-  Release: `1.1.5` · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+  Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
 
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
@@ -1154,7 +1154,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaForm
 
 - **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
-  Release: `1.1.5` · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+  Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
 
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
@@ -1195,7 +1195,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaHelpdesk
 
 - **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
-  Release: `1.1.5` · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+  Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
 
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
@@ -1236,7 +1236,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaImg
 
 - **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
-  Release: `1.1.5` · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+  Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
 
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
@@ -1277,7 +1277,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CaptchaInformation
 
 - **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
-  Release: `1.1.5` · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+  Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
 
 - **13/08/2026** — fix/components-name-format  
   Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA

@@ -71,3 +71,28 @@ export function getNextReleaseTag(commitDate, tagInfos) {
   }
   return null;
 }
+
+function compareSemver(a, b) {
+  const parse = (v) => v.replace(/^v/i, '').split('.').map((n) => Number.parseInt(n, 10) || 0);
+  const [aMajor, aMinor, aPatch] = parse(a);
+  const [bMajor, bMinor, bPatch] = parse(b);
+  return aMajor - bMajor || aMinor - bMinor || aPatch - bPatch;
+}
+
+/**
+ * Repli pour un commit sans tag postérieur, à partir de la version de `package.json`.
+ *
+ * Elle n'est retenue que si elle dépasse le dernier tag : entre deux releases,
+ * `package.json` contient encore la version **déjà publiée**, et s'y fier attribuerait le
+ * commit à une release antérieure à lui. `null` signifie « pas encore publié ».
+ *
+ * @param {string | null} packageVersion - Version lue dans `package.json`.
+ * @param {Array<{ tag: string }>} tagInfos - Sortie de `getReleaseTags`.
+ * @returns {string | null}
+ */
+export function getPendingVersion(packageVersion, tagInfos) {
+  if (!packageVersion) return null;
+  const latest = tagInfos.at(-1);
+  if (!latest) return packageVersion;
+  return compareSemver(packageVersion, latest.tag) > 0 ? packageVersion : null;
+}

@@ -14,6 +14,7 @@ import { execFile } from 'node:child_process'
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { basename, dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { getPendingVersion } from './lib/releaseTags.mjs'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const dataDir = resolve(rootDir, 'scripts/data')
@@ -206,12 +207,12 @@ async function main() {
 		const commit = await getLastFunctionalCommit(component.files)
 		if (commit) {
 			const releaseTags = await getReleaseTags()
-			let version = getNextReleaseTag(commit.date, releaseTags)
-			if (!version) {
-				version = getCurrentPackageVersion()
-			} else {
-				version = version.replace(/^v/i, '')
-			}
+			const tag = getNextReleaseTag(commit.date, releaseTags)
+			// Pas de tag postérieur : le changement n'est publié que si package.json est déjà
+			// passé à la version suivante. Sinon `null` — « à paraître ».
+			const version = tag
+				? tag.replace(/^v/i, '')
+				: getPendingVersion(getCurrentPackageVersion(), releaseTags)
 			newData[component.name] = {
 				version: version ?? null,
 				date: new Date(commit.date).toLocaleDateString('fr-FR'),

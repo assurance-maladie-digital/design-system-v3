@@ -2,6 +2,7 @@ import { execFile } from 'node:child_process'
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { basename, dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { getPendingVersion } from './lib/releaseTags.mjs'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const dataDir = resolve(rootDir, 'scripts/data')
@@ -296,10 +297,10 @@ async function analyzeComponent(component) {
 
 		if (confidence) {
 			const releaseTags = await getReleaseTags()
-			let version = getNextReleaseTag(commit.date, releaseTags)
-			if (!version) {
-				version = await getPackageVersionAtCommit(commit.hash)
-			}
+			const tag = getNextReleaseTag(commit.date, releaseTags)
+			// Pas de tag postérieur : on ne retient la version du commit que si elle dépasse
+			// le dernier tag. Sinon `null` — « à paraître ».
+			const version = tag ?? getPendingVersion(await getPackageVersionAtCommit(commit.hash), releaseTags)
 			results.push({
 				...commit,
 				confidence,

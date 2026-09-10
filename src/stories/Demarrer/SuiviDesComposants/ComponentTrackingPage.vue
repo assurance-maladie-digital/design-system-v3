@@ -22,9 +22,7 @@
 		storybookTitle?: string
 		status: string
 		functionalVersion?: string
-		functionalDate?: string
 		a11yVersion?: string
-		a11yDate?: string
 		commits?: ComponentCommit[]
 		a11yCommits?: ComponentCommit[]
 	}
@@ -241,9 +239,6 @@
 	const cardVersion = (item: ComponentInfo): string | undefined =>
 		getCardTab(item.componentName) === 'functional' ? item.functionalVersion : item.a11yVersion
 
-	const cardDate = (item: ComponentInfo): string | undefined =>
-		getCardTab(item.componentName) === 'functional' ? item.functionalDate : item.a11yDate
-
 	// Même formulation que les badges des pages de composant (`*.mdx`).
 	const lastUpdateLabel = (item: ComponentInfo): string =>
 		getCardTab(item.componentName) === 'functional'
@@ -443,12 +438,6 @@
 							class="ci-tag empty"
 						>
 							{{ locales.version.unknown }}
-						</span>
-						<span
-							v-if="cardVersion(item)"
-							class="ci-date"
-						>
-							{{ formatDate(cardDate(item)) }}
 						</span>
 					</div>
 					<ul
@@ -840,11 +829,6 @@
 		background-color: #f4f4f4;
 		border: 1px solid #e0e0e0;
 		font-weight: 500;
-	}
-
-	.ci-date {
-		font-size: 0.75rem;
-		color: #6f6f6f;
 	}
 
 	.ci-commits {

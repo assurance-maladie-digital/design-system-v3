@@ -261,6 +261,17 @@ describe('ComponentTrackingPage — filtrage des changements par version', () =>
 
 		wrapper.unmount()
 	})
+	it('n\'affiche pas de date à côté de la version', async () => {
+		const wrapper = mount(ComponentTrackingPage)
+
+		await selectVersion(wrapper, '1.1.4')
+
+		// La version est recalculée à chaque release, la date du commit ne bouge pas :
+		// les afficher ensemble laissait apparaître des couples incohérents.
+		expect(wrapper.find('.ci-version-line').text()).not.toMatch(/\d{2}\/\d{2}\/\d{4}/)
+
+		wrapper.unmount()
+	})
 	it('garde l\'option « tout » cochée après un clic dessus', async () => {
 		const wrapper = mount(ComponentTrackingPage)
 

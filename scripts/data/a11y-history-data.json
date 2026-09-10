@@ -115,42 +115,42 @@
     "dateIso": "2026-08-10 15:30:55 +0200"
   },
   "Captcha": {
-    "version": "1.1.5",
+    "version": null,
     "date": "09/09/2026",
     "dateIso": "2026-09-09 16:07:21 +0200"
   },
   "CaptchaAlert": {
-    "version": "1.1.5",
+    "version": null,
     "date": "09/09/2026",
     "dateIso": "2026-09-09 16:07:21 +0200"
   },
   "CaptchaBase": {
-    "version": "1.1.5",
+    "version": null,
     "date": "09/09/2026",
     "dateIso": "2026-09-09 16:07:21 +0200"
   },
   "CaptchaBtn": {
-    "version": "1.1.5",
+    "version": null,
     "date": "09/09/2026",
     "dateIso": "2026-09-09 16:07:21 +0200"
   },
   "CaptchaForm": {
-    "version": "1.1.5",
+    "version": null,
     "date": "09/09/2026",
     "dateIso": "2026-09-09 16:07:21 +0200"
   },
   "CaptchaHelpdesk": {
-    "version": "1.1.5",
+    "version": null,
     "date": "09/09/2026",
     "dateIso": "2026-09-09 16:07:21 +0200"
   },
   "CaptchaImg": {
-    "version": "1.1.5",
+    "version": null,
     "date": "09/09/2026",
     "dateIso": "2026-09-09 16:07:21 +0200"
   },
   "CaptchaInformation": {
-    "version": "1.1.5",
+    "version": null,
     "date": "09/09/2026",
     "dateIso": "2026-09-09 16:07:21 +0200"
   },

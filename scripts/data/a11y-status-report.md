@@ -1,6 +1,6 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 09/09/2026
+Généré le: 10/09/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|

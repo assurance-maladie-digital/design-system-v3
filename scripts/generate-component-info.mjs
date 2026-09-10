@@ -14,7 +14,7 @@ import fs from 'fs';
 import path from 'path';
 import { execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
-import { getNextReleaseTag, getReleaseTags } from './lib/releaseTags.mjs';
+import { getNextReleaseTag, getPendingVersion, getReleaseTags } from './lib/releaseTags.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -92,11 +92,12 @@ function isDeprecated(componentPath) {
 
 // Version publiee dans laquelle un commit est sorti. Meme convention que le badge
 // fonctionnel (functional-history-report.mjs) : premiere release posterieure au commit,
-// sinon version courante de package.json (changement en attente de publication).
+// sinon la prochaine version si package.json a deja ete bumpe. null = pas encore publie.
 function getCommitVersion(commitDate) {
-  const tag = getNextReleaseTag(commitDate, getReleaseTags(root));
+  const tags = getReleaseTags(root);
+  const tag = getNextReleaseTag(commitDate, tags);
   if (tag) return tag.replace(/^v/i, '');
-  return currentPackageVersion;
+  return getPendingVersion(currentPackageVersion, tags);
 }
 
 // Nombre de commits fonctionnels conservés par composant. Le suivi des composants filtre

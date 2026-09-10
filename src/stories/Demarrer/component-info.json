@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-09T14:50:29.387Z",
+  "date": "2026-09-10T07:32:13.582Z",
   "totalCount": 77,
   "results": [
     {
@@ -504,7 +504,7 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "13/08/2026",
-      "a11yVersion": "1.1.5",
+      "a11yVersion": null,
       "a11yDate": "09/09/2026",
       "commits": [
         {
@@ -574,7 +574,7 @@
           "date": "2026-09-09 16:07:21 +0200",
           "dateFr": "09/09/2026",
           "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
-          "version": "1.1.5",
+          "version": null,
           "confidence": "forte",
           "keywords": true,
           "patterns": false,

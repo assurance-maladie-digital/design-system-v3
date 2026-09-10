@@ -34,7 +34,7 @@ export const locales = {
 		a11y: 'Accessibilité',
 	},
 	version: {
-		unknown: 'Version non renseignée',
+		unknown: 'à paraître dans la prochaine version',
 	},
 	lastUpdate: {
 		functional: 'Dernière mise à jour fonctionnelle :',

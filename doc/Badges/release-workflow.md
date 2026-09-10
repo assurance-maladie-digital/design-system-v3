@@ -6,8 +6,18 @@ Deux badges sont affichés sur chaque page de documentation de composant :
 
 | Badge | Couleur | Signification |
 |---|---|---|
-| `Dernière mise à jour fonctionnelle : Vx.x.x - JJ/MM/AAAA` | Vert | Dernier commit touchant un `.vue`/`.ts` du composant (hors a11y, doc, CI) |
-| `Dernière mise à jour accessibilité : Vx.x.x - JJ/MM/AAAA` | Bleu | Dernier commit avec mot-clé a11y/accessibilité |
+| `Dernière mise à jour fonctionnelle : Vx.x.x` | Vert | Dernier commit touchant un `.vue`/`.ts` du composant (hors a11y, doc, CI) |
+| `Dernière mise à jour accessibilité : Vx.x.x` | Bleu | Dernier commit avec mot-clé a11y/accessibilité |
+
+La version affichée est la **première release publiée après** ce commit. Tant qu'aucune
+release ne le contient, le badge indique `à paraître dans la prochaine version` : entre
+deux releases, `package.json` porte encore la version déjà publiée, s'en servir
+attribuerait le changement à une release antérieure à lui.
+
+Le badge ne porte pas de date. La version seule répond à « dois-je monter de version pour
+avoir ce changement ? », et un couple version/date pouvait diverger — la version est
+recalculée à chaque release, la date du commit ne bouge jamais. Les dates des commits
+restent visibles dans le suivi des composants.
 
 ---
 
