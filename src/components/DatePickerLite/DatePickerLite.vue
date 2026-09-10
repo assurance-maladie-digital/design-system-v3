@@ -16,7 +16,7 @@
 	import { useDatePickerValidation } from './useDatePickerValidation'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
-	import type { DatePickerLiteInputSlotProps, DatePickerLiteProps, DatePickerLiteRange } from './types'
+	import type { DatePickerLiteInputProps, DatePickerLiteInputSlotProps, DatePickerLiteProps, DatePickerLiteRange } from './types'
 
 	// Attributes (including listeners such as @input) are forwarded to the field through
 	// inputProps; otherwise they would also land on the root div (duplicate via bubbling)
@@ -96,7 +96,7 @@
 		locales,
 	})
 
-	const inputProps = computed(() => ({
+	const inputProps = computed<DatePickerLiteInputProps>(() => ({
 		...attrs,
 		...useTextField(props).value,
 		required: props.required,

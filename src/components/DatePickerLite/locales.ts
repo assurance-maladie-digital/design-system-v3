@@ -11,10 +11,6 @@ export const locales = {
 	// DatePickerLite own keys
 	btnLabel: 'Ouvrir le sélecteur de date',
 	headerSelectDay: 'Sélectionner une date',
-	headerSelectMonth: 'Sélectionner un mois',
-	headerSelectYear: 'Sélectionner une année',
-	dayBtnLabelSelected: (monthYear: string) => `Sélectionner un mois, le mois affiché est ${monthYear}`,
-	dayBtnLabelUnselected: (monthYear: string) => `Sélectionner un mois, nous sommes actuellement en ${monthYear}`,
 	todayBtnLabel: 'Aujourd’hui',
 	todayBtnAriaLabel: 'Sélectionner la date du jour',
 	closeBtnLabel: 'Fermer',

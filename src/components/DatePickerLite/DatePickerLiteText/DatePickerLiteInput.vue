@@ -48,7 +48,6 @@
 		toRef(props, 'modelValue'),
 		value => emits('update:modelValue', value),
 	)
-	const focused = ref(false)
 
 	const toggleBtn = ref<HTMLButtonElement | null>(null)
 
@@ -76,8 +75,6 @@
 		:disable-error-handling="true"
 		:hide-details="props.hideDetails"
 		:display-asterisk="props.required && props.displayAsterisk"
-		@focus="focused = true"
-		@blur="focused = false"
 	>
 		<template #append>
 			<button

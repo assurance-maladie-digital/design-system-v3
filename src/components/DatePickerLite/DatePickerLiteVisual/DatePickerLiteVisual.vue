@@ -96,7 +96,6 @@
 		:aria-labelledby="`${id}-title`"
 	>
 		<div
-			ref="menu"
 			class="date-picker-lite-menu"
 			:class="{
 				'date-picker-lite-menu--readonly': props.readonly,
@@ -143,7 +142,6 @@
 			</div>
 			<div class="date-picker-lite-menu__close-action">
 				<button
-					ref="closeButton"
 					type="button"
 					class="date-picker-lite-menu__close-btn"
 					:data-close-picker="true"
