@@ -53,7 +53,7 @@ Généré le: 10/09/2026
 | **LangBtn** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
 | **Logo** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **LogoBrandSection** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **LunarCalendar** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
+| **LunarCalendar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **MaintenancePage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **MonthPicker** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
 | **NirField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
