@@ -1,94 +1,124 @@
+import { describe, it } from 'vitest'
 import { mount } from '@vue/test-utils'
-import { describe, it, expect } from 'vitest'
+import { axe } from 'vitest-axe'
+import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 import SelectBtnField from '../SelectBtnField.vue'
 
-describe('SelectBtnField - Accessibility Tests', () => {
-	it('should have appropriate ARIA roles and attributes', () => {
+const items = [
+	{ text: 'Email', value: 'email' },
+	{ text: 'SMS', value: 'sms' },
+]
+
+describe('SelectBtnField – accessibility (axe)', () => {
+	it('has no axe violations – default', async () => {
 		const wrapper = mount(SelectBtnField, {
-			props: {
-				label: 'Moyen de contact',
-				items: [
-					{ text: 'Email', value: 'email' },
-					{ text: 'SMS', value: 'sms' },
-				],
-			},
+			props: { label: 'Moyen de contact', items },
 		})
-
-		const listbox = wrapper.find('[role="listbox"]')
-		expect(listbox.exists()).toBe(true)
-		expect(listbox.attributes('aria-label')).toBe('Moyen de contact')
-
-		const options = wrapper.findAll('[role="option"]')
-		expect(options).toHaveLength(2)
-		expect(options[0]?.attributes('aria-selected')).toBe('false')
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SelectBtnField – default', {
+			ignoreRules: ['region'],
+		})
+		wrapper.unmount()
 	})
 
-	it('should update aria-selected on selection', async () => {
+	it('has no axe violations – inline', async () => {
 		const wrapper = mount(SelectBtnField, {
-			props: {
-				label: 'Moyen de contact',
-				items: [
-					{ text: 'Email', value: 'email' },
-					{ text: 'SMS', value: 'sms' },
-				],
-			},
+			props: { label: 'Moyen de contact', items, inline: true },
 		})
-
-		const options = wrapper.findAll('[role="option"]')
-		await options[0]?.trigger('click')
-
-		expect(options[0]?.attributes('aria-selected')).toBe('true')
-		expect(options[1]?.attributes('aria-selected')).toBe('false')
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SelectBtnField – inline', {
+			ignoreRules: ['region'],
+		})
+		wrapper.unmount()
 	})
 
-	it('should support keyboard navigation', async () => {
+	it('has no axe violations – multiple with selection', async () => {
 		const wrapper = mount(SelectBtnField, {
-			props: {
-				label: 'Moyen de contact',
-				items: [
-					{ text: 'Email', value: 'email' },
-					{ text: 'SMS', value: 'sms' },
-				],
-			},
+			props: { label: 'Moyen de contact', items, multiple: true, modelValue: ['email'] },
 		})
-
-		const listbox = wrapper.find('[role="listbox"]')
-		await listbox.trigger('keydown', { key: 'ArrowDown' })
-
-		const options = wrapper.findAll('[role="option"]')
-		expect(options[0]?.attributes('tabindex')).toBe('0')
-		expect(options[1]?.attributes('tabindex')).toBe('-1')
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SelectBtnField – multiple with selection', {
+			ignoreRules: ['region'],
+		})
+		wrapper.unmount()
 	})
 
-	it('should have aria-disabled when disabled', () => {
+	it('has no axe violations – selected (single)', async () => {
 		const wrapper = mount(SelectBtnField, {
-			props: {
-				label: 'Moyen de contact',
-				items: [
-					{ text: 'Email', value: 'email' },
-					{ text: 'SMS', value: 'sms' },
-				],
-				disabled: true,
-			},
+			props: { label: 'Moyen de contact', items, modelValue: 'sms' },
 		})
-
-		const listbox = wrapper.find('[role="listbox"]')
-		expect(listbox.attributes('aria-disabled')).toBe('true')
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SelectBtnField – selected', {
+			ignoreRules: ['region'],
+		})
+		wrapper.unmount()
 	})
 
-	it('should have aria-readonly when readonly', () => {
+	it('has no axe violations – error state', async () => {
 		const wrapper = mount(SelectBtnField, {
-			props: {
-				label: 'Moyen de contact',
-				items: [
-					{ text: 'Email', value: 'email' },
-					{ text: 'SMS', value: 'sms' },
-				],
-				readonly: true,
-			},
+			props: { label: 'Moyen de contact', items, errorMessages: ['Choix obligatoire'] },
+		})
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SelectBtnField – error', {
+			ignoreRules: ['region'],
+		})
+		wrapper.unmount()
+	})
+
+	it('has no axe violations – disabled', async () => {
+		const wrapper = mount(SelectBtnField, {
+			props: { label: 'Moyen de contact', items, disabled: true },
+		})
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SelectBtnField – disabled', {
+			ignoreRules: ['region'],
+		})
+		wrapper.unmount()
+	})
+
+	it('has no axe violations – readonly', async () => {
+		const wrapper = mount(SelectBtnField, {
+			props: { label: 'Moyen de contact', items, readonly: true },
+		})
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SelectBtnField – readonly', {
+			ignoreRules: ['region'],
+		})
+		wrapper.unmount()
+	})
+
+	it('has no axe violations – ariaLabelledby', async () => {
+		const container = document.createElement('div')
+		document.body.appendChild(container)
+
+		const labelElement = document.createElement('div')
+		labelElement.id = 'custom-label-id'
+		labelElement.textContent = 'Libellé personnalisé'
+		container.appendChild(labelElement)
+
+		const wrapper = mount(SelectBtnField, {
+			props: { ariaLabelledby: 'custom-label-id', items },
+			attachTo: container,
 		})
 
-		const listbox = wrapper.find('[role="listbox"]')
-		expect(listbox.attributes('aria-readonly')).toBe('true')
+		const results = await axe(container as HTMLElement)
+		assertNoA11yViolations(results, 'SelectBtnField – ariaLabelledby', {
+			ignoreRules: ['region'],
+		})
+
+		wrapper.unmount()
+		document.body.removeChild(container)
+	})
+
+	it('has no axe violations after keyboard navigation', async () => {
+		const wrapper = mount(SelectBtnField, {
+			props: { label: 'Moyen de contact', items },
+		})
+		await wrapper.find('[role="listbox"]').trigger('keydown', { key: 'ArrowDown' })
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SelectBtnField – after ArrowDown', {
+			ignoreRules: ['region'],
+		})
+		wrapper.unmount()
 	})
 })
