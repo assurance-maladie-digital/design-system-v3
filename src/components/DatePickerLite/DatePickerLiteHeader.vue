@@ -6,16 +6,13 @@
 
 	const props = withDefaults(defineProps<{
 		modelValue?: Date
-		displayedMonth?: Date
-		view?: PickerView
-		minYear?: number
-		maxYear?: number
+		/** Month currently displayed by the calendar; always provided by the parent */
+		displayedMonth: Date
+		view: PickerView
+		minYear: number
+		maxYear: number
 	}>(), {
 		modelValue: () => new Date(),
-		displayedMonth: () => new Date(),
-		view: 'days',
-		minYear: 1900,
-		maxYear: 2100,
 	})
 
 	const emits = defineEmits<{
@@ -44,36 +41,20 @@
 		return fullDateFormatter.format(props.modelValue)
 	})
 
-	const displayedDate = computed(() => {
-		const candidate = props.displayedMonth ?? props.modelValue
-		if (!(candidate instanceof Date) || Number.isNaN(candidate.getTime())) {
-			return new Date()
-		}
-		return candidate
-	})
-
-	const parsedMonth = computed(() => displayedDate.value.getMonth() + 1)
-	const parsedYear = computed(() => displayedDate.value.getFullYear())
+	const parsedMonth = computed(() => props.displayedMonth.getMonth() + 1)
+	const parsedYear = computed(() => props.displayedMonth.getFullYear())
 
 	const monthLabel = computed(() => formatShortMonth(new Date(2000, parsedMonth.value - 1)))
 	const yearLabel = computed(() => parsedYear.value)
 
-	const monthBtnAriaLabel = computed(() => {
-		if (parsedMonth.value && !Number.isNaN(parsedMonth.value)) {
-			return locales.value.monthBtnLabelSelected(formatShortMonth(new Date(2000, parsedMonth.value - 1)))
-		}
-		return locales.value.monthBtnLabelUnselected(formatShortMonth(new Date()))
-	})
+	const monthBtnAriaLabel = computed(() => locales.value.monthBtnLabelSelected(monthLabel.value))
 
 	const yearBtnAriaLabel = computed(() => {
 		const year = parsedYear.value
-		if (year && !Number.isNaN(year) && year >= props.minYear && year <= props.maxYear) {
-			return locales.value.yearBtnLabelSelected(String(year))
-		}
-		return locales.value.yearBtnLabelUnselected(String(new Date().getFullYear()))
+		return year >= props.minYear && year <= props.maxYear
+			? locales.value.yearBtnLabelSelected(String(year))
+			: locales.value.yearBtnLabelUnselected(String(new Date().getFullYear()))
 	})
-
-	const titleLabel = localeDate
 
 </script>
 
@@ -84,9 +65,9 @@
 		</div>
 		<div
 			class="date-picker-lite-header__label visual-picker-header__date"
-			:aria-label="titleLabel"
+			:aria-label="localeDate"
 		>
-			{{ titleLabel }}
+			{{ localeDate }}
 		</div>
 		<div class="date-picker-lite-header__controls">
 			<div class="date-picker-lite-header__selector">
