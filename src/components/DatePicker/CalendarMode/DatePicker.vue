@@ -682,12 +682,20 @@
 
 	function clearValidationForForm() {
 		clearValidation()
+		hasBlurred.value = false
+		if (props.noCalendar) {
+			dateTextInputRef.value?.clearValidation()
+		}
+		else if (props.useCombinedMode) {
+			complexDatePickerRef.value?.clearValidation()
+		}
 	}
 
 	function resetField() {
 		clearValidation()
 		isDatePickerVisible.value = false
 		keyboardNavigatedDate.value = null
+		hasBlurred.value = false
 
 		withInternalUpdate(() => {
 			selectedDates.value = null

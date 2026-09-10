@@ -1276,6 +1276,7 @@
 
 	function clearValidationForForm() {
 		clearValidation()
+		hasInteracted.value = false
 	}
 
 	function resetForForm() {
@@ -1286,6 +1287,7 @@
 		validateOnSubmit,
 		validate: bridgeValidate,
 		reset,
+		clearValidation: clearValidationForForm,
 		errors: readonlyState(errorMessages),
 		warnings: readonlyState(warningMessages),
 		successes: readonlyState(successMessages),

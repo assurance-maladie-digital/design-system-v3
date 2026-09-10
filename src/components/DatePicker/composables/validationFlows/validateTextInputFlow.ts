@@ -161,9 +161,6 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 		// 1. Mode Vuetify natif
 		if (unref(options.useVuetifyValidation)) {
 			const hasInteracted = options.hasInteracted?.value ?? false
-			if (!hasInteracted && !ctx.shouldDisplayErrors()) {
-				return true
-			}
 			if (!hasInteracted) {
 				return true
 			}
@@ -181,7 +178,11 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 			// Si des customRules existent et que l'utilisateur a interagi, les exécuter sur null
 			// (permet aux règles métier de valider les champs vides, ex: date obligatoire conditionnelle)
 			if (options.customRules.value.length > 0 && (options.hasInteracted?.value ?? false)) {
-				const adapted = getAdaptedRules(filterReadyRules(options.customRules.value), filterReadyRules(options.customWarningRules.value), filterReadyRules(options.customSuccessRules?.value ?? []))
+				const readyRules = getReadyCustomRules()
+				if (readyRules === null) {
+					return true
+				}
+				const adapted = getAdaptedRules(readyRules, filterReadyRules(options.customWarningRules.value), filterReadyRules(options.customSuccessRules?.value ?? []))
 				const result = await ctx.validateField(
 					null,
 					adapted.customRules,

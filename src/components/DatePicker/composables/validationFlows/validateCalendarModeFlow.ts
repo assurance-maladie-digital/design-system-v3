@@ -66,14 +66,13 @@ export function createValidateCalendarModeFlow(
 	}
 
 	const validateCalendarModeDates = async (forceValidation = false): Promise<ValidationResult> => {
-		const token = ++ctx.currentValidationToken.value
-
 		// Si le flow CalendarMode n'est pas activé, utiliser le flow standard
 		if (!options.useCalendarModeRequiredFlow) {
 			return await Promise.resolve(validateDates(forceValidation))
 		}
 
 		if (unref(options.noCalendar)) {
+			++ctx.currentValidationToken.value
 			return emptyValidationResult()
 		}
 
@@ -82,6 +81,7 @@ export function createValidateCalendarModeFlow(
 			return await Promise.resolve(validateDates(forceValidation))
 		}
 
+		const token = ++ctx.currentValidationToken.value
 		ctx.clearValidation()
 
 		// Vérifier le required avec la logique spécifique CalendarMode

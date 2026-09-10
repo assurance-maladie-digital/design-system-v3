@@ -135,6 +135,7 @@ export interface DateTextInputPublicApi {
 	validateOnSubmit: () => Promise<boolean> | boolean
 	validate: (options?: DatePickerPublicValidateOptions) => DatePickerPublicValidateResult
 	reset: () => void
+	clearValidation: () => void
 	errors: DatePickerValidationMessagesRef
 	warnings: DatePickerValidationMessagesRef
 	successes: DatePickerValidationMessagesRef
