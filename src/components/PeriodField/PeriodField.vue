@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-	import { ref, watch, computed, onMounted, toRef, readonly as readonlyState } from 'vue'
+	import { ref, watch, computed, onMounted, readonly as readonlyState } from 'vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import { useFieldValidation } from '@/composables'
-	import { useValidation, type ValidationRule } from '@/composables/unifyValidation/useValidation'
+	import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 	import { locales as defaultLocales } from './locales'
 	import { useLocales } from '@/composables/useLocales'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
@@ -74,30 +74,9 @@
 	const internalFromDate = ref<string | null>(null)
 	const internalToDate = ref<string | null>(null)
 
-	/**
-	 * Formate une valeur de date en chaîne de caractères au format spécifié
-	 * @param value - La valeur de date à formater
-	 * @returns La date formatée ou null
-	 */
-	function formatDateValue(value: unknown): string | null {
-		if (!value) return null
-		if (typeof value === 'string') return value
-		if (typeof value === 'object' && value !== null && 'selectedDates' in value) {
-			const selectedDates = (value as Record<string, unknown>).selectedDates
-			if (!selectedDates) return null
-			const date = new Date(String(selectedDates))
-			if (isNaN(date.getTime())) return null
-			const day = date.getDate().toString().padStart(2, '0')
-			const month = (date.getMonth() + 1).toString().padStart(2, '0')
-			const year = date.getFullYear()
-			return `${day}/${month}/${year}`
-		}
-		return null
-	}
-
 	// Computed properties pour les dates formatées
-	const formattedFromDate = computed(() => formatDateValue(internalFromDate.value))
-	const formattedToDate = computed(() => formatDateValue(internalToDate.value))
+	const formattedFromDate = computed(() => internalFromDate.value ?? null)
+	const formattedToDate = computed(() => internalToDate.value ?? null)
 
 	// Computed properties pour les dates parsées
 	const parsedFromDate = computed(() => formattedFromDate.value ? parseDate(formattedFromDate.value, props.format) : null)
@@ -194,36 +173,39 @@
 			: [],
 	)
 
-	const validationParams = {
-		readonly: toRef(props, 'readonly'),
-		disabled: toRef(props, 'disabled'),
-		required: toRef(props, 'required'),
-		showSuccessMessages: toRef(props, 'showSuccessMessages'),
-		disableErrorHandling: toRef(props, 'disableErrorHandling'),
-		customWarningRules: toRef(props, 'customWarningRules'),
-		isValidateOnBlur: ref(true),
-		focused: ref(false),
-	}
+	// Suivi réactif de l'état d'erreur des DatePickers enfants
+	const fromDateErrors = ref<string[]>([])
+	const toDateErrors = ref<string[]>([])
+	const fromDateSuccesses = ref<string[]>([])
+	const toDateSuccesses = ref<string[]>([])
+	const fromDateWarnings = ref<string[]>([])
+	const toDateWarnings = ref<string[]>([])
 
-	// Les DatePicker conservent leur enregistrement au formulaire et le watcher
-	// de période orchestre la revalidation croisée des deux bornes.
-	const validationOptions = { registerWithForm: false, reactiveValidation: false }
-	const fromDateValidation = useValidation({
-		...validationParams,
-		useVuetifyValidation: false,
-		modelValue: parsedFromDate,
-		customRules: fromDateRules,
-		label: ref('fromDate'),
-	}, validationOptions)
-	const toDateValidation = useValidation({
-		...validationParams,
-		useVuetifyValidation: false,
-		modelValue: parsedToDate,
-		customRules: toDateRules,
-		label: ref('toDate'),
-	}, validationOptions)
+	watch(() => fromDateRef.value?.errors, (errors) => {
+		fromDateErrors.value = Array.isArray(errors) ? [...errors] : []
+	}, { deep: true, immediate: true, flush: 'sync' })
 
-	// Vérification de la validité du formulaire en utilisant les validations
+	watch(() => toDateRef.value?.errors, (errors) => {
+		toDateErrors.value = Array.isArray(errors) ? [...errors] : []
+	}, { deep: true, immediate: true, flush: 'sync' })
+
+	watch(() => fromDateRef.value?.successes, (successes) => {
+		fromDateSuccesses.value = Array.isArray(successes) ? [...successes] : []
+	}, { deep: true, immediate: true, flush: 'sync' })
+
+	watch(() => toDateRef.value?.successes, (successes) => {
+		toDateSuccesses.value = Array.isArray(successes) ? [...successes] : []
+	}, { deep: true, immediate: true, flush: 'sync' })
+
+	watch(() => fromDateRef.value?.warnings, (warnings) => {
+		fromDateWarnings.value = Array.isArray(warnings) ? [...warnings] : []
+	}, { deep: true, immediate: true, flush: 'sync' })
+
+	watch(() => toDateRef.value?.warnings, (warnings) => {
+		toDateWarnings.value = Array.isArray(warnings) ? [...warnings] : []
+	}, { deep: true, immediate: true, flush: 'sync' })
+
+	// Vérification de la validité du formulaire
 	const isValid = computed(() => {
 		// Si aucune date n'est renseignée et que ce n'est pas required, c'est valide
 		if (!props.required && !formattedFromDate.value && !formattedToDate.value) {
@@ -250,22 +232,16 @@
 			}
 		}
 
-		// Vérifier que les deux validations ne signalent pas d'erreurs
-		return !fromDateValidation.hasError.value && !toDateValidation.hasError.value
+		// Vérifier que les DatePickers enfants ne signalent pas d'erreurs
+		return fromDateErrors.value.length === 0 && toDateErrors.value.length === 0
 	})
 
-	// Synchronisation lorsque l'une des dates change
+	// Revalidation croisée : revalide les deux DatePickers quand l'un change
 	async function validateBothDates() {
 		await Promise.all([
 			fromDateRef.value?.validateOnSubmit(),
 			toDateRef.value?.validateOnSubmit(),
 		])
-	}
-
-	// Validation complète du PeriodField
-	async function validateFields() {
-		await fromDateValidation.validate()
-		await toDateValidation.validate()
 	}
 
 	// Les deux champs partagent le même cycle de revalidation à la fermeture.
@@ -274,21 +250,15 @@
 	}
 
 	// Watch pour les changements des dates - validation croisée
-	watch([
-		formattedFromDate,
-		formattedToDate,
-		fromDateRules,
-		toDateRules,
-		() => props.customWarningRules,
-		() => props.showSuccessMessages,
-		() => props.disableErrorHandling,
-		() => props.readonly,
-		() => props.disabled,
-	], async () => {
-		await validateFields()
+	watch([formattedFromDate, formattedToDate], async () => {
 		if (formattedFromDate.value || formattedToDate.value) {
 			await validateBothDates()
 		}
+	}, { flush: 'post' })
+
+	// Revalider quand l'affichage des messages de succès change
+	watch(showSuccessMessagesActual, async () => {
+		await validateBothDates()
 	}, { flush: 'post' })
 
 	// Watch pour les changements internes - Mise à jour du modèle
@@ -303,8 +273,8 @@
 	watch(() => props.modelValue, async (newValue) => {
 		if (!newValue) return
 
-		const newFromDate = formatDateValue(newValue.from)
-		const newToDate = formatDateValue(newValue.to)
+		const newFromDate = newValue.from ?? null
+		const newToDate = newValue.to ?? null
 
 		if (internalFromDate.value !== newFromDate) {
 			internalFromDate.value = newFromDate
@@ -312,8 +282,8 @@
 		if (internalToDate.value !== newToDate) {
 			internalToDate.value = newToDate
 		}
-		// Valider les champs après la mise à jour des valeurs
-		await validateFields()
+		// Revalider les champs après la mise à jour des valeurs
+		await validateBothDates()
 	}, { deep: true, immediate: true })
 
 	// Fonction publique de validation
@@ -322,38 +292,34 @@
 		const fromDateValid = await fromDateRef.value?.validateOnSubmit() ?? true
 		const toDateValid = await toDateRef.value?.validateOnSubmit() ?? true
 
-		// Valider avec les règles personnalisées
-		await validateFields()
-
 		// Retourner true seulement si tout est valide
 		return fromDateValid && toDateValid && isValid.value
 	}
 
 	// Initialisation
 	onMounted(async () => {
-		internalFromDate.value = formatDateValue(props.modelValue?.from)
-		internalToDate.value = formatDateValue(props.modelValue?.to)
-		// Validation initiale
-		await validateFields()
+		internalFromDate.value = props.modelValue?.from ?? null
+		internalToDate.value = props.modelValue?.to ?? null
+		await validateBothDates()
 	})
 
 	defineExpose({
 		validateOnSubmit,
 		clearValidation: () => {
-			fromDateValidation.clearValidation()
-			toDateValidation.clearValidation()
+			fromDateRef.value?.clearValidation()
+			toDateRef.value?.clearValidation()
 		},
 		errors: {
-			fromDate: readonlyState(fromDateValidation.errors),
-			toDate: readonlyState(toDateValidation.errors),
+			fromDate: readonlyState(fromDateErrors),
+			toDate: readonlyState(toDateErrors),
 		},
 		successes: {
-			fromDate: readonlyState(fromDateValidation.successes),
-			toDate: readonlyState(toDateValidation.successes),
+			fromDate: readonlyState(fromDateSuccesses),
+			toDate: readonlyState(toDateSuccesses),
 		},
 		warnings: {
-			fromDate: readonlyState(fromDateValidation.warnings),
-			toDate: readonlyState(toDateValidation.warnings),
+			fromDate: readonlyState(fromDateWarnings),
+			toDate: readonlyState(toDateWarnings),
 		},
 		isValid,
 	})
@@ -370,7 +336,6 @@
 				:date-format-return="props.dateFormatReturn"
 				:display-append-icon="props.displayAppendIcon"
 				:display-icon="props.displayIcon"
-				:error-message="fromDateValidation.hasError"
 				:format="props.format"
 				:disabled="props.disabled"
 				:heading-level="props.headingLevel"
@@ -382,7 +347,6 @@
 				:required="props.disableErrorHandling ? false : props.required"
 				:show-week-number="props.showWeekNumber"
 				:show-success-messages="showSuccessMessagesActual"
-				:success-message="fromDateValidation.hasSuccess"
 				:readonly="props.readonly"
 				:bg-color="props.bgColor"
 				:density="props.density"
@@ -399,7 +363,6 @@
 				:date-format-return="props.dateFormatReturn"
 				:display-append-icon="props.displayAppendIcon"
 				:display-icon="props.displayIcon"
-				:error-message="toDateValidation.hasError"
 				:heading-level="props.headingLevel"
 				:format="props.format"
 				:disabled="props.disabled"
@@ -411,7 +374,6 @@
 				:required="props.disableErrorHandling ? false : props.required"
 				:show-week-number="props.showWeekNumber"
 				:show-success-messages="showSuccessMessagesActual"
-				:success-message="toDateValidation.hasSuccess"
 				:readonly="props.readonly"
 				:bg-color="props.bgColor"
 				:density="props.density"
