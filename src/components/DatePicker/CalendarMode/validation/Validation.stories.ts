@@ -536,7 +536,7 @@ export const BidirectionalValidation: Story = {
     <p>Démonstration de la validation bidirectionnelle entre les DatePickers.</p>
     <div class="date-range-container">
       <div>
-        <h3>Date de début</h3>
+        <h2>Date de début</h2>
         <DatePicker
           ref="startDatePickerRef"
           v-model="startDate"
@@ -548,7 +548,7 @@ export const BidirectionalValidation: Story = {
         />
       </div>
       <div>
-        <h3>Date de fin</h3>
+        <h2>Date de fin</h2>
         <DatePicker
           ref="endDatePickerRef"
           v-model="endDate"
@@ -746,7 +746,7 @@ watch(endDate, () => {
 					</p>
 					<div class="date-range-container">
 						<div class="date-picker-wrapper">
-							<h3>Date de début</h3>
+							<h2>Date de début</h2>
 							<DatePicker
 								ref="startDatePickerRef"
 								v-model="startDate"
@@ -758,7 +758,7 @@ watch(endDate, () => {
 							/>
 						</div>
 						<div class="date-picker-wrapper">
-							<h3>Date de fin</h3>
+							<h2>Date de fin</h2>
 							<DatePicker
 								ref="endDatePickerRef"
 								v-model="endDate"
