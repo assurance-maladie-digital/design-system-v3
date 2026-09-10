@@ -435,9 +435,9 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		dedupeValidationState()
 
 		return {
-			hasError: !isValid,
-			hasWarning: warnings.value.length > 0,
-			hasSuccess: successes.value.length > 0 && isValid && warnings.value.length === 0,
+			hasError: !isValid || displayHasError.value,
+			hasWarning: displayHasWarning.value,
+			hasSuccess: displayHasSuccess.value,
 			state: {
 				errors: errors.value,
 				warnings: warnings.value,

@@ -1371,6 +1371,13 @@
 
 	function clearValidationForForm() {
 		clearValidation()
+		resetInteractionState()
+		if (props.noCalendar) {
+			dateTextInputRef.value?.clearValidation()
+		}
+		else {
+			dateCalendarTextInputRef.value?.clearValidation()
+		}
 	}
 
 	// Reset hook utilisé par SyForm.reset() via useValidatable
@@ -1417,7 +1424,7 @@
 		currentMonthName,
 		toggleDatePicker,
 		validate,
-		clearValidation,
+		clearValidation: clearValidationForForm,
 		formatDateInput,
 		emitBlur: emitBlurEvent,
 		validateDateFormat: (value: string) => validateDateFormatUtil(value, props.format, props.dateFormatReturn, props.required, hasInteracted.value, props.disableErrorHandling),
