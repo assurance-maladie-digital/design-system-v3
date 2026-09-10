@@ -3,15 +3,17 @@
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { mdiCalendar } from '@mdi/js'
 	import { vMaska } from 'maska/vue'
-	import { inject, ref, useId, watch, type ComputedRef } from 'vue'
+	import { inject, ref, toRef, useId, type ComputedRef } from 'vue'
 	import { locales as defaultLocales } from '../locales'
 	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
 	import type { TextFieldProps } from '@/components/Common/Calendar/useTextField'
 	import { useTextField } from '@/components/Common/Calendar/useTextField'
-	import { formatDate, parseDate } from '@/composables/date/useDateFormatDayjs'
+	import { useDateInputModel } from './useDateInputModel'
+	import type { DatePickerLiteRange } from '../types'
 
 	const props = withDefaults(defineProps<{
-		modelValue: Date | undefined
+		mode: 'single' | 'range'
+		modelValue: Date | DatePickerLiteRange | undefined
 		errorMessages?: string[] | null
 		warningMessages?: string[] | null
 		successMessages?: string[] | null
@@ -34,56 +36,35 @@
 	})
 
 	const emits = defineEmits<{
-		(e: 'update:modelValue', value: Date | undefined): void
+		(e: 'update:modelValue', value: Date | DatePickerLiteRange | undefined): void
 	}>()
 
 	// The DatePickerLite root provides its full locales through the shared key
 	const locales = inject<ComputedRef<typeof defaultLocales>>(calendarLocalesKey)!
 
-	const DATE_FORMAT = 'DD/MM/YYYY'
-	const mask = '##/##/####'
-
-	const innerValue = ref<string | undefined>(props.modelValue ? formatDate(props.modelValue, DATE_FORMAT) : undefined)
-	const focused = ref(false)
-
-	watch(
-		() => props.modelValue,
-		(newValue) => {
-			const formatted = newValue ? formatDate(newValue, DATE_FORMAT) : undefined
-			if (innerValue.value !== formatted) {
-				innerValue.value = formatted
-			}
-		},
+	const textFieldProps = useTextField(props)
+	const { textValue, mask } = useDateInputModel(
+		toRef(props, 'mode'),
+		toRef(props, 'modelValue'),
+		value => emits('update:modelValue', value),
 	)
-
-	watch(innerValue, (newValue) => {
-		if (newValue === undefined || newValue === '') {
-			if (props.modelValue !== undefined) {
-				emits('update:modelValue', undefined)
-			}
-			return
-		}
-		const parsed = parseDate(newValue, DATE_FORMAT)
-		if (parsed && parsed.getTime() !== props.modelValue?.getTime()) {
-			emits('update:modelValue', parsed)
-		}
-	}, { immediate: true })
+	const focused = ref(false)
 
 	const toggleBtn = ref<HTMLButtonElement | null>(null)
 
 	const uniqueName = useId()
 	defineExpose({
 		// Raw text drives the root validation: an incomplete input never parses to a Date
-		textValue: innerValue,
+		textValue,
 		toggleBtn,
 	})
 </script>
 
 <template>
 	<SyTextField
-		v-model="innerValue"
+		v-model="textValue"
 		v-maska="mask"
-		v-bind="useTextField(props).value"
+		v-bind="textFieldProps"
 		:name="uniqueName"
 		:error-messages="props.errorMessages"
 		:warning-messages="props.warningMessages"
@@ -136,5 +117,4 @@
 	outline-offset: 2px;
 	border-radius: 4px;
 }
-
 </style>

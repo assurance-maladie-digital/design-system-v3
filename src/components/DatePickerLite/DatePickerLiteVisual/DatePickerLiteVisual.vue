@@ -33,6 +33,9 @@
 	// The DatePickerLite root provides its full locales through the shared key
 	const locales = inject<ComputedRef<typeof defaultLocales>>(calendarLocalesKey)!
 
+	// Optional prop: defaults to the same value as the root component's withDefaults
+	const mode = computed(() => props.mode ?? 'single')
+
 	const {
 		selectedDate,
 		selectedDateRange,
@@ -40,7 +43,7 @@
 		headerDate,
 	} = useDatePickerLiteSelection({
 		modelValue: toRef(props, 'modelValue'),
-		mode: toRef(props, 'mode'),
+		mode,
 	})
 
 	const {
@@ -60,7 +63,7 @@
 	})
 
 	const { open, setDay, handleRangeSelected, setDayFromFooter } = useDatePickerLiteDialog({
-		mode: toRef(props, 'mode'),
+		mode,
 		readonly: toRef(props, 'readonly'),
 		disabled: toRef(props, 'disabled'),
 		toggleBtn: toRef(props, 'toggleBtn'),

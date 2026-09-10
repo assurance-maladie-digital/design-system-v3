@@ -239,6 +239,24 @@ describe('DatePickerLite', () => {
 			wrapper.unmount()
 		})
 
+		it('displays success messages when showSuccessMessages is enabled', () => {
+			const wrapper = mount(DatePickerLiteComponent, {
+				props: {
+					label: 'Début du projet',
+					modelValue: new Date(2026, 8, 25),
+					successMessages: ['Date valide'],
+					showSuccessMessages: true,
+				},
+			})
+
+			const messages = wrapper.findAll('.v-messages__message')
+			expect(messages.map(message => message.text())).toContain('Date valide')
+			// Regression: successes used to fall through as a DOM attribute instead of a prop
+			expect(wrapper.find('input').attributes('successes')).toBeUndefined()
+
+			wrapper.unmount()
+		})
+
 		it('shows the required error and clears it when a date is selected via the visual picker', async () => {
 			vi.useFakeTimers()
 			const wrapper = mount(DatePickerLiteComponent, {

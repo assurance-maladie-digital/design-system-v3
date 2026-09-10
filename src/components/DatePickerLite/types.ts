@@ -28,7 +28,7 @@ export type DatePickerLiteInputProps =
 		displayAsterisk?: boolean
 		errorMessages?: string[] | null
 		warningMessages?: string[] | null
-		successes?: string[]
+		successMessages?: string[] | null
 		hasError?: boolean
 		hasWarning?: boolean
 		hasSuccess?: boolean
@@ -39,6 +39,8 @@ export type DatePickerLiteInputProps =
 
 /** Slot props for the `input` slot of DatePickerLite */
 export interface DatePickerLiteInputSlotProps {
+	/** Selection mode, so a custom input can adapt to single/range */
+	mode: 'single' | 'range'
 	modelValue: Date | DatePickerLiteRange | undefined
 	updateModelValue: (value: Date | DatePickerLiteRange | undefined) => void
 	inputProps: DatePickerLiteInputProps

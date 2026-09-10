@@ -4,7 +4,7 @@
 	import YearSelector from '@/components/Common/Calendar/YearSelector/YearSelector.vue'
 	import VisualpickerHeader from './VisualPickerHeader.vue'
 	import VisualPickerFooter from '@/components/Common/Calendar/PickerFooter/VisualPickerFooter.vue'
-	import { calendarLocalesKey, type PickerView } from '@/components/Common/Calendar/locales'
+	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
 	import { locales as defaultLocales } from '../locales'
 	import { parseMonthYearString } from '@/components/Common/Calendar/utils'
 	import type { MonthPickerVisualProps } from './MonthPickerVisualProps'
@@ -27,7 +27,7 @@
 	// The MonthPicker root provides its full locales through the shared key
 	const locales = inject<ComputedRef<typeof defaultLocales>>(calendarLocalesKey)!
 
-	const view = ref<PickerView>(props.initialView)
+	const view = ref<'months' | 'years'>(props.initialView)
 	const open = ref(false)
 	watch(open, (newValue) => {
 		if (newValue) {

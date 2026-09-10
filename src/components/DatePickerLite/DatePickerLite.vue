@@ -8,7 +8,6 @@
 
 	import { computed, nextTick, provide, readonly as readonlyState, ref, toRef, useAttrs, watch, type ComponentPublicInstance } from 'vue'
 	import DatePickerLiteInput from './DatePickerLiteText/DatePickerLiteInput.vue'
-	import DatePickerLiteInputRange from './DatePickerLiteText/DatePickerLiteInputRange.vue'
 	import DatePickerLiteVisual from './DatePickerLiteVisual/DatePickerLiteVisual.vue'
 	import { locales as defaultLocales } from './locales'
 	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
@@ -17,7 +16,6 @@
 	import { useDatePickerValidation } from './useDatePickerValidation'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
-	import { useDatePickerModel } from './useDatePickerModel'
 	import type { DatePickerLiteInputSlotProps, DatePickerLiteProps, DatePickerLiteRange } from './types'
 
 	// Attributes (including listeners such as @input) are forwarded to the field through
@@ -46,7 +44,7 @@
 	}>()
 
 	const attrs = useAttrs()
-	const textInput = ref<ComponentPublicInstance<typeof DatePickerLiteInput | typeof DatePickerLiteInputRange> | null>(null)
+	const textInput = ref<ComponentPublicInstance<typeof DatePickerLiteInput> | null>(null)
 	// Opening button tracked by the `input` slot (`:ref="toggleBtnRef"`)
 	const customToggleBtn = ref<HTMLButtonElement | null>(null)
 	// The menu anchors to the `input` slot wrapper (full width), with the fallback included
@@ -55,12 +53,8 @@
 
 	// defineModel handles controlled/uncontrolled state without echoing back to the parent;
 	// readonly/disabled remain enforced at the source (DatePickerLiteVisual, readonly field)
+	// Single/range normalization lives inside DatePickerLiteInput, keyed by `mode`
 	const internalValue = defineModel<Date | DatePickerLiteRange>()
-
-	const { modelValueForInput } = useDatePickerModel(
-		toRef(props, 'mode'),
-		internalValue,
-	)
 
 	watch(internalValue, async () => {
 		// Wait for DatePickerLiteInput to update textValue before validating
@@ -109,7 +103,7 @@
 		displayAsterisk: props.displayAsterisk,
 		errorMessages: errors.value,
 		warningMessages: warnings.value,
-		successes: successes.value,
+		successMessages: successes.value,
 		hasError: hasError.value,
 		hasWarning: hasWarning.value,
 		hasSuccess: hasSuccess.value,
@@ -117,6 +111,7 @@
 	}))
 
 	const inputSlotProps = computed<DatePickerLiteInputSlotProps>(() => ({
+		mode: props.mode,
 		modelValue: internalValue.value,
 		updateModelValue: (value: Date | DatePickerLiteRange | undefined) => {
 			internalValue.value = value
@@ -157,18 +152,10 @@
 				name="input"
 				v-bind="inputSlotProps"
 			>
-				<DatePickerLiteInputRange
-					v-if="props.mode === 'range'"
-					ref="textInput"
-					v-model="modelValueForInput"
-					v-bind="inputProps"
-					@focus="focused = true"
-					@blur="focused = false"
-				/>
 				<DatePickerLiteInput
-					v-else
 					ref="textInput"
-					v-model="modelValueForInput"
+					v-model="internalValue"
+					:mode="props.mode"
 					v-bind="inputProps"
 					@focus="focused = true"
 					@blur="focused = false"

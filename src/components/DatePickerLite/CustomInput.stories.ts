@@ -15,7 +15,7 @@ const meta: Meta<typeof DatePickerLite> = {
 	parameters: {
 		docs: {
 			description: {
-				component: 'Replacement of the default input field via the `input` slot. The component provides the slot props (`modelValue`, `updateModelValue`, `inputProps`, `updateTextValue`, `setFocused`, `toggleBtnRef`): validation, opening the visual picker, and date synchronization remain handled by the component; parsing of the typed text remains the responsibility of the custom input.',
+				component: 'Replacement of the default input field via the `input` slot. The component provides the slot props (`mode`, `modelValue`, `updateModelValue`, `inputProps`, `updateTextValue`, `setFocused`, `toggleBtnRef`): validation, opening the visual picker, and date synchronization remain handled by the component; parsing of the typed text remains the responsibility of the custom input. `mode` tells the custom input whether `modelValue` is a single `Date` or a `[Date, Date]` range.',
 			},
 			controls: {
 				exclude: ['onUpdate:modelValue', 'onUpdate:open'],
@@ -177,7 +177,7 @@ export const CustomInputSyTextField: Story = {
 							variant-style="underlined"
 							:error-messages="inputProps.errorMessages"
 							:warning-messages="inputProps.warningMessages"
-							:success-messages="inputProps.successes"
+							:success-messages="inputProps.successMessages"
 							:has-error="inputProps.hasError"
 							:has-warning="inputProps.hasWarning"
 							:has-success="inputProps.hasSuccess"

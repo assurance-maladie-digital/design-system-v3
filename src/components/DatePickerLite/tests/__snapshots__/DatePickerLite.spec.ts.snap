@@ -921,7 +921,6 @@ exports[`DatePickerLite > should render DatePickerLite 1`] = `
                 id="input-v-4"
                 name="v-1"
                 size="1"
-                successes="[]"
                 title="Début du projet"
                 type="text"
                 value="'11/11/2025'"
