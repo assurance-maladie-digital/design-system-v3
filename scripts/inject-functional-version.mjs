@@ -14,6 +14,7 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { basename, dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { PENDING_LABEL } from './lib/releaseTags.mjs'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const jsonPath = resolve(rootDir, 'scripts/data/functional-history-data.json')
@@ -61,8 +62,6 @@ function findMainMdxFiles(dir, results = []) {
 // La date n'est pas affichée : seule la version répond à « dois-je monter de version
 // pour avoir ce changement ? ». Un couple version/date pouvait diverger, la version
 // étant recalculée à chaque release alors que la date du commit, elle, ne bouge pas.
-const PENDING_LABEL = 'à paraître dans la prochaine version'
-
 function buildBadge(version) {
 	const versionText = version ? `V${version}` : PENDING_LABEL
 	return `${FUNC_BADGE_START}\n<p className="func-version-badge">Dernière mise à jour fonctionnelle : ${versionText}</p>\n${FUNC_BADGE_END}`

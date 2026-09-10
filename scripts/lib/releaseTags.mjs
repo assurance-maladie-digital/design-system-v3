@@ -11,6 +11,13 @@
 
 import { execFileSync } from 'child_process';
 
+/**
+ * Libellé affiché quand aucune release publiée ne contient encore le changement.
+ * Partagé par les badges `.mdx` et le rapport a11y pour une formulation unique.
+ * Le pendant côté Vue vit dans les `locales.ts` des composants concernés.
+ */
+export const PENDING_LABEL = 'à paraître dans la prochaine version';
+
 const tagsCache = new Map();
 
 /**

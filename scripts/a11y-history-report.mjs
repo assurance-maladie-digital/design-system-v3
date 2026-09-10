@@ -2,7 +2,7 @@ import { execFile } from 'node:child_process'
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { basename, dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { getPendingVersion } from './lib/releaseTags.mjs'
+import { PENDING_LABEL, getPendingVersion } from './lib/releaseTags.mjs'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const dataDir = resolve(rootDir, 'scripts/data')
@@ -388,7 +388,7 @@ function buildMarkdown(components) {
 			if (commit.patterns) badges.push('pattern ARIA')
 			if (commit.a11yLabel) badges.push('label PR a11y')
 			const formattedDate = new Date(commit.date).toLocaleDateString('fr-FR')
-			const versionInfo = commit.version ? `Release: \`${commit.version}\` · ` : ''
+			const versionInfo = commit.version ? `Release: \`${commit.version}\` · ` : `Release: _${PENDING_LABEL}_ · `
 			lines.push(`- **${formattedDate}** — ${commit.message}  `)
 			lines.push(`  ${versionInfo}Hash: \`${commit.hash}\` | ${badges.length ? badges.join(' · ') : 'signal détecté'}`)
 			if (commit.labels) {

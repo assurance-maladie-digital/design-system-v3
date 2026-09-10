@@ -618,10 +618,10 @@
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "ComponentStatusTable": {
-    "version": "1.1.5",
-    "date": "07/09/2026",
-    "dateIso": "2026-09-07 15:36:47 +0200",
-    "message": "Matrice composant: masquer onglet conformité dans dossier validation (#2533)"
+    "version": null,
+    "date": "10/09/2026",
+    "dateIso": "2026-09-10 09:39:16 +0200",
+    "message": "delete dates"
   },
   "ContextualMenu": {
     "version": "1.1.3",
