@@ -14,21 +14,13 @@ import { execFile } from 'node:child_process'
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { basename, dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { isComponentSourceFile, isFunctionalMessage } from './lib/filters.mjs'
 import { resolveCommitVersion } from './lib/releaseTags.mjs'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const dataDir = resolve(rootDir, 'scripts/data')
 const outputJsonPath = resolve(dataDir, 'functional-history-data.json')
 const componentsDir = resolve(rootDir, 'src/components')
-
-// Mots-clés qui signalent un commit purement a11y (à exclure du badge fonctionnel)
-const a11yOnlyRegex = /a11y|accessibilit|wcag|aria[-\s]|contraste|audit.access|rgaa/i
-
-// Mots-clés qui signalent un commit de release/ci/doc (à exclure)
-const releaseOrDocRegex = /^(chore|docs?|ci|build|release|bump|renovate|update dependency|update .* monorepo)(\([^)]+\))?[!:\s]/i
-
-// Commits qui ne touchent que de la doc/config (message contient ces mots)
-const docOnlyMessageRegex = /version badge|add.*badge|badge.*version|update.*changelog|run lint|improve.*doc|improve.*token/i
 
 function execFileAsync(cmd, args, options) {
 	return new Promise((res, rej) => {
@@ -66,9 +58,6 @@ function discoverComponents() {
 	}))
 }
 
-// Fichiers sources pertinents (pas de doc, pas de config)
-const sourceExtensions = ['.vue', '.ts', '.js', '.scss', '.css']
-
 async function getChangedFiles(hash) {
 	try {
 		const { stdout } = await execFileAsync(
@@ -85,12 +74,7 @@ async function getLastFunctionalCommit(filePaths, isEligible = () => true) {
 	if (!filePaths.length) return null
 
 	// On ne passe en argument que les fichiers sources réels (pas de stories, tests, .mdx)
-	const sourceFiles = filePaths.filter(p => {
-		if (!sourceExtensions.some(ext => p.endsWith(ext))) return false
-		if (p.includes('.stories.')) return false
-		if (p.includes('.spec.') || p.includes('.cy.') || p.includes('__tests__')) return false
-		return true
-	})
+	const sourceFiles = filePaths.filter(isComponentSourceFile)
 	if (!sourceFiles.length) return null
 
 	const args = [
@@ -109,20 +93,17 @@ async function getLastFunctionalCommit(filePaths, isEligible = () => true) {
 		})
 
 		for (const commit of commits) {
-			const msg = commit.message.trim()
 			// Exclure les commits purement a11y, release, ci, doc
-			if (a11yOnlyRegex.test(msg)) continue
-			if (releaseOrDocRegex.test(msg)) continue
-			if (docOnlyMessageRegex.test(msg)) continue
+			if (!isFunctionalMessage(commit.message)) continue
 			// Vérifier que le commit touche bien un .vue/.ts dans le dossier du composant
 			const changed = await getChangedFiles(commit.hash)
 			const toSlash = p => p.split('\\').join('/')
 			const componentDirRelative = toSlash(relative(rootDir, dirname(sourceFiles[0])))
 			const touchesComponentSource = changed.some(f => {
 				const normalized = toSlash(f)
-				// Doit être un fichier source (pas .mdx/.md/.stories/.spec)
-				if (!/\.(vue|ts|js|scss|css)$/.test(normalized)) return false
-				if (normalized.includes('.stories.') || normalized.includes('.spec.') || normalized.includes('.cy.')) return false
+				// Même périmètre que la sélection des fichiers ci-dessus : sans ce partage,
+				// les deux contrôles divergeaient (`__tests__` filtré ici, pas là).
+				if (!isComponentSourceFile(normalized)) return false
 				return normalized.startsWith(componentDirRelative + '/')
 			})
 			if (touchesComponentSource && isEligible(commit)) return commit

@@ -19,11 +19,6 @@ releases : s'y fier attribuerait le changement à une release antérieure à lui
 retenu que s'il dépasse le dernier tag, c'est-à-dire une fois le bump de la PR de release
 effectué — ce qui laisse `docs:update` estampiller la version en préparation.
 
-Le badge ne porte pas de date. La version seule répond à « dois-je monter de version pour
-avoir ce changement ? », et un couple version/date pouvait diverger — la version est
-recalculée à chaque release, la date du commit ne bouge jamais. Les dates des commits
-restent visibles dans le suivi des composants.
-
 ---
 
 ## Workflow de release
