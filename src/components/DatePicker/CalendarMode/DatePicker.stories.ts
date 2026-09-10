@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import DatePicker from './DatePicker.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
-import { ref, watch, computed } from 'vue'
-import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
+import { ref, computed } from 'vue'
 import { fn } from 'storybook/test'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -383,6 +382,7 @@ export const Default: Story = {
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
+                <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
               </div>
             `,
 		}
@@ -460,6 +460,7 @@ export const Required: Story = {
                 <DatePicker v-bind="args" v-model="value1"/>
 				<h4 class="mb-4">Avec astérisque :</h4>
 				<DatePicker v-bind="args" v-model="value2" displayAsterisk/>
+				<div class="mt-4 text-body-2">Valeur 1 : {{ value1 }} | Valeur 2 : {{ value2 }}</div>
               </div>
             `,
 		}
@@ -527,6 +528,7 @@ export const DateRange: Story = {
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
+                <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
               </div>
             `,
 		}
@@ -641,6 +643,7 @@ export const WithCustomPeriod: Story = {
 			</div>
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
+                <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
               </div>
             `,
 		}
@@ -708,6 +711,7 @@ export const WithAppendIcon: Story = {
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
+                <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
               </div>
             `,
 		}
@@ -775,6 +779,7 @@ export const WithoutIcon: Story = {
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
+                <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
               </div>
             `,
 		}
@@ -842,346 +847,9 @@ export const BirthDate: Story = {
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
+                <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
               </div>
             `,
-		}
-	},
-}
-
-export const DifferentFormats: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<div class="d-flex flex-column gap-4">
-						<DatePicker
-							v-model="value1"
-							placeholder="JJ/MM/AAAA"
-							label="Date (JJ/MM/AAAA)"
-							format="DD/MM/YYYY"
-						/>
-						<DatePicker
-							v-model="value2"
-							placeholder="MM/JJ/AAAA"
-							label="Date (MM/JJ/AAAA)"
-							format="MM/DD/YYYY"
-						/>
-						<DatePicker
-							v-model="value3"
-							placeholder="AAAA-MM-JJ"
-							label="Date (AAAA-MM-JJ)"
-							format="YYYY-MM-DD"
-						/>
-						<DatePicker
-							v-model="value4"
-							placeholder="JJ-MM-AA"
-							label="Date (JJ-MM-AA)"
-							format="DD-MM-YY"
-						/>
-						<DatePicker
-							v-model="value5"
-							placeholder="JJ.MM.AAAA"
-							label="Date (JJ.MM.AAAA)"
-							format="DD.MM.YYYY"
-						/>
-					</div>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-				const value1 = ref('24/12/2025')
-				const value2 = ref('12/24/2025')
-				const value3 = ref('2025-12-24')
-				const value4 = ref('24-12-25')
-				const value5 = ref('24.12.2025')
-				</script>
-				`,
-			},
-		],
-	},
-	render: () => {
-		return {
-			components: { DatePicker: DatePicker },
-			setup() {
-				const value1 = ref('24/12/2025')
-				const value2 = ref('12/24/2025')
-				const value3 = ref('2025-12-24')
-				const value4 = ref('24-12-25')
-				const value5 = ref('25.12.2025')
-				return { value1, value2, value3, value4, value5 }
-			},
-			template: `
-              <div class="d-flex flex-column gap-4 pa-4">
-                <DatePicker
-                    v-model="value1"
-                    placeholder="JJ/MM/AAAA"
-                    label="Date (JJ/MM/AAAA)"
-                    format="DD/MM/YYYY"
-                    class="py-4"
-                />
-                <DatePicker
-                    v-model="value2"
-                    placeholder="MM/JJ/AAAA"
-                    label="Date (MM/JJ/AAAA)"
-                    format="MM/DD/YYYY"
-					class="py-4"
-                />
-                <DatePicker
-                    v-model="value3"
-                    placeholder="AAAA-MM-JJ"
-                    label="Date (AAAA-MM-JJ)"
-                    format="YYYY-MM-DD"
-					class="py-4"
-                />
-                <DatePicker
-                    v-model="value4"
-                    placeholder="JJ-MM-AA"
-					label="Date (JJ-MM-AA)"
-                    format="DD-MM-YY"
-					class="py-4"
-                />
-                <DatePicker
-                    v-model="value5"
-                    placeholder="JJ.MM.AAAA"
-					label="Date (JJ.MM.AAAA)"
-                    format="DD.MM.YYYY"
-					class="py-4"
-                />
-              </div>
-            `,
-		}
-	},
-}
-
-export const WithDateFormatReturn: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-              <div class="d-flex flex-column gap-4 pa-4">
-                <span class="mb-4">Date de retour : {{ value1 }}</span>
-                <DatePicker
-                    v-model="value1"
-                    placeholder="JJ/MM/AAAA"
-                    label="Date (JJ/MM/AAAA)"
-                    format="DD/MM/YYYY"
-                />
-
-                <span class="mb-4">Date de retour : {{ value2 }}</span>
-                <DatePicker
-                    v-model="value2"
-                    placeholder="JJ/MM/AAAA"
-                    label="Date (JJ/MM/AAAA)"
-                    format="DD/MM/YYYY"
-                    date-format-return="MM/DD/YYYY"
-                />
-
-                <span class="mb-4">Date de retour : {{ value3 }}</span>
-                <DatePicker
-                    v-model="value3"
-                    placeholder="JJ/MM/AAAA"
-                    label="Date (JJ/MM/AAAA)"
-                    format="DD/MM/YYYY"
-                    date-format-return="YYYY-MM-DD"
-                />
-                </div>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const value1 = ref('24/12/2025')
-					const value2 = ref('25/12/2025')
-					const value3 = ref('26/12/2025')
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		'headingLevel': 3,
-		'placeholder': 'JJ/MM/AAAA',
-		'label': 'Date (JJ/MM/AAAA)',
-		'format': 'DD/MM/YYYY',
-		'dateFormatReturn': '',
-		'isBirthDate': false,
-		'showWeekNumber': false,
-		'required': false,
-		'displayRange': false,
-		'displayIcon': true,
-		'displayAppendIcon': false,
-		'disabled': false,
-		'noIcon': false,
-		'noCalendar': false,
-		'modelValue': '24/12/2025',
-		'onUpdate:modelValue': fn(),
-		'onFocus': fn(),
-		'onBlur': fn(),
-		'onClosed': fn(),
-	},
-	render: () => {
-		return {
-			components: { DatePicker: DatePicker },
-			setup() {
-				const value1 = ref('24/12/2025')
-				const value2 = ref('25/12/2025')
-				const value3 = ref('26/12/2025')
-				return { value1, value2, value3 }
-			},
-			template: `
-              <div class="d-flex flex-column gap-4 pa-4">
-                <span class="mb-4">Date de retour : {{ value1 }}</span>
-                <DatePicker
-                    v-model="value1"
-                    placeholder="JJ/MM/AAAA"
-                    label="Date (JJ/MM/AAAA)"
-                    format="DD/MM/YYYY"
-                />
-
-                <span class="mb-4">Date de retour : {{ value2 }}</span>
-                <DatePicker
-                    v-model="value2"
-                    placeholder="JJ/MM/AAAA"
-                    label="Date (JJ/MM/AAAA)"
-                    format="DD/MM/YYYY"
-					date-format-return="MM/DD/YYYY"
-                />
-
-
-                <span class="mb-4">Date de retour : {{ value3 }}</span>
-                <DatePicker
-                    v-model="value3"
-                    placeholder="JJ/MM/AAAA"
-                    label="Date (JJ/MM/AAAA)"
-                    format="DD/MM/YYYY"
-					date-format-return="YYYY-MM-DD"
-                />
-              </div>
-            `,
-		}
-	},
-}
-
-export const WithDayjsFormat: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<div>
-						<DatePicker
-							v-model="date"
-							placeholder="JJ/MM/AAAA"
-							label="Date (JJ/MM/AAAA)"
-							format="DD/MM/YYYY"
-						/>
-						<p class="mt-4">Date formatée avec dayjs: {{ formattedDate }}</p>
-						<p>Date parsée avec dayjs: {{ parsedDate ? parsedDate.toLocaleDateString() : 'Aucune date' }}</p>
-					</div>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref, watch } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					import { useDateFormat } from '@cnamts/synapse'
-
-					const { parseDate, formatDate } = useDateFormat()
-
-					const date = ref('')
-					const formattedDate = ref('')
-					const parsedDate = ref<Date | null>(null)
-
-					watch(date, (newDate) => {
-						if (newDate) {
-							parsedDate.value = parseDate(newDate, 'DD/MM/YYYY')
-							if (parsedDate.value) {
-								formattedDate.value = formatDate(parsedDate.value, 'YYYY-MM-DD')
-							}
-						} else {
-							formattedDate.value = ''
-							parsedDate.value = null
-						}
-					})
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		headingLevel: 3,
-		placeholder: 'JJ/MM/AAAA',
-		label: 'Date (JJ/MM/AAAA)',
-		format: 'DD/MM/YYYY',
-		isBirthDate: false,
-		showWeekNumber: false,
-		required: false,
-		displayRange: false,
-		displayIcon: true,
-		displayAppendIcon: false,
-		disabled: false,
-		noIcon: false,
-		noCalendar: false,
-		modelValue: '',
-	},
-	render: () => {
-		return {
-			components: { DatePicker },
-			setup() {
-				// Importer le composable useDateFormat depuis useDateFormatDayjs
-				const { parseDate, formatDate } = useDateFormat()
-
-				const date = ref('')
-				const formattedDate = ref('')
-				const parsedDate = ref<Date | null>(null)
-
-				watch(date, (newDate) => {
-					if (newDate) {
-						parsedDate.value = parseDate(newDate, 'DD/MM/YYYY')
-						if (parsedDate.value) {
-							formattedDate.value = formatDate(parsedDate.value, 'YYYY-MM-DD')
-						}
-					}
-					else {
-						formattedDate.value = ''
-						parsedDate.value = null
-					}
-				})
-
-				return { date, formattedDate, parsedDate }
-			},
-
-			template: `
-				<div class="pa-4">
-					<DatePicker
-						v-model="date"
-						placeholder="JJ/MM/AAAA"
-						label="Date (JJ/MM/AAAA)"
-						format="DD/MM/YYYY"
-					/>
-					<p class="mt-4">Date formatée avec dayjs: {{ formattedDate }}</p>
-					<p>Date parsée avec dayjs: {{ parsedDate ? parsedDate.toLocaleDateString() : 'Aucune date' }}</p>
-				</div>
-			`,
 		}
 	},
 }

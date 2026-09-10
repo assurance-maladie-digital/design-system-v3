@@ -91,6 +91,7 @@ onMounted(() => {
 					v-model="value"
 					v-bind="args"
 				/>
+				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 			</div>
 		`,
 	}),
@@ -178,6 +179,7 @@ onMounted(() => {
 					v-model="value"
 					v-bind="args"
 				/>
+				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 			</div>
 		`,
 	}),
@@ -255,6 +257,7 @@ onMounted(() => {
 					v-model="value"
 					v-bind="args"
 				/>
+				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 			</div>
 		`,
 	}),
@@ -328,6 +331,7 @@ const value2 = ref('')
 					required
 					disable-error-handling
 				/>
+				<div class="mt-4 text-body-2">Valeur 1 : {{ value1 }} | Valeur 2 : {{ value2 }}</div>
 			</div>
 		`,
 	}),
@@ -442,6 +446,9 @@ export const NoValidateOnBlur: Story = {
       required
       :is-validate-on-blur="false"
       :show-success-messages="true"
+      :custom-rules="[
+        { type: 'notAfterToday', options: { message: 'La date ne peut pas être dans le futur' } }
+      ]"
       @update:model-value="handleChange"
     />
     <div class="d-flex gap-4 mt-2">
@@ -482,6 +489,9 @@ const applyValue = async (newValue: string) => {
 		isValidateOnBlur: false,
 		showSuccessMessages: true,
 		required: true,
+		customRules: [
+			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être dans le futur' } },
+		],
 	},
 	render: args => ({
 		components: { DatePicker, VBtn },
@@ -513,6 +523,7 @@ const applyValue = async (newValue: string) => {
 					<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyValue('22/01/2024')">Valeur valide</VBtn>
 					<VBtn @mousedown.prevent @click="applyValue('')">Réinitialiser</VBtn>
 				</div>
+				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 			</div>
 		`,
 	}),
@@ -870,6 +881,7 @@ const onSubmit = (event) => {
 						Soumettre
 					</VBtn>
 				</SyForm>
+				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 			</div>
 		`,
 	}),
@@ -901,7 +913,8 @@ export const VFormValidation: Story = {
     />
     <VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
   </VForm>
-</template>`,
+</template>
+`,
 			},
 			{
 				name: 'Script',
@@ -922,7 +935,8 @@ async function onSubmit() {
     alert('Formulaire invalide.')
   }
 }
-</script>`,
+</script>
+`,
 			},
 		],
 	},
@@ -953,18 +967,19 @@ async function onSubmit() {
 			return { args, value, datePickerRef, onSubmit }
 		},
 		template: `
-			<div class="pa-4">
-				<VForm @submit.prevent="onSubmit">
-					<DatePicker
-						ref="datePickerRef"
-						v-model="value"
-						v-bind="args"
-						class="mb-4"
-					/>
-					<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
-				</VForm>
-			</div>
-		`,
+      <div class="pa-4">
+        <VForm @submit.prevent="onSubmit">
+          <DatePicker
+            ref="datePickerRef"
+            v-model="value"
+            v-bind="args"
+            class="mb-4"
+          />
+          <VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
+        </VForm>
+        <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
+      </div>
+    `,
 	}),
 }
 
@@ -1005,7 +1020,8 @@ export const SyFormCustomRulesValidation: Story = {
       Soumettre
     </VBtn>
   </SyForm>
-</template>`,
+</template>
+`,
 			},
 			{
 				name: 'Script',
@@ -1024,7 +1040,8 @@ const onSubmit = (event) => {
     alert('Formulaire invalide.')
   }
 }
-</script>`,
+</script>
+`,
 			},
 		],
 	},
@@ -1063,23 +1080,24 @@ const onSubmit = (event) => {
 			return { args, value, onSubmit }
 		},
 		template: `
-			<div class="pa-4">
-				<SyForm @submit="onSubmit">
-					<DatePicker
-						v-model="value"
-						v-bind="args"
-						class="mb-4"
-					/>
-					<VBtn
-						type="submit"
-						color="primary"
-						class="mt-4"
-					>
-						Soumettre
-					</VBtn>
-				</SyForm>
-			</div>
-		`,
+      <div class="pa-4">
+        <SyForm @submit="onSubmit">
+          <DatePicker
+            v-model="value"
+            v-bind="args"
+            class="mb-4"
+          />
+          <VBtn
+            type="submit"
+            color="primary"
+            class="mt-4"
+          >
+            Soumettre
+          </VBtn>
+        </SyForm>
+        <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
+      </div>
+    `,
 	}),
 }
 
@@ -1176,6 +1194,7 @@ async function onSubmit() {
 					/>
 					<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
 				</VForm>
+				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 			</div>
 		`,
 	}),
