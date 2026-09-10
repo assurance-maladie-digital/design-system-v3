@@ -3,10 +3,11 @@ import { afterEach, describe, expect, it } from 'vitest'
 import { nextTick } from 'vue'
 import DatePickerLite from '../DatePickerLite.vue'
 
-// Custom input substitué au champ par défaut via le slot `input` : champ texte
-// alimenté par les slot props + bouton d'ouverture enregistré via `toggleBtnRef`.
+// Custom input replacing the default field via the `input` slot: text field driven by
+// the slot props plus the opening button tracked through `toggleBtnRef`.
+// The typed text is owned by the custom input and mirrored to validation via `updateTextValue`.
 const customInputSlot = `
-<template #default="{ modelValue, updateModelValue, inputProps, textValue, updateTextValue, setFocused, toggleBtnRef }">
+<template #default="{ modelValue, updateModelValue, inputProps, updateTextValue, setFocused, toggleBtnRef }">
 	<div class="custom-input">
 		<span class="custom-input__label">{{ inputProps.label }}</span>
 		<span class="custom-input__value">{{ modelValue ? 'date-set' : 'no-date' }}</span>
@@ -21,7 +22,6 @@ const customInputSlot = `
 		</ul>
 		<input
 			class="custom-input__field"
-			:value="textValue"
 			@input="updateTextValue($event.target.value)"
 			@focus="setFocused(true)"
 			@blur="setFocused(false)"
@@ -145,8 +145,8 @@ describe('DatePickerLite - slot input', () => {
 
 		const emitted = wrapper.emitted('update:modelValue')
 		expect(emitted?.at(-1)?.[0]).toBeInstanceOf(Date)
-		// La fermeture est assertée via l'événement : le contenu téléporté reste
-		// dans le DOM le temps du fade-transition sous happy-dom.
+		// Closing is asserted via the event: the teleported content stays in the DOM
+		// for the duration of the fade transition under happy-dom.
 		expect(wrapper.emitted('update:open')?.at(-1)).toEqual([false])
 		expect(document.activeElement).toBe(toggle.element)
 

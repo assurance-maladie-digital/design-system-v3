@@ -35,7 +35,6 @@
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: Date | undefined): void
-		(e: 'update:textValue', value: string | undefined): void
 	}>()
 
 	// The DatePickerLite root provides its full locales through the shared key
@@ -53,15 +52,11 @@
 			const formatted = newValue ? formatDate(newValue, DATE_FORMAT) : undefined
 			if (innerValue.value !== formatted) {
 				innerValue.value = formatted
-				emits('update:textValue', formatted)
 			}
 		},
 	)
 
 	watch(innerValue, (newValue) => {
-		// The raw text feeds the root's validation: incomplete or impossible
-		// input never parses to a Date, so rules must see the field content.
-		emits('update:textValue', newValue)
 		if (newValue === undefined || newValue === '') {
 			if (props.modelValue !== undefined) {
 				emits('update:modelValue', undefined)
@@ -78,6 +73,8 @@
 
 	const uniqueName = useId()
 	defineExpose({
+		// Raw text drives the root validation: an incomplete input never parses to a Date
+		textValue: innerValue,
 		toggleBtn,
 	})
 </script>

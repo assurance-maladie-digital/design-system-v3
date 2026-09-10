@@ -1,6 +1,6 @@
 import type { ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
 import { useValidation } from '@/composables/unifyValidation/useValidation'
-import { computed, type Ref } from 'vue'
+import { computed, nextTick, type Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import type { locales } from './locales'
 
@@ -43,15 +43,17 @@ export function useDatePickerValidation(args: {
 	})
 
 	/**
-	 * The validation composable mutates directly the modelValue when clear is called at the level of the form,
-	 * since we do not use the modelValue of the component to validate but the textfield value
-	 * we need to intercept the clear action and reset ourselves the model of the component.
+	 * The validation composable mutates the modelValue directly when the form reset is triggered.
+	 * Since we validate against the text field value rather than the component model, we need to
+	 * intercept that clear action and reset the component model ourselves.
 	 */
 	const validationModel = computed({
 		get: () => args.modelValue.value,
 		set: (value) => {
 			if (value == null) {
-				args.onReset()
+				// Deferred: Vuetify reset (VForm) emits a transient `null` synchronously on the instance;
+				// our `undefined` must arrive last.
+				void nextTick(args.onReset)
 			}
 			else {
 				// The validation should never set the modelValue to a non null value.

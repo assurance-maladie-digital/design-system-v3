@@ -17,7 +17,7 @@ export type DatePickerLiteProps =
 		displayAsterisk?: boolean
 	}
 
-/** Props prêtes à être v-bind sur un champ de saisie custom (attrs + props de champ + état de validation) */
+/** Props ready to be v-bind on a custom text field (attrs + field props + validation state) */
 export type DatePickerLiteInputProps =
 	TextFieldProps
 	& {
@@ -31,18 +31,16 @@ export type DatePickerLiteInputProps =
 		hasSuccess?: boolean
 		showSuccessMessages?: boolean
 	}
-	// Attrs transmis par la racine (classe, listeners, etc.)
+	// Attributes forwarded by the root (classes, listeners, etc.)
 	& Record<string, unknown>
 
-/** Slot props du slot `input` de DatePickerLite */
+/** Slot props for the `input` slot of DatePickerLite */
 export interface DatePickerLiteInputSlotProps {
 	modelValue: Date | undefined
 	updateModelValue: (value: Date | undefined) => void
 	inputProps: DatePickerLiteInputProps
-	/** Alimente la validation uniquement : le parsing texte → Date reste à la charge de l'input custom */
-	textValue: string | undefined
 	updateTextValue: (value: string | undefined) => void
 	setFocused: (value: boolean) => void
-	/** À attacher via `:ref` sur le bouton qui ouvre le sélecteur visuel */
+	/** Attach via `:ref` to the button that opens the visual picker */
 	toggleBtnRef: Ref<HTMLButtonElement | null>
 }

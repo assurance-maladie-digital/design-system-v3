@@ -1,7 +1,8 @@
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { flushPromises, nextTick } from 'vue'
+import { nextTick } from 'vue'
 import DatePickerLite from '../DatePickerLite.vue'
+import DatePickerLiteInput from '../DatePickerLiteText/DatePickerLiteInput.vue'
 
 async function openMenu(wrapper: Awaited<ReturnType<typeof mount>>) {
 	await nextTick()
@@ -72,39 +73,50 @@ describe('DatePickerLite - event emissions (no duplicates)', () => {
 		wrapper.unmount()
 	})
 
-	it('should emit update:textValue only once when modelValue changes externally', async () => {
+	it('should sync the exposed textValue when modelValue changes externally', async () => {
 		const wrapper = mount(DatePickerLite, {
 			props: { label: 'Date', modelValue: new Date(2025, 10, 11) },
 			attachTo: document.body,
 		})
-
-		// Clear previous emits
 		await nextTick()
-		const initialTextValueEmits = wrapper.emitted('update:textValue')?.length ?? 0
+
+		const input = wrapper.findComponent(DatePickerLiteInput)
+		expect(input.vm.textValue).toBe('11/11/2025')
+		expect(wrapper.find('input').element.value).toBe('11/11/2025')
 
 		// Change modelValue externally (simulate parent update)
-		const newDate = new Date(2025, 11, 12)
-		await wrapper.setProps({ modelValue: newDate })
+		await wrapper.setProps({ modelValue: new Date(2025, 11, 12) })
 		await nextTick()
 
-		// Check that update:textValue was emitted exactly once (new emit)
-		const textValueEmits = wrapper.emitted('update:textValue')
-		expect(textValueEmits).toBeDefined()
-		expect(textValueEmits!.length).toBe(initialTextValueEmits + 1)
-		expect(textValueEmits!.at(-1)?.[0]).toBe('12/12/2025')
+		expect(input.vm.textValue).toBe('12/12/2025')
+		expect(wrapper.find('input').element.value).toBe('12/12/2025')
 
 		wrapper.unmount()
 	})
 
-	it('should emit update:textValue only once during manual input', async () => {
+	it('should not echo update:modelValue when modelValue is updated externally', async () => {
+		const wrapper = mount(DatePickerLite, {
+			props: { label: 'Date', modelValue: new Date(2025, 10, 11) },
+			attachTo: document.body,
+		})
+		await nextTick()
+		const initialEmits = wrapper.emitted('update:modelValue')?.length ?? 0
+
+		await wrapper.setProps({ modelValue: new Date(2025, 11, 12) })
+		await nextTick()
+
+		// The parent already owns this value: no echo emission expected
+		expect(wrapper.emitted('update:modelValue')?.length ?? 0).toBe(initialEmits)
+
+		wrapper.unmount()
+	})
+
+	it('should sync the exposed textValue during manual input', async () => {
 		const wrapper = mount(DatePickerLite, {
 			props: { label: 'Date' },
 			attachTo: document.body,
 		})
-
-		// Clear previous emits
 		await nextTick()
-		const initialTextValueEmits = wrapper.emitted('update:textValue')?.length ?? 0
 
 		// Simulate typing in the input
 		const input = wrapper.find('input')
@@ -112,16 +124,12 @@ describe('DatePickerLite - event emissions (no duplicates)', () => {
 		await input.trigger('input')
 		await nextTick()
 
-		// Check that update:textValue was emitted exactly once (new emit)
-		const textValueEmits = wrapper.emitted('update:textValue')
-		expect(textValueEmits).toBeDefined()
-		expect(textValueEmits!.length).toBe(initialTextValueEmits + 1)
-		expect(textValueEmits!.at(-1)?.[0]).toBe('15/12/2025')
+		expect(wrapper.findComponent(DatePickerLiteInput).vm.textValue).toBe('15/12/2025')
 
 		wrapper.unmount()
 	})
 
-	it('should not emit duplicate update:textValue events for the same value', async () => {
+	it('should not re-emit update:modelValue when the same text is typed again', async () => {
 		const wrapper = mount(DatePickerLite, {
 			props: { label: 'Date' },
 			attachTo: document.body,
@@ -133,21 +141,31 @@ describe('DatePickerLite - event emissions (no duplicates)', () => {
 		await input.trigger('input')
 		await nextTick()
 
-		// Get the last emitted textValue
-		const textValueEmits = wrapper.emitted('update:textValue')
-		expect(textValueEmits).toBeDefined()
-		const lastTextValue = textValueEmits!.at(-1)?.[0]
+		const emitCount = wrapper.emitted('update:modelValue')!.length
+		expect(wrapper.findComponent(DatePickerLiteInput).vm.textValue).toBe('20/12/2025')
 
-		// Simulate the same input again (should not emit a new event if value didn't change)
+		// Simulate the same input again (no new emission for the same value)
 		await input.setValue('20/12/2025')
 		await input.trigger('input')
 		await nextTick()
 
-		// Check that the last emitted textValue is still the same (no duplicate for same value)
-		const newTextValueEmits = wrapper.emitted('update:textValue')
-		expect(newTextValueEmits).toBeDefined()
-		// The last emitted value should still be the same
-		expect(newTextValueEmits!.at(-1)?.[0]).toBe(lastTextValue)
+		expect(wrapper.emitted('update:modelValue')!.length).toBe(emitCount)
+		expect(wrapper.findComponent(DatePickerLiteInput).vm.textValue).toBe('20/12/2025')
+
+		wrapper.unmount()
+	})
+
+	it('should pass down the native input event to the consumer exactly once per keystroke', async () => {
+		const onInput = vi.fn()
+		const wrapper = mount(DatePickerLite, {
+			props: { label: 'Date', onInput },
+			attachTo: document.body,
+		})
+
+		await wrapper.find('input').setValue('1')
+
+		expect(onInput).toHaveBeenCalledTimes(1)
+		expect(onInput.mock.calls[0][0]).toBeInstanceOf(Event)
 
 		wrapper.unmount()
 	})

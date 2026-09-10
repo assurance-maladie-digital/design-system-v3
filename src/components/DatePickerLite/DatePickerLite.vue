@@ -11,8 +11,12 @@
 	import { useLocales } from '@/composables/useLocales'
 	import type { DatePickerLiteInputSlotProps, DatePickerLiteProps } from './types'
 
-	const props = withDefaults(defineProps<DatePickerLiteProps>(), {
-		modelValue: undefined,
+	// Attributes (including listeners such as @input) are forwarded to the field through
+	// inputProps; otherwise they would also land on the root div (duplicate via bubbling)
+	defineOptions({ inheritAttrs: false })
+
+	// `modelValue` is declared by defineModel; the rest by defineProps
+	const props = withDefaults(defineProps<Omit<DatePickerLiteProps, 'modelValue'>>(), {
 		locales: () => ({}),
 		helpText: 'Format JJ/MM/AAAA',
 		...validationPropsDefaults,
@@ -28,42 +32,32 @@
 	provide(calendarLocalesKey, locales)
 
 	const emits = defineEmits<{
-		(e: 'update:modelValue', value: Date | undefined): void
 		(e: 'update:open', value: boolean): void
 	}>()
 
 	const attrs = useAttrs()
 	const textInput = ref<ComponentPublicInstance<typeof DatePickerLiteInput> | null>(null)
-	// Bouton d'ouverture enregistré par le slot `input` (`:ref="toggleBtnRef"`)
+	// Opening button tracked by the `input` slot (`:ref="toggleBtnRef"`)
 	const customToggleBtn = ref<HTMLButtonElement | null>(null)
-	// Le menu s'ancre sur le wrapper du slot `input` (pleine largeur), fallback compris
+	// The menu anchors to the `input` slot wrapper (full width), with the fallback included
 	const customInputEl = ref<HTMLElement | null>(null)
 	const toggleBtn = computed(() => customToggleBtn.value ?? textInput.value?.toggleBtn ?? null)
 
-	const internalValue = ref<Date | undefined>(undefined)
+	// defineModel handles controlled/uncontrolled state without echoing back to the parent;
+	// readonly/disabled remain enforced at the source (DatePickerLiteVisual, readonly field)
+	const internalValue = defineModel<Date>()
 
-	watch(
-		() => props.modelValue,
-		(newValue) => {
-			internalValue.value = newValue
-		},
-		{ immediate: true },
-	)
-
-	watch(internalValue, async (newValue) => {
-		if (!props.readonly && !props.disabled) {
-			emits('update:modelValue', newValue)
-		}
+	watch(internalValue, async () => {
 		// Wait for DatePickerLiteInput to update textValue before validating
 		await nextTick()
 		validate()
 	})
 
-	// Mirror of the text field content, fed by the input's update:textValue
-	// event (one-way): validation runs on it because incomplete input never
-	// parses to a Date (like MonthPicker). The form reset is intercepted by
-	// useDatePickerValidation and delegated to the input's exposed reset().
-	const textValue = ref<string | undefined>(undefined)
+	// Raw text content, used as the validation base (an incomplete entry never parses to Date).
+	// Default value comes from the exposed ref on DatePickerLiteInput (replaces update:textValue).
+	// The `input` slot is driven by the consumer through updateTextValue.
+	const slotTextValue = ref<string | undefined>(undefined)
+	const textValue = computed(() => textInput.value ? textInput.value.textValue : slotTextValue.value)
 
 	const focused = ref(false)
 
@@ -113,9 +107,8 @@
 			internalValue.value = value
 		},
 		inputProps: inputProps.value,
-		textValue: textValue.value,
 		updateTextValue: (value: string | undefined) => {
-			textValue.value = value
+			slotTextValue.value = value
 		},
 		setFocused: (value: boolean) => {
 			focused.value = value
@@ -153,7 +146,6 @@
 					ref="textInput"
 					v-model="internalValue"
 					v-bind="inputProps"
-					@update:text-value="textValue = $event"
 					@focus="focused = true"
 					@blur="focused = false"
 				/>

@@ -12,7 +12,9 @@
 	import type { DatePickerLiteVisualProps } from './DatePickerLiteVisualProps'
 
 	const props = defineProps<{
+		/** used to position the menu */
 		textInput: ComponentPublicInstance | HTMLElement | null
+		/** used to reset the focus on closed */
 		toggleBtn: HTMLElement | null
 		modelValue: Date | undefined
 		readonly: boolean

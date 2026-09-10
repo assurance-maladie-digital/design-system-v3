@@ -15,7 +15,7 @@ const meta: Meta<typeof DatePickerLite> = {
 	parameters: {
 		docs: {
 			description: {
-				component: 'Remplacement du champ de saisie par défaut via le slot `input`. Le composant fournit les slot props (`modelValue`, `updateModelValue`, `inputProps`, `textValue`, `updateTextValue`, `setFocused`, `toggleBtnRef`) : la validation, l’ouverture du sélecteur visuel et la synchronisation de la date restent gérées par le composant, le parsing du texte saisi reste à la charge de l’input custom.',
+				component: 'Replacement of the default input field via the `input` slot. The component provides the slot props (`modelValue`, `updateModelValue`, `inputProps`, `updateTextValue`, `setFocused`, `toggleBtnRef`): validation, opening the visual picker, and date synchronization remain handled by the component; parsing of the typed text remains the responsibility of the custom input.',
 			},
 			controls: {
 				exclude: ['onUpdate:modelValue', 'onUpdate:open'],
@@ -48,9 +48,9 @@ const parseIsoDate = (value: string): Date | undefined => {
 const formatIsoDate = (value: Date): string =>
 	`${value.getFullYear()}-${pad(value.getMonth() + 1)}-${pad(value.getDate())}`
 
-// État local du champ du slot `input` : le texte est détenu par l'input custom,
-// reflété vers la validation via updateTextValue et parsé en Date via
-// updateModelValue (le parsing reste à la charge de l'input custom).
+// Local state of the `input` slot field: the text is owned by the custom input,
+// mirrored to validation via updateTextValue and parsed to a Date via
+// updateModelValue (parsing remains the responsibility of the custom input).
 function useCustomSlotInput(
 	args: { modelValue?: Date },
 	parse: (value: string) => Date | undefined,
@@ -106,9 +106,9 @@ export const CustomInputSyTextField: Story = {
 				watch(() => args.modelValue, (value) => {
 					text.value = value ? formatDate(value, SHORT_DATE_FORMAT) : ''
 				})
-				// Même contrat que l'input par défaut : le texte masqué alimente la
-				// validation via updateTextValue, et n'écrase modelValue que s'il
-				// parse en une date différente (updateModelValue).
+				// Same contract as the default input: the masked text feeds validation via
+				// updateTextValue and only overrides modelValue when it parses to a different date.
+
 				const onTextUpdate = (
 					value: string | null,
 					modelValue: Date | undefined,
@@ -251,9 +251,8 @@ export const CustomInputSyTextField: Story = {
 						text.value = value ? formatDate(value, SHORT_DATE_FORMAT) : ''
 					})
 
-					// Même contrat que l'input par défaut : le texte masqué alimente
-					// la validation, et n'écrase modelValue que s'il parse en une
-					// date différente.
+					// Same contract as the default input: the masked text feeds validation and only
+					// overrides modelValue when it parses to a different date.
 					const onTextUpdate = (value, modelValue, updateTextValue, updateModelValue) => {
 						updateTextValue(value ?? undefined)
 						if (!value) {
@@ -292,7 +291,7 @@ export const CustomInputStyle: Story = {
 			components: { DatePickerLite },
 			setup() {
 				const { text, onInput } = useCustomSlotInput(args, parseFrDate, formatFrDate)
-				// Associations a11y : label → input, messages rattachés via aria-describedby
+				// Accessibility associations: label → input, messages wired via aria-describedby
 				const inputId = useId()
 				const helpId = useId()
 				const errorsId = useId()
@@ -469,7 +468,7 @@ export const CustomInputStyle: Story = {
 					const helpId = useId()
 					const errorsId = useId()
 
-					// Le texte est détenu par l'input custom, parsé en Date via
+					// Text is owned by the custom input and parsed to a Date via
 					// updateModelValue ; updateTextValue alimente la validation.
 					const text = ref('11/11/2025')
 					watch(selectedDate, (value) => {
@@ -626,7 +625,7 @@ export const CustomInputFormat: Story = {
 						},
 					}]
 
-					// Format détenu par l'input custom : affichage ISO de modelValue,
+					// Format owned by the custom input: ISO display of modelValue,
 					// parsing ISO -> Date via updateModelValue.
 					const text = ref('2025-11-11')
 					watch(selectedDate, (value) => {
