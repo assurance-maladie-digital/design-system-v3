@@ -150,6 +150,8 @@ export function createValidateDatesFlow(ctx: ValidationContext) {
 
 			if (token !== ctx.currentValidationToken.value) return
 			accumulateValidationResults(results)
+			const hasError = results.some(result => result.hasError)
+			ctx.applyRangeValidationErrors(!hasError)
 		})
 	}
 
