@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
   "date": "2026-09-10T08:52:36.406Z",
-=======
-  "date": "2026-09-10T12:59:26.896Z",
->>>>>>> ae958dedb (ajour onglet test a111y validation)
   "totalCount": 77,
   "results": [
     {
@@ -15,11 +11,6 @@
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
-        {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
@@ -203,19 +194,6 @@
       "a11yDate": "10/08/2026",
       "commits": [
         {
-<<<<<<< HEAD
-=======
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
-          "date": "2026-08-10",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4"
-        },
-        {
->>>>>>> ae958dedb (ajour onglet test a111y validation)
           "date": "2026-08-05",
           "message": "Ajout des interactions sur le composant `BackBtn` (#2466)",
           "version": "1.1.4"
@@ -271,15 +249,9 @@
           "version": "0.0.6-alpha"
         },
         {
-<<<<<<< HEAD
           "date": "2024-10-07",
           "message": "add back btn (#92)",
           "version": "0.0.0-alpha.0"
-=======
-          "date": "2024-12-16",
-          "message": "Alert to SyAlert (#270)",
-          "version": "0.0.6-alpha"
->>>>>>> ae958dedb (ajour onglet test a111y validation)
         }
       ],
       "a11yCommits": [
@@ -383,19 +355,6 @@
       "a11yDate": "10/08/2026",
       "commits": [
         {
-<<<<<<< HEAD
-=======
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
-          "date": "2026-08-10",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4"
-        },
-        {
->>>>>>> ae958dedb (ajour onglet test a111y validation)
           "date": "2026-08-05",
           "message": "Ajout des interactions sur le composant `BackToTopBtn` (#2467)",
           "version": "1.1.4"
@@ -545,8 +504,8 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "13/08/2026",
-      "a11yVersion": "1.1.5",
-      "a11yDate": "09/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-13",
@@ -615,11 +574,7 @@
           "date": "2026-09-09 16:07:21 +0200",
           "dateFr": "09/09/2026",
           "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
-<<<<<<< HEAD
           "version": null,
-=======
-          "version": "1.1.5",
->>>>>>> ae958dedb (ajour onglet test a111y validation)
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -768,11 +723,6 @@
       "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
-        {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
@@ -1174,11 +1124,6 @@
       "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
-        {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
         {
           "date": "2026-08-25",
           "message": "[SyRadioGroup] héritage des attributs (#2493)",
@@ -1983,11 +1928,6 @@
       "a11yDate": "13/05/2026",
       "commits": [
         {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
           "version": "1.1.5"
@@ -2071,7 +2011,6 @@
           "date": "2026-04-07",
           "message": "SyTable / SyServerTable: add autocomplete filter (#2068)",
           "version": "1.0.24"
-<<<<<<< HEAD
         },
         {
           "date": "2026-03-23",
@@ -2107,8 +2046,6 @@
           "date": "2026-02-11",
           "message": "add autoComplete componant (#1764)",
           "version": "1.0.20"
-=======
->>>>>>> ae958dedb (ajour onglet test a111y validation)
         }
       ],
       "a11yCommits": [
@@ -2266,11 +2203,6 @@
       "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
-        {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
@@ -2444,11 +2376,6 @@
       "a11yDate": "22/07/2026",
       "commits": [
         {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
           "version": "1.1.5"
@@ -2532,7 +2459,6 @@
           "date": "2026-04-13",
           "message": "SySelect: fix error display timing on required field (#2083)",
           "version": "1.0.25"
-<<<<<<< HEAD
         },
         {
           "date": "2026-04-08",
@@ -2573,8 +2499,6 @@
           "date": "2026-01-30",
           "message": "SySelect: add slots/tooltips (#1767)",
           "version": "1.0.18"
-=======
->>>>>>> ae958dedb (ajour onglet test a111y validation)
         }
       ],
       "a11yCommits": [
@@ -2909,11 +2833,6 @@
       "a11yDate": "27/08/2026",
       "commits": [
         {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
           "version": "1.1.3"
@@ -3004,7 +2923,6 @@
           "version": "1.0.11"
         },
         {
-<<<<<<< HEAD
           "date": "2025-09-30",
           "message": "add syForm (#1176)",
           "version": "1.0.10"
@@ -3028,11 +2946,6 @@
           "date": "2025-06-30",
           "message": "add syCheckbox componant (#725)",
           "version": "1.0.2"
-=======
-          "date": "2025-10-20",
-          "message": "Feat/1280 amelipro clean warning des tests global vuetify (#1288)",
-          "version": "1.0.11"
->>>>>>> ae958dedb (ajour onglet test a111y validation)
         }
       ],
       "a11yCommits": [
@@ -4318,11 +4231,6 @@
       "a11yDate": "23/07/2026",
       "commits": [
         {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
           "version": "1.1.5"
@@ -4411,7 +4319,6 @@
           "date": "2026-04-20",
           "message": "[SyTextField] Fixe de la documentation des props (#2087)",
           "version": "1.0.25"
-<<<<<<< HEAD
         },
         {
           "date": "2026-04-08",
@@ -4447,8 +4354,6 @@
           "date": "2026-03-10",
           "message": "SyTextField: add title prop to allow custom or disabled title attribute (#1947)",
           "version": "1.0.22"
-=======
->>>>>>> ae958dedb (ajour onglet test a111y validation)
         }
       ],
       "a11yCommits": [
@@ -5137,24 +5042,6 @@
       "a11yDate": "10/08/2026",
       "commits": [
         {
-<<<<<<< HEAD
-=======
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
-          "date": "2026-08-27",
-          "message": "refactor(DatePicker): standardize labels and placeholders with format hints across stories (#2513)",
-          "version": "1.1.5"
-        },
-        {
-          "date": "2026-08-18",
-          "message": "test(DatePicker): improve visual tests (#2495)",
-          "version": "1.1.4"
-        },
-        {
->>>>>>> ae958dedb (ajour onglet test a111y validation)
           "date": "2026-08-13",
           "message": "fix/components-name-format",
           "version": "1.1.4"
@@ -5233,7 +5120,6 @@
           "date": "2026-05-19",
           "message": "add validationBridge and continue refacto (#2177)",
           "version": "1.0.27"
-<<<<<<< HEAD
         },
         {
           "date": "2026-04-30",
@@ -5279,8 +5165,6 @@
           "date": "2026-03-04",
           "message": "Feat/1872 ajout de tokens (#1888)",
           "version": "1.0.22"
-=======
->>>>>>> ae958dedb (ajour onglet test a111y validation)
         }
       ],
       "a11yCommits": [
@@ -5472,34 +5356,6 @@
       "a11yDate": "10/08/2026",
       "commits": [
         {
-<<<<<<< HEAD
-=======
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
-          "date": "2026-08-27",
-          "message": "refactor(DatePicker): standardize labels and placeholders with format hints across stories (#2513)",
-          "version": "1.1.5"
-        },
-        {
-          "date": "2026-08-25",
-          "message": "refactor(DatePicker): use separate v-model refs in Required story and improve labels (#2511)",
-          "version": "1.1.4"
-        },
-        {
-          "date": "2026-08-25",
-          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)",
-          "version": "1.1.4"
-        },
-        {
-          "date": "2026-08-18",
-          "message": "test(DatePicker): improve visual tests (#2495)",
-          "version": "1.1.4"
-        },
-        {
->>>>>>> ae958dedb (ajour onglet test a111y validation)
           "date": "2026-08-13",
           "message": "fix/components-name-format",
           "version": "1.1.4"
@@ -5558,7 +5414,6 @@
           "date": "2026-05-20",
           "message": "Implémentation des nouveaux tokens (#2164)",
           "version": "1.0.27"
-<<<<<<< HEAD
         },
         {
           "date": "2026-05-19",
@@ -5624,8 +5479,6 @@
           "date": "2025-12-15",
           "message": "Refactor DatePicker components to enforce required label prop and allow to not show the placeholder (#1609)",
           "version": "1.0.16"
-=======
->>>>>>> ae958dedb (ajour onglet test a111y validation)
         }
       ],
       "a11yCommits": [
@@ -6613,11 +6466,6 @@
       "a11yDate": "10/08/2026",
       "commits": [
         {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
           "version": "1.1.5"
@@ -6673,20 +6521,9 @@
           "version": "0.0.8-alpha"
         },
         {
-<<<<<<< HEAD
           "date": "2024-10-09",
           "message": "DownloadBtn (#120)",
           "version": "0.0.2-alpha"
-=======
-          "date": "2024-12-26",
-          "message": "fix doc (#309)",
-          "version": "0.0.7-alpha"
-        },
-        {
-          "date": "2024-12-26",
-          "message": "DownloadBtn : add missing import (#308)",
-          "version": "0.0.7-alpha"
->>>>>>> ae958dedb (ajour onglet test a111y validation)
         }
       ],
       "a11yCommits": [
@@ -7385,11 +7222,6 @@
       "a11yDate": "22/07/2026",
       "commits": [
         {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
           "date": "2026-09-03",
           "message": "Improve pdf display on android + fix uploadWorkfow (#2527)",
           "version": "1.1.5"
@@ -7493,11 +7325,6 @@
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
-        {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
         {
           "date": "2026-09-03",
           "message": "Improve pdf display on android + fix uploadWorkfow (#2527)",
@@ -7636,11 +7463,6 @@
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
-        {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
@@ -8014,24 +7836,6 @@
       "a11yDate": "10/08/2026",
       "commits": [
         {
-<<<<<<< HEAD
-=======
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
-          "date": "2026-08-13",
-          "message": "refactor: standardize story export names to PascalCase",
-          "version": "1.1.4"
-        },
-        {
-          "date": "2026-08-10",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4"
-        },
-        {
->>>>>>> ae958dedb (ajour onglet test a111y validation)
           "date": "2026-08-07",
           "message": "Ajout des interactions sur le composant `SocialMediaLinks` (#2480)",
           "version": "1.1.4"
@@ -8110,7 +7914,6 @@
           "date": "2024-12-27",
           "message": "fix error build (#319)",
           "version": "0.0.8-alpha"
-<<<<<<< HEAD
         },
         {
           "date": "2024-12-19",
@@ -8131,8 +7934,6 @@
           "date": "2024-10-25",
           "message": "Feat/add footer (#164)",
           "version": "0.0.2-alpha"
-=======
->>>>>>> ae958dedb (ajour onglet test a111y validation)
         }
       ],
       "a11yCommits": [
@@ -8421,19 +8222,6 @@
       "a11yDate": "10/08/2026",
       "commits": [
         {
-<<<<<<< HEAD
-=======
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
-          "date": "2026-08-20",
-          "message": "Fix tests warning (#2498)",
-          "version": "1.1.4"
-        },
-        {
->>>>>>> ae958dedb (ajour onglet test a111y validation)
           "date": "2026-08-13",
           "message": "fix/components-name-format",
           "version": "1.1.4"
@@ -8497,7 +8285,6 @@
           "date": "2025-10-09",
           "message": "add disabled on HeaderNavigationBar tabs (#1238)",
           "version": "1.0.10"
-<<<<<<< HEAD
         },
         {
           "date": "2025-08-04",
@@ -8558,8 +8345,6 @@
           "date": "2024-11-08",
           "message": "update header beta presentation (#194)",
           "version": "0.0.5-alpha"
-=======
->>>>>>> ae958dedb (ajour onglet test a111y validation)
         }
       ],
       "a11yCommits": [
@@ -9396,19 +9181,6 @@
       "a11yDate": "10/08/2026",
       "commits": [
         {
-<<<<<<< HEAD
-=======
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
-          "date": "2026-08-10",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4"
-        },
-        {
->>>>>>> ae958dedb (ajour onglet test a111y validation)
           "date": "2026-08-05",
           "message": "Ajout des interactions sur le composant `LangBtn` (#2473)",
           "version": "1.1.4"
@@ -9467,6 +9239,11 @@
           "date": "2024-10-03",
           "message": "add vuetify types (#113)",
           "version": "0.0.0-alpha.0"
+        },
+        {
+          "date": "2024-09-30",
+          "message": "Feat/add lang btn (#86)",
+          "version": "0.0.1-alpha"
         }
       ],
       "a11yCommits": [
@@ -9849,24 +9626,6 @@
       "a11yDate": "10/08/2026",
       "commits": [
         {
-<<<<<<< HEAD
-=======
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
-          "date": "2026-08-20",
-          "message": "Fix tests warning (#2498)",
-          "version": "1.1.4"
-        },
-        {
-          "date": "2026-08-10",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4"
-        },
-        {
->>>>>>> ae958dedb (ajour onglet test a111y validation)
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
           "version": "1.1.3"
@@ -10235,11 +9994,6 @@
       "a11yDate": "22/07/2026",
       "commits": [
         {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
           "version": "1.1.5"
@@ -10318,7 +10072,6 @@
           "date": "2025-11-12",
           "message": "NirField: add custom locale (#1451)",
           "version": "1.0.13"
-<<<<<<< HEAD
         },
         {
           "date": "2025-11-07",
@@ -10364,8 +10117,6 @@
           "date": "2025-09-02",
           "message": "fix (#1050)",
           "version": "1.0.7"
-=======
->>>>>>> ae958dedb (ajour onglet test a111y validation)
         }
       ],
       "a11yCommits": [
@@ -11110,11 +10861,6 @@
       "a11yDate": "26/08/2026",
       "commits": [
         {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
           "version": "1.1.5"
@@ -11180,7 +10926,6 @@
           "version": "1.0.3"
         },
         {
-<<<<<<< HEAD
           "date": "2025-06-05",
           "message": "Add filter management in tables components v2 (#665)",
           "version": "1.0.1"
@@ -11204,16 +10949,6 @@
           "date": "2025-02-18",
           "message": "PaginatedTable (#383)",
           "version": "0.0.11-alpha"
-=======
-          "date": "2025-07-03",
-          "message": "add warning paginated table (#753)",
-          "version": "1.0.2"
-        },
-        {
-          "date": "2025-06-23",
-          "message": "SyTable text filter rules (#715)",
-          "version": "1.0.2"
->>>>>>> ae958dedb (ajour onglet test a111y validation)
         }
       ],
       "a11yCommits": [
@@ -11675,11 +11410,6 @@
       "a11yDate": "01/04/2026",
       "commits": [
         {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
           "version": "1.1.5"
@@ -11738,7 +11468,6 @@
           "date": "2025-03-26",
           "message": "improve date inputs (#460)",
           "version": "0.0.13-alpha"
-<<<<<<< HEAD
         },
         {
           "date": "2025-03-13",
@@ -11764,8 +11493,6 @@
           "date": "2025-02-11",
           "message": "PeriodField (#368)",
           "version": "0.0.10-alpha"
-=======
->>>>>>> ae958dedb (ajour onglet test a111y validation)
         }
       ],
       "a11yCommits": [
@@ -12737,11 +12464,6 @@
       "a11yDate": "28/08/2026",
       "commits": [
         {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
           "date": "2026-07-22",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3"
@@ -13316,19 +13038,6 @@
       "a11yDate": "10/08/2026",
       "commits": [
         {
-<<<<<<< HEAD
-=======
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
-          "date": "2026-08-10",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4"
-        },
-        {
->>>>>>> ae958dedb (ajour onglet test a111y validation)
           "date": "2026-08-07",
           "message": "[SyAlert] Ajout de la props density (#2478)",
           "version": "1.1.4"
@@ -13404,7 +13113,6 @@
           "version": "1.0.1"
         },
         {
-<<<<<<< HEAD
           "date": "2025-02-07",
           "message": "SyAlert: add click:close event (#379)",
           "version": "0.0.10-alpha"
@@ -13423,11 +13131,6 @@
           "date": "2024-12-16",
           "message": "Alert to SyAlert (#270)",
           "version": "0.0.6-alpha"
-=======
-          "date": "2025-04-14",
-          "message": "Amélioration des tests avec vitest (#525)",
-          "version": "0.0.15-alpha"
->>>>>>> ae958dedb (ajour onglet test a111y validation)
         }
       ],
       "a11yCommits": [
@@ -13552,11 +13255,6 @@
       "a11yVersion": "1.1.4",
       "a11yDate": "07/08/2026",
       "commits": [
-        {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
         {
           "date": "2026-09-07",
           "message": "fix button color in syBtnMenu (#2536)",
@@ -13909,11 +13607,6 @@
       "a11yDate": "22/07/2026",
       "commits": [
         {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
           "date": "2026-09-04",
           "message": "SyTable/SyServerTable: fix items per page  (#2538)",
           "version": "1.1.5"
@@ -13989,7 +13682,6 @@
           "version": "1.0.22"
         },
         {
-<<<<<<< HEAD
           "date": "2025-12-12",
           "message": "Tables fix des problèmes de mutation des items (#1600)",
           "version": "1.0.16"
@@ -14038,11 +13730,6 @@
           "date": "2025-09-10",
           "message": "Tables localstorage refactorisation (#1084)",
           "version": "1.0.9"
-=======
-          "date": "2026-01-20",
-          "message": "update vue-tsconfig (#1739)",
-          "version": "1.0.18"
->>>>>>> ae958dedb (ajour onglet test a111y validation)
         }
       ],
       "a11yCommits": [
@@ -14223,11 +13910,6 @@
       "a11yDate": "22/07/2026",
       "commits": [
         {
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
           "date": "2026-09-04",
           "message": "SyTable/SyServerTable: fix items per page  (#2538)",
           "version": "1.1.5"
@@ -14298,7 +13980,6 @@
           "version": "1.0.22"
         },
         {
-<<<<<<< HEAD
           "date": "2025-12-12",
           "message": "Tables fix des problèmes de mutation des items (#1600)",
           "version": "1.0.16"
@@ -14352,11 +14033,6 @@
           "date": "2025-08-14",
           "message": "SyTable/SyServerTable: add items per page options (#959)",
           "version": "1.0.7"
-=======
-          "date": "2026-01-20",
-          "message": "update vue-tsconfig (#1739)",
-          "version": "1.0.18"
->>>>>>> ae958dedb (ajour onglet test a111y validation)
         }
       ],
       "a11yCommits": [
@@ -14526,19 +14202,6 @@
       "a11yDate": "10/08/2026",
       "commits": [
         {
-<<<<<<< HEAD
-=======
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
-          "date": "2026-08-10",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4"
-        },
-        {
->>>>>>> ae958dedb (ajour onglet test a111y validation)
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
           "version": "1.1.3"
@@ -14909,59 +14572,6 @@
       "a11yDate": "10/08/2026",
       "commits": [
         {
-<<<<<<< HEAD
-=======
-          "date": "2026-09-08",
-          "message": "add release (#2539)",
-          "version": "1.1.5"
-        },
-        {
-          "date": "2026-09-07",
-          "message": "fix button color in syBtnMenu (#2536)",
-          "version": "1.1.5"
-        },
-        {
-          "date": "2026-08-25",
-          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)",
-          "version": "1.1.4"
-        },
-        {
-          "date": "2026-08-12",
-          "message": "refactor: replace KebabCase to PascaleCase component calls",
-          "version": "1.1.4"
-        },
-        {
-          "date": "2026-08-10",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4"
-        },
-        {
-          "date": "2026-07-22",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3"
-        },
-        {
-          "date": "2026-07-02",
-          "message": "update storybook and fix links (#2354)",
-          "version": "1.1.2"
-        },
-        {
-          "date": "2026-06-17",
-          "message": "Migration user menu (#2280)",
-          "version": "1.1.1"
-        },
-        {
-          "date": "2026-06-16",
-          "message": "Suppression de tous les imports de styles non necessaires (#2271)",
-          "version": "1.1.1"
-        },
-        {
-          "date": "2026-05-29",
-          "message": "Feat/add cypress test (#2203)",
-          "version": "1.1.0"
-        },
-        {
->>>>>>> ae958dedb (ajour onglet test a111y validation)
           "date": "2026-04-21",
           "message": "Tokens simplify v2 (#2102)",
           "version": "1.0.25"
@@ -15020,7 +14630,6 @@
           "date": "2024-12-23",
           "message": "fix userMenuBtn (#277)",
           "version": "0.0.6-alpha"
-<<<<<<< HEAD
         },
         {
           "date": "2024-12-11",
@@ -15036,8 +14645,6 @@
           "date": "2024-12-05",
           "message": "Feat/user menu btn (#235)",
           "version": "0.0.5-alpha"
-=======
->>>>>>> ae958dedb (ajour onglet test a111y validation)
         }
       ],
       "a11yCommits": [
