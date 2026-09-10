@@ -82,4 +82,4 @@ Généré le: 10/09/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 57 / 77 (74.03%)**
+**Total des composants conformes : 58 / 77 (75.32%)**
