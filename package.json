@@ -7,7 +7,17 @@
   "type": "module",
   "files": [
     "dist",
-    "src"
+    "src",
+    "!src/stories",
+    "!src/**/*.mdx",
+    "!src/**/*.stories.*",
+    "!src/**/*.spec.ts",
+    "!src/**/*.cy.ts",
+    "!src/**/tests",
+    "!src/**/__tests__",
+    "!src/**/__snapshots__",
+    "!src/**/readme.md",
+    "!src/**/*.old"
   ],
   "module": "./dist/design-system-v3.js",
   "types": "./dist/main.d.ts",
