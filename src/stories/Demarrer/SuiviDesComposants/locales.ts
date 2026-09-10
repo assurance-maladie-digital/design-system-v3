@@ -22,6 +22,8 @@ export const locales = {
 	commits: {
 		empty: 'Aucun commit à afficher.',
 		emptyForVersion: (version: string): string => `Aucun changement publié dans la version ${version}.`,
+		// Commit qu'aucune version publiée ne contient encore : il sortira à la prochaine.
+		pending: 'prochaine version',
 	},
 	emptyState: {
 		message: 'Veuillez sélectionner vos composants dans la barre de recherche',
@@ -34,7 +36,7 @@ export const locales = {
 		a11y: 'Accessibilité',
 	},
 	version: {
-		unknown: 'à paraître dans la prochaine version',
+		unknown: 'aucune version publiée',
 	},
 	lastUpdate: {
 		functional: 'Dernière mise à jour fonctionnelle :',

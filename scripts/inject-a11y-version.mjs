@@ -15,7 +15,7 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { basename, dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { PENDING_LABEL } from './lib/releaseTags.mjs'
+import { NO_RELEASE_LABEL } from './lib/releaseTags.mjs'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const jsonPath = resolve(rootDir, 'scripts/data/a11y-history-data.json')
@@ -65,7 +65,7 @@ function findMainMdxFiles(dir, results = []) {
 // pour avoir ce changement ? ». Un couple version/date pouvait diverger, la version
 // étant recalculée à chaque release alors que la date du commit, elle, ne bouge pas.
 function buildBadge(version) {
-	const versionText = version ? `V${version}` : PENDING_LABEL
+	const versionText = version ? `V${version}` : NO_RELEASE_LABEL
 	return `${A11Y_BADGE_START}\n<p className="a11y-version-badge">Dernière mise à jour accessibilité : ${versionText}</p>\n${A11Y_BADGE_END}`
 }
 
@@ -170,7 +170,7 @@ for (const { path: filePath, componentName } of mdxFiles) {
 		console.info(`[dry-run] Mise à jour: ${filePath}`)
 	} else {
 		writeFileSync(filePath, modified, 'utf8')
-		console.info(`✅ Mis à jour: ${componentName} → ${info.version ? `v${info.version}` : PENDING_LABEL}`)
+		console.info(`✅ Mis à jour: ${componentName} → ${info.version ? `v${info.version}` : NO_RELEASE_LABEL}`)
 	}
 	updated++
 }

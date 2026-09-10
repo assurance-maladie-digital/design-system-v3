@@ -14,7 +14,7 @@ import fs from 'fs';
 import path from 'path';
 import { execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
-import { getNextReleaseTag, getPendingVersion, getReleaseTags } from './lib/releaseTags.mjs';
+import { getReleaseTags, resolveCommitVersion } from './lib/releaseTags.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
@@ -94,10 +94,7 @@ function isDeprecated(componentPath) {
 // fonctionnel (functional-history-report.mjs) : premiere release posterieure au commit,
 // sinon la prochaine version si package.json a deja ete bumpe. null = pas encore publie.
 function getCommitVersion(commitDate) {
-  const tags = getReleaseTags(root);
-  const tag = getNextReleaseTag(commitDate, tags);
-  if (tag) return tag.replace(/^v/i, '');
-  return getPendingVersion(currentPackageVersion, tags);
+  return resolveCommitVersion(commitDate, getReleaseTags(root), currentPackageVersion);
 }
 
 // Nombre de commits fonctionnels conservés par composant. Le suivi des composants filtre

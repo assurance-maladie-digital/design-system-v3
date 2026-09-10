@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-10T07:54:12.980Z",
+  "date": "2026-09-10T08:37:30.982Z",
   "totalCount": 77,
   "results": [
     {
@@ -504,8 +504,8 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "13/08/2026",
-      "a11yVersion": null,
-      "a11yDate": "09/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-13",

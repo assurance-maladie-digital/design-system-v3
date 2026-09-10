@@ -448,7 +448,15 @@
 							v-for="(c, i) in visibleCommits(item, getCardTab(item.componentName))"
 							:key="i"
 						>
-							<span class="c-date">{{ formatDate(c.date) }}</span>
+							<span class="c-when">
+								<span class="c-date">{{ formatDate(c.date) }}</span>
+								<span
+									v-if="!c.version"
+									class="c-pending"
+								>
+									{{ locales.commits.pending }}
+								</span>
+							</span>
 							<span
 								class="c-msg"
 								v-html="renderMessage(c.message)"
@@ -847,11 +855,30 @@
 		font-size: 0.8125rem;
 	}
 
+	/* Date et marqueur empilés : le message reste aligné sur la date grâce au baseline du li. */
+	.ci-commits .c-when {
+		flex: none;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.125rem;
+	}
+
 	.ci-commits .c-date {
 		color: #6f6f6f;
 		font-variant-numeric: tabular-nums;
 		white-space: nowrap;
 		font-size: 0.75rem;
+	}
+
+	.ci-commits .c-pending {
+		padding: 0 0.375rem;
+		border: 1px solid #d0d0d0;
+		border-radius: 0.75rem;
+		background-color: #f4f4f4;
+		font-size: 0.6875rem;
+		color: #525252;
+		white-space: nowrap;
 	}
 
 	.ci-commits .c-msg {

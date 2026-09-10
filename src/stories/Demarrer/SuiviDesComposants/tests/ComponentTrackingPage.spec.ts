@@ -18,6 +18,8 @@ vi.mock('../../component-info.json', () => ({
 				a11yVersion: '1.1.3',
 				a11yDate: '22/07/2026',
 				commits: [
+					// Aucune release ne le contient encore : le badge l'ignore, la liste le marque.
+					{ date: '2026-09-09', message: 'correction non publiée', version: null },
 					{ date: '2026-08-07', message: 'ajout de la prop density', version: '1.1.4' },
 					{ date: '2026-07-22', message: 'correction du focus', version: '1.1.3' },
 					{ date: '2026-07-06', message: 'mode compact', version: '1.1.2' },
@@ -258,6 +260,18 @@ describe('ComponentTrackingPage — filtrage des changements par version', () =>
 		const a11yLine = wrapper.find('.ci-version-line')
 		expect(a11yLine.text()).toContain(locales.lastUpdate.a11y)
 		expect(a11yLine.text()).toContain('v1.1.3')
+
+		wrapper.unmount()
+	})
+	it('marque « prochaine version » les commits qu\'aucune release ne contient', async () => {
+		const wrapper = mount(ComponentTrackingPage)
+
+		await selectVersion(wrapper, '__ALL__')
+
+		const card = wrapper.findAll('.ci-card').find(c => c.text().includes('correction non publiée'))
+		expect(card?.find('.c-pending').text()).toBe(locales.commits.pending)
+		// Le badge continue d'annoncer la dernière version publiée, pas celle à venir.
+		expect(card?.find('.ci-version-line').text()).toContain('v1.1.4')
 
 		wrapper.unmount()
 	})

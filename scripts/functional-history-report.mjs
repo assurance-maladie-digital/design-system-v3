@@ -14,7 +14,7 @@ import { execFile } from 'node:child_process'
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { basename, dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { getPendingVersion } from './lib/releaseTags.mjs'
+import { resolveCommitVersion } from './lib/releaseTags.mjs'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const dataDir = resolve(rootDir, 'scripts/data')
@@ -81,7 +81,7 @@ async function getChangedFiles(hash) {
 	}
 }
 
-async function getLastFunctionalCommit(filePaths) {
+async function getLastFunctionalCommit(filePaths, isEligible = () => true) {
 	if (!filePaths.length) return null
 
 	// On ne passe en argument que les fichiers sources réels (pas de stories, tests, .mdx)
@@ -125,7 +125,7 @@ async function getLastFunctionalCommit(filePaths) {
 				if (normalized.includes('.stories.') || normalized.includes('.spec.') || normalized.includes('.cy.')) return false
 				return normalized.startsWith(componentDirRelative + '/')
 			})
-			if (touchesComponentSource) return commit
+			if (touchesComponentSource && isEligible(commit)) return commit
 		}
 		return null
 	} catch {
@@ -155,16 +155,6 @@ async function getReleaseTags() {
 		return tagInfos.sort((a, b) => new Date(a.date) - new Date(b.date))
 	})()
 	return releaseTagsPromise
-}
-
-function getNextReleaseTag(commitDate, tagInfos) {
-	const commitTime = new Date(commitDate).getTime()
-	for (const tag of tagInfos) {
-		if (new Date(tag.date).getTime() > commitTime) {
-			return tag.tag
-		}
-	}
-	return null
 }
 
 // Version actuellement déclarée dans package.json (fichier de travail), pas celle au commit :
@@ -202,19 +192,18 @@ async function main() {
 	const newData = {}
 	let found = 0
 
+	const releaseTags = await getReleaseTags()
+	// Le badge annonce la dernière modification **publiée** : un commit qu'aucune version ne
+	// contient encore est ignoré ici, il reste visible dans la liste des commits du suivi où
+	// il est marqué « prochaine version ».
+	const versionOf = commit => resolveCommitVersion(commit.date, releaseTags, getCurrentPackageVersion())
+
 	for (const component of components) {
 		console.info(`⏳ Analyse de ${component.name}...`)
-		const commit = await getLastFunctionalCommit(component.files)
+		const commit = await getLastFunctionalCommit(component.files, c => versionOf(c) !== null)
 		if (commit) {
-			const releaseTags = await getReleaseTags()
-			const tag = getNextReleaseTag(commit.date, releaseTags)
-			// Pas de tag postérieur : le changement n'est publié que si package.json est déjà
-			// passé à la version suivante. Sinon `null` — « à paraître ».
-			const version = tag
-				? tag.replace(/^v/i, '')
-				: getPendingVersion(getCurrentPackageVersion(), releaseTags)
 			newData[component.name] = {
-				version: version ?? null,
+				version: versionOf(commit),
 				date: new Date(commit.date).toLocaleDateString('fr-FR'),
 				dateIso: commit.date,
 				message: commit.message,

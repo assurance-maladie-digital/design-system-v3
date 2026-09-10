@@ -12,11 +12,14 @@
 import { execFileSync } from 'child_process';
 
 /**
- * Libellé affiché quand aucune release publiée ne contient encore le changement.
- * Partagé par les badges `.mdx` et le rapport a11y pour une formulation unique.
+ * Marqueur porté par un commit qu'aucune release publiée ne contient encore.
+ * Partagé par le rapport a11y et les badges `.mdx` pour une formulation unique.
  * Le pendant côté Vue vit dans les `locales.ts` des composants concernés.
  */
-export const PENDING_LABEL = 'à paraître dans la prochaine version';
+export const PENDING_LABEL = 'prochaine version';
+
+/** Badge d'un composant dont aucune modification n'est encore sortie en release. */
+export const NO_RELEASE_LABEL = 'aucune version publiée';
 
 const tagsCache = new Map();
 
@@ -102,4 +105,20 @@ export function getPendingVersion(packageVersion, tagInfos) {
   const latest = tagInfos.at(-1);
   if (!latest) return packageVersion;
   return compareSemver(packageVersion, latest.tag) > 0 ? packageVersion : null;
+}
+
+/**
+ * Version d'un commit : la première release publiée après lui, ou à défaut la prochaine
+ * version si `package.json` a déjà été bumpé (cas de la PR de release, où les badges sont
+ * régénérés avant la pose du tag). `null` = le commit n'est dans aucune version connue.
+ *
+ * @param {string} commitDate - Date du commit, parsable par `new Date()`.
+ * @param {Array<{ tag: string, date: string }>} tagInfos - Sortie de `getReleaseTags`.
+ * @param {string | null} packageVersion - Version lue dans `package.json`.
+ * @returns {string | null}
+ */
+export function resolveCommitVersion(commitDate, tagInfos, packageVersion) {
+  const tag = getNextReleaseTag(commitDate, tagInfos);
+  if (tag) return tag.replace(/^v/i, '');
+  return getPendingVersion(packageVersion, tagInfos);
 }
