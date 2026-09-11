@@ -39,30 +39,39 @@ const CaptchaFormWithFocusStub = defineComponent({
 	template: '<div class="captcha-form-stub" />',
 })
 
+const captchaUrls = {
+	urlCreate: '/captcha/captcha.json',
+	urlGetImage: '/captcha/captcha.png',
+	urlGetAudio: '/captcha/captcha.mp3',
+}
+
+const commonStubs = {
+	CaptchaInformation: true,
+	CaptchaBase: CaptchaBaseStub,
+	CaptchaImg: true,
+	CaptchaAlert: true,
+	CaptchaBtn: true,
+	CaptchaHelpdesk: true,
+	volumeUp: true,
+	SyIcon: true,
+	VBtn: true,
+}
+
+function mountCaptcha(formStub = CaptchaFormStub, props = {}) {
+	return mount(Captcha, {
+		props: { ...captchaUrls, ...props },
+		global: {
+			stubs: {
+				...commonStubs,
+				CaptchaForm: formStub,
+			},
+		},
+	})
+}
+
 describe('Captcha behavior', () => {
 	it('emits update:type when captcha type changes from CaptchaBase', async () => {
-		const wrapper = mount(Captcha, {
-			props: {
-				urlCreate: '/captcha/captcha.json',
-				urlGetImage: '/captcha/captcha.png',
-				urlGetAudio: '/captcha/captcha.mp3',
-				type: 'image',
-			},
-			global: {
-				stubs: {
-					CaptchaInformation: true,
-					CaptchaBase: CaptchaBaseStub,
-					CaptchaImg: true,
-					CaptchaAlert: true,
-					CaptchaBtn: true,
-					CaptchaHelpdesk: true,
-					CaptchaForm: CaptchaFormStub,
-					volumeUp: true,
-					SyIcon: true,
-					VBtn: true,
-				},
-			},
-		})
+		const wrapper = mountCaptcha(CaptchaFormStub, { type: 'image' })
 
 		await wrapper.find('.change-type').trigger('click')
 
@@ -71,27 +80,7 @@ describe('Captcha behavior', () => {
 	})
 
 	it('clears captcha text when a new captcha is initialized', async () => {
-		const wrapper = mount(Captcha, {
-			props: {
-				urlCreate: '/captcha/captcha.json',
-				urlGetImage: '/captcha/captcha.png',
-				urlGetAudio: '/captcha/captcha.mp3',
-			},
-			global: {
-				stubs: {
-					CaptchaInformation: true,
-					CaptchaBase: CaptchaBaseStub,
-					CaptchaImg: true,
-					CaptchaAlert: true,
-					CaptchaBtn: true,
-					CaptchaHelpdesk: true,
-					CaptchaForm: CaptchaFormStub,
-					volumeUp: true,
-					SyIcon: true,
-					VBtn: true,
-				},
-			},
-		})
+		const wrapper = mountCaptcha()
 
 		// Complete the initial captcha load so subsequent refreshes work
 		await wrapper.find('.captcha-success').trigger('click')
@@ -107,34 +96,13 @@ describe('Captcha behavior', () => {
 	})
 
 	it('does not clear validation errors when the first captcha loads after a blur', async () => {
-		const commonStubs = {
-			CaptchaInformation: true,
-			CaptchaBase: CaptchaBaseStub,
-			CaptchaImg: true,
-			CaptchaAlert: true,
-			CaptchaBtn: true,
-			CaptchaHelpdesk: true,
-			CaptchaForm: CaptchaFormWithFocusStub,
-			volumeUp: true,
-			SyIcon: true,
-			VBtn: true,
-		}
-
-		const wrapper = mount(Captcha, {
-			props: {
-				urlCreate: '/captcha/captcha.json',
-				urlGetImage: '/captcha/captcha.png',
-				urlGetAudio: '/captcha/captcha.mp3',
-				customRules: [
-					{
-						type: 'custom' as const,
-						options: {
-							validate: (v: unknown) => v ? true : 'Le captcha est requis',
-						},
-					},
-				],
-			},
-			global: { stubs: commonStubs },
+		const wrapper = mountCaptcha(CaptchaFormWithFocusStub, {
+			customRules: [{
+				type: 'custom' as const,
+				options: {
+					validate: (value: unknown) => value ? true : 'Le captcha est requis',
+				},
+			}],
 		})
 
 		// Simulate: user focuses and blurs without entering a value (triggers validation)
@@ -160,34 +128,13 @@ describe('Captcha behavior', () => {
 	})
 
 	it('clears validation errors when the captcha is refreshed after a blur', async () => {
-		const commonStubs = {
-			CaptchaInformation: true,
-			CaptchaBase: CaptchaBaseStub,
-			CaptchaImg: true,
-			CaptchaAlert: true,
-			CaptchaBtn: true,
-			CaptchaHelpdesk: true,
-			CaptchaForm: CaptchaFormWithFocusStub,
-			volumeUp: true,
-			SyIcon: true,
-			VBtn: true,
-		}
-
-		const wrapper = mount(Captcha, {
-			props: {
-				urlCreate: '/captcha/captcha.json',
-				urlGetImage: '/captcha/captcha.png',
-				urlGetAudio: '/captcha/captcha.mp3',
-				customRules: [
-					{
-						type: 'custom' as const,
-						options: {
-							validate: (v: unknown) => v ? true : 'Le captcha est requis',
-						},
-					},
-				],
-			},
-			global: { stubs: commonStubs },
+		const wrapper = mountCaptcha(CaptchaFormWithFocusStub, {
+			customRules: [{
+				type: 'custom' as const,
+				options: {
+					validate: (value: unknown) => value ? true : 'Le captcha est requis',
+				},
+			}],
 		})
 
 		// Complete the initial load first
