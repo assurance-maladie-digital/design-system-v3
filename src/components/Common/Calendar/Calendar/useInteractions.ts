@@ -79,12 +79,13 @@ export default function useInteractions(
 	/**
 	 * Move the DOM focus to the focused day, once the grid has been re-rendered.
 	 * During a month slide, both grids are in the DOM and the overflow days of
-	 * the leaving grid duplicate the boundary day: exclude it, as its inert
-	 * attribute makes focus() a silent no-op.
+	 * the leaving grid duplicate the boundary day: exclude it, as the inert
+	 * attribute set on its wrapper by the transition makes focus() a silent no-op.
 	 */
 	async function moveFocusToFocusedDay() {
 		await nextTick()
-		const focusedElement = rootElement.value?.querySelector<HTMLElement>(`table:not([inert]) .day-${focusedDay.value}`)
+		const dayElements = rootElement.value?.querySelectorAll<HTMLElement>(`.day-${focusedDay.value}`) ?? []
+		const focusedElement = Array.from(dayElements).find(element => !element.closest('[inert]'))
 		if (!focusedElement) {
 			throw new Error(`Unable to focus the day: ${focusedDay.value}`)
 		}
