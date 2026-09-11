@@ -73,7 +73,7 @@ Reference patches stored inside a config dependency:
 configDependencies:
   my-patches: "1.0.0"
 patchedDependencies:
-  react: "node_modules/.pnpm-config/my-patches/react.patch"
+  vue: "node_modules/.pnpm-config/my-patches/vue.patch"
 ```
 
 ## Key Points

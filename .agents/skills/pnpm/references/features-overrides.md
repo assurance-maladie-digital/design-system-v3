@@ -31,7 +31,7 @@ overrides:
   "underscore": "npm:lodash@^4.17.21"
 
   # Reference a catalog so the version stays in sync
-  "react": "catalog:"
+  "vue": "catalog:"
 ```
 
 ## Override Patterns
@@ -85,7 +85,7 @@ Overrides also apply to `peerDependencies`:
 
 ```yaml title="pnpm-workspace.yaml"
 overrides:
-  "react-dom>react": "18.1.0"
+  "vuetify>vue": "3.5.0"
 ```
 
 - Semver ranges, `workspace:`, and `catalog:` keep the entry as a peer dependency.
@@ -111,15 +111,15 @@ Force single version when multiple are installed:
 
 ```yaml
 overrides:
-  "react": "^18.2.0"
-  "react-dom": "^18.2.0"
+  "vue": "^3.5.0"
+  "vuetify": "^3.12.0"
 ```
 
 ### Fix Peer Dependency Issues
 
 ```yaml
 overrides:
-  "@types/react": "^18.2.0"
+  "@vue/test-utils": "^2.4.0"
 ```
 
 ### Replace Deprecated Package
@@ -144,7 +144,7 @@ function readPackage(pkg, context) {
   if (pkg.name === 'some-package') {
     pkg.peerDependencies = {
       ...pkg.peerDependencies,
-      react: '*'
+      vue: '*'
     }
   }
 
@@ -160,9 +160,9 @@ Or extend a manifest declaratively with `packageExtensions` (no JS needed):
 
 ```yaml title="pnpm-workspace.yaml"
 packageExtensions:
-  react-redux:
+  vuetify:
     peerDependencies:
-      react-dom: '*'
+      vue: '*'
 ```
 
 ## Overrides vs Catalogs

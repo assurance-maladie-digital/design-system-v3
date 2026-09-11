@@ -39,7 +39,7 @@ Called for every package before resolution. Common uses:
 function readPackage(pkg, context) {
   // Add a missing peer dependency
   if (pkg.name === 'some-broken-package') {
-    pkg.peerDependencies = { ...pkg.peerDependencies, react: '*' }
+    pkg.peerDependencies = { ...pkg.peerDependencies, vue: '*' }
   }
   // Pin a transitive version
   if (pkg.dependencies?.lodash) pkg.dependencies.lodash = '^4.17.21'
@@ -117,12 +117,12 @@ Custom predicates used via `--find-by`:
 
 ```js title=".pnpmfile.mjs"
 export const finders = {
-  react17: (ctx) => ctx.readManifest().peerDependencies?.react === '^17.0.0'
+  vue35: (ctx) => ctx.readManifest().peerDependencies?.vue === '^3.5.0'
 }
 ```
 
 ```bash
-pnpm why --find-by=react17
+pnpm why --find-by=vue35
 ```
 
 ## Custom resolvers & fetchers (advanced)

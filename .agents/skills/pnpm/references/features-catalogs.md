@@ -16,8 +16,8 @@ packages:
   - 'packages/*'
 
 catalog:
-  react: ^18.2.0
-  react-dom: ^18.2.0
+  vue: ^3.5.0
+  vuetify: ^3.12.0
   typescript: ~5.3.0
   vite: ^5.0.0
 ```
@@ -27,8 +27,8 @@ Reference in `package.json` with `catalog:`:
 ```json
 {
   "dependencies": {
-    "react": "catalog:",
-    "react-dom": "catalog:"
+    "vue": "catalog:",
+    "vuetify": "catalog:"
   },
   "devDependencies": {
     "typescript": "catalog:",
@@ -37,7 +37,7 @@ Reference in `package.json` with `catalog:`:
 }
 ```
 
-`catalog:` is shorthand for `catalog:default`. The `catalog:` protocol is valid in `package.json` `dependencies`, `devDependencies`, `peerDependencies`, and `optionalDependencies`, plus in `overrides` inside `pnpm-workspace.yaml`. It also works on the CLI: `pnpm add react@catalog:` and `pnx shx@catalog:`.
+`catalog:` is shorthand for `catalog:default`. The `catalog:` protocol is valid in `package.json` `dependencies`, `devDependencies`, `peerDependencies`, and `optionalDependencies`, plus in `overrides` inside `pnpm-workspace.yaml`. It also works on the CLI: `pnpm add vue@catalog:` and `pnx shx@catalog:`.
 
 ## Named Catalogs
 
@@ -53,17 +53,17 @@ catalog:
 
 # Named catalogs
 catalogs:
-  react17:
-    react: ^17.0.2
-    react-dom: ^17.0.2
-  
-  react18:
-    react: ^18.2.0
-    react-dom: ^18.2.0
+  vue34:
+    vue: ^3.4.0
+    vuetify: ^3.10.0
+
+  vue35:
+    vue: ^3.5.0
+    vuetify: ^3.12.0
   
   testing:
     vitest: ^1.0.0
-    "@testing-library/react": ^14.0.0
+    "@vue/test-utils": ^2.4.0
 ```
 
 Reference named catalogs:
@@ -71,8 +71,8 @@ Reference named catalogs:
 ```json
 {
   "dependencies": {
-    "react": "catalog:react18",
-    "react-dom": "catalog:react18"
+    "vue": "catalog:vue35",
+    "vuetify": "catalog:vue35"
   },
   "devDependencies": {
     "vitest": "catalog:testing"
@@ -125,14 +125,14 @@ When publishing, `catalog:` references are replaced with actual versions:
 // Before publish (source)
 {
   "dependencies": {
-    "react": "catalog:"
+    "vue": "catalog:"
   }
 }
 
 // After publish (published package)
 {
   "dependencies": {
-    "react": "^18.2.0"
+    "vue": "^3.5.0"
   }
 }
 ```
@@ -144,8 +144,8 @@ If you're using overrides for version consistency:
 ```yaml
 # Before (using overrides)
 overrides:
-  react: ^18.2.0
-  react-dom: ^18.2.0
+  vue: ^3.5.0
+  vuetify: ^3.12.0
 ```
 
 Migrate to catalogs for cleaner dependency management:
@@ -153,8 +153,8 @@ Migrate to catalogs for cleaner dependency management:
 ```yaml
 # After (using catalogs)
 catalog:
-  react: ^18.2.0
-  react-dom: ^18.2.0
+  vue: ^3.5.0
+  vuetify: ^3.12.0
 ```
 
 Then update package.json files to use `catalog:`. To migrate an existing workspace automatically:
@@ -166,7 +166,7 @@ pnpx codemod pnpm/catalog
 ## Best Practices
 
 1. **Use default catalog** for commonly shared dependencies
-2. **Use named catalogs** for version variants (e.g., different React versions)
+2. **Use named catalogs** for version variants (e.g., different Vue versions)
 3. **Keep catalog minimal** - only include shared dependencies
 4. **Combine with workspace protocol** for internal packages
 

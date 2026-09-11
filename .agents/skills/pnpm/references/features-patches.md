@@ -129,7 +129,7 @@ Patch files can live inside a shared config dependency and be referenced by path
 configDependencies:
   my-patches: '1.0.0'
 patchedDependencies:
-  react: node_modules/.pnpm-config/my-patches/react.patch
+  vue: node_modules/.pnpm-config/my-patches/vue.patch
 ```
 
 ### allowUnusedPatches

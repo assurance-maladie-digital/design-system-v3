@@ -1,6 +1,6 @@
 ---
 name: antfu-eslint-config
-description: Configuring @antfu/eslint-config for framework support, formatters, and rule overrides. Use when adding React/Vue/Svelte/Astro support, customizing rules, or setting up VS Code integration.
+description: Configuring @antfu/eslint-config for Vue support, formatters, and rule overrides. Use when configuring Vue linting or setting up VS Code integration.
 ---
 
 # @antfu/eslint-config
@@ -50,51 +50,6 @@ export default antfu({
   },
 })
 // Requires: pnpm add -D eslint-plugin-vuejs-accessibility
-```
-
-### React
-
-```js
-export default antfu({
-  react: true,
-})
-// Requires: pnpm add -D @eslint-react/eslint-plugin eslint-plugin-react-hooks eslint-plugin-react-refresh
-```
-
-### Next.js
-
-```js
-export default antfu({
-  nextjs: true,
-})
-// Requires: pnpm add -D @next/eslint-plugin-next
-```
-
-### Svelte
-
-```js
-export default antfu({
-  svelte: true,
-})
-// Requires: pnpm add -D eslint-plugin-svelte
-```
-
-### Astro
-
-```js
-export default antfu({
-  astro: true,
-})
-// Requires: pnpm add -D eslint-plugin-astro
-```
-
-### Solid
-
-```js
-export default antfu({
-  solid: true,
-})
-// Requires: pnpm add -D eslint-plugin-solid
 ```
 
 ### UnoCSS
@@ -182,7 +137,6 @@ The config renames plugin prefixes for consistency:
 | `node/*` | `n/*` |
 | `yaml/*` | `yml/*` |
 | `test/*` | `vitest/*` |
-| `next/*` | `@next/next` |
 
 Use the new prefix when overriding or disabling rules:
 
@@ -274,9 +228,7 @@ Add to `.vscode/settings.json`:
   ],
   "eslint.validate": [
     "javascript",
-    "javascriptreact",
     "typescript",
-    "typescriptreact",
     "vue",
     "html",
     "markdown",
@@ -285,8 +237,6 @@ Add to `.vscode/settings.json`:
     "yaml",
     "toml",
     "xml",
-    "astro",
-    "svelte",
     "css",
     "less",
     "scss"

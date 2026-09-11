@@ -17,7 +17,7 @@ By default (since v8), pnpm automatically installs missing non-optional peer dep
 autoInstallPeers: true
 ```
 
-On conflicting requirements (e.g. one dep needs `react@^16`, another `react@^17`), pnpm installs nothing and prints a warning — resolve it manually.
+On conflicting requirements (e.g. one dep needs `vue@^3.4`, another `vue@^3.5`), pnpm installs nothing and prints a warning — resolve it manually.
 
 ## Strict Peer Dependencies
 
@@ -48,14 +48,14 @@ peerDependencyRules:
     - '@babel/*'
     - eslint
   allowedVersions:
-    react: '17 || 18'
+    vue: '3'
   allowAny:
     - '@types/*'
 ```
 
 ### ignoreMissing
 
-Suppress warnings for missing peer dependencies. Patterns: exact name (`react`), scope (`@babel/*`), or `*` (not recommended).
+Suppress warnings for missing peer dependencies. Patterns: exact name (`vue`), scope (`@babel/*`), or `*` (not recommended).
 
 ```yaml title="pnpm-workspace.yaml"
 peerDependencyRules:
@@ -72,8 +72,8 @@ Allow specific versions that would otherwise warn. Target a specific parent with
 ```yaml title="pnpm-workspace.yaml"
 peerDependencyRules:
   allowedVersions:
-    react: '17'
-    'button@2>react': '17'   # only when react is a peer of button@2
+    vue: '3'
+    'vuetify@3>vue': '3'   # only when vue is a peer of vuetify@3
 ```
 
 ### allowAny
@@ -95,7 +95,7 @@ Declaratively add a missing peer dependency without JS:
 packageExtensions:
   problematic-package:
     peerDependencies:
-      react: '*'
+      vue: '*'
 ```
 
 For conditional logic, use a `readPackage` hook in `.pnpmfile.mjs` instead.
@@ -108,7 +108,7 @@ Workspace packages can satisfy peer dependencies:
 // packages/app/package.json
 {
   "dependencies": {
-    "react": "^18.2.0",
+    "vue": "^3.5.0",
     "@myorg/components": "workspace:^"
   }
 }
@@ -116,38 +116,38 @@ Workspace packages can satisfy peer dependencies:
 // packages/components/package.json  
 {
   "peerDependencies": {
-    "react": "^17.0.0 || ^18.0.0"
+    "vue": "^3.4.0 || ^3.5.0"
   }
 }
 ```
 
-The workspace `app` provides `react` which satisfies `components`' peer dependency.
+The workspace `app` provides `vue` which satisfies `components`' peer dependency.
 
 ## Common Scenarios
 
-### Monorepo with Shared React
+### Monorepo with Shared Vue
 
 ```yaml
 # pnpm-workspace.yaml
 catalog:
-  react: ^18.2.0
-  react-dom: ^18.2.0
+  vue: ^3.5.0
+  vuetify: ^3.12.0
 ```
 
 ```json
 // packages/ui/package.json
 {
   "peerDependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "vue": "^3.5.0",
+    "vuetify": "^3.12.0"
   }
 }
 
 // apps/web/package.json
 {
   "dependencies": {
-    "react": "catalog:",
-    "react-dom": "catalog:",
+    "vue": "catalog:",
+    "vuetify": "catalog:",
     "@myorg/ui": "workspace:^"
   }
 }
@@ -189,7 +189,7 @@ pnpm list --depth=Infinity
 1. **Keep `autoInstallPeers` on** for convenience (default in v8+)
 2. **Use `peerDependencyRules`** instead of blanket-ignoring warnings
 3. **Document suppressed warnings** explaining why they're safe
-4. **Keep peer ranges wide** in libraries (e.g. `"react": "^17 || ^18"`)
+4. **Keep peer ranges wide** in libraries (e.g. `"vue": "^3.4.0 || ^3.5.0"`)
 5. **Run `pnpm peers check`** in CI to catch peer regressions
 
 <!--

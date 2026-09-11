@@ -72,20 +72,6 @@ export default defineConfig({
 })
 ```
 
-### JSX Configuration
-
-```ts
-export default defineConfig({
-  oxc: {
-    jsx: {
-      runtime: 'automatic',  // or 'classic'
-      importSource: 'react', // for automatic runtime
-    },
-    jsxInject: `import React from 'react'`,  // auto-inject
-  },
-})
-```
-
 ### Custom Transform Targets
 
 ```ts

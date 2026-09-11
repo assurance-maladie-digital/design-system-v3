@@ -100,14 +100,14 @@ autoInstallPeers: true
 
 **Option 2:** Install manually:
 ```bash
-pnpm add react react-dom
+pnpm add vue vuetify
 ```
 
 **Option 3:** Suppress warnings if acceptable:
 ```yaml title="pnpm-workspace.yaml"
 peerDependencyRules:
   ignoreMissing:
-    - react
+    - vue
 ```
 
 ### Symlink Issues

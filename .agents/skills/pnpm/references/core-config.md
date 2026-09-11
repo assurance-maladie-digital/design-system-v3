@@ -41,7 +41,7 @@ resolutionMode: highest       # highest | time-based | lowest-direct
 
 # Centralized version management
 catalog:
-  react: ^18.2.0
+  vue: ^3.5.0
 
 # Force dependency versions (root only)
 overrides:
@@ -50,16 +50,16 @@ overrides:
 
 # Extend/patch broken package manifests
 packageExtensions:
-  react-redux:
+  vuetify:
     peerDependencies:
-      react-dom: '*'
+      vue: '*'
 
 # Peer dependency rules
 peerDependencyRules:
   ignoreMissing:
     - '@babel/*'
   allowedVersions:
-    react: '17 || 18'
+    vue: '3'
 ```
 
 ## Global configuration (config.yaml)
@@ -125,11 +125,11 @@ pnpm config set nodeVersion 22.0.0
 pnpm config set --location=project nodeVersion 22.0.0   # writes pnpm-workspace.yaml
 
 # JSON values create arrays/objects
-pnpm config set --location=project --json allowBuilds '{"react": true}'
+pnpm config set --location=project --json allowBuilds '{"vue": true}'
 
 # get/list print JSON (no longer INI) since v11
 pnpm config get nodeLinker
-pnpm config get 'allowBuilds.react'
+pnpm config get 'allowBuilds.vue'
 pnpm config list
 ```
 

@@ -93,7 +93,7 @@ pnpm add request@npm:@cypress/request
 ### Add multiple versions
 
 ```bash
-pnpm add react17@npm:react@17 react18@npm:react@18
+pnpm add vue34@npm:vue@3.4 vue35@npm:vue@3.5
 ```
 
 ## With TypeScript

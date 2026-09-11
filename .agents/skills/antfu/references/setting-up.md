@@ -17,7 +17,6 @@ Create when `.gitignore` is not present:
 .eslintcache
 .idea
 .env
-.nuxt
 .temp
 .output
 .turbo
