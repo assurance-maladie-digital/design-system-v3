@@ -761,6 +761,7 @@ describe('useDatePickerValidation', () => {
 			const options = createOptions({
 				selectedDates,
 				customRules,
+				isValidateOnBlur: ref(false),
 			})
 			const { errors } = useDatePickerValidation(options)
 
@@ -771,7 +772,7 @@ describe('useDatePickerValidation', () => {
 			expect(errors.value).toContain('Erreur auto')
 		})
 
-		it('devrait valider automatiquement en mode CalendarMode quand selectedDates devient null', async () => {
+		it('devrait valider automatiquement en mode CalendarMode quand selectedDates devient null (isValidateOnBlur: false)', async () => {
 			const selectedDates = ref<Date | (Date | null)[] | null>(new Date('2023-01-01'))
 			const isInitialValidation = ref(false)
 			const options = createOptions({
@@ -779,7 +780,7 @@ describe('useDatePickerValidation', () => {
 				required: ref(true),
 				useCalendarModeRequiredFlow: true,
 				isInitialValidation,
-				isValidateOnBlur: ref(true),
+				isValidateOnBlur: ref(false),
 			})
 			const { errors } = useDatePickerValidation(options)
 
