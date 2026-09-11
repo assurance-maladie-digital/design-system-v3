@@ -22,15 +22,18 @@ export function useDatePickerLiteDateSelection({
 }: UseDatePickerLiteDateSelectionParams) {
 	function setDay(value: Date) {
 		if (mode.value === 'range') return
-		if (!readonly.value && !disabled.value) {
-			if (mode.value === 'multiple') {
+		if (mode.value === 'multiple') {
+			if (!readonly.value && !disabled.value) {
 				const selectedDates = Array.isArray(modelValue.value) ? modelValue.value : []
 				const existingDateIndex = selectedDates.findIndex(date => date.getTime() === value.getTime())
 				onUpdateModelValue(existingDateIndex === -1
 					? [...selectedDates, value]
 					: selectedDates.filter((_, index) => index !== existingDateIndex))
-				return
 			}
+			// The picker stays open so the user can select several dates
+			return
+		}
+		if (!readonly.value && !disabled.value) {
 			onUpdateModelValue(value)
 		}
 		close()

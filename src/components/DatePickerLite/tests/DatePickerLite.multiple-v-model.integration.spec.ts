@@ -36,18 +36,22 @@ describe('DatePickerLite multiple v-model integration', () => {
 		expect(selectedDates.value).toEqual([new Date(2025, 8, 3), new Date(2025, 8, 10)])
 
 		await openMenu(wrapper)
+		const picker = wrapper.findComponent({ name: 'DatePickerLite' })
 		const calendar = wrapper.findComponent({ name: 'Calendar' })
 		await calendar.find('[data-date="2025-09-15"]').trigger('click')
 		await nextTick()
 
 		expect(selectedDates.value).toEqual([new Date(2025, 8, 3), new Date(2025, 8, 10), new Date(2025, 8, 15)])
 		expect(input.element.value).toBe('03/09/2025, 10/09/2025, 15/09/2025')
+		// Multiple mode: the picker stays open between selections
+		expect(picker.emitted('update:open')?.at(-1)).toEqual([true])
 
 		await calendar.find('[data-date="2025-09-10"]').trigger('click')
 		await nextTick()
 
 		expect(selectedDates.value).toEqual([new Date(2025, 8, 3), new Date(2025, 8, 15)])
 		expect(input.element.value).toBe('03/09/2025, 15/09/2025')
+		expect(picker.emitted('update:open')?.at(-1)).toEqual([true])
 
 		selectedDates.value = [new Date(2025, 9, 1), new Date(2025, 9, 7)]
 		await nextTick()

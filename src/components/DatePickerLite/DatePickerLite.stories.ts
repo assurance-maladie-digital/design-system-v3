@@ -596,6 +596,26 @@ export const Multiple: Story = {
 			},
 		}],
 	},
+	render: args => ({
+		components: { DatePickerLite },
+		setup() {
+			const value = ref<Date[] | undefined>(args.modelValue as Date[] | undefined)
+			watch(
+				() => args.modelValue,
+				(nextValue) => {
+					value.value = nextValue as Date[] | undefined
+				},
+				{ immediate: true },
+			)
+			return { args, value }
+		},
+		template: `
+			<DatePickerLite
+				v-bind="args"
+				v-model="value"
+			/>
+		`,
+	}),
 	parameters: {
 		sourceCode: [
 			{
