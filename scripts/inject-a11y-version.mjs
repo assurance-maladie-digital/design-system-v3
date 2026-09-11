@@ -2,7 +2,7 @@
  * inject-a11y-version.mjs
  *
  * Lit a11y-history-data.json et injecte (ou met à jour) la ligne
- * "Dernière mise à jour accessibilité : X.X.X · JJ/MM/AAAA"
+ * "Dernière mise à jour accessibilité : Vx.x.x"
  * dans chaque NomComposant.mdx principal (sous le <h1>).
  *
  * Usage :
@@ -15,6 +15,7 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { basename, dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { NO_RELEASE_LABEL } from './lib/releaseTags.mjs'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const jsonPath = resolve(rootDir, 'scripts/data/a11y-history-data.json')
@@ -60,9 +61,12 @@ function findMainMdxFiles(dir, results = []) {
 	return results
 }
 
-function buildBadge(version, date) {
-	const versionText = version ? `V${version} - ` : ''
-	return `${A11Y_BADGE_START}\n<p className="a11y-version-badge">Dernière mise à jour accessibilité : ${versionText}${date}</p>\n${A11Y_BADGE_END}`
+// La date n'est pas affichée : seule la version répond à « dois-je monter de version
+// pour avoir ce changement ? ». Un couple version/date pouvait diverger, la version
+// étant recalculée à chaque release alors que la date du commit, elle, ne bouge pas.
+function buildBadge(version) {
+	const versionText = version ? `V${version}` : NO_RELEASE_LABEL
+	return `${A11Y_BADGE_START}\n<p className="a11y-version-badge">Dernière mise à jour accessibilité : ${versionText}</p>\n${A11Y_BADGE_END}`
 }
 
 const LEGACY_START = '<!-- a11y-version-start -->'
@@ -148,7 +152,7 @@ for (const { path: filePath, componentName } of mdxFiles) {
 	}
 
 	const original = readFileSync(filePath, 'utf8')
-	const badge = buildBadge(info.version, info.date)
+	const badge = buildBadge(info.version)
 	const modified = injectOrUpdateBadge(original, badge)
 
 	if (modified === null) {
@@ -166,7 +170,7 @@ for (const { path: filePath, componentName } of mdxFiles) {
 		console.info(`[dry-run] Mise à jour: ${filePath}`)
 	} else {
 		writeFileSync(filePath, modified, 'utf8')
-		console.info(`✅ Mis à jour: ${componentName} → v${info.version ?? '?'} · ${info.date}`)
+		console.info(`✅ Mis à jour: ${componentName} → ${info.version ? `v${info.version}` : NO_RELEASE_LABEL}`)
 	}
 	updated++
 }

@@ -1,13 +1,13 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 08/09/2026
+Généré le: 11/09/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
 | **Accordion** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **BackBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **BackToTopBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **Captcha** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
+| **Captcha** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **ChipList** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **CollapsibleList** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **ContextualMenu** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -53,7 +53,7 @@ Généré le: 08/09/2026
 | **LangBtn** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
 | **Logo** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **LogoBrandSection** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **LunarCalendar** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
+| **LunarCalendar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **MaintenancePage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **MonthPicker** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
 | **NirField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -82,4 +82,4 @@ Généré le: 08/09/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 56 / 77 (72.73%)**
+**Total des composants conformes : 58 / 77 (75.32%)**
