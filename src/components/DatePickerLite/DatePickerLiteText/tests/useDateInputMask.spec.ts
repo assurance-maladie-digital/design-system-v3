@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { ref } from 'vue'
+import type { DatePickerLiteMode } from '../../types'
 import { useDateInputMask } from '../useDateInputMask'
 
 describe('useDateInputMask', () => {
@@ -15,8 +16,14 @@ describe('useDateInputMask', () => {
 		expect(mask.value).toBe('##/##/#### au ##/##/####')
 	})
 
+	it('does not constrain the number of dates in multiple mode', () => {
+		const mask = useDateInputMask('multiple', 'DD/MM/YYYY', ', ')
+
+		expect(mask.value).toBeUndefined()
+	})
+
 	it('updates the mask when its reactive inputs change', () => {
-		const mode = ref<'single' | 'range'>('single')
+		const mode = ref<DatePickerLiteMode>('single')
 		const inputFormat = ref('DD/MM/YYYY')
 		const separator = ref(' - ')
 		const mask = useDateInputMask(mode, inputFormat, separator)

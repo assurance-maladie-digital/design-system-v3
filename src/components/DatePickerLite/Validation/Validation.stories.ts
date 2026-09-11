@@ -20,7 +20,7 @@ const requiredCompleteDateRule = (value: unknown) => {
 		: 'La date doit être au format JJ/MM/AAAA.'
 }
 
-const meta = {
+const meta: Meta<DatePickerLiteStoryProps> = {
 	title: 'Composants/Formulaires/DatePickerLite/Validation',
 	component: DatePickerLite,
 	decorators: [
@@ -63,10 +63,8 @@ const meta = {
 	},
 }
 
-const typedMeta: Meta<DatePickerLiteStoryProps> = meta
-
-export default typedMeta
-type Story = StoryObj<typeof typedMeta>
+export default meta
+type Story = StoryObj<typeof meta>
 
 export const WithError: Story = {
 	args: {

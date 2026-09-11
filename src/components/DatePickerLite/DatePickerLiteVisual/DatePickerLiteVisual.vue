@@ -9,9 +9,10 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
 	import { locales as defaultLocales } from '../locales'
-	import type { DatePickerLiteRange } from '../types'
+	import type { DatePickerLiteMultiple, DatePickerLiteRange } from '../types'
 	import type { DatePickerLiteVisualProps } from './DatePickerLiteVisualProps'
 	import { useDatePickerLiteDialog } from './useDatePickerLiteDialog'
+	import { useDatePickerLiteDateSelection } from './useDatePickerLiteDateSelection'
 	import { useDatePickerLiteNavigation } from './useDatePickerLiteNavigation'
 	import { useDatePickerLiteSelection } from './useDatePickerLiteSelection'
 
@@ -20,13 +21,13 @@
 		textInput: ComponentPublicInstance | HTMLElement | null
 		/** used to reset the focus on closed */
 		toggleBtn: HTMLElement | null
-		modelValue: Date | DatePickerLiteRange | undefined
+		modelValue: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined
 		readonly: boolean
 		disabled: boolean
 	} & DatePickerLiteVisualProps>()
 
 	const emits = defineEmits<{
-		(e: 'update:modelValue', value: Date | DatePickerLiteRange | undefined): void
+		(e: 'update:modelValue', value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined): void
 		(e: 'update:open', value: boolean): void
 	}>()
 
@@ -62,14 +63,19 @@
 		initialView: toRef(props, 'initialView'),
 	})
 
-	const { open, setDay, handleRangeSelected, setDayFromFooter } = useDatePickerLiteDialog({
-		mode,
-		readonly: toRef(props, 'readonly'),
-		disabled: toRef(props, 'disabled'),
+	const { open } = useDatePickerLiteDialog({
 		toggleBtn: toRef(props, 'toggleBtn'),
 		resetViewOnOpen,
-		onUpdateModelValue: value => emits('update:modelValue', value),
 		onUpdateOpen: value => emits('update:open', value),
+	})
+
+	const { setDay, handleRangeSelected, setDayFromFooter } = useDatePickerLiteDateSelection({
+		mode,
+		modelValue: toRef(props, 'modelValue'),
+		readonly: toRef(props, 'readonly'),
+		disabled: toRef(props, 'disabled'),
+		onUpdateModelValue: value => emits('update:modelValue', value),
+		close: () => { open.value = false },
 	})
 
 	const id = useId()
@@ -129,7 +135,7 @@
 					v-model:displayed-month="visibleMonth"
 					:selected-days="selectedDates"
 					:selected-range="selectedDateRange"
-					:select-range="props.mode === 'range'"
+					:select-range="mode === 'range'"
 					@click:day="setDay"
 					@update:selected-range="handleRangeSelected"
 				/>

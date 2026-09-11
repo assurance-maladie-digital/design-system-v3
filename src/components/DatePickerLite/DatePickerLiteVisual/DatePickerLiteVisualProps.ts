@@ -1,9 +1,11 @@
+import type { DatePickerLiteMode } from '../types'
+
 export type DatePickerLiteVisualProps = {
 	minYear: number
 	maxYear: number
 	yearsOrder: 'asc' | 'desc'
 	initialView: 'days' | 'months' | 'years'
-	mode?: 'single' | 'range'
+	mode?: DatePickerLiteMode
 }
 
 export const defaultDatePickerLiteVisualProps = {

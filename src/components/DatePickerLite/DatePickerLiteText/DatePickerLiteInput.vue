@@ -10,11 +10,11 @@
 	import { useTextField } from '@/components/Common/Calendar/useTextField'
 	import { useDateInputMask } from './useDateInputMask'
 	import { useDateInputModel } from './useDateInputModel'
-	import type { DatePickerLiteRange } from '../types'
+	import type { DatePickerLiteMode, DatePickerLiteMultiple, DatePickerLiteRange } from '../types'
 
 	const props = withDefaults(defineProps<{
-		mode: 'single' | 'range'
-		modelValue: Date | DatePickerLiteRange | undefined
+		mode: DatePickerLiteMode
+		modelValue: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined
 		inputFormat?: string
 		separator?: string
 		errorMessages?: string[] | null
@@ -41,7 +41,7 @@
 	})
 
 	const emits = defineEmits<{
-		(e: 'update:modelValue', value: Date | DatePickerLiteRange | undefined): void
+		(e: 'update:modelValue', value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined): void
 	}>()
 
 	// The DatePickerLite root provides its full locales through the shared key

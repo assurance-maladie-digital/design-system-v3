@@ -578,3 +578,60 @@ export const CustomRangeSeparator: Story = {
 		],
 	},
 }
+
+export const Multiple: Story = {
+	args: {
+		'label': 'Dates de rendez-vous',
+		'mode': 'multiple',
+		'modelValue': [new Date(2025, 10, 11), new Date(2025, 10, 21)],
+		'separator': ', ',
+		'helpText': 'Format JJ/MM/AAAA, JJ/MM/AAAA',
+		'onUpdate:modelValue': fn(),
+		'onUpdate:open': fn(),
+		'customRules': [{
+			type: 'custom',
+			options: {
+				validate: (value: string | undefined) => /^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/\d{4}(, (0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/\d{4})*$/.test(value ?? ''),
+				message: 'Chaque date doit être au format JJ/MM/AAAA. (ex: 25/12/2026, 31/12/2026).',
+			},
+		}],
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePickerLite
+						v-model="selectedDates"
+						mode="multiple"
+						label="Dates de rendez-vous"
+						separator=", "
+						:custom-rules="rules"
+					/>
+				</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DatePickerLite } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const selectedDates = ref<Date[]>([
+						new Date(2025, 10, 11),
+						new Date(2025, 10, 21),
+					])
+
+					const rules = [{
+						type: 'custom',
+						options: {
+							validate: (value: string | undefined) => /^(0[1-9]|[12]\\d|3[01])\\/(0[1-9]|1[0-2])\\/\\d{4}(, (0[1-9]|[12]\\d|3[01])\\/(0[1-9]|1[0-2])\\/\\d{4})*$/.test(value ?? ''),
+							message: 'Chaque date doit être au format JJ/MM/AAAA. (ex: 25/12/2026, 31/12/2026).',
+						},
+					}]
+				</script>`,
+			},
+		],
+	},
+}

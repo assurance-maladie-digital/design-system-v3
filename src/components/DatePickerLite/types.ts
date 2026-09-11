@@ -6,14 +6,16 @@ import type { DeepPartial } from '@/utils/locales/mergeLocales'
 import type { DatePickerLiteVisualProps } from './DatePickerLiteVisual/DatePickerLiteVisualProps'
 
 export type DatePickerLiteRange = [Date, Date]
+export type DatePickerLiteMultiple = Date[]
+export type DatePickerLiteMode = 'single' | 'range' | 'multiple'
 
 export type DatePickerLiteProps =
 	TextFieldProps
 	& FieldValidationProps
 	& Partial<DatePickerLiteVisualProps>
 	& {
-		modelValue?: Date | DatePickerLiteRange
-		mode?: 'single' | 'range'
+		modelValue?: Date | DatePickerLiteRange | DatePickerLiteMultiple
+		mode?: DatePickerLiteMode
 		inputFormat?: string
 		separator?: string
 		locales?: DeepPartial<typeof defaultLocales>
@@ -43,10 +45,10 @@ export type DatePickerLiteInputProps =
 
 /** Slot props for the `input` slot of DatePickerLite */
 export interface DatePickerLiteInputSlotProps {
-	/** Selection mode, so a custom input can adapt to single/range */
-	mode: 'single' | 'range'
-	modelValue: Date | DatePickerLiteRange | undefined
-	updateModelValue: (value: Date | DatePickerLiteRange | undefined) => void
+	/** Selection mode, so a custom input can adapt to single, range, or multiple values */
+	mode: DatePickerLiteMode
+	modelValue: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined
+	updateModelValue: (value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined) => void
 	inputProps: DatePickerLiteInputProps
 	updateTextValue: (value: string | undefined) => void
 	setFocused: (value: boolean) => void

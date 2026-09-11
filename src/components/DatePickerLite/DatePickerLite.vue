@@ -17,7 +17,7 @@
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
-	import type { DatePickerLiteInputProps, DatePickerLiteInputSlotProps, DatePickerLiteProps, DatePickerLiteRange } from './types'
+	import type { DatePickerLiteInputProps, DatePickerLiteInputSlotProps, DatePickerLiteMultiple, DatePickerLiteProps, DatePickerLiteRange } from './types'
 
 	// Attributes (including listeners such as @input) are forwarded to the field through
 	// inputProps; otherwise they would also land on the root div (duplicate via bubbling)
@@ -57,7 +57,7 @@
 	// defineModel handles controlled/uncontrolled state without echoing back to the parent;
 	// readonly/disabled remain enforced at the source (DatePickerLiteVisual, readonly field)
 	// Single/range normalization lives inside DatePickerLiteInput, keyed by `mode`
-	const internalValue = defineModel<Date | DatePickerLiteRange>()
+	const internalValue = defineModel<Date | DatePickerLiteRange | DatePickerLiteMultiple>()
 
 	watch(internalValue, async () => {
 		// Wait for DatePickerLiteInput to update textValue before validating
@@ -120,7 +120,7 @@
 	const inputSlotProps = computed<DatePickerLiteInputSlotProps>(() => ({
 		mode: props.mode,
 		modelValue: internalValue.value,
-		updateModelValue: (value: Date | DatePickerLiteRange | undefined) => {
+		updateModelValue: (value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined) => {
 			internalValue.value = value
 		},
 		inputProps: inputProps.value,

@@ -1,9 +1,15 @@
 import { computed, type Ref } from 'vue'
-import type { DatePickerLiteRange } from '../types'
+import type { DatePickerLiteMode, DatePickerLiteMultiple, DatePickerLiteRange } from '../types'
+
+function isDateRange(value: unknown): value is DatePickerLiteRange {
+	return Array.isArray(value)
+		&& value.length === 2
+		&& value.every(date => date instanceof Date)
+}
 
 export interface UseDatePickerLiteSelectionParams {
-	modelValue: Ref<Date | DatePickerLiteRange | undefined>
-	mode: Ref<'single' | 'range'>
+	modelValue: Ref<Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined>
+	mode: Ref<DatePickerLiteMode>
 }
 
 export function useDatePickerLiteSelection({
@@ -24,7 +30,8 @@ export function useDatePickerLiteSelection({
 	 * It keeps the list shape expected by the calendar for range highlighting.
 	 */
 	const selectedDateRange = computed<DatePickerLiteRange | undefined>(() => {
-		return mode.value === 'range' && Array.isArray(modelValue.value) ? modelValue.value : undefined
+		const value = modelValue.value
+		return mode.value === 'range' && isDateRange(value) ? value : undefined
 	})
 
 	/**
@@ -34,6 +41,9 @@ export function useDatePickerLiteSelection({
 	const selectedDates = computed<Date[]>(() => {
 		if (mode.value === 'range') {
 			return selectedDateRange.value ? [...selectedDateRange.value] : []
+		}
+		if (mode.value === 'multiple') {
+			return Array.isArray(modelValue.value) ? [...modelValue.value] : []
 		}
 		return selectedDate.value ? [selectedDate.value] : []
 	})

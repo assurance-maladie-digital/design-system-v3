@@ -108,3 +108,59 @@ describe('DatePickerLite range mode', () => {
 		wrapper.unmount()
 	})
 })
+
+describe('DatePickerLite multiple mode', () => {
+	it('emits an array when valid dates are typed', async () => {
+		const wrapper = mount(DatePickerLiteComponent, {
+			props: {
+				label: 'Dates',
+				mode: 'multiple',
+				separator: ', ',
+			},
+		})
+
+		await wrapper.find('input').setValue('03/09/2025, 10/09/2025, 15/09/2025')
+
+		expect(wrapper.emitted('update:modelValue')).toEqual([[
+			[new Date(2025, 8, 3), new Date(2025, 8, 10), new Date(2025, 8, 15)],
+		]])
+
+		wrapper.unmount()
+	})
+
+	it('formats selected dates and toggles their visual selection', async () => {
+		vi.useFakeTimers()
+		const wrapper = mount(DatePickerLiteComponent, {
+			props: {
+				label: 'Dates',
+				mode: 'multiple',
+				modelValue: [new Date(2025, 8, 3)],
+			},
+			attachTo: document.body,
+		})
+
+		expect(wrapper.find('input').element.value).toBe('03/09/2025')
+		await openMenu(wrapper)
+
+		const calendar = wrapper.findComponent({ name: 'Calendar' })
+		await calendar.find('[data-date="2025-09-10"]').trigger('click')
+		await nextTick()
+
+		expect(wrapper.emitted('update:modelValue')).toEqual([[
+			[new Date(2025, 8, 3), new Date(2025, 8, 10)],
+		]])
+		expect(document.body.querySelector('.date-picker-lite-menu')).toBeTruthy()
+
+		await wrapper.setProps({ modelValue: [new Date(2025, 8, 3), new Date(2025, 8, 10)] })
+		await calendar.find('[data-date="2025-09-03"]').trigger('click')
+		await nextTick()
+
+		expect(wrapper.emitted('update:modelValue')).toEqual([[
+			[new Date(2025, 8, 3), new Date(2025, 8, 10)],
+		], [
+			[new Date(2025, 8, 10)],
+		]])
+
+		wrapper.unmount()
+	})
+})

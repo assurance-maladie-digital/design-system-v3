@@ -1,8 +1,6 @@
 import { ref, toValue, watch, type MaybeRefOrGetter, type Ref } from 'vue'
 import { formatDate, parseDate } from '@/composables/date/useDateFormatDayjs'
-import type { DatePickerLiteRange } from '../types'
-
-type PickerMode = 'single' | 'range'
+import type { DatePickerLiteMode, DatePickerLiteMultiple, DatePickerLiteRange } from '../types'
 
 function isDateValue(value: unknown): value is Date {
 	return value instanceof Date && Number.isFinite(value.getTime())
@@ -14,16 +12,23 @@ function isDateRange(value: unknown): value is DatePickerLiteRange {
 		&& value.every(isDateValue)
 }
 
+function isDateMultiple(value: unknown): value is DatePickerLiteMultiple {
+	return Array.isArray(value) && value.every(isDateValue)
+}
+
 // A model incoherent with the mode (e.g. a range received in single mode) formats to nothing
-function formatValue(mode: PickerMode, value: Date | DatePickerLiteRange | undefined, inputFormat: string, separator: string): string | undefined {
+function formatValue(mode: DatePickerLiteMode, value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined, inputFormat: string, separator: string): string | undefined {
 	if (mode === 'range') {
 		return isDateRange(value) ? `${formatDate(value[0], inputFormat)}${separator}${formatDate(value[1], inputFormat)}` : undefined
+	}
+	if (mode === 'multiple') {
+		return isDateMultiple(value) ? value.map(date => formatDate(date, inputFormat)).join(separator) : undefined
 	}
 	return isDateValue(value) ? formatDate(value, inputFormat) : undefined
 }
 
 // Both range bounds must parse to emit; range-order rules stay in the root validation
-function parseValue(mode: PickerMode, value: string | null, inputFormat: string, separator: string): Date | DatePickerLiteRange | undefined {
+function parseValue(mode: DatePickerLiteMode, value: string | null, inputFormat: string, separator: string): Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined {
 	if (value === null) return undefined
 	if (mode === 'range') {
 		const [startStr, endStr] = value.split(separator)
@@ -31,12 +36,22 @@ function parseValue(mode: PickerMode, value: string | null, inputFormat: string,
 		const end = endStr ? parseDate(endStr, inputFormat) : null
 		return start && end ? [start, end] : undefined
 	}
+	if (mode === 'multiple') {
+		const dates = value.split(separator).map(date => parseDate(date, inputFormat))
+		return dates.length > 0 && dates.every(isDateValue) ? dates : undefined
+	}
 	return parseDate(value, inputFormat) ?? undefined
 }
 
-function sameValue(mode: PickerMode, a: Date | DatePickerLiteRange | undefined, b: Date | DatePickerLiteRange | undefined): boolean {
+function sameValue(mode: DatePickerLiteMode, a: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined, b: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined): boolean {
 	if (mode === 'range') {
 		return isDateRange(a) && isDateRange(b) && a[0].getTime() === b[0].getTime() && a[1].getTime() === b[1].getTime()
+	}
+	if (mode === 'multiple') {
+		return isDateMultiple(a) && isDateMultiple(b) && a.length === b.length && a.every((date, index) => {
+			const otherDate = b[index]
+			return otherDate !== undefined && date.getTime() === otherDate.getTime()
+		})
 	}
 	return isDateValue(a) && isDateValue(b) && a.getTime() === b.getTime()
 }
@@ -55,11 +70,11 @@ export interface UseDateInputModel {
  * when the model changes externally or the re-entered value is identical.
  */
 export function useDateInputModel(
-	mode: MaybeRefOrGetter<PickerMode>,
-	modelValue: Ref<Date | DatePickerLiteRange | undefined>,
+	mode: MaybeRefOrGetter<DatePickerLiteMode>,
+	modelValue: Ref<Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined>,
 	inputFormat: MaybeRefOrGetter<string>,
 	separator: MaybeRefOrGetter<string>,
-	emit: (value: Date | DatePickerLiteRange | undefined) => void,
+	emit: (value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined) => void,
 ): UseDateInputModel {
 	const textValue = ref<string | null | undefined>(formatValue(toValue(mode), modelValue.value, toValue(inputFormat), toValue(separator)))
 

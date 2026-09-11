@@ -1,4 +1,3 @@
-import { fn } from 'storybook/test'
 import { ref, useId, watch } from 'vue'
 import { mdiCalendar } from '@mdi/js'
 import { vMaska } from 'maska/vue'
@@ -6,10 +5,11 @@ import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import { formatDate, parseDate } from '@/composables/date/useDateFormatDayjs'
 import DatePickerLite from './DatePickerLite.vue'
+import type { DatePickerLiteProps } from './types'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { VBtn } from 'vuetify/components'
 
-const meta: Meta<typeof DatePickerLite> = {
+const meta: Meta<DatePickerLiteProps> = {
 	title: 'Composants/Formulaires/DatePickerLite/CustomInput',
 	component: DatePickerLite,
 	parameters: {
@@ -28,7 +28,7 @@ const meta: Meta<typeof DatePickerLite> = {
 }
 
 export default meta
-type Story = StoryObj<typeof DatePickerLite>
+type Story = StoryObj<typeof meta>
 
 const pad = (value: number): string => String(value).padStart(2, '0')
 
@@ -60,11 +60,16 @@ const parseIsoDateRange = (value: string): [Date, Date] | undefined => {
 const formatIsoDateRange = (value: [Date, Date]): string =>
 	`${formatIsoDate(value[0])}${RANGE_SEPARATOR}${formatIsoDate(value[1])}`
 
+const isIsoDateRange = (value: unknown): value is [Date, Date] =>
+	Array.isArray(value)
+	&& value.length === 2
+	&& value.every(date => date instanceof Date)
+
 // Local state of the `input` slot field: the text is owned by the custom input,
 // mirrored to validation via updateTextValue and parsed to a Date via
 // updateModelValue (parsing remains the responsibility of the custom input).
 function useCustomSlotInput(
-	args: { modelValue?: Date | [Date, Date] },
+	args: { modelValue?: Date | Date[] },
 	parse: (value: string) => Date | undefined,
 	format: (value: Date) => string,
 ) {
@@ -104,13 +109,11 @@ const SHORT_DATE_FORMAT = 'DD-MM-YY'
 
 export const CustomInputSyTextField: Story = {
 	args: {
-		'modelValue': new Date(2025, 10, 11),
-		'label': 'Début du projet',
-		'hint': 'Format JJ-MM-AA',
-		'placeholder': 'JJ-MM-AA',
-		'onUpdate:modelValue': fn(),
-		'onUpdate:open': fn(),
-		'customRules': [{
+		modelValue: new Date(2025, 10, 11),
+		label: 'Début du projet',
+		hint: 'Format JJ-MM-AA',
+		placeholder: 'JJ-MM-AA',
+		customRules: [{
 			type: 'custom',
 			options: {
 				validate: (value: string | undefined) => parseDate(value, SHORT_DATE_FORMAT) !== null,
@@ -307,12 +310,10 @@ export const CustomInputSyTextField: Story = {
 
 export const CustomInputStyle: Story = {
 	args: {
-		'modelValue': new Date(2025, 10, 11),
-		'label': 'Début du projet',
-		'required': true,
-		'onUpdate:modelValue': fn(),
-		'onUpdate:open': fn(),
-		'customRules': [{
+		modelValue: new Date(2025, 10, 11),
+		label: 'Début du projet',
+		required: true,
+		customRules: [{
 			type: 'custom',
 			options: {
 				validate: (value: string | undefined) => /^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/.test(value ?? ''),
@@ -528,12 +529,10 @@ export const CustomInputStyle: Story = {
 
 export const CustomInputFormat: Story = {
 	args: {
-		'modelValue': new Date(2025, 10, 11),
-		'label': 'Début du projet',
-		'helpText': 'Format AAAA-MM-JJ',
-		'onUpdate:modelValue': fn(),
-		'onUpdate:open': fn(),
-		'customRules': [{
+		modelValue: new Date(2025, 10, 11),
+		label: 'Début du projet',
+		helpText: 'Format AAAA-MM-JJ',
+		customRules: [{
 			type: 'custom',
 			options: {
 				validate: (value: string | undefined) => /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(value ?? ''),
@@ -687,13 +686,11 @@ export const CustomInputFormat: Story = {
 
 export const CustomInputRange: Story = {
 	args: {
-		'modelValue': [new Date(2025, 10, 11), new Date(2025, 10, 21)],
-		'mode': 'range',
-		'label': 'Période du projet',
-		'helpText': 'Format AAAA-MM-JJ - AAAA-MM-JJ',
-		'onUpdate:modelValue': fn(),
-		'onUpdate:open': fn(),
-		'customRules': [{
+		modelValue: [new Date(2025, 10, 11), new Date(2025, 10, 21)],
+		mode: 'range',
+		label: 'Période du projet',
+		helpText: 'Format AAAA-MM-JJ - AAAA-MM-JJ',
+		customRules: [{
 			type: 'custom',
 			options: {
 				validate: (value: string | undefined) => parseIsoDateRange(value ?? '') !== undefined,
@@ -705,11 +702,11 @@ export const CustomInputRange: Story = {
 		return {
 			components: { DatePickerLite, SyIcon },
 			setup() {
-				const text = ref(Array.isArray(args.modelValue) ? formatIsoDateRange(args.modelValue) : '')
+				const text = ref(isIsoDateRange(args.modelValue) ? formatIsoDateRange(args.modelValue) : '')
 				const updateTextValueCallback = ref<(value: string | undefined) => void>()
 				const hasRegisteredUpdateTextValue = ref(false)
 				watch(() => args.modelValue, (value) => {
-					text.value = Array.isArray(value) ? formatIsoDateRange(value) : ''
+					text.value = isIsoDateRange(value) ? formatIsoDateRange(value) : ''
 					updateTextValueCallback.value?.(text.value || undefined)
 				})
 				const registerUpdateTextValue = (updateTextValue: (value: string | undefined) => void) => {
