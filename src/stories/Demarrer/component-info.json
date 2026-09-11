@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-10T08:52:36.406Z",
+  "date": "2026-09-11T09:13:57.498Z",
   "totalCount": 77,
   "results": [
     {
@@ -83,6 +83,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
@@ -256,6 +267,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
@@ -386,6 +408,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
           "date": "2026-08-10 15:30:55 +0200",
@@ -569,6 +602,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
           "date": "2026-09-09 16:07:21 +0200",
@@ -786,6 +830,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
@@ -949,6 +1004,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
@@ -1036,6 +1102,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
@@ -1186,6 +1263,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
           "date": "2026-08-10 15:30:55 +0200",
@@ -1597,6 +1685,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
@@ -1784,6 +1883,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
@@ -2050,6 +2160,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "7dab36881ad0d0ba95dcbbff4810c1f7d34d72f5",
           "date": "2026-08-12 16:12:41 +0200",
           "dateFr": "12/08/2026",
@@ -2265,6 +2386,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "8cd25df337dd7df9a09d92eeecbeb80ebf74c9e3",
           "date": "2026-08-20 12:20:15 +0200",
@@ -2502,6 +2634,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
           "date": "2026-08-26 13:27:43 +0200",
@@ -2950,6 +3093,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "9099bd12f8b762c86fff317a56be129231501fbd",
           "date": "2026-08-27 16:25:29 +0200",
           "dateFr": "27/08/2026",
@@ -3228,6 +3382,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
           "date": "2026-07-27 14:32:02 +0200",
           "dateFr": "27/07/2026",
@@ -3315,6 +3480,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "c436586292ca72c4d82809711b9ef7cdcbdcc09a",
           "date": "2026-02-25 16:19:14 +0100",
           "dateFr": "25/02/2026",
@@ -3400,6 +3576,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "1a820ea05380988c7263430d7046f5859bff97bd",
           "date": "2026-08-28 14:20:23 +0200",
@@ -3604,6 +3791,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
           "date": "2026-08-13 15:55:47 +0200",
           "dateFr": "13/08/2026",
@@ -3712,6 +3910,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
@@ -3883,6 +4092,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "a216fc35e26df993b7be4d403abcc5d65b5a8e36",
           "date": "2026-08-25 10:33:40 +0200",
@@ -4065,6 +4285,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
           "date": "2026-07-27 14:32:02 +0200",
@@ -4357,6 +4588,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
           "date": "2026-08-26 13:27:43 +0200",
@@ -4813,6 +5055,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
@@ -4922,6 +5175,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
@@ -5168,6 +5432,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
           "date": "2026-08-10 15:30:55 +0200",
@@ -5483,6 +5758,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
@@ -5797,6 +6083,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "f2ae3fd9d1c349db938de16033ed24455131653c",
           "date": "2026-07-23 11:35:27 +0200",
           "dateFr": "23/07/2026",
@@ -6002,6 +6299,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
@@ -6061,6 +6369,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
@@ -6256,6 +6575,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "30980ea7b507740d586d1cf742fc41eef49b6b3c",
           "date": "2026-08-05 15:08:26 +0200",
@@ -6528,6 +6858,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
@@ -6720,6 +7061,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
@@ -6910,6 +7262,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
@@ -7112,6 +7475,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
           "date": "2026-07-27 14:32:02 +0200",
           "dateFr": "27/07/2026",
@@ -7248,6 +7622,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "b70137c4b8130a223eb88d3a1427b943a36a79f6",
           "date": "2026-09-03 11:29:18 +0200",
@@ -7398,6 +7783,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
           "date": "2026-08-26 13:27:43 +0200",
           "dateFr": "26/08/2026",
@@ -7515,6 +7911,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
@@ -7703,6 +8110,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
@@ -7938,6 +8356,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
@@ -8122,6 +8551,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
@@ -8348,6 +8788,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
           "date": "2026-08-10 15:30:55 +0200",
@@ -8640,6 +9091,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "d56383f77b97cf18f4a14e05c37e6f0e165d5024",
           "date": "2026-05-29 11:29:33 +0200",
           "dateFr": "29/05/2026",
@@ -8834,6 +9296,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "moyenne",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "481c8fc57505e697f05b4cf623dc78f4fc0e65d2",
           "date": "2026-07-28 11:31:28 +0200",
@@ -9060,6 +9533,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
           "date": "2026-08-13 15:55:47 +0200",
           "dateFr": "13/08/2026",
@@ -9248,6 +9732,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
@@ -9402,6 +9897,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
@@ -9504,6 +10010,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "43ecbd9871d2da61c693351d6c13ae521d23235c",
           "date": "2026-07-30 14:51:52 +0200",
@@ -9658,6 +10175,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
@@ -9781,6 +10309,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "63522bb5c595350c4f549d0fbc6e5af15cf8a891",
           "date": "2026-03-05 10:14:51 +0100",
@@ -9927,6 +10466,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
@@ -10120,6 +10670,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
           "date": "2026-07-27 14:32:02 +0200",
@@ -10366,6 +10927,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
@@ -10601,6 +11173,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
@@ -10784,6 +11367,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "5ded9eca4a95c2ee3083fee246d6dc7e8e792d44",
           "date": "2026-06-17 14:14:22 +0200",
           "dateFr": "17/06/2026",
@@ -10952,6 +11546,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
           "date": "2026-08-26 13:27:43 +0200",
@@ -11256,6 +11861,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
@@ -11497,6 +12113,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "9df69d6c84d0c1383cd62b5441d0a027a07a01f7",
           "date": "2026-08-25 08:58:16 +0200",
           "dateFr": "25/08/2026",
@@ -11723,6 +12350,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
@@ -11923,6 +12561,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
@@ -12104,6 +12753,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
           "date": "2026-07-27 14:32:02 +0200",
@@ -12343,6 +13003,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
@@ -12495,6 +13166,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "9bc308f61597b0dea151c2ddd8f738bc824757e1",
           "date": "2026-08-28 18:19:08 +0200",
@@ -12652,6 +13334,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
@@ -12782,6 +13475,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
@@ -12938,6 +13642,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
@@ -13135,6 +13850,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
@@ -13292,6 +14018,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "b46884596483f9895fbb6bcd73ba948a49b543e7",
           "date": "2026-09-07 15:29:02 +0200",
@@ -13496,6 +14233,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "6ba17d94f51a82d2ee9d3a4972eb40275a218231",
           "date": "2026-07-23 11:48:40 +0200",
@@ -13733,6 +14481,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "2c90a270023a8f81debfab170380e16cdb6e0640",
           "date": "2026-09-04 15:53:57 +0200",
@@ -14037,6 +14796,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "5b17a07d9bf312bb7dc65d81737c16aee9486f99",
           "date": "2026-08-25 11:04:33 +0200",
           "dateFr": "25/08/2026",
@@ -14254,6 +15024,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
           "date": "2026-08-10 15:30:55 +0200",
           "dateFr": "10/08/2026",
@@ -14376,6 +15157,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
@@ -14483,6 +15275,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
@@ -14648,6 +15451,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+          "date": "2026-09-10 14:39:44 +0200",
+          "dateFr": "10/09/2026",
+          "message": "update doc a11y (#2545)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
           "date": "2026-08-10 15:30:55 +0200",

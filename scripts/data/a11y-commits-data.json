@@ -1,6 +1,17 @@
 {
   "Accordion": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -102,6 +113,17 @@
   ],
   "AmeliproAccordion": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "687eac066320e4974c10e66e83e908e642cd8308",
       "date": "2025-12-10 15:05:36 +0100",
       "dateFr": "10/12/2025",
@@ -161,6 +183,17 @@
   ],
   "AmeliproAccordionFrieze": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "687eac066320e4974c10e66e83e908e642cd8308",
       "date": "2025-12-10 15:05:36 +0100",
       "dateFr": "10/12/2025",
@@ -196,6 +229,17 @@
   ],
   "AmeliproAccordionGroup": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "525b945c3269f554a696c4287d4a7bf9ca1be315",
       "date": "2025-11-27 16:33:29 +0100",
       "dateFr": "27/11/2025",
@@ -219,6 +263,17 @@
     }
   ],
   "AmeliproAccordionList": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
@@ -276,6 +331,17 @@
     }
   ],
   "AmeliproAccordionResult": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "687eac066320e4974c10e66e83e908e642cd8308",
       "date": "2025-12-10 15:05:36 +0100",
@@ -347,6 +413,17 @@
   ],
   "AmeliproAccordionResultList": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
       "dateFr": "17/12/2025",
@@ -415,6 +492,17 @@
   ],
   "AmeliproAutoCompleteField": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
       "dateFr": "17/12/2025",
@@ -481,7 +569,31 @@
       "a11yLabel": false
     }
   ],
+  "AmeliproBadge": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    }
+  ],
   "AmeliproBreadcrumb": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "487d5fe1b4dd2b32bf8b61f8d1c402741ef74d6f",
       "date": "2026-01-20 16:46:59 +0100",
@@ -516,7 +628,31 @@
       "a11yLabel": false
     }
   ],
+  "AmeliproBtn": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    }
+  ],
   "AmeliproCallback": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "1539898edaaa972fafe1662cb4d55e489a7e7a74",
       "date": "2025-07-18 17:11:17 +0200",
@@ -530,6 +666,17 @@
     }
   ],
   "AmeliproCaptcha": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
@@ -577,6 +724,17 @@
   ],
   "AmeliproCard": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "60839dda49f37ea1fce75201c5fe7a2516016392",
       "date": "2025-10-24 13:18:53 +0200",
       "dateFr": "24/10/2025",
@@ -600,6 +758,17 @@
     }
   ],
   "AmeliproCarousel": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "cd8602b795a93778f3678ecca90d565aca86af5a",
       "date": "2025-12-10 17:32:50 +0100",
@@ -671,6 +840,17 @@
   ],
   "AmeliproCheckbox": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "f2e75c4313e579c69a4471d51ce3f2f1899f597c",
       "date": "2026-04-21 09:57:46 +0200",
       "dateFr": "21/04/2026",
@@ -728,6 +908,17 @@
   ],
   "AmeliproCheckboxGroup": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "f2e75c4313e579c69a4471d51ce3f2f1899f597c",
       "date": "2026-04-21 09:57:46 +0200",
       "dateFr": "21/04/2026",
@@ -783,7 +974,31 @@
       "a11yLabel": false
     }
   ],
+  "AmeliproChips": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    }
+  ],
   "AmeliproClickableTile": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "5ca377d8b84d0249407e5eb3d2378b7a81d9bf31",
       "date": "2026-02-09 09:55:44 +0100",
@@ -818,7 +1033,31 @@
       "a11yLabel": false
     }
   ],
+  "AmeliproContentLayout": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    }
+  ],
   "AmeliproCopyBtn": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "687eac066320e4974c10e66e83e908e642cd8308",
       "date": "2025-12-10 15:05:36 +0100",
@@ -843,6 +1082,17 @@
     }
   ],
   "AmeliproCustomSelector": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "f2e75c4313e579c69a4471d51ce3f2f1899f597c",
       "date": "2026-04-21 09:57:46 +0200",
@@ -912,6 +1162,17 @@
   ],
   "AmeliproDentalChart": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
       "dateFr": "17/12/2025",
@@ -949,6 +1210,17 @@
   ],
   "AmeliproDialog": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "2875afb9e108c907979ad2ee6fa8c32932bf70b5",
       "date": "2025-10-07 09:39:17 +0200",
       "dateFr": "07/10/2025",
@@ -972,6 +1244,17 @@
     }
   ],
   "AmeliproDisclosure": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "e09f1746ebff79d8d76b91abfaaed7e903628744",
       "date": "2025-11-07 15:08:08 +0100",
@@ -997,6 +1280,17 @@
   ],
   "AmeliproErrorTemplate": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "1907802e8607886e64b6f3f77fb7858552788e7f",
       "date": "2025-12-08 11:54:26 +0100",
       "dateFr": "08/12/2025",
@@ -1020,6 +1314,17 @@
     }
   ],
   "AmeliproFilePreview": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "1907802e8607886e64b6f3f77fb7858552788e7f",
       "date": "2025-12-08 11:54:26 +0100",
@@ -1056,6 +1361,17 @@
   ],
   "AmeliproFilters": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "f2e75c4313e579c69a4471d51ce3f2f1899f597c",
       "date": "2026-04-21 09:57:46 +0200",
       "dateFr": "21/04/2026",
@@ -1091,6 +1407,17 @@
   ],
   "AmeliproFirstLogin": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "687eac066320e4974c10e66e83e908e642cd8308",
       "date": "2025-12-10 15:05:36 +0100",
       "dateFr": "10/12/2025",
@@ -1115,6 +1442,17 @@
   ],
   "AmeliproFooter": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "d5e20e7e988c19b69e56e21b3aabdd36d1a413d3",
       "date": "2025-11-24 09:15:58 +0100",
       "dateFr": "24/11/2025",
@@ -1138,6 +1476,17 @@
     }
   ],
   "AmeliproHeader": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "f2e75c4313e579c69a4471d51ce3f2f1899f597c",
       "date": "2026-04-21 09:57:46 +0200",
@@ -1312,6 +1661,17 @@
   ],
   "AmeliproIcon": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "95db60ddc2bc7006377c1e7a590ee04cbf6c4c71",
       "date": "2026-02-11 10:13:17 +0100",
       "dateFr": "11/02/2026",
@@ -1356,7 +1716,31 @@
       "a11yLabel": false
     }
   ],
+  "AmeliproIconBtn": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    }
+  ],
   "AmeliproIllustratedDataTile": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "fded0c724003b5cdf5b09ddbb21b820289a507a9",
       "date": "2025-11-27 11:31:49 +0100",
@@ -1381,6 +1765,17 @@
     }
   ],
   "AmeliproIllustratedRadioGroup": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "487d5fe1b4dd2b32bf8b61f8d1c402741ef74d6f",
       "date": "2026-01-20 16:46:59 +0100",
@@ -1439,6 +1834,17 @@
   ],
   "AmeliproMailTile": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "9df69d6c84d0c1383cd62b5441d0a027a07a01f7",
       "date": "2026-08-25 08:58:16 +0200",
       "dateFr": "25/08/2026",
@@ -1474,6 +1880,17 @@
   ],
   "AmeliproMenu": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
       "date": "2026-07-27 14:32:02 +0200",
       "dateFr": "27/07/2026",
@@ -1508,6 +1925,17 @@
     }
   ],
   "AmeliproMessage": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "487d5fe1b4dd2b32bf8b61f8d1c402741ef74d6f",
       "date": "2026-01-20 16:46:59 +0100",
@@ -1592,6 +2020,17 @@
   ],
   "AmeliproMessagingLayout": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "584adbbda99b243ca1d3e9a98c46f1d6789cdf91",
       "date": "2025-11-27 16:00:43 +0100",
       "dateFr": "27/11/2025",
@@ -1638,6 +2077,17 @@
   ],
   "AmeliproMultipleFoldingCard": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "e51051e07a6210146f33005d31131ae2805679e7",
       "date": "2025-12-08 12:10:22 +0100",
       "dateFr": "08/12/2025",
@@ -1660,7 +2110,31 @@
       "a11yLabel": false
     }
   ],
+  "AmeliproNumberedCard": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    }
+  ],
   "AmeliproOnboarding": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "1539898edaaa972fafe1662cb4d55e489a7e7a74",
       "date": "2025-07-18 17:11:17 +0200",
@@ -1674,6 +2148,17 @@
     }
   ],
   "AmeliproPageLayout": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "5a382aaed10af7706f49dcfc707c163e1a4317b4",
       "date": "2025-11-28 13:37:12 +0100",
@@ -1698,6 +2183,17 @@
     }
   ],
   "AmeliproPagination": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "5a382aaed10af7706f49dcfc707c163e1a4317b4",
       "date": "2025-11-28 13:37:12 +0100",
@@ -1745,7 +2241,31 @@
       "a11yLabel": false
     }
   ],
+  "AmeliproPatientBanner": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    }
+  ],
   "AmeliproPatientLogged": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
@@ -1803,6 +2323,17 @@
     }
   ],
   "AmeliproPatientLogin": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
@@ -1942,6 +2473,17 @@
   ],
   "AmeliproPostalAddressField": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
       "dateFr": "17/12/2025",
@@ -2010,6 +2552,17 @@
   ],
   "AmeliproRadioGroup": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
       "dateFr": "17/12/2025",
@@ -2067,6 +2620,17 @@
   ],
   "AmeliproResultList": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
       "dateFr": "17/12/2025",
@@ -2123,6 +2687,17 @@
     }
   ],
   "AmeliproSelect": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "f2e75c4313e579c69a4471d51ce3f2f1899f597c",
       "date": "2026-04-21 09:57:46 +0200",
@@ -2190,6 +2765,32 @@
       "a11yLabel": false
     }
   ],
+  "AmeliproStateTile": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    }
+  ],
+  "AmeliproStatus": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    }
+  ],
   "AmeliproStepBtn": [
     {
       "hash": "74771278235e597eb96e763e490447e95a224d5d",
@@ -2215,6 +2816,17 @@
     }
   ],
   "AmeliproStepper": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "487d5fe1b4dd2b32bf8b61f8d1c402741ef74d6f",
       "date": "2026-01-20 16:46:59 +0100",
@@ -2261,6 +2873,17 @@
     }
   ],
   "AmeliproTable": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "566acc2e417f02c6d5eb94c92559ad99730cd415",
       "date": "2025-12-08 14:21:04 +0100",
@@ -2343,6 +2966,17 @@
   ],
   "AmeliproTabs": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "4505943446a82b6bedfae76e5faa4a6f13f19f36",
       "date": "2026-01-06 16:39:27 +0100",
       "dateFr": "06/01/2026",
@@ -2400,6 +3034,17 @@
   ],
   "AmeliproTextArea": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
       "dateFr": "17/12/2025",
@@ -2456,6 +3101,17 @@
     }
   ],
   "AmeliproTextField": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "8cd25df337dd7df9a09d92eeecbeb80ebf74c9e3",
       "date": "2026-08-20 12:20:15 +0200",
@@ -2523,7 +3179,31 @@
       "a11yLabel": false
     }
   ],
+  "AmeliproTileBtn": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    }
+  ],
   "AmeliproTooltips": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "1539898edaaa972fafe1662cb4d55e489a7e7a74",
       "date": "2025-07-18 17:11:17 +0200",
@@ -2536,7 +3216,31 @@
       "a11yLabel": false
     }
   ],
+  "AmeliproTransmission": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    }
+  ],
   "AmeliproUpload": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
@@ -2572,6 +3276,17 @@
     }
   ],
   "ServiceMenu": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "c54d359043e8d6cd165dd47a9e08009a6d10fedb",
       "date": "2025-12-05 16:04:59 +0100",
@@ -2655,6 +3370,17 @@
     }
   ],
   "StructureMenu": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "5792f7ef0c4f5c99c65d1c40d5bf076adc68b83f",
       "date": "2026-01-09 09:35:21 +0100",
@@ -2746,7 +3472,31 @@
       "a11yLabel": false
     }
   ],
+  "UserMenu": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    }
+  ],
   "BackBtn": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
       "date": "2026-08-10 15:30:55 +0200",
@@ -2837,6 +3587,17 @@
     }
   ],
   "BackToTopBtn": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
       "date": "2026-08-10 15:30:55 +0200",
@@ -2949,6 +3710,17 @@
     }
   ],
   "Captcha": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
       "date": "2026-09-09 16:07:21 +0200",
@@ -3095,6 +3867,17 @@
   ],
   "CaptchaAlert": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
       "date": "2026-09-09 16:07:21 +0200",
       "dateFr": "09/09/2026",
@@ -3239,6 +4022,17 @@
     }
   ],
   "CaptchaBase": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
       "date": "2026-09-09 16:07:21 +0200",
@@ -3385,6 +4179,17 @@
   ],
   "CaptchaBtn": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
       "date": "2026-09-09 16:07:21 +0200",
       "dateFr": "09/09/2026",
@@ -3529,6 +4334,17 @@
     }
   ],
   "CaptchaForm": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
       "date": "2026-09-09 16:07:21 +0200",
@@ -3675,6 +4491,17 @@
   ],
   "CaptchaHelpdesk": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
       "date": "2026-09-09 16:07:21 +0200",
       "dateFr": "09/09/2026",
@@ -3819,6 +4646,17 @@
     }
   ],
   "CaptchaImg": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
       "date": "2026-09-09 16:07:21 +0200",
@@ -3965,6 +4803,17 @@
   ],
   "CaptchaInformation": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
       "date": "2026-09-09 16:07:21 +0200",
       "dateFr": "09/09/2026",
@@ -4110,6 +4959,17 @@
   ],
   "ChipList": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
       "date": "2026-08-10 15:30:55 +0200",
       "dateFr": "10/08/2026",
@@ -4222,6 +5082,17 @@
   ],
   "CollapsibleList": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -4312,7 +5183,31 @@
       "a11yLabel": false
     }
   ],
+  "ComponentStatusTable": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    }
+  ],
   "ContextualMenu": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
@@ -4393,6 +5288,17 @@
   ],
   "DeepMenu": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -4471,6 +5377,17 @@
     }
   ],
   "CookieBanner": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
       "date": "2026-08-10 15:30:55 +0200",
@@ -4843,6 +5760,17 @@
   ],
   "CopyBtn": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -4954,6 +5882,17 @@
     }
   ],
   "SelectBtnField": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
@@ -5088,6 +6027,17 @@
     }
   ],
   "SyAutocomplete": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "7dab36881ad0d0ba95dcbbff4810c1f7d34d72f5",
       "date": "2026-08-12 16:12:41 +0200",
@@ -5234,6 +6184,17 @@
   ],
   "SyInputSelect": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "8cd25df337dd7df9a09d92eeecbeb80ebf74c9e3",
       "date": "2026-08-20 12:20:15 +0200",
       "dateFr": "20/08/2026",
@@ -5334,6 +6295,17 @@
     }
   ],
   "SySelect": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
@@ -5656,6 +6628,17 @@
   ],
   "SyCheckBoxGroup": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
       "date": "2026-07-27 14:32:02 +0200",
       "dateFr": "27/07/2026",
@@ -5701,6 +6684,17 @@
     }
   ],
   "SyCheckbox": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "9099bd12f8b762c86fff317a56be129231501fbd",
       "date": "2026-08-27 16:25:29 +0200",
@@ -5924,6 +6918,17 @@
   ],
   "SyForm": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "c436586292ca72c4d82809711b9ef7cdcbdcc09a",
       "date": "2026-02-25 16:19:14 +0100",
       "dateFr": "25/02/2026",
@@ -5958,6 +6963,17 @@
     }
   ],
   "SyIcon": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "1a820ea05380988c7263430d7046f5859bff97bd",
       "date": "2026-08-28 14:20:23 +0200",
@@ -6126,6 +7142,17 @@
   ],
   "SyIconAccessibility": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "1a820ea05380988c7263430d7046f5859bff97bd",
       "date": "2026-08-28 14:20:23 +0200",
       "dateFr": "28/08/2026",
@@ -6293,6 +7320,17 @@
   ],
   "SyIconButton": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
       "dateFr": "13/08/2026",
@@ -6360,6 +7398,17 @@
     }
   ],
   "SyPagination": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
@@ -6450,6 +7499,17 @@
     }
   ],
   "SyRadioGroup": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "a216fc35e26df993b7be4d403abcc5d65b5a8e36",
       "date": "2026-08-25 10:33:40 +0200",
@@ -6551,6 +7611,17 @@
     }
   ],
   "SyTabs": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
       "date": "2026-07-27 14:32:02 +0200",
@@ -6707,6 +7778,17 @@
     }
   ],
   "FieldState": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
@@ -7117,6 +8199,17 @@
   ],
   "SyTextField": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
@@ -7526,6 +8619,17 @@
   ],
   "DataList": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -7629,6 +8733,17 @@
   ],
   "DataListGroup": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -7687,6 +8802,17 @@
     }
   ],
   "DatePicker": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
       "date": "2026-08-10 15:30:55 +0200",
@@ -7866,6 +8992,17 @@
   ],
   "ComplexDatePicker": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
       "date": "2026-08-10 15:30:55 +0200",
       "dateFr": "10/08/2026",
@@ -8043,6 +9180,17 @@
     }
   ],
   "DatePickerLiveRegion": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
       "date": "2026-08-10 15:30:55 +0200",
@@ -8486,6 +9634,17 @@
   ],
   "DateTextInput": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "f2ae3fd9d1c349db938de16033ed24455131653c",
       "date": "2026-07-23 11:35:27 +0200",
       "dateFr": "23/07/2026",
@@ -8675,6 +9834,17 @@
   ],
   "DeclarationAccessibilityPage": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
       "date": "2026-08-10 15:30:55 +0200",
       "dateFr": "10/08/2026",
@@ -8698,6 +9868,17 @@
     }
   ],
   "DiacriticPicker": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
@@ -8777,6 +9958,17 @@
     }
   ],
   "DialogBox": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "30980ea7b507740d586d1cf742fc41eef49b6b3c",
       "date": "2026-08-05 15:08:26 +0200",
@@ -8978,6 +10170,17 @@
   ],
   "DownloadBtn": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
       "date": "2026-08-10 15:30:55 +0200",
       "dateFr": "10/08/2026",
@@ -9078,6 +10281,17 @@
     }
   ],
   "ErrorPage": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
@@ -9224,6 +10438,17 @@
   ],
   "ExternalLinks": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -9368,6 +10593,17 @@
     }
   ],
   "FileList": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
       "date": "2026-07-27 14:32:02 +0200",
@@ -9527,6 +10763,17 @@
   ],
   "FilePreview": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "b70137c4b8130a223eb88d3a1427b943a36a79f6",
       "date": "2026-09-03 11:29:18 +0200",
       "dateFr": "03/09/2026",
@@ -9595,6 +10842,17 @@
   ],
   "FileUpload": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
@@ -9652,6 +10910,17 @@
   ],
   "FileUploadContent": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
@@ -9708,6 +10977,17 @@
     }
   ],
   "FilterInline": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
@@ -9820,6 +11100,17 @@
     }
   ],
   "FilterSideBar": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
@@ -9943,6 +11234,17 @@
     }
   ],
   "FooterBar": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
       "date": "2026-08-10 15:30:55 +0200",
@@ -10078,6 +11380,17 @@
   ],
   "FranceConnectBtn": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -10167,6 +11480,17 @@
     }
   ],
   "HeaderBar": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
       "date": "2026-08-10 15:30:55 +0200",
@@ -10423,6 +11747,17 @@
   ],
   "HeaderBurgerMenu": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
       "date": "2026-08-10 15:30:55 +0200",
       "dateFr": "10/08/2026",
@@ -10568,6 +11903,17 @@
   ],
   "HeaderMenuItem": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -10603,6 +11949,17 @@
   ],
   "HeaderMenuSection": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "855a71637fe2452668e6ec16945100fcda300f8f",
       "date": "2025-08-04 11:06:46 +0200",
       "dateFr": "04/08/2025",
@@ -10626,6 +11983,17 @@
     }
   ],
   "HeaderSubMenu": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
       "date": "2025-12-22 14:37:18 +0100",
@@ -10831,6 +12199,17 @@
   ],
   "HeaderLoading": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "d56383f77b97cf18f4a14e05c37e6f0e165d5024",
       "date": "2026-05-29 11:29:33 +0200",
       "dateFr": "29/05/2026",
@@ -10909,6 +12288,17 @@
     }
   ],
   "HeaderNavigationBar": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "moyenne",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "481c8fc57505e697f05b4cf623dc78f4fc0e65d2",
       "date": "2026-07-28 11:31:28 +0200",
@@ -11134,6 +12524,17 @@
   ],
   "HeaderToolbar": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
       "dateFr": "13/08/2026",
@@ -11245,6 +12646,17 @@
     }
   ],
   "LangBtn": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
       "date": "2026-08-10 15:30:55 +0200",
@@ -11369,6 +12781,17 @@
   ],
   "Logo": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -11425,6 +12848,17 @@
     }
   ],
   "LogoBrandSection": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "43ecbd9871d2da61c693351d6c13ae521d23235c",
       "date": "2026-07-30 14:51:52 +0200",
@@ -11538,6 +12972,17 @@
   ],
   "LunarCalendar": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
       "date": "2026-08-10 15:30:55 +0200",
       "dateFr": "10/08/2026",
@@ -11605,6 +13050,17 @@
     }
   ],
   "MaintenancePage": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "63522bb5c595350c4f549d0fbc6e5af15cf8a891",
       "date": "2026-03-05 10:14:51 +0100",
@@ -11695,6 +13151,17 @@
     }
   ],
   "MonthPicker": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
@@ -11897,6 +13364,17 @@
   ],
   "NirField": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
       "date": "2026-07-27 14:32:02 +0200",
       "dateFr": "27/07/2026",
@@ -12086,6 +13564,17 @@
   ],
   "NotFoundPage": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -12244,6 +13733,17 @@
   ],
   "NotificationBar": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -12356,6 +13856,17 @@
   ],
   "PageContainer": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "5ded9eca4a95c2ee3083fee246d6dc7e8e792d44",
       "date": "2026-06-17 14:14:22 +0200",
       "dateFr": "17/06/2026",
@@ -12423,6 +13934,17 @@
     }
   ],
   "PaginatedTable": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
@@ -12591,6 +14113,17 @@
   ],
   "Pagination": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
@@ -12758,6 +14291,17 @@
   ],
   "PasswordField": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -12903,6 +14447,17 @@
   ],
   "PeriodField": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "9df69d6c84d0c1383cd62b5441d0a027a07a01f7",
       "date": "2026-08-25 08:58:16 +0200",
       "dateFr": "25/08/2026",
@@ -12992,6 +14547,17 @@
     }
   ],
   "PhoneField": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
@@ -13126,6 +14692,17 @@
     }
   ],
   "RangeField": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
@@ -13531,6 +15108,17 @@
   ],
   "RatingPicker": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
       "date": "2026-07-27 14:32:02 +0200",
       "dateFr": "27/07/2026",
@@ -13810,6 +15398,17 @@
   ],
   "SearchListField": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -13922,6 +15521,17 @@
   ],
   "SkipLink": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "9bc308f61597b0dea151c2ddd8f738bc824757e1",
       "date": "2026-08-28 18:19:08 +0200",
       "dateFr": "28/08/2026",
@@ -14011,6 +15621,17 @@
     }
   ],
   "SocialMediaLinks": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
@@ -14102,6 +15723,17 @@
   ],
   "StatusPage": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -14192,6 +15824,17 @@
   ],
   "SubHeader": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -14281,6 +15924,17 @@
     }
   ],
   "SyAlert": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
       "date": "2026-08-10 15:30:55 +0200",
@@ -14394,6 +16048,17 @@
   ],
   "SyBtnMenu": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "b46884596483f9895fbb6bcd73ba948a49b543e7",
       "date": "2026-09-07 15:29:02 +0200",
       "dateFr": "07/09/2026",
@@ -14485,6 +16150,17 @@
     }
   ],
   "SyTextArea": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "6ba17d94f51a82d2ee9d3a4972eb40275a218231",
       "date": "2026-07-23 11:48:40 +0200",
@@ -14587,6 +16263,17 @@
   ],
   "TableToolbar": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
       "date": "2026-08-10 15:30:55 +0200",
       "dateFr": "10/08/2026",
@@ -14687,6 +16374,17 @@
     }
   ],
   "SyServerTable": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "2c90a270023a8f81debfab170380e16cdb6e0640",
       "date": "2026-09-04 15:53:57 +0200",
@@ -14854,6 +16552,17 @@
     }
   ],
   "SyTable": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "5b17a07d9bf312bb7dc65d81737c16aee9486f99",
       "date": "2026-08-25 11:04:33 +0200",
@@ -16496,6 +18205,17 @@
   ],
   "ToolbarContainer": [
     {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
@@ -16552,6 +18272,17 @@
     }
   ],
   "UploadWorkflow": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
@@ -16631,6 +18362,17 @@
     }
   ],
   "UserMenuBtn": [
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
     {
       "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
       "date": "2026-08-10 15:30:55 +0200",

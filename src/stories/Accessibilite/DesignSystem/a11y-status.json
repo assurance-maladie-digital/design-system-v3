@@ -1,8 +1,8 @@
 {
-  "date": "2026-09-10T08:52:30.894Z",
-  "compliantCount": 57,
+  "date": "2026-09-11T09:13:52.361Z",
+  "compliantCount": 58,
   "totalCount": 77,
-  "percentage": "74.03",
+  "percentage": "75.32",
   "results": [
     {
       "componentName": "Accordion",
@@ -546,9 +546,9 @@
     {
       "componentName": "LunarCalendar",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
+      "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false,
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/LunarCalendar",
       "hasManualAudit": false,
       "version": "1.1.4",

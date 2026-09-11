@@ -1,6 +1,6 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 10/09/2026
+Généré le: 11/09/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
@@ -53,7 +53,7 @@ Généré le: 10/09/2026
 | **LangBtn** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
 | **Logo** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **LogoBrandSection** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **LunarCalendar** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
+| **LunarCalendar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **MaintenancePage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **MonthPicker** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
 | **NirField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -82,4 +82,4 @@ Généré le: 10/09/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 57 / 77 (74.03%)**
+**Total des composants conformes : 58 / 77 (75.32%)**
