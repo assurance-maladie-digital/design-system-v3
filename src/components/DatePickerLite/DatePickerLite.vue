@@ -14,6 +14,7 @@
 	import { defaultTextFieldProps, useTextField } from '@/components/Common/Calendar/useTextField'
 	import { defaultDatePickerLiteVisualProps } from './DatePickerLiteVisual/DatePickerLiteVisualProps'
 	import { useDatePickerValidation } from './useDatePickerValidation'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
 	import type { DatePickerLiteInputProps, DatePickerLiteInputSlotProps, DatePickerLiteProps, DatePickerLiteRange } from './types'
@@ -97,6 +98,8 @@
 		focused,
 		locales,
 	})
+
+	useValidatable(validate, clearValidation)
 
 	const inputProps = computed<DatePickerLiteInputProps>(() => ({
 		...attrs,

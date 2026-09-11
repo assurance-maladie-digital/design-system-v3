@@ -3,8 +3,14 @@ import { ref, watch } from 'vue'
 import DatePickerLite from './DatePickerLite.vue'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import type { DatePickerLiteProps } from './types'
 
-const meta: Meta<typeof DatePickerLite> = {
+type DatePickerLiteStoryProps = DatePickerLiteProps & {
+	'onUpdate:modelValue'?: (value: Date | undefined) => void
+	'onUpdate:open'?: (value: boolean) => void
+}
+
+const meta: Meta<DatePickerLiteStoryProps> = {
 	title: 'Composants/Formulaires/DatePickerLite',
 	component: DatePickerLite,
 	parameters: {
@@ -211,7 +217,7 @@ const meta: Meta<typeof DatePickerLite> = {
 }
 
 export default meta
-type Story = StoryObj<typeof DatePickerLite>
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	args: {
@@ -377,6 +383,197 @@ export const CustomDisplayedYears: Story = {
 					const selectedDate = ref<Date | undefined>(new Date(2025, 10, 11))
 				</script>
 				`,
+			},
+		],
+	},
+}
+
+export const Required: Story = {
+	args: {
+		label: 'Date de début',
+		modelValue: new Date(2025, 10, 11),
+		required: true,
+		displayAsterisk: true,
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Affiche un champ obligatoire avec son indicateur visuel.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePickerLite
+						v-model="selectedDate"
+						label="Date de début"
+						required
+						display-asterisk
+					/>
+				</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DatePickerLite } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const selectedDate = ref<Date | undefined>(new Date(2025, 10, 11))
+				</script>`,
+			},
+		],
+	},
+}
+
+export const Clearable: Story = {
+	args: {
+		label: 'Date de début',
+		modelValue: new Date(2025, 10, 11),
+		clearable: true,
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Affiche une action pour vider la date sélectionnée.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePickerLite
+						v-model="selectedDate"
+						label="Date de début"
+						clearable
+					/>
+				</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DatePickerLite } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const selectedDate = ref<Date | undefined>(new Date(2025, 10, 11))
+				</script>`,
+			},
+		],
+	},
+}
+
+export const Disabled: Story = {
+	args: {
+		label: 'Date de début',
+		modelValue: new Date(2025, 10, 11),
+		disabled: true,
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Désactive la saisie et l’ouverture du sélecteur visuel.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePickerLite
+						v-model="selectedDate"
+						label="Date de début"
+						disabled
+					/>
+				</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DatePickerLite } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const selectedDate = ref<Date | undefined>(new Date(2025, 10, 11))
+				</script>`,
+			},
+		],
+	},
+}
+
+export const Readonly: Story = {
+	args: {
+		label: 'Date de début',
+		modelValue: new Date(2025, 10, 11),
+		readonly: true,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePickerLite
+						v-model="selectedDate"
+						label="Date de début"
+						readonly
+					/>
+				</template>`,
+			},
+		],
+	},
+}
+
+export const CustomInputFormat: Story = {
+	args: {
+		label: 'Date de début',
+		modelValue: new Date(2025, 10, 11),
+		inputFormat: 'YYYY-MM-DD',
+		helpText: 'Format AAAA-MM-JJ',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePickerLite
+						v-model="selectedDate"
+						label="Date de début"
+						input-format="YYYY-MM-DD"
+						help-text="Format AAAA-MM-JJ"
+					/>
+				</template>`,
+			},
+		],
+	},
+}
+
+export const CustomRangeSeparator: Story = {
+	args: {
+		label: 'Période',
+		mode: 'range',
+		modelValue: [new Date(2025, 10, 11), new Date(2025, 10, 21)],
+		separator: ' au ',
+		helpText: 'Format JJ/MM/AAAA au JJ/MM/AAAA',
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePickerLite
+						v-model="selectedRange"
+						mode="range"
+						label="Période"
+						separator=" au "
+						help-text="Format JJ/MM/AAAA au JJ/MM/AAAA"
+					/>
+				</template>`,
 			},
 		],
 	},

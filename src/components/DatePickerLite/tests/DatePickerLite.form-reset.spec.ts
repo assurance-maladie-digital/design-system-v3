@@ -140,6 +140,23 @@ describe('DatePickerLite form reset (SyForm)', () => {
 		expect(events.at(-1)).toEqual([undefined])
 	})
 
+	it('validates a required field on SyForm submission', async () => {
+		const { wrapper } = await mountInForm(`
+			<SyForm>
+				<DatePickerLite label="Début du projet" required />
+			</SyForm>
+		`)
+
+		const syForm = wrapper.findComponent(SyForm)
+		const isValid = await (syForm.vm as unknown as { validate: () => Promise<boolean> }).validate()
+		await nextTick()
+
+		expect(isValid).toBe(false)
+		expect(wrapper.text()).toContain('Le champ Début du projet est requis.')
+
+		wrapper.unmount()
+	})
+
 	it('clears the validation messages displayed before the reset', async () => {
 		const { datePicker, reset } = await mountInForm(`
 			<SyForm>
