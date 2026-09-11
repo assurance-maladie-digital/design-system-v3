@@ -23,6 +23,14 @@ type ReleaseAlert = {
 
 const releaseAlerts: ReleaseAlert[] = [
 	{
+		id: 'theme-css-variables-kebab-case',
+		releaseVersion: 'v1.1.5',
+		message: 'Les variables CSS du thème sont désormais générées en kebab-case : --v-theme-onBackgroundVariant devient --v-theme-on-background-variant. Toutes les clés en camelCase sont concernées.\nUn var() pointant vers l\'ancien nom ne résout plus : la déclaration est ignorée et la couleur retombe sur l\'héritage, ce qui peut dégrader des écrans sans erreur visible.\nPour repérer les usages à migrer dans votre projet : grep -rnE -- "--v-theme-[a-z0-9]*[A-Z]" src/\nPour la liste des variables disponibles, voir la page ',
+		type: 'warning',
+		variant: 'tonal',
+		link: { href: '/?path=/docs/design-tokens-utilisation--docs', text: 'Utilisation' },
+	},
+	{
 		id: 'form-success-messages-hidden',
 		releaseVersion: 'v1.1.0',
 		message: 'Cette version modifie le comportement des composants de formulaire, les messages de succès sont désormais masqués par défaut. Cette modification répond à la fois à des besoins projets et à l\'harmonisation des différents thèmes (CNAM, PAG, Amelipro).\nPour les projets souhaitant afficher les messages de succès vous pouvez simplement le faire via la prop showSuccessMessages.\nLes composants concernés sont :',
