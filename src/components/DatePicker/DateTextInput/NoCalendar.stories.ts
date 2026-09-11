@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/vue3-vite'
+﻿import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import type { DatePickerRule } from '@/components/DatePicker/types'
 import { ref } from 'vue'
@@ -70,41 +70,41 @@ const meta = {
 		},
 		docs: {
 			description: {
-				component: '\n## DatePicker en mode text input (noCalendar) - Incompatibilités entre props\n\n### Contrôle d\'affichage des icônes\n- `noIcon: true` masque toutes les icônes, rendant `displayIcon`, `displayAppendIcon` et `displayPrependIcon` sans effet\n- `displayIcon: false` désactive les icônes, rendant `displayAppendIcon` et `displayPrependIcon` sans effet\n- `displayAppendIcon` et `displayPrependIcon` sont mutuellement exclusifs; si les deux sont définis à `true`, `displayAppendIcon` est prioritaire\n\n### Validation et états de champ\n- `readonly: true` désactive toutes les validations, y compris `required` et les règles personnalisées\n- `disabled` et `readonly` sont mutuellement exclusifs\n- `disableErrorHandling: true` peut créer une incohérence avec `showSuccessMessages: true`\n\n### Format et saisie\n- `displayRange: true` nécessite que modelValue soit un tableau de deux dates `[startDate, endDate]`\n- `autoClamp: true` peut court-circuiter certaines validations manuelles\n',
+				component: '\n## DatePicker en mode text input (noCalendar) - IncompatibilitÃ©s entre props\n\n### ContrÃ´le d\'affichage des icÃ´nes\n- `noIcon: true` masque toutes les icÃ´nes, rendant `displayIcon`, `displayAppendIcon` et `displayPrependIcon` sans effet\n- `displayIcon: false` dÃ©sactive les icÃ´nes, rendant `displayAppendIcon` et `displayPrependIcon` sans effet\n- `displayAppendIcon` et `displayPrependIcon` sont mutuellement exclusifs; si les deux sont dÃ©finis Ã  `true`, `displayAppendIcon` est prioritaire\n\n### Validation et Ã©tats de champ\n- `readonly: true` dÃ©sactive toutes les validations, y compris `required` et les rÃ¨gles personnalisÃ©es\n- `disabled` et `readonly` sont mutuellement exclusifs\n- `disableErrorHandling: true` peut crÃ©er une incohÃ©rence avec `showSuccessMessages: true`\n\n### Format et saisie\n- `displayRange: true` nÃ©cessite que modelValue soit un tableau de deux dates `[startDate, endDate]`\n- `autoClamp: true` peut court-circuiter certaines validations manuelles\n',
 			},
 		},
 	},
 	argTypes: {
 		'onUpdate:modelValue': {
-			description: 'Émis lorsque la valeur du champ est mise à jour',
+			description: 'Ã‰mis lorsque la valeur du champ est mise Ã  jour',
 			table: {
 				category: 'events',
 				type: { summary: '(value: DateValue) => void' },
 			},
 		},
 		'onFocus': {
-			description: 'Émis lorsque le champ reçoit le focus',
+			description: 'Ã‰mis lorsque le champ reÃ§oit le focus',
 			table: {
 				category: 'events',
 				type: { summary: '() => void' },
 			},
 		},
 		'onBlur': {
-			description: 'Émis lorsque le champ perd le focus',
+			description: 'Ã‰mis lorsque le champ perd le focus',
 			table: {
 				category: 'events',
 				type: { summary: '() => void' },
 			},
 		},
 		'onInput': {
-			description: 'Émis lors de la saisie dans le champ',
+			description: 'Ã‰mis lors de la saisie dans le champ',
 			table: {
 				category: 'events',
 				type: { summary: '(value: string) => void' },
 			},
 		},
 		'onDate-selected': {
-			description: 'Émis lorsqu\'une date complète est saisie manuellement',
+			description: 'Ã‰mis lorsqu\'une date complÃ¨te est saisie manuellement',
 			table: {
 				category: 'events',
 				type: { summary: '(value: DateValue) => void' },
@@ -133,99 +133,99 @@ const meta = {
 		},
 		'placeholder': {
 			control: 'text',
-			description: 'Texte indicatif affiché lorsque le champ est vide pour guider l\'utilisateur sur le format attendu',
+			description: 'Texte indicatif affichÃ© lorsque le champ est vide pour guider l\'utilisateur sur le format attendu',
 			defaultValue: 'JJ/MM/AAAA',
 		},
 		'format': {
 			control: 'select',
 			options: ['DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'],
-			description: 'Format d\'affichage de la date dans le champ (ex: DD/MM/YYYY pour jour/mois/année)',
+			description: 'Format d\'affichage de la date dans le champ (ex: DD/MM/YYYY pour jour/mois/annÃ©e)',
 			defaultValue: 'DD/MM/YYYY',
 		},
 		'dateFormatReturn': {
 			control: 'select',
 			options: ['', 'DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'],
-			description: 'Format de la date émise par le v-model. Si vide, utilise le même format que la prop "format"',
+			description: 'Format de la date Ã©mise par le v-model. Si vide, utilise le mÃªme format que la prop "format"',
 			defaultValue: '',
 		},
 		'label': {
 			control: 'text',
-			description: 'Libellé du champ affiché au-dessus ou dans le champ de saisie',
+			description: 'LibellÃ© du champ affichÃ© au-dessus ou dans le champ de saisie',
 			defaultValue: 'Date',
 		},
 		'required': {
 			control: 'boolean',
-			description: 'Définit si le champ est obligatoire et active la validation correspondante',
+			description: 'DÃ©finit si le champ est obligatoire et active la validation correspondante',
 			defaultValue: false,
 		},
 		'disabled': {
 			control: 'boolean',
-			description: 'Désactive le champ, empêchant toute interaction utilisateur et appliquant un style grisé. ⚠️ Incompatible avec readonly.',
+			description: 'DÃ©sactive le champ, empÃªchant toute interaction utilisateur et appliquant un style grisÃ©. âš ï¸ Incompatible avec readonly.',
 			defaultValue: false,
 		},
 		'readonly': {
 			control: 'boolean',
-			description: 'Rend le champ en lecture seule, la valeur peut être affichée mais pas modifiée par l\'utilisateur. ⚠️ Désactive toutes les validations (required, customRules, customWarningRules). Incompatible avec disabled.',
+			description: 'Rend le champ en lecture seule, la valeur peut Ãªtre affichÃ©e mais pas modifiÃ©e par l\'utilisateur. âš ï¸ DÃ©sactive toutes les validations (required, customRules, customWarningRules). Incompatible avec disabled.',
 			defaultValue: false,
 		},
 		'isOutlined': {
 			control: 'boolean',
-			description: 'Affiche le champ avec un contour complet (style outlined de Vuetify) plutôt qu\'un souligné simple',
+			description: 'Affiche le champ avec un contour complet (style outlined de Vuetify) plutÃ´t qu\'un soulignÃ© simple',
 			defaultValue: true,
 		},
 		'displayIcon': {
 			control: 'boolean',
-			description: 'Contrôle l\'affichage de l\'icône calendrier, à utiliser en conjonction avec displayPrependIcon ou displayAppendIcon. ⚠️ Sans effet si noIcon est true.',
+			description: 'ContrÃ´le l\'affichage de l\'icÃ´ne calendrier, Ã  utiliser en conjonction avec displayPrependIcon ou displayAppendIcon. âš ï¸ Sans effet si noIcon est true.',
 			defaultValue: true,
 		},
 		'displayAppendIcon': {
 			control: 'boolean',
-			description: 'Affiche l\'icône calendrier à la fin du champ (à droite). ⚠️ Sans effet si displayIcon est false ou si noIcon est true. Prioritaire sur displayPrependIcon si les deux sont true.',
+			description: 'Affiche l\'icÃ´ne calendrier Ã  la fin du champ (Ã  droite). âš ï¸ Sans effet si displayIcon est false ou si noIcon est true. Prioritaire sur displayPrependIcon si les deux sont true.',
 			defaultValue: false,
 		},
 		'noIcon': {
 			control: 'boolean',
-			description: 'Masque toutes les icônes du composant, remplace les props displayIcon, displayAppendIcon et displayPrependIcon. ⚠️ Incompatible avec displayIcon, displayAppendIcon et displayPrependIcon.',
+			description: 'Masque toutes les icÃ´nes du composant, remplace les props displayIcon, displayAppendIcon et displayPrependIcon. âš ï¸ Incompatible avec displayIcon, displayAppendIcon et displayPrependIcon.',
 			defaultValue: false,
 		},
 		'customRules': {
 			control: 'object',
-			description: 'Règles de validation personnalisées pour la date saisie, affichant des erreurs si non respectées',
+			description: 'RÃ¨gles de validation personnalisÃ©es pour la date saisie, affichant des erreurs si non respectÃ©es',
 			defaultValue: [],
 		},
 		'customWarningRules': {
 			control: 'object',
-			description: 'Règles d\'avertissement pour afficher des messages d\'attention sans bloquer la validation',
+			description: 'RÃ¨gles d\'avertissement pour afficher des messages d\'attention sans bloquer la validation',
 			defaultValue: [],
 		},
 		'errorMessages': {
 			control: 'object',
-			description: 'Messages d\'erreur injectés depuis le parent',
+			description: 'Messages d\'erreur injectÃ©s depuis le parent',
 			defaultValue: null,
 		},
 		'warningMessages': {
 			control: 'object',
-			description: 'Messages d\'avertissement injectés depuis le parent',
+			description: 'Messages d\'avertissement injectÃ©s depuis le parent',
 			defaultValue: null,
 		},
 		'successMessages': {
 			control: 'object',
-			description: 'Messages de succès injectés depuis le parent',
+			description: 'Messages de succÃ¨s injectÃ©s depuis le parent',
 			defaultValue: null,
 		},
 		'displayPrependIcon': {
 			control: 'boolean',
-			description: 'Affiche l\'icône calendrier au début du champ (à gauche). ⚠️ Sans effet si displayIcon est false, si noIcon est true, ou si displayAppendIcon est true.',
+			description: 'Affiche l\'icÃ´ne calendrier au dÃ©but du champ (Ã  gauche). âš ï¸ Sans effet si displayIcon est false, si noIcon est true, ou si displayAppendIcon est true.',
 			defaultValue: true,
 		},
 		'disableErrorHandling': {
 			control: 'boolean',
-			description: 'Désactive la gestion interne des erreurs, permettant à l\'application parente de gérer les validations. ⚠️ Peut créer une incohérence si showSuccessMessages est true.',
+			description: 'DÃ©sactive la gestion interne des erreurs, permettant Ã  l\'application parente de gÃ©rer les validations. âš ï¸ Peut crÃ©er une incohÃ©rence si showSuccessMessages est true.',
 			defaultValue: false,
 		},
 		'showSuccessMessages': {
 			control: 'boolean',
-			description: 'Affiche les messages de succès quand la validation est passée avec succès',
+			description: 'Affiche les messages de succÃ¨s quand la validation est passÃ©e avec succÃ¨s',
 			defaultValue: false,
 		},
 		'bgColor': {
@@ -235,22 +235,22 @@ const meta = {
 		},
 		'displayRange': {
 			control: 'boolean',
-			description: 'Active la sélection de plage de dates (date début - date fin), le v-model retournera un tableau de deux dates. ⚠️ Nécessite que modelValue soit un tableau de deux dates [startDate, endDate] pour fonctionner correctement.',
+			description: 'Active la sÃ©lection de plage de dates (date dÃ©but - date fin), le v-model retournera un tableau de deux dates. âš ï¸ NÃ©cessite que modelValue soit un tableau de deux dates [startDate, endDate] pour fonctionner correctement.',
 			defaultValue: false,
 		},
 		'autoClamp': {
 			control: 'boolean',
-			description: 'Active la mise en forme automatique lors de la saisie (ajout des séparateurs automatiquement). ⚠️ Peut court-circuiter certaines validations manuelles.',
+			description: 'Active la mise en forme automatique lors de la saisie (ajout des sÃ©parateurs automatiquement). âš ï¸ Peut court-circuiter certaines validations manuelles.',
 			defaultValue: false,
 		},
 		'displayAsterisk': {
 			control: 'boolean',
-			description: 'Affiche un astérisque (*) à côté du label pour indiquer visuellement que le champ est obligatoire',
+			description: 'Affiche un astÃ©risque (*) Ã  cÃ´tÃ© du label pour indiquer visuellement que le champ est obligatoire',
 			defaultValue: false,
 		},
 		'width': {
 			control: 'text',
-			description: 'Largeur du champ (peut être en px, %, em, rem ou toute unité CSS valide)',
+			description: 'Largeur du champ (peut Ãªtre en px, %, em, rem ou toute unitÃ© CSS valide)',
 			defaultValue: '100%',
 		},
 		'isValidateOnBlur': {
@@ -261,7 +261,7 @@ const meta = {
 		'density': {
 			control: 'select',
 			options: ['default', 'comfortable', 'compact'],
-			description: 'Densité du champ, affecte l\'espacement interne et la hauteur (standard Vuetify)',
+			description: 'DensitÃ© du champ, affecte l\'espacement interne et la hauteur (standard Vuetify)',
 			defaultValue: 'default',
 		},
 		'title': {
@@ -376,7 +376,7 @@ export const Required: Story = {
 				code: `
 				<template>
 					<div>
-						<h4 class="mb-4">Sans astérisque :</h4>
+						<h4 class="mb-4">Sans astÃ©risque :</h4>
 						<DatePicker
 							v-model="date"
 							format="DD/MM/YYYY"
@@ -386,7 +386,7 @@ export const Required: Story = {
 							is-outlined
 							:no-calendar="true"
 						/>
-						<h4 class="mb-4">Avec astérisque :</h4>
+						<h4 class="mb-4">Avec astÃ©risque :</h4>
 						<DatePicker
 							v-model="date"
 							format="DD/MM/YYYY"
@@ -433,12 +433,12 @@ export const Required: Story = {
 			},
 			template: `
 				<div>
-					<h4 class="mb-4">Sans astérisque :</h4>
+					<h4 class="mb-4">Sans astÃ©risque :</h4>
 					<DatePicker
 						v-model="date"
 						v-bind="args"
 					/>
-					<h4 class="mb-4">Avec astérisque :</h4>
+					<h4 class="mb-4">Avec astÃ©risque :</h4>
 					<DatePicker
 						v-model="date"
 						v-bind="args"
@@ -446,314 +446,6 @@ export const Required: Story = {
 					/>
 				</div>
 			`,
-		}
-	},
-}
-
-export const WithError: Story = {
-	args: {
-		...Default.args,
-		label: 'Date avec erreur injectée',
-		errorMessages: ['Date invalide côté métier'],
-		required: false,
-	},
-	parameters: {
-		docs: {
-			description: {
-				story: 'Expose le cas standard d’un message d’erreur injecté par le parent, comme sur les autres composants migrés.',
-			},
-		},
-	},
-}
-
-export const WithWarning: Story = {
-	args: {
-		...Default.args,
-		modelValue: '20/08/2026',
-		label: 'Date avec warning injecté',
-		warningMessages: ['Date inhabituelle, à vérifier'],
-		required: false,
-	},
-	parameters: {
-		docs: {
-			description: {
-				story: 'Expose le cas standard d’un message d’avertissement injecté par le parent.',
-			},
-		},
-	},
-	render(args) {
-		const date = ref<string | null>('20/08/2026')
-		return {
-			components: { DatePicker },
-			setup() {
-				return { args, date }
-			},
-			template: `
-				<div>
-					<DatePicker
-						v-model="date"
-						v-bind="args"
-					/>
-				</div>
-			`,
-		}
-	},
-}
-
-export const WithSuccess: Story = {
-	args: {
-		...Default.args,
-		modelValue: '20/08/2026',
-		label: 'Date avec succès injecté',
-		showSuccessMessages: true,
-		successMessages: ['Date validée'],
-		required: false,
-	},
-	parameters: {
-		docs: {
-			description: {
-				story: 'Expose le cas standard d’un message de succès injecté par le parent.',
-			},
-		},
-	},
-	render(args) {
-		const date = ref<string | null>('20/08/2026')
-		return {
-			components: { DatePicker },
-			setup() {
-				return { args, date }
-			},
-			template: `
-				<div>
-					<DatePicker
-						v-model="date"
-						v-bind="args"
-					/>
-				</div>
-			`,
-		}
-	},
-}
-
-export const EuropeanFormat: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<div style="padding: 20px;">
-						<h4 class="mb-4">Format européen avec règles de base (format de date valide) :</h4>
-						<DatePicker
-							v-model="date"
-							v-bind="args"
-						/>
-						<div style="margin-top: 10px; font-family: monospace; color: #666;">
-							Valeur (dateFormatReturn: 'YYYY/MM/DD') : {{ date }}
-						</div>
-					</div>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-
-					const date = ref<string | null>(null)
-					const args = {
-						noCalendar: true,
-						format: 'DD/MM/YYYY',
-						dateFormatReturn: 'YYYY/MM/DD',
-						placeholder: 'JJ/MM/AAAA',
-						label: 'Date (JJ/MM/AAAA)',
-						required: true,
-						noIcon: true,
-					}
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		'noCalendar': true,
-		'format': 'DD/MM/YYYY',
-		'dateFormatReturn': 'YYYY/MM/DD',
-		'placeholder': 'JJ/MM/AAAA',
-		'label': 'Date (JJ/MM/AAAA)',
-		'required': true,
-		'noIcon': true,
-		'onUpdate:modelValue': fn(),
-		'onFocus': fn(),
-		'onBlur': fn(),
-	},
-	render(args) {
-		const date = ref<string | null>(null)
-		return {
-			components: { DatePicker },
-			setup() {
-				return { args, date }
-			},
-			template: `
-				<div style="padding: 20px;">
-					<h4 class="mb-4">Format européen avec règles de base (format de date valide) :</h4>
-					<DatePicker
-						v-model="date"
-						v-bind="args"
-					/>
-					<div style="margin-top: 10px; font-family: monospace; color: #666;">
-						Valeur (dateFormatReturn: 'YYYY/MM/DD') : {{ date }}
-					</div>
-				</div>
-			`,
-		}
-	},
-}
-
-export const CustomRules: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<DatePicker
-						v-model="date"
-						date-format-return="DD/MM/YYYY"
-						format="DD/MM/YYYY"
-						placeholder="JJ/MM/AAAA"
-						label="Date avec règles personnalisées (JJ/MM/AAAA)"
-						required
-						no-calendar
-						:custom-rules="[{
-							type: 'custom',
-							options: {
-								validate: value => !value || !value.includes('2024'),
-								message: 'Les dates en 2024 ne sont pas autorisées',
-								successMessage: 'Les dates hors 2024 sont autorisées',
-								fieldIdentifier: 'date'
-							}
-						}]"
-					/>
-				</template>
-				`,
-			},
-		],
-	},
-	args: {
-		'noCalendar': true,
-		'format': 'DD/MM/YYYY',
-		'dateFormatReturn': 'DD/MM/YYYY',
-		'label': 'Date avec règles personnalisées (JJ/MM/AAAA)',
-		'placeholder': 'JJ/MM/AAAA',
-		'required': true,
-		'customRules': [{
-			type: 'custom',
-			options: {
-				validate: (value: unknown) => !value || !(value as string).includes('2024'),
-				message: 'Les dates en 2024 ne sont pas autorisées',
-				successMessage: 'Les dates hors 2024 sont autorisées',
-				fieldIdentifier: 'date',
-			},
-		}],
-		'onUpdate:modelValue': fn(),
-		'onFocus': fn(),
-		'onBlur': fn(),
-	},
-	render(args) {
-		const date = ref<string | null>('21/12/2024')
-		return {
-			components: { DatePicker },
-			setup() {
-				return { args, date }
-			},
-			template: `
-				<div style="padding: 20px;">
-					<h4 class="mb-0">Format avec règles personnalisées :</h4>
-					<p class="mb-4">Les dates en 2024 ne sont pas autorisées</p>
-					<DatePicker
-						v-model="date"
-						v-bind="args"
-					/>
-					<div style="margin-top: 10px; font-family: monospace; color: #666;">
-						Valeur : {{ date }}
-					</div>
-				</div>
-			`,
-		}
-	},
-}
-
-export const WarningRules: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-        <template>
-          <DatePicker
-            v-model="date"
-            format="DD/MM/YYYY"
-            placeholder="JJ/MM/AAAA"
-            label="Date avec règles d'avertissement (JJ/MM/AAAA)"
-            no-calendar
-            :custom-warning-rules="[{
-              type: 'custom',
-              options: {
-                validate: value => !value || !value.includes('2025'),
-                warningMessage: 'Les dates en 2025 ne sont pas autorisées',
-                successMessage: 'Date hors 2025',
-                fieldIdentifier: 'date',
-                isWarning: true
-              }
-            }]"
-          />
-        </template>
-        `,
-			},
-		],
-	},
-	args: {
-		'noCalendar': true,
-		'format': 'DD/MM/YYYY',
-		'placeholder': 'JJ/MM/AAAA',
-		'label': 'Date avec règles d\'avertissement (JJ/MM/AAAA)',
-		'customWarningRules': [{
-			type: 'custom',
-			options: {
-				validate: (value: unknown) => !value || !(value as string).includes('2025'),
-				warningMessage: 'Les dates en 2025 ne sont pas autorisées',
-				successMessage: 'Date hors 2025',
-				fieldIdentifier: 'date',
-				isWarning: true,
-			},
-		}],
-		'onUpdate:modelValue': fn(),
-		'onFocus': fn(),
-		'onBlur': fn(),
-	},
-	render(args) {
-		const date = ref<string | null>('20/12/2025')
-		return {
-			components: { DatePicker },
-			setup() {
-				return { args, date }
-			},
-			template: `
-        <div style="padding: 20px;">
-          <h4 class="mb-0">Format avec règles d'avertissement :</h4>
-          <p class="mb-4">Les dates en 2025 ne sont pas autorisées</p>
-          <DatePicker
-            v-model="date"
-            v-bind="args"
-          />
-          <div style="margin-top: 10px; font-family: monospace; color: #666;">
-            Valeur : {{ date }}
-          </div>
-        </div>
-      `,
 		}
 	},
 }
@@ -769,7 +461,7 @@ export const WithAppendIcon: Story = {
             v-model="date"
             format="DD/MM/YYYY"
             placeholder="JJ/MM/AAAA"
-            label="Date avec icône en suffixe (JJ/MM/AAAA)"
+            label="Date avec icÃ´ne en suffixe (JJ/MM/AAAA)"
             no-calendar
             display-append-icon
           />
@@ -782,7 +474,7 @@ export const WithAppendIcon: Story = {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
 		'placeholder': 'JJ/MM/AAAA',
-		'label': 'Date avec icône en suffixe (JJ/MM/AAAA)',
+		'label': 'Date avec icÃ´ne en suffixe (JJ/MM/AAAA)',
 		'displayAppendIcon': true,
 		'onUpdate:modelValue': fn(),
 		'onFocus': fn(),
@@ -797,7 +489,7 @@ export const WithAppendIcon: Story = {
 			},
 			template: `
         <div style="padding: 20px;">
-          <h4 class="mb-4">Format avec icône en suffixe</h4>
+          <h4 class="mb-4">Format avec icÃ´ne en suffixe</h4>
           <DatePicker
             v-model="date"
             v-bind="args"
@@ -807,359 +499,6 @@ export const WithAppendIcon: Story = {
           </div>
         </div>
       `,
-		}
-	},
-}
-
-export const WithErrorDisabled: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-        <template>
-          <div class="d-flex">
-            <div class="mr-4" style="width: 300px;">
-              <p class="mb-3">Avec <code>disableErrorHandling</code>:</p>
-              <DatePicker
-                v-model="date1"
-                format="DD/MM/YYYY"
-                placeholder="JJ/MM/AAAA"
-                label="Date (JJ/MM/AAAA)"
-                required
-                no-icon
-                no-calendar
-                :disableErrorHandling="true"
-              />
-            </div>
-            <div style="width: 300px;">
-              <p class="mb-3">Sans <code>disableErrorHandling</code>:</p>
-              <DatePicker
-                v-model="date2"
-                format="DD/MM/YYYY"
-                placeholder="JJ/MM/AAAA"
-                label="Date (JJ/MM/AAAA)"
-                required
-                no-icon
-                no-calendar
-              />
-            </div>
-          </div>
-        </template>
-        `,
-			},
-		],
-	},
-	args: {
-		noCalendar: true,
-		format: 'DD/MM/YYYY',
-		dateFormatReturn: 'YYYY/MM/DD',
-		placeholder: 'JJ/MM/AAAA',
-		label: 'Date (JJ/MM/AAAA)',
-		required: true,
-		noIcon: true,
-		disableErrorHandling: true,
-	},
-	render(args) {
-		const date1 = ref<string | null>(null)
-		const date2 = ref<string | null>(null)
-		return {
-			components: { DatePicker },
-			setup() {
-				return { args, date1, date2 }
-			},
-			template: `
-        <div style="padding: 20px;">
-          <h4 class="mb-4">DateTextInput avec désactivation des erreurs</h4>
-          <div class="d-flex mb-4">
-            <div class="mr-4" style="width: 300px;">
-              <p class="mb-3">Avec <code>disableErrorHandling</code>:</p>
-              <DatePicker
-                v-model="date1"
-                v-bind="args"
-              />
-              <div style="margin-top: 10px; font-family: monospace; color: #666;">
-                Valeur : {{ date1 }}
-              </div>
-            </div>
-            
-            <div style="width: 300px;">
-              <p class="mb-3">Sans <code>disableErrorHandling</code>:</p>
-              <DatePicker
-                v-model="date2"
-                format="DD/MM/YYYY"
-                placeholder="JJ/MM/AAAA"
-                label="Date (JJ/MM/AAAA)"
-                required
-                no-icon
-                no-calendar
-              />
-              <div style="margin-top: 10px; font-family: monospace; color: #666;">
-                Valeur : {{ date2 }}
-              </div>
-            </div>
-          </div>
-        </div>
-      `,
-		}
-	},
-}
-
-export const AutoClampFeature: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-        <template>
-          <div class="d-flex flex-column">
-            <h3>Démonstration de l'auto clamp dans DateTextInput</h3>
-            
-            <h4 class="mt-4">Format JJ/MM/AAAA (séparateur /)</h4>
-            <DatePicker
-              v-model="dateSlash"
-              placeholder="JJ/MM/AAAA"
-              label="Date (JJ/MM/AAAA)"
-              format="DD/MM/YYYY"
-              noCalendar
-              autoClamp
-            />
-            
-            <h4 class="mt-4">Format JJ-MM-AAAA (séparateur -)</h4>
-            <DatePicker
-              v-model="dateDash"
-              placeholder="JJ-MM-AAAA"
-              label="Date (JJ-MM-AAAA)"
-              format="DD-MM-YYYY"
-              noCalendar
-              autoClamp
-
-            />
-            
-            <h4 class="mt-4">Format YYYY.MM.DD (séparateur .)</h4>
-            <DatePicker
-              v-model="dateDot"
-              placeholder="AAAA.MM.JJ"
-              label="Date (AAAA.MM.JJ)"
-              format="YYYY.MM.DD"
-              noCalendar
-              autoClamp
-            />
-            
-            <h4 class="mt-4">Mode plage de dates (séparateur /)</h4>
-            <DatePicker
-              v-model="dateRange"
-              placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
-              label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
-              format="DD/MM/YYYY"
-              displayRange
-              noCalendar
-              autoClamp
-            />
-          </div>
-        </template>
-        `,
-			},
-			{
-				name: 'Script',
-				code: `
-        <script setup lang="ts">
-          import { ref } from 'vue'
-          import { DatePicker } from '@cnamts/synapse'
-          
-          const dateSlash = ref('')
-          const dateDash = ref('')
-          const dateDot = ref('')
-          const dateRange = ref('')
-        </script>
-        `,
-			},
-		],
-	},
-	render: () => {
-		return {
-			components: { DatePicker },
-			setup() {
-				const dateSlash = ref('')
-				const dateDash = ref('')
-				const dateDot = ref('')
-				const dateRange = ref('')
-				return { dateSlash, dateDash, dateDot, dateRange }
-			},
-			template: `
-        <div class="d-flex flex-column pa-4">
-          <h3>Démonstration de l'auto clamp dans DateTextInput</h3>
-          <div class="mb-4 mt-2">Saisissez uniquement des chiffres - les séparateurs seront ajoutés automatiquement selon le format défini</div>
-          
-          <h4 class="mb-2">Format JJ/MM/AAAA (séparateur /)</h4>
-          <DatePicker
-            v-model="dateSlash"
-            placeholder="JJ/MM/AAAA"
-            label="Date (JJ/MM/AAAA)"
-            format="DD/MM/YYYY"
-            noCalendar
-            autoClamp
-          />
-          <div class="caption mb-4">Valeur actuelle: {{ dateSlash || 'aucune date saisie' }}</div>
-          
-          <h4 class="mb-2">Format JJ-MM-AAAA (séparateur -)</h4>
-          <DatePicker
-            v-model="dateDash"
-            placeholder="JJ-MM-AAAA"
-            label="Date (JJ-MM-AAAA)"
-            format="DD-MM-YYYY"
-            noCalendar
-            autoClamp
-          />
-          <div class="caption mb-4">Valeur actuelle: {{ dateDash || 'aucune date saisie' }}</div>
-          
-          <h4 class="mb-2">Format AAAA.MM.JJ (séparateur .)</h4>
-          <DatePicker
-            v-model="dateDot"
-            placeholder="AAAA.MM.JJ"
-            label="Date (AAAA.MM.JJ)"
-            format="YYYY.MM.DD"
-            noCalendar
-            autoClamp
-          />
-          <div class="caption mb-4">Valeur actuelle: {{ dateDot || 'aucune date saisie' }}</div>
-          
-          <h4 class="mb-2">Mode plage de dates (séparateur /)</h4>
-          <DatePicker
-            v-model="dateRange"
-            placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
-            label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
-            format="DD/MM/YYYY"
-            displayRange
-            noCalendar
-            autoClamp
-          />
-          <div class="caption mb-4">Valeur actuelle: {{ dateRange || 'aucune plage saisie' }}</div>
-        </div>
-      `,
-		}
-	},
-}
-
-export const DifferentFormats: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<div class="d-flex flex-column gap-4">
-						<DatePicker
-							v-model="value1"
-							placeholder="JJ/MM/AAAA"
-							label="Date (JJ/MM/AAAA)"
-							format="DD/MM/YYYY"
-							no-calendar
-						/>
-						<DatePicker
-							v-model="value2"
-							placeholder="MM/JJ/AAAA"
-							label="Date (MM/JJ/AAAA)"
-							format="MM/DD/YYYY"
-							no-calendar
-						/>
-						<DatePicker
-							v-model="value3"
-							placeholder="AAAA-MM-JJ"
-							label="Date (AAAA-MM-JJ)"
-							format="YYYY-MM-DD"
-							no-calendar
-						/>
-						<DatePicker
-							v-model="value4"
-							placeholder="JJ-MM-AA"
-							label="Date (JJ-MM-AA)"
-							format="DD-MM-YY"
-							no-calendar
-						/>
-						<DatePicker
-							v-model="value5"
-							placeholder="JJ.MM.AAAA"
-							label="Date (JJ.MM.AAAA)"
-							format="DD.MM.YYYY"
-							no-calendar
-						/>
-					</div>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-				const value1 = ref('24/12/2025')
-				const value2 = ref('12/24/2025')
-				const value3 = ref('2025-12-24')
-				const value4 = ref('24-12-25')
-				const value5 = ref('24.12.2025')
-				</script>
-				`,
-			},
-		],
-	},
-	render: () => {
-		return {
-			components: { DatePicker: DatePicker },
-			setup() {
-				const value1 = ref('24/12/2025')
-				const value2 = ref('12/24/2025')
-				const value3 = ref('2025-12-24')
-				const value4 = ref('24-12-25')
-				const value5 = ref('25.12.2025')
-				return { value1, value2, value3, value4, value5 }
-			},
-			template: `
-              <div class="d-flex flex-column gap-4 pa-4">
-                <DatePicker
-                    v-model="value1"
-                    placeholder="JJ/MM/AAAA"
-					label="Date (JJ/MM/AAAA)"
-                    format="DD/MM/YYYY"
-                    no-calendar
-                    class="py-4"
-                />
-                <DatePicker
-                    v-model="value2"
-                    placeholder="MM/JJ/AAAA"
-					label="Date (MM/JJ/AAAA)"
-                    format="MM/DD/YYYY"
-					no-calendar
-					class="py-4"
-                />
-                <DatePicker
-                    v-model="value3"
-                    placeholder="AAAA-MM-JJ"
-					label="Date (AAAA-MM-JJ)"
-                    format="YYYY-MM-DD"
-					no-calendar
-					class="py-4"
-                />
-                <DatePicker
-                    v-model="value4"
-                    placeholder="JJ-MM-AA"
-					label="Date (JJ-MM-AA)"
-                    format="DD-MM-YY"
-					no-calendar
-					class="py-4"
-                />
-                <DatePicker
-                    v-model="value5"
-                    placeholder="JJ.MM.AAAA"
-					label="Date (JJ.MM.AAAA)"
-                    format="DD.MM.YYYY"
-					no-calendar
-					class="py-4"
-                />
-              </div>
-            `,
 		}
 	},
 }
