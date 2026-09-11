@@ -85,6 +85,7 @@
 		useSelectedDayAria,
 		useTodayButton,
 		validateDateFormat as validateDateFormatUtil,
+		useDateAutoClamp,
 		useDatePickerDerivedValues,
 		useDatePickerSyncGuard,
 		useDatePickerCalendar,
@@ -125,6 +126,7 @@
 	const { parseDate, formatDate } = useDateFormat()
 	const { initializeSelectedDates } = useDateInitialization()
 	const { updateAccessibility, cleanupGridSemantics } = useDatePickerAccessibility()
+	const { autoClampDate } = useDateAutoClamp()
 
 	// ─── Sync guard : flags anti-boucle & état d'interaction ──────────
 	// Ces flags coordonnent la réactivité entre les watchers de selectedDates,
@@ -1105,6 +1107,21 @@
 	// on l'ignore et on émet juste l'événement blur sans valider.
 	// Sinon, on synchronise la valeur saisie et on délègue à handleInputBlur
 	// (useDatePickerInputBlurHandler) qui valide et met à jour le modèle.
+	const clampDisplayValue = (value: string): string => {
+		if (!props.autoClamp || !value) return value
+
+		if (props.displayRange && value.includes(locales.rangeSeparator)) {
+			const [startStr = '', endStr = ''] = value.split(locales.rangeSeparator).map(s => s.trim())
+			const clampedStart = autoClampDate(startStr, props.format).clampedDate
+			const clampedEnd = autoClampDate(endStr, props.format).clampedDate
+			return endStr
+				? `${clampedStart}${locales.rangeSeparator}${clampedEnd}`
+				: `${clampedStart}${locales.rangeSeparator}`
+		}
+
+		return autoClampDate(value, props.format).clampedDate
+	}
+
 	const handleCalendarInputBlur = async () => {
 		if (consumeIgnoreNextInputBlur()) {
 			emitBlurEvent()
@@ -1113,9 +1130,17 @@
 
 		const input = getCalendarInputElement()
 		if (input) {
+			let value = input.value
+			if (props.autoClamp && value) {
+				const clamped = clampDisplayValue(value)
+				if (clamped !== value) {
+					value = clamped
+					input.value = value
+				}
+			}
 			withInternalUpdate(() => {
-				displayFormattedDate.value = input.value
-				textInputValue.value = input.value
+				displayFormattedDate.value = value
+				textInputValue.value = value
 			})
 		}
 

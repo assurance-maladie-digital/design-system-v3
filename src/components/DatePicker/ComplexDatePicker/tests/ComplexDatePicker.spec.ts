@@ -538,6 +538,25 @@ describe('ComplexDatePicker.clean', () => {
 		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('30/04/2025')
 	})
 
+	it('autoClamp in combined mode clears errors after clamp on blur', async () => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			autoClamp: true,
+		})
+
+		const input = wrapper.find('input')
+		await input.setValue('31/04/2025')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(input.element.value).toBe('30/04/2025')
+		expect(wrapper.vm.errorMessages.length).toBe(0)
+		const emitted = wrapper.emitted('update:modelValue')
+		expect(emitted).toBeTruthy()
+		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('30/04/2025')
+	})
+
 	it('respects disabled and readonly props when opening the calendar', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',

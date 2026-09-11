@@ -40,7 +40,7 @@ export const WithError: Story = {
     placeholder="JJ/MM/AAAA"
     format="DD/MM/YYYY"
     :custom-rules="[
-      { type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd'hui' } }
+      { type: 'notAfterToday', options: { message: "La date ne peut pas être après aujourd'hui" } }
     ]"
     show-success-messages
   />
@@ -69,7 +69,7 @@ onMounted(() => {
 		format: 'DD/MM/YYYY',
 		showSuccessMessages: true,
 		customRules: [
-			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd hui' } },
+			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd\'hui' } },
 		],
 	},
 	render: args => ({
@@ -1113,8 +1113,9 @@ export const VFormVuetifyValidation: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <VForm ref="formRef" @submit.prevent="onSubmit">
+  <VForm @submit.prevent="onSubmit">
     <DatePicker
+      ref="datePickerRef"
       v-model="value"
       label="Date (JJ/MM/AAAA)"
       placeholder="JJ/MM/AAAA"

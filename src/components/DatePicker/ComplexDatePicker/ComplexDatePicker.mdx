@@ -1,5 +1,7 @@
 import {Meta, Canvas, Controls, Source} from '@storybook/addon-docs/blocks';
 import * as DatePickerStories from "./ComplexDatePicker.stories.ts";
+import * as GestionDesFormatsStories from "./gestionDesFormats/GestionDesFormats.stories.ts";
+import * as ValidationStories from "./validation/Validation.stories.ts";
 
 <Meta of={DatePickerStories}/>
 
@@ -39,11 +41,11 @@ Propriétés applicables pour le mode combiné :
 
 Le composant ComplexDatePicker offre un formatage automatique intelligent des dates pendant la saisie. Les séparateurs sont automatiquement ajoutés lors de la saisie des chiffres, en s'adaptant au format spécifié (DD/MM/YYYY, MM/DD/YYYY, YYYY-MM-DD, etc.).
 
-<Canvas of={DatePickerStories.AutoFormattingInput}/>
+<Canvas of={GestionDesFormatsStories.AutoFormattingInput}/>
 
 ## Désactivation de l'interaction avec le calendrier
 
-La propriété `disablePickerInteraction` permet d'utiliser le champ de saisie avec formatage automatique sans que le calendrier n'apparaisse au clic sur l'input ou sur l'icône. Cette option est utile pour les cas où on souhaite uniquement la saisie manuelle.
+La propriété `noCalendar` permet d'utiliser le champ de saisie avec formatage automatique sans que le calendrier n'apparaisse au clic sur l'input ou sur l'icône. Cette option est utile pour les cas où on souhaite uniquement la saisie manuelle.
 
 <Canvas of={DatePickerStories.DisablePickerInteraction}/>
 
@@ -53,7 +55,7 @@ Le composant supporte différents formats de date et détecte automatiquement le
 
 Les bornes `period.min` et `period.max` doivent rester exprimées dans le même format que la prop `format`, car elles sont fournies directement au calendrier.
 
-<Canvas of={DatePickerStories.CustomDateFormat}/>
+<Canvas of={GestionDesFormatsStories.CustomDateFormat}/>
 
 ## Mode lecture seule
 
@@ -96,19 +98,19 @@ Vous pouvez personnaliser la position de l'icône du calendrier (au début ou à
 
 Le composant prend en charge des règles de validation personnalisées pour vérifier les dates saisies.
 
-<Canvas of={DatePickerStories.WithValidation}/>
+<Canvas of={ValidationStories.WithValidation}/>
 
 ## Formats de retour différents
 
 Vous pouvez spécifier un format différent pour la valeur de retour avec la propriété `dateFormatReturn`.
 
-<Canvas of={DatePickerStories.WithDateFormatReturn}/>
+<Canvas of={GestionDesFormatsStories.WithDateFormatReturn}/>
 
 ## Intégration dans un formulaire
 
 Le composant s'intègre facilement dans un formulaire avec validation à la soumission.
 
-<Canvas of={DatePickerStories.WithFormSubmission}/>
+<Canvas of={ValidationStories.WithFormSubmission}/>
 
 # Méthodes exposées
 
@@ -177,7 +179,6 @@ Le composant expose plusieurs méthodes qui peuvent être utilisées via une ré
 	import { DatePicker } from '@cnamts/synapse'
 
 	const date = ref('')
-import '../../../stories/styles/shared.css';
 </script>
 
 <template>
