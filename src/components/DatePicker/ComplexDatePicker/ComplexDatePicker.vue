@@ -1294,7 +1294,7 @@
 		formatDate,
 		updateModel,
 		// Wrapper : délègue au flow texte de validate()
-		validateTextInput: (value: string) => validate({ textValue: value }) as Promise<boolean>,
+		validateTextInput: (value: string) => validate({ textValue: value, force: true }) as Promise<boolean>,
 		emitBlur: emitBlurEvent,
 	})
 

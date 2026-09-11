@@ -404,6 +404,12 @@ describe('DatePicker', () => {
 		expect(vm.isDatePickerVisible).toBe(false)
 		expect(wrapper.find('input').element.value).toBe('18/08/2026')
 		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2026-08-18')
+
+		// Avec isValidateOnBlur: true (défaut), la validation se fait au blur, pas à la fermeture du calendrier.
+		// On déclenche le blur pour que l'erreur de customRule soit affichée.
+		await wrapper.find('input').trigger('blur')
+		await flushPromises()
+
 		expect(vm.errorMessages).toContain('La date ne peut pas être antérieure à aujourd\'hui')
 
 		vi.useRealTimers()
