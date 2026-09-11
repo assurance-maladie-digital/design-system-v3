@@ -46,4 +46,24 @@ describe('useDatePickerLiteDateSelection', () => {
 
 		expect(close).not.toHaveBeenCalled()
 	})
+
+	it('should toggle by day regardless of the time component in multiple mode', () => {
+		const close = vi.fn()
+		const modelValue = ref<Date[]>([new Date(2026, 8, 11, 14, 30)])
+		const onUpdateModelValue = vi.fn((value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined) => {
+			if (Array.isArray(value)) modelValue.value = value
+		})
+		const { setDay } = useDatePickerLiteDateSelection({
+			mode: ref('multiple'),
+			modelValue,
+			readonly: ref(false),
+			disabled: ref(false),
+			onUpdateModelValue,
+			close,
+		})
+
+		// A click on the day cell (midnight) toggles off the same day selected at 14:30
+		setDay(new Date(2026, 8, 11))
+		expect(onUpdateModelValue).toHaveBeenLastCalledWith([])
+	})
 })

@@ -25,7 +25,7 @@ export function useDatePickerLiteDateSelection({
 		if (mode.value === 'multiple') {
 			if (!readonly.value && !disabled.value) {
 				const selectedDates = Array.isArray(modelValue.value) ? modelValue.value : []
-				const existingDateIndex = selectedDates.findIndex(date => date.getTime() === value.getTime())
+				const existingDateIndex = selectedDates.findIndex(date => date.toDateString() === value.toDateString())
 				onUpdateModelValue(existingDateIndex === -1
 					? [...selectedDates, value]
 					: selectedDates.filter((_, index) => index !== existingDateIndex))

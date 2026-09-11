@@ -20,7 +20,9 @@
 	}>()
 
 	function selectCurrent() {
-		emits('update:modelValue', props.format(new Date()))
+		const now = new Date()
+		const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+		emits('update:modelValue', props.format(today))
 	}
 </script>
 

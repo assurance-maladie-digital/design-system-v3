@@ -57,6 +57,22 @@ describe('DatePickerLite multiple v-model integration', () => {
 		await nextTick()
 		expect(input.element.value).toBe('01/10/2025, 07/10/2025')
 
+		// Clicking the "today" footer twice must not duplicate the day
+		selectedDates.value = undefined
+		await nextTick()
+		await openMenu(wrapper)
+		const todayBtn = document.querySelector('.month-picker-footer__current-month-btn') as HTMLElement
+		todayBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+		await nextTick()
+		await nextTick()
+		expect(selectedDates.value).toEqual([new Date(2025, 8, 1)])
+
+		todayBtn.dispatchEvent(new MouseEvent('click', { bubbles: true }))
+		await nextTick()
+		await nextTick()
+
+		expect(selectedDates.value).toBeUndefined()
+
 		wrapper.unmount()
 	})
 })
