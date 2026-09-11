@@ -26,28 +26,22 @@ const VSheetStub = defineComponent({
 	template: '<div class="v-sheet-stub"><slot /></div>',
 })
 
-function mountCaptchaForm(props = {}) {
-	return mount(CaptchaForm, {
-		props: {
-			label: 'Captcha label',
-			locales,
-			...props,
-		},
-		global: {
-			stubs: {
-				VSheet: VSheetStub,
-				SyTextField: SyTextFieldStub,
-			},
-		},
-	})
-}
-
 describe('CaptchaForm', () => {
 	it('forwards current captcha props to SyTextField', () => {
-		const wrapper = mountCaptchaForm({
-			state: 'rejected',
-			errorMessages: ['error message'],
-			success: true,
+		const wrapper = mount(CaptchaForm, {
+			props: {
+				label: 'Captcha label',
+				locales,
+				state: 'rejected',
+				errorMessages: ['error message'],
+				success: true,
+			},
+			global: {
+				stubs: {
+					VSheet: VSheetStub,
+					SyTextField: SyTextFieldStub,
+				},
+			},
 		})
 
 		const textField = wrapper.findComponent({ name: 'SyTextField' })
@@ -64,9 +58,19 @@ describe('CaptchaForm', () => {
 	})
 
 	it('emits update:modelValue when SyTextField updates the value', async () => {
-		const wrapper = mountCaptchaForm({
-			errors: [],
-			success: false,
+		const wrapper = mount(CaptchaForm, {
+			props: {
+				label: 'Captcha label',
+				locales,
+				errors: [],
+				success: false,
+			},
+			global: {
+				stubs: {
+					VSheet: VSheetStub,
+					SyTextField: SyTextFieldStub,
+				},
+			},
 		})
 
 		const textField = wrapper.findComponent({ name: 'SyTextField' })

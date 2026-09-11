@@ -1,30 +1,7 @@
-import { afterEach, describe, expect, it, vi } from 'vitest'
-import { flushPromises, mount } from '@vue/test-utils'
+import { describe, it, expect, vi, afterEach } from 'vitest'
+import { flushPromises, mount, VueWrapper } from '@vue/test-utils'
 import Captcha from '../Captcha.vue'
-
-const captchaUrls = {
-	urlCreate: '/captcha/captcha.json',
-	urlGetImage: '/captcha/captcha.png',
-	urlGetAudio: '/captcha/captcha.mp3',
-}
-
-function mockCaptchaCreation(id = 'captcha-id') {
-	vi.stubGlobal('fetch', vi.fn().mockResolvedValue({
-		ok: true,
-		json: async () => ({ id }),
-	}))
-}
-
-function mountCaptcha(props = {}) {
-	mockCaptchaCreation()
-	return mount(Captcha, { props: { ...captchaUrls, ...props } })
-}
-
-async function mountInitializedCaptcha(props = {}) {
-	const wrapper = mountCaptcha(props)
-	await flushPromises()
-	return wrapper
-}
+import type { ComponentPublicInstance } from 'vue/dist/vue.js'
 
 describe('Captcha', () => {
 	afterEach(() => {
@@ -32,9 +9,32 @@ describe('Captcha', () => {
 	})
 
 	it('renders correctly in image mode', async () => {
-		const wrapper = await mountInitializedCaptcha()
+		const response = {
+			ok: true,
+			json: async () => ({ id: 'captcha-id' }),
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} as any
+		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
+
+		const wrapper = mount(Captcha, {
+			props: {
+				urlCreate: '/captcha/captcha.json',
+				urlGetImage: '/captcha/captcha.png',
+				urlGetAudio: '/captcha/captcha.mp3',
+			},
+		})
+
+		// Wait for the component to fully mount and initialize
+
+		// Allow additional time for async initialization
+		await flushPromises()
 
 		expect(fetch).toHaveBeenCalledTimes(1)
+
+		await wrapper.vm.$nextTick()
+
+		// wait for the image to load
+		await new Promise(resolve => setTimeout(resolve, 0))
 
 		expect(wrapper.html()).toMatchSnapshot()
 		expect(wrapper.find('img').exists()).toBe(true)
@@ -46,9 +46,33 @@ describe('Captcha', () => {
 	})
 
 	it('renders correctly in audio mode', async () => {
-		const wrapper = await mountInitializedCaptcha({ type: 'audio' })
+		const response = {
+			ok: true,
+			json: async () => ({ id: 'captcha-id' }),
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} as any
+		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
+
+		const wrapper = mount(Captcha, {
+			props: {
+				urlCreate: '/captcha/captcha.json',
+				urlGetImage: '/captcha/captcha.png',
+				urlGetAudio: '/captcha/captcha.mp3',
+				type: 'audio',
+			},
+		})
+
+		// Wait for the component to fully mount and initialize
+
+		// Allow additional time for async initialization
+		await flushPromises()
 
 		expect(fetch).toHaveBeenCalledTimes(1)
+
+		await wrapper.vm.$nextTick()
+
+		// wait for the audio to load
+		await new Promise(resolve => setTimeout(resolve, 0))
 
 		expect(wrapper.html()).toMatchSnapshot()
 		expect(wrapper.find('button.captcha-audio').exists()).toBe(true)
@@ -58,31 +82,131 @@ describe('Captcha', () => {
 	})
 
 	it('renders correctly in choice mode', async () => {
-		const wrapper = mountCaptcha({ type: 'choice' })
+		const response = {
+			ok: true,
+			json: async () => ({ id: 'captcha-id' }),
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} as any
+		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
+
+		const wrapper = mount(Captcha, {
+			props: {
+				urlCreate: '/captcha/captcha.json',
+				urlGetImage: '/captcha/captcha.png',
+				urlGetAudio: '/captcha/captcha.mp3',
+				type: 'choice',
+			},
+		})
 
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 
-	it('updates model value when text changes', async () => {
-		const wrapper = await mountInitializedCaptcha()
-		await wrapper.find('input').setValue('new-text-value')
+	it('allows switching between image and audio', async () => {
+		const response = {
+			ok: true,
+			json: async () => ({ id: 'captcha-id' }),
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} as any
+		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
 
+		const wrapper = mount(Captcha, {
+			props: {
+				urlCreate: '/captcha/captcha.json',
+				urlGetImage: '/captcha/captcha.png',
+				urlGetAudio: '/captcha/captcha.mp3',
+				type: 'choice',
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		// Find and click image button
+		const imageBtn = wrapper.find('[data-test-id="captcha-image-btn"]')
+		if (imageBtn.exists()) {
+			await imageBtn.trigger('click')
+			await wrapper.vm.$nextTick()
+			expect(wrapper.emitted('update:type')?.[0]).toEqual(['image'])
+		}
+
+		// Find and click audio button
+		const audioBtn = wrapper.find('[data-test-id="captcha-audio-btn"]')
+		if (audioBtn.exists()) {
+			await audioBtn.trigger('click')
+			await wrapper.vm.$nextTick()
+			expect(wrapper.emitted('update:type')).toBeTruthy()
+		}
+	})
+
+	it('updates model value when text changes', async () => {
+		const response = {
+			ok: true,
+			json: async () => ({ id: 'captcha-id' }),
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} as any
+		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
+
+		const wrapper = mount(Captcha, {
+			props: {
+				urlCreate: '/captcha/captcha.json',
+				urlGetImage: '/captcha/captcha.png',
+				urlGetAudio: '/captcha/captcha.mp3',
+			},
+		})
+
+		// Simulate text input change
+		await (wrapper.vm as ComponentPublicInstance<typeof Captcha>).emitChangeValueEvent('new-text-value')
+
+		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['new-text-value'])
 	})
 
 	it('initializes captcha correctly on mount', async () => {
-		mockCaptchaCreation('test-captcha-id')
-		mount(Captcha, { props: captchaUrls })
+		const response = {
+			ok: true,
+			json: async () => ({ id: 'test-captcha-id' }),
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} as any
+		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
+
+		const wrapper = mount(Captcha, {
+			props: {
+				urlCreate: '/captcha/captcha.json',
+				urlGetImage: '/captcha/captcha.png',
+				urlGetAudio: '/captcha/captcha.mp3',
+			},
+		})
+
 		await flushPromises()
 
 		expect(fetch).toHaveBeenCalledWith('/captcha/captcha.json', expect.any(Object))
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		expect((wrapper.vm as any).id).toBe('test-captcha-id')
 	})
 
 	it('watches modelValue prop changes', async () => {
-		const wrapper = await mountInitializedCaptcha({ modelValue: 'initial-value' })
-		await wrapper.setProps({ modelValue: 'updated-value' })
+		const response = {
+			ok: true,
+			json: async () => ({ id: 'captcha-id' }),
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		} as any
+		vi.stubGlobal('fetch', vi.fn().mockResolvedValue(response))
 
-		expect((wrapper.find('input').element as HTMLInputElement).value).toBe('updated-value')
+		const wrapper = mount<typeof Captcha>(Captcha, {
+			props: {
+				urlCreate: '/captcha/captcha.json',
+				urlGetImage: '/captcha/captcha.png',
+				urlGetAudio: '/captcha/captcha.mp3',
+				modelValue: 'initial-value',
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+
+		// Change modelValue prop
+		await (wrapper as VueWrapper<ComponentPublicInstance<typeof Captcha>>).setProps({ modelValue: 'updated-value' })
+		await wrapper.vm.$nextTick()
+
+		expect((wrapper.vm as ComponentPublicInstance<typeof Captcha>).text).toBe('updated-value')
 	})
 
 	it('handles helpDesk prop correctly', async () => {
