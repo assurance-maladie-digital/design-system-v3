@@ -12,9 +12,22 @@
 - Marques supportées : **CNAM / PA (Portail Agents) / AmeliPro**.
 - Fort engagement **accessibilité (RGAA)** : c'est un critère de qualité non négociable.
 
+## 2. Skills de référence
+
+Les règles génériques sont déléguées aux skills installés. Les charger avant toute tâche relevant de leur domaine :
+
+- `vue-best-practices` et `vue` pour Vue 3, les composants, la réactivité et le SSR ;
+- `vite` pour Vite, la configuration et les builds ;
+- `vitest` pour les tests unitaires ;
+- `pnpm` pour la gestion des dépendances et des workspaces ;
+- `antfu` pour l'outillage TypeScript et JavaScript.
+- `review` pour les revues de code, de pull requests et de diffs propres à Synapse.
+
+Les instructions ci-dessous ne précisent que les conventions et contraintes propres à Synapse.
+
 ---
 
-## 2. Stack & environnement
+## 3. Stack & environnement
 
 | Élément | Détail |
 |---|---|
@@ -33,7 +46,7 @@
 
 ---
 
-## 3. Commandes essentielles
+## 4. Commandes essentielles
 
 Utiliser **pnpm** exclusivement.
 
@@ -89,7 +102,7 @@ Ne lancer `pnpm build` / `pnpm test:unit` complets que si le changement est tran
 
 ---
 
-## 4. Architecture de `src/`
+## 5. Architecture de `src/`
 
 ```
 src/
@@ -112,7 +125,7 @@ src/
 
 ---
 
-## 5. Anatomie d'un composant (convention forte)
+## 6. Anatomie d'un composant (convention forte)
 
 Chaque composant vit dans `src/components/<Nom>/` et suit ce patron :
 
@@ -181,7 +194,7 @@ Règles :
 
 ---
 
-## 6. Conventions de test
+## 7. Conventions de test
 
 **Philosophie : tester en boîte noire.** Un test part des **props** et des **interactions utilisateur** (clic, saisie, clavier), puis vérifie le **rendu HTML** et les **événements émis**. On teste le composant tel que l'utilisateur / le consommateur le voit, pas son fonctionnement interne.
 
@@ -204,7 +217,7 @@ Sur WSL, utiliser `test:visual:open` pour l'inspection seulement ; générer les
 
 ---
 
-## 7. Accessibilité (RGAA) — non négociable
+## 8. Accessibilité (RGAA) — non négociable
 
 - Tout nouveau composant ou markup modifié doit disposer d'un test `*.a11y.spec.ts` (axe) et ne pas régresser `a11y-report.md`.
 - Privilégier les **directives a11y** du DS (`vToolbar`, `vLockFocus`, `vRgaaSvgFix`, `clickOutside`) plutôt que du code ad hoc — détail dans [doc/Directives/README.md](doc/Directives/README.md).
@@ -213,7 +226,7 @@ Sur WSL, utiliser `test:visual:open` pour l'inspection seulement ; générer les
 
 ---
 
-## 8. Patterns transverses & doc de référence
+## 9. Patterns transverses & doc de référence
 
 **Lire la doc du domaine concerné dans `doc/` avant de modifier le code associé.**
 
@@ -229,7 +242,7 @@ Sur WSL, utiliser `test:visual:open` pour l'inspection seulement ; générer les
 
 ---
 
-## 9. Garde-fous (rappel)
+## 10. Garde-fous (rappel)
 
 Règles à fort impact, non redites ailleurs :
 
@@ -240,10 +253,11 @@ Règles à fort impact, non redites ailleurs :
 - **Discipline dépendances** : ne pas ajouter de nouvelle dépendance sans justification explicite. Chaque dep ajoute du poids au bundle des consommateurs. Privilégier une solution locale (composable, utilitaire) à un package externe pour de la logique simple. Les deps ajoutées doivent être en `peerDependencies` si elles sont partagées avec le consommateur (ex. `vue`, `vuetify`), en `dependencies` sinon.
 - **Discipline TypeScript** : `any` est interdit dans le nouveau code (utiliser `unknown` + type guard si besoin). Les assertions de type (`as`) sont à éviter sauf cas justifié (interopérabilité Vuetify). Préférer l'inférence de type aux annotations explicites quand le type est évident. Tout type exporté doit être explicite et documenté.
 - **Sécurité** : `v-html` est **interdit** sauf cas validé en review (contenu statique ou sanitizé). Ne jamais interpoler du contenu utilisateur sans échappement. Les inputs utilisateur doivent être validés avant stockage dans l'état du composant.
+- **Respecter les scopes des états** : conserver l'état au plus près du composant qui l'utilise. Un état doit avoir une seule source de vérité et un unique responsable de sa mutation ; ne le remonter ou ne le partager que lorsque plusieurs consommateurs en ont réellement besoin.
 
 ---
 
-## 10. Commits & branches
+## 11. Commits & branches
 
 Conventions **standard**, appliquées par le hook Husky de pre-commit ([.husky/pre-commit](.husky/pre-commit)) :
 
@@ -252,58 +266,6 @@ Conventions **standard**, appliquées par le hook Husky de pre-commit ([.husky/p
   - Description : lettres, chiffres et tirets uniquement (`[a-zA-Z0-9-]+`), ex. `feat/sy-alert-dismiss`.
 - Le pre-commit lance `pnpm run lint:fix` : le code doit passer lint/format avant commit.
 - **Aucune convention imposée sur le message de commit** ; rester clair et concis.
-
 ---
 
-## 11. Philosophie de contribution & review
 
-> **Principe directeur : la solution la plus simple qui résout le problème, sans en créer de nouveaux.**
-
-### Avant de coder
-
-1. **Comprendre avant d'agir** : lire le code existant et la documentation associée avant toute modification.
-2. **Identifier la cause racine** : ne pas patcher un symptôme en aval. Remonter à la source du problème.
-3. **Vérifier s'il existe déjà une solution** : un composable, une directive, un utilitaire du DS fait peut-être déjà le job. Ne pas réinventer.
-
-### Pendant l'implémentation
-
-4. **Minimalisme** : préférer un changement d'une ligne à un refactoring. Ne pas refactorer du code non concerné par la tâche.
-5. **Pas d'over-engineering** : pas de couche d'abstraction supplémentaire, pas de genericité speculative, pas de « au cas où ». Le code doit répondre au besoin **actuel**, pas à un besoin hypothétique futur.
-6. **Pas de duplication** : si la même logique existe déjà (composable, utilitaire, constante), réutiliser. Si on est tenté de copier-coller, extraire dans un composable/utilitaire partagé.
-7. **Respecter les conventions existantes** : le nouveau code doit avoir la même tête que le code environnant (style, patterns, nommage). Si le projet utilise des tabs, on utilise des tabs.
-8. **Pas de fichier orphelin** : ne pas créer de fichier (script, doc, helper) qui n'est pas intégré au projet (exports, index.ts, build). Chaque fichier doit avoir une raison d'exister et être branché.
-
-### Avant de valider
-
-9. **Test de régression** : si on corrige un bug, ajouter un test qui reproduit le scénario ayant échoué.
-10. **Pas de régression a11y** : si le markup change, le test `*.a11y.spec.ts` doit passer.
-11. **Vérifier l'impact sur les consommateurs** : c'est une **librairie publique**. Tout changement d'API publique (props, emits, slots, exports) doit être rétro-compatible ou documenté comme breaking change.
-
-### Anti-patterns à refuser en review
-
-- **« Ça marche chez moi »** sans comprendre pourquoi ça marchait pas avant.
-- **Accès direct au DOM** (`querySelector`, `$el`, `window`) quand un mécanisme Vue existe (v-model, props, emits, refs template).
-- **Watcher en cascade** pour synchroniser des états qui devraient être dérivés (computed).
-- **Flag booléen** (`isUpdating`, `isFormatting`) pour éviter des boucles — c'est souvent le signe d'un problème de conception plus profond.
-- **setTimeout / queueMicrotask** pour « attendre que Vue mette à jour » — préférer `nextTick()` ou restructurer la réactivité.
-- **Nouveau composable** pour de la logique qui tient en 3 lignes et n'est utilisée qu'à un seul endroit.
-- **Commentaires explicatifs** sur du code évident — le code doit s'expliquer de lui-même.
-
-### En review
-
-- **Sourcer les affirmations avancées** : quand on invoque une bonne pratique, une spécificité Vue/Vuetify, une règle RGAA ou un comportement framework, **citer la source** (doc Vue, doc Vuetify, RGAA, issue GitHub, PR liée). Éviter les « c'est comme ça dans Vue » sans référence — ça permet au relecteur de vérifier et d'apprendre, et ça distingue les contraintes réelles des opinions.
-- **Du factuel, pas de l'expectative** : avant de déclarer qu'il y a un problème, **vérifier dans le code** (lire le fichier, checker les tests, reproduire). Pas de supposition présentée comme fait. Si on n'est pas sûr, le dire explicitement (« à vérifier », « hypothèse ») plutôt qu'affirmer.
-
-### Pièges réactivité Vue 3 (spécifique à ce projet)
-
-- **`watch` vs `watchEffect`** : `watch` pour réagir à un changement précis ; `watchEffect` pour synchroniser un effet avec plusieurs dépendances. Ne pas mélanger les deux.
-- **Perte de réactivité** : `unref()` fige la valeur — ne l'utiliser que dans des contextes non réactifs (handlers d'événements, callbacks). Pour préserver la réactivité, passer des `ref`/`computed` ou des getters.
-- **`reactive()` vs `ref()`** : préférer `ref` pour les valeurs primitives et les objets simples. `reactive` pour les objets complexes mutés en place. Ne pas déstructurer un `reactive` (perte de réactivité) — utiliser `toRefs`.
-- **Computed avec effet de bord** : un `computed` ne doit jamais muter d'état. Si on a besoin d'un effet, c'est un `watch`.
-- **`v-model` sur composant personnalisé** : toujours utiliser `defineModel()` ou le pattern `modelValue` + `update:modelValue`. Ne pas bricoler avec des watchers bidirectionnels.
-
-### Scope des modifications
-
-- **Ne toucher que ce qui est nécessaire à la tâche** : pas de reformatage de code non concerné, pas de renommage de variables « au passage », pas de suppression de commentaires dans des fichiers non modifiés.
-- **Si un problème est découvert en passant** : le signaler (commentaire de review, issue) mais ne pas le corriger dans la même PR sauf si c'est directement lié. Une PR = un périmètre.
-- **Diff minimal** : le reviewer doit pouvoir lire le diff en moins de 5 minutes. Si le diff dépasse 300 lignes, justifier pourquoi.
