@@ -139,6 +139,43 @@ describe('DatePickerLite', () => {
 			wrapper.unmount()
 		})
 
+		it('uses inputFormat to format and parse a single date', async () => {
+			const wrapper = mount(DatePickerLiteComponent, {
+				props: {
+					label: 'Début du projet',
+					inputFormat: 'YYYY-MM-DD',
+					modelValue: new Date(2025, 10, 11),
+				},
+			})
+
+			const input = wrapper.find('input')
+			expect(input.element.value).toBe('2025-11-11')
+
+			await input.setValue('2027-03-01')
+			expect(wrapper.emitted('update:modelValue')).toEqual([[new Date(2027, 2, 1)]])
+
+			wrapper.unmount()
+		})
+
+		it('uses separator to format and parse a date range', async () => {
+			const wrapper = mount(DatePickerLiteComponent, {
+				props: {
+					label: 'Période',
+					mode: 'range',
+					separator: ' au ',
+					modelValue: [new Date(2025, 10, 11), new Date(2025, 10, 12)],
+				},
+			})
+
+			const input = wrapper.find('input')
+			expect(input.element.value).toBe('11/11/2025 au 12/11/2025')
+
+			await input.setValue('01/03/2027 au 02/03/2027')
+			expect(wrapper.emitted('update:modelValue')).toEqual([[[new Date(2027, 2, 1), new Date(2027, 2, 2)]]])
+
+			wrapper.unmount()
+		})
+
 		it('should not emit update:modelValue when the typed date is impossible', async () => {
 			const wrapper = mount(DatePickerLiteComponent, {
 				props: {

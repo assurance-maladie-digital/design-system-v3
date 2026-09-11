@@ -10,6 +10,7 @@ const customInputSlot = `
 <template #default="{ modelValue, updateModelValue, inputProps, updateTextValue, setFocused, toggleBtnRef }">
 	<div class="custom-input">
 		<span class="custom-input__label">{{ inputProps.label }}</span>
+		<span class="custom-input__format">{{ inputProps.inputFormat }}{{ inputProps.separator }}</span>
 		<span class="custom-input__value">{{ modelValue ? 'date-set' : 'no-date' }}</span>
 		<ul>
 			<li
@@ -63,6 +64,21 @@ describe('DatePickerLite - slot input', () => {
 		wrapper.unmount()
 	})
 
+	it('passes inputFormat and separator to the slot input props', () => {
+		const wrapper = mount(DatePickerLite, {
+			props: {
+				label: 'Période',
+				inputFormat: 'YYYY-MM-DD',
+				separator: ' au ',
+			},
+			slots: { input: customInputSlot },
+		})
+
+		expect(wrapper.find('.custom-input__format').text()).toBe('YYYY-MM-DD au')
+
+		wrapper.unmount()
+	})
+
 	it('keeps the default field when the slot is not provided', () => {
 		const wrapper = mount(DatePickerLite, {
 			props: { label: 'Date' },
@@ -86,8 +102,9 @@ describe('DatePickerLite - slot input', () => {
 
 		const emitted = wrapper.emitted('update:modelValue')
 		expect(emitted).toHaveLength(1)
-		expect(emitted![0][0]).toEqual(new Date(2025, 0, 15))
+		expect(emitted?.[0]?.[0]).toEqual(new Date(2025, 0, 15))
 
+		// @ts-expect-error Vue Test Utils cannot infer props from the component's intersection type
 		await wrapper.setProps({ modelValue: new Date(2025, 0, 15) })
 		expect(wrapper.find('.custom-input__value').text()).toBe('date-set')
 
@@ -140,7 +157,11 @@ describe('DatePickerLite - slot input', () => {
 
 		const days = wrapper.findComponent({ name: 'Calendar' }).findAll('[data-date]')
 		expect(days.length).toBeGreaterThanOrEqual(28)
-		await days[10].trigger('click')
+		const day = days[10]
+		if (!day) {
+			throw new Error('Expected the calendar to render at least 11 days')
+		}
+		await day.trigger('click')
 		await nextTick()
 
 		const emitted = wrapper.emitted('update:modelValue')

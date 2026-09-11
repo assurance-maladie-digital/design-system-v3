@@ -8,12 +8,15 @@
 	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
 	import type { TextFieldProps } from '@/components/Common/Calendar/useTextField'
 	import { useTextField } from '@/components/Common/Calendar/useTextField'
+	import { useDateInputMask } from './useDateInputMask'
 	import { useDateInputModel } from './useDateInputModel'
 	import type { DatePickerLiteRange } from '../types'
 
 	const props = withDefaults(defineProps<{
 		mode: 'single' | 'range'
 		modelValue: Date | DatePickerLiteRange | undefined
+		inputFormat?: string
+		separator?: string
 		errorMessages?: string[] | null
 		warningMessages?: string[] | null
 		successMessages?: string[] | null
@@ -24,6 +27,8 @@
 		displayAsterisk?: boolean
 		hideDetails?: boolean
 	} & TextFieldProps>(), {
+		inputFormat: 'DD/MM/YYYY',
+		separator: ' - ',
 		errorMessages: null,
 		warningMessages: null,
 		successMessages: null,
@@ -43,11 +48,14 @@
 	const locales = inject<ComputedRef<typeof defaultLocales>>(calendarLocalesKey)!
 
 	const textFieldProps = useTextField(props)
-	const { textValue, mask } = useDateInputModel(
+	const { textValue } = useDateInputModel(
 		toRef(props, 'mode'),
 		toRef(props, 'modelValue'),
+		toRef(props, 'inputFormat'),
+		toRef(props, 'separator'),
 		value => emits('update:modelValue', value),
 	)
+	const mask = useDateInputMask(toRef(props, 'mode'), toRef(props, 'inputFormat'), toRef(props, 'separator'))
 
 	const toggleBtn = ref<HTMLButtonElement | null>(null)
 

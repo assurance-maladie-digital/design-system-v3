@@ -14,6 +14,8 @@ export type DatePickerLiteProps =
 	& {
 		modelValue?: Date | DatePickerLiteRange
 		mode?: 'single' | 'range'
+		inputFormat?: string
+		separator?: string
 		locales?: DeepPartial<typeof defaultLocales>
 		disabled?: boolean
 		readonly?: boolean
@@ -26,6 +28,8 @@ export type DatePickerLiteInputProps =
 	& {
 		required?: boolean
 		displayAsterisk?: boolean
+		inputFormat?: string
+		separator?: string
 		errorMessages?: string[] | null
 		warningMessages?: string[] | null
 		successMessages?: string[] | null

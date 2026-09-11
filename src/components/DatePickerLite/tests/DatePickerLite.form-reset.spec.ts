@@ -58,6 +58,27 @@ describe('DatePickerLite form reset (SyForm)', () => {
 		expect(events.at(-1)).toEqual([undefined])
 	})
 
+	it('clears a typed valid range', async () => {
+		const { datePicker, reset } = await mountInForm(`
+			<SyForm>
+				<DatePickerLite
+					label="Période"
+					mode="range"
+				/>
+			</SyForm>
+		`)
+
+		const input = datePicker.find('input')
+		await input.setValue('01/03/2027 - 10/03/2027')
+		expect(datePicker.emitted('update:modelValue')?.at(-1)).toEqual([[new Date(2027, 2, 1), new Date(2027, 2, 10)]])
+
+		reset()
+		await nextTick()
+
+		expect(input.element.value).toBe('')
+		expect(datePicker.emitted('update:modelValue')?.at(-1)).toEqual([undefined])
+	})
+
 	it('clears incomplete text that never parsed to a Date (regression)', async () => {
 		const { datePicker, reset } = await mountInForm(`
 			<SyForm>
@@ -77,6 +98,28 @@ describe('DatePickerLite form reset (SyForm)', () => {
 		// No Date may ever be emitted for unparseable text
 		const events = datePicker.emitted('update:modelValue')
 		expect(events?.every(([value]) => !(value instanceof Date))).toBe(true)
+	})
+
+	it('clears incomplete range text that never parsed to a range', async () => {
+		const { datePicker, reset } = await mountInForm(`
+			<SyForm>
+				<DatePickerLite
+					label="Période"
+					mode="range"
+				/>
+			</SyForm>
+		`)
+
+		const input = datePicker.find('input')
+		await input.setValue('01/03/2027 - 10/03')
+		expect(datePicker.emitted('update:modelValue')).toBeUndefined()
+
+		reset()
+		await nextTick()
+
+		expect(input.element.value).toBe('')
+		const events = datePicker.emitted('update:modelValue')
+		expect(events?.every(([value]) => !Array.isArray(value))).toBe(true)
 	})
 
 	it('clears a date provided as initial modelValue prop', async () => {
