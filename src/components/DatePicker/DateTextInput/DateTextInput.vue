@@ -692,7 +692,7 @@
 		return false
 	}
 
-	async function runRules(value: string): Promise<boolean> {
+	async function runRules(value: string, force = false): Promise<boolean> {
 		// Skeleton input (placeholders like __/__/____) is treated as empty by the bridge
 		if (skeletonPattern.value.test(value)) {
 			value = ''
@@ -700,7 +700,8 @@
 
 		// Délègue au flow texte de validate() via le bridge.
 		// Les skeleton inputs (__/__/____) sont traités comme champs vides.
-		return await (bridgeValidate({ textValue: value }) as Promise<boolean>)
+		// `force` permet de bypasser le gate isValidateOnBlur (blur, submit).
+		return await (bridgeValidate({ textValue: value, force }) as Promise<boolean>)
 	}
 
 	function isVisuallyEmptyInput(value: string): boolean {
@@ -1176,7 +1177,7 @@
 
 	async function handleEmptyBlurValue(): Promise<void> {
 		emitModel(null)
-		await runRules('')
+		await runRules('', true)
 	}
 
 	async function applyBlurAutoClamp(): Promise<void> {
@@ -1219,7 +1220,7 @@
 
 		// Format invalide ou règles custom en erreur : runRules pousse déjà les messages attendus.
 		// On garde la valeur visible pour permettre la correction sans nettoyer le champ.
-		if (!(await runRules(inputValue.value))) {
+		if (!(await runRules(inputValue.value, true))) {
 			return
 		}
 

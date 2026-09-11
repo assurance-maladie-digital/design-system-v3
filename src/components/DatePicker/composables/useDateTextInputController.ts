@@ -6,7 +6,7 @@ export interface UseDateTextFieldSubmitOptions {
 	isValidating: Ref<boolean>
 	hasInteracted: Ref<boolean>
 	inputValue: Ref<string>
-	runRules: (value: string) => Promise<boolean>
+	runRules: (value: string, force?: boolean) => Promise<boolean>
 }
 
 export interface UseDateTextFieldResetOptions {
@@ -43,7 +43,7 @@ export const useDateTextInputController = (options: UseDateTextInputControllerOp
 		hasInteracted.value = true
 
 		try {
-			return await runRules(inputValue.value)
+			return await runRules(inputValue.value, true)
 		}
 		finally {
 			isValidating.value = false

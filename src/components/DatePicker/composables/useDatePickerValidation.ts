@@ -110,8 +110,9 @@ export interface ValidateOptions {
 	/**
 	 * Force la validation même si les conditions interactives ne sont pas remplies.
 	 * Utilisé pour : validation on submit, validation au blur, validation forcée.
-	 * Sans cette option, la validation peut être skippée si l'utilisateur n'a pas interagi
-	 * ou si `isInitialValidation` est true.
+	 * Sans cette option, la validation peut être skippée si l'utilisateur n'a pas interagi,
+	 * si `isInitialValidation` est true, ou si `isValidateOnBlur` est true (la validation
+	 * ne doit alors se faire qu'au blur, pas pendant la frappe ou la sélection).
 	 */
 	force?: boolean
 	/**
@@ -513,7 +514,9 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		if (options.useCalendarModeRequiredFlow) {
 			if (options.isUpdatingFromInternal.value) return
 			if (newDates === null || (Array.isArray(newDates) && newDates.length === 0)) {
-				if (options.isValidateOnBlur?.value && !options.isInitialValidation?.value) {
+				// Quand isValidateOnBlur est true, la validation se fait au blur (handleInputBlur).
+				// Quand isValidateOnBlur est false, la validation est en temps réel → on valide les dates vides.
+				if (!options.isValidateOnBlur?.value && !options.isInitialValidation?.value) {
 					validateCalendarModeDates()
 				}
 			}
@@ -531,11 +534,24 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			return
 		}
 
+		// Quand isValidateOnBlur est true, la validation se fait au blur, pas sur changement de selectedDates
+		if (options.isValidateOnBlur?.value) return
+
 		validateDates()
 	})
 
 	// --- Point d'entrée unifié : validate() ---
 	const validate = (opts: ValidateOptions = {}): ValidationResult | Promise<ValidationResult> | Promise<boolean> => {
+		// Quand isValidateOnBlur est true, seules les validations forcées (blur, submit) sont autorisées.
+		// La frappe, la sélection dans le calendrier et les watchers ne doivent pas déclencher de validation.
+		if (options.isValidateOnBlur?.value && !opts.force) {
+			// Pour le flow texte (runRules → bridgeValidate), retourner Promise<true> pour
+			// maintenir la compatibilité avec le cast `as Promise<boolean>` côté DateTextInput.
+			if (opts.textValue !== undefined) {
+				return Promise.resolve(true)
+			}
+			return emptyValidationResult()
+		}
 		if (opts.textValue !== undefined) {
 			return validateTextInput(opts.textValue)
 		}
