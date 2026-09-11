@@ -98,7 +98,7 @@ pnpm exec eslint <fichiers modifiés> && pnpm vitest run <dossier concerné>
 Ajouter le `*.a11y.spec.ts` du composant si du markup a été modifié.
 Ne lancer `pnpm build` / `pnpm test:unit` complets que si le changement est transverse ou avant un commit important.
 
-> Un hook **Husky** s'exécute au pre-commit : il lance `pnpm run lint:fix` **et** valide le **nom de branche** (voir §11). Le code doit passer lint/format.
+> Un hook **Husky** s'exécute au pre-commit : il lance `pnpm run lint:fix` **et** valide le **nom de branche** (voir §10). Le code doit passer lint/format.
 
 ---
 
