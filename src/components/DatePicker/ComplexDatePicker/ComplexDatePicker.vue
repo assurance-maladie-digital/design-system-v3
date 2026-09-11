@@ -346,6 +346,7 @@
 		maxErrors: computed(() => props.maxErrors),
 		selectedDates,
 		isUpdatingFromInternal,
+		isValidateOnBlur: computed(() => props.isValidateOnBlur),
 		revalidateOnCustomRulesChange: true,
 		readonly: computed(() => props.readonly),
 		skipValidationWhenReadonly: true,

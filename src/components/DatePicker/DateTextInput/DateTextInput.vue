@@ -178,6 +178,7 @@
 		isUpdatingFromInternal,
 		skipValidationWhenReadonly: true,
 		readonly: readonly,
+		isValidateOnBlur: computed(() => props.isValidateOnBlur),
 		fieldIdentifier: computed(() => props.label || props.placeholder || 'Date'),
 		displayFormat: computed(() => displayFormat.value),
 		parseDate,
