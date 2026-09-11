@@ -208,3 +208,131 @@ describe('DatePickerLite - event emissions (no duplicates)', () => {
 		wrapper.unmount()
 	})
 })
+
+describe('DatePickerLite - public events', () => {
+	afterEach(() => {
+		vi.useRealTimers()
+		document.body.innerHTML = ''
+	})
+
+	it('should emit focus and blur when the field gains or loses focus', async () => {
+		const wrapper = mount(DatePickerLite, {
+			props: { label: 'Date' },
+			attachTo: document.body,
+		})
+
+		const input = wrapper.find('input')
+		await input.trigger('focus')
+		expect(wrapper.emitted('focus')).toHaveLength(1)
+
+		await input.trigger('blur')
+		expect(wrapper.emitted('blur')).toHaveLength(1)
+
+		wrapper.unmount()
+	})
+
+	it('should emit keydown on each keystroke in the field', async () => {
+		const wrapper = mount(DatePickerLite, {
+			props: { label: 'Date' },
+			attachTo: document.body,
+		})
+
+		await wrapper.find('input').trigger('keydown', { key: 'a' })
+		expect(wrapper.emitted('keydown')).toHaveLength(1)
+
+		wrapper.unmount()
+	})
+
+	it('should emit change when a valid date is typed', async () => {
+		const wrapper = mount(DatePickerLite, {
+			props: { label: 'Date' },
+			attachTo: document.body,
+		})
+
+		await wrapper.find('input').setValue('25/12/2025')
+		await nextTick()
+
+		const changeEmits = wrapper.emitted('change')
+		expect(changeEmits).toBeDefined()
+		expect(changeEmits!.at(-1)?.[0]).toEqual(new Date(2025, 11, 25))
+
+		wrapper.unmount()
+	})
+
+	it('should emit change when a date is selected in the visual picker', async () => {
+		vi.useFakeTimers()
+		const wrapper = mount(DatePickerLite, {
+			props: { label: 'Date', modelValue: new Date(2025, 10, 1) },
+			attachTo: document.body,
+		})
+
+		await openMenu(wrapper)
+		await wrapper.findComponent({ name: 'Calendar' }).find('[data-date="2025-11-15"]').trigger('click')
+		vi.advanceTimersByTime(1000)
+		await vi.runAllTimersAsync()
+		await flushPromises()
+		await nextTick()
+
+		const changeEmits = wrapper.emitted('change')
+		expect(changeEmits).toBeDefined()
+		expect(changeEmits!.at(-1)?.[0]).toEqual(new Date(2025, 10, 15))
+
+		wrapper.unmount()
+	})
+
+	it('should not emit change when modelValue is updated externally', async () => {
+		const wrapper = mount(DatePickerLite, {
+			props: { label: 'Date', modelValue: new Date(2025, 10, 11) },
+			attachTo: document.body,
+		})
+		await nextTick()
+
+		await wrapper.setProps({ modelValue: new Date(2025, 11, 12) })
+		await nextTick()
+
+		expect(wrapper.emitted('change')).toBeUndefined()
+
+		wrapper.unmount()
+	})
+
+	it('should emit clear and change(undefined) when the clear button is used', async () => {
+		const wrapper = mount(DatePickerLite, {
+			props: { label: 'Date', modelValue: new Date(2025, 10, 11), clearable: true },
+			attachTo: document.body,
+		})
+		await nextTick()
+
+		const clearBtn = wrapper.find('.v-field__clearable button')
+		expect(clearBtn.exists()).toBe(true)
+		await clearBtn.trigger('click')
+		await nextTick()
+
+		expect(wrapper.emitted('clear')).toHaveLength(1)
+		const changeEmits = wrapper.emitted('change')
+		expect(changeEmits).toBeDefined()
+		expect(changeEmits!.at(-1)?.[0]).toBeUndefined()
+
+		wrapper.unmount()
+	})
+
+	it('should emit update:view when the calendar view changes', async () => {
+		const wrapper = mount(DatePickerLite, {
+			props: { label: 'Date', modelValue: new Date(2025, 10, 1) },
+			attachTo: document.body,
+		})
+
+		await openMenu(wrapper)
+		const initialViewEmits = wrapper.emitted('update:view')?.length ?? 0
+
+		const yearBtn = wrapper.findComponent({ name: 'DatePickerLiteHeader' }).find('.visual-picker-year-btn')
+		await yearBtn.trigger('click')
+		await nextTick()
+
+		const viewEmits = wrapper.emitted('update:view')
+		expect(viewEmits).toBeDefined()
+		expect(viewEmits!.length).toBe(initialViewEmits + 1)
+		expect(viewEmits!.at(-1)?.[0]).toBe('years')
+
+		wrapper.unmount()
+	})
+})

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 	import { mdiClose } from '@mdi/js'
-	import { computed, inject, toRef, useId, type ComponentPublicInstance, type ComputedRef } from 'vue'
+	import { computed, inject, toRef, useId, watch, type ComponentPublicInstance, type ComputedRef } from 'vue'
 	import MonthSelector from '@/components/Common/Calendar/MonthSelector/MonthSelector.vue'
 	import YearSelector from '@/components/Common/Calendar/YearSelector/YearSelector.vue'
 	import DatePickerLiteHeader from '@/components/DatePickerLite/DatePickerLiteHeader.vue'
 	import VisualPickerFooter from '@/components/Common/Calendar/PickerFooter/VisualPickerFooter.vue'
 	import Calendar from '@/components/Common/Calendar/Calendar/Calendar.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
-	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
+	import { calendarLocalesKey, type PickerView } from '@/components/Common/Calendar/locales'
 	import { locales as defaultLocales } from '../locales'
 	import type { DatePickerLiteMultiple, DatePickerLiteRange } from '../types'
 	import type { DatePickerLiteVisualProps } from './DatePickerLiteVisualProps'
@@ -29,6 +29,7 @@
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined): void
 		(e: 'update:open', value: boolean): void
+		(e: 'update:view', value: PickerView): void
 	}>()
 
 	// The DatePickerLite root provides its full locales through the shared key
@@ -62,6 +63,10 @@
 		modelValue: computed(() => selectedDate.value),
 		initialView: toRef(props, 'initialView'),
 	})
+
+	// Covers every view change: header toggles, year/month selection returning
+	// to the days panel, and the reset performed when the picker reopens
+	watch(view, value => emits('update:view', value))
 
 	const { open } = useDatePickerLiteDialog({
 		toggleBtn: toRef(props, 'toggleBtn'),

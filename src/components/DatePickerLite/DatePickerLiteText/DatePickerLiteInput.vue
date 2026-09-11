@@ -42,6 +42,10 @@
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined): void
+		(e: 'focus', event: FocusEvent): void
+		(e: 'blur', event: FocusEvent): void
+		(e: 'keydown', event: KeyboardEvent): void
+		(e: 'clear'): void
 	}>()
 
 	// The DatePickerLite root provides its full locales through the shared key
@@ -83,6 +87,11 @@
 		:disable-error-handling="true"
 		:hide-details="props.hideDetails"
 		:display-asterisk="props.required && props.displayAsterisk"
+		@focus="emits('focus', $event)"
+		@blur="emits('blur', $event)"
+		@keydown="emits('keydown', $event)"
+		@clear="emits('clear')"
+		@click:clear="emits('clear')"
 	>
 		<template #append>
 			<button

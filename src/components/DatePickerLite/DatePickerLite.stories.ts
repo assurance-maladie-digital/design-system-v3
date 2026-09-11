@@ -8,6 +8,12 @@ import type { DatePickerLiteProps } from './types'
 type DatePickerLiteStoryProps = DatePickerLiteProps & {
 	'onUpdate:modelValue'?: (value: Date | undefined) => void
 	'onUpdate:open'?: (value: boolean) => void
+	'onUpdate:view'?: (value: 'days' | 'months' | 'years') => void
+	'onChange'?: (value: Date | [Date, Date] | Date[] | undefined) => void
+	'onFocus'?: (event: FocusEvent) => void
+	'onBlur'?: (event: FocusEvent) => void
+	'onClear'?: () => void
+	'onKeydown'?: (event: KeyboardEvent) => void
 }
 
 const meta: Meta<DatePickerLiteStoryProps> = {
@@ -19,11 +25,11 @@ const meta: Meta<DatePickerLiteStoryProps> = {
 				component: 'Sélecteur de date avec saisie libre et ouverture d’un sélecteur visuel. Le composant prend en charge la sélection au clavier, l’ouverture/fermeture, la validation et le comportement accessible sur les boutons de navigation du mois et de l’année.',
 			},
 			controls: {
-				exclude: ['onUpdate:modelValue', 'onUpdate:open'],
+				exclude: ['onUpdate:modelValue', 'onUpdate:open', 'onUpdate:view', 'onChange', 'onFocus', 'onBlur', 'onClear', 'onKeydown'],
 			},
 		},
 		controls: {
-			exclude: ['width', 'undefined', 'onUpdate:modelValue', 'onUpdate:open'],
+			exclude: ['width', 'undefined', 'onUpdate:modelValue', 'onUpdate:open', 'onUpdate:view', 'onChange', 'onFocus', 'onBlur', 'onClear', 'onKeydown'],
 		},
 	},
 	argTypes: {
@@ -57,20 +63,39 @@ const meta: Meta<DatePickerLiteStoryProps> = {
 		...getValidationDocumentation('base'),
 		'modelValue': {
 			control: 'object',
-			description: 'Date sélectionnée en mode simple, ou plage de dates [start, end] en mode range. La valeur est renvoyée au format JavaScript Date, ou undefined si le champ est vide.',
+			description: 'Date sélectionnée en mode simple, plage de dates [start, end] en mode range, ou liste de dates en mode multiple. La valeur est renvoyée au format JavaScript Date, ou undefined si le champ est vide.',
 			table: {
-				type: { summary: 'Date | [Date, Date] | undefined' },
+				type: { summary: 'Date | [Date, Date] | Date[] | undefined' },
 				defaultValue: { summary: 'undefined' },
 				category: 'props',
 			},
 		},
 		'mode': {
 			control: 'select',
-			options: ['single', 'range'],
-			description: 'Active le mode de saisie. En mode range, le champ attend une plage de dates au format JJ/MM/AAAA - JJ/MM/AAAA.',
+			options: ['single', 'range', 'multiple'],
+			description: 'Mode de saisie. En mode range, le champ attend une plage de dates au format JJ/MM/AAAA - JJ/MM/AAAA. En mode multiple, le champ accepte une liste de dates séparées par le séparateur défini par la prop separator.',
 			table: {
-				type: { summary: '"single" | "range"' },
+				type: { summary: '"single" | "range" | "multiple"' },
 				defaultValue: { summary: '"single"' },
+				category: 'props',
+			},
+		},
+		'inputFormat': {
+			control: 'select',
+			options: ['DD/MM/YYYY', 'DD.MM.YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'],
+			description: 'Format de saisie et d’affichage des dates dans le champ. Les jetons D, M et Y représentent respectivement le jour, le mois et l’année (ex: "DD/MM/YYYY", "YYYY-MM-DD").',
+			table: {
+				type: { summary: 'string' },
+				defaultValue: { summary: '"DD/MM/YYYY"' },
+				category: 'props',
+			},
+		},
+		'separator': {
+			control: 'text',
+			description: 'Séparateur entre les dates en mode range et multiple, utilisé pour l’affichage et la saisie (ex: " - ", ", ").',
+			table: {
+				type: { summary: 'string' },
+				defaultValue: { summary: '" - "' },
 				category: 'props',
 			},
 		},
@@ -201,9 +226,9 @@ const meta: Meta<DatePickerLiteStoryProps> = {
 
 		'onUpdate:modelValue': {
 			action: 'update:modelValue',
-			description: 'Événement émis lorsqu’une date valide est saisie dans le champ ou sélectionnée dans la modale (objet Date), ou avec `undefined` lorsque le champ est vidé.',
+			description: 'Événement émis lorsqu’une date valide est saisie dans le champ ou sélectionnée dans la modale (objet Date, plage de dates en mode range, liste de dates en mode multiple), ou avec `undefined` lorsque le champ est vidé.',
 			table: {
-				type: { summary: 'Date | undefined' },
+				type: { summary: 'Date | [Date, Date] | Date[] | undefined' },
 			},
 		},
 		'onUpdate:open': {
@@ -211,6 +236,45 @@ const meta: Meta<DatePickerLiteStoryProps> = {
 			description: 'Événement émis lorsque le sélecteur de date est ouvert ou fermé.',
 			table: {
 				type: { summary: 'boolean' },
+			},
+		},
+		'onUpdate:view': {
+			action: 'update:view',
+			description: 'Événement émis lorsque la vue du sélecteur visuel change (jours, mois ou années) : bascule via l’en-tête, retour aux jours après sélection d’un mois ou d’une année, et réinitialisation à l’ouverture.',
+			table: {
+				type: { summary: '"days" | "months" | "years"' },
+			},
+		},
+		'onChange': {
+			action: 'change',
+			description: 'Événement émis lorsque la valeur change par interaction utilisateur : date valide saisie au clavier, sélectionnée dans le sélecteur visuel ou champ vidé.',
+			table: {
+				type: { summary: 'Date | [Date, Date] | Date[] | undefined' },
+			},
+		},
+		'onFocus': {
+			action: 'focus',
+			description: 'Événement émis lorsque le champ de saisie reçoit le focus.',
+			table: {
+				type: { summary: 'FocusEvent' },
+			},
+		},
+		'onBlur': {
+			action: 'blur',
+			description: 'Événement émis lorsque le champ de saisie perd le focus.',
+			table: {
+				type: { summary: 'FocusEvent' },
+			},
+		},
+		'onClear': {
+			action: 'clear',
+			description: 'Événement émis lorsque le champ est vidé (bouton d’effacement ou saisie supprimée).',
+		},
+		'onKeydown': {
+			action: 'keydown',
+			description: 'Événement émis à chaque frappe clavier sur le champ de saisie.',
+			table: {
+				type: { summary: 'KeyboardEvent' },
 			},
 		},
 	},
@@ -225,6 +289,12 @@ export const Default: Story = {
 		'label': 'Début du projet',
 		'onUpdate:modelValue': fn(),
 		'onUpdate:open': fn(),
+		'onUpdate:view': fn(),
+		'onChange': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClear': fn(),
+		'onKeydown': fn(),
 		'customRules': [{
 			type: 'custom',
 			options: {
@@ -297,6 +367,12 @@ export const Range: Story = {
 		'helpText': 'Format JJ/MM/AAAA - JJ/MM/AAAA',
 		'onUpdate:modelValue': fn(),
 		'onUpdate:open': fn(),
+		'onUpdate:view': fn(),
+		'onChange': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClear': fn(),
+		'onKeydown': fn(),
 	},
 	render: args => ({
 		components: { DatePickerLite },
@@ -358,6 +434,12 @@ export const CustomDisplayedYears: Story = {
 		'maxYear': 2025,
 		'onUpdate:modelValue': fn(),
 		'onUpdate:open': fn(),
+		'onUpdate:view': fn(),
+		'onChange': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClear': fn(),
+		'onKeydown': fn(),
 	},
 	parameters: {
 		sourceCode: [
@@ -588,6 +670,12 @@ export const Multiple: Story = {
 		'helpText': 'Format JJ/MM/AAAA, JJ/MM/AAAA',
 		'onUpdate:modelValue': fn(),
 		'onUpdate:open': fn(),
+		'onUpdate:view': fn(),
+		'onChange': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClear': fn(),
+		'onKeydown': fn(),
 		'customRules': [{
 			type: 'custom',
 			options: {

@@ -44,4 +44,64 @@ const selectedDate = ref<Date | undefined>(new Date(2025, 10, 11))
 </template>
 `} />
 
+# Modes de sélection
+
+## Plage de dates
+
+En mode `range`, le champ attend une plage de dates séparées par la prop `separator` (par défaut `" - "`). La valeur du modèle est un tuple `[Date, Date]`.
+
+<Canvas of={DatePickerLiteStories.Range} />
+
+## Dates multiples
+
+En mode `multiple`, le champ accepte une liste de dates séparées par la prop `separator`. La valeur du modèle est un tableau de dates.
+
+<Canvas of={DatePickerLiteStories.Multiple} />
+
+# Personnalisation
+
+## Format de saisie
+
+La prop `inputFormat` permet de définir le format de saisie et d'affichage des dates. Les jetons `D`, `M` et `Y` représentent respectivement le jour, le mois et l'année. Pensez à adapter le `helpText` en conséquence.
+
+<Canvas of={DatePickerLiteStories.CustomInputFormat} />
+
+## Séparateur
+
+La prop `separator` définit le séparateur utilisé entre les dates en mode `range` et `multiple`, à la fois pour l'affichage et la saisie.
+
+<Canvas of={DatePickerLiteStories.CustomRangeSeparator} />
+
+## Années affichées
+
+Les props `minYear` et `maxYear` limitent les années proposées dans le sélecteur visuel. Elles ne concernent pas la validation : une date hors de cet intervalle peut toujours être saisie manuellement.
+
+<Canvas of={DatePickerLiteStories.CustomDisplayedYears} />
+
+# États du champ
+
+## Champ obligatoire
+
+La prop `required` indique que la date est obligatoire (prise en compte par la validation), et `displayAsterisk` affiche l'astérisque visuel à côté du label.
+
+<Canvas of={DatePickerLiteStories.Required} />
+
+## Champ vidable
+
+La prop `clearable` affiche un bouton permettant de vider le champ et de réinitialiser la date sélectionnée.
+
+<Canvas of={DatePickerLiteStories.Clearable} />
+
+## Désactivé
+
+La prop `disabled` désactive la saisie et l'ouverture du sélecteur visuel.
+
+<Canvas of={DatePickerLiteStories.Disabled} />
+
+## Lecture seule
+
+La prop `readonly` permet de consulter la date sans pouvoir la modifier.
+
+<Canvas of={DatePickerLiteStories.Readonly} />
+
 <a href="/?path=/docs/guide-du-dev-formulaires-validation-guide-des-formulaires--docs" className="action-link">Pour plus d'informations sur la validation, consultez le guide de validation des formulaires.</a>

@@ -10,7 +10,7 @@
 	import DatePickerLiteInput from './DatePickerLiteText/DatePickerLiteInput.vue'
 	import DatePickerLiteVisual from './DatePickerLiteVisual/DatePickerLiteVisual.vue'
 	import { locales as defaultLocales } from './locales'
-	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
+	import { calendarLocalesKey, type PickerView } from '@/components/Common/Calendar/locales'
 	import { defaultTextFieldProps, useTextField } from '@/components/Common/Calendar/useTextField'
 	import { defaultDatePickerLiteVisualProps } from './DatePickerLiteVisual/DatePickerLiteVisualProps'
 	import { useDatePickerValidation } from './useDatePickerValidation'
@@ -44,6 +44,12 @@
 
 	const emits = defineEmits<{
 		(e: 'update:open', value: boolean): void
+		(e: 'update:view', value: PickerView): void
+		(e: 'focus', event: FocusEvent): void
+		(e: 'blur', event: FocusEvent): void
+		(e: 'change', value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined): void
+		(e: 'clear'): void
+		(e: 'keydown', event: KeyboardEvent): void
 	}>()
 
 	const attrs = useAttrs()
@@ -62,6 +68,7 @@
 	watch(internalValue, async () => {
 		// Wait for DatePickerLiteInput to update textValue before validating
 		await nextTick()
+		// TODO: we should not need to manually call validate here, it should be reactive
 		validate()
 	})
 
@@ -72,6 +79,23 @@
 	const textValue = computed(() => textInput.value ? textInput.value.textValue : slotTextValue.value)
 
 	const focused = ref(false)
+
+	// User-driven value change (typed text, picker selection, clear): update the
+	// model and emit `change`. External model updates do not go through here.
+	function onUserSelect(value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined): void {
+		internalValue.value = value
+		emits('change', value)
+	}
+
+	function onInputFocus(event: FocusEvent): void {
+		focused.value = true
+		emits('focus', event)
+	}
+
+	function onInputBlur(event: FocusEvent): void {
+		focused.value = false
+		emits('blur', event)
+	}
 
 	const { errors, warnings, successes, hasError, hasWarning, hasSuccess, validate, clearValidation } = useDatePickerValidation({
 		modelValue: textValue,
@@ -161,16 +185,19 @@
 			>
 				<DatePickerLiteInput
 					ref="textInput"
-					v-model="internalValue"
+					:model-value="internalValue"
 					:mode="props.mode"
 					v-bind="inputProps"
-					@focus="focused = true"
-					@blur="focused = false"
+					@update:model-value="onUserSelect"
+					@focus="onInputFocus"
+					@blur="onInputBlur"
+					@keydown="event => emits('keydown', event)"
+					@clear="emits('clear')"
 				/>
 			</slot>
 		</div>
 		<DatePickerLiteVisual
-			v-model="internalValue"
+			:model-value="internalValue"
 			:text-input="customInputEl"
 			:toggle-btn
 			:mode="props.mode"
@@ -180,7 +207,9 @@
 			:initial-view
 			:disabled
 			:readonly
+			@update:model-value="onUserSelect"
 			@update:open="emits('update:open', $event)"
+			@update:view="value => emits('update:view', value)"
 		/>
 	</div>
 </template>
