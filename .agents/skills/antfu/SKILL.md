@@ -53,28 +53,16 @@ Favor explicit, traceable code over implicit "magic". A reader (human or agent) 
 
 ## Tooling Choices
 
-### @antfu/ni Commands
-
-| Command | Description |
-|---------|-------------|
-| `ni` | Install dependencies |
-| `ni <pkg>` / `ni -D <pkg>` | Add dependency / dev dependency |
-| `nr <script>` | Run script |
-| `nu` | Upgrade dependencies |
-| `nun <pkg>` | Uninstall dependency |
-| `nci` | Clean install (`pnpm i --frozen-lockfile`) |
-| `nlx <pkg>` | Execute package (`npx`) |
-
 ### Checking npm Package Versions
 
-Use [`fast-npm-meta`](https://github.com/antfu/fast-npm-meta) to look up the latest version of a package — it queries a small metadata endpoint instead of downloading the full registry payload (which can be megabytes per package).
+Use [`fast-npm-meta`](https://github.com/antfu/fast-npm-meta) through `pnpm dlx` to look up the latest version of a package — it queries a small metadata endpoint instead of downloading the full registry payload (which can be megabytes per package).
 
 ```bash
-nlx fast-npm-meta version vite              # 7.3.1
-nlx fast-npm-meta version "vue@^3.5"        # range-aware
-nlx fast-npm-meta version vite vue           # multiple at once
-nlx fast-npm-meta version vite --json       # JSON for scripting
-nlx fast-npm-meta full vite                 # full version list + dist-tags
+pnpm dlx fast-npm-meta version vite              # 7.3.1
+pnpm dlx fast-npm-meta version "vue@^3.5"        # range-aware
+pnpm dlx fast-npm-meta version vite vue           # multiple at once
+pnpm dlx fast-npm-meta version vite --json       # JSON for scripting
+pnpm dlx fast-npm-meta full vite                 # full version list + dist-tags
 ```
 
 Prefer this over `npm view <pkg> version` when you only need the latest version, and over reading `package.json` from the registry directly.
@@ -116,11 +104,11 @@ For detailed configuration options: [antfu-eslint-config](references/antfu-eslin
 ```json
 {
   "simple-git-hooks": {
-    "pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && npx lint-staged"
+    "pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && pnpm exec lint-staged"
   },
   "lint-staged": { "*": "eslint --fix" },
   "scripts": {
-    "prepare": "npx simple-git-hooks"
+    "prepare": "pnpm exec simple-git-hooks"
   }
 }
 ```
