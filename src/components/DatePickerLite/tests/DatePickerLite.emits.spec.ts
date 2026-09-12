@@ -2,7 +2,6 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { nextTick } from 'vue'
 import DatePickerLite from '../DatePickerLite.vue'
-import DatePickerLiteInput from '../DatePickerLiteText/DatePickerLiteInput.vue'
 
 async function openMenu(wrapper: Awaited<ReturnType<typeof mount>>) {
 	await nextTick()
@@ -80,16 +79,14 @@ describe('DatePickerLite - event emissions (no duplicates)', () => {
 		})
 		await nextTick()
 
-		const input = wrapper.findComponent(DatePickerLiteInput)
-		expect(input.vm.textValue).toBe('11/11/2025')
-		expect(wrapper.find('input').element.value).toBe('11/11/2025')
+		const input = wrapper.find('input')
+		expect(input.element.value).toBe('11/11/2025')
 
 		// Change modelValue externally (simulate parent update)
 		await wrapper.setProps({ modelValue: new Date(2025, 11, 12) })
 		await nextTick()
 
-		expect(input.vm.textValue).toBe('12/12/2025')
-		expect(wrapper.find('input').element.value).toBe('12/12/2025')
+		expect(input.element.value).toBe('12/12/2025')
 
 		wrapper.unmount()
 	})
@@ -124,7 +121,7 @@ describe('DatePickerLite - event emissions (no duplicates)', () => {
 		await input.trigger('input')
 		await nextTick()
 
-		expect(wrapper.findComponent(DatePickerLiteInput).vm.textValue).toBe('15/12/2025')
+		expect(wrapper.find('input').element.value).toBe('15/12/2025')
 
 		wrapper.unmount()
 	})
@@ -142,7 +139,7 @@ describe('DatePickerLite - event emissions (no duplicates)', () => {
 		await nextTick()
 
 		const emitCount = wrapper.emitted('update:modelValue')!.length
-		expect(wrapper.findComponent(DatePickerLiteInput).vm.textValue).toBe('20/12/2025')
+		expect(wrapper.find('input').element.value).toBe('20/12/2025')
 
 		// Simulate the same input again (no new emission for the same value)
 		await input.setValue('20/12/2025')
@@ -150,7 +147,7 @@ describe('DatePickerLite - event emissions (no duplicates)', () => {
 		await nextTick()
 
 		expect(wrapper.emitted('update:modelValue')!.length).toBe(emitCount)
-		expect(wrapper.findComponent(DatePickerLiteInput).vm.textValue).toBe('20/12/2025')
+		expect(wrapper.find('input').element.value).toBe('20/12/2025')
 
 		wrapper.unmount()
 	})

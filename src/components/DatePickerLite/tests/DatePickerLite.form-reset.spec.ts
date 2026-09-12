@@ -32,11 +32,10 @@ describe('DatePickerLite form reset (SyForm)', () => {
 		return { wrapper, datePicker, reset }
 	}
 
-	// SyForm.reset() also triggers Vuetify's native VForm.reset(), which
-	// transiently resets the inner VTextField and leaks a `null` through
-	// update:modelValue before our own `undefined` clears arrive (pre-existing
-	// behavior). Assertions therefore check the first/last emissions, not the
-	// exact full sequence.
+	// The validation layer clears the field by writing `undefined` into the root-owned
+	// text ref; the text watcher then clears the model. A transient `null` from Vuetify's
+	// VForm.reset() is normalized to `undefined` at the ref boundary, so the exact
+	// emission sequence can be asserted (no `null` leak).
 	it('clears a typed valid date: text, modelValue and exactly one emit per change', async () => {
 		const { datePicker, reset } = await mountInForm(`
 			<SyForm>
@@ -53,9 +52,7 @@ describe('DatePickerLite form reset (SyForm)', () => {
 		await nextTick()
 
 		expect(input.element.value).toBe('')
-		const events = datePicker.emitted('update:modelValue')!
-		expect(events.at(0)).toEqual([new Date(2027, 2, 1)])
-		expect(events.at(-1)).toEqual([undefined])
+		expect(datePicker.emitted('update:modelValue')).toEqual([[new Date(2027, 2, 1)], [undefined]])
 	})
 
 	it('clears a typed valid range', async () => {
