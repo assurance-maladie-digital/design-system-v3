@@ -27,7 +27,12 @@ export function useDatePickerLiteDialog({
 		onUpdateOpen(isOpen)
 	})
 
+	const setOpen = (value: boolean): void => {
+		open.value = value
+	}
+
 	return {
 		open,
+		setOpen,
 	}
 }

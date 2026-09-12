@@ -152,9 +152,14 @@
 									:name="`day-${day.ISO8601}`"
 									v-bind="day"
 								>
-									<div class="sy-calendar__day-content">
-										{{ day.day }}
-									</div>
+									<slot
+										name="day"
+										v-bind="day"
+									>
+										<div class="sy-calendar__day-content">
+											{{ day.day }}
+										</div>
+									</slot>
 								</slot>
 							</td>
 						</tr>
@@ -217,7 +222,7 @@
 	outline: none;
 }
 
-.sy-calendar__day:focus-visible > .sy-calendar__day-content {
+.sy-calendar__day:focus-visible > * {
 	box-shadow:
 		inset 0 0 0 2px rgb(var(--v-theme-surface, 255, 255, 255)),
 		0 0 0 2px rgb(var(--v-theme-primary, 12, 65, 154));

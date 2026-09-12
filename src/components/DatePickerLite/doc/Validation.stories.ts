@@ -5,7 +5,7 @@ import { VBtn, VForm } from 'vuetify/components'
 import DatePickerLite from '../DatePickerLite.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 import { parseDate } from '@/composables/date/useDateFormatDayjs'
-import type { DatePickerLiteProps } from '../types'
+import type { DatePickerLiteProps } from '../types.ts'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
 type DatePickerLiteStoryProps = DatePickerLiteProps & {

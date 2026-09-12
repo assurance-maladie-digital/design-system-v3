@@ -3,7 +3,7 @@
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import { mdiCalendar } from '@mdi/js'
 	import { vMaska } from 'maska/vue'
-	import { inject, ref, toRef, useId, type ComputedRef } from 'vue'
+	import { computed, inject, ref, toRef, useId, useSlots, type ComputedRef } from 'vue'
 	import { locales as defaultLocales } from '../locales'
 	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
 	import type { TextFieldProps } from '@/components/Common/Calendar/useTextField'
@@ -26,6 +26,7 @@
 		required?: boolean
 		displayAsterisk?: boolean
 		hideDetails?: boolean
+		hideDefaultToggle?: boolean
 	} & TextFieldProps>(), {
 		inputFormat: 'DD/MM/YYYY',
 		separator: ' - ',
@@ -38,6 +39,7 @@
 		required: false,
 		displayAsterisk: false,
 		hideDetails: false,
+		hideDefaultToggle: false,
 	})
 
 	const emits = defineEmits<{
@@ -47,6 +49,9 @@
 		(e: 'keydown', event: KeyboardEvent): void
 		(e: 'clear'): void
 	}>()
+
+	const slots = useSlots()
+	const forwardedSlotNames = computed(() => Object.keys(slots).filter(slotName => slotName !== 'append'))
 
 	// The DatePickerLite root provides its full locales through the shared key
 	const locales = inject<ComputedRef<typeof defaultLocales>>(calendarLocalesKey)!
@@ -93,8 +98,19 @@
 		@clear="emits('clear')"
 		@click:clear="emits('clear')"
 	>
+		<template
+			v-for="slotName in forwardedSlotNames"
+			#[slotName]="slotProps"
+		>
+			<slot
+				:name="slotName"
+				v-bind="slotProps || {}"
+			/>
+		</template>
 		<template #append>
+			<slot name="append" />
 			<button
+				v-if="!props.hideDefaultToggle"
 				ref="toggleBtn"
 				type="button"
 				class="date-picker-lite-input__toggle-btn"
@@ -106,6 +122,24 @@
 					decorative
 				/>
 			</button>
+		</template>
+		<template
+			v-if="$slots['prepend-inner']"
+			#prepend-inner
+		>
+			<slot name="prepend-inner" />
+		</template>
+		<template
+			v-if="$slots['append-inner']"
+			#append-inner
+		>
+			<slot name="append-inner" />
+		</template>
+		<template
+			v-if="$slots.details"
+			#details
+		>
+			<slot name="details" />
 		</template>
 	</SyTextField>
 </template>

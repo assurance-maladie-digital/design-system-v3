@@ -6,7 +6,7 @@
 	 * - The visual rendering
 	 */
 
-	import { computed, nextTick, provide, readonly as readonlyState, ref, toRef, useAttrs, watch, type ComponentPublicInstance } from 'vue'
+	import { computed, nextTick, provide, readonly as readonlyState, ref, toRef, useAttrs, useSlots, watch, type ComponentPublicInstance } from 'vue'
 	import DatePickerLiteInput from './DatePickerLiteText/DatePickerLiteInput.vue'
 	import DatePickerLiteVisual from './DatePickerLiteVisual/DatePickerLiteVisual.vue'
 	import { locales as defaultLocales } from './locales'
@@ -17,7 +17,15 @@
 	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
-	import type { DatePickerLiteInputProps, DatePickerLiteInputSlotProps, DatePickerLiteMultiple, DatePickerLiteProps, DatePickerLiteRange } from './types'
+	import type {
+		DatePickerLiteHeaderSlotProps,
+		DatePickerLiteInputProps,
+		DatePickerLiteInputSlotProps,
+		DatePickerLiteMenuSlotProps,
+		DatePickerLiteMultiple,
+		DatePickerLiteProps,
+		DatePickerLiteRange,
+	} from './types'
 
 	// Attributes (including listeners such as @input) are forwarded to the field through
 	// inputProps; otherwise they would also land on the root div (duplicate via bubbling)
@@ -53,6 +61,9 @@
 	}>()
 
 	const attrs = useAttrs()
+	const slots = useSlots()
+	const daySlotNames = computed(() => Object.keys(slots)
+		.filter(name => /^day-\d{4}-\d{2}-\d{2}$/.test(name)))
 	const textInput = ref<ComponentPublicInstance<typeof DatePickerLiteInput> | null>(null)
 	// Opening button tracked by the `input` slot (`:ref="toggleBtnRef"`)
 	const customToggleBtn = ref<HTMLButtonElement | null>(null)
@@ -159,6 +170,17 @@
 
 	defineSlots<{
 		input(slotProps: DatePickerLiteInputSlotProps): void
+		menu(slotProps: DatePickerLiteMenuSlotProps): void
+		header(slotProps: DatePickerLiteHeaderSlotProps): void
+		footer(): void
+		default(): void
+		prepend(): void
+		append(): void
+		prependInner(): void
+		appendInner(): void
+		details(): void
+		day(slotProps: unknown): void
+		[key: `day-${string}`]: (slotProps: unknown) => void
 	}>()
 
 	defineExpose({
@@ -193,7 +215,17 @@
 					@blur="onInputBlur"
 					@keydown="event => emits('keydown', event)"
 					@clear="emits('clear')"
-				/>
+				>
+					<template
+						v-for="(_, slotName) in slots"
+						#[slotName]="slotProps"
+					>
+						<slot
+							:name="slotName"
+							v-bind="slotProps || {}"
+						/>
+					</template>
+				</DatePickerLiteInput>
 			</slot>
 		</div>
 		<DatePickerLiteVisual
@@ -210,6 +242,49 @@
 			@update:model-value="onUserSelect"
 			@update:open="emits('update:open', $event)"
 			@update:view="value => emits('update:view', value)"
-		/>
+		>
+			<template
+				v-if="slots.menu"
+				#menu="slotProps"
+			>
+				<slot
+					name="menu"
+					v-bind="slotProps"
+				/>
+			</template>
+			<template
+				v-if="slots.header"
+				#header="slotProps"
+			>
+				<slot
+					name="header"
+					v-bind="slotProps"
+				/>
+			</template>
+			<template
+				v-if="slots.footer"
+				#footer
+			>
+				<slot name="footer" />
+			</template>
+			<template
+				v-if="slots.day"
+				#day="slotProps"
+			>
+				<slot
+					name="day"
+					v-bind="slotProps"
+				/>
+			</template>
+			<template
+				v-for="slotName in daySlotNames"
+				#[slotName]="slotProps"
+			>
+				<slot
+					:name="slotName"
+					v-bind="slotProps"
+				/>
+			</template>
+		</DatePickerLiteVisual>
 	</div>
 </template>

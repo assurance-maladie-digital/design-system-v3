@@ -1,5 +1,7 @@
 import { Meta, Canvas, Controls, Source } from '@storybook/addon-docs/blocks'
-import * as DatePickerLiteStories from './DatePickerLite.stories.ts'
+import * as DatePickerLiteStories from './doc/DatePickerLite.stories.ts'
+import * as DatePickerLiteSlotsStories from './doc/Slots.stories.ts'
+import * as DatePickerLiteCustomInputStories from './doc/CustomInput.stories.ts'
 import DatePickerLite from './DatePickerLite.vue'
 
 <Meta title="Composants/Formulaires/DatePickerLite" component={DatePickerLite} />
@@ -71,6 +73,38 @@ La prop `inputFormat` permet de définir le format de saisie et d'affichage des 
 La prop `separator` définit le séparateur utilisé entre les dates en mode `range` et `multiple`, à la fois pour l'affichage et la saisie.
 
 <Canvas of={DatePickerLiteStories.CustomRangeSeparator} />
+
+## Slots personnalisés
+
+Le composant expose plusieurs slots pour personnaliser le champ et la modale sans réécrire l’intégralité du comportement.
+
+### Slot `input`
+
+Le slot `input` remplace entièrement le champ texte par défaut. Il reçoit les props de contexte du champ (`mode`, `modelValue`, `updateModelValue`, `inputProps`, `updateTextValue`, `setFocused`, `toggleBtnRef`), ce qui permet de conserver la validation et le bouton d’ouverture du sélecteur visuel tout en pilotant le rendu librement.
+
+<Canvas of={DatePickerLiteCustomInputStories.CustomInputSyTextField} />
+
+### Slots disponibles
+
+| Slot | Props du slot | Description |
+|---|---|---|
+| `input` | `mode`, `modelValue`, `updateModelValue`, `inputProps`, `updateTextValue`, `setFocused`, `toggleBtnRef` | Remplace entièrement le champ de saisie. `inputProps` (props du champ + état de validation) est à `v-bind` sur le champ personnalisé, `toggleBtnRef` est à attacher via `:ref` au bouton d’ouverture du sélecteur visuel. |
+| `menu` | `modelValue`, `view`, `readonly`, `disabled`, `isOpen`, `setOpen` | Remplace le contenu du sélecteur visuel pour créer un calendrier ou un menu de sélection personnalisé. `setOpen` pilote l’ouverture du menu (ex. `setOpen(false)` après une sélection). |
+| `header` | `view`, `modelValue`, `currentMonth`, `minYear`, `maxYear`, `previousMonth`, `nextMonth` | Surcharge l’en-tête du calendrier avec ses callbacks de navigation au mois précédent et suivant. |
+| `footer` | — | Ajoute un message ou un bloc d’action en bas du sélecteur visuel. |
+| `day` | `day`, `rawDate`, `ISO8601`, `isSelected`, `isToday`, `isWeekend`, `isPreviousMonth`, `isNextMonth`, `isRangeStart`, `isRangeEnd`, `isInRange`, `isPreviewed`, `isPreviewStart`, `isPreviewEnd` | Personnalise chaque case du calendrier à partir du jour courant et de ses états visuels. |
+| `day-YYYY-MM-DD` | Identiques au slot `day` | Personnalise une date précise pour mettre en avant un jour particulier (ex. : `day-2025-10-15`). |
+| `prepend` / `append` | — | Ajouter du contenu avant ou après le champ. |
+| `prepend-inner` / `append-inner` | — | Ajouter du contenu à l’intérieur du champ sans en remplacer le comportement. |
+| `details` | — | Ajoute des informations complémentaires sous le champ. |
+
+### Sous-section Storybook : Slots
+
+La sous-page dédiée aux slots rassemble les exemples de personnalisation des zones de champ et de calendrier.
+
+<Canvas of={DatePickerLiteSlotsStories.Field} />
+
+<Canvas of={DatePickerLiteSlotsStories.Calendar} />
 
 ## Années affichées
 

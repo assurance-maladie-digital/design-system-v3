@@ -302,9 +302,10 @@ describe('DatePickerLite - public events', () => {
 		})
 		await nextTick()
 
-		const clearBtn = wrapper.find('.v-field__clearable button')
-		expect(clearBtn.exists()).toBe(true)
-		await clearBtn.trigger('click')
+		const clearIcon = wrapper.find('.v-field__clearable .v-icon')
+		expect(clearIcon.exists()).toBe(true)
+		await clearIcon.trigger('click')
+		await flushPromises()
 		await nextTick()
 
 		expect(wrapper.emitted('clear')).toHaveLength(1)

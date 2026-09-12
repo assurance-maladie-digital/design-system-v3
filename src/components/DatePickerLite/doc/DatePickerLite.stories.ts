@@ -1,22 +1,10 @@
 import { fn } from 'storybook/test'
 import { ref, watch } from 'vue'
-import DatePickerLite from './DatePickerLite.vue'
+import DatePickerLite from '../DatePickerLite.vue'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
-import type { DatePickerLiteProps } from './types'
 
-type DatePickerLiteStoryProps = DatePickerLiteProps & {
-	'onUpdate:modelValue'?: (value: Date | undefined) => void
-	'onUpdate:open'?: (value: boolean) => void
-	'onUpdate:view'?: (value: 'days' | 'months' | 'years') => void
-	'onChange'?: (value: Date | [Date, Date] | Date[] | undefined) => void
-	'onFocus'?: (event: FocusEvent) => void
-	'onBlur'?: (event: FocusEvent) => void
-	'onClear'?: () => void
-	'onKeydown'?: (event: KeyboardEvent) => void
-}
-
-const meta: Meta<DatePickerLiteStoryProps> = {
+const meta: Meta<typeof DatePickerLite> = {
 	title: 'Composants/Formulaires/DatePickerLite',
 	component: DatePickerLite,
 	parameters: {
@@ -29,7 +17,7 @@ const meta: Meta<DatePickerLiteStoryProps> = {
 			},
 		},
 		controls: {
-			exclude: ['width', 'undefined', 'onUpdate:modelValue', 'onUpdate:open', 'onUpdate:view', 'onChange', 'onFocus', 'onBlur', 'onClear', 'onKeydown'],
+			exclude: ['width', 'undefined', 'onUpdate:modelValue', 'onUpdate:open', 'onUpdate:view', 'onChange', 'onFocus', 'onBlur', 'onClear', 'onKeydown', 'slotName'],
 		},
 	},
 	argTypes: {
@@ -61,6 +49,145 @@ const meta: Meta<DatePickerLiteStoryProps> = {
 			},
 		},
 		...getValidationDocumentation('base'),
+		'input': {
+			description: 'Slot de remplacement du champ de saisie. Il reçoit le contexte de validation, le modèle et le bouton d’ouverture du sélecteur visuel pour conserver le comportement sans réécrire l’intégralité du composant.',
+			control: false,
+			table: {
+				type: {
+					summary: 'DatePickerLiteInputSlotProps',
+					detail: `{
+	mode: 'single' | 'range' | 'multiple',
+	modelValue: Date | [Date, Date] | Date[] | undefined,
+	updateModelValue: (value: Date | [Date, Date] | Date[] | undefined) => void,
+	inputProps: DatePickerLiteInputProps, // props du champ + état de validation, à v-bind sur le champ personnalisé
+	updateTextValue: (value: string | undefined) => void, // reporte le texte saisi pour la validation
+	setFocused: (value: boolean) => void,
+	toggleBtnRef: Ref<HTMLButtonElement | null>, // à attacher via :ref au bouton d'ouverture du sélecteur visuel
+}`,
+				},
+				defaultValue: { summary: 'default input field' },
+				category: 'slots',
+			},
+		},
+		'menu': {
+			description: 'Slot de remplacement complet du menu du sélecteur visuel. Reçoit la vue courante, la valeur sélectionnée et le contrôle d’ouverture pour personnaliser le contenu du calendrier.',
+			control: false,
+			table: {
+				type: {
+					summary: 'DatePickerLiteMenuSlotProps',
+					detail: `{
+	modelValue: Date | [Date, Date] | Date[] | undefined,
+	view: 'days' | 'months' | 'years',
+	readonly: boolean,
+	disabled: boolean,
+	isOpen: boolean,
+	setOpen: (value: boolean) => void, // ex. setOpen(false) pour fermer après sélection
+}`,
+				},
+				category: 'slots',
+			},
+		},
+		'header': {
+			description: 'Slot pour surcharger l’en-tête du calendrier. Reçoit la vue active, le mois courant, les bornes d’années et les callbacks de navigation au mois précédent et suivant.',
+			control: false,
+			table: {
+				type: {
+					summary: 'DatePickerLiteHeaderSlotProps',
+					detail: `{
+	view: 'days' | 'months' | 'years',
+	modelValue: Date | undefined,
+	currentMonth: Date,
+	minYear: number,
+	maxYear: number,
+	previousMonth: () => void,
+	nextMonth: () => void,
+}`,
+				},
+				category: 'slots',
+			},
+		},
+		'footer': {
+			description: 'Slot pour ajouter un contenu d’action ou d’information au bas du sélecteur visuel.',
+			control: false,
+			table: {
+				type: { summary: 'slot' },
+				category: 'slots',
+			},
+		},
+		'day': {
+			description: 'Slot appliqué à chaque case du calendrier. Reçoit le jour courant ainsi que son état visuel (sélectionné, aujourd’hui, plage, etc.).',
+			control: false,
+			table: {
+				type: {
+					summary: 'FeaturedDaysInWeek',
+					detail: `{
+	rawDate: Date,
+	day: number, // numéro du jour dans le mois
+	ISO8601: string, // ex. '2025-10-15'
+	isSelected: boolean,
+	isToday: boolean,
+	isWeekend: boolean,
+	isPreviousMonth: boolean,
+	isNextMonth: boolean,
+	isRangeStart: boolean,
+	isRangeEnd: boolean,
+	isInRange: boolean,
+	isPreviewed: boolean,
+	isPreviewStart: boolean,
+	isPreviewEnd: boolean,
+}`,
+				},
+				category: 'slots',
+			},
+		},
+		'day-*': {
+			description: 'Slot spécifique à une date donnée au format day-YYYY-MM-DD, utile pour mettre en avant un jour particulier (ex. : day-2025-10-15). Reçoit les mêmes props que le slot day.',
+			control: false,
+			table: {
+				type: { summary: 'FeaturedDaysInWeek' },
+				category: 'slots',
+			},
+		},
+		'prepend': {
+			description: 'Slot de contenu ajouté avant le champ de saisie pour intégrer un libellé, un badge ou un bouton contextualisé.',
+			control: false,
+			table: {
+				type: { summary: 'slot' },
+				category: 'slots',
+			},
+		},
+		'append': {
+			description: 'Slot de contenu ajouté après le champ de saisie, utile pour intégrer un bouton d’action ou un raccourci.',
+			control: false,
+			table: {
+				type: { summary: 'slot' },
+				category: 'slots',
+			},
+		},
+		'prepend-inner': {
+			description: 'Slot contenu à l’intérieur du champ, avant le texte saisi, pour insérer un indicateur ou un préfixe visuel.',
+			control: false,
+			table: {
+				type: { summary: 'slot' },
+				category: 'slots',
+			},
+		},
+		'append-inner': {
+			description: 'Slot contenu à l’intérieur du champ, après le texte saisi, pour insérer un suffixe visuel ou un bouton métier.',
+			control: false,
+			table: {
+				type: { summary: 'slot' },
+				category: 'slots',
+			},
+		},
+		'details': {
+			description: 'Slot de détail affiché sous le champ, souvent utilisé pour ajouter un texte d’accompagnement ou des informations complémentaires.',
+			control: false,
+			table: {
+				type: { summary: 'slot' },
+				category: 'slots',
+			},
+		},
 		'modelValue': {
 			control: 'object',
 			description: 'Date sélectionnée en mode simple, plage de dates [start, end] en mode range, ou liste de dates en mode multiple. La valeur est renvoyée au format JavaScript Date, ou undefined si le champ est vide.',

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { mdiClose } from '@mdi/js'
-	import { computed, inject, toRef, useId, watch, type ComponentPublicInstance, type ComputedRef } from 'vue'
+	import { computed, inject, toRef, useId, useSlots, watch, type ComponentPublicInstance, type ComputedRef } from 'vue'
 	import MonthSelector from '@/components/Common/Calendar/MonthSelector/MonthSelector.vue'
 	import YearSelector from '@/components/Common/Calendar/YearSelector/YearSelector.vue'
 	import DatePickerLiteHeader from '@/components/DatePickerLite/DatePickerLiteHeader.vue'
@@ -25,6 +25,10 @@
 		readonly: boolean
 		disabled: boolean
 	} & DatePickerLiteVisualProps>()
+
+	const slots = useSlots()
+	const daySlotNames = computed(() => Object.keys(slots)
+		.filter(name => /^day-\d{4}-\d{2}-\d{2}$/.test(name)))
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined): void
@@ -68,7 +72,7 @@
 	// to the days panel, and the reset performed when the picker reopens
 	watch(view, value => emits('update:view', value))
 
-	const { open } = useDatePickerLiteDialog({
+	const { open, setOpen } = useDatePickerLiteDialog({
 		toggleBtn: toRef(props, 'toggleBtn'),
 		resetViewOnOpen,
 		onUpdateOpen: value => emits('update:open', value),
@@ -95,7 +99,6 @@
 		retain-focus
 		:max-width="328"
 		:min-width="328"
-		:min-height="455"
 		disable-initial-focus
 		:disabled="props.disabled"
 		transition="fade-transition"
@@ -106,69 +109,110 @@
 		role="dialog"
 		:aria-labelledby="`${id}-title`"
 	>
-		<div
-			class="date-picker-lite-menu"
-			:class="{
-				'date-picker-lite-menu--readonly': props.readonly,
-			}"
-		>
-			<div class="date-picker-lite-menu__content">
-				<DatePickerLiteHeader
-					v-model:view="view"
-					:model-value="headerDate"
-					:displayed-month="currentMonth"
-					:min-year
-					:max-year
-					@previous-month="previousMonth"
-					@next-month="nextMonth"
-				/>
-				<YearSelector
-					v-if="view === 'years'"
-					:model-value="visibleYear"
-					:min="minYear"
-					:max="maxYear"
-					:order="yearsOrder"
-					@update:model-value="setYear"
-				/>
-				<MonthSelector
-					v-else-if="view === 'months'"
-					:model-value="visibleMonthIndex"
-					@update:model-value="setMonth"
-				/>
-				<Calendar
-					v-else
-					v-model:displayed-month="visibleMonth"
-					:selected-days="selectedDates"
-					:selected-range="selectedDateRange"
-					:select-range="mode === 'range'"
-					@click:day="setDay"
-					@update:selected-range="handleRangeSelected"
-				/>
-				<VisualPickerFooter
-					:label="locales.todayBtnLabel"
-					:aria-label="locales.todayBtnAriaLabel"
-					:format="date => date"
-					@update:model-value="setDayFromFooter"
-				/>
-			</div>
-			<div class="date-picker-lite-menu__close-action">
-				<button
-					type="button"
-					class="date-picker-lite-menu__close-btn"
-					:data-close-picker="true"
-					:aria-label="locales.closeBtnAriaLabel"
-					:title="locales.closeBtnAriaLabel"
-					@click="open = false"
+		<template #default>
+			<slot
+				name="menu"
+				:model-value="props.modelValue"
+				:view="view"
+				:readonly="props.readonly"
+				:disabled="props.disabled"
+				:is-open="open"
+				:set-open="setOpen"
+			>
+				<div
+					class="date-picker-lite-menu"
+					:class="{
+						'date-picker-lite-menu--readonly': props.readonly,
+					}"
 				>
-					<SyIcon
-						:icon="mdiClose"
-						size="x-small"
-						decorative
-					/>
-					{{ locales.closeBtnLabel }}
-				</button>
-			</div>
-		</div>
+					<div class="date-picker-lite-menu__content">
+						<slot
+							name="header"
+							:view="view"
+							:model-value="headerDate"
+							:current-month="currentMonth"
+							:min-year="minYear"
+							:max-year="maxYear"
+							:previous-month="previousMonth"
+							:next-month="nextMonth"
+						>
+							<DatePickerLiteHeader
+								v-model:view="view"
+								:model-value="headerDate"
+								:displayed-month="currentMonth"
+								:min-year
+								:max-year
+								@previous-month="previousMonth"
+								@next-month="nextMonth"
+							/>
+						</slot>
+						<YearSelector
+							v-if="view === 'years'"
+							:model-value="visibleYear"
+							:min="minYear"
+							:max="maxYear"
+							:order="yearsOrder"
+							@update:model-value="setYear"
+						/>
+						<MonthSelector
+							v-else-if="view === 'months'"
+							:model-value="visibleMonthIndex"
+							@update:model-value="setMonth"
+						/>
+						<Calendar
+							v-else
+							v-model:displayed-month="visibleMonth"
+							:selected-days="selectedDates"
+							:selected-range="selectedDateRange"
+							:select-range="mode === 'range'"
+							@click:day="setDay"
+							@update:selected-range="handleRangeSelected"
+						>
+							<template #day="slotProps">
+								<slot
+									name="day"
+									v-bind="slotProps"
+								/>
+							</template>
+							<template
+								v-for="slotName in daySlotNames"
+								#[slotName]="slotProps"
+							>
+								<slot
+									:name="slotName"
+									v-bind="slotProps"
+								/>
+							</template>
+						</Calendar>
+						<slot name="footer">
+							<VisualPickerFooter
+								:label="locales.todayBtnLabel"
+								:aria-label="locales.todayBtnAriaLabel"
+								:format="date => date"
+								@update:model-value="setDayFromFooter"
+							/>
+						</slot>
+					</div>
+					<div class="date-picker-lite-menu__close-action">
+						<button
+							type="button"
+							class="date-picker-lite-menu__close-btn"
+							:data-close-picker="true"
+							:aria-label="locales.closeBtnAriaLabel"
+							:title="locales.closeBtnAriaLabel"
+							@click="open = false"
+						>
+							<SyIcon
+								:icon="mdiClose"
+								size="x-small"
+								decorative
+							/>
+							{{ locales.closeBtnLabel }}
+						</button>
+					</div>
+				</div>
+			</slot>
+		</template>
 	</VMenu>
 </template>
 
