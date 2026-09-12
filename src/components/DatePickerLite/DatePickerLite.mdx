@@ -1,0 +1,141 @@
+import { Meta, Canvas, Controls, Source } from '@storybook/addon-docs/blocks'
+import * as DatePickerLiteStories from './doc/DatePickerLite.stories.ts'
+import * as DatePickerLiteSlotsStories from './doc/Slots.stories.ts'
+import * as DatePickerLiteCustomInputStories from './doc/CustomInput.stories.ts'
+import DatePickerLite from './DatePickerLite.vue'
+
+<Meta title="Composants/Formulaires/DatePickerLite" component={DatePickerLite} />
+
+<div className="header">
+  <h1>DatePickerLite</h1>
+  <p>Le composant DatePickerLite permet de sélectionner une date via un champ de saisie et un sélecteur visuel. Il prend en charge la navigation par mois et par année, la saisie manuelle, la validation et les interactions clavier.</p>
+</div>
+
+{/* func-version-start */}
+<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.1.3 - 04/09/2026</p>
+{/* func-version-end */}
+{/* a11y-version-start */}
+<p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.1.3 - 04/09/2026</p>
+{/* a11y-version-end */}
+
+<Canvas of={DatePickerLiteStories.Default} />
+
+# API
+
+<Controls of={DatePickerLiteStories.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+import { DatePickerLite } from '@cnamts/synapse'
+import { ref } from 'vue'
+
+const selectedDate = ref<Date | undefined>(new Date(2025, 10, 11))
+</script>
+
+<template>
+  <DatePickerLite
+    v-model="selectedDate"
+    label="Début du projet"
+    :min-year="2000"
+    :max-year="2035"
+    :clearable="true"
+    required
+  />
+</template>
+`} />
+
+# Modes de sélection
+
+## Plage de dates
+
+En mode `range`, le champ attend une plage de dates séparées par la prop `separator` (par défaut `" - "`). La valeur du modèle est un tuple `[Date, Date]`.
+
+<Canvas of={DatePickerLiteStories.Range} />
+
+## Dates multiples
+
+En mode `multiple`, le champ accepte une liste de dates séparées par la prop `separator`. La valeur du modèle est un tableau de dates.
+
+<Canvas of={DatePickerLiteStories.Multiple} />
+
+# Personnalisation
+
+## Format de saisie
+
+La prop `inputFormat` permet de définir le format de saisie et d'affichage des dates. Les jetons `D`, `M` et `Y` représentent respectivement le jour, le mois et l'année. Pensez à adapter le `helpText` en conséquence.
+
+<Canvas of={DatePickerLiteStories.CustomInputFormat} />
+
+## Séparateur
+
+La prop `separator` définit le séparateur utilisé entre les dates en mode `range` et `multiple`, à la fois pour l'affichage et la saisie.
+
+<Canvas of={DatePickerLiteStories.CustomRangeSeparator} />
+
+## Slots personnalisés
+
+Le composant expose plusieurs slots pour personnaliser le champ et la modale sans réécrire l’intégralité du comportement.
+
+### Slot `input`
+
+Le slot `input` remplace entièrement le champ texte par défaut. Il reçoit les props de contexte du champ (`mode`, `modelValue`, `updateModelValue`, `inputProps`, `updateTextValue`, `setFocused`, `toggleBtnRef`), ce qui permet de conserver la validation et le bouton d’ouverture du sélecteur visuel tout en pilotant le rendu librement.
+
+<Canvas of={DatePickerLiteCustomInputStories.CustomInputSyTextField} />
+
+### Slots disponibles
+
+| Slot | Props du slot | Description |
+|---|---|---|
+| `input` | `mode`, `modelValue`, `updateModelValue`, `inputProps`, `updateTextValue`, `setFocused`, `toggleBtnRef` | Remplace entièrement le champ de saisie. `inputProps` (props du champ + état de validation) est à `v-bind` sur le champ personnalisé, `toggleBtnRef` est à attacher via `:ref` au bouton d’ouverture du sélecteur visuel. |
+| `menu` | `modelValue`, `view`, `readonly`, `disabled`, `isOpen`, `setOpen` | Remplace le contenu du sélecteur visuel pour créer un calendrier ou un menu de sélection personnalisé. `setOpen` pilote l’ouverture du menu (ex. `setOpen(false)` après une sélection). |
+| `header` | `view`, `modelValue`, `currentMonth`, `minYear`, `maxYear`, `previousMonth`, `nextMonth` | Surcharge l’en-tête du calendrier avec ses callbacks de navigation au mois précédent et suivant. |
+| `footer` | — | Ajoute un message ou un bloc d’action en bas du sélecteur visuel. |
+| `day` | `day`, `rawDate`, `ISO8601`, `isSelected`, `isToday`, `isWeekend`, `isPreviousMonth`, `isNextMonth`, `isRangeStart`, `isRangeEnd`, `isInRange`, `isPreviewed`, `isPreviewStart`, `isPreviewEnd` | Personnalise chaque case du calendrier à partir du jour courant et de ses états visuels. |
+| `day-YYYY-MM-DD` | Identiques au slot `day` | Personnalise une date précise pour mettre en avant un jour particulier (ex. : `day-2025-10-15`). |
+| `prepend` / `append` | — | Ajouter du contenu avant ou après le champ. |
+| `prepend-inner` / `append-inner` | — | Ajouter du contenu à l’intérieur du champ sans en remplacer le comportement. |
+| `details` | — | Ajoute des informations complémentaires sous le champ. |
+
+### Sous-section Storybook : Slots
+
+La sous-page dédiée aux slots rassemble les exemples de personnalisation des zones de champ et de calendrier.
+
+<Canvas of={DatePickerLiteSlotsStories.Field} />
+
+<Canvas of={DatePickerLiteSlotsStories.Calendar} />
+
+## Années affichées
+
+Les props `minYear` et `maxYear` limitent les années proposées dans le sélecteur visuel. Elles ne concernent pas la validation : une date hors de cet intervalle peut toujours être saisie manuellement.
+
+<Canvas of={DatePickerLiteStories.CustomDisplayedYears} />
+
+# États du champ
+
+## Champ obligatoire
+
+La prop `required` indique que la date est obligatoire (prise en compte par la validation), et `displayAsterisk` affiche l'astérisque visuel à côté du label.
+
+<Canvas of={DatePickerLiteStories.Required} />
+
+## Champ vidable
+
+La prop `clearable` affiche un bouton permettant de vider le champ et de réinitialiser la date sélectionnée.
+
+<Canvas of={DatePickerLiteStories.Clearable} />
+
+## Désactivé
+
+La prop `disabled` désactive la saisie et l'ouverture du sélecteur visuel.
+
+<Canvas of={DatePickerLiteStories.Disabled} />
+
+## Lecture seule
+
+La prop `readonly` permet de consulter la date sans pouvoir la modifier.
+
+<Canvas of={DatePickerLiteStories.Readonly} />
+
+<a href="/?path=/docs/guide-du-dev-formulaires-validation-guide-des-formulaires--docs" className="action-link">Pour plus d'informations sur la validation, consultez le guide de validation des formulaires.</a>

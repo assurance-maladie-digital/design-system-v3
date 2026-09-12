@@ -1,14 +1,19 @@
 export const locales = {
-	btnLabel: 'Ouvrir le sélecteur de mois',
-	headerSelectYear: 'Sélectionner une année',
-	headerSelectMonth: 'Sélectionner un mois',
-	yearSelectorLabel: 'Sélectionner une année',
+	// Keys required by CalendarLocales (injected by the shared picker sub-components)
 	monthSelectorLabel: 'Sélectionner un mois',
+	yearSelectorLabel: 'Sélectionner une année',
 	yearBtnLabelSelected: (selectedYear: string) => `Sélectionner une année, l'année sélectionnée est ${selectedYear}`,
 	yearBtnLabelUnselected: (selectedYear: string) => `Sélectionner une année, nous sommes actuellement en ${selectedYear}`,
 	monthBtnLabelSelected: (selectedMonth: string) => `Sélectionner un mois, le mois sélectionné est ${selectedMonth}`,
 	monthBtnLabelUnselected: (selectedMonth: string) => `Sélectionner un mois, nous sommes actuellement en ${selectedMonth}`,
 	previousMonthBtnLabel: 'Mois précédent',
 	nextMonthBtnLabel: 'Mois suivant',
+	// DatePickerLite own keys
+	btnLabel: 'Ouvrir le sélecteur de date',
+	headerSelectDay: 'Sélectionner une date',
+	todayBtnLabel: 'Aujourd’hui',
+	todayBtnAriaLabel: 'Sélectionner la date du jour',
+	closeBtnLabel: 'Fermer',
+	closeBtnAriaLabel: 'Fermer le sélecteur de date',
 	fieldRequired: (label?: string) => `${label ? `Le champ ${label}` : 'Ce champ'} est requis.`,
 }
