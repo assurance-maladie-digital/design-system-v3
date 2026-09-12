@@ -140,14 +140,17 @@ const meta: Meta<typeof DatePickerLite> = {
 				category: 'slots',
 			},
 		},
-		'day-*': {
-			description: 'Slot spécifique à une date donnée au format day-YYYY-MM-DD, utile pour mettre en avant un jour particulier (ex. : day-2025-10-15). Reçoit les mêmes props que le slot day.',
-			control: false,
-			table: {
-				type: { summary: 'FeaturedDaysInWeek' },
-				category: 'slots',
+		// Slot dynamique (day-YYYY-MM-DD) : la clé template-literal n'est pas préservée par ArgTypes, d'où le cast
+		...({
+			'`day-${date}"`': {
+				description: 'Slot spécifique à une date donnée au format day-YYYY-MM-DD, utile pour mettre en avant un jour particulier (ex. : day-2025-10-15). Reçoit les mêmes props que le slot day.',
+				control: false,
+				table: {
+					type: { summary: 'FeaturedDaysInWeek' },
+					category: 'slots',
+				},
 			},
-		},
+		} as Meta<typeof DatePickerLite>['argTypes']),
 		'prepend': {
 			description: 'Slot de contenu ajouté avant le champ de saisie pour intégrer un libellé, un badge ou un bouton contextualisé.',
 			control: false,

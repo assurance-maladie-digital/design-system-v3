@@ -169,17 +169,17 @@
 	}))
 
 	defineSlots<{
-		input(slotProps: DatePickerLiteInputSlotProps): void
-		menu(slotProps: DatePickerLiteMenuSlotProps): void
-		header(slotProps: DatePickerLiteHeaderSlotProps): void
-		footer(): void
-		default(): void
-		prepend(): void
-		append(): void
-		prependInner(): void
-		appendInner(): void
-		details(): void
-		day(slotProps: unknown): void
+		'input'(slotProps: DatePickerLiteInputSlotProps): void
+		'menu'(slotProps: DatePickerLiteMenuSlotProps): void
+		'header'(slotProps: DatePickerLiteHeaderSlotProps): void
+		'footer'(): void
+		'default'(): void
+		'prepend'(): void
+		'append'(): void
+		'prepend-inner'(): void
+		'append-inner'(): void
+		'details'(): void
+		'day'(slotProps: unknown): void
 		[key: `day-${string}`]: (slotProps: unknown) => void
 	}>()
 
