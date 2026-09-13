@@ -1,4 +1,4 @@
-import { computed, nextTick, ref, type MaybeRefOrGetter } from 'vue'
+import { computed, nextTick, ref, toValue, type MaybeRefOrGetter } from 'vue'
 import type { Ref } from 'vue'
 import { getISODatePart, parseISODatePart } from './utils'
 import useRangeSelection from './useRangeSelection'
@@ -11,6 +11,7 @@ export default function useInteractions(
 		(event: 'click:day', value: Date): void
 		(event: 'update:selectedRange', value: [Date, Date]): void
 	},
+	isDateDisabled: MaybeRefOrGetter<((date: Date) => boolean) | undefined> = undefined,
 ) {
 	/** The month displayed by the calendar, falling back to the current month */
 	const displayedView = computed(() => displayedMonth.value ?? new Date())
@@ -132,6 +133,7 @@ export default function useInteractions(
 	}
 
 	function click(date: Date) {
+		if (toValue(isDateDisabled)?.(date) ?? false) return
 		focusDay(date)
 		emits('click:day', date)
 		selectDay(date)

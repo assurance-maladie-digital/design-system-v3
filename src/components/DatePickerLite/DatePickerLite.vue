@@ -59,6 +59,14 @@
 	}>()
 
 	const attrs = useAttrs()
+	const inputAttrs = computed(() => Object.fromEntries(
+		Object.entries(attrs).filter(([name]) => name !== 'isDateDisabled'),
+	))
+	const isDateDisabledPredicate = (value: unknown): value is NonNullable<DatePickerLiteProps['isDateDisabled']> => typeof value === 'function'
+	const isDateDisabled = computed(() => {
+		const predicate = props.isDateDisabled ?? attrs.isDateDisabled
+		return isDateDisabledPredicate(predicate) ? predicate : undefined
+	})
 	const slots = useSlots()
 	const daySlotNames = computed(() => Object.keys(slots)
 		.filter(name => /^day-\d{4}-\d{2}-\d{2}$/.test(name)))
@@ -136,7 +144,7 @@
 	})
 
 	const inputProps = computed<DatePickerLiteInputProps>(() => ({
-		...attrs,
+		...inputAttrs.value,
 		...useTextField(props).value,
 		required: props.required,
 		displayAsterisk: props.displayAsterisk,
@@ -236,6 +244,7 @@
 			:max-year
 			:years-order
 			:initial-view
+			:is-date-disabled="isDateDisabled"
 			:disabled
 			:readonly
 			@update:model-value="onUserSelect"

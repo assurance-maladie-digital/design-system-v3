@@ -13,6 +13,7 @@
 		ariaLabelledby?: string
 		selectRange?: boolean
 		locales?: typeof defaultLocales
+		isDateDisabled?: (date: Date) => boolean
 	}>()
 
 	const emits = defineEmits<{
@@ -41,6 +42,7 @@
 		rootElement,
 		() => props.selectRange,
 		emits,
+		() => props.isDateDisabled,
 	)
 
 	const {
@@ -52,6 +54,7 @@
 		() => props.selectedRange,
 		locales,
 		locale,
+		() => props.isDateDisabled,
 	)
 
 	const { displayedWeeks, localizedDays, localizedFullMonth } = useCalendar(
@@ -60,6 +63,7 @@
 		committedRange,
 		previewedRange,
 		locale,
+		() => props.isDateDisabled,
 	)
 
 	const { transitionProps } = useMonthTransition(displayedMonth)
@@ -134,16 +138,18 @@
 									'sy-calendar__day--preview': day.isPreviewed,
 									'sy-calendar__day--preview-start': day.isPreviewStart,
 									'sy-calendar__day--preview-end': day.isPreviewEnd,
+									'sy-calendar__day--disabled': day.isDisabled,
 								}]"
 								:data-date="day.ISO8601"
 								:tabindex="focusedDay === day.ISO8601 || day.isRangeStart || day.isRangeEnd ? 0 : -1"
 								:aria-current="day.isToday ? 'date' : undefined"
 								:aria-selected="day.isSelected || day.isRangeStart || day.isRangeEnd ? true : undefined"
+								:aria-disabled="day.isDisabled ? 'true' : undefined"
 								:aria-label="getAriaLabelForRange(day)"
 								role="gridcell"
 								v-bind="keyboardInteractions"
 								@click="() => click(day.rawDate)"
-								@mouseenter="() => previewRange(day.rawDate)"
+								@mouseenter="() => day.isDisabled ? previewRange(null) : previewRange(day.rawDate)"
 								@mouseleave="() => previewRange(null)"
 								@focusin="() => previewRange(day.rawDate)"
 								@focusout="() => previewRange(null)"
@@ -286,6 +292,11 @@
 
 .sy-calendar__day--preview-end > .sy-calendar__day-content {
 	border-radius: 0 999px 999px 0;
+}
+
+.sy-calendar__day--disabled > .sy-calendar__day-content {
+	color: rgb(var(--v-theme-on-surface), var(--v-disabled-opacity));
+	cursor: not-allowed;
 }
 
 // Month slide transition: the leaving grid is taken out of the flow

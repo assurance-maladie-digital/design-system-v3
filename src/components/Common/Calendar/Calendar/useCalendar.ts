@@ -19,6 +19,7 @@ export type FeaturedDaysInWeek = {
 	isPreviewed: boolean
 	isPreviewStart: boolean
 	isPreviewEnd: boolean
+	isDisabled: boolean
 }
 
 /**
@@ -31,6 +32,7 @@ export default function useCalendar(
 	committedRange: MaybeRefOrGetter<[ISODate, ISODate] | null>,
 	previewedRange: MaybeRefOrGetter<[ISODate, ISODate] | null>,
 	locale: MaybeRefOrGetter<string>,
+	isDateDisabled: MaybeRefOrGetter<((date: Date) => boolean) | undefined> = undefined,
 ) {
 	/** Date of reference for the view */
 	const dateView = computed<Date>(() => {
@@ -135,6 +137,7 @@ export default function useCalendar(
 				isPreviewed: preview !== null && isoDate >= preview[0] && isoDate <= preview[1],
 				isPreviewStart: preview !== null && isoDate === preview[0],
 				isPreviewEnd: preview !== null && isoDate === preview[1],
+				isDisabled: toValue(isDateDisabled)?.(rawDate) ?? false,
 			}
 		})
 	})

@@ -6,6 +6,8 @@ export type DatePickerLiteVisualProps = {
 	yearsOrder: 'asc' | 'desc'
 	initialView: 'days' | 'months' | 'years'
 	mode?: DatePickerLiteMode
+	/** Returns true when a date must not be selectable in the visual picker. */
+	isDateDisabled?: (date: Date) => boolean
 }
 
 export const defaultDatePickerLiteVisualProps = {

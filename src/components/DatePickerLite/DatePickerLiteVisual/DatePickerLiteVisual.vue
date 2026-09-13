@@ -165,6 +165,7 @@
 							:selected-days="selectedDates"
 							:selected-range="selectedDateRange"
 							:select-range="mode === 'range'"
+							:is-date-disabled="props.isDateDisabled"
 							@click:day="setDay"
 							@update:selected-range="handleRangeSelected"
 						>

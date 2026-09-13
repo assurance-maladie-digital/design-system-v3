@@ -3,6 +3,59 @@ import { ref, watch } from 'vue'
 import DatePickerLite from '../DatePickerLite.vue'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { parseDate } from '@/composables/date/useDateFormatDayjs'
+
+const isWeekend = (date: Date): boolean => date.getDay() === 0 || date.getDay() === 6
+
+const isWeekendText = (value: string | undefined): boolean => {
+	if (!value) return false
+	const date = parseDate(value, 'DD/MM/YYYY')
+	return date ? isWeekend(date) : false
+}
+
+const getEasterMonday = (year: number): Date => {
+	const goldenNumber = year % 19
+	const century = Math.floor(year / 100)
+	const yearInCentury = year % 100
+	const leapYears = Math.floor(century / 4)
+	const centuryRemainder = century % 4
+	const correction = Math.floor((century + 8) / 25)
+	const epactCorrection = Math.floor((century - correction + 1) / 3)
+	const epact = (19 * goldenNumber + century - leapYears - epactCorrection + 15) % 30
+	const fullMoonCorrection = Math.floor(yearInCentury / 4)
+	const weekdayCorrection = yearInCentury % 4
+	const daysUntilEaster = (32 + 2 * centuryRemainder + 2 * fullMoonCorrection - epact - weekdayCorrection) % 7
+	const monthCorrection = Math.floor((goldenNumber + 11 * epact + 22 * daysUntilEaster) / 451)
+	const easterSunday = new Date(year, Math.floor((epact + daysUntilEaster - 7 * monthCorrection + 114) / 31) - 1, (epact + daysUntilEaster - 7 * monthCorrection + 114) % 31 + 1)
+	return new Date(year, easterSunday.getMonth(), easterSunday.getDate() + 1)
+}
+
+const getPublicHolidays = (year: number): Date[] => {
+	const easterMonday = getEasterMonday(year)
+	return [
+		new Date(year, 0, 1),
+		easterMonday,
+		new Date(year, easterMonday.getMonth(), easterMonday.getDate() + 38),
+		new Date(year, easterMonday.getMonth(), easterMonday.getDate() + 49),
+		new Date(year, 4, 1),
+		new Date(year, 4, 8),
+		new Date(year, 6, 14),
+		new Date(year, 7, 15),
+		new Date(year, 10, 1),
+		new Date(year, 10, 11),
+		new Date(year, 11, 25),
+	]
+}
+
+const isPublicHoliday = (date: Date): boolean => getPublicHolidays(date.getFullYear()).some(publicHoliday =>
+	publicHoliday.getMonth() === date.getMonth()
+	&& publicHoliday.getDate() === date.getDate())
+
+const isPublicHolidayText = (value: string | undefined): boolean => {
+	if (!value) return false
+	const date = parseDate(value, 'DD/MM/YYYY')
+	return date ? isPublicHoliday(date) : false
+}
 
 const meta: Meta<typeof DatePickerLite> = {
 	title: 'Composants/Formulaires/DatePickerLite',
@@ -301,6 +354,14 @@ const meta: Meta<typeof DatePickerLite> = {
 				category: 'props',
 			},
 		},
+		'isDateDisabled': {
+			description: 'Prédicat qui rend une date indisponible dans le sélecteur visuel. Associer une règle de validation cohérente pour rejeter également les dates saisies manuellement.',
+			control: false,
+			table: {
+				type: { summary: '(date: Date) => boolean' },
+				category: 'props',
+			},
+		},
 		'placeholder': {
 			description: 'Texte affiché dans le champ de saisie lorsque aucune valeur n’est sélectionnée.',
 			control: 'text',
@@ -595,6 +656,150 @@ export const CustomDisplayedYears: Story = {
 					const selectedDate = ref<Date | undefined>(new Date(2025, 10, 11))
 				</script>
 				`,
+			},
+		],
+	},
+}
+
+export const DisabledWeekends: Story = {
+	args: {
+		label: 'Date de rendez-vous',
+		modelValue: new Date(2025, 10, 11),
+		isDateDisabled: isWeekend,
+		customRules: [{
+			type: 'custom',
+			options: {
+				validate: (value: string | undefined) => !isWeekendText(value),
+				message: 'Les rendez-vous ne sont pas disponibles le week-end.',
+			},
+		}],
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Les samedis et dimanches sont indisponibles dans le calendrier et rejetés lorsqu’ils sont saisis manuellement.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePickerLite
+						v-model="selectedDate"
+						label="Date de rendez-vous"
+						:is-date-disabled="isWeekend"
+						:custom-rules="rules"
+					/>
+				</template>`,
+			}, {
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DatePickerLite } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const selectedDate = ref<Date | undefined>(new Date(2025, 10, 11))
+					const isWeekend = (date: Date) => date.getDay() === 0 || date.getDay() === 6
+					const isWeekendText = (value: string | undefined) => {
+						if (!value) return false
+						const [day, month, year] = value.split('/').map(Number)
+						return isWeekend(new Date(year, month - 1, day))
+					}
+					const rules = [{
+						type: 'custom' as const,
+						options: {
+							validate: (value: string | undefined) => !isWeekendText(value),
+							message: 'Les rendez-vous ne sont pas disponibles le week-end.',
+						},
+					}]
+				</script>`,
+			},
+		],
+	},
+}
+
+export const DisabledPublicHolidays: Story = {
+	args: {
+		label: 'Date de rendez-vous',
+		modelValue: new Date(2025, 10, 12),
+		isDateDisabled: isPublicHoliday,
+		customRules: [{
+			type: 'custom',
+			options: {
+				validate: (value: string | undefined) => !isPublicHolidayText(value),
+				message: 'Les rendez-vous ne sont pas disponibles les jours fériés.',
+			},
+		}],
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Les jours fériés français, y compris les jours mobiles, sont indisponibles dans le calendrier et rejetés lorsqu’ils sont saisis manuellement.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePickerLite
+						v-model="selectedDate"
+						label="Date de rendez-vous"
+						:is-date-disabled="isPublicHoliday"
+						:custom-rules="rules"
+					/>
+				</template>`,
+			}, {
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DatePickerLite } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const selectedDate = ref<Date | undefined>(new Date(2025, 10, 12))
+					const getEasterMonday = (year: number) => {
+						const goldenNumber = year % 19
+						const century = Math.floor(year / 100)
+						const yearInCentury = year % 100
+						const leapYears = Math.floor(century / 4)
+						const centuryRemainder = century % 4
+						const correction = Math.floor((century + 8) / 25)
+						const epactCorrection = Math.floor((century - correction + 1) / 3)
+						const epact = (19 * goldenNumber + century - leapYears - epactCorrection + 15) % 30
+						const fullMoonCorrection = Math.floor(yearInCentury / 4)
+						const weekdayCorrection = yearInCentury % 4
+						const daysUntilEaster = (32 + 2 * centuryRemainder + 2 * fullMoonCorrection - epact - weekdayCorrection) % 7
+						const monthCorrection = Math.floor((goldenNumber + 11 * epact + 22 * daysUntilEaster) / 451)
+						const easterSunday = new Date(year, Math.floor((epact + daysUntilEaster - 7 * monthCorrection + 114) / 31) - 1, (epact + daysUntilEaster - 7 * monthCorrection + 114) % 31 + 1)
+						return new Date(year, easterSunday.getMonth(), easterSunday.getDate() + 1)
+					}
+					const getPublicHolidays = (year: number) => {
+						const easterMonday = getEasterMonday(year)
+						return [
+							new Date(year, 0, 1), easterMonday,
+							new Date(year, easterMonday.getMonth(), easterMonday.getDate() + 38),
+							new Date(year, easterMonday.getMonth(), easterMonday.getDate() + 49),
+							new Date(year, 4, 1), new Date(year, 4, 8), new Date(year, 6, 14),
+							new Date(year, 7, 15), new Date(year, 10, 1), new Date(year, 10, 11), new Date(year, 11, 25),
+						]
+					}
+					const isPublicHoliday = (date: Date) => getPublicHolidays(date.getFullYear()).some(publicHoliday =>
+						publicHoliday.getMonth() === date.getMonth()
+						&& publicHoliday.getDate() === date.getDate())
+					const isPublicHolidayText = (value: string | undefined) => {
+						if (!value) return false
+						const [day, month, year] = value.split('/').map(Number)
+						return isPublicHoliday(new Date(year, month - 1, day))
+					}
+					const rules = [{
+						type: 'custom' as const,
+						options: {
+							validate: (value: string | undefined) => !isPublicHolidayText(value),
+							message: 'Les rendez-vous ne sont pas disponibles les jours fériés.',
+						},
+					}]
+				</script>`,
 			},
 		],
 	},
