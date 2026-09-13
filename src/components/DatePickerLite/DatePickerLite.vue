@@ -6,7 +6,7 @@
 	 * - The visual rendering
 	 */
 
-	import { computed, nextTick, provide, readonly as readonlyState, ref, toRef, useAttrs, useSlots, watch, type ComponentPublicInstance } from 'vue'
+	import { computed, provide, readonly as readonlyState, ref, toRef, useAttrs, useSlots, type ComponentPublicInstance } from 'vue'
 	import DatePickerLiteInput from './DatePickerLiteText/DatePickerLiteInput.vue'
 	import DatePickerLiteVisual from './DatePickerLiteVisual/DatePickerLiteVisual.vue'
 	import { locales as defaultLocales } from './locales'
@@ -14,7 +14,6 @@
 	import { defaultTextFieldProps, useTextField } from '@/components/Common/Calendar/useTextField'
 	import { defaultDatePickerLiteVisualProps } from './DatePickerLiteVisual/DatePickerLiteVisualProps'
 	import { useDatePickerValidation } from './useDatePickerValidation'
-	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
 	import type {
@@ -22,9 +21,8 @@
 		DatePickerLiteInputProps,
 		DatePickerLiteInputSlotProps,
 		DatePickerLiteMenuSlotProps,
-		DatePickerLiteMultiple,
 		DatePickerLiteProps,
-		DatePickerLiteRange,
+		DatePickerLiteValue,
 	} from './types'
 
 	// Attributes (including listeners such as @input) are forwarded to the field through
@@ -55,7 +53,7 @@
 		(e: 'update:view', value: PickerView): void
 		(e: 'focus', event: FocusEvent): void
 		(e: 'blur', event: FocusEvent): void
-		(e: 'change', value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined): void
+		(e: 'change', value: DatePickerLiteValue): void
 		(e: 'clear'): void
 		(e: 'keydown', event: KeyboardEvent): void
 	}>()
@@ -74,14 +72,11 @@
 	// defineModel handles controlled/uncontrolled state without echoing back to the parent;
 	// readonly/disabled remain enforced at the source (DatePickerLiteVisual, readonly field)
 	// Single/range normalization lives inside DatePickerLiteInput, keyed by `mode`
-	const internalValue = defineModel<Date | DatePickerLiteRange | DatePickerLiteMultiple>()
+	const internalValue = defineModel<DatePickerLiteValue>()
 
-	watch(internalValue, async () => {
-		// Wait for DatePickerLiteInput to update textValue before validating
-		await nextTick()
-		// TODO: we should not need to manually call validate here, it should be reactive
-		validate()
-	})
+	// `undefined` (prop absent) and `null` (cleared field) are equivalent inputs;
+	// children only ever receive `null` as the empty value.
+	const modelValue = computed(() => internalValue.value ?? null)
 
 	// Raw text content, used as the validation base (an incomplete entry never parses to Date).
 	// Default value comes from the exposed ref on DatePickerLiteInput (replaces update:textValue).
@@ -93,7 +88,7 @@
 
 	// User-driven value change (typed text, picker selection, clear): update the
 	// model and emit `change`. External model updates do not go through here.
-	function onUserSelect(value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined): void {
+	function onUserSelect(value: DatePickerLiteValue): void {
 		internalValue.value = value
 		emits('change', value)
 	}
@@ -110,7 +105,13 @@
 
 	const { errors, warnings, successes, hasError, hasWarning, hasSuccess, validate, clearValidation } = useDatePickerValidation({
 		modelValue: textValue,
-		onReset: () => internalValue.value = undefined,
+		pickerValue: internalValue,
+		onReset: () => {
+			// No emit when the field was already empty (never filled or already cleared)
+			if (internalValue.value != null) {
+				internalValue.value = null
+			}
+		},
 		readonly: toRef(props, 'readonly'),
 		disabled: toRef(props, 'disabled'),
 		required: toRef(props, 'required'),
@@ -134,8 +135,6 @@
 		locales,
 	})
 
-	useValidatable(validate, clearValidation)
-
 	const inputProps = computed<DatePickerLiteInputProps>(() => ({
 		...attrs,
 		...useTextField(props).value,
@@ -154,8 +153,8 @@
 
 	const inputSlotProps = computed<DatePickerLiteInputSlotProps>(() => ({
 		mode: props.mode,
-		modelValue: internalValue.value,
-		updateModelValue: (value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined) => {
+		modelValue: modelValue.value,
+		updateModelValue: (value: DatePickerLiteValue) => {
 			internalValue.value = value
 		},
 		inputProps: inputProps.value,
@@ -207,7 +206,7 @@
 			>
 				<DatePickerLiteInput
 					ref="textInput"
-					:model-value="internalValue"
+					:model-value="modelValue"
 					:mode="props.mode"
 					v-bind="inputProps"
 					@update:model-value="onUserSelect"
@@ -229,7 +228,7 @@
 			</slot>
 		</div>
 		<DatePickerLiteVisual
-			:model-value="internalValue"
+			:model-value="modelValue"
 			:text-input="customInputEl"
 			:toggle-btn
 			:mode="props.mode"

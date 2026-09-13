@@ -1,5 +1,5 @@
 import { computed, type Ref } from 'vue'
-import type { DatePickerLiteMode, DatePickerLiteMultiple, DatePickerLiteRange } from '../types'
+import type { DatePickerLiteMode, DatePickerLiteRange, DatePickerLiteValue } from '../types'
 
 function isDateRange(value: unknown): value is DatePickerLiteRange {
 	return Array.isArray(value)
@@ -8,7 +8,7 @@ function isDateRange(value: unknown): value is DatePickerLiteRange {
 }
 
 export interface UseDatePickerLiteSelectionParams {
-	modelValue: Ref<Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined>
+	modelValue: Ref<DatePickerLiteValue>
 	mode: Ref<DatePickerLiteMode>
 }
 
@@ -22,7 +22,7 @@ export function useDatePickerLiteSelection({
 	 */
 	const selectedDate = computed<Date | undefined>(() => {
 		const value = modelValue.value
-		return Array.isArray(value) ? value[0] : value
+		return Array.isArray(value) ? value[0] : (value ?? undefined)
 	})
 
 	/**

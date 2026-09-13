@@ -190,7 +190,7 @@ describe('DatePickerLite', () => {
 			wrapper.unmount()
 		})
 
-		it('should emit update:modelValue with undefined when the input is cleared', async () => {
+		it('should emit update:modelValue with null when the input is cleared', async () => {
 			const wrapper = mount(DatePickerLiteComponent, {
 				props: {
 					label: 'Début du projet',
@@ -200,7 +200,7 @@ describe('DatePickerLite', () => {
 
 			const input = wrapper.find('input')
 			await input.setValue('')
-			expect(wrapper.emitted('update:modelValue')).toEqual([[undefined]])
+			expect(wrapper.emitted('update:modelValue')).toEqual([[null]])
 
 			wrapper.unmount()
 		})

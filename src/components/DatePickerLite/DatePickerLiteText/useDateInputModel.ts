@@ -1,6 +1,6 @@
 import { ref, toValue, watch, type MaybeRefOrGetter, type Ref } from 'vue'
 import { formatDate, parseDate } from '@/composables/date/useDateFormatDayjs'
-import type { DatePickerLiteMode, DatePickerLiteMultiple, DatePickerLiteRange } from '../types'
+import type { DatePickerLiteMode, DatePickerLiteMultiple, DatePickerLiteRange, DatePickerLiteValue } from '../types'
 
 function isDateValue(value: unknown): value is Date {
 	return value instanceof Date && Number.isFinite(value.getTime())
@@ -17,7 +17,7 @@ function isDateMultiple(value: unknown): value is DatePickerLiteMultiple {
 }
 
 // A model incoherent with the mode (e.g. a range received in single mode) formats to nothing
-function formatValue(mode: DatePickerLiteMode, value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined, inputFormat: string, separator: string): string | undefined {
+function formatValue(mode: DatePickerLiteMode, value: DatePickerLiteValue, inputFormat: string, separator: string): string | undefined {
 	if (mode === 'range') {
 		return isDateRange(value) ? `${formatDate(value[0], inputFormat)}${separator}${formatDate(value[1], inputFormat)}` : undefined
 	}
@@ -28,22 +28,22 @@ function formatValue(mode: DatePickerLiteMode, value: Date | DatePickerLiteRange
 }
 
 // Both range bounds must parse to emit; range-order rules stay in the root validation
-function parseValue(mode: DatePickerLiteMode, value: string | null, inputFormat: string, separator: string): Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined {
-	if (value === null) return undefined
+function parseValue(mode: DatePickerLiteMode, value: string | null, inputFormat: string, separator: string): DatePickerLiteValue {
+	if (value === null) return null
 	if (mode === 'range') {
 		const [startStr, endStr] = value.split(separator)
 		const start = startStr ? parseDate(startStr, inputFormat) : null
 		const end = endStr ? parseDate(endStr, inputFormat) : null
-		return start && end ? [start, end] : undefined
+		return start && end ? [start, end] : null
 	}
 	if (mode === 'multiple') {
 		const dates = value.split(separator).map(date => parseDate(date, inputFormat))
-		return dates.length > 0 && dates.every(isDateValue) ? dates : undefined
+		return dates.length > 0 && dates.every(isDateValue) ? dates : null
 	}
-	return parseDate(value, inputFormat) ?? undefined
+	return parseDate(value, inputFormat) ?? null
 }
 
-function sameValue(mode: DatePickerLiteMode, a: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined, b: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined): boolean {
+function sameValue(mode: DatePickerLiteMode, a: DatePickerLiteValue, b: DatePickerLiteValue): boolean {
 	if (mode === 'range') {
 		return isDateRange(a) && isDateRange(b) && a[0].getTime() === b[0].getTime() && a[1].getTime() === b[1].getTime()
 	}
@@ -71,10 +71,10 @@ export interface UseDateInputModel {
  */
 export function useDateInputModel(
 	mode: MaybeRefOrGetter<DatePickerLiteMode>,
-	modelValue: Ref<Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined>,
+	modelValue: Ref<DatePickerLiteValue>,
 	inputFormat: MaybeRefOrGetter<string>,
 	separator: MaybeRefOrGetter<string>,
-	emit: (value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined) => void,
+	emit: (value: DatePickerLiteValue) => void,
 ): UseDateInputModel {
 	const textValue = ref<string | null | undefined>(formatValue(toValue(mode), modelValue.value, toValue(inputFormat), toValue(separator)))
 
@@ -90,8 +90,8 @@ export function useDateInputModel(
 
 	watch(textValue, (newValue) => {
 		if (newValue === undefined || newValue === null || newValue === '') {
-			if (modelValue.value !== undefined) {
-				emit(undefined)
+			if (modelValue.value !== null) {
+				emit(null)
 			}
 			return
 		}

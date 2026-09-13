@@ -292,7 +292,7 @@ describe('DatePickerLite - public events', () => {
 		wrapper.unmount()
 	})
 
-	it('should emit clear and change(undefined) when the clear button is used', async () => {
+	it('should emit clear and change(null) when the clear button is used', async () => {
 		const wrapper = mount(DatePickerLite, {
 			props: { label: 'Date', modelValue: new Date(2025, 10, 11), clearable: true },
 			attachTo: document.body,
@@ -308,7 +308,7 @@ describe('DatePickerLite - public events', () => {
 		expect(wrapper.emitted('clear')).toHaveLength(1)
 		const changeEmits = wrapper.emitted('change')
 		expect(changeEmits).toBeDefined()
-		expect(changeEmits!.at(-1)?.[0]).toBeUndefined()
+		expect(changeEmits!.at(-1)?.[0]).toBeNull()
 
 		wrapper.unmount()
 	})

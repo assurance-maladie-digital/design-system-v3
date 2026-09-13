@@ -32,10 +32,10 @@ describe('DatePickerLite form reset (SyForm)', () => {
 		return { wrapper, datePicker, reset }
 	}
 
-	// The validation layer clears the field by writing `undefined` into the root-owned
-	// text ref; the text watcher then clears the model. A transient `null` from Vuetify's
-	// VForm.reset() is normalized to `undefined` at the ref boundary, so the exact
-	// emission sequence can be asserted (no `null` leak).
+	// The validation layer clears the field by writing into the validation model, which
+	// resets the component to `null` (the model's empty value, Vuetify convention).
+	// The Vuetify validation stack is not instantiated in custom mode, so its VForm
+	// registration cannot emit a duplicate clear: the exact emission sequence can be asserted.
 	it('clears a typed valid date: text, modelValue and exactly one emit per change', async () => {
 		const { datePicker, reset } = await mountInForm(`
 			<SyForm>
@@ -52,7 +52,7 @@ describe('DatePickerLite form reset (SyForm)', () => {
 		await nextTick()
 
 		expect(input.element.value).toBe('')
-		expect(datePicker.emitted('update:modelValue')).toEqual([[new Date(2027, 2, 1)], [undefined]])
+		expect(datePicker.emitted('update:modelValue')).toEqual([[new Date(2027, 2, 1)], [null]])
 	})
 
 	it('clears a typed valid range', async () => {
@@ -73,7 +73,7 @@ describe('DatePickerLite form reset (SyForm)', () => {
 		await nextTick()
 
 		expect(input.element.value).toBe('')
-		expect(datePicker.emitted('update:modelValue')?.at(-1)).toEqual([undefined])
+		expect(datePicker.emitted('update:modelValue')?.at(-1)).toEqual([null])
 	})
 
 	it('clears incomplete text that never parsed to a Date (regression)', async () => {
@@ -92,9 +92,8 @@ describe('DatePickerLite form reset (SyForm)', () => {
 		await nextTick()
 
 		expect(input.element.value).toBe('')
-		// No Date may ever be emitted for unparseable text
-		const events = datePicker.emitted('update:modelValue')
-		expect(events?.every(([value]) => !(value instanceof Date))).toBe(true)
+		// Nothing ever parsed: no value may be emitted at all
+		expect(datePicker.emitted('update:modelValue')).toBeUndefined()
 	})
 
 	it('clears incomplete range text that never parsed to a range', async () => {
@@ -115,8 +114,8 @@ describe('DatePickerLite form reset (SyForm)', () => {
 		await nextTick()
 
 		expect(input.element.value).toBe('')
-		const events = datePicker.emitted('update:modelValue')
-		expect(events?.every(([value]) => !Array.isArray(value))).toBe(true)
+		// Nothing ever parsed: no value may be emitted at all
+		expect(datePicker.emitted('update:modelValue')).toBeUndefined()
 	})
 
 	it('clears a date provided as initial modelValue prop', async () => {
@@ -134,7 +133,7 @@ describe('DatePickerLite form reset (SyForm)', () => {
 
 		expect(input.element.value).toBe('')
 		const events = datePicker.emitted('update:modelValue')!
-		expect(events.at(-1)).toEqual([undefined])
+		expect(events.at(-1)).toEqual([null])
 	})
 
 	it('validates a required field on SyForm submission', async () => {

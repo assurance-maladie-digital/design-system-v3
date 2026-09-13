@@ -9,7 +9,7 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { calendarLocalesKey, type PickerView } from '@/components/Common/Calendar/locales'
 	import { locales as defaultLocales } from '../locales'
-	import type { DatePickerLiteMultiple, DatePickerLiteRange } from '../types'
+	import type { DatePickerLiteValue } from '../types'
 	import type { DatePickerLiteVisualProps } from './DatePickerLiteVisualProps'
 	import { useDatePickerLiteDialog } from './useDatePickerLiteDialog'
 	import { useDatePickerLiteDateSelection } from './useDatePickerLiteDateSelection'
@@ -21,7 +21,7 @@
 		textInput: ComponentPublicInstance | HTMLElement | null
 		/** used to reset the focus on closed */
 		toggleBtn: HTMLElement | null
-		modelValue: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined
+		modelValue: DatePickerLiteValue
 		readonly: boolean
 		disabled: boolean
 	} & DatePickerLiteVisualProps>()
@@ -31,7 +31,7 @@
 		.filter(name => /^day-\d{4}-\d{2}-\d{2}$/.test(name)))
 
 	const emits = defineEmits<{
-		(e: 'update:modelValue', value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined): void
+		(e: 'update:modelValue', value: DatePickerLiteValue): void
 		(e: 'update:open', value: boolean): void
 		(e: 'update:view', value: PickerView): void
 	}>()

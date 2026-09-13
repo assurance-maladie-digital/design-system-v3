@@ -9,13 +9,15 @@ import type { DatePickerLiteVisualProps } from './DatePickerLiteVisual/DatePicke
 export type DatePickerLiteRange = [Date, Date]
 export type DatePickerLiteMultiple = Date[]
 export type DatePickerLiteMode = 'single' | 'range' | 'multiple'
+// The model's empty value follows the Vuetify convention: a cleared field emits `null`.
+export type DatePickerLiteValue = Date | DatePickerLiteRange | DatePickerLiteMultiple | null
 
 export type DatePickerLiteProps =
 	TextFieldProps
 	& FieldValidationProps
 	& Partial<DatePickerLiteVisualProps>
 	& {
-		modelValue?: Date | DatePickerLiteRange | DatePickerLiteMultiple
+		modelValue?: Date | DatePickerLiteRange | DatePickerLiteMultiple | null
 		mode?: DatePickerLiteMode
 		inputFormat?: string
 		separator?: string
@@ -48,8 +50,8 @@ export type DatePickerLiteInputProps =
 export interface DatePickerLiteInputSlotProps {
 	/** Selection mode, so a custom input can adapt to single, range, or multiple values */
 	mode: DatePickerLiteMode
-	modelValue: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined
-	updateModelValue: (value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined) => void
+	modelValue: DatePickerLiteValue
+	updateModelValue: (value: DatePickerLiteValue) => void
 	inputProps: DatePickerLiteInputProps
 	updateTextValue: (value: string | undefined) => void
 	setFocused: (value: boolean) => void
@@ -59,7 +61,7 @@ export interface DatePickerLiteInputSlotProps {
 
 /** Slot props for the `menu` slot of DatePickerLite */
 export interface DatePickerLiteMenuSlotProps {
-	modelValue: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined
+	modelValue: DatePickerLiteValue
 	view: PickerView
 	readonly: boolean
 	disabled: boolean

@@ -1,11 +1,14 @@
 import type { ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
 import { useValidation } from '@/composables/unifyValidation/useValidation'
-import { computed, nextTick, type Ref } from 'vue'
+import { computed, nextTick, toValue, watch, type Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import type { locales } from './locales'
 
 export function useDatePickerValidation(args: {
+	/** Text backing the validation rules (incomplete entries never parse to Date) */
 	modelValue: Ref<unknown>
+	/** Component model (picker selection, external update): changes don't necessarily blur the field */
+	pickerValue: Ref<unknown>
 	readonly: Ref<boolean>
 	disabled: Ref<boolean>
 	required: Ref<boolean>
@@ -51,18 +54,17 @@ export function useDatePickerValidation(args: {
 		get: () => args.modelValue.value,
 		set: (value) => {
 			if (value == null) {
-				// Deferred: Vuetify reset (VForm) emits a transient `null` synchronously on the instance;
-				// our `undefined` must arrive last.
-				void nextTick(args.onReset)
+				// Deferred so the synchronous VForm reset sequence settles before our clear lands.
+				nextTick(args.onReset)
 			}
 			else {
 				// The validation should never set the modelValue to a non null value.
-				throw new Error('DatePickerLite: In the validation pipeline modelValue can only be set to null or undefined to reset the value.')
+				throw new Error('DatePickerLite: In the validation pipeline modelValue can only be set to null to reset the value.')
 			}
 		},
 	})
 
-	return useValidation({
+	const validation = useValidation({
 		modelValue: validationModel,
 		readonly: args.readonly,
 		disabled: args.disabled,
@@ -70,7 +72,15 @@ export function useDatePickerValidation(args: {
 		isValidateOnBlur: args.isValidateOnBlur,
 		showSuccessMessages: args.showSuccessMessages,
 		disableErrorHandling: args.disableErrorHandling,
-		useVuetifyValidation: args.useVuetifyValidation,
+		// Plain boolean on purpose: the mode is fixed at mount. A Ref would always
+		// instantiate the Vuetify stack, whose VForm registration emits a duplicate
+		// clear through update:modelValue on VForm.reset() — the custom stack owns
+		// the reset. The cast is only a type-level workaround: `useValidation` does not
+		// accept a plain boolean yet (its guard reads `!== false`, `toValue` accepts
+		// booleans, so the runtime contract holds).
+		// TODO(upstream): widen the `useVuetifyValidation` param of unifyValidation's
+		// `useValidation` to `Ref<boolean> | boolean` and drop this cast.
+		useVuetifyValidation: toValue(args.useVuetifyValidation) as Ref<boolean>,
 		label: args.label,
 		rules: args.rules,
 		customRules: allCustomRules,
@@ -85,4 +95,15 @@ export function useDatePickerValidation(args: {
 		maxErrors: args.maxErrors,
 		focused: args.focused,
 	})
+
+	// Calendar selections and external model updates change the picker value without
+	// a focus/blur cycle on the text field: validation must run once the text synced.
+	// In validate-on-input mode the textValue watcher inside useValidation already covers it.
+	watch(args.pickerValue, async () => {
+		if (!args.isValidateOnBlur.value) return
+		await nextTick()
+		await validation.validate()
+	})
+
+	return validation
 }

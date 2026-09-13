@@ -1,7 +1,5 @@
 import type { Ref } from 'vue'
-import type { DatePickerLiteMode, DatePickerLiteMultiple, DatePickerLiteRange } from '../types'
-
-type DatePickerLiteValue = Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined
+import type { DatePickerLiteMode, DatePickerLiteRange, DatePickerLiteValue } from '../types'
 
 export interface UseDatePickerLiteDateSelectionParams {
 	mode: Ref<DatePickerLiteMode>

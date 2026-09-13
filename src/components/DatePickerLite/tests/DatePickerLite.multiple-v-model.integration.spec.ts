@@ -71,7 +71,7 @@ describe('DatePickerLite multiple v-model integration', () => {
 		await nextTick()
 		await nextTick()
 
-		expect(selectedDates.value).toBeUndefined()
+		expect(selectedDates.value).toBeNull()
 
 		wrapper.unmount()
 	})

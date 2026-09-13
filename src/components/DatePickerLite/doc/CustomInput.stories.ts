@@ -69,7 +69,7 @@ const isIsoDateRange = (value: unknown): value is [Date, Date] =>
 // mirrored to validation via updateTextValue and parsed to a Date via
 // updateModelValue (parsing remains the responsibility of the custom input).
 function useCustomSlotInput(
-	args: { modelValue?: Date | Date[] },
+	args: { modelValue?: Date | Date[] | null },
 	parse: (value: string) => Date | undefined,
 	format: (value: Date) => string,
 ) {

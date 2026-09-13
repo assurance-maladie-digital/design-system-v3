@@ -10,11 +10,11 @@
 	import { useTextField } from '@/components/Common/Calendar/useTextField'
 	import { useDateInputMask } from './useDateInputMask'
 	import { useDateInputModel } from './useDateInputModel'
-	import type { DatePickerLiteMode, DatePickerLiteMultiple, DatePickerLiteRange } from '../types'
+	import type { DatePickerLiteMode, DatePickerLiteValue } from '../types'
 
 	const props = withDefaults(defineProps<{
 		mode: DatePickerLiteMode
-		modelValue: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined
+		modelValue: DatePickerLiteValue
 		inputFormat?: string
 		separator?: string
 		errorMessages?: string[] | null
@@ -43,7 +43,7 @@
 	})
 
 	const emits = defineEmits<{
-		(e: 'update:modelValue', value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined): void
+		(e: 'update:modelValue', value: DatePickerLiteValue): void
 		(e: 'focus', event: FocusEvent): void
 		(e: 'blur', event: FocusEvent): void
 		(e: 'keydown', event: KeyboardEvent): void
