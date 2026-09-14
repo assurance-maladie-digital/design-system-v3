@@ -3,7 +3,7 @@
 	import { computed, inject, toRef, useId, useSlots, watch, type ComponentPublicInstance, type ComputedRef } from 'vue'
 	import MonthSelector from '@/components/Common/Calendar/MonthSelector/MonthSelector.vue'
 	import YearSelector from '@/components/Common/Calendar/YearSelector/YearSelector.vue'
-	import DatePickerLiteHeader from '@/components/DatePickerLite/DatePickerLiteHeader.vue'
+	import DatePickerLiteHeader from './DatePickerLiteHeader.vue'
 	import VisualPickerFooter from '@/components/Common/Calendar/PickerFooter/VisualPickerFooter.vue'
 	import Calendar from '@/components/Common/Calendar/Calendar/Calendar.vue'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'

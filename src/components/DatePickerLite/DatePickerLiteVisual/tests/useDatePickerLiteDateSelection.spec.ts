@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 import { ref } from 'vue'
-import type { DatePickerLiteMultiple, DatePickerLiteRange } from '../../types'
+import type { DatePickerLiteValue } from '../../types'
 import { useDatePickerLiteDateSelection } from '../useDatePickerLiteDateSelection'
 
 describe('useDatePickerLiteDateSelection', () => {
@@ -10,7 +10,7 @@ describe('useDatePickerLiteDateSelection', () => {
 		const selectedDate = new Date(2026, 8, 11)
 		const { setDay } = useDatePickerLiteDateSelection({
 			mode: ref('single'),
-			modelValue: ref(undefined),
+			modelValue: ref<DatePickerLiteValue>(null),
 			readonly: ref(false),
 			disabled: ref(false),
 			onUpdateModelValue,
@@ -26,7 +26,7 @@ describe('useDatePickerLiteDateSelection', () => {
 	it('should toggle the date without closing the dialog in multiple mode', () => {
 		const close = vi.fn()
 		const modelValue = ref<Date[]>([new Date(2026, 8, 11)])
-		const onUpdateModelValue = vi.fn((value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined) => {
+		const onUpdateModelValue = vi.fn((value: DatePickerLiteValue) => {
 			if (Array.isArray(value)) modelValue.value = value
 		})
 		const { setDay } = useDatePickerLiteDateSelection({
@@ -50,7 +50,7 @@ describe('useDatePickerLiteDateSelection', () => {
 	it('should toggle by day regardless of the time component in multiple mode', () => {
 		const close = vi.fn()
 		const modelValue = ref<Date[]>([new Date(2026, 8, 11, 14, 30)])
-		const onUpdateModelValue = vi.fn((value: Date | DatePickerLiteRange | DatePickerLiteMultiple | undefined) => {
+		const onUpdateModelValue = vi.fn((value: DatePickerLiteValue) => {
 			if (Array.isArray(value)) modelValue.value = value
 		})
 		const { setDay } = useDatePickerLiteDateSelection({

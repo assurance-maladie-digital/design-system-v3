@@ -127,7 +127,6 @@ describe('DatePickerLite - slot input', () => {
 		expect(emitted).toHaveLength(1)
 		expect(emitted?.[0]?.[0]).toEqual(new Date(2025, 0, 15))
 
-		// @ts-expect-error Vue Test Utils cannot infer props from the component's intersection type
 		await wrapper.setProps({ modelValue: new Date(2025, 0, 15) })
 		expect(wrapper.find('.custom-input__value').text()).toBe('date-set')
 

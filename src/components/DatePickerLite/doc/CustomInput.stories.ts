@@ -15,7 +15,7 @@ const meta: Meta<DatePickerLiteProps> = {
 	parameters: {
 		docs: {
 			description: {
-				component: 'Replacement of the default input field via the `input` slot. The component provides the slot props (`mode`, `modelValue`, `updateModelValue`, `inputProps`, `updateTextValue`, `setFocused`, `toggleBtnRef`): validation, opening the visual picker, and date synchronization remain handled by the component; parsing of the typed text remains the responsibility of the custom input. `mode` tells the custom input whether `modelValue` is a single `Date` or a `[Date, Date]` range.',
+				component: 'Replacement of the default input field via the `input` slot. The component provides the slot props (`modelValue`, `updateModelValue`, `inputProps`, `updateTextValue`, `setFocused`, `toggleBtnRef`): validation, opening the visual picker, and date synchronization remain handled by the component; parsing of the typed text remains the responsibility of the custom input. `inputProps` carries the field props, the validation state and the picker props (`mode`, `locale`, …) to `v-bind` on the custom field; `mode` tells the custom input whether `modelValue` is a single `Date` or a `[Date, Date]` range.',
 			},
 			controls: {
 				exclude: ['onUpdate:modelValue', 'onUpdate:open'],

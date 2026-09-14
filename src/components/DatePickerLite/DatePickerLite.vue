@@ -6,19 +6,19 @@
 	 * - The visual rendering
 	 */
 
-	import { computed, provide, readonly as readonlyState, ref, toRef, useAttrs, type ComponentPublicInstance } from 'vue'
+	import { computed, provide, readonly as readonlyState, ref, toRef, type ComponentPublicInstance } from 'vue'
 	import DatePickerLiteInput from './DatePickerLiteText/DatePickerLiteInput.vue'
 	import DatePickerLiteVisual from './DatePickerLiteVisual/DatePickerLiteVisual.vue'
 	import { locales as defaultLocales } from './locales'
 	import { calendarLocalesKey, type PickerView } from '@/components/Common/Calendar/locales'
-	import { defaultTextFieldProps, useTextField } from '@/components/Common/Calendar/useTextField'
+	import { defaultTextFieldProps } from '@/composables/useTextField'
 	import { defaultDatePickerLiteVisualProps } from './DatePickerLiteVisual/DatePickerLiteVisualProps'
 	import { useDatePickerValidation } from './useDatePickerValidation'
+	import { useDatePickerLiteTextField, isDaySlotName } from './useDatePickerLiteTextField'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
 	import type {
 		DatePickerLiteHeaderSlotProps,
-		DatePickerLiteInputProps,
 		DatePickerLiteInputSlotProps,
 		DatePickerLiteMenuSlotProps,
 		DatePickerLiteProps,
@@ -61,7 +61,6 @@
 		(e: 'keydown', event: KeyboardEvent): void
 	}>()
 
-	const attrs = useAttrs()
 	const slots = defineSlots<{
 		'input'(slotProps: DatePickerLiteInputSlotProps): void
 		'menu'(slotProps: DatePickerLiteMenuSlotProps): void
@@ -76,23 +75,15 @@
 		'day'(slotProps: unknown): void
 		[key: `day-${string}`]: (slotProps: unknown) => void
 	}>()
-	const daySlotNames = computed(() => Object.keys(slots)
-		.filter(name => /^day-\d{4}-\d{2}-\d{2}$/.test(name)))
+	const daySlotNames = computed(() => Object.keys(slots).filter(isDaySlotName))
 	const textInput = ref<ComponentPublicInstance<typeof DatePickerLiteInput> | null>(null)
-	// Opening button tracked by the `input` slot (`:ref="toggleBtnRef"`)
-	const customToggleBtn = ref<HTMLButtonElement | null>(null)
 	// The menu anchors to the `input` slot wrapper (full width), with the fallback included
 	const customInputEl = ref<HTMLElement | null>(null)
-	const toggleBtn = computed(() => customToggleBtn.value ?? textInput.value?.toggleBtn ?? null)
 
 	// defineModel handles controlled/uncontrolled state without echoing back to the parent;
 	// readonly/disabled remain enforced at the source (DatePickerLiteVisual, readonly field)
 	// Single/range normalization lives inside DatePickerLiteInput, keyed by `mode`
 	const internalValue = defineModel<DatePickerLiteValue>()
-
-	// `undefined` (prop absent) and `null` (cleared field) are equivalent inputs;
-	// children only ever receive `null` as the empty value.
-	const modelValue = computed(() => internalValue.value ?? null)
 
 	// Raw text content, used as the validation base (an incomplete entry never parses to Date).
 	// Default value comes from the exposed ref on DatePickerLiteInput (replaces update:textValue).
@@ -151,38 +142,17 @@
 		locales,
 	})
 
-	const inputProps = computed<DatePickerLiteInputProps>(() => ({
-		...attrs,
-		...useTextField(props).value,
-		required: props.required,
-		inputFormat: props.inputFormat,
-		separator: props.separator,
-		locale: locale.value,
-		errorMessages: errors.value,
-		warningMessages: warnings.value,
-		successMessages: successes.value,
-		hasError: hasError.value,
-		hasWarning: hasWarning.value,
-		hasSuccess: hasSuccess.value,
-		showSuccessMessages: props.showSuccessMessages,
-	}))
+	const { modelValue, inputProps, inputSlotProps, customToggleBtn, textFieldSlots } = useDatePickerLiteTextField({
+		props,
+		locale,
+		internalValue,
+		focused,
+		slotTextValue,
+		validation: { errors, warnings, successes, hasError, hasWarning, hasSuccess },
+	})
 
-	const inputSlotProps = computed<DatePickerLiteInputSlotProps>(() => ({
-		...inputProps.value,
-		mode: props.mode,
-		modelValue: modelValue.value,
-		updateModelValue: (value: DatePickerLiteValue) => {
-			internalValue.value = value
-		},
-		inputProps: inputProps.value,
-		updateTextValue: (value: string | undefined) => {
-			slotTextValue.value = value
-		},
-		setFocused: (value: boolean) => {
-			focused.value = value
-		},
-		toggleBtnRef: customToggleBtn,
-	}))
+	// The toggle button comes from a custom `input` slot when provided, else from the default input
+	const toggleBtn = computed(() => customToggleBtn.value ?? textInput.value?.toggleBtn ?? null)
 
 	defineExpose({
 		errors: readonlyState(errors),
@@ -217,7 +187,7 @@
 					@clear="emits('clear')"
 				>
 					<template
-						v-for="(_, slotName) in slots"
+						v-for="(_, slotName) in textFieldSlots"
 						#[slotName]="slotProps"
 					>
 						<slot

@@ -1,5 +1,5 @@
 import { type Ref } from 'vue'
-import { type TextFieldProps } from '@/components/Common/Calendar/useTextField'
+import { type TextFieldProps } from '@/composables/useTextField'
 import { type PickerView } from '@/components/Common/Calendar/locales'
 import { type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 import { locales as defaultLocales } from './locales'
@@ -21,6 +21,7 @@ export type DatePickerLiteProps =
 		mode?: DatePickerLiteMode
 		inputFormat?: string
 		separator?: string
+		displayAsterisk?: boolean
 		locales?: DeepPartial<typeof defaultLocales>
 		disabled?: boolean
 		readonly?: boolean
@@ -34,7 +35,8 @@ export type DatePickerLiteInputProps =
 		displayAsterisk?: boolean
 		inputFormat?: string
 		separator?: string
-		locale?: string
+		mode: DatePickerLiteMode
+		locale: string
 		errorMessages?: string[] | null
 		warningMessages?: string[] | null
 		successMessages?: string[] | null
@@ -48,11 +50,10 @@ export type DatePickerLiteInputProps =
 
 /** Slot props for the `input` slot of DatePickerLite */
 export interface DatePickerLiteInputSlotProps {
-	/** Selection mode, so a custom input can adapt to single, range, or multiple values */
-	mode: DatePickerLiteMode
-	locale: string
+	/** Normalized value (`null` when the field is empty) */
 	modelValue: DatePickerLiteValue
 	updateModelValue: (value: DatePickerLiteValue) => void
+	/** Props to `v-bind` on a custom text field: field props, validation state and picker props (`mode`, `locale`, …) */
 	inputProps: DatePickerLiteInputProps
 	updateTextValue: (value: string | undefined) => void
 	setFocused: (value: boolean) => void

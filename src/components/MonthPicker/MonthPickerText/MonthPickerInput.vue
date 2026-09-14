@@ -6,8 +6,8 @@
 	import { inject, ref, useId, watch, type ComputedRef } from 'vue'
 	import { locales as defaultLocales } from '../locales'
 	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
-	import type { TextFieldProps } from '@/components/Common/Calendar/useTextField'
-	import { useTextField } from '@/components/Common/Calendar/useTextField'
+	import type { TextFieldProps } from '@/composables/useTextField'
+	import { useTextField } from '@/composables/useTextField'
 
 	const props = withDefaults(defineProps<{
 		modelValue: string | undefined

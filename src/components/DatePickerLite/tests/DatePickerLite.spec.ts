@@ -4,7 +4,7 @@ import { nextTick, computed, ref } from 'vue'
 import { DatePickerLite } from '@/components/index'
 import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
 import DatePickerLiteComponent from '../DatePickerLite.vue'
-import DatePickerLiteHeader from '../DatePickerLiteHeader.vue'
+import DatePickerLiteHeader from '../DatePickerLiteVisual/DatePickerLiteHeader.vue'
 
 async function openMenu(wrapper: Awaited<ReturnType<typeof mount>>) {
 	await nextTick()
@@ -47,6 +47,7 @@ describe('DatePickerLite', () => {
 				modelValue: new Date(2026, 8, 4),
 				displayedMonth: new Date(2026, 11, 4),
 				view: 'days',
+				locale: navigator.language,
 				minYear: 1900,
 				maxYear: 2100,
 			},
@@ -81,6 +82,7 @@ describe('DatePickerLite', () => {
 				modelValue: new Date(2026, 8, 4),
 				displayedMonth: new Date(2026, 11, 4),
 				view: 'months',
+				locale: navigator.language,
 				minYear: 1900,
 				maxYear: 2100,
 			},
@@ -402,8 +404,8 @@ describe('DatePickerLite', () => {
 
 			expect(focusables.length).toBeGreaterThan(1)
 
-			const firstFocusable = focusables[0]
-			const lastFocusable = focusables[focusables.length - 1]
+			const firstFocusable = focusables[0]!
+			const lastFocusable = focusables[focusables.length - 1]!
 
 			lastFocusable.focus()
 			menuEl.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }))
@@ -485,7 +487,7 @@ describe('DatePickerLite', () => {
 			await vi.runAllTimersAsync()
 			await nextTick()
 
-			expect((wrapper.vm as { selectedDate: Date }).selectedDate).toEqual(new Date(2026, 8, 4))
+			expect(selectedDate.value).toEqual(new Date(2026, 8, 4))
 			expect(wrapper.find('input').element.value).toBe('04/09/2026')
 
 			wrapper.unmount()

@@ -162,7 +162,7 @@ describe('DatePickerLite - event emissions (no duplicates)', () => {
 		await wrapper.find('input').setValue('1')
 
 		expect(onInput).toHaveBeenCalledTimes(1)
-		expect(onInput.mock.calls[0][0]).toBeInstanceOf(Event)
+		expect(onInput.mock.calls[0]?.[0]).toBeInstanceOf(Event)
 
 		wrapper.unmount()
 	})
