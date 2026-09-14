@@ -17,6 +17,7 @@
 		modelValue: DatePickerLiteValue
 		inputFormat?: string
 		separator?: string
+		locale?: string
 		errorMessages?: string[] | null
 		warningMessages?: string[] | null
 		successMessages?: string[] | null
@@ -30,6 +31,7 @@
 	} & TextFieldProps>(), {
 		inputFormat: 'DD/MM/YYYY',
 		separator: ' - ',
+		locale: 'fr-FR',
 		errorMessages: null,
 		warningMessages: null,
 		successMessages: null,
@@ -62,6 +64,7 @@
 		toRef(props, 'modelValue'),
 		toRef(props, 'inputFormat'),
 		toRef(props, 'separator'),
+		toRef(props, 'locale'),
 		value => emits('update:modelValue', value),
 	)
 	const mask = useDateInputMask(toRef(props, 'mode'), toRef(props, 'inputFormat'), toRef(props, 'separator'))

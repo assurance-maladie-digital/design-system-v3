@@ -266,7 +266,7 @@ const meta: Meta<typeof DatePickerLite> = {
 		'inputFormat': {
 			control: 'select',
 			options: ['DD/MM/YYYY', 'DD.MM.YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'],
-			description: 'Format de saisie et d’affichage des dates dans le champ. Les jetons D, M et Y représentent respectivement le jour, le mois et l’année (ex: "DD/MM/YYYY", "YYYY-MM-DD").',
+			description: 'Format de saisie et d’affichage des dates dans le champ. Les jetons D, M et Y représentent respectivement le jour, le mois et l’année (ex: "DD/MM/YYYY", "YYYY-MM-DD"). Si seulement deux jours caractères sont utilisées pour coder l\'année, alors le siècle sera déterminé selon la norme [POSIX/strptime](https://www.mankier.com/3p/strptime#Description)',
 			table: {
 				type: { summary: 'string' },
 				defaultValue: { summary: '"DD/MM/YYYY"' },
@@ -807,10 +807,9 @@ export const DisabledPublicHolidays: Story = {
 
 export const Required: Story = {
 	args: {
-		label: 'Date de début',
+		label: 'Date de début (requis)',
 		modelValue: new Date(2025, 10, 11),
 		required: true,
-		displayAsterisk: true,
 	},
 	parameters: {
 		docs: {
@@ -825,9 +824,8 @@ export const Required: Story = {
 				<template>
 					<DatePickerLite
 						v-model="selectedDate"
-						label="Date de début"
+						label="Date de début (requis)"
 						required
-						display-asterisk
 					/>
 				</template>`,
 			},

@@ -1,6 +1,34 @@
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
+import 'dayjs/locale/fr'
+import 'dayjs/locale/en'
 import { ref, toValue, watch, type MaybeRefOrGetter, type Ref } from 'vue'
-import { formatDate, parseDate } from '@/composables/date/useDateFormatDayjs'
 import type { DatePickerLiteMode, DatePickerLiteMultiple, DatePickerLiteRange, DatePickerLiteValue } from '../types'
+
+dayjs.extend(customParseFormat)
+
+function language(locale: string): string {
+	return locale.split('-')[0] || 'fr'
+}
+
+function formatDate(date: Date, format: string, locale: string): string {
+	return dayjs(date).locale(language(locale)).format(format)
+}
+
+function parseDate(value: string, format: string, locale: string): Date | null {
+	const parsedDate = dayjs(value, format, language(locale), true)
+	if (!parsedDate.isValid()) return null
+
+	return dayjs()
+		.year(parsedDate.year())
+		.month(parsedDate.month())
+		.date(parsedDate.date())
+		.hour(0)
+		.minute(0)
+		.second(0)
+		.millisecond(0)
+		.toDate()
+}
 
 function isDateValue(value: unknown): value is Date {
 	return value instanceof Date && Number.isFinite(value.getTime())
@@ -17,30 +45,30 @@ function isDateMultiple(value: unknown): value is DatePickerLiteMultiple {
 }
 
 // A model incoherent with the mode (e.g. a range received in single mode) formats to nothing
-function formatValue(mode: DatePickerLiteMode, value: DatePickerLiteValue, inputFormat: string, separator: string): string | undefined {
+function formatValue(mode: DatePickerLiteMode, value: DatePickerLiteValue, inputFormat: string, separator: string, locale: string): string | undefined {
 	if (mode === 'range') {
-		return isDateRange(value) ? `${formatDate(value[0], inputFormat)}${separator}${formatDate(value[1], inputFormat)}` : undefined
+		return isDateRange(value) ? `${formatDate(value[0], inputFormat, locale)}${separator}${formatDate(value[1], inputFormat, locale)}` : undefined
 	}
 	if (mode === 'multiple') {
-		return isDateMultiple(value) ? value.map(date => formatDate(date, inputFormat)).join(separator) : undefined
+		return isDateMultiple(value) ? value.map(date => formatDate(date, inputFormat, locale)).join(separator) : undefined
 	}
-	return isDateValue(value) ? formatDate(value, inputFormat) : undefined
+	return isDateValue(value) ? formatDate(value, inputFormat, locale) : undefined
 }
 
 // Both range bounds must parse to emit; range-order rules stay in the root validation
-function parseValue(mode: DatePickerLiteMode, value: string | null, inputFormat: string, separator: string): DatePickerLiteValue {
+function parseValue(mode: DatePickerLiteMode, value: string | null, inputFormat: string, separator: string, locale: string): DatePickerLiteValue {
 	if (value === null) return null
 	if (mode === 'range') {
 		const [startStr, endStr] = value.split(separator)
-		const start = startStr ? parseDate(startStr, inputFormat) : null
-		const end = endStr ? parseDate(endStr, inputFormat) : null
+		const start = startStr ? parseDate(startStr, inputFormat, locale) : null
+		const end = endStr ? parseDate(endStr, inputFormat, locale) : null
 		return start && end ? [start, end] : null
 	}
 	if (mode === 'multiple') {
-		const dates = value.split(separator).map(date => parseDate(date, inputFormat))
+		const dates = value.split(separator).map(date => parseDate(date, inputFormat, locale))
 		return dates.length > 0 && dates.every(isDateValue) ? dates : null
 	}
-	return parseDate(value, inputFormat) ?? null
+	return parseDate(value, inputFormat, locale) ?? null
 }
 
 function sameValue(mode: DatePickerLiteMode, a: DatePickerLiteValue, b: DatePickerLiteValue): boolean {
@@ -74,14 +102,15 @@ export function useDateInputModel(
 	modelValue: Ref<DatePickerLiteValue>,
 	inputFormat: MaybeRefOrGetter<string>,
 	separator: MaybeRefOrGetter<string>,
+	locale: MaybeRefOrGetter<string>,
 	emit: (value: DatePickerLiteValue) => void,
 ): UseDateInputModel {
-	const textValue = ref<string | null | undefined>(formatValue(toValue(mode), modelValue.value, toValue(inputFormat), toValue(separator)))
+	const textValue = ref<string | null | undefined>(formatValue(toValue(mode), modelValue.value, toValue(inputFormat), toValue(separator), toValue(locale)))
 
 	watch(
-		modelValue,
+		[modelValue, () => toValue(mode), () => toValue(inputFormat), () => toValue(separator), () => toValue(locale)],
 		(newValue) => {
-			const formatted = formatValue(toValue(mode), newValue, toValue(inputFormat), toValue(separator))
+			const formatted = formatValue(toValue(mode), newValue[0], toValue(inputFormat), toValue(separator), toValue(locale))
 			if (textValue.value !== formatted) {
 				textValue.value = formatted
 			}
@@ -95,7 +124,7 @@ export function useDateInputModel(
 			}
 			return
 		}
-		const parsed = parseValue(toValue(mode), newValue, toValue(inputFormat), toValue(separator))
+		const parsed = parseValue(toValue(mode), newValue, toValue(inputFormat), toValue(separator), toValue(locale))
 		if (parsed && !sameValue(toValue(mode), parsed, modelValue.value)) {
 			emit(parsed)
 		}

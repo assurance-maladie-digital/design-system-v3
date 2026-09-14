@@ -1,6 +1,6 @@
 import type { ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
 import { useValidation } from '@/composables/unifyValidation/useValidation'
-import { computed, nextTick, toValue, watch, type Ref } from 'vue'
+import { computed, nextTick, watch, type Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import type { locales } from './locales'
 
@@ -72,15 +72,7 @@ export function useDatePickerValidation(args: {
 		isValidateOnBlur: args.isValidateOnBlur,
 		showSuccessMessages: args.showSuccessMessages,
 		disableErrorHandling: args.disableErrorHandling,
-		// Plain boolean on purpose: the mode is fixed at mount. A Ref would always
-		// instantiate the Vuetify stack, whose VForm registration emits a duplicate
-		// clear through update:modelValue on VForm.reset() — the custom stack owns
-		// the reset. The cast is only a type-level workaround: `useValidation` does not
-		// accept a plain boolean yet (its guard reads `!== false`, `toValue` accepts
-		// booleans, so the runtime contract holds).
-		// TODO(upstream): widen the `useVuetifyValidation` param of unifyValidation's
-		// `useValidation` to `Ref<boolean> | boolean` and drop this cast.
-		useVuetifyValidation: toValue(args.useVuetifyValidation) as Ref<boolean>,
+		useVuetifyValidation: args.useVuetifyValidation,
 		label: args.label,
 		rules: args.rules,
 		customRules: allCustomRules,

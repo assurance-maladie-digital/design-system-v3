@@ -11,6 +11,7 @@
 		view: PickerView
 		minYear: number
 		maxYear: number
+		locale: string
 	}>(), {
 		modelValue: () => new Date(),
 	})
@@ -21,12 +22,12 @@
 		(e: 'nextMonth'): void
 	}>()
 
-	const formatter = Intl.DateTimeFormat(navigator.language, { month: 'short' })
+	const formatter = Intl.DateTimeFormat(props.locale, { month: 'short' })
 	const formatShortMonth = (date: Date): string => {
 		const value = formatter.format(date)
 		return value.length >= 4 ? value.slice(0, 4) : value.padEnd(4, '.')
 	}
-	const fullDateFormatter = Intl.DateTimeFormat(navigator.language, {
+	const fullDateFormatter = Intl.DateTimeFormat(props.locale, {
 		weekday: 'long',
 		day: 'numeric',
 		month: 'long',

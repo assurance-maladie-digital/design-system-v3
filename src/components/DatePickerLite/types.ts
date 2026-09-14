@@ -24,7 +24,6 @@ export type DatePickerLiteProps =
 		locales?: DeepPartial<typeof defaultLocales>
 		disabled?: boolean
 		readonly?: boolean
-		displayAsterisk?: boolean
 	}
 
 /** Props ready to be v-bind on a custom text field (attrs + field props + validation state) */
@@ -35,6 +34,7 @@ export type DatePickerLiteInputProps =
 		displayAsterisk?: boolean
 		inputFormat?: string
 		separator?: string
+		locale?: string
 		errorMessages?: string[] | null
 		warningMessages?: string[] | null
 		successMessages?: string[] | null
@@ -50,6 +50,7 @@ export type DatePickerLiteInputProps =
 export interface DatePickerLiteInputSlotProps {
 	/** Selection mode, so a custom input can adapt to single, range, or multiple values */
 	mode: DatePickerLiteMode
+	locale: string
 	modelValue: DatePickerLiteValue
 	updateModelValue: (value: DatePickerLiteValue) => void
 	inputProps: DatePickerLiteInputProps
@@ -62,6 +63,7 @@ export interface DatePickerLiteInputSlotProps {
 /** Slot props for the `menu` slot of DatePickerLite */
 export interface DatePickerLiteMenuSlotProps {
 	modelValue: DatePickerLiteValue
+	locale: string
 	view: PickerView
 	readonly: boolean
 	disabled: boolean

@@ -31,8 +31,8 @@ export default function useCalendar(
 	selectedDays: MaybeRefOrGetter<Date[] | undefined>,
 	committedRange: MaybeRefOrGetter<[ISODate, ISODate] | null>,
 	previewedRange: MaybeRefOrGetter<[ISODate, ISODate] | null>,
+	isDateDisabled: MaybeRefOrGetter<((date: Date) => boolean) | undefined>,
 	locale: MaybeRefOrGetter<string>,
-	isDateDisabled: MaybeRefOrGetter<((date: Date) => boolean) | undefined> = undefined,
 ) {
 	/** Date of reference for the view */
 	const dateView = computed<Date>(() => {

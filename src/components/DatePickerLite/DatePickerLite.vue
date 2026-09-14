@@ -41,10 +41,13 @@
 		separator: ' - ',
 		disabled: false,
 		readonly: false,
-		displayAsterisk: false,
 	})
 
 	const locales = useLocales(defaultLocales, () => props.locales)
+	const locale = computed(() => typeof navigator === 'undefined'
+		? locales.value.fallbackLocale
+		: navigator.language ?? locales.value.fallbackLocale,
+	)
 
 	provide(calendarLocalesKey, locales)
 
@@ -147,9 +150,9 @@
 		...inputAttrs.value,
 		...useTextField(props).value,
 		required: props.required,
-		displayAsterisk: props.displayAsterisk,
 		inputFormat: props.inputFormat,
 		separator: props.separator,
+		locale: locale.value,
 		errorMessages: errors.value,
 		warningMessages: warnings.value,
 		successMessages: successes.value,
@@ -161,6 +164,7 @@
 
 	const inputSlotProps = computed<DatePickerLiteInputSlotProps>(() => ({
 		mode: props.mode,
+		locale: locale.value,
 		modelValue: modelValue.value,
 		updateModelValue: (value: DatePickerLiteValue) => {
 			internalValue.value = value
@@ -216,6 +220,7 @@
 					ref="textInput"
 					:model-value="modelValue"
 					:mode="props.mode"
+					:locale
 					v-bind="inputProps"
 					@update:model-value="onUserSelect"
 					@focus="onInputFocus"
@@ -240,6 +245,7 @@
 			:text-input="customInputEl"
 			:toggle-btn
 			:mode="props.mode"
+			:locale
 			:min-year
 			:max-year
 			:years-order

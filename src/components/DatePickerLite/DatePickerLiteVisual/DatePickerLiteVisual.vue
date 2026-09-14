@@ -22,6 +22,7 @@
 		/** used to reset the focus on closed */
 		toggleBtn: HTMLElement | null
 		modelValue: DatePickerLiteValue
+		locale: string
 		readonly: boolean
 		disabled: boolean
 	} & DatePickerLiteVisualProps>()
@@ -113,6 +114,7 @@
 			<slot
 				name="menu"
 				:model-value="props.modelValue"
+				:locale="props.locale"
 				:view="view"
 				:readonly="props.readonly"
 				:disabled="props.disabled"
@@ -142,6 +144,7 @@
 								:displayed-month="currentMonth"
 								:min-year
 								:max-year
+								:locale="props.locale"
 								@previous-month="previousMonth"
 								@next-month="nextMonth"
 							/>
@@ -166,6 +169,7 @@
 							:selected-range="selectedDateRange"
 							:select-range="mode === 'range'"
 							:is-date-disabled="props.isDateDisabled"
+							:locale="props.locale"
 							@click:day="setDay"
 							@update:selected-range="handleRangeSelected"
 						>

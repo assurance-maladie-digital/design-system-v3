@@ -113,7 +113,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
       ></div>
       <div
         class="d-sr-only"
-        id="sy-calendar-instructions-v-7"
+        id="sy-calendar-instructions-v-8"
       >
         Utilisez les flèches pour naviguer, Espace pour sélectionner.
       </div>
@@ -125,7 +125,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
       >
         <div class="sy-calendar__table-wrapper">
           <table
-            aria-describedby="sy-calendar-instructions-v-7"
+            aria-describedby="sy-calendar-instructions-v-8"
             aria-label="December 2026"
             class="sy-calendar"
             role="grid"
@@ -905,21 +905,21 @@ exports[`DatePickerLite > should render DatePickerLite 1`] = `
                   v-field-label
                   v-label
                 "
-                id="input-v-3-label"
+                id="input-v-4-label"
               >
                 <!---->
                 Début du projet
               </label>
               <!---->
               <input
-                aria-describedby="input-v-3-messages"
+                aria-describedby="input-v-4-messages"
                 aria-label="Début du projet"
-                aria-labelledby="input-v-3-label"
+                aria-labelledby="input-v-4-label"
                 autocomplete="off"
                 class="v-field__input"
                 direction="horizontal"
-                id="input-v-3"
-                name="v-0"
+                id="input-v-4"
+                name="v-1"
                 size="1"
                 title="Début du projet"
                 type="text"
@@ -946,7 +946,7 @@ exports[`DatePickerLite > should render DatePickerLite 1`] = `
                     v-field-label--floating
                     v-label
                   "
-                  for="input-v-3"
+                  for="input-v-4"
                 >
                   <!---->
                   Début du projet
@@ -990,7 +990,7 @@ exports[`DatePickerLite > should render DatePickerLite 1`] = `
         <div
           aria-live="polite"
           class="v-input__details"
-          id="input-v-3-messages"
+          id="input-v-4-messages"
           role="alert"
         >
           <transition-group-stub

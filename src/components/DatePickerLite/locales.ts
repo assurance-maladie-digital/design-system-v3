@@ -1,4 +1,5 @@
 export const locales = {
+	fallbackLocale: 'fr-FR',
 	// Keys required by CalendarLocales (injected by the shared picker sub-components)
 	monthSelectorLabel: 'Sélectionner un mois',
 	yearSelectorLabel: 'Sélectionner une année',

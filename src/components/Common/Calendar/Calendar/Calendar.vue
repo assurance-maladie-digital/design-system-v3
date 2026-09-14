@@ -13,6 +13,7 @@
 		ariaLabelledby?: string
 		selectRange?: boolean
 		locales?: typeof defaultLocales
+		locale?: string
 		isDateDisabled?: (date: Date) => boolean
 	}>()
 
@@ -26,9 +27,9 @@
 	const rootElement = ref<HTMLElement>()
 
 	const locales = useLocales(defaultLocales, () => props.locales)
-	const locale = (): string => typeof navigator === 'undefined'
+	const locale = (): string => props.locale ?? (typeof navigator === 'undefined'
 		? locales.value.fallbackLocale
-		: navigator.language ?? locales.value.fallbackLocale
+		: navigator.language ?? locales.value.fallbackLocale)
 
 	const {
 		focusedDay,
@@ -54,7 +55,6 @@
 		() => props.selectedRange,
 		locales,
 		locale,
-		() => props.isDateDisabled,
 	)
 
 	const { displayedWeeks, localizedDays, localizedFullMonth } = useCalendar(
@@ -62,8 +62,8 @@
 		() => props.selectedDays,
 		committedRange,
 		previewedRange,
-		locale,
 		() => props.isDateDisabled,
+		locale,
 	)
 
 	const { transitionProps } = useMonthTransition(displayedMonth)
