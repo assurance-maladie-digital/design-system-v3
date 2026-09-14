@@ -201,13 +201,13 @@ export const TriggerOnLeft: Story = {
 				v-bind="args"
 				v-model="value"
 			>
-				<template #input="{ modelValue, inputProps, updateModelValue, setFocused, toggleBtnRef }">
+				<template #input="{ inputProps, textValue, updateTextValue, setFocused, toggleBtnRef }">
 					<DatePickerLiteInput
 						:mode="args.mode ?? 'single'"
-						:model-value="modelValue"
+						:text-value="textValue"
 						:hide-default-toggle="true"
 						v-bind="inputProps"
-						@update:model-value="updateModelValue"
+						@update:text-value="updateTextValue"
 						@focus="setFocused(true)"
 						@blur="setFocused(false)"
 					>
@@ -242,12 +242,12 @@ export const TriggerOnLeft: Story = {
 				code: `
 				<template>
 					<DatePickerLite v-model="selectedDate" label="Date de rendez-vous">
-						<template #input="{ modelValue, inputProps, updateModelValue, setFocused, toggleBtnRef }">
+						<template #input="{ inputProps, textValue, updateTextValue, setFocused, toggleBtnRef }">
 							<DatePickerLiteInput
 								:mode="mode"
-								:model-value="modelValue"
+								:text-value="textValue"
 								v-bind="inputProps"
-								@update:model-value="updateModelValue"
+								@update:text-value="updateTextValue"
 								@focus="setFocused(true)"
 								@blur="setFocused(false)"
 							>

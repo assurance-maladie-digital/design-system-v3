@@ -50,11 +50,11 @@ export type DatePickerLiteInputProps =
 
 /** Slot props for the `input` slot of DatePickerLite */
 export interface DatePickerLiteInputSlotProps {
-	/** Normalized value (`null` when the field is empty) */
-	modelValue: DatePickerLiteValue
-	updateModelValue: (value: DatePickerLiteValue) => void
 	/** Props to `v-bind` on a custom text field: field props, validation state and picker props (`mode`, `locale`, …) */
 	inputProps: DatePickerLiteInputProps
+	/** Raw text of the field — formatted by the component from the model (per `inputFormat`/`separator`), to bind on the custom field */
+	textValue: string | null | undefined
+	/** Reported text feeds validation and parses to the model per `inputFormat`/`separator` */
 	updateTextValue: (value: string | undefined) => void
 	setFocused: (value: boolean) => void
 	/** Attach via `:ref` to the button that opens the visual picker */

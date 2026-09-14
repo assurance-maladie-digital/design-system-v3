@@ -4,7 +4,6 @@ import type {
 	DatePickerLiteInputProps,
 	DatePickerLiteInputSlotProps,
 	DatePickerLiteMode,
-	DatePickerLiteValue,
 } from './types'
 
 /** Slots of the root component forwarded to the text input */
@@ -30,38 +29,35 @@ interface UseDatePickerLiteTextFieldOptions {
 		mode: DatePickerLiteMode
 	}
 	locale: Ref<string>
-	/** Model ref returned by `defineModel` */
-	internalValue: Ref<DatePickerLiteValue | undefined>
 	/** Shared with the validation composable */
 	focused: Ref<boolean>
-	/** Text reported by a custom `input` slot, shared with the validation composable */
-	slotTextValue: Ref<string | undefined>
+	/** Text of the field (default input via update:textValue, custom slot via updateTextValue), kept in sync with the model by `useDatePickerLiteTextSync` */
+	textValue: Ref<string | null | undefined>
 	validation: DatePickerLiteValidationState
 }
 
 /**
- * Centralizes the text field wiring of DatePickerLite:
+ * Centralizes the text field wiring of DatePickerLite (assembly only — no state
+ * effect; the text↔model sync lives in `useDatePickerLiteTextSync`):
  * - `inputProps`: props to `v-bind` on the text input (attrs forwarded by the root,
  *   field props, validation state and the picker-specific props)
- * - `inputSlotProps`: props of the `input` slot (modelValue, focus, custom toggle button)
+ * - `inputSlotProps`: props of the `input` slot (text value, focus, custom toggle button)
  * - `textFieldSlots`: root slots forwarded to the text input, visual-picker slots excluded
  */
 export function useDatePickerLiteTextField(options: UseDatePickerLiteTextFieldOptions): {
-	/** `undefined` (prop absent) and `null` (cleared field) are equivalent inputs;
-	 * children only ever receive `null` as the empty value. */
-	modelValue: ComputedRef<DatePickerLiteValue>
+	/** Props to `v-bind` on the text input (attrs forwarded by the root, field props, validation state and the picker-specific props) */
 	inputProps: ComputedRef<DatePickerLiteInputProps>
+	/** Props of the `input` slot (text value, focus handling, custom toggle button) */
 	inputSlotProps: ComputedRef<DatePickerLiteInputSlotProps>
 	/** Opening button tracked by a custom `input` slot (`:ref="toggleBtnRef"`) */
 	customToggleBtn: Ref<HTMLButtonElement | null>
+	/** Root slots forwarded to the text input, visual-picker slots excluded */
 	textFieldSlots: ComputedRef<Record<string, Slot | undefined>>
 } {
 	const attrs = useAttrs()
 	const slots = useSlots()
 	const fieldProps = useTextField(options.props)
 	const { errors, warnings, successes, hasError, hasWarning, hasSuccess } = options.validation
-
-	const modelValue = computed(() => options.internalValue.value ?? null)
 
 	const inputProps = computed<DatePickerLiteInputProps>(() => ({
 		...attrs,
@@ -84,13 +80,10 @@ export function useDatePickerLiteTextField(options: UseDatePickerLiteTextFieldOp
 	const customToggleBtn = ref<HTMLButtonElement | null>(null)
 
 	const inputSlotProps = computed<DatePickerLiteInputSlotProps>(() => ({
-		modelValue: modelValue.value,
 		inputProps: inputProps.value,
-		updateModelValue: (value) => {
-			options.internalValue.value = value
-		},
+		textValue: options.textValue.value,
 		updateTextValue: (value) => {
-			options.slotTextValue.value = value
+			options.textValue.value = value
 		},
 		setFocused: (value) => {
 			options.focused.value = value
@@ -103,7 +96,6 @@ export function useDatePickerLiteTextField(options: UseDatePickerLiteTextFieldOp
 	))
 
 	return {
-		modelValue,
 		inputProps,
 		inputSlotProps,
 		customToggleBtn,

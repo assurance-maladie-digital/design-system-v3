@@ -103,17 +103,15 @@ const meta: Meta<typeof DatePickerLite> = {
 		},
 		...getValidationDocumentation('base'),
 		'input': {
-			description: 'Slot de remplacement du champ de saisie. Il reçoit le contexte de validation, le modèle et le bouton d’ouverture du sélecteur visuel pour conserver le comportement sans réécrire l’intégralité du composant.',
+			description: 'Slot de remplacement du champ de saisie. Il reçoit le contexte de validation, le texte du champ et le bouton d’ouverture du sélecteur visuel pour conserver le comportement sans réécrire l’intégralité du composant.',
 			control: false,
 			table: {
 				type: {
 					summary: 'DatePickerLiteInputSlotProps',
 					detail: `{
-	mode: 'single' | 'range' | 'multiple',
-	modelValue: Date | [Date, Date] | Date[] | undefined,
-	updateModelValue: (value: Date | [Date, Date] | Date[] | undefined) => void,
 	inputProps: DatePickerLiteInputProps, // props du champ + état de validation, à v-bind sur le champ personnalisé
-	updateTextValue: (value: string | undefined) => void, // reporte le texte saisi pour la validation
+	textValue: string | null | undefined, // texte brut du champ, formaté par le composant depuis le modèle (selon inputFormat/separator)
+	updateTextValue: (value: string | undefined) => void, // reporte le texte saisi : validation + parse en modèle selon inputFormat/separator
 	setFocused: (value: boolean) => void,
 	toggleBtnRef: Ref<HTMLButtonElement | null>, // à attacher via :ref au bouton d'ouverture du sélecteur visuel
 }`,

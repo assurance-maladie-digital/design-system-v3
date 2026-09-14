@@ -9,12 +9,12 @@
 	import type { TextFieldProps } from '@/composables/useTextField'
 	import { useTextField } from '@/composables/useTextField'
 	import { useDateInputMask } from './useDateInputMask'
-	import { useDateInputModel } from './useDateInputModel'
-	import type { DatePickerLiteMode, DatePickerLiteValue } from '../types'
+	import type { DatePickerLiteMode } from '../types'
 
 	const props = withDefaults(defineProps<{
 		mode: DatePickerLiteMode
-		modelValue: DatePickerLiteValue
+		/** Raw text of the field, owned by DatePickerLite (single source) */
+		textValue?: string | null
 		inputFormat?: string
 		separator?: string
 		locale?: string
@@ -29,6 +29,7 @@
 		hideDetails?: boolean
 		hideDefaultToggle?: boolean
 	} & TextFieldProps>(), {
+		textValue: undefined,
 		inputFormat: 'DD/MM/YYYY',
 		separator: ' - ',
 		locale: 'fr-FR',
@@ -45,7 +46,7 @@
 	})
 
 	const emits = defineEmits<{
-		(e: 'update:modelValue', value: DatePickerLiteValue): void
+		(e: 'update:textValue', value: string | null | undefined): void
 		(e: 'focus', event: FocusEvent): void
 		(e: 'blur', event: FocusEvent): void
 		(e: 'keydown', event: KeyboardEvent): void
@@ -59,30 +60,26 @@
 	const locales = inject<ComputedRef<typeof defaultLocales>>(calendarLocalesKey)!
 
 	const textFieldProps = useTextField(props)
-	const { textValue } = useDateInputModel(
-		toRef(props, 'mode'),
-		toRef(props, 'modelValue'),
-		toRef(props, 'inputFormat'),
-		toRef(props, 'separator'),
-		toRef(props, 'locale'),
-		value => emits('update:modelValue', value),
-	)
 	const mask = useDateInputMask(toRef(props, 'mode'), toRef(props, 'inputFormat'), toRef(props, 'separator'))
+
+	// Stateless: the raw text is reported as-is; the root owns parsing it to the model
+	// and validating it (an incomplete input never parses to a Date).
+	function onTextFieldInput(value: string | null): void {
+		emits('update:textValue', value)
+	}
 
 	const toggleBtn = ref<HTMLButtonElement | null>(null)
 
 	const uniqueName = useId()
 	defineExpose({
-		// Raw text drives the root validation: an incomplete input never parses to a Date
-		textValue,
 		toggleBtn,
 	})
 </script>
 
 <template>
 	<SyTextField
-		v-model="textValue"
 		v-maska="mask"
+		:model-value="props.textValue"
 		v-bind="textFieldProps"
 		:name="uniqueName"
 		:error-messages="props.errorMessages"
@@ -95,6 +92,7 @@
 		:disable-error-handling="true"
 		:hide-details="props.hideDetails"
 		:display-asterisk="props.required && props.displayAsterisk"
+		@update:model-value="onTextFieldInput"
 		@focus="emits('focus', $event)"
 		@blur="emits('blur', $event)"
 		@keydown="emits('keydown', $event)"

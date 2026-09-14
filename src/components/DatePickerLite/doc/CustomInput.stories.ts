@@ -1,13 +1,12 @@
-import { ref, useId, watch } from 'vue'
+import { useId } from 'vue'
 import { mdiCalendar } from '@mdi/js'
 import { vMaska } from 'maska/vue'
 import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
-import { formatDate, parseDate } from '@/composables/date/useDateFormatDayjs'
+import { parseDate } from '@/composables/date/useDateFormatDayjs'
 import DatePickerLite from '../DatePickerLite.vue'
 import type { DatePickerLiteProps } from '../types'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { VBtn } from 'vuetify/components'
 
 const meta: Meta<DatePickerLiteProps> = {
 	title: 'Composants/Formulaires/DatePickerLite/CustomInput',
@@ -15,7 +14,7 @@ const meta: Meta<DatePickerLiteProps> = {
 	parameters: {
 		docs: {
 			description: {
-				component: 'Replacement of the default input field via the `input` slot. The component provides the slot props (`modelValue`, `updateModelValue`, `inputProps`, `updateTextValue`, `setFocused`, `toggleBtnRef`): validation, opening the visual picker, and date synchronization remain handled by the component; parsing of the typed text remains the responsibility of the custom input. `inputProps` carries the field props, the validation state and the picker props (`mode`, `locale`, …) to `v-bind` on the custom field; `mode` tells the custom input whether `modelValue` is a single `Date` or a `[Date, Date]` range.',
+				component: 'Replacement of the default input field via the `input` slot. The slot is text-only: bind `textValue` on the custom field and report the typed text through `updateTextValue` — validation, parsing (per `inputFormat`/`separator`) and display sync (picker selections, external model updates) remain handled by the component. Declare a custom format through the root `inputFormat`/`separator` props. `inputProps` carries the field props, the validation state and the picker props (`mode`, `locale`, …) to `v-bind` on the custom field; `mode` tells the custom input whether `textValue` holds a single date or a range.',
 			},
 			controls: {
 				exclude: ['onUpdate:modelValue', 'onUpdate:open'],
@@ -30,87 +29,13 @@ const meta: Meta<DatePickerLiteProps> = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const pad = (value: number): string => String(value).padStart(2, '0')
-
-const parseFrDate = (value: string): Date | undefined => {
-	const match = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(value)
-	return match ? new Date(Number(match[3]), Number(match[2]) - 1, Number(match[1])) : undefined
-}
-
-const formatFrDate = (value: Date): string =>
-	`${pad(value.getDate())}/${pad(value.getMonth() + 1)}/${value.getFullYear()}`
-
-const parseIsoDate = (value: string): Date | undefined => {
-	const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value)
-	return match ? new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3])) : undefined
-}
-
-const formatIsoDate = (value: Date): string =>
-	`${value.getFullYear()}-${pad(value.getMonth() + 1)}-${pad(value.getDate())}`
-
-const RANGE_SEPARATOR = ' - '
-
-const parseIsoDateRange = (value: string): [Date, Date] | undefined => {
-	const [start, end] = value.split(RANGE_SEPARATOR)
-	const parsedStart = start ? parseIsoDate(start) : undefined
-	const parsedEnd = end ? parseIsoDate(end) : undefined
-	return parsedStart && parsedEnd ? [parsedStart, parsedEnd] : undefined
-}
-
-const formatIsoDateRange = (value: [Date, Date]): string =>
-	`${formatIsoDate(value[0])}${RANGE_SEPARATOR}${formatIsoDate(value[1])}`
-
-const isIsoDateRange = (value: unknown): value is [Date, Date] =>
-	Array.isArray(value)
-	&& value.length === 2
-	&& value.every(date => date instanceof Date)
-
-// Local state of the `input` slot field: the text is owned by the custom input,
-// mirrored to validation via updateTextValue and parsed to a Date via
-// updateModelValue (parsing remains the responsibility of the custom input).
-function useCustomSlotInput(
-	args: { modelValue?: Date | Date[] | null },
-	parse: (value: string) => Date | undefined,
-	format: (value: Date) => string,
-) {
-	const text = ref(args.modelValue instanceof Date ? format(args.modelValue) : '')
-	const updateTextValueCallback = ref<(value: string | undefined) => void>()
-	const hasRegisteredUpdateTextValue = ref(false)
-	watch(() => args.modelValue, (value) => {
-		text.value = value instanceof Date ? format(value) : ''
-		updateTextValueCallback.value?.(text.value || undefined)
-	})
-	const registerUpdateTextValue = (updateTextValue: (value: string | undefined) => void) => {
-		updateTextValueCallback.value = updateTextValue
-		if (!hasRegisteredUpdateTextValue.value) {
-			hasRegisteredUpdateTextValue.value = true
-			updateTextValue(text.value || undefined)
-		}
-	}
-	const onInput = (
-		event: Event,
-		updateTextValue: (value: string | undefined) => void,
-		updateModelValue: (value: Date | undefined) => void,
-	) => {
-		text.value = (event.target as HTMLInputElement).value
-		updateTextValue(text.value)
-		const parsed = parse(text.value)
-		if (parsed) {
-			updateModelValue(parsed)
-		}
-		else if (text.value === '') {
-			updateModelValue(undefined)
-		}
-	}
-	return { text, onInput, registerUpdateTextValue }
-}
-
 const SHORT_DATE_FORMAT = 'DD-MM-YY'
 
 export const CustomInputSyTextField: Story = {
 	args: {
 		modelValue: new Date(2025, 10, 11),
 		label: 'Début du projet',
+		inputFormat: SHORT_DATE_FORMAT,
 		hint: 'Format JJ-MM-AA',
 		placeholder: 'JJ-MM-AA',
 		customRules: [{
@@ -123,69 +48,26 @@ export const CustomInputSyTextField: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { DatePickerLite, SyTextField, VBtn, SyIcon },
+			components: { DatePickerLite, SyTextField, SyIcon },
 			directives: { maska: vMaska },
 			setup() {
 				const mask = '##-##-##'
-				const text = ref(args.modelValue instanceof Date ? formatDate(args.modelValue, SHORT_DATE_FORMAT) : '')
-				const updateTextValueCallback = ref<(value: string | undefined) => void>()
-				const hasRegisteredUpdateTextValue = ref(false)
-				watch(() => args.modelValue, (value) => {
-					text.value = value instanceof Date ? formatDate(value, SHORT_DATE_FORMAT) : ''
-					updateTextValueCallback.value?.(text.value || undefined)
-				})
-				// Same contract as the default input: the masked text feeds validation via
-				// updateTextValue and only overrides modelValue when it parses to a different date.
-
-				const onTextUpdate = (
-					value: string | null,
-					modelValue: Date | undefined,
-					updateTextValue: (value: string | undefined) => void,
-					updateModelValue: (value: Date | undefined) => void,
-				) => {
-					updateTextValue(value ?? undefined)
-					if (!value) {
-						updateModelValue(undefined)
-						return
-					}
-					const parsed = parseDate(value, SHORT_DATE_FORMAT)
-					if (parsed && parsed.getTime() !== modelValue?.getTime()) {
-						updateModelValue(parsed)
-					}
-				}
-				const registerUpdateTextValue = (updateTextValue: (value: string | undefined) => void) => {
-					updateTextValueCallback.value = updateTextValue
-					if (!hasRegisteredUpdateTextValue.value) {
-						hasRegisteredUpdateTextValue.value = true
-						updateTextValue(text.value || undefined)
-					}
-				}
 				return {
 					args,
-					text,
-					onTextUpdate,
-					registerUpdateTextValue,
 					mask,
 					calendarIcon: mdiCalendar,
 				}
 			},
 			template: `
 				<DatePickerLite v-bind="args" v-model="args.modelValue">
-					<template #input="{ modelValue, updateModelValue, inputProps, updateTextValue, setFocused, toggleBtnRef }">
+					<template #input="{ inputProps, textValue, updateTextValue, setFocused, toggleBtnRef }">
 						<SyTextField
-							:ref="() => registerUpdateTextValue(updateTextValue)"
-							v-model="text"
+							:model-value="textValue"
 							v-maska="mask"
 							v-bind="inputProps"
 							variant-style="underlined"
-							:error-messages="inputProps.errorMessages"
-							:warning-messages="inputProps.warningMessages"
-							:success-messages="inputProps.successMessages"
-							:has-error="inputProps.hasError"
-							:has-warning="inputProps.hasWarning"
-							:has-success="inputProps.hasSuccess"
 							:disable-error-handling="true"
-							@update:model-value="onTextUpdate($event, modelValue, updateTextValue, updateModelValue)"
+							@update:model-value="value => updateTextValue(value ?? undefined)"
 							@focus="setFocused(true)"
 							@blur="setFocused(false)"
 						>
@@ -212,7 +94,7 @@ export const CustomInputSyTextField: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Input custom construit sur `SyTextField` et Maska, comme le champ par défaut, mais au format court JJ-MM-AA (variante `underlined` au lieu d’`outlined`). Le masque `##-##-##` formate la saisie, le parsing strict (dayjs) délègue à `updateModelValue` uniquement les dates valides, et `SyTextField` conserve labels, messages de validation et attributs ARIA natifs.',
+				story: 'Input custom construit sur `SyTextField` et Maska, comme le champ par défaut, mais au format court JJ-MM-AA (variante `underlined` au lieu d’`outlined`). Le format est déclaré via `inputFormat` : le composant parse le texte rapporté et reflète les sélections du picker dans `textValue` — aucun état local ni parsing côté story. `SyTextField` conserve labels, messages de validation et attributs ARIA natifs.',
 			},
 		},
 		sourceCode: [
@@ -223,36 +105,24 @@ export const CustomInputSyTextField: Story = {
 					<DatePickerLite
 						v-model="selectedDate"
 						label="Début du projet"
+						input-format="DD-MM-YY"
 						help-text="Format JJ-MM-AA"
 						placeholder="JJ-MM-AA"
 						:custom-rules="rules"
 					>
-						<template #input="{ modelValue, updateModelValue, inputProps, updateTextValue, setFocused, toggleBtnRef }">
+						<template #input="{ inputProps, textValue, updateTextValue, setFocused, toggleBtnRef }">
 							<SyTextField
-								v-model="text"
+								:model-value="textValue"
 								v-maska="mask"
 								v-bind="inputProps"
 								variant-style="underlined"
-								:error-messages="inputProps.errorMessages"
-								:has-error="inputProps.hasError"
-								:disable-error-handling="true"
-								@update:model-value="onTextUpdate($event, modelValue, updateTextValue, updateModelValue)"
+								@update:model-value="value => updateTextValue(value ?? undefined)"
 								@focus="setFocused(true)"
 								@blur="setFocused(false)"
 							>
-								<template #append>
-									<button
-										:ref="toggleBtnRef"
-										type="button"
-										title="Choisir une date"
-										aria-label="Choisir une date"
-										class="custom-input__toggle"
-									>
-										<SyIcon
-											:icon="mdiCalendar"
-											decorative
-											color="primary"
-										/>
+								<template #prepend>
+									<button :ref="toggleBtnRef" type="button" aria-label="Choisir une date">
+										<SyIcon :icon="mdiCalendar" decorative color="primary" />
 									</button>
 								</template>
 							</SyTextField>
@@ -267,40 +137,20 @@ export const CustomInputSyTextField: Story = {
 					import { DatePickerLite, SyIcon, SyTextField } from '@cnamts/synapse'
 					import { mdiCalendar } from '@mdi/js'
 					import { vMaska } from 'maska/vue'
-					import { ref, watch } from 'vue'
-					import { formatDate, parseDate } from '@cnamts/synapse'
-
-					const SHORT_DATE_FORMAT = 'DD-MM-YY'
+					import { ref } from 'vue'
+					import { parseDate } from '@cnamts/synapse'
 
 					const selectedDate = ref<Date | undefined>(new Date(2025, 10, 11))
 
 					const rules = [{
 						type: 'custom',
 						options: {
-							validate: (value) => parseDate(value, SHORT_DATE_FORMAT) !== null,
+							validate: (value) => parseDate(value, 'DD-MM-YY') !== null,
 							message: 'Le format doit être JJ-MM-AA (ex: 25-12-26).',
 						},
 					}]
 
 					const mask = '##-##-##'
-					const text = ref(formatDate(selectedDate.value, SHORT_DATE_FORMAT))
-					watch(selectedDate, (value) => {
-						text.value = value ? formatDate(value, SHORT_DATE_FORMAT) : ''
-					})
-
-					// Same contract as the default input: the masked text feeds validation and only
-					// overrides modelValue when it parses to a different date.
-					const onTextUpdate = (value, modelValue, updateTextValue, updateModelValue) => {
-						updateTextValue(value ?? undefined)
-						if (!value) {
-							updateModelValue(undefined)
-							return
-						}
-						const parsed = parseDate(value, SHORT_DATE_FORMAT)
-						if (parsed && parsed.getTime() !== modelValue?.getTime()) {
-							updateModelValue(parsed)
-						}
-					}
 				</script>
 				`,
 			},
@@ -325,16 +175,12 @@ export const CustomInputStyle: Story = {
 		return {
 			components: { DatePickerLite },
 			setup() {
-				const { text, onInput, registerUpdateTextValue } = useCustomSlotInput(args, parseFrDate, formatFrDate)
 				// Accessibility associations: label → input, messages wired via aria-describedby
 				const inputId = useId()
 				const helpId = useId()
 				const errorsId = useId()
 				return {
 					args,
-					text,
-					onInput,
-					registerUpdateTextValue,
 					inputId,
 					helpId,
 					errorsId,
@@ -343,7 +189,7 @@ export const CustomInputStyle: Story = {
 			},
 			template: `
 				<DatePickerLite v-bind="args" v-model="args.modelValue">
-					<template #input="{ inputProps, updateModelValue, updateTextValue, setFocused, toggleBtnRef }">
+					<template #input="{ inputProps, textValue, updateTextValue, setFocused, toggleBtnRef }">
 						<div :style="{
 							display: 'flex',
 							alignItems: 'center',
@@ -363,7 +209,6 @@ export const CustomInputStyle: Story = {
 							</label>
 							<input
 								:id="inputId"
-								:ref="() => registerUpdateTextValue(updateTextValue)"
 								type="text"
 								:style="{
 									flex: '1',
@@ -372,13 +217,13 @@ export const CustomInputStyle: Story = {
 									minWidth: '120px',
 								}"
 								placeholder="JJ/MM/AAAA"
-								:value="text"
+								:value="textValue"
 								:disabled="inputProps.disabled"
 								:readonly="inputProps.readonly"
 								:aria-required="inputProps.required"
 								:aria-invalid="inputProps.hasError"
 								:aria-describedby="describedBy"
-								@input="onInput($event, updateTextValue, updateModelValue)"
+								@input="updateTextValue($event.target.value)"
 								@focus="setFocused(true)"
 								@blur="setFocused(false)"
 							>
@@ -423,7 +268,7 @@ export const CustomInputStyle: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Champ de saisie remplacé via le slot `input`, ici avec un style « pill ». La validation (règle custom de format + champ requis) fonctionne comme sur le champ par défaut : le texte est envoyé via `updateTextValue`, l’état focus via `setFocused`, et les messages d’erreur reviennent dans `inputProps.errorMessages`. L’accessibilité est maintenue : label associé via `for`/`id`, texte d’aide et erreurs rattachés au champ par `aria-describedby`, `aria-invalid`/`aria-required` reflétés, erreurs annoncées via `role="alert"`, et bouton d’ouverture enregistré via `toggleBtnRef` (le sélecteur visuel gère `aria-haspopup` et le retour de focus).',
+				story: 'Champ de saisie remplacé via le slot `input`, ici avec un style « pill » et le format par défaut JJ/MM/AAAA : l’input natif se contente de lier `textValue` et de rapporter la saisie via `updateTextValue`. La validation (règle custom de format + champ requis) fonctionne comme sur le champ par défaut, et les sélections du picker sont reflétées dans `textValue`. L’accessibilité est maintenue : label associé via `for`/`id`, texte d’aide et erreurs rattachés au champ par `aria-describedby`, `aria-invalid`/`aria-required` reflétés, erreurs annoncées via `role="alert"`, et bouton d’ouverture enregistré via `toggleBtnRef` (le sélecteur visuel gère `aria-haspopup` et le retour de focus).',
 			},
 		},
 		sourceCode: [
@@ -437,12 +282,9 @@ export const CustomInputStyle: Story = {
 						required
 						:custom-rules="rules"
 					>
-						<template #input="{ inputProps, updateModelValue, updateTextValue, setFocused, toggleBtnRef }">
+						<template #input="{ inputProps, textValue, updateTextValue, setFocused, toggleBtnRef }">
 							<div class="custom-input">
-								<label
-									class="custom-input__label"
-									:for="inputId"
-								>
+								<label class="custom-input__label" :for="inputId">
 									{{ inputProps.label }}<span aria-hidden="true"> *</span>
 								</label>
 								<input
@@ -450,32 +292,21 @@ export const CustomInputStyle: Story = {
 									type="text"
 									class="custom-input__field"
 									placeholder="JJ/MM/AAAA"
-									:value="text"
+									:value="textValue"
 									:aria-required="inputProps.required"
 									:aria-invalid="inputProps.hasError"
 									:aria-describedby="helpId + ' ' + errorsId"
-									@input="onInput($event, updateTextValue, updateModelValue)"
+									@input="updateTextValue($event.target.value)"
 									@focus="setFocused(true)"
 									@blur="setFocused(false)"
 								>
-								<button
-									type="button"
-									class="custom-input__toggle"
-									:ref="toggleBtnRef"
-								>
+								<button type="button" class="custom-input__toggle" :ref="toggleBtnRef">
 									Choisir
 								</button>
 							</div>
 							<p :id="helpId">{{ inputProps.helpText }}</p>
-							<div
-								:id="errorsId"
-								role="alert"
-							>
-								<p
-									v-for="message in inputProps.errorMessages"
-									:key="message"
-									class="custom-input__error"
-								>
+							<div :id="errorsId" role="alert">
+								<p v-for="message in inputProps.errorMessages" :key="message" class="custom-input__error">
 									{{ message }}
 								</p>
 							</div>
@@ -488,7 +319,7 @@ export const CustomInputStyle: Story = {
 				code: `
 				<script setup lang="ts">
 					import { DatePickerLite } from '@cnamts/synapse'
-					import { ref, useId, watch } from 'vue'
+					import { useId } from 'vue'
 
 					const selectedDate = ref<Date | undefined>(new Date(2025, 10, 11))
 
@@ -504,22 +335,6 @@ export const CustomInputStyle: Story = {
 					const inputId = useId()
 					const helpId = useId()
 					const errorsId = useId()
-
-					// Text is owned by the custom input and parsed to a Date via
-					// updateModelValue ; updateTextValue alimente la validation.
-					const text = ref('11/11/2025')
-					watch(selectedDate, (value) => {
-						text.value = value ? formatDate(value) : ''
-					})
-
-					const onInput = (event, updateTextValue, updateModelValue) => {
-						text.value = event.target.value
-						updateTextValue(text.value)
-						const parsed = parseDate(text.value)
-						if (parsed) {
-							updateModelValue(parsed)
-						}
-					}
 				</script>
 				`,
 			},
@@ -531,6 +346,7 @@ export const CustomInputFormat: Story = {
 	args: {
 		modelValue: new Date(2025, 10, 11),
 		label: 'Début du projet',
+		inputFormat: 'YYYY-MM-DD',
 		helpText: 'Format AAAA-MM-JJ',
 		customRules: [{
 			type: 'custom',
@@ -544,25 +360,20 @@ export const CustomInputFormat: Story = {
 		return {
 			components: { DatePickerLite, SyIcon },
 			setup() {
-				const { text, onInput, registerUpdateTextValue } = useCustomSlotInput(args, parseIsoDate, formatIsoDate)
 				return {
 					args,
-					text,
-					onInput,
-					registerUpdateTextValue,
 					calendarIcon: mdiCalendar,
 				}
 			},
 			template: `
 				<DatePickerLite v-bind="args" v-model="args.modelValue">
-					<template #input="{ inputProps, updateModelValue, updateTextValue, setFocused, toggleBtnRef }">
+					<template #input="{ inputProps, textValue, updateTextValue, setFocused, toggleBtnRef }">
 						<label :style="{ display: 'block', fontWeight: 'bold', marginBottom: '4px' }">
 							{{ inputProps.label }}
 						</label>
 						<div :style="{ display: 'flex', gap: '8px', alignItems: 'center' }">
 							<input
 								type="text"
-								:ref="() => registerUpdateTextValue(updateTextValue)"
 								:style="{
 									border: '1px solid rgba(0, 0, 0, 0.38)',
 									borderRadius: '4px',
@@ -570,8 +381,8 @@ export const CustomInputFormat: Story = {
 									minWidth: '140px',
 								}"
 								placeholder="AAAA-MM-JJ"
-								:value="text"
-								@input="onInput($event, updateTextValue, updateModelValue)"
+								:value="textValue"
+								@input="updateTextValue($event.target.value)"
 								@focus="setFocused(true)"
 								@blur="setFocused(false)"
 							>
@@ -604,7 +415,7 @@ export const CustomInputFormat: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Champ de saisie au format ISO (AAAA-MM-JJ) via le slot `input` : l’input custom affiche `modelValue` dans son propre format, parse la saisie avant de la transmettre via `updateModelValue`, et envoie le texte brut à la validation via `updateTextValue` (règle custom adaptée au format).',
+				story: 'Champ de saisie au format ISO (AAAA-MM-JJ) via le slot `input` : le format est déclaré avec `input-format="YYYY-MM-DD"`, l’input custom se contente de lier `textValue` et de rapporter la saisie via `updateTextValue` — le composant parse le texte ISO et formate les sélections du picker dans le même format (règle custom adaptée au format).',
 			},
 		},
 		sourceCode: [
@@ -615,32 +426,23 @@ export const CustomInputFormat: Story = {
 					<DatePickerLite
 						v-model="selectedDate"
 						label="Début du projet"
+						input-format="YYYY-MM-DD"
 						help-text="Format AAAA-MM-JJ"
 						:custom-rules="rules"
 					>
-						<template #input="{ inputProps, updateModelValue, updateTextValue, setFocused, toggleBtnRef }">
+						<template #input="{ inputProps, textValue, updateTextValue, setFocused, toggleBtnRef }">
 							<label>{{ inputProps.label }}</label>
 							<input
 								type="text"
 								placeholder="AAAA-MM-JJ"
-								:value="text"
-								@input="onInput($event, updateTextValue, updateModelValue)"
+								:value="textValue"
+								@input="updateTextValue($event.target.value)"
 								@focus="setFocused(true)"
 								@blur="setFocused(false)"
 							>
-								<button
-									:ref="toggleBtnRef"
-									type="button"
-									title="Choisir une date"
-									aria-label="Choisir une date"
-									class="custom-input__toggle"
-								>
-									<SyIcon
-										:icon="mdiCalendar"
-										decorative
-										color="primary"
-									/>
-								</button>
+							<button :ref="toggleBtnRef" type="button" aria-label="Choisir une date">
+								<SyIcon :icon="mdiCalendar" decorative color="primary" />
+							</button>
 						</template>
 					</DatePickerLite>
 				</template>
@@ -650,7 +452,7 @@ export const CustomInputFormat: Story = {
 				code: `
 				<script setup lang="ts">
 					import { DatePickerLite } from '@cnamts/synapse'
-					import { ref, watch } from 'vue'
+					import { ref } from 'vue'
 
 					const selectedDate = ref<Date | undefined>(new Date(2025, 10, 11))
 
@@ -661,22 +463,6 @@ export const CustomInputFormat: Story = {
 							message: 'Le format doit être AAAA-MM-JJ (ex: 2026-12-25).',
 						},
 					}]
-
-					// Format owned by the custom input: ISO display of modelValue,
-					// parsing ISO -> Date via updateModelValue.
-					const text = ref('2025-11-11')
-					watch(selectedDate, (value) => {
-						text.value = value ? formatIso(value) : ''
-					})
-
-					const onInput = (event, updateTextValue, updateModelValue) => {
-						text.value = event.target.value
-						updateTextValue(text.value)
-						const parsed = parseIso(text.value)
-						if (parsed) {
-							updateModelValue(parsed)
-						}
-					}
 				</script>
 				`,
 			},
@@ -689,11 +475,13 @@ export const CustomInputRange: Story = {
 		modelValue: [new Date(2025, 10, 11), new Date(2025, 10, 21)],
 		mode: 'range',
 		label: 'Période du projet',
+		inputFormat: 'YYYY-MM-DD',
+		separator: ' - ',
 		helpText: 'Format AAAA-MM-JJ - AAAA-MM-JJ',
 		customRules: [{
 			type: 'custom',
 			options: {
-				validate: (value: string | undefined) => parseIsoDateRange(value ?? '') !== undefined,
+				validate: (value: string | undefined) => /^\d{4}-\d{2}-\d{2} - \d{4}-\d{2}-\d{2}$/.test(value ?? ''),
 				message: 'Le format doit être AAAA-MM-JJ - AAAA-MM-JJ.',
 			},
 		}],
@@ -702,51 +490,24 @@ export const CustomInputRange: Story = {
 		return {
 			components: { DatePickerLite, SyIcon },
 			setup() {
-				const text = ref(isIsoDateRange(args.modelValue) ? formatIsoDateRange(args.modelValue) : '')
-				const updateTextValueCallback = ref<(value: string | undefined) => void>()
-				const hasRegisteredUpdateTextValue = ref(false)
-				watch(() => args.modelValue, (value) => {
-					text.value = isIsoDateRange(value) ? formatIsoDateRange(value) : ''
-					updateTextValueCallback.value?.(text.value || undefined)
-				})
-				const registerUpdateTextValue = (updateTextValue: (value: string | undefined) => void) => {
-					updateTextValueCallback.value = updateTextValue
-					if (!hasRegisteredUpdateTextValue.value) {
-						hasRegisteredUpdateTextValue.value = true
-						updateTextValue(text.value || undefined)
-					}
+				return {
+					args,
+					calendarIcon: mdiCalendar,
 				}
-				const onInput = (
-					event: Event,
-					updateTextValue: (value: string | undefined) => void,
-					updateModelValue: (value: [Date, Date] | undefined) => void,
-				) => {
-					text.value = (event.target as HTMLInputElement).value
-					updateTextValue(text.value || undefined)
-					const parsed = parseIsoDateRange(text.value)
-					if (parsed) {
-						updateModelValue(parsed)
-					}
-					else if (text.value === '') {
-						updateModelValue(undefined)
-					}
-				}
-				return { args, text, onInput, registerUpdateTextValue, calendarIcon: mdiCalendar }
 			},
 			template: `
 				<DatePickerLite v-bind="args" v-model="args.modelValue">
-					<template #input="{ inputProps, updateModelValue, updateTextValue, setFocused, toggleBtnRef }">
+					<template #input="{ inputProps, textValue, updateTextValue, setFocused, toggleBtnRef }">
 						<label :style="{ display: 'block', fontWeight: 'bold', marginBottom: '4px' }">
 							{{ inputProps.label }}
 						</label>
 						<div :style="{ display: 'flex', gap: '8px', alignItems: 'center' }">
 							<input
 								type="text"
-								:ref="() => registerUpdateTextValue(updateTextValue)"
 								:style="{ border: '1px solid rgba(0, 0, 0, 0.38)', borderRadius: '4px', padding: '8px', minWidth: '260px' }"
 								placeholder="AAAA-MM-JJ - AAAA-MM-JJ"
-								:value="text"
-								@input="onInput($event, updateTextValue, updateModelValue)"
+								:value="textValue"
+								@input="updateTextValue($event.target.value)"
 								@focus="setFocused(true)"
 								@blur="setFocused(false)"
 							>
@@ -771,7 +532,7 @@ export const CustomInputRange: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Champ de période personnalisé via le slot `input`, au format ISO `AAAA-MM-JJ - AAAA-MM-JJ`. Le champ détient le formatage et le parsing du tuple, et synchronise le texte de validation après chaque sélection visuelle.',
+				story: 'Champ de période personnalisé via le slot `input`, au format ISO `AAAA-MM-JJ - AAAA-MM-JJ` : le format est déclaré via `input-format` et `separator`, l’input lie `textValue` et rapporte la saisie via `updateTextValue` — le composant parse la plage complète et formate les sélections visuelles dans le même format.',
 			},
 		},
 	},

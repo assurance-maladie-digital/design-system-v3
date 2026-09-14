@@ -4,15 +4,15 @@ import { nextTick } from 'vue'
 import DatePickerLite from '../DatePickerLite.vue'
 import DatePickerLiteInput from '../DatePickerLiteText/DatePickerLiteInput.vue'
 
-// Custom input replacing the default field via the `input` slot: text field driven by
-// the slot props plus the opening button tracked through `toggleBtnRef`.
-// The typed text is owned by the custom input and mirrored to validation via `updateTextValue`.
+// Custom input replacing the default field via the `input` slot: text field bound to
+// `textValue`, typed text reported through `updateTextValue` (validation + parse per
+// `inputFormat`), opening button tracked through `toggleBtnRef`.
 const customInputSlot = `
-<template #default="{ modelValue, updateModelValue, inputProps, updateTextValue, setFocused, toggleBtnRef }">
+<template #default="{ inputProps, textValue, updateTextValue, setFocused, toggleBtnRef }">
 	<div class="custom-input">
 		<span class="custom-input__label">{{ inputProps.label }}</span>
 		<span class="custom-input__format">{{ inputProps.inputFormat }}{{ inputProps.separator }}</span>
-		<span class="custom-input__value">{{ modelValue ? 'date-set' : 'no-date' }}</span>
+		<span class="custom-input__value">{{ textValue ? 'date-set' : 'no-date' }}</span>
 		<ul>
 			<li
 				v-for="message in inputProps.errorMessages"
@@ -24,6 +24,7 @@ const customInputSlot = `
 		</ul>
 		<input
 			class="custom-input__field"
+			:value="textValue"
 			@input="updateTextValue($event.target.value)"
 			@focus="setFocused(true)"
 			@blur="setFocused(false)"
@@ -31,7 +32,7 @@ const customInputSlot = `
 		<button
 			type="button"
 			class="custom-input__set"
-			@click="updateModelValue(new Date(2025, 0, 15))"
+			@click="updateTextValue('15/01/2025')"
 		>
 			set
 		</button>
@@ -113,7 +114,9 @@ describe('DatePickerLite - slot input', () => {
 		wrapper.unmount()
 	})
 
-	it('propagates the value via updateModelValue and reflects modelValue in the slot props', async () => {
+	// Contract: a programmatically reported complete date parses to the model, and an
+	// external model update is reflected in the bound text
+	it('parses a date reported via updateTextValue and reflects external model updates in textValue', async () => {
 		const wrapper = mount(DatePickerLite, {
 			props: { label: 'Date' },
 			slots: { input: customInputSlot },
@@ -126,9 +129,10 @@ describe('DatePickerLite - slot input', () => {
 		const emitted = wrapper.emitted('update:modelValue')
 		expect(emitted).toHaveLength(1)
 		expect(emitted?.[0]?.[0]).toEqual(new Date(2025, 0, 15))
-
-		await wrapper.setProps({ modelValue: new Date(2025, 0, 15) })
 		expect(wrapper.find('.custom-input__value').text()).toBe('date-set')
+
+		await wrapper.setProps({ modelValue: new Date(2026, 1, 20) })
+		expect((wrapper.find('.custom-input__field').element as HTMLInputElement).value).toBe('20/02/2026')
 
 		wrapper.unmount()
 	})
@@ -156,6 +160,26 @@ describe('DatePickerLite - slot input', () => {
 		expect(wrapper.emitted('update:modelValue')).toBeUndefined()
 		expect(wrapper.findAll('.custom-input__error')).toHaveLength(1)
 		expect(wrapper.find('.custom-input__error').text()).toBe('Invalid date format. Use DD/MM/YYYY.')
+
+		wrapper.unmount()
+	})
+
+	// Contract: text reported via updateTextValue is parsed by the component per inputFormat
+	it('parses a complete date typed via updateTextValue and emits the model and change', async () => {
+		const wrapper = mount(DatePickerLite, {
+			props: { label: 'Date' },
+			slots: { input: customInputSlot },
+		})
+
+		const field = wrapper.find('.custom-input__field')
+		await field.trigger('focus')
+		await field.setValue('15/01/2025')
+
+		const emitted = wrapper.emitted('update:modelValue')
+		expect(emitted).toHaveLength(1)
+		expect(emitted?.[0]?.[0]).toEqual(new Date(2025, 0, 15))
+		expect(wrapper.emitted('change')?.at(-1)?.[0]).toEqual(new Date(2025, 0, 15))
+		expect(wrapper.find('.custom-input__value').text()).toBe('date-set')
 
 		wrapper.unmount()
 	})
@@ -260,13 +284,13 @@ describe('DatePickerLite - slot input', () => {
 			props: { label: 'Date', modelValue: new Date(2026, 8, 4) },
 			slots: {
 				input: `
-					<template #default="{ modelValue, inputProps, updateModelValue, setFocused, toggleBtnRef }">
+					<template #default="{ inputProps, textValue, updateTextValue, setFocused, toggleBtnRef }">
 						<DatePickerLiteInput
 							:mode="'single'"
-							:model-value="modelValue"
+							:text-value="textValue"
 							v-bind="inputProps"
 							:hide-default-toggle="true"
-							@update:model-value="updateModelValue"
+							@update:text-value="updateTextValue"
 							@focus="setFocused(true)"
 							@blur="setFocused(false)"
 						>
@@ -292,6 +316,51 @@ describe('DatePickerLite - slot input', () => {
 		await nextTick()
 		expect(wrapper.find('.date-picker-lite-input__toggle-btn').exists()).toBe(false)
 		expect(wrapper.find('.custom-left-trigger').exists()).toBe(true)
+
+		wrapper.unmount()
+	})
+
+	// Regression: the reused DatePickerLiteInput must report its text to the root
+	// (via the textValue/updateTextValue slot props) so validation sees what was typed
+	it('validates the typed text when DatePickerLiteInput is reused inside the input slot', async () => {
+		const wrapper = mount(DatePickerLite, {
+			props: {
+				label: 'Début du projet',
+				customRules: [{
+					type: 'custom',
+					options: {
+						validate: (value: string | undefined) => /^(0[1-9]|[12]\d|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/.test(value ?? ''),
+						message: 'Invalid date format. Use DD/MM/YYYY.',
+					},
+				}],
+			},
+			slots: {
+				input: `
+					<template #default="{ inputProps, textValue, updateTextValue, setFocused }">
+						<DatePickerLiteInput
+							:mode="'single'"
+							:text-value="textValue"
+							v-bind="inputProps"
+							@update:text-value="updateTextValue"
+							@focus="setFocused(true)"
+							@blur="setFocused(false)"
+						/>
+					</template>
+				`,
+			},
+			global: {
+				components: { DatePickerLiteInput },
+			},
+			attachTo: document.body,
+		})
+
+		const field = wrapper.find('input')
+		await field.trigger('focus')
+		await field.setValue('25/12/20')
+		await field.trigger('blur')
+
+		expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+		expect(wrapper.text()).toContain('Invalid date format. Use DD/MM/YYYY.')
 
 		wrapper.unmount()
 	})

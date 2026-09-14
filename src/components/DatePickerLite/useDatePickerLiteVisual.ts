@@ -31,6 +31,7 @@ interface UseDatePickerLiteVisualOptions {
  * - `visualSlots`: root slots forwarded to the visual picker (menu, header, footer, day, day-*)
  */
 export function useDatePickerLiteVisual(options: UseDatePickerLiteVisualOptions): {
+	/** Props to `v-bind` on the visual picker (model, anchor, toggle button, visual picker props) */
 	visualProps: ComputedRef<{
 		modelValue: DatePickerLiteValue
 		textInput: HTMLElement | null
@@ -38,7 +39,9 @@ export function useDatePickerLiteVisual(options: UseDatePickerLiteVisualOptions)
 		mode: DatePickerLiteVisualProps['mode']
 		locale: string
 	} & DatePickerLiteVisualProps & { disabled: boolean, readonly: boolean }>
+	/** Anchor of the picker menu, attached to the `input` slot wrapper (full width, custom slot included) */
 	customInputEl: Ref<HTMLElement | null>
+	/** Root slots forwarded to the visual picker (menu, header, footer, day, day-*) */
 	visualSlots: ComputedRef<Record<string, Slot | undefined>>
 } {
 	const slots = useSlots()

@@ -28,6 +28,7 @@ export function useDatePickerValidation(args: {
 	hasWarningProp?: Ref<boolean>
 	hasSuccessProp?: Ref<boolean>
 	maxErrors?: Ref<number>
+	/** Focus state of the text field: gates the eager picker-value validation */
 	focused: Ref<boolean>
 	locales: Ref<typeof locales>
 	onReset: () => void
@@ -90,9 +91,11 @@ export function useDatePickerValidation(args: {
 
 	// Calendar selections and external model updates change the picker value without
 	// a focus/blur cycle on the text field: validation must run once the text synced.
+	// Typed text also updates the model, but while the field is focused — the blur
+	// cycle validates it, so it must not trigger validation at input time.
 	// In validate-on-input mode the textValue watcher inside useValidation already covers it.
 	watch(args.pickerValue, async () => {
-		if (!args.isValidateOnBlur.value) return
+		if (!args.isValidateOnBlur.value || args.focused.value) return
 		await nextTick()
 		await validation.validate()
 	})

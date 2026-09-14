@@ -80,7 +80,7 @@ Le composant expose plusieurs slots pour personnaliser le champ et la modale san
 
 ### Slot `input`
 
-Le slot `input` remplace entièrement le champ texte par défaut. Il reçoit les props de contexte du champ (`modelValue`, `updateModelValue`, `inputProps`, `updateTextValue`, `setFocused`, `toggleBtnRef`) — `inputProps` contient les props du champ, l’état de validation et les props du picker (`mode`, `locale`, …) à `v-bind` sur le champ personnalisé — ce qui permet de conserver la validation et le bouton d’ouverture du sélecteur visuel tout en pilotant le rendu librement.
+Le slot `input` remplace entièrement le champ texte par défaut. Il reçoit les props de contexte du champ (`inputProps`, `textValue`, `updateTextValue`, `setFocused`, `toggleBtnRef`) — `inputProps` contient les props du champ, l’état de validation et les props du picker (`mode`, `locale`, …) à `v-bind` sur le champ personnalisé. Le slot est purement texte : liez `textValue` sur le champ custom et rapportez la saisie via `updateTextValue` — le texte remonté alimente la validation **et** est parsé en modèle selon `inputFormat`/`separator` (émission de `change`), et les sélections du sélecteur visuel comme les mises à jour externes du modèle sont reflétées dans `textValue`. Un format personnalisé se déclare via les props `inputFormat` et `separator`.
 
 <Canvas of={DatePickerLiteCustomInputStories.CustomInputSyTextField} />
 
