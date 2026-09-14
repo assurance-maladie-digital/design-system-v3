@@ -6,7 +6,7 @@
 	 * - The visual rendering
 	 */
 
-	import { computed, provide, readonly as readonlyState, ref, toRef, useAttrs, useSlots, type ComponentPublicInstance } from 'vue'
+	import { computed, provide, readonly as readonlyState, ref, toRef, useAttrs, type ComponentPublicInstance } from 'vue'
 	import DatePickerLiteInput from './DatePickerLiteText/DatePickerLiteInput.vue'
 	import DatePickerLiteVisual from './DatePickerLiteVisual/DatePickerLiteVisual.vue'
 	import { locales as defaultLocales } from './locales'
@@ -62,15 +62,20 @@
 	}>()
 
 	const attrs = useAttrs()
-	const inputAttrs = computed(() => Object.fromEntries(
-		Object.entries(attrs).filter(([name]) => name !== 'isDateDisabled'),
-	))
-	const isDateDisabledPredicate = (value: unknown): value is NonNullable<DatePickerLiteProps['isDateDisabled']> => typeof value === 'function'
-	const isDateDisabled = computed(() => {
-		const predicate = props.isDateDisabled ?? attrs.isDateDisabled
-		return isDateDisabledPredicate(predicate) ? predicate : undefined
-	})
-	const slots = useSlots()
+	const slots = defineSlots<{
+		'input'(slotProps: DatePickerLiteInputSlotProps): void
+		'menu'(slotProps: DatePickerLiteMenuSlotProps): void
+		'header'(slotProps: DatePickerLiteHeaderSlotProps): void
+		'footer'(): void
+		'default'(): void
+		'prepend'(): void
+		'append'(): void
+		'prepend-inner'(): void
+		'append-inner'(): void
+		'details'(): void
+		'day'(slotProps: unknown): void
+		[key: `day-${string}`]: (slotProps: unknown) => void
+	}>()
 	const daySlotNames = computed(() => Object.keys(slots)
 		.filter(name => /^day-\d{4}-\d{2}-\d{2}$/.test(name)))
 	const textInput = ref<ComponentPublicInstance<typeof DatePickerLiteInput> | null>(null)
@@ -147,7 +152,7 @@
 	})
 
 	const inputProps = computed<DatePickerLiteInputProps>(() => ({
-		...inputAttrs.value,
+		...attrs,
 		...useTextField(props).value,
 		required: props.required,
 		inputFormat: props.inputFormat,
@@ -163,8 +168,8 @@
 	}))
 
 	const inputSlotProps = computed<DatePickerLiteInputSlotProps>(() => ({
+		...inputProps.value,
 		mode: props.mode,
-		locale: locale.value,
 		modelValue: modelValue.value,
 		updateModelValue: (value: DatePickerLiteValue) => {
 			internalValue.value = value
@@ -178,21 +183,6 @@
 		},
 		toggleBtnRef: customToggleBtn,
 	}))
-
-	defineSlots<{
-		'input'(slotProps: DatePickerLiteInputSlotProps): void
-		'menu'(slotProps: DatePickerLiteMenuSlotProps): void
-		'header'(slotProps: DatePickerLiteHeaderSlotProps): void
-		'footer'(): void
-		'default'(): void
-		'prepend'(): void
-		'append'(): void
-		'prepend-inner'(): void
-		'append-inner'(): void
-		'details'(): void
-		'day'(slotProps: unknown): void
-		[key: `day-${string}`]: (slotProps: unknown) => void
-	}>()
 
 	defineExpose({
 		errors: readonlyState(errors),
@@ -219,8 +209,6 @@
 				<DatePickerLiteInput
 					ref="textInput"
 					:model-value="modelValue"
-					:mode="props.mode"
-					:locale
 					v-bind="inputProps"
 					@update:model-value="onUserSelect"
 					@focus="onInputFocus"
@@ -250,7 +238,7 @@
 			:max-year
 			:years-order
 			:initial-view
-			:is-date-disabled="isDateDisabled"
+			:is-date-disabled
 			:disabled
 			:readonly
 			@update:model-value="onUserSelect"
