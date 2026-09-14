@@ -116,7 +116,7 @@
     },
     {
       "componentName": "Customs/Selects/SelectBtnField",
-      "hasA11yTests": false,
+      "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
       "isFullyCompliant": false,
