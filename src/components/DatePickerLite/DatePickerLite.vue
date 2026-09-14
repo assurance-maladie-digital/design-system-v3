@@ -14,7 +14,8 @@
 	import { defaultTextFieldProps } from '@/composables/useTextField'
 	import { defaultDatePickerLiteVisualProps } from './DatePickerLiteVisual/DatePickerLiteVisualProps'
 	import { useDatePickerValidation } from './useDatePickerValidation'
-	import { useDatePickerLiteTextField, isDaySlotName } from './useDatePickerLiteTextField'
+	import { useDatePickerLiteTextField } from './useDatePickerLiteTextField'
+	import { useDatePickerLiteVisual } from './useDatePickerLiteVisual'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
 	import type {
@@ -61,7 +62,7 @@
 		(e: 'keydown', event: KeyboardEvent): void
 	}>()
 
-	const slots = defineSlots<{
+	defineSlots<{
 		'input'(slotProps: DatePickerLiteInputSlotProps): void
 		'menu'(slotProps: DatePickerLiteMenuSlotProps): void
 		'header'(slotProps: DatePickerLiteHeaderSlotProps): void
@@ -75,10 +76,7 @@
 		'day'(slotProps: unknown): void
 		[key: `day-${string}`]: (slotProps: unknown) => void
 	}>()
-	const daySlotNames = computed(() => Object.keys(slots).filter(isDaySlotName))
 	const textInput = ref<ComponentPublicInstance<typeof DatePickerLiteInput> | null>(null)
-	// The menu anchors to the `input` slot wrapper (full width), with the fallback included
-	const customInputEl = ref<HTMLElement | null>(null)
 
 	// defineModel handles controlled/uncontrolled state without echoing back to the parent;
 	// readonly/disabled remain enforced at the source (DatePickerLiteVisual, readonly field)
@@ -151,8 +149,13 @@
 		validation: { errors, warnings, successes, hasError, hasWarning, hasSuccess },
 	})
 
-	// The toggle button comes from a custom `input` slot when provided, else from the default input
-	const toggleBtn = computed(() => customToggleBtn.value ?? textInput.value?.toggleBtn ?? null)
+	const { visualProps, customInputEl, visualSlots } = useDatePickerLiteVisual({
+		props,
+		locale,
+		modelValue,
+		customToggleBtn,
+		textInput,
+	})
 
 	defineExpose({
 		errors: readonlyState(errors),
@@ -199,62 +202,18 @@
 			</slot>
 		</div>
 		<DatePickerLiteVisual
-			:model-value="modelValue"
-			:text-input="customInputEl"
-			:toggle-btn
-			:mode="props.mode"
-			:locale
-			:min-year
-			:max-year
-			:years-order
-			:initial-view
-			:is-date-disabled
-			:disabled
-			:readonly
+			v-bind="visualProps"
 			@update:model-value="onUserSelect"
 			@update:open="emits('update:open', $event)"
 			@update:view="value => emits('update:view', value)"
 		>
 			<template
-				v-if="slots.menu"
-				#menu="slotProps"
-			>
-				<slot
-					name="menu"
-					v-bind="slotProps"
-				/>
-			</template>
-			<template
-				v-if="slots.header"
-				#header="slotProps"
-			>
-				<slot
-					name="header"
-					v-bind="slotProps"
-				/>
-			</template>
-			<template
-				v-if="slots.footer"
-				#footer
-			>
-				<slot name="footer" />
-			</template>
-			<template
-				v-if="slots.day"
-				#day="slotProps"
-			>
-				<slot
-					name="day"
-					v-bind="slotProps"
-				/>
-			</template>
-			<template
-				v-for="slotName in daySlotNames"
+				v-for="(_, slotName) in visualSlots"
 				#[slotName]="slotProps"
 			>
 				<slot
 					:name="slotName"
-					v-bind="slotProps"
+					v-bind="slotProps || {}"
 				/>
 			</template>
 		</DatePickerLiteVisual>

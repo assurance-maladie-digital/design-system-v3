@@ -7,11 +7,8 @@ import type {
 	DatePickerLiteValue,
 } from './types'
 
-/** Slots owned by the visual picker, never forwarded to the text input */
-const VISUAL_PICKER_SLOT_NAMES = new Set(['input', 'menu', 'header', 'footer', 'day'])
-
-/** Matches the per-day slots of the visual picker (`day-2026-09-14`) */
-export const isDaySlotName = (name: string): boolean => /^day-\d{4}-\d{2}-\d{2}$/.test(name)
+/** Slots of the root component forwarded to the text input */
+const TEXT_FIELD_SLOT_NAMES = new Set(['default', 'prepend', 'append', 'prepend-inner', 'append-inner', 'details'])
 
 /** Validation state exposed by `useDatePickerValidation` */
 interface DatePickerLiteValidationState {
@@ -102,7 +99,7 @@ export function useDatePickerLiteTextField(options: UseDatePickerLiteTextFieldOp
 	}))
 
 	const textFieldSlots = computed(() => Object.fromEntries(
-		Object.entries(slots).filter(([name]) => !VISUAL_PICKER_SLOT_NAMES.has(name) && !isDaySlotName(name)),
+		Object.entries(slots).filter(([name]) => TEXT_FIELD_SLOT_NAMES.has(name)),
 	))
 
 	return {
