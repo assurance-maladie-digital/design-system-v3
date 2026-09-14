@@ -291,9 +291,6 @@ export const Default: Story = {
 		],
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -531,9 +528,6 @@ export const WithSlots: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',

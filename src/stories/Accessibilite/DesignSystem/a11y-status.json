@@ -490,7 +490,7 @@
     },
     {
       "componentName": "HeaderNavigationBar",
-      "hasA11yTests": false,
+      "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
       "mdxStatus": "Manquante",
       "isFullyCompliant": false,
