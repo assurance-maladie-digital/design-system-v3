@@ -63,6 +63,14 @@ describe('Calendar', () => {
 		])
 	})
 
+	it('names every day with its full localized date, including adjacent-month days', async () => {
+		const wrapper = await mountCalendar({ displayedMonth })
+
+		expect(wrapper.find('[data-date="2024-06-15"]').attributes('aria-label')).toBe('samedi 15 juin 2024')
+		// Overflow day of the previous month: unambiguous full date
+		expect(wrapper.find('[data-date="2024-05-27"]').attributes('aria-label')).toBe('lundi 27 mai 2024')
+	})
+
 	it('updates the displayed grid when displayedMonth changes', async () => {
 		const wrapper = await mountCalendar({ displayedMonth })
 

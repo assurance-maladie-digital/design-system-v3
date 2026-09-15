@@ -12,8 +12,11 @@
 		minYear: number
 		maxYear: number
 		locale: string
+		/** Id of the header date label, targeted by the dialog `aria-labelledby` */
+		titleId?: string
 	}>(), {
 		modelValue: () => new Date(),
+		titleId: undefined,
 	})
 
 	const emits = defineEmits<{
@@ -48,7 +51,16 @@
 	const monthLabel = computed(() => formatShortMonth(new Date(2000, parsedMonth.value - 1)))
 	const yearLabel = computed(() => parsedYear.value)
 
-	const monthBtnAriaLabel = computed(() => locales.value.monthBtnLabelSelected(monthLabel.value))
+	const monthBtnAriaLabel = computed(() => {
+		// Same semantics as the year button: Selected variant when the displayed
+		// month is the one of the reference date (selection, or today by default)
+		const isSelectedMonth = props.modelValue instanceof Date
+			&& props.modelValue.getMonth() === parsedMonth.value - 1
+			&& props.modelValue.getFullYear() === parsedYear.value
+		return isSelectedMonth
+			? locales.value.monthBtnLabelSelected(monthLabel.value)
+			: locales.value.monthBtnLabelUnselected(monthLabel.value)
+	})
 
 	const yearBtnAriaLabel = computed(() => {
 		const year = parsedYear.value
@@ -65,6 +77,7 @@
 			{{ locales.headerSelectDay }}
 		</div>
 		<div
+			:id="props.titleId"
 			class="date-picker-lite-header__label visual-picker-header__date"
 			:aria-label="localeDate"
 		>

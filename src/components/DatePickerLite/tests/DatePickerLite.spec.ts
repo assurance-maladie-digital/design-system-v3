@@ -126,6 +126,30 @@ describe('DatePickerLite', () => {
 		wrapper.unmount()
 	})
 
+	it('switches the month button label to the unselected variant when navigating away from the selection', async () => {
+		vi.useFakeTimers()
+		const wrapper = mount(DatePickerLiteComponent, {
+			props: {
+				label: 'Début du projet',
+				modelValue: new Date(2026, 11, 12),
+			},
+			attachTo: document.body,
+		})
+
+		await openMenu(wrapper)
+
+		const monthBtn = document.body.querySelector('.visual-picker-month-btn') as HTMLElement
+		expect(monthBtn.getAttribute('aria-label')).toBe('Sélectionner un mois, le mois sélectionné est Dec.')
+
+		const nextMonthBtn = document.body.querySelector('.date-picker-lite-header__nav--next') as HTMLElement
+		nextMonthBtn.click()
+		await nextTick()
+
+		expect(monthBtn.getAttribute('aria-label')).toBe('Sélectionner un mois, nous sommes actuellement en Jan.')
+
+		wrapper.unmount()
+	})
+
 	describe('DatePickerLiteInput', () => {
 		it('should emit update:modelValue with a Date when a valid date is typed', async () => {
 			const wrapper = mount(DatePickerLiteComponent, {

@@ -141,7 +141,7 @@
 									'sy-calendar__day--disabled': day.isDisabled,
 								}]"
 								:data-date="day.ISO8601"
-								:tabindex="focusedDay === day.ISO8601 || day.isRangeStart || day.isRangeEnd ? 0 : -1"
+								:tabindex="focusedDay === day.ISO8601 ? 0 : -1"
 								:aria-current="day.isToday ? 'date' : undefined"
 								:aria-selected="day.isSelected || day.isRangeStart || day.isRangeEnd ? true : undefined"
 								:aria-disabled="day.isDisabled ? 'true' : undefined"
@@ -328,6 +328,16 @@
 .slide-next-enter-from,
 .slide-prev-leave-to {
 	transform: translateX(100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sy-calendar__day-content,
+	.slide-next-enter-active,
+	.slide-next-leave-active,
+	.slide-prev-enter-active,
+	.slide-prev-leave-active {
+		transition: none;
+	}
 }
 
 </style>

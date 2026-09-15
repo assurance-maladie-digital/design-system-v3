@@ -42,6 +42,49 @@ describe('DatePickerLite - Focus', () => {
 		wrapper.unmount()
 	})
 
+	it('uses a single roving tabindex across the day cells in range mode', async () => {
+		const wrapper = mount(DatePickerLite, {
+			props: {
+				label: 'Date',
+				mode: 'range',
+				modelValue: [new Date(2026, 8, 4), new Date(2026, 8, 10)],
+			},
+			attachTo: document.body,
+		})
+		await nextTick()
+		await nextTick()
+		await wrapper.find('.date-picker-lite-input__toggle-btn').trigger('click')
+		await nextTick()
+
+		// Range bounds must not add extra tab stops: only the focused day is tabbable
+		const days = wrapper.findComponent({ name: 'Calendar' }).findAll('[data-date]')
+		const tabbable = days.filter(b => b.attributes('tabindex') === '0')
+		expect(tabbable).toHaveLength(1)
+
+		wrapper.unmount()
+	})
+
+	it('names the dialog through an existing header element (aria-labelledby)', async () => {
+		const wrapper = mount(DatePickerLite, {
+			props: { label: 'Date', modelValue: new Date(2026, 8, 4) },
+			attachTo: document.body,
+		})
+		await nextTick()
+		await nextTick()
+		await wrapper.find('.date-picker-lite-input__toggle-btn').trigger('click')
+		await nextTick()
+
+		const dialog = document.body.querySelector('[role="dialog"]') as HTMLElement | null
+		expect(dialog).not.toBeNull()
+		const labelledby = dialog!.getAttribute('aria-labelledby')
+		expect(labelledby).toBeTruthy()
+		// The referenced id must resolve to the header date label
+		const title = dialog!.querySelector(`#${labelledby}`)
+		expect(title?.classList.contains('date-picker-lite-header__label')).toBe(true)
+
+		wrapper.unmount()
+	})
+
 	it('keeps a focusable close button as the last tab stop of the menu', async () => {
 		// The reveal of the close button (`:has(:focus-visible)`) and the focus
 		// wrap (Vuetify `retain-focus` trap) rely on native focus and layout,

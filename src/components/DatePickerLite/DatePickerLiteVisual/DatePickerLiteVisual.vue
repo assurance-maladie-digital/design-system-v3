@@ -157,6 +157,7 @@
 								v-model:view="view"
 								:model-value="headerDate"
 								:displayed-month="currentMonth"
+								:title-id="`${id}-title`"
 								:min-year
 								:max-year
 								:locale="props.locale"
@@ -248,7 +249,7 @@ $close-action-padding-block: 6px;
 
 	&__content {
 		overflow-y: auto;
-		background-color: white;
+		background-color: rgb(var(--v-theme-surface, 255, 255, 255));
 		border-radius: var(--radius-md) !important;
 		box-shadow:
 			0 1px 5px 0 #0000001f,
@@ -262,7 +263,7 @@ $close-action-padding-block: 6px;
 		display: flex;
 		padding: calc($close-action-padding-block / 2) 12px $close-action-padding-block;
 		border-radius: 0 0 var(--radius-md) var(--radius-md);
-		background-color: white;
+		background-color: rgb(var(--v-theme-surface, 255, 255, 255));
 		box-shadow:
 			0 1px 5px 0 #0000001f,
 			0 2px 2px 0 #00000024,
@@ -282,7 +283,7 @@ $close-action-padding-block: 6px;
 				radial-gradient(
 					circle at bottom left,
 					transparent calc($close-action-join-radius - 0.5px),
-					white calc($close-action-join-radius + 0.5px)
+					rgb(var(--v-theme-surface, 255, 255, 255)) calc($close-action-join-radius + 0.5px)
 				);
 			content: '';
 		}
@@ -314,7 +315,7 @@ $close-action-padding-block: 6px;
 	padding: 4px 10px;
 	border: 0;
 	border-radius: 999px;
-	background-color: white;
+	background-color: rgb(var(--v-theme-surface, 255, 255, 255));
 	color: rgb(var(--v-theme-primary, 12, 65, 154));
 	font-weight: 600;
 	cursor: pointer;

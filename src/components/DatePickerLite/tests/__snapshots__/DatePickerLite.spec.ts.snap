@@ -13,6 +13,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
           date-picker-lite-header__label
           visual-picker-header__date
         "
+        id="v-6-title"
       >
         Saturday, December 12, 2026
       </div>
@@ -193,6 +194,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
             <tbody data-month="2026-12">
               <tr class="sy-calendar__week">
                 <td
+                  aria-label="Monday, November 30, 2026"
                   class="
                     day-2026-11-30
                     sy-calendar__day
@@ -207,6 +209,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Tuesday, December 1, 2026"
                   class="
                     day-2026-12-01
                     sy-calendar__day
@@ -220,6 +223,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Wednesday, December 2, 2026"
                   class="
                     day-2026-12-02
                     sy-calendar__day
@@ -233,6 +237,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Thursday, December 3, 2026"
                   class="
                     day-2026-12-03
                     sy-calendar__day
@@ -246,6 +251,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Friday, December 4, 2026"
                   class="
                     day-2026-12-04
                     sy-calendar__day
@@ -259,6 +265,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Saturday, December 5, 2026"
                   class="
                     day-2026-12-05
                     sy-calendar__day
@@ -273,6 +280,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Sunday, December 6, 2026"
                   class="
                     day-2026-12-06
                     sy-calendar__day
@@ -289,6 +297,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
               </tr>
               <tr class="sy-calendar__week">
                 <td
+                  aria-label="Monday, December 7, 2026"
                   class="
                     day-2026-12-07
                     sy-calendar__day
@@ -302,6 +311,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Tuesday, December 8, 2026"
                   class="
                     day-2026-12-08
                     sy-calendar__day
@@ -315,6 +325,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Wednesday, December 9, 2026"
                   class="
                     day-2026-12-09
                     sy-calendar__day
@@ -328,6 +339,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Thursday, December 10, 2026"
                   class="
                     day-2026-12-10
                     sy-calendar__day
@@ -341,6 +353,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Friday, December 11, 2026"
                   class="
                     day-2026-12-11
                     sy-calendar__day
@@ -354,6 +367,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Saturday, December 12, 2026"
                   aria-selected="true"
                   class="
                     day-2026-12-12
@@ -370,6 +384,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Sunday, December 13, 2026"
                   class="
                     day-2026-12-13
                     sy-calendar__day
@@ -386,6 +401,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
               </tr>
               <tr class="sy-calendar__week">
                 <td
+                  aria-label="Monday, December 14, 2026"
                   class="
                     day-2026-12-14
                     sy-calendar__day
@@ -399,6 +415,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Tuesday, December 15, 2026"
                   class="
                     day-2026-12-15
                     sy-calendar__day
@@ -412,6 +429,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Wednesday, December 16, 2026"
                   class="
                     day-2026-12-16
                     sy-calendar__day
@@ -425,6 +443,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Thursday, December 17, 2026"
                   class="
                     day-2026-12-17
                     sy-calendar__day
@@ -438,6 +457,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Friday, December 18, 2026"
                   class="
                     day-2026-12-18
                     sy-calendar__day
@@ -451,6 +471,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Saturday, December 19, 2026"
                   class="
                     day-2026-12-19
                     sy-calendar__day
@@ -465,6 +486,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Sunday, December 20, 2026"
                   class="
                     day-2026-12-20
                     sy-calendar__day
@@ -481,6 +503,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
               </tr>
               <tr class="sy-calendar__week">
                 <td
+                  aria-label="Monday, December 21, 2026"
                   class="
                     day-2026-12-21
                     sy-calendar__day
@@ -494,6 +517,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Tuesday, December 22, 2026"
                   class="
                     day-2026-12-22
                     sy-calendar__day
@@ -507,6 +531,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Wednesday, December 23, 2026"
                   class="
                     day-2026-12-23
                     sy-calendar__day
@@ -520,6 +545,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Thursday, December 24, 2026"
                   class="
                     day-2026-12-24
                     sy-calendar__day
@@ -533,6 +559,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Friday, December 25, 2026"
                   class="
                     day-2026-12-25
                     sy-calendar__day
@@ -546,6 +573,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Saturday, December 26, 2026"
                   class="
                     day-2026-12-26
                     sy-calendar__day
@@ -560,6 +588,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Sunday, December 27, 2026"
                   class="
                     day-2026-12-27
                     sy-calendar__day
@@ -576,6 +605,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
               </tr>
               <tr class="sy-calendar__week">
                 <td
+                  aria-label="Monday, December 28, 2026"
                   class="
                     day-2026-12-28
                     sy-calendar__day
@@ -589,6 +619,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Tuesday, December 29, 2026"
                   class="
                     day-2026-12-29
                     sy-calendar__day
@@ -602,6 +633,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Wednesday, December 30, 2026"
                   class="
                     day-2026-12-30
                     sy-calendar__day
@@ -615,6 +647,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Thursday, December 31, 2026"
                   class="
                     day-2026-12-31
                     sy-calendar__day
@@ -628,6 +661,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Friday, January 1, 2027"
                   class="
                     day-2027-01-01
                     sy-calendar__day
@@ -642,6 +676,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Saturday, January 2, 2027"
                   class="
                     day-2027-01-02
                     sy-calendar__day
@@ -657,6 +692,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Sunday, January 3, 2027"
                   class="
                     day-2027-01-03
                     sy-calendar__day
@@ -674,6 +710,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
               </tr>
               <tr class="sy-calendar__week">
                 <td
+                  aria-label="Monday, January 4, 2027"
                   class="
                     day-2027-01-04
                     sy-calendar__day
@@ -688,6 +725,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Tuesday, January 5, 2027"
                   class="
                     day-2027-01-05
                     sy-calendar__day
@@ -702,6 +740,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Wednesday, January 6, 2027"
                   class="
                     day-2027-01-06
                     sy-calendar__day
@@ -716,6 +755,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Thursday, January 7, 2027"
                   class="
                     day-2027-01-07
                     sy-calendar__day
@@ -730,6 +770,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Friday, January 8, 2027"
                   class="
                     day-2027-01-08
                     sy-calendar__day
@@ -744,6 +785,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Saturday, January 9, 2027"
                   class="
                     day-2027-01-09
                     sy-calendar__day
@@ -759,6 +801,7 @@ exports[`DatePickerLite > should open the menu when clicking on the toggle butto
                   </div>
                 </td>
                 <td
+                  aria-label="Sunday, January 10, 2027"
                   class="
                     day-2027-01-10
                     sy-calendar__day

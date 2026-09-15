@@ -34,7 +34,11 @@ export default function useSelectedRange(
 		)
 	})
 
-	/** Screen reader label describing the day's position in the selected range */
+	/**
+	 * Screen reader label of a day: its position in the selected range when
+	 * relevant, otherwise its full localized date (so that every cell is named
+	 * unambiguously, including adjacent-month overflow days)
+	 */
 	function getAriaLabelForRange(day: FeaturedDaysInWeek) {
 		const dayWithName = {
 			...day,
@@ -43,7 +47,12 @@ export default function useSelectedRange(
 		if (day.isRangeStart) return locales.value.rangeStartLabel(dayWithName)
 		if (day.isRangeEnd) return locales.value.rangeEndLabel(dayWithName)
 		if (day.isInRange) return locales.value.rangeIncludedLabel(dayWithName)
-		return undefined
+		return day.rawDate.toLocaleDateString(toValue(locale), {
+			weekday: 'long',
+			day: 'numeric',
+			month: 'long',
+			year: 'numeric',
+		})
 	}
 
 	return {
