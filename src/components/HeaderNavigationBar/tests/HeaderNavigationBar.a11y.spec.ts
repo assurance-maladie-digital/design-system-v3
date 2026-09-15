@@ -100,7 +100,7 @@ describe('HeaderNavigationBar – accessibility (axe)', () => {
 		)
 	})
 
-	it('has no axe violations – disabled item', async () => {
+	it('has no axe violations – disabled navigation item', async () => {
 		const wrapper = mountComponent({
 			props: {
 				items: [
@@ -116,7 +116,7 @@ describe('HeaderNavigationBar – accessibility (axe)', () => {
 
 		await runAxe(
 			wrapper,
-			'HeaderNavigationBar – disabled item',
+			'HeaderNavigationBar – disabled navigation item',
 		)
 	})
 
@@ -136,24 +136,27 @@ describe('HeaderNavigationBar – accessibility (axe)', () => {
 		)
 	})
 
-	it('has no axe violations – vertical navigation configuration', async () => {
+	it('has no axe violations – open burger menu', async () => {
 		const wrapper = mountComponent({
 			props: {
 				items,
 				maxHorizontalMenuItems: 1,
+				burgerMenu: true,
 			},
 		})
 
 		await runAxe(
 			wrapper,
-			'HeaderNavigationBar – vertical navigation',
+			'HeaderNavigationBar – open burger menu',
 		)
 	})
 
-	it('has no axe violations – slots', async () => {
+	it('has no axe violations – navigation slots', async () => {
 		const wrapper = mountComponent({
 			props: {
 				items,
+				maxHorizontalMenuItems: 0,
+				burgerMenu: true,
 			},
 			slots: {
 				'logo': `
@@ -186,7 +189,7 @@ describe('HeaderNavigationBar – accessibility (axe)', () => {
 					<span>Navigation principale</span>
 				`,
 				'navigation-menu-prepend': `
-					<span>Menu</span>
+					<span>Début du menu</span>
 				`,
 				'navigation-menu-append': `
 					<button type="button">
@@ -201,7 +204,7 @@ describe('HeaderNavigationBar – accessibility (axe)', () => {
 
 		await runAxe(
 			wrapper,
-			'HeaderNavigationBar – slots',
+			'HeaderNavigationBar – navigation slots',
 		)
 	})
 })
