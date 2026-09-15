@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 	/**
-	 * Handle the validation and the syncronisation beweens the sub component
+	 * Handle the validation and the synchronization betweens the sub component
 	 * Owns the raw text of the field (single source), kept in sync with the model
 	 * by useDatePickerLiteTextSync. Do not handle :
 	 * - The text input format
@@ -32,8 +32,8 @@
 	// inputProps; otherwise they would also land on the root div (duplicate via bubbling)
 	defineOptions({ inheritAttrs: false })
 
-	// `modelValue` is declared by defineModel; the rest by defineProps
-	const props = withDefaults(defineProps<Omit<DatePickerLiteProps, 'modelValue'>>(), {
+	// `modelValue` and `view` are declared by defineModel; the rest by defineProps
+	const props = withDefaults(defineProps<Omit<DatePickerLiteProps, 'modelValue' | 'view'>>(), {
 		locales: () => ({}),
 		helpText: 'Format JJ/MM/AAAA',
 		...validationPropsDefaults,
@@ -59,7 +59,8 @@
 
 	const emits = defineEmits<{
 		(e: 'update:open', value: boolean): void
-		(e: 'update:view', value: PickerView): void
+		(e: 'select:month', value: number): void
+		(e: 'select:year', value: number): void
 		(e: 'focus', event: FocusEvent): void
 		(e: 'blur', event: FocusEvent): void
 		(e: 'change', value: DatePickerLiteValue): void
@@ -94,6 +95,13 @@
 	 * Single/range normalization lives inside DatePickerLiteInput, keyed by `mode`.
 	 */
 	const internalValue = defineModel<DatePickerLiteValue>()
+
+	/**
+	 * Two-way panel of the visual picker (`v-model:view`): days, months or years.
+	 * Reactive end to end — external updates switch the panel, user navigation
+	 * emits `update:view`. The picker reopens on `initialView`.
+	 */
+	const view = defineModel<PickerView>('view', { default: 'days' })
 
 	/**
 	 * Model normalized for the children: `undefined` (prop absent) and `null` (cleared field)
@@ -235,9 +243,11 @@
 		</div>
 		<DatePickerLiteVisual
 			v-bind="visualProps"
+			v-model:view="view"
 			@update:model-value="onUserSelect"
 			@update:open="emits('update:open', $event)"
-			@update:view="value => emits('update:view', value)"
+			@select:month="emits('select:month', $event)"
+			@select:year="emits('select:year', $event)"
 		>
 			<template
 				v-for="(_, slotName) in visualSlots"

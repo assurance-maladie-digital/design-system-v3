@@ -4,6 +4,7 @@ export type DatePickerLiteVisualProps = {
 	minYear: number
 	maxYear: number
 	yearsOrder: 'asc' | 'desc'
+	/** View restored each time the picker reopens */
 	initialView: 'days' | 'months' | 'years'
 	mode?: DatePickerLiteMode
 	/** Returns true when a date must not be selectable in the visual picker. */

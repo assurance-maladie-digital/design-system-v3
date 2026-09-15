@@ -49,7 +49,7 @@ describe('DatePickerLite – accessibility (axe)', () => {
 			props: {
 				label: 'Select a date',
 				modelValue: new Date(2023, 2, 3),
-				initialView: 'months',
+				view: 'months',
 			},
 			attachTo: document.body,
 		})
@@ -72,7 +72,7 @@ describe('DatePickerLite – accessibility (axe)', () => {
 			props: {
 				label: 'Select a date',
 				modelValue: new Date(2023, 2, 3),
-				initialView: 'years',
+				view: 'years',
 			},
 			attachTo: document.body,
 		})

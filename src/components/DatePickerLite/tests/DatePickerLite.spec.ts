@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { nextTick, computed, ref } from 'vue'
+import { nextTick, computed, defineComponent, ref } from 'vue'
 import { DatePickerLite } from '@/components/index'
 import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
 import DatePickerLiteComponent from '../DatePickerLite.vue'
@@ -598,7 +598,7 @@ describe('DatePickerLite', () => {
 			wrapper.unmount()
 		})
 
-		it('should switch to the years view from the months view, then back to months when a year is selected', async () => {
+		it('should switch to the years view from the days view, then back to days when a year is selected', async () => {
 			vi.useFakeTimers()
 			const wrapper = mount(DatePickerLiteComponent, {
 				props: {
@@ -619,13 +619,13 @@ describe('DatePickerLite', () => {
 			const yearButton = wrapper.findComponent({ name: 'YearSelector' }).find('.year-2030')
 			await yearButton.trigger('click')
 
-			expect(wrapper.findComponent({ name: 'MonthSelector' }).isVisible()).toBeTruthy()
+			expect(wrapper.findComponent({ name: 'Calendar' }).isVisible()).toBeTruthy()
 			expect(wrapper.emitted('update:modelValue')).toBeUndefined()
 
 			wrapper.unmount()
 		})
 
-		it('should respect the initialView prop', async () => {
+		it('should open the picker on the provided initialView', async () => {
 			vi.useFakeTimers()
 			const wrapper = mount(DatePickerLiteComponent, {
 				props: {
@@ -638,6 +638,107 @@ describe('DatePickerLite', () => {
 			await openMenu(wrapper)
 
 			expect(wrapper.findComponent({ name: 'MonthSelector' }).isVisible()).toBeTruthy()
+
+			wrapper.unmount()
+		})
+
+		it('should switch the panel when the view prop is updated externally', async () => {
+			vi.useFakeTimers()
+			const wrapper = mount(DatePickerLiteComponent, {
+				props: {
+					label: 'Début du projet',
+				},
+				attachTo: document.body,
+			})
+
+			await openMenu(wrapper)
+			expect(wrapper.findComponent({ name: 'Calendar' }).isVisible()).toBeTruthy()
+
+			await wrapper.setProps({ view: 'months' })
+
+			expect(wrapper.findComponent({ name: 'MonthSelector' }).isVisible()).toBeTruthy()
+
+			wrapper.unmount()
+		})
+
+		it('should reset the panel to initialView on reopen', async () => {
+			vi.useFakeTimers()
+			const wrapper = mount(DatePickerLiteComponent, {
+				props: {
+					label: 'Début du projet',
+				},
+				attachTo: document.body,
+			})
+
+			await openMenu(wrapper)
+
+			const yearPillButton = wrapper.findComponent(DatePickerLiteHeader).find('.visual-picker-year-btn')
+			await yearPillButton.trigger('click')
+			expect(wrapper.findComponent({ name: 'YearSelector' }).isVisible()).toBeTruthy()
+
+			const toggleBtn = wrapper.find('.date-picker-lite-input__toggle-btn')
+			await toggleBtn.trigger('click')
+			await nextTick()
+			await toggleBtn.trigger('click')
+			await nextTick()
+			await nextTick()
+
+			expect(wrapper.findComponent({ name: 'Calendar' }).isVisible()).toBeTruthy()
+
+			wrapper.unmount()
+		})
+
+		it('should honor an initialView updated after mount on reopen', async () => {
+			vi.useFakeTimers()
+			const wrapper = mount(DatePickerLiteComponent, {
+				props: {
+					label: 'Début du projet',
+				},
+				attachTo: document.body,
+			})
+
+			await openMenu(wrapper)
+			await wrapper.find('.date-picker-lite-input__toggle-btn').trigger('click')
+			await nextTick()
+
+			await wrapper.setProps({ initialView: 'months' })
+			await openMenu(wrapper)
+
+			expect(wrapper.findComponent({ name: 'MonthSelector' }).isVisible()).toBeTruthy()
+
+			wrapper.unmount()
+		})
+
+		it('should support the birthday cascade: years, then months, then days', async () => {
+			const BirthdayPicker = defineComponent({
+				components: { DatePickerLite: DatePickerLiteComponent },
+				setup() {
+					const view = ref<'days' | 'months' | 'years'>('days')
+					return { view }
+				},
+				template: `
+					<DatePickerLite
+						label="Date de naissance"
+						initial-view="years"
+						v-model:view="view"
+						@select:year="view = 'months'"
+					/>
+				`,
+			})
+
+			vi.useFakeTimers()
+			const wrapper = mount(BirthdayPicker, { attachTo: document.body })
+
+			await openMenu(wrapper)
+			expect(wrapper.findComponent({ name: 'YearSelector' }).isVisible()).toBeTruthy()
+
+			const yearButton = wrapper.findComponent({ name: 'YearSelector' }).find('.year-1990')
+			await yearButton.trigger('click')
+			expect(wrapper.findComponent({ name: 'MonthSelector' }).isVisible()).toBeTruthy()
+
+			const monthButton = wrapper.findComponent({ name: 'MonthSelector' }).find('.month-6')
+			await monthButton.trigger('click')
+			expect(wrapper.findComponent({ name: 'Calendar' }).isVisible()).toBeTruthy()
 
 			wrapper.unmount()
 		})

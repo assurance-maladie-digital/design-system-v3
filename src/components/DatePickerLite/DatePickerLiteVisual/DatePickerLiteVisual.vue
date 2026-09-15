@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { mdiClose } from '@mdi/js'
-	import { computed, inject, toRef, useId, useSlots, watch, type ComponentPublicInstance, type ComputedRef } from 'vue'
+	import { computed, inject, toRef, useId, useSlots, type ComponentPublicInstance, type ComputedRef } from 'vue'
 	import MonthSelector from '@/components/Common/Calendar/MonthSelector/MonthSelector.vue'
 	import YearSelector from '@/components/Common/Calendar/YearSelector/YearSelector.vue'
 	import DatePickerLiteHeader from './DatePickerLiteHeader.vue'
@@ -34,8 +34,15 @@
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: DatePickerLiteValue): void
 		(e: 'update:open', value: boolean): void
-		(e: 'update:view', value: PickerView): void
+		(e: 'select:month', value: number): void
+		(e: 'select:year', value: number): void
 	}>()
+
+	/**
+	 * Two-way panel of the picker (`v-model:view`): days, months, or years.
+	 * Writes emit `update:view` to the parent; external updates switch the panel.
+	 */
+	const view = defineModel<PickerView>('view', { default: 'days' })
 
 	// The DatePickerLite root provides its full locales through the shared key
 	const locales = inject<ComputedRef<typeof defaultLocales>>(calendarLocalesKey)!
@@ -54,7 +61,6 @@
 	})
 
 	const {
-		view,
 		visibleMonth,
 		currentMonth,
 		visibleMonthIndex,
@@ -66,12 +72,9 @@
 		setMonth,
 	} = useDatePickerLiteNavigation({
 		modelValue: computed(() => selectedDate.value),
+		view,
 		initialView: toRef(props, 'initialView'),
 	})
-
-	// Covers every view change: header toggles, year/month selection returning
-	// to the days panel, and the reset performed when the picker reopens
-	watch(view, value => emits('update:view', value))
 
 	const { open, setOpen } = useDatePickerLiteDialog({
 		toggleBtn: toRef(props, 'toggleBtn'),
@@ -87,6 +90,18 @@
 		onUpdateModelValue: value => emits('update:modelValue', value),
 		close: () => { open.value = false },
 	})
+
+	/** A year click moves back to the days panel, then notifies the consumer so it can override the resulting view */
+	function onYearSelected(year: number): void {
+		setYear(year)
+		emits('select:year', year)
+	}
+
+	/** A month click moves back to the days panel, then notifies the consumer so it can override the resulting view */
+	function onMonthSelected(month: number): void {
+		setMonth(month)
+		emits('select:month', month)
+	}
 
 	const id = useId()
 </script>
@@ -155,12 +170,12 @@
 							:min="minYear"
 							:max="maxYear"
 							:order="yearsOrder"
-							@update:model-value="setYear"
+							@update:model-value="onYearSelected"
 						/>
 						<MonthSelector
 							v-else-if="view === 'months'"
 							:model-value="visibleMonthIndex"
-							@update:model-value="setMonth"
+							@update:model-value="onMonthSelected"
 						/>
 						<Calendar
 							v-else

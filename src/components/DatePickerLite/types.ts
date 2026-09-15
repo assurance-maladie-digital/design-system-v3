@@ -17,7 +17,9 @@ export type DatePickerLiteProps =
 	& FieldValidationProps
 	& Partial<DatePickerLiteVisualProps>
 	& {
-		modelValue?: Date | DatePickerLiteRange | DatePickerLiteMultiple | null
+		modelValue?: DatePickerLiteValue
+		/** Panel displayed by the visual picker, two-way (`v-model:view`). Reopen restores `initialView`. */
+		view?: PickerView
 		mode?: DatePickerLiteMode
 		inputFormat?: string
 		separator?: string

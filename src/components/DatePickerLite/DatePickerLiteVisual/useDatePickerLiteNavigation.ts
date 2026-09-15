@@ -3,19 +3,17 @@ import type { PickerView } from '@/components/Common/Calendar/locales'
 
 export interface UseDatePickerLiteNavigationParams {
 	modelValue: Ref<Date | undefined>
-	initialView: Ref<'days' | 'months' | 'years'>
+	/** Two-way `view` model of the picker: days, months, or years */
+	view: Ref<PickerView>
+	/** View restored each time the picker reopens */
+	initialView: Ref<PickerView>
 }
 
 export function useDatePickerLiteNavigation({
 	modelValue,
+	view,
 	initialView,
 }: UseDatePickerLiteNavigationParams) {
-	/**
-	 * `view` controls which panel is displayed: days, months, or years.
-	 * This is a UI state, not the source of truth from the model.
-	 */
-	const view = ref<PickerView>(initialView.value)
-
 	/**
 	 * `visibleMonth` is the navigation cursor. It stays independent from the selected value
 	 * so the user can browse around the calendar without mutating the model immediately.
@@ -64,7 +62,7 @@ export function useDatePickerLiteNavigation({
 	function setYear(year: number) {
 		const current = visibleMonth.value ?? new Date()
 		visibleMonth.value = new Date(year, current.getMonth(), 1)
-		view.value = 'months'
+		view.value = 'days'
 	}
 
 	function setMonth(month: number) {

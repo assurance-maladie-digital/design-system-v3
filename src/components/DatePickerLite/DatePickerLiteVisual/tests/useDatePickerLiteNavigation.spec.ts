@@ -5,6 +5,7 @@ import { useDatePickerLiteNavigation } from '../useDatePickerLiteNavigation'
 describe('useDatePickerLiteNavigation', () => {
 	it('should sync the displayed month with the model value and navigate across months', () => {
 		const modelValue = ref<Date | undefined>(new Date(2026, 8, 4))
+		const view = ref<'days' | 'months' | 'years'>('days')
 		const initialView = ref<'days' | 'months' | 'years'>('days')
 		const {
 			currentMonth,
@@ -15,6 +16,7 @@ describe('useDatePickerLiteNavigation', () => {
 			setMonth,
 		} = useDatePickerLiteNavigation({
 			modelValue,
+			view,
 			initialView,
 		})
 
@@ -32,17 +34,41 @@ describe('useDatePickerLiteNavigation', () => {
 		expect(currentMonth.value.getMonth()).toBe(10)
 	})
 
-	it('should reset the view on open and keep the calendar aligned with the selected value', () => {
+	it('should return to the days view after a year or a month selection', () => {
 		const modelValue = ref<Date | undefined>(new Date(2026, 8, 4))
-		const initialView = ref<'days' | 'months' | 'years'>('months')
-		const { view, resetViewOnOpen } = useDatePickerLiteNavigation({
+		const view = ref<'days' | 'months' | 'years'>('years')
+		const initialView = ref<'days' | 'months' | 'years'>('days')
+		const { setYear, setMonth } = useDatePickerLiteNavigation({
 			modelValue,
+			view,
 			initialView,
 		})
 
-		expect(view.value).toBe('months')
+		setYear(2030)
+		expect(view.value).toBe('days')
 
+		view.value = 'months'
+		setMonth(9)
+		expect(view.value).toBe('days')
+	})
+
+	it('should reset the view on open to the current initialView value and keep the calendar aligned with the selected value', () => {
+		const modelValue = ref<Date | undefined>(new Date(2026, 8, 4))
+		const view = ref<'days' | 'months' | 'years'>('days')
+		const initialView = ref<'days' | 'months' | 'years'>('days')
+		const { resetViewOnOpen } = useDatePickerLiteNavigation({
+			modelValue,
+			view,
+			initialView,
+		})
+
+		view.value = 'years'
 		resetViewOnOpen()
-		expect(view.value).toBe('months')
+		expect(view.value).toBe('days')
+
+		// initialView stays reactive: a later change is honored on the next reopen
+		initialView.value = 'years'
+		resetViewOnOpen()
+		expect(view.value).toBe('years')
 	})
 })

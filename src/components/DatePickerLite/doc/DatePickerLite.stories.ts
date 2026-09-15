@@ -342,8 +342,18 @@ const meta: Meta<typeof DatePickerLite> = {
 				category: 'props',
 			},
 		},
+		'view': {
+			description: 'Panneau affiché par le sélecteur visuel (jours, mois ou années), lié en two-way via `v-model:view` : une mise à jour externe bascule le panneau, la navigation utilisateur émet `update:view`.',
+			control: 'select',
+			options: ['days', 'months', 'years'],
+			table: {
+				type: { summary: '"days" | "months" | "years"' },
+				defaultValue: { summary: '"days"' },
+				category: 'props',
+			},
+		},
 		'initialView': {
-			description: 'Vue initiale affichée lorsque la modale de sélection de date est ouverte.',
+			description: 'Vue restaurée à chaque réouverture de la modale de sélection de date.',
 			control: 'select',
 			options: ['days', 'months', 'years'],
 			table: {
@@ -432,6 +442,20 @@ const meta: Meta<typeof DatePickerLite> = {
 			description: 'Événement émis lorsque la vue du sélecteur visuel change (jours, mois ou années) : bascule via l’en-tête, retour aux jours après sélection d’un mois ou d’une année, et réinitialisation à l’ouverture.',
 			table: {
 				type: { summary: '"days" | "months" | "years"' },
+			},
+		},
+		'onSelect:month': {
+			action: 'select:month',
+			description: 'Événement émis lorsqu’un mois est sélectionné dans le panneau des mois du sélecteur visuel (numéro du mois, de 1 à 12).',
+			table: {
+				type: { summary: 'number' },
+			},
+		},
+		'onSelect:year': {
+			action: 'select:year',
+			description: 'Événement émis lorsqu’une année est sélectionnée dans le panneau des années du sélecteur visuel.',
+			table: {
+				type: { summary: 'number' },
 			},
 		},
 		'onChange': {
@@ -608,6 +632,82 @@ export const Range: Story = {
 						new Date(2025, 8, 3),
 						new Date(2025, 8, 10),
 					])
+				</script>
+				`,
+			},
+		],
+	},
+}
+
+export const Birthday: Story = {
+	args: {
+		'modelValue': undefined,
+		'label': 'Date de naissance',
+		'initialView': 'years',
+		'onUpdate:modelValue': fn(),
+		'onUpdate:open': fn(),
+		'onUpdate:view': fn(),
+		'onChange': fn(),
+		'onFocus': fn(),
+		'onBlur': fn(),
+		'onClear': fn(),
+		'onKeydown': fn(),
+	},
+	render: args => ({
+		components: { DatePickerLite },
+		setup() {
+			const value = ref<Date | undefined>(args.modelValue as Date | undefined)
+			watch(
+				() => args.modelValue,
+				(nextValue) => {
+					value.value = nextValue as Date | undefined
+				},
+				{ immediate: true },
+			)
+			const view = ref<'days' | 'months' | 'years'>('days')
+			return { args, value, view }
+		},
+		template: `
+			<DatePickerLite
+				v-bind="args"
+				v-model="value"
+				v-model:view="view"
+				@select:year="view = 'months'"
+			/>
+		`,
+	}),
+	parameters: {
+		docs: {
+			description: {
+				story: [
+					'Recette « date de naissance » : le sélecteur s’ouvre sur le panneau des années (`initialView`), puis la sélection d’une année enchaîne sur le panneau des mois, et celle d’un mois revient aux jours.',
+					'Par défaut, la sélection d’une année ou d’un mois retombe toujours sur la vue des jours : la cascade années → mois → jours est donc construite côté consommateur, en écoutant `select:year` pour basculer la vue sur les mois via `v-model:view`. À chaque réouverture, le sélecteur revient sur `initialView`.',
+				].join(' '),
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePickerLite
+						v-model="birthDate"
+						v-model:view="view"
+						label="Date de naissance"
+						initial-view="years"
+						@select:year="view = 'months'"
+					/>
+				</template>
+				`,
+			}, {
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DatePickerLite } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const birthDate = ref<Date | undefined>(undefined)
+					const view = ref<'days' | 'months' | 'years'>('days')
 				</script>
 				`,
 			},

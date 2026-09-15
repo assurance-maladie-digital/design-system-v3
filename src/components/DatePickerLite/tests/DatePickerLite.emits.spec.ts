@@ -333,4 +333,39 @@ describe('DatePickerLite - public events', () => {
 
 		wrapper.unmount()
 	})
+
+	it('should emit select:year and select:month when a year then a month are selected in the visual picker', async () => {
+		const wrapper = mount(DatePickerLite, {
+			props: { label: 'Date', modelValue: new Date(2025, 10, 1) },
+			attachTo: document.body,
+		})
+
+		await openMenu(wrapper)
+
+		// Year selection: toggle to the years panel, then pick a year
+		const yearBtn = wrapper.findComponent({ name: 'DatePickerLiteHeader' }).find('.visual-picker-year-btn')
+		await yearBtn.trigger('click')
+		await nextTick()
+
+		const yearButton = wrapper.findComponent({ name: 'YearSelector' }).find('.year-2030')
+		await yearButton.trigger('click')
+		await nextTick()
+
+		expect(wrapper.emitted('select:year')).toHaveLength(1)
+		expect(wrapper.emitted('select:year')![0]).toEqual([2030])
+
+		// Month selection: toggle to the months panel, then pick a month
+		const monthBtn = wrapper.findComponent({ name: 'DatePickerLiteHeader' }).find('.visual-picker-month-btn')
+		await monthBtn.trigger('click')
+		await nextTick()
+
+		const monthButton = wrapper.findComponent({ name: 'MonthSelector' }).find('.month-9')
+		await monthButton.trigger('click')
+		await nextTick()
+
+		expect(wrapper.emitted('select:month')).toHaveLength(1)
+		expect(wrapper.emitted('select:month')![0]).toEqual([9])
+
+		wrapper.unmount()
+	})
 })
