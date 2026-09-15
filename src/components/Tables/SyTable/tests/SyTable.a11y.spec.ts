@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { beforeAll, describe, it } from 'vitest'
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { h } from 'vue'
 import { axe } from 'vitest-axe'
@@ -35,6 +35,13 @@ describe('SyTable - accessibility (axe)', () => {
 			removeEventListener: () => {},
 			dispatchEvent: () => true,
 		}
+	})
+
+	// Les tests montent avec `attachTo: document.body` : sans ce nettoyage, le DOM
+	// d'un test fuit dans le suivant et une assertion sur l'attribut d'une table
+	// peut porter sur celle d'un test précédent.
+	beforeEach(() => {
+		document.body.innerHTML = ''
 	})
 
 	it('has no obvious axe violations with pageInput enabled', async () => {
@@ -137,5 +144,45 @@ describe('SyTable - accessibility (axe)', () => {
 		assertNoA11yViolations(results, 'SyTable - bulk actions', {
 			ignoreRules: ['region', 'label'],
 		})
+	})
+
+	// Régression : un <caption> vide déclenchait la pose d'un aria-label littéral
+	// « Table caption » sur <table>, restitué tel quel par NVDA comme nom du tableau.
+	it('ne nomme pas la table quand la légende est vide', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: {} as DataOptions,
+				suffix: 'a11y-empty-caption',
+				headers,
+				items,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.find('table').attributes('aria-label')).toBeUndefined()
+
+		wrapper.unmount()
+	})
+
+	it('restitue la légende fournie sans ajouter de nom concurrent', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: {} as DataOptions,
+				suffix: 'a11y-filled-caption',
+				caption: 'Liste des agents',
+				headers,
+				items,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.vm.$nextTick()
+
+		expect(wrapper.find('caption').text()).toBe('Liste des agents')
+		expect(wrapper.find('table').attributes('aria-label')).toBeUndefined()
+
+		wrapper.unmount()
 	})
 })
