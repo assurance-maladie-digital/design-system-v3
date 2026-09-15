@@ -1,7 +1,21 @@
 import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 import { useValidatable } from '@/composables/validation/useValidatable'
-import { reactive, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, reactive, ref, watch } from 'vue'
 import type { Ref } from 'vue'
+import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
+import { locales } from './locales'
+
+export interface UseCustomValidationOptions {
+	registerWithForm?: boolean
+	reactiveValidation?: boolean
+	formRegistration?: {
+		validateOnSubmit?: () => Promise<boolean> | boolean
+		clearValidation?: () => void
+		reset?: () => void
+	}
+	useVuetifyValidation?: Ref<boolean>
+	rules?: Ref<VuetifyValidationRule[] | undefined>
+}
 
 /**
  * Interface between the validation entrypoint "useValidation" composable and the custom validation logic.
@@ -21,58 +35,32 @@ export function useCustomValidation(
 	disableErrorHandling: Ref<boolean>,
 	readonly?: Ref<boolean>,
 	disabled?: Ref<boolean>,
+	options: UseCustomValidationOptions = {},
 ) {
 	const hasSuccess = ref(false)
+	let currentValidationToken = 0
+	let pendingValidationToken: number | undefined
 
 	const validatorOptions = reactive({
-		showSuccessMessages: showSuccessMessages.value,
-		fieldIdentifier: label.value,
-		disableErrorHandling: disableErrorHandling.value,
+		showSuccessMessages: computed(() => showSuccessMessages.value),
+		fieldIdentifier: computed(() => label.value),
+		disableErrorHandling: computed(() => disableErrorHandling.value),
 	})
 
 	const validator = useValidation(validatorOptions)
 
-	watch(
-		() => [showSuccessMessages.value, label.value, disableErrorHandling.value],
-		() => {
-			validatorOptions.showSuccessMessages = showSuccessMessages.value
-			validatorOptions.fieldIdentifier = label.value
-			validatorOptions.disableErrorHandling = disableErrorHandling.value
-
-			const isDirty = errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0 || hasSuccess.value
-			if (isDirty) {
-				validate()
-			}
+	const emptyValidationResult = () => ({
+		hasError: false,
+		hasWarning: false,
+		hasSuccess: false,
+		state: {
+			errors: [] as string[],
+			warnings: [] as string[],
+			successes: [] as string[],
 		},
-	)
+	})
 
-	watch(
-		() => [customRules?.value, customWarningRules?.value, customSuccessRules?.value],
-		() => {
-			const isDirty = errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0 || hasSuccess.value
-			if (isDirty) {
-				validate()
-			}
-		},
-		{ deep: true },
-	)
-
-	async function validate() {
-		if (readonly?.value || disabled?.value) {
-			errors.value = []
-			warnings.value = []
-			successes.value = []
-			hasSuccess.value = false
-			return { hasError: false, hasWarning: false, hasSuccess: false, state: { errors: [] as string[], warnings: [] as string[], successes: [] as string[] } }
-		}
-
-		const result = await validator.validateField(
-			modelValue.value,
-			customRules?.value,
-			customWarningRules?.value,
-			customSuccessRules?.value,
-		)
-
+	const applyValidationResult = (result: Awaited<ReturnType<typeof validator.validateField>>) => {
 		errors.value = result.state.errors
 		warnings.value = result.state.warnings
 		successes.value = result.state.successes
@@ -80,38 +68,152 @@ export function useCustomValidation(
 
 		return result
 	}
-	useValidatable(
-		async () => {
-			const result = await validate()
-			return result.state.errors.length === 0
-		},
-		() => {
-			errors.value = []
-			warnings.value = []
-			successes.value = []
-			hasSuccess.value = false
-		},
-		() => modelValue.value = undefined,
-	)
 
-	watch(focused, (newVal) => {
-		if (isValidateOnBlur.value && !newVal && !disableErrorHandling.value) {
-			validate()
+	const buildVuetifyValidationResult = (vuetifyErrors: string[]) => {
+		return {
+			hasError: vuetifyErrors.length > 0,
+			hasWarning: false,
+			hasSuccess: false,
+			state: {
+				errors: vuetifyErrors,
+				warnings: [] as string[],
+				successes: [] as string[],
+			},
 		}
-	})
+	}
 
-	watch(modelValue, () => {
-		if (!isValidateOnBlur.value && !disableErrorHandling.value) {
-			validate()
+	const normalizeVuetifyRuleResult = (result: unknown): string | null => {
+		if (result === true) {
+			return null
 		}
-	})
+
+		if (typeof result === 'string') {
+			return result
+		}
+		// TODO: Check avec Adrien
+		return locales.invalidValue
+	}
+
+	const validateVuetifyValue = async (
+		value: unknown,
+		rules: VuetifyValidationRule[] = [],
+		token = currentValidationToken,
+	) => {
+		const results = await Promise.all(
+			rules.map(async (rule) => {
+				try {
+					const rawResult = typeof rule === 'function' ? await rule(value) : rule
+					return normalizeVuetifyRuleResult(rawResult)
+				}
+				catch {
+					return locales.invalidValue
+				}
+			}),
+		)
+
+		if (token !== currentValidationToken) return emptyValidationResult()
+
+		return buildVuetifyValidationResult(
+			results.filter((message): message is string => message !== null),
+		)
+	}
+
+	function validateValue(
+		value = modelValue.value,
+		rules = customRules?.value,
+		warningRules = customWarningRules?.value,
+		successRules = customSuccessRules?.value,
+	) {
+		const token = ++currentValidationToken
+		if (readonly?.value || disabled?.value || disableErrorHandling.value) {
+			clearValidation()
+			return emptyValidationResult()
+		}
+
+		const result = options.useVuetifyValidation?.value
+			? validateVuetifyValue(value, options.rules?.value ?? [], token)
+			: validator.validateField(value, rules, warningRules, successRules)
+
+		if (result instanceof Promise) {
+			pendingValidationToken = token
+			return result.then(resolved => token === currentValidationToken
+				? applyValidationResult(resolved)
+				: emptyValidationResult()).finally(() => {
+				if (pendingValidationToken === token) pendingValidationToken = undefined
+			})
+		}
+
+		return applyValidationResult(result)
+	}
+	const validate = () => validateValue(modelValue.value)
 
 	function clearValidation() {
+		currentValidationToken++
+		pendingValidationToken = undefined
+		validator.clearValidation()
 		errors.value = []
 		warnings.value = []
 		successes.value = []
 		hasSuccess.value = false
 	}
 
-	return { validate, hasSuccess, clearValidation }
+	onBeforeUnmount(clearValidation)
+	watch([() => readonly?.value, () => disabled?.value, disableErrorHandling], () => {
+		if (readonly?.value || disabled?.value || disableErrorHandling.value) clearValidation()
+	}, { flush: 'sync' })
+
+	const validateOnSubmit = options.formRegistration?.validateOnSubmit ?? (async () => {
+		const result = await validate()
+		return result.state.errors.length === 0
+	})
+
+	const reset = options.formRegistration?.reset ?? (() => {
+		modelValue.value = undefined
+	})
+
+	if (options.registerWithForm !== false) {
+		useValidatable(
+			validateOnSubmit,
+			options.formRegistration?.clearValidation ?? clearValidation,
+			reset,
+		)
+	}
+
+	if (options.reactiveValidation !== false) {
+		watch(
+			() => [customRules?.value, customWarningRules?.value, customSuccessRules?.value, options.rules?.value, options.useVuetifyValidation?.value],
+			() => {
+				const isDirty = pendingValidationToken !== undefined || errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0 || hasSuccess.value
+				if (isDirty) {
+					validate()
+				}
+			},
+			{ deep: true, flush: 'sync' },
+		)
+
+		watch(
+			() => [showSuccessMessages.value, label.value, disableErrorHandling.value],
+			() => {
+				const isDirty = pendingValidationToken !== undefined || errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0 || hasSuccess.value
+				if (isDirty) {
+					validate()
+				}
+			},
+		)
+
+		watch(focused, (newVal) => {
+			if (isValidateOnBlur.value && !newVal && !disableErrorHandling.value) {
+				validate()
+			}
+		})
+
+		watch(modelValue, () => {
+			if (pendingValidationToken !== undefined) clearValidation()
+			if (!isValidateOnBlur.value && !disableErrorHandling.value) {
+				validate()
+			}
+		}, { flush: 'sync' })
+	}
+
+	return { validate, validateValue, hasSuccess, clearValidation }
 }

@@ -1,9 +1,11 @@
-import { Meta, Controls, Canvas, Story } from '@storybook/addon-docs/blocks';
-import * as NoCalendarStories from './NoCalendar.stories';
-import { ref } from 'vue';
+import {Meta, Canvas, Controls, Source} from '@storybook/addon-docs/blocks';
+import * as NoCalendarStories from "./NoCalendar.stories.ts";
+import * as ValidationStories from "./validation/Validation.stories.ts";
+import * as GestionDesFormatsStories from "./gestionDesFormats/GestionDesFormats.stories.ts";
+import * as DateRangeStories from "./DateRange.stories.ts";
 import '../../../stories/styles/shared.css';
 
-<Meta of={NoCalendarStories} />
+<Meta of={NoCalendarStories}/>
 
 <div className="header">
   <h1>DatePicker - Mode saisie manuelle uniquement</h1>
@@ -27,48 +29,208 @@ Cette variante du DatePicker est particulièrement utile lorsque :
 
 Le formatage automatique intelligent ajoute les séparateurs (/, -, etc.) pendant la saisie en fonction du format spécifié.
 
-<Canvas of={NoCalendarStories.Default} />
+## Exemple interactif
+
+<Canvas story={{height: '550px'}} of={NoCalendarStories.Default}/>
 
 ## Propriétés spécifiques
 
 Propriétés applicables pour le mode saisie manuelle uniquement :
 
-<Controls of={NoCalendarStories.Default} />
+<Controls of={NoCalendarStories.Default}/>
+
+## Formats de date
+
+Le DatePicker utilise deux formats distincts :
+
+- **Format d'entrée/affichage** : défini par la prop `format`, il détermine à la fois le format dans lequel la date doit être fournie au composant et comment la date est affichée visuellement dans le champ.
+- **Format de retour** : défini par la prop `dateFormatReturn`, il détermine le format de la date émise.
+
+<div
+    style={{
+        border: '2px solid #FF0000',
+        padding: '1rem',
+        borderRadius: '4px',
+        marginBottom: '1rem',
+    }}
+>
+    <strong>Note importante sur les formats</strong>
+    <div>
+        Par exemple, avec <code>format="DD-MM-YY"</code> et <code>dateFormatReturn="YYYY/MM/DD"</code> :
+    </div>
+    <ul>
+        <li>Vous devez fournir la date au format : <code>24-12-25</code></li>
+        <li>Elle sera affichée comme : <code>24-12-25</code></li>
+        <li>Elle sera retournée comme : <code>2025/12/24</code></li>
+    </ul>
+</div>
 
 ## Exemples
 
+### Formatage automatique (autoClamp)
+
+Le formatage automatique intelligent ajoute les séparateurs pendant la saisie. L'option `autoClamp` permet d'ajouter les séparateurs automatiquement sans bloquer les corrections clavier.
+
+<Canvas of={GestionDesFormatsStories.AutoClampFeature}/>
+
+### Formats de date différents
+
+<Canvas of={GestionDesFormatsStories.DifferentFormats}/>
+
 ### Format européen (DD/MM/YYYY)
 
-<Canvas>
-  <Story of={NoCalendarStories.EuropeanFormat} />
-</Canvas>
+<Canvas of={GestionDesFormatsStories.EuropeanFormat}/>
+
+### Avec validation d'erreur
+
+<Canvas of={ValidationStories.WithError}/>
+
+### Avec message d'avertissement
+
+<Canvas of={ValidationStories.WithWarning}/>
+
+### Avec message de succès
+
+<Canvas of={ValidationStories.WithSuccess}/>
 
 ### Avec règles de validation personnalisées
 
-<Canvas>
-  <Story of={NoCalendarStories.CustomRules} />
-</Canvas>
+<Canvas of={ValidationStories.CustomRules}/>
 
 ### Avec règles d'avertissement
 
-<Canvas>
-  <Story of={NoCalendarStories.WarningRules} />
-</Canvas>
+<Canvas of={ValidationStories.WarningRules}/>
 
 ### Avec gestion d'erreurs désactivée
 
-<Canvas>
-  <Story of={NoCalendarStories.WithErrorDisabled} />
-</Canvas>
+<Canvas of={ValidationStories.WithErrorDisabled}/>
 
 ### Avec icône à la fin du champ
 
-<Canvas>
-  <Story of={NoCalendarStories.WithAppendIcon} />
-</Canvas>
+<Canvas of={NoCalendarStories.WithAppendIcon}/>
 
-### Avec gestion d'erreurs désactivée et autres options
+## Plages de dates
 
-<Canvas>
-  <Story of={NoCalendarStories.WithErrorDisabled} />
-</Canvas>
+Le composant permet la saisie de plages de dates avec validation automatique.
+
+<Canvas of={DateRangeStories.Default}/>
+
+## Exemple d'utilisation dans le code
+
+### DatePicker en mode saisie manuelle
+
+<Source
+    dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { DatePicker } from '@cnamts/synapse'
+
+	const date = ref('')
+</script>
+
+<template>
+	<DatePicker
+		v-model="date"
+		no-calendar
+		placeholder="JJ/MM/AAAA"
+		format="DD/MM/YYYY"
+		required
+	/>
+</template>
+`}
+/>
+
+### DatePicker avec plage de dates en saisie manuelle
+
+<Source
+    dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { DatePicker } from '@cnamts/synapse'
+
+	const dateRange = ref(['', ''])
+</script>
+
+<template>
+	<DatePicker
+		v-model="dateRange"
+		no-calendar
+		placeholder="Sélectionner une plage de dates"
+		format="DD/MM/YYYY"
+		display-range
+		required
+	/>
+</template>
+`}
+/>
+
+# Méthodes exposées
+
+Le composant expose plusieurs méthodes qui peuvent être utilisées via une référence :
+
+### validateOnSubmit
+- **Description** : Valide le champ lors de la soumission d'un formulaire
+- **Retour** : `boolean` - Indique si la validation a réussi
+
+### clearValidation
+- **Description** : Efface les messages de validation
+
+### validateDates
+- **Description** : Valide les dates saisies
+
+### reset
+- **Description** : Efface la sélection et les messages de validation
+
+### Exemple d'utilisation
+
+<Source
+    dark code={`
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { DatePicker } from '@cnamts/synapse'
+
+	const date = ref('')
+	const datePicker = ref(null)
+
+	const submitForm = () => {
+		const isValid = datePicker.value.validateOnSubmit()
+		if (isValid) {
+			// Traitement du formulaire
+		}
+	}
+</script>
+
+<template>
+	<form @submit.prevent="submitForm">
+		<DatePicker
+			ref="datePicker"
+			v-model="date"
+			no-calendar
+			placeholder="Date requise"
+			format="DD/MM/YYYY"
+			required
+		/>
+		<button type="submit">Soumettre</button>
+	</form>
+</template>
+`}
+/>
+
+# Événements
+
+Le composant émet plusieurs événements :
+
+### update:modelValue
+- **Payload** : `string | string[]` - La nouvelle valeur du champ
+
+### focus
+- **Description** : Émis lorsque le champ reçoit le focus
+
+### blur
+- **Description** : Émis lorsque le champ perd le focus
+
+### input
+- **Payload** : `string` - La valeur saisie dans le champ
+
+### date-selected
+- **Payload** : `string | [string, string] | null` - La valeur sélectionnée, au format de retour du composant
