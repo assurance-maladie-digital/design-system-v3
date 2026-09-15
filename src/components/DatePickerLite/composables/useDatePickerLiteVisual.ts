@@ -1,5 +1,5 @@
 import { computed, ref, useSlots, type ComputedRef, type ComponentPublicInstance, type Ref, type Slot } from 'vue'
-import type DatePickerLiteInput from './DatePickerLiteText/DatePickerLiteInput.vue'
+import type DatePickerLiteInput from '../DatePickerLiteText/DatePickerLiteInput.vue'
 import type { DatePickerLiteVisualProps } from '../DatePickerLiteVisual/DatePickerLiteVisualProps.ts'
 import type { DatePickerLiteValue } from '../types.ts'
 
