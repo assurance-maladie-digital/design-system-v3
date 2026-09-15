@@ -1,8 +1,10 @@
+// @vitest-environment jsdom
+
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
-import SyHeading from './SyHeading.vue'
+import SyHeading from '../SyHeading.vue'
 
 describe('SyHeading - Accessibility', () => {
 	it('should not have any accessibility violations with default props', async () => {

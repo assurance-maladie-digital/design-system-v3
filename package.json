@@ -12,6 +12,7 @@
     "!src/**/*.mdx",
     "!src/**/*.stories.*",
     "!src/**/*.spec.ts",
+    "!src/**/*.test.ts",
     "!src/**/*.cy.ts",
     "!src/**/tests",
     "!src/**/__tests__",
