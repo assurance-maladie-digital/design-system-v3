@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-15T11:25:02.287Z",
+  "date": "2026-09-15T12:14:45.795Z",
   "totalCount": 77,
   "results": [
     {
@@ -11871,6 +11871,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "6d1728bfbe9d7f9a2b376e732d0b17bf2e0e997d",
+          "date": "2026-09-15 13:26:34 +0200",
+          "dateFr": "15/09/2026",
+          "message": "ajout onglet a11y dans le passwordfield ainsi que le dossier validation",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
