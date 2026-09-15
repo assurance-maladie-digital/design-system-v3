@@ -1,6 +1,6 @@
 # Rapport d’historique d’accessibilité par composant
 
-- Généré le: 2026-09-11T09:13:51.747Z
+- Généré le: 2026-09-15T11:24:56.842Z
 
 ## Accordion
 
@@ -3818,6 +3818,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.5-alpha` · Hash: `bc1e8e6bae55b91f0d41a7b9375aa967c4e3f862` | pattern ARIA
 
 ## LunarCalendar
+
+- **11/09/2026** — LunarCalendar: ajout onglet test a11y dans validation (#2547)  
+  Release: _prochaine version_ · Hash: `60fe923d69a06f1c43ba06edea701c8b1d35d119` | mot-clé a11y
 
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y

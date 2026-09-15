@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-11T09:13:57.498Z",
+  "date": "2026-09-15T11:25:02.287Z",
   "totalCount": 77,
   "results": [
     {
@@ -10174,6 +10174,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "60fe923d69a06f1c43ba06edea701c8b1d35d119",
+          "date": "2026-09-11 11:36:21 +0200",
+          "dateFr": "11/09/2026",
+          "message": "LunarCalendar: ajout onglet test a11y dans validation (#2547)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",

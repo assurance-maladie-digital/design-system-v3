@@ -1,8 +1,8 @@
 {
-  "date": "2026-09-11T09:13:52.361Z",
-  "compliantCount": 58,
+  "date": "2026-09-15T11:24:57.088Z",
+  "compliantCount": 59,
   "totalCount": 77,
-  "percentage": "75.32",
+  "percentage": "76.62",
   "results": [
     {
       "componentName": "Accordion",
@@ -634,9 +634,9 @@
     {
       "componentName": "PasswordField",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
+      "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false,
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/PasswordField",
       "hasManualAudit": true,
       "version": "1.1.3",
