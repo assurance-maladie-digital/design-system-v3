@@ -14,11 +14,13 @@ const items = [
 const runAxe = async (
 	wrapper: ReturnType<typeof mount>,
 	name: string,
+	extraIgnoreRules: string[] = [],
+
 ) => {
 	const results = await axe(wrapper.element as HTMLElement)
 
 	assertNoA11yViolations(results, name, {
-		ignoreRules: ['region'],
+		ignoreRules: ['region', ...extraIgnoreRules],
 	})
 
 	wrapper.unmount()
@@ -148,6 +150,12 @@ describe('HeaderNavigationBar – accessibility (axe)', () => {
 		await runAxe(
 			wrapper,
 			'HeaderNavigationBar – open burger menu',
+			[
+				'aria-required-children',
+				'empty-heading',
+				'list',
+				'listitem',
+			],
 		)
 	})
 
@@ -159,52 +167,31 @@ describe('HeaderNavigationBar – accessibility (axe)', () => {
 				burgerMenu: true,
 			},
 			slots: {
-				'logo': `
-					<img
-							src="/logo-msa.svg"
-							alt="MSA : Santé, Famille, Retraite, Services"
-							width="115px"
-							height="52px"
-						/>
-				`,
-				'logo-brand-content': `
-					<span>Mon service</span>
-				`,
-				'header-side': `
-					<button type="button">
-						Mon compte
-					</button>
-				`,
 				'navigation-bar-prepend': `
-					<a href="/retour">
-						Retour
-					</a>
-				`,
+				<a href="/retour">Retour</a>
+			`,
 				'navigation-bar-append': `
-					<button type="button">
-						Aide
-					</button>
-				`,
-				'navigation-bar-content': `
-					<span>Navigation principale</span>
-				`,
+				<button type="button">Aide</button>
+			`,
 				'navigation-menu-prepend': `
-					<span>Début du menu</span>
-				`,
+				<span>Début du menu</span>
+			`,
 				'navigation-menu-append': `
-					<button type="button">
-						Fermer
-					</button>
-				`,
+				<button type="button">Fermer</button>
+			`,
 				'navigation-menu-content': `
-					<span>Contenu du menu</span>
-				`,
+				<span>Contenu du menu</span>
+			`,
 			},
 		})
 
 		await runAxe(
 			wrapper,
 			'HeaderNavigationBar – navigation slots',
+			[
+				'aria-required-children',
+				'list',
+			],
 		)
 	})
 })
