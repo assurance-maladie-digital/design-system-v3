@@ -14,13 +14,15 @@
 
 ## 2. Skills de référence
 
-Les règles génériques sont déléguées aux skills installés. Les charger avant toute tâche relevant de leur domaine :
+Les règles génériques sont déléguées aux skills installés (dans `.agents/skills/`). **Pour Claude/opencode** : les symlinks dans `.claude/skills/` pointent vers `.agents/skills/` pour une compatibilité immédiate. Les autres outils (Cursor, Copilot, Devin, etc.) doivent être configurés pour utiliser `.agents/skills/` directement.
+
+Les charger avant toute tâche relevant de leur domaine :
 
 - `vue-best-practices` et `vue` pour Vue 3, les composants, la réactivité et le SSR ;
-- `vite` pour Vite, la configuration et les builds ;
-- `vitest` pour les tests unitaires ;
+- `vite` (compatible **Vite 6.4.2**) pour Vite, la configuration et les builds ;
+- `vitest` (compatible **Vitest 4.1.0**) pour les tests unitaires ;
 - `pnpm` pour la gestion des dépendances et des workspaces ;
-- `antfu` pour l'outillage TypeScript et JavaScript.
+- `antfu` pour l'outillage TypeScript et JavaScript (**les conventions de tests et de hooks Git du dépôt priment** : voir §4 et §11) ;
 - `review` pour les revues de code, de pull requests et de diffs propres à Synapse.
 
 Les instructions ci-dessous ne précisent que les conventions et contraintes propres à Synapse.
