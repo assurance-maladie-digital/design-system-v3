@@ -13,6 +13,12 @@
       "skillPath": "skills/pnpm/SKILL.md",
       "computedHash": "2ec08c851c6f901d4ed72c21b826416ed074a487db65662b36249418afd728bf"
     },
+    "rgaa": {
+      "source": "etalab-ia/skills",
+      "sourceType": "github",
+      "skillPath": "skills/rgaa/SKILL.md",
+      "computedHash": "8995375b549154e6bb7fb6b42a7996c470cb10998d3ffa08e9e2af8f6254f7f3"
+    },
     "vite": {
       "source": "antfu/skills",
       "sourceType": "github",
