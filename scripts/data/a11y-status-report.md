@@ -1,6 +1,6 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 11/09/2026
+Généré le: 15/09/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
@@ -61,7 +61,7 @@ Généré le: 11/09/2026
 | **NotificationBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **PageContainer** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **PaginatedTable** | ❌ Non | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
-| **PasswordField** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
+| **PasswordField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **PeriodField** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **PhoneField** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **RangeField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -82,4 +82,4 @@ Généré le: 11/09/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 58 / 77 (75.32%)**
+**Total des composants conformes : 59 / 77 (76.62%)**

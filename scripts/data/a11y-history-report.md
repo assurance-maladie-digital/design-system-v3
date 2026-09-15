@@ -1,6 +1,6 @@
 # Rapport d’historique d’accessibilité par composant
 
-- Généré le: 2026-09-11T09:13:51.747Z
+- Généré le: 2026-09-15T12:14:40.737Z
 
 ## Accordion
 
@@ -3819,6 +3819,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## LunarCalendar
 
+- **11/09/2026** — LunarCalendar: ajout onglet test a11y dans validation (#2547)  
+  Release: _prochaine version_ · Hash: `60fe923d69a06f1c43ba06edea701c8b1d35d119` | mot-clé a11y
+
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
@@ -4201,6 +4204,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.11-alpha` · Hash: `b4252a4f54c0bffe7c72b848d7d40417aa5a3fb0` | pattern ARIA
 
 ## PasswordField
+
+- **15/09/2026** — ajout onglet a11y dans le passwordfield ainsi que le dossier validation  
+  Release: _prochaine version_ · Hash: `6d1728bfbe9d7f9a2b376e732d0b17bf2e0e997d` | mot-clé a11y
 
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y

@@ -111,9 +111,6 @@ type Story = StoryObj<PasswordFieldStoryArgs>
 
 export const WithError: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -182,9 +179,6 @@ export const WithError: Story = {
 
 export const WithWarning: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -255,9 +249,6 @@ export const WithWarning: Story = {
 
 export const WithSuccess: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -339,9 +330,6 @@ export const WithSuccess: Story = {
 
 export const WithCustomRules: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -472,9 +460,6 @@ export const WithCustomRules: Story = {
 
 export const WithSuccessMessages: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		docs: {
 			description: {
 				story: `
@@ -560,9 +545,6 @@ ne sont pas nécessaires dans certains contextes.
 
 export const DisableErrorHandling: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		docs: {
 			description: {
 				story: `

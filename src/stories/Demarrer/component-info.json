@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-11T09:13:57.498Z",
+  "date": "2026-09-15T12:14:45.795Z",
   "totalCount": 77,
   "results": [
     {
@@ -10175,6 +10175,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "60fe923d69a06f1c43ba06edea701c8b1d35d119",
+          "date": "2026-09-11 11:36:21 +0200",
+          "dateFr": "11/09/2026",
+          "message": "LunarCalendar: ajout onglet test a11y dans validation (#2547)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
           "dateFr": "10/09/2026",
@@ -11860,6 +11871,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "6d1728bfbe9d7f9a2b376e732d0b17bf2e0e997d",
+          "date": "2026-09-15 13:26:34 +0200",
+          "dateFr": "15/09/2026",
+          "message": "ajout onglet a11y dans le passwordfield ainsi que le dossier validation",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
         {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
