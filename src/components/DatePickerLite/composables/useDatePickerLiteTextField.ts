@@ -4,7 +4,7 @@ import type {
 	DatePickerLiteInputProps,
 	DatePickerLiteInputSlotProps,
 	DatePickerLiteMode,
-} from './types'
+} from '../types'
 
 /** Slots of the root component forwarded to the text input */
 const TEXT_FIELD_SLOT_NAMES = new Set(['default', 'prepend', 'append', 'prepend-inner', 'append-inner', 'details'])

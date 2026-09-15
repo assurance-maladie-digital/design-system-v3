@@ -449,6 +449,7 @@ const meta: Meta<typeof DatePickerLite> = {
 			description: 'Événement émis lorsqu’un mois est sélectionné dans le panneau des mois du sélecteur visuel (numéro du mois, de 1 à 12).',
 			table: {
 				type: { summary: 'number' },
+				category: 'events',
 			},
 		},
 		'onSelect:year': {
@@ -456,6 +457,7 @@ const meta: Meta<typeof DatePickerLite> = {
 			description: 'Événement émis lorsqu’une année est sélectionnée dans le panneau des années du sélecteur visuel.',
 			table: {
 				type: { summary: 'number' },
+				category: 'events',
 			},
 		},
 		'onChange': {

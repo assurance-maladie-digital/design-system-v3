@@ -1,7 +1,7 @@
 import { computed, ref, useSlots, type ComputedRef, type ComponentPublicInstance, type Ref, type Slot } from 'vue'
 import type DatePickerLiteInput from './DatePickerLiteText/DatePickerLiteInput.vue'
-import type { DatePickerLiteVisualProps } from './DatePickerLiteVisual/DatePickerLiteVisualProps'
-import type { DatePickerLiteValue } from './types'
+import type { DatePickerLiteVisualProps } from '../DatePickerLiteVisual/DatePickerLiteVisualProps.ts'
+import type { DatePickerLiteValue } from '../types.ts'
 
 /** Slots of the root component forwarded to DatePickerLiteVisual */
 const VISUAL_SLOT_NAMES = new Set(['menu', 'header', 'footer', 'day'])

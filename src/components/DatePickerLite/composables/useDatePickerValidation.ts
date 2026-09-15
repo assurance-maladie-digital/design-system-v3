@@ -2,7 +2,7 @@ import type { ValidationRule as SyValidationRule } from '@/composables/validatio
 import { useValidation } from '@/composables/unifyValidation/useValidation'
 import { computed, nextTick, watch, type Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
-import type { locales } from './locales'
+import type { locales } from '../locales'
 
 export function useDatePickerValidation(args: {
 	/** Text backing the validation rules (incomplete entries never parse to Date) */

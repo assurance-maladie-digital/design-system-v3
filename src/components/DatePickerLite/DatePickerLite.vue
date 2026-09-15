@@ -14,10 +14,10 @@
 	import { calendarLocalesKey, type PickerView } from '@/components/Common/Calendar/locales'
 	import { defaultTextFieldProps } from '@/composables/useTextField'
 	import { defaultDatePickerLiteVisualProps } from './DatePickerLiteVisual/DatePickerLiteVisualProps'
-	import { useDatePickerValidation } from './useDatePickerValidation'
+	import { useDatePickerValidation } from './composables/useDatePickerValidation.ts'
 	import { useDatePickerLiteTextSync } from './DatePickerLiteText/useDatePickerLiteTextSync'
-	import { useDatePickerLiteTextField } from './useDatePickerLiteTextField'
-	import { useDatePickerLiteVisual } from './useDatePickerLiteVisual'
+	import { useDatePickerLiteTextField } from './composables/useDatePickerLiteTextField.ts'
+	import { useDatePickerLiteVisual } from './composables/useDatePickerLiteVisual.ts'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
 	import { useLocales } from '@/composables/useLocales'
 	import type {
