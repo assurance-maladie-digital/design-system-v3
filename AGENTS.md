@@ -14,7 +14,7 @@
 
 ## 2. Skills de référence
 
-Les règles génériques sont déléguées aux skills installés (dans `.agents/skills/`). **Pour Claude/opencode** : les symlinks dans `.claude/skills/` pointent vers `.agents/skills/` pour une compatibilité immédiate. Les autres outils (Cursor, Copilot, Devin, etc.) doivent être configurés pour utiliser `.agents/skills/` directement.
+Les règles génériques sont déléguées aux skills installés (dans `.agents/skills/`). Des symlinks pointent vers `.agents/skills/` pour une compatibilité immédiate avec chaque outil : `.claude/skills/` (Claude/opencode) et `.windsurf/skills/` (Windsurf). Les autres outils (Cursor, Copilot, Devin, etc.) doivent être configurés pour utiliser `.agents/skills/` directement.
 
 Les charger avant toute tâche relevant de leur domaine :
 
