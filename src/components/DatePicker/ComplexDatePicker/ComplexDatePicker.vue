@@ -215,7 +215,7 @@
 
 	// La restauration éventuelle du focus est différée jusqu'à `VMenu.after-leave`.
 	// À ce stade, le menu est entièrement démonté et le focus du champ ne peut plus le rouvrir.
-	const closeDatePicker = async (options: { restoreFocus?: boolean } = {}) => {
+	const closeDatePicker = async (options: { restoreFocus?: boolean, forceValidation?: boolean } = {}) => {
 		if (!isDatePickerVisible.value) return
 
 		isDatePickerVisible.value = false
@@ -225,7 +225,7 @@
 			scheduleCalendarInputFocusRestore()
 		}
 
-		await validate({ force: true })
+		await validate(options.forceValidation ? { force: true } : undefined)
 	}
 
 	const closeAndRestoreFocus = () => closeDatePicker({ restoreFocus: true })
@@ -731,7 +731,7 @@
 		}
 
 		// Validate immediately to surface messages
-		queueMicrotask(() => validate({ force: true }))
+		queueMicrotask(() => validate())
 	}
 
 	const isSameCalendarSelection = (first: DateObjectValue, second: DateObjectValue): boolean => {

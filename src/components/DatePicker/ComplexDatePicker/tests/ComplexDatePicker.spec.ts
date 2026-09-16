@@ -466,7 +466,7 @@ describe('ComplexDatePicker.clean', () => {
 		expect(input.attributes('aria-expanded')).toBe('false')
 	})
 
-	it('validates the field when Escape closes the dialog', async () => {
+	it('does not validate the field when Escape closes the dialog before blur', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',
 			format: 'DD/MM/YYYY',
@@ -485,6 +485,10 @@ describe('ComplexDatePicker.clean', () => {
 		await flushPromises()
 
 		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+		expect(wrapper.vm.errorMessages).not.toContain('La date est requise.')
+
+		await wrapper.find('input').trigger('blur')
+		await flushPromises()
 		expect(wrapper.vm.errorMessages).toContain('La date est requise.')
 	})
 
