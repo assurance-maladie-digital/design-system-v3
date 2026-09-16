@@ -1257,7 +1257,7 @@
 	watch(() => props.modelValue, (nv) => {
 		if (isFormatting.value) return
 		const syncedDisplayValue = syncFromModelValue(nv)
-		void runRules(syncedDisplayValue)
+		void runRules(syncedDisplayValue, true)
 	})
 
 	watch([
@@ -1268,7 +1268,7 @@
 		() => props.useVuetifyValidation,
 	], () => {
 		if (hasInteracted.value || errorMessages.value.length || warningMessages.value.length || successMessages.value.length) {
-			void runRules(inputValue.value)
+			void runRules(inputValue.value, true)
 		}
 	}, { deep: true })
 

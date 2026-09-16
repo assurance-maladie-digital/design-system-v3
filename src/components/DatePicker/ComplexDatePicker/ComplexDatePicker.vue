@@ -225,7 +225,7 @@
 			scheduleCalendarInputFocusRestore()
 		}
 
-		await validate()
+		await validate({ force: true })
 	}
 
 	const closeAndRestoreFocus = () => closeDatePicker({ restoreFocus: true })
