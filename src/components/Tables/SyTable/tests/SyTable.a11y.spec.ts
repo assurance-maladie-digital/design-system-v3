@@ -178,6 +178,9 @@ describe('SyTable - accessibility (axe)', () => {
 
 		await wrapper.vm.$nextTick()
 
+		// RGAA 5.4 : la légende n'est associée au tableau que si elle en est
+		// l'enfant direct. Rendue via le slot `top`, elle atterrissait à côté.
+		expect(wrapper.find('table > caption').exists()).toBe(true)
 		expect(wrapper.find('caption').text()).toBe('Liste des agents')
 		expect(wrapper.find('table').attributes('aria-label')).toBeUndefined()
 
