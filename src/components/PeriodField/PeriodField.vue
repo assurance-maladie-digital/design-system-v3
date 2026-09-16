@@ -332,7 +332,11 @@
 </script>
 
 <template>
-	<div class="period-field">
+	<div
+		class="period-field"
+		role="group"
+		:aria-label="`${props.placeholderFrom} - ${props.placeholderTo}`"
+	>
 		<div class="period-field__col">
 			<DatePicker
 				ref="fromDateRef"

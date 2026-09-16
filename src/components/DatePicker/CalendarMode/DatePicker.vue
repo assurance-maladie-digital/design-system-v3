@@ -843,8 +843,8 @@
 		// Ne rien faire si le composant est en readonly
 		if (props.readonly) return // Gardé tel quel car readonly-only, pas disabled
 
-		// Ouvrir le calendrier uniquement lorsque la touche Entrée est pressée
-		if (event.key === 'Enter') {
+		// Ouvrir le calendrier avec Entrée ou Espace, comme un bouton.
+		if (event.key === 'Enter' || event.key === ' ') {
 			await openDatePicker()
 			event.preventDefault() // Empêcher la soumission du formulaire
 		}
