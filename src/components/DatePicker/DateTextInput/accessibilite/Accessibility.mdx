@@ -52,9 +52,10 @@ import {
 	</DemoSection>
 
 	<BestPracticesSection>
-		- Fournir un libellé explicite ou <code>aria-label</code> quand le label visuel est masqué ou tronqué.
-		- Afficher un placeholder cohérent avec le format attendu et conserver un hint persistent pour les formats non standards.
-		- En lecture seule, désactiver les actions d’ouverture/validation et laisser l’icône décorative optionnelle mais non interactive.
+		- Fournir un <code>label</code> explicite; utiliser <code>aria-label</code> ou <code>aria-labelledby</code> uniquement lorsque le label visible n’est pas disponible.
+		- Afficher un placeholder cohérent avec le <code>format</code> attendu et conserver un hint persistent pour les formats non standards.
+		- Laisser <code>isValidateOnBlur</code> à <code>true</code> si la validation doit attendre la sortie du champ; déclencher <code>validateOnSubmit()</code> au submit.
+		- En lecture seule, désactiver les actions d’édition et d’effacement; ne pas utiliser le champ comme solution de remplacement d’un bouton calendrier.
 		- En mode plage, préciser dans le hint l’ordre attendu (début puis fin) et conserver la séparatrice <code>" - "</code>.
 		- Avec <code>autoClamp</code>, signaler que les séparateurs sont ajoutés automatiquement sans bloquer les corrections clavier.
 	</BestPracticesSection>
