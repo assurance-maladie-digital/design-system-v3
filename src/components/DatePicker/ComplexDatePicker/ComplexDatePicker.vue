@@ -1075,19 +1075,32 @@
 			return
 		}
 
-		if (event.key === 'Backspace') {
-			if (!input.selectionStart || input.selectionStart !== input.selectionEnd) return
-			const cursorPos = input.selectionStart
-			const charBeforeCursor = input.value[cursorPos - 1]
+		if (event.key === 'Delete') {
+			event.preventDefault()
+			const selectionStart = input.selectionStart ?? 0
+			const selectionEnd = input.selectionEnd ?? selectionStart
+			const separator = props.format.match(/[^DMY]/)?.[0] || '/'
+			const deletePosition = input.value[selectionStart] === separator
+				? (() => {
+					let position = selectionStart
+					while (position < input.value.length && input.value[position] === separator) position++
+					return position
+				})()
+				: selectionStart
+			const start = selectionStart === selectionEnd ? deletePosition : selectionStart
+			const end = selectionStart === selectionEnd ? Math.min(deletePosition + 1, input.value.length) : selectionEnd
+			const updatedValue = input.value
+				.split('')
+				.map((character, index) => index >= start && index < end && /\d/.test(character) ? '_' : character)
+				.join('')
 
-			if (!charBeforeCursor || !/\d/.test(charBeforeCursor)) {
-				event.preventDefault()
-				displayFormattedDate.value = input.value.substring(0, cursorPos - 2) + input.value.substring(cursorPos)
-				queueMicrotask(() => {
-					const newCursorPos = cursorPos - 2
-					input.setSelectionRange(newCursorPos, newCursorPos)
-				})
-			}
+			withInternalUpdate(() => {
+				displayFormattedDate.value = updatedValue
+				textInputValue.value = updatedValue
+			})
+			input.value = updatedValue
+			queueMicrotask(() => input.setSelectionRange(start, start))
+			return
 		}
 
 		if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {

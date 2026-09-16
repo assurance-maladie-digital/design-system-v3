@@ -421,6 +421,45 @@ describe('ComplexDatePicker.clean', () => {
 		wrapper.unmount()
 	})
 
+	it.each([
+		{ cursor: 4, expected: '12/0_/3333', description: 'before the month unit' },
+		{ cursor: 5, expected: '12/01/_333', description: 'on the separator before the year' },
+		{ cursor: 6, expected: '12/01/_333', description: 'before the first year digit' },
+	])('Delete replaces the digit under the cursor $description without shifting a combined date', async ({ cursor, expected }) => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			modelValue: '12/01/3333',
+		})
+		const input = wrapper.find('input')
+		await flushPromises()
+
+		input.element.setSelectionRange(cursor, cursor)
+		await input.trigger('keydown', { key: 'Delete' })
+		await flushPromises()
+
+		expect(input.element.value).toBe(expected)
+	})
+
+	it.each([
+		{ cursor: 4, expected: '12/_1/3333', description: 'after the month tens digit' },
+		{ cursor: 6, expected: '12/0_/3333', description: 'before the first year digit' },
+	])('Backspace preserves date slots $description', async ({ cursor, expected }) => {
+		const wrapper = mountComponent({
+			label: 'Date Field',
+			format: 'DD/MM/YYYY',
+			modelValue: '12/01/3333',
+		})
+		const input = wrapper.find('input')
+		await flushPromises()
+
+		input.element.setSelectionRange(cursor, cursor)
+		await input.trigger('keydown', { key: 'Backspace' })
+		await flushPromises()
+
+		expect(input.element.value).toBe(expected)
+	})
+
 	it('keeps manual input state stable when keyboard interaction is used afterwards', async () => {
 		const wrapper = mountComponent({
 			label: 'Date Field',

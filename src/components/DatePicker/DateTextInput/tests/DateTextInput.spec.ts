@@ -154,6 +154,7 @@ describe('DateTextInput.clean', () => {
 		expect(emitted).toBeTruthy()
 		const lastEmitted = emitted && emitted[emitted.length - 1]?.[0]
 		expect(lastEmitted).toBe('1986/12/17')
+		if (typeof lastEmitted !== 'string') throw new Error('Expected a string model value')
 
 		// Simulate parent component updating modelValue with the emitted value (like v-model does)
 		await wrapper.setProps({ modelValue: lastEmitted })
