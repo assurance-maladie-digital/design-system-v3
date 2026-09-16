@@ -1054,10 +1054,15 @@
 <style lang="scss" scoped>
 @use '../styles/datePickerShared';
 
-/* En mode calendar, le champ est readonly : pas de cursor pointer sur l'input et les icônes */
+:deep(.v-field),
 :deep(.v-field__input),
+:deep(.v-field__input input) {
+	cursor: pointer;
+	caret-color: transparent !important;
+}
+
 :deep(.sy-text-field__icon-button) {
-	cursor: default;
+	cursor: pointer;
 }
 
 .dp-width {
