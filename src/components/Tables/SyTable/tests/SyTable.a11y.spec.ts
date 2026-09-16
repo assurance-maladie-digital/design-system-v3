@@ -146,8 +146,6 @@ describe('SyTable - accessibility (axe)', () => {
 		})
 	})
 
-	// Régression : un <caption> vide déclenchait la pose d'un aria-label littéral
-	// « Table caption » sur <table>, restitué tel quel par NVDA comme nom du tableau.
 	it('ne nomme pas la table quand la légende est vide', async () => {
 		const wrapper = mount(SyTable, {
 			props: {
