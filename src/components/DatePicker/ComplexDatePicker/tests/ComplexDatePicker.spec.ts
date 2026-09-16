@@ -1,5 +1,5 @@
 import { VDatePicker } from 'vuetify/components'
-import { mount, flushPromises, VueWrapper, type MountingOptions } from '@vue/test-utils'
+import { mount, flushPromises, VueWrapper } from '@vue/test-utils'
 import { describe, it, expect, afterEach, vi } from 'vitest'
 import { nextTick, defineComponent, ref } from 'vue'
 import ComplexDatePicker from '../ComplexDatePicker.vue'
@@ -27,7 +27,7 @@ type ComplexDatePickerProps = InstanceType<typeof ComplexDatePicker>['$props']
 
 const mountComponent = (
 	props: ComplexDatePickerProps = { label: 'Test' },
-	options: MountingOptions<ComplexDatePickerProps> = {},
+	options: { attachTo?: Element | string } = {},
 ) => {
 	wrapper = mount(ComplexDatePicker, { props, ...options })
 	return wrapper
