@@ -255,6 +255,8 @@ describe('DatePicker', () => {
 			dateFormatReturn: 'YYYY-MM-DD',
 			modelValue: '2025-01-01',
 			useCombinedMode: true,
+			textFieldActivator: true,
+			required: true,
 		}, { attachTo: document.body })
 
 		await wrapper.find('button.sy-text-field__icon-button').trigger('click')
@@ -267,6 +269,7 @@ describe('DatePicker', () => {
 		await flushPromises()
 
 		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2025-01-15')
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
 	})
 
 	it('keeps a clicked combined-calendar selection after parent v-model synchronization', async () => {
