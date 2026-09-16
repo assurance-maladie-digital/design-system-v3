@@ -1,6 +1,6 @@
 import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 import { useValidatable } from '@/composables/validation/useValidatable'
-import { computed, onBeforeUnmount, reactive, ref, watch } from 'vue'
+import { computed, getCurrentInstance, onBeforeUnmount, reactive, ref, watch } from 'vue'
 import type { Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import { locales } from './locales'
@@ -157,7 +157,9 @@ export function useCustomValidation(
 		hasSuccess.value = false
 	}
 
-	onBeforeUnmount(clearValidation)
+	if (getCurrentInstance()) {
+		onBeforeUnmount(clearValidation)
+	}
 	watch([() => readonly?.value, () => disabled?.value, disableErrorHandling], () => {
 		if (readonly?.value || disabled?.value || disableErrorHandling.value) clearValidation()
 	}, { flush: 'sync' })
