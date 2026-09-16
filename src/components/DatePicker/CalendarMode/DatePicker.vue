@@ -653,7 +653,8 @@
 		// On utilise le flow standard (sans calendarMode) car le flow CalendarMode skippait
 		// la validation au montage à cause du flag isInitialValidation, empêchant les custom rules
 		// des composants parents (ex: PeriodField) de s'exécuter.
-		// Aligné sur le comportement de ComplexDatePicker.
+		// La validation initiale respecte le mode isValidateOnBlur ; les valeurs
+		// préremplies seront validées au blur ou à la soumission.
 		validate()
 
 		// Après la validation initiale, désactiver le flag

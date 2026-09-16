@@ -348,6 +348,7 @@
 		isUpdatingFromInternal,
 		isValidateOnBlur: computed(() => props.isValidateOnBlur),
 		revalidateOnCustomRulesChange: true,
+		deferCustomRulesRevalidation: computed(() => props.isValidateOnBlur),
 		readonly: computed(() => props.readonly),
 		skipValidationWhenReadonly: true,
 		displayFormat: computed(() => props.format),

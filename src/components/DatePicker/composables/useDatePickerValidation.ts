@@ -74,6 +74,7 @@ export type DatePickerValidationOptions = {
 	hasBlurred?: Ref<boolean>
 	fieldIdentifier?: MaybeRef<string>
 	revalidateOnCustomRulesChange?: boolean
+	deferCustomRulesRevalidation?: MaybeRef<boolean>
 	displayFormat?: MaybeRef<string>
 	parseDate?: (dateStr: string, format: string) => Date | null
 	hasInteracted?: Ref<boolean>
@@ -501,7 +502,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 	// Watcher 1 : revalidation quand les customRules changent
 	if (options.revalidateOnCustomRulesChange) {
 		watch(options.customRules, () => {
-			if (options.isValidateOnBlur?.value || options.selectedDates.value === null) {
+			if (options.isInitialValidation?.value || options.selectedDates.value === null) {
 				return
 			}
 

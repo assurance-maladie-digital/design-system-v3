@@ -245,17 +245,12 @@
 		])
 	}
 
-	// Les deux champs partagent le même cycle de revalidation à la fermeture.
-	async function handleDateClosed() {
+	// Revalider les deux bornes après un vrai blur. Le blur provoqué par l'ouverture
+	// du calendrier est ignoré tant que le DatePicker enfant est encore ouvert.
+	async function handleDateBlur(dateRef: typeof fromDateRef) {
+		if (dateRef.value?.isDatePickerVisible?.value) return
 		await validateBothDates()
 	}
-
-	// Watch pour les changements des dates - validation croisée
-	watch([formattedFromDate, formattedToDate], async () => {
-		if (isInitialized.value && (formattedFromDate.value || formattedToDate.value)) {
-			await validateBothDates()
-		}
-	}, { flush: 'post' })
 
 	// Revalider quand l'affichage des messages de succès change
 	watch(showSuccessMessagesActual, async () => {
@@ -283,7 +278,10 @@
 		if (internalToDate.value !== newToDate) {
 			internalToDate.value = newToDate
 		}
-		// Revalider les champs après la mise à jour des valeurs
+		if (!newFromDate && !newToDate) return
+
+		// Attendre la synchronisation des DatePickers enfants avant de revalider.
+		await nextTick()
 		await validateBothDates()
 	}, { deep: true, immediate: true })
 
@@ -359,7 +357,7 @@
 				:bg-color="props.bgColor"
 				:density="props.density"
 				:hide-details="props.hideDetails"
-				@closed="handleDateClosed"
+				@blur="handleDateBlur(fromDateRef)"
 			/>
 		</div>
 		<div class="period-field__col">
@@ -386,7 +384,7 @@
 				:bg-color="props.bgColor"
 				:density="props.density"
 				:hide-details="props.hideDetails"
-				@closed="handleDateClosed"
+				@blur="handleDateBlur(toDateRef)"
 			/>
 		</div>
 	</div>

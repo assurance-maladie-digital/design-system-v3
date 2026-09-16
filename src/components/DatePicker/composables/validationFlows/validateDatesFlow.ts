@@ -150,6 +150,18 @@ export function createValidateDatesFlow(ctx: ValidationContext) {
 
 			if (token !== ctx.currentValidationToken.value) return
 			accumulateValidationResults(results)
+
+			// ComplexDatePicker avec isValidateOnBlur doit pouvoir afficher une erreur
+			// lorsqu'une règle dynamique devient invalide, sans passer visuellement au
+			// succès avant le blur.
+			if (unref(options.deferCustomRulesRevalidation)) {
+				const revalidatedErrors = [...ctx.errors.value]
+				const revalidatedWarnings = [...ctx.warnings.value]
+				ctx.clearValidation()
+				ctx.replaceErrors(revalidatedErrors)
+				ctx.warnings.value = revalidatedWarnings
+			}
+
 			const hasError = results.some(result => result.hasError)
 			ctx.applyRangeValidationErrors(!hasError)
 		})
