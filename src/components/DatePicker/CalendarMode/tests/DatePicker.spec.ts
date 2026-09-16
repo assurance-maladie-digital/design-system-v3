@@ -18,8 +18,9 @@ afterEach(() => {
 })
 
 describe('DatePicker', () => {
-	const mountComponent = (props: Record<string, unknown> = {}) => {
+	const mountComponent = (props: Record<string, unknown> = {}, options: { attachTo?: Element | string } = {}) => {
 		wrapper = mount(DatePicker, {
+			...options,
 			props: { label: 'Date Field', ...props },
 		})
 		return wrapper
@@ -74,7 +75,7 @@ describe('DatePicker', () => {
 		await nextTick()
 		await flushPromises()
 
-		const heading = document.querySelector<HTMLElement>(`#${vm.datePickerHeadingId}`)
+		const heading = document.querySelector<HTMLElement>('[id$="-heading"]')
 		expect(heading).not.toBeNull()
 		expect(heading?.getAttribute('aria-live')).toBeNull()
 		expect(heading?.getAttribute('aria-atomic')).toBeNull()
@@ -87,10 +88,12 @@ describe('DatePicker', () => {
 		await nextTick()
 		await flushPromises()
 
-		const dialog = document.querySelector<HTMLElement>(`#${vm.datePickerDialogId}`)
-		expect(dialog?.getAttribute('aria-labelledby')).toBe(vm.datePickerTitleId)
+		const dialog = document.querySelector<HTMLElement>('[role="dialog"]')
+		expect(dialog).not.toBeNull()
+		const titleId = dialog?.getAttribute('aria-labelledby')
+		expect(titleId).toBeTruthy()
 
-		const title = document.querySelector<HTMLElement>(`#${vm.datePickerTitleId}`)
+		const title = document.getElementById(titleId ?? '')
 		expect(title).not.toBeNull()
 		expect(title?.textContent?.trim()).toBe(locales.calendarTitle)
 	})
@@ -104,7 +107,7 @@ describe('DatePicker', () => {
 		await nextTick()
 		await flushPromises()
 
-		const yearButton = document.querySelector<HTMLElement>(`#${vm.datePickerContentId} .sy-date-picker-controls__year-btn`)
+		const yearButton = document.querySelector<HTMLElement>('.sy-date-picker-controls__year-btn')
 		expect(yearButton?.getAttribute('aria-label')).toBe('Sélectionner l\'année 2026')
 	})
 
@@ -145,7 +148,7 @@ describe('DatePicker', () => {
 		await nextTick()
 		await flushPromises()
 
-		const activatorWrapper = wrapper.find(`[aria-controls="${vm.datePickerDialogId}"]`)
+		const activatorWrapper = wrapper.find('[aria-controls]')
 		expect(activatorWrapper.exists()).toBe(true)
 	})
 
@@ -156,13 +159,13 @@ describe('DatePicker', () => {
 		vm.isDatePickerVisible = true
 		await nextTick()
 		await flushPromises()
-		expect(wrapper.find(`[aria-controls="${vm.datePickerDialogId}"]`).exists()).toBe(true)
+		expect(wrapper.find('[aria-controls]').exists()).toBe(true)
 
 		vm.isDatePickerVisible = false
 		await nextTick()
 		await flushPromises()
 
-		expect(wrapper.find(`[aria-controls="${vm.datePickerDialogId}"]`).exists()).toBe(false)
+		expect(wrapper.find('[aria-controls]').exists()).toBe(false)
 	})
 
 	/**
@@ -876,7 +879,7 @@ describe('DatePicker', () => {
 		await nextTick()
 		await flushPromises()
 
-		const dialog = document.body.querySelector<HTMLElement>(`#${vm.datePickerDialogId}`)
+		const dialog = document.body.querySelector<HTMLElement>('[role="dialog"]')
 		expect(dialog).not.toBeNull()
 
 		dialog?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
