@@ -101,6 +101,8 @@ export interface DatePickerCommonProps {
 export interface DateTextInputProps extends Omit<DatePickerCommonProps, 'displayAsterisk' | 'displayHolidayDays' | 'displayTodayButton' | 'displayWeekendDays' | 'headingLevel' | 'hideDetails' | 'noCalendar' | 'period' | 'showWeekNumber' | 'textFieldActivator' | 'width'> {
 	disableClickButton?: boolean
 	externalErrorMessages?: string[]
+	/** Contrôle la validation déclenchée par une synchronisation externe du modèle. */
+	validateOnModelChange?: boolean
 }
 
 /**

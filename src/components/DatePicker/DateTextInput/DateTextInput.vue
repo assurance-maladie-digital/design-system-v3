@@ -107,6 +107,7 @@
 		required: false,
 		showSuccessMessages: false,
 		successMessages: null,
+		validateOnModelChange: true,
 		title: false,
 		warningMessages: null,
 	})
@@ -1257,6 +1258,10 @@
 	watch(() => props.modelValue, (nv) => {
 		if (isFormatting.value) return
 		const syncedDisplayValue = syncFromModelValue(nv)
+		if (!props.validateOnModelChange) {
+			clearValidation()
+			return
+		}
 		void runRules(syncedDisplayValue, true)
 	})
 

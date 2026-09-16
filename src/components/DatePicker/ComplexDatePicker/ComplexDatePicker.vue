@@ -702,6 +702,12 @@
 			props.customSuccessRules,
 		))
 
+		// La sélection doit uniquement servir de garde métier. L'état visuel de validation
+		// reste vierge tant que le champ n'a pas perdu le focus.
+		if (props.isValidateOnBlur) {
+			clearValidation()
+		}
+
 		if (!validationResult.hasError) {
 			return true
 		}

@@ -23,9 +23,11 @@ const waitForCondition = async (
 	throw new Error('Timed out waiting for condition')
 }
 
+type ComplexDatePickerProps = InstanceType<typeof ComplexDatePicker>['$props']
+
 const mountComponent = (
-	props: Record<string, unknown> = { label: 'Test' },
-	options: MountingOptions<InstanceType<typeof ComplexDatePicker>> = {},
+	props: ComplexDatePickerProps = { label: 'Test' },
+	options: MountingOptions<ComplexDatePickerProps> = {},
 ) => {
 	wrapper = mount(ComplexDatePicker, { props, ...options })
 	return wrapper

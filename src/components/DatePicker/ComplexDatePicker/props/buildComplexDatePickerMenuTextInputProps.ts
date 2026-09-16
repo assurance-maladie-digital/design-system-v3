@@ -15,4 +15,5 @@ export const buildComplexDatePickerMenuTextInputProps = (
 	// Icône calendrier = bouton focusable au clavier (comme en CalendarMode), pas une
 	// icône décorative. Elle ouvre le calendrier au clic/Enter/Espace et reçoit le ring DS.
 	'disable-click-button': false,
+	'validate-on-model-change': false,
 })

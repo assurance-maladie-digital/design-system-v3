@@ -10,4 +10,5 @@ export const buildComplexDatePickerTextInputProps = (
 	successMessages: Ref<string[]>,
 ) => ({
 	...buildSharedDateTextInputProps(props, labelWithAsterisk, errorMessages, warningMessages, successMessages),
+	'validate-on-model-change': false,
 })
