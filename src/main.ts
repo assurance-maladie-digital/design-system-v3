@@ -6,3 +6,5 @@ export * from './composables'
 export * from './utils/rules'
 export * from './utils'
 export * from './designTokens'
+
+export * from './GeneratorPdf'
