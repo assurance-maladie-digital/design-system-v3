@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, watch, computed, onMounted, readonly as readonlyState } from 'vue'
+	import { ref, watch, computed, onMounted, nextTick, readonly as readonlyState } from 'vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import { useFieldValidation } from '@/composables'
 	import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
@@ -180,6 +180,7 @@
 	const toDateSuccesses = ref<string[]>([])
 	const fromDateWarnings = ref<string[]>([])
 	const toDateWarnings = ref<string[]>([])
+	const isInitialized = ref(false)
 
 	watch(() => fromDateRef.value?.errors, (errors) => {
 		fromDateErrors.value = Array.isArray(errors) ? [...errors] : []
@@ -251,7 +252,7 @@
 
 	// Watch pour les changements des dates - validation croisée
 	watch([formattedFromDate, formattedToDate], async () => {
-		if (formattedFromDate.value || formattedToDate.value) {
+		if (isInitialized.value && (formattedFromDate.value || formattedToDate.value)) {
 			await validateBothDates()
 		}
 	}, { flush: 'post' })
@@ -300,7 +301,14 @@
 	onMounted(async () => {
 		internalFromDate.value = props.modelValue?.from ?? null
 		internalToDate.value = props.modelValue?.to ?? null
-		await validateBothDates()
+		await nextTick()
+		isInitialized.value = true
+
+		// Valider les valeurs préremplies cohérentes entre elles, sans afficher
+		// d'erreur required pour un champ vide ou partiellement renseigné.
+		if (formattedFromDate.value && formattedToDate.value) {
+			await validateBothDates()
+		}
 	})
 
 	defineExpose({

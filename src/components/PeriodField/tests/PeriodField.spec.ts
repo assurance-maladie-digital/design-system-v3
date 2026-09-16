@@ -84,6 +84,20 @@ describe('PeriodField.vue', () => {
 	})
 
 	describe('Validation', () => {
+		it('does not show required errors on initial render', async () => {
+			const wrapper = mount(PeriodField, {
+				props: {
+					required: true,
+					modelValue: { from: null, to: null },
+				},
+			})
+
+			await flushPromises()
+
+			expect(wrapper.text()).not.toContain('La date de début est requise.')
+			expect(wrapper.text()).not.toContain('La date de fin est requise.')
+		})
+
 		it('shows error when start date is after end date', async () => {
 			const wrapper = mount(PeriodField, {
 				props: {
@@ -95,6 +109,7 @@ describe('PeriodField.vue', () => {
 			})
 
 			await wrapper.vm.$nextTick()
+			await flushPromises()
 
 			expect(wrapper.text()).toContain('La date de fin ne peut pas être inférieure à la date de début')
 			expect(wrapper.vm.isValid).toBe(false)
@@ -111,6 +126,7 @@ describe('PeriodField.vue', () => {
 			})
 
 			await wrapper.vm.$nextTick()
+			await flushPromises()
 
 			expect(wrapper.text()).toContain('La date de fin ne peut pas être inférieure à la date de début')
 			expect(wrapper.vm.isValid).toBe(false)
