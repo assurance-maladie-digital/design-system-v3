@@ -52,7 +52,7 @@
 	})
 
 	const yearAriaLabel = computed(() => {
-		return `${locales.selectYear(yearLabel.value)}`
+		return locales.selectYearForDisplay(yearLabel.value)
 	})
 
 	const isMonthDisabled = computed(() => props.slotProps.disabled.includes('text'))

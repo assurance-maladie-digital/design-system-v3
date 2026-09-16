@@ -95,6 +95,19 @@ describe('DatePicker', () => {
 		expect(title?.textContent?.trim()).toBe(locales.calendarTitle)
 	})
 
+	it('gives the year selector an action-oriented accessible name', async () => {
+		const wrapper = mountComponent({
+			modelValue: '15/03/2026',
+		})
+		const vm = wrapper.vm as DatePickerInstance
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const yearButton = document.querySelector<HTMLElement>(`#${vm.datePickerContentId} .sy-date-picker-controls__year-btn`)
+		expect(yearButton?.getAttribute('aria-label')).toBe('Sélectionner l\'année 2026')
+	})
+
 	it('keeps saturday and sunday weekend styling with a custom period in december 2005', async () => {
 		const wrapper = mount(DatePicker, {
 			props: {
