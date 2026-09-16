@@ -695,18 +695,19 @@
 	}
 
 	const validateCalendarSelection = async (date: Date): Promise<boolean> => {
+		// Avec isValidateOnBlur, une sélection calendrier ne valide pas encore les customRules.
+		// Elle doit se comporter comme une sélection valide : le calendrier se ferme et la
+		// validation métier est effectuée au blur, comme pour une saisie manuelle.
+		if (props.isValidateOnBlur) {
+			return true
+		}
+
 		const validationResult = await Promise.resolve(validateField(
 			date,
 			props.customRules,
 			props.customWarningRules,
 			props.customSuccessRules,
 		))
-
-		// La sélection doit uniquement servir de garde métier. L'état visuel de validation
-		// reste vierge tant que le champ n'a pas perdu le focus.
-		if (props.isValidateOnBlur) {
-			clearValidation()
-		}
 
 		if (!validationResult.hasError) {
 			return true

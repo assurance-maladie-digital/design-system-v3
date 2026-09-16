@@ -501,7 +501,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 	// Watcher 1 : revalidation quand les customRules changent
 	if (options.revalidateOnCustomRulesChange) {
 		watch(options.customRules, () => {
-			if (options.selectedDates.value === null) {
+			if (options.isValidateOnBlur?.value || options.selectedDates.value === null) {
 				return
 			}
 

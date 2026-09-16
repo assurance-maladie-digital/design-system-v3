@@ -1272,6 +1272,11 @@
 		() => props.rules,
 		() => props.useVuetifyValidation,
 	], () => {
+		if (!props.validateOnModelChange) {
+			clearValidation()
+			return
+		}
+
 		if (hasInteracted.value || errorMessages.value.length || warningMessages.value.length || successMessages.value.length) {
 			void runRules(inputValue.value, true)
 		}

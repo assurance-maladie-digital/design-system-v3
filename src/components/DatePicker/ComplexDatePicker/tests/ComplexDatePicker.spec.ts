@@ -731,7 +731,7 @@ describe('ComplexDatePicker.clean', () => {
 		expect(wrapper.vm.isDatePickerVisible).toBe(false)
 	})
 
-	it('keeps the dialog open and does not emit model update when a calendar selection fails customRules', async () => {
+	it('closes the dialog and defers customRules validation to blur after a calendar selection', async () => {
 		vi.useFakeTimers()
 		vi.setSystemTime(new Date(2026, 7, 19, 12, 0, 0))
 
@@ -755,15 +755,19 @@ describe('ComplexDatePicker.clean', () => {
 		await wrapper.vm.updateSelectedDates(new Date(2026, 7, 18))
 		await flushPromises()
 
-		expect(wrapper.vm.isDatePickerVisible).toBe(true)
-		expect(wrapper.vm.displayFormattedDate).toBe('')
-		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+		expect(wrapper.vm.displayFormattedDate).toBe('18/08/2026')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2026-08-18')
+		expect(wrapper.vm.errorMessages).not.toContain('La date ne peut pas être antérieure à aujourd\'hui')
+
+		await wrapper.find('input').trigger('blur')
+		await flushPromises()
 		expect(wrapper.vm.errorMessages).toContain('La date ne peut pas être antérieure à aujourd\'hui')
 
 		vi.useRealTimers()
 	})
 
-	it('keeps the dialog open when VDatePicker emits an invalid calendar selection', async () => {
+	it('closes the dialog and defers VDatePicker customRules validation to blur', async () => {
 		vi.useFakeTimers()
 		vi.setSystemTime(new Date(2026, 7, 19, 12, 0, 0))
 
@@ -784,8 +788,12 @@ describe('ComplexDatePicker.clean', () => {
 		datePicker.vm.$emit('update:modelValue', new Date(2026, 7, 18))
 		await flushPromises()
 
-		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
-		expect(wrapper.vm.isDatePickerVisible).toBe(true)
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2026-08-18')
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+		expect(wrapper.vm.errorMessages).not.toContain('La date ne peut pas être antérieure à aujourd\'hui')
+
+		await wrapper.find('input').trigger('blur')
+		await flushPromises()
 		expect(wrapper.vm.errorMessages).toContain('La date ne peut pas être antérieure à aujourd\'hui')
 
 		vi.useRealTimers()

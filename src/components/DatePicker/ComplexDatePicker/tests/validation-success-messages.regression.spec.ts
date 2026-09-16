@@ -106,4 +106,35 @@ describe('Validation Success Messages Regression', () => {
 		expect(wrapper.findAll('.success-field')).toHaveLength(1)
 		wrapper.unmount()
 	})
+
+	it('n’applique pas l’état succès quand les customRules changent avant le blur', async () => {
+		const wrapper = mount(ComplexDatePicker, {
+			props: {
+				modelValue: '',
+				label: 'Date de test',
+				format: 'DD/MM/YYYY',
+				isValidateOnBlur: true,
+				showSuccessMessages: true,
+			},
+		})
+
+		wrapper.vm.isDatePickerVisible = true
+		await wrapper.vm.updateSelectedDates(new Date(2025, 4, 15))
+		await flushPromises()
+		await wrapper.setProps({
+			customRules: [{
+				type: 'custom',
+				options: { validate: () => true, successMessage: 'Date conforme' },
+			}],
+		})
+		await flushPromises()
+
+		expect(wrapper.findAll('.success-field')).toHaveLength(0)
+
+		await wrapper.find('input').trigger('blur')
+		await flushPromises()
+
+		expect(wrapper.findAll('.success-field')).toHaveLength(1)
+		wrapper.unmount()
+	})
 })
