@@ -98,7 +98,7 @@ describe('DatePicker', () => {
 		expect(title?.textContent?.trim()).toBe(locales.calendarTitle)
 	})
 
-	it('gives the year selector an action-oriented accessible name', async () => {
+	it('gives the month and year selectors action-oriented accessible names', async () => {
 		const wrapper = mountComponent({
 			modelValue: '15/03/2026',
 		})
@@ -107,7 +107,10 @@ describe('DatePicker', () => {
 		await nextTick()
 		await flushPromises()
 
+		const monthButton = document.querySelector<HTMLElement>('.sy-date-picker-controls__month-btn')
 		const yearButton = document.querySelector<HTMLElement>('.sy-date-picker-controls__year-btn')
+		expect(monthButton?.getAttribute('aria-label')).toMatch(/^Sélectionner le mois \(/)
+		expect(monthButton?.getAttribute('aria-label')).not.toContain('sélectionné')
 		expect(yearButton?.getAttribute('aria-label')).toBe('Sélectionner l\'année 2026')
 	})
 

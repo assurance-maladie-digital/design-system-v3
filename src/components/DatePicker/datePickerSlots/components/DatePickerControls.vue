@@ -48,7 +48,7 @@
 
 	const monthAriaLabel = computed(() => {
 		const full = fullMonthName.value || expandMonthAccessibleName(monthLabel.value)
-		return `${locales.selectMonth(full)} (${full} / ${monthLabel.value} ${locales.selectedByDefault})`
+		return locales.selectMonth(full)
 	})
 
 	const yearAriaLabel = computed(() => {
