@@ -1,5 +1,5 @@
-import { describe, it } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { afterEach, describe, expect, it } from 'vitest'
+import { mount, type VueWrapper } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 import SelectBtnField from '../SelectBtnField.vue'
@@ -8,6 +8,16 @@ const items = [
 	{ text: 'Email', value: 'email' },
 	{ text: 'SMS', value: 'sms' },
 ]
+
+// Nettoyage garanti : exécuté même si une assertion échoue en cours de test,
+// ce qui évite qu'un wrapper attaché au document ne fuite sur le test suivant.
+let activeWrapper: VueWrapper | null = null
+
+afterEach(() => {
+	activeWrapper?.unmount()
+	activeWrapper = null
+	document.body.innerHTML = ''
+})
 
 describe('SelectBtnField – accessibility (axe)', () => {
 	it('has no axe violations – default', async () => {
@@ -120,5 +130,54 @@ describe('SelectBtnField – accessibility (axe)', () => {
 			ignoreRules: ['region'],
 		})
 		wrapper.unmount()
+	})
+
+	it('déplace le focus sur la première option après ArrowDown', async () => {
+		// `attachTo` est indispensable : sans insertion dans le document,
+		// `element.focus()` est sans effet et `document.activeElement` reste <body>.
+		const wrapper = mount(SelectBtnField, {
+			props: { label: 'Moyen de contact', items },
+			attachTo: document.body,
+		})
+		activeWrapper = wrapper
+
+		const listbox = wrapper.find('[role="listbox"]')
+		expect(listbox.exists()).toBe(true)
+
+		// Le listbox doit être focusable pour recevoir l'événement clavier
+		;(listbox.element as HTMLElement).focus()
+		await listbox.trigger('keydown', { key: 'ArrowDown' })
+
+		const options = wrapper.findAll('[role="option"]')
+		expect(options).toHaveLength(items.length)
+
+		// Le focus DOM doit réellement se déplacer sur la première option
+		expect(document.activeElement).toBe(options[0]?.element)
+
+		// Roving tabindex : une seule option tabulable à la fois (APG listbox)
+		expect(wrapper.findAll('[role="option"][tabindex="0"]')).toHaveLength(1)
+		expect(options[0]?.attributes('tabindex')).toBe('0')
+		expect(options[1]?.attributes('tabindex')).toBe('-1')
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SelectBtnField – after ArrowDown', {
+			ignoreRules: ['region'],
+		})
+	})
+
+	it('boucle sur la dernière option avec ArrowUp depuis la première', async () => {
+		const wrapper = mount(SelectBtnField, {
+			props: { label: 'Moyen de contact', items },
+			attachTo: document.body,
+		})
+		activeWrapper = wrapper
+
+		const listbox = wrapper.find('[role="listbox"]')
+        ;(listbox.element as HTMLElement).focus()
+		await listbox.trigger('keydown', { key: 'ArrowDown' })
+		await listbox.trigger('keydown', { key: 'ArrowUp' })
+
+		const options = wrapper.findAll('[role="option"]')
+		expect(document.activeElement).toBe(options[options.length - 1]?.element)
 	})
 })
