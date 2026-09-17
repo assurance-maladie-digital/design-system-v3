@@ -124,3 +124,9 @@ export default function useCustomizableOptions<T extends ComponentsProps>(
 - **Réactivité** : le `ComputedRef` retourné est réactif — si `props.vuetifyOptions` change, le merge est recalculé automatiquement.
 - **toRaw** : le composable appelle `toRaw()` sur `vuetifyOptions` avant le merge pour éviter les effets de bord des proxies Vue sur `deepmerge`.
 - **Limitation** : ne pas utiliser pour passer des event listeners (`onXxx`) — seules les props de données sont supportées par `deepmerge`.
+
+---
+
+## Voir aussi
+
+- [Passthrough & typage des wrappers — stratégie sans breaking change](./passthrough-typage-wrappers.md) : comment typer `vuetifyOptions` et harmoniser le passage des props sans casser les consommateurs.
