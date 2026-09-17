@@ -14,14 +14,10 @@ const items = [
 const runAxe = async (
 	wrapper: ReturnType<typeof mount>,
 	name: string,
-	extraIgnoreRules: string[] = [],
-
 ) => {
 	const results = await axe(wrapper.element as HTMLElement)
 
-	assertNoA11yViolations(results, name, {
-		ignoreRules: ['region', ...extraIgnoreRules],
-	})
+	assertNoA11yViolations(results, name)
 
 	wrapper.unmount()
 }
@@ -30,7 +26,6 @@ const mountComponent = (options = {}) =>
 	mount(HeaderNavigationBar, {
 		global: {
 			stubs: {
-				Teleport: true,
 				RouterLink: true,
 			},
 		},
@@ -150,12 +145,7 @@ describe('HeaderNavigationBar – accessibility (axe)', () => {
 		await runAxe(
 			wrapper,
 			'HeaderNavigationBar – open burger menu',
-			[
-				'aria-required-children',
-				'empty-heading',
-				'list',
-				'listitem',
-			],
+
 		)
 	})
 
@@ -188,10 +178,6 @@ describe('HeaderNavigationBar – accessibility (axe)', () => {
 		await runAxe(
 			wrapper,
 			'HeaderNavigationBar – navigation slots',
-			[
-				'aria-required-children',
-				'list',
-			],
 		)
 	})
 })
