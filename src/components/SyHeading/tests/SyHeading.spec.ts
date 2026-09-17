@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
-import SyHeading from './SyHeading.vue'
+import SyHeading from '../SyHeading.vue'
 
 describe('SyHeading', () => {
 	it('renders default heading level 2', () => {
