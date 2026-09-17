@@ -1,10 +1,12 @@
 <script lang="ts" setup>
-	import { computed, provide, readonly as readonlyState, ref, toRef, useAttrs, type ComponentPublicInstance } from 'vue'
+	import { computed, provide, readonly as readonlyState, ref, toRef, type ComponentPublicInstance } from 'vue'
 	import MonthPickerInput from './MonthPickerText/MonthPickerInput.vue'
 	import MonthPickerVisual from './MonthPickerVisual/MonthPickerVisual.vue'
 	import { watch } from 'vue'
-	import { locales as defaultLocales, localesKey } from './locales'
-	import { defaultTextFieldProps, useTextField } from './MonthPickerText/useTextField'
+	import { locales as defaultLocales } from './locales'
+	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
+	import { defaultTextFieldProps } from '@/composables/useTextField'
+	import { usePickerInputProps } from './usePickerInputProps'
 	import { defaultMonthPickerVisualProps } from './MonthPickerVisual/MonthPickerVisualProps'
 	import { useMonthPickerValidation } from './useMonthPickerValidation'
 	import { validationPropsDefaults } from '@/composables/unifyValidation/useValidation'
@@ -25,14 +27,13 @@
 
 	const locales = useLocales(defaultLocales, () => props.locales)
 
-	provide(localesKey, locales)
+	provide(calendarLocalesKey, locales)
 
 	const emits = defineEmits<{
 		(e: 'update:modelValue', value: string | undefined): void
 		(e: 'update:open', value: boolean): void
 	}>()
 
-	const attrs = useAttrs()
 	const textInput = ref<ComponentPublicInstance<typeof MonthPickerInput> | null>(null)
 	const toggleBtn = computed(() => textInput.value?.toggleBtn)
 
@@ -79,19 +80,7 @@
 		locales,
 	})
 
-	const inputProps = computed(() => ({
-		...attrs,
-		...useTextField(props).value,
-		required: props.required,
-		displayAsterisk: props.displayAsterisk,
-		errorMessages: errors.value,
-		warningMessages: warnings.value,
-		successMessages: successes.value,
-		hasError: hasError.value,
-		hasWarning: hasWarning.value,
-		hasSuccess: hasSuccess.value,
-		showSuccessMessages: props.showSuccessMessages,
-	}))
+	const inputProps = usePickerInputProps(props, { errors, warnings, successes, hasError, hasWarning, hasSuccess })
 
 	defineExpose({
 		errors: readonlyState(errors),
