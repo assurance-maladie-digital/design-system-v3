@@ -5883,6 +5883,39 @@
   ],
   "SelectBtnField": [
     {
+      "hash": "7ebfa59c2acbce33901ff8003e4f73f4c5e8016c",
+      "date": "2026-09-16 14:52:14 +0200",
+      "dateFr": "16/09/2026",
+      "message": "add on focus",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "ed876dadf42a4f0a077cb76458c5209d02d9c4ff",
+      "date": "2026-09-10 10:24:20 +0200",
+      "dateFr": "10/09/2026",
+      "message": "fix tests",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "dd8ac6caf9610089fdd27dc9544d58ded7554ac9",
+      "date": "2026-09-09 14:26:40 +0200",
+      "dateFr": "09/09/2026",
+      "message": "add tests a11y to selectBtnField",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
       "dateFr": "10/09/2026",
@@ -14302,10 +14335,10 @@
   ],
   "PasswordField": [
     {
-      "hash": "6d1728bfbe9d7f9a2b376e732d0b17bf2e0e997d",
-      "date": "2026-09-15 13:26:34 +0200",
+      "hash": "e945f9bca8bd9b042d2459700cb37aa26da92083",
+      "date": "2026-09-15 14:54:14 +0200",
       "dateFr": "15/09/2026",
-      "message": "ajout onglet a11y dans le passwordfield ainsi que le dossier validation",
+      "message": "PasswordField: ajout onglet a11y ainsi que le dossier validation (#2556)",
       "version": null,
       "confidence": "forte",
       "keywords": true,

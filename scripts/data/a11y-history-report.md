@@ -1,6 +1,6 @@
 # Rapport d’historique d’accessibilité par composant
 
-- Généré le: 2026-09-15T12:14:40.737Z
+- Généré le: 2026-09-17T09:56:32.358Z
 
 ## Accordion
 
@@ -1789,6 +1789,15 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.1-alpha` · Hash: `d4592f02a5e6d34bc56b4028abcceeab394a0120` | pattern ARIA
 
 ## SelectBtnField
+
+- **16/09/2026** — add on focus  
+  Release: _prochaine version_ · Hash: `7ebfa59c2acbce33901ff8003e4f73f4c5e8016c` | mot-clé a11y · pattern ARIA
+
+- **10/09/2026** — fix tests  
+  Release: _prochaine version_ · Hash: `ed876dadf42a4f0a077cb76458c5209d02d9c4ff` | pattern ARIA
+
+- **09/09/2026** — add tests a11y to selectBtnField  
+  Release: _prochaine version_ · Hash: `dd8ac6caf9610089fdd27dc9544d58ded7554ac9` | mot-clé a11y · pattern ARIA
 
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
@@ -4205,8 +4214,8 @@ Aucune amélioration d’accessibilité détectée.
 
 ## PasswordField
 
-- **15/09/2026** — ajout onglet a11y dans le passwordfield ainsi que le dossier validation  
-  Release: _prochaine version_ · Hash: `6d1728bfbe9d7f9a2b376e732d0b17bf2e0e997d` | mot-clé a11y
+- **15/09/2026** — PasswordField: ajout onglet a11y ainsi que le dossier validation (#2556)  
+  Release: _prochaine version_ · Hash: `e945f9bca8bd9b042d2459700cb37aa26da92083` | mot-clé a11y
 
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y

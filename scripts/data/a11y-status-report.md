@@ -1,6 +1,6 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 15/09/2026
+Généré le: 17/09/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
@@ -14,7 +14,7 @@ Généré le: 15/09/2026
 | **CookieBanner** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **CookiesSelection** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **CopyBtn** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
-| **Customs/Selects/SelectBtnField** | ❌ Non | ✅ Non | ✅ Complète | ❌ Non | ❌ |
+| **Customs/Selects/SelectBtnField** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/Selects/SyAutocomplete** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/Selects/SyInputSelect** | ❌ Non | ✅ Non | ✅ Complète | ❌ Non | ❌ |
 | **Customs/Selects/SySelect** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -82,4 +82,4 @@ Généré le: 15/09/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 59 / 77 (76.62%)**
+**Total des composants conformes : 60 / 77 (77.92%)**
