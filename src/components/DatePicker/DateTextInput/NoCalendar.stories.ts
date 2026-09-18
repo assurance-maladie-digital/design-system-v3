@@ -68,43 +68,38 @@ const meta = {
 				'date-selected': 'onDate-selected',
 			},
 		},
-		docs: {
-			description: {
-				component: '\n## DatePicker en mode text input (noCalendar) - IncompatibilitÃ©s entre props\n\n### ContrÃ´le d\'affichage des icÃ´nes\n- `noIcon: true` masque toutes les icÃ´nes, rendant `displayIcon`, `displayAppendIcon` et `displayPrependIcon` sans effet\n- `displayIcon: false` dÃ©sactive les icÃ´nes, rendant `displayAppendIcon` et `displayPrependIcon` sans effet\n- `displayAppendIcon` et `displayPrependIcon` sont mutuellement exclusifs; si les deux sont dÃ©finis Ã  `true`, `displayAppendIcon` est prioritaire\n\n### Validation et Ã©tats de champ\n- `readonly: true` dÃ©sactive toutes les validations, y compris `required` et les rÃ¨gles personnalisÃ©es\n- `disabled` et `readonly` sont mutuellement exclusifs\n- `disableErrorHandling: true` peut crÃ©er une incohÃ©rence avec `showSuccessMessages: true`\n\n### Format et saisie\n- `displayRange: true` nÃ©cessite que modelValue soit un tableau de deux dates `[startDate, endDate]`\n- `autoClamp: true` peut court-circuiter certaines validations manuelles\n',
-			},
-		},
 	},
 	argTypes: {
 		'onUpdate:modelValue': {
-			description: 'Ã‰mis lorsque la valeur du champ est mise Ã  jour',
+			description: 'Émis lorsque la valeur du champ est mise à jour',
 			table: {
 				category: 'events',
 				type: { summary: '(value: DateValue) => void' },
 			},
 		},
 		'onFocus': {
-			description: 'Ã‰mis lorsque le champ reÃ§oit le focus',
+			description: 'Émis lorsque le champ reÃ§oit le focus',
 			table: {
 				category: 'events',
 				type: { summary: '() => void' },
 			},
 		},
 		'onBlur': {
-			description: 'Ã‰mis lorsque le champ perd le focus',
+			description: 'Émis lorsque le champ perd le focus',
 			table: {
 				category: 'events',
 				type: { summary: '() => void' },
 			},
 		},
 		'onInput': {
-			description: 'Ã‰mis lors de la saisie dans le champ',
+			description: 'Émis lors de la saisie dans le champ',
 			table: {
 				category: 'events',
 				type: { summary: '(value: string) => void' },
 			},
 		},
 		'onDate-selected': {
-			description: 'Ã‰mis lorsqu\'une date complÃ¨te est saisie manuellement',
+			description: 'Emis lorsqu\'une date complÃ¨te est saisie manuellement',
 			table: {
 				category: 'events',
 				type: { summary: '(value: DateValue) => void' },
@@ -175,17 +170,17 @@ const meta = {
 		},
 		'displayIcon': {
 			control: 'boolean',
-			description: 'ContrÃ´le l\'affichage de l\'icÃ´ne calendrier, Ã  utiliser en conjonction avec displayPrependIcon ou displayAppendIcon. âš ï¸ Sans effet si noIcon est true.',
+			description: 'ContrÃ´le l\'affichage de l\'icône calendrier, Ã  utiliser en conjonction avec displayPrependIcon ou displayAppendIcon. âš ï¸ Sans effet si noIcon est true.',
 			defaultValue: true,
 		},
 		'displayAppendIcon': {
 			control: 'boolean',
-			description: 'Affiche l\'icÃ´ne calendrier Ã  la fin du champ (Ã  droite). âš ï¸ Sans effet si displayIcon est false ou si noIcon est true. Prioritaire sur displayPrependIcon si les deux sont true.',
+			description: 'Affiche l\'icône calendrier Ã  la fin du champ (Ã  droite). âš ï¸ Sans effet si displayIcon est false ou si noIcon est true. Prioritaire sur displayPrependIcon si les deux sont true.',
 			defaultValue: false,
 		},
 		'noIcon': {
 			control: 'boolean',
-			description: 'Masque toutes les icÃ´nes du composant, remplace les props displayIcon, displayAppendIcon et displayPrependIcon. âš ï¸ Incompatible avec displayIcon, displayAppendIcon et displayPrependIcon.',
+			description: 'Masque toutes les icônes du composant, remplace les props displayIcon, displayAppendIcon et displayPrependIcon. âš ï¸ Incompatible avec displayIcon, displayAppendIcon et displayPrependIcon.',
 			defaultValue: false,
 		},
 		'customRules': {
@@ -215,7 +210,7 @@ const meta = {
 		},
 		'displayPrependIcon': {
 			control: 'boolean',
-			description: 'Affiche l\'icÃ´ne calendrier au dÃ©but du champ (Ã  gauche). âš ï¸ Sans effet si displayIcon est false, si noIcon est true, ou si displayAppendIcon est true.',
+			description: 'Affiche l\'icône calendrier au dÃ©but du champ (Ã  gauche). âš ï¸ Sans effet si displayIcon est false, si noIcon est true, ou si displayAppendIcon est true.',
 			defaultValue: true,
 		},
 		'disableErrorHandling': {
@@ -461,7 +456,7 @@ export const WithAppendIcon: Story = {
             v-model="date"
             format="DD/MM/YYYY"
             placeholder="JJ/MM/AAAA"
-            label="Date avec icÃ´ne en suffixe (JJ/MM/AAAA)"
+            label="Date avec icône en suffixe (JJ/MM/AAAA)"
             no-calendar
             display-append-icon
           />
@@ -474,7 +469,7 @@ export const WithAppendIcon: Story = {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
 		'placeholder': 'JJ/MM/AAAA',
-		'label': 'Date avec icÃ´ne en suffixe (JJ/MM/AAAA)',
+		'label': 'Date avec icône en suffixe (JJ/MM/AAAA)',
 		'displayAppendIcon': true,
 		'onUpdate:modelValue': fn(),
 		'onFocus': fn(),
@@ -489,7 +484,7 @@ export const WithAppendIcon: Story = {
 			},
 			template: `
         <div style="padding: 20px;">
-          <h4 class="mb-4">Format avec icÃ´ne en suffixe</h4>
+          <h4 class="mb-4">Format avec icône en suffixe</h4>
           <DatePicker
             v-model="date"
             v-bind="args"
