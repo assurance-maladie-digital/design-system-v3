@@ -173,8 +173,8 @@
 	height: auto;
 }
 
-:deep(.v-btn--variant-text .v-btn__overlay) {
-	background: transparent !important;
+:deep(.v-btn--icon:hover) {
+	opacity: 1;
 }
 
 .alert-icon :deep(.v-icon__svg) {
