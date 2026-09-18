@@ -245,7 +245,7 @@ const meta = {
 		},
 		'displayAsterisk': {
 			control: 'boolean',
-			description: 'Affiche un astÃ©risque (*) Ã  cÃ´tÃ© du label pour indiquer visuellement que le champ est obligatoire',
+			description: 'Affiche un astérisque (*) Ã  cÃ´tÃ© du label pour indiquer visuellement que le champ est obligatoire',
 			defaultValue: false,
 		},
 		'width': {
@@ -376,7 +376,7 @@ export const Required: Story = {
 				code: `
 				<template>
 					<div>
-						<h4 class="mb-4">Sans astÃ©risque :</h4>
+						<h4 class="mb-4">Sans astérisque :</h4>
 						<DatePicker
 							v-model="date"
 							format="DD/MM/YYYY"
@@ -386,7 +386,7 @@ export const Required: Story = {
 							is-outlined
 							:no-calendar="true"
 						/>
-						<h4 class="mb-4">Avec astÃ©risque :</h4>
+						<h4 class="mb-4">Avec astérisque :</h4>
 						<DatePicker
 							v-model="date"
 							format="DD/MM/YYYY"
@@ -433,12 +433,12 @@ export const Required: Story = {
 			},
 			template: `
 				<div>
-					<h4 class="mb-4">Sans astÃ©risque :</h4>
+					<h4 class="mb-4">Sans astérisque :</h4>
 					<DatePicker
 						v-model="date"
 						v-bind="args"
 					/>
-					<h4 class="mb-4">Avec astÃ©risque :</h4>
+					<h4 class="mb-4">Avec astérisque :</h4>
 					<DatePicker
 						v-model="date"
 						v-bind="args"
