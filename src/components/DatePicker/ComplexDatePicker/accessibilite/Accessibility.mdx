@@ -60,11 +60,13 @@ import {
 </DemoSection>
 
 <BestPracticesSection>
-- Fournir un libellé ou <code>aria-label</code> explicite, surtout si le label visuel est masqué ou tronqué.
-- Si <code>readonly</code>, laisser le calendrier fermé et désactiver l’effacement; ne pas surcharger les raccourcis.
+- Fournir un <code>label</code> explicite; utiliser <code>placeholder</code> uniquement comme aide complémentaire.
+- Conserver <code>format</code>, <code>dateFormatReturn</code> et le <code>hint</code> cohérents pour éviter une valeur affichée différente de la valeur émise.
+- Laisser <code>isValidateOnBlur</code> à <code>true</code> si les erreurs et le succès doivent être annoncés au blur; utiliser <code>validateOnSubmit()</code> pour le contrôle de soumission.
+- Avec <code>textFieldActivator</code>, s’assurer que toute la zone d’activation reste compréhensible au clavier et que l’icône n’est pas le seul point d’entrée.
+- Si <code>readonly</code>, le champ ne doit pas être utilisé pour saisir ou effacer une date; ne pas le présenter comme un combobox éditable.
 - En plage de dates, conserver la séparatrice <code>" - "</code> et préciser l’ordre début/fin dans le hint.
 - Ajuster <code>period</code> pour ne pas masquer des dates attendues; vérifier <code>min/max</code> cohérents avec la plage.
-- Avec <code>textFieldActivator</code>, s’assurer que le label reste lisible et que l’icône n’est pas le seul point d’entrée.
 </BestPracticesSection>
 
 <ResourcesSection>

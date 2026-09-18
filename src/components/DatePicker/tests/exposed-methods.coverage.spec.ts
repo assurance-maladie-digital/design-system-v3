@@ -1,9 +1,9 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import DateTextInput from '../DateTextInput/DateTextInput.vue'
+import type { DateTextInputPublicApi } from '../types'
 
-type DateTextInputInstance = InstanceType<typeof DateTextInput>
-type DateTextInputVM = DateTextInputInstance & { focus: () => void, blur: () => void }
+type DateTextInputVM = InstanceType<typeof DateTextInput> & DateTextInputPublicApi
 
 /**
  * Tests pour couvrir les méthodes exposées (focus, blur)
@@ -66,7 +66,50 @@ describe('Exposed Methods Coverage Tests', () => {
 		})
 
 		// La méthode doit exister
-		expect((wrapper.vm as DateTextInputInstance).validateOnSubmit).toBeDefined()
+		expect((wrapper.vm as DateTextInputVM).validateOnSubmit).toBeDefined()
+
+		wrapper.unmount()
+	})
+
+	it('exposes the expected public API contract', () => {
+		const wrapper = mount(DateTextInput, {
+			props: {
+				modelValue: '',
+				label: 'Date',
+				format: 'DD/MM/YYYY',
+			},
+		})
+
+		const vm = wrapper.vm as DateTextInputVM
+		expect(typeof vm.validateOnSubmit).toBe('function')
+		expect(typeof vm.validate).toBe('function')
+		expect(typeof vm.reset).toBe('function')
+		expect(typeof vm.focus).toBe('function')
+		expect(typeof vm.blur).toBe('function')
+		expect(Array.isArray(vm.errors)).toBe(true)
+		expect(Array.isArray(vm.warnings)).toBe(true)
+		expect(Array.isArray(vm.successes)).toBe(true)
+
+		wrapper.unmount()
+	})
+
+	it('removes focus from the native input when the exposed blur method is called', async () => {
+		const wrapper = mount(DateTextInput, {
+			props: {
+				modelValue: '',
+				label: 'Date',
+				format: 'DD/MM/YYYY',
+			},
+			attachTo: document.body,
+		})
+
+		const input = wrapper.find('input')
+		const nativeInput = input.element as HTMLInputElement
+		nativeInput.focus()
+
+		;(wrapper.vm as DateTextInputVM).blur()
+
+		expect(document.activeElement).not.toBe(nativeInput)
 
 		wrapper.unmount()
 	})
