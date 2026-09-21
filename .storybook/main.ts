@@ -4,7 +4,8 @@ import remarkGfm from 'remark-gfm'
 
 const isDev = process.env.NODE_ENV === 'development'
 
-// Branche déployée par Netlify (`BRANCH`), absente en local.
+// Netlify construit tous ses environnements avec `build-storybook` : `NODE_ENV`
+// ne distingue pas le Storybook publié du site d'équipe, la branche si.
 const showConformitePanel = process.env.BRANCH !== 'prod'
 
 const stories = [
@@ -31,11 +32,7 @@ if (isDev) {
 const config: StorybookConfig = {
 	stories,
 	staticDirs: ['./public'],
-	// L'onglet « Conformité » est un outil interne : visible en local, sur le
-	// site de l'équipe et sur les deploy previews, absent du seul Storybook
-	// publié. `NODE_ENV` ne sait pas les distinguer — Netlify construit tous
-	// ses environnements avec `build-storybook` — d'où le test sur la branche.
-	// Le manager est bundlé à part : on lui transmet la décision par le <head>.
+	// Le manager est bundlé à part : la décision lui passe par le <head>.
 	managerHead: head => `${head}<meta name="synapse-conformite" content="${showConformitePanel}">`,
 	addons: [
 		'@storybook/addon-links',
