@@ -13,10 +13,6 @@ describe('isConformiteHidden', () => {
 		expect(isConformiteHidden('Composants/Données/SyTable/Usages')).toBe(false)
 	})
 
-	// Régression : `api.getCurrentStoryData()` renvoie `undefined` tant que
-	// l'index n'est pas résolu, et l'ancien code déréférençait `.title` sans
-	// garde. Titre inconnu = rien à masquer ; masquer par défaut faisait
-	// disparaître l'onglet en dev, où il doit s'afficher.
 	it('laisse le panneau visible tant que le titre est inconnu', () => {
 		expect(isConformiteHidden(undefined)).toBe(false)
 		expect(isConformiteHidden('')).toBe(false)
