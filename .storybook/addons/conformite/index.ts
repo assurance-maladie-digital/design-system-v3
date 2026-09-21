@@ -1,6 +1,7 @@
 import React from 'react'
 import { addons, types } from 'storybook/manager-api'
 import { ConformitePanel } from './conformitePanel'
+import { isConformiteHidden } from './isConformiteHidden'
 
 export const registerConformiteAddon = () => {
 	addons.register(
@@ -11,13 +12,7 @@ export const registerConformiteAddon = () => {
 				{
 					type: types.PANEL,
 					title: 'Conformité',
-					disabled: () => {
-						const story = api.getCurrentStoryData()
-
-						return story.title
-							.split('/')
-							.some(segment => segment.toLowerCase() === 'validation')
-					},
+					disabled: () => isConformiteHidden(api.getCurrentStoryData()?.title),
 					render: ({ active }) =>
 						React.createElement(
 							ConformitePanel,
