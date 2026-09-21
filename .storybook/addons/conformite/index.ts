@@ -3,10 +3,6 @@ import { addons, types } from 'storybook/manager-api'
 import { ConformitePanel } from './conformitePanel'
 import { isConformiteHidden } from './isConformiteHidden'
 
-/**
- * Décision injectée par `managerHead` (voir .storybook/main.ts).
- * Meta absent = on affiche : seul le Storybook publié le passe à `false`.
- */
 const isPanelEnabled = () =>
 	document
 		.querySelector('meta[name="synapse-conformite"]')

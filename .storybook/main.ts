@@ -3,9 +3,6 @@ import { mergeConfig } from 'vite'
 import remarkGfm from 'remark-gfm'
 
 const isDev = process.env.NODE_ENV === 'development'
-
-// Netlify construit tous ses environnements avec `build-storybook` : `NODE_ENV`
-// ne distingue pas le Storybook publié du site d'équipe, la branche si.
 const showConformitePanel = process.env.BRANCH !== 'prod'
 
 const stories = [
