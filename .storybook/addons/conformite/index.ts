@@ -3,15 +3,17 @@ import { addons, types } from 'storybook/manager-api'
 import { ConformitePanel } from './conformitePanel'
 import { isConformiteHidden } from './isConformiteHidden'
 
-/** Mode injecté par `managerHead` (voir .storybook/main.ts). */
-const isDevManager = () =>
+/**
+ * Décision injectée par `managerHead` (voir .storybook/main.ts).
+ * Meta absent = on affiche : seul le Storybook publié le passe à `false`.
+ */
+const isPanelEnabled = () =>
 	document
-		.querySelector('meta[name="synapse-env"]')
-		?.getAttribute('content') === 'development'
+		.querySelector('meta[name="synapse-conformite"]')
+		?.getAttribute('content') !== 'false'
 
 export const registerConformiteAddon = () => {
-	// Outil interne : absent du Storybook publié.
-	if (!isDevManager()) return
+	if (!isPanelEnabled()) return
 
 	addons.register(
 		'conformite-design-system',
