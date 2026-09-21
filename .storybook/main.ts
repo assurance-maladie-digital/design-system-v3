@@ -28,6 +28,10 @@ if (isDev) {
 const config: StorybookConfig = {
 	stories,
 	staticDirs: ['./public'],
+	// Le manager est bundlé séparément et n'a pas accès à `isDev`. On lui
+	// transmet le mode par le <head>, pour garder une source de vérité unique
+	// avec le filtrage des stories ci-dessus.
+	managerHead: head => `${head}<meta name="synapse-env" content="${isDev ? 'development' : 'production'}">`,
 	addons: [
 		'@storybook/addon-links',
 		'@jls-digital/storybook-addon-code',
