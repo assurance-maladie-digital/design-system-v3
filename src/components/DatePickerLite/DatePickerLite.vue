@@ -1,12 +1,4 @@
 <script lang="ts" setup>
-	/**
-	 * Handle the validation and the synchronization betweens the sub component
-	 * Owns the raw text of the field (single source), kept in sync with the model
-	 * by useDatePickerLiteTextSync. Do not handle :
-	 * - The text input format
-	 * - The visual rendering
-	 */
-
 	import { computed, provide, readonly as readonlyState, ref, toRef, type ComponentPublicInstance } from 'vue'
 	import DatePickerLiteInput from './DatePickerLiteText/DatePickerLiteInput.vue'
 	import DatePickerLiteVisual from './DatePickerLiteVisual/DatePickerLiteVisual.vue'
