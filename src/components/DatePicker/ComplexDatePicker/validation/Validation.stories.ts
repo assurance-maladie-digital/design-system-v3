@@ -295,7 +295,14 @@ export const WithFormSubmission: Story = {
 			},
 		],
 	},
-	render: () => {
+	args: {
+		label: 'Date (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
+		format: 'DD/MM/YYYY',
+		required: true,
+		useCombinedMode: true,
+	},
+	render: (args) => {
 		return {
 			components: { DatePicker, VBtn },
 			setup() {
@@ -314,20 +321,16 @@ export const WithFormSubmission: Story = {
 					}
 				}
 
-				return { date, datePicker, submitted, submitForm }
+				return { args, date, datePicker, submitted, submitForm }
 			},
 			template: `
               <div class="pa-4">
                 <form @submit.prevent="submitForm">
                   <DatePicker
                     ref="datePicker"
+                    v-bind="args"
                     v-model="date"
-					label="Date (JJ/MM/AAAA)"
-                    placeholder="JJ/MM/AAAA"
-                    format="DD/MM/YYYY"
-                    required
-					class="mb-4"
-					useCombinedMode
+                    class="mb-4"
                   />
                   <VBtn type="submit" color="primary">Soumettre</VBtn>
                 </form>
@@ -348,6 +351,7 @@ export const CustomRules: Story = {
 				story: 'Règles personnalisées avec `customRules` : la date ne peut pas être antérieure à aujourd\'hui.',
 			},
 		},
+		controls: { exclude: ['modelValue', 'customRules'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -388,7 +392,14 @@ export const CustomRules: Story = {
 			},
 		],
 	},
-	render: () => {
+	args: {
+		label: 'Date de rendez-vous (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
+		format: 'DD/MM/YYYY',
+		required: true,
+		useCombinedMode: true,
+	},
+	render: (args) => {
 		return {
 			components: { DatePicker },
 			setup() {
@@ -403,19 +414,16 @@ export const CustomRules: Story = {
 
 				const date = ref(null)
 
-				return { date, customRules }
+				return { args, date, customRules }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
 					<DatePicker
+						v-bind="args"
 						v-model="date"
 						:custom-rules="customRules"
-						required
-						use-combined-mode
-						label="Date de rendez-vous (JJ/MM/AAAA)"
-				placeholder="JJ/MM/AAAA"
-			/>
-			<div class="mt-4 text-body-2">Valeur actuelle : {{ date }}</div>
+					/>
+					<div class="mt-4 text-body-2">Valeur actuelle : {{ date }}</div>
 				</div>
 			`,
 		}
@@ -429,6 +437,7 @@ export const CustomWarningRules: Story = {
 				story: 'Règles d\'avertissement personnalisées avec `customWarningRules` : un message non bloquant s\'affiche pour les dates en 2025.',
 			},
 		},
+		controls: { exclude: ['modelValue', 'customWarningRules'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -479,7 +488,14 @@ export const CustomWarningRules: Story = {
 			},
 		],
 	},
-	render: () => {
+	args: {
+		label: 'Date (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
+		format: 'DD/MM/YYYY',
+		required: true,
+		useCombinedMode: true,
+	},
+	render: (args) => {
 		return {
 			components: { DatePicker },
 			setup() {
@@ -505,19 +521,16 @@ export const CustomWarningRules: Story = {
 
 				const date = ref('')
 
-				return { date, customWarningRules }
+				return { args, date, customWarningRules }
 			},
 			template: `
 				<div class="d-flex flex-wrap align-center pa-4">
 					<DatePicker
+						v-bind="args"
 						v-model="date"
 						:custom-warning-rules="customWarningRules"
-						required
-						use-combined-mode
-						label="Date de rendez-vous (JJ/MM/AAAA)"
-						placeholder="JJ/MM/AAAA"
-				/>
-				<div class="mt-4 text-body-2">Valeur actuelle : {{ date }}</div>
+					/>
+					<div class="mt-4 text-body-2">Valeur actuelle : {{ date }}</div>
 				</div>
 			`,
 		}

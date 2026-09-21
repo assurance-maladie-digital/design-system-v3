@@ -31,6 +31,7 @@ export const DifferentFormats: Story = {
 				story: 'Démonstration de différents formats d\'affichage (JJ/MM/AAAA, MM/JJ/AAAA, AAAA-MM-JJ) avec le mode combiné.',
 			},
 		},
+		controls: { exclude: ['modelValue', 'format', 'label', 'placeholder', 'dateFormatReturn'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -79,7 +80,13 @@ export const DifferentFormats: Story = {
 			},
 		],
 	},
-	render: () => {
+	args: {
+		useCombinedMode: true,
+		required: false,
+		noIcon: false,
+		noCalendar: false,
+	},
+	render: (args) => {
 		return {
 			components: { DatePicker },
 			setup() {
@@ -87,32 +94,32 @@ export const DifferentFormats: Story = {
 				const americanDate = ref('')
 				const isoDate = ref('')
 
-				return { europeanDate, americanDate, isoDate }
+				return { args, europeanDate, americanDate, isoDate }
 			},
 			template: `
               <div class="d-flex flex-column pa-4">
                 <DatePicker
+                  v-bind="args"
                   v-model="europeanDate"
 				  label="Date (JJ/MM/AAAA)"
                   placeholder="JJ/MM/AAAA"
                   format="DD/MM/YYYY"
                   class="mb-4"
-				  useCombinedMode
                 />
                 <DatePicker
+                  v-bind="args"
                   v-model="americanDate"
 				  label="Date (MM/JJ/AAAA)"
                   placeholder="MM/JJ/AAAA"
                   format="MM/DD/YYYY"
                   class="mb-4"
-				  useCombinedMode
                 />
                 <DatePicker
+                  v-bind="args"
                   v-model="isoDate"
 				  label="Date (AAAA-MM-JJ)"
                   placeholder="AAAA-MM-JJ"
                   format="YYYY-MM-DD"
-				  useCombinedMode
                 />
                 <div class="mt-4 text-body-2">Valeur 1 : {{ europeanDate }} | Valeur 2 : {{ americanDate }} | Valeur 3 : {{ isoDate }}</div>
               </div>
@@ -161,22 +168,25 @@ export const WithDateFormatReturn: Story = {
 			},
 		],
 	},
-	render: () => {
+	args: {
+		label: 'Date (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
+		format: 'DD/MM/YYYY',
+		dateFormatReturn: 'YYYY-MM-DD',
+		useCombinedMode: true,
+	},
+	render: (args) => {
 		return {
 			components: { DatePicker },
 			setup() {
 				const date = ref('')
-				return { date }
+				return { args, date }
 			},
 			template: `
               <div class="d-flex flex-column pa-4">
                 <DatePicker
+                  v-bind="args"
                   v-model="date"
-				  label="Date (JJ/MM/AAAA)"
-                  placeholder="JJ/MM/AAAA"
-                  format="DD/MM/YYYY"
-                  dateFormatReturn="YYYY-MM-DD"
-				  useCombinedMode
                 />
                 <div>Valeur du modèle: {{ date }}</div>
               </div>
@@ -313,6 +323,7 @@ export const AutoClamp: Story = {
 				story: 'Démonstration de l\'auto clamp avec différents séparateurs (/, -, .). Les séparateurs sont ajoutés automatiquement pendant la saisie.',
 			},
 		},
+		controls: { exclude: ['modelValue', 'format', 'label', 'placeholder', 'dateFormatReturn'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -369,14 +380,21 @@ export const AutoClamp: Story = {
 			},
 		],
 	},
-	render: () => {
+	args: {
+		useCombinedMode: true,
+		autoClamp: true,
+		required: false,
+		noIcon: false,
+		noCalendar: false,
+	},
+	render: (args) => {
 		return {
 			components: { DatePicker },
 			setup() {
 				const dateSlash = ref('')
 				const dateDash = ref('')
 				const dateDot = ref('')
-				return { dateSlash, dateDash, dateDot }
+				return { args, dateSlash, dateDash, dateDot }
 			},
 			template: `
               <div class="d-flex flex-column pa-4">
@@ -385,34 +403,31 @@ export const AutoClamp: Story = {
                 
                 <h4 class="mb-2">Format JJ/MM/AAAA (séparateur /)</h4>
                 <DatePicker
+                  v-bind="args"
                   v-model="dateSlash"
 				  label="Date (JJ/MM/AAAA)"
                   placeholder="JJ/MM/AAAA"
                   format="DD/MM/YYYY"
-                  useCombinedMode
-                  autoClamp
                 />
                 <div class="caption mb-4">Valeur actuelle: {{ dateSlash || 'aucune date saisie' }}</div>
                 
                 <h4 class="mb-2">Format JJ-MM-AAAA (séparateur -)</h4>
                 <DatePicker
+                  v-bind="args"
                   v-model="dateDash"
 				  label="Date (JJ-MM-AAAA)"
                   placeholder="JJ-MM-AAAA"
                   format="DD-MM-YYYY"
-                  useCombinedMode
-                  autoClamp
                 />
                 <div class="caption mb-4">Valeur actuelle: {{ dateDash || 'aucune date saisie' }}</div>
                 
                 <h4 class="mb-2">Format AAAA.MM.JJ (séparateur .)</h4>
                 <DatePicker
+                  v-bind="args"
                   v-model="dateDot"
 				  label="Date (AAAA.MM.JJ)"
                   placeholder="AAAA.MM.JJ"
                   format="YYYY.MM.DD"
-                  useCombinedMode
-                  autoClamp
                 />
                 <div class="caption mb-4">Valeur actuelle: {{ dateDot || 'aucune date saisie' }}</div>
               </div>

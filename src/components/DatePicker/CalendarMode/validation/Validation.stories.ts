@@ -270,6 +270,7 @@ export const DisableErrorHandling: Story = {
 				story: 'Comparaison entre un champ avec validation interne (défaut) et un champ avec `disableErrorHandling` activé. La validation interne est désactivée sur le deuxième champ.',
 			},
 		},
+		controls: { exclude: ['modelValue', 'label', 'placeholder', 'format', 'disableErrorHandling'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -307,29 +308,31 @@ const value2 = ref('')
 			},
 		],
 	},
-	render: () => ({
+	args: {
+		placeholder: 'JJ/MM/AAAA',
+		format: 'DD/MM/YYYY',
+		required: true,
+	},
+	render: args => ({
 		components: { DatePicker },
 		setup() {
 			const value1 = ref('')
 			const value2 = ref('')
-			return { value1, value2 }
+			return { args, value1, value2 }
 		},
 		template: `
 			<div class="pa-4 d-flex flex-column" style="gap: 16px;">
 				<DatePicker
+					v-bind="args"
 					v-model="value1"
 					label="Avec validation interne (défaut)"
-					placeholder="JJ/MM/AAAA"
-					format="DD/MM/YYYY"
-					required
+					disable-error-handling="false"
 				/>
 				<DatePicker
+					v-bind="args"
 					v-model="value2"
 					label="Validation interne désactivée"
-					placeholder="JJ/MM/AAAA"
-					format="DD/MM/YYYY"
-					required
-					disable-error-handling
+					disable-error-handling="true"
 				/>
 				<div class="mt-4 text-body-2">Valeur 1 : {{ value1 }} | Valeur 2 : {{ value2 }}</div>
 			</div>
@@ -531,7 +534,7 @@ const applyValue = async (newValue: string) => {
 
 export const BidirectionalValidation: Story = {
 	parameters: {
-		controls: { disable: true },
+		controls: { exclude: ['modelValue', 'label', 'placeholder', 'format', 'customRules'] },
 		docs: {
 			description: {
 				story: 'Démonstration de la validation bidirectionnelle entre deux DatePickers. Modifier une date revalide l\'autre automatiquement.',
@@ -651,7 +654,11 @@ watch(endDate, () => {
 			},
 		],
 	},
-	render: () => {
+	args: {
+		format: 'DD/MM/YYYY',
+		required: true,
+	},
+	render: (args) => {
 		return {
 			components: { DatePicker },
 			setup() {
@@ -737,6 +744,7 @@ watch(endDate, () => {
 				})
 
 				return {
+					args,
 					startDate,
 					endDate,
 					startDatePickerRef,
@@ -760,11 +768,11 @@ watch(endDate, () => {
 							<h2>Date de début</h2>
 							<DatePicker
 								ref="startDatePickerRef"
+								v-bind="args"
 								v-model="startDate"
 								label="Date de début (JJ/MM/AAAA)"
 								placeholder="JJ/MM/AAAA"
 								:custom-rules="startDateRules"
-								required
 								@update:model-value="validateEndDate"
 							/>
 						</div>
@@ -772,11 +780,11 @@ watch(endDate, () => {
 							<h2>Date de fin</h2>
 							<DatePicker
 								ref="endDatePickerRef"
+								v-bind="args"
 								v-model="endDate"
 								label="Date de fin (JJ/MM/AAAA)"
 								placeholder="JJ/MM/AAAA"
 								:custom-rules="endDateRules"
-								required
 								@update:model-value="validateStartDate"
 							/>
 						</div>

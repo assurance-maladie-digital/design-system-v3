@@ -26,6 +26,7 @@ export const DifferentFormats: Story = {
 				story: 'Démonstration des différents formats d\'affichage supportés par le DatePicker : DD/MM/YYYY, MM/DD/YYYY, YYYY-MM-DD, DD-MM-YY, DD.MM.YYYY.',
 			},
 		},
+		controls: { exclude: ['modelValue', 'format', 'label', 'placeholder', 'dateFormatReturn'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -81,7 +82,12 @@ const value5 = ref('24.12.2025')
 			},
 		],
 	},
-	render: () => ({
+	args: {
+		required: false,
+		noIcon: false,
+		noCalendar: false,
+	},
+	render: args => ({
 		components: { DatePicker },
 		setup() {
 			const value1 = ref('24/12/2025')
@@ -89,11 +95,12 @@ const value5 = ref('24.12.2025')
 			const value3 = ref('2025-12-24')
 			const value4 = ref('24-12-25')
 			const value5 = ref('24.12.2025')
-			return { value1, value2, value3, value4, value5 }
+			return { args, value1, value2, value3, value4, value5 }
 		},
 		template: `
 			<div class="d-flex flex-column gap-4 pa-4">
 				<DatePicker
+					v-bind="args"
 					v-model="value1"
 					placeholder="JJ/MM/AAAA"
 					label="Date (JJ/MM/AAAA)"
@@ -101,6 +108,7 @@ const value5 = ref('24.12.2025')
 					class="py-4"
 				/>
 				<DatePicker
+					v-bind="args"
 					v-model="value2"
 					placeholder="MM/JJ/AAAA"
 					label="Date (MM/JJ/AAAA)"
@@ -108,6 +116,7 @@ const value5 = ref('24.12.2025')
 					class="py-4"
 				/>
 				<DatePicker
+					v-bind="args"
 					v-model="value3"
 					placeholder="AAAA-MM-JJ"
 					label="Date (AAAA-MM-JJ)"
@@ -115,6 +124,7 @@ const value5 = ref('24.12.2025')
 					class="py-4"
 				/>
 				<DatePicker
+					v-bind="args"
 					v-model="value4"
 					placeholder="JJ-MM-AA"
 					label="Date (JJ-MM-AA)"
@@ -122,6 +132,7 @@ const value5 = ref('24.12.2025')
 					class="py-4"
 				/>
 				<DatePicker
+					v-bind="args"
 					v-model="value5"
 					placeholder="JJ.MM.AAAA"
 					label="Date (JJ.MM.AAAA)"
@@ -143,6 +154,7 @@ export const WithDateFormatReturn: Story = {
 				story: 'La prop `dateFormatReturn` permet de définir un format différent pour la valeur émise par le v-model. Le champ affiche la date au format `format` (DD/MM/YYYY) mais émet la valeur au format `dateFormatReturn`.',
 			},
 		},
+		controls: { exclude: ['modelValue', 'format', 'label', 'placeholder', 'dateFormatReturn'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -191,18 +203,24 @@ const value3 = ref('26/12/2025')
 			},
 		],
 	},
-	render: () => ({
+	args: {
+		required: false,
+		noIcon: false,
+		noCalendar: false,
+	},
+	render: args => ({
 		components: { DatePicker },
 		setup() {
 			const value1 = ref('24/12/2025')
 			const value2 = ref('25/12/2025')
 			const value3 = ref('26/12/2025')
-			return { value1, value2, value3 }
+			return { args, value1, value2, value3 }
 		},
 		template: `
 			<div class="d-flex flex-column gap-4 pa-4">
 				<span class="mb-4">Date de retour : {{ value1 }}</span>
 				<DatePicker
+					v-bind="args"
 					v-model="value1"
 					placeholder="JJ/MM/AAAA"
 					label="Date (JJ/MM/AAAA)"
@@ -211,6 +229,7 @@ const value3 = ref('26/12/2025')
 
 				<span class="mb-4">Date de retour : {{ value2 }}</span>
 				<DatePicker
+					v-bind="args"
 					v-model="value2"
 					placeholder="JJ/MM/AAAA"
 					label="Date (JJ/MM/AAAA)"
@@ -220,6 +239,7 @@ const value3 = ref('26/12/2025')
 
 				<span class="mb-4">Date de retour : {{ value3 }}</span>
 				<DatePicker
+					v-bind="args"
 					v-model="value3"
 					placeholder="JJ/MM/AAAA"
 					label="Date (JJ/MM/AAAA)"
@@ -238,6 +258,7 @@ export const WithDayjsFormat: Story = {
 				story: 'Utilisation du composable `useDateFormat` (basé sur dayjs) pour parser et formater la date émise par le DatePicker. La date saisie est parsée puis reformatée avec dayjs.',
 			},
 		},
+		controls: { exclude: ['modelValue', 'format', 'label', 'placeholder', 'dateFormatReturn'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -284,7 +305,12 @@ watch(date, (newDate) => {
 			},
 		],
 	},
-	render: () => ({
+	args: {
+		required: false,
+		noIcon: false,
+		noCalendar: false,
+	},
+	render: args => ({
 		components: { DatePicker },
 		setup() {
 			const { parseDate, formatDate } = useDateFormat()
@@ -306,11 +332,12 @@ watch(date, (newDate) => {
 				}
 			})
 
-			return { date, formattedDate, parsedDate }
+			return { args, date, formattedDate, parsedDate }
 		},
 		template: `
 			<div class="pa-4">
 				<DatePicker
+					v-bind="args"
 					v-model="date"
 					placeholder="JJ/MM/AAAA"
 					label="Date (JJ/MM/AAAA)"

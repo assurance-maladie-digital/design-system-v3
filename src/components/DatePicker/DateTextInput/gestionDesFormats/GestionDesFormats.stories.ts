@@ -103,6 +103,7 @@ export const EuropeanFormat: Story = {
 
 export const AutoClampFeature: Story = {
 	parameters: {
+		controls: { exclude: ['modelValue', 'format', 'label', 'placeholder', 'dateFormatReturn', 'displayRange'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -172,7 +173,13 @@ export const AutoClampFeature: Story = {
 			},
 		],
 	},
-	render: () => {
+	args: {
+		noCalendar: true,
+		autoClamp: true,
+		required: false,
+		noIcon: false,
+	},
+	render: (args) => {
 		return {
 			components: { DatePicker },
 			setup() {
@@ -180,7 +187,7 @@ export const AutoClampFeature: Story = {
 				const dateDash = ref('')
 				const dateDot = ref('')
 				const dateRange = ref('')
-				return { dateSlash, dateDash, dateDot, dateRange }
+				return { args, dateSlash, dateDash, dateDot, dateRange }
 			},
 			template: `
         <div class="d-flex flex-column pa-4">
@@ -189,46 +196,42 @@ export const AutoClampFeature: Story = {
           
           <h4 class="mb-2">Format JJ/MM/AAAA (séparateur /)</h4>
           <DatePicker
+            v-bind="args"
             v-model="dateSlash"
             placeholder="JJ/MM/AAAA"
             label="Date (JJ/MM/AAAA)"
             format="DD/MM/YYYY"
-            noCalendar
-            autoClamp
           />
           <div class="caption mb-4">Valeur actuelle: {{ dateSlash || 'aucune date saisie' }}</div>
           
           <h4 class="mb-2">Format JJ-MM-AAAA (séparateur -)</h4>
           <DatePicker
+            v-bind="args"
             v-model="dateDash"
             placeholder="JJ-MM-AAAA"
             label="Date (JJ-MM-AAAA)"
             format="DD-MM-YYYY"
-            noCalendar
-            autoClamp
           />
           <div class="caption mb-4">Valeur actuelle: {{ dateDash || 'aucune date saisie' }}</div>
           
           <h4 class="mb-2">Format AAAA.MM.JJ (séparateur .)</h4>
           <DatePicker
+            v-bind="args"
             v-model="dateDot"
             placeholder="AAAA.MM.JJ"
             label="Date (AAAA.MM.JJ)"
             format="YYYY.MM.DD"
-            noCalendar
-            autoClamp
           />
           <div class="caption mb-4">Valeur actuelle: {{ dateDot || 'aucune date saisie' }}</div>
           
           <h4 class="mb-2">Mode plage de dates (séparateur /)</h4>
           <DatePicker
+            v-bind="args"
             v-model="dateRange"
             placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
             label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
             format="DD/MM/YYYY"
-            displayRange
-            noCalendar
-            autoClamp
+            display-range
           />
           <div class="caption mb-4">Valeur actuelle: {{ dateRange || 'aucune plage saisie' }}</div>
         </div>
@@ -239,6 +242,7 @@ export const AutoClampFeature: Story = {
 
 export const DifferentFormats: Story = {
 	parameters: {
+		controls: { exclude: ['modelValue', 'format', 'label', 'placeholder', 'dateFormatReturn'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -301,7 +305,12 @@ export const DifferentFormats: Story = {
 			},
 		],
 	},
-	render: () => {
+	args: {
+		noCalendar: true,
+		required: false,
+		noIcon: false,
+	},
+	render: (args) => {
 		return {
 			components: { DatePicker: DatePicker },
 			setup() {
@@ -310,48 +319,48 @@ export const DifferentFormats: Story = {
 				const value3 = ref('2025-12-24')
 				const value4 = ref('24-12-25')
 				const value5 = ref('25.12.2025')
-				return { value1, value2, value3, value4, value5 }
+				return { args, value1, value2, value3, value4, value5 }
 			},
 			template: `
               <div class="d-flex flex-column gap-4 pa-4">
                 <DatePicker
+                    v-bind="args"
                     v-model="value1"
                     placeholder="JJ/MM/AAAA"
 					label="Date (JJ/MM/AAAA)"
                     format="DD/MM/YYYY"
-                    no-calendar
                     class="py-4"
                 />
                 <DatePicker
+                    v-bind="args"
                     v-model="value2"
                     placeholder="MM/JJ/AAAA"
 					label="Date (MM/JJ/AAAA)"
                     format="MM/DD/YYYY"
-					no-calendar
 					class="py-4"
                 />
                 <DatePicker
+                    v-bind="args"
                     v-model="value3"
                     placeholder="AAAA-MM-JJ"
 					label="Date (AAAA-MM-JJ)"
                     format="YYYY-MM-DD"
-					no-calendar
 					class="py-4"
                 />
                 <DatePicker
+                    v-bind="args"
                     v-model="value4"
                     placeholder="JJ-MM-AA"
 					label="Date (JJ-MM-AA)"
                     format="DD-MM-YY"
-					no-calendar
 					class="py-4"
                 />
                 <DatePicker
+                    v-bind="args"
                     v-model="value5"
                     placeholder="JJ.MM.AAAA"
 					label="Date (JJ.MM.AAAA)"
                     format="DD.MM.YYYY"
-					no-calendar
 					class="py-4"
                 />
               </div>

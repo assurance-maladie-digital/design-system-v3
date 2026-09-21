@@ -30,7 +30,12 @@ export const Century: StoryObj = {
 }
 
 export const ValidationModes: StoryObj = {
-	render: () => {
+	args: {
+		placeholder: 'JJ/MM/AAAA',
+		format: 'DD/MM/YYYY',
+		noCalendar: true,
+	},
+	render: (args) => {
 		return {
 			components: { DatePicker },
 			setup() {
@@ -38,6 +43,7 @@ export const ValidationModes: StoryObj = {
 				const vuetifyValue = ref('')
 
 				return {
+					args,
 					synapseValue,
 					vuetifyValue,
 					synapseRules: [
@@ -64,7 +70,7 @@ export const ValidationModes: StoryObj = {
 				'<li>required conditionnel, range, flow CalendarMode</li>',
 				'</ul>',
 				'<div style="margin-top: 16px; max-width: 320px;">',
-				'<DatePicker v-model="synapseValue" label="Date Synapse" placeholder="JJ/MM/AAAA" no-calendar format="DD/MM/YYYY" :custom-rules="synapseRules" />',
+				'<DatePicker v-bind="args" v-model="synapseValue" label="Date Synapse" :custom-rules="synapseRules" />',
 				'</div>',
 				'</div>',
 				'<div style="padding: 16px; border-radius: 8px; border: 1px solid #e0e0e0; background: #fafafa;">',
@@ -76,7 +82,7 @@ export const ValidationModes: StoryObj = {
 				'<li>utile pour un comportement aligne avec les autres champs migres</li>',
 				'</ul>',
 				'<div style="margin-top: 16px; max-width: 320px;">',
-				'<DatePicker v-model="vuetifyValue" label="Date Vuetify" placeholder="JJ/MM/AAAA" no-calendar format="DD/MM/YYYY" use-vuetify-validation :rules="vuetifyRules" />',
+				'<DatePicker v-bind="args" v-model="vuetifyValue" label="Date Vuetify" use-vuetify-validation :rules="vuetifyRules" />',
 				'</div>',
 				'</div>',
 				'</div>',
