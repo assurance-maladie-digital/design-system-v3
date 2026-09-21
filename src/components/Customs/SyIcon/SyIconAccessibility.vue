@@ -68,7 +68,7 @@
 			class="mb-6"
 			variant="outlined"
 		>
-			<VCardTitle class="text-h5 primary lighten-4 py-3 px-4">
+			<VCardTitle class="text-h5 bg-primary lighten-4 py-3 px-4">
 				Guide d'accessibilité pour SyIcon
 			</VCardTitle>
 
@@ -84,7 +84,7 @@
 				<VAlert
 					class="mb-4"
 					color="warning"
-					variant="tonal"
+					variant="flat"
 					density="comfortable"
 				>
 					<strong>Important :</strong> Si une icône est marquée comme non décorative (<code>:decorative="false"</code>) mais qu'aucun label n'est fourni,
@@ -103,8 +103,11 @@
 							Invisibles pour les lecteurs d'écran (role="presentation", aria-hidden="true")
 						</VListItemSubtitle>
 					</VListItem>
-					<VDivider />
 					<VListItem>
+						<VDivider
+							role="presentation"
+							aria-hidden="true"
+						/>
 						<VListItemTitle class="font-weight-bold">
 							Icônes informatives
 						</VListItemTitle>
@@ -117,7 +120,7 @@
 				<VAlert
 					class="mb-4"
 					color="info"
-					variant="tonal"
+					variant="flat"
 					density="comfortable"
 				>
 					La directive <code>v-rgaa-svg-fix</code> est également appliquée pour garantir la compatibilité avec les lecteurs d'écran.
@@ -130,7 +133,7 @@
 			class="mb-6"
 			variant="outlined"
 		>
-			<VCardTitle class="text-h6 secondary lighten-4 py-3 px-4">
+			<VCardTitle class="text-h6 bg-secondary lighten-4 py-3 px-4">
 				Démonstration interactive
 			</VCardTitle>
 
@@ -169,15 +172,22 @@
 								/>
 							</VRadioGroup>
 
+							<span
+								id="icon-select-label"
+								class="d-block mb-1 icon-select__label"
+							>
+								Sélectionnez une icône
+							</span>
 							<VSelect
 								v-model="selectedIconIndex"
-								label="Sélectionnez une icône"
 								:items="iconOptions"
 								item-title="label"
 								item-value="index"
+								aria-labelledby="icon-select-label"
 								class="mb-4"
 								variant="outlined"
 								density="comfortable"
+								hide-details
 								@update:model-value="updateSelectedIcon"
 							/>
 
@@ -223,7 +233,7 @@
 								<div>
 									<VChip
 										v-if="decorative"
-										color="success"
+										color="green-darken-4"
 										variant="outlined"
 										class="ml-10 mb-2"
 									>
@@ -256,7 +266,7 @@
 			class="mb-6"
 			variant="outlined"
 		>
-			<VCardTitle class="text-h6 accent lighten-4 py-3 px-4">
+			<VCardTitle class="text-h6 bg-accent lighten-4 py-3 px-4">
 				Résultats
 			</VCardTitle>
 
@@ -303,4 +313,24 @@ pre {
 	white-space: pre-wrap;
 	word-break: break-word;
 }
+:deep(.v-list-item__overlay) {
+    display: none;
+}
+
+:deep(.v-list-item-subtitle) {
+    opacity: 1;
+    color: #424242;
+	-webkit-line-clamp: unset;
+	line-clamp: unset;
+}
+:deep(.v-label) {
+    opacity: 1;
+    color: #212121;
+}
+
+:deep(.v-selection-control__input::before),
+:deep(.v-selection-control__input .v-ripple__container) {
+    display: none;
+}
+
 </style>

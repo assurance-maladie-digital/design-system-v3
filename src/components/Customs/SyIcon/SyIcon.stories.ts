@@ -331,7 +331,16 @@ export const InformativeIcon: Story = {
 export const AccessibilityDemo: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			config: {
+				rules: [
+					{
+						// Faux positif Vuetify : le menu du VSelect est teleporté
+						// et monté seulement à l'ouverture.
+						id: 'aria-valid-attr-value',
+						enabled: false,
+					},
+				],
+			},
 		},
 	},
 	args: {
