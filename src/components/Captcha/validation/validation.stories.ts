@@ -61,9 +61,6 @@ type Story = StoryObj<StoryArgs>
 
 export const WithError: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		docs: {
 			description: {
 				story: 'Validation bloquante via `customRules` (message d\'erreur personnalisé).',
@@ -150,9 +147,6 @@ const modelValue = ref('ytq')
 export const WithWarning: Story = {
 	...WithError,
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		docs: {
 			description: {
 				story: 'Validation non bloquante via `customWarningRules` (message d\'avertissement personnalisé).',
@@ -208,9 +202,6 @@ const modelValue = ref('ytq')
 export const WithSuccess: Story = {
 	...WithError,
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		docs: {
 			description: {
 				story: 'Validation de succès via `customSuccessRules` (message de succès personnalisé).',
@@ -286,9 +277,6 @@ const modelValue = ref('ytqZNq')
 
 export const ValidateOnInput: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		docs: {
 			description: {
 				story: 'Validation déclenchée à chaque frappe via `isValidateOnBlur=false`.',
@@ -410,9 +398,6 @@ const verifyCaptcha = () => {
 
 export const ExternalMessages: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		docs: {
 			description: {
 				story: 'Messages injectés par le parent via `errorMessages`, `warningMessages` et `successMessages`.',
@@ -507,9 +492,6 @@ export const ExternalMessages: Story = {
 
 export const DisableErrorHandling: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		docs: {
 			description: {
 				story: 'Désactivation de la gestion des erreurs via `disableErrorHandling`.',
@@ -669,9 +651,6 @@ const customRules = [
 
 export const SyFormValidation: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		docs: {
 			description: {
 				story: 'Intégration avec `SyForm` pour soumettre un Captcha validé par règles personnalisées.',
@@ -815,9 +794,6 @@ function handleSubmit(e: { isValid: boolean }) {
 
 export const VFormValidation: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		docs: {
 			description: {
 				story: 'Validation déclenchée à la soumission du formulaire via l\'API exposée `validate()` du Captcha.',
@@ -963,9 +939,6 @@ async function handleSubmit() {
 
 export const SyFormVuetifyValidation: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		docs: {
 			description: {
 				story: 'Validation native Vuetify (`useVuetifyValidation=true` + `rules`) intégrée automatiquement à un `SyForm`.',
@@ -1079,9 +1052,6 @@ function handleSubmit(e: { isValid: boolean }) {
 
 export const VFormVuetifyValidation: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		docs: {
 			description: {
 				story: 'Validation de style Vuetify avec `useVuetifyValidation=true` et des règles natives.',

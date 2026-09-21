@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach, beforeAll, beforeEach } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import { LocalStorageUtility } from '@/utils/localStorageUtility'
 import type { DataOptions, FilterOption } from '@/components/Tables/common/types'
 
@@ -1620,5 +1620,43 @@ describe('SyServerTable pageInput', () => {
 		bars.forEach((bar) => {
 			expect(bar.getAttribute('aria-label')).toBe('Chargement des données en cours')
 		})
+	})
+
+	it('keeps itemsPerPage after the items are refreshed by a new search (#2535)', async () => {
+		const rows = (count: number, tag: string) => Array.from(
+			{ length: count },
+			(_, i) => ({ id: i + 1, name: `${tag}-${i + 1}`, age: 20 }),
+		)
+
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				suffix: 'per-page-sync',
+				serverItemsLength: 1000,
+				itemsPerPageOptions: [10, 50, 300],
+			},
+			attrs: { items: rows(10, 'row'), headers },
+		})
+		await wrapper.vm.$nextTick()
+
+		const pagination = () => wrapper.findComponent({ name: 'SyTablePagination' })
+		const dataTable = () => wrapper.findComponent({ name: 'VDataTableServer' })
+
+		pagination().vm.$emit('update:items-per-page', 300)
+		await flushPromises()
+
+		const emitted = wrapper.emitted('update:options')!
+		const lastEmit = emitted[emitted.length - 1]![0] as DataOptions
+		expect(lastEmit.itemsPerPage).toBe(300)
+		expect(dataTable().props('itemsPerPage')).toBe(300)
+
+		// Le projet renvoie la page demandée, puis relance la recherche.
+		await wrapper.setProps({ items: rows(300, 'row') } as never)
+		await flushPromises()
+		await wrapper.setProps({ items: rows(300, 'new') } as never)
+		await flushPromises()
+
+		expect(pagination().props('itemsPerPage')).toBe(300)
+		expect(dataTable().props('itemsPerPage')).toBe(300)
 	})
 })

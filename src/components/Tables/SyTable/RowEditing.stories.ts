@@ -5,7 +5,7 @@ import type { VDataTable } from 'vuetify/components'
 import SyTable from './SyTable.vue'
 import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls } from '../common/storyArgTypes'
 
 const meta = {
 	title: 'Composants/Tableaux/SyTable/Édition/Ligne par ligne',
@@ -17,58 +17,10 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
-		controls: { hideNoControlsWarning: true },
+		controls: { hideNoControlsWarning: true, exclude: commonTableExcludedControls },
 	},
 	argTypes: {
 		...commonTableArgTypes,
-		'item.actions': {
-			description: 'Slot d\'actions par ligne. Reçoit les helpers d\'édition `{ item, isEditing, edit, save, cancel, remove }`.',
-			control: undefined,
-			table: {
-				category: 'slots',
-				type: { summary: 'slot', detail: '{ item, isEditing: boolean, edit: () => void, save: () => void, cancel: () => void, remove: () => void }' },
-			},
-		},
-		'edit.<columnKey>': {
-			description: 'Personnalise l\'éditeur d\'une cellule en édition inline. Remplacer `<columnKey>` par la clé de la colonne. Par défaut un `SyTextField`.',
-			control: undefined,
-			table: {
-				category: 'slots',
-				type: { summary: 'slot', detail: '{ item, value: unknown, update: (value: unknown) => void }' },
-			},
-		},
-		'onEdit': {
-			action: 'edit',
-			description: 'Émis à l\'entrée en édition inline d\'une ligne.',
-			table: {
-				category: 'events',
-				type: { summary: '(item: Record<string, unknown>) => void' },
-			},
-		},
-		'onSave': {
-			action: 'save',
-			description: 'Émis à la validation de l\'édition inline. Reçoit la ligne mise à jour et l\'originale.',
-			table: {
-				category: 'events',
-				type: { summary: '(updated: Record<string, unknown>, original: Record<string, unknown> | null) => void' },
-			},
-		},
-		'onCancel': {
-			action: 'cancel',
-			description: 'Émis à l\'annulation de l\'édition inline.',
-			table: {
-				category: 'events',
-				type: { summary: '(item: Record<string, unknown> | null) => void' },
-			},
-		},
-		'onDelete': {
-			action: 'delete',
-			description: 'Émis au clic sur l\'action de suppression d\'une ligne.',
-			table: {
-				category: 'events',
-				type: { summary: '(item: Record<string, unknown>) => void' },
-			},
-		},
 	},
 } satisfies Meta<typeof SyTable & typeof VDataTable>
 
@@ -102,6 +54,7 @@ export const Default: Story = {
 		editable: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyTable, SyIconButton },
@@ -135,7 +88,7 @@ export const Default: Story = {
 						<SyIconButton :icon="mdiDelete" label="Supprimer" density="comfortable" color="error" @click-icon-button="remove" />
 					</template>
 					<template v-else>
-						<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="rgba(var(--v-theme-on-success-variant), 0.6)" @click-icon-button="save" />
+						<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="rgba(var(--v-theme-on-success-variant))" @click-icon-button="save" />
 						<SyIconButton :icon="mdiClose" label="Annuler" density="comfortable" @click-icon-button="cancel" />
 					</template>
 				</template>
@@ -165,7 +118,7 @@ export const Default: Story = {
 				<SyIconButton :icon="mdiDelete" label="Supprimer" density="comfortable" color="error" @click-icon-button="remove" />
 			</template>
 			<template v-else>
-				<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="rgba(var(--v-theme-on-success-variant), 0.6)" @click-icon-button="save" />
+				<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="rgba(var(--v-theme-on-success-variant))" @click-icon-button="save" />
 				<SyIconButton :icon="mdiClose" label="Annuler" density="comfortable" @click-icon-button="cancel" />
 			</template>
 		</template>
@@ -222,6 +175,7 @@ export const CustomEditor: Story = {
 		editable: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyTable, SyIconButton },
@@ -256,7 +210,7 @@ export const CustomEditor: Story = {
 						<SyIconButton :icon="mdiPencil" label="Éditer" density="comfortable" @click-icon-button="edit" />
 					</template>
 					<template v-else>
-						<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="rgba(var(--v-theme-on-success-variant), 0.6)" @click-icon-button="save" />
+						<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="rgba(var(--v-theme-on-success-variant))" @click-icon-button="save" />
 						<SyIconButton :icon="mdiClose" label="Annuler" density="comfortable" @click-icon-button="cancel" />
 					</template>
 				</template>
@@ -291,7 +245,7 @@ export const CustomEditor: Story = {
 				<SyIconButton :icon="mdiPencil" label="Éditer" density="comfortable" @click-icon-button="edit" />
 			</template>
 			<template v-else>
-				<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="rgba(var(--v-theme-on-success-variant), 0.6)" @click-icon-button="save" />
+				<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="rgba(var(--v-theme-on-success-variant))" @click-icon-button="save" />
 				<SyIconButton :icon="mdiClose" label="Annuler" density="comfortable" @click-icon-button="cancel" />
 			</template>
 		</template>
@@ -348,6 +302,7 @@ export const NonPrimitiveEditor: Story = {
 		editable: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyTable, SyIconButton, DatePicker },
@@ -397,7 +352,7 @@ export const NonPrimitiveEditor: Story = {
 						<SyIconButton :icon="mdiPencil" label="Éditer" density="comfortable" @click-icon-button="edit" />
 					</template>
 					<template v-else>
-						<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="rgba(var(--v-theme-on-success-variant), 0.6)" @click-icon-button="save" />
+						<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="rgba(var(--v-theme-on-success-variant))" @click-icon-button="save" />
 						<SyIconButton :icon="mdiClose" label="Annuler" density="comfortable" @click-icon-button="cancel" />
 					</template>
 				</template>
@@ -424,7 +379,7 @@ export const NonPrimitiveEditor: Story = {
 				<SyIconButton :icon="mdiPencil" label="Éditer" density="comfortable" @click-icon-button="edit" />
 			</template>
 			<template v-else>
-				<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="rgba(var(--v-theme-on-success-variant), 0.6)" @click-icon-button="save" />
+				<SyIconButton :icon="mdiCheck" label="Valider" density="comfortable" color="rgba(var(--v-theme-on-success-variant))" @click-icon-button="save" />
 				<SyIconButton :icon="mdiClose" label="Annuler" density="comfortable" @click-icon-button="cancel" />
 			</template>
 		</template>

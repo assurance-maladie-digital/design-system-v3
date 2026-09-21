@@ -7,6 +7,7 @@ import SyTable from './SyTable.vue'
 import DialogBox from '@/components/DialogBox/DialogBox.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
+import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls } from '../common/storyArgTypes'
 
 const meta = {
 	title: 'Composants/Tableaux/SyTable/Édition/Actions groupées',
@@ -18,9 +19,10 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
-		controls: { hideNoControlsWarning: true },
+		controls: { hideNoControlsWarning: true, exclude: commonTableExcludedControls },
 	},
 	argTypes: {
+		...commonTableArgTypes,
 		'bulk-actions': {
 			description: 'Barre affichée quand des lignes sont sélectionnées. Le composant ne fournit que la sélection ; **le projet rend ses propres actions** (éditer, supprimer, exporter…) et pilote leur UX (DialogBox, drawer, page…).',
 			control: undefined,
@@ -89,6 +91,7 @@ export const Default: Story = {
 		showSelect: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyTable, DialogBox, SySelect },
@@ -261,6 +264,7 @@ export const SequentialEdit: Story = {
 		showSelect: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyTable, DialogBox, SyTextField, SySelect },

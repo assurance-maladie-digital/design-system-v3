@@ -23,7 +23,6 @@
 		hasCypressTest?: boolean
 		criticality?: string
 		functionalVersion?: string
-		functionalDate?: string
 	}
 	const searchTerm = ref('')
 	const selectedCategory = ref('Toutes')
@@ -94,7 +93,7 @@
 		},
 		{
 			critere: 'Stories requises',
-			description: 'Vérifie la présence des stories importantes : Default, Disabled, Validation.',
+			description: 'Vérifie les cas Required et FormValidation. Si un dossier Validation existe, vérifie aussi WithError, WithWarning et WithSuccess.',
 			valeurs: 'Complètes / Partiel / Non concerné',
 		},
 		{
@@ -413,9 +412,6 @@
 					<span class="functional-version">
 						v{{ item.functionalVersion }}
 					</span>
-					<span class="functional-date">
-						{{ item.functionalDate }}
-					</span>
 				</div>
 
 				<span v-else>-</span>
@@ -541,10 +537,5 @@
 	color: #1e7e34;
 	font-weight: 700;
 	font-size: 12px;
-}
-
-.functional-date {
-	font-size: 12px;
-	color: #6b7280;
 }
 </style>

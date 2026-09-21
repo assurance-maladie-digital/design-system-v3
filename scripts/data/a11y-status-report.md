@@ -1,20 +1,20 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 25/08/2026
+Généré le: 17/09/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
 | **Accordion** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **BackBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **BackToTopBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **Captcha** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
+| **Captcha** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **ChipList** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **CollapsibleList** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **ContextualMenu** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **CookieBanner** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **CookiesSelection** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **CopyBtn** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
-| **Customs/Selects/SelectBtnField** | ❌ Non | ✅ Non | ✅ Complète | ❌ Non | ❌ |
+| **Customs/Selects/SelectBtnField** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/Selects/SyAutocomplete** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/Selects/SyInputSelect** | ❌ Non | ✅ Non | ✅ Complète | ❌ Non | ❌ |
 | **Customs/Selects/SySelect** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -40,7 +40,7 @@ Généré le: 25/08/2026
 | **ErrorPage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **ExternalLinks** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
 | **FileList** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
-| **FilePreview** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
+| **FilePreview** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **FileUpload** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **FilterInline** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **FilterSideBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -53,7 +53,7 @@ Généré le: 25/08/2026
 | **LangBtn** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
 | **Logo** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **LogoBrandSection** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **LunarCalendar** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
+| **LunarCalendar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **MaintenancePage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **MonthPicker** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
 | **NirField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -61,7 +61,7 @@ Généré le: 25/08/2026
 | **NotificationBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **PageContainer** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **PaginatedTable** | ❌ Non | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
-| **PasswordField** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
+| **PasswordField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **PeriodField** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **PhoneField** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **RangeField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -78,9 +78,8 @@ Généré le: 25/08/2026
 | **Tables/SyServerTable** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
 | **Tables/SyTable** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
 | **TableToolbar** | ❌ Non | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
-| **tests** | ❌ Non | ✅ Non | ❌ Manquante | ❌ Non | ❌ |
 | **ToolbarContainer** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 55 / 78 (70.51%)**
+**Total des composants conformes : 60 / 77 (77.92%)**

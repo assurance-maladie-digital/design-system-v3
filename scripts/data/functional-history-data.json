@@ -1,9 +1,9 @@
 {
   "Accordion": {
-    "version": "1.1.4",
-    "date": "07/08/2026",
-    "dateIso": "2026-08-07 16:34:33 +0200",
-    "message": "[Accordion] Ajout de la props density (#2482)"
+    "version": "1.1.5",
+    "date": "27/08/2026",
+    "dateIso": "2026-08-27 08:16:48 +0200",
+    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
   },
   "AmeliproAccordion": {
     "version": "1.0.25",
@@ -456,10 +456,10 @@
     "message": "Feat/amelipro components ok (#803)"
   },
   "AmeliproUpload": {
-    "version": "1.1.4",
-    "date": "25/08/2026",
-    "dateIso": "2026-08-25 08:58:16 +0200",
-    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+    "version": "1.1.5",
+    "date": "27/08/2026",
+    "dateIso": "2026-08-27 08:16:48 +0200",
+    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
   },
   "ServiceBtn": {
     "version": "1.0.3",
@@ -600,10 +600,10 @@
     "message": "fix/components-name-format"
   },
   "ChipList": {
-    "version": "1.1.3",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.5",
+    "date": "27/08/2026",
+    "dateIso": "2026-08-27 08:16:48 +0200",
+    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
   },
   "CollapsibleList": {
     "version": "1.1.3",
@@ -616,6 +616,12 @@
     "date": "27/07/2026",
     "dateIso": "2026-07-27 14:32:02 +0200",
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+  },
+  "ComponentStatusTable": {
+    "version": "1.1.5",
+    "date": "07/09/2026",
+    "dateIso": "2026-09-07 15:36:47 +0200",
+    "message": "Matrice composant: masquer onglet conformité dans dossier validation (#2533)"
   },
   "ContextualMenu": {
     "version": "1.1.3",
@@ -666,22 +672,22 @@
     "message": "interaction vbtn (#2435)"
   },
   "SyAutocomplete": {
-    "version": "1.1.3",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.5",
+    "date": "27/08/2026",
+    "dateIso": "2026-08-27 08:16:48 +0200",
+    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
   },
   "SyInputSelect": {
-    "version": "1.1.4",
-    "date": "20/08/2026",
-    "dateIso": "2026-08-20 12:20:15 +0200",
-    "message": "Fix tests warning (#2498)"
+    "version": "1.1.5",
+    "date": "27/08/2026",
+    "dateIso": "2026-08-27 08:16:48 +0200",
+    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
   },
   "SySelect": {
-    "version": "1.1.3",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:56:33 +0200",
-    "message": "SySelect: fix selection display when items is a string array (#2425)"
+    "version": "1.1.5",
+    "date": "27/08/2026",
+    "dateIso": "2026-08-27 08:16:48 +0200",
+    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
   },
   "SyCheckBoxGroup": {
     "version": "1.1.3",
@@ -738,16 +744,16 @@
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "FieldState": {
-    "version": "1.1.3",
-    "date": "31/07/2026",
-    "dateIso": "2026-07-31 12:04:52 +0200",
-    "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)"
+    "version": "1.1.5",
+    "date": "27/08/2026",
+    "dateIso": "2026-08-27 08:16:48 +0200",
+    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
   },
   "SyTextField": {
-    "version": "1.1.3",
-    "date": "31/07/2026",
-    "dateIso": "2026-07-31 12:04:52 +0200",
-    "message": "SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)"
+    "version": "1.1.5",
+    "date": "27/08/2026",
+    "dateIso": "2026-08-27 08:16:48 +0200",
+    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
   },
   "DataList": {
     "version": "1.1.3",
@@ -798,22 +804,22 @@
     "message": "DatePicker: wrap customRules and customWarningRules in computed and fix isOnSuccess validation state (#2461)"
   },
   "BidirectionalComplexValidation": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.1.5",
+    "date": "27/08/2026",
+    "dateIso": "2026-08-27 09:48:42 +0200",
+    "message": "refactor(DatePicker): standardize labels and placeholders with format hints across stories (#2513)"
   },
   "DatePickerBidirectionalValidation": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.1.5",
+    "date": "27/08/2026",
+    "dateIso": "2026-08-27 09:48:42 +0200",
+    "message": "refactor(DatePicker): standardize labels and placeholders with format hints across stories (#2513)"
   },
   "DatePickerValidationExamples": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.1.5",
+    "date": "27/08/2026",
+    "dateIso": "2026-08-27 09:48:42 +0200",
+    "message": "refactor(DatePicker): standardize labels and placeholders with format hints across stories (#2513)"
   },
   "ComplexDatePickerPlayground": {
     "version": "1.0.25",
@@ -846,10 +852,10 @@
     "message": "Ajout des interactions sur le composant `DialogBox` (#2469)"
   },
   "DownloadBtn": {
-    "version": "1.1.4",
-    "date": "06/08/2026",
-    "dateIso": "2026-08-06 10:17:41 +0200",
-    "message": "Ajout des interactions sur le composant `DownloadBtn` (#2475)"
+    "version": "1.1.5",
+    "date": "27/08/2026",
+    "dateIso": "2026-08-27 08:16:48 +0200",
+    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
   },
   "ErrorPage": {
     "version": "1.0.23",
@@ -876,28 +882,28 @@
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "FilePreview": {
-    "version": "1.1.3",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.5",
+    "date": "03/09/2026",
+    "dateIso": "2026-09-03 11:29:18 +0200",
+    "message": "Improve pdf display on android + fix uploadWorkfow (#2527)"
   },
   "FileUpload": {
-    "version": "1.1.4",
-    "date": "06/08/2026",
-    "dateIso": "2026-08-06 14:59:09 +0200",
-    "message": "Ajout des interactions sur le composant `FileUpload` (#2474)"
+    "version": "1.1.5",
+    "date": "03/09/2026",
+    "dateIso": "2026-09-03 11:29:18 +0200",
+    "message": "Improve pdf display on android + fix uploadWorkfow (#2527)"
   },
   "FileUploadContent": {
-    "version": "1.1.4",
-    "date": "06/08/2026",
-    "dateIso": "2026-08-06 14:59:09 +0200",
-    "message": "Ajout des interactions sur le composant `FileUpload` (#2474)"
+    "version": "1.1.5",
+    "date": "03/09/2026",
+    "dateIso": "2026-09-03 11:29:18 +0200",
+    "message": "Improve pdf display on android + fix uploadWorkfow (#2527)"
   },
   "FilterInline": {
-    "version": "1.1.3",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.5",
+    "date": "27/08/2026",
+    "dateIso": "2026-08-27 08:16:48 +0200",
+    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
   },
   "FilterSideBar": {
     "version": "1.1.3",
@@ -1056,10 +1062,10 @@
     "message": "Components: fix focus display (#2383)"
   },
   "NirField": {
-    "version": "1.1.4",
-    "date": "25/08/2026",
-    "dateIso": "2026-08-25 08:58:16 +0200",
-    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+    "version": "1.1.5",
+    "date": "27/08/2026",
+    "dateIso": "2026-08-27 08:16:48 +0200",
+    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
   },
   "NotFoundPage": {
     "version": "1.0.22",
@@ -1086,16 +1092,16 @@
     "message": "migration ameliproPageLayout (#2259)"
   },
   "PaginatedTable": {
-    "version": "1.1.3",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.5",
+    "date": "27/08/2026",
+    "dateIso": "2026-08-27 08:16:48 +0200",
+    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
   },
   "Pagination": {
-    "version": "1.1.3",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.5",
+    "date": "27/08/2026",
+    "dateIso": "2026-08-27 08:16:48 +0200",
+    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
   },
   "PasswordField": {
     "version": "1.1.3",
@@ -1104,10 +1110,10 @@
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "PeriodField": {
-    "version": "1.1.3",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.5",
+    "date": "27/08/2026",
+    "dateIso": "2026-08-27 08:16:48 +0200",
+    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
   },
   "PhoneField": {
     "version": "1.1.3",
@@ -1194,10 +1200,10 @@
     "message": "[SyAlert] Ajout de la props density (#2478)"
   },
   "SyBtnMenu": {
-    "version": "1.1.3",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.5",
+    "date": "07/09/2026",
+    "dateIso": "2026-09-07 15:29:02 +0200",
+    "message": "fix button color in syBtnMenu (#2536)"
   },
   "SyHeading": {
     "version": "1.0.23",
@@ -1218,76 +1224,76 @@
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "SyServerTable": {
-    "version": "1.1.4",
-    "date": "25/08/2026",
-    "dateIso": "2026-08-25 11:04:33 +0200",
-    "message": "[Table] selection avec éléments radio en mode selection unique (#2494)"
+    "version": "1.1.5",
+    "date": "04/09/2026",
+    "dateIso": "2026-09-04 15:53:57 +0200",
+    "message": "SyTable/SyServerTable: fix items per page  (#2538)"
   },
   "SyTable": {
-    "version": "1.1.4",
-    "date": "25/08/2026",
-    "dateIso": "2026-08-25 11:04:33 +0200",
-    "message": "[Table] selection avec éléments radio en mode selection unique (#2494)"
+    "version": "1.1.5",
+    "date": "04/09/2026",
+    "dateIso": "2026-09-04 15:53:57 +0200",
+    "message": "SyTable/SyServerTable: fix items per page  (#2538)"
   },
   "SyTableFilter": {
-    "version": "1.1.4",
-    "date": "25/08/2026",
-    "dateIso": "2026-08-25 11:04:33 +0200",
-    "message": "[Table] selection avec éléments radio en mode selection unique (#2494)"
+    "version": "1.1.5",
+    "date": "04/09/2026",
+    "dateIso": "2026-09-04 15:53:57 +0200",
+    "message": "SyTable/SyServerTable: fix items per page  (#2538)"
   },
   "SyTablePagination": {
-    "version": "1.1.4",
-    "date": "25/08/2026",
-    "dateIso": "2026-08-25 11:04:33 +0200",
-    "message": "[Table] selection avec éléments radio en mode selection unique (#2494)"
+    "version": "1.1.5",
+    "date": "04/09/2026",
+    "dateIso": "2026-09-04 15:53:57 +0200",
+    "message": "SyTable/SyServerTable: fix items per page  (#2538)"
   },
   "TableBulkActions": {
-    "version": "1.1.4",
-    "date": "25/08/2026",
-    "dateIso": "2026-08-25 11:04:33 +0200",
-    "message": "[Table] selection avec éléments radio en mode selection unique (#2494)"
+    "version": "1.1.5",
+    "date": "04/09/2026",
+    "dateIso": "2026-09-04 15:53:57 +0200",
+    "message": "SyTable/SyServerTable: fix items per page  (#2538)"
   },
   "TableHeader": {
-    "version": "1.1.4",
-    "date": "25/08/2026",
-    "dateIso": "2026-08-25 11:04:33 +0200",
-    "message": "[Table] selection avec éléments radio en mode selection unique (#2494)"
+    "version": "1.1.5",
+    "date": "04/09/2026",
+    "dateIso": "2026-09-04 15:53:57 +0200",
+    "message": "SyTable/SyServerTable: fix items per page  (#2538)"
   },
   "AutocompleteFilter": {
-    "version": "1.1.4",
-    "date": "25/08/2026",
-    "dateIso": "2026-08-25 08:58:16 +0200",
-    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+    "version": "1.1.5",
+    "date": "28/08/2026",
+    "dateIso": "2026-08-28 09:23:02 +0200",
+    "message": "[Tables] Ajout de la configuration individuel des filtres (#2490)"
   },
   "DateFilter": {
-    "version": "1.1.4",
-    "date": "25/08/2026",
-    "dateIso": "2026-08-25 08:58:16 +0200",
-    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+    "version": "1.1.5",
+    "date": "28/08/2026",
+    "dateIso": "2026-08-28 09:23:02 +0200",
+    "message": "[Tables] Ajout de la configuration individuel des filtres (#2490)"
   },
   "NumberFilter": {
-    "version": "1.1.4",
-    "date": "25/08/2026",
-    "dateIso": "2026-08-25 08:58:16 +0200",
-    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+    "version": "1.1.5",
+    "date": "28/08/2026",
+    "dateIso": "2026-08-28 09:23:02 +0200",
+    "message": "[Tables] Ajout de la configuration individuel des filtres (#2490)"
   },
   "PeriodFilter": {
-    "version": "1.1.4",
-    "date": "25/08/2026",
-    "dateIso": "2026-08-25 08:58:16 +0200",
-    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+    "version": "1.1.5",
+    "date": "28/08/2026",
+    "dateIso": "2026-08-28 09:23:02 +0200",
+    "message": "[Tables] Ajout de la configuration individuel des filtres (#2490)"
   },
   "SelectFilter": {
-    "version": "1.1.4",
-    "date": "25/08/2026",
-    "dateIso": "2026-08-25 08:58:16 +0200",
-    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+    "version": "1.1.5",
+    "date": "28/08/2026",
+    "dateIso": "2026-08-28 09:23:02 +0200",
+    "message": "[Tables] Ajout de la configuration individuel des filtres (#2490)"
   },
   "TextFilter": {
-    "version": "1.1.4",
-    "date": "25/08/2026",
-    "dateIso": "2026-08-25 08:58:16 +0200",
-    "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
+    "version": "1.1.5",
+    "date": "28/08/2026",
+    "dateIso": "2026-08-28 09:23:02 +0200",
+    "message": "[Tables] Ajout de la configuration individuel des filtres (#2490)"
   },
   "OrganizeColumns": {
     "version": "1.1.3",

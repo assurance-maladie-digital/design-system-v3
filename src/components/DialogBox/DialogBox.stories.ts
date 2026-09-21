@@ -1036,17 +1036,17 @@ export const Tutoriel: Story = {
 					{
 						title: 'Étape 1 : Bienvenue',
 						content: 'Dans cet espace, vous allez pouvoir découvrir les fonctionnalités principales de l\'application. Suivez ce tutoriel pour apprendre à utiliser tous les outils disponibles.',
-						img: 'https://picsum.photos/400/300?random=1',
+						img: 'https://placehold.co/400x300?text=1',
 					},
 					{
 						title: 'Étape 2 : Navigation',
 						content: 'Utilisez le menu de navigation pour accéder aux différentes sections. Vous pouvez également utiliser les raccourcis clavier pour une navigation plus rapide.',
-						img: 'https://picsum.photos/400/300?random=2',
+						img: 'https://placehold.co/400x300?text=2',
 					},
 					{
 						title: 'Étape 3 : Terminé',
 						content: 'Vous êtes maintenant prêt à utiliser l\'application ! N\'hésitez pas à consulter la documentation pour plus d\'informations.',
-						img: 'https://picsum.photos/400/300?random=3',
+						img: 'https://placehold.co/400x300?text=3',
 					},
 				]
 
@@ -1266,17 +1266,17 @@ export const Tutoriel: Story = {
         {
             title: 'Étape 1 : Bienvenue',
             content: 'Dans cet espace, vous allez pouvoir découvrir les fonctionnalités principales de l\\'application. Suivez ce tutoriel pour apprendre à utiliser tous les outils disponibles.',
-            img: 'https://picsum.photos/400/300?random=1',
+            img: 'https://placehold.co/400x300?text=1',
         },
         {
             title: 'Étape 2 : Navigation',
             content: 'Utilisez le menu de navigation pour accéder aux différentes sections. Vous pouvez également utiliser les raccourcis clavier pour une navigation plus rapide.',
-            img: 'https://picsum.photos/400/300?random=2',
+            img: 'https://placehold.co/400x300?text=2',
         },
         {
             title: 'Étape 3 : Terminé',
             content: 'Vous êtes maintenant prêt à utiliser l\\'application ! N\\'hésitez pas à consulter la documentation pour plus d\\'informations.',
-            img: 'https://picsum.photos/400/300?random=3',
+            img: 'https://placehold.co/400x300?text=3',
         },
     ]
 

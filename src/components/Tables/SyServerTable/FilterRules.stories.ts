@@ -3,7 +3,7 @@ import SyServerTable from './SyServerTable.vue'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 import dayjs from 'dayjs'
-import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls } from '../common/storyArgTypes'
 
 interface TextItem {
 	example: string
@@ -54,7 +54,7 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
-		controls: { hideNoControlsWarning: true },
+		controls: { hideNoControlsWarning: true, exclude: commonTableExcludedControls },
 	},
 	argTypes: {
 		...commonTableArgTypes,

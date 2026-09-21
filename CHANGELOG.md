@@ -1,3 +1,85 @@
+## v1.1.5 (08-09-2026)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 100%">Synapse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- SyBtnMenu: fix button colors
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2536">#2536</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable: fix items per page after table update
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2538">#2538</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable: improve documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2525">#2525</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Doc: improve page Suivi des composants
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2534">#2534</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Doc: improve page Bonnes pratiques d'écoconception
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2529">#2529</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- FilePreview: fix pdf display on android and improve documentation and accessibility
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2527">#2527</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable: fix elements per page display
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2524">#2524</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable: add individual configuration for filters
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2490">#2490</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Security: update plugin postcss
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2520">#2520</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SkipLink: add support for multiple skip links and enhance accessibility
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2515">#2515</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyIcon: improve documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2483">#2483</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: standardize labels and placeholders with format hints across documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2513">#2513</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Forms: improve input borders for accessibility
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2471">#2471</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- PaginatedTable: add locales support for accessibility labels
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2505">#2505</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.1.4 (25-08-2026)
 
 <table>

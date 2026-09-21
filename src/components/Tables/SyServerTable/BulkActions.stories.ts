@@ -6,7 +6,7 @@ import SyServerTable from './SyServerTable.vue'
 import DialogBox from '@/components/DialogBox/DialogBox.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
-import { commonTableArgTypes, commonTableEventArgs } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls } from '../common/storyArgTypes'
 import { useServerEditingDemo } from '../common/serverStoryHelpers'
 
 const meta = {
@@ -19,7 +19,7 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
-		controls: { hideNoControlsWarning: true },
+		controls: { hideNoControlsWarning: true, exclude: commonTableExcludedControls },
 	},
 	argTypes: {
 		...commonTableArgTypes,

@@ -130,9 +130,6 @@ type Story = StoryObj<PasswordFieldStoryArgs>
  */
 export const Default: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -179,9 +176,6 @@ export const Default: Story = {
  */
 export const Required: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -219,9 +213,6 @@ export const Required: Story = {
  */
 export const RequiredWithAsterisk: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -260,9 +251,6 @@ export const RequiredWithAsterisk: Story = {
  */
 export const Disabled: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -300,9 +288,6 @@ export const Disabled: Story = {
  */
 export const ReadOnly: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -337,9 +322,6 @@ export const ReadOnly: Story = {
 
 export const HelpText: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -375,9 +357,6 @@ export const HelpText: Story = {
 
 export const HideDetails: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',

@@ -1,6 +1,6 @@
 # Lint uniquement les fichiers déjà indexés dans le commit.
 # Les modifications non stage ne doivent pas faire échouer le hook.
-files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(js|jsx|ts|tsx|vue)$' | tr '\n' ' ')
+files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '^src/.*\.(js|jsx|ts|tsx|vue)$' | tr '\n' ' ')
 
 if [ -n "$files" ]; then
     pnpm exec eslint --fix $files

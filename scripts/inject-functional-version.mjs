@@ -2,7 +2,7 @@
  * inject-functional-version.mjs
  *
  * Lit functional-history-data.json et injecte (ou met à jour) le badge
- * "Dernière mise à jour fonctionnelle : Vx.x.x - JJ/MM/AAAA"
+ * "Dernière mise à jour fonctionnelle : Vx.x.x"
  * dans chaque NomComposant.mdx, AU-DESSUS du badge a11y.
  *
  * Usage :
@@ -14,6 +14,7 @@
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { basename, dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { NO_RELEASE_LABEL } from './lib/releaseTags.mjs'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const jsonPath = resolve(rootDir, 'scripts/data/functional-history-data.json')
@@ -58,9 +59,12 @@ function findMainMdxFiles(dir, results = []) {
 	return results
 }
 
-function buildBadge(version, date) {
-	const versionText = version ? `V${version} - ` : ''
-	return `${FUNC_BADGE_START}\n<p className="func-version-badge">Dernière mise à jour fonctionnelle : ${versionText}${date}</p>\n${FUNC_BADGE_END}`
+// La date n'est pas affichée : seule la version répond à « dois-je monter de version
+// pour avoir ce changement ? ». Un couple version/date pouvait diverger, la version
+// étant recalculée à chaque release alors que la date du commit, elle, ne bouge pas.
+function buildBadge(version) {
+	const versionText = version ? `V${version}` : NO_RELEASE_LABEL
+	return `${FUNC_BADGE_START}\n<p className="func-version-badge">Dernière mise à jour fonctionnelle : ${versionText}</p>\n${FUNC_BADGE_END}`
 }
 
 function injectOrUpdateBadge(content, badge) {
@@ -140,7 +144,7 @@ for (const { path: filePath, componentName } of mdxFiles) {
 	}
 
 	const original = readFileSync(filePath, 'utf8')
-	const badge = buildBadge(info.version, info.date)
+	const badge = buildBadge(info.version)
 	const modified = injectOrUpdateBadge(original, badge)
 
 	if (modified === null) {
@@ -158,7 +162,7 @@ for (const { path: filePath, componentName } of mdxFiles) {
 		console.info(`[dry-run] Mise à jour: ${filePath}`)
 	} else {
 		writeFileSync(filePath, modified, 'utf8')
-		console.info(`✅ Mis à jour: ${componentName} → v${info.version ?? '?'} · ${info.date}`)
+		console.info(`✅ Mis à jour: ${componentName} → ${info.version ? `v${info.version}` : NO_RELEASE_LABEL}`)
 	}
 	updated++
 }

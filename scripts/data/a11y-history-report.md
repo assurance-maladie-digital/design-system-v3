@@ -1,8 +1,11 @@
 # Rapport d’historique d’accessibilité par composant
 
-- Généré le: 2026-08-25T13:33:03.740Z
+- Généré le: 2026-09-17T09:56:32.358Z
 
 ## Accordion
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -33,6 +36,9 @@
 
 ## AmeliproAccordion
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/12/2025** — AmeliproIcon : fix v-html issue (#1583)  
   Release: `v1.0.16` · Hash: `687eac066320e4974c10e66e83e908e642cd8308` | pattern ARIA
 
@@ -52,6 +58,9 @@
 
 ## AmeliproAccordionFrieze
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/12/2025** — AmeliproIcon : fix v-html issue (#1583)  
   Release: `v1.0.16` · Hash: `687eac066320e4974c10e66e83e908e642cd8308` | pattern ARIA
 
@@ -63,6 +72,9 @@
 
 ## AmeliproAccordionGroup
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **27/11/2025** — TU pour AmeliproAccordionGroup (#1463)  
   Release: `v1.0.16` · Hash: `525b945c3269f554a696c4287d4a7bf9ca1be315` | pattern ARIA
 
@@ -70,6 +82,9 @@
   Release: `v1.0.7` · Hash: `07d55d8947c07b7f1f5c87e0dd9a5f047046da85` | pattern ARIA
 
 ## AmeliproAccordionList
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **17/12/2025** — Feat/1498 renommer props ariarequired (#1535)  
   Release: `v1.0.16` · Hash: `ddd68980d997e18bc0d4ddd60bc9919b3a5bad40` | mot-clé a11y · pattern ARIA
@@ -87,6 +102,9 @@
   Release: `v1.0.7` · Hash: `17e38682c37776348be9adc97b9a5fbe84f94e78` | pattern ARIA
 
 ## AmeliproAccordionResult
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **10/12/2025** — AmeliproIcon : fix v-html issue (#1583)  
   Release: `v1.0.16` · Hash: `687eac066320e4974c10e66e83e908e642cd8308` | pattern ARIA
@@ -110,6 +128,9 @@
 
 ## AmeliproAccordionResultList
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **17/12/2025** — Feat/1498 renommer props ariarequired (#1535)  
   Release: `v1.0.16` · Hash: `ddd68980d997e18bc0d4ddd60bc9919b3a5bad40` | mot-clé a11y · pattern ARIA
 
@@ -129,6 +150,9 @@
   Release: `v1.0.7` · Hash: `a4da971a02ba5bb7ccb84220870ecf78ce82426c` | pattern ARIA
 
 ## AmeliproAutoCompleteField
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **17/12/2025** — Feat/1498 renommer props ariarequired (#1535)  
   Release: `v1.0.16` · Hash: `ddd68980d997e18bc0d4ddd60bc9919b3a5bad40` | mot-clé a11y · pattern ARIA
@@ -150,9 +174,13 @@
 
 ## AmeliproBadge
 
-Aucune amélioration d’accessibilité détectée.
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 ## AmeliproBreadcrumb
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **20/01/2026** — update vue-tsconfig (#1739)  
   Release: `v1.0.18` · Hash: `487d5fe1b4dd2b32bf8b61f8d1c402741ef74d6f` | pattern ARIA
@@ -165,14 +193,21 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproBtn
 
-Aucune amélioration d’accessibilité détectée.
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 ## AmeliproCallback
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **18/07/2025** — Feat/amelipro components ok (#803)  
   Release: `v1.0.3` · Hash: `1539898edaaa972fafe1662cb4d55e489a7e7a74` | pattern ARIA
 
 ## AmeliproCaptcha
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **17/12/2025** — Feat/1498 renommer props ariarequired (#1535)  
   Release: `v1.0.16` · Hash: `ddd68980d997e18bc0d4ddd60bc9919b3a5bad40` | mot-clé a11y · pattern ARIA
@@ -188,6 +223,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproCard
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **24/10/2025** — Feat/981 ajout de tests unitaires pour le composant ameliprocard (#1067)  
   Release: `v1.0.11` · Hash: `60839dda49f37ea1fce75201c5fe7a2516016392` | pattern ARIA
 
@@ -195,6 +233,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `1539898edaaa972fafe1662cb4d55e489a7e7a74` | pattern ARIA
 
 ## AmeliproCarousel
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **10/12/2025** — Fix Vuetify sass warn (#1594)  
   Release: `v1.0.16` · Hash: `cd8602b795a93778f3678ecca90d565aca86af5a` | pattern ARIA
@@ -218,6 +259,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproCheckbox
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **21/04/2026** — Tokens simplify v2 (#2102)  
   Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
 
@@ -234,6 +278,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `1539898edaaa972fafe1662cb4d55e489a7e7a74` | pattern ARIA
 
 ## AmeliproCheckboxGroup
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **21/04/2026** — Tokens simplify v2 (#2102)  
   Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
@@ -252,9 +299,13 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproChips
 
-Aucune amélioration d’accessibilité détectée.
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 ## AmeliproClickableTile
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **09/02/2026** — Feat/1768 amelipro clickable icon tile (#1772)  
   Release: `v1.0.20` · Hash: `5ca377d8b84d0249407e5eb3d2378b7a81d9bf31` | pattern ARIA
@@ -267,9 +318,13 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproContentLayout
 
-Aucune amélioration d’accessibilité détectée.
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 ## AmeliproCopyBtn
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **10/12/2025** — AmeliproIcon : fix v-html issue (#1583)  
   Release: `v1.0.16` · Hash: `687eac066320e4974c10e66e83e908e642cd8308` | pattern ARIA
@@ -278,6 +333,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.9` · Hash: `ede2ab613c63b27a83b9ca29122cf34ec7a0fed6` | pattern ARIA
 
 ## AmeliproCustomSelector
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **21/04/2026** — Tokens simplify v2 (#2102)  
   Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
@@ -299,6 +357,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproDentalChart
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **17/12/2025** — Feat/1498 renommer props ariarequired (#1535)  
   Release: `v1.0.16` · Hash: `ddd68980d997e18bc0d4ddd60bc9919b3a5bad40` | mot-clé a11y · pattern ARIA
 
@@ -312,6 +373,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproDialog
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **07/10/2025** — Feat/1223 ajout composant amelipro patient login (#1241)  
   Release: `v1.0.10` · Hash: `2875afb9e108c907979ad2ee6fa8c32932bf70b5` | pattern ARIA
 
@@ -319,6 +383,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `1539898edaaa972fafe1662cb4d55e489a7e7a74` | pattern ARIA
 
 ## AmeliproDisclosure
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **07/11/2025** — Feat/989 ajout de tests unitaires pour le composant ameliprodisclosure (#1212)  
   Release: `v1.0.13` · Hash: `e09f1746ebff79d8d76b91abfaaed7e903628744` | pattern ARIA
@@ -328,6 +395,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproErrorTemplate
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **08/12/2025** — feat/1446 Ajout de tests unitaires pour les derniers composants Amelipro - lot 6 (#1452)  
   Release: `v1.0.16` · Hash: `1907802e8607886e64b6f3f77fb7858552788e7f` | pattern ARIA
 
@@ -335,6 +405,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.9` · Hash: `c7f505fa1c100b656284d0b3d44dfba6cf0a6c0d` | pattern ARIA
 
 ## AmeliproFilePreview
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **08/12/2025** — feat/1446 Ajout de tests unitaires pour les derniers composants Amelipro - lot 6 (#1452)  
   Release: `v1.0.16` · Hash: `1907802e8607886e64b6f3f77fb7858552788e7f` | pattern ARIA
@@ -347,6 +420,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproFilters
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **21/04/2026** — Tokens simplify v2 (#2102)  
   Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
 
@@ -358,6 +434,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproFirstLogin
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/12/2025** — AmeliproIcon : fix v-html issue (#1583)  
   Release: `v1.0.16` · Hash: `687eac066320e4974c10e66e83e908e642cd8308` | pattern ARIA
 
@@ -366,6 +445,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproFooter
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **24/11/2025** — Feat/990 ajout de tests unitaires pour le composant ameliprofooter (#1213)  
   Release: `v1.0.13` · Hash: `d5e20e7e988c19b69e56e21b3aabdd36d1a413d3` | pattern ARIA
 
@@ -373,6 +455,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `1539898edaaa972fafe1662cb4d55e489a7e7a74` | pattern ARIA
 
 ## AmeliproHeader
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **21/04/2026** — Tokens simplify v2 (#2102)  
   Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
@@ -427,6 +512,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproIcon
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **11/02/2026** — Feat/icon file refactoring (#1818)  
   Release: `v1.0.20` · Hash: `95db60ddc2bc7006377c1e7a590ee04cbf6c4c71` | pattern ARIA
 
@@ -441,9 +529,13 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproIconBtn
 
-Aucune amélioration d’accessibilité détectée.
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 ## AmeliproIllustratedDataTile
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **27/11/2025** — Mise à jour des tests unitaires (#1392)  
   Release: `v1.0.16` · Hash: `fded0c724003b5cdf5b09ddbb21b820289a507a9` | pattern ARIA
@@ -452,6 +544,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `1539898edaaa972fafe1662cb4d55e489a7e7a74` | pattern ARIA
 
 ## AmeliproIllustratedRadioGroup
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **20/01/2026** — update vue-tsconfig (#1739)  
   Release: `v1.0.18` · Hash: `487d5fe1b4dd2b32bf8b61f8d1c402741ef74d6f` | pattern ARIA
@@ -470,8 +565,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproMailTile
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **25/08/2026** — refactor: enforce no-console rule and replace TODO with Note comments (#2501)  
-  Release: `1.1.3` · Hash: `9df69d6c84d0c1383cd62b5441d0a027a07a01f7` | pattern ARIA
+  Release: `v1.1.4` · Hash: `9df69d6c84d0c1383cd62b5441d0a027a07a01f7` | pattern ARIA
 
 - **27/11/2025** — Mise à jour des tests unitaires (#1407)  
   Release: `v1.0.16` · Hash: `d09cfcb7467140a25d1ad44012a1b66bddd844f2` | pattern ARIA
@@ -480,6 +578,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `1539898edaaa972fafe1662cb4d55e489a7e7a74` | pattern ARIA
 
 ## AmeliproMenu
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **27/07/2026** — Permettre de rendre configurable toutes les chaines de caractères (#2404)  
   Release: `v1.1.3` · Hash: `2528a80ea9667f0d693f03f149d76f0242e22d4f` | pattern ARIA
@@ -491,6 +592,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `1539898edaaa972fafe1662cb4d55e489a7e7a74` | pattern ARIA
 
 ## AmeliproMessage
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **20/01/2026** — update vue-tsconfig (#1739)  
   Release: `v1.0.18` · Hash: `487d5fe1b4dd2b32bf8b61f8d1c402741ef74d6f` | pattern ARIA
@@ -519,6 +623,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproMessagingLayout
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **27/11/2025** — Mise à jour des tests unitaires (#1409)  
   Release: `v1.0.16` · Hash: `584adbbda99b243ca1d3e9a98c46f1d6789cdf91` | pattern ARIA
 
@@ -537,6 +644,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproMultipleFoldingCard
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **08/12/2025** — feat/1453 Ajout de tests unitaires pour les derniers composants Amelipro - lot 7 (#1460)  
   Release: `v1.0.16` · Hash: `e51051e07a6210146f33005d31131ae2805679e7` | pattern ARIA
 
@@ -545,14 +655,21 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproNumberedCard
 
-Aucune amélioration d’accessibilité détectée.
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 ## AmeliproOnboarding
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **18/07/2025** — Feat/amelipro components ok (#803)  
   Release: `v1.0.3` · Hash: `1539898edaaa972fafe1662cb4d55e489a7e7a74` | pattern ARIA
 
 ## AmeliproPageLayout
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **28/11/2025** — feat/1410 Ajout de tests unitaires pour les derniers composants Amelipro - lot 1 (#1433)  
   Release: `v1.0.16` · Hash: `5a382aaed10af7706f49dcfc707c163e1a4317b4` | pattern ARIA
@@ -561,6 +678,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `1539898edaaa972fafe1662cb4d55e489a7e7a74` | pattern ARIA
 
 ## AmeliproPagination
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **28/11/2025** — feat/1410 Ajout de tests unitaires pour les derniers composants Amelipro - lot 1 (#1433)  
   Release: `v1.0.16` · Hash: `5a382aaed10af7706f49dcfc707c163e1a4317b4` | pattern ARIA
@@ -578,9 +698,13 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproPatientBanner
 
-Aucune amélioration d’accessibilité détectée.
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 ## AmeliproPatientLogged
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **17/12/2025** — Feat/1498 renommer props ariarequired (#1535)  
   Release: `v1.0.16` · Hash: `ddd68980d997e18bc0d4ddd60bc9919b3a5bad40` | mot-clé a11y · pattern ARIA
@@ -598,6 +722,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.10` · Hash: `a403c9776f886bf71d5919007bdac303bc664e26` | pattern ARIA
 
 ## AmeliproPatientLogin
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **17/12/2025** — Feat/1498 renommer props ariarequired (#1535)  
   Release: `v1.0.16` · Hash: `ddd68980d997e18bc0d4ddd60bc9919b3a5bad40` | mot-clé a11y · pattern ARIA
@@ -641,6 +768,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproPostalAddressField
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **17/12/2025** — Feat/1498 renommer props ariarequired (#1535)  
   Release: `v1.0.16` · Hash: `ddd68980d997e18bc0d4ddd60bc9919b3a5bad40` | mot-clé a11y · pattern ARIA
 
@@ -661,6 +791,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproRadioGroup
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **17/12/2025** — Feat/1498 renommer props ariarequired (#1535)  
   Release: `v1.0.16` · Hash: `ddd68980d997e18bc0d4ddd60bc9919b3a5bad40` | mot-clé a11y · pattern ARIA
 
@@ -678,6 +811,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproResultList
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **17/12/2025** — Feat/1498 renommer props ariarequired (#1535)  
   Release: `v1.0.16` · Hash: `ddd68980d997e18bc0d4ddd60bc9919b3a5bad40` | mot-clé a11y · pattern ARIA
 
@@ -694,6 +830,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.7` · Hash: `79378a1ad34cdb07b03cf1bd220b02453cfe4229` | pattern ARIA
 
 ## AmeliproSelect
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **21/04/2026** — Tokens simplify v2 (#2102)  
   Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
@@ -715,11 +854,13 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproStateTile
 
-Aucune amélioration d’accessibilité détectée.
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 ## AmeliproStatus
 
-Aucune amélioration d’accessibilité détectée.
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 ## AmeliproStepBtn
 
@@ -730,6 +871,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `1539898edaaa972fafe1662cb4d55e489a7e7a74` | pattern ARIA
 
 ## AmeliproStepper
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **20/01/2026** — update vue-tsconfig (#1739)  
   Release: `v1.0.18` · Hash: `487d5fe1b4dd2b32bf8b61f8d1c402741ef74d6f` | pattern ARIA
@@ -744,6 +888,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `1539898edaaa972fafe1662cb4d55e489a7e7a74` | pattern ARIA
 
 ## AmeliproTable
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **08/12/2025** — Feat/1469 ajout de tests unitaires pour les derniers composants amelipro lot 8 (#1570)  
   Release: `v1.0.16` · Hash: `566acc2e417f02c6d5eb94c92559ad99730cd415` | pattern ARIA
@@ -770,6 +917,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproTabs
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **06/01/2026** — Feat/1691 ameliprotabs alignement (#1692)  
   Release: `v1.0.17` · Hash: `4505943446a82b6bedfae76e5faa4a6f13f19f36` | pattern ARIA
 
@@ -786,6 +936,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `1539898edaaa972fafe1662cb4d55e489a7e7a74` | pattern ARIA
 
 ## AmeliproTextArea
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **17/12/2025** — Feat/1498 renommer props ariarequired (#1535)  
   Release: `v1.0.16` · Hash: `ddd68980d997e18bc0d4ddd60bc9919b3a5bad40` | mot-clé a11y · pattern ARIA
@@ -804,8 +957,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproTextField
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **20/08/2026** — Fix tests warning (#2498)  
-  Release: `1.1.3` · Hash: `8cd25df337dd7df9a09d92eeecbeb80ebf74c9e3` | pattern ARIA
+  Release: `v1.1.4` · Hash: `8cd25df337dd7df9a09d92eeecbeb80ebf74c9e3` | pattern ARIA
 
 - **17/12/2025** — Feat/1498 renommer props ariarequired (#1535)  
   Release: `v1.0.16` · Hash: `ddd68980d997e18bc0d4ddd60bc9919b3a5bad40` | mot-clé a11y · pattern ARIA
@@ -824,18 +980,26 @@ Aucune amélioration d’accessibilité détectée.
 
 ## AmeliproTileBtn
 
-Aucune amélioration d’accessibilité détectée.
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 ## AmeliproTooltips
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **18/07/2025** — Feat/amelipro components ok (#803)  
   Release: `v1.0.3` · Hash: `1539898edaaa972fafe1662cb4d55e489a7e7a74` | pattern ARIA
 
 ## AmeliproTransmission
 
-Aucune amélioration d’accessibilité détectée.
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 ## AmeliproUpload
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **17/12/2025** — Feat/1498 renommer props ariarequired (#1535)  
   Release: `v1.0.16` · Hash: `ddd68980d997e18bc0d4ddd60bc9919b3a5bad40` | mot-clé a11y · pattern ARIA
@@ -855,6 +1019,9 @@ Aucune amélioration d’accessibilité détectée.
 Aucune amélioration d’accessibilité détectée.
 
 ## ServiceMenu
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **05/12/2025** — Mise à jour des tests unitaires (#1430)  
   Release: `v1.0.16` · Hash: `c54d359043e8d6cd165dd47a9e08009a6d10fedb` | pattern ARIA
@@ -891,6 +1058,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## StructureMenu
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **09/01/2026** — [AMELIPRO] Structure Menu - Ajouter Nom du PS (#1703)  
   Release: `v1.0.17` · Hash: `5792f7ef0c4f5c99c65d1c40d5bf076adc68b83f` | pattern ARIA
 
@@ -923,7 +1093,8 @@ Aucune amélioration d’accessibilité détectée.
 
 ## UserMenu
 
-Aucune amélioration d’accessibilité détectée.
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 ## UserMenuDetails
 
@@ -931,8 +1102,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## BackBtn
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -957,8 +1131,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## BackToTopBtn
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -989,8 +1166,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## Captcha
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
+  Release: _prochaine version_ · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1027,8 +1210,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## CaptchaAlert
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
+  Release: _prochaine version_ · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1065,8 +1254,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## CaptchaBase
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
+  Release: _prochaine version_ · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1103,8 +1298,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## CaptchaBtn
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
+  Release: _prochaine version_ · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1141,8 +1342,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## CaptchaForm
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
+  Release: _prochaine version_ · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1179,8 +1386,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## CaptchaHelpdesk
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
+  Release: _prochaine version_ · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1217,8 +1430,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## CaptchaImg
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
+  Release: _prochaine version_ · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1255,8 +1474,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## CaptchaInformation
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **09/09/2026** — ajout onglet accessibility dans dossier validation du captcha (#2544)  
+  Release: _prochaine version_ · Hash: `09850a4359abdf2d4d09e400124ad88b5ac38d96` | mot-clé a11y
+
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1297,8 +1522,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## ChipList
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -1329,6 +1557,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## CollapsibleList
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
 
@@ -1346,13 +1577,24 @@ Aucune amélioration d’accessibilité détectée.
 
 ## IconSlot
 
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+
 - **27/07/2026** — Permettre de rendre configurable toutes les chaines de caractères (#2404)  
   Release: `v1.1.3` · Hash: `2528a80ea9667f0d693f03f149d76f0242e22d4f` | pattern ARIA
 
 - **30/01/2026** — SySelect: add slots/tooltips (#1767)  
   Release: `v1.0.18` · Hash: `c3265eb88d01ee106e4db7f1a7d28cd960e48bb4` | pattern ARIA
 
+## ComponentStatusTable
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 ## ContextualMenu
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1377,6 +1619,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## DeepMenu
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
 
@@ -1400,11 +1645,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## CookieBanner
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **06/08/2026** — Ajout des interactions sur le composant `CookieBanner` (#2477)  
-  Release: `1.1.3` · Hash: `499a1aa0772107eb411333e91a6741a2695ed0fa` | pattern ARIA
+  Release: `v1.1.4` · Hash: `499a1aa0772107eb411333e91a6741a2695ed0fa` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1471,7 +1719,7 @@ Aucune amélioration d’accessibilité détectée.
 ## CookiesSelection
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1507,6 +1755,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## CopyBtn
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
 
@@ -1538,6 +1789,18 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.1-alpha` · Hash: `d4592f02a5e6d34bc56b4028abcceeab394a0120` | pattern ARIA
 
 ## SelectBtnField
+
+- **16/09/2026** — add on focus  
+  Release: _prochaine version_ · Hash: `7ebfa59c2acbce33901ff8003e4f73f4c5e8016c` | mot-clé a11y · pattern ARIA
+
+- **10/09/2026** — fix tests  
+  Release: _prochaine version_ · Hash: `ed876dadf42a4f0a077cb76458c5209d02d9c4ff` | pattern ARIA
+
+- **09/09/2026** — add tests a11y to selectBtnField  
+  Release: _prochaine version_ · Hash: `dd8ac6caf9610089fdd27dc9544d58ded7554ac9` | mot-clé a11y · pattern ARIA
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -1577,8 +1840,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyAutocomplete
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **12/08/2026** — refactor: replace KebabCase to PascaleCase component calls  
-  Release: `1.1.3` · Hash: `7dab36881ad0d0ba95dcbbff4810c1f7d34d72f5` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7dab36881ad0d0ba95dcbbff4810c1f7d34d72f5` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -1618,11 +1884,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyInputSelect
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **20/08/2026** — Fix tests warning (#2498)  
-  Release: `1.1.3` · Hash: `8cd25df337dd7df9a09d92eeecbeb80ebf74c9e3` | pattern ARIA
+  Release: `v1.1.4` · Hash: `8cd25df337dd7df9a09d92eeecbeb80ebf74c9e3` | pattern ARIA
 
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **27/07/2026** — Permettre de rendre configurable toutes les chaines de caractères (#2404)  
   Release: `v1.1.3` · Hash: `2528a80ea9667f0d693f03f149d76f0242e22d4f` | pattern ARIA
@@ -1646,6 +1915,12 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `bb0f966392add9b7ded61f7edddd960556bc228c` | pattern ARIA
 
 ## SySelect
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
 
 - **27/07/2026** — SySelect: fix selection display when items is a string array (#2425)  
   Release: `v1.1.3` · Hash: `45ce4db94c37746d9e3c0b3d9883d27eae0841e7` | pattern ARIA
@@ -1733,6 +2008,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyCheckBoxGroup
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **27/07/2026** — Permettre de rendre configurable toutes les chaines de caractères (#2404)  
   Release: `v1.1.3` · Hash: `2528a80ea9667f0d693f03f149d76f0242e22d4f` | pattern ARIA
 
@@ -1746,6 +2024,12 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.21` · Hash: `eaed6607738f2806fd050d39f4e4a0145dbce92f` | pattern ARIA
 
 ## SyCheckbox
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **27/08/2026** — fix error on accessibility page (#2514)  
+  Release: `v1.1.5` · Hash: `9099bd12f8b762c86fff317a56be129231501fbd` | mot-clé a11y · pattern ARIA
 
 - **23/07/2026** — [SyCheckbox] multiple (#2410)  
   Release: `v1.1.3` · Hash: `d8257e99afab773ca4986c43262aeba95297a8ce` | pattern ARIA
@@ -1806,6 +2090,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyForm
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **25/02/2026** — add a11y ci (#1881)  
   Release: `v1.0.21` · Hash: `c436586292ca72c4d82809711b9ef7cdcbdcc09a` | mot-clé a11y
 
@@ -1817,8 +2104,17 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyIcon
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **28/08/2026** — Ajout de documentation sur le composant `SyIcon` (#2483)  
+  Release: `v1.1.5` · Hash: `1a820ea05380988c7263430d7046f5859bff97bd` | pattern ARIA
+
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -1858,8 +2154,17 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyIconAccessibility
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **28/08/2026** — Ajout de documentation sur le composant `SyIcon` (#2483)  
+  Release: `v1.1.5` · Hash: `1a820ea05380988c7263430d7046f5859bff97bd` | pattern ARIA
+
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -1899,11 +2204,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyIconButton
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **04/08/2026** — Add Destructive VBtn version (#2464)  
-  Release: `1.1.3` · Hash: `c78863eecebea48a511266cdcca492913112e4f4` | pattern ARIA
+  Release: `v1.1.4` · Hash: `c78863eecebea48a511266cdcca492913112e4f4` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -1918,6 +2226,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.23` · Hash: `733824e0e28371ab68c8e6280c6f01d0798d41c4` | pattern ARIA
 
 ## SyPagination
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -1945,8 +2256,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyRadioGroup
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **25/08/2026** — [SyRadioGroup] héritage des attributs (#2493)  
-  Release: `1.1.3` · Hash: `a216fc35e26df993b7be4d403abcc5d65b5a8e36` | pattern ARIA
+  Release: `v1.1.4` · Hash: `a216fc35e26df993b7be4d403abcc5d65b5a8e36` | pattern ARIA
 
 - **27/07/2026** — Permettre de rendre configurable toutes les chaines de caractères (#2404)  
   Release: `v1.1.3` · Hash: `2528a80ea9667f0d693f03f149d76f0242e22d4f` | pattern ARIA
@@ -1973,6 +2287,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.16` · Hash: `6fee96c4f1a2b6e146f1b4282b9e18bb035bbf7b` | pattern ARIA
 
 ## SyTabs
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **27/07/2026** — Permettre de rendre configurable toutes les chaines de caractères (#2404)  
   Release: `v1.1.3` · Hash: `2528a80ea9667f0d693f03f149d76f0242e22d4f` | pattern ARIA
@@ -2017,6 +2334,12 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.7` · Hash: `80bc09fa1699b9cb604e9e3a8604a1b42aaa3d5c` | pattern ARIA
 
 ## FieldState
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
 
 - **31/07/2026** — SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)  
   Release: `v1.1.3` · Hash: `611b0627edc2976b1cd4129f701dd228394d52d8` | pattern ARIA
@@ -2128,6 +2451,12 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyTextField
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+
 - **31/07/2026** — SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)  
   Release: `v1.1.3` · Hash: `611b0627edc2976b1cd4129f701dd228394d52d8` | pattern ARIA
 
@@ -2238,6 +2567,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## DataList
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
 
@@ -2269,6 +2601,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## DataListGroup
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
 
@@ -2288,8 +2623,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## DatePicker
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **31/07/2026** — SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)  
   Release: `v1.1.3` · Hash: `611b0627edc2976b1cd4129f701dd228394d52d8` | pattern ARIA
@@ -2338,8 +2676,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## ComplexDatePicker
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **30/07/2026** — DatePicker: add documentation for known false positives in accessibility tooling (aria-controls and keyboard navigation) (#2446)  
   Release: `v1.1.3` · Hash: `6fc4e15b014bb96534f21f5070a2ce4226866f4f` | mot-clé a11y · pattern ARIA
@@ -2388,8 +2729,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## DatePickerLiveRegion
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **31/07/2026** — SyTextField: add allowIconButtonWhenReadonly prop to enable icon on dp (#2456)  
   Release: `v1.1.3` · Hash: `611b0627edc2976b1cd4129f701dd228394d52d8` | pattern ARIA
@@ -2510,6 +2854,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## DateTextInput
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **23/07/2026** — WIP: Feat/a11y complex date picker (#2390)  
   Release: `v1.1.3` · Hash: `f2ae3fd9d1c349db938de16033ed24455131653c` | mot-clé a11y · pattern ARIA
 
@@ -2583,13 +2930,19 @@ Aucune amélioration d’accessibilité détectée.
 
 ## DeclarationAccessibilityPage
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
 
 ## DiacriticPicker
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -2614,8 +2967,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## DialogBox
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **05/08/2026** — Ajout des interactions sur le composant `DialogBox` (#2469)  
-  Release: `1.1.3` · Hash: `30980ea7b507740d586d1cf742fc41eef49b6b3c` | pattern ARIA
+  Release: `v1.1.4` · Hash: `30980ea7b507740d586d1cf742fc41eef49b6b3c` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -2670,8 +3026,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## DownloadBtn
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -2698,6 +3057,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.5-alpha` · Hash: `3ddeab00f73305765205d47c8e24a76a19fed0fa` | mot-clé a11y
 
 ## ErrorPage
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -2740,6 +3102,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## ExternalLinks
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
 
@@ -2780,6 +3145,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.8-alpha` · Hash: `bdfc829b8b00c2fe510376965ebe23302b21dc5c` | pattern ARIA
 
 ## FileList
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **27/07/2026** — Permettre de rendre configurable toutes les chaines de caractères (#2404)  
   Release: `v1.1.3` · Hash: `2528a80ea9667f0d693f03f149d76f0242e22d4f` | pattern ARIA
@@ -2827,6 +3195,12 @@ Aucune amélioration d’accessibilité détectée.
 
 ## FilePreview
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **03/09/2026** — Improve pdf display on android + fix uploadWorkfow (#2527)  
+  Release: `v1.1.5` · Hash: `b70137c4b8130a223eb88d3a1427b943a36a79f6` | pattern ARIA
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
 
@@ -2844,6 +3218,12 @@ Aucune amélioration d’accessibilité détectée.
 
 ## FileUpload
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
 
@@ -2858,6 +3238,12 @@ Aucune amélioration d’accessibilité détectée.
 
 ## FileUploadContent
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
 
@@ -2871,6 +3257,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.17` · Hash: `ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf` | mot-clé a11y
 
 ## FilterInline
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -2903,6 +3292,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.11-alpha` · Hash: `2c5aede4d2753029180fd05b48e6f2434346c9fc` | pattern ARIA
 
 ## FilterSideBar
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -2939,8 +3331,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## FooterBar
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -2977,6 +3372,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## FranceConnectBtn
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
 
@@ -3003,8 +3401,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## HeaderBar
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **30/07/2026** — A11y: Fix homeLink focus (#2443)  
   Release: `v1.1.3` · Hash: `43ecbd9871d2da61c693351d6c13ae521d23235c` | mot-clé a11y · pattern ARIA
@@ -3074,8 +3475,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## HeaderBurgerMenu
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -3115,6 +3519,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## HeaderMenuItem
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
 
@@ -3126,6 +3533,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## HeaderMenuSection
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **04/08/2025** — HeaderBar/HeaderBurgerMenu correction post audit (#828)  
   Release: `v1.0.6` · Hash: `855a71637fe2452668e6ec16945100fcda300f8f` | pattern ARIA
 
@@ -3133,6 +3543,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.5-alpha` · Hash: `c3ebe8705b6cc59a436ff06af2d28c0c68445126` | pattern ARIA
 
 ## HeaderSubMenu
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **22/12/2025** — add Storybook a11y addon and disable color-contrast checks (#1658)  
   Release: `v1.0.17` · Hash: `d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4` | mot-clé a11y
@@ -3194,6 +3607,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## HeaderLoading
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **29/05/2026** — Feat/add cypress test (#2203)  
   Release: `v1.1.0` · Hash: `d56383f77b97cf18f4a14e05c37e6f0e165d5024` | pattern ARIA
 
@@ -3216,6 +3632,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.5-alpha` · Hash: `11e216c893106c736ac3b8f9ee985ae82fa589b0` | pattern ARIA
 
 ## HeaderNavigationBar
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **28/07/2026** — fix header navigation bar color to variable (#2431)  
   Release: `v1.1.3` · Hash: `481c8fc57505e697f05b4cf623dc78f4fc0e65d2` | mot-clé a11y
@@ -3281,11 +3700,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## HeaderToolbar
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **13/08/2026** — fix/components-name-format  
-  Release: `1.1.3` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7a60cc11c6a81f356f17d09b4a36d3bac6f326b9` | pattern ARIA
 
 - **12/08/2026** — refactor: replace KebabCase to PascaleCase component calls  
-  Release: `1.1.3` · Hash: `7dab36881ad0d0ba95dcbbff4810c1f7d34d72f5` | pattern ARIA
+  Release: `v1.1.4` · Hash: `7dab36881ad0d0ba95dcbbff4810c1f7d34d72f5` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -3313,8 +3735,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## LangBtn
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -3348,6 +3773,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## Logo
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
 
@@ -3364,6 +3792,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.2-alpha` · Hash: `006827e9f5d3a1bdfa2b8822ea853f6d85c8dbaa` | pattern ARIA
 
 ## LogoBrandSection
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **30/07/2026** — A11y: Fix homeLink focus (#2443)  
   Release: `v1.1.3` · Hash: `43ecbd9871d2da61c693351d6c13ae521d23235c` | mot-clé a11y · pattern ARIA
@@ -3397,8 +3828,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## LunarCalendar
 
+- **11/09/2026** — LunarCalendar: ajout onglet test a11y dans validation (#2547)  
+  Release: _prochaine version_ · Hash: `60fe923d69a06f1c43ba06edea701c8b1d35d119` | mot-clé a11y
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -3416,6 +3853,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.17` · Hash: `ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf` | mot-clé a11y
 
 ## MaintenancePage
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **05/03/2026** — Feat/1785 migration page de maintenance (#1929)  
   Release: `v1.0.22` · Hash: `63522bb5c595350c4f549d0fbc6e5af15cf8a891` | pattern ARIA
@@ -3442,6 +3882,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `1933ebf2afd156dd76f8d5c4c3021fd9d9603882` | pattern ARIA
 
 ## MonthPicker
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -3508,6 +3951,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## NirField
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **27/07/2026** — Permettre de rendre configurable toutes les chaines de caractères (#2404)  
   Release: `v1.1.3` · Hash: `2528a80ea9667f0d693f03f149d76f0242e22d4f` | pattern ARIA
 
@@ -3561,6 +4007,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## NotFoundPage
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
 
@@ -3607,6 +4056,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## NotificationBar
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
 
@@ -3639,6 +4091,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## PageContainer
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **17/06/2026** — migration ameliproPageLayout (#2259)  
   Release: `v1.1.1` · Hash: `5ded9eca4a95c2ee3083fee246d6dc7e8e792d44` | pattern ARIA
 
@@ -3658,6 +4113,15 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.17` · Hash: `ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf` | mot-clé a11y
 
 ## PaginatedTable
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+
+- **26/08/2026** — refactor(PaginatedTable): add locales support for accessibility labels (#2505)  
+  Release: `v1.1.5` · Hash: `755b1137304028d3762733d9b5f297469e3023c6` | mot-clé a11y · pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -3700,6 +4164,15 @@ Aucune amélioration d’accessibilité détectée.
 
 ## Pagination
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+
+- **26/08/2026** — refactor(PaginatedTable): add locales support for accessibility labels (#2505)  
+  Release: `v1.1.5` · Hash: `755b1137304028d3762733d9b5f297469e3023c6` | mot-clé a11y · pattern ARIA
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
 
@@ -3740,6 +4213,12 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.11-alpha` · Hash: `b4252a4f54c0bffe7c72b848d7d40417aa5a3fb0` | pattern ARIA
 
 ## PasswordField
+
+- **15/09/2026** — PasswordField: ajout onglet a11y ainsi que le dossier validation (#2556)  
+  Release: _prochaine version_ · Hash: `e945f9bca8bd9b042d2459700cb37aa26da92083` | mot-clé a11y
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -3782,8 +4261,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## PeriodField
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **25/08/2026** — refactor: enforce no-console rule and replace TODO with Note comments (#2501)  
-  Release: `1.1.3` · Hash: `9df69d6c84d0c1383cd62b5441d0a027a07a01f7` | pattern ARIA
+  Release: `v1.1.4` · Hash: `9df69d6c84d0c1383cd62b5441d0a027a07a01f7` | pattern ARIA
 
 - **01/04/2026** — Feat/improve date pickers accessibility (#1964)  
   Release: `v1.0.24` · Hash: `bfc61d4def7a5d1b29f3777ab2f57eff5e88152a` | mot-clé a11y · pattern ARIA
@@ -3807,6 +4289,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.10-alpha` · Hash: `b4fb5d5b3fa5012bed2850b1a367f570e4611183` | pattern ARIA
 
 ## PhoneField
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -3845,6 +4330,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.1` · Hash: `004a526cbd82d54581326a15531782d8c8fdbbda` | pattern ARIA
 
 ## RangeField
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -3966,6 +4454,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## RatingPicker
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **27/07/2026** — Permettre de rendre configurable toutes les chaines de caractères (#2404)  
   Release: `v1.1.3` · Hash: `2528a80ea9667f0d693f03f149d76f0242e22d4f` | pattern ARIA
 
@@ -4045,6 +4536,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SearchListField
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
 
@@ -4077,6 +4571,12 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SkipLink
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **28/08/2026** — feat(SkipLink): add support for multiple skip links and enhance accessibility (#2515)  
+  Release: `v1.1.5` · Hash: `9bc308f61597b0dea151c2ddd8f738bc824757e1` | mot-clé a11y · pattern ARIA
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
 
@@ -4099,6 +4599,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.1-alpha` · Hash: `4328ecf39809770f7c26a3d88fc75b473a381bb8` | pattern ARIA
 
 ## SocialMediaLinks
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -4126,6 +4629,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## StatusPage
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
 
@@ -4151,6 +4657,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.21` · Hash: `0c332980a2eebd9eee723ecf451aaf6b3b4f28f2` | pattern ARIA
 
 ## SubHeader
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -4178,11 +4687,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyAlert
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **07/08/2026** — [SyAlert] Ajout de la props density (#2478)  
-  Release: `1.1.3` · Hash: `1fc52297b3b59207665ab797522e03309e6a18a7` | pattern ARIA
+  Release: `v1.1.4` · Hash: `1fc52297b3b59207665ab797522e03309e6a18a7` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -4210,8 +4722,17 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyBtnMenu
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **07/09/2026** — fix button color in syBtnMenu (#2536)  
+  Release: `v1.1.5` · Hash: `b46884596483f9895fbb6bcd73ba948a49b543e7` | pattern ARIA
+
+- **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
+  Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
+
 - **07/08/2026** — UserMenuBtn: improve responsive + a11y (#2470)  
-  Release: `1.1.3` · Hash: `39f7e1db8d96b9422e2b972fd423def3aa25a678` | mot-clé a11y · pattern ARIA
+  Release: `v1.1.4` · Hash: `39f7e1db8d96b9422e2b972fd423def3aa25a678` | mot-clé a11y · pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -4231,6 +4752,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.23` · Hash: `a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a` | mot-clé a11y
 
 ## SyTextArea
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **23/07/2026** — expose Vuetify props on SyTextArea and DialogBox (#2415)  
   Release: `v1.1.3` · Hash: `6ba17d94f51a82d2ee9d3a4972eb40275a218231` | pattern ARIA
@@ -4261,8 +4785,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## TableToolbar
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -4290,8 +4817,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyServerTable
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
+- **04/09/2026** — SyTable/SyServerTable: fix items per page  (#2538)  
+  Release: `v1.1.5` · Hash: `2c90a270023a8f81debfab170380e16cdb6e0640` | pattern ARIA
+
 - **25/08/2026** — [Table] selection avec éléments radio en mode selection unique (#2494)  
-  Release: `1.1.3` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
+  Release: `v1.1.4` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -4334,8 +4867,11 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyTable
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **25/08/2026** — [Table] selection avec éléments radio en mode selection unique (#2494)  
-  Release: `1.1.3` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
+  Release: `v1.1.4` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -4379,10 +4915,10 @@ Aucune amélioration d’accessibilité détectée.
 ## SyTableFilter
 
 - **25/08/2026** — fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)  
-  Release: `1.1.3` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
+  Release: `v1.1.4` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
 
 - **25/08/2026** — [Table] selection avec éléments radio en mode selection unique (#2494)  
-  Release: `1.1.3` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
+  Release: `v1.1.4` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -4465,10 +5001,10 @@ Aucune amélioration d’accessibilité détectée.
 ## SyTablePagination
 
 - **25/08/2026** — fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)  
-  Release: `1.1.3` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
+  Release: `v1.1.4` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
 
 - **25/08/2026** — [Table] selection avec éléments radio en mode selection unique (#2494)  
-  Release: `1.1.3` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
+  Release: `v1.1.4` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -4551,10 +5087,10 @@ Aucune amélioration d’accessibilité détectée.
 ## TableBulkActions
 
 - **25/08/2026** — fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)  
-  Release: `1.1.3` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
+  Release: `v1.1.4` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
 
 - **25/08/2026** — [Table] selection avec éléments radio en mode selection unique (#2494)  
-  Release: `1.1.3` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
+  Release: `v1.1.4` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -4637,10 +5173,10 @@ Aucune amélioration d’accessibilité détectée.
 ## TableHeader
 
 - **25/08/2026** — fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)  
-  Release: `1.1.3` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
+  Release: `v1.1.4` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
 
 - **25/08/2026** — [Table] selection avec éléments radio en mode selection unique (#2494)  
-  Release: `1.1.3` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
+  Release: `v1.1.4` · Hash: `5b17a07d9bf312bb7dc65d81737c16aee9486f99` | pattern ARIA
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
@@ -4799,6 +5335,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## ToolbarContainer
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y · pattern ARIA
 
@@ -4815,6 +5354,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.2` · Hash: `9bc8e4da0a3865263e294b69d53647b5c2a2203a` | pattern ARIA
 
 ## UploadWorkflow
+
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
@@ -4843,11 +5385,14 @@ Aucune amélioration d’accessibilité détectée.
 
 ## UserMenuBtn
 
+- **10/09/2026** — update doc a11y (#2545)  
+  Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
+
 - **10/08/2026** — [GitHub CI] Fix l'installation de la font Arial (#2488)  
-  Release: `1.1.3` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `fb82c46202a925c73c0a48758ca81e446a0082e4` | mot-clé a11y
 
 - **07/08/2026** — UserMenuBtn: improve responsive + a11y (#2470)  
-  Release: `1.1.3` · Hash: `39f7e1db8d96b9422e2b972fd423def3aa25a678` | mot-clé a11y
+  Release: `v1.1.4` · Hash: `39f7e1db8d96b9422e2b972fd423def3aa25a678` | mot-clé a11y
 
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
