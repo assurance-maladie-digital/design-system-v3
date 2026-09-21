@@ -13,11 +13,12 @@ describe('isConformiteHidden', () => {
 	})
 
 	// Régression : `api.getCurrentStoryData()` renvoie `undefined` tant que
-	// l'index n'est pas résolu. L'ancien code déréférençait `.title` sans garde,
-	// levait, et le panneau restait affiché — visible en prod, pas en dev.
-	it('masque le panneau tant que le titre est inconnu', () => {
-		expect(isConformiteHidden(undefined)).toBe(true)
-		expect(isConformiteHidden('')).toBe(true)
+	// l'index n'est pas résolu, et l'ancien code déréférençait `.title` sans
+	// garde. Titre inconnu = rien à masquer ; masquer par défaut faisait
+	// disparaître l'onglet en dev, où il doit s'afficher.
+	it('laisse le panneau visible tant que le titre est inconnu', () => {
+		expect(isConformiteHidden(undefined)).toBe(false)
+		expect(isConformiteHidden('')).toBe(false)
 	})
 
 	it('ignore la casse et les espaces du segment', () => {

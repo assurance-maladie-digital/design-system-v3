@@ -7,13 +7,14 @@
  * Le titre est optionnel à dessein : tant que l'index des stories n'est pas
  * résolu, `api.getCurrentStoryData()` renvoie `undefined` — son typage le
  * déclare pourtant non-nullable, ce qui faisait lever l'ancien appel direct à
- * `.title` et laissait le panneau visible. Dans le doute on masque : un onglet
- * absent une fraction de seconde vaut mieux qu'un onglet affiché à tort.
+ * `.title`. Titre inconnu = on n'a rien à masquer : le panneau reste visible,
+ * et la règle s'applique dès que la story est résolue. Masquer par défaut
+ * ferait disparaître l'onglet en dev, où l'addon doit précisément s'afficher.
  *
  * @param title - Titre de la story courante, `undefined` si non encore connu.
  */
 export function isConformiteHidden(title?: string): boolean {
-	if (!title) return true
+	if (!title) return false
 
 	return title
 		.split('/')
