@@ -18,5 +18,5 @@ export function isConformiteHidden(title?: string): boolean {
 
 	return title
 		.split('/')
-		.some(segment => segment.trim().toLowerCase() === 'validation')
+		.some(segment => segment.toLowerCase() === 'validation')
 }

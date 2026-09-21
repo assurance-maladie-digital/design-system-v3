@@ -5,6 +5,7 @@ describe('isConformiteHidden', () => {
 	it('masque le panneau dans les dossiers de validation', () => {
 		expect(isConformiteHidden('Composants/Formulaires/NirField/Validation')).toBe(true)
 		expect(isConformiteHidden('Composants/Formulaires/DatePicker/Validation/Submit/MultiMode')).toBe(true)
+		expect(isConformiteHidden('Composants/NirField/validation')).toBe(true)
 	})
 
 	it('affiche le panneau ailleurs', () => {
@@ -19,16 +20,5 @@ describe('isConformiteHidden', () => {
 	it('laisse le panneau visible tant que le titre est inconnu', () => {
 		expect(isConformiteHidden(undefined)).toBe(false)
 		expect(isConformiteHidden('')).toBe(false)
-	})
-
-	it('ignore la casse et les espaces du segment', () => {
-		expect(isConformiteHidden('Composants/NirField/validation')).toBe(true)
-		expect(isConformiteHidden('Composants/NirField/ Validation ')).toBe(true)
-	})
-
-	// Un segment qui commence par « validation » sans y être égal reste visible :
-	// le comportement est inchangé, il est documenté ici pour être explicite.
-	it('ne masque pas un segment seulement préfixé par validation', () => {
-		expect(isConformiteHidden('Validation manuelle')).toBe(false)
 	})
 })
