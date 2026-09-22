@@ -63,12 +63,24 @@ import {
 		</ul>
 	</BestPracticesSection>
 
+		<div style={{ margin: '3rem 0', padding: '1.5rem', backgroundColor: '#fff3e0', borderLeft: '4px solid #f57c00', borderRadius: '4px' }}>
+<h2 style={{ color: '#e65100', marginTop: 0 }}>Faux positif connu (outillage) : aria-controls</h2>
+<ul>
+<li>L’addon d'accessibilité de Storybook peut signaler <code>aria-valid-attr-value</code> sur le bouton de <code>SyBtnMenu</code>, lorsque le menu est ouvert.</li>
+<li>L’attribut <code>aria-controls</code> relie le bouton au menu qu’il ouvre.</li>
+<li>Cause: Vuetify affiche le menu dans <code>.v-overlay-container</code>, ajouté sous <code>&lt;body&gt;</code>, en dehors de <code>#storybook-root</code>— le périmètre par défaut scanné par l'addon.</li>
+<li>Vérification manuelle : ouvrir le menu, sélectionner son bouton dans l’inspecteur, puis saisir dans la console <code>document.getElementById($0.getAttribute('aria-controls'))</code>. Le résultat doit être l’élément correspondant au menu ouvert.</li>
+<li>Si la référence pointe bien vers le menu, ce point est vérifié : l’alerte ne prouve pas une erreur du composant. Il faut conserver <code>aria-controls</code>. Si le résultat est <code>null</code>, la référence doit être corrigée.</li>
+</ul>
+</div>
+
 	<ResourcesSection>
 		<ul>
 			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices: Menu Button</a></li>
 			<li><a href="https://inclusive-components.design/menus-menu-buttons/" target="_blank" rel="noopener noreferrer">Inclusive Components: Menus & Menu Buttons</a></li>
 		</ul>
 	</ResourcesSection>
+
 
 	<div class="mt-8">
 		<p>Rapport d’audit manuel : <a href="/audits/SyBtnMenu.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
