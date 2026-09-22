@@ -1054,11 +1054,9 @@
 <style lang="scss" scoped>
 @use '../styles/datePickerShared';
 
-:deep(.v-field),
-:deep(.v-field__input),
-:deep(.v-field__input input) {
+:deep(.v-field__input[readonly]) {
 	cursor: pointer;
-	caret-color: transparent !important;
+	caret-color: transparent;
 }
 
 :deep(.sy-text-field__icon-button) {
