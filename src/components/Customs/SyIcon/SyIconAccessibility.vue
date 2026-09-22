@@ -1,7 +1,19 @@
 <script setup lang="ts">
 	import SyIcon from './SyIcon.vue'
 	import { ref, computed } from 'vue'
-	import { mdiInformation, mdiHome, mdiAccount, mdiCog, mdiAlertCircle, mdiMagnify, mdiDownload, mdiPencil, mdiCheck, mdiClose, mdiHelp } from '@mdi/js'
+	import {
+		mdiInformation,
+		mdiHome,
+		mdiAccount,
+		mdiCog,
+		mdiAlertCircle,
+		mdiMagnify,
+		mdiDownload,
+		mdiPencil,
+		mdiCheck,
+		mdiClose,
+		mdiHelp,
+	} from '@mdi/js'
 
 	// Liste d'icônes prédéfinies pour la sélection
 	const iconOptions = [
@@ -40,7 +52,8 @@
 		return {
 			'role': decorative.value !== false ? 'presentation' : 'img',
 			'aria-hidden': decorative.value !== false ? 'true' : undefined,
-			'aria-label': decorative.value === false && label.value ? label.value : undefined,
+			'aria-label':
+				decorative.value === false && label.value ? label.value : undefined,
 		}
 	})
 
@@ -77,8 +90,9 @@
 					Principes d'accessibilité
 				</h3>
 				<p class="mb-2">
-					Le composant SyIcon respecte les normes d'accessibilité RGAA en appliquant automatiquement les attributs ARIA appropriés
-					en fonction de la nature de l'icône (décorative ou informative).
+					Le composant SyIcon respecte les normes d'accessibilité RGAA en
+					appliquant automatiquement les attributs ARIA appropriés en fonction
+					de la nature de l'icône (décorative ou informative).
 				</p>
 
 				<VAlert
@@ -87,8 +101,11 @@
 					variant="flat"
 					density="comfortable"
 				>
-					<strong>Important :</strong> Si une icône est marquée comme non décorative (<code>:decorative="false"</code>) mais qu'aucun label n'est fourni,
-					un message d'erreur sera affiché dans la console : <code>L'icône "[nom-de-l'icône]" n'est pas décorative, mais aucun texte alternatif (label) n'a été fourni.</code>
+					<strong>Important :</strong> Si une icône est marquée comme non
+					décorative (<code>:decorative="false"</code>) mais qu'aucun label
+					n'est fourni, un message d'erreur sera affiché dans la console :
+					<code>L'icône "[nom-de-l'icône]" n'est pas décorative, mais aucun texte
+						alternatif (label) n'a été fourni.</code>
 				</VAlert>
 
 				<VList
@@ -100,7 +117,8 @@
 							Icônes décoratives
 						</VListItemTitle>
 						<VListItemSubtitle>
-							Invisibles pour les lecteurs d'écran (role="presentation", aria-hidden="true")
+							Invisibles pour les lecteurs d'écran (role="presentation",
+							aria-hidden="true")
 						</VListItemSubtitle>
 					</VListItem>
 					<VListItem>
@@ -112,7 +130,8 @@
 							Icônes informatives
 						</VListItemTitle>
 						<VListItemSubtitle>
-							Annoncées par les lecteurs d'écran avec un label explicite (role="img", aria-label="[label]")
+							Annoncées par les lecteurs d'écran avec un label explicite
+							(role="img", aria-label="[label]")
 						</VListItemSubtitle>
 					</VListItem>
 				</VList>
@@ -123,7 +142,8 @@
 					variant="flat"
 					density="comfortable"
 				>
-					La directive <code>v-rgaa-svg-fix</code> est également appliquée pour garantir la compatibilité avec les lecteurs d'écran.
+					La directive <code>v-rgaa-svg-fix</code> est également appliquée pour
+					garantir la compatibilité avec les lecteurs d'écran.
 				</VAlert>
 			</VCardText>
 		</VCard>
@@ -139,7 +159,8 @@
 
 			<VCardText>
 				<p class="mb-4">
-					Modifiez les paramètres ci-dessous pour voir comment les attributs d'accessibilité sont générés :
+					Modifiez les paramètres ci-dessous pour voir comment les attributs
+					d'accessibilité sont générés :
 				</p>
 
 				<VRow>
@@ -309,38 +330,38 @@
 
 <style scoped>
 pre {
-	margin: 0;
-	white-space: pre-wrap;
-	word-break: break-word;
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
 }
 :deep(.v-list-item__overlay) {
-    display: none;
+  display: none;
 }
 :deep(.v-list-item-subtitle) {
-    opacity: 1;
-    color: #424242;
-	-webkit-line-clamp: unset;
-	line-clamp: unset;
+  opacity: 1;
+  color: #424242;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
 }
 :deep(.v-label) {
-    opacity: 1;
-    color: #212121;
+  opacity: 1;
+  color: #212121;
 }
 /* Le VField superpose un overlay + un input transparent au-dessus du texte
    sélectionné : axe ne peut pas calculer le fond. */
 :deep(.v-field__overlay) {
-    display: none;
+  display: none;
 }
 :deep(.v-field) {
-    background-color: #fff;
+  background-color: #fff;
 }
 :deep(.v-select__selection) {
-    position: relative;
-    z-index: 1;
-    background-color: #fff;
+  position: relative;
+  z-index: 1;
+  background-color: #fff;
 }
 :deep(.v-select__selection-text) {
-    opacity: 1;
-    color: #212121;
+  opacity: 1;
+  color: #212121;
 }
 </style>
