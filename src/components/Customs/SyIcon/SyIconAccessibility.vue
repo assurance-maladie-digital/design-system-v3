@@ -330,38 +330,45 @@
 
 <style scoped>
 pre {
-  margin: 0;
-  white-space: pre-wrap;
-  word-break: break-word;
+	margin: 0;
+	white-space: pre-wrap;
+	word-break: break-word;
 }
+
 :deep(.v-list-item__overlay) {
-  display: none;
+	display: none;
 }
+
 :deep(.v-list-item-subtitle) {
-  opacity: 1;
-  color: #424242;
-  -webkit-line-clamp: unset;
-  line-clamp: unset;
+	opacity: 1;
+	color: #424242;
+	-webkit-line-clamp: unset;
+	line-clamp: unset;
 }
+
 :deep(.v-label) {
-  opacity: 1;
-  color: #212121;
+	opacity: 1;
+	color: #212121;
 }
+
 /* Le VField superpose un overlay + un input transparent au-dessus du texte
    sélectionné : axe ne peut pas calculer le fond. */
 :deep(.v-field__overlay) {
-  display: none;
+	display: none;
 }
+
 :deep(.v-field) {
-  background-color: #fff;
+	background-color: #fff;
 }
+
 :deep(.v-select__selection) {
-  position: relative;
-  z-index: 1;
-  background-color: #fff;
+	position: relative;
+	z-index: 1;
+	background-color: #fff;
 }
+
 :deep(.v-select__selection-text) {
-  opacity: 1;
-  color: #212121;
+	opacity: 1;
+	color: #212121;
 }
 </style>
