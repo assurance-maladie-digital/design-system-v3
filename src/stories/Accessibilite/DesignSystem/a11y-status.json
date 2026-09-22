@@ -194,7 +194,7 @@
     {
       "componentName": "Customs/SyIcon",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
+      "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Données/SyIcon",
