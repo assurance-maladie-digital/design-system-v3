@@ -77,6 +77,52 @@ export const adaptCustomRules = (rules: DatePickerRule[] = [], format: string): 
  * @param required - Indique si le champ est requis
  * @returns Objet indiquant si la validation doit continuer et si la valeur est valide
  */
+/** Bornes d'un segment de date, par jeton de format. */
+const SEGMENT_BOUNDS: Record<string, { min: number, max: number }> = {
+	D: { min: 1, max: 31 },
+	M: { min: 1, max: 12 },
+}
+
+/**
+ * Détecte un segment déjà entièrement saisi dont la valeur est hors plage —
+ * un jour à `00`, un mois à `13`… Ces saisies ne pourront jamais devenir une
+ * date valide, quelles que soient les frappes suivantes.
+ *
+ * `isDateComplete` ne compte que les chiffres : sans ce contrôle, une saisie
+ * comme `00/__/____` reste « incomplète donc valide » et le champ s'affiche
+ * sans erreur (issue #2571). Les segments partiels sont ignorés : `0` peut
+ * encore devenir `01`, seul `00` est définitivement faux.
+ *
+ * @param value - Saisie de l'utilisateur, séparateurs compris.
+ * @param format - Format d'affichage, ex. `DD/MM/YYYY`.
+ */
+export const hasImpossibleDateSegment = (value: string, format: string): boolean => {
+	if (!value) return false
+
+	// Séparateurs réellement présents dans le format (`/`, `-`, `.`), échappés
+	// pour la classe de caractères. Découper sur « tout sauf une lettre »
+	// casserait la saisie, les chiffres en faisant partie.
+	const separatorChars = [...new Set(format.replace(/[A-Za-z]/g, ''))]
+	if (separatorChars.length === 0) return false
+
+	const separators = new RegExp(`[${separatorChars.map(c => `\\${c}`).join('')}]+`)
+	const formatSegments = format.split(separators).filter(Boolean)
+	const valueSegments = value.split(separators)
+
+	return formatSegments.some((formatSegment, index) => {
+		const bounds = SEGMENT_BOUNDS[formatSegment[0] ?? '']
+		if (!bounds) return false
+
+		const segment = valueSegments[index]
+		// Segment absent ou encore partiel : rien à conclure.
+		if (!segment || segment.length < formatSegment.length) return false
+		if (!/^\d+$/.test(segment)) return false
+
+		const numeric = Number(segment)
+		return numeric < bounds.min || numeric > bounds.max
+	})
+}
+
 export const validateEmptyOrIncompleteDate = (
 	value: string,
 	required: boolean,
