@@ -69,25 +69,25 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date1"
-					label="Date requise"
-					placeholder="Date requise"
+					label="Date requise (JJ/MM/AAAA)"
+					placeholder="JJ/MM/AAAA"
 					required
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date1 = ''"
 			>
 				Vider le champ
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date1 = today"
 			>
 				Remplir le champ
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date1 }}
 			</div>
@@ -107,8 +107,8 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date2"
-					label="Jour de semaine"
-					placeholder="Jour de semaine uniquement"
+					label="Jour de semaine (JJ/MM/AAAA)"
+					placeholder="JJ/MM/AAAA"
 					:custom-rules="[{
 						type: 'notWeekend',
 						options: {
@@ -119,20 +119,20 @@
 					:show-success-messages="true"
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date2 = '13/04/2025'"
 			>
 				Samedi (13/04/2025)
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date2 = '15/04/2025'"
 			>
 				Mardi (15/04/2025)
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date2 }}
 			</div>
@@ -152,8 +152,8 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date3"
-					label="Date passée"
-					placeholder="Date passée ou aujourd'hui"
+					label="Date passée (JJ/MM/AAAA)"
+					placeholder="JJ/MM/AAAA"
 					:custom-rules="[{
 						type: 'notAfterToday',
 						options: {
@@ -164,27 +164,27 @@
 					:show-success-messages="true"
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date3 = today"
 			>
 				Aujourd'hui
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date3 = tomorrow"
 			>
 				Demain
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date3 = yesterday"
 			>
 				Hier
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date3 }}
 			</div>
@@ -204,8 +204,8 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date4"
-					label="Date future"
-					placeholder="Date future ou aujourd'hui"
+					label="Date future (JJ/MM/AAAA)"
+					placeholder="JJ/MM/AAAA"
 					:custom-rules="[{
 						type: 'notBeforeToday',
 						options: {
@@ -216,27 +216,27 @@
 					:show-success-messages="true"
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date4 = today"
 			>
 				Aujourd'hui
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date4 = tomorrow"
 			>
 				Demain
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date4 = yesterday"
 			>
 				Hier
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date4 }}
 			</div>
@@ -256,8 +256,8 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date5"
-					label="Date après le 01/01/2025"
-					placeholder="Date après le 01/01/2025"
+					label="Date après le 01/01/2025 (JJ/MM/AAAA)"
+					placeholder="JJ/MM/AAAA"
 					:custom-rules="[{
 						type: 'notBeforeDate',
 						options: {
@@ -269,20 +269,20 @@
 					:show-success-messages="true"
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date5 = '15/04/2025'"
 			>
 				15/04/2025
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date5 = '31/12/2024'"
 			>
 				31/12/2024
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date5 }}
 			</div>
@@ -302,8 +302,8 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date6"
-					label="Date avant le 31/12/2025"
-					placeholder="Date avant le 31/12/2025"
+					label="Date avant le 31/12/2025 (JJ/MM/AAAA)"
+					placeholder="JJ/MM/AAAA"
 					:custom-rules="[{
 						type: 'notAfterDate',
 						options: {
@@ -315,20 +315,20 @@
 					:show-success-messages="true"
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date6 = '15/04/2025'"
 			>
 				15/04/2025
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date6 = '01/01/2026'"
 			>
 				01/01/2026
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date6 }}
 			</div>
@@ -348,8 +348,8 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date7"
-					label="Date exacte"
-					placeholder="Date exacte: 25/12/2025"
+					label="Date exacte (JJ/MM/AAAA)"
+					placeholder="JJ/MM/AAAA"
 					:custom-rules="[{
 						type: 'dateExact',
 						options: {
@@ -361,20 +361,20 @@
 					:show-success-messages="true"
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date7 = '25/12/2025'"
 			>
 				25/12/2025
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date7 = '26/12/2025'"
 			>
 				26/12/2025
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date7 }}
 			</div>
@@ -394,8 +394,8 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date8"
-					label="Date hors 2024"
-					placeholder="Date hors 2024"
+					label="Date hors 2024 (JJ/MM/AAAA)"
+					placeholder="JJ/MM/AAAA"
 					:custom-rules="[{
 						type: 'custom',
 						options: {
@@ -419,20 +419,20 @@
 					:show-success-messages="true"
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date8 = '15/04/2025'"
 			>
 				15/04/2025
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date8 = '15/12/2024'"
 			>
 				15/12/2024
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date8 }}
 			</div>
@@ -452,8 +452,8 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date9"
-					label="Date avec avertissement"
-					placeholder="Date (avertissement pour 2025)"
+					label="Date avec avertissement (JJ/MM/AAAA)"
+					placeholder="JJ/MM/AAAA"
 					:custom-warning-rules="[{
 						type: 'custom',
 						options: {
@@ -481,20 +481,20 @@
 					:show-success-messages="true"
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date9 = '15/04/2025'"
 			>
 				15/04/2025
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date9 = '15/12/2026'"
 			>
 				15/12/2026
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date9 }}
 			</div>
@@ -514,8 +514,8 @@
 			<div class="mb-2">
 				<DatePicker
 					v-model="date10"
-					label="Date de travail"
-					placeholder="Date de travail"
+					label="Date de travail (JJ/MM/AAAA)"
+					placeholder="JJ/MM/AAAA"
 					required
 					:custom-rules="[
 						{
@@ -530,27 +530,27 @@
 					:show-success-messages="true"
 				/>
 			</div>
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				@click="date10 = today"
 			>
 				Aujourd'hui
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date10 = '13/04/2025'"
 			>
 				Weekend
-			</v-btn>
-			<v-btn
+			</VBtn>
+			<VBtn
 				size="small"
 				class="ml-2"
 				@click="date10 = nextYear"
 			>
 				Futur
-			</v-btn>
+			</VBtn>
 			<div class="mt-2">
 				Valeur actuelle: {{ date10 }}
 			</div>

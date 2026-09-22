@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
-import { fn } from 'storybook/test'
 import type { VDataTable } from 'vuetify/components'
 import SyServerTable from './SyServerTable.vue'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls, syServerTableItemsArgTypes } from '../common/storyArgTypes'
 import { serverUsers } from '../common/storyData'
 import { useServerTableDemo } from '../common/serverStoryHelpers'
 
@@ -17,21 +16,11 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: commonTableExcludedControls },
 	},
 	argTypes: {
 		...commonTableArgTypes,
-		items: {
-			description: 'Liste des éléments à afficher dans le tableau',
-			control: { type: 'object' },
-			table: {
-				category: 'props',
-				defaultValue: { summary: 'undefined' },
-			},
-		},
-		serverItemsLength: {
-			description: 'Nombre total d\'éléments à afficher',
-			control: { type: 'number' },
-		},
+		...syServerTableItemsArgTypes,
 	},
 } satisfies Meta<typeof SyServerTable & typeof VDataTable>
 
@@ -50,7 +39,6 @@ const serverHeaders = [
  * cocher. La sélection reste un `v-model` local (indépendant du « fetch »).
  */
 export const RowSelection: Story = {
-	name: 'Row Selection',
 	parameters: {
 		a11y: {
 			disable: true,
@@ -120,15 +108,15 @@ export const RowSelection: Story = {
 		],
 	},
 	args: {
-		'options': { itemsPerPage: 5, page: 1 },
-		'headers': serverHeaders,
-		'caption': '',
-		'serverItemsLength': 15,
-		'suffix': 'selection-server-table',
-		'density': 'default',
-		'striped': false,
-		'showSelect': true,
-		'onUpdate:options': fn(),
+		options: { itemsPerPage: 5, page: 1 },
+		headers: serverHeaders,
+		caption: '',
+		serverItemsLength: 15,
+		suffix: 'selection-server-table',
+		density: 'default',
+		striped: false,
+		showSelect: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -147,6 +135,7 @@ export const RowSelection: Story = {
 					:server-items-length="totalItems"
 					:loading="state === StateEnum.PENDING"
 					@update:options="fetchData"
+					@update:model-value="args['onUpdate:modelValue']"
 				/>
 				<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
 					<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
@@ -166,7 +155,6 @@ export const RowSelection: Story = {
  * seule ligne (boutons radio). Le `v-model` contient au plus un élément.
  */
 export const SingleRowSelection: Story = {
-	name: 'Single Row Selection',
 	parameters: {
 		a11y: {
 			disable: true,
@@ -235,15 +223,15 @@ export const SingleRowSelection: Story = {
 		],
 	},
 	args: {
-		'options': { itemsPerPage: 5, page: 1 },
-		'headers': serverHeaders,
-		'caption': '',
-		'serverItemsLength': 15,
-		'suffix': 'selection-server-table',
-		'density': 'default',
-		'striped': false,
-		'showSelectSingle': true,
-		'onUpdate:options': fn(),
+		options: { itemsPerPage: 5, page: 1 },
+		headers: serverHeaders,
+		caption: '',
+		serverItemsLength: 15,
+		suffix: 'selection-server-table',
+		density: 'default',
+		striped: false,
+		showSelectSingle: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyServerTable },
@@ -262,6 +250,7 @@ export const SingleRowSelection: Story = {
 					:server-items-length="totalItems"
 					:loading="state === StateEnum.PENDING"
 					@update:options="fetchData"
+					@update:model-value="args['onUpdate:modelValue']"
 				/>
 				<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
 					<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>

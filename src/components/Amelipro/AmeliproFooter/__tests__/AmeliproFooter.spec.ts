@@ -576,7 +576,7 @@ describe('AmeliproFooter', () => {
 				expect(findBtn().attributes('href')).toBe(testHelper.modified('configurationHref'))
 			})
 
-			// TODO: pourquoi ce test ne passe-t-il pas ?
+			// Note: pourquoi ce test ne passe-t-il pas ?
 			it.skip('prop configurationLabel sets label text', async () => {
 				expect(findBtn().text()).toBe(testHelper.default('configurationLabel'))
 
@@ -735,7 +735,7 @@ describe('AmeliproFooter', () => {
 		})
 	})
 
-	// TODO: réparer ces tests
+	// Note: réparer ces tests
 	describe.skip('Events', () => {
 		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproFooter>>
 

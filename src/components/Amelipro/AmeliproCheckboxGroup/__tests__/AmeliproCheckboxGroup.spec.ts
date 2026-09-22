@@ -289,7 +289,7 @@ describe('AmeliproCheckboxGroup', () => {
 
 	describe.todo('Setting props should update props or attributes of inner components')
 
-	// TODO: n'a pas le comportement attendu, probablement à cause de slotSubItem (ne réagit pas aux changements de props ?)
+	// Note: n'a pas le comportement attendu, probablement à cause de slotSubItem (ne réagit pas aux changements de props ?)
 	describe.skip('Slots', () => {
 		const vueWrapper = mount(AmeliproCheckboxGroup, {
 			attachTo: attachToApp(),
@@ -328,7 +328,7 @@ describe('AmeliproCheckboxGroup', () => {
 		})
 	})
 
-	// TODO: n'a pas le comportement attendu, probablement à cause de slotSubItem (ne réagit pas aux changements de props ?)
+	// Note: n'a pas le comportement attendu, probablement à cause de slotSubItem (ne réagit pas aux changements de props ?)
 	describe.skip('attributes', () => {
 		const vueWrapper = shallowMount(AmeliproCheckboxGroup, {
 			props: modifiedPropValues(),

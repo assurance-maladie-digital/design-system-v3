@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-	import { computed, getCurrentInstance } from 'vue'
 	import type { RouteLocationRaw } from 'vue-router'
 	import { useTheme } from 'vuetify'
 	import { logoDesktop as logoDesktopUrl, logoMobile as logoMobileUrl } from '@/assets/logos'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
+	import { useHomeLinkFallback } from '@/composables/useHomeLinkFallback'
 	import { headerBreakpoint } from '../consts'
 
 	type PropsType = {
@@ -35,28 +35,15 @@
 	const primary = theme.current.value.colors.primary
 	const desktopLogoMediaQuery = `(min-width: ${headerBreakpoint}px)`
 
-	const routeType = computed(() => {
-		if (props.homeLink?.to) {
-			const componentsRegistered = getCurrentInstance()?.appContext?.components
-			const hasRouterLink = componentsRegistered && 'RouterLink' in componentsRegistered
-			if (hasRouterLink) {
-				return 'router-link'
-			}
-			return 'div'
-		}
-		if (props.homeLink?.href) {
-			return 'a'
-		}
-		return 'div'
-	})
+	const { containerComponent: routeType, homeHref } = useHomeLinkFallback(() => props.homeLink)
 </script>
 
 <template>
 	<component
 		:is="routeType"
 		v-bind="{
-			to: 'to' in homeLink ? homeLink?.to : undefined,
-			href: 'href' in homeLink ? homeLink?.href : undefined,
+			to: routeType === 'router-link' ? homeLink?.to : undefined,
+			href: routeType === 'a' ? homeHref : undefined,
 			'aria-label': 'aria-label' in homeLink ? homeLink?.['aria-label'] : undefined,
 		}"
 		class="logo"
@@ -125,13 +112,18 @@
 	line-height: 1.45;
 	font-family: Cabin, Arial, Helvetica, sans-serif;
 	text-decoration: none;
-	cursor: pointer;
 
 	// Ring DS au focus clavier (remplace l'outline navigateur par défaut)
 	&:focus-visible {
 		outline: 2px solid rgb(var(--v-theme-primary));
 		outline-offset: 3px;
 		border-radius: 4px;
+	}
+
+	// cursor: pointer uniquement quand le conteneur est interactif (a, router-link)
+	&:is(a),
+	&[href] {
+		cursor: pointer;
 	}
 }
 

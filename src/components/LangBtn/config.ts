@@ -6,7 +6,6 @@ const defaultOptions = {
 	btn: {
 		color: 'primary',
 		variant: 'outlined' as VariantType,
-		ripple: true,
 	},
 	icon: {
 		class: 'ml-1',

@@ -22,7 +22,6 @@ const meta: Meta<typeof LangBtn> = {
 				btn: {
 					color: 'primary',
 					variant: 'outlined',
-					ripple: true,
 				},
 				icon: {
 					class: 'ml-1',
@@ -78,7 +77,6 @@ export const Default: Story = {
 			btn: {
 				color: 'primary',
 				variant: 'outlined',
-				ripple: true,
 			},
 			icon: {
 				class: 'ml-1',
@@ -236,7 +234,6 @@ export const FlatBtn: Story = {
 		btn: {
 			color: 'primary',
 			variant: 'flat',
-			ripple: true,
 		},
 	}
 </script>
@@ -253,7 +250,6 @@ export const FlatBtn: Story = {
 			btn: {
 				color: 'primary',
 				variant: 'flat',
-				ripple: true,
 			},
 		},
 	},

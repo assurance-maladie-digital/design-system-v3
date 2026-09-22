@@ -16,7 +16,7 @@ import type { UserInformationSummaryInfos } from '@/components/Amelipro/UserInfo
 import UserMenu from '@/components/Amelipro/UserMenu/UserMenu.vue'
 import type { UserMenuInfos } from '@/components/Amelipro/UserMenu/types'
 
-// TODO: corriger le warning "[Vue warn]: Unable to locate target #service-menu-infos-unique-id-service-menu at <VOverlay ref=Ref< undefined > id="v-menu-10" class="v-menu"  ... > "
+// Note: corriger le warning "[Vue warn]: Unable to locate target #service-menu-infos-unique-id-service-menu at <VOverlay ref=Ref< undefined > id="v-menu-10" class="v-menu"  ... > "
 
 const expectedPropOptions: ExpectedPropOptions<typeof AmeliproHeader> = {
 	ameliproHeaderInfos: {

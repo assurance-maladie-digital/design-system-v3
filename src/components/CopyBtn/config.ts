@@ -10,11 +10,12 @@ export const config = {
 	btn: {
 		icon: true,
 		variant: 'text' as VariantType,
+		color: 'primary',
 		density: 'comfortable' as DensityType,
 		rounded: 'pill',
 	},
 	icon: {
-		// TODO refactor to use our theme color
+		// Note: 'grey-darken-20' est utilisé en attendant de migrer vers une couleur du thème DS
 		color: 'grey-darken-20',
 	},
 }

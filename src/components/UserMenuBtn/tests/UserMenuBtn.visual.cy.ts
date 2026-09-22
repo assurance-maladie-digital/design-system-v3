@@ -47,6 +47,41 @@ describe('UserMenuBtn - Visual regression tests', () => {
 	})
 })
 
+// Version mobile : l'activateur devient une icône seule et l'identité, masquée dans le bouton,
+// est reportée en tête du menu. Rien de tout ça n'est vérifiable en test unitaire — jsdom
+// n'applique pas les feuilles de style et `getComputedStyle` est neutralisé par le setup — d'où
+// cette capture, qui fige d'un coup le bouton circulaire, le disque de l'avatar, l'encart teinté
+// avec son arrondi et ses marges, et le décalage du menu sous l'activateur.
+describe('UserMenuBtn - Mobile visual regression tests', () => {
+	it('displays the icon-only activator with the identity block in the open menu', () => {
+		// Largeur mobile : `smAndDown` bascule le composant en icône seule, comme en usage réel.
+		cy.viewport(390, 700)
+
+		cy.mountWithVuetify(UserMenuBtn, {
+			props: {
+				menuItems: defaultMenuItems,
+				fullName: 'Jean Dupont',
+				additionalInformation: 'N° 123456789',
+			},
+		})
+
+		cy.get('.sy-user-menu-btn').click()
+		cy.get('.v-overlay__content').should('be.visible')
+		cy.get('.sy-user-menu-identity').should('be.visible')
+
+		// Le focus part sur le premier item à l'ouverture : on le retire pour que la capture ne
+		// dépende pas du ring, déjà couvert par les tests de focus.
+		cy.document().then((doc) => {
+			if (doc.activeElement instanceof HTMLElement) {
+				doc.activeElement.blur()
+			}
+		})
+
+		cy.wait(150)
+		cy.matchImageSnapshot('user-menu-btn-mobile-menu-open')
+	})
+})
+
 describe('UserMenuBtn - Focus visual regression tests', () => {
 	// Activateur (SyBtnMenu) : ring standard global (2px primary, offset 3px). Capture
 	// `.v-application` pour ne pas rogner le ring outset.

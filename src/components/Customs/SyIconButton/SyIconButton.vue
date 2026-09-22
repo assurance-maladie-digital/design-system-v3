@@ -19,23 +19,23 @@
 </script>
 
 <template>
-	<v-btn
+	<VBtn
 		:disabled="props.disabled"
 		:aria-label="props.label"
 		:title="props.label"
 		:variant="props.variant ?? 'text'"
 		:size="props.size"
 		class="rounded-circle"
+		:color="props.color"
 		icon
 		@click="$emit('click-icon-button')"
 	>
 		<SyIcon
 			:icon="props.icon"
 			:size="props.size"
-			:color="props.color"
 			:decorative="true"
 		/>
-	</v-btn>
+	</VBtn>
 </template>
 
 <style scoped lang="scss">

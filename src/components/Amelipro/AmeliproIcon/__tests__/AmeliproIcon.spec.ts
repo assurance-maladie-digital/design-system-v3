@@ -315,7 +315,7 @@ describe('AmeliproIcon', () => {
 		})
 	})
 
-	// TODO: pourquoi le slot de VIcon est toujours vide ?
+	// Note: pourquoi le slot de VIcon est toujours vide ?
 	describe.skip('Slots', () => {
 		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproIcon>>
 

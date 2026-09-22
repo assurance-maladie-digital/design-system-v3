@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, computed, watch } from 'vue'
+	import { ref, computed, watch, nextTick } from 'vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import type { DatePickerRule } from '@/components/DatePicker/types'
 	// useDateFormat n'est plus nécessaire avec les règles prédéfinies
@@ -79,19 +79,15 @@
 	}
 
 	// Watcher pour la date de début qui force la revalidation de la date de fin
-	watch(startDate, () => {
-		// Laisser le temps au système de mettre à jour les valeurs
-		setTimeout(() => {
-			validateEndDate()
-		}, 0)
+	watch(startDate, async () => {
+		await nextTick()
+		validateEndDate()
 	})
 
 	// Watcher pour la date de fin qui force la revalidation de la date de début
-	watch(endDate, () => {
-		// Laisser le temps au système de mettre à jour les valeurs
-		setTimeout(() => {
-			validateStartDate()
-		}, 0)
+	watch(endDate, async () => {
+		await nextTick()
+		validateStartDate()
 	})
 
 	// Fonction pour définir des dates de test
@@ -167,7 +163,8 @@
 					ref="startDatePickerRef"
 					v-model="startDate"
 					:heading-level="2"
-					label="Date de début"
+					label="Date de début (JJ/MM/AAAA)"
+					placeholder="JJ/MM/AAAA"
 					:custom-rules="startDateRules"
 					use-combined-mode
 					required
@@ -185,8 +182,9 @@
 					ref="endDatePickerRef"
 					v-model="endDate"
 					:heading-level="2"
+					label="Date de fin (JJ/MM/AAAA)"
+					placeholder="JJ/MM/AAAA"
 					:heading-level-complex-date-picker="2"
-					label="Date de fin"
 					:custom-rules="endDateRules"
 					use-combined-mode
 					required
@@ -196,31 +194,31 @@
 		</div>
 
 		<div class="actions mb-4">
-			<v-btn
+			<VBtn
 				size="small"
 				color="primary"
 				class="mr-2"
 				@click="resetDates"
 			>
 				Réinitialiser
-			</v-btn>
+			</VBtn>
 
-			<v-btn
+			<VBtn
 				size="small"
-				color="onSuccessVariant"
+				color="on-success-variant"
 				class="mr-2"
 				@click="setTestDates"
 			>
 				Dates valides
-			</v-btn>
+			</VBtn>
 
-			<v-btn
+			<VBtn
 				size="small"
 				color="error"
 				@click="setInvalidDates"
 			>
 				Dates invalides
-			</v-btn>
+			</VBtn>
 		</div>
 
 		<div class="current-values mt-4">

@@ -11,7 +11,7 @@ export const defaultOptions = {
 		height: 'auto',
 	},
 	icon: {
-		color: 'secondary',
+		color: undefined,
 	},
 	logoutListItem: {
 		class: 'text-primary',
@@ -21,4 +21,5 @@ export const defaultOptions = {
 		color: 'primary',
 		class: 'mr-4',
 	},
+	identityListItem: {},
 } as const

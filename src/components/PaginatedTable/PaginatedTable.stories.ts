@@ -465,7 +465,6 @@ export const TableServer: Story = {
 						const { items, total } = await getDataFromApi(options.value)
 						users.value = items
 						totalUsers.value = total
-						console.log(users.value, totalUsers.value)
 					}
 				
 					const wait = async (ms: number) => {
@@ -555,8 +554,6 @@ export const TableServer: Story = {
 					const { items, total } = await getDataFromApi(options.value)
 					users.value = items
 					totalUsers.value = total
-
-					console.log(users.value, totalUsers.value)
 				}
 
 				const wait = async (ms: number) => {

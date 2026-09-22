@@ -47,9 +47,9 @@ export const ComboboxKeyboardNavigation: StoryObj = {
 			},
 			template: `
 				<div>
-					<h3><v-icon :icon="keyboardIcon" style="margin-right: 8px;"/>Navigation au clavier</h3>
+					<h3><VIcon :icon="keyboardIcon" style="margin-right: 8px;"/>Navigation au clavier</h3>
 					<p>Le composant SyAutocomplete implémente le pattern de navigation au clavier recommandé par le W3C pour les combobox avec auto-complétion.</p>
-					<v-table density="compact" style="margin-top: 16px;">
+					<VTable density="compact" style="margin-top: 16px;">
 						<thead>
 							<tr>
 								<th>Touche</th>
@@ -62,7 +62,7 @@ export const ComboboxKeyboardNavigation: StoryObj = {
 								<td>{{ item.action }}</td>
 							</tr>
 						</tbody>
-					</v-table>
+					</VTable>
 					<p style="margin-top: 16px;"><strong>Note:</strong> Le focus DOM reste toujours sur l'élément combobox, tandis que le focus visuel est géré via <code>aria-activedescendant</code>.</p>
 				</div>
 			`,
@@ -80,7 +80,7 @@ export const LoadingAccessibility: StoryObj = {
 			template: `
 				<div>
 					<p>Lorsque la prop <code>loading</code> est à <code>true</code>, le composant affiche une barre de progression au bas du champ.</p>
-					<v-table density="compact" style="margin-top: 16px;">
+					<VTable density="compact" style="margin-top: 16px;">
 						<thead>
 							<tr>
 								<th>Comportement</th>
@@ -101,7 +101,7 @@ export const LoadingAccessibility: StoryObj = {
 								<td>Le rôle <code>progressbar</code> et son nom accessible satisfont le critère « Nom, rôle, valeur » pour les composants d’interface.</td>
 							</tr>
 						</tbody>
-					</v-table>
+					</VTable>
 				</div>
 			`,
 		}

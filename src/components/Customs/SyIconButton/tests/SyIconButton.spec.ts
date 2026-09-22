@@ -7,12 +7,12 @@ const globalStubs = {
 		stubs: {
 			'v-btn': {
 				template: '<button :aria-label="ariaLabel" :disabled="disabled" @click="$emit(\'click\', $event)"><slot></slot></button>',
-				props: ['ariaLabel', 'disabled', 'size', 'variant', 'icon'],
+				props: ['ariaLabel', 'disabled', 'size', 'variant', 'icon', 'color'],
 				emits: ['click'],
 			},
 			'SyIcon': {
 				template: '<span class="sy-icon" :aria-hidden="decorative ? true : undefined"></span>',
-				props: ['icon', 'color', 'size', 'decorative'],
+				props: ['icon', 'size', 'decorative'],
 			},
 		},
 	},
@@ -110,11 +110,12 @@ describe('SyIconButton', () => {
 		expect(wrapper.html()).toMatchSnapshot()
 	})
 
-	it('passes the color prop to SyIcon', () => {
+	it('passes the color prop to v-btn', () => {
 		const wrapper = mount(SyIconButton, {
 			props: {
 				icon: 'mdi-close',
 				label: 'Fermer',
+				variant: 'outlined',
 				color: 'primary',
 			},
 			...globalStubs,

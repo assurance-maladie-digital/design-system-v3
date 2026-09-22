@@ -5,7 +5,7 @@ export const paLightTheme = {
 
 	// Border
 	border: baseTokens.color.blue.base,
-	borderVariant: baseTokens.color.grey.lighten40,
+	borderVariant: baseTokens.color.grey.base,
 	borderBright: baseTokens.color.white.base,
 	borderDim: baseTokens.color.white.alpha40,
 
@@ -35,13 +35,13 @@ export const paLightTheme = {
 	surfaceBright: baseTokens.color.blue.lighten97,
 	surfaceDim: baseTokens.color.blue.lighten90,
 	onSurface: baseTokens.color.grey.darken60,
-	onSurfaceVariant: baseTokens.color.grey.base,
+	onSurfaceVariant: baseTokens.color.grey.lighten90,
 
 	// Background
 	background: baseTokens.color.blue.lighten90,
 	onBackground: baseTokens.color.grey.darken60,
 	backgroundVariant: baseTokens.color.white.base,
-	onBackgroundVariant: baseTokens.color.grey.lighten40,
+	onBackgroundVariant: baseTokens.color.grey.base,
 
 	// Feedback
 	info: baseTokens.color.blue.base,
@@ -62,19 +62,11 @@ export const paLightTheme = {
 	warning: baseTokens.color.yellow.base,
 	onWarning: baseTokens.color.grey.darken60,
 	warningVariant: baseTokens.color.yellow.lighten80,
-	warningVariantLigthen: baseTokens.color.yellow.lighten90,
+	warningVariantLighten: baseTokens.color.yellow.lighten90,
 	onWarningVariant: baseTokens.color.yellow.darken60,
 
 	// Interaction
-	interactionLightenEnabled: baseTokens.color.none,
-	interactionLightenHover: baseTokens.color.white.alpha20,
-	interactionLightenSelected: baseTokens.color.white.alpha20,
-	interactionLightenPressed: baseTokens.color.white.alpha38,
-	interactionDarkEnabled: baseTokens.color.transparentBlue.alpha00,
-	interactionDarkHover: baseTokens.color.transparentBlue.alpha08,
-	interactionDarkPressed: baseTokens.color.transparentBlue.alpha18,
-	interactionDarkenEnabled: baseTokens.color.transparentBlack.alpha00,
-	interactionDarkenHover: baseTokens.color.transparentBlack.alpha20,
-	interactionDarkenPressed: baseTokens.color.transparentBlack.alpha40,
-
+	interactionDark: baseTokens.color.blue.base,
+	interactionDarken: baseTokens.color.black.base,
+	interactionLighten: baseTokens.color.white.base,
 }

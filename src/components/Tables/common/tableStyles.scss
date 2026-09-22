@@ -1,8 +1,13 @@
+$sy-table-radius: 8px;
+$sy-table-border: 1px solid rgb(var(--v-theme-disabled));
+
 @mixin tablestyles {
 	.v-table {
-		border: 1px solid rgb(var(--v-theme-disabled));
+		border: $sy-table-border;
+		border-radius: $sy-table-radius;
+		overflow: hidden;
 
-		--sy-table-header-bg-pinned: color-mix(in srgb, rgb(var(--v-theme-infoVariant)) 20%, white);
+		--sy-table-header-bg-pinned: color-mix(in srgb, rgb(var(--v-theme-info-variant)) 20%, rgb(var(--v-theme-surface)));
 
 		// Standardisation des z-index pour les tableaux
 		--sy-table-z-base: 1;
@@ -11,22 +16,30 @@
 		--sy-table-z-progress: calc(var(--sy-table-z-base) + 5);
 	}
 
+	.sy-table-bulk-actions {
+		border: $sy-table-border;
+		border-bottom: 0;
+		border-radius: $sy-table-radius $sy-table-radius 0 0;
+	}
+
+	.sy-table-bulk-actions + .v-table {
+		border-top: 0;
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+	}
+
 	table thead tr {
 		white-space: nowrap;
 	}
 
 	table thead tr.filters,
 	table thead tr.reset {
-		background-color: rgb(var(--v-theme-infoVariantLighten));
-	}
-
-	caption {
-		background-color: rgb(var(--v-theme-infoVariant90));
+		background-color: rgb(var(--v-theme-info-variant-lighten));
 	}
 
 	table thead tr.headers,
 	table thead tr.reset {
-		background-color: rgba(var(--v-theme-infoVariant), 0.2);
+		background-color: rgba(var(--v-theme-info-variant), 0.2);
 	}
 
 	&.fixed-min-height {

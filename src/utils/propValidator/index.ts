@@ -1,3 +1,5 @@
+import { devWarn } from '@/utils/devWarn'
+
 /** Validate a prop against a set of values */
 export function propValidator(
 	propName: string,
@@ -11,9 +13,8 @@ export function propValidator(
 	const isValid = value.match(valuesRegexp) !== null
 
 	if (!isValid) {
-		console.error(
-			`Invalid value for the \`${propName}\` prop. Received: "${value}", expected one of: [${acceptedValues.join(', ')}].`,
-		)
+		devWarn(`Invalid value for the \`${propName}\` prop. Received: "${value}", expected one of: [${acceptedValues.join(', ')}].`)
+		return false
 	}
 
 	return true

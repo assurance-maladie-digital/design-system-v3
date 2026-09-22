@@ -118,7 +118,7 @@ describe('AmeliproCheckbox', () => {
 			})
 		})
 
-		// TODO: Le contenu de emitted() semble buggé (non conforme à la doc)
+		// Note: Le contenu de emitted() semble buggé (non conforme à la doc)
 		it.skip('should react to input event', async () => {
 			expect(wrapper.emitted('input')).toBeUndefined()
 			await inputWrapper().trigger('input')

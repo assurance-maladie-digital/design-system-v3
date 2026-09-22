@@ -7,6 +7,7 @@ import SyTable from './SyTable.vue'
 import DialogBox from '@/components/DialogBox/DialogBox.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
+import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls } from '../common/storyArgTypes'
 
 const meta = {
 	title: 'Composants/Tableaux/SyTable/Édition/Actions groupées',
@@ -18,9 +19,10 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
-		controls: { hideNoControlsWarning: true },
+		controls: { hideNoControlsWarning: true, exclude: commonTableExcludedControls },
 	},
 	argTypes: {
+		...commonTableArgTypes,
 		'bulk-actions': {
 			description: 'Barre affichée quand des lignes sont sélectionnées. Le composant ne fournit que la sélection ; **le projet rend ses propres actions** (éditer, supprimer, exporter…) et pilote leur UX (DialogBox, drawer, page…).',
 			control: undefined,
@@ -89,6 +91,7 @@ export const Default: Story = {
 		showSelect: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyTable, DialogBox, SySelect },
@@ -135,7 +138,7 @@ export const Default: Story = {
 		template: `
 			<div>
 				<!-- Conteneur scrollable : la barre d'actions reste « sticky » en haut -->
-				<div style="max-height: 360px; overflow: auto; border: 1px solid rgba(0,0,0,0.12); border-radius: 4px;">
+				<div style="max-height: 360px; overflow: auto; border-radius: 4px;">
 					<SyTable v-bind="args" v-model="selected" v-model:options="options" :headers="headers" :items="items">
 						<template #bulk-actions="{ selected, count, clearSelection }">
 							<VBtn color="primary" variant="flat" size="small" :prepend-icon="mdiPencil" @click="openEdit(selected, clearSelection)">
@@ -261,6 +264,7 @@ export const SequentialEdit: Story = {
 		showSelect: true,
 		selectionKey: 'id',
 		hideDefaultFooter: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyTable, DialogBox, SyTextField, SySelect },

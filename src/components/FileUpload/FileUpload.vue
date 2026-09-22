@@ -187,7 +187,7 @@
 	&:hover,
 	&:focus-within,
 	&.dragover {
-		background: rgb(var(--v-theme-surfaceDim));
+		background: rgb(var(--v-theme-surface-dim));
 	}
 
 	// Dropzone = `role="button"` custom (pas un `.v-btn`) → non couverte par `_btns.scss`.

@@ -8,7 +8,7 @@
 	import CaptchaHelpdesk from './CaptchaHelpdesk.vue'
 	import CaptchaImg from './CaptchaImg.vue'
 	import CaptchaInformation from './CaptchaInformation.vue'
-	import volumeUp from './icons/volumeUp.vue'
+	import VolumeUp from './icons/VolumeUp.vue'
 	import { locales as defaultLocales } from './locales'
 	import { type CaptchaProps, type CaptchaType, type StateType } from './types'
 	import { useCaptchaValidation } from './useCaptchaValidation'
@@ -233,7 +233,7 @@
 						data-test-id="captcha-image-change"
 						@click="chooseAudio"
 					>
-						<volume-up
+						<VolumeUp
 							fill="#0C419A"
 							aria-hidden="true"
 							height="16"
@@ -280,7 +280,7 @@
 					</span>
 
 					<span v-else>
-						<volume-up
+						<VolumeUp
 							fill="#fff"
 							aria-hidden="true"
 							height="16"
@@ -362,7 +362,7 @@
 						{{ locales.choiceCaptcha.image }}
 					</CaptchaBtn>
 					<CaptchaBtn @click="chooseAudio">
-						<volume-up
+						<VolumeUp
 							fill="#0C419A"
 							aria-hidden="true"
 							height="16"

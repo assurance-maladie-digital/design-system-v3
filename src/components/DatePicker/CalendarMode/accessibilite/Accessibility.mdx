@@ -31,14 +31,14 @@ import {
 				</ul>
 			</li>
 			<li><strong>Panneau</strong> : calendrier exposé dans un vrai <code>dialog</code> modal, contenant la grille de jours et ses contrôles.</li>
-			<li><strong>Relations</strong> : <code>aria-controls</code> relie l’enveloppe activatrice du champ readonly au <code>dialog</code> lorsqu’il est ouvert; <code>aria-owns/expanded/haspopup</code> ne sont pas surchargés sur l’input natif.</li>
+			<li><strong>Relations</strong> : <code>aria-controls</code> relie l’enveloppe activatrice du champ readonly au <code>dialog</code> lorsqu’il est ouvert; le <code>dialog</code> est nommé par un titre stable « Calendrier » via <code>aria-labelledby</code>; <code>aria-owns/expanded/haspopup</code> ne sont pas surchargés sur l’input natif.</li>
 			<li><strong>États</strong> : <code>aria-disabled</code> / <code>aria-readonly</code> alignés sur les props, messages d’erreur/avertissement/succès annoncés via la zone de messages du champ.</li>
 		</ul>
 	</CriteriaCard>
 
 	<CriteriaCard title="Ouverture et focus" icon="">
 		<ul>
-			<li><strong>Ouverture clavier</strong> : <kbd>Entrée</kbd> sur le champ ouvre le calendrier; l’icône déclenche l’ouverture avec la souris.</li>
+			<li><strong>Ouverture clavier</strong> : <kbd>Entrée</kbd> ou <kbd>Espace</kbd> sur le champ ouvre le calendrier; l’icône déclenche l’ouverture avec la souris.</li>
 			<li><strong>Fermeture</strong> : <kbd>Échap</kbd> ferme et valide; un clic extérieur ferme aussi le panneau; le focus est ensuite rendu au champ.</li>
 			<li><strong>Piège de focus</strong> : <kbd>Tab</kbd>/<kbd>Shift+Tab</kbd> restent dans le panneau ouvert (boutons d’entête, grille de jours, bouton « Aujourd’hui »).</li>
 		</ul>
@@ -67,10 +67,13 @@ import {
 </DemoSection>
 
 <BestPracticesSection>
-- Fournir un libellé explicite ou <code>aria-label</code> lorsque le label visuel est masqué ou tronqué.
-- En lecture seule, éviter de proposer l’ouverture (raccourcis désactivés dans le composant).
+- Fournir un <code>label</code> explicite; utiliser <code>placeholder</code> uniquement comme aide complémentaire, jamais comme seul libellé.
+- Conserver <code>format</code> et le texte d’aide cohérents avec la valeur attendue; utiliser <code>hint</code> pour expliquer le format métier.
+- Laisser <code>isValidateOnBlur</code> à <code>true</code> si les erreurs ne doivent apparaître qu’après la sortie du champ; réserver <code>validateOnSubmit()</code> à la soumission.
+- En lecture seule, le champ n’est pas éditable et le calendrier ne doit pas être proposé; pour un champ sélectionnable mais non saisissable, utiliser le mode calendrier normal, pas <code>readonly</code>.
 - En plage de dates, préciser l’ordre attendu dans le hint et laisser la séparatrice visible.
 - Vérifier la cohérence des bornes <code>period</code> pour ne pas masquer les jours attendus.
+- Ne pas ajouter <code>role="combobox"</code> au mode calendrier seul : ce mode ne permet pas la saisie d’une valeur.
 </BestPracticesSection>
 
 <ResourcesSection>

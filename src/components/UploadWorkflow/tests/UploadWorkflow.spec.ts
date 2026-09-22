@@ -167,7 +167,6 @@ describe('UploadWorkflow', () => {
 			},
 		})
 
-		wrapper.find('.sy-select input').setValue('bill')
 		wrapper.findComponent(SySelect).vm.$emit('update:modelValue', 'bill')
 
 		await wrapper.find('[data-test-id="confirm-btn"]').trigger('click')

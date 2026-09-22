@@ -190,7 +190,7 @@ export const Default: Story = {
 						v-model="dateRange"
 						format="DD/MM/YYYY"
 						placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
-						label="Période"
+						label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
 						display-range
 						no-calendar
 					/>
@@ -202,7 +202,7 @@ export const Default: Story = {
 	args: {
 		'format': 'DD/MM/YYYY',
 		'placeholder': 'JJ/MM/AAAA - JJ/MM/AAAA',
-		'label': 'Période',
+		'label': 'Période (JJ/MM/AAAA - JJ/MM/AAAA)',
 		'displayRange': true,
 		'displayIcon': true,
 		'isOutlined': true,
@@ -247,7 +247,7 @@ export const WithInitialValue: Story = {
 						v-model="dateRange"
 						format="DD/MM/YYYY"
 						placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
-						label="Période"
+						label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
 						display-range
 						no-calendar
 					/>
@@ -260,7 +260,7 @@ export const WithInitialValue: Story = {
 		'noCalendar': true,
 		'format': 'DD/MM/YYYY',
 		'placeholder': 'JJ/MM/AAAA - JJ/MM/AAAA',
-		'label': 'Période avec valeur initiale',
+		'label': 'Période (JJ/MM/AAAA - JJ/MM/AAAA)',
 		'displayRange': true,
 		'displayIcon': true,
 		'isOutlined': true,
@@ -304,7 +304,7 @@ export const WithCustomFormat: Story = {
 						format="YYYY-MM-DD"
 						date-format-return="DD/MM/YYYY"
 						placeholder="AAAA-MM-JJ - AAAA-MM-JJ"
-						label="Période (format ISO)"
+						label="Période (AAAA-MM-JJ - AAAA-MM-JJ)"
 						display-range
 						no-calendar
 					/>
@@ -318,7 +318,7 @@ export const WithCustomFormat: Story = {
 		format: 'YYYY-MM-DD',
 		dateFormatReturn: 'DD/MM/YYYY',
 		placeholder: 'AAAA-MM-JJ - AAAA-MM-JJ',
-		label: 'Période (format ISO)',
+		label: 'Période (AAAA-MM-JJ - AAAA-MM-JJ)',
 		displayRange: true,
 		displayIcon: true,
 		isOutlined: true,
@@ -357,7 +357,7 @@ export const WithValidation: Story = {
 						v-model="dateRange"
 						format="DD/MM/YYYY"
 						placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
-						label="Période"
+						label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
 						display-range
 						no-calendar
 						required
@@ -381,7 +381,7 @@ export const WithValidation: Story = {
 		noCalendar: true,
 		format: 'DD/MM/YYYY',
 		placeholder: 'JJ/MM/AAAA - JJ/MM/AAAA',
-		label: 'Période (max 30 jours)',
+		label: 'Période (JJ/MM/AAAA - JJ/MM/AAAA, max 30 jours)',
 		displayRange: true,
 		displayIcon: true,
 		isOutlined: true,

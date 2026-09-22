@@ -22,12 +22,14 @@
 	const props = withDefaults(defineProps<{
 		type?: 'success' | 'info' | 'warning' | 'error'
 		closable?: boolean
+		density?: 'default' | 'comfortable' | 'compact'
 		variant?: 'tonal' | 'outlined'
 		role?: string
 		ariaLive?: 'off' | 'polite' | 'assertive'
 	}>(), {
 		type: 'info',
 		closable: false,
+		density: 'default',
 		variant: 'tonal',
 		role: 'alert',
 		ariaLive: undefined,
@@ -75,7 +77,8 @@
 			:type="props.type"
 			:closable="props.closable"
 			:variant="props.variant"
-			:class="`alert alert--${props.type}`"
+			:density="props.density"
+			:class="['alert', `alert--${props.type}`]"
 			:color="props.type"
 			:border="props.variant === 'tonal' ? 'start' : false"
 		>
@@ -133,6 +136,22 @@
 	padding: var(--v-padding-4);
 }
 
+.v-alert--density-comfortable {
+	padding-block: var(--v-padding-3);
+
+	:deep(.v-alert__prepend) {
+		margin-inline-end: var(--v-padding-3);
+	}
+}
+
+.v-alert--density-compact {
+	padding-block: var(--v-padding-2);
+
+	:deep(.v-alert__prepend) {
+		margin-inline-end: var(--v-padding-2);
+	}
+}
+
 .alert-icon {
 	border-radius: 50%;
 }
@@ -174,7 +193,7 @@
 	}
 
 	// Ring DS. Le fond de l'alerte reste clair même en thème dark → ring en primary
-	// (pas onPrimary) pour rester visible. Le `::after` natif du VBtn est masqué par
+	// (pas on-primary) pour rester visible. Le `::after` natif du VBtn est masqué par
 	// l'override global `_btns.scss`. (Avant : `var(--v-theme-primary)` sur un triplet
 	// RGB était invalide → le ring retombait en noir.)
 	&:focus-visible {
@@ -195,12 +214,31 @@
 
 		:deep(.v-alert__content) {
 			align-self: flex-start !important;
-			margin-top: var(--v-padding-4);
 		}
 
 		:deep(.v-alert__close) {
-			margin-top: var(--v-padding-4);
 			align-self: flex-end;
+		}
+
+		&.v-alert--density-default {
+			:deep(.v-alert__content),
+			:deep(.v-alert__close) {
+				margin-top: var(--v-padding-4);
+			}
+		}
+
+		&.v-alert--density-comfortable {
+			:deep(.v-alert__content),
+			:deep(.v-alert__close) {
+				margin-top: var(--v-padding-3);
+			}
+		}
+
+		&.v-alert--density-compact {
+			:deep(.v-alert__content),
+			:deep(.v-alert__close) {
+				margin-top: var(--v-padding-2);
+			}
 		}
 
 		.v-alert__prepend > .v-icon {
@@ -212,10 +250,23 @@
 @media screen and (width >= 441px) {
 	.alert {
 		.alert-icon {
-			width: 3.5rem !important;
-			height: 3.5rem !important;
 			display: grid;
 			place-items: center;
+		}
+
+		&.v-alert--density-default .alert-icon {
+			width: 3.5rem !important;
+			height: 3.5rem !important;
+		}
+
+		&.v-alert--density-comfortable .alert-icon {
+			width: 3rem !important;
+			height: 3rem !important;
+		}
+
+		&.v-alert--density-compact .alert-icon {
+			width: 2rem !important;
+			height: 2rem !important;
 		}
 	}
 }
@@ -223,7 +274,7 @@
 @mixin redesign($type, $map) {
 	&.alert--#{$type}.v-alert--variant-tonal {
 		background: map.get($map, 'background') !important;
-		color: rgb(var(--v-theme-onSurface)) !important;
+		color: rgb(var(--v-theme-on-surface)) !important;
 
 		:deep(.v-alert__border) {
 			border-color: map.get($map, 'border') !important;
@@ -262,41 +313,41 @@
 	@include redesign(
 		'warning',
 		(
-			'background': rgb(var(--v-theme-warningVariant)),
-			'accent': rgb(var(--v-theme-onWarningVariant)),
-			'border': rgb(var(--v-theme-onWarningVariant)),
-			'icon': rgb(var(--v-theme-onWarningVariant)),
-			'icon-bg': rgb(var(--v-theme-warningVariantLigthen)),
+			'background': rgb(var(--v-theme-warning-variant)),
+			'accent': rgb(var(--v-theme-on-warning-variant)),
+			'border': rgb(var(--v-theme-on-warning-variant)),
+			'icon': rgb(var(--v-theme-on-warning-variant)),
+			'icon-bg': rgb(var(--v-theme-warning-variant-lighten)),
 		)
 	);
 	@include redesign(
 		'success',
 		(
-			'background': rgb(var(--v-theme-successVariant)),
-			'accent': rgb(var(--v-theme-onSuccessVariant)),
-			'border': rgb(var(--v-theme-onSuccessVariant)),
-			'icon':rgb(var(--v-theme-onSuccessVariant)),
-			'icon-bg': rgb(var(--v-theme-successVariantLighten)),
+			'background': rgb(var(--v-theme-success-variant)),
+			'accent': rgb(var(--v-theme-on-success-variant)),
+			'border': rgb(var(--v-theme-on-success-variant)),
+			'icon':rgb(var(--v-theme-on-success-variant)),
+			'icon-bg': rgb(var(--v-theme-success-variant-lighten)),
 		)
 	);
 	@include redesign(
 		'error',
 		(
-			'background': rgb(var(--v-theme-errorVariant)),
+			'background': rgb(var(--v-theme-error-variant)),
 			'accent': rgb(var(--v-theme-error)),
 			'border': rgb(var(--v-theme-error)),
 			'icon':rgb(var(--v-theme-error)),
-			'icon-bg': rgb(var(--v-theme-errorVariantLighten)),
+			'icon-bg': rgb(var(--v-theme-error-variant-lighten)),
 		)
 	);
 	@include redesign(
 		'info',
 		(
-			'background': rgb(var(--v-theme-infoVariant)),
+			'background': rgb(var(--v-theme-info-variant)),
 			'accent': rgb(var(--v-theme-info)),
 			'border': rgb(var(--v-theme-info)),
 			'icon':rgb(var(--v-theme-info)),
-			'icon-bg': rgb(var(--v-theme-infoVariantLighten)),
+			'icon-bg': rgb(var(--v-theme-info-variant-lighten)),
 		)
 	);
 }

@@ -144,6 +144,24 @@ describe('SyTextField', () => {
 		expect(wrapper.emitted('prepend-icon-click')).toBeFalsy()
 	})
 
+	it('keeps icon buttons interactive when readonly is combined with allowIconButtonWhenReadonly', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				appendIcon: 'calendar' as IconType,
+				label: 'Test Field',
+				disableClickButton: false,
+				readonly: true,
+				allowIconButtonWhenReadonly: true,
+			},
+		})
+
+		const appendButton = wrapper.find('.sy-text-field__icon-button')
+		expect(appendButton.attributes('disabled')).toBeUndefined()
+		expect(appendButton.attributes('aria-disabled')).toBeUndefined()
+		await appendButton.trigger('click')
+		expect(wrapper.emitted('append-icon-click')).toBeTruthy()
+	})
+
 	it('prevents mousedown on icon buttons from blurring the input first', async () => {
 		const wrapper = mount(SyTextField, {
 			props: {

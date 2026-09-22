@@ -561,7 +561,7 @@ export const Chips: Story = {
 				chip: true,
 				options: {
 					chip: {
-						color: 'onSuccessVariant',
+						color: 'on-success-variant',
 					},
 				},
 			},

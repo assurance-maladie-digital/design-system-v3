@@ -14,7 +14,7 @@ exports[`LogoBrandSection > renders correctly 1`] = `
     href="/"
   >
     <logo-stub
-    arialabel="undefined Retour vers accueil du site"
+    arialabel="Retour vers accueil du site"
     avatar="false"
     class=""
     dark="false"

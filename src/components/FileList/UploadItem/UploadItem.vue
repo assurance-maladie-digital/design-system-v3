@@ -106,7 +106,7 @@
 							v-else-if="state === 'success'"
 							:icon="mdiCheckCircle"
 							:size="cnamContextualTokens.iconSize.default"
-							color="onSuccessVariant"
+							color="on-success-variant"
 							decorative
 						/>
 
@@ -233,7 +233,7 @@
 
 .file-item__name {
 	font-size: 0.875rem;
-	color: rgb(var(--v-theme-onSurface));
+	color: rgb(var(--v-theme-on-surface));
 }
 
 .file-item__description {
@@ -287,7 +287,7 @@
 
 .file-item__message {
 	font-size: 0.875rem;
-	color: rgb(var(--v-theme-onSurfaceVariant));
+	color: rgb(var(--v-theme-on-surface-variant));
 }
 
 .file-item__message-success,

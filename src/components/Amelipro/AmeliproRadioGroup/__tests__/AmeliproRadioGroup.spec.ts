@@ -234,7 +234,7 @@ describe('AmeliproRadioGroup', () => {
 		})
 	})
 
-	// TODO: réparer ces tests
+	// Note: réparer ces tests
 	describe.skip('Slots', () => {
 		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproRadioGroup>>
 		const inputFinder = () => vueWrapper.findAll('.radio-group__item__label input')
@@ -271,7 +271,7 @@ describe('AmeliproRadioGroup', () => {
 		})
 	})
 
-	// TODO: réparer ces tests
+	// Note: réparer ces tests
 	describe.skip('attributes', () => {
 		let vueWrapper: VueWrapper<InstanceType<typeof AmeliproRadioGroup>>
 		const inputFinder = () => vueWrapper.findAll('.radio-group__item__label input')
@@ -325,7 +325,7 @@ describe('AmeliproRadioGroup', () => {
 			componentWrapper = vueWrapper.findComponent(AmeliproMessage)
 			expect(componentWrapper.exists()).toBe(true)
 
-			// TODO: ce test ne marche plus car le contenu de AmeliproMessage est vide (slot non rendu)
+			// Note: ce test ne marche plus car le contenu de AmeliproMessage est vide (slot non rendu)
 			// expect(componentWrapper.find('.mb-0').text()).toBe('Ce champ est obligatoire');
 		})
 	})

@@ -118,7 +118,7 @@ describe('UserMenuBtn', () => {
 	})
 
 	it('possède la prop logoutText  par défaut', async () => {
-		const defaultLogoutText = 'Logout'
+		const defaultLogoutText = 'Se déconnecter'
 		const wrapper = mount(UserMenuBtn, {
 			props: {
 				modelValue: null,
@@ -132,6 +132,70 @@ describe('UserMenuBtn', () => {
 
 		// Vérifier directement que la prop est correctement passée au composant
 		expect(wrapper.props('logoutText')).toBe(defaultLogoutText)
+	})
+})
+
+// Version mobile (isMobileView) : l'activateur devient une icône seule, l'identité
+// (fullName / additionalInformation) doit alors être reportée dans le menu déroulant.
+describe('UserMenuBtn - responsive identity', () => {
+	const menuItems = [{ text: 'Mon compte', value: 'account' }]
+
+	it('shows fullName and additionalInformation in the dropdown on mobile', async () => {
+		const wrapper = mount(UserMenuBtn, {
+			props: {
+				menuItems,
+				fullName: 'Jean Dupont',
+				additionalInformation: 'Administrateur',
+				isMobileView: true,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.find('.sy-user-menu-btn').trigger('click')
+
+		const identity = document.body.querySelector('.sy-user-menu-identity')
+		expect(identity).not.toBeNull()
+		expect(identity?.textContent).toContain('Jean Dupont')
+		expect(identity?.textContent).toContain('Administrateur')
+
+		wrapper.unmount()
+	})
+
+	it('does not duplicate the identity in the dropdown on desktop', async () => {
+		const wrapper = mount(UserMenuBtn, {
+			props: {
+				menuItems,
+				fullName: 'Jean Dupont',
+				isMobileView: false,
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.find('.sy-user-menu-btn').trigger('click')
+
+		expect(document.body.querySelector('.sy-user-menu-identity')).toBeNull()
+
+		wrapper.unmount()
+	})
+
+	it('does not show the auto-generated identity block when the default slot is used', async () => {
+		const wrapper = mount(UserMenuBtn, {
+			props: {
+				fullName: 'Jean Dupont',
+				isMobileView: true,
+			},
+			slots: {
+				default: '<div class="custom-content">Contenu personnalisé</div>',
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.find('.sy-user-menu-btn').trigger('click')
+
+		expect(document.body.querySelector('.sy-user-menu-identity')).toBeNull()
+		expect(document.body.querySelector('.custom-content')).not.toBeNull()
+
+		wrapper.unmount()
 	})
 })
 

@@ -3,6 +3,7 @@
 	import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
 	import { config } from './config'
 	import { locales as defaultLocales } from './locales'
+	import { useNativePdfFallback, type PdfProbeDelays } from './useNativePdfFallback'
 	import { usePdfConsultation } from './usePdfConsultation'
 	import { useLocales } from '@/composables/useLocales'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
@@ -12,6 +13,8 @@
 		options?: {
 			pdf?: Record<string, string>
 			image?: Record<string, string>
+			/** Délais de la sonde de rendu natif (appareils lents à afficher les PDF). */
+			pdfProbe?: PdfProbeDelays
 		}
 		locales?: DeepPartial<typeof defaultLocales>
 		/** Active le suivi de consultation du PDF (rendu via pdf.js, chargé à la demande). */
@@ -57,15 +60,60 @@
 	const isImage = computed(() => props.file ? /^image\//.test(props.file.type) : false)
 	const filePreviewOptions = computed(() => deepmerge(config, props.options || {}))
 
+	const {
+		isLoading,
+		hasError,
+		isComplete,
+		render,
+		checkScrollComplete,
+	} = usePdfConsultation()
+
 	// Suivi de consultation (scroll → fin de lecture), uniquement pour les PDF
 	const isTracking = computed(() => props.trackConsultation && isPdf.value)
-	// Rendu embarqué pdf.js : requis par le suivi de consultation ET par la lecture seule
-	const isEmbedded = computed(() => (props.trackConsultation || props.readonly) && isPdf.value)
 
-	// `fileURL` (URL objet) n'est consommée que par <img> (images) et <object> (PDF en
-	// mode natif). En rendu embarqué pdf.js (readonly / track-consultation), c'est le
-	// viewer qui affiche le PDF via arrayBuffer() → créer une URL objet serait inutile.
-	const needsObjectUrl = computed(() => isImage.value || (isPdf.value && !isEmbedded.value))
+	// Quel moteur de rendu PDF utiliser ? Le composable isole cette règle : signaux du
+	// navigateur, puis sonde du rendu réel de l'<object>.
+	const {
+		prefersPdfJs,
+		probeDone: nativePdfProbeDone,
+		fallbackRef: objectFallbackRef,
+	} = useNativePdfFallback(
+		() => props.file,
+		() => isPdf.value && !props.trackConsultation && !props.readonly,
+		() => filePreviewOptions.value.pdfProbe,
+	)
+
+	// Rendu embarqué pdf.js : requis par le suivi de consultation, par la lecture seule,
+	// et utilisé en repli quand le navigateur ne sait pas afficher un PDF nativement.
+	const isEmbedded = computed(() => isPdf.value
+		&& (props.trackConsultation || props.readonly || prefersPdfJs.value))
+
+	// Le rendu pdf.js a échoué : on propose un téléchargement pour ne pas laisser
+	// l'utilisateur sans accès au document. Jamais en lecture seule, où le téléchargement
+	// est justement l'action que l'on retire.
+	const canDownloadOnError = computed(() => isEmbedded.value && hasError.value && !props.readonly)
+
+	// Le rendu pdf.js se fait en <canvas>, non restitué aux lecteurs d'écran : le slot
+	// `alternative` permet au consommateur d'exposer un équivalent accessible du document.
+	// Repli subi : le consommateur n'a demandé ni `readonly` ni `track-consultation`, mais
+	// le navigateur impose pdf.js. Il perd alors la barre d'outils native (téléchargement,
+	// impression) et le texte restitué aux lecteurs d'écran ; le lien de téléchargement
+	// rétablit au moins l'accès au document source.
+	const isNativePdfFallback = computed(() => isEmbedded.value
+		&& !props.trackConsultation
+		&& !props.readonly)
+
+	// `fileURL` (URL objet) n'est consommée que par <img> (images), <object> (PDF en mode
+	// natif) et le lien de secours ci-dessus. En rendu embarqué pdf.js (readonly /
+	// track-consultation), c'est le viewer qui affiche le PDF via arrayBuffer() → créer
+	// une URL objet serait inutile.
+	const needsObjectUrl = computed(() => isImage.value
+		|| (isPdf.value && !isEmbedded.value)
+		|| canDownloadOnError.value
+		|| isNativePdfFallback.value)
+
+	// `File` porte un nom, pas `Blob` : on retombe sur un nom générique.
+	const downloadName = computed(() => (props.file instanceof File ? props.file.name : 'document.pdf'))
 
 	const getFileURL = () => {
 		// Révoque et réinitialise l'URL précédente : sans cela, chaque changement de
@@ -76,6 +124,10 @@
 		fileURL.value = URL.createObjectURL(props.file)
 	}
 
+	// L'URL objet reste valide tant que le fichier est affiché : la révoquer au chargement
+	// casserait tout ce qui la re-sollicite ensuite — actions du lecteur natif
+	// (téléchargement, impression, rechargement) et lien de secours après un repli.
+	// Elle est libérée au changement de fichier et au démontage.
 	const revokeFileURL = () => {
 		if (!fileURL.value) return
 		URL.revokeObjectURL(fileURL.value)
@@ -91,14 +143,6 @@
 	const viewerRef = ref<HTMLElement>()
 	const pagesHostRef = ref<HTMLElement>()
 
-	const {
-		isLoading,
-		hasError,
-		isComplete,
-		render,
-		checkScrollComplete,
-	} = usePdfConsultation()
-
 	const viewerStyle = computed(() => ({
 		height: filePreviewOptions.value.pdf?.height ?? '556px',
 	}))
@@ -108,8 +152,7 @@
 		if (!isEmbedded.value || !props.file || !pagesHostRef.value) {
 			return
 		}
-		const data = await props.file.arrayBuffer()
-		const pageCount = await render(data, pagesHostRef.value, {
+		const pageCount = await render(props.file, pagesHostRef.value, {
 			workerSrc: props.pdfWorkerSrc,
 		})
 		if (pageCount !== null) {
@@ -166,7 +209,7 @@
 			class="sy-file-preview__pdf-viewer"
 			:style="viewerStyle"
 			role="document"
-			:aria-label="locales.previewNotAvailable"
+			:aria-label="locales.documentLabel"
 			tabindex="0"
 			@scroll="onViewerScroll"
 		>
@@ -181,12 +224,23 @@
 			>
 				{{ locales.loadingDocument }}
 			</p>
-			<p
+			<div
 				v-else-if="hasError"
-				class="sy-file-preview__status pa-4 text-center mb-0"
+				class="sy-file-preview__status pa-4 text-center"
 			>
-				{{ locales.documentError }}
-			</p>
+				<p class="mb-0">
+					{{ locales.documentError }}
+				</p>
+
+				<a
+					v-if="canDownloadOnError && fileURL"
+					class="sy-file-preview__download d-inline-block mt-2"
+					:href="fileURL"
+					:download="downloadName"
+				>
+					{{ locales.downloadDocument }}
+				</a>
+			</div>
 		</div>
 
 		<object
@@ -194,9 +248,12 @@
 			:data="fileURL"
 			v-bind="filePreviewOptions.pdf"
 			type="application/pdf"
-			@load="revokeFileURL"
 		>
-			<p class="mb-0">{{ locales.previewNotAvailable }}</p>
+			<p
+				ref="objectFallbackRef"
+				class="mb-0"
+				:class="{ 'sy-file-preview__object-fallback--probing': !nativePdfProbeDone }"
+			>{{ locales.previewNotAvailable }}</p>
 		</object>
 
 		<img
@@ -204,7 +261,6 @@
 			:src="fileURL"
 			:alt="filePreviewOptions.image.alt || ''"
 			v-bind="filePreviewOptions.image"
-			@load="revokeFileURL"
 		>
 
 		<slot v-else>
@@ -212,6 +268,24 @@
 				{{ locales.previewTypeNotAvailable }}
 			</p>
 		</slot>
+
+		<template v-if="isEmbedded">
+			<div
+				v-if="$slots.alternative"
+				class="sy-file-preview__alternative"
+			>
+				<slot name="alternative" />
+			</div>
+
+			<a
+				v-if="isNativePdfFallback && !hasError && fileURL"
+				class="sy-file-preview__download d-inline-block mt-2"
+				:href="fileURL"
+				:download="downloadName"
+			>
+				{{ locales.downloadDocument }}
+			</a>
+		</template>
 	</div>
 </template>
 
@@ -241,6 +315,20 @@
 }
 
 .sy-file-preview__status {
+	color: rgb(var(--v-theme-primary));
+}
+
+// `visibility` et non `display` : le contenu de repli doit conserver sa boîte pour
+// rester mesurable par la sonde de rendu natif.
+.sy-file-preview__object-fallback--probing {
+	visibility: hidden;
+}
+
+.sy-file-preview__alternative {
+	margin-top: 8px;
+}
+
+.sy-file-preview__download {
 	color: rgb(var(--v-theme-primary));
 }
 </style>

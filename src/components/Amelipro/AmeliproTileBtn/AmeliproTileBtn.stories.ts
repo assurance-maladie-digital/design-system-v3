@@ -171,7 +171,7 @@ export const Desactivee: Story = {
 }
 
 // --- Tuile bouton avec tooltip ---
-export const tooltip: Story = {
+export const Tooltip: Story = {
 	name: 'Avec tooltip',
 	args: {
 		imgSrc: '/amelipro/img/tile-example.svg',

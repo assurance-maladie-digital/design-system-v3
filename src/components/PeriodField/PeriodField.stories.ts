@@ -1133,13 +1133,13 @@ export const FormValidation: Story = {
 		},
 		template: `
 			<div class="pa-4">
-				<v-form @submit.prevent="submitForm" ref="formRef">
-					<v-container>
-						<v-row>
-							<v-col cols="12">
+				<VForm @submit.prevent="submitForm" ref="formRef">
+					<VContainer>
+						<VRow>
+							<VCol cols="12">
 								<h3>Formulaire avec validation</h3>
-							</v-col>
-							<v-col cols="12" md="6">
+							</VCol>
+							<VCol cols="12" md="6">
 								<PeriodField
 									v-model="form.period"
 									ref="periodFieldRef"
@@ -1148,20 +1148,20 @@ export const FormValidation: Story = {
 									placeholder-from="Début de l'événement"
 									placeholder-to="Fin de l'événement"
 								/>
-							</v-col>
-							<v-col cols="12">
-								<v-btn type="submit" color="primary" :disabled="isSubmitting">Valider</v-btn>
-							</v-col>
-						</v-row>
+							</VCol>
+							<VCol cols="12">
+								<VBtn type="submit" color="primary" :disabled="isSubmitting">Valider</VBtn>
+							</VCol>
+						</VRow>
 						
-						<v-row v-if="formStatus">
-							<v-col cols="12">
+						<VRow v-if="formStatus">
+							<VCol cols="12">
 									{{ formStatus }}
 								<pre v-if="formData">{{ formData }}</pre>
-							</v-col>
-						</v-row>
-					</v-container>
-				</v-form>
+							</VCol>
+						</VRow>
+					</VContainer>
+				</VForm>
 			</div>
 		`,
 	}),

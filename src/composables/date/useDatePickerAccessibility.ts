@@ -9,12 +9,14 @@ import type { ViewMode } from '@/components/DatePicker/composables/useDatePicker
 const MONTH_CONTROL_SELECTOR = [
 	'[data-testid="month-btn"]',
 	'.v-date-picker-controls__month-btn',
+	'.sy-date-picker-controls__month-btn',
 ].join(',')
 
 const YEAR_CONTROL_SELECTOR = [
 	'[data-testid="year-btn"]',
 	'.v-date-picker-controls__mode-btn',
 	'.v-date-picker-controls__year-btn',
+	'.sy-date-picker-controls__year-btn',
 ].join(',')
 
 const PREV_MONTH_BUTTON_SELECTOR = [
@@ -244,7 +246,7 @@ const ensureMonthAndYearSelectorLabels = (
 
 		button.setAttribute('aria-label', ariaLabel)
 		button.setAttribute('title', ariaLabel)
-		button.setAttribute('aria-pressed', String(button.classList.contains('v-btn--active')))
+		button.removeAttribute('aria-pressed')
 
 		if (!selectionListeners.has(button)) {
 			const handler = () => {
@@ -269,7 +271,7 @@ const ensureMonthAndYearSelectorLabels = (
 
 		button.setAttribute('aria-label', ariaLabel)
 		button.setAttribute('title', ariaLabel)
-		button.setAttribute('aria-pressed', String(button.classList.contains('v-btn--active')))
+		button.removeAttribute('aria-pressed')
 
 		if (!selectionListeners.has(button)) {
 			const handler = () => {
@@ -440,6 +442,21 @@ const createAriaRow = (className?: string): HTMLElement => {
 	return row
 }
 
+const cleanupGridSemanticsForSelector = (container: HTMLElement) => {
+	Array.from(container.children).forEach((child) => {
+		if (
+			child instanceof HTMLElement
+			&& child.getAttribute('role') === 'row'
+			&& child.style.display === 'contents'
+		) {
+			while (child.firstChild) {
+				container.appendChild(child.firstChild)
+			}
+			child.remove()
+		}
+	})
+}
+
 const cleanupGridSemanticsForMonth = (daysContainer: HTMLElement) => {
 	Array.from(daysContainer.children).forEach((child) => {
 		if (
@@ -453,6 +470,58 @@ const cleanupGridSemanticsForMonth = (daysContainer: HTMLElement) => {
 			child.remove()
 		}
 	})
+
+	daysContainer.querySelectorAll<HTMLButtonElement>('.v-date-picker-month__day button').forEach((button) => {
+		if (button.dataset.gridcellManagedTabindex === 'true') {
+			button.removeAttribute('tabindex')
+			delete button.dataset.gridcellManagedTabindex
+		}
+	})
+}
+
+const applyOptionGridStructure = (
+	container: HTMLElement,
+	kind: 'month' | 'year',
+) => {
+	const content = container.querySelector<HTMLElement>(`.v-date-picker-${kind}s__content`) ?? container
+	const gridcells = Array.from(content.querySelectorAll<HTMLElement>(`[data-sy-date-picker-option="${kind}"]`))
+	if (gridcells.length === 0) return
+
+	const activeIndex = gridcells.findIndex(cell =>
+		cell.getAttribute('aria-selected') === 'true'
+		|| cell.querySelector('.v-btn--active') !== null,
+	)
+	const fallbackIndex = activeIndex >= 0 ? activeIndex : 0
+
+	gridcells.forEach((cell, index) => {
+		cell.tabIndex = index === fallbackIndex ? 0 : -1
+	})
+
+	container.setAttribute('role', 'grid')
+	container.setAttribute('aria-label', kind === 'month' ? locales.selectMonth() : locales.selectYear())
+	container.removeAttribute('aria-readonly')
+	container.removeAttribute('aria-rowcount')
+	container.removeAttribute('aria-colcount')
+
+	cleanupGridSemanticsForSelector(content)
+
+	const firstRowTop = gridcells[0]?.offsetTop ?? 0
+	const columns = gridcells.filter(cell => cell.offsetTop === firstRowTop).length || 3
+
+	for (let i = 0; i < gridcells.length; i += columns) {
+		const row = createAriaRow(`v-date-picker-${kind}s__row`)
+		gridcells.slice(i, i + columns).forEach((cell) => {
+			row.appendChild(cell)
+		})
+		content.appendChild(row)
+	}
+}
+
+const cleanupOptionGrid = (container: HTMLElement) => {
+	const content = container.querySelector<HTMLElement>('.v-date-picker-months__content, .v-date-picker-years__content') ?? container
+	cleanupGridSemanticsForSelector(content)
+	container.removeAttribute('role')
+	container.removeAttribute('aria-label')
 }
 
 const applyGridSemantics = (pickerEl: HTMLElement) => {
@@ -480,7 +549,7 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 		)
 
 		const dayCells = allChildren.filter(cell =>
-			cell.hasAttribute('data-v-date'),
+			!cell.classList.contains('v-date-picker-month__weekday'),
 		)
 
 		const colCount = weekdayCells.length || 7
@@ -507,26 +576,40 @@ const applyGridSemantics = (pickerEl: HTMLElement) => {
 			const chunk = dayCells.slice(i, i + colCount)
 			chunk.forEach((cell) => {
 				const button = cell.querySelector<HTMLButtonElement>('button')
-				if (!button) return
-
 				cell.setAttribute('role', 'gridcell')
 				const isSelected = cell.classList.contains('v-date-picker-month__day--selected')
-					|| button.classList.contains('v-btn--active')
-				if (isSelected) {
-					cell.setAttribute('aria-selected', 'true')
-				}
-				else {
-					cell.removeAttribute('aria-selected')
+					|| button?.classList.contains('v-btn--active')
+				cell.setAttribute('aria-selected', String(isSelected))
+
+				if (button) {
+					button.removeAttribute('role')
+					button.removeAttribute('aria-rowindex')
+					button.removeAttribute('aria-colindex')
+					button.removeAttribute('aria-selected')
+					button.setAttribute('tabindex', isSelected ? '0' : '-1')
+					button.dataset.gridcellManagedTabindex = 'true'
 				}
 
-				button.removeAttribute('role')
-				button.removeAttribute('aria-rowindex')
-				button.removeAttribute('aria-colindex')
-				button.removeAttribute('aria-selected')
 				row.appendChild(cell)
 			})
 			daysContainer.appendChild(row)
 		}
+
+		// If no date is selected, give the first day button tabindex="0"
+		// so keyboard users can Tab into the grid
+		const firstButton = daysContainer.querySelector<HTMLButtonElement>('.v-date-picker-month__day button[data-gridcell-managed-tabindex="true"][tabindex="-1"]')
+		const hasTabbableButton = daysContainer.querySelector<HTMLButtonElement>('.v-date-picker-month__day button[data-gridcell-managed-tabindex="true"][tabindex="0"]')
+		if (firstButton && !hasTabbableButton) {
+			firstButton.setAttribute('tabindex', '0')
+		}
+	})
+
+	pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-months').forEach((monthsContainer) => {
+		applyOptionGridStructure(monthsContainer, 'month')
+	})
+
+	pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-years').forEach((yearsContainer) => {
+		applyOptionGridStructure(yearsContainer, 'year')
 	})
 }
 
@@ -540,6 +623,9 @@ const cleanupGridSemantics = (root: ParentNode = document) => {
 	pickerEls.forEach((pickerEl) => {
 		pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-month__days').forEach((daysContainer) => {
 			cleanupGridSemanticsForMonth(daysContainer)
+		})
+		pickerEl.querySelectorAll<HTMLElement>('.v-date-picker-months, .v-date-picker-years').forEach((container) => {
+			cleanupOptionGrid(container)
 		})
 	})
 }

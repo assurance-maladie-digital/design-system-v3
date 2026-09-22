@@ -88,7 +88,7 @@ describe('AmeliproPagination', () => {
 		})
 
 		it('initialise le composant avec le bon nombre d’items', async () => {
-			// TODO: corriger le composant pour ne pas avoir 2 boutons vide si liste vide ?
+			// Note: corriger le composant pour ne pas avoir 2 boutons vide si liste vide ?
 			expect(itemFinder()).toHaveLength(2)
 
 			await vueWrapper.setProps({ items: items2() })

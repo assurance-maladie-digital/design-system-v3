@@ -41,7 +41,7 @@ describe('useValidation (unifyValidation)', () => {
 	describe('disableErrorHandling', () => {
 		it('returns a stub with empty refs and false computed values when disableErrorHandling is true', () => {
 			const params = makeParams({ disableErrorHandling: ref(true) })
-			const result = useValidation(params as Parameters<typeof useValidation>[0])
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
 			expect(result.errors.value).toEqual([])
 			expect(result.warnings.value).toEqual([])
@@ -53,7 +53,7 @@ describe('useValidation (unifyValidation)', () => {
 
 		it('stub validate() always returns true when disableErrorHandling is true', async () => {
 			const params = makeParams({ disableErrorHandling: ref(true) })
-			const result = useValidation(params as Parameters<typeof useValidation>[0])
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
 			const valid = await result.validate()
 			expect(valid).toBe(true)
@@ -1975,11 +1975,10 @@ describe('useValidation (unifyValidation)', () => {
 			// Errors are cleared by the readonly short-circuit
 			expect(result.errors.value).toEqual([])
 
-			// Resolve stale async — since the readonly short-circuit does not
-			// invalidate the pending token, the resolved result still writes errors
+			// La validation lancée avant readonly ne doit pas restaurer ses erreurs.
 			resolve(false)
 			await p1
-			expect(result.errors.value).toContain('Erreur obsolète readonly')
+			expect(result.errors.value).toEqual([])
 		})
 	})
 

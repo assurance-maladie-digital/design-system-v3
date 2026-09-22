@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /* eslint-disable vuejs-accessibility/label-has-for */
-	import { computed, onMounted, type PropType, ref } from 'vue'
+	import { computed, onMounted, type PropType, ref, useAttrs } from 'vue'
 	import type { IndexedObject, ValidateOnType } from '../types'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 	import type { InputTextField } from './types'
@@ -12,6 +12,7 @@
 	import { notBeforeDate } from '@/utils/amelipro/rules/notBeforeDate'
 	import { isRequired } from '@/utils/rules/isRequired'
 	import { mdiCheck, mdiClose, mdiEye, mdiEyeOff } from '@mdi/js'
+	import { vMaska } from 'maska/vue'
 
 	const props = defineProps({
 		required: {
@@ -78,6 +79,10 @@
 			type: String,
 			required: true,
 		},
+		mask: {
+			type: [String, Object] as PropType<string | Record<string, unknown>>,
+			default: undefined,
+		},
 		labelMaxWidth: {
 			type: String,
 			default: undefined,
@@ -134,6 +139,11 @@
 			},
 		},
 	})
+
+	defineOptions({
+		inheritAttrs: false,
+	})
+	const attrs = useAttrs()
 
 	const show = ref(false)
 	const inputTextField = ref<InputTextField>({ errorMessages: [], isValid: true })
@@ -230,7 +240,7 @@
 		})
 	})
 
-	const emit = defineEmits(['change', 'update:model-value'])
+	const emit = defineEmits(['change', 'update:model-value', 'keypress'])
 	const emitChangeEvent = (): void => {
 		emit('change', inputValue.value, props.uniqueId)
 	}
@@ -312,6 +322,7 @@
 
 <template>
 	<div
+		v-bind="attrs"
 		:id="`${uniqueId}-container`"
 		:class="classes"
 		:style="globalFieldStyles"
@@ -353,6 +364,7 @@
 				:id="uniqueId"
 				ref="inputTextField"
 				v-model="inputValue"
+				v-maska="props.mask"
 				:aria-describedby="displayError ? errorId : undefined"
 				:aria-invalid="displayError ? true : undefined"
 				:required="required"
@@ -376,6 +388,7 @@
 				@blur="focused = false"
 				@change="emitChangeEvent"
 				@focus="focused = true"
+				@keypress="emit('keypress', $event)"
 			>
 				<template
 					v-if="isPassword && inputValue"

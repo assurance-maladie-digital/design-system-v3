@@ -54,12 +54,12 @@ export const AnomalieGraphique = {
 				return {}
 			},
 			template: `
-              <v-expansion-panels class="mt-6">
-                <v-expansion-panel>
-                  <v-expansion-panel-title>
+              <VExpansionPanels class="mt-6">
+                <VExpansionPanel>
+                  <VExpansionPanelTitle>
                     <p class="text-h5 text-primary">Anomalie graphique</p>
-                  </v-expansion-panel-title>
-                  <v-expansion-panel-text>
+                  </VExpansionPanelTitle>
+                  <VExpansionPanelText>
                     <table>
                       <thead>
                       <tr style="background-color: rgb(12 65 154 / 10%)">
@@ -75,9 +75,9 @@ export const AnomalieGraphique = {
                               Si l'anomalie rencontrée ne répond pas à ces critères merci d'utiliser le formulaire dédiée à l'anomalie mineure.</td>
                             <td style="text-align: center;"><b>Majeure</b></td>
                             <td style="text-align: center;">
-                              <v-btn style="text-decoration: none; color: rgb(2, 156, 253);" href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_graphic_major.md" target="_blank">
+                              <VBtn style="text-decoration: none; color: rgb(2, 156, 253);" href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_graphic_major.md" target="_blank">
                                 Créer un ticket
-                              </v-btn>
+                              </VBtn>
                             </td>
                           </tr>
                           <tr>
@@ -89,16 +89,16 @@ export const AnomalieGraphique = {
                             <td style="padding: 10px">Une différence existe entre le composant concerné dans sa globalité ou une fonctionnalité spécifique et sa représentation dans le fichier Synapse présent dans l'outil de maquettage Figma.</td>
                             <td style="text-align: center;"><b>Mineure</b></td>
                             <td style="text-align: center;">
-                              <v-btn style="text-decoration: none; color: rgb(2, 156, 253);" href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_graphic_minor.md" target="_blank">
+                              <VBtn style="text-decoration: none; color: rgb(2, 156, 253);" href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_graphic_minor.md" target="_blank">
                                 Créer un ticket
-                              </v-btn>
+                              </VBtn>
                             </td>
                           </tr>
                         </tbody>
                     </table>
-                  </v-expansion-panel-text>
-                </v-expansion-panel>
-              </v-expansion-panels>
+                  </VExpansionPanelText>
+                </VExpansionPanel>
+              </VExpansionPanels>
             `,
 		}
 	},
@@ -113,12 +113,12 @@ export const AnomalieFonctionnelle = {
 				return {}
 			},
 			template: `
-              <v-expansion-panels class="mt-2">
-                <v-expansion-panel>
-                  <v-expansion-panel-title>
+              <VExpansionPanels class="mt-2">
+                <VExpansionPanel>
+                  <VExpansionPanelTitle>
                     <p class="text-h5 text-primary">Anomalie fonctionnelle</p>
-                  </v-expansion-panel-title>
-                  <v-expansion-panel-text>
+                  </VExpansionPanelTitle>
+                  <VExpansionPanelText>
                     <table>
                       <thead>
                       <tr style="background-color: rgb(12 65 154 / 10%)">
@@ -136,12 +136,12 @@ export const AnomalieFonctionnelle = {
                         </td>
                         <td style="text-align: center;"><b>Majeure</b></td>
                         <td style="text-align: center;">
-                          <v-btn style="text-decoration: none; color: rgb(2, 156, 253);"
+                          <VBtn style="text-decoration: none; color: rgb(2, 156, 253);"
                                  href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_functional_major.md"
                                  target="_blank"
                           >
                             Créer un ticket
-                          </v-btn>
+                          </VBtn>
                         </td>
                       </tr>
                       <tr>
@@ -155,19 +155,19 @@ export const AnomalieFonctionnelle = {
                         </td>
                         <td style="text-align: center;"><b>Mineure</b></td>
                         <td style="text-align: center;">
-                          <v-btn style="text-decoration: none; color: rgb(2, 156, 253);"
+                          <VBtn style="text-decoration: none; color: rgb(2, 156, 253);"
                                  href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=bug_functional_minor.md"
                                  target="_blank"
                           >
                             Créer un ticket
-                          </v-btn>
+                          </VBtn>
                         </td>
                       </tr>
                       </tbody>
                     </table>
-                  </v-expansion-panel-text>
-                </v-expansion-panel>
-              </v-expansion-panels>
+                  </VExpansionPanelText>
+                </VExpansionPanel>
+              </VExpansionPanels>
             `,
 		}
 	},
@@ -182,12 +182,12 @@ export const AnomalieAccessibilite = {
 				return {}
 			},
 			template: `
-              <v-expansion-panels class="mt-2">
-                <v-expansion-panel>
-                  <v-expansion-panel-title>
+              <VExpansionPanels class="mt-2">
+                <VExpansionPanel>
+                  <VExpansionPanelTitle>
                     <p class="text-h5 text-primary">Anomalie d'accessibilité</p>
-                  </v-expansion-panel-title>
-                  <v-expansion-panel-text>
+                  </VExpansionPanelTitle>
+                  <VExpansionPanelText>
                     <table>
                       <thead>
                       <tr style="background-color: rgb(12 65 154 / 10%)">
@@ -201,16 +201,16 @@ export const AnomalieAccessibilite = {
                             <td style="padding: 10px">Le composant concerné ne respecte pas l'accessibilité numérique (RGAA) avec les critères paramétrable au niveau du design system.<br/>Dans le doute, vous pouvez consulter les rapports d'audit disponibles pour chaque composant dans la documentation en ligne présents sur les pages "Accessibilité".</td>
                             <td style="text-align: center;"><b>Majeure</b></td>
                             <td style="text-align: center;">
-                              <v-btn style="text-decoration: none; color: rgb(2, 156, 253);" href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=accessibility.md" target="_blank">
+                              <VBtn style="text-decoration: none; color: rgb(2, 156, 253);" href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=accessibility.md" target="_blank">
                                 Créer un ticket
-                              </v-btn>
+                              </VBtn>
                             </td>
                           </tr>
                         </tbody>
                     </table>
-                  </v-expansion-panel-text>
-                </v-expansion-panel>
-              </v-expansion-panels>
+                  </VExpansionPanelText>
+                </VExpansionPanel>
+              </VExpansionPanels>
             `,
 		}
 	},
@@ -225,12 +225,12 @@ export const AnomalieDocumentaire = {
 				return {}
 			},
 			template: `
-              <v-expansion-panels class="mt-2">
-                <v-expansion-panel>
-                  <v-expansion-panel-title>
+              <VExpansionPanels class="mt-2">
+                <VExpansionPanel>
+                  <VExpansionPanelTitle>
                     <p class="text-h5 text-primary">Anomalie documentaire</p>
-                  </v-expansion-panel-title>
-                  <v-expansion-panel-text>
+                  </VExpansionPanelTitle>
+                  <VExpansionPanelText>
                     <table>
                       <thead>
                       <tr style="background-color: rgb(12 65 154 / 10%)">
@@ -244,16 +244,16 @@ export const AnomalieDocumentaire = {
                             <td style="padding: 10px">La documentation technique d'un composant (ou toute autre sources d'information, ex: Figma…) contient une anomalie.</td>
                             <td style="text-align: center;"><b>Mineure</b></td>
                             <td style="text-align: center;">
-                              <v-btn style="text-decoration: none; color: rgb(2, 156, 253);" href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=documentation.md" target="_blank">
+                              <VBtn style="text-decoration: none; color: rgb(2, 156, 253);" href="https://github.com/assurance-maladie-digital/design-system-v3/issues/new?template=documentation.md" target="_blank">
                                 Créer un ticket
-                              </v-btn>
+                              </VBtn>
                             </td>
                           </tr>
                         </tbody>
                     </table>
-                  </v-expansion-panel-text>
-                </v-expansion-panel>
-              </v-expansion-panels>
+                  </VExpansionPanelText>
+                </VExpansionPanel>
+              </VExpansionPanels>
             `,
 		}
 	},

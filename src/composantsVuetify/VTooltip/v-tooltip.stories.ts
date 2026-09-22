@@ -8,11 +8,11 @@ const meta: Meta = {
 			return { args }
 		},
 		template: `
-            <v-tooltip :text="args.text" :location="args.location" :disabled="args.disabled">
+            <VTooltip :text="args.text" :location="args.location" :disabled="args.disabled">
                 <template v-slot:activator="{ props }">
-                    <v-btn v-bind="props" color="primary">{{ args.activator }}</v-btn>
+                    <VBtn v-bind="props" color="primary">{{ args.activator }}</VBtn>
                 </template>
-            </v-tooltip>
+            </VTooltip>
         `,
 	}),
 }
@@ -69,6 +69,22 @@ export const Right: Story = {
 		docs: {
 			source: {
 				code: `<v-tooltip text="Tooltip right" location="right">
+    <template v-slot:activator="{ props }">
+        <v-btn v-bind="props" color="primary">Hover me</v-btn>
+    </template>
+</v-tooltip>`,
+			},
+		},
+	},
+}
+
+// --- Interactive (RGAA 10.13.2) ---
+export const Interactive: Story = {
+	args: { text: 'Ce tooltip reste ouvert au survol — vous pouvez sélectionner et copier ce texte.', activator: 'Hover me', location: 'top', disabled: false },
+	parameters: {
+		docs: {
+			source: {
+				code: `<v-tooltip text="Ce tooltip reste ouvert au survol" location="top">
     <template v-slot:activator="{ props }">
         <v-btn v-bind="props" color="primary">Hover me</v-btn>
     </template>

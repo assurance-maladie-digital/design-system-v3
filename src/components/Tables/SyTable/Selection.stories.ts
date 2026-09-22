@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref } from 'vue'
 import type { VDataTable } from 'vuetify/components'
 import SyTable from './SyTable.vue'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls, syTableItemsArgTypes } from '../common/storyArgTypes'
 import { users, usersHeaders } from '../common/storyData'
 
 const meta = {
@@ -15,21 +15,11 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: commonTableExcludedControls },
 	},
 	argTypes: {
 		...commonTableArgTypes,
-		items: {
-			description: 'Liste des éléments à afficher dans le tableau',
-			control: { type: 'object' },
-			table: {
-				category: 'props',
-				defaultValue: { summary: '[]' },
-			},
-		},
-		showFilters: {
-			description: 'Affiche les filtres au-dessus du tableau',
-			control: { type: 'boolean' },
-		},
+		...syTableItemsArgTypes,
 	},
 } satisfies Meta<typeof SyTable & typeof VDataTable>
 
@@ -42,7 +32,6 @@ type Story = StoryObj<typeof meta>
  * La sélection est un `v-model` (tableau des lignes sélectionnées).
  */
 export const RowSelection: Story = {
-	name: 'Row Selection',
 	parameters: {
 		a11y: {
 			disable: true,
@@ -111,6 +100,7 @@ export const RowSelection: Story = {
 		striped: false,
 		showSelect: true,
 		showFilters: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyTable },
@@ -121,7 +111,13 @@ export const RowSelection: Story = {
 		},
 		template: `
 			<div>
-				<SyTable v-model:options="args.options" v-model="selection" v-bind="args" suffix="selection-table" />
+				<SyTable
+					v-model:options="args.options"
+					v-model="selection"
+					v-bind="args"
+					suffix="selection-table"
+					@update:model-value="args['onUpdate:modelValue']"
+				/>
 				<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
 					<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
 					<div v-for="(item, index) in selection" :key="index" class="mb-2 pa-2 bg-grey-lighten-3">
@@ -140,7 +136,6 @@ export const RowSelection: Story = {
  * (boutons radio). Le `v-model` contient au plus un élément.
  */
 export const SingleRowSelection: Story = {
-	name: 'Single Row Selection',
 	parameters: {
 		a11y: {
 			disable: true,
@@ -209,6 +204,7 @@ export const SingleRowSelection: Story = {
 		striped: false,
 		showSelectSingle: true,
 		showFilters: true,
+		...commonTableEventArgs(),
 	},
 	render: args => ({
 		components: { SyTable },
@@ -219,7 +215,13 @@ export const SingleRowSelection: Story = {
 		},
 		template: `
 			<div>
-				<SyTable v-model:options="args.options" v-model="selection" v-bind="args" suffix="selection-table" />
+				<SyTable
+					v-model:options="args.options"
+					v-model="selection"
+					v-bind="args"
+					suffix="selection-table"
+					@update:model-value="args['onUpdate:modelValue']"
+				/>
 				<div v-if="selection.length" class="mt-4 pa-4 bg-grey-lighten-4">
 					<h3 class="text-h6 mb-3">Item(s) sélectionné(s) ({{ selection.length }})</h3>
 					<div v-for="(item, index) in selection" :key="index" class="mb-2 pa-2 bg-grey-lighten-3">

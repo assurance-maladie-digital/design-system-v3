@@ -772,7 +772,7 @@ const options = [
 	},
 }
 
-export const withCustomKey: Story = {
+export const WithCustomKey: Story = {
 	parameters: {
 		sourceCode: [
 			{

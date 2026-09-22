@@ -2,7 +2,7 @@ export const config = {
 	sheet: {
 		theme: 'light',
 		dense: true,
-		color: 'rgb(var(--v-theme-primaryVariant))',
+		color: 'rgb(var(--v-theme-primary-variant))',
 	},
 	tabs: {
 		'height': '53',

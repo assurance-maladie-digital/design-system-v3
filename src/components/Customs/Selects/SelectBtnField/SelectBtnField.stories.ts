@@ -265,7 +265,7 @@ export const Multiple: Story = {
 	},
 }
 
-export const inline: Story = {
+export const Inline: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -330,7 +330,7 @@ export const inline: Story = {
 	},
 }
 
-export const itemUnique: Story = {
+export const ItemUnique: Story = {
 	parameters: {
 		sourceCode: [
 			{
@@ -466,7 +466,7 @@ export const HelpText: Story = {
 	},
 }
 
-export const readonly: Story = {
+export const Readonly: Story = {
 	parameters: {
 		sourceCode: [
 			{

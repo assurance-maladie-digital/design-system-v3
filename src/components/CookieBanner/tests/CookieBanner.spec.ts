@@ -1,6 +1,8 @@
 import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import CookieBanner from '../CookieBanner.vue'
+import { locales } from '@/components/CookieBanner/locales'
+import { nextTick } from 'vue'
 describe('CookieBanner', () => {
 	it('renders correctly', () => {
 		const wrapper = mount(CookieBanner)
@@ -167,5 +169,26 @@ describe('CookieBanner', () => {
 		expect(wrapper.emitted('submit')?.[0]?.[0]).toEqual({
 			functional: true,
 		})
+	})
+
+	it('adds an accessible label to the close button', async () => {
+		const wrapper = mount(CookieBanner, {
+			attachTo: document.body,
+			props: {
+				modelValue: true,
+			},
+		})
+
+		await nextTick()
+
+		const closeButton = document.querySelector(
+			'.vd-cookie-banner-close-btn',
+		)
+
+		expect(closeButton).not.toBeNull()
+		expect(closeButton?.getAttribute('aria-label'))
+			.toBe(locales.closeBtn)
+
+		wrapper.unmount()
 	})
 })

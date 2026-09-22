@@ -2,8 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { useDatePickerAccessibility } from '../useDatePickerAccessibility'
 import { mount } from '@vue/test-utils'
 // Créer un composant vide pour servir de contexte à l'exécution des hooks
-import { defineComponent, ref, nextTick } from 'vue'
-import { useMonthButtonCustomization } from '../../../components/DatePicker/composables/useMonthButtonCustomization'
+import { defineComponent, nextTick } from 'vue'
 
 // Composant vide qui servira de contexte pour les hooks Vue
 const TestComponent = defineComponent({
@@ -69,30 +68,14 @@ describe('useDatePickerAccessibility', () => {
 		`
 	})
 
-	it('does not override month/year control labels set by useMonthButtonCustomization', async () => {
-		const { customizeMonthButton } = useMonthButtonCustomization(
-			() => true,
-			ref('janvier'),
-			ref('2023'),
-		)
-
-		await customizeMonthButton()
+	it('sets aria-labels on navigation buttons', async () => {
 		await updateAccessibility()
 
-		// Récupérer les boutons
 		const prevButton = document.querySelector('[data-testid="prev-month"]')
 		const nextButton = document.querySelector('[data-testid="next-month"]')
-		const monthButton = document.querySelector('.v-date-picker-controls__month-btn')
-		const yearButton = document.querySelector('.v-date-picker-controls__mode-btn')
 
-		// Vérifier que les flèches de navigation ont des labels statiques
 		expect(prevButton?.getAttribute('aria-label')).toBe('Mois précédent')
 		expect(nextButton?.getAttribute('aria-label')).toBe('Mois suivant')
-
-		// Vérifier que les labels riches des boutons mois/année ne sont pas écrasés
-		expect(monthButton?.getAttribute('aria-label')).toContain('Sélectionner un mois')
-		expect(monthButton?.getAttribute('aria-label')).toContain('janvier')
-		expect(yearButton?.getAttribute('aria-label')).toContain('2023')
 	})
 
 	it('adds a dedicated hidden role="status" element', async () => {
@@ -138,7 +121,7 @@ describe('useDatePickerAccessibility', () => {
 		expect(new Set(ids).size).toBe(4)
 	})
 
-	it('sets aria-pressed on active month/year selector buttons', async () => {
+	it('does not add aria-pressed to month/year selector buttons', async () => {
 		document.body.innerHTML = `
 			<div class="v-date-picker">
 				<div class="v-date-picker-months">
@@ -157,18 +140,107 @@ describe('useDatePickerAccessibility', () => {
 		await updateAccessibility()
 
 		const monthButtons = document.querySelectorAll('.v-date-picker-months button')
-		expect(monthButtons[0]?.getAttribute('aria-pressed')).toBe('false')
-		expect(monthButtons[1]?.getAttribute('aria-pressed')).toBe('true')
-		expect(monthButtons[2]?.getAttribute('aria-pressed')).toBe('false')
+		expect(monthButtons[0]?.getAttribute('aria-pressed')).toBeNull()
+		expect(monthButtons[1]?.getAttribute('aria-pressed')).toBeNull()
+		expect(monthButtons[2]?.getAttribute('aria-pressed')).toBeNull()
 
 		const yearButtons = document.querySelectorAll('.v-date-picker-years button')
-		expect(yearButtons[0]?.getAttribute('aria-pressed')).toBe('false')
-		expect(yearButtons[1]?.getAttribute('aria-pressed')).toBe('true')
-		expect(yearButtons[2]?.getAttribute('aria-pressed')).toBe('false')
+		expect(yearButtons[0]?.getAttribute('aria-pressed')).toBeNull()
+		expect(yearButtons[1]?.getAttribute('aria-pressed')).toBeNull()
+		expect(yearButtons[2]?.getAttribute('aria-pressed')).toBeNull()
 
 		// Les aria-label doivent toujours être présents
 		expect(monthButtons[1]?.getAttribute('aria-label')).toBeTruthy()
 		expect(yearButtons[1]?.getAttribute('aria-label')).toBeTruthy()
+	})
+
+	it('sets roving tabindex on month and year gridcells from slots', async () => {
+		document.body.innerHTML = `
+			<div class="v-date-picker">
+				<div class="v-date-picker-months">
+					<div class="v-date-picker-months__content">
+						<div role="gridcell" data-sy-date-picker-option="month" aria-selected="false"><button class="v-btn" tabindex="-1">janv.</button></div>
+						<div role="gridcell" data-sy-date-picker-option="month" aria-selected="true"><button class="v-btn v-btn--active" tabindex="-1">févr.</button></div>
+						<div role="gridcell" data-sy-date-picker-option="month" aria-selected="false"><button class="v-btn" tabindex="-1">mars</button></div>
+					</div>
+				</div>
+				<div class="v-date-picker-years">
+					<div class="v-date-picker-years__content">
+						<div role="gridcell" data-sy-date-picker-option="year" aria-selected="false"><button class="v-btn" tabindex="-1">2024</button></div>
+						<div role="gridcell" data-sy-date-picker-option="year" aria-selected="true"><button class="v-btn v-btn--active" tabindex="-1">2025</button></div>
+						<div role="gridcell" data-sy-date-picker-option="year" aria-selected="false"><button class="v-btn" tabindex="-1">2026</button></div>
+					</div>
+				</div>
+			</div>
+		`
+
+		await updateAccessibility()
+
+		const monthCells = Array.from(document.querySelectorAll<HTMLElement>('.v-date-picker-months [data-sy-date-picker-option="month"]'))
+		const yearCells = Array.from(document.querySelectorAll<HTMLElement>('.v-date-picker-years [data-sy-date-picker-option="year"]'))
+
+		expect(monthCells).toHaveLength(3)
+		expect(yearCells).toHaveLength(3)
+		expect(monthCells[0]?.getAttribute('role')).toBe('gridcell')
+		expect(monthCells[1]?.getAttribute('aria-selected')).toBe('true')
+		expect(monthCells[1]?.tabIndex).toBe(0)
+		expect(monthCells[0]?.tabIndex).toBe(-1)
+		expect(yearCells[1]?.getAttribute('aria-selected')).toBe('true')
+		expect(yearCells[1]?.tabIndex).toBe(0)
+		expect(yearCells[0]?.tabIndex).toBe(-1)
+
+		const monthsContainer = document.querySelector('.v-date-picker-months') as HTMLElement
+		expect(monthsContainer.getAttribute('role')).toBe('grid')
+	})
+
+	it('wraps month and year gridcells in ARIA rows', async () => {
+		document.body.innerHTML = `
+			<div class="v-date-picker">
+				<div class="v-date-picker-months">
+					<div class="v-date-picker-months__content">
+						<div role="gridcell" data-sy-date-picker-option="month" aria-pressed="false"><button class="v-btn" tabindex="-1">janv.</button></div>
+						<div role="gridcell" data-sy-date-picker-option="month" aria-pressed="true"><button class="v-btn v-btn--active" tabindex="-1">févr.</button></div>
+					</div>
+				</div>
+			</div>
+		`
+
+		await updateAccessibility()
+
+		const content = document.querySelector('.v-date-picker-months__content') as HTMLElement
+		const rows = Array.from(content.querySelectorAll<HTMLElement>('[role="row"]'))
+		expect(rows.length).toBeGreaterThanOrEqual(1)
+		expect(rows[0]?.style.display).toBe('contents')
+
+		const cellsInRows = Array.from(content.querySelectorAll<HTMLElement>('[role="row"] [data-sy-date-picker-option="month"]'))
+		expect(cellsInRows).toHaveLength(2)
+	})
+
+	it('sets grid role and aria-label on month/year containers', async () => {
+		document.body.innerHTML = `
+			<div class="v-date-picker">
+				<div class="v-date-picker-months">
+					<div class="v-date-picker-months__content">
+						<div role="gridcell" data-sy-date-picker-option="month" aria-pressed="false"><button class="v-btn" tabindex="-1">janv.</button></div>
+					</div>
+				</div>
+				<div class="v-date-picker-years">
+					<div class="v-date-picker-years__content">
+						<div role="gridcell" data-sy-date-picker-option="year" aria-pressed="false"><button class="v-btn" tabindex="-1">2024</button></div>
+					</div>
+				</div>
+			</div>
+		`
+
+		await updateAccessibility()
+
+		const monthsContainer = document.querySelector('.v-date-picker-months') as HTMLElement
+		const yearsContainer = document.querySelector('.v-date-picker-years') as HTMLElement
+
+		expect(monthsContainer.getAttribute('role')).toBe('grid')
+		expect(monthsContainer.getAttribute('aria-label')).toBeTruthy()
+		expect(yearsContainer.getAttribute('role')).toBe('grid')
+		expect(yearsContainer.getAttribute('aria-label')).toBeTruthy()
 	})
 
 	it('announces the target month when clicking a navigation button', async () => {
@@ -298,11 +370,12 @@ describe('useDatePickerAccessibility', () => {
 		const dayCells = Array.from(dataRows[0]?.querySelectorAll('.v-date-picker-month__day[data-v-date]') ?? [])
 		expect(dayCells[0]?.getAttribute('role')).toBe('gridcell')
 		expect(dayCells[0]?.getAttribute('aria-selected')).toBe('true')
-		expect(dayCells[1]?.hasAttribute('aria-selected')).toBe(false)
+		expect(dayCells[1]?.getAttribute('aria-selected')).toBe('false')
 
 		const dayButtons = Array.from(dayCells[0]?.querySelectorAll('button') ?? [])
 		expect(dayButtons[0]?.getAttribute('role')).toBeNull()
 		expect(dayButtons[0]?.getAttribute('aria-selected')).toBeNull()
+		expect(dayButtons[0]?.getAttribute('tabindex')).toBe('0')
 	})
 
 	it('cleanupGridSemantics flattens injected rows', async () => {
@@ -327,6 +400,36 @@ describe('useDatePickerAccessibility', () => {
 
 		const daysContainer = monthElAfter.querySelector('.v-date-picker-month__days') as HTMLElement
 		expect(daysContainer.children.length).toBe(2)
+		expect(daysContainer.querySelector('button')?.getAttribute('tabindex')).toBeNull()
+	})
+
+	it('cleanupGridSemantics removes grid role and ARIA rows from month/year containers', async () => {
+		document.body.innerHTML = `
+			<div class="v-date-picker">
+				<div class="v-date-picker-months">
+					<div class="v-date-picker-months__content">
+						<div role="gridcell" data-sy-date-picker-option="month" aria-pressed="false"><button class="v-btn" tabindex="-1">janv.</button></div>
+						<div role="gridcell" data-sy-date-picker-option="month" aria-pressed="true"><button class="v-btn v-btn--active" tabindex="-1">févr.</button></div>
+					</div>
+				</div>
+			</div>
+		`
+
+		await updateAccessibility()
+
+		const monthsContainer = document.querySelector('.v-date-picker-months') as HTMLElement
+		expect(monthsContainer.getAttribute('role')).toBe('grid')
+		expect(monthsContainer.querySelectorAll('[role="row"]')).toHaveLength(1)
+
+		await cleanupGridSemantics()
+
+		const monthsContainerAfter = document.querySelector('.v-date-picker-months') as HTMLElement
+		expect(monthsContainerAfter.getAttribute('role')).toBeNull()
+		expect(monthsContainerAfter.getAttribute('aria-label')).toBeNull()
+		expect(monthsContainerAfter.querySelectorAll('[role="row"]')).toHaveLength(0)
+
+		// Gridcells from slots are preserved (they are declarative, not generated)
+		expect(monthsContainerAfter.querySelectorAll('[data-sy-date-picker-option="month"]')).toHaveLength(2)
 	})
 
 	it('wraps flat div structure into ARIA rows with display: contents', async () => {
@@ -444,8 +547,7 @@ describe('useDatePickerAccessibility', () => {
 		expect(daysContainer.querySelector('[data-v-date="2026-08-02"]')?.getAttribute('role')).toBe('gridcell')
 	})
 
-	it('preserves customized month button label with different navigation icons', async () => {
-		// Modifier les icônes
+	it('preserves navigation button labels with different icons', async () => {
 		document.body.innerHTML = `
 			<div class="v-date-picker">
 				<div class="v-date-picker-controls">
@@ -468,26 +570,13 @@ describe('useDatePickerAccessibility', () => {
 			</div>
 		`
 
-		const { customizeMonthButton } = useMonthButtonCustomization(
-			() => true,
-			ref('janvier'),
-			ref('2023'),
-		)
-
-		await customizeMonthButton()
 		await updateAccessibility()
 
-		// Récupérer les boutons
 		const prevButton = document.querySelector('[data-testid="prev-month"]')
 		const nextButton = document.querySelector('[data-testid="next-month"]')
-		const monthButton = document.querySelector('.v-date-picker-controls__month-btn')
 
-		// Vérifier que les flèches de navigation sont toujours étiquetées
 		expect(prevButton?.getAttribute('aria-label')).toBe('Mois précédent')
 		expect(nextButton?.getAttribute('aria-label')).toBe('Mois suivant')
-
-		// Vérifier que le label personnalisé du mois n'est pas écrasé
-		expect(monthButton?.getAttribute('aria-label')).toContain('janvier')
 	})
 
 	it('ne crée pas de bloc sr-only instructions (comportement actuel)', async () => {
@@ -594,107 +683,6 @@ describe('useDatePickerAccessibility', () => {
 
 			// Vérifier que la fonction ne génère pas d'erreur
 			expect(() => handleKeyDown(enterEvent)).not.toThrow()
-		})
-	})
-
-	describe('RGAA 12.6 - aria-label reprend le texte visible', () => {
-		it('vérifie que l\'aria-label du bouton du mois contient le texte visible', async () => {
-			document.body.innerHTML = `
-				<div class="v-date-picker-controls">
-					<button class="v-date-picker-controls__month-btn">janv.</button>
-					<button class="v-date-picker-controls__mode-btn">2025</button>
-				</div>
-			`
-
-			const { customizeMonthButton } = useMonthButtonCustomization(
-				() => true,
-				ref('janvier'),
-				ref('2025'),
-			)
-
-			await customizeMonthButton()
-			await nextTick()
-
-			const monthBtn = document.querySelector('.v-date-picker-controls__month-btn')!
-			const ariaLabel = monthBtn.getAttribute('aria-label')
-			const visibleText = monthBtn.textContent
-
-			// Vérifier que l'aria-label contient le texte visible (janv.)
-			expect(ariaLabel).toContain('janv.')
-			expect(visibleText).toContain('janv.')
-		})
-
-		it('vérifie que l\'aria-label du bouton de l\'année contient le texte visible', async () => {
-			document.body.innerHTML = `
-				<div class="v-date-picker-controls">
-					<button class="v-date-picker-controls__month-btn">janv.</button>
-					<button class="v-date-picker-controls__mode-btn">2025</button>
-				</div>
-			`
-
-			const { customizeMonthButton } = useMonthButtonCustomization(
-				() => true,
-				ref('janvier'),
-				ref('2025'),
-			)
-
-			await customizeMonthButton()
-			await nextTick()
-
-			const yearBtn = document.querySelector('.v-date-picker-controls__mode-btn')!
-			const ariaLabel = yearBtn.getAttribute('aria-label')
-			const visibleText = yearBtn.textContent
-
-			// Vérifier que l'aria-label contient le texte visible (2025)
-			expect(ariaLabel).toContain('2025')
-			expect(visibleText).toContain('2025')
-		})
-
-		it('vérifie que l\'aria-label du bouton du mois contient le mois sélectionné', async () => {
-			document.body.innerHTML = `
-				<div class="v-date-picker-controls">
-					<button class="v-date-picker-controls__month-btn">déc.</button>
-					<button class="v-date-picker-controls__mode-btn">2030</button>
-				</div>
-			`
-
-			const { customizeMonthButton } = useMonthButtonCustomization(
-				() => true,
-				ref('décembre'),
-				ref('2030'),
-			)
-
-			await customizeMonthButton()
-			await nextTick()
-
-			const monthBtn = document.querySelector('.v-date-picker-controls__month-btn')!
-			const ariaLabel = monthBtn.getAttribute('aria-label')
-
-			expect(ariaLabel).toContain('électionner un mois (décembre / déc. sélectionné)')
-		})
-
-		it('vérifie que l\'aria-label du bouton de l\'année contient l\'année sélectionnée', async () => {
-			document.body.innerHTML = `
-				<div class="v-date-picker-controls">
-					<button class="v-date-picker-controls__month-btn">janv.</button>
-					<button class="v-date-picker-controls__mode-btn">2030</button>
-				</div>
-			`
-
-			const { customizeMonthButton } = useMonthButtonCustomization(
-				() => true,
-				ref('janvier'),
-				ref('2030'),
-			)
-
-			await customizeMonthButton()
-			await nextTick()
-
-			const yearBtn = document.querySelector('.v-date-picker-controls__mode-btn')!
-			const ariaLabel = yearBtn.getAttribute('aria-label')
-
-			// Vérifier que l'aria-label contient "2030 sélectionné"
-			expect(ariaLabel).toContain('2030 sélectionné')
 		})
 	})
 })

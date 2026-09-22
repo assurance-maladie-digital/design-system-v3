@@ -1,40 +1,83 @@
 
 # Validation compatible Vuetify
 
+Le système unifié permet aussi d'utiliser le mode de validation natif Vuetify.
+
+Le point d'entrée reste :
+
+- [`src/composables/unifyValidation/useValidation.ts`](src/composables/unifyValidation/useValidation.ts)
+
+avec `useVuetifyValidation: true`.
+
+---
+
 ## Props spécifiques
 
-| Prop                  | Type      | Description                                                                 |
-|-----------------------|-----------|-----------------------------------------------------------------------------|
-| `useVuetifyValidation`| boolean   | Active le mode validation Vuetify.                                          |
-| `rules`        | array     | Tableau de fonctions synchrones au format Vuetify.                          |
+| Prop | Type | Description |
+|---|---|---|
+| `useVuetifyValidation` | `boolean` | Active le mode Vuetify |
+| `rules` | `VuetifyValidationRule[]` | Règles synchrones Vuetify |
 
+---
 
-## Mode Vuetify
+## Fonctionnement
 
-Le système de validation unifié permet d'utiliser la validation native Vuetify ou la validation Synapse via l'option `useVuetifyValidation`.
+```mermaid
+flowchart LR
+    Entry["Component.vue"] --> Unified["useValidation.ts"]
+    Unified -->|useVuetifyValidation: true| Vuetify["useVuetifyValidation.ts"]
+```
 
-- `useVuetifyValidation: true` → Validation Vuetify native (règles sous forme de fonctions retournant true ou un message d'erreur)
-- `useVuetifyValidation: false` → Validation Synapse (recommandé pour la migration)
+Le mode Vuetify est utile quand le composant doit s'aligner sur des règles simples au format natif Vuetify.
 
-**Fichiers source :**
-- [`useVuetifyValidation.ts`](src/composables/unifyValidation/useVuetifyValidation.ts) - Adapteur Vuetify
-- [`useValidation.ts`](src/composables/unifyValidation/useValidation.ts) - Point d'entrée unifié
+Le mode Synapse reste préférable si le composant doit exposer :
 
-## Exemple d'intégration Vuetify
+- erreurs
+- warnings
+- succès
+- règles async
+- messages injectés et états forcés
 
-```typescript
+---
+
+## Exemple
+
+```ts
 import { useValidation } from '@/composables/unifyValidation/useValidation'
 
 const { validate, errors } = useValidation({
-  modelValue: model,
-  useVuetifyValidation: true, // ← mode Vuetify
-  vuetifyRules: [
-    (v) => !!v || 'Champ requis',
-    (v) => /.+@.+\..+/.test(v) || 'Email invalide'
-  ]
+	modelValue,
+	readonly,
+	disabled,
+	required,
+	isValidateOnBlur,
+	showSuccessMessages,
+	disableErrorHandling,
+	label,
+	focused,
+	useVuetifyValidation: true,
+	rules: computed(() => [
+		(v) => !!v || 'Champ requis',
+		(v) => /.+@.+\\..+/.test(v) || 'Email invalide',
+	]),
 })
 ```
 
-## Migration des règles
+---
 
-- Pour la migration, privilégier les règles custom et la validation Synapse pour bénéficier des 3 niveaux de feedback.
+## Cas DatePicker
+
+Le DatePicker supporte désormais aussi `useVuetifyValidation` + `rules`.
+
+Il conserve néanmoins un bridge métier dédié :
+
+- [`src/components/DatePicker/composables/useDatePickerValidation.ts`](src/components/DatePicker/composables/useDatePickerValidation.ts)
+
+Ce bridge porte encore des règles métier qui dépassent le simple contrat Vuetify :
+
+- plage de dates
+- `required` conditionnel
+- flow `CalendarMode`
+- soumission `SyForm`
+
+Le mode Vuetify est donc possible sur DatePicker pour s'aligner avec les autres champs migrés, mais le mode Synapse reste le plus adapté dès qu'une règle dépend du métier date.

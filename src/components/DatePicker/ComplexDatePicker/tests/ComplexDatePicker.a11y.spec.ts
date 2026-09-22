@@ -22,12 +22,6 @@ describe('ComplexDatePicker – accessibility (axe)', () => {
 		const ignoredRules = ['region'] // Ignoring 'region' rule as per test configuration
 
 		const results = await axe(wrapper.element as HTMLElement)
-		// Debug aid: log violations details when present
-		if (results.violations.filter(
-			v => !ignoredRules.includes(v.id), // Ignoring specified rules as per test configuration
-		).length > 0) {
-			console.log(JSON.stringify(results.violations, null, 2))
-		}
 		assertNoA11yViolations(results, 'ComplexDatePicker – default calendar mode', {
 			ignoreRules: ignoredRules,
 		})
@@ -54,7 +48,7 @@ describe('ComplexDatePicker – accessibility (axe)', () => {
 		const dialog = document.body.querySelector<HTMLElement>(`#${wrapper.vm.datePickerDialogId}`)
 		expect(dialog).not.toBeNull()
 		expect(dialog?.getAttribute('role')).toBe('dialog')
-		expect(dialog?.getAttribute('aria-labelledby')).toBe(wrapper.vm.datePickerHeadingId)
+		expect(dialog?.getAttribute('aria-labelledby')).toBe(wrapper.vm.datePickerTitleId)
 		expect(dialog?.getAttribute('aria-modal')).toBeNull()
 
 		const ignoredRules = ['region']

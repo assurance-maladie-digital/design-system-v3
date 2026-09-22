@@ -177,12 +177,20 @@ describe('SyTextArea', () => {
 		await textarea.trigger('focus')
 		await textarea.setValue('content\ncontent\ncontent\ncontent\ncontent\ncontent')
 		await textarea.trigger('blur')
+		// Ajout pour useCustomValidation.ts:195-199 : watch(focused, (newVal) => {
+		//     if (isValidateOnBlur.value && !newVal && !disableErrorHandling.value) {
+		//         validate()
+		//     }
+		// })
+		// Pour eviter de demander à chaque composant de connaître et d'appeler validate() explicitement.
+		await flushPromises()
 
 		expect(wrapper.text()).toContain('Ce champ ne peut pas dépasser 5 lignes')
 
 		await textarea.trigger('focus')
 		await textarea.setValue('content\ncontent\ncontent\ncontent\ncontent')
 		await textarea.trigger('blur')
+		await flushPromises()
 
 		expect(wrapper.text()).not.toContain('Ce champ ne peut pas dépasser 5 lignes')
 	})
@@ -486,7 +494,7 @@ describe('SyTextArea', () => {
 
 		expect(wrapper.find('.warning-field').exists()).toBe(true)
 		expect(wrapper.find('.sy-textarea__state-icon').exists()).toBe(true)
-		expect(wrapper.findComponent(SyIcon).props('color')).toBe('onWarningVariant')
+		expect(wrapper.findComponent(SyIcon).props('color')).toBe('on-warning-variant')
 	})
 
 	it('applies error visual state and error icon when validation fails', async () => {

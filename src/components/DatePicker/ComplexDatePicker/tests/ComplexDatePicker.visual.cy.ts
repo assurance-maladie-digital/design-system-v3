@@ -26,7 +26,12 @@ const activeElementSelectorByViewMode: Record<CalendarViewMode, string> = {
 	year: '.v-date-picker-years .v-btn--active',
 }
 
+const freezeDate = () => {
+	cy.clock(new Date(2025, 5, 15, 12).getTime(), ['Date'])
+}
+
 const openComplexDialogInView = (viewMode: CalendarViewMode) => {
+	freezeDate()
 	cy.mountWithVuetify(ComplexDatePicker, {
 		props: fixedOverlayProps,
 	}).then(async ({ wrapper }) => {
@@ -42,14 +47,13 @@ const openComplexDialogInView = (viewMode: CalendarViewMode) => {
 		await vm.$nextTick()
 	})
 
-	cy.wait(250, { log: false })
+	cy.get('.date-picker-overlay-content').filter(':visible').should('have.length', 1).as('visibleOverlay')
 	cy.document({ log: false }).then((doc) => {
 		if (doc.activeElement instanceof HTMLElement) {
 			doc.activeElement.blur()
 		}
 	})
-	cy.get(activeElementSelectorByViewMode[viewMode]).should('be.visible').focus()
-	cy.get('.date-picker-overlay-content').filter(':visible').should('have.length', 1).as('visibleOverlay')
+	cy.get(activeElementSelectorByViewMode[viewMode]).should('be.visible').focus().should('be.focused')
 	cy.get(overlayPanelSelectorByViewMode[viewMode]).should('be.visible')
 	cy.matchImageSnapshot(snapshotNameByViewMode[viewMode], cy.get('@visibleOverlay'))
 }
@@ -108,15 +112,16 @@ describe('ComplexDatePicker - Focus visual regression tests', () => {
 	// l'activateur (`textFieldActivator: false` par défaut) : le calendrier s'ouvre via
 	// l'icône calendrier (prepend). On l'ouvre donc, puis on focus une cellule de jour.
 	it('shows the ring on a focused calendar day cell', () => {
+		freezeDate()
 		cy.mountWithVuetify(ComplexDatePicker, {
 			props: { label: 'Date' },
 		})
 
 		cy.get('.v-input__prepend').first().click()
-		cy.get('.v-date-picker-month__day .v-btn', { timeout: 8000 }).should('be.visible')
+		cy.get('.v-date-picker-month__day .v-btn').should('be.visible')
 
 		focusVisible('.v-date-picker-month__day .v-btn')
-		cy.wait(150)
+		cy.get('.v-date-picker-month__day .v-btn').should('be.focused')
 		cy.matchImageSnapshot('complex-date-picker-calendar-day-focus', cy.get('.v-application'))
 	})
 })

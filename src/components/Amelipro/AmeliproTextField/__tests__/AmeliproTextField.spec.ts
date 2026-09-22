@@ -163,6 +163,10 @@ const expectedPropOptions: ExpectedPropOptions<typeof AmeliproTextField> = {
 		type: String,
 		required: true,
 	},
+	mask: {
+		type: [String, Object] as PropType<string | Record<string, unknown>>,
+		default: undefined,
+	},
 	labelMaxWidth: {
 		type: String,
 		default: undefined,
@@ -241,6 +245,7 @@ const modifiedPropValues = (): ComponentProps<typeof AmeliproTextField> => ({
 	inputMaxWidth: '150px',
 	inputMinWidth: '50px',
 	label: 'Modified label',
+	mask: '#####XX######',
 	labelMaxWidth: '120px',
 	labelMinWidth: '60px',
 	maxDate: '2099-12-31',

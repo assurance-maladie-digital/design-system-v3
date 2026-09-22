@@ -19,17 +19,6 @@
 			type: Array as () => FilterOption[],
 			default: () => [],
 		},
-		// Propriétés customisables des champs de saisie
-		inputConfig: {
-			type: Object as () => {
-				disableErrorHandling?: boolean
-				variant?: string
-				hideDetails?: boolean
-				density?: 'default' | 'comfortable' | 'compact'
-				clearable?: boolean
-			},
-			default: () => ({}),
-		},
 		// Propriétés de configuration des champs de saisie
 		disableErrorHandling: {
 			type: Boolean,
@@ -71,6 +60,8 @@
 		select: {},
 		autocomplete: {},
 	})
+
+	const effectiveInputConfig = computed(() => props.header.filterConfig ?? {})
 
 	// Computed properties pour accéder aux différents types de filtres
 	const textFilters = computed(() => filtersMap.value.text)
@@ -279,7 +270,7 @@
 				:header="props.header"
 				:filters="props.filters"
 				:filter-value="getFilterValue(props.header)"
-				:input-config="props.inputConfig"
+				:input-config="effectiveInputConfig"
 				:disable-error-handling="props.disableErrorHandling"
 				:variant="props.variant"
 				:hide-details="props.hideDetails"

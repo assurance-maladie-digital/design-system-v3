@@ -1,11 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SyServerTable from './SyServerTable.vue'
-import { commonTableArgTypes } from '../common/storyArgTypes'
+import { commonTableArgTypes, commonTableEventArgs, commonTableExcludedControls, syServerTableItemsArgTypes } from '../common/storyArgTypes'
 import { StateEnum } from '../common/constants/StateEnum'
 import type { DataOptions } from '../common/types'
 import { ref, watch } from 'vue'
 import type { VDataTable } from 'vuetify/components'
-import { fn } from 'storybook/test'
 
 interface User {
 	[key: string]: string
@@ -29,23 +28,11 @@ const meta = {
 	],
 	parameters: {
 		layout: 'fullscreen',
+		controls: { exclude: commonTableExcludedControls },
 	},
 	argTypes: {
 		...commonTableArgTypes,
-		items: {
-			description: 'Liste des éléments à afficher dans le tableau',
-			control: { type: 'object' },
-			table: {
-				category: 'props',
-				defaultValue: {
-					summary: 'undefined',
-				},
-			},
-		},
-		serverItemsLength: {
-			description: 'Nombre total d\'éléments à afficher',
-			control: { type: 'number' },
-		},
+		...syServerTableItemsArgTypes,
 	},
 } satisfies Meta<typeof SyServerTable & typeof VDataTable>
 
@@ -176,22 +163,22 @@ export const Default: Story = {
 		],
 	},
 	args: {
-		'options': {
+		options: {
 			itemsPerPage: 5,
 			sortBy: [{ key: 'lastname', order: 'asc' }],
 			page: 1,
 		},
-		'headers': [
+		headers: [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
-		'caption': '',
-		'serverItemsLength': 15,
-		'suffix': 'server-default',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
+		caption: '',
+		serverItemsLength: 15,
+		suffix: 'server-default',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: (args) => {
 		return {
@@ -434,17 +421,17 @@ export const ManyServerTables: Story = {
 		],
 	},
 	args: {
-		'serverItemsLength': 15, // Add required serverItemsLength property
-		'headers': [
+		serverItemsLength: 15, // Add required serverItemsLength property
+		headers: [
 			{ title: 'Nom', key: 'lastname' },
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
-		'caption': '',
-		'suffix': 'multi',
-		'density': 'default',
-		'striped': false,
-		'onUpdate:options': fn(),
+		caption: '',
+		suffix: 'multi',
+		density: 'default',
+		striped: false,
+		...commonTableEventArgs(),
 	},
 	render: (args) => {
 		return {

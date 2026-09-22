@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import DatePicker from './DatePicker.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
-import { ref, watch, computed } from 'vue'
-import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
+import { ref, computed } from 'vue'
 import { fn } from 'storybook/test'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
@@ -167,7 +166,7 @@ const meta = {
 		},
 		'isBirthDate': {
 			control: 'boolean',
-			description: 'Active le mode date de naissance qui commence la navigation du calendrier à l\'année en cours moins 30 ans',
+			description: 'Active le mode date de naissance qui ouvre le calendrier sur la vue de sélection d\'année (au lieu de la vue mensuelle), permettant une navigation année → mois → jour',
 			defaultValue: false,
 		},
 		'birthDate': {
@@ -334,8 +333,8 @@ export const Default: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Sélectionner une date"
-						placeholder="Sélectionner une date"
+						label="Date (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 					  />
 				</template>
@@ -353,8 +352,8 @@ export const Default: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'label': 'Sélectionner une date',
-		'placeholder': 'Sélectionner une date',
+		'label': 'Date (JJ/MM/AAAA)',
+		'placeholder': 'JJ/MM/AAAA',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
 		'showWeekNumber': false,
@@ -383,6 +382,7 @@ export const Default: Story = {
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
+                <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
               </div>
             `,
 		}
@@ -397,16 +397,16 @@ export const Required: Story = {
 				code: `
 				<template>
 					<DatePicker
-						v-model="date"
-						placeholder="Sélectionner une date"
-						label="Sélectionner une date"
+						v-model="date1"
+						placeholder="JJ/MM/AAAA"
+						label="Date (JJ/MM/AAAA)"
 						required
 						format="DD/MM/YYYY"
 					  />
 					  	<DatePicker
-						v-model="date"
-						label="Sélectionner une date"
-						placeholder="Sélectionner une date"
+						v-model="date2"
+						label="Date (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						required
 						displayAsterisk
 						format="DD/MM/YYYY"
@@ -426,8 +426,8 @@ export const Required: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'Sélectionner une date',
-		'label': 'Sélectionner une date',
+		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
 		'showWeekNumber': false,
@@ -450,15 +450,17 @@ export const Required: Story = {
 		return {
 			components: { DatePicker: DatePicker },
 			setup() {
-				const value = ref('')
-				return { args, value }
+				const value1 = ref('')
+				const value2 = ref('')
+				return { args, value1, value2 }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
 				<h4 class="mb-4">Sans astérisque :</h4>
-                <DatePicker v-bind="args" v-model="value"/>
+                <DatePicker v-bind="args" v-model="value1"/>
 				<h4 class="mb-4">Avec astérisque :</h4>
-				<DatePicker v-bind="args" v-model="value" displayAsterisk/>
+				<DatePicker v-bind="args" v-model="value2" displayAsterisk/>
+				<div class="mt-4 text-body-2">Valeur 1 : {{ value1 }} | Valeur 2 : {{ value2 }}</div>
               </div>
             `,
 		}
@@ -474,8 +476,8 @@ export const DateRange: Story = {
 				<template>
 					<DatePicker
 						v-model="dateRange"
-						label="Sélectionner une période"
-						placeholder="Sélectionner une période"
+						label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						displayRange
 					/>
@@ -497,8 +499,8 @@ export const DateRange: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'Sélectionner une période',
-		'label': 'Sélectionner une période',
+		'placeholder': 'JJ/MM/AAAA - JJ/MM/AAAA',
+		'label': 'Période (JJ/MM/AAAA - JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -526,6 +528,7 @@ export const DateRange: Story = {
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
+                <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
               </div>
             `,
 		}
@@ -541,12 +544,12 @@ export const WithCustomPeriod: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						placeholder="Sélectionner une date"
-						label="Sélectionner une date"
+						placeholder="JJ/MM/AAAA"
+						label="Date (JJ/MM/AAAA)"
 						format="DD/MM/YYYY"
 						:period="{
 							min: '01/01/1995',
-							max: '12/31/2005',
+							max: '31/12/2005',
 						}"
 						:customRules="[
 							{
@@ -582,8 +585,8 @@ export const WithCustomPeriod: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'Sélectionner une date',
-		'label': 'Sélectionner une date',
+		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
 		'showWeekNumber': false,
@@ -601,7 +604,7 @@ export const WithCustomPeriod: Story = {
 		'onClosed': fn(),
 		'period': {
 			min: '01/01/1995',
-			max: '12/31/2005',
+			max: '31/12/2005',
 		},
 		'customRules': [
 			{
@@ -640,6 +643,7 @@ export const WithCustomPeriod: Story = {
 			</div>
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
+                <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
               </div>
             `,
 		}
@@ -655,8 +659,8 @@ export const WithAppendIcon: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						placeholder="Sélectionner une date"
-						label="Sélectionner une date"
+						placeholder="JJ/MM/AAAA"
+						label="Date (JJ/MM/AAAA)"
 						format="DD/MM/YYYY"
 						displayAppendIcon
 					/>
@@ -678,8 +682,8 @@ export const WithAppendIcon: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'Sélectionner une date',
-		'label': 'Sélectionner une date',
+		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -707,6 +711,7 @@ export const WithAppendIcon: Story = {
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
+                <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
               </div>
             `,
 		}
@@ -722,8 +727,8 @@ export const WithoutIcon: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						placeholder="Sélectionner une date"
-						label="Sélectionner une date"
+						placeholder="JJ/MM/AAAA"
+						label="Date (JJ/MM/AAAA)"
 						format="DD/MM/YYYY"
 						:displayIcon="false"
 					/>
@@ -745,8 +750,8 @@ export const WithoutIcon: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'Sélectionner une date',
-		'label': 'Sélectionner une date',
+		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -774,6 +779,7 @@ export const WithoutIcon: Story = {
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
+                <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
               </div>
             `,
 		}
@@ -789,8 +795,8 @@ export const BirthDate: Story = {
 				<template>
 					<DatePicker
 						v-model="birthDate"
-						placeholder="Date de naissance"
-						label="Date de naissance"
+						placeholder="JJ/MM/AAAA"
+						label="Date de naissance (JJ/MM/AAAA)"
 						format="DD/MM/YYYY"
 						isBirthDate
 					/>
@@ -812,8 +818,8 @@ export const BirthDate: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'Date de naissance',
-		'label': 'Date de naissance',
+		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date de naissance (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': true,
@@ -841,570 +847,9 @@ export const BirthDate: Story = {
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
+                <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
               </div>
             `,
-		}
-	},
-}
-
-export const WithError: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<DatePicker
-						v-model="date"
-						placeholder="notAfterToday"
-						label="notAfterToday"
-						:custom-rules="[
-			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd'hui' } },
-		]"
-					/>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const date = ref('01/01/2100')
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		'headingLevel': 3,
-		'placeholder': 'Sélectionner une date',
-		'label': 'Sélectionner une date',
-		'format': 'DD/MM/YYYY',
-		'dateFormatReturn': '',
-		'isBirthDate': false,
-		'showWeekNumber': false,
-		'required': false,
-		'displayRange': false,
-		'displayIcon': true,
-		'displayAppendIcon': false,
-		'disabled': false,
-		'noIcon': false,
-		'noCalendar': false,
-		'modelValue': '01/01/2100',
-		'customRules': [
-			{ type: 'notAfterToday', options: { message: 'La date ne peut pas être après aujourd hui' } },
-		],
-		'onUpdate:modelValue': fn(),
-		'onFocus': fn(),
-		'onBlur': fn(),
-		'onClosed': fn(),
-	},
-	render: (args) => {
-		return {
-			components: { DatePicker: DatePicker },
-			setup() {
-				const value = ref('01/01/2100')
-				return { args, value }
-			},
-			template: `
-              <div class="d-flex flex-wrap align-center pa-4">
-                <DatePicker v-bind="args" v-model="value"/>
-              </div>
-            `,
-		}
-	},
-}
-
-export const WithWarning: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<DatePicker
-						v-model="date"
-						placeholder="Date avec avertissement"
-						label="Date avec avertissement"
-						:custom-warning-rules="[
-							{ type: 'notBeforeDate', options: { 
-								warningMessage: 'Attention : la date est antérieure à la date de référence (01/01/2031)',
-								date: '01/01/2031',
-								isWarning: true,
-							} }
-						]"
-					/>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const date = ref('20/12/2023')
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		'headingLevel': 3,
-		'placeholder': 'Date avec avertissement',
-		'label': 'Date avec avertissement',
-		'format': 'DD/MM/YYYY',
-		'dateFormatReturn': '',
-		'isBirthDate': false,
-		'showWeekNumber': false,
-		'required': false,
-		'displayRange': false,
-		'displayIcon': true,
-		'displayAppendIcon': false,
-		'disabled': false,
-		'noIcon': false,
-		'noCalendar': false,
-		'modelValue': '20/12/2023',
-		'customWarningRules': [
-			{
-				type: 'notBeforeDate', options: {
-					warningMessage: 'Attention : la date est antérieure à la date de référence (01/01/2031)',
-					date: '01/01/2031',
-					isWarning: true,
-				},
-			},
-		],
-		'onUpdate:modelValue': fn(),
-		'onFocus': fn(),
-		'onBlur': fn(),
-		'onClosed': fn(),
-	},
-	render: (args) => {
-		return {
-			components: { DatePicker: DatePicker },
-			setup() {
-				const value = ref('20/12/2023')
-				return { args, value }
-			},
-			template: `
-              <div class="d-flex flex-wrap align-center pa-4">
-                <DatePicker v-bind="args" v-model="value"/>
-              </div>
-            `,
-		}
-	},
-}
-
-export const WithSuccess: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<DatePicker
-						v-model="date"
-						placeholder="Date valide"
-						label="Date valide"
-						required
-						:custom-rules="[
-							{ type: 'notWeekend', options: { message: 'La date ne peut pas être un weekend' } }
-						]"
-					/>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const date = ref('22/01/2024')
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		'headingLevel': 3,
-		'placeholder': 'Date valide',
-		'label': 'Date valide',
-		'format': 'DD/MM/YYYY',
-		'dateFormatReturn': '',
-		'isBirthDate': false,
-		'showWeekNumber': false,
-		'required': true,
-		'displayRange': false,
-		'displayIcon': true,
-		'displayAppendIcon': false,
-		'disabled': false,
-		'noIcon': false,
-		'noCalendar': false,
-		'modelValue': '22/01/2024',
-		'customRules': [
-			{ type: 'notWeekend', options: { message: 'La date ne peut pas être un weekend' } },
-		],
-		'onUpdate:modelValue': fn(),
-		'onFocus': fn(),
-		'onBlur': fn(),
-		'onClosed': fn(),
-	},
-	render: (args) => {
-		return {
-			components: { DatePicker: DatePicker },
-			setup() {
-				const value = ref('22/01/2024')
-				return { args, value }
-			},
-			template: `
-              <div class="d-flex flex-wrap align-center pa-4">
-                <DatePicker v-bind="args" v-model="value"/>
-              </div>
-            `,
-		}
-	},
-}
-
-export const DifferentFormats: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<div class="d-flex flex-column gap-4">
-						<DatePicker
-							v-model="value1"
-							placeholder="Format JJ/MM/AAAA"
-							label="Format JJ/MM/AAAA"
-							format="DD/MM/YYYY"
-						/>
-						<DatePicker
-							v-model="value2"
-							placeholder="Format MM/JJ/AAAA"
-							label="Format MM/JJ/AAAA"
-							format="MM/DD/YYYY"
-						/>
-						<DatePicker
-							v-model="value3"
-							placeholder="Format AAAA-MM-JJ"
-							label="Format AAAA-MM-JJ"
-							format="YYYY-MM-DD"
-						/>
-						<DatePicker
-							v-model="value4"
-							placeholder="Format JJ-MM-AA"
-							label="Format JJ-MM-AA"
-							format="DD-MM-YY"
-						/>
-						<DatePicker
-							v-model="value5"
-							placeholder="Format JJ.MM.AAAA"
-							label="Format JJ.MM.AAAA"
-							format="DD.MM.YYYY"
-						/>
-					</div>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-				const value1 = ref('24/12/2025')
-				const value2 = ref('12/24/2025')
-				const value3 = ref('2025-12-24')
-				const value4 = ref('24-12-25')
-				const value5 = ref('24.12.2025')
-				</script>
-				`,
-			},
-		],
-	},
-	render: () => {
-		return {
-			components: { DatePicker: DatePicker },
-			setup() {
-				const value1 = ref('24/12/2025')
-				const value2 = ref('12/24/2025')
-				const value3 = ref('2025-12-24')
-				const value4 = ref('24-12-25')
-				const value5 = ref('25.12.2025')
-				return { value1, value2, value3, value4, value5 }
-			},
-			template: `
-              <div class="d-flex flex-column gap-4 pa-4">
-                <DatePicker
-                    v-model="value1"
-                    placeholder="Format JJ/MM/AAAA"
-                    label="Format JJ/MM/AAAA"
-                    format="DD/MM/YYYY"
-                    class="py-4"
-                />
-                <DatePicker
-                    v-model="value2"
-                    placeholder="Format MM/JJ/AAAA"
-                    label="Format MM/JJ/AAAA"
-                    format="MM/DD/YYYY"
-					class="py-4"
-                />
-                <DatePicker
-                    v-model="value3"
-                    placeholder="Format YYYY-MM-DD"
-                    label="Format YYYY-MM-DD"
-                    format="YYYY-MM-DD"
-					class="py-4"
-                />
-                <DatePicker
-                    v-model="value4"
-                    placeholder="Format DD-MM-YY"
-					label="Format DD-MM-YY"
-                    format="DD-MM-YY"
-					class="py-4"
-                />
-                <DatePicker
-                    v-model="value5"
-                    placeholder="Format DD.MM.YYYY"
-					label="Format DD.MM.YYYY"
-                    format="DD.MM.YYYY"
-					class="py-4"
-                />
-              </div>
-            `,
-		}
-	},
-}
-
-export const WithDateFormatReturn: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-              <div class="d-flex flex-column gap-4 pa-4">
-                <span class="mb-4">Date de retour : {{ value1 }}</span>
-                <DatePicker
-                    v-model="value1"
-                    placeholder="Format JJ/MM/AAAA, retour par défaut"
-                    label="Format JJ/MM/AAAA, retour par défaut"
-                    format="DD/MM/YYYY"
-                />
-
-                <span class="mb-4">Date de retour : {{ value2 }}</span>
-                <DatePicker
-                    v-model="value2"
-                    placeholder="Format JJ/MM/AAAA, retour MM/DD/YYYY"
-                    label="Format JJ/MM/AAAA, retour MM/DD/YYYY"
-                    format="DD/MM/YYYY"
-                    date-format-return="MM/DD/YYYY"
-                />
-
-                <span class="mb-4">Date de retour : {{ value3 }}</span>
-                <DatePicker
-                    v-model="value3"
-                    placeholder="Format JJ/MM/AAAA, retour YYYY-MM-DD"
-                    label="Format JJ/MM/AAAA, retour YYYY-MM-DD"
-                    format="DD/MM/YYYY"
-                    date-format-return="YYYY-MM-DD"
-                />
-                </div>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const value1 = ref('24/12/2025')
-					const value2 = ref('25/12/2025')
-					const value3 = ref('26/12/2025')
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		'headingLevel': 3,
-		'placeholder': 'Sélectionner une date',
-		'label': 'Sélectionner une date',
-		'format': 'DD/MM/YYYY',
-		'dateFormatReturn': '',
-		'isBirthDate': false,
-		'showWeekNumber': false,
-		'required': false,
-		'displayRange': false,
-		'displayIcon': true,
-		'displayAppendIcon': false,
-		'disabled': false,
-		'noIcon': false,
-		'noCalendar': false,
-		'modelValue': '24/12/2025',
-		'onUpdate:modelValue': fn(),
-		'onFocus': fn(),
-		'onBlur': fn(),
-		'onClosed': fn(),
-	},
-	render: () => {
-		return {
-			components: { DatePicker: DatePicker },
-			setup() {
-				const value1 = ref('24/12/2025')
-				const value2 = ref('25/12/2025')
-				const value3 = ref('26/12/2025')
-				return { value1, value2, value3 }
-			},
-			template: `
-              <div class="d-flex flex-column gap-4 pa-4">
-                <span class="mb-4">Date de retour : {{ value1 }}</span>
-                <DatePicker
-                    v-model="value1"
-                    placeholder="Format JJ/MM/AAAA, retour par défaut"
-                    label="Format JJ/MM/AAAA, retour par défaut"
-                    format="DD/MM/YYYY"
-                />
-
-                <span class="mb-4">Date de retour : {{ value2 }}</span>
-                <DatePicker
-                    v-model="value2"
-                    placeholder="Format JJ/MM/AAAA, retour MM/DD/YYYY"
-                    label="Format JJ/MM/AAAA, retour MM/DD/YYYY"
-                    format="DD/MM/YYYY"
-					date-format-return="MM/DD/YYYY"
-                />
-
-
-                <span class="mb-4">Date de retour : {{ value3 }}</span>
-                <DatePicker
-                    v-model="value3"
-                    placeholder="Format JJ/MM/AAAA, retour YYYY-MM-DD"
-                    label="Format JJ/MM/AAAA, retour YYYY-MM-DD"
-                    format="DD/MM/YYYY"
-					date-format-return="YYYY-MM-DD"
-                />
-              </div>
-            `,
-		}
-	},
-}
-
-export const WithDayjsFormat: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<div>
-						<DatePicker
-							v-model="date"
-							placeholder="Sélectionner une date"
-							label="Sélectionner une date"
-							format="DD/MM/YYYY"
-						/>
-						<p class="mt-4">Date formatée avec dayjs: {{ formattedDate }}</p>
-						<p>Date parsée avec dayjs: {{ parsedDate ? parsedDate.toLocaleDateString() : 'Aucune date' }}</p>
-					</div>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref, watch } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					import { useDateFormat } from '@cnamts/synapse'
-
-					const { parseDate, formatDate } = useDateFormat()
-
-					const date = ref('')
-					const formattedDate = ref('')
-					const parsedDate = ref<Date | null>(null)
-
-					watch(date, (newDate) => {
-						if (newDate) {
-							parsedDate.value = parseDate(newDate, 'DD/MM/YYYY')
-							if (parsedDate.value) {
-								formattedDate.value = formatDate(parsedDate.value, 'YYYY-MM-DD')
-							}
-						} else {
-							formattedDate.value = ''
-							parsedDate.value = null
-						}
-					})
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		headingLevel: 3,
-		placeholder: 'Sélectionner une date',
-		label: 'Sélectionner une date',
-		format: 'DD/MM/YYYY',
-		isBirthDate: false,
-		showWeekNumber: false,
-		required: false,
-		displayRange: false,
-		displayIcon: true,
-		displayAppendIcon: false,
-		disabled: false,
-		noIcon: false,
-		noCalendar: false,
-		modelValue: '',
-	},
-	render: () => {
-		return {
-			components: { DatePicker },
-			setup() {
-				// Importer le composable useDateFormat depuis useDateFormatDayjs
-				const { parseDate, formatDate } = useDateFormat()
-
-				const date = ref('')
-				const formattedDate = ref('')
-				const parsedDate = ref<Date | null>(null)
-
-				watch(date, (newDate) => {
-					if (newDate) {
-						parsedDate.value = parseDate(newDate, 'DD/MM/YYYY')
-						if (parsedDate.value) {
-							formattedDate.value = formatDate(parsedDate.value, 'YYYY-MM-DD')
-						}
-					}
-					else {
-						formattedDate.value = ''
-						parsedDate.value = null
-					}
-				})
-
-				return { date, formattedDate, parsedDate }
-			},
-
-			template: `
-				<div class="pa-4">
-					<DatePicker
-						v-model="date"
-						placeholder="Sélectionner une date"
-						label="Sélectionner une date"
-						format="DD/MM/YYYY"
-					/>
-					<p class="mt-4">Date formatée avec dayjs: {{ formattedDate }}</p>
-					<p>Date parsée avec dayjs: {{ parsedDate ? parsedDate.toLocaleDateString() : 'Aucune date' }}</p>
-				</div>
-			`,
 		}
 	},
 }
@@ -1419,8 +864,8 @@ export const UTC: Story = {
 					<div>
 						<DatePicker
 							v-model="dateString"
-							placeholder="Sélectionner une date"
-							label="Sélectionner une date"
+							placeholder="JJ/MM/AAAA"
+							label="Date (JJ/MM/AAAA)"
 							format="DD/MM/YYYY"
 						/>
 
@@ -1485,8 +930,8 @@ export const UTC: Story = {
 	},
 	args: {
 		'headingLevel': 3,
-		'placeholder': 'Sélectionner une date',
-		'label': 'Sélectionner une date',
+		'placeholder': 'JJ/MM/AAAA',
+		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -1566,464 +1011,4 @@ export const UTC: Story = {
 			`,
 		}
 	},
-}
-
-export const BidirectionalValidation: Story = {
-	parameters: {
-		controls: { disable: true },
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<div class="date-validation-playground">
-						<h1>Validation bidirectionnelle des dates</h1>
-						<p class="description">
-							Démonstration de la validation bidirectionnelle entre les DatePickers.
-							Les messages d'erreur apparaissent directement dans les composants.
-						</p>
-						<div class="date-range-container">
-							<div class="date-picker-wrapper">
-								<h3>Date de début</h3>
-								<DatePicker
-									ref="startDatePickerRef"
-									v-model="startDate"
-									label="Date de début"
-									:custom-rules="startDateRules"
-									required
-									@update:model-value="validateEndDate"
-								/>
-							</div>
-							<div class="date-picker-wrapper">
-								<h3>Date de fin</h3>
-								<DatePicker
-									ref="endDatePickerRef"
-									v-model="endDate"
-									label="Date de fin"
-									:custom-rules="endDateRules"
-									required
-									@update:model-value="validateStartDate"
-								/>
-							</div>
-						</div>
-						<div class="current-values">
-							<p><strong>Date de début:</strong> {{ startDate || 'Non sélectionnée' }}</p>
-							<p><strong>Date de fin:</strong> {{ endDate || 'Non sélectionnée' }}</p>
-						</div>
-					</div>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script lang="ts" setup>
-					import { ref, watch, computed } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					import { useDateFormat } from '@cnamts/synapse'
-
-					const { parseDate } = useDateFormat()
-
-					// État des dates
-					const startDate = ref<string | null>(null)
-					const endDate = ref<string | null>(null)
-
-					// Références aux composants CalendarMode pour accéder à leurs méthodes
-					const startDatePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
-					const endDatePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
-
-					// Règle de validation pour vérifier que la date de fin n'est pas avant la date de début
-					const createEndDateValidationRule = () => ({
-						type: 'custom',
-						options: {
-							validate: (value: string) => {
-								// Si pas de valeur pour la date de fin, pas besoin de validation
-								if (!value) return true
-
-								// Si pas de date de début mais une date de fin, afficher l'erreur
-								if (!startDate.value) return 'Veuillez d\\'abord sélectionner une date de début'
-
-								const start = parseDate(startDate.value, 'DD/MM/YYYY')
-								const end = parseDate(value, 'DD/MM/YYYY')
-
-								if (!start || !end) return true
-
-								return end >= start || 'La date de fin ne peut pas être antérieure à la date de début'
-							},
-							message: 'La date de fin ne peut pas être antérieure à la date de début',
-						},
-					})
-
-					// Règle de validation pour vérifier que la date de début n'est pas après la date de fin
-					const createStartDateValidationRule = () => ({
-						type: 'custom',
-						options: {
-							validate: (value: string) => {
-								// Si pas de valeur pour la date de début ou pas de date de fin, pas besoin de validation
-								if (!value || !endDate.value) return true
-
-								const start = parseDate(value, 'DD/MM/YYYY')
-								const end = parseDate(endDate.value, 'DD/MM/YYYY')
-
-								if (!start || !end) return true
-
-								return start <= end || 'La date de début ne peut pas être postérieure à la date de fin'
-							},
-							message: 'La date de début ne peut pas être postérieure à la date de fin',
-						},
-					})
-
-					// Règles de validation pour la date de début
-					const startDateRules = computed(() => [
-						{
-							type: 'required',
-							options: {
-								message: 'La date de début est requise.',
-							},
-						},
-						createStartDateValidationRule(),
-					])
-
-					// Règles de validation pour la date de fin
-					const endDateRules = computed(() => [
-						{
-							type: 'required',
-							options: {
-								message: 'La date de fin est requise.',
-							},
-						},
-						createEndDateValidationRule(),
-					])
-
-					// Fonction pour forcer la validation de la date de fin quand la date de début change
-					const validateEndDate = () => {
-						if (endDatePickerRef.value && endDate.value) {
-							// On utilise validateOnSubmit pour forcer la validation complète
-							endDatePickerRef.value.validateOnSubmit()
-						}
-					}
-
-					// Fonction pour forcer la validation de la date de début quand la date de fin change
-					const validateStartDate = () => {
-						if (startDatePickerRef.value && startDate.value) {
-							// On utilise validateOnSubmit pour forcer la validation complète
-							startDatePickerRef.value.validateOnSubmit()
-						}
-					}
-
-					// Watcher pour la date de début qui force la revalidation de la date de fin
-					watch(startDate, () => {
-						// Laisser le temps au système de mettre à jour les valeurs
-						setTimeout(() => {
-							validateEndDate()
-						}, 0)
-					})
-
-					// Watcher pour la date de fin qui force la revalidation de la date de début
-					watch(endDate, () => {
-						// Laisser le temps au système de mettre à jour les valeurs
-						setTimeout(() => {
-							validateStartDate()
-						}, 0)
-					})
-				</script>
-				`,
-			},
-		],
-	},
-	render: () => {
-		return {
-			components: { DatePicker },
-			setup() {
-				// Importer le composable useDateFormat depuis useDateFormatDayjs
-				const { parseDate } = useDateFormat()
-
-				// État des dates
-				const startDate = ref<string | null>(null)
-				const endDate = ref<string | null>(null)
-
-				// Références aux composants CalendarMode pour accéder à leurs méthodes
-				const startDatePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
-				const endDatePickerRef = ref<InstanceType<typeof DatePicker> | null>(null)
-
-				// Règle de validation pour vérifier que la date de fin n'est pas avant la date de début
-				const createEndDateValidationRule = () => ({
-					type: 'custom',
-					options: {
-						validate: (value: string) => {
-							// Si pas de valeur pour la date de fin, pas besoin de validation
-							if (!value) return true
-
-							// Si pas de date de début mais une date de fin, afficher l'erreur
-							if (!startDate.value) return 'Veuillez d\'abord sélectionner une date de début'
-
-							const start = parseDate(startDate.value, 'DD/MM/YYYY')
-							const end = parseDate(value, 'DD/MM/YYYY')
-
-							if (!start || !end) return true
-
-							return end >= start || 'La date de fin ne peut pas être antérieure à la date de début'
-						},
-						message: 'La date de fin ne peut pas être antérieure à la date de début',
-					},
-				})
-
-				// Règle de validation pour vérifier que la date de début n'est pas après la date de fin
-				const createStartDateValidationRule = () => ({
-					type: 'custom',
-					options: {
-						validate: (value: string) => {
-							// Si pas de valeur pour la date de début ou pas de date de fin, pas besoin de validation
-							if (!value || !endDate.value) return true
-
-							const start = parseDate(value, 'DD/MM/YYYY')
-							const end = parseDate(endDate.value, 'DD/MM/YYYY')
-
-							if (!start || !end) return true
-
-							return start <= end || 'La date de début ne peut pas être postérieure à la date de fin'
-						},
-						message: 'La date de début ne peut pas être postérieure à la date de fin',
-					},
-				})
-
-				// Règles de validation pour la date de début
-				const startDateRules = computed(() => [
-					{
-						type: 'required',
-						options: {
-							message: 'La date de début est requise.',
-						},
-					},
-					createStartDateValidationRule(),
-				])
-
-				// Règles de validation pour la date de fin
-				const endDateRules = computed(() => [
-					{
-						type: 'required',
-						options: {
-							message: 'La date de fin est requise.',
-						},
-					},
-					createEndDateValidationRule(),
-				])
-
-				// Fonction pour forcer la validation de la date de fin quand la date de début change
-				const validateEndDate = () => {
-					if (endDatePickerRef.value && endDate.value) {
-						// On utilise validateOnSubmit pour forcer la validation complète
-						endDatePickerRef.value.validateOnSubmit()
-					}
-				}
-
-				// Fonction pour forcer la validation de la date de début quand la date de fin change
-				const validateStartDate = () => {
-					if (startDatePickerRef.value && startDate.value) {
-						// On utilise validateOnSubmit pour forcer la validation complète
-						startDatePickerRef.value.validateOnSubmit()
-					}
-				}
-
-				// Watcher pour la date de début qui force la revalidation de la date de fin
-				watch(startDate, () => {
-					// Laisser le temps au système de mettre à jour les valeurs
-					setTimeout(() => {
-						validateEndDate()
-					}, 0)
-				})
-
-				// Watcher pour la date de fin qui force la revalidation de la date de début
-				watch(endDate, () => {
-					// Laisser le temps au système de mettre à jour les valeurs
-					setTimeout(() => {
-						validateStartDate()
-					}, 0)
-				})
-
-				return {
-					startDate,
-					endDate,
-					startDatePickerRef,
-					endDatePickerRef,
-					startDateRules,
-					endDateRules,
-					validateEndDate,
-					validateStartDate,
-				}
-			},
-
-			template: `
-				<div class="date-validation-playground">
-					<h1>Validation bidirectionnelle des dates</h1>
-					<p class="description">
-						Démonstration de la validation bidirectionnelle entre les DatePickers.
-						Les messages d'erreur apparaissent directement dans les composants.
-					</p>
-					<div class="date-range-container">
-						<div class="date-picker-wrapper">
-							<h3>Date de début</h3>
-							<DatePicker
-								ref="startDatePickerRef"
-								v-model="startDate"
-								placeholder="Date de début"
-								label="Date de début"
-								:custom-rules="startDateRules"
-								required
-								@update:model-value="validateEndDate"
-							/>
-						</div>
-						<div class="date-picker-wrapper">
-							<h3>Date de fin</h3>
-							<DatePicker
-								ref="endDatePickerRef"
-								v-model="endDate"
-								placeholder="Date de fin"
-								label="Date de fin"
-								:custom-rules="endDateRules"
-								required
-								@update:model-value="validateStartDate"
-							/>
-						</div>
-					</div>
-					<div class="current-values">
-						<p><strong>Date de début:</strong> {{ startDate || 'Non sélectionnée' }}</p>
-						<p><strong>Date de fin:</strong> {{ endDate || 'Non sélectionnée' }}</p>
-					</div>
-				</div>
-			`,
-		}
-	},
-}
-
-export const WithFormSubmission: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<v-form @submit.prevent="handleSubmit">
-						<div style="display: flex; flex-direction: column; gap: 16px;">
-							<div>
-								<h3 class="mb-4">Avec calendrier</h3>
-								<DatePicker
-									ref="datePicker1"
-									v-model="date1"
-									required
-									format="DD/MM/YYYY"
-									placeholder="Date requise"
-									label="Date requise au format DD/MM/YYYY "
-								/>
-							</div>
-							<div>
-								<h3 class="mb-4">Sans calendrier</h3>
-								<DatePicker
-									ref="datePicker2"
-									v-model="date2"
-									required
-									format="DD/MM/YYYY"
-									placeholder="Date requise"
-									label="Date requise au format DD/MM/YYYY"
-									no-calendar
-								/>
-							</div>
-						</div>
-						<button type="submit" style="margin-top: 16px; padding: 8px 16px; background-color:#0c419a; color: white; border: none; border-radius: 4px; cursor: pointer;">
-							Soumettre
-						</button>
-					</v-form>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-
-					const datePicker1 = ref<InstanceType<typeof DatePicker>>()
-					const datePicker2 = ref<InstanceType<typeof DatePicker>>()
-					const date1 = ref('')
-					const date2 = ref('')
-
-					const handleSubmit = async () => {
-						const isValid1 = await datePicker1.value?.validateOnSubmit()
-						const isValid2 = await datePicker2.value?.validateOnSubmit()
-						
-						if (!isValid1 || !isValid2) {
-							alert('Corrigez les erreurs avant de soumettre !')
-						} else {
-							alert('Formulaire soumis avec succès !')
-						}
-					}
-				</script>
-				`,
-			},
-		],
-	},
-	render: () => ({
-		components: { DatePicker },
-		setup() {
-			const datePicker1 = ref<InstanceType<typeof DatePicker>>()
-			const datePicker2 = ref<InstanceType<typeof DatePicker>>()
-			const date1 = ref('')
-			const date2 = ref('')
-
-			const handleSubmit = async () => {
-				const isValid1 = await datePicker1.value?.validateOnSubmit()
-				const isValid2 = await datePicker2.value?.validateOnSubmit()
-
-				if (!isValid1 || !isValid2) {
-					alert('Corrigez les erreurs avant de soumettre !')
-				}
-				else {
-					alert('Formulaire soumis avec succès !')
-				}
-			}
-
-			return {
-				datePicker1,
-				datePicker2,
-				date1,
-				date2,
-				handleSubmit,
-			}
-		},
-		template: `
-			<div class="d-flex flex-wrap align-center pa-4">
-				<form @submit.prevent="handleSubmit" style="width: 100%;">
-					<div style="display: flex; flex-direction: column; gap: 16px;">
-						<div>
-							<h3 class="mb-4">Avec soumission de formulaire:</h3>
-							<DatePicker
-								ref="datePicker1"
-								v-model="date1"
-								required
-								format="DD/MM/YYYY"
-								placeholder="Date requise"
-								label="Date requise au format DD/MM/YYYY"
-							/>
-						</div>
-						<div>
-							<h3 class="mb-4">Sans calendrier</h3>
-							<DatePicker
-								ref="datePicker2"
-								v-model="date2"
-								required
-								format="DD/MM/YYYY"
-								placeholder="Date requise"
-								label="Date requise au format DD/MM/YYYY"
-								no-calendar
-							/>
-						</div>
-					</div>
-					<button type="submit" style="margin-top: 16px; padding: 8px 16px; background-color:#0c419a; color: white; border: none; border-radius: 4px; cursor: pointer;">
-						Soumettre
-					</button>
-				</form>
-			</div>
-		`,
-	}),
 }

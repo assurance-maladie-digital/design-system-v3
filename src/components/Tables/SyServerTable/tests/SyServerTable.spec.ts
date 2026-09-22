@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, afterEach, beforeAll, beforeEach } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import { LocalStorageUtility } from '@/utils/localStorageUtility'
 import type { DataOptions, FilterOption } from '@/components/Tables/common/types'
 
@@ -125,6 +125,28 @@ describe('SyServerTable', () => {
 		expect(wrapper.text()).toContain('John Doe')
 
 		// Ajouter le wrapper à la liste pour le démontage
+		activeWrappers.push(wrapper)
+	})
+
+	it('applies ARIA row metadata to the rendered table', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				serverItemsLength: fakeItems.length,
+				suffix: 'table-aria',
+				headers,
+				items: fakeItems,
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		const table = wrapper.find('table')
+		expect(table.attributes('aria-rowcount')).toBe('4')
+		expect(table.find('thead tr').attributes('aria-rowindex')).toBe('1')
+		expect(table.find('tbody tr').attributes('aria-rowindex')).toBe('2')
+
 		activeWrappers.push(wrapper)
 	})
 
@@ -482,6 +504,133 @@ describe('SyServerTable', () => {
 		expect(filterComponents.length).toBeGreaterThan(0)
 
 		// Ajouter le wrapper à la liste pour le démontage
+		activeWrappers.push(wrapper)
+	})
+
+	it('passes each column filterInputConfig to its filter', async () => {
+		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				showFilters: true,
+				serverItemsLength: fakeItems.length,
+				suffix: 'filter-config',
+				headers: [
+					{ title: 'Name', key: 'name', filterable: true, filterType: 'text' },
+					{ title: 'Age', key: 'age', filterable: true, filterType: 'number' },
+				],
+				items: fakeItems,
+				filterInputConfig: {
+					name: { maxlength: 8 },
+					age: { maxlength: 6 },
+				},
+			},
+		})
+
+		await vi.dynamicImportSettled()
+		const filters = wrapper.findAllComponents(SyTableFilter)
+
+		expect(filters.find(filter => filter.props('header').key === 'name')?.props('header').filterConfig).toEqual({ maxlength: 8 })
+		expect(filters.find(filter => filter.props('header').key === 'age')?.props('header').filterConfig).toEqual({ maxlength: 6 })
+		expect(warnSpy).not.toHaveBeenCalled()
+
+		warnSpy.mockRestore()
+		activeWrappers.push(wrapper)
+	})
+
+	it('uses value-based identifier when key is missing for filterInputConfig', async () => {
+		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				showFilters: true,
+				serverItemsLength: fakeItems.length,
+				suffix: 'filter-config-value-fallback',
+				headers: [
+					{ title: 'Name', value: 'name', filterable: true, filterType: 'text' },
+					{ title: 'Age', value: 'age', filterable: true, filterType: 'number' },
+				],
+				items: fakeItems,
+				filterInputConfig: {
+					name: { maxlength: 8 },
+					age: { maxlength: 6 },
+				},
+			},
+		})
+
+		await vi.dynamicImportSettled()
+		const filters = wrapper.findAllComponents(SyTableFilter)
+
+		expect(filters.find(filter => String(filter.props('header').value ?? '') === 'name')?.props('header').filterConfig).toEqual({ maxlength: 8 })
+		expect(filters.find(filter => String(filter.props('header').value ?? '') === 'age')?.props('header').filterConfig).toEqual({ maxlength: 6 })
+		expect(warnSpy).not.toHaveBeenCalled()
+
+		warnSpy.mockRestore()
+		activeWrappers.push(wrapper)
+	})
+
+	it('warns when filterInputConfig uses the legacy (non per-column) format', async () => {
+		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				showFilters: true,
+				serverItemsLength: fakeItems.length,
+				suffix: 'filter-config-legacy-format',
+				headers: [
+					{ title: 'Name', key: 'name', filterable: true, filterType: 'text' },
+				],
+				items: fakeItems,
+				// Ancien format : options placées à la racine, sans clé de colonne
+				filterInputConfig: { maxlength: 8 } as unknown as Record<string, { maxlength: number }>,
+			},
+		})
+
+		await vi.dynamicImportSettled()
+
+		expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining('[SyServerTable]'))
+
+		warnSpy.mockRestore()
+		activeWrappers.push(wrapper)
+	})
+
+	it('passes and updates filterInputConfig on filter components', async () => {
+		const filterInputConfig = {
+			name: { variant: 'outlined' },
+		}
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				showFilters: true,
+				serverItemsLength: 10,
+				suffix: 'filter-input-config-test',
+				headers: [{
+					title: 'Name',
+					key: 'name',
+					filterable: true,
+					filterType: 'text',
+				}],
+				items: fakeItems,
+				filterInputConfig,
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		const filter = wrapper.findComponent(SyTableFilter)
+		expect(filter.exists()).toBe(true)
+		expect(filter.props('header').filterConfig).toEqual(filterInputConfig.name)
+
+		const updatedFilterInputConfig = {
+			name: { variant: 'solo' },
+		}
+		await wrapper.setProps({ filterInputConfig: updatedFilterInputConfig })
+
+		expect(filter.props('header').filterConfig).toEqual(updatedFilterInputConfig.name)
+
 		activeWrappers.push(wrapper)
 	})
 
@@ -849,6 +998,93 @@ describe('SyServerTable', () => {
 		// Check that the VDataTable has the correct model value
 		const dataTable = wrapper.findComponent({ name: 'VDataTableServer' })
 		expect(dataTable.props('modelValue')).toEqual([2])
+	})
+
+	it('keeps only one radio checked in single-select mode', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				headers,
+				items: fakeItems,
+				serverItemsLength: fakeItems.length,
+				showSelectSingle: true,
+				modelValue: [fakeItems[0]?.id],
+				suffix: 'radio-sync',
+			},
+		})
+
+		let radios = wrapper.findAll('input[type="radio"]')
+		expect(radios).toHaveLength(3)
+		expect((radios[0]!.element as HTMLInputElement).checked).toBe(true)
+		expect((radios[1]!.element as HTMLInputElement).checked).toBe(false)
+		expect((radios[2]!.element as HTMLInputElement).checked).toBe(false)
+
+		await wrapper.setProps({ modelValue: [fakeItems[1]?.id] })
+		await wrapper.vm.$nextTick()
+
+		radios = wrapper.findAll('input[type="radio"]')
+		expect((radios[0]!.element as HTMLInputElement).checked).toBe(false)
+		expect((radios[1]!.element as HTMLInputElement).checked).toBe(true)
+		expect((radios[2]!.element as HTMLInputElement).checked).toBe(false)
+	})
+
+	it('checking a radio updates the selection and deselects the previous row', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				headers,
+				'items': fakeItems,
+				'serverItemsLength': fakeItems.length,
+				'showSelectSingle': true,
+				'modelValue': [],
+				'suffix': 'radio-click',
+				'onUpdate:modelValue': (value: unknown) => wrapper.setProps({ modelValue: value as unknown[] | undefined }),
+			},
+		})
+
+		const radios = wrapper.findAll<HTMLInputElement>('input[type="radio"]')
+		const selectRadio = (radio: HTMLInputElement) => {
+			radio.checked = true
+			radio.dispatchEvent(new Event('change', { bubbles: true }))
+		}
+
+		selectRadio(radios[0]!.element)
+		await wrapper.vm.$nextTick()
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([[fakeItems[0]?.id]])
+
+		selectRadio(radios[1]!.element)
+		await wrapper.vm.$nextTick()
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([[fakeItems[1]?.id]])
+		expect(radios[0]!.element.checked).toBe(false)
+		expect(radios[1]!.element.checked).toBe(true)
+	})
+
+	it('ignores change events from a deselected radio', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				headers,
+				'items': fakeItems,
+				'serverItemsLength': fakeItems.length,
+				'showSelectSingle': true,
+				'modelValue': [fakeItems[1]?.id],
+				'suffix': 'radio-switch',
+				'onUpdate:modelValue': (value: unknown) => wrapper.setProps({ modelValue: value as unknown[] | undefined }),
+			},
+		})
+
+		const radios = wrapper.findAll<HTMLInputElement>('input[type="radio"]')
+		const dispatchChange = (radio: HTMLInputElement, checked: boolean) => {
+			radio.checked = checked
+			radio.dispatchEvent(new Event('change', { bubbles: true }))
+		}
+
+		dispatchChange(radios[0]!.element, true)
+		dispatchChange(radios[1]!.element, false)
+		await wrapper.vm.$nextTick()
+
+		// The deselected radio must not restore the previous selection.
+		expect(wrapper.emitted('update:modelValue')).toHaveLength(1)
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([[fakeItems[0]?.id]])
+		expect(radios[0]!.element.checked).toBe(true)
+		expect(radios[1]!.element.checked).toBe(false)
 	})
 
 	describe('SyServerTable Checkbox selectionKey', () => {
@@ -1384,5 +1620,43 @@ describe('SyServerTable pageInput', () => {
 		bars.forEach((bar) => {
 			expect(bar.getAttribute('aria-label')).toBe('Chargement des données en cours')
 		})
+	})
+
+	it('keeps itemsPerPage after the items are refreshed by a new search (#2535)', async () => {
+		const rows = (count: number, tag: string) => Array.from(
+			{ length: count },
+			(_, i) => ({ id: i + 1, name: `${tag}-${i + 1}`, age: 20 }),
+		)
+
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: {} as DataOptions,
+				suffix: 'per-page-sync',
+				serverItemsLength: 1000,
+				itemsPerPageOptions: [10, 50, 300],
+			},
+			attrs: { items: rows(10, 'row'), headers },
+		})
+		await wrapper.vm.$nextTick()
+
+		const pagination = () => wrapper.findComponent({ name: 'SyTablePagination' })
+		const dataTable = () => wrapper.findComponent({ name: 'VDataTableServer' })
+
+		pagination().vm.$emit('update:items-per-page', 300)
+		await flushPromises()
+
+		const emitted = wrapper.emitted('update:options')!
+		const lastEmit = emitted[emitted.length - 1]![0] as DataOptions
+		expect(lastEmit.itemsPerPage).toBe(300)
+		expect(dataTable().props('itemsPerPage')).toBe(300)
+
+		// Le projet renvoie la page demandée, puis relance la recherche.
+		await wrapper.setProps({ items: rows(300, 'row') } as never)
+		await flushPromises()
+		await wrapper.setProps({ items: rows(300, 'new') } as never)
+		await flushPromises()
+
+		expect(pagination().props('itemsPerPage')).toBe(300)
+		expect(dataTable().props('itemsPerPage')).toBe(300)
 	})
 })

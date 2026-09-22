@@ -8,8 +8,10 @@ import {
 	VExpansionPanelTitle,
 } from 'vuetify/components'
 import type { StoryObj } from '@storybook/vue3-vite'
+import SyTable from '@/components/Tables/SyTable/SyTable.vue'
 
 export default {
+	components: { SyTable },
 	title: 'Guide Du Dev/Équivalence des composants/Amelipro',
 }
 
@@ -23,6 +25,7 @@ export const AmeliproComponents: StoryObj = {
 				VExpansionPanelText,
 				VDivider,
 				SyTextField,
+				SyTable,
 			},
 
 			setup() {
@@ -77,6 +80,14 @@ export const AmeliproComponents: StoryObj = {
 							name: 'AmeliproCheckbox',
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-checkbox',
 						},
+						props: [
+							{ name: 'checkbox', reason: 'Doublon avec label et name' },
+							{ name: 'isSwitch', reason: 'Création d’un composant Switch dédié' },
+							{ name: 'append', reason: 'Faisable côté projet' },
+							{ name: 'errorDefault', reason: 'Géré par la validation' },
+							{ name: 'labelLeft', reason: 'Faisable côté projet' },
+							{ name: 'requiredErrorMessage', reason: 'Géré par la validation' },
+						],
 					}, {
 						title: 'AmeliproCheckboxGroup',
 						synapse: {
@@ -107,6 +118,35 @@ export const AmeliproComponents: StoryObj = {
 							name: 'AmeliproBtn',
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-btn',
 						},
+						props: [
+							{ name: 'uniqueId', reason: 'Géré par Vuetify' },
+							{ name: 'badge', reason: 'Géré par Vuetify' },
+							{ name: 'badgeBgColor', reason: 'Géré par Vuetify' },
+							{ name: 'badgeColor', reason: 'Géré par Vuetify' },
+							{ name: 'bordered', reason: 'Géré par Vuetify' },
+							{ name: 'classes', reason: 'Géré par Vuetify' },
+							{ name: 'color', reason: 'Utiliser les couleurs du DS' },
+							{ name: 'disabled', reason: 'Géré par Vuetify' },
+							{ name: 'hoverColor', reason: 'Utiliser les couleurs du DS' },
+							{ name: 'hoverUnderline', reason: 'Utiliser les couleurs du DS' },
+							{ name: 'iconBgColor', reason: 'Utiliser les couleurs du DS' },
+							{ name: 'iconBordered', reason: 'Géré par Vuetify' },
+							{ name: 'iconColor', reason: 'Utiliser les couleurs du DS' },
+							{ name: 'iconFocusColor', reason: 'Utiliser les couleurs du DS' },
+							{ name: 'iconHoverColor', reason: 'Utiliser les couleurs du DS' },
+							{ name: 'iconLeft', reason: 'Géré par Vuetify' },
+							{ name: 'iconName', reason: 'Géré par Vuetify' },
+							{ name: 'infoBlock', reason: 'Géré par Vuetify' },
+							{ name: 'minHeight', reason: 'Géré par Vuetify' },
+							{ name: 'size', reason: 'Géré par Vuetify' },
+							{ name: 'target', reason: 'Géré par Vuetify' },
+							{ name: 'text', reason: 'Géré par Vuetify' },
+							{ name: 'textColor', reason: 'Utiliser les couleurs du DS' },
+							{ name: 'textFocusColor', reason: 'Utiliser les couleurs du DS' },
+							{ name: 'textHoverColor', reason: 'Utiliser les couleurs du DS' },
+							{ name: 'type', reason: 'Géré par Vuetify' },
+							{ name: 'underline', reason: 'Géré par Vuetify' },
+						],
 					},
 					{
 						title: 'AmeliproCallback',
@@ -129,6 +169,23 @@ export const AmeliproComponents: StoryObj = {
 							name: 'AmeliproCard',
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-card',
 						},
+						props: [
+							{ name: 'cardTitle', reason: 'Géré par Vuetify' },
+							{ name: 'uniqueId', reason: 'Géré par Vuetify' },
+							{ name: 'borderColor', reason: 'Géré par Vuetify' },
+							{ name: 'bordered', reason: 'Géré par Vuetify' },
+							{ name: 'cardColor', reason: 'Géré par Vuetify' },
+							{ name: 'classes', reason: 'Géré par Vuetify' },
+							{ name: 'contentClasses', reason: 'Géré par Vuetify' },
+							{ name: 'divider', reason: 'Géré par Vuetify' },
+							{ name: 'headerRightWidth', reason: 'Géré par Vuetify' },
+							{ name: 'noCardHeader', reason: 'Géré par Vuetify' },
+							{ name: 'rightPart', reason: 'Géré par Vuetify' },
+							{ name: 'rightPartClasses', reason: 'Géré par Vuetify' },
+							{ name: 'rightPartWidth', reason: 'Géré par Vuetify' },
+							{ name: 'titleColor', reason: 'Géré par Vuetify' },
+							{ name: 'titleLevel', reason: 'Géré par Vuetify' },
+						],
 					}, {
 						title: 'AmeliproContentLayout',
 						synapse: {
@@ -149,6 +206,18 @@ export const AmeliproComponents: StoryObj = {
 							name: 'AmeliproDialog',
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-dialog',
 						},
+						props: [
+							{ name: 'uniqueId', reason: 'Déjà géré par Synapse' },
+							{ name: 'attach', reason: 'Géré par Vuetify' },
+							{ name: 'eager', reason: 'Géré par Vuetify' },
+							{ name: 'fullscreen', reason: 'Géré par Vuetify' },
+							{ name: 'hiddenCancelBtn', reason: 'Déjà géré par Synapse' },
+							{ name: 'labelledby', reason: 'Déjà géré par Synapse' },
+							{ name: 'mainContentMaxHeight', reason: 'Géré par Vuetify' },
+							{ name: 'mainContentMinHeight', reason: 'Géré par Vuetify' },
+							{ name: 'noClickOutside', reason: 'Géré par Vuetify' },
+							{ name: 'noFooter', reason: 'Non utilisé' },
+						],
 					}, {
 						title: 'AmeliproErrorTemplate',
 						synapse: {
@@ -231,6 +300,28 @@ export const AmeliproComponents: StoryObj = {
 							name: 'AmeliproIconBtn',
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-icon-btn',
 						},
+						props: [
+							{ name: 'iconBgColor', reason: 'Couleur du DS' },
+							{ name: 'iconHoverBgColor', reason: 'Couleur du DS' },
+							{ name: 'iconHoverColor', reason: 'Couleur du DS' },
+							{ name: 'uniqueId', reason: 'Géré coté projet' },
+							{ name: 'xLarge', reason: 'Géré par la props size' },
+							{ name: 'badge', reason: 'Géré par Vuetify' },
+							{ name: 'badgeBgColor', reason: 'Géré par Vuetify' },
+							{ name: 'badgeColor', reason: 'Géré par Vuetify' },
+							{ name: 'bordered', reason: 'Implémentation ultérieure à étudier' },
+							{ name: 'btnTitle', reason: 'Géré par la props label' },
+							{ name: 'href', reason: 'Implémentation ultérieure à étudier' },
+							{ name: 'iconBorderColor', reason: 'Couleur du DS' },
+							{ name: 'iconFocusBgColor', reason: 'Couleur du DS' },
+							{ name: 'iconFocusBorderColor', reason: 'Couleur du DS' },
+							{ name: 'iconFocusColor', reason: 'Couleur du DS' },
+							{ name: 'iconHoverBorderColor', reason: 'Implémentation ultérieure à étudier' },
+							{ name: 'large', reason: 'Géré par la props size' },
+							{ name: 'medium', reason: 'Géré par la props size' },
+							{ name: 'small', reason: 'Géré par la props size' },
+							{ name: 'to', reason: 'Implémentation ultérieure à étudier' },
+						],
 					},
 					{
 						title: 'AmeliproLogoAm',
@@ -264,6 +355,22 @@ export const AmeliproComponents: StoryObj = {
 							name: 'AmeliproMessage',
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-message',
 						},
+						props: [
+							{ name: 'alignStart', reason: 'Non utilisé' },
+							{ name: 'borderLeftMessage', reason: 'Géré par la props variant' },
+							{ name: 'borderLeftMessageTitle', reason: 'Non utilisé' },
+							{ name: 'color', reason: 'Géré par la props variant' },
+							{ name: 'dark', reason: 'Non utilisé' },
+							{ name: 'icon', reason: 'Géré par la props variant' },
+							{ name: 'iconBgColor', reason: 'Géré par la props variant' },
+							{ name: 'iconColor', reason: 'Géré par la props variant' },
+							{ name: 'maxWidth', reason: 'Non utilisé' },
+							{ name: 'noIcon', reason: 'Non utilisé' },
+							{ name: 'text', reason: 'Géré avec le slot default' },
+							{ name: 'textColor', reason: 'Géré par la props variant' },
+							{ name: 'type', reason: 'Géré par la props variant' },
+							{ name: 'width', reason: 'Non utilisé' },
+						],
 					},
 					{
 						title: 'AmeliproStatus',
@@ -286,6 +393,19 @@ export const AmeliproComponents: StoryObj = {
 							name: 'AmeliproTooltips',
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-tooltips',
 						},
+						props: [
+							{ name: 'tooltipText', reason: 'Géré par Vuetify' },
+							{ name: 'uniqueId', reason: 'Géré par Vuetify' },
+							{ name: 'btnLabel', reason: 'N’utilise pas le bouton' },
+							{ name: 'classes', reason: 'Géré par le projet' },
+							{ name: 'iconBgColor', reason: 'Géré par le SyIcon' },
+							{ name: 'iconColor', reason: 'Géré par le SyIcon' },
+							{ name: 'iconHoverBgColor', reason: 'Géré par le SyIcon' },
+							{ name: 'iconHoverColor', reason: 'Géré par le SyIcon' },
+							{ name: 'iconName', reason: 'Géré par le SyIcon' },
+							{ name: 'tooltipBg', reason: 'Couleur du DS' },
+							{ name: 'tooltipTextColor', reason: 'Couleur du DS' },
+						],
 					},
 					{
 						title: 'AmeliproTransmission',
@@ -425,6 +545,10 @@ export const AmeliproComponents: StoryObj = {
 							name: 'AmeliproChips',
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-chips',
 						},
+						props: [
+							{ name: 'Text', reason: 'Géré par Items' },
+							{ name: 'uniqueId', reason: 'Géré par Items' },
+						],
 					},
 					{
 						title: 'AmeliproDisclosure',
@@ -562,6 +686,14 @@ export const AmeliproComponents: StoryObj = {
 							name: 'AmeliproRadioGroup',
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-radio-group',
 						},
+						props: [
+							{ name: 'fullHorizontal', reason: 'utiliser le composant selectBtnField pour horizontal' },
+							{ name: 'hiddenLabel', reason: 'Cacher le label n\'est pas une bonne pratique' },
+							{ name: 'horizontal', reason: 'utiliser le composant selectBtnField pour horizontal' },
+							{ name: 'horizontalLabel', reason: 'utiliser le composant selectBtnField pour horizontal' },
+							{ name: 'pills', reason: 'composant existant dans synapse selectBtnField' },
+							{ name: 'requiredErrorMessage', reason: 'Geré par le systeme de validation Synapse' },
+						],
 					},
 					{
 						title: 'AmeliproSelect',
@@ -573,6 +705,20 @@ export const AmeliproComponents: StoryObj = {
 							name: 'AmeliproSelect',
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-select',
 						},
+						props: [
+							{ name: 'fullWidthErrorMessage', reason: 'Geré par la validation' },
+							{ name: 'globalMaxWidth', reason: 'Géré par la props width' },
+							{ name: 'globalMinWidth', reason: 'Géré par la props width' },
+							{ name: 'globalWidth', reason: 'Géré par la props width' },
+							{ name: 'hideErrorMessage', reason: 'Geré par la validation' },
+							{ name: 'horizontal', reason: 'Peut etre intégré sur demande' },
+							{ name: 'inputMaxWidth', reason: 'Géré par la props width' },
+							{ name: 'inputMinWidth', reason: 'Géré par la props width' },
+							{ name: 'labelMaxWidth', reason: 'Peut être fait par le développeur du projet' },
+							{ name: 'labelMinWidth', reason: 'Peut être fait par le développeur du projet' },
+							{ name: 'placeholder', reason: 'Non obligatoire' },
+							{ name: 'rules', reason: 'Geré par la validation' },
+						],
 					},
 					{
 						title: 'AmeliproStateTile',
@@ -606,6 +752,14 @@ export const AmeliproComponents: StoryObj = {
 							name: 'AmeliproTabs',
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-tabs',
 						},
+						props: [
+							{ name: 'ariaLabel', reason: 'Géré par le composant' },
+							{ name: 'ariaLabelledby', reason: 'Non utilisé' },
+							{ name: 'btnGroupClasses', reason: 'Non utilisé' },
+							{ name: 'id', reason: 'Non utilisé' },
+							{ name: 'noTabDefaultStyle', reason: 'Deux composants totalement différents' },
+							{ name: 'pills', reason: 'Deux composants totalement différents' },
+						],
 					}, {
 						title: 'AmeliproTextArea',
 						synapse: {
@@ -616,6 +770,16 @@ export const AmeliproComponents: StoryObj = {
 							name: 'AmeliproTextArea',
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-text-area',
 						},
+						props: [
+							{ name: 'globalMaxWidth', reason: 'Géré par Vuetify' },
+							{ name: 'globalMinWidth', reason: 'Géré par Vuetify' },
+							{ name: 'horizontal', reason: 'Géré par le projet' },
+							{ name: 'inputMaxWidth', reason: 'Géré par Vuetify' },
+							{ name: 'inputMinWidth', reason: 'Géré par Vuetify' },
+							{ name: 'labelMaxWidth', reason: 'Géré par Vuetify' },
+							{ name: 'labelMinWidth', reason: 'Géré par Vuetify' },
+							{ name: 'classes', reason: 'Non utilisé' },
+						],
 					}, {
 						title: 'AmeliproTextField',
 						synapse: {
@@ -626,6 +790,26 @@ export const AmeliproComponents: StoryObj = {
 							name: 'AmeliproTextField',
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-text-field',
 						},
+						props: [
+							{ name: 'classes', reason: 'Non utilisé' },
+							{ name: 'disabledDateForSafari', reason: 'Non utilisé' },
+							{ name: 'fullWidthErrorMsg', reason: 'Géré par la validation' },
+							{ name: 'globalMaxWidth', reason: 'Non utilisé' },
+							{ name: 'globalMinWidth', reason: 'Non utilisé' },
+							{ name: 'globalWidth', reason: 'Non utilisé' },
+							{ name: 'hideErrorMessage', reason: 'Géré par la validation' },
+							{ name: 'horizontal', reason: 'Non utilisé' },
+							{ name: 'labelMaxWidth', reason: 'Non utilisé' },
+							{ name: 'labelMinWidth', reason: 'Non utilisé' },
+							{ name: 'maxDate', reason: 'Non utilisé' },
+							{ name: 'maxNumber', reason: 'Non utilisé' },
+							{ name: 'minDate', reason: 'Non utilisé' },
+							{ name: 'minNumber', reason: 'Non utilisé' },
+							{ name: 'modelValue', reason: 'Non utilisé' },
+							{ name: 'rules', reason: 'Géré par la validation' },
+							{ name: 'type', reason: 'Non utilisé' },
+							{ name: 'validateOn', reason: 'Géré par la validation' },
+						],
 					},
 					{
 						title: 'AmeliproTileBtn',
@@ -659,6 +843,11 @@ export const AmeliproComponents: StoryObj = {
 							name: 'AmeliproCustomSelector',
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-custom-selector',
 						},
+						props: [
+							{ name: 'labelDescription', reason: 'Géré par Items' },
+							{ name: 'labelMarginBottom', reason: 'Géré par Items' },
+							{ name: 'uniqueId', reason: 'Géré par Items' },
+						],
 					},
 					{
 						title: 'AmeliproAccordion',
@@ -731,6 +920,16 @@ export const AmeliproComponents: StoryObj = {
 							name: 'AmeliproAccordionGroup',
 							url: 'https://p2-design-system-dev.app.ge-4.digital.ramage/composants/amelipro-accordion-group',
 						},
+						props: [
+							{ name: 'defaultItemOpened', reason: 'Géré par le v-model' },
+							{ name: 'groupBorderColor', reason: 'Géré par vuetifyOptions' },
+							{ name: 'groupBordered', reason: 'Géré par vuetifyOptions' },
+							{ name: 'groupColor', reason: 'Géré par vuetifyOptions' },
+							{ name: 'groupTitleLevel', reason: 'Géré par vuetifyOptions' },
+							{ name: 'groupTitleUppercase', reason: 'Géré par vuetifyOptions' },
+							{ name: 'headerRightWidth', reason: 'Géré par vuetifyOptions' },
+							{ name: 'hideSeparator', reason: 'Géré par vuetifyOptions' },
+						],
 					},
 					{
 						title: 'AmeliproCarousel',
@@ -896,7 +1095,18 @@ export const AmeliproComponents: StoryObj = {
 						)
 				})
 
-				return { filteredComponents, apComponents, searchTerm, getComponentUrl, systemLabel }
+				const headers = ref([
+					{
+						title: 'Props',
+						key: 'name',
+					},
+					{
+						title: 'Raison',
+						key: 'reason',
+					},
+				])
+
+				return { filteredComponents, apComponents, searchTerm, getComponentUrl, systemLabel, headers }
 			},
 
 			template: `
@@ -960,6 +1170,20 @@ export const AmeliproComponents: StoryObj = {
                           Documentation du composant Amelipro {{ component.amelipro.name }}
                         </a>
                       </p>
+						<template v-if="component.props?.length">
+							<VDivider class="my-4"/>
+							<h4 class="mb-3">
+								Props non migrés
+							</h4>
+							<SyTable
+								:items="component.props"
+								:headers="headers"
+								suffix="table"
+								hide-default-footer
+								density="compact"
+								
+							/>
+						</template>
                     </template>
 
                   </VExpansionPanelText>

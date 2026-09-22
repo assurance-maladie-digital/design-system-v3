@@ -178,7 +178,7 @@ const meta = {
 		},
 		'isBirthDate': {
 			control: 'boolean',
-			description: 'Active le mode date de naissance qui commence la navigation du calendrier à l\'année en cours moins 30 ans',
+			description: 'Active le mode date de naissance qui ouvre le calendrier sur la vue de sélection d\'année (au lieu de la vue mensuelle), permettant une navigation année → mois → jour',
 			defaultValue: false,
 		},
 		'showWeekNumber': {
@@ -365,6 +365,11 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Utilisation basique du DatePicker en mode combiné, permettant à la fois la saisie manuelle et la sélection via calendrier.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -372,8 +377,8 @@ export const Default: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Sélectionner une date"
-						placeholder="Sélectionner une date"
+						label="Date (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						useCombinedMode
 						format="DD/MM/YYYY"
 					/>
@@ -394,8 +399,8 @@ export const Default: Story = {
 		],
 	},
 	args: {
-		'label': 'Sélectionner une date',
-		'placeholder': 'Sélectionner une date',
+		'label': 'Date (JJ/MM/AAAA)',
+		'placeholder': 'JJ/MM/AAAA',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
 		'showWeekNumber': false,
@@ -428,6 +433,7 @@ export const Default: Story = {
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
+                <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
               </div>
             `,
 		}
@@ -436,23 +442,28 @@ export const Default: Story = {
 
 export const Required: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Champ obligatoire avec et sans astérisque, et comparaison de `isValidateOnBlur` à true (par défaut) et false.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `
 				<template>
 					<DatePicker
-						v-model="date"
-						label="Sélectionner une date"
-						placeholder="Sélectionner une date"
+						v-model="date1"
+						label="Date (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						useCombinedMode
 						required
 						format="DD/MM/YYYY"
-					/>
+					/>	
 					<DatePicker
-						v-model="date"
-						label="Sélectionner une date"
-						placeholder="Sélectionner une date"
+						v-model="date2"
+						label="Date (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						useCombinedMode
 						required
 						displayAsterisk
@@ -467,15 +478,16 @@ export const Required: Story = {
 				<script setup lang="ts">
 					import { DatePicker } from '@cnamts/synapse'
 					import { ref } from 'vue'
-					
-					const date = ref('')
+
+					const date1 = ref('')
+					const date2 = ref('')
 				</script>
 				`,
 			},
 		],
 	},
 	args: {
-		'label': 'Sélectionner une date',
+		'label': 'Date (JJ/MM/AAAA)',
 		'format': 'DD/MM/YYYY',
 		'isBirthDate': false,
 		'showWeekNumber': false,
@@ -502,15 +514,17 @@ export const Required: Story = {
 		return {
 			components: { DatePicker },
 			setup() {
-				const value = ref('')
-				return { args, value }
+				const value1 = ref('')
+				const value2 = ref('')
+				return { args, value1, value2 }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
-				<h4 class="mb-4">Sans astérisque :</h4>
-                <DatePicker v-bind="args" v-model="value"/>
-				<h4 class="mb-4">Avec astérisque :</h4>
-				<DatePicker v-bind="args" displayAsterisk v-model="value"/>
+				<h4 class="mb-4">Sans astérisque & isValidateOnBlur à true (par defaut):</h4>
+                <DatePicker v-bind="args" v-model="value1"/>
+				<h4 class="mb-4">Avec astérisque & isValidateOnBlur à false:</h4>
+				<DatePicker v-bind="args" displayAsterisk  v-model="value2" :isValidateOnBlur='false'/>
+				<div class="mt-4 text-body-2">Valeur 1 : {{ value1 }} | Valeur 2 : {{ value2 }}</div>
               </div>
             `,
 		}
@@ -519,6 +533,11 @@ export const Required: Story = {
 
 export const DateRange: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Sélection d\'une plage de dates (date début - date fin) avec `displayRange`. Le v-model retourne un tableau de deux dates.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -526,8 +545,8 @@ export const DateRange: Story = {
 				<template>
 					<DatePicker
 						v-model="dateRange"
-						label="Sélectionner une période"
-						placeholder="Sélectionner une période"
+						label="Période (JJ/MM/AAAA - JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA - JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						display-range
 						use-combined-mode
@@ -549,8 +568,8 @@ export const DateRange: Story = {
 		],
 	},
 	args: {
-		'label': 'Sélectionner une période',
-		'placeholder': 'Sélectionner une période',
+		'label': 'Période (JJ/MM/AAAA - JJ/MM/AAAA)',
+		'placeholder': 'JJ/MM/AAAA - JJ/MM/AAAA',
 		'format': 'DD/MM/YYYY',
 		'dateFormatReturn': '',
 		'isBirthDate': false,
@@ -575,12 +594,13 @@ export const DateRange: Story = {
 		return {
 			components: { DatePicker },
 			setup() {
-				const value = ['2023-01-15', '2023-01-20']
+				const value = ref(['2023-01-15', '2023-01-20'] as [string, string] | null)
 				return { args, value }
 			},
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
+                <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
               </div>
             `,
 		}
@@ -589,6 +609,11 @@ export const DateRange: Story = {
 
 export const BirthDate: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Mode date de naissance avec `isBirthDate`, ouvrant le calendrier sur la vue année pour une navigation année → mois → jour.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -596,8 +621,8 @@ export const BirthDate: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date de naissance"
-						placeholder="Date de naissance"
+						label="Date de naissance (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						isBirthDate
 						useCombinedMode
@@ -619,8 +644,8 @@ export const BirthDate: Story = {
 		],
 	},
 	args: {
-		label: 'Date de naissance',
-		placeholder: 'Date de naissance',
+		label: 'Date de naissance (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		isBirthDate: true,
 		showWeekNumber: false,
@@ -645,243 +670,7 @@ export const BirthDate: Story = {
 			template: `
               <div class="d-flex flex-wrap align-center pa-4">
                 <DatePicker v-bind="args" v-model="value"/>
-              </div>
-            `,
-		}
-	},
-}
-
-export const WithValidation: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<DatePicker
-						v-model="date"
-						label="Date requise"
-						placeholder="Date requise"
-						format="DD/MM/YYYY"
-						required
-						:customRules="customRules"
-						useCombinedMode
-					/>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const date = ref('')
-					const customRules = [
-						{
-							type: 'custom',
-							options: {
-								validate: (value) => {
-									if (value && new Date(value as string).getFullYear() === 2024) {
-										return false
-									}
-									return true
-								},
-								message: 'Les dates en 2024 ne sont pas autorisées',
-								successMessage: 'Les dates hors 2024 sont autorisées',
-								fieldIdentifier: 'date',
-							},
-						},
-					]
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		label: 'Date requise',
-		placeholder: 'Date requise',
-		format: 'DD/MM/YYYY',
-		required: true,
-		useCombinedMode: true,
-		customRules: [
-			{
-				type: 'custom',
-				options: {
-					validate: (value: unknown) => {
-						if (value && new Date(value as string).getFullYear() === 2024) {
-							return false
-						}
-						return true
-					},
-					message: 'Les dates en 2024 ne sont pas autorisées',
-					successMessage: 'Les dates hors 2024 sont autorisées',
-					fieldIdentifier: 'date',
-				},
-			},
-		],
-	},
-	render: (args) => {
-		return {
-			components: { DatePicker },
-			setup() {
-				const value = ref('')
-				return { args, value }
-			},
-			template: `
-              <div class="d-flex flex-wrap align-center pa-4">
-                <DatePicker v-bind="args" v-model="value"/>
-              </div>
-            `,
-		}
-	},
-}
-
-export const DifferentFormats: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<div class="d-flex flex-column">
-						<DatePicker
-							v-model="europeanDate"
-							label="Format européen"
-							placeholder="Format européen"
-							format="DD/MM/YYYY"
-							class="mb-4"
-							useCombinedMode
-						/>
-						<DatePicker
-							v-model="americanDate"
-							label="Format américain"
-							placeholder="Format américain"
-							format="MM/DD/YYYY"
-							class="mb-4"
-							useCombinedMode
-						/>
-						<DatePicker
-							v-model="isoDate"
-							label="Format ISO"
-							placeholder="Format ISO"
-							format="YYYY-MM-DD"
-							useCombinedMode
-						/>
-					</div>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const europeanDate = ref('')
-					const americanDate = ref('')
-					const isoDate = ref('')
-				</script>
-				`,
-			},
-		],
-	},
-	render: () => {
-		return {
-			components: { DatePicker },
-			setup() {
-				const europeanDate = ref('')
-				const americanDate = ref('')
-				const isoDate = ref('')
-
-				return { europeanDate, americanDate, isoDate }
-			},
-			template: `
-              <div class="d-flex flex-column pa-4">
-                <DatePicker
-                  v-model="europeanDate"
-				  label="Format européen"
-                  placeholder="Format européen"
-                  format="DD/MM/YYYY"
-                  class="mb-4"
-				  useCombinedMode
-                />
-                <DatePicker
-                  v-model="americanDate"
-				  label="Format américain"
-                  placeholder="Format américain"
-                  format="MM/DD/YYYY"
-                  class="mb-4"
-				  useCombinedMode
-                />
-                <DatePicker
-                  v-model="isoDate"
-				  label="Format ISO"
-                  placeholder="Format ISO"
-                  format="YYYY-MM-DD"
-				  useCombinedMode
-                />
-              </div>
-            `,
-		}
-	},
-}
-
-export const WithDateFormatReturn: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<div class="d-flex flex-column">
-						<DatePicker
-							v-model="date"
-							label="Format d'affichage: JJ/MM/AAAA, Format de retour: AAAA-MM-JJ"
-							placeholder="Format d'affichage: JJ/MM/AAAA, Format de retour: AAAA-MM-JJ"
-							format="DD/MM/YYYY"
-							dateFormatReturn="YYYY-MM-DD"
-							class="mb-4"
-							useCombinedMode
-						/>
-						<div>Valeur du modèle: {{ date }}</div>
-					</div>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const date = ref('')
-				</script>
-				`,
-			},
-		],
-	},
-	render: () => {
-		return {
-			components: { DatePicker },
-			setup() {
-				const date = ref('')
-				return { date }
-			},
-			template: `
-              <div class="d-flex flex-column pa-4">
-                <DatePicker
-                  v-model="date"
-				  label="Format d'affichage: JJ/MM/AAAA, Format de retour: AAAA-MM-JJ"
-                  placeholder="Format d'affichage: JJ/MM/AAAA, Format de retour: AAAA-MM-JJ"
-                  format="DD/MM/YYYY"
-                  dateFormatReturn="YYYY-MM-DD"
-				  useCombinedMode
-                />
-                <div>Valeur du modèle: {{ date }}</div>
+                <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
               </div>
             `,
 		}
@@ -890,6 +679,11 @@ export const WithDateFormatReturn: Story = {
 
 export const DisablePickerInteraction: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Avec `noCalendar: true`, le calendrier est désactivé. Seule la saisie manuelle avec formatage automatique est disponible.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -897,8 +691,8 @@ export const DisablePickerInteraction: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Saisie manuelle uniquement"
-						placeholder="Saisie manuelle uniquement"
+						label="Date (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						noCalendar
@@ -920,8 +714,8 @@ export const DisablePickerInteraction: Story = {
 		],
 	},
 	args: {
-		label: 'Saisie manuelle uniquement',
-		placeholder: 'Saisie manuelle uniquement',
+		label: 'Date (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		displayIcon: true,
 		useCombinedMode: true,
@@ -947,119 +741,13 @@ export const DisablePickerInteraction: Story = {
 	},
 }
 
-export const AutoFormattingInput: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<div class="d-flex flex-column">
-						<DatePicker
-							v-model="date"
-							label="Saisie avec formatage automatique"
-							placeholder="Saisie avec formatage automatique"
-							format="DD-MM-YYYY"
-							useCombinedMode
-						/>
-					</div>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const date = ref('')
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		label: 'Saisie avec formatage automatique',
-		placeholder: 'Saisie avec formatage automatique',
-		format: 'DD-MM-YYYY',
-		useCombinedMode: true,
-	},
-	render: (args) => {
-		return {
-			components: { DatePicker },
-			setup() {
-				const value = ref('')
-				return { args, value }
-			},
-			template: `
-              <div class="d-flex flex-column pa-4">
-                <div class="mb-2">Essayez de saisir des chiffres - les séparateurs seront ajoutés automatiquement</div>
-                <DatePicker v-bind="args" v-model="value"/>
-              </div>
-            `,
-		}
-	},
-}
-
-export const CustomDateFormat: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<DatePicker
-						v-model="date"
-						label="Format AAAA.MM.JJ"
-						placeholder="Format AAAA.MM.JJ"
-						format="AAAA.MM.JJ"
-						useCombinedMode
-					/>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { DatePicker } from '@cnamts/synapse'
-					import { ref } from 'vue'
-					
-					const date = ref('')
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		label: 'Format AAAA.MM.JJ',
-		placeholder: 'Format AAAA.MM.JJ',
-		format: 'YYYY.MM.DD',
-		useCombinedMode: true,
-	},
-	render: (args) => {
-		return {
-			components: { DatePicker },
-			setup() {
-				const value = ref('')
-				return { args, value }
-			},
-			template: `
-              <div class="d-flex flex-wrap align-center pa-4">
-                <DatePicker v-bind="args" v-model="value"/>
-                <div class="ml-4 mt-4">
-                  <p>Valeur actuelle: {{ value }}</p>
-                  <p>Le séparateur "." est automatiquement ajouté pendant la saisie.</p>
-                </div>
-              </div>
-            `,
-		}
-	},
-}
-
 export const ReadonlyMode: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Mode lecture seule avec `readonly`, empêchant toute modification de la valeur par l\'utilisateur.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1067,8 +755,8 @@ export const ReadonlyMode: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date en lecture seule"
-						placeholder="Date en lecture seule"
+						label="Date en lecture seule (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						readonly
@@ -1095,8 +783,8 @@ export const ReadonlyMode: Story = {
 		],
 	},
 	args: {
-		label: 'Date en lecture seule',
-		placeholder: 'Date en lecture seule',
+		label: 'Date en lecture seule (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
 		readonly: true,
@@ -1128,6 +816,11 @@ export const ReadonlyMode: Story = {
 
 export const AppendIcon: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Positionnement de l\'icône calendrier à la fin du champ avec `displayAppendIcon` et `displayPrependIcon: false`.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1135,8 +828,8 @@ export const AppendIcon: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date avec icône à la fin"
-						placeholder="Date avec icône à la fin"
+						label="Date avec icône à la fin (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						:displayPrependIcon="false"
@@ -1159,8 +852,8 @@ export const AppendIcon: Story = {
 		],
 	},
 	args: {
-		label: 'Date avec icône à la fin',
-		placeholder: 'Date avec icône à la fin',
+		label: 'Date avec icône à la fin (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
 		displayPrependIcon: false,
@@ -1188,6 +881,11 @@ export const AppendIcon: Story = {
 
 export const WithCustomPeriod: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Période personnalisée avec `period` (min/max) et `customRules` pour valider les saisies manuelles hors période.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1195,8 +893,8 @@ export const WithCustomPeriod: Story = {
 				<template>
 					<DatePicker
 						v-model="date"
-						label="Date avec icône à la fin"
-						placeholder="Date avec icône à la fin"
+						label="Date (JJ/MM/AAAA)"
+						placeholder="JJ/MM/AAAA"
 						format="DD/MM/YYYY"
 						useCombinedMode
 						:period="{
@@ -1245,8 +943,8 @@ export const WithCustomPeriod: Story = {
 		],
 	},
 	args: {
-		label: 'Date avec icône à la fin',
-		placeholder: 'Date avec icône à la fin',
+		label: 'Date (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		useCombinedMode: true,
 		period: {
@@ -1298,442 +996,4 @@ export const WithCustomPeriod: Story = {
             `,
 		}
 	},
-}
-
-export const WithTextFieldActivator: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<DatePicker
-						v-model="date"
-						label="Cliquez sur le champ pour ouvrir"
-						placeholder="Cliquez sur le champ pour ouvrir"
-						format="DD/MM/YYYY"
-						useCombinedMode
-						textFieldActivator
-					/>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { DatePicker } from '@cnamts/synapse'
-					import { ref } from 'vue'
-					
-					const date = ref('')
-				</script>
-				`,
-			},
-		],
-	},
-	args: {
-		label: 'Cliquez sur le champ pour ouvrir',
-		placeholder: 'Cliquez sur le champ pour ouvrir',
-		format: 'DD/MM/YYYY',
-		useCombinedMode: true,
-		textFieldActivator: true,
-	},
-	render: (args) => {
-		return {
-			components: { DatePicker },
-			setup() {
-				const value = ref('')
-				return { args, value }
-			},
-			template: `
-              <div class="d-flex flex-wrap align-center pa-4">
-                <DatePicker v-bind="args" v-model="value"/>
-                <div class="ml-4 mt-4">
-                  <p>Valeur actuelle: {{ value }}</p>
-                  <p>Le calendrier s'ouvre au clic sur l'ensemble du champ.</p>
-                </div>
-              </div>
-            `,
-		}
-	},
-}
-
-export const AutoClampFeature: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<div class="d-flex flex-column">
-						<h3>Démonstration de l'auto clamp avec différents formats</h3>
-						
-						<h4 class="mt-4">Format JJ/MM/AAAA (séparateur /)</h4>
-						<DatePicker
-							v-model="dateSlash"
-							label="Saisie avec auto clamp - séparateur /"
-							placeholder="Saisie avec auto clamp - séparateur /"
-							format="DD/MM/YYYY"
-							useCombinedMode
-							autoClamp
-						/>
-						
-						<h4 class="mt-4">Format JJ-MM-AAAA (séparateur -)</h4>
-						<DatePicker
-							v-model="dateDash"
-							label="Saisie avec auto clamp - séparateur -"
-							placeholder="Saisie avec auto clamp - séparateur -"
-							format="DD-MM-YYYY"
-							useCombinedMode
-							autoClamp
-						/>
-						
-						<h4 class="mt-4">Format AAAA.MM.JJ (séparateur .)</h4>
-						<DatePicker
-							v-model="dateDot"
-							label="Saisie avec auto clamp - séparateur ."
-							placeholder="Saisie avec auto clamp - séparateur ."
-							format="YYYY.MM.DD"
-							useCombinedMode
-							autoClamp
-						/>
-					</div>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const dateSlash = ref('')
-					const dateDash = ref('')
-					const dateDot = ref('')
-				</script>
-				`,
-			},
-		],
-	},
-	render: () => {
-		return {
-			components: { DatePicker },
-			setup() {
-				const dateSlash = ref('')
-				const dateDash = ref('')
-				const dateDot = ref('')
-				return { dateSlash, dateDash, dateDot }
-			},
-			template: `
-              <div class="d-flex flex-column pa-4">
-                <h3>Démonstration de l'auto clamp avec différents formats</h3>
-                <div class="mb-4 mt-2">Saisissez uniquement des chiffres - les séparateurs seront ajoutés automatiquement selon le format défini</div>
-                
-                <h4 class="mb-2">Format JJ/MM/AAAA (séparateur /)</h4>
-                <DatePicker
-                  v-model="dateSlash"
-				  label="Saisie avec auto clamp - séparateur /"
-                  placeholder="Saisie avec auto clamp - séparateur /"
-                  format="DD/MM/YYYY"
-                  useCombinedMode
-                  autoClamp
-                />
-                <div class="caption mb-4">Valeur actuelle: {{ dateSlash || 'aucune date saisie' }}</div>
-                
-                <h4 class="mb-2">Format JJ-MM-AAAA (séparateur -)</h4>
-                <DatePicker
-                  v-model="dateDash"
-				  label="Saisie avec auto clamp - séparateur -"
-                  placeholder="Saisie avec auto clamp - séparateur -"
-                  format="DD-MM-YYYY"
-                  useCombinedMode
-                  autoClamp
-                />
-                <div class="caption mb-4">Valeur actuelle: {{ dateDash || 'aucune date saisie' }}</div>
-                
-                <h4 class="mb-2">Format AAAA.MM.JJ (séparateur .)</h4>
-                <DatePicker
-                  v-model="dateDot"
-				  label="Saisie avec auto clamp - séparateur ."
-                  placeholder="Saisie avec auto clamp - séparateur ."
-                  format="YYYY.MM.DD"
-                  useCombinedMode
-                  autoClamp
-                />
-                <div class="caption mb-4">Valeur actuelle: {{ dateDot || 'aucune date saisie' }}</div>
-              </div>
-            `,
-		}
-	},
-}
-
-export const WithFormSubmission: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-				<template>
-					<form @submit.prevent="submitForm">
-						<DatePicker
-							ref="datePicker"
-							v-model="date"
-							label="Date requise"
-							placeholder="Date requise"
-							format="DD/MM/YYYY"
-							required
-							class="mb-4"
-							useCombinedMode
-						/>
-						<v-btn type="submit" color="primary">Soumettre</v-btn>
-					</form>
-					<div v-if="submitted" class="mt-4">
-						Formulaire soumis avec la date: {{ date }}
-					</div>
-				</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { DatePicker } from '@cnamts/synapse'
-					
-					const date = ref('')
-					const datePicker = ref(null)
-					const submitted = ref(false)
-					
-					const submitForm = () => {
-						const isValid = datePicker.value.validateOnSubmit()
-						if (isValid) {
-							submitted.value = true
-						}
-					}
-				</script>
-				`,
-			},
-		],
-	},
-	render: () => {
-		return {
-			components: { DatePicker },
-			setup() {
-				const date = ref('')
-				// Définir le type correct pour la référence datePicker
-				const datePicker = ref<InstanceType<typeof DatePicker> | null>(null)
-				const submitted = ref(false)
-
-				const submitForm = async () => {
-					if (!datePicker.value) return
-					const isValid = await datePicker.value.validateOnSubmit()
-					if (isValid) {
-						submitted.value = true
-					}
-					else {
-						submitted.value = false
-					}
-				}
-
-				return { date, datePicker, submitted, submitForm }
-			},
-			template: `
-              <div class="pa-4">
-                <form @submit.prevent="submitForm">
-                  <DatePicker
-                    ref="datePicker"
-                    v-model="date"
-					label="Date requise"
-                    placeholder="Date requise"
-                    format="DD/MM/YYYY"
-                    required
-					class="mb-4"
-					useCombinedMode
-                  />
-                  <v-btn type="submit" color="primary">Soumettre</v-btn>
-                </form>
-                <div v-if="submitted" class="mt-4 success--text">
-                  Formulaire soumis avec la date: {{ date }}
-                </div>
-              </div>
-            `,
-		}
-	},
-}
-
-export const CustomRules: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-					<template>
-						<DatePicker
-							v-model="date"
-							label="Date de rendez-vous"
-							placeholder="Date requise"
-							format="DD/MM/YYYY"
-							required
-							class="mb-4"
-							useCombinedMode
-							:customRules="customRules"
-						/>
-					</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-					<script setup lang="ts">
-						import { DatePicker } from '@cnamts/synapse'
-						import { ref } from 'vue'
-						
-						const date = ref('')
-
-						const customRules = [
-						{
-							type: 'notBeforeToday',
-							options: {
-								message: 'La date ne peut pas être antérieure à aujourd'hui',
-							},
-					},
-				]
-					</script>
-				`,
-			},
-		],
-	},
-	render: () => {
-		return {
-			components: { DatePicker },
-			setup() {
-				const customRules = [
-					{
-						type: 'notBeforeToday',
-						options: {
-							message: 'La date ne peut pas être antérieure à aujourd\'hui',
-						},
-					},
-				]
-
-				// Valeur du DatePicker
-				const date = ref(null)
-
-				return { date, customRules }
-			},
-			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-					<DatePicker
-						v-model="date"
-						:custom-rules="customRules"
-						required
-						use-combined-mode
-						label="Date de rendez-vous"
-				placeholder="JJ/MM/AAAA"
-			/>
-				</div>
-			`,
-		}
-	},
-}
-
-export const CustomWarningRules: Story = {
-	parameters: {
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `
-					<template>
-						<DatePicker
-							v-model="date"
-							label="Date requise"
-							placeholder="Date requise"
-							format="DD/MM/YYYY"
-							required
-							class="mb-4"
-							useCombinedMode
-							:customWarningRules="customWarningRules"
-						/>
-					</template>
-				`,
-			},
-			{
-				name: 'Script',
-				code: `
-					<script setup lang="ts">
-						import { DatePicker } from '@cnamts/synapse'
-						import { ref } from 'vue'
-						
-						const date = ref('')
-						const customWarningRules = [
-							{
-								type: 'custom',
-								options: {
-									validate: (value: string | Date) => {
-										// check if manual entry
-										if (typeof value === 'string') {
-											return !value.includes('2025')
-										} else {
-											// check if DatePicker selection
-											return !value.getFullYear().toString().includes('2025')
-										}
-									},
-									warningMessage: 'Les dates en 2025 ne sont pas autorisées',
-									successMessage: 'Date hors 2025',
-									fieldIdentifier: 'date',
-								},
-							},
-						]
-					</script>
-				`,
-			},
-		],
-	},
-	render: () => {
-		return {
-			components: { DatePicker },
-			setup() {
-				const customWarningRules = [
-					{
-						type: 'custom',
-						options: {
-							validate: (value: string | Date) => {
-								// check typeof value
-								if (typeof value === 'string') {
-									return !value.includes('2025')
-								}
-								else {
-									// check if value is a Date
-									return !value.getFullYear().toString().includes('2025')
-								}
-							},
-							warningMessage: 'Les dates en 2025 ne sont pas autorisées',
-							successMessage: 'Date hors 2025',
-							fieldIdentifier: 'date',
-							isWarning: true,
-						},
-					},
-				]
-
-				// Valeur du DatePicker
-				const date = ref('')
-
-				return { date, customWarningRules }
-			},
-			template: `
-				<div class="d-flex flex-wrap align-center pa-4">
-					<DatePicker
-						v-model="date"
-						:custom-warning-rules="customWarningRules"
-						required
-						use-combined-mode
-						label="Date de rendez-vous"
-						placeholder="JJ/MM/AAAA"
-				/>
-				</div>
-			`,
-		}
-	},
-
 }

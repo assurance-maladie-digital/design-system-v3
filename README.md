@@ -30,9 +30,7 @@ Pour utiliser ce Design System, vous devez avoir les versions suivantes install�
 
 ### Starter kit
 
-Pour utiliser ce package, vous pouvez installer le starter kit suivant :
-
--   [Starter Kit Synapse](https://gitlab.cnqd.cnamts.fr/human/developpement/sksn_x)
+Pour utiliser ce package, vous pouvez récupérer le Starter Kit (SKSN).
 
 ### Librairie uniquement
 

@@ -12,26 +12,29 @@ const PROP_NAME = 'test'
 const ACCEPTED_VALUES = ['value1', 'value2']
 
 describe('propValidator', () => {
-	let consoleErrorSpy: unknown
+	let consoleWarnSpy: ReturnType<typeof vi.spyOn>
 
 	beforeEach(() => {
-		consoleErrorSpy = vi
-			.spyOn(console, 'error')
+		consoleWarnSpy = vi
+			.spyOn(console, 'warn')
 			.mockImplementation(() => {})
 	})
 
-	it('does not log anything if the prop is valid', () => {
+	it('returns true and does not warn if the prop is valid', () => {
 		const result = propValidator(PROP_NAME, ACCEPTED_VALUES, 'value1')
 
-		expect(result).toBeTruthy()
-		expect(consoleErrorSpy).not.toHaveBeenCalled()
+		expect(result).toBe(true)
+		expect(consoleWarnSpy).not.toHaveBeenCalled()
 	})
 
-	it('logs an error if the prop is not valid', () => {
+	it('returns false and warns if the prop is not valid', () => {
 		const result = propValidator(PROP_NAME, ACCEPTED_VALUES, 'wrongValue')
 
-		expect(result).toBeTruthy()
-		expect(consoleErrorSpy).toHaveBeenCalled()
+		expect(result).toBe(false)
+		expect(consoleWarnSpy).toHaveBeenCalledTimes(1)
+		expect(consoleWarnSpy).toHaveBeenCalledWith(
+			expect.stringContaining('Invalid value for the `test` prop'),
+		)
 	})
 
 	afterEach(() => {

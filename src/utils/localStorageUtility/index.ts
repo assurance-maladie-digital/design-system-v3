@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /** @see https://developer.mozilla.org/en-US/docs/Web/API/Storage for native specifications */
 
 interface ControlItem {
@@ -65,7 +64,7 @@ export class LocalStorageUtility {
 		return this.getAllKeys()?.[n]
 	}
 
-	getItem<T = any>(key: string): T | null {
+	getItem<T = unknown>(key: string): T | null {
 		const controlItem = this.getControlItem()
 
 		if (!this.localStorageSupported && !controlItem) {
@@ -82,7 +81,7 @@ export class LocalStorageUtility {
 
 		this.setControlItem()
 
-		return this.get(this.prefix + key)
+		return this.get(this.prefix + key) as T | null
 	}
 
 	setItem<T>(key: string, value: T): void {
@@ -106,8 +105,8 @@ export class LocalStorageUtility {
 		})
 	}
 
-	getAll(): any[] {
-		const items = [] as any[]
+	getAll(): unknown[] {
+		const items = [] as unknown[]
 
 		this.filterStorage((storageKey) => {
 			items.push(this.get(storageKey))
@@ -142,12 +141,12 @@ export class LocalStorageUtility {
 	}
 
 	/** Wrapper for localStorage.getItem that parses the result */
-	private get(key: string): any | null {
+	private get(key: string): unknown | null {
 		return JSON.parse(localStorage.getItem(key) || JSON.stringify(null))
 	}
 
 	/** Wrapper for localStorage.setItem that stringify the value */
-	private set(key: string, value: any): void {
+	private set(key: string, value: unknown): void {
 		localStorage.setItem(key, JSON.stringify(value))
 	}
 
@@ -174,7 +173,7 @@ export class LocalStorageUtility {
 
 	private getControlItem(): ControlItem | null {
 		if (this.localStorageSupported) {
-			return this.get(this.CONTROL_ITEM_KEY)
+			return this.get(this.CONTROL_ITEM_KEY) as ControlItem | null
 		}
 
 		return null

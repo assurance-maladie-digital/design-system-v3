@@ -81,6 +81,7 @@ const meta = {
 	icon: Record<string, any>,
 	logoutListItem: Record<string, any>,
 	logoutIcon: Record<string, any>,
+	identityListItem: Record<string, any>,
 }`,
 				},
 				defaultValue: {
@@ -108,6 +109,7 @@ const meta = {
 		color: 'primary',
 		class: 'mr-4',
 	},
+	identityListItem: {},
 }`,
 				},
 			},
@@ -800,11 +802,11 @@ export const WithPsInfo: Story = {
     const lastConnexion = ref('01/01/2024')
 
     const handleAccount = () => {
-        console.log('Mon Compte clicked')
+        // Navigation vers le compte utilisateur
     }
 
     const handleLogout = () => {
-        console.log('Déconnexion clicked')
+        // Déconnexion de l'utilisateur
     }
 </script>`,
 			},
@@ -831,11 +833,11 @@ export const WithPsInfo: Story = {
 				}
 
 				const handleAccount = () => {
-					console.log('Mon Compte clicked')
+					// Navigation vers le compte utilisateur
 				}
 
 				const handleLogout = () => {
-					console.log('Déconnexion clicked')
+					// Déconnexion de l'utilisateur
 				}
 
 				return { args, userDetails, handleAccount, handleLogout }
@@ -871,7 +873,7 @@ export const WithPsInfo: Story = {
             </div>
 
             <div class="d-flex bg-primary-lighten-3" style="border-bottom-left-radius: 4px; border-bottom-right-radius: 4px;">
-                <v-btn
+                <VBtn
                     class="text-none font-weight-bold flex-grow-1"
                     color="primary"
                     variant="text"
@@ -879,9 +881,9 @@ export const WithPsInfo: Story = {
                     @click="handleAccount"
                 >
                     Mon Compte
-                </v-btn>
+                </VBtn>
 
-                <v-btn
+                <VBtn
                     class="text-none font-weight-bold flex-grow-1"
                     color="primary"
                     variant="text"
@@ -889,7 +891,7 @@ export const WithPsInfo: Story = {
                     @click="handleLogout"
                 >
                     Déconnexion
-                </v-btn>
+                </VBtn>
             </div>
         </template>
     </UserMenuBtn>

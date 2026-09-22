@@ -184,35 +184,35 @@
 </script>
 
 <template>
-	<v-container fluid>
-		<v-card
+	<VContainer fluid>
+		<VCard
 			flat
 			class="mt-4"
 		>
-			<v-card-text class="d-flex justify-space-between align-center px-4 py-2">
+			<VCardText class="d-flex justify-space-between align-center px-4 py-2">
 				<SyHeading
 					class="text-h6 text-primary"
 					:level="3"
 				>
 					Filtres
 				</SyHeading>
-				<v-btn
+				<VBtn
 					variant="text"
 					:aria-label="showFilters ? 'Masquer les filtres' : 'Afficher les filtres'"
 					:icon="showFilters ? mdiChevronUpIcon : mdiChevronDownIcon"
 					@click="showFilters = !showFilters"
 				/>
-			</v-card-text>
+			</VCardText>
 
-			<v-expand-transition>
+			<VExpandTransition>
 				<div v-show="showFilters">
-					<v-card-text class="pa-2">
-						<v-row class="mb-1">
-							<v-col
+					<VCardText class="pa-2">
+						<VRow class="mb-1">
+							<VCol
 								cols="12"
 								md="6"
 							>
-								<v-select
+								<VSelect
 									v-model="selectedCategory"
 									:items="categories"
 									label="Catégorie"
@@ -223,12 +223,12 @@
 									item-value="value"
 									color="primary"
 								/>
-							</v-col>
-							<v-col
+							</VCol>
+							<VCol
 								cols="12"
 								md="6"
 							>
-								<v-select
+								<VSelect
 									v-model="selectedTheme"
 									:items="themes"
 									label="Sélectionnez un thème"
@@ -241,14 +241,14 @@
 									:disabled="!hasDataForCategory"
 									placeholder="Sélectionnez un thème"
 								/>
-							</v-col>
-						</v-row>
+							</VCol>
+						</VRow>
 
-						<v-row class="mb-1">
-							<v-col
+						<VRow class="mb-1">
+							<VCol
 								cols="12"
 							>
-								<v-text-field
+								<VTextField
 									v-model="search"
 									label="Rechercher"
 									variant="outlined"
@@ -260,39 +260,39 @@
 									placeholder="Rechercher par critères, actions ou numéro de règle ou de thème"
 									:disabled="!hasDataForCategory"
 								/>
-							</v-col>
-						</v-row>
+							</VCol>
+						</VRow>
 
-						<v-row>
-							<v-col
+						<VRow>
+							<VCol
 								cols="12"
 								class="d-flex justify-end"
 							>
-								<v-btn
+								<VBtn
 									:prepend-icon="mdiRefreshIcon"
 									variant="text"
 									color="primary"
 									@click="resetFilters"
 								>
 									Réinitialiser
-								</v-btn>
-							</v-col>
-						</v-row>
-					</v-card-text>
+								</VBtn>
+							</VCol>
+						</VRow>
+					</VCardText>
 				</div>
-			</v-expand-transition>
+			</VExpandTransition>
 
-			<v-divider />
+			<VDivider />
 
-			<v-row
+			<VRow
 				v-if="!hasDataForCategory"
 				class="pa-4"
 			>
-				<v-col
+				<VCol
 					cols="12"
 					md="6"
 				>
-					<v-alert
+					<VAlert
 						type="info"
 						title="Contenu à venir"
 						text="Les règles d'éco-conception pour cette catégorie seront disponibles prochainement."
@@ -300,108 +300,108 @@
 						variant="tonal"
 						class="mb-4"
 					/>
-				</v-col>
-			</v-row>
+				</VCol>
+			</VRow>
 
-			<v-row
+			<VRow
 				v-else
 				class="pa-4"
 			>
-				<v-col
+				<VCol
 					v-if="filteredRules.length === 0"
 					cols="12"
 				>
-					<v-alert
+					<VAlert
 						type="info"
 						title="Aucun résultat"
 						text="Aucune règle ne correspond à vos critères de recherche."
 						color="info"
 						variant="tonal"
 					/>
-				</v-col>
+				</VCol>
 
 				<template v-else>
-					<v-col
+					<VCol
 						v-for="rule in paginatedRules"
 						:key="rule.numero"
 						cols="12"
 						sm="6"
 						md="6"
 					>
-						<v-card
+						<VCard
 							height="100%"
 							class="d-flex flex-column"
 							elevation="2"
 						>
-							<v-card-title class="text-subtitle-1 text-primary font-weight-bold title-multiline">
-								<v-chip
+							<VCardTitle class="text-subtitle-1 text-primary font-weight-bold title-multiline">
+								<VChip
 									:color="getBadgeColor(rule.theme)"
 									size="small"
 									class="mr-2"
 								>
 									{{ extractThemeNumber(rule.theme) }}
-								</v-chip>
+								</VChip>
 								<span class="card-text-wrap">{{ rule.criteres }}</span>
-							</v-card-title>
+							</VCardTitle>
 
-							<v-card-text class="flex-grow-1">
+							<VCardText class="flex-grow-1">
 								<p class="text-body-1">
 									{{ rule.actions }}
 								</p>
-							</v-card-text>
+							</VCardText>
 
-							<v-card-actions>
-								<v-spacer />
-								<v-btn
+							<VCardActions>
+								<VSpacer />
+								<VBtn
 									variant="text"
 									color="primary"
 									@click="showRuleDetails(rule)"
 								>
 									Détails
-								</v-btn>
-							</v-card-actions>
-						</v-card>
-					</v-col>
+								</VBtn>
+							</VCardActions>
+						</VCard>
+					</VCol>
 				</template>
 
-				<v-col
+				<VCol
 					v-if="filteredRules.length > itemsPerPage"
 					cols="12"
 					class="d-flex justify-center mt-4"
 				>
-					<v-pagination
+					<VPagination
 						v-model="page"
 						:length="totalPages"
 						total-visible="7"
 						rounded
 						color="primary"
 					/>
-				</v-col>
-			</v-row>
-		</v-card>
+				</VCol>
+			</VRow>
+		</VCard>
 
-		<v-dialog
+		<VDialog
 			v-model="detailDialog"
 			max-width="800px"
 		>
-			<v-card
+			<VCard
 				v-if="selectedRule"
 				class="detail-card"
 				elevation="3"
 			>
-				<v-card-item>
+				<VCardItem>
 					<div class="d-flex justify-space-between mb-2">
 						<SyHeading
 							:level="3"
 						>
 							{{ selectedRule.finalite3mots }}
 						</SyHeading>
-						<v-chip
+						<VChip
 							:color="getBadgeColor(selectedRule.theme)"
 							size="small"
 						>
 							Regle:	{{ selectedRule.numero }}
-						</v-chip>
+						</VChip>
 					</div>
 
 					<!-- <h3 class="text-h6 mb-4 mt-4">
@@ -494,21 +494,21 @@
 							</div>
 						</div>
 					</div>
-				</v-card-item>
+				</VCardItem>
 
-				<v-card-actions class="pa-4">
-					<v-spacer />
-					<v-btn
+				<VCardActions class="pa-4">
+					<VSpacer />
+					<VBtn
 						variant="outlined"
 						color="primary"
 						@click="detailDialog = false"
 					>
 						Fermer
-					</v-btn>
-				</v-card-actions>
-			</v-card>
-		</v-dialog>
-	</v-container>
+					</VBtn>
+				</VCardActions>
+			</VCard>
+		</VDialog>
+	</VContainer>
 </template>
 
 <style lang="scss" scoped>

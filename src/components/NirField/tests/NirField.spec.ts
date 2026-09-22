@@ -1068,7 +1068,7 @@ describe('NirField.vue', () => {
 			it('respects maxErrors limit for exposed errors', async () => {
 				const testWrapper = createNirFieldWrapper({
 					maxErrors: 1,
-					customNumberRules: () => [
+					customNumberRules: [
 						{ type: 'custom', options: { validate: () => 'Erreur 1', message: 'Erreur 1' } },
 						{ type: 'custom', options: { validate: () => 'Erreur 2', message: 'Erreur 2' } },
 					],
@@ -1317,7 +1317,7 @@ describe('NirField.vue', () => {
 			it('removes duplicates from exposed errors', async () => {
 				const testWrapper = createNirFieldWrapper({
 					errorMessages: ['Erreur identique'],
-					customNumberRules: () => [
+					customNumberRules: [
 						{ type: 'custom', options: { validate: () => 'Erreur identique', message: 'Erreur identique' } },
 					],
 				})

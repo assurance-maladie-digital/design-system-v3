@@ -438,7 +438,9 @@ exports[`UploadWorkflow > render the upload list 1`] = `
             sy-file-upload-btn
             text-white
           ">
-            Choisir un fichier
+            <span class="sy-file-upload-btn__content">
+              Choisir un fichier
+            </span>
           </span>
           <span class="
             mt-4

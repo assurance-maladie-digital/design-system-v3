@@ -12,9 +12,24 @@
 - Marques supportées : **CNAM / PA (Portail Agents) / AmeliPro**.
 - Fort engagement **accessibilité (RGAA)** : c'est un critère de qualité non négociable.
 
+## 2. Skills de référence
+
+Les règles génériques sont déléguées aux skills installés (dans `.agents/skills/`). Des symlinks pointent vers `.agents/skills/` pour une compatibilité immédiate avec chaque outil : `.claude/skills/` (Claude/opencode) et `.windsurf/skills/` (Windsurf). Les autres outils (Cursor, Copilot, Devin, etc.) doivent être configurés pour utiliser `.agents/skills/` directement.
+
+Les charger avant toute tâche relevant de leur domaine :
+
+- `vue-best-practices` et `vue` pour Vue 3, les composants, la réactivité et le SSR ;
+- `vite` (compatible **Vite 6.4.2**) pour Vite, la configuration et les builds ;
+- `vitest` (compatible **Vitest 4.1.0**) pour les tests unitaires ;
+- `pnpm` pour la gestion des dépendances et des workspaces ;
+- `antfu` pour l'outillage TypeScript et JavaScript (**les conventions de tests et de hooks Git du dépôt priment** : voir §4 et §11) ;
+- `review` pour les revues de code, de pull requests et de diffs propres à Synapse.
+
+Les instructions ci-dessous ne précisent que les conventions et contraintes propres à Synapse.
+
 ---
 
-## 2. Stack & environnement
+## 3. Stack & environnement
 
 | Élément | Détail |
 |---|---|
@@ -33,7 +48,7 @@
 
 ---
 
-## 3. Commandes essentielles
+## 4. Commandes essentielles
 
 Utiliser **pnpm** exclusivement.
 
@@ -89,7 +104,7 @@ Ne lancer `pnpm build` / `pnpm test:unit` complets que si le changement est tran
 
 ---
 
-## 4. Architecture de `src/`
+## 5. Architecture de `src/`
 
 ```
 src/
@@ -112,7 +127,7 @@ src/
 
 ---
 
-## 5. Anatomie d'un composant (convention forte)
+## 6. Anatomie d'un composant (convention forte)
 
 Chaque composant vit dans `src/components/<Nom>/` et suit ce patron :
 
@@ -181,7 +196,7 @@ Règles :
 
 ---
 
-## 6. Conventions de test
+## 7. Conventions de test
 
 **Philosophie : tester en boîte noire.** Un test part des **props** et des **interactions utilisateur** (clic, saisie, clavier), puis vérifie le **rendu HTML** et les **événements émis**. On teste le composant tel que l'utilisateur / le consommateur le voit, pas son fonctionnement interne.
 
@@ -204,7 +219,7 @@ Sur WSL, utiliser `test:visual:open` pour l'inspection seulement ; générer les
 
 ---
 
-## 7. Accessibilité (RGAA) — non négociable
+## 8. Accessibilité (RGAA) — non négociable
 
 - Tout nouveau composant ou markup modifié doit disposer d'un test `*.a11y.spec.ts` (axe) et ne pas régresser `a11y-report.md`.
 - Privilégier les **directives a11y** du DS (`vToolbar`, `vLockFocus`, `vRgaaSvgFix`, `clickOutside`) plutôt que du code ad hoc — détail dans [doc/Directives/README.md](doc/Directives/README.md).
@@ -213,7 +228,7 @@ Sur WSL, utiliser `test:visual:open` pour l'inspection seulement ; générer les
 
 ---
 
-## 8. Patterns transverses & doc de référence
+## 9. Patterns transverses & doc de référence
 
 **Lire la doc du domaine concerné dans `doc/` avant de modifier le code associé.**
 
@@ -222,25 +237,29 @@ Sur WSL, utiliser `test:visual:open` pour l'inspection seulement ; générer les
 | Options Vuetify | `useCustomizableOptions` : *deep-merge* des props des composants Vuetify sous-jacents. L'utiliser plutôt que recâbler les props à la main. | [Composables](doc/Composables/vuetify-options.md) |
 | Validation | Deux modes : `synapse` (sync/async, gestion des race conditions) et `vuetify` (natif). | [Validation](doc/Validation/README.md) |
 | Theming & Tokens | Point d'entrée SCSS `src/assets/settings.scss`, overrides Vuetify, variables CSS `--v-*` (+ shim legacy). | [Theming](doc/Theming/README.md) |
-| DatePicker | Composant le plus complexe (plusieurs modes, nombreux composables). À lire **impérativement** avant toute modif. | [Migration DatePicker](doc/Validation/migration-datepicker.md) |
+| DatePicker | Composant le plus complexe (plusieurs modes, nombreux composables). À lire **impérativement** avant toute modif.|
 | Badges de version | Générés par scripts (a11y / fonctionnel). Ne pas éditer à la main. | [Badges](doc/Badges/release-workflow.md) |
 | Directives Vue | Directives a11y à privilégier (cf. §7). | [Directives](doc/Directives/README.md) |
 | Scripts / Utils | Outillage et utilitaires publics. | [Scripts](doc/Scripts/README.md) · [Utils](doc/Utils/README.md) |
 
 ---
 
-## 9. Garde-fous (rappel)
+## 10. Garde-fous (rappel)
 
 Règles à fort impact, non redites ailleurs :
 
 - **pnpm uniquement** (jamais npm/yarn) ; `vue`/`vuetify` restent externes.
 - Ne pas committer de baselines de tests visuels générées sous **WSL** (cf. §6).
 - Ne pas créer de fichiers markdown de documentation « de changement » non demandés.
-- **Pas de code mort** : pas de `console.log`, `debugger`, commentaires temporaires ou branches inatteignables laissées dans le code.
+- **Pas de code mort** : pas de `console.log`, `debugger`, commentaires temporaires ou branches inatteignables laissés dans le code.
+- **Discipline dépendances** : ne pas ajouter de nouvelle dépendance sans justification explicite. Chaque dep ajoute du poids au bundle des consommateurs. Privilégier une solution locale (composable, utilitaire) à un package externe pour de la logique simple. Les deps ajoutées doivent être en `peerDependencies` si elles sont partagées avec le consommateur (ex. `vue`, `vuetify`), en `dependencies` sinon.
+- **Discipline TypeScript** : `any` est interdit dans le nouveau code (utiliser `unknown` + type guard si besoin). Les assertions de type (`as`) sont à éviter sauf cas justifié (interopérabilité Vuetify). Préférer l'inférence de type aux annotations explicites quand le type est évident. Tout type exporté doit être explicite et documenté.
+- **Sécurité** : `v-html` est **interdit** sauf cas validé en review (contenu statique ou sanitizé). Ne jamais interpoler du contenu utilisateur sans échappement. Les inputs utilisateur doivent être validés avant stockage dans l'état du composant.
+- **Respecter les scopes des états** : conserver l'état au plus près du composant qui l'utilise. Un état doit avoir une seule source de vérité et un unique responsable de sa mutation ; ne le remonter ou ne le partager que lorsque plusieurs consommateurs en ont réellement besoin.
 
 ---
 
-## 10. Commits & branches
+## 11. Commits & branches
 
 Conventions **standard**, appliquées par le hook Husky de pre-commit ([.husky/pre-commit](.husky/pre-commit)) :
 
@@ -249,3 +268,6 @@ Conventions **standard**, appliquées par le hook Husky de pre-commit ([.husky/p
   - Description : lettres, chiffres et tirets uniquement (`[a-zA-Z0-9-]+`), ex. `feat/sy-alert-dismiss`.
 - Le pre-commit lance `pnpm run lint:fix` : le code doit passer lint/format avant commit.
 - **Aucune convention imposée sur le message de commit** ; rester clair et concis.
+---
+
+

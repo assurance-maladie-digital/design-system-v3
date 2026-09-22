@@ -1,4 +1,3 @@
-<!-- eslint-disable no-console -->
 <script setup lang="ts">
 /* eslint-disable vuejs-accessibility/no-static-element-interactions, vuejs-accessibility/label-has-for */
 	import type { ErrorBucket, Registrable } from './types'
@@ -23,6 +22,7 @@
 	import AmeliproIcon from '../AmeliproIcon/AmeliproIcon.vue'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 	import { isRequiredFn } from '@/utils/rules/isRequired'
+	import { devWarn } from '@/utils/devWarn'
 	import bgPJ from '@/assets/amelipro/img/bg-pieces-jointe.svg'
 
 	type FileInfo = { name: string, size: number, type: string, hash: string }
@@ -116,11 +116,16 @@
 	//
 	const warningMessagesBucket = ref<ErrorBucket[]>([])
 
+	interface VFileInputRef {
+		valid: boolean
+		reset: () => void
+		$el?: HTMLElement
+	}
+
 	/**
 	 * Référence à l'instance de VFileInput
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const vFileInput = ref<any>({ reset: () => undefined, valid: true })
+	const vFileInput = ref<VFileInputRef>({ reset: () => undefined, valid: true })
 
 	/**
 	 * Référence à la liste de fichiers importés
@@ -284,7 +289,7 @@
 			updateFilesModel = true
 		}
 		else {
-			console.warn('AmeliproUpload:doRemoveFile: index out of bounds', index)
+			devWarn(`AmeliproUpload:doRemoveFile: index out of bounds ${index}`)
 		}
 
 		if (updateFilesModel) {
@@ -292,7 +297,8 @@
 		}
 
 		nextTick(() => {
-			vFileInput.value.$el.querySelector('input').value = ''
+			const input = vFileInput.value.$el?.querySelector('input') as HTMLInputElement | null
+			if (input) input.value = ''
 		})
 	}
 

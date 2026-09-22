@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { describe, it } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
@@ -21,16 +21,15 @@ describe('PeriodField – accessibility (axe)', () => {
 			attachTo: document.body,
 		})
 
-		// TODO : https://github.com/assurance-maladie-digital/design-system-v3/issues/1960
 		// 'aria-valid-attr-value' is ignored because Vuetify sets aria-owns on the
 		// DatePicker input referencing the VMenu id, but in JSDOM the menu is
 		// rendered via <Teleport> and not present in the scanned subtree.
+		// See: https://github.com/assurance-maladie-digital/design-system-v3/issues/1960
 		const ignoreRules = ['region', 'aria-valid-attr-value']
 
+		expect(wrapper.find('[role="group"]').attributes('aria-label')).toBe('Début - Fin')
+
 		const results = await axe(wrapper.element as HTMLElement)
-		if (results.violations.filter(violation => !ignoreRules.includes(violation.id)).length > 0) {
-			console.log(JSON.stringify(results.violations, null, 2))
-		}
 		assertNoA11yViolations(results, 'PeriodField – valid period', {
 			ignoreRules: ignoreRules,
 		})

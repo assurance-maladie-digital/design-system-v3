@@ -92,7 +92,7 @@ describe('UserMenu', () => {
 			expect(vueWrapper.findComponent({ name: 'AmeliproIconBtn' }).props('icon')).toBe(testHelper.modified('icon'))
 		})
 
-		// TODO: HS, à réparer
+		// Note: HS, à réparer
 		it.skip('prop userMenuInfos sets user-menu-details-infos prop on UserMenuDetails', async () => {
 			// UsermMenuDetails est dans le slot de VMenu, donc on ne peut pas le tester avec shallowMount
 			vueWrapper = mount(UserMenu, {
@@ -113,7 +113,7 @@ describe('UserMenu', () => {
 		})
 	})
 
-	// TODO: HS, à réparer
+	// Note: HS, à réparer
 	describe.skip('Events', () => {
 		let vueWrapper: VueWrapper<InstanceType<typeof UserMenu>>
 		beforeEach(() => {

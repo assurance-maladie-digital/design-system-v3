@@ -16,7 +16,9 @@ export function useTableRowCheckboxAccessibility({
 				const tableElement = document.getElementById(uniqueTableId)
 				if (!tableElement) return
 
-				const rowCheckboxes = tableElement.querySelectorAll('td .v-selection-control input[type="checkbox"]')
+				const rowCheckboxes = tableElement.querySelectorAll(
+					'td .v-selection-control input[type="checkbox"], td .v-selection-control input[type="radio"]',
+				)
 				rowCheckboxes.forEach((checkbox, index) => {
 					const rowLabel = `${locales.selectRow} ${index + 1}`
 					checkbox.setAttribute('aria-label', rowLabel)

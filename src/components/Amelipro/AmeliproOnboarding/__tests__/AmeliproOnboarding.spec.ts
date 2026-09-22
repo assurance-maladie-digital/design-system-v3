@@ -123,7 +123,7 @@ class NoopMutationObserver {
 
 global.MutationObserver = NoopMutationObserver as any
 
-// TODO: de nombreux tests ne passent pas et ont été désactivés. Il faudra les réactiver un par un et corriger les erreurs.
+// Note: de nombreux tests ne passent pas et ont été désactivés. Il faudra les réactiver un par un et corriger les erreurs.
 describe('AmeliproOnboarding', () => {
 	describe('Snapshots', () => {
 		testHelper.snapshots()
@@ -196,15 +196,15 @@ describe('AmeliproOnboarding', () => {
 			})
 		})
 
-		// TODO: left part img
+		// Note: left part img
 
-		// TODO: right part
+		// Note: right part
 
-		// TODO: right part dot wrapper
+		// Note: right part dot wrapper
 
-		// TODO: right part dot
+		// Note: right part dot
 
-		// TODO: nombreux cas à rajouter (content title, content text, buttons labels, img height, etc.)
+		// Note: nombreux cas à rajouter (content title, content text, buttons labels, img height, etc.)
 	})
 
 	describe.skip('Events', () => {

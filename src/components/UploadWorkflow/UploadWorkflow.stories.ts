@@ -449,7 +449,7 @@ export const WithPreviewStep: Story = {
 	]
 
 	function onPreview(fileItem: unknown) {
-		console.log('preview', fileItem)
+		// Prévisualisation du fichier
 	}
 </script>`,
 			},
@@ -690,7 +690,7 @@ export const Events: Story = {
 	}
 
 	function onPreview(fileItem: unknown) {
-		console.log('preview', fileItem)
+		// Prévisualisation du fichier
 	}
 </script>`,
 			},

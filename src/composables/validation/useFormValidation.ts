@@ -1,4 +1,5 @@
-import { computed, provide, inject, ref, type InjectionKey, type Ref } from 'vue'
+import { devWarn } from '@/utils/devWarn'
+import { computed, inject, provide, ref, type InjectionKey, type Ref } from 'vue'
 
 /**
  * Interface représentant un composant validable qui peut s'enregistrer auprès d'un formulaire parent.
@@ -65,7 +66,7 @@ export function useFormValidation() {
 					component.clearValidation()
 				}
 				catch (error) {
-					console.warn('Error clearing validation for field: ' + (component?.$props?.label ?? 'unknown'), error)
+					devWarn('Error clearing validation for field: ' + (component?.$props?.label ?? 'unknown'), error)
 				}
 			}
 		})
@@ -81,7 +82,7 @@ export function useFormValidation() {
 					component.reset()
 				}
 				catch (error) {
-					console.warn('Error resetting field: ' + (component?.$props?.label ?? 'unknown'), error)
+					devWarn('Error resetting field: ' + (component?.$props?.label ?? 'unknown'), error)
 				}
 			}
 		})

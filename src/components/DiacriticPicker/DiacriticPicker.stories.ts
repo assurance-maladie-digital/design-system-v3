@@ -106,7 +106,7 @@ export const Default: Story = {
 						:diacritics="args.diacritics"
 						:vuetify-options="args.vuetifyOptions"
 					>
-						<v-text-field
+						<VTextField
 							v-model="value"
 							label="Nom avec accents"
 							color="primary"
@@ -189,7 +189,7 @@ export const WithTextarea: Story = {
 						:diacritics="args.diacritics"
 						:vuetify-options="args.vuetifyOptions"
 					>
-						<v-textarea
+						<VTextarea
 							v-model="value"
 							label="Adresse"
 							color="primary"
@@ -265,7 +265,7 @@ export const CustomDiacritics: Story = {
 						:diacritics="args.diacritics"
 						:vuetify-options="args.vuetifyOptions"
 					>
-						<v-text-field
+						<VTextField
 							v-model="value"
 							label="Texte avec accents personnalisés"
 							color="primary"
@@ -347,7 +347,7 @@ export const CustomButtonTitle: Story = {
 						:diacritics="args.diacritics"
 						:vuetify-options="args.vuetifyOptions"
 					>
-						<v-text-field
+						<VTextField
 							v-model="value"
 							label="Texte avec bouton personnalisé"
 							color="primary"
@@ -441,7 +441,7 @@ export const Customization: Story = {
 						:diacritics="args.diacritics"
 						:vuetify-options="args.vuetifyOptions"
 					>
-						<v-text-field
+						<VTextField
 							v-model="value"
 							label="Options Vuetify personnalisées"
 							color="secondary"

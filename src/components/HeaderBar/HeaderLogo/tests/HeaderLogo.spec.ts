@@ -14,6 +14,9 @@ describe('HeaderLogo', () => {
 		window.happyDOM.setInnerWidth(600)
 
 		const mobileWrapper = mount(HeaderLogo, {
+			props: {
+				logoAlt: 'Logo',
+			},
 			attachTo: document.body,
 		})
 
@@ -30,6 +33,9 @@ describe('HeaderLogo', () => {
 		window.happyDOM.setInnerWidth(1200)
 
 		const desktopWrapper = mount(HeaderLogo, {
+			props: {
+				logoAlt: 'Logo',
+			},
 			attachTo: document.body,
 		})
 
@@ -97,19 +103,55 @@ describe('HeaderLogo', () => {
 		expect(wrapper.find('router-link-stub').attributes('to')).toBe('/')
 	})
 
-	it('render a div when there there is no `RouterLink` component registered', async () => {
+	// sans `RouterLink` enregistré, le conteneur retombait sur un `<div>` —
+	// visuellement cliquable (cursor: pointer) mais impossible à atteindre au clavier (RGAA 7.3).
+	// On vérifie qu'un vrai `<a href>` est rendu à la place.
+	it('render a focusable anchor when there is no `RouterLink` component registered', async () => {
 		const wrapper = mount(HeaderLogo, {
 			props: {
-				ariaLabel: 'Test aria label',
 				logoAlt: 'Test aria label',
 				headingLevelTitle: 2,
 				homeLink: {
-					to: '/',
+					'to': '/accueil',
+					'aria-label': 'Test aria label',
+				},
+			},
+		})
+		const link = wrapper.find('.logo')
+
+		expect(link.element.tagName).toBe('A')
+		expect(link.attributes('href')).toBe('/accueil')
+	})
+
+	it('resolves the fallback href from an object route location', async () => {
+		const wrapper = mount(HeaderLogo, {
+			props: {
+				logoAlt: 'Test aria label',
+				headingLevelTitle: 2,
+				homeLink: {
+					to: { path: '/accueil' },
 				},
 			},
 		})
 
-		expect(wrapper.find('.logo').element.tagName).toBe('DIV')
+		expect(wrapper.find('.logo').attributes('href')).toBe('/accueil')
+	})
+
+	it('falls back to homeLink.href for a named route that only the router can resolve', async () => {
+		const wrapper = mount(HeaderLogo, {
+			props: {
+				logoAlt: 'Test aria label',
+				headingLevelTitle: 2,
+				homeLink: {
+					to: { name: 'home' },
+					href: '/racine',
+				},
+			},
+		})
+		const link = wrapper.find('.logo')
+
+		expect(link.element.tagName).toBe('A')
+		expect(link.attributes('href')).toBe('/racine')
 	})
 
 	it('render a div when the homeLink properties `to` and `href` are both set to `undefined`', async () => {
@@ -129,6 +171,9 @@ describe('HeaderLogo', () => {
 
 	it('should use browser-native source selection for desktop and mobile svg files', async () => {
 		const wrapper = mount(HeaderLogo, {
+			props: {
+				logoAlt: 'Logo',
+			},
 			attachTo: document.body,
 		})
 

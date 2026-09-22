@@ -4,7 +4,7 @@ export const semanticTokens = {
 	CNAM: {
 		color: {
 			border: baseTokens.color.blue.base,
-			borderVariant: baseTokens.color.grey.lighten40,
+			borderVariant: baseTokens.color.grey.base,
 			disabled: baseTokens.color.grey.lighten80,
 			inverseSurface: baseTokens.color.grey.base,
 			onDisabled: baseTokens.color.grey.lighten40,
@@ -12,7 +12,9 @@ export const semanticTokens = {
 			onPrimaryVariant: baseTokens.color.white.base,
 			onSecondary: baseTokens.color.white.base,
 			onSecondaryVariant: baseTokens.color.white.base,
-			onSurfaceVariant: baseTokens.color.grey.base,
+			onSurfaceVariant: baseTokens.color.grey.lighten90,
+			onBackground: baseTokens.color.grey.darken60,
+			onBackgroundVariant: baseTokens.color.grey.base,
 			overlay: baseTokens.color.grey.alpha40,
 			primary: baseTokens.color.blue.base,
 			primaryVariant: baseTokens.color.blue.darken40,
@@ -25,7 +27,6 @@ export const semanticTokens = {
 		background: {
 			background: baseTokens.color.blue.lighten90,
 			backgroundVariant: baseTokens.color.white.base,
-			onBackgroundVariant: baseTokens.color.grey.lighten40,
 		},
 		feedback: {
 			error: baseTokens.color.orange.darken20,
@@ -44,22 +45,11 @@ export const semanticTokens = {
 			warning: baseTokens.color.yellow.base,
 			warningVariant: baseTokens.color.yellow.lighten80,
 		},
-		interaction: {
-			darkEnabled: baseTokens.color.transparentBlue.alpha00,
-			darkHover: baseTokens.color.transparentBlue.alpha08,
-			darkPressed: baseTokens.color.transparentBlue.alpha20,
-			darkenEnabled: baseTokens.color.transparentBlack.alpha00,
-			darkenHover: baseTokens.color.transparentBlack.alpha20,
-			darkenPressed: baseTokens.color.transparentBlack.alpha40,
-			lightenEnabled: baseTokens.color.none,
-			lightenHover: baseTokens.color.white.alpha20,
-			lightenPressed: baseTokens.color.white.alpha40,
-		},
 	},
 	ap: {
 		color: {
 			border: baseTokens.color.cyan.darken20,
-			borderVariant: baseTokens.color.grey.lighten40,
+			borderVariant: baseTokens.color.grey.base,
 			disabled: baseTokens.color.grey.lighten80,
 			inverseSurface: baseTokens.color.grey.base,
 			onDisabled: baseTokens.color.grey.lighten40,
@@ -67,7 +57,9 @@ export const semanticTokens = {
 			onPrimaryVariant: baseTokens.color.white.base,
 			onSecondary: baseTokens.color.white.base,
 			onSecondaryVariant: baseTokens.color.white.base,
-			onSurfaceVariant: baseTokens.color.grey.base,
+			onSurfaceVariant: baseTokens.color.grey.lighten90,
+			onBackground: baseTokens.color.grey.darken60,
+			onBackgroundVariant: baseTokens.color.grey.base,
 			overlay: baseTokens.color.grey.alpha40,
 			primary: baseTokens.color.cyan.darken20,
 			primaryVariant: baseTokens.color.cyan.darken40,
@@ -80,7 +72,6 @@ export const semanticTokens = {
 		background: {
 			background: baseTokens.color.cyan.lighten97,
 			backgroundVariant: baseTokens.color.white.base,
-			onBackgroundVariant: baseTokens.color.grey.lighten40,
 		},
 		feedback: {
 			error: baseTokens.color.red.darken20,
@@ -98,17 +89,6 @@ export const semanticTokens = {
 			successVariant: baseTokens.color.forestGreen.lighten90,
 			warning: baseTokens.color.yellow.base,
 			warningVariant: baseTokens.color.yellow.lighten80,
-		},
-		interaction: {
-			darkEnabled: baseTokens.color.transparentCyan.alpha00,
-			darkHover: baseTokens.color.transparentCyan.alpha08,
-			darkPressed: baseTokens.color.transparentCyan.alpha18,
-			darkenEnabled: baseTokens.color.transparentBlack.alpha00,
-			darkenHover: baseTokens.color.transparentBlack.alpha20,
-			darkenPressed: baseTokens.color.transparentBlack.alpha40,
-			lightenEnabled: baseTokens.color.none,
-			lightenHover: baseTokens.color.white.alpha20,
-			lightenPressed: baseTokens.color.white.alpha38,
 		},
 	},
 } as const

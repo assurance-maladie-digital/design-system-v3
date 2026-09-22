@@ -54,7 +54,7 @@ const focusVisible = (selector: string) =>
 	})
 
 describe('SubHeader - Focus visual regression tests', () => {
-	// Fond primary : le back button a un ring onPrimary (blanc), visible sur le bleu.
+	// Fond primary : le back button a un ring on-primary (blanc), visible sur le bleu.
 	it('shows the onPrimary focus ring on the back button', () => {
 		cy.mountWithVuetify(SubHeader, {
 			props: { titleText: 'Titre de la page' },

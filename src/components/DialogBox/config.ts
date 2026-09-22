@@ -6,7 +6,6 @@ export const config = {
 		class: 'd-flex align-start flex-nowrap pa-0 pt-6 mb-6 px-6',
 	},
 	closeBtn: {
-		icon: true,
 		elevation: 0,
 		width: '32px',
 		height: '32px',

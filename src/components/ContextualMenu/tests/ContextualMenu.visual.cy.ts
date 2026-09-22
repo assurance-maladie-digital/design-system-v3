@@ -57,7 +57,7 @@ describe('ContextualMenu - Focus visual regression tests', () => {
 		cy.matchImageSnapshot('contextual-menu-focus-light', cy.get('.vd-contextual-menu-container'))
 	})
 
-	// Sur fond primary (marqueur .v-theme--dark) : texte + ring en onPrimary (blanc).
+	// Sur fond primary (marqueur .v-theme--dark) : texte + ring en on-primary (blanc).
 	it('shows the onPrimary ring and light text on a menu link (dark background)', () => {
 		const DarkMenu = defineComponent({
 			setup() {

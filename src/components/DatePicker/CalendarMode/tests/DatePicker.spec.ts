@@ -1,7 +1,11 @@
+/* eslint-disable vue/one-component-per-file */
 import { mount, flushPromises, type VueWrapper } from '@vue/test-utils'
 import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest'
-import { nextTick } from 'vue'
+import { nextTick, defineComponent, ref } from 'vue'
 import DatePicker from '../DatePicker.vue'
+import ComplexDatePicker from '../../ComplexDatePicker/ComplexDatePicker.vue'
+import { locales } from '../../locales'
+import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
 type DatePickerInstance = InstanceType<typeof DatePicker>
 
@@ -14,8 +18,9 @@ afterEach(() => {
 })
 
 describe('DatePicker', () => {
-	const mountComponent = (props: Record<string, unknown> = {}) => {
+	const mountComponent = (props: Record<string, unknown> = {}, options: { attachTo?: Element | string } = {}) => {
 		wrapper = mount(DatePicker, {
+			...options,
 			props: { label: 'Date Field', ...props },
 		})
 		return wrapper
@@ -38,6 +43,31 @@ describe('DatePicker', () => {
 		expect(input.exists()).toBe(true)
 	})
 
+	it('forwards all validation props in combined mode', () => {
+		const customSuccessRules = [{ type: 'custom', options: { validate: () => true } }]
+		const wrapper = mountComponent({
+			useCombinedMode: true,
+			customSuccessRules,
+			errorMessages: ['Erreur externe'],
+			warningMessages: ['Avertissement externe'],
+			successMessages: ['Succès externe'],
+			hasError: true,
+			hasWarning: true,
+			hasSuccess: true,
+			maxErrors: 2,
+		})
+
+		const complexDatePicker = wrapper.findComponent(ComplexDatePicker)
+		expect(complexDatePicker.props('customSuccessRules')).toEqual(customSuccessRules)
+		expect(complexDatePicker.props('errorMessages')).toEqual(['Erreur externe'])
+		expect(complexDatePicker.props('warningMessages')).toEqual(['Avertissement externe'])
+		expect(complexDatePicker.props('successMessages')).toEqual(['Succès externe'])
+		expect(complexDatePicker.props('hasError')).toBe(true)
+		expect(complexDatePicker.props('hasWarning')).toBe(true)
+		expect(complexDatePicker.props('hasSuccess')).toBe(true)
+		expect(complexDatePicker.props('maxErrors')).toBe(2)
+	})
+
 	it('keeps the visible calendar heading free of live-region attributes', async () => {
 		const wrapper = mountComponent()
 		const vm = wrapper.vm as DatePickerInstance
@@ -45,10 +75,73 @@ describe('DatePicker', () => {
 		await nextTick()
 		await flushPromises()
 
-		const heading = document.querySelector<HTMLElement>(`#${vm.datePickerHeadingId}`)
+		const heading = document.querySelector<HTMLElement>('[id$="-heading"]')
 		expect(heading).not.toBeNull()
 		expect(heading?.getAttribute('aria-live')).toBeNull()
 		expect(heading?.getAttribute('aria-atomic')).toBeNull()
+	})
+
+	it('uses a stable dialog title instead of the dynamic date heading as accessible name', async () => {
+		const wrapper = mountComponent()
+		const vm = wrapper.vm as DatePickerInstance
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const dialog = document.querySelector<HTMLElement>('[role="dialog"]')
+		expect(dialog).not.toBeNull()
+		const titleId = dialog?.getAttribute('aria-labelledby')
+		expect(titleId).toBeTruthy()
+
+		const title = document.getElementById(titleId ?? '')
+		expect(title).not.toBeNull()
+		expect(title?.textContent?.trim()).toBe(locales.calendarTitle)
+	})
+
+	it('gives the month and year selectors action-oriented accessible names', async () => {
+		const wrapper = mountComponent({
+			modelValue: '15/03/2026',
+		})
+		const vm = wrapper.vm as DatePickerInstance
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const monthButton = document.querySelector<HTMLElement>('.sy-date-picker-controls__month-btn')
+		const yearButton = document.querySelector<HTMLElement>('.sy-date-picker-controls__year-btn')
+		expect(monthButton?.getAttribute('aria-label')).toMatch(/^Sélectionner le mois \(/)
+		expect(monthButton?.getAttribute('aria-label')).not.toContain('sélectionné')
+		expect(yearButton?.getAttribute('aria-label')).toBe('Sélectionner l\'année 2026')
+	})
+
+	it('keeps saturday and sunday weekend styling with a custom period in december 2005', async () => {
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '15/12/2005',
+				format: 'DD/MM/YYYY',
+				period: {
+					min: '01/01/1995',
+					max: '12/31/2005',
+				},
+			},
+			attachTo: document.body,
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		const saturday = document.querySelector('[data-v-date="2005-12-03"] .v-btn')
+		const sunday = document.querySelector('[data-v-date="2005-12-04"] .v-btn')
+		const monday = document.querySelector('[data-v-date="2005-12-05"] .v-btn')
+
+		expect(saturday?.classList.contains('weekend-day')).toBe(true)
+		expect(sunday?.classList.contains('weekend-day')).toBe(true)
+		expect(monday?.classList.contains('weekend-day')).toBe(false)
+
+		wrapper.unmount()
 	})
 
 	it('links the readonly activator wrapper to the exposed dialog when the calendar is open', async () => {
@@ -58,7 +151,7 @@ describe('DatePicker', () => {
 		await nextTick()
 		await flushPromises()
 
-		const activatorWrapper = wrapper.find(`[aria-controls="${vm.datePickerDialogId}"]`)
+		const activatorWrapper = wrapper.find('[aria-controls]')
 		expect(activatorWrapper.exists()).toBe(true)
 	})
 
@@ -69,13 +162,13 @@ describe('DatePicker', () => {
 		vm.isDatePickerVisible = true
 		await nextTick()
 		await flushPromises()
-		expect(wrapper.find(`[aria-controls="${vm.datePickerDialogId}"]`).exists()).toBe(true)
+		expect(wrapper.find('[aria-controls]').exists()).toBe(true)
 
 		vm.isDatePickerVisible = false
 		await nextTick()
 		await flushPromises()
 
-		expect(wrapper.find(`[aria-controls="${vm.datePickerDialogId}"]`).exists()).toBe(false)
+		expect(wrapper.find('[aria-controls]').exists()).toBe(false)
 	})
 
 	/**
@@ -136,6 +229,73 @@ describe('DatePicker', () => {
 		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('30/04/2025')
 	})
 
+	it('commits a date clicked in the combined calendar after keyboard opening', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			modelValue: '2025-01-01',
+			useCombinedMode: true,
+		}, { attachTo: document.body })
+
+		await wrapper.find('input').trigger('keydown', { key: 'ArrowDown' })
+		await nextTick()
+		await flushPromises()
+
+		const dayButton = document.querySelector<HTMLButtonElement>('[data-v-date="2025-01-15"] .v-btn')
+		expect(dayButton).not.toBeNull()
+		dayButton?.click()
+		await flushPromises()
+
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2025-01-15')
+	})
+
+	it('commits a date clicked in the combined calendar after icon opening', async () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			modelValue: '2025-01-01',
+			useCombinedMode: true,
+			textFieldActivator: true,
+			required: true,
+		}, { attachTo: document.body })
+
+		await wrapper.find('button.sy-text-field__icon-button').trigger('click')
+		await nextTick()
+		await flushPromises()
+
+		const dayButton = document.querySelector<HTMLButtonElement>('[data-v-date="2025-01-15"] .v-btn')
+		expect(dayButton).not.toBeNull()
+		dayButton?.click()
+		await flushPromises()
+
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2025-01-15')
+		expect(wrapper.vm.isDatePickerVisible).toBe(false)
+	})
+
+	it('keeps a clicked combined-calendar selection after parent v-model synchronization', async () => {
+		const Parent = defineComponent({
+			components: { DatePicker },
+			setup() {
+				const modelValue = ref('2025-01-01')
+				return { modelValue }
+			},
+			template: '<DatePicker v-model="modelValue" label="Date" format="DD/MM/YYYY" date-format-return="YYYY-MM-DD" use-combined-mode />',
+		})
+		const wrapper = mount(Parent, { attachTo: document.body })
+
+		await wrapper.find('button.sy-text-field__icon-button').trigger('click')
+		await nextTick()
+		await flushPromises()
+
+		const dayButton = document.querySelector<HTMLButtonElement>('[data-v-date="2025-01-15"] .v-btn')
+		expect(dayButton).not.toBeNull()
+		dayButton?.click()
+		await flushPromises()
+
+		expect(wrapper.vm.modelValue).toBe('2025-01-15')
+		wrapper.unmount()
+	})
+
 	it('preserves autoClamp with masked keyboard input in combined mode', async () => {
 		const wrapper = mountComponent({
 			format: 'DD/MM/YYYY',
@@ -171,6 +331,177 @@ describe('DatePicker', () => {
 		const emitted = wrapper.emitted('update:modelValue')
 		expect(emitted).toBeTruthy()
 		expect(emitted && emitted[emitted.length - 1]?.[0]).toBe('2025-04-30')
+	})
+
+	it('emits dateFormatReturn and closes the dialog when a visible calendar selection is valid', async () => {
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '',
+				format: 'DD/MM/YYYY',
+				dateFormatReturn: 'YYYY-MM-DD',
+			},
+			attachTo: document.body,
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		await vm.updateSelectedDates(new Date(2026, 6, 1))
+		await flushPromises()
+
+		expect(wrapper.find('input').element.value).toBe('01/07/2026')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2026-07-01')
+		expect(vm.isDatePickerVisible).toBe(false)
+
+		wrapper.unmount()
+	})
+
+	it('waits for a complete range before emitting the model and uses dateFormatReturn for calendar ranges', async () => {
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '',
+				format: 'DD/MM/YYYY',
+				dateFormatReturn: 'YYYY-MM-DD',
+				displayRange: true,
+			},
+			attachTo: document.body,
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		vm.updateSelectedDates(new Date(2026, 6, 1))
+		await flushPromises()
+
+		expect(wrapper.find('input').element.value).toBe('01/07/2026')
+		expect(wrapper.emitted('update:modelValue')).toBeFalsy()
+		expect(vm.isDatePickerVisible).toBe(true)
+
+		vm.updateSelectedDates(new Date(2026, 6, 5))
+		await flushPromises()
+
+		expect(wrapper.find('input').element.value).toBe('01/07/2026 - 05/07/2026')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toEqual(['2026-07-01', '2026-07-05'])
+		expect(vm.isDatePickerVisible).toBe(false)
+
+		wrapper.unmount()
+	})
+
+	it('still emits the selected value and surfaces an error when a calendar selection fails customRules', async () => {
+		vi.useFakeTimers()
+		vi.setSystemTime(new Date(2026, 7, 19, 12, 0, 0))
+
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date Field',
+				modelValue: '',
+				format: 'DD/MM/YYYY',
+				dateFormatReturn: 'YYYY-MM-DD',
+				customRules: [
+					{
+						type: 'notBeforeToday',
+						options: {
+							message: 'La date ne peut pas être antérieure à aujourd\'hui',
+						},
+					},
+				],
+			},
+			attachTo: document.body,
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		vm.isDatePickerVisible = true
+		await nextTick()
+		await flushPromises()
+
+		await vm.updateSelectedDates(new Date(2026, 7, 18))
+		await flushPromises()
+
+		expect(vm.isDatePickerVisible).toBe(false)
+		expect(wrapper.find('input').element.value).toBe('18/08/2026')
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2026-08-18')
+
+		// Avec isValidateOnBlur: true (défaut), la validation se fait au blur, pas à la fermeture du calendrier.
+		// On déclenche le blur pour que l'erreur de customRule soit affichée.
+		await wrapper.find('input').trigger('blur')
+		await flushPromises()
+
+		expect(vm.errorMessages).toContain('La date ne peut pas être antérieure à aujourd\'hui')
+
+		vi.useRealTimers()
+		wrapper.unmount()
+	})
+
+	describe('SyForm integration', () => {
+		it('registers with SyForm and blocks submit while the field is invalid', async () => {
+			const Host = defineComponent({
+				components: { DatePicker, SyForm },
+				setup() {
+					const value = ref<string | null>(null)
+					const submitPayload = ref<{ isValid: boolean } | null>(null)
+
+					return {
+						submitPayload,
+						value,
+						handleSubmit: (payload: { isValid: boolean }) => {
+							submitPayload.value = payload
+						},
+					}
+				},
+				template: `
+					<SyForm @submit="handleSubmit">
+						<DatePicker v-model="value" label="Date Field" required />
+					</SyForm>
+				`,
+			})
+
+			const host = mount(Host)
+			const form = host.getComponent(SyForm)
+			const datePicker = host.getComponent(DatePicker)
+
+			expect(await (form.vm as InstanceType<typeof SyForm>).validate()).toBe(false)
+			expect(host.vm.submitPayload).toBeNull()
+
+			const input = datePicker.find('input')
+			await input.setValue('26/08/2026')
+			await input.trigger('blur')
+			await flushPromises()
+
+			expect(await (form.vm as InstanceType<typeof SyForm>).validate()).toBe(true)
+
+			await form.trigger('submit')
+			await flushPromises()
+
+			expect(host.vm.submitPayload).toEqual({ isValid: true })
+			host.unmount()
+		})
+	})
+
+	describe('Unified Vuetify validation', () => {
+		it('applies Vuetify rules through validateOnSubmit without SyForm', async () => {
+			const wrapper = mountComponent({
+				label: 'Date Field',
+				useVuetifyValidation: true,
+				rules: [
+					(value: unknown) => Boolean(value) || 'Erreur Vuetify DatePicker',
+				],
+			})
+
+			expect(await wrapper.vm.validateOnSubmit()).toBe(false)
+			expect(wrapper.vm.errorMessages).toContain('Erreur Vuetify DatePicker')
+
+			await wrapper.vm.updateSelectedDates(new Date(2026, 7, 26))
+			await flushPromises()
+
+			expect(await wrapper.vm.validateOnSubmit()).toBe(true)
+			expect(wrapper.vm.errorMessages).not.toContain('Erreur Vuetify DatePicker')
+		})
 	})
 
 	it('preserves autoClamp in combined range mode', async () => {
@@ -332,6 +663,19 @@ describe('DatePicker', () => {
 		vm.updateSelectedDates('invalid-date')
 
 		expect(vm.selectedDates).toBeNull()
+	})
+
+	it('exposes the expected public API contract for parent refs', () => {
+		const wrapper = mountComponent({
+			format: 'DD/MM/YYYY',
+		})
+		const vm = wrapper.vm as DatePickerInstance
+
+		expect(typeof vm.validateOnSubmit).toBe('function')
+		expect(typeof vm.openDatePicker).toBe('function')
+		expect(typeof vm.updateSelectedDates).toBe('function')
+		expect(typeof vm.clearValidation).toBe('function')
+		expect(typeof vm.reset).toBe('function')
 	})
 
 	it('validateOnSubmit returns false and sets error messages when required and empty', async () => {
@@ -541,7 +885,7 @@ describe('DatePicker', () => {
 		await nextTick()
 		await flushPromises()
 
-		const dialog = document.body.querySelector<HTMLElement>(`#${vm.datePickerDialogId}`)
+		const dialog = document.body.querySelector<HTMLElement>('[role="dialog"]')
 		expect(dialog).not.toBeNull()
 
 		dialog?.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
@@ -825,6 +1169,22 @@ describe('DatePicker - Events & Interactions', () => {
 		expect(evWrapper.vm.isDatePickerVisible).toBe(false)
 	})
 
+	it('renders a keyboard-accessible calendar icon button on the activator', async () => {
+		const wrapper = mount(DatePicker, {
+			props: { label: 'Date de départ', modelValue: '', format: 'DD/MM/YYYY' },
+		})
+
+		await nextTick()
+
+		const iconButton = wrapper.find('.sy-text-field__icon-button')
+		expect(iconButton.exists()).toBe(true)
+		expect(iconButton.attributes('type')).toBe('button')
+		expect(iconButton.attributes('disabled')).toBeUndefined()
+		expect(iconButton.attributes('aria-label')).toBe('Date de départ - ouvrir le calendrier')
+
+		wrapper.unmount()
+	})
+
 	it('openDatePickerOnIconClick ne fait rien si disabled', async () => {
 		const w = mount(DatePicker, {
 			props: { label: 'Date', modelValue: '', format: 'DD/MM/YYYY', disabled: true },
@@ -933,6 +1293,23 @@ describe('DatePicker - Coverage branches', () => {
 		w.unmount()
 	})
 
+	it('emits blur from the activator input even when isValidateOnBlur is false', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '', format: 'DD/MM/YYYY', required: true, isValidateOnBlur: false },
+		})
+
+		const input = w.find('input')
+		await input.trigger('focus')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(w.emitted('blur')).toBeTruthy()
+		expect(w.emitted('blur')).toHaveLength(1)
+		expect(w.vm.errorMessages.length).toBe(0)
+
+		w.unmount()
+	})
+
 	it('syncDisplayedMonthYearFromDate updates currentMonth and currentMonthName', async () => {
 		const w = mount(DatePicker, {
 			props: { label: 'Date', modelValue: '', format: 'DD/MM/YYYY' },
@@ -1030,6 +1407,24 @@ describe('DatePicker - Coverage branches', () => {
 		const container = w.find('.date-picker-container').element
 		vm.handleClickOutside({ target: container } as unknown as MouseEvent)
 		expect(w.emitted('closed')).toBeFalsy()
+		w.unmount()
+	})
+
+	it('blur is emitted but validation is skipped when isUpdatingFromInternal is true', async () => {
+		const w = mount(DatePicker, {
+			props: { label: 'Date', modelValue: '01/01/2023', format: 'DD/MM/YYYY', required: true, isValidateOnBlur: true },
+		})
+		const vm = w.vm as InstanceType<typeof DatePicker>
+		// Simulate isUpdatingFromInternal being true (e.g. after clear)
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		;(vm as any).isUpdatingFromInternal = true
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await (vm as any).handleInputBlur()
+		await flushPromises()
+		// blur event is still emitted (happens before the guard)
+		expect(w.emitted('blur')).toBeTruthy()
+		// but validation should not run (no error messages pushed)
+		expect(w.emitted('update:errorMessages')).toBeFalsy()
 		w.unmount()
 	})
 })

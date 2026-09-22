@@ -80,8 +80,6 @@ describe('NirField - Cursor Position Preservation', () => {
 	})
 
 	it('should not trigger watchers when displayKey is false', async () => {
-		// Spy sur console.log pour détecter d'éventuels logs de debug
-		const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 		const focusSpy = vi.spyOn(HTMLElement.prototype, 'focus')
 
 		const numberInput = wrapper.find('.number-field input')
@@ -98,7 +96,6 @@ describe('NirField - Cursor Position Preservation', () => {
 		// Vérifier qu'aucun focus automatique n'a été déclenché
 		expect(focusSpy).not.toHaveBeenCalled()
 
-		consoleSpy.mockRestore()
 		focusSpy.mockRestore()
 	})
 

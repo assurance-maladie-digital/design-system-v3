@@ -183,7 +183,7 @@ export const VuetifyPanel: StoryObj = {
 							
 							<!-- Recherche -->
 							<VCol cols="12" sm="6" md="8">
-								<v-combobox
+								<VCombobox
 									:menu-props="menuProps"
 									variant="outlined"
 									color="primary"
@@ -198,7 +198,7 @@ export const VuetifyPanel: StoryObj = {
 									hide-selected
 									return-object
 									prepend-inner-icon="mdi-magnify"
-								></v-combobox>
+								></VCombobox>
 							</VCol>
 						</VRow>
 						

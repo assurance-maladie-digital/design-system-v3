@@ -723,9 +723,9 @@
 								:vuetify-options="{
 									sheet: { color: 'rgb(var(--v-theme-primary))' },
 									tab: {
-										'base-color': 'rgba(var(--v-theme-onPrimary), 0.7)',
-										'active-color': 'rgb(var(--v-theme-onPrimary))',
-										'slider-color': 'rgb(var(--v-theme-onPrimary))',
+										'base-color': 'rgba(var(--v-theme-on-primary), 0.7)',
+										'active-color': 'rgb(var(--v-theme-on-primary))',
+										'slider-color': 'rgb(var(--v-theme-on-primary))',
 									},
 								}"
 							/>

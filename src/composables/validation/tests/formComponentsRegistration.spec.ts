@@ -1,5 +1,5 @@
 /* eslint-disable vue/one-component-per-file */
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, beforeAll, afterAll } from 'vitest'
 import { defineComponent, h, provide, ref, type Component } from 'vue'
 import { mount, flushPromises } from '@vue/test-utils'
 import { ValidatableComponentsKey, useFormValidation } from '../useFormValidation'
@@ -56,6 +56,14 @@ function mountFieldAndCountRegisterAttempts(Component: Component, props: Record<
 }
 
 describe('form field components attempt to register the expected number of times', () => {
+	beforeAll(() => {
+		vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ({ id: 'captcha-id' }) }))
+	})
+
+	afterAll(() => {
+		vi.unstubAllGlobals()
+	})
+
 	// La plupart des champs doivent tenter de s'enregistrer exactement 1 fois
 	// (auto-register via useValidation, ou appel explicite pour SyInputSelect qui
 	// utilise l'ancien useValidation). NirField est l'exception acceptée : c'est
@@ -65,13 +73,13 @@ describe('form field components attempt to register the expected number of times
 		{ name: 'SyTextField', component: SyTextField, props: { label: 'Test', modelValue: '' } },
 		{ name: 'SyTextArea', component: SyTextArea, props: { label: 'Test', modelValue: '' } },
 		{ name: 'SyCheckbox', component: SyCheckbox, props: { label: 'Test', modelValue: false } },
-		{ name: 'SyRadioGroup', component: SyRadioGroup, props: { label: 'Test', items: [{ label: 'A', value: 'a' }] } },
+		{ name: 'SyRadioGroup', component: SyRadioGroup, props: { label: 'Test', options: [{ label: 'A', value: 'a' }] } },
 		{ name: 'SyCheckBoxGroup', component: SyCheckBoxGroup, props: { label: 'Test', items: [{ label: 'A', value: 'a' }] } },
 		{ name: 'SySelect', component: SySelect, props: { label: 'Test', items: [{ title: 'A', value: 'a' }] } },
 		{ name: 'SyAutocomplete', component: SyAutocomplete, props: { label: 'Test', items: [{ title: 'A', value: 'a' }] } },
 		{ name: 'SelectBtnField', component: SelectBtnField, props: { label: 'Test', items: [{ title: 'A', value: 'a' }] } },
 		{ name: 'NirField', component: NirField, expectedAttempts: 2, props: { label: 'Test' } },
-		{ name: 'Captcha', component: Captcha, props: {} },
+		{ name: 'Captcha', component: Captcha, props: { urlCreate: '/captcha/captcha.json', urlGetImage: '/captcha/captcha.png', urlGetAudio: '/captcha/captcha.mp3' } },
 		{ name: 'PasswordField', component: PasswordField, props: { label: 'Test', modelValue: '' } },
 		{ name: 'PhoneField', component: PhoneField, props: { label: 'Test', modelValue: '' } },
 		{ name: 'MonthPicker', component: MonthPicker, props: { label: 'Test' } },

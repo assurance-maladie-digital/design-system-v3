@@ -37,4 +37,27 @@ describe('LogoBrandSection – accessibility (axe)', () => {
 
 		wrapper.unmount()
 	})
+
+	it('has no axe violations when falling back to a real <a> without vue-router', async () => {
+		const wrapper = mount(LogoBrandSection, {
+			props: {
+				headingLevelTitle: 1,
+				headingLevelSubtitle: 2,
+				theme: 'default',
+				serviceTitle: 'Service Title',
+				homeLink: {
+					to: '/accueil',
+					ariaLabel: 'Accueil du site',
+				},
+			},
+			attachTo: document.body,
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'LogoBrandSection – fallback anchor without vue-router', {
+			ignoreRules: ['region'],
+		})
+
+		wrapper.unmount()
+	})
 })

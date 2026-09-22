@@ -926,7 +926,6 @@ export const WithTabConfirmation: Story = {
 					// Dans un cas réel, vous afficheriez votre propre composant de dialogue
 					// Pour cette démo, on utilise encore window.confirm mais avec un préfixe
 					const confirmed = window.confirm('Changer d\'onglet ?')
-					console.log('Réponse de l\'utilisateur:', confirmed ? 'Accepté' : 'Refusé')
 					callback(confirmed)
 				}
 

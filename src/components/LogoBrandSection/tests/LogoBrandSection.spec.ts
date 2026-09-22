@@ -361,4 +361,30 @@ describe('LogoBrandSection', () => {
 
 		expect(wrapper.findAll('.vd-home-link')[1]?.element.tagName).toBe('DIV')
 	})
+
+	it('uses only the generic label when ariaLabel is not provided', () => {
+		const wrapper = mount(LogoBrandSection, {
+			global: {
+				stubs: ['RouterLink', 'Logo'],
+			},
+			props: {
+				homeLink: { href: '/' },
+			},
+		})
+
+		expect(wrapper.find('logo-stub').attributes('arialabel')).toBe('Retour vers accueil du site')
+	})
+
+	it('concatenates ariaLabel with the generic label when provided', () => {
+		const wrapper = mount(LogoBrandSection, {
+			global: {
+				stubs: ['RouterLink', 'Logo'],
+			},
+			props: {
+				homeLink: { href: '/', ariaLabel: 'Accueil CNAM' },
+			},
+		})
+
+		expect(wrapper.find('logo-stub').attributes('arialabel')).toBe('Accueil CNAM Retour vers accueil du site')
+	})
 })

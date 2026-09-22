@@ -5,14 +5,12 @@ export const locales = {
 		selectAll: 'Sélectionner tous',
 	},
 	filters: {
-		selectFunctionalVersion: 'Sélectionner une version fonctionnelle',
-		selectA11yVersion: 'Sélectionner une version a11y',
+		selectVersion: 'Sélectionner une version',
 		allVersions: 'Toutes les versions',
 		allStatuses: 'Tous les statuts',
-		functionalLabel: 'Filtrer par version fonctionnelle',
-		a11yLabel: 'Filtrer par version accessibilité',
+		versionLabel: 'Filtrer par version',
 		statusLabel: 'Filtrer par statut',
-		includeDeprecated: 'Inclure les dépréciés',
+		includeDeprecated: 'Inclure les composants dépréciés',
 		resetFilters: 'Effacer les filtres',
 	},
 	status: {
@@ -23,6 +21,9 @@ export const locales = {
 	},
 	commits: {
 		empty: 'Aucun commit à afficher.',
+		emptyForVersion: (version: string): string => `Aucun changement publié dans la version ${version}.`,
+		// Commit qu'aucune version publiée ne contient encore : il sortira à la prochaine.
+		pending: 'prochaine version',
 	},
 	emptyState: {
 		message: 'Veuillez sélectionner vos composants dans la barre de recherche',
@@ -35,7 +36,11 @@ export const locales = {
 		a11y: 'Accessibilité',
 	},
 	version: {
-		unknown: 'Version non renseignée',
+		unknown: 'aucune version publiée',
+	},
+	lastUpdate: {
+		functional: 'Dernière mise à jour fonctionnelle :',
+		a11y: 'Dernière mise à jour accessibilité :',
 	},
 	meta: {
 		components: 'composants',

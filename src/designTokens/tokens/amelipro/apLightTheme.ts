@@ -5,7 +5,7 @@ export const apLightTheme = {
 
 	// Border
 	border: baseTokens.color.cyan.darken40,
-	borderVariant: baseTokens.color.grey.lighten40,
+	borderVariant: baseTokens.color.grey.base,
 	borderBright: baseTokens.color.white.base,
 	borderDim: baseTokens.color.white.alpha40,
 
@@ -35,13 +35,13 @@ export const apLightTheme = {
 	surfaceBright: baseTokens.color.cyan.lighten97,
 	surfaceDim: baseTokens.color.cyan.lighten90,
 	onSurface: baseTokens.color.grey.darken60,
-	onSurfaceVariant: baseTokens.color.grey.base,
+	onSurfaceVariant: baseTokens.color.grey.lighten90,
 
 	// Background
 	background: baseTokens.color.cyan.lighten97,
 	backgroundVariant: baseTokens.color.white.base,
 	onBackground: baseTokens.color.grey.darken60,
-	onBackgroundVariant: baseTokens.color.grey.lighten40,
+	onBackgroundVariant: baseTokens.color.grey.base,
 
 	// Feedback
 	info: baseTokens.color.parma.darken40,
@@ -62,19 +62,11 @@ export const apLightTheme = {
 	warning: baseTokens.color.yellow.base,
 	onWarning: baseTokens.color.grey.darken60,
 	warningVariant: baseTokens.color.yellow.lighten80,
-	warningVariantLigthen: baseTokens.color.yellow.lighten90,
+	warningVariantLighten: baseTokens.color.yellow.lighten90,
 	onWarningVariant: baseTokens.color.yellow.darken60,
 
 	// Interaction
-	interactionLightenEnabled: baseTokens.color.none,
-	interactionLightenHover: baseTokens.color.white.alpha20,
-	interactionLightenSelected: baseTokens.color.white.alpha20,
-	interactionLightenPressed: baseTokens.color.white.alpha38,
-	interactionDarkEnabled: baseTokens.color.transparentCyan.alpha00,
-	interactionDarkHover: baseTokens.color.transparentCyan.alpha08,
-	interactionDarkPressed: baseTokens.color.transparentCyan.alpha18,
-	interactionDarkSelected: baseTokens.color.cyan.darken40,
-	interactionDarkenEnabled: baseTokens.color.transparentBlack.alpha00,
-	interactionDarkenHover: baseTokens.color.transparentBlack.alpha20,
-	interactionDarkenPressed: baseTokens.color.transparentBlack.alpha40,
+	interactionDark: baseTokens.color.cyan.darken40,
+	interactionDarken: baseTokens.color.black.base,
+	interactionLighten: baseTokens.color.white.base,
 }
