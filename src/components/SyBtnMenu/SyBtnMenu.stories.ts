@@ -38,9 +38,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -96,9 +93,6 @@ const items = [
 
 export const MobileView: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -147,9 +141,6 @@ const items = ['Option 1', 'Option 2']
 
 export const WithSlotPrependIcon: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -208,9 +199,6 @@ const items = ['Option 1', 'Option 2']
 
 export const WithSlotAppendIcon: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -266,9 +254,6 @@ const items = ['Option 1', 'Option 2']
 
 export const WithIconOnly: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -326,9 +311,6 @@ const items = ['Option 1', 'Option 2']
 
 export const WithIdentityInList: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -391,9 +373,6 @@ const items = ['Option 1', 'Option 2']
 
 export const WithLogoutItemSlot: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -404,7 +383,7 @@ export const WithLogoutItemSlot: Story = {
   	:menu-items="items"
   >
     <template #footer-list-item>
-      <VListItem @click="onLogout">
+      <VListItem tag="li" role="menuitem" @click="onLogout">
         <VListItemTitle>Logout</VListItemTitle>
       </VListItem>
     </template>
@@ -442,7 +421,7 @@ const onLogout = () => {}
               <div class="d-flex flex-wrap align-center pa-4">
                 <SyBtnMenu v-bind="args">
                   <template #footer-list-item>
-                    <VListItem @click="onLogout">
+                    <VListItem tag="li" role="menuitem" @click="onLogout">
                       <VListItemTitle>Logout</VListItemTitle>
                     </VListItem>
                   </template>
@@ -455,9 +434,6 @@ const onLogout = () => {}
 
 export const WithCustomKeys: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -523,9 +499,6 @@ const menuItems = [
 
 export const WithMultipleSlots: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -539,7 +512,7 @@ export const WithMultipleSlots: Story = {
 	<SyIcon :icon="mdiAccount" decorative />
     </template>
     <template #footer-list-item>
-      <VListItem @click="onLogout">
+      <VListItem tag="li" role="menuitem" @click="onLogout">
         <VListItemTitle>Se déconnecter</VListItemTitle>
       </VListItem>
     </template>
@@ -580,7 +553,7 @@ const onLogout = () => {}
 					<SyIcon :icon="mdiAccount" decorative />
                   </template>
                   <template #footer-list-item>
-                    <VListItem @click="onLogout">
+                    <VListItem tag="li" role="menuitem" @click="onLogout">
                       <VListItemTitle>Se déconnecter</VListItemTitle>
                     </VListItem>
                   </template>
@@ -593,9 +566,6 @@ const onLogout = () => {}
 
 export const WithCustomStyles: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -661,9 +631,6 @@ const items = ['Option 1', 'Option 2']
 
 export const WithStyledOptions: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
