@@ -12,7 +12,7 @@ export const locales = {
 	invalidDateFormat: 'Le format de la date est invalide.',
 	invalidDate: 'La date saisie est invalide.',
 	// Le format reçu est un motif dayjs (`DD/MM/YYYY`) : traduit avant affichage,
-	// sans quoi le message mêle du français et des jetons anglais (issue #2571).
+	// sans quoi le message mêle du français et des jetons anglais
 	invalidDateFormatWithFormat: (format: string): string =>
 		`Format de date invalide (${format.replace(/D/g, 'J').replace(/Y/g, 'A')})`,
 	incompleteDate: 'La date est incomplète.',
