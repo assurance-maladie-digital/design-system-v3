@@ -74,6 +74,17 @@ import {
 </ul>
 </div>
 
+<div style={{ margin: '3rem 0', padding: '1.5rem', backgroundColor: '#fff3e0', borderLeft: '4px solid #f57c00', borderRadius: '4px' }}>
+<h2 style={{ color: '#e65100', marginTop: 0 }}>Faux positif (Tanaguru) : déconnexion « non atteignable au clavier »</h2>
+<ul>
+<li>Tanaguru peut signaler l’action « Logout » ou « Se déconnecter » de <code>SyBtnMenu</code> comme non atteignable au clavier, car elle porte <code>tabindex="-2"</code>.</li>
+<li>Cause : Vuetify retire cette action du parcours avec Tab. La navigation dans le menu est prévue avec les flèches du clavier, qui déplacent le focus en JavaScript.</li>
+<li>Vérification manuelle, sans souris : atteindre le bouton avec Tab, ouvrir le menu avec Entrée, puis utiliser les flèches pour atteindre la déconnexion.</li>
+<li>Vérification manuelle (navigation clavier réelle, sans clic souris) : vérifier que les flèches déplacent bien <code>document.activeElement</code> vers l’action « Logout » ou « Se déconnecter », que son nom est correctement annoncé par le lecteur d’écran et qu’Entrée permet de l’activer.</li>
+<li>Ce  n'est pas un bug du composant : la navigation clavier est fonctionnelle  et le contenu est correctement annoncé ; c'est une limite des outils  d'audit statiques face à un focus managé en JavaScript.</li>
+</ul>
+</div>
+
 	<ResourcesSection>
 		<ul>
 			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices: Menu Button</a></li>
