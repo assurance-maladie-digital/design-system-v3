@@ -3,7 +3,9 @@ import { mergeConfig } from 'vite'
 import remarkGfm from 'remark-gfm'
 
 const isDev = process.env.NODE_ENV === 'development'
-const showConformitePanel = process.env.BRANCH !== 'prod'
+// Outil de travail local : aucun Storybook déployé ne doit le porter, et
+// Netlify lance `build-storybook` pour tous ses environnements.
+const showConformitePanel = isDev
 
 const stories = [
 	// Fichiers directement dans src/
