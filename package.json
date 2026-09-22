@@ -7,7 +7,18 @@
   "type": "module",
   "files": [
     "dist",
-    "src"
+    "src",
+    "!src/stories",
+    "!src/**/*.mdx",
+    "!src/**/*.stories.*",
+    "!src/**/*.spec.ts",
+    "!src/**/*.test.ts",
+    "!src/**/*.cy.ts",
+    "!src/**/tests",
+    "!src/**/__tests__",
+    "!src/**/__snapshots__",
+    "!src/**/*.md",
+    "!src/**/*.old"
   ],
   "module": "./dist/design-system-v3.js",
   "types": "./dist/main.d.ts",
@@ -33,6 +44,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -p tsconfig.app.json && vite build",
+    "pack:check": "node ./scripts/check-package-files.mjs",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "cross-env NODE_OPTIONS=--max-old-space-size=4096 storybook build",
     "lint": "eslint \"src/**/*.{ts,vue}\"",
