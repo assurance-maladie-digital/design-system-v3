@@ -68,7 +68,7 @@
 			class="mb-6"
 			variant="outlined"
 		>
-			<VCardTitle class="text-h5 bg-primary lighten-4 py-3 px-4">
+			<VCardTitle class="text-h5 py-3 px-4">
 				Guide d'accessibilité pour SyIcon
 			</VCardTitle>
 
@@ -133,7 +133,7 @@
 			class="mb-6"
 			variant="outlined"
 		>
-			<VCardTitle class="text-h6 bg-secondary lighten-4 py-3 px-4">
+			<VCardTitle class="text-h6 py-3 px-4">
 				Démonstration interactive
 			</VCardTitle>
 
@@ -266,7 +266,7 @@
 			class="mb-6"
 			variant="outlined"
 		>
-			<VCardTitle class="text-h6 bg-accent lighten-4 py-3 px-4">
+			<VCardTitle class="text-h6 py-3 px-4">
 				Résultats
 			</VCardTitle>
 
@@ -316,7 +316,6 @@ pre {
 :deep(.v-list-item__overlay) {
     display: none;
 }
-
 :deep(.v-list-item-subtitle) {
     opacity: 1;
     color: #424242;
@@ -327,10 +326,21 @@ pre {
     opacity: 1;
     color: #212121;
 }
-
-:deep(.v-selection-control__input::before),
-:deep(.v-selection-control__input .v-ripple__container) {
+/* Le VField superpose un overlay + un input transparent au-dessus du texte
+   sélectionné : axe ne peut pas calculer le fond. */
+:deep(.v-field__overlay) {
     display: none;
 }
-
+:deep(.v-field) {
+    background-color: #fff;
+}
+:deep(.v-select__selection) {
+    position: relative;
+    z-index: 1;
+    background-color: #fff;
+}
+:deep(.v-select__selection-text) {
+    opacity: 1;
+    color: #212121;
+}
 </style>
