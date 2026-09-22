@@ -22,6 +22,35 @@ import * as PeriodFieldStories from "./PeriodField.stories.ts";
 
 <Controls of={PeriodFieldStories.Default}/>
 
+## Validation
+
+La validation des deux bornes utilise le système unifié Synapse, avec des règles
+croisées pour vérifier leur ordre. Les changements de règles et d'options de
+validation sont pris en compte sans modifier la période. Les DatePicker internes
+conservent leur enregistrement dans `SyForm`.
+
+Les méthodes `validateOnSubmit()` et `clearValidation()`, ainsi que les états
+`isValid`, `errors`, `warnings` et `successes`, restent disponibles.
+
+## Libellé accessible du groupe
+
+Les deux champs sont regroupés dans un même groupe accessible (`role="group"`).
+Son nom accessible est construit automatiquement à partir de `placeholderFrom` et
+`placeholderTo`, séparés par « - ». Pour l’intégration, personnalisez ces deux
+props afin d’obtenir un intitulé explicite avec votre vocabulaire métier :
+
+```vue
+<PeriodField
+  v-model="selectedPeriod"
+  placeholder-from="Date de début"
+  placeholder-to="Date de fin"
+/>
+```
+
+Le groupe sera alors annoncé comme « Date de début - Date de fin ». Ces props
+servent également de libellés visibles aux deux champs ; elles doivent donc rester
+courtes et descriptives.
+
 ## Utilisation de base
 
 <Source

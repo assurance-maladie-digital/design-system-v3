@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { describe, it } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
@@ -26,6 +26,8 @@ describe('PeriodField – accessibility (axe)', () => {
 		// rendered via <Teleport> and not present in the scanned subtree.
 		// See: https://github.com/assurance-maladie-digital/design-system-v3/issues/1960
 		const ignoreRules = ['region', 'aria-valid-attr-value']
+
+		expect(wrapper.find('[role="group"]').attributes('aria-label')).toBe('Début - Fin')
 
 		const results = await axe(wrapper.element as HTMLElement)
 		assertNoA11yViolations(results, 'PeriodField – valid period', {

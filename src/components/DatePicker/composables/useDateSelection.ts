@@ -1,6 +1,7 @@
 import { ref, unref } from 'vue'
 import type { Ref, MaybeRef } from 'vue'
 import { locales } from '../locales'
+import { isValidDateRange } from '../utils/dateFormattingUtils'
 
 /**
  * Composable pour gérer la sélection de dates dans les composants CalendarMode
@@ -12,11 +13,16 @@ export function useDateSelection(
 	format: MaybeRef<string>,
 	displayRange: MaybeRef<boolean>,
 ) {
-	// Stockage des dates de début et de fin pour les plages
 	const rangeBoundaryDates = ref<[Date | null, Date | null] | null>(null)
+	const currentFormat = () => unref(format)
 
 	const resetRange = () => {
 		rangeBoundaryDates.value = null
+	}
+
+	const clearSelection = () => {
+		selectedDates.value = null
+		resetRange()
 	}
 
 	/**
@@ -38,89 +44,127 @@ export function useDateSelection(
 		return dateArray
 	}
 
+	const applySingleSelection = (date: Date | null) => {
+		selectedDates.value = date
+		resetRange()
+	}
+
+	const startRangeSelection = (date: Date) => {
+		rangeBoundaryDates.value = [date, null]
+		selectedDates.value = [date]
+	}
+
+	const applyRangeSelection = (startDate: Date, endDate: Date) => {
+		rangeBoundaryDates.value = [startDate, endDate]
+
+		selectedDates.value = isValidDateRange(startDate, endDate)
+			? generateDateRange(startDate, endDate)
+			: [startDate, endDate]
+	}
+
+	const getPendingRangeStart = (): Date | null => {
+		if (rangeBoundaryDates.value?.[0] && !rangeBoundaryDates.value[1]) {
+			return rangeBoundaryDates.value[0]
+		}
+
+		if (Array.isArray(selectedDates.value) && selectedDates.value.length === 1) {
+			return selectedDates.value[0] ?? null
+		}
+
+		return null
+	}
+
+	const applyProgressiveRangeSelection = (date: Date) => {
+		const pendingStart = getPendingRangeStart()
+
+		if (!pendingStart) {
+			startRangeSelection(date)
+			return
+		}
+
+		applyRangeSelection(pendingStart, date)
+	}
+
+	const toDate = (value: Date | string | null | undefined): Date | null => {
+		if (value instanceof Date) return value
+		return value ? parseDate(value, currentFormat()) : null
+	}
+
+	const parseDateArray = (input: (Date | string | null | undefined)[]): Date[] => (
+		input
+			.map(toDate)
+			.filter((date): date is Date => date !== null)
+	)
+
+	const parseRangeString = (value: string): [Date, Date] | null => {
+		const [startDateText, endDateText] = value.split(locales.rangeSeparator)
+		if (startDateText === undefined || endDateText === undefined) return null
+
+		const startDate = parseDate(startDateText, currentFormat())
+		const endDate = parseDate(endDateText, currentFormat())
+		if (!startDate || !endDate) return null
+
+		return [startDate, endDate]
+	}
+
 	/**
 	 * Met à jour les dates sélectionnées en fonction de l'entrée
 	 */
 	const updateSelectedDates = (input: Date | Date[] | string | string[] | null | undefined) => {
-		// Cas 0: Input est null ou undefined (suppression de la sélection)
 		if (input === null || input === undefined) {
-			selectedDates.value = null
-			rangeBoundaryDates.value = null
+			clearSelection()
 			return
 		}
 
-		// Cas 1: Input est un tableau de dates ou de chaînes (sélection depuis le calendrier)
 		if (Array.isArray(input)) {
-			const dates = input
-				.map((item) => {
-					if (item instanceof Date) return item
-					return item ? parseDate(item, unref(format)) : null
-				})
-				.filter((date): date is Date => date !== null)
+			const dates = parseDateArray(input)
 
 			if (dates.length === 0) {
-				selectedDates.value = null
-				rangeBoundaryDates.value = null
+				clearSelection()
 				return
 			}
 
-			if (unref(displayRange) && dates.length >= 2) {
-				// Trier les dates pour s'assurer que nous avons la première et la dernière
-				dates.sort((a, b) => a.getTime() - b.getTime())
-
-				// Récupérer les dates de début et de fin
-				const startDate = dates[0]!
-				const endDate = dates[dates.length - 1]!
-
-				// Stocker les dates de début et de fin pour la plage, même si la plage est invalide
-				rangeBoundaryDates.value = [startDate, endDate]
-
-				// Pour l'affichage dans le calendrier, générer les dates intermédiaires si la plage est valide
-				if (startDate && endDate && startDate.getTime() <= endDate.getTime()) {
-					const allDates = generateDateRange(startDate, endDate)
-					selectedDates.value = allDates
+			if (unref(displayRange)) {
+				if (dates.length >= 2) {
+					dates.sort((a, b) => a.getTime() - b.getTime())
+					const startDate = dates[0]!
+					const endDate = dates[dates.length - 1]!
+					applyRangeSelection(startDate, endDate)
 				}
 				else {
-					// Même si la plage est invalide, conserver les deux dates pour l'affichage
-					// Cela permettra à l'utilisateur de voir et corriger la plage invalide
-					selectedDates.value = [startDate, endDate]
+					startRangeSelection(dates[0]!)
 				}
 			}
 			else {
 				selectedDates.value = dates
-				rangeBoundaryDates.value = null
+				resetRange()
 			}
 			return
 		}
 
-		// Cas 2: Input est une chaîne de caractères (saisie manuelle)
+		if (unref(displayRange) && input instanceof Date) {
+			applyProgressiveRangeSelection(input)
+			return
+		}
+
 		if (!unref(displayRange) && input instanceof Date) {
-			selectedDates.value = input
-			rangeBoundaryDates.value = null
+			applySingleSelection(input)
 			return
 		}
 
 		if (!unref(displayRange)) {
-			// Mode date unique
-			const date = input && typeof input === 'string' ? parseDate(input, unref(format)) : null
-			selectedDates.value = date === null ? null : date
-			rangeBoundaryDates.value = null
+			applySingleSelection(typeof input === 'string' ? parseDate(input, currentFormat()) : null)
+			return
 		}
-		else if (typeof input === 'string') {
-			// Mode plage de dates
-			const dates = input.split(locales.rangeSeparator)
-			if (dates.length === 2) {
-				const startDate = parseDate(dates[0]!, unref(format))
-				const endDate = parseDate(dates[1]!, unref(format))
-				if (startDate && endDate) {
-					// Stocker les dates de début et de fin pour la plage
-					rangeBoundaryDates.value = [startDate, endDate]
 
-					// Générer toutes les dates intermédiaires pour l'affichage dans le calendrier
-					const allDates = generateDateRange(startDate, endDate)
-					selectedDates.value = allDates
-				}
-			}
+		if (typeof input !== 'string') return
+
+		const parsedRange = parseRangeString(input)
+		if (!parsedRange) return
+
+		const [startDate, endDate] = parsedRange
+		if (startDate && endDate) {
+			applyRangeSelection(startDate, endDate)
 		}
 	}
 
