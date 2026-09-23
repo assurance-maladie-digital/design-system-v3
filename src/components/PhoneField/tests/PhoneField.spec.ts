@@ -847,14 +847,14 @@ describe('PhoneField', () => {
 			await flushPromises()
 
 			// Verify initial value is set (masked)
-			expect(phoneInput.element.value).toContain('01')
+			expect((phoneInput.element as HTMLInputElement).value).toContain('01')
 
 			// Reset form
 			form.reset()
 			await waitForDomUpdate()
 
 			// Verify PhoneField is reset (input is empty)
-			expect(phoneInput.element.value).toBe('')
+			expect((phoneInput.element as HTMLInputElement).value).toBe('')
 			// Verify no error messages are displayed
 			const errorMessagesAfter = wrapper.findAll('.v-messages__message')
 			expect(errorMessagesAfter.length).toBe(0)
