@@ -1,11 +1,16 @@
-import type { ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
+import type {
+	ValidationResult as LegacyValidationResult,
+	ValidationRule as SyValidationRule,
+} from '@/composables/validation/useValidation'
 import { computed, ref, toValue, type Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
-import { useCustomValidation } from './useCustomValidation'
+import { useCustomValidation, type UseCustomValidationOptions } from './useCustomValidation'
 import { useVuetifyValidation as useVuetifyValidationComposable } from './useVuetifyValidation'
+import { mergeMessages } from './messageUtils'
 
 export type { VuetifyValidationRule }
 export type { SyValidationRule as ValidationRule }
+export type { LegacyValidationResult as ValidationResult }
 
 export interface FieldValidationProps {
 	customRules?: SyValidationRule[]
@@ -39,6 +44,8 @@ export interface FieldValidationProps {
  * errorMessages/warningMessages/successMessages sont des messages externes injectés par le parent
  * et ne déclenchent aucun calcul de validation.
  * Expose aussi une interface unifiée pour les erreurs, avertissements, succès et la validation à la demande.
+ * Les options permettent aux champs composites de déléguer l'enregistrement Synapse
+ * au formulaire à leurs enfants et d'orchestrer eux-mêmes la revalidation.
  */
 export const validationPropsDefaults = {
 	readonly: false,
@@ -95,7 +102,7 @@ export function useValidation(params: {
 	customWarningRules?: Ref<SyValidationRule[]>
 	customSuccessRules?: Ref<SyValidationRule[]>
 	rules: Ref<VuetifyValidationRule[] | undefined>
-})) {
+}), options: Pick<UseCustomValidationOptions, 'registerWithForm' | 'reactiveValidation'> = {}) {
 	const vuetifyErrors = ref<string[]>([])
 	const customErrors = ref<string[]>([])
 	const innerWarnings = ref<string[]>([])
@@ -135,6 +142,7 @@ export function useValidation(params: {
 		params.disableErrorHandling,
 		params.readonly,
 		params.disabled,
+		options,
 	)
 
 	async function validate(): Promise<boolean> {
@@ -166,7 +174,7 @@ export function useValidation(params: {
 		}
 
 		const max = params.maxErrors?.value
-		return max && max > 0 ? [...new Set(errorslist)].slice(0, max) : [...new Set(errorslist)]
+		return mergeMessages(null, errorslist, max)
 	})
 
 	const warnings = computed(() => {
@@ -175,7 +183,7 @@ export function useValidation(params: {
 			warningsList.push(...innerWarnings.value)
 		}
 		const max = params.maxErrors?.value
-		return max && max > 0 ? [...new Set(warningsList)].slice(0, max) : [...new Set(warningsList)]
+		return mergeMessages(null, warningsList, max)
 	})
 	const successes = computed(() => {
 		const successesList = [...params.successMessages?.value || []]
@@ -183,7 +191,7 @@ export function useValidation(params: {
 			successesList.push(...innerSuccesses.value)
 		}
 		const max = params.maxErrors?.value
-		return max && max > 0 ? [...new Set(successesList)].slice(0, max) : [...new Set(successesList)]
+		return mergeMessages(null, successesList, max)
 	})
 	const internalHasSuccess = computed(() => customValidator.hasSuccess.value)
 

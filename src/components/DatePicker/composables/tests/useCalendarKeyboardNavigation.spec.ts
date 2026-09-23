@@ -810,7 +810,7 @@ describe('useCalendarKeyboardNavigation', () => {
 		const wrappers = Array.from({ length: 12 }, (_, i) => {
 			const wrapper = document.createElement('div')
 			wrapper.dataset.syDatePickerOption = 'month'
-			wrapper.setAttribute('aria-pressed', i === 8 ? 'true' : 'false')
+			wrapper.setAttribute('aria-selected', i === 8 ? 'true' : 'false')
 			wrapper.tabIndex = i === 8 ? 0 : -1
 			wrapper.focus = vi.fn()
 
@@ -1036,7 +1036,7 @@ describe('useCalendarKeyboardNavigation', () => {
 			const wrapper = document.createElement('div')
 			wrapper.dataset.syDatePickerOption = 'year'
 			wrapper.setAttribute('aria-label', year)
-			wrapper.setAttribute('aria-pressed', year === '2026' ? 'true' : 'false')
+			wrapper.setAttribute('aria-selected', year === '2026' ? 'true' : 'false')
 			wrapper.tabIndex = year === '2026' ? 0 : -1
 			wrapper.focus = vi.fn()
 
@@ -1101,6 +1101,48 @@ describe('useCalendarKeyboardNavigation', () => {
 
 		document.body.removeChild(rootEl)
 		vi.useRealTimers()
+	})
+
+	it('detaches from the target used during attachment when the date picker root changes', () => {
+		const isDatePickerVisible = ref(true)
+		const initialRootEl = document.createElement('div')
+		const initialDatePickerEl = document.createElement('div')
+		initialDatePickerEl.className = 'v-date-picker'
+		initialRootEl.appendChild(initialDatePickerEl)
+
+		const replacementRootEl = document.createElement('div')
+		const replacementDatePickerEl = document.createElement('div')
+		replacementDatePickerEl.className = 'v-date-picker'
+		replacementRootEl.appendChild(replacementDatePickerEl)
+
+		const datePickerRef = ref<ComponentPublicInstance | null>({ $el: initialRootEl } as unknown as ComponentPublicInstance)
+		const initialRemoveSpy = vi.spyOn(initialDatePickerEl, 'removeEventListener')
+		const replacementRemoveSpy = vi.spyOn(replacementDatePickerEl, 'removeEventListener')
+
+		let detachListeners!: () => void
+		const TestComponent = defineComponent({
+			setup() {
+				const result = useCalendarKeyboardNavigation({
+					isDatePickerVisible,
+					datePickerRef,
+					getCurrentDate: vi.fn(() => null),
+					setCurrentDate: vi.fn(),
+				})
+				detachListeners = result.detachListeners
+				result.attachListeners()
+				return () => null
+			},
+		})
+		mount(TestComponent)
+
+		datePickerRef.value = { $el: replacementRootEl } as unknown as ComponentPublicInstance
+		detachListeners()
+
+		expect(initialRemoveSpy).toHaveBeenCalledWith('keydown', expect.any(Function), true)
+		expect(replacementRemoveSpy).not.toHaveBeenCalled()
+
+		initialRemoveSpy.mockRestore()
+		replacementRemoveSpy.mockRestore()
 	})
 
 	it('attaches the keydown listener to the dialog container rather than a gridcell with tabindex -1', () => {

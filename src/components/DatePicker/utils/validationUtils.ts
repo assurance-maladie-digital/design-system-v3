@@ -1,7 +1,44 @@
-﻿import { formatDate } from '@/utils/formatDate'
+﻿/**
+ * validationUtils — Fonctions utilitaires de validation pour les composants DatePicker.
+ *
+ * ## Fonctions exportées
+ *
+ * - `isModelValueEqual` : Comparaison robuste de deux `DateModelValue` (insensible au timezone,
+ *   gère les tableaux pour les plages). Utilisée par `updateModel` pour éviter les emits redondants.
+ * - `adaptCustomRules` : Adapte les règles personnalisées pour qu'elles fonctionnent aussi bien
+ *   avec des `Date` qu'avec des `string`. Convertit les `Date` en chaîne formatée avant de passer
+ *   à la fonction `validate` de la règle.
+ * - `validateEmptyOrIncompleteDate` : Pré-validation pour les champs vides ou incomplets.
+ *   Retourne `{ shouldContinue, isValid, errorMessage }` pour court-circuiter la validation
+ *   quand le champ est vide (required géré) ou incomplet (pas assez de chiffres).
+ * - `FormatValidationResult` : Interface du résultat de validation de format.
+ *
+ * ## Utilisation
+ *
+ * Ces fonctions sont consommées par `useDatePickerValidation.ts` (orchestrateur) et
+ * indirectement par les composants DatePicker via le bridge de validation.
+ */
+import { formatDate } from '@/utils/formatDate'
 import dayjs from 'dayjs'
 import { locales } from '../locales'
 import type { DatePickerRule } from '../types'
+import type { DateInput, DateModelValue } from '@/composables/date/useDateInitializationDayjs'
+
+/**
+ * Compare deux valeurs DateModelValue de manière robuste.
+ * Contrairement à JSON.stringify, cette fonction est insensible au timezone
+ * et ne dépend pas de la sérialisation.
+ */
+export const isModelValueEqual = (a: DateModelValue | undefined, b: DateInput | undefined): boolean => {
+	if (a === b) return true
+	if (a === null || a === undefined || b === null || b === undefined) return false
+	if (Array.isArray(a) && Array.isArray(b)) {
+		if (a.length !== b.length) return false
+		return a.every((val, i) => val === b[i])
+	}
+	if (Array.isArray(a) || Array.isArray(b)) return false
+	return a === b
+}
 
 /**
  * Adapte les règles personnalisées pour assurer la compatibilité avec différents types de valeurs
@@ -21,11 +58,9 @@ export const adaptCustomRules = (rules: DatePickerRule[] = [], format: string): 
 			safeCopy.options = { ...rule.options }
 
 			safeCopy.options.validate = (val: unknown) => {
-				// Si la valeur est une Date mais que la fonction originale attend une chaîne
-				// (détecté par la présence de includes dans le code source)
-				if (val instanceof Date && originalValidate.toString().includes('.includes')) {
-					// Convertir la date en chaîne au format spécifié
-					return originalValidate(format ? formatDate(dayjs(val), format) : val.toISOString())
+				if (val instanceof Date) {
+					const formatted = format ? formatDate(dayjs(val), format) : val.toISOString()
+					return originalValidate(formatted)
 				}
 				return originalValidate(val)
 			}
@@ -53,7 +88,7 @@ export const validateEmptyOrIncompleteDate = (
 		return {
 			shouldContinue: false,
 			isValid: false,
-			errorMessage: locales.fieldRequired,
+			errorMessage: locales.required,
 		}
 	}
 
