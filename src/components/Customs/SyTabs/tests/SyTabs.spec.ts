@@ -847,6 +847,25 @@ describe('SyTabs', () => {
 		})
 	})
 
+	// Régression #2577 : les slots panel-{index} n'étaient plus pris en compte
+	describe('panel slots', () => {
+		it('renders the panel-{index} slot content instead of item.content', async () => {
+			const wrapper = mount(SyTabs, {
+				...defaultMountOptions,
+				slots: {
+					'panel-0': '<p data-test="custom-panel-0">Contenu personnalisé 0</p>',
+					'panel-1': '<p data-test="custom-panel-1">Contenu personnalisé 1</p>',
+				},
+			})
+
+			const panels = wrapper.findAll('.sy-tabs-panel')
+			expect(panels[0]!.find('[data-test="custom-panel-0"]').exists()).toBe(true)
+			expect(panels[0]!.text()).not.toContain('Contenu du Tab 1')
+			expect(panels[1]!.find('[data-test="custom-panel-1"]').exists()).toBe(true)
+			expect(panels[2]!.text()).toBe('Contenu du Tab 3')
+		})
+	})
+
 	// Le ring de focus des onglets est porté par SyTabs (.sy-tabs__button:focus-visible,
 	// 2px, cf. SyTabs.vue). jsdom ne calcule pas :focus-visible : on vérifie que les
 	// onglets sont bien des éléments focusables (role tab).
