@@ -1,6 +1,7 @@
 import { mount, VueWrapper } from '@vue/test-utils'
 import LangBtn from '../LangBtn.vue'
 import { describe, it, expect, afterEach, vi } from 'vitest'
+import { defineComponent } from 'vue'
 import ISO6391 from 'iso-639-1'
 
 describe('LangBtn', () => {
@@ -251,6 +252,93 @@ describe('LangBtn', () => {
 		expect(wrapper.find('.vd-lang-btn').text()).toBe('corsu')
 		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['co'])
+	})
+
+	it('exposes aria-controls and aria-owns only once the menu they reference exists', async () => {
+		wrapper = mount(LangBtn, {
+			props: {
+				availableLanguages: ['fr', 'en'],
+			},
+			attachTo: document.body,
+		})
+
+		const activator = wrapper.get('.vd-lang-btn')
+		expect(activator.attributes('aria-controls')).toBeUndefined()
+		expect(activator.attributes('aria-owns')).toBeUndefined()
+
+		await activator.trigger('click')
+		await wrapper.vm.$nextTick()
+
+		const controls = activator.attributes('aria-controls')
+		expect(controls).toBeTruthy()
+		expect(document.getElementById(controls!)).not.toBeNull()
+	})
+
+	it('moves focus between items with arrow keys, Home and End', async () => {
+		wrapper = mount(LangBtn, {
+			props: {
+				modelValue: 'fr',
+				availableLanguages: ['fr', 'co', 'es'],
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.find('.vd-lang-btn').trigger('click')
+		await wrapper.vm.$nextTick()
+
+		const items = document.body.querySelectorAll('.v-list-item')
+
+		// Le focus initial est posé en différé (retry rAF le temps que l'overlay
+		// téléporté soit monté) : on attend qu'il se stabilise sur un item.
+		await vi.waitFor(() => {
+			expect(document.activeElement).toBe(items[0])
+		})
+
+		const keydown = (index: number, key: string) => {
+			items[index]?.dispatchEvent(new KeyboardEvent('keydown', { key, bubbles: true }))
+		}
+
+		// Le focus initial est placé sur la langue sélectionnée (fr)
+		expect(document.activeElement).toBe(items[0])
+
+		keydown(0, 'ArrowDown')
+		expect(document.activeElement).toBe(items[1])
+
+		keydown(1, 'ArrowDown')
+		expect(document.activeElement).toBe(items[2])
+
+		// Bouclage : ArrowDown sur le dernier item revient au premier
+		keydown(2, 'ArrowDown')
+		expect(document.activeElement).toBe(items[0])
+
+		keydown(0, 'ArrowUp')
+		expect(document.activeElement).toBe(items[2])
+
+		keydown(2, 'Home')
+		expect(document.activeElement).toBe(items[0])
+
+		keydown(0, 'End')
+		expect(document.activeElement).toBe(items[2])
+	})
+
+	it('generates unique ids per instance', () => {
+		// useId() est scopé par app : les deux instances doivent partager la même app
+		// pour reproduire le cas réel de plusieurs LangBtn sur une page.
+		const Host = defineComponent({
+			components: { LangBtn },
+			template: `
+				<LangBtn :available-languages="['fr', 'en']" />
+				<LangBtn :available-languages="['fr', 'en']" />
+			`,
+		})
+		const host = mount(Host)
+
+		const ids = host.findAll('.vd-lang-btn').map(btn => btn.attributes('id'))
+		expect(ids[0]).toBeTruthy()
+		expect(ids[1]).toBeTruthy()
+		expect(ids[0]).not.toBe(ids[1])
+
+		host.unmount()
 	})
 })
 

@@ -1,13 +1,11 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`LangBtn > renders correctly 1`] = `
-<div id="lang-menu-id">
+<div>
   <button
-    aria-controls="lang-menu-id"
     aria-expanded="false"
     aria-haspopup="menu"
     aria-label="Choix de la langue. Actuellement Français"
-    aria-owns="lang-menu-id"
     class="
       text-primary
       v-btn
@@ -17,7 +15,7 @@ exports[`LangBtn > renders correctly 1`] = `
       v-theme--light
       vd-lang-btn
     "
-    id="lang-menu-btn"
+    id="lang-btn-v-0"
     type="button"
   >
     <span class="v-btn__overlay"></span>

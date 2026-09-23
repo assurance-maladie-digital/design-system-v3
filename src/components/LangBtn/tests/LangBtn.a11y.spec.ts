@@ -22,4 +22,24 @@ describe('LangBtn – accessibility (axe)', () => {
 			ignoreRules: ['region'],
 		})
 	})
+
+	it('has no obvious axe violations in open state', async () => {
+		const wrapper = mount(LangBtn, {
+			props: {
+				availableLanguages: ['fr', 'en'],
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.find('.vd-lang-btn').trigger('click')
+		await wrapper.vm.$nextTick()
+
+		// Le contenu du VMenu est téléporté hors du wrapper : on audite tout le document.
+		const results = await axe(document.body)
+		assertNoA11yViolations(results, 'LangBtn – open state', {
+			ignoreRules: ['region'],
+		})
+
+		wrapper.unmount()
+	})
 })

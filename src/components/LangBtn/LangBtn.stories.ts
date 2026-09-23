@@ -37,9 +37,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -100,9 +97,6 @@ export const Default: Story = {
 
 export const AllLanguages: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -151,9 +145,6 @@ export const AllLanguages: Story = {
 
 export const NoDownArrow: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -204,9 +195,6 @@ export const NoDownArrow: Story = {
 
 export const FlatBtn: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',

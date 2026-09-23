@@ -1,15 +1,86 @@
-import { Meta, Story } from '@storybook/addon-docs/blocks';
+import { Meta, Primary } from '@storybook/addon-docs/blocks';
 import * as Stories from '../LangBtn.stories.ts';
-import '@/stories/styles/shared.css';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={Stories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
-
-
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/LangBtn.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+<AccessibilityGuideLayout
+	componentName="LangBtn"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/"
+>
+	<div class="mt-8">
+		<p>Rapport d’audit manuel : <a href="/audits/LangBtn.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
 		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4009" target="_blank" style={{color:'#0C41BD'}}>issue #4009</a>)</p>
 	</div>
+
+	<CriteriaSection>
+		<CriteriaCard title="Structure sémantique et attributs">
+			<ul>
+				<li><strong>Bouton natif</strong> : l'activateur est un <code>&lt;button&gt;</code> (via <code>VBtn</code>) portant <code>aria-haspopup="menu"</code> et <code>aria-expanded</code>, avec un nom accessible explicitant la langue courante (<code>aria-label</code>, personnalisable via la prop <code>ariaLabel</code>).</li>
+				<li><strong>Menu</strong> : la liste porte <code>role="menu"</code> et chaque option <code>role="menuitemradio"</code> avec <code>aria-checked</code> — la langue active est donc restituée comme un choix exclusif par les technologies d'assistance.</li>
+				<li><strong>Relations ARIA</strong> : <code>aria-labelledby</code> relie le menu au bouton ; <code>aria-controls</code> et <code>aria-owns</code> ne sont exposés que lorsque le menu est réellement monté dans le DOM (le contenu du <code>VMenu</code> est téléporté et rendu à la demande).</li>
+				<li><strong>Identifiants uniques</strong> : les ids du bouton et de la liste sont générés via <code>useId()</code>, ce qui permet plusieurs instances du composant sur une même page sans collision.</li>
+				<li><strong>Changement de langue</strong> : chaque option porte l'attribut <code>lang</code> correspondant à son code ISO 639-1, pour une restitution correcte du nom de langue (critère RGAA 8.7).</li>
+				<li><strong>Icône décorative</strong> : la flèche est masquée aux lecteurs d'écran (<code>decorative</code>).</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard title="Navigation et interaction clavier">
+			<ul>
+				<li><strong>Ouverture</strong> : <kbd>Entrée</kbd> ou <kbd>Espace</kbd> sur le bouton ouvre le menu ; le focus est placé sur la langue actuellement sélectionnée.</li>
+				<li><strong>Déplacement dans le menu</strong> : <kbd>Flèche haut</kbd> / <kbd>Flèche bas</kbd> naviguent entre les options avec bouclage, <kbd>Home</kbd> et <kbd>End</kbd> rejoignent la première et la dernière option (pattern menu APG — le focus réel est déplacé, sans <code>aria-activedescendant</code>).</li>
+				<li><strong>Activation</strong> : <kbd>Entrée</kbd> ou <kbd>Espace</kbd> sur une option la sélectionne et ferme le menu.</li>
+				<li><strong>Fermeture</strong> : <kbd>Échap</kbd> ferme le menu ; le focus est restitué au bouton activateur.</li>
+				<li><strong>Indicateur de focus</strong> : un outline visible est appliqué aux options en <code>:focus-visible</code>.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard title="Restitution et états">
+			<ul>
+				<li><strong>État du menu</strong> : <code>aria-expanded</code> reflète l'ouverture du menu sur le bouton.</li>
+				<li><strong>Option sélectionnée</strong> : <code>aria-checked</code> sur l'option active et mise en évidence visuelle via la prop <code>active</code> de <code>VListItem</code>.</li>
+				<li><strong>Nom des options</strong> : chaque option expose son nom natif (ex. « Français », « English ») comme nom accessible, sans <code>aria-label</code> redondant.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="LangBtn">
+		<Primary />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li><strong>Libellé explicite</strong> : conservez un <code>ariaLabel</code> qui annonce clairement la fonction (« Choix de la langue ») ; la langue courante est ajoutée automatiquement au nom accessible.</li>
+			<li><strong>Langues pertinentes</strong> : limitez <code>availableLanguages</code> aux langues réellement proposées par votre service plutôt que <code>"*"</code>, qui rend la navigation clavier très longue.</li>
+			<li><strong>Placement prévisible</strong> : positionnez le sélecteur de langue à un endroit constant de vos pages (généralement dans l'en-tête).</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/" target="_blank" rel="noopener noreferrer">Guide des pratiques WAI-ARIA : Menu Button</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#8.7" target="_blank" rel="noopener noreferrer">RGAA : critère 8.7 — changement de langue</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#7.3" target="_blank" rel="noopener noreferrer">RGAA : critère 7.3 — contrôle par le clavier</a></li>
+		</ul>
+	</ResourcesSection>
+
+	<div style={{ margin: '3rem 0', padding: '1.5rem', backgroundColor: '#fff3e0', borderLeft: '4px solid #f57c00', borderRadius: '4px' }}>
+		<h2 style={{ color: '#e65100', marginTop: 0 }}>Faux positif connu (outillage) : aria-controls + aria-haspopup</h2>
+		<ul>
+			<li>axe (vitest-axe, addon Storybook) peut remonter <code>aria-valid-attr-value</code> en « inconclusive » : <em>« Unable to determine if aria-controls referenced ID exists on the page while using aria-haspopup »</em>.</li>
+			<li>Cause : dès qu'<code>aria-controls</code> coexiste avec <code>aria-haspopup</code>, axe-core marque systématiquement le résultat « needs review » — il ne peut pas vérifier statiquement qu'une popup rendue à la demande existe. Ici, <code>VMenu</code> monte son contenu en lazy et le téléporte dans <code>.v-overlay-container</code> sous <code>&lt;body&gt;</code>.</li>
+			<li>Le composant limite déjà le signal : <code>aria-controls</code> et <code>aria-owns</code> ne sont exposés que lorsque le menu est réellement monté (état ouvert), et pointent vers l'identifiant d'overlay généré par <code>VMenu</code>.</li>
+			<li>Vérification manuelle (DevTools, menu ouvert) : <code>document.getElementById(btn.getAttribute('aria-controls'))</code> retourne bien l'élément du menu — la référence est valide dans le DOM réel.</li>
+			<li>Ce n'est pas un bug du composant mais une limite des scanners statiques face aux popups téléportées et rendues à la demande.</li>
+		</ul>
+	</div>
+</AccessibilityGuideLayout>
