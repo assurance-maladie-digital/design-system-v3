@@ -14,6 +14,7 @@
 		mdiClose,
 		mdiHelp,
 	} from '@mdi/js'
+	import SySelect from '../Selects/SySelect/SySelect.vue'
 
 	// Liste d'icônes prédéfinies pour la sélection
 	const iconOptions = [
@@ -121,11 +122,11 @@
 							aria-hidden="true")
 						</VListItemSubtitle>
 					</VListItem>
+					<VDivider
+						role="presentation"
+						aria-hidden="true"
+					/>
 					<VListItem>
-						<VDivider
-							role="presentation"
-							aria-hidden="true"
-						/>
 						<VListItemTitle class="font-weight-bold">
 							Icônes informatives
 						</VListItemTitle>
@@ -199,14 +200,14 @@
 							>
 								Sélectionnez une icône
 							</span>
-							<VSelect
+							<SySelect
 								v-model="selectedIconIndex"
 								:items="iconOptions"
-								item-title="label"
-								item-value="index"
+								text-key="label"
+								value-key="index"
 								aria-labelledby="icon-select-label"
 								class="mb-4"
-								variant="outlined"
+								variant-style="outlined"
 								density="comfortable"
 								hide-details
 								@update:model-value="updateSelectedIcon"
@@ -333,42 +334,5 @@ pre {
 	margin: 0;
 	white-space: pre-wrap;
 	word-break: break-word;
-}
-
-:deep(.v-list-item__overlay) {
-	display: none;
-}
-
-:deep(.v-list-item-subtitle) {
-	opacity: 1;
-	color: #424242;
-	-webkit-line-clamp: unset;
-	line-clamp: unset;
-}
-
-:deep(.v-label) {
-	opacity: 1;
-	color: #212121;
-}
-
-/* Le VField superpose un overlay + un input transparent au-dessus du texte
-   sélectionné : axe ne peut pas calculer le fond. */
-:deep(.v-field__overlay) {
-	display: none;
-}
-
-:deep(.v-field) {
-	background-color: #fff;
-}
-
-:deep(.v-select__selection) {
-	position: relative;
-	z-index: 1;
-	background-color: #fff;
-}
-
-:deep(.v-select__selection-text) {
-	opacity: 1;
-	color: #212121;
 }
 </style>

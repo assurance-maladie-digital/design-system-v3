@@ -329,20 +329,6 @@ export const InformativeIcon: Story = {
 }
 
 export const AccessibilityDemo: Story = {
-	parameters: {
-		a11y: {
-			config: {
-				rules: [
-					{
-						// Faux positif Vuetify : le menu du VSelect est teleporté
-						// et monté seulement à l'ouverture.
-						id: 'aria-valid-attr-value',
-						enabled: false,
-					},
-				],
-			},
-		},
-	},
 	args: {
 		icon: mdiStar, // Using an icon from the imported icons
 	},
