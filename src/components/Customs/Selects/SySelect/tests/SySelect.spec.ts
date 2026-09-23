@@ -2042,3 +2042,44 @@ describe('SySelect.vue — utilisation sans model-value / v-model', () => {
 		expect(readonlyWarnings).toEqual([])
 	})
 })
+
+describe('Integration with SyForm', () => {
+	it('SyForm.reset() resets SySelect value and errors', async () => {
+		const wrapper = mount({
+			components: { SyForm, SySelect },
+			template: `
+					<SyForm ref="form">
+						<SySelect v-model="selected" :items="items" required />
+						<button type="reset">Reset</button>
+					</SyForm>
+				`,
+			data() {
+				return {
+					selected: '1',
+					items: [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }],
+				}
+			},
+			attachTo: document.body,
+		})
+
+		const sySelect = wrapper.findComponent(SySelect)
+		const form = wrapper.vm.$refs.form as InstanceType<typeof SyForm>
+		const input = wrapper.find('input')
+
+		// Verify initial selection in DOM
+		expect(input.element.value).toBe('Option 1')
+
+		// Reset form
+		form.reset()
+		await flushPromises()
+
+		// Verify SySelect is reset (v-model is null)
+		expect(sySelect.props('modelValue')).toBeNull()
+		// Verify input is empty
+		expect(input.element.value).toBe('')
+		// Verify no error messages are displayed
+		expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+
+		wrapper.unmount()
+	})
+})

@@ -144,4 +144,32 @@ describe('DatePicker CalendarMode - clearValidation()', () => {
 			wrapper.unmount()
 		})
 	})
+
+	describe('Mode Range', () => {
+		it('clearValidation() clears errors for both date fields in Range mode', async () => {
+			wrapper = mount(DatePicker, {
+				props: { modelValue: [null, null], label: 'Date Range', required: true, range: true },
+				global: {
+					stubs: {
+						VDatePicker: { template: '<div class="v-date-picker-mock"></div>' },
+						VMenu: { template: '<div class="v-menu-mock"><slot name="activator"></slot><slot></slot></div>' },
+					},
+				},
+			})
+
+			const vm = wrapper.vm as DatePickerInstance
+
+			await vm.validateOnSubmit()
+			await nextTick()
+
+			expect(vm.errorMessages.length).toBeGreaterThan(0)
+
+			vm.clearValidation()
+			await nextTick()
+
+			expect(vm.errorMessages).toEqual([])
+
+			wrapper.unmount()
+		})
+	})
 })

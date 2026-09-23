@@ -795,6 +795,73 @@ describe('PhoneField', () => {
 
 	// Tests de validation
 	describe('Validation', () => {
+		it('PhoneField.clearValidation() clears errors in SyTextField', async () => {
+			const wrapper = mount({
+				components: { PhoneField, SyForm },
+				template: `
+						<SyForm ref="form">
+							<PhoneField required v-model="phone" />
+						</SyForm>
+					`,
+				data() { return { phone: '' } },
+				attachTo: document.body,
+			})
+
+			// Trigger form submit to display errors
+			await wrapper.find('form').trigger('submit.prevent')
+			await flushPromises()
+
+			// Verify error messages are displayed
+			const errorMessagesBefore = wrapper.findAll('.v-messages__message')
+			expect(errorMessagesBefore.length).toBeGreaterThan(0)
+
+			// Call clearValidation via SyForm
+			const form = wrapper.vm.$refs.form as InstanceType<typeof SyForm>
+			form.clearValidation()
+			await nextTick()
+
+			// Verify errors are cleared (no error messages in DOM)
+			const errorMessagesAfter = wrapper.findAll('.v-messages__message')
+			expect(errorMessagesAfter.length).toBe(0)
+
+			wrapper.unmount()
+		})
+
+		it('SyForm.reset() resets PhoneField value and errors', async () => {
+			const wrapper = baseMount({
+				components: { PhoneField, SyForm },
+				template: `
+						<SyForm ref="form">
+							<PhoneField required v-model="phone" />
+							<button type="reset">Reset</button>
+						</SyForm>
+					`,
+				data() { return { phone: '0123456789' } },
+				attachTo: document.body,
+			})
+
+			const phoneInput = wrapper.find('input[type="tel"]')
+			const form = wrapper.vm.$refs.form as InstanceType<typeof SyForm>
+
+			// Wait for mask to be applied
+			await flushPromises()
+
+			// Verify initial value is set (masked)
+			expect(phoneInput.element.value).toContain('01')
+
+			// Reset form
+			form.reset()
+			await waitForDomUpdate()
+
+			// Verify PhoneField is reset (input is empty)
+			expect(phoneInput.element.value).toBe('')
+			// Verify no error messages are displayed
+			const errorMessagesAfter = wrapper.findAll('.v-messages__message')
+			expect(errorMessagesAfter.length).toBe(0)
+
+			wrapper.unmount()
+		})
+
 		it('cleans spaces from phone number before validation', async () => {
 			const wrapper = mount(PhoneField, {
 				props: {

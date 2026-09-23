@@ -4,8 +4,9 @@ import SyForm from '../SyForm.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import NirField from '@/components/NirField/NirField.vue'
 import { VTextField } from 'vuetify/components/VTextField'
-import { defineComponent, h, nextTick } from 'vue'
+import { defineComponent, h, nextTick, type InstanceType } from 'vue'
 import { useValidatable } from '@/composables/validation/useValidatable'
+import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 
 describe('SyForm', () => {
 	it('modelValue should reflect validity of the form', async () => {
@@ -607,5 +608,88 @@ describe('SyForm', () => {
 		expect(wrapper.vm.formValide).toBe(null)
 
 		wrapper.unmount()
+	})
+
+	describe('Integration with DatePicker (legacy fields)', () => {
+		it('SyForm.clearValidation() clears validation errors for DatePicker in Calendar mode', async () => {
+			const wrapper = mount({
+				components: { SyForm, DatePicker },
+				template: `
+					<SyForm ref="form">
+						<DatePicker v-model="date" label="Date" required />
+					</SyForm>
+				`,
+				data() { return { date: null } },
+				global: {
+					stubs: {
+						VDatePicker: { template: '<div class="v-date-picker-mock"></div>' },
+						VMenu: { template: '<div class="v-menu-mock"><slot name="activator"></slot><slot></slot></div>' },
+					},
+				},
+			})
+
+			const formRef = wrapper.vm.$refs.form as InstanceType<typeof SyForm>
+
+			// Trigger form validation (should fail because required but null)
+			await wrapper.find('form').trigger('submit.prevent')
+			await flushPromises()
+
+			// Verify error messages are displayed in the DOM
+			const errorMessagesBefore = wrapper.findAll('.v-messages__message')
+			expect(errorMessagesBefore.length).toBeGreaterThan(0)
+
+			// Clear validation via SyForm
+			formRef.clearValidation()
+			await nextTick()
+
+			// Verify errors are cleared (no error messages in DOM)
+			const errorMessagesAfter = wrapper.findAll('.v-messages__message')
+			expect(errorMessagesAfter.length).toBe(0)
+
+			wrapper.unmount()
+		})
+
+		it('SyForm.reset() resets DatePicker in Calendar mode', async () => {
+			const wrapper = mount({
+				components: { SyForm, DatePicker },
+				template: `
+					<SyForm>
+						<DatePicker v-model="date" label="Date" required />
+						<button type="reset">Reset</button>
+					</SyForm>
+				`,
+				data() { return { date: null } },
+				global: {
+					stubs: {
+						VDatePicker: { template: '<div class="v-date-picker-mock"></div>' },
+						VMenu: { template: '<div class="v-menu-mock"><slot name="activator"></slot><slot></slot></div>' },
+					},
+				},
+			})
+
+			// Set a date value
+			await wrapper.setData({ date: '2026-09-23' })
+			await nextTick()
+
+			// Trigger validation (should pass)
+			await wrapper.find('form').trigger('submit.prevent')
+			await flushPromises()
+
+			// Verify no errors
+			const errorMessagesBefore = wrapper.findAll('.v-messages__message')
+			expect(errorMessagesBefore.length).toBe(0)
+
+			// Reset form
+			await wrapper.find('button[type="reset"]').trigger('click')
+			await flushPromises()
+
+			// Verify DatePicker is reset (v-model is null)
+			expect(wrapper.vm.date).toBeNull()
+			// Verify no error messages are displayed
+			const errorMessagesAfter = wrapper.findAll('.v-messages__message')
+			expect(errorMessagesAfter.length).toBe(0)
+
+			wrapper.unmount()
+		})
 	})
 })
