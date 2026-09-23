@@ -2,7 +2,7 @@ import { unref } from 'vue'
 import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 import { locales } from '../../locales'
 import type { DatePickerRule } from '../../types'
-import { adaptCustomRules, hasImpossibleDateSegment, validateEmptyOrIncompleteDate } from '../../utils/validationUtils'
+import { adaptCustomRules, validateEmptyOrIncompleteDate } from '../../utils/validationUtils'
 import { getRangeValidationError } from '../../utils/dateFormattingUtils'
 import { validateDateFormat, isDateComplete } from '../useDateFormatUtils'
 import type { ValidationContext } from './types'
@@ -120,15 +120,6 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 		}
 
 		if (!emptyCheck.shouldContinue) {
-			// Une saisie incomplète est tolérée pendant la frappe, sauf si un
-			// segment déjà complet est hors plage : il ne deviendra jamais valide.
-			if (emptyCheck.isValid && hasImpossibleDateSegment(value, format)) {
-				if (ctx.shouldDisplayErrors()) {
-					ctx.pushError(locales.invalidDateFormatWithFormat(format))
-				}
-				return false
-			}
-
 			return emptyCheck.isValid
 		}
 
