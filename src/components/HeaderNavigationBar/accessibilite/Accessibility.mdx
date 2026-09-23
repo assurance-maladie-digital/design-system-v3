@@ -1,0 +1,314 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+import * as Stories from '../HeaderNavigationBar.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import '@/stories/styles/shared.css';
+import {
+  AccessibilityGuideLayout,
+  CriteriaSection,
+  CriteriaCard,
+  DemoSection,
+  BestPracticesSection,
+  ResourcesSection,
+  AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
+
+<Meta of={Stories} />
+
+<AccessibilityGuideLayout
+  componentName="HeaderNavigation"
+  iconSrc={AccessibilityIcon}
+>
+
+  <CriteriaSection>
+    <CriteriaCard title="Structure et sémantique">
+      <ul>
+        <li>
+          Le composant s’appuie sur <code>HeaderBar</code> pour la structure
+          globale du bandeau et de son titre.
+        </li>
+        <li>
+          Le niveau de titre est configurable via{' '}
+          <code>headingLevelTitle</code> afin de conserver une hiérarchie
+          de titres cohérente avec la page qui l’intègre.
+        </li>
+        <li>
+          Les éléments de navigation actifs utilisent des liens natifs :
+          <code>a</code> pour les URL externes et <code>RouterLink</code>
+          pour la navigation interne.
+        </li>
+        <li>
+          Les éléments désactivés ne sont pas exposés comme des liens
+          interactifs et sont rendus sous forme de <code>span</code>.
+        </li>
+        <li>
+          Les libellés des éléments de navigation doivent être explicites
+          et permettre de comprendre la destination sans dépendre
+          uniquement du contexte visuel.
+        </li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Navigation au clavier">
+      <ul>
+        <li>
+          Les liens de navigation doivent être accessibles avec la touche
+          <code>Tab</code>.
+        </li>
+        <li>
+          Les liens doivent conserver leur comportement clavier natif :
+          <code>Entrée</code> permet d’activer le lien.
+        </li>
+        <li>
+          Le menu burger doit être utilisable au clavier et permettre
+          l’ouverture et la fermeture sans utiliser la souris.
+        </li>
+        <li>
+          Lorsque le menu burger est ouvert, la navigation entre ses
+          différents éléments doit rester logique et prévisible.
+        </li>
+        <li>
+          La fermeture du menu ne doit pas provoquer une perte de focus
+          inattendue.
+        </li>
+        <li>
+          Les styles de <code>:focus</code> et <code>:focus-visible</code>
+          doivent rester visibles sur les éléments interactifs.
+        </li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Menu burger et navigation responsive">
+      <ul>
+        <li>
+          Le menu vertical est utilisé lorsque la largeur disponible ne
+          permet plus d'afficher correctement la navigation horizontale.
+        </li>
+        <li>
+          Le passage entre navigation horizontale et navigation verticale
+          est déterminé par le mode responsive et par{' '}
+          <code>maxHorizontalMenuItems</code>.
+        </li>
+        <li>
+          L'état d'ouverture du menu est piloté par{' '}
+          <code>v-model:burgerMenu</code>.
+        </li>
+        <li>
+          Lorsqu'un <code>RouterLink</code> du menu burger est activé,
+          le menu est refermé afin d'éviter de conserver une navigation
+          mobile ouverte après le changement de page.
+        </li>
+        <li>
+          Le contenu additionnel des slots{' '}
+          <code>navigation-menu-prepend</code> et{' '}
+          <code>navigation-menu-append</code> doit lui aussi respecter
+          les règles d'accessibilité clavier et de contraste.
+        </li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Navigation horizontale">
+      <ul>
+        <li>
+          Lorsque le nombre d'éléments et le contexte responsive le
+          permettent, la navigation est affichée via{' '}
+          <code>HorizontalNavbar</code>.
+        </li>
+        <li>
+          Les éléments de navigation doivent rester accessibles au clavier
+          dans leur ordre visuel et logique.
+        </li>
+        <li>
+          Les changements d'onglet doivent être perceptibles sans dépendre
+          uniquement de la couleur.
+        </li>
+        <li>
+          Lorsqu'une confirmation de changement d'onglet est activée,
+          le mécanisme de confirmation doit être lui-même accessible au
+          clavier et correctement annoncé aux technologies d'assistance.
+        </li>
+        <li>
+          L'événement <code>confirm-tab-change</code> permet au composant
+          parent de contrôler l'interface de confirmation ; cette interface
+          doit respecter les règles d'accessibilité qui lui sont propres.
+        </li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="États désactivés">
+      <ul>
+        <li>
+          Un élément désactivé n'est pas rendu comme un lien interactif.
+        </li>
+        <li>
+          L'état désactivé ne doit pas être indiqué uniquement par sa couleur
+          ou son opacité.
+        </li>
+        <li>
+          Les utilisateurs de technologies d'assistance doivent pouvoir
+          comprendre que l'élément n'est pas disponible.
+        </li>
+        <li>
+          Évitez d'ajouter un élément désactivé dans l'ordre de tabulation
+          si celui-ci n'est pas activable.
+        </li>
+        <li>
+          Si une navigation désactivée doit devenir temporairement disponible,
+          l'état doit être mis à jour de manière perceptible par les
+          technologies d'assistance.
+        </li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Focus et visibilité">
+      <ul>
+        <li>
+          Aucun style du header ne doit supprimer le contour de focus
+          des liens et boutons.
+        </li>
+        <li>
+          Le focus doit rester suffisamment contrasté avec le fond du header.
+        </li>
+        <li>
+          Lorsque le header est <code>sticky</code>, le déplacement de la
+          page ne doit pas masquer l'élément actuellement focalisé.
+        </li>
+        <li>
+          Le mode <code>hideWhenDown</code> ne doit pas provoquer de
+          disparition inattendue du contenu actuellement utilisé au clavier.
+        </li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Contraste et lisibilité">
+      <ul>
+        <li>
+          Les textes et liens de navigation doivent respecter les exigences
+          de contraste applicables.
+        </li>
+        <li>
+          L'information indiquant l'élément actuellement sélectionné ou actif
+          ne doit pas reposer uniquement sur la couleur.
+        </li>
+        <li>
+          Les éléments du header doivent conserver une taille de texte
+          et une zone d'interaction suffisamment confortables.
+        </li>
+        <li>
+          Le style appliqué aux éléments désactivés doit rester discernable
+          sans rendre le texte illisible.
+        </li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Logo et lien d'accueil">
+      <ul>
+        <li>
+          Le lien d'accueil doit disposer d'un nom accessible explicite via
+          <code>homeAriaLabel</code> lorsque le contenu visuel ne suffit pas.
+        </li>
+        <li>
+          Le contenu fourni via les slots <code>logo</code> et{' '}
+          <code>logo-brand-content</code> doit conserver une alternative
+          textuelle pertinente lorsque le logo véhicule une information.
+        </li>
+        <li>
+          Le titre et le sous-titre du service doivent rester compréhensibles
+          lorsque le logo est utilisé avec un lecteur d'écran.
+        </li>
+      </ul>
+    </CriteriaCard>
+  </CriteriaSection>
+
+  <DemoSection componentName="HeaderNavigation">
+    <Story of={Stories.Default} />
+  </DemoSection>
+
+  <BestPracticesSection>
+    <ul>
+      <li>
+        Utilisez des libellés de navigation courts, explicites et distincts
+        les uns des autres.
+      </li>
+
+      <li>
+        Conservez un ordre de navigation clavier correspondant à l'ordre
+        visuel et fonctionnel attendu.
+      </li>
+
+      <li>
+        Ne masquez pas les indicateurs de focus natifs sans fournir
+        une alternative au moins équivalente.
+      </li>
+
+      <li>
+        Utilisez <code>homeAriaLabel</code> lorsque le lien vers l'accueil
+        n'est pas suffisamment explicite à partir de son contenu visible.
+      </li>
+
+      <li>
+        Choisissez <code>headingLevelTitle</code> en fonction de la
+        hiérarchie réelle de la page plutôt que du niveau visuel souhaité.
+      </li>
+
+      <li>
+        Pour les liens externes, utilisez <code>href</code> avec un libellé
+        indiquant clairement la destination lorsque celle-ci n'est pas
+        évidente.
+      </li>
+
+      <li>
+        Pour les routes internes de l'application, préférez{' '}
+        <code>RouterLink</code> afin de conserver le comportement de
+        navigation attendu par l'application.
+      </li>
+
+      <li>
+        Évitez de rendre un élément simplement visuellement désactivé tout
+        en le laissant activable au clavier.
+      </li>
+
+      <li>
+        Si <code>confirmTabChange</code> est activé, assurez-vous que la
+        boîte de dialogue de confirmation possède un nom accessible, un
+        focus correctement géré et une fermeture clavier avec{' '}
+        <code>Échap</code> lorsque cela est pertinent.
+      </li>
+
+      <li>
+        Testez séparément les deux modes de navigation : navigation
+        horizontale et menu burger.
+      </li>
+
+      <li>
+        Testez également les configurations avec peu d'éléments et avec
+        suffisamment d'éléments pour déclencher automatiquement le menu
+        vertical via <code>maxHorizontalMenuItems</code>.
+      </li>
+
+      <li>
+        Avec <code>sticky</code> et <code>hideWhenDown</code>, vérifiez que
+        le header reste utilisable lorsque l'utilisateur navigue au clavier
+        ou utilise un zoom important.
+      </li>
+
+      <li>
+        Les contenus injectés dans les différents slots doivent respecter
+        les mêmes exigences d'accessibilité que le contenu fourni par défaut.
+      </li>
+    </ul>
+  </BestPracticesSection>
+
+  <ResourcesSection>
+    <ul>
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices Guide</a></li>
+
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/" target="_blank" rel="noopener noreferrer">WAI-ARIA APG – Disclosure</a></li>
+
+      <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html" target="_blank" rel="noopener noreferrer">WCAG 2.2 – Keyboard</a></li>
+
+      <li><a href="https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html" target="_blank" rel="noopener noreferrer">WCAG 2.2 – Focus Visible</a></li>
+
+      <li><a href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/" target="_blank" rel="noopener noreferrer">RGAA – Référentiel général d'amélioration de l'accessibilité</a></li>
+    </ul>
+  </ResourcesSection>
+</AccessibilityGuideLayout>
