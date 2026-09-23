@@ -18,13 +18,13 @@ describe('useDateFormatUtils', () => {
 		it('devrait retourner une erreur si la date ne correspond ni au format ni au format de retour', () => {
 			const result = validateDateFormat('25-12-2023', 'DD/MM/YYYY', 'YYYY-MM-DD')
 			expect(result.isValid).toBe(false)
-			expect(result.message).toBe('Format de date invalide (DD/MM/YYYY)')
+			expect(result.message).toBe('Format de date invalide (JJ/MM/AAAA)')
 		})
 
 		it('devrait retourner une erreur pour une date invalide mais syntaxiquement correcte', () => {
 			const result = validateDateFormat('31/02/2023', 'DD/MM/YYYY')
 			expect(result.isValid).toBe(false)
-			expect(result.message).toBe('Format de date invalide (DD/MM/YYYY)')
+			expect(result.message).toBe('Format de date invalide (JJ/MM/AAAA)')
 		})
 
 		it('devrait considérer une chaîne vide comme invalide si le champ est requis et a été interactif', () => {
@@ -48,7 +48,7 @@ describe('useDateFormatUtils', () => {
 		it('devrait retourner une erreur pour des caractères non autorisés', () => {
 			const result = validateDateFormat('25/12/abcd', 'DD/MM/YYYY')
 			expect(result.isValid).toBe(false)
-			expect(result.message).toBe('Format de date invalide (DD/MM/YYYY)')
+			expect(result.message).toBe('Format de date invalide (JJ/MM/AAAA)')
 		})
 	})
 
