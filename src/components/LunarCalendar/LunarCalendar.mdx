@@ -42,3 +42,9 @@ L'astérisque n'est affiché que si le champ est également `required`.
 ## Avec texte d'aide
 
 <Canvas of={LunarCalendarStories.HelpText} />
+
+## Avec règles de validation personnalisées
+
+Des règles supplémentaires peuvent être ajoutées via la prop `custom-rules`. Elles s'appliquent en plus des contrôles intégrés (format de la date, `min-year` / `max-year`, `required`).
+
+<Canvas of={LunarCalendarStories.WithCustomRules} />

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import LunarCalendar from './LunarCalendar.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
@@ -484,6 +484,74 @@ const dateValue = ref('12/12/1445')
 			template: `
 				<div class="d-flex flex-wrap align-center">
 					<LunarCalendar v-bind="args" v-model="value" />
+				</div>
+			`,
+		}
+	},
+}
+
+export const WithCustomRules: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<LunarCalendar
+		label="Date de naissance"
+		v-model="dateValue"
+		:custom-rules="customRules"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+
+const dateValue = ref('12/12/1390')
+
+const customRules = [
+	{
+		type: 'matchPattern',
+		options: {
+			pattern: /^\\d{2}\\/\\d{2}\\/14\\d{2}$/,
+			message: "L'année doit être comprise entre 1400 et 1499.",
+		},
+	},
+]
+</script>`,
+			},
+		],
+	},
+	args: {
+		modelValue: '12/12/1390',
+		customRules: [
+			{
+				type: 'matchPattern',
+				options: {
+					pattern: /^\d{2}\/\d{2}\/14\d{2}$/,
+					message: 'L\'année doit être comprise entre 1400 et 1499.',
+				},
+			},
+		],
+	},
+	render: (args) => {
+		return {
+			components: { LunarCalendar },
+			setup() {
+				const value = ref(args.modelValue)
+				const fieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				onMounted(() => {
+					fieldRef.value?.validateOnSubmit()
+				})
+				return { args, value, fieldRef }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center">
+					<LunarCalendar ref="fieldRef" v-bind="args" v-model="value" />
 				</div>
 			`,
 		}
