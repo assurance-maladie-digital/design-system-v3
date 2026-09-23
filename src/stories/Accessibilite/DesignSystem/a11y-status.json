@@ -1,8 +1,8 @@
 {
-  "date": "2026-09-17T09:56:32.909Z",
-  "compliantCount": 60,
+  "date": "2026-09-23T14:23:35.520Z",
+  "compliantCount": 61,
   "totalCount": 77,
-  "percentage": "77.92",
+  "percentage": "79.22",
   "results": [
     {
       "componentName": "Accordion",
@@ -733,9 +733,9 @@
     {
       "componentName": "SubHeader",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
+      "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false,
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Structure/SubHeader",
       "hasManualAudit": true,
       "version": "1.1.3",

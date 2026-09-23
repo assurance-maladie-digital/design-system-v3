@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-17T09:56:38.093Z",
+  "date": "2026-09-23T14:23:40.563Z",
   "totalCount": 77,
   "results": [
     {
@@ -1884,32 +1884,10 @@
       ],
       "a11yCommits": [
         {
-          "hash": "7ebfa59c2acbce33901ff8003e4f73f4c5e8016c",
-          "date": "2026-09-16 14:52:14 +0200",
-          "dateFr": "16/09/2026",
-          "message": "add on focus",
-          "version": null,
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "ed876dadf42a4f0a077cb76458c5209d02d9c4ff",
-          "date": "2026-09-10 10:24:20 +0200",
-          "dateFr": "10/09/2026",
-          "message": "fix tests",
-          "version": null,
-          "confidence": "faible",
-          "keywords": false,
-          "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "dd8ac6caf9610089fdd27dc9544d58ded7554ac9",
-          "date": "2026-09-09 14:26:40 +0200",
-          "dateFr": "09/09/2026",
-          "message": "add tests a11y to selectBtnField",
+          "hash": "99dd21e66e143bda73bf5d60d7cc258bf80fda35",
+          "date": "2026-09-17 14:05:01 +0200",
+          "dateFr": "17/09/2026",
+          "message": "add tests a11y to selectBtnField (#2543)",
           "version": null,
           "confidence": "forte",
           "keywords": true,
@@ -3610,6 +3588,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "10d998f3c39c4df0f14b28536e73af79a2d02399",
+          "date": "2026-09-17 16:04:51 +0200",
+          "dateFr": "17/09/2026",
+          "message": "refacto tests a11y (#2562)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
           "dateFr": "10/09/2026",
@@ -3736,17 +3725,6 @@
           "dateFr": "11/02/2026",
           "message": "Accessibilité: file reorganization accessibility (#1792)",
           "version": "1.0.20",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
-          "date": "2026-01-06 11:55:17 +0100",
-          "dateFr": "06/01/2026",
-          "message": "Feat/add accessibility in ci (#1663)",
-          "version": "1.0.17",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -5339,6 +5317,11 @@
       "a11yDate": "10/08/2026",
       "commits": [
         {
+          "date": "2026-09-22",
+          "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+          "version": null
+        },
+        {
           "date": "2026-08-13",
           "message": "fix/components-name-format",
           "version": "1.1.4"
@@ -5457,14 +5440,20 @@
           "date": "2026-03-11",
           "message": "DatePicker: adjust month view width for better layout (#1948)",
           "version": "1.0.22"
-        },
-        {
-          "date": "2026-03-04",
-          "message": "Feat/1872 ajout de tokens (#1888)",
-          "version": "1.0.22"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+          "date": "2026-09-22 08:55:24 +0200",
+          "dateFr": "22/09/2026",
+          "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
@@ -5664,6 +5653,11 @@
       "a11yDate": "10/08/2026",
       "commits": [
         {
+          "date": "2026-09-22",
+          "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+          "version": null
+        },
+        {
           "date": "2026-08-13",
           "message": "fix/components-name-format",
           "version": "1.1.4"
@@ -5782,14 +5776,20 @@
           "date": "2025-12-18",
           "message": "fix combined synch (#1642)",
           "version": "1.0.16"
-        },
-        {
-          "date": "2025-12-15",
-          "message": "Refactor DatePicker components to enforce required label prop and allow to not show the placeholder (#1609)",
-          "version": "1.0.16"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+          "date": "2026-09-22 08:55:24 +0200",
+          "dateFr": "22/09/2026",
+          "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
@@ -5989,6 +5989,11 @@
       "a11yDate": "23/07/2026",
       "commits": [
         {
+          "date": "2026-09-22",
+          "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+          "version": null
+        },
+        {
           "date": "2026-07-31",
           "message": "DatePicker: wrap customRules and customWarningRules in computed and fix isOnSuccess validation state (#2461)",
           "version": "1.1.3"
@@ -6107,14 +6112,20 @@
           "date": "2025-10-13",
           "message": "Fix/datepicker custom rules empty fields (#1261)",
           "version": "1.0.10"
-        },
-        {
-          "date": "2025-10-09",
-          "message": "Fix/date picker validation combined (#1253)",
-          "version": "1.0.10"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+          "date": "2026-09-22 08:55:24 +0200",
+          "dateFr": "22/09/2026",
+          "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
@@ -12081,6 +12092,11 @@
       "a11yDate": "01/04/2026",
       "commits": [
         {
+          "date": "2026-09-22",
+          "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+          "version": null
+        },
+        {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
           "version": "1.1.5"
@@ -12167,6 +12183,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+          "date": "2026-09-22 08:55:24 +0200",
+          "dateFr": "22/09/2026",
+          "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
@@ -13698,6 +13725,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "9d1b16abe6fc04f71a2785eaaf609d2bced2e523",
+          "date": "2026-09-23 16:21:14 +0200",
+          "dateFr": "23/09/2026",
+          "message": "mise a jour page accessibilite, correction pb accesibility",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
           "dateFr": "10/09/2026",
@@ -14410,6 +14448,11 @@
       "a11yDate": "22/07/2026",
       "commits": [
         {
+          "date": "2026-09-18",
+          "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+          "version": null
+        },
+        {
           "date": "2026-09-04",
           "message": "SyTable/SyServerTable: fix items per page  (#2538)",
           "version": "1.1.5"
@@ -14528,11 +14571,6 @@
           "date": "2025-09-30",
           "message": "SyServerTable : fix double emit (#1186)",
           "version": "1.0.10"
-        },
-        {
-          "date": "2025-09-10",
-          "message": "Tables localstorage refactorisation (#1084)",
-          "version": "1.0.9"
         }
       ],
       "a11yCommits": [
@@ -14724,6 +14762,11 @@
       "a11yDate": "22/07/2026",
       "commits": [
         {
+          "date": "2026-09-18",
+          "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+          "version": null
+        },
+        {
           "date": "2026-09-04",
           "message": "SyTable/SyServerTable: fix items per page  (#2538)",
           "version": "1.1.5"
@@ -14842,14 +14885,20 @@
           "date": "2025-09-08",
           "message": "SyTable no-data slot (#1076)",
           "version": "1.0.9"
-        },
-        {
-          "date": "2025-08-14",
-          "message": "SyTable/SyServerTable: add items per page options (#959)",
-          "version": "1.0.7"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
+          "date": "2026-09-18 14:10:26 +0200",
+          "dateFr": "18/09/2026",
+          "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
