@@ -1,0 +1,98 @@
+import { Meta, Story, Primary } from '@storybook/addon-docs/blocks';
+import * as Stories from './SyDatePicker.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
+
+<Meta of={Stories} />
+
+<AccessibilityGuideLayout
+    componentName="SyDatePicker"
+    iconSrc={AccessibilityIcon}
+    apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/"
+>
+    <CriteriaSection>
+        <CriteriaCard title="Labels accessibles">
+            <ul>
+                <li><strong>Bouton d'ouverture du picker</strong> : le bouton toggle, affiché sous forme d'icône calendaire, possède un <code>aria-label</code> et un <code>title</code> décrivant son action (« Ouvrir le sélecteur de date »). C'est un bouton natif <code>&lt;button type="button"&gt;</code>, focusable et activable au clavier.</li>
+                <li><strong>Icônes décoratives</strong> : toutes les icônes du composant (calendrier, chevrons, fermeture) sont marquées comme décoratives et masquées aux lecteurs d'écran.</li>
+                <li><strong>Champ de saisie</strong> : le champ possède un <code>name</code> unique généré par <code>useId()</code>, évitant toute collision entre plusieurs instances dans une même page ; l'association label / champ est assurée par le <code>SyTextField</code> sous-jacent. Un texte d'aide rappelle le format attendu (« Format JJ/MM/AAAA ») et un masque de saisie guide la saisie clavier.</li>
+                <li><strong>Bouton « Fermer »</strong> : doté d'un <code>aria-label</code> explicite (« Fermer le sélecteur de date ») et d'un libellé visible.</li>
+                <li><strong>Bouton « Aujourd'hui »</strong> : porte un <code>aria-label</code> spécifique (« Sélectionner la date du jour »).</li>
+                <li><strong>Boutons mois / année du header</strong> : leurs libellés visuels sont abrégés (ex. « mars », « 2023 ») ; une alternative complète et contextuelle est fournie aux lecteurs d'écran (« Sélectionner un mois, le mois sélectionné est mars », « Sélectionner une année, nous sommes actuellement en 2026 »).</li>
+                <li><strong>Navigation mensuelle</strong> : les boutons « Mois précédent » / « Mois suivant » possèdent des <code>aria-label</code> dédiés et sont désactivés hors de la vue jours.</li>
+                <li><strong>Internationalisation</strong> : toutes les chaînes accessibles sont externalisées dans <code>locales.ts</code> (aucune librairie i18n) et surchargeables par le consommateur via la prop <code>locales</code>.</li>
+            </ul>
+        </CriteriaCard>
+        <CriteriaCard title="Structure sémantique">
+            <ul>
+                <li><strong>Popin</strong> : le sélecteur visuel est exposé avec <code>role="dialog"</code>, nommé via <code>aria-labelledby</code> pointant vers le titre du header, et relié à son déclencheur par <code>aria-haspopup="dialog"</code>.</li>
+                <li><strong>Grille de jours</strong> : sémantique de tableau riche avec <code>role="grid"</code> sur la table, <code>role="gridcell"</code> sur les cellules et une ligne d'en-têtes de jours. La grille est nommée par le mois localisé complet et liée à ses instructions d'utilisation via <code>aria-describedby</code>.</li>
+                <li><strong>Jours des mois adjacents</strong> : les jours de débordement en début/fin de grille sont rendus grisés et restent fonctionnels (le clic ou la navigation clavier vers l'un d'eux affiche son mois) ; ils portent un <code>aria-label</code> avec leur date complète, sans ambiguïté de mois.</li>
+                <li><strong>États exposés</strong> : chaque jour porte <code>aria-selected</code> (jour sélectionné et bornes de plage), <code>aria-disabled</code> (jours désactivés), <code>aria-current="date"</code> (aujourd'hui) et un <code>aria-label</code> contenant la date complète.</li>
+                <li><strong>Boutons de bascule de vue</strong> : les boutons mois / année exposent leur état actif via <code>aria-pressed</code>.</li>
+                <li><strong>Champ obligatoire</strong> : l'état <code>required</code> est transmis au champ natif, avec astérissement visuel optionnel (<code>displayAsterisk</code>).</li>
+            </ul>
+        </CriteriaCard>
+        <CriteriaCard title="Navigation clavier complète">
+            <ul>
+                <li><strong>Touches Espace et Entrée</strong> : ouvrir le picker depuis le bouton toggle, sélectionner un jour, un mois ou une année.</li>
+                <li><strong>Roving tabindex</strong> : un seul jour de la grille est tabulable (<code>tabindex="0"</code>, <code>-1</code> ailleurs), conformément au pattern ARIA de grille modifiable.</li>
+                <li><strong>Touches fléchées</strong> : déplacement du focus d'un jour (←, →), d'une semaine (↑, ↓) ; la prévisualisation de plage suit le focus.</li>
+                <li><strong>Touches Début / Fin</strong> : positionner le focus sur le premier / dernier jour du mois affiché.</li>
+                <li><strong>Entrée</strong> : sélectionner le jour focalisé.</li>
+                <li><strong>Bouton « Fermer »</strong> : dernier point d'arrêt de la tabulation dans la popin ; il reste dans l'ordre de tabulation et dans l'arbre d'accessibilité même lorsqu'il est masqué visuellement (opacity seule).</li>
+            </ul>
+        </CriteriaCard>
+        <CriteriaCard title="Gestion du focus">
+            <ul>
+                <li><strong>Retour du focus au déclencheur</strong> : à la fermeture de la popin, le focus est restitué au bouton d'ouverture afin de préserver la continuité de la navigation clavier.</li>
+                <li><strong>Piège de focus</strong> : le focus reste confiné dans la popin ouverte (<code>retain-focus</code>), la tabulation boucle à l'intérieur du dialogue.</li>
+                <li><strong>Pas de vol de focus</strong> : <code>disable-initial-focus</code> évite un déplacement de focus non souhaité à l'ouverture.</li>
+                <li><strong>Anneaux de focus visibles</strong> : tous les boutons (toggle, navigation, sélecteurs, fermeture) affichent l'anneau de focus du DS via <code>:focus-visible</code>, sans supprimer l'outline par défaut pour la navigation souris.</li>
+                <li><strong>Révélation au clavier</strong> : le bouton « Fermer », masqué par défaut, est révélé au focus clavier via <code>:has(:focus-visible)</code>.</li>
+            </ul>
+        </CriteriaCard>
+        <CriteriaCard title="Annonces pour lecteurs d'écran">
+            <ul>
+                <li><strong>Région <code>aria-live</code></strong> : une zone <code>aria-live="polite"</code> + <code>aria-atomic="true"</code> en screen-reader-only annonce la plage de dates en cours de sélection (mode <code>range</code>).</li>
+                <li><strong>Instructions d'utilisation</strong> : les instructions de navigation clavier sont fournies en screen-reader-only et liées à la grille par <code>aria-describedby</code>.</li>
+                <li><strong>Messages d'état du champ</strong> : les messages d'erreur, avertissement et succès sont relayés au champ de saisie et exposés via <code>aria-describedby</code>.</li>
+            </ul>
+        </CriteriaCard>
+        <CriteriaCard title="Confort de lecture et animations">
+            <ul>
+                <li><strong><code>prefers-reduced-motion</code></strong> : les transitions du composant (glissement mensuel de la grille, survol des jours, apparition du bouton « Fermer ») sont désactivées lorsque l'utilisateur a exprimé une préférence pour la réduction des animations.</li>
+                <li><strong>Contrastes</strong> : les couleurs sont pilotées par les variables de thème du DS (<code>--v-theme-*</code>), garantissant les niveaux de contraste validés par les tokens.</li>
+            </ul>
+        </CriteriaCard>
+
+        <DemoSection componentName="SyDatePicker">
+            <Primary />
+        </DemoSection>
+
+        <BestPracticesSection>
+            <ul>
+                <li><strong>Labels clairs</strong> : utiliser un libellé de champ explicite pour faciliter la compréhension de sa fonction.</li>
+                <li><strong>Gestion des erreurs</strong> : fournir des messages d'erreur explicites en cas de saisie ou de sélection invalide, un message d'erreur doit contenir un exemple d'une saisie valide.</li>
+                <li><strong>Champ obligatoire</strong> : activer <code>required</code> et présisez le dans le label pour exposer visuellement l'obligation de saisie.</li>
+                <li><strong>Surcharge des libellés</strong> : adapter les chaînes accessibles au contexte métier via la prop <code>locales</code> plutôt que de les laisser par défaut.</li>
+                <li><strong>Personnalisation du champ</strong> : en cas d'utilisation du slot <code>input</code>, veiller à conserver un bouton d'ouverture natif focusable avec un <code>aria-label</code> équivalent.</li>
+            </ul>
+        </BestPracticesSection>
+
+        <ResourcesSection>
+            <ul>
+                <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/" target="_blank" rel="noopener noreferrer">APG W3C — Exemple de datepicker en dialogue</a></li>
+                <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/grid/" target="_blank" rel="noopener noreferrer">APG W3C — Pattern de grille ARIA (roving tabindex)</a></li>
+                <li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/" target="_blank" rel="noopener noreferrer">RGAA — Critères et tests</a></li>
+            </ul>
+        </ResourcesSection>
+    </CriteriaSection>
+</AccessibilityGuideLayout>

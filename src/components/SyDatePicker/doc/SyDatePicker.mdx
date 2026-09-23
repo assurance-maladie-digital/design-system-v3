@@ -1,0 +1,130 @@
+import { Meta, Canvas, Controls, Source } from '@storybook/addon-docs/blocks'
+import * as SyDatePickerStories from './SyDatePicker.stories.ts'
+import * as SyDatePickerSlotsStories from './Slots.stories.ts'
+import * as SyDatePickerCustomInputStories from './CustomInput.stories.ts'
+import SyDatePicker from '../SyDatePicker.vue'
+
+<Meta title="Composants/Formulaires/SyDatePicker" component={SyDatePicker} />
+
+<div className="header">
+  <h1>SyDatePicker</h1>
+  <p>Le composant SyDatePicker permet de sélectionner une date via un champ de saisie et un sélecteur visuel. Il prend en charge la navigation par mois et par année, la saisie manuelle, la validation et les interactions clavier.</p>
+</div>
+
+{/* func-version-start */}
+<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.1.3 - 04/09/2026</p>
+{/* func-version-end */}
+{/* a11y-version-start */}
+<p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.1.3 - 04/09/2026</p>
+{/* a11y-version-end */}
+
+<Canvas of={SyDatePickerStories.Default} />
+
+# API
+
+<Controls of={SyDatePickerStories.Default} />
+
+# Exemple d'utilisation
+
+<Source dark code={`
+<script setup lang="ts">
+import { SyDatePicker } from '@cnamts/synapse'
+import { ref } from 'vue'
+
+const selectedDate = ref<Date | undefined>(new Date(2025, 10, 11))
+</script>
+
+<template>
+  <SyDatePicker
+    v-model="selectedDate"
+    label="Début du projet"
+    :min-year="2000"
+    :max-year="2035"
+    :clearable="true"
+    required
+  />
+</template>
+`} />
+
+# Modes de sélection
+
+## Plage de dates
+
+En mode `range`, le champ attend une plage de dates séparées par la prop `separator` (par défaut `" - "`). La valeur du modèle est un tuple `[Date, Date]`.
+
+<Canvas of={SyDatePickerStories.Range} />
+
+## Dates multiples
+
+En mode `multiple`, le champ accepte une liste de dates séparées par la prop `separator`. La valeur du modèle est un tableau de dates.
+
+<Canvas of={SyDatePickerStories.Multiple} />
+
+# Personnalisation
+
+## Format de saisie
+
+La prop `inputFormat` permet de définir le format de saisie et d'affichage des dates. Les jetons `D`, `M` et `Y` représentent respectivement le jour, le mois et l'année. Pensez à adapter le `helpText` en conséquence.
+
+<Canvas of={SyDatePickerStories.CustomInputFormat} />
+
+## Séparateur
+
+La prop `separator` définit le séparateur utilisé entre les dates en mode `range` et `multiple`, à la fois pour l'affichage et la saisie.
+
+<Canvas of={SyDatePickerStories.CustomRangeSeparator} />
+
+## Slots personnalisés
+
+Le composant expose plusieurs slots pour personnaliser le champ et la modale sans réécrire l’intégralité du comportement.
+
+### Slot `input`
+
+Le slot `input` remplace entièrement le champ texte par défaut. Il reçoit les props de contexte du champ (`inputProps`, `textValue`, `updateTextValue`, `setFocused`, `toggleBtnRef`) — `inputProps` contient les props du champ, l’état de validation et les props du picker (`mode`, `locale`, …) à `v-bind` sur le champ personnalisé. Le slot est purement texte : liez `textValue` sur le champ custom et rapportez la saisie via `updateTextValue` — le texte remonté alimente la validation **et** est parsé en modèle selon `inputFormat`/`separator` (émission de `change`), et les sélections du sélecteur visuel comme les mises à jour externes du modèle sont reflétées dans `textValue`. Un format personnalisé se déclare via les props `inputFormat` et `separator`.
+
+<Canvas of={SyDatePickerCustomInputStories.CustomInputSyTextField} />
+
+### Slots internes du champs text
+
+Les slots internes de champs text (SyTextField utilisés à l'intérieur du composant) permettent de personnaliser le rendu du champ texte à l'intérieur du composant.
+<Canvas of={SyDatePickerSlotsStories.Field} />
+
+### Slot Calendar
+
+Le slot `calendar` permet d'écraser le rendu du calendrier à l'intérieur du composant.
+
+<Canvas of={SyDatePickerSlotsStories.Calendar} />
+
+## Années affichées
+
+Les props `minYear` et `maxYear` limitent les années proposées dans le sélecteur visuel. Elles ne concernent pas la validation : une date hors de cet intervalle peut toujours être saisie manuellement.
+
+<Canvas of={SyDatePickerStories.CustomDisplayedYears} />
+
+# États du champ
+
+## Champ obligatoire
+
+La prop `required` indique que la date est obligatoire (prise en compte par la validation).
+
+<Canvas of={SyDatePickerStories.Required} />
+
+## Champ vidable
+
+La prop `clearable` affiche un bouton permettant de vider le champ et de réinitialiser la date sélectionnée.
+
+<Canvas of={SyDatePickerStories.Clearable} />
+
+## Désactivé
+
+La prop `disabled` désactive la saisie et l'ouverture du sélecteur visuel.
+
+<Canvas of={SyDatePickerStories.Disabled} />
+
+## Lecture seule
+
+La prop `readonly` permet de consulter la date sans pouvoir la modifier.
+
+<Canvas of={SyDatePickerStories.Readonly} />
+
+<a href="/?path=/docs/guide-du-dev-formulaires-validation-guide-des-formulaires--docs" className="action-link">Pour plus d'informations sur la validation, consultez le guide de validation des formulaires.</a>
