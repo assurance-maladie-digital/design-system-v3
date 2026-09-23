@@ -194,18 +194,13 @@
 								/>
 							</VRadioGroup>
 
-							<span
-								id="icon-select-label"
-								class="d-block mb-1 icon-select__label"
-							>
-								Sélectionnez une icône
-							</span>
 							<SySelect
 								v-model="selectedIconIndex"
+								:label="'Sélectionnez une icône'"
 								:items="iconOptions"
 								text-key="label"
 								value-key="index"
-								aria-labelledby="icon-select-label"
+
 								class="mb-4"
 								variant-style="outlined"
 								density="comfortable"
