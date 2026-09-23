@@ -126,7 +126,15 @@
 	))
 
 	// Props du ComplexDatePicker utilisé dans le flux combinedMode
-	const combinedModeDatePickerProps = computed(() => buildCalendarModeComplexDatePickerProps(props))
+	// On passe formRegistration pour que ComplexDatePicker s'enregistre correctement dans SyForm
+	const combinedModeDatePickerProps = computed(() => buildCalendarModeComplexDatePickerProps(
+		props,
+		{
+			validateOnSubmit,
+			clearValidation: clearValidationForForm,
+			reset: resetField,
+		},
+	))
 
 	// Props du champ activateur utilisé quand le calendrier s'ouvre dans le menu
 	const menuActivatorTextFieldProps = computed(() => buildCalendarModeActivatorTextFieldProps(
@@ -689,6 +697,10 @@
 		}
 		else if (props.useCombinedMode) {
 			complexDatePickerRef.value?.clearValidation()
+		}
+		else {
+			// Mode CalendarMode par défaut : nettoyer le SyTextField interne
+			dateCalendarTextInputRef.value?.clearValidation()
 		}
 	}
 

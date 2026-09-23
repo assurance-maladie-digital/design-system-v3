@@ -1,6 +1,9 @@
-import type { DatePickerCommonProps } from '../../types'
+import type { DatePickerCommonProps, FormRegistration } from '../../types'
 
-export const buildCalendarModeComplexDatePickerProps = (props: DatePickerCommonProps) => ({
+export const buildCalendarModeComplexDatePickerProps = (
+	props: DatePickerCommonProps,
+	formRegistration?: FormRegistration,
+) => ({
 	modelValue: props.modelValue,
 	format: props.format,
 	dateFormatReturn: props.dateFormatReturn,
@@ -45,4 +48,5 @@ export const buildCalendarModeComplexDatePickerProps = (props: DatePickerCommonP
 	rules: props.rules,
 	warningMessages: props.warningMessages,
 	successMessages: props.successMessages,
+	formRegistration,
 })
