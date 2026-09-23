@@ -148,9 +148,12 @@
 								v-else
 								class="text-h6 font-weight-bold mt-1 mb-0"
 								:style="{ color: 'rgba(255, 255, 255, .7)' }"
-								:aria-label="subTitleAccessibleName"
 							>
-								{{ subTitleText }}
+								<span
+									v-if="subTitleAccessibleName"
+									class="d-sr-only"
+								>{{ subTitleAccessibleName }}</span>
+								<span :aria-hidden="subTitleAccessibleName ? true : undefined">{{ subTitleText }}</span>
 							</p>
 						</VFadeTransition>
 					</slot>
@@ -164,6 +167,7 @@
 					<DataListGroup
 						v-if="dataListGroupItems"
 						:items="dataListGroupItems"
+						:titles-tag="headingLevel < 6 ? 'h' + (headingLevel + 1) : 'h6'"
 						:loading="loading"
 						item-width="auto"
 						:class="renderFixedHeight ? 'flex-nowrap flex-shrink-0' : 'flex-wrap'"

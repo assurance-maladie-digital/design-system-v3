@@ -29,6 +29,23 @@ import {
     <li><strong>Accessibilité</strong> : Permet que la hiérarchie entre les titres soit pertinente (critère 9.1.1 RGAA) </li>
   </ul>
 </CriteriaCard>
+<CriteriaCard title="Niveau automatique des titres des listes">
+  <ul>
+    <li>Les titres des listes utilisent automatiquement le niveau suivant. Par exemple, avec <code>headingLevel="2"</code>, le titre de SubHeader est un <code>h2</code> et les titres des listes sont des <code>h3</code>.</li>
+    <li>Le niveau ne dépasse jamais <code>h6</code>. Si SubHeader utilise déjà un <code>h6</code>, les titres des listes restent aussi en <code>h6</code>.</li>
+    <li>Choisissez un niveau adapté aux autres titres de la page. Si vous remplacez un titre avec un slot, vérifiez aussi son niveau et celui des titres qui suivent.</li>
+  </ul>
+ <code>&lt;SubHeader :heading-level="2" title-text="Informations du patient" :data-list-group-items="items" /&gt; </code>
+  <p>Référence : <a href="https://www.w3.org/WAI/tutorials/page-structure/headings/">W3C — Organisation des titres</a>.</p>
+</CriteriaCard>
+<CriteriaCard title="Un sous-titre compréhensible au lecteur d’écran">
+  <ul>
+    <li>Le sous-titre est un paragraphe. Une information comme « Traité par Jean Lunel » n’a pas besoin d’être un titre.</li>
+    <li>La prop <code>subTitleAccessibleName</code> permet de fournir un texte complet au lecteur d’écran. Ce texte est caché visuellement. Le sous-titre visible est alors masqué au lecteur d’écran pour éviter une lecture en double.</li>
+    <li>Fournissez le texte complet, y compris la valeur affichée. Sans cette prop, le sous-titre visible reste accessible au lecteur d’écran.</li>
+  </ul>
+  <code>&lt;SubHeader sub-title-text="123" sub-title-accessible-name="Numéro de dossier : 123" /&gt; </code>
+</CriteriaCard>
 </CriteriaSection>
 
 

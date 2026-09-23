@@ -137,9 +137,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -257,9 +254,6 @@ export const BackgroundCustom: Story = {
 
 export const DataList: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
 			{
@@ -353,9 +347,6 @@ export const DataList: Story = {
 
 export const DataListFixedHeight: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
 			{
@@ -451,9 +442,6 @@ export const DataListFixedHeight: Story = {
 
 export const ActionBtn: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
 			{
@@ -565,9 +553,6 @@ export const ActionBtn: Story = {
 
 export const HtmlValue: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		controls: { exclude: ['vuetifyOptions', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'additional-informations', 'right-content'] },
 		sourceCode: [
 			{
@@ -770,9 +755,6 @@ export const Loading: Story = {
 
 export const SlotAdditionalInformations: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'back-btn', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
@@ -790,6 +772,7 @@ export const SlotAdditionalInformations: Story = {
 								Profil complété à 50%
 							</p>
 							<VProgressLinear
+								aria-label="Complétion du profil"
 								:model-value="50"
 								color="#fff"
 								height="8px"
@@ -826,6 +809,7 @@ export const SlotAdditionalInformations: Story = {
 		Profil complété à 50%
 	</p>
 	<VProgressLinear
+		aria-label="Complétion du profil"
 		:model-value="50"
 		color="#fff"
 		height="8px"
@@ -849,6 +833,7 @@ export const SlotAdditionalInformations: Story = {
 							Profil complété à 50%
 						</p>
 						<VProgressLinear
+							aria-label="Complétion du profil"
 							:model-value="50"
 							color="#fff"
 							height="8px"
@@ -865,9 +850,6 @@ export const SlotAdditionalInformations: Story = {
 
 export const SlotBackBtn: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn-icon', 'title', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
@@ -945,9 +927,6 @@ export const SlotBackBtn: Story = {
 
 export const SlotBackBtnIcon: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'title', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
@@ -1017,9 +996,6 @@ export const SlotBackBtnIcon: Story = {
 
 export const SlotTitle: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'sub-title', 'right-content'] },
 		sourceCode: [
 			{
@@ -1084,9 +1060,6 @@ export const SlotTitle: Story = {
 
 export const SlotSubTitle: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'title', 'right-content'] },
 		sourceCode: [
 			{
@@ -1097,9 +1070,9 @@ export const SlotSubTitle: Story = {
 						title-text="Paul Dupont"
 					>
 						<template #sub-title>
-							<h4 class="title mt-1">
+							<p class="title mt-1">
 								Traité par Paul Dupont
-							</h4>
+							</p>
 						</template>
 					</SubHeader>
 				</template>
@@ -1124,9 +1097,9 @@ export const SlotSubTitle: Story = {
 		'subTitleAccessibleName': 'Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75',
 		'loading': false,
 		'sub-title': `<template #sub-title>
-	<h4 class="title mt-1">
+	<p class="title mt-1">
 		Traité par Jean Lunel
-	</h4>
+	</p>
 </template>`,
 	},
 	render: (args) => {
@@ -1138,9 +1111,9 @@ export const SlotSubTitle: Story = {
 			template: `
 				<SubHeader v-bind="args">
 					<template #sub-title>
-						<h4 class="title mt-1">
+						<p class="title mt-1">
 							Traité par Jean Lunel
-						</h4>
+						</p>
 					</template>
 				</SubHeader>
 		`,
@@ -1150,9 +1123,6 @@ export const SlotSubTitle: Story = {
 
 export const SlotRightContent: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		controls: { exclude: ['vuetifyOptions', 'dataListGroupItems', 'backBtnText', 'backBtnAccessibleName', 'hideBackBtn', 'titleText', 'titleAccessibleName', 'subTitleText', 'subTitleAccessibleName', 'loading', 'renderHtmlValue', 'renderFixedHeight', 'back', 'click:list-item', 'additional-informations', 'back-btn', 'back-btn-icon', 'title', 'sub-title'] },
 		sourceCode: [
 			{
@@ -1195,10 +1165,7 @@ export const SlotRightContent: Story = {
 		'loading': false,
 		'right-content': `<template #right-content>
 	<div class="d-flex flex-column align-start flex-grow-0 ml-auto mt-auto">
-		<VBtn
-			variant="text"
-			color="white"
-		>
+		<VBtn>
 			<VIcon class="mr-2">
 				{{ cancelIcon }}
 			</VIcon>
