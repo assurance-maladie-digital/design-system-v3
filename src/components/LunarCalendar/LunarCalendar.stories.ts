@@ -125,20 +125,20 @@ export const Default: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<LunarCalendar
-						label="Date de naissance"
-						v-model="dateValue"
-					/>
-				</template>
+				code: `<template>
+	<LunarCalendar
+		label="Date de naissance"
+		v-model="dateValue"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
 
-				<script setup lang="ts">
-				import { ref } from 'vue'
-
-				const dateValue = ref('')
-				</script>
-				`,
+const dateValue = ref('')
+</script>`,
 			},
 		],
 	},
@@ -169,21 +169,21 @@ export const Required: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<LunarCalendar
-						label="Date de naissance"
-						v-model="dateValue"
-						required
-					/>
-				</template>
+				code: `<template>
+	<LunarCalendar
+		label="Date de naissance"
+		v-model="dateValue"
+		required
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
 
-				<script setup lang="ts">
-				import { ref } from 'vue'
-
-				const dateValue = ref('')
-				</script>
-				`,
+const dateValue = ref('')
+</script>`,
 			},
 		],
 	},
@@ -210,27 +210,75 @@ export const Required: Story = {
 	},
 }
 
+export const DisplayAsterisk: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<LunarCalendar
+		label="Date de naissance"
+		v-model="dateValue"
+		required
+		display-asterisk
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+
+const dateValue = ref('')
+</script>`,
+			},
+		],
+	},
+	args: {
+		modelValue: '',
+		required: true,
+		displayAsterisk: true,
+	},
+	render: (args) => {
+		return {
+			components: { LunarCalendar },
+			setup() {
+				const value = ref(args.modelValue)
+				watch(() => args.modelValue, (newValue) => {
+					value.value = newValue
+				})
+				return { args, value }
+			},
+			template: `
+				<div class="d-flex flex-wrap align-center">
+					<LunarCalendar v-bind="args" v-model="value" />
+				</div>
+			`,
+		}
+	},
+}
+
 export const WithClearable: Story = {
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<LunarCalendar
-						label="Date de naissance"
-						v-model="dateValue"
-						placeholder="21/13/1442"
-						is-clearable
-					/>
-				</template>
+				code: `<template>
+	<LunarCalendar
+		label="Date de naissance"
+		v-model="dateValue"
+		placeholder="21/13/1442"
+		is-clearable
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
 
-				<script setup lang="ts">
-				import { ref } from 'vue'
-
-				const dateValue = ref('12/13/1564')
-				</script>
-				`,
+const dateValue = ref('12/13/1564')
+</script>`,
 			},
 		],
 	},
@@ -263,21 +311,21 @@ export const HelpText: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<LunarCalendar
-						label="Date de naissance"
-						v-model="dateValue"
-						help-text="Format attendu : JJ/MM/AAAA"
-					/>
-				</template>
+				code: `<template>
+	<LunarCalendar
+		label="Date de naissance"
+		v-model="dateValue"
+		help-text="Format attendu : JJ/MM/AAAA"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
 
-				<script setup lang="ts">
-				import { ref } from 'vue'
-
-				const dateValue = ref('')
-				</script>
-				`,
+const dateValue = ref('')
+</script>`,
 			},
 		],
 	},
@@ -309,21 +357,21 @@ export const WithLoading: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<LunarCalendar
-						label="Date de naissance"
-						v-model="dateValue"
-						loading
-					/>
-				</template>
+				code: `<template>
+	<LunarCalendar
+		label="Date de naissance"
+		v-model="dateValue"
+		loading
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
 
-				<script setup lang="ts">
-				import { ref } from 'vue'
-
-				const dateValue = ref('12/12/1445')
-				</script>
-				`,
+const dateValue = ref('12/12/1445')
+</script>`,
 			},
 		],
 	},
@@ -355,21 +403,21 @@ export const Disabled: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<LunarCalendar
-						label="Date de naissance"
-						v-model="dateValue"
-						disabled
-					/>
-				</template>
+				code: `<template>
+	<LunarCalendar
+		label="Date de naissance"
+		v-model="dateValue"
+		disabled
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
 
-				<script setup lang="ts">
-				import { ref } from 'vue'
-
-				const dateValue = ref('12/12/1445')
-				</script>
-				`,
+const dateValue = ref('12/12/1445')
+</script>`,
 			},
 		],
 	},
@@ -401,21 +449,21 @@ export const Readonly: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<LunarCalendar
-						label="Date de naissance"
-						v-model="dateValue"
-						readonly
-					/>
-				</template>
+				code: `<template>
+	<LunarCalendar
+		label="Date de naissance"
+		v-model="dateValue"
+		readonly
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
 
-				<script setup lang="ts">
-				import { ref } from 'vue'
-
-				const dateValue = ref('12/12/1445')
-				</script>
-				`,
+const dateValue = ref('12/12/1445')
+</script>`,
 			},
 		],
 	},
