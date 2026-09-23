@@ -15,6 +15,7 @@
 		mdiHelp,
 	} from '@mdi/js'
 	import SySelect from '../Selects/SySelect/SySelect.vue'
+	import SyRadioGroup from '../SyRadioGroup/SyRadioGroup.vue'
 
 	// Liste d'icônes prédéfinies pour la sélection
 	const iconOptions = [
@@ -36,6 +37,18 @@
 	const label = ref('Information importante')
 	const icon = ref(mdiInformation)
 	const selectedIconIndex = ref(0)
+
+	const decorativeOptions = [
+		{ label: 'Décorative', value: 'decorative' },
+		{ label: 'Informative', value: 'informative' },
+	]
+
+	const decorativeMode = computed({
+		get: () => (decorative.value ? 'decorative' : 'informative'),
+		set: (value: PropertyKey | null) => {
+			decorative.value = value === 'decorative'
+		},
+	})
 
 	// Mettre à jour l'icône sélectionnée
 	const updateSelectedIcon = (index) => {
@@ -178,21 +191,13 @@
 								Configuration
 							</h4>
 
-							<VRadioGroup
-								v-model="decorative"
-								inline
+							<SyRadioGroup
+								v-model="decorativeMode"
+								:options="decorativeOptions"
 								label="Type d'icône :"
-								class="mb-4"
-							>
-								<VRadio
-									:value="true"
-									label="Décorative"
-								/>
-								<VRadio
-									:value="false"
-									label="Informative"
-								/>
-							</VRadioGroup>
+								inline
+								class="mb-4 icon-type-group"
+							/>
 
 							<SySelect
 								v-model="selectedIconIndex"
@@ -200,7 +205,6 @@
 								:items="iconOptions"
 								text-key="label"
 								value-key="index"
-
 								class="mb-4"
 								variant-style="outlined"
 								density="comfortable"
@@ -329,5 +333,9 @@ pre {
 	margin: 0;
 	white-space: pre-wrap;
 	word-break: break-word;
+}
+
+:deep(.v-input__control > .v-label) {
+    opacity: 1;
 }
 </style>
