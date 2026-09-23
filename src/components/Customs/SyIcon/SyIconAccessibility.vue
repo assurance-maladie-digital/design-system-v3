@@ -196,7 +196,7 @@
 
 							<SySelect
 								v-model="selectedIconIndex"
-								:label="'Sélectionnez une icône'"
+								label="Sélectionnez une icône"
 								:items="iconOptions"
 								text-key="label"
 								value-key="index"
