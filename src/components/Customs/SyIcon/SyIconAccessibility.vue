@@ -336,6 +336,6 @@ pre {
 }
 
 :deep(.v-input__control > .v-label) {
-    opacity: 1;
+	opacity: 1;
 }
 </style>
