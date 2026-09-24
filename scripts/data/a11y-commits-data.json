@@ -5883,32 +5883,10 @@
   ],
   "SelectBtnField": [
     {
-      "hash": "7ebfa59c2acbce33901ff8003e4f73f4c5e8016c",
-      "date": "2026-09-16 14:52:14 +0200",
-      "dateFr": "16/09/2026",
-      "message": "add on focus",
-      "version": null,
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "ed876dadf42a4f0a077cb76458c5209d02d9c4ff",
-      "date": "2026-09-10 10:24:20 +0200",
-      "dateFr": "10/09/2026",
-      "message": "fix tests",
-      "version": null,
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "dd8ac6caf9610089fdd27dc9544d58ded7554ac9",
-      "date": "2026-09-09 14:26:40 +0200",
-      "dateFr": "09/09/2026",
-      "message": "add tests a11y to selectBtnField",
+      "hash": "99dd21e66e143bda73bf5d60d7cc258bf80fda35",
+      "date": "2026-09-17 14:05:01 +0200",
+      "dateFr": "17/09/2026",
+      "message": "add tests a11y to selectBtnField (#2543)",
       "version": null,
       "confidence": "forte",
       "keywords": true,
@@ -6997,6 +6975,17 @@
   ],
   "SyIcon": [
     {
+      "hash": "10d998f3c39c4df0f14b28536e73af79a2d02399",
+      "date": "2026-09-17 16:04:51 +0200",
+      "dateFr": "17/09/2026",
+      "message": "refacto tests a11y (#2562)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
       "dateFr": "10/09/2026",
@@ -7123,17 +7112,6 @@
       "dateFr": "11/02/2026",
       "message": "Accessibilité: file reorganization accessibility (#1792)",
       "version": "1.0.20",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
-      "date": "2026-01-06 11:55:17 +0100",
-      "dateFr": "06/01/2026",
-      "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
@@ -7175,6 +7153,17 @@
   ],
   "SyIconAccessibility": [
     {
+      "hash": "10d998f3c39c4df0f14b28536e73af79a2d02399",
+      "date": "2026-09-17 16:04:51 +0200",
+      "dateFr": "17/09/2026",
+      "message": "refacto tests a11y (#2562)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
       "dateFr": "10/09/2026",
@@ -7301,17 +7290,6 @@
       "dateFr": "11/02/2026",
       "message": "Accessibilité: file reorganization accessibility (#1792)",
       "version": "1.0.20",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
-      "date": "2026-01-06 11:55:17 +0100",
-      "dateFr": "06/01/2026",
-      "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
@@ -8836,6 +8814,17 @@
   ],
   "DatePicker": [
     {
+      "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+      "date": "2026-09-22 08:55:24 +0200",
+      "dateFr": "22/09/2026",
+      "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
       "dateFr": "10/09/2026",
@@ -9024,6 +9013,17 @@
     }
   ],
   "ComplexDatePicker": [
+    {
+      "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+      "date": "2026-09-22 08:55:24 +0200",
+      "dateFr": "22/09/2026",
+      "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
@@ -9214,6 +9214,17 @@
   ],
   "DatePickerLiveRegion": [
     {
+      "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+      "date": "2026-09-22 08:55:24 +0200",
+      "dateFr": "22/09/2026",
+      "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
       "dateFr": "10/09/2026",
@@ -9335,17 +9346,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "f2e75c4313e579c69a4471d51ce3f2f1899f597c",
-      "date": "2026-04-21 09:57:46 +0200",
-      "dateFr": "21/04/2026",
-      "message": "Tokens simplify v2 (#2102)",
-      "version": "1.0.25",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
       "hash": "c7d5d6808a432dd319821980564f035869530c40",
       "date": "2026-04-20 11:55:30 +0200",
       "dateFr": "20/04/2026",
@@ -9434,17 +9434,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "517a9b37efc6ae9bb4139cb9a69b37eab3711d28",
-      "date": "2026-01-16 09:28:09 +0100",
-      "dateFr": "16/01/2026",
-      "message": "Corrige les différences graphiques sur le DatePicker (#1670)",
-      "version": "1.0.17",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
       "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
@@ -9472,28 +9461,6 @@
       "dateFr": "15/12/2025",
       "message": "Refactor DatePicker components to enforce required label prop and allow to not show the placeholder (#1609)",
       "version": "1.0.16",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "8a3708a8c1435413ad5403f6cb39bd727159df18",
-      "date": "2025-12-08 15:45:15 +0100",
-      "dateFr": "08/12/2025",
-      "message": "Feat/improve dp (#1540)",
-      "version": "1.0.16",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "e8bd3742c7b7be52d59307d1ed9b6c5179c8f64e",
-      "date": "2025-11-05 10:46:17 +0100",
-      "dateFr": "05/11/2025",
-      "message": "fix monthname on navigation in datePickers (#1415)",
-      "version": "1.0.12",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -9588,43 +9555,10 @@
       "a11yLabel": false
     },
     {
-      "hash": "11bdd743786bdb4c84f94f0d39cc1a31f54de623",
-      "date": "2025-07-09 10:47:54 +0200",
-      "dateFr": "09/07/2025",
-      "message": "improve access on datePicker (#772)",
-      "version": "1.0.3",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "54b9bca097ab6d40d93fe7a9e5f0ea7b85803158",
-      "date": "2025-07-04 14:16:37 +0200",
-      "dateFr": "04/07/2025",
-      "message": "fix the problem with displaying datePicker boxes when several are open (#759)",
-      "version": "1.0.2",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
       "hash": "c0da961282b8da1897f96d2fce82c928adddcd58",
       "date": "2025-07-04 09:55:25 +0200",
       "dateFr": "04/07/2025",
       "message": "fix label and placeholder in datePickersa componants (#746)",
-      "version": "1.0.2",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fc05bc61ccbb1ce3471c55a5f44ba15531b2af29",
-      "date": "2025-06-26 14:29:14 +0200",
-      "dateFr": "26/06/2025",
-      "message": "add autoClamp on datePicker (#723)",
       "version": "1.0.2",
       "confidence": "faible",
       "keywords": false,
@@ -9666,6 +9600,17 @@
     }
   ],
   "DateTextInput": [
+    {
+      "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+      "date": "2026-09-22 08:55:24 +0200",
+      "dateFr": "22/09/2026",
+      "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
@@ -9859,6 +9804,58 @@
       "dateFr": "02/06/2025",
       "message": "Feat/improve dp doc orga (#671)",
       "version": "1.0.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "DatePickerControls": [
+    {
+      "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+      "date": "2026-09-22 08:55:24 +0200",
+      "dateFr": "22/09/2026",
+      "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "DatePickerDay": [
+    {
+      "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+      "date": "2026-09-22 08:55:24 +0200",
+      "dateFr": "22/09/2026",
+      "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "DatePickerMonthOption": [
+    {
+      "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+      "date": "2026-09-22 08:55:24 +0200",
+      "dateFr": "22/09/2026",
+      "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "DatePickerYearOption": [
+    {
+      "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+      "date": "2026-09-22 08:55:24 +0200",
+      "dateFr": "22/09/2026",
+      "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+      "version": null,
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
@@ -14502,6 +14499,17 @@
   ],
   "PeriodField": [
     {
+      "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+      "date": "2026-09-22 08:55:24 +0200",
+      "dateFr": "22/09/2026",
+      "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
       "dateFr": "10/09/2026",
@@ -15879,6 +15887,17 @@
   ],
   "SubHeader": [
     {
+      "hash": "9d1b16abe6fc04f71a2785eaaf609d2bced2e523",
+      "date": "2026-09-23 16:21:14 +0200",
+      "dateFr": "23/09/2026",
+      "message": "mise a jour page accessibilite, correction pb accesibility",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
       "dateFr": "10/09/2026",
@@ -16608,6 +16627,17 @@
   ],
   "SyTable": [
     {
+      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
+      "date": "2026-09-18 14:10:26 +0200",
+      "dateFr": "18/09/2026",
+      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
       "dateFr": "10/09/2026",
@@ -16774,6 +16804,28 @@
     }
   ],
   "SyTableFilter": [
+    {
+      "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+      "date": "2026-09-22 08:55:24 +0200",
+      "dateFr": "22/09/2026",
+      "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
+      "date": "2026-09-18 14:10:26 +0200",
+      "dateFr": "18/09/2026",
+      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "866c9198ee0aa864b462705ae01a3b5d2e2f1cf8",
       "date": "2026-08-25 11:18:14 +0200",
@@ -17085,6 +17137,28 @@
   ],
   "SyTablePagination": [
     {
+      "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+      "date": "2026-09-22 08:55:24 +0200",
+      "dateFr": "22/09/2026",
+      "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
+      "date": "2026-09-18 14:10:26 +0200",
+      "dateFr": "18/09/2026",
+      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "866c9198ee0aa864b462705ae01a3b5d2e2f1cf8",
       "date": "2026-08-25 11:18:14 +0200",
       "dateFr": "25/08/2026",
@@ -17395,6 +17469,28 @@
   ],
   "TableBulkActions": [
     {
+      "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+      "date": "2026-09-22 08:55:24 +0200",
+      "dateFr": "22/09/2026",
+      "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
+      "date": "2026-09-18 14:10:26 +0200",
+      "dateFr": "18/09/2026",
+      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "866c9198ee0aa864b462705ae01a3b5d2e2f1cf8",
       "date": "2026-08-25 11:18:14 +0200",
       "dateFr": "25/08/2026",
@@ -17704,6 +17800,28 @@
     }
   ],
   "TableHeader": [
+    {
+      "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+      "date": "2026-09-22 08:55:24 +0200",
+      "dateFr": "22/09/2026",
+      "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
+      "date": "2026-09-18 14:10:26 +0200",
+      "dateFr": "18/09/2026",
+      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "866c9198ee0aa864b462705ae01a3b5d2e2f1cf8",
       "date": "2026-08-25 11:18:14 +0200",

@@ -23,6 +23,8 @@ import * as SubHeaderStories from './SubHeader.stories';
 
 <Controls of={SubHeaderStories.Default} />
 
+La prop `dataListTitleLevel` choisit le niveau des titres des listes (de 1 à 6). Elle vaut **4 par défaut** et reste indépendante de `headingLevel`. Par exemple, utilisez `:heading-level="2"` et `:data-list-title-level="3"` pour placer les titres des listes au niveau suivant.
+
 # Exemple d'utilisation
 
 <Source dark code={`
@@ -35,7 +37,7 @@ import * as SubHeaderStories from './SubHeader.stories';
 		back-btn-text="Back"
 		title-text="Paul Dupont"
 		sub-title-text="1 69 08 75 125 456 75"
-		sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
+		sub-title-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 	/>
 </template>
 `} />
