@@ -1,6 +1,6 @@
 # Rapport d’historique d’accessibilité par composant
 
-- Généré le: 2026-09-17T09:56:32.358Z
+- Généré le: 2026-09-22T09:39:58.512Z
 
 ## Accordion
 
@@ -1790,14 +1790,8 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SelectBtnField
 
-- **16/09/2026** — add on focus  
-  Release: _prochaine version_ · Hash: `7ebfa59c2acbce33901ff8003e4f73f4c5e8016c` | mot-clé a11y · pattern ARIA
-
-- **10/09/2026** — fix tests  
-  Release: _prochaine version_ · Hash: `ed876dadf42a4f0a077cb76458c5209d02d9c4ff` | pattern ARIA
-
-- **09/09/2026** — add tests a11y to selectBtnField  
-  Release: _prochaine version_ · Hash: `dd8ac6caf9610089fdd27dc9544d58ded7554ac9` | mot-clé a11y · pattern ARIA
+- **17/09/2026** — add tests a11y to selectBtnField (#2543)  
+  Release: _prochaine version_ · Hash: `99dd21e66e143bda73bf5d60d7cc258bf80fda35` | mot-clé a11y · pattern ARIA
 
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
@@ -2104,6 +2098,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyIcon
 
+- **17/09/2026** — refacto tests a11y (#2562)  
+  Release: _prochaine version_ · Hash: `10d998f3c39c4df0f14b28536e73af79a2d02399` | mot-clé a11y · pattern ARIA
+
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
@@ -2139,9 +2136,6 @@ Aucune amélioration d’accessibilité détectée.
 
 - **11/02/2026** — Accessibilité: file reorganization accessibility (#1792)  
   Release: `v1.0.20` · Hash: `b1bca6204773d854436df21d2acd547e18f0f61a` | mot-clé a11y · pattern ARIA
-
-- **06/01/2026** — Feat/add accessibility in ci (#1663)  
-  Release: `v1.0.17` · Hash: `ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf` | mot-clé a11y · pattern ARIA
 
 - **22/12/2025** — add Storybook a11y addon and disable color-contrast checks (#1658)  
   Release: `v1.0.17` · Hash: `d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4` | mot-clé a11y
@@ -2154,6 +2148,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyIconAccessibility
 
+- **17/09/2026** — refacto tests a11y (#2562)  
+  Release: _prochaine version_ · Hash: `10d998f3c39c4df0f14b28536e73af79a2d02399` | mot-clé a11y · pattern ARIA
+
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
@@ -2189,9 +2186,6 @@ Aucune amélioration d’accessibilité détectée.
 
 - **11/02/2026** — Accessibilité: file reorganization accessibility (#1792)  
   Release: `v1.0.20` · Hash: `b1bca6204773d854436df21d2acd547e18f0f61a` | mot-clé a11y · pattern ARIA
-
-- **06/01/2026** — Feat/add accessibility in ci (#1663)  
-  Release: `v1.0.17` · Hash: `ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf` | mot-clé a11y · pattern ARIA
 
 - **22/12/2025** — add Storybook a11y addon and disable color-contrast checks (#1658)  
   Release: `v1.0.17` · Hash: `d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4` | mot-clé a11y
@@ -4867,6 +4861,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyTable
 
+- **18/09/2026** — SyTable: ne plus avoir "Table caption" quand le caption est vide (#2559)  
+  Release: _prochaine version_ · Hash: `4d3907527c38c9958b531f95ff00a1bf4361c0a8` | pattern ARIA
+
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
@@ -4913,6 +4910,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.1` · Hash: `44b6129940ba1ee01dd57f10fd1162bab63ddb2a` | pattern ARIA
 
 ## SyTableFilter
+
+- **18/09/2026** — SyTable: ne plus avoir "Table caption" quand le caption est vide (#2559)  
+  Release: _prochaine version_ · Hash: `4d3907527c38c9958b531f95ff00a1bf4361c0a8` | pattern ARIA
 
 - **25/08/2026** — fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)  
   Release: `v1.1.4` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
@@ -5000,6 +5000,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyTablePagination
 
+- **18/09/2026** — SyTable: ne plus avoir "Table caption" quand le caption est vide (#2559)  
+  Release: _prochaine version_ · Hash: `4d3907527c38c9958b531f95ff00a1bf4361c0a8` | pattern ARIA
+
 - **25/08/2026** — fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)  
   Release: `v1.1.4` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
 
@@ -5086,6 +5089,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## TableBulkActions
 
+- **18/09/2026** — SyTable: ne plus avoir "Table caption" quand le caption est vide (#2559)  
+  Release: _prochaine version_ · Hash: `4d3907527c38c9958b531f95ff00a1bf4361c0a8` | pattern ARIA
+
 - **25/08/2026** — fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)  
   Release: `v1.1.4` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
 
@@ -5171,6 +5177,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.1` · Hash: `44b6129940ba1ee01dd57f10fd1162bab63ddb2a` | pattern ARIA
 
 ## TableHeader
+
+- **18/09/2026** — SyTable: ne plus avoir "Table caption" quand le caption est vide (#2559)  
+  Release: _prochaine version_ · Hash: `4d3907527c38c9958b531f95ff00a1bf4361c0a8` | pattern ARIA
 
 - **25/08/2026** — fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)  
   Release: `v1.1.4` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA

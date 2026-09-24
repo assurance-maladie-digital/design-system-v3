@@ -1,8 +1,8 @@
 {
-  "date": "2026-09-17T09:56:32.909Z",
-  "compliantCount": 60,
+  "date": "2026-09-22T09:39:58.746Z",
+  "compliantCount": 61,
   "totalCount": 77,
-  "percentage": "77.92",
+  "percentage": "79.22",
   "results": [
     {
       "componentName": "Accordion",
@@ -755,9 +755,9 @@
     {
       "componentName": "SyBtnMenu",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
+      "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false,
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Navigation/SyBtnMenu",
       "hasManualAudit": true,
       "version": "1.1.4",

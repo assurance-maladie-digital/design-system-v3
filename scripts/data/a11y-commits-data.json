@@ -5883,32 +5883,10 @@
   ],
   "SelectBtnField": [
     {
-      "hash": "7ebfa59c2acbce33901ff8003e4f73f4c5e8016c",
-      "date": "2026-09-16 14:52:14 +0200",
-      "dateFr": "16/09/2026",
-      "message": "add on focus",
-      "version": null,
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "ed876dadf42a4f0a077cb76458c5209d02d9c4ff",
-      "date": "2026-09-10 10:24:20 +0200",
-      "dateFr": "10/09/2026",
-      "message": "fix tests",
-      "version": null,
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "dd8ac6caf9610089fdd27dc9544d58ded7554ac9",
-      "date": "2026-09-09 14:26:40 +0200",
-      "dateFr": "09/09/2026",
-      "message": "add tests a11y to selectBtnField",
+      "hash": "99dd21e66e143bda73bf5d60d7cc258bf80fda35",
+      "date": "2026-09-17 14:05:01 +0200",
+      "dateFr": "17/09/2026",
+      "message": "add tests a11y to selectBtnField (#2543)",
       "version": null,
       "confidence": "forte",
       "keywords": true,
@@ -6997,6 +6975,17 @@
   ],
   "SyIcon": [
     {
+      "hash": "10d998f3c39c4df0f14b28536e73af79a2d02399",
+      "date": "2026-09-17 16:04:51 +0200",
+      "dateFr": "17/09/2026",
+      "message": "refacto tests a11y (#2562)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
       "dateFr": "10/09/2026",
@@ -7123,17 +7112,6 @@
       "dateFr": "11/02/2026",
       "message": "Accessibilité: file reorganization accessibility (#1792)",
       "version": "1.0.20",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
-      "date": "2026-01-06 11:55:17 +0100",
-      "dateFr": "06/01/2026",
-      "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
@@ -7175,6 +7153,17 @@
   ],
   "SyIconAccessibility": [
     {
+      "hash": "10d998f3c39c4df0f14b28536e73af79a2d02399",
+      "date": "2026-09-17 16:04:51 +0200",
+      "dateFr": "17/09/2026",
+      "message": "refacto tests a11y (#2562)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
       "dateFr": "10/09/2026",
@@ -7301,17 +7290,6 @@
       "dateFr": "11/02/2026",
       "message": "Accessibilité: file reorganization accessibility (#1792)",
       "version": "1.0.20",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
-      "date": "2026-01-06 11:55:17 +0100",
-      "dateFr": "06/01/2026",
-      "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
@@ -16608,6 +16586,17 @@
   ],
   "SyTable": [
     {
+      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
+      "date": "2026-09-18 14:10:26 +0200",
+      "dateFr": "18/09/2026",
+      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
       "dateFr": "10/09/2026",
@@ -16774,6 +16763,17 @@
     }
   ],
   "SyTableFilter": [
+    {
+      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
+      "date": "2026-09-18 14:10:26 +0200",
+      "dateFr": "18/09/2026",
+      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "866c9198ee0aa864b462705ae01a3b5d2e2f1cf8",
       "date": "2026-08-25 11:18:14 +0200",
@@ -17085,6 +17085,17 @@
   ],
   "SyTablePagination": [
     {
+      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
+      "date": "2026-09-18 14:10:26 +0200",
+      "dateFr": "18/09/2026",
+      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "866c9198ee0aa864b462705ae01a3b5d2e2f1cf8",
       "date": "2026-08-25 11:18:14 +0200",
       "dateFr": "25/08/2026",
@@ -17395,6 +17406,17 @@
   ],
   "TableBulkActions": [
     {
+      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
+      "date": "2026-09-18 14:10:26 +0200",
+      "dateFr": "18/09/2026",
+      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "866c9198ee0aa864b462705ae01a3b5d2e2f1cf8",
       "date": "2026-08-25 11:18:14 +0200",
       "dateFr": "25/08/2026",
@@ -17704,6 +17726,17 @@
     }
   ],
   "TableHeader": [
+    {
+      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
+      "date": "2026-09-18 14:10:26 +0200",
+      "dateFr": "18/09/2026",
+      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "866c9198ee0aa864b462705ae01a3b5d2e2f1cf8",
       "date": "2026-08-25 11:18:14 +0200",
