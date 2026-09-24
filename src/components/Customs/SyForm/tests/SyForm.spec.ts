@@ -7,6 +7,7 @@ import { VTextField } from 'vuetify/components/VTextField'
 import { defineComponent, h, nextTick, type InstanceType } from 'vue'
 import { useValidatable } from '@/composables/validation/useValidatable'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
+import SyAutocomplete from '@/components/Customs/Selects/SyAutocomplete/SyAutocomplete.vue'
 
 describe('SyForm', () => {
 	it('modelValue should reflect validity of the form', async () => {
@@ -688,6 +689,46 @@ describe('SyForm', () => {
 			// Verify no error messages are displayed
 			const errorMessagesAfter = wrapper.findAll('.v-messages__message')
 			expect(errorMessagesAfter.length).toBe(0)
+
+			wrapper.unmount()
+		})
+	})
+
+	describe('clearValidation and v-model', () => {
+		it('clearValidation() restores the v-model to null and clears displayed errors (SyAutocomplete)', async () => {
+			const wrapper = mount({
+				components: { SyForm, SyAutocomplete },
+				template: `
+					<SyForm ref="form" v-model="formValid">
+						<SyAutocomplete
+							v-model="doctor"
+							label="Médecin traitant"
+							required
+							:items="[{ text: 'Dr Martin', value: 'martin' }]"
+						/>
+					</SyForm>
+				`,
+				data() {
+					return {
+						doctor: null,
+						formValid: null as boolean | null,
+					}
+				},
+			})
+
+			// Soumission avec un champ requis vide : le v-model passe à false
+			await wrapper.find('form').trigger('submit.prevent')
+			await flushPromises()
+			expect(wrapper.vm.formValid).toBe(false)
+			expect(wrapper.findAll('.v-messages__message').length).toBeGreaterThan(0)
+
+			// clearValidation : les erreurs disparaissent et le v-model revient à null
+			const formRef = wrapper.vm.$refs.form as InstanceType<typeof SyForm>
+			formRef.clearValidation()
+			await flushPromises()
+			await nextTick()
+			expect(wrapper.findAll('.v-messages__message').length).toBe(0)
+			expect(wrapper.vm.formValid).toBe(null)
 
 			wrapper.unmount()
 		})

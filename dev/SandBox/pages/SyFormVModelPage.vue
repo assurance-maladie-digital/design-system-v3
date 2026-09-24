@@ -15,7 +15,6 @@
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SelectBtnField from '@/components/Customs/Selects/SelectBtnField/SelectBtnField.vue'
 	import SyAutocomplete from '@/components/Customs/Selects/SyAutocomplete/SyAutocomplete.vue'
-	import SyInputSelect from '@/components/Customs/Selects/SyInputSelect/SyInputSelect.vue'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import { mdiSwapHorizontal, mdiCheckCircle, mdiRefresh, mdiHistory, mdiTextAccount, mdiCalendarRange, mdiCheckDecagramOutline, mdiEyeOutline, mdiShieldCheckOutline, mdiVuetify } from '@mdi/js'
 
@@ -105,8 +104,6 @@
 	const synapseStayPeriod = ref<{ from: string, to: string } | null>(null)
 	const synapseCareType = ref<string | null>(null)
 	const synapseDoctor = ref<string | null>(null)
-	const synapseContactChannel = ref<string | null>(null)
-	const synapseBillingFormat = ref<string | null>(null)
 	const synapseFileTransfer = ref<string | number | null>(null)
 	const synapseTransmissionWay = ref<string | null>(null)
 	const synapseNotifications = ref<string[]>([])
@@ -345,8 +342,6 @@
 		synapseStayPeriod.value = null
 		synapseCareType.value = null
 		synapseDoctor.value = null
-		synapseContactChannel.value = null
-		synapseBillingFormat.value = null
 		synapseFileTransfer.value = null
 		synapseTransmissionWay.value = null
 		synapseNotifications.value = []
@@ -752,22 +747,6 @@
 											:items="doctorItems"
 											required
 											:custom-rules="synapseRequiredChoice('le médecin traitant')"
-											class="mb-4"
-										/>
-										<SyInputSelect
-											v-model="synapseContactChannel"
-											label="Canal de contact préféré"
-											:items="contactChannelItems"
-											required
-											:custom-rules="synapseRequiredChoice('le canal de contact')"
-											class="mb-4"
-										/>
-										<SyInputSelect
-											v-model="synapseBillingFormat"
-											label="Format de facturation"
-											:items="billingFormatItems"
-											required
-											:custom-rules="synapseRequiredChoice('le format de facturation')"
 											class="mb-4"
 										/>
 										<SelectBtnField
@@ -1188,7 +1167,7 @@
 											:rules="vuetifyRequiredChoice('Veuillez sélectionner un médecin traitant')"
 											class="mb-4"
 										/>
-										<!-- SyInputSelect n'a pas de mode Vuetify : équivalents en composants natifs -->
+										<!-- Composants Vuetify natifs -->
 										<VSelect
 											v-model="vuetifyContactChannel"
 											label="Canal de contact préféré (VSelect)"

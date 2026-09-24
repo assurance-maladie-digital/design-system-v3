@@ -64,8 +64,6 @@ export function useCustomValidation(
 	})
 
 	const applyValidationResult = (result: Awaited<ReturnType<typeof validator.validateField>>) => {
-		// eslint-disable-next-line no-console
-		console.log('[TRACE] applyValidationResult', label.value, JSON.stringify(result.state.errors), 'isPristine ->', false)
 		isPristine.value = false
 
 		errors.value = result.state.errors

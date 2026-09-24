@@ -423,7 +423,7 @@
 					:show-success-messages="showSuccessMessages"
 					:required="required"
 					:display-asterisk="required && displayAsterisk"
-					:disable-error-handling="disableErrorHandling"
+					:disable-error-handling="true"
 					:loading="loading"
 					:help-text="helpText"
 					:hide-details="hideDetails"
