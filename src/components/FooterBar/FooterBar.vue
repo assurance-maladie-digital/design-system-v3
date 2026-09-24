@@ -303,7 +303,6 @@ a {
 }
 
 .logo-image {
-	display: block;
 	width: 131px;
 	height: 40px;
 }
