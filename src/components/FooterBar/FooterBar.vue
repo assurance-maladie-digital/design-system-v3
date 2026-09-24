@@ -294,6 +294,8 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/overrides/breakpoints' as bp;
+
 a {
 	cursor: pointer;
 }
@@ -454,7 +456,7 @@ a {
 	background: rgba(white, 0.1);
 }
 
-@media screen and (width >= 600px) {
+@media #{bp.$up-sm} {
 	.logo-image {
 		width: 211px;
 		height: 64px;
