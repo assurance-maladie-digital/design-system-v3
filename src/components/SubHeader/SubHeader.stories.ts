@@ -11,6 +11,12 @@ const meta = {
 		layout: 'fullscreen',
 	},
 	argTypes: {
+		'dataListTitleLevel': {
+			control: { type: 'select' },
+			options: [1, 2, 3, 4, 5, 6],
+			description: 'Niveau des titres des listes, indépendant du titre principal. Par défaut : 4.',
+			table: { defaultValue: { summary: '4' } },
+		},
 		'headingLevel': {
 			control: { type: 'select' },
 			options: [1, 2, 3, 4, 5, 6],
@@ -261,6 +267,8 @@ export const DataList: Story = {
 				code: `
 				<template>
 					<SubHeader
+						:heading-level="2"
+						:data-list-title-level="3"
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
 						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
@@ -303,6 +311,7 @@ export const DataList: Story = {
 		],
 	},
 	args: {
+		dataListTitleLevel: 3,
 		headingLevel: 2,
 		backBtnText: 'Retour',
 		hideBackBtn: false,
@@ -354,6 +363,8 @@ export const DataListFixedHeight: Story = {
 				code: `
 				<template>
 					<SubHeader
+						:heading-level="2"
+						:data-list-title-level="3"
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
 						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
@@ -397,6 +408,7 @@ export const DataListFixedHeight: Story = {
 		],
 	},
 	args: {
+		dataListTitleLevel: 3,
 		headingLevel: 2,
 		backBtnText: 'Retour',
 		hideBackBtn: false,
@@ -449,6 +461,8 @@ export const ActionBtn: Story = {
 				code: `
 				<template>
 					<SubHeader
+						:heading-level="2"
+						:data-list-title-level="3"
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
 						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
@@ -499,6 +513,7 @@ export const ActionBtn: Story = {
 		],
 	},
 	args: {
+		dataListTitleLevel: 3,
 		headingLevel: 2,
 		backBtnText: 'Retour',
 		hideBackBtn: false,
@@ -560,6 +575,8 @@ export const HtmlValue: Story = {
 				code: `
 <template>
 	<SubHeader
+						:heading-level="2"
+						:data-list-title-level="3"
 		title-text="Paul Dupont"
 		sub-title-text="1 69 08 75 125 456 75"
 		:data-list-group-items="items"
@@ -642,6 +659,8 @@ export const HtmlValue: Story = {
 		},
 		template: `
 			<SubHeader
+						:heading-level="2"
+						:data-list-title-level="3"
 				title-text="Paul Dupont"
 				sub-title-text="1 69 08 75 125 456 75"
 				:data-list-group-items="items"
@@ -863,6 +882,7 @@ export const SlotBackBtn: Story = {
 					>
 						<template #back-btn>
 							<VBtn
+								theme="dark"
 								color="white"
 								variant="tonal"
 								class="mb-4"
@@ -894,6 +914,7 @@ export const SlotBackBtn: Story = {
 		'headingLevel': 2,
 		'back-btn': `<template #back-btn>
 	<VBtn
+		theme="dark"
 		color="white"
 		variant="tonal"
 		class="mb-4"
@@ -912,6 +933,7 @@ export const SlotBackBtn: Story = {
 				<SubHeader v-bind="args">
 					<template #back-btn>
 						<VBtn
+							theme="dark"
 							color="white"
 							variant="tonal"
 							class="mb-4"
@@ -1134,11 +1156,30 @@ export const SlotRightContent: Story = {
 						sub-title-text="1 69 08 75 125 456 75"
 						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 					>
-						<template #sub-title>
-							<h4 class="title mt-1">
-								Traité par Paul Dupont
-							</h4>
-						</template>
+						<template #right-content>
+							<div class="d-flex flex-column align-start flex-grow-0 ml-auto mt-auto">
+								<VBtn
+									theme="dark"
+									variant="text"
+									color="white"
+								>
+									<VIcon class="mr-2">
+										{{ cancelIcon }}
+									</VIcon>
+									Clore le dossier
+								</VBtn>
+								<VBtn
+									theme="dark"
+									variant="text"
+									color="white"
+								>
+									<VIcon class="mr-2">
+										{{ copyIcon }}
+									</VIcon>
+									Dupliquer le dossier
+								</VBtn>
+							</div>
+					</template>
 					</SubHeader>
 				</template>
 				`,
@@ -1165,13 +1206,14 @@ export const SlotRightContent: Story = {
 		'loading': false,
 		'right-content': `<template #right-content>
 	<div class="d-flex flex-column align-start flex-grow-0 ml-auto mt-auto">
-		<VBtn>
+		<VBtn theme="dark" variant="text" color="white">
 			<VIcon class="mr-2">
 				{{ cancelIcon }}
 			</VIcon>
 			Clore le dossier
 		</VBtn>
 		<VBtn
+			theme="dark"
 			variant="text"
 			color="white"
 		>
@@ -1197,6 +1239,7 @@ export const SlotRightContent: Story = {
 					<template #right-content>
 						<div class="d-flex flex-column align-start flex-grow-0 ml-auto mt-auto">
 							<VBtn
+								theme="dark"
 								variant="text"
 								color="white"
 							>
@@ -1206,6 +1249,7 @@ export const SlotRightContent: Story = {
 								Clore le dossier
 							</VBtn>
 							<VBtn
+								theme="dark"
 								variant="text"
 								color="white"
 							>
