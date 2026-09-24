@@ -115,7 +115,7 @@
 		)
 	})
 
-	const { containerComponent: logoContainerComponent, homeHref } = useHomeLinkFallback(() => props.homeLink)
+	const { containerComponent: logoContainerComponent, linkAttrs: homeLinkAttrs } = useHomeLinkFallback(() => props.homeLink)
 
 	// Le libellé du lien d'accueil : sans `ariaLabel`, on n'annonce que le libellé générique
 	// (une concaténation naïve produisait « undefined Retour vers accueil du site »).
@@ -203,8 +203,7 @@
 	>
 		<component
 			:is="logoContainerComponent"
-			:to="logoContainerComponent === 'router-link' ? homeLink?.to : undefined"
-			:href="logoContainerComponent === 'a' ? homeHref : undefined"
+			v-bind="homeLinkAttrs"
 			class="vd-home-link"
 		>
 			<Logo
@@ -236,9 +235,8 @@
 			<component
 				:is="secondaryLogoCtnComponent"
 				v-if="secondaryLogo"
+				v-bind="secondaryLogoCtnComponent === 'div' ? {} : homeLinkAttrs"
 				:aria-label="secondaryLogoLabel"
-				:to="secondaryLogoCtnComponent === 'router-link' ? homeLink?.to : undefined"
-				:href="secondaryLogoCtnComponent === 'a' ? homeHref : undefined"
 				class="vd-home-link"
 			>
 				<img
