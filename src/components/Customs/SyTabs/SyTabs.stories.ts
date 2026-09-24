@@ -96,17 +96,19 @@ export const Disabled: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `<SyTabs :items="items" />`,
+				code: `
+<SyTabs :items="items" />
+`,
 			},
 			{
 				name: 'Script',
 				code: `
-					const items = [
-						{ label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
-						{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2", disabled: true },
-						{ label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
-					]
-				`,
+const items = [
+	{ label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
+	{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2", disabled: true },
+	{ label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
+]
+`,
 			},
 		],
 	},
@@ -188,7 +190,7 @@ export const WithTabsPrependSlot: Story = {
 		template: `
       <SyTabs :items="args.items">
         <template #tabs-prepend>
-            <div class="p-4 bg-info-light rounded">
+            <div class="pa-4 bg-info-variant-lighten rounded">
               <p class="mr-4">Tabs prepend content</p>
             </div>
         </template>
@@ -199,15 +201,25 @@ export const WithTabsPrependSlot: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: ` 
-              <SyTabs :items="args.items">
-        <template #tabs-prepend>
-            <div class="p-4 bg-info-light rounded">
-                <p class="mr-4">Tabs prepend content</p>
-            </div>
-        </template>
-      </SyTabs>
-      `,
+				code: `
+<SyTabs :items="items">
+	<template #tabs-prepend>
+		<div class="pa-4 bg-info-variant-lighten rounded">
+			<p class="mr-4">Tabs prepend content</p>
+		</div>
+	</template>
+</SyTabs>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+const items = [
+	{ label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
+	{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
+	{ label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
+]
+`,
 			},
 		],
 	},
@@ -225,7 +237,7 @@ export const WithTabsAppendSlot: Story = {
 		template: `
       <SyTabs :items="args.items">
         <template #tabs-append>
-            <div class="p-4 bg-info-light rounded">
+            <div class="pa-4 bg-info-variant-lighten rounded">
               <p class="mr-4">Tabs append content</p>
             </div>
         </template>
@@ -236,15 +248,25 @@ export const WithTabsAppendSlot: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: ` 
-              <SyTabs :items="args.items">
-        <template #tabs-append>
-            <div class="p-4 bg-info-light rounded">
-                <p class="mr-4">Tabs append content</p>
-            </div>
-        </template>
-      </SyTabs>
-      `,
+				code: `
+<SyTabs :items="items">
+	<template #tabs-append>
+		<div class="pa-4 bg-info-variant-lighten rounded">
+			<p class="mr-4">Tabs append content</p>
+		</div>
+	</template>
+</SyTabs>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+const items = [
+	{ label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
+	{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
+	{ label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
+]
+`,
 			},
 		],
 	},
@@ -276,23 +298,30 @@ export const WithTabPrependSlot: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: ` 
-              <SyTabs :items="args.items">
-        <template #tab-prepend="{ item, index, isActive }">
-          <VIcon
-              v-if="index === 0"
-              class="mr-2"
-              :color="isActive ? 'primary' : 'grey'"
-              :icon="mdiHome"
-          />
-        </template>
-      </SyTabs>
-      `,
-				script: `
-<script setup>
+				code: `
+<SyTabs :items="items">
+	<template #tab-prepend="{ index, isActive }">
+		<VIcon
+			v-if="index === 0"
+			class="mr-2"
+			:color="isActive ? 'primary' : 'grey'"
+			:icon="mdiHome"
+		/>
+	</template>
+</SyTabs>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
 import { mdiHome } from '@mdi/js'
-</script>
-                `,
+
+const items = [
+	{ label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
+	{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
+	{ label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
+]
+`,
 			},
 		],
 	},
@@ -324,23 +353,30 @@ export const WithTabAppendSlot: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: ` 
-              <SyTabs :items="args.items">
-        <template #tab-append="{ item, index, isActive }">
-        <VIcon
-              v-if="index === 0"
-              class="ml-2"
-              :color="isActive ? 'primary' : 'grey'"
-              :icon="mdiHome"
-          />
-      </template>
-      </SyTabs>
-      `,
-				script: `
-        <script setup>
-        import { mdiHome } from '@mdi/js'
-        </script>
-                `,
+				code: `
+<SyTabs :items="items">
+	<template #tab-append="{ index, isActive }">
+		<VIcon
+			v-if="index === 0"
+			class="ml-2"
+			:color="isActive ? 'primary' : 'grey'"
+			:icon="mdiHome"
+		/>
+	</template>
+</SyTabs>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+import { mdiHome } from '@mdi/js'
+
+const items = [
+	{ label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
+	{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
+	{ label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
+]
+`,
 			},
 		],
 	},
@@ -350,6 +386,13 @@ export const WithTabAppendSlot: Story = {
  * Exemple avec slot pannel
  */
 export const WithCustomContent: Story = {
+	args: {
+		items: [
+			{ label: 'Onglet 1', value: 'tab1' },
+			{ label: 'Onglet 2', value: 'tab2' },
+			{ label: 'Onglet 3', value: 'tab3', content: 'Contenu de l\'onglet 3' },
+		],
+	},
 	render: args => ({
 		components: { SyTabs },
 		setup() {
@@ -358,13 +401,13 @@ export const WithCustomContent: Story = {
 		template: `
       <SyTabs :items="args.items">
         <template #panel-0>
-          <div class="p-4 bg-info-light rounded">
+          <div class="pa-4 bg-info-variant-lighten rounded">
             <h3 class="text-h6 font-weight-bold">Contenu personnalisé pour l'onglet 1</h3>
             <p>Vous pouvez utiliser des slots nommés <code>panel-{index}</code> pour personnaliser le contenu de chaque onglet.</p>
           </div>
         </template>
         <template #panel-1>
-          <div class="p-4 bg-success-light rounded">
+          <div class="pa-4 bg-success-variant-lighten rounded">
             <h3 class="text-h6 font-weight-bold text-secondary">Contenu personnalisé pour l'onglet 2</h3>
             <p>Ce panneau utilise un style différent.</p>
           </div>
@@ -376,22 +419,32 @@ export const WithCustomContent: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: ` 
-              <SyTabs :items="args.items">
-        <template #panel-0>
-          <div class="p-4 bg-info-light rounded">
-            <h3 class="text-h6 font-weight-bold">Contenu personnalisé pour l'onglet 1</h3>
-            <p>Vous pouvez utiliser des slots nommés <code>panel-{index}</code> pour personnaliser le contenu de chaque onglet.</p>
-          </div>
-        </template>
-        <template #panel-1>
-          <div class="p-4 bg-success-light rounded">
-            <h3 class="text-h6 font-weight-bold text-secondary">Contenu personnalisé pour l'onglet 2</h3>
-            <p>Ce panneau utilise un style différent.</p>
-          </div>
-        </template>
-      </SyTabs>
-      `,
+				code: `
+<SyTabs :items="items">
+	<template #panel-0>
+		<div class="pa-4 bg-info-variant-lighten rounded">
+			<h3 class="text-h6 font-weight-bold">Contenu personnalisé pour l'onglet 1</h3>
+			<p>Vous pouvez utiliser des slots nommés <code>panel-{index}</code> pour personnaliser le contenu de chaque onglet.</p>
+		</div>
+	</template>
+	<template #panel-1>
+		<div class="pa-4 bg-success-variant-lighten rounded">
+			<h3 class="text-h6 font-weight-bold text-secondary">Contenu personnalisé pour l'onglet 2</h3>
+			<p>Ce panneau utilise un style différent.</p>
+		</div>
+	</template>
+</SyTabs>
+`,
+			},
+			{
+				name: 'Script',
+				code: `
+const items = [
+	{ label: 'Onglet 1', value: 'tab1' },
+	{ label: 'Onglet 2', value: 'tab2' },
+	{ label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
+]
+`,
 			},
 		],
 	},
@@ -533,7 +586,7 @@ export const WithTabConfirmation: Story = {
 		},
 		template: `
       <div>
-        <div class="mb-4 pa-2 bg-warning-light">
+        <div class="mb-4 pa-2 bg-warning-variant-lighten">
           <strong>Note :</strong> Essayez de changer d'onglet. Une boîte de dialogue de confirmation s'affichera.
         </div>
 
@@ -550,41 +603,34 @@ export const WithTabConfirmation: Story = {
 			{
 				name: 'Template',
 				code: `
-<template>
-  <div>
-    <div class="mb-4 pa-2 bg-warning-light">
-      <strong>Note :</strong> Essayez de changer d'onglet. Une boîte de dialogue de confirmation s'affichera.
-    </div>
-      <SyTabs 
-      :items="items" 
-      :confirmTabChange="true"
-      @confirm-tab-change="showConfirmDialog"
-    />
-  </div>
-</template>
+<div>
+	<div class="mb-4 pa-2 bg-warning-variant-lighten">
+		<strong>Note :</strong> Essayez de changer d'onglet. Une boîte de dialogue de confirmation s'affichera.
+	</div>
+	<SyTabs
+		:items="items"
+		confirm-tab-change
+		@confirm-tab-change="showConfirmDialog"
+	/>
+</div>
 `,
 			},
 			{
 				name: 'Script',
 				code: `
-<script setup>
-import { ref } from 'vue'
-
 const items = [
-  { label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
-  { label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
-  { label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" }
+	{ label: 'Onglet 1', value: 'tab1', content: "Contenu de l'onglet 1" },
+	{ label: 'Onglet 2', value: 'tab2', content: "Contenu de l'onglet 2" },
+	{ label: 'Onglet 3', value: 'tab3', content: "Contenu de l'onglet 3" },
 ]
 
 // Fonction pour afficher une boîte de dialogue de confirmation
 function showConfirmDialog(message, callback) {
-  // Dans un cas réel, vous afficheriez une boîte de dialogue personnalisée
-  // Ici nous utilisons window.confirm pour la démonstration
-  const confirmed = window.confirm("Voulez-vous vraiment changer d'onglet ?")
-  // Appelons le callback avec le résultat de la confirmation
-  callback(confirmed)
+	// Dans un cas réel, vous afficheriez une boîte de dialogue personnalisée
+	// Ici nous utilisons window.confirm pour la démonstration
+	const confirmed = window.confirm(message)
+	callback(confirmed)
 }
-</script>
 `,
 			},
 		],
