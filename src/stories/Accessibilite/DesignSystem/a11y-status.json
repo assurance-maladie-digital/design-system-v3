@@ -1,8 +1,8 @@
 {
-  "date": "2026-09-17T09:56:32.909Z",
-  "compliantCount": 60,
+  "date": "2026-09-24T09:20:58.504Z",
+  "compliantCount": 61,
   "totalCount": 77,
-  "percentage": "77.92",
+  "percentage": "79.22",
   "results": [
     {
       "componentName": "Accordion",
@@ -490,10 +490,10 @@
     },
     {
       "componentName": "HeaderNavigationBar",
-      "hasA11yTests": false,
-      "hasA11yDisabledInStories": true,
-      "mdxStatus": "Manquante",
-      "isFullyCompliant": false,
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Structure/HeaderBar/HeaderNavigationBar",
       "hasManualAudit": false,
       "version": "1.1.3",
