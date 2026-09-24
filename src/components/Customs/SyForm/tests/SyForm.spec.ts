@@ -667,8 +667,8 @@ describe('SyForm', () => {
 				},
 			})
 
-			// Set a date value
-			await wrapper.setData({ date: '2026-09-23' })
+			// Set a date value (using DD/MM/YYYY format to match DatePicker default)
+			await wrapper.setData({ date: '23/09/2026' })
 			await nextTick()
 
 			// Trigger validation (should pass)
