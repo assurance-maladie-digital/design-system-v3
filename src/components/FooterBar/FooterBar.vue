@@ -194,8 +194,6 @@
 								:media="desktopLogoMediaQuery"
 								:srcset="props.light ? logoDarkDesktopUrl : logoLightDesktopUrl"
 								type="image/svg+xml"
-								width="211"
-								height="64"
 							>
 							<img
 								class="logo-image"
@@ -302,6 +300,12 @@ a {
 
 .v-btn--icon {
 	border: 0;
+}
+
+.logo-image {
+	display: block;
+	width: 131px;
+	height: 40px;
 }
 
 // Fix footer bar height in SK
@@ -449,5 +453,12 @@ a {
 
 .v-theme--dark button.v-btn:hover :deep() {
 	background: rgba(white, 0.1);
+}
+
+@media screen and (width >= 600px) {
+	.logo-image {
+		width: 211px;
+		height: 64px;
+	}
 }
 </style>

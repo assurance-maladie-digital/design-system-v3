@@ -183,8 +183,12 @@ describe('HeaderLogo', () => {
 		expect(source.exists()).toBe(true)
 		expect(source.attributes('media')).toBe('(min-width: 990px)')
 		expect(source.attributes('srcset')).toContain('logo-desktop.svg')
+		expect(source.attributes('width')).toBeUndefined()
+		expect(source.attributes('height')).toBeUndefined()
 		expect(image.exists()).toBe(true)
 		expect(image.attributes('src')).toContain('logo-mobile.svg')
+		expect(image.attributes('width')).toBe('141')
+		expect(image.attributes('height')).toBe('42')
 
 		wrapper.unmount()
 	})

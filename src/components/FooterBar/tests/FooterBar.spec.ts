@@ -146,6 +146,12 @@ describe('FooterBar', () => {
 		expect(sourceElement.exists()).toBe(true)
 		expect(sourceElement.attributes('srcset')).toBeTruthy()
 		expect(sourceElement.attributes('media')).toBe(`(min-width: 600px)`)
+		expect(sourceElement.attributes('width')).toBeUndefined()
+		expect(sourceElement.attributes('height')).toBeUndefined()
+
+		const imageElement = wrapper.find('.logo-picture img')
+		expect(imageElement.attributes('width')).toBe('131')
+		expect(imageElement.attributes('height')).toBe('40')
 	})
 
 	it('updates the logo dynamically when the theme changes', async () => {
