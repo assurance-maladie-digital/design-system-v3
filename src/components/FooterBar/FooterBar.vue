@@ -454,7 +454,7 @@ a {
 	background: rgba(white, 0.1);
 }
 
-@media screen and (min-width: $up-sm) {
+@media screen and (width >= 600px) {
 	.logo-image {
 		width: 211px;
 		height: 64px;
