@@ -33,6 +33,11 @@ const router = createRouter({
 			path: '/validation',
 			component: () => import('./pages/ValidationComparisonPage.vue'),
 		},
+		{
+			name: 'sandbox-syform-v-model',
+			path: '/syform-v-model',
+			component: () => import('./pages/SyFormVModelPage.vue'),
+		},
 	],
 })
 
