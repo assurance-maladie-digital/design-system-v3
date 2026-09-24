@@ -151,7 +151,7 @@ export const Default: Story = {
 					<SubHeader
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
-						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
+						sub-title-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 					/>
 				</template>
 				`,
@@ -213,7 +213,7 @@ export const BackgroundCustom: Story = {
   <SubHeader
     title-text="Paul Dupont"
     sub-title-text="1 69 08 75 125 456 75"
-    sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
+    sub-title-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
     :vuetifyOptions="{ sheet: { color: 'secondary' } }"
   />
 </template>
@@ -271,7 +271,7 @@ export const DataList: Story = {
 						:data-list-title-level="3"
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
-						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
+						sub-title-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 						:data-list-group-items="items"
 					/>
 				</template>
@@ -367,7 +367,7 @@ export const DataListFixedHeight: Story = {
 						:data-list-title-level="3"
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
-						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
+						sub-title-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 						:data-list-group-items="items"
 						:render-fixed-height="true"
 					/>
@@ -465,7 +465,7 @@ export const ActionBtn: Story = {
 						:data-list-title-level="3"
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
-						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
+						sub-title-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 						:data-list-group-items="items"
 						@click:list-item="updateInfo"
 					/>
@@ -690,7 +690,7 @@ export const Loading: Story = {
 					<SubHeader
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
-						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
+						sub-title-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 						:data-list-group-items="items"
 						loading
 					>
@@ -783,7 +783,7 @@ export const SlotAdditionalInformations: Story = {
 					<SubHeader
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
-						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
+						sub-title-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 					>
 						<template #additional-informations>
 							<VSpacer />
@@ -878,7 +878,7 @@ export const SlotBackBtn: Story = {
 					<SubHeader
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
-						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
+						sub-title-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 					>
 						<template #back-btn>
 							<VBtn
@@ -958,7 +958,7 @@ export const SlotBackBtnIcon: Story = {
 					<SubHeader
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
-						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
+						sub-title-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 					>
 						<template #back-btn-icon>
 							<VIcon class="mr-2">
@@ -1026,7 +1026,7 @@ export const SlotTitle: Story = {
 				<template>
 					<SubHeader
 						sub-title-text="1 69 08 75 125 456 75"
-						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
+						sub-title-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 					>
 						<template #title>
 							<h3 class="headline font-weight-bold mt-2">
@@ -1154,7 +1154,7 @@ export const SlotRightContent: Story = {
 					<SubHeader
 						title-text="Paul Dupont"
 						sub-title-text="1 69 08 75 125 456 75"
-						sub-title-text-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
+						sub-title-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75"
 					>
 						<template #right-content>
 							<div class="d-flex flex-column align-start flex-grow-0 ml-auto mt-auto">
