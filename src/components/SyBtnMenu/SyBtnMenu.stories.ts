@@ -383,8 +383,8 @@ export const WithLogoutItemSlot: Story = {
   	:menu-items="items"
   >
     <template #footer-list-item>
-      <VListItem tag="li" role="menuitem" @click="onLogout">
-        <VListItemTitle>Logout</VListItemTitle>
+      <VListItem tag="li" role="menuitem" tabindex="0" @click="onLogout">
+        <VListItemTitle>Se déconnecter</VListItemTitle>
       </VListItem>
     </template>
   </SyBtnMenu>
@@ -421,8 +421,8 @@ const onLogout = () => {}
               <div class="d-flex flex-wrap align-center pa-4">
                 <SyBtnMenu v-bind="args">
                   <template #footer-list-item>
-                    <VListItem tag="li" role="menuitem" @click="onLogout">
-                      <VListItemTitle>Logout</VListItemTitle>
+                    <VListItem tag="li" role="menuitem" tabindex="0" @click="onLogout">
+                      <VListItemTitle>Se déconnecter</VListItemTitle>
                     </VListItem>
                   </template>
                 </SyBtnMenu>
@@ -512,7 +512,7 @@ export const WithMultipleSlots: Story = {
 	<SyIcon :icon="mdiAccount" decorative />
     </template>
     <template #footer-list-item>
-      <VListItem tag="li" role="menuitem" @click="onLogout">
+      <VListItem tag="li" role="menuitem" tabindex="0" @click="onLogout">
         <VListItemTitle>Se déconnecter</VListItemTitle>
       </VListItem>
     </template>
@@ -553,7 +553,7 @@ const onLogout = () => {}
 					<SyIcon :icon="mdiAccount" decorative />
                   </template>
                   <template #footer-list-item>
-                    <VListItem tag="li" role="menuitem" @click="onLogout">
+                    <VListItem tag="li" role="menuitem" tabindex="0" @click="onLogout">
                       <VListItemTitle>Se déconnecter</VListItemTitle>
                     </VListItem>
                   </template>
