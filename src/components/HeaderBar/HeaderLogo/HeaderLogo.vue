@@ -53,8 +53,6 @@
 				:media="desktopLogoMediaQuery"
 				:srcset="logoDesktopUrl"
 				type="image/svg+xml"
-				width="165"
-				height="50"
 			>
 			<img
 				class="logo-image"
@@ -134,6 +132,8 @@
 
 .logo-image {
 	display: block;
+	width: 141px;
+	height: 42px;
 }
 
 .logo :deep(svg) {
@@ -152,6 +152,11 @@
 }
 
 @media screen and (min-width: $header-breakpoint) {
+	.logo-image {
+		width: 165px;
+		height: 50px;
+	}
+
 	.service-title {
 		font-size: 1.125rem !important;
 	}

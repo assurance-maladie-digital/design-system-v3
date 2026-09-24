@@ -194,8 +194,6 @@
 								:media="desktopLogoMediaQuery"
 								:srcset="props.light ? logoDarkDesktopUrl : logoLightDesktopUrl"
 								type="image/svg+xml"
-								width="211"
-								height="64"
 							>
 							<img
 								class="logo-image"
@@ -296,12 +294,19 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/overrides/breakpoints' as bp;
+
 a {
 	cursor: pointer;
 }
 
 .v-btn--icon {
 	border: 0;
+}
+
+.logo-image {
+	width: 131px;
+	height: 40px;
 }
 
 // Fix footer bar height in SK
@@ -449,5 +454,12 @@ a {
 
 .v-theme--dark button.v-btn:hover :deep() {
 	background: rgba(white, 0.1);
+}
+
+@media #{bp.$up-sm} {
+	.logo-image {
+		width: 211px;
+		height: 64px;
+	}
 }
 </style>
