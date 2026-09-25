@@ -1,8 +1,8 @@
 {
-  "date": "2026-09-17T09:56:32.909Z",
-  "compliantCount": 60,
+  "date": "2026-09-25T13:11:44.782Z",
+  "compliantCount": 61,
   "totalCount": 77,
-  "percentage": "77.92",
+  "percentage": "79.22",
   "results": [
     {
       "componentName": "Accordion",
@@ -470,7 +470,7 @@
       "componentName": "HeaderBar",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
-      "mdxStatus": "Incomplète",
+      "mdxStatus": "Complète",
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Structure/HeaderBar",
       "hasManualAudit": true,
@@ -513,9 +513,9 @@
     {
       "componentName": "LangBtn",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
-      "mdxStatus": "Incomplète",
-      "isFullyCompliant": false,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Boutons/LangBtn",
       "hasManualAudit": true,
       "version": "1.1.4",
