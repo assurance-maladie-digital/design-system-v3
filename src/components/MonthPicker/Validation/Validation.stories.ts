@@ -53,9 +53,6 @@ type Story = StoryObj<MonthPickerProps>
 
 export const WithError: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -121,9 +118,6 @@ export const WithError: Story = {
 
 export const WithWarning: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -204,9 +198,6 @@ export const WithWarning: Story = {
 
 export const WithSuccess: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -280,9 +271,6 @@ export const WithSuccess: Story = {
 
 export const WithCustomRules: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -435,9 +423,6 @@ export const WithCustomRules: Story = {
 
 export const DisableErrorHandling: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		docs: {
 			description: {
 				story: `

@@ -11,6 +11,8 @@
 	import { useLocales } from '@/composables/useLocales'
 	import type { MonthPickerProps } from './types'
 
+	defineOptions({ inheritAttrs: false })
+
 	const props = withDefaults(defineProps<MonthPickerProps>(), {
 		modelValue: undefined,
 		locales: () => ({}),
@@ -106,7 +108,10 @@
 </script>
 
 <template>
-	<div class="month-picker">
+	<div
+		v-bind="Object.fromEntries(Object.entries(attrs).filter(([name]) => name !== 'width'))"
+		class="month-picker"
+	>
 		<MonthPickerInput
 			ref="textInput"
 			v-model="internalValue"

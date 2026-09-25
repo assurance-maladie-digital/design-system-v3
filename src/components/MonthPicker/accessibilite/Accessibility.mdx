@@ -49,6 +49,16 @@ import {
             </ul>
         </BestPracticesSection>
 
+        <div style={{ margin: '3rem 0', padding: '1.5rem', backgroundColor: '#fff3e0', borderLeft: '4px solid #f57c00', borderRadius: '4px' }}>
+            <h2 style={{ color: '#e65100', marginTop: 0 }}>Faux positif connu (outillage) : aria-controls</h2>
+            <ul>
+                <li>L’addon d’accessibilité de Storybook peut signaler <code>aria-controls</code> dans l’onglet « Inconclusive » (<code>aria-valid-attr-value</code>) lorsque le calendrier de <code>MonthPicker</code> est ouvert.</li>
+                <li>Cause : la version d’axe utilisée demande une vérification manuelle de <code>aria-controls</code> en présence de <code>aria-haspopup="dialog"</code>, même si l’élément référencé existe. Vuetify téléporte le contenu de <code>VMenu</code> dans <code>.v-overlay-container</code>, ajouté sous <code>&lt;body&gt;</code> : ce contenu doit aussi être inclus dans le périmètre analysé.</li>
+                <li>Vérification manuelle (DevTools, calendrier ouvert) : sélectionner le bouton d’ouverture de <code>MonthPicker</code> dans l’inspecteur. La commande <code>$0.ownerDocument.getElementById($0.getAttribute('aria-controls'))</code> retourne bien l’élément <code>role="dialog"</code> correspondant. Le composant est donc conforme sur ce point : la référence <code>aria-controls</code> est valide dans le DOM réel.</li>
+                <li>Dans ce cas vérifié, ce n’est pas un bug de <code>MonthPicker</code> mais une limite du scanner lors du contrôle du lien entre le bouton et le calendrier. Le contenu du calendrier est téléporté hors de son conteneur d’origine.</li>
+            </ul>
+        </div>
+
         <ResourcesSection>
             <ul>
                 <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/examples/datepicker-dialog/" target="_blank" rel="noopener noreferrer">Guide de conception de datepicker</a></li>
