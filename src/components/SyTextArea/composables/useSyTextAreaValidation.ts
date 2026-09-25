@@ -19,7 +19,7 @@ export function useSyTextAreaValidation(
 ) {
 	const focused = ref(false)
 
-	const { vuetifyRules: defaultVuetifyRules, customRules: defaultCustomRules } = useDefaultValidationRules({
+	const { customRules: defaultCustomRules } = useDefaultValidationRules({
 		required: computed(() => props.required ?? false),
 		maxLines: computed(() => props.maxLines),
 		hasInteracted,
@@ -29,11 +29,6 @@ export function useSyTextAreaValidation(
 	const mergedCustomRules = computed<SyValidationRule[]>(() => [
 		...defaultCustomRules.value,
 		...(props.customRules ?? []),
-	])
-
-	const mergedVuetifyRules = computed(() => [
-		...(props.rules ?? []),
-		...defaultVuetifyRules.value,
 	])
 
 	const { validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
@@ -46,7 +41,7 @@ export function useSyTextAreaValidation(
 		disableErrorHandling: computed(() => props.disableErrorHandling ?? false),
 		useVuetifyValidation: computed(() => props.useVuetifyValidation ?? false),
 		label: computed(() => props.label ?? ''),
-		rules: mergedVuetifyRules,
+		rules: computed(() => props.useVuetifyValidation ? props.rules : undefined),
 		customRules: mergedCustomRules,
 		customWarningRules: computed(() => props.customWarningRules ?? []),
 		customSuccessRules: computed(() => props.customSuccessRules ?? []),
@@ -79,6 +74,5 @@ export function useSyTextAreaValidation(
 		hasWarning,
 		hasSuccess,
 		validationIcon,
-		mergedVuetifyRules,
 	}
 }
