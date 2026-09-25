@@ -1,15 +1,74 @@
-import { Meta, Story } from '@storybook/addon-docs/blocks';
+import { Meta, Primary } from '@storybook/addon-docs/blocks';
 import * as Stories from '../ExternalLinks.stories.ts';
 import '@/stories/styles/shared.css';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+	AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={Stories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
+<AccessibilityGuideLayout
+	componentName="ExternalLinks"
+	iconSrc={AccessibilityIcon}
+>
+	<AuditSection>
+    <p>Rapport d’audit manuel : <a href="/audits/ExternalLinks.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/808" target="_blank" style={{color:'#0C41BD'}}>issue #808</a>)</p>
+	</AuditSection>
+
+<CriteriaSection title="Critères d'accessibilité respectés">
+    <CriteriaCard title="Labels accessibles">
+        <ul>
+            <li>La prop <code>btnText</code> définit le texte visible du bouton. La prop <code>ariaLabel</code> définit son nom pour le lecteur d’écran.</li>
+            <li>Si le texte du bouton change, adapter aussi <code>ariaLabel</code> pour qu’il contienne ce texte.</li>
+            <li>Chaque lien affiche le texte fourni dans <code>items</code>. Les icônes décoratives sont masquées aux lecteurs d’écran.</li>
+        </ul>
+    </CriteriaCard>
+    <CriteriaCard title="Lien entre le bouton et le menu">
+        <ul>
+            <li><code>aria-expanded</code> indique si le menu est ouvert ou fermé.</li>
+            <li><code>aria-controls</code> et <code>aria-owns</code> pointent vers le menu uniquement lorsqu’il est ouvert. Ils sont retirés à la fermeture pour éviter une référence vers un élément absent.</li>
+        </ul>
+    </CriteriaCard>
+    <CriteriaCard title="Structure et navigation clavier">
+        <ul>
+            <li>La directive <code>v-toolbar</code> donne au groupe de liens le rôle <code>toolbar</code> et gère la navigation au clavier.</li>
+            <li>Les éléments <code>li</code> utilisent <code>role="none"</code> : ils servent de conteneurs, sans être annoncés comme des éléments de liste. Les liens restent accessibles.</li>
+            <li>À l’ouverture, le composant place le focus sur le premier lien si la liste n’est pas vide.</li>
+            <li>Vérifier sans souris l’ouverture du menu, le déplacement entre les liens, leur activation avec Entrée et la fermeture avec Échap. Le focus doit rester visible.</li>
+        </ul>
+    </CriteriaCard>
+</CriteriaSection>
+
+<DemoSection componentName="ExternalLinks">
+    <Primary />
+</DemoSection>
+
+<BestPracticesSection>
+    <ul>
+        <li>Donner à chaque lien un texte clair qui décrit sa destination.</li>
+        <li>Les liens s’ouvrent par défaut dans un nouvel onglet. Prévenir l’utilisateur de ce changement dans les libellés fournis.</li>
+        <li>Après une personnalisation des couleurs, vérifier le contraste des textes et la visibilité du focus.</li>
+        <li>Les tests axe couvrent le menu fermé, ouvert et vide. Ils ne remplacent pas les vérifications au clavier et au lecteur d’écran.</li>
+    </ul>
+</BestPracticesSection>
+
+<div style={{ margin: '3rem 0', padding: '1.5rem', backgroundColor: '#fff3e0', borderLeft: '4px solid #f57c00', borderRadius: '4px' }}>
+    <h2 style={{ color: '#e65100', marginTop: 0 }}>Faux positif connu (outillage) : aria-controls</h2>
+    <ul>
+        <li>L’addon d’accessibilité de Storybook peut signaler <code>aria-controls</code> dans l’onglet « Inconclusive » (élément référencé introuvable) lorsque le menu de <code>ExternalLinks</code> est ouvert.</li>
+        <li>Cause : la version d’axe utilisée demande une vérification manuelle du lien en présence de <code>aria-haspopup="menu"</code>, même si l’élément référencé existe. Dans ce composant, <code>VMenu</code> utilise <code>attach</code> : le contenu n’est donc pas nécessairement téléporté sous <code>&lt;body&gt;</code>, en dehors de <code>#storybook-root</code>.</li>
+        <li>Vérification manuelle (DevTools, menu ouvert) : sélectionner le bouton <code>.sy-external-links-btn</code> dans l’inspecteur, puis saisir <code>$0.ownerDocument.getElementById($0.getAttribute('aria-controls'))</code>. Le résultat doit être l’élément du menu dont l’identifiant commence par <code>sy-external-links-menu-</code>. Si cet élément correspond bien au menu ouvert, le composant est conforme sur ce point : la référence <code>aria-controls</code> est valide dans le DOM réel.</li>
+        <li>Ce n'est pas un bug du composant mais une limite du scanner face au contenu téléporté hors de son conteneur d'origine. </li>
+    </ul>
 </div>
 
-
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/ExternalLinks.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/808" target="_blank" style={{color:'#0C41BD'}}>issue #808</a>)</p>
-	</div>
+</AccessibilityGuideLayout>

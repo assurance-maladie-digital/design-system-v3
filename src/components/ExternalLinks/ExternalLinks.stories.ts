@@ -175,9 +175,6 @@ export const Default: Story = {
 		],
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -233,9 +230,6 @@ export const NudgeTop: Story = {
 		],
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -292,9 +286,6 @@ export const NudgeBottom: Story = {
 		],
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -337,9 +328,6 @@ export const NoData: Story = {
 		items: [],
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -380,9 +368,6 @@ export const BtnText: Story = {
 		btnText: 'Afficher les liens externes',
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -445,9 +430,6 @@ export const VuetifyOptions: Story = {
 		],
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -526,9 +508,6 @@ export const CustomLinksIcon: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',

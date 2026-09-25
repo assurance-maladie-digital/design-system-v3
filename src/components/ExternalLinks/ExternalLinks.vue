@@ -103,6 +103,7 @@
 					}"
 					:aria-label="props.ariaLabel"
 					:aria-controls="menu ? menuId : undefined"
+					:aria-owns="menu ? menuId : undefined"
 					:style="btnStyle"
 					class="sy-external-links-btn"
 					@mouseenter="hover = true"
@@ -138,6 +139,7 @@
 				<li
 					v-for="(item, index) in items"
 					:key="index"
+					role="none"
 				>
 					<VBtn
 						:href="item.href"
