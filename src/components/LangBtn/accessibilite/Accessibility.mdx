@@ -1,15 +1,84 @@
 import { Meta, Story } from '@storybook/addon-docs/blocks';
-import * as Stories from '../LangBtn.stories.ts';
-import '@/stories/styles/shared.css';
+import * as LangBtnStories from '../LangBtn.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+	AccessibilityGuideLayout,
+	CriteriaSection,
+	CriteriaCard,
+	DemoSection,
+	BestPracticesSection,
+	ResourcesSection,
+	AuditSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={Stories} />
+<Meta of={LangBtnStories} />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
-
-
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/LangBtn.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+<AccessibilityGuideLayout
+	componentName="LangBtn"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/"
+>
+	<AuditSection>
+		<p>Rapport d’audit manuel : <a href="/audits/LangBtn.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
 		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/4009" target="_blank" style={{color:'#0C41BD'}}>issue #4009</a>)</p>
-	</div>
+	</AuditSection>
+
+	<CriteriaSection>
+		<CriteriaCard title="Structure sémantique et rôles ARIA (pattern listbox APG)">
+			<ul>
+				<li><strong>Bouton déclencheur</strong> : <code>aria-haspopup="listbox"</code> et <code>aria-expanded</code> reflètent l'état du menu ; <code>aria-controls</code> et <code>aria-owns</code> ne sont posés qu'à l'ouverture (le contenu est téléporté et n'existe pas menu fermé).</li>
+				<li><strong>Liste des langues</strong> : <code>role="listbox"</code> avec <code>aria-labelledby</code> qui lie la liste au bouton déclencheur.</li>
+				<li><strong>Options</strong> : chaque entrée porte <code>role="option"</code> et <code>aria-selected</code> expose la langue courante aux technologies d'assistance.</li>
+				<li><strong>Nom accessible</strong> : <code>aria-label</code> du bouton annonce « Choix de la langue. Actuellement {langue} » (personnalisable via la prop <code>ariaLabel</code>).</li>
+				<li><strong>Ids uniques</strong> : identifiants générés par <code>useId()</code> — plusieurs instances cohabitent sans doublon d'id.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard title="Navigation clavier et focus">
+			<ul>
+				<li><strong>Ouverture</strong> : <kbd>Entrée</kbd>, <kbd>Espace</kbd> ou <kbd>Flèche bas</kbd> sur le bouton ouvre le menu.</li>
+				<li><strong>Focus initial</strong> : à l'ouverture, le focus est placé sur l'option sélectionnée (ou la première).</li>
+				<li><strong>Parcours</strong> : les options sont atteignables à <kbd>Tab</kbd> et aux flèches (navigation VMenu).</li>
+				<li><strong>Fermeture</strong> : <kbd>Échap</kbd> ou la sélection ferme le menu et le focus revient sur le bouton.</li>
+				<li><strong>Focus visible</strong> : liseré de focus stylé sur les options (<code>:focus-visible</code>).</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard title="Langue et sens de lecture">
+			<ul>
+				<li><strong>Attribut <code>lang</code></strong> : chaque option porte <code>lang</code> avec le code ISO 639-1 de la langue, pour une restitution correcte par les synthèses vocales.</li>
+				<li><strong>Langue courante</strong> : le nom affiché dans le bouton porte lui aussi l'attribut <code>lang</code> correspondant.</li>
+				<li><strong>Sens de lecture</strong> : les langues à écriture de droite à gauche (arabe, hébreu, persan…) reçoivent <code>dir="rtl"</code>.</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard title="Indicateurs visuels">
+			<ul>
+				<li><strong>Sélection</strong> : la langue active est signalée par une coche en plus du fond coloré — l'information n'est pas portée par la seule couleur (RGAA 3.1).</li>
+				<li><strong>Icônes</strong> : flèche et coche marquées décoratives pour être ignorées par les technologies d'assistance.</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="LangBtn">
+		<Story of={LangBtnStories.Default} />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Personnalisez <code>ariaLabel</code> si le contexte exige un libellé plus précis (ex. « Langue d'affichage du portail »).</li>
+			<li>Limitez <code>availableLanguages</code> aux langues réellement supportées par l'application plutôt que <code>"*"</code>.</li>
+			<li>Le composant applique la langue choisie via <code>v-model</code> : pensez à propager ce choix à l'attribut <code>lang</code> global de la page et à l'API de traduction.</li>
+			<li>Ne surchargez pas les styles du focus (<code>:focus-visible</code>) sans fournir un indicateur au moins aussi visible.</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/listbox/" target="_blank" rel="noopener noreferrer">Guide des pratiques WAI-ARIA : Listbox</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#7.1" target="_blank" rel="noopener noreferrer">RGAA : Compatibilité avec les technologies d'assistance</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#8.7" target="_blank" rel="noopener noreferrer">RGAA : Changement de langue</a></li>
+			<li><a href="https://www.w3.org/WAI/WCAG21/Understanding/name-role-value.html" target="_blank" rel="noopener noreferrer">WCAG : Nom, rôle et valeur</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>

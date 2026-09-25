@@ -1,7 +1,7 @@
 <script setup lang="ts">
-	import { computed, nextTick, ref, watch } from 'vue'
+	import { computed, nextTick, ref, useId, watch } from 'vue'
 	import type { AllLanguagesChar } from '@/components/LangBtn/types'
-	import { mdiMenuDown } from '@mdi/js'
+	import { mdiCheck, mdiMenuDown } from '@mdi/js'
 	import { locales } from './locales'
 	import ISO6391 from 'iso-639-1'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
@@ -14,13 +14,11 @@
 		modelValue?: string
 		hideDownArrow?: boolean
 		ariaLabel?: string
-		ariaOwns?: string
 		availableLanguages?: string[] | AllLanguagesChar
 	}>(), {
 		modelValue: 'fr',
 		hideDownArrow: false,
 		ariaLabel: locales.label,
-		ariaOwns: 'lang-btn',
 		availableLanguages: () => ['fr', 'en'],
 		validator: (value: string[] | AllLanguagesChar): boolean => {
 			if (Array.isArray(value)) {
@@ -61,7 +59,16 @@
 	type LanguagesData = Record<string, LanguageInfo>
 
 	const isMenuOpen = computed(() => menu.value)
-	const menuId = computed(() => `lang-menu-id`)
+
+	// Ids uniques par instance (RGAA 8.2 : pas de doublon si plusieurs LangBtn)
+	const instanceId = useId()
+	const btnId = computed(() => `lang-btn${instanceId}`)
+	const listboxId = computed(() => `lang-listbox${instanceId}`)
+	const optionId = (code: string): string => `lang-option${instanceId}-${code}`
+
+	// Langues à écriture de droite à gauche (RGAA 8.10)
+	const RTL_LANGUAGES = new Set(['ar', 'arc', 'dv', 'fa', 'ha', 'he', 'khw', 'ks', 'ku', 'ps', 'ur', 'yi'])
+	const langDir = (code: string): 'rtl' | 'ltr' => (RTL_LANGUAGES.has(code) ? 'rtl' : 'ltr')
 
 	const languagesData = computed<LanguagesData>(() => {
 		const data: LanguagesData = {}
@@ -95,25 +102,28 @@
 
 	const itemRef = ref<Array<VListItem>>([])
 	const btnRef = ref<VBtn | null>(null)
+
+	// Focus initial sur l'option sélectionnée à l'ouverture (pattern listbox APG)
+	const selectedIndex = computed(() => Object.keys(languagesData.value).indexOf(selectedLanguage.value))
+
 	watch(
 		menu,
-		(newVal) => {
-			setTimeout(async () => {
-				if (newVal) {
-					setTimeout(() => {
-						requestAnimationFrame(() => {
-							const inputElement = itemRef.value[0]?.$el
-							if (inputElement) {
-								inputElement.focus()
-							}
-						})
-					}, 0)
-				}
-				else {
-					await nextTick()
-					btnRef.value?.$el.focus()
-				}
-			}, 0)
+		async (newVal) => {
+			if (newVal) {
+				await nextTick()
+				requestAnimationFrame(() => {
+					// Le menu a pu se fermer avant la frame : ne pas déplacer le focus
+					if (!menu.value) {
+						return
+					}
+					const index = selectedIndex.value >= 0 ? selectedIndex.value : 0
+					itemRef.value[index]?.$el?.focus()
+				})
+			}
+			else {
+				await nextTick()
+				btnRef.value?.$el?.focus()
+			}
 		},
 	)
 
@@ -125,31 +135,29 @@
 </script>
 
 <template>
-	<div :id="menuId">
+	<div>
 		<VMenu
 			v-bind="options.menu"
-			id="lang-menu"
 			v-model="menu"
 			scroll-strategy="none"
-			role="menu"
 			location="bottom"
 		>
 			<template #activator="{ props: activatorProps }">
 				<VBtn
-					id="lang-menu-btn"
+					:id="btnId"
 					v-bind="{
 						...options.btn,
 						...activatorProps,
 					}"
 					ref="btnRef"
 					:aria-label="`${props.ariaLabel} ${currentLangData.name}`"
-					aria-haspopup="menu"
-					:aria-controls="menuId"
-					:aria-owns="menuId"
+					aria-haspopup="listbox"
+					:aria-controls="isMenuOpen ? listboxId : undefined"
+					:aria-owns="isMenuOpen ? activatorProps['aria-owns'] : undefined"
 					:aria-expanded="isMenuOpen"
 					class="vd-lang-btn"
 				>
-					{{ currentLangData.name }}
+					<span :lang="selectedLanguage">{{ currentLangData.name }}</span>
 					<SyIcon
 						v-if="!hideDownArrow"
 						v-bind="options.icon"
@@ -161,28 +169,38 @@
 			</template>
 			<VList
 				v-bind="options.list"
-				aria-labelledby="lang-menu-btn"
+				:id="listboxId"
+				:aria-labelledby="btnId"
 				color="secondary"
-				:aria-activedescendant="`lang-item-${selectedLanguage}`"
-				role="menu"
+				role="listbox"
 			>
+				<!-- tabindex=0 sur chaque option : requis par la navigation clavier de VMenu (focus réel) -->
 				<VListItem
 					v-for="(langData, code) in languagesData"
 					v-bind="options.listTile"
-					:id="`lang-item-${code}`"
+					:id="optionId(code)"
 					:key="code"
 					ref="itemRef"
 					:active="selectedLanguage === code"
-					role="menuitem"
+					role="option"
+					:aria-selected="selectedLanguage === code"
 					:lang="code"
+					:dir="langDir(code)"
 					color="primary"
 					tabindex="0"
-					:aria-label="`${props.ariaLabel} ${langData.nativeName}`"
 					@click="updateLang(code)"
 				>
 					<VListItemTitle v-bind="options.listTileTitle">
 						{{ langData.nativeName }}
 					</VListItemTitle>
+					<template #append>
+						<SyIcon
+							v-if="selectedLanguage === code"
+							:icon="mdiCheck"
+							decorative
+							class="text-primary"
+						/>
+					</template>
 				</VListItem>
 			</VList>
 		</VMenu>
