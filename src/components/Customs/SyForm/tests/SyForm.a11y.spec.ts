@@ -4,7 +4,7 @@ import { describe, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
-import SyForm from './SyForm.vue'
+import SyForm from '../SyForm.vue'
 
 // Scénario d’accessibilité : formulaire contenant un champ et un bouton de soumission.
 

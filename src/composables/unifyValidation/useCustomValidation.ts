@@ -1,6 +1,6 @@
 import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 import { useValidatable } from '@/composables/validation/useValidatable'
-import { computed, getCurrentInstance, onBeforeUnmount, reactive, ref, watch } from 'vue'
+import { computed, getCurrentInstance, nextTick, onBeforeUnmount, reactive, ref, watch } from 'vue'
 import type { Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import { locales } from './locales'
@@ -40,6 +40,9 @@ export function useCustomValidation(
 	const hasSuccess = ref(false)
 	let currentValidationToken = 0
 	let pendingValidationToken: number | undefined
+	// Champ jamais encore validé : permet à `useValidatable` de rapporter `valide=null`
+	// (au lieu de `true`) tant qu'aucune validation réelle n'a eu lieu.
+	const isPristine = ref(true)
 
 	const validatorOptions = reactive({
 		showSuccessMessages: computed(() => showSuccessMessages.value),
@@ -61,6 +64,8 @@ export function useCustomValidation(
 	})
 
 	const applyValidationResult = (result: Awaited<ReturnType<typeof validator.validateField>>) => {
+		isPristine.value = false
+
 		errors.value = result.state.errors
 		warnings.value = result.state.warnings
 		successes.value = result.state.successes
@@ -155,6 +160,10 @@ export function useCustomValidation(
 		warnings.value = []
 		successes.value = []
 		hasSuccess.value = false
+		// Repasser en état vierge : sans ça, un champ précédemment invalidé
+		// (isPristine=false) rapporterait `valide=true` après nettoyage au lieu
+		// de `null`, alors qu'il n'a pas été revalidé (cf. le reset de useValidatable).
+		isPristine.value = true
 	}
 
 	if (getCurrentInstance()) {
@@ -169,8 +178,22 @@ export function useCustomValidation(
 		return result.state.errors.length === 0
 	})
 
+	// Le reset (via useValidatable) remet `modelValue` à `undefined`. En validation
+	// live (isValidateOnBlur === false), le watch(modelValue) ci-dessous relancerait
+	// aussitôt `validate()` et, pour un champ requis, ré-invaliderait le champ au lieu
+	// de le ramener à un état neutre/pristine. On neutralise donc la validation
+	// déclenchée par ce reset précis.
+	let skipValidationForReset = false
+
 	const reset = options.formRegistration?.reset ?? (() => {
+		skipValidationForReset = true
 		modelValue.value = undefined
+		// Filet de sécurité : si la valeur était déjà `undefined`, le watch ne se
+		// déclenche pas — on lève la garde au tick suivant pour ne pas ignorer une
+		// modification utilisateur ultérieure.
+		nextTick(() => {
+			skipValidationForReset = false
+		})
 	})
 
 	if (options.registerWithForm !== false) {
@@ -178,6 +201,8 @@ export function useCustomValidation(
 			validateOnSubmit,
 			options.formRegistration?.clearValidation ?? clearValidation,
 			reset,
+			computed(() => isPristine.value ? null : errors.value.length < 1),
+			computed(() => !disableErrorHandling.value || errors.value.length > 0),
 		)
 	}
 
@@ -210,6 +235,10 @@ export function useCustomValidation(
 		})
 
 		watch(modelValue, () => {
+			if (skipValidationForReset) {
+				skipValidationForReset = false
+				return
+			}
 			if (pendingValidationToken !== undefined) clearValidation()
 			if (!isValidateOnBlur.value && !disableErrorHandling.value) {
 				validate()

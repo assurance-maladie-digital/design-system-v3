@@ -1,8 +1,8 @@
-import { mount as baseMount, VueWrapper } from '@vue/test-utils'
+import { mount as baseMount, flushPromises, VueWrapper } from '@vue/test-utils'
 import PhoneField from '../PhoneField.vue'
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
 import { indicatifs } from '../indicatifs'
-import type { ComponentPublicInstance } from 'vue'
+import { nextTick, type ComponentPublicInstance } from 'vue'
 import { locales } from '../locales'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
@@ -29,6 +29,12 @@ type IndicatifLike = {
 }
 
 const mount = (component: unknown, options?: Record<string, unknown>) => baseMount(component as never, options as never) as unknown as VueWrapper<PhoneFieldInstance>
+
+const waitForDomUpdate = async (): Promise<void> => {
+	await flushPromises()
+	await nextTick()
+	await flushPromises()
+}
 
 describe('PhoneField', () => {
 	afterEach(() => {
@@ -789,6 +795,73 @@ describe('PhoneField', () => {
 
 	// Tests de validation
 	describe('Validation', () => {
+		it('PhoneField.clearValidation() clears errors in SyTextField', async () => {
+			const wrapper = mount({
+				components: { PhoneField, SyForm },
+				template: `
+						<SyForm ref="form">
+							<PhoneField required v-model="phone" />
+						</SyForm>
+					`,
+				data() { return { phone: '' } },
+				attachTo: document.body,
+			})
+
+			// Trigger form submit to display errors
+			await wrapper.find('form').trigger('submit.prevent')
+			await flushPromises()
+
+			// Verify error messages are displayed
+			const errorMessagesBefore = wrapper.findAll('.v-messages__message')
+			expect(errorMessagesBefore.length).toBeGreaterThan(0)
+
+			// Call clearValidation via SyForm
+			const form = wrapper.vm.$refs.form as InstanceType<typeof SyForm>
+			form.clearValidation()
+			await nextTick()
+
+			// Verify errors are cleared (no error messages in DOM)
+			const errorMessagesAfter = wrapper.findAll('.v-messages__message')
+			expect(errorMessagesAfter.length).toBe(0)
+
+			wrapper.unmount()
+		})
+
+		it('SyForm.reset() resets PhoneField value and errors', async () => {
+			const wrapper = baseMount({
+				components: { PhoneField, SyForm },
+				template: `
+						<SyForm ref="form">
+							<PhoneField required v-model="phone" />
+							<button type="reset">Reset</button>
+						</SyForm>
+					`,
+				data() { return { phone: '0123456789' } },
+				attachTo: document.body,
+			})
+
+			const phoneInput = wrapper.find('input[type="tel"]')
+			const form = wrapper.vm.$refs.form as InstanceType<typeof SyForm>
+
+			// Wait for mask to be applied
+			await flushPromises()
+
+			// Verify initial value is set (masked)
+			expect((phoneInput.element as HTMLInputElement).value).toContain('01')
+
+			// Reset form
+			form.reset()
+			await waitForDomUpdate()
+
+			// Verify PhoneField is reset (input is empty)
+			expect((phoneInput.element as HTMLInputElement).value).toBe('')
+			// Verify no error messages are displayed
+			const errorMessagesAfter = wrapper.findAll('.v-messages__message')
+			expect(errorMessagesAfter.length).toBe(0)
+
+			wrapper.unmount()
+		})
+
 		it('cleans spaces from phone number before validation', async () => {
 			const wrapper = mount(PhoneField, {
 				props: {
@@ -979,6 +1052,35 @@ describe('PhoneField', () => {
 		})
 
 		describe('Validation with SyForm', () => {
+			it('clears PhoneField and child-field errors after a form reset', async () => {
+				const wrapper = baseMount({
+					components: { PhoneField, SyForm },
+					template: `
+						<SyForm>
+							<PhoneField required />
+							<button type="submit">Submit</button>
+							<button type="reset">Reset</button>
+						</SyForm>
+					`,
+				})
+
+				await wrapper.find('form').trigger('submit.prevent')
+				await waitForDomUpdate()
+
+				const phoneField = wrapper.find('.phone-field')
+				const phoneInput = wrapper.find('input[type="tel"]')
+				expect(phoneField.classes()).toContain('error-field')
+				expect(phoneInput.attributes('aria-invalid')).toBe('true')
+				expect(wrapper.find('.v-messages__message').exists()).toBe(true)
+
+				await wrapper.find('button[type="reset"]').trigger('click')
+				await waitForDomUpdate()
+
+				expect(phoneField.classes()).not.toContain('error-field')
+				expect(phoneInput.attributes('aria-invalid')).toBeUndefined()
+				expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+			})
+
 			it('validates as part of SyForm submission', async () => {
 				const wrapper = baseMount({
 					components: { PhoneField, SyForm },
