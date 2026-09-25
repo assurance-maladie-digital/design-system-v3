@@ -280,10 +280,10 @@
 	// ── Données de référence (communes aux deux formulaires) ──
 
 	const careTypeItems = [
-		{ title: 'Consultation médecin généraliste', value: 'gp' },
-		{ title: 'Consultation médecin spécialiste', value: 'specialist' },
-		{ title: 'Soins dentaires', value: 'dental' },
-		{ title: 'Hospitalisation', value: 'hospital' },
+		{ text: 'Consultation médecin généraliste', value: 'gp' },
+		{ text: 'Consultation médecin spécialiste', value: 'specialist' },
+		{ text: 'Soins dentaires', value: 'dental' },
+		{ text: 'Hospitalisation', value: 'hospital' },
 	]
 
 	const doctorItems = [
