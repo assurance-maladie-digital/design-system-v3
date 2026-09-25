@@ -35,15 +35,14 @@
 	const primary = theme.current.value.colors.primary
 	const desktopLogoMediaQuery = `(min-width: ${headerBreakpoint}px)`
 
-	const { containerComponent: routeType, homeHref } = useHomeLinkFallback(() => props.homeLink)
+	const { containerComponent: routeType, linkAttrs: homeLinkAttrs } = useHomeLinkFallback(() => props.homeLink)
 </script>
 
 <template>
 	<component
 		:is="routeType"
 		v-bind="{
-			to: routeType === 'router-link' ? homeLink?.to : undefined,
-			href: routeType === 'a' ? homeHref : undefined,
+			...homeLinkAttrs,
 			'aria-label': 'aria-label' in homeLink ? homeLink?.['aria-label'] : undefined,
 		}"
 		class="logo"

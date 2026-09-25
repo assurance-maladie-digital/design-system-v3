@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
+import { createMemoryHistory, createRouter } from 'vue-router'
 import LogoBrandSection from '../LogoBrandSection.vue'
 
 // LogoBrandSection n'a aucun style de focus propre : quand un `homeLink` est fourni, le logo est
@@ -64,5 +65,32 @@ describe('LogoBrandSection - Focus', () => {
 
 		expect(container.exists()).toBe(true)
 		expect(container.element.tagName).toBe('DIV')
+	})
+
+	// Avec un vrai vue-router, le `href: undefined` passé au conteneur écrasait celui calculé
+	// par RouterLink : `<a>` sans `href`, donc hors de l'ordre de tabulation (#2579).
+	it('renders a focusable RouterLink with its href when vue-router is installed', async () => {
+		const router = createRouter({
+			history: createMemoryHistory(),
+			routes: [
+				{ path: '/', component: { template: '<div />' } },
+				{ path: '/accueil', component: { template: '<div />' } },
+			],
+		})
+		await router.push('/')
+
+		const wrapper = mount(LogoBrandSection, {
+			global: { plugins: [router] },
+			props: { homeLink: { to: '/accueil' } },
+		})
+		const link = wrapper.find('.vd-home-link')
+
+		expect(link.element.tagName).toBe('A')
+		expect(link.attributes('href')).toBe('/accueil')
+
+		await link.trigger('click')
+		await flushPromises()
+
+		expect(router.currentRoute.value.path).toBe('/accueil')
 	})
 })

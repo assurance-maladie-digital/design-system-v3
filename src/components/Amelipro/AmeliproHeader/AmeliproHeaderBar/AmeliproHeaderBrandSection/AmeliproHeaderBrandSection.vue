@@ -66,6 +66,18 @@
 		return 'button'
 	})
 
+	// Seule la clé utile est liée : un `href: undefined` transmis à RouterLink écraserait
+	// le `href` qu'il calcule et rendrait le lien non focusable.
+	const linkAttrs = computed<{ href?: string, to?: RouteLocationRaw }>(() => {
+		if (props.homeHref) {
+			return { href: props.homeHref }
+		}
+		if (props.homeLink) {
+			return { to: props.homeLink }
+		}
+		return {}
+	})
+
 	const linkTitle = computed<string>(() => {
 		let title = locales.homeLinkLabel
 		if (props.serviceTitle) {
@@ -120,10 +132,9 @@
 			:is="logoContainerComponent"
 			:id="uniqueId ? `${uniqueId}-logo-link` : undefined"
 			:aria-label="linkTitle"
+			v-bind="linkAttrs"
 			class="w-100 d-flex align-center header-home-link"
-			:href="homeHref"
 			:title="linkTitle"
-			:to="homeHref=== undefined ? homeLink : undefined"
 			@click="clickLogoEvent"
 		>
 			<AmeliproLogoAm
