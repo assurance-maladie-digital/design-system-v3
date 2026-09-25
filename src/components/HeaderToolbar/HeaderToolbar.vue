@@ -187,6 +187,14 @@
 		return 'a'
 	}
 
+	// Seule la clé utile est liée : un `href: undefined` transmis à RouterLink écraserait
+	// le `href` qu'il calcule (lien sans `href`, donc sans rôle de lien).
+	const getLinkAttrs = (item: MenuItem): Pick<MenuItem, 'href' | 'to'> => {
+		if (item.href) return { href: item.href }
+		if (item.to !== undefined && item.to !== null) return { to: item.to }
+		return {}
+	}
+
 	// Overlay and focus state
 	const showOverlay = ref(false)
 	const highlightMenu = ref(false)
@@ -534,12 +542,11 @@
 							>
 								<component
 									:is="getLinkComponent(item as MenuItem)"
+									v-bind="getLinkAttrs(item as MenuItem)"
 									:aria-label="itemsSelectMenu && index === 1 ? dropdownMenuTitle + '' : item.title"
-									:href="item.href"
 									:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 									:tabindex="0"
 									:target="item.openInNewTab ? '_blank' : undefined"
-									:to="item.to"
 									:aria-current="getCurrentPageIndex() === index ? 'page' : undefined"
 									:aria-expanded="itemsSelectMenu && index === 1 ? (menuOpen ? 'true' : 'false') : undefined"
 									:aria-haspopup="itemsSelectMenu && index === 1 ? 'menu' : undefined"
@@ -723,13 +730,12 @@
 							>
 								<component
 									:is="getLinkComponent(item as MenuItem)"
+									v-bind="getLinkAttrs(item as MenuItem)"
 									:aria-label="item.title"
-									:href="item.href"
 									:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 									:tabindex="0"
 									:target="item.openInNewTab ? '_blank' : undefined"
 									:title="item.title"
-									:to="item.to"
 									@click="deleteActiveLink()"
 								>
 									<span class="right-menu-item">{{ item.title }}</span>
