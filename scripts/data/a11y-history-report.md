@@ -1,6 +1,6 @@
 # Rapport d’historique d’accessibilité par composant
 
-- Généré le: 2026-09-23T14:23:35.236Z
+- Généré le: 2026-09-28T12:10:19.018Z
 
 ## Accordion
 
@@ -456,6 +456,9 @@
 
 ## AmeliproHeader
 
+- **28/09/2026** — LogoBrandSection: fix router (#2586)  
+  Release: _prochaine version_ · Hash: `4beac9cb6a842d3852a0986e03a22b4b405dc64f` | pattern ARIA
+
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
@@ -476,6 +479,9 @@
 
 ## AmeliproHeaderBar
 
+- **28/09/2026** — LogoBrandSection: fix router (#2586)  
+  Release: _prochaine version_ · Hash: `4beac9cb6a842d3852a0986e03a22b4b405dc64f` | pattern ARIA
+
 - **21/04/2026** — Tokens simplify v2 (#2102)  
   Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
 
@@ -492,6 +498,9 @@
   Release: `v1.0.3` · Hash: `1539898edaaa972fafe1662cb4d55e489a7e7a74` | pattern ARIA
 
 ## AmeliproHeaderBrandSection
+
+- **28/09/2026** — LogoBrandSection: fix router (#2586)  
+  Release: _prochaine version_ · Hash: `4beac9cb6a842d3852a0986e03a22b4b405dc64f` | pattern ARIA
 
 - **21/04/2026** — Tokens simplify v2 (#2102)  
   Release: `v1.0.25` · Hash: `f2e75c4313e579c69a4471d51ce3f2f1899f597c` | pattern ARIA
@@ -2098,6 +2107,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyIcon
 
+- **24/09/2026** — SyIcon - add accessibility tab on AccessibilityDemo story (#2569)  
+  Release: _prochaine version_ · Hash: `6b48d0b4c60df11d089c554c474f5f21f6e3a2fd` | mot-clé a11y · pattern ARIA
+
 - **17/09/2026** — refacto tests a11y (#2562)  
   Release: _prochaine version_ · Hash: `10d998f3c39c4df0f14b28536e73af79a2d02399` | mot-clé a11y · pattern ARIA
 
@@ -2147,6 +2159,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `58f9176323c97588d22abbe8eb8e4da9c540991e` | pattern ARIA
 
 ## SyIconAccessibility
+
+- **24/09/2026** — SyIcon - add accessibility tab on AccessibilityDemo story (#2569)  
+  Release: _prochaine version_ · Hash: `6b48d0b4c60df11d089c554c474f5f21f6e3a2fd` | mot-clé a11y · pattern ARIA
 
 - **17/09/2026** — refacto tests a11y (#2562)  
   Release: _prochaine version_ · Hash: `10d998f3c39c4df0f14b28536e73af79a2d02399` | mot-clé a11y · pattern ARIA
@@ -2281,6 +2296,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.16` · Hash: `6fee96c4f1a2b6e146f1b4282b9e18bb035bbf7b` | pattern ARIA
 
 ## SyTabs
+
+- **24/09/2026** — SyTabs: fix slots and stories (#2580)  
+  Release: _prochaine version_ · Hash: `77899ea7457f81bcd93d0c16b4d75950f5520c6a` | pattern ARIA
 
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
@@ -2612,8 +2630,17 @@ Aucune amélioration d’accessibilité détectée.
 
 ## DataListItem
 
+- **28/09/2026** — ajout test spec accessibilité (#2565)  
+  Release: _prochaine version_ · Hash: `5a322e15e83a6f15a7c62feb7dd6747aabc1df86` | mot-clé a11y
+
 - **22/07/2026** — Components: fix focus display (#2383)  
   Release: `v1.1.3` · Hash: `eab7e848864ed0910ef8bc19e316f6e912bd4d3e` | mot-clé a11y
+
+- **25/02/2026** — add a11y ci (#1881)  
+  Release: `v1.0.21` · Hash: `c436586292ca72c4d82809711b9ef7cdcbdcc09a` | mot-clé a11y · pattern ARIA
+
+- **06/01/2026** — Feat/add accessibility in ci (#1663)  
+  Release: `v1.0.17` · Hash: `ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf` | mot-clé a11y · pattern ARIA
 
 ## DatePicker
 
@@ -3328,6 +3355,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## FooterBar
 
+- **28/09/2026** — LogoBrandSection: fix router (#2586)  
+  Release: _prochaine version_ · Hash: `4beac9cb6a842d3852a0986e03a22b4b405dc64f` | pattern ARIA
+
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
@@ -3397,6 +3427,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.0-alpha.0` · Hash: `bba714c483a53f1b7937afb2b2c51c3adbd08496` | pattern ARIA
 
 ## HeaderBar
+
+- **28/09/2026** — LogoBrandSection: fix router (#2586)  
+  Release: _prochaine version_ · Hash: `4beac9cb6a842d3852a0986e03a22b4b405dc64f` | pattern ARIA
 
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
@@ -3558,6 +3591,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## HeaderLogo
 
+- **28/09/2026** — LogoBrandSection: fix router (#2586)  
+  Release: _prochaine version_ · Hash: `4beac9cb6a842d3852a0986e03a22b4b405dc64f` | pattern ARIA
+
 - **30/07/2026** — A11y: Fix homeLink focus (#2443)  
   Release: `v1.1.3` · Hash: `43ecbd9871d2da61c693351d6c13ae521d23235c` | mot-clé a11y · pattern ARIA
 
@@ -3697,6 +3733,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## HeaderToolbar
 
+- **28/09/2026** — LogoBrandSection: fix router (#2586)  
+  Release: _prochaine version_ · Hash: `4beac9cb6a842d3852a0986e03a22b4b405dc64f` | pattern ARIA
+
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
@@ -3789,6 +3828,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.2-alpha` · Hash: `006827e9f5d3a1bdfa2b8822ea853f6d85c8dbaa` | pattern ARIA
 
 ## LogoBrandSection
+
+- **28/09/2026** — LogoBrandSection: fix router (#2586)  
+  Release: _prochaine version_ · Hash: `4beac9cb6a842d3852a0986e03a22b4b405dc64f` | pattern ARIA
 
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
@@ -4658,8 +4700,8 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SubHeader
 
-- **23/09/2026** — mise a jour page accessibilite, correction pb accesibility  
-  Release: _prochaine version_ · Hash: `9d1b16abe6fc04f71a2785eaaf609d2bced2e523` | pattern ARIA
+- **28/09/2026** — SubHeader : resolutions probleme accessibilité et mise en place des tests axe et maj documentation  (#2584)  
+  Release: _prochaine version_ · Hash: `cd3d71ce22678b00dedc9fed3a490c62fcaa25d1` | mot-clé a11y · pattern ARIA
 
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
@@ -4751,8 +4793,7 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyHeading
 
-- **30/03/2026** — Feat/add a11y tests and pages (#2032)  
-  Release: `v1.0.23` · Hash: `a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a` | mot-clé a11y
+Aucune amélioration d’accessibilité détectée.
 
 ## SyTextArea
 

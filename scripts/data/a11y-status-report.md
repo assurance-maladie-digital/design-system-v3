@@ -1,6 +1,6 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 23/09/2026
+Généré le: 28/09/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
@@ -21,7 +21,7 @@ Généré le: 23/09/2026
 | **Customs/SyCheckbox** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **Customs/SyCheckBoxGroup** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyForm** | ✅ Oui | ✅ Non | ⚠️ Bientôt disponible | ❌ Non | ❌ |
-| **Customs/SyIcon** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ✅ |
+| **Customs/SyIcon** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyIconButton** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyPagination** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyRadioGroup** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
@@ -29,7 +29,7 @@ Généré le: 23/09/2026
 | **Customs/SyTextField** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
 | **DataList** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **DataListGroup** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **DataListItem** | ❌ Non | ✅ Non | ❌ Manquante | ❌ Non | ❌ |
+| **DataListItem** | ✅ Oui | ✅ Non | ❌ Manquante | ❌ Non | ❌ |
 | **DatePicker/CalendarMode** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **DatePicker/ComplexDatePicker** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **DatePicker/DateTextInput** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
