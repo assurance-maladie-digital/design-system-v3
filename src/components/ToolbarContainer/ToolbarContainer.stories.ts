@@ -321,8 +321,8 @@ export const ManySections: Story = {
 							aria-label="gras"
 							elevation="2"
 							size="small"
-							value="bold"
-							:aria-pressed="textDecoration.includes('bold') ? 'true' : 'false'"
+							value="gras"
+							:aria-pressed="textDecoration.includes('gras') ? 'true' : 'false'"
 						>
 							<SyIcon :icon="mdiFormatBold" size="x-large" decorative />
 						</VBtn>
@@ -331,8 +331,8 @@ export const ManySections: Story = {
 							aria-label="italique"
 							elevation="2"
 							size="small"
-							value="italic"
-							:aria-pressed="textDecoration.includes('italic') ? 'true' : 'false'"
+							value="italique"
+							:aria-pressed="textDecoration.includes('italique') ? 'true' : 'false'"
 						>
 							<SyIcon :icon="mdiFormatItalic" size="x-large" decorative />
 						</VBtn>
@@ -341,8 +341,8 @@ export const ManySections: Story = {
 							aria-label="souligné"
 							elevation="2"
 							size="small"
-							value="underline"
-							:aria-pressed="textDecoration.includes('underline') ? 'true' : 'false'"
+							value="souligné"
+							:aria-pressed="textDecoration.includes('souligné') ? 'true' : 'false'"
 						>
 							<SyIcon :icon="mdiFormatUnderline" size="x-large" decorative />
 						</VBtn>
@@ -451,8 +451,8 @@ export const ManySections: Story = {
 								aria-label="gras"
 								elevation="2"
 								size="small"
-								value="bold"
-								:aria-pressed="textDecoration.includes('bold') ? 'true' : 'false'"
+								value="gras"
+								:aria-pressed="textDecoration.includes('gras') ? 'true' : 'false'"
 							>
 								<SyIcon :icon="mdiFormatBold" size="x-large" decorative />
 							</VBtn>
@@ -461,8 +461,8 @@ export const ManySections: Story = {
 								aria-label="italique"
 								elevation="2"
 								size="small"
-								value="italic"
-								:aria-pressed="textDecoration.includes('italic') ? 'true' : 'false'"
+								value="italique"
+								:aria-pressed="textDecoration.includes('italique') ? 'true' : 'false'"
 							>
 								<SyIcon :icon="mdiFormatItalic" size="x-large" decorative />
 							</VBtn>
@@ -471,8 +471,8 @@ export const ManySections: Story = {
 								aria-label="souligné"
 								elevation="2"
 								size="small"
-								value="underline"
-								:aria-pressed="textDecoration.includes('underline') ? 'true' : 'false'"
+								value="souligné"
+								:aria-pressed="textDecoration.includes('souligné') ? 'true' : 'false'"
 							>
 								<SyIcon :icon="mdiFormatUnderline" size="x-large" decorative />
 							</VBtn>
@@ -609,8 +609,8 @@ export const Vertical: Story = {
 							elevation="2"
 							size="small"
 							height="48"
-							value="bold"
-							:aria-pressed="textDecoration.includes('bold') ? 'true' : 'false'"
+							value="gras"
+							:aria-pressed="textDecoration.includes('gras') ? 'true' : 'false'"
 						>
 							<SyIcon :icon="mdiFormatBold" size="x-large" decorative />
 						</VBtn>
@@ -620,8 +620,8 @@ export const Vertical: Story = {
 							elevation="2"
 							size="small"
 							height="48"
-							value="italic"
-							:aria-pressed="textDecoration.includes('italic') ? 'true' : 'false'"
+							value="italique"
+							:aria-pressed="textDecoration.includes('italique') ? 'true' : 'false'"
 						>
 							<SyIcon :icon="mdiFormatItalic" size="x-large" decorative />
 						</VBtn>
@@ -631,8 +631,8 @@ export const Vertical: Story = {
 							elevation="2"
 							size="small"
 							height="48"
-							value="underline"
-							:aria-pressed="textDecoration.includes('underline') ? 'true' : 'false'"
+							value="souligné"
+							:aria-pressed="textDecoration.includes('souligné') ? 'true' : 'false'"
 						>
 							<SyIcon :icon="mdiFormatUnderline" size="x-large" decorative />
 						</VBtn>
@@ -748,8 +748,8 @@ export const Vertical: Story = {
 								elevation="2"
 								size="small"
 								height="48"
-								value="bold"
-								:aria-pressed="textDecoration.includes('bold') ? 'true' : 'false'"
+								value="gras"
+								:aria-pressed="textDecoration.includes('gras') ? 'true' : 'false'"
 							>
 								<SyIcon :icon="mdiFormatBold" size="x-large" decorative />
 							</VBtn>
@@ -759,8 +759,8 @@ export const Vertical: Story = {
 								elevation="2"
 								size="small"
 								height="48"
-								value="italic"
-								:aria-pressed="textDecoration.includes('italic') ? 'true' : 'false'"
+								value="italique"
+								:aria-pressed="textDecoration.includes('italique') ? 'true' : 'false'"
 							>
 								<SyIcon :icon="mdiFormatItalic" size="x-large" decorative />
 							</VBtn>
@@ -770,8 +770,8 @@ export const Vertical: Story = {
 								elevation="2"
 								size="small"
 								height="48"
-								value="underline"
-								:aria-pressed="textDecoration.includes('underline') ? 'true' : 'false'"
+								value="souligné"
+								:aria-pressed="textDecoration.includes('souligné') ? 'true' : 'false'"
 							>
 								<SyIcon :icon="mdiFormatUnderline" size="x-large" decorative />
 							</VBtn>
