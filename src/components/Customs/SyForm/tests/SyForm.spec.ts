@@ -8,6 +8,7 @@ import { defineComponent, h, nextTick, type InstanceType } from 'vue'
 import { useValidatable } from '@/composables/validation/useValidatable'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import SyAutocomplete from '@/components/Customs/Selects/SyAutocomplete/SyAutocomplete.vue'
+import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 
 describe('SyForm', () => {
 	it('modelValue should reflect validity of the form', async () => {
@@ -729,6 +730,52 @@ describe('SyForm', () => {
 			await nextTick()
 			expect(wrapper.findAll('.v-messages__message').length).toBe(0)
 			expect(wrapper.vm.formValid).toBe(null)
+
+			wrapper.unmount()
+		})
+
+		it('clearValidation() clears errors of a field in Vuetify validation mode (SySelect + rules)', async () => {
+			const wrapper = mount({
+				components: { SyForm, SySelect },
+				template: `
+					<SyForm ref="form" v-model="formValid">
+						<SySelect
+							v-model="category"
+							label="Catégorie d'assuré"
+							:items="[{ title: 'Assuré social', value: 'assure' }]"
+							required
+							use-vuetify-validation
+							:rules="[(value) => !!value || 'Veuillez sélectionner une catégorie']"
+						/>
+					</SyForm>
+				`,
+				data() {
+					return {
+						category: null,
+						formValid: null as boolean | null,
+					}
+				},
+			})
+
+			// Soumission avec un champ requis vide : erreur affichée, v-model à false
+			await wrapper.find('form').trigger('submit.prevent')
+			await flushPromises()
+			expect(wrapper.vm.formValid).toBe(false)
+			expect(wrapper.findAll('.v-messages__message').length).toBeGreaterThan(0)
+
+			// clearValidation : les erreurs du validator Vuetify disparaissent aussi
+			const formRef = wrapper.vm.$refs.form as InstanceType<typeof SyForm>
+			formRef.clearValidation()
+			await flushPromises()
+			await nextTick()
+			expect(wrapper.findAll('.v-messages__message').length).toBe(0)
+
+			// Une revalidation ultérieure (saisie) ne doit pas resynchroniser
+			// les anciennes erreurs du validator Vuetify resté « sale ».
+			wrapper.vm.$data.category = 'assure'
+			await flushPromises()
+			await nextTick()
+			expect(wrapper.findAll('.v-messages__message').length).toBe(0)
 
 			wrapper.unmount()
 		})

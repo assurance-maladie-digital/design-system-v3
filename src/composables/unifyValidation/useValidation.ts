@@ -218,7 +218,10 @@ export function useValidation(params: {
 	})
 
 	function clearValidation() {
-		vuetifyErrors.value = []
+		// `resetValidation` repasse le validator Vuetify natif à l'état vierge :
+		// le watch de `useVuetifyValidation` en profite pour vider la ref d'erreurs
+		// synchronisée — même canal que lorsqu'il est réinitialisé via VForm.
+		vuetifyValidator?.resetValidation()
 		customValidator.clearValidation()
 	}
 
