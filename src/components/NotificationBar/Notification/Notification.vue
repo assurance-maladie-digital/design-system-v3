@@ -166,6 +166,15 @@
 		:deep(a:focus-visible) {
 			outline-color: rgb(var(--v-theme-on-primary));
 		}
+		:deep(button:hover) {
+            background: rgba(var(--v-theme-interaction-lighten), 0.14);
+            opacity: 1;
+        }
+
+        :deep(button:active) {
+            background: rgba(var(--v-theme-interaction-lighten), 0.18);
+            opacity: 1;
+        }
 	}
 
 	.notification__message {
@@ -195,5 +204,4 @@
 			justify-content: flex-end !important;
 		}
 	}
-
 </style>
