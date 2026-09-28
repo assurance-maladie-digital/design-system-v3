@@ -379,7 +379,9 @@
 			@update:items-per-page="updateItemsPerPage"
 			@update:options="updateOptions"
 		>
-			<template #top>
+			<!-- `colgroup` est le seul slot rendu dans le <table>, en premier enfant. -->
+			<!-- `top` plaçait la légende hors du tableau : non associée (RGAA 5.4). -->
+			<template #colgroup>
 				<caption
 					class="text-subtitle-1 text-center pa-4"
 					:class="{ 'd-sr-only': props.caption === '' }"

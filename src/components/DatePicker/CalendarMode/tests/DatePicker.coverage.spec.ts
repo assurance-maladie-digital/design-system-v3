@@ -86,8 +86,10 @@ describe('DatePicker.vue - coverage', () => {
 		})
 		w.vm.selectedDates = new Date(2020, 5, 15)
 		await nextTick()
+		await flushPromises()
 		w.vm.selectedDates = null
 		await nextTick()
+		await flushPromises()
 		const today = new Date()
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		expect((w.vm as any).currentYear).toBe(today.getFullYear().toString())

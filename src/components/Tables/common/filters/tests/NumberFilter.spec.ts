@@ -269,3 +269,60 @@ describe('NumberFilter.vue', () => {
 		])
 	})
 })
+
+describe('NumberFilter zero value regression', () => {
+	let wrapper: ReturnType<typeof mount<typeof NumberFilter>>
+
+	beforeEach(() => {
+		vi.useFakeTimers()
+	})
+
+	afterEach(() => {
+		wrapper.unmount()
+		vi.clearAllTimers()
+		vi.useRealTimers()
+	})
+
+	it('displays an initial numeric zero', () => {
+		wrapper = mount(NumberFilter, {
+			props: {
+				header: { title: 'Quantité', key: 'quantity' },
+				filterValue: 0,
+				filters: [{ key: 'quantity', value: 0, type: 'number' }],
+			},
+		})
+
+		expect(wrapper.get('input').element.value).toBe('0')
+	})
+
+	it('emits numeric zero after debounce and removes it only when cleared', async () => {
+		wrapper = mount(NumberFilter, {
+			props: {
+				header: { title: 'Quantité', key: 'quantity' },
+				filters: [{ key: 'other', value: 1, type: 'number' }],
+			},
+		})
+
+		const input = wrapper.get('input')
+		await input.setValue('0')
+		expect(wrapper.emitted('update:filters')).toBeUndefined()
+		await vi.advanceTimersByTimeAsync(300)
+		expect(wrapper.emitted('update:filters')?.[0]?.[0]).toEqual([
+			{ key: 'other', value: 1, type: 'number' },
+			{ key: 'quantity', value: 0, type: 'number' },
+		])
+		expect(input.element.value).toBe('0')
+
+		await wrapper.setProps({
+			filters: [
+				{ key: 'other', value: 1, type: 'number' },
+				{ key: 'quantity', value: 0, type: 'number' },
+			],
+		})
+		await input.setValue('')
+		await vi.advanceTimersByTimeAsync(300)
+		expect(wrapper.emitted('update:filters')?.[1]?.[0]).toEqual([
+			{ key: 'other', value: 1, type: 'number' },
+		])
+	})
+})

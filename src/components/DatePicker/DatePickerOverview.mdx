@@ -121,6 +121,16 @@ Le DatePicker propose trois modes principaux, chacun adapté à des besoins spé
   </div>
 </div>
 
+## Validation après migration
+
+<Story of={datePickers.ValidationModes} />
+
+Le DatePicker migré repose sur l'entrée de validation unifiée du design system et conserve un bridge métier dédié pour les règles propres à la date.
+
+- Le mode recommandé pour DatePicker reste la validation Synapse via `customRules`, `customWarningRules` et `customSuccessRules`
+- Le mode `useVuetifyValidation` + `rules` est aussi disponible quand le besoin est celui d'un champ standard
+- Le bridge DatePicker reste responsable des contraintes métier date: plage, required conditionnel, flux CalendarMode et synchro calendrier/saisie
+
 ## Tableau comparatif des fonctionnalités
 
 <Story of={datePickers.Century}  />

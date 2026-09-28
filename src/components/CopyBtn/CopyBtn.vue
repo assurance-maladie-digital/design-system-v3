@@ -12,7 +12,7 @@
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		ariaLabel?: string
 		ariaOwns?: string
-		textToCopy: (() => string) | string
+		textToCopy?: (() => string) | string
 		hideTooltip?: boolean
 		tooltipDuration?: number
 		separatorsToRemove?: string | string[]

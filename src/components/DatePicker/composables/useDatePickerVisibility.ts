@@ -1,7 +1,13 @@
 import { type Ref, nextTick, onMounted, onBeforeUnmount, unref, type MaybeRef } from 'vue'
 
 /**
- * Composable pour gérer la visibilité et les interactions avec le CalendarMode
+ * Composable pour gérer la visibilité et les interactions avec le CalendarMode.
+ *
+ * ## Rôle dans l'architecture validation
+ * Reçoit `validateDates` en paramètre — c'est un alias de compatibilité qui délègue
+ * à `validate()` dans le composant appelant. Le composable ne sait pas quel flow
+ * est utilisé ; il se contente d'appeler la fonction fournie après la fermeture
+ * du calendrier pour déclencher la validation des dates sélectionnées.
  *
  * @param options - Options de configuration
  * @returns Fonctions pour gérer la visibilité du CalendarMode
@@ -19,6 +25,10 @@ export const useDatePickerVisibility = (options: {
 
 	// Fonctions
 	updateAccessibility: () => void
+	/**
+	 * Fonction de validation déléguée — en pratique, c'est `() => validate()`
+	 * fournie par le composant appelant. Appelée après fermeture du calendrier.
+	 */
 	validateDates: () => void
 
 	// Émetteurs d'événements
@@ -38,42 +48,41 @@ export const useDatePickerVisibility = (options: {
 		emitFocus,
 	} = options
 
+	const canInteract = (): boolean => !unref(disabled) && !unref(readonly)
+
+	const closeDatePickerInternal = (): void => {
+		isDatePickerVisible.value = false
+		emitClosed()
+		validateDates()
+	}
+
+	const openDatePickerInternal = (): void => {
+		isDatePickerVisible.value = true
+		nextTick(() => {
+			updateAccessibility()
+		})
+	}
+
 	/**
 	 * Bascule l'affichage du CalendarMode
 	 */
 	const toggleDatePicker = () => {
-		if (unref(disabled) || unref(readonly)) return
-
-		isDatePickerVisible.value = !isDatePickerVisible.value
+		if (!canInteract()) return
 
 		if (isDatePickerVisible.value) {
-			// Mettre à jour l'accessibilité après l'ouverture du CalendarMode
-			nextTick(() => {
-				updateAccessibility()
-			})
+			closeDatePickerInternal()
+			return
 		}
-		else {
-			emitClosed()
-			validateDates()
-		}
+
+		openDatePickerInternal()
 	}
 
 	/**
 	 * Ouvre le CalendarMode s'il n'est pas déjà visible
 	 */
 	const openDatePicker = () => {
-		if (!isDatePickerVisible.value) {
-			toggleDatePicker()
-		}
-	}
-
-	/**
-	 * Ouvre le CalendarMode lors d'un clic sur le champ de texte
-	 */
-	const openDatePickerOnClick = () => {
-		if (unref(textFieldActivator)) {
-			openDatePicker()
-		}
+		if (!canInteract() || isDatePickerVisible.value) return
+		openDatePickerInternal()
 	}
 
 	/**
@@ -108,10 +117,7 @@ export const useDatePickerVisibility = (options: {
 
 		// Si on clique dans le conteneur du CalendarMode, on ne fait rien
 		if (container) return
-		isDatePickerVisible.value = false
-		emitClosed()
-		// Déclencher la validation à la fermeture
-		validateDates()
+		closeDatePickerInternal()
 	}
 
 	// Gestion des événements de clic en dehors du CalendarMode
@@ -131,7 +137,7 @@ export const useDatePickerVisibility = (options: {
 		if ((
 			event.key === 'Enter'
 			|| event.key === 'ArrowDown'
-		) && !unref(disabled) && !unref(readonly)) {
+		) && canInteract()) {
 			event.preventDefault() // Empêcher le comportement par défaut
 			openDatePicker()
 			return true
@@ -142,7 +148,6 @@ export const useDatePickerVisibility = (options: {
 	return {
 		toggleDatePicker,
 		openDatePicker,
-		openDatePickerOnClick,
 		openDatePickerOnFocus,
 		openDatePickerOnIconClick,
 		handleClickOutside,

@@ -1,8 +1,16 @@
 import React from 'react'
 import { addons, types } from 'storybook/manager-api'
 import { ConformitePanel } from './conformitePanel'
+import { isConformiteHidden } from './isConformiteHidden'
+
+const isPanelEnabled = () =>
+	document
+		.querySelector('meta[name="synapse-conformite"]')
+		?.getAttribute('content') !== 'false'
 
 export const registerConformiteAddon = () => {
+	if (!isPanelEnabled()) return
+
 	addons.register(
 		'conformite-design-system',
 		(api) => {
@@ -11,13 +19,7 @@ export const registerConformiteAddon = () => {
 				{
 					type: types.PANEL,
 					title: 'Conformité',
-					disabled: () => {
-						const story = api.getCurrentStoryData()
-
-						return story.title
-							.split('/')
-							.some(segment => segment.toLowerCase() === 'validation')
-					},
+					disabled: () => isConformiteHidden(api.getCurrentStoryData()?.title),
 					render: ({ active }) =>
 						React.createElement(
 							ConformitePanel,

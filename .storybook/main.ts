@@ -3,6 +3,9 @@ import { mergeConfig } from 'vite'
 import remarkGfm from 'remark-gfm'
 
 const isDev = process.env.NODE_ENV === 'development'
+// Outil de travail local : aucun Storybook déployé ne doit le porter, et
+// Netlify lance `build-storybook` pour tous ses environnements.
+const showConformitePanel = isDev
 
 const stories = [
 	// Fichiers directement dans src/
@@ -28,6 +31,8 @@ if (isDev) {
 const config: StorybookConfig = {
 	stories,
 	staticDirs: ['./public'],
+	// Le manager est bundlé à part : la décision lui passe par le <head>.
+	managerHead: head => `${head}<meta name="synapse-conformite" content="${showConformitePanel}">`,
 	addons: [
 		'@storybook/addon-links',
 		'@jls-digital/storybook-addon-code',

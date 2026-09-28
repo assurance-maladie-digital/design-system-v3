@@ -79,3 +79,7 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Build
         run: pnpm build
+      # Le périmètre de publication tient au champ `files` de package.json :
+      # une erreur de motif y fuite des tests ou ampute le paquet sans bruit.
+      - name: Check npm package contents
+        run: pnpm pack:check

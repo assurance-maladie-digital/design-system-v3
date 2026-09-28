@@ -1975,11 +1975,10 @@ describe('useValidation (unifyValidation)', () => {
 			// Errors are cleared by the readonly short-circuit
 			expect(result.errors.value).toEqual([])
 
-			// Resolve stale async — since the readonly short-circuit does not
-			// invalidate the pending token, the resolved result still writes errors
+			// La validation lancée avant readonly ne doit pas restaurer ses erreurs.
 			resolve(false)
 			await p1
-			expect(result.errors.value).toContain('Erreur obsolète readonly')
+			expect(result.errors.value).toEqual([])
 		})
 	})
 

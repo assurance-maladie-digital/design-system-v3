@@ -100,7 +100,7 @@ export function useLunarCalendarValidation(
 		disableErrorHandling: computed(() => props.disableErrorHandling ?? false),
 		useVuetifyValidation: false,
 		label: computed(() => props.label),
-		customRules: computed(() => [...defaultRules.value, ...customRules.value]),
+		customRules: computed(() => [...defaultRules.value, ...customRules.value, ...(props.customRules ?? [])]),
 		customWarningRules: computed(() => props.customWarningRules ?? []),
 		customSuccessRules: computed(() => props.customSuccessRules ?? []),
 		errorMessages: computed(() => props.errorMessages ?? []),

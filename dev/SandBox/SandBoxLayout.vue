@@ -2,15 +2,16 @@
 	import { computed } from 'vue'
 	import { useRoute } from 'vue-router'
 	import ThemeSwitcher from '../ThemeSwitcher.vue'
-	import { mdiFlaskOutline, mdiFormSelect, mdiViewDashboardOutline, mdiHomeOutline } from '@mdi/js'
+	import { mdiFlaskOutline, mdiFormSelect, mdiViewDashboardOutline, mdiHomeOutline, mdiShieldCheckOutline } from '@mdi/js'
 
 	const route = useRoute()
 	const currentPath = computed(() => route.path)
 
 	const navItems = [
-		{ label: 'Accueil', to: '/sandbox.html', icon: mdiHomeOutline },
-		{ label: 'Formulaire', to: '/sandbox.html/form', icon: mdiFormSelect },
-		{ label: 'Composants', to: '/sandbox.html/components', icon: mdiViewDashboardOutline },
+		{ label: 'Accueil', to: '/', icon: mdiHomeOutline },
+		{ label: 'Formulaire', to: '/form', icon: mdiFormSelect },
+		{ label: 'Composants', to: '/components', icon: mdiViewDashboardOutline },
+		{ label: 'Validation', to: '/validation', icon: mdiShieldCheckOutline },
 	]
 </script>
 
@@ -39,7 +40,10 @@
 					</div>
 				</div>
 
-				<VList density="comfortable" nav>
+				<VList
+					density="comfortable"
+					nav
+				>
 					<VListItem
 						v-for="item in navItems"
 						:key="item.to"
@@ -72,7 +76,7 @@
 				max-width="1200"
 			>
 				<RouterView v-slot="{ Component }">
-					<Transition name="fade" mode="out-in">
+					<Transition name="fade">
 						<component :is="Component" />
 					</Transition>
 				</RouterView>

@@ -1,5 +1,7 @@
 import {Meta, Canvas, Controls, Source} from '@storybook/addon-docs/blocks';
 import * as DatePickerStories from "./DatePicker.stories.ts";
+import * as ValidationStories from "./validation/Validation.stories.ts";
+import * as GestionDesFormatsStories from "./gestionDesFormats/GestionDesFormats.stories.ts";
 
 <Meta of={DatePickerStories}/>
 
@@ -84,19 +86,19 @@ Le DatePicker utilise deux formats distincts :
 
 ### Avec validation d'erreur
 
-<Canvas of={DatePickerStories.WithError}/>
+<Canvas of={ValidationStories.WithError}/>
 
 ### Avec message d'avertissement
 
-<Canvas of={DatePickerStories.WithWarning}/>
+<Canvas of={ValidationStories.WithWarning}/>
 
 ### Avec message de succès
 
-<Canvas of={DatePickerStories.WithSuccess}/>
+<Canvas of={ValidationStories.WithSuccess}/>
 
 ### Formats de date différents
 
-<Canvas of={DatePickerStories.DifferentFormats}/>
+<Canvas of={GestionDesFormatsStories.DifferentFormats}/>
 
 ## Exemple d'utilisation dans le code
 

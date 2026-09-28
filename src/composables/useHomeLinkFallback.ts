@@ -14,6 +14,17 @@ export interface UseHomeLinkFallbackReturn {
 	containerComponent: ComputedRef<'router-link' | 'a' | 'div'>
 	/** `href` résolu pour un `<a>` (repli quand vue-router n'est pas disponible, ou `href` direct) */
 	homeHref: ComputedRef<string | undefined>
+	/**
+	 * Attributs de lien à lier au conteneur (`v-bind`) : `{ to }` pour un `router-link`,
+	 * `{ href }` pour un `<a>`, `{}` pour un `<div>`. La clé inutile est omise (et non mise
+	 * à `undefined`) : un `href: undefined` transmis à `RouterLink` écraserait son `href`.
+	 */
+	linkAttrs: ComputedRef<HomeLinkAttrs>
+}
+
+export interface HomeLinkAttrs {
+	to?: RouteLocationRaw
+	href?: string
 }
 
 /**
@@ -70,5 +81,17 @@ export function useHomeLinkFallback(homeLink: () => HomeLink | undefined): UseHo
 		return link.href ?? '/'
 	})
 
-	return { containerComponent, homeHref }
+	const linkAttrs = computed<HomeLinkAttrs>(() => {
+		const to = homeLink()?.to
+
+		if (containerComponent.value === 'router-link' && to) {
+			return { to }
+		}
+		if (containerComponent.value === 'a' && homeHref.value) {
+			return { href: homeHref.value }
+		}
+		return {}
+	})
+
+	return { containerComponent, homeHref, linkAttrs }
 }

@@ -42,8 +42,10 @@ export function useValidatable(
 	clearValidation?: () => void,
 	reset?: () => void,
 ) {
-	const { register, unregister } = useValidatableComponent()
 	const instance = getCurrentInstance()
+	if (!instance) return
+
+	const { register, unregister } = useValidatableComponent()
 
 	// If this field is nested inside another field, it is an internal building
 	// block: skip registration and let the owning (outermost) field be the one

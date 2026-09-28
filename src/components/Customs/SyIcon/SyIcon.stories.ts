@@ -329,11 +329,6 @@ export const InformativeIcon: Story = {
 }
 
 export const AccessibilityDemo: Story = {
-	parameters: {
-		a11y: {
-			disable: true,
-		},
-	},
 	args: {
 		icon: mdiStar, // Using an icon from the imported icons
 	},

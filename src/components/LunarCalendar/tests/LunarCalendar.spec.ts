@@ -61,6 +61,37 @@ describe('LunarCalendar', () => {
 			expect(wrapper.html()).toContain('L\'année doit être supérieure ou égale à 1996.')
 		})
 
+		it('applies the customRules prop on blur', async () => {
+			const wrapper = mount(LunarCalendar, {
+				props: {
+					label: 'Date de naissance',
+					modelValue: '',
+					customRules: [{
+						type: 'matchPattern',
+						options: {
+							pattern: /^1.*/,
+							message: 'La saisie doit commencer par 1.',
+						},
+					}],
+				},
+			})
+
+			const input = wrapper.find('input')
+			await input.trigger('focus')
+			await wrapper.setProps({ modelValue: '20/10/1995' })
+			await input.trigger('blur')
+			await flushPromises()
+
+			expect(wrapper.html()).toContain('La saisie doit commencer par 1.')
+
+			await input.trigger('focus')
+			await wrapper.setProps({ modelValue: '10/10/1995' })
+			await input.trigger('blur')
+			await flushPromises()
+
+			expect(wrapper.html()).not.toContain('La saisie doit commencer par 1.')
+		})
+
 		it('validates maxDate rule', async () => {
 			const wrapper = mount(LunarCalendar, {
 				props: {
@@ -267,6 +298,31 @@ describe('LunarCalendar', () => {
 			await wrapper.vm.$nextTick()
 
 			expect(wrapper.html()).toContain('Ceci est un hint')
+		})
+	})
+
+	describe('displayAsterisk', () => {
+		it('displays an asterisk in the label when the field is required', () => {
+			const wrapper = mount(LunarCalendar, {
+				props: {
+					label: 'Date de naissance',
+					displayAsterisk: true,
+					required: true,
+				},
+			})
+
+			expect(wrapper.find('label').text()).toContain('Date de naissance *')
+		})
+
+		it('does not display an asterisk when the field is not required', () => {
+			const wrapper = mount(LunarCalendar, {
+				props: {
+					label: 'Date de naissance',
+					displayAsterisk: true,
+				},
+			})
+
+			expect(wrapper.find('label').text()).not.toContain('*')
 		})
 	})
 })

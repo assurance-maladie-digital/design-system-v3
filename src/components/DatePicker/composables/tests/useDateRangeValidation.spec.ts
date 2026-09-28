@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { ref } from 'vue'
+import { ref, computed, nextTick } from 'vue'
 import { useDateRangeValidation } from '../useDateRangeValidation'
 
 describe('useDateRangeValidation', () => {
@@ -102,6 +102,35 @@ describe('useDateRangeValidation', () => {
 			const { getRangeValidationError } = useDateRangeValidation(selectedDates, true)
 
 			expect(getRangeValidationError.value).toBe('La date de fin doit être postérieure ou égale à la date de début')
+		})
+	})
+
+	describe('régression : réactivité de displayRange (fix #5)', () => {
+		it('devrait réagir quand displayRange passe de false à true avec un ref', async () => {
+			const selectedDates = ref([new Date('2023-01-10'), new Date('2023-01-01')])
+			const displayRange = ref(false)
+			const { currentRangeIsValid } = useDateRangeValidation(selectedDates, displayRange)
+
+			expect(currentRangeIsValid.value).toBe(true)
+
+			displayRange.value = true
+			await nextTick()
+
+			expect(currentRangeIsValid.value).toBe(false)
+		})
+
+		it('devrait réagir quand displayRange passe de false à true avec un computed', async () => {
+			const selectedDates = ref([new Date('2023-01-10'), new Date('2023-01-01')])
+			const toggle = ref(false)
+			const displayRange = computed(() => toggle.value)
+			const { currentRangeIsValid } = useDateRangeValidation(selectedDates, displayRange)
+
+			expect(currentRangeIsValid.value).toBe(true)
+
+			toggle.value = true
+			await nextTick()
+
+			expect(currentRangeIsValid.value).toBe(false)
 		})
 	})
 })
