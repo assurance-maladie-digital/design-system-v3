@@ -821,18 +821,6 @@
     "dateIso": "2026-08-27 09:48:42 +0200",
     "message": "refactor(DatePicker): standardize labels and placeholders with format hints across stories (#2513)"
   },
-  "ComplexDatePickerPlayground": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
-  },
-  "DatePickerHolidayRule": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
-  },
   "DeclarationAccessibilityPage": {
     "version": "1.0.21",
     "date": "25/02/2026",
