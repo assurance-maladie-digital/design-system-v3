@@ -86,6 +86,12 @@
 		return item.href ? 'a' : 'RouterLink'
 	}
 
+	// Seule la clé utile est liée : un `href: undefined` transmis à RouterLink écraserait
+	// le `href` qu'il calcule et rendrait le lien non focusable.
+	const getLinkAttrs = (item: LinkItem): Pick<LinkItem, 'href' | 'to'> => {
+		return item.href ? { href: item.href } : { to: item.to }
+	}
+
 	const scrollToTop = () => {
 		window.scrollTo({
 			top: 0,
@@ -259,8 +265,7 @@
 					<component
 						:is="getLinkComponent(item)"
 						v-if="!backOffice"
-						:href="item.href"
-						:to="item.to"
+						v-bind="getLinkAttrs(item)"
 						:aria-label="item.ariaLabel"
 						:target="item.openInNewTab ? '_blank' : undefined"
 						:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
