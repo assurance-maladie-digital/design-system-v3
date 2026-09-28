@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-23T14:23:35.520Z",
+  "date": "2026-09-28T12:10:19.615Z",
   "compliantCount": 61,
   "totalCount": 77,
   "percentage": "79.22",
@@ -281,7 +281,7 @@
     },
     {
       "componentName": "DataListItem",
-      "hasA11yTests": false,
+      "hasA11yTests": true,
       "hasA11yDisabledInStories": false,
       "mdxStatus": "Manquante",
       "isFullyCompliant": false,
@@ -771,8 +771,8 @@
       "isFullyCompliant": true,
       "storybookTitle": "Composants/Customs/SyHeading",
       "hasManualAudit": false,
-      "version": "1.0.23",
-      "versionDate": "30/03/2026"
+      "version": null,
+      "versionDate": null
     },
     {
       "componentName": "SyTextArea",
