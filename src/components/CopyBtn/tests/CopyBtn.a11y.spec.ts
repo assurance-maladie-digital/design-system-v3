@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { describe, it, beforeEach, afterEach, vi } from 'vitest'
+import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
@@ -36,5 +36,33 @@ describe('CopyBtn – accessibility (axe)', () => {
 		assertNoA11yViolations(results, 'CopyBtn – default state', {
 			ignoreRules: ['region'],
 		})
+		wrapper.unmount()
+	})
+})
+
+describe('CopyBtn – ARIA references', () => {
+	it.each([false, true])('keeps valid references with hideTooltip=%s', async (hideTooltip) => {
+		const target = document.createElement('main')
+		document.body.appendChild(target)
+		const wrapper = mount(CopyBtn, {
+			props: { textToCopy: 'Texte', ariaOwns: 'custom-copy', hideTooltip },
+			attachTo: target,
+		})
+		const spy = vi.fn().mockResolvedValue(undefined)
+		vi.stubGlobal('navigator', { clipboard: { writeText: spy } })
+		try {
+			const button = wrapper.get('button')
+			expect(button.attributes('aria-owns')).toBeUndefined()
+			expect(button.attributes('aria-controls')).toBeUndefined()
+			assertNoA11yViolations(await axe(target), 'CopyBtn – custom identifier')
+			await button.trigger('click')
+			expect(spy).toHaveBeenCalledWith('Texte')
+			assertNoA11yViolations(await axe(document.body), 'CopyBtn – after copy')
+		}
+		finally {
+			wrapper.unmount()
+			target.remove()
+			vi.unstubAllGlobals()
+		}
 	})
 })
