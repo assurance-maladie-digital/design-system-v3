@@ -110,12 +110,7 @@
 }
 
 .roadmap-timeline__status {
-	margin-top: 4px !important;
-	color: #4b5563;
-	font-size: 0.75rem;
-	font-weight: 600;
-	letter-spacing: 0.03em;
-	text-transform: uppercase;
+	margin-top: 8px !important;
 }
 
 .roadmap-timeline__highlights {
@@ -127,6 +122,32 @@
 
 .roadmap-timeline__highlights li + li {
 	margin-top: 4px;
+}
+
+/* Tag d'impact projet, partagé entre le tableau des cycles et la frise */
+.roadmap-impact {
+	display: inline-block;
+	padding: 2px 10px;
+	border-radius: 12px;
+	font-size: 0.75rem !important;
+	font-weight: 700;
+	line-height: 1.5 !important;
+	white-space: nowrap;
+}
+
+.roadmap-impact--patch {
+	background: #eef1f5;
+	color: #3f4b5b;
+}
+
+.roadmap-impact--minor {
+	background: #fff1e6;
+	color: #9a3412;
+}
+
+.roadmap-impact--major {
+	background: #f3f0ff;
+	color: #5b21b6;
 }
 
 /* Écrans étroits : frise verticale */
@@ -201,14 +222,15 @@
 	background: #fff;
 }
 
+/* Teintes distinctes des tags d'impact (gris, orange, violet) de la frise */
 .roadmap-board__card--ux {
-	--rb-accent: #c2410c;
-	--rb-soft: #fff4e6;
+	--rb-accent: #a61e4d;
+	--rb-soft: #fff0f6;
 }
 
 .roadmap-board__card--a11y {
-	--rb-accent: #6d28d9;
-	--rb-soft: #f3f0ff;
+	--rb-accent: #0b7285;
+	--rb-soft: #e3fafc;
 }
 
 .roadmap-board__card--eco {

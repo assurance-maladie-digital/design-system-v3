@@ -73,10 +73,17 @@ const versions: Version[] = [
 	},
 ]
 
+// Mêmes libellés que la colonne « Impact pour votre projet » du tableau des cycles de versions.
+// Le tag de statut en reprend la couleur ; le libellé est restitué aux lecteurs d'écran.
+const impactLabels = {
+	minor: 'Adaptations légères',
+	major: 'Migration planifiée',
+}
+
 export const VersionsTimeline: StoryObj = {
 	render: () => ({
 		setup() {
-			return { versions, statusLabels }
+			return { versions, statusLabels, impactLabels }
 		},
 		template: `
 			<ol class="roadmap-timeline">
@@ -91,8 +98,9 @@ export const VersionsTimeline: StoryObj = {
 							<span class="roadmap-timeline__version">{{ item.version }}</span>
 							<span class="roadmap-timeline__date">{{ item.date }}</span>
 						</p>
-						<p class="roadmap-timeline__status">
+						<p :class="['roadmap-impact', 'roadmap-timeline__status', item.major ? 'roadmap-impact--major' : 'roadmap-impact--minor']">
 							{{ statusLabels[item.status] }}<template v-if="item.major"> · Majeure</template>
+							<span class="d-sr-only"> – impact : {{ item.major ? impactLabels.major : impactLabels.minor }}</span>
 						</p>
 						<ul class="roadmap-timeline__highlights">
 							<li v-for="highlight in item.highlights" :key="highlight">{{ highlight }}</li>
