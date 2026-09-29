@@ -97,7 +97,6 @@
 </template>
 
 <style scoped lang="scss">
-
 :deep(.help-text-as-hint .v-messages),
 :deep(.help-text-below:not(.text-disabled)) {
 	--v-medium-emphasis-opacity: 1;
