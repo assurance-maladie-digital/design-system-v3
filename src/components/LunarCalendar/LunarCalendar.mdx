@@ -10,7 +10,7 @@ import * as LunarCalendarStories from './LunarCalendar.stories';
 </div>
 
 {/* func-version-start */}
-<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.1.3</p>
+<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.1.6</p>
 {/* func-version-end */}
 {/* a11y-version-start */}
 <p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.1.4</p>
@@ -29,6 +29,12 @@ import * as LunarCalendarStories from './LunarCalendar.stories';
 
 <Canvas of={LunarCalendarStories.Required} />
 
+## Champ requis avec astérisque
+
+L'astérisque n'est affiché que si le champ est également `required`.
+
+<Canvas of={LunarCalendarStories.DisplayAsterisk} />
+
 ## Avec bouton de suppression
 
 <Canvas of={LunarCalendarStories.WithClearable} />
@@ -36,3 +42,9 @@ import * as LunarCalendarStories from './LunarCalendar.stories';
 ## Avec texte d'aide
 
 <Canvas of={LunarCalendarStories.HelpText} />
+
+## Avec règles de validation personnalisées
+
+Des règles supplémentaires peuvent être ajoutées via la prop `custom-rules`. Elles s'appliquent en plus des contrôles intégrés (format de la date, `min-year` / `max-year`, `required`).
+
+<Canvas of={LunarCalendarStories.WithCustomRules} />

@@ -1,5 +1,6 @@
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
+import { createMemoryHistory, createRouter } from 'vue-router'
 import HeaderLogo from '../HeaderLogo.vue'
 
 describe('HeaderLogo', () => {
@@ -103,6 +104,37 @@ describe('HeaderLogo', () => {
 		expect(wrapper.find('router-link-stub').attributes('to')).toBe('/')
 	})
 
+	// Avec un vrai vue-router, le `href: undefined` passé au conteneur écrasait celui calculé
+	// par RouterLink : `<a>` sans `href`, donc hors de l'ordre de tabulation (#2579).
+	it('renders a focusable RouterLink with its href when vue-router is installed', async () => {
+		const router = createRouter({
+			history: createMemoryHistory(),
+			routes: [
+				{ path: '/', component: { template: '<div />' } },
+				{ path: '/accueil', component: { template: '<div />' } },
+			],
+		})
+		await router.push('/')
+
+		const wrapper = mount(HeaderLogo, {
+			global: { plugins: [router] },
+			props: {
+				logoAlt: 'Test aria label',
+				homeLink: { 'to': '/accueil', 'aria-label': 'Accueil' },
+			},
+		})
+		const link = wrapper.find('.logo')
+
+		expect(link.element.tagName).toBe('A')
+		expect(link.attributes('href')).toBe('/accueil')
+		expect(link.attributes('aria-label')).toBe('Accueil')
+
+		await link.trigger('click')
+		await flushPromises()
+
+		expect(router.currentRoute.value.path).toBe('/accueil')
+	})
+
 	// sans `RouterLink` enregistré, le conteneur retombait sur un `<div>` —
 	// visuellement cliquable (cursor: pointer) mais impossible à atteindre au clavier (RGAA 7.3).
 	// On vérifie qu'un vrai `<a href>` est rendu à la place.
@@ -183,8 +215,12 @@ describe('HeaderLogo', () => {
 		expect(source.exists()).toBe(true)
 		expect(source.attributes('media')).toBe('(min-width: 990px)')
 		expect(source.attributes('srcset')).toContain('logo-desktop.svg')
+		expect(source.attributes('width')).toBeUndefined()
+		expect(source.attributes('height')).toBeUndefined()
 		expect(image.exists()).toBe(true)
 		expect(image.attributes('src')).toContain('logo-mobile.svg')
+		expect(image.attributes('width')).toBe('141')
+		expect(image.attributes('height')).toBe('42')
 
 		wrapper.unmount()
 	})

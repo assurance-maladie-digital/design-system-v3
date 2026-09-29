@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-17T09:56:38.093Z",
+  "date": "2026-09-28T12:10:25.293Z",
   "totalCount": 77,
   "results": [
     {
@@ -1884,32 +1884,10 @@
       ],
       "a11yCommits": [
         {
-          "hash": "7ebfa59c2acbce33901ff8003e4f73f4c5e8016c",
-          "date": "2026-09-16 14:52:14 +0200",
-          "dateFr": "16/09/2026",
-          "message": "add on focus",
-          "version": null,
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "ed876dadf42a4f0a077cb76458c5209d02d9c4ff",
-          "date": "2026-09-10 10:24:20 +0200",
-          "dateFr": "10/09/2026",
-          "message": "fix tests",
-          "version": null,
-          "confidence": "faible",
-          "keywords": false,
-          "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "dd8ac6caf9610089fdd27dc9544d58ded7554ac9",
-          "date": "2026-09-09 14:26:40 +0200",
-          "dateFr": "09/09/2026",
-          "message": "add tests a11y to selectBtnField",
+          "hash": "99dd21e66e143bda73bf5d60d7cc258bf80fda35",
+          "date": "2026-09-17 14:05:01 +0200",
+          "dateFr": "17/09/2026",
+          "message": "add tests a11y to selectBtnField (#2543)",
           "version": null,
           "confidence": "forte",
           "keywords": true,
@@ -3610,6 +3588,28 @@
       ],
       "a11yCommits": [
         {
+          "hash": "6b48d0b4c60df11d089c554c474f5f21f6e3a2fd",
+          "date": "2026-09-24 14:22:02 +0200",
+          "dateFr": "24/09/2026",
+          "message": "SyIcon - add accessibility tab on AccessibilityDemo story (#2569)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "10d998f3c39c4df0f14b28536e73af79a2d02399",
+          "date": "2026-09-17 16:04:51 +0200",
+          "dateFr": "17/09/2026",
+          "message": "refacto tests a11y (#2562)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
           "dateFr": "10/09/2026",
@@ -3736,17 +3736,6 @@
           "dateFr": "11/02/2026",
           "message": "Accessibilité: file reorganization accessibility (#1792)",
           "version": "1.0.20",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
-          "date": "2026-01-06 11:55:17 +0100",
-          "dateFr": "06/01/2026",
-          "message": "Feat/add accessibility in ci (#1663)",
-          "version": "1.0.17",
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
@@ -4241,11 +4230,16 @@
       "componentName": "Customs/SyTabs",
       "storybookTitle": "Composants/Navigation/SyTabs",
       "status": "actif",
-      "functionalVersion": "1.1.3",
-      "functionalDate": "27/07/2026",
+      "functionalVersion": "1.1.6",
+      "functionalDate": "24/09/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-09-24",
+          "message": "SyTabs: fix slots and stories (#2580)",
+          "version": "1.1.6"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
@@ -4318,6 +4312,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "77899ea7457f81bcd93d0c16b4d75950f5520c6a",
+          "date": "2026-09-24 10:11:02 +0200",
+          "dateFr": "24/09/2026",
+          "message": "SyTabs: fix slots and stories (#2580)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
@@ -5317,14 +5322,47 @@
       ],
       "a11yCommits": [
         {
+          "hash": "5a322e15e83a6f15a7c62feb7dd6747aabc1df86",
+          "date": "2026-09-28 09:08:42 +0200",
+          "dateFr": "28/09/2026",
+          "message": "ajout test spec accessibilité (#2565)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": false
+        },
+        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "moyenne",
+          "confidence": "forte",
           "keywords": true,
           "patterns": false,
+          "a11yLabel": false
+        },
+        {
+          "hash": "c436586292ca72c4d82809711b9ef7cdcbdcc09a",
+          "date": "2026-02-25 16:19:14 +0100",
+          "dateFr": "25/02/2026",
+          "message": "add a11y ci (#1881)",
+          "version": "1.0.21",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
+          "date": "2026-01-06 11:55:17 +0100",
+          "dateFr": "06/01/2026",
+          "message": "Feat/add accessibility in ci (#1663)",
+          "version": "1.0.17",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
           "a11yLabel": false
         }
       ]
@@ -5333,11 +5371,21 @@
       "componentName": "DatePicker/CalendarMode",
       "storybookTitle": "Composants/Formulaires/DatePicker/CalendarMode",
       "status": "actif",
-      "functionalVersion": "1.1.4",
-      "functionalDate": "13/08/2026",
+      "functionalVersion": "1.1.6",
+      "functionalDate": "22/09/2026",
       "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-09-22",
+          "message": "fix caret-color (#2575)",
+          "version": "1.1.6"
+        },
+        {
+          "date": "2026-09-22",
+          "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+          "version": "1.1.6"
+        },
         {
           "date": "2026-08-13",
           "message": "fix/components-name-format",
@@ -5452,19 +5500,20 @@
           "date": "2026-03-11",
           "message": "Hx: replace hx to SyHeading (#1874)",
           "version": "1.0.22"
-        },
-        {
-          "date": "2026-03-11",
-          "message": "DatePicker: adjust month view width for better layout (#1948)",
-          "version": "1.0.22"
-        },
-        {
-          "date": "2026-03-04",
-          "message": "Feat/1872 ajout de tokens (#1888)",
-          "version": "1.0.22"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+          "date": "2026-09-22 08:55:24 +0200",
+          "dateFr": "22/09/2026",
+          "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
@@ -5658,11 +5707,16 @@
       "componentName": "DatePicker/ComplexDatePicker",
       "storybookTitle": "Composants/Formulaires/DatePicker/CombinedMode",
       "status": "actif",
-      "functionalVersion": "1.1.4",
-      "functionalDate": "13/08/2026",
+      "functionalVersion": "1.1.6",
+      "functionalDate": "22/09/2026",
       "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-09-22",
+          "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+          "version": "1.1.6"
+        },
         {
           "date": "2026-08-13",
           "message": "fix/components-name-format",
@@ -5782,14 +5836,20 @@
           "date": "2025-12-18",
           "message": "fix combined synch (#1642)",
           "version": "1.0.16"
-        },
-        {
-          "date": "2025-12-15",
-          "message": "Refactor DatePicker components to enforce required label prop and allow to not show the placeholder (#1609)",
-          "version": "1.0.16"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+          "date": "2026-09-22 08:55:24 +0200",
+          "dateFr": "22/09/2026",
+          "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
@@ -5983,11 +6043,16 @@
       "componentName": "DatePicker/DateTextInput",
       "storybookTitle": "Composants/Formulaires/DatePicker/DateInput",
       "status": "actif",
-      "functionalVersion": "1.1.3",
-      "functionalDate": "31/07/2026",
+      "functionalVersion": "1.1.6",
+      "functionalDate": "22/09/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "23/07/2026",
       "commits": [
+        {
+          "date": "2026-09-22",
+          "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+          "version": "1.1.6"
+        },
         {
           "date": "2026-07-31",
           "message": "DatePicker: wrap customRules and customWarningRules in computed and fix isOnSuccess validation state (#2461)",
@@ -6107,14 +6172,20 @@
           "date": "2025-10-13",
           "message": "Fix/datepicker custom rules empty fields (#1261)",
           "version": "1.0.10"
-        },
-        {
-          "date": "2025-10-09",
-          "message": "Fix/date picker validation combined (#1253)",
-          "version": "1.0.10"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+          "date": "2026-09-22 08:55:24 +0200",
+          "dateFr": "22/09/2026",
+          "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
@@ -8281,11 +8352,16 @@
       "componentName": "FooterBar",
       "storybookTitle": "Composants/Structure/FooterBar",
       "status": "actif",
-      "functionalVersion": "1.1.4",
-      "functionalDate": "07/08/2026",
+      "functionalVersion": "1.1.6",
+      "functionalDate": "28/09/2026",
       "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-09-28",
+          "message": "LogoBrandSection: fix router (#2586)",
+          "version": "1.1.6"
+        },
         {
           "date": "2026-08-07",
           "message": "Ajout des interactions sur le composant `SocialMediaLinks` (#2480)",
@@ -8388,6 +8464,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "4beac9cb6a842d3852a0986e03a22b4b405dc64f",
+          "date": "2026-09-28 09:36:28 +0200",
+          "dateFr": "28/09/2026",
+          "message": "LogoBrandSection: fix router (#2586)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
@@ -8689,11 +8776,16 @@
       "componentName": "HeaderBar",
       "storybookTitle": "Composants/Structure/HeaderBar",
       "status": "actif",
-      "functionalVersion": "1.1.4",
-      "functionalDate": "13/08/2026",
+      "functionalVersion": "1.1.6",
+      "functionalDate": "28/09/2026",
       "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-09-28",
+          "message": "LogoBrandSection: fix router (#2586)",
+          "version": "1.1.6"
+        },
         {
           "date": "2026-08-13",
           "message": "fix/components-name-format",
@@ -8813,14 +8905,20 @@
           "date": "2024-11-21",
           "message": "Feat/header (#202)",
           "version": "0.0.5-alpha"
-        },
-        {
-          "date": "2024-11-08",
-          "message": "update header beta presentation (#194)",
-          "version": "0.0.5-alpha"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "4beac9cb6a842d3852a0986e03a22b4b405dc64f",
+          "date": "2026-09-28 09:36:28 +0200",
+          "dateFr": "28/09/2026",
+          "message": "LogoBrandSection: fix router (#2586)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
@@ -9478,11 +9576,16 @@
       "componentName": "HeaderToolbar",
       "storybookTitle": "Composants/Structure/HeaderToolbar",
       "status": "actif",
-      "functionalVersion": "1.1.4",
-      "functionalDate": "13/08/2026",
+      "functionalVersion": "1.1.6",
+      "functionalDate": "28/09/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-09-28",
+          "message": "LogoBrandSection: fix router (#2586)",
+          "version": "1.1.6"
+        },
         {
           "date": "2026-08-13",
           "message": "fix/components-name-format",
@@ -9565,6 +9668,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "4beac9cb6a842d3852a0986e03a22b4b405dc64f",
+          "date": "2026-09-28 09:36:28 +0200",
+          "dateFr": "28/09/2026",
+          "message": "LogoBrandSection: fix router (#2586)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
@@ -10001,11 +10115,16 @@
       "componentName": "LogoBrandSection",
       "storybookTitle": "Composants/Données/LogoBrandSection",
       "status": "actif",
-      "functionalVersion": "1.1.3",
-      "functionalDate": "27/07/2026",
+      "functionalVersion": "1.1.6",
+      "functionalDate": "28/09/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "30/07/2026",
       "commits": [
+        {
+          "date": "2026-09-28",
+          "message": "LogoBrandSection: fix router (#2586)",
+          "version": "1.1.6"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
@@ -10043,6 +10162,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "4beac9cb6a842d3852a0986e03a22b4b405dc64f",
+          "date": "2026-09-28 09:36:28 +0200",
+          "dateFr": "28/09/2026",
+          "message": "LogoBrandSection: fix router (#2586)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
@@ -10170,11 +10300,16 @@
       "componentName": "LunarCalendar",
       "storybookTitle": "Composants/Formulaires/LunarCalendar",
       "status": "actif",
-      "functionalVersion": "1.1.3",
-      "functionalDate": "27/07/2026",
+      "functionalVersion": "1.1.6",
+      "functionalDate": "24/09/2026",
       "a11yVersion": "1.1.4",
       "a11yDate": "10/08/2026",
       "commits": [
+        {
+          "date": "2026-09-24",
+          "message": "LunarCalendar: add custom rules + add stories/tests (#2583)",
+          "version": "1.1.6"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
@@ -12075,11 +12210,16 @@
       "componentName": "PeriodField",
       "storybookTitle": "Composants/Formulaires/PeriodField",
       "status": "actif",
-      "functionalVersion": "1.1.5",
-      "functionalDate": "27/08/2026",
+      "functionalVersion": "1.1.6",
+      "functionalDate": "22/09/2026",
       "a11yVersion": "1.0.24",
       "a11yDate": "01/04/2026",
       "commits": [
+        {
+          "date": "2026-09-22",
+          "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+          "version": "1.1.6"
+        },
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
@@ -12167,6 +12307,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
+          "date": "2026-09-22 08:55:24 +0200",
+          "dateFr": "22/09/2026",
+          "message": "Refactor: Migration de la validation des DatePickers (#2499)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
@@ -13698,6 +13849,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "cd3d71ce22678b00dedc9fed3a490c62fcaa25d1",
+          "date": "2026-09-28 09:29:15 +0200",
+          "dateFr": "28/09/2026",
+          "message": "SubHeader : resolutions probleme accessibilité et mise en place des tests axe et maj documentation  (#2584)",
+          "version": null,
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
           "dateFr": "10/09/2026",
@@ -14169,9 +14331,14 @@
       "status": "actif",
       "functionalVersion": "1.0.23",
       "functionalDate": "25/03/2026",
-      "a11yVersion": "1.0.23",
-      "a11yDate": "30/03/2026",
+      "a11yVersion": null,
+      "a11yDate": null,
       "commits": [
+        {
+          "date": "2026-09-22",
+          "message": "Core: clean package (#2549)",
+          "version": "1.1.6"
+        },
         {
           "date": "2026-03-25",
           "message": "Feat/turn heading level optional (#2025)",
@@ -14183,19 +14350,7 @@
           "version": "1.0.22"
         }
       ],
-      "a11yCommits": [
-        {
-          "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
-          "date": "2026-03-30 08:20:25 +0100",
-          "dateFr": "30/03/2026",
-          "message": "Feat/add a11y tests and pages (#2032)",
-          "version": "1.0.23",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        }
-      ]
+      "a11yCommits": []
     },
     {
       "componentName": "SyTextArea",
@@ -14404,11 +14559,16 @@
       "componentName": "Tables/SyServerTable",
       "storybookTitle": "Composants/Tableaux/SyServerTable",
       "status": "actif",
-      "functionalVersion": "1.1.5",
-      "functionalDate": "04/09/2026",
+      "functionalVersion": "1.1.6",
+      "functionalDate": "18/09/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-09-18",
+          "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+          "version": "1.1.6"
+        },
         {
           "date": "2026-09-04",
           "message": "SyTable/SyServerTable: fix items per page  (#2538)",
@@ -14528,11 +14688,6 @@
           "date": "2025-09-30",
           "message": "SyServerTable : fix double emit (#1186)",
           "version": "1.0.10"
-        },
-        {
-          "date": "2025-09-10",
-          "message": "Tables localstorage refactorisation (#1084)",
-          "version": "1.0.9"
         }
       ],
       "a11yCommits": [
@@ -14718,11 +14873,16 @@
       "componentName": "Tables/SyTable",
       "storybookTitle": "Composants/Tableaux/SyTable",
       "status": "actif",
-      "functionalVersion": "1.1.5",
-      "functionalDate": "04/09/2026",
+      "functionalVersion": "1.1.6",
+      "functionalDate": "18/09/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-09-18",
+          "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+          "version": "1.1.6"
+        },
         {
           "date": "2026-09-04",
           "message": "SyTable/SyServerTable: fix items per page  (#2538)",
@@ -14842,14 +15002,20 @@
           "date": "2025-09-08",
           "message": "SyTable no-data slot (#1076)",
           "version": "1.0.9"
-        },
-        {
-          "date": "2025-08-14",
-          "message": "SyTable/SyServerTable: add items per page options (#959)",
-          "version": "1.0.7"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
+          "date": "2026-09-18 14:10:26 +0200",
+          "dateFr": "18/09/2026",
+          "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
           "date": "2026-09-10 14:39:44 +0200",
