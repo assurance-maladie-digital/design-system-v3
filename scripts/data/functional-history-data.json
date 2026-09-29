@@ -840,10 +840,17 @@
     "message": "Refactor: Migration de la validation des DatePickers (#2499)"
   },
   "DatePickerValidationExamples": {
+<<<<<<< HEAD
     "version": "1.1.6",
     "date": "22/09/2026",
     "dateIso": "2026-09-22 08:55:24 +0200",
     "message": "Refactor: Migration de la validation des DatePickers (#2499)"
+=======
+    "version": "1.1.5",
+    "date": "27/08/2026",
+    "dateIso": "2026-08-27 09:48:42 +0200",
+    "message": "refactor(DatePicker): standardize labels and placeholders with format hints across stories (#2513)"
+>>>>>>> 9e64bffa8 (pnpm docs update)
   },
   "DeclarationAccessibilityPage": {
     "version": "1.0.21",
