@@ -110,48 +110,51 @@
 	</div>
 </template>
 <style scoped lang="scss">
-	.notification {
-		display: flex;
-		align-items: center;
-		width: 100%;
-		padding: var(--v-gap-2) var(--v-gap-4);
-		margin-block: var(--v-gap-1);
-		gap: var(--v-gap-2) var(--v-gap-4);
-		box-shadow:
-			0 3px 5px -1px var(--v-shadow-key-umbra-opacity, rgb(0 0 0 / 20%)),
-			0 6px 10px 0 var(--v-shadow-key-penumbra-opacity, rgb(0 0 0 / 14%)),
-			0 1px 18px 0 var(--v-shadow-key-ambient-opacity, rgb(0 0 0 / 12%));
+.notification {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	padding: var(--v-gap-2) var(--v-gap-4);
+	margin-block: var(--v-gap-1);
+	gap: var(--v-gap-2) var(--v-gap-4);
+	box-shadow:
+		0 3px 5px -1px var(--v-shadow-key-umbra-opacity, rgb(0 0 0 / 20%)),
+		0 6px 10px 0 var(--v-shadow-key-penumbra-opacity, rgb(0 0 0 / 14%)),
+		0 1px 18px 0 var(--v-shadow-key-ambient-opacity, rgb(0 0 0 / 12%));
 
-		// prevent margins collapsing
-		clear: both;
-		float: left;
+	// prevent margins collapsing
+	clear: both;
+	float: left;
+}
+
+/* stylelint-disable custom-property-pattern */
+.notification--info {
+	background-color: rgb(var(--v-theme-info));
+	color: rgb(var(--v-theme-on-primary));
+
+	:deep(button:focus-visible),
+	:deep(a:focus-visible) {
+		outline-color: rgb(var(--v-theme-on-primary));
 	}
 
-	/* stylelint-disable custom-property-pattern */
-	.notification--info {
-		background-color: rgb(var(--v-theme-info));
-		color: rgb(var(--v-theme-on-primary));
-
-		:deep(button:focus-visible),
-		:deep(a:focus-visible) {
-			outline-color: rgb(var(--v-theme-on-primary));
-		}
-		:deep(button:hover) {
-			background: rgba(var(--v-theme-interaction-lighten), 0.12);
-		}
-		:deep(button:active) {
-			background: rgba(var(--v-theme-interaction-lighten), 0.18);
-		}
+	:deep(button:hover) {
+		background: rgba(var(--v-theme-interaction-lighten), 0.12);
 	}
 
-	.notification--success {
-		background-color: rgb(var(--v-theme-success, '86, 194, 113'));
-		color: rgb(var(--v-theme-on-success));
+	:deep(button:active) {
+		background: rgba(var(--v-theme-interaction-lighten), 0.18);
+	}
+}
+
+.notification--success {
+	background-color: rgb(var(--v-theme-success, '86, 194, 113'));
+	color: rgb(var(--v-theme-on-success));
 
 	:deep(button:focus-visible),
 	:deep(a:focus-visible) {
 		outline-color: rgb(var(--v-theme-on-success));
 	}
+
 	:where(.v-theme--ap).v-btn--variant-outlined:hover {
 		background: rgba(var(--v-theme-interaction-lighten), 0.12) !important;
 	}
@@ -161,59 +164,59 @@
 	}
 }
 
-	.notification--warning {
-		background-color: rgb(var(--v-theme-warning));
-		color: rgb(var(--v-theme-on-warning));
+.notification--warning {
+	background-color: rgb(var(--v-theme-warning));
+	color: rgb(var(--v-theme-on-warning));
 
-		:deep(button:focus-visible),
-		:deep(a:focus-visible) {
-			outline-color: rgb(var(--v-theme-on-surface));
-		}
+	:deep(button:focus-visible),
+	:deep(a:focus-visible) {
+		outline-color: rgb(var(--v-theme-on-surface));
+	}
+}
+
+.notification--error {
+	background-color: rgb(var(--v-theme-error));
+	color: rgb(var(--v-theme-on-primary));
+
+	:deep(button:focus-visible),
+	:deep(a:focus-visible) {
+		outline-color: rgb(var(--v-theme-on-primary));
 	}
 
-	.notification--error {
-		background-color: rgb(var(--v-theme-error));
-		color: rgb(var(--v-theme-on-primary));
-
-		:deep(button:focus-visible),
-		:deep(a:focus-visible) {
-			outline-color: rgb(var(--v-theme-on-primary));
-		}
-
-		:deep(button:hover) {
-			background: rgba(var(--v-theme-interaction-lighten), 0.14);
-		}
-
-		:deep(button:active) {
-			background: rgba(var(--v-theme-interaction-lighten), 0.18);
-		}
+	:deep(button:hover) {
+		background: rgba(var(--v-theme-interaction-lighten), 0.14);
 	}
 
-	.notification__message {
-		flex-grow: 1;
+	:deep(button:active) {
+		background: rgba(var(--v-theme-interaction-lighten), 0.18);
 	}
+}
 
-	.notification--long-text {
-		/* stylelint-disable-next-line */
+.notification__message {
+	flex-grow: 1;
+}
+
+.notification--long-text {
+	/* stylelint-disable-next-line */
 		@media screen and (width <= 600px) {
-			flex-direction: column;
-			align-items: flex-start;
-			padding: var(--v-gap-4);
-
-			.notification__actions {
-				justify-content: space-between;
-				width: 100%;
-			}
-		}
+		flex-direction: column;
+		align-items: flex-start;
+		padding: var(--v-gap-4);
 
 		.notification__actions {
-			justify-content: space-around;
+			justify-content: space-between;
+			width: 100%;
 		}
 	}
 
-	.notification--short-text {
-		.notification__actions {
-			justify-content: flex-end !important;
-		}
+	.notification__actions {
+		justify-content: space-around;
 	}
+}
+
+.notification--short-text {
+	.notification__actions {
+		justify-content: flex-end !important;
+	}
+}
 </style>
