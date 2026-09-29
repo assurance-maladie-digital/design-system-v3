@@ -55,7 +55,7 @@ Généré le: 29/09/2026
 | **LogoBrandSection** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **LunarCalendar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **MaintenancePage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **MonthPicker** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
+| **MonthPicker** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **NirField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **NotFoundPage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **NotificationBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -82,4 +82,4 @@ Généré le: 29/09/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 61 / 77 (79.22%)**
+**Total des composants conformes : 62 / 77 (80.52%)**
