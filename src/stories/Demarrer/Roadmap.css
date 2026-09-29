@@ -1,0 +1,145 @@
+/* Frise des versions (Démarrer/Roadmap) */
+.roadmap-timeline {
+	--rt-accent: rgb(var(--v-theme-primary));
+	--rt-line: #d5dae5;
+
+	position: relative;
+	display: grid;
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	gap: 16px;
+	margin: 24px 0 32px;
+	padding: 0;
+	list-style: none;
+}
+
+/* Ligne horizontale reliant les jalons */
+.roadmap-timeline::before {
+	position: absolute;
+	top: 9px;
+	right: 10%;
+	left: 10%;
+	border-top: 2px solid var(--rt-line);
+	content: '';
+}
+
+.roadmap-timeline__item {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.roadmap-timeline__item--planned,
+.roadmap-timeline__item--study {
+	--rt-accent: #6b7280;
+}
+
+.roadmap-timeline__item--major {
+	--rt-accent: rgb(var(--v-theme-secondary));
+}
+
+.roadmap-timeline__dot {
+	z-index: 1;
+	flex-shrink: 0;
+	width: 20px;
+	height: 20px;
+	margin-bottom: 12px;
+	border: 3px solid var(--rt-accent);
+	border-radius: 50%;
+	background: #fff;
+}
+
+.roadmap-timeline__item--current .roadmap-timeline__dot {
+	background: var(--rt-accent);
+}
+
+.roadmap-timeline__item--in-progress .roadmap-timeline__dot {
+	background: linear-gradient(90deg, var(--rt-accent) 50%, #fff 50%);
+}
+
+.roadmap-timeline__item--study .roadmap-timeline__dot {
+	border-style: dashed;
+}
+
+.roadmap-timeline__card {
+	width: 100%;
+	height: 100%;
+	padding: 12px 14px;
+	border: 1px solid var(--rt-line);
+	border-top: 4px solid var(--rt-accent);
+	border-radius: 8px;
+	background: #fff;
+}
+
+.roadmap-timeline__item--study .roadmap-timeline__card {
+	border-style: dashed;
+	border-top-style: solid;
+}
+
+.roadmap-timeline__card p {
+	margin: 0;
+}
+
+.roadmap-timeline__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 4px;
+}
+
+.roadmap-timeline__version {
+	color: var(--rt-accent);
+	font-size: 1.25rem;
+	font-weight: 700;
+}
+
+.roadmap-timeline__date {
+	color: #4b5563;
+	font-size: 0.8rem;
+	font-weight: 600;
+}
+
+.roadmap-timeline__status {
+	margin-top: 4px !important;
+	color: #4b5563;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+}
+
+.roadmap-timeline__highlights {
+	margin: 10px 0 0;
+	padding-left: 16px;
+	font-size: 0.85rem;
+	line-height: 1.4;
+}
+
+.roadmap-timeline__highlights li + li {
+	margin-top: 4px;
+}
+
+/* Écrans étroits : frise verticale */
+@media (width <= 900px) {
+	.roadmap-timeline {
+		grid-template-columns: 1fr;
+		padding-left: 32px;
+	}
+
+	.roadmap-timeline::before {
+		inset: 10px auto 10px 9px;
+		border-top: 0;
+		border-left: 2px solid var(--rt-line);
+	}
+
+	.roadmap-timeline__item {
+		align-items: stretch;
+	}
+
+	.roadmap-timeline__dot {
+		position: absolute;
+		top: 12px;
+		left: -32px;
+	}
+}
