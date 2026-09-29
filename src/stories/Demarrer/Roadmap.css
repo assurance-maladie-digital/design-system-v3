@@ -57,8 +57,13 @@
 	background: linear-gradient(90deg, var(--rt-accent) 50%, #fff 50%);
 }
 
+/* Anneau en pointillés dessiné en dégradé : Firefox n'affiche que 4 tirets
+   avec un border dashed sur un petit cercle */
 .roadmap-timeline__item--study .roadmap-timeline__dot {
-	border-style: dashed;
+	border: 0;
+	background:
+		radial-gradient(closest-side, #fff calc(100% - 3px), transparent calc(100% - 3px)),
+		repeating-conic-gradient(var(--rt-accent) 0 22.5deg, #fff 0 45deg);
 }
 
 .roadmap-timeline__card {
@@ -71,9 +76,13 @@
 	background: #fff;
 }
 
+/* Bordure du haut dessinée en fond : Firefox tronque les coins arrondis
+   quand un côté plein (haut) rejoint des côtés en pointillés */
 .roadmap-timeline__item--study .roadmap-timeline__card {
+	padding-top: 16px;
 	border-style: dashed;
-	border-top-style: solid;
+	border-top: 0;
+	background: linear-gradient(var(--rt-accent), var(--rt-accent)) top / 100% 4px no-repeat, #fff;
 }
 
 .roadmap-timeline__card p {
