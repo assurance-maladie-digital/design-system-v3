@@ -136,17 +136,30 @@
 		:deep(a:focus-visible) {
 			outline-color: rgb(var(--v-theme-on-primary));
 		}
+		:deep(button:hover) {
+			background: rgba(var(--v-theme-interaction-lighten), 0.12);
+		}
+		:deep(button:active) {
+			background: rgba(var(--v-theme-interaction-lighten), 0.18);
+		}
 	}
 
 	.notification--success {
 		background-color: rgb(var(--v-theme-success, '86, 194, 113'));
 		color: rgb(var(--v-theme-on-success));
 
-		:deep(button:focus-visible),
-		:deep(a:focus-visible) {
-			outline-color: rgb(var(--v-theme-on-success));
-		}
+	:deep(button:focus-visible),
+	:deep(a:focus-visible) {
+		outline-color: rgb(var(--v-theme-on-success));
 	}
+	:where(.v-theme--ap).v-btn--variant-outlined:hover {
+		background: rgba(var(--v-theme-interaction-lighten), 0.12) !important;
+	}
+
+	:where(.v-theme--ap).v-btn--variant-outlined:active {
+		background: rgba(var(--v-theme-interaction-lighten), 0.18) !important;
+	}
+}
 
 	.notification--warning {
 		background-color: rgb(var(--v-theme-warning));
@@ -169,12 +182,10 @@
 
 		:deep(button:hover) {
 			background: rgba(var(--v-theme-interaction-lighten), 0.14);
-			opacity: 1;
 		}
 
 		:deep(button:active) {
 			background: rgba(var(--v-theme-interaction-lighten), 0.18);
-			opacity: 1;
 		}
 	}
 
