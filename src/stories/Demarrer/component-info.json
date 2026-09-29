@@ -1,9 +1,5 @@
 {
-<<<<<<< HEAD
-  "date": "2026-09-28T12:10:25.293Z",
-=======
   "date": "2026-09-29T07:02:11.418Z",
->>>>>>> 9e64bffa8 (pnpm docs update)
   "totalCount": 77,
   "results": [
     {
@@ -4242,11 +4238,7 @@
         {
           "date": "2026-09-24",
           "message": "SyTabs: fix slots and stories (#2580)",
-<<<<<<< HEAD
-          "version": "1.1.6"
-=======
           "version": null
->>>>>>> 9e64bffa8 (pnpm docs update)
         },
         {
           "date": "2026-07-27",
@@ -5387,20 +5379,12 @@
         {
           "date": "2026-09-22",
           "message": "fix caret-color (#2575)",
-<<<<<<< HEAD
-          "version": "1.1.6"
-=======
           "version": null
->>>>>>> 9e64bffa8 (pnpm docs update)
         },
         {
           "date": "2026-09-22",
           "message": "Refactor: Migration de la validation des DatePickers (#2499)",
-<<<<<<< HEAD
-          "version": "1.1.6"
-=======
           "version": null
->>>>>>> 9e64bffa8 (pnpm docs update)
         },
         {
           "date": "2026-08-13",
@@ -5731,11 +5715,7 @@
         {
           "date": "2026-09-22",
           "message": "Refactor: Migration de la validation des DatePickers (#2499)",
-<<<<<<< HEAD
-          "version": "1.1.6"
-=======
           "version": null
->>>>>>> 9e64bffa8 (pnpm docs update)
         },
         {
           "date": "2026-08-13",
@@ -6071,11 +6051,7 @@
         {
           "date": "2026-09-22",
           "message": "Refactor: Migration de la validation des DatePickers (#2499)",
-<<<<<<< HEAD
-          "version": "1.1.6"
-=======
           "version": null
->>>>>>> 9e64bffa8 (pnpm docs update)
         },
         {
           "date": "2026-07-31",
@@ -10343,11 +10319,7 @@
         {
           "date": "2026-09-24",
           "message": "LunarCalendar: add custom rules + add stories/tests (#2583)",
-<<<<<<< HEAD
-          "version": "1.1.6"
-=======
           "version": null
->>>>>>> 9e64bffa8 (pnpm docs update)
         },
         {
           "date": "2026-07-27",
@@ -12257,11 +12229,7 @@
         {
           "date": "2026-09-22",
           "message": "Refactor: Migration de la validation des DatePickers (#2499)",
-<<<<<<< HEAD
-          "version": "1.1.6"
-=======
           "version": null
->>>>>>> 9e64bffa8 (pnpm docs update)
         },
         {
           "date": "2026-08-27",
@@ -14380,11 +14348,7 @@
         {
           "date": "2026-09-22",
           "message": "Core: clean package (#2549)",
-<<<<<<< HEAD
-          "version": "1.1.6"
-=======
           "version": null
->>>>>>> 9e64bffa8 (pnpm docs update)
         },
         {
           "date": "2026-03-25",
@@ -14614,11 +14578,7 @@
         {
           "date": "2026-09-18",
           "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
-<<<<<<< HEAD
-          "version": "1.1.6"
-=======
           "version": null
->>>>>>> 9e64bffa8 (pnpm docs update)
         },
         {
           "date": "2026-09-04",
@@ -14932,11 +14892,7 @@
         {
           "date": "2026-09-18",
           "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
-<<<<<<< HEAD
-          "version": "1.1.6"
-=======
           "version": null
->>>>>>> 9e64bffa8 (pnpm docs update)
         },
         {
           "date": "2026-09-04",
