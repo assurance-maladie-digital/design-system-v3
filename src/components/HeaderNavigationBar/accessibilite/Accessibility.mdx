@@ -298,6 +298,26 @@ import {
     </ul>
   </BestPracticesSection>
 
+    <div
+        style={{
+            margin: '3rem 0',
+            padding: '1.5rem',
+            backgroundColor: '#fff3e0',
+            borderLeft: '4px solid #f57c00',
+            borderRadius: '4px'
+        }}
+    >
+        <h2 style={{ color: '#e65100', marginTop: 0 }}>Faux positif connu (outillage) : Élément interactif non atteignable à la navigation clavier</h2>
+
+        <ul>
+            <li>L’audit automatisé signale cet élément interactif comme non atteignable à la navigation clavier, car il possède <code>tabindex="-1"</code>.</li>
+
+            <li>Ce comportement peut toutefois être volontaire dans le cadre du pattern<strong>Tabs</strong> avec gestion du focus : un seul onglet est placé dans l’ordre de tabulation, tandis que les autres onglets sont atteints via la navigation au clavier.</li><li>La présence de <code>tabindex="-1"</code> ne permet donc pas, à elle seule, de conclure à un défaut d’accessibilité. Une vérification manuelle de la navigation clavier est nécessaire.</li><li><strong>Vérification manuelle :</strong> <kbd>Tab</kbd> doit permettre d’atteindre l’onglet actif, puis les touches <kbd>←</kbd> et <kbd>→</kbd>doivent permettre de déplacer le focus entre les onglets.</li>
+
+            <li>Si la navigation clavier entre les onglets fonctionne correctement, le signal de l’outil peut être considéré comme un faux positif lié à la gestion dynamique du focus.</li>
+        </ul>
+    </div>
+
   <ResourcesSection>
     <ul>
       <li><a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices Guide</a></li>
