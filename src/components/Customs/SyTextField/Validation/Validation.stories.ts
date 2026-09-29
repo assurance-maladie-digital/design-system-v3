@@ -58,7 +58,14 @@ type Story = StoryObj<FieldValidationProps>
 export const WithError: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			config: {
+				play: async ({ canvasElement }) => {
+					const input = canvasElement.querySelector('input')
+					if (input) {
+						await input.blur()
+					}
+				},
+			},
 		},
 		sourceCode: [
 			{
@@ -146,7 +153,14 @@ export const WithError: Story = {
 export const WithWarning: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			config: {
+				play: async ({ canvasElement }) => {
+					const input = canvasElement.querySelector('input')
+					if (input) {
+						await input.blur()
+					}
+				},
+			},
 		},
 		sourceCode: [
 			{
@@ -223,7 +237,14 @@ export const WithWarning: Story = {
 export const WithSuccess: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			config: {
+				play: async ({ canvasElement }) => {
+					const input = canvasElement.querySelector('input')
+					if (input) {
+						await input.blur()
+					}
+				},
+			},
 		},
 		sourceCode: [
 			{
@@ -301,7 +322,14 @@ export const WithSuccess: Story = {
 export const WithCustomRules: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			config: {
+				play: async ({ canvasElement }) => {
+					const input = canvasElement.querySelector('input')
+					if (input) {
+						await input.blur()
+					}
+				},
+			},
 		},
 		sourceCode: [
 			{
@@ -408,7 +436,14 @@ export const WithCustomRules: Story = {
 export const DisableErrorHandling: Story = {
 	parameters: {
 		a11y: {
-			disable: true,
+			config: {
+				play: async ({ canvasElement }) => {
+					const inputs = canvasElement.querySelectorAll('input')
+					for (const input of inputs) {
+						await input.blur()
+					}
+				},
+			},
 		},
 		docs: {
 			description: {

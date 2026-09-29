@@ -56,6 +56,43 @@ describe('SyTextField – accessibility (axe)', () => {
 		})
 	})
 
+	it('has no obvious axe violations for number input with spin buttons', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				label: 'Quantité',
+				modelValue: '5',
+				type: 'number',
+				areSpinButtonsHidden: false,
+			},
+		})
+
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SyTextField – number input with spin buttons', {
+			ignoreRules: ['region'],
+		})
+	})
+
+	it('has no obvious axe violations for number input in error state', async () => {
+		const wrapper = mount(SyTextField, {
+			props: {
+				label: 'Prix',
+				modelValue: '',
+				type: 'number',
+				customRules: [{
+					type: 'custom',
+					options: { validate: () => false, message: 'Ce champ est obligatoire' },
+				}],
+				isValidateOnBlur: true,
+			},
+		})
+
+		await wrapper.find('input').trigger('blur')
+		const results = await axe(wrapper.element as HTMLElement)
+		assertNoA11yViolations(results, 'SyTextField – number input error state', {
+			ignoreRules: ['region'],
+		})
+	})
+
 	it('has no obvious axe violations for tel input', async () => {
 		const wrapper = mount(SyTextField, {
 			props: {
