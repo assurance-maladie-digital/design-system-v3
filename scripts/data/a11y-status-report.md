@@ -1,10 +1,6 @@
 # État des lieux de l'accessibilité des composants
 
-<<<<<<< HEAD
-Généré le: 28/09/2026
-=======
 Généré le: 29/09/2026
->>>>>>> 9e64bffa8 (pnpm docs update)
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
