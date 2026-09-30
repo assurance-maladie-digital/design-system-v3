@@ -109,14 +109,12 @@ export function useFormValidation() {
 	}
 
 	/**
-	 * Le statut global de validation du formulaire, basé sur les composants enfants
-	 * - true : tous les composants sont valides
-	 * - false : au moins un composant est invalide
-	 * - null : aucun composant n'est enregistré ou certains composants n'ont pas encore été validés
+	 * Statut de validation des composants custom enregistrés
+	 * - true : tous les composants custom sont valides
+	 * - false : au moins un composant custom est invalide
+	 * - null : aucun composant custom enregistré ou certains n'ont pas encore été validés
 	 */
-	const valide = computed<boolean | null>(() => {
-		// Aucun composant custom enregistré → l'agrégat n'a aucune information :
-		// on renvoie `null` (« inconnu ») plutôt que `true` par vacuité.
+	const customComponentsValide = computed<boolean | null>(() => {
 		if (validatableComponents.value.length === 0) {
 			return null
 		}
@@ -131,7 +129,27 @@ export function useFormValidation() {
 		return true
 	})
 
-	// Fournir le registre aux composants enfants
+	/**
+	 * Calcule la valeur globale du formulaire en combinant les validations custom et Vuetify.
+	 * - Priorité aux erreurs : si Vuetify ou custom est invalide → false
+	 * - Sans composant custom : défère à vFormStatus (Vuetify natif)
+	 * - Avec composant custom : utilises customComponentsValide (tri-état préservé)
+	 * @param vFormStatus - Statut de validation du VForm Vuetify
+	 * @returns Statut global du formulaire (boolean | null)
+	 */
+	const getFormValue = (vFormStatus: boolean | null): boolean | null => {
+		if (vFormStatus === false || customComponentsValide.value === false) {
+			return false
+		}
+		if (validatableComponents.value.length === 0) {
+			return vFormStatus
+		}
+		return customComponentsValide.value
+	}
+
+	// Méthode pour les tests : retourne une copie des composants enregistrés
+	const _getValidatableComponents = (): readonly ValidatableComponent[] => [...validatableComponents.value]
+
 	provide(ValidatableComponentsKey, {
 		register,
 		unregister,
@@ -142,10 +160,11 @@ export function useFormValidation() {
 
 	return {
 		validateAll,
-		validatableComponents,
 		clearAll,
 		resetAll,
-		valide,
+		customComponentsValide,
+		getFormValue,
+		_getValidatableComponents,
 	}
 }
 

@@ -695,6 +695,189 @@ describe('SyForm', () => {
 		})
 	})
 
+	describe('Tri-state v-model preservation (regression tests for commit 19f88712)', () => {
+		it('preserves null state when form has only untouched custom fields', async () => {
+			const TestWrapper = {
+				components: { SyForm, SyTextField },
+				template: `
+					<SyForm v-model="formValide" ref="form">
+						<SyTextField v-model="text" required label="Nom" />
+					</SyForm>
+				`,
+				data() {
+					return {
+						text: '',
+						formValide: null as boolean | null,
+					}
+				},
+			}
+
+			const wrapper = mount(TestWrapper)
+			await flushPromises()
+
+			// Champs non touchés → état pristine/unknown → v-model reste null
+			expect(wrapper.vm.formValide).toBe(null)
+		})
+
+		it('defers to vFormStatus when form has only Vuetify fields', async () => {
+			const TestWrapper = {
+				components: { SyForm, VTextField },
+				template: `
+					<SyForm v-model="formValide" ref="form">
+						<VTextField v-model="text" required label="Nom" />
+					</SyForm>
+				`,
+				data() {
+					return {
+						text: '',
+						formValide: null as boolean | null,
+					}
+				},
+			}
+
+			const wrapper = mount(TestWrapper)
+			await flushPromises()
+
+			// Aucun champ custom → défère à vFormStatus (VForm retourne true pour un formulaire pristine)
+			// Le changement du commit : avant on aurait forcé true par vacuité, maintenant on utilise vFormStatus
+			expect(wrapper.vm.formValide).toBe(true)
+		})
+
+		it('initializes v-model immediately on mount with immediate watch', async () => {
+			const TestWrapper = {
+				components: { SyForm, VTextField },
+				template: `
+					<SyForm v-model="formValide" ref="form">
+						<VTextField v-model="text" required label="Nom" />
+					</SyForm>
+				`,
+				data() {
+					return {
+						text: '',
+						formValide: undefined as boolean | null | undefined,
+					}
+				},
+			}
+
+			const wrapper = mount(TestWrapper)
+			await flushPromises()
+
+			// Le watch a { immediate: true }, donc le v-model est initialisé immédiatement
+			// Avec des champs Vuetify seulement, vFormStatus est true par défaut
+			expect(wrapper.vm.formValide).toBe(true)
+		})
+
+		it('defers to vFormStatus for multiple Vuetify fields when pristine', async () => {
+			const TestWrapper = {
+				components: { SyForm, VTextField },
+				template: `
+					<SyForm v-model="formValide" ref="form">
+						<VTextField v-model="text1" required label="Nom" />
+						<VTextField v-model="text2" required label="Prénom" />
+					</SyForm>
+				`,
+				data() {
+					return {
+						text1: '',
+						text2: '',
+						formValide: null as boolean | null,
+					}
+				},
+			}
+
+			const wrapper = mount(TestWrapper)
+			await flushPromises()
+
+			// Aucun champ custom enregistré → v-model défère à vFormStatus (true pour VForm pristine)
+			expect(wrapper.vm.formValide).toBe(true)
+		})
+
+		it('does not collapse null to false when form has pristine custom fields', async () => {
+			const TestWrapper = {
+				components: { SyForm, SyTextField },
+				template: `
+					<SyForm v-model="formValide" ref="form">
+						<SyTextField v-model="text" required label="Nom" />
+					</SyForm>
+				`,
+				data() {
+					return {
+						text: '',
+						formValide: null as boolean | null,
+					}
+				},
+			}
+
+			const wrapper = mount(TestWrapper)
+			await flushPromises()
+
+			// Important: null ne doit PAS être collapsé en false
+			expect(wrapper.vm.formValide).toBe(null)
+			expect(wrapper.vm.formValide).not.toBe(false)
+		})
+
+		it('transitions from null to true when all custom fields become valid', async () => {
+			const TestWrapper = {
+				components: { SyForm, SyTextField },
+				template: `
+					<SyForm v-model="formValide" ref="form">
+						<SyTextField v-model="text" required label="Nom" />
+					</SyForm>
+				`,
+				data() {
+					return {
+						text: '',
+						formValide: null as boolean | null,
+					}
+				},
+			}
+
+			const wrapper = mount(TestWrapper)
+			await flushPromises()
+			expect(wrapper.vm.formValide).toBe(null)
+
+			// Remplir et valider le champ
+			const textFieldInput = wrapper.findComponent(SyTextField).find('input')
+			await textFieldInput.trigger('focus')
+			await textFieldInput.setValue('John Doe')
+			await textFieldInput.trigger('blur')
+			await flushPromises()
+
+			// Tous les champs sont valides → v-model passe à true
+			expect(wrapper.vm.formValide).toBe(true)
+		})
+
+		it('transitions from null to false when a custom field is invalid', async () => {
+			const TestWrapper = {
+				components: { SyForm, SyTextField },
+				template: `
+					<SyForm v-model="formValide" ref="form">
+						<SyTextField v-model="text" required label="Nom" />
+					</SyForm>
+				`,
+				data() {
+					return {
+						text: '',
+						formValide: null as boolean | null,
+					}
+				},
+			}
+
+			const wrapper = mount(TestWrapper)
+			await flushPromises()
+			expect(wrapper.vm.formValide).toBe(null)
+
+			// Toucher le champ mais le laisser vide (invalide)
+			const textFieldInput = wrapper.findComponent(SyTextField).find('input')
+			await textFieldInput.trigger('focus')
+			await textFieldInput.trigger('blur')
+			await flushPromises()
+
+			// Champ invalide → v-model passe à false
+			expect(wrapper.vm.formValide).toBe(false)
+		})
+	})
+
 	describe('clearValidation and v-model', () => {
 		it('clearValidation() restores the v-model to null and clears displayed errors (SyAutocomplete)', async () => {
 			const wrapper = mount({
