@@ -26,7 +26,7 @@ Composables utilitaires réutilisables dans les projets consommateurs et les com
 | Fichier | Contenu |
 |---|---|
 | [vuetifyOptions](./Composables/vuetify-options.md) | Mécanisme `useCustomizableOptions` — deep merge des props Vuetify sous-jacentes |
-| [Composables utilitaires](./Composables/composables-utilitaires.md) | `useWidthable`, `useFilterable`, `useHolidayDay`, `usePagination`, `useFormFieldErrorHandling` |
+| [Composables utilitaires](./Composables/composables-utilitaires.md) | `useWidthable`, `useFilterable`, `useHolidayDay`, `usePagination` |
 
 ---
 
