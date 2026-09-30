@@ -137,12 +137,12 @@
 		outline-color: rgb(var(--v-theme-on-primary));
 	}
 
-	:deep(button:hover) {
-		background: rgba(var(--v-theme-interaction-lighten), 0.12);
+	:deep(.v-btn--variant-outlined:hover) {
+		background: rgba(var(--v-theme-interaction-lighten), 0.12) !important;
 	}
 
-	:deep(button:active) {
-		background: rgba(var(--v-theme-interaction-lighten), 0.18);
+	:deep(.v-btn--variant-outlined:active) {
+		background: rgba(var(--v-theme-interaction-lighten), 0.18) !important;
 	}
 }
 
@@ -183,12 +183,12 @@
 		outline-color: rgb(var(--v-theme-on-primary));
 	}
 
-	:deep(button:hover) {
-		background: rgba(var(--v-theme-interaction-lighten), 0.14);
+	:deep(.v-btn--variant-outlined:hover) {
+		background: rgba(var(--v-theme-interaction-lighten), 0.14) !important;
 	}
 
-	:deep(button:active) {
-		background: rgba(var(--v-theme-interaction-lighten), 0.18);
+	:deep(.v-btn--variant-outlined:active) {
+		background: rgba(var(--v-theme-interaction-lighten), 0.18) !important;
 	}
 }
 
