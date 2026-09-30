@@ -175,21 +175,21 @@
 }
 
 .notification--error {
-    background-color: rgb(var(--v-theme-error-variant-darken, var(--v-theme-error)));
-    color: rgb(var(--v-theme-on-primary));
+	background-color: rgb(var(--v-theme-error-variant-darken, var(--v-theme-error)));
+	color: rgb(var(--v-theme-on-primary));
 
-    :deep(button:focus-visible),
-    :deep(a:focus-visible) {
-        outline-color: rgb(var(--v-theme-on-primary));
-    }
+	:deep(button:focus-visible),
+	:deep(a:focus-visible) {
+		outline-color: rgb(var(--v-theme-on-primary));
+	}
 
-    :deep(button:hover) {
-        background: rgba(var(--v-theme-interaction-lighten), 0.14);
-    }
+	:deep(button:hover) {
+		background: rgba(var(--v-theme-interaction-lighten), 0.14);
+	}
 
-    :deep(button:active) {
-        background: rgba(var(--v-theme-interaction-lighten), 0.18);
-    }
+	:deep(button:active) {
+		background: rgba(var(--v-theme-interaction-lighten), 0.18);
+	}
 }
 
 .notification__message {
