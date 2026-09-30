@@ -1,10 +1,11 @@
 // @vitest-environment jsdom
 
-import { describe, it } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { describe, it, expect } from 'vitest'
+import { flushPromises, mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 import SyTextField from '../SyTextField.vue'
+import { nextTick } from 'vue'
 
 // Scénario d’accessibilité : champ texte requis avec label explicite.
 
@@ -78,15 +79,17 @@ describe('SyTextField – accessibility (axe)', () => {
 				label: 'Prix',
 				modelValue: '',
 				type: 'number',
-				customRules: [{
-					type: 'custom',
-					options: { validate: () => false, message: 'Ce champ est obligatoire' },
-				}],
+				required: true,
 				isValidateOnBlur: true,
 			},
 		})
 
-		await wrapper.find('input').trigger('blur')
+		const input = wrapper.find('input')
+		await input.trigger('focus')
+		await input.trigger('blur')
+		await flushPromises()
+		await nextTick()
+		expect(wrapper.text()).toContain('Le champ Prix est requis.')
 		const results = await axe(wrapper.element as HTMLElement)
 		assertNoA11yViolations(results, 'SyTextField – number input error state', {
 			ignoreRules: ['region'],
