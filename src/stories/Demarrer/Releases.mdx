@@ -1,6 +1,11 @@
 import { Meta, Story } from '@storybook/addon-docs/blocks';
 import * as ReleasesStories from './Releases.stories.ts';
+import '../styles/shared.css';
 
 <Meta of={ReleasesStories}/>
+
+<div className="header">
+    <h1>Releases</h1>
+</div>
 
 <Story of={ReleasesStories.List}/>

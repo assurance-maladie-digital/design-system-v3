@@ -3,30 +3,10 @@ import type { StoryObj } from '@storybook/vue3-vite'
 import { mdiGithub, mdiMenuRight } from '@mdi/js'
 
 import { version } from '../../../package.json'
-import { VBtn, VIcon, VRow, VCol, VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPanelText } from 'vuetify/components'
+import { VIcon, VRow, VCol, VExpansionPanels, VExpansionPanel, VExpansionPanelTitle, VExpansionPanelText } from 'vuetify/components'
 
 export default {
 	title: 'Démarrer/Introduction',
-}
-
-export const Header: StoryObj = {
-	render: () => {
-		return {
-			components: { VBtn, VIcon },
-			setup() {
-				return {
-					githubIcon: mdiGithub,
-					version,
-				}
-			},
-			template: `
-              <div class="d-flex justify-space-between align-center">
-                  <h1 class="title font-weight-medium mb-5">Démarrer</h1>
-              </div>
-            `,
-		}
-	},
-	tags: ['!dev'],
 }
 
 export const List: StoryObj = {
@@ -75,7 +55,7 @@ export const Intro: StoryObj = {
 				}
 			},
 			template: `
-              <div>
+              <div class="mt-4">
 				  <p style="margin-bottom:5px;">Concevoir une plateforme digitale à la CNAM</p>
 				  <p style="margin-bottom:5px;">Bienvenue dans notre guide d’aide à la conception, pensé par et pour les équipes de la CNAM</p>
 				  <p>Ce guide a été conçu pour accompagner chaque membre de l’équipe dans la création de plateformes web de qualité, alignées avec nos standards et nos valeurs. Vous y trouverez toutes les ressources essentielles pour vous guider tout au long du processus de conception, notamment :</p>
