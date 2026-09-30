@@ -34,28 +34,22 @@ const versions: Version[] = [
 	},
 	{
 		version: 'v1.2',
-		date: 'T3 2026',
-		status: 'in-progress',
+		date: 'T4 2026',
+		status: 'planned',
 		highlights: ['Validation sur les composants de formulaire', 'Montée de version Node 22 et Pnpm 10'],
 	},
 	{
 		version: 'v1.3',
-		date: 'T1 2027',
+		date: 'S1 2027',
 		status: 'planned',
-		highlights: ['Documentation des usages', 'Alignement Figma & Storybook', 'Vitest-axe sur 100 % des composants'],
-	},
-	{
-		version: 'v1.4',
-		date: 'T2 2027',
-		status: 'planned',
-		highlights: ['Thème Amelipro stabilisé (sortie de l’alpha)', '10 patterns clés dans Storybook et Figma'],
+		highlights: ['Nouveautés selon les besoins projets (Cnam / Portail Agent / Amelipro)'],
 	},
 	{
 		version: 'v2.0',
-		date: 'Cadrage T2 2027',
+		date: 'Cadrage S2 2027',
 		status: 'study',
 		major: true,
-		highlights: ['IA pour le Design System', 'Vue 4 / Vuetify 4', 'RGAA 5'],
+		highlights: ['IA pour le Design System', 'Vue 4 / Vuetify 4', 'RGAA 5', '10 patterns clés dans Storybook et Figma'],
 	},
 ]
 
@@ -134,7 +128,6 @@ const workstreamColumns: { period: string, items: Workstream[] }[] = [
 		period: 'T1 2027',
 		items: [
 			{ label: 'Stabilisation du thème Amelipro', axis: 'ds', deliverable: 'Version stabilisée' },
-			{ label: 'Évolution du catalogue', axis: 'ds', deliverable: '10 patterns clés dans Storybook et Figma' },
 			{ label: 'IA pour le Design System', axis: 'ds', deliverable: 'Règles d’usage de l’IA' },
 			{ label: 'Élargissement des pratiques d’écoconception', axis: 'eco', deliverable: 'Périmètres back, architecture et run, principes directeurs v2' },
 		],
@@ -143,6 +136,7 @@ const workstreamColumns: { period: string, items: Workstream[] }[] = [
 		period: 'T2 2027',
 		items: [
 			{ label: 'Études Synapse v2', axis: 'ds', deliverable: 'IA pour le Design System, passage à Vue 4 / Vuetify 4' },
+			{ label: 'Évolution du catalogue', axis: 'ds', deliverable: '10 patterns clés dans Storybook et Figma' },
 			{ label: 'Évolution RGAA 5', axis: 'a11y', deliverable: 'Étude d’impact RGAA 5, kit de pré-audit v2' },
 		],
 	},
