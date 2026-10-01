@@ -262,6 +262,18 @@
 	opacity: 1 !important;
 }
 
+.error-field :deep(.v-selection-control__input) {
+	color: rgb(var(--v-theme-error));
+}
+
+.warning-field :deep(.v-selection-control__input) {
+	color: rgb(var(--v-theme-on-warning-variant));
+}
+
+.success-field :deep(.v-selection-control__input) {
+	color: rgb(var(--v-theme-on-success-variant));
+}
+
 .success-field :deep(.v-messages__message) {
 	color: rgb(var(--v-theme-on-success-variant)) !important;
 }
