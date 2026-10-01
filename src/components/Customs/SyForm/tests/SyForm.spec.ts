@@ -503,9 +503,8 @@ describe('SyForm', () => {
 
 	// Contrat de compatibilité avec les composants non migrés (« legacy ») :
 	// ceux enregistrés via useValidatable() sans fournir d'état réactif `valide`
-	// (ex. les DatePickers) n'alimentent pas le v-model tri-état de SyForm. Le
-	// formulaire ne peut donc pas conclure « valide » en temps réel (reste `null`),
-	// mais la soumission — qui s'appuie sur validateOnSubmit() — fonctionne.
+	// (ex. les DatePickers) n'alimentent pas le v-model tri-état de SyForm en
+	// temps réel. Une validation explicite publie toutefois son verdict final.
 	//
 	// Ces tests VERROUILLENT ce comportement : s'ils changent (ex. migration des
 	// DatePickers vers le tri-état), c'est un choix volontaire à acter ici.
@@ -519,7 +518,7 @@ describe('SyForm', () => {
 		},
 	})
 
-	it('keeps the live tri-state v-model at null when a legacy field (no reactive `valide`) is registered, while submission still works', async () => {
+	it('publishes a valid result after submitting a legacy field without reactive `valide`', async () => {
 		const submitHandler = vi.fn()
 		const TestWrapper = {
 			components: { SyForm, LegacyField },
@@ -545,13 +544,13 @@ describe('SyForm', () => {
 		await flushPromises()
 		expect(submitHandler).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ isValid: true }))
 
-		// …et le v-model live reste `null`, même après une soumission valide
-		expect(wrapper.vm.formValide).toBe(null)
+		// La validation explicite publie son verdict dans le v-model
+		expect(wrapper.vm.formValide).toBe(true)
 
 		wrapper.unmount()
 	})
 
-	it('a legacy invalid field reports invalid on submit but the live v-model stays null', async () => {
+	it('publishes an invalid result after submitting an invalid legacy field', async () => {
 		const submitHandler = vi.fn()
 		const TestWrapper = {
 			components: { SyForm, LegacyField },
@@ -576,8 +575,8 @@ describe('SyForm', () => {
 		await flushPromises()
 		expect(submitHandler).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ isValid: false }))
 
-		// Le v-model live ne bascule pas à false (le champ legacy ne publie rien)
-		expect(wrapper.vm.formValide).toBe(null)
+		// La validation explicite publie son verdict dans le v-model
+		expect(wrapper.vm.formValide).toBe(false)
 
 		wrapper.unmount()
 	})
@@ -720,8 +719,8 @@ describe('SyForm', () => {
 		})
 	})
 
-	describe('Tri-state v-model preservation (regression tests for commit 19f88712)', () => {
-		it('preserves null state when form has only untouched custom fields', async () => {
+	describe('Initial v-model validation', () => {
+		it('sets false when a pristine custom field is initially invalid', async () => {
 			const TestWrapper = {
 				components: { SyForm, SyTextField },
 				template: `
@@ -740,8 +739,8 @@ describe('SyForm', () => {
 			const wrapper = mount(TestWrapper)
 			await flushPromises()
 
-			// Champs non touchés → état pristine/unknown → v-model reste null
-			expect(wrapper.vm.formValide).toBe(null)
+			// Le formulaire connaît la validité initiale, sans afficher l'erreur du champ pristine.
+			expect(wrapper.vm.formValide).toBe(false)
 		})
 
 		it('defers to vFormStatus when form has only Vuetify fields', async () => {
@@ -817,7 +816,7 @@ describe('SyForm', () => {
 			expect(wrapper.vm.formValide).toBe(true)
 		})
 
-		it('does not collapse null to false when form has pristine custom fields', async () => {
+		it('reports false when form has pristine invalid custom fields', async () => {
 			const TestWrapper = {
 				components: { SyForm, SyTextField },
 				template: `
@@ -836,12 +835,10 @@ describe('SyForm', () => {
 			const wrapper = mount(TestWrapper)
 			await flushPromises()
 
-			// Important: null ne doit PAS être collapsé en false
-			expect(wrapper.vm.formValide).toBe(null)
-			expect(wrapper.vm.formValide).not.toBe(false)
+			expect(wrapper.vm.formValide).toBe(false)
 		})
 
-		it('transitions from null to true when all custom fields become valid', async () => {
+		it('transitions from false to true when all custom fields become valid', async () => {
 			const TestWrapper = {
 				components: { SyForm, SyTextField },
 				template: `
@@ -859,7 +856,7 @@ describe('SyForm', () => {
 
 			const wrapper = mount(TestWrapper)
 			await flushPromises()
-			expect(wrapper.vm.formValide).toBe(null)
+			expect(wrapper.vm.formValide).toBe(false)
 
 			// Remplir et valider le champ
 			const textFieldInput = wrapper.findComponent(SyTextField).find('input')
@@ -872,7 +869,7 @@ describe('SyForm', () => {
 			expect(wrapper.vm.formValide).toBe(true)
 		})
 
-		it('transitions from null to false when a custom field is invalid', async () => {
+		it('keeps false when a custom field remains invalid', async () => {
 			const TestWrapper = {
 				components: { SyForm, SyTextField },
 				template: `
@@ -890,7 +887,7 @@ describe('SyForm', () => {
 
 			const wrapper = mount(TestWrapper)
 			await flushPromises()
-			expect(wrapper.vm.formValide).toBe(null)
+			expect(wrapper.vm.formValide).toBe(false)
 
 			// Toucher le champ mais le laisser vide (invalide)
 			const textFieldInput = wrapper.findComponent(SyTextField).find('input')
