@@ -41,7 +41,7 @@
 		'update:dialCodeModel': [value: Indicatif | string | undefined]
 	}>()
 
-	const phoneNumber = ref<string>(props.modelValue)
+	const phoneNumber = ref<string>(props.modelValue ?? '')
 	const { internalDialCode, dialCodeList } = usePhoneIndicatifs(
 		toRef(props, 'dialCodeModel'),
 		toRef(props, 'displayFormat'),

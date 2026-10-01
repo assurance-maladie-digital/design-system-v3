@@ -2,7 +2,7 @@ import { mount as baseMount, flushPromises, VueWrapper } from '@vue/test-utils'
 import PhoneField from '../PhoneField.vue'
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest'
 import { indicatifs } from '../indicatifs'
-import { nextTick, type ComponentPublicInstance } from 'vue'
+import { nextTick, ref, type ComponentPublicInstance } from 'vue'
 import { locales } from '../locales'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
@@ -1052,6 +1052,31 @@ describe('PhoneField', () => {
 		})
 
 		describe('Validation with SyForm', () => {
+			it('keeps a nullable optional phone field valid on SyForm submission', async () => {
+				const wrapper = baseMount({
+					components: { PhoneField, SyForm },
+					setup() {
+						const phone = ref<string | null>(null)
+						return { phone }
+					},
+					template: `
+						<SyForm>
+							<PhoneField v-model="phone" />
+							<button type="submit">Submit</button>
+						</SyForm>
+					`,
+				})
+
+				const syForm = wrapper.findComponent(SyForm)
+				const form = syForm.vm as unknown as { validate: () => Promise<boolean> }
+				const isValid = await form.validate()
+				await waitForDomUpdate()
+
+				expect(isValid).toBe(true)
+				expect(wrapper.find('.phone-field').classes()).not.toContain('error-field')
+				expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+			})
+
 			it('clears PhoneField and child-field errors after a form reset', async () => {
 				const wrapper = baseMount({
 					components: { PhoneField, SyForm },

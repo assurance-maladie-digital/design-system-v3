@@ -134,10 +134,6 @@
 
 	const synapseNameRules = [
 		{
-			type: 'required',
-			options: { message: 'Le nom est obligatoire', fieldIdentifier: 'Le nom' },
-		},
-		{
 			type: 'minLength',
 			options: { length: 2, message: 'Le nom doit contenir au moins 2 caractères' },
 		},
@@ -145,20 +141,12 @@
 
 	const synapseEmailRules = [
 		{
-			type: 'required',
-			options: { message: 'L’adresse e-mail est obligatoire', fieldIdentifier: 'L’adresse e-mail' },
-		},
-		{
 			type: 'email',
 			options: { message: 'L’adresse e-mail n’est pas valide', successMessage: 'Adresse e-mail valide' },
 		},
 	]
 
 	const synapseMessageRules = [
-		{
-			type: 'required',
-			options: { message: 'Le message est obligatoire', fieldIdentifier: 'Le message' },
-		},
 		{
 			type: 'maxLength',
 			options: { length: 200, message: 'Le message ne doit pas dépasser 200 caractères' },
@@ -200,20 +188,6 @@
 		},
 	]
 
-	const synapseRequiredChoice = (identifier: string) => [
-		{
-			type: 'required',
-			options: { message: `Veuillez renseigner ${identifier}`, fieldIdentifier: identifier },
-		},
-	]
-
-	const synapseConsentRules = [
-		{
-			type: 'required',
-			options: { message: 'Vous devez accepter les conditions pour soumettre le formulaire' },
-		},
-	]
-
 	// ── Règles Vuetify (rules : fonctions retournant true ou un message) ──
 
 	const vuetifyNameRules = [
@@ -249,7 +223,7 @@
 
 	const vuetifyDateRules = [
 		(value: unknown) => {
-			if (!value) return true
+			if (!value) return 'La date de consultation est obligatoire'
 			const today = new Date()
 			today.setHours(0, 0, 0, 0)
 			const input = new Date(value as string)
@@ -638,6 +612,8 @@
 											v-model="synapseEmail"
 											label="Adresse e-mail"
 											placeholder="ex : jean.dupont@exemple.fr"
+											required
+											display-asterisk
 											:custom-rules="synapseEmailRules"
 											show-success-messages
 											class="mb-4"
@@ -738,7 +714,6 @@
 											label="Type de soins"
 											:items="careTypeItems"
 											required
-											:custom-rules="synapseRequiredChoice('le type de soins')"
 											class="mb-4"
 										/>
 										<SyAutocomplete
@@ -746,7 +721,6 @@
 											label="Médecin traitant"
 											:items="doctorItems"
 											required
-											:custom-rules="synapseRequiredChoice('le médecin traitant')"
 											class="mb-4"
 										/>
 										<SelectBtnField
@@ -754,7 +728,6 @@
 											label="Mode de téléversement"
 											:items="fileTransferItems"
 											required
-											:custom-rules="synapseRequiredChoice('le mode de téléversement')"
 											class="mb-4"
 										/>
 										<SyRadioGroup
@@ -762,7 +735,6 @@
 											label="Voie de transmission"
 											:options="fileTransferOptions"
 											required
-											:custom-rules="synapseRequiredChoice('la voie de transmission')"
 											class="mb-4"
 										/>
 										<SyCheckBoxGroup
@@ -777,7 +749,6 @@
 											v-model="synapseConsent"
 											label="J’accepte que mes données soient utilisées pour le traitement de cette demande."
 											required
-											:custom-rules="synapseConsentRules"
 										/>
 									</VCardText>
 
@@ -789,7 +760,6 @@
 											color="primary"
 											variant="elevated"
 											:prepend-icon="mdiCheckCircle"
-											:disabled="synapseValidity !== true"
 										>
 											Soumettre
 										</VBtn>
@@ -1229,7 +1199,6 @@
 											color="primary"
 											variant="elevated"
 											:prepend-icon="mdiCheckCircle"
-											:disabled="vuetifyValidity !== true"
 										>
 											Soumettre
 										</VBtn>
