@@ -1,6 +1,6 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 28/09/2026
+Généré le: 01/10/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
@@ -49,7 +49,7 @@ Généré le: 28/09/2026
 | **HeaderBar** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
 | **HeaderLoading** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **HeaderNavigationBar** | ❌ Non | ❌ Oui | ❌ Manquante | ❌ Non | ❌ |
-| **HeaderToolbar** | ❌ Non | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
+| **HeaderToolbar** | ❌ Non | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
 | **LangBtn** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
 | **Logo** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **LogoBrandSection** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -82,4 +82,4 @@ Généré le: 28/09/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 61 / 77 (79.22%)**
+**Total des composants conformes : 62 / 77 (80.52%)**

@@ -1,15 +1,99 @@
-import { Meta, Story } from '@storybook/addon-docs/blocks'
-import * as HeaderToolbarStories from '../HeaderToolbar.stories';
-import '@/stories/styles/shared.css';
+import { Meta, Primary } from '@storybook/addon-docs/blocks';
+import * as HeaderToolbarStories from '../HeaderToolbar.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+  AccessibilityGuideLayout,
+  CriteriaSection,
+  CriteriaCard,
+  DemoSection,
+  BestPracticesSection,
+  ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={HeaderToolbarStories}/>
 
-<div className="header">
-  <h1>Accessibilité</h1>
-</div>
+<AccessibilityGuideLayout
+  componentName="HeaderToolbar"
+  iconSrc={AccessibilityIcon}
+  apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/menubar/"
+>
+  <div class="mt-8">
+    <p>Rapport d’audit manuel : <a href="/audits/Accordion.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
+    <p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/640" target="_blank" style={{color:'#0C41BD'}}>issue #640</a>)</p>
+  </div>
 
+  <CriteriaSection>
 
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/HeaderToolbar.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/640" target="_blank" style={{color:'#0C41BD'}}>issue #640</a>)</p>
-	</div>
+    <CriteriaCard title="Structure sémantique de la navigation">
+      <ul>
+        <li><strong>Navigation identifiée</strong> : utilisation de l'élément<code>nav</code> avec un label accessible pour identifier les zones de navigation</li><li><strong>Menus sémantiques</strong> : utilisation de<code>role="menu"</code> pour les menus déroulants</li>
+        <li><strong>Éléments de menu</strong> : utilisation de<code>role="menuitem"</code> pour les éléments interactifs des menus</li>
+        <li><strong>Page courante</strong> : utilisation de<code>aria-current="page"</code> afin d'identifier l'élément correspondant à la page courante</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Navigation au clavier">
+      <ul>
+        <li><strong>Ouverture du menu</strong> : ouverture possible avec<code>Entrée</code>, <code>Espace</code> et<code>Flèche bas</code></li><li><strong>Navigation verticale</strong> : utilisation des touches<code>Flèche haut</code> et <code>Flèche bas</code> pour parcourir les éléments du menu</li>
+        <li><strong>Navigation directe</strong> : les touches<code>Home</code> et <code>End</code> permettent d'atteindre respectivement le premier et le dernier élément</li>
+        <li><strong>Recherche par caractère</strong> : la saisie d'un caractère permet de rechercher le prochain élément correspondant</li>
+        <li><strong>Fermeture du menu</strong> : la touche<code>Escape</code> ferme le menu et restitue le focus au bouton déclencheur</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Gestion du focus">
+      <ul>
+        <li><strong>Focus initial</strong> : lors de l'ouverture d'un menu, le focus est positionné sur le premier élément disponible</li>
+        <li><strong>Navigation par focus</strong> : utilisation de<code>tabindex="0"</code> et <code>tabindex="-1"</code> pour contrôler l'élément actif</li>
+        <li><strong>Retour du focus</strong> : après fermeture avec<code>Escape</code>, le focus revient sur l'élément ayant déclenché l'ouverture du menu</li>
+        <li><strong>Focus visible</strong> : les éléments interactifs conservent un état de focus identifiable lors de la navigation au clavier</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Attributs ARIA">
+      <ul>
+        <li><strong>Label du menu gauche</strong> :<code>ariaLeftLabel</code> permet de définir le nom accessible du menu de sélection du public</li>
+        <li><strong>Label du menu droit</strong> :<code>ariaRightLabel</code> permet de définir le nom accessible du menu institutionnel</li>
+        <li><strong>État du menu</strong> :<code>aria-expanded</code> indique si le menu est ouvert ou fermé</li>
+        <li><strong>Type de menu</strong> :<code>aria-haspopup="menu"</code> indique qu'un bouton permet d'ouvrir un menu</li>
+        <li><strong>Association bouton/menu</strong> :<code>aria-controls</code> permet d'associer le bouton au menu qu'il contrôle</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Navigation responsive">
+      <ul>
+        <li><strong>Menu desktop</strong> : les menus institutionnels sont affichés directement dans l'en-tête sur les écrans suffisamment larges</li>
+        <li><strong>Menu mobile</strong> : le menu institutionnel est regroupé dans un menu burger sur les écrans mobiles</li>
+        <li><strong>Bouton burger accessible</strong> : l'état ouvert/fermé est communiqué via <code>aria-expanded</code></li>
+        <li><strong>Navigation mobile</strong> : les éléments du menu mobile conservent les rôles et mécanismes d'accessibilité du menu desktop</li>
+      </ul>
+    </CriteriaCard>
+
+  </CriteriaSection>
+
+  <DemoSection componentName="Header">
+    <Primary />
+  </DemoSection>
+
+  <BestPracticesSection>
+    <ul>
+      <li><strong>Labels explicites</strong> : utilisez<code>ariaLeftLabel</code> et <code>ariaRightLabel</code> avec des intitulés permettant d'identifier clairement les différentes zones de navigation</li>
+      <li><strong>Page courante</strong> : utilisez<code>currentPageIndex</code> afin d'indiquer l'élément correspondant à la page actuellement consultée</li>
+      <li><strong>Intitulés descriptifs</strong> : utilisez des valeurs explicites pour les propriétés <code>title</code> et<code>text</code> des éléments de navigation</li>
+      <li><strong>Navigation clavier</strong> : conservez le comportement clavier natif du composant et évitez de bloquer les événements<code>Escape</code>, <code>Enter</code><code>Space</code> et les touches directionnelles</li>
+      <li><strong>Liens externes</strong> : utilisez<code>openInNewTab</code> lorsqu'un lien doit être ouvert dans un nouvel onglet</li>
+      <li><strong>Menus cohérents</strong> : conservez une organisation et un ordre cohérents entre les menus desktop et mobile</li>
+    </ul>
+  </BestPracticesSection>
+
+  <ResourcesSection>
+    <ul>
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/menubar/" target="_blank" rel="noopener noreferrer">Guide des pratiques WAI-ARIA : Menubar</a></li>
+      <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/menu/" target="_blank" rel="noopener noreferrer">Guide des pratiques WAI-ARIA : Menu</a></li>
+      <li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
+      <li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/" target="_blank" rel="noopener noreferrer">RGAA - Critères et tests</a></li>
+      <li><a href="https://developer.mozilla.org/fr/docs/Web/Accessibility/ARIA/Roles/menu_role" target="_blank" rel="noopener noreferrer">MDN : rôle ARIA menu</a></li>
+    </ul>
+  </ResourcesSection>
+
+</AccessibilityGuideLayout>
