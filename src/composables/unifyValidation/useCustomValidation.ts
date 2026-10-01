@@ -1,6 +1,6 @@
 import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 import { useValidatable } from '@/composables/validation/useValidatable'
-import { computed, getCurrentInstance, nextTick, onBeforeUnmount, reactive, ref, watch } from 'vue'
+import { computed, getCurrentInstance, nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import type { Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import { locales } from './locales'
@@ -43,6 +43,9 @@ export function useCustomValidation(
 	// Champ jamais encore validé : permet à `useValidatable` de rapporter `valide=null`
 	// (au lieu de `true`) tant qu'aucune validation réelle n'a eu lieu.
 	const isPristine = ref(true)
+	// Résultat de la validation silencieuse au montage (n'écrit jamais dans errors/warnings/
+	// successes, donc n'affiche jamais de message) : seule source de vérité pour `valide` tant que isPristine.
+	const silentValide = ref<boolean | null>(null)
 
 	const validatorOptions = reactive({
 		showSuccessMessages: computed(() => showSuccessMessages.value),
@@ -152,6 +155,21 @@ export function useCustomValidation(
 	}
 	const validate = () => validateValue(modelValue.value)
 
+	// Évalue la validité réelle sans jamais écrire dans errors/warnings/successes, pour que
+	// `valide` sorte de `null` dès le montage sans faire apparaître de message prématuré.
+	async function validateSilently() {
+		if (readonly?.value || disabled?.value || disableErrorHandling.value) return
+
+		const token = currentValidationToken
+		const result = options.useVuetifyValidation?.value
+			? await validateVuetifyValue(modelValue.value, options.rules?.value ?? [], token)
+			: await validator.validateField(modelValue.value, customRules?.value, customWarningRules?.value, customSuccessRules?.value)
+
+		if (token !== currentValidationToken || !isPristine.value) return
+
+		silentValide.value = result.state.errors.length === 0
+	}
+
 	function clearValidation() {
 		currentValidationToken++
 		pendingValidationToken = undefined
@@ -160,14 +178,17 @@ export function useCustomValidation(
 		warnings.value = []
 		successes.value = []
 		hasSuccess.value = false
-		// Repasser en état vierge : sans ça, un champ précédemment invalidé
-		// (isPristine=false) rapporterait `valide=true` après nettoyage au lieu
-		// de `null`, alors qu'il n'a pas été revalidé (cf. le reset de useValidatable).
 		isPristine.value = true
+		silentValide.value = null
 	}
 
 	if (getCurrentInstance()) {
 		onBeforeUnmount(clearValidation)
+	}
+	if (getCurrentInstance() && options.reactiveValidation !== false) {
+		onMounted(() => {
+			void validateSilently()
+		})
 	}
 	watch([() => readonly?.value, () => disabled?.value, disableErrorHandling], () => {
 		if (readonly?.value || disabled?.value || disableErrorHandling.value) clearValidation()
@@ -187,7 +208,9 @@ export function useCustomValidation(
 
 	const reset = options.formRegistration?.reset ?? (() => {
 		skipValidationForReset = true
+		clearValidation()
 		modelValue.value = undefined
+		void validateSilently()
 		// Filet de sécurité : si la valeur était déjà `undefined`, le watch ne se
 		// déclenche pas — on lève la garde au tick suivant pour ne pas ignorer une
 		// modification utilisateur ultérieure.
@@ -201,7 +224,7 @@ export function useCustomValidation(
 			validateOnSubmit,
 			options.formRegistration?.clearValidation ?? clearValidation,
 			reset,
-			computed(() => isPristine.value ? null : errors.value.length < 1),
+			computed(() => isPristine.value ? silentValide.value : errors.value.length < 1),
 			computed(() => !disableErrorHandling.value || errors.value.length > 0),
 		)
 	}
@@ -246,5 +269,5 @@ export function useCustomValidation(
 		}, { flush: 'sync' })
 	}
 
-	return { validate, validateValue, hasSuccess, clearValidation }
+	return { validate, validateValue, hasSuccess, clearValidation, reset, isPristine }
 }

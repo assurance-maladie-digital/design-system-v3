@@ -1035,6 +1035,11 @@ describe('useCustomValidation', () => {
 					args.focused,
 					args.isValidateOnBlur,
 					args.disableErrorHandling,
+					undefined,
+					undefined,
+					// Désactive la validation silencieuse au montage : elle consommerait un
+					// premier appel de la règle custom et décalerait les indices de `resolvers`.
+					{ reactiveValidation: false },
 				),
 			)
 

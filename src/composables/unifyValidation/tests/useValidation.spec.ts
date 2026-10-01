@@ -1638,7 +1638,9 @@ describe('useValidation (unifyValidation)', () => {
 					},
 				}]),
 			})
-			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+			// Désactive la validation silencieuse au montage : elle consommerait un premier
+			// appel de la règle custom et décalerait les indices de `resolvers`.
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0], { reactiveValidation: false }))
 
 			// Trigger first validation with modelValue 'a'
 			const p1 = result.validate()

@@ -496,15 +496,18 @@ describe('SyForm', () => {
 		await nextTick()
 		await flushPromises()
 
-		// Le reset doit ramener le champ à un état neutre/vierge, pas le ré-invalider
-		expect(wrapper.vm.formValide).toBe(null)
+		// Le reset doit ramener le champ à un état neutre/vierge, pas le ré-invalider :
+		// comme un champ Vuetify qui ne remonte aucune erreur, le formulaire redevient valide.
+		expect(wrapper.vm.formValide).toBe(true)
 		expect(wrapper.findComponent(SyTextField).text()).not.toContain('Le champ est obligatoire')
 	})
 
 	// Contrat de compatibilité avec les composants non migrés (« legacy ») :
 	// ceux enregistrés via useValidatable() sans fournir d'état réactif `valide`
-	// (ex. les DatePickers) n'alimentent pas le v-model tri-état de SyForm en
-	// temps réel. Une validation explicite publie toutefois son verdict final.
+	// (ex. les DatePickers) exposent `valide === undefined`. Comportement aligné
+	// sur Vuetify : un champ qui ne remonte pas d'erreur réactive est considéré
+	// valide par défaut, y compris après une soumission (validateOnSubmit() n'écrit
+	// pas dans `valide`).
 	//
 	// Ces tests VERROUILLENT ce comportement : s'ils changent (ex. migration des
 	// DatePickers vers le tri-état), c'est un choix volontaire à acter ici.
@@ -536,21 +539,19 @@ describe('SyForm', () => {
 		const wrapper = mount(TestWrapper)
 		await flushPromises()
 
-		// Un champ sans `valide` réactif → SyForm ne peut pas conclure « valide »
-		expect(wrapper.vm.formValide).toBe(null)
+		// Un champ sans `valide` réactif ne remonte pas d'erreur → considéré valide
+		expect(wrapper.vm.formValide).toBe(true)
 
 		// La soumission fonctionne malgré tout (via validateOnSubmit)
 		await wrapper.find('form').trigger('submit.prevent')
 		await flushPromises()
 		expect(submitHandler).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ isValid: true }))
-
-		// La validation explicite publie son verdict dans le v-model
 		expect(wrapper.vm.formValide).toBe(true)
 
 		wrapper.unmount()
 	})
 
-	it('publishes an invalid result after submitting an invalid legacy field', async () => {
+	it('publishes an invalid submit event for an invalid legacy field without flipping the v-model', async () => {
 		const submitHandler = vi.fn()
 		const TestWrapper = {
 			components: { SyForm, LegacyField },
@@ -568,20 +569,21 @@ describe('SyForm', () => {
 		const wrapper = mount(TestWrapper)
 		await flushPromises()
 
-		// Pas d'état live : « inconnu », pas « invalide »
-		expect(wrapper.vm.formValide).toBe(null)
+		// Pas d'état réactif → considéré valide, comme un champ Vuetify jamais validé
+		expect(wrapper.vm.formValide).toBe(true)
 
 		await wrapper.find('form').trigger('submit.prevent')
 		await flushPromises()
+		// Le verdict de soumission est correct (validateOnSubmit() est bien appelé)…
 		expect(submitHandler).toHaveBeenCalledExactlyOnceWith(expect.objectContaining({ isValid: false }))
-
-		// La validation explicite publie son verdict dans le v-model
-		expect(wrapper.vm.formValide).toBe(false)
+		// …mais comme le champ legacy n'écrit jamais dans un état `valide` réactif,
+		// le v-model du formulaire ne reflète pas ce verdict (contrat volontaire).
+		expect(wrapper.vm.formValide).toBe(true)
 
 		wrapper.unmount()
 	})
 
-	it('a fully valid migrated field cannot bring the tri-state v-model to true while a legacy field coexists', async () => {
+	it('a legacy field without reactive `valide` does not block the v-model from becoming true', async () => {
 		const TestWrapper = {
 			components: { SyForm, SyTextField, LegacyField },
 			template: `
@@ -605,8 +607,8 @@ describe('SyForm', () => {
 		await textFieldInput.trigger('blur')
 		await flushPromises()
 
-		// …mais le formulaire reste `null` car le champ legacy est « inconnu »
-		expect(wrapper.vm.formValide).toBe(null)
+		// …et le champ legacy, n'ayant jamais remonté d'erreur, ne bloque pas le formulaire
+		expect(wrapper.vm.formValide).toBe(true)
 
 		wrapper.unmount()
 	})
@@ -901,7 +903,7 @@ describe('SyForm', () => {
 	})
 
 	describe('clearValidation and v-model', () => {
-		it('clearValidation() restores the v-model to null and clears displayed errors (SyAutocomplete)', async () => {
+		it('clearValidation() restores the v-model to true and clears displayed errors (SyAutocomplete)', async () => {
 			const wrapper = mount({
 				components: { SyForm, SyAutocomplete },
 				template: `
@@ -928,13 +930,13 @@ describe('SyForm', () => {
 			expect(wrapper.vm.formValid).toBe(false)
 			expect(wrapper.findAll('.v-messages__message').length).toBeGreaterThan(0)
 
-			// clearValidation : les erreurs disparaissent et le v-model revient à null
+			// clearValidation : les erreurs disparaissent et le v-model redevient valide
 			const formRef = wrapper.vm.$refs.form as InstanceType<typeof SyForm>
 			formRef.clearValidation()
 			await flushPromises()
 			await nextTick()
 			expect(wrapper.findAll('.v-messages__message').length).toBe(0)
-			expect(wrapper.vm.formValid).toBe(null)
+			expect(wrapper.vm.formValid).toBe(true)
 
 			wrapper.unmount()
 		})
