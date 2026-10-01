@@ -589,6 +589,12 @@
 									</VCardItem>
 									<VDivider />
 
+									<VCardText>
+										<p class="text-caption text-medium-emphasis">
+											Les champs suivis d’un astérisque (*) sont obligatoires.
+										</p>
+									</VCardText>
+
 									<!-- Champs texte -->
 									<VCardText>
 										<p class="text-caption font-weight-medium mb-2">
@@ -651,11 +657,13 @@
 											v-model="synapsePhone"
 											label="Numéro de téléphone"
 											required
+											display-asterisk
 											class="mb-4"
 										/>
 										<NirField
 											v-model="synapseNir"
 											required
+											display-asterisk
 											number-label="Numéro de sécurité sociale"
 											:display-key="true"
 										/>
@@ -678,6 +686,7 @@
 											label="Date de consultation"
 											placeholder="JJ/MM/AAAA"
 											required
+											display-asterisk
 											:custom-rules="synapseDateRules"
 											:display-today-button="true"
 											class="mb-4"
@@ -686,6 +695,7 @@
 											v-model="synapseProjectMonth"
 											label="Début du projet"
 											required
+											display-asterisk
 											:custom-rules="synapseMonthRules"
 											class="mb-4"
 										/>
@@ -714,6 +724,7 @@
 											label="Type de soins"
 											:items="careTypeItems"
 											required
+											display-asterisk
 											class="mb-4"
 										/>
 										<SyAutocomplete
@@ -721,6 +732,7 @@
 											label="Médecin traitant"
 											:items="doctorItems"
 											required
+											display-asterisk
 											class="mb-4"
 										/>
 										<SelectBtnField
@@ -735,6 +747,7 @@
 											label="Voie de transmission"
 											:options="fileTransferOptions"
 											required
+											display-asterisk
 											class="mb-4"
 										/>
 										<SyCheckBoxGroup
@@ -743,12 +756,14 @@
 											:options="notificationOptions"
 											multiple
 											required
+											display-asterisk
 											class="mb-4"
 										/>
 										<SyCheckbox
 											v-model="synapseConsent"
 											label="J’accepte que mes données soient utilisées pour le traitement de cette demande."
 											required
+											display-asterisk
 										/>
 									</VCardText>
 
@@ -980,6 +995,12 @@
 									</VCardItem>
 									<VDivider />
 
+									<VCardText>
+										<p class="text-caption text-medium-emphasis">
+											Les champs suivis d’un astérisque (*) sont obligatoires.
+										</p>
+									</VCardText>
+
 									<!-- Champs texte -->
 									<VCardText>
 										<p class="text-caption font-weight-medium mb-2">
@@ -992,24 +1013,27 @@
 										</p>
 										<SyTextField
 											v-model="vuetifyLastName"
-											label="Nom"
+											label="Nom *"
 											placeholder="Ex : Dupont"
+											aria-required="true"
 											use-vuetify-validation
 											:rules="vuetifyNameRules"
 											class="mb-4"
 										/>
 										<SyTextField
 											v-model="vuetifyEmail"
-											label="Adresse e-mail"
+											label="Adresse e-mail *"
 											placeholder="ex : jean.dupont@exemple.fr"
+											aria-required="true"
 											use-vuetify-validation
 											:rules="vuetifyEmailRules"
 											class="mb-4"
 										/>
 										<SyTextArea
 											v-model="vuetifyMessage"
-											label="Message"
+											label="Message *"
 											placeholder="Décrivez votre demande"
+											aria-required="true"
 											use-vuetify-validation
 											:rules="vuetifyMessageRules"
 										/>
@@ -1036,15 +1060,17 @@
 										/>
 										<PhoneField
 											v-model="vuetifyPhone"
-											label="Numéro de téléphone"
+											label="Numéro de téléphone *"
+											aria-required="true"
 											use-vuetify-validation
 											:rules="vuetifyPhoneRules"
 											class="mb-4"
 										/>
 										<NirField
 											v-model="vuetifyNir"
+											aria-required="true"
 											use-vuetify-validation
-											number-label="Numéro de sécurité sociale"
+											number-label="Numéro de sécurité sociale *"
 											:display-key="true"
 											:number-rules="vuetifyNirNumberRules"
 											:key-rules="vuetifyNirKeyRules"
@@ -1065,9 +1091,9 @@
 										</p>
 										<DatePicker
 											v-model="vuetifyBirthDate"
-											label="Date de consultation"
+											label="Date de consultation *"
 											placeholder="JJ/MM/AAAA"
-											required
+											aria-required="true"
 											use-vuetify-validation
 											:rules="vuetifyDateRules"
 											:display-today-button="true"
@@ -1075,7 +1101,8 @@
 										/>
 										<MonthPicker
 											v-model="vuetifyProjectMonth"
-											label="Début du projet"
+											label="Début du projet *"
+											aria-required="true"
 											use-vuetify-validation
 											:rules="vuetifyMonthRules"
 											class="mb-4"
@@ -1088,9 +1115,10 @@
 											>
 												<VTextField
 													v-model="vuetifyPeriodStart"
-													label="Date d’entrée (VTextField)"
+													label="Date d’entrée (VTextField) *"
 													placeholder="JJ/MM/AAAA"
 													variant="outlined"
+													aria-required="true"
 													:rules="vuetifyDatePatternRules"
 												/>
 											</VCol>
@@ -1100,9 +1128,10 @@
 											>
 												<VTextField
 													v-model="vuetifyPeriodEnd"
-													label="Date de sortie (VTextField)"
+													label="Date de sortie (VTextField) *"
 													placeholder="JJ/MM/AAAA"
 													variant="outlined"
+													aria-required="true"
 													:rules="vuetifyDatePatternRules"
 												/>
 											</VCol>
@@ -1123,16 +1152,18 @@
 										</p>
 										<SySelect
 											v-model="vuetifyCareType"
-											label="Type de soins"
+											label="Type de soins *"
 											:items="careTypeItems"
+											aria-required="true"
 											use-vuetify-validation
 											:rules="vuetifyRequiredChoice('Veuillez sélectionner un type de soins')"
 											class="mb-4"
 										/>
 										<SyAutocomplete
 											v-model="vuetifyDoctor"
-											label="Médecin traitant"
+											label="Médecin traitant *"
 											:items="doctorItems"
+											aria-required="true"
 											use-vuetify-validation
 											:rules="vuetifyRequiredChoice('Veuillez sélectionner un médecin traitant')"
 											class="mb-4"
@@ -1140,52 +1171,58 @@
 										<!-- Composants Vuetify natifs -->
 										<VSelect
 											v-model="vuetifyContactChannel"
-											label="Canal de contact préféré (VSelect)"
+											label="Canal de contact préféré (VSelect) *"
 											:items="contactChannelItems"
 											item-title="text"
 											item-value="value"
 											variant="outlined"
+											aria-required="true"
 											:rules="vuetifyRequiredChoice('Veuillez sélectionner un canal de contact')"
 											class="mb-4"
 										/>
 										<VSelect
 											v-model="vuetifyBillingFormat"
-											label="Format de facturation (VSelect)"
+											label="Format de facturation (VSelect) *"
 											:items="billingFormatItems"
 											item-title="text"
 											item-value="value"
 											variant="outlined"
+											aria-required="true"
 											:rules="vuetifyRequiredChoice('Veuillez sélectionner un format de facturation')"
 											class="mb-4"
 										/>
 										<SelectBtnField
 											v-model="vuetifyFileTransfer"
-											label="Mode de téléversement"
+											label="Mode de téléversement *"
 											:items="fileTransferItems"
+											aria-required="true"
 											use-vuetify-validation
 											:rules="vuetifyRequiredChoice('Veuillez sélectionner un mode de téléversement')"
 											class="mb-4"
 										/>
 										<SyRadioGroup
 											v-model="vuetifyTransmissionWay"
-											label="Voie de transmission"
+											label="Voie de transmission *"
 											:options="fileTransferOptions"
+											aria-required="true"
 											use-vuetify-validation
 											:rules="vuetifyRequiredChoice('Veuillez sélectionner une voie de transmission')"
 											class="mb-4"
 										/>
 										<SyCheckBoxGroup
 											v-model="vuetifyNotifications"
-											label="Notifications souhaitées"
+											label="Notifications souhaitées *"
 											:options="notificationOptions"
 											multiple
+											aria-required="true"
 											use-vuetify-validation
 											:rules="vuetifyRequiredChoice('Veuillez sélectionner au moins une notification')"
 											class="mb-4"
 										/>
 										<SyCheckbox
 											v-model="vuetifyConsent"
-											label="J’accepte que mes données soient utilisées pour le traitement de cette demande."
+											label="J’accepte que mes données soient utilisées pour le traitement de cette demande. *"
+											aria-required="true"
 											use-vuetify-validation
 											:rules="vuetifyConsentRules"
 										/>
