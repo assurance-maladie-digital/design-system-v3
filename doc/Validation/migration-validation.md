@@ -15,10 +15,14 @@ import {
 
 Un composant migré :
 
-1. importe depuis `unifyValidation`
+1. importe uniquement le point d'entrée `unifyValidation/useValidation`
 2. passe des refs au composable unifié
 3. consomme `errors`, `warnings`, `successes`, `hasError`, `hasWarning`, `hasSuccess`
-4. ne gère plus un état de validation parallèle
+4. laisse `useValidation` l'enregistrer automatiquement auprès de `SyForm`
+5. ne gère plus un état de validation parallèle
+
+Il ne faut plus appeler directement `useCustomValidation`, `useVuetifyValidation`, le
+moteur legacy ou `useValidatable` depuis un composant migré.
 
 ---
 
@@ -29,7 +33,7 @@ Certains composants ont une logique métier qui ne doit pas être poussée dans 
 Dans ce cas, la migration correcte n'est pas de supprimer toute couche intermédiaire, mais de :
 
 1. garder un bridge dédié au domaine
-2. faire reposer ce bridge sur le système unifié
+2. faire appeler `useValidation` par ce bridge
 3. limiter ce bridge à la logique métier résiduelle
 
 ### Exemple : DatePicker
@@ -46,6 +50,8 @@ Ce bridge doit rester mince et ne porter que :
 - orchestration `SyForm`
 
 Il ne doit pas recréer un moteur de validation générique.
+Son appel direct actuel à une couche interne est une exception transitoire à supprimer, pas
+un modèle d'intégration.
 
 ---
 
@@ -74,10 +80,19 @@ Utiliser uniquement les sorties du système unifié :
 - `validate`
 - `clearValidation`
 
+L'appel enregistre automatiquement le champ auprès du `SyForm` parent. Ne pas ajouter
+`useValidatable` en complément.
+
 ### 3. Supprimer les états parallèles
 
 Retirer les anciennes variables d'état du composant quand elles doublonnent le moteur unifié.
 
-### 4. Garder un bridge seulement si nécessaire
+### 4. Supprimer l'enregistrement manuel
+
+Retirer tout appel direct à `useValidatable`. Pour un composant composite, utiliser
+exceptionnellement `{ registerWithForm: false }` sur le champ interne qui ne doit pas être
+enregistré séparément.
+
+### 5. Garder un bridge seulement si nécessaire
 
 Créer ou conserver un bridge uniquement si le composant porte une logique métier transversale qui ne doit pas être absorbée par `useValidation`.

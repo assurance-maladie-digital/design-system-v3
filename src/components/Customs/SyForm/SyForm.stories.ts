@@ -164,7 +164,7 @@ export const CustomValidation: Story = {
 			const username = ref('')
 			const password = ref('')
 			const confirmPassword = ref('')
-			// v-model tri-état : true (valide) | false (invalide) | null (non évalué)
+			// v-model tri-état : true (toutes les règles passent) | false (invalide) | null (aucun statut disponible)
 			const isFormValid = ref<boolean | null>(null)
 			const form = ref<{ validate: () => Promise<boolean> } | null>(null)
 
@@ -192,7 +192,7 @@ export const CustomValidation: Story = {
 			}
 
 			const validityLabel = computed(() =>
-				isFormValid.value === null ? 'non évalué' : (isFormValid.value ? 'valide' : 'invalide'),
+				isFormValid.value === null ? 'statut indisponible' : (isFormValid.value ? 'valide' : 'invalide'),
 			)
 
 			return { username, password, confirmPassword, isFormValid, validityLabel, passwordRules, confirmPasswordRules, form, onSubmit, validateManually, args }
@@ -233,8 +233,8 @@ correspondance des deux mots de passe (validation **inter-champs**).
 - **S'inscrire** (\`type="submit"\`) déclenche la validation de tout le formulaire (comportement
   par défaut), puis émet \`submit\` avec \`{ isValid }\`.
 - **Valider manuellement** appelle la méthode exposée \`form.validate()\`.
-- Le \`v-model\` reflète en direct la validité globale (\`true\` / \`false\` / \`null\` tant qu'un champ
-  n'a pas été évalué).
+- Le \`v-model\` reflète en direct la validité globale (\`true\` / \`false\` / \`null\` lorsqu'aucun
+	statut de champ n'est disponible).
 				`,
 			},
 		},
@@ -249,8 +249,8 @@ correspondance des deux mots de passe (validation **inter-champs**).
       <SyTextField v-model="password" label="Mot de passe" type="password" :custom-rules="passwordRules" />
       <SyTextField v-model="confirmPassword" label="Confirmer le mot de passe" type="password" :custom-rules="confirmPasswordRules" />
 
-      <!-- Validité globale exposée par le v-model : 'valide' | 'invalide' | 'non évalué' -->
-      <p>Validité du formulaire : {{ isFormValid === null ? 'non évalué' : (isFormValid ? 'valide' : 'invalide') }}</p>
+	<!-- Validité globale exposée par le v-model -->
+	<p>Validité du formulaire : {{ isFormValid === null ? 'statut indisponible' : (isFormValid ? 'valide' : 'invalide') }}</p>
 
       <div class="d-flex gap-3">
         <v-btn type="submit" color="primary">S'inscrire</v-btn>
@@ -271,7 +271,7 @@ import { SyForm, SyTextField } from '@cnamts/synapse'
 const username = ref('')
 const password = ref('')
 const confirmPassword = ref('')
-// v-model tri-état : true (valide) | false (invalide) | null (non évalué)
+// v-model tri-état : true (toutes les règles passent) | false (invalide) | null (aucun statut disponible)
 const isFormValid = ref<boolean | null>(null)
 const form = ref(null)
 

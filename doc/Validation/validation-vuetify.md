@@ -3,11 +3,15 @@
 
 Le système unifié permet aussi d'utiliser le mode de validation natif Vuetify.
 
-Le point d'entrée reste :
+L'unique point d'entrée reste :
 
 - [`src/composables/unifyValidation/useValidation.ts`](src/composables/unifyValidation/useValidation.ts)
 
 avec `useVuetifyValidation: true`.
+
+Le composant ne doit pas appeler directement le composable interne
+`useVuetifyValidation`. Le point d'entrée unifié sélectionne ce moteur, normalise son état
+et assure l'enregistrement auprès de `SyForm`.
 
 ---
 
