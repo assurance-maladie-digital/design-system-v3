@@ -134,8 +134,8 @@ export function useFormValidation() {
 	 * @param vFormStatus - Statut de validation du VForm Vuetify
 	 * @returns Statut global du formulaire (boolean | null)
 	 */
-	const getFormValue = (vFormStatus: boolean | null): boolean | null => {
-		if (vFormStatus === false || customComponentsValide.value === false) {
+	const getFormValue = (vFormStatus: boolean | null | undefined): boolean | null => {
+		if (!vFormStatus || customComponentsValide.value === false) {
 			return false
 		}
 		if (validatableComponents.value.length === 0) {

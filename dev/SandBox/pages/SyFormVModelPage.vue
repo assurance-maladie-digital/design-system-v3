@@ -437,11 +437,6 @@
 										</VChip>
 									</VSheet>
 
-									<p class="text-caption text-medium-emphasis mb-4">
-										Tri-état attendu : <code>null</code> tant qu’au moins un champ est vierge,
-										<code>false</code> si un champ est invalide, <code>true</code> lorsque tout est validé.
-									</p>
-
 									<p class="text-caption font-weight-medium mb-2">
 										Écrire le model depuis le parent (two-way binding)
 									</p>
@@ -842,11 +837,6 @@
 											{{ validityLabel(vuetifyValidity).hint }}
 										</VChip>
 									</VSheet>
-
-									<p class="text-caption text-medium-emphasis mb-4">
-										Tri-état attendu : <code>null</code> tant qu’au moins un champ est vierge,
-										<code>false</code> si un champ est invalide, <code>true</code> lorsque tout est validé.
-									</p>
 
 									<p class="text-caption font-weight-medium mb-2">
 										Écrire le model depuis le parent (two-way binding)
