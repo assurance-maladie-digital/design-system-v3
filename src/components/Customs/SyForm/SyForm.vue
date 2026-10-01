@@ -84,16 +84,19 @@
 </script>
 
 <template>
-	<VForm
-		ref="form"
-		v-model="vFormStatus"
-		@submit.prevent="handleSubmit"
-		@reset="handleReset"
-	>
-		<slot
-			:validate="validate"
-			:reset="reset"
-			:clear="clearValidation"
-		/>
-	</VForm>
+	<div>
+		{{ vFormStatus === null ? 'En attente' : vFormStatus ? 'Valide' : 'Invalide' }}
+		<VForm
+			ref="form"
+			v-model="vFormStatus"
+			@submit.prevent="handleSubmit"
+			@reset="handleReset"
+		>
+			<slot
+				:validate="validate"
+				:reset="reset"
+				:clear="clearValidation"
+			/>
+		</VForm>
+	</div>
 </template>
