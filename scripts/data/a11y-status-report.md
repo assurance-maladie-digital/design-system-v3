@@ -72,7 +72,7 @@ Généré le: 28/09/2026
 | **StatusPage** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **SubHeader** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **SyAlert** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **SyBtnMenu** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
+| **SyBtnMenu** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **SyHeading** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **SyTextArea** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Tables/SyServerTable** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
