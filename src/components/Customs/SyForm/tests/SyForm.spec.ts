@@ -651,6 +651,31 @@ describe('SyForm', () => {
 			wrapper.unmount()
 		})
 
+		it('passe le v-model à true au submit quand un DatePicker optionnel est vide', async () => {
+			const wrapper = mount({
+				components: { SyForm, DatePicker },
+				template: `
+					<SyForm v-model="isValid">
+						<DatePicker v-model="date" label="Date de naissance" format="DD/MM/YYYY" />
+					</SyForm>
+				`,
+				data: () => ({ isValid: null as boolean | null, date: '' }),
+				global: {
+					stubs: {
+						VDatePicker: { template: '<div class="v-date-picker-mock"></div>' },
+						VMenu: { template: '<div class="v-menu-mock"><slot name="activator"></slot><slot></slot></div>' },
+					},
+				},
+			})
+
+			await wrapper.find('form').trigger('submit')
+			await flushPromises()
+
+			expect(wrapper.vm.isValid).toBe(true)
+
+			wrapper.unmount()
+		})
+
 		it('SyForm.reset() resets DatePicker in Calendar mode', async () => {
 			const wrapper = mount({
 				components: { SyForm, DatePicker },
