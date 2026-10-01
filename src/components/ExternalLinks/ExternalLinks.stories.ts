@@ -36,6 +36,11 @@ const meta = {
 			},
 			description: 'List des liens',
 		},
+		'newWindowText': {
+			control: 'text',
+			description: 'Annonce accessible ajoutée aux liens ouverts dans une nouvelle fenêtre.',
+			table: { defaultValue: { summary: 'nouvelle fenêtre' } },
+		},
 		'btnText': {
 			control: {
 				type: 'text',
@@ -547,5 +552,12 @@ const arrowIcon = mdiArrowTopRight
 `,
 			},
 		],
+	},
+}
+
+export const CustomNewWindowText: Story = {
+	args: {
+		...Default.args,
+		newWindowText: 'ouverture dans un nouvel onglet',
 	},
 }

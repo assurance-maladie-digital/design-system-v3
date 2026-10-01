@@ -55,7 +55,7 @@ import {
 <BestPracticesSection>
     <ul>
         <li>Donner à chaque lien un texte clair qui décrit sa destination.</li>
-        <li>Les liens s’ouvrent par défaut dans un nouvel onglet. Prévenir l’utilisateur de ce changement dans les libellés fournis.</li>
+        <li>Les liens s’ouvrent par défaut dans un nouvel onglet. Le composant ajoute « nouvelle fenêtre » à leur texte accessible lorsque la cible vaut <code>_blank</code>. Cette annonce est personnalisable avec <code>newWindowText</code>.</li>
         <li>Après une personnalisation des couleurs, vérifier le contraste des textes et la visibilité du focus.</li>
         <li>Les tests axe couvrent le menu fermé, ouvert et vide. Ils ne remplacent pas les vérifications au clavier et au lecteur d’écran.</li>
     </ul>

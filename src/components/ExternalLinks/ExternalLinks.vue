@@ -24,6 +24,7 @@
 		nudgeBottom?: number | string
 		fixed?: boolean
 		ariaLabel?: string
+		newWindowText?: string
 	}>(), {
 		position: 'top left',
 		btnText: locales.btnText,
@@ -31,6 +32,7 @@
 		nudgeBottom: 0,
 		fixed: false,
 		ariaLabel: locales.ariaLabel,
+		newWindowText: locales.newWindowText,
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -150,6 +152,12 @@
 						<div class="w-100 h-100 d-flex justify-space-between align-center">
 							<div v-bind="options.listItemTitle">
 								{{ item.text }}
+								<span
+									v-if="options.listItem.target === '_blank'"
+									class="d-sr-only"
+								>
+									— {{ newWindowText }}
+								</span>
 							</div>
 
 							<slot name="link-icon">

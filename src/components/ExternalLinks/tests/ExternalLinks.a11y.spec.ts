@@ -51,3 +51,33 @@ describe('ExternalLinks – menu accessibility', () => {
 		}
 	})
 })
+
+describe('ExternalLinks – new window announcement', () => {
+	it.each([false, true])('announces the new window with a custom icon: %s', async (customIcon) => {
+		const wrapper = mount(ExternalLinks, {
+			props: { items: [{ text: 'ameli.fr', href: 'https://ameli.fr' }] },
+			slots: customIcon ? { 'link-icon': '<span aria-hidden="true">↗</span>' } : {},
+		})
+		try {
+			await wrapper.get('.sy-external-links-btn').trigger('click')
+			const link = wrapper.get('a[href="https://ameli.fr"]')
+			expect(link.attributes('target')).toBe('_blank')
+			expect(link.text()).toContain('ameli.fr')
+			expect(link.get('.d-sr-only').text()).toBe('— nouvelle fenêtre')
+			expect(link.get('.d-sr-only').attributes('aria-hidden')).toBeUndefined()
+
+			await wrapper.setProps({ newWindowText: 'opens in a new window' })
+			expect(link.get('.d-sr-only').text()).toBe('— opens in a new window')
+
+			await wrapper.setProps({ vuetifyOptions: { listItem: { target: '_self' } } })
+			expect(link.attributes('target')).toBe('_self')
+			expect(link.find('.d-sr-only').exists()).toBe(false)
+
+			await wrapper.setProps({ vuetifyOptions: { listItem: { target: '_blank' } } })
+			expect(link.get('.d-sr-only').text()).toBe('— opens in a new window')
+		}
+		finally {
+			wrapper.unmount()
+		}
+	})
+})
