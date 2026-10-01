@@ -1,0 +1,22 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+import * as ProcessStories from './Process.stories.ts';
+import '../styles/shared.css';
+
+<Meta of={ProcessStories}/>
+
+<div className="header">
+    <h1>Process</h1>
+</div>
+
+Cette page présente le parcours suivi par chaque ticket ouvert sur le Design System, de sa réception jusqu'à son entrée dans le backlog de l'équipe du Studio Design.<br/>
+Pour ouvrir un ticket, consultez les pages [Signaler une anomalie](/docs/démarrer-signaler-une-anomalie--docs) et [Enrichir le Design System](/docs/démarrer-enrichir-le-design-system--docs).
+
+## Traitement d'un ticket
+
+1. **Vérification du ticket** : l'équipe vérifie que le ticket est complet. S'il manque des informations, il passe au statut « Besoin d'infos » et revient à cette étape une fois les informations reçues. S'il est complet, il passe au statut « En étude ».
+2. **Reproduction** : l'équipe vérifie si le problème est reproductible sur la version courante du Design System. Si ce n'est pas le cas, une montée de version est demandée au projet.
+3. **Étude** : si le problème est reproductible, l'issue est confirmée. L'équipe en étudie la source et réalise une étude d'impact.
+4. **Qualification** : le ticket est qualifié en *feature* ou en *correctif*, puis selon son impact : *breaking* (non rétrocompatible) ou *non breaking*.
+5. **Backlog** : le ticket qualifié rejoint le backlog. Il passe ensuite dans le backlog « ready » lorsqu'il est prêt à être réalisé.
+
+<Story of={ProcessStories.Schema}/>
