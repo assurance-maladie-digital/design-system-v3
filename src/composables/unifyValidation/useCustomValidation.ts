@@ -210,7 +210,7 @@ export function useCustomValidation(
 		skipValidationForReset = true
 		clearValidation()
 		modelValue.value = undefined
-		void validateSilently()
+		validateSilently()
 		// Filet de sécurité : si la valeur était déjà `undefined`, le watch ne se
 		// déclenche pas — on lève la garde au tick suivant pour ne pas ignorer une
 		// modification utilisateur ultérieure.
@@ -265,6 +265,9 @@ export function useCustomValidation(
 			if (pendingValidationToken !== undefined) clearValidation()
 			if (!isValidateOnBlur.value && !disableErrorHandling.value) {
 				validate()
+			}
+			else if (isPristine.value && !disableErrorHandling.value) {
+				validateSilently()
 			}
 		}, { flush: 'sync' })
 	}
