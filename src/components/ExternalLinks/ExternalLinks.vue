@@ -156,7 +156,7 @@
 									v-if="options.listItem.target === '_blank'"
 									class="d-sr-only"
 								>
-									— {{ newWindowText }}
+									({{ newWindowText }})
 								</span>
 							</div>
 

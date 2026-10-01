@@ -145,7 +145,7 @@ exports[`ExternalLinks > opens the menu when the button is clicked 1`] = `
               h-100
               justify-space-between
               w-100
-            "><div>ameli.fr <span class="d-sr-only"> — nouvelle fenêtre</span>
+            "><div>ameli.fr <span class="d-sr-only"> (nouvelle fenêtre) </span>
       </div><i
               aria-hidden="true"
               class="
@@ -204,7 +204,7 @@ exports[`ExternalLinks > opens the menu when the button is clicked 1`] = `
               h-100
               justify-space-between
               w-100
-            "><div>Github <span class="d-sr-only"> — nouvelle fenêtre</span>
+            "><div>Github <span class="d-sr-only"> (nouvelle fenêtre) </span>
 </div><i
               aria-hidden="true"
               class="
@@ -262,7 +262,7 @@ exports[`ExternalLinks > opens the menu when the button is clicked 1`] = `
               h-100
               justify-space-between
               w-100
-            "><div>Twitter <span class="d-sr-only"> — nouvelle fenêtre</span></div><i
+            "><div>Twitter <span class="d-sr-only"> (nouvelle fenêtre) </span></div><i
               aria-hidden="true"
               class="
                 0
@@ -483,7 +483,7 @@ exports[`ExternalLinks > renders correctly with fixed prop 1`] = `
               h-100
               justify-space-between
               w-100
-            "><div>ameli.fr <span class="d-sr-only"> — nouvelle fenêtre</span>
+            "><div>ameli.fr <span class="d-sr-only"> (nouvelle fenêtre) </span>
       </div><i
               aria-hidden="true"
               class="
@@ -542,7 +542,7 @@ exports[`ExternalLinks > renders correctly with fixed prop 1`] = `
               h-100
               justify-space-between
               w-100
-            "><div>Github <span class="d-sr-only"> — nouvelle fenêtre</span>
+            "><div>Github <span class="d-sr-only"> (nouvelle fenêtre) </span>
 </div><i
               aria-hidden="true"
               class="
@@ -600,7 +600,7 @@ exports[`ExternalLinks > renders correctly with fixed prop 1`] = `
               h-100
               justify-space-between
               w-100
-            "><div>Twitter <span class="d-sr-only"> — nouvelle fenêtre</span></div><i
+            "><div>Twitter <span class="d-sr-only"> (nouvelle fenêtre) </span></div><i
               aria-hidden="true"
               class="
                 0
