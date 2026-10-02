@@ -829,7 +829,8 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 		}
 
 		// Common link styling
-		:deep(ul > li > a), :deep(ul > li > button) {
+		:deep(ul > li > a),
+ :deep(ul > li > button) {
 			display: block;
 			color: $blue-darken-40;
 			text-decoration: none;
@@ -838,8 +839,8 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 
 			// Neutralisation des styles natifs du <button>
 			border: none;
-            font: inherit;
-            text-align: inherit;
+			font: inherit;
+			text-align: inherit;
 
 			&:hover {
 				text-decoration: underline;
@@ -856,7 +857,8 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 	// Left menu styling
 	// --------------------------------
 	#left-menu {
-		ul > li > a, ul > li > button {
+		ul > li > a,
+ ul > li > button {
 			font-weight: 700;
 			color: $blue-darken-40;
 			display: flex;
@@ -906,7 +908,8 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 				min-height: $second-item-max-height-mobile;
 			}
 
-			a, button {
+			a,
+ button {
 				/* Let the link grow in height with text zoom */
 				min-height: $second-item-max-height;
 				position: relative; // Garantit l'application du z-index
@@ -1090,7 +1093,8 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 		z-index: $z-button;
 	}
 
-	a, button {
+	a,
+ button {
 		background: $user-professionnel;
 		position: relative;
 		z-index: 0;
