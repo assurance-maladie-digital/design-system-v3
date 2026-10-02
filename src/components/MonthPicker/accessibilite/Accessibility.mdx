@@ -26,15 +26,17 @@ import {
         </CriteriaCard>
         <CriteriaCard title="Structure sémantique">
             <ul>
-                <li><strong>Rôles ARIA appropriés</strong> : Utilisation de rôles <code>role="grid"</code> pour les grilles de sélection des mois et années.</li>
-                <li><strong>Relations entre éléments</strong> : Connexion entre le bouton d'ouverture et la grille de mois via <code>aria-expanded</code>, <code>aria-controls</code> et <code>aria-haspopup</code>.</li>
+                <li><strong>Groupes de sélection nommés</strong> : Les sélecteurs de mois et d’années utilisent <code>role="group"</code> avec un <code>aria-label</code>. Ils contiennent des boutons HTML natifs dont l’état sélectionné est indiqué par <code>aria-pressed</code>.</li>
+                <li><strong>Nom accessible du dialogue</strong> : Le dialogue est nommé via <code>aria-labelledby</code>, qui référence le titre de l’en-tête. Ce titre indique la sélection des mois ou des années selon la vue active.</li>
+                <li><strong>Relations entre éléments</strong> : Le bouton d’ouverture annonce un dialogue avec <code>aria-haspopup="dialog"</code> et indique son état ouvert ou fermé via <code>aria-expanded</code>. Lorsque le calendrier est ouvert, <code>aria-controls</code> et <code>aria-owns</code> référencent l’élément <code>role="dialog"</code> de l’overlay <code>VMenu</code>. Ces deux attributs sont absents lorsque le calendrier est fermé.</li>
 
             </ul>
         </CriteriaCard>
         <CriteriaCard title="Navigation clavier complète">
             <ul>
                 <li><strong>Touches Espace et Entrée</strong> : Pour ouvrir/fermer le picker et sélectionner un mois, une année.</li>
-                <li><strong>Touches fléchées</strong> : Navigation entre les mois (↑, ↓, ←, →)</li>
+                <li><strong>Touche Échap</strong> : Ferme le calendrier grâce au comportement natif de <code>VMenu</code>.</li>
+                <li><strong>Touches fléchées</strong> : Navigation entre les mois ou les années (↑, ↓, ←, →). Dans chaque groupe, seul le bouton actif possède <code>tabindex="0"</code> ; les autres ont <code>tabindex="-1"</code>.</li>
             </ul>
         </CriteriaCard>
 
@@ -48,6 +50,16 @@ import {
                 <li><strong>Gestion des erreurs</strong> : Fournir des messages d'erreur explicites en cas de sélection invalide.</li>
             </ul>
         </BestPracticesSection>
+
+        <div style={{ margin: '3rem 0', padding: '1.5rem', backgroundColor: '#fff3e0', borderLeft: '4px solid #f57c00', borderRadius: '4px' }}>
+            <h2 style={{ color: '#e65100', marginTop: 0 }}>Faux positif connu (outillage) : aria-controls</h2>
+            <ul>
+                <li>L’addon d’accessibilité de Storybook peut signaler <code>aria-controls</code> dans l’onglet « Inconclusive » (<code>aria-valid-attr-value</code>) lorsque le calendrier de <code>MonthPicker</code> est ouvert.</li>
+                <li>Cause : la version d’axe utilisée demande une vérification manuelle de <code>aria-controls</code> en présence de <code>aria-haspopup="dialog"</code>, même si l’élément référencé existe. Vuetify téléporte le contenu de <code>VMenu</code> dans <code>.v-overlay-container</code>, ajouté sous <code>&lt;body&gt;</code> : ce contenu doit aussi être inclus dans le périmètre analysé.</li>
+                <li>Vérification manuelle (DevTools, calendrier ouvert) : sélectionner le bouton d’ouverture de <code>MonthPicker</code> dans l’inspecteur. La commande <code>$0.ownerDocument.getElementById($0.getAttribute('aria-controls'))</code> retourne bien l’élément <code>role="dialog"</code> correspondant. Le composant est donc conforme sur ce point : la référence <code>aria-controls</code> est valide dans le DOM réel.</li>
+                <li>Dans ce cas vérifié, ce n’est pas un bug de <code>MonthPicker</code> mais une limite du scanner lors du contrôle du lien entre le bouton et le calendrier. Le contenu du calendrier est téléporté hors de son conteneur d’origine.</li>
+            </ul>
+        </div>
 
         <ResourcesSection>
             <ul>
