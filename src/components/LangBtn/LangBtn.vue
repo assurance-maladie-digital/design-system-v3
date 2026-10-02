@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, nextTick, ref, useId, watch } from 'vue'
+	import { computed, nextTick, ref, shallowRef, useId, watch } from 'vue'
 	import type { AllLanguagesChar } from '@/components/LangBtn/types'
 	import { mdiCheck, mdiMenuDown } from '@mdi/js'
 	import { locales } from './locales'
@@ -35,6 +35,7 @@
 	const emit = defineEmits(['update:modelValue', 'change'])
 	const menu = ref(false)
 	const selectedLanguage = ref(props.modelValue)
+	const focusedLanguage = shallowRef(props.modelValue)
 
 	watch(
 		() => props.modelValue,
@@ -104,7 +105,36 @@
 	const btnRef = ref<VBtn | null>(null)
 
 	// Focus initial sur l'option sélectionnée à l'ouverture (pattern listbox APG)
-	const selectedIndex = computed(() => Object.keys(languagesData.value).indexOf(selectedLanguage.value))
+	const languageCodes = computed(() => Object.keys(languagesData.value))
+	const selectedIndex = computed(() => languageCodes.value.indexOf(selectedLanguage.value))
+
+	function focusLanguageAt(index: number) {
+		const codes = languageCodes.value
+		const targetCode = codes[index]
+
+		if (!targetCode) {
+			return
+		}
+
+		focusedLanguage.value = targetCode
+
+		nextTick(() => {
+			itemRef.value[index]?.$el?.focus()
+		})
+	}
+
+	function focusLanguageByOffset(code: string, offset: number) {
+		const codes = languageCodes.value
+		const currentIndex = codes.indexOf(code)
+
+		if (currentIndex === -1) {
+			focusLanguageAt(0)
+			return
+		}
+
+		const nextIndex = (currentIndex + offset + codes.length) % codes.length
+		focusLanguageAt(nextIndex)
+	}
 
 	watch(
 		menu,
@@ -117,7 +147,7 @@
 						return
 					}
 					const index = selectedIndex.value >= 0 ? selectedIndex.value : 0
-					itemRef.value[index]?.$el?.focus()
+					focusLanguageAt(index)
 				})
 			}
 			else {
@@ -153,7 +183,7 @@
 					:aria-label="`${props.ariaLabel} ${currentLangData.name}`"
 					aria-haspopup="listbox"
 					:aria-controls="isMenuOpen ? listboxId : undefined"
-					:aria-owns="isMenuOpen ? activatorProps['aria-owns'] : undefined"
+					:aria-owns="undefined"
 					:aria-expanded="isMenuOpen"
 					class="vd-lang-btn"
 				>
@@ -174,7 +204,6 @@
 				color="secondary"
 				role="listbox"
 			>
-				<!-- tabindex=0 sur chaque option : requis par la navigation clavier de VMenu (focus réel) -->
 				<VListItem
 					v-for="(langData, code) in languagesData"
 					v-bind="options.listTile"
@@ -187,8 +216,13 @@
 					:lang="code"
 					:dir="langDir(code)"
 					color="primary"
-					tabindex="0"
+					:tabindex="focusedLanguage === code ? 0 : -1"
 					@click="updateLang(code)"
+					@focus="focusedLanguage = code"
+					@keydown.down.prevent.stop="focusLanguageByOffset(code, 1)"
+					@keydown.up.prevent.stop="focusLanguageByOffset(code, -1)"
+					@keydown.home.prevent.stop="focusLanguageAt(0)"
+					@keydown.end.prevent.stop="focusLanguageAt(languageCodes.length - 1)"
 				>
 					<VListItemTitle v-bind="options.listTileTitle">
 						{{ langData.nativeName }}

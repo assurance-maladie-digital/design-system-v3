@@ -26,7 +26,7 @@ import {
 	<CriteriaSection>
 		<CriteriaCard title="Structure sémantique et rôles ARIA (pattern listbox APG)">
 			<ul>
-				<li><strong>Bouton déclencheur</strong> : <code>aria-haspopup="listbox"</code> et <code>aria-expanded</code> reflètent l'état du menu ; <code>aria-controls</code> et <code>aria-owns</code> ne sont posés qu'à l'ouverture (le contenu est téléporté et n'existe pas menu fermé).</li>
+				<li><strong>Bouton déclencheur</strong> : <code>aria-haspopup="listbox"</code> et <code>aria-expanded</code> reflètent l'état du menu ; <code>aria-controls</code> référence la liste à l'ouverture.</li>
 				<li><strong>Liste des langues</strong> : <code>role="listbox"</code> avec <code>aria-labelledby</code> qui lie la liste au bouton déclencheur.</li>
 				<li><strong>Options</strong> : chaque entrée porte <code>role="option"</code> et <code>aria-selected</code> expose la langue courante aux technologies d'assistance.</li>
 				<li><strong>Nom accessible</strong> : <code>aria-label</code> du bouton annonce « Choix de la langue. Actuellement {langue} » (personnalisable via la prop <code>ariaLabel</code>).</li>
@@ -38,7 +38,7 @@ import {
 			<ul>
 				<li><strong>Ouverture</strong> : <kbd>Entrée</kbd>, <kbd>Espace</kbd> ou <kbd>Flèche bas</kbd> sur le bouton ouvre le menu.</li>
 				<li><strong>Focus initial</strong> : à l'ouverture, le focus est placé sur l'option sélectionnée (ou la première).</li>
-				<li><strong>Parcours</strong> : les options sont atteignables à <kbd>Tab</kbd> et aux flèches (navigation VMenu).</li>
+				<li><strong>Parcours</strong> : un seul arrêt de tabulation est exposé dans la liste ; les options se parcourent avec <kbd>Flèche haut</kbd>, <kbd>Flèche bas</kbd>, <kbd>Début</kbd> et <kbd>Fin</kbd>.</li>
 				<li><strong>Fermeture</strong> : <kbd>Échap</kbd> ou la sélection ferme le menu et le focus revient sur le bouton.</li>
 				<li><strong>Focus visible</strong> : liseré de focus stylé sur les options (<code>:focus-visible</code>).</li>
 			</ul>
