@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { inject, nextTick, onMounted, onUnmounted, readonly, ref, watch, type Ref } from 'vue'
+	import { inject, nextTick, onMounted, onUnmounted, readonly, ref, useId, watch, type Ref } from 'vue'
 	import HeaderMenuBtn from '../HeaderMenuBtn/HeaderMenuBtn.vue'
 	import { registerHeaderMenuKey } from '../consts'
 	import locals from './locals'
@@ -7,8 +7,9 @@
 	import useMenuPosition from './useMenuPosition'
 	import vLockFocus from '@/directives/lockFocus'
 
-	const headerMenuWrapper = ref<HTMLElement | null>(null)
+	const menuWrapper = ref<HTMLElement | null>(null)
 	const menuBtnWrapper = ref<HTMLDivElement | null>(null)
+	const menuId = useId()
 	const outerBtn = ref<HTMLElement | null>(null)
 	const innerBtn = ref<HTMLElement | null>(null)
 
@@ -37,14 +38,14 @@
 	function handleClickOutside(event: MouseEvent | KeyboardEvent) {
 		if (!menuOpen.value) return
 
-		// do not close menu if click is inside the menu
+		// do not close menu if click is inside the menu or on the trigger button
+		// (no stopPropagation: the clicked element must still receive its click)
 		let walkElement = event.target as HTMLElement | null
 		while (walkElement && walkElement !== document.body) {
-			if (walkElement === headerMenuWrapper.value) return
+			if (walkElement === menuBtnWrapper.value || walkElement === menuWrapper.value) return
 			walkElement = walkElement.parentElement
 		}
 
-		event.stopPropagation()
 		menuOpen.value = false
 	}
 
@@ -79,17 +80,18 @@
 	<div
 		class="menu mr-4"
 	>
-		<nav ref="menuBtnWrapper">
+		<div ref="menuBtnWrapper">
 			<HeaderMenuBtn
 				ref="outerBtn"
 				v-model="menuOpen"
+				:aria-controls="menuId"
 			/>
-		</nav>
+		</div>
 		<Teleport to="body">
 			<Transition name="menu">
 				<div
 					v-if="menuOpen"
-					ref="headerInnerMenu"
+					:id="menuId"
 					v-lock-focus
 					class="overlay"
 					role="dialog"
@@ -98,17 +100,16 @@
 					@keyup.esc="menuOpen = false"
 				>
 					<div
-						role="menu"
+						ref="menuWrapper"
 						class="menu-wrapper"
 						:style="menuStyle"
 					>
 						<HeaderMenuBtn
 							ref="innerBtn"
 							v-model="menuOpen"
+							:aria-controls="menuId"
 						/>
 						<nav
-							id="header-menu-wrapper"
-							ref="headerMenuWrapper"
 							class="header-menu-wrapper"
 							:class="{
 								'header-menu-wrapper--submenu-open': haveOpenSubMenu,

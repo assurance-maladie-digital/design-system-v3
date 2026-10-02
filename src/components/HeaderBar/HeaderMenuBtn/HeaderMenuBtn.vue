@@ -22,8 +22,8 @@
 			'header-menu-btn__open': model
 		}"
 		type="button"
+		:aria-expanded="model ? 'true' : 'false'"
 		:aria-label="model ? locals.closeMenu : locals.openMenu"
-		:title="model ? locals.closeMenu : locals.openMenu"
 		@click="() => { model = !model }"
 	>
 		<SyIcon
