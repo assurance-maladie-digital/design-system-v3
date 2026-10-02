@@ -520,7 +520,7 @@ const focused = ref(false)
 
 const rules = computed<ValidationRule[]>(() => [
   ...(props.required
-    ? [{ type: 'required', options: { message: \\`\\${props.label} est obligatoire\\` } }]
+    ? [{ type: 'required', options: { message: \`\${props.label} est obligatoire\` } }]
     : []),
   ...props.customRules,
 ])
