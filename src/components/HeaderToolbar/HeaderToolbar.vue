@@ -830,7 +830,7 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 
 		// Common link styling
 		:deep(ul > li > a),
- :deep(ul > li > button) {
+		:deep(ul > li > button) {
 			display: block;
 			color: $blue-darken-40;
 			text-decoration: none;
@@ -858,7 +858,7 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 	// --------------------------------
 	#left-menu {
 		ul > li > a,
- ul > li > button {
+		ul > li > button {
 			font-weight: 700;
 			color: $blue-darken-40;
 			display: flex;
@@ -909,7 +909,7 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 			}
 
 			a,
- button {
+			button {
 				/* Let the link grow in height with text zoom */
 				min-height: $second-item-max-height;
 				position: relative; // Garantit l'application du z-index
@@ -1094,7 +1094,7 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 	}
 
 	a,
- button {
+	button {
 		background: $user-professionnel;
 		position: relative;
 		z-index: 0;
