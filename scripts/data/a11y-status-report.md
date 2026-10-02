@@ -46,11 +46,11 @@ Généré le: 28/09/2026
 | **FilterSideBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **FooterBar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **FranceConnectBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **HeaderBar** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
+| **HeaderBar** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
 | **HeaderLoading** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **HeaderNavigationBar** | ❌ Non | ❌ Oui | ❌ Manquante | ❌ Non | ❌ |
 | **HeaderToolbar** | ❌ Non | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
-| **LangBtn** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
+| **LangBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **Logo** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **LogoBrandSection** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **LunarCalendar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |

@@ -1,4 +1,5 @@
 import { mount, VueWrapper } from '@vue/test-utils'
+import { defineComponent } from 'vue'
 import LangBtn from '../LangBtn.vue'
 import { describe, it, expect, afterEach, vi } from 'vitest'
 import ISO6391 from 'iso-639-1'
@@ -251,6 +252,85 @@ describe('LangBtn', () => {
 		expect(wrapper.find('.vd-lang-btn').text()).toBe('corsu')
 		expect(wrapper.emitted('update:modelValue')).toBeTruthy()
 		expect(wrapper.emitted('update:modelValue')?.[0]).toEqual(['co'])
+	})
+
+	// Pattern APG listbox : le bouton expose haspopup/expanded/controls, la liste
+	// expose role=listbox et chaque item role=option + aria-selected + lang/dir.
+	it('exposes the APG listbox pattern when the menu is open', async () => {
+		wrapper = mount(LangBtn, {
+			props: {
+				modelValue: 'fr',
+				availableLanguages: ['fr', 'ar', 'es'],
+			},
+			attachTo: document.body,
+		})
+
+		const activatorButton = wrapper.find('.vd-lang-btn')
+		await activatorButton.trigger('click')
+		await wrapper.vm.$nextTick()
+
+		expect(activatorButton.attributes('aria-haspopup')).toBe('listbox')
+		expect(activatorButton.attributes('aria-expanded')).toBe('true')
+
+		const listbox = document.body.querySelector('[role="listbox"]')
+		expect(listbox).not.toBeNull()
+		expect(listbox!.id).toBe(activatorButton.attributes('aria-controls'))
+		expect(listbox!.getAttribute('aria-labelledby')).toBe(activatorButton.attributes('id'))
+		expect(activatorButton.attributes('aria-owns')).toBeUndefined()
+
+		const options = Array.from(document.body.querySelectorAll('[role="option"]'))
+		expect(options.length).toBe(3)
+		expect(options[0]!.getAttribute('aria-selected')).toBe('true')
+		expect(options[0]!.getAttribute('lang')).toBe('fr')
+		expect(options[1]!.getAttribute('aria-selected')).toBe('false')
+		// L'arabe est une langue à écriture de droite à gauche (RGAA 8.10)
+		expect(options[1]!.getAttribute('dir')).toBe('rtl')
+	})
+
+	it('uses a roving tabindex while preserving arrow navigation', async () => {
+		wrapper = mount(LangBtn, {
+			props: {
+				modelValue: 'fr',
+				availableLanguages: ['fr', 'en', 'es'],
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.find('.vd-lang-btn').trigger('click')
+		await wrapper.vm.$nextTick()
+		await new Promise(resolve => setTimeout(resolve, 20))
+
+		const options = () => Array.from(document.body.querySelectorAll<HTMLElement>('[role="option"]'))
+		expect(options().map(option => option.getAttribute('tabindex'))).toEqual(['0', '-1', '-1'])
+		expect(document.activeElement).toBe(options()[0])
+
+		options()[0]!.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }))
+		await wrapper.vm.$nextTick()
+
+		expect(options().map(option => option.getAttribute('tabindex'))).toEqual(['-1', '0', '-1'])
+		expect(document.activeElement).toBe(options()[1])
+
+		options()[1]!.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true }))
+		await wrapper.vm.$nextTick()
+
+		expect(options().map(option => option.getAttribute('tabindex'))).toEqual(['-1', '-1', '0'])
+		expect(document.activeElement).toBe(options()[2])
+	})
+
+	// Deux instances dans la même app : les ids générés doivent être uniques (RGAA 8.2)
+	it('generates unique ids when several instances are mounted', async () => {
+		const Host = defineComponent({
+			components: { LangBtn },
+			template: `
+				<LangBtn :availableLanguages="['fr', 'en']" />
+				<LangBtn :availableLanguages="['fr', 'en']" />
+			`,
+		})
+		wrapper = mount(Host)
+
+		const buttons = wrapper.findAll('.vd-lang-btn')
+		expect(buttons.length).toBe(2)
+		expect(buttons[0]!.attributes('id')).not.toBe(buttons[1]!.attributes('id'))
 	})
 })
 
