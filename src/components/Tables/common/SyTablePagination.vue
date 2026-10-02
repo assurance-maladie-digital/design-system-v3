@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, ref, nextTick, watch, onMounted } from 'vue'
+	import { computed, ref, nextTick, watch, onMounted, useId } from 'vue'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import SyPagination from '@/components/Customs/SyPagination/SyPagination.vue'
 	import { locales } from './locales'
@@ -12,11 +12,17 @@
 		itemsPerPageOptions?: number[]
 		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 		pageInput?: boolean
+		controlsId?: string
+		paginationLabel?: string
 	}>(), {
 		itemsPerPageOptions: undefined,
 		headingLevel: 2,
 		pageInput: false,
+		controlsId: undefined,
+		paginationLabel: undefined,
 	})
+
+	const itemsPerPageLabelId = `items-per-page-${useId()}`
 
 	// Reference to the SySelect component
 	const selectRef = ref<InstanceType<typeof SySelect> | null>(null)
@@ -159,7 +165,9 @@
 				:pages="pageCount"
 				:heading-level="headingLevel"
 				:visible="5"
-				:label="locales.pagination.paginationNavAriaLabel"
+				:label="paginationLabel || locales.pagination.paginationNavAriaLabel"
+				:button-mode="!!controlsId"
+				:aria-controls="controlsId"
 				class="pagination"
 				@update:model-value="goToPage"
 			>
@@ -167,7 +175,11 @@
 					<span>{{ locales.pagination.previous }}</span>
 				</template>
 				<template #page-number="{ page: pageNum }">
-					{{ locales.pagination.pageText(pageNum) }}
+					<span
+						v-if="controlsId"
+						class="d-sr-only"
+					>{{ locales.pagination.pageAriaLabel(pageNum) }}</span>
+					<span :aria-hidden="controlsId ? true : undefined">{{ locales.pagination.pageText(pageNum) }}</span>
 				</template>
 				<template #next>
 					<span>{{ locales.pagination.next }}</span>
@@ -203,7 +215,10 @@
 		</div>
 
 		<div class="rows-per-page">
-			<span class="rows-per-page-label">{{ locales.pagination.itemsPerPageText }}</span>
+			<span
+				:id="itemsPerPageLabelId"
+				class="rows-per-page-label"
+			>{{ locales.pagination.itemsPerPageText }}</span>
 
 			<SySelect
 				ref="selectRef"
@@ -215,6 +230,7 @@
 				density="compact"
 				class="rows-per-page-select"
 				:aria-label="locales.pagination.itemsPerPageText"
+				:aria-labelledby="controlsId ? itemsPerPageLabelId : undefined"
 				:label="''"
 				style="width: 90px;"
 				:clearable="false"

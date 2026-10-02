@@ -133,7 +133,6 @@
 		class="ml-3"
 	>
 		<VMenu
-			:id="columnsMenuId"
 			v-model="isMenuOpen"
 			:close-on-content-click="false"
 			location="end"
@@ -145,7 +144,8 @@
 					variant="outlined"
 					color="primary"
 					v-bind="props"
-					aria-haspopup="menu"
+					aria-haspopup="dialog"
+					:aria-owns="undefined"
 					:aria-controls="isMenuOpen ? columnsMenuId : undefined"
 				>
 					<SyIcon
@@ -155,7 +155,12 @@
 					/>
 				</VBtn>
 			</template>
-			<VCard min-width="300">
+			<VCard
+				:id="columnsMenuId"
+				role="dialog"
+				:aria-labelledby="columnsTitleId"
+				min-width="300"
+			>
 				<VCardTitle :id="columnsTitleId">
 					{{ locales.reorganizeColumnsTitle }}
 				</VCardTitle>

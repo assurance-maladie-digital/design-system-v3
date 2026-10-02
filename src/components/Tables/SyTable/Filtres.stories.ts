@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { fn } from 'storybook/test'
 import { ref } from 'vue'
 import SyTable from './SyTable.vue'
+import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 import { commonTableArgTypes, commonTableExcludedControls, syTableItemsArgTypes } from '../common/storyArgTypes'
 import type { DataOptions, FilterType } from '../common/types'
 import type { VDataTable } from 'vuetify/components'
@@ -31,9 +32,6 @@ type Story = StoryObj<typeof meta>
 
 export const FilterByText: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -210,9 +208,6 @@ export const FilterByText: Story = {
 
 export const FilterByNumber: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -379,9 +374,6 @@ export const FilterByNumber: Story = {
 
 export const FilterBySelect: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -582,9 +574,6 @@ export const FilterBySelect: Story = {
 
 export const FilterBySelectMultiple: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -785,9 +774,6 @@ export const FilterBySelectMultiple: Story = {
 
 export const FilterByAutocomplete: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -939,9 +925,6 @@ export const FilterByAutocomplete: Story = {
 
 export const FilterByExactDate: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1089,9 +1072,6 @@ export const FilterByExactDate: Story = {
 
 export const FilterByPeriod: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -1239,12 +1219,9 @@ export const FilterByPeriod: Story = {
 
 export const CustomFilterSlot: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		docs: {
 			description: {
-				story: 'Cette story démontre comment utiliser un slot personnalisé pour le filtrage. Le filtre personnalisé utilise un v-select pour filtrer par statut.',
+				story: 'Cette story démontre comment utiliser un slot personnalisé pour le filtrage. Le filtre personnalisé utilise un SySelect pour filtrer par statut.',
 			},
 		},
 		sourceCode: [
@@ -1264,7 +1241,7 @@ export const CustomFilterSlot: Story = {
 								<div class="custom-filter-info mb-2">
 									Filtre personnalisé :
 								</div>
-								<v-select
+								<SySelect
 									v-model="customFilterValue"
 									:items="statusOptions"
 									label="Statut"
@@ -1290,7 +1267,7 @@ export const CustomFilterSlot: Story = {
 				code: `
 				<script setup lang="ts">
 					import { ref } from 'vue'
-					import { SyTable } from '@cnamts/synapse'
+					import { SyTable, SySelect } from '@cnamts/synapse'
 					
 					const options = ref({
 						page: 1,
@@ -1464,7 +1441,7 @@ export const CustomFilterSlot: Story = {
 	},
 	render: (args) => {
 		return {
-			components: { SyTable },
+			components: { SyTable, SySelect },
 			setup() {
 				// Create a fresh copy of the options to avoid reactivity issues
 				const options = ref<DataOptions>({
@@ -1526,7 +1503,7 @@ export const CustomFilterSlot: Story = {
 							<div class="custom-filter-info mb-2">
 								Filtre personnalisé :
 							</div>
-							<VSelect
+							<SySelect
 								v-model="customFilterValue"
 								:items="statusOptions"
 								label="Statut"
@@ -1551,9 +1528,6 @@ export const CustomFilterSlot: Story = {
 
 export const CustomFilterInputs: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',

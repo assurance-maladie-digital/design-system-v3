@@ -50,9 +50,6 @@ const multiSortItems = [
  */
 export const SortBy: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -133,9 +130,6 @@ export const SortBy: Story = {
  */
 export const MultiSort: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
