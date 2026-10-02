@@ -11,7 +11,6 @@
 	import TableHeader, { type HeaderPropsRaw } from '../common/TableHeader.vue'
 	import { locales } from '../common/locales'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
-	import { useTableAccessibility } from '../common/tableAccessibilityUtils'
 	import { useTableProps } from '../common/tableProps'
 	import type { DataOptions, Item, SyTableProps } from '../common/types'
 	import type { ClickableTableRowPropsInput } from '../common/useClickableTableRow'
@@ -19,6 +18,7 @@
 	import { usePagination } from '../common/usePagination'
 	import { usePinnedColumns } from '../common/usePinnedColumns'
 	import useStoredOptions from '../common/useStoredOptions'
+	import { useTableStatus } from './useTableStatus'
 	import { useTableAria } from '../common/useTableAria'
 	import { useTableBulkActions } from '../common/useTableBulkActions'
 	import { useTableCheckbox } from '../common/useTableCheckbox'
@@ -107,10 +107,6 @@
 		clickableRow: toRef(props, 'clickableRow'),
 		rowProps: forwardedRowProps,
 		onRowClick: item => emit('row-click', item),
-	})
-
-	const { setupAccessibility } = useTableAccessibility({
-		tableId: uniqueTableId.value,
 	})
 
 	// Use the table headers composable
@@ -226,7 +222,6 @@
 	// Use the ARIA accessibility composable
 	const {
 		statusRegionId,
-		statusMessage,
 		setupAria,
 	} = useTableAria({
 		table,
@@ -236,8 +231,17 @@
 		uniqueTableId: uniqueTableId.value,
 	})
 
-	// Initialize generic accessibility adjustments (tabbable elements, etc.)
-	setupAccessibility()
+	const statusMessage = useTableStatus({
+		page,
+		itemsPerPage: itemsPerPageValue,
+		total: itemsLength,
+		selected: () => model.value.length,
+		selectedRows: () => props.items.flatMap((item, index) => model.value.includes(getItemValue(item)) ? [index + 1] : []),
+		options,
+		headers: () => props.headers,
+	})
+	const resultsId = `${uniqueTableId.value}-results`
+	const paginationLabel = computed(() => locales.tablePagination(props.caption || props.suffix || uniqueTableId.value))
 
 	const { accessibilityRowCheckboxes } = useTableRowCheckboxAccessibility({
 		uniqueTableId: uniqueTableId.value,
@@ -323,6 +327,7 @@
 		<div
 			:id="statusRegionId"
 			role="status"
+			aria-atomic="true"
 			aria-live="polite"
 			class="d-sr-only"
 		>
@@ -345,6 +350,7 @@
 		</TableBulkActions>
 
 		<VDataTable
+			:id="resultsId"
 			ref="table"
 			v-model="model"
 			color="primary"
@@ -384,6 +390,7 @@
 							:key="column.key!"
 						>
 							<th
+								scope="col"
 								:class="[
 									{ 'checkbox-column': column.key === 'data-table-select' },
 									{
@@ -422,8 +429,13 @@
 										</template>
 									</SyCheckbox>
 								</template>
+								<template v-else-if="column.key === 'data-table-select' || column.key === 'data-table-expand'">
+									<span class="d-sr-only">{{ column.key === 'data-table-select' ? locales.selectionColumn : locales.expandRows }}</span>
+								</template>
 								<template v-else>
 									<TableHeader
+										:data-column-key="column.key"
+										announce-width
 										:table="table"
 										:header-params="slotProps"
 										:column="column"
@@ -449,12 +461,12 @@
 						v-if="props.showFilters"
 						class="filters"
 					>
-						<th v-if="props.showSelect || props.showSelectSingle" />
+						<td v-if="props.showSelect || props.showSelectSingle" />
 						<template
 							v-for="column in slotProps.columns.filter(c => c.key !== 'data-table-select')"
 							:key="column.key!"
 						>
-							<th
+							<td
 								:style="{
 									...(getHeaderForColumn(column)?.maxWidth && !props.resizableColumns ? { maxWidth: getHeaderForColumn(column)?.maxWidth } : {}),
 									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth } : {}),
@@ -462,7 +474,7 @@
 								}"
 							>
 								<SyTableFilter
-									v-if="!props.headers?.find(h => (h.key === column.key || h.value === column.key) && h.filterable === false)"
+									v-if="column.key !== 'data-table-expand' && !props.headers?.find(h => (h.key === column.key || h.value === column.key) && h.filterable === false)"
 									:filterable="true"
 									:filters="filters"
 									:header="getEnhancedHeader(column)"
@@ -477,7 +489,7 @@
 										/>
 									</template>
 								</SyTableFilter>
-							</th>
+							</td>
 						</template>
 					</tr>
 					<tr
@@ -505,6 +517,7 @@
 						<th
 							v-for="header in props.headers || []"
 							:key="header.key || header.value || ''"
+							scope="col"
 							:style="{
 								...(header.maxWidth ? { maxWidth: header.maxWidth } : {}),
 								...(header.minWidth ? { minWidth: header.minWidth } : {}),
@@ -518,7 +531,7 @@
 						v-if="props.showFilters"
 						class="filters"
 					>
-						<th
+						<td
 							v-for="header in props.headers || []"
 							:key="header.key || header.value || ''"
 							:style="{
@@ -542,7 +555,7 @@
 									/>
 								</template>
 							</SyTableFilter>
-						</th>
+						</td>
 					</tr>
 				</template>
 			</template>
@@ -646,6 +659,8 @@
 					<SyTablePagination
 						v-if="filteredItems.length > 0 && !props.hideDefaultFooter"
 						:page="page"
+						:controls-id="resultsId"
+						:pagination-label="paginationLabel"
 						:items-per-page="itemsPerPageValue"
 						:heading-level="props.headingLevel"
 						:page-count="pageCount"

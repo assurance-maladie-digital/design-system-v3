@@ -53,11 +53,12 @@ import {
 
         <CriteriaCard title="Navigation clavier">
             <ul>
-                <li>Les en-têtes de colonnes sont focalisables via <code>tabindex="0"</code> et activables au clavier.</li>
+                <li>Les boutons de tri et les poignées de redimensionnement sont accessibles au clavier.</li>
                 <li>Les actions de tri sont accessibles via Entrée ou Espace.</li>
                 <li>Les filtres sont navigables dans l’ordre naturel de tabulation.</li>
                 <li>Les cases à cocher de sélection (ligne et globale) sont entièrement accessibles au clavier.</li>
                 <li>La pagination est utilisable au clavier (page, items par page, navigation).</li>
+                <li>Dans l’exemple des lignes dépliables, le bouton « Plus d’info » indique son état avec <code>aria-expanded</code> et référence la ligne ouverte via <code>aria-controls</code>. Conservez ces attributs lorsque vous personnalisez les slots.</li>
                 <li>Les lignes cliquables restent accessibles via clavier lorsqu’activées.</li>
             </ul>
         </CriteriaCard>
@@ -65,9 +66,11 @@ import {
         <CriteriaCard title="Annonces aux technologies d’assistance">
             <ul>
                 <li>Le <code>caption</code> fournit un contexte global de lecture du tableau.</li>
-                <li>Un region <code>role="status"</code> avec <code>aria-live="polite"</code> annonce les changements de résultats.</li>
+                <li>La sélection unique utilise des boutons radio. La sélection multiple utilise des cases à cocher.</li>
                 <li>Les états de tri sont exposés via <code>aria-sort</code> sur les en-têtes.</li>
-                <li>Les contrôles de pagination et filtres utilisent des libellés explicites.</li>
+                <li>La pagination utilise des boutons nommés « Page 2 », « Page 3 », etc., qui référencent la zone de résultats via <code>aria-controls</code>. Son nom reprend la légende du tableau : utilisez des légendes distinctes lorsque plusieurs tableaux sont présents.</li>
+                <li>Une zone <code>role="status"</code> annonce la page, les lignes visibles, le total, la sélection, les filtres et le tri.</li>
+                <li>Les poignées de redimensionnement annoncent la largeur de colonne en pixels. Les flèches gauche et droite permettent de la modifier.</li>
                 <li>Les attributs ARIA inutiles (ex: <code>aria-describedby</code>) sont supprimés pour éviter les doublons de lecture.</li>
             </ul>
         </CriteriaCard>
@@ -116,4 +119,15 @@ import {
             <li><a href="https://www.numerique.gouv.fr/publications/rgaa-accessibilite/" target="_blank" rel="noopener noreferrer">RGAA – critères 5, 7 et 10</a></li>
         </ul>
     </ResourcesSection>
+
+    <div style={{ margin: '3rem 0', padding: '1.5rem', backgroundColor: '#fff3e0', borderLeft: '4px solid #f57c00', borderRadius: '4px' }}>
+        <h2 style={{ color: '#e65100', marginTop: 0 }}>Faux positif connu (outillage) : aria-controls</h2>
+        <ul>
+            <li>L’addon d'accessibilité de Storybook peut signaler <code>aria-valid-attr-value</code> sur le bouton « Gestion des colonnes » de <code>SyTable</code>, lorsque le panneau est ouvert.</li>
+            <li>L’attribut <code>aria-controls</code> relie le bouton au panneau qu’il ouvre.</li>
+            <li>Cause : la version d’axe utilisée ne confirme pas automatiquement la référence de <code>aria-controls</code> lorsque le bouton utilise aussi <code>aria-haspopup="dialog"</code>. Elle affiche alors un résultat « Inconclusive », même si le panneau existe.</li>
+            <li>Vérification manuelle : ouvrir le panneau, sélectionner son bouton dans l’inspecteur, puis saisir dans la console <code>document.getElementById($0.getAttribute('aria-controls'))</code>. Le résultat doit être l’élément correspondant au panneau ouvert, avec <code>role="dialog"</code>.</li>
+            <li>Si la référence pointe bien vers le panneau, ce point est vérifié : l’alerte ne prouve pas une erreur du composant. Il faut conserver <code>aria-controls</code>. Si le résultat est <code>null</code>, la référence doit être corrigée.</li>
+        </ul>
+    </div>
 </AccessibilityGuideLayout>

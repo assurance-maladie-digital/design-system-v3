@@ -33,9 +33,6 @@ type Story = StoryObj<typeof meta>
  */
 export const ItemsPerPageOptions: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -103,9 +100,6 @@ export const ItemsPerPageOptions: Story = {
  */
 export const HideDefaultFooter: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -176,9 +170,6 @@ export const HideDefaultFooter: Story = {
  */
 export const PageInput: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
