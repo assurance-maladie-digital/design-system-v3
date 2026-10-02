@@ -903,7 +903,44 @@ describe('SyForm', () => {
 	})
 
 	describe('clearValidation and v-model', () => {
-		it('clearValidation() restores the v-model to true and clears displayed errors (SyAutocomplete)', async () => {
+		it('keeps the v-model neutral when only one of several fields is completed after clearValidation()', async () => {
+			const wrapper = mount({
+				components: { SyForm, SyTextField },
+				template: `
+					<SyForm ref="form" v-model="formValid">
+						<SyTextField v-model="firstName" required label="Prénom" />
+						<SyTextField v-model="lastName" required label="Nom" />
+					</SyForm>
+				`,
+				data() {
+					return {
+						firstName: '',
+						lastName: '',
+						formValid: null as boolean | null,
+					}
+				},
+			})
+
+			await wrapper.find('form').trigger('submit.prevent')
+			await flushPromises()
+			expect(wrapper.vm.formValid).toBe(false)
+
+			const formRef = wrapper.vm.$refs.form as InstanceType<typeof SyForm>
+			formRef.clearValidation()
+			await flushPromises()
+			expect(wrapper.vm.formValid).toBeNull()
+
+			const firstFieldInput = wrapper.findAllComponents(SyTextField)[0]!.find('input')
+			await firstFieldInput.trigger('focus')
+			await firstFieldInput.setValue('Jean')
+			await firstFieldInput.trigger('blur')
+			await flushPromises()
+
+			expect(wrapper.vm.formValid).toBeNull()
+			wrapper.unmount()
+		})
+
+		it('clearValidation() resets the v-model to null and clears displayed errors (SyAutocomplete)', async () => {
 			const wrapper = mount({
 				components: { SyForm, SyAutocomplete },
 				template: `
@@ -930,13 +967,13 @@ describe('SyForm', () => {
 			expect(wrapper.vm.formValid).toBe(false)
 			expect(wrapper.findAll('.v-messages__message').length).toBeGreaterThan(0)
 
-			// clearValidation : les erreurs disparaissent et le v-model redevient valide
+			// clearValidation masque les erreurs et remet le statut à l'état neutre.
 			const formRef = wrapper.vm.$refs.form as InstanceType<typeof SyForm>
 			formRef.clearValidation()
 			await flushPromises()
 			await nextTick()
 			expect(wrapper.findAll('.v-messages__message').length).toBe(0)
-			expect(wrapper.vm.formValid).toBe(true)
+			expect(wrapper.vm.formValid).toBeNull()
 
 			wrapper.unmount()
 		})

@@ -113,7 +113,7 @@ export function useFormValidation() {
 	 * Statut de validation des composants custom enregistrés (comportement aligné sur Vuetify) :
 	 * - true : aucun composant custom ne remonte explicitement `valide === false`
 	 * - false : au moins un composant custom est invalide
-	 * - null : aucun composant custom enregistré (délègue alors à vFormStatus)
+	 * - null : aucun composant custom enregistré ou au moins un champ non validé
 	 */
 	const customComponentsValide = computed<boolean | null>(() => {
 		if (validatableComponents.value.length === 0) {
@@ -122,6 +122,9 @@ export function useFormValidation() {
 		const hasError = validatableComponents.value.some(component => component.valide === false)
 		if (hasError) {
 			return false
+		}
+		if (validatableComponents.value.some(component => component.valide === null)) {
+			return null
 		}
 		return true
 	})
@@ -158,6 +161,9 @@ export function useFormValidation() {
 		}
 		if (vFormStatus === false) {
 			return false
+		}
+		if (customComponentsValide.value === null && validatableComponents.value.length > 0) {
+			return null
 		}
 		if (hasVuetifyFields && vFormStatus == null) {
 			return null

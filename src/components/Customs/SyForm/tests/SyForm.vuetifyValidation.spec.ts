@@ -43,6 +43,16 @@ const LegacyField = defineComponent({
 	},
 })
 
+const PristineLegacyField = defineComponent({
+	name: 'PristineLegacyField',
+	setup() {
+		const validity = ref<boolean | null>(null)
+		const isPristine = ref(true)
+		useValidatable(() => true, undefined, undefined, validity, true, isPristine)
+		return () => h('div')
+	},
+})
+
 const MixedPristineForm = defineComponent({
 	components: { LegacyField, SyForm, SyTextField },
 	setup() {
@@ -67,6 +77,53 @@ const MixedPristineForm = defineComponent({
 	`,
 })
 
+const MixedInvalidForm = defineComponent({
+	components: { PristineLegacyField, SyForm, SyTextField },
+	setup() {
+		const formValidity = ref<boolean | null>(null)
+		const name = ref('')
+		const requiredRule = (value: unknown): boolean | string =>
+			(typeof value === 'string' && value.trim() !== '') || 'Le nom est obligatoire'
+
+		return { formValidity, name, requiredRule }
+	},
+	template: `
+		<SyForm v-model="formValidity">
+			<PristineLegacyField />
+			<SyTextField
+				v-model="name"
+				label="Nom"
+				use-vuetify-validation
+				:rules="[requiredRule]"
+			/>
+			<span data-testid="form-validity">{{ String(formValidity) }}</span>
+		</SyForm>
+	`,
+})
+
+const MixedValidForm = defineComponent({
+	components: { PristineLegacyField, SyForm, SyTextField },
+	setup() {
+		const formValidity = ref<boolean | null>(null)
+		const name = ref('Jean Dupont')
+		const requiredRule = (value: unknown): boolean | string =>
+			(typeof value === 'string' && value.trim() !== '') || 'Le nom est obligatoire'
+
+		return { formValidity, name, requiredRule }
+	},
+	template: `
+		<SyForm v-model="formValidity">
+			<PristineLegacyField />
+			<SyTextField
+				v-model="name"
+				label="Nom"
+				use-vuetify-validation
+				:rules="[requiredRule]"
+			/>
+			<span data-testid="form-validity">{{ String(formValidity) }}</span>
+		</SyForm>
+	`,
+})
 describe('SyForm — champs en mode Vuetify uniquement', () => {
 	it('reste null au chargement quand le champ requis est pristine', async () => {
 		const wrapper = mount(VuetifyOnlyForm)
@@ -78,6 +135,22 @@ describe('SyForm — champs en mode Vuetify uniquement', () => {
 		const wrapper = mount(MixedPristineForm)
 		await flushPromises()
 		expect(wrapper.get('[data-testid="form-validity"]').text()).toBe('null')
+	})
+
+	it('passe à false lorsqu’un champ Vuetify est invalide avec un composant legacy pristine', async () => {
+		const wrapper = mount(MixedInvalidForm)
+		const form = wrapper.findComponent(SyForm)
+		await form.vm.validate()
+		await flushPromises()
+		expect(wrapper.get('[data-testid="form-validity"]').text()).toBe('false')
+	})
+
+	it('passe à true après une validation explicite de tous les validateurs', async () => {
+		const wrapper = mount(MixedValidForm)
+		const form = wrapper.findComponent(SyForm)
+		await form.vm.validate()
+		await flushPromises()
+		expect(wrapper.get('[data-testid="form-validity"]').text()).toBe('true')
 	})
 
 	it('passe à false après une validation explicite sur champ vide', async () => {
@@ -93,6 +166,16 @@ describe('SyForm — champs en mode Vuetify uniquement', () => {
 		await wrapper.find('input').setValue('Jean Dupont')
 		const form = wrapper.findComponent(SyForm)
 		await form.vm.validate()
+		await flushPromises()
+		expect(wrapper.get('[data-testid="form-validity"]').text()).toBe('true')
+	})
+
+	it('passe à true après une saisie valide et un blur sans validation explicite', async () => {
+		const wrapper = mount(VuetifyOnlyForm)
+		const input = wrapper.get('input')
+		await input.trigger('focus')
+		await input.setValue('Jean Dupont')
+		await input.trigger('blur')
 		await flushPromises()
 		expect(wrapper.get('[data-testid="form-validity"]').text()).toBe('true')
 	})

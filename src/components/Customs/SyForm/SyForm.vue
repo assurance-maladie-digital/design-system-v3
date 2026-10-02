@@ -33,7 +33,12 @@
 		const vuetifyValidateResult = await form.value!.validate()
 		const customComponentsValid = await validateAll()
 
-		return vuetifyValidateResult.valid && customComponentsValid
+		const isValid = vuetifyValidateResult.valid && customComponentsValid
+		if (isValid && model.value === null) {
+			model.value = true
+		}
+
+		return isValid
 	}
 
 	/**
@@ -52,6 +57,7 @@
 	 * Réinitialise l'état de validation de tous les champs.
 	 */
 	const clearValidation = () => {
+		model.value = null
 		form.value!.resetValidation()
 		clearAll()
 	}

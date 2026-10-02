@@ -72,19 +72,6 @@
 		logChange(vuetifyLog, value, 'champ')
 	})
 
-	// Écriture du model depuis le parent : teste le two-way binding.
-	function forceSynapseModel(value: boolean | null) {
-		suppressSynapseLog.value = true
-		synapseValidity.value = value
-		logChange(synapseLog, value, 'parent')
-	}
-
-	function forceVuetifyModel(value: boolean | null) {
-		suppressVuetifyLog.value = true
-		vuetifyValidity.value = value
-		logChange(vuetifyLog, value, 'parent')
-	}
-
 	function validityLabel(value: boolean | null) {
 		if (value === null) return { text: 'null', hint: 'invalide (masqué)', color: 'medium-emphasis' as const }
 		if (value === true) return { text: 'true', hint: 'valide', color: 'success' as const }
@@ -439,35 +426,6 @@
 											{{ validityLabel(synapseValidity).hint }}
 										</VChip>
 									</VSheet>
-
-									<p class="text-caption font-weight-medium mb-2">
-										Écrire le model depuis le parent (two-way binding)
-									</p>
-									<div class="d-flex ga-2 mb-4">
-										<VBtn
-											size="small"
-											variant="outlined"
-											@click="forceSynapseModel(null)"
-										>
-											null
-										</VBtn>
-										<VBtn
-											size="small"
-											variant="outlined"
-											color="success"
-											@click="forceSynapseModel(true)"
-										>
-											true
-										</VBtn>
-										<VBtn
-											size="small"
-											variant="outlined"
-											color="error"
-											@click="forceSynapseModel(false)"
-										>
-											false
-										</VBtn>
-									</div>
 
 									<p class="text-caption font-weight-medium mb-2">
 										API exposée via <code>ref</code>
@@ -842,35 +800,6 @@
 											{{ validityLabel(vuetifyValidity).hint }}
 										</VChip>
 									</VSheet>
-
-									<p class="text-caption font-weight-medium mb-2">
-										Écrire le model depuis le parent (two-way binding)
-									</p>
-									<div class="d-flex ga-2 mb-4">
-										<VBtn
-											size="small"
-											variant="outlined"
-											@click="forceVuetifyModel(null)"
-										>
-											null
-										</VBtn>
-										<VBtn
-											size="small"
-											variant="outlined"
-											color="success"
-											@click="forceVuetifyModel(true)"
-										>
-											true
-										</VBtn>
-										<VBtn
-											size="small"
-											variant="outlined"
-											color="error"
-											@click="forceVuetifyModel(false)"
-										>
-											false
-										</VBtn>
-									</div>
 
 									<p class="text-caption font-weight-medium mb-2">
 										API exposée via <code>ref</code>
