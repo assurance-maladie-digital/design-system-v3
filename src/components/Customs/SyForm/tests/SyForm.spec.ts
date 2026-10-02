@@ -30,7 +30,7 @@ describe('SyForm', () => {
 		}
 
 		const wrapper = mount(TestWrapper)
-		expect(wrapper.vm.formValide).toBe(null)
+		expect(wrapper.vm.formValide).toBeNull()
 
 		// Champs invalides
 		const numberFieldNir = wrapper.findComponent(NirField).find('input')
@@ -722,7 +722,7 @@ describe('SyForm', () => {
 	})
 
 	describe('Initial v-model validation', () => {
-		it('sets false when a pristine custom field is initially invalid', async () => {
+		it('sets null when a pristine custom field is initially invalid', async () => {
 			const TestWrapper = {
 				components: { SyForm, SyTextField },
 				template: `
@@ -742,7 +742,7 @@ describe('SyForm', () => {
 			await flushPromises()
 
 			// Le formulaire connaît la validité initiale, sans afficher l'erreur du champ pristine.
-			expect(wrapper.vm.formValide).toBe(false)
+			expect(wrapper.vm.formValide).toBeNull()
 		})
 
 		it('defers to vFormStatus when form has only Vuetify fields', async () => {
@@ -780,7 +780,7 @@ describe('SyForm', () => {
 				data() {
 					return {
 						text: '',
-						formValide: undefined as boolean | null | undefined,
+						formValide: null as boolean | null,
 					}
 				},
 			}
@@ -818,7 +818,7 @@ describe('SyForm', () => {
 			expect(wrapper.vm.formValide).toBe(true)
 		})
 
-		it('reports false when form has pristine invalid custom fields', async () => {
+		it('reports null when form has pristine invalid custom fields', async () => {
 			const TestWrapper = {
 				components: { SyForm, SyTextField },
 				template: `
@@ -837,10 +837,10 @@ describe('SyForm', () => {
 			const wrapper = mount(TestWrapper)
 			await flushPromises()
 
-			expect(wrapper.vm.formValide).toBe(false)
+			expect(wrapper.vm.formValide).toBeNull()
 		})
 
-		it('transitions from false to true when all custom fields become valid', async () => {
+		it('transitions from null to true when all custom fields become valid', async () => {
 			const TestWrapper = {
 				components: { SyForm, SyTextField },
 				template: `
@@ -858,7 +858,7 @@ describe('SyForm', () => {
 
 			const wrapper = mount(TestWrapper)
 			await flushPromises()
-			expect(wrapper.vm.formValide).toBe(false)
+			expect(wrapper.vm.formValide).toBeNull()
 
 			// Remplir et valider le champ
 			const textFieldInput = wrapper.findComponent(SyTextField).find('input')
@@ -889,7 +889,7 @@ describe('SyForm', () => {
 
 			const wrapper = mount(TestWrapper)
 			await flushPromises()
-			expect(wrapper.vm.formValide).toBe(false)
+			expect(wrapper.vm.formValide).toBeNull()
 
 			// Toucher le champ mais le laisser vide (invalide)
 			const textFieldInput = wrapper.findComponent(SyTextField).find('input')

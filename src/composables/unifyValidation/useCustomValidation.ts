@@ -174,6 +174,7 @@ export function useCustomValidation(
 			reset,
 			computed(() => isPristine.value ? silentValide.value : errors.value.length < 1),
 			computed(() => !disableErrorHandling.value || errors.value.length > 0),
+			isPristine,
 		)
 	}
 

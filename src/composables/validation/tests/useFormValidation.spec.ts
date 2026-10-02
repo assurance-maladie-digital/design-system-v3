@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { defineComponent, h } from 'vue'
+import { defineComponent, h, ref } from 'vue'
 import { mount, flushPromises } from '@vue/test-utils'
 import { useFormValidation, useValidatableComponent } from '../useFormValidation'
 import type { ValidatableComponent } from '../useFormValidation'
@@ -243,6 +243,27 @@ describe('useFormValidation', () => {
 		childApi.register(asyncTrue)
 
 		await expect(form.validateAll()).resolves.toBe(true)
+	})
+
+	it('reports null while an invalid custom field is pristine, even when VForm reports false', () => {
+		const wrapper = mount(ParentWithForm)
+		const form = (wrapper.vm as { form: FormValidationApi }).form
+		const isValid = ref(false)
+		const isPristine = ref(true)
+
+		lastChildApi!.register({
+			validateOnSubmit: () => isValid.value,
+			valide: isValid,
+			isPristine,
+		})
+
+		expect(form.getFormValue(false)).toBeNull()
+
+		isPristine.value = false
+		expect(form.getFormValue(false)).toBe(false)
+
+		isValid.value = true
+		expect(form.getFormValue(true)).toBe(true)
 	})
 })
 

@@ -86,7 +86,7 @@
 	}
 
 	function validityLabel(value: boolean | null) {
-		if (value === null) return { text: 'null', hint: 'vierge / inconnu', color: 'medium-emphasis' as const }
+		if (value === null) return { text: 'null', hint: 'invalide (masqué)', color: 'medium-emphasis' as const }
 		if (value === true) return { text: 'true', hint: 'valide', color: 'success' as const }
 		return { text: 'false', hint: 'invalide', color: 'error' as const }
 	}
@@ -648,6 +648,7 @@
 										<PasswordField
 											v-model="synapsePassword"
 											label="Mot de passe"
+											autocomplete-type="new-password"
 											:custom-rules="synapsePasswordRules"
 											class="mb-4"
 										/>
@@ -1048,6 +1049,7 @@
 										<PasswordField
 											v-model="vuetifyPassword"
 											label="Mot de passe"
+											autocomplete-type="new-password"
 											use-vuetify-validation
 											:rules="vuetifyPasswordRules"
 											class="mb-4"

@@ -45,7 +45,7 @@ describe('SyForm integration with Synapse and Vuetify fields', () => {
 			expectFormValidity(wrapper, 'true')
 		})
 
-		it('sets the v-model to false for an invalid initial value without displaying an error', async () => {
+		it('sets the v-model to null for an invalid initial value without displaying an error', async () => {
 			const wrapper = mount(IntegrationTestForm, {
 				props: {
 					initiallyValid: true,
@@ -56,7 +56,9 @@ describe('SyForm integration with Synapse and Vuetify fields', () => {
 			await flushPromises()
 			await nextTick()
 
-			expectFormValidity(wrapper, 'false')
+			// Le formulaire connaît l'invalidité (validation silencieuse) mais l'erreur
+			// n'est pas encore affichée : validité inconnue côté consommateur.
+			expectFormValidity(wrapper, 'null')
 			expect(wrapper.text()).not.toContain('Le numéro de téléphone est invalide.')
 		})
 	})

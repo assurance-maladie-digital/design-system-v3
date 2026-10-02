@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { ref, watch } from 'vue'
+	import { computed, ref, watch } from 'vue'
 	import { useFormValidation } from '@/composables/validation/useFormValidation'
 	import type { VForm } from 'vuetify/components/VForm'
 
@@ -18,11 +18,15 @@
 
 	const form = ref<InstanceType<typeof VForm>>()
 	const vFormStatus = ref<boolean | null>(null)
+	const hasVuetifyFields = computed(() => (form.value?.items.length ?? 0) > 0)
 
-	const { validateAll, clearAll, resetAll, customComponentsValide, getFormValue } = useFormValidation()
+	const { validateAll, clearAll, resetAll, customComponentsValide, hasDisplayedError, getFormValue } = useFormValidation()
 
-	watch([customComponentsValide, vFormStatus], ([, newVFormStatus]) => {
-		model.value = getFormValue(newVFormStatus)
+	// hasDisplayedError est une source du watch : le passage de pristine à « erreur
+	// affichée » (via validateOnSubmit) doit recalculer le v-model même si
+	// customComponentsValide et vFormStatus n'ont pas changé.
+	watch([customComponentsValide, hasDisplayedError, vFormStatus, hasVuetifyFields], ([, , newVFormStatus, newHasVuetifyFields]) => {
+		model.value = getFormValue(newVFormStatus, newHasVuetifyFields)
 	}, { immediate: true })
 
 	const validate = async () => {
@@ -84,19 +88,16 @@
 </script>
 
 <template>
-	<div>
-		{{ vFormStatus === null ? 'En attente' : vFormStatus ? 'Valide' : 'Invalide' }}
-		<VForm
-			ref="form"
-			v-model="vFormStatus"
-			@submit.prevent="handleSubmit"
-			@reset="handleReset"
-		>
-			<slot
-				:validate="validate"
-				:reset="reset"
-				:clear="clearValidation"
-			/>
-		</VForm>
-	</div>
+	<VForm
+		ref="form"
+		v-model="vFormStatus"
+		@submit.prevent="handleSubmit"
+		@reset="handleReset"
+	>
+		<slot
+			:validate="validate"
+			:reset="reset"
+			:clear="clearValidation"
+		/>
+	</VForm>
 </template>

@@ -1,8 +1,10 @@
+/* eslint-disable vue/one-component-per-file */
 import { describe, expect, it } from 'vitest'
 import { flushPromises, mount } from '@vue/test-utils'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, h, ref } from 'vue'
 import SyForm from '../SyForm.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+import { useValidatable } from '@/composables/validation/useValidatable'
 
 // Régression du bug de la page sandbox SyFormVModelPage (onglet Vuetify) :
 // le v-model de SyForm passait à true au chargement alors que tous les champs
@@ -28,14 +30,52 @@ const VuetifyOnlyForm = defineComponent({
 				use-vuetify-validation
 				:rules="[requiredRule]"
 			/>
-			<span data-testid="form-validity">{{ formValidity === null ? 'null' : formValidity }}</span>
+			<span data-testid="form-validity">{{ String(formValidity) }}</span>
+		</SyForm>
+	`,
+})
+
+const LegacyField = defineComponent({
+	name: 'LegacyField',
+	setup() {
+		useValidatable(() => true)
+		return () => h('div')
+	},
+})
+
+const MixedPristineForm = defineComponent({
+	components: { LegacyField, SyForm, SyTextField },
+	setup() {
+		const formValidity = ref<boolean | null>(null)
+		const name = ref('')
+		const requiredRule = (value: unknown): boolean | string =>
+			(typeof value === 'string' && value.trim() !== '') || 'Le nom est obligatoire'
+
+		return { formValidity, name, requiredRule }
+	},
+	template: `
+		<SyForm v-model="formValidity">
+			<LegacyField />
+			<SyTextField
+				v-model="name"
+				label="Nom"
+				use-vuetify-validation
+				:rules="[requiredRule]"
+			/>
+			<span data-testid="form-validity">{{ String(formValidity) }}</span>
 		</SyForm>
 	`,
 })
 
 describe('SyForm — champs en mode Vuetify uniquement', () => {
-	it('reste à null au chargement (validité déléguée au VForm, encore pristine)', async () => {
+	it('reste null au chargement quand le champ requis est pristine', async () => {
 		const wrapper = mount(VuetifyOnlyForm)
+		await flushPromises()
+		expect(wrapper.get('[data-testid="form-validity"]').text()).toBe('null')
+	})
+
+	it('reste null quand un champ Vuetify est pristine avec un composant legacy enregistré', async () => {
+		const wrapper = mount(MixedPristineForm)
 		await flushPromises()
 		expect(wrapper.get('[data-testid="form-validity"]').text()).toBe('null')
 	})

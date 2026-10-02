@@ -38,15 +38,15 @@ describe('SyForm integration with mixed Synapse and Vuetify fields', () => {
 	}
 
 	describe('Live v-model', () => {
-		it('transitions from false to true, false, then true as fields change', async () => {
+		it('transitions from null to true, false, then true as fields change', async () => {
 			const wrapper = mount(IntegrationMixedForm)
 
 			await settle()
-			expectFormValidity(wrapper, 'false')
+			expectFormValidity(wrapper, 'null')
 
 			await wrapper.findComponent(SyTextField).find('input').setValue('Jean Dupont')
 			await settle()
-			expectFormValidity(wrapper, 'false')
+			expectFormValidity(wrapper, 'null')
 
 			await fillRequiredFields(wrapper)
 			expectFormValidity(wrapper, 'true')

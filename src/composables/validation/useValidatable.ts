@@ -43,6 +43,7 @@ export function useValidatable(
 	reset?: () => void,
 	valide?: Ref<boolean | null>,
 	active: Ref<boolean | null> | boolean = true,
+	isPristine?: Ref<boolean>,
 ) {
 	const instance = getCurrentInstance()
 	if (!instance) return
@@ -66,6 +67,7 @@ export function useValidatable(
 		clearValidation,
 		reset,
 		valide,
+		isPristine,
 		$props: {
 			label: typeof instance?.props?.label === 'string' ? instance.props.label : undefined,
 		},

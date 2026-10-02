@@ -6,6 +6,7 @@ import { computed, inject, provide, ref, type InjectionKey, type Ref } from 'vue
  */
 export type ValidatableComponent = {
 	valide?: boolean | null
+	isPristine?: boolean
 	validateOnSubmit: () => Promise<boolean> | boolean
 	clearValidation?: () => void
 	reset?: () => void
@@ -112,7 +113,7 @@ export function useFormValidation() {
 	 * Statut de validation des composants custom enregistrés (comportement aligné sur Vuetify) :
 	 * - true : aucun composant custom ne remonte explicitement `valide === false`
 	 * - false : au moins un composant custom est invalide
-	 * - null : aucun composant custom enregistré (défère alors à vFormStatus)
+	 * - null : aucun composant custom enregistré (délègue alors à vFormStatus)
 	 */
 	const customComponentsValide = computed<boolean | null>(() => {
 		if (validatableComponents.value.length === 0) {
@@ -126,22 +127,45 @@ export function useFormValidation() {
 	})
 
 	/**
+	 * Indique si au moins un composant custom invalide a affiché son erreur
+	 * (champ touché par l'utilisateur ou validation explicite au submit).
+	 * Est une source de réactivité pour le formulaire : sans lui, le passage
+	 * de pristine à affiché pendant un validate() ne redéclencherait pas
+	 * le recalcul du v-model.
+	 */
+	const hasDisplayedError = computed<boolean>(() => validatableComponents.value.some(component =>
+		component.valide === false && component.isPristine === false,
+	))
+
+	/**
 	 * Calcule la valeur globale du formulaire en combinant les validations custom et Vuetify.
-	 * - Priorité aux erreurs : si Vuetify ou custom est invalide → false
+	 * - Priorité aux erreurs affichées : si Vuetify ou custom est invalide → false
+	 * - Erreur custom pristine : null, car le formulaire est invalide sans
+	 *   avoir encore affiché l'erreur à l'utilisateur
 	 * - Sans composant custom : défère à vFormStatus (Vuetify natif)
 	 * - Avec composant custom : utilise customComponentsValide (true tant qu'aucune erreur
 	 *   n'est remontée, à la manière de Vuetify)
 	 * @param vFormStatus - Statut de validation du VForm Vuetify
+	 * @param hasVuetifyFields - Indique si le VForm contient des champs enregistrés
 	 * @returns Statut global du formulaire (boolean | null)
 	 */
-	const getFormValue = (vFormStatus: boolean | null | undefined): boolean | null => {
-		if (!vFormStatus || customComponentsValide.value === false) {
+	const getFormValue = (
+		vFormStatus: boolean | null | undefined,
+		hasVuetifyFields = false,
+	): boolean | null => {
+		if (customComponentsValide.value === false) {
+			return hasDisplayedError.value ? false : null
+		}
+		if (vFormStatus === false) {
 			return false
 		}
-		if (validatableComponents.value.length === 0) {
-			return vFormStatus
+		if (hasVuetifyFields && vFormStatus == null) {
+			return null
 		}
-		return customComponentsValide.value
+		if (validatableComponents.value.length === 0) {
+			return vFormStatus === true ? true : null
+		}
+		return true
 	}
 
 	// Méthode pour les tests : retourne une copie des composants enregistrés
@@ -160,6 +184,7 @@ export function useFormValidation() {
 		clearAll,
 		resetAll,
 		customComponentsValide,
+		hasDisplayedError,
 		getFormValue,
 		_getValidatableComponents,
 	}
