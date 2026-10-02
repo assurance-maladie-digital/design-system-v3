@@ -37,6 +37,13 @@ export const locales = {
 	moveColumnLeft: (columnTitle: string) => `Déplacer la colonne ${columnTitle} vers la gauche`,
 	moveColumnRight: (columnTitle: string) => `Déplacer la colonne ${columnTitle} vers la droite`,
 
+	columnWidth: (width: number) => `${width} pixels`,
+	expandRows: 'Détails des lignes',
+	selectionColumn: 'Sélection des lignes',
+	selectedRows: (rows: string) => `Lignes sélectionnées : ${rows}.`,
+	tablePagination: (name: string) => `Pagination du tableau ${name}`,
+	visibleRows: (start: number, end: number, total: number, page: number) => `Page ${page}. Lignes ${start} à ${end} sur ${total}.`,
+	activeFilters: (count: number) => `${count} filtre${count > 1 ? 's' : ''} actif${count > 1 ? 's' : ''}.`,
 	// Accessibility locales
 	loading: 'Chargement des données en cours',
 	rowCountStatus: (count: number) => count <= 1 ? `${count} ligne trouvée` : `${count} lignes trouvées`,

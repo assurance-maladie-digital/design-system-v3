@@ -15,11 +15,13 @@
 		table: VDataTable | VDataTableServer | null | undefined
 		resizableColumns?: boolean
 		wrapTitle?: boolean
+		announceWidth?: boolean
 		storageKey?: string
 		headerPropsRaw?: HeaderPropsRaw
 	}>(), {
 		resizableColumns: false,
 		wrapTitle: false,
+		announceWidth: false,
 		storageKey: undefined,
 		headerPropsRaw: undefined,
 	})
@@ -168,7 +170,7 @@
 		await nextTick()
 		updateTableWidth()
 	})
-	window.addEventListener('resize', updateTableWidth)
+	onMounted(() => window.addEventListener('resize', updateTableWidth))
 
 	onUnmounted(() => {
 		window.removeEventListener('resize', updateTableWidth)
@@ -202,6 +204,28 @@
 
 		const index = props.headerParams.sortBy.findIndex(sort => sort.key === props.column.key)
 		return index !== -1 ? index + 1 : null
+	})
+
+	const measuredWidth = ref(0)
+	let widthObserver: ResizeObserver | undefined
+	onMounted(() => {
+		if (!props.announceWidth) return
+		const cell = wrapper.value?.closest('th')
+		if (!cell) return
+		const measure = () => {
+			measuredWidth.value = Math.round(cell.getBoundingClientRect().width)
+		}
+		measure()
+		widthObserver = new ResizeObserver(measure)
+		widthObserver.observe(cell)
+	})
+	onUnmounted(() => widthObserver?.disconnect())
+	const accessibleWidth = computed(() => {
+		if (measuredWidth.value > 0) return measuredWidth.value
+		const width = header.value?.width
+		if (typeof width === 'number') return Math.max(50, Math.round(width))
+		if (typeof width === 'string' && /^\d+(\.\d+)?(px)?$/.test(width)) return Math.max(50, Math.round(Number.parseFloat(width)))
+		return 50
 	})
 
 	const titleClasses = computed(() => [
@@ -278,10 +302,12 @@
 			class="resizer"
 			tabindex="0"
 			role="separator"
-			:aria-valuenow="(column.width as number)"
-			:aria-valuemin="0"
-			:aria-valuemax="tableWidth"
-			:aria-label="locales.ResizableColumn"
+			:aria-valuenow="announceWidth ? accessibleWidth : (column.width as number)"
+			:aria-valuetext="announceWidth ? locales.columnWidth(accessibleWidth) : undefined"
+			:aria-orientation="announceWidth ? 'vertical' : undefined"
+			:aria-valuemin="announceWidth ? 50 : 0"
+			:aria-valuemax="announceWidth ? Math.max(tableWidth, accessibleWidth) : tableWidth"
+			:aria-label="announceWidth ? locales.resizeColumn(column.title || '') : locales.ResizableColumn"
 			@mousedown="startResize"
 			@dblclick="resetColumnWidth"
 			@keydown.right.prevent="resizeKeyboardColumn(10)"
