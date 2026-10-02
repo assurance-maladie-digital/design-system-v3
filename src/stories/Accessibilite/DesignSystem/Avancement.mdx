@@ -184,6 +184,18 @@ import { useState } from 'react';
   border-color: transparent transparent #393939 transparent;
 }
 
+.carbon-tooltip-content--right {
+  left: 0;
+  right: auto;
+}
+
+.carbon-tooltip-content--right::after {
+  left: 10px;
+  right: auto;
+  margin-right: 0;
+  margin-left: -5px;
+}
+
 .carbon-tooltip-container:hover .carbon-tooltip-content {
   visibility: visible;
   opacity: 1;
@@ -236,6 +248,21 @@ import { useState } from 'react';
   font-size: 0.875rem;
   color: #525252;
 }
+
+.a11y-notice {
+  background-color: #d0e2ff;
+  border-left: 4px solid #0C419A;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  max-width: 900px;
+}
+
+.a11y-notice strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
 `}
 </style>
 
@@ -262,18 +289,15 @@ import { useState } from 'react';
     <div className="carbon-a11y-container">
   <div className="header-section">
     <h2 className="title">
-      Statut de l'accessibilité par composant
-      <span className="carbon-tooltip-container">
-        <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" className="carbon-tooltip-icon">
-          <path d="M16 2A14 14 0 1 0 30 16 14 14 0 0 0 16 2zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"></path>
-          <path d="M17 22h-2v-2h2zm-2-5v-1c0-1.1.9-2 2-2s2-.9 2-2-.9-2-2-2-2 .9-2 2h-2c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4v1z"></path>
-        </svg>
-        <span className="carbon-tooltip-content">Cet indicateur reflète l'état global d'avancement de la mise en accessibilité des composants du Design System. Le pourcentage de conformité se base sur les tests automatisés, la configuration des stories et la documentation complète. Les audits manuels sont affichés à titre informatif mais ne sont pas comptabilisés dans ce pourcentage.</span>
-      </span>
+      Vérifications d'accessibilité par composant
     </h2>
     <div className="meta-info">
-      <strong>Statut :</strong> {compliantCount} / {totalCount} composants conformes ({percentage}%) | <strong>Dernière mise à jour :</strong> {new Date(statusData.date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
+      <strong>Statut :</strong> {compliantCount} / {totalCount} composants couverts par les vérifications automatiques ({percentage}%) | <strong>Dernière mise à jour :</strong> {new Date(statusData.date).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
     </div>
+  </div>
+
+  <div className="a11y-notice">
+    Cet indicateur reflète la couverture des vérifications automatiques : présence de tests vitest-axe, activation de l'onglet accessibilité dans les stories et documentation complète. Il ne garantit pas la conformité RGAA d'un composant. Les audits manuels sont affichés dans la colonne « Audit manuel » mais ne sont pas comptabilisés dans ce pourcentage.
   </div>
 
   <div className="search-container">
@@ -307,7 +331,7 @@ import { useState } from 'react';
                   <path d="M16 2A14 14 0 1 0 30 16 14 14 0 0 0 16 2zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"></path>
                   <path d="M17 22h-2v-2h2zm-2-5v-1c0-1.1.9-2 2-2s2-.9 2-2-.9-2-2-2-2 .9-2 2h-2c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4v1z"></path>
                 </svg>
-                <span className="carbon-tooltip-content">Indique si des tests d'accessibilité (vitest-axe) sont implémentés et fonctionnels pour la CI.</span>
+                <span className="carbon-tooltip-content carbon-tooltip-content--right">Indique si des tests d'accessibilité (vitest-axe) sont implémentés et fonctionnels pour la CI.</span>
               </span>
             </div>
           </th>
@@ -337,13 +361,25 @@ import { useState } from 'react';
           </th>
           <th>
             <div className="th-content">
+              Audit manuel
+              <span className="carbon-tooltip-container">
+                <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" className="carbon-tooltip-icon">
+                  <path d="M16 2A14 14 0 1 0 30 16 14 14 0 0 0 16 2zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"></path>
+                  <path d="M17 22h-2v-2h2zm-2-5v-1c0-1.1.9-2 2-2s2-.9 2-2-.9-2-2-2-2 .9-2 2h-2c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4v1z"></path>
+                </svg>
+                <span className="carbon-tooltip-content">Indique si un audit manuel d'accessibilité a été réalisé sur ce composant. Seul cet audit permet d'attester de sa conformité RGAA réelle.</span>
+              </span>
+            </div>
+          </th>
+          <th>
+            <div className="th-content">
               Version corrigée
               <span className="carbon-tooltip-container">
                 <svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" className="carbon-tooltip-icon">
                   <path d="M16 2A14 14 0 1 0 30 16 14 14 0 0 0 16 2zm0 26a12 12 0 1 1 12-12 12 12 0 0 1-12 12z"></path>
                   <path d="M17 22h-2v-2h2zm-2-5v-1c0-1.1.9-2 2-2s2-.9 2-2-.9-2-2-2-2 .9-2 2h-2c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4v1z"></path>
                 </svg>
-                <span className="carbon-tooltip-content">Version du Design System dans laquelle l'accessibilité de ce composant a été corrigée / mise à jour.</span>
+                <span className="carbon-tooltip-content">Dernière version du Design System dans laquelle l'accessibilité de ce composant a été corrigée / mise à jour.</span>
               </span>
             </div>
           </th>
@@ -438,6 +474,11 @@ import { useState } from 'react';
                     item.mdxStatus === 'Manquante' ? 'tag-red' : 'tag-blue'
                   }`}>
                     {item.mdxStatus}
+                  </span>
+                </td>
+                <td>
+                  <span className={`carbon-tag ${item.hasManualAudit ? 'tag-green' : 'tag-gray'}`}>
+                    {item.hasManualAudit ? 'Audité' : 'Non audité'}
                   </span>
                 </td>
                 <td>
