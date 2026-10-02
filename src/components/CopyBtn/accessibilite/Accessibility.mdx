@@ -22,7 +22,6 @@ import {
             <ul>
                 <li><strong>Bouton natif</strong> : utilisation du composant<code>VBtn</code> qui génère un élément <code>&lt;button&gt;</code>, garantissant un comportement accessible par défaut.</li>
                 <li><strong>Nom accessible</strong> : l’attribut <code>aria-label</code>permet de fournir une description explicite de l’action (ex. « Copier le numéro de compte »).</li>
-                <li><strong>Attributs ARIA corrigés</strong> : les liens <code>aria-owns</code> et <code>aria-controls</code> ajoutés par CopyBtn ont été retirés. Le premier pointait vers le conteneur parent du bouton. Le second pouvait pointer vers un élément absent lorsque la prop <code>ariaOwns</code> était personnalisée. Ces liens n’étaient pas nécessaires à l’action de copie.</li>
                 <li><strong>Identifiants uniques</strong> : l’utilisation de<code>useId()</code> garantit des identifiants uniques pour chaque instance du composant.</li>
             </ul>
         </CriteriaCard>
