@@ -43,7 +43,6 @@
 			<component
 				:is="innerTag"
 				:id="groupId"
-				role="group"
 				class="header-menu-section-list"
 			>
 				<slot />

@@ -34,16 +34,29 @@ const vLockFocus: Directive<HTMLElement> = {
 	},
 }
 
+function isElementVisible(el: HTMLElement): boolean {
+	// checkVisibility() natif : détecte display:none / visibility:hidden sur l'élément et ses ancêtres
+	if (typeof el.checkVisibility === 'function') {
+		return el.checkVisibility()
+	}
+	// Fallback DOM : masquage par v-show (style inline), [hidden] ou aria-hidden
+	return !el.closest('[hidden], [style*="display: none"], [style*="display:none"], [aria-hidden="true"]')
+}
+
 function handleFocus(event: KeyboardEvent) {
 	if (event.key !== 'Tab') return
 	const target = event.currentTarget as HTMLElement
 
-	const focusableElements = target.querySelectorAll(
-		'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex]:not([tabindex="-1"]), [contenteditable]',
-	)
+	const focusableElements = Array.from(
+		target.querySelectorAll<HTMLElement>(
+			'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, [tabindex]:not([tabindex="-1"]), [contenteditable]',
+		),
+	).filter(isElementVisible)
 
-	const firstElement = focusableElements[0] as HTMLElement
-	const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement
+	const firstElement = focusableElements[0]
+	const lastElement = focusableElements[focusableElements.length - 1]
+
+	if (!firstElement || !lastElement) return
 
 	if (event.shiftKey && document.activeElement === firstElement) {
 		event.preventDefault()

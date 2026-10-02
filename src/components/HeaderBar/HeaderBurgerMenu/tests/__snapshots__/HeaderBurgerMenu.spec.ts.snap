@@ -5,24 +5,23 @@ exports[`HeaderBurgerMenu > should render the component 1`] = `
   aria-label="Menu principal"
   aria-modal="true"
   class="overlay"
+  id="v-0"
   role="dialog"
 >
   <div
     class="menu-wrapper"
-    role="menu"
     style="
       left: 0px;
       top: 0px;
       height: calc(100vh - 0px - 48px);
     "
   >
-    <button>
+    <button aria-controls="v-0">
       Test
     </button>
     <nav
       aria-label="Menu public"
       class="header-menu-wrapper"
-      id="header-menu-wrapper"
       role="navigation"
     >
       <ul class="header-menu">
