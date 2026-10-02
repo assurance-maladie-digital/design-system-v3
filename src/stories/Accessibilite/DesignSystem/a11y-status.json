@@ -1,8 +1,8 @@
 {
-  "date": "2026-09-29T07:02:06.370Z",
-  "compliantCount": 61,
+  "date": "2026-10-02T12:46:02.780Z",
+  "compliantCount": 63,
   "totalCount": 77,
-  "percentage": "79.22",
+  "percentage": "81.82",
   "results": [
     {
       "componentName": "Accordion",
@@ -249,9 +249,9 @@
     {
       "componentName": "Customs/SyTextField",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
+      "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false,
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/SyTextField",
       "hasManualAudit": true,
       "version": "1.1.3",
@@ -501,9 +501,9 @@
     },
     {
       "componentName": "HeaderToolbar",
-      "hasA11yTests": false,
+      "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
-      "mdxStatus": "Incomplète",
+      "mdxStatus": "Complète",
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Structure/HeaderToolbar",
       "hasManualAudit": true,

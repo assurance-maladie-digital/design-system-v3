@@ -1,6 +1,6 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 29/09/2026
+Généré le: 02/10/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
@@ -26,7 +26,7 @@ Généré le: 29/09/2026
 | **Customs/SyPagination** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyRadioGroup** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyTabs** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
-| **Customs/SyTextField** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
+| **Customs/SyTextField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **DataList** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **DataListGroup** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **DataListItem** | ✅ Oui | ✅ Non | ❌ Manquante | ❌ Non | ❌ |
@@ -49,7 +49,7 @@ Généré le: 29/09/2026
 | **HeaderBar** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
 | **HeaderLoading** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **HeaderNavigationBar** | ❌ Non | ❌ Oui | ❌ Manquante | ❌ Non | ❌ |
-| **HeaderToolbar** | ❌ Non | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
+| **HeaderToolbar** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
 | **LangBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **Logo** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **LogoBrandSection** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -82,4 +82,4 @@ Généré le: 29/09/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 61 / 77 (79.22%)**
+**Total des composants conformes : 63 / 77 (81.82%)**
