@@ -114,7 +114,7 @@
 	const vuetifyLastName = ref('')
 	const vuetifyEmail = ref('')
 	const vuetifyMessage = ref('')
-	const vuetifyPassword = ref<string | null>('fffkkkjmlkjmkjmlkf')
+	const vuetifyPassword = ref<string | null>(null)
 	const vuetifyPhone = ref('0202020202')
 	const vuetifyNir = ref('')
 	const vuetifyBirthDate = ref<string | null>(null)
@@ -223,11 +223,14 @@
 
 	const vuetifyDateRules = [
 		(value: unknown) => {
-			if (!value) return 'La date de consultation est obligatoire'
+			if (typeof value !== 'string' || value === '') return 'La date de consultation est obligatoire'
+			// Le DatePicker émet au format JJ/MM/AAAA : parsing explicite,
+			// new Date(string) interpréterait la chaîne au format US MM/DD/YYYY.
+			const [day, month, year] = value.split('/').map(Number)
+			const input = new Date(year, month - 1, day)
+			if (Number.isNaN(input.getTime())) return 'Le format attendu est JJ/MM/AAAA'
 			const today = new Date()
 			today.setHours(0, 0, 0, 0)
-			const input = new Date(value as string)
-			input.setHours(0, 0, 0, 0)
 			return input >= today || 'La date ne peut pas être antérieure à aujourd’hui'
 		},
 	]
@@ -437,11 +440,6 @@
 										</VChip>
 									</VSheet>
 
-									<p class="text-caption text-medium-emphasis mb-4">
-										Tri-état attendu : <code>null</code> tant qu’au moins un champ est vierge,
-										<code>false</code> si un champ est invalide, <code>true</code> lorsque tout est validé.
-									</p>
-
 									<p class="text-caption font-weight-medium mb-2">
 										Écrire le model depuis le parent (two-way binding)
 									</p>
@@ -589,6 +587,12 @@
 									</VCardItem>
 									<VDivider />
 
+									<VCardText>
+										<p class="text-caption text-medium-emphasis">
+											Les champs suivis d’un astérisque (*) sont obligatoires.
+										</p>
+									</VCardText>
+
 									<!-- Champs texte -->
 									<VCardText>
 										<p class="text-caption font-weight-medium mb-2">
@@ -704,6 +708,7 @@
 									<VDivider />
 
 									<!-- Sélections -->
+
 									<VCardText>
 										<p class="text-caption font-weight-medium mb-2">
 											<VIcon
@@ -759,7 +764,7 @@
 											required
 											display-asterisk
 										/>
-									</VCardText>
+									</VCardText>-->
 
 									<VDivider />
 
@@ -836,11 +841,6 @@
 											{{ validityLabel(vuetifyValidity).hint }}
 										</VChip>
 									</VSheet>
-
-									<p class="text-caption text-medium-emphasis mb-4">
-										Tri-état attendu : <code>null</code> tant qu’au moins un champ est vierge,
-										<code>false</code> si un champ est invalide, <code>true</code> lorsque tout est validé.
-									</p>
 
 									<p class="text-caption font-weight-medium mb-2">
 										Écrire le model depuis le parent (two-way binding)
@@ -989,6 +989,12 @@
 									</VCardItem>
 									<VDivider />
 
+									<VCardText>
+										<p class="text-caption text-medium-emphasis">
+											Les champs suivis d’un astérisque (*) sont obligatoires.
+										</p>
+									</VCardText>
+
 									<!-- Champs texte -->
 									<VCardText>
 										<p class="text-caption font-weight-medium mb-2">
@@ -1001,30 +1007,27 @@
 										</p>
 										<SyTextField
 											v-model="vuetifyLastName"
-											label="Nom"
+											label="Nom *"
 											placeholder="Ex : Dupont"
-											required
-											display-asterisk
+											aria-required="true"
 											use-vuetify-validation
 											:rules="vuetifyNameRules"
 											class="mb-4"
 										/>
 										<SyTextField
 											v-model="vuetifyEmail"
-											label="Adresse e-mail"
+											label="Adresse e-mail *"
 											placeholder="ex : jean.dupont@exemple.fr"
-											required
-											display-asterisk
+											aria-required="true"
 											use-vuetify-validation
 											:rules="vuetifyEmailRules"
 											class="mb-4"
 										/>
 										<SyTextArea
 											v-model="vuetifyMessage"
-											label="Message"
+											label="Message *"
 											placeholder="Décrivez votre demande"
-											required
-											display-asterisk
+											aria-required="true"
 											use-vuetify-validation
 											:rules="vuetifyMessageRules"
 										/>
@@ -1051,26 +1054,173 @@
 										/>
 										<PhoneField
 											v-model="vuetifyPhone"
-											label="Numéro de téléphone"
-											required
-											display-asterisk
+											label="Numéro de téléphone *"
+											aria-required="true"
 											use-vuetify-validation
 											:rules="vuetifyPhoneRules"
 											class="mb-4"
 										/>
 										<NirField
 											v-model="vuetifyNir"
-											required
-											display-asterisk
+											aria-required="true"
 											use-vuetify-validation
-											number-label="Numéro de sécurité sociale"
+											number-label="Numéro de sécurité sociale *"
 											:display-key="true"
 											:number-rules="vuetifyNirNumberRules"
 											:key-rules="vuetifyNirKeyRules"
-										/>-->
+										/>
 									</VCardText>
 
 									<VDivider />
+
+									<!-- Dates -->
+									<VCardText>
+										<p class="text-caption font-weight-medium mb-2">
+											<VIcon
+												:icon="mdiCalendarRange"
+												size="14"
+												class="mr-1"
+											/>
+											Dates
+										</p>
+										<DatePicker
+											v-model="vuetifyBirthDate"
+											label="Date de consultation *"
+											placeholder="JJ/MM/AAAA"
+											aria-required="true"
+											use-vuetify-validation
+											:rules="vuetifyDateRules"
+											:display-today-button="true"
+											class="mb-4"
+										/>
+										<MonthPicker
+											v-model="vuetifyProjectMonth"
+											label="Début du projet *"
+											aria-required="true"
+											use-vuetify-validation
+											:rules="vuetifyMonthRules"
+											class="mb-4"
+										/>
+										<!-- PeriodField n'a pas de mode Vuetify : équivalent en composants natifs -->
+										<VRow>
+											<VCol
+												cols="12"
+												sm="6"
+											>
+												<VTextField
+													v-model="vuetifyPeriodStart"
+													label="Date d’entrée (VTextField) *"
+													placeholder="JJ/MM/AAAA"
+													variant="outlined"
+													aria-required="true"
+													:rules="vuetifyDatePatternRules"
+												/>
+											</VCol>
+											<VCol
+												cols="12"
+												sm="6"
+											>
+												<VTextField
+													v-model="vuetifyPeriodEnd"
+													label="Date de sortie (VTextField) *"
+													placeholder="JJ/MM/AAAA"
+													variant="outlined"
+													aria-required="true"
+													:rules="vuetifyDatePatternRules"
+												/>
+											</VCol>
+										</VRow>
+									</VCardText>
+
+									<VDivider />
+
+									<!-- Sélections -->
+									<VCardText>
+										<p class="text-caption font-weight-medium mb-2">
+											<VIcon
+												:icon="mdiCheckDecagramOutline"
+												size="14"
+												class="mr-1"
+											/>
+											Sélections
+										</p>
+										<SySelect
+											v-model="vuetifyCareType"
+											label="Type de soins *"
+											:items="careTypeItems"
+											aria-required="true"
+											use-vuetify-validation
+											:rules="vuetifyRequiredChoice('Veuillez sélectionner un type de soins')"
+											class="mb-4"
+										/>
+										<SyAutocomplete
+											v-model="vuetifyDoctor"
+											label="Médecin traitant *"
+											:items="doctorItems"
+											aria-required="true"
+											use-vuetify-validation
+											:rules="vuetifyRequiredChoice('Veuillez sélectionner un médecin traitant')"
+											class="mb-4"
+										/>
+										<!-- Composants Vuetify natifs -->
+										<VSelect
+											v-model="vuetifyContactChannel"
+											label="Canal de contact préféré (VSelect) *"
+											:items="contactChannelItems"
+											item-title="text"
+											item-value="value"
+											variant="outlined"
+											aria-required="true"
+											:rules="vuetifyRequiredChoice('Veuillez sélectionner un canal de contact')"
+											class="mb-4"
+										/>
+										<VSelect
+											v-model="vuetifyBillingFormat"
+											label="Format de facturation (VSelect) *"
+											:items="billingFormatItems"
+											item-title="text"
+											item-value="value"
+											variant="outlined"
+											aria-required="true"
+											:rules="vuetifyRequiredChoice('Veuillez sélectionner un format de facturation')"
+											class="mb-4"
+										/>
+										<SelectBtnField
+											v-model="vuetifyFileTransfer"
+											label="Mode de téléversement *"
+											:items="fileTransferItems"
+											aria-required="true"
+											use-vuetify-validation
+											:rules="vuetifyRequiredChoice('Veuillez sélectionner un mode de téléversement')"
+											class="mb-4"
+										/>
+										<SyRadioGroup
+											v-model="vuetifyTransmissionWay"
+											label="Voie de transmission *"
+											:options="fileTransferOptions"
+											aria-required="true"
+											use-vuetify-validation
+											:rules="vuetifyRequiredChoice('Veuillez sélectionner une voie de transmission')"
+											class="mb-4"
+										/>
+										<SyCheckBoxGroup
+											v-model="vuetifyNotifications"
+											label="Notifications souhaitées *"
+											:options="notificationOptions"
+											multiple
+											aria-required="true"
+											use-vuetify-validation
+											:rules="vuetifyRequiredChoice('Veuillez sélectionner au moins une notification')"
+											class="mb-4"
+										/>
+										<SyCheckbox
+											v-model="vuetifyConsent"
+											label="J’accepte que mes données soient utilisées pour le traitement de cette demande. *"
+											aria-required="true"
+											use-vuetify-validation
+											:rules="vuetifyConsentRules"
+										/>
+									</VCardText>
 
 									<VDivider />
 
