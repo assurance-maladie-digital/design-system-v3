@@ -23,6 +23,19 @@ import * as ExternalLinksStories from './ExternalLinks.stories.ts'
 
 <Controls of={ExternalLinksStories.Default} />
 
+## Ouverture dans une nouvelle fenêtre
+
+La prop `newWindowText` personnalise l’annonce réservée aux lecteurs d’écran,
+avec la valeur par défaut `nouvelle fenêtre`. Le lien est ainsi annoncé
+« ameli.fr (nouvelle fenêtre) ».
+
+Cette annonce est ajoutée lorsque `vuetifyOptions.listItem.target` vaut `_blank`
+(valeur par défaut). Elle n’est pas ajoutée pour `_self` et reste présente lorsque
+le slot `link-icon` est personnalisé. Fournissez le libellé sans parenthèses :
+le composant les ajoute automatiquement.
+
+<Canvas of={ExternalLinksStories.CustomNewWindowText} />
+
 ## Décalage
 
 Vous pouvez décaler le composant vers le haut ou vers le bas en utilisant les props `nudge-top` et `nude-bottom`.

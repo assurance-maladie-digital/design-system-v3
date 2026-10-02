@@ -1,6 +1,6 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 28/09/2026
+Généré le: 29/09/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
@@ -38,7 +38,7 @@ Généré le: 28/09/2026
 | **DialogBox** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **DownloadBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **ErrorPage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **ExternalLinks** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
+| **ExternalLinks** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **FileList** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **FilePreview** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **FileUpload** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |

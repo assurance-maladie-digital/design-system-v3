@@ -1,5 +1,5 @@
 {
-  "date": "2026-09-28T12:10:19.615Z",
+  "date": "2026-09-29T07:02:06.370Z",
   "compliantCount": 61,
   "totalCount": 77,
   "percentage": "79.22",
@@ -381,9 +381,9 @@
     {
       "componentName": "ExternalLinks",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
-      "mdxStatus": "Incomplète",
-      "isFullyCompliant": false,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Navigation/ExternalLinks",
       "hasManualAudit": true,
       "version": "1.1.3",

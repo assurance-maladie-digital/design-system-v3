@@ -10593,6 +10593,17 @@
   ],
   "ExternalLinks": [
     {
+      "hash": "962b87035c34c626d88f0986b10bcb4c508bc219",
+      "date": "2026-09-25 12:04:38 +0200",
+      "dateFr": "25/09/2026",
+      "message": "corrections test accessibilité axe et tanaguru",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
       "dateFr": "10/09/2026",
