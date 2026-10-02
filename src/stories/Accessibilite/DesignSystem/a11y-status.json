@@ -1,8 +1,8 @@
 {
-  "date": "2026-09-29T07:02:06.370Z",
-  "compliantCount": 61,
+  "date": "2026-10-02T13:29:27.665Z",
+  "compliantCount": 66,
   "totalCount": 77,
-  "percentage": "79.22",
+  "percentage": "85.71",
   "results": [
     {
       "componentName": "Accordion",
@@ -249,9 +249,9 @@
     {
       "componentName": "Customs/SyTextField",
       "hasA11yTests": true,
-      "hasA11yDisabledInStories": true,
+      "hasA11yDisabledInStories": false,
       "mdxStatus": "Complète",
-      "isFullyCompliant": false,
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Formulaires/SyTextField",
       "hasManualAudit": true,
       "version": "1.1.3",
@@ -470,7 +470,7 @@
       "componentName": "HeaderBar",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
-      "mdxStatus": "Complète",
+      "mdxStatus": "Incomplète",
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Structure/HeaderBar",
       "hasManualAudit": true,
@@ -501,10 +501,10 @@
     },
     {
       "componentName": "HeaderToolbar",
-      "hasA11yTests": false,
-      "hasA11yDisabledInStories": true,
-      "mdxStatus": "Incomplète",
-      "isFullyCompliant": false,
+      "hasA11yTests": true,
+      "hasA11yDisabledInStories": false,
+      "mdxStatus": "Complète",
+      "isFullyCompliant": true,
       "storybookTitle": "Composants/Structure/HeaderToolbar",
       "hasManualAudit": true,
       "version": "1.1.3",
