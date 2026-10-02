@@ -23,6 +23,14 @@ import * as CopyBtnStories from './CopyBtn.stories';
 
 <Controls of={CopyBtnStories.Default} />
 
+## À quoi sert `ariaOwns` ?
+
+La prop `ariaOwns` vaut `copy-btn` par défaut.
+Elle sert à créer l’identifiant unique du conteneur et à définir le `data-test-id` du bouton.
+Elle n’ajoute pas d’attribut `aria-owns`.
+
+Pour changer le texte annoncé par le lecteur d’écran, utilisez `ariaLabel`.
+
 # Exemple d'utilisation
 
 <Source dark code={`

@@ -18,6 +18,7 @@ const meta = {
 			default: 'copy-btn',
 		},
 		ariaOwns: {
+			description: 'Préfixe de l’identifiant du conteneur et valeur du data-test-id du bouton. Ne définit pas de relation ARIA.',
 			control: { type: 'text' },
 			default: 'copy-btn',
 		},
