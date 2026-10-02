@@ -7,6 +7,16 @@ import type { DateInput, DateModelValue } from '@/composables/date/useDateInitia
  */
 
 /**
+ * Type pour l'enregistrement d'un composant auprès d'un formulaire parent (SyForm).
+ * Permet à SyForm de appeler clearValidation(), validateOnSubmit() et reset() sur le composant.
+ */
+export interface FormRegistration {
+	validateOnSubmit?: () => Promise<boolean> | boolean
+	clearValidation?: () => void
+	reset?: () => void
+}
+
+/**
  * Type représentant une valeur de date qui peut être une Date, un tableau de Dates ou null
  * Utilisé pour les opérations internes du CalendarMode avec des objets Date
  */

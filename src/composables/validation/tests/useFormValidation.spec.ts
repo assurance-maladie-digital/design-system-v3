@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { defineComponent, h } from 'vue'
+import { defineComponent, h, ref } from 'vue'
 import { mount, flushPromises } from '@vue/test-utils'
 import { useFormValidation, useValidatableComponent } from '../useFormValidation'
 import type { ValidatableComponent } from '../useFormValidation'
@@ -56,15 +56,15 @@ describe('useFormValidation', () => {
 			validateOnSubmit: vi.fn(() => true),
 		}
 
-		expect(form.validatableComponents.value).toHaveLength(0)
+		expect(form._getValidatableComponents()).toHaveLength(0)
 
 		childApi.register(component)
-		expect(form.validatableComponents.value).toHaveLength(1)
-		expect(form.validatableComponents.value[0]).toStrictEqual(component)
+		expect(form._getValidatableComponents()).toHaveLength(1)
+		expect(form._getValidatableComponents()[0]).toStrictEqual(component)
 
 		// Duplicate registration should be ignored
 		childApi.register(component)
-		expect(form.validatableComponents.value).toHaveLength(1)
+		expect(form._getValidatableComponents()).toHaveLength(1)
 	})
 
 	it('unregisters components by reference and by validateOnSubmit fallback', () => {
@@ -81,17 +81,17 @@ describe('useFormValidation', () => {
 
 		// Direct reference removal
 		childApi.register(component1)
-		expect(form.validatableComponents.value).toHaveLength(1)
+		expect(form._getValidatableComponents()).toHaveLength(1)
 
 		childApi.unregister(component1)
-		expect(form.validatableComponents.value).toHaveLength(0)
+		expect(form._getValidatableComponents()).toHaveLength(0)
 
 		// Fallback: removal by matching validateOnSubmit reference
 		childApi.register(component1)
-		expect(form.validatableComponents.value).toHaveLength(1)
+		expect(form._getValidatableComponents()).toHaveLength(1)
 
 		childApi.unregister(component2)
-		expect(form.validatableComponents.value).toHaveLength(0)
+		expect(form._getValidatableComponents()).toHaveLength(0)
 	})
 
 	it('clearAll calls clearValidation on registered components and ignores missing or throwing ones', () => {
@@ -137,7 +137,7 @@ describe('useFormValidation', () => {
 		const wrapper = mount(ParentWithForm)
 		const form = (wrapper.vm as { form: FormValidationApi }).form
 
-		expect(form.validatableComponents.value).toHaveLength(0)
+		expect(form._getValidatableComponents()).toHaveLength(0)
 
 		// Should not throw even when nothing is registered
 		form.clearAll()
@@ -186,7 +186,7 @@ describe('useFormValidation', () => {
 		const wrapper = mount(ParentWithForm)
 		const form = (wrapper.vm as { form: FormValidationApi }).form
 
-		expect(form.validatableComponents.value).toHaveLength(0)
+		expect(form._getValidatableComponents()).toHaveLength(0)
 
 		// Should not throw even when nothing is registered
 		form.resetAll()
@@ -243,6 +243,27 @@ describe('useFormValidation', () => {
 		childApi.register(asyncTrue)
 
 		await expect(form.validateAll()).resolves.toBe(true)
+	})
+
+	it('reports null while an invalid custom field is pristine, even when VForm reports false', () => {
+		const wrapper = mount(ParentWithForm)
+		const form = (wrapper.vm as { form: FormValidationApi }).form
+		const isValid = ref(false)
+		const isPristine = ref(true)
+
+		lastChildApi!.register({
+			validateOnSubmit: () => isValid.value,
+			valide: isValid,
+			isPristine,
+		})
+
+		expect(form.getFormValue(false)).toBeNull()
+
+		isPristine.value = false
+		expect(form.getFormValue(false)).toBe(false)
+
+		isValid.value = true
+		expect(form.getFormValue(true)).toBe(true)
 	})
 })
 

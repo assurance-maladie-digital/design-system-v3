@@ -164,7 +164,7 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 			if (!hasInteracted) {
 				return true
 			}
-			const result = await Promise.resolve(ctx.validation.validateValue(value))
+			const result = await Promise.resolve(ctx.validateField(value))
 			if (token !== ctx.currentValidationToken.value) return !ctx.displayHasError.value
 			return !result.hasError
 		}

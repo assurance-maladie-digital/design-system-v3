@@ -90,28 +90,25 @@ export function createValidateCalendarModeFlow(
 			return emptyValidationResult()
 		}
 
-		// Si pas de sélection : valider avec null si des customRules existent
-		// (permet aux custom rules de s'exécuter sur les champs vides)
+		// Si pas de sélection : toujours passer par validateField (même sans customRules)
+		// pour que le champ soit marqué « validé » (isPristine=false) — sinon SyForm
+		// garde le champ à valide=null et le v-model du formulaire reste à null.
+		// Les custom rules peuvent ainsi aussi s'exécuter sur les champs vides.
 		if (ctx.hasNoSelection()) {
-			const hasCustomRules = options.customRules.value && options.customRules.value.length > 0
-
-			if (hasCustomRules && shouldRunDisplayedValidation(forceValidation)) {
+			if (shouldRunDisplayedValidation(forceValidation)) {
 				await ctx.validateField(
 					options.selectedDates.value,
-					options.customRules.value,
-					options.customWarningRules.value,
+					options.customRules.value ?? [],
+					options.customWarningRules.value ?? [],
 					options.customSuccessRules?.value ?? [],
 				)
 				if (token !== ctx.currentValidationToken.value) return emptyValidationResult()
-				// Pousser l'erreur required APRÈS les custom rules pour éviter qu'applyValidationResult l'écrase
-				if (ctx.shouldValidateRequired(forceValidation) && ctx.shouldDisplayErrors()) {
-					ctx.pushError(locales.required)
-				}
-				ctx.dedupeValidationState()
 			}
-			else if (ctx.shouldValidateRequired(forceValidation) && ctx.shouldDisplayErrors()) {
+			// Pousser l'erreur required APRÈS les custom rules pour éviter qu'applyValidationResult l'écrase
+			if (ctx.shouldValidateRequired(forceValidation) && ctx.shouldDisplayErrors()) {
 				ctx.pushError(locales.required)
 			}
+			ctx.dedupeValidationState()
 			return ctx.buildValidationResult(ctx.shouldDisplayErrors() ? false : true)
 		}
 

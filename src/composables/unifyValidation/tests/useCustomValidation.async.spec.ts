@@ -2,7 +2,6 @@ import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { defineComponent, ref } from 'vue'
 import { useCustomValidation } from '../useCustomValidation'
-import { locales } from '../locales'
 import type { ValidationRule } from '../useValidation'
 
 enableAutoUnmount(afterEach)
@@ -17,7 +16,7 @@ function deferred() {
 	return { promise, resolve, reject }
 }
 
-function setupValidation(useVuetifyValidation = false) {
+function setupValidation() {
 	const pending = deferred()
 	const rule = vi.fn(() => pending.promise)
 	const modelValue = ref<unknown>('ancienne')
@@ -35,7 +34,6 @@ function setupValidation(useVuetifyValidation = false) {
 				modelValue, customRules, ref([]), ref([]), errors, warnings, successes,
 				ref(true), ref('Date'), ref(false), ref(true), disableErrorHandling,
 				readonly, disabled,
-				{ useVuetifyValidation: ref(useVuetifyValidation), rules: ref([async () => await rule() ? true : 'Obsolète']) },
 			)
 			return () => null
 		},
@@ -45,8 +43,8 @@ function setupValidation(useVuetifyValidation = false) {
 }
 
 describe('async validation lifecycle', () => {
-	it.each([false, true])('ignores completion after clearing messages (Vuetify: %s)', async (mode) => {
-		const state = setupValidation(mode)
+	it('ignores completion after clearing messages', async () => {
+		const state = setupValidation()
 		const result = state.controller.validate()
 		state.controller.clearValidation()
 		state.pending.resolve(false)
@@ -54,8 +52,8 @@ describe('async validation lifecycle', () => {
 		expect(state.errors.value).toEqual([])
 	})
 
-	it.each([false, true])('ignores completion after unmount (Vuetify: %s)', async (mode) => {
-		const state = setupValidation(mode)
+	it('ignores completion after unmount', async () => {
+		const state = setupValidation()
 		const result = state.controller.validate()
 		state.wrapper.unmount()
 		state.pending.resolve(false)
@@ -63,12 +61,8 @@ describe('async validation lifecycle', () => {
 		expect(state.errors.value).toEqual([])
 	})
 
-	it.each([
-		{ mode: false, flag: 'readonly' }, { mode: true, flag: 'readonly' },
-		{ mode: false, flag: 'disabled' }, { mode: true, flag: 'disabled' },
-		{ mode: false, flag: 'disableErrorHandling' }, { mode: true, flag: 'disableErrorHandling' },
-	] as const)('ignores completion after $flag (Vuetify: $mode)', async ({ mode, flag }) => {
-		const state = setupValidation(mode)
+	it.each(['readonly', 'disabled', 'disableErrorHandling'] as const)('ignores completion after %s', async (flag) => {
+		const state = setupValidation()
 		const result = state.controller.validate()
 		state[flag].value = true
 		await flushPromises()
@@ -99,8 +93,8 @@ describe('async validation lifecycle', () => {
 		expect(state.errors.value).toEqual([])
 	})
 
-	it.each([false, true])('preserves the newest result when validations finish in reverse order (Vuetify: %s)', async (mode) => {
-		const state = setupValidation(mode)
+	it('preserves the newest result when validations finish in reverse order', async () => {
+		const state = setupValidation()
 		const first = state.controller.validate()
 		state.rule.mockResolvedValueOnce(true)
 		await state.controller.validate()
@@ -109,11 +103,11 @@ describe('async validation lifecycle', () => {
 		expect(state.errors.value).toEqual([])
 	})
 
-	it.each([false, true])('settles a rejected async rule (Vuetify: %s)', async (mode) => {
-		const state = setupValidation(mode)
+	it('settles a rejected async rule', async () => {
+		const state = setupValidation()
 		const result = Promise.resolve(state.controller.validate())
 		state.pending.reject(new Error('Service indisponible'))
 		await expect(result).resolves.toMatchObject({ hasError: true })
-		expect(state.errors.value).toContain(mode ? locales.invalidValue : 'Obsolète')
+		expect(state.errors.value).toContain('Obsolète')
 	})
 })

@@ -13,25 +13,15 @@ export function useDefaultValidationRules(params: {
 	const vuetifyRules = computed<TextareaRule[]>(() => {
 		const rules: TextareaRule[] = []
 
-		rules.push((value: string) => {
-			if (params.required.value && params.hasInteracted.value && !value) {
-				return params.locales.value.required
-			}
-			return true
-		})
-
-		rules.push((value: string) => {
-			if (params.maxLines.value === undefined) {
+		if (params.maxLines.value !== undefined) {
+			rules.push((value: string) => {
+				const lines = value.split('\n').length
+				if (lines > params.maxLines.value!) {
+					return params.locales.value.maxLines(params.maxLines.value!)
+				}
 				return true
-			}
-
-			const lines = value.split('\n').length
-			if (lines > params.maxLines.value) {
-				return params.locales.value.maxLines(params.maxLines.value)
-			}
-
-			return true
-		})
+			})
+		}
 
 		return rules
 	})
