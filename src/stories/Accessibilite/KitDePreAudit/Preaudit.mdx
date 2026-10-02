@@ -313,15 +313,15 @@ import '../../styles/shared.css';
 
     <h5>2. Aide à la saisie, messages d'erreur et validation</h5>
     <ol>
-      <li>S'assurer que l'indication de champ obligatoire est visible et qu'il existe un attribut `required` (ou `aria-requied="true"`).</li>
+      <li>S'assurer que l'indication de champ obligatoire est visible et qu'il existe un attribut `required` (ou `aria-required="true"`).</li>
       <li>Vérifier que les aides à la saisie et messages d'erreur sont clairement associés aux champs en cas de saisie incorrecte (annoncé au lecteur d'écran via un `aria-describedby` + ajout de la balise `aria-invalid="true"`).</li>
       <li>Tester que ces messages d'erreur sont visibles, compréhensibles et bien positionnés. Si nécessaire, le message d'erreur devra posséder une suggestion.</li>
     </ol>
 
     <h5>3. Groupes de champs</h5>
     <ol>
-      <li>Vérifier que les champs de même nature sont regroupés via un `fieldset` ou un `role="group"` (par exemple, champs de type `checkbox` ou `radio`, numéro de sécurité social en 2 champs, etc.)</li>
-      <li>S'assurer qu'une légende existe et est pertinente (`legend` si `fielset`; `aria-label` ou `aria-describedby` si `role="group"`).</li>
+      <li>Vérifier que les champs de même nature sont regroupés via un `fieldset` ou un `role="group"` (par exemple, champs de type `checkbox` ou `radio`, numéro de sécurité sociale en 2 champs, etc.)</li>
+      <li>S'assurer qu'une légende existe et est pertinente (`legend` si `fieldset`; `aria-label` ou `aria-describedby` si `role="group"`).</li>
     </ol>
 
     <h5>4. Retour après soumission du formulaire</h5>
@@ -397,7 +397,7 @@ import '../../styles/shared.css';
     <li>Identifier si le titre affiché dans l'onglet du navigateur est pertinent.</li>
     <li>Le contenu de la page devra avoir au moins un titre.</li>
     <li>Analyser les balises de <code>h1</code> à <code>h6</code> en vérifiant la pertinence et la structure (aucun saut de niveau).</li>
-    <li>S'assurer que les titres sont sémantiquement correctes (présence d'une balise <code>hx</code> ou balises <code>role="heading" aria-level="x"</code></li>
+    <li>S'assurer que les titres sont sémantiquement corrects (présence d'une balise <code>hx</code> ou balises <code>role="heading" aria-level="x"</code></li>
   </ol>
   <h4>Outil éventuel:</h4>
   <p>Extension HeadingsMap (<a href="/?path=/docs/accessibilité-kit-de-pré-audit-outils-introduction--docs">voir la page des outils</a>)</p>
@@ -420,8 +420,8 @@ import '../../styles/shared.css';
   <ol>
     <li>Écouter les vidéos sans regarder l’écran et statuer sur la pertinence de l'audiodescription.</li>
     <li>Lire une vidéo avec sous-titres activés et statuer sur leur pertinence.</li>
-    <li>Vérifier que toute transcription textuelle exprime tout ce qui est retranscrit oralement et suivent la chronologie du média.</li>
-    <li>S'assurer que tout son déclenché automatiquement peut, soit être stoppé, soit contrôlé indépendemment du volume, soit possède une durée inféreure ou égale à 3 secondes.</li>
+    <li>Vérifier que toute transcription textuelle exprime tout ce qui est retranscrit oralement et suive la chronologie du média.</li>
+    <li>S'assurer que tout son déclenché automatiquement peut, soit être stoppé, soit contrôlé indépendamment du volume, soit possède une durée inférieure ou égale à 3 secondes.</li>
   </ol>
   <h4>Outil éventuel:</h4>
   <p>Aucun</p>
