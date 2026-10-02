@@ -102,12 +102,12 @@ export function useCustomValidation(
 
 	// Évalue la validité réelle sans jamais écrire dans errors/warnings/successes, pour que
 	// `valide` sorte de `null` dès le montage sans faire apparaître de message prématuré.
-	async function validateSilently() {
+	async function validateSilently(value: unknown) {
 		if (readonly?.value || disabled?.value || disableErrorHandling.value) return
 
 		const token = currentValidationToken
 		const result = await validator.validateField(
-			modelValue.value,
+			value,
 			customRules?.value,
 			customWarningRules?.value,
 			customSuccessRules?.value,
@@ -135,7 +135,7 @@ export function useCustomValidation(
 	}
 	if (getCurrentInstance() && options.reactiveValidation !== false) {
 		onMounted(() => {
-			void validateSilently()
+			void validateSilently(modelValue.value)
 		})
 	}
 	watch([() => readonly?.value, () => disabled?.value, disableErrorHandling], () => {
@@ -158,7 +158,9 @@ export function useCustomValidation(
 		skipValidationForReset = true
 		clearValidation()
 		modelValue.value = undefined
-		validateSilently()
+		// Valider la valeur réinitialisée : avec un v-model parent, modelValue.value
+		// conserve l'ancienne valeur jusqu'au prochain rendu.
+		validateSilently(undefined)
 		// Filet de sécurité : si la valeur était déjà `undefined`, le watch ne se
 		// déclenche pas — on lève la garde au tick suivant pour ne pas ignorer une
 		// modification utilisateur ultérieure.
@@ -216,7 +218,7 @@ export function useCustomValidation(
 				validate()
 			}
 			else if (isPristine.value && !disableErrorHandling.value) {
-				validateSilently()
+				validateSilently(modelValue.value)
 			}
 		}, { flush: 'sync' })
 	}

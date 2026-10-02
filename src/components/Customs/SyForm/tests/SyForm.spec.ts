@@ -497,8 +497,10 @@ describe('SyForm', () => {
 		await flushPromises()
 
 		// Le reset doit ramener le champ à un état neutre/vierge, pas le ré-invalider :
-		// comme un champ Vuetify qui ne remonte aucune erreur, le formulaire redevient valide.
-		expect(wrapper.vm.formValide).toBe(true)
+		// aucune erreur affichée, et le formulaire revient à `null` comme au montage
+		// (champ requis vide). Régression : la validation silencieuse du reset lisait
+		// l'ancienne valeur et repassait le formulaire à `true`.
+		expect(wrapper.vm.formValide).toBe(null)
 		expect(wrapper.findComponent(SyTextField).text()).not.toContain('Le champ est obligatoire')
 	})
 
