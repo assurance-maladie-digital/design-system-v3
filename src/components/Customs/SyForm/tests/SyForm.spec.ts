@@ -504,6 +504,72 @@ describe('SyForm', () => {
 		expect(wrapper.findComponent(SyTextField).text()).not.toContain('Le champ est obligatoire')
 	})
 
+	it('updates the v-model when the rules of a pristine field change', async () => {
+		const wrapper = mount({
+			components: { SyForm, SyTextField },
+			template: `
+				<SyForm v-model="formValide">
+					<SyTextField v-model="text" label="Nom" :required="required" />
+				</SyForm>
+			`,
+			data: () => ({ text: '', required: false, formValide: null as boolean | null }),
+		})
+		await flushPromises()
+		expect(wrapper.vm.formValide).toBe(true)
+
+		// Le champ vide devient requis : invalide mais pas encore affiché → null, sans message
+		wrapper.vm.required = true
+		await flushPromises()
+		expect(wrapper.vm.formValide).toBe(null)
+		expect(wrapper.findComponent(SyTextField).text()).not.toContain('obligatoire')
+
+		wrapper.vm.required = false
+		await flushPromises()
+		expect(wrapper.vm.formValide).toBe(true)
+	})
+
+	it('ignores a field in error once it becomes disabled', async () => {
+		const wrapper = mount({
+			components: { SyForm, SyTextField },
+			template: `
+				<SyForm v-model="formValide">
+					<SyTextField v-model="text" label="Nom" :required="enabled" :disabled="!enabled" />
+					<SyTextField v-model="other" label="Prénom" required />
+				</SyForm>
+			`,
+			data: () => ({ text: '', other: 'Alex', enabled: true, formValide: null as boolean | null }),
+		})
+		await flushPromises()
+		await wrapper.find('form').trigger('submit')
+		await flushPromises()
+		expect(wrapper.vm.formValide).toBe(false)
+
+		// Le seul champ en erreur devient désactivé : il ne bloque plus le formulaire
+		wrapper.vm.enabled = false
+		await flushPromises()
+		expect(wrapper.vm.formValide).toBe(true)
+	})
+
+	it('updates the v-model when the rules of an already validated field change', async () => {
+		const wrapper = mount({
+			components: { SyForm, SyTextField },
+			template: `
+				<SyForm v-model="formValide">
+					<SyTextField v-model="text" label="Nom" :required="required" />
+				</SyForm>
+			`,
+			data: () => ({ text: '', required: false, formValide: null as boolean | null }),
+		})
+		await flushPromises()
+		await wrapper.find('form').trigger('submit')
+		await flushPromises()
+		expect(wrapper.vm.formValide).toBe(true)
+
+		wrapper.vm.required = true
+		await flushPromises()
+		expect(wrapper.vm.formValide).toBe(false)
+	})
+
 	// Contrat de compatibilité avec les composants non migrés (« legacy ») :
 	// ceux enregistrés via useValidatable() sans fournir d'état réactif `valide`
 	// (ex. les DatePickers) exposent `valide === undefined`. Comportement aligné

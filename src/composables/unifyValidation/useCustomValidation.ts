@@ -174,7 +174,12 @@ export function useCustomValidation(
 			validateOnSubmit,
 			options.formRegistration?.clearValidation ?? clearValidation,
 			reset,
-			computed(() => isPristine.value ? silentValide.value : errors.value.length < 1),
+			// Un champ désactivé ou en lecture seule n'est pas validé (cf. watch ci-dessus) et
+			// ne peut pas être corrigé : il ne doit pas bloquer le formulaire (comme Vuetify).
+			computed(() => {
+				if (readonly?.value || disabled?.value) return true
+				return isPristine.value ? silentValide.value : errors.value.length < 1
+			}),
 			computed(() => !disableErrorHandling.value || errors.value.length > 0),
 			isPristine,
 		)
@@ -185,8 +190,13 @@ export function useCustomValidation(
 			() => [customRules?.value, customWarningRules?.value, customSuccessRules?.value],
 			() => {
 				const isDirty = pendingValidationToken !== undefined || errors.value.length > 0 || warnings.value.length > 0 || successes.value.length > 0 || hasSuccess.value
-				if (isDirty) {
+				if (isDirty || !isPristine.value) {
 					validate()
+				}
+				else {
+					// Champ vierge : recalculer la validité silencieuse avec les nouvelles règles,
+					// sinon `valide` (et donc l'état du SyForm) reste celui des anciennes règles.
+					validateSilently(modelValue.value)
 				}
 			},
 			{ deep: true, flush: 'sync' },
