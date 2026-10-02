@@ -1083,7 +1083,7 @@ describe('SyTable selectionKey', () => {
 			expect(truncatedTd!.attributes('title')).toBeUndefined()
 		})
 
-		it('applies maxWidth without truncation on filter row <th> when maxWidth is set with showFilters', async () => {
+		it('applies maxWidth without truncation on filter row <td> when maxWidth is set with showFilters', async () => {
 			const wrapper = mount(SyTable, {
 				props: {
 					suffix: 'truncate-filter-test',
@@ -1097,7 +1097,7 @@ describe('SyTable selectionKey', () => {
 			await wrapper.vm.$nextTick()
 			await vi.dynamicImportSettled()
 
-			const filterThs = wrapper.findAll('tr.filters th')
+			const filterThs = wrapper.findAll('tr.filters td')
 			const truncatedFilterTh = filterThs.find(th => (th.attributes('style') || '').includes('max-width'))
 
 			expect(truncatedFilterTh).toBeDefined()

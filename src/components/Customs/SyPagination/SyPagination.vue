@@ -24,6 +24,8 @@
 		 * ID of the element controlled by this pagination
 		 */
 		ariaControls?: string
+		/** Use native buttons for in-place pagination. */
+		buttonMode?: boolean
 		/**
 		 * Heading level for the pagination label (for accessibility)
 		 */
@@ -34,6 +36,7 @@
 		visible: undefined,
 		label: undefined,
 		ariaControls: undefined,
+		buttonMode: false,
 		headingLevel: 2,
 	})
 
@@ -209,8 +212,11 @@
 			<ul class="list">
 				<!-- First page button (optional) -->
 				<li v-if="$slots['first-page']">
-					<a
-						href="#"
+					<component
+						:is="buttonMode ? 'button' : 'a'"
+						:type="buttonMode ? 'button' : undefined"
+						:aria-controls="buttonMode ? ariaControls : undefined"
+						:href="buttonMode ? undefined : '#'"
 						class="first-page"
 						:class="{ 'disabled': !hasPrevious }"
 						:aria-disabled="!hasPrevious ? 'true' : undefined"
@@ -219,13 +225,16 @@
 						<slot name="first-page">
 							<span>«</span>
 						</slot>
-					</a>
+					</component>
 				</li>
 
 				<!-- Previous button -->
 				<li>
-					<a
-						href="#"
+					<component
+						:is="buttonMode ? 'button' : 'a'"
+						:type="buttonMode ? 'button' : undefined"
+						:aria-controls="buttonMode ? ariaControls : undefined"
+						:href="buttonMode ? undefined : '#'"
 						class="previous-page"
 						:class="{ 'disabled': !hasPrevious }"
 						:aria-disabled="!hasPrevious ? 'true' : undefined"
@@ -234,13 +243,16 @@
 						<slot name="previous">
 							<span>Précédent</span>
 						</slot>
-					</a>
+					</component>
 				</li>
 
 				<!-- First page -->
 				<li>
-					<a
-						href="#"
+					<component
+						:is="buttonMode ? 'button' : 'a'"
+						:type="buttonMode ? 'button' : undefined"
+						:aria-controls="buttonMode ? ariaControls : undefined"
+						:href="buttonMode ? undefined : '#'"
 						class="list-first"
 						:aria-current="modelValue === 1 ? 'page' : undefined"
 						@click.prevent="goToPage(1)"
@@ -251,7 +263,7 @@
 						>
 							{{ 1 }}
 						</slot>
-					</a>
+					</component>
 				</li>
 
 				<!-- Start ellipsis if needed -->
@@ -259,11 +271,14 @@
 					v-if="visiblePageNumbers.includes('ellipsis-start')"
 					class="ellipsis-item"
 				>
-					<a
-						href="#"
+					<component
+						:is="buttonMode ? 'span' : 'a'"
+						:href="buttonMode ? undefined : '#'"
 						class="ellipsis"
 						@click.prevent
-					>…</a>
+					>
+						…
+					</component>
 				</li>
 
 				<!-- Middle pages -->
@@ -271,8 +286,11 @@
 					v-for="pageNum in middlePages"
 					:key="pageNum"
 				>
-					<a
-						href="#"
+					<component
+						:is="buttonMode ? 'button' : 'a'"
+						:type="buttonMode ? 'button' : undefined"
+						:aria-controls="buttonMode ? ariaControls : undefined"
+						:href="buttonMode ? undefined : '#'"
 						:aria-current="modelValue === pageNum ? 'page' : undefined"
 						@click.prevent="goToPage(pageNum)"
 					>
@@ -282,7 +300,7 @@
 						>
 							{{ pageNum }}
 						</slot>
-					</a>
+					</component>
 				</li>
 
 				<!-- End ellipsis if needed -->
@@ -290,17 +308,23 @@
 					v-if="visiblePageNumbers.includes('ellipsis-end')"
 					class="ellipsis-item"
 				>
-					<a
-						href="#"
+					<component
+						:is="buttonMode ? 'span' : 'a'"
+						:href="buttonMode ? undefined : '#'"
 						class="ellipsis"
 						@click.prevent
-					>…</a>
+					>
+						…
+					</component>
 				</li>
 
 				<!-- Last page (if not already shown) -->
 				<li v-if="totalPages > 1">
-					<a
-						href="#"
+					<component
+						:is="buttonMode ? 'button' : 'a'"
+						:type="buttonMode ? 'button' : undefined"
+						:aria-controls="buttonMode ? ariaControls : undefined"
+						:href="buttonMode ? undefined : '#'"
 						class="list-last"
 						:aria-current="modelValue === totalPages ? 'page' : undefined"
 						@click.prevent="goToPage(totalPages)"
@@ -311,13 +335,16 @@
 						>
 							{{ totalPages }}
 						</slot>
-					</a>
+					</component>
 				</li>
 
 				<!-- Next button -->
 				<li>
-					<a
-						href="#"
+					<component
+						:is="buttonMode ? 'button' : 'a'"
+						:type="buttonMode ? 'button' : undefined"
+						:aria-controls="buttonMode ? ariaControls : undefined"
+						:href="buttonMode ? undefined : '#'"
 						class="next-page"
 						:class="{ 'disabled': !hasNext }"
 						:aria-disabled="!hasNext ? 'true' : undefined"
@@ -326,13 +353,16 @@
 						<slot name="next">
 							<span>Suivant</span>
 						</slot>
-					</a>
+					</component>
 				</li>
 
 				<!-- Last page button (optional) -->
 				<li v-if="$slots['last-page']">
-					<a
-						href="#"
+					<component
+						:is="buttonMode ? 'button' : 'a'"
+						:type="buttonMode ? 'button' : undefined"
+						:aria-controls="buttonMode ? ariaControls : undefined"
+						:href="buttonMode ? undefined : '#'"
 						class="last-page"
 						:class="{ 'disabled': !hasNext }"
 						:aria-disabled="!hasNext ? 'true' : undefined"
@@ -341,7 +371,7 @@
 						<slot name="last-page">
 							<span>»</span>
 						</slot>
-					</a>
+					</component>
 				</li>
 			</ul>
 		</nav>
@@ -378,7 +408,11 @@
 				display: inline-block;
 			}
 
-			a {
+			a,
+			button {
+				background: transparent;
+				font-family: inherit;
+				cursor: pointer;
 				display: inline-block;
 				padding: 0.5rem 0.75rem;
 				text-decoration: none;

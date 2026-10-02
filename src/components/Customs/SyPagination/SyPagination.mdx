@@ -161,3 +161,11 @@ Le composant SyPagination respecte les règles d'accessibilité RGAA :
 - Support complet de la navigation au clavier
 - Contraste suffisant entre le texte et le fond
 - Association claire entre la pagination et le contenu paginé via l'attribut `aria-controls`
+
+## Pagination sans navigation
+
+Avec `buttonMode`, les actions sont des boutons : elles mettent à jour les données
+sans ouvrir une autre page. `ariaControls` indique l’identifiant de la zone mise à jour.
+Le mode par défaut conserve les liens.
+
+<Canvas of={SyPaginationStories.Buttons} />
