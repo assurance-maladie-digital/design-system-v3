@@ -49,7 +49,7 @@ Généré le: 05/10/2026
 | **HeaderBar** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
 | **HeaderLoading** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **HeaderNavigationBar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
-| **HeaderToolbar** | ❌ Non | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
+| **HeaderToolbar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **LangBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **Logo** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **LogoBrandSection** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -82,4 +82,8 @@ Généré le: 05/10/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
+<<<<<<< HEAD
 **Total des composants conformes : 68 / 77 (88.31%)**
+=======
+**Total des composants conformes : 66 / 77 (85.71%)**
+>>>>>>> 35582a9c6 (update status)
