@@ -501,9 +501,9 @@
     },
     {
       "componentName": "HeaderToolbar",
-      "hasA11yTests": false,
+      "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
-      "mdxStatus": "Incomplète",
+      "mdxStatus": "Complète",
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Structure/HeaderToolbar",
       "hasManualAudit": true,
