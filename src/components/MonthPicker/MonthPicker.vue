@@ -35,6 +35,10 @@
 	}>()
 
 	const attrs = useAttrs()
+	// Exclure width de la  div il reste transmis au champ via inputProps.
+	const rootAttrs = computed(() =>
+		Object.fromEntries(Object.entries(attrs).filter(([name]) => name !== 'width')),
+	)
 	const textInput = ref<ComponentPublicInstance<typeof MonthPickerInput> | null>(null)
 	const toggleBtn = computed(() => textInput.value?.toggleBtn)
 
@@ -109,7 +113,7 @@
 
 <template>
 	<div
-		v-bind="Object.fromEntries(Object.entries(attrs).filter(([name]) => name !== 'width'))"
+		v-bind="rootAttrs"
 		class="month-picker"
 	>
 		<MonthPickerInput

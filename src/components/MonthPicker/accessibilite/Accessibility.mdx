@@ -26,15 +26,17 @@ import {
         </CriteriaCard>
         <CriteriaCard title="Structure sémantique">
             <ul>
-                <li><strong>Rôles ARIA appropriés</strong> : Utilisation de rôles <code>role="grid"</code> pour les grilles de sélection des mois et années.</li>
-                <li><strong>Relations entre éléments</strong> : Connexion entre le bouton d'ouverture et la grille de mois via <code>aria-expanded</code>, <code>aria-controls</code> et <code>aria-haspopup</code>.</li>
+                <li><strong>Groupes de sélection nommés</strong> : Les sélecteurs de mois et d’années utilisent <code>role="group"</code> avec un <code>aria-label</code>. Ils contiennent des boutons HTML natifs dont l’état sélectionné est indiqué par <code>aria-pressed</code>.</li>
+                <li><strong>Nom accessible du dialogue</strong> : Le dialogue est nommé via <code>aria-labelledby</code>, qui référence le titre de l’en-tête. Ce titre indique la sélection des mois ou des années selon la vue active.</li>
+                <li><strong>Relations entre éléments</strong> : Le bouton d’ouverture annonce un dialogue avec <code>aria-haspopup="dialog"</code> et indique son état ouvert ou fermé via <code>aria-expanded</code>. Lorsque le calendrier est ouvert, <code>aria-controls</code> et <code>aria-owns</code> référencent l’élément <code>role="dialog"</code> de l’overlay <code>VMenu</code>. Ces deux attributs sont absents lorsque le calendrier est fermé.</li>
 
             </ul>
         </CriteriaCard>
         <CriteriaCard title="Navigation clavier complète">
             <ul>
                 <li><strong>Touches Espace et Entrée</strong> : Pour ouvrir/fermer le picker et sélectionner un mois, une année.</li>
-                <li><strong>Touches fléchées</strong> : Navigation entre les mois (↑, ↓, ←, →)</li>
+                <li><strong>Touche Échap</strong> : Ferme le calendrier grâce au comportement natif de <code>VMenu</code>.</li>
+                <li><strong>Touches fléchées</strong> : Navigation entre les mois ou les années (↑, ↓, ←, →). Dans chaque groupe, seul le bouton actif possède <code>tabindex="0"</code> ; les autres ont <code>tabindex="-1"</code>.</li>
             </ul>
         </CriteriaCard>
 
