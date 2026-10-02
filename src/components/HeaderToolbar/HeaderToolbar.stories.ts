@@ -89,9 +89,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -263,9 +260,6 @@ export const Default: Story = {
 
 export const CustomLinks: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
