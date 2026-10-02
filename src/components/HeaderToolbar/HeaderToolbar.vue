@@ -583,7 +583,7 @@
 									<VMenu
 										v-if="itemsSelectMenu && index === 1"
 										v-model="menuOpen"
-										:activator="menuActivatorEl!"
+										:target="menuActivatorEl!"
 										eager
 										location="bottom"
 										attach="body"
