@@ -1,5 +1,8 @@
 <script lang="ts" setup>
-	import { computed, ref } from 'vue'
+	import { computed, ref, watch } from 'vue'
+	import { useRoute, useRouter } from 'vue-router'
+	import SyFormTestPanel from '../components/SyFormTestPanel.vue'
+	import Captcha from '@/components/Captcha/Captcha.vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import DiacriticPicker from '@/components/DiacriticPicker/DiacriticPicker.vue'
 	import FileUpload from '@/components/FileUpload/FileUpload.vue'
@@ -11,78 +14,128 @@
 	import PhoneField from '@/components/PhoneField/PhoneField.vue'
 	import RangeField from '@/components/RangeField/RangeField.vue'
 	import SearchListField from '@/components/SearchListField/SearchListField.vue'
-	import SyAlert from '@/components/SyAlert/SyAlert.vue'
 	import SyTextArea from '@/components/SyTextArea/SyTextArea.vue'
 	import SyCheckbox from '@/components/Customs/SyCheckbox/SyCheckbox.vue'
 	import SyCheckBoxGroup from '@/components/Customs/SyCheckBoxGroup/SyCheckBoxGroup.vue'
-	import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 	import SyRadioGroup from '@/components/Customs/SyRadioGroup/SyRadioGroup.vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SelectBtnField from '@/components/Customs/Selects/SelectBtnField/SelectBtnField.vue'
 	import SyAutocomplete from '@/components/Customs/Selects/SyAutocomplete/SyAutocomplete.vue'
 	import SyInputSelect from '@/components/Customs/Selects/SyInputSelect/SyInputSelect.vue'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
-	import { mdiCalendarRange, mdiCheckCircle, mdiCheckDecagramOutline, mdiCodeJson, mdiEyeOutline, mdiFormTextbox, mdiPuzzleOutline, mdiRefresh, mdiTextAccount } from '@mdi/js'
+	import { mdiCalendarRange, mdiCheckDecagramOutline, mdiFormTextbox, mdiPuzzleOutline, mdiRobotOutline, mdiServerNetwork, mdiShapeOutline, mdiSwapHorizontal, mdiTextAccount, mdiTextBoxOutline, mdiTimerSand, mdiToggleSwitchOutline } from '@mdi/js'
 
-	// Page de test exhaustive : chaque composant de formulaire du DS est placé
-	// dans un même SyForm, en mode validation Synapse (required / customRules).
-	// Les composants qui ne s'enregistrent pas auprès de SyForm sont regroupés
-	// dans une section dédiée pour vérifier qu'ils n'altèrent pas le v-model.
+	// Page de test SyForm découpée en onglets : chaque onglet est un cas de test
+	// isolé (son propre SyForm, son tableau de bord et ses valeurs), pour qu'une
+	// revue puisse se concentrer sur un sujet à la fois.
 
-	const formRef = ref<InstanceType<typeof SyForm> | null>(null)
-	const validity = ref<boolean | null>(null)
-	const validateOnSubmit = ref(true)
-	const lastSubmit = ref<{ isValid: boolean, time: string } | null>(null)
-	const resetCount = ref(0)
+	// ── Onglets (synchronisés avec ?tab= pour partager un lien direct) ──
 
-	function createInitialValues() {
-		return {
-			textField: '',
-			textArea: '',
-			diacritic: '',
-			password: null as string | null,
-			phone: '',
-			nir: '',
-			date: null as string | null,
-			dateNoCalendar: null as string | null,
-			dateCombined: null as string | null,
-			birthDate: null as string | null,
-			month: undefined as string | undefined,
-			period: { from: null, to: null } as { from: string | null, to: string | null },
-			lunarDate: undefined as string | undefined,
-			select: null as string | null,
-			autocomplete: null as string | null,
-			inputSelect: null as Record<string, unknown> | string | null,
-			selectBtn: null as string | number | null,
-			radio: null as string | null,
-			checkboxGroup: [] as string[],
-			checkbox: false,
-			range: [0, 100] as [number, number],
-			searchList: [] as unknown[],
-			files: [] as File[],
-		}
-	}
+	const tabs = [
+		{ value: 'text', label: 'Texte', icon: mdiTextBoxOutline },
+		{ value: 'identity', label: 'Identité', icon: mdiTextAccount },
+		{ value: 'dates', label: 'Dates', icon: mdiCalendarRange },
+		{ value: 'selections', label: 'Sélections', icon: mdiCheckDecagramOutline },
+		{ value: 'variants', label: 'Variantes', icon: mdiShapeOutline },
+		{ value: 'async', label: 'Async', icon: mdiTimerSand },
+		{ value: 'states', label: 'États', icon: mdiToggleSwitchOutline },
+		{ value: 'mixed', label: 'Synapse / Vuetify', icon: mdiSwapHorizontal },
+		{ value: 'server', label: 'Erreurs serveur', icon: mdiServerNetwork },
+		{ value: 'captcha', label: 'Captcha', icon: mdiRobotOutline },
+		{ value: 'unregistered', label: 'Hors SyForm', icon: mdiPuzzleOutline },
+	]
 
+	const route = useRoute()
+	const router = useRouter()
+
+	const tab = computed({
+		get: () => {
+			const queryTab = route.query.tab
+			return tabs.some(item => item.value === queryTab) ? String(queryTab) : 'text'
+		},
+		set: (value: string) => {
+			router.replace({ query: { ...route.query, tab: value } })
+		},
+	})
+
+	// ── Valeurs initiales par onglet ──
+
+	const initText = () => ({
+		textField: '',
+		textArea: '',
+		diacritic: '',
+		password: null as string | null,
+	})
+
+	const initIdentity = () => ({
+		phone: '',
+		nir: '',
+	})
+
+	const initDates = () => ({
+		date: null as string | null,
+		dateNoCalendar: null as string | null,
+		dateCombined: null as string | null,
+		birthDate: null as string | null,
+		month: undefined as string | undefined,
+		period: { from: null, to: null } as { from: string | null, to: string | null },
+		lunarDate: undefined as string | undefined,
+	})
+
+	const initSelections = () => ({
+		select: null as string | null,
+		autocomplete: null as string | null,
+		inputSelect: null as Record<string, unknown> | string | null,
+		selectBtn: null as string | number | null,
+		radio: null as string | null,
+		checkboxGroup: [] as string[],
+		checkbox: false,
+	})
+
+	const initVariants = () => ({
+		selectMultiple: [] as string[],
+		autocompleteMultiple: [] as string[],
+		selectBtnMultiple: [] as (string | number)[],
+		radioInline: null as string | null,
+	})
+
+	const initAsync = () => ({ username: '' })
+
+	const initStates = () => ({
+		conditionalField: '',
+		disabledField: '',
+		readonlyField: '',
+		ignoredField: '',
+	})
+
+	const initMixed = () => ({
+		synapseField: '',
+		vuetifyRulesField: '',
+		nativeVTextField: '',
+	})
+
+	const initServer = () => ({ email: '' })
+
+	const initCaptcha = () => ({ captcha: '' })
+
+	const initUnregistered = () => ({
+		range: [0, 100] as [number, number],
+		searchList: [] as unknown[],
+		files: [] as File[],
+	})
+
+	const textValues = ref(initText())
 	// NIR valide (clé 91) prérempli au chargement uniquement : reset() vide le champ.
-	const values = ref({ ...createInitialValues(), nir: '185057800608491' })
-
-	// Les File ne sont pas sérialisables : on n'affiche que leur nom.
-	const displayedValues = computed(() => JSON.stringify({
-		...values.value,
-		files: values.value.files.map(file => file.name),
-	}, null, 2))
-
-	const validityColor = computed(() => {
-		if (validity.value === true) return 'success'
-		if (validity.value === false) return 'error'
-		return 'grey-lighten-3'
-	})
-
-	const validityHint = computed(() => {
-		if (validity.value === true) return 'valide'
-		if (validity.value === false) return 'invalide'
-		return 'au moins un champ vierge'
-	})
+	const identityValues = ref({ ...initIdentity(), nir: '185057800608491' })
+	const datesValues = ref(initDates())
+	const selectionsValues = ref(initSelections())
+	const variantsValues = ref(initVariants())
+	const asyncValues = ref(initAsync())
+	const statesValues = ref(initStates())
+	const mixedValues = ref(initMixed())
+	const serverValues = ref(initServer())
+	const captchaValues = ref(initCaptcha())
+	const unregisteredValues = ref(initUnregistered())
 
 	// ── Règles Synapse ──
 
@@ -158,16 +211,93 @@
 		{ label: 'Psychologie', value: 'psy' },
 	]
 
-	// ── Soumission / réinitialisation ──
+	// ── Validation asynchrone ──
+	// Délai aléatoire : deux saisies rapprochées peuvent se résoudre dans le
+	// désordre, ce qui permet d'observer la gestion des race conditions.
 
-	function handleSubmit({ isValid }: { isValid: boolean }) {
-		lastSubmit.value = { isValid, time: new Date().toLocaleTimeString('fr-FR') }
+	const takenUsernames = ['admin', 'dupont']
+	const pendingAsyncValidations = ref(0)
+
+	const usernameAsyncRules = [
+		{
+			type: 'custom',
+			options: {
+				validate: async (value: string) => {
+					pendingAsyncValidations.value++
+					try {
+						await new Promise(resolve => setTimeout(resolve, 300 + Math.random() * 1200))
+						return !takenUsernames.includes((value ?? '').trim().toLowerCase())
+					}
+					finally {
+						pendingAsyncValidations.value--
+					}
+				},
+				message: 'Cet identifiant est déjà utilisé',
+			},
+		},
+	]
+
+	// ── États & enregistrement ──
+
+	const showConditionalField = ref(true)
+
+	// ── Validation Vuetify mélangée ──
+
+	const vuetifyRequiredRules = [
+		(value: unknown) => (typeof value === 'string' && value.trim() !== '') || 'Ce champ est obligatoire (rules Vuetify)',
+	]
+
+	// ── Erreurs serveur simulées (errorMessages) ──
+
+	const simulateServerError = ref(true)
+	const serverErrors = ref<string[]>([])
+
+	watch(() => serverValues.value.email, () => {
+		serverErrors.value = []
+	})
+
+	function handleServerSubmit({ isValid }: { isValid: boolean }) {
+		if (isValid && simulateServerError.value) {
+			serverErrors.value = ['Cette adresse e-mail est déjà associée à un compte (erreur serveur simulée)']
+		}
 	}
 
-	function handleReset() {
-		values.value = createInitialValues()
-		lastSubmit.value = null
-		resetCount.value++
+	function handleServerReset() {
+		serverValues.value = initServer()
+		serverErrors.value = []
+	}
+
+	// ── Captcha : API simulée sans back-end ──
+	// fetch accepte un POST sur une URL data: et renvoie son contenu.
+
+	const captchaUrlCreate = 'data:application/json,{"id":"sandbox-captcha"}'
+	const captchaUrlGetImage = `data:image/svg+xml,${encodeURIComponent(
+		'<svg xmlns="http://www.w3.org/2000/svg" width="240" height="80"><rect width="100%" height="100%" fill="#eef2f7"/><text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-family="monospace" font-size="36" fill="#0c419a">S4NDB0X</text></svg>',
+	)}`
+	const captchaUrlGetAudio = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA='
+
+	// Le Captcha ne valide que le remplissage : la vérification de la réponse
+	// est faite par le serveur, qui renvoie l'erreur via error-messages.
+	const captchaExpectedCode = 'S4NDB0X'
+	const simulateCaptchaVerification = ref(true)
+	const captchaErrors = ref<string[]>([])
+
+	watch(() => captchaValues.value.captcha, () => {
+		captchaErrors.value = []
+	})
+
+	function handleCaptchaSubmit({ isValid }: { isValid: boolean }) {
+		if (!isValid || !simulateCaptchaVerification.value) {
+			return
+		}
+		if ((captchaValues.value.captcha ?? '').trim().toUpperCase() !== captchaExpectedCode) {
+			captchaErrors.value = ['Le code saisi est incorrect (vérification serveur simulée)']
+		}
+	}
+
+	function handleCaptchaReset() {
+		captchaValues.value = initCaptcha()
+		captchaErrors.value = []
 	}
 </script>
 
@@ -182,452 +312,476 @@
 			/>
 			<div>
 				<h1 class="text-h4 font-weight-bold">
-					SyForm — tous les champs
+					SyForm Tests
 				</h1>
 				<p class="text-body-2 text-medium-emphasis">
-					Tous les composants de formulaire du DS dans un même SyForm, pour tester validation, soumission et réinitialisation.
+					Un onglet par cas de test, chacun avec son propre SyForm et son tableau de bord.
 				</p>
 			</div>
 		</div>
 
-		<VDivider class="mb-6" />
+		<VDivider class="mb-4" />
 
-		<VRow>
-			<!-- Tableau de bord -->
-			<VCol
-				cols="12"
-				lg="4"
+		<VTabs
+			v-model="tab"
+			color="primary"
+			show-arrows
+			class="mb-6"
+		>
+			<VTab
+				v-for="item in tabs"
+				:key="item.value"
+				:value="item.value"
+				:prepend-icon="item.icon"
 			>
-				<div class="dashboard-panel">
-					<VCard
-						variant="outlined"
-						rounded="lg"
+				{{ item.label }}
+			</VTab>
+		</VTabs>
+
+		<VWindow v-model="tab">
+			<!-- Texte -->
+			<VWindowItem value="text">
+				<SyFormTestPanel
+					title="Champs texte"
+					description="Règles minLength / maxLength, warning non bloquant, champ imbriqué dans DiacriticPicker."
+					:values="textValues"
+					@reset="textValues = initText()"
+				>
+					<SyTextField
+						v-model="textValues.textField"
+						label="Nom (SyTextField)"
+						required
+						display-asterisk
+						:custom-rules="nameRules"
+						class="mb-4"
+					/>
+					<SyTextArea
+						v-model="textValues.textArea"
+						label="Message (SyTextArea)"
+						required
+						display-asterisk
+						:custom-rules="messageRules"
+						:custom-warning-rules="messageWarningRules"
+						class="mb-4"
+					/>
+					<DiacriticPicker
+						v-model="textValues.diacritic"
 						class="mb-4"
 					>
-						<VCardItem>
-							<template #prepend>
-								<VIcon
-									:icon="mdiEyeOutline"
-									color="primary"
-								/>
-							</template>
-							<VCardTitle class="text-h6">
-								Tableau de bord
-							</VCardTitle>
-							<VCardSubtitle>v-model de SyForm</VCardSubtitle>
-						</VCardItem>
+						<SyTextField
+							v-model="textValues.diacritic"
+							label="Ville de naissance (DiacriticPicker + SyTextField)"
+							required
+							display-asterisk
+						/>
+					</DiacriticPicker>
+					<PasswordField
+						v-model="textValues.password"
+						label="Mot de passe (PasswordField)"
+						autocomplete-type="new-password"
+						required
+						:custom-rules="passwordRules"
+					/>
+				</SyFormTestPanel>
+			</VWindowItem>
 
-						<VDivider />
-
-						<VCardText>
-							<VSheet
-								:color="validityColor"
-								:variant="validity === null ? 'flat' : 'tonal'"
-								rounded="lg"
-								class="pa-4 text-center mb-4"
-							>
-								<p class="text-h4 font-weight-black font-monospace">
-									{{ validity }}
-								</p>
-								<p class="text-caption mt-1">
-									{{ validityHint }}
-								</p>
-							</VSheet>
-
-							<p class="text-caption font-weight-medium mb-2">
-								API exposée via <code>ref</code>
-							</p>
-							<div class="d-flex flex-wrap ga-2 mb-4">
-								<VBtn
-									size="small"
-									variant="tonal"
-									@click="formRef?.validate()"
-								>
-									validate()
-								</VBtn>
-								<VBtn
-									size="small"
-									variant="tonal"
-									@click="formRef?.clearValidation()"
-								>
-									clearValidation()
-								</VBtn>
-								<VBtn
-									size="small"
-									variant="tonal"
-									@click="formRef?.reset()"
-								>
-									reset()
-								</VBtn>
-							</div>
-
-							<VSwitch
-								v-model="validateOnSubmit"
-								density="compact"
-								color="primary"
-								hide-details
-								label="validateOnSubmit"
-								class="mb-2"
-							/>
-
-							<p class="text-caption">
-								Dernier submit :
-								<strong v-if="lastSubmit">
-									{{ lastSubmit.isValid ? 'valide' : 'invalide' }} ({{ lastSubmit.time }})
-								</strong>
-								<span v-else>aucun</span>
-							</p>
-							<p class="text-caption">
-								Événements reset reçus : <strong>{{ resetCount }}</strong>
-							</p>
-						</VCardText>
-					</VCard>
-
-					<VCard
-						variant="outlined"
-						rounded="lg"
-					>
-						<VCardItem>
-							<template #prepend>
-								<VIcon
-									:icon="mdiCodeJson"
-									color="primary"
-								/>
-							</template>
-							<VCardTitle class="text-h6">
-								Valeurs
-							</VCardTitle>
-						</VCardItem>
-						<VDivider />
-						<VCardText>
-							<pre class="values-panel text-caption">{{ displayedValues }}</pre>
-						</VCardText>
-					</VCard>
-				</div>
-			</VCol>
-
-			<!-- Formulaire -->
-			<VCol
-				cols="12"
-				lg="8"
-			>
-				<SyAlert
-					v-if="lastSubmit"
-					:type="lastSubmit.isValid ? 'success' : 'error'"
-					variant="tonal"
-					closable
-					class="mb-4"
-					@close="lastSubmit = null"
+			<!-- Identité -->
+			<VWindowItem value="identity">
+				<SyFormTestPanel
+					title="Identité & coordonnées"
+					description="Le NIR est prérempli avec une valeur valide au chargement ; reset() le vide."
+					:values="identityValues"
+					@reset="identityValues = initIdentity()"
 				>
-					Formulaire soumis : <code>isValid = {{ lastSubmit.isValid }}</code>
-				</SyAlert>
+					<PhoneField
+						v-model="identityValues.phone"
+						label="Téléphone (PhoneField)"
+						required
+						display-asterisk
+						class="mb-4"
+					/>
+					<NirField
+						v-model="identityValues.nir"
+						number-label="Numéro de sécurité sociale (NirField)"
+						required
+						display-asterisk
+						:display-key="true"
+					/>
+				</SyFormTestPanel>
+			</VWindowItem>
 
-				<SyForm
-					ref="formRef"
-					v-model="validity"
-					:validate-on-submit="validateOnSubmit"
-					@submit="handleSubmit"
-					@reset="handleReset"
+			<!-- Dates -->
+			<VWindowItem value="dates">
+				<SyFormTestPanel
+					title="Dates"
+					description="Les quatre modes du DatePicker, MonthPicker, PeriodField et LunarCalendar."
+					:values="datesValues"
+					@reset="datesValues = initDates()"
 				>
-					<template #default="{ reset }">
-						<VCard
-							variant="outlined"
-							rounded="lg"
-						>
-							<VCardText>
-								<p class="text-caption text-medium-emphasis">
-									Les champs suivis d’un astérisque (*) sont obligatoires.
-								</p>
-							</VCardText>
+					<DatePicker
+						v-model="datesValues.date"
+						label="Date de rendez-vous (DatePicker)"
+						placeholder="JJ/MM/AAAA"
+						required
+						display-asterisk
+						:custom-rules="futureDateRules"
+						class="mb-4"
+					/>
+					<DatePicker
+						v-model="datesValues.dateNoCalendar"
+						label="Date de saisie (DatePicker noCalendar)"
+						placeholder="JJ/MM/AAAA"
+						no-calendar
+						required
+						display-asterisk
+						class="mb-4"
+					/>
+					<DatePicker
+						v-model="datesValues.dateCombined"
+						label="Date de soins (DatePicker useCombinedMode)"
+						placeholder="JJ/MM/AAAA"
+						use-combined-mode
+						required
+						display-asterisk
+						class="mb-4"
+					/>
+					<DatePicker
+						v-model="datesValues.birthDate"
+						label="Date de naissance (DatePicker isBirthDate)"
+						placeholder="JJ/MM/AAAA"
+						is-birth-date
+						required
+						display-asterisk
+						class="mb-4"
+					/>
+					<MonthPicker
+						v-model="datesValues.month"
+						label="Mois de début (MonthPicker)"
+						required
+						display-asterisk
+						class="mb-4"
+					/>
+					<PeriodField
+						v-model="datesValues.period"
+						placeholder-from="Date d’entrée (PeriodField)"
+						placeholder-to="Date de sortie (PeriodField)"
+						required
+						class="mb-4"
+					/>
+					<LunarCalendar
+						v-model="datesValues.lunarDate"
+						label="Date de naissance lunaire (LunarCalendar)"
+						required
+						display-asterisk
+					/>
+				</SyFormTestPanel>
+			</VWindowItem>
 
-							<!-- Champs texte -->
-							<VCardText>
-								<h2 class="section-title">
-									<VIcon
-										:icon="mdiTextAccount"
-										size="16"
-									/>
-									Champs texte
-								</h2>
-								<SyTextField
-									v-model="values.textField"
-									label="Nom (SyTextField)"
-									required
-									display-asterisk
-									:custom-rules="nameRules"
-									class="mb-4"
-								/>
-								<SyTextArea
-									v-model="values.textArea"
-									label="Message (SyTextArea)"
-									required
-									display-asterisk
-									:custom-rules="messageRules"
-									:custom-warning-rules="messageWarningRules"
-									class="mb-4"
-								/>
-								<DiacriticPicker
-									v-model="values.diacritic"
-									class="mb-4"
-								>
-									<SyTextField
-										v-model="values.diacritic"
-										label="Ville de naissance (DiacriticPicker + SyTextField)"
-										required
-										display-asterisk
-									/>
-								</DiacriticPicker>
-								<PasswordField
-									v-model="values.password"
-									label="Mot de passe (PasswordField)"
-									autocomplete-type="new-password"
-									required
-									:custom-rules="passwordRules"
-								/>
-							</VCardText>
+			<!-- Sélections -->
+			<VWindowItem value="selections">
+				<SyFormTestPanel
+					title="Sélections"
+					description="Composants de sélection en choix simple."
+					:values="selectionsValues"
+					@reset="selectionsValues = initSelections()"
+				>
+					<SySelect
+						v-model="selectionsValues.select"
+						label="Type de soins (SySelect)"
+						:items="careTypeItems"
+						required
+						display-asterisk
+						class="mb-4"
+					/>
+					<SyAutocomplete
+						v-model="selectionsValues.autocomplete"
+						label="Médecin traitant (SyAutocomplete)"
+						:items="doctorItems"
+						required
+						display-asterisk
+						class="mb-4"
+					/>
+					<SyInputSelect
+						v-model="selectionsValues.inputSelect"
+						label="Régime (SyInputSelect)"
+						:items="regimeItems"
+						required
+						display-asterisk
+						class="mb-4"
+					/>
+					<SelectBtnField
+						v-model="selectionsValues.selectBtn"
+						label="Mode de téléversement (SelectBtnField)"
+						:items="fileTransferItems"
+						required
+						class="mb-4"
+					/>
+					<SyRadioGroup
+						v-model="selectionsValues.radio"
+						label="Voie de transmission (SyRadioGroup)"
+						:options="transmissionOptions"
+						required
+						display-asterisk
+						class="mb-4"
+					/>
+					<SyCheckBoxGroup
+						v-model="selectionsValues.checkboxGroup"
+						label="Notifications souhaitées (SyCheckBoxGroup)"
+						:options="notificationOptions"
+						multiple
+						required
+						display-asterisk
+						class="mb-4"
+					/>
+					<SyCheckbox
+						v-model="selectionsValues.checkbox"
+						label="J’accepte les conditions d’utilisation (SyCheckbox)"
+						required
+						display-asterisk
+					/>
+				</SyFormTestPanel>
+			</VWindowItem>
 
-							<VDivider />
+			<!-- Variantes -->
+			<VWindowItem value="variants">
+				<SyFormTestPanel
+					title="Variantes de sélection"
+					description="Sélections multiples et radio en ligne (inline transmis au VRadioGroup via attrs)."
+					:values="variantsValues"
+					@reset="variantsValues = initVariants()"
+				>
+					<SySelect
+						v-model="variantsValues.selectMultiple"
+						label="Types de soins (SySelect multiple)"
+						:items="careTypeItems"
+						multiple
+						chips
+						required
+						display-asterisk
+						class="mb-4"
+					/>
+					<SyAutocomplete
+						v-model="variantsValues.autocompleteMultiple"
+						label="Médecins consultés (SyAutocomplete multiple)"
+						:items="doctorItems"
+						multiple
+						chips
+						required
+						display-asterisk
+						class="mb-4"
+					/>
+					<SelectBtnField
+						v-model="variantsValues.selectBtnMultiple"
+						label="Modes de téléversement (SelectBtnField multiple)"
+						:items="fileTransferItems"
+						multiple
+						required
+						class="mb-4"
+					/>
+					<SyRadioGroup
+						v-model="variantsValues.radioInline"
+						label="Voie de transmission (SyRadioGroup inline)"
+						:options="transmissionOptions"
+						inline
+						required
+						display-asterisk
+					/>
+				</SyFormTestPanel>
+			</VWindowItem>
 
-							<!-- Identité & coordonnées -->
-							<VCardText>
-								<h2 class="section-title">
-									<VIcon
-										:icon="mdiTextAccount"
-										size="16"
-									/>
-									Identité &amp; coordonnées
-								</h2>
-								<PhoneField
-									v-model="values.phone"
-									label="Téléphone (PhoneField)"
-									required
-									display-asterisk
-									class="mb-4"
-								/>
-								<NirField
-									v-model="values.nir"
-									number-label="Numéro de sécurité sociale (NirField)"
-									required
-									display-asterisk
-									:display-key="true"
-								/>
-							</VCardText>
-
-							<VDivider />
-
-							<!-- Dates -->
-							<VCardText>
-								<h2 class="section-title">
-									<VIcon
-										:icon="mdiCalendarRange"
-										size="16"
-									/>
-									Dates
-								</h2>
-								<DatePicker
-									v-model="values.date"
-									label="Date de rendez-vous (DatePicker)"
-									placeholder="JJ/MM/AAAA"
-									required
-									display-asterisk
-									:custom-rules="futureDateRules"
-									class="mb-4"
-								/>
-								<DatePicker
-									v-model="values.dateNoCalendar"
-									label="Date de saisie (DatePicker noCalendar)"
-									placeholder="JJ/MM/AAAA"
-									no-calendar
-									required
-									display-asterisk
-									class="mb-4"
-								/>
-								<DatePicker
-									v-model="values.dateCombined"
-									label="Date de soins (DatePicker useCombinedMode)"
-									placeholder="JJ/MM/AAAA"
-									use-combined-mode
-									required
-									display-asterisk
-									class="mb-4"
-								/>
-								<DatePicker
-									v-model="values.birthDate"
-									label="Date de naissance (DatePicker isBirthDate)"
-									placeholder="JJ/MM/AAAA"
-									is-birth-date
-									required
-									display-asterisk
-									class="mb-4"
-								/>
-								<MonthPicker
-									v-model="values.month"
-									label="Mois de début (MonthPicker)"
-									required
-									display-asterisk
-									class="mb-4"
-								/>
-								<PeriodField
-									v-model="values.period"
-									placeholder-from="Date d’entrée (PeriodField)"
-									placeholder-to="Date de sortie (PeriodField)"
-									required
-									class="mb-4"
-								/>
-								<LunarCalendar
-									v-model="values.lunarDate"
-									label="Date de naissance lunaire (LunarCalendar)"
-									required
-									display-asterisk
-								/>
-							</VCardText>
-
-							<VDivider />
-
-							<!-- Sélections -->
-							<VCardText>
-								<h2 class="section-title">
-									<VIcon
-										:icon="mdiCheckDecagramOutline"
-										size="16"
-									/>
-									Sélections
-								</h2>
-								<SySelect
-									v-model="values.select"
-									label="Type de soins (SySelect)"
-									:items="careTypeItems"
-									required
-									display-asterisk
-									class="mb-4"
-								/>
-								<SyAutocomplete
-									v-model="values.autocomplete"
-									label="Médecin traitant (SyAutocomplete)"
-									:items="doctorItems"
-									required
-									display-asterisk
-									class="mb-4"
-								/>
-								<SyInputSelect
-									v-model="values.inputSelect"
-									label="Régime (SyInputSelect)"
-									:items="regimeItems"
-									required
-									display-asterisk
-									class="mb-4"
-								/>
-								<SelectBtnField
-									v-model="values.selectBtn"
-									label="Mode de téléversement (SelectBtnField)"
-									:items="fileTransferItems"
-									required
-									class="mb-4"
-								/>
-								<SyRadioGroup
-									v-model="values.radio"
-									label="Voie de transmission (SyRadioGroup)"
-									:options="transmissionOptions"
-									required
-									display-asterisk
-									class="mb-4"
-								/>
-								<SyCheckBoxGroup
-									v-model="values.checkboxGroup"
-									label="Notifications souhaitées (SyCheckBoxGroup)"
-									:options="notificationOptions"
-									multiple
-									required
-									display-asterisk
-									class="mb-4"
-								/>
-								<SyCheckbox
-									v-model="values.checkbox"
-									label="J’accepte les conditions d’utilisation (SyCheckbox)"
-									required
-									display-asterisk
-								/>
-							</VCardText>
-
-							<VDivider />
-
-							<!-- Composants non enregistrés auprès de SyForm -->
-							<VCardText>
-								<h2 class="section-title">
-									<VIcon
-										:icon="mdiPuzzleOutline"
-										size="16"
-									/>
-									Sans validation SyForm
-								</h2>
-								<p class="text-caption text-medium-emphasis mb-4">
-									Ces composants ne s’enregistrent pas auprès de SyForm : ils ne doivent pas influencer son v-model.
-									Le Captcha n’est pas inclus car il nécessite une API back-end.
-								</p>
-								<RangeField
-									v-model="values.range"
-									fieldset-label="Tranche d’âge (RangeField)"
-									class="mb-4"
-								/>
-								<SearchListField
-									v-model="values.searchList"
-									label="Rechercher une spécialité (SearchListField)"
-									list-label="Spécialités paramédicales"
-									:items="searchListItems"
-									class="mb-4"
-								/>
-								<FileUpload
-									v-model="values.files"
-									multiple
-								/>
-							</VCardText>
-
-							<VDivider />
-
-							<VCardActions class="pa-4">
-								<VBtn
-									type="submit"
-									color="primary"
-									variant="elevated"
-									:prepend-icon="mdiCheckCircle"
-								>
-									Soumettre
-								</VBtn>
-								<VBtn
-									variant="text"
-									:prepend-icon="mdiRefresh"
-									@click="reset"
-								>
-									Réinitialiser
-								</VBtn>
-							</VCardActions>
-						</VCard>
+			<!-- Async -->
+			<VWindowItem value="async">
+				<SyFormTestPanel
+					title="Validation asynchrone"
+					description="Règle custom asynchrone (300 à 1500 ms, délai aléatoire). « admin » et « dupont » sont déjà pris. Tapez vite ou soumettez pendant la validation pour tester les race conditions."
+					:values="asyncValues"
+					@reset="asyncValues = initAsync()"
+				>
+					<template #dashboard>
+						<p class="text-caption">
+							Validations async en cours : <strong>{{ pendingAsyncValidations }}</strong>
+						</p>
 					</template>
-				</SyForm>
-			</VCol>
-		</VRow>
+					<SyTextField
+						v-model="asyncValues.username"
+						label="Identifiant (règle async)"
+						required
+						display-asterisk
+						:custom-rules="usernameAsyncRules"
+					/>
+				</SyFormTestPanel>
+			</VWindowItem>
+
+			<!-- États -->
+			<VWindowItem value="states">
+				<SyFormTestPanel
+					title="États & enregistrement"
+					description="Tous ces champs sont obligatoires et vides. Le champ conditionnel doit se désenregistrer quand il est masqué."
+					:values="statesValues"
+					@reset="statesValues = initStates()"
+				>
+					<template #dashboard>
+						<VSwitch
+							v-model="showConditionalField"
+							density="compact"
+							color="primary"
+							hide-details
+							label="Afficher le champ conditionnel"
+						/>
+					</template>
+					<SyTextField
+						v-if="showConditionalField"
+						v-model="statesValues.conditionalField"
+						label="Champ conditionnel (v-if)"
+						required
+						display-asterisk
+						class="mb-4"
+					/>
+					<SyTextField
+						v-model="statesValues.disabledField"
+						label="Champ désactivé (disabled)"
+						required
+						display-asterisk
+						disabled
+						class="mb-4"
+					/>
+					<SyTextField
+						v-model="statesValues.readonlyField"
+						label="Champ en lecture seule (readonly)"
+						required
+						display-asterisk
+						readonly
+						class="mb-4"
+					/>
+					<SyTextField
+						v-model="statesValues.ignoredField"
+						label="Champ sans gestion d’erreur (disableErrorHandling)"
+						required
+						display-asterisk
+						disable-error-handling
+					/>
+				</SyFormTestPanel>
+			</VWindowItem>
+
+			<!-- Synapse / Vuetify -->
+			<VWindowItem value="mixed">
+				<SyFormTestPanel
+					title="Mélange Synapse / Vuetify"
+					description="Validation Synapse (customRules) et validation Vuetify (rules) dans le même formulaire."
+					:values="mixedValues"
+					@reset="mixedValues = initMixed()"
+				>
+					<SyTextField
+						v-model="mixedValues.synapseField"
+						label="Nom (validation Synapse)"
+						required
+						display-asterisk
+						:custom-rules="nameRules"
+						class="mb-4"
+					/>
+					<SyTextField
+						v-model="mixedValues.vuetifyRulesField"
+						label="Référence dossier (SyTextField use-vuetify-validation) *"
+						aria-required="true"
+						use-vuetify-validation
+						:rules="vuetifyRequiredRules"
+						class="mb-4"
+					/>
+					<VTextField
+						v-model="mixedValues.nativeVTextField"
+						label="Commentaire interne (VTextField natif) *"
+						variant="outlined"
+						aria-required="true"
+						:rules="vuetifyRequiredRules"
+					/>
+				</SyFormTestPanel>
+			</VWindowItem>
+
+			<!-- Erreurs serveur -->
+			<VWindowItem value="server">
+				<SyFormTestPanel
+					title="Erreurs serveur (errorMessages)"
+					description="Après un submit valide, le parent injecte une erreur via error-messages. Elle disparaît dès que l’e-mail est modifié."
+					:values="serverValues"
+					:server-errors="serverErrors"
+					@submit="handleServerSubmit"
+					@reset="handleServerReset"
+				>
+					<template #dashboard>
+						<VSwitch
+							v-model="simulateServerError"
+							density="compact"
+							color="primary"
+							hide-details
+							label="Simuler une erreur serveur au submit"
+						/>
+					</template>
+					<SyTextField
+						v-model="serverValues.email"
+						label="Adresse e-mail"
+						required
+						display-asterisk
+						:error-messages="serverErrors"
+					/>
+				</SyFormTestPanel>
+			</VWindowItem>
+
+			<!-- Captcha -->
+			<VWindowItem value="captcha">
+				<SyFormTestPanel
+					title="Captcha (API simulée)"
+					description="Création, image et audio servis par des URL data:, sans back-end. Le composant ne vérifie que le remplissage : au submit, la vérification serveur est simulée (code attendu : S4NDB0X) et l’erreur est injectée via error-messages."
+					:values="captchaValues"
+					:server-errors="captchaErrors"
+					@submit="handleCaptchaSubmit"
+					@reset="handleCaptchaReset"
+				>
+					<template #dashboard>
+						<VSwitch
+							v-model="simulateCaptchaVerification"
+							density="compact"
+							color="primary"
+							hide-details
+							label="Simuler la vérification serveur"
+						/>
+					</template>
+					<Captcha
+						v-model="captchaValues.captcha"
+						:url-create="captchaUrlCreate"
+						:url-get-image="captchaUrlGetImage"
+						:url-get-audio="captchaUrlGetAudio"
+						:error-messages="captchaErrors"
+						required
+					/>
+				</SyFormTestPanel>
+			</VWindowItem>
+
+			<!-- Hors SyForm -->
+			<VWindowItem value="unregistered">
+				<SyFormTestPanel
+					title="Composants sans validation SyForm"
+					description="Ces composants ne s’enregistrent pas auprès de SyForm : ils ne doivent pas influencer son v-model."
+					:values="unregisteredValues"
+					@reset="unregisteredValues = initUnregistered()"
+				>
+					<RangeField
+						v-model="unregisteredValues.range"
+						fieldset-label="Tranche d’âge (RangeField)"
+						class="mb-4"
+					/>
+					<SearchListField
+						v-model="unregisteredValues.searchList"
+						label="Rechercher une spécialité (SearchListField)"
+						list-label="Spécialités paramédicales"
+						:items="searchListItems"
+						class="mb-4"
+					/>
+					<FileUpload
+						v-model="unregisteredValues.files"
+						multiple
+					/>
+				</SyFormTestPanel>
+			</VWindowItem>
+		</VWindow>
 	</div>
 </template>
-
-<style scoped>
-.dashboard-panel {
-	position: sticky;
-	top: 16px;
-}
-
-.section-title {
-	display: flex;
-	align-items: center;
-	gap: 4px;
-	margin-bottom: 16px;
-	font-size: 0.875rem;
-	font-weight: 600;
-}
-
-.values-panel {
-	max-height: 360px;
-	overflow: auto;
-	white-space: pre-wrap;
-	word-break: break-word;
-}
-</style>
