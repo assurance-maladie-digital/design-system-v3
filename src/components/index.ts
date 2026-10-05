@@ -112,6 +112,9 @@ export { default as FileList } from './FileList/FileList.vue'
 export { default as FilePreview } from './FilePreview/FilePreview.vue'
 export { default as Logo } from './Logo/Logo.vue'
 export { default as LogoBrandSection } from './LogoBrandSection/LogoBrandSection.vue'
+export { default as BarChart } from './Chart/BarChart.vue'
+export { default as FormChart } from './Chart/FormChart.vue'
+export { default as LineChart } from './Chart/LineChart.vue'
 
 // ===========================
 // Feedback
