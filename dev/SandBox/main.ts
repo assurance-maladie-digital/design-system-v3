@@ -38,6 +38,11 @@ const router = createRouter({
 			path: '/syform-v-model',
 			component: () => import('./pages/SyFormVModelPage.vue'),
 		},
+		{
+			name: 'sandbox-syform-all-fields',
+			path: '/syform-all-fields',
+			component: () => import('./pages/SyFormAllFieldsPage.vue'),
+		},
 	],
 })
 
