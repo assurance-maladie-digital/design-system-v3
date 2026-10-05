@@ -144,7 +144,7 @@ export function useValidation(params: {
 				params.disableErrorHandling,
 				params.readonly,
 				params.disabled,
-				options,
+				{ ...options, externalErrors: params.errorMessages },
 			)
 
 	async function validate(): Promise<boolean> {

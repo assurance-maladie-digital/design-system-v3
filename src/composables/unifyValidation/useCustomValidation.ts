@@ -6,6 +6,11 @@ import type { Ref } from 'vue'
 export interface UseCustomValidationOptions {
 	registerWithForm?: boolean
 	reactiveValidation?: boolean
+	/**
+	 * Messages d'erreur injectés par le parent (prop `errorMessages`, ex. erreur serveur).
+	 * Ils invalident le champ auprès du SyForm au même titre qu'une règle en échec.
+	 */
+	externalErrors?: Ref<string[] | null | undefined>
 	formRegistration?: {
 		validateOnSubmit?: () => Promise<boolean> | boolean
 		clearValidation?: () => void
@@ -42,6 +47,7 @@ export function useCustomValidation(
 	// Résultat de la validation silencieuse au montage (n'écrit jamais dans errors/warnings/
 	// successes, donc n'affiche jamais de message) : seule source de vérité pour `valide` tant que isPristine.
 	const silentValide = ref<boolean | null>(null)
+	const hasExternalErrors = computed(() => (options.externalErrors?.value?.length ?? 0) > 0)
 
 	const validatorOptions = reactive({
 		showSuccessMessages: computed(() => showSuccessMessages.value),
@@ -144,7 +150,7 @@ export function useCustomValidation(
 
 	const validateOnSubmit = options.formRegistration?.validateOnSubmit ?? (async () => {
 		const result = await validate()
-		return result.state.errors.length === 0
+		return result.state.errors.length === 0 && !hasExternalErrors.value
 	})
 
 	// Le reset (via useValidatable) remet `modelValue` à `undefined`. En validation
@@ -178,10 +184,13 @@ export function useCustomValidation(
 			// ne peut pas être corrigé : il ne doit pas bloquer le formulaire (comme Vuetify).
 			computed(() => {
 				if (readonly?.value || disabled?.value) return true
+				// Une erreur injectée par le parent est affichée : elle invalide le champ
+				// même s'il est vierge ou si ses propres règles sont satisfaites.
+				if (hasExternalErrors.value) return false
 				return isPristine.value ? silentValide.value : errors.value.length < 1
 			}),
-			computed(() => !disableErrorHandling.value || errors.value.length > 0),
-			isPristine,
+			computed(() => !disableErrorHandling.value || errors.value.length > 0 || hasExternalErrors.value),
+			computed(() => isPristine.value && !hasExternalErrors.value),
 		)
 	}
 
