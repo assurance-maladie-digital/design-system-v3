@@ -32,7 +32,7 @@ interface HTMLAttributes {
 type Data = Record<string, unknown>
 type DefaultFactory<T> = (props: Data) => T | null | undefined
 
-export interface PropOptions<T = any, D = T> {
+interface PropOptions<T = any, D = T> {
 	type?: PropType<T> | true | null
 	required?: boolean
 	default?: D | DefaultFactory<D> | null | undefined | object
@@ -54,7 +54,7 @@ export interface PreparedExpectedData {
 	typeLabel: string // Version facile à lire du type défini dans propOptions
 }
 
-export type DefaultProp = string | boolean | undefined
+type DefaultProp = string | boolean | undefined
 export type PropValues = Record<string, any>
 
 export interface TUnitTestParams<C> extends ComponentMountingOptions<C> {
@@ -86,39 +86,39 @@ export type ExpectedPropOptions<T> = ComponentObjectPropsOptions<ComponentProps<
 // Nouveau
 
 // Cas 'a'
-export type PropCas1<C> = keyof ComponentProps<C>
+type PropCas1<C> = keyof ComponentProps<C>
 // Cas ['a', 'b']
-export type PropCas2<C, D = C> = [keyof ComponentProps<C>, keyof ComponentProps<D>]
+type PropCas2<C, D = C> = [keyof ComponentProps<C>, keyof ComponentProps<D>]
 // Cas [['a1', 'a2'], 'b']
-export type PropCas3<C, D = C> = [(keyof ComponentProps<C>)[], keyof ComponentProps<D>]
+type PropCas3<C, D = C> = [(keyof ComponentProps<C>)[], keyof ComponentProps<D>]
 // Cas [{
 //			keys: cas 1 ou 2 ou 3
 //			values: [any, any][]
 //		}]
-export interface TestPropData<C, D = C> {
+interface TestPropData<C, D = C> {
 	keys: PropCas1<C> | PropCas2<C, D> | PropCas3<C, D>
 	values: [any, any][]
 }
-export type TestPropsData<C, D = C> = PropCas1<C> | PropCas2<C, D> | PropCas3<C, D> | TestPropData<C, D>
+type TestPropsData<C, D = C> = PropCas1<C> | PropCas2<C, D> | PropCas3<C, D> | TestPropData<C, D>
 
 // Cas 'a'
-export type AttributeCas1<C> = keyof ComponentProps<C>
+type AttributeCas1<C> = keyof ComponentProps<C>
 // Cas ['a', 'b']
-export type AttributeCas2<C> = [keyof ComponentProps<C>, keyof HTMLAttributes]
+type AttributeCas2<C> = [keyof ComponentProps<C>, keyof HTMLAttributes]
 // Cas [['a1', 'a2'], 'b']
-export type AttributeCas3<C> = [(keyof ComponentProps<C>)[], keyof HTMLAttributes]
+type AttributeCas3<C> = [(keyof ComponentProps<C>)[], keyof HTMLAttributes]
 // Cas [{
 //			keys: cas 1 ou 2 ou 3
 //			values: [any, any][]
 //		}]
-export interface TestAttributeData<C> {
+interface TestAttributeData<C> {
 	keys: AttributeCas1<C> | AttributeCas2<C> | AttributeCas3<C>
 	values: [any, any][]
 }
 
-export type TestAttributesData<C> = AttributeCas1<C> | AttributeCas2<C> | AttributeCas3<C> | TestAttributeData<C>
+type TestAttributesData<C> = AttributeCas1<C> | AttributeCas2<C> | AttributeCas3<C> | TestAttributeData<C>
 
-export interface TestData<C, D = C> {
+interface TestData<C, D = C> {
 	// forcedValues?: ComponentProps<C>;
 	// fullMount?: boolean;
 	attributesFinder?: (key: keyof HTMLAttributes) => any

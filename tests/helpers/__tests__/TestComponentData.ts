@@ -3,7 +3,7 @@ import type { ExpectedPropOptions } from '@tests/types'
 import type { PropType } from 'vue'
 import TestComponent from './TestComponent.vue'
 
-export interface TestComponentProps {
+interface TestComponentProps {
 	booleanProp?: boolean
 	nullStringProp?: string | null
 	requiredBoolean: boolean

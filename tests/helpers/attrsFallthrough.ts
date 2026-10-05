@@ -4,7 +4,7 @@ import type { Component } from 'vue'
 /**
  * Génère une valeur factice cohérente avec le type de prop attendu par Vue.
  */
-export const generateStubValue = (type: any): any => {
+const generateStubValue = (type: any): any => {
 	if (Array.isArray(type)) {
 		return generateStubValue(type[0])
 	}

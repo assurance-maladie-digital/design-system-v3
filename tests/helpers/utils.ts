@@ -8,7 +8,7 @@ import { useDisplay } from 'vuetify'
  * @param {string} htmlString - La chaîne HTML contenant les commentaires à modifier.
  * @returns {string} La chaîne HTML avec les chemins d'accès absolus supprimés.
  */
-export const removeAbsolutePaths = (htmlString: string | void): string => {
+const removeAbsolutePaths = (htmlString: string | void): string => {
 	const regex = /--C:(.*?)\.vue-(.*?): (.*?);/g
 	return String(htmlString).replace(regex, '--$2: $3;')
 }
@@ -35,7 +35,7 @@ export const propTypes = (type: any) => ({
 	type,
 })
 
-export const getApp = (): HTMLElement => {
+const getApp = (): HTMLElement => {
 	let app = document.getElementById('app')
 
 	if (app === null) {
