@@ -76,7 +76,7 @@ const meta = {
 		'homeLink': {
 			control: { type: 'object' },
 			description:
-        'Le lien de retour vers la home. Renseigner soit `href` soit `to` pour avoir un lien de type `<a>` ou `<router-link>`.',
+        'Le lien de retour vers page acceuil. Renseigner soit `href` soit `to` pour avoir un lien de type `<a>` ou `<router-link>`.',
 			table: {
 				type: {
 					summary: `{
@@ -281,11 +281,11 @@ export const Default: Story = {
 		headingLevelTitle: 1,
 		items: [
 			{
-				label: 'Home',
+				label: 'Acceuil',
 				href: '',
 			},
 			{
-				label: 'About',
+				label: 'À propos',
 				href: '',
 			},
 		],
@@ -297,8 +297,8 @@ export const Default: Story = {
 				code: `
 <HeaderNavigationBar
 	:items="[
-		{ label: 'Home', href: '' },
-		{ label: 'About', href: '' },
+		{ label: 'Acceuil', href: '' },
+		{ label: 'À propos', href: '' },
 	]"
 />
 				`,
@@ -320,11 +320,11 @@ export const WithScroll: Story = {
 		headingLevelTitle: 1,
 		items: [
 			{
-				label: 'Home',
+				label: 'Acceuil',
 				href: '',
 			},
 			{
-				label: 'About',
+				label: 'À propos',
 				href: '',
 			},
 		],
@@ -347,8 +347,8 @@ export const WithScroll: Story = {
 				code: `<template>
 <HeaderNavigationBar
 	:items="[
-		{ label: 'Home', href: '' },
-		{ label: 'About', href: '' },
+		{ label: 'Acceuil', href: '' },
+		{ label: 'À propos', href: '' },
 	]"
 />
 <div
@@ -374,11 +374,11 @@ export const WithManyItems: Story = {
 		headingLevelTitle: 1,
 		items: [
 			{
-				label: 'Home',
+				label: 'Acceuil',
 				href: '',
 			},
 			{
-				label: 'About',
+				label: 'À propos',
 				href: '',
 			},
 			{
@@ -398,11 +398,11 @@ export const WithManyItems: Story = {
 				href: '',
 			},
 			{
-				label: 'Team',
+				label: 'Équipe',
 				href: '',
 			},
 			{
-				label: 'Careers',
+				label: 'Nous rejoindre',
 				href: '',
 			},
 		],
@@ -415,11 +415,11 @@ export const WithManyItems: Story = {
 <HeaderNavigationBar
 	:items="[
 		{
-				label: 'Home',
+				label: 'Acceuil',
 				href: '',
 			},
 			{
-				label: 'About',
+				label: 'À propos',
 				href: '',
 			},
 			{
@@ -439,11 +439,11 @@ export const WithManyItems: Story = {
 				href: '',
 			},
 			{
-				label: 'Team',
+				label: 'Équipe',
 				href: '',
 			},
 			{
-				label: 'Careers',
+				label: 'Nous rejoindre',
 				href: '',
 			},
 	]"
@@ -812,8 +812,8 @@ export const WithNavigationMenuAppendSlot: Story = {
 	<HeaderNavigationBar
 		maxHorizontalMenuItems="0"
 		:items="[
-			{ label: 'Home', href: '' },
-			{ label: 'About', href: '' },
+			{ label: 'Acceuil', href: '' },
+			{ label: 'À propos', href: '' },
 		]"
 	>
 		<template #navigation-menu-append>
@@ -857,8 +857,8 @@ export const WithVuetifyOptions: Story = {
 				code: `
 <HeaderNavigationBar
 	:items="[
-		{ label: 'Home', href: '/home/about' },
-		{ label: 'About', href: '/about' },
+		{ label: 'Acceuil', href: '/acceuil/a-propos' },
+		{ label: 'À propos', href: '/a-propos' },
 	]"
 	:vuetifyOptions="{
 		sheet: {
@@ -884,7 +884,7 @@ export const WithTabConfirmation: Story = {
 	args: {
 		headingLevelTitle: 1,
 		items: [
-			{ label: 'Home', href: '/home' },
+			{ label: 'Acceuil', href: '/acceuil' },
 			{ label: 'Test avec href', href: '/test-avec-href' },
 			{ label: 'Test sans href', href: '' },
 		],
@@ -927,8 +927,8 @@ export const WithTabConfirmation: Story = {
 <template>
 	<HeaderNavigationBar
 		:items="[
-			{ label: 'Home', href: '/home' },
-			{ label: 'About', href: '/about' },
+			{ label: 'Acceuil', href: '/acceuil' },
+			{ label: 'À propos', href: '/a-propos' },
 		]"
 		:confirmTabChange="true"
 		@confirm-tab-change="showCustomConfirmDialog"
