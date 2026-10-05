@@ -76,7 +76,7 @@ const meta = {
 		'homeLink': {
 			control: { type: 'object' },
 			description:
-        'Le lien de retour vers page acceuil. Renseigner soit `href` soit `to` pour avoir un lien de type `<a>` ou `<router-link>`.',
+        'Le lien de retour vers la page d\'accueil. Renseigner soit `href` soit `to` pour avoir un lien de type `<a>` ou `<router-link>`.',
 			table: {
 				type: {
 					summary: `{
