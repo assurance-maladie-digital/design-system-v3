@@ -300,6 +300,21 @@
 		}
 	}
 
+	// `VMenu` n'a pas de prop `activator` (elle injecterait ses propres attributs ARIA
+	// avec un id généré, cassant `aria-controls`). L'ouverture au clic est donc gérée ici.
+	const onActivatorClick = (index: number) => {
+		checkActiveLink(index)
+		if (index !== 1) return
+
+		if (menuOpen.value) {
+			hideOverlay()
+		}
+		else {
+			menuOpen.value = true
+			showOverlay.value = true
+		}
+	}
+
 	// onMobileMenuModel provided by composable
 
 	// openMobileMenuAndFocus provided by composable
@@ -382,9 +397,7 @@
 	const menuActivatorEl = ref<HTMLElement | null>(null)
 
 	onMounted(() => {
-		menuActivatorEl.value = document.querySelector(
-			'#left-menu li:nth-child(2) > button',
-		) as HTMLElement | null
+		menuActivatorEl.value = getLeftActivatorInteractiveEl()
 
 		updateWidth()
 		// Pour mettre à jour en temps réel, vous pouvez utiliser:
@@ -514,6 +527,7 @@
 		getLinkComponent,
 		handleSubMenuItemClick,
 		handleKeyboardEnter,
+		onActivatorClick,
 		openMenuWithKeyboard,
 		handleMenuKeydown,
 	})
@@ -557,8 +571,8 @@
 									:aria-current="getCurrentPageIndex() === index ? 'page' : undefined"
 									:aria-haspopup="itemsSelectMenu && index === 1 ? 'menu' : undefined"
 									:aria-expanded="itemsSelectMenu && index === 1 ? String(menuOpen) : undefined"
-									:aria-controls="itemsSelectMenu && index === 1 && menuOpen ? 'left-dropdown-menu' : undefined"
-									@click="checkActiveLink(index)"
+									:aria-controls="itemsSelectMenu && index === 1 ? 'left-dropdown-menu' : undefined"
+									@click="onActivatorClick(index)"
 									@focus="index === 1 && showOverlay ? highlightMenu = true : null"
 									@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
 									@keydown.enter.prevent="handleKeyboardEnter(item, index)"
