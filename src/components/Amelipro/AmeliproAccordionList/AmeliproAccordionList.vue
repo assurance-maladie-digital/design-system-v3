@@ -239,7 +239,7 @@
 						:border-color="groupBorderColor"
 						:bordered="groupBordered"
 						:card-color="groupColor"
-						:header-right-width="String(accordion.headerRightWidth)"
+						:header-right-width="accordion.headerRightWidth === undefined ? undefined : String(accordion.headerRightWidth)"
 						:hide-separator="hideSeparator"
 						:is-open="`accordion-result-${accordion.id}` === openId"
 						:title-level="titleLevel"
