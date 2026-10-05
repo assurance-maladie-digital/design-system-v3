@@ -262,22 +262,11 @@ describe('AmeliproMultipleFoldingCard', () => {
 			const wrapperFinder = () => (wrapper.find('.amelipro-card--multi-folding-header-left'))
 
 			it('prop headerRightWidth sets style attribute', async () => {
-				expect(wrapperFinder().attributes('style')).toBe('display: inline-block; margin-right: 10px;')
+				expect(wrapperFinder().attributes('style')).toBe('display: inline-block; width: calc(100% - (50% + 10px)); margin-right: 10px;')
 
 				const { headerRightWidth } = modifiedPropValues()
 				await wrapper.setProps({ headerRightWidth })
-				// *************************************
-				// BUG JSDOM !!!
-				// Cf : https://github.com/jsdom/jsdom/issues/3538
-				// *************************************
-				// Les "calc()" ne s'affichent pas dans le DOM de JSDOM si le calc() contient des parenthèses
-				// OK sur un vrai navigateur
-				// 	- calc(${props.headerRightWidth} - 10px) ==> OK
-				// 	- calc(100% - (${props.headerRightWidth} + 10px)) ==> FAIL
-				// Fausse le retour des TU
-
-				// Attendu : expect(wrapperFinder().attributes('style')).toBe('display: inline-block; width: calc(100% - (55px + 10px)); margin-right: 10px;');
-				expect(wrapperFinder().attributes('style')).toBe('display: inline-block; margin-right: 10px;')
+				expect(wrapperFinder().attributes('style')).toBe('display: inline-block; width: calc(100% - (55px + 10px)); margin-right: 10px;')
 
 				displayWrapper.vm.setSmAndUp(false)
 				await wrapper.vm.$nextTick()
