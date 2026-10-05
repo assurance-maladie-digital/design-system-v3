@@ -23,22 +23,22 @@ import * as CaptchaStories from './Captcha.stories';
 		format: 'dedent',
 		code: `
 		<script lang="ts" setup>
-			import { captcha } from '@cnamts/synapse'
+			import { ref } from 'vue'
+			import { Captcha } from '@cnamts/synapse'
+
+			const captchaValue = ref('')
 		</script>
 
 		<template>
 			<VCard class="pa-8" width="400">
-        <Captcha 
-          url-create="..."
-          url-get-image="..."
-          url-get-audio="/..."
-          service="(e) => {
-            // call the API to verify the captcha and return the response
-          }"
-          @validation:success="(e) => { ... }"
-          @validation:error="(e) => { ... }"
-        />
-      </VCard>
+				<Captcha
+					v-model="captchaValue"
+					url-create="..."
+					url-get-image="..."
+					url-get-audio="..."
+					required
+				/>
+			</VCard>
 		</template>
 		`
 	}}
@@ -51,6 +51,13 @@ import * as CaptchaStories from './Captcha.stories';
 ## API
 
 <Controls of={CaptchaStories.Default} />
+
+## Vérification de la réponse
+
+Le composant ne vérifie pas la réponse saisie : sans règle supplémentaire, il valide seulement que le champ est rempli (`required`). Seul le serveur connaît la bonne réponse, la vérification est donc à la charge de l'application :
+
+- **Pendant la saisie**, avec une règle `custom` asynchrone dans `custom-rules` qui appelle l'API de vérification (voir la page Validation du Captcha).
+- **À la soumission**, en appelant l'API puis, si la réponse est incorrecte, en transmettant le message d'erreur via la prop `error-messages`. Tant que ce message est présent, le `SyForm` parent est invalide et sa soumission renvoie `isValid: false`.
 
 ## Context d'utilisation
 
