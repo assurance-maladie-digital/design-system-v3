@@ -121,6 +121,7 @@
     "happy-dom": "^20.8.8",
     "husky": "^9.1.6",
     "jsdom": "^27.3.0",
+    "knip": "^6.39.0",
     "marked": "^16.0.0",
     "postcss-html": "^1.7.0",
     "postcss-scss": "^4.0.9",
