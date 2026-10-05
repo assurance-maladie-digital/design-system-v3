@@ -265,4 +265,7 @@ const {
 
 ### Intégration SyForm
 
-Ce composable appelle automatiquement `useValidatable(validateOnSubmit, clearValidation)` — le champ est donc enregistré auprès du `SyForm` parent sans action supplémentaire.
+Pour tout nouveau composant ou composant migré, utiliser uniquement
+`@/composables/unifyValidation/useValidation`. Ce point d'entrée gère la validation et
+enregistre automatiquement le champ auprès du `SyForm` parent. Ne pas ajouter d'appel
+direct à `useValidatable`.

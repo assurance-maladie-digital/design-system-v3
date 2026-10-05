@@ -177,7 +177,7 @@ export function createValidateDatesFlow(ctx: ValidationContext) {
 			return emptyValidationResult()
 		}
 
-		// 2. Mode Vuetify natif : déléguer entièrement à useCustomValidation
+		// 2. Mode Vuetify natif : déléguer au bridge Vuetify du DatePicker
 		if (unref(options.useVuetifyValidation)) {
 			ctx.clearValidation()
 			const hasInteracted = options.hasInteracted?.value ?? false
@@ -185,7 +185,7 @@ export function createValidateDatesFlow(ctx: ValidationContext) {
 				return emptyValidationResult()
 			}
 			const value = unref(options.modelValue) ?? options.selectedDates.value ?? ''
-			const result = ctx.validation.validateValue(value)
+			const result = ctx.validateField(value)
 			if (result instanceof Promise) {
 				return result.then((resolved) => {
 					if (token !== ctx.currentValidationToken.value) return emptyValidationResult()

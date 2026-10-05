@@ -439,6 +439,40 @@ describe('DatePicker', () => {
 	})
 
 	describe('SyForm integration', () => {
+		it('updates SyForm v-model when a Vuetify-validated date becomes valid', async () => {
+			const Host = defineComponent({
+				components: { DatePicker, SyForm },
+				setup() {
+					const formValidity = ref<boolean | null>(null)
+					const value = ref<string | null>(null)
+					const requiredRule = (date: unknown): boolean | string => Boolean(date) || 'La date est obligatoire'
+
+					return { formValidity, value, requiredRule }
+				},
+				template: `
+					<SyForm v-model="formValidity">
+						<DatePicker
+							v-model="value"
+							label="Date Field"
+							use-vuetify-validation
+							:rules="[requiredRule]"
+						/>
+						<span data-testid="form-validity">{{ String(formValidity) }}</span>
+					</SyForm>
+				`,
+			})
+
+			const host = mount(Host)
+			const input = host.findComponent(DatePicker).find('input')
+			await input.trigger('focus')
+			await input.setValue('26/08/2026')
+			await input.trigger('blur')
+			await flushPromises()
+
+			expect(host.get('[data-testid="form-validity"]').text()).toBe('true')
+			host.unmount()
+		})
+
 		it('registers with SyForm and blocks submit while the field is invalid', async () => {
 			const Host = defineComponent({
 				components: { DatePicker, SyForm },
