@@ -33,7 +33,10 @@
 		const vuetifyValidateResult = await form.value!.validate()
 		const customComponentsValid = await validateAll()
 
-		const isValid = vuetifyValidateResult.valid && customComponentsValid
+		// VForm.validate() ne vérifie que les `rules` : un champ Vuetify portant des
+		// `error-messages` injectés par le parent (ex. erreur serveur) n'y est pas compté,
+		// alors que le VForm le considère déjà invalide (vFormStatus à false).
+		const isValid = vuetifyValidateResult.valid && vFormStatus.value !== false && customComponentsValid
 		if (isValid && model.value === null) {
 			model.value = true
 		}
