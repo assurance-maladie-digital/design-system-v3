@@ -5920,6 +5920,10 @@
       "date": "2026-09-17 14:05:01 +0200",
       "dateFr": "17/09/2026",
       "message": "add tests a11y to selectBtnField (#2543)",
+      "hash": "99dd21e66e143bda73bf5d60d7cc258bf80fda35",
+      "date": "2026-09-17 14:05:01 +0200",
+      "dateFr": "17/09/2026",
+      "message": "add tests a11y to selectBtnField (#2543)",
       "version": null,
       "confidence": "forte",
       "keywords": true,
@@ -7008,6 +7012,17 @@
   ],
   "SyIcon": [
     {
+      "hash": "10d998f3c39c4df0f14b28536e73af79a2d02399",
+      "date": "2026-09-17 16:04:51 +0200",
+      "dateFr": "17/09/2026",
+      "message": "refacto tests a11y (#2562)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "6b48d0b4c60df11d089c554c474f5f21f6e3a2fd",
       "date": "2026-09-24 14:22:02 +0200",
       "dateFr": "24/09/2026",
@@ -7196,6 +7211,17 @@
     }
   ],
   "SyIconAccessibility": [
+    {
+      "hash": "10d998f3c39c4df0f14b28536e73af79a2d02399",
+      "date": "2026-09-17 16:04:51 +0200",
+      "dateFr": "17/09/2026",
+      "message": "refacto tests a11y (#2562)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "6b48d0b4c60df11d089c554c474f5f21f6e3a2fd",
       "date": "2026-09-24 14:22:02 +0200",
@@ -10566,6 +10592,17 @@
     }
   ],
   "ExternalLinks": [
+    {
+      "hash": "962b87035c34c626d88f0986b10bcb4c508bc219",
+      "date": "2026-09-25 12:04:38 +0200",
+      "dateFr": "25/09/2026",
+      "message": "corrections test accessibilité axe et tanaguru",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
@@ -16779,6 +16816,17 @@
       "a11yLabel": false
     },
     {
+      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
+      "date": "2026-09-18 14:10:26 +0200",
+      "dateFr": "18/09/2026",
+      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
       "dateFr": "10/09/2026",
@@ -16945,6 +16993,17 @@
     }
   ],
   "SyTableFilter": [
+    {
+      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
+      "date": "2026-09-18 14:10:26 +0200",
+      "dateFr": "18/09/2026",
+      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",
@@ -17278,6 +17337,17 @@
   ],
   "SyTablePagination": [
     {
+      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
+      "date": "2026-09-18 14:10:26 +0200",
+      "dateFr": "18/09/2026",
+      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",
       "dateFr": "22/09/2026",
@@ -17610,6 +17680,17 @@
   ],
   "TableBulkActions": [
     {
+      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
+      "date": "2026-09-18 14:10:26 +0200",
+      "dateFr": "18/09/2026",
+      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",
       "dateFr": "22/09/2026",
@@ -17941,6 +18022,17 @@
     }
   ],
   "TableHeader": [
+    {
+      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
+      "date": "2026-09-18 14:10:26 +0200",
+      "dateFr": "18/09/2026",
+      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",

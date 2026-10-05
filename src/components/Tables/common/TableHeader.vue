@@ -243,7 +243,7 @@
 		</slot>
 		<div
 			v-if="header!.sortable"
-			class="sort-container d-flex align-center"
+			class="sort-container align-center"
 		>
 			<button
 				type="button"

@@ -1,6 +1,6 @@
 # Rapport d’historique d’accessibilité par composant
 
-- Généré le: 2026-09-28T12:10:19.018Z
+- Généré le: 2026-09-29T07:02:06.039Z
 
 ## Accordion
 
@@ -1801,6 +1801,8 @@ Aucune amélioration d’accessibilité détectée.
 
 - **17/09/2026** — add tests a11y to selectBtnField (#2543)  
   Release: _prochaine version_ · Hash: `99dd21e66e143bda73bf5d60d7cc258bf80fda35` | mot-clé a11y · pattern ARIA
+- **17/09/2026** — add tests a11y to selectBtnField (#2543)  
+  Release: _prochaine version_ · Hash: `99dd21e66e143bda73bf5d60d7cc258bf80fda35` | mot-clé a11y · pattern ARIA
 
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
@@ -2113,6 +2115,12 @@ Aucune amélioration d’accessibilité détectée.
 - **17/09/2026** — refacto tests a11y (#2562)  
   Release: _prochaine version_ · Hash: `10d998f3c39c4df0f14b28536e73af79a2d02399` | mot-clé a11y · pattern ARIA
 
+- **24/09/2026** — SyIcon - add accessibility tab on AccessibilityDemo story (#2569)  
+  Release: _prochaine version_ · Hash: `6b48d0b4c60df11d089c554c474f5f21f6e3a2fd` | mot-clé a11y · pattern ARIA
+
+- **17/09/2026** — refacto tests a11y (#2562)  
+  Release: _prochaine version_ · Hash: `10d998f3c39c4df0f14b28536e73af79a2d02399` | mot-clé a11y · pattern ARIA
+
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
@@ -2159,6 +2167,12 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `58f9176323c97588d22abbe8eb8e4da9c540991e` | pattern ARIA
 
 ## SyIconAccessibility
+
+- **24/09/2026** — SyIcon - add accessibility tab on AccessibilityDemo story (#2569)  
+  Release: _prochaine version_ · Hash: `6b48d0b4c60df11d089c554c474f5f21f6e3a2fd` | mot-clé a11y · pattern ARIA
+
+- **17/09/2026** — refacto tests a11y (#2562)  
+  Release: _prochaine version_ · Hash: `10d998f3c39c4df0f14b28536e73af79a2d02399` | mot-clé a11y · pattern ARIA
 
 - **24/09/2026** — SyIcon - add accessibility tab on AccessibilityDemo story (#2569)  
   Release: _prochaine version_ · Hash: `6b48d0b4c60df11d089c554c474f5f21f6e3a2fd` | mot-clé a11y · pattern ARIA
@@ -2296,6 +2310,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.16` · Hash: `6fee96c4f1a2b6e146f1b4282b9e18bb035bbf7b` | pattern ARIA
 
 ## SyTabs
+
+- **24/09/2026** — SyTabs: fix slots and stories (#2580)  
+  Release: _prochaine version_ · Hash: `77899ea7457f81bcd93d0c16b4d75950f5520c6a` | pattern ARIA
 
 - **24/09/2026** — SyTabs: fix slots and stories (#2580)  
   Release: _prochaine version_ · Hash: `77899ea7457f81bcd93d0c16b4d75950f5520c6a` | pattern ARIA
@@ -2647,6 +2664,9 @@ Aucune amélioration d’accessibilité détectée.
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
 
+- **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
+  Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
+
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
@@ -2703,6 +2723,9 @@ Aucune amélioration d’accessibilité détectée.
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
 
+- **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
+  Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
+
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
@@ -2755,6 +2778,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.1` · Hash: `f1384e4430380e37ef475f2a924039341233e794` | pattern ARIA
 
 ## DatePickerLiveRegion
+
+- **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
+  Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
 
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
@@ -2866,6 +2892,9 @@ Aucune amélioration d’accessibilité détectée.
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
 
+- **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
+  Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
+
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
@@ -2941,13 +2970,36 @@ Aucune amélioration d’accessibilité détectée.
   Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
 
 ## BidirectionalComplexValidation
+## DatePickerControls
+
+- **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
+  Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
+
+## DatePickerDay
+
+- **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
+  Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
+
+## DatePickerMonthOption
+
+- **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
+  Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
+
+## DatePickerYearOption
+
+- **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
+  Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
+
+## BidirectionalComplexValidation
 
 Aucune amélioration d’accessibilité détectée.
 
 ## DatePickerBidirectionalValidation
+## DatePickerBidirectionalValidation
 
 Aucune amélioration d’accessibilité détectée.
 
+## DatePickerValidationExamples
 ## DatePickerValidationExamples
 
 Aucune amélioration d’accessibilité détectée.
@@ -3125,6 +3177,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.5-alpha` · Hash: `69dcfbc1d3b862caf01cb0c60dbbbea642d680e3` | pattern ARIA
 
 ## ExternalLinks
+
+- **25/09/2026** — corrections test accessibilité axe et tanaguru  
+  Release: _prochaine version_ · Hash: `962b87035c34c626d88f0986b10bcb4c508bc219` | mot-clé a11y · pattern ARIA
 
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
@@ -4303,6 +4358,9 @@ Aucune amélioration d’accessibilité détectée.
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
 
+- **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
+  Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
+
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
@@ -4794,6 +4852,7 @@ Aucune amélioration d’accessibilité détectée.
 ## SyHeading
 
 Aucune amélioration d’accessibilité détectée.
+Aucune amélioration d’accessibilité détectée.
 
 ## SyTextArea
 
@@ -4914,6 +4973,9 @@ Aucune amélioration d’accessibilité détectée.
 - **18/09/2026** — SyTable: ne plus avoir "Table caption" quand le caption est vide (#2559)  
   Release: _prochaine version_ · Hash: `4d3907527c38c9958b531f95ff00a1bf4361c0a8` | pattern ARIA
 
+- **18/09/2026** — SyTable: ne plus avoir "Table caption" quand le caption est vide (#2559)  
+  Release: _prochaine version_ · Hash: `4d3907527c38c9958b531f95ff00a1bf4361c0a8` | pattern ARIA
+
 - **10/09/2026** — update doc a11y (#2545)  
   Release: _prochaine version_ · Hash: `9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e` | mot-clé a11y
 
@@ -4960,6 +5022,12 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.1` · Hash: `44b6129940ba1ee01dd57f10fd1162bab63ddb2a` | pattern ARIA
 
 ## SyTableFilter
+
+- **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
+  Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
+
+- **18/09/2026** — SyTable: ne plus avoir "Table caption" quand le caption est vide (#2559)  
+  Release: _prochaine version_ · Hash: `4d3907527c38c9958b531f95ff00a1bf4361c0a8` | pattern ARIA
 
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
@@ -5059,6 +5127,12 @@ Aucune amélioration d’accessibilité détectée.
 - **18/09/2026** — SyTable: ne plus avoir "Table caption" quand le caption est vide (#2559)  
   Release: _prochaine version_ · Hash: `4d3907527c38c9958b531f95ff00a1bf4361c0a8` | pattern ARIA
 
+- **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
+  Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
+
+- **18/09/2026** — SyTable: ne plus avoir "Table caption" quand le caption est vide (#2559)  
+  Release: _prochaine version_ · Hash: `4d3907527c38c9958b531f95ff00a1bf4361c0a8` | pattern ARIA
+
 - **25/08/2026** — fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)  
   Release: `v1.1.4` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
 
@@ -5151,6 +5225,12 @@ Aucune amélioration d’accessibilité détectée.
 - **18/09/2026** — SyTable: ne plus avoir "Table caption" quand le caption est vide (#2559)  
   Release: _prochaine version_ · Hash: `4d3907527c38c9958b531f95ff00a1bf4361c0a8` | pattern ARIA
 
+- **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
+  Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
+
+- **18/09/2026** — SyTable: ne plus avoir "Table caption" quand le caption est vide (#2559)  
+  Release: _prochaine version_ · Hash: `4d3907527c38c9958b531f95ff00a1bf4361c0a8` | pattern ARIA
+
 - **25/08/2026** — fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)  
   Release: `v1.1.4` · Hash: `866c9198ee0aa864b462705ae01a3b5d2e2f1cf8` | mot-clé a11y · pattern ARIA
 
@@ -5236,6 +5316,12 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.1` · Hash: `44b6129940ba1ee01dd57f10fd1162bab63ddb2a` | pattern ARIA
 
 ## TableHeader
+
+- **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
+  Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
+
+- **18/09/2026** — SyTable: ne plus avoir "Table caption" quand le caption est vide (#2559)  
+  Release: _prochaine version_ · Hash: `4d3907527c38c9958b531f95ff00a1bf4361c0a8` | pattern ARIA
 
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: _prochaine version_ · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA

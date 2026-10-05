@@ -38,7 +38,7 @@ Généré le: 29/09/2026
 | **DialogBox** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **DownloadBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **ErrorPage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **ExternalLinks** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
+| **ExternalLinks** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **FileList** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **FilePreview** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **FileUpload** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
@@ -46,11 +46,11 @@ Généré le: 29/09/2026
 | **FilterSideBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **FooterBar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **FranceConnectBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **HeaderBar** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
+| **HeaderBar** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
 | **HeaderLoading** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **HeaderNavigationBar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **HeaderToolbar** | ❌ Non | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
-| **LangBtn** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
+| **LangBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **Logo** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **LogoBrandSection** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **LunarCalendar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
@@ -72,7 +72,7 @@ Généré le: 29/09/2026
 | **StatusPage** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **SubHeader** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **SyAlert** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **SyBtnMenu** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
+| **SyBtnMenu** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **SyHeading** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **SyTextArea** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Tables/SyServerTable** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |

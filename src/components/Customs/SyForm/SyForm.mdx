@@ -61,6 +61,42 @@ Si vous souhaitez gérer vous-même la validation, vous pouvez désactiver la va
 
 <Controls of={SyFormStories.Basic} />
 
+## État de validation (`v-model`)
+
+`SyForm` expose la validité globale du formulaire via un `v-model` **à trois états**
+(`boolean | null`), à la manière de Vuetify. C'est pratique pour piloter, par exemple,
+l'état activé d'un bouton de soumission.
+
+<table>
+  <thead>
+    <tr>
+      <th>Valeur</th>
+      <th>Signification</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>true</code></td>
+      <td>Toutes les règles évaluées des champs Vuetify et Synapse passent.</td>
+    </tr>
+    <tr>
+      <td><code>false</code></td>
+      <td>Au moins un champ est invalide.</td>
+    </tr>
+    <tr>
+      <td><code>null</code></td>
+      <td>Aucun statut de champ n'est disponible.</td>
+    </tr>
+  </tbody>
+</table>
+
+Les champs Synapse réactifs sont évalués silencieusement au montage. Un champ requis vide
+peut donc faire passer le formulaire à `false` sans afficher de message de validation.
+Pour n'activer un bouton que lorsque toutes les règles passent, comparez explicitement le
+statut à `true` :
+
+<Source dark code={'\n<script setup lang="ts">\nimport { ref } from "vue"\nimport { SyForm, SyTextField } from "@cnamts/synapse"\n\nconst valid = ref(null) // true | false | null\nconst name = ref("")\n</script>\n\n<template>\n  <SyForm v-model="valid">\n    <div class="d-flex flex-column gap-4">\n      <SyTextField v-model="name" label="Nom" required />\n      <!-- Actif uniquement lorsque toutes les règles passent -->\n      <v-btn type="submit" color="primary" :disabled="valid !== true">Soumettre</v-btn>\n    </div>\n  </SyForm>\n</template>'} />
+
 ## Événements
 
 <table>

@@ -1,6 +1,5 @@
 import type { ComputedRef, Ref } from 'vue'
 import type { ValidationResult, ValidationRule } from '@/composables/unifyValidation/useValidation'
-import type { useCustomValidation } from '@/composables/unifyValidation/useCustomValidation'
 import type { useDateRangeValidation } from '../useDateRangeValidation'
 import type { DatePickerValidationOptions } from '../useDatePickerValidation'
 
@@ -21,7 +20,6 @@ export interface ValidationContext {
 	warnings: Ref<string[]>
 	successes: Ref<string[]>
 	currentValidationToken: { value: number }
-	validation: ReturnType<typeof useCustomValidation>
 
 	// Mutators
 	clearValidation: () => void

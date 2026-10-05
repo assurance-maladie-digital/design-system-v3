@@ -26,6 +26,8 @@ export const buildCalendarModeActivatorTextFieldProps = (
 	'disable-click-button': props.textFieldActivator,
 	'allow-icon-button-when-readonly': true,
 	'readonly': true,
+	'use-vuetify-validation': props.useVuetifyValidation,
+	'rules': props.rules,
 	'label': labelWithAsterisk.value,
 	'placeholder': props.placeholder,
 	'no-icon': props.noIcon,
