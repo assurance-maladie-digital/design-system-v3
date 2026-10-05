@@ -8,7 +8,7 @@ const defaultOptions = {
 		class: 'mr-0',
 	},
 	btn: {
-		variant: 'text' as VariantType,
+		variant: 'outlined' as VariantType,
 	},
 }
 

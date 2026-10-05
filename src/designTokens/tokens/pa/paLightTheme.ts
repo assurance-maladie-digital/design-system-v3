@@ -53,6 +53,7 @@ export const paLightTheme = {
 	onError: baseTokens.color.white.base,
 	errorVariant: baseTokens.color.orange.lighten80,
 	errorVariantLighten: baseTokens.color.orange.lighten90,
+	errorVariantDarken: baseTokens.color.orange.darken40,
 	onErrorVariant: baseTokens.color.orange.darken60,
 	success: baseTokens.color.green.base,
 	successVariant: baseTokens.color.green.lighten80,
