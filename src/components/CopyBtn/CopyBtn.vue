@@ -103,9 +103,7 @@
 				<VBtn
 					v-bind="{...tooltipProps,...options.btn}"
 					:aria-label="props.ariaLabel"
-					:aria-owns="`${props.ariaOwns}-${id}`"
 					:data-test-id="props.ariaOwns"
-					:aria-controls="`copy-btn-${id}`"
 					@click="copy"
 				>
 					<slot name="icon">

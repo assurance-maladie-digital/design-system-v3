@@ -99,13 +99,16 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
           "
           id="amelipro-accordion-frieze-unique-id-slide-0"
           role="group"
-          style=""
+          style="width: calc((1 / 3) * 100%);"
         >
-          <div class="
-            d-flex
-            frieze__sub-item
-            px-1
-          ">
+          <div
+            class="
+              d-flex
+              frieze__sub-item
+              px-1
+            "
+            style="width: calc((1 / 6) * 100%);"
+          >
             <button
               aria-controls="accordion-content--item-1__content"
               aria-expanded="false"
@@ -154,11 +157,14 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               </span>
             </button>
           </div>
-          <div class="
-            d-flex
-            frieze__sub-item
-            px-1
-          ">
+          <div
+            class="
+              d-flex
+              frieze__sub-item
+              px-1
+            "
+            style="width: calc((1 / 6) * 100%);"
+          >
             <button
               aria-controls="accordion-content--item-2__content"
               aria-expanded="false"
@@ -220,13 +226,16 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
           "
           id="amelipro-accordion-frieze-unique-id-slide-1"
           role="group"
-          style=""
+          style="width: calc((1 / 3) * 100%);"
         >
-          <div class="
-            d-flex
-            frieze__sub-item
-            px-1
-          ">
+          <div
+            class="
+              d-flex
+              frieze__sub-item
+              px-1
+            "
+            style="width: calc((1 / 6) * 100%);"
+          >
             <button
               aria-controls="accordion-content--item-3__content"
               aria-expanded="false"
@@ -275,11 +284,14 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               </span>
             </button>
           </div>
-          <div class="
-            d-flex
-            frieze__sub-item
-            px-1
-          ">
+          <div
+            class="
+              d-flex
+              frieze__sub-item
+              px-1
+            "
+            style="width: calc((1 / 6) * 100%);"
+          >
             <button
               aria-controls="accordion-content--item-4__content"
               aria-expanded="false"
@@ -328,11 +340,14 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               </span>
             </button>
           </div>
-          <div class="
-            d-flex
-            frieze__sub-item
-            px-1
-          ">
+          <div
+            class="
+              d-flex
+              frieze__sub-item
+              px-1
+            "
+            style="width: calc((1 / 6) * 100%);"
+          >
             <button
               aria-controls="accordion-content--item-5__content"
               aria-expanded="false"
@@ -381,11 +396,14 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               </span>
             </button>
           </div>
-          <div class="
-            d-flex
-            frieze__sub-item
-            px-1
-          ">
+          <div
+            class="
+              d-flex
+              frieze__sub-item
+              px-1
+            "
+            style="width: calc((1 / 6) * 100%);"
+          >
             <button
               aria-controls="accordion-content--item-6__content"
               aria-expanded="false"
@@ -434,11 +452,14 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               </span>
             </button>
           </div>
-          <div class="
-            d-flex
-            frieze__sub-item
-            px-1
-          ">
+          <div
+            class="
+              d-flex
+              frieze__sub-item
+              px-1
+            "
+            style="width: calc((1 / 6) * 100%);"
+          >
             <button
               aria-controls="accordion-content--item-7__content"
               aria-expanded="false"
@@ -487,11 +508,14 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               </span>
             </button>
           </div>
-          <div class="
-            d-flex
-            frieze__sub-item
-            px-1
-          ">
+          <div
+            class="
+              d-flex
+              frieze__sub-item
+              px-1
+            "
+            style="width: calc((1 / 6) * 100%);"
+          >
             <button
               aria-controls="accordion-content--item-8__content"
               aria-expanded="false"
@@ -553,13 +577,16 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
           "
           id="amelipro-accordion-frieze-unique-id-slide-2"
           role="group"
-          style=""
+          style="width: calc((1 / 3) * 100%);"
         >
-          <div class="
-            d-flex
-            frieze__sub-item
-            px-1
-          ">
+          <div
+            class="
+              d-flex
+              frieze__sub-item
+              px-1
+            "
+            style="width: calc((1 / 6) * 100%);"
+          >
             <button
               aria-controls="accordion-content--item-9__content"
               aria-expanded="false"
@@ -608,11 +635,14 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               </span>
             </button>
           </div>
-          <div class="
-            d-flex
-            frieze__sub-item
-            px-1
-          ">
+          <div
+            class="
+              d-flex
+              frieze__sub-item
+              px-1
+            "
+            style="width: calc((1 / 6) * 100%);"
+          >
             <button
               aria-controls="accordion-content--item-10__content"
               aria-expanded="false"
@@ -661,11 +691,14 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               </span>
             </button>
           </div>
-          <div class="
-            d-flex
-            frieze__sub-item
-            px-1
-          ">
+          <div
+            class="
+              d-flex
+              frieze__sub-item
+              px-1
+            "
+            style="width: calc((1 / 6) * 100%);"
+          >
             <button
               aria-controls="accordion-content--item-11__content"
               aria-expanded="false"
@@ -714,11 +747,14 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               </span>
             </button>
           </div>
-          <div class="
-            d-flex
-            frieze__sub-item
-            px-1
-          ">
+          <div
+            class="
+              d-flex
+              frieze__sub-item
+              px-1
+            "
+            style="width: calc((1 / 6) * 100%);"
+          >
             <button
               aria-controls="accordion-content--item-12__content"
               aria-expanded="false"
@@ -767,11 +803,14 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               </span>
             </button>
           </div>
-          <div class="
-            d-flex
-            frieze__sub-item
-            px-1
-          ">
+          <div
+            class="
+              d-flex
+              frieze__sub-item
+              px-1
+            "
+            style="width: calc((1 / 6) * 100%);"
+          >
             <button
               aria-controls="accordion-content--item-13__content"
               aria-expanded="false"
@@ -820,11 +859,14 @@ exports[`AmeliproAccordionFrieze > render correctly 1`] = `
               </span>
             </button>
           </div>
-          <div class="
-            d-flex
-            frieze__sub-item
-            px-1
-          ">
+          <div
+            class="
+              d-flex
+              frieze__sub-item
+              px-1
+            "
+            style="width: calc((1 / 6) * 100%);"
+          >
             <button
               aria-controls="accordion-content--item-14__content"
               aria-expanded="false"

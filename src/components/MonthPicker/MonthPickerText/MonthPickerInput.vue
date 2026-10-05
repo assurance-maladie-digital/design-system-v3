@@ -97,6 +97,11 @@
 </template>
 
 <style scoped lang="scss">
+:deep(.help-text-as-hint .v-messages),
+:deep(.help-text-below:not(.text-disabled)) {
+	--v-medium-emphasis-opacity: 1;
+}
+
 .error-field .month-picker-input__toggle-btn :deep(svg) {
 	color: rgb(var(--v-theme-error, 179, 63, 46));
 }

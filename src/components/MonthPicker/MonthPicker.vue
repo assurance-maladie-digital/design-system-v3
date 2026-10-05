@@ -11,6 +11,8 @@
 	import { useLocales } from '@/composables/useLocales'
 	import type { MonthPickerProps } from './types'
 
+	defineOptions({ inheritAttrs: false })
+
 	const props = withDefaults(defineProps<MonthPickerProps>(), {
 		modelValue: undefined,
 		locales: () => ({}),
@@ -33,6 +35,10 @@
 	}>()
 
 	const attrs = useAttrs()
+	// Exclure width de la  div il reste transmis au champ via inputProps.
+	const rootAttrs = computed(() =>
+		Object.fromEntries(Object.entries(attrs).filter(([name]) => name !== 'width')),
+	)
 	const textInput = ref<ComponentPublicInstance<typeof MonthPickerInput> | null>(null)
 	const toggleBtn = computed(() => textInput.value?.toggleBtn)
 
@@ -106,7 +112,10 @@
 </script>
 
 <template>
-	<div class="month-picker">
+	<div
+		v-bind="rootAttrs"
+		class="month-picker"
+	>
 		<MonthPickerInput
 			ref="textInput"
 			v-model="internalValue"

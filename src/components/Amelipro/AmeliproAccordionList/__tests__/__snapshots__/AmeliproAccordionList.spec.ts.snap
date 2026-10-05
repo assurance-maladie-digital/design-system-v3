@@ -265,7 +265,10 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
           >
             <div
               class="btn-wrapper"
-              style="margin-right: 10px;"
+              style="
+                width: calc(100% - (50% + 10px));
+                margin-right: 10px;
+              "
             >
               <p
                 aria-level="2"
@@ -321,7 +324,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
             <div
               class="right-slot"
               style="
-                width: calc(undefined - 10px);
+                width: calc(50% - 10px);
                 margin-left: 10px;
               "
             >
@@ -382,7 +385,10 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
           >
             <div
               class="btn-wrapper"
-              style="margin-right: 10px;"
+              style="
+                width: calc(100% - (50% + 10px));
+                margin-right: 10px;
+              "
             >
               <p
                 aria-level="2"
@@ -438,7 +444,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
             <div
               class="right-slot"
               style="
-                width: calc(undefined - 10px);
+                width: calc(50% - 10px);
                 margin-left: 10px;
               "
             >
@@ -499,7 +505,10 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
           >
             <div
               class="btn-wrapper"
-              style="margin-right: 10px;"
+              style="
+                width: calc(100% - (50% + 10px));
+                margin-right: 10px;
+              "
             >
               <p
                 aria-level="2"
@@ -555,7 +564,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
             <div
               class="right-slot"
               style="
-                width: calc(undefined - 10px);
+                width: calc(50% - 10px);
                 margin-left: 10px;
               "
             >
@@ -616,7 +625,10 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
           >
             <div
               class="btn-wrapper"
-              style="margin-right: 10px;"
+              style="
+                width: calc(100% - (50% + 10px));
+                margin-right: 10px;
+              "
             >
               <p
                 aria-level="2"
@@ -672,7 +684,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
             <div
               class="right-slot"
               style="
-                width: calc(undefined - 10px);
+                width: calc(50% - 10px);
                 margin-left: 10px;
               "
             >
@@ -733,7 +745,10 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
           >
             <div
               class="btn-wrapper"
-              style="margin-right: 10px;"
+              style="
+                width: calc(100% - (50% + 10px));
+                margin-right: 10px;
+              "
             >
               <p
                 aria-level="2"
@@ -789,7 +804,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
             <div
               class="right-slot"
               style="
-                width: calc(undefined - 10px);
+                width: calc(50% - 10px);
                 margin-left: 10px;
               "
             >
@@ -850,7 +865,10 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
           >
             <div
               class="btn-wrapper"
-              style="margin-right: 10px;"
+              style="
+                width: calc(100% - (50% + 10px));
+                margin-right: 10px;
+              "
             >
               <p
                 aria-level="2"
@@ -906,7 +924,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
             <div
               class="right-slot"
               style="
-                width: calc(undefined - 10px);
+                width: calc(50% - 10px);
                 margin-left: 10px;
               "
             >
@@ -967,7 +985,10 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
           >
             <div
               class="btn-wrapper"
-              style="margin-right: 10px;"
+              style="
+                width: calc(100% - (50% + 10px));
+                margin-right: 10px;
+              "
             >
               <p
                 aria-level="2"
@@ -1023,7 +1044,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
             <div
               class="right-slot"
               style="
-                width: calc(undefined - 10px);
+                width: calc(50% - 10px);
                 margin-left: 10px;
               "
             >
@@ -1084,7 +1105,10 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
           >
             <div
               class="btn-wrapper"
-              style="margin-right: 10px;"
+              style="
+                width: calc(100% - (50% + 10px));
+                margin-right: 10px;
+              "
             >
               <p
                 aria-level="2"
@@ -1140,7 +1164,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
             <div
               class="right-slot"
               style="
-                width: calc(undefined - 10px);
+                width: calc(50% - 10px);
                 margin-left: 10px;
               "
             >
@@ -1201,7 +1225,10 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
           >
             <div
               class="btn-wrapper"
-              style="margin-right: 10px;"
+              style="
+                width: calc(100% - (50% + 10px));
+                margin-right: 10px;
+              "
             >
               <p
                 aria-level="2"
@@ -1257,7 +1284,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
             <div
               class="right-slot"
               style="
-                width: calc(undefined - 10px);
+                width: calc(50% - 10px);
                 margin-left: 10px;
               "
             >
@@ -1318,7 +1345,10 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
           >
             <div
               class="btn-wrapper"
-              style="margin-right: 10px;"
+              style="
+                width: calc(100% - (50% + 10px));
+                margin-right: 10px;
+              "
             >
               <p
                 aria-level="2"
@@ -1374,7 +1404,7 @@ exports[`AmeliproAccordionList > render correctly 1`] = `
             <div
               class="right-slot"
               style="
-                width: calc(undefined - 10px);
+                width: calc(50% - 10px);
                 margin-left: 10px;
               "
             >
