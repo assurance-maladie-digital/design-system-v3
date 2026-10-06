@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, defineComponent, h, ref, watch } from 'vue'
+	import { computed, defineComponent, h, onMounted, ref, watch } from 'vue'
 	import { mdiArrowRight, mdiMagnify } from '@mdi/js'
 	import iconsStatus from './icons_status.png'
 	import iconsStatus2 from './icons_status2.png'
@@ -122,6 +122,21 @@
 	})
 	const practices = bestPracticesData as PracticeItem[]
 	const selectedLevels = ref<PracticeLevel[]>([])
+
+	onMounted(() => {
+		for (const source of [window, window.parent]) {
+			try {
+				const level = new URLSearchParams(source.location.search).get('ecoLevel')
+				if (level === '1' || level === '2') {
+					selectedLevels.value = [level === '1' ? 'level1' : 'level2']
+					return
+				}
+			}
+			catch {
+				// Une intégration sur une autre origine interdit l'accès à son URL.
+			}
+		}
+	})
 	const selectedAudiences = ref<Audience[] | null>([])
 	const selectedPracticeId = ref('')
 	const search = ref<string | null>('')
