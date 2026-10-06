@@ -2,7 +2,7 @@
   "name": "@cnamts/synapse",
   "version": "1.1.6",
   "private": false,
-  "packageManager": "pnpm@10.12.4",
+  "packageManager": "pnpm@10.33.4",
   "description": "CNAM DS v3",
   "type": "module",
   "files": [
@@ -100,7 +100,7 @@
     "@stylistic/eslint-plugin-ts": "^2.9.0",
     "@stylistic/stylelint-config": "^3.0.0",
     "@tsconfig/node20": "^20.1.4",
-    "@types/node": "^20.17.1",
+    "@types/node": "^22.20.5",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/parser": "^8.11.0",
