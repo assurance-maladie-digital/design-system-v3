@@ -130,9 +130,9 @@
 				score: { cx: 675.28, cy: 768.983, r: 22, fill: '#EC4899', textFill: '#fff' },
 			},
 			level2: {
-				value: '43',
-				status: '43 bonnes pratiques disponibles',
-				action: { label: 'Demander le référentiel interne', link: level2Link },
+				value: '35',
+				status: '35 bonnes pratiques disponibles',
+				action: { label: 'Consulter les pratiques du niveau 2', link: level1Link },
 				path: 'M1028.15 720.773C1005.97 796.677 960.058 863.477 897.142 911.381C834.226 959.285 757.618 985.772 678.55 986.958C599.482 988.144 522.113 963.967 457.789 917.972C393.465 871.977 345.569 806.583 321.123 731.38L435.245 694.284C451.763 745.097 484.125 789.282 527.587 820.36C571.05 851.437 623.325 867.773 676.75 866.972C730.174 866.17 781.937 848.274 824.447 815.906C866.958 783.539 897.98 738.403 912.966 687.117L1028.15 720.773Z',
 				score: { cx: 677.649, cy: 926.965, r: 26, fill: '#fff', textFill: '#EC4899' },
 			},
@@ -519,7 +519,7 @@
 						<div>
 							<strong>Niveau #2 · Avancé</strong>
 							<p>
-								<span class="schema-level-card__number schema-level-card__number--advanced">103</span>
+								<span class="schema-level-card__number schema-level-card__number--advanced">95</span>
 								bonnes pratiques pour aller plus loin
 							</p>
 						</div>

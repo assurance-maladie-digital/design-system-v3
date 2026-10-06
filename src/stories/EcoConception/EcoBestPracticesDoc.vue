@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, ref, watch } from 'vue'
+	import { computed, defineComponent, h, ref, watch } from 'vue'
 	import { mdiArrowRight, mdiMagnify } from '@mdi/js'
 	import iconsStatus from './icons_status.png'
 	import iconsStatus2 from './icons_status2.png'
@@ -55,6 +55,7 @@
 		objective?: string
 		actionNumbers: number[]
 		do: string[]
+		doList?: boolean
 		dont: string[]
 		control: string[]
 		tables?: PracticeTable[]
@@ -66,6 +67,38 @@
 		page?: string
 		references?: string[]
 	}
+
+	const EcoPracticeText = defineComponent({
+		props: {
+			text: { type: String, required: true },
+		},
+		setup(props) {
+			const blocks = computed(() => {
+				const result: { list: boolean, lines: string[] }[] = []
+				for (const line of props.text.split('\n')) {
+					const list = line.startsWith('- ')
+					const text = list ? line.slice(2) : line
+					const previous = result.at(-1)
+					if (list && previous?.list) {
+						previous.lines.push(text)
+					}
+					else {
+						result.push({ list, lines: [text] })
+					}
+				}
+				return result
+			})
+
+			return () => h('div', { class: 'practice-text' }, blocks.value.map(block =>
+				h(block.list ? 'ul' : 'p', block.lines.map(line =>
+					h(block.list ? 'li' : 'span', line.split(/(\*\*[^*]+\*\*)/g).map((part) => {
+						const strong = part.startsWith('**') && part.endsWith('**')
+						return strong ? h('strong', part.slice(2, -2)) : part
+					})),
+				)),
+			))
+		},
+	})
 
 	// Pagination
 	const currentPage = ref(1)
@@ -104,6 +137,8 @@
 			|| Boolean((search.value ?? '').trim())
 	})
 	const normalizeText = (value = '') => value
+		.replace(/\*\*/g, '')
+		.replace(/\n- /g, ' ')
 		.toLowerCase()
 		.normalize('NFD')
 		.replace(/[\u0300-\u036f]/g, '')
@@ -647,9 +682,7 @@
 					<div class="detail-objective">
 						<h4>Objectif</h4>
 
-						<p>
-							{{ selectedPractice.objective || selectedPractice.summary }}
-						</p>
+						<EcoPracticeText :text="selectedPractice.objective || selectedPractice.summary" />
 					</div>
 
 					<VRow>
@@ -660,14 +693,15 @@
 							<section class="detail-section detail-section--do">
 								<h4>À faire</h4>
 
-								<ul>
-									<li
+								<component :is="selectedPractice.doList === false ? 'div' : 'ul'">
+									<component
+										:is="selectedPractice.doList === false ? 'div' : 'li'"
 										v-for="item in selectedPractice.do"
 										:key="item"
 									>
-										{{ item }}
-									</li>
-								</ul>
+										<EcoPracticeText :text="item" />
+									</component>
+								</component>
 							</section>
 						</VCol>
 
@@ -683,7 +717,7 @@
 										v-for="item in selectedPractice.dont"
 										:key="item"
 									>
-										{{ item }}
+										<EcoPracticeText :text="item" />
 									</li>
 								</ul>
 							</section>
@@ -748,7 +782,7 @@
 										v-for="item in selectedPractice.control"
 										:key="item"
 									>
-										{{ item }}
+										<EcoPracticeText :text="item" />
 									</li>
 								</ul>
 							</section>
@@ -800,7 +834,7 @@
 	</VContainer>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .filters-footer {
 	display: flex;
 	align-items: center;
@@ -1000,7 +1034,7 @@
 .practice-card h3 {
 	color: rgb(var(--v-theme-primary));
 	font-size: 20px;
-	font-weight: 800;
+	font-weight: 700;
 	line-height: 1.35;
 	margin: 0;
 }
@@ -1015,7 +1049,7 @@
 	margin: 0;
 	color: rgb(var(--v-theme-primary));
 	font-size: 20px;
-	font-weight: 800;
+	font-weight: 700;
 	line-height: 1.35;
 }
 
@@ -1104,7 +1138,9 @@
 
 .detail-badges {
 	display: flex;
+	flex-shrink: 0;
 	flex-wrap: wrap;
+	justify-content: flex-end;
 	gap: 8px;
 }
 
@@ -1120,10 +1156,27 @@
 	margin-bottom: 8px;
 	color: rgb(var(--v-theme-primary));
 	font-size: 18px;
-	font-weight: 800;
+	font-weight: 700;
 }
 
-.detail-objective p {
+.practice-text :deep(p),
+.practice-text :deep(ul) {
+	margin: 0;
+}
+
+.practice-text :deep(ul) {
+	padding-left: 22px;
+}
+
+.practice-text :deep(li) {
+	margin-bottom: 0;
+}
+
+.practice-text :deep(strong) {
+	font-weight: 700;
+}
+
+.detail-objective :deep(p) {
 	margin: 0;
 	line-height: 1.6;
 }
@@ -1140,7 +1193,7 @@
 	margin-bottom: 16px;
 	color: rgb(var(--v-theme-primary));
 	font-size: 18px;
-	font-weight: 800;
+	font-weight: 700;
 }
 
 .detail-section ul {
@@ -1397,10 +1450,17 @@
 		gap: 4px;
 	}
 
-	.detail-header,
+	.detail-header {
+		flex-wrap: wrap;
+	}
+
+	.detail-badges {
+		margin-left: auto;
+	}
+
 	.practice-card__badges {
-		flex-direction: column;
-		align-items: flex-start;
+		flex-wrap: wrap;
+		gap: 8px;
 	}
 
 	.filters-footer {
