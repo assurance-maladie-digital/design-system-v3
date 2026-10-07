@@ -185,6 +185,31 @@ describe('useValidation (unifyValidation)', () => {
 	})
 
 	describe('validate()', () => {
+		it('returns false while external errorMessages are injected, even when rules pass', async () => {
+			const errorMessages = ref<string[] | null>(null)
+			const params = makeParams({
+				modelValue: ref('valeur valide'),
+				errorMessages,
+				customRules: ref<ValidationRule[]>([
+					{ type: 'required', options: { message: 'Requis' } },
+				]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			expect(await result.validate()).toBe(true)
+
+			// Une erreur injectée par le parent (ex. erreur serveur) est affichée
+			// : elle doit faire échouer validate() comme elle invalide le SyForm.
+			errorMessages.value = ['Erreur serveur']
+			await nextTick()
+			expect(await result.validate()).toBe(false)
+			expect(result.errors.value).toContain('Erreur serveur')
+
+			errorMessages.value = null
+			await nextTick()
+			expect(await result.validate()).toBe(true)
+		})
+
 		describe('when useVuetifyValidation = false', () => {
 			it('returns true and clears state when readonly is true', async () => {
 				const params = makeParams({

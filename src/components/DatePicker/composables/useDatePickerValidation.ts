@@ -308,6 +308,9 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 					registerWithForm: Boolean(options.formRegistration),
 					reactiveValidation: false, // Désactivé : le DatePicker gère ses propres watchers
 					formRegistration: options.formRegistration,
+					// Les erreurs injectées par le parent (ex. erreur serveur) doivent invalider
+					// le champ auprès du SyForm, pas seulement s'afficher (cf. useDisplayMessages).
+					externalErrors: options.errorMessages,
 				},
 			)
 
