@@ -43,6 +43,11 @@ const router = createRouter({
 			path: '/syform-all-fields',
 			component: () => import('./pages/SyFormAllFieldsPage.vue'),
 		},
+		{
+			name: 'sandbox-validation-edge-cases',
+			path: '/validation-edge-cases',
+			component: () => import('./pages/ValidationEdgeCasesPage.vue'),
+		},
 	],
 })
 
