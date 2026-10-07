@@ -40,7 +40,7 @@ import {
     <CriteriaCard title="État global et retours d'information">
       <ul>
         <li><strong>v-model tri-état</strong> : le modèle reflète la validité globale — <code>true</code> (valide), <code>false</code> (invalide avec erreur affichée), <code>null</code> (statut indisponible ou champ non encore validé).</li>
-        <li><strong>Événement <code>submit</code> explicite</strong> : l'événement transporte <code>{ isValid }</code>, permettant à l'application de bloquer la suite du traitement et d'informer l'utilisateur en cas d'erreurs.</li>
+        <li><strong>Événement <code>submit</code> explicite</strong> : l'événement transporte <code>\{ isValid \}</code>, permettant à l'application de bloquer la suite du traitement et d'informer l'utilisateur en cas d'erreurs.</li>
         <li><strong>Événement <code>reset</code></strong> : émis lors de la réinitialisation, pour permettre à l'application de réagir (annonce, nettoyage d'état…).</li>
         <li><strong>Méthodes exposées</strong> : <code>validate()</code>, <code>reset()</code> et <code>clearValidation()</code> sont exposées (et disponibles via le slot) pour piloter le formulaire de façon programmatique, par exemple depuis un bouton « Valider sans soumettre ».</li>
       </ul>
