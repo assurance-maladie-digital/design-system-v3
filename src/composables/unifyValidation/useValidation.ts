@@ -147,6 +147,8 @@ export function useValidation(params: {
 				{ ...options, externalErrors: params.errorMessages },
 			)
 
+	const hasExternalErrors = computed(() => (params.errorMessages?.value?.length ?? 0) > 0)
+
 	async function validate(): Promise<boolean> {
 		if (params.readonly.value || params.disabled.value || params.disableErrorHandling.value) {
 			vuetifyErrors.value = []
@@ -157,14 +159,17 @@ export function useValidation(params: {
 			return true
 		}
 
+		// Une erreur injectée par le parent (ex. erreur serveur) est affichée mais ne
+		// provient d'aucune règle : les validateurs ne la comptent pas. Elle doit
+		// pourtant faire échouer la validation, comme le validateOnSubmit du SyForm.
 		if (toValue(params.useVuetifyValidation)) {
 			const result = await vuetifyValidator!.validate()
-			return result?.length === 0
+			return result?.length === 0 && !hasExternalErrors.value
 		}
 
 		else {
 			const result = await customValidator?.validate()
-			return result?.state.errors.length === 0
+			return result?.state.errors.length === 0 && !hasExternalErrors.value
 		}
 	}
 
