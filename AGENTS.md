@@ -38,7 +38,7 @@ Les instructions ci-dessous ne précisent que les conventions et contraintes pro
 | Langage | TypeScript strict |
 | Styles | SCSS **scopé** par composant (`<style scoped lang="scss">`), en réutilisant au maximum les **variables CSS générées par Vuetify** (`--v-*`) plutôt que des valeurs en dur |
 | Doc/Dev UI | Storybook |
-| Runtime | Node `22.23.3` (dev & CI) ; `engines` : `>=20 <23` |
+| Runtime | Node : version figée dans `.nvmrc` (dev, CI, Netlify) ; `engines` : `>=20 <23` |
 | Package manager | **pnpm uniquement** |
 
 > `vue` et `vuetify` sont des **peerDependencies / externals** : ils ne doivent **jamais** être inclus dans le bundle.

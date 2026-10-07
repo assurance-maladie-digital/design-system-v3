@@ -3,6 +3,5 @@
   publish = "storybook-static"
   
 [build.environment]
-  # Storybook 10 requiert Node 20.19+ / 22.12+
-  NODE_VERSION = "22.23.3"
+  # Version de Node lue depuis .nvmrc (Storybook 10 requiert Node 20.19+ / 22.12+)
   NODE_OPTIONS = "--max-old-space-size=4096"

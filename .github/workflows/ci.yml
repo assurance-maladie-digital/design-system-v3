@@ -32,7 +32,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: ['20.x', '22.x']
+        # 20.x : borne basse d'`engines` ; .nvmrc : version de référence (dev & CI)
+        include:
+          - node-version: '20.x'
+          - node-version-file: '.nvmrc'
     steps:
       - uses: actions/checkout@v4
       - name: Install pnpm
@@ -41,6 +44,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          node-version-file: ${{ matrix.node-version-file }}
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
