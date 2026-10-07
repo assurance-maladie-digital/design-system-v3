@@ -148,10 +148,19 @@ export function useCustomValidation(
 		if (readonly?.value || disabled?.value || disableErrorHandling.value) clearValidation()
 	}, { flush: 'sync' })
 
-	const validateOnSubmit = options.formRegistration?.validateOnSubmit ?? (async () => {
+	const validateOnSubmit = async (): Promise<boolean> => {
+		// Un champ désactivé ou en lecture seule n'est pas validé et ne peut pas être
+		// corrigé : il ne doit pas bloquer le formulaire, comme pour `valide`.
+		if (readonly?.value || disabled?.value) return true
+		// Les erreurs injectées par le parent (ex. erreur serveur) font échouer la
+		// soumission quel que soit le validateOnSubmit — y compris celui fourni via
+		// formRegistration, qui sinon court-circuiterait ce contrôle.
+		if (options.formRegistration?.validateOnSubmit) {
+			return await options.formRegistration.validateOnSubmit() && !hasExternalErrors.value
+		}
 		const result = await validate()
 		return result.state.errors.length === 0 && !hasExternalErrors.value
-	})
+	}
 
 	// Le reset (via useValidatable) remet `modelValue` à `undefined`. En validation
 	// live (isValidateOnBlur === false), le watch(modelValue) ci-dessous relancerait
