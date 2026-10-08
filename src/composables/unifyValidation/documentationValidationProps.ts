@@ -1,7 +1,7 @@
 const RuleGeneralType = `'required' | 'custom'`
 const StringRuleType = `'minLength' | 'maxLength' | 'exactLength' | 'email' | 'matchPattern'`
 const NumberRuleType = `'min' | 'max'`
-const DateRuleType = `'noWeekend' | 'noBeforeToday' | 'notAfterToday' | 'notBeforeDate' | 'notAfterDate' | 'dateExact' | 'isHolidayDay'`
+const DateRuleType = `'notWeekend' | 'notBeforeToday' | 'notAfterToday' | 'notBeforeDate' | 'notAfterDate' | 'dateExact' | 'isHolidayDay'`
 
 function generateBuiltInRuleType(type: 'base' | 'date' | 'number' | 'string' | 'all' = 'all') {
 	switch (type) {

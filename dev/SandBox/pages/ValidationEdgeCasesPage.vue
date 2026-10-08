@@ -41,8 +41,8 @@
 	}
 
 	// ── Scénario 2 : noWeekend (typé/documenté) vs notWeekend (réel) ──
-	// Bug HIGH : 'noWeekend' est dans les types + doc mais le switch
-	// n'implémente que 'notWeekend' → erreur "La règle spécifiée n'existe pas".
+	// Bug HIGH (corrigé) : 'noWeekend' était dans les types + doc mais le switch
+	// n'implémentait que 'notWeekend' → erreur "La règle spécifiée n'existe pas".
 	const documentedValue = ref('10/10/2026') // un samedi
 	const realValue = ref('10/10/2026')
 	const ruleFormValid = ref<boolean | null>(null)
@@ -55,8 +55,8 @@
 	]
 
 	// ── Scénario 3 : notBeforeDate avec options.date = Date ──────────
-	// Bug HIGH : le type autorise Date mais le code throw → le submit
-	// du formulaire rejette (Promise.all) au lieu de marquer le champ.
+	// Bug HIGH (corrigé) : le type autorisait Date mais le code faisait un throw →
+	// le submit du formulaire rejetait (Promise.all) au lieu de marquer le champ.
 	const dateObjValue = ref('15/10/2026')
 	const dateObjFormValid = ref<boolean | null>(null)
 	const dateObjFormRef = ref<InstanceType<typeof SyForm> | null>(null)
@@ -328,14 +328,14 @@
 				<template #prepend>
 					<VIcon
 						:icon="mdiBugOutline"
-						color="error"
+						color="success"
 					/>
 				</template>
 				<VCardTitle class="text-h6">
 					2. <code>noWeekend</code> (typé/documenté) vs <code>notWeekend</code> (réel)
 				</VCardTitle>
 				<VCardSubtitle>
-					Bug high — la règle documentée n'existe pas au runtime
+					Corrigé — 'noWeekend' / 'noBeforeToday' sont acceptés comme alias
 				</VCardSubtitle>
 			</VCardItem>
 			<VCardText>
@@ -345,7 +345,7 @@
 					class="mb-4"
 				>
 					<strong>Attendu :</strong> les deux champs affichent « Week-end interdit » pour un samedi.
-					<strong>Bug :</strong> le premier affiche « La règle spécifiée pour … n'existe pas ».
+					<strong>Bug (corrigé) :</strong> le premier affichait « La règle spécifiée pour … n'existe pas ».
 				</SyAlert>
 				<SyForm v-model="ruleFormValid">
 					<SyTextField
@@ -375,14 +375,14 @@
 				<template #prepend>
 					<VIcon
 						:icon="mdiBugOutline"
-						color="error"
+						color="success"
 					/>
 				</template>
 				<VCardTitle class="text-h6">
 					3. <code>notBeforeDate</code> avec <code>options.date: Date</code>
 				</VCardTitle>
 				<VCardSubtitle>
-					Bug high — le type autorise <code>Date</code> mais le code throw (submit rejeté)
+					Corrigé — une date de référence <code>Date</code> est évaluée au lieu de faire échouer le submit
 				</VCardSubtitle>
 			</VCardItem>
 			<VCardText>
@@ -392,7 +392,7 @@
 					class="mb-4"
 				>
 					<strong>Attendu :</strong> la règle s'évalue (parseDate gère les Date).
-					<strong>Bug :</strong> <code>validate()</code> rejette avec « La date de référence doit être une chaîne au format DD/MM/YYYY ».
+					<strong>Bug (corrigé) :</strong> <code>validate()</code> rejetait avec « La date de référence doit être une chaîne au format DD/MM/YYYY ».
 				</SyAlert>
 				<SyForm
 					ref="dateObjFormRef"
