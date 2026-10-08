@@ -189,10 +189,19 @@ export function useCustomValidation(
 		})
 	})
 
+	// Nettoyage déclenché par le SyForm : le champ redevient vierge, mais sa validité
+	// silencieuse est recalculée comme au montage, sinon `valide` resterait à null.
+	const clearValidationForForm = () => {
+		clearValidation()
+		if (options.reactiveValidation !== false) {
+			void validateSilently(modelValue.value)
+		}
+	}
+
 	if (options.registerWithForm !== false) {
 		useValidatable(
 			validateOnSubmit,
-			options.formRegistration?.clearValidation ?? clearValidation,
+			options.formRegistration?.clearValidation ?? clearValidationForForm,
 			reset,
 			// Un champ désactivé ou en lecture seule n'est pas validé (cf. watch ci-dessus) et
 			// ne peut pas être corrigé : il ne doit pas bloquer le formulaire (comme Vuetify).

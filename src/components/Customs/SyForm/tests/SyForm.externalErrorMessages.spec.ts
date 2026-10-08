@@ -145,6 +145,41 @@ describe('SyForm with error messages injected by the parent', () => {
 	})
 })
 
+describe('SyForm clearValidation with error messages injected by the parent', () => {
+	const ExternalErrorForm = createExternalErrorForm(synapseTextField)
+
+	const clearValidation = async (wrapper: ReturnType<typeof mount>) => {
+		(wrapper.findComponent(SyForm).vm as unknown as { clearValidation: () => void }).clearValidation()
+		await settle()
+	}
+
+	it('keeps the form invalid while the injected error is still displayed', async () => {
+		const wrapper = mount(ExternalErrorForm, {
+			props: { errorMessages: ['Ce nom est déjà utilisé'] },
+		})
+		await settle()
+		expect(getFormValidity(wrapper)).toBe('false')
+
+		await clearValidation(wrapper)
+
+		expect(wrapper.text()).toContain('Ce nom est déjà utilisé')
+		expect(getFormValidity(wrapper)).toBe('false')
+	})
+
+	it('becomes valid once the injected error is removed after clearValidation', async () => {
+		const wrapper = mount(ExternalErrorForm, {
+			props: { errorMessages: ['Ce nom est déjà utilisé'] },
+		})
+		await settle()
+
+		await clearValidation(wrapper)
+		await wrapper.setProps({ errorMessages: [] })
+		await settle()
+
+		expect(getFormValidity(wrapper)).toBe('true')
+	})
+})
+
 describe.each(vuetifyFields)('SyForm with a $name and error messages injected by the parent', ({ render }) => {
 	const ExternalErrorForm = createExternalErrorForm(render)
 
