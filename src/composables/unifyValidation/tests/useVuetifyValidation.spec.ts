@@ -126,6 +126,30 @@ describe('useVuetifyValidation', () => {
 		expect(args.errors.value).toContain('Ce champ est requis')
 	})
 
+	it('validate() with a rule returning false displays the generic message', async () => {
+		const args = defaultArgs()
+		args.rules.value = [() => false]
+		const { result } = withSetup(() =>
+			useVuetifyValidation(
+				args.modelValue,
+				args.rules,
+				args.disabled,
+				args.errors,
+				args.error,
+				args.errorMessages,
+				args.focused,
+				args.maxErrors,
+				args.name,
+				args.label,
+				args.readonly,
+				args.validateOn,
+			),
+		)
+		await result.validate()
+		await nextTick()
+		expect(args.errors.value).toEqual(['La valeur est invalide.'])
+	})
+
 	it('validate() with passing required rule keeps errors empty', async () => {
 		const args = defaultArgs()
 		args.modelValue.value = 'valid'
