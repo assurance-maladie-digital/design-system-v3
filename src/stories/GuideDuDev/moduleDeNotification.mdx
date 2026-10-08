@@ -13,12 +13,12 @@ import '../styles/shared.css';
 ## Importation et utilisation
 
 <Source dark code={`
-import { useNotificationService } from '@cnamts/synapse/modules/notification'
+import { useNotificationService } from '@cnamts/synapse'
 
 const { notificationQueue, addNotification, removeNotification, clearQueue } = useNotificationService()
 `} />
 
-> L'entrée `@cnamts/synapse/modules/notification` est déclarée explicitement dans les exports du package.
+> Importez `useNotificationService` depuis le point d'entrée principal `@cnamts/synapse` : il partage ainsi la même file de notifications que le composant `NotificationBar`.
 
 ## Propriétés et méthodes :
 

@@ -72,7 +72,7 @@ export function getReleaseTags(rootDir) {
  * @param {Array<{ tag: string, date: string }>} tagInfos - Sortie de `getReleaseTags`.
  * @returns {string | null}
  */
-export function getNextReleaseTag(commitDate, tagInfos) {
+function getNextReleaseTag(commitDate, tagInfos) {
   const commitTime = new Date(commitDate).getTime();
   for (const tag of tagInfos) {
     if (new Date(tag.date).getTime() > commitTime) {
@@ -100,7 +100,7 @@ function compareSemver(a, b) {
  * @param {Array<{ tag: string }>} tagInfos - Sortie de `getReleaseTags`.
  * @returns {string | null}
  */
-export function getPendingVersion(packageVersion, tagInfos) {
+function getPendingVersion(packageVersion, tagInfos) {
   if (!packageVersion) return null;
   const latest = tagInfos.at(-1);
   if (!latest) return packageVersion;

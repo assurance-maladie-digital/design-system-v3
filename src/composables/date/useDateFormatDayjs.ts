@@ -85,5 +85,3 @@ export function useDateFormat() {
 		formatDate,
 	}
 }
-
-export default useDateFormat
