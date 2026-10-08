@@ -453,6 +453,115 @@ describe('useCustomValidation', () => {
 		wrapper.unmount()
 	})
 
+	it('fails the form when external errors are injected, even with a custom validateOnSubmit', async () => {
+		const args = defaultArgs()
+		const externalErrors = ref<string[] | null>(['Erreur serveur'])
+		const validateOnSubmit = vi.fn(async () => true)
+
+		const FieldUnderTest = defineComponent({
+			setup() {
+				useCustomValidation(
+					args.modelValue,
+					args.customRules,
+					args.customWarningRules,
+					args.customSuccessRules,
+					args.errors,
+					args.warnings,
+					args.successes,
+					args.showSuccessMessages,
+					args.label,
+					args.focused,
+					args.isValidateOnBlur,
+					args.disableErrorHandling,
+					undefined,
+					undefined,
+					{
+						externalErrors,
+						formRegistration: { validateOnSubmit },
+					},
+				)
+
+				return {}
+			},
+			template: '<div data-test="field-under-test" />',
+		})
+
+		const wrapper = mount(defineComponent({
+			components: { SyForm, FieldUnderTest },
+			template: `
+				<SyForm data-test="syform">
+					<FieldUnderTest />
+				</SyForm>
+			`,
+		}))
+
+		await nextTick()
+
+		const syFormVm = wrapper.getComponent(SyForm).vm as {
+			validate: () => Promise<boolean>
+		}
+
+		expect(await syFormVm.validate()).toBe(false)
+		expect(validateOnSubmit).toHaveBeenCalledTimes(1)
+
+		wrapper.unmount()
+	})
+
+	it('does not block the form for a readonly field even with external errors', async () => {
+		const args = defaultArgs()
+		const externalErrors = ref<string[] | null>(['Erreur serveur'])
+		const validateOnSubmit = vi.fn(async () => true)
+
+		const FieldUnderTest = defineComponent({
+			setup() {
+				useCustomValidation(
+					args.modelValue,
+					args.customRules,
+					args.customWarningRules,
+					args.customSuccessRules,
+					args.errors,
+					args.warnings,
+					args.successes,
+					args.showSuccessMessages,
+					args.label,
+					args.focused,
+					args.isValidateOnBlur,
+					args.disableErrorHandling,
+					ref(true), // readonly
+					undefined,
+					{
+						externalErrors,
+						formRegistration: { validateOnSubmit },
+					},
+				)
+
+				return {}
+			},
+			template: '<div data-test="field-under-test" />',
+		})
+
+		const wrapper = mount(defineComponent({
+			components: { SyForm, FieldUnderTest },
+			template: `
+				<SyForm data-test="syform">
+					<FieldUnderTest />
+				</SyForm>
+			`,
+		}))
+
+		await nextTick()
+
+		const syFormVm = wrapper.getComponent(SyForm).vm as {
+			validate: () => Promise<boolean>
+		}
+
+		// Cohérent avec `valide` : un champ readonly ne peut pas être corrigé,
+		// il ne doit pas bloquer le formulaire même si une erreur est affichée.
+		expect(await syFormVm.validate()).toBe(true)
+
+		wrapper.unmount()
+	})
+
 	it('re-creates the validator when customRules change and auto-validates when dirty', async () => {
 		const args = defaultArgs()
 		args.modelValue.value = 'hello'
@@ -788,8 +897,8 @@ describe('useCustomValidation', () => {
 		expect(validationResult.hasError).toBe(false)
 	})
 
-	describe('courses asynchrones', () => {
-		it('un résultat async stale n\'écrase pas un résultat sync plus récent', async () => {
+	describe('async races', () => {
+		it('a stale async result does not override a more recent sync result', async () => {
 			let resolveSlow!: (v: boolean) => void
 			const args = defaultArgs()
 			args.modelValue.value = 'test'
@@ -840,7 +949,7 @@ describe('useCustomValidation', () => {
 			expect(args.errors.value).not.toContain('Erreur async stale')
 		})
 
-		it('un résultat async stale n\'écrase pas un résultat async plus récent', async () => {
+		it('a stale async result does not override a more recent async result', async () => {
 			let resolveFirst!: (v: boolean) => void
 			let resolveSecond!: (v: boolean) => void
 			const args = defaultArgs()
@@ -891,7 +1000,7 @@ describe('useCustomValidation', () => {
 			expect(args.errors.value).not.toContain('Erreur première')
 		})
 
-		it('clearValidation() invalide une validation async en cours', async () => {
+		it('clearValidation() cancels a pending async validation', async () => {
 			let resolveSlow!: (v: boolean) => void
 			const args = defaultArgs()
 			args.modelValue.value = 'test'
@@ -930,7 +1039,7 @@ describe('useCustomValidation', () => {
 			expect(args.errors.value).toEqual([])
 		})
 
-		it('le passage en readonly invalide une validation async en cours', async () => {
+		it('switching to readonly cancels a pending async validation', async () => {
 			let resolveSlow!: (v: boolean) => void
 			const readonly = ref(false)
 			const args = defaultArgs()
@@ -973,7 +1082,7 @@ describe('useCustomValidation', () => {
 			expect(args.errors.value).toEqual([])
 		})
 
-		it('plusieurs validate() concurrents avec des modelValues différents gardent le dernier résultat', async () => {
+		it('concurrent validate() calls with different modelValues keep the latest result', async () => {
 			const resolvers: Array<(v: boolean) => void> = []
 			let callIndex = 0
 			const args = defaultArgs()

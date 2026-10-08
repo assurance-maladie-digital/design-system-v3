@@ -38,6 +38,16 @@ const router = createRouter({
 			path: '/syform-v-model',
 			component: () => import('./pages/SyFormVModelPage.vue'),
 		},
+		{
+			name: 'sandbox-syform-all-fields',
+			path: '/syform-all-fields',
+			component: () => import('./pages/SyFormAllFieldsPage.vue'),
+		},
+		{
+			name: 'sandbox-validation-edge-cases',
+			path: '/validation-edge-cases',
+			component: () => import('./pages/ValidationEdgeCasesPage.vue'),
+		},
 	],
 })
 

@@ -165,8 +165,6 @@ export function useNirValidation(
 		return rules
 	})
 
-	// État pour suivre si une validation est en cours
-	const isValidating = ref(false)
 	const shouldValidateOnBlur = ref(false)
 	let validationPromise: Promise<boolean> | null = null
 	const numberFieldFocused = ref(false)
@@ -212,7 +210,8 @@ export function useNirValidation(
 		modelValue: keyValue,
 		readonly,
 		disabled,
-		required,
+		// La clé masquée (displayKey à false) n'est pas requise.
+		required: computed(() => required.value && displayKey.value),
 		isValidateOnBlur,
 		showSuccessMessages,
 		disableErrorHandling,
@@ -233,8 +232,6 @@ export function useNirValidation(
 		}
 
 		validationPromise = (async () => {
-			isValidating.value = true
-
 			await numberValidation.validate()
 
 			if (displayKey.value) {
@@ -252,7 +249,6 @@ export function useNirValidation(
 				shouldValidateOnBlur.value = false
 			}
 
-			isValidating.value = false
 			validationPromise = null
 			return !numberValidation.hasError.value && (!displayKey.value || !keyValidation.hasError.value)
 		})()

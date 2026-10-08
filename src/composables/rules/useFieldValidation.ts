@@ -37,9 +37,10 @@ export function useFieldValidation() {
 	const parseDate = (dateStr: string | Date, format: string = 'DD/MM/YYYY'): Date | null => {
 		if (!dateStr) return null
 
-		// If dateStr is already a Date object, return it
+		// Copie : les règles normalisent la date avec setHours(), elles ne doivent pas
+		// modifier l'objet Date du consommateur (valeur du champ ou date de référence).
 		if (dateStr instanceof Date) {
-			return dateStr
+			return Number.isNaN(dateStr.getTime()) ? null : new Date(dateStr.getTime())
 		}
 
 		const parts = dateStr.split(/[-/.]/)
@@ -88,6 +89,10 @@ export function useFieldValidation() {
 
 		return date
 	}
+
+	// Date de référence telle qu'affichée dans les messages : une Date est formatée en DD/MM/YYYY.
+	const formatReferenceDate = (date: string | Date): string =>
+		typeof date === 'string' ? date : date.toLocaleDateString('fr-FR')
 
 	const isDateInput = (value: unknown): value is string | Date => {
 		return typeof value === 'string' || value instanceof Date
@@ -176,6 +181,8 @@ export function useFieldValidation() {
 						options.message || options.warningMessage || `Le format de ${identifier} est invalide.`,
 					)
 
+				// 'noWeekend' / 'noBeforeToday' : alias historiques, présents dans les types et la doc.
+				case 'noWeekend':
 				case 'notWeekend': {
 					if (value === null || value === undefined || value === '') {
 						return {}
@@ -196,6 +203,7 @@ export function useFieldValidation() {
 					)
 				}
 
+				case 'noBeforeToday':
 				case 'notBeforeToday': {
 					if (value === null || value === undefined || value === '') {
 						return {}
@@ -275,11 +283,6 @@ export function useFieldValidation() {
 						return { error: 'Date invalide' }
 					}
 
-					// Check if options.date is a string and in DD/MM/YYYY format
-					if (typeof options.date !== 'string') {
-						throw new Error('La date de référence doit être une chaîne au format DD/MM/YYYY')
-					}
-
 					const referenceDate = parseDate(options.date)
 					if (!referenceDate) {
 						return { error: 'Date de référence invalide' }
@@ -291,7 +294,7 @@ export function useFieldValidation() {
 
 					return createValidationResult(
 						dateValue >= referenceDate,
-						options.message || options.warningMessage || `${identifier} ne peut pas être avant le ${options.date}.`,
+						options.message || options.warningMessage || `${identifier} ne peut pas être avant le ${formatReferenceDate(options.date)}.`,
 					)
 				}
 
@@ -320,11 +323,6 @@ export function useFieldValidation() {
 						return { error: 'Date invalide' }
 					}
 
-					// Check if options.date is a string and in DD/MM/YYYY format
-					if (typeof options.date !== 'string') {
-						throw new Error('La date de référence doit être une chaîne au format DD/MM/YYYY')
-					}
-
 					const referenceDate = parseDate(options.date)
 					if (!referenceDate) {
 						return { error: 'Date de référence invalide' }
@@ -336,7 +334,7 @@ export function useFieldValidation() {
 
 					return createValidationResult(
 						dateValue <= referenceDate,
-						options.message || options.warningMessage || `${identifier} ne peut pas être après le ${options.date}.`,
+						options.message || options.warningMessage || `${identifier} ne peut pas être après le ${formatReferenceDate(options.date)}.`,
 					)
 				}
 
@@ -365,10 +363,6 @@ export function useFieldValidation() {
 						return { error: 'Date invalide' }
 					}
 
-					if (typeof options.date !== 'string') {
-						throw new Error('La date de référence doit être une chaîne au format DD/MM/YYYY')
-					}
-
 					const referenceDate = parseDate(options.date)
 					if (!referenceDate) {
 						return { error: 'Date de référence invalide' }
@@ -385,7 +379,7 @@ export function useFieldValidation() {
 
 					return createValidationResult(
 						isSameDate,
-						options.message || options.warningMessage || `${identifier} doit être exactement le ${options.date}.`,
+						options.message || options.warningMessage || `${identifier} doit être exactement le ${formatReferenceDate(options.date)}.`,
 					)
 				}
 

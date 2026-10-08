@@ -746,3 +746,25 @@ describe('SyTextField - focus (clear button)', () => {
 		wrapper.unmount()
 	})
 })
+
+describe('SyTextField with a Vuetify rule returning false', () => {
+	it('displays the generic message instead of an empty error', async () => {
+		const wrapper = mount({
+			components: { SyForm, SyTextField },
+			setup: () => ({ rules: [() => false] }),
+			template: `
+				<SyForm>
+					<SyTextField model-value="quelque chose" label="Champ" use-vuetify-validation :rules="rules" />
+				</SyForm>
+			`,
+		})
+		await flushPromises()
+
+		await wrapper.find('form').trigger('submit')
+		await flushPromises()
+
+		expect(wrapper.find('.v-input--error').exists()).toBe(true)
+		expect(wrapper.text()).toContain('La valeur est invalide.')
+		wrapper.unmount()
+	})
+})

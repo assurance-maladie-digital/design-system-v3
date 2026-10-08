@@ -69,6 +69,30 @@ const { validate, errors } = useValidation({
 
 ---
 
+## `required` en mode Vuetify
+
+Comme dans Vuetify, la prop `required` **ne valide rien** en mode Vuetify : elle n'ajoute que
+l'indication visuelle (astérisque) et la sémantique ARIA (`aria-required`). Un champ requis vide ne
+bloque donc pas la soumission de `SyForm` sans règle explicite :
+
+```vue
+<SyTextField
+	v-model="email"
+	label="E-mail"
+	required
+	use-vuetify-validation
+	:rules="[v => !!v || 'Champ requis']"
+/>
+```
+
+Les règles intégrées des composants (`customRules`, règle « requis » par défaut, formats propres à
+`PhoneField`, `NirField`…) relèvent du mode Synapse et ne s'appliquent pas non plus en mode Vuetify.
+
+En développement, `useValidation` émet un avertissement console quand un champ est `required` en
+mode Vuetify sans aucune règle Vuetify.
+
+---
+
 ## Cas DatePicker
 
 Le DatePicker supporte désormais aussi `useVuetifyValidation` + `rules`.

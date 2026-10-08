@@ -480,19 +480,6 @@ describe('useFieldValidation', () => {
 		expect(await notAfterDateRule(new Date(2023, 0, 21))).toEqual({ warning: 'Date after ref warning.' })
 	})
 
-	it('should throw when date reference is not a string in notBeforeDate rule', async () => {
-		await expect(async () => {
-			const invalidRule = generateRules([{
-				type: 'notBeforeDate',
-				options: {
-					date: new Date() as unknown as string, // Date object instead of string
-					message: 'Date cannot be before reference date.',
-				},
-			}])[0]!
-			await invalidRule(new Date())
-		}).rejects.toThrow('La date de référence doit être une chaîne au format DD/MM/YYYY')
-	})
-
 	it('should validate notAfterDate rule', async () => {
 		const rules = generateRules([{
 			type: 'notAfterDate',
@@ -539,19 +526,6 @@ describe('useFieldValidation', () => {
 			options: { date: 'invalid-date', message: 'Date cannot be after reference date.' },
 		}])[0]!
 		expect(await ruleWithInvalidRefDate(new Date())).toEqual({ error: 'Date de référence invalide' })
-	})
-
-	it('should throw when date reference is not a string in notAfterDate rule', async () => {
-		await expect(async () => {
-			const invalidRule = generateRules([{
-				type: 'notAfterDate',
-				options: {
-					date: new Date() as unknown as string, // Date object instead of string
-					message: 'Date cannot be after reference date.',
-				},
-			}])[0]!
-			await invalidRule(new Date())
-		}).rejects.toThrow('La date de référence doit être une chaîne au format DD/MM/YYYY')
 	})
 
 	it('should validate dateExact rule', async () => {
@@ -614,19 +588,6 @@ describe('useFieldValidation', () => {
 
 		expect(await dateExactRule(new Date(2023, 0, 14))).toEqual({ warning: 'Not exact date warning.' })
 		expect(await dateExactRule(new Date(2023, 0, 15))).toEqual({ success: 'Le champ est valide.' })
-	})
-
-	it('should throw when date reference is not a string in dateExact rule', async () => {
-		await expect(async () => {
-			const invalidRule = generateRules([{
-				type: 'dateExact',
-				options: {
-					date: new Date() as unknown as string, // Date object instead of string
-					message: 'Date must be exactly the reference date.',
-				},
-			}])[0]!
-			await invalidRule(new Date())
-		}).rejects.toThrow('La date de référence doit être une chaîne au format DD/MM/YYYY')
 	})
 
 	it('should validate custom rule', async () => {
@@ -898,5 +859,42 @@ describe('useFieldValidation', () => {
 		// Le 1er janvier 2023 est un jour férié
 		expect(await holidayRule(new Date(2023, 0, 1))).toEqual({ warning: 'Holiday warning.' })
 		expect(await holidayRule(new Date(2023, 0, 13))).toEqual({ success: 'Le champ est valide.' })
+	})
+
+	it.each([
+		['noWeekend', 'notWeekend'],
+		['noBeforeToday', 'notBeforeToday'],
+	])('accepts the documented "%s" alias of "%s"', async (alias, type) => {
+		const [aliasRule] = generateRules([{ type: alias, options: { message: 'Date refusée.' } }])
+		const [rule] = generateRules([{ type, options: { message: 'Date refusée.' } }])
+		const saturdayInThePast = new Date(2023, 0, 14)
+
+		expect(await aliasRule!(saturdayInThePast)).toEqual(await rule!(saturdayInThePast))
+		expect(await aliasRule!(saturdayInThePast)).toEqual({ error: 'Date refusée.' })
+	})
+
+	describe('reference date given as a Date object', () => {
+		// Les dates sont créées dans chaque test : la classe Date est mockée par le beforeEach.
+		it.each([
+			['notBeforeDate', 9, 'Le champ ne peut pas être avant le 10/01/2023.'],
+			['notAfterDate', 11, 'Le champ ne peut pas être après le 10/01/2023.'],
+			['dateExact', 11, 'Le champ doit être exactement le 10/01/2023.'],
+		])('%s evaluates the rule instead of throwing', async (type, invalidDay, message) => {
+			const [rule] = generateRules([{ type, options: { date: new Date(2023, 0, 10, 15, 30), fieldIdentifier: 'Le champ' } }])
+
+			expect(await rule!(new Date(2023, 0, invalidDay))).toEqual({ error: message })
+			expect(await rule!(new Date(2023, 0, 10))).toEqual({ success: 'Le champ est valide.' })
+		})
+
+		it('does not mutate the reference date nor the validated value', async () => {
+			const reference = new Date(2023, 0, 10, 15, 30)
+			const value = new Date(2023, 0, 12, 9, 45)
+			const [rule] = generateRules([{ type: 'notBeforeDate', options: { date: reference } }])
+
+			await rule!(value)
+
+			expect(reference.getHours()).toBe(15)
+			expect(value.getHours()).toBe(9)
+		})
 	})
 })

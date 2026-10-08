@@ -2,8 +2,9 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { mdiChevronDown, mdiCloseCircle, mdiInformation } from '@mdi/js'
-	import { computed, onMounted, readonly as readonlyState, ref, useId, watch } from 'vue'
+	import { computed, nextTick, onMounted, readonly as readonlyState, ref, useId, watch } from 'vue'
 	import defaultOptions from './config'
 	import { locales as defaultLocales } from './locales'
 	import { useLocales } from '@/composables/useLocales'
@@ -122,8 +123,16 @@
 		return isShouldDisplayAsterisk.value ? `${props.label} *` : props.label
 	})
 
+	// Le reset (SyForm) remet la valeur à null : il ne doit pas déclencher la validation,
+	// sinon un champ requis réapparaîtrait aussitôt en erreur au lieu de revenir à l'état neutre.
+	let skipValidationForReset = false
+
 	watch(() => props.modelValue, (newValue) => {
 		selectedItem.value = newValue
+		if (skipValidationForReset) {
+			skipValidationForReset = false
+			return
+		}
 		validateField(newValue)
 		emit('update:errorMessages', localErrorMessages.value)
 	})
@@ -216,6 +225,40 @@
 	const checkForErrors = async () => {
 		return await validateField(selectedItem.value)
 	}
+
+	const clearValidation = () => {
+		validation.clearValidation()
+		localErrorMessages.value = []
+		hasError.value = false
+	}
+
+	const reset = () => {
+		skipValidationForReset = true
+		selectedItem.value = null
+		emit('update:modelValue', null)
+		clearValidation()
+		// Si la valeur était déjà null, le watch ne se déclenche pas : on lève la garde.
+		nextTick(() => {
+			skipValidationForReset = false
+		})
+	}
+
+	// Enregistrement auprès du SyForm : sans lui, un champ requis jamais touché ne
+	// bloquait pas la soumission (seul le VInput, qui ne connaît que les erreurs déjà
+	// affichées, était vu par le formulaire).
+	useValidatable(
+		validateOnSubmit,
+		clearValidation,
+		reset,
+		computed(() => {
+			if (props.readonly) return true
+			if (localErrorMessages.value.length > 0) return false
+			// Champ requis vide pas encore validé : invalide sans erreur affichée.
+			return !(props.required && !selectedItem.value)
+		}),
+		true,
+		computed(() => localErrorMessages.value.length === 0),
+	)
 
 	defineExpose({
 		isOpen,

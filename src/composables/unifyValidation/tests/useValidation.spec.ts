@@ -1,5 +1,5 @@
 /* eslint-disable vue/one-component-per-file */
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { defineComponent, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { useValidation } from '../useValidation'
@@ -57,6 +57,116 @@ describe('useValidation (unifyValidation)', () => {
 
 			const valid = await result.validate()
 			expect(valid).toBe(true)
+		})
+
+		it('validate() returns false while external errorMessages are injected', async () => {
+			const errorMessages = ref<string[] | null>(['Erreur serveur'])
+			const params = makeParams({ disableErrorHandling: ref(true), errorMessages })
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			// Les erreurs injectées restent affichées et bloquent le SyForm : validate() doit suivre.
+			expect(result.errors.value).toContain('Erreur serveur')
+			expect(await result.validate()).toBe(false)
+
+			errorMessages.value = null
+			await nextTick()
+			expect(await result.validate()).toBe(true)
+		})
+
+		it('validate() returns true with external errorMessages when the field is also disabled', async () => {
+			const params = makeParams({
+				disableErrorHandling: ref(true),
+				disabled: ref(true),
+				errorMessages: ref<string[] | null>(['Erreur serveur']),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			expect(await result.validate()).toBe(true)
+		})
+	})
+
+	describe('required in Vuetify mode dev warning', () => {
+		const isRequiredWarning = (call: unknown[]) => String(call[0]).includes('requis en mode Vuetify')
+
+		it('warns once when a required field has no Vuetify rule', () => {
+			const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+			const params = makeParams({ useVuetifyValidation: true, required: ref(true), rules: ref([]), label: ref('E-mail') })
+			withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			const calls = warn.mock.calls.filter(isRequiredWarning)
+			expect(calls).toHaveLength(1)
+			expect(String(calls[0]![0])).toContain('« E-mail »')
+			warn.mockRestore()
+		})
+
+		it.each([
+			['a Vuetify rule is provided', { useVuetifyValidation: true, required: ref(true), rules: ref([(v: unknown) => !!v || 'Requis']) }],
+			['the field is not required', { useVuetifyValidation: true, required: ref(false), rules: ref([]) }],
+			['the field uses Synapse validation', { required: ref(true) }],
+		])('does not warn when %s', (_, overrides) => {
+			const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+			const params = makeParams(overrides)
+			withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			expect(warn.mock.calls.filter(isRequiredWarning)).toHaveLength(0)
+			warn.mockRestore()
+		})
+	})
+
+	describe('hasError prop', () => {
+		it.each([false, true])('validate() returns false while hasError is set (useVuetifyValidation = %s)', async (useVuetifyValidation) => {
+			const hasErrorProp = ref(true)
+			const params = makeParams({ modelValue: ref('valeur valide'), useVuetifyValidation, rules: ref([]), hasErrorProp })
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			expect(await result.validate()).toBe(false)
+
+			hasErrorProp.value = false
+			expect(await result.validate()).toBe(true)
+		})
+
+		it('validate() returns false with hasError and disableErrorHandling', async () => {
+			const params = makeParams({ disableErrorHandling: ref(true), hasErrorProp: ref(true) })
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			expect(await result.validate()).toBe(false)
+		})
+
+		it('validate() returns true with hasError when the field is disabled', async () => {
+			const params = makeParams({ disabled: ref(true), hasErrorProp: ref(true) })
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			expect(await result.validate()).toBe(true)
+		})
+	})
+
+	describe('dynamic useVuetifyValidation', () => {
+		const requiredRule: ValidationRule[] = [{ type: 'required', options: { message: 'Requis (Synapse)' } }]
+
+		it('applies customRules after switching from Vuetify to Synapse mode', async () => {
+			const useVuetifyValidation = ref(true)
+			const params = makeParams({ useVuetifyValidation, rules: ref([]), customRules: ref(requiredRule) })
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			expect(await result.validate()).toBe(true)
+
+			useVuetifyValidation.value = false
+			await nextTick()
+			expect(await result.validate()).toBe(false)
+			expect(result.errors.value).toContain('Requis (Synapse)')
+		})
+
+		it('stops applying customRules after switching from Synapse to Vuetify mode', async () => {
+			const useVuetifyValidation = ref(false)
+			const params = makeParams({ useVuetifyValidation, rules: ref([]), customRules: ref(requiredRule) })
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			expect(await result.validate()).toBe(false)
+
+			useVuetifyValidation.value = true
+			await nextTick()
+			expect(result.errors.value).toEqual([])
+			expect(await result.validate()).toBe(true)
 		})
 	})
 
@@ -185,6 +295,31 @@ describe('useValidation (unifyValidation)', () => {
 	})
 
 	describe('validate()', () => {
+		it('returns false while external errorMessages are injected, even when rules pass', async () => {
+			const errorMessages = ref<string[] | null>(null)
+			const params = makeParams({
+				modelValue: ref('valeur valide'),
+				errorMessages,
+				customRules: ref<ValidationRule[]>([
+					{ type: 'required', options: { message: 'Requis' } },
+				]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			expect(await result.validate()).toBe(true)
+
+			// Une erreur injectée par le parent (ex. erreur serveur) est affichée
+			// : elle doit faire échouer validate() comme elle invalide le SyForm.
+			errorMessages.value = ['Erreur serveur']
+			await nextTick()
+			expect(await result.validate()).toBe(false)
+			expect(result.errors.value).toContain('Erreur serveur')
+
+			errorMessages.value = null
+			await nextTick()
+			expect(await result.validate()).toBe(true)
+		})
+
 		describe('when useVuetifyValidation = false', () => {
 			it('returns true and clears state when readonly is true', async () => {
 				const params = makeParams({

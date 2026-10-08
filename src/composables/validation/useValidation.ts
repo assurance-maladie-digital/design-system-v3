@@ -3,13 +3,16 @@ import { devWarn } from '@/utils/devWarn'
 import { useFieldValidation, type RuleOptions, type ValidationResult as FieldValidationResult } from '../rules/useFieldValidation'
 
 type builtInDateRuleType =
-	'noWeekend'
-	| 'noBeforeToday'
+	'notWeekend'
+	| 'notBeforeToday'
 	| 'notAfterToday'
 	| 'notBeforeDate'
 	| 'notAfterDate'
 	| 'dateExact'
 	| 'isHolidayDay'
+	// Alias historiques de 'notWeekend' / 'notBeforeToday', conservés pour compatibilité.
+	| 'noWeekend'
+	| 'noBeforeToday'
 
 type BuiltInNumberRuleType = 'min' | 'max'
 type BuiltInStringRuleType = 'minLength' | 'maxLength' | 'exactLength' | 'email' | 'matchPattern'

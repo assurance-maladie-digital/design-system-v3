@@ -287,7 +287,11 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 	// - options diverses : showSuccessMessages, fieldIdentifier, isValidateOnBlur, etc.
 	// - reactiveValidation: false → on désactive la validation réactive automatique de
 	//   useCustomValidation car le DatePicker gère lui-même ses watchers (section plus bas).
-	const validation = unref(options.useVuetifyValidation)
+	// `useVuetifyValidation` peut basculer quand il est passé en Ref : useCustomValidation est
+	// alors toujours créé (sinon `validation` resterait null après true→false), mais se
+	// désenregistre du SyForm tant que le mode Vuetify est actif.
+	const isCustomMode = computed(() => !unref(options.useVuetifyValidation))
+	const validation = options.useVuetifyValidation === true
 		? null
 		: useCustomValidation(
 				computed(() => options.selectedDates.value),
@@ -308,6 +312,10 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 					registerWithForm: Boolean(options.formRegistration),
 					reactiveValidation: false, // Désactivé : le DatePicker gère ses propres watchers
 					formRegistration: options.formRegistration,
+					// Les erreurs injectées par le parent (ex. erreur serveur) doivent invalider
+					// le champ auprès du SyForm, pas seulement s'afficher (cf. useDisplayMessages).
+					externalErrors: options.errorMessages,
+					enabled: isCustomMode,
 				},
 			)
 
@@ -372,7 +380,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		hasErrorProp: () => Boolean(unref(options.hasErrorProp)),
 		hasWarningProp: () => Boolean(unref(options.hasWarningProp)),
 		hasSuccessProp: () => Boolean(unref(options.hasSuccessProp)),
-		internalHasSuccess: computed(() => validation?.hasSuccess.value ?? false),
+		internalHasSuccess: computed(() => isCustomMode.value && (validation?.hasSuccess.value ?? false)),
 		disableErrorHandling: () => Boolean(unref(options.disableErrorHandling)),
 	})
 
@@ -398,6 +406,9 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			clearValidation()
 		}
 	}, { flush: 'sync' })
+
+	// Les messages calculés dans un mode ne s'appliquent plus après bascule de l'autre.
+	watch(isCustomMode, () => clearValidation())
 
 	// --- Validation bas niveau : wrapper autour de useCustomValidation ---
 	const validateField = (

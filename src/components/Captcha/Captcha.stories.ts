@@ -282,7 +282,7 @@ export const Default: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { Captcha } from '@cnamts/Captcha'
+import { Captcha } from '@cnamts/synapse'
 import { VCard } from 'vuetify/components'
 
 const verifyCaptcha = () => {
@@ -364,8 +364,6 @@ export const Choice: Story = {
 			url-create="..."
 			url-get-image="..."
 			url-get-audio="/..."
-			@validation:success="(e) => { ... }"
-			@validation:error="(e) => { ... }"
 			type="choice"
 		/>
     </VCard>
@@ -375,7 +373,7 @@ export const Choice: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { Captcha } from '@cnamts/Captcha'
+import { Captcha } from '@cnamts/synapse'
 import { VCard } from 'vuetify/components'
 </script>
                 `,

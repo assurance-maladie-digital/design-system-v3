@@ -13,7 +13,8 @@ export function normalizeVuetifyRuleResult(result: unknown): string | null {
 	if (typeof result === 'string') {
 		return result
 	}
-	// TODO: Check avec Adrien
+	// `false` ou toute autre valeur : message générique, aligné sur le chemin Vuetify natif
+	// (useVuetifyValidation), pour qu'un champ en erreur affiche toujours une explication.
 	return locales.invalidValue
 }
 
