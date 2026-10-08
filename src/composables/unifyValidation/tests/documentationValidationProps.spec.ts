@@ -56,7 +56,7 @@ describe('getValidationDocumentation', () => {
 			const detail = doc.customRules.table.type.detail
 			expect(detail).toContain('minLength')
 			expect(detail).toContain('min')
-			expect(detail).toContain('noWeekend')
+			expect(detail).toContain('notWeekend')
 		})
 
 		it('customWarningRules inclut tous les types', () => {
@@ -74,7 +74,7 @@ describe('getValidationDocumentation', () => {
 			const detail = doc.customRules.table.type.detail
 			expect(detail).toContain('minLength')
 			expect(detail).toContain('email')
-			expect(detail).not.toContain('noWeekend')
+			expect(detail).not.toContain('notWeekend')
 			expect(detail).not.toContain('notAfterDate')
 		})
 	})
@@ -86,7 +86,7 @@ describe('getValidationDocumentation', () => {
 			expect(detail).toContain('\'min\'')
 			expect(detail).toContain('\'max\'')
 			expect(detail).not.toContain('minLength')
-			expect(detail).not.toContain('noWeekend')
+			expect(detail).not.toContain('notWeekend')
 		})
 	})
 
@@ -94,7 +94,7 @@ describe('getValidationDocumentation', () => {
 		it('customRules inclut les types date mais pas string ni number', () => {
 			const doc = getValidationDocumentation('date')
 			const detail = doc.customRules.table.type.detail
-			expect(detail).toContain('noWeekend')
+			expect(detail).toContain('notWeekend')
 			expect(detail).toContain('notAfterDate')
 			expect(detail).not.toContain('minLength')
 		})
