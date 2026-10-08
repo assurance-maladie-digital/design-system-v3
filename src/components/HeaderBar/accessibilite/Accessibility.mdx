@@ -1,34 +1,141 @@
-import { Meta, Story } from '@storybook/addon-docs/blocks'
-import * as HeaderBarStories from '../HeaderBar.stories';
-import '@/stories/styles/shared.css';
-import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import { Meta } from '@storybook/addon-docs/blocks'
+import * as HeaderBarStories from '../HeaderBar.stories'
+import '@/stories/styles/shared.css'
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg'
 import {
-	AccessibilityGuideLayout,
-	CriteriaSection,
-	CriteriaCard,
-	DemoSection,
-	BestPracticesSection,
-	ResourcesSection,
-} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
+  AccessibilityGuideLayout,
+  CriteriaCard,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx'
 
 <Meta of={HeaderBarStories}/>
 
-
 <AccessibilityGuideLayout
-	componentName="HeaderBar"
-	iconSrc={AccessibilityIcon}
+  componentName="HeaderBar"
+  iconSrc={AccessibilityIcon}
 >
-		<div class="mt-6">
-<p>Rapport d’audit manuel : <a href="/audits/HeaderBar.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/643" target="_blank" style={{color:'#0C41BD'}}>issue #643</a>)</p>
-</div>
-<CriteriaCard title="Niveau de titre configurable via la prop headingLevel">
-  <ul>
-    <li>Le niveau du titre (h1 à h6) est défini grâce à la propriété <strong>headingLevel</strong> déclarée dans le composant. Si aucune valeur n’est fournie, le composant applique par défaut un titre de niveau h2, défini dans l’implémentation du composant.</li>
-      <code>&lt;HeaderBar
-          :heading-level="2" /&gt; </code>
-    
-    <li><strong>Accessibilité</strong> : Permet que la hiérarchie entre les titres soit pertinente (critère 9.1.1 RGAA) </li>
-  </ul>
-</CriteriaCard>
+  <div class="mt-6">
+    <p>Rapport d’audit manuel :<a href="/audits/HeaderBar.xlsx" style={{ color: '#0C41BD' }}>Voir le rapport</a></p>
+
+    <p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/643" target="_blank" style={{ color: '#0C41BD' }}>issue #643</a>)</p>
+  </div>
+
+  <CriteriaCard title="Niveau de titre configurable via la prop headingLevelTitle">
+    <ul>
+      <li>Le niveau du titre du service peut être configuré de <strong>h1 à h6</strong>grâce à la propriété<strong>headingLevelTitle</strong>.</li>
+
+      <code>&lt;HeaderBar :heading-level-title="2" /&gt;</code>
+
+      <li>Cette configuration permet d’intégrer l’en-tête dans une hiérarchie de titres cohérente avec la page qui l’utilise.</li>
+
+      <li><strong>Accessibilité :</strong> la hiérarchie des titres doit être pertinente et refléter la structure du contenu(critère <strong>9.1.1 RGAA</strong>).</li>
+    </ul>
+  </CriteriaCard>
+
+  <CriteriaCard title="Structure sémantique de l’en-tête">
+    <ul>
+      <li>Le composant utilise l’élément HTML natif <strong>&lt;header&gt;</strong>pour identifier la zone d’en-tête.</li>
+
+      <li>L’en-tête possède également le rôle <strong>banner</strong>, afin d’être identifié comme la bannière principale du site.</li>
+
+      <li>Cette structure permet aux technologies d’assistance d’identifier rapidement la zone d’en-tête et de faciliter la navigation entre les différentes régions de la page.</li>
+
+      <li><strong>Bonne pratique :</strong> éviter de reproduire un second rôle <strong>banner</strong> sur un élément parent ou enfant.</li>
+    </ul>
+  </CriteriaCard>
+
+  <CriteriaCard title="Nom accessible du lien d’accueil">
+    <ul>
+      <li>Le lien permettant de revenir à l’accueil peut recevoir un nom accessible via la propriété <strong>homeAriaLabel</strong>.</li>
+
+      <code>&lt;HeaderBar home-aria-label="Accueil - Assurance Maladie" /&gt;</code>
+
+      <li>Lorsque le logo ou le lien d’accueil est utilisé comme élément interactif, son nom accessible doit permettre à l’utilisateur de comprendre sa destination.</li>
+
+      <li><strong>Accessibilité :</strong> les éléments interactifs doivent</li>
+    </ul>
+  </CriteriaCard>
+
+  <CriteriaCard title="Logo et lien vers l’accueil">
+    <ul>
+      <li>Le composant permet de configurer le lien du logo grâce à la propriété<strong>homeLink</strong>.</li>
+
+      <code>&lt;HeaderBar :home-link="&#123; href: '/' &#125;" /&gt;</code>
+
+      <li>Le lien peut être configuré avec une destination interne ou externe selon le besoin de l’application.</li>
+
+      <li>Le lien du logo doit conserver une destination et un nom accessibles lorsqu’il est personnalisé.</li>
+
+      <li>
+        <strong>Point de vigilance :</strong> lorsqu’un slot <strong>logo</strong>
+        est utilisé, la responsabilité de fournir un lien et un nom accessible
+        revient au contenu fourni par l’utilisateur du composant.
+      </li>
+    </ul>
+  </CriteriaCard>
+
+  <CriteriaCard title="Navigation et menu personnalisables">
+    <ul>
+      <li>
+        Le composant expose un slot <strong>menu</strong> permettant
+        d’intégrer la navigation ou le bouton d’ouverture du menu.
+      </li>
+
+      <li>Le contenu injecté dans ce slot doit utiliser les éléments HTML adaptés à son usage, par exemple <strong>&lt;nav&gt;</strong> pour une zone de navigation ou <strong>&lt;button&gt;</strong> pour une action d’ouverture de menu.</li>
+
+      <li>Un bouton d’ouverture de menu doit disposer d’un nom accessible explicite, par exemple « Ouvrir le menu ».</li>
+
+      <li><strong>Accessibilité :</strong> les éléments interactifs doivent être identifiables et utilisables par les technologies d’assistance (critères <strong>7.1</strong> et <strong>11.9 RGAA</strong>).</li>
+    </ul>
+  </CriteriaCard>
+
+  <CriteriaCard title="Slots personnalisables et responsabilité d’accessibilité">
+    <ul>
+      <li>Plusieurs zones de l’en-tête sont personnalisables via les slots<strong>prepend</strong>, <strong>menu</strong>,<strong>logo</strong>, <strong>logo-brand-content</strong>,<strong>header-side</strong> et <strong>append</strong>.</li>
+
+      <li>Ces slots permettent d’adapter l’en-tête aux différents contextes fonctionnels tout en conservant sa structure générale.</li>
+
+      <li>Le contenu injecté dans ces slots doit respecter les règles d’accessibilité applicables aux éléments utilisés : liens nommés, boutons accessibles, images avec alternative pertinente, titres correctement structurés, etc.</li>
+
+      <li><strong>Point de vigilance :</strong> la personnalisation d’un slot peut modifier la conformité du composant. Il est donc nécessaire de vérifier l’accessibilité du contenu fourni par l’intégrateur.</li>
+    </ul>
+  </CriteriaCard>
+
+  <CriteriaCard title="Gestion de l'affichage sticky">
+    <ul>
+      <li>La propriété <strong>sticky</strong> permet de maintenir l’en-tête visible lors du défilement de la page.</li>
+
+      <code>&lt;HeaderBar :sticky="true" /&gt;</code>
+
+      <li>Le comportement sticky ne doit pas empêcher l’utilisateur d’accéder au contenu de la page ni masquer durablement des informations ou des éléments interactifs.</li>
+
+      <li>Le composant prend également en charge un comportement de masquage lors du défilement grâce à la propriété <strong>hideWhenDown</strong>.</li>
+
+      <li><strong>Point de vigilance :</strong> lorsque l’en-tête est masqué dynamiquement, les fonctionnalités et contenus accessibles depuis celui-ci doivent rester retrouvables et utilisables au clavier.</li>
+    </ul>
+  </CriteriaCard>
+
+  <CriteriaCard title="Ordre de navigation au clavier">
+    <ul>
+      <li>Le composant ne modifie pas volontairement l’ordre de navigation naturel du document.</li>
+
+      <li>Les éléments interactifs fournis dans les différents slots doivent être atteignables au clavier dans un ordre logique.</li>
+
+      <li>Aucun élément interactif ne doit être rendu inaccessible uniquement à cause du positionnement fixe ou du comportement sticky de l’en-tête.</li>
+
+      <li><strong>Accessibilité :</strong> les fonctionnalités doivent rester utilisables au clavier et l’ordre de tabulation doit rester cohérent (critère <strong>12.8 RGAA</strong>).</li>
+    </ul>
+  </CriteriaCard>
+
+  <CriteriaCard title="Tests automatisés d’accessibilité">
+    <ul>
+      <li>Des tests automatisés avec <strong>axe-core</strong> sont réalisés sur plusieurs configurations du composant.</li>
+
+      <li>Les tests couvrent notamment l’utilisation par défaut, l’en-tête sticky, les différents slots et la personnalisation du logo.</li>
+
+      <li>Ces tests permettent de détecter automatiquement certaines violations d’accessibilité, mais ne remplacent pas les contrôles manuels.</li>
+
+      <li><strong>Bonnes pratiques :</strong> compléter les tests automatisés par des vérifications manuelles du clavier, de la hiérarchie des titres, des annonces par lecteur d’écran et du comportement lors du défilement.</li>
+    </ul>
+  </CriteriaCard>
+
 </AccessibilityGuideLayout>
