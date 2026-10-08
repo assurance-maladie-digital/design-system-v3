@@ -14,3 +14,6 @@ Référence de `useWidthable`, `useFilterable`, `useHolidayDay`, `usePagination`
 
 ### 3. [Passthrough & typage des wrappers — stratégie sans breaking change](./passthrough-typage-wrappers.md)
 Comment harmoniser le passage des props (`v-bind` / `$attrs` / `vuetifyOptions`) et leur typage vers les composants Vuetify sous-jacents, sans casser les projets consommateurs (suite à #2417).
+
+### 4. [Passthrough & typage — implémentation recommandée](./passthrough-implementation.md)
+Le pattern retenu (cast `$props` type-level, `useSplitAttrs`, `vuetifyOptions` typé par les clés réelles) et son application par groupe de composants.
