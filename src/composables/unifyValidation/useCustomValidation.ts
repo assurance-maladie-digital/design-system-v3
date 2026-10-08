@@ -11,6 +11,11 @@ export interface UseCustomValidationOptions {
 	 * Ils invalident le champ auprès du SyForm au même titre qu'une règle en échec.
 	 */
 	externalErrors?: Ref<string[] | null | undefined>
+	/**
+	 * Active la validation custom (true par défaut). Désactivée, le champ n'est plus
+	 * enregistré auprès du SyForm : utilisé quand `useVuetifyValidation` bascule à true.
+	 */
+	enabled?: Ref<boolean>
 	formRegistration?: {
 		validateOnSubmit?: () => Promise<boolean> | boolean
 		clearValidation?: () => void
@@ -198,7 +203,8 @@ export function useCustomValidation(
 				if (hasExternalErrors.value) return false
 				return isPristine.value ? silentValide.value : errors.value.length < 1
 			}),
-			computed(() => !disableErrorHandling.value || errors.value.length > 0 || hasExternalErrors.value),
+			computed(() => (options.enabled?.value ?? true)
+				&& (!disableErrorHandling.value || errors.value.length > 0 || hasExternalErrors.value)),
 			computed(() => isPristine.value && !hasExternalErrors.value),
 		)
 	}

@@ -111,6 +111,10 @@ export function useValidation(params: {
 	let vuetifyValidator: ReturnType<typeof useVuetifyValidationComposable> | null = null
 
 	if (params.useVuetifyValidation !== false) {
+		// Le validator Vuetify s'enregistre dans le VForm sous l'id `name` : il doit rester
+		// stable, sinon après une bascule de mode (ou un changement de label) le VForm ne
+		// reçoit plus ses mises à jour et garde un état de validité périmé.
+		const vuetifyName = toValue(params.useVuetifyValidation) ? params.label?.value : undefined
 		vuetifyValidator = useVuetifyValidationComposable(
 			params.modelValue,
 			params.rules,
@@ -120,20 +124,27 @@ export function useValidation(params: {
 			computed(() => params.errorMessages?.value || []),
 			params.focused,
 			params.maxErrors,
-			computed(() => toValue(params.useVuetifyValidation) ? params.label?.value : undefined),
+			computed(() => vuetifyName),
 			params.label,
 			params.readonly,
 			computed(() => params.isValidateOnBlur.value ? 'blur' : 'input'),
 		)
 	}
 
-	const customValidator = toValue(params.useVuetifyValidation)
+	// `useVuetifyValidation` peut basculer quand il est passé en Ref : le validateur custom
+	// est alors toujours créé, mais n'applique aucune règle et se désenregistre du SyForm
+	// tant que le mode Vuetify est actif (sinon les customRules seraient perdues après true→false).
+	const isCustomMode = computed(() => !toValue(params.useVuetifyValidation))
+	const whenCustomMode = (rules: Ref<SyValidationRule[]> | undefined) =>
+		computed(() => isCustomMode.value ? rules?.value ?? [] : [])
+
+	const customValidator = params.useVuetifyValidation === true
 		? null
 		: useCustomValidation(
 				params.modelValue,
-				params.customRules,
-				params.customWarningRules,
-				params.customSuccessRules,
+				whenCustomMode(params.customRules),
+				whenCustomMode(params.customWarningRules),
+				whenCustomMode(params.customSuccessRules),
 				customErrors,
 				innerWarnings,
 				innerSuccesses,
@@ -144,7 +155,7 @@ export function useValidation(params: {
 				params.disableErrorHandling,
 				params.readonly,
 				params.disabled,
-				{ ...options, externalErrors: params.errorMessages },
+				{ ...options, externalErrors: params.errorMessages, enabled: isCustomMode },
 			)
 
 	const hasExternalErrors = computed(() => (params.errorMessages?.value?.length ?? 0) > 0)
