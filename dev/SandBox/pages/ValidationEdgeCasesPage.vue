@@ -23,9 +23,10 @@
 	}
 
 	// ── Scénario 1 : bascule dynamique useVuetifyValidation ──────────
-	// Bug MEDIUM : les validateurs sont instanciés au setup selon la valeur
-	// à l'instant T. Après true→false, customValidator reste null et
-	// validate() retourne false à vie.
+	// Bug MEDIUM (corrigé) : les validateurs étaient instanciés au setup selon la
+	// valeur à l'instant T. Après true→false, customValidator restait null : les
+	// customRules n'étaient jamais appliquées (champ vide accepté en mode Synapse).
+	// Les `rules` ne sont passées qu'en mode Vuetify pour isoler les customRules.
 	const dynMode = ref(true)
 	const dynValue = ref('')
 	const dynFormValid = ref<boolean | null>(null)
@@ -35,8 +36,8 @@
 
 	async function testDynSubmit() {
 		const result = await dynFormRef.value?.validate()
-		// Après bascule true→false : bug si le champ rempli reste invalide
-		setStatus('dyn', dynValue.value && result === false ? 'ko' : result ? 'ok' : 'idle')
+		// Le champ doit être valide si et seulement s'il est rempli, quel que soit le mode.
+		setStatus('dyn', result === Boolean(dynValue.value) ? 'ok' : 'ko')
 	}
 
 	// ── Scénario 2 : noWeekend (typé/documenté) vs notWeekend (réel) ──
@@ -256,14 +257,14 @@
 				<template #prepend>
 					<VIcon
 						:icon="mdiSwapHorizontal"
-						color="warning"
+						color="success"
 					/>
 				</template>
 				<VCardTitle class="text-h6">
 					1. Bascule dynamique <code>useVuetifyValidation</code>
 				</VCardTitle>
 				<VCardSubtitle>
-					Bug medium — validate() retourne <code>false</code> à vie après true→false
+					Corrigé — les customRules s’appliquent après une bascule Vuetify → Synapse
 				</VCardSubtitle>
 			</VCardItem>
 			<VCardText>
@@ -272,8 +273,10 @@
 					variant="tonal"
 					class="mb-4"
 				>
-					<strong>Attendu :</strong> après avoir basculé en mode Synapse, un champ rempli est valide.
-					<strong>Bug :</strong> le champ reste invalide car <code>customValidator</code> n'a jamais été créé.
+					<strong>Attendu :</strong> dans les deux modes, un champ vide est invalide (« Valeur requise
+					(Vuetify) » ou « Valeur requise (Synapse) ») et un champ rempli est valide.
+					<strong>Bug (corrigé) :</strong> après bascule Vuetify → Synapse, les <code>customRules</code>
+					n'étaient jamais appliquées : un champ vide était accepté.
 				</SyAlert>
 				<SyForm
 					ref="dynFormRef"
@@ -290,7 +293,7 @@
 						v-model="dynValue"
 						label="Valeur"
 						:use-vuetify-validation="dynMode"
-						:rules="dynRules"
+						:rules="dynMode ? dynRules : []"
 						:custom-rules="dynCustomRules"
 					/>
 					<div class="d-flex align-center ga-3 mt-3">

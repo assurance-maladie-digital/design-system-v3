@@ -85,6 +85,36 @@ describe('useValidation (unifyValidation)', () => {
 		})
 	})
 
+	describe('dynamic useVuetifyValidation', () => {
+		const requiredRule: ValidationRule[] = [{ type: 'required', options: { message: 'Requis (Synapse)' } }]
+
+		it('applies customRules after switching from Vuetify to Synapse mode', async () => {
+			const useVuetifyValidation = ref(true)
+			const params = makeParams({ useVuetifyValidation, rules: ref([]), customRules: ref(requiredRule) })
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			expect(await result.validate()).toBe(true)
+
+			useVuetifyValidation.value = false
+			await nextTick()
+			expect(await result.validate()).toBe(false)
+			expect(result.errors.value).toContain('Requis (Synapse)')
+		})
+
+		it('stops applying customRules after switching from Synapse to Vuetify mode', async () => {
+			const useVuetifyValidation = ref(false)
+			const params = makeParams({ useVuetifyValidation, rules: ref([]), customRules: ref(requiredRule) })
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			expect(await result.validate()).toBe(false)
+
+			useVuetifyValidation.value = true
+			await nextTick()
+			expect(result.errors.value).toEqual([])
+			expect(await result.validate()).toBe(true)
+		})
+	})
+
 	describe('Initial validation', () => {
 		it('hides custom validation errors until the pristine field is explicitly validated', async () => {
 			const params = makeParams({
