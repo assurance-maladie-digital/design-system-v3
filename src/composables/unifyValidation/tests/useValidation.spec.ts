@@ -58,6 +58,31 @@ describe('useValidation (unifyValidation)', () => {
 			const valid = await result.validate()
 			expect(valid).toBe(true)
 		})
+
+		it('validate() returns false while external errorMessages are injected', async () => {
+			const errorMessages = ref<string[] | null>(['Erreur serveur'])
+			const params = makeParams({ disableErrorHandling: ref(true), errorMessages })
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			// Les erreurs injectées restent affichées et bloquent le SyForm : validate() doit suivre.
+			expect(result.errors.value).toContain('Erreur serveur')
+			expect(await result.validate()).toBe(false)
+
+			errorMessages.value = null
+			await nextTick()
+			expect(await result.validate()).toBe(true)
+		})
+
+		it('validate() returns true with external errorMessages when the field is also disabled', async () => {
+			const params = makeParams({
+				disableErrorHandling: ref(true),
+				disabled: ref(true),
+				errorMessages: ref<string[] | null>(['Erreur serveur']),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			expect(await result.validate()).toBe(true)
+		})
 	})
 
 	describe('Initial validation', () => {

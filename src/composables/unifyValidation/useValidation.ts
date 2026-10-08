@@ -156,6 +156,11 @@ export function useValidation(params: {
 			innerWarnings.value = []
 			innerSuccesses.value = []
 
+			// Avec disableErrorHandling, les erreurs injectées par le parent restent affichées
+			// et font échouer la soumission du SyForm : validate() doit rester cohérent.
+			if (params.disableErrorHandling.value && !params.readonly.value && !params.disabled.value) {
+				return !hasExternalErrors.value
+			}
 			return true
 		}
 
