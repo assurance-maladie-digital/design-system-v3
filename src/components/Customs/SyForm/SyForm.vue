@@ -73,6 +73,11 @@
 		model.value = null
 		form.value!.resetValidation()
 		clearAll()
+		// Un champ portant une erreur injectée reste invalide après le nettoyage : aucune
+		// source du watch ne change, le v-model doit donc être recalculé explicitement.
+		nextTick(() => {
+			model.value = getFormValue(vFormStatus.value, hasVuetifyFields.value)
+		})
 	}
 
 	/**

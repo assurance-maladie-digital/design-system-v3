@@ -85,6 +85,33 @@ describe('useValidation (unifyValidation)', () => {
 		})
 	})
 
+	describe('hasError prop', () => {
+		it.each([false, true])('validate() returns false while hasError is set (useVuetifyValidation = %s)', async (useVuetifyValidation) => {
+			const hasErrorProp = ref(true)
+			const params = makeParams({ modelValue: ref('valeur valide'), useVuetifyValidation, rules: ref([]), hasErrorProp })
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			expect(await result.validate()).toBe(false)
+
+			hasErrorProp.value = false
+			expect(await result.validate()).toBe(true)
+		})
+
+		it('validate() returns false with hasError and disableErrorHandling', async () => {
+			const params = makeParams({ disableErrorHandling: ref(true), hasErrorProp: ref(true) })
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			expect(await result.validate()).toBe(false)
+		})
+
+		it('validate() returns true with hasError when the field is disabled', async () => {
+			const params = makeParams({ disabled: ref(true), hasErrorProp: ref(true) })
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			expect(await result.validate()).toBe(true)
+		})
+	})
+
 	describe('dynamic useVuetifyValidation', () => {
 		const requiredRule: ValidationRule[] = [{ type: 'required', options: { message: 'Requis (Synapse)' } }]
 

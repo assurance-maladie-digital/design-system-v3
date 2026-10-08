@@ -167,25 +167,25 @@ export function useValidation(params: {
 			innerWarnings.value = []
 			innerSuccesses.value = []
 
-			// Avec disableErrorHandling, les erreurs injectées par le parent restent affichées
-			// et font échouer la soumission du SyForm : validate() doit rester cohérent.
+			// Avec disableErrorHandling, les erreurs injectées par le parent et `hasError`
+			// restent affichés et font échouer la soumission du SyForm : validate() doit suivre.
 			if (params.disableErrorHandling.value && !params.readonly.value && !params.disabled.value) {
-				return !hasExternalErrors.value
+				return !hasExternalErrors.value && !params.hasErrorProp?.value
 			}
 			return true
 		}
 
-		// Une erreur injectée par le parent (ex. erreur serveur) est affichée mais ne
-		// provient d'aucune règle : les validateurs ne la comptent pas. Elle doit
-		// pourtant faire échouer la validation, comme le validateOnSubmit du SyForm.
+		// Une erreur injectée par le parent (ex. erreur serveur) ou forcée par `hasError` est
+		// affichée mais ne provient d'aucune règle : les validateurs ne la comptent pas. Elle
+		// doit pourtant faire échouer la validation, comme la soumission du SyForm.
 		if (toValue(params.useVuetifyValidation)) {
 			const result = await vuetifyValidator!.validate()
-			return result?.length === 0 && !hasExternalErrors.value
+			return result?.length === 0 && !hasExternalErrors.value && !params.hasErrorProp?.value
 		}
 
 		else {
 			const result = await customValidator?.validate()
-			return result?.state.errors.length === 0 && !hasExternalErrors.value
+			return result?.state.errors.length === 0 && !hasExternalErrors.value && !params.hasErrorProp?.value
 		}
 	}
 
