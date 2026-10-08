@@ -204,7 +204,8 @@ export function useCustomValidation(
 			options.formRegistration?.clearValidation ?? clearValidationForForm,
 			reset,
 			// Un champ désactivé ou en lecture seule n'est pas validé (cf. watch ci-dessus) et
-			// ne peut pas être corrigé : il ne doit pas bloquer le formulaire (comme Vuetify).
+			// ne peut pas être corrigé : il ne doit pas bloquer le formulaire. C'est un choix
+			// Synapse : Vuetify, lui, évalue les rules de ces champs et peut les compter invalides.
 			computed(() => {
 				if (readonly?.value || disabled?.value) return true
 				// Une erreur injectée par le parent est affichée : elle invalide le champ

@@ -608,8 +608,10 @@
 					class="mb-4"
 				>
 					<strong>Attendu :</strong> un champ disabled ne bloque pas le formulaire (comportement
-					custom). <strong>Bug (corrigé) :</strong> en mode Vuetify, <code>VForm.validate()</code> évaluait
-					ses <code>rules</code> → formulaire invalide et « Requis » affiché.
+					custom), et le v-model du formulaire vaut <code>true</code> dès le montage.
+					<strong>Bug (corrigé) :</strong> en mode Vuetify, <code>VForm.validate()</code> évaluait ses
+					<code>rules</code> → formulaire invalide et « Requis » affiché, et le v-model restait à
+					<code>null</code> avant tout submit.
 				</SyAlert>
 				<SyForm
 					v-model="disabledFormValid"
@@ -636,6 +638,9 @@
 						>
 							Submit : {{ disabledSubmitResult ? 'valide' : 'invalide' }}
 						</VChip>
+						<span :class="`text-${validityLabel(disabledFormValid).color}`">
+							Formulaire : {{ validityLabel(disabledFormValid).text }}
+						</span>
 					</div>
 				</SyForm>
 			</VCardText>
