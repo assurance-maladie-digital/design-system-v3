@@ -13,7 +13,6 @@
 		:is="tag"
 		class="header-menu-item"
 		:class="{ 'header-menu-item--disabled': disabled }"
-		:aria-disabled="disabled"
 	>
 		<slot />
 	</component>

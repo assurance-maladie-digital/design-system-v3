@@ -1,12 +1,14 @@
-import { computed, provide, ref, watch, type DeepReadonly, type Ref } from 'vue'
+import { computed, onScopeDispose, provide, ref, watch, type DeepReadonly, type Ref } from 'vue'
 import { registerSubMenuKey } from './conts'
 
 export default function useHandleSubMenus(openStatus: DeepReadonly<Ref<boolean>>) {
 	type SubMenu = { id: string, status: Ref<boolean>, close: () => void }
 	const subMenus: Ref<SubMenu[]> = ref([])
+	let subMenuCounter = 0
 
 	function registerSubMenu(status: Ref<boolean>, close: () => void) {
-		const id = String(subMenus.value.length)
+		// Incremental counter (not array length) to avoid id collisions after unregister
+		const id = String(subMenuCounter++)
 		const newSubMenu = { id, status, close }
 
 		// Register the new submenu
@@ -16,6 +18,15 @@ export default function useHandleSubMenus(openStatus: DeepReadonly<Ref<boolean>>
 		watch(status, (newStatus) => {
 			if (newStatus) {
 				closeOtherSubMenus(newSubMenu)
+			}
+		})
+
+		// Unregister when the calling component (HeaderSubMenu) unmounts :
+		// avoids stale refs in subMenus (dead watchers, close() on unmounted submenus)
+		onScopeDispose(() => {
+			const index = subMenus.value.indexOf(newSubMenu)
+			if (index !== -1) {
+				subMenus.value.splice(index, 1)
 			}
 		})
 	}
