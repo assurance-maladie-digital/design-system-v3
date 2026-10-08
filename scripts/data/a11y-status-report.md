@@ -1,6 +1,6 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 12/10/2026
+Généré le: 19/10/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
@@ -29,7 +29,6 @@ Généré le: 12/10/2026
 | **Customs/SyTextField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **DataList** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **DataListGroup** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **DataListItem** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **DatePicker/CalendarMode** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **DatePicker/ComplexDatePicker** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **DatePicker/DateTextInput** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
@@ -46,7 +45,7 @@ Généré le: 12/10/2026
 | **FilterSideBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **FooterBar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **FranceConnectBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **HeaderBar** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
+| **HeaderBar** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
 | **HeaderLoading** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **HeaderNavigationBar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **HeaderToolbar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -82,4 +81,4 @@ Généré le: 12/10/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 71 / 77 (92.21%)**
+**Total des composants conformes : 70 / 76 (92.11%)**
