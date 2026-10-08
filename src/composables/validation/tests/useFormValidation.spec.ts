@@ -67,7 +67,7 @@ describe('useFormValidation', () => {
 		expect(form._getValidatableComponents()).toHaveLength(1)
 	})
 
-	it('unregisters components by reference and by validateOnSubmit fallback', () => {
+	it('unregisters components by reference only', () => {
 		lastChildApi = null
 
 		const wrapper = mount(ParentWithForm)
@@ -86,12 +86,12 @@ describe('useFormValidation', () => {
 		childApi.unregister(component1)
 		expect(form._getValidatableComponents()).toHaveLength(0)
 
-		// Fallback: removal by matching validateOnSubmit reference
+		// Another component sharing the same validateOnSubmit must not remove the registered one
 		childApi.register(component1)
 		expect(form._getValidatableComponents()).toHaveLength(1)
 
 		childApi.unregister(component2)
-		expect(form._getValidatableComponents()).toHaveLength(0)
+		expect(form._getValidatableComponents()).toHaveLength(1)
 	})
 
 	it('clearAll calls clearValidation on registered components and ignores missing or throwing ones', () => {

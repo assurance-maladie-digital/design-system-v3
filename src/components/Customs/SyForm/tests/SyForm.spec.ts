@@ -1092,4 +1092,22 @@ describe('SyForm', () => {
 			wrapper.unmount()
 		})
 	})
+
+	describe('exposed methods before the inner VForm is mounted', () => {
+		it('do not throw and validate() resolves to false', async () => {
+			const wrapper = mount(SyForm)
+			const vm = wrapper.vm as unknown as {
+				validate: () => Promise<boolean>
+				reset: () => void
+				clearValidation: () => void
+			}
+			// Seul moyen de reproduire un appel antérieur au montage du VForm (ex. via le slot
+			// pendant le rendu initial) : on retire la ref interne du VForm.
+			;(vm as unknown as { $: { setupState: { form: unknown } } }).$.setupState.form = undefined
+
+			await expect(vm.validate()).resolves.toBe(false)
+			expect(() => vm.reset()).not.toThrow()
+			expect(() => vm.clearValidation()).not.toThrow()
+		})
+	})
 })

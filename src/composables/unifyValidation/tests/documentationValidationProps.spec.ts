@@ -25,15 +25,15 @@ const EXPECTED_KEYS = [
 ] as const
 
 describe('getValidationDocumentation', () => {
-	describe('structure retournée', () => {
-		it('retourne toutes les clés attendues pour le type "all" (défaut)', () => {
+	describe('returned structure', () => {
+		it('returns every expected key for the "all" type (default)', () => {
 			const doc = getValidationDocumentation()
 			for (const key of EXPECTED_KEYS) {
 				expect(doc).toHaveProperty(key)
 			}
 		})
 
-		it('chaque entrée possède une description string non vide', () => {
+		it('gives every entry a non-empty string description', () => {
 			const doc = getValidationDocumentation()
 			for (const key of EXPECTED_KEYS) {
 				expect(typeof doc[key].description).toBe('string')
@@ -41,7 +41,7 @@ describe('getValidationDocumentation', () => {
 			}
 		})
 
-		it('chaque entrée possède une table avec un type', () => {
+		it('gives every entry a table with a type', () => {
 			const doc = getValidationDocumentation()
 			for (const key of EXPECTED_KEYS) {
 				expect(doc[key]).toHaveProperty('table')
@@ -50,8 +50,8 @@ describe('getValidationDocumentation', () => {
 		})
 	})
 
-	describe('type "all" (défaut)', () => {
-		it('customRules inclut les types string, number et date', () => {
+	describe('"all" type (default)', () => {
+		it('customRules includes the string, number and date types', () => {
 			const doc = getValidationDocumentation('all')
 			const detail = doc.customRules.table.type.detail
 			expect(detail).toContain('minLength')
@@ -59,7 +59,7 @@ describe('getValidationDocumentation', () => {
 			expect(detail).toContain('notWeekend')
 		})
 
-		it('customWarningRules inclut tous les types', () => {
+		it('customWarningRules includes every type', () => {
 			const doc = getValidationDocumentation('all')
 			const detail = doc.customWarningRules.table.type.detail
 			expect(detail).toContain('maxLength')
@@ -68,8 +68,8 @@ describe('getValidationDocumentation', () => {
 		})
 	})
 
-	describe('type "string"', () => {
-		it('customRules inclut les types string mais pas number ni date', () => {
+	describe('"string" type', () => {
+		it('customRules includes the string types but neither number nor date', () => {
 			const doc = getValidationDocumentation('string')
 			const detail = doc.customRules.table.type.detail
 			expect(detail).toContain('minLength')
@@ -79,8 +79,8 @@ describe('getValidationDocumentation', () => {
 		})
 	})
 
-	describe('type "number"', () => {
-		it('customRules inclut les types number mais pas string ni date', () => {
+	describe('"number" type', () => {
+		it('customRules includes the number types but neither string nor date', () => {
 			const doc = getValidationDocumentation('number')
 			const detail = doc.customRules.table.type.detail
 			expect(detail).toContain('\'min\'')
@@ -90,8 +90,8 @@ describe('getValidationDocumentation', () => {
 		})
 	})
 
-	describe('type "date"', () => {
-		it('customRules inclut les types date mais pas string ni number', () => {
+	describe('"date" type', () => {
+		it('customRules includes the date types but neither string nor number', () => {
 			const doc = getValidationDocumentation('date')
 			const detail = doc.customRules.table.type.detail
 			expect(detail).toContain('notWeekend')
@@ -100,35 +100,35 @@ describe('getValidationDocumentation', () => {
 		})
 	})
 
-	describe('valeurs par défaut documentées', () => {
-		it('readonly a un defaultValue false', () => {
+	describe('documented default values', () => {
+		it('readonly defaults to false', () => {
 			const doc = getValidationDocumentation()
 			expect(doc.readonly.table.defaultValue).toEqual({ summary: 'false' })
 		})
 
-		it('isValidateOnBlur a un defaultValue true', () => {
+		it('isValidateOnBlur defaults to true', () => {
 			const doc = getValidationDocumentation()
 			expect(doc.isValidateOnBlur.table.defaultValue).toEqual({ summary: 'true' })
 		})
 
-		it('showSuccessMessages a un defaultValue false', () => {
+		it('showSuccessMessages defaults to false', () => {
 			const doc = getValidationDocumentation()
 			expect(doc.showSuccessMessages.table.defaultValue).toEqual({ summary: 'false' })
 		})
 
-		it('disableErrorHandling a un defaultValue false', () => {
+		it('disableErrorHandling defaults to false', () => {
 			const doc = getValidationDocumentation()
 			expect(doc.disableErrorHandling.table.defaultValue).toEqual({ summary: 'false' })
 		})
 
-		it('useVuetifyValidation a un defaultValue false', () => {
+		it('useVuetifyValidation defaults to false', () => {
 			const doc = getValidationDocumentation()
 			expect(doc.useVuetifyValidation.table.defaultValue).toEqual({ summary: 'false' })
 		})
 	})
 
-	describe('contrôles Storybook', () => {
-		it('les props booléennes ont control="boolean"', () => {
+	describe('Storybook controls', () => {
+		it('boolean props use control="boolean"', () => {
 			const doc = getValidationDocumentation()
 			const booleanProps = ['readonly', 'disabled', 'required', 'isValidateOnBlur', 'showSuccessMessages', 'disableErrorHandling', 'useVuetifyValidation', 'hasError', 'hasWarning', 'hasSuccess', 'hideDetails'] as const
 			for (const key of booleanProps) {
@@ -136,24 +136,24 @@ describe('getValidationDocumentation', () => {
 			}
 		})
 
-		it('label a control="text"', () => {
+		it('label uses control="text"', () => {
 			const doc = getValidationDocumentation()
 			expect(doc.label.control).toBe('text')
 		})
 
-		it('customRules a control="object"', () => {
+		it('customRules uses control="object"', () => {
 			const doc = getValidationDocumentation()
 			expect(doc.customRules.control).toBe('object')
 		})
 
-		it('maxErrors a control="number"', () => {
+		it('maxErrors uses control="number"', () => {
 			const doc = getValidationDocumentation()
 			expect(doc.maxErrors.control).toBe('number')
 		})
 	})
 
-	describe('catégories table', () => {
-		it('toutes les entrées ont category="props"', () => {
+	describe('table categories', () => {
+		it('puts every entry in category="props"', () => {
 			const doc = getValidationDocumentation()
 			for (const key of EXPECTED_KEYS) {
 				expect(doc[key].table.category).toBe('props')
@@ -161,14 +161,14 @@ describe('getValidationDocumentation', () => {
 		})
 	})
 
-	describe('appels successifs', () => {
-		it('deux appels avec le même type retournent des objets équivalents', () => {
+	describe('successive calls', () => {
+		it('returns equivalent objects for two calls with the same type', () => {
 			const doc1 = getValidationDocumentation('string')
 			const doc2 = getValidationDocumentation('string')
 			expect(JSON.stringify(doc1)).toBe(JSON.stringify(doc2))
 		})
 
-		it('deux appels avec des types différents retournent des objets différents pour customRules', () => {
+		it('returns different customRules objects for two calls with different types', () => {
 			const docString = getValidationDocumentation('string')
 			const docDate = getValidationDocumentation('date')
 			expect(docString.customRules.table.type.detail).not.toBe(docDate.customRules.table.type.detail)

@@ -1,5 +1,6 @@
 import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
 import { useValidatable } from '@/composables/validation/useValidatable'
+import { emptyValidationResult } from './emptyValidationResult'
 import { computed, getCurrentInstance, nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import type { Ref } from 'vue'
 
@@ -61,17 +62,6 @@ export function useCustomValidation(
 	})
 
 	const validator = useValidation(validatorOptions)
-
-	const emptyValidationResult = () => ({
-		hasError: false,
-		hasWarning: false,
-		hasSuccess: false,
-		state: {
-			errors: [] as string[],
-			warnings: [] as string[],
-			successes: [] as string[],
-		},
-	})
 
 	const applyValidationResult = (result: Awaited<ReturnType<typeof validator.validateField>>) => {
 		isPristine.value = false

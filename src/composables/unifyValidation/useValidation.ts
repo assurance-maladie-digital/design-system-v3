@@ -2,7 +2,8 @@ import type {
 	ValidationResult as LegacyValidationResult,
 	ValidationRule as SyValidationRule,
 } from '@/composables/validation/useValidation'
-import { computed, ref, toValue, type Ref } from 'vue'
+import { computed, ref, toValue, watch, type Ref } from 'vue'
+import { devWarn } from '@/utils/devWarn'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import { useCustomValidation, type UseCustomValidationOptions } from './useCustomValidation'
 import { useVuetifyValidation as useVuetifyValidationComposable } from './useVuetifyValidation'
@@ -71,6 +72,11 @@ export function useValidation(params: {
 	modelValue: Ref<unknown>
 	readonly: Ref<boolean>
 	disabled: Ref<boolean>
+	/**
+	 * Non lu par la validation : chaque composant transforme sa prop `required` en règle dans
+	 * `customRules`. En mode Vuetify, la règle doit être fournie dans `rules` (un avertissement
+	 * de développement le signale).
+	 */
 	required: Ref<boolean>
 	isValidateOnBlur: Ref<boolean>
 	showSuccessMessages: Ref<boolean>
@@ -103,6 +109,22 @@ export function useValidation(params: {
 	customSuccessRules?: Ref<SyValidationRule[]>
 	rules: Ref<VuetifyValidationRule[] | undefined>
 }), options: Pick<UseCustomValidationOptions, 'registerWithForm' | 'reactiveValidation'> = {}) {
+	// En mode Vuetify, comme dans Vuetify, `required` n'ajoute que l'indication visuelle et ARIA :
+	// sans règle dans `rules`, un champ requis vide ne bloque pas la soumission.
+	if (import.meta.env.DEV) {
+		watch(
+			() => Boolean(toValue(params.useVuetifyValidation) && params.required?.value && !params.rules?.value?.length),
+			(isRequiredUnchecked) => {
+				if (isRequiredUnchecked) {
+					devWarn(`[Synapse] Le champ « ${params.label?.value ?? 'sans label'} » est requis en mode Vuetify (use-vuetify-validation) sans règle Vuetify : `
+						+ 'required n\'ajoute que l\'indication visuelle et ARIA, la soumission ne sera pas bloquée. '
+						+ 'Ajoutez une règle, par exemple :rules="[v => !!v || \'Champ requis\']".')
+				}
+			},
+			{ immediate: true },
+		)
+	}
+
 	const vuetifyErrors = ref<string[]>([])
 	const customErrors = ref<string[]>([])
 	const innerWarnings = ref<string[]>([])

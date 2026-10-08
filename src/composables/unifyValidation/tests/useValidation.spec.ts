@@ -1,5 +1,5 @@
 /* eslint-disable vue/one-component-per-file */
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { defineComponent, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { useValidation } from '../useValidation'
@@ -82,6 +82,34 @@ describe('useValidation (unifyValidation)', () => {
 			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
 			expect(await result.validate()).toBe(true)
+		})
+	})
+
+	describe('required in Vuetify mode dev warning', () => {
+		const isRequiredWarning = (call: unknown[]) => String(call[0]).includes('requis en mode Vuetify')
+
+		it('warns once when a required field has no Vuetify rule', () => {
+			const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+			const params = makeParams({ useVuetifyValidation: true, required: ref(true), rules: ref([]), label: ref('E-mail') })
+			withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			const calls = warn.mock.calls.filter(isRequiredWarning)
+			expect(calls).toHaveLength(1)
+			expect(String(calls[0]![0])).toContain('« E-mail »')
+			warn.mockRestore()
+		})
+
+		it.each([
+			['a Vuetify rule is provided', { useVuetifyValidation: true, required: ref(true), rules: ref([(v: unknown) => !!v || 'Requis']) }],
+			['the field is not required', { useVuetifyValidation: true, required: ref(false), rules: ref([]) }],
+			['the field uses Synapse validation', { required: ref(true) }],
+		])('does not warn when %s', (_, overrides) => {
+			const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+			const params = makeParams(overrides)
+			withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			expect(warn.mock.calls.filter(isRequiredWarning)).toHaveLength(0)
+			warn.mockRestore()
 		})
 	})
 

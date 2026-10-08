@@ -48,7 +48,7 @@ function useCustomValidationInComponent(
 	return mount(TestComponent)
 }
 
-describe('useCustomValidation - État pristine et comportement du formulaire', () => {
+describe('useCustomValidation - pristine state and form behavior', () => {
 	beforeEach(() => {
 		vi.clearAllMocks()
 	})
@@ -57,8 +57,8 @@ describe('useCustomValidation - État pristine et comportement du formulaire', (
 		await flushPromises()
 	})
 
-	describe('Validation explicite', () => {
-		it('invalide un champ requis vide', async () => {
+	describe('Explicit validation', () => {
+		it('invalidates an empty required field', async () => {
 			const rules: ValidationRule[] = [
 				{ type: 'required', options: { message: 'Champ obligatoire' } },
 			]
@@ -97,8 +97,8 @@ describe('useCustomValidation - État pristine et comportement du formulaire', (
 		})
 	})
 
-	describe('Règles custom (ex: SyCheckbox)', () => {
-		it('détecte correctement une règle custom pour SyCheckbox quand non coché', async () => {
+	describe('Custom rules (e.g. SyCheckbox)', () => {
+		it('detects a failing custom rule for an unchecked SyCheckbox', async () => {
 			const rules: ValidationRule[] = [
 				{
 					type: 'custom',
@@ -141,7 +141,7 @@ describe('useCustomValidation - État pristine et comportement du formulaire', (
 			expect(errors.value).toContain('Vous devez accepter les conditions')
 		})
 
-		it('détecte correctement une règle custom pour SyCheckbox quand coché', async () => {
+		it('detects a passing custom rule for a checked SyCheckbox', async () => {
 			const rules: ValidationRule[] = [
 				{
 					type: 'custom',
@@ -185,8 +185,8 @@ describe('useCustomValidation - État pristine et comportement du formulaire', (
 		})
 	})
 
-	describe('Réinitialisation du formulaire', () => {
-		it('reset réinitialise modelValue', async () => {
+	describe('Form reset', () => {
+		it('reset clears modelValue', async () => {
 			const modelValue = ref('test')
 			const customRules = ref<ValidationRule[]>([
 				{ type: 'required', options: { message: 'Requis' } },
@@ -222,7 +222,7 @@ describe('useCustomValidation - État pristine et comportement du formulaire', (
 			expect(modelValue.value).toBeUndefined()
 		})
 
-		it('clearValidation nettoie les erreurs', async () => {
+		it('clearValidation clears the errors', async () => {
 			const modelValue = ref('test')
 			const customRules = ref<ValidationRule[]>([
 				{ type: 'required', options: { message: 'Requis' } },
@@ -256,8 +256,8 @@ describe('useCustomValidation - État pristine et comportement du formulaire', (
 		})
 	})
 
-	describe('Comportement de fieldValide', () => {
-		it('garde un champ obligatoire vide pristine sans SyForm', async () => {
+	describe('fieldValide behavior', () => {
+		it('keeps an empty required field pristine without SyForm', async () => {
 			const modelValue = ref('')
 			const customRules = ref<ValidationRule[]>([
 				{ type: 'required', options: { message: 'Requis' } },
@@ -288,7 +288,7 @@ describe('useCustomValidation - État pristine et comportement du formulaire', (
 			expect(wrapper.vm.isPristine).toBe(true)
 		})
 
-		it('fieldValide est true pour un champ optionnel vide', async () => {
+		it('fieldValide is true for an empty optional field', async () => {
 			const modelValue = ref('')
 			const customRules = ref<ValidationRule[]>([]) // Pas de règle required
 			const errors = ref<string[]>([])
@@ -320,7 +320,7 @@ describe('useCustomValidation - État pristine et comportement du formulaire', (
 			expect(errors.value).toHaveLength(0)
 		})
 
-		it('fieldValide est true pour un champ pré-rempli valide', async () => {
+		it('fieldValide is true for a valid prefilled field', async () => {
 			const modelValue = ref('valeur valide')
 			const customRules = ref<ValidationRule[]>([
 				{ type: 'required', options: { message: 'Requis' } },
