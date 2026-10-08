@@ -80,6 +80,15 @@ const meta: Meta<typeof HeaderToolbar> = {
 				defaultValue: { summary: 'null' },
 			},
 		},
+		newWindowText: {
+			description: 'Annonce destinée aux lecteurs d\'écran, ajoutée aux liens ouverts dans une nouvelle fenêtre (`openInNewTab`).',
+			control: { type: 'text' },
+			table: {
+				category: 'props',
+				type: { summary: 'string' },
+				defaultValue: { summary: 'nouvelle fenêtre' },
+			},
+		},
 	},
 }
 
@@ -89,9 +98,6 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -263,9 +269,6 @@ export const Default: Story = {
 
 export const CustomLinks: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
