@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref } from 'vue'
+	import { computed, ref, watch } from 'vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SelectBtnField from '@/components/Customs/Selects/SelectBtnField/SelectBtnField.vue'
 	import SyForm from '@/components/Customs/SyForm/SyForm.vue'
@@ -159,6 +159,70 @@
 			},
 		},
 	]
+
+	// ── Scénario 10 : erreur externe × état du champ ─────────────────
+	// Une erreur injectée par le parent bloque la soumission, sauf si le
+	// champ est désactivé ou en lecture seule (il ne peut pas être corrigé).
+	// Couvre les trois chemins : Synapse, use-vuetify-validation, VTextField natif.
+	type ExtStateMode = 'synapse' | 'vuetify' | 'native'
+	type ExtStateField = 'normal' | 'disabled' | 'readonly' | 'disableErrorHandling' | 'hasError'
+
+	const extStateModes: { value: ExtStateMode, title: string }[] = [
+		{ value: 'synapse', title: 'Synapse' },
+		{ value: 'vuetify', title: 'use-vuetify-validation' },
+		{ value: 'native', title: 'VTextField natif' },
+	]
+	const extStateFields: { value: ExtStateField, title: string }[] = [
+		{ value: 'normal', title: 'Normal' },
+		{ value: 'disabled', title: 'disabled' },
+		{ value: 'readonly', title: 'readonly' },
+		{ value: 'disableErrorHandling', title: 'disableErrorHandling' },
+		{ value: 'hasError', title: 'hasError / error' },
+	]
+
+	const extStateMode = ref<ExtStateMode>('synapse')
+	const extStateField = ref<ExtStateField>('disabled')
+	const extStateValue = ref('valeur valide')
+	const extStateErrors = ref<string[]>(['Erreur injectée par le serveur'])
+	const extStateFormValid = ref<boolean | null>(null)
+	const extStateFieldRef = ref<InstanceType<typeof SyTextField> | null>(null)
+	const extStateSubmitResult = ref<boolean | null>(null)
+	const extStateFieldResult = ref<boolean | null>(null)
+	const extStateRules = [(v: unknown) => !!v || 'Requis']
+
+	const isExtStateFieldUnavailable = (field: ExtStateField) =>
+		extStateMode.value === 'native' && field === 'disableErrorHandling'
+
+	const extStateFieldProps = computed(() => ({
+		disabled: extStateField.value === 'disabled',
+		readonly: extStateField.value === 'readonly',
+	}))
+
+	// Attendu : un champ disabled/readonly ne bloque jamais ; hasError bloque toujours ;
+	// sinon, le formulaire est invalide tant que l'erreur externe est injectée.
+	const extStateExpected = computed(() => {
+		if (extStateField.value === 'disabled' || extStateField.value === 'readonly') return true
+		if (extStateField.value === 'hasError') return false
+		return extStateErrors.value.length === 0
+	})
+
+	function resetExtStateResults() {
+		extStateSubmitResult.value = null
+		extStateFieldResult.value = null
+	}
+
+	watch([extStateMode, extStateField, extStateErrors], resetExtStateResults)
+	watch(extStateMode, () => {
+		if (isExtStateFieldUnavailable(extStateField.value)) extStateField.value = 'normal'
+	})
+
+	function toggleExtStateError() {
+		extStateErrors.value = extStateErrors.value.length ? [] : ['Erreur injectée par le serveur']
+	}
+
+	async function checkExtStateField() {
+		extStateFieldResult.value = await extStateFieldRef.value?.validateOnSubmit() ?? null
+	}
 </script>
 
 <template>
@@ -631,6 +695,143 @@
 					:is-validate-on-blur="false"
 				/>
 				<span>valeur courante : {{ JSON.stringify(asyncValue) }}</span>
+			</VCardText>
+		</VCard>
+
+		<!-- Scénario 10 : erreur externe × état du champ -->
+		<VCard
+			variant="outlined"
+			rounded="lg"
+			class="mt-6"
+		>
+			<VCardItem>
+				<template #prepend>
+					<VIcon
+						:icon="mdiShieldCheckOutline"
+						color="success"
+					/>
+				</template>
+				<VCardTitle class="text-h6">
+					10. Erreur externe × état du champ
+				</VCardTitle>
+				<VCardSubtitle>
+					Correctif — un champ disabled ou readonly portant une erreur injectée ne bloque pas la soumission
+				</VCardSubtitle>
+			</VCardItem>
+			<VCardText>
+				<SyAlert
+					type="info"
+					variant="tonal"
+					class="mb-4"
+				>
+					<strong>Attendu :</strong> avec l'erreur injectée, la soumission échoue (Normal,
+					<code>disableErrorHandling</code>) sauf si le champ est <code>disabled</code> ou
+					<code>readonly</code>. <code>hasError</code> / <code>error</code> bloque toujours.
+					Le <code>validateOnSubmit()</code> du champ doit donner le même verdict que le submit.
+				</SyAlert>
+				<div class="d-flex flex-wrap ga-4 mb-4">
+					<VBtnToggle
+						v-model="extStateMode"
+						mandatory
+						density="comfortable"
+						variant="outlined"
+						color="primary"
+					>
+						<VBtn
+							v-for="mode in extStateModes"
+							:key="mode.value"
+							:value="mode.value"
+						>
+							{{ mode.title }}
+						</VBtn>
+					</VBtnToggle>
+					<VBtnToggle
+						v-model="extStateField"
+						mandatory
+						density="comfortable"
+						variant="outlined"
+						color="primary"
+					>
+						<VBtn
+							v-for="field in extStateFields"
+							:key="field.value"
+							:value="field.value"
+							:disabled="isExtStateFieldUnavailable(field.value)"
+						>
+							{{ field.title }}
+						</VBtn>
+					</VBtnToggle>
+				</div>
+				<SyForm
+					v-model="extStateFormValid"
+					@submit="extStateSubmitResult = $event.isValid"
+				>
+					<VTextField
+						v-if="extStateMode === 'native'"
+						:key="`native-${extStateField}`"
+						v-model="extStateValue"
+						label="Champ avec erreur serveur (VTextField natif)"
+						:rules="extStateRules"
+						:error-messages="extStateErrors"
+						:error="extStateField === 'hasError'"
+						v-bind="extStateFieldProps"
+					/>
+					<SyTextField
+						v-else
+						ref="extStateFieldRef"
+						:key="`${extStateMode}-${extStateField}`"
+						v-model="extStateValue"
+						label="Champ avec erreur serveur"
+						:use-vuetify-validation="extStateMode === 'vuetify'"
+						:rules="extStateRules"
+						:custom-rules="[{ type: 'required', options: { message: 'Requis' } }]"
+						:error-messages="extStateErrors"
+						:has-error="extStateField === 'hasError'"
+						:disable-error-handling="extStateField === 'disableErrorHandling'"
+						v-bind="extStateFieldProps"
+					/>
+					<div class="d-flex flex-wrap align-center ga-3 mt-3">
+						<VBtn
+							variant="tonal"
+							@click="toggleExtStateError"
+						>
+							{{ extStateErrors.length ? 'Retirer' : 'Injecter' }} l'erreur
+						</VBtn>
+						<VBtn
+							color="primary"
+							type="submit"
+						>
+							Soumettre
+						</VBtn>
+						<VBtn
+							variant="text"
+							:disabled="extStateMode === 'native'"
+							@click="checkExtStateField"
+						>
+							validateOnSubmit() du champ
+						</VBtn>
+					</div>
+					<div class="d-flex flex-wrap align-center ga-3 mt-3">
+						<span>Attendu : <strong>{{ extStateExpected ? 'valide' : 'invalide' }}</strong></span>
+						<VChip
+							v-if="extStateSubmitResult !== null"
+							:color="extStateSubmitResult === extStateExpected ? 'success' : 'error'"
+							size="small"
+						>
+							Submit : {{ extStateSubmitResult ? 'valide' : 'invalide' }}
+						</VChip>
+						<VChip
+							v-if="extStateFieldResult !== null"
+							:color="extStateFieldResult === extStateExpected ? 'success' : 'error'"
+							size="small"
+						>
+							Champ : {{ extStateFieldResult ? 'valide' : 'invalide' }}
+						</VChip>
+						<span :class="`text-${validityLabel(extStateFormValid).color}`">
+							v-model SyForm : {{ validityLabel(extStateFormValid).text }}
+						</span>
+					</div>
+				</SyForm>
 			</VCardText>
 		</VCard>
 	</div>

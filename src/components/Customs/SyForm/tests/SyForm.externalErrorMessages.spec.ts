@@ -49,12 +49,13 @@ const createExternalErrorForm = (renderField: FieldRenderer) => defineComponent(
 
 const requiredRules = [(value: unknown) => Boolean(value) || 'Ce champ est obligatoire']
 
-const synapseTextField: FieldRenderer = ({ modelValue, onUpdate, errorMessages }) => h(SyTextField, {
+const synapseTextField: FieldRenderer = ({ modelValue, onUpdate, errorMessages, ...fieldProps }) => h(SyTextField, {
 	modelValue,
 	'onUpdate:modelValue': onUpdate,
 	'label': 'Nom',
 	'required': true,
 	errorMessages,
+	...fieldProps,
 })
 
 // Champs validés par Vuetify (rules) : VForm.validate() ne vérifie que les rules
@@ -173,5 +174,48 @@ describe.each(vuetifyFields)('SyForm with a $name and error messages injected by
 
 		expect(lastSubmitPayload(wrapper)).toEqual({ isValid: true })
 		expect(getFormValidity(wrapper)).toBe('true')
+	})
+})
+
+// Un champ désactivé ou en lecture seule ne peut pas être corrigé : l'erreur injectée
+// reste affichée mais ne doit pas bloquer la soumission, quel que soit le mode de validation.
+const nonEditableFields: { name: string, render: FieldRenderer }[] = [
+	{ name: 'disabled SyTextField', render: props => synapseTextField({ ...props, disabled: true } as Parameters<FieldRenderer>[0]) },
+	{ name: 'readonly SyTextField', render: props => synapseTextField({ ...props, readonly: true } as Parameters<FieldRenderer>[0]) },
+	...vuetifyFields.flatMap(({ name, render }) => [
+		{ name: `disabled ${name}`, render: (props: Parameters<FieldRenderer>[0]) => h(render(props), { disabled: true }) },
+		{ name: `readonly ${name}`, render: (props: Parameters<FieldRenderer>[0]) => h(render(props), { readonly: true }) },
+	]),
+]
+
+describe.each(nonEditableFields)('SyForm with a $name and error messages injected by the parent', ({ render }) => {
+	const ExternalErrorForm = createExternalErrorForm(render)
+
+	it('emits a valid submit while the injected error is displayed', async () => {
+		const wrapper = mount(ExternalErrorForm, {
+			props: { errorMessages: ['Ce nom est déjà utilisé'] },
+		})
+		await settle()
+		expect(wrapper.text()).toContain('Ce nom est déjà utilisé')
+
+		await submit(wrapper)
+
+		expect(lastSubmitPayload(wrapper)).toEqual({ isValid: true })
+	})
+})
+
+describe('SyForm with a SyTextField forced in error by the hasError prop', () => {
+	// `hasError` force l'état d'erreur du champ : le VForm le considère invalide (comme la
+	// prop `error` de Vuetify), le v-model du SyForm passe à false et la soumission échoue.
+	const ExternalErrorForm = createExternalErrorForm(props => synapseTextField({ ...props, hasError: true } as Parameters<FieldRenderer>[0]))
+
+	it('emits an invalid submit', async () => {
+		const wrapper = mount(ExternalErrorForm)
+		await settle()
+
+		await submit(wrapper)
+
+		expect(lastSubmitPayload(wrapper)).toEqual({ isValid: false })
+		expect(getFormValidity(wrapper)).toBe('false')
 	})
 })

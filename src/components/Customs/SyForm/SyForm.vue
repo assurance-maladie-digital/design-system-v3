@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, ref, watch } from 'vue'
+	import { computed, nextTick, ref, watch } from 'vue'
 	import { useFormValidation } from '@/composables/validation/useFormValidation'
 	import type { VForm } from 'vuetify/components/VForm'
 
@@ -29,14 +29,24 @@
 		model.value = getFormValue(newVFormStatus, newHasVuetifyFields)
 	}, { immediate: true })
 
+	/**
+	 * VForm.validate() ne vérifie que les `rules` : un champ Vuetify portant `error` ou des
+	 * `error-messages` injectés par le parent (ex. erreur serveur) n'y est pas compté, alors
+	 * que le VForm le considère invalide. Comme pour les champs Synapse, un champ désactivé
+	 * ou en lecture seule ne peut pas être corrigé et ne bloque pas la soumission
+	 * (Vuetify, lui, le compte invalide).
+	 */
+	const hasBlockingVuetifyError = () => form.value!.items.some(({ isValid, vm }) =>
+		isValid === false && !vm.props.disabled && !vm.props.readonly,
+	)
+
 	const validate = async () => {
 		const vuetifyValidateResult = await form.value!.validate()
 		const customComponentsValid = await validateAll()
+		// Laisse les champs Vuetify remonter leur état `isValid` au VForm après la validation.
+		await nextTick()
 
-		// VForm.validate() ne vérifie que les `rules` : un champ Vuetify portant des
-		// `error-messages` injectés par le parent (ex. erreur serveur) n'y est pas compté,
-		// alors que le VForm le considère déjà invalide (vFormStatus à false).
-		const isValid = vuetifyValidateResult.valid && vFormStatus.value !== false && customComponentsValid
+		const isValid = vuetifyValidateResult.valid && !hasBlockingVuetifyError() && customComponentsValid
 		if (isValid && model.value === null) {
 			model.value = true
 		}
