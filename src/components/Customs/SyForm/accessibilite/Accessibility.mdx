@@ -1,10 +1,81 @@
 import { Meta, Story } from '@storybook/addon-docs/blocks';
-import * as SyForm from '../SyForm.stories';
-import '@/stories/styles/shared.css';
+import * as SyFormStories from '../SyForm.stories';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+  AccessibilityGuideLayout,
+  CriteriaSection,
+  CriteriaCard,
+  DemoSection,
+  BestPracticesSection,
+  ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={SyForm}/>
+<Meta of={SyFormStories} name="Accessibility" />
 
-<div className="header">
-  <h1>Accessibilité</h1>
-  <p>Cette page sera bientôt disponible</p>
-</div>
+<AccessibilityGuideLayout
+  componentName="SyForm"
+  iconSrc={AccessibilityIcon}
+  apgHref="https://www.w3.org/WAI/tutorials/forms/"
+  apgLabel="WAI Web Accessibility Tutorials – Forms"
+>
+  <CriteriaSection>
+    <CriteriaCard title="Structure sémantique native">
+      <ul>
+        <li><strong>Élément <code>&lt;form&gt;</code> natif</strong> : SyForm encapsule le <code>VForm</code> de Vuetify, qui rend une balise <code>&lt;form&gt;</code> HTML réelle. Les technologies d'assistance identifient ainsi la région comme un formulaire.</li>
+        <li><strong>Soumission implicite</strong> : la soumission native du formulaire (touche <kbd>Entrée</kbd> dans un champ, bouton <code>type="submit"</code>) déclenche la validation via l'écoute de l'événement <code>submit</code>.</li>
+        <li><strong>Prévention du rechargement</strong> : le gestionnaire <code>@submit.prevent</code> intercepte la soumission pour exécuter la validation côté client sans recharger la page ni perdre le contexte de l'utilisateur.</li>
+        <li><strong>Contenu libre</strong> : le slot par défaut accueille les champs, qui conservent leur propre sémantique (labels, <code>fieldset</code>/<code>legend</code>, messages d'erreur).</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Validation orchestrée des champs">
+      <ul>
+        <li><strong>Validation unifiée</strong> : au submit, SyForm valide à la fois les champs Vuetify natifs (<code>form.validate()</code>) et les composants custom du design system enregistrés via le registre <code>useFormValidation</code>.</li>
+        <li><strong>Enregistrement automatique</strong> : les champs DS (SyTextField, SySelect, SyCheckbox…) s'enregistrent eux-mêmes auprès du formulaire parent par <code>provide</code>/<code>inject</code>, sans configuration supplémentaire.</li>
+        <li><strong>Erreurs affichées au bon moment</strong> : l'état <em>pristine</em> des champs est respecté — les messages d'erreur n'apparaissent qu'après une interaction utilisateur ou une tentative de soumission, évitant une surcharge d'informations dès l'affichage.</li>
+        <li><strong>Erreurs au niveau du champ</strong> : chaque champ affiche son propre message d'erreur, associé programmaticalement à son input (<code>aria-describedby</code> géré par les composants de champ).</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="État global et retours d'information">
+      <ul>
+        <li><strong>v-model tri-état</strong> : le modèle reflète la validité globale — <code>true</code> (valide), <code>false</code> (invalide avec erreur affichée), <code>null</code> (statut indisponible ou champ non encore validé).</li>
+        <li><strong>Événement <code>submit</code> explicite</strong> : l'événement transporte <code>\{ isValid \}</code>, permettant à l'application de bloquer la suite du traitement et d'informer l'utilisateur en cas d'erreurs.</li>
+        <li><strong>Événement <code>reset</code></strong> : émis lors de la réinitialisation, pour permettre à l'application de réagir (annonce, nettoyage d'état…).</li>
+        <li><strong>Méthodes exposées</strong> : <code>validate()</code>, <code>reset()</code> et <code>clearValidation()</code> sont exposées (et disponibles via le slot) pour piloter le formulaire de façon programmatique, par exemple depuis un bouton « Valider sans soumettre ».</li>
+      </ul>
+    </CriteriaCard>
+
+    <CriteriaCard title="Réinitialisation accessible">
+      <ul>
+        <li><strong>Événement natif <code>reset</code> supporté</strong> : un bouton <code>type="reset"</code> placé dans le formulaire déclenche <code>handleReset</code>, qui réinitialise les valeurs <em>et</em> les états de validation de tous les champs enregistrés (custom et Vuetify).</li>
+        <li><strong>Propagation complète</strong> : <code>clearAll()</code> et <code>resetAll()</code> parcourent le registre des champs pour effacer les erreurs affichées, évitant des messages orphelins après réinitialisation.</li>
+      </ul>
+    </CriteriaCard>
+  </CriteriaSection>
+
+  <DemoSection componentName="SyForm">
+    <Story of={SyFormStories.Basic} />
+  </DemoSection>
+
+  <BestPracticesSection>
+    <ul>
+      <li><strong>Labels sur chaque champ</strong> : tous les champs du formulaire doivent avoir un <code>label</code> visible et explicite — jamais un placeholder comme seule indication.</li>
+      <li><strong>Bouton de soumission natif</strong> : utilisez un bouton <code>type="submit"</code> à l'intérieur du formulaire pour préserver la soumission au clavier (<kbd>Entrée</kbd>).</li>
+      <li><strong>Champs obligatoires signalés</strong> : indiquez les champs requis (prop <code>required</code> des champs DS, astérisque visuel) et prévoyez une mention globale si nécessaire.</li>
+      <li><strong>Regroupement sémantique</strong> : groupez les champs liés dans un <code>&lt;fieldset&gt;</code> avec une <code>&lt;legend&gt;</code> explicite (coordonnées, choix multiples…).</li>
+      <li><strong>Conservation de <code>validateOnSubmit</code></strong> : gardez la validation à la soumission activée (défaut) ; si vous la désactivez, fournissez un retour de validation équivalent à l'utilisateur.</li>
+      <li><strong>Gestion des erreurs côté application</strong> : en cas de <code>isValid: false</code>, il est recommandé de déplacer le focus vers le premier champ en erreur ou vers un récapitulatif d'erreurs pour aider les utilisateurs de lecteurs d'écran.</li>
+      <li><strong>Pas de changement de contexte inattendu</strong> : n'effectuez pas de soumission automatique ou de redirection sans action explicite de l'utilisateur.</li>
+    </ul>
+  </BestPracticesSection>
+
+  <ResourcesSection>
+    <ul>
+      <li><a href="https://www.w3.org/WAI/tutorials/forms/" target="_blank" rel="noopener noreferrer">WAI Web Accessibility Tutorials – Forms</a></li>
+      <li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#11" target="_blank" rel="noopener noreferrer">RGAA 4.1 : Thématique Formulaires</a></li>
+      <li><a href="https://www.w3.org/WAI/WCAG21/quickref/" target="_blank" rel="noopener noreferrer">Référence rapide WCAG 2.1</a></li>
+      <li><a href="https://vuetifyjs.com/en/components/forms/" target="_blank" rel="noopener noreferrer">Documentation Vuetify – VForm</a></li>
+    </ul>
+  </ResourcesSection>
+</AccessibilityGuideLayout>
