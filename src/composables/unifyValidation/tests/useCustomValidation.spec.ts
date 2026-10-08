@@ -897,8 +897,8 @@ describe('useCustomValidation', () => {
 		expect(validationResult.hasError).toBe(false)
 	})
 
-	describe('courses asynchrones', () => {
-		it('un résultat async stale n\'écrase pas un résultat sync plus récent', async () => {
+	describe('async races', () => {
+		it('a stale async result does not override a more recent sync result', async () => {
 			let resolveSlow!: (v: boolean) => void
 			const args = defaultArgs()
 			args.modelValue.value = 'test'
@@ -949,7 +949,7 @@ describe('useCustomValidation', () => {
 			expect(args.errors.value).not.toContain('Erreur async stale')
 		})
 
-		it('un résultat async stale n\'écrase pas un résultat async plus récent', async () => {
+		it('a stale async result does not override a more recent async result', async () => {
 			let resolveFirst!: (v: boolean) => void
 			let resolveSecond!: (v: boolean) => void
 			const args = defaultArgs()
@@ -1000,7 +1000,7 @@ describe('useCustomValidation', () => {
 			expect(args.errors.value).not.toContain('Erreur première')
 		})
 
-		it('clearValidation() invalide une validation async en cours', async () => {
+		it('clearValidation() cancels a pending async validation', async () => {
 			let resolveSlow!: (v: boolean) => void
 			const args = defaultArgs()
 			args.modelValue.value = 'test'
@@ -1039,7 +1039,7 @@ describe('useCustomValidation', () => {
 			expect(args.errors.value).toEqual([])
 		})
 
-		it('le passage en readonly invalide une validation async en cours', async () => {
+		it('switching to readonly cancels a pending async validation', async () => {
 			let resolveSlow!: (v: boolean) => void
 			const readonly = ref(false)
 			const args = defaultArgs()
@@ -1082,7 +1082,7 @@ describe('useCustomValidation', () => {
 			expect(args.errors.value).toEqual([])
 		})
 
-		it('plusieurs validate() concurrents avec des modelValues différents gardent le dernier résultat', async () => {
+		it('concurrent validate() calls with different modelValues keep the latest result', async () => {
 			const resolvers: Array<(v: boolean) => void> = []
 			let callIndex = 0
 			const args = defaultArgs()

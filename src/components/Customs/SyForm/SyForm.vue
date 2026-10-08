@@ -46,7 +46,7 @@
 	 * ou en lecture seule ne peut pas être corrigé et ne bloque pas la soumission
 	 * (Vuetify, lui, le compte invalide).
 	 */
-	const hasBlockingVuetifyError = () => form.value!.items.some(({ isValid, vm }) =>
+	const hasBlockingVuetifyError = () => (form.value?.items ?? []).some(({ isValid, vm }) =>
 		isValid === false && !vm.props.disabled && !vm.props.readonly,
 	)
 
@@ -56,14 +56,18 @@
 	 * et son message est retiré.
 	 */
 	const ignoreDisabledVuetifyFields = (errors: { id: string | number }[]) => {
-		const disabledItems = form.value!.items.filter(({ vm }) => vm.props.disabled)
+		const disabledItems = (form.value?.items ?? []).filter(({ vm }) => vm.props.disabled)
 		disabledItems.forEach(item => void item.resetValidation())
 
 		return errors.every(({ id }) => disabledItems.some(item => item.id === id))
 	}
 
 	const validate = async () => {
-		const vuetifyValidateResult = await form.value!.validate()
+		// Méthodes exposées (ref, slot) : appelées avant le montage du VForm, elles ne
+		// peuvent rien valider ni réinitialiser.
+		if (!form.value) return false
+
+		const vuetifyValidateResult = await form.value.validate()
 		const customComponentsValid = await validateAll()
 		const vuetifyFieldsValid = ignoreDisabledVuetifyFields(vuetifyValidateResult.errors)
 		// Laisse les champs Vuetify remonter leur état `isValid` au VForm après la validation.
@@ -83,8 +87,8 @@
 	const reset = () => {
 		clearAll()
 		resetAll()
-		form.value!.reset()
-		form.value!.resetValidation()
+		form.value?.reset()
+		form.value?.resetValidation()
 
 		emit('reset')
 	}
@@ -94,7 +98,7 @@
 	 */
 	const clearValidation = () => {
 		model.value = null
-		form.value!.resetValidation()
+		form.value?.resetValidation()
 		clearAll()
 		// Un champ portant une erreur injectée reste invalide après le nettoyage : aucune
 		// source du watch ne change, le v-model doit donc être recalculé explicitement.
