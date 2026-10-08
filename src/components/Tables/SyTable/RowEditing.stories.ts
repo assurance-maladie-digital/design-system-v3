@@ -198,9 +198,10 @@ export const CustomEditor: Story = {
 				:items="items"
 				@save="onSave"
 			>
-				<template #edit.lastname="{ value, update }">
+				<template #edit.lastname="{ value, update, column }">
 					<input
 						:value="value"
+						:aria-label="column.title"
 						style="width:100%;padding:4px;border:1px solid #767676;border-radius:4px;background:#fff"
 						@input="update($event.target.value)"
 					>
@@ -233,9 +234,10 @@ export const CustomEditor: Story = {
 		@save="onSave"
 	>
 		<!-- Éditeur personnalisé pour la colonne "Nom" (input HTML) -->
-		<template #edit.lastname="{ value, update }">
+		<template #edit.lastname="{ value, update, column }">
 			<input
 				:value="value"
+				:aria-label="column.title"
 				style="width:100%;padding:4px;border:1px solid #767676;border-radius:4px;background:#fff"
 				@input="update($event.target.value)"
 			>
