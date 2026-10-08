@@ -643,6 +643,12 @@
 													/>
 													<span>
 														{{ subItem.text }}
+														<span
+															v-if="subItem.openInNewTab"
+															class="d-sr-only"
+														>
+															({{ locales.newWindowText }})
+														</span>
 													</span>
 												</VListItemTitle>
 											</VListItem>

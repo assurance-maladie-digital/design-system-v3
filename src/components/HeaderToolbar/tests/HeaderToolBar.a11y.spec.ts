@@ -166,6 +166,20 @@ describe('HeaderToolbar – accessibility', () => {
 		externalLinks.forEach(link => expect(link.attributes('rel')).toBe('noopener noreferrer'))
 	})
 
+	it('should announce dropdown items opening in a new window', () => {
+		mountToolbar({
+			itemsSelectMenu: [
+				{ text: 'Médecin', value: 'medecin', href: 'https://example.com/medecin', openInNewTab: true },
+				{ text: 'Infirmier', value: 'infirmier', href: 'https://example.com/infirmier' },
+			],
+		})
+
+		const items = document.querySelectorAll('#left-dropdown-menu [role="menuitem"]')
+
+		expect(items[0]?.querySelector('.d-sr-only')?.textContent?.trim()).toBe('(nouvelle fenêtre)')
+		expect(items[1]?.querySelector('.d-sr-only')).toBeNull()
+	})
+
 	it('should label the overlay close button', async () => {
 		const wrapper = mountToolbar()
 
