@@ -132,5 +132,3 @@ export const useDateAutoClamp = () => {
 		clampDayToValidDate,
 	}
 }
-
-export default useDateAutoClamp
