@@ -224,7 +224,7 @@ export function getValidationDocumentation(type: 'base' | 'date' | 'number' | 's
 			},
 		},
 		maxErrors: {
-			description: 'Le nombre maximum d\'erreurs à afficher, applicable uniquement si useVuetifyValidation est true.',
+			description: 'Le nombre maximum de messages à afficher, appliqué séparément aux erreurs, aux avertissements et aux succès, quel que soit le mode de validation (Synapse ou Vuetify).',
 			control: 'number',
 			table: {
 				type: { summary: 'number' },

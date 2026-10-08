@@ -53,7 +53,10 @@
 		hasError,
 		hasWarning,
 		hasSuccess,
-	} = useSelectBtnFieldValidation(props, locales)
+	} = useSelectBtnFieldValidation(props, locales, (value) => {
+		internalValue.value = (value as SelectBtnValue | undefined) ?? (props.multiple ? [] : null)
+		emits('update:modelValue', internalValue.value)
+	})
 
 	defineExpose({
 		validateOnSubmit: validate,
