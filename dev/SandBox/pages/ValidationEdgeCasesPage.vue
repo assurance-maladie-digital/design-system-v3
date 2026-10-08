@@ -82,7 +82,7 @@
 	}
 
 	// ── Scénario 4 : règle Vuetify retournant false ──────────────────
-	// Divergence : Vuetify natif pousse '' (erreur sans message) alors que
+	// Divergence (corrigée) : Vuetify natif poussait '' (erreur sans message) alors que
 	// evaluateVuetifyRules (DatePicker) normalise en 'La valeur est invalide.'.
 	const falseRuleValue = ref('quelque chose')
 	const falseRuleFormValid = ref<boolean | null>(null)
@@ -437,14 +437,14 @@
 				<template #prepend>
 					<VIcon
 						:icon="mdiHelpCircleOutline"
-						color="warning"
+						color="success"
 					/>
 				</template>
 				<VCardTitle class="text-h6">
 					4. Règle Vuetify retournant <code>false</code>
 				</VCardTitle>
 				<VCardSubtitle>
-					Divergence — erreur « fantôme » sans message (Vuetify) vs « La valeur est invalide. » (DatePicker)
+					Corrigé — une rule qui renvoie <code>false</code> affiche « La valeur est invalide. »
 				</VCardSubtitle>
 			</VCardItem>
 			<VCardText>
@@ -454,7 +454,7 @@
 					class="mb-4"
 				>
 					<strong>Attendu :</strong> message d'erreur cohérent quel que soit le chemin.
-					<strong>Observé :</strong> le champ passe en erreur sans aucun message visible.
+					<strong>Bug (corrigé) :</strong> le champ passait en erreur sans aucun message visible.
 				</SyAlert>
 				<SyForm v-model="falseRuleFormValid">
 					<SyTextField
