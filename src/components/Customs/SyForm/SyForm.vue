@@ -40,13 +40,26 @@
 		isValid === false && !vm.props.disabled && !vm.props.readonly,
 	)
 
+	/**
+	 * VForm.validate() évalue aussi les `rules` des champs désactivés. Comme pour les champs
+	 * Synapse, un champ désactivé ne peut pas être corrigé : il ne bloque pas la soumission
+	 * et son message est retiré.
+	 */
+	const ignoreDisabledVuetifyFields = (errors: { id: string | number }[]) => {
+		const disabledItems = form.value!.items.filter(({ vm }) => vm.props.disabled)
+		disabledItems.forEach(item => void item.resetValidation())
+
+		return errors.every(({ id }) => disabledItems.some(item => item.id === id))
+	}
+
 	const validate = async () => {
 		const vuetifyValidateResult = await form.value!.validate()
 		const customComponentsValid = await validateAll()
+		const vuetifyFieldsValid = ignoreDisabledVuetifyFields(vuetifyValidateResult.errors)
 		// Laisse les champs Vuetify remonter leur état `isValid` au VForm après la validation.
 		await nextTick()
 
-		const isValid = vuetifyValidateResult.valid && !hasBlockingVuetifyError() && customComponentsValid
+		const isValid = vuetifyFieldsValid && !hasBlockingVuetifyError() && customComponentsValid
 		if (isValid && model.value === null) {
 			model.value = true
 		}

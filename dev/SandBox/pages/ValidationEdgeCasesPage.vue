@@ -107,9 +107,9 @@
 	}
 
 	// ── Scénario 6 : reset() sur SelectBtnField (modelValue readonly) ─
-	// Le composable reçoit computed(() => props.modelValue) → le reset par
-	// défaut écrit sur une ref readonly → warning Vue en console. La valeur
-	// peut quand même être vidée via le chemin Vuetify (VForm.reset).
+	// Corrigé : le composable recevait computed(() => props.modelValue) → le reset
+	// par défaut écrivait sur une ref readonly → warning Vue en console. La valeur
+	// passe désormais par l'émission update:modelValue.
 	const selectBtnValue = ref<string | number | null>(null)
 	const selectBtnItems = [
 		{ text: 'Option A', value: 'a' },
@@ -128,15 +128,17 @@
 	}
 
 	// ── Scénario 7 : champ disabled + mode Vuetify ───────────────────
-	// Contradiction : useCustomValidation retourne true pour un champ
-	// disabled, mais VForm.validate() évalue quand même ses rules.
+	// Corrigé : useCustomValidation retourne true pour un champ disabled, mais
+	// VForm.validate() évaluait quand même ses rules. SyForm ignore désormais
+	// les champs Vuetify désactivés et retire leur message.
 	const disabledFormValid = ref<boolean | null>(null)
 	const disabledValue = ref('')
 	const disabledVuetifyRules = [(v: unknown) => !!v || 'Requis']
+	const disabledSubmitResult = ref<boolean | null>(null)
 
 	// ── Scénario 8 : maxErrors en mode custom ────────────────────────
-	// La doc dit « uniquement si useVuetifyValidation » — en réalité la
-	// limite s'applique aussi aux erreurs custom.
+	// Doc corrigée : elle disait « uniquement si useVuetifyValidation » alors que la
+	// limite s'applique aussi aux erreurs custom (comportement conservé).
 	const maxErrValue = ref('')
 	const maxErrRules = [
 		{ type: 'required', options: { message: 'Erreur 1' } },
@@ -532,14 +534,14 @@
 				<template #prepend>
 					<VIcon
 						:icon="mdiRefresh"
-						color="warning"
+						color="success"
 					/>
 				</template>
 				<VCardTitle class="text-h6">
 					6. <code>reset()</code> sur SelectBtnField
 				</VCardTitle>
 				<VCardSubtitle>
-					Bug medium — le chemin custom écrit sur une ref readonly (warning console)
+					Corrigé — le reset passe par <code>update:modelValue</code> (plus de warning console)
 				</VCardSubtitle>
 			</VCardItem>
 			<VCardText>
@@ -548,9 +550,9 @@
 					variant="tonal"
 					class="mb-4"
 				>
-					<strong>Attendu :</strong> reset sans warning. <strong>Bug :</strong> « Set operation on
-					readonly » en console — la valeur n'est vidée que par le chemin Vuetify (enregistrement
-					implicite dans VForm).
+					<strong>Attendu :</strong> reset sans warning. <strong>Bug (corrigé) :</strong> « Write operation
+					failed: computed value is readonly » en console — la valeur n'était vidée que par le chemin
+					Vuetify (enregistrement implicite dans VForm).
 				</SyAlert>
 				<SyForm ref="selectBtnFormRef">
 					<SelectBtnField
@@ -589,14 +591,14 @@
 				<template #prepend>
 					<VIcon
 						:icon="mdiBugOutline"
-						color="warning"
+						color="success"
 					/>
 				</template>
 				<VCardTitle class="text-h6">
 					7. Champ <code>disabled</code> en mode Vuetify
 				</VCardTitle>
 				<VCardSubtitle>
-					Contradiction — custom ignore le champ disabled, VForm l'évalue quand même
+					Corrigé — un champ désactivé est ignoré au submit, comme en mode Synapse
 				</VCardSubtitle>
 			</VCardItem>
 			<VCardText>
@@ -606,10 +608,13 @@
 					class="mb-4"
 				>
 					<strong>Attendu :</strong> un champ disabled ne bloque pas le formulaire (comportement
-					custom). <strong>Observé :</strong> en mode Vuetify, <code>VForm.validate()</code> évalue
-					ses <code>rules</code> → formulaire invalide.
+					custom). <strong>Bug (corrigé) :</strong> en mode Vuetify, <code>VForm.validate()</code> évaluait
+					ses <code>rules</code> → formulaire invalide et « Requis » affiché.
 				</SyAlert>
-				<SyForm v-model="disabledFormValid">
+				<SyForm
+					v-model="disabledFormValid"
+					@submit="disabledSubmitResult = $event.isValid"
+				>
 					<SyTextField
 						v-model="disabledValue"
 						label="Champ désactivé avec rules"
@@ -617,9 +622,21 @@
 						use-vuetify-validation
 						:rules="disabledVuetifyRules"
 					/>
-					<span :class="`text-${validityLabel(disabledFormValid).color}`">
-						Formulaire : {{ validityLabel(disabledFormValid).text }}
-					</span>
+					<div class="d-flex align-center ga-3 mt-3">
+						<VBtn
+							color="primary"
+							type="submit"
+						>
+							Soumettre
+						</VBtn>
+						<VChip
+							v-if="disabledSubmitResult !== null"
+							:color="disabledSubmitResult ? 'success' : 'error'"
+							size="small"
+						>
+							Submit : {{ disabledSubmitResult ? 'valide' : 'invalide' }}
+						</VChip>
+					</div>
 				</SyForm>
 			</VCardText>
 		</VCard>
@@ -634,14 +651,14 @@
 				<template #prepend>
 					<VIcon
 						:icon="mdiHelpCircleOutline"
-						color="info"
+						color="success"
 					/>
 				</template>
 				<VCardTitle class="text-h6">
 					8. <code>maxErrors</code> en mode custom
 				</VCardTitle>
 				<VCardSubtitle>
-					Doc incorrecte — la limite s'applique aussi hors mode Vuetify
+					Doc corrigée — la limite s'applique dans les deux modes
 				</VCardSubtitle>
 			</VCardItem>
 			<VCardText>
@@ -650,8 +667,8 @@
 					variant="tonal"
 					class="mb-4"
 				>
-					<strong>Doc :</strong> « applicable uniquement si useVuetifyValidation ».
-					<strong>Observé :</strong> 3 règles échouent mais 1 seule erreur affichée.
+					<strong>Doc (corrigée) :</strong> la limite s'applique aux erreurs, avertissements et succès,
+					quel que soit le mode. <strong>Observé :</strong> plusieurs règles échouent mais 1 seule erreur affichée.
 				</SyAlert>
 				<SyTextField
 					v-model="maxErrValue"
