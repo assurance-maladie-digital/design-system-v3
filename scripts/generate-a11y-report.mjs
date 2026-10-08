@@ -9,7 +9,7 @@ const componentsDir = path.join(__dirname, '..', 'src', 'components');
 const reportPath = path.join(__dirname, 'data', 'a11y-status-report.md');
 
 // Components or folders to ignore
-const ignoreFolders = ['Amelipro', 'Common', 'Usages', 'System', 'AccessibilityProgressPage', 'stories', 'ComponentStatusTable'];
+const ignoreFolders = ['Amelipro', 'Common', 'Usages', 'System', 'AccessibilityProgressPage', 'stories', 'ComponentStatusTable', 'DataListItem'];
 
 function findFilesRecursively(dir, pattern, fileList = []) {
   if (!fs.existsSync(dir)) return fileList;
@@ -45,6 +45,7 @@ function analyzeComponent(componentName, componentPath) {
   // 2. Check for a11y: { disable: true } in stories and extract Storybook title
   const storyFiles = findFilesRecursively(componentPath, /\.stories\.ts$/);
   let hasA11yDisabledInStories = false;
+  let isDeprecated = false;
   const titleCandidates = [];
 
   for (const storyFile of storyFiles) {
@@ -59,6 +60,11 @@ function analyzeComponent(componentName, componentPath) {
     // Regex to match a11y: { disable: true } with possible whitespace/newlines
     if (/a11y\s*:\s*\{\s*[\s\S]*?disable\s*:\s*true[\s\S]*?\}/.test(content)) {
       hasA11yDisabledInStories = true;
+    }
+
+    // Composant déprécié : une story utilise createDeprecationNotice
+    if (/createDeprecationNotice/.test(content)) {
+      isDeprecated = true;
     }
   }
 
@@ -111,7 +117,8 @@ function analyzeComponent(componentName, componentPath) {
       mdxStatus: 'Complète',
       isFullyCompliant: true,
       storybookTitle: 'Composants/Customs/SyHeading',
-      hasManualAudit: false
+      hasManualAudit: false,
+      deprecated: false
     };
   }
 
@@ -124,7 +131,8 @@ function analyzeComponent(componentName, componentPath) {
       mdxStatus: 'Complète',
       isFullyCompliant: true,
       storybookTitle: 'Composants/Feedback/CookiesSelection',
-      hasManualAudit: false
+      hasManualAudit: false,
+      deprecated: false
     };
   }
 
@@ -136,6 +144,7 @@ function analyzeComponent(componentName, componentPath) {
     isFullyCompliant,
     storybookTitle,
     hasManualAudit,
+    deprecated: isDeprecated,
     mainVue
   };
 }
@@ -240,7 +249,7 @@ function generateReport() {
   console.log(`Report generated at ${reportPath}`);
 
   // Also write JSON for dynamic Vue component hydration
-  const jsonReportPath = path.join(__dirname, '..', 'src', 'stories', 'Accessibilite', 'DesignSystem', 'a11y-status.json');
+  const jsonReportPath = path.join(__dirname, '..', 'src', 'stories', 'Accessibilite', 'a11y-status.json');
   fs.mkdirSync(path.dirname(jsonReportPath), { recursive: true });
   fs.writeFileSync(jsonReportPath, JSON.stringify({
     date: new Date().toISOString(),
