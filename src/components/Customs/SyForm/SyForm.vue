@@ -17,16 +17,26 @@
 	const model = defineModel<boolean | null>({ default: null })
 
 	const form = ref<InstanceType<typeof VForm>>()
-	const vFormStatus = ref<boolean | null>(null)
-	const hasVuetifyFields = computed(() => (form.value?.items.length ?? 0) > 0)
+	// Champs Vuetify pris en compte pour le v-model : comme pour les champs Synapse, un champ
+	// désactivé ne peut pas être corrigé et ne compte pas (choix Synapse : le VForm, lui, le
+	// compte et resterait à null tant que ses rules échouent).
+	const enabledVuetifyItems = computed(() => form.value?.items.filter(({ vm }) => !vm.props.disabled) ?? [])
+	const hasVuetifyFields = computed(() => enabledVuetifyItems.value.length > 0)
+	// Statut de ces champs, avec la même règle que le v-model du VForm.
+	const vuetifyFieldsStatus = computed<boolean | null>(() => {
+		// VForm pas encore monté : statut inconnu, comme son v-model initial.
+		if (!form.value) return null
+		if (enabledVuetifyItems.value.some(({ isValid }) => isValid === false)) return false
+		return enabledVuetifyItems.value.every(({ isValid }) => isValid === true) ? true : null
+	})
 
 	const { validateAll, clearAll, resetAll, customComponentsValide, hasDisplayedError, getFormValue } = useFormValidation()
 
 	// hasDisplayedError est une source du watch : le passage de pristine à « erreur
 	// affichée » (via validateOnSubmit) doit recalculer le v-model même si
-	// customComponentsValide et vFormStatus n'ont pas changé.
-	watch([customComponentsValide, hasDisplayedError, vFormStatus, hasVuetifyFields], ([, , newVFormStatus, newHasVuetifyFields]) => {
-		model.value = getFormValue(newVFormStatus, newHasVuetifyFields)
+	// customComponentsValide et vuetifyFieldsStatus n'ont pas changé.
+	watch([customComponentsValide, hasDisplayedError, vuetifyFieldsStatus, hasVuetifyFields], ([, , newVuetifyFieldsStatus, newHasVuetifyFields]) => {
+		model.value = getFormValue(newVuetifyFieldsStatus, newHasVuetifyFields)
 	}, { immediate: true })
 
 	/**
@@ -89,7 +99,7 @@
 		// Un champ portant une erreur injectée reste invalide après le nettoyage : aucune
 		// source du watch ne change, le v-model doit donc être recalculé explicitement.
 		nextTick(() => {
-			model.value = getFormValue(vFormStatus.value, hasVuetifyFields.value)
+			model.value = getFormValue(vuetifyFieldsStatus.value, hasVuetifyFields.value)
 		})
 	}
 
@@ -127,7 +137,6 @@
 <template>
 	<VForm
 		ref="form"
-		v-model="vFormStatus"
 		@submit.prevent="handleSubmit"
 		@reset="handleReset"
 	>

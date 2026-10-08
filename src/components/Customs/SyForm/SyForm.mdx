@@ -97,6 +97,69 @@ statut à `true` :
 
 <Source dark code={'\n<script setup lang="ts">\nimport { ref } from "vue"\nimport { SyForm, SyTextField } from "@cnamts/synapse"\n\nconst valid = ref(null) // true | false | null\nconst name = ref("")\n</script>\n\n<template>\n  <SyForm v-model="valid">\n    <div class="d-flex flex-column gap-4">\n      <SyTextField v-model="name" label="Nom" required />\n      <!-- Actif uniquement lorsque toutes les règles passent -->\n      <v-btn type="submit" color="primary" :disabled="valid !== true">Soumettre</v-btn>\n    </div>\n  </SyForm>\n</template>'} />
 
+## Champs désactivés et erreurs injectées
+
+### Un champ désactivé ne bloque pas la soumission
+
+Un champ `disabled` ne peut pas être corrigé par l'utilisateur : `SyForm` ne le prend pas en compte
+dans la validité du formulaire, quelle que soit la source de l'erreur. C'est le comportement du
+HTML natif, qui exclut les champs désactivés de la validation, et cela évite un formulaire
+impossible à soumettre (bouton `:disabled="valid !== true"` grisé sans recours).
+
+<table>
+  <thead>
+    <tr>
+      <th>Champ</th>
+      <th>Erreur issue des règles</th>
+      <th>Erreur injectée (<code>error-messages</code>)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Champ Synapse <code>disabled</code> ou <code>readonly</code></td>
+      <td>Règles non évaluées : ne bloque pas.</td>
+      <td>Message affiché, ne bloque pas.</td>
+    </tr>
+    <tr>
+      <td>Champ Vuetify <code>disabled</code> (<code>use-vuetify-validation</code> ou composant Vuetify natif)</td>
+      <td>Ignorée à la soumission, message retiré, exclue du <code>v-model</code> : ne bloque pas.</td>
+      <td>Message affiché, ne bloque pas.</td>
+    </tr>
+    <tr>
+      <td>Champ Vuetify <code>readonly</code></td>
+      <td>Évaluée : <strong>bloque</strong> la soumission (voir la limite ci-dessous).</td>
+      <td>Message affiché, ne bloque pas.</td>
+    </tr>
+  </tbody>
+</table>
+
+**Écart volontaire avec Vuetify** : un `VForm` compte un champ désactivé dont les règles échouent
+comme invalide. Un même composant Vuetify natif ne se comporte donc pas de la même façon dans un
+`VForm` et dans un `SyForm`.
+
+**Limite** : les règles d'un champ Vuetify `readonly` restent évaluées. Le champ affiché par le
+`DatePicker` en mode calendrier est toujours en lecture seule et porte ses `rules` en mode Vuetify :
+l'exclure désactiverait sa validation.
+
+**Contrepartie** : la valeur d'un champ désactivé reste dans l'état de l'application. Si le payload
+envoyé au serveur est construit à partir de cet état (cas usuel avec `v-model`), une valeur
+invalide d'un champ désactivé est envoyée sans être bloquée. La validation côté serveur reste donc
+indispensable, et un champ dont la valeur doit pouvoir être corrigée ne doit pas être désactivé.
+
+### Erreurs injectées par le parent
+
+Une erreur transmise par le parent via `error-messages` (par exemple une erreur renvoyée par le
+serveur) ou un état forcé via `has-error` invalide le champ, même si ses propres règles passent :
+le `v-model` passe à `false`, la soumission échoue et la méthode `validateOnSubmit()` du champ
+renvoie `false`. Retirer l'erreur rend au champ sa validité. `clearValidation()` n'efface pas une
+erreur injectée : elle reste affichée et le formulaire reste invalide tant que le parent la fournit.
+
+Si le serveur rejette la valeur d'un champ désactivé, l'erreur s'affiche mais ne bloque pas une
+nouvelle soumission : c'est au parent de réactiver le champ pour permettre la correction, ou de
+bloquer l'envoi lui-même.
+
+<Source dark code={'\n<script setup lang="ts">\nimport { ref } from "vue"\nimport { SyForm, SyTextField } from "@cnamts/synapse"\n\nconst email = ref("")\nconst serverErrors = ref<string[]>([])\n\nconst onSubmit = async ({ isValid }) => {\n  if (!isValid) return\n  const response = await saveUser({ email: email.value })\n  // L\'erreur serveur est affichée et invalide le formulaire jusqu\'à sa correction\n  serverErrors.value = response.ok ? [] : ["Cette adresse e-mail est déjà utilisée"]\n}\n</script>\n\n<template>\n  <SyForm @submit="onSubmit">\n    <SyTextField\n      v-model="email"\n      label="E-mail"\n      required\n      :error-messages="serverErrors"\n      @update:model-value="serverErrors = []"\n    />\n    <v-btn type="submit" color="primary">Enregistrer</v-btn>\n  </SyForm>\n</template>'} />
+
 ## Événements
 
 <table>
@@ -154,7 +217,15 @@ statut à `true` :
 
 `SyForm` fonctionne avec le système de validation en cascade basé sur les composables `useFormValidation` et `useValidatable`. Ce système permet aux composants de s'auto-enregistrer auprès du formulaire parent, sans nécessiter de références manuelles.
 
-<Source dark code={'\n// Dans SyForm.vue\nimport { ref } from "vue"\nimport { useFormValidation } from "@/composables/validation/useFormValidation"\n\nconst { validateAll } = useFormValidation()\n\nconst validate = async () => {\n  // 1. Valider les composants Vuetify natifs\n  const vuetifyValid = await form.value?.validate() ?? false\n  \n  // 2. Valider les composants personnalisés\n  const customComponentsValid = await validateAll()\n  \n  // Le formulaire est valide si les deux sont valides\n  return vuetifyValid && customComponentsValid\n}\n'} />
+À la soumission, le formulaire est valide si les trois vérifications suivantes passent :
+
+1. **Règles des champs Vuetify** (`use-vuetify-validation` ou composants Vuetify natifs), évaluées par le `VForm` sous-jacent. Les champs désactivés sont ignorés.
+2. **Champs Synapse** enregistrés auprès du formulaire : leurs règles, les erreurs injectées via `error-messages` et l'état forcé par `has-error`. Les champs désactivés ou en lecture seule ne bloquent pas.
+3. **Erreurs injectées sur les champs Vuetify** actifs (`error-messages`, `error`), que la validation du `VForm` ne compte pas.
+
+<Source dark code={'\n// Dans SyForm.vue (simplifié)\nconst { validateAll } = useFormValidation()\n\nconst validate = async () => {\n  // 1. Règles des champs Vuetify (use-vuetify-validation et composants Vuetify natifs)\n  const { errors } = await form.value.validate()\n\n  // 2. Champs Synapse enregistrés : règles, erreurs injectées, has-error\n  const customComponentsValid = await validateAll()\n\n  // Les erreurs des champs désactivés sont ignorées (et leur message retiré)\n  const disabledIds = form.value.items\n    .filter(item => item.vm.props.disabled)\n    .map(item => item.id)\n  const vuetifyFieldsValid = errors.every(error => disabledIds.includes(error.id))\n\n  // 3. Erreurs injectées (error-messages / error) sur les champs Vuetify actifs,\n  //    que VForm.validate() ne compte pas\n  const hasBlockingVuetifyError = form.value.items.some(item =>\n    item.isValid === false && !item.vm.props.disabled && !item.vm.props.readonly,\n  )\n\n  return vuetifyFieldsValid && !hasBlockingVuetifyError && customComponentsValid\n}\n'} />
+
+Le `v-model` du formulaire applique ces mêmes vérifications en continu, sans attendre la soumission, avec son état `null` tant qu'aucun statut n'est disponible (voir la section « État de validation (`v-model`) »).
 
 ## Composants compatibles
 
