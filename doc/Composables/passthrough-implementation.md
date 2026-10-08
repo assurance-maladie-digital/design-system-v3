@@ -1,7 +1,7 @@
 # Passthrough & typage — implémentation recommandée
 
 Suite de l'étude [passthrough-typage-wrappers](./passthrough-typage-wrappers.md) (#2417).
-Ce document formalise **la méthode d'implémentation retenue** : le pattern déjà éprouvé par
+Ce document formalise **une seconde méthode d'implémentation** : le pattern déjà éprouvé par
 `SyTextArea`, généralisé en trois utilitaires réutilisables.
 
 > **Principe central** : les props Vuetify ne sont **jamais déclarées** comme props runtime
