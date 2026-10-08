@@ -169,6 +169,10 @@
 			type: String,
 			default: 'Menu institutionnel',
 		},
+		newWindowText: {
+			type: String,
+			default: locales.newWindowText,
+		},
 	})
 
 	// Display breakpoint helpers
@@ -195,6 +199,11 @@
 		if (item.href) return { href: item.href }
 		if (item.to !== undefined && item.to !== null) return { to: item.to }
 		return { type: 'button' }
+	}
+
+	// Un `aria-label` remplace le contenu du lien : l'annonce de nouvelle fenêtre doit y figurer.
+	const getLinkLabel = (item: MenuItem): string => {
+		return item.openInNewTab ? `${item.title} (${props.newWindowText})` : item.title
 	}
 
 	// Overlay and focus state
@@ -565,7 +574,7 @@
 								<component
 									:is="getLinkComponent(item as MenuItem)"
 									v-bind="getLinkAttrs(item as MenuItem)"
-									:aria-label="itemsSelectMenu && index === 1 ? dropdownMenuTitle + '' : item.title"
+									:aria-label="itemsSelectMenu && index === 1 ? dropdownMenuTitle + '' : getLinkLabel(item)"
 									:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 									:target="item.openInNewTab ? '_blank' : undefined"
 									:aria-current="getCurrentPageIndex() === index ? 'page' : undefined"
@@ -647,7 +656,7 @@
 															v-if="subItem.openInNewTab"
 															class="d-sr-only"
 														>
-															({{ locales.newWindowText }})
+															({{ props.newWindowText }})
 														</span>
 													</span>
 												</VListItemTitle>
@@ -737,6 +746,12 @@
 										class="mr-1"
 									/>
 									{{ item.title }}
+									<span
+										v-if="item.openInNewTab"
+										class="d-sr-only"
+									>
+										({{ props.newWindowText }})
+									</span>
 								</VListItemTitle>
 							</VListItem>
 						</VList>
@@ -759,7 +774,7 @@
 								<component
 									:is="getLinkComponent(item as MenuItem)"
 									v-bind="getLinkAttrs(item as MenuItem)"
-									:aria-label="item.title"
+									:aria-label="getLinkLabel(item)"
 									:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 									:tabindex="0"
 									:target="item.openInNewTab ? '_blank' : undefined"

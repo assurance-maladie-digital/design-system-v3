@@ -180,6 +180,69 @@ describe('HeaderToolbar – accessibility', () => {
 		expect(items[1]?.querySelector('.d-sr-only')).toBeNull()
 	})
 
+	it('should announce left and right menu links opening in a new window', () => {
+		const wrapper = mountToolbar({
+			leftMenu: [
+				{ title: 'Assuré', href: 'https://example.com/assure', openInNewTab: true },
+				{ title: 'Professionnel de santé' },
+				{ title: 'Entreprise', href: 'https://example.com/entreprise' },
+			],
+			rightMenu: [
+				{ title: 'Presse', href: 'https://example.com/presse', openInNewTab: true },
+				{ title: 'Carrières', href: 'https://example.com/carrieres' },
+			],
+		})
+
+		const leftLinks = wrapper.findAll('#left-menu li > a')
+		const rightLinks = wrapper.findAll('#right-menu li > a')
+
+		expect(leftLinks[0]?.attributes('aria-label')).toBe('Assuré (nouvelle fenêtre)')
+		expect(leftLinks[1]?.attributes('aria-label')).toBe('Entreprise')
+		expect(rightLinks[0]?.attributes('aria-label')).toBe('Presse (nouvelle fenêtre)')
+		expect(rightLinks[1]?.attributes('aria-label')).toBe('Carrières')
+	})
+
+	it('should announce mobile menu links opening in a new window', () => {
+		mount(HeaderToolbar, {
+			props: {
+				rightMenu: [
+					{ title: 'Presse', href: 'https://example.com/presse', openInNewTab: true },
+					{ title: 'Carrières', href: 'https://example.com/carrieres' },
+				],
+			},
+			global: {
+				plugins: [createVuetify({
+					components,
+					directives,
+					display: { thresholds: { xs: 0, sm: 99998, md: 99999, lg: 100000, xl: 100001, xxl: 100002 } },
+				})],
+			},
+			attachTo: document.body,
+		})
+
+		const items = document.querySelectorAll('#mobile-right-menu [role="menuitem"]')
+
+		expect(items).toHaveLength(2)
+		expect(items[0]?.querySelector('.d-sr-only')?.textContent?.trim()).toBe('(nouvelle fenêtre)')
+		expect(items[1]?.querySelector('.d-sr-only')).toBeNull()
+	})
+
+	it('should allow customizing the new window announcement', () => {
+		const wrapper = mountToolbar({
+			newWindowText: 'nouvel onglet',
+			leftMenu: [
+				{ title: 'Assuré', href: 'https://example.com/assure', openInNewTab: true },
+				{ title: 'Professionnel de santé' },
+			],
+			itemsSelectMenu: [
+				{ text: 'Médecin', value: 'medecin', href: 'https://example.com/medecin', openInNewTab: true },
+			],
+		})
+
+		expect(wrapper.find('#left-menu li > a').attributes('aria-label')).toBe('Assuré (nouvel onglet)')
+		expect(document.querySelector('#left-dropdown-menu .d-sr-only')?.textContent?.trim()).toBe('(nouvel onglet)')
+	})
+
 	it('should label the overlay close button', async () => {
 		const wrapper = mountToolbar()
 

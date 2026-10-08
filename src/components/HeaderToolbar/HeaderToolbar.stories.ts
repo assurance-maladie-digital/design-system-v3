@@ -80,6 +80,15 @@ const meta: Meta<typeof HeaderToolbar> = {
 				defaultValue: { summary: 'null' },
 			},
 		},
+		newWindowText: {
+			description: 'Annonce destinée aux lecteurs d\'écran, ajoutée aux liens ouverts dans une nouvelle fenêtre (`openInNewTab`).',
+			control: { type: 'text' },
+			table: {
+				category: 'props',
+				type: { summary: 'string' },
+				defaultValue: { summary: 'nouvelle fenêtre' },
+			},
+		},
 	},
 }
 
