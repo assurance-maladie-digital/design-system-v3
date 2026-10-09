@@ -25,7 +25,7 @@ const prepareExpectedData = <T, D = T>(propName: string, expectedPropOption: Pro
 	}
 }
 
-export const definedProps = (vueWrapper: VueWrapper): Record<string, ComponentObjectPropsOptions> => vueWrapper.vm.$options.props
+const definedProps = (vueWrapper: VueWrapper): Record<string, ComponentObjectPropsOptions> => vueWrapper.vm.$options.props
 
 // Ajout de la prise en compte de mountOptions
 export const testProperties = <C>(component: Component, params: TUnitTestParams<C>): void => {
