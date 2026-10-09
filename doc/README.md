@@ -116,3 +116,13 @@ Dépendances déclarées par `@cnamts/synapse` et paquets à installer côté pr
 | [Patches pnpm](./Dependances/README.md#patches-appliqués-via-pnpm) | Patch Vuetify (fix SCSS `@use`), patch undici orphelin — contenu, justification, procédure de mise à jour |
 
 ---
+
+### 🔒 [Sécurité](./Securite/audit-2026-10.md)
+
+Audits de sécurité du dépôt (librairie, Storybook, CI, dépendances).
+
+| Fichier | Contenu |
+|---|---|
+| [Audit octobre 2026](./Securite/audit-2026-10.md) | Constats, scénarios, correctifs appliqués et recommandations |
+
+---
