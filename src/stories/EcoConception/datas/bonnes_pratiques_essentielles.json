@@ -1014,5 +1014,846 @@
     "priority": "Haute",
     "difficulty": "Faible",
     "essential": true
+  },
+  {
+    "id": "hardware-profiles",
+    "actionNumbers": [],
+    "title": "Définir la liste des profils de matériels que les utilisateurs vont pouvoir employer pour accéder au service",
+    "audience": "UX / UI",
+    "pillar": {
+      "id": "usable-service",
+      "title": "Service numérique utilisable"
+    },
+    "summary": "Définir les équipements réels sur lesquels le service doit fonctionner.",
+    "objective": "Définir les équipements réels sur lesquels le service doit fonctionner afin d’éviter d’imposer le renouvellement prématuré d’un téléphone, d’une tablette ou d’un ordinateur. Cette connaissance permet d’adapter la conception, les performances et les tests aux conditions d’usage des utilisateurs, y compris sur des matériels anciens, peu puissants ou avec une connexion limitée. Le RGESN demande de privilégier les équipements aussi anciens que possible et de publier le profil matériel minimal dans la déclaration d’écoconception.",
+    "do": [
+      "Identifier les profils matériels représentatifs des utilisateurs",
+      "Définir un niveau minimal compatible avec des équipements durables",
+      "Tester et publier les prérequis matériels"
+    ],
+    "dont": [
+      "Concevoir uniquement pour des équipements récents et performants",
+      "Définir des prérequis sans connaître les usages réels",
+      "Masquer les incompatibilités ou les évolutions prévues"
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "informative-media",
+    "actionNumbers": [],
+    "title": "Utiliser uniquement du contenu vidéo, audio et animé porteur d’information",
+    "audience": "UX / UI",
+    "pillar": {
+      "id": "contents",
+      "title": "Optimiser les contenus"
+    },
+    "summary": "Réserver les médias vidéo, audio et animés aux usages qui apportent une information utile ou nécessaire dans ce format.",
+    "objective": "Réserver les médias vidéo, audio et animés aux usages qui apportent une information utile ou soutiennent une fonction essentielle du service. Ces contenus mobilisent davantage de données, de stockage et d’énergie que du texte ou une image statique : les éviter lorsqu’ils sont purement décoratifs réduit l’empreinte numérique, améliore la performance et préserve l’attention des utilisateurs.",
+    "do": [
+      "**Justifier chaque média** : s’assurer qu’une vidéo, un son ou une animation explique une démarche, illustre une information utile ou facilite l’accomplissement d’une tâche essentielle.",
+      "Privilégier des alternatives plus légères lorsque le message peut être transmis par du texte, une image, une illustration statique ou un schéma.",
+      "**Documenter l’usage des médias dans la conception** : préciser leur objectif, leur audience, leur durée et leur contribution au parcours utilisateur."
+    ],
+    "dont": [
+      "Ajouter une vidéo de fond, une animation ou un son uniquement pour l’esthétique, sans valeur informative ni fonctionnelle.",
+      "Multiplier les médias redondants qui répètent une information déjà présente dans le texte ou les éléments d’interface.",
+      "**Imposer des contenus lourds automatiquement** : préférer une lecture déclenchée par l’utilisateur et prévoir une alternative accessible."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "audio-compression",
+    "actionNumbers": [],
+    "title": "Proposer des contenus audios dont le mode de compression est adapté au contenu et au contexte d’écoute",
+    "audience": "UX / UI",
+    "pillar": {
+      "id": "contents",
+      "title": "Optimiser les contenus"
+    },
+    "summary": "Réserver les médias vidéo, audio et animés aux usages qui apportent une information utile ou nécessaire dans ce format.",
+    "objective": "Proposer des fichiers audio dont le format, le débit et le nombre de canaux sont ajustés au type de contenu et au contexte d’écoute. Un message vocal ou un podcast n’a pas les mêmes exigences qu’un morceau de musique : adapter la compression évite de transférer des données inutiles, tout en maintenant une écoute confortable.",
+    "do": [
+      "Choisir un codec efficace tel qu’Opus ou AAC, en proposant une alternative de repli uniquement pour les terminaux non compatibles.",
+      "**Ajuster le débit et l’encodage au contenu** : voix, dialogue ou musique n’exigent pas la même qualité ni le même poids.",
+      "Privilégier le mono pour la voix et réserver le stéréo à la musique ou aux contenus qui en ont réellement besoin ; documenter les choix de codec et d’encodage."
+    ],
+    "dont": [
+      "Utiliser une qualité élevée par défaut, notamment pour des contenus essentiellement parlés ou courts.",
+      "**Conserver des fichiers volumineux** : viser un poids inférieur à 1 Mo par minute d’écoute.",
+      "Choisir des formats peu efficaces ou négliger les paramètres de compression, au risque d’alourdir inutilement les échanges et de ralentir l’accès au contenu."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "document-format",
+    "actionNumbers": [],
+    "title": "Utiliser un format de fichier adapté au contenu et au contexte pour chaque document",
+    "audience": "UX / UI",
+    "pillar": {
+      "id": "contents",
+      "title": "Optimiser les contenus"
+    },
+    "summary": "Réduire le poids des documents téléchargés en choisissant un format adapté au contenu et au contexte d’usage.",
+    "objective": "Réduire le poids des documents téléchargés en choisissant le format, le niveau de compression et le mode de diffusion les plus pertinents pour le contenu et le contexte d’usage. Un document doit être léger, lisible et utile sur l’écran, l’appareil et la connexion de l’utilisateur, sans dégrader son information ou son accessibilité.",
+    "do": [
+      "**Choisir le format selon l’usage** : privilégier une page web pour une information à consulter, un document texte pour du contenu modifiable, et un PDF uniquement pour une version imprimable ou une archive à conserver.",
+      "**Compresser sans dégrader l’essentiel** : réduire les images, supprimer les pages ou éléments inutiles et optimiser les polices et objets intégrés avant publication.",
+      "**Documenter la stratégie** : préciser les formats retenus, les règles de compression et les seuils de poids pour chaque type de document, afin que ces choix soient traçables et auditables."
+    ],
+    "dont": [
+      "Proposer systématiquement un PDF, même pour une information courte qui pourrait être présentée directement dans la page.",
+      "Publier des fichiers volumineux contenant des images non compressées, des pages superflues ou des ressources inutiles.",
+      "Négliger l’accessibilité et l’usage mobile, par exemple en fournissant un PDF balisé incomplet, difficilement lisible sur petit écran ou impossible à exploiter avec les technologies d’assistance."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "downloaded-fonts",
+    "actionNumbers": [],
+    "title": "Limiter le nombre de polices de caractères téléchargées",
+    "audience": "UX / UI",
+    "pillar": {
+      "id": "contents",
+      "title": "Optimiser les contenus"
+    },
+    "summary": "Réduire le nombre, les variantes et le poids des polices chargées par le service.",
+    "objective": "Réduire le nombre, les variantes et le poids des polices chargées par le service. Chaque police ou variante téléchargée ajoute des données à transférer et peut ralentir l’affichage, notamment sur mobile ou en connexion limitée. En limitant ces ressources, on améliore la performance tout en préservant une typographie claire et cohérente.",
+    "do": [
+      "Privilégier les polices système lorsqu’elles suffisent à l’identité et à la lisibilité du service ; elles évitent un téléchargement spécifique.",
+      "**Limiter la palette typographique** : viser au maximum deux familles et quatre variantes par page ou unité d’affichage, ou un poids total de 400 Ko.",
+      "**Optimiser les polices utiles** : ne charger que les graisses réellement employées, privilégier le format WOFF2, les polices variables et un sous-ensemble limité aux caractères et langues nécessaires."
+    ],
+    "dont": [
+      "Multiplier les familles typographiques sans besoin fonctionnel ou de hiérarchie claire.",
+      "**Charger toutes les variantes d’une police** : les graisses et styles non utilisés génèrent des fichiers et des requêtes superflues.",
+      "Embarquer des jeux de caractères inutiles ou des polices complètes alors qu’un sous-ensemble, par exemple limité aux caractères français, suffit."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "simplify-journey",
+    "actionNumbers": [],
+    "title": "Simplifier le parcours",
+    "audience": "UX / UI",
+    "pillar": {
+      "id": "interaction",
+      "title": "Optimiser l’interaction utilisateur"
+    },
+    "summary": "Permettre à l’utilisateur d’atteindre son objectif avec le moins d’écrans, d’étapes et d’interactions possible.",
+    "objective": "Permettre à l’utilisateur d’atteindre son objectif avec le moins d’écrans, d’étapes et d’interactions possible. Un parcours direct réduit les pages consultées, les clics, les requêtes et les données échangées ; il diminue donc la consommation de ressources tout en améliorant la satisfaction et la lisibilité du service.",
+    "do": [
+      "**Cadrer l’objectif du parcours** : identifier la tâche principale — par exemple « déposer une demande » ou « consulter un remboursement » — et concevoir le chemin le plus court pour l’accomplir.",
+      "Regrouper les informations utiles sur une même étape lorsque cela ne nuit pas à la compréhension, et hiérarchiser clairement les contenus et actions.",
+      "**Supprimer les étapes sans valeur ajoutée** : contenus redondants, écrans intermédiaires, confirmations inutiles ou demandes d’informations non indispensables."
+    ],
+    "dont": [
+      "Multiplier les clics et les écrans pour une action simple, sans bénéfice clair pour l’utilisateur.",
+      "**Ajouter des distractions** : carrousels, publicités, contenus promotionnels ou interactions non essentielles qui allongent le chemin vers l’objectif.",
+      "Créer des ruptures de parcours, telles que des redirections inutiles, des formulaires trop longs ou une architecture difficile à comprendre."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "third-party-services",
+    "actionNumbers": [],
+    "title": "Permettre à l’utilisateur d’activer ou non un service tiers",
+    "audience": "UX / UI",
+    "pillar": {
+      "id": "interaction",
+      "title": "Optimiser l’interaction utilisateur"
+    },
+    "summary": "Éviter le chargement par défaut de services externes.",
+    "objective": "L’objectif est d’éviter le chargement par défaut de services externes — par exemple une vidéo embarquée, une carte interactive, un module de partage social, un outil de mesure d’audience ou un chatbot — lorsqu’ils ne sont pas indispensables au service demandé.",
+    "do": [
+      "**Identifier les services tiers et proposer un choix avant leur chargement** : recenser les services externes intégrés comme le lecteur vidéo, la carte, le chatbot et afficher un écran de substitution avant de charger le service tiers avec un bouton explicite « afficher la carte », « lire la vidéo ».",
+      "**Informer clairement sur les conséquences de l’activation** : indiquer le nom du fournisseur et la finalité du service, par exemple « cette vidéo est hébergée par YouTube ».",
+      "**Permettre de refuser ou de retirer facilement son choix** : prévoir un refus aussi simple que l’acceptation sans pénaliser l’accès au contenu ou au parcours principal."
+    ],
+    "dont": [
+      "Charger automatiquement un service tiers.",
+      "**Présenter un choix ambigu ou déséquilibré** : éviter les formulations vagues telles que « Continuer », « OK » pour recueillir l’accord, ne pas précocher l’activation, masquer le refus.",
+      "**Ne proposer aucune alternative** : éviter de rendre un contenu important accessible uniquement via un fournisseur tiers, ne pas limiter une information essentielle à une carte interactive, une vidéo ou un post de réseau social embarqué."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "avoid-dark-patterns",
+    "actionNumbers": [],
+    "title": "Éviter le recours à des procédés manipulatoires dans son interface utilisateur",
+    "audience": "UX / UI",
+    "pillar": {
+      "id": "interaction",
+      "title": "Optimiser l’interaction utilisateur"
+    },
+    "summary": "Concevoir une interface transparente et non manipulatoire afin de permettre à l’utilisateur de maîtriser ses choix, son temps d’usage et les impacts environnementaux associés.",
+    "objective": "Ces procédés, souvent appelés dark patterns, sont des choix de conception destinés à orienter, tromper ou contraindre une personne afin qu’elle adopte un comportement qui sert l’intérêt du service plutôt que le sien.",
+    "do": [
+      "Présenter des choix clairs, neutres et équitables.",
+      "Respecter les choix et les paramètres de l’utilisateur.",
+      "Auditer les parcours et les maquettes avant chaque mise en ligne."
+    ],
+    "dont": [
+      "Orienter artificiellement l’utilisateur vers l’option souhaitée.",
+      "Créer une urgence, une rareté ou une contrainte artificielle.",
+      "Rendre le refus, la sortie ou la suppression plus difficile."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "input-format",
+    "actionNumbers": [],
+    "title": "Informer l’utilisateur du format de saisie attendu avant sa validation",
+    "audience": "UX / UI",
+    "pillar": {
+      "id": "interaction",
+      "title": "Optimiser l’interaction utilisateur"
+    },
+    "summary": "Permettre à l’utilisateur de saisir correctement une information dès la première tentative.",
+    "objective": "Permettre à l’utilisateur de saisir correctement une information dès la première tentative, en indiquant clairement le format attendu avant l’envoi du formulaire. Cela réduit les erreurs, les allers-retours, les requêtes inutiles vers le serveur et améliore à la fois l’accessibilité, l’expérience utilisateur et la sobriété du service.",
+    "do": [
+      "**Indiquer le format attendu au plus près du champ** : afficher une aide visible avant validation (exemple : date de naissance - jj/mm/aaaa) et associer cette information au champ de façon accessible.",
+      "**Utiliser le type de champ et les aides adaptés** : employer les types de saisie pertinents afin de proposer un clavier adapté sur mobile et d’aider le navigateur à contrôler la saisie, ajouter un exemple de valeur valide lorsque le format est peu courant ou complexe.",
+      "**Afficher des erreurs précises et permettre la correction** : identifier le champ concerné et expliquer clairement l’erreur (« la date de naissance doit être saisie au format jj/mm/aaaa »), préserver les valeurs déjà saisies et permettre à l’utilisateur de les corriger sans recommencer le formulaire, réaliser les contrôles côté client lorsque cela est possible, avant un envoi au serveur inutile."
+    ],
+    "dont": [
+      "**N’indiquer le format qu’après une erreur** : éviter d’afficher uniquement « format invalide » après validation, sans avoir précisé auparavant ce qui était attendu.",
+      "**Indiquer un placeholder comme seule instruction** : ne pas remplacer le libellé et l’aide par un texte qui disparaît dès que la personne commence à saisir.",
+      "**Produire des messages génériques ou bloquants** : éviter les messages comme « erreur », « saisie incorrecte » ou « champ invalide » sans préciser le champ ni le correctif attendu."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "user-sobriety-controls",
+    "actionNumbers": [],
+    "title": "Fournir à l’utilisateur un moyen de contrôle sur ses contenus et ses services afin de réduire les impacts environnementaux",
+    "audience": "UX / UI",
+    "pillar": {
+      "id": "interaction",
+      "title": "Optimiser l’interaction utilisateur"
+    },
+    "summary": "Donner à l’utilisateur la possibilité de choisir un usage plus sobre du service.",
+    "objective": "Donner à l’utilisateur la possibilité de choisir un usage plus sobre du service, en lui permettant de limiter les contenus et fonctionnalités les plus consommateurs en données, énergie ou ressources matérielles. Il s’agit également de rendre visibles les effets de ces choix, sans culpabiliser l’utilisateur ni dégrader l’accès aux informations essentielles.",
+    "do": [
+      "**Proposer un mode d’usage sobre** : permettre d’activer un mode sobre depuis les paramètres ou l’interface avec réduction des images, désactivation de la lecture automatique, limitation des animations, affichage de vidéos à la demande ou qualité réduite.",
+      "**Laisser le contrôle des contenus coûteux** : ne charger les vidéos, cartes, contenus audio, flux sociaux ou services tiers qu’à la demande.",
+      "**Informer simplement sur les réglages et leurs effets** : expliquer ce que modifie le mode sobre, rendre accessibles les paramètres et indiquer les gains environnementaux associés lorsqu’il est possible de les évaluer de manière fiable."
+    ],
+    "dont": [
+      "Imposer des contenus lourds sans contrôle.",
+      "Cacher ou complexifier les réglages de sobriété.",
+      "Réduire l’accès à l’information essentielle."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "optimize-user-journey",
+    "actionNumbers": [],
+    "title": "Optimiser le parcours utilisateur",
+    "audience": "UX / UI",
+    "pillar": {
+      "id": "interaction",
+      "title": "Optimiser l’interaction utilisateur"
+    },
+    "summary": "Concevoir des parcours simples, directs et adaptés aux besoins réels afin que l’utilisateur atteigne son objectif rapidement.",
+    "objective": "Concevoir des parcours simples, directs et adaptés aux besoins réels afin que l’utilisateur atteigne son objectif avec le moins d’étapes, de pages chargées, de données transférées et d’actions inutiles possible. Optimiser un parcours utilisateur réduit les abandons et les erreurs, tout en limitant les sollicitations réseau, serveur et terminal.",
+    "do": [
+      "**Identifier et prioriser les parcours principaux** : définir les actions les plus importantes du service, s’appuyer sur la recherche utilisateur, les retours du support et des données de fréquentation non intrusives, formaliser les étapes de chaque parcours principal afin d’identifier les écrans, contenus et interactions réellement nécessaires.",
+      "**Réduire les étapes et les chargements inutiles** : supprimer les pages intermédiaires, confirmations redondantes, pop-ins, carrousels et contenus décoratifs, regrouper les informations utiles au bon moment, préremplir les données déjà connues, limiter les appels réseaux, redirections…",
+      "Mesurer et améliorer régulièrement les parcours."
+    ],
+    "dont": [
+      "Ajouter des étapes sans valeur pour l’utilisateur.",
+      "Multiplier les contenus et fonctionnalités secondaires.",
+      "Optimiser sans vérifier les usages réels."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "document-chapters",
+    "actionNumbers": [],
+    "title": "Les documents à télécharger sont proposés au téléchargement par un système de chapitrage ou de résumé afin d’éviter de télécharger la totalité d’un document",
+    "audience": "UX / UI",
+    "pillar": {
+      "id": "contents",
+      "title": "Optimiser les contenus"
+    },
+    "summary": "Fournir une description ou un court résumé du document directement dans la page.",
+    "objective": "Lorsqu’un document est long, et pour éviter qu’il soit téléchargé inutilement, vous pouvez fournir une description ou un court résumé du document directement dans la page. On peut également fournir deux versions d’un document, une version courte constituant une synthèse et une version longue contenant tous les détails, sans oublier d’indiquer le poids de chaque.",
+    "do": [
+      "**Présenter un résumé avant le téléchargement** : afficher sur la page une description courte du document, proposer une synthèse HTML ou une version courte téléchargeable lorsque le document est long, technique, permettre ainsi à l’utilisateur de décider si le document complet est réellement nécessaire.",
+      "**Découper les documents volumineux par thème ou chapitre** : mettre à disposition un sommaire cliquable ou un chapitrage permettant d’accéder directement à une partie précise, proposer, lorsque cela correspond aux usages, des fichiers séparés par chapitre, annexe, territoire ou thématique, prévoir aussi une version complète pour les personnes qui ont besoin de consulter ou conserver l’ensemble du document.",
+      "**Informer avant chaque téléchargement** : indiquer le titre, le format, le poids du fichier et si utile, le nombre de pages, exemple « Télécharger le guide complet - PDF, 42 pages, 2,4 Mo »."
+    ],
+    "dont": [
+      "Proposer uniquement un fichier complet et volumineux.",
+      "Rendre les fichiers difficiles à identifier.",
+      "Découper les documents sans préserver leur compréhension."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "minimal-form-data",
+    "actionNumbers": [],
+    "title": "Les informations collectées sur le formulaire sont limitées au strict minimum",
+    "audience": "UX / UI",
+    "pillar": {
+      "id": "contents",
+      "title": "Optimiser les contenus"
+    },
+    "summary": "Limiter les informations demandées dans le formulaire à celles nécessaires au service attendu.",
+    "objective": "La tentation est souvent grande d’utiliser les formulaires standards avec un certain nombre de champs prédéfinis. Encore une fois, l’enjeu est d’interroger l’utilité du ou des champs, et de ne demander que ce qui est vraiment nécessaire pour réaliser la démarche ou fournir le service attendu. Cette sobriété réduit la charge de saisie pour l’utilisateur, limite les erreurs et les abandons, diminue le volume de données à stocker et à sécuriser, et respecte le principe de minimisation du RGPD.",
+    "do": [
+      "**Justifier chaque champ par une finalité précise** : vérifier pour chaque donnée demandée « Est-elle indispensable pour traiter cette demande ou fournir ce service ? »",
+      "Différencier clairement les données obligatoires et facultatives ; indiquer les champs obligatoires avant la validation et préciser la conséquence lorsqu’une information obligatoire n’est pas fournie, rendre réellement facultatifs les champs qui servent à la personnalisation, aux statistiques non indispensables ou à une prise de contact complémentaire, expliquer au plus près du champ, l’usage de toute donnée dont la nécessité n’est pas évidente (par ex : votre numéro de téléphone est utilisé uniquement pour vous prévenir d’un changement de rendez-vous).",
+      "Adapter le formulaire au contexte et au profil de l’utilisateur."
+    ],
+    "dont": [
+      "**Demander des données « au cas où »** : éviter de collecter systématiquement la date de naissance, le numéro de téléphone, l’adresse complète, la situation familiale ou la profession lorsque ces données ne sont pas indispensables, ne pas conserver des champs hérités d’un ancien formulaire, d’un modèle générique ou d’un besoin métier disparu.",
+      "**Rendre obligatoire des informations non nécessaires** : ne pas bloquer l’envoi d’un formulaire parce qu’un utilisateur refuse de fournir une donnée utile uniquement pour du confort, de la personnalisation ou de la prospection.",
+      "**Collecter des données sensibles sans nécessité forte** : éviter les champs ouverts qui invitent à transmettre des informations de santé, des données financières, des opinions, des données concernant des mineurs ou tout autre contenu sensible."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "legacy-os-browsers",
+    "actionNumbers": [],
+    "title": "Utilisable sur d’anciennes versions de système d’exploitation et de navigateurs web",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "usable-service",
+      "title": "Service numérique utilisable"
+    },
+    "summary": "Jusqu’à 5 ans pour une application native, jusqu’à deux ans pour un navigateur web",
+    "objective": "- **Si le service numérique est une application native**, il doit prendre en charge les dernières versions des systèmes d’exploitation supportés et être utilisable sur les versions anciennes de ces systèmes d’exploitation (hors mises à jour correctives), **jusqu’à cinq ans**, en prenant en compte la première date de mise à disposition en version stable.\n- **Si le service numérique fonctionne sur un navigateur web**, il doit prendre en charge les dernières versions des navigateurs web (hors mises à jour correctives) et être utilisable sur les versions anciennes des principaux navigateurs web, **jusqu’à deux ans**, en prenant en compte la première date de mise à disposition en version stable.",
+    "doList": false,
+    "do": [
+      "Définir les versions prises en charge\n- Établir une liste de navigateurs et systèmes d’exploitation minimums.\n- L’adapter aux usages réels des utilisateurs et aux exigences de sécurité.",
+      "Tester les parcours essentiels\n- Vérifier les fonctionnalités principales sur les versions cibles.\n- Corriger les blocages, même si des différences visuelles mineures subsistent.",
+      "Prévoir un fonctionnement dégradé\n- Utiliser les standards web et l’amélioration progressive."
+    ],
+    "dont": [
+      "Imposer systématiquement la dernière version\n- Éviter de bloquer l’accès sans vérifier si le service peut fonctionner.\n- Ne pas exiger un équipement ou navigateur récent sans nécessité démontrée.",
+      "Utiliser des technologies sans solution alternative\n- Éviter les API ou effets récents qui bloquent un parcours essentiel.\n- Ne pas dépendre d’un framework incompatible avec les navigateurs visés.",
+      "Négliger la sécurité\n- Éviter de prendre en charge des OS ou navigateurs qui ne reçoivent plus de mises à jour de sécurité.\n- Ne pas confondre compatibilité fonctionnelle et maintien d’un environnement vulnérable."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "content-retention",
+    "actionNumbers": [],
+    "title": "Mettre en place une stratégie d’archivage et de suppression, automatique ou manuelle des contenus obsolètes ou périmés",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "infrastructure",
+      "title": "Moins d’infrastructure IT nécessaire"
+    },
+    "summary": "Définir et communiquer une durée de conservation des données personnelles.",
+    "objective": "Cette stratégie est obligatoire pour le sous-ensemble des données personnelles collectées par les services, qui impose de définir et communiquer une durée de conservation des données personnelles (art. 13-2 du RGPD).",
+    "do": [
+      "Définir une durée de conservation pour chaque type de contenu",
+      "Automatiser l’archivage et la suppression lorsque c’est possible",
+      "Prévoir une gestion manuelle et un contrôle régulier"
+    ],
+    "dont": [
+      "Conserver tous les contenus indéfiniment",
+      "Supprimer automatiquement sans règle ni vérification",
+      "Ne pas informer les utilisateurs et les équipes"
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "split-css",
+    "actionNumbers": [],
+    "title": "Découper les CSS",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "contents",
+      "title": "Optimiser les contenus"
+    },
+    "summary": "Charger uniquement les styles nécessaires à chaque écran ou fonctionnalité.",
+    "objective": "Charger uniquement les styles nécessaires à chaque écran ou fonctionnalité, plutôt qu’un fichier CSS unique contenant l’ensemble des règles du service. Cette organisation réduit le volume de données transférées, améliore le temps de chargement et facilite la maintenance du code.",
+    "do": [
+      "Organiser les styles par périmètre : séparer les feuilles de style par page, module, composant ou fonctionnalité.",
+      "Charger les styles à la demande : n’inclure que les fichiers CSS utiles à l’écran affiché, notamment pour les parcours ponctuels ou les modules spécifiques.",
+      "Structurer une base commune : conserver un socle minimal de styles partagés, puis ajouter des feuilles distinctes pour les composants ou contextes spécifiques."
+    ],
+    "dont": [
+      "Regrouper toutes les règles dans un seul fichier CSS volumineux, chargé sur toutes les pages même lorsqu’une grande partie n’est pas utilisée.",
+      "Multiplier excessivement les fichiers pour quelques règles isolées : le découpage doit rester équilibré afin de ne pas augmenter le nombre de requêtes.",
+      "Dupliquer les styles d’un module à l’autre sans mutualiser les règles réellement communes, ce qui alourdit la maintenance et le poids total."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "native-components",
+    "actionNumbers": [],
+    "title": "Utiliser majoritairement des composants fonctionnels natifs",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "contents",
+      "title": "Optimiser les contenus"
+    },
+    "summary": "Privilégier les composants fournis nativement par le navigateur, le système d’exploitation ou le langage utilisé.",
+    "objective": "Privilégier les composants fournis nativement par le navigateur, le système d’exploitation ou le langage utilisé plutôt que des composants développés en surcouche. Ils sont généralement plus légers, plus rapides et plus robustes, car ils mobilisent moins de ressources et offrent des comportements déjà éprouvés : navigation au clavier, adaptation tactile, gestion du focus et compatibilité avec les technologies d’assistance",
+    "do": [
+      "Choisir le bon élément HTML : utiliser <button> pour une action, <a> pour une navigation, <input>, <select>, <textarea> ou <label> pour les formulaires.",
+      "S’appuyer sur les comportements natifs : laisser le navigateur gérer l’ouverture d’un champ de sélection, le focus, la saisie ou la validation lorsque cela suffit.",
+      "Personnaliser avec parcimonie : appliquer des styles CSS progressifs, sans reconstruire entièrement un composant natif, et tester sur plusieurs navigateurs et terminaux."
+    ],
+    "dont": [
+      "Recréer inutilement des composants déjà existants, par exemple remplacer un <select> par une liste complexe construite en JavaScript.",
+      "Ajouter une bibliothèque ou un script lourd pour une fonctionnalité simple qu’un élément natif couvre déjà.",
+      "Négliger l’accessibilité et les tests, notamment le clavier, le lecteur d’écran, le zoom et le tactile, lorsqu’un composant personnalisé reste nécessaire."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "component-environmental-impact",
+    "actionNumbers": [],
+    "title": "Prendre en compte les impacts environnementaux des composants d’interface prêts à l’emploi utilisés",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "contents",
+      "title": "Optimiser les contenus"
+    },
+    "summary": "Évaluer l’empreinte environnementale des bibliothèques, design systems et composants prêts à l’emploi avant de les intégrer.",
+    "objective": "Évaluer l’empreinte environnementale des bibliothèques, design systems et composants prêts à l’emploi avant de les intégrer. Ces solutions font gagner du temps, mais elles peuvent aussi apporter du code, des styles et des dépendances inutiles. Les comparer permet de choisir les options les plus sobres, sans renoncer à la cohérence, à l’accessibilité ou à la qualité d’usage.",
+    "do": [
+      "Mesurer avant de choisir : comparer le poids des fichiers, le nombre de requêtes et les données transférées par des composants équivalents.",
+      "Privilégier les composants légers et nécessaires : utiliser uniquement les éléments réellement requis par les parcours, plutôt qu’une bibliothèque complète chargée inutilement.",
+      "Documenter les choix : conserver les critères de sélection, les mesures réalisées et les alternatives écartées dans la déclaration ou la documentation d’écoconception."
+    ],
+    "dont": [
+      "Choisir un composant uniquement pour sa rapidité d’intégration, sans évaluer son poids ni les dépendances associées.",
+      "Charger une bibliothèque entière pour n’utiliser qu’un bouton, une modale ou un composant de formulaire.",
+      "Ignorer la maintenance et l’évolutivité : un composant difficile à mettre à jour ou mal maintenu peut entraîner des correctifs et des ressources supplémentaires à long terme."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "evolving-protocols",
+    "actionNumbers": [],
+    "title": "Supporter l’évolution technique des protocoles",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "usable-service",
+      "title": "Service numérique utilisable"
+    },
+    "summary": "Choisir et maintenir des protocoles réseau, de sécurité et d’échange capables d’évoluer avec les standards du web.",
+    "objective": "Choisir et maintenir des protocoles réseau, de sécurité et d’échange capables d’évoluer avec les standards du web afin de garantir la pérennité, la sécurité et l’accessibilité du service dans le temps. Un protocole obsolète peut provoquer des dysfonctionnements, empêcher l’accès à certains utilisateurs et conduire à des remplacements prématurés de composants ou de services. Le RGESN vise notamment la compatibilité IPv6, l’usage d’HTTPS et le support des versions actuelles de TLS.",
+    "do": [
+      "Vérifier que le service est accessible en IPv6 et définir une stratégie de test IPv6 incluant des tests depuis un équipement où la connectivité IPv4 est désactivée.",
+      "Utiliser le protocole d’authentification et de chiffrement HTTPS.",
+      "Pour le protocole de sécurité, la version de TLS utilisée doit prendre en charge la version la plus récente (au moment de la rédaction de ce référentiel : TLS v1.3).",
+      "Pour les protocoles d’échanges de données, il est recommandé de comparer les protocoles disponibles en fonction des types de contenu et des fonctionnalités recherchées. Cette évaluation devrait prendre en considération des critères tels que l'efficacité de transfert des données, la latence, la compatibilité avec les technologies utilisées, ainsi que l'impact environnemental de chaque protocole. Par exemple : Pour la vidéo : Multicast, HTTP Live Streaming (HLS), Real-Time Messaging Protocol (RTMP), Web Real-Time Communications (WebRTC)… -Pour les API : REST, SOAP, GraphQL, Protocol Buffers…"
+    ],
+    "dont": [
+      "Conserver des protocoles ou versions obsolètes : éviter les services accessibles uniquement en HTTP, les configurations TLS anciennes ou les certificats et suites cryptographiques dépassés, ne pas fonder une fonctionnalité essentielle sur IPv4 uniquement, ni ignorer la disponibilité progressive d’accès internet exclusivement IPv6.",
+      "Négliger les dépendances externes : éviter de vérifier uniquement l’application principale (un script externe, une police, un outil de mesure, une API ou un service d’authentification non compatible peut bloquer ou dégrader le parcours), ne pas intégrer un fournisseur tiers sans vérifier sa compatibilité IPv6, HTTPS et TLS, ainsi que ses engagements de maintenance.",
+      "Changer de protocole sans stratégie de transition : éviter les migrations brutales qui rendent indisponibles les applications clientes, systèmes partenaires ou intégrations existantes, ne pas supprimer une version d’API, modifier un mécanisme d’authentification ou renforcer une règle de chiffrement sans période de transition, documentation, tests et information des parties concernées, éviter d’adopter un protocole complexe ou coûteux en ressources sans vérifier qu’il répond à un besoin réel et qu’une alternative plus simple ne suffit pas."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "interoperable-technologies",
+    "actionNumbers": [],
+    "title": "Concevoir avec des technologies standard interopérables plutôt que des technologies spécifiques et fermées",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "usable-service",
+      "title": "Service numérique utilisable"
+    },
+    "summary": "Privilégier des technologies ouvertes, documentées et largement prises en charge.",
+    "objective": "Privilégier des technologies ouvertes, documentées et largement prises en charge afin de garantir la pérennité du service, sa compatibilité avec différents terminaux et logiciels, ainsi que son évolution dans le temps. Cela limite la dépendance à un fournisseur, réduit les besoins de renouvellement matériel ou logiciel et contribue à allonger la durée de vie des équipements. Le RGESN souligne que l’interopérabilité aide à limiter l’obsolescence des terminaux, notamment lorsque des applications imposent des versions récentes d’OS ou de matériel.",
+    "do": [
+      "S’appuyer sur des standards ouverts et pérennes : privilégier des technologies du web standard : HTML, CSS, JavaScript standard, HTTPS, URL, formats structurés et documentés.",
+      "Concevoir des interfaces et API interopérables  : concevoir des API reposant sur des protocoles standards, documentées et versionnées avec des formats d’échange ouverts.",
+      "Evaluer les dépendances avant de choisir une solution"
+    ],
+    "dont": [
+      "Dépendre d’un format ou d’un logiciel propriétaire sans nécessité",
+      "Créer des échanges fermés ou insuffisamment documentés",
+      "Choisir une technologie uniquement pour son effet de nouveauté"
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "legacy-devices",
+    "actionNumbers": [],
+    "title": "Utilisable sur d’anciens modèles de terminaux",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "usable-service",
+      "title": "Service numérique utilisable"
+    },
+    "summary": "Pour chaque fonctionnalité, s’assurer que le service numérique est compatible avec des équipements anciens.",
+    "objective": "Pour chaque fonctionnalité, s’assurer que le service numérique est compatible avec des équipements anciens.\nPar exemple, ce critère peut être ajouté dans les tests ou QA (Quality Assurance). Quelques précisions concernant le critère :\n- Il s’agit de la compatibilité avec un matériel et non avec un système d’exploitation ou tout autre logiciel faisant fonctionner le service numérique (par exemple un navigateur).\n- Définition de « utilisable » ici : mode dégradé accepté mais sans perte de fonctionnalité incontournable ou critique ni de contenu pour le service.",
+    "doList": false,
+    "do": [
+      "Contrôler la mise en œuvre selon la nature du service en vérifiant les points suivants :\n- **Si le service numérique est une application native** : il convient de tester les fonctionnalités critiques du service numérique sur un équipement ancien, c’est-à-dire mis sur le marché **il y a sept ans ou plus**, dans la dernière version du système d’exploitation proposé par cet équipement.\n- **Si le service numérique fonctionne sur un navigateur web** : les fonctionnalités critiques doivent fonctionner sur un PC portable – ou un autre terminal équipé d’un microprocesseur mis sur le marché **il y a dix ans ou plus**.\n- **Pour les autres services numériques** : tester les fonctionnalités critiques du service sur un terminal (exemple : équipements connectés) mis sur le marché **il y a sept ans ou plus**. Une durée de compatibilité plus longue est recommandée. Dans ce cas l’objectif est à préciser, par exemple dans la déclaration d’écoconception.\nCe critère n’exclut pas l’usage de fonctionnalités récentes permettant la réduction des impacts environnementaux à l’usage tant que le service reste disponible sur les anciennes versions (principe d’amélioration progressive)."
+    ],
+    "dont": [
+      "Imposer un matériel récent sans besoin démontré",
+      "Ajouter des éléments gourmands sans valeur fonctionnelle",
+      "Considérer le service compatible sans le vérifier"
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "low-bandwidth-offline",
+    "actionNumbers": [],
+    "title": "Utilisable via une connexion bas débit ou hors connexion",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "usable-service",
+      "title": "Service numérique utilisable"
+    },
+    "summary": "Permettre à l’utilisateur d’accéder aux informations et de réaliser les démarches principales malgré une connexion lente, instable ou temporairement indisponible.",
+    "objective": "Permettre à l’utilisateur d’accéder aux informations et de réaliser les démarches principales malgré une connexion lente, instable ou temporairement indisponible. Cette approche améliore l’inclusion des personnes en mobilité ou en zone de faible couverture, limite les échecs de parcours et réduit les transferts de données inutiles. Le RGESN recommande de tester le service en 3G mobile et à 512 Kbit/s en connexion fixe ; pour les applications natives, il recommande également de prévoir un mode hors connexion lorsque cela est techniquement possible.",
+    "do": [
+      "Concevoir un parcours léger et progressif",
+      "Prévoir la continuité en cas de coupure",
+      "Tester et documenter les conditions minimales"
+    ],
+    "dont": [
+      "Dépendre d’une connexion rapide et constante",
+      "Perdre les données lors d’une interruption",
+      "Masquer les limites du mode dégradé ou hors ligne"
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "ecodesign-reviews",
+    "actionNumbers": [],
+    "title": "Concevoir le service avec une revue de conception et une revue de code pour réduire les impacts environnementaux de chaque fonctionnalité.",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "methodology",
+      "title": "Méthodologie facilitant l’écoconception"
+    },
+    "summary": "Intégrer l’écoconception à chaque étape de réalisation du service : avant le développement, au moment des choix fonctionnels et techniques, puis après le développement, lors de la vérification du code.",
+    "objective": "Intégrer l’écoconception à chaque étape de réalisation du service : avant le développement, au moment des choix fonctionnels et techniques, puis après le développement, lors de la vérification du code. L’objectif est de choisir la solution qui répond au besoin avec le moins de ressources possible et d’éviter que des fonctionnalités, composants ou traitements inutilement lourds soient mis en production. Le RGESN préconise une revue de conception en amont et, lorsque du code est produit, une revue de code en aval ; ces revues doivent pouvoir être référencées dans la déclaration d’écoconception",
+    "do": [
+      "**Mettre en place une revue de conception avant le développement**\n- Réunir les profils concernés — produit, UX/UI, développement, architecture, contenu, données, accessibilité et métier — pour examiner la nécessité de chaque fonctionnalité.\n- Évaluer plusieurs solutions possibles et retenir celle qui couvre le besoin avec le moins d’écrans, de données collectées, de traitements, de dépendances, de transferts réseau et de stockage.\n- Formaliser les impacts directs et indirects de la fonctionnalité : équipement utilisateur, trafic réseau, calcul côté client ou serveur, stockage, services tiers et maintenance.",
+      "**Intégrer des critères d’écoconception à la revue de code**\n- Ajouter une checklist de revue : ressources chargées, poids des pages, requêtes réseau, dépendances, traitement côté client/serveur, mise en cache, requêtes de base de données, logs et stockage.\n- Vérifier que le code ne déclenche pas de chargements, calculs, rafraîchissements, boucles, appels API ou transmissions de données inutiles.\n- Contrôler la sobriété des composants : taille des fichiers, compression, chargement différé, suppression du code inutilisé et limitation des bibliothèques.",
+      "**Tracer les décisions et améliorer continuellement**\n- Consigner les décisions prises, les variantes étudiées, les compromis retenus et les résultats de mesures dans les tickets, spécifications, comptes rendus de revue ou documentation d’architecture.\n- Fixer des critères d’acceptation mesurables pour les fonctionnalités importantes : poids maximal, nombre de requêtes, temps de chargement, consommation de données, volume stocké ou durée de conservation.\n- Réaliser ces revues à chaque évolution significative, corriger les écarts avant mise en production et mettre à jour la déclaration d’écoconception."
+    ],
+    "dont": [
+      "Traiter l’écoconception uniquement en fin de projet : éviter d’attendre la recette ou la mise en production pour mesurer et corriger les impacts d’une fonctionnalité.",
+      "Faire une revue de code limitée au style ou aux erreurs techniques : éviter de vérifier seulement la lisibilité, la sécurité ou les conventions de code sans examiner les appels réseau, les ressources, les calculs et les données générés.",
+      "Ne pas documenter les choix et les écarts : éviter les décisions prises oralement ou uniquement dans des échanges éphémères, sans trace de la justification ni de l’alternative"
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "version-impact-comparison",
+    "actionNumbers": [],
+    "title": "Mettre en place des mesures comparatives d’impact d’une application lors d’une montée de version ou d’un remplacement d’application",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "methodology",
+      "title": "Méthodologie facilitant l’écoconception"
+    },
+    "summary": "Comparer l’impact environnemental de la version actuelle et de la nouvelle version d’une application avant de la déployer.",
+    "objective": "Comparer l’impact environnemental de la version actuelle et de la nouvelle version d’une application avant de la déployer, afin de vérifier que la montée de version ou le remplacement apporte un bénéfice réel — ou, à défaut, que ses impacts supplémentaires sont connus, justifiés et maîtrisés. Cette mesure permet d’objectiver les décisions, de détecter les régressions et d’inscrire l’évolution de l’application dans une démarche d’amélioration continue. Les mesures servent à rendre les progrès observables, mais ne doivent pas devenir une fin en soi : elles doivent aider à décider et à agir.",
+    "do": [
+      "Définir un protocole de comparaison identique : mesurer l’ancienne et la nouvelle version dans des conditions comparables  (même équipement, navigateur, réseau, scénario utilisateur, données de test et environnement).",
+      "Tester les mêmes fonctionnalités et parcours représentatifs, notamment les actions les plus utilisées ou les plus coûteuses. : mesurer plusieurs indicateurs pertinents, comparer notamment le poids des pages et ressources, le nombre de requêtes, la quantité de données transférées, le temps de chargement et la consommation de mémoire ou de processeur.",
+      "Utiliser les résultats pour décider et corriger"
+    ],
+    "dont": [
+      "Traiter l’écoconception uniquement en fin de projet : éviter d’attendre la recette ou la mise en production pour mesurer et corriger les impacts d’une fonctionnalité.",
+      "Faire une revue de code limitée au style ou aux erreurs techniques : éviter de vérifier seulement la lisibilité, la sécurité ou les conventions de code sans examiner les appels réseau, les ressources, les calculs et les données générés.",
+      "Ne pas documenter les choix et les écarts : éviter les décisions prises oralement ou uniquement dans des échanges éphémères, sans trace de la justification ni de l’alternative"
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "device-sensors",
+    "actionNumbers": [],
+    "title": "Restreindre l’usage des capteurs des terminaux utilisateurs au besoin du service",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "resources",
+      "title": "Réduire la consommation de ressources"
+    },
+    "summary": "N’activer les capteurs d’un terminal — géolocalisation, caméra, microphone, etc. — que lorsqu’ils sont réellement nécessaires à une fonctionnalité demandée par l’utilisateur.",
+    "objective": "N’activer les capteurs d’un terminal — géolocalisation, caméra, microphone, accéléromètre, Bluetooth, NFC, etc. — que lorsqu’ils sont réellement nécessaires à une fonctionnalité demandée par l’utilisateur. Cela limite la consommation de batterie, les transferts de données et la collecte de données personnelles, tout en préservant le contrôle de l’utilisateur. Le RGESN demande que l’usage des capteurs soit minimal par défaut, limité dans le temps et précédé d’une information ainsi que d’un consentement.",
+    "do": [
+      "Justifier et limiter chaque utilisation de capteur : identifier les capteurs sollicités par le service et documenter, pour chacun, la fonctionnalité concernée, sa finalité, les données générées et la durée d’activation nécessaire, n’activer un capteur que pour réaliser une action précise : par exemple, ouvrir la caméra après un clic sur « Prendre une photo » ou la géolocalisation après un clic sur « Utiliser ma position », arrêter immédiatement l’accès au capteur lorsque l’action est terminée, annulée ou lorsque l’utilisateur quitte l’écran concerné.",
+      "Informer et demander l’accord avant l’activation : expliquer clairement, avant la demande d’autorisation système, quel capteur est nécessaire, pourquoi il est utilisé et ce qui se passe si l’utilisateur refuse, déclencher l’autorisation au moment où elle est utile et après une action explicite de l’utilisateur, et non au premier lancement de l’application ou à l’ouverture d’une page",
+      "Proposer une alternative sans capteur et vérifier les usages : prévoir un mode dégradé qui permet de réaliser le besoin essentiel sans capteur saisie au clavier au lieu d’une dictée vocale, mesurer régulièrement la durée d’activation des capteurs et vérifier que leur usage reste limité au strict nécessaire."
+    ],
+    "dont": [
+      "Activer un capteur en continu ou par défaut, éviter l’accès permanent à la localisation, au microphone ou à la caméra lorsque le service est ouvert, même si aucune fonctionnalité ne les utilise à cet instant, ne pas demander toutes les autorisations au premier lancement « au cas où », ni conserver un capteur actif en arrière-plan sans besoin fonctionnel démontré.",
+      "Utiliser un capteur pour une finalité secondaire : éviter de collecter une position, une image, un son ou un mouvement pour de la personnalisation, de l’analyse ou du marketing lorsque cela n’est pas nécessaire à la demande de l’utilisateur, ne pas détourner les données collectées par un capteur vers une autre finalité sans information claire et base légale appropriée.",
+      "Bloquer l’accès au service en cas de refus"
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "minimal-library-code",
+    "actionNumbers": [],
+    "title": "N’utiliser que les portions indispensables des bibliothèques JavaScript et frameworks CSS",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "resources",
+      "title": "Réduire la consommation de ressources"
+    },
+    "summary": "Ne charger que les portions de JavaScript et de CSS réellement nécessaires à chaque écran et fonctionnalité.",
+    "objective": "Réduire le poids des pages, les transferts réseau, le temps de traitement et la consommation de ressources côté utilisateur en ne chargeant que le code JavaScript et CSS réellement nécessaire à chaque écran et à chaque fonctionnalité. L’enjeu n’est pas d’interdire les bibliothèques ou frameworks, mais d’éviter de livrer leur totalité lorsqu’une petite partie seulement est utilisée.",
+    "do": [
+      "Importer uniquement les composants utiles\n- Charger les modules nécessaires plutôt qu’une bibliothèque complète.\n- Privilégier HTML, CSS et API natives lorsque cela suffit.",
+      "Charger le code à la demande\n- Utiliser le tree shaking et le découpage du code par page ou fonctionnalité.\n- Charger les modules secondaires seulement lorsqu’ils sont utilisés.",
+      "Contrôler les dépendances\n- Suivre le poids des fichiers JavaScript et CSS.\n- Supprimer régulièrement les dépendances, styles et scripts inutilisés.\n- Définir des seuils de poids dans l’intégration continue."
+    ],
+    "dont": [
+      "Charger un framework complet pour un besoin simple\n- Éviter d’importer une bibliothèque entière pour un bouton, une modale ou une icône.\n- Ne pas cumuler plusieurs outils remplissant la même fonction.",
+      "Télécharger les fonctionnalités secondaires dès l’ouverture\n- Éviter de charger par défaut une carte, un graphique, un éditeur riche ou un lecteur multimédia non utilisé.\n- Ne pas inclure une feuille de style globale couvrant des composants absents de la page.",
+      "Conserver du code inutilisé Éviter les plugins désactivés, les anciennes feuilles de style et les polyfills devenus inutiles. Ne pas se limiter à la minification : elle réduit le poids, mais ne supprime pas nécessairement le code inutile."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "on-demand-resources",
+    "actionNumbers": [],
+    "title": "Ne charger les données et le code que lorsqu’ils sont nécessaires",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "resources",
+      "title": "Réduire la consommation de ressources"
+    },
+    "summary": "Réduire les transferts de données et la consommation de ressources en ne chargeant les données, scripts, styles, images ou médias qu’au moment où ils sont utiles à l’utilisateur.",
+    "objective": "Réduire les transferts de données et la consommation de ressources en ne chargeant les données, scripts, styles, images ou médias qu’au moment où ils sont utiles à l’utilisateur. Le RGESN recommande de ne charger les ressources et composants que lorsqu’ils sont effectivement utilisés.",
+    "do": [
+      "Charger les contenus progressivement\n- Utiliser le chargement différé pour les images, vidéos et contenus situés hors de la zone visible.\n- Charger les pages suivantes ou les résultats supplémentaires à la demande.",
+      "Déclencher les modules au besoin\n- Charger les scripts d’une carte, d’un graphique, d’un lecteur vidéo ou d’un éditeur uniquement lorsqu’ils sont activés.\n- Ne récupérer les données d’une fonctionnalité qu’à son ouverture.",
+      "Vérifier les ressources réellement utilisées\n- Contrôler les requêtes, scripts, styles et médias chargés sur chaque page.\n- Supprimer les ressources non utilisées et surveiller les régressions dans les tests."
+    ],
+    "dont": [
+      "Tout charger dès l’arrivée sur la page\n- Éviter de précharger des données, médias ou modules dont l’utilisateur n’a pas encore besoin.\n- Ne pas télécharger toutes les pages d’un parcours ou tous les résultats d’une liste par défaut.",
+      "Charger des éléments invisibles ou optionnels\n- Éviter de charger des images hors écran, des onglets non ouverts, des modales fermées ou des contenus repliés.",
+      "Multiplier les préchargements sans nécessité\n- Éviter les mécanismes de préchargement systématiques qui augmentent les données transférées. Ne précharger que les ressources dont l’usage est très probable et qui améliorent réellement le parcours."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "limit-css-files",
+    "actionNumbers": [],
+    "title": "Limiter le nombre de CSS",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "resources",
+      "title": "Réduire la consommation de ressources"
+    },
+    "summary": "Limiter le nombre de fichiers CSS chargés par page afin de réduire les requêtes réseau, le poids transféré et le travail de rendu du navigateur.",
+    "objective": "Limiter le nombre de fichiers CSS chargés par page afin de réduire les requêtes réseau, le poids transféré et le travail de rendu du navigateur. Une organisation CSS maîtrisée améliore aussi la maintenance et évite les styles redondants.",
+    "do": [
+      "Regrouper les styles communs\n- Utiliser une feuille de style partagée pour les éléments communs du service.\n- Mutualiser les styles des composants réutilisés.",
+      "Découper les styles par besoin\n- Charger un fichier CSS spécifique uniquement pour une page, un module ou une fonctionnalité qui l’utilise.\n- Adapter les styles aux différents affichages sans créer de fichiers inutiles.",
+      "Contrôler les fichiers chargés\n- Vérifier le nombre, le poids et l’utilité des fichiers CSS chargés sur chaque page.\n- Supprimer les feuilles de style obsolètes, dupliquées ou inutilisées."
+    ],
+    "dont": [
+      "Multiplier les petits fichiers CSS\n- Éviter un fichier CSS par composant lorsque plusieurs styles peuvent être regroupés.\n- Ne pas créer des fichiers spécifiques pour des variations mineures.",
+      "Charger des styles inutiles\n- Éviter de charger les styles de pages, composants ou thèmes qui ne sont pas affichés.\n- Ne pas importer tout un framework CSS si seule une partie est utilisée.",
+      "Conserver des styles redondants\n- Éviter les règles dupliquées, les anciens correctifs et les feuilles de style non maintenues.\n- Ne pas ajouter un nouveau fichier CSS sans vérifier si un style existant peut être réutilisé ou adapté."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "local-static-data",
+    "actionNumbers": [],
+    "title": "Stocker les données statiques localement",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "resources",
+      "title": "Réduire la consommation de ressources"
+    },
+    "summary": "Stocker localement des données structurées statiques.",
+    "objective": "Avec le support désormais généralisé sur tous les navigateurs des bases de données clé-valeur (IndexedDB, Web Storage), et de la mise en cache dans le Cache Storage API, il est possible de stocker localement des données structurées statiques.",
+    "do": [
+      "Mettre en cache les ressources stables\n- Stocker localement les fichiers CSS, JavaScript, polices, icônes et images rarement modifiées.\n- Définir une durée de conservation adaptée à la fréquence de mise à jour.",
+      "Utiliser des mécanismes de cache adaptés\n- Configurer les en-têtes HTTP de cache pour les ressources statiques.\n- Utiliser un service worker ou le stockage local lorsque cela répond à un besoin identifié, notamment pour un usage hors connexion.",
+      "Prévoir l’actualisation des ressources\n- Versionner les fichiers statiques afin de télécharger une nouvelle version uniquement lorsqu’elle change.\n- Tester la mise à jour du cache pour éviter l’affichage de contenus ou de styles obsolètes."
+    ],
+    "dont": [
+      "Télécharger les mêmes ressources à chaque visite\n- Éviter de désactiver le cache sans raison pour les images, styles, scripts ou polices qui évoluent peu.\n- Ne pas imposer de nouveaux téléchargements lorsque les fichiers n’ont pas changé.",
+      "Mettre en cache des données inadaptées\n- Éviter de conserver localement des données personnelles, sensibles ou temporaires sans nécessité, information et mesures de sécurité adaptées.\n- Ne pas stocker des données dynamiques si leur mise à jour immédiate est indispensable.",
+      "Conserver des fichiers obsolètes indéfiniment\n- Éviter les durées de cache excessives sans mécanisme de versionnement ou d’invalidation.\n- Ne pas laisser le cache s’accumuler sans contrôle, notamment pour les médias lourds, les anciennes versions de l’application ou les contenus téléchargés rarement utilisés."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "targeted-component-imports",
+    "actionNumbers": [],
+    "title": "Se limiter au chargement des composants utilisés au sein des bibliothèques lorsque cela est possible",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "resources",
+      "title": "Réduire la consommation de ressources"
+    },
+    "summary": "Charger uniquement les composants nécessaires.",
+    "objective": "Charger uniquement les composants nécessaires. Certaines bibliothèques rendent disponibles les composants pour une utilisation unitaire (par exemple Bootstrap). Autre exemple : le système de design de l’État est disponible sous forme packagée (feuilles de style et scripts) avec tous les composants. Il est rarement nécessaire d’utiliser tous les composants. Il est possible de ne charger que les fichiers CSS et JavaScript des composants nécessaires.",
+    "do": [
+      "Importer les composants à l’unité\n- Charger uniquement les modules, icônes ou styles nécessaires.\n- Préférer les imports ciblés aux imports globaux.",
+      "Configurer la construction du projet\n- Activer le tree shaking pour supprimer le code non utilisé.\n- Générer des fichiers de production optimisés par page ou fonctionnalité.",
+      "Vérifier les dépendances chargées\n- Contrôler les fichiers réellement téléchargés dans les outils de développement.\n- Retirer les composants et bibliothèques inutilisés."
+    ],
+    "dont": [
+      "Importer une bibliothèque complète par défaut\n- Éviter les imports globaux lorsqu’un import ciblé est disponible.\n- Ne pas charger tous les composants d’un design system pour en utiliser quelques-uns.",
+      "Charger des modules avant leur utilisation\n- Éviter de télécharger les composants d’une carte, d’un graphique ou d’un éditeur avant leur ouverture.\n- Charger les fonctionnalités secondaires à la demande.",
+      "Supposer que l’optimisation est automatique\n- Ne pas considérer que la minification ou le tree shaking fonctionne sans vérification."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "static-pages",
+    "actionNumbers": [],
+    "title": "Favoriser les pages statiques",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "resources",
+      "title": "Réduire la consommation de ressources"
+    },
+    "summary": "Privilégier les pages statiques pour les contenus qui évoluent peu afin de réduire les traitements serveur, les accès à la base de données et les transferts inutiles.",
+    "objective": "Privilégier les pages statiques pour les contenus qui évoluent peu afin de réduire les traitements serveur, les accès à la base de données et les transferts inutiles. Une page statique peut être servie directement, sans reconstruire son contenu à chaque consultation, ce qui économise des cycles CPU et de la bande passante",
+    "do": [
+      "Identifier les contenus peu modifiés\n- Repérer les pages stables : informations institutionnelles, mentions légales, pages d’aide ou contenus éditoriaux peu actualisés.\n- Générer ces pages sous forme de fichiers statiques lorsque cela est pertinent.",
+      "Mettre en cache les pages stables\n- Configurer un cache pour servir rapidement les pages peu modifiées.\n- Invalider ou régénérer le cache uniquement lorsqu’un contenu est mis à jour.",
+      "Conserver un processus de publication simple\n- Intégrer la génération statique au processus de publication ou de déploiement.\n- Vérifier le rendu et l’actualisation des contenus après chaque publication."
+    ],
+    "dont": [
+      "Générer dynamiquement une page stable\n- Éviter d’interroger une base de données ou d’exécuter des traitements serveur pour un contenu rarement modifié.\n- Ne pas utiliser un rendu dynamique par défaut sans besoin identifié.",
+      "Mettre en cache sans stratégie de mise à jour\n- Éviter de laisser des contenus obsolètes accessibles après une modification.\n- Ne pas appliquer une durée de cache identique à tous les contenus sans tenir compte de leur fréquence d’évolution.",
+      "Rendre statiques des contenus personnalisés\n- Éviter de traiter comme statiques des pages liées à un compte, une démarche en cours ou des données actualisées en temps réel.\n- Ne pas exposer dans un fichier statique des informations personnelles, confidentielles ou soumises à des droits d’accès."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "input-server-requests",
+    "actionNumbers": [],
+    "title": "Limiter le nombre de requêtes lors de la saisie utilisateur",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "resources",
+      "title": "Réduire la consommation de ressources"
+    },
+    "summary": "Réduire les échanges inutiles entre le terminal de l’utilisateur et le serveur pendant la saisie d’un formulaire.",
+    "objective": "Réduire les échanges inutiles entre le terminal de l’utilisateur et le serveur pendant la saisie d’un formulaire. Limiter ces requêtes diminue les transferts de données, accélère l’interface et évite de solliciter le réseau ou le serveur à chaque caractère saisi. Le RGESN vise spécifiquement la limitation des requêtes serveur lors de la saisie utilisateur.",
+    "do": [
+      "Valider localement lorsque c’est possible\n- Vérifier le format, les champs obligatoires ou la longueur de saisie directement dans le navigateur. N’interroger le serveur que pour les contrôles nécessitant réellement une donnée distante.",
+      "Déclencher les requêtes au bon moment\n- Attendre une pause de saisie avant une recherche ou une suggestion.\n- Lancer une requête après une action explicite ou un nombre minimal de caractères.",
+      "Limiter et réutiliser les résultats\n- Mettre en cache les résultats récents et éviter les requêtes identiques.\n- Limiter le nombre de suggestions et de résultats retournés."
+    ],
+    "dont": [
+      "Envoyer une requête à chaque caractère\n- Éviter de contacter le serveur à chaque frappe pour un contrôle simple.\n- Ne pas lancer plusieurs requêtes concurrentes pour une même saisie.",
+      "Contrôler trop tôt ou sans nécessité\n- Éviter de vérifier un champ vide, incomplet ou non finalisé.",
+      "Répéter les mêmes appels\n- Éviter de redemander des données déjà disponibles localement."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "circuit-breaker",
+    "actionNumbers": [],
+    "title": "Mettre en place un « circuit breaker »",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "resources",
+      "title": "Réduire la consommation de ressources"
+    },
+    "summary": "Éviter qu’un service continue d’envoyer des requêtes vers une dépendance indisponible ou en erreur.",
+    "objective": "Éviter qu’un service continue d’envoyer des requêtes vers une dépendance indisponible ou en erreur. Un circuit breaker interrompt temporairement les appels après un seuil d’échecs, ce qui réduit les requêtes inutiles, préserve les ressources et limite les pannes en cascade.",
+    "do": [
+      "Protéger les dépendances sensibles\n- Mettre un circuit breaker devant les API, services tiers ou bases de données susceptibles d’être indisponibles.\n- Définir les erreurs et délais d’attente à prendre en compte.",
+      "Définir des seuils et une durée adaptés\n- Ouvrir le circuit après un nombre d’échecs défini sur une période donnée.\n- Prévoir une durée d’ouverture avant de tester progressivement le rétablissement du service.",
+      "Prévoir une réponse de remplacement\n- Afficher un message clair ou une fonctionnalité dégradée lorsque le service distant est indisponible.\n- Journaliser les ouvertures du circuit et surveiller les erreurs pour intervenir rapidement. Le modèle prévoit classiquement les états fermé, ouvert et semi-ouvert afin de tester la reprise du service."
+    ],
+    "dont": [
+      "Relancer les appels en échec sans limite\n- Éviter les tentatives répétées vers un service déjà indisponible.\n- Ne pas associer des relances automatiques illimitées à une dépendance défaillante.",
+      "Bloquer l’utilisateur pendant les délais d’attente\n- Éviter d’attendre plusieurs secondes avant d’afficher une erreur connue.\n- Ne pas laisser un écran de chargement infini lorsqu’une dépendance est en panne.",
+      "Ouvrir le circuit sans suivi ni solution de repli\n- Éviter des seuils arbitraires ou non testés.\n- Ne pas masquer l’indisponibilité ni supprimer toute information sur l’état de la demande."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "data-format",
+    "actionNumbers": [],
+    "title": "Choisir un format de données adapté",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "resources",
+      "title": "Réduire la consommation de ressources"
+    },
+    "summary": "Choisir, pour chaque échange ou stockage de données, un format proportionné au contenu, au besoin fonctionnel et au contexte d’utilisation.",
+    "objective": "Choisir, pour chaque échange ou stockage de données, un format proportionné au contenu, au besoin fonctionnel et au contexte d’utilisation. Un format adapté réduit le poids des fichiers, les transferts réseau, le temps de traitement et les besoins de stockage, sans dégrader l’utilité, l’accessibilité ou l’interopérabilité. Le RGESN recommande notamment d’adapter le format au contenu et au contexte de visualisation ou d’utilisation.",
+    "do": [
+      "Adapter le format au type de contenu\n- Utiliser SVG pour les icônes, logos et illustrations vectorielles.\n- Utiliser JPEG ou WebP/AVIF pour les photographies, selon la compatibilité recherchée.\n- Utiliser PNG seulement lorsqu’une transparence ou des aplats précis sont nécessaires.",
+      "Adapter la qualité au contexte\n- Proposer une résolution adaptée à l’affichage réel, sans image ou document surdimensionné.\n- Prévoir une version légère pour la consultation en ligne et une version haute définition seulement pour l’impression ou le téléchargement volontaire.",
+      "Privilégier des formats ouverts et compatibles\n- Utiliser des formats documentés, standards et largement pris en charge.\n- Indiquer le format et le poids avant le téléchargement."
+    ],
+    "dont": [
+      "Utiliser un format inadapté\n- Éviter un PNG lourd pour une photographie ou un JPEG pour un logo vectoriel.\n- Ne pas utiliser un format propriétaire lorsqu’un format ouvert répond au besoin.",
+      "Diffuser une qualité excessive\n- Éviter des fichiers haute définition pour un affichage sur petit écran.\n- Ne pas transmettre des données ou métadonnées inutiles.",
+      "Proposer un seul format pour tous les usages\n- Éviter d’imposer le même fichier pour l’écran, l’impression et l’archivage.\n- Ne pas oublier les contraintes de compatibilité, d’accessibilité et de téléchargement sur connexion limitée."
+    ],
+    "control": [],
+    "essential": false
+  },
+  {
+    "id": "ram-caches",
+    "actionNumbers": [],
+    "title": "Mettre les caches entièrement en RAM (opcode et kvs)",
+    "audience": "Dev Front",
+    "pillar": {
+      "id": "resources",
+      "title": "Réduire la consommation de ressources"
+    },
+    "summary": "Conserver en mémoire vive les données et instructions fréquemment réutilisées afin de réduire les accès disque et les recalculs côté serveur.",
+    "objective": "Conserver en mémoire vive les données et instructions fréquemment réutilisées afin de réduire les accès disque et les recalculs côté serveur. Un cache en RAM permet de répondre plus vite tout en limitant les entrées/sorties et les cycles processeur associés.",
+    "do": [
+      "Cibler les données fréquemment sollicitées\n- Mettre en cache les résultats coûteux et peu volatils.\n- Utiliser un cache d’opcode et un magasin clé-valeur en mémoire lorsque cela est pertinent.",
+      "Dimensionner et surveiller le cache\n- Adapter la taille du cache à la charge et aux données réellement utilisées.\n- Surveiller les évictions, erreurs mémoire et taux d’utilisation.",
+      "Gérer l’expiration et l’invalidation\n- Définir une durée de vie adaptée à chaque donnée.\n- Purger ou actualiser le cache lorsqu’une donnée source est modifiée. Une stratégie de cache serveur doit prévoir des règles d’expiration et de rafraîchissement."
+    ],
+    "dont": [
+      "Utiliser le disque pour un cache très sollicité\n- Éviter les accès disque répétés pour des données fréquemment demandées.\n- Ne pas conserver un cache sur disque lorsqu’un stockage RAM est adapté et disponible.",
+      "Mettre en cache sans limite\n- Éviter de remplir la mémoire avec des données peu utiles ou rarement consultées.\n- Ne pas utiliser une durée de conservation identique pour tous les contenus.",
+      "Servir des données obsolètes\n- Éviter un cache sans règles d’expiration ni mécanisme d’invalidation.\n- Ne pas mettre en cache des données sensibles sans mesures de sécurité adaptées."
+    ],
+    "control": [],
+    "essential": false
   }
 ]
