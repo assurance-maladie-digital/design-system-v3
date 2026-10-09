@@ -119,8 +119,8 @@ importers:
         specifier: ^8.11.0
         version: 8.71.0(eslint@9.39.5)(typescript@5.9.3)
       '@vitejs/plugin-vue':
-        specifier: 5.2.1
-        version: 5.2.1(vite@6.4.3(@types/node@22.20.5)(sass-embedded@1.83.0)(sass@1.105.1))(vue@3.5.43(typescript@5.9.3))
+        specifier: 5.2.4
+        version: 5.2.4(vite@6.4.3(@types/node@22.20.5)(sass-embedded@1.83.0)(sass@1.105.1))(vue@3.5.43(typescript@5.9.3))
       '@vitest/coverage-v8':
         specifier: ^4.1.0
         version: 4.1.11(vitest@4.1.11)
@@ -1738,8 +1738,8 @@ packages:
     resolution: {integrity: sha512-8eQ9R218XORK+KLosnf4bu/QsUXvUyVwTbArg7/0NMB1Pu87OJKvj4nhFblkYE8gQV73mW1dx1ptlPCkwRGa7A==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@vitejs/plugin-vue@5.2.1':
-    resolution: {integrity: sha512-cxh314tzaWwOLqVes2gnnCtvBDcM1UMdn+iFR+UjAn411dPT3tOmqrJjbMd7koZpMAmBM/GqeV4n9ge7JSiJJQ==}
+  '@vitejs/plugin-vue@5.2.4':
+    resolution: {integrity: sha512-7Yx/SXSOcQq5HiiV3orevHUFn+pmMB4cgbEkDYgnkUWb0WfeQ/wa2yFv6D5ICiCQOVpjA7vYDXrC7AGO8yjDHA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
       vite: ^5.0.0 || ^6.0.0
@@ -6812,7 +6812,7 @@ snapshots:
       '@typescript-eslint/types': 8.71.0
       eslint-visitor-keys: 5.0.1
 
-  '@vitejs/plugin-vue@5.2.1(vite@6.4.3(@types/node@22.20.5)(sass-embedded@1.83.0)(sass@1.105.1))(vue@3.5.43(typescript@5.9.3))':
+  '@vitejs/plugin-vue@5.2.4(vite@6.4.3(@types/node@22.20.5)(sass-embedded@1.83.0)(sass@1.105.1))(vue@3.5.43(typescript@5.9.3))':
     dependencies:
       vite: 6.4.3(@types/node@22.20.5)(sass-embedded@1.83.0)(sass@1.105.1)
       vue: 3.5.43(typescript@5.9.3)
