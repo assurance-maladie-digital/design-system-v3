@@ -728,3 +728,5 @@ export function useDatePickerAccessibility() {
 		handleKeyDown,
 	}
 }
+
+export default useDatePickerAccessibility

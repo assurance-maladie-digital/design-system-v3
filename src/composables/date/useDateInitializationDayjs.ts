@@ -121,3 +121,5 @@ export function useDateInitialization() {
 		initializeSelectedDates,
 	}
 }
+
+export default useDateInitialization
