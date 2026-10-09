@@ -21,6 +21,7 @@ vi.mock('../../component-info.json', () => ({
 					// Aucune release ne le contient encore : le badge l'ignore, la liste le marque.
 					{ date: '2026-09-09', message: 'correction non publiée', version: null },
 					{ date: '2026-08-07', message: 'ajout de la prop density', version: '1.1.4' },
+					{ date: '2026-08-06', message: 'libellé <img src="x" onerror="alert(1)"> échappé (#2482)', version: '1.1.4' },
 					{ date: '2026-07-22', message: 'correction du focus', version: '1.1.3' },
 					{ date: '2026-07-06', message: 'mode compact', version: '1.1.2' },
 					{ date: '2025-11-03', message: 'création du composant', version: '0.0.15-alpha' },
@@ -345,6 +346,31 @@ describe('ComponentTrackingPage — filtrage des changements par version', () =>
 		await selectComponents(wrapper, null)
 
 		expect(currentSelection(wrapper)).toEqual([])
+
+		wrapper.unmount()
+	})
+})
+
+describe('ComponentTrackingPage — rendu des messages de commit', () => {
+	it('affiche le HTML d\'un message de commit comme du texte', async () => {
+		const wrapper = mount(ComponentTrackingPage)
+
+		await selectVersion(wrapper, '1.1.4')
+
+		expect(wrapper.find('.c-msg img').exists()).toBe(false)
+		expect(wrapper.text()).toContain('libellé <img src="x" onerror="alert(1)"> échappé')
+
+		wrapper.unmount()
+	})
+
+	it('transforme la référence de PR en lien vers GitHub', async () => {
+		const wrapper = mount(ComponentTrackingPage)
+
+		await selectVersion(wrapper, '1.1.4')
+
+		const link = wrapper.findAll('.c-msg a').find(a => a.text() === '#2482')
+		expect(link?.attributes('href')).toMatch(/\/pull\/2482$/)
+		expect(link?.attributes('rel')).toBe('noopener noreferrer')
 
 		wrapper.unmount()
 	})

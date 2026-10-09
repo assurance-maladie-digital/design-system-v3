@@ -2,6 +2,7 @@ import axios from 'axios'
 import { onMounted, shallowRef } from 'vue'
 import * as marked from 'marked'
 import SyAlert from '../../components/SyAlert/SyAlert.vue'
+import { sanitizeHtml } from './sanitizeHtml'
 
 type GitHubRelease = {
 	id: number
@@ -138,7 +139,7 @@ export const List = {
 
 				const formatMarkdown = (markdown?: string | null) => {
 					const html = marked.parse(markdown ?? '') as string
-					return html.replace(/<blockquote>[\s\S]*?<\/blockquote>/g, '')
+					return sanitizeHtml(html.replace(/<blockquote>[\s\S]*?<\/blockquote>/g, ''))
 				}
 
 				const getReleaseAlerts = (release: GitHubRelease) => {
