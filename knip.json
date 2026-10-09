@@ -9,5 +9,8 @@
 		"scripts/vitest.memcheck.config.ts"
 	],
 	"ignore": ["dist/**"],
-	"ignoreDependencies": ["semantic-release"]
+	"ignoreIssues": {
+		"src/composables/date/*.ts": ["duplicates"],
+		"src/components/DatePicker/composables/useDateAutoClamp.ts": ["duplicates"]
+	}
 }

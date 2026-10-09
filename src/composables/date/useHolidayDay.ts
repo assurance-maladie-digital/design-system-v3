@@ -99,3 +99,5 @@ export function useHolidayDay() {
 		calculPaquesGregorienne,
 	}
 }
+
+export default useHolidayDay
