@@ -25,6 +25,12 @@ Il est basé sur un `v-textfield`.</p>
 
 <Controls of={SySelectStories.Default} />
 
+<p>
+	<b>Sécurité :</b> avec la prop <code>allowHtml</code>, le texte des options est injecté en HTML <b>sans être filtré</b>.
+	Ne l'activer qu'avec des libellés statiques ou nettoyés en amont, jamais avec des données saisies par un utilisateur
+	ou issues d'une API non maîtrisée : un libellé malveillant exécuterait du script dans la page (faille XSS).
+</p>
+
 # Exemple d'utilisation
 
 <Source dark code={`
