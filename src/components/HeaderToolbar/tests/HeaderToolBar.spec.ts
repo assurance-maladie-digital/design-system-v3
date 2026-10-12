@@ -198,10 +198,10 @@ describe('HeaderToolbar', () => {
 			expect(result).toBe('RouterLink')
 		})
 
-		it('retourne "a" pour un item sans href ni to', () => {
+		it('retourne "button" pour un item sans href ni to', () => {
 			const wrapper = mount(HeaderToolbar)
 			const result = wrapper.vm.getLinkComponent({ title: 'Test' })
-			expect(result).toBe('a')
+			expect(result).toBe('button')
 		})
 	})
 
