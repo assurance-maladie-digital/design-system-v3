@@ -2,6 +2,7 @@ import { execFile } from 'node:child_process'
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { basename, dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { isReleaseMessage } from './lib/filters.mjs'
 import { PENDING_LABEL, resolveCommitVersion } from './lib/releaseTags.mjs'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
@@ -259,6 +260,10 @@ async function analyzeComponent(component) {
 	const results = []
 
 	for (const commit of commits) {
+		// Une PR de release regroupe des corrections déjà comptées dans leurs propres PR
+		if (isReleaseMessage(commit.message)) {
+			continue
+		}
 		const diff = await getDiffForCommit(commit.hash, allTrackedFiles)
 		const keywords = hasA11yKeywords(commit.message)
 		const patterns = hasA11yPatterns(diff)
