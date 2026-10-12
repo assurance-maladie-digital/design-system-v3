@@ -1,23 +1,12 @@
 {
   "Accordion": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -61,7 +50,7 @@
       "dateFr": "09/01/2026",
       "message": "accordion fix des problèmes relevés lors de l'audit d'accessibilité (#1677)",
       "version": "1.0.17",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -71,17 +60,6 @@
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
       "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
       "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
@@ -112,17 +90,6 @@
     }
   ],
   "AmeliproAccordion": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "687eac066320e4974c10e66e83e908e642cd8308",
       "date": "2025-12-10 15:05:36 +0100",
@@ -183,14 +150,14 @@
   ],
   "AmeliproAccordionFrieze": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
+      "hash": "b7efc2374b91ff99de07893f6a2f051cfd590658",
+      "date": "2026-10-05 11:57:53 +0200",
+      "dateFr": "05/10/2026",
+      "message": "Security: update plugin undici (#2613)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
       "a11yLabel": false
     },
     {
@@ -229,17 +196,6 @@
   ],
   "AmeliproAccordionGroup": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "525b945c3269f554a696c4287d4a7bf9ca1be315",
       "date": "2025-11-27 16:33:29 +0100",
       "dateFr": "27/11/2025",
@@ -264,14 +220,14 @@
   ],
   "AmeliproAccordionList": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
+      "hash": "b7efc2374b91ff99de07893f6a2f051cfd590658",
+      "date": "2026-10-05 11:57:53 +0200",
+      "dateFr": "05/10/2026",
+      "message": "Security: update plugin undici (#2613)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
       "a11yLabel": false
     },
     {
@@ -280,7 +236,7 @@
       "dateFr": "17/12/2025",
       "message": "Feat/1498 renommer props ariarequired (#1535)",
       "version": "1.0.16",
-      "confidence": "moyenne",
+      "confidence": "faible",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -331,17 +287,6 @@
     }
   ],
   "AmeliproAccordionResult": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "687eac066320e4974c10e66e83e908e642cd8308",
       "date": "2025-12-10 15:05:36 +0100",
@@ -413,23 +358,12 @@
   ],
   "AmeliproAccordionResultList": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
       "dateFr": "17/12/2025",
       "message": "Feat/1498 renommer props ariarequired (#1535)",
       "version": "1.0.16",
-      "confidence": "moyenne",
+      "confidence": "faible",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -491,17 +425,6 @@
     }
   ],
   "AmeliproAutoCompleteField": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
@@ -569,31 +492,7 @@
       "a11yLabel": false
     }
   ],
-  "AmeliproBadge": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    }
-  ],
   "AmeliproBreadcrumb": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "487d5fe1b4dd2b32bf8b61f8d1c402741ef74d6f",
       "date": "2026-01-20 16:46:59 +0100",
@@ -628,31 +527,7 @@
       "a11yLabel": false
     }
   ],
-  "AmeliproBtn": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    }
-  ],
   "AmeliproCallback": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "1539898edaaa972fafe1662cb4d55e489a7e7a74",
       "date": "2025-07-18 17:11:17 +0200",
@@ -666,17 +541,6 @@
     }
   ],
   "AmeliproCaptcha": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
@@ -724,17 +588,6 @@
   ],
   "AmeliproCard": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "60839dda49f37ea1fce75201c5fe7a2516016392",
       "date": "2025-10-24 13:18:53 +0200",
       "dateFr": "24/10/2025",
@@ -759,14 +612,14 @@
   ],
   "AmeliproCarousel": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
+      "hash": "b7efc2374b91ff99de07893f6a2f051cfd590658",
+      "date": "2026-10-05 11:57:53 +0200",
+      "dateFr": "05/10/2026",
+      "message": "Security: update plugin undici (#2613)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
       "a11yLabel": false
     },
     {
@@ -840,17 +693,6 @@
   ],
   "AmeliproCheckbox": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "f2e75c4313e579c69a4471d51ce3f2f1899f597c",
       "date": "2026-04-21 09:57:46 +0200",
       "dateFr": "21/04/2026",
@@ -908,17 +750,6 @@
   ],
   "AmeliproCheckboxGroup": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "f2e75c4313e579c69a4471d51ce3f2f1899f597c",
       "date": "2026-04-21 09:57:46 +0200",
       "dateFr": "21/04/2026",
@@ -974,31 +805,7 @@
       "a11yLabel": false
     }
   ],
-  "AmeliproChips": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    }
-  ],
   "AmeliproClickableTile": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "5ca377d8b84d0249407e5eb3d2378b7a81d9bf31",
       "date": "2026-02-09 09:55:44 +0100",
@@ -1033,31 +840,7 @@
       "a11yLabel": false
     }
   ],
-  "AmeliproContentLayout": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    }
-  ],
   "AmeliproCopyBtn": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "687eac066320e4974c10e66e83e908e642cd8308",
       "date": "2025-12-10 15:05:36 +0100",
@@ -1082,17 +865,6 @@
     }
   ],
   "AmeliproCustomSelector": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "f2e75c4313e579c69a4471d51ce3f2f1899f597c",
       "date": "2026-04-21 09:57:46 +0200",
@@ -1162,23 +934,12 @@
   ],
   "AmeliproDentalChart": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
       "dateFr": "17/12/2025",
       "message": "Feat/1498 renommer props ariarequired (#1535)",
       "version": "1.0.16",
-      "confidence": "moyenne",
+      "confidence": "faible",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -1210,17 +971,6 @@
   ],
   "AmeliproDialog": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "2875afb9e108c907979ad2ee6fa8c32932bf70b5",
       "date": "2025-10-07 09:39:17 +0200",
       "dateFr": "07/10/2025",
@@ -1244,17 +994,6 @@
     }
   ],
   "AmeliproDisclosure": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "e09f1746ebff79d8d76b91abfaaed7e903628744",
       "date": "2025-11-07 15:08:08 +0100",
@@ -1280,17 +1019,6 @@
   ],
   "AmeliproErrorTemplate": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "1907802e8607886e64b6f3f77fb7858552788e7f",
       "date": "2025-12-08 11:54:26 +0100",
       "dateFr": "08/12/2025",
@@ -1314,17 +1042,6 @@
     }
   ],
   "AmeliproFilePreview": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "1907802e8607886e64b6f3f77fb7858552788e7f",
       "date": "2025-12-08 11:54:26 +0100",
@@ -1361,17 +1078,6 @@
   ],
   "AmeliproFilters": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "f2e75c4313e579c69a4471d51ce3f2f1899f597c",
       "date": "2026-04-21 09:57:46 +0200",
       "dateFr": "21/04/2026",
@@ -1407,17 +1113,6 @@
   ],
   "AmeliproFirstLogin": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "687eac066320e4974c10e66e83e908e642cd8308",
       "date": "2025-12-10 15:05:36 +0100",
       "dateFr": "10/12/2025",
@@ -1441,17 +1136,6 @@
     }
   ],
   "AmeliproFooter": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "d5e20e7e988c19b69e56e21b3aabdd36d1a413d3",
       "date": "2025-11-24 09:15:58 +0100",
@@ -1485,17 +1169,6 @@
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -1694,17 +1367,6 @@
   ],
   "AmeliproIcon": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "95db60ddc2bc7006377c1e7a590ee04cbf6c4c71",
       "date": "2026-02-11 10:13:17 +0100",
       "dateFr": "11/02/2026",
@@ -1749,31 +1411,7 @@
       "a11yLabel": false
     }
   ],
-  "AmeliproIconBtn": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    }
-  ],
   "AmeliproIllustratedDataTile": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "fded0c724003b5cdf5b09ddbb21b820289a507a9",
       "date": "2025-11-27 11:31:49 +0100",
@@ -1798,17 +1436,6 @@
     }
   ],
   "AmeliproIllustratedRadioGroup": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "487d5fe1b4dd2b32bf8b61f8d1c402741ef74d6f",
       "date": "2026-01-20 16:46:59 +0100",
@@ -1867,17 +1494,6 @@
   ],
   "AmeliproMailTile": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "9df69d6c84d0c1383cd62b5441d0a027a07a01f7",
       "date": "2026-08-25 08:58:16 +0200",
       "dateFr": "25/08/2026",
@@ -1913,17 +1529,6 @@
   ],
   "AmeliproMenu": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
       "date": "2026-07-27 14:32:02 +0200",
       "dateFr": "27/07/2026",
@@ -1958,17 +1563,6 @@
     }
   ],
   "AmeliproMessage": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "487d5fe1b4dd2b32bf8b61f8d1c402741ef74d6f",
       "date": "2026-01-20 16:46:59 +0100",
@@ -2053,17 +1647,6 @@
   ],
   "AmeliproMessagingLayout": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "584adbbda99b243ca1d3e9a98c46f1d6789cdf91",
       "date": "2025-11-27 16:00:43 +0100",
       "dateFr": "27/11/2025",
@@ -2110,17 +1693,6 @@
   ],
   "AmeliproMultipleFoldingCard": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "e51051e07a6210146f33005d31131ae2805679e7",
       "date": "2025-12-08 12:10:22 +0100",
       "dateFr": "08/12/2025",
@@ -2143,31 +1715,7 @@
       "a11yLabel": false
     }
   ],
-  "AmeliproNumberedCard": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    }
-  ],
   "AmeliproOnboarding": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "1539898edaaa972fafe1662cb4d55e489a7e7a74",
       "date": "2025-07-18 17:11:17 +0200",
@@ -2181,17 +1729,6 @@
     }
   ],
   "AmeliproPageLayout": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "5a382aaed10af7706f49dcfc707c163e1a4317b4",
       "date": "2025-11-28 13:37:12 +0100",
@@ -2216,17 +1753,6 @@
     }
   ],
   "AmeliproPagination": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "5a382aaed10af7706f49dcfc707c163e1a4317b4",
       "date": "2025-11-28 13:37:12 +0100",
@@ -2274,38 +1800,14 @@
       "a11yLabel": false
     }
   ],
-  "AmeliproPatientBanner": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    }
-  ],
   "AmeliproPatientLogged": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
       "dateFr": "17/12/2025",
       "message": "Feat/1498 renommer props ariarequired (#1535)",
       "version": "1.0.16",
-      "confidence": "moyenne",
+      "confidence": "faible",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -2356,17 +1858,6 @@
     }
   ],
   "AmeliproPatientLogin": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
@@ -2506,17 +1997,6 @@
   ],
   "AmeliproPostalAddressField": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
       "dateFr": "17/12/2025",
@@ -2585,17 +2065,6 @@
   ],
   "AmeliproRadioGroup": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
       "dateFr": "17/12/2025",
@@ -2653,23 +2122,12 @@
   ],
   "AmeliproResultList": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
       "dateFr": "17/12/2025",
       "message": "Feat/1498 renommer props ariarequired (#1535)",
       "version": "1.0.16",
-      "confidence": "moyenne",
+      "confidence": "faible",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -2720,17 +2178,6 @@
     }
   ],
   "AmeliproSelect": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "f2e75c4313e579c69a4471d51ce3f2f1899f597c",
       "date": "2026-04-21 09:57:46 +0200",
@@ -2798,32 +2245,6 @@
       "a11yLabel": false
     }
   ],
-  "AmeliproStateTile": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    }
-  ],
-  "AmeliproStatus": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    }
-  ],
   "AmeliproStepBtn": [
     {
       "hash": "74771278235e597eb96e763e490447e95a224d5d",
@@ -2849,17 +2270,6 @@
     }
   ],
   "AmeliproStepper": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "487d5fe1b4dd2b32bf8b61f8d1c402741ef74d6f",
       "date": "2026-01-20 16:46:59 +0100",
@@ -2906,17 +2316,6 @@
     }
   ],
   "AmeliproTable": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "566acc2e417f02c6d5eb94c92559ad99730cd415",
       "date": "2025-12-08 14:21:04 +0100",
@@ -2999,17 +2398,6 @@
   ],
   "AmeliproTabs": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "4505943446a82b6bedfae76e5faa4a6f13f19f36",
       "date": "2026-01-06 16:39:27 +0100",
       "dateFr": "06/01/2026",
@@ -3067,17 +2455,6 @@
   ],
   "AmeliproTextArea": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
       "dateFr": "17/12/2025",
@@ -3134,17 +2511,6 @@
     }
   ],
   "AmeliproTextField": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "8cd25df337dd7df9a09d92eeecbeb80ebf74c9e3",
       "date": "2026-08-20 12:20:15 +0200",
@@ -3212,31 +2578,7 @@
       "a11yLabel": false
     }
   ],
-  "AmeliproTileBtn": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    }
-  ],
   "AmeliproTooltips": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "1539898edaaa972fafe1662cb4d55e489a7e7a74",
       "date": "2025-07-18 17:11:17 +0200",
@@ -3249,31 +2591,7 @@
       "a11yLabel": false
     }
   ],
-  "AmeliproTransmission": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    }
-  ],
   "AmeliproUpload": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "ddd68980d997e18bc0d4ddd60bc9919b3a5bad40",
       "date": "2025-12-17 14:13:24 +0100",
@@ -3309,17 +2627,6 @@
     }
   ],
   "ServiceMenu": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "c54d359043e8d6cd165dd47a9e08009a6d10fedb",
       "date": "2025-12-05 16:04:59 +0100",
@@ -3403,17 +2710,6 @@
     }
   ],
   "StructureMenu": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "5792f7ef0c4f5c99c65d1c40d5bf076adc68b83f",
       "date": "2026-01-09 09:35:21 +0100",
@@ -3505,49 +2801,14 @@
       "a11yLabel": false
     }
   ],
-  "UserMenu": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    }
-  ],
   "BackBtn": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -3575,17 +2836,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-      "date": "2026-01-30 15:10:51 +0100",
-      "dateFr": "30/01/2026",
-      "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-      "version": "1.0.18",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
@@ -3597,23 +2847,12 @@
       "a11yLabel": false
     },
     {
-      "hash": "30ead9ee61626407d453f957a382fb0fd57fb7d6",
-      "date": "2025-04-14 13:02:49 +0000",
-      "dateFr": "14/04/2025",
-      "message": "[DownloadBtn] fixe des problèmes d'accessibilité (#522)",
-      "version": "0.0.15-alpha",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "6318250b9ae75875589ba95d179bd84a9c9d8a79",
       "date": "2025-04-11 07:30:33 +0000",
       "dateFr": "11/04/2025",
       "message": "[BackBtn] fixe des problèmes d'accessibilité (#521)",
       "version": "0.0.15-alpha",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -3621,34 +2860,12 @@
   ],
   "BackToTopBtn": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -3676,32 +2893,10 @@
       "a11yLabel": false
     },
     {
-      "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-      "date": "2026-01-30 15:10:51 +0100",
-      "dateFr": "30/01/2026",
-      "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-      "version": "1.0.18",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
       "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
       "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
@@ -3714,7 +2909,7 @@
       "dateFr": "24/04/2025",
       "message": "BackToTopBtn - fix d'audit d'accessibilité (#560)",
       "version": "0.0.15-alpha",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -3744,28 +2939,6 @@
   ],
   "Captcha": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
-      "date": "2026-09-09 16:07:21 +0200",
-      "dateFr": "09/09/2026",
-      "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
       "dateFr": "13/08/2026",
@@ -3782,7 +2955,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -3900,28 +3073,6 @@
   ],
   "CaptchaAlert": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
-      "date": "2026-09-09 16:07:21 +0200",
-      "dateFr": "09/09/2026",
-      "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
       "dateFr": "13/08/2026",
@@ -3938,7 +3089,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -4056,28 +3207,6 @@
   ],
   "CaptchaBase": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
-      "date": "2026-09-09 16:07:21 +0200",
-      "dateFr": "09/09/2026",
-      "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
       "dateFr": "13/08/2026",
@@ -4094,7 +3223,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -4212,28 +3341,6 @@
   ],
   "CaptchaBtn": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
-      "date": "2026-09-09 16:07:21 +0200",
-      "dateFr": "09/09/2026",
-      "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
       "dateFr": "13/08/2026",
@@ -4250,7 +3357,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -4368,28 +3475,6 @@
   ],
   "CaptchaForm": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
-      "date": "2026-09-09 16:07:21 +0200",
-      "dateFr": "09/09/2026",
-      "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
       "dateFr": "13/08/2026",
@@ -4406,7 +3491,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -4524,28 +3609,6 @@
   ],
   "CaptchaHelpdesk": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
-      "date": "2026-09-09 16:07:21 +0200",
-      "dateFr": "09/09/2026",
-      "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
       "dateFr": "13/08/2026",
@@ -4562,7 +3625,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -4680,28 +3743,6 @@
   ],
   "CaptchaImg": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
-      "date": "2026-09-09 16:07:21 +0200",
-      "dateFr": "09/09/2026",
-      "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
       "dateFr": "13/08/2026",
@@ -4718,7 +3759,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -4836,28 +3877,6 @@
   ],
   "CaptchaInformation": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
-      "date": "2026-09-09 16:07:21 +0200",
-      "dateFr": "09/09/2026",
-      "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
       "dateFr": "13/08/2026",
@@ -4874,7 +3893,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -4992,34 +4011,12 @@
   ],
   "ChipList": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -5052,7 +4049,7 @@
       "dateFr": "15/01/2026",
       "message": "feat: enhance accessibility and usability of FilterSideBar component (#1704)",
       "version": "1.0.17",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -5080,17 +4077,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "07e0c84d28534651ca9d468b4591f335f8574cf7",
       "date": "2025-08-12 13:49:37 +0200",
       "dateFr": "12/08/2025",
@@ -5115,23 +4101,12 @@
   ],
   "CollapsibleList": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -5231,23 +4206,12 @@
   ],
   "ContextualMenu": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -5275,17 +4239,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-      "date": "2026-01-30 15:10:51 +0100",
-      "dateFr": "30/01/2026",
-      "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-      "version": "1.0.18",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
@@ -5294,17 +4247,6 @@
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -5321,23 +4263,12 @@
   ],
   "DeepMenu": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -5365,17 +4296,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-      "date": "2026-01-30 15:10:51 +0100",
-      "dateFr": "30/01/2026",
-      "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-      "version": "1.0.18",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
@@ -5384,17 +4304,6 @@
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -5410,28 +4319,6 @@
     }
   ],
   "CookieBanner": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "499a1aa0772107eb411333e91a6741a2695ed0fa",
       "date": "2026-08-06 15:19:01 +0200",
@@ -5449,7 +4336,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -5492,17 +4379,6 @@
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
       "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
       "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
@@ -5570,7 +4446,7 @@
       "dateFr": "09/01/2025",
       "message": "correction des problèmes d'accessibilité sur le CookieBanner (#301)",
       "version": "0.0.8-alpha",
-      "confidence": "forte",
+      "confidence": "faible",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -5594,7 +4470,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -5649,7 +4525,7 @@
       "dateFr": "09/01/2025",
       "message": "correction des problèmes d'accessibilité sur le CookieBanner (#301)",
       "version": "0.0.8-alpha",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -5668,23 +4544,12 @@
   ],
   "CookiesSelection": [
     {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -5750,7 +4615,7 @@
       "dateFr": "09/01/2025",
       "message": "correction des problèmes d'accessibilité sur le CookieBanner (#301)",
       "version": "0.0.8-alpha",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -5785,7 +4650,7 @@
       "dateFr": "09/01/2025",
       "message": "correction des problèmes d'accessibilité sur le CookieBanner (#301)",
       "version": "0.0.8-alpha",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -5793,14 +4658,14 @@
   ],
   "CopyBtn": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
+      "hash": "eb0307f7c72cde537c9c3f26980118810f0adc9c",
+      "date": "2026-10-05 10:40:12 +0200",
+      "dateFr": "05/10/2026",
+      "message": "CopyBtn: correction test accessibility et update documentation (#2607)",
+      "version": null,
       "confidence": "forte",
       "keywords": true,
-      "patterns": false,
+      "patterns": true,
       "a11yLabel": false
     },
     {
@@ -5809,7 +4674,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -5837,17 +4702,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-      "date": "2026-01-30 15:10:51 +0100",
-      "dateFr": "30/01/2026",
-      "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-      "version": "1.0.18",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
@@ -5856,17 +4710,6 @@
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -5897,7 +4740,7 @@
       "dateFr": "27/09/2024",
       "message": "fix CopyBtn accessibility (#87)",
       "version": "0.0.1-alpha",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -5920,25 +4763,10 @@
       "date": "2026-09-17 14:05:01 +0200",
       "dateFr": "17/09/2026",
       "message": "add tests a11y to selectBtnField (#2543)",
-      "hash": "99dd21e66e143bda73bf5d60d7cc258bf80fda35",
-      "date": "2026-09-17 14:05:01 +0200",
-      "dateFr": "17/09/2026",
-      "message": "add tests a11y to selectBtnField (#2543)",
       "version": "1.1.6",
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -5947,7 +4775,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -6041,17 +4869,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-      "date": "2026-01-30 15:10:51 +0100",
-      "dateFr": "30/01/2026",
-      "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-      "version": "1.0.18",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "3565543635e1f82d12ac3785ace129d7fb0fb7a9",
       "date": "2025-12-05 16:13:57 +0100",
       "dateFr": "05/12/2025",
@@ -6076,17 +4893,6 @@
   ],
   "SyAutocomplete": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "7dab36881ad0d0ba95dcbbff4810c1f7d34d72f5",
       "date": "2026-08-12 16:12:41 +0200",
       "dateFr": "12/08/2026",
@@ -6103,7 +4909,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -6232,17 +5038,6 @@
   ],
   "SyInputSelect": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "8cd25df337dd7df9a09d92eeecbeb80ebf74c9e3",
       "date": "2026-08-20 12:20:15 +0200",
       "dateFr": "20/08/2026",
@@ -6251,17 +5046,6 @@
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -6281,7 +5065,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -6344,17 +5128,6 @@
   ],
   "SySelect": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
@@ -6393,7 +5166,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -6476,17 +5249,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-      "date": "2026-01-30 15:10:51 +0100",
-      "dateFr": "30/01/2026",
-      "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-      "version": "1.0.18",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "c3265eb88d01ee106e4db7f1a7d28cd960e48bb4",
       "date": "2026-01-30 12:33:02 +0100",
       "dateFr": "30/01/2026",
@@ -6509,23 +5271,12 @@
       "a11yLabel": false
     },
     {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "1adde3ed7e7063a130e7f2dd0ff4297000730a12",
       "date": "2025-12-18 15:47:20 +0100",
       "dateFr": "18/12/2025",
       "message": "refactor SySelect keyboard handling for improved focus management (#1641)",
       "version": "1.0.16",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -6569,7 +5320,7 @@
       "dateFr": "23/09/2025",
       "message": "improve sySelect accessibility (#1141)",
       "version": "1.0.10",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -6613,7 +5364,7 @@
       "dateFr": "02/09/2025",
       "message": "SySelect focus on clear (#1044)",
       "version": "1.0.7",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -6676,17 +5427,6 @@
   ],
   "SyCheckBoxGroup": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
       "date": "2026-07-27 14:32:02 +0200",
       "dateFr": "27/07/2026",
@@ -6698,23 +5438,12 @@
       "a11yLabel": false
     },
     {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "7f2a9c3ab64afbcceb675f6207bcef447a508ec8",
       "date": "2026-07-08 14:17:13 +0200",
       "dateFr": "08/07/2026",
       "message": "[SyCheckbox] fix des retours d'accessibilitées (#2366)",
       "version": "1.1.2",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -6732,17 +5461,6 @@
     }
   ],
   "SyCheckbox": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "9099bd12f8b762c86fff317a56be129231501fbd",
       "date": "2026-08-27 16:25:29 +0200",
@@ -6771,7 +5489,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "faible",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -6804,7 +5522,7 @@
       "dateFr": "23/06/2026",
       "message": "fix(SyCheckbox): improve focus styling (#2311)",
       "version": "1.1.2",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -6859,7 +5577,7 @@
       "dateFr": "10/03/2026",
       "message": "SySelect: fix de la navigation clavier (#1920)",
       "version": "1.0.22",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -6909,28 +5627,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "97b6b167fd7bb12364aad36899f3f8d7fdbd06e0",
-      "date": "2025-11-28 09:36:33 +0100",
-      "dateFr": "28/11/2025",
-      "message": "SearchListField accessibilité (#1499)",
-      "version": "1.0.16",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "88c74a321378e10f0571dde4821c16953b790dae",
       "date": "2025-08-19 17:46:15 +0200",
       "dateFr": "19/08/2025",
@@ -6966,25 +5662,25 @@
   ],
   "SyForm": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
+      "hash": "7ac9b1d8f2a8bf74187de0635012c8454422e9df",
+      "date": "2026-10-07 16:31:56 +0200",
+      "dateFr": "07/10/2026",
+      "message": "docs(SyForm): fix markdown escaping in accessibility documentation",
+      "version": null,
       "confidence": "forte",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
     },
     {
-      "hash": "c436586292ca72c4d82809711b9ef7cdcbdcc09a",
-      "date": "2026-02-25 16:19:14 +0100",
-      "dateFr": "25/02/2026",
-      "message": "add a11y ci (#1881)",
-      "version": "1.0.21",
+      "hash": "a0796b78d71f23b3a2a6a9ed3aca4bd80317f8a4",
+      "date": "2026-10-07 16:28:55 +0200",
+      "dateFr": "07/10/2026",
+      "message": "docs(a11y): update accessibility status report and documentation",
+      "version": null,
       "confidence": "forte",
       "keywords": true,
-      "patterns": false,
+      "patterns": true,
       "a11yLabel": false
     },
     {
@@ -6997,38 +5693,16 @@
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
-    },
-    {
-      "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
-      "date": "2026-01-06 11:55:17 +0100",
-      "dateFr": "06/01/2026",
-      "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
     }
   ],
   "SyIcon": [
-    {
-      "hash": "10d998f3c39c4df0f14b28536e73af79a2d02399",
-      "date": "2026-09-17 16:04:51 +0200",
-      "dateFr": "17/09/2026",
-      "message": "refacto tests a11y (#2562)",
-      "version": null,
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": true,
-      "a11yLabel": false
-    },
     {
       "hash": "6b48d0b4c60df11d089c554c474f5f21f6e3a2fd",
       "date": "2026-09-24 14:22:02 +0200",
       "dateFr": "24/09/2026",
       "message": "SyIcon - add accessibility tab on AccessibilityDemo story (#2569)",
       "version": "1.1.6",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -7042,17 +5716,6 @@
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -7094,7 +5757,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -7149,7 +5812,7 @@
       "dateFr": "16/03/2026",
       "message": "SyIcon: fix decorative prop default value and improve accessibility handling (#1965)",
       "version": "1.0.22",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -7160,7 +5823,7 @@
       "dateFr": "02/03/2026",
       "message": "Feat/fix a11y tests (#1883)",
       "version": "1.0.22",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -7174,17 +5837,6 @@
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -7212,23 +5864,12 @@
   ],
   "SyIconAccessibility": [
     {
-      "hash": "10d998f3c39c4df0f14b28536e73af79a2d02399",
-      "date": "2026-09-17 16:04:51 +0200",
-      "dateFr": "17/09/2026",
-      "message": "refacto tests a11y (#2562)",
-      "version": null,
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
       "hash": "6b48d0b4c60df11d089c554c474f5f21f6e3a2fd",
       "date": "2026-09-24 14:22:02 +0200",
       "dateFr": "24/09/2026",
       "message": "SyIcon - add accessibility tab on AccessibilityDemo story (#2569)",
       "version": "1.1.6",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -7242,17 +5883,6 @@
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -7294,7 +5924,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -7349,7 +5979,7 @@
       "dateFr": "16/03/2026",
       "message": "SyIcon: fix decorative prop default value and improve accessibility handling (#1965)",
       "version": "1.0.22",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -7360,7 +5990,7 @@
       "dateFr": "02/03/2026",
       "message": "Feat/fix a11y tests (#1883)",
       "version": "1.0.22",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -7374,17 +6004,6 @@
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -7411,17 +6030,6 @@
     }
   ],
   "SyIconButton": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
       "date": "2026-08-13 15:55:47 +0200",
@@ -7450,7 +6058,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -7460,17 +6068,6 @@
       "date": "2026-07-07 15:06:32 +0200",
       "dateFr": "07/07/2026",
       "message": "SyTable/SyServerTable row editing + global actions (#2338)",
-      "version": "1.1.2",
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "6816c49867c1f06368e49ed5cd44461a1ce7bb1f",
-      "date": "2026-06-23 15:27:49 +0200",
-      "dateFr": "23/06/2026",
-      "message": "display version badge in docs (#2308)",
       "version": "1.1.2",
       "confidence": "faible",
       "keywords": false,
@@ -7491,23 +6088,12 @@
   ],
   "SyPagination": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -7592,17 +6178,6 @@
   ],
   "SyRadioGroup": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "a216fc35e26df993b7be4d403abcc5d65b5a8e36",
       "date": "2026-08-25 10:33:40 +0200",
       "dateFr": "25/08/2026",
@@ -7630,7 +6205,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -7715,17 +6290,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
       "date": "2026-07-27 14:32:02 +0200",
       "dateFr": "27/07/2026",
@@ -7742,7 +6306,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -7814,17 +6378,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "2b74efb48469f7d15d95eb4cfd60b35dd3763d5e",
       "date": "2025-12-19 14:23:47 +0100",
       "dateFr": "19/12/2025",
@@ -7882,17 +6435,6 @@
   ],
   "FieldState": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
@@ -7920,20 +6462,9 @@
       "dateFr": "23/07/2026",
       "message": "WIP: Feat/a11y complex date picker (#2390)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -7992,17 +6523,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "a0978412009d92f864ac437f4ad279910076c0cc",
-      "date": "2026-04-03 08:50:02 +0200",
-      "dateFr": "03/04/2026",
-      "message": "SyTextField: enable a11y tests for WithTooltips story (#2062)",
-      "version": "1.0.24",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
       "date": "2026-03-30 08:20:25 +0100",
       "dateFr": "30/03/2026",
@@ -8041,7 +6561,7 @@
       "dateFr": "02/03/2026",
       "message": "Feat/fix a11y tests (#1883)",
       "version": "1.0.22",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -8069,17 +6589,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-      "date": "2026-01-30 15:10:51 +0100",
-      "dateFr": "30/01/2026",
-      "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-      "version": "1.0.18",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "517a9b37efc6ae9bb4139cb9a69b37eab3711d28",
       "date": "2026-01-16 09:28:09 +0100",
       "dateFr": "16/01/2026",
@@ -8095,17 +6604,6 @@
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
       "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
       "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
@@ -8140,7 +6638,7 @@
       "dateFr": "04/11/2025",
       "message": "DatePicker : improve accessibility (#1399)",
       "version": "1.0.12",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -8151,7 +6649,7 @@
       "dateFr": "03/10/2025",
       "message": "NirField correction post audit Accessibilité (#1131)",
       "version": "1.0.10",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -8220,17 +6718,6 @@
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "80b0b2f16aef1d0948b046e9f95821d3f4bc12a3",
-      "date": "2025-03-28 15:05:15 +0100",
-      "dateFr": "28/03/2025",
-      "message": "Enhance Storybook pages for accessibility and add Screen Readers and Design System Audit pages (#473)",
-      "version": "0.0.13-alpha",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -8302,17 +6789,6 @@
   ],
   "SyTextField": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
@@ -8340,20 +6816,9 @@
       "dateFr": "23/07/2026",
       "message": "WIP: Feat/a11y complex date picker (#2390)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -8412,17 +6877,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "a0978412009d92f864ac437f4ad279910076c0cc",
-      "date": "2026-04-03 08:50:02 +0200",
-      "dateFr": "03/04/2026",
-      "message": "SyTextField: enable a11y tests for WithTooltips story (#2062)",
-      "version": "1.0.24",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
       "date": "2026-03-30 08:20:25 +0100",
       "dateFr": "30/03/2026",
@@ -8461,7 +6915,7 @@
       "dateFr": "02/03/2026",
       "message": "Feat/fix a11y tests (#1883)",
       "version": "1.0.22",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -8489,17 +6943,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-      "date": "2026-01-30 15:10:51 +0100",
-      "dateFr": "30/01/2026",
-      "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-      "version": "1.0.18",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "517a9b37efc6ae9bb4139cb9a69b37eab3711d28",
       "date": "2026-01-16 09:28:09 +0100",
       "dateFr": "16/01/2026",
@@ -8515,17 +6958,6 @@
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
       "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
       "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
@@ -8560,7 +6992,7 @@
       "dateFr": "04/11/2025",
       "message": "DatePicker : improve accessibility (#1399)",
       "version": "1.0.12",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -8571,7 +7003,7 @@
       "dateFr": "03/10/2025",
       "message": "NirField correction post audit Accessibilité (#1131)",
       "version": "1.0.10",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -8643,17 +7075,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "80b0b2f16aef1d0948b046e9f95821d3f4bc12a3",
-      "date": "2025-03-28 15:05:15 +0100",
-      "dateFr": "28/03/2025",
-      "message": "Enhance Storybook pages for accessibility and add Screen Readers and Design System Audit pages (#473)",
-      "version": "0.0.13-alpha",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "2a65d995a12edc0694bde3622a168e2acf06701b",
       "date": "2025-03-11 10:51:50 +0100",
       "dateFr": "11/03/2025",
@@ -8721,28 +7142,6 @@
     }
   ],
   "DataList": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
       "date": "2026-03-30 08:20:25 +0100",
@@ -8836,28 +7235,6 @@
   ],
   "DataListGroup": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
       "date": "2026-03-30 08:20:25 +0100",
       "dateFr": "30/03/2026",
@@ -8893,6 +7270,17 @@
   ],
   "DataListItem": [
     {
+      "hash": "9b8c8644c12b5f3be309f6496104027b261f166d",
+      "date": "2026-10-08 16:56:23 +0200",
+      "dateFr": "08/10/2026",
+      "message": "add tests (#2623)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "5a322e15e83a6f15a7c62feb7dd6747aabc1df86",
       "date": "2026-09-28 09:08:42 +0200",
       "dateFr": "28/09/2026",
@@ -8909,7 +7297,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -8950,28 +7338,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "611b0627edc2976b1cd4129f701dd228394d52d8",
       "date": "2026-07-31 12:04:52 +0200",
       "dateFr": "31/07/2026",
@@ -8988,7 +7354,7 @@
       "dateFr": "30/07/2026",
       "message": "DatePicker: improve keyboard navigation in month and year selection v… (#2437)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -9021,7 +7387,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -9054,7 +7420,7 @@
       "dateFr": "20/04/2026",
       "message": "Feat/improve sy tabs a11y (#2111)",
       "version": "1.0.25",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -9104,23 +7470,12 @@
       "a11yLabel": false
     },
     {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "35c62cc0e150ad7000a1496266bdc873872ff6c2",
       "date": "2025-11-04 13:56:18 +0100",
       "dateFr": "04/11/2025",
       "message": "DatePicker : improve accessibility (#1399)",
       "version": "1.0.12",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -9131,7 +7486,7 @@
       "dateFr": "20/08/2025",
       "message": "improve dp keyboard navigation (#975)",
       "version": "1.0.7",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -9147,28 +7502,6 @@
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -9188,7 +7521,7 @@
       "dateFr": "30/07/2026",
       "message": "DatePicker: improve keyboard navigation in month and year selection v… (#2437)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -9221,7 +7554,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -9293,23 +7626,12 @@
       "a11yLabel": false
     },
     {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "35c62cc0e150ad7000a1496266bdc873872ff6c2",
       "date": "2025-11-04 13:56:18 +0100",
       "dateFr": "04/11/2025",
       "message": "DatePicker : improve accessibility (#1399)",
       "version": "1.0.12",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -9350,28 +7672,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "611b0627edc2976b1cd4129f701dd228394d52d8",
       "date": "2026-07-31 12:04:52 +0200",
       "dateFr": "31/07/2026",
@@ -9399,7 +7699,7 @@
       "dateFr": "30/07/2026",
       "message": "DatePicker: improve keyboard navigation in month and year selection v… (#2437)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -9432,7 +7732,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -9476,7 +7776,7 @@
       "dateFr": "20/04/2026",
       "message": "Feat/improve sy tabs a11y (#2111)",
       "version": "1.0.25",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -9537,43 +7837,10 @@
       "a11yLabel": false
     },
     {
-      "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
-      "date": "2026-02-11 12:51:15 +0100",
-      "dateFr": "11/02/2026",
-      "message": "Accessibilité: file reorganization accessibility (#1792)",
-      "version": "1.0.20",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-      "date": "2026-01-30 15:10:51 +0100",
-      "dateFr": "30/01/2026",
-      "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-      "version": "1.0.18",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
       "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
       "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
@@ -9597,7 +7864,7 @@
       "dateFr": "04/11/2025",
       "message": "DatePicker : improve accessibility (#1399)",
       "version": "1.0.12",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -9652,7 +7919,7 @@
       "dateFr": "20/08/2025",
       "message": "improve dp keyboard navigation (#975)",
       "version": "1.0.7",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -9737,17 +8004,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "f2ae3fd9d1c349db938de16033ed24455131653c",
       "date": "2026-07-23 11:35:27 +0200",
       "dateFr": "23/07/2026",
@@ -9756,17 +8012,6 @@
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -9825,17 +8070,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "dfd126d73e2c465e0911070afee57a791c5cae2c",
       "date": "2025-12-15 09:36:48 +0100",
       "dateFr": "15/12/2025",
@@ -9852,7 +8086,7 @@
       "dateFr": "04/11/2025",
       "message": "DatePicker : improve accessibility (#1399)",
       "version": "1.0.12",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -9987,60 +8221,14 @@
       "a11yLabel": false
     }
   ],
-  "DeclarationAccessibilityPage": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    }
-  ],
   "DiacriticPicker": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -10062,7 +8250,7 @@
       "dateFr": "18/02/2026",
       "message": "fix: ensure input has aria-label in DiacriticPicker and add a11y:report script (#1832)",
       "version": "1.0.21",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -10114,17 +8302,6 @@
   ],
   "DialogBox": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "30980ea7b507740d586d1cf742fc41eef49b6b3c",
       "date": "2026-08-05 15:08:26 +0200",
       "dateFr": "05/08/2026",
@@ -10141,7 +8318,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -10185,7 +8362,7 @@
       "dateFr": "10/03/2026",
       "message": "UploadWorkflow: Tests et page d'accessibilité (#1923)",
       "version": "1.0.22",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -10196,17 +8373,6 @@
       "dateFr": "11/02/2026",
       "message": "Accessibilité: file reorganization accessibility (#1792)",
       "version": "1.0.20",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-      "date": "2026-01-30 15:10:51 +0100",
-      "dateFr": "30/01/2026",
-      "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-      "version": "1.0.18",
       "confidence": "forte",
       "keywords": true,
       "patterns": false,
@@ -10224,23 +8390,12 @@
       "a11yLabel": false
     },
     {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "7e1f98b18cc5878db3ca712a924a0be690b9c2a3",
       "date": "2025-10-06 15:53:05 +0200",
       "dateFr": "06/10/2025",
       "message": "fix DialogBox déplacement au clavier (#1236)",
       "version": "1.0.10",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -10273,7 +8428,7 @@
       "dateFr": "02/09/2025",
       "message": "DialogBox Props autofocusValidateBtn (#1035)",
       "version": "1.0.7",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -10325,34 +8480,12 @@
   ],
   "DownloadBtn": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -10418,46 +8551,13 @@
       "dateFr": "14/04/2025",
       "message": "[DownloadBtn] fixe des problèmes d'accessibilité (#522)",
       "version": "0.0.15-alpha",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "3ddeab00f73305765205d47c8e24a76a19fed0fa",
-      "date": "2024-11-26 11:28:07 +0100",
-      "dateFr": "26/11/2024",
-      "message": "Doc : accessibility ex page (#230)",
-      "version": "0.0.5-alpha",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     }
   ],
   "ErrorPage": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "a9dea254e921bf06a6b343e07fae495ba0ce0ee2",
       "date": "2026-03-25 10:38:49 +0100",
@@ -10593,25 +8693,14 @@
   ],
   "ExternalLinks": [
     {
-      "hash": "962b87035c34c626d88f0986b10bcb4c508bc219",
-      "date": "2026-09-25 12:04:38 +0200",
-      "dateFr": "25/09/2026",
-      "message": "corrections test accessibilité axe et tanaguru",
+      "hash": "c62a900a1f5c7383ea89d72f31c65fce99b9b6bb",
+      "date": "2026-10-02 10:46:52 +0200",
+      "dateFr": "02/10/2026",
+      "message": "ExternalLink: fix problemes accessibilité  (#2596)",
       "version": null,
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -10620,7 +8709,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -10674,17 +8763,6 @@
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
       "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
       "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
@@ -10760,17 +8838,6 @@
   ],
   "FileList": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
       "date": "2026-07-27 14:32:02 +0200",
       "dateFr": "27/07/2026",
@@ -10779,17 +8846,6 @@
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -10841,17 +8897,6 @@
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
       "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
       "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
@@ -10929,17 +8974,6 @@
   ],
   "FilePreview": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "b70137c4b8130a223eb88d3a1427b943a36a79f6",
       "date": "2026-09-03 11:29:18 +0200",
       "dateFr": "03/09/2026",
@@ -10956,7 +8990,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "faible",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -10993,31 +9027,9 @@
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
     }
   ],
   "FileUpload": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
@@ -11035,7 +9047,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -11076,17 +9088,6 @@
   ],
   "FileUploadContent": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
@@ -11103,7 +9104,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -11144,28 +9145,6 @@
   ],
   "FilterInline": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "b649f01a6d7adfcd44a3fdc04bdad87599caa30e",
       "date": "2026-03-04 17:08:50 +0100",
       "dateFr": "04/03/2026",
@@ -11192,17 +9171,6 @@
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
       "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
       "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
@@ -11267,23 +9235,12 @@
   ],
   "FilterSideBar": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -11360,7 +9317,7 @@
       "dateFr": "15/01/2026",
       "message": "feat: enhance accessibility and usability of FilterSideBar component (#1704)",
       "version": "1.0.17",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -11370,17 +9327,6 @@
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
       "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
       "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
@@ -11412,34 +9358,12 @@
       "a11yLabel": false
     },
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -11557,28 +9481,6 @@
   ],
   "FranceConnectBtn": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
       "date": "2026-03-30 08:20:25 +0100",
       "dateFr": "30/03/2026",
@@ -11639,7 +9541,7 @@
       "dateFr": "09/04/2025",
       "message": "[FranceConnectBtn] fixe des problèmes d'accessibilité (#520)",
       "version": "0.0.15-alpha",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -11669,34 +9571,12 @@
       "a11yLabel": false
     },
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "43ecbd9871d2da61c693351d6c13ae521d23235c",
       "date": "2026-07-30 14:51:52 +0200",
       "dateFr": "30/07/2026",
       "message": "A11y: Fix homeLink focus (#2443)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -11707,7 +9587,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -11761,17 +9641,6 @@
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
       "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
       "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
@@ -11839,7 +9708,7 @@
       "dateFr": "18/04/2025",
       "message": "Fix des focus dans les Menu du header (#547)",
       "version": "0.0.15-alpha",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -11935,55 +9804,11 @@
   ],
   "HeaderBurgerMenu": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
       "date": "2026-02-11 12:51:15 +0100",
       "dateFr": "11/02/2026",
       "message": "Accessibilité: file reorganization accessibility (#1792)",
       "version": "1.0.20",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
       "patterns": false,
@@ -12028,7 +9853,7 @@
       "dateFr": "18/04/2025",
       "message": "Fix des focus dans les Menu du header (#547)",
       "version": "0.0.15-alpha",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -12091,28 +9916,6 @@
   ],
   "HeaderMenuItem": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "432611b8bc2b890087900b80e0bbb0d7e8d769fe",
       "date": "2025-10-09 15:19:10 +0200",
       "dateFr": "09/10/2025",
@@ -12137,17 +9940,6 @@
   ],
   "HeaderMenuSection": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "855a71637fe2452668e6ec16945100fcda300f8f",
       "date": "2025-08-04 11:06:46 +0200",
       "dateFr": "04/08/2025",
@@ -12171,28 +9963,6 @@
     }
   ],
   "HeaderSubMenu": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "855a71637fe2452668e6ec16945100fcda300f8f",
       "date": "2025-08-04 11:06:46 +0200",
@@ -12398,17 +10168,6 @@
   ],
   "HeaderLoading": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "d56383f77b97cf18f4a14e05c37e6f0e165d5024",
       "date": "2026-05-29 11:29:33 +0200",
       "dateFr": "29/05/2026",
@@ -12464,17 +10223,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "3ddeab00f73305765205d47c8e24a76a19fed0fa",
-      "date": "2024-11-26 11:28:07 +0100",
-      "dateFr": "26/11/2024",
-      "message": "Doc : accessibility ex page (#230)",
-      "version": "0.0.5-alpha",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "11e216c893106c736ac3b8f9ee985ae82fa589b0",
       "date": "2024-11-05 09:33:52 +0100",
       "dateFr": "05/11/2024",
@@ -12488,14 +10236,14 @@
   ],
   "HeaderNavigationBar": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "moyenne",
+      "hash": "9e1a3727069bcc6489ee3da6d9ae7172c32f6ef7",
+      "date": "2026-10-07 16:33:49 +0200",
+      "dateFr": "07/10/2026",
+      "message": "Ajout des tests a11y au composant `HeaderNavigationBar` (#2552)",
+      "version": null,
+      "confidence": "forte",
       "keywords": true,
-      "patterns": false,
+      "patterns": true,
       "a11yLabel": false
     },
     {
@@ -12576,6 +10324,28 @@
       "a11yLabel": false
     },
     {
+      "hash": "c436586292ca72c4d82809711b9ef7cdcbdcc09a",
+      "date": "2026-02-25 16:19:14 +0100",
+      "dateFr": "25/02/2026",
+      "message": "add a11y ci (#1881)",
+      "version": "1.0.21",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
+      "date": "2026-01-06 11:55:17 +0100",
+      "dateFr": "06/01/2026",
+      "message": "Feat/add accessibility in ci (#1663)",
+      "version": "1.0.17",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
       "hash": "4bbcc79cf36b50d5024e9ec36700b0c6396fd39b",
       "date": "2026-01-05 11:13:24 +0100",
       "dateFr": "05/01/2026",
@@ -12584,17 +10354,6 @@
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "moyenne",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -12723,6 +10482,17 @@
   ],
   "HeaderToolbar": [
     {
+      "hash": "5ea21ed9f76c9863fd5e85f84016bc12a92b9688",
+      "date": "2026-10-12 09:00:08 +0200",
+      "dateFr": "12/10/2026",
+      "message": "add a11y tests on headerToolbar and fix tanaguru problems (#2611)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "4beac9cb6a842d3852a0986e03a22b4b405dc64f",
       "date": "2026-09-28 09:36:28 +0200",
       "dateFr": "28/09/2026",
@@ -12731,17 +10501,6 @@
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -12772,7 +10531,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -12794,17 +10553,6 @@
       "dateFr": "11/02/2026",
       "message": "Accessibilité: file reorganization accessibility (#1792)",
       "version": "1.0.20",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
       "patterns": false,
@@ -12857,25 +10605,14 @@
   ],
   "LangBtn": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
+      "hash": "54058f561f3023685b64e68d6e659be053a48a85",
+      "date": "2026-10-02 09:57:45 +0200",
+      "dateFr": "02/10/2026",
+      "message": "LangBtn: implement ARIA listbox pattern and RGAA compliance (#2589)",
+      "version": null,
       "confidence": "forte",
       "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
+      "patterns": true,
       "a11yLabel": false
     },
     {
@@ -12884,7 +10621,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -12912,23 +10649,12 @@
       "a11yLabel": false
     },
     {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "78d15ce9d5e91a5ab199e87599fae715ea52ddb3",
       "date": "2025-04-24 11:48:09 +0000",
       "dateFr": "24/04/2025",
       "message": "LangBtn - fix d'audit d'accessibilité (#553)",
       "version": "0.0.15-alpha",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -12991,23 +10717,12 @@
   ],
   "Logo": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "faible",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -13070,17 +10785,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "43ecbd9871d2da61c693351d6c13ae521d23235c",
       "date": "2026-07-30 14:51:52 +0200",
       "dateFr": "30/07/2026",
@@ -13100,17 +10804,6 @@
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -13193,50 +10886,6 @@
   ],
   "LunarCalendar": [
     {
-      "hash": "60fe923d69a06f1c43ba06edea701c8b1d35d119",
-      "date": "2026-09-11 11:36:21 +0200",
-      "dateFr": "11/09/2026",
-      "message": "LunarCalendar: ajout onglet test a11y dans validation (#2547)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
       "date": "2026-03-30 08:20:25 +0100",
       "dateFr": "30/03/2026",
@@ -13282,17 +10931,6 @@
     }
   ],
   "MaintenancePage": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "63522bb5c595350c4f549d0fbc6e5af15cf8a891",
       "date": "2026-03-05 10:14:51 +0100",
@@ -13384,25 +11022,14 @@
   ],
   "MonthPicker": [
     {
-      "hash": "58290e4223b2b5d9ca984e260dd6acede3e88a19",
-      "date": "2026-09-25 11:39:55 +0200",
-      "dateFr": "25/09/2026",
-      "message": "corrections test accessibilité axe et tanaguru",
-      "version": "1.1.6",
+      "hash": "12adee1d9c97dae08a6dcf07e71d5762bbb46f44",
+      "date": "2026-10-05 10:18:21 +0200",
+      "dateFr": "05/10/2026",
+      "message": "MonthPicker: correction tests axe accessibilité (#2597)",
+      "version": null,
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -13411,7 +11038,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -13463,11 +11090,11 @@
   ],
   "MonthPickerInput": [
     {
-      "hash": "58290e4223b2b5d9ca984e260dd6acede3e88a19",
-      "date": "2026-09-25 11:39:55 +0200",
-      "dateFr": "25/09/2026",
-      "message": "corrections test accessibilité axe et tanaguru",
-      "version": "1.1.6",
+      "hash": "12adee1d9c97dae08a6dcf07e71d5762bbb46f44",
+      "date": "2026-10-05 10:18:21 +0200",
+      "dateFr": "05/10/2026",
+      "message": "MonthPicker: correction tests axe accessibilité (#2597)",
+      "version": null,
       "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
@@ -13498,11 +11125,11 @@
   ],
   "MonthPickerVisual": [
     {
-      "hash": "58290e4223b2b5d9ca984e260dd6acede3e88a19",
-      "date": "2026-09-25 11:39:55 +0200",
-      "dateFr": "25/09/2026",
-      "message": "corrections test accessibilité axe et tanaguru",
-      "version": "1.1.6",
+      "hash": "12adee1d9c97dae08a6dcf07e71d5762bbb46f44",
+      "date": "2026-10-05 10:18:21 +0200",
+      "dateFr": "05/10/2026",
+      "message": "MonthPicker: correction tests axe accessibilité (#2597)",
+      "version": null,
       "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
@@ -13533,11 +11160,11 @@
   ],
   "MonthSelector": [
     {
-      "hash": "58290e4223b2b5d9ca984e260dd6acede3e88a19",
-      "date": "2026-09-25 11:39:55 +0200",
-      "dateFr": "25/09/2026",
-      "message": "corrections test accessibilité axe et tanaguru",
-      "version": "1.1.6",
+      "hash": "12adee1d9c97dae08a6dcf07e71d5762bbb46f44",
+      "date": "2026-10-05 10:18:21 +0200",
+      "dateFr": "05/10/2026",
+      "message": "MonthPicker: correction tests axe accessibilité (#2597)",
+      "version": null,
       "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
@@ -13568,11 +11195,11 @@
   ],
   "VisualPickerFooter": [
     {
-      "hash": "58290e4223b2b5d9ca984e260dd6acede3e88a19",
-      "date": "2026-09-25 11:39:55 +0200",
-      "dateFr": "25/09/2026",
-      "message": "corrections test accessibilité axe et tanaguru",
-      "version": "1.1.6",
+      "hash": "12adee1d9c97dae08a6dcf07e71d5762bbb46f44",
+      "date": "2026-10-05 10:18:21 +0200",
+      "dateFr": "05/10/2026",
+      "message": "MonthPicker: correction tests axe accessibilité (#2597)",
+      "version": null,
       "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
@@ -13603,11 +11230,11 @@
   ],
   "VisualPickerHeader": [
     {
-      "hash": "58290e4223b2b5d9ca984e260dd6acede3e88a19",
-      "date": "2026-09-25 11:39:55 +0200",
-      "dateFr": "25/09/2026",
-      "message": "corrections test accessibilité axe et tanaguru",
-      "version": "1.1.6",
+      "hash": "12adee1d9c97dae08a6dcf07e71d5762bbb46f44",
+      "date": "2026-10-05 10:18:21 +0200",
+      "dateFr": "05/10/2026",
+      "message": "MonthPicker: correction tests axe accessibilité (#2597)",
+      "version": null,
       "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
@@ -13638,11 +11265,11 @@
   ],
   "YearSelector": [
     {
-      "hash": "58290e4223b2b5d9ca984e260dd6acede3e88a19",
-      "date": "2026-09-25 11:39:55 +0200",
-      "dateFr": "25/09/2026",
-      "message": "corrections test accessibilité axe et tanaguru",
-      "version": "1.1.6",
+      "hash": "12adee1d9c97dae08a6dcf07e71d5762bbb46f44",
+      "date": "2026-10-05 10:18:21 +0200",
+      "dateFr": "05/10/2026",
+      "message": "MonthPicker: correction tests axe accessibilité (#2597)",
+      "version": null,
       "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
@@ -13673,14 +11300,14 @@
   ],
   "NirField": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
+      "hash": "d7ac6be5343bfad4f05913e4fb9b9b4e2d8e6cae",
+      "date": "2026-10-05 09:23:58 +0200",
+      "dateFr": "05/10/2026",
+      "message": "SyForm v2 (#2434)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
       "a11yLabel": false
     },
     {
@@ -13700,7 +11327,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "faible",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -13750,32 +11377,10 @@
       "a11yLabel": false
     },
     {
-      "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-      "date": "2026-01-30 15:10:51 +0100",
-      "dateFr": "30/01/2026",
-      "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-      "version": "1.0.18",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
       "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
       "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
@@ -13810,7 +11415,7 @@
       "dateFr": "03/10/2025",
       "message": "NirField correction post audit Accessibilité (#1131)",
       "version": "1.0.10",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -13832,7 +11437,7 @@
       "dateFr": "09/09/2025",
       "message": "Nirfield: fix focus on edition (#1085)",
       "version": "1.0.9",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -13872,28 +11477,6 @@
     }
   ],
   "NotFoundPage": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "5ded9eca4a95c2ee3083fee246d6dc7e8e792d44",
       "date": "2026-06-17 14:14:22 +0200",
@@ -14042,23 +11625,12 @@
   ],
   "NotificationBar": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -14080,17 +11652,6 @@
       "dateFr": "11/02/2026",
       "message": "Accessibilité: file reorganization accessibility (#1792)",
       "version": "1.0.20",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-      "date": "2026-01-30 15:10:51 +0100",
-      "dateFr": "30/01/2026",
-      "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-      "version": "1.0.18",
       "confidence": "forte",
       "keywords": true,
       "patterns": false,
@@ -14146,7 +11707,7 @@
       "dateFr": "21/03/2025",
       "message": "fix NotificationBar accessibility (#445)",
       "version": "0.0.13-alpha",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -14164,17 +11725,6 @@
     }
   ],
   "PageContainer": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "5ded9eca4a95c2ee3083fee246d6dc7e8e792d44",
       "date": "2026-06-17 14:14:22 +0200",
@@ -14244,17 +11794,6 @@
   ],
   "PaginatedTable": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
@@ -14271,7 +11810,7 @@
       "dateFr": "26/08/2026",
       "message": "refactor(PaginatedTable): add locales support for accessibility labels (#2505)",
       "version": "1.1.5",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -14282,7 +11821,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -14359,20 +11898,9 @@
       "dateFr": "13/01/2026",
       "message": "PaginatedTable fixe des colors et des état de hover/focus (#1711)",
       "version": "1.0.17",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -14381,7 +11909,7 @@
       "dateFr": "05/12/2025",
       "message": "fix de problèmes d'accessibilité sur les bouton du PaginatedTable (#1560)",
       "version": "1.0.16",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -14422,17 +11950,6 @@
   ],
   "Pagination": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
       "dateFr": "26/08/2026",
@@ -14449,7 +11966,7 @@
       "dateFr": "26/08/2026",
       "message": "refactor(PaginatedTable): add locales support for accessibility labels (#2505)",
       "version": "1.1.5",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -14460,7 +11977,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -14537,20 +12054,9 @@
       "dateFr": "13/01/2026",
       "message": "PaginatedTable fixe des colors et des état de hover/focus (#1711)",
       "version": "1.0.17",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -14559,7 +12065,7 @@
       "dateFr": "05/12/2025",
       "message": "fix de problèmes d'accessibilité sur les bouton du PaginatedTable (#1560)",
       "version": "1.0.16",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -14600,34 +12106,12 @@
   ],
   "PasswordField": [
     {
-      "hash": "e945f9bca8bd9b042d2459700cb37aa26da92083",
-      "date": "2026-09-15 14:54:14 +0200",
-      "dateFr": "15/09/2026",
-      "message": "PasswordField: ajout onglet a11y ainsi que le dossier validation (#2556)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -14692,17 +12176,6 @@
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
       "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
       "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
@@ -14775,17 +12248,6 @@
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -14879,14 +12341,14 @@
   ],
   "PhoneField": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
+      "hash": "d7ac6be5343bfad4f05913e4fb9b9b4e2d8e6cae",
+      "date": "2026-10-05 09:23:58 +0200",
+      "dateFr": "05/10/2026",
+      "message": "SyForm v2 (#2434)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
       "a11yLabel": false
     },
     {
@@ -14895,7 +12357,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -14945,32 +12407,10 @@
       "a11yLabel": false
     },
     {
-      "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-      "date": "2026-01-30 15:10:51 +0100",
-      "dateFr": "30/01/2026",
-      "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-      "version": "1.0.18",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
       "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
       "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
@@ -15022,25 +12462,71 @@
       "a11yLabel": false
     }
   ],
-  "RangeField": [
+  "PhoneField.reset.fixture": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
+      "hash": "d7ac6be5343bfad4f05913e4fb9b9b4e2d8e6cae",
+      "date": "2026-10-05 09:23:58 +0200",
+      "dateFr": "05/10/2026",
+      "message": "SyForm v2 (#2434)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "0623c31856bc1545e6df01135176b7c4ec45bddf",
+      "date": "2026-06-11 15:53:58 +0200",
+      "dateFr": "11/06/2026",
+      "message": "[PhoneField] Fixe et ajout de la validation (#2205)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "5a5b5f5133c247de33640d5558ab0bcb6acebadd",
+      "date": "2026-03-10 11:32:10 +0100",
+      "dateFr": "10/03/2026",
+      "message": "PhoneField: fix errors display (#1928)",
+      "version": "1.0.22",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "c436586292ca72c4d82809711b9ef7cdcbdcc09a",
+      "date": "2026-02-25 16:19:14 +0100",
+      "dateFr": "25/02/2026",
+      "message": "add a11y ci (#1881)",
+      "version": "1.0.21",
       "confidence": "forte",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
     },
     {
+      "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
+      "date": "2026-01-06 11:55:17 +0100",
+      "dateFr": "06/01/2026",
+      "message": "Feat/add accessibility in ci (#1663)",
+      "version": "1.0.17",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    }
+  ],
+  "RangeField": [
+    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -15073,17 +12559,6 @@
       "dateFr": "06/01/2026",
       "message": "Feat/add accessibility in ci (#1663)",
       "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "35c62cc0e150ad7000a1496266bdc873872ff6c2",
-      "date": "2025-11-04 13:56:18 +0100",
-      "dateFr": "04/11/2025",
-      "message": "DatePicker : improve accessibility (#1399)",
-      "version": "1.0.12",
       "confidence": "forte",
       "keywords": true,
       "patterns": false,
@@ -15439,17 +12914,6 @@
   ],
   "RatingPicker": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
       "date": "2026-07-27 14:32:02 +0200",
       "dateFr": "27/07/2026",
@@ -15466,7 +12930,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -15488,7 +12952,7 @@
       "dateFr": "30/06/2026",
       "message": "[RatingPicker] fix des problèmes d'accessibilitées (#2335)",
       "version": "1.1.2",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -15538,23 +13002,12 @@
       "a11yLabel": false
     },
     {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "a29e9d4b25ced9d230104b0becf6d281b059959d",
       "date": "2025-11-28 11:12:05 +0100",
       "dateFr": "28/11/2025",
       "message": "Add keyboard navigation support for EmotionPicker, NumberPicker, and StarsPicker components (#1510)",
       "version": "1.0.16",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -15729,34 +13182,12 @@
   ],
   "SearchListField": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "7f2a9c3ab64afbcceb675f6207bcef447a508ec8",
-      "date": "2026-07-08 14:17:13 +0200",
-      "dateFr": "08/07/2026",
-      "message": "[SyCheckbox] fix des retours d'accessibilitées (#2366)",
-      "version": "1.1.2",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -15800,7 +13231,7 @@
       "dateFr": "28/11/2025",
       "message": "SearchListField accessibilité (#1499)",
       "version": "1.0.16",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -15852,17 +13283,6 @@
   ],
   "SkipLink": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "9bc308f61597b0dea151c2ddd8f738bc824757e1",
       "date": "2026-08-28 18:19:08 +0200",
       "dateFr": "28/08/2026",
@@ -15879,7 +13299,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -15907,23 +13327,12 @@
       "a11yLabel": false
     },
     {
-      "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-      "date": "2026-01-30 15:10:51 +0100",
-      "dateFr": "30/01/2026",
-      "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-      "version": "1.0.18",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "f126a815d41505d4d1cf299941fc68815ff07857",
       "date": "2025-04-24 14:45:07 +0200",
       "dateFr": "24/04/2025",
       "message": "SkipLink - fix d audit d accessibilité (#555)",
       "version": "0.0.15-alpha",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -15953,23 +13362,12 @@
   ],
   "SocialMediaLinks": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -16053,28 +13451,6 @@
     }
   ],
   "StatusPage": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "5ded9eca4a95c2ee3083fee246d6dc7e8e792d44",
       "date": "2026-06-17 14:14:22 +0200",
@@ -16166,23 +13542,12 @@
       "a11yLabel": false
     },
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -16243,17 +13608,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "2b7cede14198ab0f938da60507d22b49c9254300",
       "date": "2025-08-11 15:41:41 +0200",
       "dateFr": "11/08/2025",
@@ -16266,28 +13620,6 @@
     }
   ],
   "SyAlert": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "1fc52297b3b59207665ab797522e03309e6a18a7",
       "date": "2026-08-07 15:40:09 +0200",
@@ -16305,7 +13637,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -16355,23 +13687,12 @@
       "a11yLabel": false
     },
     {
-      "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-      "date": "2026-01-30 15:10:51 +0100",
-      "dateFr": "30/01/2026",
-      "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-      "version": "1.0.18",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "72505f8fdf4937a01903e75191e97d19d8ea56fa",
       "date": "2025-11-26 17:38:34 +0100",
       "dateFr": "26/11/2025",
       "message": "correction duplication role alert (#1501)",
       "version": "1.0.16",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -16382,7 +13703,7 @@
       "dateFr": "28/04/2025",
       "message": "SyAlert - fix d'audit d'accessibilité (#544)",
       "version": "0.0.16-alpha",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -16390,14 +13711,14 @@
   ],
   "SyBtnMenu": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
+      "hash": "eac0e72325e768e9ecd6c0daa5a361e78ed8b94d",
+      "date": "2026-09-29 15:01:04 +0200",
+      "dateFr": "29/09/2026",
+      "message": "SyBtnMenu: correction test d'accessibilité axe (#2573)",
+      "version": null,
       "confidence": "forte",
       "keywords": true,
-      "patterns": false,
+      "patterns": true,
       "a11yLabel": false
     },
     {
@@ -16439,7 +13760,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -16480,14 +13801,14 @@
   ],
   "SyTextArea": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
+      "hash": "d7ac6be5343bfad4f05913e4fb9b9b4e2d8e6cae",
+      "date": "2026-10-05 09:23:58 +0200",
+      "dateFr": "05/10/2026",
+      "message": "SyForm v2 (#2434)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
       "a11yLabel": false
     },
     {
@@ -16499,17 +13820,6 @@
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -16592,55 +13902,11 @@
   ],
   "TableToolbar": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
       "date": "2026-02-11 12:51:15 +0100",
       "dateFr": "11/02/2026",
       "message": "Accessibilité: file reorganization accessibility (#1792)",
       "version": "1.0.20",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
       "patterns": false,
@@ -16704,17 +13970,6 @@
   ],
   "SyServerTable": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "2c90a270023a8f81debfab170380e16cdb6e0640",
       "date": "2026-09-04 15:53:57 +0200",
       "dateFr": "04/09/2026",
@@ -16734,17 +13989,6 @@
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -16808,17 +14052,6 @@
       "dateFr": "11/02/2026",
       "message": "Accessibilité: file reorganization accessibility (#1792)",
       "version": "1.0.20",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
       "patterns": false,
@@ -16886,32 +14119,10 @@
       "date": "2026-09-18 14:10:26 +0200",
       "dateFr": "18/09/2026",
       "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
-      "version": null,
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
-      "date": "2026-09-18 14:10:26 +0200",
-      "dateFr": "18/09/2026",
-      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
       "version": "1.1.6",
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -16923,17 +14134,6 @@
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -17003,17 +14203,6 @@
       "a11yLabel": false
     },
     {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "1ce73af328b4960272770e8c8c5b22d786838649",
       "date": "2025-07-24 16:01:40 +0200",
       "dateFr": "24/07/2025",
@@ -17071,17 +14260,6 @@
   ],
   "SyTableFilter": [
     {
-      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
-      "date": "2026-09-18 14:10:26 +0200",
-      "dateFr": "18/09/2026",
-      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
-      "version": null,
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",
       "dateFr": "22/09/2026",
@@ -17109,7 +14287,7 @@
       "dateFr": "25/08/2026",
       "message": "fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)",
       "version": "1.1.4",
-      "confidence": "forte",
+      "confidence": "faible",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -17131,7 +14309,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -17414,17 +14592,6 @@
   ],
   "SyTablePagination": [
     {
-      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
-      "date": "2026-09-18 14:10:26 +0200",
-      "dateFr": "18/09/2026",
-      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
-      "version": null,
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",
       "dateFr": "22/09/2026",
@@ -17452,7 +14619,7 @@
       "dateFr": "25/08/2026",
       "message": "fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)",
       "version": "1.1.4",
-      "confidence": "forte",
+      "confidence": "faible",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -17474,7 +14641,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -17757,17 +14924,6 @@
   ],
   "TableBulkActions": [
     {
-      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
-      "date": "2026-09-18 14:10:26 +0200",
-      "dateFr": "18/09/2026",
-      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
-      "version": null,
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",
       "dateFr": "22/09/2026",
@@ -17795,7 +14951,7 @@
       "dateFr": "25/08/2026",
       "message": "fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)",
       "version": "1.1.4",
-      "confidence": "forte",
+      "confidence": "faible",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -17817,7 +14973,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -18100,17 +15256,6 @@
   ],
   "TableHeader": [
     {
-      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
-      "date": "2026-09-18 14:10:26 +0200",
-      "dateFr": "18/09/2026",
-      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
-      "version": null,
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",
       "dateFr": "22/09/2026",
@@ -18138,7 +15283,7 @@
       "dateFr": "25/08/2026",
       "message": "fix(useTableAria): fuite mémoire — nettoyage du registre elementsWithListeners à chaque updateHeaderAria (#2507)",
       "version": "1.1.4",
-      "confidence": "forte",
+      "confidence": "faible",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -18160,7 +15305,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -18699,23 +15844,12 @@
       "a11yLabel": false
     },
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
       "date": "2026-07-22 11:00:09 +0200",
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "forte",
+      "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -18748,7 +15882,7 @@
       "dateFr": "09/02/2026",
       "message": "ToolbarContainer - fix des problèmes remontés dans l'audit d'accessibilité (#1680)",
       "version": "1.0.20",
-      "confidence": "forte",
+      "confidence": "faible",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -18766,28 +15900,6 @@
     }
   ],
   "UploadWorkflow": [
-    {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
     {
       "hash": "462a742899258fad303074faa447e8c8a2b109b2",
       "date": "2026-03-11 11:00:31 +0100",
@@ -18857,44 +15969,11 @@
   ],
   "UserMenuBtn": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-      "date": "2026-08-10 15:30:55 +0200",
-      "dateFr": "10/08/2026",
-      "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-      "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
       "hash": "39f7e1db8d96b9422e2b972fd423def3aa25a678",
       "date": "2026-08-07 15:13:49 +0200",
       "dateFr": "07/08/2026",
       "message": "UserMenuBtn: improve responsive + a11y (#2470)",
       "version": "1.1.4",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-      "date": "2026-07-22 11:00:09 +0200",
-      "dateFr": "22/07/2026",
-      "message": "Components: fix focus display (#2383)",
-      "version": "1.1.3",
       "confidence": "forte",
       "keywords": true,
       "patterns": false,
@@ -18927,17 +16006,6 @@
       "date": "2026-01-06 11:55:17 +0100",
       "dateFr": "06/01/2026",
       "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
-    },
-    {
-      "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-      "date": "2025-12-22 14:37:18 +0100",
-      "dateFr": "22/12/2025",
-      "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
       "version": "1.0.17",
       "confidence": "forte",
       "keywords": true,
