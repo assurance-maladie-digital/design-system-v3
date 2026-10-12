@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 	import { ref, watch, computed } from 'vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
-	import { useDateFormat } from '@/composables/date/useDateFormat'
+	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 
 	const { parseDate } = useDateFormat()
 

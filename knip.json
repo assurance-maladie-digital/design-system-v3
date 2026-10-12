@@ -1,0 +1,16 @@
+{
+	"$schema": "https://unpkg.com/knip@6/schema.json",
+	"entry": [
+		"dev/SandBox/main.ts",
+		"dev/CustomPlaygrounds/**/*.vue",
+		"dev/Playground-theme-switcher.vue",
+		"scripts/detect-memory-leaks.js",
+		"scripts/memory-leak-detector.js",
+		"scripts/vitest.memcheck.config.ts"
+	],
+	"ignore": ["dist/**"],
+	"ignoreIssues": {
+		"src/composables/date/*.ts": ["duplicates"],
+		"src/components/DatePicker/composables/useDateAutoClamp.ts": ["duplicates"]
+	}
+}

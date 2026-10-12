@@ -15,19 +15,19 @@
 // (sans accent final pour attraper le mot sous toutes ses formes), « WCAG », « aria-label »
 // ou « aria label » (d'où `[-\s]`, qui évite de matcher « arial »), « contraste », « audit
 // accessibilité » (le `.` couvre l'espace, le tiret ou les deux-points) et « RGAA ».
-export const a11yOnlyRegex = /a11y|accessibilit|wcag|aria[-\s]|contraste|audit.access|rgaa/i;
+const a11yOnlyRegex = /a11y|accessibilit|wcag|aria[-\s]|contraste|audit.access|rgaa/i;
 
 // Commit de release, d'outillage ou de doc, reconnu à son PRÉFIXE de type conventionnel
 // (`^`) : « chore: », « docs(readme): », « ci! », « build », « release », « bump »,
 // « renovate », et les messages automatiques de Renovate (« update dependency X »,
 // « update pnpm monorepo »). Le groupe `(\([^)]+\))?` accepte la portée optionnelle
 // `(scope)`, et `[!:\s]` le `!` d'un breaking change, le `:` ou une simple espace.
-export const releaseOrDocRegex = /^(chore|docs?|ci|build|release|bump|renovate|update dependency|update .* monorepo)(\([^)]+\))?[!:\s]/i;
+const releaseOrDocRegex = /^(chore|docs?|ci|build|release|bump|renovate|update dependency|update .* monorepo)(\([^)]+\))?[!:\s]/i;
 
 // Commit sans préfixe conventionnel mais sans impact fonctionnel : mise à jour d'un badge
 // de version, du changelog, passage de lint ou retouche de doc / de tokens. Recherché
 // n'importe où dans le message, ces commits n'étant pas préfixés.
-export const docOnlyMessageRegex = /version badge|add.*badge|badge.*version|update.*changelog|run lint|improve.*doc|improve.*token/i;
+const docOnlyMessageRegex = /version badge|add.*badge|badge.*version|update.*changelog|run lint|improve.*doc|improve.*token/i;
 
 /**
  * Vrai si le message décrit une modification fonctionnelle du composant.
@@ -41,7 +41,7 @@ export function isFunctionalMessage(message) {
 }
 
 /** Extensions du code d'un composant. Les `.d.ts` en font partie : ils sont réexportés par `src/components/index.ts`, c'est du contrat public. */
-export const SOURCE_EXTENSIONS = ['vue', 'ts', 'js', 'scss', 'css'];
+const SOURCE_EXTENSIONS = ['vue', 'ts', 'js', 'scss', 'css'];
 
 /** Fragments de nom qui désignent une story ou un test plutôt que du code de production. */
 const NON_SOURCE_SUFFIXES = ['.stories.', '.spec.', '.cy.'];
