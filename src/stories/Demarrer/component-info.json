@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-12T13:26:34.905Z",
+  "date": "2026-10-12T13:37:33.564Z",
   "totalCount": 77,
   "results": [
     {
@@ -8,8 +8,8 @@
       "status": "actif",
       "functionalVersion": "1.1.5",
       "functionalDate": "27/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-27",
@@ -84,23 +84,12 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -144,7 +133,7 @@
           "dateFr": "09/01/2026",
           "message": "accordion fix des problèmes relevés lors de l'audit d'accessibilité (#1677)",
           "version": "1.0.17",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -154,17 +143,6 @@
           "date": "2026-01-06 11:55:17 +0100",
           "dateFr": "06/01/2026",
           "message": "Feat/add accessibility in ci (#1663)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
           "version": "1.0.17",
           "confidence": "forte",
           "keywords": true,
@@ -201,8 +179,8 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "05/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-05",
@@ -267,34 +245,12 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-          "date": "2026-08-10 15:30:55 +0200",
-          "dateFr": "10/08/2026",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -322,17 +278,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-          "date": "2026-01-30 15:10:51 +0100",
-          "dateFr": "30/01/2026",
-          "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-          "version": "1.0.18",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
           "date": "2026-01-06 11:55:17 +0100",
           "dateFr": "06/01/2026",
@@ -344,23 +289,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "30ead9ee61626407d453f957a382fb0fd57fb7d6",
-          "date": "2025-04-14 13:02:49 +0000",
-          "dateFr": "14/04/2025",
-          "message": "[DownloadBtn] fixe des problèmes d'accessibilité (#522)",
-          "version": "0.0.15-alpha",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "6318250b9ae75875589ba95d179bd84a9c9d8a79",
           "date": "2025-04-11 07:30:33 +0000",
           "dateFr": "11/04/2025",
           "message": "[BackBtn] fixe des problèmes d'accessibilité (#521)",
           "version": "0.0.15-alpha",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -373,8 +307,8 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "05/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-05",
@@ -409,34 +343,12 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-          "date": "2026-08-10 15:30:55 +0200",
-          "dateFr": "10/08/2026",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -464,32 +376,10 @@
           "a11yLabel": false
         },
         {
-          "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-          "date": "2026-01-30 15:10:51 +0100",
-          "dateFr": "30/01/2026",
-          "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-          "version": "1.0.18",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
           "date": "2026-01-06 11:55:17 +0100",
           "dateFr": "06/01/2026",
           "message": "Feat/add accessibility in ci (#1663)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
           "version": "1.0.17",
           "confidence": "forte",
           "keywords": true,
@@ -502,7 +392,7 @@
           "dateFr": "24/04/2025",
           "message": "BackToTopBtn - fix d'audit d'accessibilité (#560)",
           "version": "0.0.15-alpha",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -537,8 +427,8 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "13/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-13",
@@ -603,28 +493,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "09850a4359abdf2d4d09e400124ad88b5ac38d96",
-          "date": "2026-09-09 16:07:21 +0200",
-          "dateFr": "09/09/2026",
-          "message": "ajout onglet accessibility dans dossier validation du captcha (#2544)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
           "date": "2026-08-13 15:55:47 +0200",
           "dateFr": "13/08/2026",
@@ -641,7 +509,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -764,8 +632,8 @@
       "status": "actif",
       "functionalVersion": "1.1.5",
       "functionalDate": "27/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-27",
@@ -830,34 +698,12 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-          "date": "2026-08-10 15:30:55 +0200",
-          "dateFr": "10/08/2026",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -890,7 +736,7 @@
           "dateFr": "15/01/2026",
           "message": "feat: enhance accessibility and usability of FilterSideBar component (#1704)",
           "version": "1.0.17",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -915,17 +761,6 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
           "a11yLabel": false
         },
         {
@@ -958,8 +793,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-07-22",
@@ -1004,23 +839,12 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -1077,8 +901,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-07-22",
@@ -1103,23 +927,12 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -1147,17 +960,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-          "date": "2026-01-30 15:10:51 +0100",
-          "dateFr": "30/01/2026",
-          "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-          "version": "1.0.18",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
           "date": "2026-01-06 11:55:17 +0100",
           "dateFr": "06/01/2026",
@@ -1166,17 +968,6 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
           "a11yLabel": false
         },
         {
@@ -1198,8 +989,8 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "25/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-25",
@@ -1264,28 +1055,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-          "date": "2026-08-10 15:30:55 +0200",
-          "dateFr": "10/08/2026",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "499a1aa0772107eb411333e91a6741a2695ed0fa",
           "date": "2026-08-06 15:19:01 +0200",
           "dateFr": "06/08/2026",
@@ -1302,7 +1071,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -1345,17 +1114,6 @@
           "date": "2026-01-06 11:55:17 +0100",
           "dateFr": "06/01/2026",
           "message": "Feat/add accessibility in ci (#1663)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
           "version": "1.0.17",
           "confidence": "forte",
           "keywords": true,
@@ -1423,7 +1181,7 @@
           "dateFr": "09/01/2025",
           "message": "correction des problèmes d'accessibilité sur le CookieBanner (#301)",
           "version": "0.0.8-alpha",
-          "confidence": "forte",
+          "confidence": "faible",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -1447,8 +1205,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.4",
-      "a11yDate": "10/08/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-07-22",
@@ -1493,23 +1251,12 @@
       ],
       "a11yCommits": [
         {
-          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-          "date": "2026-08-10 15:30:55 +0200",
-          "dateFr": "10/08/2026",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -1575,7 +1322,7 @@
           "dateFr": "09/01/2025",
           "message": "correction des problèmes d'accessibilité sur le CookieBanner (#301)",
           "version": "0.0.8-alpha",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -1599,8 +1346,8 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "25/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-25",
@@ -1696,23 +1443,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -1740,17 +1476,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-          "date": "2026-01-30 15:10:51 +0100",
-          "dateFr": "30/01/2026",
-          "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-          "version": "1.0.18",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
           "date": "2026-01-06 11:55:17 +0100",
           "dateFr": "06/01/2026",
@@ -1759,17 +1484,6 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
           "a11yLabel": false
         },
         {
@@ -1800,7 +1514,7 @@
           "dateFr": "27/09/2024",
           "message": "fix CopyBtn accessibility (#87)",
           "version": "0.0.1-alpha",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -1906,23 +1620,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -2010,17 +1713,6 @@
           "dateFr": "11/02/2026",
           "message": "Accessibilité: file reorganization accessibility (#1792)",
           "version": "1.0.20",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-          "date": "2026-01-30 15:10:51 +0100",
-          "dateFr": "30/01/2026",
-          "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-          "version": "1.0.18",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -2187,17 +1879,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "7dab36881ad0d0ba95dcbbff4810c1f7d34d72f5",
           "date": "2026-08-12 16:12:41 +0200",
           "dateFr": "12/08/2026",
@@ -2214,7 +1895,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -2348,8 +2029,8 @@
       "status": "déprécié",
       "functionalVersion": "1.1.5",
       "functionalDate": "27/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-27",
@@ -2414,17 +2095,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "8cd25df337dd7df9a09d92eeecbeb80ebf74c9e3",
           "date": "2026-08-20 12:20:15 +0200",
           "dateFr": "20/08/2026",
@@ -2433,17 +2103,6 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-          "date": "2026-08-10 15:30:55 +0200",
-          "dateFr": "10/08/2026",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
           "a11yLabel": false
         },
         {
@@ -2463,7 +2122,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -2531,8 +2190,8 @@
       "status": "actif",
       "functionalVersion": "1.1.5",
       "functionalDate": "27/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-10-05",
@@ -2662,17 +2321,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
           "date": "2026-08-26 13:27:43 +0200",
           "dateFr": "26/08/2026",
@@ -2711,7 +2359,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -2794,17 +2442,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-          "date": "2026-01-30 15:10:51 +0100",
-          "dateFr": "30/01/2026",
-          "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-          "version": "1.0.18",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "c3265eb88d01ee106e4db7f1a7d28cd960e48bb4",
           "date": "2026-01-30 12:33:02 +0100",
           "dateFr": "30/01/2026",
@@ -2827,23 +2464,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "1adde3ed7e7063a130e7f2dd0ff4297000730a12",
           "date": "2025-12-18 15:47:20 +0100",
           "dateFr": "18/12/2025",
           "message": "refactor SySelect keyboard handling for improved focus management (#1641)",
           "version": "1.0.16",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -2887,7 +2513,7 @@
           "dateFr": "23/09/2025",
           "message": "improve sySelect accessibility (#1141)",
           "version": "1.0.10",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -2931,7 +2557,7 @@
           "dateFr": "02/09/2025",
           "message": "SySelect focus on clear (#1044)",
           "version": "1.0.7",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -2999,8 +2625,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.5",
+      "a11yDate": "27/08/2026",
       "commits": [
         {
           "date": "2026-07-27",
@@ -3120,17 +2746,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "9099bd12f8b762c86fff317a56be129231501fbd",
           "date": "2026-08-27 16:25:29 +0200",
           "dateFr": "27/08/2026",
@@ -3158,7 +2773,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "faible",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -3191,7 +2806,7 @@
           "dateFr": "23/06/2026",
           "message": "fix(SyCheckbox): improve focus styling (#2311)",
           "version": "1.1.2",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -3246,7 +2861,7 @@
           "dateFr": "10/03/2026",
           "message": "SySelect: fix de la navigation clavier (#1920)",
           "version": "1.0.22",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -3290,28 +2905,6 @@
           "dateFr": "06/01/2026",
           "message": "Feat/add accessibility in ci (#1663)",
           "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "97b6b167fd7bb12364aad36899f3f8d7fdbd06e0",
-          "date": "2025-11-28 09:36:33 +0100",
-          "dateFr": "28/11/2025",
-          "message": "SearchListField accessibilité (#1499)",
-          "version": "1.0.16",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -3414,17 +3007,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
           "date": "2026-07-27 14:32:02 +0200",
           "dateFr": "27/07/2026",
@@ -3436,23 +3018,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "7f2a9c3ab64afbcceb675f6207bcef447a508ec8",
           "date": "2026-07-08 14:17:13 +0200",
           "dateFr": "08/07/2026",
           "message": "[SyCheckbox] fix des retours d'accessibilitées (#2366)",
           "version": "1.1.2",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -3476,8 +3047,8 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "13/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.20",
+      "a11yDate": "11/02/2026",
       "commits": [
         {
           "date": "2026-10-05",
@@ -3536,17 +3107,6 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
           "a11yLabel": false
         },
         {
@@ -3619,7 +3179,7 @@
           "dateFr": "24/09/2026",
           "message": "SyIcon - add accessibility tab on AccessibilityDemo story (#2569)",
           "version": "1.1.6",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -3633,17 +3193,6 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
           "a11yLabel": false
         },
         {
@@ -3685,7 +3234,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -3740,7 +3289,7 @@
           "dateFr": "16/03/2026",
           "message": "SyIcon: fix decorative prop default value and improve accessibility handling (#1965)",
           "version": "1.0.22",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -3751,7 +3300,7 @@
           "dateFr": "02/03/2026",
           "message": "Feat/fix a11y tests (#1883)",
           "version": "1.0.22",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -3765,17 +3314,6 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
           "a11yLabel": false
         },
         {
@@ -3839,17 +3377,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
           "date": "2026-08-13 15:55:47 +0200",
           "dateFr": "13/08/2026",
@@ -3877,7 +3404,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -3887,17 +3414,6 @@
           "date": "2026-07-07 15:06:32 +0200",
           "dateFr": "07/07/2026",
           "message": "SyTable/SyServerTable row editing + global actions (#2338)",
-          "version": "1.1.2",
-          "confidence": "faible",
-          "keywords": false,
-          "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "6816c49867c1f06368e49ed5cd44461a1ce7bb1f",
-          "date": "2026-06-23 15:27:49 +0200",
-          "dateFr": "23/06/2026",
-          "message": "display version badge in docs (#2308)",
           "version": "1.1.2",
           "confidence": "faible",
           "keywords": false,
@@ -3923,8 +3439,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-07-22",
@@ -3959,23 +3475,12 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -4065,8 +3570,8 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "25/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-25",
@@ -4141,17 +3646,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "a216fc35e26df993b7be4d403abcc5d65b5a8e36",
           "date": "2026-08-25 10:33:40 +0200",
           "dateFr": "25/08/2026",
@@ -4179,7 +3673,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -4258,8 +3752,8 @@
       "status": "actif",
       "functionalVersion": "1.1.6",
       "functionalDate": "24/09/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-09-24",
@@ -4350,17 +3844,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
           "date": "2026-07-27 14:32:02 +0200",
           "dateFr": "27/07/2026",
@@ -4377,7 +3860,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -4449,17 +3932,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "2b74efb48469f7d15d95eb4cfd60b35dd3763d5e",
           "date": "2025-12-19 14:23:47 +0100",
           "dateFr": "19/12/2025",
@@ -4522,8 +3994,8 @@
       "status": "actif",
       "functionalVersion": "1.1.5",
       "functionalDate": "27/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "23/07/2026",
       "commits": [
         {
           "date": "2026-08-27",
@@ -4653,17 +4125,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
           "date": "2026-08-26 13:27:43 +0200",
           "dateFr": "26/08/2026",
@@ -4691,20 +4152,9 @@
           "dateFr": "23/07/2026",
           "message": "WIP: Feat/a11y complex date picker (#2390)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
           "a11yLabel": false
         },
         {
@@ -4763,17 +4213,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "a0978412009d92f864ac437f4ad279910076c0cc",
-          "date": "2026-04-03 08:50:02 +0200",
-          "dateFr": "03/04/2026",
-          "message": "SyTextField: enable a11y tests for WithTooltips story (#2062)",
-          "version": "1.0.24",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
           "date": "2026-03-30 08:20:25 +0100",
           "dateFr": "30/03/2026",
@@ -4812,7 +4251,7 @@
           "dateFr": "02/03/2026",
           "message": "Feat/fix a11y tests (#1883)",
           "version": "1.0.22",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -4840,17 +4279,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-          "date": "2026-01-30 15:10:51 +0100",
-          "dateFr": "30/01/2026",
-          "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-          "version": "1.0.18",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "517a9b37efc6ae9bb4139cb9a69b37eab3711d28",
           "date": "2026-01-16 09:28:09 +0100",
           "dateFr": "16/01/2026",
@@ -4866,17 +4294,6 @@
           "date": "2026-01-06 11:55:17 +0100",
           "dateFr": "06/01/2026",
           "message": "Feat/add accessibility in ci (#1663)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
           "version": "1.0.17",
           "confidence": "forte",
           "keywords": true,
@@ -4911,7 +4328,7 @@
           "dateFr": "04/11/2025",
           "message": "DatePicker : improve accessibility (#1399)",
           "version": "1.0.12",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -4922,7 +4339,7 @@
           "dateFr": "03/10/2025",
           "message": "NirField correction post audit Accessibilité (#1131)",
           "version": "1.0.10",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -4991,17 +4408,6 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "80b0b2f16aef1d0948b046e9f95821d3f4bc12a3",
-          "date": "2025-03-28 15:05:15 +0100",
-          "dateFr": "28/03/2025",
-          "message": "Enhance Storybook pages for accessibility and add Screen Readers and Design System Audit pages (#473)",
-          "version": "0.0.13-alpha",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
           "a11yLabel": false
         },
         {
@@ -5078,8 +4484,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "17/07/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.23",
+      "a11yDate": "30/03/2026",
       "commits": [
         {
           "date": "2026-07-17",
@@ -5118,28 +4524,6 @@
         }
       ],
       "a11yCommits": [
-        {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
         {
           "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
           "date": "2026-03-30 08:20:25 +0100",
@@ -5214,8 +4598,8 @@
       "status": "actif",
       "functionalVersion": "1.0.16",
       "functionalDate": "11/12/2025",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.23",
+      "a11yDate": "30/03/2026",
       "commits": [
         {
           "date": "2025-12-11",
@@ -5239,28 +4623,6 @@
         }
       ],
       "a11yCommits": [
-        {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
         {
           "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
           "date": "2026-03-30 08:20:25 +0100",
@@ -5375,7 +4737,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -5410,8 +4772,8 @@
       "status": "actif",
       "functionalVersion": "1.1.6",
       "functionalDate": "22/09/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "30/07/2026",
       "commits": [
         {
           "date": "2026-10-05",
@@ -5552,28 +4914,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-          "date": "2026-08-10 15:30:55 +0200",
-          "dateFr": "10/08/2026",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "611b0627edc2976b1cd4129f701dd228394d52d8",
           "date": "2026-07-31 12:04:52 +0200",
           "dateFr": "31/07/2026",
@@ -5590,7 +4930,7 @@
           "dateFr": "30/07/2026",
           "message": "DatePicker: improve keyboard navigation in month and year selection v… (#2437)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -5623,7 +4963,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -5656,7 +4996,7 @@
           "dateFr": "20/04/2026",
           "message": "Feat/improve sy tabs a11y (#2111)",
           "version": "1.0.25",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -5706,23 +5046,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "35c62cc0e150ad7000a1496266bdc873872ff6c2",
           "date": "2025-11-04 13:56:18 +0100",
           "dateFr": "04/11/2025",
           "message": "DatePicker : improve accessibility (#1399)",
           "version": "1.0.12",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -5733,7 +5062,7 @@
           "dateFr": "20/08/2025",
           "message": "improve dp keyboard navigation (#975)",
           "version": "1.0.7",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -5746,8 +5075,8 @@
       "status": "actif",
       "functionalVersion": "1.1.6",
       "functionalDate": "22/09/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "30/07/2026",
       "commits": [
         {
           "date": "2026-09-22",
@@ -5888,28 +5217,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-          "date": "2026-08-10 15:30:55 +0200",
-          "dateFr": "10/08/2026",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "6fc4e15b014bb96534f21f5070a2ce4226866f4f",
           "date": "2026-07-30 13:56:16 +0200",
           "dateFr": "30/07/2026",
@@ -5926,7 +5233,7 @@
           "dateFr": "30/07/2026",
           "message": "DatePicker: improve keyboard navigation in month and year selection v… (#2437)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -5959,7 +5266,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -6031,23 +5338,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "35c62cc0e150ad7000a1496266bdc873872ff6c2",
           "date": "2025-11-04 13:56:18 +0100",
           "dateFr": "04/11/2025",
           "message": "DatePicker : improve accessibility (#1399)",
           "version": "1.0.12",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -6082,8 +5378,8 @@
       "status": "actif",
       "functionalVersion": "1.1.6",
       "functionalDate": "22/09/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "23/07/2026",
       "commits": [
         {
           "date": "2026-09-22",
@@ -6224,17 +5520,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "f2ae3fd9d1c349db938de16033ed24455131653c",
           "date": "2026-07-23 11:35:27 +0200",
           "dateFr": "23/07/2026",
@@ -6243,17 +5528,6 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
           "a11yLabel": false
         },
         {
@@ -6312,17 +5586,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "dfd126d73e2c465e0911070afee57a791c5cae2c",
           "date": "2025-12-15 09:36:48 +0100",
           "dateFr": "15/12/2025",
@@ -6339,7 +5602,7 @@
           "dateFr": "04/11/2025",
           "message": "DatePicker : improve accessibility (#1399)",
           "version": "1.0.12",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -6438,41 +5701,7 @@
           "version": "1.0.21"
         }
       ],
-      "a11yCommits": [
-        {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-          "date": "2026-08-10 15:30:55 +0200",
-          "dateFr": "10/08/2026",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        }
-      ]
+      "a11yCommits": []
     },
     {
       "componentName": "DiacriticPicker",
@@ -6480,8 +5709,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-07-22",
@@ -6511,23 +5740,12 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -6549,7 +5767,7 @@
           "dateFr": "18/02/2026",
           "message": "fix: ensure input has aria-label in DiacriticPicker and add a11y:report script (#1832)",
           "version": "1.0.21",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -6606,8 +5824,8 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "05/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-05",
@@ -6717,17 +5935,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "30980ea7b507740d586d1cf742fc41eef49b6b3c",
           "date": "2026-08-05 15:08:26 +0200",
           "dateFr": "05/08/2026",
@@ -6744,7 +5951,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -6788,7 +5995,7 @@
           "dateFr": "10/03/2026",
           "message": "UploadWorkflow: Tests et page d'accessibilité (#1923)",
           "version": "1.0.22",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -6799,17 +6006,6 @@
           "dateFr": "11/02/2026",
           "message": "Accessibilité: file reorganization accessibility (#1792)",
           "version": "1.0.20",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-          "date": "2026-01-30 15:10:51 +0100",
-          "dateFr": "30/01/2026",
-          "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-          "version": "1.0.18",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -6827,23 +6023,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "7e1f98b18cc5878db3ca712a924a0be690b9c2a3",
           "date": "2025-10-06 15:53:05 +0200",
           "dateFr": "06/10/2025",
           "message": "fix DialogBox déplacement au clavier (#1236)",
           "version": "1.0.10",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -6876,7 +6061,7 @@
           "dateFr": "02/09/2025",
           "message": "DialogBox Props autofocusValidateBtn (#1035)",
           "version": "1.0.7",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -6933,8 +6118,8 @@
       "status": "actif",
       "functionalVersion": "1.1.5",
       "functionalDate": "27/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-27",
@@ -6999,34 +6184,12 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-          "date": "2026-08-10 15:30:55 +0200",
-          "dateFr": "10/08/2026",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -7092,20 +6255,9 @@
           "dateFr": "14/04/2025",
           "message": "[DownloadBtn] fixe des problèmes d'accessibilité (#522)",
           "version": "0.0.15-alpha",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "3ddeab00f73305765205d47c8e24a76a19fed0fa",
-          "date": "2024-11-26 11:28:07 +0100",
-          "dateFr": "26/11/2024",
-          "message": "Doc : accessibility ex page (#230)",
-          "version": "0.0.5-alpha",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
           "a11yLabel": false
         }
       ]
@@ -7116,8 +6268,8 @@
       "status": "actif",
       "functionalVersion": "1.0.23",
       "functionalDate": "25/03/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.21",
+      "a11yDate": "26/02/2026",
       "commits": [
         {
           "date": "2026-03-25",
@@ -7201,28 +6353,6 @@
         }
       ],
       "a11yCommits": [
-        {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
         {
           "hash": "a9dea254e921bf06a6b343e07fae495ba0ce0ee2",
           "date": "2026-03-25 10:38:49 +0100",
@@ -7363,8 +6493,8 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "06/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-06",
@@ -7415,23 +6545,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -7485,17 +6604,6 @@
           "date": "2026-01-06 11:55:17 +0100",
           "dateFr": "06/01/2026",
           "message": "Feat/add accessibility in ci (#1663)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
           "version": "1.0.17",
           "confidence": "forte",
           "keywords": true,
@@ -7576,8 +6684,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.22",
+      "a11yDate": "10/03/2026",
       "commits": [
         {
           "date": "2026-07-27",
@@ -7627,17 +6735,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
           "date": "2026-07-27 14:32:02 +0200",
           "dateFr": "27/07/2026",
@@ -7646,17 +6743,6 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
           "a11yLabel": false
         },
         {
@@ -7715,17 +6801,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "3146e5bae8c2ee560774eb201d26b18bf2c18b00",
           "date": "2025-02-14 14:08:43 +0100",
           "dateFr": "14/02/2025",
@@ -7744,8 +6819,8 @@
       "status": "actif",
       "functionalVersion": "1.1.5",
       "functionalDate": "03/09/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.20",
+      "a11yDate": "11/02/2026",
       "commits": [
         {
           "date": "2026-09-03",
@@ -7775,17 +6850,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "b70137c4b8130a223eb88d3a1427b943a36a79f6",
           "date": "2026-09-03 11:29:18 +0200",
           "dateFr": "03/09/2026",
@@ -7802,7 +6866,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "faible",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -7839,17 +6903,6 @@
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
         }
       ]
     },
@@ -7859,8 +6912,8 @@
       "status": "actif",
       "functionalVersion": "1.1.5",
       "functionalDate": "03/09/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-09-03",
@@ -7935,17 +6988,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
           "date": "2026-08-26 13:27:43 +0200",
           "dateFr": "26/08/2026",
@@ -7962,7 +7004,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -8008,8 +7050,8 @@
       "status": "actif",
       "functionalVersion": "1.1.5",
       "functionalDate": "27/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.20",
+      "a11yDate": "11/02/2026",
       "commits": [
         {
           "date": "2026-08-27",
@@ -8064,28 +7106,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "b649f01a6d7adfcd44a3fdc04bdad87599caa30e",
           "date": "2026-03-04 17:08:50 +0100",
           "dateFr": "04/03/2026",
@@ -8112,17 +7132,6 @@
           "date": "2026-01-06 11:55:17 +0100",
           "dateFr": "06/01/2026",
           "message": "Feat/add accessibility in ci (#1663)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
           "version": "1.0.17",
           "confidence": "forte",
           "keywords": true,
@@ -8192,8 +7201,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-07-27",
@@ -8263,23 +7272,12 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -8356,7 +7354,7 @@
           "dateFr": "15/01/2026",
           "message": "feat: enhance accessibility and usability of FilterSideBar component (#1704)",
           "version": "1.0.17",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -8366,17 +7364,6 @@
           "date": "2026-01-06 11:55:17 +0100",
           "dateFr": "06/01/2026",
           "message": "Feat/add accessibility in ci (#1663)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
           "version": "1.0.17",
           "confidence": "forte",
           "keywords": true,
@@ -8402,8 +7389,8 @@
       "status": "actif",
       "functionalVersion": "1.1.6",
       "functionalDate": "28/09/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-09-28",
@@ -8524,34 +7511,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-          "date": "2026-08-10 15:30:55 +0200",
-          "dateFr": "10/08/2026",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -8674,8 +7639,8 @@
       "status": "actif",
       "functionalVersion": "1.0.27",
       "functionalDate": "20/05/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.23",
+      "a11yDate": "30/03/2026",
       "commits": [
         {
           "date": "2026-05-20",
@@ -8719,28 +7684,6 @@
         }
       ],
       "a11yCommits": [
-        {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
         {
           "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
           "date": "2026-03-30 08:20:25 +0100",
@@ -8802,7 +7745,7 @@
           "dateFr": "09/04/2025",
           "message": "[FranceConnectBtn] fixe des problèmes d'accessibilité (#520)",
           "version": "0.0.15-alpha",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -8826,8 +7769,8 @@
       "status": "actif",
       "functionalVersion": "1.1.6",
       "functionalDate": "28/09/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "30/07/2026",
       "commits": [
         {
           "date": "2026-09-28",
@@ -8968,34 +7911,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-          "date": "2026-08-10 15:30:55 +0200",
-          "dateFr": "10/08/2026",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "43ecbd9871d2da61c693351d6c13ae521d23235c",
           "date": "2026-07-30 14:51:52 +0200",
           "dateFr": "30/07/2026",
           "message": "A11y: Fix homeLink focus (#2443)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -9006,7 +7927,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -9060,17 +7981,6 @@
           "date": "2026-01-06 11:55:17 +0100",
           "dateFr": "06/01/2026",
           "message": "Feat/add accessibility in ci (#1663)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
           "version": "1.0.17",
           "confidence": "forte",
           "keywords": true,
@@ -9138,7 +8048,7 @@
           "dateFr": "18/04/2025",
           "message": "Fix des focus dans les Menu du header (#547)",
           "version": "0.0.15-alpha",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -9239,8 +8149,8 @@
       "status": "actif",
       "functionalVersion": "1.0.7",
       "functionalDate": "20/08/2025",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.20",
+      "a11yDate": "11/02/2026",
       "commits": [
         {
           "date": "2025-08-20",
@@ -9269,17 +8179,6 @@
         }
       ],
       "a11yCommits": [
-        {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
         {
           "hash": "d56383f77b97cf18f4a14e05c37e6f0e165d5024",
           "date": "2026-05-29 11:29:33 +0200",
@@ -9336,17 +8235,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "3ddeab00f73305765205d47c8e24a76a19fed0fa",
-          "date": "2024-11-26 11:28:07 +0100",
-          "dateFr": "26/11/2024",
-          "message": "Doc : accessibility ex page (#230)",
-          "version": "0.0.5-alpha",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "11e216c893106c736ac3b8f9ee985ae82fa589b0",
           "date": "2024-11-05 09:33:52 +0100",
           "dateFr": "05/11/2024",
@@ -9365,8 +8253,8 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "25/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "28/07/2026",
       "commits": [
         {
           "date": "2026-08-25",
@@ -9487,23 +8375,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "481c8fc57505e697f05b4cf623dc78f4fc0e65d2",
           "date": "2026-07-28 11:31:28 +0200",
           "dateFr": "28/07/2026",
           "message": "fix header navigation bar color to variable (#2431)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -9514,7 +8391,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -9558,7 +8435,7 @@
           "dateFr": "20/04/2026",
           "message": "Feat/improve sy tabs a11y (#2111)",
           "version": "1.0.25",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -9608,17 +8485,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "80bc09fa1699b9cb604e9e3a8604a1b42aaa3d5c",
           "date": "2025-08-22 09:29:00 +0200",
           "dateFr": "22/08/2025",
@@ -9659,8 +8525,8 @@
       "status": "actif",
       "functionalVersion": "1.1.6",
       "functionalDate": "28/09/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-09-28",
@@ -9772,17 +8638,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "7a60cc11c6a81f356f17d09b4a36d3bac6f326b9",
           "date": "2026-08-13 15:55:47 +0200",
           "dateFr": "13/08/2026",
@@ -9810,7 +8665,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -9832,17 +8687,6 @@
           "dateFr": "11/02/2026",
           "message": "Accessibilité: file reorganization accessibility (#1792)",
           "version": "1.0.20",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -9900,8 +8744,8 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "05/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-05",
@@ -9982,34 +8826,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-          "date": "2026-08-10 15:30:55 +0200",
-          "dateFr": "10/08/2026",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -10037,23 +8859,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "78d15ce9d5e91a5ab199e87599fae715ea52ddb3",
           "date": "2025-04-24 11:48:09 +0000",
           "dateFr": "24/04/2025",
           "message": "LangBtn - fix d'audit d'accessibilité (#553)",
           "version": "0.0.15-alpha",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -10121,8 +8932,8 @@
       "status": "actif",
       "functionalVersion": "1.0.18",
       "functionalDate": "20/01/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.24",
+      "a11yDate": "30/03/2026",
       "commits": [
         {
           "date": "2026-01-20",
@@ -10147,23 +8958,12 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "faible",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -10220,8 +9020,8 @@
       "status": "actif",
       "functionalVersion": "1.1.6",
       "functionalDate": "28/09/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "30/07/2026",
       "commits": [
         {
           "date": "2026-09-28",
@@ -10277,17 +9077,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "43ecbd9871d2da61c693351d6c13ae521d23235c",
           "date": "2026-07-30 14:51:52 +0200",
           "dateFr": "30/07/2026",
@@ -10307,17 +9096,6 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
           "a11yLabel": false
         },
         {
@@ -10405,8 +9183,8 @@
       "status": "actif",
       "functionalVersion": "1.1.6",
       "functionalDate": "24/09/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "11/09/2026",
+      "a11yVersion": "1.0.23",
+      "a11yDate": "30/03/2026",
       "commits": [
         {
           "date": "2026-09-24",
@@ -10445,50 +9223,6 @@
         }
       ],
       "a11yCommits": [
-        {
-          "hash": "60fe923d69a06f1c43ba06edea701c8b1d35d119",
-          "date": "2026-09-11 11:36:21 +0200",
-          "dateFr": "11/09/2026",
-          "message": "LunarCalendar: ajout onglet test a11y dans validation (#2547)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-          "date": "2026-08-10 15:30:55 +0200",
-          "dateFr": "10/08/2026",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
         {
           "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
           "date": "2026-03-30 08:20:25 +0100",
@@ -10541,8 +9275,8 @@
       "status": "actif",
       "functionalVersion": "1.0.23",
       "functionalDate": "19/03/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.21",
+      "a11yDate": "25/02/2026",
       "commits": [
         {
           "date": "2026-03-19",
@@ -10591,17 +9325,6 @@
         }
       ],
       "a11yCommits": [
-        {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
         {
           "hash": "63522bb5c595350c4f549d0fbc6e5af15cf8a891",
           "date": "2026-03-05 10:14:51 +0100",
@@ -10760,23 +9483,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -10833,8 +9545,8 @@
       "status": "actif",
       "functionalVersion": "1.1.5",
       "functionalDate": "27/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.2",
+      "a11yDate": "23/06/2026",
       "commits": [
         {
           "date": "2026-10-05",
@@ -10975,17 +9687,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
           "date": "2026-07-27 14:32:02 +0200",
           "dateFr": "27/07/2026",
@@ -11002,7 +9703,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "faible",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -11052,32 +9753,10 @@
           "a11yLabel": false
         },
         {
-          "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-          "date": "2026-01-30 15:10:51 +0100",
-          "dateFr": "30/01/2026",
-          "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-          "version": "1.0.18",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
           "date": "2026-01-06 11:55:17 +0100",
           "dateFr": "06/01/2026",
           "message": "Feat/add accessibility in ci (#1663)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
           "version": "1.0.17",
           "confidence": "forte",
           "keywords": true,
@@ -11112,7 +9791,7 @@
           "dateFr": "03/10/2025",
           "message": "NirField correction post audit Accessibilité (#1131)",
           "version": "1.0.10",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -11134,7 +9813,7 @@
           "dateFr": "09/09/2025",
           "message": "Nirfield: fix focus on edition (#1085)",
           "version": "1.0.9",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -11180,8 +9859,8 @@
       "status": "actif",
       "functionalVersion": "1.0.22",
       "functionalDate": "11/03/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.21",
+      "a11yDate": "26/02/2026",
       "commits": [
         {
           "date": "2026-03-11",
@@ -11230,28 +9909,6 @@
         }
       ],
       "a11yCommits": [
-        {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
         {
           "hash": "5ded9eca4a95c2ee3083fee246d6dc7e8e792d44",
           "date": "2026-06-17 14:14:22 +0200",
@@ -11381,8 +10038,8 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "20/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-10-05",
@@ -11482,23 +10139,12 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -11520,17 +10166,6 @@
           "dateFr": "11/02/2026",
           "message": "Accessibilité: file reorganization accessibility (#1792)",
           "version": "1.0.20",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-          "date": "2026-01-30 15:10:51 +0100",
-          "dateFr": "30/01/2026",
-          "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-          "version": "1.0.18",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -11586,7 +10221,7 @@
           "dateFr": "21/03/2025",
           "message": "fix NotificationBar accessibility (#445)",
           "version": "0.0.13-alpha",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -11610,8 +10245,8 @@
       "status": "actif",
       "functionalVersion": "1.1.1",
       "functionalDate": "17/06/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.21",
+      "a11yDate": "25/02/2026",
       "commits": [
         {
           "date": "2026-06-17",
@@ -11675,17 +10310,6 @@
         }
       ],
       "a11yCommits": [
-        {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
         {
           "hash": "5ded9eca4a95c2ee3083fee246d6dc7e8e792d44",
           "date": "2026-06-17 14:14:22 +0200",
@@ -11760,8 +10384,8 @@
       "status": "déprécié",
       "functionalVersion": "1.1.5",
       "functionalDate": "27/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.5",
+      "a11yDate": "26/08/2026",
       "commits": [
         {
           "date": "2026-08-27",
@@ -11856,17 +10480,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
           "date": "2026-08-26 13:27:43 +0200",
           "dateFr": "26/08/2026",
@@ -11883,7 +10496,7 @@
           "dateFr": "26/08/2026",
           "message": "refactor(PaginatedTable): add locales support for accessibility labels (#2505)",
           "version": "1.1.5",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -11894,7 +10507,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -11971,20 +10584,9 @@
           "dateFr": "13/01/2026",
           "message": "PaginatedTable fixe des colors et des état de hover/focus (#1711)",
           "version": "1.0.17",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
           "a11yLabel": false
         },
         {
@@ -11993,7 +10595,7 @@
           "dateFr": "05/12/2025",
           "message": "fix de problèmes d'accessibilité sur les bouton du PaginatedTable (#1560)",
           "version": "1.0.16",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -12039,8 +10641,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "15/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-07-27",
@@ -12170,34 +10772,12 @@
       ],
       "a11yCommits": [
         {
-          "hash": "e945f9bca8bd9b042d2459700cb37aa26da92083",
-          "date": "2026-09-15 14:54:14 +0200",
-          "dateFr": "15/09/2026",
-          "message": "PasswordField: ajout onglet a11y ainsi que le dossier validation (#2556)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -12269,17 +10849,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "627997d2f857a89bd560fc1808e7352f05d372a5",
           "date": "2025-11-14 16:57:37 +0100",
           "dateFr": "14/11/2025",
@@ -12342,8 +10911,8 @@
       "status": "actif",
       "functionalVersion": "1.1.6",
       "functionalDate": "22/09/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.24",
+      "a11yDate": "01/04/2026",
       "commits": [
         {
           "date": "2026-09-22",
@@ -12449,17 +11018,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "9df69d6c84d0c1383cd62b5441d0a027a07a01f7",
           "date": "2026-08-25 08:58:16 +0200",
           "dateFr": "25/08/2026",
@@ -12555,8 +11113,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-10-05",
@@ -12697,23 +11255,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -12763,32 +11310,10 @@
           "a11yLabel": false
         },
         {
-          "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-          "date": "2026-01-30 15:10:51 +0100",
-          "dateFr": "30/01/2026",
-          "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-          "version": "1.0.18",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
           "date": "2026-01-06 11:55:17 +0100",
           "dateFr": "06/01/2026",
           "message": "Feat/add accessibility in ci (#1663)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
           "version": "1.0.17",
           "confidence": "forte",
           "keywords": true,
@@ -12847,8 +11372,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-07-22",
@@ -12908,23 +11433,12 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -12957,17 +11471,6 @@
           "dateFr": "06/01/2026",
           "message": "Feat/add accessibility in ci (#1663)",
           "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "35c62cc0e150ad7000a1496266bdc873872ff6c2",
-          "date": "2025-11-04 13:56:18 +0100",
-          "dateFr": "04/11/2025",
-          "message": "DatePicker : improve accessibility (#1399)",
-          "version": "1.0.12",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -13025,8 +11528,8 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "04/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-04",
@@ -13101,17 +11604,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "2528a80ea9667f0d693f03f149d76f0242e22d4f",
           "date": "2026-07-27 14:32:02 +0200",
           "dateFr": "27/07/2026",
@@ -13128,7 +11620,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -13150,7 +11642,7 @@
           "dateFr": "30/06/2026",
           "message": "[RatingPicker] fix des problèmes d'accessibilitées (#2335)",
           "version": "1.1.2",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -13200,23 +11692,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "a29e9d4b25ced9d230104b0becf6d281b059959d",
           "date": "2025-11-28 11:12:05 +0100",
           "dateFr": "28/11/2025",
           "message": "Add keyboard navigation support for EmotionPicker, NumberPicker, and StarsPicker components (#1510)",
           "version": "1.0.16",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -13284,8 +11765,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-07-27",
@@ -13350,34 +11831,12 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "7f2a9c3ab64afbcceb675f6207bcef447a508ec8",
-          "date": "2026-07-08 14:17:13 +0200",
-          "dateFr": "08/07/2026",
-          "message": "[SyCheckbox] fix des retours d'accessibilitées (#2366)",
-          "version": "1.1.2",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -13421,7 +11880,7 @@
           "dateFr": "28/11/2025",
           "message": "SearchListField accessibilité (#1499)",
           "version": "1.0.16",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -13478,8 +11937,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.5",
+      "a11yDate": "28/08/2026",
       "commits": [
         {
           "date": "2026-07-22",
@@ -13514,17 +11973,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "9bc308f61597b0dea151c2ddd8f738bc824757e1",
           "date": "2026-08-28 18:19:08 +0200",
           "dateFr": "28/08/2026",
@@ -13541,7 +11989,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -13569,23 +12017,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-          "date": "2026-01-30 15:10:51 +0100",
-          "dateFr": "30/01/2026",
-          "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-          "version": "1.0.18",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "f126a815d41505d4d1cf299941fc68815ff07857",
           "date": "2025-04-24 14:45:07 +0200",
           "dateFr": "24/04/2025",
           "message": "SkipLink - fix d audit d accessibilité (#555)",
           "version": "0.0.15-alpha",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -13620,8 +12057,8 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "07/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-07",
@@ -13681,23 +12118,12 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -13787,8 +12213,8 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "19/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.21",
+      "a11yDate": "26/02/2026",
       "commits": [
         {
           "date": "2026-08-19",
@@ -13822,28 +12248,6 @@
         }
       ],
       "a11yCommits": [
-        {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
         {
           "hash": "5ded9eca4a95c2ee3083fee246d6dc7e8e792d44",
           "date": "2026-06-17 14:14:22 +0200",
@@ -14001,23 +12405,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -14078,17 +12471,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "2b7cede14198ab0f938da60507d22b49c9254300",
           "date": "2025-08-11 15:41:41 +0200",
           "dateFr": "11/08/2025",
@@ -14107,8 +12489,8 @@
       "status": "actif",
       "functionalVersion": "1.1.4",
       "functionalDate": "07/08/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-08-07",
@@ -14208,28 +12590,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-          "date": "2026-08-10 15:30:55 +0200",
-          "dateFr": "10/08/2026",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "1fc52297b3b59207665ab797522e03309e6a18a7",
           "date": "2026-08-07 15:40:09 +0200",
           "dateFr": "07/08/2026",
@@ -14246,7 +12606,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -14296,23 +12656,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "cf1246e585b8cb69aa68318284f2c4358bba9937",
-          "date": "2026-01-30 15:10:51 +0100",
-          "dateFr": "30/01/2026",
-          "message": "ACCESSIBILITE: effacer ancien model accessibilité sur la documentation (#1763)",
-          "version": "1.0.18",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "72505f8fdf4937a01903e75191e97d19d8ea56fa",
           "date": "2025-11-26 17:38:34 +0100",
           "dateFr": "26/11/2025",
           "message": "correction duplication role alert (#1501)",
           "version": "1.0.16",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -14323,7 +12672,7 @@
           "dateFr": "28/04/2025",
           "message": "SyAlert - fix d'audit d'accessibilité (#544)",
           "version": "0.0.16-alpha",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -14336,8 +12685,8 @@
       "status": "actif",
       "functionalVersion": "1.1.5",
       "functionalDate": "07/09/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.4",
+      "a11yDate": "07/08/2026",
       "commits": [
         {
           "date": "2026-09-07",
@@ -14388,17 +12737,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "b46884596483f9895fbb6bcd73ba948a49b543e7",
           "date": "2026-09-07 15:29:02 +0200",
           "dateFr": "07/09/2026",
@@ -14437,7 +12775,7 @@
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": false,
           "a11yLabel": false
@@ -14510,8 +12848,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.23",
+      "a11yDate": "30/03/2026",
       "commits": [
         {
           "date": "2026-10-05",
@@ -14612,17 +12950,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "6ba17d94f51a82d2ee9d3a4972eb40275a218231",
           "date": "2026-07-23 11:48:40 +0200",
           "dateFr": "23/07/2026",
@@ -14631,17 +12958,6 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
           "a11yLabel": false
         },
         {
@@ -14729,8 +13045,8 @@
       "status": "actif",
       "functionalVersion": "1.1.6",
       "functionalDate": "18/09/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.20",
+      "a11yDate": "11/02/2026",
       "commits": [
         {
           "date": "2026-09-18",
@@ -14860,17 +13176,6 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "2c90a270023a8f81debfab170380e16cdb6e0640",
           "date": "2026-09-04 15:53:57 +0200",
           "dateFr": "04/09/2026",
@@ -14890,17 +13195,6 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
           "a11yLabel": false
         },
         {
@@ -14970,17 +13264,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "1ce73af328b4960272770e8c8c5b22d786838649",
           "date": "2025-07-24 16:01:40 +0200",
           "dateFr": "24/07/2025",
@@ -15043,8 +13326,8 @@
       "status": "actif",
       "functionalVersion": "1.1.6",
       "functionalDate": "18/09/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.20",
+      "a11yDate": "11/02/2026",
       "commits": [
         {
           "date": "2026-09-18",
@@ -15185,17 +13468,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "5b17a07d9bf312bb7dc65d81737c16aee9486f99",
           "date": "2026-08-25 11:04:33 +0200",
           "dateFr": "25/08/2026",
@@ -15204,17 +13476,6 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
           "a11yLabel": false
         },
         {
@@ -15284,17 +13545,6 @@
           "a11yLabel": false
         },
         {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "1ce73af328b4960272770e8c8c5b22d786838649",
           "date": "2025-07-24 16:01:40 +0200",
           "dateFr": "24/07/2025",
@@ -15357,8 +13607,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.20",
+      "a11yDate": "11/02/2026",
       "commits": [
         {
           "date": "2026-07-27",
@@ -15413,55 +13663,11 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-          "date": "2026-08-10 15:30:55 +0200",
-          "dateFr": "10/08/2026",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
           "date": "2026-02-11 12:51:15 +0100",
           "dateFr": "11/02/2026",
           "message": "Accessibilité: file reorganization accessibility (#1792)",
           "version": "1.0.20",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
-          "version": "1.0.17",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -15530,8 +13736,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "22/07/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.3",
+      "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-07-22",
@@ -15557,23 +13763,12 @@
           "a11yLabel": false
         },
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
           "dateFr": "22/07/2026",
           "message": "Components: fix focus display (#2383)",
           "version": "1.1.3",
-          "confidence": "forte",
+          "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -15606,7 +13801,7 @@
           "dateFr": "09/02/2026",
           "message": "ToolbarContainer - fix des problèmes remontés dans l'audit d'accessibilité (#1680)",
           "version": "1.0.20",
-          "confidence": "forte",
+          "confidence": "faible",
           "keywords": true,
           "patterns": true,
           "a11yLabel": false
@@ -15630,8 +13825,8 @@
       "status": "actif",
       "functionalVersion": "1.1.3",
       "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.0.22",
+      "a11yDate": "10/03/2026",
       "commits": [
         {
           "date": "2026-07-27",
@@ -15675,28 +13870,6 @@
         }
       ],
       "a11yCommits": [
-        {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
         {
           "hash": "462a742899258fad303074faa447e8c8a2b109b2",
           "date": "2026-03-11 11:00:31 +0100",
@@ -15771,8 +13944,8 @@
       "status": "actif",
       "functionalVersion": "1.0.25",
       "functionalDate": "21/04/2026",
-      "a11yVersion": "1.1.6",
-      "a11yDate": "10/09/2026",
+      "a11yVersion": "1.1.4",
+      "a11yDate": "07/08/2026",
       "commits": [
         {
           "date": "2026-04-21",
@@ -15852,44 +14025,11 @@
       ],
       "a11yCommits": [
         {
-          "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-          "date": "2026-09-10 14:39:44 +0200",
-          "dateFr": "10/09/2026",
-          "message": "update doc a11y (#2545)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "fb82c46202a925c73c0a48758ca81e446a0082e4",
-          "date": "2026-08-10 15:30:55 +0200",
-          "dateFr": "10/08/2026",
-          "message": "[GitHub CI] Fix l'installation de la font Arial (#2488)",
-          "version": "1.1.4",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
           "hash": "39f7e1db8d96b9422e2b972fd423def3aa25a678",
           "date": "2026-08-07 15:13:49 +0200",
           "dateFr": "07/08/2026",
           "message": "UserMenuBtn: improve responsive + a11y (#2470)",
           "version": "1.1.4",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
@@ -15922,17 +14062,6 @@
           "date": "2026-01-06 11:55:17 +0100",
           "dateFr": "06/01/2026",
           "message": "Feat/add accessibility in ci (#1663)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "d4b70e78eaec70b2ef0dcd47cf8e886d69aeffb4",
-          "date": "2025-12-22 14:37:18 +0100",
-          "dateFr": "22/12/2025",
-          "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
           "version": "1.0.17",
           "confidence": "forte",
           "keywords": true,
