@@ -239,7 +239,7 @@ export const WithRightMenu: Story = {
                           variant="text"
                           :prepend-icon="searchIcon"
                           color="primary"
-                          role="search"
+						  type="button"
                       >
                         Rechercher
                       </VBtn>
@@ -250,16 +250,14 @@ export const WithRightMenu: Story = {
                         Login
                       </VBtn>
                     </nav>
-                    <VBtn
-                        class="d-md-none"
-                        variant="text"
-                    >
-                      <VBtn
-                          color="primary"
-                          density="comfortable"
-                          :icon="accountIcon"
-                      />
-                    </vbtn>
+					  <VBtn
+						  class="d-md-none"
+						  variant="text"
+						  color="primary"
+						  :icon="accountIcon"
+						  aria-label="Se connecter"
+						  type="button"
+					  />
                   </template>
 				</HeaderBar>
 			</div>`,
@@ -281,7 +279,7 @@ export const WithRightMenu: Story = {
 									variant="text"
 									:prepend-icon="mdiMagnify"
 									color="primary"
-									role="search"
+									type="button"
 								>
 									Rechercher
 								</VBtn>
@@ -292,16 +290,14 @@ export const WithRightMenu: Story = {
 									Login
 								</VBtn>
 							</nav>
-							<VBtn
-								class="d-md-none"
-								variant="text"
-							>
-								<VBtn
-                                    color="primary"
-                                    density="comfortable"
-                                    :icon="mdiAccountCircleOutline"
-                                />
-							</VBtn>
+								  <VBtn
+						  class="d-md-none"
+						  variant="text"
+						  color="primary"
+						  :icon="accountIcon"
+						  aria-label="Se connecter"
+						  type="button"
+					  />
 						</template>
 					</HeaderBar>
 				</template>

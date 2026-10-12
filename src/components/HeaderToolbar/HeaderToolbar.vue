@@ -580,7 +580,6 @@
 									:aria-current="getCurrentPageIndex() === index ? 'page' : undefined"
 									:aria-haspopup="itemsSelectMenu && index === 1 ? 'menu' : undefined"
 									:aria-expanded="itemsSelectMenu && index === 1 ? String(menuOpen) : undefined"
-									:aria-controls="itemsSelectMenu && index === 1 ? 'left-dropdown-menu' : undefined"
 									@click="onActivatorClick(index)"
 									@focus="index === 1 && showOverlay ? highlightMenu = true : null"
 									@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
