@@ -57,7 +57,7 @@ Périmètre minimal proposé :
 ## Impact
 
 - **Sévérité :** Critique (bloquant) — les règles métier qui exploitent la valeur validée (ex. `new Date(value)`, comparaison au `v-model`) sont faussées.
-- **Introduit dans :** à déterminer (`git blame` sur `adaptCustomRules` / `validateTextInputFlow`) — probable depuis l'introduction du flow `validateTextInput`.
+- **Introduit dans :** PR [#684](https://github.com/assurance-maladie-digital/design-system-v3/pull/684) « Feat/improve dp ranges » (`b57bc9d5`, 13/06/2025) — première conversion `Date` → string via `formatDate(dayjs(val), format)` avec `format` = format d'affichage, jamais `dateFormatReturn`. Généralisé par la PR [#2499](https://github.com/assurance-maladie-digital/design-system-v3/pull/2499) « Migration de la validation des DatePickers » (`2f3c708a`) qui a supprimé l'heuristique `originalValidate.toString().includes('.includes')` : depuis, **tout** objet `Date` est formaté avec le format d'affichage avant d'atteindre le callback `validate`.
 - **Utilisateurs concernés :** tous les consommateurs combinant `customRules` de type `custom` + `dateFormatReturn` différent de `format` (typiquement affichage `DD/MM/YYYY` + retour `YYYY-MM-DD` — le cas standard CNAM).
 - **Zones à risque :** `composables/validationFlows/validateTextInputFlow.ts`, `composables/validationFlows/validateDatesFlow.ts`, `utils/validationUtils.ts`, `ComplexDatePicker.vue`, `CalendarMode/DatePicker.vue`, `DateTextInput.vue` ; tests `validationUtils.spec.ts`, `useDatePickerValidation.spec.ts`, `DatePicker.spec.ts` / `ComplexDatePicker.spec.ts` (les tests existants qui passaient un format explicite à `adaptCustomRules` restent valides car la fonction garde sa signature).
 
@@ -73,4 +73,7 @@ Périmètre minimal proposé :
 
 ## Tickets liés
 
-- Rapport de bug : « La validation n'utilise pas le format dateFormatReturn » (🐛 anomalie fonctionnelle majeure, 🔴 bloquant)
+- Rapport de bug : [#2627 — La validation n'utilise pas le format dateFormatReturn](https://github.com/assurance-maladie-digital/design-system-v3/issues/2627) (🐛 anomalie fonctionnelle majeure, 🔴 bloquant)
+- PR à l'origine du bug :
+  - [#684 — Feat/improve dp ranges](https://github.com/assurance-maladie-digital/design-system-v3/pull/684) (`b57bc9d5`) : introduit le formatage `Date` → string au format d'affichage dans le callback `validate` des custom rules
+  - [#2499 — Migration de la validation des DatePickers](https://github.com/assurance-maladie-digital/design-system-v3/pull/2499) (`2f3c708a`) : rend le formatage systématique (suppression de l'heuristique `.includes`), rendant le bug visible dans tous les cas
