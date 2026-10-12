@@ -183,6 +183,17 @@
   ],
   "AmeliproAccordionFrieze": [
     {
+      "hash": "b7efc2374b91ff99de07893f6a2f051cfd590658",
+      "date": "2026-10-05 11:57:53 +0200",
+      "dateFr": "05/10/2026",
+      "message": "Security: update plugin undici (#2613)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
       "dateFr": "10/09/2026",
@@ -263,6 +274,17 @@
     }
   ],
   "AmeliproAccordionList": [
+    {
+      "hash": "b7efc2374b91ff99de07893f6a2f051cfd590658",
+      "date": "2026-10-05 11:57:53 +0200",
+      "dateFr": "05/10/2026",
+      "message": "Security: update plugin undici (#2613)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
@@ -758,6 +780,17 @@
     }
   ],
   "AmeliproCarousel": [
+    {
+      "hash": "b7efc2374b91ff99de07893f6a2f051cfd590658",
+      "date": "2026-10-05 11:57:53 +0200",
+      "dateFr": "05/10/2026",
+      "message": "Security: update plugin undici (#2613)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
@@ -5793,6 +5826,17 @@
   ],
   "CopyBtn": [
     {
+      "hash": "eb0307f7c72cde537c9c3f26980118810f0adc9c",
+      "date": "2026-10-05 10:40:12 +0200",
+      "dateFr": "05/10/2026",
+      "message": "CopyBtn: correction test accessibility et update documentation (#2607)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
       "dateFr": "10/09/2026",
@@ -5916,10 +5960,6 @@
   ],
   "SelectBtnField": [
     {
-      "hash": "99dd21e66e143bda73bf5d60d7cc258bf80fda35",
-      "date": "2026-09-17 14:05:01 +0200",
-      "dateFr": "17/09/2026",
-      "message": "add tests a11y to selectBtnField (#2543)",
       "hash": "99dd21e66e143bda73bf5d60d7cc258bf80fda35",
       "date": "2026-09-17 14:05:01 +0200",
       "dateFr": "17/09/2026",
@@ -6966,22 +7006,33 @@
   ],
   "SyForm": [
     {
-      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
-      "date": "2026-09-10 14:39:44 +0200",
-      "dateFr": "10/09/2026",
-      "message": "update doc a11y (#2545)",
-      "version": "1.1.6",
+      "hash": "7ac9b1d8f2a8bf74187de0635012c8454422e9df",
+      "date": "2026-10-07 16:31:56 +0200",
+      "dateFr": "07/10/2026",
+      "message": "docs(SyForm): fix markdown escaping in accessibility documentation",
+      "version": null,
       "confidence": "forte",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
     },
     {
-      "hash": "c436586292ca72c4d82809711b9ef7cdcbdcc09a",
-      "date": "2026-02-25 16:19:14 +0100",
-      "dateFr": "25/02/2026",
-      "message": "add a11y ci (#1881)",
-      "version": "1.0.21",
+      "hash": "a0796b78d71f23b3a2a6a9ed3aca4bd80317f8a4",
+      "date": "2026-10-07 16:28:55 +0200",
+      "dateFr": "07/10/2026",
+      "message": "docs(a11y): update accessibility status report and documentation",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
+      "date": "2026-09-10 14:39:44 +0200",
+      "dateFr": "10/09/2026",
+      "message": "update doc a11y (#2545)",
+      "version": "1.1.6",
       "confidence": "forte",
       "keywords": true,
       "patterns": false,
@@ -6997,31 +7048,9 @@
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
-    },
-    {
-      "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
-      "date": "2026-01-06 11:55:17 +0100",
-      "dateFr": "06/01/2026",
-      "message": "Feat/add accessibility in ci (#1663)",
-      "version": "1.0.17",
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": false,
-      "a11yLabel": false
     }
   ],
   "SyIcon": [
-    {
-      "hash": "10d998f3c39c4df0f14b28536e73af79a2d02399",
-      "date": "2026-09-17 16:04:51 +0200",
-      "dateFr": "17/09/2026",
-      "message": "refacto tests a11y (#2562)",
-      "version": null,
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": true,
-      "a11yLabel": false
-    },
     {
       "hash": "6b48d0b4c60df11d089c554c474f5f21f6e3a2fd",
       "date": "2026-09-24 14:22:02 +0200",
@@ -7211,17 +7240,6 @@
     }
   ],
   "SyIconAccessibility": [
-    {
-      "hash": "10d998f3c39c4df0f14b28536e73af79a2d02399",
-      "date": "2026-09-17 16:04:51 +0200",
-      "dateFr": "17/09/2026",
-      "message": "refacto tests a11y (#2562)",
-      "version": null,
-      "confidence": "forte",
-      "keywords": true,
-      "patterns": true,
-      "a11yLabel": false
-    },
     {
       "hash": "6b48d0b4c60df11d089c554c474f5f21f6e3a2fd",
       "date": "2026-09-24 14:22:02 +0200",
@@ -8892,6 +8910,17 @@
     }
   ],
   "DataListItem": [
+    {
+      "hash": "9b8c8644c12b5f3be309f6496104027b261f166d",
+      "date": "2026-10-08 16:56:23 +0200",
+      "dateFr": "08/10/2026",
+      "message": "add tests (#2623)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "5a322e15e83a6f15a7c62feb7dd6747aabc1df86",
       "date": "2026-09-28 09:08:42 +0200",
@@ -10593,10 +10622,10 @@
   ],
   "ExternalLinks": [
     {
-      "hash": "962b87035c34c626d88f0986b10bcb4c508bc219",
-      "date": "2026-09-25 12:04:38 +0200",
-      "dateFr": "25/09/2026",
-      "message": "corrections test accessibilité axe et tanaguru",
+      "hash": "c62a900a1f5c7383ea89d72f31c65fce99b9b6bb",
+      "date": "2026-10-02 10:46:52 +0200",
+      "dateFr": "02/10/2026",
+      "message": "ExternalLink: fix problemes accessibilité  (#2596)",
       "version": null,
       "confidence": "forte",
       "keywords": true,
@@ -12488,12 +12517,23 @@
   ],
   "HeaderNavigationBar": [
     {
+      "hash": "9e1a3727069bcc6489ee3da6d9ae7172c32f6ef7",
+      "date": "2026-10-07 16:33:49 +0200",
+      "dateFr": "07/10/2026",
+      "message": "Ajout des tests a11y au composant `HeaderNavigationBar` (#2552)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
       "dateFr": "10/09/2026",
       "message": "update doc a11y (#2545)",
       "version": "1.1.6",
-      "confidence": "moyenne",
+      "confidence": "forte",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -12504,7 +12544,7 @@
       "dateFr": "28/07/2026",
       "message": "fix header navigation bar color to variable (#2431)",
       "version": "1.1.3",
-      "confidence": "moyenne",
+      "confidence": "forte",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -12515,7 +12555,7 @@
       "dateFr": "22/07/2026",
       "message": "Components: fix focus display (#2383)",
       "version": "1.1.3",
-      "confidence": "moyenne",
+      "confidence": "forte",
       "keywords": true,
       "patterns": true,
       "a11yLabel": false
@@ -12559,7 +12599,7 @@
       "dateFr": "20/04/2026",
       "message": "Feat/improve sy tabs a11y (#2111)",
       "version": "1.0.25",
-      "confidence": "moyenne",
+      "confidence": "forte",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -12573,6 +12613,28 @@
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "c436586292ca72c4d82809711b9ef7cdcbdcc09a",
+      "date": "2026-02-25 16:19:14 +0100",
+      "dateFr": "25/02/2026",
+      "message": "add a11y ci (#1881)",
+      "version": "1.0.21",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
+      "date": "2026-01-06 11:55:17 +0100",
+      "dateFr": "06/01/2026",
+      "message": "Feat/add accessibility in ci (#1663)",
+      "version": "1.0.17",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
       "a11yLabel": false
     },
     {
@@ -12592,7 +12654,7 @@
       "dateFr": "22/12/2025",
       "message": "add Storybook a11y addon and disable color-contrast checks (#1658)",
       "version": "1.0.17",
-      "confidence": "moyenne",
+      "confidence": "forte",
       "keywords": true,
       "patterns": false,
       "a11yLabel": false
@@ -12722,6 +12784,17 @@
     }
   ],
   "HeaderToolbar": [
+    {
+      "hash": "5ea21ed9f76c9863fd5e85f84016bc12a92b9688",
+      "date": "2026-10-12 09:00:08 +0200",
+      "dateFr": "12/10/2026",
+      "message": "add a11y tests on headerToolbar and fix tanaguru problems (#2611)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "4beac9cb6a842d3852a0986e03a22b4b405dc64f",
       "date": "2026-09-28 09:36:28 +0200",
@@ -12856,6 +12929,17 @@
     }
   ],
   "LangBtn": [
+    {
+      "hash": "54058f561f3023685b64e68d6e659be053a48a85",
+      "date": "2026-10-02 09:57:45 +0200",
+      "dateFr": "02/10/2026",
+      "message": "LangBtn: implement ARIA listbox pattern and RGAA compliance (#2589)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
@@ -13384,11 +13468,11 @@
   ],
   "MonthPicker": [
     {
-      "hash": "58290e4223b2b5d9ca984e260dd6acede3e88a19",
-      "date": "2026-09-25 11:39:55 +0200",
-      "dateFr": "25/09/2026",
-      "message": "corrections test accessibilité axe et tanaguru",
-      "version": "1.1.6",
+      "hash": "12adee1d9c97dae08a6dcf07e71d5762bbb46f44",
+      "date": "2026-10-05 10:18:21 +0200",
+      "dateFr": "05/10/2026",
+      "message": "MonthPicker: correction tests axe accessibilité (#2597)",
+      "version": null,
       "confidence": "forte",
       "keywords": true,
       "patterns": true,
@@ -13463,11 +13547,11 @@
   ],
   "MonthPickerInput": [
     {
-      "hash": "58290e4223b2b5d9ca984e260dd6acede3e88a19",
-      "date": "2026-09-25 11:39:55 +0200",
-      "dateFr": "25/09/2026",
-      "message": "corrections test accessibilité axe et tanaguru",
-      "version": "1.1.6",
+      "hash": "12adee1d9c97dae08a6dcf07e71d5762bbb46f44",
+      "date": "2026-10-05 10:18:21 +0200",
+      "dateFr": "05/10/2026",
+      "message": "MonthPicker: correction tests axe accessibilité (#2597)",
+      "version": null,
       "confidence": "moyenne",
       "keywords": true,
       "patterns": false,
@@ -13498,11 +13582,11 @@
   ],
   "MonthPickerVisual": [
     {
-      "hash": "58290e4223b2b5d9ca984e260dd6acede3e88a19",
-      "date": "2026-09-25 11:39:55 +0200",
-      "dateFr": "25/09/2026",
-      "message": "corrections test accessibilité axe et tanaguru",
-      "version": "1.1.6",
+      "hash": "12adee1d9c97dae08a6dcf07e71d5762bbb46f44",
+      "date": "2026-10-05 10:18:21 +0200",
+      "dateFr": "05/10/2026",
+      "message": "MonthPicker: correction tests axe accessibilité (#2597)",
+      "version": null,
       "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
@@ -13533,11 +13617,11 @@
   ],
   "MonthSelector": [
     {
-      "hash": "58290e4223b2b5d9ca984e260dd6acede3e88a19",
-      "date": "2026-09-25 11:39:55 +0200",
-      "dateFr": "25/09/2026",
-      "message": "corrections test accessibilité axe et tanaguru",
-      "version": "1.1.6",
+      "hash": "12adee1d9c97dae08a6dcf07e71d5762bbb46f44",
+      "date": "2026-10-05 10:18:21 +0200",
+      "dateFr": "05/10/2026",
+      "message": "MonthPicker: correction tests axe accessibilité (#2597)",
+      "version": null,
       "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
@@ -13568,11 +13652,11 @@
   ],
   "VisualPickerFooter": [
     {
-      "hash": "58290e4223b2b5d9ca984e260dd6acede3e88a19",
-      "date": "2026-09-25 11:39:55 +0200",
-      "dateFr": "25/09/2026",
-      "message": "corrections test accessibilité axe et tanaguru",
-      "version": "1.1.6",
+      "hash": "12adee1d9c97dae08a6dcf07e71d5762bbb46f44",
+      "date": "2026-10-05 10:18:21 +0200",
+      "dateFr": "05/10/2026",
+      "message": "MonthPicker: correction tests axe accessibilité (#2597)",
+      "version": null,
       "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
@@ -13603,11 +13687,11 @@
   ],
   "VisualPickerHeader": [
     {
-      "hash": "58290e4223b2b5d9ca984e260dd6acede3e88a19",
-      "date": "2026-09-25 11:39:55 +0200",
-      "dateFr": "25/09/2026",
-      "message": "corrections test accessibilité axe et tanaguru",
-      "version": "1.1.6",
+      "hash": "12adee1d9c97dae08a6dcf07e71d5762bbb46f44",
+      "date": "2026-10-05 10:18:21 +0200",
+      "dateFr": "05/10/2026",
+      "message": "MonthPicker: correction tests axe accessibilité (#2597)",
+      "version": null,
       "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
@@ -13638,11 +13722,11 @@
   ],
   "YearSelector": [
     {
-      "hash": "58290e4223b2b5d9ca984e260dd6acede3e88a19",
-      "date": "2026-09-25 11:39:55 +0200",
-      "dateFr": "25/09/2026",
-      "message": "corrections test accessibilité axe et tanaguru",
-      "version": "1.1.6",
+      "hash": "12adee1d9c97dae08a6dcf07e71d5762bbb46f44",
+      "date": "2026-10-05 10:18:21 +0200",
+      "dateFr": "05/10/2026",
+      "message": "MonthPicker: correction tests axe accessibilité (#2597)",
+      "version": null,
       "confidence": "moyenne",
       "keywords": true,
       "patterns": true,
@@ -13672,6 +13756,17 @@
     }
   ],
   "NirField": [
+    {
+      "hash": "d7ac6be5343bfad4f05913e4fb9b9b4e2d8e6cae",
+      "date": "2026-10-05 09:23:58 +0200",
+      "dateFr": "05/10/2026",
+      "message": "SyForm v2 (#2434)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
@@ -14879,6 +14974,17 @@
   ],
   "PhoneField": [
     {
+      "hash": "d7ac6be5343bfad4f05913e4fb9b9b4e2d8e6cae",
+      "date": "2026-10-05 09:23:58 +0200",
+      "dateFr": "05/10/2026",
+      "message": "SyForm v2 (#2434)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
       "dateFr": "10/09/2026",
@@ -15019,6 +15125,74 @@
       "confidence": "faible",
       "keywords": false,
       "patterns": true,
+      "a11yLabel": false
+    }
+  ],
+  "PhoneField.reset.fixture": [
+    {
+      "hash": "d7ac6be5343bfad4f05913e4fb9b9b4e2d8e6cae",
+      "date": "2026-10-05 09:23:58 +0200",
+      "dateFr": "05/10/2026",
+      "message": "SyForm v2 (#2434)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
+      "date": "2026-07-22 11:00:09 +0200",
+      "dateFr": "22/07/2026",
+      "message": "Components: fix focus display (#2383)",
+      "version": "1.1.3",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "0623c31856bc1545e6df01135176b7c4ec45bddf",
+      "date": "2026-06-11 15:53:58 +0200",
+      "dateFr": "11/06/2026",
+      "message": "[PhoneField] Fixe et ajout de la validation (#2205)",
+      "version": "1.1.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "5a5b5f5133c247de33640d5558ab0bcb6acebadd",
+      "date": "2026-03-10 11:32:10 +0100",
+      "dateFr": "10/03/2026",
+      "message": "PhoneField: fix errors display (#1928)",
+      "version": "1.0.22",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "c436586292ca72c4d82809711b9ef7cdcbdcc09a",
+      "date": "2026-02-25 16:19:14 +0100",
+      "dateFr": "25/02/2026",
+      "message": "add a11y ci (#1881)",
+      "version": "1.0.21",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
+      "a11yLabel": false
+    },
+    {
+      "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
+      "date": "2026-01-06 11:55:17 +0100",
+      "dateFr": "06/01/2026",
+      "message": "Feat/add accessibility in ci (#1663)",
+      "version": "1.0.17",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": false,
       "a11yLabel": false
     }
   ],
@@ -16390,6 +16564,17 @@
   ],
   "SyBtnMenu": [
     {
+      "hash": "eac0e72325e768e9ecd6c0daa5a361e78ed8b94d",
+      "date": "2026-09-29 15:01:04 +0200",
+      "dateFr": "29/09/2026",
+      "message": "SyBtnMenu: correction test d'accessibilité axe (#2573)",
+      "version": null,
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
       "dateFr": "10/09/2026",
@@ -16479,6 +16664,17 @@
     }
   ],
   "SyTextArea": [
+    {
+      "hash": "d7ac6be5343bfad4f05913e4fb9b9b4e2d8e6cae",
+      "date": "2026-10-05 09:23:58 +0200",
+      "dateFr": "05/10/2026",
+      "message": "SyForm v2 (#2434)",
+      "version": null,
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "9f0ec7fc1ea13e69ecafb1a1d0405c2f9ae4743e",
       "date": "2026-09-10 14:39:44 +0200",
@@ -16886,17 +17082,6 @@
       "date": "2026-09-18 14:10:26 +0200",
       "dateFr": "18/09/2026",
       "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
-      "version": null,
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
-      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
-      "date": "2026-09-18 14:10:26 +0200",
-      "dateFr": "18/09/2026",
-      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
       "version": "1.1.6",
       "confidence": "faible",
       "keywords": false,
@@ -17070,17 +17255,6 @@
     }
   ],
   "SyTableFilter": [
-    {
-      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
-      "date": "2026-09-18 14:10:26 +0200",
-      "dateFr": "18/09/2026",
-      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
-      "version": null,
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
     {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",
@@ -17414,17 +17588,6 @@
   ],
   "SyTablePagination": [
     {
-      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
-      "date": "2026-09-18 14:10:26 +0200",
-      "dateFr": "18/09/2026",
-      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
-      "version": null,
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",
       "dateFr": "22/09/2026",
@@ -17757,17 +17920,6 @@
   ],
   "TableBulkActions": [
     {
-      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
-      "date": "2026-09-18 14:10:26 +0200",
-      "dateFr": "18/09/2026",
-      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
-      "version": null,
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
-    {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",
       "dateFr": "22/09/2026",
@@ -18099,17 +18251,6 @@
     }
   ],
   "TableHeader": [
-    {
-      "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
-      "date": "2026-09-18 14:10:26 +0200",
-      "dateFr": "18/09/2026",
-      "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
-      "version": null,
-      "confidence": "faible",
-      "keywords": false,
-      "patterns": true,
-      "a11yLabel": false
-    },
     {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",

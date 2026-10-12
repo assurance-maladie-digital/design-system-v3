@@ -1,8 +1,8 @@
 {
-  "date": "2026-10-08T08:08:24.573Z",
-  "compliantCount": 70,
+  "date": "2026-10-12T13:15:08.633Z",
+  "compliantCount": 71,
   "totalCount": 77,
-  "percentage": "90.91",
+  "percentage": "92.21",
   "results": [
     {
       "componentName": "Accordion",
@@ -470,7 +470,7 @@
       "componentName": "HeaderBar",
       "hasA11yTests": true,
       "hasA11yDisabledInStories": true,
-      "mdxStatus": "Complète",
+      "mdxStatus": "Incomplète",
       "isFullyCompliant": false,
       "storybookTitle": "Composants/Structure/HeaderBar",
       "hasManualAudit": true,
