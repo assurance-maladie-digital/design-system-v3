@@ -1410,3 +1410,44 @@ describe('SyTable pageInput', () => {
 		expect(wrapper.findAll('tbody tr')).toHaveLength(300)
 	})
 })
+
+describe('SyTable accessible result references', () => {
+	it('announces selected row positions after sorting, filtering and pagination', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				suffix: 'accessible-rows',
+				headers: [{ title: 'Nom', key: 'name' }],
+				items: [{ id: 1, name: 'Zoé' }, { id: 2, name: 'Alice' }, { id: 3, name: 'Bob' }],
+				modelValue: [2],
+				showSelect: true,
+				options: { itemsPerPage: 2, sortBy: [{ key: 'name', order: 'asc' }] },
+			},
+		})
+		await flushPromises()
+		expect(wrapper.get('[role="status"]').text()).toContain('Lignes sélectionnées : 1.')
+		await wrapper.setProps({ modelValue: [1], options: { page: 2, itemsPerPage: 2, sortBy: [{ key: 'name', order: 'asc' }] } })
+		await flushPromises()
+		expect(wrapper.get('[role="status"]').text()).toContain('Lignes sélectionnées : 3.')
+		await wrapper.setProps({ options: { itemsPerPage: -1, sortBy: [{ key: 'name', order: 'desc' }] } })
+		await flushPromises()
+		expect(wrapper.get('[role="status"]').text()).toContain('Lignes sélectionnées : 1.')
+		await wrapper.setProps({ options: { itemsPerPage: -1, filters: [{ key: 'name', value: 'Alice', type: 'text' }] }, modelValue: [2] })
+		await flushPromises()
+		expect(wrapper.get('[role="status"]').text()).toContain('Lignes sélectionnées : 1.')
+		wrapper.unmount()
+	})
+
+	it('keeps pagination controls linked to the results with a consumer id', async () => {
+		const wrapper = mount(SyTable, {
+			attrs: { id: 'patients' },
+			props: { suffix: 'accessible-results', headers, items: fakeItems, options: { itemsPerPage: 1 } },
+		})
+		await flushPromises()
+		const targetId = wrapper.get('button[aria-current="page"]').attributes('aria-controls')
+		expect(targetId).toBeTruthy()
+		const targets = wrapper.findAll('[id]').filter(element => element.attributes('id') === targetId)
+		expect(targets).toHaveLength(1)
+		expect(targets[0]!.find('table').exists()).toBe(true)
+		wrapper.unmount()
+	})
+})
