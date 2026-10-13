@@ -466,7 +466,7 @@ export const CustomBrand: Story = {
 					<template #logo-brand-content>
 						<svg data-v-a3ce97de="" width="22" height="64" fill="#0c419a" role="img" focusable="false" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22 64" class="vd-divider"><path data-v-a3ce97de="" d="M14.3 49.3c-.2 0-.4-.2-.4-.4V14.2c0-.2.2-.4.4-.4.3 0 .5.2.5.4v34.7c0 .2-.2.4-.5.4Z"></path></svg>
 						<div>
-							<div style="font-size: 1.15rem;">Brand <span style="color: red">custom</span></div>
+							<div style="font-size: 1.15rem;">Brand <span style="color: #B33F2E">custom</span></div>
 							<div style="font-size: 0.75rem;">un service de l'assurance maladie</div>
 						</div>
 					</template>
