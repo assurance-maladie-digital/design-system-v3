@@ -36,6 +36,11 @@ const meta = {
 			},
 			description: 'List des liens',
 		},
+		'newWindowText': {
+			control: 'text',
+			description: 'Annonce accessible ajoutée aux liens ouverts dans une nouvelle fenêtre.',
+			table: { defaultValue: { summary: 'nouvelle fenêtre' } },
+		},
 		'btnText': {
 			control: {
 				type: 'text',
@@ -175,9 +180,6 @@ export const Default: Story = {
 		],
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -233,9 +235,6 @@ export const NudgeTop: Story = {
 		],
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -292,9 +291,6 @@ export const NudgeBottom: Story = {
 		],
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -337,9 +333,6 @@ export const NoData: Story = {
 		items: [],
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -380,9 +373,6 @@ export const BtnText: Story = {
 		btnText: 'Afficher les liens externes',
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -445,9 +435,6 @@ export const VuetifyOptions: Story = {
 		],
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -526,9 +513,6 @@ export const CustomLinksIcon: Story = {
 		}
 	},
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -568,5 +552,12 @@ const arrowIcon = mdiArrowTopRight
 `,
 			},
 		],
+	},
+}
+
+export const CustomNewWindowText: Story = {
+	args: {
+		...Default.args,
+		newWindowText: 'ouverture dans un nouvel onglet',
 	},
 }

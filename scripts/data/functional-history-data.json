@@ -204,22 +204,22 @@
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "AmeliproHeader": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
+    "version": "1.1.6",
+    "date": "28/09/2026",
+    "dateIso": "2026-09-28 09:36:28 +0200",
+    "message": "LogoBrandSection: fix router (#2586)"
   },
   "AmeliproHeaderBar": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
+    "version": "1.1.6",
+    "date": "28/09/2026",
+    "dateIso": "2026-09-28 09:36:28 +0200",
+    "message": "LogoBrandSection: fix router (#2586)"
   },
   "AmeliproHeaderBrandSection": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
+    "version": "1.1.6",
+    "date": "28/09/2026",
+    "dateIso": "2026-09-28 09:36:28 +0200",
+    "message": "LogoBrandSection: fix router (#2586)"
   },
   "AmeliproLogoAm": {
     "version": "1.0.18",
@@ -738,10 +738,10 @@
     "message": "[SyRadioGroup] héritage des attributs (#2493)"
   },
   "SyTabs": {
-    "version": "1.1.3",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.6",
+    "date": "24/09/2026",
+    "dateIso": "2026-09-24 10:11:02 +0200",
+    "message": "SyTabs: fix slots and stories (#2580)"
   },
   "FieldState": {
     "version": "1.1.5",
@@ -780,58 +780,70 @@
     "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "DatePicker": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 16:39:56 +0200",
+    "message": "fix caret-color (#2575)"
   },
   "ComplexDatePicker": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 08:55:24 +0200",
+    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
   },
   "DatePickerLiveRegion": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 16:39:56 +0200",
+    "message": "fix caret-color (#2575)"
   },
   "DateTextInput": {
-    "version": "1.1.3",
-    "date": "31/07/2026",
-    "dateIso": "2026-07-31 15:06:51 +0200",
-    "message": "DatePicker: wrap customRules and customWarningRules in computed and fix isOnSuccess validation state (#2461)"
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 08:55:24 +0200",
+    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
+  },
+  "DatePickerControls": {
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 08:55:24 +0200",
+    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
+  },
+  "DatePickerDay": {
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 08:55:24 +0200",
+    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
+  },
+  "DatePickerMonthOption": {
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 08:55:24 +0200",
+    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
+  },
+  "DatePickerYearOption": {
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 08:55:24 +0200",
+    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
   },
   "BidirectionalComplexValidation": {
-    "version": "1.1.5",
-    "date": "27/08/2026",
-    "dateIso": "2026-08-27 09:48:42 +0200",
-    "message": "refactor(DatePicker): standardize labels and placeholders with format hints across stories (#2513)"
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 08:55:24 +0200",
+    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
   },
   "DatePickerBidirectionalValidation": {
-    "version": "1.1.5",
-    "date": "27/08/2026",
-    "dateIso": "2026-08-27 09:48:42 +0200",
-    "message": "refactor(DatePicker): standardize labels and placeholders with format hints across stories (#2513)"
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 08:55:24 +0200",
+    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
   },
   "DatePickerValidationExamples": {
-    "version": "1.1.5",
-    "date": "27/08/2026",
-    "dateIso": "2026-08-27 09:48:42 +0200",
-    "message": "refactor(DatePicker): standardize labels and placeholders with format hints across stories (#2513)"
-  },
-  "ComplexDatePickerPlayground": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
-  },
-  "DatePickerHolidayRule": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 08:55:24 +0200",
+    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
   },
   "DeclarationAccessibilityPage": {
     "version": "1.0.21",
@@ -912,10 +924,10 @@
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "FooterBar": {
-    "version": "1.1.4",
-    "date": "07/08/2026",
-    "dateIso": "2026-08-07 11:22:22 +0200",
-    "message": "Ajout des interactions sur le composant `SocialMediaLinks` (#2480)"
+    "version": "1.1.6",
+    "date": "28/09/2026",
+    "dateIso": "2026-09-28 09:36:28 +0200",
+    "message": "LogoBrandSection: fix router (#2586)"
   },
   "FranceConnectBtn": {
     "version": "1.0.27",
@@ -924,10 +936,10 @@
     "message": "Implémentation des nouveaux tokens (#2164)"
   },
   "HeaderBar": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.1.6",
+    "date": "28/09/2026",
+    "dateIso": "2026-09-28 09:36:28 +0200",
+    "message": "LogoBrandSection: fix router (#2586)"
   },
   "HeaderBurgerMenu": {
     "version": "1.1.4",
@@ -954,10 +966,10 @@
     "message": "fix/components-name-format"
   },
   "HeaderLogo": {
-    "version": "1.1.3",
-    "date": "22/07/2026",
-    "dateIso": "2026-07-22 11:00:09 +0200",
-    "message": "Components: fix focus display (#2383)"
+    "version": "1.1.6",
+    "date": "28/09/2026",
+    "dateIso": "2026-09-28 09:36:28 +0200",
+    "message": "LogoBrandSection: fix router (#2586)"
   },
   "HeaderMenuBtn": {
     "version": "1.1.3",
@@ -984,10 +996,10 @@
     "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "HeaderToolbar": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.1.6",
+    "date": "28/09/2026",
+    "dateIso": "2026-09-28 09:36:28 +0200",
+    "message": "LogoBrandSection: fix router (#2586)"
   },
   "LangBtn": {
     "version": "1.1.4",
@@ -1002,16 +1014,16 @@
     "message": "update vue-tsconfig (#1739)"
   },
   "LogoBrandSection": {
-    "version": "1.1.3",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.6",
+    "date": "28/09/2026",
+    "dateIso": "2026-09-28 09:36:28 +0200",
+    "message": "LogoBrandSection: fix router (#2586)"
   },
   "LunarCalendar": {
-    "version": "1.1.3",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.1.6",
+    "date": "24/09/2026",
+    "dateIso": "2026-09-24 09:02:16 +0200",
+    "message": "LunarCalendar: add custom rules + add stories/tests (#2583)"
   },
   "MaintenancePage": {
     "version": "1.0.23",
@@ -1110,10 +1122,10 @@
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "PeriodField": {
-    "version": "1.1.5",
-    "date": "27/08/2026",
-    "dateIso": "2026-08-27 08:16:48 +0200",
-    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 08:55:24 +0200",
+    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
   },
   "PhoneField": {
     "version": "1.1.3",
@@ -1224,76 +1236,76 @@
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "SyServerTable": {
-    "version": "1.1.5",
-    "date": "04/09/2026",
-    "dateIso": "2026-09-04 15:53:57 +0200",
-    "message": "SyTable/SyServerTable: fix items per page  (#2538)"
+    "version": "1.1.6",
+    "date": "18/09/2026",
+    "dateIso": "2026-09-18 14:10:26 +0200",
+    "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)"
   },
   "SyTable": {
-    "version": "1.1.5",
-    "date": "04/09/2026",
-    "dateIso": "2026-09-04 15:53:57 +0200",
-    "message": "SyTable/SyServerTable: fix items per page  (#2538)"
+    "version": "1.1.6",
+    "date": "18/09/2026",
+    "dateIso": "2026-09-18 14:10:26 +0200",
+    "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)"
   },
   "SyTableFilter": {
-    "version": "1.1.5",
-    "date": "04/09/2026",
-    "dateIso": "2026-09-04 15:53:57 +0200",
-    "message": "SyTable/SyServerTable: fix items per page  (#2538)"
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 11:15:02 +0200",
+    "message": "changement condition (#2560)"
   },
   "SyTablePagination": {
-    "version": "1.1.5",
-    "date": "04/09/2026",
-    "dateIso": "2026-09-04 15:53:57 +0200",
-    "message": "SyTable/SyServerTable: fix items per page  (#2538)"
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 11:15:02 +0200",
+    "message": "changement condition (#2560)"
   },
   "TableBulkActions": {
-    "version": "1.1.5",
-    "date": "04/09/2026",
-    "dateIso": "2026-09-04 15:53:57 +0200",
-    "message": "SyTable/SyServerTable: fix items per page  (#2538)"
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 11:15:02 +0200",
+    "message": "changement condition (#2560)"
   },
   "TableHeader": {
-    "version": "1.1.5",
-    "date": "04/09/2026",
-    "dateIso": "2026-09-04 15:53:57 +0200",
-    "message": "SyTable/SyServerTable: fix items per page  (#2538)"
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 11:15:02 +0200",
+    "message": "changement condition (#2560)"
   },
   "AutocompleteFilter": {
-    "version": "1.1.5",
-    "date": "28/08/2026",
-    "dateIso": "2026-08-28 09:23:02 +0200",
-    "message": "[Tables] Ajout de la configuration individuel des filtres (#2490)"
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 11:15:02 +0200",
+    "message": "changement condition (#2560)"
   },
   "DateFilter": {
-    "version": "1.1.5",
-    "date": "28/08/2026",
-    "dateIso": "2026-08-28 09:23:02 +0200",
-    "message": "[Tables] Ajout de la configuration individuel des filtres (#2490)"
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 11:15:02 +0200",
+    "message": "changement condition (#2560)"
   },
   "NumberFilter": {
-    "version": "1.1.5",
-    "date": "28/08/2026",
-    "dateIso": "2026-08-28 09:23:02 +0200",
-    "message": "[Tables] Ajout de la configuration individuel des filtres (#2490)"
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 11:15:02 +0200",
+    "message": "changement condition (#2560)"
   },
   "PeriodFilter": {
-    "version": "1.1.5",
-    "date": "28/08/2026",
-    "dateIso": "2026-08-28 09:23:02 +0200",
-    "message": "[Tables] Ajout de la configuration individuel des filtres (#2490)"
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 11:15:02 +0200",
+    "message": "changement condition (#2560)"
   },
   "SelectFilter": {
-    "version": "1.1.5",
-    "date": "28/08/2026",
-    "dateIso": "2026-08-28 09:23:02 +0200",
-    "message": "[Tables] Ajout de la configuration individuel des filtres (#2490)"
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 11:15:02 +0200",
+    "message": "changement condition (#2560)"
   },
   "TextFilter": {
-    "version": "1.1.5",
-    "date": "28/08/2026",
-    "dateIso": "2026-08-28 09:23:02 +0200",
-    "message": "[Tables] Ajout de la configuration individuel des filtres (#2490)"
+    "version": "1.1.6",
+    "date": "22/09/2026",
+    "dateIso": "2026-09-22 11:15:02 +0200",
+    "message": "changement condition (#2560)"
   },
   "OrganizeColumns": {
     "version": "1.1.3",

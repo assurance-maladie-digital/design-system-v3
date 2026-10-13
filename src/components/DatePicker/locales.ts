@@ -11,7 +11,10 @@ export const locales = {
 	required: 'La date est requise.',
 	invalidDateFormat: 'Le format de la date est invalide.',
 	invalidDate: 'La date saisie est invalide.',
-	invalidDateFormatWithFormat: (format: string): string => `Format de date invalide (${format})`,
+	// Le format reçu est un motif dayjs (`DD/MM/YYYY`) : traduit avant affichage,
+	// sans quoi le message mêle du français et des jetons anglais
+	invalidDateFormatWithFormat: (format: string): string =>
+		`Format de date invalide (${format.replace(/D/g, 'J').replace(/Y/g, 'A')})`,
 	incompleteDate: 'La date est incomplète.',
 	invalidRange: 'La plage de dates est invalide.',
 	startDateMissing: 'La date de début est manquante.',

@@ -2,6 +2,7 @@ import { execFile } from 'node:child_process'
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { basename, dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { isReleaseMessage } from './lib/filters.mjs'
 import { PENDING_LABEL, resolveCommitVersion } from './lib/releaseTags.mjs'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
@@ -166,6 +167,29 @@ async function getDiffForCommit(hash, filePaths) {
 	}
 }
 
+async function getChangedFiles(hash, filePaths) {
+	const paths = filePaths.map(p => relative(rootDir, p))
+	try {
+		const { stdout } = await execFileAsync('git', ['show', hash, '--format=', '--name-only', '--', ...paths], { cwd: rootDir })
+		return stdout.split('\n').filter(Boolean).map(p => resolve(rootDir, p))
+	} catch {
+		return []
+	}
+}
+
+// Lignes réécrites par docs:update (badges de version et leurs marqueurs)
+const badgeLineRegex = /version-badge|version-(?:start|end)/
+
+// Vrai si le diff ne modifie que des badges de version : c'est un passage de docs:update,
+// pas une correction. Sans ce garde-fou, le commit qui met à jour les badges serait lui-même
+// détecté comme correction a11y et daterait tous les composants au run suivant.
+function isBadgeOnlyDiff(diff) {
+	const changedLines = diff.split('\n').filter(line =>
+		/^[+-]/.test(line) && !/^(?:\+\+\+|---) /.test(line) && line.slice(1).trim() !== '',
+	)
+	return changedLines.length > 0 && changedLines.every(line => badgeLineRegex.test(line))
+}
+
 function extractPRNumber(message) {
 	const match = message.match(/(?:merge pull request #|#)(\d+)/i)
 	return match ? match[1] : null
@@ -259,7 +283,14 @@ async function analyzeComponent(component) {
 	const results = []
 
 	for (const commit of commits) {
+		// Une PR de release regroupe des corrections déjà comptées dans leurs propres PR
+		if (isReleaseMessage(commit.message)) {
+			continue
+		}
 		const diff = await getDiffForCommit(commit.hash, allTrackedFiles)
+		if (isBadgeOnlyDiff(diff)) {
+			continue
+		}
 		const keywords = hasA11yKeywords(commit.message)
 		const patterns = hasA11yPatterns(diff)
 		const prNumber = extractPRNumber(commit.message)
@@ -270,10 +301,13 @@ async function analyzeComponent(component) {
 		const labels = await getPRLabels(prNumber)
 		const a11yLabel = hasA11yLabel(labels)
 
-		const touchedMdx = component.files.some(isAccessibilityMdx)
-		const touchedA11yTest = component.files.some(isA11yTest)
-		const touchedMigration = migrationFiles.length > 0
-		const touchedComponent = component.files.some(f => f.endsWith('.vue'))
+		// Fichiers réellement modifiés par le commit, et non tous les fichiers du composant :
+		// sinon tout commit au message contenant un mot-clé a11y passe en confiance forte.
+		const changedFiles = await getChangedFiles(commit.hash, allTrackedFiles)
+		const touchedMdx = changedFiles.some(isAccessibilityMdx)
+		const touchedA11yTest = changedFiles.some(isA11yTest)
+		const touchedMigration = changedFiles.some(f => migrationFiles.includes(f))
+		const touchedComponent = changedFiles.some(f => f.endsWith('.vue'))
 
 		let confidence = null
 

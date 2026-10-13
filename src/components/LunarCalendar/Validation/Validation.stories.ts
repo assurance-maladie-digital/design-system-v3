@@ -60,22 +60,22 @@ export const WithError: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<LunarCalendar
-						label="Date de naissance"
-						v-model="dateValue"
-						:min-year="1400"
-						:max-year="1500"
-					/>
-				</template>
+				code: `<template>
+	<LunarCalendar
+		label="Date de naissance"
+		v-model="dateValue"
+		:min-year="1400"
+		:max-year="1500"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
 
-				<script setup lang="ts">
-				import { ref } from 'vue'
-
-				const dateValue = ref('16/08/1550')
-				</script>
-				`,
+const dateValue = ref('16/08/1550')
+</script>`,
 			},
 		],
 	},
@@ -110,34 +110,34 @@ export const WithWarning: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<LunarCalendar
-						label="Date de naissance"
-						v-model="dateValue"
-						:custom-warning-rules="customWarningRules"
-					/>
-				</template>
+				code: `<template>
+	<LunarCalendar
+		label="Date de naissance"
+		v-model="dateValue"
+		:custom-warning-rules="customWarningRules"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
 
-				<script setup lang="ts">
-				import { ref } from 'vue'
+const dateValue = ref('01/01/1900')
 
-				const dateValue = ref('01/01/1900')
-
-				const customWarningRules = [
-					{
-						type: 'custom',
-						options: {
-							validate: (value: string) => {
-								const year = Number(value.split('/')[2])
-								return isNaN(year) || year >= 1912
-							},
-							warningMessage: 'Cette date est antérieure à 1912.',
-						},
-					},
-				]
-				</script>
-				`,
+const customWarningRules = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value: string) => {
+				const year = Number(value.split('/')[2])
+				return isNaN(year) || year >= 1912
+			},
+			warningMessage: 'Cette date est antérieure à 1912.',
+		},
+	},
+]
+</script>`,
 			},
 		],
 	},
@@ -182,32 +182,32 @@ export const WithSuccess: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<LunarCalendar
-						label="Date de naissance"
-						v-model="dateValue"
-						show-success-messages
-						:custom-success-rules="customSuccessRules"
-					/>
-				</template>
+				code: `<template>
+	<LunarCalendar
+		label="Date de naissance"
+		v-model="dateValue"
+		show-success-messages
+		:custom-success-rules="customSuccessRules"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
 
-				<script setup lang="ts">
-				import { ref } from 'vue'
+const dateValue = ref('15/08/1450')
 
-				const dateValue = ref('15/08/1450')
-
-				const customSuccessRules = [
-					{
-						type: 'custom',
-						options: {
-							validate: (value: string) => /^\\d{2}\\/\\d{2}\\/\\d{4}$/.test(value),
-							successMessage: 'Date lunaire valide.',
-						},
-					},
-				]
-				</script>
-				`,
+const customSuccessRules = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value: string) => /^\\d{2}\\/\\d{2}\\/\\d{4}$/.test(value),
+			successMessage: 'Date lunaire valide.',
+		},
+	},
+]
+</script>`,
 			},
 		],
 	},
@@ -250,54 +250,54 @@ export const ExternalMessages: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<LunarCalendar
-						label="Date de naissance"
-						v-model="dateValue"
-						show-success-messages
-						:error-messages="errorMessages"
-						:warning-messages="warningMessages"
-						:success-messages="successMessages"
-					/>
-					<div class="mt-4 d-flex flex-wrap ga-2">
-						<VBtn color="error" @click="setError">Simuler une erreur</VBtn>
-						<VBtn color="warning" @click="setWarning">Simuler un avertissement</VBtn>
-						<VBtn color="success" @click="setSuccess">Simuler un succès</VBtn>
-						<VBtn color="black" @click="reset">Réinitialiser</VBtn>
-					</div>
-				</template>
+				code: `<template>
+	<LunarCalendar
+		label="Date de naissance"
+		v-model="dateValue"
+		show-success-messages
+		:error-messages="errorMessages"
+		:warning-messages="warningMessages"
+		:success-messages="successMessages"
+	/>
+	<div class="mt-4 d-flex flex-wrap ga-2">
+		<VBtn color="error" @click="setError">Simuler une erreur</VBtn>
+		<VBtn color="warning" @click="setWarning">Simuler un avertissement</VBtn>
+		<VBtn color="success" @click="setSuccess">Simuler un succès</VBtn>
+		<VBtn color="black" @click="reset">Réinitialiser</VBtn>
+	</div>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
 
-				<script setup lang="ts">
-				import { ref } from 'vue'
+const dateValue = ref('15/08/1450')
+const errorMessages = ref<string[] | null>(null)
+const warningMessages = ref<string[] | null>(null)
+const successMessages = ref<string[] | null>(null)
 
-				const dateValue = ref('15/08/1450')
-				const errorMessages = ref<string[] | null>(null)
-				const warningMessages = ref<string[] | null>(null)
-				const successMessages = ref<string[] | null>(null)
-
-				function setError() {
-					errorMessages.value = ['Date non reconnue dans le calendrier lunaire.']
-					warningMessages.value = null
-					successMessages.value = null
-				}
-				function setWarning() {
-					errorMessages.value = null
-					warningMessages.value = ['Cette date correspond à une période incertaine.']
-					successMessages.value = null
-				}
-				function setSuccess() {
-					errorMessages.value = null
-					warningMessages.value = null
-					successMessages.value = ['Date lunaire validée par le serveur.']
-				}
-				function reset() {
-					errorMessages.value = null
-					warningMessages.value = null
-					successMessages.value = null
-				}
-				</script>
-				`,
+function setError() {
+	errorMessages.value = ['Date non reconnue dans le calendrier lunaire.']
+	warningMessages.value = null
+	successMessages.value = null
+}
+function setWarning() {
+	errorMessages.value = null
+	warningMessages.value = ['Cette date correspond à une période incertaine.']
+	successMessages.value = null
+}
+function setSuccess() {
+	errorMessages.value = null
+	warningMessages.value = null
+	successMessages.value = ['Date lunaire validée par le serveur.']
+}
+function reset() {
+	errorMessages.value = null
+	warningMessages.value = null
+	successMessages.value = null
+}
+</script>`,
 			},
 		],
 	},
@@ -365,22 +365,22 @@ export const WithYearConstraints: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<LunarCalendar
-						label="Date de naissance"
-						v-model="dateValue"
-						:min-year="1400"
-						:max-year="1500"
-					/>
-				</template>
+				code: `<template>
+	<LunarCalendar
+		label="Date de naissance"
+		v-model="dateValue"
+		:min-year="1400"
+		:max-year="1500"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
 
-				<script setup lang="ts">
-				import { ref } from 'vue'
-
-				const dateValue = ref('16/08/1550')
-				</script>
-				`,
+const dateValue = ref('16/08/1550')
+</script>`,
 			},
 		],
 	},
@@ -415,21 +415,21 @@ export const WithMinYearOnly: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<LunarCalendar
-						label="Date de naissance"
-						v-model="dateValue"
-						:min-year="1420"
-					/>
-				</template>
+				code: `<template>
+	<LunarCalendar
+		label="Date de naissance"
+		v-model="dateValue"
+		:min-year="1420"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
 
-				<script setup lang="ts">
-				import { ref } from 'vue'
-
-				const dateValue = ref('12/12/1445')
-				</script>
-				`,
+const dateValue = ref('12/12/1445')
+</script>`,
 			},
 		],
 	},
@@ -463,21 +463,21 @@ export const WithMaxYearOnly: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<LunarCalendar
-						label="Date de naissance"
-						v-model="dateValue"
-						:max-year="1450"
-					/>
-				</template>
+				code: `<template>
+	<LunarCalendar
+		label="Date de naissance"
+		v-model="dateValue"
+		:max-year="1450"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
 
-				<script setup lang="ts">
-				import { ref } from 'vue'
-
-				const dateValue = ref('12/12/1445')
-				</script>
-				`,
+const dateValue = ref('12/12/1445')
+</script>`,
 			},
 		],
 	},
@@ -512,17 +512,17 @@ export const SyFormValidation: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-    <SyForm @submit="handleSubmit">
-        <LunarCalendar
-            v-model="value"
-            label="Date de naissance"
-            :custom-rules="customRules"
+	<SyForm @submit="handleSubmit">
+		<LunarCalendar
+			v-model="value"
+			label="Date de naissance"
+			:custom-rules="customRules"
 			required
-        />
-        <div class="mt-4">
-            <VBtn type="submit" color="primary">Valider</VBtn>
-        </div>
-    </SyForm>
+		/>
+		<div class="mt-4">
+			<VBtn type="submit" color="primary">Valider</VBtn>
+		</div>
+	</SyForm>
 </template>`,
 			},
 			{
@@ -534,24 +534,24 @@ import { LunarCalendar, SyForm } from '@cnamts/synapse'
 const value = ref('')
 
 const customRules = [
-    {
-        type: 'custom',
-        options: {
-            validate: (value: string) => {
-                if (!value || !/^\\d{2}\\/\\d{2}\\/\\d{4}$/.test(value)) {
-                    return false
-                }
-                return true
-            },
-            message: 'La date doit être au format JJ/MM/AAAA.',
-            fieldIdentifier: 'date',
-        },
-    },
+	{
+		type: 'custom',
+		options: {
+			validate: (value: string) => {
+				if (!value || !/^\\d{2}\\/\\d{2}\\/\\d{4}$/.test(value)) {
+					return false
+				}
+				return true
+			},
+			message: 'La date doit être au format JJ/MM/AAAA.',
+			fieldIdentifier: 'date',
+		},
+	},
 ]
 
-function handleSubmit(e) {
-    const isValid = e.isValid
-    alert(isValid ? 'Date valide !' : 'Veuillez corriger les erreurs.')
+function handleSubmit(e: { isValid: boolean }) {
+	const isValid = e.isValid
+	alert(isValid ? 'Date valide !' : 'Veuillez corriger les erreurs.')
 }
 </script>`,
 			},

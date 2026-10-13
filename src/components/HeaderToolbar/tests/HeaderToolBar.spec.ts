@@ -1,4 +1,5 @@
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
+import { createMemoryHistory, createRouter } from 'vue-router'
 import { expect, describe, it, vi, afterEach } from 'vitest'
 import HeaderToolbar from '../HeaderToolbar.vue'
 
@@ -197,10 +198,10 @@ describe('HeaderToolbar', () => {
 			expect(result).toBe('RouterLink')
 		})
 
-		it('retourne "a" pour un item sans href ni to', () => {
+		it('retourne "button" pour un item sans href ni to', () => {
 			const wrapper = mount(HeaderToolbar)
 			const result = wrapper.vm.getLinkComponent({ title: 'Test' })
-			expect(result).toBe('a')
+			expect(result).toBe('button')
 		})
 	})
 
@@ -353,5 +354,36 @@ describe('HeaderToolbar', () => {
 			const links = wrapper.findAll('#left-menu a')
 			expect(links.length).toBe(2)
 		})
+	})
+
+	// Avec un vrai vue-router, le `href: undefined` passé au RouterLink écrasait celui qu'il
+	// calcule : `<a>` sans `href`, donc sans rôle de lien pour les technologies d'assistance.
+	it('renders RouterLinks with their href in the left and right menus when vue-router is installed', async () => {
+		const router = createRouter({
+			history: createMemoryHistory(),
+			routes: [
+				{ path: '/', component: { template: '<div />' } },
+				{ path: '/plan-du-site', component: { template: '<div />' } },
+			],
+		})
+		await router.push('/')
+
+		const wrapper = mount(HeaderToolbar, {
+			global: { plugins: [router] },
+			props: {
+				leftMenu: [{ title: 'Left', to: '/plan-du-site' }],
+				rightMenu: [{ title: 'Right', to: '/plan-du-site' }],
+			},
+		})
+		const leftLink = wrapper.find('#left-menu a')
+		const rightLink = wrapper.find('#right-menu a')
+
+		expect(leftLink.attributes('href')).toBe('/plan-du-site')
+		expect(rightLink.attributes('href')).toBe('/plan-du-site')
+
+		await rightLink.trigger('click')
+		await flushPromises()
+
+		expect(router.currentRoute.value.path).toBe('/plan-du-site')
 	})
 })

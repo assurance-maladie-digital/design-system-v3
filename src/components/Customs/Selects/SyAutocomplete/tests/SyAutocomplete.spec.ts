@@ -1,10 +1,11 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest'
 import { mount, flushPromises } from '@vue/test-utils'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, nextTick, type InstanceType } from 'vue'
 import { VCheckbox, VDivider, VListItem, VListItemTitle, VMenu } from 'vuetify/components'
 
 import SyAutocomplete from '../SyAutocomplete.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
+import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 
 describe('SyAutocomplete', () => {
 	let wrapper: ReturnType<typeof mount<typeof SyAutocomplete>>
@@ -1536,6 +1537,82 @@ describe('SyAutocomplete', () => {
 			// After debounce: émis
 			await new Promise(resolve => setTimeout(resolve, 60))
 			expect(wrapper.emitted('search')).toBeTruthy()
+		})
+	})
+
+	describe('Integration with SyForm', () => {
+		beforeEach(() => {})
+		afterEach(() => {})
+
+		it('clearValidation() is exposed via SyForm for SyAutocomplete', async () => {
+			const wrapper = mount({
+				components: { SyAutocomplete, SyForm },
+				template: `
+					<SyForm ref="form">
+						<SyAutocomplete v-model="selected" :items="items" required label="Test" />
+					</SyForm>
+				`,
+				data() {
+					return {
+						selected: null,
+						items: [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }],
+					}
+				},
+				attachTo: document.body,
+			})
+
+			const form = wrapper.vm.$refs.form as InstanceType<typeof SyForm>
+
+			// Verify SyForm exposes clearValidation method
+			expect(typeof form.clearValidation).toBe('function')
+
+			// Call clearValidation without errors (should not throw)
+			form.clearValidation()
+			await nextTick()
+
+			// Verify no errors are displayed
+			const errorMessages = wrapper.findAll('.v-messages__message')
+			expect(errorMessages.length).toBe(0)
+
+			wrapper.unmount()
+		})
+
+		it('SyForm.reset() resets SyAutocomplete value and errors', async () => {
+			const wrapper = mount({
+				components: { SyAutocomplete, SyForm },
+				template: `
+					<SyForm ref="form">
+						<SyAutocomplete v-model="selected" :items="items" required label="Test" />
+						<button type="reset">Reset</button>
+					</SyForm>
+				`,
+				data() {
+					return {
+						selected: '1',
+						items: [{ text: 'Option 1', value: '1' }, { text: 'Option 2', value: '2' }],
+					}
+				},
+				attachTo: document.body,
+			})
+
+			const syAutocomplete = wrapper.findComponent(SyAutocomplete)
+			const form = wrapper.vm.$refs.form as InstanceType<typeof SyForm>
+
+			// Verify initial selection in DOM
+			const input = wrapper.find('input')
+			expect(input.element.value).toBe('Option 1')
+
+			// Reset form
+			form.reset()
+			await flushPromises()
+
+			// Verify SyAutocomplete is reset (input is empty)
+			expect(syAutocomplete.props('modelValue')).toBeNull()
+			expect(input.element.value).toBe('')
+			// Verify no error messages are displayed
+			expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+
+			wrapper.unmount()
 		})
 	})
 })

@@ -1,6 +1,7 @@
 <script setup lang="ts">
-	import { ref } from 'vue'
+	import { computed, ref, watch } from 'vue'
 	import { useFormValidation } from '@/composables/validation/useFormValidation'
+	import type { VForm } from 'vuetify/components/VForm'
 
 	const props = withDefaults(defineProps<{
 		validateOnSubmit?: boolean
@@ -13,81 +14,72 @@
 		(e: 'reset'): void
 	}>()
 
-	// Reference vers le formulaire Vuetify
-	const form = ref<InstanceType<typeof import('vuetify/components').VForm> | null>(null)
+	const model = defineModel<boolean | null>({ default: null })
 
-	const { validateAll, clearAll, resetAll } = useFormValidation()
-	const isValid = ref<boolean>(true)
+	const form = ref<InstanceType<typeof VForm>>()
+	const vFormStatus = ref<boolean | null>(null)
+	const hasVuetifyFields = computed(() => (form.value?.items.length ?? 0) > 0)
 
-	// Methode de validation globale qui combine Vuetify et nos composants personnalises
+	const { validateAll, clearAll, resetAll, customComponentsValide, hasDisplayedError, getFormValue } = useFormValidation()
+
+	// hasDisplayedError est une source du watch : le passage de pristine à « erreur
+	// affichée » (via validateOnSubmit) doit recalculer le v-model même si
+	// customComponentsValide et vFormStatus n'ont pas changé.
+	watch([customComponentsValide, hasDisplayedError, vFormStatus, hasVuetifyFields], ([, , newVFormStatus, newHasVuetifyFields]) => {
+		model.value = getFormValue(newVFormStatus, newHasVuetifyFields)
+	}, { immediate: true })
+
 	const validate = async () => {
-		if (!form.value) {
-			return false
-		}
-
-		// Attention Vuetify v-form retourne parfois undefined même si le formulaire est valide
-		// efface les etats d'erreur precedents
-		form.value.resetValidation()
-
-		// 1. Appeler la methode validate() de Vuetify
-		// retourne un objet { valid: boolean, errors: [...] } ou un boolean
-		const vuetifyValidateResult = await form.value.validate()
-
-		let vuetifyValid = true
-
-		// Detecter si Vuetify 3 a retourne un objet ou un booleen
-		if (typeof vuetifyValidateResult === 'object' && vuetifyValidateResult !== null) {
-			vuetifyValid = vuetifyValidateResult.valid
-		}
-		else if (typeof vuetifyValidateResult === 'boolean') {
-			vuetifyValid = vuetifyValidateResult
-		}
-		// Si undefined, on considère que c'est valide (comportement par défaut de Vuetify)
-
-		// 2. Valider nos composants personnalises enregistres
+		const vuetifyValidateResult = await form.value!.validate()
 		const customComponentsValid = await validateAll()
 
-		// Le formulaire est valide si les deux sont valides
-		isValid.value = vuetifyValid && customComponentsValid
+		const isValid = vuetifyValidateResult.valid && customComponentsValid
+		if (isValid && model.value === null) {
+			model.value = true
+		}
 
-		return isValid.value
+		return isValid
 	}
 
+	/**
+	 * Réinitialise la valeur et l'état de validation de tous les champs.
+	 */
 	const reset = () => {
-		// Reset custom components values
 		clearAll()
 		resetAll()
-		// Reset field values and validations for Vuetify form
-		form.value?.reset()
-		form.value?.resetValidation()
-		isValid.value = true
-		// Notify consumers so they can clear external models (e.g., v-model refs)
+		form.value!.reset()
+		form.value!.resetValidation()
+
 		emit('reset')
 	}
 
-	// Clear only validation states (keep current values)
+	/**
+	 * Réinitialise l'état de validation de tous les champs.
+	 */
 	const clearValidation = () => {
-		// Clear Vuetify internal validation state
-		form.value?.resetValidation()
-		// Clear custom components validation states registered in the form
-		isValid.value = true
+		model.value = null
+		form.value!.resetValidation()
 		clearAll()
 	}
 
+	/**
+	 * Quand le composant VForm émet un événement `reset`, on réinitialise la valeur et l'état de validation de tous les champs.
+	 */
 	const handleReset = () => {
 		clearAll()
 		resetAll()
 		form.value?.resetValidation()
-		isValid.value = true
 		emit('reset')
 	}
 
-	// Gestion de la soumission du formulaire
+	/**
+	 * Quand le composant VForm émet un événement `submit`, on déclenche la validation globale et on émet un événement `submit` avec le résultat de la validation.
+	 */
 	const handleSubmit = async () => {
 		if (props.validateOnSubmit !== false) {
-			const isValid = await validate()
-			emit('submit', { isValid })
-			return isValid
+			const submitIsValid = await validate()
+			emit('submit', { isValid: submitIsValid })
+			return submitIsValid
 		}
 		emit('submit', { isValid: true })
 		return true
@@ -104,11 +96,11 @@
 <template>
 	<VForm
 		ref="form"
+		v-model="vFormStatus"
 		@submit.prevent="handleSubmit"
 		@reset="handleReset"
 	>
 		<slot
-			:is-valid="isValid"
 			:validate="validate"
 			:reset="reset"
 			:clear="clearValidation"

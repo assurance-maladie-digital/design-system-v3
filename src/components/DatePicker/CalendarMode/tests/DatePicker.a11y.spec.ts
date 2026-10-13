@@ -6,6 +6,7 @@ import { axe } from 'vitest-axe'
 import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 import { nextTick } from 'vue'
 import DatePicker from '../DatePicker.vue'
+import { locales } from '../../locales'
 
 // Scénario d'accessibilité : sélecteur de date en mode calendrier,
 // avec label, format jour/mois/année et navigation clavier.
@@ -152,15 +153,24 @@ describe('DatePicker (CalendarMode) – accessibility (axe)', () => {
 
 		wrapper.vm.isDatePickerVisible = true
 		await nextTick()
+		// Apply ARIA semantics before running axe so we test the patched markup
+		wrapper.vm.updateAccessibility()
+		await nextTick()
 
-		const dialog = document.body.querySelector<HTMLElement>(`#${wrapper.vm.datePickerDialogId}`)
+		const dialog = document.body.querySelector<HTMLElement>('[role="dialog"]')
 		expect(dialog).not.toBeNull()
 		expect(dialog?.getAttribute('role')).toBe('dialog')
 		expect(dialog?.getAttribute('aria-modal')).toBe('true')
-		expect(dialog?.getAttribute('aria-labelledby')).toBe(wrapper.vm.datePickerTitleId)
+		const titleId = dialog?.getAttribute('aria-labelledby')
+		expect(titleId).toBeTruthy()
+		expect(document.getElementById(titleId ?? '')?.textContent?.trim()).toBe(locales.calendarTitle)
 
-		const activatorWrapper = wrapper.find(`[aria-controls="${wrapper.vm.datePickerDialogId}"]`)
+		const activatorWrapper = wrapper.find('[aria-controls]')
 		expect(activatorWrapper.exists()).toBe(true)
+
+		const dayCells = Array.from(document.body.querySelectorAll<HTMLElement>('[role="gridcell"][data-v-date]'))
+		expect(dayCells.length).toBeGreaterThan(0)
+		expect(dayCells.every(cell => ['true', 'false'].includes(cell.getAttribute('aria-selected') ?? ''))).toBe(true)
 
 		const results = await axe(document.body)
 		assertNoA11yViolations(results, 'DatePicker – opened calendar dialog', {

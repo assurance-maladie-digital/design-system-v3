@@ -60,6 +60,23 @@ describe('useValidation (unifyValidation)', () => {
 		})
 	})
 
+	describe('Initial validation', () => {
+		it('hides custom validation errors until the pristine field is explicitly validated', async () => {
+			const params = makeParams({
+				customRules: ref<ValidationRule[]>([
+					{ type: 'required', options: { message: 'Requis' } },
+				]),
+			})
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			await nextTick()
+			expect(result.errors.value).toEqual([])
+
+			await result.validate()
+			expect(result.errors.value).toContain('Requis')
+		})
+	})
+
 	describe('errorMessages / warningMessages / successMessages props', () => {
 		it('syncs errorMessages to errors ref immediately via watch', async () => {
 			const errorMessages = ref<string[] | null>(['Une erreur externe'])
@@ -1621,7 +1638,9 @@ describe('useValidation (unifyValidation)', () => {
 					},
 				}]),
 			})
-			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+			// Désactive la validation silencieuse au montage : elle consommerait un premier
+			// appel de la règle custom et décalerait les indices de `resolvers`.
+			const { result } = withSetup(() => useValidation(params as Parameters<typeof useValidation>[0], { reactiveValidation: false }))
 
 			// Trigger first validation with modelValue 'a'
 			const p1 = result.validate()
@@ -1975,11 +1994,10 @@ describe('useValidation (unifyValidation)', () => {
 			// Errors are cleared by the readonly short-circuit
 			expect(result.errors.value).toEqual([])
 
-			// Resolve stale async — since the readonly short-circuit does not
-			// invalidate the pending token, the resolved result still writes errors
+			// La validation lancée avant readonly ne doit pas restaurer ses erreurs.
 			resolve(false)
 			await p1
-			expect(result.errors.value).toContain('Erreur obsolète readonly')
+			expect(result.errors.value).toEqual([])
 		})
 	})
 

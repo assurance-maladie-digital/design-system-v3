@@ -17,7 +17,11 @@ exports[`ServiceList > Snapshots > renders the component with all properties fil
       service-item
     "
     id="modified-unique-id-item-0"
-    style="max-width: calc((100% / 3) - 8px);"
+    style="
+      flex-basis: calc((100% / 3) - 8px);
+      max-width: calc((100% / 3) - 8px);
+      width: calc((100% / 3) - 8px);
+    "
   >
     <service-btn-stub
       iconbgcolor="#1CB0BA"
@@ -33,7 +37,11 @@ exports[`ServiceList > Snapshots > renders the component with all properties fil
       service-item
     "
     id="modified-unique-id-item-1"
-    style="max-width: calc((100% / 3) - 8px);"
+    style="
+      flex-basis: calc((100% / 3) - 8px);
+      max-width: calc((100% / 3) - 8px);
+      width: calc((100% / 3) - 8px);
+    "
   >
     <service-btn-stub
       iconbgcolor="#1CB0BA"

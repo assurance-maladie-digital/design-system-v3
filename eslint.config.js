@@ -59,6 +59,13 @@ export default ts.config(
 			'vue/html-indent': ['error', 'tab'],
 			'vue/html-comment-indent': ['error', 'tab'],
 			'vue/no-v-html': 0,
+			// La règle ignore `defineModel` : elle réclame un défaut sur chaque
+			// `v-model`, alors que `undefined` y signifie « non renseigné » et
+			// qu'un défaut statique ne conviendrait pas (RangeField initialise
+			// le sien depuis ses props). La contradiction réellement dangereuse
+			// — prop requise ET valeur par défaut — reste couverte par
+			// `vue/no-required-prop-with-default`.
+			'vue/require-default-prop': 0,
 			'@stylistic/indent': 0,
 			'no-explicit-any': 0,
 			'vuejs-accessibility/interactive-supports-focus': 0,

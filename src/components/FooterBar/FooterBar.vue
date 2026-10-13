@@ -86,6 +86,12 @@
 		return item.href ? 'a' : 'RouterLink'
 	}
 
+	// Seule la clé utile est liée : un `href: undefined` transmis à RouterLink écraserait
+	// le `href` qu'il calcule et rendrait le lien non focusable.
+	const getLinkAttrs = (item: LinkItem): Pick<LinkItem, 'href' | 'to'> => {
+		return item.href ? { href: item.href } : { to: item.to }
+	}
+
 	const scrollToTop = () => {
 		window.scrollTo({
 			top: 0,
@@ -194,8 +200,6 @@
 								:media="desktopLogoMediaQuery"
 								:srcset="props.light ? logoDarkDesktopUrl : logoLightDesktopUrl"
 								type="image/svg+xml"
-								width="211"
-								height="64"
 							>
 							<img
 								class="logo-image"
@@ -261,8 +265,7 @@
 					<component
 						:is="getLinkComponent(item)"
 						v-if="!backOffice"
-						:href="item.href"
-						:to="item.to"
+						v-bind="getLinkAttrs(item)"
 						:aria-label="item.ariaLabel"
 						:target="item.openInNewTab ? '_blank' : undefined"
 						:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
@@ -296,12 +299,19 @@
 </template>
 
 <style lang="scss" scoped>
+@use '@/assets/overrides/breakpoints' as bp;
+
 a {
 	cursor: pointer;
 }
 
 .v-btn--icon {
 	border: 0;
+}
+
+.logo-image {
+	width: 131px;
+	height: 40px;
 }
 
 // Fix footer bar height in SK
@@ -449,5 +459,12 @@ a {
 
 .v-theme--dark button.v-btn:hover :deep() {
 	background: rgba(white, 0.1);
+}
+
+@media #{bp.$up-sm} {
+	.logo-image {
+		width: 211px;
+		height: 64px;
+	}
 }
 </style>

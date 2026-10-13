@@ -1,0 +1,39 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+import * as RoadmapStories from './Roadmap.stories.ts';
+import '../styles/shared.css';
+
+<Meta of={RoadmapStories}/>
+
+<div className="header">
+    <h1>Roadmap</h1>
+</div>
+
+Cette page présente la vision d'évolution du Design System Synapse et, plus largement, des chantiers portés par le Studio Design : Design System, UX/UI, accessibilité et écoconception.
+
+## Cycle de versions
+
+Synapse suit la gestion sémantique de version (`MAJEURE.MINEURE.CORRECTIF`).<br/>
+Le type de version vous indique l'effort à prévoir pour mettre à jour votre projet.<br/>
+Vous pouvez consulter le contenu de chaque version sur la page [Releases](/docs/démarrer-releases--docs).
+
+<div className="roadmap-cycles">
+
+| Type | Exemple | Contenu | Rythme | Impact pour votre projet |
+| --- | --- | --- | --- | --- |
+| **Correctif** | `1.1.5` → `1.1.6` | Corrections d'anomalies, améliorations d'accessibilité, documentation, petites évolutions rétrocompatibles. | Toutes les 3 semaines (sauf cas particulier comme la sécurité). | <span className="roadmap-impact roadmap-impact--patch">Impact faible</span><br/>Aucune étude d'impact nécessaire. |
+| **Mineure** | `1.0.x` → `1.1.0` | Nouveaux composants ou fonctionnalités, changements de comportement par défaut, évolution des prérequis (Starter Kit). | 1 fois par trimestre si nécessaire. | <span className="roadmap-impact roadmap-impact--minor">Impact modéré</span><br/>Étude d'impact recommandée avant la montée de version. |
+| **Majeure** | `1.x` → `2.0.0` | Changements non rétrocompatibles : refonte d'API de composants, montée de version de socle (Vue, Vuetify), évolution structurante des tokens. | Rare. | <span className="roadmap-impact roadmap-impact--major">Impact fort</span><br/>Étude d'impact indispensable avant la montée de version. |
+
+</div>
+
+## Roadmap 2026 – 2027
+
+Versions prévues sur la période de septembre 2026 à août 2027.<br/>
+Des versions correctives sont publiées en continu entre ces versions.<br/>
+Les échéances et le contenu des cartes sont donnés à titre indicatif et mis à jour régulièrement.
+
+<Story of={RoadmapStories.VersionsTimeline}/>
+
+### Principaux chantiers du Studio Design
+
+<Story of={RoadmapStories.Chantiers}/>

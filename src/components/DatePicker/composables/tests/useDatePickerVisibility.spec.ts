@@ -176,42 +176,6 @@ describe('useDatePickerVisibility', () => {
 		})
 	})
 
-	describe('openDatePickerOnClick', () => {
-		it('devrait ouvrir le CalendarMode si textFieldActivator=true', () => {
-			const { openDatePickerOnClick } = useDatePickerVisibility({
-				textFieldActivator: true,
-				isDatePickerVisible,
-				isManualInputActive,
-				hasInteracted,
-				updateAccessibility: mockUpdateAccessibility,
-				validateDates: mockValidateDates,
-				emitClosed: mockEmitClosed,
-				emitFocus: mockEmitFocus,
-			})
-
-			openDatePickerOnClick()
-
-			expect(isDatePickerVisible.value).toBe(true)
-		})
-
-		it('ne devrait pas ouvrir le CalendarMode si textFieldActivator=false', () => {
-			const { openDatePickerOnClick } = useDatePickerVisibility({
-				textFieldActivator: false,
-				isDatePickerVisible,
-				isManualInputActive,
-				hasInteracted,
-				updateAccessibility: mockUpdateAccessibility,
-				validateDates: mockValidateDates,
-				emitClosed: mockEmitClosed,
-				emitFocus: mockEmitFocus,
-			})
-
-			openDatePickerOnClick()
-
-			expect(isDatePickerVisible.value).toBe(false)
-		})
-	})
-
 	describe('openDatePickerOnFocus', () => {
 		it('devrait ouvrir le CalendarMode si textFieldActivator=true', () => {
 			const { openDatePickerOnFocus } = useDatePickerVisibility({

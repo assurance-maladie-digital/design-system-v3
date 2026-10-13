@@ -4,6 +4,7 @@ import '@/stories/styles/shared.css';
 import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
 import {
 	AccessibilityGuideLayout,
+	AuditSection,
 	CriteriaSection,
 	CriteriaCard,
 	DemoSection,
@@ -12,25 +13,85 @@ import {
 } from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
 <Meta of={SubHeaderStories} />
+
 <AccessibilityGuideLayout
 	componentName="SubHeader"
 	iconSrc={AccessibilityIcon}
 >
-<div class="mt-2">
-<p>Rapport d’audit manuel : <a href="/audits/SubHeader.xlsx" style={{ color:'#0C41BD' }}>Voir le rapport</a></p>
-		<p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/942" target="_blank" style={{color:'#0C41BD'}}>issue #942</a>)</p>
-	</div>
-<CriteriaSection>
-<CriteriaCard title="Niveau de titre configurable via la prop headingLevel">
-  <ul>
-    <li>Le niveau du titre (h1 à h6) est défini grâce à la propriété <strong>headingLevel</strong> déclarée dans le composant. Si aucune valeur n’est fournie, le composant applique par défaut un titre de niveau h4, défini dans l’implémentation du composant.</li>
-      <code>&lt;SubHeader :heading-level="4" /&gt; </code>
-    
-    <li><strong>Accessibilité</strong> : Permet que la hiérarchie entre les titres soit pertinente (critère 9.1.1 RGAA) </li>
-  </ul>
-</CriteriaCard>
-</CriteriaSection>
+	<AuditSection>
+		<div>Rapport d’audit manuel : <a href="/audits/SubHeader.xlsx" style={{ color: '#0C41BD' }}>Voir le rapport</a></div>
+		<div style={{ color: 'grey', fontSize: '14px' }}>
+			Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/942" target="_blank" style={{ color: '#0C41BD' }}>issue #942</a>)
+		</div>
+	</AuditSection>
 
+	<CriteriaSection>
+		<CriteriaCard title="Niveau de titre configurable via la prop headingLevel">
+			<ul>
+				<li>Le niveau du titre principal (h1 à h6) est défini par la prop <code>headingLevel</code>. Valeur par défaut : <strong>h1</strong>.</li>
+				<li>La prop <code>titleAccessibleName</code> pose un <code>aria-label</code> sur le titre : il <strong>remplace</strong> le nom accessible, le texte visible n’est alors plus restitué. Fournissez un texte complet incluant le titre.</li>
+				<li><strong>Accessibilité</strong> : permet une hiérarchie de titres pertinente (critère RGAA 9.1.1).</li>
+			</ul>
+			<code>&lt;SubHeader :heading-level="2" title-text="Informations du patient" /&gt;</code>
+		</CriteriaCard>
 
+		<CriteriaCard title="Niveau des titres de listes via la prop dataListTitleLevel">
+			<ul>
+				<li>La prop <code>dataListTitleLevel</code> choisit le niveau des titres des listes (1 à 6). Valeur par défaut : <strong>4</strong>, pour conserver les titres <code>h4</code> des usages existants.</li>
+				<li>Ce niveau est indépendant de <code>headingLevel</code>. Par exemple, après un titre principal <code>h2</code>, utilisez <code>:data-list-title-level="3"</code> pour obtenir des titres de liste <code>h3</code>.</li>
+				<li>Chaque liste titrée est rendue dans un <code>&lt;section&gt;</code> labellisé par son titre (<code>aria-labelledby</code>) : elle est repérable à la navigation par landmarks.</li>
+				<li><strong>Attention</strong> : avec les valeurs par défaut (<code>h1</code> + <code>h4</code>), la hiérarchie saute des niveaux. Ajustez <code>dataListTitleLevel</code> au niveau qui suit votre titre principal.</li>
+			</ul>
+			<code>&lt;SubHeader :heading-level="2" :data-list-title-level="3" title-text="Informations du patient" :data-list-group-items="items" /&gt;</code>
+			<p>Référence : <a href="https://www.w3.org/WAI/tutorials/page-structure/headings/">W3C — Organisation des titres</a>.</p>
+		</CriteriaCard>
 
+		<CriteriaCard title="Un sous-titre compréhensible au lecteur d’écran">
+			<ul>
+				<li>Le sous-titre est un paragraphe, pas un titre : une valeur affichée seule comme « 1 69 08 75 125 456 75 » ne dit pas ce qu’elle représente.</li>
+				<li>La prop <code>subTitleAccessibleName</code> fournit un texte complet au lecteur d’écran, masqué visuellement. Le sous-titre visible est alors masqué au lecteur d’écran pour éviter une lecture en double.</li>
+				<li>Fournissez le texte complet, y compris la valeur affichée. Sans cette prop, le sous-titre visible reste restitué tel quel.</li>
+			</ul>
+			<code>&lt;SubHeader sub-title-text="1 69 08 75 125 456 75" sub-title-accessible-name="Numéro de sécurité sociale de Paul Dupont : 1 69 08 75 125 456 75" /&gt;</code>
+		</CriteriaCard>
+
+		<CriteriaCard title="Bouton retour : nom accessible et focus visible">
+			<ul>
+				<li>Par défaut, le bouton « Retour » porte le nom accessible « Retour vers la page précédente » (<code>aria-label</code>), plus explicite que le texte visible seul.</li>
+				<li>La prop <code>backBtnAccessibleName</code> permet de personnaliser ce nom (ex. « Retour à la liste des dossiers »).</li>
+				<li>Si <code>backBtnText</code> est personnalisé sans <code>backBtnAccessibleName</code>, aucun <code>aria-label</code> n’est ajouté : le libellé visible fait office de nom accessible et doit rester compréhensible seul.</li>
+				<li>L’icône est décorative (<code>aria-hidden</code>) et le focus visible utilise un outline <code>on-primary</code>, contrasté sur le fond primary.</li>
+				<li>Le clic émet l’événement <code>back</code> : la navigation effective reste à la charge de l’application.</li>
+			</ul>
+			<code>&lt;SubHeader back-btn-text="Retour" back-btn-accessible-name="Retour à la liste des dossiers" /&gt;</code>
+		</CriteriaCard>
+
+		<CriteriaCard title="État de chargement">
+			<ul>
+				<li>En <code>loading</code>, des skeleton loaders remplacent le bouton retour, le titre et le sous-titre : aucun titre vide n’est rendu dans la hiérarchie.</li>
+				<li><strong>Limitation connue</strong> : les skeletons sont masqués aux technologies d’assistance et l’état de chargement n’est pas annoncé (ni <code>role="status"</code> ni <code>aria-busy</code>).</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="SubHeader">
+		<Story of={SubHeaderStories.DataList} />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Choisissez <code>headingLevel</code> selon la place du composant dans la page, puis <code>dataListTitleLevel</code> au niveau immédiatement inférieur.</li>
+			<li>Si vous remplacez le titre ou le sous-titre par un slot (<code>title</code>, <code>sub-title</code>), conservez une hiérarchie de titres cohérente et n’utilisez pas de titre pour du texte qui n’en est pas un.</li>
+			<li>Fournissez <code>subTitleAccessibleName</code> quand le sous-titre visible seul est ambigu (ex. un numéro de sécurité sociale).</li>
+			<li>Si vous personnalisez <code>backBtnText</code>, renseignez <code>backBtnAccessibleName</code> pour garder un nom accessible explicite.</li>
+			<li>Si vous changez la couleur de fond via <code>vuetifyOptions.sheet.color</code>, vérifiez le contraste : les textes du composant sont prévus pour un fond sombre.</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/tutorials/page-structure/headings/">W3C — Organisation des titres</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/#9.1">RGAA — Critère 9.1 (titres)</a></li>
+		</ul>
+	</ResourcesSection>
 </AccessibilityGuideLayout>

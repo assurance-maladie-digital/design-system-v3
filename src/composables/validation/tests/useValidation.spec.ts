@@ -2,6 +2,49 @@ import { describe, it, expect, vi } from 'vitest'
 import { useValidation } from '../useValidation'
 
 describe('useValidation', () => {
+	it.each([false, true])('ignores an async result after clearValidation (valid: %s)', async (valid) => {
+		let resolveRule: (value: boolean) => void = () => {}
+		const pending = new Promise<boolean>((resolve) => {
+			resolveRule = resolve
+		})
+		const validation = useValidation({ showSuccessMessages: true })
+		const result = validation.validateField('date', [{
+			type: 'custom',
+			options: {
+				validate: () => pending,
+				message: 'Erreur obsolète',
+				successMessage: 'Succès obsolète',
+			},
+		}])
+
+		validation.clearValidation()
+		resolveRule(valid)
+		await result
+
+		expect(validation.errors.value).toEqual([])
+		expect(validation.warnings.value).toEqual([])
+		expect(validation.successes.value).toEqual([])
+		expect(validation.hasSuccess.value).toBe(false)
+	})
+
+	it.each(['warning', 'success'] as const)('ignores late %s rules after clearValidation', async (kind) => {
+		let resolveRule: (valid: boolean) => void = () => {}
+		const pending = new Promise<boolean>((resolve) => {
+			resolveRule = resolve
+		})
+		const rule = { type: 'custom', options: {
+			validate: () => pending, message: 'Message obsolète', successMessage: 'Succès obsolète',
+		} }
+		const validation = useValidation({ showSuccessMessages: true })
+		const result = validation.validateField('date', [], kind === 'warning' ? [rule] : [], kind === 'success' ? [rule] : [])
+		validation.clearValidation()
+		resolveRule(kind === 'success')
+		await result
+		expect(validation.warnings.value).toEqual([])
+		expect(validation.successes.value).toEqual([])
+		expect(validation.hasSuccess.value).toBe(false)
+	})
+
 	it('should initialize with empty validation state', () => {
 		const validation = useValidation()
 

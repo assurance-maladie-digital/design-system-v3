@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { ref, computed, watch } from 'vue'
+	import { ref, computed, watch, nextTick } from 'vue'
 	import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 	import SyHeading from '@/components/SyHeading/SyHeading.vue'
 	import type { DatePickerRule } from '@/components/DatePicker/types'
@@ -80,19 +80,15 @@
 	}
 
 	// Watcher pour la date de début qui force la revalidation de la date de fin
-	watch(startDate, () => {
-		// Laisser le temps au système de mettre à jour les valeurs
-		setTimeout(() => {
-			validateEndDate()
-		}, 0)
+	watch(startDate, async () => {
+		await nextTick()
+		validateEndDate()
 	})
 
 	// Watcher pour la date de fin qui force la revalidation de la date de début
-	watch(endDate, () => {
-		// Laisser le temps au système de mettre à jour les valeurs
-		setTimeout(() => {
-			validateStartDate()
-		}, 0)
+	watch(endDate, async () => {
+		await nextTick()
+		validateStartDate()
 	})
 
 	// Fonction pour définir des dates de test

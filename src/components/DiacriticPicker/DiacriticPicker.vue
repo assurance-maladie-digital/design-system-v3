@@ -6,7 +6,7 @@
 	import { VBtn, VCard, VCardText, VCardTitle, VDialog } from 'vuetify/components'
 
 	const props = withDefaults(defineProps<{
-		modelValue: string
+		modelValue?: string
 		btnTitle?: string
 		diacritics?: string[]
 		inputAriaLabel?: string

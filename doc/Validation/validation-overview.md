@@ -1,171 +1,117 @@
 # Vue d'ensemble du système de validation
 
+Le design system expose **un seul point d'entrée** pour la validation des composants de champ :
+
+- [`src/composables/unifyValidation/useValidation.ts`](src/composables/unifyValidation/useValidation.ts)
+
+`useValidation` sélectionne en interne le mode Synapse ou Vuetify, expose un état commun et
+enregistre automatiquement le champ auprès du `SyForm` parent. Les autres composables de
+validation sont des détails d'implémentation et ne doivent pas être appelés directement par
+un composant.
+
+---
+
 ## Props principales
 
-| Prop                  | Type      | Description                                                                 |
-|-----------------------|-----------|-----------------------------------------------------------------------------|
-| `modelValue`          | any       | Valeur du champ à valider.                                                  |
-| `customRules`         | array     | Tableau de règles de validation personnalisées (erreurs bloquantes).        |
-| `customWarningRules`  | array     | Tableau de règles d’avertissement (non bloquantes).                         |
-| `customSuccessRules`  | array     | Tableau de règles de succès (feedback positif).                             |
-| `useVuetifyValidation`| boolean   | Active le mode validation Vuetify (sinon Synapse).                          |
-| `rules`        | array     | Règles synchrones au format Vuetify (mode Vuetify uniquement).              |
-
-> **Vue d'ensemble** : Le système de validation fournit un **framework complet de gestion des états de formulaire**, supportant la validation synchrone et asynchrone avec gestion des conflits (race conditions), et offrant trois niveaux de feedback (erreurs bloquantes, avertissements informatifs, confirmations de succès).
-
----
-
-## Vue d'ensemble
-
-```mermaid
-flowchart TB
-    subgraph Champs["Composants de formulaire"]
-        A["SyTextField: email"]
-        B["SyTextField: password"]
-        C["DatePicker: date"]
-    end
-
-    subgraph Form["Coordination"]
-        S["SyForm: Registre central"]
-    end
-
-    subgraph Rules["Regles"]
-        RA["required, email"]
-        RB["minLength(8), pattern"]
-        RC["noWeekend, async API"]
-    end
-
-    A -->|enregistrement| S
-    B -->|enregistrement| S
-    C -->|enregistrement| S
-
-    S -->|valide| RA
-    S -->|valide| RB
-    S -->|valide| RC
-
-    style S fill:#0288d1,color:#fff,stroke:#01579b,stroke-width:2px
-    style A fill:#7b1fa2,color:#fff,stroke:#4a148c,stroke-width:0px
-    style B fill:#7b1fa2,color:#fff,stroke:#4a148c,stroke-width:0px
-    style C fill:#7b1fa2,color:#fff,stroke:#4a148c,stroke-width:0px
-```
-
-**Fichiers source :**
-- [`SyForm.vue`](src/components/Customs/SyForm/SyForm.vue) - Composant formulaire
-- [`SyTextField.vue`](src/components/Customs/SyTextField/SyTextField.vue) - Champ de saisie
-- [`DateTextInput.vue`](src/components/DatePicker/DateTextInput/DateTextInput.vue) - Saisie de date
-- [`useFieldValidation.ts`](src/composables/rules/useFieldValidation.ts) - Définition des règles
+| Prop | Type | Description |
+|---|---|---|
+| `modelValue` | `unknown` | Valeur du champ à valider |
+| `customRules` | `ValidationRule[]` | Règles d'erreur bloquantes |
+| `customWarningRules` | `ValidationRule[]` | Règles d'avertissement |
+| `customSuccessRules` | `ValidationRule[]` | Règles de succès |
+| `useVuetifyValidation` | `boolean` | Bascule vers le mode Vuetify |
+| `rules` | `VuetifyValidationRule[]` | Règles Vuetify synchrones |
+| `errorMessages` | `string[]` | Messages d'erreur injectés |
+| `warningMessages` | `string[]` | Messages de warning injectés |
+| `successMessages` | `string[]` | Messages de succès injectés |
 
 ---
 
-## Les 3 niveaux de validation
+## Architecture cible
 
 ```mermaid
 flowchart TB
-    subgraph Statuts["Statuts de validation"]
-        N[Etat neutre]
-        R[Etat d'erreur]
-        VW[Etat de warning]
-        V[Etat de success]
-    end
+    Entry["Component.vue"]
+    Unified["useValidation.ts"]
+    Custom["useCustomValidation.ts (interne)"]
+    Vuetify["useVuetifyValidation.ts (interne)"]
+    Legacy["validation/useValidation.ts"]
+    Validatable["useValidatable.ts"]
 
-    N -->|Règle classique| R
-    N -->|Règle de type warning| VW
-    N -->|Règle de confirmation| V
-
-    style R fill:#d32f2f,color:#fff,stroke:#b71c1c,stroke-width:2px
-    style VW fill:#f57c00,color:#fff,stroke:#e65100,stroke-width:0px
-    style V fill:#388e3c,color:#fff,stroke:#1b5e20,stroke-width:0px
-    style N fill:#616161,color:#fff,stroke:#212121,stroke-width:0px
+    Entry --> Unified
+    Unified -->|useVuetifyValidation: false| Custom
+    Unified -->|useVuetifyValidation: true| Vuetify
+    Custom -.-> Legacy
+    Custom -.-> Validatable
 ```
 
-**Légende :**
-- 🔴 **REJECTED (Erreur)** : Soumission bloquée, border-error + icone
-- 🟡 **VALIDATED_WITH_WARNINGS (Avertissement)** : Soumission autorisée, border-warning  + icone
-- 🟢 **VALIDATED (Succès)** : Validation confirmée, border-success + icone
+### Règle simple
+
+- un composant appelle toujours `useValidation`
+- `useValidation` gère la validation, l'état affiché et l'enregistrement auprès de `SyForm`
+- un bridge métier peut préparer les données et les règles, mais délègue ces responsabilités à `useValidation`
+- ne pas appeler directement `useCustomValidation`, `useVuetifyValidation` ou `useValidatable`
+
+### Enregistrement auprès de SyForm
+
+L'appel à `useValidation` suffit pour rendre le champ compatible avec un `SyForm` parent.
+Il ne faut pas ajouter un second appel à `useValidatable`, sous peine d'enregistrer le champ
+deux fois. L'option `{ registerWithForm: false }` est réservée aux composants composites dont
+un autre champ porte volontairement l'enregistrement.
 
 ---
 
-## Architecture à deux étages
+## Cas particulier DatePicker
 
-### Couche 1 : Système Legacy (Fondations)
+Le DatePicker est migré sur le système unifié, mais il conserve un bridge métier dédié :
 
-```mermaid
-flowchart TB
-    subgraph Legacy["VALIDATION LEGACY"]
-        Entry["Component.vue"]
-        useValidation["useValidation.ts"]
-        useFieldValidation["useFieldValidation.ts"]
-        useValidatable["useValidatable.ts"]
-        useFormValidation["useFormValidation.ts"]
-    end
+- [`src/components/DatePicker/composables/useDatePickerValidation.ts`](src/components/DatePicker/composables/useDatePickerValidation.ts)
 
-    Entry -->|validation logic|useValidation
-    useValidation -->|génération des règles| useFieldValidation
-    Entry -->|SyForm enregistrement| useValidatable
-    useValidatable --> useFormValidation
+Ce bridge est volontairement conservé car il porte encore des règles métier qui ne doivent pas être poussées dans le moteur générique :
 
-    style Entry fill:#388e3c,color:#fff,stroke:#1b5e20,stroke-width:2px
-    style useValidation fill:#f57c00,color:#fff,stroke:#e65100,stroke-width:0px
-    style useValidatable fill:#f57c00,color:#fff,stroke:#e65100,stroke-width:0px
-    style useFieldValidation fill:#f57c00,color:#fff,stroke:#e65100,stroke-width:0px
-```
+- `required` conditionnel
+- validation de plage
+- sélection incomplète en mode range
+- flow spécifique `CalendarMode`
+- orchestration `validateOnSubmit` pour `SyForm`
 
-### Couche 2 : Système Unifié (Interface modernisée)
-
-Le nouveau système permet :
-- D'avoir un seul point d'entré pour la validation et l'enregistrement dans le registre de formulaire (SyForm).
- - ajoute une couche d'abstraction pour gérer les différents êtats de validation (error, warning, success)
-- Gérer les règles de validation au format natif Vuetify ou au format Synapse
-
-```mermaid
-flowchart TB
-    subgraph Unified["VALIDATION UNIFIEE"]
-        Entry["Component.vue"]
-        subgraph Nouveaux wrapper unifié
-            useValidation["useValidation.ts"]
-            Vuetify["useVuetifyValidation.ts"]
-            Custom["useCustomValidation.ts"]
-            end
-        subgraph composants préexistant
-            UV_Legacy["useValidation.ts synapse"]
-            useValidatable["useValidatable.ts"]
-            end
-    end
-
-    Entry -->useValidation
-    useValidation -->|useVuetifyValidation: true| Vuetify["useVuetifyValidation <br>*Gère la validation au format natif Vuetify*"]
-    useValidation -->|"useVuetifyValidation: false<br>(mode par défaut)"| Custom["useCustomValidation <br>*Gère la validation au format Synapse*"]
-    Custom -.->|wrap| UV_Legacy
-    Custom -.->|wrap| useValidatable
-
-    style Entry fill:#388e3c,color:#fff,stroke:#1b5e20,stroke-width:2px
-    style useValidation fill:purple,color:#fff,stroke-width:0
-    style Vuetify fill:#0288d1,color:#fff,stroke-width:0
-    style Custom fill:#c2185b,color:#fff,stroke-width:0
-    style UV_Legacy fill:#f57c00,color:#fff,stroke-width:0
-    style useValidatable fill:#f57c00,color:#fff,stroke-width:0
-```
+La cible n'est donc pas la suppression pure du bridge, mais son maintien sous une forme mince, explicite et stable.
+Le bridge DatePicker appelle encore directement une couche interne pour ses besoins
+d'orchestration spécifiques. Cette exception transitoire ne constitue pas un second point
+d'entrée et ne doit pas être reproduite dans un nouveau composant.
 
 ---
 
-## Points clés à retenir
+## Validité globale dans SyForm
 
-```mermaid
-flowchart TD
-    Root["POINTS CLES"]
-    
-    Root --> SyForm["SyForm - Registre formulaire"]
-    Root --> useValidation["useValidation - Etat validation"]
-    Root --> ValidationRule["ValidationRule - Contraintes"]
-    Root --> Token["Token - Race conditions"]
-    Root --> Async["Async - Promise support"]
-    Root --> Niveaux["3 niveaux: Error, Warning, Success"]
-```
-| Concept | Explication technique | Où ça vit |
-|---------|-------------------|-----------|
-| SyForm | Registre et coordinateur de validation de formulaire | `components/Customs/SyForm/` |
-| **useValidation** | Composable principal retournant l'état de validation | `composables/unifyValidation/useValidation.ts` |
-| **ValidationRule** | Définition d'une contrainte de validation | `composable/rules/useFieldValidation.ts` |
-| **Token** | Identifiant pour éviter les validations concurrentes (race conditions) | `composable/validation/useValidation.ts` |
-| **Async** | Support des validations retournant Promise | Règles custom avec validate async |
-| **3 niveaux** | Erreur bloquante, avertissement informatif, confirmation de succès | `composable/validation/useValidation.ts`|
+`SyForm` agrège le statut du `VForm` Vuetify et celui des composants Synapse enregistrés.
+Les champs Synapse réactifs sont évalués silencieusement au montage : leurs règles
+alimentent le `v-model` du formulaire sans afficher prématurément les messages de validation.
+
+Le `v-model` de `SyForm` vaut :
+
+- `true` lorsque toutes les règles évaluées passent ;
+- `false` dès qu'au moins un champ Vuetify ou Synapse est invalide ;
+- `null` lorsqu'aucun statut de champ n'est disponible.
+
+Ce comportement permet notamment de désactiver un bouton de soumission tant que le
+formulaire n'est pas valide avec `:disabled="formValid !== true"`.
+
+---
+
+## Fichiers de référence
+
+- [`src/composables/unifyValidation/useValidation.ts`](src/composables/unifyValidation/useValidation.ts) : unique point d'entrée
+- [`src/composables/unifyValidation/useCustomValidation.ts`](src/composables/unifyValidation/useCustomValidation.ts) : implémentation interne du mode Synapse
+- [`src/composables/unifyValidation/useVuetifyValidation.ts`](src/composables/unifyValidation/useVuetifyValidation.ts) : implémentation interne du mode Vuetify
+- [`src/components/DatePicker/composables/useDatePickerValidation.ts`](src/components/DatePicker/composables/useDatePickerValidation.ts) : bridge métier DatePicker
+- [`src/components/Customs/SyForm/SyForm.vue`](src/components/Customs/SyForm/SyForm.vue) : coordination formulaire
+
+---
+
+## À retenir
+
+- importer uniquement `unifyValidation/useValidation` pour tout nouveau composant migré
+- ne pas appeler directement les moteurs internes ni `useValidatable`
+- laisser `useValidation` gérer l'enregistrement auprès de `SyForm`
+- ne créer un bridge métier que si le domaine a de vraies règles transverses que le moteur générique ne doit pas absorber

@@ -99,6 +99,32 @@ describe('useDateSelection', () => {
 			expect(rangeBoundaryDates.value).toEqual([date1, date2])
 		})
 
+		it('démarre une plage progressive à partir d\'une seule date en mode plage', () => {
+			const startDate = new Date('2023-01-01')
+			const { updateSelectedDates, rangeBoundaryDates } = useDateSelection(mockParseDate, selectedDates, format, true)
+
+			updateSelectedDates(startDate)
+
+			expect(selectedDates.value).toEqual([startDate])
+			expect(rangeBoundaryDates.value).toEqual([startDate, null])
+		})
+
+		it('complète une plage progressive quand une seconde date est sélectionnée', () => {
+			const startDate = new Date('2023-01-01')
+			const endDate = new Date('2023-01-03')
+			const { updateSelectedDates, rangeBoundaryDates } = useDateSelection(mockParseDate, selectedDates, format, true)
+
+			updateSelectedDates(startDate)
+			updateSelectedDates(endDate)
+
+			expect(rangeBoundaryDates.value).toEqual([startDate, endDate])
+			expect(selectedDates.value).toEqual([
+				new Date('2023-01-01'),
+				new Date('2023-01-02'),
+				new Date('2023-01-03'),
+			])
+		})
+
 		it('devrait trier les dates avant de générer une plage', () => {
 			const date1 = new Date('2023-01-01')
 			const date2 = new Date('2023-01-03')
@@ -151,6 +177,19 @@ describe('useDateSelection', () => {
 
 			// Vérifier que rangeBoundaryDates contient les dates de début et de fin
 			expect(rangeBoundaryDates.value).toEqual([startDate, endDate])
+		})
+
+		it('redémarre une nouvelle plage quand une date unique est sélectionnée après une plage complète', () => {
+			const startDate = new Date('2023-01-01')
+			const endDate = new Date('2023-01-05')
+			const restartDate = new Date('2023-02-10')
+			const { updateSelectedDates, rangeBoundaryDates } = useDateSelection(mockParseDate, selectedDates, format, true)
+
+			updateSelectedDates([startDate, endDate])
+			updateSelectedDates(restartDate)
+
+			expect(selectedDates.value).toEqual([restartDate])
+			expect(rangeBoundaryDates.value).toEqual([restartDate, null])
 		})
 
 		it('ne devrait pas modifier selectedDates si une des dates de la plage est invalide', () => {

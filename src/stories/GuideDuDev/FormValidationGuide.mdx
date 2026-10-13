@@ -475,18 +475,22 @@ const handleSubmit = async () => {
 
 ## Créer un composant compatible avec SyForm
 
-Pour créer vos propres composants qui s'intègrent automatiquement avec SyForm, utilisez le composable `useValidatable` :
+Pour créer un composant interne au design system compatible avec `SyForm`, utilisez
+uniquement le point d'entrée `@/composables/unifyValidation/useValidation`.
+Il exécute les règles, expose les états d'affichage et enregistre automatiquement le champ
+auprès du `SyForm` parent.
 
-### Composant personnalisé basique
+### Composant personnalisé
 
 <Source dark code={`
 <template>
   <div class="custom-input">
-    <label>{{ label }}</label>
+    <label>{{ props.label }}</label>
     <input 
-      v-model="inputValue" 
+      v-model="model"
       :class="{ 'error': hasError }"
-      @blur="validate"
+      @focus="focused = true"
+      @blur="focused = false"
     />
     <div v-if="hasError" class="error-messages">
       <p v-for="error in errors" :key="error">{{ error }}</p>
@@ -495,167 +499,64 @@ Pour créer vos propres composants qui s'intègrent automatiquement avec SyForm,
 </template>
 
 <script setup lang='ts'>
-import { useValidation } from '@cnamts/synapse'
-import { computed, ref } from 'vue';
+import { computed, ref, toRef } from 'vue'
+import {
+  useValidation,
+  type ValidationRule,
+} from '@/composables/unifyValidation/useValidation'
 
-const props = defineProps({
-  modelValue: String,
-  label: String,
-  customRules: { type: Array, default: () => [] },
-  required: Boolean
-});
+const props = withDefaults(defineProps<{
+  label?: string
+  required?: boolean
+  customRules?: ValidationRule[]
+}>(), {
+  label: '',
+  required: false,
+  customRules: () => [],
+})
 
-const emit = defineEmits(['update:modelValue']);
+const model = defineModel<string>({ default: '' })
+const focused = ref(false)
 
-// Gestion de la valeur
-const inputValue = computed({
-  get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value)
-});
+const rules = computed<ValidationRule[]>(() => [
+  ...(props.required
+    ? [{ type: 'required', options: { message: \`\${props.label} est obligatoire\` } }]
+    : []),
+  ...props.customRules,
+])
 
-// Validation
-const { validateField, hasError, errors, clearValidation } = useValidation({
-  fieldIdentifier: props.label
-});
+const {
+  validate,
+  clearValidation,
+  errors,
+  hasError,
+} = useValidation({
+  modelValue: model,
+  readonly: ref(false),
+  disabled: ref(false),
+  required: toRef(props, 'required'),
+  isValidateOnBlur: ref(true),
+  showSuccessMessages: ref(false),
+  disableErrorHandling: ref(false),
+  label: toRef(props, 'label'),
+  focused,
+  useVuetifyValidation: false,
+  customRules: rules,
+})
 
-// Construire les règles
-const rules = computed(() => {
-  const allRules = [...props.customRules];
-  if (props.required) {
-    allRules.push({ type: 'required', options: { message: \`\${props.label} est obligatoire\` } });
-  }
-  return allRules;
-});
-
-// Méthode de validation pour SyForm
-const validateOnSubmit = () => {
-  const result = validateField(inputValue.value, rules.value);
-  return !result.hasError;
-};
-
-// S'enregistrer auprès de SyForm
-useValidatable(validateOnSubmit);
-
-// Validation en temps réel
-const validate = () => {
-  validateField(inputValue.value, rules.value);
-};
-
-// Exposer la méthode pour validation manuelle
-defineExpose({
-  validateOnSubmit,
-  clearValidation
-});
+defineExpose({ validate, clearValidation })
 </script>
 `}/>
 
-### 🔑 Points clés pour l'intégration SyForm
+### Points clés pour l'intégration SyForm
 
-- **`useValidatable(validateOnSubmit)`** : Enregistre automatiquement le composant auprès de SyForm
-- **`validateOnSubmit()`** : Méthode obligatoire qui retourne `true` si valide, `false` sinon
-- **`defineExpose()`** : Expose les méthodes pour la validation manuelle si nécessaire
-- **Auto-enregistrement** : Le composant s'enregistre automatiquement au `onMounted` et se désenregistre au `onBeforeUnmount`
-
-### Composant avancé avec validation personnalisée
-
-<Source dark code={`
-<template>
-  <div class="rating-input">
-    <label>{{ label }}</label>
-    <div class="stars">
-      <button 
-        v-for="star in 5" 
-        :key="star"
-        @click="setRating(star)"
-        :class="{ active: star <= currentRating }"
-      >
-        ⭐
-      </button>
-    </div>
-    <div v-if="hasError" class="error-messages">
-      <p v-for="error in errors" :key="error">{{ error }}</p>
-    </div>
-    <div v-if="hasSuccess" class="success-messages">
-      <p v-for="success in successes" :key="success">{{ success }}</p>
-    </div>
-  </div>
-</template>
-
-<script setup>
-import { ref, computed } from 'vue'
-import { useValidation } from '@/composables/validation/useValidation';
-import { useValidatable } from '@/composables/validation/useValidatable';
-
-const props = defineProps({
-  modelValue: Number,
-  label: String,
-  minRating: { type: Number, default: 1 },
-  required: { type: Boolean, default: false }
-});
-
-const emit = defineEmits(['update:modelValue']);
-
-const currentRating = computed({
-  get: () => props.modelValue || 0,
-  set: (value) => emit('update:modelValue', value)
-});
-
-// Validation avec règles personnalisées
-const { validateField, hasError, hasSuccess, errors, successes } = useValidation({
-  fieldIdentifier: props.label,
-  showSuccessMessages: true
-});
-
-const setRating = (rating) => {
-  currentRating.value = rating;
-  validate();
-};
-
-// Règles de validation personnalisées
-const rules = computed(() => {
-  const allRules = [];
-  
-  if (props.required) {
-    allRules.push({
-      type: 'custom',
-      options: {
-        validate: (value) => value > 0 || \`\${props.label} est obligatoire\`,
-        successMessage: 'Merci pour votre évaluation !'
-      }
-    });
-  }
-  
-  if (props.minRating > 1) {
-    allRules.push({
-      type: 'custom',
-      options: {
-        validate: (value) => value >= props.minRating || \`Minimum \${props.minRating} étoiles requis\`
-      }
-    });
-  }
-  
-  return allRules;
-});
-
-const validate = () => {
-  validateField(currentRating.value, rules.value);
-};
-
-// Méthode pour SyForm
-const validateOnSubmit = () => {
-  const result = validateField(currentRating.value, rules.value);
-  return !result.hasError;
-};
-
-// Enregistrement automatique avec SyForm
-useValidatable(validateOnSubmit);
-
-defineExpose({
-  validateOnSubmit,
-  validate
-});
-</script>
-`}/>
+- **Point d'entrée unique** : ne pas appeler directement `useCustomValidation`,
+  `useVuetifyValidation` ou l'ancien moteur.
+- **Auto-enregistrement** : `useValidation` enregistre et désenregistre le champ auprès de
+  `SyForm`; ne pas ajouter `useValidatable`.
+- **Validation manuelle** : `validate()` retourne une promesse résolue avec la validité du champ.
+- **Composant composite** : utiliser `{ registerWithForm: false }` uniquement pour un champ
+  interne qui ne doit pas être enregistré séparément de son composant parent.
 
 ### Utilisation dans SyForm
 
@@ -670,23 +571,14 @@ Une fois votre composant créé, il fonctionne automatiquement avec SyForm :
       required 
       :custom-rules="nameRules" 
     />
-    <RatingInput 
-      v-model="satisfaction" 
-      label="Satisfaction" 
-      :min-rating="3" 
-      required 
-    />
     <VBtn type="submit">Envoyer</VBtn>
   </SyForm>
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import { useValidation } from '@/composables/validation/useValidation'
-import { useValidatable } from '@/composables/validation/useValidatable'
 
 const name = ref('');
-const satisfaction = ref(0);
 
 const nameRules = [
   { type: 'minLength', options: { length: 2, message: 'Minimum 2 caractères' } }
@@ -694,7 +586,7 @@ const nameRules = [
 
 const handleSubmit = () => {
   // Appelé seulement si tous les composants sont valides !
-  console.log('Formulaire valide:', { name: name.value, satisfaction: satisfaction.value });
+  console.log('Formulaire valide:', { name: name.value });
 };
 </script>
 `}/>
@@ -733,8 +625,6 @@ Dans certains cas, vous ne pouvez pas utiliser SyForm (intégration avec des com
 
 <script setup>
 import { ref } from 'vue'
-import { useValidation } from '@/composables/validation/useValidation'
-import { useValidatable } from '@/composables/validation/useValidatable'
 
 const email = ref('');
 const password = ref('');
@@ -819,8 +709,6 @@ Pour la validation croisée sans SyForm, utilisez des `ref` et `watch` :
 
 <script setup>
 import { ref } from 'vue'
-import { useValidation } from '@/composables/validation/useValidation'
-import { useValidatable } from '@/composables/validation/useValidatable'
 
 const password = ref('');
 const confirmPassword = ref('');
@@ -905,12 +793,7 @@ Plusieurs composants du Design System intègrent déjà la validation :
 
 <script setup>
 import { NirField, SyButton } from '@cnamts/synapse';
-import { ref, computed, watch } from 'vue';
-import { useValidation } from '@/composables/validation/useValidation';
-import { useValidatable } from '@/composables/validation/useValidatable';
-import { ref, computed } from 'vue';
-import { useValidation } from '@/composables/validation/useValidation';
-import { useValidatable } from '@/composables/validation/useValidatable';
+import { ref } from 'vue';
 
 const nirValue = ref('');
 const nirFieldRef = ref();

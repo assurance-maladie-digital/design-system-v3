@@ -433,7 +433,19 @@ export function useFieldValidation() {
 							: { error: typeof res === 'string' ? res : options.message || baseMessages.error }
 					}
 
-					const result = options.validate(value)
+					const validateSafely = (): boolean | string | Promise<boolean | string> => {
+						try {
+							return options.validate!(value)
+						}
+						catch (err) {
+							// Une règle custom synchrone qui throw (ex. accès à une propriété d'une
+							// valeur undefined) est convertie en résultat d'erreur, comme le serait
+							// une promesse rejetée — évite une unhandled rejection chez le consommateur.
+							return Promise.reject(err)
+						}
+					}
+
+					const result = validateSafely()
 					if (result instanceof Promise) {
 						return result.then(handleCustomResult).catch((err: unknown) => {
 							const message = err instanceof Error ? err.message : String(err)

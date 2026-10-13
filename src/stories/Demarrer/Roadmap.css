@@ -1,0 +1,278 @@
+/* Frise des versions (Démarrer/Roadmap) */
+.roadmap-timeline {
+	--rt-accent: rgb(var(--v-theme-primary));
+	--rt-line: #d5dae5;
+
+	position: relative;
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 16px;
+	margin: 24px 0 32px;
+	padding: 0;
+	list-style: none;
+}
+
+/* Ligne horizontale reliant les jalons */
+.roadmap-timeline::before {
+	position: absolute;
+	top: 9px;
+	right: 12.5%;
+	left: 12.5%;
+	border-top: 2px solid var(--rt-line);
+	content: '';
+}
+
+.roadmap-timeline__item {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.roadmap-timeline__item--planned,
+.roadmap-timeline__item--study {
+	--rt-accent: #6b7280;
+}
+
+.roadmap-timeline__item--major {
+	--rt-accent: rgb(var(--v-theme-secondary));
+}
+
+.roadmap-timeline__dot {
+	z-index: 1;
+	flex-shrink: 0;
+	width: 20px;
+	height: 20px;
+	margin-bottom: 12px;
+	border: 3px solid var(--rt-accent);
+	border-radius: 50%;
+	background: #fff;
+}
+
+.roadmap-timeline__item--current .roadmap-timeline__dot {
+	background: var(--rt-accent);
+}
+
+.roadmap-timeline__item--in-progress .roadmap-timeline__dot {
+	background: linear-gradient(90deg, var(--rt-accent) 50%, #fff 50%);
+}
+
+/* Anneau en pointillés dessiné en dégradé : Firefox n'affiche que 4 tirets
+   avec un border dashed sur un petit cercle */
+.roadmap-timeline__item--study .roadmap-timeline__dot {
+	border: 0;
+	background:
+		radial-gradient(closest-side, #fff calc(100% - 3px), transparent calc(100% - 3px)),
+		repeating-conic-gradient(var(--rt-accent) 0 22.5deg, #fff 0 45deg);
+}
+
+.roadmap-timeline__card {
+	width: 100%;
+	height: 100%;
+	padding: 12px 14px;
+	border: 1px solid var(--rt-line);
+	border-top: 4px solid var(--rt-accent);
+	border-radius: 8px;
+	background: #fff;
+}
+
+/* Bordure du haut dessinée en fond : Firefox tronque les coins arrondis
+   quand un côté plein (haut) rejoint des côtés en pointillés */
+.roadmap-timeline__item--study .roadmap-timeline__card {
+	padding-top: 16px;
+	border-style: dashed;
+	border-top: 0;
+	background: linear-gradient(var(--rt-accent), var(--rt-accent)) top / 100% 4px no-repeat, #fff;
+}
+
+.roadmap-timeline__card p {
+	margin: 0;
+}
+
+.roadmap-timeline__head {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 4px;
+}
+
+.roadmap-timeline__version {
+	color: var(--rt-accent);
+	font-size: 1.25rem;
+	font-weight: 700;
+}
+
+.roadmap-timeline__date {
+	color: #4b5563;
+	font-size: 0.8rem;
+	font-weight: 600;
+}
+
+.roadmap-timeline__status {
+	margin-top: 8px !important;
+}
+
+.roadmap-timeline__highlights {
+	margin: 10px 0 0;
+	padding-left: 16px;
+	font-size: 0.85rem;
+	line-height: 1.4;
+}
+
+.roadmap-timeline__highlights li + li {
+	margin-top: 4px;
+}
+
+/* Tableau des cycles de versions : sans alternance de fond de Storybook */
+.roadmap-cycles tr {
+	background: transparent !important;
+}
+
+/* Tag d'impact projet, partagé entre le tableau des cycles et la frise */
+.roadmap-impact {
+	display: inline-block;
+	padding: 2px 10px;
+	border-radius: 12px;
+	font-size: 0.75rem !important;
+	font-weight: 700;
+	line-height: 1.5 !important;
+	white-space: nowrap;
+}
+
+.roadmap-impact--patch {
+	background: #eef1f5;
+	color: #3f4b5b;
+}
+
+.roadmap-impact--minor {
+	background: #fff1e6;
+	color: #9a3412;
+}
+
+.roadmap-impact--major {
+	background: #f3f0ff;
+	color: #5b21b6;
+}
+
+/* Écrans étroits : frise verticale */
+@media (width <= 900px) {
+	.roadmap-timeline {
+		grid-template-columns: 1fr;
+		padding-left: 32px;
+	}
+
+	.roadmap-timeline::before {
+		inset: 10px auto 10px 9px;
+		border-top: 0;
+		border-left: 2px solid var(--rt-line);
+	}
+
+	.roadmap-timeline__item {
+		align-items: stretch;
+	}
+
+	.roadmap-timeline__dot {
+		position: absolute;
+		top: 12px;
+		left: -32px;
+	}
+}
+
+/* Tableau des chantiers par trimestre (Démarrer/Roadmap) */
+.roadmap-board {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	gap: 12px;
+	margin: 16px 0 32px;
+}
+
+.roadmap-board__column {
+	padding: 10px;
+	border-radius: 8px;
+	background: #f4f6fa;
+}
+
+.roadmap-board__column--continuous {
+	border: 1px dashed #c3cad8;
+	background: #fff;
+}
+
+.roadmap-board__period {
+	margin: 0 0 10px !important;
+	color: rgb(var(--v-theme-primary));
+	font-size: 0.95rem;
+	font-weight: 700;
+	text-align: center;
+}
+
+.roadmap-board__list {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.roadmap-board__card {
+	--rb-accent: rgb(var(--v-theme-primary));
+	--rb-soft: rgba(var(--v-theme-primary), 0.1);
+
+	margin: 0 !important;
+	padding: 10px 12px;
+	border: 1px solid #e1e5ee;
+	border-left: 4px solid var(--rb-accent);
+	border-radius: 6px;
+	background: #fff;
+}
+
+/* Teintes distinctes des tags d'impact (gris, orange, violet) de la frise */
+.roadmap-board__card--ux {
+	--rb-accent: #a61e4d;
+	--rb-soft: #fff0f6;
+}
+
+.roadmap-board__card--a11y {
+	--rb-accent: #0b7285;
+	--rb-soft: #e3fafc;
+}
+
+.roadmap-board__card--eco {
+	--rb-accent: #2b7a3b;
+	--rb-soft: #ebfbee;
+}
+
+.roadmap-board__axis {
+	display: inline-block;
+	padding: 1px 8px;
+	border-radius: 10px;
+	background: var(--rb-soft);
+	color: var(--rb-accent);
+	font-size: 0.7rem;
+	font-weight: 700;
+}
+
+.roadmap-board__card p {
+	margin: 0;
+}
+
+.roadmap-board__title {
+	margin-top: 6px !important;
+	font-size: 0.85rem;
+	font-weight: 700;
+	line-height: 1.3;
+}
+
+.roadmap-board__deliverable {
+	margin-top: 4px !important;
+	color: #4b5563;
+	font-size: 0.8rem;
+	line-height: 1.4;
+}
+
+@media (width <= 900px) {
+	.roadmap-board {
+		grid-template-columns: 1fr;
+	}
+}

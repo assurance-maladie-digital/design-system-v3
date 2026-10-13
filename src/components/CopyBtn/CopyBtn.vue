@@ -12,7 +12,7 @@
 	const props = withDefaults(defineProps<CustomizableOptions & {
 		ariaLabel?: string
 		ariaOwns?: string
-		textToCopy: (() => string) | string
+		textToCopy?: (() => string) | string
 		hideTooltip?: boolean
 		tooltipDuration?: number
 		separatorsToRemove?: string | string[]
@@ -103,9 +103,7 @@
 				<VBtn
 					v-bind="{...tooltipProps,...options.btn}"
 					:aria-label="props.ariaLabel"
-					:aria-owns="`${props.ariaOwns}-${id}`"
 					:data-test-id="props.ariaOwns"
-					:aria-controls="`copy-btn-${id}`"
 					@click="copy"
 				>
 					<slot name="icon">

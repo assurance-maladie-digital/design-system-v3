@@ -10,7 +10,7 @@ import {
 	ResourcesSection,
 } from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
 
-<Meta of={ToolbarContainerStories}/>
+<Meta of={ToolbarContainerStories} />
 
 <AccessibilityGuideLayout
 	componentName="ToolbarContainer"
@@ -55,6 +55,17 @@ import {
 			<li>Assurez-vous que le focus est toujours visible</li>
 		</ul>
 	</BestPracticesSection>
+
+	<div style={{ margin: '3rem 0', padding: '1.5rem', backgroundColor: '#fff3e0', borderLeft: '4px solid #f57c00', borderRadius: '4px' }}>
+		<h2 style={{ color: '#e65100', marginTop: 0 }}>Faux positif connu (outillage) : roving tabindex</h2>
+		<ul>
+			<li>Des audits automatisés peuvent signaler les éléments interactifs de la barre d'outils comme non atteignables au clavier, car ils portent tous <code>tabindex="-1"</code> à l'état initial.</li>
+			<li>Cause : le pattern <strong>roving tabindex</strong> fait de la barre un arrêt de tabulation unique. Seul le conteneur <code>role="toolbar"</code> reste dans l'ordre de tabulation ; le <code>tabindex</code> passe dynamiquement à <code>0</code> sur l'élément actif au fil de la navigation par flèches. Les scanners évaluent le DOM hors interaction et ne savent pas simuler ce déplacement de focus.</li>
+			<li>Vérification manuelle (navigation clavier réelle) : <kbd>Tab</kbd> place le focus sur la barre, puis les flèches déplacent <code>document.activeElement</code> d'un élément à l'autre, avec bouclage en fin de liste ; <kbd>Home</kbd>/<kbd>End</kbd> atteignent le premier/dernier élément. Toutes les actions sont donc accessibles au clavier.</li>
+			<li>Couverture automatisée : ce comportement est vérifié par les tests unitaires de <code>ToolbarContainer.spec.ts</code> (déplacement du focus aux flèches, bouclage, touches <code>Home</code>/<code>End</code>).</li>
+			<li>Ce n'est pas un bug du composant mais une limite des outils d'audit statiques face à un focus managé en JavaScript, conforme aux <a href="https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/" target="_blank" rel="noopener noreferrer">ARIA Authoring Practices</a>.</li>
+		</ul>
+</div>
 
 	<ResourcesSection>
 		<ul>

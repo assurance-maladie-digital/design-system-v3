@@ -43,11 +43,22 @@ export function useVuetifyValidation(
 		proxifiedProps,
 	)
 
-	watch (() => vuetifyValidator.errorMessages.value, (newVal) => {
-		if (vuetifyValidator.isPristine.value) {
+	// Synchronise les erreurs du validator Vuetify vers la ref partagée avec la
+	// couche unifiée. Quand le validator repasse à l'état vierge (`resetValidation`,
+	// déclenché par VForm car le validator s'y enregistre directement), les erreurs
+	// synchronisées sont retirées : le champ est nettoyé même si la réinitialisation
+	// vient du formulaire Vuetify et non de notre propre API. À l'état vierge, on
+	// n'écrit que s'il reste des erreurs à retirer : une écriture superflue (tableau
+	// vide recréé par le validate silencieux du mount) déclencherait un re-render
+	// qui réinitialiserait la saisie native du champ.
+	watch([vuetifyValidator.errorMessages, vuetifyValidator.isPristine], ([errorMessages, isPristine]) => {
+		if (isPristine) {
+			if (errors.value.length > 0) {
+				errors.value = []
+			}
 			return
 		}
-		errors.value = newVal
+		errors.value = errorMessages
 	})
 
 	return vuetifyValidator

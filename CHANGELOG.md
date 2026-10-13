@@ -1,3 +1,81 @@
+## v1.1.6 (28-09-2026)
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 100%">Synapse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- LogoBrandSection: improve routing
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2586">#2586</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SubHeader: improve accessibility and add tests/documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2584">#2584</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- HeaderBar/FooterBar: remove source dimensions for RGAA compliance
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2585">#2585</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTabs: fix slots and improve stories
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2580">#2580</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- LunarCalendar: add custom rules + add stories/tests
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2583">#2583</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix date translations
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2576">#2576</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: fix date translations and caret color
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2576">#2576</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2575">#2575</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Chore: update eslint-plugin-vue from v9 to v10
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2516">#2516</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Chore: clean package
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2549">#2549</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable : filters fix 0 number value
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2560">#2560</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: add validation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2499">#2499</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyserverTable: fix table caption
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2559">#2559</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Chore: add visual tests workflow triggers for design tokens and dependencies
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2553">#2553</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.1.5 (08-09-2026)
 
 <table>

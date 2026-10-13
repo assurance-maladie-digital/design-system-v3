@@ -1,8 +1,12 @@
-import { provide, inject, ref, type InjectionKey, type Ref } from 'vue'
 import { devWarn } from '@/utils/devWarn'
+import { computed, inject, provide, ref, type InjectionKey, type Ref } from 'vue'
 
-// Type pour les composants pouvant être validés
+/**
+ * Interface représentant un composant validable qui peut s'enregistrer auprès d'un formulaire parent.
+ */
 export type ValidatableComponent = {
+	valide?: boolean | null
+	isPristine?: boolean
 	validateOnSubmit: () => Promise<boolean> | boolean
 	clearValidation?: () => void
 	reset?: () => void
@@ -28,14 +32,18 @@ export function useFormValidation() {
 	// Liste des composants validables enregistrés
 	const validatableComponents = ref<ValidatableComponent[]>([])
 
-	// Fonction pour enregistrer un composant validable
+	/**
+	 * Enregistre un champ auprès du formulaire
+	 */
 	const register = (component: ValidatableComponent) => {
 		if (!validatableComponents.value.includes(component)) {
 			validatableComponents.value.push(component)
 		}
 	}
 
-	// Fonction pour supprimer un composant validable du registre
+	/**
+	 * Retire un champ du registre du formulaire
+	 */
 	const unregister = (component: ValidatableComponent) => {
 		// Prefer direct reference removal
 		let index = validatableComponents.value.indexOf(component)
@@ -48,7 +56,9 @@ export function useFormValidation() {
 		}
 	}
 
-	// Fonction pour nettoyer les validations de tous les composants enregistrés
+	/**
+	 * Réinitialise les états de validation de tous les champs
+	 */
 	const clearAll = () => {
 		if (validatableComponents.value.length === 0) return
 		validatableComponents.value.forEach((component: ValidatableComponent) => {
@@ -63,9 +73,11 @@ export function useFormValidation() {
 		})
 	}
 
+	/**
+	 * Réinitialise la valeur de tous les champs
+	 */
 	const resetAll = () => {
-		if (validatableComponents.value.length === 0) return
-		validatableComponents.value.forEach((component: ValidatableComponent) => {
+		validatableComponents.value.forEach((component) => {
 			if (component.reset) {
 				try {
 					component.reset()
@@ -77,19 +89,10 @@ export function useFormValidation() {
 		})
 	}
 
-	// Fournir le registre aux composants enfants
-	provide(ValidatableComponentsKey, {
-		register,
-		unregister,
-		clearAll,
-		resetAll,
-		components: validatableComponents,
-	})
-
 	/**
-     * Valide tous les composants enfants enregistrés
-     * @returns Promise<boolean> - true si tous les composants sont valides
-     */
+	 * Déclenche la validation de tous les composants enfants enregistrés
+	 * @returns Promise<boolean> - true si tous les composants sont valides
+	 */
 	const validateAll = async (): Promise<boolean> => {
 		if (validatableComponents.value.length === 0) {
 			return true
@@ -106,11 +109,90 @@ export function useFormValidation() {
 		return results.every(result => result === true)
 	}
 
-	return {
-		validateAll,
-		validatableComponents,
+	/**
+	 * Statut de validation des composants custom enregistrés (comportement aligné sur Vuetify) :
+	 * - true : aucun composant custom ne remonte explicitement `valide === false`
+	 * - false : au moins un composant custom est invalide
+	 * - null : aucun composant custom enregistré ou au moins un champ non validé
+	 */
+	const customComponentsValide = computed<boolean | null>(() => {
+		if (validatableComponents.value.length === 0) {
+			return null
+		}
+		const hasError = validatableComponents.value.some(component => component.valide === false)
+		if (hasError) {
+			return false
+		}
+		if (validatableComponents.value.some(component => component.valide === null)) {
+			return null
+		}
+		return true
+	})
+
+	/**
+	 * Indique si au moins un composant custom invalide a affiché son erreur
+	 * (champ touché par l'utilisateur ou validation explicite au submit).
+	 * Est une source de réactivité pour le formulaire : sans lui, le passage
+	 * de pristine à affiché pendant un validate() ne redéclencherait pas
+	 * le recalcul du v-model.
+	 */
+	const hasDisplayedError = computed<boolean>(() => validatableComponents.value.some(component =>
+		component.valide === false && component.isPristine === false,
+	))
+
+	/**
+	 * Calcule la valeur globale du formulaire en combinant les validations custom et Vuetify.
+	 * - Priorité aux erreurs affichées : si Vuetify ou custom est invalide → false
+	 * - Erreur custom pristine : null, car le formulaire est invalide sans
+	 *   avoir encore affiché l'erreur à l'utilisateur
+	 * - Sans composant custom : défère à vFormStatus (Vuetify natif)
+	 * - Avec composant custom : utilise customComponentsValide (true tant qu'aucune erreur
+	 *   n'est remontée, à la manière de Vuetify)
+	 * @param vFormStatus - Statut de validation du VForm Vuetify
+	 * @param hasVuetifyFields - Indique si le VForm contient des champs enregistrés
+	 * @returns Statut global du formulaire (boolean | null)
+	 */
+	const getFormValue = (
+		vFormStatus: boolean | null | undefined,
+		hasVuetifyFields = false,
+	): boolean | null => {
+		if (customComponentsValide.value === false) {
+			return hasDisplayedError.value ? false : null
+		}
+		if (vFormStatus === false) {
+			return false
+		}
+		if (customComponentsValide.value === null && validatableComponents.value.length > 0) {
+			return null
+		}
+		if (hasVuetifyFields && vFormStatus == null) {
+			return null
+		}
+		if (validatableComponents.value.length === 0) {
+			return vFormStatus === true ? true : null
+		}
+		return true
+	}
+
+	// Méthode pour les tests : retourne une copie des composants enregistrés
+	const _getValidatableComponents = (): readonly ValidatableComponent[] => [...validatableComponents.value]
+
+	provide(ValidatableComponentsKey, {
+		register,
+		unregister,
 		clearAll,
 		resetAll,
+		components: validatableComponents,
+	})
+
+	return {
+		validateAll,
+		clearAll,
+		resetAll,
+		customComponentsValide,
+		hasDisplayedError,
+		getFormValue,
+		_getValidatableComponents,
 	}
 }
 

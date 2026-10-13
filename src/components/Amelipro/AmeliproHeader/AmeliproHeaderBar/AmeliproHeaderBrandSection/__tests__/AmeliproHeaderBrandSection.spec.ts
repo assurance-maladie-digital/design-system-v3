@@ -1,6 +1,6 @@
-import { type RouteLocationRaw, RouterLink } from 'vue-router'
+import { createMemoryHistory, createRouter, type RouteLocationRaw, RouterLink } from 'vue-router'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { mount, shallowMount } from '@vue/test-utils'
+import { flushPromises, mount, shallowMount } from '@vue/test-utils'
 import AmeliproHeaderBrandSection from '../AmeliproHeaderBrandSection.vue'
 import type { ComponentProps } from 'vue-component-type-helpers'
 import type { ExpectedPropOptions } from '@tests/types'
@@ -93,6 +93,33 @@ describe('AmeliproHeaderBrandSection', () => {
 				const { homeHref } = modifiedPropValues()
 				await vueWrapper.setProps({ homeHref })
 				expect(vueWrapper.find('a.header-home-link').exists()).toBe(true)
+			})
+
+			// Avec un vrai vue-router, le `href: undefined` passé au RouterLink écrasait celui qu'il
+			// calcule : `<a>` sans `href`, donc hors de l'ordre de tabulation.
+			it('prop homeLink renders a focusable RouterLink with its href when vue-router is installed', async () => {
+				const router = createRouter({
+					history: createMemoryHistory(),
+					routes: [
+						{ path: '/', component: { template: '<div />' } },
+						{ path: '/accueil', component: { template: '<div />' } },
+					],
+				})
+				await router.push('/')
+
+				const wrapper = mount(AmeliproHeaderBrandSection, {
+					global: { plugins: [router] },
+					props: { homeLink: '/accueil' },
+				})
+				const link = wrapper.find('.header-home-link')
+
+				expect(link.element.tagName).toBe('A')
+				expect(link.attributes('href')).toBe('/accueil')
+
+				await link.trigger('click')
+				await flushPromises()
+
+				expect(router.currentRoute.value.path).toBe('/accueil')
 			})
 
 			// Note: corriger le rendu du Component

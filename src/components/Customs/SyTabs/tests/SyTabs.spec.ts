@@ -847,6 +847,55 @@ describe('SyTabs', () => {
 		})
 	})
 
+	describe('panel slots', () => {
+		it('renders the panel-{index} slot content instead of item.content', async () => {
+			const wrapper = mount(SyTabs, {
+				...defaultMountOptions,
+				slots: {
+					'panel-0': '<p data-test="custom-panel-0">Contenu personnalisé 0</p>',
+					'panel-1': '<p data-test="custom-panel-1">Contenu personnalisé 1</p>',
+				},
+			})
+
+			const panels = wrapper.findAll('.sy-tabs-panel')
+			expect(panels[0]!.find('[data-test="custom-panel-0"]').exists()).toBe(true)
+			expect(panels[0]!.text()).not.toContain('Contenu du Tab 1')
+			expect(panels[1]!.find('[data-test="custom-panel-1"]').exists()).toBe(true)
+			expect(panels[2]!.text()).toBe('Contenu du Tab 3')
+		})
+
+		it('keeps unique ids and isolated panel slots across several instances', () => {
+			const wrapper = mount({
+				components: { SyTabs },
+				setup: () => ({ items: testItems }),
+				template: `
+					<SyTabs :items="items">
+						<template #panel-0><p data-test="first-panel-0">Premier</p></template>
+					</SyTabs>
+					<SyTabs :items="items">
+						<template #panel-0><p data-test="second-panel-0">Second</p></template>
+					</SyTabs>
+				`,
+			}, { global: defaultMountOptions.global })
+
+			const ids = wrapper.findAll('[id]').map(el => el.attributes('id'))
+			expect(ids).toHaveLength(testItems.length * 2 * 2)
+			expect(new Set(ids).size).toBe(ids.length)
+
+			const panelGroups = wrapper.findAll('.sy-tabs-panels')
+			expect(panelGroups).toHaveLength(2)
+			expect(panelGroups[0]!.find('[data-test="first-panel-0"]').exists()).toBe(true)
+			expect(panelGroups[0]!.find('[data-test="second-panel-0"]').exists()).toBe(false)
+			expect(panelGroups[1]!.find('[data-test="second-panel-0"]').exists()).toBe(true)
+			expect(panelGroups[1]!.find('[data-test="first-panel-0"]').exists()).toBe(false)
+
+			const firstTab = wrapper.findAll('[role="tab"]')[0]!
+			const secondInstanceTab = wrapper.findAll('[role="tab"]')[testItems.length]!
+			expect(firstTab.attributes('aria-controls')).not.toBe(secondInstanceTab.attributes('aria-controls'))
+			expect(wrapper.find(`#${firstTab.attributes('aria-controls')}`).attributes('aria-labelledby')).toBe(firstTab.attributes('id'))
+		})
+	})
+
 	// Le ring de focus des onglets est porté par SyTabs (.sy-tabs__button:focus-visible,
 	// 2px, cf. SyTabs.vue). jsdom ne calcule pas :focus-visible : on vérifie que les
 	// onglets sont bien des éléments focusables (role tab).

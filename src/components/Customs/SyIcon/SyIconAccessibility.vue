@@ -1,7 +1,21 @@
 <script setup lang="ts">
 	import SyIcon from './SyIcon.vue'
 	import { ref, computed } from 'vue'
-	import { mdiInformation, mdiHome, mdiAccount, mdiCog, mdiAlertCircle, mdiMagnify, mdiDownload, mdiPencil, mdiCheck, mdiClose, mdiHelp } from '@mdi/js'
+	import {
+		mdiInformation,
+		mdiHome,
+		mdiAccount,
+		mdiCog,
+		mdiAlertCircle,
+		mdiMagnify,
+		mdiDownload,
+		mdiPencil,
+		mdiCheck,
+		mdiClose,
+		mdiHelp,
+	} from '@mdi/js'
+	import SySelect from '../Selects/SySelect/SySelect.vue'
+	import SyRadioGroup from '../SyRadioGroup/SyRadioGroup.vue'
 
 	// Liste d'icônes prédéfinies pour la sélection
 	const iconOptions = [
@@ -24,6 +38,18 @@
 	const icon = ref(mdiInformation)
 	const selectedIconIndex = ref(0)
 
+	const decorativeOptions = [
+		{ label: 'Décorative', value: 'decorative' },
+		{ label: 'Informative', value: 'informative' },
+	]
+
+	const decorativeMode = computed({
+		get: () => (decorative.value ? 'decorative' : 'informative'),
+		set: (value: PropertyKey | null) => {
+			decorative.value = value === 'decorative'
+		},
+	})
+
 	// Mettre à jour l'icône sélectionnée
 	const updateSelectedIcon = (index) => {
 		if (index !== undefined && index !== null && iconOptions[index]) {
@@ -40,7 +66,8 @@
 		return {
 			'role': decorative.value !== false ? 'presentation' : 'img',
 			'aria-hidden': decorative.value !== false ? 'true' : undefined,
-			'aria-label': decorative.value === false && label.value ? label.value : undefined,
+			'aria-label':
+				decorative.value === false && label.value ? label.value : undefined,
 		}
 	})
 
@@ -68,7 +95,7 @@
 			class="mb-6"
 			variant="outlined"
 		>
-			<VCardTitle class="text-h5 primary lighten-4 py-3 px-4">
+			<VCardTitle class="text-h5 py-3 px-4">
 				Guide d'accessibilité pour SyIcon
 			</VCardTitle>
 
@@ -77,18 +104,22 @@
 					Principes d'accessibilité
 				</h3>
 				<p class="mb-2">
-					Le composant SyIcon respecte les normes d'accessibilité RGAA en appliquant automatiquement les attributs ARIA appropriés
-					en fonction de la nature de l'icône (décorative ou informative).
+					Le composant SyIcon respecte les normes d'accessibilité RGAA en
+					appliquant automatiquement les attributs ARIA appropriés en fonction
+					de la nature de l'icône (décorative ou informative).
 				</p>
 
 				<VAlert
 					class="mb-4"
 					color="warning"
-					variant="tonal"
+					variant="flat"
 					density="comfortable"
 				>
-					<strong>Important :</strong> Si une icône est marquée comme non décorative (<code>:decorative="false"</code>) mais qu'aucun label n'est fourni,
-					un message d'erreur sera affiché dans la console : <code>L'icône "[nom-de-l'icône]" n'est pas décorative, mais aucun texte alternatif (label) n'a été fourni.</code>
+					<strong>Important :</strong> Si une icône est marquée comme non
+					décorative (<code>:decorative="false"</code>) mais qu'aucun label
+					n'est fourni, un message d'erreur sera affiché dans la console :
+					<code>L'icône "[nom-de-l'icône]" n'est pas décorative, mais aucun texte
+						alternatif (label) n'a été fourni.</code>
 				</VAlert>
 
 				<VList
@@ -100,16 +131,21 @@
 							Icônes décoratives
 						</VListItemTitle>
 						<VListItemSubtitle>
-							Invisibles pour les lecteurs d'écran (role="presentation", aria-hidden="true")
+							Invisibles pour les lecteurs d'écran (role="presentation",
+							aria-hidden="true")
 						</VListItemSubtitle>
 					</VListItem>
-					<VDivider />
+					<VDivider
+						role="presentation"
+						aria-hidden="true"
+					/>
 					<VListItem>
 						<VListItemTitle class="font-weight-bold">
 							Icônes informatives
 						</VListItemTitle>
 						<VListItemSubtitle>
-							Annoncées par les lecteurs d'écran avec un label explicite (role="img", aria-label="[label]")
+							Annoncées par les lecteurs d'écran avec un label explicite
+							(role="img", aria-label="[label]")
 						</VListItemSubtitle>
 					</VListItem>
 				</VList>
@@ -117,10 +153,11 @@
 				<VAlert
 					class="mb-4"
 					color="info"
-					variant="tonal"
+					variant="flat"
 					density="comfortable"
 				>
-					La directive <code>v-rgaa-svg-fix</code> est également appliquée pour garantir la compatibilité avec les lecteurs d'écran.
+					La directive <code>v-rgaa-svg-fix</code> est également appliquée pour
+					garantir la compatibilité avec les lecteurs d'écran.
 				</VAlert>
 			</VCardText>
 		</VCard>
@@ -130,13 +167,14 @@
 			class="mb-6"
 			variant="outlined"
 		>
-			<VCardTitle class="text-h6 secondary lighten-4 py-3 px-4">
+			<VCardTitle class="text-h6 py-3 px-4">
 				Démonstration interactive
 			</VCardTitle>
 
 			<VCardText>
 				<p class="mb-4">
-					Modifiez les paramètres ci-dessous pour voir comment les attributs d'accessibilité sont générés :
+					Modifiez les paramètres ci-dessous pour voir comment les attributs
+					d'accessibilité sont générés :
 				</p>
 
 				<VRow>
@@ -153,31 +191,24 @@
 								Configuration
 							</h4>
 
-							<VRadioGroup
-								v-model="decorative"
-								inline
+							<SyRadioGroup
+								v-model="decorativeMode"
+								:options="decorativeOptions"
 								label="Type d'icône :"
-								class="mb-4"
-							>
-								<VRadio
-									:value="true"
-									label="Décorative"
-								/>
-								<VRadio
-									:value="false"
-									label="Informative"
-								/>
-							</VRadioGroup>
+								inline
+								class="mb-4 icon-type-group"
+							/>
 
-							<VSelect
+							<SySelect
 								v-model="selectedIconIndex"
 								label="Sélectionnez une icône"
 								:items="iconOptions"
-								item-title="label"
-								item-value="index"
+								text-key="label"
+								value-key="index"
 								class="mb-4"
-								variant="outlined"
+								variant-style="outlined"
 								density="comfortable"
+								hide-details
 								@update:model-value="updateSelectedIcon"
 							/>
 
@@ -223,7 +254,7 @@
 								<div>
 									<VChip
 										v-if="decorative"
-										color="success"
+										color="green-darken-4"
 										variant="outlined"
 										class="ml-10 mb-2"
 									>
@@ -256,7 +287,7 @@
 			class="mb-6"
 			variant="outlined"
 		>
-			<VCardTitle class="text-h6 accent lighten-4 py-3 px-4">
+			<VCardTitle class="text-h6 py-3 px-4">
 				Résultats
 			</VCardTitle>
 
@@ -302,5 +333,9 @@ pre {
 	margin: 0;
 	white-space: pre-wrap;
 	word-break: break-word;
+}
+
+:deep(.v-input__control > .v-label) {
+	opacity: 1;
 }
 </style>

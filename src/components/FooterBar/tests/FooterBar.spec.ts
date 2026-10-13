@@ -1,4 +1,5 @@
-import { mount } from '@vue/test-utils'
+import { flushPromises, mount } from '@vue/test-utils'
+import { createMemoryHistory, createRouter } from 'vue-router'
 import { describe, it, expect, vi } from 'vitest'
 import { h } from 'vue'
 import FooterBar from '@/components/FooterBar/FooterBar.vue'
@@ -146,6 +147,12 @@ describe('FooterBar', () => {
 		expect(sourceElement.exists()).toBe(true)
 		expect(sourceElement.attributes('srcset')).toBeTruthy()
 		expect(sourceElement.attributes('media')).toBe(`(min-width: 600px)`)
+		expect(sourceElement.attributes('width')).toBeUndefined()
+		expect(sourceElement.attributes('height')).toBeUndefined()
+
+		const imageElement = wrapper.find('.logo-picture img')
+		expect(imageElement.attributes('width')).toBe('131')
+		expect(imageElement.attributes('height')).toBe('40')
 	})
 
 	it('updates the logo dynamically when the theme changes', async () => {
@@ -218,5 +225,37 @@ describe('FooterBar', () => {
 
 			wrapper.unmount()
 		})
+	})
+
+	// Avec un vrai vue-router, le `href: undefined` passé au RouterLink écrasait celui qu'il
+	// calcule : `<a>` sans `href`, donc hors de l'ordre de tabulation.
+	it('renders focusable RouterLinks with their href when vue-router is installed', async () => {
+		const router = createRouter({
+			history: createMemoryHistory(),
+			routes: [
+				{ path: '/', component: { template: '<div />' } },
+				{ path: '/plan-du-site', component: { template: '<div />' } },
+			],
+		})
+		await router.push('/')
+
+		const wrapper = mount(FooterBar, {
+			global: { plugins: [router] },
+			props: {
+				linkItems: [
+					{ text: 'Plan du site', to: '/plan-du-site' },
+					{ text: 'Externe', href: 'https://www.ameli.fr' },
+				],
+			},
+		})
+		const links = wrapper.findAll('.vd-footer-bar-links a')
+
+		expect(links[0]!.attributes('href')).toBe('/plan-du-site')
+		expect(links[1]!.attributes('href')).toBe('https://www.ameli.fr')
+
+		await links[0]!.trigger('click')
+		await flushPromises()
+
+		expect(router.currentRoute.value.path).toBe('/plan-du-site')
 	})
 })

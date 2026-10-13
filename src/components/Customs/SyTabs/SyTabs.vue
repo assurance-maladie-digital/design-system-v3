@@ -64,6 +64,7 @@
 		'default': () => unknown
 		'tab-prepend': (props: { item: TabItem, index: number, isActive: boolean }) => unknown
 		'tab-append': (props: { item: TabItem, index: number, isActive: boolean }) => unknown
+		[key: `panel-${number}`]: (props: { active: boolean }) => unknown
 	}>()
 
 	const options = useCustomizableOptions(config, { vuetifyOptions: props.vuetifyOptions })
@@ -572,7 +573,7 @@
 		>
 			<template v-if="!lazy || renderedPanels.has(index)">
 				<slot
-					:name="`${uid}-panel-${index}`"
+					:name="`panel-${index}`"
 					:active="activeItemIndex === index"
 				>
 					{{ item.content || '' }}

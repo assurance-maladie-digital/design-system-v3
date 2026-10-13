@@ -27,6 +27,8 @@
 		loading?: boolean
 		renderFixedHeight?: boolean
 		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
+		/** Heading level for data list titles, independent of headingLevel */
+		dataListTitleLevel?: 1 | 2 | 3 | 4 | 5 | 6
 	}>(), {
 		hideBackBtn: false,
 		backBtnText: locales.backBtnText,
@@ -39,6 +41,7 @@
 		loading: false,
 		renderFixedHeight: false,
 		headingLevel: 1,
+		dataListTitleLevel: 4,
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -148,9 +151,12 @@
 								v-else
 								class="text-h6 font-weight-bold mt-1 mb-0"
 								:style="{ color: 'rgba(255, 255, 255, .7)' }"
-								:aria-label="subTitleAccessibleName"
 							>
-								{{ subTitleText }}
+								<span
+									v-if="subTitleAccessibleName"
+									class="d-sr-only"
+								>{{ subTitleAccessibleName }}</span>
+								<span :aria-hidden="subTitleAccessibleName ? true : undefined">{{ subTitleText }}</span>
 							</p>
 						</VFadeTransition>
 					</slot>
@@ -164,6 +170,7 @@
 					<DataListGroup
 						v-if="dataListGroupItems"
 						:items="dataListGroupItems"
+						:titles-tag="'h' + dataListTitleLevel"
 						:loading="loading"
 						item-width="auto"
 						:class="renderFixedHeight ? 'flex-nowrap flex-shrink-0' : 'flex-wrap'"

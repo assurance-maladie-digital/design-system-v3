@@ -125,15 +125,15 @@ describe('multiple instances of the same component register independently', () =
 		const form = (wrapper.vm as { form: ReturnType<typeof useFormValidation> }).form
 		await flushPromises()
 
-		expect(form.validatableComponents.value).toHaveLength(2)
+		expect(form._getValidatableComponents()).toHaveLength(2)
 		// Two distinct registration objects (one per instance, not the same reference).
-		expect(form.validatableComponents.value[0]).not.toBe(form.validatableComponents.value[1])
+		expect(form._getValidatableComponents()[0]).not.toBe(form._getValidatableComponents()[1])
 		// Each keeps its own label so the form can tell them apart.
-		expect(form.validatableComponents.value[0]?.$props?.label).toBe('Field A')
-		expect(form.validatableComponents.value[1]?.$props?.label).toBe('Field B')
+		expect(form._getValidatableComponents()[0]?.$props?.label).toBe('Field A')
+		expect(form._getValidatableComponents()[1]?.$props?.label).toBe('Field B')
 
 		wrapper.unmount()
 		await flushPromises()
-		expect(form.validatableComponents.value).toHaveLength(0)
+		expect(form._getValidatableComponents()).toHaveLength(0)
 	})
 })

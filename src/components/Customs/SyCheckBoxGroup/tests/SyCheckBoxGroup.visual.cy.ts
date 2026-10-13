@@ -70,4 +70,61 @@ describe('SyCheckBoxGroup - Visual regression tests', () => {
 		cy.wait(150)
 		cy.matchImageSnapshot('sy-checkbox-group-focus', cy.get('.sy-checkbox-group'))
 	})
+
+	// Régression : la bordure des cases non cochées doit être rouge en erreur
+	it('displays the checkbox group in error state', () => {
+		cy.mountWithVuetify(SyCheckBoxGroup, {
+			props: {
+				options: defaultOptions,
+				label: 'Choisissez vos options',
+				required: true,
+				errorMessages: ['Ce champ est requis'],
+			},
+		})
+
+		cy.get('.sy-checkbox-group').should('have.class', 'error-field')
+		cy.matchImageSnapshot('sy-checkbox-group-error', cy.get('.sy-checkbox-group'))
+	})
+
+	it('displays the checkbox group in error state with a checked option', () => {
+		cy.mountWithVuetify(SyCheckBoxGroup, {
+			props: {
+				options: defaultOptions,
+				label: 'Choisissez vos options',
+				multiple: true,
+				modelValue: ['b'],
+				errorMessages: ['Sélection invalide'],
+			},
+		})
+
+		cy.get('.sy-checkbox-group').should('have.class', 'error-field')
+		cy.matchImageSnapshot('sy-checkbox-group-error-checked', cy.get('.sy-checkbox-group'))
+	})
+
+	it('displays the checkbox group in warning state', () => {
+		cy.mountWithVuetify(SyCheckBoxGroup, {
+			props: {
+				options: defaultOptions,
+				label: 'Choisissez vos options',
+				warningMessages: ['Attention à votre choix'],
+			},
+		})
+
+		cy.get('.sy-checkbox-group').should('have.class', 'warning-field')
+		cy.matchImageSnapshot('sy-checkbox-group-warning', cy.get('.sy-checkbox-group'))
+	})
+
+	it('displays the checkbox group in success state', () => {
+		cy.mountWithVuetify(SyCheckBoxGroup, {
+			props: {
+				options: defaultOptions,
+				label: 'Choisissez vos options',
+				showSuccessMessages: true,
+				successMessages: ['Choix valide'],
+			},
+		})
+
+		cy.get('.sy-checkbox-group').should('have.class', 'success-field')
+		cy.matchImageSnapshot('sy-checkbox-group-success', cy.get('.sy-checkbox-group'))
+	})
 })
