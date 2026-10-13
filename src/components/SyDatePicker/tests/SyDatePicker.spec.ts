@@ -322,6 +322,8 @@ describe('SyDatePicker', () => {
 
 		it('shows the required error and clears it when a date is selected via the visual picker', async () => {
 			vi.useFakeTimers()
+			// Le calendrier s'ouvre sur le mois courant : on fige la date pour que le jour cliqué y soit affiché
+			vi.setSystemTime(new Date(2026, 8, 1))
 			const wrapper = mount(SyDatePickerComponent, {
 				props: {
 					label: 'Début du projet',
