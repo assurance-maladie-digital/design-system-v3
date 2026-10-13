@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import { ref } from 'vue'
-	import Calendar from '@/components/Date/Calendar.vue'
+	import Calendar from '@/components/Common/Calendar/Calendar/Calendar.vue'
 
 	const displayedMonth = ref(new Date(new Date().setMonth(11)))
 
