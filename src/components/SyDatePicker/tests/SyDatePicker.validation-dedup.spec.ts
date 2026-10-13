@@ -107,6 +107,13 @@ describe.each([true, false])('SyDatePicker validation deduplication (isValidateO
 		})
 		await settle()
 
+		// Tant que le champ est vierge, useCustomValidation lance en plus une validation silencieuse
+		// (calcul de `valide` sans message) au premier changement. Un cycle focus/blur sort le champ
+		// de cet état pour ne compter que les validations déclenchées par les changements de valeur.
+		await wrapper.find('input').trigger('focus')
+		await wrapper.find('input').trigger('blur')
+		await settle()
+
 		const changesCount = (): number => wrapper.emitted('change')?.length ?? 0
 
 		// Typed input
