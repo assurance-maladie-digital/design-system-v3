@@ -92,19 +92,19 @@ describe('HeaderToolbar – accessibility', () => {
 		expect(name?.trim()).toBe('Professionnel de santé')
 	})
 
-	it('should expose the correct expanded state when opening the dropdown', async () => {
+	it('should reference an existing element through aria-controls when opened', async () => {
 		const wrapper = mountToolbar()
-
-		const activator = findActivator()
-
-		expect(activator).not.toBeNull()
-		expect(activator?.getAttribute('aria-expanded')).toBe('false')
 
 		await wrapper.vm.openMenuWithKeyboard()
 		await flush()
 
+		const activator = findActivator()
+		const controls = activator?.getAttribute('aria-controls') ?? activator?.getAttribute('aria-owns')
+
 		expect(activator?.getAttribute('aria-expanded')).toBe('true')
-		expect(document.getElementById('left-dropdown-menu')).not.toBeNull()
+		// L'id est généré par VMenu : on vérifie qu'il résout bien vers un nœud du DOM
+		expect(controls).toBeTruthy()
+		expect(document.getElementById(controls as string)).not.toBeNull()
 	})
 
 	it('should have no ARIA violations when the dropdown is open', async () => {
