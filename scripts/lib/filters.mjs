@@ -29,6 +29,22 @@ export const releaseOrDocRegex = /^(chore|docs?|ci|build|release|bump|renovate|u
 // n'importe où dans le message, ces commits n'étant pas préfixés.
 export const docOnlyMessageRegex = /version badge|add.*badge|badge.*version|update.*changelog|run lint|improve.*doc|improve.*token/i;
 
+// PR de release, reconnue au mot « release » n'importe où dans le message, préfixé ou non
+// (« Release 1.1.2 (#2394) », « add release (#2539) »). Une release regroupe des changements
+// déjà comptés dans leurs propres PR : la compter daterait le composant à tort.
+// `\b` évite de matcher « releases » ou « released » ; aucun commit fonctionnel ne l'emploie.
+export const releaseMessageRegex = /\brelease\b/i;
+
+/**
+ * Vrai si le message est celui d'une PR de release.
+ *
+ * @param {string} message - Sujet du commit.
+ * @returns {boolean}
+ */
+export function isReleaseMessage(message) {
+  return releaseMessageRegex.test(message);
+}
+
 /**
  * Vrai si le message décrit une modification fonctionnelle du composant.
  *
@@ -37,7 +53,7 @@ export const docOnlyMessageRegex = /version badge|add.*badge|badge.*version|upda
  */
 export function isFunctionalMessage(message) {
   const msg = message.trim();
-  return !a11yOnlyRegex.test(msg) && !releaseOrDocRegex.test(msg) && !docOnlyMessageRegex.test(msg);
+  return !a11yOnlyRegex.test(msg) && !releaseOrDocRegex.test(msg) && !docOnlyMessageRegex.test(msg) && !isReleaseMessage(msg);
 }
 
 /** Extensions du code d'un composant. Les `.d.ts` en font partie : ils sont réexportés par `src/components/index.ts`, c'est du contrat public. */

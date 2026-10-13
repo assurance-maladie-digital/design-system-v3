@@ -69,6 +69,16 @@ function buildBadge(version) {
 	return `${A11Y_BADGE_START}\n<p className="a11y-version-badge">Dernière mise à jour accessibilité : ${versionText}</p>\n${A11Y_BADGE_END}`
 }
 
+// Retire un badge devenu sans données (ex. composant daté à tort par un ancien run) :
+// sans cela, un badge obsolète resterait affiché indéfiniment. Retire aussi les sauts de
+// ligne ajoutés à l'injection (`\n\n` + badge + `\n`) pour restaurer le fichier d'origine.
+function removeBadge(content) {
+	return content.replace(
+		/(?:\n\n)?\{\/\* a11y-version-start \*\/\}[\s\S]*?\{\/\* a11y-version-end \*\/\}\n?/,
+		'',
+	)
+}
+
 const LEGACY_START = '<!-- a11y-version-start -->'
 const LEGACY_END = '<!-- a11y-version-end -->'
 
@@ -141,6 +151,7 @@ const mdxFiles = findMainMdxFiles(componentsDir)
 let updated = 0
 let skipped = 0
 let noData = 0
+let removed = 0
 
 for (const { path: filePath, componentName } of mdxFiles) {
 	if (targetComponents.length > 0 && !targetComponents.includes(componentName.toLowerCase())) continue
@@ -148,6 +159,16 @@ for (const { path: filePath, componentName } of mdxFiles) {
 
 	if (!info) {
 		noData++
+		const content = readFileSync(filePath, 'utf8')
+		if (content.includes(A11Y_BADGE_START)) {
+			if (dryRun) {
+				console.info(`[dry-run] Badge retiré: ${filePath}`)
+			} else {
+				writeFileSync(filePath, removeBadge(content), 'utf8')
+				console.info(`🗑️  Badge retiré (aucune donnée a11y): ${componentName}`)
+			}
+			removed++
+		}
 		continue
 	}
 
@@ -175,5 +196,5 @@ for (const { path: filePath, componentName } of mdxFiles) {
 	updated++
 }
 
-console.info(`\n📊 ${updated} fichier(s) mis à jour, ${skipped} ignoré(s), ${noData} sans données a11y`)
+console.info(`\n📊 ${updated} fichier(s) mis à jour, ${skipped} ignoré(s), ${noData} sans données a11y (${removed} badge(s) retiré(s))`)
 if (dryRun) console.info('ℹ️  Mode dry-run : aucun fichier modifié')
