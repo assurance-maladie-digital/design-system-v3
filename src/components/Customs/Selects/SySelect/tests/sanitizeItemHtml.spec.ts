@@ -18,9 +18,14 @@ describe('sanitizeItemHtml', () => {
 			.toBe('+33 <abbr title="France">FRA</abbr>')
 	})
 
+	it('keeps the class of a span, to style an option', () => {
+		expect(render('<span class="text-error">Option</span>'))
+			.toBe('<span class="text-error">Option</span>')
+	})
+
 	it('removes the attributes that are not allowed', () => {
-		expect(render('<span class="x" style="color:red" onclick="alert(1)">a</span><abbr title="t" onmouseover="alert(1)">b</abbr>'))
-			.toBe('<span>a</span><abbr title="t">b</abbr>')
+		expect(render('<span class="x" style="color:red" onclick="alert(1)">a</span><abbr title="t" class="x" onmouseover="alert(1)">b</abbr><b class="x">c</b>'))
+			.toBe('<span class="x">a</span><abbr title="t">b</abbr><b>c</b>')
 	})
 
 	it('removes an image carrying an event handler', () => {

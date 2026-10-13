@@ -5,6 +5,7 @@ const ALLOWED_TAGS = new Set(['abbr', 'b', 'em', 'i', 'span', 'strong'])
 
 const ALLOWED_ATTRIBUTES: Record<string, string[]> = {
 	abbr: ['title'],
+	span: ['class'],
 }
 
 // Supprimées avec leur contenu, qui n'a pas de sens une fois la balise retirée.
