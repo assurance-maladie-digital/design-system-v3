@@ -231,12 +231,21 @@
 		uniqueTableId: uniqueTableId.value,
 	})
 
+	const currentItems = ref<unknown[]>([])
+	const selectedRows = computed(() => {
+		const offset = itemsPerPageValue.value === -1 ? 0 : (page.value - 1) * itemsPerPageValue.value
+		const rows = currentItems.value.filter((item): item is { type: 'item', value: unknown } =>
+			typeof item === 'object' && item !== null && 'type' in item && item.type === 'item' && 'value' in item,
+		)
+		return rows.flatMap((item, index) => model.value.includes(item.value) ? [offset + index + 1] : [])
+	})
+
 	const statusMessage = useTableStatus({
 		page,
 		itemsPerPage: itemsPerPageValue,
 		total: itemsLength,
 		selected: () => model.value.length,
-		selectedRows: () => props.items.flatMap((item, index) => model.value.includes(getItemValue(item)) ? [index + 1] : []),
+		selectedRows,
 		options,
 		headers: () => props.headers,
 	})
@@ -345,12 +354,12 @@
 		</TableBulkActions>
 
 		<VDataTable
+			v-bind="propsFacade"
 			:id="resultsId"
 			ref="table"
 			v-model="model"
 			color="primary"
 			:headers="displayHeadersWithPinned"
-			v-bind="propsFacade"
 			:row-props="clickableRowProps"
 			:items="filteredItems"
 			:density="props.density"
@@ -363,6 +372,7 @@
 			:show-expand="props.showExpand"
 			:page="page"
 			:items-per-page="itemsPerPageValue"
+			@update:current-items="currentItems = $event"
 			@update:page="updateOptions({ page: $event })"
 			@update:items-per-page="updateItemsPerPage"
 			@update:options="updateOptions"
