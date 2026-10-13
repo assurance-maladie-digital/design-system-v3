@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed, ref } from 'vue'
+	import { computed, ref, watch } from 'vue'
 	import { mdiKeyboardBackspace } from '@mdi/js'
 
 	import { config } from './config'
@@ -27,7 +27,7 @@
 		loading?: boolean
 		renderFixedHeight?: boolean
 		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
-		/** Heading level for data list titles, independent of headingLevel */
+		/** Heading level for data list titles. Defaults to headingLevel + 1 (max 6) */
 		dataListTitleLevel?: 1 | 2 | 3 | 4 | 5 | 6
 	}>(), {
 		hideBackBtn: false,
@@ -41,7 +41,7 @@
 		loading: false,
 		renderFixedHeight: false,
 		headingLevel: 1,
-		dataListTitleLevel: 4,
+		dataListTitleLevel: undefined,
 	})
 
 	const options = useCustomizableOptions(config, props)
@@ -64,14 +64,40 @@
 			props.backBtnText === locales.backBtnText ? locales.backBtnAccessibleName : undefined
 		)
 	})
+
+	const dataListTitleTag = computed(() => `h${props.dataListTitleLevel ?? Math.min(props.headingLevel + 1, 6)}`)
+
+	// The region name must not depend on the heading, which is replaced by a skeleton while loading.
+	const regionName = computed(() => props.titleAccessibleName ?? props.titleText)
+
+	const loadingEnded = ref(false)
+	watch(() => props.loading, (isLoading) => {
+		loadingEnded.value = !isLoading
+	})
+
+	const statusMessage = computed(() => {
+		if (props.loading) {
+			return locales.loading
+		}
+		return loadingEnded.value ? locales.loaded : ''
+	})
 </script>
 
 <template>
 	<VSheet
 		v-bind="options.sheet"
 		:style="widthStyles"
-		class="vd-sub-header white--text py-6 px-8"
+		:role="regionName ? 'region' : undefined"
+		:aria-label="regionName"
+		class="vd-sub-header py-6 px-8"
 	>
+		<div
+			role="status"
+			class="d-sr-only"
+		>
+			{{ statusMessage }}
+		</div>
+
 		<slot name="back-btn">
 			<VFadeTransition
 				v-if="!hideBackBtn"
@@ -84,6 +110,7 @@
 							type="button"
 							class="vd-subheader-loading mb-4"
 							theme="dark"
+							aria-hidden="true"
 						/>
 
 						<VBtn
@@ -110,6 +137,7 @@
 		<div
 			class="vd-sub-header-content d-flex justify-space-between flex-wrap ga-8"
 			:class="renderFixedHeight ? 'flex-nowrap flex-shrink-0' : 'flex-wrap'"
+			:aria-busy="loading || undefined"
 		>
 			<div
 				class="vd-sub-header-informations d-flex flex-column mr-10"
@@ -149,8 +177,7 @@
 							/>
 							<p
 								v-else
-								class="text-h6 font-weight-bold mt-1 mb-0"
-								:style="{ color: 'rgba(255, 255, 255, .7)' }"
+								class="vd-sub-header-subtitle text-h6 font-weight-bold mt-1 mb-0"
 							>
 								<span
 									v-if="subTitleAccessibleName"
@@ -170,7 +197,7 @@
 					<DataListGroup
 						v-if="dataListGroupItems"
 						:items="dataListGroupItems"
-						:titles-tag="'h' + dataListTitleLevel"
+						:titles-tag="dataListTitleTag"
 						:loading="loading"
 						item-width="auto"
 						:class="renderFixedHeight ? 'flex-nowrap flex-shrink-0' : 'flex-wrap'"
@@ -203,12 +230,26 @@
 .vd-sub-header-back-btn {
 	margin: 0 -6px;
 
-	// Fond du subheader = primary : ring en on-primary (le ring global primary
-	// serait bleu sur bleu = invisible).
+	// Le fond du subheader est personnalisable : le ring suit la couleur du texte
+	// (on-color du fond), le ring global primary serait invisible sur fond primary.
 	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-on-primary));
+		outline: 2px solid currentcolor;
 		outline-offset: 3px;
 	}
+}
+
+// Couleurs dérivées de la couleur du texte héritée du VSheet (on-color du fond),
+// pour rester lisibles quel que soit `vuetifyOptions.sheet.color`.
+.vd-sub-header-subtitle {
+	color: color-mix(in srgb, currentcolor calc(var(--v-high-emphasis-opacity, 0.87) * 100%), transparent);
+}
+
+.vd-sub-header :deep(.sy-data-list-item-label) {
+	color: color-mix(in srgb, currentcolor calc(var(--v-high-emphasis-opacity, 0.87) * 100%), transparent) !important;
+}
+
+.vd-sub-header :deep(.sy-data-list-item-action-btn) {
+	color: inherit !important;
 }
 
 .vd-data-list-group,
@@ -227,14 +268,6 @@
 	.vd-key {
 		display: inline-block;
 		font-size: 0.75rem !important;
-	}
-
-	.vd-data-list-item-label {
-		color: rgb(255 255 255 / 70%) !important;
-	}
-
-	.vd-data-list-item-action-btn {
-		color: rgb(var(--v-theme-on-primary)) !important;
 	}
 }
 
