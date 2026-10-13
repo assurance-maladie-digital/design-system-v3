@@ -17,6 +17,7 @@
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { useSySelectValidation } from './composables/useSySelectValidation'
 	import { locales as defaultLocales } from './locales'
+	import { sanitizeItemHtml } from './sanitizeItemHtml'
 
 	export type ItemType = {
 		[key: string]: unknown
@@ -360,9 +361,7 @@
 				return
 			}
 
-			// getItemText already returns the correct HTML string for the item
-			// We assign it to innerHTML to preserve the previous rendering behavior
-			el.innerHTML = String(getItemText(item) ?? '')
+			el.replaceChildren(sanitizeItemHtml(String(getItemText(item) ?? '')))
 		})
 	})
 
