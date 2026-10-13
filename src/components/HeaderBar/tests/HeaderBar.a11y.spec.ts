@@ -65,7 +65,7 @@ describe('HeaderBar – accessibility (axe)', () => {
 
 	it('has no accessibility violations with a custom logo slot', async () => {
 		await checkA11y('custom logo', {
-			slots: { logo: `<a href="/" aria-label="Accueil">Logo</a>` } })
+			slots: { logo: `<a href="/" aria-label="Accueil">Accueil</a>` } })
 	})
 
 	it('has no accessibility violations with a custom brand content slot', async () => {
