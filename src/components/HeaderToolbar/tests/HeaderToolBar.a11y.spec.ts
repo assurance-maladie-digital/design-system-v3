@@ -196,9 +196,9 @@ describe('HeaderToolbar – accessibility', () => {
 		const leftLinks = wrapper.findAll('#left-menu li > a')
 		const rightLinks = wrapper.findAll('#right-menu li > a')
 
-		expect(leftLinks[0]?.attributes('aria-label')).toBe('Assuré (nouvelle fenêtre)')
+		expect(leftLinks[0]?.attributes('aria-label')).toBe('Assuré (ouvre dans une nouvelle fenêtre)')
 		expect(leftLinks[1]?.attributes('aria-label')).toBe('Entreprise')
-		expect(rightLinks[0]?.attributes('aria-label')).toBe('Presse (nouvelle fenêtre)')
+		expect(rightLinks[0]?.attributes('aria-label')).toBe('Presse (ouvre dans une nouvelle fenêtre)')
 		expect(rightLinks[1]?.attributes('aria-label')).toBe('Carrières')
 	})
 
@@ -223,7 +223,7 @@ describe('HeaderToolbar – accessibility', () => {
 		const items = document.querySelectorAll('#mobile-right-menu [role="menuitem"]')
 
 		expect(items).toHaveLength(2)
-		expect(items[0]?.querySelector('.d-sr-only')?.textContent?.trim()).toBe('(nouvelle fenêtre)')
+		expect(items[0]?.querySelector('.d-sr-only')?.textContent?.trim()).toBe('(ouvre dans une nouvelle fenêtre)')
 		expect(items[1]?.querySelector('.d-sr-only')).toBeNull()
 	})
 
