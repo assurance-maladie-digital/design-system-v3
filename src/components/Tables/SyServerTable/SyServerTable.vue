@@ -686,7 +686,8 @@
 
 @mixin striped-rows {
 	.v-table tbody tr:nth-child(even) {
-		background-color: rgba(var(--v-theme-primary), 0.05);
+      --sy-table-row-bg: rgba(var(--v-theme-primary), 0.05);
+      background-color: var(--sy-table-row-bg);
 	}
 }
 
