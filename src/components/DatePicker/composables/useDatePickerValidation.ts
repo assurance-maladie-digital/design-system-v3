@@ -315,6 +315,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 					// Les erreurs injectées par le parent (ex. erreur serveur) doivent invalider
 					// le champ auprès du SyForm, pas seulement s'afficher (cf. useDisplayMessages).
 					externalErrors: options.errorMessages,
+					forcedError: computed(() => Boolean(unref(options.hasErrorProp))),
 					enabled: isCustomMode,
 				},
 			)

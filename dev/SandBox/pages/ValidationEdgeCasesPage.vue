@@ -6,7 +6,7 @@
 	import SyAlert from '@/components/SyAlert/SyAlert.vue'
 	import { mdiBugOutline, mdiCheckCircle, mdiRefresh, mdiShieldCheckOutline, mdiSwapHorizontal, mdiHelpCircleOutline } from '@mdi/js'
 
-	// Chaque scénario correspond à un finding de la revue (audits/review-validation-unifiee.md).
+	// Chaque scénario correspond à un cas limite couvert par la validation unifiée.
 	// « Attendu » = comportement correct. « Observé » = ce que la page montre en direct.
 
 	type ScenarioStatus = 'idle' | 'ok' | 'ko'
@@ -241,7 +241,7 @@
 					Cas limites — validation unifiée
 				</h1>
 				<p class="text-body-2 text-medium-emphasis">
-					Scénarios issus de la revue (<code>audits/review-validation-unifiee.md</code>).
+					Scénarios de validation unifiée.
 					Ouvrir la console pour observer les warnings.
 				</p>
 			</div>

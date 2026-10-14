@@ -12,6 +12,10 @@ const createExternalErrorForm = (modeProps: Record<string, boolean>) => defineCo
 			type: Array as PropType<string[]>,
 			default: () => [],
 		},
+		hasError: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	emits: ['submit'],
 	setup(props, { emit }) {
@@ -35,6 +39,7 @@ const createExternalErrorForm = (modeProps: Record<string, boolean>) => defineCo
 					'label': 'Date de rendez-vous',
 					'required': true,
 					'errorMessages': props.errorMessages,
+					'hasError': props.hasError,
 					...modeProps,
 				}),
 			}),
@@ -93,6 +98,21 @@ describe('DatePicker in SyForm with error messages injected by the parent', () =
 			await submit(wrapper)
 
 			expect(lastSubmitPayload(wrapper)).toEqual({ isValid: true })
+
+			wrapper.unmount()
+		})
+
+		it('emits an invalid submit while hasError is forced without messages', async () => {
+			const wrapper = mount(createExternalErrorForm(modeProps), {
+				props: { hasError: true },
+				attachTo: document.body,
+			})
+			await settle()
+
+			await submit(wrapper)
+
+			expect(lastSubmitPayload(wrapper)).toEqual({ isValid: false })
+			expect(wrapper.get('[data-testid="form-validity"]').text()).toBe('false')
 
 			wrapper.unmount()
 		})
