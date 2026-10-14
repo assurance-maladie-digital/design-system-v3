@@ -2,7 +2,7 @@ import type {
 	ValidationResult as LegacyValidationResult,
 	ValidationRule as SyValidationRule,
 } from '@/composables/validation/useValidation'
-import { computed, ref, toValue, watch, type Ref } from 'vue'
+import { computed, ref, toValue, useId, watch, type Ref } from 'vue'
 import { devWarn } from '@/utils/devWarn'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import { useCustomValidation, type UseCustomValidationOptions } from './useCustomValidation'
@@ -132,14 +132,29 @@ export function useValidation(params: {
 
 	let vuetifyValidator: ReturnType<typeof useVuetifyValidationComposable> | null = null
 
+	// `useVuetifyValidation` peut basculer quand il est passé en Ref : le validateur custom
+	// est alors toujours créé, mais n'applique aucune règle et se désenregistre du SyForm
+	// tant que le mode Vuetify est actif (sinon les customRules seraient perdues après true→false).
+	const isCustomMode = computed(() => !toValue(params.useVuetifyValidation))
+	const whenCustomMode = (rules: Ref<SyValidationRule[]> | undefined) =>
+		computed(() => isCustomMode.value ? rules?.value ?? [] : [])
+
 	if (params.useVuetifyValidation !== false) {
 		// Le validator Vuetify s'enregistre dans le VForm sous l'id `name` : il doit rester
 		// stable, sinon après une bascule de mode (ou un changement de label) le VForm ne
-		// reçoit plus ses mises à jour et garde un état de validité périmé.
-		const vuetifyName = toValue(params.useVuetifyValidation) ? params.label?.value : undefined
+		// reçoit plus ses mises à jour et garde un état de validité périmé. Le suffixe
+		// unique évite la collision « Duplicate input name » quand deux champs partagent
+		// le même label (form.update ne mettrait à jour que le premier item trouvé).
+		const vuetifyName = toValue(params.useVuetifyValidation) && params.label?.value
+			? `${params.label.value}-${useId()}`
+			: undefined
+		const { rules } = params
 		vuetifyValidator = useVuetifyValidationComposable(
 			params.modelValue,
-			params.rules,
+			// L'item VForm « fantôme » reste enregistré en mode custom : il ne doit pas
+			// évaluer les `rules`, sinon VForm.validate() le compterait invalide et
+			// bloquerait la soumission alors que le mode Vuetify est inactif.
+			computed(() => isCustomMode.value ? [] : rules?.value),
 			params.disabled,
 			vuetifyErrors,
 			params.hasErrorProp || ref(false),
@@ -152,13 +167,6 @@ export function useValidation(params: {
 			computed(() => params.isValidateOnBlur.value ? 'blur' : 'input'),
 		)
 	}
-
-	// `useVuetifyValidation` peut basculer quand il est passé en Ref : le validateur custom
-	// est alors toujours créé, mais n'applique aucune règle et se désenregistre du SyForm
-	// tant que le mode Vuetify est actif (sinon les customRules seraient perdues après true→false).
-	const isCustomMode = computed(() => !toValue(params.useVuetifyValidation))
-	const whenCustomMode = (rules: Ref<SyValidationRule[]> | undefined) =>
-		computed(() => isCustomMode.value ? rules?.value ?? [] : [])
 
 	const customValidator = params.useVuetifyValidation === true
 		? null
@@ -177,8 +185,16 @@ export function useValidation(params: {
 				params.disableErrorHandling,
 				params.readonly,
 				params.disabled,
-				{ ...options, externalErrors: params.errorMessages, enabled: isCustomMode },
+				{ ...options, externalErrors: params.errorMessages, forcedError: params.hasErrorProp, enabled: isCustomMode },
 			)
+
+	// Bascule de mode : l'état du validateur qu'on quitte est remis à zéro, sinon une
+	// erreur Vuetify survivrait au passage en mode custom (item VForm fantôme périmé)
+	// ou une erreur custom resterait affichée en mode Vuetify.
+	watch(isCustomMode, (customMode) => {
+		if (customMode) void vuetifyValidator?.resetValidation()
+		else customValidator?.clearValidation()
+	})
 
 	const hasExternalErrors = computed(() => (params.errorMessages?.value?.length ?? 0) > 0)
 

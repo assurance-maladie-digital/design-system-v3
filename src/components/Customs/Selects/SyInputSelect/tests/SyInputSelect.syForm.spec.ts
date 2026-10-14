@@ -85,6 +85,13 @@ describe('SyInputSelect in SyForm', () => {
 		expect(await submit(wrapper)).toEqual({ isValid: true })
 	})
 
+	it('does not block the submit when disabled (a disabled field cannot be corrected)', async () => {
+		const wrapper = mount(createForm({ required: true, disabled: true }))
+		await settle()
+
+		expect(await submit(wrapper)).toEqual({ isValid: true })
+	})
+
 	it('clears the value without displaying an error on form reset', async () => {
 		const wrapper = mount(createForm({ required: true }))
 		await settle()

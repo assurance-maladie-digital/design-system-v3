@@ -17,6 +17,13 @@ export interface UseCustomValidationOptions {
 	 * enregistré auprès du SyForm : utilisé quand `useVuetifyValidation` bascule à true.
 	 */
 	enabled?: Ref<boolean>
+	/**
+	 * État d'erreur forcé par le parent (prop `has-error`, sans message) : invalide le
+	 * champ au même titre qu'une erreur injectée — y compris sans item VForm enregistré
+	 * (`useVuetifyValidation: false` littéral), où le blocage ne peut pas reposer sur le
+	 * validateur Vuetify.
+	 */
+	forcedError?: Ref<boolean>
 	formRegistration?: {
 		validateOnSubmit?: () => Promise<boolean> | boolean
 		clearValidation?: () => void
@@ -54,6 +61,7 @@ export function useCustomValidation(
 	// successes, donc n'affiche jamais de message) : seule source de vérité pour `valide` tant que isPristine.
 	const silentValide = ref<boolean | null>(null)
 	const hasExternalErrors = computed(() => (options.externalErrors?.value?.length ?? 0) > 0)
+	const hasForcedError = computed(() => options.forcedError?.value ?? false)
 
 	const validatorOptions = reactive({
 		showSuccessMessages: computed(() => showSuccessMessages.value),
@@ -151,10 +159,10 @@ export function useCustomValidation(
 		// soumission quel que soit le validateOnSubmit — y compris celui fourni via
 		// formRegistration, qui sinon court-circuiterait ce contrôle.
 		if (options.formRegistration?.validateOnSubmit) {
-			return await options.formRegistration.validateOnSubmit() && !hasExternalErrors.value
+			return await options.formRegistration.validateOnSubmit() && !hasExternalErrors.value && !hasForcedError.value
 		}
 		const result = await validate()
-		return result.state.errors.length === 0 && !hasExternalErrors.value
+		return result.state.errors.length === 0 && !hasExternalErrors.value && !hasForcedError.value
 	}
 
 	// Le reset (via useValidatable) remet `modelValue` à `undefined`. En validation
@@ -198,14 +206,14 @@ export function useCustomValidation(
 			// Synapse : Vuetify, lui, évalue les rules de ces champs et peut les compter invalides.
 			computed(() => {
 				if (readonly?.value || disabled?.value) return true
-				// Une erreur injectée par le parent est affichée : elle invalide le champ
-				// même s'il est vierge ou si ses propres règles sont satisfaites.
-				if (hasExternalErrors.value) return false
+				// Une erreur injectée ou forcée par le parent est affichée : elle invalide
+				// le champ même s'il est vierge ou si ses propres règles sont satisfaites.
+				if (hasExternalErrors.value || hasForcedError.value) return false
 				return isPristine.value ? silentValide.value : errors.value.length < 1
 			}),
 			computed(() => (options.enabled?.value ?? true)
-				&& (!disableErrorHandling.value || errors.value.length > 0 || hasExternalErrors.value)),
-			computed(() => isPristine.value && !hasExternalErrors.value),
+				&& (!disableErrorHandling.value || errors.value.length > 0 || hasExternalErrors.value || hasForcedError.value)),
+			computed(() => isPristine.value && !hasExternalErrors.value && !hasForcedError.value),
 		)
 	}
 

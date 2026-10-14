@@ -22,6 +22,7 @@
 		isHeaderToolbar?: boolean
 		displayAsterisk?: boolean
 		readonly?: boolean
+		disabled?: boolean
 		clearable?: boolean
 		customRules?: ValidationRule[]
 		disableErrorHandling?: boolean
@@ -40,6 +41,7 @@
 		isHeaderToolbar: false,
 		displayAsterisk: false,
 		readonly: false,
+		disabled: false,
 		clearable: false,
 		customRules: () => [],
 		disableErrorHandling: false,
@@ -81,7 +83,7 @@
 	const hasError = ref(false)
 
 	const toggleMenu = () => {
-		if (props.readonly) return
+		if (props.readonly || props.disabled) return
 		isOpen.value = !isOpen.value
 	}
 
@@ -90,13 +92,14 @@
 	}
 
 	const isRequired = computed(() => {
-		if (props.readonly) return
+		if (props.readonly || props.disabled) return
 		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
 	})
 
 	const inputId = `sy-input-select-${useId()}`
 
 	const selectItem = async (item: unknown) => {
+		if (props.readonly || props.disabled) return
 		selectedItem.value = item as Record<string, unknown> | string | null
 		emit('update:modelValue', item)
 		isOpen.value = false
@@ -195,7 +198,9 @@
 	)
 
 	const validateField = async (value: unknown) => {
-		if (props.readonly) {
+		// Un champ désactivé ou en lecture seule ne peut pas être corrigé : il ne
+		// doit pas bloquer le formulaire, comme pour `valide` ci-dessous.
+		if (props.readonly || props.disabled) {
 			validation.clearValidation()
 			localErrorMessages.value = []
 			return true
@@ -251,7 +256,7 @@
 		clearValidation,
 		reset,
 		computed(() => {
-			if (props.readonly) return true
+			if (props.readonly || props.disabled) return true
 			if (localErrorMessages.value.length > 0) return false
 			// Champ requis vide pas encore validé : invalide sans erreur affichée.
 			return !(props.required && !selectedItem.value)
@@ -284,6 +289,7 @@
 		:title="labelWithAsterisk"
 		role="menu"
 		:readonly="props.readonly"
+		:disabled="props.disabled"
 		@click="checkForErrors"
 	>
 		<div

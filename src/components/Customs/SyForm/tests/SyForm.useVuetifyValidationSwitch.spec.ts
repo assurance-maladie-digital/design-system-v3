@@ -1,6 +1,7 @@
+/* eslint-disable vue/one-component-per-file */
 import { describe, expect, it } from 'vitest'
 import { flushPromises, mount } from '@vue/test-utils'
-import { defineComponent, h, nextTick, type PropType } from 'vue'
+import { defineComponent, h, nextTick, ref, type PropType } from 'vue'
 import SyForm from '../SyForm.vue'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 
@@ -84,5 +85,56 @@ describe('SyForm with a field switching useVuetifyValidation', () => {
 		await settle()
 
 		expect(await submit(wrapper)).toEqual({ isValid: true })
+	})
+})
+
+// `rules` ne s'appliquent qu'en mode Vuetify : après une bascule vers le mode
+// Synapse, l'erreur Vuetify ne doit plus être affichée, ni bloquer la soumission,
+// ni figer le v-model (sinon l'état de l'item VForm est périmé).
+const StaleVuetifyStateForm = defineComponent({
+	props: {
+		useVuetifyValidation: {
+			type: Boolean as PropType<boolean>,
+			required: true,
+		},
+	},
+	emits: ['submit'],
+	setup(props, { emit }) {
+		const validity = ref<boolean | null>(null)
+
+		return () => h('div', [
+			h('span', { 'data-testid': 'form-validity' }, String(validity.value)),
+			h(SyForm, {
+				'modelValue': validity.value,
+				'onUpdate:modelValue': (value: boolean | null) => {
+					validity.value = value
+				},
+				'onSubmit': (payload: { isValid: boolean }) => emit('submit', payload),
+			}, {
+				default: () => h(SyTextField, {
+					modelValue: '',
+					label: 'Nom',
+					useVuetifyValidation: props.useVuetifyValidation,
+					rules: [(v: unknown) => Boolean(v) || 'Requis (Vuetify)'],
+				}),
+			}),
+		])
+	},
+})
+
+describe('SyForm with a field switching away from a failed Vuetify validation', () => {
+	it('clears the Vuetify error and unblocks the submit after switching to Synapse mode', async () => {
+		const wrapper = mount(StaleVuetifyStateForm, { props: { useVuetifyValidation: true } })
+		await settle()
+
+		expect(await submit(wrapper)).toEqual({ isValid: false })
+		expect(wrapper.text()).toContain('Requis (Vuetify)')
+
+		await wrapper.setProps({ useVuetifyValidation: false })
+		await settle()
+
+		expect(wrapper.text()).not.toContain('Requis (Vuetify)')
+		expect(await submit(wrapper)).toEqual({ isValid: true })
+		expect(wrapper.get('[data-testid="form-validity"]').text()).toBe('true')
 	})
 })

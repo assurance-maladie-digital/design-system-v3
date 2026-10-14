@@ -48,6 +48,11 @@ const router = createRouter({
 			path: '/validation-edge-cases',
 			component: () => import('./pages/ValidationEdgeCasesPage.vue'),
 		},
+		{
+			name: 'sandbox-syform-findings',
+			path: '/syform-findings',
+			component: () => import('./pages/SyFormFindingsPage.vue'),
+		},
 	],
 })
 

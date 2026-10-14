@@ -20,7 +20,20 @@
 	// Champs Vuetify pris en compte pour le v-model : comme pour les champs Synapse, un champ
 	// désactivé ne peut pas être corrigé et ne compte pas (choix Synapse : le VForm, lui, le
 	// compte et resterait à null tant que ses rules échouent).
-	const enabledVuetifyItems = computed(() => form.value?.items.filter(({ vm }) => !vm.props.disabled) ?? [])
+	const enabledVuetifyItems = computed(() => form.value?.items.filter((item) => {
+		const { vm } = item
+		if (vm.props.disabled) return false
+		// Champ readonly : une invalidité portée uniquement par des erreurs injectées (props
+		// `error` / `error-messages`) ne peut pas être corrigée et ne compte pas dans le
+		// v-model — sinon le formulaire serait invalide alors que la soumission passe.
+		// Une erreur issue des `rules` (message non injecté) reste comptée : limite
+		// documentée, l'activateur du DatePicker en mode calendrier est readonly.
+		if (vm.props.readonly && item.isValid === false) {
+			const injected = new Set([vm.props.errorMessages ?? []].flat())
+			return item.errorMessages.some((message: string) => !injected.has(message))
+		}
+		return true
+	}) ?? [])
 	const hasVuetifyFields = computed(() => enabledVuetifyItems.value.length > 0)
 	// Statut de ces champs, avec la même règle que le v-model du VForm.
 	const vuetifyFieldsStatus = computed<boolean | null>(() => {
