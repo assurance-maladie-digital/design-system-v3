@@ -2,7 +2,7 @@
 	import { computed } from 'vue'
 	import { useRoute } from 'vue-router'
 	import ThemeSwitcher from '../ThemeSwitcher.vue'
-	import { mdiBugOutline, mdiFlaskOutline, mdiFormSelect, mdiFormTextbox, mdiViewDashboardOutline, mdiHomeOutline, mdiShieldAlertOutline, mdiShieldCheckOutline, mdiSwapHorizontal } from '@mdi/js'
+	import { mdiBugOutline, mdiFlaskOutline, mdiFormSelect, mdiFormTextbox, mdiViewDashboardOutline, mdiHomeOutline, mdiShieldCheckOutline, mdiSwapHorizontal } from '@mdi/js'
 
 	const route = useRoute()
 	const currentPath = computed(() => route.path)
@@ -15,7 +15,6 @@
 		{ label: 'SyForm v-model', to: '/syform-v-model', icon: mdiSwapHorizontal },
 		{ label: 'SyForm Tests', to: '/syform-all-fields', icon: mdiFormTextbox },
 		{ label: 'Cas limites SyForm', to: '/validation-edge-cases', icon: mdiBugOutline },
-		{ label: 'Findings SyForm', to: '/syform-findings', icon: mdiShieldAlertOutline },
 	]
 </script>
 
