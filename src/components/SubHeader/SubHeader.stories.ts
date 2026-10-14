@@ -787,11 +787,14 @@ export const SlotAdditionalInformations: Story = {
 					>
 						<template #additional-informations>
 							<VSpacer />
-							<p class="mt-8 mb-0">
+							<p
+								id="profile-completion-label"
+								class="mt-8 mb-0"
+							>
 								Profil complété à 50%
 							</p>
 							<VProgressLinear
-								aria-label="Complétion du profil"
+								aria-labelledby="profile-completion-label"
 								:model-value="50"
 								color="#fff"
 								height="8px"
@@ -824,11 +827,14 @@ export const SlotAdditionalInformations: Story = {
 		'loading': false,
 		'additional-informations': `<template #additional-informations>
 	<VSpacer />
-	<p class="mt-8 mb-0">
+	<p
+		id="profile-completion-label"
+		class="mt-8 mb-0"
+	>
 		Profil complété à 50%
 	</p>
 	<VProgressLinear
-		aria-label="Complétion du profil"
+		aria-labelledby="profile-completion-label"
 		:model-value="50"
 		color="#fff"
 		height="8px"
@@ -848,11 +854,14 @@ export const SlotAdditionalInformations: Story = {
 				<SubHeader v-bind="args">
 					<template #additional-informations>
 						<VSpacer />
-						<p class="mt-8 mb-0">
+						<p
+							id="profile-completion-label"
+							class="mt-8 mb-0"
+						>
 							Profil complété à 50%
 						</p>
 						<VProgressLinear
-							aria-label="Complétion du profil"
+							aria-labelledby="profile-completion-label"
 							:model-value="50"
 							color="#fff"
 							height="8px"
