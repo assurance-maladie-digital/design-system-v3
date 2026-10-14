@@ -1,6 +1,7 @@
 <script setup lang="ts">
-	import { computed, nextTick, ref, watch } from 'vue'
+	import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
 	import { useFormValidation } from '@/composables/validation/useFormValidation'
+	import { getVuetifyFieldState } from './vuetifyFieldState'
 	import type { VForm } from 'vuetify/components/VForm'
 
 	const props = withDefaults(defineProps<{
@@ -21,16 +22,16 @@
 	// désactivé ne peut pas être corrigé et ne compte pas (choix Synapse : le VForm, lui, le
 	// compte et resterait à null tant que ses rules échouent).
 	const enabledVuetifyItems = computed(() => form.value?.items.filter((item) => {
-		const { vm } = item
-		if (vm.props.disabled) return false
+		const field = getVuetifyFieldState(item)
+		if (field.disabled) return false
 		// Champ readonly : une invalidité portée uniquement par des erreurs injectées (props
 		// `error` / `error-messages`) ne peut pas être corrigée et ne compte pas dans le
 		// v-model — sinon le formulaire serait invalide alors que la soumission passe.
 		// Une erreur issue des `rules` (message non injecté) reste comptée : limite
 		// documentée, l'activateur du DatePicker en mode calendrier est readonly.
-		if (vm.props.readonly && item.isValid === false) {
-			const injected = new Set([vm.props.errorMessages ?? []].flat())
-			return item.errorMessages.some((message: string) => !injected.has(message))
+		if (field.readonly && field.isValid === false) {
+			const injected = new Set(field.injectedErrorMessages)
+			return field.errorMessages.some(message => !injected.has(message))
 		}
 		return true
 	}) ?? [])
@@ -59,20 +60,27 @@
 	 * ou en lecture seule ne peut pas être corrigé et ne bloque pas la soumission
 	 * (Vuetify, lui, le compte invalide).
 	 */
-	const hasBlockingVuetifyError = () => (form.value?.items ?? []).some(({ isValid, vm }) =>
-		isValid === false && !vm.props.disabled && !vm.props.readonly,
-	)
+	const hasBlockingVuetifyError = () => (form.value?.items ?? []).some((item) => {
+		const field = getVuetifyFieldState(item)
+		return field.isValid === false && !field.disabled && !field.readonly
+	})
 
 	/**
 	 * VForm.validate() évalue aussi les `rules` des champs désactivés. Comme pour les champs
 	 * Synapse, un champ désactivé ne peut pas être corrigé : il ne bloque pas la soumission
 	 * et son message est retiré.
+	 *
+	 * Effet de bord assumé : le message de validation des champs désactivés est retiré
+	 * (resetValidation), afin qu'il n'induise pas en erreur l'utilisateur qui ne peut
+	 * pas corriger ces champs.
 	 */
-	const ignoreDisabledVuetifyFields = (errors: { id: string | number }[]) => {
-		const disabledItems = (form.value?.items ?? []).filter(({ vm }) => vm.props.disabled)
-		disabledItems.forEach(item => void item.resetValidation())
+	const resetAndIgnoreDisabledVuetifyFields = (errors: { id: string | number }[]) => {
+		const disabledFields = (form.value?.items ?? [])
+			.map(getVuetifyFieldState)
+			.filter(field => field.disabled)
+		disabledFields.forEach(field => void field.resetValidation())
 
-		return errors.every(({ id }) => disabledItems.some(item => item.id === id))
+		return errors.every(({ id }) => disabledFields.some(field => field.id === id))
 	}
 
 	const validate = async () => {
@@ -82,7 +90,7 @@
 
 		const vuetifyValidateResult = await form.value.validate()
 		const customComponentsValid = await validateAll()
-		const vuetifyFieldsValid = ignoreDisabledVuetifyFields(vuetifyValidateResult.errors)
+		const vuetifyFieldsValid = resetAndIgnoreDisabledVuetifyFields(vuetifyValidateResult.errors)
 		// Laisse les champs Vuetify remonter leur état `isValid` au VForm après la validation.
 		await nextTick()
 
@@ -98,6 +106,8 @@
 	 * Réinitialise la valeur et l'état de validation de tous les champs.
 	 */
 	const reset = () => {
+		// Invalide un éventuel recalcul du v-model en attente (voir clearValidation).
+		clearGeneration++
 		clearAll()
 		resetAll()
 		form.value?.reset()
@@ -109,16 +119,26 @@
 	/**
 	 * Réinitialise l'état de validation de tous les champs.
 	 */
+	// Une annulation (reset(), démontage) empêche le recalcul différé du v-model
+	// planifié par clearValidation de réécrire le modèle juste après.
+	let clearGeneration = 0
+
 	const clearValidation = () => {
+		const generation = ++clearGeneration
 		model.value = null
 		form.value?.resetValidation()
 		clearAll()
 		// Un champ portant une erreur injectée reste invalide après le nettoyage : aucune
 		// source du watch ne change, le v-model doit donc être recalculé explicitement.
 		nextTick(() => {
+			if (generation !== clearGeneration) return
 			model.value = getFormValue(vuetifyFieldsStatus.value, hasVuetifyFields.value)
 		})
 	}
+
+	onUnmounted(() => {
+		clearGeneration++
+	})
 
 	/**
 	 * Quand le composant VForm émet un événement `reset`, on réinitialise la valeur et l'état de validation de tous les champs.

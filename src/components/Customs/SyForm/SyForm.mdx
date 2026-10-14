@@ -223,7 +223,12 @@ bloquer l'envoi lui-même.
 2. **Champs Synapse** enregistrés auprès du formulaire : leurs règles, les erreurs injectées via `error-messages` et l'état forcé par `has-error`. Les champs désactivés ou en lecture seule ne bloquent pas.
 3. **Erreurs injectées sur les champs Vuetify** actifs (`error-messages`, `error`), que la validation du `VForm` ne compte pas.
 
-<Source dark code={'\n// Dans SyForm.vue (simplifié)\nconst { validateAll } = useFormValidation()\n\nconst validate = async () => {\n  // 1. Règles des champs Vuetify (use-vuetify-validation et composants Vuetify natifs)\n  const { errors } = await form.value.validate()\n\n  // 2. Champs Synapse enregistrés : règles, erreurs injectées, has-error\n  const customComponentsValid = await validateAll()\n\n  // Les erreurs des champs désactivés sont ignorées (et leur message retiré)\n  const disabledIds = form.value.items\n    .filter(item => item.vm.props.disabled)\n    .map(item => item.id)\n  const vuetifyFieldsValid = errors.every(error => disabledIds.includes(error.id))\n\n  // 3. Erreurs injectées (error-messages / error) sur les champs Vuetify actifs,\n  //    que VForm.validate() ne compte pas\n  const hasBlockingVuetifyError = form.value.items.some(item =>\n    item.isValid === false && !item.vm.props.disabled && !item.vm.props.readonly,\n  )\n\n  return vuetifyFieldsValid && !hasBlockingVuetifyError && customComponentsValid\n}\n'} />
+Dans le détail, `validate()` déclenche d'abord la validation du `VForm` sous-jacent
+(vérification 1) et la validation des champs Synapse enregistrés (vérification 2). Les
+erreurs remontées par le `VForm` qui concernent des champs désactivés sont ignorées et
+leur message est retiré. Après un tick — le temps que les champs Vuetify remontent leur
+statut — le formulaire est valide si aucune erreur ne bloque un champ Vuetify actif
+(vérification 3) et si les champs Synapse sont valides.
 
 Le `v-model` du formulaire applique ces mêmes vérifications en continu, sans attendre la soumission, avec son état `null` tant qu'aucun statut n'est disponible (voir la section « État de validation (`v-model`) »).
 
