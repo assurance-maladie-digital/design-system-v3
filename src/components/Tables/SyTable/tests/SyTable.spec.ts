@@ -1412,28 +1412,72 @@ describe('SyTable pageInput', () => {
 })
 
 describe('SyTable accessible result references', () => {
-	it('announces selected row positions after sorting, filtering and pagination', async () => {
+	it('announces only changed state after selection, sorting, filtering and pagination', async () => {
 		const wrapper = mount(SyTable, {
 			props: {
 				suffix: 'accessible-rows',
+				saveState: false,
 				headers: [{ title: 'Nom', key: 'name' }],
 				items: [{ id: 1, name: 'Zoé' }, { id: 2, name: 'Alice' }, { id: 3, name: 'Bob' }],
-				modelValue: [2],
+				selectionKey: 'id',
 				showSelect: true,
-				options: { itemsPerPage: 2, sortBy: [{ key: 'name', order: 'asc' }] },
+				options: { page: 1, itemsPerPage: 2 },
 			},
 		})
 		await flushPromises()
-		expect(wrapper.get('[role="status"]').text()).toContain('Lignes sélectionnées : 1.')
-		await wrapper.setProps({ modelValue: [1], options: { page: 2, itemsPerPage: 2, sortBy: [{ key: 'name', order: 'asc' }] } })
+		const status = wrapper.get('[role="status"]')
+		expect(status.text()).toBe('')
+		await wrapper.find('tbody input[type="checkbox"]').setValue(true)
 		await flushPromises()
-		expect(wrapper.get('[role="status"]').text()).toContain('Lignes sélectionnées : 3.')
-		await wrapper.setProps({ options: { itemsPerPage: -1, sortBy: [{ key: 'name', order: 'desc' }] } })
+		expect(status.text()).toBe('1 élément sélectionné')
+		await wrapper.setProps({ options: { page: 2, itemsPerPage: 2 } })
 		await flushPromises()
-		expect(wrapper.get('[role="status"]').text()).toContain('Lignes sélectionnées : 1.')
-		await wrapper.setProps({ options: { itemsPerPage: -1, filters: [{ key: 'name', value: 'Alice', type: 'text' }] }, modelValue: [2] })
+		expect(status.text()).toBe('Page 2. Lignes 3 à 3 sur 3.')
+		await wrapper.setProps({ options: { page: 2, itemsPerPage: 2, sortBy: [{ key: 'name', order: 'asc' }] } })
 		await flushPromises()
-		expect(wrapper.get('[role="status"]').text()).toContain('Lignes sélectionnées : 1.')
+		expect(status.text()).toBe('Nom : Tri croissant')
+		await wrapper.setProps({ options: { page: 1, itemsPerPage: 2, sortBy: [], filters: [{ key: 'name', value: 'Alice', type: 'text' }] } })
+		await flushPromises()
+		expect(status.text()).toContain('1 filtre actif.')
+		expect(status.text()).toContain('Page 1. Lignes 1 à 1 sur 1.')
+		expect(status.text()).not.toContain('sélectionné')
+		wrapper.unmount()
+	})
+
+	it('announces a bounded count when selecting all 500 rows', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				suffix: 'accessible-select-all',
+				saveState: false,
+				headers: [{ title: 'Nom', key: 'name' }],
+				items: Array.from({ length: 500 }, (_, i) => ({ id: i + 1, name: `Agent ${i + 1}` })),
+				selectionKey: 'id',
+				showSelect: true,
+				options: { page: 1, itemsPerPage: 10 },
+			},
+		})
+		await flushPromises()
+		await wrapper.find('thead input[type="checkbox"]').trigger('click')
+		await flushPromises()
+		expect(wrapper.get('[role="status"]').text()).toBe('500 éléments sélectionnés')
+		await wrapper.find('thead input[type="checkbox"]').trigger('click')
+		await flushPromises()
+		expect(wrapper.get('[role="status"]').text()).toBe('0 élément sélectionné')
+		wrapper.unmount()
+	})
+
+	it.each(['', 'storage-key'])('uses a generic pagination label without a caption (suffix: %s)', async (suffix) => {
+		const wrapper = mount(SyTable, {
+			props: { suffix, saveState: false, headers, items: fakeItems, options: { itemsPerPage: 1 } },
+		})
+		await flushPromises()
+		const nav = wrapper.get('nav')
+		const heading = nav.get('[id="' + nav.attributes('aria-labelledby') + '"]')
+		expect(heading.text()).toBe('Navigation de pagination')
+		await wrapper.setProps({ caption: 'Liste des agents' })
+		expect(heading.text()).toBe('Pagination du tableau Liste des agents')
+		await wrapper.setProps({ caption: '' })
+		expect(heading.text()).toBe('Navigation de pagination')
 		wrapper.unmount()
 	})
 
