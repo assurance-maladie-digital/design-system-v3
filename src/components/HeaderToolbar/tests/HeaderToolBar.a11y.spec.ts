@@ -176,7 +176,7 @@ describe('HeaderToolbar – accessibility', () => {
 
 		const items = document.querySelectorAll('#left-dropdown-menu [role="menuitem"]')
 
-		expect(items[0]?.querySelector('.d-sr-only')?.textContent?.trim()).toBe('(nouvelle fenêtre)')
+		expect(items[0]?.querySelector('.d-sr-only')?.textContent?.trim()).toBe('(ouvre dans une nouvelle fenêtre)')
 		expect(items[1]?.querySelector('.d-sr-only')).toBeNull()
 	})
 
