@@ -231,26 +231,19 @@
 		uniqueTableId: uniqueTableId.value,
 	})
 
-	const currentItems = ref<unknown[]>([])
-	const selectedRows = computed(() => {
-		const offset = itemsPerPageValue.value === -1 ? 0 : (page.value - 1) * itemsPerPageValue.value
-		const rows = currentItems.value.filter((item): item is { type: 'item', value: unknown } =>
-			typeof item === 'object' && item !== null && 'type' in item && item.type === 'item' && 'value' in item,
-		)
-		return rows.flatMap((item, index) => model.value.includes(item.value) ? [offset + index + 1] : [])
-	})
-
 	const statusMessage = useTableStatus({
 		page,
 		itemsPerPage: itemsPerPageValue,
 		total: itemsLength,
 		selected: () => model.value.length,
-		selectedRows,
 		options,
 		headers: () => props.headers,
 	})
 	const resultsId = `${uniqueTableId.value}-results`
-	const paginationLabel = computed(() => locales.tablePagination(props.caption || props.suffix || uniqueTableId.value))
+	const paginationLabel = computed(() => props.caption
+		? locales.tablePagination(props.caption)
+		: locales.pagination.paginationNavAriaLabel,
+	)
 
 	const { accessibilityRowCheckboxes } = useTableRowCheckboxAccessibility({
 		uniqueTableId: uniqueTableId.value,
@@ -327,7 +320,7 @@
 		]"
 		:style="pinnedEdgeVars"
 	>
-		<!-- ARIA status region for row count announcements -->
+		<!-- ARIA status region for changes to table results -->
 		<div
 			:id="statusRegionId"
 			role="status"
@@ -372,7 +365,6 @@
 			:show-expand="props.showExpand"
 			:page="page"
 			:items-per-page="itemsPerPageValue"
-			@update:current-items="currentItems = $event"
 			@update:page="updateOptions({ page: $event })"
 			@update:items-per-page="updateItemsPerPage"
 			@update:options="updateOptions"
