@@ -778,7 +778,7 @@
 									:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 									:tabindex="0"
 									:target="item.openInNewTab ? '_blank' : undefined"
-									:title="item.title"
+									:title="getLinkLabel(item)"
 									@click="deleteActiveLink()"
 								>
 									<span class="right-menu-item">{{ item.title }}</span>

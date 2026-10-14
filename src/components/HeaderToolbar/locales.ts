@@ -1,4 +1,4 @@
 export const locales = {
 	closeOverlay: 'Close overlay.',
-	newWindowText: 'nouvelle fenêtre',
+	newWindowText: 'ouvre dans une nouvelle fenêtre',
 }
