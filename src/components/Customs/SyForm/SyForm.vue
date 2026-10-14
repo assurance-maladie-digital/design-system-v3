@@ -102,6 +102,10 @@
 		return isValid
 	}
 
+	// Une annulation (reset(), démontage) empêche le recalcul différé du v-model
+	// planifié par clearValidation de réécrire le modèle juste après.
+	let clearGeneration = 0
+
 	/**
 	 * Réinitialise la valeur et l'état de validation de tous les champs.
 	 */
@@ -119,10 +123,6 @@
 	/**
 	 * Réinitialise l'état de validation de tous les champs.
 	 */
-	// Une annulation (reset(), démontage) empêche le recalcul différé du v-model
-	// planifié par clearValidation de réécrire le modèle juste après.
-	let clearGeneration = 0
-
 	const clearValidation = () => {
 		const generation = ++clearGeneration
 		model.value = null

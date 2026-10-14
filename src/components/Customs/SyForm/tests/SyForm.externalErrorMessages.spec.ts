@@ -178,6 +178,26 @@ describe('SyForm clearValidation with error messages injected by the parent', ()
 
 		expect(getFormValidity(wrapper)).toBe('true')
 	})
+
+	it('does not rewrite the v-model when reset() is called in the same tick as clearValidation()', async () => {
+		const wrapper = mount(ExternalErrorForm, {
+			props: { errorMessages: ['Ce nom est déjà utilisé'] },
+		})
+		await settle()
+		expect(getFormValidity(wrapper)).toBe('false')
+
+		const formVm = wrapper.findComponent(SyForm).vm as unknown as {
+			clearValidation: () => void
+			reset: () => void
+		}
+		// Sans garde, le recalcul différé du v-model planifié par clearValidation
+		// s'exécuterait après le reset() et réécrirait le modèle.
+		formVm.clearValidation()
+		formVm.reset()
+		await settle()
+
+		expect(getFormValidity(wrapper)).toBe('null')
+	})
 })
 
 describe.each(vuetifyFields)('SyForm with a $name and error messages injected by the parent', ({ render }) => {
