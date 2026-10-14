@@ -78,14 +78,16 @@ export const VersionsTimeline: StoryObj = {
 				>
 					<span class="roadmap-timeline__dot" aria-hidden="true" />
 					<div class="roadmap-timeline__card">
-						<p class="roadmap-timeline__head">
-							<span class="roadmap-timeline__version">{{ item.version }}</span>
-							<span class="roadmap-timeline__date">{{ item.date }}</span>
-						</p>
-						<p v-if="!item.hideStatus" :class="['roadmap-impact', 'roadmap-timeline__status', item.major ? 'roadmap-impact--major' : 'roadmap-impact--minor']">
-							{{ statusLabels[item.status] }}
-							<span class="d-sr-only"> – impact : {{ item.major ? impactLabels.major : impactLabels.minor }}</span>
-						</p>
+						<div class="roadmap-timeline__head">
+							<p class="roadmap-timeline__title">
+								<span class="roadmap-timeline__version">{{ item.version }}</span>
+								<span class="roadmap-timeline__date">{{ item.date }}</span>
+							</p>
+							<p v-if="!item.hideStatus" :class="['roadmap-impact', 'roadmap-timeline__status', item.major ? 'roadmap-impact--major' : 'roadmap-impact--minor']">
+								{{ statusLabels[item.status] }}
+								<span class="d-sr-only"> – impact : {{ item.major ? impactLabels.major : impactLabels.minor }}</span>
+							</p>
+						</div>
 						<ul class="roadmap-timeline__highlights">
 							<li v-for="highlight in item.highlights" :key="highlight">{{ highlight }}</li>
 						</ul>
