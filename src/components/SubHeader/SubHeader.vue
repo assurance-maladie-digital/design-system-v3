@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed, ref, watch } from 'vue'
+	import { computed, onMounted, ref, watch } from 'vue'
 	import { mdiKeyboardBackspace } from '@mdi/js'
 
 	import { config } from './config'
@@ -75,7 +75,16 @@
 		loadingEnded.value = !isLoading
 	})
 
+	// A live region inserted with its content is not announced: fill it only once mounted.
+	const isMounted = ref(false)
+	onMounted(() => {
+		isMounted.value = true
+	})
+
 	const statusMessage = computed(() => {
+		if (!isMounted.value) {
+			return ''
+		}
 		if (props.loading) {
 			return locales.loading
 		}

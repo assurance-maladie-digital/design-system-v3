@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { nextTick } from 'vue'
 import SubHeader from '../SubHeader.vue'
 import type { DataList } from '@/components/DataList/types'
 import type { DataListGroupItems } from '@/components/DataListGroup/types'
@@ -136,10 +137,24 @@ describe('SubHeader', () => {
 
 	// RGAA 7.5 : le chargement et sa fin doivent être annoncés par un message de statut.
 	describe('loading status message', () => {
-		it('marks the content as busy and announces the loading', () => {
+		// Une zone live insérée avec son contenu n'est pas restituée : elle doit être vide au rendu initial.
+		it('renders the status region empty before announcing an initial loading', async () => {
+			const wrapper = mount(SubHeader, {
+				props: { titleText: 'Titre', loading: true },
+			})
+
+			expect(wrapper.get('[role="status"]').text()).toBe('')
+
+			await nextTick()
+
+			expect(wrapper.get('[role="status"]').text()).toBe('Chargement en cours…')
+		})
+
+		it('marks the content as busy and announces the loading', async () => {
 			const wrapper = mount(SubHeader, {
 				props: { titleText: 'Titre', loading: true, dataListGroupItems },
 			})
+			await nextTick()
 
 			const status = wrapper.get('[role="status"]')
 			expect(wrapper.find('[aria-busy="true"]').exists()).toBe(true)
