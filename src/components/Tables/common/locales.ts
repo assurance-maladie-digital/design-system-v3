@@ -40,7 +40,6 @@ export const locales = {
 	columnWidth: (width: number) => `${width} pixels`,
 	expandRows: 'Détails des lignes',
 	selectionColumn: 'Sélection des lignes',
-	selectedRows: (rows: string) => `Lignes sélectionnées : ${rows}.`,
 	tablePagination: (name: string) => `Pagination du tableau ${name}`,
 	visibleRows: (start: number, end: number, total: number, page: number) => `Page ${page}. Lignes ${start} à ${end} sur ${total}.`,
 	activeFilters: (count: number) => `${count} filtre${count > 1 ? 's' : ''} actif${count > 1 ? 's' : ''}.`,
