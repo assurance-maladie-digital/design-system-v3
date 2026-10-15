@@ -207,19 +207,24 @@
 	})
 
 	const measuredWidth = ref(0)
-	let widthObserver: ResizeObserver | undefined
 	onMounted(() => {
-		if (!props.announceWidth) return
-		const cell = wrapper.value?.closest('th')
-		if (!cell) return
-		const measure = () => {
-			measuredWidth.value = Math.round(cell.getBoundingClientRect().width)
-		}
-		measure()
-		widthObserver = new ResizeObserver(measure)
-		widthObserver.observe(cell)
+		watch(
+			[() => props.announceWidth, () => props.resizableColumns, isLastColumn],
+			([announce, resizable, last], _, onCleanup) => {
+				if (!announce || !resizable || last) return
+				const cell = wrapper.value?.closest('th')
+				if (!cell) return
+				const measure = () => {
+					measuredWidth.value = Math.round(cell.getBoundingClientRect().width)
+				}
+				measure()
+				const observer = new ResizeObserver(measure)
+				observer.observe(cell)
+				onCleanup(() => observer.disconnect())
+			},
+			{ immediate: true, flush: 'post' },
+		)
 	})
-	onUnmounted(() => widthObserver?.disconnect())
 	const accessibleWidth = computed(() => {
 		if (measuredWidth.value > 0) return measuredWidth.value
 		const width = header.value?.width

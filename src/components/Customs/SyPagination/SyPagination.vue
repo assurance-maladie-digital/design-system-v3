@@ -273,6 +273,7 @@
 				>
 					<component
 						:is="buttonMode ? 'span' : 'a'"
+						:aria-hidden="buttonMode ? true : undefined"
 						:href="buttonMode ? undefined : '#'"
 						class="ellipsis"
 						@click.prevent
@@ -310,6 +311,7 @@
 				>
 					<component
 						:is="buttonMode ? 'span' : 'a'"
+						:aria-hidden="buttonMode ? true : undefined"
 						:href="buttonMode ? undefined : '#'"
 						class="ellipsis"
 						@click.prevent

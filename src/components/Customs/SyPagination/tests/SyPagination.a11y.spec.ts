@@ -35,6 +35,16 @@ describe('SyPagination – accessibility (axe)', () => {
 		wrapper.unmount()
 	})
 
+	it('has no obvious axe violations in button mode with ellipses and disabled navigation', async () => {
+		const wrapper = mount(SyPagination, {
+			props: { ...baseProps, pages: 20, visible: 3, buttonMode: true },
+			attachTo: document.body,
+		})
+		const results = await axe(document.body)
+		assertNoA11yViolations(results, 'SyPagination – button mode')
+		wrapper.unmount()
+	})
+
 	it('has no obvious axe violations with ellipses and disabled controls', async () => {
 		const wrapper = mount(SyPagination, {
 			props: {
