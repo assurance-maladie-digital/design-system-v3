@@ -230,8 +230,7 @@
 				disable-error-handling
 				density="compact"
 				class="rows-per-page-select"
-				:aria-labelledby="itemsPerPageLabelId"
-				:aria-label="locales.pagination.itemsPerPageText"
+				:aria-label="controlsId ? undefined : locales.pagination.itemsPerPageText"
 				:aria-labelledby="controlsId ? itemsPerPageLabelId : undefined"
 				:label="''"
 				style="width: 90px;"
