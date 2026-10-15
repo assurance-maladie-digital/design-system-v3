@@ -326,13 +326,13 @@ const value2 = ref('')
 					v-bind="args"
 					v-model="value1"
 					label="Avec validation interne (défaut)"
-					disable-error-handling="false"
+					:disable-error-handling="false"
 				/>
 				<DatePicker
 					v-bind="args"
 					v-model="value2"
 					label="Validation interne désactivée"
-					disable-error-handling="true"
+					:disable-error-handling="true"
 				/>
 				<div class="mt-4 text-body-2">Valeur 1 : {{ value1 }} | Valeur 2 : {{ value2 }}</div>
 			</div>
