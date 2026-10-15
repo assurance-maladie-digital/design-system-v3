@@ -14,6 +14,7 @@ export const buildDateTextInputTextFieldProps = (
 	'append-icon': props.displayIcon && props.displayAppendIcon ? 'calendar' : undefined,
 	'disabled': props.disabled,
 	'disable-click-button': props.disableClickButton,
+	'disable-error-handling': props.disableErrorHandling,
 	'error-messages': errorMessages.value,
 	'label': props.label,
 	'placeholder': props.placeholder,
