@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-	import { computed, ref, watch } from 'vue'
+	import { computed, onMounted, ref, watch } from 'vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SelectBtnField from '@/components/Customs/Selects/SelectBtnField/SelectBtnField.vue'
 	import SyInputSelect from '@/components/Customs/Selects/SyInputSelect/SyInputSelect.vue'
@@ -49,6 +49,13 @@
 	const documentedValue = ref('10/10/2026') // un samedi
 	const realValue = ref('10/10/2026')
 	const ruleFormValid = ref<boolean | null>(null)
+	const ruleFormRef = ref<InstanceType<typeof SyForm> | null>(null)
+
+	// La valeur initiale (un samedi) n'est validée qu'à la saisie : on valide au montage
+	// pour afficher le résultat des deux règles sans interaction.
+	onMounted(() => {
+		void ruleFormRef.value?.validate()
+	})
 
 	const noWeekendRules = [
 		{ type: 'noWeekend', options: { message: 'Week-end interdit' } },
@@ -60,7 +67,14 @@
 	// ── Scénario 3 : notBeforeDate avec options.date = Date ──────────
 	// Bug HIGH (corrigé) : le type autorisait Date mais le code faisait un throw →
 	// le submit du formulaire rejetait (Promise.all) au lieu de marquer le champ.
-	const dateObjValue = ref('15/10/2026')
+	// Date du jour au format JJ/MM/AAAA : une date en dur finirait par être antérieure
+	// à la référence (new Date()) et afficherait « Date trop ancienne ».
+	const today = new Date()
+	const formatDate = (date: Date) => [date.getDate(), date.getMonth() + 1]
+		.map(part => String(part).padStart(2, '0'))
+		.concat(String(date.getFullYear()))
+		.join('/')
+	const dateObjValue = ref(formatDate(today))
 	const dateObjFormValid = ref<boolean | null>(null)
 	const dateObjFormRef = ref<InstanceType<typeof SyForm> | null>(null)
 	const dateObjError = ref<string | null>(null)
@@ -68,7 +82,7 @@
 	const dateObjRules = [
 		{
 			type: 'notBeforeDate',
-			options: { date: new Date(), message: 'Date trop ancienne' },
+			options: { date: today, message: 'Date trop ancienne' },
 		},
 	]
 
@@ -123,10 +137,7 @@
 
 	async function testSelectBtnReset() {
 		await selectBtnFormRef.value?.reset()
-		// Attendu : selectBtnValue revient à null ET aucun warning readonly
-		// dans la console. Observé : la valeur est vidée via VForm mais le
-		// chemin custom (resetAll → modelValue.value = undefined) échoue
-		// silencieusement avec un warning.
+		// Attendu : selectBtnValue revient à null, sans warning readonly dans la console.
 		setStatus('reset', selectBtnValue.value === null ? 'ok' : 'ko')
 	}
 
@@ -401,7 +412,10 @@
 					<strong>Attendu :</strong> les deux champs affichent « Week-end interdit » pour un samedi.
 					<strong>Bug (corrigé) :</strong> le premier affichait « La règle spécifiée pour … n'existe pas ».
 				</SyAlert>
-				<SyForm v-model="ruleFormValid">
+				<SyForm
+					ref="ruleFormRef"
+					v-model="ruleFormValid"
+				>
 					<SyTextField
 						v-model="documentedValue"
 						label="Règle 'noWeekend' (documentée)"
@@ -626,7 +640,7 @@
 							:color="scenarioStatus.reset === 'ko' ? 'error' : 'success'"
 							size="small"
 						>
-							{{ scenarioStatus.reset === 'ko' ? 'Valeur non réinitialisée' : 'Valeur vidée (via Vuetify)' }}
+							{{ scenarioStatus.reset === 'ko' ? 'Valeur non réinitialisée' : 'Valeur vidée' }}
 						</VChip>
 					</div>
 				</SyForm>
