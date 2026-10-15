@@ -180,7 +180,7 @@ export interface DatePickerValidationController {
 		successRules?: ValidationRule[],
 	) => ValidationResult | Promise<ValidationResult>
 	validateDates: (forceValidation?: boolean) => ValidationResult | Promise<ValidationResult>
-	validateTextInput: (value: string) => Promise<boolean>
+	validateTextInput: (value: string, force?: boolean) => Promise<boolean>
 	validateCalendarModeDates: (forceValidation?: boolean) => ValidationResult | Promise<ValidationResult>
 }
 
@@ -600,7 +600,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			return emptyValidationResult()
 		}
 		if (opts.textValue !== undefined) {
-			return validateTextInput(opts.textValue)
+			return validateTextInput(opts.textValue, opts.force ?? false)
 		}
 		if (opts.calendarMode && options.useCalendarModeRequiredFlow) {
 			return validateCalendarModeDates(opts.force ?? false)
