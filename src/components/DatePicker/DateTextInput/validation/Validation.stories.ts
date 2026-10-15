@@ -51,6 +51,7 @@ const baseArgs = {
 export const WithError: Story = {
 	args: {
 		...baseArgs,
+		modelValue: '20/08/2026',
 		label: 'Date avec erreur injectée',
 		errorMessages: ['Date invalide côté métier'],
 		required: false,
@@ -61,6 +62,23 @@ export const WithError: Story = {
 				story: 'Expose le cas standard d\'un message d\'erreur injecté par le parent, comme sur les autres composants migrés.',
 			},
 		},
+	},
+	render(args) {
+		const date = ref<string | null>('20/08/2026')
+		return {
+			components: { DatePicker },
+			setup() {
+				return { args, date }
+			},
+			template: `
+				<div>
+					<DatePicker
+						v-model="date"
+						v-bind="args"
+					/>
+				</div>
+			`,
+		}
 	},
 }
 

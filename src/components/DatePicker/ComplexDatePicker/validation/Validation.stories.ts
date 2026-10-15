@@ -56,6 +56,7 @@ const baseArgs = {
 export const WithError: Story = {
 	args: {
 		...baseArgs,
+		modelValue: '20/08/2026',
 		label: 'Date avec erreur injectée',
 		errorMessages: ['Date invalide côté métier'],
 		required: false,
@@ -71,7 +72,7 @@ export const WithError: Story = {
 		return {
 			components: { DatePicker },
 			setup() {
-				const value = ref('')
+				const value = ref('20/08/2026')
 				return { args, value }
 			},
 			template: `
