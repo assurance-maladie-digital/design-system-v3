@@ -787,21 +787,28 @@ export const SlotAdditionalInformations: Story = {
 					>
 						<template #additional-informations>
 							<VSpacer />
-							<p
-								id="profile-completion-label"
-								class="mt-8 mb-0"
-							>
-								Profil complété à 50%
-							</p>
-							<VProgressLinear
-								aria-labelledby="profile-completion-label"
-								:model-value="50"
-								color="#fff"
-								height="8px"
-								class="mt-2 mb-1"
-								bg-color="#fff"
-								bg-opacity=".24"
-							/>
+							<div class="d-flex flex-wrap ga-2 mt-8 mb-1">
+								<VBadge
+									color="#fff"
+									text-color="primary"
+									height="24"
+									inline
+								>
+									<template #badge>
+										<span class="text-body-2">Médecin traitant déclaré</span>
+									</template>
+								</VBadge>
+								<VBadge
+									color="#fff"
+									text-color="primary"
+									height="24"
+									inline
+								>
+									<template #badge>
+										<span class="text-body-2">Complémentaire santé active</span>
+									</template>
+								</VBadge>
+							</div>
 						</template>
 					</SubHeader>
 				</template>
@@ -827,21 +834,28 @@ export const SlotAdditionalInformations: Story = {
 		'loading': false,
 		'additional-informations': `<template #additional-informations>
 	<VSpacer />
-	<p
-		id="profile-completion-label"
-		class="mt-8 mb-0"
-	>
-		Profil complété à 50%
-	</p>
-	<VProgressLinear
-		aria-labelledby="profile-completion-label"
-		:model-value="50"
-		color="#fff"
-		height="8px"
-		class="mt-2 mb-1"
-		bg-color="#fff"
-		bg-opacity=".24"
-	/>
+	<div class="d-flex flex-wrap ga-2 mt-8 mb-1">
+		<VBadge
+			color="#fff"
+			text-color="primary"
+			height="24"
+			inline
+		>
+			<template #badge>
+				<span class="text-body-2">Médecin traitant déclaré</span>
+			</template>
+		</VBadge>
+		<VBadge
+			color="#fff"
+			text-color="primary"
+			height="24"
+			inline
+		>
+			<template #badge>
+				<span class="text-body-2">Complémentaire santé active</span>
+			</template>
+		</VBadge>
+	</div>
 </template>`,
 	},
 	render: (args) => {
@@ -854,21 +868,28 @@ export const SlotAdditionalInformations: Story = {
 				<SubHeader v-bind="args">
 					<template #additional-informations>
 						<VSpacer />
-						<p
-							id="profile-completion-label"
-							class="mt-8 mb-0"
-						>
-							Profil complété à 50%
-						</p>
-						<VProgressLinear
-							aria-labelledby="profile-completion-label"
-							:model-value="50"
-							color="#fff"
-							height="8px"
-							class="mt-2 mb-1"
-							bg-color="#fff"
-							bg-opacity=".24"
-						/>
+						<div class="d-flex flex-wrap ga-2 mt-8 mb-1">
+							<VBadge
+								color="#fff"
+								text-color="primary"
+								height="24"
+								inline
+							>
+								<template #badge>
+									<span class="text-body-2">Médecin traitant déclaré</span>
+								</template>
+							</VBadge>
+							<VBadge
+								color="#fff"
+								text-color="primary"
+								height="24"
+								inline
+							>
+								<template #badge>
+									<span class="text-body-2">Complémentaire santé active</span>
+								</template>
+							</VBadge>
+						</div>
 					</template>
 				</SubHeader>
 			`,
