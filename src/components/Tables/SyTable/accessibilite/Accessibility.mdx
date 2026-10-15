@@ -43,7 +43,7 @@ import {
         <CriteriaCard title="Structure et rôles">
             <ul>
                 <li>Le composant repose sur <code>VDataTable</code> et conserve la structure sémantique native d’un tableau HTML (<code>table</code>, <code>caption</code>, <code>thead</code>, <code>tbody</code>, <code>th</code>, <code>td</code>).</li>
-                <li>Une légende (<code>caption</code>) est injectée dynamiquement au montage et reste accessible via la classe <code>d-sr-only</code> lorsqu’elle est masquée visuellement.</li>
+                <li>Une légende (<code>caption</code>) est rendue comme premier enfant du tableau et reste accessible via la classe <code>d-sr-only</code> lorsqu’elle est masquée visuellement.</li>
                 <li>Les en-têtes utilisent des cellules <code>th</code> avec <code>scope="col"</code> et exposent les états de tri via <code>aria-sort</code>.</li>
                 <li>Les filtres et la pagination conservent les rôles natifs des composants de formulaire.</li>
                 <li>Les slots permettent d’étendre le tableau sans altérer sa structure sémantique.</li>
@@ -68,10 +68,9 @@ import {
                 <li>Le <code>caption</code> fournit un contexte global de lecture du tableau.</li>
                 <li>La sélection unique utilise des boutons radio. La sélection multiple utilise des cases à cocher.</li>
                 <li>Les états de tri sont exposés via <code>aria-sort</code> sur les en-têtes.</li>
-                <li>La pagination utilise des boutons nommés « Page 2 », « Page 3 », etc., qui référencent la zone de résultats via <code>aria-controls</code>. Son nom reprend la légende du tableau : utilisez des légendes distinctes lorsque plusieurs tableaux sont présents.</li>
-                <li>Une zone <code>role="status"</code> annonce la page, les lignes visibles, le total, la sélection, les filtres et le tri.</li>
+                <li>La pagination utilise des boutons nommés « Page 2 », « Page 3 », etc., qui référencent la zone de résultats via <code>aria-controls</code>. Son nom reprend la légende du tableau lorsqu’elle est renseignée, sinon « Navigation de pagination ». Utilisez des légendes distinctes lorsque plusieurs tableaux sont présents.</li>
+                <li>Une zone <code>role="status"</code> annonce uniquement les changements : compteur de sélection, page et plage de résultats, filtres ou tri. Elle ne liste pas les lignes sélectionnées.</li>
                 <li>Les poignées de redimensionnement annoncent la largeur de colonne en pixels. Les flèches gauche et droite permettent de la modifier.</li>
-                <li>Les attributs ARIA inutiles (ex: <code>aria-describedby</code>) sont supprimés pour éviter les doublons de lecture.</li>
             </ul>
         </CriteriaCard>
 
@@ -121,13 +120,26 @@ import {
     </ResourcesSection>
 
     <div style={{ margin: '3rem 0', padding: '1.5rem', backgroundColor: '#fff3e0', borderLeft: '4px solid #f57c00', borderRadius: '4px' }}>
-        <h2 style={{ color: '#e65100', marginTop: 0 }}>Faux positif connu (outillage) : aria-controls</h2>
+        <h2 style={{ color: '#e65100', marginTop: 0 }}>Résultat à vérifier manuellement : aria-controls</h2>
         <ul>
             <li>L’addon d'accessibilité de Storybook peut signaler <code>aria-valid-attr-value</code> sur le bouton « Gestion des colonnes » de <code>SyTable</code>, lorsque le panneau est ouvert.</li>
             <li>L’attribut <code>aria-controls</code> relie le bouton au panneau qu’il ouvre.</li>
-            <li>Cause : la version d’axe utilisée ne confirme pas automatiquement la référence de <code>aria-controls</code> lorsque le bouton utilise aussi <code>aria-haspopup="dialog"</code>. Elle affiche alors un résultat « Inconclusive », même si le panneau existe.</li>
+            <li>Constat reproduit avec axe-core 4.13.0 : le moteur ne confirme pas automatiquement la référence de <code>aria-controls</code> lorsque le bouton utilise aussi <code>aria-haspopup="dialog"</code>. Il classe ce résultat dans <code>incomplete</code>, même si le panneau existe. Cela nécessite une vérification manuelle et ne constitue pas une preuve de conformité.</li>
             <li>Vérification manuelle : ouvrir le panneau, sélectionner son bouton dans l’inspecteur, puis saisir dans la console <code>document.getElementById($0.getAttribute('aria-controls'))</code>. Le résultat doit être l’élément correspondant au panneau ouvert, avec <code>role="dialog"</code>.</li>
             <li>Si la référence pointe bien vers le panneau, ce point est vérifié : l’alerte ne prouve pas une erreur du composant. Il faut conserver <code>aria-controls</code>. Si le résultat est <code>null</code>, la référence doit être corrigée.</li>
         </ul>
+        <p>Extrait du rapport reproduit avec axe-core 4.13.0, un bouton <code>aria-haspopup="dialog"</code> et un panneau existant <code>id="columns" role="dialog"</code> :</p>
+
+```json
+{
+  "violations": [],
+  "incomplete": [{
+    "id": "aria-valid-attr-value",
+    "summary": "Unable to determine if aria-controls referenced ID exists on the page while using aria-haspopup: aria-controls=\"columns\""
+  }]
+}
+```
+
+        <p>Le test <code>SyTableStories.a11y.spec.ts</code> vérifie l’existence du panneau ouvert, son rôle, son nom et la référence du bouton, puis contrôle que les résultats à examiner concernent cette seule association.</p>
     </div>
 </AccessibilityGuideLayout>

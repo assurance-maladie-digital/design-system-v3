@@ -18,7 +18,7 @@
 	import { usePagination } from '../common/usePagination'
 	import { usePinnedColumns } from '../common/usePinnedColumns'
 	import useStoredOptions from '../common/useStoredOptions'
-	import { useTableStatus } from './useTableStatus'
+	import { useTableStatus } from '../common/useTableStatus'
 	import { useTableAria } from '../common/useTableAria'
 	import { useTableBulkActions } from '../common/useTableBulkActions'
 	import { useTableCheckbox } from '../common/useTableCheckbox'
@@ -227,6 +227,8 @@
 		statusRegionId,
 		setupAria,
 	} = useTableAria({
+		announceRowCount: false,
+		keepHeaderControlsAccessible: true,
 		table,
 		items: filteredItems,
 		totalItemsCount: itemsLength,
@@ -333,7 +335,6 @@
 			:id="statusRegionId"
 			role="status"
 			aria-atomic="true"
-			aria-live="polite"
 			class="d-sr-only"
 		>
 			{{ statusMessage }}
@@ -440,7 +441,7 @@
 								<template v-else>
 									<TableHeader
 										:data-column-key="column.key"
-										announce-width
+										:announce-width="props.resizableColumns"
 										:table="table"
 										:header-params="slotProps"
 										:column="column"

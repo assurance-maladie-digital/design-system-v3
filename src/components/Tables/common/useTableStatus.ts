@@ -1,8 +1,8 @@
 import { computed, nextTick, shallowRef, toValue, watch, type MaybeRefOrGetter, type Ref } from 'vue'
-import { locales } from '../common/locales'
-import type { DataOptions, DataTableHeaders } from '../common/types'
+import { locales } from './locales'
+import type { DataOptions, DataTableHeaders } from './types'
 
-/** Announces only changes to the client-side table state. */
+/** Announces only changes to the table state. */
 export function useTableStatus(input: {
 	page: MaybeRefOrGetter<number>
 	itemsPerPage: MaybeRefOrGetter<number>

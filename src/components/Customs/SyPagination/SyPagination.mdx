@@ -168,4 +168,9 @@ Avec `buttonMode`, les actions sont des boutons : elles mettent à jour les donn
 sans ouvrir une autre page. `ariaControls` indique l’identifiant de la zone mise à jour.
 Le mode par défaut conserve les liens.
 
+`SyTable` utilise ce mode pour leur pagination. Les projets
+qui ciblent `a[href]`, `getByRole('link')` ou `.sy-pagination a` doivent adapter
+leurs tests et styles pour cibler les boutons (`getByRole('button')`,
+`.sy-pagination button`).
+
 <Canvas of={SyPaginationStories.Buttons} />
