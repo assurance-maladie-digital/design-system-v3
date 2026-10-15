@@ -108,3 +108,71 @@ describe('Régression : submit avec saisie incomplète ou effacée', () => {
 		wrapper.unmount()
 	})
 })
+
+/**
+ * Une date incomplète saisie directement (sans date valide retenue auparavant)
+ * affichait « La date est requise. » au submit : l'erreur « requise » des dates
+ * retenues passait devant l'erreur de format du champ texte (maxErrors à 1).
+ */
+describe('Régression : message affiché au submit d\'une date incomplète', () => {
+	const mountRequired = (props: Record<string, unknown> = {}) => mount(ComplexDatePicker, {
+		props: {
+			modelValue: '',
+			label: 'Date',
+			format: 'DD/MM/YYYY',
+			required: true,
+			...props,
+		},
+		attachTo: document.body,
+	})
+
+	const displayedMessages = (wrapper: ReturnType<typeof mount>) =>
+		wrapper.findAll('.v-messages__message').map(message => message.text())
+
+	it('affiche l\'erreur de format, et non « requise », pour une date incomplète saisie directement', async () => {
+		const wrapper = mountRequired()
+
+		await wrapper.find('input').setValue('12/10/20')
+		await flushPromises()
+
+		expect(await wrapper.vm.validateOnSubmit()).toBe(false)
+		await flushPromises()
+
+		expect(displayedMessages(wrapper)).toEqual([locales.invalidDateFormatWithFormat('DD/MM/YYYY')])
+
+		wrapper.unmount()
+	})
+
+	it('remplace l\'erreur « requise » d\'un submit précédent par l\'erreur de format', async () => {
+		const wrapper = mountRequired()
+
+		expect(await wrapper.vm.validateOnSubmit()).toBe(false)
+		await flushPromises()
+		expect(displayedMessages(wrapper)).toEqual([locales.required])
+
+		await wrapper.find('input').setValue('12/10/20')
+		await flushPromises()
+
+		expect(await wrapper.vm.validateOnSubmit()).toBe(false)
+		await flushPromises()
+
+		expect(displayedMessages(wrapper)).toEqual([locales.invalidDateFormatWithFormat('DD/MM/YYYY')])
+
+		wrapper.unmount()
+	})
+
+	it('conserve l\'erreur injectée par le parent', async () => {
+		const wrapper = mountRequired({ errorMessages: ['Erreur serveur'] })
+
+		await wrapper.find('input').setValue('12/10/20')
+		await flushPromises()
+
+		expect(await wrapper.vm.validateOnSubmit()).toBe(false)
+		await flushPromises()
+
+		expect(displayedMessages(wrapper)).toContain('Erreur serveur')
+		expect(displayedMessages(wrapper)).not.toContain(locales.required)
+
+		wrapper.unmount()
+	})
+})

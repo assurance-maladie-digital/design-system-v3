@@ -151,6 +151,8 @@ export interface DateTextInputPublicApi {
 	errors: DatePickerValidationMessagesRef
 	warnings: DatePickerValidationMessagesRef
 	successes: DatePickerValidationMessagesRef
+	/** true dès que le champ contient au moins un chiffre saisi, même incomplet. */
+	hasInput: Readonly<Ref<boolean>>
 	focus: () => void
 	blur: () => void
 }

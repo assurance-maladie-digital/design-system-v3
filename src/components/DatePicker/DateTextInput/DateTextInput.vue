@@ -235,6 +235,8 @@
 	}
 
 	const inputValue = ref('')
+	// Saisie présente, même incomplète (le masque `_` et les séparateurs ne comptent pas).
+	const hasInput = computed(() => /\d/.test(inputValue.value))
 	const inputRef = ref<InstanceType<typeof SyTextField> | null>(null)
 	const isFormatting = ref(false)
 	const pendingSyncedInputValue = ref<string | null>(null)
@@ -1303,6 +1305,7 @@
 		errors: readonlyState(errorMessages),
 		warnings: readonlyState(warningMessages),
 		successes: readonlyState(successMessages),
+		hasInput,
 		focus() {
 			const el = getNativeInputElement()
 			el?.focus({ preventScroll: true })
