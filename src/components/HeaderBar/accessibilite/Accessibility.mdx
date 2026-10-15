@@ -4,6 +4,8 @@ import '@/stories/styles/shared.css'
 import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg'
 import {
   AccessibilityGuideLayout,
+  AuditSection,
+  CriteriaSection,
   CriteriaCard,
 } from '@/stories/accessibility/AccessibilityGuideLayout.mdx'
 
@@ -13,23 +15,28 @@ import {
   componentName="HeaderBar"
   iconSrc={AccessibilityIcon}
 >
-  <div class="mt-6">
-    <p>Rapport d’audit manuel :<a href="/audits/HeaderBar.xlsx" style={{ color: '#0C41BD' }}>Voir le rapport</a></p>
+  <AuditSection>
+    <div class="mt-6">
+      <p>Rapport d’audit manuel :<a href="/audits/HeaderBar.xlsx" style={{ color: '#0C41BD' }}>Voir le rapport</a></p>
 
-    <p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/643" target="_blank" style={{ color: '#0C41BD' }}>issue #643</a>)</p>
-  </div>
+      <p style={{ color: 'grey', fontSize: '14px', marginTop: '0px' }}>Correctifs associés (<a href="https://github.com/assurance-maladie-digital/design-system-v3/issues/643" target="_blank" style={{ color: '#0C41BD' }}>issue #643</a>)</p>
+    </div>
+  </AuditSection>
 
-  <CriteriaCard title="Niveau de titre configurable via la prop headingLevelTitle">
-    <ul>
-      <li>Le niveau du titre du service peut être configuré de <strong>h1 à h6</strong>grâce à la propriété<strong>headingLevelTitle</strong>.</li>
+  <CriteriaSection>
+    <CriteriaCard title="Niveau de titre configurable via la prop headingLevelTitle">
+      <ul>
+        <li>
+          Le niveau du titre du service peut être configuré de <strong>h1 à h6</strong> grâce à la propriété <strong>headingLevelTitle</strong>.
+          <br />
+          <code>&lt;HeaderBar :heading-level-title="2" /&gt;</code>
+        </li>
 
-      <code>&lt;HeaderBar :heading-level-title="2" /&gt;</code>
+        <li>Cette configuration permet d’intégrer l’en-tête dans une hiérarchie de titres cohérente avec la page qui l’utilise.</li>
 
-      <li>Cette configuration permet d’intégrer l’en-tête dans une hiérarchie de titres cohérente avec la page qui l’utilise.</li>
-
-      <li><strong>Accessibilité :</strong> la hiérarchie des titres doit être pertinente et refléter la structure du contenu(critère <strong>9.1.1 RGAA</strong>).</li>
-    </ul>
-  </CriteriaCard>
+        <li><strong>Accessibilité :</strong> la hiérarchie des titres doit être pertinente et refléter la structure du contenu (critère <strong>9.1 RGAA</strong>).</li>
+      </ul>
+    </CriteriaCard>
 
   <CriteriaCard title="Structure sémantique de l’en-tête">
     <ul>
@@ -45,9 +52,11 @@ import {
 
   <CriteriaCard title="Nom accessible du lien d’accueil">
     <ul>
-      <li>Le lien permettant de revenir à l’accueil peut recevoir un nom accessible via la propriété <strong>homeAriaLabel</strong>.</li>
-
-      <code>&lt;HeaderBar home-aria-label="Accueil - Assurance Maladie" /&gt;</code>
+      <li>
+        Le lien permettant de revenir à l’accueil peut recevoir un nom accessible via la propriété <strong>homeAriaLabel</strong>.
+        <br />
+        <code>&lt;HeaderBar home-aria-label="Accueil - Assurance Maladie" /&gt;</code>
+      </li>
 
       <li>Lorsque le logo ou le lien d’accueil est utilisé comme élément interactif, son nom accessible doit permettre à l’utilisateur de comprendre sa destination.</li>
 
@@ -57,9 +66,11 @@ import {
 
   <CriteriaCard title="Logo et lien vers l’accueil">
     <ul>
-      <li>Le composant permet de configurer le lien du logo grâce à la propriété<strong>homeLink</strong>.</li>
-
-      <code>&lt;HeaderBar :home-link="&#123; href: '/' &#125;" /&gt;</code>
+      <li>
+        Le composant permet de configurer le lien du logo grâce à la propriété <strong>homeLink</strong>.
+        <br />
+        <code>&lt;HeaderBar :home-link="&#123; href: '/' &#125;" /&gt;</code>
+      </li>
 
       <li>Le lien peut être configuré avec une destination interne ou externe selon le besoin de l’application.</li>
 
@@ -84,7 +95,7 @@ import {
 
       <li>Un bouton d’ouverture de menu doit disposer d’un nom accessible explicite, par exemple « Ouvrir le menu ».</li>
 
-      <li><strong>Accessibilité :</strong> les éléments interactifs doivent être identifiables et utilisables par les technologies d’assistance (critères <strong>7.1</strong> et <strong>11.9 RGAA</strong>).</li>
+      <li><strong>Accessibilité :</strong> les éléments interactifs doivent être identifiables et utilisables par les technologies d’assistance (critère <strong>7.1 RGAA</strong>).</li>
     </ul>
   </CriteriaCard>
 
@@ -102,9 +113,11 @@ import {
 
   <CriteriaCard title="Gestion de l'affichage sticky">
     <ul>
-      <li>La propriété <strong>sticky</strong> permet de maintenir l’en-tête visible lors du défilement de la page.</li>
-
-      <code>&lt;HeaderBar :sticky="true" /&gt;</code>
+      <li>
+        La propriété <strong>sticky</strong> permet de maintenir l’en-tête visible lors du défilement de la page.
+        <br />
+        <code>&lt;HeaderBar :sticky="true" /&gt;</code>
+      </li>
 
       <li>Le comportement sticky ne doit pas empêcher l’utilisateur d’accéder au contenu de la page ni masquer durablement des informations ou des éléments interactifs.</li>
 
@@ -137,5 +150,6 @@ import {
       <li><strong>Bonnes pratiques :</strong> compléter les tests automatisés par des vérifications manuelles du clavier, de la hiérarchie des titres, des annonces par lecteur d’écran et du comportement lors du défilement.</li>
     </ul>
   </CriteriaCard>
+  </CriteriaSection>
 
 </AccessibilityGuideLayout>
