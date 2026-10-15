@@ -602,7 +602,10 @@ import { VBtn, VForm } from 'vuetify/components'
 
 const phone = ref('')
 
+// En mode Vuetify, \`required\` n'ajoute que l'astérisque et l'attribut ARIA :
+// la règle requise doit figurer dans \`rules\`.
 const rules = [
+  (value) => !!value || 'Le numéro de téléphone est requis.',
   (value) => /^0[1-9][0-9]{8}$/.test(value.replace(/\\s/g, '')) || 'Le numéro de téléphone n\\'est pas valide.'
 ]
 
@@ -632,7 +635,10 @@ function onSyFormSubmit(event: { isValid: boolean }) {
 				}
 			}
 
+			// En mode Vuetify, `required` n'ajoute que l'astérisque et l'attribut ARIA :
+			// la règle requise doit figurer dans `rules`.
 			const rules = [
+				value => !!value || 'Le numéro de téléphone est requis.',
 				value => /^0[1-9][0-9]{8}$/.test(value.replace(/\s/g, '')) || 'Le numéro de téléphone n\'est pas valide.',
 			]
 
@@ -671,7 +677,9 @@ export const VFormAndVuetifyValidation: Story = {
     <PhoneField
 	  v-model="phone"
 	  :use-vuetify-validation="true"
-	  :rules="[(value) => /^0[1-9][0-9]{8}$/.test(value.replace(/\\s/g, '')) || 'Le numéro de téléphone n\\'est pas valide.']"
+	  required
+	  display-asterisk
+	  :rules="rules"
 	/>
 	<VBtn type="submit" :disabled="isValid === false" color="primary">Soumettre</VBtn>
   </VForm>
@@ -686,6 +694,13 @@ import { PhoneField } from '@cnamts/synapse'
 import { VForm, VBtn } from 'vuetify/components'
 
 const phone = ref('')
+
+// En mode Vuetify, \`required\` n'ajoute que l'astérisque et l'attribut ARIA :
+// la règle requise doit figurer dans \`rules\`.
+const rules = [
+  (value) => !!value || 'Le numéro de téléphone est requis.',
+  (value) => /^0[1-9][0-9]{8}$/.test(value.replace(/\\s/g, '')) || 'Le numéro de téléphone n\\'est pas valide.'
+]
 </script>`,
 			},
 		],
@@ -694,11 +709,17 @@ const phone = ref('')
 		components: { PhoneField, VForm, VBtn },
 		setup() {
 			const phone = ref('')
+			// En mode Vuetify, `required` n'ajoute que l'astérisque et l'attribut ARIA :
+			// la règle requise doit figurer dans `rules`.
+			const rules = [
+				(value: string) => !!value || 'Le numéro de téléphone est requis.',
+				(value: string) => /^0[1-9][0-9]{8}$/.test(value.replace(/\s/g, '')) || 'Le numéro de téléphone n\'est pas valide.',
+			]
 			async function onSubmit(e: Promise<{ valid: boolean }>) {
 				const result = await e
 				alert('Le formulaire est : ' + (result.valid ? 'valide' : 'invalide'))
 			}
-			return { args, phone, onSubmit }
+			return { args, phone, rules, onSubmit }
 		},
 		template: `
 			<div class="pa-4">
@@ -707,7 +728,9 @@ const phone = ref('')
 						v-model="phone"
 						v-bind="args"
 						:use-vuetify-validation="true"
-						:rules="[(value) => /^0[1-9][0-9]{8}$/.test(value.replace(/\\s/g, '')) || 'Le numéro de téléphone n\\'est pas valide.']"
+						required
+						display-asterisk
+						:rules="rules"
 					/>
 					<VBtn type="submit" class="mt-4" color="primary">Soumettre</VBtn>
 				</VForm>

@@ -219,7 +219,9 @@ describe('SySelect.vue', () => {
 		})
 	})
 
-	it('keeps the label active when a validation error is displayed', async () => {
+	// Comme les autres champs, un SySelect vide garde son libellé dans le champ quand une
+	// erreur s'affiche : le message suffit, le libellé ne doit pas remonter dans la bordure.
+	it('keeps the label inside an empty field when a validation error is displayed', async () => {
 		const wrapper = mount(SySelect, {
 			props: {
 				items: [{ text: 'Option 1', value: '1' }],
@@ -234,7 +236,8 @@ describe('SySelect.vue', () => {
 		await nextTick()
 
 		expect(isValid).toBe(false)
-		expect(wrapper.find('.v-field').classes()).toContain('v-field--active')
+		expect(wrapper.find('.v-messages__message').exists()).toBe(true)
+		expect(wrapper.find('.v-field').classes()).not.toContain('v-field--active')
 
 		wrapper.unmount()
 	})

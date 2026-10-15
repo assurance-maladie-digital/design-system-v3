@@ -102,10 +102,10 @@ export const Basic: Story = {
 		},
 		template: `
       <SyForm v-bind="args" @submit="submitForm">
-        <div class="d-flex flex-column gap-4">
+        <div class="d-flex flex-column ga-4">
           <SyTextField v-model="name" label="Nom" required class="mb-2" />
           <SyTextField v-model="email" label="Email" :custom-rules="emailRules" class="mb-2" />
-          <div class="d-flex gap-3">
+          <div class="d-flex ga-3">
             <VBtn type="submit" color="primary">Soumettre</VBtn>
           </div>
         </div>
@@ -119,10 +119,10 @@ export const Basic: Story = {
 				code: `
 <template>
       <SyForm @submit="submitForm">
-        <div class="d-flex flex-column gap-4">
+        <div class="d-flex flex-column ga-4">
           <SyTextField v-model="name" label="Nom" required class="mb-2" />
           <SyTextField v-model="email" label="Email" :custom-rules="emailRules" class="mb-2" />
-          <div class="d-flex gap-3">
+          <div class="d-flex ga-3">
             <v-btn type="submit" color="primary">Soumettre</v-btn>
           </div>
         </div>
@@ -207,7 +207,7 @@ export const CustomValidation: Story = {
 		template: `
       <div>
         <SyForm ref="form" v-bind="args" @submit="onSubmit" :validate-on-submit="args.validateOnSubmit">
-          <div class="d-flex flex-column gap-4">
+          <div class="d-flex flex-column ga-4">
             <SyTextField v-model="username" label="Nom d'utilisateur" required class="mb-2" />
             <SyTextField v-model="password" label="Mot de passe" type="password" :custom-rules="passwordRules" class="mb-2" />
             <SyTextField 
@@ -218,8 +218,8 @@ export const CustomValidation: Story = {
               :custom-rules="confirmPasswordRules"
               class="mb-2"
             />
-            <div class="d-flex gap-3">
-              <VBtn type="submit" color="primary" class="mr-2">S'inscrire</VBtn>
+            <div class="d-flex ga-3">
+              <VBtn type="submit" color="primary">S'inscrire</VBtn>
               <VBtn @click="validateManually" color="secondary">Valider sans soumettre</VBtn>
             </div>
           </div>
@@ -251,7 +251,7 @@ correspondance des deux mots de passe (validation **inter-champs**).
 				code: `
 <template>
   <SyForm ref="form" v-model="isFormValid" @submit="onSubmit">
-    <div class="d-flex flex-column gap-4">
+    <div class="d-flex flex-column ga-4">
       <SyTextField v-model="username" label="Nom d'utilisateur" required />
       <SyTextField v-model="password" label="Mot de passe" type="password" :custom-rules="passwordRules" />
       <SyTextField v-model="confirmPassword" label="Confirmer le mot de passe" type="password" :custom-rules="confirmPasswordRules" />
@@ -259,7 +259,7 @@ correspondance des deux mots de passe (validation **inter-champs**).
 	<!-- Validité globale exposée par le v-model -->
 	<p>Validité du formulaire : {{ isFormValid === null ? 'statut indisponible' : (isFormValid ? 'valide' : 'invalide') }}</p>
 
-      <div class="d-flex gap-3">
+      <div class="d-flex ga-3">
         <v-btn type="submit" color="primary">S'inscrire</v-btn>
         <v-btn variant="outlined" @click="validateManually">Valider manuellement</v-btn>
       </div>
@@ -358,11 +358,11 @@ export const MixedFields: Story = {
 		},
 		template: `
       <SyForm ref="form" v-bind="args" @submit="submitForm">
-        <div class="d-flex flex-column gap-4">
+        <div class="d-flex flex-column ga-4">
           <SyTextField v-model="formData.name" label="Nom complet" required class="mb-2" />
           <SyTextField v-model="formData.email" label="Email" :custom-rules="emailCustomRules" class="mb-2" />
           <SySelect v-model="formData.country" :items="countries" label="Pays" required class="mb-2" />
-          <div class="d-flex gap-3">
+          <div class="d-flex ga-3">
             <VBtn type="submit" color="primary">Enregistrer</VBtn>
           </div>
         </div>
@@ -376,11 +376,11 @@ export const MixedFields: Story = {
 				code: `
 <template>
       <SyForm ref="form" @submit="submitForm">
-        <div class="d-flex flex-column gap-4">
+        <div class="d-flex flex-column ga-4">
           <SyTextField v-model="formData.name" label="Nom complet" required class="mb-2" />
           <SyTextField v-model="formData.email" label="Email" :custom-rules="emailCustomRules" class="mb-2" />
           <SySelect v-model="formData.country" :items="countries" label="Pays" required class="mb-2" />
-          <div class="d-flex gap-3">
+          <div class="d-flex ga-3">
             <v-btn type="submit" color="primary">Enregistrer</v-btn>
           </div>
         </div>
@@ -504,7 +504,7 @@ export const SelectionFields: Story = {
 		},
 		template: `
       <SyForm ref="form" v-model="isFormValid" v-bind="args">
-        <div class="d-flex flex-column gap-4">
+        <div class="d-flex flex-column ga-4">
           <SySelect v-model="values.careType" label="Type de soins (SySelect)" :items="careTypeItems" required />
           <SyAutocomplete v-model="values.doctor" label="Médecin traitant (SyAutocomplete)" :items="doctorItems" required />
           <SyInputSelect v-model="values.regime" label="Régime (SyInputSelect)" :items="regimeItems" required />
@@ -519,7 +519,7 @@ export const SelectionFields: Story = {
           />
           <SyCheckbox v-model="values.terms" label="J'accepte les conditions d'utilisation (SyCheckbox)" required />
           <p role="status">Validité du formulaire : {{ validityText }}</p>
-          <div class="d-flex gap-3">
+          <div class="d-flex ga-3">
             <VBtn variant="outlined" color="primary" @click="form?.reset()">Réinitialiser</VBtn>
             <VBtn type="submit" color="primary">Soumettre</VBtn>
           </div>
@@ -552,8 +552,10 @@ sans afficher d'erreur.
     <SyRadioGroup v-model="values.transmission" label="Voie de transmission" :options="transmissionOptions" required />
     <SyCheckBoxGroup v-model="values.notifications" label="Notifications souhaitées" :options="notificationOptions" multiple required />
     <SyCheckbox v-model="values.terms" label="J'accepte les conditions d'utilisation" required />
-    <v-btn variant="outlined" color="primary" @click="form?.reset()">Réinitialiser</v-btn>
-    <v-btn type="submit" color="primary">Soumettre</v-btn>
+    <div class="d-flex ga-3">
+      <v-btn variant="outlined" color="primary" @click="form?.reset()">Réinitialiser</v-btn>
+      <v-btn type="submit" color="primary">Soumettre</v-btn>
+    </div>
   </SyForm>
 </template>
 `,
@@ -668,7 +670,7 @@ export const DateFields: Story = {
             required
           />
           <p role="status">Validité du formulaire : {{ validityText }}</p>
-          <div class="d-flex gap-3">
+          <div class="d-flex ga-3">
             <VBtn type="submit" color="primary">Soumettre</VBtn>
           </div>
         </div>
@@ -767,7 +769,7 @@ export const VuetifyValidation: Story = {
 		},
 		template: `
       <SyForm v-model="isFormValid" v-bind="args">
-        <div class="d-flex flex-column gap-4">
+        <div class="d-flex flex-column ga-4">
           <SyTextField v-model="values.synapse" label="Nom (validation Synapse)" :custom-rules="nameRules" />
           <SyTextField
             v-model="values.vuetify"
@@ -784,7 +786,7 @@ export const VuetifyValidation: Story = {
             :rules="requiredRules"
           />
           <p role="status">Validité du formulaire : {{ validityText }}</p>
-          <div class="d-flex gap-3">
+          <div class="d-flex ga-3">
             <VBtn type="submit" color="primary">Soumettre</VBtn>
           </div>
         </div>
@@ -902,7 +904,7 @@ export const AsyncValidation: Story = {
 		},
 		template: `
       <SyForm v-model="isFormValid" v-bind="args" @submit="onSubmit">
-        <div class="d-flex flex-column gap-4">
+        <div class="d-flex flex-column ga-4">
           <SyTextField
             v-model="username"
             label="Identifiant"
@@ -914,7 +916,7 @@ export const AsyncValidation: Story = {
             <template v-if="pendingValidations > 0"> — vérification en cours…</template>
             <template v-else-if="submitResult !== null"> — dernière soumission : {{ submitResult ? 'valide' : 'invalide' }}</template>
           </p>
-          <div class="d-flex gap-3">
+          <div class="d-flex ga-3">
             <VBtn type="submit" color="primary">Soumettre</VBtn>
           </div>
         </div>
@@ -1344,7 +1346,7 @@ export const FieldStates: Story = {
 		},
 		template: `
       <SyForm v-model="isFormValid" v-bind="args" @submit="onSubmit">
-        <div class="d-flex flex-column gap-4">
+        <div class="d-flex flex-column ga-4">
           <VSwitch
             v-model="showConditionalField"
             label="Afficher le champ conditionnel"
@@ -1369,7 +1371,7 @@ export const FieldStates: Story = {
             Validité du formulaire : {{ validityText }}
             <template v-if="submitResult !== null"> — dernière soumission : {{ submitResult ? 'valide' : 'invalide' }}</template>
           </p>
-          <div class="d-flex gap-3">
+          <div class="d-flex ga-3">
             <VBtn type="submit" color="primary">Soumettre</VBtn>
           </div>
         </div>
@@ -1453,7 +1455,7 @@ export const ServerErrors: Story = {
 		},
 		template: `
       <SyForm v-model="isFormValid" v-bind="args" @submit="onSubmit">
-        <div class="d-flex flex-column gap-4">
+        <div class="d-flex flex-column ga-4">
           <SyTextField
             v-model="email"
             label="Adresse e-mail"
@@ -1463,7 +1465,7 @@ export const ServerErrors: Story = {
             @update:model-value="serverErrors = []"
           />
           <p role="status">Validité du formulaire : {{ validityText }}</p>
-          <div class="d-flex gap-3">
+          <div class="d-flex ga-3">
             <VBtn type="submit" color="primary">Créer le compte</VBtn>
           </div>
         </div>

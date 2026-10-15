@@ -140,12 +140,11 @@
 		emit('update:errorMessages', localErrorMessages.value)
 	})
 
-	watch([isOpen, hasError], ([newIsOpen, newHasError]) => {
+	// L'état d'erreur n'est recalculé qu'à la fermeture du menu : suivre aussi hasError
+	// réimposait l'erreur dès que clearValidation (reset du SyForm) la retirait.
+	watch(isOpen, (newIsOpen) => {
 		if (!newIsOpen) {
 			hasError.value = (!selectedItem.value && isRequired.value) || props.errorMessages.length > 0
-		}
-		else {
-			hasError.value = newHasError
 		}
 	})
 

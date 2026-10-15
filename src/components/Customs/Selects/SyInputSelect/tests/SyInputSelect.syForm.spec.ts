@@ -106,4 +106,33 @@ describe('SyInputSelect in SyForm', () => {
 		expect(vm.value).toBeNull()
 		expect(wrapper.find('.v-messages__message').exists()).toBe(false)
 	})
+
+	it('removes the error style on form reset after a failed submit', async () => {
+		const wrapper = mount(createForm({ required: true }))
+		await settle()
+
+		expect(await submit(wrapper)).toEqual({ isValid: false })
+		expect(wrapper.find('.sy-input-select').classes()).toContain('text-error')
+
+		const vm = wrapper.vm as unknown as { reset: () => void }
+		vm.reset()
+		await settle()
+
+		expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+		expect(wrapper.find('.sy-input-select').classes()).not.toContain('text-error')
+	})
+
+	it('keeps the error style of a failing custom rule after a submit', async () => {
+		const wrapper = mount(createForm({
+			customRules: [{ type: 'custom', options: { validate: () => false, message: 'Option refusée' } }],
+		}))
+		await settle()
+
+		const vm = wrapper.vm as unknown as { value: Record<string, unknown> | null }
+		vm.value = items[1]!
+		await settle()
+
+		await submit(wrapper)
+		expect(wrapper.find('.sy-input-select').classes()).toContain('text-error')
+	})
 })

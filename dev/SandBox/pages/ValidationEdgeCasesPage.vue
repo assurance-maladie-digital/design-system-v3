@@ -2,6 +2,9 @@
 	import { computed, ref, watch } from 'vue'
 	import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 	import SelectBtnField from '@/components/Customs/Selects/SelectBtnField/SelectBtnField.vue'
+	import SyInputSelect from '@/components/Customs/Selects/SyInputSelect/SyInputSelect.vue'
+	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
+	import PhoneField from '@/components/PhoneField/PhoneField.vue'
 	import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 	import SyAlert from '@/components/SyAlert/SyAlert.vue'
 	import { mdiBugOutline, mdiCheckCircle, mdiRefresh, mdiShieldCheckOutline, mdiSwapHorizontal, mdiHelpCircleOutline } from '@mdi/js'
@@ -226,6 +229,55 @@
 	async function checkExtStateField() {
 		extStateFieldResult.value = await extStateFieldRef.value?.validateOnSubmit() ?? null
 	}
+
+	// ── Scénario 11 : reset du SyInputSelect après un submit en échec ─
+	// Corrigé : le watch de l'état d'erreur suivait aussi `hasError`, et réimposait le
+	// style d'erreur dès que le reset le retirait (message effacé, champ toujours rouge).
+	// Le même watch retirait le style d'erreur d'une règle custom en échec au submit.
+	const inputSelectItems = [
+		{ text: 'Régime général', value: 'general' },
+		{ text: 'Régime agricole', value: 'agricole' },
+	]
+	const inputSelectRequired = ref<Record<string, unknown> | string | null>(null)
+	const inputSelectCustom = ref<Record<string, unknown> | string | null>(inputSelectItems[1]!)
+	const inputSelectCustomRules = [
+		{
+			type: 'custom',
+			options: {
+				validate: (value: unknown) => (value as { value?: string } | null)?.value !== 'agricole',
+				message: 'Le régime agricole n’est pas accepté',
+			},
+		},
+	]
+	const inputSelectFormRef = ref<InstanceType<typeof SyForm> | null>(null)
+	const inputSelectSubmitResult = ref<boolean | null>(null)
+
+	// ── Scénario 12 : champ requis en mode Vuetify (PhoneField) ──────
+	// Changement de comportement : PhoneField applique désormais use-vuetify-validation.
+	// Comme dans Vuetify, `required` n'ajoute alors que l'astérisque et l'attribut ARIA :
+	// sans règle requise dans `rules`, un champ vide ne bloque pas la soumission.
+	const phoneWithoutRequiredRule = ref('')
+	const phoneWithRequiredRule = ref('')
+	const phoneFormatRule = (value: string) =>
+		/^0[1-9][0-9]{8}$/.test((value ?? '').replace(/\s/g, '')) || 'Le numéro de téléphone n’est pas valide.'
+	const phoneRulesWithoutRequired = [(value: string) => !value || phoneFormatRule(value)]
+	const phoneRulesWithRequired = [
+		(value: string) => !!value || 'Le numéro de téléphone est requis.',
+		phoneFormatRule,
+	]
+	const phoneWithoutRequiredResult = ref<boolean | null>(null)
+	const phoneWithRequiredResult = ref<boolean | null>(null)
+
+	// ── Scénario 13 : SySelect requis soumis vide ────────────────────
+	// Le message « requis » s'affiche au submit (sur dev, seule la bordure passait en
+	// rouge). Corrigé : le libellé ne remonte plus dans la bordure quand un message
+	// s'affiche sur un champ vide (isFieldActive ne tient plus compte des messages).
+	const sySelectValue = ref<string | null>(null)
+	const sySelectItems = [
+		{ text: 'Option 1', value: '1' },
+		{ text: 'Option 2', value: '2' },
+	]
+	const sySelectSubmitResult = ref<boolean | null>(null)
 </script>
 
 <template>
@@ -855,6 +907,233 @@
 						<span :class="`text-${validityLabel(extStateFormValid).color}`">
 							v-model SyForm : {{ validityLabel(extStateFormValid).text }}
 						</span>
+					</div>
+				</SyForm>
+			</VCardText>
+		</VCard>
+
+		<!-- Scénario 11 : reset SyInputSelect après un submit en échec -->
+		<VCard
+			variant="outlined"
+			rounded="lg"
+			class="mb-6"
+		>
+			<VCardItem>
+				<template #prepend>
+					<VIcon
+						:icon="mdiRefresh"
+						color="success"
+					/>
+				</template>
+				<VCardTitle class="text-h6">
+					11. Reset du <code>SyInputSelect</code> après un submit en échec
+				</VCardTitle>
+				<VCardSubtitle>
+					Corrigé — le reset retire aussi le style d'erreur, pas seulement le message
+				</VCardSubtitle>
+			</VCardItem>
+			<VCardText>
+				<SyAlert
+					type="info"
+					variant="tonal"
+					class="mb-4"
+				>
+					<strong>Test :</strong> soumettre (les deux champs passent en erreur), puis réinitialiser.
+					<strong>Attendu :</strong> après le reset, plus aucun message ni bordure rouge sur le
+					premier champ. Au submit, le second champ garde son style d'erreur (règle custom en échec).
+					<strong>Bug (corrigé) :</strong> le message disparaissait mais le bouton restait rouge,
+					et le style d'erreur de la règle custom disparaissait au submit.
+				</SyAlert>
+				<SyForm
+					ref="inputSelectFormRef"
+					@submit="inputSelectSubmitResult = $event.isValid"
+				>
+					<SyInputSelect
+						v-model="inputSelectRequired"
+						label="Régime (requis)"
+						:items="inputSelectItems"
+						required
+						display-asterisk
+						class="mb-4"
+					/>
+					<SyInputSelect
+						v-model="inputSelectCustom"
+						label="Régime (règle custom)"
+						:items="inputSelectItems"
+						:custom-rules="inputSelectCustomRules"
+					/>
+					<div class="d-flex align-center ga-3 mt-3">
+						<VBtn
+							color="primary"
+							type="submit"
+						>
+							Soumettre
+						</VBtn>
+						<VBtn
+							variant="tonal"
+							@click="inputSelectFormRef?.reset(); inputSelectSubmitResult = null"
+						>
+							Réinitialiser
+						</VBtn>
+						<VChip
+							v-if="inputSelectSubmitResult !== null"
+							:color="inputSelectSubmitResult ? 'success' : 'error'"
+							size="small"
+						>
+							Submit : {{ inputSelectSubmitResult ? 'valide' : 'invalide' }}
+						</VChip>
+					</div>
+				</SyForm>
+			</VCardText>
+		</VCard>
+
+		<!-- Scénario 12 : requis en mode Vuetify (PhoneField) -->
+		<VCard
+			variant="outlined"
+			rounded="lg"
+			class="mb-6"
+		>
+			<VCardItem>
+				<template #prepend>
+					<VIcon
+						:icon="mdiHelpCircleOutline"
+						color="warning"
+					/>
+				</template>
+				<VCardTitle class="text-h6">
+					12. Champ requis en mode Vuetify (<code>PhoneField</code>)
+				</VCardTitle>
+				<VCardSubtitle>
+					Changement de comportement — <code>use-vuetify-validation</code> est maintenant appliqué
+				</VCardSubtitle>
+			</VCardItem>
+			<VCardText>
+				<SyAlert
+					type="warning"
+					variant="tonal"
+					class="mb-4"
+				>
+					<strong>Attendu :</strong> en mode Vuetify, <code>required</code> n'ajoute que l'astérisque
+					et l'attribut ARIA, comme dans Vuetify. Vide, le premier champ (règle de format seule)
+					laisse passer la soumission. Sans aucune règle dans <code>rules</code>, un avertissement de
+					développement le signalerait dans la console. Le second (règle requise dans <code>rules</code>) bloque avec « Le numéro de téléphone est
+					requis. ». <strong>Avant :</strong> PhoneField ignorait <code>use-vuetify-validation</code>
+					et appliquait la règle requise Synapse.
+				</SyAlert>
+				<div class="d-flex flex-wrap ga-6">
+					<SyForm
+						class="flex-grow-1"
+						@submit="phoneWithoutRequiredResult = $event.isValid"
+					>
+						<PhoneField
+							v-model="phoneWithoutRequiredRule"
+							label="Sans règle requise"
+							required
+							display-asterisk
+							use-vuetify-validation
+							:rules="phoneRulesWithoutRequired"
+						/>
+						<div class="d-flex align-center ga-3 mt-3">
+							<VBtn
+								color="primary"
+								type="submit"
+							>
+								Soumettre
+							</VBtn>
+							<VChip
+								v-if="phoneWithoutRequiredResult !== null"
+								:color="phoneWithoutRequiredResult ? 'success' : 'error'"
+								size="small"
+							>
+								Submit : {{ phoneWithoutRequiredResult ? 'valide' : 'invalide' }}
+							</VChip>
+						</div>
+					</SyForm>
+					<SyForm
+						class="flex-grow-1"
+						@submit="phoneWithRequiredResult = $event.isValid"
+					>
+						<PhoneField
+							v-model="phoneWithRequiredRule"
+							label="Avec règle requise"
+							required
+							display-asterisk
+							use-vuetify-validation
+							:rules="phoneRulesWithRequired"
+						/>
+						<div class="d-flex align-center ga-3 mt-3">
+							<VBtn
+								color="primary"
+								type="submit"
+							>
+								Soumettre
+							</VBtn>
+							<VChip
+								v-if="phoneWithRequiredResult !== null"
+								:color="phoneWithRequiredResult ? 'success' : 'error'"
+								size="small"
+							>
+								Submit : {{ phoneWithRequiredResult ? 'valide' : 'invalide' }}
+							</VChip>
+						</div>
+					</SyForm>
+				</div>
+			</VCardText>
+		</VCard>
+
+		<!-- Scénario 13 : SySelect requis soumis vide -->
+		<VCard
+			variant="outlined"
+			rounded="lg"
+			class="mb-6"
+		>
+			<VCardItem>
+				<template #prepend>
+					<VIcon
+						:icon="mdiBugOutline"
+						color="success"
+					/>
+				</template>
+				<VCardTitle class="text-h6">
+					13. <code>SySelect</code> requis soumis vide
+				</VCardTitle>
+				<VCardSubtitle>
+					Corrigé — le libellé reste dans le champ vide quand le message d'erreur s'affiche
+				</VCardSubtitle>
+			</VCardItem>
+			<VCardText>
+				<SyAlert
+					type="info"
+					variant="tonal"
+					class="mb-4"
+				>
+					<strong>Attendu :</strong> au submit, le message « requis » s'affiche et le libellé reste
+					dans le champ vide, comme pour les autres champs.
+					<strong>Bug (corrigé) :</strong> sur dev, seule la bordure passait en rouge, sans message ;
+					une fois le message affiché, le libellé remontait dans la bordure alors que le champ était vide.
+				</SyAlert>
+				<SyForm @submit="sySelectSubmitResult = $event.isValid">
+					<SySelect
+						v-model="sySelectValue"
+						label="Option"
+						:items="sySelectItems"
+						required
+						display-asterisk
+					/>
+					<div class="d-flex align-center ga-3 mt-3">
+						<VBtn
+							color="primary"
+							type="submit"
+						>
+							Soumettre
+						</VBtn>
+						<VChip
+							v-if="sySelectSubmitResult !== null"
+							:color="sySelectSubmitResult ? 'success' : 'error'"
+							size="small"
+						>
+							Submit : {{ sySelectSubmitResult ? 'valide' : 'invalide' }}
+						</VChip>
 					</div>
 				</SyForm>
 			</VCardText>

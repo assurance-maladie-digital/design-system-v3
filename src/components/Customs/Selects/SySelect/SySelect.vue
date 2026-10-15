@@ -456,7 +456,6 @@
 			|| hasSingleSelection.value
 			|| isOpen.value
 			|| focused.value
-			|| hasMessages.value
 	})
 
 	const labelWithAsterisk = computed(() => {
@@ -1304,12 +1303,14 @@
 		}
 	}
 
+	// on-surface comme pour l'état succès : on-surface-variant (#EEEEEE) rendait le
+	// chevron quasi invisible sur fond blanc (contraste RGAA insuffisant).
 	:deep(.v-icon.arrow) {
-		color: rgb(var(--v-theme-on-surface-variant)) !important;
+		color: rgb(var(--v-theme-on-surface)) !important;
 	}
 
 	:deep(.v-icon.arrow .v-icon__svg) {
-		fill: rgb(var(--v-theme-on-surface-variant)) !important;
+		fill: rgb(var(--v-theme-on-surface)) !important;
 	}
 }
 
