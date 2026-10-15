@@ -45,12 +45,9 @@ export function useFormValidation() {
 	 * Retire un champ du registre du formulaire
 	 */
 	const unregister = (component: ValidatableComponent) => {
-		// Prefer direct reference removal
-		let index = validatableComponents.value.indexOf(component)
-		// Fallback: locate by matching validateOnSubmit reference
-		if (index === -1) {
-			index = validatableComponents.value.findIndex(c => c.validateOnSubmit === component.validateOnSubmit)
-		}
+		// Retrait par référence uniquement : un repli sur `validateOnSubmit` pourrait retirer un
+		// autre champ partageant la même fonction de validation.
+		const index = validatableComponents.value.indexOf(component)
 		if (index !== -1) {
 			validatableComponents.value.splice(index, 1)
 		}

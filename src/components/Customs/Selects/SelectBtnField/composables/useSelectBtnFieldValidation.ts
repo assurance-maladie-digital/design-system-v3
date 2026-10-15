@@ -17,6 +17,7 @@ export function useSelectBtnFieldValidation(
 	locales: Ref<{
 		requiredField: (label: string | undefined) => string
 	}>,
+	onUpdateModelValue: (value: unknown) => void,
 ) {
 	const focused = ref(false)
 
@@ -32,7 +33,12 @@ export function useSelectBtnFieldValidation(
 	)
 
 	const { validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
-		modelValue: computed(() => props.modelValue),
+		// Écrite par le reset du SyForm / VForm : passe par l'émission `update:modelValue`
+		// (une ref en lecture seule ferait échouer le reset avec un warning Vue).
+		modelValue: computed({
+			get: () => props.modelValue,
+			set: onUpdateModelValue,
+		}),
 		readonly: computed(() => props.readonly ?? false),
 		disabled: computed(() => props.disabled ?? false),
 		required: computed(() => props.required ?? false),

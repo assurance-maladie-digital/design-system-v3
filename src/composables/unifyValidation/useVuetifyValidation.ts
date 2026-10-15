@@ -1,6 +1,7 @@
 import { computed, reactive, watch, type Ref } from 'vue'
 import type { ValidationRule } from 'vuetify'
 import { useValidation } from 'vuetify/lib/composables/validation.mjs'
+import { locales } from './locales'
 
 /** Interface between the validation entrypoint "useValidation" composable and the Vuetify validation logic. */
 export function useVuetifyValidation(
@@ -58,7 +59,10 @@ export function useVuetifyValidation(
 			}
 			return
 		}
-		errors.value = errorMessages
+		// Une rule qui renvoie `false` produit un message vide côté
+		// Vuetify : on affiche le message générique, comme pour les rules évaluées par le pont
+		// (normalizeVuetifyRuleResult), au lieu d'un champ en erreur sans explication.
+		errors.value = errorMessages.map(message => message || locales.invalidValue)
 	})
 
 	return vuetifyValidator

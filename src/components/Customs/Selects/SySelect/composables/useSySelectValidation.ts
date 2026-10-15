@@ -29,7 +29,8 @@ export function useSySelectValidation(
 		readonly: computed(() => props.readonly ?? false),
 		disabled: computed(() => props.disabled ?? false),
 		required: computed(() => props.required ?? false),
-		isValidateOnBlur: computed(() => props.isValidateOnBlur ?? false),
+		// Repli aligné sur le défaut effectif de SySelect (validationPropsDefaults : true)
+		isValidateOnBlur: computed(() => props.isValidateOnBlur ?? true),
 		showSuccessMessages: computed(() => props.showSuccessMessages ?? false),
 		disableErrorHandling: computed(() => props.disableErrorHandling ?? false),
 		useVuetifyValidation: computed(() => props.useVuetifyValidation ?? false),

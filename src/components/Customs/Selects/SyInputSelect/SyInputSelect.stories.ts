@@ -33,7 +33,10 @@ const meta = {
 		vuetifyOptions: { control: 'object' },
 		displayAsterisk: { control: 'boolean' },
 		readonly: { control: 'boolean' },
-		bgColor: { control: 'color' },
+		disabled: {
+			control: 'boolean',
+			description: 'Désactive le champ : le menu ne s\'ouvre pas, la valeur ne peut pas être modifiée et le champ ne bloque pas la soumission du formulaire (comme `readonly`, un champ non modifiable ne peut pas être corrigé).',
+		},
 	},
 } as Meta<typeof SyInputSelect>
 
@@ -86,6 +89,7 @@ export const Default: Story = {
 			},
 		},
 		readonly: false,
+		disabled: false,
 	},
 	render: (args) => {
 		return {
@@ -99,6 +103,7 @@ export const Default: Story = {
 						v-bind="args"
 						:vuetify-options="args.vuetifyOptions"
 						:readonly="args.readonly"
+						:disabled="args.disabled"
 					/>
 				</div>
 				<br/><br/><br/><br/>

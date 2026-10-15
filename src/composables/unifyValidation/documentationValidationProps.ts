@@ -1,7 +1,7 @@
 const RuleGeneralType = `'required' | 'custom'`
 const StringRuleType = `'minLength' | 'maxLength' | 'exactLength' | 'email' | 'matchPattern'`
 const NumberRuleType = `'min' | 'max'`
-const DateRuleType = `'noWeekend' | 'noBeforeToday' | 'notAfterToday' | 'notBeforeDate' | 'notAfterDate' | 'dateExact' | 'isHolidayDay'`
+const DateRuleType = `'notWeekend' | 'notBeforeToday' | 'notAfterToday' | 'notBeforeDate' | 'notAfterDate' | 'dateExact' | 'isHolidayDay'`
 
 function generateBuiltInRuleType(type: 'base' | 'date' | 'number' | 'string' | 'all' = 'all') {
 	switch (type) {
@@ -41,7 +41,7 @@ export function getValidationDocumentation(type: 'base' | 'date' | 'number' | 's
 			},
 		},
 		required: {
-			description: 'Indique que le champ est requis.',
+			description: 'Indique que le champ est requis. En mode Synapse, un champ requis vide bloque la soumission. En mode Vuetify (useVuetifyValidation), comme dans Vuetify, required n\'ajoute que l\'indication visuelle et ARIA : ajoutez une règle dans rules (ex. v => !!v || \'Champ requis\') pour bloquer la soumission.',
 			control: 'boolean',
 			table: {
 				type: { summary: 'boolean' },
@@ -77,7 +77,7 @@ export function getValidationDocumentation(type: 'base' | 'date' | 'number' | 's
 			},
 		},
 		useVuetifyValidation: {
-			description: 'Indique si la validation doit être gérée par Vuetify (true) ou par Synapse (false).',
+			description: 'Indique si la validation doit être gérée par Vuetify (true) ou par Synapse (false). En mode Vuetify, seules les règles de rules s\'appliquent : required, customRules et les règles intégrées du composant ne bloquent pas la soumission.',
 			control: 'boolean',
 			table: {
 				type: { summary: 'boolean' },
@@ -224,7 +224,7 @@ export function getValidationDocumentation(type: 'base' | 'date' | 'number' | 's
 			},
 		},
 		maxErrors: {
-			description: 'Le nombre maximum d\'erreurs à afficher, applicable uniquement si useVuetifyValidation est true.',
+			description: 'Le nombre maximum de messages à afficher, appliqué séparément aux erreurs, aux avertissements et aux succès, quel que soit le mode de validation (Synapse ou Vuetify).',
 			control: 'number',
 			table: {
 				type: { summary: 'number' },

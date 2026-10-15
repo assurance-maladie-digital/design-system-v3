@@ -19,7 +19,8 @@ export function normalizeMessages(messages: string[], max?: number): string[] {
 }
 
 /**
- * Fusionne des messages externes et internes en dédupliquant puis limitant.
+ * Fusionne des messages externes et internes en filtrant les messages vides,
+ * en dédupliquant puis en limitant.
  */
 export function mergeMessages(
 	externalMessages: string[] | null | undefined,
@@ -30,7 +31,7 @@ export function mergeMessages(
 		[...new Set([
 			...(externalMessages ?? []),
 			...internalMessages,
-		])],
+		].filter(Boolean))],
 		max,
 	)
 }

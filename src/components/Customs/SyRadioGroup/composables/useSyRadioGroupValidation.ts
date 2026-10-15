@@ -1,4 +1,4 @@
-import { computed, ref, toRef, type ComputedRef, type Ref } from 'vue'
+import { computed, toRef, type ComputedRef, type Ref } from 'vue'
 import { useValidation, type FieldValidationProps, type ValidationRule, type VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 
 export interface SyRadioGroupValidationProps extends FieldValidationProps {
@@ -59,9 +59,6 @@ export function useSyRadioGroupValidation(
 		requiredField: (label: string | undefined) => string
 	}>,
 ): UseSyRadioGroupValidationReturn {
-	// Utiliser la variable focused passée en paramètre, sinon en créer une locale
-	const focusedRef = focused || ref(false)
-
 	// Construction des règles de validation par défaut (required)
 	const defaultRules = computed<ValidationRule[]>(() =>
 		props.required
@@ -110,7 +107,7 @@ export function useSyRadioGroupValidation(
 		hasWarningProp: toRef(() => props.hasWarning ?? false),
 		hasSuccessProp: toRef(() => props.hasSuccess ?? false),
 		maxErrors: toRef(() => props.maxErrors ?? 1),
-		focused: focusedRef,
+		focused,
 	})
 
 	const validateOnSubmit = async (): Promise<boolean> => {
@@ -127,7 +124,7 @@ export function useSyRadioGroupValidation(
 		hasWarning,
 		hasSuccess,
 		defaultRules,
-		focused: focusedRef,
+		focused,
 		clearValidation,
 	}
 }
