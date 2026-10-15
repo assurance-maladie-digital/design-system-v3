@@ -51,11 +51,41 @@ Vous pouvez implémenter des règles de validation personnalisées et accéder a
 
 <Source dark code={'\n<script setup lang="ts">\nimport { ref } from "vue"\nimport SyForm from "@cnamts/synapse"\nimport SyTextField from "@cnamts/synapse"\nimport SySelect from "@/components/Customs/Selects/SySelect/SySelect.vue"\nimport SyCheckbox from "@/components/Customs/SyCheckbox/SyCheckbox.vue"\n\nconst formData = ref({\n  name: "",\n  email: "",\n  country: "",\n  subscribe: false,\n})\n\nconst countries = [\n  { text: "France", value: "fr" },\n  { text: "Allemagne", value: "de" },\n  { text: "Espagne", value: "es" },\n  { text: "Italie", value: "it" },\n]\n\nconst onSubmit = (event) => {\n  if (event.isValid) {\n    alert("Formulaire valide ! Données: " + JSON.stringify(formData.value))\n  }\n}\n</script>\n\n<template>\n  <SyForm @submit="onSubmit">\n    <div class="d-flex flex-column gap-4">\n      <SyTextField v-model="formData.name" label="Nom complet" required />\n      <SyTextField v-model="formData.email" label="Email" required :rules="[v => /.+@.+/.test(v) || \'E-mail invalide\']" />\n      <SySelect v-model="formData.country" :items="countries" label="Pays" required />\n      <SyCheckbox v-model="formData.subscribe" label="S\'abonner à la newsletter" />\n      <v-btn type="submit" color="primary">Enregistrer</v-btn>\n    </div>\n  </SyForm>\n</template>'} />
 
+### Champs de sélection
+
+Tous les composants de sélection s'enregistrent auprès de `SyForm` : un champ `required` laissé vide bloque la soumission, et `reset()` vide chaque champ sans afficher d'erreur.
+
+<Canvas of={SyFormStories.SelectionFields} />
+
+### Champs de date
+
+Les champs de date s'enregistrent comme les autres champs, quel que soit le mode du `DatePicker`.
+
+<Canvas of={SyFormStories.DateFields} />
+
+## Validation Synapse et validation Vuetify
+
+Un même `SyForm` valide des champs Synapse (`custom-rules`), des champs Synapse en mode Vuetify (`use-vuetify-validation`) et des composants Vuetify natifs. En mode Vuetify, `required` n'ajoute que l'indication visuelle et ARIA : ajoutez une règle dans `rules` pour bloquer la soumission.
+
+<Canvas of={SyFormStories.VuetifyValidation} />
+
+## Validation asynchrone
+
+Une règle `custom` peut renvoyer une promesse. La soumission attend la fin des validations en cours, et un résultat obsolète (valeur modifiée avant la réponse) est ignoré.
+
+<Canvas of={SyFormStories.AsyncValidation} />
+
+## Avertissements et messages de succès
+
+Les règles de `custom-warning-rules` affichent un avertissement sans bloquer la soumission. Avec `show-success-messages`, le `successMessage` d'une règle s'affiche quand elle passe.
+
+<Canvas of={SyFormStories.WarningAndSuccessRules} />
+
 ## Sans validation automatique
 
-Si vous souhaitez gérer vous-même la validation, vous pouvez désactiver la validation automatique en passant `validate-on-submit="false"`.
+Si vous souhaitez gérer vous-même la validation, désactivez la validation automatique avec `:validate-on-submit="false"`. L'événement `submit` renvoie alors toujours `isValid: true` : déclenchez la validation avec la méthode `validate()`.
 
-<Source dark code={'\n<script setup lang="ts">\nimport { ref } from "vue"\nimport SyForm from "@cnamts/synapse"\nimport SyTextField from "@cnamts/synapse"\n\nconst name = ref("")\nconst email = ref("")\n\nconst onSubmit = () => {\n  // La validation ne se fait pas automatiquement\n  alert("Soumission du formulaire sans validation automatique. Vous devez gérer la validation manuellement.")\n}\n</script>\n\n<template>\n  <SyForm :validate-on-submit="false" @submit="onSubmit">\n    <div class="d-flex flex-column gap-4">\n      <SyTextField v-model="name" label="Nom" required />\n      <SyTextField v-model="email" label="Email" required :rules="[v => /.+@.+/.test(v) || \'E-mail invalide\']" />\n      <v-btn type="submit" color="primary">Soumettre</v-btn>\n    </div>\n  </SyForm>\n</template>'} />
+<Canvas of={SyFormStories.WithoutAutoValidation} />
 
 ## API
 
@@ -85,17 +115,21 @@ l'état activé d'un bouton de soumission.
     </tr>
     <tr>
       <td><code>null</code></td>
-      <td>Aucun statut de champ n'est disponible.</td>
+      <td>Aucun statut n'est encore disponible, ou un champ Synapse est invalide sans qu'aucune erreur ne soit affichée.</td>
     </tr>
   </tbody>
 </table>
 
-Les champs Synapse réactifs sont évalués silencieusement au montage. Un champ requis vide
-peut donc faire passer le formulaire à `false` sans afficher de message de validation.
+Les champs Synapse réactifs sont évalués silencieusement au montage. Tant qu'aucune erreur
+n'est affichée, un champ invalide (par exemple un champ requis vide) laisse le formulaire à
+`null` : le statut ne passe à `false` qu'une fois une erreur affichée (sortie du champ,
+soumission, `validate()`).
 Pour n'activer un bouton que lorsque toutes les règles passent, comparez explicitement le
 statut à `true` :
 
 <Source dark code={'\n<script setup lang="ts">\nimport { ref } from "vue"\nimport { SyForm, SyTextField } from "@cnamts/synapse"\n\nconst valid = ref(null) // true | false | null\nconst name = ref("")\n</script>\n\n<template>\n  <SyForm v-model="valid">\n    <div class="d-flex flex-column gap-4">\n      <SyTextField v-model="name" label="Nom" required />\n      <!-- Actif uniquement lorsque toutes les règles passent -->\n      <v-btn type="submit" color="primary" :disabled="valid !== true">Soumettre</v-btn>\n    </div>\n  </SyForm>\n</template>'} />
+
+<Canvas of={SyFormStories.ValidityState} />
 
 ## Champs désactivés et erreurs injectées
 
@@ -146,6 +180,8 @@ envoyé au serveur est construit à partir de cet état (cas usuel avec `v-model
 invalide d'un champ désactivé est envoyée sans être bloquée. La validation côté serveur reste donc
 indispensable, et un champ dont la valeur doit pouvoir être corrigée ne doit pas être désactivé.
 
+<Canvas of={SyFormStories.FieldStates} />
+
 ### Erreurs injectées par le parent
 
 Une erreur transmise par le parent via `error-messages` (par exemple une erreur renvoyée par le
@@ -157,6 +193,8 @@ erreur injectée : elle reste affichée et le formulaire reste invalide tant que
 Si le serveur rejette la valeur d'un champ désactivé, l'erreur s'affiche mais ne bloque pas une
 nouvelle soumission : c'est au parent de réactiver le champ pour permettre la correction, ou de
 bloquer l'envoi lui-même.
+
+<Canvas of={SyFormStories.ServerErrors} />
 
 <Source dark code={'\n<script setup lang="ts">\nimport { ref } from "vue"\nimport { SyForm, SyTextField } from "@cnamts/synapse"\n\nconst email = ref("")\nconst serverErrors = ref<string[]>([])\n\nconst onSubmit = async ({ isValid }) => {\n  if (!isValid) return\n  const response = await saveUser({ email: email.value })\n  // L\'erreur serveur est affichée et invalide le formulaire jusqu\'à sa correction\n  serverErrors.value = response.ok ? [] : ["Cette adresse e-mail est déjà utilisée"]\n}\n</script>\n\n<template>\n  <SyForm @submit="onSubmit">\n    <SyTextField\n      v-model="email"\n      label="E-mail"\n      required\n      :error-messages="serverErrors"\n      @update:model-value="serverErrors = []"\n    />\n    <v-btn type="submit" color="primary">Enregistrer</v-btn>\n  </SyForm>\n</template>'} />
 
@@ -213,6 +251,8 @@ bloquer l'envoi lui-même.
   </tbody>
 </table>
 
+<Canvas of={SyFormStories.ExposedMethods} />
+
 ## Le système de validation en cascade
 
 `SyForm` fonctionne avec le système de validation en cascade basé sur les composables `useFormValidation` et `useValidatable`. Ce système permet aux composants de s'auto-enregistrer auprès du formulaire parent, sans nécessiter de références manuelles.
@@ -234,17 +274,15 @@ Le `v-model` du formulaire applique ces mêmes vérifications en continu, sans a
 
 ## Composants compatibles
 
-Les composants suivants sont déjà intégrés avec le système de validation en cascade et fonctionnent automatiquement avec `SyForm` :
+Les composants suivants s'enregistrent automatiquement auprès de `SyForm` :
 
-- SyTextField
-- SySelect
-- SyCheckbox
-- DatePicker
-- ComplexDatePicker
-- DateTextInput
-- NirField
-- PasswordField
-- PhoneField
+- Champs texte : `SyTextField`, `SyTextArea`, `PasswordField`, `PhoneField`, `NirField`, `Captcha`
+- Sélections : `SySelect`, `SyAutocomplete`, `SyInputSelect`, `SelectBtnField`, `SyRadioGroup`, `SyCheckBoxGroup`, `SyCheckbox`
+- Dates : `DatePicker` (tous les modes), `PeriodField`, `MonthPicker`, `LunarCalendar`
+
+Les composants Vuetify natifs dotés de `rules` (`VTextField`, `VSelect`…) sont validés par le `VForm` sous-jacent.
+
+`RangeField`, `SearchListField` et `FileUpload` ne s'enregistrent pas : ils n'influencent ni la soumission ni le `v-model` du formulaire.
 
 ## Exemple d'utilisation complète
 
