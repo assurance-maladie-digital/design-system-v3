@@ -25,7 +25,7 @@ const meta: Meta<typeof SyCheckBoxGroup> = {
 		multiple: { control: 'boolean', description: 'Sélection multiple' },
 	},
 	args: {
-		label: 'Choisissez une ou plusieurs options',
+		label: 'Choisissez une option',
 		options: [
 			{ label: 'Option A', value: 'a' },
 			{ label: 'Option B', value: 'b' },
@@ -43,6 +43,9 @@ type Story = StoryObj<typeof SyCheckBoxGroup>
  * Utilise le système de validation personnalisé du design system
  */
 export const WithError: Story = {
+	args: {
+		label: 'Sélectionnez au moins 2 options',
+	},
 	parameters: {
 		docs: {
 			description: {
@@ -778,6 +781,9 @@ async function onSubmit(e: Promise<{ valid: boolean }>) {
  * Valide qu'au moins N options sont sélectionnées
  */
 export const MultipleSelectionValidation: Story = {
+	args: {
+		label: 'Sélectionnez au moins 2 options',
+	},
 	parameters: {
 		docs: {
 			description: {
