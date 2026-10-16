@@ -73,8 +73,8 @@ export const WithError: Story = {
 			template: `
 				<div>
 					<DatePicker
-						v-model="date"
 						v-bind="args"
+						v-model="date"
 					/>
 				</div>
 			`,
@@ -107,8 +107,8 @@ export const WithWarning: Story = {
 			template: `
 				<div>
 					<DatePicker
-						v-model="date"
 						v-bind="args"
+						v-model="date"
 					/>
 				</div>
 			`,
@@ -142,8 +142,8 @@ export const WithSuccess: Story = {
 			template: `
 				<div>
 					<DatePicker
-						v-model="date"
 						v-bind="args"
+						v-model="date"
 					/>
 				</div>
 			`,
@@ -208,8 +208,8 @@ export const CustomRules: Story = {
 					<h4 class="mb-0">Format avec règles personnalisées :</h4>
 					<p class="mb-4">Les dates en 2024 ne sont pas autorisées</p>
 					<DatePicker
-						v-model="date"
 						v-bind="args"
+						v-model="date"
 					/>
 					<div style="margin-top: 10px; font-family: monospace; color: #666;">
 						Valeur : {{ date }}
@@ -275,8 +275,8 @@ export const WarningRules: Story = {
           <h4 class="mb-0">Format avec règles d'avertissement :</h4>
           <p class="mb-4">Les dates en 2025 ne sont pas autorisées</p>
           <DatePicker
-            v-model="date"
             v-bind="args"
+            v-model="date"
           />
           <div style="margin-top: 10px; font-family: monospace; color: #666;">
             Valeur : {{ date }}
