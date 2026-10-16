@@ -1096,7 +1096,4 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 			</div>
 		`,
 	}),
-	args: {
-		showSuccessMessages: true,
-	},
 }
