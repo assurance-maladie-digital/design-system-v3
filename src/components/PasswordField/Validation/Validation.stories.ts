@@ -258,6 +258,7 @@ export const WithSuccess: Story = {
 						v-model="password"
 						label="Mot de passe"
 						:custom-success-rules="customSuccessRules"
+						showSuccessMessages
 					/>
 				</template>
 				`,
