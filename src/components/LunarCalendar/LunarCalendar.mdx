@@ -48,3 +48,22 @@ L'astérisque n'est affiché que si le champ est également `required`.
 Des règles supplémentaires peuvent être ajoutées via la prop `custom-rules`. Elles s'appliquent en plus des contrôles intégrés (format de la date, `min-year` / `max-year`, `required`).
 
 <Canvas of={LunarCalendarStories.WithCustomRules} />
+
+## Avec la validation Vuetify
+
+Avec `use-vuetify-validation`, seules les règles passées dans `rules` (format Vuetify) sont évaluées. Les contrôles intégrés et les `custom-rules` ne s'appliquent plus : le format de la date et `min-year` / `max-year` ne sont pas contrôlés, et `required` n'ajoute que l'indication visuelle et ARIA. Ajoutez les règles correspondantes dans `rules`.
+
+<Source dark code={`
+<LunarCalendar
+	v-model="value"
+	label="Date de naissance"
+	required
+	use-vuetify-validation
+	:rules="[
+		v => !!v || 'La date de naissance est requise.',
+		v => /^\\d{2}\\/\\d{2}\\/\\d{4}$/.test(v) || 'La date doit être au format JJ/MM/AAAA.',
+	]"
+/>
+`} />
+
+<a href="/?path=/docs/guide-du-dev-formulaires-validation-guide-des-formulaires--docs" className="action-link">Pour plus d'informations sur la validation, consultez le guide de validation des formulaires.</a>
