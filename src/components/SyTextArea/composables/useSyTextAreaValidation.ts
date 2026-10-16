@@ -21,6 +21,7 @@ export function useSyTextAreaValidation(
 
 	const { customRules: defaultCustomRules } = useDefaultValidationRules({
 		required: computed(() => props.required ?? false),
+		label: computed(() => props.label),
 		maxLines: computed(() => props.maxLines),
 		hasInteracted,
 		locales,

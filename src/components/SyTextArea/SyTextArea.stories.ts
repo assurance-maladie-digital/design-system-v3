@@ -24,7 +24,8 @@ const meta = {
 			control: 'object',
 			table: {
 				type: { summary: 'object', detail: `{
-	required: string,
+	requiredField: (label?: string) => string,
+	required?: string, // déprécié : remplace requiredField s'il est renseigné
 	maxLines: (maxLines: number) => string,
 	clearField: string,
 }` },

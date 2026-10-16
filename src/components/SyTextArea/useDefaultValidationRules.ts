@@ -6,6 +6,7 @@ export type TextareaRule = (value: string) => boolean | string
 
 export function useDefaultValidationRules(params: {
 	required: Ref<boolean>
+	label: Ref<string | undefined>
 	maxLines: Ref<number | undefined>
 	hasInteracted: Ref<boolean>
 	locales: Ref<typeof defaultLocales>
@@ -33,7 +34,7 @@ export function useDefaultValidationRules(params: {
 			rules.push({
 				type: 'required',
 				options: {
-					message: params.locales.value.required,
+					message: params.locales.value.required ?? params.locales.value.requiredField(params.label.value),
 				},
 			})
 		}
