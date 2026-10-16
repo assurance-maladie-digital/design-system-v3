@@ -204,10 +204,8 @@ describe('HeaderToolbar – accessibility', () => {
 	})
 
 	it('should announce mobile menu links opening in a new window', () => {
-		// Ce test requiert des seuils `display` custom, donc une instance Vuetify
-		// dédiée. On retire le Vuetify global (config.global.plugins) le temps du
-		// mount : sinon les deux instances s'installent sur la même app et Vue
-		// émet un warning « component already registered » par composant.
+		// Seuils `display` custom : l'instance globale est remplacée le temps du
+		// mount (voir le commentaire de `mountToolbar`).
 		const globalPlugins = config.global.plugins
 		config.global.plugins = []
 		try {
