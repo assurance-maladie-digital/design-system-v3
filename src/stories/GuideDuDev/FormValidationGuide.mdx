@@ -833,7 +833,7 @@ Tous les composants de champ du DS partagent ces props (issues de `FieldValidati
 4. **Validation progressive** : Validez pendant la saisie (`is-validate-on-blur="false"`) pour une rétroaction immédiate
 5. **Messages clairs** : Utilisez des messages d'erreur explicites et constructifs
 6. **Validation côté client ET serveur** : Ne vous fiez jamais uniquement à la validation côté client ; injectez les erreurs serveur via `error-messages`
-7. **Ordre des règles crucial** : Mettez `required` **en dernier** — avec `max-errors` à 1, c'est la première règle en échec qui s'affiche
+7. **Ordre des règles** : sur un champ vide, le message de `required` s'affiche quelle que soit sa position. Entre les autres règles, avec `max-errors` à 1, c'est la première règle en échec qui s'affiche : placez en tête celle dont le message est le plus utile
 8. **Utilisez les avertissements** pour les recommandations non-bloquantes
 9. **Célébrez la réussite** avec des messages de succès pour renforcer les bonnes pratiques
 
