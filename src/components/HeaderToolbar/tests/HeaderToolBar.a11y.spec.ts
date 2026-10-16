@@ -1,17 +1,18 @@
 import { describe, it, expect, afterEach } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { config, mount } from '@vue/test-utils'
 import { axe } from 'vitest-axe'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import HeaderToolbar from '../HeaderToolbar.vue'
 
-const vuetify = createVuetify({ components, directives })
-
+// L'instance Vuetify globale (tests/unit/setup.ts → config.global.plugins) est
+// appliquée à chaque mount : ne pas repasser de plugin Vuetify ici, sinon les
+// deux instances s'installent sur la même app et Vue émet un warning
+// « component already registered » pour chaque composant.
 const mountToolbar = (props: Record<string, unknown> = {}) =>
 	mount(HeaderToolbar, {
 		props,
-		global: { plugins: [vuetify] },
 		attachTo: document.body,
 	})
 
@@ -203,22 +204,31 @@ describe('HeaderToolbar – accessibility', () => {
 	})
 
 	it('should announce mobile menu links opening in a new window', () => {
-		mount(HeaderToolbar, {
-			props: {
-				rightMenu: [
-					{ title: 'Presse', href: 'https://example.com/presse', openInNewTab: true },
-					{ title: 'Carrières', href: 'https://example.com/carrieres' },
-				],
-			},
-			global: {
-				plugins: [createVuetify({
-					components,
-					directives,
-					display: { thresholds: { xs: 0, sm: 99998, md: 99999, lg: 100000, xl: 100001, xxl: 100002 } },
-				})],
-			},
-			attachTo: document.body,
-		})
+		// Seuils `display` custom : l'instance globale est remplacée le temps du
+		// mount (voir le commentaire de `mountToolbar`).
+		const globalPlugins = config.global.plugins
+		config.global.plugins = []
+		try {
+			mount(HeaderToolbar, {
+				props: {
+					rightMenu: [
+						{ title: 'Presse', href: 'https://example.com/presse', openInNewTab: true },
+						{ title: 'Carrières', href: 'https://example.com/carrieres' },
+					],
+				},
+				global: {
+					plugins: [createVuetify({
+						components,
+						directives,
+						display: { thresholds: { xs: 0, sm: 99998, md: 99999, lg: 100000, xl: 100001, xxl: 100002 } },
+					})],
+				},
+				attachTo: document.body,
+			})
+		}
+		finally {
+			config.global.plugins = globalPlugins
+		}
 
 		const items = document.querySelectorAll('#mobile-right-menu [role="menuitem"]')
 
