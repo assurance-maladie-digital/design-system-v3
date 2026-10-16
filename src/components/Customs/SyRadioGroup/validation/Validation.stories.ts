@@ -118,6 +118,10 @@ onMounted(() => {
 		],
 	},
 
+	args: {
+		label: 'Sélectionnez l\'option A',
+	},
+
 	render: args => ({
 		components: { SyRadioGroup, SyForm, VBtn },
 		setup() {
@@ -705,7 +709,7 @@ const options = [
 
 const rules: VuetifyValidationRule[] = [
 	(v: string | null) => !!v || 'Une sélection est requise',
-	(v: string | null) => v === 'a' || 'Vous devez sélectionner l'option A',
+	(v: string | null) => v === 'a' || "Vous devez sélectionner l'option A",
 ]
 
 const submit = async () => {

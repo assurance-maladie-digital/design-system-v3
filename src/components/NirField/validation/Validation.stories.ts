@@ -245,7 +245,7 @@ export const DisableErrorHandling: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <div class="d-flex flex-column gap-4">
+  <div class="d-flex flex-column ga-4">
     <NirField
       v-model="value1"
       label="Avec validation interne (défaut)"
@@ -433,7 +433,7 @@ export const NoValidateOnBlur: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <div class="d-flex flex-column gap-4 pa-4">
+  <div class="d-flex flex-column ga-4 pa-4">
     <NirField
       ref="nirRef"
       :model-value="value"
@@ -443,7 +443,7 @@ export const NoValidateOnBlur: Story = {
       :show-success-messages="true"
       @update:model-value="handleChange"
     />
-    <div class="d-flex gap-4 mt-2">
+    <div class="d-flex ga-4 mt-2">
       <VBtn color="primary" @mousedown.prevent @click="applyValue('199012345678')">Valeur invalide</VBtn>
       <VBtn color="primary" @mousedown.prevent @click="applyValue('184027512345674')">Valeur valide</VBtn>
       <VBtn @mousedown.prevent @click="resetValue()">Réinitialiser</VBtn>
@@ -508,14 +508,14 @@ const resetValue = () => {
 			return { args, value, nirRef, handleChange, applyValue, resetValue, VALID_NIR, INVALID_NIR }
 		},
 		template: `
-			<div class="d-flex flex-column gap-4 pa-4">
+			<div class="d-flex flex-column ga-4 pa-4">
 				<NirField
 					ref="nirRef"
 					:model-value="value"
 					v-bind="args"
 					@update:model-value="handleChange"
 				/>
-				<div class="d-flex gap-4 mt-2">
+				<div class="d-flex ga-4 mt-2">
 					<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyValue(INVALID_NIR)">Valeur invalide</VBtn>
 					<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyValue(VALID_NIR)">Valeur valide</VBtn>
 					<VBtn @mousedown.prevent @click="resetValue()">Réinitialiser</VBtn>

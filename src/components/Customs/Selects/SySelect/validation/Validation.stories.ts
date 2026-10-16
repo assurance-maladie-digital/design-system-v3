@@ -137,7 +137,7 @@ export const WithWarning: Story = {
         type: 'custom',
         options: {
           validate: (v) => v !== '1',
-          message: 'Option 1 est dépréciée, préférez Option 2 ou 3.'
+          warningMessage: 'Option 1 est dépréciée, préférez Option 2 ou 3.'
         }
       }
     ]"
@@ -188,7 +188,7 @@ const items = [
 							type: 'custom',
 							options: {
 								validate: (v) => v !== '1',
-								message: 'Option 1 est dépréciée, préférez Option 2 ou 3.'
+								warningMessage: 'Option 1 est dépréciée, préférez Option 2 ou 3.'
 							}
 						}
 					]"
@@ -221,7 +221,7 @@ export const WithSuccess: Story = {
         type: 'custom',
         options: {
           validate: (v) => v !== null && v !== undefined,
-          message: 'Option sélectionnée avec succès.'
+          successMessage: 'Option sélectionnée avec succès.'
         }
       }
     ]"
@@ -273,7 +273,7 @@ const items = [
 							type: 'custom',
 							options: {
 								validate: (v) => v !== null && v !== undefined,
-								message: 'Option sélectionnée avec succès.'
+								successMessage: 'Option sélectionnée avec succès.'
 							}
 						}
 					]"
@@ -295,7 +295,7 @@ export const NoValidateOnBlur: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <div class="d-flex flex-column gap-4 pa-4">
+  <div class="d-flex flex-column ga-4 pa-4">
     <SySelect
       ref="selectRef"
       :model-value="value"
@@ -307,7 +307,7 @@ export const NoValidateOnBlur: Story = {
       :custom-success-rules="customSuccessRules"
       @update:model-value="handleManualChange"
     />
-    <div class="d-flex gap-4 mt-2">
+    <div class="d-flex ga-4 mt-2">
       <VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('1')">Définir une valeur invalide</VBtn>
       <VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('2')">Définir une valeur valide</VBtn>
       <VBtn @mousedown.prevent @click="applyButtonValue(null)">Réinitialiser</VBtn>
@@ -440,7 +440,7 @@ const applyButtonValue = async (newValue) => {
 				return { args, value, selectRef, customRules, customSuccessRules, handleManualChange, applyButtonValue }
 			},
 			template: `
-				<div class="d-flex flex-column gap-4 pa-4">
+				<div class="d-flex flex-column ga-4 pa-4">
 					<SySelect
 						ref="selectRef"
 						:model-value="value"
@@ -449,7 +449,7 @@ const applyButtonValue = async (newValue) => {
 						:custom-success-rules="customSuccessRules"
 						@update:model-value="handleManualChange"
 					/>
-					<div class="d-flex gap-4 mt-2">
+					<div class="d-flex ga-4 mt-2">
 						<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('1')">Définir une valeur invalide</VBtn>
 						<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('2')">Définir une valeur valide</VBtn>
 						<VBtn @mousedown.prevent @click="applyButtonValue(null)">Réinitialiser</VBtn>
@@ -467,7 +467,7 @@ export const DisableErrorHandling: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<div class="d-flex flex-column gap-4">
+	<div class="d-flex flex-column ga-4">
 		<SySelect
 			v-model="value1"
 			:items="items"

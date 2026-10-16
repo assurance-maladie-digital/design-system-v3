@@ -283,11 +283,9 @@ export const WithSuccess: Story = {
 									const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value)
 									const hasMinLength = value.length >= 8
 									
-									if (hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && hasMinLength) {
-										return 'Mot de passe fort'
-									}
-									return true
+									return hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar && hasMinLength
 								},
+								successMessage: 'Mot de passe fort',
 								fieldIdentifier: 'password',
 							},
 						},
@@ -478,11 +476,12 @@ ne sont pas nécessaires dans certains contextes.
 			{
 				name: 'Template',
 				code: `<template>
-  <!-- Champ avec messages de succès (par défaut) -->
+  <!-- Champ avec messages de succès -->
   <PasswordField
     v-model="value1"
     label="Mot de passe avec messages de succès"
     required
+    show-success-messages
   />
 
   <!-- Champ sans messages de succès -->
@@ -506,7 +505,7 @@ ne sont pas nécessaires dans certains contextes.
 		},
 		template: `
       <div>
-        <p class="mb-4">Cette démonstration compare un PasswordField avec <code>showSuccessMessages=true</code> (par défaut) et un avec <code>showSuccessMessages=false</code>.</p>
+        <p class="mb-4">Cette démonstration compare un PasswordField avec <code>showSuccessMessages=true</code> et un avec <code>showSuccessMessages=false</code> (valeur par défaut).</p>
 
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
           <div>
