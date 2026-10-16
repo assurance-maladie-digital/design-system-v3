@@ -98,7 +98,7 @@ const customRules: ValidationRule[] = [
 		type: 'custom',
 		options: {
 			validate: (value: unknown) => value === 'a',
-			message: 'Vous devez sélectionner l'option A',
+			message: "Vous devez sélectionner l'option A",
 			fieldIdentifier: 'Option',
 		},
 	},
@@ -187,6 +187,7 @@ Utilise les **customWarningRules** pour afficher un avertissement non bloquant.
 <template>
 	<SyForm ref="form" @submit="onSubmit">
 		<SyRadioGroup
+			ref="radioGroupRef"
 			v-model="selected"
 			label="Choisissez une option"
 			:options="options"
@@ -199,12 +200,13 @@ Utilise les **customWarningRules** pour afficher un avertissement non bloquant.
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { SyRadioGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
 const selected = ref<string | null>('b')
+const radioGroupRef = ref(null)
 
 const options = [
 	{ label: 'Option A (recommandée)', value: 'a' },
@@ -216,7 +218,7 @@ const customWarningRules: ValidationRule[] = [
 		type: 'custom',
 		options: {
 			validate: (value: unknown) => value === 'a',
-			message: 'L'option A est recommandée',
+			warningMessage: "L'option A est recommandée",
 			fieldIdentifier: 'Option',
 		},
 	},
@@ -225,6 +227,11 @@ const customWarningRules: ValidationRule[] = [
 const onSubmit = (event: { isValid: boolean }) => {
 	alert('Formulaire soumis (les warnings ne bloquent pas la soumission)')
 }
+
+// Affiche l'état dès le chargement
+onMounted(() => {
+	radioGroupRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
@@ -234,13 +241,14 @@ const onSubmit = (event: { isValid: boolean }) => {
 		components: { SyRadioGroup, SyForm, VBtn },
 		setup() {
 			const selected = ref<string | null>('b')
+			const radioGroupRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 			const customWarningRules = [
 				{
 					type: 'custom',
 					options: {
 						validate: (value: unknown) => value === 'a',
-						message: 'L\'option A est recommandée',
+						warningMessage: 'L\'option A est recommandée',
 						fieldIdentifier: 'Option',
 					},
 				},
@@ -250,11 +258,16 @@ const onSubmit = (event: { isValid: boolean }) => {
 				alert('Formulaire soumis (les warnings ne bloquent pas la soumission)')
 			}
 
-			return { args, selected, customWarningRules, onSubmit }
+			onMounted(() => {
+				radioGroupRef.value?.validateOnSubmit()
+			})
+
+			return { args, selected, radioGroupRef, customWarningRules, onSubmit }
 		},
 		template: `
 			<SyForm ref="form" @submit="onSubmit">
 				<SyRadioGroup
+					ref="radioGroupRef"
 					v-model="selected"
 					v-bind="args"
 					:custom-warning-rules="customWarningRules"
@@ -283,6 +296,7 @@ export const WithSuccess: Story = {
 <template>
 	<SyForm ref="form" @submit="onSubmit">
 		<SyRadioGroup
+			ref="radioGroupRef"
 			v-model="selected"
 			label="Choisissez une option"
 			:options="options"
@@ -296,12 +310,13 @@ export const WithSuccess: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { SyRadioGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
 const selected = ref<string | null>('a')
+const radioGroupRef = ref(null)
 
 const options = [
 	{ label: 'Option A', value: 'a' },
@@ -323,6 +338,11 @@ const onSubmit = (event: { isValid: boolean }) => {
 		alert('Formulaire valide !')
 	}
 }
+
+// Affiche l'état dès le chargement
+onMounted(() => {
+	radioGroupRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
@@ -332,6 +352,7 @@ const onSubmit = (event: { isValid: boolean }) => {
 		components: { SyRadioGroup, SyForm, VBtn },
 		setup() {
 			const selected = ref<string | null>('a')
+			const radioGroupRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 			const customSuccessRules = [
 				{
@@ -349,11 +370,16 @@ const onSubmit = (event: { isValid: boolean }) => {
 				}
 			}
 
-			return { args, selected, customSuccessRules, onSubmit }
+			onMounted(() => {
+				radioGroupRef.value?.validateOnSubmit()
+			})
+
+			return { args, selected, radioGroupRef, customSuccessRules, onSubmit }
 		},
 		template: `
 			<SyForm ref="form" @submit="onSubmit">
 				<SyRadioGroup
+					ref="radioGroupRef"
 					v-model="selected"
 					v-bind="args"
 					show-success-messages
