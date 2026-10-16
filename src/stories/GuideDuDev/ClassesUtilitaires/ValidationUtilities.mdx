@@ -25,13 +25,14 @@ Cette fonction facilite la validation des props dans les composants Vue.
     // Valider une prop avec des valeurs spécifiques
     size: {
       type: String,
-      validator: propValidator('size', ['small', 'medium', 'large'])
+      // propValidator prend la valeur en 3e argument : on la passe via le validator
+      validator: (value) => propValidator('size', ['small', 'medium', 'large'], value)
     },
     
-    // Valider une prop avec des valeurs numériques
+    // Valider une prop avec des valeurs numériques (comparées sous forme de chaîne)
     priority: {
       type: Number,
-      validator: propValidator('priority', [1, 2, 3, 4, 5])
+      validator: (value) => propValidator('priority', ['1', '2', '3', '4', '5'], String(value))
     }
   }
 }
@@ -54,12 +55,12 @@ export default {
     size: {
       type: String,
       default: 'medium',
-      validator: propValidator('size', ['small', 'medium', 'large'])
+      validator: (value) => propValidator('size', ['small', 'medium', 'large'], value)
     },
     variant: {
       type: String,
       default: 'primary',
-      validator: propValidator('variant', ['primary', 'secondary', 'outline', 'text'])
+      validator: (value) => propValidator('variant', ['primary', 'secondary', 'outline', 'text'], value)
     }
   }
 }
@@ -68,7 +69,7 @@ export default {
 
 ## ruleMessage
 
-Cette fonction génère un message d'erreur formaté pour les règles de validation.
+Cette fonction récupère le message associé à une clé dans une table de messages (`ErrorMessages`) : la valeur peut être une chaîne ou une fonction appelée avec les arguments fournis. Elle sert à construire des règles de validation personnalisées compatibles avec les règles du Design System (`isRequired`, `isMinLength`…).
 
 ### Importation
 
@@ -77,62 +78,40 @@ Cette fonction génère un message d'erreur formaté pour les règles de validat
 
 ### Utilisation
 
-<Source dark code={`// Message simple
-ruleMessage('Ce champ est requis') // 'Ce champ est requis'
+<Source dark code={`const messages = {
+  default: 'La valeur est invalide',
+  minLength: (min) => 'Minimum ' + min + ' caractères'
+}
 
-// Message avec nom de champ
-ruleMessage('Ce champ est requis', 'Email') // 'Email : Ce champ est requis'
+// Message simple
+ruleMessage(messages, 'default') // 'La valeur est invalide'
+
+// Message fonction, avec arguments
+ruleMessage(messages, 'minLength', [8]) // 'Minimum 8 caractères'
 `}/>
 
-### Exemple pratique
+### Exemple pratique : une règle personnalisée
 
-<Source dark code={`<template>
-  <v-form ref="form">
-    <v-text-field
-      v-model="email"
-      label="Email"
-      :rules="emailRules"
-    />
-    <v-text-field
-      v-model="password"
-      label="Mot de passe"
-      type="password"
-      :rules="passwordRules"
-    />
-  </v-form>
-</template>
-
-<script>
-import { ref } from 'vue'
+<Source dark code={`<script>
 import { ruleMessage } from '@cnamts/synapse'
 
-export default {
-  setup() {
-    const email = ref('')
-    const password = ref('')
-    
-    const emailRules = [
-      v => !!v || ruleMessage('Ce champ est requis', 'Email'),
-      v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || ruleMessage('Format d\'email invalide', 'Email')
-    ]
-    
-    const passwordRules = [
-      v => !!v || ruleMessage('Ce champ est requis', 'Mot de passe'),
-      v => v.length >= 8 || ruleMessage('Le mot de passe doit contenir au moins 8 caractères', 'Mot de passe')
-    ]
-    
-    return {
-      email,
-      password,
-      emailRules,
-      passwordRules
-    }
+// Fabrique de règle compatible avec :rules (Vuetify) et custom-rules (DS)
+const isSiretFn = (errorMessages = { default: 'Le SIRET doit contenir 14 chiffres' }) =>
+  (value) => {
+    if (!value) return true // champ vide : laisser une règle required gérer
+    return /^\\d{14}$/.test(value) || ruleMessage(errorMessages, 'default')
   }
-}
+
+// Usage
+const siretRules = [isSiretFn()]
 </script>
 `}/>
 
+> **Note** : pour les cas courants, préférez les règles prêtes à l'emploi du catalogue ([Règles de validation](/?path=/docs/guide-du-dev-utilitaires-r%C3%A8gles-de-validation--docs)) ou les `custom-rules` des composants du DS.
+
 ## Validation de dates
+
+> **⚠️ Formats attendus** : `isDateAfter`, `isDateBefore` et `isDateValidUtil` acceptent le format `DD/MM/YYYY`. `isDateInRange` et `isWeekend` attendent le format ISO `YYYY-MM-DD` (via `dayjs`).
 
 ### isDateAfter
 
@@ -143,15 +122,13 @@ Vérifie si une date est postérieure à une autre date.
 <Source dark code={`import { isDateAfter } from '@cnamts/synapse'
 `}/>
 
+Signature : `isDateAfter(dateReference, valeur)` — retourne `true` si `valeur` est strictement postérieure à `dateReference`.
+
 #### Utilisation
 
-<Source dark code={`// Avec des chaînes de dates (format DD/MM/YYYY)
-isDateAfter('15/02/2023', '10/02/2023') // true
-isDateAfter('10/02/2023', '15/02/2023') // false
- `}/>
-
-<Source dark code={`// Avec des objets Date
-isDateAfter(new Date('2023-02-15'), new Date('2023-02-10')) // true
+<Source dark code={`// Chaînes de dates au format DD/MM/YYYY
+isDateAfter('10/02/2023', '15/02/2023') // true : 15/02 est après 10/02
+isDateAfter('15/02/2023', '10/02/2023') // false
 `}/>
 
 ### isDateBefore
@@ -163,14 +140,13 @@ Vérifie si une date est antérieure à une autre date.
 <Source dark code={`import { isDateBefore } from '@cnamts/synapse'
 `}/>
 
+Signature : `isDateBefore(dateReference, valeur)` — retourne `true` si `valeur` est strictement antérieure à `dateReference`.
+
 #### Utilisation
 
-<Source dark code={`// Avec des chaînes de dates (format DD/MM/YYYY)
-isDateBefore('10/02/2023', '15/02/2023') // true
-isDateBefore('15/02/2023', '10/02/2023') // false
-
-// Avec des objets Date
-isDateBefore(new Date('2023-02-10'), new Date('2023-02-15')) // true
+<Source dark code={`// Chaînes de dates au format DD/MM/YYYY
+isDateBefore('15/02/2023', '10/02/2023') // true : 10/02 est avant 15/02
+isDateBefore('10/02/2023', '15/02/2023') // false
 `}/>
 
 ### isDateInRange
@@ -182,23 +158,23 @@ Vérifie si une date est comprise dans une plage de dates.
 <Source dark code={`import { isDateInRange } from '@cnamts/synapse'
 `}/>
 
+Signature : `isDateInRange(date, debut, fin, interval?)`. Le paramètre `interval` contrôle l'inclusion des bornes : `'[)'` par défaut (début inclus, fin exclue), aussi `'[]'`, `'()'` ou `'(]'`.
+
 #### Utilisation
 
-<Source dark code={`// Avec des chaînes de dates (format DD/MM/YYYY)
-isDateInRange('15/02/2023', '10/02/2023', '20/02/2023') // true
-isDateInRange('05/02/2023', '10/02/2023', '20/02/2023') // false
+<Source dark code={`// Chaînes de dates au format ISO YYYY-MM-DD
+isDateInRange('2023-02-15', '2023-02-10', '2023-02-20') // true
+isDateInRange('2023-02-05', '2023-02-10', '2023-02-20') // false
 
-// Avec des objets Date
-isDateInRange(
-  new Date('2023-02-15'),
-  new Date('2023-02-10'),
-  new Date('2023-02-20')
-) // true
+// Borne finale incluse
+isDateInRange('2023-02-20', '2023-02-10', '2023-02-20', '[]') // true
 `}/>
 
 ### isDateValidUtil
 
-Vérifie si une chaîne de date est valide.
+Vérifie si une chaîne de date est valide (format `DD/MM/YYYY`). Retourne `true` si la date est valide, sinon un **code d'erreur** (`'wrongFormat'`, `'monthNotMatch'`, `'notALeapYear'`) : utilisez `=== true` pour tester la validité.
+
+> **Ne pas confondre** : `isDateValidUtil` est la fonction bas niveau (`true` ou code d'erreur). La **règle** `isDateValid` (instance) est prête à l'emploi dans `:rules`/`custom-rules` et retourne `true` ou un message traduit.
 
 #### Importation
 
@@ -207,13 +183,13 @@ Vérifie si une chaîne de date est valide.
 
 #### Utilisation
 
-<Source dark code={`// Dates valides
+<Source dark code={`// Date valide
 isDateValidUtil('15/02/2023') // true
-isDateValidUtil('2023-02-15') // true
 
-// Dates invalides
-isDateValidUtil('31/02/2023') // false (février n'a pas 31 jours)
-isDateValidUtil('date invalide') // false
+// Dates invalides : un code d'erreur est retourné (pas false)
+isDateValidUtil('31/02/2023') // 'notALeapYear' (2023 n'est pas bissextile)
+isDateValidUtil('date invalide') // 'wrongFormat'
+isDateValidUtil('2023-02-15') // 'wrongFormat' — le format attendu est DD/MM/YYYY
 `}/>
 
 ### isWeekend
@@ -227,13 +203,10 @@ Vérifie si une date correspond à un jour de week-end (samedi ou dimanche).
 
 #### Utilisation
 
-<Source dark code={`// Avec des objets Date
-isWeekend(new Date('2023-02-18')) // true (samedi)
-isWeekend(new Date('2023-02-19')) // true (dimanche)
-isWeekend(new Date('2023-02-20')) // false (lundi)
-
-// Avec des chaînes de dates (format DD/MM/YYYY)
-isWeekend('18/02/2023') // true (samedi)
+<Source dark code={`// Chaînes de dates au format ISO YYYY-MM-DD
+isWeekend('2023-02-18') // true (samedi)
+isWeekend('2023-02-19') // true (dimanche)
+isWeekend('2023-02-20') // false (lundi)
 `}/>
 
 ## Validation d'email
@@ -301,7 +274,7 @@ import {
   isDateValidUtil,
   isDateAfter,
   isWeekend,
-  ruleMessage
+  parseDate
 } from '@cnamts/synapse'
 
 export default {
@@ -315,30 +288,36 @@ export default {
       endDate: ''
     })
     
+    // isWeekend attend le format ISO : conversion depuis DD/MM/YYYY via parseDate
+    const isWeekendDate = (v) => isWeekend(parseDate(v).format('YYYY-MM-DD'))
+    
     // Règles de validation pour l'email
     const emailRules = [
-      v => !!v || ruleMessage('Ce champ est requis', 'Email'),
-      v => isEmailValid(v) || ruleMessage('Format d\'email invalide', 'Email')
+      v => !!v || 'Ce champ est requis',
+      v => isEmailValid(v) || 'Format d\'email invalide'
     ]
     
     // Règles de validation pour la date de début
+    // isDateValidUtil retourne true ou un code d'erreur : comparaison stricte
     const startDateRules = [
-      v => !!v || ruleMessage('Ce champ est requis', 'Date de début'),
-      v => isDateValidUtil(v) || ruleMessage('Format de date invalide (JJ/MM/AAAA)', 'Date de début'),
-      v => !isWeekend(v) || ruleMessage('La date ne peut pas être un week-end', 'Date de début')
+      v => !!v || 'Ce champ est requis',
+      v => isDateValidUtil(v) === true || 'Format de date invalide (JJ/MM/AAAA)',
+      v => !v || !isWeekendDate(v) || 'La date ne peut pas être un week-end'
     ]
     
     // Règles de validation pour la date de fin
     const endDateRules = computed(() => [
-      v => !!v || ruleMessage('Ce champ est requis', 'Date de fin'),
-      v => isDateValidUtil(v) || ruleMessage('Format de date invalide (JJ/MM/AAAA)', 'Date de fin'),
-      v => !isWeekend(v) || ruleMessage('La date ne peut pas être un week-end', 'Date de fin'),
-      v => !formData.startDate || !v || isDateAfter(v, formData.startDate) || 
-        ruleMessage('La date de fin doit être postérieure à la date de début', 'Date de fin')
+      v => !!v || 'Ce champ est requis',
+      v => isDateValidUtil(v) === true || 'Format de date invalide (JJ/MM/AAAA)',
+      v => !v || !isWeekendDate(v) || 'La date ne peut pas être un week-end',
+      v => !v || !formData.startDate || isDateAfter(formData.startDate, v) || 
+        'La date de fin doit être postérieure à la date de début'
     ])
     
-    const submitForm = () => {
-      if (form.value.validate()) {
+    // v-form.validate() est asynchrone en Vuetify 3
+    const submitForm = async () => {
+      const { valid } = await form.value.validate()
+      if (valid) {
         // Traitement du formulaire
         console.log('Formulaire valide', formData)
       }
@@ -361,7 +340,8 @@ export default {
 ## Bonnes pratiques
 
 - Utilisez `propValidator` pour valider les props de vos composants avec des valeurs spécifiques
-- Utilisez `ruleMessage` pour créer des messages d'erreur cohérents dans vos formulaires
+- Utilisez `ruleMessage` dans vos fabriques de règles personnalisées pour permettre la surcharge des messages
 - Combinez les différentes fonctions de validation pour créer des règles de validation complexes
 - Validez toujours les dates avant de les utiliser dans des calculs ou des comparaisons
-- Pour les validations de formulaire plus complexes, envisagez d'utiliser les règles de validation fournies par le Design System
+- Attention aux **formats attendus** : `DD/MM/YYYY` pour `isDateAfter`, `isDateBefore`, `isDateValidUtil` — ISO `YYYY-MM-DD` pour `isDateInRange`, `isWeekend`
+- Pour les validations de formulaire, préférez les règles prêtes à l'emploi du Design System (voir [Règles de validation](/?path=/docs/guide-du-dev-utilitaires-r%C3%A8gles-de-validation--docs)) qui gèrent déjà ces subtilités

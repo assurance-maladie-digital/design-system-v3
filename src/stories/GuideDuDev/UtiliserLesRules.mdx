@@ -12,25 +12,27 @@ import '../styles/shared.css';
   <div className="guide-links">
     <p>📖 <strong>Guides complémentaires :</strong></p>
     <ul>
-      <li><a href="?path=/docs/guide-du-dev-formulaires-validation-guide-des-formulaires--docs">Guide des Formulaires - SyForm & Validation Automatique</a> (approche recommandée)</li>
-      <li><a href="?path=/docs/guide-du-dev-utilitaires-règles-de-validation--docs">Règles de validation</a> (catalogue des règles prêtes à l'emploi)</li>
+      <li><a href="/?path=/docs/guide-du-dev-formulaires-validation-guide-des-formulaires--docs">Guide des Formulaires - SyForm & Validation Automatique</a> (approche recommandée)</li>
+      <li><a href="/?path=/docs/guide-du-dev-utilitaires-règles-de-validation--docs">Règles de validation</a> (catalogue des règles prêtes à l'emploi)</li>
     </ul>
   </div>
 </div>
 
 ## Architecture du système
 
-Le système de validation repose sur deux composables principaux :
+### API publique (`@cnamts/synapse`)
 
-### `useFieldValidation`
-- **Rôle** : Génère et exécute les règles de validation
-- **Usage** : Création de règles personnalisées, validation de champs individuels
-- **Retour** : Fonctions de validation prêtes à l'emploi
+| Composable | Rôle | API principale |
+|---|---|---|
+| `useValidation` | Moteur de validation : exécute les règles et maintient l'état réactif | `validateField()`, `validateOnSubmit()`, `clearValidation()`, états `errors` / `warnings` / `successes` |
+| `useFieldValidation` | Fabrique de règles bas niveau | `generateRules()` — transforme des règles `{ type, options }` en fonctions — et `parseDate()` (format `DD/MM/YYYY`) |
+| `useValidatable` | Enregistre un champ auprès du `SyForm` parent | Utilisé automatiquement par les composants du DS |
 
-### `useValidation` 
-- **Rôle** : Gère l'état de validation et l'affichage des messages
-- **Usage** : Intégration dans les composants, gestion des états d'erreur/warning/succès
-- **Retour** : État réactif et méthodes de validation
+> **Note** : `useFieldValidation` est utilisé en interne par `useValidation`. Ne l'appelez directement que si vous construisez votre propre pipeline de validation.
+
+### Interne (composants du Design System)
+
+Les composants du DS passent par le point d'entrée unifié `@/composables/unifyValidation/useValidation`, qui choisit entre le moteur custom (`useCustomValidation`) et le moteur Vuetify (`useVuetifyValidation`) selon la prop `use-vuetify-validation`, et gère l'auto-enregistrement auprès de `SyForm`. Voir [« Créer un composant compatible avec SyForm »](/?path=/docs/guide-du-dev-formulaires-validation-guide-des-formulaires--docs) dans le guide des formulaires.
 
 ### Priorité des validations
 
@@ -49,31 +51,38 @@ Options de configuration pour la validation :
 
 <Source dark code={`
 interface ValidationOptions {
-  showSuccessMessages?: boolean;  // Afficher les messages de succès (false par défaut)
-  fieldIdentifier?: string;       // Nom du champ pour les messages
-  disableErrorHandling?: boolean; // Désactiver complètement la gestion des erreurs
+  showSuccessMessages?: MaybeRef<boolean>;  // Afficher les messages de succès (false par défaut)
+  fieldIdentifier?: string;                 // Nom du champ pour les messages
+  disableErrorHandling?: MaybeRef<boolean>; // Désactiver complètement la gestion des erreurs
 }
 `}/>
 
 > **Note :** les règles d'erreur, d'avertissement et de succès ne sont **pas** des options&nbsp;: elles sont passées en **arguments** de \`validateField(value, rules, warningRules, successRules)\` (voir ci-dessous).
 
-### Type `ValidationRule`
+### Descripteur de règle vs type `ValidationRule`
 
-Structure d'une règle de validation :
+Dans les props (`custom-rules`, `custom-warning-rules`…) et en argument de `validateField`, une règle est un **objet descripteur** :
 
 <Source dark code={`
-type ValidationRule = {
-  type: string;     // Type de règle (ex: 'required', 'email')
-  options: RuleOptions;
+// Descripteur de règle (accepté par generateRules / validateField)
+const rule = {
+  type: 'required',                       // Type de règle (ex: 'required', 'email', 'custom')
+  options: { message: 'Champ requis' },   // RuleOptions — facultatif
 }
+`}/>
+
+Le type exporté `ValidationRule` désigne la **fonction exécutable** produite par `generateRules` :
+
+<Source dark code={`
+type ValidationRule = (value: unknown) => ValidationResult | Promise<ValidationResult>
 `}/>
 
 ### Type `RuleOptions`
 
-Options disponibles pour configurer une règle :
+Options disponibles pour configurer une règle (type générique `RuleOptions<T = any>`) :
 
 <Source dark code={`
-interface RuleOptions {
+type RuleOptions<T = any> = {
   message?: string;         // Message d'erreur personnalisé
   successMessage?: string;  // Message de succès personnalisé
   warningMessage?: string;  // Message d'avertissement personnalisé
@@ -84,8 +93,8 @@ interface RuleOptions {
   pattern?: RegExp;        // Expression régulière
   ignoreSpace?: boolean;   // Ignorer les espaces
   isWarning?: boolean;     // Traiter comme un avertissement
-  validate?: (value: any) => boolean | string; // Validation personnalisée
-  date?: string | Date;    // Date de référence pour les règles de dates
+  validate?: (value: any) => boolean | string | Promise<boolean | string>; // Validation personnalisée (synchrone ou asynchrone)
+  date?: string | Date;    // Date de référence pour notBeforeDate / notAfterDate / dateExact
 }
 `}/>
 
@@ -309,33 +318,44 @@ const asyncEmailRule = {
 ## Règles de validation disponibles
 
 ### Règles basiques
-- `required` : Vérifie qu'une valeur est présente
-- `min` : Vérifie qu'une valeur numérique est supérieure ou égale à un minimum
-- `max` : Vérifie qu'une valeur numérique est inférieure ou égale à un maximum
-- `minLength` : Vérifie qu'une chaîne a une longueur minimale
-- `maxLength` : Vérifie qu'une chaîne a une longueur maximale
-- `exactLength` : Vérifie qu'une chaîne a une longueur exacte
-- `email` : Vérifie qu'une chaîne est un email valide
-- `matchPattern` : Vérifie qu'une chaîne correspond à une expression régulière
+
+| Type | Description | Options |
+|---|---|---|
+| `required` | Vérifie qu'une valeur est présente | `message` |
+| `min` / `max` | Vérifie une borne numérique | `value` |
+| `minLength` / `maxLength` / `exactLength` | Vérifie la longueur d'une chaîne | `length`, `ignoreSpace` |
+| `email` | Vérifie qu'une chaîne est un email valide | `message` |
+| `matchPattern` | Vérifie la correspondance à une regex | `pattern` |
 
 ### Règles de validation de dates
-- `notWeekend` : Vérifie qu'une date n'est pas un jour de week-end
-- `notBeforeToday` : Vérifie qu'une date n'est pas antérieure à aujourd'hui
-- `notAfterToday` : Vérifie qu'une date n'est pas postérieure à aujourd'hui
-- `notBeforeDate` : Vérifie qu'une date n'est pas antérieure à une date de référence
-- `notAfterDate` : Vérifie qu'une date n'est pas postérieure à une date de référence
-- `dateExact` : Vérifie qu'une date est exactement égale à une date de référence
+
+| Type | Description | Options |
+|---|---|---|
+| `notWeekend` | Interdit samedi et dimanche | `message` |
+| `notBeforeToday` / `notAfterToday` | Interdit avant / après aujourd'hui | `message` |
+| `notBeforeDate` / `notAfterDate` | Interdit avant / après une date de référence | `date` |
+| `dateExact` | Exige une date exactement égale à la date de référence | `date` |
+| `isHolidayDay` | Interdit les jours fériés | `message` |
+
+> Alias historiques conservés : `noWeekend` (= `notWeekend`) et `noBeforeToday` (= `notBeforeToday`).
 
 ### Règle personnalisée
-- `custom` : Permet de définir une validation personnalisée via la fonction `validate`
+
+| Type | Description | Options |
+|---|---|---|
+| `custom` | Validation libre via `validate` — synchrone ou **asynchrone** | `validate`, `message`, `successMessage`, `warningMessage`, `isWarning` |
 
 ## Méthodes disponibles
 
-Le composable `useValidation` retourne plusieurs méthodes utiles :
+Le composable `useValidation` retourne des méthodes et des états réactifs :
 
-- `validateField` : Valide une valeur selon les règles définies
-- `validateOnSubmit` : Vérifie si le formulaire peut être soumis (retourne `true` si aucune erreur)
-- `clearValidation` : Réinitialise l'état de validation (efface erreurs, avertissements et succès)
+| Méthode | Signature | Description |
+|---|---|---|
+| `validateField` | `(value, rules?, warningRules?, successRules?) => ValidationResult \| Promise<ValidationResult>` | Exécute les règles et met à jour l'état ; le résultat contient `hasError`, `hasWarning`, `hasSuccess` et `state` |
+| `validateOnSubmit` | `() => boolean` | `true` si aucune erreur après la dernière validation |
+| `clearValidation` | `() => void` | Réinitialise erreurs, avertissements et succès |
+
+États réactifs exposés : `errors`, `warnings`, `successes`, `displaySuccesses`, `hasError`, `hasWarning`, `hasSuccess`.
 
 ## Bonnes pratiques
 

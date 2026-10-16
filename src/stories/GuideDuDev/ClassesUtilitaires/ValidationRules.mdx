@@ -43,6 +43,23 @@ isMinLengthFn(8, false, { default: (min) => \`Au moins \${min} caractères\` }) 
 
 ## Règles disponibles
 
+| Règle | Signature | Vérifie que… |
+|---|---|---|
+| `isRequired` | `isRequiredFn(errorMessages?)` | …la valeur est renseignée (chaîne, tableau, nombre…) |
+| `isValidEmail` | `isValidEmailFn(errorMessages?)` | …la valeur est un e-mail valide |
+| `isMinLength` | `isMinLengthFn(min, ignoreSpaces?, errorMessages?)` | …la longueur ≥ `min` |
+| `isMaxLength` | `isMaxLengthFn(max, ignoreSpaces?, errorMessages?)` | …la longueur ≤ `max` |
+| `isExactLength` | `isExactLengthFn(length, ignoreSpaces?, errorMessages?)` | …la longueur = `length` |
+| `doMatchPattern` | `doMatchPatternFn(pattern, errorMessages?)` | …la valeur correspond à la regex |
+| `isDateValid` | `isDateValidFn(errorMessages?)` | …la valeur est une date valide (`JJ/MM/AAAA` ou `Date`) |
+| `isNotBeforeDate` | `isNotBeforeDateFn(date, errorMessages?)` | …la date ≥ `date` (`JJ/MM/AAAA`) |
+| `isNotAfterDate` | `isNotAfterDateFn(date, errorMessages?)` | …la date ≤ `date` (`JJ/MM/AAAA`) |
+| `isNotBeforeToday` | `isNotBeforeTodayFn(errorMessages?)` | …la date ≥ aujourd'hui |
+| `isNotAfterToday` | `isNotAfterTodayFn(errorMessages?)` | …la date ≤ aujourd'hui |
+| `isHolidayDay` | `isHolidayDayFn(errorMessages?)` | …la date n'est pas un jour férié français |
+
+> **⚠️ Valeurs vides** : sauf `isRequired`, toutes les règles renvoient `true` pour une valeur vide (`''`, `null`, `undefined`) — elles ne bloquent que les valeurs renseignées. Combinez-les avec `isRequired` pour rendre un champ obligatoire.
+
 ### isRequired
 
 Vérifie qu'un champ n'est pas vide.
@@ -191,7 +208,7 @@ isHolidayDayFn({ default: 'La date ne peut pas être un jour férié' })  // mes
 </template>
 
 <script>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive } from 'vue'
 import {
   isRequired,
   isValidEmail,
@@ -227,8 +244,10 @@ export default {
       ]
     }
     
-    const submitForm = () => {
-      if (form.value.validate()) {
+    // v-form.validate() est asynchrone en Vuetify 3
+    const submitForm = async () => {
+      const { valid } = await form.value.validate()
+      if (valid) {
         // Traitement du formulaire
         console.log('Formulaire valide', formData)
       }
@@ -287,7 +306,8 @@ import {
   isDateValid,
   isNotBeforeToday,
   isNotAfterDateFn,
-  isHolidayDay
+  isHolidayDay,
+  isDateAfter
 } from '@cnamts/synapse'
 
 export default {
@@ -308,12 +328,6 @@ export default {
                             (maxDate.getMonth() + 1).toString().padStart(2, '0') + '/' + 
                             maxDate.getFullYear()
     
-    // Fonction utilitaire pour vérifier si une date est après une autre
-    const isDateAfter = (date1, date2) => {
-      // Implémentation simplifiée
-      return true || 'La date de fin doit être après la date de début'
-    }
-    
     const rules = {
       name: [
         isRequired
@@ -328,16 +342,18 @@ export default {
       endDate: computed(() => [
         isRequired,
         isDateValid,
-        v => !formData.startDate || isDateValid(formData.startDate) !== true || 
+        v => !v || !formData.startDate || isDateValid(formData.startDate) !== true || 
              isDateValid(v) !== true || 
-             isDateAfter(v, formData.startDate),
+             isDateAfter(formData.startDate, v) || 'La date de fin doit être après la date de début',
         isNotAfterDateFn(maxDateFormatted),
         isHolidayDay
       ])
     }
     
-    const submitForm = () => {
-      if (form.value.validate()) {
+    // v-form.validate() est asynchrone en Vuetify 3
+    const submitForm = async () => {
+      const { valid } = await form.value.validate()
+      if (valid) {
         // Traitement du formulaire
         console.log('Formulaire valide', formData)
       }
@@ -383,4 +399,4 @@ Vous pouvez facilement combiner les règles prédéfinies avec vos propres règl
 - Utilisez des règles calculées (computed) lorsque la validation dépend d'autres champs
 - Personnalisez les messages d'erreur pour qu'ils soient compréhensibles par les utilisateurs
 - Validez toujours les données côté serveur, même si vous avez une validation côté client
-- Pour les formulaires complexes, envisagez d'utiliser une bibliothèque de validation comme VeeValidate en complément
+- Pour les formulaires complets, utilisez [SyForm](/?path=/docs/composants-formulaires-syform--docs) : il orchestre automatiquement la validation de tous les champs à la soumission
