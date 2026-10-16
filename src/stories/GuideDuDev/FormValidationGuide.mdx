@@ -12,7 +12,8 @@ import '../styles/shared.css';
   <div className="guide-links">
     <p>📖 <strong>Guides complémentaires :</strong></p>
     <ul>
-      <li><a href="?path=/docs/guide-du-dev-formulaires-validation-guide-technique--docs">Guide Technique - Système de Validation & Règles</a> (validation manuelle, règles personnalisées)</li>
+      <li><a href="/?path=/docs/guide-du-dev-formulaires-validation-guide-technique--docs">Guide Technique - Système de Validation & Règles</a> (validation manuelle, règles personnalisées)</li>
+      <li><a href="/?path=/docs/guide-du-dev-utilitaires-règles-de-validation--docs">Règles de validation</a> (catalogue des règles prêtes à l'emploi)</li>
     </ul>
   </div>
 </div>
@@ -71,19 +72,20 @@ const emailRules = [
   { type: 'required', options: { message: "L'email est obligatoire" } }
 ];
 
-const handleSubmit = async () => {
-  // Cette fonction n'est appelée QUE si le formulaire est valide !
+const handleSubmit = async ({ isValid }) => {
+  // @submit est émis à chaque soumission : on vérifie isValid avant de continuer
+  if (!isValid) return;
   console.log('Formulaire valide, envoi en cours...');
   console.log({ email: email.value, name: name.value });
 };
 </script>
 `}/>
 
-###  Points clés de cet exemple
+### Points clés de cet exemple
 
 - **`SyForm`** : Conteneur qui gère automatiquement la validation
-- **`validate-on-submit="true"`** : Valide tous les champs à la soumission
-- **`@submit`** : Ne se déclenche QUE si le formulaire est valide
+- **`validate-on-submit`** : Valide tous les champs à la soumission (`true` par défaut)
+- **`@submit`** : Émis à **chaque** soumission avec `{ isValid: boolean }` — le handler doit vérifier `isValid`
 - **`required`** : Validation simple directement sur le composant
 - **`:custom-rules`** : Règles de validation personnalisées
 
@@ -159,7 +161,8 @@ const passwordSuccessRules = [
   }
 ];
 
-const handleSubmit = () => {
+const handleSubmit = ({ isValid }) => {
+  if (!isValid) return;
   console.log('Compte créé avec succès !');
 };
 </script>
@@ -226,8 +229,9 @@ const confirmPasswordRules = computed(() => [
   { type: 'required', options: { message: 'Veuillez confirmer le mot de passe' } },
 ]);
 
-const handleSubmit = async () => {
-  // SyForm gère automatiquement la validation !
+const handleSubmit = async ({ isValid }) => {
+  // SyForm valide automatiquement, mais @submit est émis dans tous les cas
+  if (!isValid) return;
   console.log('Inscription réussie !', { username: username.value });
 };
 </script>
@@ -239,80 +243,6 @@ const handleSubmit = async () => {
 - **Réactivité manuelle** : Vous devez explicitement rendre les règles réactives avec `computed()`
 - **SyForm** : Gère la validation centralisée mais pas la réactivité des règles
 - **Avantage vs approche manuelle** : Plus besoin de `watch()` pour revalider les champs
-
-## Formulaires complexes avec SyForm
-
-<Source dark code={`
-<template>
-  <form @submit.prevent="handleSubmit">
-    <PasswordField
-      ref="passwordField"
-      v-model="password"
-      label="Mot de passe"
-      type="password"
-      :custom-rules="passwordRules"
-    />
-    
-    <PasswordField
-      ref="confirmPasswordField"
-      v-model="confirmPassword"
-      label="Confirmer le mot de passe"
-      type="password"
-      :custom-rules="confirmPasswordRules"
-    />
-    
-    <VBtn type="submit">S'inscrire</VBtn>
-  </form>
-</template>
-
-<script setup>
-
-const password = ref('');
-const confirmPassword = ref('');
-
-const passwordField = ref();
-const confirmPasswordField = ref();
-
-const passwordRules = [
-  { type: 'required', options: { message: 'Le mot de passe est obligatoire' } },
-  { type: 'minLength', options: { length: 8, message: 'Le mot de passe doit contenir au moins 8 caractères' } }
-];
-
-const confirmPasswordRules = [
-  { type: 'required', options: { message: 'La confirmation du mot de passe est obligatoire' } },
-  {
-    type: 'custom',
-    options: {
-      validate: (value) => {
-        if (value !== password.value) {
-          return 'Les mots de passe ne correspondent pas';
-        }
-        return true;
-      }
-    }
-  }
-];
-
-// Revalider la confirmation lorsque le mot de passe change
-watch(password, () => {
-  if (confirmPassword.value && confirmPasswordField.value) {
-    // Forcer la validation du champ de confirmation
-    confirmPasswordField.value.validateOnSubmit();
-  }
-});
-
-const handleSubmit = async () => {
-  // Validation de tous les champs
-  const isPasswordValid = await passwordField.value.validateOnSubmit();
-  const isConfirmValid = await confirmPasswordField.value.validateOnSubmit();
-  
-  if (isPasswordValid && isConfirmValid) {
-    // Soumettre le formulaire
-    console.log('Inscription réussie !');
-  }
-};
-</script>
-`}/>
 
 ## Utilisation du composant SyForm
 
@@ -368,9 +298,14 @@ const confirmPasswordRules = computed(() => [
   { type: 'required', options: { message: 'Veuillez confirmer le mot de passe' } },
 ]);
 
-const handleSubmit = async () => {
-  // SyForm gère automatiquement la validation avec validate-on-submit="true"
-  // Cette fonction n'est appelée que si le formulaire est valide
+const handleSubmit = async ({ isValid }) => {
+  // SyForm valide automatiquement à la soumission (validate-on-submit, true par défaut)
+  // @submit est émis dans tous les cas : on ne poursuit que si le formulaire est valide
+  if (!isValid) {
+    console.log('Formulaire invalide, merci de corriger les erreurs.');
+    return;
+  }
+  
   console.log('Formulaire valide, inscription en cours...');
   
   // Appel API d'inscription
@@ -381,7 +316,7 @@ const handleSubmit = async () => {
     });
     console.log('Inscription réussie !');
   } catch (error) {
-    console.error('Erreur lors de l\\'inscription:', error);
+    console.error('Erreur lors de l\'inscription:', error);
   }
 };
 
@@ -397,13 +332,26 @@ const validateManually = async () => {
 </script>
 `}/>
 
+### API de SyForm
+
+| Élément | Type | Description |
+|---|---|---|
+| `validate-on-submit` | prop `boolean` (défaut `true`) | Valide tous les champs enregistrés à la soumission |
+| `v-model` | `boolean \| null` | Validité du formulaire en direct (`null` = statut indéterminé) |
+| `@submit` | événement `{ isValid: boolean }` | Émis à **chaque** soumission — vérifier `isValid` dans le handler |
+| `@reset` | événement | Émis quand le formulaire est réinitialisé |
+| `validate()` | méthode exposée | `Promise<boolean>` — valide tous les champs à la demande |
+| `reset()` | méthode exposée | Réinitialise les valeurs et l'état de validation |
+| `clearValidation()` | méthode exposée | Efface les messages sans modifier les valeurs |
+
+> **⚠️ Important** : `@submit` est émis **même si le formulaire est invalide**. Testez toujours `event.isValid` avant de traiter les données.
+
 ### Avantages du SyForm
 
-- **Validation automatique** : Avec `validate-on-submit="true"`, tous les champs sont validés automatiquement
-- **Gestion centralisée** : Un seul composant gère l'ensemble du formulaire
-- **Événement @submit** : Ne se déclenche que si le formulaire est valide
-- **Méthode validate()** : Permet la validation manuelle via `form.value.validate()`
-- **Compatibilité** : Fonctionne avec tous les composants du design system
+- **Validation automatique** : tous les champs enregistrés sont validés à la soumission
+- **Gestion centralisée** : un seul composant gère l'ensemble du formulaire
+- **État global réactif** : le `v-model` reflète la validité en temps réel
+- **Compatibilité** : fonctionne avec tous les composants du design system
 
 ### Formulaire mixte avec SyForm
 
@@ -466,7 +414,8 @@ const birthDateRules = [
   { type: 'required', options: { message: 'La date de naissance est obligatoire' } },
 ];
 
-const handleSubmit = async () => {
+const handleSubmit = async ({ isValid }) => {
+  if (!isValid) return;
   console.log('Données du formulaire:', formData.value);
   // Traitement des données...
 };
@@ -554,7 +503,7 @@ defineExpose({ validate, clearValidation })
   `useVuetifyValidation` ou l'ancien moteur.
 - **Auto-enregistrement** : `useValidation` enregistre et désenregistre le champ auprès de
   `SyForm`; ne pas ajouter `useValidatable`.
-- **Validation manuelle** : `validate()` retourne une promesse résolue avec la validité du champ.
+- **Validation manuelle** : `validate()` retourne une promesse résolue avec la validité du champ. Exposez aussi un alias `validateOnSubmit` si votre composant doit être piloté hors `SyForm`, comme les composants du DS (`field.value.validateOnSubmit()`).
 - **Composant composite** : utiliser `{ registerWithForm: false }` uniquement pour un champ
   interne qui ne doit pas être enregistré séparément de son composant parent.
 
@@ -584,8 +533,9 @@ const nameRules = [
   { type: 'minLength', options: { length: 2, message: 'Minimum 2 caractères' } }
 ];
 
-const handleSubmit = () => {
-  // Appelé seulement si tous les composants sont valides !
+const handleSubmit = ({ isValid }) => {
+  // @submit est émis à chaque soumission : vérifier isValid
+  if (!isValid) return;
   console.log('Formulaire valide:', { name: name.value });
 };
 </script>
@@ -787,12 +737,12 @@ Plusieurs composants du Design System intègrent déjà la validation :
       label="Numéro de sécurité sociale"
     />
     
-    <SyButton type="submit">Valider</SyButton>
+    <VBtn type="submit" color="primary">Valider</VBtn>
   </form>
 </template>
 
 <script setup>
-import { NirField, SyButton } from '@cnamts/synapse';
+import { NirField } from '@cnamts/synapse';
 import { ref } from 'vue';
 
 const nirValue = ref('');
@@ -811,17 +761,25 @@ const handleSubmit = async () => {
 ## Règles de validation disponibles
 
 ### Règles génériques
-- `required` : Champ obligatoire
-- `minLength` / `maxLength` : Longueur minimale/maximale
-- `min` / `max` : Valeur minimale/maximale pour les nombres
-- `email` : Format d'email valide
-- `matchPattern` : Correspondance à une expression régulière
+
+| Type | Description | Options principales |
+|---|---|---|
+| `required` | Champ obligatoire | `message` |
+| `minLength` / `maxLength` / `exactLength` | Longueur min / max / exacte | `length`, `ignoreSpace` |
+| `min` / `max` | Valeur numérique min / max | `value` |
+| `email` | Format d'email valide | `message` |
+| `matchPattern` | Correspondance à une regex | `pattern` |
+| `custom` | Fonction de validation libre (sync ou async) | `validate`, `message` |
 
 ### Règles de dates
-- `notBeforeToday` / `notAfterToday` : Date après/avant aujourd'hui
-- `notBeforeDate` / `notAfterDate` : Date après/avant une date spécifique
-- `notWeekend` : Jour ouvrable
-- `isHolidayDay` : Jour non férié
+
+| Type | Description | Options |
+|---|---|---|
+| `notBeforeToday` / `notAfterToday` | Interdit avant / après aujourd'hui | `message` |
+| `notBeforeDate` / `notAfterDate` | Interdit avant / après une date de référence | `date` |
+| `dateExact` | Exige une date exacte | `date` |
+| `notWeekend` | Interdit samedi et dimanche | `message` |
+| `isHolidayDay` | Interdit les jours fériés | `message` |
 
 ### Règles personnalisées
 Utilisez le type `custom` avec une fonction `validate` pour créer vos propres règles :
@@ -843,15 +801,39 @@ const customRule = {
 };
 `}/>
 
+### Props de validation communes
+
+Tous les composants de champ du DS partagent ces props (issues de `FieldValidationProps`) :
+
+| Prop | Type | Défaut | Description |
+|---|---|---|---|
+| `custom-rules` | `ValidationRule[]` | `[]` | Règles d'erreur (bloquantes) |
+| `custom-warning-rules` | `ValidationRule[]` | `[]` | Règles d'avertissement (non bloquantes) |
+| `custom-success-rules` | `ValidationRule[]` | `[]` | Règles de succès |
+| `error-messages` / `warning-messages` / `success-messages` | `string[]` | `null` | Messages injectés par le parent (ex. erreurs serveur) |
+| `has-error` / `has-warning` / `has-success` | `boolean` | `false` | Force l'état visuel correspondant |
+| `is-validate-on-blur` | `boolean` | `true`* | `true` = validation au blur, `false` = validation à la saisie |
+| `show-success-messages` | `boolean` | `false` | Affiche les messages de succès |
+| `max-errors` | `number` | `1` | Nombre max de messages affichés par niveau |
+| `disable-error-handling` | `boolean` | `false` | Désactive le moteur de validation interne |
+| `use-vuetify-validation` | `boolean` | `false` | Utilise les `rules` natives Vuetify à la place des `custom-rules` |
+| `rules` | `VuetifyValidationRule[]` | — | Règles natives Vuetify (avec `use-vuetify-validation`) |
+| `required` | `boolean` | `false` | Ajoute la règle « obligatoire » (convertie en règle `custom`/`required`) |
+| `readonly` / `disabled` | `boolean` | `false` | Champ non validé, ne bloque pas le formulaire |
+
+\* sauf composants à cases à cocher (`SyCheckbox`, `SyCheckBoxGroup`) où la valeur par défaut est `false`.
+
+> **⚠️ `required` en mode `use-vuetify-validation`** : comme dans Vuetify, `required` n'ajoute que l'indication visuelle et ARIA — sans règle dans `rules`, un champ requis vide **ne bloque pas** la soumission. Ajoutez une règle, par exemple `:rules="[v => !!v || 'Champ requis']"`.
+
 ## Bonnes pratiques
 
 1. **Utilisez SyForm** : Privilégiez le composant `SyForm` pour une gestion centralisée et automatique de la validation
-2. **Règles réactives** : Utilisez `computed()` pour les règles qui dépendent d'autres valeurs (validation croisée)
-3. **Validation progressive** : Validez pendant la saisie pour une rétroaction immédiate
-4. **Messages clairs** : Utilisez des messages d'erreur explicites et constructifs
-5. **Validation côté client ET serveur** : Ne vous fiez jamais uniquement à la validation côté client
-6. **Utilisez validateOnSubmit** : Assurez-vous que tous les champs sont validés à la soumission
-7. **Ordre des règles crucial** : Mettez toujours `required` **en dernier** ! L'ordre détermine quel message s'affiche en premier
+2. **Testez `isValid` dans `@submit`** : l'événement est émis même quand le formulaire est invalide — ne traitez les données que si `isValid === true`
+3. **Règles réactives** : Utilisez `computed()` pour les règles qui dépendent d'autres valeurs (validation croisée)
+4. **Validation progressive** : Validez pendant la saisie (`is-validate-on-blur="false"`) pour une rétroaction immédiate
+5. **Messages clairs** : Utilisez des messages d'erreur explicites et constructifs
+6. **Validation côté client ET serveur** : Ne vous fiez jamais uniquement à la validation côté client ; injectez les erreurs serveur via `error-messages`
+7. **Ordre des règles** : sur un champ vide, le message de `required` s'affiche quelle que soit sa position. Entre les autres règles, avec `max-errors` à 1, c'est la première règle en échec qui s'affiche : placez en tête celle dont le message est le plus utile
 8. **Utilisez les avertissements** pour les recommandations non-bloquantes
 9. **Célébrez la réussite** avec des messages de succès pour renforcer les bonnes pratiques
 
