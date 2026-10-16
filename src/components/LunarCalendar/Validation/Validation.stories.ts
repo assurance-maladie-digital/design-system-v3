@@ -707,3 +707,195 @@ async function handleSubmit() {
 		`,
 	}),
 }
+
+export const SyFormVuetifyValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Validation native Vuetify via `useVuetifyValidation`. Les règles sont au format Vuetify (fonctions retournant `true` ou un message d\'erreur), passées via la prop `rules`. En mode Vuetify, `required` n\'ajoute que l\'indication visuelle : la règle d\'obligation doit être fournie dans `rules`. Soumettez le formulaire pour déclencher la validation.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyForm @submit="onSubmit">
+		<LunarCalendar
+			v-model="value"
+			label="Date de naissance"
+			use-vuetify-validation
+			:rules="[
+				v => !!v || 'La date de naissance est requise.',
+				v => /^\\d{2}\\/\\d{2}\\/\\d{4}$/.test(v) || 'La date doit être au format JJ/MM/AAAA.',
+			]"
+			required
+			class="mb-4"
+		/>
+		<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
+	</SyForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { LunarCalendar, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const value = ref('')
+
+const onSubmit = (event: { isValid: boolean }) => {
+	if (event.isValid) {
+		alert('Formulaire valide : ' + value.value)
+	} else {
+		alert('Formulaire invalide.')
+	}
+}
+</script>`,
+			},
+		],
+	},
+	args: {
+		modelValue: '',
+		required: true,
+		useVuetifyValidation: true,
+	},
+	render: args => ({
+		components: { LunarCalendar, SyForm, VBtn },
+		setup() {
+			const value = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
+
+			const rules = [
+				(v: string) => !!v || 'La date de naissance est requise.',
+				(v: string) => /^\d{2}\/\d{2}\/\d{4}$/.test(v) || 'La date doit être au format JJ/MM/AAAA.',
+			]
+
+			const onSubmit = (event: { isValid: boolean }) => {
+				if (event.isValid) {
+					alert(`Formulaire valide : ${value.value}`)
+				}
+				else {
+					alert('Formulaire invalide.')
+				}
+			}
+
+			return { args, value, rules, onSubmit }
+		},
+		template: `
+			<div class="pa-4">
+				<SyForm @submit="onSubmit">
+					<LunarCalendar
+						v-bind="args"
+						v-model="value"
+						:rules="rules"
+						class="mb-4"
+					/>
+					<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
+				</SyForm>
+			</div>
+		`,
+	}),
+}
+
+export const VFormAndVuetifyValidation: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Validation native Vuetify (`useVuetifyValidation`) intégrée dans un `VForm` natif (sans SyForm). La soumission déclenche la validation via `form.validate()`.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<VForm ref="formRef" @submit.prevent="onSubmit">
+		<LunarCalendar
+			v-model="value"
+			label="Date de naissance"
+			use-vuetify-validation
+			:rules="[
+				v => !!v || 'La date de naissance est requise.',
+				v => /^\\d{2}\\/\\d{2}\\/\\d{4}$/.test(v) || 'La date doit être au format JJ/MM/AAAA.',
+			]"
+			required
+			class="mb-4"
+		/>
+		<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
+	</VForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { LunarCalendar } from '@cnamts/synapse'
+import { VBtn, VForm } from 'vuetify/components'
+
+const value = ref('')
+const formRef = ref(null)
+
+async function onSubmit() {
+	const result = await formRef.value?.validate()
+	if (result?.valid) {
+		alert('Formulaire valide : ' + value.value)
+	} else {
+		alert('Formulaire invalide.')
+	}
+}
+</script>`,
+			},
+		],
+	},
+	args: {
+		modelValue: '',
+		required: true,
+		useVuetifyValidation: true,
+	},
+	render: args => ({
+		components: { LunarCalendar, VBtn, VForm },
+		setup() {
+			const value = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
+			const formRef = ref<InstanceType<typeof VForm> | null>(null)
+
+			const rules = [
+				(v: string) => !!v || 'La date de naissance est requise.',
+				(v: string) => /^\d{2}\/\d{2}\/\d{4}$/.test(v) || 'La date doit être au format JJ/MM/AAAA.',
+			]
+
+			async function onSubmit() {
+				const result = await formRef.value?.validate()
+				if (result?.valid) {
+					alert(`Formulaire valide : ${value.value}`)
+				}
+				else {
+					alert('Formulaire invalide.')
+				}
+			}
+
+			return { args, value, formRef, rules, onSubmit }
+		},
+		template: `
+			<div class="pa-4">
+				<VForm ref="formRef" @submit.prevent="onSubmit">
+					<LunarCalendar
+						v-bind="args"
+						v-model="value"
+						:rules="rules"
+						class="mb-4"
+					/>
+					<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
+				</VForm>
+			</div>
+		`,
+	}),
+}
