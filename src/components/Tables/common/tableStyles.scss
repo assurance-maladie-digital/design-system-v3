@@ -8,12 +8,39 @@ $sy-table-border: 1px solid rgb(var(--v-theme-disabled));
 		overflow: hidden;
 
 		--sy-table-header-bg-pinned: color-mix(in srgb, rgb(var(--v-theme-info-variant)) 20%, rgb(var(--v-theme-surface)));
+		--sy-table-pinned-cell-bg: rgb(var(--v-theme-surface));
+
+		// Fond des lignes
+		--sy-table-row-bg: transparent;
+
+		// Ombre des colonnes épinglées
+		--sy-table-pinned-shadow: -4px 0 8px rgb(0 0 0 / 8%);
 
 		// Standardisation des z-index pour les tableaux
 		--sy-table-z-base: 1;
 		--sy-table-z-pinned-cell: calc(var(--sy-table-z-base) + 2);
 		--sy-table-z-pinned-header: calc(var(--sy-table-z-base) + 4);
 		--sy-table-z-progress: calc(var(--sy-table-z-base) + 5);
+	}
+
+	.sy-table__pinned {
+		position: sticky;
+		background: linear-gradient(
+						var(--sy-table-row-bg, transparent),
+						var(--sy-table-row-bg, transparent)
+		), var(--sy-table-pinned-cell-bg, rgb(var(--v-theme-surface)));
+	}
+
+	.sy-table__pinned--left {
+		left: var(--sy-pinned-offset);
+		z-index: var(--sy-table-z-pinned-cell);
+		box-shadow: var(--sy-table-pinned-shadow, none);
+	}
+
+	.sy-table__pinned--right {
+		right: var(--sy-pinned-offset);
+		z-index: var(--sy-table-z-pinned-cell);
+		box-shadow: var(--sy-table-pinned-shadow, none);
 	}
 
 	.sy-table-bulk-actions {
@@ -72,22 +99,22 @@ $sy-table-border: 1px solid rgb(var(--v-theme-disabled));
 
 	// Override Vuetify's checkbox styles to use primary color
 	.v-table .v-selection-control {
-		color: rgb(var(--v-theme-primary)) !important;
+		color: rgb(var(--v-theme-primary));
 	}
 
 	.v-table .v-selection-control--dirty .v-selection-control__input::before {
-		background-color: rgb(var(--v-theme-primary)) !important;
-		border-color: rgb(var(--v-theme-primary)) !important;
+		background-color: rgb(var(--v-theme-primary));
+		border-color: rgb(var(--v-theme-primary));
 	}
 
 	// Target the header checkbox specifically
 	.v-data-table-header__checkbox .v-selection-control {
-		color: rgb(var(--v-theme-primary)) !important;
+		color: rgb(var(--v-theme-primary));
 	}
 
 	// Target the row checkboxes specifically
 	.v-data-table-row__checkbox .v-selection-control {
-		color: rgb(var(--v-theme-primary)) !important;
+		color: rgb(var(--v-theme-primary));
 	}
 
 	// Add a global style for all checkboxes in the table
