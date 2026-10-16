@@ -73,7 +73,7 @@ describe('SyTextArea', () => {
 			},
 		})
 
-		expect(wrapper.text()).not.toContain('Ce champ est requis')
+		expect(wrapper.text()).not.toContain('Le champ Description des symptomes est requis.')
 	})
 
 	it('shows required error message when empty after interaction', async () => {
@@ -90,7 +90,50 @@ describe('SyTextArea', () => {
 		const textarea = wrapper.find('textarea')
 		await textarea.trigger('focus')
 		await textarea.trigger('blur')
-		expect(wrapper.text()).toContain('Ce champ est requis')
+		expect(wrapper.text()).toContain('Le champ Description des symptomes est requis.')
+	})
+
+	describe('message du champ requis', () => {
+		const mountRequired = (props: Record<string, unknown> = {}) => mount(SyTextArea, {
+			props: {
+				uniqueId: 'textarea-1',
+				modelValue: '',
+				required: true,
+				label: 'Motif',
+				...props,
+			},
+		})
+
+		const blur = async (wrapper: ReturnType<typeof mountRequired>) => {
+			const textarea = wrapper.find('textarea')
+			await textarea.trigger('focus')
+			await textarea.trigger('blur')
+		}
+
+		it('utilise la locale requiredField surchargée', async () => {
+			const wrapper = mountRequired({ locales: { requiredField: (label: string) => `${label} : obligatoire` } })
+
+			await blur(wrapper)
+
+			expect(wrapper.text()).toContain('Motif : obligatoire')
+		})
+
+		it('conserve la locale dépréciée required si elle est surchargée', async () => {
+			const wrapper = mountRequired({ locales: { required: 'Message personnalisé' } })
+
+			await blur(wrapper)
+
+			expect(wrapper.text()).toContain('Message personnalisé')
+			expect(wrapper.text()).not.toContain('Le champ Motif est requis.')
+		})
+
+		it('affiche un message générique sans label', async () => {
+			const wrapper = mountRequired({ label: undefined })
+
+			await blur(wrapper)
+
+			expect(wrapper.text()).toContain('Le champ ce champ est requis.')
+		})
 	})
 
 	it('remove the white spaces at the beginning of the text as we try to add them', async () => {
@@ -598,7 +641,7 @@ describe('SyTextArea', () => {
 			await textarea.trigger('blur')
 
 			expect(wrapper.text()).not.toContain('Texte d\'aide')
-			expect(wrapper.text()).toContain('Ce champ est requis')
+			expect(wrapper.text()).toContain('Le champ Description est requis.')
 		})
 	})
 
@@ -634,7 +677,7 @@ describe('SyTextArea', () => {
 			await textarea.trigger('blur')
 
 			expect(wrapper.find('.v-messages').exists()).toBe(true)
-			expect(wrapper.text()).toContain('Ce champ est requis')
+			expect(wrapper.text()).toContain('Le champ Description est requis.')
 		})
 
 		it('affiche la zone des messages par défaut (hideDetails vaut false)', () => {
@@ -729,7 +772,7 @@ describe('SyTextArea', () => {
 
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			expect((wrapper.vm as any).hasError).toBe(false)
-			expect(wrapper.text()).not.toContain('Ce champ est requis')
+			expect(wrapper.text()).not.toContain('Le champ Description est requis.')
 		})
 
 		it('affiche les erreurs normalement quand disableErrorHandling est false', async () => {
@@ -748,7 +791,7 @@ describe('SyTextArea', () => {
 			await textarea.trigger('focus')
 			await textarea.trigger('blur')
 
-			expect(wrapper.text()).toContain('Ce champ est requis')
+			expect(wrapper.text()).toContain('Le champ Description est requis.')
 		})
 	})
 
@@ -819,7 +862,7 @@ describe('SyTextArea', () => {
 			await flushPromises()
 
 			expect(isValid).toBe(false)
-			expect(wrapper.text()).toContain('Ce champ est requis')
+			expect(wrapper.text()).toContain('Le champ Description est requis.')
 		})
 
 		it('clearValidation remet l\'état d\'erreur à zéro', async () => {
@@ -927,7 +970,7 @@ describe('SyTextArea', () => {
 			await flushPromises()
 
 			expect(onSubmit).toHaveBeenCalledWith({ isValid: false })
-			expect(wrapper.text()).toContain('Ce champ est requis')
+			expect(wrapper.text()).toContain('Le champ Description est requis.')
 		})
 	})
 })
