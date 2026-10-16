@@ -223,3 +223,12 @@ export const Slots: Story = {
 		`,
 	}),
 }
+
+export const Buttons: Story = {
+	args: {
+		modelValue: 1,
+		pages: 5,
+		label: 'Pagination des résultats',
+		buttonMode: true,
+	},
+}
