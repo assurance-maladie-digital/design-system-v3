@@ -80,7 +80,7 @@ import { SyRadioGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
-const selected = ref<string | null>(null)
+const selected = ref<string | null>('b')
 
 const options = [
 	{ label: 'Option A', value: 'a' },
@@ -111,7 +111,7 @@ const onSubmit = (event: { isValid: boolean }) => {
 	render: args => ({
 		components: { SyRadioGroup, SyForm, VBtn },
 		setup() {
-			const selected = ref<string | null>('a')
+			const selected = ref<string | null>('b')
 
 			const customRules = [
 				{
