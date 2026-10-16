@@ -839,7 +839,7 @@ import { LunarCalendar } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const value = ref('')
-const formRef = ref(null)
+const formRef = ref<InstanceType<typeof VForm> | null>(null)
 
 async function onSubmit() {
 	const result = await formRef.value?.validate()
