@@ -457,7 +457,7 @@ export const NoValidateOnBlur: Story = {
     <div class="d-flex gap-4 mt-2">
       <VBtn color="primary" @mousedown.prevent @click="applyValue('01/01/2100')">Valeur invalide</VBtn>
       <VBtn color="primary" @mousedown.prevent @click="applyValue('22/01/2024')">Valeur valide</VBtn>
-      <VBtn @mousedown.prevent @click="applyValue('')">Réinitialiser</VBtn>
+      <VBtn @mousedown.prevent @click="resetValue()">Réinitialiser</VBtn>
     </div>
   </div>
 </template>`,
@@ -481,6 +481,10 @@ const applyValue = async (newValue: string) => {
   value.value = newValue
   await datePickerRef.value?.validateOnSubmit()
 }
+
+const resetValue = () => {
+  datePickerRef.value?.reset()
+}
 </script>`,
 			},
 		],
@@ -500,7 +504,7 @@ const applyValue = async (newValue: string) => {
 		components: { DatePicker, VBtn },
 		setup() {
 			const value = ref('')
-			const datePickerRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+			const datePickerRef = ref<{ validateOnSubmit: () => Promise<boolean>, reset: () => void } | null>(null)
 
 			const handleChange = (newValue: string) => {
 				value.value = newValue
@@ -511,7 +515,11 @@ const applyValue = async (newValue: string) => {
 				await datePickerRef.value?.validateOnSubmit()
 			}
 
-			return { args, value, datePickerRef, handleChange, applyValue }
+			const resetValue = () => {
+				datePickerRef.value?.reset()
+			}
+
+			return { args, value, datePickerRef, handleChange, applyValue, resetValue }
 		},
 		template: `
 			<div class="d-flex flex-column gap-4 pa-4">
@@ -524,7 +532,7 @@ const applyValue = async (newValue: string) => {
 				<div class="d-flex gap-4 mt-2">
 					<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyValue('01/01/2100')">Valeur invalide</VBtn>
 					<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyValue('22/01/2024')">Valeur valide</VBtn>
-					<VBtn @mousedown.prevent @click="applyValue('')">Réinitialiser</VBtn>
+					<VBtn @mousedown.prevent @click="resetValue()">Réinitialiser</VBtn>
 				</div>
 				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 			</div>

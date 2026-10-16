@@ -397,7 +397,7 @@ export const CustomRules: Story = {
 import { ref } from 'vue'
 import { NirField } from '@cnamts/synapse'
 
-const value = ref('')
+const value = ref('184027512345674')
 </script>`,
 			},
 		],
@@ -405,7 +405,7 @@ const value = ref('')
 	render: args => ({
 		components: { NirField },
 		setup() {
-			const value = ref('')
+			const value = ref(VALID_NIR)
 			return { args, value }
 		},
 		template: `
@@ -446,7 +446,7 @@ export const NoValidateOnBlur: Story = {
     <div class="d-flex gap-4 mt-2">
       <VBtn color="primary" @mousedown.prevent @click="applyValue('199012345678')">Valeur invalide</VBtn>
       <VBtn color="primary" @mousedown.prevent @click="applyValue('184027512345674')">Valeur valide</VBtn>
-      <VBtn @mousedown.prevent @click="applyValue(null)">Réinitialiser</VBtn>
+      <VBtn @mousedown.prevent @click="resetValue()">Réinitialiser</VBtn>
     </div>
   </div>
 </template>`,
@@ -470,6 +470,11 @@ const applyValue = async (newValue: string | null) => {
   value.value = newValue
   await nirRef.value?.validateOnSubmit()
 }
+
+const resetValue = () => {
+  value.value = null
+  nirRef.value?.clearValidation()
+}
 </script>`,
 			},
 		],
@@ -484,7 +489,7 @@ const applyValue = async (newValue: string | null) => {
 		components: { NirField, VBtn },
 		setup() {
 			const value = ref<string | null>(null)
-			const nirRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+			const nirRef = ref<{ validateOnSubmit: () => Promise<boolean>, clearValidation: () => void } | null>(null)
 
 			const handleChange = (newValue: string | null) => {
 				value.value = newValue
@@ -495,7 +500,12 @@ const applyValue = async (newValue: string | null) => {
 				await nirRef.value?.validateOnSubmit()
 			}
 
-			return { args, value, nirRef, handleChange, applyValue, VALID_NIR, INVALID_NIR }
+			const resetValue = () => {
+				value.value = null
+				nirRef.value?.clearValidation()
+			}
+
+			return { args, value, nirRef, handleChange, applyValue, resetValue, VALID_NIR, INVALID_NIR }
 		},
 		template: `
 			<div class="d-flex flex-column gap-4 pa-4">
@@ -508,7 +518,7 @@ const applyValue = async (newValue: string | null) => {
 				<div class="d-flex gap-4 mt-2">
 					<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyValue(INVALID_NIR)">Valeur invalide</VBtn>
 					<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyValue(VALID_NIR)">Valeur valide</VBtn>
-					<VBtn @mousedown.prevent @click="applyValue(null)">Réinitialiser</VBtn>
+					<VBtn @mousedown.prevent @click="resetValue()">Réinitialiser</VBtn>
 				</div>
 			</div>
 		`,
@@ -550,7 +560,7 @@ import { ref } from 'vue'
 import { NirField, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 
-const value = ref('')
+const value = ref('184027512345674')
 
 const onSubmit = (event) => {
   if (event.isValid) {
@@ -572,7 +582,7 @@ const onSubmit = (event) => {
 	render: args => ({
 		components: { NirField, SyForm, VBtn },
 		setup() {
-			const value = ref('')
+			const value = ref(VALID_NIR)
 
 			const onSubmit = (event: { isValid: boolean }) => {
 				if (event.isValid) {
@@ -640,7 +650,7 @@ import { ref } from 'vue'
 import { NirField } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
-const value = ref('')
+const value = ref('184027512345674')
 const nirRef = ref(null)
 
 async function onSubmit() {
@@ -664,7 +674,7 @@ async function onSubmit() {
 	render: args => ({
 		components: { NirField, VBtn, VForm },
 		setup() {
-			const value = ref('')
+			const value = ref(VALID_NIR)
 			const nirRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 			async function onSubmit() {
@@ -728,7 +738,7 @@ import { ref } from 'vue'
 import { NirField, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 
-const value = ref('')
+const value = ref('184027512345674')
 
 const onSubmit = (event) => {
   if (event.isValid) {
@@ -748,7 +758,7 @@ const onSubmit = (event) => {
 	render: args => ({
 		components: { NirField, SyForm, VBtn },
 		setup() {
-			const value = ref('')
+			const value = ref(VALID_NIR)
 
 			const onSubmit = (event: { isValid: boolean }) => {
 				if (event.isValid) {
@@ -811,7 +821,7 @@ import { ref } from 'vue'
 import { NirField } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
-const value = ref('')
+const value = ref('184027512345674')
 const formRef = ref(null)
 
 async function onSubmit() {
@@ -833,7 +843,7 @@ async function onSubmit() {
 	render: args => ({
 		components: { NirField, VBtn, VForm },
 		setup() {
-			const value = ref('')
+			const value = ref(VALID_NIR)
 			const formRef = ref<InstanceType<typeof VForm> | null>(null)
 
 			async function onSubmit() {
