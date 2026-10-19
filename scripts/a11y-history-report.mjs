@@ -11,6 +11,8 @@ const outputPath = resolve(dataDir, 'a11y-history-report.md')
 const outputJsonPath = resolve(dataDir, 'a11y-history-data.json')
 const outputCommitsJsonPath = resolve(dataDir, 'a11y-commits-data.json')
 const componentsDir = resolve(rootDir, 'src/components')
+// Nombre de composants analysés en même temps
+const ANALYSIS_CONCURRENCY = 8
 
 const a11yKeywords = [
 	'a11y',
@@ -157,23 +159,20 @@ async function getGitLog(filePaths) {
 	}
 }
 
-async function getDiffForCommit(hash, filePaths) {
+// Un seul `git show` par commit : `--patch-with-raw` donne la liste des fichiers modifiés
+// (lignes `:…`, chemin en dernier champ, nouveau nom en cas de renommage) puis le diff.
+async function getCommitChanges(hash, filePaths) {
 	const paths = filePaths.map(p => relative(rootDir, p))
 	try {
-		const { stdout } = await execFileAsync('git', ['show', hash, '--format=', '-p', '--', ...paths], { cwd: rootDir })
-		return stdout
+		const { stdout } = await execFileAsync('git', ['show', hash, '--format=', '--patch-with-raw', '--', ...paths], { cwd: rootDir })
+		const lines = stdout.split('\n')
+		const changedFiles = lines
+			.filter(line => line.startsWith(':'))
+			.map(line => resolve(rootDir, line.split('\t').at(-1)))
+		const diff = lines.filter(line => !line.startsWith(':')).join('\n')
+		return { diff, changedFiles }
 	} catch {
-		return ''
-	}
-}
-
-async function getChangedFiles(hash, filePaths) {
-	const paths = filePaths.map(p => relative(rootDir, p))
-	try {
-		const { stdout } = await execFileAsync('git', ['show', hash, '--format=', '--name-only', '--', ...paths], { cwd: rootDir })
-		return stdout.split('\n').filter(Boolean).map(p => resolve(rootDir, p))
-	} catch {
-		return []
+		return { diff: '', changedFiles: [] }
 	}
 }
 
@@ -234,19 +233,41 @@ async function getPackageVersionAtCommit(hash) {
 	}
 }
 
-async function getPRLabels(prNumber) {
-	if (!prNumber) return []
-	if (prLabelCache.has(prNumber)) return prLabelCache.get(prNumber)
+// Labels de toutes les PR en un seul appel (une dizaine de secondes) : un `gh pr view` par PR
+// représentait ~1 200 appels réseau et l'essentiel de la durée de l'analyse complète.
+// `null` si la liste est indisponible : on retombe alors sur un appel par PR.
+let allPRLabelsPromise = null
+
+function getAllPRLabels() {
+	if (!allPRLabelsPromise) {
+		allPRLabelsPromise = execFileAsync(
+			'gh',
+			['pr', 'list', '--state', 'all', '--limit', '100000', '--json', 'number,labels'],
+			{ cwd: rootDir, maxBuffer: 64 * 1024 * 1024 },
+		)
+			.then(({ stdout }) => new Map(JSON.parse(stdout).map(pr => [String(pr.number), (pr.labels || []).map(l => l.name)])))
+			.catch(() => null)
+	}
+	return allPRLabelsPromise
+}
+
+async function fetchPRLabels(prNumber) {
 	try {
 		const { stdout } = await execFileAsync('gh', ['pr', 'view', prNumber, '--json', 'labels'], { cwd: rootDir })
-		const parsed = JSON.parse(stdout)
-		const labels = (parsed.labels || []).map(l => l.name)
-		prLabelCache.set(prNumber, labels)
-		return labels
+		return (JSON.parse(stdout).labels || []).map(l => l.name)
 	} catch {
-		prLabelCache.set(prNumber, [])
 		return []
 	}
+}
+
+async function getPRLabels(prNumber) {
+	if (!prNumber) return []
+	const allLabels = await getAllPRLabels()
+	// Numéro absent de la liste : c'est une issue, pas une PR (`gh pr view` échouait aussi)
+	if (allLabels) return allLabels.get(String(prNumber)) ?? []
+	// Promesse en cache : les composants analysés en parallèle partagent le même appel
+	if (!prLabelCache.has(prNumber)) prLabelCache.set(prNumber, fetchPRLabels(prNumber))
+	return prLabelCache.get(prNumber)
 }
 
 function hasA11yLabel(labels) {
@@ -287,7 +308,7 @@ async function analyzeComponent(component) {
 		if (isReleaseMessage(commit.message)) {
 			continue
 		}
-		const diff = await getDiffForCommit(commit.hash, allTrackedFiles)
+		const { diff, changedFiles } = await getCommitChanges(commit.hash, allTrackedFiles)
 		if (isBadgeOnlyDiff(diff)) {
 			continue
 		}
@@ -303,7 +324,6 @@ async function analyzeComponent(component) {
 
 		// Fichiers réellement modifiés par le commit, et non tous les fichiers du composant :
 		// sinon tout commit au message contenant un mot-clé a11y passe en confiance forte.
-		const changedFiles = await getChangedFiles(commit.hash, allTrackedFiles)
 		const touchedMdx = changedFiles.some(isAccessibilityMdx)
 		const touchedA11yTest = changedFiles.some(isA11yTest)
 		const touchedMigration = changedFiles.some(f => migrationFiles.includes(f))
@@ -449,12 +469,21 @@ async function main() {
 
 	console.info(`📦 ${components.length} composant(s) à analyser`)
 
-	const results = []
-	for (const component of components) {
-		console.info(`⏳ Analyse de ${component.name}...`)
-		const commits = await analyzeComponent(component)
-		results.push({ name: component.name, commits })
+	// Composants analysés en parallèle (chacun enchaîne des appels git) ; l'ordre des
+	// résultats reste celui de `components`.
+	const results = new Array(components.length)
+	let nextIndex = 0
+	let doneCount = 0
+	const worker = async () => {
+		while (nextIndex < components.length) {
+			const index = nextIndex++
+			const component = components[index]
+			const commits = await analyzeComponent(component)
+			results[index] = { name: component.name, commits }
+			console.info(`⏳ [${++doneCount}/${components.length}] ${component.name} analysé`)
+		}
 	}
+	await Promise.all(Array.from({ length: Math.min(ANALYSIS_CONCURRENCY, components.length) }, worker))
 
 	const markdown = buildMarkdown(results)
 	writeFileSync(outputPath, markdown, 'utf8')

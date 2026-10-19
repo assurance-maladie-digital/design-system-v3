@@ -59,7 +59,7 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add a11y-status-report.md src/stories/Accessibilite/DesignSystem/a11y-status.json
+          git add scripts/data/a11y-status-report.md src/stories/Accessibilite/a11y-status.json
           # Always commit to ensure the report reflects the latest state
           git commit -m "chore(a11y): auto-update accessibility status report [skip ci]" || echo "No changes to commit"
           git push
