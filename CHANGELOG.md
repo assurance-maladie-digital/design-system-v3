@@ -5,16 +5,20 @@
 > Ces changements sont des corrections, mais un projet existant peut les percevoir comme des régressions. Vérifiez vos formulaires après la montée de version.
 >
 > **SyForm** ([#2434](https://github.com/assurance-maladie-digital/design-system-v3/pull/2434), [#2616](https://github.com/assurance-maladie-digital/design-system-v3/pull/2616))
-> - **Erreurs injectées (`error-messages`, `has-error`) :** elles bloquent maintenant la soumission. Retirez l'erreur quand l'utilisateur corrige la valeur (`@update:model-value="serverErrors = []"`), sinon le formulaire reste bloqué. Un `has-error` utilisé seulement pour la mise en forme bloque aussi la soumission.
+> - **Erreurs injectées (`error-messages`, `has-error`) :** elles bloquent maintenant la soumission. Retirez l'erreur quand l'utilisateur corrige la valeur (`@update:model-value="serverErrors = []"`), sinon le formulaire reste bloqué. Le `validateOnSubmit()` du champ renvoie aussi `false`, y compris avec `disable-error-handling`. Un `has-error` utilisé seulement pour la mise en forme bloque aussi la soumission.
 > - **`v-model` du formulaire :** il vaut `null` tant qu'aucune erreur n'est affichée, au lieu de `false`. Si vous testez `valid === false` (bouton de soumission, garde), un formulaire invalide passe : comparez à `true` (`:disabled="valid !== true"`).
+> - **Formulaire sans champ Synapse :** il ne vaut plus `true` d'office. Un `SyForm` qui ne contient que des composants Vuetify natifs suit maintenant leur validité.
 > - **`SyInputSelect` requis vide :** il bloque désormais la soumission.
 > - **Champs Vuetify `disabled` :** ils sont ignorés par la validation du `SyForm`.
 > - **Uniquement si vous lisez `validate().errors` :** l'`id` des champs en `use-vuetify-validation` devient `<label>-<id>` au lieu de `<label>`.
 >
 > **Champs de formulaire**
-> - **`PhoneField` ([#2616](https://github.com/assurance-maladie-digital/design-system-v3/pull/2616)) et `LunarCalendar` ([#2662](https://github.com/assurance-maladie-digital/design-system-v3/pull/2662)) appliquent `use-vuetify-validation`.** La prop était ignorée et la validation Synapse s'appliquait. Désormais, seules les `rules` sont évaluées : `required` n'ajoute que l'indication visuelle et ARIA, et les contrôles intégrés (format, `min-year` / `max-year`…) ne s'appliquent plus. Ajoutez les règles correspondantes dans `rules`.
+> - **`PhoneField` ([#2616](https://github.com/assurance-maladie-digital/design-system-v3/pull/2616)) et `LunarCalendar` ([#2662](https://github.com/assurance-maladie-digital/design-system-v3/pull/2662)) appliquent `use-vuetify-validation`.** La prop était ignorée et la validation Synapse s'appliquait. Désormais, seules les `rules` sont évaluées : `required` n'ajoute que l'indication visuelle et ARIA, et les contrôles intégrés (format, `min-year` / `max-year`…) ne s'appliquent plus. Ajoutez les règles correspondantes dans `rules`. En développement, un avertissement console signale un champ `required` sans règle dans `rules`.
 > - **`SySelect` affiche son message « requis » à la soumission** ([#2616](https://github.com/assurance-maladie-digital/design-system-v3/pull/2616)). Avant, seule la bordure passait en rouge.
 > - **`SyTextArea` inclut le libellé du champ dans son message « requis »** ([#2655](https://github.com/assurance-maladie-digital/design-system-v3/pull/2655)).
+> - **`DatePicker` : une date incomplète est refusée au blur et à la soumission** ([#2616](https://github.com/assurance-maladie-digital/design-system-v3/pull/2616)). Avant, effacer une partie d'une date valide laissait soumettre l'ancienne date. Le message « Format de date invalide (…) » s'affiche désormais, y compris en mode combiné, où « La date est requise. » s'affichait à la place.
+> - **`NirField` : la clé n'est plus requise quand elle est masquée** (`display-key="false"`) ([#2616](https://github.com/assurance-maladie-digital/design-system-v3/pull/2616)).
+> - **Mode Vuetify : une règle qui renvoie `false` affiche « La valeur est invalide. »** ([#2616](https://github.com/assurance-maladie-digital/design-system-v3/pull/2616)), au lieu de passer le champ en erreur sans message.
 
 ### 🚀 Features
 
@@ -43,6 +47,16 @@
     <tr style="vertical-align: top;">
       <td>- SyCheckBoxGroup: add error, warning and success colors on the selection control
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2603">#2603</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyInputSelect: add disabled prop
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2616">#2616</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Date rules: accept a Date as reference (notBeforeDate, notAfterDate, dateExact) and the noWeekend / noBeforeToday aliases
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2616">#2616</a>
       </td>
     </tr>
   </tbody>
