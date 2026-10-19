@@ -1,7 +1,8 @@
-import { mount, flushPromises, type VueWrapper } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import ComplexDatePicker from '../ComplexDatePicker.vue'
 import DateTextInput from '../../DateTextInput/DateTextInput.vue'
+import type { DatePickerCommonProps } from '../../types'
 import type { DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 
 /**
@@ -15,7 +16,7 @@ import type { DateModelValue } from '@/composables/date/useDateInitializationDay
  */
 const mountWithModel = (
 	component: typeof ComplexDatePicker | typeof DateTextInput,
-	extraProps: Record<string, unknown> = {},
+	extraProps: Partial<DatePickerCommonProps> = {},
 ) => {
 	const wrapper = mount(component, {
 		props: {
@@ -27,7 +28,7 @@ const mountWithModel = (
 		},
 		attachTo: document.body,
 	})
-	return wrapper as VueWrapper & { props: (key: 'modelValue') => DateModelValue }
+	return wrapper
 }
 
 describe('Régression : v-model après effacement partiel d\'une date valide', () => {
@@ -253,6 +254,75 @@ describe('Régression : v-model après effacement partiel d\'une plage valide', 
 		// Aucune réémission de la plage périmée ni de date-selected après le null
 		expect(wrapper.emitted('update:modelValue')).toEqual([[null]])
 		expect(wrapper.emitted('date-selected') ?? []).toEqual([])
+
+		wrapper.unmount()
+	})
+})
+
+describe('Régression : état interne aligné sur le texte affiché après effacement partiel', () => {
+	it('conserve le texte partiel au blur et à la réouverture du calendrier (mode combiné)', async () => {
+		const wrapper = mountWithModel(ComplexDatePicker)
+		const input = wrapper.find('input')
+		const el = input.element as HTMLInputElement
+
+		await input.setValue('22/12/2555')
+		await flushPromises()
+		await input.setValue('22/12/255')
+		await flushPromises()
+
+		// L'état interne reflète le texte réellement affiché, pas ''
+		expect(wrapper.vm.displayFormattedDate).toBe('22/12/255_')
+
+		// Le blur conserve la saisie en cours
+		el.focus()
+		await input.trigger('blur')
+		await flushPromises()
+		expect(el.value).toBe('22/12/255_')
+
+		// La réouverture du calendrier conserve la saisie en cours
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await (wrapper.vm as any).openDatePicker()
+		await flushPromises()
+		expect(el.value).toBe('22/12/255_')
+		expect(wrapper.props('modelValue')).toBe(null)
+
+		wrapper.unmount()
+	})
+
+	it('resynchronise le champ quand le consommateur réécrit la prop', async () => {
+		const wrapper = mountWithModel(ComplexDatePicker)
+		const input = wrapper.find('input')
+
+		await input.setValue('22/12/2555')
+		await flushPromises()
+		await input.setValue('22/12/255')
+		await flushPromises()
+
+		await wrapper.setProps({ modelValue: '23/12/2555' })
+		await flushPromises()
+
+		expect((input.element as HTMLInputElement).value).toBe('23/12/2555')
+
+		wrapper.unmount()
+	})
+
+	it('conserve le texte partiel au blur en mode noCalendar', async () => {
+		const wrapper = mountWithModel(DateTextInput)
+		const input = wrapper.find('input')
+		const el = input.element as HTMLInputElement
+
+		await input.setValue('22/12/2555')
+		await flushPromises()
+		await input.setValue('22/12/255')
+		await flushPromises()
+
+		expect(wrapper.vm.displayValue).toBe('22/12/255_')
+
+		el.focus()
+		await input.trigger('blur')
+		await flushPromises()
+		expect(el.value).toBe('22/12/255_')
+		expect(wrapper.props('modelValue')).toBe(null)
 
 		wrapper.unmount()
 	})

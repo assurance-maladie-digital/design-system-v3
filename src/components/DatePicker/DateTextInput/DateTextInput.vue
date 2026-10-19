@@ -1314,6 +1314,9 @@
 		warnings: readonlyState(warningMessages),
 		successes: readonlyState(successMessages),
 		hasInput,
+		get displayValue() {
+			return inputValue.value
+		},
 		focus() {
 			const el = getNativeInputElement()
 			el?.focus({ preventScroll: true })

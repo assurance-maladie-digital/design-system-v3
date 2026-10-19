@@ -482,12 +482,18 @@
 	// émission qu'au tick suivant : sans ce suivi, une même valeur peut être émise
 	// deux fois dans une chaîne synchrone (ex. effacement depuis le champ texte →
 	// updateModel, puis watcher selectedDates → handleClearedSelectedDates → updateModel).
+	// Le shadow est relâché en fin de tâche (après le flush des watchers, comme
+	// isUpdatingFromInternal dans CalendarMode) : entre deux interactions
+	// distinctes, props.modelValue reste la référence de déduplication.
 	const lastNotifiedModelValue = ref<DateInput | undefined>(props.modelValue)
 
 	const updateModel = (value: DateModelValue) => {
 		// Prevent redundant emits
 		if (isModelValueEqual(value, lastNotifiedModelValue.value)) return
 		lastNotifiedModelValue.value = value
+		setTimeout(() => {
+			lastNotifiedModelValue.value = props.modelValue
+		}, 0)
 		withInternalUpdate(() => emit('update:modelValue', value))
 	}
 
@@ -857,15 +863,31 @@
 		}
 	}
 
+	// Effacement émis par le champ texte (date partiellement effacée ou clear) :
+	// la saisie visible n'est alors pas réécrite par la boucle de synchronisation
+	// (verrou isFormatting de DateTextInput). Flag borné à la tâche en cours et
+	// consommé par handleClearedSelectedDates pour aligner l'état interne sur le
+	// texte réellement affiché.
+	const clearedFromTextInput = ref(false)
+
+	const markClearedFromTextInput = (): void => {
+		clearedFromTextInput.value = true
+		setTimeout(() => (clearedFromTextInput.value = false), 0)
+	}
+
 	const handleClearedSelectedDates = (): void => {
 		dateSelectionResult.resetRange()
 		updateModel(null)
-		// Quand l'effacement vient de la saisie texte (date partiellement effacée),
-		// textInputValue repasse à '' ici alors que le champ affiche encore du texte :
-		// c'est le verrou isFormatting de DateTextInput qui empêche ce model-value ''
-		// d'écraser la saisie visible. L'état est resynchronisé à la frappe suivante.
-		syncSelectionDisplay()
-		displayFormattedDate.value = ''
+		// En mode noCalendar, le v-model écrit null dans textInputValue quand
+		// l'effacement vient de la saisie ; les syncs internes n'écrivent que des chaînes.
+		const fromTextInput = clearedFromTextInput.value || textInputValue.value === null
+		clearedFromTextInput.value = false
+		const activeTextInput = props.noCalendar ? dateTextInputRef : dateCalendarTextInputRef
+		const displayedText = fromTextInput ? activeTextInput.value?.displayValue ?? '' : ''
+		withInternalUpdate(() => {
+			textInputValue.value = displayedText
+			displayFormattedDate.value = displayedText
+		})
 		syncVisibleCalendarState(null)
 	}
 
@@ -1338,6 +1360,10 @@
 	const handleDateTextInputUpdate = (value: DateModelValue) => {
 		// Ne pas traiter les mises à jour internes pour éviter les boucles
 		if (isUpdatingFromInternal.value) return
+
+		if (value === null) {
+			markClearedFromTextInput()
+		}
 
 		withInternalUpdate(() => {
 			updateModel(value)
