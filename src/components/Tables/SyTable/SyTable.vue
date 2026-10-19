@@ -666,8 +666,14 @@
 
 @mixin striped-rows {
 	.v-table tbody tr:nth-child(even) {
-      --sy-table-row-bg: rgba(var(--v-theme-primary), 0.05);
-      background-color: var(--sy-table-row-bg);
+		--sy-table-row-bg:
+ color-mix(
+			in srgb,
+			rgb(var(--v-theme-primary)) 5%,
+			rgb(var(--v-theme-surface))
+		);
+
+		background-color: var(--sy-table-row-bg);
 	}
 }
 
@@ -723,6 +729,12 @@
 	left: 0 !important;
 	z-index: 3;
 	background: rgb(var(--v-theme-surface)) !important;
+}
+
+.sy-server-table--striped.sy-server-table--pinned-select-left :deep(
+	.v-table__wrapper > table > tbody > tr:nth-child(even) > .v-data-table__td--select-row
+) {
+	background-color: var(--sy-table-row-bg) !important;
 }
 
 .sy-table--pinned-left-shadow.sy-table--pinned-select-left:not(.sy-table--select-single) :deep(.v-data-table__th--select),
