@@ -179,8 +179,8 @@ async function main() {
 	// il est marqué « prochaine version ».
 	const versionOf = commit => resolveCommitVersion(commit.date, releaseTags, getCurrentPackageVersion())
 
-	for (const component of components) {
-		console.info(`⏳ Analyse de ${component.name}...`)
+	for (const [index, component] of components.entries()) {
+		console.info(`⏳ [${index + 1}/${components.length}] Analyse de ${component.name}...`)
 		const commit = await getLastFunctionalCommit(component.files, c => versionOf(c) !== null)
 		if (commit) {
 			newData[component.name] = {
