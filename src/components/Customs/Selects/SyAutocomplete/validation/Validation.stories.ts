@@ -313,7 +313,7 @@ export const NoValidateOnBlur: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <div class="d-flex flex-column gap-4 pa-4">
+  <div class="d-flex flex-column ga-4 pa-4">
     <SyAutocomplete
       ref="autocompleteRef"
       :model-value="value"
@@ -325,7 +325,7 @@ export const NoValidateOnBlur: Story = {
       :custom-success-rules="customSuccessRules"
       @update:model-value="handleManualChange"
     />
-    <div class="d-flex gap-4 mt-2">
+    <div class="d-flex ga-4 mt-2">
       <VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('1')">Définir une valeur invalide</VBtn>
       <VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('2')">Définir une valeur valide</VBtn>
       <VBtn @mousedown.prevent @click="applyButtonValue(null)">Réinitialiser</VBtn>
@@ -462,7 +462,7 @@ const applyButtonValue = async (newValue) => {
 				return { args, value, autocompleteRef, customRules, customSuccessRules, handleManualChange, applyButtonValue }
 			},
 			template: `
-				<div class="d-flex flex-column gap-4 pa-4">
+				<div class="d-flex flex-column ga-4 pa-4">
 					<SyAutocomplete
 						ref="autocompleteRef"
 						:model-value="value"
@@ -471,7 +471,7 @@ const applyButtonValue = async (newValue) => {
 						:custom-success-rules="customSuccessRules"
 						@update:model-value="handleManualChange"
 					/>
-					<div class="d-flex gap-4 mt-2">
+					<div class="d-flex ga-4 mt-2">
 						<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('1')">Définir une valeur invalide</VBtn>
 						<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('2')">Définir une valeur valide</VBtn>
 						<VBtn @mousedown.prevent @click="applyButtonValue(null)">Réinitialiser</VBtn>
@@ -489,7 +489,7 @@ export const DisableErrorHandling: Story = {
 				name: 'Template',
 				code: `
 <template>
-	<div class="d-flex flex-column gap-4">
+	<div class="d-flex flex-column ga-4">
 		<SyAutocomplete
 			v-model="value1"
 			:items="items"

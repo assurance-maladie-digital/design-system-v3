@@ -276,7 +276,7 @@ export const DisableErrorHandling: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <div class="d-flex flex-column gap-4">
+  <div class="d-flex flex-column ga-4">
     <DatePicker
       v-model="value1"
       label="Avec validation interne (défaut)"
@@ -439,7 +439,7 @@ export const NoValidateOnBlur: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <div class="d-flex flex-column gap-4 pa-4">
+  <div class="d-flex flex-column ga-4 pa-4">
     <DatePicker
       ref="datePickerRef"
       :model-value="value"
@@ -454,7 +454,7 @@ export const NoValidateOnBlur: Story = {
       ]"
       @update:model-value="handleChange"
     />
-    <div class="d-flex gap-4 mt-2">
+    <div class="d-flex ga-4 mt-2">
       <VBtn color="primary" @mousedown.prevent @click="applyValue('01/01/2100')">Valeur invalide</VBtn>
       <VBtn color="primary" @mousedown.prevent @click="applyValue('22/01/2024')">Valeur valide</VBtn>
       <VBtn @mousedown.prevent @click="resetValue()">Réinitialiser</VBtn>
@@ -522,14 +522,14 @@ const resetValue = () => {
 			return { args, value, datePickerRef, handleChange, applyValue, resetValue }
 		},
 		template: `
-			<div class="d-flex flex-column gap-4 pa-4">
+			<div class="d-flex flex-column ga-4 pa-4">
 				<DatePicker
 					ref="datePickerRef"
 					:model-value="value"
 					v-bind="args"
 					@update:model-value="handleChange"
 				/>
-				<div class="d-flex gap-4 mt-2">
+				<div class="d-flex ga-4 mt-2">
 					<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyValue('01/01/2100')">Valeur invalide</VBtn>
 					<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyValue('22/01/2024')">Valeur valide</VBtn>
 					<VBtn @mousedown.prevent @click="resetValue()">Réinitialiser</VBtn>

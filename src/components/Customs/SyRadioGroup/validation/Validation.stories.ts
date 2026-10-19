@@ -392,8 +392,6 @@ onMounted(() => {
 }
 
 /**
- * showSuccessMessages: false — les messages de succès sont masqués
-/**
  * disableErrorHandling: true — la validation est complètement désactivée
  */
 export const DisableErrorHandling: Story = {
@@ -705,7 +703,7 @@ const options = [
 
 const rules: VuetifyValidationRule[] = [
 	(v: string | null) => !!v || 'Une sélection est requise',
-	(v: string | null) => v === 'a' || 'Vous devez sélectionner l'option A',
+	(v: string | null) => v === 'a' || "Vous devez sélectionner l'option A",
 ]
 
 const submit = async () => {

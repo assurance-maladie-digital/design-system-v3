@@ -959,6 +959,7 @@ Ce story démontre l'utilisation simultanée des **customWarningRules** et **cus
 		label="Options"
 		:custom-warning-rules="warningRules"
 		:custom-success-rules="successRules"
+		show-success-messages
 		:is-validate-on-blur="false"
 	/>
 </template>`,
@@ -1046,6 +1047,7 @@ const successRules: ValidationRule[] = [
 				:options="options"
 				:custom-warning-rules="warningRules"
 				:custom-success-rules="successRules"
+				show-success-messages
 				:is-validate-on-blur="false"
 			/>
 		`,
