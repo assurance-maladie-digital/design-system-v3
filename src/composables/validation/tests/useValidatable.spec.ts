@@ -50,8 +50,8 @@ describe('useValidatable', () => {
 		const wrapper = mount(ParentWithForm)
 		const form = (wrapper.vm as { form: FormValidationApi }).form
 
-		expect(form.validatableComponents.value).toHaveLength(1)
-		const registered = form.validatableComponents.value[0]
+		expect(form._getValidatableComponents()).toHaveLength(1)
+		const registered = form._getValidatableComponents()[0]
 
 		const childWrapper = wrapper.findComponent(ChildComponent)
 		const childVm = childWrapper.vm as unknown as {
@@ -71,7 +71,7 @@ describe('useValidatable', () => {
 
 		wrapper.unmount()
 		await flushPromises()
-		expect(form.validatableComponents.value).toHaveLength(0)
+		expect(form._getValidatableComponents()).toHaveLength(0)
 	})
 
 	it('does NOT de-duplicate: two useValidatable() calls in the same instance register twice', async () => {
@@ -105,11 +105,11 @@ describe('useValidatable', () => {
 		const wrapper = mount(ParentWithForm)
 		const form = (wrapper.vm as { form: FormValidationApi }).form
 
-		expect(form.validatableComponents.value).toHaveLength(2)
+		expect(form._getValidatableComponents()).toHaveLength(2)
 
 		wrapper.unmount()
 		await flushPromises()
-		expect(form.validatableComponents.value).toHaveLength(0)
+		expect(form._getValidatableComponents()).toHaveLength(0)
 	})
 
 	it('does nothing harmful when no form provider is present', async () => {

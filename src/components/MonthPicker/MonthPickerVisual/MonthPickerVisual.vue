@@ -92,6 +92,7 @@
 </script>
 <template>
 	<VMenu
+		:id="`${id}-dialog`"
 		v-model="open"
 		:target="(textInput as ComponentPublicInstance)"
 		:activator="(toggleBtn as HTMLElement)"
@@ -105,7 +106,9 @@
 		transition="fade-transition"
 		:activator-props="{
 			'aria-haspopup': 'dialog',
-			'disabled': props.disabled ? 'true' : undefined,
+			'aria-controls': open ? `${id}-dialog` : undefined,
+			'aria-owns': open ? `${id}-dialog` : undefined,
+			'disabled': props.disabled ? true : undefined,
 		}"
 		role="dialog"
 		:aria-labelledby="`${id}-title`"

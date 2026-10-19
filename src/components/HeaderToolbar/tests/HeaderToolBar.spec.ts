@@ -198,10 +198,10 @@ describe('HeaderToolbar', () => {
 			expect(result).toBe('RouterLink')
 		})
 
-		it('retourne "a" pour un item sans href ni to', () => {
+		it('retourne "button" pour un item sans href ni to', () => {
 			const wrapper = mount(HeaderToolbar)
 			const result = wrapper.vm.getLinkComponent({ title: 'Test' })
-			expect(result).toBe('a')
+			expect(result).toBe('button')
 		})
 	})
 
@@ -330,10 +330,28 @@ describe('HeaderToolbar', () => {
 	})
 
 	describe('openMenuWithKeyboard', () => {
+		afterEach(() => {
+			vi.restoreAllMocks()
+			vi.useRealTimers()
+		})
+
 		it('ouvre le menu et l\'overlay', async () => {
 			const wrapper = mount(HeaderToolbar)
 			wrapper.vm.openMenuWithKeyboard()
 			expect(wrapper.vm.showOverlay).toBe(true)
+		})
+
+		it('n\'accède plus au DOM si le composant est démonté avant le focus différé', async () => {
+			vi.useFakeTimers()
+			const wrapper = mount(HeaderToolbar, { attachTo: document.body })
+			wrapper.vm.openMenuWithKeyboard()
+			await vi.advanceTimersByTimeAsync(0)
+			const getElementById = vi.spyOn(document, 'getElementById')
+
+			wrapper.unmount()
+			await vi.advanceTimersByTimeAsync(100)
+
+			expect(getElementById).not.toHaveBeenCalledWith('left-dropdown-menu')
 		})
 	})
 

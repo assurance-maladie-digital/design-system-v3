@@ -1,5 +1,5 @@
 import { computed, ref, toRef, watch } from 'vue'
-import type { Ref } from 'vue'
+import type { Ref, WritableComputedRef } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import { mdiAlertCircle, mdiAlertOutline, mdiCheck } from '@mdi/js'
 import { type ValidationRule } from '@/composables/validation/useValidation'
@@ -7,6 +7,7 @@ import { useValidation, type FieldValidationProps } from '@/composables/unifyVal
 
 export function useSyAutocompleteValidation(
 	props: FieldValidationProps,
+	modelValue: WritableComputedRef<unknown>,
 	locales: Ref<{
 		requiredField: (label: string | undefined) => string
 	}>,
@@ -27,7 +28,7 @@ export function useSyAutocompleteValidation(
 	)
 
 	const { validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
-		modelValue: toRef(props, 'modelValue') as Ref<unknown>,
+		modelValue,
 		readonly: toRef(props, 'readonly') as Ref<boolean>,
 		disabled: toRef(props, 'disabled') as Ref<boolean>,
 		required: toRef(props, 'required') as Ref<boolean>,

@@ -1412,6 +1412,13 @@
 			return await Promise.resolve(dateTextInputRef.value?.validateOnSubmit() ?? false)
 		}
 		const textInputValid = await Promise.resolve(dateCalendarTextInputRef.value?.validateOnSubmit() ?? false)
+		// Saisie présente mais invalide (date incomplète ou mal formée) : l'erreur de format
+		// du champ texte prime. Valider les dates retenues ajouterait « La date est requise. »
+		// (aucune date complète retenue), affichée avant l'erreur de format avec maxErrors à 1.
+		if (!textInputValid && dateCalendarTextInputRef.value?.hasInput) {
+			clearValidation()
+			return false
+		}
 		await Promise.resolve(validate({ force: true }))
 		return textInputValid && errorMessages.value.length === 0
 	}

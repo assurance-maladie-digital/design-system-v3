@@ -22,7 +22,6 @@ import {
             <ul>
                 <li><strong>Bouton natif</strong> : utilisation du composant<code>VBtn</code> qui génère un élément <code>&lt;button&gt;</code>, garantissant un comportement accessible par défaut.</li>
                 <li><strong>Nom accessible</strong> : l’attribut <code>aria-label</code>permet de fournir une description explicite de l’action (ex. « Copier le numéro de compte »).</li>
-                <li><strong>Association ARIA</strong> : les attributs<code>aria-owns</code> et <code>aria-controls</code> peuvent être utilisés pour relier le bouton à un élément spécifique de l’interface.</li>
                 <li><strong>Identifiants uniques</strong> : l’utilisation de<code>useId()</code> garantit des identifiants uniques pour chaque instance du composant.</li>
             </ul>
         </CriteriaCard>
@@ -47,7 +46,7 @@ import {
         <CriteriaCard title="Personnalisation accessible">
             <ul>
                 <li><strong>Slots personnalisables</strong> : possibilité de remplacer l’icône ou le contenu du tooltip via les slots<code>icon</code> et <code>tooltip</code>.</li>
-                <li><strong>Libellés adaptables</strong> : les propriétés<code>ariaLabel</code> et <code>ariaOwns</code> permettent d’adapter les descriptions selon le contexte.</li>
+                <li><strong>Libellé adaptable</strong> : la prop <code>ariaLabel</code> permet de décrire l’action de copie selon le contexte.</li>
                 <li><strong>Nettoyage du contenu copié</strong> : la prop<code>separatorsToRemove</code> permet de retirer des caractères visuels (ex. espaces ou tirets) avant la copie.</li>
             </ul>
         </CriteriaCard>

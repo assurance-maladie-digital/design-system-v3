@@ -209,6 +209,10 @@
 		validateFields,
 		hasFieldErrors,
 		clearValidation,
+		handleNumberFocus,
+		handleNumberBlur,
+		handleKeyFocus,
+		handleKeyBlur,
 	} = useNirValidation(
 		numberValue,
 		keyValue,
@@ -477,6 +481,8 @@
 				:aria-describedby="numberDescribedBy"
 				:show-success-messages="false"
 				@input="handleNumberInput"
+				@focus="handleNumberFocus"
+				@blur="handleNumberBlur"
 			/>
 		</div>
 		<div
@@ -520,6 +526,8 @@
 				:aria-describedby="keyDescribedBy"
 				:show-success-messages="false"
 				@input="handleKeyInput"
+				@focus="handleKeyFocus"
+				@blur="handleKeyBlur"
 			/>
 		</div>
 		<div

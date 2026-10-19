@@ -14,6 +14,7 @@ export const buildDateTextInputTextFieldProps = (
 	'append-icon': props.displayIcon && props.displayAppendIcon ? 'calendar' : undefined,
 	'disabled': props.disabled,
 	'disable-click-button': props.disableClickButton,
+	'disable-error-handling': props.disableErrorHandling,
 	'error-messages': errorMessages.value,
 	'label': props.label,
 	'placeholder': props.placeholder,
@@ -36,4 +37,9 @@ export const buildDateTextInputTextFieldProps = (
 	'title': props.title,
 	'hint': props.hint,
 	'persistent-hint': props.persistentHint,
+	// En mode Vuetify, les `rules` sont portées par le champ texte, comme l'activateur du
+	// mode calendrier : il s'enregistre dans le VForm, qui les évalue au submit même si
+	// le champ n'a jamais été touché.
+	'use-vuetify-validation': props.useVuetifyValidation,
+	'rules': props.useVuetifyValidation ? props.rules : undefined,
 })

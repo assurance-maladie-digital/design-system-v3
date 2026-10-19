@@ -29,8 +29,6 @@ export function usePasswordField(params: {
 	maxErrors: Ref<number | undefined>
 	locales: Ref<typeof defaultLocales>
 }) {
-	const alertMessage = ref('')
-
 	const allCustomRules = computed<ValidationRule[]>(() => {
 		const rules: ValidationRule[] = []
 
@@ -86,7 +84,11 @@ export function usePasswordField(params: {
 	})
 
 	return {
-		alertMessage,
+		/**
+		 * @deprecated Jamais alimenté : le message d'alerte est géré par PasswordField.
+		 * Conservé pour compatibilité, sera supprimé à la prochaine version majeure.
+		 */
+		alertMessage: ref(''),
 		errors,
 		warnings,
 		successes,

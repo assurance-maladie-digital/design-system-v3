@@ -41,7 +41,7 @@
 		'update:dialCodeModel': [value: Indicatif | string | undefined]
 	}>()
 
-	const phoneNumber = ref<string>(props.modelValue)
+	const phoneNumber = ref<string>(props.modelValue ?? '')
 	const { internalDialCode, dialCodeList } = usePhoneIndicatifs(
 		toRef(props, 'dialCodeModel'),
 		toRef(props, 'displayFormat'),
@@ -96,6 +96,7 @@
 		warningRules: toRef(props, 'customWarningRules'),
 		successRules: toRef(props, 'customSuccessRules'),
 		rules: toRef(props, 'rules'),
+		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
 		errorMessages: toRef(props, 'errorMessages'),
 		warningMessages: toRef(props, 'warningMessages'),
 		successMessages: toRef(props, 'successMessages'),
@@ -187,7 +188,7 @@
 					:outlined="props.outlined"
 					:aria-required="true"
 					:display-asterisk="props.displayAsterisk"
-					:disable-error-handling="props.disableErrorHandling || props.readonly"
+					:disable-error-handling="true"
 					:bg-color="props.bgColor"
 					:readonly="props.readonly"
 					:disabled="props.disabled"
@@ -205,7 +206,7 @@
 					v-model="phoneNumber"
 					v-maska="internalDialCode.mask"
 					:counter="internalDialCode.phoneLength"
-					:counter-value="(value: string) => value.replace(/\D/g, '').length"
+					:counter-value="(value?: string) => (value ? value.replace(/\D/g, '').length : 0)"
 					:label="withCountryCode ? locales.phoneNumberWithoutCountryLabel : locales.label"
 					:required="props.required"
 					:aria-required="props.required"
@@ -214,7 +215,7 @@
 					:warning-messages="warnings"
 					:success-messages="successes"
 					:show-success-messages="props.showSuccessMessages"
-					:disable-error-handling="props.disableErrorHandling || props.readonly"
+					:disable-error-handling="true"
 					:variant="props.outlined ? 'outlined' : 'underlined'"
 					:display-asterisk="props.displayAsterisk"
 					:readonly="props.readonly"

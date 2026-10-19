@@ -213,6 +213,7 @@ export { useFieldValidation } from '../composables/rules/useFieldValidation'
 export type { RuleOptions } from '../composables/rules/useFieldValidation'
 export { useValidatable } from '../composables/validation/useValidatable'
 export { useValidation } from '../composables/validation/useValidation'
+export type { ValidationOptions } from '../composables/validation/useValidation'
 export { useNotificationService } from '../services/NotificationService'
 
 // ===========================

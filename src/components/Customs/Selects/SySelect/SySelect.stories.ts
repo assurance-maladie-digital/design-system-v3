@@ -40,7 +40,7 @@ const meta: Meta<typeof SySelect> = {
 		},
 		allowHtml: {
 			control: 'boolean',
-			description: 'Permet d\'afficher le texte des options en HTML. À utiliser avec plainTextKey pour le filtrage en texte brut.',
+			description: 'Permet d\'afficher le texte des options en HTML. À utiliser avec plainTextKey pour le filtrage en texte brut. Le HTML est filtré : seules les balises abbr (avec title), span (avec class), b, strong, em et i sont conservées. Les autres attributs, dont style, sont retirés.',
 		},
 		valueKey: {
 			control: 'text',

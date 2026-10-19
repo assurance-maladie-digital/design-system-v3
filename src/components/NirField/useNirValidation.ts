@@ -1,4 +1,4 @@
-import { computed, nextTick, onBeforeUnmount, onMounted, ref, type Ref } from 'vue'
+import { computed, nextTick, ref, type Ref } from 'vue'
 import { checkNIR, isNIRKeyValid } from './nirValidation'
 import { locales } from './locales'
 import { useValidation, type ValidationRule as SyValidationRule } from '@/composables/unifyValidation/useValidation'
@@ -165,50 +165,23 @@ export function useNirValidation(
 		return rules
 	})
 
-	// État pour suivre si une validation est en cours
-	const isValidating = ref(false)
 	const shouldValidateOnBlur = ref(false)
 	let validationPromise: Promise<boolean> | null = null
 	const numberFieldFocused = ref(false)
 	const keyFieldFocused = ref(false)
 
-	// update focus state on blur and focus
-	const onNumberFocus = () => {
+	const handleNumberFocus = () => {
 		numberFieldFocused.value = true
 	}
-	const onNumberBlur = () => {
+	const handleNumberBlur = () => {
 		numberFieldFocused.value = false
 	}
-	const onKeyFocus = () => {
+	const handleKeyFocus = () => {
 		keyFieldFocused.value = true
 	}
-	const onKeyBlur = () => {
+	const handleKeyBlur = () => {
 		keyFieldFocused.value = false
 	}
-
-	let numberInput: HTMLInputElement | null = null
-	let keyInput: HTMLInputElement | null = null
-
-	onMounted(() => {
-		numberInput = numberField.value?.$el?.querySelector('input') ?? null
-		if (numberInput) {
-			numberInput.addEventListener('focus', onNumberFocus)
-			numberInput.addEventListener('blur', onNumberBlur)
-		}
-
-		keyInput = keyField.value?.$el?.querySelector('input') ?? null
-		if (keyInput) {
-			keyInput.addEventListener('focus', onKeyFocus)
-			keyInput.addEventListener('blur', onKeyBlur)
-		}
-	})
-
-	onBeforeUnmount(() => {
-		numberInput?.removeEventListener('focus', onNumberFocus)
-		numberInput?.removeEventListener('blur', onNumberBlur)
-		keyInput?.removeEventListener('focus', onKeyFocus)
-		keyInput?.removeEventListener('blur', onKeyBlur)
-	})
 
 	const numberValidation = useValidation({
 		modelValue: numberValue,
@@ -219,7 +192,7 @@ export function useNirValidation(
 		showSuccessMessages,
 		disableErrorHandling,
 		useVuetifyValidation,
-		label,
+		label: numberLabel,
 		customRules: numberRules,
 		customWarningRules: computed(() => unmaskedNumberValue.value.length === 13 ? customNumberWarningRules.value : []),
 		rules: vuetifyNumberRules,
@@ -237,12 +210,13 @@ export function useNirValidation(
 		modelValue: keyValue,
 		readonly,
 		disabled,
-		required,
+		// La clé masquée (displayKey à false) n'est pas requise.
+		required: computed(() => required.value && displayKey.value),
 		isValidateOnBlur,
 		showSuccessMessages,
 		disableErrorHandling,
 		useVuetifyValidation,
-		label,
+		label: keyLabel,
 		customRules: keyRules,
 		customWarningRules: computed(() => (displayKey.value && unmaskedKeyValue.value.length === 2) ? customKeyWarningRules.value : []),
 		rules: vuetifyKeyRules,
@@ -258,8 +232,6 @@ export function useNirValidation(
 		}
 
 		validationPromise = (async () => {
-			isValidating.value = true
-
 			await numberValidation.validate()
 
 			if (displayKey.value) {
@@ -277,7 +249,6 @@ export function useNirValidation(
 				shouldValidateOnBlur.value = false
 			}
 
-			isValidating.value = false
 			validationPromise = null
 			return !numberValidation.hasError.value && (!displayKey.value || !keyValidation.hasError.value)
 		})()
@@ -298,5 +269,9 @@ export function useNirValidation(
 		validateFields,
 		hasFieldErrors,
 		clearValidation,
+		handleNumberFocus,
+		handleNumberBlur,
+		handleKeyFocus,
+		handleKeyBlur,
 	}
 }

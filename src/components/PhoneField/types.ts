@@ -12,7 +12,7 @@ export type Indicatif = {
 	phoneLength?: number
 }
 export type PhoneFieldProps = FieldValidationProps & {
-	modelValue?: string
+	modelValue?: string | null
 	isClearable?: boolean
 	dialCodeModel?: string | Indicatif
 	outlined?: boolean

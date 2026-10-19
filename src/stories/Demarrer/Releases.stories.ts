@@ -2,6 +2,7 @@ import axios from 'axios'
 import { onMounted, shallowRef } from 'vue'
 import * as marked from 'marked'
 import SyAlert from '../../components/SyAlert/SyAlert.vue'
+import { sanitizeHtml } from './sanitizeHtml'
 
 type GitHubRelease = {
 	id: number
@@ -22,6 +23,22 @@ type ReleaseAlert = {
 }
 
 const releaseAlerts: ReleaseAlert[] = [
+	{
+		id: 'syform-validation-behavior',
+		releaseVersion: 'v1.2.0',
+		message: 'Changements de comportement du SyForm. Ce sont des corrections, mais un projet existant peut les percevoir comme des régressions : vérifiez vos formulaires après la montée de version.\nIls font suite à la finalisation de la validation des formulaires (SyForm et champs de formulaire), engagée depuis la v1.0.24. Nous avons testé tous les cas qui nous semblaient utiles aux projets, mais il est possible que certains nous aient échappé : n\'hésitez pas à nous signaler tout comportement inattendu.\n- Erreurs injectées (error-messages, has-error) : elles bloquent maintenant la soumission. Retirez l\'erreur quand l\'utilisateur corrige la valeur (@update:model-value="serverErrors = []"), sinon le formulaire reste bloqué. Le validateOnSubmit() du champ renvoie aussi false, y compris avec disable-error-handling. Un has-error utilisé seulement pour la mise en forme bloque aussi la soumission.\n- v-model du formulaire : il vaut null tant qu\'aucune erreur n\'est affichée, au lieu de false. Si vous testez valid === false (bouton de soumission, garde), un formulaire invalide passe : comparez à true (:disabled="valid !== true").\n- Formulaire sans champ Synapse : il ne vaut plus true d\'office. Un SyForm qui ne contient que des composants Vuetify natifs suit maintenant leur validité.\n- SyInputSelect requis vide : il bloque désormais la soumission.\n- Champs Vuetify disabled : ils sont ignorés par la validation du SyForm.\n- Uniquement si vous lisez validate().errors : l\'id des champs en use-vuetify-validation devient <label>-<id> au lieu de <label>.\nPour plus de détails, voir la page ',
+		type: 'warning',
+		variant: 'tonal',
+		link: { href: '/?path=/docs/composants-formulaires-syform--docs', text: 'SyForm' },
+	},
+	{
+		id: 'form-fields-validation-behavior',
+		releaseVersion: 'v1.2.0',
+		message: 'Changements de comportement des champs de formulaire :\n- PhoneField et LunarCalendar appliquent use-vuetify-validation. La prop était ignorée et la validation Synapse s\'appliquait. Désormais, seules les rules sont évaluées : required n\'ajoute que l\'indication visuelle et ARIA, et les contrôles intégrés (format, min-year / max-year…) ne s\'appliquent plus. Ajoutez les règles correspondantes dans rules. En développement, un avertissement console signale un champ required sans règle dans rules.\n- SySelect affiche son message « requis » à la soumission. Avant, seule la bordure passait en rouge.\n- SyTextArea inclut le libellé du champ dans son message « requis ».\n- DatePicker : une date incomplète est refusée au blur et à la soumission. Avant, effacer une partie d\'une date valide laissait soumettre l\'ancienne date. Le message « Format de date invalide (…) » s\'affiche désormais, y compris en mode combiné, où « La date est requise. » s\'affichait à la place.\n- NirField : la clé n\'est plus requise quand elle est masquée (display-key="false").\n- Mode Vuetify : une règle qui renvoie false affiche « La valeur est invalide. », au lieu de passer le champ en erreur sans message.\nPour plus de détails, voir le ',
+		type: 'warning',
+		variant: 'tonal',
+		link: { href: '/?path=/docs/guide-du-dev-formulaires-validation-guide-des-formulaires--docs', text: 'guide de validation des formulaires' },
+	},
 	{
 		id: 'theme-css-variables-kebab-case',
 		releaseVersion: 'v1.1.5',
@@ -138,7 +155,7 @@ export const List = {
 
 				const formatMarkdown = (markdown?: string | null) => {
 					const html = marked.parse(markdown ?? '') as string
-					return html.replace(/<blockquote>[\s\S]*?<\/blockquote>/g, '')
+					return sanitizeHtml(html.replace(/<blockquote>[\s\S]*?<\/blockquote>/g, ''))
 				}
 
 				const getReleaseAlerts = (release: GitHubRelease) => {
@@ -160,9 +177,6 @@ export const List = {
 				}
 			},
 			template: `
-			   <div class="d-flex justify-space-between align-center">
-                  <h1 class="title font-weight-medium mb-5">Releases</h1>
-              </div>
 				<div class="releases">
 					<SyAlert type="info" variant="tonal" :closable="false">
 						<template #default>Nous faisons des nouvelles release (correction de bugs ou nouvelles fonctionnalités) régulièrement. Vous pouvez retrouver la liste des dernières releases ci-dessous.</template>

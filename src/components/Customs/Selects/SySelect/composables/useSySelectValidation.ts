@@ -1,11 +1,12 @@
 import { computed, ref } from 'vue'
-import type { Ref } from 'vue'
+import type { Ref, WritableComputedRef } from 'vue'
 import { mdiAlertCircle, mdiAlertOutline, mdiCheck } from '@mdi/js'
 import { useValidation, type FieldValidationProps } from '@/composables/unifyValidation/useValidation'
 import type { ValidationRule } from '@/composables/validation/useValidation'
 
 export function useSySelectValidation(
 	props: FieldValidationProps & { modelValue?: unknown },
+	modelValue: WritableComputedRef<unknown>,
 	locales: Ref<{
 		requiredField: (label: string | undefined) => string
 	}>,
@@ -24,11 +25,12 @@ export function useSySelectValidation(
 	)
 
 	const { validate, clearValidation, errors, warnings, successes, hasError, hasWarning, hasSuccess } = useValidation({
-		modelValue: computed(() => props.modelValue),
+		modelValue,
 		readonly: computed(() => props.readonly ?? false),
 		disabled: computed(() => props.disabled ?? false),
 		required: computed(() => props.required ?? false),
-		isValidateOnBlur: computed(() => props.isValidateOnBlur ?? false),
+		// Repli aligné sur le défaut effectif de SySelect (validationPropsDefaults : true)
+		isValidateOnBlur: computed(() => props.isValidateOnBlur ?? true),
 		showSuccessMessages: computed(() => props.showSuccessMessages ?? false),
 		disableErrorHandling: computed(() => props.disableErrorHandling ?? false),
 		useVuetifyValidation: computed(() => props.useVuetifyValidation ?? false),

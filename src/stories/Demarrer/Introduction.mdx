@@ -1,9 +1,12 @@
 import {Story, Meta} from '@storybook/addon-docs/blocks';
 import * as IntroductionStories from './Introduction.stories';
+import '../styles/shared.css';
 
 <Meta of={IntroductionStories} />
 
-<Story of={IntroductionStories.Header}  />
+<div className="header">
+    <h1>Démarrer</h1>
+</div>
 
 <Story of={IntroductionStories.Intro}  />
 

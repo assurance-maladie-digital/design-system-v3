@@ -137,32 +137,24 @@ describe('LunarCalendar', () => {
 			expect(wrapper.html()).toContain('Date format valide')
 		})
 
-		it('displays success messages when showSuccessMessages is true', async () => {
-			const successRule = {
-				type: 'custom',
-				options: {
-					validate: (value: string) => {
-						const regex = /^\d{2}\/\d{2}\/\d{4}$/
-						return regex.test(value)
-					},
-					successMessage: 'Date format valide',
-				},
-			}
-
+		// Régression : `useVuetifyValidation` et `rules` étaient ignorés, le mode Synapse s'appliquait toujours
+		it('applies the Vuetify rules instead of the built-in rules when useVuetifyValidation is true', async () => {
 			const wrapper = mount(LunarCalendar, {
 				props: {
 					label: 'Date de naissance',
-					modelValue: '10/19/1995',
-					showSuccessMessages: true,
-					customSuccessRules: [successRule],
+					modelValue: '',
+					required: true,
+					useVuetifyValidation: true,
+					rules: [(v: string) => !!v || 'La date de naissance est requise.'],
 				},
 			})
 
-			await (wrapper.vm.validateOnSubmit as unknown as () => Promise<boolean>)()
+			const isValid = await (wrapper.vm.validateOnSubmit as () => Promise<boolean>)()
 			await flushPromises()
-			await wrapper.vm.$nextTick()
 
-			expect(wrapper.html()).toContain('Date format valide')
+			expect(isValid).toBe(false)
+			expect(wrapper.html()).toContain('La date de naissance est requise.')
+			expect(wrapper.html()).not.toContain('Le champ Date de naissance est requis.')
 		})
 	})
 

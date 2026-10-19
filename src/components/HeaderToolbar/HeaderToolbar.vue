@@ -169,6 +169,10 @@
 			type: String,
 			default: 'Menu institutionnel',
 		},
+		newWindowText: {
+			type: String,
+			default: locales.newWindowText,
+		},
 	})
 
 	// Display breakpoint helpers
@@ -184,15 +188,22 @@
 		// Safely detect a possible router "to" without using 'any'
 		const maybeTo = (item as unknown as { to?: unknown }).to
 		if (maybeTo !== undefined && maybeTo !== null) return 'RouterLink'
-		return 'a'
+		// Sans href ni to, un <a> n'expose pas le rôle `link` et n'autorise aucun
+		// attribut ARIA : on utilise un <button> (rôle `button`) pour l'activateur.
+		return 'button'
 	}
 
 	// Seule la clé utile est liée : un `href: undefined` transmis à RouterLink écraserait
 	// le `href` qu'il calcule (lien sans `href`, donc sans rôle de lien).
-	const getLinkAttrs = (item: MenuItem): Pick<MenuItem, 'href' | 'to'> => {
+	const getLinkAttrs = (item: MenuItem): Record<string, unknown> => {
 		if (item.href) return { href: item.href }
 		if (item.to !== undefined && item.to !== null) return { to: item.to }
-		return {}
+		return { type: 'button' }
+	}
+
+	// Un `aria-label` remplace le contenu du lien : l'annonce de nouvelle fenêtre doit y figurer.
+	const getLinkLabel = (item: MenuItem): string => {
+		return item.openInNewTab ? `${item.title} (${props.newWindowText})` : item.title
 	}
 
 	// Overlay and focus state
@@ -213,7 +224,7 @@
 		const target = elem?.closest('a,button,[tabindex]:not([tabindex="-1"])') as HTMLElement | null
 		if (target) return target
 		// Fallback to DOM query if ref resolution fails
-		return document.querySelector('#left-menu li:nth-child(2) a') as HTMLElement | null
+		return document.querySelector('#left-menu li:nth-child(2) > button, #left-menu li:nth-child(2) > a') as HTMLElement | null
 	}
 	// Mobile burger and focus management via composable
 	const {
@@ -237,6 +248,26 @@
 		return document.getElementById('left-dropdown-menu')
 	}
 
+	// Le focus différé est annulé au démontage pour éviter tout accès au DOM
+	// après destruction du composant (source d'instabilité dans les tests).
+	let focusFirstItemTimeout: ReturnType<typeof setTimeout> | undefined
+	let isUnmounted = false
+
+	const focusFirstMenuItem = () => {
+		nextTick(() => {
+			if (isUnmounted) return
+			clearTimeout(focusFirstItemTimeout)
+			focusFirstItemTimeout = setTimeout(() => {
+				const container = getLeftDropdownEl()
+				const firstMenuItem = container?.querySelector('[role="menuitem"]') as HTMLElement | null
+				if (firstMenuItem) {
+					activeDescendantId.value = firstMenuItem.id || 'menu-item-0'
+					firstMenuItem.focus()
+				}
+			}, 30)
+		})
+	}
+
 	const isCurrentRightLink = (item: MenuItem): boolean => {
 		if (!item.href) return false
 		try {
@@ -255,16 +286,7 @@
 		if (val) {
 			leftMenuAuditTransient.value = true
 			showOverlay.value = true
-			nextTick(() => {
-				setTimeout(() => {
-					const container = getLeftDropdownEl()
-					const first = container?.querySelector('[role="menuitem"]') as HTMLElement | null
-					if (first) {
-						activeDescendantId.value = first.id || 'menu-item-0'
-						first.focus()
-					}
-				}, 30)
-			})
+			focusFirstMenuItem()
 		}
 		else {
 			hideOverlay()
@@ -295,6 +317,21 @@
 			// Clicking a normal link should close any overlay/menu
 			highlightMenu.value = false
 			hideOverlay()
+		}
+	}
+
+	// `VMenu` n'a pas de prop `activator` (elle injecterait ses propres attributs ARIA
+	// avec un id généré, cassant `aria-controls`). L'ouverture au clic est donc gérée ici.
+	const onActivatorClick = (index: number) => {
+		checkActiveLink(index)
+		if (index !== 1) return
+
+		if (menuOpen.value) {
+			hideOverlay()
+		}
+		else {
+			menuOpen.value = true
+			showOverlay.value = true
 		}
 	}
 
@@ -377,7 +414,11 @@
 		}
 	}
 
+	const menuActivatorEl = ref<HTMLElement | null>(null)
+
 	onMounted(() => {
+		menuActivatorEl.value = getLeftActivatorInteractiveEl()
+
 		updateWidth()
 		// Pour mettre à jour en temps réel, vous pouvez utiliser:
 		window.addEventListener('resize', updateWidth)
@@ -389,6 +430,8 @@
 
 	// N'oubliez pas de nettoyer l'event listener
 	onBeforeUnmount(() => {
+		isUnmounted = true
+		clearTimeout(focusFirstItemTimeout)
 		window.removeEventListener('resize', updateWidth)
 	})
 
@@ -483,16 +526,7 @@
 	const openMenuWithKeyboard = () => {
 		menuOpen.value = true
 		showOverlay.value = true
-		nextTick(() => {
-			setTimeout(() => {
-				const container = getLeftDropdownEl()
-				const firstMenuItem = container?.querySelector('[role="menuitem"]') as HTMLElement | null
-				if (firstMenuItem) {
-					activeDescendantId.value = firstMenuItem.id || 'menu-item-0'
-					firstMenuItem.focus()
-				}
-			}, 30)
-		})
+		focusFirstMenuItem()
 	}
 
 	defineExpose({
@@ -506,6 +540,7 @@
 		getLinkComponent,
 		handleSubMenuItemClick,
 		handleKeyboardEnter,
+		onActivatorClick,
 		openMenuWithKeyboard,
 		handleMenuKeydown,
 	})
@@ -543,15 +578,14 @@
 								<component
 									:is="getLinkComponent(item as MenuItem)"
 									v-bind="getLinkAttrs(item as MenuItem)"
-									:aria-label="itemsSelectMenu && index === 1 ? dropdownMenuTitle + '' : item.title"
+									:aria-label="itemsSelectMenu && index === 1 ? dropdownMenuTitle + '' : getLinkLabel(item)"
 									:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
-									:tabindex="0"
 									:target="item.openInNewTab ? '_blank' : undefined"
 									:aria-current="getCurrentPageIndex() === index ? 'page' : undefined"
-									:aria-expanded="itemsSelectMenu && index === 1 ? (menuOpen ? 'true' : 'false') : undefined"
 									:aria-haspopup="itemsSelectMenu && index === 1 ? 'menu' : undefined"
-									:aria-controls="itemsSelectMenu && index === 1 && menuOpen ? 'left-dropdown-menu' : undefined"
-									@click="checkActiveLink(index)"
+									:aria-expanded="itemsSelectMenu && index === 1 ? String(menuOpen) : undefined"
+									:aria-controls="itemsSelectMenu && index === 1 ? 'left-dropdown-menu' : undefined"
+									@click="onActivatorClick(index)"
 									@focus="index === 1 && showOverlay ? highlightMenu = true : null"
 									@mouseover="index === 1 && showOverlay ? highlightMenu = true : null"
 									@keydown.enter.prevent="handleKeyboardEnter(item, index)"
@@ -576,12 +610,13 @@
 									<VMenu
 										v-if="itemsSelectMenu && index === 1"
 										v-model="menuOpen"
+										:target="menuActivatorEl!"
+										eager
 										location="bottom"
 										attach="body"
 										scroll-strategy="none"
 										:offset="[-12,0]"
 										:close-on-content-click="true"
-										activator="parent"
 										content-class="left-dropdown-menu"
 										:theme="theme.global.name.value"
 										@update:model-value="onLeftMenuModel"
@@ -621,6 +656,12 @@
 													/>
 													<span>
 														{{ subItem.text }}
+														<span
+															v-if="subItem.openInNewTab"
+															class="d-sr-only"
+														>
+															({{ props.newWindowText }})
+														</span>
 													</span>
 												</VListItemTitle>
 											</VListItem>
@@ -709,6 +750,12 @@
 										class="mr-1"
 									/>
 									{{ item.title }}
+									<span
+										v-if="item.openInNewTab"
+										class="d-sr-only"
+									>
+										({{ props.newWindowText }})
+									</span>
 								</VListItemTitle>
 							</VListItem>
 						</VList>
@@ -731,11 +778,11 @@
 								<component
 									:is="getLinkComponent(item as MenuItem)"
 									v-bind="getLinkAttrs(item as MenuItem)"
-									:aria-label="item.title"
+									:aria-label="getLinkLabel(item)"
 									:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 									:tabindex="0"
 									:target="item.openInNewTab ? '_blank' : undefined"
-									:title="item.title"
+									:title="getLinkLabel(item)"
 									@click="deleteActiveLink()"
 								>
 									<span class="right-menu-item">{{ item.title }}</span>
@@ -821,12 +868,18 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 		}
 
 		// Common link styling
-		:deep(ul > li > a) {
+		:deep(ul > li > a),
+		:deep(ul > li > button) {
 			display: block;
 			color: $blue-darken-40;
 			text-decoration: none;
 			padding: $menu-padding;
 			cursor: pointer;
+
+			// Neutralisation des styles natifs du <button>
+			border: none;
+			font: inherit;
+			text-align: inherit;
 
 			&:hover {
 				text-decoration: underline;
@@ -843,7 +896,8 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 	// Left menu styling
 	// --------------------------------
 	#left-menu {
-		ul > li > a {
+		ul > li > a,
+		ul > li > button {
 			font-weight: 700;
 			color: $blue-darken-40;
 			display: flex;
@@ -893,7 +947,8 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 				min-height: $second-item-max-height-mobile;
 			}
 
-			a {
+			a,
+			button {
 				/* Let the link grow in height with text zoom */
 				min-height: $second-item-max-height;
 				position: relative; // Garantit l'application du z-index
@@ -918,6 +973,7 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 			}
 
 			a:hover,
+			button:hover,
 			&.highlight,
 			&.active {
 				background: $user-professionnel;
@@ -1076,7 +1132,8 @@ $z-overlay: 5; // Sans !important pour éviter des problèmes
 		z-index: $z-button;
 	}
 
-	a {
+	a,
+	button {
 		background: $user-professionnel;
 		position: relative;
 		z-index: 0;

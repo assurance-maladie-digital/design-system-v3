@@ -53,9 +53,6 @@ type Story = StoryObj<MonthPickerProps>
 
 export const WithError: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -85,7 +82,7 @@ export const WithError: Story = {
 								validate: (value: string) => {
 									return /^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value)
 								},
-								message: 'Le format doit être MM/YYYY avec un mois entre 01 et 12 (ex: 03/2026).',
+								message: 'Le format doit être MM/AAAA avec un mois entre 01 et 12 (ex: 03/2026).',
 								fieldIdentifier: 'selectedMonth',
 							},
 						},
@@ -104,7 +101,7 @@ export const WithError: Story = {
 					validate: (value: string) => {
 						return /^(0[1-9]|1[0-2])\/\d{4}$/.test(value)
 					},
-					message: 'Le format doit être MM/YYYY avec un mois entre 01 et 12 (ex: 03/2026).',
+					message: 'Le format doit être MM/AAAA avec un mois entre 01 et 12 (ex: 03/2026).',
 					fieldIdentifier: 'selectedMonth',
 				},
 			},
@@ -121,9 +118,6 @@ export const WithError: Story = {
 
 export const WithWarning: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -204,9 +198,6 @@ export const WithWarning: Story = {
 
 export const WithSuccess: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -280,9 +271,6 @@ export const WithSuccess: Story = {
 
 export const WithCustomRules: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -315,7 +303,7 @@ export const WithCustomRules: Story = {
 									}
 									return true
 								},
-								message: 'Le format doit être MM/YYYY (ex: 03/2026).',
+								message: 'Le format doit être MM/AAAA (ex: 03/2026).',
 								fieldIdentifier: 'selectedMonth',
 							},
 						},
@@ -371,7 +359,7 @@ export const WithCustomRules: Story = {
 							}
 							return true
 						},
-						message: 'Le format doit être MM/YYYY (ex: 03/2026).',
+						message: 'Le format doit être MM/AAAA (ex: 03/2026).',
 						fieldIdentifier: 'selectedMonth',
 					},
 				},
@@ -422,10 +410,9 @@ export const WithCustomRules: Story = {
 				<div class="mt-4">
 					<p><strong>Conseils pour tester :</strong></p>
 					<ul>
-						<li>Laissez le champ vide pour voir l'erreur de champ requis</li>
-						<li>Saisissez un mois invalide (ex: 13/2026) pour voir l'erreur de format</li>
-						<li>Saisissez une date à plus de 5 ans (ex: 01/2032) pour voir l'avertissement</li>
-						<li>Saisissez une date entre aujourd'hui et dans 5 ans pour voir le message de succès</li>
+						<li>Saisissez un mois incomplet (ex: 03/20) pour voir l'erreur de format</li>
+						<li>Saisissez un mois invalide (ex: 13/2026) pour voir l'erreur de mois</li>
+						<li>Saisissez une date antérieure à 10 ans (ex: 01/2010) pour voir l'erreur d'ancienneté</li>
 					</ul>
 				</div>
 			</div>
@@ -435,9 +422,6 @@ export const WithCustomRules: Story = {
 
 export const DisableErrorHandling: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		docs: {
 			description: {
 				story: `
@@ -484,7 +468,7 @@ la gestion et l'affichage des erreurs dans un champ, même si des règles de val
 					options: {
 						validate: (value: string) => {
 							if (!value || !/^(0[1-9]|1[0-2])\/\d{4}$/.test(value)) {
-								return 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).'
+								return 'Le format doit être MM/AAAA avec un mois valide (ex: 03/2026).'
 							}
 							return true
 						},
@@ -562,7 +546,7 @@ de la valeur plutôt qu'à la perte de focus. Utile pour un retour immédiat à 
 			{
 				type: 'custom',
 				options: {
-					message: 'Le format doit être MM/YYYY (ex: 03/2026).',
+					message: 'Le format doit être MM/AAAA (ex: 03/2026).',
 					validate: (value) => /^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value),
 				},
 			},
@@ -600,7 +584,7 @@ const selectedMonth = ref('')
 						{
 							type: 'custom',
 							options: {
-								message: 'Le format doit être MM/YYYY (ex: 03/2026).',
+								message: 'Le format doit être MM/AAAA (ex: 03/2026).',
 								validate: (value) => /^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value),
 							},
 						},
@@ -776,7 +760,7 @@ const customRules = [
                 }
                 return true
             },
-			message: 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).',
+			message: 'Le format doit être MM/AAAA avec un mois valide (ex: 03/2026).',
             fieldIdentifier: 'selectedMonth',
         },
     },
@@ -805,7 +789,7 @@ function handleSubmit(e) {
 							}
 							return true
 						},
-						message: 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).',
+						message: 'Le format doit être MM/AAAA avec un mois valide (ex: 03/2026).',
 						fieldIdentifier: 'selectedMonth',
 					},
 				},
@@ -876,7 +860,7 @@ const customRules = [
 				}
 				return true
 			},
-			message: 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).',
+			message: 'Le format doit être MM/AAAA avec un mois valide (ex: 03/2026).',
 			fieldIdentifier: 'selectedMonth',
 		},
 	},
@@ -906,7 +890,7 @@ async function handleSubmit() {
 							}
 							return true
 						},
-						message: 'Le format doit être MM/YYYY avec un mois valide (ex: 03/2026).',
+						message: 'Le format doit être MM/AAAA avec un mois valide (ex: 03/2026).',
 						fieldIdentifier: 'selectedMonth',
 					},
 				},
@@ -969,7 +953,7 @@ const selectedMonth = ref('')
 
 const vuetifyRules = [
     (value: string) => !!value || 'Le mois est requis',
-    (value: string) => /^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value) || 'Le format doit être MM/YYYY (ex: 03/2026)',
+    (value: string) => /^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value) || 'Le format doit être MM/AAAA (ex: 03/2026)',
 ]
 
 function handleSubmit(e) {
@@ -987,7 +971,7 @@ function handleSubmit(e) {
 
 			const vuetifyRules = [
 				(value: string) => !!value || 'Le mois est requis',
-				(value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value) || 'Le format doit être MM/YYYY (ex: 03/2026)',
+				(value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value) || 'Le format doit être MM/AAAA (ex: 03/2026)',
 			]
 
 			function handleSubmit(e: { isValid: boolean }) {
@@ -1059,7 +1043,7 @@ const selectedMonth = ref('')
 
 const rules = [
 	(value: string) => !!value || 'Le mois est requis',
-	(value: string) => /^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value) || 'Le format doit être MM/YYYY (ex: 03/2026)',
+	(value: string) => /^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value) || 'Le format doit être MM/AAAA (ex: 03/2026)',
 ]
 
 async function handleSubmit(e: Promise<{ valid: boolean }>) {
@@ -1078,7 +1062,7 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 
 			const rules = [
 				(value: string) => !!value || 'Le mois est requis',
-				(value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value) || 'Le format doit être MM/YYYY (ex: 03/2026)',
+				(value: string) => /^(0[1-9]|1[0-2])\/\d{4}$/.test(value) || 'Le format doit être MM/AAAA (ex: 03/2026)',
 			]
 
 			async function handleSubmit(e: Promise<{ valid: boolean }>) {
@@ -1111,7 +1095,4 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 			</div>
 		`,
 	}),
-	args: {
-		showSuccessMessages: true,
-	},
 }

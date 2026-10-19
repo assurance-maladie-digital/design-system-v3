@@ -126,7 +126,15 @@
 	))
 
 	// Props du ComplexDatePicker utilisé dans le flux combinedMode
-	const combinedModeDatePickerProps = computed(() => buildCalendarModeComplexDatePickerProps(props))
+	// On passe formRegistration pour que ComplexDatePicker s'enregistre correctement dans SyForm
+	const combinedModeDatePickerProps = computed(() => buildCalendarModeComplexDatePickerProps(
+		props,
+		{
+			validateOnSubmit,
+			clearValidation: clearValidationForForm,
+			reset: resetField,
+		},
+	))
 
 	// Props du champ activateur utilisé quand le calendrier s'ouvre dans le menu
 	const menuActivatorTextFieldProps = computed(() => buildCalendarModeActivatorTextFieldProps(
@@ -665,8 +673,11 @@
 
 	async function validateOnSubmit() {
 		// Si le mode noCalendar est activé, on délègue la validation au DateTextInput
+		// Le DateTextInput ne valide que ses règles : les erreurs injectées par le parent
+		// (ex. erreur serveur) doivent aussi faire échouer la soumission, comme en mode calendrier.
 		if (props.noCalendar) {
-			return await dateTextInputRef.value?.validateOnSubmit() ?? false
+			const isValid = await dateTextInputRef.value?.validateOnSubmit() ?? false
+			return isValid && (props.errorMessages?.length ?? 0) === 0
 		}
 		// Si le mode combiné est activé, on délègue la validation au ComplexDatePicker
 		else if (props.useCombinedMode) {
@@ -689,6 +700,10 @@
 		}
 		else if (props.useCombinedMode) {
 			complexDatePickerRef.value?.clearValidation()
+		}
+		else {
+			// Mode CalendarMode par défaut : nettoyer le SyTextField interne
+			dateCalendarTextInputRef.value?.clearValidation()
 		}
 	}
 

@@ -168,7 +168,6 @@
 		hasWarning,
 		hasSuccess,
 		validationIcon,
-		mergedVuetifyRules,
 	} = useSyTextAreaValidation(props, { internalValue, hasInteracted }, locales)
 
 	const computedLabel = computed(() =>
@@ -247,8 +246,6 @@
 			:max-errors="props.maxErrors"
 			:disabled="props.disabled"
 			:readonly="props.readonly"
-			:validate-on="validateOn"
-			:rules="props.useVuetifyValidation ? mergedVuetifyRules : undefined"
 			:label="computedLabel"
 			:aria-label="computedLabel"
 			:required="required"

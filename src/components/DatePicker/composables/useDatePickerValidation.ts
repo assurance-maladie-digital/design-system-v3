@@ -23,6 +23,7 @@
 import { computed, ref, watch, unref, type ComputedRef, type Ref, type MaybeRef } from 'vue'
 import { type ValidationResult, type ValidationRule, type VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 import { useCustomValidation } from '@/composables/unifyValidation/useCustomValidation'
+import { evaluateVuetifyRules } from '@/composables/unifyValidation/vuetifyRuleEvaluation'
 import {
 	normalizeMessages as normalizeMessagesUtil,
 	useDisplayMessages,
@@ -179,7 +180,7 @@ export interface DatePickerValidationController {
 		successRules?: ValidationRule[],
 	) => ValidationResult | Promise<ValidationResult>
 	validateDates: (forceValidation?: boolean) => ValidationResult | Promise<ValidationResult>
-	validateTextInput: (value: string) => Promise<boolean>
+	validateTextInput: (value: string, force?: boolean) => Promise<boolean>
 	validateCalendarModeDates: (forceValidation?: boolean) => ValidationResult | Promise<ValidationResult>
 }
 
@@ -286,36 +287,52 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 	// - options diverses : showSuccessMessages, fieldIdentifier, isValidateOnBlur, etc.
 	// - reactiveValidation: false → on désactive la validation réactive automatique de
 	//   useCustomValidation car le DatePicker gère lui-même ses watchers (section plus bas).
-	const validation = useCustomValidation(
-		computed(() => options.selectedDates.value),
-		options.customRules as Ref<ValidationRule[]>,
-		options.customWarningRules as Ref<ValidationRule[]>,
-		(options.customSuccessRules as Ref<ValidationRule[]>) ?? ref<ValidationRule[]>([]),
-		errors,
-		warnings,
-		successes,
-		computed(() => unref(options.showSuccessMessages)),
-		computed(() => unref(options.fieldIdentifier) ?? locales.label),
-		ref(false), // focused — non géré ici, le DatePicker a sa propre logique de focus
-		computed(() => options.isValidateOnBlur?.value ?? true),
-		computed(() => unref(options.disableErrorHandling)),
-		computed(() => Boolean(unref(options.readonly))),
-		computed(() => Boolean(unref(options.disabled))),
-		{
-			registerWithForm: Boolean(options.formRegistration),
-			reactiveValidation: false, // Désactivé : le DatePicker gère ses propres watchers
-			formRegistration: options.formRegistration,
-			useVuetifyValidation: computed(() => Boolean(unref(options.useVuetifyValidation))),
-			rules: options.rules,
-		},
-	)
+	// `useVuetifyValidation` peut basculer quand il est passé en Ref : useCustomValidation est
+	// alors toujours créé (sinon `validation` resterait null après true→false), mais se
+	// désenregistre du SyForm tant que le mode Vuetify est actif.
+	const isCustomMode = computed(() => !unref(options.useVuetifyValidation))
+	const validation = options.useVuetifyValidation === true
+		? null
+		: useCustomValidation(
+				computed(() => options.selectedDates.value),
+				options.customRules as Ref<ValidationRule[]>,
+				options.customWarningRules as Ref<ValidationRule[]>,
+				(options.customSuccessRules as Ref<ValidationRule[]>) ?? ref<ValidationRule[]>([]),
+				errors,
+				warnings,
+				successes,
+				computed(() => unref(options.showSuccessMessages)),
+				computed(() => unref(options.fieldIdentifier) ?? locales.label),
+				ref(false), // focused — non géré ici, le DatePicker a sa propre logique de focus
+				computed(() => options.isValidateOnBlur?.value ?? true),
+				computed(() => unref(options.disableErrorHandling)),
+				computed(() => Boolean(unref(options.readonly))),
+				computed(() => Boolean(unref(options.disabled))),
+				{
+					registerWithForm: Boolean(options.formRegistration),
+					reactiveValidation: false, // Désactivé : le DatePicker gère ses propres watchers
+					formRegistration: options.formRegistration,
+					// Les erreurs injectées par le parent (ex. erreur serveur) doivent invalider
+					// le champ auprès du SyForm, pas seulement s'afficher (cf. useDisplayMessages).
+					externalErrors: options.errorMessages,
+					forcedError: computed(() => Boolean(unref(options.hasErrorProp))),
+					enabled: isCustomMode,
+				},
+			)
 
 	// --- Mutateurs d'erreur ---
 
 	/** Vide toutes les refs d'erreurs / warnings / succès. */
+	const clearMessages = () => {
+		validation?.clearValidation()
+		errors.value = []
+		warnings.value = []
+		successes.value = []
+	}
+
 	const clearValidation = () => {
 		currentValidationToken.value++
-		validation.clearValidation()
+		clearMessages()
 	}
 
 	/** Retourne la limite d'erreurs à afficher, ou undefined si pas de limite. */
@@ -364,7 +381,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		hasErrorProp: () => Boolean(unref(options.hasErrorProp)),
 		hasWarningProp: () => Boolean(unref(options.hasWarningProp)),
 		hasSuccessProp: () => Boolean(unref(options.hasSuccessProp)),
-		internalHasSuccess: validation.hasSuccess,
+		internalHasSuccess: computed(() => isCustomMode.value && (validation?.hasSuccess.value ?? false)),
 		disableErrorHandling: () => Boolean(unref(options.disableErrorHandling)),
 	})
 
@@ -391,6 +408,9 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		}
 	}, { flush: 'sync' })
 
+	// Les messages calculés dans un mode ne s'appliquent plus après bascule de l'autre.
+	watch(isCustomMode, () => clearValidation())
+
 	// --- Validation bas niveau : wrapper autour de useCustomValidation ---
 	const validateField = (
 		value: unknown,
@@ -402,7 +422,34 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			return emptyValidationResult()
 		}
 
-		return validation.validateValue(value, rules, warningRules, successRules)
+		if (!unref(options.useVuetifyValidation)) {
+			return validation!.validateValue(value, rules, warningRules, successRules)
+		}
+
+		const token = currentValidationToken.value
+		return evaluateVuetifyRules(
+			unref(options.modelValue) ?? value,
+			options.rules?.value,
+		).then((results) => {
+			if (token !== currentValidationToken.value) {
+				return emptyValidationResult()
+			}
+
+			errors.value = results.filter((message): message is string => message !== null)
+			warnings.value = []
+			successes.value = []
+
+			return {
+				hasError: errors.value.length > 0,
+				hasWarning: false,
+				hasSuccess: false,
+				state: {
+					errors: errors.value,
+					warnings: [],
+					successes: [],
+				},
+			}
+		})
 	}
 
 	// --- Prédicats et builders partagés ---
@@ -469,9 +516,8 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		warnings,
 		successes,
 		currentValidationToken,
-		validation,
 		// Les flows nettoient les messages sans annuler leur propre exécution.
-		clearValidation: validation.clearValidation,
+		clearValidation: clearMessages,
 		replaceErrors,
 		pushError,
 		getMaxErrors,
@@ -499,9 +545,9 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 
 	// --- Watchers de validation automatique ---
 
-	// Watcher 1 : revalidation quand les customRules changent
+	// Watcher 1 : revalidation quand les règles changent
 	if (options.revalidateOnCustomRulesChange) {
-		watch(options.customRules, () => {
+		watch(() => [options.customRules.value, options.rules?.value], () => {
 			if (options.isInitialValidation?.value || options.selectedDates.value === null) {
 				return
 			}
@@ -554,7 +600,7 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 			return emptyValidationResult()
 		}
 		if (opts.textValue !== undefined) {
-			return validateTextInput(opts.textValue)
+			return validateTextInput(opts.textValue, opts.force ?? false)
 		}
 		if (opts.calendarMode && options.useCalendarModeRequiredFlow) {
 			return validateCalendarModeDates(opts.force ?? false)

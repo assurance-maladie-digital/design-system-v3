@@ -1,6 +1,8 @@
 <script setup lang="ts">
-	import { ref } from 'vue'
+	import { computed, nextTick, onUnmounted, ref, watch } from 'vue'
 	import { useFormValidation } from '@/composables/validation/useFormValidation'
+	import { getVuetifyFieldState } from './vuetifyFieldState'
+	import type { VForm } from 'vuetify/components/VForm'
 
 	const props = withDefaults(defineProps<{
 		validateOnSubmit?: boolean
@@ -13,81 +15,149 @@
 		(e: 'reset'): void
 	}>()
 
-	// Reference vers le formulaire Vuetify
-	const form = ref<InstanceType<typeof import('vuetify/components').VForm> | null>(null)
+	const model = defineModel<boolean | null>({ default: null })
 
-	const { validateAll, clearAll, resetAll } = useFormValidation()
-	const isValid = ref<boolean>(true)
-
-	// Methode de validation globale qui combine Vuetify et nos composants personnalises
-	const validate = async () => {
-		if (!form.value) {
-			return false
+	const form = ref<InstanceType<typeof VForm>>()
+	// Champs Vuetify pris en compte pour le v-model : comme pour les champs Synapse, un champ
+	// désactivé ne peut pas être corrigé et ne compte pas (choix Synapse : le VForm, lui, le
+	// compte et resterait à null tant que ses rules échouent).
+	const enabledVuetifyItems = computed(() => form.value?.items.filter((item) => {
+		const field = getVuetifyFieldState(item)
+		if (field.disabled) return false
+		// Champ readonly : une invalidité portée uniquement par des erreurs injectées (props
+		// `error` / `error-messages`) ne peut pas être corrigée et ne compte pas dans le
+		// v-model — sinon le formulaire serait invalide alors que la soumission passe.
+		// Une erreur issue des `rules` (message non injecté) reste comptée : limite
+		// documentée, l'activateur du DatePicker en mode calendrier est readonly.
+		if (field.readonly && field.isValid === false) {
+			const injected = new Set(field.injectedErrorMessages)
+			return field.errorMessages.some(message => !injected.has(message))
 		}
+		return true
+	}) ?? [])
+	const hasVuetifyFields = computed(() => enabledVuetifyItems.value.length > 0)
+	// Statut de ces champs, avec la même règle que le v-model du VForm.
+	const vuetifyFieldsStatus = computed<boolean | null>(() => {
+		// VForm pas encore monté : statut inconnu, comme son v-model initial.
+		if (!form.value) return null
+		if (enabledVuetifyItems.value.some(({ isValid }) => isValid === false)) return false
+		return enabledVuetifyItems.value.every(({ isValid }) => isValid === true) ? true : null
+	})
 
-		// Attention Vuetify v-form retourne parfois undefined même si le formulaire est valide
-		// efface les etats d'erreur precedents
-		form.value.resetValidation()
+	const { validateAll, clearAll, resetAll, customComponentsValide, hasDisplayedError, getFormValue } = useFormValidation()
 
-		// 1. Appeler la methode validate() de Vuetify
-		// retourne un objet { valid: boolean, errors: [...] } ou un boolean
-		const vuetifyValidateResult = await form.value.validate()
+	// hasDisplayedError est une source du watch : le passage de pristine à « erreur
+	// affichée » (via validateOnSubmit) doit recalculer le v-model même si
+	// customComponentsValide et vuetifyFieldsStatus n'ont pas changé.
+	watch([customComponentsValide, hasDisplayedError, vuetifyFieldsStatus, hasVuetifyFields], ([, , newVuetifyFieldsStatus, newHasVuetifyFields]) => {
+		model.value = getFormValue(newVuetifyFieldsStatus, newHasVuetifyFields)
+	}, { immediate: true })
 
-		let vuetifyValid = true
+	/**
+	 * VForm.validate() ne vérifie que les `rules` : un champ Vuetify portant `error` ou des
+	 * `error-messages` injectés par le parent (ex. erreur serveur) n'y est pas compté, alors
+	 * que le VForm le considère invalide. Comme pour les champs Synapse, un champ désactivé
+	 * ou en lecture seule ne peut pas être corrigé et ne bloque pas la soumission
+	 * (Vuetify, lui, le compte invalide).
+	 */
+	const hasBlockingVuetifyError = () => (form.value?.items ?? []).some((item) => {
+		const field = getVuetifyFieldState(item)
+		return field.isValid === false && !field.disabled && !field.readonly
+	})
 
-		// Detecter si Vuetify 3 a retourne un objet ou un booleen
-		if (typeof vuetifyValidateResult === 'object' && vuetifyValidateResult !== null) {
-			vuetifyValid = vuetifyValidateResult.valid
-		}
-		else if (typeof vuetifyValidateResult === 'boolean') {
-			vuetifyValid = vuetifyValidateResult
-		}
-		// Si undefined, on considère que c'est valide (comportement par défaut de Vuetify)
+	/**
+	 * VForm.validate() évalue aussi les `rules` des champs désactivés. Comme pour les champs
+	 * Synapse, un champ désactivé ne peut pas être corrigé : il ne bloque pas la soumission
+	 * et son message est retiré.
+	 *
+	 * Effet de bord assumé : le message de validation des champs désactivés est retiré
+	 * (resetValidation), afin qu'il n'induise pas en erreur l'utilisateur qui ne peut
+	 * pas corriger ces champs.
+	 */
+	const resetAndIgnoreDisabledVuetifyFields = (errors: { id: string | number }[]) => {
+		const disabledFields = (form.value?.items ?? [])
+			.map(getVuetifyFieldState)
+			.filter(field => field.disabled)
+		disabledFields.forEach(field => void field.resetValidation())
 
-		// 2. Valider nos composants personnalises enregistres
-		const customComponentsValid = await validateAll()
-
-		// Le formulaire est valide si les deux sont valides
-		isValid.value = vuetifyValid && customComponentsValid
-
-		return isValid.value
+		return errors.every(({ id }) => disabledFields.some(field => field.id === id))
 	}
 
+	const validate = async () => {
+		// Méthodes exposées (ref, slot) : appelées avant le montage du VForm, elles ne
+		// peuvent rien valider ni réinitialiser.
+		if (!form.value) return false
+
+		const vuetifyValidateResult = await form.value.validate()
+		const customComponentsValid = await validateAll()
+		const vuetifyFieldsValid = resetAndIgnoreDisabledVuetifyFields(vuetifyValidateResult.errors)
+		// Laisse les champs Vuetify remonter leur état `isValid` au VForm après la validation.
+		await nextTick()
+
+		const isValid = vuetifyFieldsValid && !hasBlockingVuetifyError() && customComponentsValid
+		if (isValid && model.value === null) {
+			model.value = true
+		}
+
+		return isValid
+	}
+
+	// Une annulation (reset(), démontage) empêche le recalcul différé du v-model
+	// planifié par clearValidation de réécrire le modèle juste après.
+	let clearGeneration = 0
+
+	/**
+	 * Réinitialise la valeur et l'état de validation de tous les champs.
+	 */
 	const reset = () => {
-		// Reset custom components values
+		// Invalide un éventuel recalcul du v-model en attente (voir clearValidation).
+		clearGeneration++
 		clearAll()
 		resetAll()
-		// Reset field values and validations for Vuetify form
 		form.value?.reset()
 		form.value?.resetValidation()
-		isValid.value = true
-		// Notify consumers so they can clear external models (e.g., v-model refs)
+
 		emit('reset')
 	}
 
-	// Clear only validation states (keep current values)
+	/**
+	 * Réinitialise l'état de validation de tous les champs.
+	 */
 	const clearValidation = () => {
-		// Clear Vuetify internal validation state
+		const generation = ++clearGeneration
+		model.value = null
 		form.value?.resetValidation()
-		// Clear custom components validation states registered in the form
-		isValid.value = true
 		clearAll()
+		// Un champ portant une erreur injectée reste invalide après le nettoyage : aucune
+		// source du watch ne change, le v-model doit donc être recalculé explicitement.
+		nextTick(() => {
+			if (generation !== clearGeneration) return
+			model.value = getFormValue(vuetifyFieldsStatus.value, hasVuetifyFields.value)
+		})
 	}
 
+	onUnmounted(() => {
+		clearGeneration++
+	})
+
+	/**
+	 * Quand le composant VForm émet un événement `reset`, on réinitialise la valeur et l'état de validation de tous les champs.
+	 */
 	const handleReset = () => {
 		clearAll()
 		resetAll()
 		form.value?.resetValidation()
-		isValid.value = true
 		emit('reset')
 	}
 
-	// Gestion de la soumission du formulaire
+	/**
+	 * Quand le composant VForm émet un événement `submit`, on déclenche la validation globale et on émet un événement `submit` avec le résultat de la validation.
+	 */
 	const handleSubmit = async () => {
 		if (props.validateOnSubmit !== false) {
-			const isValid = await validate()
-			emit('submit', { isValid })
-			return isValid
+			const submitIsValid = await validate()
+			emit('submit', { isValid: submitIsValid })
+			return submitIsValid
 		}
 		emit('submit', { isValid: true })
 		return true
@@ -108,7 +178,6 @@
 		@reset="handleReset"
 	>
 		<slot
-			:is-valid="isValid"
 			:validate="validate"
 			:reset="reset"
 			:clear="clearValidation"

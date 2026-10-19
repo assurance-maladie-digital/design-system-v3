@@ -56,6 +56,7 @@ const baseArgs = {
 export const WithError: Story = {
 	args: {
 		...baseArgs,
+		modelValue: '20/08/2026',
 		label: 'Date avec erreur injectée',
 		errorMessages: ['Date invalide côté métier'],
 		required: false,
@@ -71,7 +72,7 @@ export const WithError: Story = {
 		return {
 			components: { DatePicker },
 			setup() {
-				const value = ref('')
+				const value = ref('20/08/2026')
 				return { args, value }
 			},
 			template: `
@@ -168,6 +169,7 @@ export const WithValidation: Story = {
 						format="DD/MM/YYYY"
 						required
 						:customRules="customRules"
+						show-success-messages
 						useCombinedMode
 					/>
 				</template>
@@ -185,11 +187,9 @@ export const WithValidation: Story = {
 						{
 							type: 'custom',
 							options: {
-								validate: (value) => {
-									if (value && new Date(value as string).getFullYear() === 2024) {
-										return false
-									}
-									return true
+								validate: (value: unknown) => {
+									if (value instanceof Date) return value.getFullYear() !== 2024
+									return typeof value !== 'string' || !value.endsWith('/2024')
 								},
 								message: 'Les dates en 2024 ne sont pas autorisées',
 								successMessage: 'Les dates hors 2024 sont autorisées',
@@ -207,16 +207,15 @@ export const WithValidation: Story = {
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		required: true,
+		showSuccessMessages: true,
 		useCombinedMode: true,
 		customRules: [
 			{
 				type: 'custom',
 				options: {
 					validate: (value: unknown) => {
-						if (value && new Date(value as string).getFullYear() === 2024) {
-							return false
-						}
-						return true
+						if (value instanceof Date) return value.getFullYear() !== 2024
+						return typeof value !== 'string' || !value.endsWith('/2024')
 					},
 					message: 'Les dates en 2024 ne sont pas autorisées',
 					successMessage: 'Les dates hors 2024 sont autorisées',
@@ -265,7 +264,7 @@ export const WithFormSubmission: Story = {
 							class="mb-4"
 							useCombinedMode
 						/>
-						<v-btn type="submit" color="primary">Soumettre</v-btn>
+						<VBtn type="submit" color="primary">Soumettre</VBtn>
 					</form>
 					<div v-if="submitted" class="mt-4">
 						Formulaire soumis avec la date: {{ date }}
@@ -279,16 +278,15 @@ export const WithFormSubmission: Story = {
 				<script setup lang="ts">
 					import { ref } from 'vue'
 					import { DatePicker } from '@cnamts/synapse'
+					import { VBtn } from 'vuetify/components'
 					
 					const date = ref('')
-					const datePicker = ref(null)
+					const datePicker = ref<InstanceType<typeof DatePicker> | null>(null)
 					const submitted = ref(false)
 					
-					const submitForm = () => {
-						const isValid = datePicker.value.validateOnSubmit()
-						if (isValid) {
-							submitted.value = true
-						}
+					const submitForm = async () => {
+						const isValid = await datePicker.value?.validateOnSubmit()
+						submitted.value = isValid === true
 					}
 				</script>
 				`,
@@ -334,7 +332,7 @@ export const WithFormSubmission: Story = {
                   />
                   <VBtn type="submit" color="primary">Soumettre</VBtn>
                 </form>
-                <div v-if="submitted" class="mt-4 success--text">
+                <div v-if="submitted" class="mt-4 text-success">
                   Formulaire soumis avec la date: {{ date }}
                 </div>
                 <div class="mt-4 text-body-2">Valeur actuelle : {{ date }}</div>
@@ -383,7 +381,7 @@ export const CustomRules: Story = {
 						{
 							type: 'notBeforeToday',
 							options: {
-								message: 'La date ne peut pas être antérieure à aujourd'hui',
+								message: "La date ne peut pas être antérieure à aujourd'hui",
 							},
 					},
 				]
@@ -451,6 +449,7 @@ export const CustomWarningRules: Story = {
 							required
 							class="mb-4"
 							useCombinedMode
+							show-success-messages
 							:customWarningRules="customWarningRules"
 						/>
 					</template>
@@ -493,6 +492,7 @@ export const CustomWarningRules: Story = {
 		placeholder: 'JJ/MM/AAAA',
 		format: 'DD/MM/YYYY',
 		required: true,
+		showSuccessMessages: true,
 		useCombinedMode: true,
 	},
 	render: (args) => {

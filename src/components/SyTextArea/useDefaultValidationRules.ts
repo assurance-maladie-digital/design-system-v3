@@ -6,6 +6,7 @@ export type TextareaRule = (value: string) => boolean | string
 
 export function useDefaultValidationRules(params: {
 	required: Ref<boolean>
+	label: Ref<string | undefined>
 	maxLines: Ref<number | undefined>
 	hasInteracted: Ref<boolean>
 	locales: Ref<typeof defaultLocales>
@@ -13,25 +14,15 @@ export function useDefaultValidationRules(params: {
 	const vuetifyRules = computed<TextareaRule[]>(() => {
 		const rules: TextareaRule[] = []
 
-		rules.push((value: string) => {
-			if (params.required.value && params.hasInteracted.value && !value) {
-				return params.locales.value.required
-			}
-			return true
-		})
-
-		rules.push((value: string) => {
-			if (params.maxLines.value === undefined) {
+		if (params.maxLines.value !== undefined) {
+			rules.push((value: string) => {
+				const lines = value.split('\n').length
+				if (lines > params.maxLines.value!) {
+					return params.locales.value.maxLines(params.maxLines.value!)
+				}
 				return true
-			}
-
-			const lines = value.split('\n').length
-			if (lines > params.maxLines.value) {
-				return params.locales.value.maxLines(params.maxLines.value)
-			}
-
-			return true
-		})
+			})
+		}
 
 		return rules
 	})
@@ -43,7 +34,7 @@ export function useDefaultValidationRules(params: {
 			rules.push({
 				type: 'required',
 				options: {
-					message: params.locales.value.required,
+					message: params.locales.value.required ?? params.locales.value.requiredField(params.label.value),
 				},
 			})
 		}

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import SyCheckBoxGroup from '../SyCheckBoxGroup.vue'
 import SyForm from '../../SyForm/SyForm.vue'
 import { VBtn, VForm } from 'vuetify/components'
@@ -25,7 +25,7 @@ const meta: Meta<typeof SyCheckBoxGroup> = {
 		multiple: { control: 'boolean', description: 'Sélection multiple' },
 	},
 	args: {
-		label: 'Choisissez une ou plusieurs options',
+		label: 'Choisissez une option',
 		options: [
 			{ label: 'Option A', value: 'a' },
 			{ label: 'Option B', value: 'b' },
@@ -43,6 +43,9 @@ type Story = StoryObj<typeof SyCheckBoxGroup>
  * Utilise le système de validation personnalisé du design system
  */
 export const WithError: Story = {
+	args: {
+		label: 'Sélectionnez au moins 2 options',
+	},
 	parameters: {
 		docs: {
 			description: {
@@ -64,6 +67,7 @@ Utilise les **customRules** pour définir des règles de validation personnalis�
 <template>
 	<SyForm ref="form" @submit="onSubmit">
 		<SyCheckBoxGroup
+			ref="checkboxGroupRef"
 			v-model="selected"
 			label="Sélectionnez au moins 2 options"
 			:options="options"
@@ -78,12 +82,13 @@ Utilise les **customRules** pour définir des règles de validation personnalis�
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { SyCheckBoxGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
-const selected = ref<string[]>([])
+const selected = ref<string[]>(['a'])
+const checkboxGroupRef = ref(null)
 
 const options = [
 	{ label: 'Option A', value: 'a' },
@@ -107,6 +112,11 @@ const onSubmit = (event: { isValid: boolean }) => {
 		alert('Formulaire valide !')
 	}
 }
+
+// Affiche l'état dès le chargement
+onMounted(() => {
+	checkboxGroupRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
@@ -116,6 +126,7 @@ const onSubmit = (event: { isValid: boolean }) => {
 		components: { SyCheckBoxGroup, SyForm, VBtn },
 		setup() {
 			const selected = ref<string[]>(['a'])
+			const checkboxGroupRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 			const customRules = [
 				{
@@ -132,11 +143,16 @@ const onSubmit = (event: { isValid: boolean }) => {
 				alert(event.isValid ? 'Formulaire valide !' : 'Veuillez corriger les erreurs.')
 			}
 
-			return { args, selected, customRules, onSubmit }
+			onMounted(() => {
+				checkboxGroupRef.value?.validateOnSubmit()
+			})
+
+			return { args, selected, checkboxGroupRef, customRules, onSubmit }
 		},
 		template: `
 			<SyForm ref="form" @submit="onSubmit">
 				<SyCheckBoxGroup
+					ref="checkboxGroupRef"
 					v-model="selected"
 					v-bind="args"
 					:custom-rules="customRules"
@@ -174,6 +190,7 @@ Utilise les **customWarningRules** pour afficher un avertissement non bloquant.
 <template>
 	<SyForm ref="form" @submit="onSubmit">
 		<SyCheckBoxGroup
+			ref="checkboxGroupRef"
 			v-model="selected"
 			label="Choisissez une option"
 			:options="options"
@@ -186,12 +203,13 @@ Utilise les **customWarningRules** pour afficher un avertissement non bloquant.
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { SyCheckBoxGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
 const selected = ref<string | null>('b')
+const checkboxGroupRef = ref(null)
 
 const options = [
 	{ label: 'Option A (recommandée)', value: 'a' },
@@ -204,7 +222,7 @@ const customWarningRules: ValidationRule[] = [
 		type: 'custom',
 		options: {
 			validate: (value: unknown) => value === 'a',
-			message: "L'option A est recommandée",
+			warningMessage: "L'option A est recommandée",
 			fieldIdentifier: 'Option',
 		},
 	},
@@ -213,6 +231,11 @@ const customWarningRules: ValidationRule[] = [
 const onSubmit = (event: { isValid: boolean }) => {
 	alert('Formulaire soumis (les warnings ne bloquent pas la soumission)')
 }
+
+// Affiche l'état dès le chargement
+onMounted(() => {
+	checkboxGroupRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
@@ -222,13 +245,14 @@ const onSubmit = (event: { isValid: boolean }) => {
 		components: { SyCheckBoxGroup, SyForm, VBtn },
 		setup() {
 			const selected = ref<string | null>('b')
+			const checkboxGroupRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 			const customWarningRules = [
 				{
 					type: 'custom',
 					options: {
 						validate: (value: unknown) => value === 'a',
-						message: 'L\'option A est recommandée',
+						warningMessage: 'L\'option A est recommandée',
 						fieldIdentifier: 'Option',
 					},
 				},
@@ -238,11 +262,16 @@ const onSubmit = (event: { isValid: boolean }) => {
 				alert('Formulaire soumis (les warnings ne bloquent pas la soumission)')
 			}
 
-			return { args, selected, customWarningRules, onSubmit }
+			onMounted(() => {
+				checkboxGroupRef.value?.validateOnSubmit()
+			})
+
+			return { args, selected, checkboxGroupRef, customWarningRules, onSubmit }
 		},
 		template: `
 			<SyForm ref="form" @submit="onSubmit">
 				<SyCheckBoxGroup
+					ref="checkboxGroupRef"
 					v-model="selected"
 					v-bind="args"
 					:custom-warning-rules="customWarningRules"
@@ -271,6 +300,7 @@ export const WithSuccess: Story = {
 <template>
 	<SyForm ref="form" @submit="onSubmit">
 		<SyCheckBoxGroup
+			ref="checkboxGroupRef"
 			v-model="selected"
 			label="Choisissez une option"
 			:options="options"
@@ -284,12 +314,13 @@ export const WithSuccess: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { SyCheckBoxGroup, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
 const selected = ref<string | null>('a')
+const checkboxGroupRef = ref(null)
 
 const options = [
 	{ label: 'Option A', value: 'a' },
@@ -312,6 +343,11 @@ const onSubmit = (event: { isValid: boolean }) => {
 		alert('Formulaire valide !')
 	}
 }
+
+// Affiche l'état dès le chargement
+onMounted(() => {
+	checkboxGroupRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
@@ -321,6 +357,7 @@ const onSubmit = (event: { isValid: boolean }) => {
 		components: { SyCheckBoxGroup, SyForm, VBtn },
 		setup() {
 			const selected = ref<string | null>('a')
+			const checkboxGroupRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 			const customSuccessRules = [
 				{
@@ -336,11 +373,16 @@ const onSubmit = (event: { isValid: boolean }) => {
 				alert(event.isValid ? 'Formulaire valide !' : 'Veuillez corriger les erreurs.')
 			}
 
-			return { args, selected, customSuccessRules, onSubmit }
+			onMounted(() => {
+				checkboxGroupRef.value?.validateOnSubmit()
+			})
+
+			return { args, selected, checkboxGroupRef, customSuccessRules, onSubmit }
 		},
 		template: `
 			<SyForm ref="form" @submit="onSubmit">
 				<SyCheckBoxGroup
+					ref="checkboxGroupRef"
 					v-model="selected"
 					v-bind="args"
 					show-success-messages
@@ -778,6 +820,9 @@ async function onSubmit(e: Promise<{ valid: boolean }>) {
  * Valide qu'au moins N options sont sélectionnées
  */
 export const MultipleSelectionValidation: Story = {
+	args: {
+		label: 'Sélectionnez au moins 2 options',
+	},
 	parameters: {
 		docs: {
 			description: {
@@ -914,6 +959,7 @@ Ce story démontre l'utilisation simultanée des **customWarningRules** et **cus
 		label="Options"
 		:custom-warning-rules="warningRules"
 		:custom-success-rules="successRules"
+		show-success-messages
 		:is-validate-on-blur="false"
 	/>
 </template>`,
@@ -1001,6 +1047,7 @@ const successRules: ValidationRule[] = [
 				:options="options"
 				:custom-warning-rules="warningRules"
 				:custom-success-rules="successRules"
+				show-success-messages
 				:is-validate-on-blur="false"
 			/>
 		`,

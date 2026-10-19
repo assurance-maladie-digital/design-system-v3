@@ -1,6 +1,7 @@
 import { computed, reactive, watch, type Ref } from 'vue'
 import type { ValidationRule } from 'vuetify'
 import { useValidation } from 'vuetify/lib/composables/validation.mjs'
+import { locales } from './locales'
 
 /** Interface between the validation entrypoint "useValidation" composable and the Vuetify validation logic. */
 export function useVuetifyValidation(
@@ -43,11 +44,25 @@ export function useVuetifyValidation(
 		proxifiedProps,
 	)
 
-	watch (() => vuetifyValidator.errorMessages.value, (newVal) => {
-		if (vuetifyValidator.isPristine.value) {
+	// Synchronise les erreurs du validator Vuetify vers la ref partagée avec la
+	// couche unifiée. Quand le validator repasse à l'état vierge (`resetValidation`,
+	// déclenché par VForm car le validator s'y enregistre directement), les erreurs
+	// synchronisées sont retirées : le champ est nettoyé même si la réinitialisation
+	// vient du formulaire Vuetify et non de notre propre API. À l'état vierge, on
+	// n'écrit que s'il reste des erreurs à retirer : une écriture superflue (tableau
+	// vide recréé par le validate silencieux du mount) déclencherait un re-render
+	// qui réinitialiserait la saisie native du champ.
+	watch([vuetifyValidator.errorMessages, vuetifyValidator.isPristine], ([errorMessages, isPristine]) => {
+		if (isPristine) {
+			if (errors.value.length > 0) {
+				errors.value = []
+			}
 			return
 		}
-		errors.value = newVal
+		// Une rule qui renvoie `false` produit un message vide côté
+		// Vuetify : on affiche le message générique, comme pour les rules évaluées par le pont
+		// (normalizeVuetifyRuleResult), au lieu d'un champ en erreur sans explication.
+		errors.value = errorMessages.map(message => message || locales.invalidValue)
 	})
 
 	return vuetifyValidator

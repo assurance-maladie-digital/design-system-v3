@@ -171,12 +171,17 @@
 		return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
 	}
 
-	const renderMessage = (msg: string) => {
-		// Première référence de PR du message (`#2482`), transformée en lien vers GitHub.
+	// Première référence de PR du message (`#2482`), rendue en lien vers GitHub par le
+	// template : le message reste du texte, jamais interprété comme du HTML.
+	const splitMessage = (msg: string): { text: string, pr?: string }[] => {
 		const m = msg.match(/#(\d+)/)
-		if (!m) return msg
+		if (!m) return [{ text: msg }]
 		const index = m.index ?? 0
-		return `${msg.slice(0, index)}<a href="${REPO}/pull/${m[1]}" target="_blank" rel="noopener noreferrer">#${m[1]}</a>${msg.slice(index + m[0].length)}`
+		return [
+			{ text: msg.slice(0, index) },
+			{ text: m[0], pr: m[1] },
+			{ text: msg.slice(index + m[0].length) },
+		]
 	}
 
 	// Un composant est retenu s'il a changé dans la version filtrée, sur l'un ou l'autre
@@ -457,10 +462,17 @@
 									{{ locales.commits.pending }}
 								</span>
 							</span>
-							<span
-								class="c-msg"
-								v-html="renderMessage(c.message)"
-							/>
+							<span class="c-msg">
+								<template
+									v-for="(part, j) in splitMessage(c.message)"
+									:key="j"
+								><a
+									v-if="part.pr"
+									:href="`${REPO}/pull/${part.pr}`"
+									target="_blank"
+									rel="noopener noreferrer"
+								>{{ part.text }}</a><template v-else>{{ part.text }}</template></template>
+							</span>
 						</li>
 					</ul>
 					<p

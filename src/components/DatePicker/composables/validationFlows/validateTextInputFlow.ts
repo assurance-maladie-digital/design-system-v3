@@ -104,7 +104,7 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 	 * 3. Parse la date avec parseDate
 	 * 4. Valide la date parsée avec les custom rules (validateCustomRulesForDate)
 	 */
-	const validateSingleTextInput = async (value: string, token: number): Promise<boolean> => {
+	const validateSingleTextInput = async (value: string, token: number, force = false): Promise<boolean> => {
 		const format = unref(options.displayFormat) ?? ''
 
 		// 1. Vérifier si vide ou incomplet
@@ -120,6 +120,15 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 		}
 
 		if (!emptyCheck.shouldContinue) {
+			// Une date incomplète est tolérée pendant la frappe (isValid: true) mais
+			// invalide en validation forcée (blur/submit) : l'utilisateur a fini de
+			// saisir et le modèle ne peut pas refléter une valeur partielle.
+			if (force && emptyCheck.isValid) {
+				if (ctx.shouldDisplayErrors()) {
+					ctx.pushError(locales.invalidDateFormatWithFormat(format))
+				}
+				return false
+			}
 			return emptyCheck.isValid
 		}
 
@@ -154,7 +163,7 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 		return isValid
 	}
 
-	const validateTextInput = async (value: string): Promise<boolean> => {
+	const validateTextInput = async (value: string, force = false): Promise<boolean> => {
 		const token = ++ctx.currentValidationToken.value
 		ctx.clearValidation()
 
@@ -164,7 +173,7 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 			if (!hasInteracted) {
 				return true
 			}
-			const result = await Promise.resolve(ctx.validation.validateValue(value))
+			const result = await Promise.resolve(ctx.validateField(value))
 			if (token !== ctx.currentValidationToken.value) return !ctx.displayHasError.value
 			return !result.hasError
 		}
@@ -201,7 +210,7 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 
 			// Si seulement la date de début est saisie, valider juste celle-ci
 			if (startDateText && !endDateText) {
-				return await validateSingleTextInput(startDateText, token)
+				return await validateSingleTextInput(startDateText, token, force)
 			}
 
 			// Si ni start ni end n'est saisie, retourner l'état courant
@@ -257,7 +266,7 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 		}
 
 		// 4. Date unique
-		return await validateSingleTextInput(value, token)
+		return await validateSingleTextInput(value, token, force)
 	}
 
 	return { validateTextInput }

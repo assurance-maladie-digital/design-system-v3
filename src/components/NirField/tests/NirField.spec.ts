@@ -2,6 +2,30 @@ import { mount } from '@vue/test-utils'
 import NirField from '../NirField.vue'
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { useValidation } from '@/composables/validation/useValidation'
+import { VForm } from 'vuetify/components'
+import { defineComponent, ref } from 'vue'
+
+const NirFieldInVForm = defineComponent({
+	components: { NirField, VForm },
+	setup() {
+		const nir = ref('')
+		const formValidity = ref<boolean | null>(null)
+		const numberRules = [(value: string) => value.replaceAll(' ', '').length === 13 || 'Le numéro doit contenir 13 chiffres']
+		const keyRules = [(value: string) => value.length === 2 || 'La clé doit contenir 2 chiffres']
+
+		return { nir, formValidity, numberRules, keyRules }
+	},
+	template: `
+		<VForm v-model="formValidity">
+			<NirField
+				v-model="nir"
+				use-vuetify-validation
+				:number-rules="numberRules"
+				:key-rules="keyRules"
+			/>
+		</VForm>
+	`,
+})
 
 describe('NirField.vue', () => {
 	let wrapper: ReturnType<typeof mount<typeof NirField & {
@@ -705,6 +729,24 @@ describe('NirField.vue', () => {
 	describe('validation Vuetify (numberRules / keyRules)', () => {
 		const numberRules = [(v: string) => (!!v && v.replace(/\s/g, '').length === 13) || 'Le numéro doit contenir 13 chiffres']
 		const keyRules = [(v: string) => (!!v && v.replace(/\s/g, '').length === 2) || 'La clé doit contenir 2 chiffres']
+
+		it('met le v-model du VForm à true lorsque le NIR est valide', async () => {
+			const formWrapper = mount(NirFieldInVForm)
+			activeWrappers.push(formWrapper)
+			const nirField = formWrapper.findComponent(NirField)
+			const numberInput = nirField.find('.number-field input')
+			const keyInput = nirField.find('.key-field input')
+			await numberInput.trigger('focus')
+			await numberInput.setValue('2940375120005')
+			await numberInput.trigger('blur')
+			await keyInput.trigger('focus')
+			await keyInput.setValue('05')
+			await keyInput.trigger('blur')
+			await flushPromises()
+			await formWrapper.vm.$nextTick()
+
+			expect(formWrapper.vm.formValidity).toBe(true)
+		})
 
 		it('applique numberRules : un NIR partiel est invalide', async () => {
 			const w = mount(NirField, { props: { label: 'Identifiant', useVuetifyValidation: true, numberRules, keyRules } })

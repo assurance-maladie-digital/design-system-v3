@@ -43,12 +43,6 @@ Avant de proposer une review, vérifiez chaque point de la checklist qui vous co
 - [ ] Le composant/template est fonctionnel dans les cas d’usage définis
 - [ ] Le composant/template est responsive (mobile, tablet, desktop)
 
-**Accessibilité spécifique au composant/template**
-
-- [ ] La navigation clavier couvre tous les éléments interactifs
-- [ ] La restitution lecteur d’écran est correcte
-- [ ] Les règles a11y spécifiques sont documentées
-- [ ] Les tests a11y automatisés sont présents
 
 **Documentation & Storybook**
 
@@ -81,13 +75,6 @@ Avant de proposer une review, vérifiez chaque point de la checklist qui vous co
 - [ ] Le correctif résout le problème identifié
 - [ ] Aucun impact sur les usages existants
 
-**Accessibilité spécifique au composant/template**
-
-- [ ] Navigation clavier vérifiée
-- [ ] Restitution lecteur d’écran vérifiée
-- [ ] Tests a11y mis à jour si nécessaire
-- [ ] Page accessibilité mise à jour si impact / crée si n’existe pas
-
 **Documentation & Storybook**
 
 - [ ] Storybook mis à jour si nécessaire
@@ -104,3 +91,18 @@ Avant de proposer une review, vérifiez chaque point de la checklist qui vous co
 - [ ] Le composant/template n'induit pas de régression dans le composant/template Synapse, Portail Agent ou AmeliPro
 - [ ] Ajout des stories propre au thème (penser à filter le menu/props si nécessaire)
 - [ ] Ajouter un message dans le composant/template déprécié avec un lien vers le nouveau
+
+**Accessibilite**
+
+## Checklist de PR obligatoire
+
+- [ ] Pas d'erreurs axe-core sur la story.
+- [ ] Pas d’erreur Tanaguru.
+- [ ] Faux positifs documentés.
+- [ ] Page d’accessibilité mise à jour.
+- [ ] Tests mis à jour.
+- [ ] Snapshot visuel mis à jour si styles modifiés.
+- [ ] Tests manuels :
+  - [ ] Restitution vocale : intitulés des boutons, alertes.
+  - [ ] Comportement des composants lors d'une navigation uniquement au clavier.
+  - [ ] Zoom de la taille de texte à 200 % (10.4) et viewport 320 px (10.11) : pas de perte de contenu ou de fonctionnalité.

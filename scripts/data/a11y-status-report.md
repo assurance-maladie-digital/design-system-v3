@@ -1,6 +1,6 @@
 # État des lieux de l'accessibilité des composants
 
-Généré le: 28/09/2026
+Généré le: 19/10/2026
 
 | Composant | Tests A11y | `a11y: disable` (Stories) | Page Accessibilité | Audit Manuel | Conforme ✅ |
 |-----------|------------|---------------------------|--------------------|--------------|-------------|
@@ -13,23 +13,22 @@ Généré le: 28/09/2026
 | **ContextualMenu** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **CookieBanner** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **CookiesSelection** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
-| **CopyBtn** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
+| **CopyBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **Customs/Selects/SelectBtnField** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/Selects/SyAutocomplete** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/Selects/SyInputSelect** | ❌ Non | ✅ Non | ✅ Complète | ❌ Non | ❌ |
 | **Customs/Selects/SySelect** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **Customs/SyCheckbox** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **Customs/SyCheckBoxGroup** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
-| **Customs/SyForm** | ✅ Oui | ✅ Non | ⚠️ Bientôt disponible | ❌ Non | ❌ |
+| **Customs/SyForm** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyIcon** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyIconButton** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyPagination** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyRadioGroup** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Customs/SyTabs** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
-| **Customs/SyTextField** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
+| **Customs/SyTextField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **DataList** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **DataListGroup** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **DataListItem** | ✅ Oui | ✅ Non | ❌ Manquante | ❌ Non | ❌ |
 | **DatePicker/CalendarMode** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **DatePicker/ComplexDatePicker** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **DatePicker/DateTextInput** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
@@ -38,7 +37,7 @@ Généré le: 28/09/2026
 | **DialogBox** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **DownloadBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **ErrorPage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **ExternalLinks** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
+| **ExternalLinks** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **FileList** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **FilePreview** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **FileUpload** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
@@ -46,16 +45,16 @@ Généré le: 28/09/2026
 | **FilterSideBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **FooterBar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **FranceConnectBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **HeaderBar** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
+| **HeaderBar** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
 | **HeaderLoading** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **HeaderNavigationBar** | ❌ Non | ❌ Oui | ❌ Manquante | ❌ Non | ❌ |
-| **HeaderToolbar** | ❌ Non | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
-| **LangBtn** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
+| **HeaderNavigationBar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
+| **HeaderToolbar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
+| **LangBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **Logo** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **LogoBrandSection** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **LunarCalendar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **MaintenancePage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **MonthPicker** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
+| **MonthPicker** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **NirField** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **NotFoundPage** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **NotificationBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
@@ -72,7 +71,7 @@ Généré le: 28/09/2026
 | **StatusPage** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **SubHeader** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **SyAlert** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **SyBtnMenu** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
+| **SyBtnMenu** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **SyHeading** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **SyTextArea** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **Tables/SyServerTable** | ✅ Oui | ❌ Oui | ✅ Complète | ❌ Non | ❌ |
@@ -82,4 +81,4 @@ Généré le: 28/09/2026
 | **UploadWorkflow** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **UserMenuBtn** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 
-**Total des composants conformes : 61 / 77 (79.22%)**
+**Total des composants conformes : 70 / 76 (92.11%)**
