@@ -94,8 +94,9 @@
       </td>
     </tr>
     <tr style="vertical-align: top;">
-      <td>- HeaderToolbar: clear the focus timeout on unmount
+      <td>- HeaderToolbar: clear the focus timeout on unmount and add a regression test
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2654">#2654</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2656">#2656</a>
       </td>
     </tr>
     <tr style="vertical-align: top;">
@@ -151,6 +152,26 @@
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2589">#2589</a>
       </td>
     </tr>
+    <tr style="vertical-align: top;">
+      <td>- DataListItem: add RGAA tests
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2623">#2623</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- HeaderNavigationBar: add accessibility tests and documentation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2552">#2552</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyBtnMenu: fix axe accessibility test
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2573">#2573</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- ToolbarContainer: add landmark tests
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2588">#2588</a>
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -187,6 +208,38 @@
     <tr style="vertical-align: top;">
       <td>- Security: update fast-uri
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2600">#2600</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### 🧹 Chore
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 100%">Synapse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- Chore: update Node 22 and pnpm 10.33
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2617">#2617</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Chore: update dev dependencies (happy-dom, sass-embedded, @vue/tsconfig, parse5, eslint-plugin-vuejs-accessibility, @vitejs/plugin-vue)
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2638">#2638</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2375">#2375</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1898">#1898</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1899">#1899</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2636">#2636</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1278">#1278</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- HeaderToolbar: fix Vuetify instance conflicts in tests
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2659">#2659</a>
       </td>
     </tr>
   </tbody>
@@ -274,75 +327,6 @@
     <tr style="vertical-align: top;">
       <td>- SyTextField: enable the accessibility tab on all stories
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2599">#2599</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-### 🧪 Tests
-
-<table>
-  <thead>
-    <tr style="vertical-align: top;">
-      <th style="width: 100%">Synapse</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="vertical-align: top;">
-      <td>- HeaderToolbar: fix Vuetify instance conflicts in tests
-        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2659">#2659</a>
-      </td>
-    </tr>
-    <tr style="vertical-align: top;">
-      <td>- HeaderToolbar: add regression test for the deferred focus on unmount
-        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2656">#2656</a>
-      </td>
-    </tr>
-    <tr style="vertical-align: top;">
-      <td>- DataListItem: add RGAA tests
-        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2623">#2623</a>
-      </td>
-    </tr>
-    <tr style="vertical-align: top;">
-      <td>- HeaderNavigationBar: add accessibility tests
-        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2552">#2552</a>
-      </td>
-    </tr>
-    <tr style="vertical-align: top;">
-      <td>- SyBtnMenu: fix axe accessibility test
-        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2573">#2573</a>
-      </td>
-    </tr>
-    <tr style="vertical-align: top;">
-      <td>- ToolbarContainer: add landmark tests
-        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2588">#2588</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-### 🧹 Chore
-
-<table>
-  <thead>
-    <tr style="vertical-align: top;">
-      <th style="width: 100%">Synapse</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr style="vertical-align: top;">
-      <td>- Chore: update Node 22 and pnpm 10.33
-        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2617">#2617</a>
-      </td>
-    </tr>
-    <tr style="vertical-align: top;">
-      <td>- Chore: update dev dependencies (happy-dom, sass-embedded, @vue/tsconfig, parse5, eslint-plugin-vuejs-accessibility, @vitejs/plugin-vue)
-        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2638">#2638</a>
-        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2375">#2375</a>
-        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1898">#1898</a>
-        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1899">#1899</a>
-        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2636">#2636</a>
-        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/1278">#1278</a>
       </td>
     </tr>
   </tbody>
