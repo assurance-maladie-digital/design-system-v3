@@ -28,7 +28,7 @@ export function useCaptchaValidation(params: {
 	locales: Ref<typeof defaultLocales>
 },
 ) {
-	const defaultRules = computed<SyValidationRule[]>(() => params.required.value
+	const defaultRules = computed<SyValidationRule[]>(() => params.required
 		? [{
 				type: 'required',
 				options: {

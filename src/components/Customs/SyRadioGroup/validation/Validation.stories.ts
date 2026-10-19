@@ -118,10 +118,6 @@ onMounted(() => {
 		],
 	},
 
-	args: {
-		label: 'Sélectionnez l\'option A',
-	},
-
 	render: args => ({
 		components: { SyRadioGroup, SyForm, VBtn },
 		setup() {
@@ -395,8 +391,6 @@ onMounted(() => {
 	}),
 }
 
-/**
- * showSuccessMessages: false — les messages de succès sont masqués
 /**
  * disableErrorHandling: true — la validation est complètement désactivée
  */
