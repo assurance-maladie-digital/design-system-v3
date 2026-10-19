@@ -195,7 +195,7 @@ function extractPRNumber(message) {
 }
 
 const prLabelCache = new Map()
-const packageVersionCache = new Map()
+let currentPackageVersion
 let releaseTagsPromise = null
 
 async function getReleaseTags() {
@@ -219,18 +219,19 @@ async function getReleaseTags() {
 	return releaseTagsPromise
 }
 
-async function getPackageVersionAtCommit(hash) {
-	if (packageVersionCache.has(hash)) return packageVersionCache.get(hash)
+// Version **actuelle** de `package.json`, comme functional-history-report.mjs : c'est le repli
+// de `resolveCommitVersion` pour les commits sans tag (PR de release, version déjà bumpée).
+// La version lue dans le commit lui-même était toujours celle de la release précédente,
+// et les corrections non encore taguées disparaissaient de la colonne « Version corrigée ».
+function getCurrentPackageVersion() {
+	if (currentPackageVersion !== undefined) return currentPackageVersion
 	try {
-		const { stdout } = await execFileAsync('git', ['show', `${hash}:package.json`], { cwd: rootDir })
-		const parsed = JSON.parse(stdout)
-		const version = parsed.version ? parsed.version.replace(/^v/i, '') : null
-		packageVersionCache.set(hash, version)
-		return version
+		const parsed = JSON.parse(readFileSync(resolve(rootDir, 'package.json'), 'utf8'))
+		currentPackageVersion = parsed.version ? parsed.version.replace(/^v/i, '') : null
 	} catch {
-		packageVersionCache.set(hash, null)
-		return null
+		currentPackageVersion = null
 	}
+	return currentPackageVersion
 }
 
 // Labels de toutes les PR en un seul appel (une dizaine de secondes) : un `gh pr view` par PR
@@ -344,7 +345,7 @@ async function analyzeComponent(component) {
 			const version = resolveCommitVersion(
 				commit.date,
 				releaseTags,
-				await getPackageVersionAtCommit(commit.hash),
+				getCurrentPackageVersion(),
 			)
 			results.push({
 				...commit,
