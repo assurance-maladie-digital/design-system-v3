@@ -5,11 +5,11 @@
 > Ces changements sont des corrections, mais un projet existant peut les percevoir comme des régressions. Vérifiez vos formulaires après la montée de version.
 >
 > **SyForm** ([#2434](https://github.com/assurance-maladie-digital/design-system-v3/pull/2434), [#2616](https://github.com/assurance-maladie-digital/design-system-v3/pull/2616))
-> - **Le `v-model` du `SyForm` est tri-état** (`true` / `false` / `null`) : il vaut `null` tant que la validité n'est pas connue, au lieu de `false`. Un formulaire sans champ Synapse suit l'état du `VForm` au lieu de valoir `true`.
-> - **`error-messages` et `has-error` font échouer la soumission.** Un champ qui porte une erreur injectée (erreur serveur, par exemple) ou `has-error` rend le formulaire invalide, et son `validateOnSubmit()` renvoie `false`. Le parent doit retirer l'erreur quand l'utilisateur corrige la valeur (`@update:model-value="serverErrors = []"`), sinon le formulaire reste bloqué.
-> - **`SyInputSelect` s'enregistre auprès du `SyForm`** : un `SyInputSelect` `required` laissé vide bloque la soumission.
-> - **Les champs Vuetify `disabled` sont ignorés par le `SyForm`**, qu'ils soient natifs ou en `use-vuetify-validation`, comme les champs Synapse.
-> - **Identifiant `VForm` des champs en `use-vuetify-validation`** : le champ est enregistré sous `<label>-<id>` au lieu de `<label>`. L'`id` des entrées de `validate().errors` change.
+> - **Erreurs injectées (`error-messages`, `has-error`) :** elles bloquent maintenant la soumission. Retirez l'erreur quand l'utilisateur corrige la valeur (`@update:model-value="serverErrors = []"`), sinon le formulaire reste bloqué. Un `has-error` utilisé seulement pour la mise en forme bloque aussi la soumission.
+> - **`v-model` du formulaire :** il vaut `null` tant qu'aucune erreur n'est affichée, au lieu de `false`. Si vous testez `valid === false` (bouton de soumission, garde), un formulaire invalide passe : comparez à `true` (`:disabled="valid !== true"`).
+> - **`SyInputSelect` requis vide :** il bloque désormais la soumission.
+> - **Champs Vuetify `disabled` :** ils sont ignorés par la validation du `SyForm`.
+> - **Uniquement si vous lisez `validate().errors` :** l'`id` des champs en `use-vuetify-validation` devient `<label>-<id>` au lieu de `<label>`.
 >
 > **Champs de formulaire**
 > - **`PhoneField` ([#2616](https://github.com/assurance-maladie-digital/design-system-v3/pull/2616)) et `LunarCalendar` ([#2662](https://github.com/assurance-maladie-digital/design-system-v3/pull/2662)) appliquent `use-vuetify-validation`.** La prop était ignorée et la validation Synapse s'appliquait. Désormais, seules les `rules` sont évaluées : `required` n'ajoute que l'indication visuelle et ARIA, et les contrôles intégrés (format, `min-year` / `max-year`…) ne s'appliquent plus. Ajoutez les règles correspondantes dans `rules`.
