@@ -4,6 +4,8 @@
 >
 > Ces changements sont des corrections, mais un projet existant peut les percevoir comme des régressions. Vérifiez vos formulaires après la montée de version.
 >
+> Ils font suite à la finalisation de la validation des formulaires (`SyForm` et champs de formulaire). Nous avons testé tous les cas qui nous semblaient utiles aux projets, mais il est possible que certains nous aient échappé : n'hésitez pas à nous [signaler](https://github.com/assurance-maladie-digital/design-system-v3/issues) tout comportement inattendu.
+>
 > **SyForm** ([#2434](https://github.com/assurance-maladie-digital/design-system-v3/pull/2434), [#2616](https://github.com/assurance-maladie-digital/design-system-v3/pull/2616))
 > - **Erreurs injectées (`error-messages`, `has-error`) :** elles bloquent maintenant la soumission. Retirez l'erreur quand l'utilisateur corrige la valeur (`@update:model-value="serverErrors = []"`), sinon le formulaire reste bloqué. Le `validateOnSubmit()` du champ renvoie aussi `false`, y compris avec `disable-error-handling`. Un `has-error` utilisé seulement pour la mise en forme bloque aussi la soumission.
 > - **`v-model` du formulaire :** il vaut `null` tant qu'aucune erreur n'est affichée, au lieu de `false`. Si vous testez `valid === false` (bouton de soumission, garde), un formulaire invalide passe : comparez à `true` (`:disabled="valid !== true"`).
