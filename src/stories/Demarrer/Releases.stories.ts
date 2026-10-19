@@ -24,6 +24,22 @@ type ReleaseAlert = {
 
 const releaseAlerts: ReleaseAlert[] = [
 	{
+		id: 'syform-validation-behavior',
+		releaseVersion: 'v1.2.0',
+		message: 'Changements de comportement du SyForm. Ce sont des corrections, mais un projet existant peut les percevoir comme des régressions : vérifiez vos formulaires après la montée de version.\n- Le v-model du SyForm est tri-état (true / false / null) : il vaut null tant que la validité n\'est pas connue, au lieu de false. Un formulaire sans champ Synapse suit l\'état du VForm au lieu de valoir true.\n- error-messages et has-error font échouer la soumission, et le validateOnSubmit() du champ renvoie false. Le parent doit retirer l\'erreur quand l\'utilisateur corrige la valeur (@update:model-value="serverErrors = []"), sinon le formulaire reste bloqué.\n- Un SyInputSelect required laissé vide bloque la soumission.\n- Les champs Vuetify disabled sont ignorés par le SyForm, qu\'ils soient natifs ou en use-vuetify-validation.\n- Les champs en use-vuetify-validation sont enregistrés dans le VForm sous <label>-<id> au lieu de <label> : l\'id des entrées de validate().errors change.\nPour plus de détails, voir la page ',
+		type: 'warning',
+		variant: 'tonal',
+		link: { href: '/?path=/docs/composants-formulaires-syform--docs', text: 'SyForm' },
+	},
+	{
+		id: 'form-fields-validation-behavior',
+		releaseVersion: 'v1.2.0',
+		message: 'Changements de comportement des champs de formulaire :\n- PhoneField et LunarCalendar appliquent use-vuetify-validation. La prop était ignorée et la validation Synapse s\'appliquait. Désormais, seules les rules sont évaluées : required n\'ajoute que l\'indication visuelle et ARIA, et les contrôles intégrés (format, min-year / max-year…) ne s\'appliquent plus. Ajoutez les règles correspondantes dans rules.\n- SySelect affiche son message « requis » à la soumission. Avant, seule la bordure passait en rouge.\n- SyTextArea inclut le libellé du champ dans son message « requis ».\nPour plus de détails, voir le ',
+		type: 'warning',
+		variant: 'tonal',
+		link: { href: '/?path=/docs/guide-du-dev-formulaires-validation-guide-des-formulaires--docs', text: 'guide de validation des formulaires' },
+	},
+	{
 		id: 'theme-css-variables-kebab-case',
 		releaseVersion: 'v1.1.5',
 		message: 'Les variables CSS du thème sont désormais générées en kebab-case : --v-theme-onBackgroundVariant devient --v-theme-on-background-variant. Toutes les clés en camelCase sont concernées.\nUn var() pointant vers l\'ancien nom ne résout plus : la déclaration est ignorée et la couleur retombe sur l\'héritage, ce qui peut dégrader des écrans sans erreur visible.\nPour repérer les usages à migrer dans votre projet : grep -rnE -- "--v-theme-[a-z0-9]*[A-Z]" src/\nPour la liste des variables disponibles, voir la page ',
