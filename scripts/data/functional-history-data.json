@@ -30,10 +30,10 @@
     "message": "update vue-tsconfig (#1739)"
   },
   "AmeliproAccordionList": {
-    "version": "1.0.25",
-    "date": "21/04/2026",
-    "dateIso": "2026-04-21 09:57:46 +0200",
-    "message": "Tokens simplify v2 (#2102)"
+    "version": "1.2.0",
+    "date": "05/10/2026",
+    "dateIso": "2026-10-05 11:57:53 +0200",
+    "message": "Security: update plugin undici (#2613)"
   },
   "AmeliproAccordionResult": {
     "version": "1.0.25",
@@ -666,34 +666,34 @@
     "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "SelectBtnField": {
-    "version": "1.1.4",
-    "date": "04/08/2026",
-    "dateIso": "2026-08-04 09:24:53 +0200",
-    "message": "interaction vbtn (#2435)"
+    "version": "1.2.0",
+    "date": "15/10/2026",
+    "dateIso": "2026-10-15 16:34:04 +0200",
+    "message": "SyForm: add tests page on sandbox + fixes (#2616)"
   },
   "SyAutocomplete": {
-    "version": "1.1.5",
-    "date": "27/08/2026",
-    "dateIso": "2026-08-27 08:16:48 +0200",
-    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
+    "version": "1.2.0",
+    "date": "15/10/2026",
+    "dateIso": "2026-10-15 16:34:04 +0200",
+    "message": "SyForm: add tests page on sandbox + fixes (#2616)"
   },
   "SyInputSelect": {
-    "version": "1.1.5",
-    "date": "27/08/2026",
-    "dateIso": "2026-08-27 08:16:48 +0200",
-    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
+    "version": "1.2.0",
+    "date": "15/10/2026",
+    "dateIso": "2026-10-15 16:34:04 +0200",
+    "message": "SyForm: add tests page on sandbox + fixes (#2616)"
   },
   "SySelect": {
-    "version": "1.1.5",
-    "date": "27/08/2026",
-    "dateIso": "2026-08-27 08:16:48 +0200",
-    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
+    "version": "1.2.0",
+    "date": "15/10/2026",
+    "dateIso": "2026-10-15 16:34:04 +0200",
+    "message": "SyForm: add tests page on sandbox + fixes (#2616)"
   },
   "SyCheckBoxGroup": {
-    "version": "1.1.3",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.2.0",
+    "date": "01/10/2026",
+    "dateIso": "2026-10-01 15:42:47 +0200",
+    "message": "SyCheckBoxGroup: add color styling for error, warning, and success states on selection control input (#2603)"
   },
   "SyCheckbox": {
     "version": "1.1.3",
@@ -702,10 +702,22 @@
     "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
   },
   "SyForm": {
-    "version": "1.1.4",
-    "date": "13/08/2026",
-    "dateIso": "2026-08-13 15:55:47 +0200",
-    "message": "fix/components-name-format"
+    "version": "1.2.0",
+    "date": "15/10/2026",
+    "dateIso": "2026-10-15 16:34:04 +0200",
+    "message": "SyForm: add tests page on sandbox + fixes (#2616)"
+  },
+  "IntegrationMixedForm": {
+    "version": "1.2.0",
+    "date": "05/10/2026",
+    "dateIso": "2026-10-05 09:23:58 +0200",
+    "message": "SyForm v2 (#2434)"
+  },
+  "IntegrationTestForm": {
+    "version": "1.2.0",
+    "date": "05/10/2026",
+    "dateIso": "2026-10-05 09:23:58 +0200",
+    "message": "SyForm v2 (#2434)"
   },
   "SyIcon": {
     "version": "1.1.4",
@@ -732,10 +744,10 @@
     "message": "Components: fix focus display (#2383)"
   },
   "SyRadioGroup": {
-    "version": "1.1.4",
-    "date": "25/08/2026",
-    "dateIso": "2026-08-25 10:33:40 +0200",
-    "message": "[SyRadioGroup] héritage des attributs (#2493)"
+    "version": "1.2.0",
+    "date": "15/10/2026",
+    "dateIso": "2026-10-15 16:34:04 +0200",
+    "message": "SyForm: add tests page on sandbox + fixes (#2616)"
   },
   "SyTabs": {
     "version": "1.1.6",
@@ -780,28 +792,28 @@
     "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "DatePicker": {
-    "version": "1.1.6",
-    "date": "22/09/2026",
-    "dateIso": "2026-09-22 16:39:56 +0200",
-    "message": "fix caret-color (#2575)"
+    "version": "1.2.0",
+    "date": "15/10/2026",
+    "dateIso": "2026-10-15 16:34:04 +0200",
+    "message": "SyForm: add tests page on sandbox + fixes (#2616)"
   },
   "ComplexDatePicker": {
-    "version": "1.1.6",
-    "date": "22/09/2026",
-    "dateIso": "2026-09-22 08:55:24 +0200",
-    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
+    "version": "1.2.0",
+    "date": "15/10/2026",
+    "dateIso": "2026-10-15 16:34:04 +0200",
+    "message": "SyForm: add tests page on sandbox + fixes (#2616)"
   },
   "DatePickerLiveRegion": {
-    "version": "1.1.6",
-    "date": "22/09/2026",
-    "dateIso": "2026-09-22 16:39:56 +0200",
-    "message": "fix caret-color (#2575)"
+    "version": "1.2.0",
+    "date": "15/10/2026",
+    "dateIso": "2026-10-15 16:34:04 +0200",
+    "message": "SyForm: add tests page on sandbox + fixes (#2616)"
   },
   "DateTextInput": {
-    "version": "1.1.6",
-    "date": "22/09/2026",
-    "dateIso": "2026-09-22 08:55:24 +0200",
-    "message": "Refactor: Migration de la validation des DatePickers (#2499)"
+    "version": "1.2.0",
+    "date": "15/10/2026",
+    "dateIso": "2026-10-15 16:53:40 +0200",
+    "message": "fix(DateTextInput): passer la prop disable-error-handling au TextField (#2647)"
   },
   "DatePickerControls": {
     "version": "1.1.6",
@@ -996,10 +1008,10 @@
     "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)"
   },
   "HeaderToolbar": {
-    "version": "1.1.6",
-    "date": "28/09/2026",
-    "dateIso": "2026-09-28 09:36:28 +0200",
-    "message": "LogoBrandSection: fix router (#2586)"
+    "version": "1.2.0",
+    "date": "16/10/2026",
+    "dateIso": "2026-10-16 11:15:56 +0200",
+    "message": "fix(HeaderToolbar): nettoyer le timeout de focus au démontage (#2654)"
   },
   "LangBtn": {
     "version": "1.1.4",
@@ -1020,10 +1032,10 @@
     "message": "LogoBrandSection: fix router (#2586)"
   },
   "LunarCalendar": {
-    "version": "1.1.6",
-    "date": "24/09/2026",
-    "dateIso": "2026-09-24 09:02:16 +0200",
-    "message": "LunarCalendar: add custom rules + add stories/tests (#2583)"
+    "version": "1.2.0",
+    "date": "16/10/2026",
+    "dateIso": "2026-10-16 14:43:39 +0200",
+    "message": "LunarCalendar: add Vuetify validation stories and support (#2662)"
   },
   "MaintenancePage": {
     "version": "1.0.23",
@@ -1074,10 +1086,10 @@
     "message": "Components: fix focus display (#2383)"
   },
   "NirField": {
-    "version": "1.1.5",
-    "date": "27/08/2026",
-    "dateIso": "2026-08-27 08:16:48 +0200",
-    "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
+    "version": "1.2.0",
+    "date": "15/10/2026",
+    "dateIso": "2026-10-15 16:34:04 +0200",
+    "message": "SyForm: add tests page on sandbox + fixes (#2616)"
   },
   "NotFoundPage": {
     "version": "1.0.22",
@@ -1086,16 +1098,16 @@
     "message": "Hx: replace hx to SyHeading (#1874)"
   },
   "Notification": {
-    "version": "1.1.4",
-    "date": "20/08/2026",
-    "dateIso": "2026-08-20 12:20:15 +0200",
-    "message": "Fix tests warning (#2498)"
+    "version": "1.2.0",
+    "date": "05/10/2026",
+    "dateIso": "2026-10-05 10:13:12 +0200",
+    "message": "add tokens and interactions on notificationBar (#2602)"
   },
   "NotificationBar": {
-    "version": "1.1.4",
-    "date": "20/08/2026",
-    "dateIso": "2026-08-20 12:20:15 +0200",
-    "message": "Fix tests warning (#2498)"
+    "version": "1.2.0",
+    "date": "05/10/2026",
+    "dateIso": "2026-10-05 10:13:12 +0200",
+    "message": "add tokens and interactions on notificationBar (#2602)"
   },
   "PageContainer": {
     "version": "1.1.1",
@@ -1116,10 +1128,10 @@
     "message": "refactor: replace `any` types with proper TypeScript types  (#2496)"
   },
   "PasswordField": {
-    "version": "1.1.3",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.2.0",
+    "date": "15/10/2026",
+    "dateIso": "2026-10-15 16:34:04 +0200",
+    "message": "SyForm: add tests page on sandbox + fixes (#2616)"
   },
   "PeriodField": {
     "version": "1.1.6",
@@ -1128,10 +1140,16 @@
     "message": "Refactor: Migration de la validation des DatePickers (#2499)"
   },
   "PhoneField": {
-    "version": "1.1.3",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.2.0",
+    "date": "15/10/2026",
+    "dateIso": "2026-10-15 16:34:04 +0200",
+    "message": "SyForm: add tests page on sandbox + fixes (#2616)"
+  },
+  "PhoneField.reset.fixture": {
+    "version": "1.2.0",
+    "date": "05/10/2026",
+    "dateIso": "2026-10-05 09:23:58 +0200",
+    "message": "SyForm v2 (#2434)"
   },
   "RangeField": {
     "version": "1.1.3",
@@ -1224,10 +1242,10 @@
     "message": "Feat/turn heading level optional (#2025)"
   },
   "SyTextArea": {
-    "version": "1.1.3",
-    "date": "27/07/2026",
-    "dateIso": "2026-07-27 14:32:02 +0200",
-    "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)"
+    "version": "1.2.0",
+    "date": "16/10/2026",
+    "dateIso": "2026-10-16 11:24:23 +0200",
+    "message": "fix sytextarea (#2655)"
   },
   "TableToolbar": {
     "version": "1.1.3",
@@ -1248,28 +1266,28 @@
     "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)"
   },
   "SyTableFilter": {
-    "version": "1.1.6",
-    "date": "22/09/2026",
-    "dateIso": "2026-09-22 11:15:02 +0200",
-    "message": "changement condition (#2560)"
+    "version": "1.2.0",
+    "date": "29/09/2026",
+    "dateIso": "2026-09-29 11:14:04 +0200",
+    "message": "remove d-flex to prevent headers moving (#2595)"
   },
   "SyTablePagination": {
-    "version": "1.1.6",
-    "date": "22/09/2026",
-    "dateIso": "2026-09-22 11:15:02 +0200",
-    "message": "changement condition (#2560)"
+    "version": "1.2.0",
+    "date": "29/09/2026",
+    "dateIso": "2026-09-29 11:14:04 +0200",
+    "message": "remove d-flex to prevent headers moving (#2595)"
   },
   "TableBulkActions": {
-    "version": "1.1.6",
-    "date": "22/09/2026",
-    "dateIso": "2026-09-22 11:15:02 +0200",
-    "message": "changement condition (#2560)"
+    "version": "1.2.0",
+    "date": "29/09/2026",
+    "dateIso": "2026-09-29 11:14:04 +0200",
+    "message": "remove d-flex to prevent headers moving (#2595)"
   },
   "TableHeader": {
-    "version": "1.1.6",
-    "date": "22/09/2026",
-    "dateIso": "2026-09-22 11:15:02 +0200",
-    "message": "changement condition (#2560)"
+    "version": "1.2.0",
+    "date": "29/09/2026",
+    "dateIso": "2026-09-29 11:14:04 +0200",
+    "message": "remove d-flex to prevent headers moving (#2595)"
   },
   "AutocompleteFilter": {
     "version": "1.1.6",

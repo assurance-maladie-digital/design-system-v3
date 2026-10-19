@@ -1,6 +1,6 @@
 {
-  "date": "2026-10-12T13:37:33.564Z",
-  "totalCount": 77,
+  "date": "2026-10-19T14:12:25.171Z",
+  "totalCount": 76,
   "results": [
     {
       "componentName": "Accordion",
@@ -114,7 +114,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "af510a85006d3871ba268b3d98fd390c36f0c6ae",
@@ -275,7 +278,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -289,15 +295,32 @@
           "a11yLabel": false
         },
         {
+          "hash": "30ead9ee61626407d453f957a382fb0fd57fb7d6",
+          "date": "2025-04-14 13:02:49 +0000",
+          "dateFr": "14/04/2025",
+          "message": "[DownloadBtn] fixe des problèmes d'accessibilité (#522)",
+          "version": "0.0.15-alpha",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
+        },
+        {
           "hash": "6318250b9ae75875589ba95d179bd84a9c9d8a79",
           "date": "2025-04-11 07:30:33 +0000",
           "dateFr": "11/04/2025",
           "message": "[BackBtn] fixe des problèmes d'accessibilité (#521)",
           "version": "0.0.15-alpha",
-          "confidence": "moyenne",
+          "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         }
       ]
     },
@@ -373,7 +396,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -392,10 +418,13 @@
           "dateFr": "24/04/2025",
           "message": "BackToTopBtn - fix d'audit d'accessibilité (#560)",
           "version": "0.0.15-alpha",
-          "confidence": "moyenne",
+          "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "7bd988914d82b2708a9386593486a63aa86f0660",
@@ -406,7 +435,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "938a2b864fd688ee7b5acfb99668d694d101377a",
@@ -567,7 +599,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -728,7 +763,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "0e6be85734946c535a22e45b773b7e9b4b7c92e4",
@@ -858,7 +896,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -880,7 +921,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "b2106621838261be7d7e8b88c392d1cf1297e6a8",
@@ -946,7 +990,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -957,7 +1004,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -979,7 +1029,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         }
       ]
     },
@@ -1063,7 +1116,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "improvement"
+          ]
         },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
@@ -1085,7 +1141,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "56e07df6e8e0890704fd5b4f47ba2ec2dbd07423",
@@ -1107,7 +1166,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -1151,7 +1213,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "9cb1dd8f7b44c563bd426f3f702b8be7c02d47f9",
@@ -1173,7 +1238,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "f09ec4e408b5d46a7b21043428235a71c3c744d6",
@@ -1270,7 +1338,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -1303,7 +1374,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "7bd988914d82b2708a9386593486a63aa86f0660",
@@ -1314,7 +1388,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "f09ec4e408b5d46a7b21043428235a71c3c744d6",
@@ -1440,7 +1517,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
@@ -1462,7 +1542,11 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro",
+            "Fusion DS"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -1473,7 +1557,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -1495,7 +1582,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "PAG"
+          ]
         },
         {
           "hash": "810c404a70630102184f90c8a447aa3c741f7ec7",
@@ -1506,7 +1596,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "30ce91e56e399848a1bb49b13d7cc557e0b8ca12",
@@ -1536,11 +1629,16 @@
       "componentName": "Customs/Selects/SelectBtnField",
       "storybookTitle": "Composants/Formulaires/Selects/SelectBtnField",
       "status": "actif",
-      "functionalVersion": "1.1.4",
-      "functionalDate": "04/08/2026",
+      "functionalVersion": "1.2.0",
+      "functionalDate": "15/10/2026",
       "a11yVersion": "1.1.6",
       "a11yDate": "17/09/2026",
       "commits": [
+        {
+          "date": "2026-10-15",
+          "message": "SyForm: add tests page on sandbox + fixes (#2616)",
+          "version": "1.2.0"
+        },
         {
           "date": "2026-08-04",
           "message": "interaction vbtn (#2435)",
@@ -1617,7 +1715,11 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Synapse",
+            "Amelipro"
+          ]
         },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
@@ -1661,7 +1763,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "9758523beee3282578116e2f03d48e8ed92e7c72",
@@ -1672,7 +1777,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Issue"
+          ]
         },
         {
           "hash": "425ebec90ed0848ef71301fe944006bb86a5b1f5",
@@ -1716,7 +1824,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "3565543635e1f82d12ac3785ace129d7fb0fb7a9",
@@ -1738,7 +1849,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         }
       ]
     },
@@ -1746,15 +1860,20 @@
       "componentName": "Customs/Selects/SyAutocomplete",
       "storybookTitle": "Composants/Formulaires/Selects/SyAutocomplete",
       "status": "actif",
-      "functionalVersion": "1.1.5",
-      "functionalDate": "27/08/2026",
+      "functionalVersion": "1.2.0",
+      "functionalDate": "15/10/2026",
       "a11yVersion": "1.0.27",
       "a11yDate": "13/05/2026",
       "commits": [
         {
+          "date": "2026-10-15",
+          "message": "SyForm: add tests page on sandbox + fixes (#2616)",
+          "version": "1.2.0"
+        },
+        {
           "date": "2026-10-05",
           "message": "SyForm v2 (#2434)",
-          "version": null
+          "version": "1.2.0"
         },
         {
           "date": "2026-08-27",
@@ -1870,11 +1989,6 @@
           "date": "2026-03-17",
           "message": "fix  clear chips (#1982)",
           "version": "1.0.23"
-        },
-        {
-          "date": "2026-02-11",
-          "message": "add autoComplete componant (#1764)",
-          "version": "1.0.20"
         }
       ],
       "a11yCommits": [
@@ -2027,11 +2141,16 @@
       "componentName": "Customs/Selects/SyInputSelect",
       "storybookTitle": "Composants/Formulaires/Selects/SyInputSelect",
       "status": "déprécié",
-      "functionalVersion": "1.1.5",
-      "functionalDate": "27/08/2026",
+      "functionalVersion": "1.2.0",
+      "functionalDate": "15/10/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-10-15",
+          "message": "SyForm: add tests page on sandbox + fixes (#2616)",
+          "version": "1.2.0"
+        },
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
@@ -2095,6 +2214,17 @@
       ],
       "a11yCommits": [
         {
+          "hash": "312a37bc46ce5d3bda4738d6b28eb2a56421e919",
+          "date": "2026-10-15 16:34:04 +0200",
+          "dateFr": "15/10/2026",
+          "message": "SyForm: add tests page on sandbox + fixes (#2616)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
           "hash": "8cd25df337dd7df9a09d92eeecbeb80ebf74c9e3",
           "date": "2026-08-20 12:20:15 +0200",
           "dateFr": "20/08/2026",
@@ -2136,7 +2266,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "129060e2b8a94d277d8a03fd98eb169ad72ebcdb",
@@ -2158,7 +2291,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "2cd0bb4789554c18cd15969fdf2490f864266c55",
@@ -2169,7 +2305,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "improvement"
+          ]
         },
         {
           "hash": "bb0f966392add9b7ded61f7edddd960556bc228c",
@@ -2180,7 +2319,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         }
       ]
     },
@@ -2188,15 +2330,20 @@
       "componentName": "Customs/Selects/SySelect",
       "storybookTitle": "Composants/Formulaires/Selects/SySelect",
       "status": "actif",
-      "functionalVersion": "1.1.5",
-      "functionalDate": "27/08/2026",
+      "functionalVersion": "1.2.0",
+      "functionalDate": "15/10/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
+          "date": "2026-10-15",
+          "message": "SyForm: add tests page on sandbox + fixes (#2616)",
+          "version": "1.2.0"
+        },
+        {
           "date": "2026-10-05",
           "message": "SyForm v2 (#2434)",
-          "version": null
+          "version": "1.2.0"
         },
         {
           "date": "2026-08-27",
@@ -2312,11 +2459,6 @@
           "date": "2026-02-11",
           "message": "Fix/sy select display (#1815)",
           "version": "1.0.20"
-        },
-        {
-          "date": "2026-02-11",
-          "message": "add autoComplete componant (#1764)",
-          "version": "1.0.20"
         }
       ],
       "a11yCommits": [
@@ -2406,7 +2548,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "23266f81904431a6e9448a23939b2fdfcfccfe6f",
@@ -2439,7 +2584,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "c3265eb88d01ee106e4db7f1a7d28cd960e48bb4",
@@ -2505,7 +2653,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Anomalie graphique"
+          ]
         },
         {
           "hash": "bbea26c058130cf1e21425f2379c7175b35ab3a8",
@@ -2513,10 +2664,13 @@
           "dateFr": "23/09/2025",
           "message": "improve sySelect accessibility (#1141)",
           "version": "1.0.10",
-          "confidence": "moyenne",
+          "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "c0a587f8a9d7534585b57c2dd51b089290fc3569",
@@ -2615,7 +2769,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         }
       ]
     },
@@ -2842,7 +2999,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "837ed2b022646181b519bcf9a7d49958a557ce5c",
@@ -2886,7 +3046,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "adbdc305d83e9a0b3611b8de55a6225201249117",
@@ -2897,7 +3060,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Anomalie graphique"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -2949,15 +3115,15 @@
       "componentName": "Customs/SyCheckBoxGroup",
       "storybookTitle": "Composants/Formulaires/SyCheckBoxGroup",
       "status": "actif",
-      "functionalVersion": "1.1.3",
-      "functionalDate": "27/07/2026",
+      "functionalVersion": "1.2.0",
+      "functionalDate": "01/10/2026",
       "a11yVersion": "1.0.21",
       "a11yDate": "23/02/2026",
       "commits": [
         {
           "date": "2026-10-01",
           "message": "SyCheckBoxGroup: add color styling for error, warning, and success states on selection control input (#2603)",
-          "version": null
+          "version": "1.2.0"
         },
         {
           "date": "2026-07-27",
@@ -3045,15 +3211,20 @@
       "componentName": "Customs/SyForm",
       "storybookTitle": "Composants/Formulaires/SyForm",
       "status": "actif",
-      "functionalVersion": "1.1.4",
-      "functionalDate": "13/08/2026",
+      "functionalVersion": "1.2.0",
+      "functionalDate": "15/10/2026",
       "a11yVersion": "1.0.20",
       "a11yDate": "11/02/2026",
       "commits": [
         {
+          "date": "2026-10-15",
+          "message": "SyForm: add tests page on sandbox + fixes (#2616)",
+          "version": "1.2.0"
+        },
+        {
           "date": "2026-10-05",
           "message": "SyForm v2 (#2434)",
-          "version": null
+          "version": "1.2.0"
         },
         {
           "date": "2026-08-13",
@@ -3088,21 +3259,21 @@
       ],
       "a11yCommits": [
         {
-          "hash": "7ac9b1d8f2a8bf74187de0635012c8454422e9df",
-          "date": "2026-10-07 16:31:56 +0200",
-          "dateFr": "07/10/2026",
-          "message": "docs(SyForm): fix markdown escaping in accessibility documentation",
+          "hash": "312a37bc46ce5d3bda4738d6b28eb2a56421e919",
+          "date": "2026-10-15 16:34:04 +0200",
+          "dateFr": "15/10/2026",
+          "message": "SyForm: add tests page on sandbox + fixes (#2616)",
           "version": null,
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
           "a11yLabel": false
         },
         {
-          "hash": "a0796b78d71f23b3a2a6a9ed3aca4bd80317f8a4",
-          "date": "2026-10-07 16:28:55 +0200",
-          "dateFr": "07/10/2026",
-          "message": "docs(a11y): update accessibility status report and documentation",
+          "hash": "3cefa5c0cce2d6af028abc2aec979d0a2775fecf",
+          "date": "2026-10-12 15:52:28 +0200",
+          "dateFr": "12/10/2026",
+          "message": "Feat/update a11y avancement page (#2621)",
           "version": null,
           "confidence": "forte",
           "keywords": true,
@@ -3118,7 +3289,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         }
       ]
     },
@@ -3182,7 +3356,11 @@
           "confidence": "moyenne",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Synapse",
+            "Amelipro"
+          ]
         },
         {
           "hash": "10d998f3c39c4df0f14b28536e73af79a2d02399",
@@ -3193,7 +3371,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "1a820ea05380988c7263430d7046f5859bff97bd",
@@ -3204,7 +3385,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
@@ -3281,7 +3465,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Synapse"
+          ]
         },
         {
           "hash": "48b419e210b58ba8c8510cbf2b41619a6577c023",
@@ -3300,10 +3487,13 @@
           "dateFr": "02/03/2026",
           "message": "Feat/fix a11y tests (#1883)",
           "version": "1.0.22",
-          "confidence": "moyenne",
+          "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -3314,7 +3504,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "bb0f966392add9b7ded61f7edddd960556bc228c",
@@ -3325,7 +3518,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "58f9176323c97588d22abbe8eb8e4da9c540991e",
@@ -3336,7 +3532,11 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "enhancement",
+            "Accessibility"
+          ]
         }
       ]
     },
@@ -3396,7 +3596,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "improvement"
+          ]
         },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
@@ -3429,7 +3632,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Synapse"
+          ]
         }
       ]
     },
@@ -3494,7 +3700,11 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro",
+            "Fusion DS"
+          ]
         },
         {
           "hash": "462a742899258fad303074faa447e8c8a2b109b2",
@@ -3505,7 +3715,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "8345b5a2f6f57725750d64afb35f882a49cabfcd",
@@ -3527,7 +3740,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -3538,7 +3754,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -3568,11 +3787,16 @@
       "componentName": "Customs/SyRadioGroup",
       "storybookTitle": "Composants/Formulaires/SyRadioGroup",
       "status": "actif",
-      "functionalVersion": "1.1.4",
-      "functionalDate": "25/08/2026",
+      "functionalVersion": "1.2.0",
+      "functionalDate": "15/10/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-10-15",
+          "message": "SyForm: add tests page on sandbox + fixes (#2616)",
+          "version": "1.2.0"
+        },
         {
           "date": "2026-08-25",
           "message": "[SyRadioGroup] héritage des attributs (#2493)",
@@ -3720,7 +3944,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -3896,7 +4123,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -3907,7 +4137,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "487d5fe1b4dd2b32bf8b61f8d1c402741ef74d6f",
@@ -3984,7 +4217,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         }
       ]
     },
@@ -4251,10 +4487,13 @@
           "dateFr": "02/03/2026",
           "message": "Feat/fix a11y tests (#1883)",
           "version": "1.0.22",
-          "confidence": "moyenne",
+          "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -4265,7 +4504,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "4ecd47a81afe4bbd79ecd7a89326fc1f213e6d9e",
@@ -4544,7 +4786,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -4643,7 +4888,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -4654,114 +4902,6 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
-        }
-      ]
-    },
-    {
-      "componentName": "DataListItem",
-      "storybookTitle": "Composants/Données/DataList",
-      "status": "actif",
-      "functionalVersion": "1.1.4",
-      "functionalDate": "25/08/2026",
-      "a11yVersion": "1.0.23",
-      "a11yDate": "30/03/2026",
-      "commits": [
-        {
-          "date": "2026-08-25",
-          "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)",
-          "version": "1.1.4"
-        },
-        {
-          "date": "2026-07-22",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3"
-        },
-        {
-          "date": "2026-07-02",
-          "message": "update storybook and fix links (#2354)",
-          "version": "1.1.2"
-        },
-        {
-          "date": "2025-12-11",
-          "message": "DataListItem : déprécier renderHtmlValue et ajouter un slo… (#1573)",
-          "version": "1.0.16"
-        },
-        {
-          "date": "2025-10-06",
-          "message": "Refactor DataListItem.vue: improve slot structure for action button (#1237)",
-          "version": "1.0.10"
-        },
-        {
-          "date": "2025-04-14",
-          "message": "remove old classes prefix and add newest (#532)",
-          "version": "0.0.15-alpha"
-        },
-        {
-          "date": "2025-01-08",
-          "message": "Ajout d'une configuration pour stylelint (#323)",
-          "version": "0.0.8-alpha"
-        },
-        {
-          "date": "2024-11-05",
-          "message": "DataList/DataListGroup: add components + composable (#165)",
-          "version": "0.0.5-alpha"
-        }
-      ],
-      "a11yCommits": [
-        {
-          "hash": "9b8c8644c12b5f3be309f6496104027b261f166d",
-          "date": "2026-10-08 16:56:23 +0200",
-          "dateFr": "08/10/2026",
-          "message": "add tests (#2623)",
-          "version": null,
-          "confidence": "faible",
-          "keywords": false,
-          "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "5a322e15e83a6f15a7c62feb7dd6747aabc1df86",
-          "date": "2026-09-28 09:08:42 +0200",
-          "dateFr": "28/09/2026",
-          "message": "ajout test spec accessibilité (#2565)",
-          "version": "1.1.6",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
-          "date": "2026-07-22 11:00:09 +0200",
-          "dateFr": "22/07/2026",
-          "message": "Components: fix focus display (#2383)",
-          "version": "1.1.3",
-          "confidence": "moyenne",
-          "keywords": true,
-          "patterns": false,
-          "a11yLabel": false
-        },
-        {
-          "hash": "c436586292ca72c4d82809711b9ef7cdcbdcc09a",
-          "date": "2026-02-25 16:19:14 +0100",
-          "dateFr": "25/02/2026",
-          "message": "add a11y ci (#1881)",
-          "version": "1.0.21",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": true,
-          "a11yLabel": false
-        },
-        {
-          "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
-          "date": "2026-01-06 11:55:17 +0100",
-          "dateFr": "06/01/2026",
-          "message": "Feat/add accessibility in ci (#1663)",
-          "version": "1.0.17",
-          "confidence": "forte",
-          "keywords": true,
-          "patterns": true,
           "a11yLabel": false
         }
       ]
@@ -4770,15 +4910,20 @@
       "componentName": "DatePicker/CalendarMode",
       "storybookTitle": "Composants/Formulaires/DatePicker/CalendarMode",
       "status": "actif",
-      "functionalVersion": "1.1.6",
-      "functionalDate": "22/09/2026",
+      "functionalVersion": "1.2.0",
+      "functionalDate": "15/10/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "30/07/2026",
       "commits": [
         {
+          "date": "2026-10-15",
+          "message": "SyForm: add tests page on sandbox + fixes (#2616)",
+          "version": "1.2.0"
+        },
+        {
           "date": "2026-10-05",
           "message": "SyForm v2 (#2434)",
-          "version": null
+          "version": "1.2.0"
         },
         {
           "date": "2026-09-22",
@@ -4894,11 +5039,6 @@
           "date": "2026-04-03",
           "message": "Amelioration du système de validation (#1902)",
           "version": "1.0.24"
-        },
-        {
-          "date": "2026-03-12",
-          "message": "Update Vuetify 3.12.2 (#1951)",
-          "version": "1.0.22"
         }
       ],
       "a11yCommits": [
@@ -5032,7 +5172,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -5062,10 +5205,13 @@
           "dateFr": "20/08/2025",
           "message": "improve dp keyboard navigation (#975)",
           "version": "1.0.7",
-          "confidence": "moyenne",
+          "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         }
       ]
     },
@@ -5073,11 +5219,16 @@
       "componentName": "DatePicker/ComplexDatePicker",
       "storybookTitle": "Composants/Formulaires/DatePicker/CombinedMode",
       "status": "actif",
-      "functionalVersion": "1.1.6",
-      "functionalDate": "22/09/2026",
+      "functionalVersion": "1.2.0",
+      "functionalDate": "15/10/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "30/07/2026",
       "commits": [
+        {
+          "date": "2026-10-15",
+          "message": "SyForm: add tests page on sandbox + fixes (#2616)",
+          "version": "1.2.0"
+        },
         {
           "date": "2026-09-22",
           "message": "Refactor: Migration de la validation des DatePickers (#2499)",
@@ -5197,11 +5348,6 @@
           "date": "2026-01-16",
           "message": "Corrige les différences graphiques sur le DatePicker (#1670)",
           "version": "1.0.17"
-        },
-        {
-          "date": "2025-12-18",
-          "message": "fix combined synch (#1642)",
-          "version": "1.0.16"
         }
       ],
       "a11yCommits": [
@@ -5313,7 +5459,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "c436586292ca72c4d82809711b9ef7cdcbdcc09a",
@@ -5324,7 +5473,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -5357,7 +5509,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "PAG"
+          ]
         },
         {
           "hash": "f1384e4430380e37ef475f2a924039341233e794",
@@ -5368,7 +5523,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "PAG"
+          ]
         }
       ]
     },
@@ -5376,11 +5534,21 @@
       "componentName": "DatePicker/DateTextInput",
       "storybookTitle": "Composants/Formulaires/DatePicker/DateInput",
       "status": "actif",
-      "functionalVersion": "1.1.6",
-      "functionalDate": "22/09/2026",
+      "functionalVersion": "1.2.0",
+      "functionalDate": "15/10/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "23/07/2026",
       "commits": [
+        {
+          "date": "2026-10-15",
+          "message": "fix(DateTextInput): passer la prop disable-error-handling au TextField (#2647)",
+          "version": "1.2.0"
+        },
+        {
+          "date": "2026-10-15",
+          "message": "SyForm: add tests page on sandbox + fixes (#2616)",
+          "version": "1.2.0"
+        },
         {
           "date": "2026-09-22",
           "message": "Refactor: Migration de la validation des DatePickers (#2499)",
@@ -5495,16 +5663,6 @@
           "date": "2025-10-30",
           "message": "DatePicker : add hint + improve display (#1372)",
           "version": "1.0.12"
-        },
-        {
-          "date": "2025-10-13",
-          "message": "DatePicker title (#1262)",
-          "version": "1.0.10"
-        },
-        {
-          "date": "2025-10-13",
-          "message": "Fix/datepicker custom rules empty fields (#1261)",
-          "version": "1.0.10"
         }
       ],
       "a11yCommits": [
@@ -5561,7 +5719,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "c436586292ca72c4d82809711b9ef7cdcbdcc09a",
@@ -5572,7 +5733,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -5649,7 +5813,11 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Issue",
+            "improvement"
+          ]
         },
         {
           "hash": "88c74a321378e10f0571dde4821c16953b790dae",
@@ -5682,7 +5850,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "PAG"
+          ]
         }
       ]
     },
@@ -5781,7 +5952,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -5814,7 +5988,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "PAG"
+          ]
         }
       ]
     },
@@ -5943,7 +6120,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "improvement"
+          ]
         },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
@@ -5965,7 +6145,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "af001866a5dfa51318889b7b8acc96b390c7fdc1",
@@ -5976,7 +6159,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "0dcb4fea00e4db193817438a2097778d9477bd57",
@@ -5987,7 +6173,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "175ca0d27910a1bf459f0fbe10e7d0812b0b0c92",
@@ -6009,7 +6198,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -6075,7 +6267,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "c8343780910f894c315f552373d8ccc1106f19ee",
@@ -6086,7 +6281,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "PAG"
+          ]
         },
         {
           "hash": "6ca61420de1b66632e1def21c92273c3e1850565",
@@ -6214,7 +6412,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "c436586292ca72c4d82809711b9ef7cdcbdcc09a",
@@ -6225,7 +6426,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -6236,7 +6440,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -6255,10 +6462,13 @@
           "dateFr": "14/04/2025",
           "message": "[DownloadBtn] fixe des problèmes d'accessibilité (#522)",
           "version": "0.0.15-alpha",
-          "confidence": "moyenne",
+          "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         }
       ]
     },
@@ -6395,7 +6605,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Fusion DS"
+          ]
         },
         {
           "hash": "4c72c5cb31c01106ee938d588ce4999a2b499b63",
@@ -6406,7 +6619,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "38c470a42bee5c9a6fa9cb0f44049cafe5047683",
@@ -6428,7 +6644,11 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro",
+            "Fusion DS"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -6439,7 +6659,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -6472,7 +6695,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "69dcfbc1d3b862caf01cb0c60dbbbea642d680e3",
@@ -6542,7 +6768,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
@@ -6564,7 +6793,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "a64eb0ae893c65a6f5e6513a2e63e58136aaaa2a",
@@ -6586,7 +6818,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -6597,7 +6832,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -6641,7 +6879,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "7bd988914d82b2708a9386593486a63aa86f0660",
@@ -6652,7 +6893,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "6b8a052a8d19c19dd02e9779b92adbbf1908b824",
@@ -6787,7 +7031,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -6891,7 +7138,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -7029,7 +7279,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -7125,7 +7378,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -7180,7 +7436,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "2c5aede4d2753029180fd05b48e6f2434346c9fc",
@@ -7346,7 +7605,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "0e6be85734946c535a22e45b773b7e9b4b7c92e4",
@@ -7530,7 +7792,11 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro",
+            "Fusion DS"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -7541,7 +7807,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -7563,7 +7832,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "7bd988914d82b2708a9386593486a63aa86f0660",
@@ -7574,7 +7846,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "7be0591d0eb740b1452b30c604148e91d20e3e46",
@@ -7715,7 +7990,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -7737,7 +8015,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "fb67092b1eeccb3999cd63108bbef503011f285b",
@@ -7745,10 +8026,13 @@
           "dateFr": "09/04/2025",
           "message": "[FranceConnectBtn] fixe des problèmes d'accessibilité (#520)",
           "version": "0.0.15-alpha",
-          "confidence": "moyenne",
+          "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "bba714c483a53f1b7937afb2b2c51c3adbd08496",
@@ -7900,6 +8184,20 @@
       ],
       "a11yCommits": [
         {
+          "hash": "0d0a38a3c858047c2f33b433dce83932b07d9ee7",
+          "date": "2026-10-15 10:39:55 +0200",
+          "dateFr": "15/10/2026",
+          "message": "Headerbar : Ajout de tests RGAA- #2623 (#2628)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
+        },
+        {
           "hash": "4beac9cb6a842d3852a0986e03a22b4b405dc64f",
           "date": "2026-09-28 09:36:28 +0200",
           "dateFr": "28/09/2026",
@@ -7952,7 +8250,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -7963,7 +8264,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "93fa01545bde32ca88d2c0ba46f559a075424a4b",
@@ -8007,7 +8311,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "improvement"
+          ]
         },
         {
           "hash": "432611b8bc2b890087900b80e0bbb0d7e8d769fe",
@@ -8029,7 +8336,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "5f94b9c5cc9e56eab174e34bc3475be74ea2d088",
@@ -8062,7 +8372,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "d7f2a0dbf9bc0528c65902f882e96478be840edd",
@@ -8210,7 +8523,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -8232,7 +8548,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "11e216c893106c736ac3b8f9ee985ae82fa589b0",
@@ -8449,7 +8768,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "c436586292ca72c4d82809711b9ef7cdcbdcc09a",
@@ -8460,7 +8782,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -8493,7 +8818,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "272cc46857f8d5ed0ce4dd39c69c9a67a65ea766",
@@ -8523,11 +8851,16 @@
       "componentName": "HeaderToolbar",
       "storybookTitle": "Composants/Structure/HeaderToolbar",
       "status": "actif",
-      "functionalVersion": "1.1.6",
-      "functionalDate": "28/09/2026",
+      "functionalVersion": "1.2.0",
+      "functionalDate": "16/10/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-10-16",
+          "message": "fix(HeaderToolbar): nettoyer le timeout de focus au démontage (#2654)",
+          "version": "1.2.0"
+        },
         {
           "date": "2026-09-28",
           "message": "LogoBrandSection: fix router (#2586)",
@@ -8616,6 +8949,53 @@
       ],
       "a11yCommits": [
         {
+          "hash": "6efad3d18f10335997ef299c416f9614544a8b0a",
+          "date": "2026-10-16 14:28:55 +0200",
+          "dateFr": "16/10/2026",
+          "message": "HeaderToolbar: fix Vuetify instance conflicts in tests (#2659)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "db8337c497b92f40e89d85662018cf826dd57f57",
+          "date": "2026-10-16 11:33:48 +0200",
+          "dateFr": "16/10/2026",
+          "message": "add test (#2656)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "940132d72878a0337c77a5454e7deb55a3bbb069",
+          "date": "2026-10-16 11:15:56 +0200",
+          "dateFr": "16/10/2026",
+          "message": "fix(HeaderToolbar): nettoyer le timeout de focus au démontage (#2654)",
+          "version": null,
+          "confidence": "moyenne",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "0d0a38a3c858047c2f33b433dce83932b07d9ee7",
+          "date": "2026-10-15 10:39:55 +0200",
+          "dateFr": "15/10/2026",
+          "message": "Headerbar : Ajout de tests RGAA- #2623 (#2628)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
+        },
+        {
           "hash": "5ea21ed9f76c9863fd5e85f84016bc12a92b9688",
           "date": "2026-10-12 09:00:08 +0200",
           "dateFr": "12/10/2026",
@@ -8624,7 +9004,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Synapse"
+          ]
         },
         {
           "hash": "4beac9cb6a842d3852a0986e03a22b4b405dc64f",
@@ -8690,7 +9073,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "82157a60a0149f90ae28cd6fea7f4c582b279abc",
@@ -8845,7 +9231,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -8878,7 +9267,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "3a9452592ef55a7e859f4d1a2deded2ecb8f595f",
@@ -8988,7 +9380,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -9129,7 +9524,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -9151,7 +9549,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "7bd988914d82b2708a9386593486a63aa86f0660",
@@ -9162,7 +9563,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "bc1e8e6bae55b91f0d41a7b9375aa967c4e3f862",
@@ -9181,11 +9585,16 @@
       "componentName": "LunarCalendar",
       "storybookTitle": "Composants/Formulaires/LunarCalendar",
       "status": "actif",
-      "functionalVersion": "1.1.6",
-      "functionalDate": "24/09/2026",
+      "functionalVersion": "1.2.0",
+      "functionalDate": "16/10/2026",
       "a11yVersion": "1.0.23",
       "a11yDate": "30/03/2026",
       "commits": [
+        {
+          "date": "2026-10-16",
+          "message": "LunarCalendar: add Vuetify validation stories and support (#2662)",
+          "version": "1.2.0"
+        },
         {
           "date": "2026-09-24",
           "message": "LunarCalendar: add custom rules + add stories/tests (#2583)",
@@ -9243,7 +9652,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -9254,7 +9666,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -9334,7 +9749,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Fusion DS"
+          ]
         },
         {
           "hash": "18e73c15325e772585af4dfc75388de619d6d36d",
@@ -9345,7 +9763,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "794b8518c04d6d85c2947d0f8be3da845a5cbc28",
@@ -9367,7 +9788,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -9378,7 +9802,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ed2af9a587b8470ac641c5c5efb6ca7deee91ece",
@@ -9480,7 +9907,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
@@ -9543,15 +9973,20 @@
       "componentName": "NirField",
       "storybookTitle": "Composants/Formulaires/NirField",
       "status": "actif",
-      "functionalVersion": "1.1.5",
-      "functionalDate": "27/08/2026",
+      "functionalVersion": "1.2.0",
+      "functionalDate": "15/10/2026",
       "a11yVersion": "1.1.2",
       "a11yDate": "23/06/2026",
       "commits": [
         {
+          "date": "2026-10-15",
+          "message": "SyForm: add tests page on sandbox + fixes (#2616)",
+          "version": "1.2.0"
+        },
+        {
           "date": "2026-10-05",
           "message": "SyForm v2 (#2434)",
-          "version": null
+          "version": "1.2.0"
         },
         {
           "date": "2026-08-27",
@@ -9667,11 +10102,6 @@
           "date": "2025-09-11",
           "message": "refacto nirField and improve key with tooltip display (#1096)",
           "version": "1.0.9"
-        },
-        {
-          "date": "2025-09-09",
-          "message": "Nirfield: fix focus on edition (#1085)",
-          "version": "1.0.9"
         }
       ],
       "a11yCommits": [
@@ -9728,7 +10158,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "3e904dddd4068d07eac77c3a97e8883573fa5758",
@@ -9750,7 +10183,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -9827,7 +10263,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Issue"
+          ]
         },
         {
           "hash": "2a65d995a12edc0694bde3622a168e2acf06701b",
@@ -9918,7 +10357,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "ba19fd9900304d113a80f9001ea094e09b5225b8",
@@ -9929,7 +10371,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Fusion DS"
+          ]
         },
         {
           "hash": "4c72c5cb31c01106ee938d588ce4999a2b499b63",
@@ -9940,7 +10385,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "12c59761a78ec583b2da2b56545fdbc97bfcdd56",
@@ -9951,7 +10399,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -9962,7 +10413,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ed2af9a587b8470ac641c5c5efb6ca7deee91ece",
@@ -10006,7 +10460,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "7bd988914d82b2708a9386593486a63aa86f0660",
@@ -10017,7 +10474,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "69dcfbc1d3b862caf01cb0c60dbbbea642d680e3",
@@ -10036,15 +10496,15 @@
       "componentName": "NotificationBar",
       "storybookTitle": "Composants/Feedback/NotificationBar",
       "status": "actif",
-      "functionalVersion": "1.1.4",
-      "functionalDate": "20/08/2026",
+      "functionalVersion": "1.2.0",
+      "functionalDate": "05/10/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
           "date": "2026-10-05",
           "message": "add tokens and interactions on notificationBar (#2602)",
-          "version": null
+          "version": "1.2.0"
         },
         {
           "date": "2026-08-20",
@@ -10169,7 +10629,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "f592e6c39d43a258449ff46582666dda7b0953a3",
@@ -10213,7 +10676,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "5fd96e54daf3f92c24ae393a35cae5d110be2f24",
@@ -10319,7 +10785,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "59b9490ceeac95b7c7f9a6c7117685ab7268c915",
@@ -10330,7 +10799,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Fusion DS"
+          ]
         },
         {
           "hash": "038aaf7ead79718426046f2648f01aadf707cb4c",
@@ -10341,7 +10813,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -10352,7 +10827,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "24252977aea99b4965bca207788055bdaa35450a",
@@ -10363,7 +10841,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -10521,7 +11002,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "c5a2297435779e2698442027eaa64ec319a83ad5",
@@ -10554,7 +11038,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "5e44292f75b7d653055fce781180fa6f3e4a3a8e",
@@ -10620,7 +11107,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "PAG"
+          ]
         },
         {
           "hash": "b4252a4f54c0bffe7c72b848d7d40417aa5a3fb0",
@@ -10639,11 +11129,16 @@
       "componentName": "PasswordField",
       "storybookTitle": "Composants/Formulaires/PasswordField",
       "status": "actif",
-      "functionalVersion": "1.1.3",
-      "functionalDate": "27/07/2026",
-      "a11yVersion": "1.1.3",
-      "a11yDate": "22/07/2026",
+      "functionalVersion": "1.2.0",
+      "functionalDate": "15/10/2026",
+      "a11yVersion": "1.1.6",
+      "a11yDate": "15/09/2026",
       "commits": [
+        {
+          "date": "2026-10-15",
+          "message": "SyForm: add tests page on sandbox + fixes (#2616)",
+          "version": "1.2.0"
+        },
         {
           "date": "2026-07-27",
           "message": "Permettre de rendre configurable toutes les chaines de caractères (#2404)",
@@ -10763,14 +11258,23 @@
           "date": "2025-01-29",
           "message": "Feat/dape picker v1 (#365)",
           "version": "0.0.9-alpha"
-        },
-        {
-          "date": "2025-01-08",
-          "message": "Ajout d'une configuration pour stylelint (#323)",
-          "version": "0.0.8-alpha"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "e945f9bca8bd9b042d2459700cb37aa26da92083",
+          "date": "2026-09-15 14:54:14 +0200",
+          "dateFr": "15/09/2026",
+          "message": "PasswordField: ajout onglet a11y ainsi que le dossier validation (#2556)",
+          "version": "1.1.6",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": false,
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
+        },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
           "date": "2026-07-22 11:00:09 +0200",
@@ -10791,7 +11295,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "5a2966f8841c575fe09967b67aae3089bfeeda3e",
@@ -10835,7 +11342,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -10879,7 +11389,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "2a65d995a12edc0694bde3622a168e2acf06701b",
@@ -11059,7 +11572,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -11070,7 +11586,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "487d5fe1b4dd2b32bf8b61f8d1c402741ef74d6f",
@@ -11111,15 +11630,20 @@
       "componentName": "PhoneField",
       "storybookTitle": "Composants/Formulaires/PhoneField",
       "status": "actif",
-      "functionalVersion": "1.1.3",
-      "functionalDate": "27/07/2026",
+      "functionalVersion": "1.2.0",
+      "functionalDate": "15/10/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
         {
+          "date": "2026-10-15",
+          "message": "SyForm: add tests page on sandbox + fixes (#2616)",
+          "version": "1.2.0"
+        },
+        {
           "date": "2026-10-05",
           "message": "SyForm v2 (#2434)",
-          "version": null
+          "version": "1.2.0"
         },
         {
           "date": "2026-07-27",
@@ -11235,11 +11759,6 @@
           "date": "2025-04-17",
           "message": "Pass read-only to readonly to be conform to Vuetify (#543)",
           "version": "0.0.15-alpha"
-        },
-        {
-          "date": "2025-04-03",
-          "message": "fix readOnly (#496)",
-          "version": "0.0.15-alpha"
         }
       ],
       "a11yCommits": [
@@ -11296,7 +11815,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -11307,7 +11829,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -11463,7 +11988,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",
@@ -11507,7 +12035,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "9b8d511530fc5ee1c5e005521b539f2975a99aa1",
@@ -11667,7 +12198,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Feature"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -11678,7 +12212,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "487d5fe1b4dd2b32bf8b61f8d1c402741ef74d6f",
@@ -11711,7 +12248,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "improvement"
+          ]
         },
         {
           "hash": "faaeee85eac71876d55270b88bf529aa66816342",
@@ -11744,7 +12284,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "750c722f16ddd4a2e400de7819f0bb1bc249d3bd",
@@ -11872,7 +12415,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "97b6b167fd7bb12364aad36899f3f8d7fdbd06e0",
@@ -12014,7 +12560,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "f126a815d41505d4d1cf299941fc68815ff07857",
@@ -12022,10 +12571,14 @@
           "dateFr": "24/04/2025",
           "message": "SkipLink - fix d audit d accessibilité (#555)",
           "version": "0.0.15-alpha",
-          "confidence": "moyenne",
+          "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "help wanted",
+            "Accessibility"
+          ]
         },
         {
           "hash": "7bd988914d82b2708a9386593486a63aa86f0660",
@@ -12036,7 +12589,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "4328ecf39809770f7c26a3d88fc75b473a381bb8",
@@ -12148,7 +12704,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -12159,7 +12718,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "487d5fe1b4dd2b32bf8b61f8d1c402741ef74d6f",
@@ -12181,7 +12743,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "d5ccb81c96cc5603e4f4c768a4fdfbfee0a517eb",
@@ -12257,7 +12822,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "c2b48d9293c9a62a5401fd577ca2c04894ad9539",
@@ -12279,7 +12847,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "59b9490ceeac95b7c7f9a6c7117685ab7268c915",
@@ -12290,7 +12861,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Fusion DS"
+          ]
         },
         {
           "hash": "4c72c5cb31c01106ee938d588ce4999a2b499b63",
@@ -12301,7 +12875,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "98daf930cfae6f279391b19273e5e5de402ba858",
@@ -12312,7 +12889,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "0c332980a2eebd9eee723ecf451aaf6b3b4f28f2",
@@ -12323,7 +12903,11 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro",
+            "Fusion DS"
+          ]
         }
       ]
     },
@@ -12394,6 +12978,20 @@
       ],
       "a11yCommits": [
         {
+          "hash": "86b23f09c17e07c84b2c9b5125545067e3e7fce3",
+          "date": "2026-10-15 11:19:59 +0200",
+          "dateFr": "15/10/2026",
+          "message": "Fix subheader rgaa (#2644)",
+          "version": null,
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false,
+          "labels": [
+            "Synapse"
+          ]
+        },
+        {
           "hash": "cd3d71ce22678b00dedc9fed3a490c62fcaa25d1",
           "date": "2026-09-28 09:29:15 +0200",
           "dateFr": "28/09/2026",
@@ -12402,7 +13000,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
@@ -12435,7 +13036,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "b1bca6204773d854436df21d2acd547e18f0f61a",
@@ -12446,7 +13050,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "3e63f654bb896a8e533008d905a0099781ed74aa",
@@ -12457,7 +13064,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Issue"
+          ]
         },
         {
           "hash": "93fa01545bde32ca88d2c0ba46f559a075424a4b",
@@ -12653,7 +13263,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "72505f8fdf4937a01903e75191e97d19d8ea56fa",
@@ -12672,10 +13285,14 @@
           "dateFr": "28/04/2025",
           "message": "SyAlert - fix d'audit d'accessibilité (#544)",
           "version": "0.0.16-alpha",
-          "confidence": "moyenne",
+          "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "help wanted",
+            "Accessibility"
+          ]
         }
       ]
     },
@@ -12734,7 +13351,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "b46884596483f9895fbb6bcd73ba948a49b543e7",
@@ -12745,7 +13365,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
@@ -12800,7 +13423,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "bcdf2c122dc515263cd6accfc060d9b595249878",
@@ -12846,15 +13472,20 @@
       "componentName": "SyTextArea",
       "storybookTitle": "Composants/Formulaires/SyTextArea",
       "status": "actif",
-      "functionalVersion": "1.1.3",
-      "functionalDate": "27/07/2026",
+      "functionalVersion": "1.2.0",
+      "functionalDate": "16/10/2026",
       "a11yVersion": "1.0.23",
       "a11yDate": "30/03/2026",
       "commits": [
         {
+          "date": "2026-10-16",
+          "message": "fix sytextarea (#2655)",
+          "version": "1.2.0"
+        },
+        {
           "date": "2026-10-05",
           "message": "SyForm v2 (#2434)",
-          "version": null
+          "version": "1.2.0"
         },
         {
           "date": "2026-07-27",
@@ -12969,7 +13600,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "36532628ae609d173dafea39ac1224fd0ff4f72a",
@@ -13013,7 +13647,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "2054247a36e60b6689cae4aab940367fde885c9c",
@@ -13217,7 +13854,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "dfccf9d35dfd9fc7fc21f6009e9aba4d2afd5ddc",
@@ -13261,7 +13901,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "1ce73af328b4960272770e8c8c5b22d786838649",
@@ -13272,7 +13915,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "b3ae1a7879d2e8911093e5a597ac18b8ffb5face",
@@ -13294,7 +13940,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "PAG"
+          ]
         },
         {
           "hash": "88e3816fc167eb21dbaee3dca9df1a72dfa27547",
@@ -13316,7 +13965,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "PAG"
+          ]
         }
       ]
     },
@@ -13498,7 +14150,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Amelipro"
+          ]
         },
         {
           "hash": "dfccf9d35dfd9fc7fc21f6009e9aba4d2afd5ddc",
@@ -13542,7 +14197,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "1ce73af328b4960272770e8c8c5b22d786838649",
@@ -13553,7 +14211,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "b3ae1a7879d2e8911093e5a597ac18b8ffb5face",
@@ -13575,7 +14236,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "PAG"
+          ]
         },
         {
           "hash": "88e3816fc167eb21dbaee3dca9df1a72dfa27547",
@@ -13597,7 +14261,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "PAG"
+          ]
         }
       ]
     },
@@ -13671,7 +14338,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "cd8602b795a93778f3678ecca90d565aca86af5a",
@@ -13715,7 +14385,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "e5a0f2ec8f52a5b6df6868adc8e908d24043c25b",
@@ -13760,7 +14433,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Synapse"
+          ]
         },
         {
           "hash": "eab7e848864ed0910ef8bc19e316f6e912bd4d3e",
@@ -13793,7 +14469,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "afc501f9495a079dc29eaeed6bdef0798d1cf883",
@@ -13879,7 +14558,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": true,
+          "labels": [
+            "Accessibility"
+          ]
         },
         {
           "hash": "175ca0d27910a1bf459f0fbe10e7d0812b0b0c92",
@@ -13912,7 +14594,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "7bd988914d82b2708a9386593486a63aa86f0660",
@@ -13923,7 +14608,10 @@
           "confidence": "faible",
           "keywords": false,
           "patterns": true,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "7311bb21501618c16399a9dc02c6b95c7ecf2b1a",
@@ -14055,7 +14743,10 @@
           "confidence": "forte",
           "keywords": true,
           "patterns": false,
-          "a11yLabel": false
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
         },
         {
           "hash": "ef1f24fbdfbafa3f8117a1e1f3d31160e6c48baf",

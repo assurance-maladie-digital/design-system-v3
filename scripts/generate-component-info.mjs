@@ -21,7 +21,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '..');
 const dataDir = path.join(root, 'scripts/data');
 
-const a11yStatusPath = path.join(root, 'src/stories/Accessibilite/DesignSystem/a11y-status.json');
+const a11yStatusPath = path.join(root, 'src/stories/Accessibilite/a11y-status.json');
 const funcHistoryPath = path.join(dataDir, 'functional-history-data.json');
 const a11yHistoryPath = path.join(dataDir, 'a11y-history-data.json');
 const a11yCommitsPath = path.join(dataDir, 'a11y-commits-data.json');

@@ -45,7 +45,7 @@ Généré le: 19/10/2026
 | **FilterSideBar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **FooterBar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **FranceConnectBtn** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
-| **HeaderBar** | ✅ Oui | ❌ Oui | ✅ Complète | ✅ Oui | ❌ |
+| **HeaderBar** | ✅ Oui | ❌ Oui | ⚠️ Incomplète | ✅ Oui | ❌ |
 | **HeaderLoading** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
 | **HeaderNavigationBar** | ✅ Oui | ✅ Non | ✅ Complète | ❌ Non | ✅ |
 | **HeaderToolbar** | ✅ Oui | ✅ Non | ✅ Complète | ✅ Oui | ✅ |
