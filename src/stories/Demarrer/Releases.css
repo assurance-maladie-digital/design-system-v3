@@ -1,0 +1,66 @@
+/* Bandeaux de la page Releases : titre court, texte resserré, détail repliable */
+
+/* L'icône reste en haut du bandeau au lieu d'être centrée sur toute sa hauteur */
+.releases .release-alert .v-alert__prepend {
+	align-self: start;
+	height: auto;
+}
+
+.releases .release-alert .v-alert__content {
+	font-size: 0.875rem;
+	line-height: 1.5;
+}
+
+.releases .release-alert__title {
+	margin: 0 0 0.25rem;
+	font-size: 1rem;
+	font-weight: 700;
+}
+
+.releases .release-alert__text {
+	margin: 0 0 0.5rem;
+	max-width: 90ch;
+}
+
+.releases .release-alert__text:last-child {
+	margin-bottom: 0;
+}
+
+.releases .release-alert__details {
+	margin: 0 0 0.5rem;
+}
+
+.releases .release-alert__details summary {
+	cursor: pointer;
+	font-weight: 700;
+	text-decoration: underline;
+	text-underline-offset: 0.2em;
+	width: fit-content;
+}
+
+.releases .release-alert__list {
+	margin: 0.5rem 0 0;
+	padding-left: 1.25rem;
+	max-width: 90ch;
+}
+
+.releases .release-alert__list li + li {
+	margin-top: 0.5rem;
+}
+
+.releases .release-alert__components {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.25rem 0.5rem;
+	margin: 0 0 0.5rem;
+	padding: 0;
+	list-style: none;
+}
+
+.releases .release-alert code {
+	padding: 0 0.25em;
+	border-radius: 4px;
+	background: rgb(0 0 0 / 6%);
+	font-size: 0.8125rem;
+	overflow-wrap: anywhere;
+}
