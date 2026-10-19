@@ -588,7 +588,7 @@ export const SyFormVuetifyValidation: Story = {
 			use-vuetify-validation
 			:rules="rules"
 		/>
-		<VBtn type="submit" color="primary">Soumettre (SyForm)</VBtn>
+		<VBtn type="submit" color="primary">Soumettre</VBtn>
 	</SyForm>
 </template>`,
 			},
@@ -655,7 +655,7 @@ function onSyFormSubmit(event: { isValid: boolean }) {
 					use-vuetify-validation
 					:rules="rules"
 				/>
-				<VBtn type="submit" color="primary">Soumettre (SyForm)</VBtn>
+				<VBtn type="submit" color="primary">Soumettre</VBtn>
 			</SyForm>
 		`,
 	}),
