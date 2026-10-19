@@ -1,8 +1,9 @@
 import axios from 'axios'
-import { onMounted, shallowRef } from 'vue'
+import { defineComponent, h, onMounted, shallowRef } from 'vue'
 import * as marked from 'marked'
 import SyAlert from '../../components/SyAlert/SyAlert.vue'
 import { sanitizeHtml } from './sanitizeHtml'
+import './Releases.css'
 
 type GitHubRelease = {
 	id: number
@@ -12,47 +13,121 @@ type GitHubRelease = {
 	body?: string | null
 }
 
+// Texte d'un bandeau : les passages entre backticks sont rendus en `<code>`.
+type ReleaseAlertItem = {
+	label: string
+	text: string
+}
+
 type ReleaseAlert = {
 	id: string
 	releaseVersion: string
-	message: string
 	type: 'success' | 'info' | 'warning' | 'error'
 	variant: 'tonal' | 'outlined'
-	link?: { href: string, text: string }
+	title: string
+	paragraphs?: string[]
+	// Liste des changements, repliée sous un « Voir les N changements »
+	items?: ReleaseAlertItem[]
 	components?: string[]
+	link?: { intro: string, href: string, text: string }
 }
 
 const releaseAlerts: ReleaseAlert[] = [
 	{
 		id: 'syform-validation-behavior',
 		releaseVersion: 'v1.2.0',
-		message: 'Changements de comportement du SyForm. Ce sont des corrections, mais un projet existant peut les percevoir comme des régressions : vérifiez vos formulaires après la montée de version.\nIls font suite à la finalisation de la validation des formulaires (SyForm et champs de formulaire), engagée depuis la v1.0.24. Nous avons testé tous les cas qui nous semblaient utiles aux projets, mais il est possible que certains nous aient échappé : n\'hésitez pas à nous signaler tout comportement inattendu.\n- Erreurs injectées (error-messages, has-error) : elles bloquent maintenant la soumission. Retirez l\'erreur quand l\'utilisateur corrige la valeur (@update:model-value="serverErrors = []"), sinon le formulaire reste bloqué. Le validateOnSubmit() du champ renvoie aussi false, y compris avec disable-error-handling. Un has-error utilisé seulement pour la mise en forme bloque aussi la soumission.\n- v-model du formulaire : il vaut null tant qu\'aucune erreur n\'est affichée, au lieu de false. Si vous testez valid === false (bouton de soumission, garde), un formulaire invalide passe : comparez à true (:disabled="valid !== true").\n- Formulaire sans champ Synapse : il ne vaut plus true d\'office. Un SyForm qui ne contient que des composants Vuetify natifs suit maintenant leur validité.\n- SyInputSelect requis vide : il bloque désormais la soumission.\n- Champs Vuetify disabled : ils sont ignorés par la validation du SyForm.\n- Uniquement si vous lisez validate().errors : l\'id des champs en use-vuetify-validation devient <label>-<id> au lieu de <label>.\nPour plus de détails, voir la page ',
 		type: 'warning',
 		variant: 'tonal',
-		link: { href: '/?path=/docs/composants-formulaires-syform--docs', text: 'SyForm' },
+		title: 'Changements de comportement du SyForm',
+		paragraphs: [
+			'Ce sont des corrections, mais un projet existant peut les percevoir comme des régressions : vérifiez vos formulaires après la montée de version.',
+			'Ils font suite à la finalisation de la validation des formulaires (SyForm et champs de formulaire), engagée depuis la v1.0.24. Nous avons testé tous les cas qui nous semblaient utiles aux projets, mais il est possible que certains nous aient échappé : n\'hésitez pas à nous signaler tout comportement inattendu.',
+		],
+		items: [
+			{
+				label: 'Erreurs injectées (`error-messages`, `has-error`)',
+				text: 'Elles bloquent maintenant la soumission. Retirez l\'erreur quand l\'utilisateur corrige la valeur (`@update:model-value="serverErrors = []"`), sinon le formulaire reste bloqué. Le `validateOnSubmit()` du champ renvoie aussi `false`, y compris avec `disable-error-handling`. Un `has-error` utilisé seulement pour la mise en forme bloque aussi la soumission.',
+			},
+			{
+				label: '`v-model` du formulaire',
+				text: 'Il vaut `null` tant qu\'aucune erreur n\'est affichée, au lieu de `false`. Si vous testez `valid === false` (bouton de soumission, garde), un formulaire invalide passe : comparez à `true` (`:disabled="valid !== true"`).',
+			},
+			{
+				label: 'Formulaire sans champ Synapse',
+				text: 'Il ne vaut plus `true` d\'office. Un SyForm qui ne contient que des composants Vuetify natifs suit maintenant leur validité.',
+			},
+			{
+				label: '`SyInputSelect` requis vide',
+				text: 'Il bloque désormais la soumission.',
+			},
+			{
+				label: 'Champs Vuetify `disabled`',
+				text: 'Ils sont ignorés par la validation du SyForm.',
+			},
+			{
+				label: '`validate().errors`',
+				text: 'Uniquement si vous le lisez : l\'id des champs en `use-vuetify-validation` devient `<label>-<id>` au lieu de `<label>`.',
+			},
+		],
+		link: { intro: 'Pour plus de détails, voir la page', href: '/?path=/docs/composants-formulaires-syform--docs', text: 'SyForm' },
 	},
 	{
 		id: 'form-fields-validation-behavior',
 		releaseVersion: 'v1.2.0',
-		message: 'Changements de comportement des champs de formulaire :\n- PhoneField et LunarCalendar appliquent use-vuetify-validation. La prop était ignorée et la validation Synapse s\'appliquait. Désormais, seules les rules sont évaluées : required n\'ajoute que l\'indication visuelle et ARIA, et les contrôles intégrés (format, min-year / max-year…) ne s\'appliquent plus. Ajoutez les règles correspondantes dans rules. En développement, un avertissement console signale un champ required sans règle dans rules.\n- SySelect affiche son message « requis » à la soumission. Avant, seule la bordure passait en rouge.\n- SyTextArea inclut le libellé du champ dans son message « requis ».\n- DatePicker : une date incomplète est refusée au blur et à la soumission. Avant, effacer une partie d\'une date valide laissait soumettre l\'ancienne date. Le message « Format de date invalide (…) » s\'affiche désormais, y compris en mode combiné, où « La date est requise. » s\'affichait à la place.\n- NirField : la clé n\'est plus requise quand elle est masquée (display-key="false").\n- Mode Vuetify : une règle qui renvoie false affiche « La valeur est invalide. », au lieu de passer le champ en erreur sans message.\nPour plus de détails, voir le ',
 		type: 'warning',
 		variant: 'tonal',
-		link: { href: '/?path=/docs/guide-du-dev-formulaires-validation-guide-des-formulaires--docs', text: 'guide de validation des formulaires' },
+		title: 'Changements de comportement des champs de formulaire',
+		items: [
+			{
+				label: '`PhoneField` et `LunarCalendar` en `use-vuetify-validation`',
+				text: 'La prop était ignorée et la validation Synapse s\'appliquait. Désormais, seules les `rules` sont évaluées : `required` n\'ajoute que l\'indication visuelle et ARIA, et les contrôles intégrés (format, `min-year` / `max-year`…) ne s\'appliquent plus. Ajoutez les règles correspondantes dans `rules`. En développement, un avertissement console signale un champ `required` sans règle dans `rules`.',
+			},
+			{
+				label: '`SySelect`',
+				text: 'Il affiche son message « requis » à la soumission. Avant, seule la bordure passait en rouge.',
+			},
+			{
+				label: '`SyTextArea`',
+				text: 'Son message « requis » inclut le libellé du champ.',
+			},
+			{
+				label: '`DatePicker`',
+				text: 'Une date incomplète est refusée au blur et à la soumission. Avant, effacer une partie d\'une date valide laissait soumettre l\'ancienne date. Le message « Format de date invalide (…) » s\'affiche désormais, y compris en mode combiné, où « La date est requise. » s\'affichait à la place.',
+			},
+			{
+				label: '`NirField`',
+				text: 'La clé n\'est plus requise quand elle est masquée (`display-key="false"`).',
+			},
+			{
+				label: 'Mode Vuetify',
+				text: 'Une règle qui renvoie `false` affiche « La valeur est invalide. », au lieu de passer le champ en erreur sans message.',
+			},
+		],
+		link: { intro: 'Pour plus de détails, voir le', href: '/?path=/docs/guide-du-dev-formulaires-validation-guide-des-formulaires--docs', text: 'guide de validation des formulaires' },
 	},
 	{
 		id: 'theme-css-variables-kebab-case',
 		releaseVersion: 'v1.1.5',
-		message: 'Les variables CSS du thème sont désormais générées en kebab-case : --v-theme-onBackgroundVariant devient --v-theme-on-background-variant. Toutes les clés en camelCase sont concernées.\nUn var() pointant vers l\'ancien nom ne résout plus : la déclaration est ignorée et la couleur retombe sur l\'héritage, ce qui peut dégrader des écrans sans erreur visible.\nPour repérer les usages à migrer dans votre projet : grep -rnE -- "--v-theme-[a-z0-9]*[A-Z]" src/\nPour la liste des variables disponibles, voir la page ',
 		type: 'warning',
 		variant: 'tonal',
-		link: { href: '/?path=/docs/design-tokens-utilisation--docs', text: 'Utilisation' },
+		title: 'Variables CSS du thème générées en kebab-case',
+		paragraphs: [
+			'`--v-theme-onBackgroundVariant` devient `--v-theme-on-background-variant`. Toutes les clés en camelCase sont concernées.',
+			'Un `var()` pointant vers l\'ancien nom ne résout plus : la déclaration est ignorée et la couleur retombe sur l\'héritage, ce qui peut dégrader des écrans sans erreur visible.',
+			'Pour repérer les usages à migrer dans votre projet : `grep -rnE -- "--v-theme-[a-z0-9]*[A-Z]" src/`',
+		],
+		link: { intro: 'Pour la liste des variables disponibles, voir la page', href: '/?path=/docs/design-tokens-utilisation--docs', text: 'Utilisation' },
 	},
 	{
 		id: 'form-success-messages-hidden',
 		releaseVersion: 'v1.1.0',
-		message: 'Cette version modifie le comportement des composants de formulaire, les messages de succès sont désormais masqués par défaut. Cette modification répond à la fois à des besoins projets et à l\'harmonisation des différents thèmes (CNAM, PAG, Amelipro).\nPour les projets souhaitant afficher les messages de succès vous pouvez simplement le faire via la prop showSuccessMessages.\nLes composants concernés sont :',
 		type: 'warning',
 		variant: 'tonal',
+		title: 'Messages de succès masqués par défaut dans les composants de formulaire',
+		paragraphs: [
+			'Cette modification répond à la fois à des besoins projets et à l\'harmonisation des différents thèmes (CNAM, PAG, Amelipro).',
+			'Pour afficher les messages de succès, utilisez la prop `showSuccessMessages`.',
+		],
 		components: [
 			'SyTextField',
 			'SyTextArea',
@@ -65,7 +140,6 @@ const releaseAlerts: ReleaseAlert[] = [
 			'PeriodField',
 			'MonthPicker',
 			'LunarCalendar',
-			'PeriodField',
 			'NirField',
 			'PasswordField',
 			'PhoneField',
@@ -75,56 +149,76 @@ const releaseAlerts: ReleaseAlert[] = [
 	{
 		id: 'node-18-decommission',
 		releaseVersion: 'v1.1.0',
-		message: 'En lien avec le Starter Kit, fin de support de Node 18.',
 		type: 'warning',
 		variant: 'tonal',
+		title: 'Fin du support de Node 18',
+		paragraphs: ['En lien avec le Starter Kit.'],
 	},
 	{
 		id: 'tokens-simplification-rappel',
 		releaseVersion: 'v1.1.0',
-		message: 'Pour rappel (depuis la v1.0.27), une simplification des tokens a été menée suite à l\'ajout du thème Amelipro, merci de vous référer à la page des ',
 		type: 'warning',
 		variant: 'tonal',
-		link: { href: '/?path=/docs/design-tokens-couleurs--docs', text: 'couleurs' },
+		title: 'Rappel : simplification des tokens (depuis la v1.0.27)',
+		paragraphs: ['Elle a été menée suite à l\'ajout du thème Amelipro.'],
+		link: { intro: 'Voir la page des', href: '/?path=/docs/design-tokens-couleurs--docs', text: 'couleurs' },
 	},
 	{
 		id: 'tokens-simplification',
 		releaseVersion: 'v1.0.27',
-		message: 'Nous avons procédé à une simplification des tokens contraint par l\'ajout du thème Amelipro, merci de vous référer à la page des ',
 		type: 'warning',
 		variant: 'tonal',
-		link: { href: '/?path=/docs/design-tokens-couleurs--docs', text: 'couleurs' },
+		title: 'Simplification des tokens',
+		paragraphs: ['Elle est rendue nécessaire par l\'ajout du thème Amelipro.'],
+		link: { intro: 'Voir la page des', href: '/?path=/docs/design-tokens-couleurs--docs', text: 'couleurs' },
 	},
 	{
 		id: 'starter-kit-2-0-35',
 		releaseVersion: 'v1.0.27',
-		message: 'Il est conseillé de faire une montée de version du Starter Kit en 2.0.35',
 		type: 'warning',
 		variant: 'tonal',
+		title: 'Montée de version du Starter Kit conseillée en 2.0.35',
 	},
 	{
 		id: 'tokens-css-variables',
 		releaseVersion: 'v1.0.25',
-		message: 'Les design tokens ne sont plus exposés via l\'export SCSS (`$gap-2`, variables de couleur…) mais sous forme de variables CSS `--v-…` (ex. `var(--v-gap-2)`, `rgb(var(--v-theme-primary))`). Pour l\'usage et la migration, voir la page ',
 		type: 'warning',
 		variant: 'tonal',
-		link: { href: '/?path=/docs/design-tokens-utilisation--docs', text: 'Utilisation' },
+		title: 'Design tokens exposés en variables CSS',
+		paragraphs: [
+			'Ils ne sont plus exposés via l\'export SCSS (`$gap-2`, variables de couleur…) mais sous forme de variables CSS `--v-…` (ex. `var(--v-gap-2)`, `rgb(var(--v-theme-primary))`).',
+		],
+		link: { intro: 'Pour l\'usage et la migration, voir la page', href: '/?path=/docs/design-tokens-utilisation--docs', text: 'Utilisation' },
 	},
 	{
 		id: 'starter-kit-2-0-33',
 		releaseVersion: 'v1.0.25',
-		message: 'Il est conseillé de faire une montée de version du Starter Kit en 2.0.33',
 		type: 'warning',
 		variant: 'tonal',
+		title: 'Montée de version du Starter Kit conseillée en 2.0.33',
 	},
 	{
 		id: 'starter-kit-2-0-32',
 		releaseVersion: 'v1.0.24',
-		message: 'Il est conseillé de faire une montée de version du Starter Kit en 2.0.32',
 		type: 'warning',
 		variant: 'tonal',
+		title: 'Montée de version du Starter Kit conseillée en 2.0.32',
 	},
 ]
+
+// Rend un texte de bandeau en remplaçant les passages entre backticks par des `<code>`
+// (pas de `v-html` : le texte reste échappé par Vue).
+const AlertText = defineComponent({
+	props: {
+		text: { type: String, required: true },
+	},
+	setup(props) {
+		return () => props.text
+			.split('`')
+			.map((part, index) => (index % 2 === 1 ? h('code', part) : part))
+			.filter(part => part !== '')
+	},
+})
 
 export default {
 	title: 'Démarrer/Releases',
@@ -133,7 +227,7 @@ export default {
 export const List = {
 	render: () => {
 		return {
-			components: { SyAlert },
+			components: { SyAlert, AlertText },
 			setup() {
 				const releases = shallowRef<GitHubRelease[]>([])
 				const errorMessage = shallowRef('')
@@ -153,8 +247,11 @@ export const List = {
 					return new Date(date).toLocaleDateString()
 				}
 
+				// Le corps reprend la section du CHANGELOG, qui commence par « ## vX.Y.Z (date) » :
+				// ce titre double celui affiché juste au-dessus (nom et date de la release).
 				const formatMarkdown = (markdown?: string | null) => {
-					const html = marked.parse(markdown ?? '') as string
+					const body = (markdown ?? '').replace(/^\s*#{1,6}\s*v?\d+\.\d+\.\d+[^\n]*\n/, '')
+					const html = marked.parse(body) as string
 					return sanitizeHtml(html.replace(/<blockquote>[\s\S]*?<\/blockquote>/g, ''))
 				}
 
@@ -194,9 +291,26 @@ export const List = {
 								:type="alert.type"
 								:variant="alert.variant"
 								:closable="false"
-								class="mt-2 mb-4"
+								density="comfortable"
+								class="release-alert mt-2 mb-4"
 							>
-								<template #default><span style="white-space: pre-line">{{ alert.message }}</span><template v-if="alert.link"> <a :href="alert.link.href">{{ alert.link.text }}</a>.</template><ul v-if="alert.components" class="mt-2 ml-4" style="column-count: 3; max-width: 42rem;"><li v-for="component in alert.components" :key="component">{{ component }}</li></ul></template>
+								<p class="release-alert__title">{{ alert.title }}</p>
+								<p v-for="paragraph in alert.paragraphs" :key="paragraph" class="release-alert__text"><AlertText :text="paragraph" /></p>
+								<details v-if="alert.items" class="release-alert__details">
+									<summary>Voir les {{ alert.items.length }} changements</summary>
+									<ul class="release-alert__list">
+										<li v-for="item in alert.items" :key="item.label">
+											<strong><AlertText :text="item.label" /></strong> : <AlertText :text="item.text" />
+										</li>
+									</ul>
+								</details>
+								<template v-if="alert.components">
+									<p class="release-alert__text">Composants concernés :</p>
+									<ul class="release-alert__components">
+										<li v-for="component in alert.components" :key="component"><code>{{ component }}</code></li>
+									</ul>
+								</template>
+								<p v-if="alert.link" class="release-alert__text">{{ alert.link.intro }} <a :href="alert.link.href">{{ alert.link.text }}</a>.</p>
 							</SyAlert>
 							<div v-html="formatMarkdown(release.body)"></div>
 							<hr>
