@@ -478,9 +478,16 @@
 		requestDatePickerOpen()
 	}
 
+	// Dernière valeur notifiée au consommateur. `props.modelValue` ne reflète une
+	// émission qu'au tick suivant : sans ce suivi, une même valeur peut être émise
+	// deux fois dans une chaîne synchrone (ex. effacement depuis le champ texte →
+	// updateModel, puis watcher selectedDates → handleClearedSelectedDates → updateModel).
+	const lastNotifiedModelValue = ref<DateInput | undefined>(props.modelValue)
+
 	const updateModel = (value: DateModelValue) => {
 		// Prevent redundant emits
-		if (isModelValueEqual(value, props.modelValue)) return
+		if (isModelValueEqual(value, lastNotifiedModelValue.value)) return
+		lastNotifiedModelValue.value = value
 		withInternalUpdate(() => emit('update:modelValue', value))
 	}
 
@@ -851,7 +858,12 @@
 	}
 
 	const handleClearedSelectedDates = (): void => {
+		dateSelectionResult.resetRange()
 		updateModel(null)
+		// Quand l'effacement vient de la saisie texte (date partiellement effacée),
+		// textInputValue repasse à '' ici alors que le champ affiche encore du texte :
+		// c'est le verrou isFormatting de DateTextInput qui empêche ce model-value ''
+		// d'écraser la saisie visible. L'état est resynchronisé à la frappe suivante.
 		syncSelectionDisplay()
 		displayFormattedDate.value = ''
 		syncVisibleCalendarState(null)
@@ -1337,6 +1349,7 @@
 	watch(
 		() => props.modelValue,
 		(newValue) => {
+			lastNotifiedModelValue.value = newValue
 			if (isUpdatingFromInternal.value) return
 			withInternalUpdate(() => syncFromModelValue(newValue))
 		},
@@ -1453,7 +1466,7 @@
 			textInputValue.value = ''
 			displayFormattedDate.value = ''
 			// Synchroniser le modèle externe
-			emit('update:modelValue', null)
+			updateModel(null)
 		})
 
 		// 3) Forcer la recréation du champ pour réinitialiser l'état interne de Vuetify

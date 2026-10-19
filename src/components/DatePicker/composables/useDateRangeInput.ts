@@ -13,7 +13,6 @@ type RangeInputResult = {
 	formattedValue: string
 	dates: RangeDates
 	isComplete: boolean
-	justCompletedFirstDate?: boolean
 	cursorPosition?: number
 }
 
@@ -44,13 +43,11 @@ export function useDateRangeInput(
 		formattedValue,
 		dates,
 		isComplete,
-		justCompletedFirstDate,
 		cursorPosition,
 	}: RangeInputResult): RangeInputResult => ({
 		formattedValue,
 		dates,
 		isComplete,
-		justCompletedFirstDate,
 		cursorPosition,
 	})
 
@@ -124,7 +121,6 @@ export function useDateRangeInput(
 				formattedValue: `${formattedDate}${rangeSeparator}`,
 				dates: [date, null],
 				isComplete: false,
-				justCompletedFirstDate: true,
 				cursorPosition: formattedDate.length + rangeSeparator.length,
 			})
 		}

@@ -64,7 +64,6 @@ describe('useDateRangeInput', () => {
 			formattedValue: '01/01/2023 - ',
 			dates: [new Date(2023, 0, 1), null],
 			isComplete: false,
-			justCompletedFirstDate: true,
 		})
 
 		const secondStep = handleRangeInput('01/01/2023 - ', '01/01/2023 - 1')
