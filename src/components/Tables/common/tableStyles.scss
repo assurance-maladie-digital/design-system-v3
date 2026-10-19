@@ -26,11 +26,11 @@ $sy-table-border: 1px solid rgb(var(--v-theme-disabled));
 	.sy-table__pinned {
 		position: sticky;
 		background:
- linear-gradient(
-			var(--sy-table-row-bg, transparent),
-			var(--sy-table-row-bg, transparent)
-		),
- var(--sy-table-pinned-cell-bg, rgb(var(--v-theme-surface)));
+			linear-gradient(
+				var(--sy-table-row-bg, transparent),
+				var(--sy-table-row-bg, transparent)
+			),
+			var(--sy-table-pinned-cell-bg, rgb(var(--v-theme-surface)));
 	}
 
 	.sy-table__pinned--left {

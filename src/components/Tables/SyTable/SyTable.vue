@@ -667,11 +667,11 @@
 @mixin striped-rows {
 	.v-table tbody tr:nth-child(even) {
 		--sy-table-row-bg:
- color-mix(
-			in srgb,
-			rgb(var(--v-theme-primary)) 5%,
-			rgb(var(--v-theme-surface))
-		);
+			color-mix(
+				in srgb,
+				rgb(var(--v-theme-primary)) 5%,
+				rgb(var(--v-theme-surface))
+			);
 
 		background-color: var(--sy-table-row-bg);
 	}
