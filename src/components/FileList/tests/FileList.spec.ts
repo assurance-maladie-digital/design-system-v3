@@ -28,6 +28,21 @@ describe('FileList', () => {
 		expect(item2!.text()).toContain('Carte d\'identité')
 	})
 
+	it('renders the success icon with the foreground success theme utility', async () => {
+		const wrapper = mount(FileList, {
+			props: {
+				uploadList: [{ id: 'document', title: 'Document', state: 'initial' }],
+			},
+		})
+		expect(wrapper.get('.file-item__icon .v-icon').classes()).toContain('text-primary')
+		await wrapper.setProps({
+			uploadList: [{ id: 'document', title: 'Document', state: 'success' }],
+		})
+		expect(wrapper.get('.file-item__icon .v-icon').classes()).toContain('on-success-variant')
+		expect(wrapper.get('.file-item__icon').text()).toContain(locales.success)
+		wrapper.unmount()
+	})
+
 	it('shows the right action for each state and item preference', async () => {
 		const wrapper = mount(FileList, {
 			props: {
