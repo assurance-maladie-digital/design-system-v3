@@ -31,23 +31,17 @@ Le composant standard `v-form` de Vuetify est excellent pour les formulaires sim
 - **Système de validation en cascade** - Les validations se propagent automatiquement à tous les niveaux d'imbrication
 - **API simplifiée** - Événement `submit` enrichi avec un statut de validation complet
 - **Intégration transparente** - Les composants s'auto-enregistrent auprès du formulaire parent
-- **Conforme au RGAA** - Implémentation accessible respectant les recommandations d'accessibilité
+- **Conforme au RGAA** - Implémentation accessible respectant les recommandations d'accessibilité ([voir la page accessibilité](/?path=/docs/composants-formulaires-syform--accessibility))
 
 ## Quand utiliser SyForm ?
 
-### Utiliser SyForm lorsque...
-
-- Vous avez des formulaires contenant un mélange de composants natifs Vuetify et de composants personnalisés
-- Vous avez besoin de valider des formulaires complexes avec des structures imbriquées
-- Vous souhaitez une approche cohérente et unifiée pour la validation de formulaires dans votre application
-- Vous développez des formulaires nécessitant une forte accessibilité (RGAA)
-- Vous avez besoin d'un contrôle fin sur la validation et la gestion des erreurs
-
-### Continuer à utiliser v-form standard lorsque...
-
-- Vous avez des formulaires très simples n'utilisant que des composants Vuetify standards
-- Vous n'avez pas de validations personnalisées complexes
-- La structure de votre formulaire est plate (pas d'imbrication)
+| ✅ Utiliser `SyForm` lorsque… | ➖ Un `v-form` standard suffit lorsque… |
+|---|---|
+| Le formulaire mélange composants Synapse et Vuetify natifs | Le formulaire est simple et n'utilise que des composants Vuetify |
+| Des formulaires ou des composants sont imbriqués | Aucune validation personnalisée complexe |
+| Vous voulez une validation cohérente et unifiée dans l'application | La structure est plate (pas d'imbrication) |
+| Une forte accessibilité (RGAA) est requise | — |
+| Vous voulez un contrôle fin (avertissements, succès, erreurs injectées) | — |
 
 ## Comparaison avec la validation traditionnelle
 
@@ -63,11 +57,11 @@ const field2 = ref(null)
 const nestedForm = ref(null)
 
 const validate = async () => {
-  // Validation manuelle de chaque champ
-  const isField1Valid = await field1.value?.validate()
-  const isField2Valid = await field2.value?.validate()
+  // Validation manuelle de chaque champ (méthode exposée : validateOnSubmit)
+  const isField1Valid = await field1.value?.validateOnSubmit()
+  const isField2Valid = await field2.value?.validateOnSubmit()
   
-  // Validation manuelle des formulaires imbriqués
+  // Validation manuelle des formulaires imbriqués (SyForm expose validate())
   const isNestedValid = await nestedForm.value?.validate()
   
   // Combinaison manuelle des résultats
@@ -93,25 +87,35 @@ const validate = async () => {
 </script>
 `} />
 
-## La documentation du composable ValidationSystem
+## API en bref
 
-Pour une compréhension approfondie du fonctionnement interne de `SyForm`, consultez la [documentation du système de validation en cascade](?path=/docs/composables-validationsystem--docs).
+| Élément | Type | Description |
+|---|---|---|
+| `validate-on-submit` | prop `boolean` (défaut `true`) | Valide tous les champs enregistrés à la soumission |
+| `v-model` | `boolean \| null` | Validité globale du formulaire (`null` = statut indéterminé) |
+| `@submit` | événement | Émis à chaque soumission avec `{ isValid: boolean }` |
+| `@reset` | événement | Émis à la réinitialisation du formulaire |
+| `validate()` | méthode exposée | `Promise<boolean>` — valide tous les champs à la demande |
+| `reset()` | méthode exposée | Réinitialise valeurs et états de validation |
+| `clearValidation()` | méthode exposée | Efface les messages sans modifier les valeurs |
 
-Cette documentation détaille :
+> **⚠️ Important** : `@submit` est émis **même si le formulaire est invalide**. Vérifiez toujours `event.isValid` dans votre handler avant de traiter les données.
 
-- Le fonctionnement interne du système d'enregistrement des champs
-- Comment étendre le système pour vos propres composants
-- Les hooks disponibles pour l'intégration personnalisée
-- Des exemples avancés de validation asynchrone
-- Comment implémenter des validations dépendantes entre champs
+## Pour aller plus loin
+
+`SyForm` s'appuie sur le système de validation en cascade basé sur `useFormValidation` (collecte centralisée) et `useValidatable` (auto-enregistrement des champs). Pour une compréhension approfondie :
+
+- [Guide des formulaires](/?path=/docs/guide-du-dev-formulaires-validation-guide-des-formulaires--docs) : SyForm, validation automatique, créer un composant compatible
+- [Guide technique](/?path=/docs/guide-du-dev-formulaires-validation-guide-technique--docs) : `useValidation`, règles personnalisées et asynchrones
+- [Documentation de SyForm](/?path=/docs/composants-formulaires-syform--docs) : `v-model` à trois états, erreurs injectées par le parent, champs désactivés
 
 ## Migrer d'un v-form à SyForm
 
 La migration est généralement simple :
 
 1. Remplacez `v-form` par `SyForm` dans vos templates
-2. Adaptez la signature de votre gestionnaire d'événement submit pour accepter `event: { isValid: boolean }`
-3. Pour les composants personnalisés, implémentez `useValidatable` comme détaillé dans la documentation
+2. Adaptez votre gestionnaire `@submit` : il reçoit `{ isValid: boolean }` et est émis **même si le formulaire est invalide** — vérifiez `isValid` avant de traiter les données
+3. Pour vos composants personnalisés, enregistrez-les via `useValidatable` (les composants du DS s'auto-enregistrent déjà)
 
 <Source dark code={`
 <!-- Avant -->
@@ -125,8 +129,10 @@ La migration est généralement simple :
 </SyForm>
 `} />
 
+> `SyForm` encapsule un `v-form` : le `.prevent` est déjà géré en interne, utilisez `@submit` sans modificateur.
+
 ## Conclusion
 
 `SyForm` représente une évolution significative dans la gestion des formulaires par rapport à l'approche traditionnelle de Vuetify. Il offre une solution robuste, accessible et flexible pour les applications d'entreprise complexes qui nécessitent une validation rigoureuse des données utilisateur.
 
-Pour des exemples concrets d'utilisation, consultez la [documentation principale de SyForm](/docs/composants-formulaires-syform--docs?path=/docs/composants-formulaires-syform--docs).
+Pour des exemples concrets d'utilisation, consultez la [documentation principale de SyForm](/?path=/docs/composants-formulaires-syform--docs).

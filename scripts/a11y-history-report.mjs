@@ -2,6 +2,7 @@ import { execFile } from 'node:child_process'
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
 import { basename, dirname, relative, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { isReleaseMessage } from './lib/filters.mjs'
 import { PENDING_LABEL, resolveCommitVersion } from './lib/releaseTags.mjs'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
@@ -10,6 +11,8 @@ const outputPath = resolve(dataDir, 'a11y-history-report.md')
 const outputJsonPath = resolve(dataDir, 'a11y-history-data.json')
 const outputCommitsJsonPath = resolve(dataDir, 'a11y-commits-data.json')
 const componentsDir = resolve(rootDir, 'src/components')
+// Nombre de composants analysés en même temps
+const ANALYSIS_CONCURRENCY = 8
 
 const a11yKeywords = [
 	'a11y',
@@ -156,14 +159,34 @@ async function getGitLog(filePaths) {
 	}
 }
 
-async function getDiffForCommit(hash, filePaths) {
+// Un seul `git show` par commit : `--patch-with-raw` donne la liste des fichiers modifiés
+// (lignes `:…`, chemin en dernier champ, nouveau nom en cas de renommage) puis le diff.
+async function getCommitChanges(hash, filePaths) {
 	const paths = filePaths.map(p => relative(rootDir, p))
 	try {
-		const { stdout } = await execFileAsync('git', ['show', hash, '--format=', '-p', '--', ...paths], { cwd: rootDir })
-		return stdout
+		const { stdout } = await execFileAsync('git', ['show', hash, '--format=', '--patch-with-raw', '--', ...paths], { cwd: rootDir })
+		const lines = stdout.split('\n')
+		const changedFiles = lines
+			.filter(line => line.startsWith(':'))
+			.map(line => resolve(rootDir, line.split('\t').at(-1)))
+		const diff = lines.filter(line => !line.startsWith(':')).join('\n')
+		return { diff, changedFiles }
 	} catch {
-		return ''
+		return { diff: '', changedFiles: [] }
 	}
+}
+
+// Lignes réécrites par docs:update (badges de version et leurs marqueurs)
+const badgeLineRegex = /version-badge|version-(?:start|end)/
+
+// Vrai si le diff ne modifie que des badges de version : c'est un passage de docs:update,
+// pas une correction. Sans ce garde-fou, le commit qui met à jour les badges serait lui-même
+// détecté comme correction a11y et daterait tous les composants au run suivant.
+function isBadgeOnlyDiff(diff) {
+	const changedLines = diff.split('\n').filter(line =>
+		/^[+-]/.test(line) && !/^(?:\+\+\+|---) /.test(line) && line.slice(1).trim() !== '',
+	)
+	return changedLines.length > 0 && changedLines.every(line => badgeLineRegex.test(line))
 }
 
 function extractPRNumber(message) {
@@ -172,7 +195,7 @@ function extractPRNumber(message) {
 }
 
 const prLabelCache = new Map()
-const packageVersionCache = new Map()
+let currentPackageVersion
 let releaseTagsPromise = null
 
 async function getReleaseTags() {
@@ -196,33 +219,56 @@ async function getReleaseTags() {
 	return releaseTagsPromise
 }
 
-async function getPackageVersionAtCommit(hash) {
-	if (packageVersionCache.has(hash)) return packageVersionCache.get(hash)
+// Version **actuelle** de `package.json`, comme functional-history-report.mjs : c'est le repli
+// de `resolveCommitVersion` pour les commits sans tag (PR de release, version déjà bumpée).
+// La version lue dans le commit lui-même était toujours celle de la release précédente,
+// et les corrections non encore taguées disparaissaient de la colonne « Version corrigée ».
+function getCurrentPackageVersion() {
+	if (currentPackageVersion !== undefined) return currentPackageVersion
 	try {
-		const { stdout } = await execFileAsync('git', ['show', `${hash}:package.json`], { cwd: rootDir })
-		const parsed = JSON.parse(stdout)
-		const version = parsed.version ? parsed.version.replace(/^v/i, '') : null
-		packageVersionCache.set(hash, version)
-		return version
+		const parsed = JSON.parse(readFileSync(resolve(rootDir, 'package.json'), 'utf8'))
+		currentPackageVersion = parsed.version ? parsed.version.replace(/^v/i, '') : null
 	} catch {
-		packageVersionCache.set(hash, null)
-		return null
+		currentPackageVersion = null
+	}
+	return currentPackageVersion
+}
+
+// Labels de toutes les PR en un seul appel (une dizaine de secondes) : un `gh pr view` par PR
+// représentait ~1 200 appels réseau et l'essentiel de la durée de l'analyse complète.
+// `null` si la liste est indisponible : on retombe alors sur un appel par PR.
+let allPRLabelsPromise = null
+
+function getAllPRLabels() {
+	if (!allPRLabelsPromise) {
+		allPRLabelsPromise = execFileAsync(
+			'gh',
+			['pr', 'list', '--state', 'all', '--limit', '100000', '--json', 'number,labels'],
+			{ cwd: rootDir, maxBuffer: 64 * 1024 * 1024 },
+		)
+			.then(({ stdout }) => new Map(JSON.parse(stdout).map(pr => [String(pr.number), (pr.labels || []).map(l => l.name)])))
+			.catch(() => null)
+	}
+	return allPRLabelsPromise
+}
+
+async function fetchPRLabels(prNumber) {
+	try {
+		const { stdout } = await execFileAsync('gh', ['pr', 'view', prNumber, '--json', 'labels'], { cwd: rootDir })
+		return (JSON.parse(stdout).labels || []).map(l => l.name)
+	} catch {
+		return []
 	}
 }
 
 async function getPRLabels(prNumber) {
 	if (!prNumber) return []
-	if (prLabelCache.has(prNumber)) return prLabelCache.get(prNumber)
-	try {
-		const { stdout } = await execFileAsync('gh', ['pr', 'view', prNumber, '--json', 'labels'], { cwd: rootDir })
-		const parsed = JSON.parse(stdout)
-		const labels = (parsed.labels || []).map(l => l.name)
-		prLabelCache.set(prNumber, labels)
-		return labels
-	} catch {
-		prLabelCache.set(prNumber, [])
-		return []
-	}
+	const allLabels = await getAllPRLabels()
+	// Numéro absent de la liste : c'est une issue, pas une PR (`gh pr view` échouait aussi)
+	if (allLabels) return allLabels.get(String(prNumber)) ?? []
+	// Promesse en cache : les composants analysés en parallèle partagent le même appel
+	if (!prLabelCache.has(prNumber)) prLabelCache.set(prNumber, fetchPRLabels(prNumber))
+	return prLabelCache.get(prNumber)
 }
 
 function hasA11yLabel(labels) {
@@ -259,7 +305,14 @@ async function analyzeComponent(component) {
 	const results = []
 
 	for (const commit of commits) {
-		const diff = await getDiffForCommit(commit.hash, allTrackedFiles)
+		// Une PR de release regroupe des corrections déjà comptées dans leurs propres PR
+		if (isReleaseMessage(commit.message)) {
+			continue
+		}
+		const { diff, changedFiles } = await getCommitChanges(commit.hash, allTrackedFiles)
+		if (isBadgeOnlyDiff(diff)) {
+			continue
+		}
 		const keywords = hasA11yKeywords(commit.message)
 		const patterns = hasA11yPatterns(diff)
 		const prNumber = extractPRNumber(commit.message)
@@ -270,10 +323,12 @@ async function analyzeComponent(component) {
 		const labels = await getPRLabels(prNumber)
 		const a11yLabel = hasA11yLabel(labels)
 
-		const touchedMdx = component.files.some(isAccessibilityMdx)
-		const touchedA11yTest = component.files.some(isA11yTest)
-		const touchedMigration = migrationFiles.length > 0
-		const touchedComponent = component.files.some(f => f.endsWith('.vue'))
+		// Fichiers réellement modifiés par le commit, et non tous les fichiers du composant :
+		// sinon tout commit au message contenant un mot-clé a11y passe en confiance forte.
+		const touchedMdx = changedFiles.some(isAccessibilityMdx)
+		const touchedA11yTest = changedFiles.some(isA11yTest)
+		const touchedMigration = changedFiles.some(f => migrationFiles.includes(f))
+		const touchedComponent = changedFiles.some(f => f.endsWith('.vue'))
 
 		let confidence = null
 
@@ -290,7 +345,7 @@ async function analyzeComponent(component) {
 			const version = resolveCommitVersion(
 				commit.date,
 				releaseTags,
-				await getPackageVersionAtCommit(commit.hash),
+				getCurrentPackageVersion(),
 			)
 			results.push({
 				...commit,
@@ -415,12 +470,21 @@ async function main() {
 
 	console.info(`📦 ${components.length} composant(s) à analyser`)
 
-	const results = []
-	for (const component of components) {
-		console.info(`⏳ Analyse de ${component.name}...`)
-		const commits = await analyzeComponent(component)
-		results.push({ name: component.name, commits })
+	// Composants analysés en parallèle (chacun enchaîne des appels git) ; l'ordre des
+	// résultats reste celui de `components`.
+	const results = new Array(components.length)
+	let nextIndex = 0
+	let doneCount = 0
+	const worker = async () => {
+		while (nextIndex < components.length) {
+			const index = nextIndex++
+			const component = components[index]
+			const commits = await analyzeComponent(component)
+			results[index] = { name: component.name, commits }
+			console.info(`⏳ [${++doneCount}/${components.length}] ${component.name} analysé`)
+		}
 	}
+	await Promise.all(Array.from({ length: Math.min(ANALYSIS_CONCURRENCY, components.length) }, worker))
 
 	const markdown = buildMarkdown(results)
 	writeFileSync(outputPath, markdown, 'utf8')

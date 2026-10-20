@@ -248,6 +248,26 @@
 		return document.getElementById('left-dropdown-menu')
 	}
 
+	// Le focus différé est annulé au démontage pour éviter tout accès au DOM
+	// après destruction du composant (source d'instabilité dans les tests).
+	let focusFirstItemTimeout: ReturnType<typeof setTimeout> | undefined
+	let isUnmounted = false
+
+	const focusFirstMenuItem = () => {
+		nextTick(() => {
+			if (isUnmounted) return
+			clearTimeout(focusFirstItemTimeout)
+			focusFirstItemTimeout = setTimeout(() => {
+				const container = getLeftDropdownEl()
+				const firstMenuItem = container?.querySelector('[role="menuitem"]') as HTMLElement | null
+				if (firstMenuItem) {
+					activeDescendantId.value = firstMenuItem.id || 'menu-item-0'
+					firstMenuItem.focus()
+				}
+			}, 30)
+		})
+	}
+
 	const isCurrentRightLink = (item: MenuItem): boolean => {
 		if (!item.href) return false
 		try {
@@ -266,16 +286,7 @@
 		if (val) {
 			leftMenuAuditTransient.value = true
 			showOverlay.value = true
-			nextTick(() => {
-				setTimeout(() => {
-					const container = getLeftDropdownEl()
-					const first = container?.querySelector('[role="menuitem"]') as HTMLElement | null
-					if (first) {
-						activeDescendantId.value = first.id || 'menu-item-0'
-						first.focus()
-					}
-				}, 30)
-			})
+			focusFirstMenuItem()
 		}
 		else {
 			hideOverlay()
@@ -419,6 +430,8 @@
 
 	// N'oubliez pas de nettoyer l'event listener
 	onBeforeUnmount(() => {
+		isUnmounted = true
+		clearTimeout(focusFirstItemTimeout)
 		window.removeEventListener('resize', updateWidth)
 	})
 
@@ -513,16 +526,7 @@
 	const openMenuWithKeyboard = () => {
 		menuOpen.value = true
 		showOverlay.value = true
-		nextTick(() => {
-			setTimeout(() => {
-				const container = getLeftDropdownEl()
-				const firstMenuItem = container?.querySelector('[role="menuitem"]') as HTMLElement | null
-				if (firstMenuItem) {
-					activeDescendantId.value = firstMenuItem.id || 'menu-item-0'
-					firstMenuItem.focus()
-				}
-			}, 30)
-		})
+		focusFirstMenuItem()
 	}
 
 	defineExpose({
@@ -778,7 +782,7 @@
 									:rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
 									:tabindex="0"
 									:target="item.openInNewTab ? '_blank' : undefined"
-									:title="item.title"
+									:title="getLinkLabel(item)"
 									@click="deleteActiveLink()"
 								>
 									<span class="right-menu-item">{{ item.title }}</span>

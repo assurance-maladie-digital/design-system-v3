@@ -7,6 +7,6 @@ export const config = {
 	backBtn: {
 		size: 'small',
 		variant: 'text' as VariantType,
-		class: 'font-weight-regular white--text px-1',
+		class: 'font-weight-regular px-1',
 	},
 }

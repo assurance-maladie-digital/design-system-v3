@@ -2,7 +2,8 @@ import type {
 	ValidationResult as LegacyValidationResult,
 	ValidationRule as SyValidationRule,
 } from '@/composables/validation/useValidation'
-import { computed, ref, toValue, type Ref } from 'vue'
+import { computed, ref, toValue, useId, watch, type Ref } from 'vue'
+import { devWarn } from '@/utils/devWarn'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import { useCustomValidation, type UseCustomValidationOptions } from './useCustomValidation'
 import { useVuetifyValidation as useVuetifyValidationComposable } from './useVuetifyValidation'
@@ -71,6 +72,11 @@ export function useValidation(params: {
 	modelValue: Ref<unknown>
 	readonly: Ref<boolean>
 	disabled: Ref<boolean>
+	/**
+	 * Non lu par la validation : chaque composant transforme sa prop `required` en règle dans
+	 * `customRules`. En mode Vuetify, la règle doit être fournie dans `rules` (un avertissement
+	 * de développement le signale).
+	 */
 	required: Ref<boolean>
 	isValidateOnBlur: Ref<boolean>
 	showSuccessMessages: Ref<boolean>
@@ -103,6 +109,22 @@ export function useValidation(params: {
 	customSuccessRules?: Ref<SyValidationRule[]>
 	rules: Ref<VuetifyValidationRule[] | undefined>
 }), options: Pick<UseCustomValidationOptions, 'registerWithForm' | 'reactiveValidation'> = {}) {
+	// En mode Vuetify, comme dans Vuetify, `required` n'ajoute que l'indication visuelle et ARIA :
+	// sans règle dans `rules`, un champ requis vide ne bloque pas la soumission.
+	if (import.meta.env.DEV) {
+		watch(
+			() => Boolean(toValue(params.useVuetifyValidation) && params.required?.value && !params.rules?.value?.length),
+			(isRequiredUnchecked) => {
+				if (isRequiredUnchecked) {
+					devWarn(`[Synapse] Le champ « ${params.label?.value ?? 'sans label'} » est requis en mode Vuetify (use-vuetify-validation) sans règle Vuetify : `
+						+ 'required n\'ajoute que l\'indication visuelle et ARIA, la soumission ne sera pas bloquée. '
+						+ 'Ajoutez une règle, par exemple :rules="[v => !!v || \'Champ requis\']".')
+				}
+			},
+			{ immediate: true },
+		)
+	}
+
 	const vuetifyErrors = ref<string[]>([])
 	const customErrors = ref<string[]>([])
 	const innerWarnings = ref<string[]>([])
@@ -110,30 +132,49 @@ export function useValidation(params: {
 
 	let vuetifyValidator: ReturnType<typeof useVuetifyValidationComposable> | null = null
 
+	// `useVuetifyValidation` peut basculer quand il est passé en Ref : le validateur custom
+	// est alors toujours créé, mais n'applique aucune règle et se désenregistre du SyForm
+	// tant que le mode Vuetify est actif (sinon les customRules seraient perdues après true→false).
+	const isCustomMode = computed(() => !toValue(params.useVuetifyValidation))
+	const whenCustomMode = (rules: Ref<SyValidationRule[]> | undefined) =>
+		computed(() => isCustomMode.value ? rules?.value ?? [] : [])
+
 	if (params.useVuetifyValidation !== false) {
+		// Le validator Vuetify s'enregistre dans le VForm sous l'id `name` : il doit rester
+		// stable, sinon après une bascule de mode (ou un changement de label) le VForm ne
+		// reçoit plus ses mises à jour et garde un état de validité périmé. Le suffixe
+		// unique évite la collision « Duplicate input name » quand deux champs partagent
+		// le même label (form.update ne mettrait à jour que le premier item trouvé).
+		const vuetifyName = toValue(params.useVuetifyValidation) && params.label?.value
+			? `${params.label.value}-${useId()}`
+			: undefined
+		const { rules } = params
 		vuetifyValidator = useVuetifyValidationComposable(
 			params.modelValue,
-			params.rules,
+			// L'item VForm « fantôme » reste enregistré en mode custom : il ne doit pas
+			// évaluer les `rules`, sinon VForm.validate() le compterait invalide et
+			// bloquerait la soumission alors que le mode Vuetify est inactif.
+			computed(() => isCustomMode.value ? [] : rules?.value),
 			params.disabled,
 			vuetifyErrors,
 			params.hasErrorProp || ref(false),
 			computed(() => params.errorMessages?.value || []),
 			params.focused,
 			params.maxErrors,
-			computed(() => toValue(params.useVuetifyValidation) ? params.label?.value : undefined),
+			computed(() => vuetifyName),
 			params.label,
 			params.readonly,
 			computed(() => params.isValidateOnBlur.value ? 'blur' : 'input'),
 		)
 	}
 
-	const customValidator = toValue(params.useVuetifyValidation)
+	const customValidator = params.useVuetifyValidation === true
 		? null
 		: useCustomValidation(
 				params.modelValue,
-				params.customRules,
-				params.customWarningRules,
-				params.customSuccessRules,
+				whenCustomMode(params.customRules),
+				whenCustomMode(params.customWarningRules),
+				whenCustomMode(params.customSuccessRules),
 				customErrors,
 				innerWarnings,
 				innerSuccesses,
@@ -144,8 +185,18 @@ export function useValidation(params: {
 				params.disableErrorHandling,
 				params.readonly,
 				params.disabled,
-				options,
+				{ ...options, externalErrors: params.errorMessages, forcedError: params.hasErrorProp, enabled: isCustomMode },
 			)
+
+	// Bascule de mode : l'état du validateur qu'on quitte est remis à zéro, sinon une
+	// erreur Vuetify survivrait au passage en mode custom (item VForm fantôme périmé)
+	// ou une erreur custom resterait affichée en mode Vuetify.
+	watch(isCustomMode, (customMode) => {
+		if (customMode) void vuetifyValidator?.resetValidation()
+		else customValidator?.clearValidation()
+	})
+
+	const hasExternalErrors = computed(() => (params.errorMessages?.value?.length ?? 0) > 0)
 
 	async function validate(): Promise<boolean> {
 		if (params.readonly.value || params.disabled.value || params.disableErrorHandling.value) {
@@ -154,17 +205,25 @@ export function useValidation(params: {
 			innerWarnings.value = []
 			innerSuccesses.value = []
 
+			// Avec disableErrorHandling, les erreurs injectées par le parent et `hasError`
+			// restent affichés et font échouer la soumission du SyForm : validate() doit suivre.
+			if (params.disableErrorHandling.value && !params.readonly.value && !params.disabled.value) {
+				return !hasExternalErrors.value && !params.hasErrorProp?.value
+			}
 			return true
 		}
 
+		// Une erreur injectée par le parent (ex. erreur serveur) ou forcée par `hasError` est
+		// affichée mais ne provient d'aucune règle : les validateurs ne la comptent pas. Elle
+		// doit pourtant faire échouer la validation, comme la soumission du SyForm.
 		if (toValue(params.useVuetifyValidation)) {
 			const result = await vuetifyValidator!.validate()
-			return result?.length === 0
+			return result?.length === 0 && !hasExternalErrors.value && !params.hasErrorProp?.value
 		}
 
 		else {
 			const result = await customValidator?.validate()
-			return result?.state.errors.length === 0
+			return result?.state.errors.length === 0 && !hasExternalErrors.value && !params.hasErrorProp?.value
 		}
 	}
 

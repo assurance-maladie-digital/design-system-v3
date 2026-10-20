@@ -1,105 +1,57 @@
-## Description
+## Problème
 
 <!--
-  Écrivez un résumé du changement, du bug résolu ou de la fonctionnalité ajoutée.
-  Expliquez également le contexte si cela est pertinent.
+  Décrivez le problème ou le besoin : bug, régression, fonctionnalité manquante.
+  Liez l'issue concernée si elle existe.
 -->
 
-## Stories
+## Correctif
 
-<!-- Lien de la/les stories pour cette fonctonnalitée -->
+<!--
+  Décrivez ce que fait la PR pour résoudre le problème.
+  Mentionnez les choix techniques importants et la/les stories associées.
+-->
 
-## Type de changement
+## Changement de contrat
 
-<!-- Supprimez les options non pertinentes. -->
+<!--
+  Impact de la PR sur le contrat du composant ou de la librairie.
+  Conservez uniquement la ligne pertinente.
+  Si changement de contrat : documentez-le dans releasesAlerts/vX.X.X/
+  (format : releasesAlerts/README.md). À fournir avant la fin de la PR.
+-->
 
-- Nouvelle fonctionnalité
-- Correction de bug
-- Changement cassant
-- Refactoring
-- Maintenance
-- Documentation
-- Ce changement nécessite une mise à jour de la documentation
+- Aucun changement de contrat
+- Changement de comportement (non cassant, observable par le consommateur)
+- Changement cassant : props/événements/slots renommés ou supprimés (détaillez ci-dessous)
 
-## Definition of Done
+## Avant de demander la review
 
-Avant de proposer une review, vérifiez chaque point de la checklist qui vous concerne et cochez-le s'il est appliqué.
+<!-- Ne cochez que ce qui s'applique à votre PR. -->
 
-### Nouveau composant/template
+**Général**
 
-**Bonne Pratique**
+- [ ] PR bien nommée (Composant : descriptif), pointe vers la bonne branche, issue liée
+- [ ] Maquettes respectées (équipe design informée si évolution) et design tokens utilisés
+- [ ] Aucun impact sur les usages existants, responsive vérifié
+- [ ] Deploy + SKSN checks OK
 
-- [ ] Ma Pull Request est bien nommée (Composant/template: descriptif du composant/template)
-- [ ] Ma Pull Request pointe vers la bonne branche
-- [ ] Linker la demande de création du composant/template et PR
+**Documentation**
 
-**Design**
-
-- [ ] Le composant/template respecte les maquettes validées
-- [ ] Les design tokens sont utilisés
-
-**Fonctionnel**
-
-- [ ] Le composant/template est fonctionnel dans les cas d’usage définis
-- [ ] Le composant/template est responsive (mobile, tablet, desktop)
-
-
-**Documentation & Storybook**
-
-- [ ] Une story est créée avec exemples d’usage
-- [ ] L’onglet A11Y Storybook est présent et sans erreur
-- [ ] Une page de documentation accessibilité est créée
+- [ ] Story créée ou mise à jour (exemples d'usage, état d'erreur/vide)
+- [ ] Changement de contrat documenté dans `releasesAlerts/vX.X.X/` (si applicable)
 
 **Tests**
 
-- [ ] Des tests prouvent le bon fonctionnement du composant/template
-- [ ] Deploy + SKSN Checks
+- [ ] Tests unitaires ajoutés ou mis à jour (test de régression pour un correctif)
+- [ ] Test `*.a11y.spec.ts` ajouté ou mis à jour si markup modifié
 
----
-
-### Evolution ou correctif de composant/template
-
-**Bonne Pratique**
-
-- [ ] Ma Pull Request est bien nommée (Composant/template: descriptif issue)
-- [ ] Ma Pull Request pointe vers la bonne branche
-- [ ] Linker issue et PR
-
-**Design**
-
-- [ ] L'évolution du composant/template respecte les maquettes validées (et l'équipe design est informée des changements)
-- [ ] Les design tokens sont utilisés
-
-**Fonctionnel**
-
-- [ ] Le correctif résout le problème identifié
-- [ ] Aucun impact sur les usages existants
-
-**Documentation & Storybook**
-
-- [ ] Storybook mis à jour si nécessaire
-- [ ] Onglet A11Y sans erreur
-- [ ] La page de documentation accessibilité mise à jour si nécessaire
-
-**Tests**
-
-- [ ] Tests mis à jour ou ajoutés pour couvrir le correctif
-- [ ] Deploy + SKSN Checks
-
-**Fusion de composant/template**
-
-- [ ] Le composant/template n'induit pas de régression dans le composant/template Synapse, Portail Agent ou AmeliPro
-- [ ] Ajout des stories propre au thème (penser à filter le menu/props si nécessaire)
-- [ ] Ajouter un message dans le composant/template déprécié avec un lien vers le nouveau
-
-**Accessibilite**
-
-## Checklist de PR obligatoire
+## Checklist Accessibilité obligatoire
 
 - [ ] Pas d'erreurs axe-core sur la story.
-- [ ] Pas d’erreur Tanaguru.
+- [ ] Pas d'erreur Tanaguru.
 - [ ] Faux positifs documentés.
-- [ ] Page d’accessibilité mise à jour.
+- [ ] Page d'accessibilité mise à jour.
 - [ ] Tests mis à jour.
 - [ ] Snapshot visuel mis à jour si styles modifiés.
 - [ ] Tests manuels :

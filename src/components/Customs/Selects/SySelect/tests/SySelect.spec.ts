@@ -219,7 +219,9 @@ describe('SySelect.vue', () => {
 		})
 	})
 
-	it('keeps the label active when a validation error is displayed', async () => {
+	// Comme les autres champs, un SySelect vide garde son libellé dans le champ quand une
+	// erreur s'affiche : le message suffit, le libellé ne doit pas remonter dans la bordure.
+	it('keeps the label inside an empty field when a validation error is displayed', async () => {
 		const wrapper = mount(SySelect, {
 			props: {
 				items: [{ text: 'Option 1', value: '1' }],
@@ -234,7 +236,8 @@ describe('SySelect.vue', () => {
 		await nextTick()
 
 		expect(isValid).toBe(false)
-		expect(wrapper.find('.v-field').classes()).toContain('v-field--active')
+		expect(wrapper.find('.v-messages__message').exists()).toBe(true)
+		expect(wrapper.find('.v-field').classes()).not.toContain('v-field--active')
 
 		wrapper.unmount()
 	})
@@ -1875,6 +1878,39 @@ describe('SySelect.vue - Number items', () => {
 		})
 		expect(wrapper.find('input').element.value).toBe('0')
 		wrapper.unmount()
+	})
+
+	// Régression XSS : avec allowHtml, le libellé des options était injecté via innerHTML sans filtre.
+	describe('allowHtml sanitization', () => {
+		async function openWithItem(text: string) {
+			const wrapper = mount(SySelect, {
+				props: {
+					items: [{ text, value: '1' }],
+					allowHtml: true,
+				},
+				attachTo: document.body,
+			})
+			await wrapper.find('.v-field').trigger('click')
+			await nextTick()
+			const label = wrapper.findComponent(VList).get('.item-text')
+			return { wrapper, label }
+		}
+
+		it('does not render an image carrying an event handler', async () => {
+			const { wrapper, label } = await openWithItem('<img src="x" onerror="alert(1)">Option 1')
+
+			expect(label.find('img').exists()).toBe(false)
+			expect(label.text()).toBe('Option 1')
+			wrapper.unmount()
+		})
+
+		it('keeps the allowed formatting', async () => {
+			const { wrapper, label } = await openWithItem('+33 <abbr title="France">FRA</abbr> <b>gras</b>')
+
+			expect(label.get('abbr').attributes('title')).toBe('France')
+			expect(label.get('b').text()).toBe('gras')
+			wrapper.unmount()
+		})
 	})
 })
 

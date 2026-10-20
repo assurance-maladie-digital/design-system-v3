@@ -410,10 +410,9 @@ export const WithCustomRules: Story = {
 				<div class="mt-4">
 					<p><strong>Conseils pour tester :</strong></p>
 					<ul>
-						<li>Laissez le champ vide pour voir l'erreur de champ requis</li>
-						<li>Saisissez un mois invalide (ex: 13/2026) pour voir l'erreur de format</li>
-						<li>Saisissez une date à plus de 5 ans (ex: 01/2032) pour voir l'avertissement</li>
-						<li>Saisissez une date entre aujourd'hui et dans 5 ans pour voir le message de succès</li>
+						<li>Saisissez un mois incomplet (ex: 03/20) pour voir l'erreur de format</li>
+						<li>Saisissez un mois invalide (ex: 13/2026) pour voir l'erreur de mois</li>
+						<li>Saisissez une date antérieure à 10 ans (ex: 01/2010) pour voir l'erreur d'ancienneté</li>
 					</ul>
 				</div>
 			</div>
@@ -1096,7 +1095,4 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 			</div>
 		`,
 	}),
-	args: {
-		showSuccessMessages: true,
-	},
 }

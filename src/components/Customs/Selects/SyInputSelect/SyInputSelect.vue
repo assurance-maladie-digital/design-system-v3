@@ -2,8 +2,9 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import useCustomizableOptions, { type CustomizableOptions } from '@/composables/useCustomizableOptions'
 	import { useValidation, type ValidationRule } from '@/composables/validation/useValidation'
+	import { useValidatable } from '@/composables/validation/useValidatable'
 	import { mdiChevronDown, mdiCloseCircle, mdiInformation } from '@mdi/js'
-	import { computed, onMounted, readonly as readonlyState, ref, useId, watch } from 'vue'
+	import { computed, nextTick, onMounted, readonly as readonlyState, ref, useId, watch } from 'vue'
 	import defaultOptions from './config'
 	import { locales as defaultLocales } from './locales'
 	import { useLocales } from '@/composables/useLocales'
@@ -21,6 +22,7 @@
 		isHeaderToolbar?: boolean
 		displayAsterisk?: boolean
 		readonly?: boolean
+		disabled?: boolean
 		clearable?: boolean
 		customRules?: ValidationRule[]
 		disableErrorHandling?: boolean
@@ -39,6 +41,7 @@
 		isHeaderToolbar: false,
 		displayAsterisk: false,
 		readonly: false,
+		disabled: false,
 		clearable: false,
 		customRules: () => [],
 		disableErrorHandling: false,
@@ -80,7 +83,7 @@
 	const hasError = ref(false)
 
 	const toggleMenu = () => {
-		if (props.readonly) return
+		if (props.readonly || props.disabled) return
 		isOpen.value = !isOpen.value
 	}
 
@@ -89,13 +92,14 @@
 	}
 
 	const isRequired = computed(() => {
-		if (props.readonly) return
+		if (props.readonly || props.disabled) return
 		return (props.required || props.errorMessages.length > 0) && !selectedItem.value
 	})
 
 	const inputId = `sy-input-select-${useId()}`
 
 	const selectItem = async (item: unknown) => {
+		if (props.readonly || props.disabled) return
 		selectedItem.value = item as Record<string, unknown> | string | null
 		emit('update:modelValue', item)
 		isOpen.value = false
@@ -122,18 +126,25 @@
 		return isShouldDisplayAsterisk.value ? `${props.label} *` : props.label
 	})
 
+	// Le reset (SyForm) remet la valeur à null : il ne doit pas déclencher la validation,
+	// sinon un champ requis réapparaîtrait aussitôt en erreur au lieu de revenir à l'état neutre.
+	let skipValidationForReset = false
+
 	watch(() => props.modelValue, (newValue) => {
 		selectedItem.value = newValue
+		if (skipValidationForReset) {
+			skipValidationForReset = false
+			return
+		}
 		validateField(newValue)
 		emit('update:errorMessages', localErrorMessages.value)
 	})
 
-	watch([isOpen, hasError], ([newIsOpen, newHasError]) => {
+	// L'état d'erreur n'est recalculé qu'à la fermeture du menu : suivre aussi hasError
+	// réimposait l'erreur dès que clearValidation (reset du SyForm) la retirait.
+	watch(isOpen, (newIsOpen) => {
 		if (!newIsOpen) {
 			hasError.value = (!selectedItem.value && isRequired.value) || props.errorMessages.length > 0
-		}
-		else {
-			hasError.value = newHasError
 		}
 	})
 
@@ -186,7 +197,9 @@
 	)
 
 	const validateField = async (value: unknown) => {
-		if (props.readonly) {
+		// Un champ désactivé ou en lecture seule ne peut pas être corrigé : il ne
+		// doit pas bloquer le formulaire, comme pour `valide` ci-dessous.
+		if (props.readonly || props.disabled) {
 			validation.clearValidation()
 			localErrorMessages.value = []
 			return true
@@ -217,6 +230,40 @@
 		return await validateField(selectedItem.value)
 	}
 
+	const clearValidation = () => {
+		validation.clearValidation()
+		localErrorMessages.value = []
+		hasError.value = false
+	}
+
+	const reset = () => {
+		skipValidationForReset = true
+		selectedItem.value = null
+		emit('update:modelValue', null)
+		clearValidation()
+		// Si la valeur était déjà null, le watch ne se déclenche pas : on lève la garde.
+		nextTick(() => {
+			skipValidationForReset = false
+		})
+	}
+
+	// Enregistrement auprès du SyForm : sans lui, un champ requis jamais touché ne
+	// bloquait pas la soumission (seul le VInput, qui ne connaît que les erreurs déjà
+	// affichées, était vu par le formulaire).
+	useValidatable(
+		validateOnSubmit,
+		clearValidation,
+		reset,
+		computed(() => {
+			if (props.readonly || props.disabled) return true
+			if (localErrorMessages.value.length > 0) return false
+			// Champ requis vide pas encore validé : invalide sans erreur affichée.
+			return !(props.required && !selectedItem.value)
+		}),
+		true,
+		computed(() => localErrorMessages.value.length === 0),
+	)
+
 	defineExpose({
 		isOpen,
 		closeList,
@@ -241,6 +288,7 @@
 		:title="labelWithAsterisk"
 		role="menu"
 		:readonly="props.readonly"
+		:disabled="props.disabled"
 		@click="checkForErrors"
 	>
 		<div

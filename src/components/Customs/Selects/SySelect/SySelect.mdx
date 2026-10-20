@@ -10,7 +10,7 @@ Il est basé sur un `v-textfield`.</p>
 </div>
 
 {/* func-version-start */}
-<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.1.5</p>
+<p className="func-version-badge">Dernière mise à jour fonctionnelle : V1.2.0</p>
 {/* func-version-end */}
 {/* a11y-version-start */}
 <p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.1.3</p>
@@ -24,6 +24,12 @@ Il est basé sur un `v-textfield`.</p>
 # API
 
 <Controls of={SySelectStories.Default} />
+
+<p>
+	<b>Sécurité :</b> avec la prop <code>allowHtml</code>, le texte des options est filtré avant d'être affiché.
+	Seules les balises <code>abbr</code> (avec son attribut <code>title</code>), <code>span</code> (avec son attribut <code>class</code>), <code>b</code>, <code>strong</code>, <code>em</code> et <code>i</code> sont conservées, sans aucun autre attribut (<code>style</code> notamment est retiré).
+	Les autres balises sont retirées en gardant leur texte ; <code>script</code>, <code>style</code>, <code>iframe</code>, etc. sont supprimées avec leur contenu.
+</p>
 
 # Exemple d'utilisation
 

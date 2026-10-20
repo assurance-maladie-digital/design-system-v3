@@ -29,6 +29,7 @@
 	align-items: center;
 }
 
+.roadmap-timeline__item--released,
 .roadmap-timeline__item--planned,
 .roadmap-timeline__item--study {
 	--rt-accent: #6b7280;
@@ -49,6 +50,7 @@
 	background: #fff;
 }
 
+.roadmap-timeline__item--released .roadmap-timeline__dot,
 .roadmap-timeline__item--current .roadmap-timeline__dot {
 	background: var(--rt-accent);
 }
@@ -89,12 +91,17 @@
 	margin: 0;
 }
 
+/* En-tête : version et date empilées, tag de statut à droite */
 .roadmap-timeline__head {
 	display: flex;
-	flex-wrap: wrap;
-	align-items: baseline;
+	align-items: flex-start;
 	justify-content: space-between;
-	gap: 4px;
+	gap: 8px;
+}
+
+.roadmap-timeline__title {
+	display: flex;
+	flex-direction: column;
 }
 
 .roadmap-timeline__version {
@@ -110,7 +117,7 @@
 }
 
 .roadmap-timeline__status {
-	margin-top: 8px !important;
+	margin-top: 4px !important;
 }
 
 .roadmap-timeline__highlights {

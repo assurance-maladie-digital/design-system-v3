@@ -719,10 +719,12 @@ li.sy-autocomplete__option--focused {
 	outline-offset: -2px;
 }
 
+// on-surface : on-surface-variant (#EEEEEE) rendait le chevron quasi invisible sur
+// fond blanc (contraste RGAA insuffisant).
 :deep(.error-field .v-icon.arrow),
 :deep(.error-field .v-icon.arrow .v-icon__svg) {
-	color: rgb(var(--v-theme-on-surface-variant)) !important;
-	fill: rgb(var(--v-theme-on-surface-variant)) !important;
+	color: rgb(var(--v-theme-on-surface)) !important;
+	fill: rgb(var(--v-theme-on-surface)) !important;
 }
 
 :deep(.warning-field .v-icon.arrow),

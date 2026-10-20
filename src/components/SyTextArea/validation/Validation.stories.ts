@@ -250,7 +250,7 @@ export const NoValidateOnBlur: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <div class="d-flex flex-column gap-4 pa-4">
+  <div class="d-flex flex-column ga-4 pa-4">
     <SyTextArea
       ref="textAreaRef"
       :model-value="value"
@@ -267,7 +267,7 @@ export const NoValidateOnBlur: Story = {
       }]"
       @update:model-value="handleManualChange"
     />
-    <div class="d-flex gap-4 mt-2">
+    <div class="d-flex ga-4 mt-2">
       <VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('Contenu interdit')">Définir une valeur invalide</VBtn>
       <VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('Contenu valide')">Définir une valeur valide</VBtn>
       <VBtn @mousedown.prevent @click="applyButtonValue('')">Réinitialiser</VBtn>
@@ -336,7 +336,7 @@ const applyButtonValue = (newValue) => {
 			return { args, value, textAreaRef, handleManualChange, applyButtonValue }
 		},
 		template: `
-			<div class="d-flex flex-column gap-4 pa-4">
+			<div class="d-flex flex-column ga-4 pa-4">
 				<SyTextArea
 					ref="textAreaRef"
 					:model-value="value"
@@ -351,7 +351,7 @@ const applyButtonValue = (newValue) => {
 					}]"
 					@update:model-value="handleManualChange"
 				/>
-				<div class="d-flex gap-4 mt-2">
+				<div class="d-flex ga-4 mt-2">
 					<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('Contenu interdit')">Définir une valeur invalide</VBtn>
 					<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('Contenu valide')">Définir une valeur valide</VBtn>
 					<VBtn @mousedown.prevent @click="applyButtonValue('')">Réinitialiser</VBtn>
@@ -394,7 +394,7 @@ export const DisableErrorHandling: Story = {
 			return { valueWithHandling, valueWithout, customRules, textAreaRef1, textAreaRef2 }
 		},
 		template: `
-			<div class="pa-4 d-flex flex-column gap-6">
+			<div class="pa-4 d-flex flex-column ga-6">
 				<div>
 					<p class="text-subtitle-2 mb-2">Avec gestion des erreurs (défaut)</p>
 					<SyTextArea

@@ -8,15 +8,17 @@ import { assertNoA11yViolations } from '@tests/unit/accessibility/axeUtils'
 import SubHeader from '../SubHeader.vue'
 import * as stories from '../SubHeader.stories'
 
-const { Default, DataList, DataListFixedHeight, ActionBtn, HtmlValue, SlotSubTitle, SlotAdditionalInformations } = composeStories(stories)
+const { Default, BackgroundCustom, DataList, DataListFixedHeight, ActionBtn, HtmlValue, Loading, SlotSubTitle, SlotAdditionalInformations } = composeStories(stories)
 
 describe('SubHeader – accessibility (axe)', () => {
 	it.each([
 		{ name: 'Default', story: Default },
+		{ name: 'BackgroundCustom', story: BackgroundCustom },
 		{ name: 'DataList', story: DataList },
 		{ name: 'DataListFixedHeight', story: DataListFixedHeight },
 		{ name: 'ActionBtn', story: ActionBtn },
 		{ name: 'HtmlValue', story: HtmlValue },
+		{ name: 'Loading', story: Loading },
 		{ name: 'SlotSubTitle', story: SlotSubTitle },
 		{ name: 'SlotAdditionalInformations', story: SlotAdditionalInformations },
 	])('has no axe violations in the $name story', async ({ name, story }) => {

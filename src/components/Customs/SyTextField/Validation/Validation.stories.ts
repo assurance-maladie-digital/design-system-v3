@@ -224,6 +224,7 @@ export const WithSuccess: Story = {
 					<SyTextField
 						v-model="value"
 						label="Adresse email"
+						show-success-messages
 						:custom-success-rules="customSuccessRules"
 					/>
 				</template>
@@ -521,7 +522,7 @@ de la valeur plutôt qu'à la perte de focus. Utile pour un retour immédiat à 
 				type: 'custom',
 				options: {
 					message: 'L\\'adresse email est invalide.',
-					validate: (value) => /^[^\\\\s@]+@[^\\\\s@]+\\\\.[^\\\\s@]+$/.test(value),
+					validate: (value) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value),
 				},
 			},
 		]"

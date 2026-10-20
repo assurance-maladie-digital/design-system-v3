@@ -51,6 +51,7 @@ const baseArgs = {
 export const WithError: Story = {
 	args: {
 		...baseArgs,
+		modelValue: '20/08/2026',
 		label: 'Date avec erreur injectée',
 		errorMessages: ['Date invalide côté métier'],
 		required: false,
@@ -61,6 +62,23 @@ export const WithError: Story = {
 				story: 'Expose le cas standard d\'un message d\'erreur injecté par le parent, comme sur les autres composants migrés.',
 			},
 		},
+	},
+	render(args) {
+		const date = ref<string | null>('20/08/2026')
+		return {
+			components: { DatePicker },
+			setup() {
+				return { args, date }
+			},
+			template: `
+				<div>
+					<DatePicker
+						v-bind="args"
+						v-model="date"
+					/>
+				</div>
+			`,
+		}
 	},
 }
 
@@ -89,8 +107,8 @@ export const WithWarning: Story = {
 			template: `
 				<div>
 					<DatePicker
-						v-model="date"
 						v-bind="args"
+						v-model="date"
 					/>
 				</div>
 			`,
@@ -124,8 +142,8 @@ export const WithSuccess: Story = {
 			template: `
 				<div>
 					<DatePicker
-						v-model="date"
 						v-bind="args"
+						v-model="date"
 					/>
 				</div>
 			`,
@@ -190,8 +208,8 @@ export const CustomRules: Story = {
 					<h4 class="mb-0">Format avec règles personnalisées :</h4>
 					<p class="mb-4">Les dates en 2024 ne sont pas autorisées</p>
 					<DatePicker
-						v-model="date"
 						v-bind="args"
+						v-model="date"
 					/>
 					<div style="margin-top: 10px; font-family: monospace; color: #666;">
 						Valeur : {{ date }}
@@ -257,8 +275,8 @@ export const WarningRules: Story = {
           <h4 class="mb-0">Format avec règles d'avertissement :</h4>
           <p class="mb-4">Les dates en 2025 ne sont pas autorisées</p>
           <DatePicker
-            v-model="date"
             v-bind="args"
+            v-model="date"
           />
           <div style="margin-top: 10px; font-family: monospace; color: #666;">
             Valeur : {{ date }}

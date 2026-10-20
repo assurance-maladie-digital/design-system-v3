@@ -17,6 +17,7 @@
 	import { useSySelectKeyboard } from './composables/useSySelectKeyboard'
 	import { useSySelectValidation } from './composables/useSySelectValidation'
 	import { locales as defaultLocales } from './locales'
+	import { sanitizeItemHtml } from './sanitizeItemHtml'
 
 	export type ItemType = {
 		[key: string]: unknown
@@ -360,9 +361,7 @@
 				return
 			}
 
-			// getItemText already returns the correct HTML string for the item
-			// We assign it to innerHTML to preserve the previous rendering behavior
-			el.innerHTML = String(getItemText(item) ?? '')
+			el.replaceChildren(sanitizeItemHtml(String(getItemText(item) ?? '')))
 		})
 	})
 
@@ -457,7 +456,6 @@
 			|| hasSingleSelection.value
 			|| isOpen.value
 			|| focused.value
-			|| hasMessages.value
 	})
 
 	const labelWithAsterisk = computed(() => {
@@ -1305,12 +1303,14 @@
 		}
 	}
 
+	// on-surface comme pour l'état succès : on-surface-variant (#EEEEEE) rendait le
+	// chevron quasi invisible sur fond blanc (contraste RGAA insuffisant).
 	:deep(.v-icon.arrow) {
-		color: rgb(var(--v-theme-on-surface-variant)) !important;
+		color: rgb(var(--v-theme-on-surface)) !important;
 	}
 
 	:deep(.v-icon.arrow .v-icon__svg) {
-		fill: rgb(var(--v-theme-on-surface-variant)) !important;
+		fill: rgb(var(--v-theme-on-surface)) !important;
 	}
 }
 

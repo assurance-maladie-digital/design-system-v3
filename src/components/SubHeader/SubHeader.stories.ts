@@ -14,8 +14,8 @@ const meta = {
 		'dataListTitleLevel': {
 			control: { type: 'select' },
 			options: [1, 2, 3, 4, 5, 6],
-			description: 'Niveau des titres des listes, indépendant du titre principal. Par défaut : 4.',
-			table: { defaultValue: { summary: '4' } },
+			description: 'Niveau des titres des listes. Par défaut : niveau suivant `headingLevel` (limité à 6).',
+			table: { defaultValue: { summary: 'headingLevel + 1' } },
 		},
 		'headingLevel': {
 			control: { type: 'select' },
@@ -71,13 +71,13 @@ const meta = {
 			type: 'boolean',
 			control: { type: 'boolean' },
 			default: false,
-			description: 'Affiche un indicateur de chargement à la place du contenu',
+			description: 'Affiche des skeletons à la place du contenu et annonce le chargement aux lecteurs d\'écran',
 		},
 		'renderFixedHeight': {
 			type: 'boolean',
 			control: { type: 'boolean' },
 			default: false,
-			description: 'Applique une hauteur fixe au conteneur et ajoute une scrollbar horizontale si nécessaire',
+			description: 'Empêche le retour à la ligne des listes et ajoute une scrollbar horizontale si nécessaire. À réserver aux écrans larges (défilement horizontal à 320 px, RGAA 10.11).',
 		},
 		'additional-informations': {
 			type: 'string',
@@ -188,7 +188,7 @@ export const Default: Story = {
 			backBtn: {
 				size: 'small',
 				variant: 'text',
-				class: 'font-weight-regular white--text px-1',
+				class: 'font-weight-regular px-1',
 			},
 		},
 	},
@@ -245,7 +245,7 @@ export const BackgroundCustom: Story = {
 			backBtn: {
 				size: 'small',
 				variant: 'text',
-				class: 'font-weight-regular white--text px-1',
+				class: 'font-weight-regular px-1',
 			},
 		},
 	},
@@ -787,18 +787,28 @@ export const SlotAdditionalInformations: Story = {
 					>
 						<template #additional-informations>
 							<VSpacer />
-							<p class="white--text mt-8 mb-0">
-								Profil complété à 50%
-							</p>
-							<VProgressLinear
-								aria-label="Complétion du profil"
-								:model-value="50"
-								color="#fff"
-								height="8px"
-								class="mt-2 mb-1"
-								background-color="#fff"
-								background-opacity=".24"
-							/>
+							<div class="d-flex flex-wrap ga-2 mt-8 mb-1">
+								<VBadge
+									color="#fff"
+									text-color="primary"
+									height="24"
+									inline
+								>
+									<template #badge>
+										<span class="text-body-2">Médecin traitant déclaré</span>
+									</template>
+								</VBadge>
+								<VBadge
+									color="#fff"
+									text-color="primary"
+									height="24"
+									inline
+								>
+									<template #badge>
+										<span class="text-body-2">Complémentaire santé active</span>
+									</template>
+								</VBadge>
+							</div>
 						</template>
 					</SubHeader>
 				</template>
@@ -824,18 +834,28 @@ export const SlotAdditionalInformations: Story = {
 		'loading': false,
 		'additional-informations': `<template #additional-informations>
 	<VSpacer />
-	<p class="white--text mt-8 mb-0">
-		Profil complété à 50%
-	</p>
-	<VProgressLinear
-		aria-label="Complétion du profil"
-		:model-value="50"
-		color="#fff"
-		height="8px"
-		class="mt-2 mb-1"
-		background-color="#fff"
-		background-opacity=".24"
-	/>
+	<div class="d-flex flex-wrap ga-2 mt-8 mb-1">
+		<VBadge
+			color="#fff"
+			text-color="primary"
+			height="24"
+			inline
+		>
+			<template #badge>
+				<span class="text-body-2">Médecin traitant déclaré</span>
+			</template>
+		</VBadge>
+		<VBadge
+			color="#fff"
+			text-color="primary"
+			height="24"
+			inline
+		>
+			<template #badge>
+				<span class="text-body-2">Complémentaire santé active</span>
+			</template>
+		</VBadge>
+	</div>
 </template>`,
 	},
 	render: (args) => {
@@ -848,18 +868,28 @@ export const SlotAdditionalInformations: Story = {
 				<SubHeader v-bind="args">
 					<template #additional-informations>
 						<VSpacer />
-						<p class="white--text mt-8 mb-0">
-							Profil complété à 50%
-						</p>
-						<VProgressLinear
-							aria-label="Complétion du profil"
-							:model-value="50"
-							color="#fff"
-							height="8px"
-							class="mt-2 mb-1"
-							background-color="#fff"
-							background-opacity=".24"
-						/>
+						<div class="d-flex flex-wrap ga-2 mt-8 mb-1">
+							<VBadge
+								color="#fff"
+								text-color="primary"
+								height="24"
+								inline
+							>
+								<template #badge>
+									<span class="text-body-2">Médecin traitant déclaré</span>
+								</template>
+							</VBadge>
+							<VBadge
+								color="#fff"
+								text-color="primary"
+								height="24"
+								inline
+							>
+								<template #badge>
+									<span class="text-body-2">Complémentaire santé active</span>
+								</template>
+							</VBadge>
+						</div>
 					</template>
 				</SubHeader>
 			`,

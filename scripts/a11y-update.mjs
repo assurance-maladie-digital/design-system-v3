@@ -9,26 +9,27 @@
  *   pnpm docs:update                   (tous les composants — long)
  */
 
-import { execFile } from 'node:child_process'
+import { spawn } from 'node:child_process'
 import { resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)))
 const components = process.argv.slice(2).filter(Boolean)
 
+// Sortie de l'étape relayée en direct : avec `execFile`, elle n'apparaissait qu'à la fin
+// de l'étape et l'analyse a11y (plusieurs minutes) donnait l'impression d'être bloquée.
 function run(script, args = []) {
 	return new Promise((res, rej) => {
-		execFile(
+		const child = spawn(
 			process.execPath,
 			[resolve(rootDir, 'scripts', script), ...args],
-			{ cwd: rootDir },
-			(err, stdout, stderr) => {
-				if (stdout) process.stdout.write(stdout)
-				if (stderr) process.stderr.write(stderr)
-				if (err) rej(err)
-				else res()
-			},
+			{ cwd: rootDir, stdio: 'inherit' },
 		)
+		child.on('error', rej)
+		child.on('close', (code) => {
+			if (code === 0) res()
+			else rej(new Error(`${script} s'est terminé avec le code ${code}`))
+		})
 	})
 }
 

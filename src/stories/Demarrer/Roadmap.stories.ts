@@ -8,17 +8,19 @@ export default {
 	component: SyAlert,
 }
 
-type VersionStatus = 'current' | 'in-progress' | 'planned' | 'study'
+type VersionStatus = 'released' | 'current' | 'in-progress' | 'planned' | 'study'
 
 type Version = {
 	version: string
 	date: string
 	status: VersionStatus
 	major?: boolean
+	hideStatus?: boolean
 	highlights: string[]
 }
 
 const statusLabels: Record<VersionStatus, string> = {
+	'released': 'Publiée',
 	'current': 'Version actuelle',
 	'in-progress': 'En cours',
 	'planned': 'Prévue',
@@ -29,27 +31,29 @@ const versions: Version[] = [
 	{
 		version: 'v1.1',
 		date: 'Juin 2026',
-		status: 'current',
+		status: 'released',
+		hideStatus: true,
 		highlights: ['Mise à jour des tokens suite à l’intégration du thème Amelipro', 'Messages de succès masqués par défaut', 'Fin du support de Node 18'],
 	},
 	{
 		version: 'v1.2',
 		date: 'T4 2026',
-		status: 'planned',
+		status: 'current',
 		highlights: ['Validation sur les composants de formulaire', 'Montée de version Node 22 et Pnpm 10'],
 	},
 	{
 		version: 'v1.3',
-		date: 'S1 2027',
+		date: 'T1 2027',
 		status: 'planned',
-		highlights: ['Nouveautés selon les besoins projets (Cnam / Portail Agent / Amelipro)'],
+		hideStatus: true,
+		highlights: ['Nouveautés selon les besoins projets (Cnam / Portail Agent / Amelipro)', 'Header v2'],
 	},
 	{
-		version: 'v2.0',
-		date: 'Cadrage S2 2027',
+		version: 'vX.X',
+		date: 'S2 2027',
 		status: 'study',
 		major: true,
-		highlights: ['IA pour le Design System', 'Vue 4 / Vuetify 4', 'RGAA 5', '10 patterns clés dans Storybook et Figma'],
+		highlights: ['IA pour le Design System', 'RGAA 5', '10 patterns clés dans Storybook et Figma'],
 	},
 ]
 
@@ -74,14 +78,16 @@ export const VersionsTimeline: StoryObj = {
 				>
 					<span class="roadmap-timeline__dot" aria-hidden="true" />
 					<div class="roadmap-timeline__card">
-						<p class="roadmap-timeline__head">
-							<span class="roadmap-timeline__version">{{ item.version }}</span>
-							<span class="roadmap-timeline__date">{{ item.date }}</span>
-						</p>
-						<p :class="['roadmap-impact', 'roadmap-timeline__status', item.major ? 'roadmap-impact--major' : 'roadmap-impact--minor']">
-							{{ statusLabels[item.status] }}<template v-if="item.major"> · Majeure</template>
-							<span class="d-sr-only"> – impact : {{ item.major ? impactLabels.major : impactLabels.minor }}</span>
-						</p>
+						<div class="roadmap-timeline__head">
+							<p class="roadmap-timeline__title">
+								<span class="roadmap-timeline__version">{{ item.version }}</span>
+								<span class="roadmap-timeline__date">{{ item.date }}</span>
+							</p>
+							<p v-if="!item.hideStatus" :class="['roadmap-impact', 'roadmap-timeline__status', item.major ? 'roadmap-impact--major' : 'roadmap-impact--minor']">
+								{{ statusLabels[item.status] }}
+								<span class="d-sr-only"> – impact : {{ item.major ? impactLabels.major : impactLabels.minor }}</span>
+							</p>
+						</div>
 						<ul class="roadmap-timeline__highlights">
 							<li v-for="highlight in item.highlights" :key="highlight">{{ highlight }}</li>
 						</ul>
@@ -128,6 +134,7 @@ const workstreamColumns: { period: string, items: Workstream[] }[] = [
 		period: 'T1 2027',
 		items: [
 			{ label: 'Stabilisation du thème Amelipro', axis: 'ds', deliverable: 'Version stabilisée' },
+			{ label: 'Header v2', axis: 'ds', deliverable: 'Nouvelle version du composant Header, livrée en v1.3' },
 			{ label: 'IA pour le Design System', axis: 'ds', deliverable: 'Règles d’usage de l’IA' },
 			{ label: 'Élargissement des pratiques d’écoconception', axis: 'eco', deliverable: 'Périmètres back, architecture et run, principes directeurs v2' },
 		],
@@ -135,7 +142,7 @@ const workstreamColumns: { period: string, items: Workstream[] }[] = [
 	{
 		period: 'T2 2027',
 		items: [
-			{ label: 'Études Synapse v2', axis: 'ds', deliverable: 'IA pour le Design System, passage à Vue 4 / Vuetify 4' },
+			{ label: 'Études Synapse vX.X', axis: 'ds', deliverable: 'IA pour le Design System' },
 			{ label: 'Évolution du catalogue', axis: 'ds', deliverable: '10 patterns clés dans Storybook et Figma' },
 			{ label: 'Évolution RGAA 5', axis: 'a11y', deliverable: 'Étude d’impact RGAA 5, kit de pré-audit v2' },
 		],

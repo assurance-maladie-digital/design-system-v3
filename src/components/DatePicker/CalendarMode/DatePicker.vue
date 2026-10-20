@@ -673,8 +673,11 @@
 
 	async function validateOnSubmit() {
 		// Si le mode noCalendar est activé, on délègue la validation au DateTextInput
+		// Le DateTextInput ne valide que ses règles : les erreurs injectées par le parent
+		// (ex. erreur serveur) doivent aussi faire échouer la soumission, comme en mode calendrier.
 		if (props.noCalendar) {
-			return await dateTextInputRef.value?.validateOnSubmit() ?? false
+			const isValid = await dateTextInputRef.value?.validateOnSubmit() ?? false
+			return isValid && (props.errorMessages?.length ?? 0) === 0
 		}
 		// Si le mode combiné est activé, on délègue la validation au ComplexDatePicker
 		else if (props.useCombinedMode) {
