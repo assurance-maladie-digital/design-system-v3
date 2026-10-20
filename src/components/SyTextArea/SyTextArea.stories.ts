@@ -515,12 +515,17 @@ const text = ref('')
 
 export const MaxLines: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'La prop `maxLines` ajoute une règle bloquante sur le nombre de lignes. La valeur initiale dépasse 5 lignes : la validation est déclenchée au montage via `validateOnSubmit()` pour afficher l\'erreur dès le chargement.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
-	    uniqueId: 'text-area-unique-id',
+		ref="textAreaRef"
 		v-model="text"
 		label="Max lines text area"
 		:max-lines="5"
@@ -531,8 +536,16 @@ export const MaxLines: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { ref } from 'vue'
-const text = ref('')
+import { nextTick, onMounted, ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
+
+const text = ref('Lorem ipsum dolor sit amet,\\n consectetur adipiscing elit,\\n sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\\n Ut enim ad minim veniam,\\n quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\\n Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\\n Excepteur sint occaecat cupidatat non proident,\\n sunt in culpa qui officia deserunt mollit anim id est laborum.')
+const textAreaRef = ref<InstanceType<typeof SyTextArea> | null>(null)
+
+onMounted(async () => {
+	await nextTick()
+	textAreaRef.value?.validateOnSubmit()
+})
 </script>
 				`,
 			},
