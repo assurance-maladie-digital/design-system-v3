@@ -340,6 +340,7 @@
 		isValidateOnBlur: computed(() => props.isValidateOnBlur),
 		hasBlurred,
 		revalidateOnCustomRulesChange: true,
+		returnFormat: computed(() => props.dateFormatReturn || props.format),
 		formRegistration: {
 			validateOnSubmit,
 			clearValidation: clearValidationForForm,

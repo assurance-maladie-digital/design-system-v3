@@ -182,6 +182,7 @@
 		isValidateOnBlur: computed(() => props.isValidateOnBlur),
 		fieldIdentifier: computed(() => props.label || props.placeholder || 'Date'),
 		displayFormat: computed(() => displayFormat.value),
+		returnFormat,
 		parseDate,
 		hasInteracted,
 		formRegistration: {

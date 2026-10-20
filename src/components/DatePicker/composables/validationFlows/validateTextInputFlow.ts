@@ -2,7 +2,7 @@ import { unref } from 'vue'
 import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 import { locales } from '../../locales'
 import type { DatePickerRule } from '../../types'
-import { validateEmptyOrIncompleteDate } from '../../utils/validationUtils'
+import { adaptCustomRules, validateEmptyOrIncompleteDate } from '../../utils/validationUtils'
 import { getRangeValidationError } from '../../utils/dateFormattingUtils'
 import { validateDateFormat, isDateComplete } from '../useDateFormatUtils'
 import type { ValidationContext } from './types'
@@ -56,18 +56,23 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 
 	/**
 	 * Convertit les règles DatePicker vers le type attendu par le validateur unifié.
-	 * Les règles sont transmises telles quelles : `options.validate` reçoit l'objet
-	 * `Date` parsé depuis la saisie texte, comme en sélection calendrier.
+	 * En saisie texte, le `validate` des custom rules reçoit la date formatée au
+	 * format de retour (`dateFormatReturn || format`), comme le `v-model`.
+	 * Les règles intégrées (notBeforeDate, …) conservent l'objet `Date` :
+	 * `adaptCustomRules` n'adaptent que les règles de type `custom`.
 	 */
 	const toValidationRules = (
 		customRules: DatePickerRule[],
 		warningRules: DatePickerRule[],
 		successRules: DatePickerRule[],
-	): { customRules: ValidationRule[], warningRules: ValidationRule[], successRules: ValidationRule[] } => ({
-		customRules: customRules as unknown as ValidationRule[],
-		warningRules: warningRules as unknown as ValidationRule[],
-		successRules: successRules as unknown as ValidationRule[],
-	})
+	): { customRules: ValidationRule[], warningRules: ValidationRule[], successRules: ValidationRule[] } => {
+		const returnFormat = unref(options.returnFormat) ?? unref(options.displayFormat) ?? ''
+		return {
+			customRules: adaptCustomRules(customRules, returnFormat) as unknown as ValidationRule[],
+			warningRules: adaptCustomRules(warningRules, returnFormat) as unknown as ValidationRule[],
+			successRules: adaptCustomRules(successRules, returnFormat) as unknown as ValidationRule[],
+		}
+	}
 
 	/**
 	 * Valide une date (objet Date) avec les custom rules filtrées et adaptées.

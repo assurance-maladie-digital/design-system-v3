@@ -36,8 +36,10 @@ export interface DatePickerRuleOptions {
 	message?: string
 	date?: string | Date
 	/**
-	 * Reçoit un objet `Date` (saisie texte comme sélection calendrier)
-	 * ou `null` quand le champ est vide.
+	 * Reçoit :
+	 * - en saisie texte, une `string` au format `dateFormatReturn || format` (ex. `'2026-10-07'`) ;
+	 * - en sélection calendrier, un objet `Date` ;
+	 * - `null` quand le champ est vide.
 	 * Le `v-model` reste une chaîne au format `dateFormatReturn`.
 	 */
 	validate?: (value: unknown) => boolean | string | Promise<boolean | string>

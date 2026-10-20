@@ -838,16 +838,18 @@ describe('useDatePickerValidation', () => {
 	})
 
 	describe('régression : contrat des custom rules en saisie texte', () => {
-		it('passe un objet Date au validate des custom rules en saisie texte, comme en sélection calendrier', async () => {
+		const parseDate = (value: string) => {
+			const [day, month, year] = value.split('/').map(Number)
+			return day && month && year ? new Date(year, month - 1, day) : null
+		}
+
+		it('passe la date formatée au format d\'affichage quand returnFormat n\'est pas défini', async () => {
 			const received: unknown[] = []
 			const options = createOptions({
 				noCalendar: ref(true),
 				displayFormat: computed(() => 'DD/MM/YYYY'),
 				hasInteracted: ref(true),
-				parseDate: (value: string) => {
-					const [day, month, year] = value.split('/').map(Number)
-					return day && month && year ? new Date(year, month - 1, day) : null
-				},
+				parseDate,
 				customRules: ref([{
 					type: 'custom',
 					options: {
@@ -863,11 +865,104 @@ describe('useDatePickerValidation', () => {
 			await validateTextInput('07/10/2026')
 
 			expect(received).toHaveLength(1)
+			expect(received[0]).toBe('07/10/2026')
+		})
+
+		it('passe la date formatée au format returnFormat quand il diffère du format d\'affichage (issue #2627)', async () => {
+			const received: unknown[] = []
+			const options = createOptions({
+				noCalendar: ref(true),
+				displayFormat: computed(() => 'DD/MM/YYYY'),
+				returnFormat: computed(() => 'YYYY-MM-DD'),
+				hasInteracted: ref(true),
+				parseDate,
+				customRules: ref([{
+					type: 'custom',
+					options: {
+						validate: (value: unknown) => {
+							received.push(value)
+							return true
+						},
+					},
+				}]),
+			})
+			const { validateTextInput } = useDatePickerValidation(options)
+
+			await validateTextInput('07/10/2026')
+
+			expect(received).toHaveLength(1)
+			expect(received[0]).toBe('2026-10-07')
+		})
+
+		it('les règles écrites pour une chaîne (.includes) fonctionnent en saisie texte', async () => {
+			const options = createOptions({
+				noCalendar: ref(true),
+				displayFormat: computed(() => 'DD/MM/YYYY'),
+				hasInteracted: ref(true),
+				parseDate,
+				customRules: ref([{
+					type: 'custom',
+					options: {
+						validate: (value: string) => !value.includes('2025'),
+						message: 'Les dates en 2025 ne sont pas autorisées',
+					},
+				}]),
+			})
+			const { validateTextInput, errors } = useDatePickerValidation(options)
+
+			expect(await validateTextInput('10/01/2024')).toBe(true)
+			expect(await validateTextInput('10/01/2025')).toBe(false)
+			expect(errors.value).toContain('Les dates en 2025 ne sont pas autorisées')
+		})
+
+		it('passe null au validate quand le champ est vidé', async () => {
+			const received: unknown[] = []
+			const options = createOptions({
+				noCalendar: ref(true),
+				displayFormat: computed(() => 'DD/MM/YYYY'),
+				hasInteracted: ref(true),
+				parseDate,
+				customRules: ref([{
+					type: 'custom',
+					options: {
+						validate: (value: unknown) => {
+							received.push(value)
+							return true
+						},
+					},
+				}]),
+			})
+			const { validateTextInput } = useDatePickerValidation(options)
+
+			await validateTextInput('')
+
+			expect(received).toHaveLength(1)
+			expect(received[0]).toBeNull()
+		})
+	})
+
+	describe('régression : contrat des custom rules en sélection calendrier', () => {
+		it('passe un objet Date au validate en sélection calendrier', async () => {
+			const received: unknown[] = []
+			const options = createOptions({
+				selectedDates: ref(new Date(2026, 9, 7)),
+				customRules: ref([{
+					type: 'custom',
+					options: {
+						validate: (value: unknown) => {
+							received.push(value)
+							return true
+						},
+					},
+				}]),
+			})
+			const { validateDates } = useDatePickerValidation(options)
+
+			await validateDates()
+
+			expect(received).toHaveLength(1)
 			expect(received[0]).toBeInstanceOf(Date)
-			const date = received[0] as Date
-			expect(date.getFullYear()).toBe(2026)
-			expect(date.getMonth()).toBe(9)
-			expect(date.getDate()).toBe(7)
+			expect((received[0] as Date).getTime()).toBe(new Date(2026, 9, 7).getTime())
 		})
 	})
 
@@ -887,14 +982,13 @@ describe('useDatePickerValidation', () => {
 					type: 'custom',
 					options: {
 						validate: (value: unknown) => {
-							const isDay = (day: number) => value instanceof Date
-								&& value.getFullYear() === 2025 && value.getMonth() === 0 && value.getDate() === day
-							if (isDay(1)) {
+							// En saisie texte, validate reçoit une chaîne au format d'affichage
+							if (value === '01/01/2025') {
 								return new Promise<boolean>((resolve) => {
 									releaseFirstDate = () => resolve(true)
 								})
 							}
-							return isDay(2) ? 'Erreur périmée' : true
+							return value === '02/01/2025' ? 'Erreur périmée' : true
 						},
 					},
 				}]),

@@ -5,6 +5,9 @@
  *
  * - `isModelValueEqual` : Comparaison robuste de deux `DateModelValue` (insensible au timezone,
  *   gère les tableaux pour les plages). Utilisée par `updateModel` pour éviter les emits redondants.
+ * - `adaptCustomRules` : Adapte les règles personnalisées pour qu'elles fonctionnent aussi bien
+ *   avec des `Date` qu'avec des `string`. Convertit les `Date` en chaîne formatée avant de passer
+ *   à la fonction `validate` de la règle.
  * - `validateEmptyOrIncompleteDate` : Pré-validation pour les champs vides ou incomplets.
  *   Retourne `{ shouldContinue, isValid, errorMessage }` pour court-circuiter la validation
  *   quand le champ est vide (required géré) ou incomplet (pas assez de chiffres).
@@ -15,7 +18,10 @@
  * Ces fonctions sont consommées par `useDatePickerValidation.ts` (orchestrateur) et
  * indirectement par les composants DatePicker via le bridge de validation.
  */
+import { formatDate } from '@/utils/formatDate'
+import dayjs from 'dayjs'
 import { locales } from '../locales'
+import type { DatePickerRule } from '../types'
 import type { DateInput, DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 
 /**
@@ -32,6 +38,40 @@ export const isModelValueEqual = (a: DateModelValue | undefined, b: DateInput | 
 	}
 	if (Array.isArray(a) || Array.isArray(b)) return false
 	return a === b
+}
+
+/**
+ * Adapte les règles personnalisées pour assurer la compatibilité avec différents types de valeurs
+ *
+ * En saisie texte, `validate` reçoit une chaîne : les `Date` sont converties au format
+ * passé en paramètre (`dateFormatReturn || format` — voir `validateTextInputFlow`).
+ * En sélection calendrier, les règles reçoivent le `Date` tel quel.
+ *
+ * @param rules - Règles personnalisées à adapter
+ * @param format - Format de date à utiliser pour la conversion
+ * @returns Règles adaptées pour fonctionner avec les dates et chaînes
+ */
+export const adaptCustomRules = (rules: DatePickerRule[] = [], format: string): DatePickerRule[] => {
+	return rules.map((rule) => {
+		if (rule.type === 'custom' && rule.options && rule.options.validate) {
+			// Créer une copie de la règle pour ne pas modifier l'original
+			const safeCopy: DatePickerRule = { ...rule }
+			const originalValidate = rule.options.validate
+
+			// Remplacer la fonction validate par une version sécurisée
+			safeCopy.options = { ...rule.options }
+
+			safeCopy.options.validate = (val: unknown) => {
+				if (val instanceof Date) {
+					const formatted = format ? formatDate(dayjs(val), format) : val.toISOString()
+					return originalValidate(formatted)
+				}
+				return originalValidate(val)
+			}
+			return safeCopy
+		}
+		return rule
+	})
 }
 
 /**

@@ -438,6 +438,41 @@ describe('DatePicker', () => {
 		wrapper.unmount()
 	})
 
+	it('passes the date formatted at dateFormatReturn to custom rules on text input (issue #2627)', async () => {
+		const received: unknown[] = []
+		const wrapper = mountComponent({
+			useCombinedMode: true,
+			modelValue: '',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			customRules: [
+				{
+					type: 'custom',
+					options: {
+						validate: (value: unknown) => {
+							received.push(value)
+							return true
+						},
+						message: 'Erreur de validation',
+					},
+				},
+			],
+		})
+
+		const input = wrapper.find('input')
+		await input.trigger('focus')
+		await input.setValue('07/10/2026')
+		await input.trigger('blur')
+		await flushPromises()
+
+		expect(received.length).toBeGreaterThan(0)
+		expect(received[0]).toBe('2026-10-07')
+		// Le v-model reste émis au format de retour
+		expect(wrapper.emitted('update:modelValue')?.at(-1)?.[0]).toBe('2026-10-07')
+
+		wrapper.unmount()
+	})
+
 	describe('SyForm integration', () => {
 		it('updates SyForm v-model when a Vuetify-validated date becomes valid', async () => {
 			const Host = defineComponent({
