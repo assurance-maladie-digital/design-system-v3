@@ -43,6 +43,7 @@ export const WithError: Story = {
 				name: 'Template',
 				code: `<template>
 	<SelectBtnField
+		ref="fieldRef"
 		v-model="value"
 		:items="items"
 		label="Moyen de contact"
@@ -53,10 +54,11 @@ export const WithError: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { SelectBtnField } from '@cnamts/synapse'
 
 const value = ref('sms')
+const fieldRef = ref(null)
 const items = [
 	{ text: 'Email', value: 'email' },
 	{ text: 'Courrier', value: 'courrier' },
@@ -67,14 +69,22 @@ const customRules = [
 	{
 		type: 'custom',
 		options: {
-			validate: (v) => v !== 'sms',
+			validate: (v: unknown) => v !== 'sms',
 			message: 'Le SMS n’est pas disponible pour ce dossier.',
 		},
 	},
 ]
+
+onMounted(() => {
+	fieldRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
+	},
+	args: {
+		items,
+		label: 'Moyen de contact',
 	},
 	render: args => ({
 		components: { SelectBtnField },
@@ -100,8 +110,7 @@ const customRules = [
 				<SelectBtnField
 					ref="fieldRef"
 					v-model="value"
-					:items="items"
-					label="Moyen de contact"
+					v-bind="args"
 					:custom-rules="customRules"
 				/>
 			</div>
@@ -118,25 +127,51 @@ export const WithWarning: Story = {
 		},
 		sourceCode: [
 			{
+				name: 'Template',
+				code: `<template>
+	<SelectBtnField
+		ref="fieldRef"
+		v-model="value"
+		:items="items"
+		label="Moyen de contact"
+		:custom-warning-rules="customWarningRules"
+	/>
+</template>`,
+			},
+			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { SelectBtnField } from '@cnamts/synapse'
 
 const value = ref('courrier')
+const fieldRef = ref(null)
+const items = [
+	{ text: 'Email', value: 'email' },
+	{ text: 'Courrier', value: 'courrier' },
+	{ text: 'SMS', value: 'sms' },
+]
 
 const customWarningRules = [
 	{
 		type: 'custom',
 		options: {
-			validate: (v) => v !== 'courrier',
+			validate: (v: unknown) => v !== 'courrier',
 			warningMessage: 'Le courrier postal allonge les délais de traitement.',
 		},
 	},
 ]
+
+onMounted(() => {
+	fieldRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
+	},
+	args: {
+		items,
+		label: 'Moyen de contact',
 	},
 	render: args => ({
 		components: { SelectBtnField },
@@ -162,8 +197,7 @@ const customWarningRules = [
 				<SelectBtnField
 					ref="fieldRef"
 					v-model="value"
-					:items="items"
-					label="Moyen de contact"
+					v-bind="args"
 					:custom-warning-rules="customWarningRules"
 				/>
 			</div>
@@ -180,25 +214,53 @@ export const WithSuccess: Story = {
 		},
 		sourceCode: [
 			{
+				name: 'Template',
+				code: `<template>
+	<SelectBtnField
+		ref="fieldRef"
+		v-model="value"
+		:items="items"
+		label="Moyen de contact"
+		:custom-success-rules="customSuccessRules"
+		show-success-messages
+	/>
+</template>`,
+			},
+			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { SelectBtnField } from '@cnamts/synapse'
 
 const value = ref('email')
+const fieldRef = ref(null)
+const items = [
+	{ text: 'Email', value: 'email' },
+	{ text: 'Courrier', value: 'courrier' },
+	{ text: 'SMS', value: 'sms' },
+]
 
 const customSuccessRules = [
 	{
 		type: 'custom',
 		options: {
-			validate: (v) => v === 'email',
+			validate: (v: unknown) => v === 'email',
 			successMessage: 'L’email est le moyen de contact le plus rapide.',
 		},
 	},
 ]
+
+onMounted(() => {
+	fieldRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
+	},
+	args: {
+		items,
+		label: 'Moyen de contact',
+		showSuccessMessages: true,
 	},
 	render: args => ({
 		components: { SelectBtnField },
@@ -224,10 +286,8 @@ const customSuccessRules = [
 				<SelectBtnField
 					ref="fieldRef"
 					v-model="value"
-					:items="items"
-					label="Moyen de contact"
+					v-bind="args"
 					:custom-success-rules="customSuccessRules"
-					show-success-messages
 				/>
 			</div>
 		`,
@@ -238,24 +298,87 @@ export const DisableErrorHandling: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Avec `disableErrorHandling`, aucune erreur n’est affichée même si une règle échoue.',
+				story: 'Comparaison à déclenchement identique : `disableErrorHandling` masque les messages de validation tandis que le champ témoin affiche l’erreur `required`.',
 			},
 		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<SelectBtnField
+		ref="fieldRefNoHandling"
+		v-model="valueNoHandling"
+		:items="items"
+		label="Avec disableErrorHandling"
+		required
+		disable-error-handling
+	/>
+	<SelectBtnField
+		ref="fieldRefDefault"
+		v-model="valueDefault"
+		:items="items"
+		label="Sans disableErrorHandling"
+		required
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { SelectBtnField } from '@cnamts/synapse'
+
+const items = [
+	{ text: 'Email', value: 'email' },
+	{ text: 'Courrier', value: 'courrier' },
+	{ text: 'SMS', value: 'sms' },
+]
+
+const valueNoHandling = ref(null)
+const valueDefault = ref(null)
+const fieldRefNoHandling = ref(null)
+const fieldRefDefault = ref(null)
+
+onMounted(() => {
+	fieldRefNoHandling.value?.validateOnSubmit()
+	fieldRefDefault.value?.validateOnSubmit()
+})
+</script>`,
+			},
+		],
+	},
+	args: {
+		items,
+		required: true,
 	},
 	render: args => ({
 		components: { SelectBtnField },
 		setup() {
-			const value = ref<string | null>(null)
-			return { args, value, items }
+			const valueNoHandling = ref<string | null>(null)
+			const valueDefault = ref<string | null>(null)
+			const fieldRefNoHandling = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+			const fieldRefDefault = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+			onMounted(() => {
+				fieldRefNoHandling.value?.validateOnSubmit()
+				fieldRefDefault.value?.validateOnSubmit()
+			})
+			return { args, valueNoHandling, valueDefault, fieldRefNoHandling, fieldRefDefault }
 		},
 		template: `
 			<div class="pa-4" style="max-width: 400px">
 				<SelectBtnField
-					v-model="value"
-					:items="items"
-					label="Moyen de contact"
-					required
+					ref="fieldRefNoHandling"
+					v-model="valueNoHandling"
+					v-bind="args"
+					label="Avec disableErrorHandling"
 					disable-error-handling
+				/>
+				<SelectBtnField
+					ref="fieldRefDefault"
+					v-model="valueDefault"
+					v-bind="args"
+					label="Sans disableErrorHandling"
+					class="mt-4"
 				/>
 			</div>
 		`,
@@ -269,6 +392,71 @@ export const ExternalMessages: Story = {
 				story: 'Les props `errorMessages` / `warningMessages` / `successMessages` injectent des messages depuis le parent.',
 			},
 		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<SelectBtnField
+		v-model="value"
+		:items="items"
+		label="Moyen de contact"
+		:error-messages="errorMessages"
+		:warning-messages="warningMessages"
+		:success-messages="successMessages"
+		show-success-messages
+	/>
+	<VBtn color="error" @click="setError">Erreur</VBtn>
+	<VBtn color="warning" @click="setWarning">Avertissement</VBtn>
+	<VBtn color="success" @click="setSuccess">Succès</VBtn>
+	<VBtn @click="reset">Réinitialiser</VBtn>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SelectBtnField } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const value = ref('email')
+const items = [
+	{ text: 'Email', value: 'email' },
+	{ text: 'Courrier', value: 'courrier' },
+	{ text: 'SMS', value: 'sms' },
+]
+
+const errorMessages = ref<string[] | null>(null)
+const warningMessages = ref<string[] | null>(null)
+const successMessages = ref<string[] | null>(null)
+
+function setError() {
+	errorMessages.value = ['Ce moyen de contact est indisponible.']
+	warningMessages.value = null
+	successMessages.value = null
+}
+function setWarning() {
+	errorMessages.value = null
+	warningMessages.value = ['Vérifiez vos coordonnées.']
+	successMessages.value = null
+}
+function setSuccess() {
+	errorMessages.value = null
+	warningMessages.value = null
+	successMessages.value = ['Moyen de contact validé par le serveur.']
+}
+function reset() {
+	errorMessages.value = null
+	warningMessages.value = null
+	successMessages.value = null
+}
+</script>`,
+			},
+		],
+	},
+	args: {
+		items,
+		label: 'Moyen de contact',
+		showSuccessMessages: true,
 	},
 	render: args => ({
 		components: { SelectBtnField, VBtn },
@@ -305,12 +493,10 @@ export const ExternalMessages: Story = {
 			<div class="pa-4" style="max-width: 400px">
 				<SelectBtnField
 					v-model="value"
-					:items="items"
-					label="Moyen de contact"
+					v-bind="args"
 					:error-messages="errorMessages"
 					:warning-messages="warningMessages"
 					:success-messages="successMessages"
-					show-success-messages
 				/>
 				<div class="mt-4 d-flex flex-wrap ga-2">
 					<VBtn color="error" @click="setError">Erreur</VBtn>
@@ -350,15 +536,21 @@ export const SyFormValidation: Story = {
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { SelectBtnField, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const value = ref(null)
 
-function handleSubmit(e) {
+function handleSubmit(e: { isValid: boolean }) {
 	alert(e.isValid ? 'Formulaire valide !' : 'Veuillez corriger les erreurs.')
 }
 </script>`,
 			},
 		],
+	},
+	args: {
+		items,
+		label: 'Moyen de contact',
+		required: true,
 	},
 	render: args => ({
 		components: { SelectBtnField, SyForm, VBtn },
@@ -374,9 +566,7 @@ function handleSubmit(e) {
 				<SyForm @submit="handleSubmit">
 					<SelectBtnField
 						v-model="value"
-						:items="items"
-						label="Moyen de contact"
-						required
+						v-bind="args"
 					/>
 					<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
 				</SyForm>
@@ -414,6 +604,7 @@ export const VFormValidation: Story = {
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { SelectBtnField } from '@cnamts/synapse'
+import { VBtn, VForm } from 'vuetify/components'
 
 const value = ref(null)
 const fieldRef = ref(null)
@@ -422,7 +613,7 @@ const customRules = [
 	{
 		type: 'custom',
 		options: {
-			validate: (v) => v !== 'sms',
+			validate: (v: unknown) => v !== 'sms',
 			message: 'Le SMS n’est pas disponible pour ce dossier.',
 		},
 	},
@@ -435,6 +626,11 @@ async function handleSubmit() {
 </script>`,
 			},
 		],
+	},
+	args: {
+		items,
+		label: 'Moyen de contact',
+		required: true,
 	},
 	render: args => ({
 		components: { SelectBtnField, VBtn, VForm },
@@ -462,10 +658,8 @@ async function handleSubmit() {
 					<SelectBtnField
 						ref="fieldRef"
 						v-model="value"
-						:items="items"
-						label="Moyen de contact"
+						v-bind="args"
 						:custom-rules="customRules"
-						required
 					/>
 					<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
 				</VForm>
@@ -502,19 +696,25 @@ export const SyFormVuetifyValidation: Story = {
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { SelectBtnField, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const value = ref(null)
 
 const rules = [
-	(v) => !!v || 'Le moyen de contact est requis.',
+	(v: unknown) => !!v || 'Le moyen de contact est requis.',
 ]
 
-function handleSubmit(e) {
+function handleSubmit(e: { isValid: boolean }) {
 	alert(e.isValid ? 'Formulaire valide !' : 'Veuillez corriger les erreurs.')
 }
 </script>`,
 			},
 		],
+	},
+	args: {
+		items,
+		label: 'Moyen de contact',
+		useVuetifyValidation: true,
 	},
 	render: args => ({
 		components: { SelectBtnField, SyForm, VBtn },
@@ -533,9 +733,7 @@ function handleSubmit(e) {
 				<SyForm @submit="handleSubmit">
 					<SelectBtnField
 						v-model="value"
-						:items="items"
-						label="Moyen de contact"
-						:use-vuetify-validation="true"
+						v-bind="args"
 						:rules="rules"
 					/>
 					<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
@@ -554,19 +752,52 @@ export const VFormVuetifyValidation: Story = {
 		},
 		sourceCode: [
 			{
+				name: 'Template',
+				code: `<template>
+	<VForm @submit.prevent="handleSubmit">
+		<SelectBtnField
+			v-model="value"
+			:items="items"
+			label="Moyen de contact"
+			use-vuetify-validation
+			:rules="rules"
+			required
+		/>
+		<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
+	</VForm>
+</template>`,
+			},
+			{
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { SelectBtnField } from '@cnamts/synapse'
+import { VBtn, VForm } from 'vuetify/components'
 
 const value = ref(null)
+const items = [
+	{ text: 'Email', value: 'email' },
+	{ text: 'Courrier', value: 'courrier' },
+	{ text: 'SMS', value: 'sms' },
+]
 
 const rules = [
-	(v) => !!v || 'Le moyen de contact est requis.',
+	(v: unknown) => !!v || 'Le moyen de contact est requis.',
 ]
+
+async function handleSubmit(e: Promise<{ valid: boolean }>) {
+	const result = await e
+	alert(result.valid ? 'Valide !' : 'Veuillez corriger les erreurs.')
+}
 </script>`,
 			},
 		],
+	},
+	args: {
+		items,
+		label: 'Moyen de contact',
+		required: true,
+		useVuetifyValidation: true,
 	},
 	render: args => ({
 		components: { SelectBtnField, VBtn, VForm },
@@ -586,11 +817,8 @@ const rules = [
 				<VForm @submit.prevent="handleSubmit">
 					<SelectBtnField
 						v-model="value"
-						:items="items"
-						label="Moyen de contact"
-						:use-vuetify-validation="true"
+						v-bind="args"
 						:rules="rules"
-						required
 					/>
 					<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
 				</VForm>

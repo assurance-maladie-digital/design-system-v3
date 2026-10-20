@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { onMounted, ref } from 'vue'
+import { fn } from 'storybook/test'
 import SelectBtnField from './SelectBtnField.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
 
@@ -14,6 +15,9 @@ const meta = {
 	parameters: {
 		layout: 'fullscreen',
 		controls: { exclude: ['copy'] },
+	},
+	args: {
+		'onUpdate:modelValue': fn(),
 	},
 	argTypes: {
 		...getValidationDocumentation('base'),
@@ -125,13 +129,8 @@ export const Default: Story = {
 					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
                     <SelectBtnField
 						v-model="args.modelValue"
-						:items="args.items"
-						:label="args.label"
-						:multiple="args.multiple"
-						:inline="args.inline"
-						:help-text="args.helpText"
-						:readonly="args.readonly"
 						aria-labelledby="contact-method"
+						v-bind="args"
 					/>
 				</div>
             `,
@@ -189,10 +188,8 @@ onMounted(() => {
 					<SelectBtnField
 						ref="fieldRef"
 						v-model="args.modelValue"
-						:items="args.items"
-						label="Moyen de contact"
 						aria-labelledby="contact-method"
-						required
+						v-bind="args"
 					/>
 				</div>
 			`,
@@ -255,9 +252,8 @@ export const Multiple: Story = {
 				<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
 				<SelectBtnField
 					v-model="args.modelValue"
-					:items="args.items"
-					:multiple="args.multiple"
 					aria-labelledby="contact-method"
+					v-bind="args"
 				/>
 			</div>
             `,
@@ -320,9 +316,8 @@ export const Inline: Story = {
 					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
 					<SelectBtnField
 						v-model="args.modelValue"
-						:items="args.items"
-						:inline="args.inline"
 						aria-labelledby="contact-method"
+						v-bind="args"
 					/>
 				</div>
             `,
@@ -387,9 +382,8 @@ export const ItemUnique: Story = {
 					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
 					<SelectBtnField
 						v-model="args.modelValue"
-						:items="args.items"
-						:multiple="args.multiple"
 						aria-labelledby="contact-method"
+						v-bind="args"
 					/>
 				</div>
                 <p class="text-caption" style="margin-top: 20px;">
@@ -456,9 +450,8 @@ export const HelpText: Story = {
 					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
 					<SelectBtnField
 						v-model="args.modelValue"
-						:items="args.items"
 						aria-labelledby="contact-method"
-						:help-text="args.helpText"
+						v-bind="args"
 					/>
 				</div>
             `,
@@ -522,9 +515,8 @@ export const Readonly: Story = {
 					<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
 					<SelectBtnField
 						v-model="args.modelValue"
-						:items="args.items"
 						aria-labelledby="contact-method"
-						:readonly="args.readonly"
+						v-bind="args"
 					/>
 				</div>
 			`,
