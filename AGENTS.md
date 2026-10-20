@@ -239,6 +239,7 @@ Sur WSL, utiliser `test:visual:open` pour l'inspection seulement ; générer les
 | Theming & Tokens | Point d'entrée SCSS `src/assets/settings.scss`, overrides Vuetify, variables CSS `--v-*` (+ shim legacy). | [Theming](doc/Theming/README.md) |
 | DatePicker | Composant le plus complexe (plusieurs modes, nombreux composables). À lire **impérativement** avant toute modif.|
 | Badges de version | Générés par scripts (a11y / fonctionnel). Ne pas éditer à la main. | [Badges](doc/Badges/release-workflow.md) |
+| Changements de contrat | Tout changement de contrat (props/événements/slots, comportement observable) doit être documenté dans `releasesAlerts/vX.X.X/` **avant la fin de la PR**. | [releasesAlerts](releasesAlerts/README.md) |
 | Directives Vue | Directives a11y à privilégier (cf. §7). | [Directives](doc/Directives/README.md) |
 | Scripts / Utils | Outillage et utilitaires publics. | [Scripts](doc/Scripts/README.md) · [Utils](doc/Utils/README.md) |
 

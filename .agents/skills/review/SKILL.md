@@ -35,6 +35,7 @@ Review changes from a factual, user-impact perspective. Report findings first, o
 ### API and security
 
 - Public props, emits, slots, exports, and types remain backward-compatible, or the breaking change is explicit and documented.
+- Any contract change (props, emits, slots, exports, observable behavior) is documented in `releasesAlerts/vX.X.X/` before the PR is completed; its absence on a contract-changing PR is a finding.
 - New public props are typed, documented, and represented in stories.
 - New code does not introduce `any`; type assertions are limited to justified interoperability cases.
 - User-controlled content is not rendered with `v-html` unless it is static or demonstrably sanitized, and inputs are validated before entering component state.
