@@ -478,9 +478,26 @@
 		requestDatePickerOpen()
 	}
 
+	// Dernière valeur notifiée au consommateur. `props.modelValue` ne reflète une
+	// émission qu'au tick suivant : sans ce suivi, une même valeur peut être émise
+	// deux fois dans une chaîne synchrone (ex. effacement depuis le champ texte →
+	// updateModel, puis watcher selectedDates → handleClearedSelectedDates → updateModel).
+	// Le shadow est relâché en fin de tâche (après le flush des watchers, comme
+	// isUpdatingFromInternal dans CalendarMode) : entre deux interactions,
+	// props.modelValue redevient la référence de déduplication. Ce relâchement est
+	// nécessaire chez un consommateur « listener only » : la prop reste périmée et,
+	// sans lui, un resync ultérieur dérivé de cette prop réémettrait la valeur
+	// stale — le consommateur réécrirait la prop et le texte partiel serait
+	// reformaté (le bug initial).
+	const lastNotifiedModelValue = ref<DateInput | undefined>(props.modelValue)
+
 	const updateModel = (value: DateModelValue) => {
 		// Prevent redundant emits
-		if (isModelValueEqual(value, props.modelValue)) return
+		if (isModelValueEqual(value, lastNotifiedModelValue.value)) return
+		lastNotifiedModelValue.value = value
+		setTimeout(() => {
+			lastNotifiedModelValue.value = props.modelValue
+		}, 0)
 		withInternalUpdate(() => emit('update:modelValue', value))
 	}
 
@@ -850,10 +867,35 @@
 		}
 	}
 
+	// Effacement émis par le champ texte (date partiellement effacée ou clear) :
+	// la saisie visible n'est alors pas réécrite par la boucle de synchronisation
+	// (verrou isFormatting de DateTextInput). Flag borné à la tâche en cours et
+	// consommé par handleClearedSelectedDates pour aligner l'état interne sur le
+	// texte réellement affiché. Variable simple (handoff synchrone, jamais lue en
+	// réactif) ; le setTimeout est un filet pour le cas où selectedDates est déjà
+	// null : le watcher ne se déclenche pas et le flag ne serait jamais consommé.
+	let clearedFromTextInput = false
+
+	const markClearedFromTextInput = (): void => {
+		clearedFromTextInput = true
+		setTimeout(() => {
+			clearedFromTextInput = false
+		}, 0)
+	}
+
 	const handleClearedSelectedDates = (): void => {
+		dateSelectionResult.resetRange()
 		updateModel(null)
-		syncSelectionDisplay()
-		displayFormattedDate.value = ''
+		// En mode noCalendar, le v-model écrit null dans textInputValue quand
+		// l'effacement vient de la saisie ; les syncs internes n'écrivent que des chaînes.
+		const fromTextInput = clearedFromTextInput || textInputValue.value === null
+		clearedFromTextInput = false
+		const activeTextInput = props.noCalendar ? dateTextInputRef : dateCalendarTextInputRef
+		const displayedText = fromTextInput ? activeTextInput.value?.displayValue ?? '' : ''
+		withInternalUpdate(() => {
+			textInputValue.value = displayedText
+			displayFormattedDate.value = displayedText
+		})
 		syncVisibleCalendarState(null)
 	}
 
@@ -1327,6 +1369,10 @@
 		// Ne pas traiter les mises à jour internes pour éviter les boucles
 		if (isUpdatingFromInternal.value) return
 
+		if (value === null) {
+			markClearedFromTextInput()
+		}
+
 		withInternalUpdate(() => {
 			updateModel(value)
 			applyResolvedTextInputState(value)
@@ -1337,6 +1383,7 @@
 	watch(
 		() => props.modelValue,
 		(newValue) => {
+			lastNotifiedModelValue.value = newValue
 			if (isUpdatingFromInternal.value) return
 			withInternalUpdate(() => syncFromModelValue(newValue))
 		},
@@ -1453,7 +1500,7 @@
 			textInputValue.value = ''
 			displayFormattedDate.value = ''
 			// Synchroniser le modèle externe
-			emit('update:modelValue', null)
+			updateModel(null)
 		})
 
 		// 3) Forcer la recréation du champ pour réinitialiser l'état interne de Vuetify

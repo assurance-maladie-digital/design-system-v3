@@ -201,7 +201,7 @@ Le composant expose plusieurs méthodes qui peuvent être utilisées via une ré
 Le composant émet plusieurs événements :
 
 ### update:modelValue
-- **Payload** : `string | string[]` - La nouvelle valeur du champ
+- **Payload** : `string | string[] | null` - La nouvelle valeur du champ. `null` est émis dès que la saisie devient invalide ou incomplète (format invalide, date non parsable, plage incomplète ou saisie effacée) : une saisie incomplète invalide le modèle.
 
 ### closed
 - **Description** : Émis lorsque le calendrier est fermé
@@ -216,4 +216,4 @@ Le composant émet plusieurs événements :
 - **Payload** : `string` - La valeur saisie dans le champ
 
 ### date-selected
-- **Payload** : `string | [string, string] | null` - La valeur sélectionnée, au format de retour du composant
+- **Payload** : `string | [string, string] | null` - La valeur sélectionnée, au format de retour du composant. L'événement n'est émis que lorsqu'une sélection est complète (date unique confirmée ou plage complète) : il n'est plus émis lorsque seule la première borne d'une plage est saisie au clavier.

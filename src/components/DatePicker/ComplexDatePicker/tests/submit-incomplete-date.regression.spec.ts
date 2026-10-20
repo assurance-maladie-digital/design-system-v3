@@ -35,7 +35,7 @@ describe('Régression : submit avec saisie incomplète ou effacée', () => {
 		const emitted = wrapper.emitted('update:modelValue')
 		expect(emitted?.[emitted.length - 1]).toEqual(['22/12/2555'])
 
-		// 2. L'utilisateur efface un chiffre → saisie incomplète, modèle inchangé
+		// 2. L'utilisateur efface un chiffre → saisie incomplète, modèle invalidé
 		await input.setValue('22/12/255_')
 		await flushPromises()
 
