@@ -483,8 +483,12 @@
 	// deux fois dans une chaîne synchrone (ex. effacement depuis le champ texte →
 	// updateModel, puis watcher selectedDates → handleClearedSelectedDates → updateModel).
 	// Le shadow est relâché en fin de tâche (après le flush des watchers, comme
-	// isUpdatingFromInternal dans CalendarMode) : entre deux interactions
-	// distinctes, props.modelValue reste la référence de déduplication.
+	// isUpdatingFromInternal dans CalendarMode) : entre deux interactions,
+	// props.modelValue redevient la référence de déduplication. Ce relâchement est
+	// nécessaire chez un consommateur « listener only » : la prop reste périmée et,
+	// sans lui, un resync ultérieur dérivé de cette prop réémettrait la valeur
+	// stale — le consommateur réécrirait la prop et le texte partiel serait
+	// reformaté (le bug initial).
 	const lastNotifiedModelValue = ref<DateInput | undefined>(props.modelValue)
 
 	const updateModel = (value: DateModelValue) => {
@@ -867,12 +871,16 @@
 	// la saisie visible n'est alors pas réécrite par la boucle de synchronisation
 	// (verrou isFormatting de DateTextInput). Flag borné à la tâche en cours et
 	// consommé par handleClearedSelectedDates pour aligner l'état interne sur le
-	// texte réellement affiché.
-	const clearedFromTextInput = ref(false)
+	// texte réellement affiché. Variable simple (handoff synchrone, jamais lue en
+	// réactif) ; le setTimeout est un filet pour le cas où selectedDates est déjà
+	// null : le watcher ne se déclenche pas et le flag ne serait jamais consommé.
+	let clearedFromTextInput = false
 
 	const markClearedFromTextInput = (): void => {
-		clearedFromTextInput.value = true
-		setTimeout(() => (clearedFromTextInput.value = false), 0)
+		clearedFromTextInput = true
+		setTimeout(() => {
+			clearedFromTextInput = false
+		}, 0)
 	}
 
 	const handleClearedSelectedDates = (): void => {
@@ -880,8 +888,8 @@
 		updateModel(null)
 		// En mode noCalendar, le v-model écrit null dans textInputValue quand
 		// l'effacement vient de la saisie ; les syncs internes n'écrivent que des chaînes.
-		const fromTextInput = clearedFromTextInput.value || textInputValue.value === null
-		clearedFromTextInput.value = false
+		const fromTextInput = clearedFromTextInput || textInputValue.value === null
+		clearedFromTextInput = false
 		const activeTextInput = props.noCalendar ? dateTextInputRef : dateCalendarTextInputRef
 		const displayedText = fromTextInput ? activeTextInput.value?.displayValue ?? '' : ''
 		withInternalUpdate(() => {

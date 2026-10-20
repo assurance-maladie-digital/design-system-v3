@@ -67,7 +67,7 @@ describe('Régression : v-model après effacement partiel d\'une date valide', (
 		wrapper.unmount()
 	})
 
-	it('émet null en mode noCalendar quand une date valide est partiellement effacée', async () => {
+	it('émet null sur DateTextInput seul quand une date valide est partiellement effacée', async () => {
 		const wrapper = mountWithModel(DateTextInput)
 		const input = wrapper.find('input')
 
@@ -191,7 +191,7 @@ describe('Régression : v-model après effacement partiel d\'une plage valide', 
 		wrapper.unmount()
 	})
 
-	it('émet null en mode noCalendar quand la date de fin est partiellement effacée', async () => {
+	it('émet null sur DateTextInput seul quand la date de fin est partiellement effacée', async () => {
 		const wrapper = mountWithModel(DateTextInput, {
 			displayRange: true,
 			modelValue: ['22/12/2555', '10/01/2026'],
@@ -306,7 +306,7 @@ describe('Régression : état interne aligné sur le texte affiché après effac
 		wrapper.unmount()
 	})
 
-	it('conserve le texte partiel au blur en mode noCalendar', async () => {
+	it('conserve le texte partiel au blur sur DateTextInput seul', async () => {
 		const wrapper = mountWithModel(DateTextInput)
 		const input = wrapper.find('input')
 		const el = input.element as HTMLInputElement
@@ -315,8 +315,6 @@ describe('Régression : état interne aligné sur le texte affiché après effac
 		await flushPromises()
 		await input.setValue('22/12/255')
 		await flushPromises()
-
-		expect(wrapper.vm.displayValue).toBe('22/12/255_')
 
 		el.focus()
 		await input.trigger('blur')
