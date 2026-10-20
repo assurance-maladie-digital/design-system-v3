@@ -6,7 +6,7 @@ import * as mainStories from '../SyTextArea.stories'
 import * as validationStories from '../validation/Validation.stories'
 import { locales } from '../locales'
 
-const { MaxLines } = composeStories(mainStories)
+const { Default, Required, Trim, ReplaceTabs, MaxLines, AutoWrap, Normalize } = composeStories(mainStories)
 const {
 	WithWarning,
 	WithSuccess,
@@ -46,6 +46,16 @@ function getArrowParams(template: string): Set<string> {
 	return new Set([...template.matchAll(/\(?\s*(\w+)\s*\)?\s*=>/g)].map(([, param]) => param!))
 }
 
+interface TemplateNode { tag?: string, props?: { name: string, rawName?: string, loc: { source: string } }[], children?: TemplateNode[] }
+
+// Noms d'attributs bruts tels qu'écrits dans le template (ex. `uniqueId:` pour une syntaxe JS égarée).
+function getAttributeNames(node: TemplateNode): string[] {
+	const own = (node.props ?? []).map(prop => prop.loc.source.split('=')[0]!)
+	return [...own, ...(node.children ?? []).flatMap(getAttributeNames)]
+}
+
+const validAttributeName = /^(?:[:@#]|v-[\w-]+:?)?[\w-]+(?:\.[\w-]+)*$/
+
 enableAutoUnmount(afterEach)
 
 afterEach(() => {
@@ -53,6 +63,29 @@ afterEach(() => {
 })
 
 describe('SyTextArea stories', () => {
+	it.each([
+		{ name: 'Default', story: Default },
+		{ name: 'Required', story: Required },
+		{ name: 'Trim', story: Trim },
+		{ name: 'ReplaceTabs', story: ReplaceTabs },
+		{ name: 'MaxLines', story: MaxLines },
+		{ name: 'AutoWrap', story: AutoWrap },
+		{ name: 'Normalize', story: Normalize },
+		{ name: 'WithWarning', story: WithWarning },
+		{ name: 'WithSuccess', story: WithSuccess },
+		{ name: 'NoValidateOnBlur', story: NoValidateOnBlur },
+		{ name: 'DisableErrorHandling', story: DisableErrorHandling },
+		{ name: 'SyFormVuetifyValidation', story: SyFormVuetifyValidation },
+		{ name: 'VFormVuetifyValidation', story: VFormVuetifyValidation },
+	])('le template de l\'extrait de $name ne contient que des attributs valides', ({ story }) => {
+		const { descriptor, errors } = parse(getSourceCode(story).map(tab => tab.code).join('\n'))
+		expect(errors).toEqual([])
+
+		const invalidAttributes = getAttributeNames(descriptor.template!.ast as TemplateNode)
+			.filter(name => !validAttributeName.test(name))
+		expect(invalidAttributes).toEqual([])
+	})
+
 	it.each([
 		{ name: 'MaxLines', story: MaxLines },
 		{ name: 'WithWarning', story: WithWarning },

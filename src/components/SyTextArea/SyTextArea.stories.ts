@@ -170,7 +170,6 @@ export const Default: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
-		uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Texte"
 		placeholder="Entrez votre texte ici"
@@ -237,7 +236,6 @@ export const Required: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
-		uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Texte requis"
 		:required="true"
@@ -443,7 +441,6 @@ export const Trim: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
-		uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Trim text area"
 		:trim="true"
@@ -484,7 +481,6 @@ export const ReplaceTabs: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
-	    uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Replace tabs text area"
 		:replace-tabs="4"
@@ -596,7 +592,6 @@ export const AutoWrap: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
-	    uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Auto wrap text area"
 		:auto-wrap="50"
@@ -642,7 +637,6 @@ export const Normalize: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
-	    uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Normalize text area"
 		:normalize="true"
