@@ -2,7 +2,6 @@ import { describe, it, expect, vi, afterEach, beforeAll, beforeEach } from 'vite
 import { mount, flushPromises } from '@vue/test-utils'
 import { LocalStorageUtility } from '@/utils/localStorageUtility'
 import type { DataOptions, FilterOption } from '@/components/Tables/common/types'
-
 import SyServerTable from '../SyServerTable.vue'
 import SyTableFilter from '../../common/SyTableFilter.vue'
 
@@ -209,12 +208,38 @@ describe('SyServerTable', () => {
 		expect(pinnedTh.every(th => (th.attributes('style') || '').includes('background: var(--sy-table-header-bg-pinned)'))).toBe(true)
 
 		// Vérifier les cellules sticky du corps
-		const pinnedTd = wrapper.findAll('tbody td[style*="position: sticky"]')
+		const pinnedTd = wrapper.findAll('tbody td.sy-table__pinned')
 		expect(pinnedTd.length).toBeGreaterThan(0)
-		expect(pinnedTd.some(td => (td.attributes('style') || '').includes('left:'))).toBe(true)
-		expect(pinnedTd.some(td => (td.attributes('style') || '').includes('right:'))).toBe(true)
+		expect(pinnedTd.every(td => !(td.attributes('style') || '').includes('position: sticky'))).toBe(true)
+		expect(pinnedTd.some(td => td.classes().includes('sy-table__pinned--left'))).toBe(true)
+		expect(pinnedTd.some(td => td.classes().includes('sy-table__pinned--right'))).toBe(true)
 
 		activeWrappers.push(wrapper)
+	})
+
+	it('applies striped background to even rows', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'pinned-columns-test',
+				showSelect: true,
+				pinnedColumns: [
+					'data-table-select',
+					{ key: 'name', side: 'left' },
+					{ key: 'age', side: 'right' },
+				],
+				headers,
+				items: fakeItems,
+				serverItemsLength: fakeItems.length,
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		const rows = wrapper.findAll('.v-table tbody tr')
+
+		expect(rows.length).toBeGreaterThan(1)
 	})
 
 	it('makes selection column sticky when stickySelect is true', async () => {

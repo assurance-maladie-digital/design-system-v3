@@ -447,11 +447,36 @@ describe('SyTable', () => {
 		expect(pinnedTh.some(th => (th.attributes('style') || '').includes('right:'))).toBe(true)
 		expect(pinnedTh.every(th => (th.attributes('style') || '').includes('background: var(--sy-table-header-bg-pinned)'))).toBe(true)
 
-		const pinnedTd = wrapper.findAll('tbody td[style*="position: sticky"]')
+		const pinnedTd = wrapper.findAll('tbody td.sy-table__pinned')
 		expect(pinnedTd.length).toBeGreaterThan(0)
-		expect(pinnedTd.some(td => (td.attributes('style') || '').includes('left:'))).toBe(true)
-		expect(pinnedTd.some(td => (td.attributes('style') || '').includes('right:'))).toBe(true)
-		expect(pinnedTd.every(td => (td.attributes('style') || '').includes('background: rgb(var(--v-theme-surface))'))).toBe(true)
+		expect(pinnedTd.every(td => !(td.attributes('style') || '').includes('position: sticky'))).toBe(true)
+		expect(pinnedTd.some(td => td.classes().includes('sy-table__pinned--left'))).toBe(true)
+		expect(pinnedTd.some(td => td.classes().includes('sy-table__pinned--right'))).toBe(true)
+	})
+
+	it('applies striped background to even rows', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'pinned-columns-test',
+				showSelect: true,
+				pinnedColumns: [
+					'data-table-select',
+					{ key: 'name', side: 'left' },
+					{ key: 'age', side: 'right' },
+				],
+				headers,
+				items: fakeItems,
+				serverItemsLength: fakeItems.length,
+			},
+		})
+
+		await wrapper.vm.$nextTick()
+		await flushPromises()
+
+		const rows = wrapper.findAll('.v-table tbody tr')
+
+		expect(rows.length).toBeGreaterThan(1)
 	})
 
 	it('enables selection when showSelect is true', async () => {
