@@ -837,6 +837,40 @@ describe('useDatePickerValidation', () => {
 		})
 	})
 
+	describe('régression : contrat des custom rules en saisie texte', () => {
+		it('passe un objet Date au validate des custom rules en saisie texte, comme en sélection calendrier', async () => {
+			const received: unknown[] = []
+			const options = createOptions({
+				noCalendar: ref(true),
+				displayFormat: computed(() => 'DD/MM/YYYY'),
+				hasInteracted: ref(true),
+				parseDate: (value: string) => {
+					const [day, month, year] = value.split('/').map(Number)
+					return day && month && year ? new Date(year, month - 1, day) : null
+				},
+				customRules: ref([{
+					type: 'custom',
+					options: {
+						validate: (value: unknown) => {
+							received.push(value)
+							return true
+						},
+					},
+				}]),
+			})
+			const { validateTextInput } = useDatePickerValidation(options)
+
+			await validateTextInput('07/10/2026')
+
+			expect(received).toHaveLength(1)
+			expect(received[0]).toBeInstanceOf(Date)
+			const date = received[0] as Date
+			expect(date.getFullYear()).toBe(2026)
+			expect(date.getMonth()).toBe(9)
+			expect(date.getDate()).toBe(7)
+		})
+	})
+
 	describe('régression : validation texte asynchrone', () => {
 		it('ignore une plage obsolète après la validation asynchrone de sa date de début', async () => {
 			let releaseFirstDate!: () => void
@@ -853,12 +887,14 @@ describe('useDatePickerValidation', () => {
 					type: 'custom',
 					options: {
 						validate: (value: unknown) => {
-							if (value === '01/01/2025') {
+							const isDay = (day: number) => value instanceof Date
+								&& value.getFullYear() === 2025 && value.getMonth() === 0 && value.getDate() === day
+							if (isDay(1)) {
 								return new Promise<boolean>((resolve) => {
 									releaseFirstDate = () => resolve(true)
 								})
 							}
-							return value === '02/01/2025' ? 'Erreur périmée' : true
+							return isDay(2) ? 'Erreur périmée' : true
 						},
 					},
 				}]),

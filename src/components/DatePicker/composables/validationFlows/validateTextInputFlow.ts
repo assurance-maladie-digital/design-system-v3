@@ -2,7 +2,7 @@ import { unref } from 'vue'
 import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 import { locales } from '../../locales'
 import type { DatePickerRule } from '../../types'
-import { adaptCustomRules, validateEmptyOrIncompleteDate } from '../../utils/validationUtils'
+import { validateEmptyOrIncompleteDate } from '../../utils/validationUtils'
 import { getRangeValidationError } from '../../utils/dateFormattingUtils'
 import { validateDateFormat, isDateComplete } from '../useDateFormatUtils'
 import type { ValidationContext } from './types'
@@ -55,21 +55,19 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 	}
 
 	/**
-	 * Adapte les règles DatePicker au format du validateur unifié.
-	 * Les règles personnalisées de saisie texte reçoivent une chaîne formatée.
+	 * Convertit les règles DatePicker vers le type attendu par le validateur unifié.
+	 * Les règles sont transmises telles quelles : `options.validate` reçoit l'objet
+	 * `Date` parsé depuis la saisie texte, comme en sélection calendrier.
 	 */
-	const getAdaptedRules = (
+	const toValidationRules = (
 		customRules: DatePickerRule[],
 		warningRules: DatePickerRule[],
 		successRules: DatePickerRule[],
-	): { customRules: ValidationRule[], warningRules: ValidationRule[], successRules: ValidationRule[] } => {
-		const format = unref(options.displayFormat) ?? ''
-		return {
-			customRules: adaptCustomRules(customRules, format) as unknown as ValidationRule[],
-			warningRules: adaptCustomRules(warningRules, format) as unknown as ValidationRule[],
-			successRules: adaptCustomRules(successRules, format) as unknown as ValidationRule[],
-		}
-	}
+	): { customRules: ValidationRule[], warningRules: ValidationRule[], successRules: ValidationRule[] } => ({
+		customRules: customRules as unknown as ValidationRule[],
+		warningRules: warningRules as unknown as ValidationRule[],
+		successRules: successRules as unknown as ValidationRule[],
+	})
 
 	/**
 	 * Valide une date (objet Date) avec les custom rules filtrées et adaptées.
@@ -84,8 +82,8 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 		if (readyRules === null) {
 			return true
 		}
-		const adapted = getAdaptedRules(readyRules, filterReadyRules(options.customWarningRules.value), filterReadyRules(options.customSuccessRules?.value ?? []))
-		const result = ctx.validateField(date, adapted.customRules, adapted.warningRules, adapted.successRules)
+		const rules = toValidationRules(readyRules, filterReadyRules(options.customWarningRules.value), filterReadyRules(options.customSuccessRules?.value ?? []))
+		const result = ctx.validateField(date, rules.customRules, rules.warningRules, rules.successRules)
 
 		if (result instanceof Promise) {
 			return result.then(resolvedResult => (
@@ -191,12 +189,12 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 				if (readyRules === null) {
 					return true
 				}
-				const adapted = getAdaptedRules(readyRules, filterReadyRules(options.customWarningRules.value), filterReadyRules(options.customSuccessRules?.value ?? []))
+				const rules = toValidationRules(readyRules, filterReadyRules(options.customWarningRules.value), filterReadyRules(options.customSuccessRules?.value ?? []))
 				const result = await ctx.validateField(
 					null,
-					adapted.customRules,
-					adapted.warningRules,
-					adapted.successRules,
+					rules.customRules,
+					rules.warningRules,
+					rules.successRules,
 				)
 				if (token !== ctx.currentValidationToken.value) return !ctx.displayHasError.value
 				return !result.hasError

@@ -95,6 +95,8 @@ Le formatage automatique intelligent ajoute les séparateurs pendant la saisie. 
 
 ### Avec règles de validation personnalisées
 
+Le `validate` des règles personnalisées (`customRules`, `customWarningRules`, `customSuccessRules`) reçoit toujours un objet `Date` — en saisie texte comme en sélection calendrier — ou `null` pour un champ vide. Le `v-model` reste une chaîne au format `dateFormatReturn`.
+
 <Canvas of={ValidationStories.CustomRules}/>
 
 ### Avec règles d'avertissement

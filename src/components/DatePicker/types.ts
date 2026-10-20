@@ -35,6 +35,11 @@ export type DateValue = DateObjectValue
 export interface DatePickerRuleOptions {
 	message?: string
 	date?: string | Date
+	/**
+	 * Reçoit un objet `Date` (saisie texte comme sélection calendrier)
+	 * ou `null` quand le champ est vide.
+	 * Le `v-model` reste une chaîne au format `dateFormatReturn`.
+	 */
 	validate?: (value: unknown) => boolean | string | Promise<boolean | string>
 	[key: string]: unknown
 }

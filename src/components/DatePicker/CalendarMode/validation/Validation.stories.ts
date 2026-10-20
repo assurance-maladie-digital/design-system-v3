@@ -603,7 +603,7 @@ const endDatePickerRef = ref(null)
 const createEndDateValidationRule = () => ({
   type: 'custom',
   options: {
-    validate: (value: string) => {
+    validate: (value: string | Date | null) => {
       if (!value) return true
       if (!startDate.value) return 'Veuillez d\u2019abord sélectionner une date de début'
       const start = parseDate(startDate.value, 'DD/MM/YYYY')
@@ -618,7 +618,7 @@ const createEndDateValidationRule = () => ({
 const createStartDateValidationRule = () => ({
   type: 'custom',
   options: {
-    validate: (value: string) => {
+    validate: (value: string | Date | null) => {
       if (!value || !endDate.value) return true
       const start = parseDate(value, 'DD/MM/YYYY')
       const end = parseDate(endDate.value, 'DD/MM/YYYY')
@@ -681,7 +681,7 @@ watch(endDate, () => {
 				const createEndDateValidationRule = () => ({
 					type: 'custom',
 					options: {
-						validate: (value: string) => {
+						validate: (value: string | Date | null) => {
 							if (!value) return true
 							if (!startDate.value) return 'Veuillez d\u2019abord sélectionner une date de début'
 							const start = parseDate(startDate.value, 'DD/MM/YYYY')
@@ -696,7 +696,7 @@ watch(endDate, () => {
 				const createStartDateValidationRule = () => ({
 					type: 'custom',
 					options: {
-						validate: (value: string) => {
+						validate: (value: string | Date | null) => {
 							if (!value || !endDate.value) return true
 							const start = parseDate(value, 'DD/MM/YYYY')
 							const end = parseDate(endDate.value, 'DD/MM/YYYY')

@@ -169,7 +169,7 @@ export const CustomRules: Story = {
 						:custom-rules="[{
 							type: 'custom',
 							options: {
-								validate: value => !value || !value.includes('2024'),
+								validate: value => !value || value.getFullYear() !== 2024,
 								message: 'Les dates en 2024 ne sont pas autorisées',
 								successMessage: 'Les dates hors 2024 sont autorisées',
 								fieldIdentifier: 'date'
@@ -189,7 +189,7 @@ export const CustomRules: Story = {
 		customRules: [{
 			type: 'custom',
 			options: {
-				validate: (value: unknown) => !value || !(value as string).includes('2024'),
+				validate: (value: unknown) => !(value instanceof Date) || value.getFullYear() !== 2024,
 				message: 'Les dates en 2024 ne sont pas autorisées',
 				successMessage: 'Les dates hors 2024 sont autorisées',
 				fieldIdentifier: 'date',
@@ -236,7 +236,7 @@ export const WarningRules: Story = {
             :custom-warning-rules="[{
               type: 'custom',
               options: {
-                validate: value => !value || !value.includes('2025'),
+                validate: value => !value || value.getFullYear() !== 2025,
                 warningMessage: 'Les dates en 2025 ne sont pas autorisées',
                 successMessage: 'Date hors 2025',
                 fieldIdentifier: 'date',
@@ -255,7 +255,7 @@ export const WarningRules: Story = {
 		customWarningRules: [{
 			type: 'custom',
 			options: {
-				validate: (value: unknown) => !value || !(value as string).includes('2025'),
+				validate: (value: unknown) => !(value instanceof Date) || value.getFullYear() !== 2025,
 				warningMessage: 'Les dates en 2025 ne sont pas autorisées',
 				successMessage: 'Date hors 2025',
 				fieldIdentifier: 'date',
