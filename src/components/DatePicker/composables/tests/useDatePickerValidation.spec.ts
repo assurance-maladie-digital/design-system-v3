@@ -894,6 +894,58 @@ describe('useDatePickerValidation', () => {
 			expect(received[0]).toBe('2026-10-07')
 		})
 
+		it('passe chaque borne d\'une plage au format returnFormat (displayRange)', async () => {
+			const received: unknown[] = []
+			const options = createOptions({
+				noCalendar: ref(true),
+				displayRange: ref(true),
+				displayFormat: computed(() => 'DD/MM/YYYY'),
+				returnFormat: computed(() => 'YYYY-MM-DD'),
+				hasInteracted: ref(true),
+				parseDate,
+				customRules: ref([{
+					type: 'custom',
+					options: {
+						validate: (value: unknown) => {
+							received.push(value)
+							return true
+						},
+					},
+				}]),
+			})
+			const { validateTextInput } = useDatePickerValidation(options)
+
+			await validateTextInput('07/10/2026 - 15/10/2026')
+
+			expect(received).toEqual(['2026-10-07', '2026-10-15'])
+		})
+
+		it('passe la date de début au format returnFormat quand seule la première borne est saisie (displayRange)', async () => {
+			const received: unknown[] = []
+			const options = createOptions({
+				noCalendar: ref(true),
+				displayRange: ref(true),
+				displayFormat: computed(() => 'DD/MM/YYYY'),
+				returnFormat: computed(() => 'YYYY-MM-DD'),
+				hasInteracted: ref(true),
+				parseDate,
+				customRules: ref([{
+					type: 'custom',
+					options: {
+						validate: (value: unknown) => {
+							received.push(value)
+							return true
+						},
+					},
+				}]),
+			})
+			const { validateTextInput } = useDatePickerValidation(options)
+
+			await validateTextInput('07/10/2026 - ')
+
+			expect(received).toEqual(['2026-10-07'])
+		})
+
 		it('les règles écrites pour une chaîne (.includes) fonctionnent en saisie texte', async () => {
 			const options = createOptions({
 				noCalendar: ref(true),
