@@ -107,6 +107,13 @@
 		close: label => locales.value.closeField(label),
 	}
 
+	// Match the disabled background without dimming readonly text or blocking focus.
+	const fieldBackgroundColor = computed(() =>
+		props.readonly && !props.disabled && props.bgColor === 'white'
+			? 'rgba(var(--v-theme-white), var(--v-disabled-opacity))'
+			: props.bgColor,
+	)
+
 	const emit = defineEmits([
 		'update:modelValue',
 		'input',
@@ -592,7 +599,7 @@
 			:aria-invalid="hasError ? 'true' : undefined"
 			:aria-required="props.required ? 'true' : undefined"
 			:base-color="props.baseColor"
-			:bg-color="props.bgColor"
+			:bg-color="fieldBackgroundColor"
 			:center-affix="props.centerAffix"
 			:color="props.color"
 			:counter="props.counter"
