@@ -59,6 +59,27 @@ for (const [group, stories] of groups) {
 	})
 }
 
+it('gives each table and pagination a distinct accessible name in ManyTables', async () => {
+	const { ManyTables } = composeStories(tableStories)
+	const wrapper = mount(ManyTables, { attachTo: document.body })
+	await flushPromises()
+	expect(wrapper.findAll('table > caption').map(caption => caption.text())).toEqual([
+		'Contacts de l’équipe A',
+		'Contacts de l’équipe B',
+	])
+	for (const caption of wrapper.findAll('table > caption')) expect(caption.classes()).toContain('d-sr-only')
+	const names = wrapper.findAll('nav').map((nav) => {
+		const labelId = nav.attributes('aria-labelledby')
+		return document.getElementById(labelId)?.textContent?.trim()
+	})
+	expect(names).toEqual([
+		'Pagination du tableau Contacts de l’équipe A',
+		'Pagination du tableau Contacts de l’équipe B',
+	])
+	const result = await axe(wrapper.element as HTMLElement, { runOnly: ['landmark-unique'] })
+	expect(result.violations).toEqual([])
+})
+
 it('connects the column controls button to its open dialog', async () => {
 	const { ColumnControls } = composeStories(columnStories)
 	const wrapper = mount(ColumnControls, { attachTo: document.body })

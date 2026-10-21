@@ -31,6 +31,7 @@
 
 	const props = withDefaults(defineProps<SyTableProps>(), {
 		caption: '',
+		hideCaption: false,
 		saveState: true,
 		showFilters: false,
 		resizableColumns: false,
@@ -381,6 +382,7 @@
 				<caption
 					v-if="props.caption.trim()"
 					class="text-subtitle-1 text-center pa-4"
+					:class="{ 'd-sr-only': props.hideCaption || props.caption === '' }"
 				>
 					{{ props.caption }}
 				</caption>

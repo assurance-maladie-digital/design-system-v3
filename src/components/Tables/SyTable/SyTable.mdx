@@ -27,6 +27,16 @@ import '@/stories/styles/shared.css';
 
 ## Fonctionnalités
 
+### Légende masquée visuellement
+
+Pour donner un titre accessible au tableau sans l’afficher à l’écran, renseignez `caption` et activez `hideCaption` (désactivé par défaut) :
+
+```vue
+<SyTable caption="Liste des contacts" hide-caption ... />
+```
+
+La légende reste disponible pour les lecteurs d’écran et sert à nommer la pagination. Avec plusieurs tableaux, donnez une légende différente à chacun.
+
 ### Stockage local des options
 
 Le composant `SyTable` enregistre automatiquement les options du tableau (tri, pagination, etc.) dans le localStorage du navigateur. Ces options sont restaurées lorsque l'utilisateur revient sur la page.
