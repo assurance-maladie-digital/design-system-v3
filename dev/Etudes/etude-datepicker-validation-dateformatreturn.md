@@ -53,7 +53,18 @@ Avant de corriger, il faut décider ce que `options.validate` reçoit :
 
 B semble le bon candidat pour un correctif rapide (1.1.7) : on corrige la régression. A irait plutôt dans une mineure, avec release note. À trancher en équipe.
 
-> **Décision (PR #2631, revue)** : variante **A2** retenue — en saisie texte, `validate` reçoit une **chaîne au format `dateFormatReturn || format`** (réponse exacte au signalement + restauration de la compat `.includes()` des versions ≤ 1.2.0) ; en sélection calendrier, `validate` reçoit toujours un `Date` ; `null` en champ vide. Le calendrier n'est PAS passé à la chaîne (pas d'étape 3 : ç'aurait été un breaking change pour tous les projets). Reste à signaler : les règles qui parsaient la chaîne au format *d'affichage* (`parseDate(value, 'DD/MM/YYYY')`) cassent quand `dateFormatReturn ≠ format` — annoncé dans `dev/ReleasesAlerts/v1.2.1.md`.
+> **Décision (revue des PR #2631 puis #2679)** : variante **A2** retenue. Lorsque `validate` reçoit une chaîne, elle est désormais au format `dateFormatReturn || format`, comme le `v-model` (réponse exacte au signalement). Le calendrier n'est PAS passé à la chaîne (pas d'étape 3 : ç'aurait été un breaking change pour tous les projets). Sans `dateFormatReturn`, rien ne change.
+>
+> Contrat résultant, mesuré mode par mode (le type dépend du mode du composant, pas seulement de la façon de saisir) :
+>
+> | Composant / mode | `validate` reçoit |
+> |---|---|
+> | `DatePicker` avec `noCalendar` | une chaîne |
+> | `DatePicker` en mode calendrier (saisie clavier ou sélection) | un objet `Date` |
+> | `DatePicker` avec `useCombinedMode` (`ComplexDatePicker`) | à la saisie (blur) : une chaîne ; à la soumission (`validateOnSubmit`, `SyForm`) : une chaîne **puis** un objet `Date` |
+> | Champ vide | `null` |
+>
+> Reste à signaler : les règles qui parsaient la chaîne au format *d'affichage* (`parseDate(value, 'DD/MM/YYYY')`) cassent quand `dateFormatReturn ≠ format`, annoncé dans `dev/ReleasesAlerts/v1.2.1.md`. Le double appel à la soumission en `useCombinedMode` (une règle écrite pour une chaîne refuse une date valide) est hors périmètre, suivi dans #2681.
 
 ### Si A
 
@@ -76,7 +87,7 @@ Nuance : en 1.1.5, `validate` ne recevait pas toujours un `Date` en saisie texte
 
 1. `DatePicker` en `useCombinedMode` avec `format="DD/MM/YYYY"` (défaut) et `dateFormatReturn="YYYY-MM-DD"`, plus une `customRule` de type `custom` qui capture la valeur reçue.
 2. Saisir `07/10/2026` : aujourd'hui `v-model = "2026-10-07"` mais `validate` reçoit `"07/10/2026"`.
-3. Après correction : A → `validate` reçoit `"2026-10-07"` sur saisie texte et calendrier ; B → un objet `Date` dans les deux modes. Dans tous les cas, saisie et calendrier doivent donner le même type de valeur.
+3. Après correction (A2) : au blur, `validate` reçoit `"2026-10-07"`, identique au `v-model`. Le type reçu reste dépendant du mode (voir le tableau de la Décision) : l'uniformisation entre saisie et calendrier n'est pas l'objet de ce correctif et est suivie dans #2681.
 
 ## Impact
 
@@ -85,21 +96,23 @@ Nuance : en 1.1.5, `validate` ne recevait pas toujours un `Date` en saisie texte
 - Zones à risque : `validateTextInputFlow.ts`, `validateDatesFlow.ts`, `validationUtils.ts`, `ComplexDatePicker.vue`, `CalendarMode/DatePicker.vue`, `DateTextInput.vue` ; tests `validationUtils.spec.ts`, `useDatePickerValidation.spec.ts`, `DatePicker.spec.ts` / `ComplexDatePicker.spec.ts`.
 - Nos propres stories ont le même bug : `Validation.stories.ts:188,215` font `new Date(value)` sur `07/10/2026` — le moteur JS lit le format américain (10 juillet) et `13/10/2024` donne une date invalide, la règle « pas de 2024 » laisse donc passer cette date. À corriger dans le périmètre.
 
-## xhecklist — B : `Date` partout + repli compat chaîne (TypeError → retry + `devWarn`)
-x (composable + composant `useCombinedMode`)
-- [x] La correction traite la cause (format transmis au `validate`), pas su:eplagen cotlertes e  tesf composable ;l`isValio teOnBltr` inchangé (la saisie texee valide au blur, le calendrier diffèxt au blur —ins exstat)
-- [x] Test de non-régression ajouté sur saisie texte ET sélectue)` → `instanceof Date` / `getFillYoar(n ),cannotations aalenédrisur`Dae| null`
-- [ ] Non-régression sur les plages (`displayRange`) et `isValidateOnBlur`, qui suivent d'autres chemins
-- [ ] Stories `Validation.stories.ts`  (pas de markup modifié)corrigées (`new Date(value)` lignes 188 et 215)
-- [ ] `pnpm vitest run src/components/DatePicker` passe sur le pé (pas de rendu modifié)rimètre modifié
-- [x] Tests a11y si du markupc nsole ; changéde dépréiation volntaire en dev quand le repli chaîe e décench
-- [x] Tests visuels Cypress / baselines à jour JSDi  `types.ts`, `.mdx`lees 3rendu chans,`dev/Rlrt/v1.2.1.md`) —`Da | ll`
-- [ ] Pas de nouvelle erreur ou warning console
-- [ ] Contrat de `options.validate` documenté (doc du composant + release note si A est retenue)
+## Checklist — A2 : chaîne au format `dateFormatReturn || format` lorsque `validate` reçoit une chaîne
+
+- [x] La correction traite la cause : `returnFormat` transmis à `adaptCustomRules` dans le flux de saisie texte ; le parsing reste sur le format d'affichage
+- [x] Tests de non-régression : saisie texte avec et sans `returnFormat`, champ vide (`null`), sélection calendrier (`Date`), plages (`displayRange` : plage complète et première borne seule), scénario de l'issue de bout en bout (`DatePicker` en `useCombinedMode`)
+- [ ] Non-régression `isValidateOnBlur` avec `returnFormat` : non couverte
+- [x] Stories : plus de `new Date(value)` ; stories `DateTextInput` `CustomRules` / `WarningRules` corrigées (règles sur la chaîne) et validées au montage
+- [x] `pnpm vitest run src/components/DatePicker` passe (619/619)
+- [x] Tests a11y : non concernés, pas de markup de composant modifié
+- [ ] Tests visuels Cypress : en attente de la CI de #2679
+- [ ] Pas de nouvelle erreur ou warning console : non vérifié en navigateur
+- [x] Contrat de `options.validate` documenté : `dev/ReleasesAlerts/v1.2.1.md`, `.mdx` (`DatePicker`, `ComplexDatePicker`, `NoCalendar`, `DatePickerOverview`), JSDoc de `types.ts`
+- [ ] Vérification en navigateur sur la preview Netlify (stories `DateTextInput` `CustomRules` / `WarningRules`)
 
 ## Tickets liés
 
 - Rapport de bug : [#2627 — La validation n'utilise pas le format dateFormatReturn](https://github.com/assurance-maladie-digital/design-system-v3/issues/2627)
 - [#2499 — Migration de la validation des DatePickers](https://github.com/assurance-maladie-digital/design-system-v3/pull/2499) (`2f3c708a`) : régression introduite en 1.1.6
 - [#684 — Feat/improve dp ranges](https://github.com/assurance-maladie-digital/design-system-v3/pull/684) (`b57bc9d5`) : première version de la conversion, contexte uniquement
-- Étude revue dans la PR #2631
+- Étude revue dans la PR #2631, correctif livré par la PR #2679
+- [#2681 — Date valide refusée à la soumission en `useCombinedMode`](https://github.com/assurance-maladie-digital/design-system-v3/issues/2681) : double appel de `validate` (chaîne puis `Date`), hors périmètre
