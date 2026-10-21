@@ -21,6 +21,11 @@ const meta = {
 	argTypes: {
 		...commonTableArgTypes,
 		...syTableItemsArgTypes,
+		hideCaption: {
+			description: 'Masque la légende à l’écran en la conservant pour les lecteurs d’écran.',
+			control: 'boolean',
+			table: { defaultValue: { summary: 'false' } },
+		},
 	},
 } satisfies Meta<typeof SyTable & typeof VDataTable>
 
@@ -39,6 +44,8 @@ export const Default: Story = {
 						v-model:options="options"
 						:headers="headers"
 						:items="items"
+						caption="Liste des contacts"
+						hide-caption
 						suffix="default-table"
 					/>
 				</template>
@@ -157,7 +164,8 @@ export const Default: Story = {
 		'options': {
 			itemsPerPage: 4,
 		},
-		'caption': '',
+		'caption': 'Liste des contacts',
+		'hideCaption': true,
 		'suffix': 'default-table',
 		'density': 'default',
 		'striped': false,
@@ -191,12 +199,16 @@ export const ManyTables: Story = {
 							v-model:options="options1"
 							:headers="headers"
 							:items="items1"
+							caption="Contacts de l’équipe A"
+							hide-caption
 							suffix="table-1"
 						/>
 						<SyTable
 							v-model:options="options2"
 							:headers="headers"
 							:items="items2"
+							caption="Contacts de l’équipe B"
+							hide-caption
 							suffix="table-2"
 						/>
 					</div>
@@ -318,6 +330,7 @@ export const ManyTables: Story = {
 			},
 		],
 		'caption': '',
+		'hideCaption': true,
 		'suffix': 'multi-server',
 		'density': 'default',
 		'striped': false,
@@ -340,12 +353,14 @@ export const ManyTables: Story = {
 					<SyTable
 						v-model:options="options1"
 						v-bind="args"
+						caption="Contacts de l’équipe A"
 						suffix="table1"
 						class="mb-10"
 					/>
 					<SyTable
 						v-model:options="options2"
 						v-bind="args"
+						caption="Contacts de l’équipe B"
 						suffix="table2"
 					/>
 				</div>

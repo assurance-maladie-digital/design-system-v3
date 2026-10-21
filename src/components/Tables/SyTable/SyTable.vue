@@ -31,6 +31,7 @@
 
 	const props = withDefaults(defineProps<SyTableProps>(), {
 		caption: '',
+		hideCaption: false,
 		saveState: true,
 		showFilters: false,
 		resizableColumns: false,
@@ -375,7 +376,7 @@
 			<template #colgroup>
 				<caption
 					class="text-subtitle-1 text-center pa-4"
-					:class="{ 'd-sr-only': props.caption === '' }"
+					:class="{ 'd-sr-only': props.hideCaption || props.caption === '' }"
 				>
 					{{ props.caption }}
 				</caption>
