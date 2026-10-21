@@ -108,6 +108,14 @@ const meta = {
 				defaultValue: { summary: 'primary' },
 			},
 		},
+		bgColor: {
+			control: { type: 'text' },
+			description: 'Couleur de fond du champ',
+			table: {
+				type: { summary: 'string' },
+				defaultValue: { summary: 'white' },
+			},
+		},
 		variant: {
 			control: { type: 'select' },
 			options: ['filled', 'outlined', 'underlined'],
@@ -172,9 +180,7 @@ export const Default: Story = {
 	<SyTextArea
 		v-model="text"
 		label="Texte"
-		placeholder="Entrez votre texte ici"
-		style="width: 100%"
-	></SyTextArea>
+	/>
 </template>
 				`,
 			},

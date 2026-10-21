@@ -63,6 +63,22 @@ afterEach(() => {
 })
 
 describe('SyTextArea stories', () => {
+	it('l\'extrait de Default ne contient que les attributs de ses args', () => {
+		const template = getSource(Default, 'Template')
+
+		expect(Default.args).not.toHaveProperty('placeholder')
+		expect(template).not.toContain('placeholder')
+		expect(template).not.toContain('style=')
+	})
+
+	it.each([
+		{ name: 'principal', meta: mainStories.default },
+		{ name: 'de validation', meta: validationStories.default },
+	])('le meta $name déclare color et bgColor en contrôle texte', ({ meta }) => {
+		expect(meta.argTypes?.color?.control).toEqual({ type: 'text' })
+		expect(meta.argTypes?.bgColor?.control).toEqual({ type: 'text' })
+	})
+
 	it.each([
 		{ name: 'Default', story: Default },
 		{ name: 'Required', story: Required },

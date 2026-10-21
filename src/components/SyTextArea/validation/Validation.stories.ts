@@ -11,6 +11,24 @@ const meta: Meta<typeof SyTextArea> = {
 	parameters: {
 		layout: 'fullscreen',
 	},
+	argTypes: {
+		color: {
+			control: { type: 'text' },
+			description: 'Couleur du champ',
+			table: {
+				type: { summary: 'string' },
+				defaultValue: { summary: 'primary' },
+			},
+		},
+		bgColor: {
+			control: { type: 'text' },
+			description: 'Couleur de fond du champ',
+			table: {
+				type: { summary: 'string' },
+				defaultValue: { summary: 'white' },
+			},
+		},
+	},
 	args: {
 		'onUpdate:modelValue': fn(),
 	},
