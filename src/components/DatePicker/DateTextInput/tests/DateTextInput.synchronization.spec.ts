@@ -8,9 +8,9 @@ enableAutoUnmount(afterEach)
 
 const validRange = '10/01/2024 - 20/01/2024'
 
-// Les custom rules reçoivent désormais un objet Date (saisie texte comme calendrier)
-const jan10_2024 = new Date(2024, 0, 10)
-const isJan10_2024 = (value: unknown) => value instanceof Date && value.getTime() === jan10_2024.getTime()
+// Les custom rules reçoivent désormais la date formatée (dateFormatReturn || format) en saisie texte
+const jan10_2024 = '10/01/2024'
+const isJan10_2024 = (value: unknown) => value === jan10_2024
 
 describe('DateTextInput synchronization', () => {
 	const SyFormDateTextInputHost = defineComponent({
