@@ -43,9 +43,9 @@ export const isModelValueEqual = (a: DateModelValue | undefined, b: DateInput | 
 /**
  * Adapte les règles personnalisées pour assurer la compatibilité avec différents types de valeurs
  *
- * En saisie texte, `validate` reçoit une chaîne : les `Date` sont converties au format
- * passé en paramètre (`dateFormatReturn || format` — voir `validateTextInputFlow`).
- * En sélection calendrier, les règles reçoivent le `Date` tel quel.
+ * Utilisé par le flux de saisie texte (`validateTextInputFlow`) : les `Date` sont converties
+ * au format passé en paramètre (`dateFormatReturn || format`). Les autres flux (mode calendrier)
+ * n'utilisent pas cet adaptateur et transmettent le `Date` tel quel.
  *
  * @param rules - Règles personnalisées à adapter
  * @param format - Format de date à utiliser pour la conversion

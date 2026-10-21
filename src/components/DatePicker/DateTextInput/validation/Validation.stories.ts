@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import type { DatePickerRule } from '@/components/DatePicker/types'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { fn } from 'storybook/test'
 
 const meta = {
@@ -159,6 +159,7 @@ export const CustomRules: Story = {
 				code: `
 				<template>
 					<DatePicker
+						ref="datePickerRef"
 						v-model="date"
 						date-format-return="DD/MM/YYYY"
 						format="DD/MM/YYYY"
@@ -169,7 +170,7 @@ export const CustomRules: Story = {
 						:custom-rules="[{
 							type: 'custom',
 							options: {
-								validate: value => !value || value.getFullYear() !== 2024,
+								validate: value => !value || !value.includes('2024'),
 								message: 'Les dates en 2024 ne sont pas autorisées',
 								successMessage: 'Les dates hors 2024 sont autorisées',
 								fieldIdentifier: 'date'
@@ -178,6 +179,20 @@ export const CustomRules: Story = {
 					/>
 				</template>
 				`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+
+const date = ref<string | null>('21/12/2024')
+const datePickerRef = ref<InstanceType<typeof DatePicker>>()
+
+onMounted(() => {
+	datePickerRef.value?.validateOnSubmit()
+})
+</script>`,
 			},
 		],
 	},
@@ -189,7 +204,7 @@ export const CustomRules: Story = {
 		customRules: [{
 			type: 'custom',
 			options: {
-				validate: (value: unknown) => !(value instanceof Date) || value.getFullYear() !== 2024,
+				validate: (value: unknown) => !value || !(value as string).includes('2024'),
 				message: 'Les dates en 2024 ne sont pas autorisées',
 				successMessage: 'Les dates hors 2024 sont autorisées',
 				fieldIdentifier: 'date',
@@ -201,13 +216,18 @@ export const CustomRules: Story = {
 		return {
 			components: { DatePicker },
 			setup() {
-				return { args, date }
+				const datePickerRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+				onMounted(() => {
+					datePickerRef.value?.validateOnSubmit()
+				})
+				return { args, date, datePickerRef }
 			},
 			template: `
 				<div style="padding: 20px;">
 					<h4 class="mb-0">Format avec règles personnalisées :</h4>
 					<p class="mb-4">Les dates en 2024 ne sont pas autorisées</p>
 					<DatePicker
+						ref="datePickerRef"
 						v-bind="args"
 						v-model="date"
 					/>
@@ -228,6 +248,7 @@ export const WarningRules: Story = {
 				code: `
         <template>
           <DatePicker
+            ref="datePickerRef"
             v-model="date"
             format="DD/MM/YYYY"
             placeholder="JJ/MM/AAAA"
@@ -236,7 +257,7 @@ export const WarningRules: Story = {
             :custom-warning-rules="[{
               type: 'custom',
               options: {
-                validate: value => !value || value.getFullYear() !== 2025,
+                validate: value => !value || !value.includes('2025'),
                 warningMessage: 'Les dates en 2025 ne sont pas autorisées',
                 successMessage: 'Date hors 2025',
                 fieldIdentifier: 'date',
@@ -247,6 +268,20 @@ export const WarningRules: Story = {
         </template>
         `,
 			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+
+const date = ref<string | null>('20/12/2025')
+const datePickerRef = ref<InstanceType<typeof DatePicker>>()
+
+onMounted(() => {
+	datePickerRef.value?.validateOnSubmit()
+})
+</script>`,
+			},
 		],
 	},
 	args: {
@@ -255,7 +290,7 @@ export const WarningRules: Story = {
 		customWarningRules: [{
 			type: 'custom',
 			options: {
-				validate: (value: unknown) => !(value instanceof Date) || value.getFullYear() !== 2025,
+				validate: (value: unknown) => !value || !(value as string).includes('2025'),
 				warningMessage: 'Les dates en 2025 ne sont pas autorisées',
 				successMessage: 'Date hors 2025',
 				fieldIdentifier: 'date',
@@ -268,13 +303,18 @@ export const WarningRules: Story = {
 		return {
 			components: { DatePicker },
 			setup() {
-				return { args, date }
+				const datePickerRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+				onMounted(() => {
+					datePickerRef.value?.validateOnSubmit()
+				})
+				return { args, date, datePickerRef }
 			},
 			template: `
         <div style="padding: 20px;">
           <h4 class="mb-0">Format avec règles d'avertissement :</h4>
           <p class="mb-4">Les dates en 2025 ne sont pas autorisées</p>
           <DatePicker
+            ref="datePickerRef"
             v-bind="args"
             v-model="date"
           />

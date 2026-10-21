@@ -8,10 +8,6 @@ enableAutoUnmount(afterEach)
 
 const validRange = '10/01/2024 - 20/01/2024'
 
-// Les custom rules reçoivent désormais la date formatée (dateFormatReturn || format) en saisie texte
-const jan10_2024 = '10/01/2024'
-const isJan10_2024 = (value: unknown) => value === jan10_2024
-
 describe('DateTextInput synchronization', () => {
 	const SyFormDateTextInputHost = defineComponent({
 		components: { DateTextInput, SyForm },
@@ -70,14 +66,14 @@ describe('DateTextInput synchronization', () => {
 		const pending = new Promise<boolean>((resolve) => {
 			resolveOld = resolve
 		})
-		const validate = vi.fn((value: unknown) => isJan10_2024(value) ? pending : true)
+		const validate = vi.fn((value: unknown) => value === '10/01/2024' ? pending : true)
 		const wrapper = mount(DateTextInput, { props: {
 			label: 'Date',
 			customRules: [{ type: 'custom', options: { validate, message: 'Ancienne date invalide' } }],
 		} })
 		await wrapper.setProps({ modelValue: '10/01/2024' })
 		await flushPromises()
-		expect(validate).toHaveBeenCalledWith(jan10_2024)
+		expect(validate).toHaveBeenCalledWith('10/01/2024')
 		await wrapper.setProps({ modelValue: '20/01/2024' })
 		await flushPromises()
 		resolveOld(false)
@@ -134,7 +130,7 @@ describe('DateTextInput synchronization', () => {
 		const submission = wrapper.vm.validateOnSubmit()
 		await flushPromises()
 		if (useVuetifyValidation) expect(vuetifyRule).toHaveBeenCalled()
-		else expect(validate).toHaveBeenCalledWith(jan10_2024)
+		else expect(validate).toHaveBeenCalledWith('10/01/2024')
 		if (action === 'reset') wrapper.vm.reset()
 		else await wrapper.setProps({ [action]: true })
 		await flushPromises()
@@ -162,7 +158,7 @@ describe('DateTextInput synchronization', () => {
 		const formVm = wrapper.getComponent(SyForm).vm as InstanceType<typeof SyForm>
 		const submission = formVm.validate()
 		await flushPromises()
-		expect(validate).toHaveBeenCalledWith(jan10_2024)
+		expect(validate).toHaveBeenCalledWith('10/01/2024')
 
 		formVm.reset()
 		await flushPromises()

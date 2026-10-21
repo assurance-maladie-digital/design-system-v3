@@ -88,7 +88,13 @@ Le DatePicker utilise deux formats distincts :
 
 <Canvas of={ValidationStories.WithError}/>
 
-> **Note** : le `validate` des règles personnalisées (`customRules`, `customWarningRules`, `customSuccessRules`) reçoit un objet `Date` en sélection calendrier, une chaîne au format `dateFormatReturn || format` en saisie texte, ou `null` pour un champ vide. Le `v-model` reste une chaîne au format `dateFormatReturn`.
+> **Note** : le type reçu par le `validate` des règles personnalisées (`customRules`, `customWarningRules`, `customSuccessRules`) dépend du mode :
+> - mode calendrier (saisie clavier ou sélection) : un objet `Date` ;
+> - `noCalendar` : une chaîne au format `dateFormatReturn || format` ;
+> - `useCombinedMode` : une chaîne au format `dateFormatReturn || format` **puis** un objet `Date`, pour une même saisie ;
+> - champ vide : `null`.
+>
+> Pour couvrir tous les cas, parsez avec `parseDate(value, dateFormatReturn || format)` (`useDateFormat`), qui accepte une chaîne comme un objet `Date`. Le `v-model` reste une chaîne au format `dateFormatReturn`.
 
 ### Avec message d'avertissement
 

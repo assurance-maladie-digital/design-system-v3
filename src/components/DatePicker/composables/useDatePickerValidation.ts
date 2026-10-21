@@ -78,9 +78,9 @@ export type DatePickerValidationOptions = {
 	deferCustomRulesRevalidation?: MaybeRef<boolean>
 	displayFormat?: MaybeRef<string>
 	/**
-	 * Format de la chaîne transmise au `validate` des custom rules en saisie texte.
-	 * `props.dateFormatReturn || props.format` côté composants — voir `adaptCustomRules`.
-	 * La sélection calendrier transmet toujours un objet `Date`.
+	 * Format de la chaîne transmise au `validate` des custom rules par le flux de saisie texte
+	 * (`noCalendar`, `useCombinedMode`, `ComplexDatePicker`) — voir `adaptCustomRules`.
+	 * `props.dateFormatReturn || props.format` côté composants. Le mode calendrier transmet un objet `Date`.
 	 */
 	returnFormat?: MaybeRef<string>
 	parseDate?: (dateStr: string, format: string) => Date | null

@@ -982,7 +982,7 @@ describe('useDatePickerValidation', () => {
 					type: 'custom',
 					options: {
 						validate: (value: unknown) => {
-							// En saisie texte, validate reçoit une chaîne au format d'affichage
+							// Sans returnFormat, validate reçoit une chaîne au format d'affichage
 							if (value === '01/01/2025') {
 								return new Promise<boolean>((resolve) => {
 									releaseFirstDate = () => resolve(true)
