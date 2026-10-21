@@ -147,6 +147,22 @@ export const Required: Story = {
 		},
 		sourceCode: [
 			{
+				name: 'Template',
+				code: `<template>
+	<div style="max-width: 400px">
+		<h2 id="contact-method" class="text-h6">Choisissez votre moyen de contact :</h2>
+		<SelectBtnField
+			ref="fieldRef"
+			v-model="value"
+			:items="items"
+			label="Moyen de contact"
+			aria-labelledby="contact-method"
+			required
+		/>
+	</div>
+</template>`,
+			},
+			{
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { onMounted, ref } from 'vue'
@@ -154,6 +170,11 @@ import { SelectBtnField } from '@cnamts/synapse'
 
 const value = ref(null)
 const fieldRef = ref<InstanceType<typeof SelectBtnField>>()
+const items = [
+	{ text: 'Email', value: 'email' },
+	{ text: 'Courrier', value: 'courrier' },
+	{ text: 'SMS', value: 'sms' },
+]
 
 onMounted(() => {
 	fieldRef.value?.validateOnSubmit()

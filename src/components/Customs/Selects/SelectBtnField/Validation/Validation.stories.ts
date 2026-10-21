@@ -4,6 +4,7 @@ import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 import { onMounted, ref } from 'vue'
 import { fn } from 'storybook/test'
 import { VBtn, VForm } from 'vuetify/components'
+import type { SubmitEventPromise } from 'vuetify'
 
 const meta: Meta<typeof SelectBtnField> = {
 	title: 'Composants/Formulaires/Selects/SelectBtnField/Validation',
@@ -301,6 +302,7 @@ export const DisableErrorHandling: Story = {
 				story: 'Comparaison à déclenchement identique : `disableErrorHandling` masque les messages de validation tandis que le champ témoin affiche l’erreur `required`.',
 			},
 		},
+		controls: { exclude: ['label'] },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -773,6 +775,7 @@ export const VFormVuetifyValidation: Story = {
 import { ref } from 'vue'
 import { SelectBtnField } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
+import type { SubmitEventPromise } from 'vuetify'
 
 const value = ref(null)
 const items = [
@@ -785,7 +788,7 @@ const rules = [
 	(v: unknown) => !!v || 'Le moyen de contact est requis.',
 ]
 
-async function handleSubmit(e: Promise<{ valid: boolean }>) {
+async function handleSubmit(e: SubmitEventPromise) {
 	const result = await e
 	alert(result.valid ? 'Valide !' : 'Veuillez corriger les erreurs.')
 }
@@ -806,7 +809,7 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 			const rules = [
 				(v: unknown) => !!v || 'Le moyen de contact est requis.',
 			]
-			async function handleSubmit(e: Promise<{ valid: boolean }>) {
+			async function handleSubmit(e: SubmitEventPromise) {
 				const result = await e
 				alert(result.valid ? 'Valide !' : 'Veuillez corriger les erreurs.')
 			}
