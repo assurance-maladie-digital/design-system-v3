@@ -91,7 +91,7 @@ Le DatePicker utilise deux formats distincts :
 > **Note** : le type reçu par le `validate` des règles personnalisées (`customRules`, `customWarningRules`, `customSuccessRules`) dépend du mode :
 > - mode calendrier (saisie clavier ou sélection) : un objet `Date` ;
 > - `noCalendar` : une chaîne au format `dateFormatReturn || format` ;
-> - `useCombinedMode` : une chaîne au format `dateFormatReturn || format` **puis** un objet `Date`, pour une même saisie ;
+> - `useCombinedMode` : une chaîne au format `dateFormatReturn || format` à la saisie ; à la soumission (`validateOnSubmit`, `SyForm`), une chaîne **puis** un objet `Date` ;
 > - champ vide : `null`.
 >
 > Pour couvrir tous les cas, parsez avec `parseDate(value, dateFormatReturn || format)` (`useDateFormat`), qui accepte une chaîne comme un objet `Date`. Le `v-model` reste une chaîne au format `dateFormatReturn`.

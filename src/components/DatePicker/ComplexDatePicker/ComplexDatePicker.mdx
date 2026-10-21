@@ -98,7 +98,7 @@ Vous pouvez personnaliser la position de l'icône du calendrier (au début ou à
 
 Le composant prend en charge des règles de validation personnalisées pour vérifier les dates saisies.
 
-Pour une même saisie, le `validate` des règles personnalisées (`customRules`, `customWarningRules`, `customSuccessRules`) est appelé avec une chaîne au format `dateFormatReturn || format`, **puis** avec un objet `Date`. Il reçoit `null` pour un champ vide. La règle doit donc accepter les deux types : `parseDate(value, dateFormatReturn || format)` (`useDateFormat`) les gère. Le `v-model` reste une chaîne au format `dateFormatReturn`.
+À la saisie, le `validate` des règles personnalisées (`customRules`, `customWarningRules`, `customSuccessRules`) reçoit une chaîne au format `dateFormatReturn || format`. À la soumission (`validateOnSubmit`, `SyForm`), il est appelé avec cette chaîne, **puis** avec un objet `Date`. Il reçoit `null` pour un champ vide. La règle doit donc accepter les deux types : `parseDate(value, dateFormatReturn || format)` (`useDateFormat`) les gère. Le `v-model` reste une chaîne au format `dateFormatReturn`.
 
 <Canvas of={ValidationStories.WithValidation}/>
 

@@ -39,7 +39,8 @@ export interface DatePickerRuleOptions {
 	 * Le type reçu dépend du mode du composant :
 	 * - `noCalendar` : une `string` au format `dateFormatReturn || format` (ex. `'2026-10-07'`) ;
 	 * - mode calendrier (saisie clavier ou sélection) : un objet `Date` ;
-	 * - `useCombinedMode` et `ComplexDatePicker` : une `string` puis un objet `Date`, pour une même saisie ;
+	 * - `useCombinedMode` et `ComplexDatePicker` : une `string` à la saisie (blur) ; à la soumission
+	 *   (`validateOnSubmit`, `SyForm`), une `string` puis un objet `Date` ;
 	 * - `null` quand le champ est vide.
 	 * Le `v-model` reste une chaîne au format `dateFormatReturn`.
 	 */
