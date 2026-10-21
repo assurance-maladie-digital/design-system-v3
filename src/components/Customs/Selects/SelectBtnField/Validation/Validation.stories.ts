@@ -109,8 +109,8 @@ onMounted(() => {
 			<div class="pa-4" style="max-width: 400px">
 				<SelectBtnField
 					ref="fieldRef"
-					v-model="value"
 					v-bind="args"
+					v-model="value"
 					:custom-rules="customRules"
 				/>
 			</div>
@@ -196,8 +196,8 @@ onMounted(() => {
 			<div class="pa-4" style="max-width: 400px">
 				<SelectBtnField
 					ref="fieldRef"
-					v-model="value"
 					v-bind="args"
+					v-model="value"
 					:custom-warning-rules="customWarningRules"
 				/>
 			</div>
@@ -285,8 +285,8 @@ onMounted(() => {
 			<div class="pa-4" style="max-width: 400px">
 				<SelectBtnField
 					ref="fieldRef"
-					v-model="value"
 					v-bind="args"
+					v-model="value"
 					:custom-success-rules="customSuccessRules"
 				/>
 			</div>
@@ -368,15 +368,15 @@ onMounted(() => {
 			<div class="pa-4" style="max-width: 400px">
 				<SelectBtnField
 					ref="fieldRefNoHandling"
-					v-model="valueNoHandling"
 					v-bind="args"
+					v-model="valueNoHandling"
 					label="Avec disableErrorHandling"
 					disable-error-handling
 				/>
 				<SelectBtnField
 					ref="fieldRefDefault"
-					v-model="valueDefault"
 					v-bind="args"
+					v-model="valueDefault"
 					label="Sans disableErrorHandling"
 					class="mt-4"
 				/>
@@ -492,8 +492,8 @@ function reset() {
 		template: `
 			<div class="pa-4" style="max-width: 400px">
 				<SelectBtnField
-					v-model="value"
 					v-bind="args"
+					v-model="value"
 					:error-messages="errorMessages"
 					:warning-messages="warningMessages"
 					:success-messages="successMessages"
@@ -565,8 +565,8 @@ function handleSubmit(e: { isValid: boolean }) {
 			<div class="pa-4" style="max-width: 400px">
 				<SyForm @submit="handleSubmit">
 					<SelectBtnField
-						v-model="value"
 						v-bind="args"
+						v-model="value"
 					/>
 					<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
 				</SyForm>
@@ -657,8 +657,8 @@ async function handleSubmit() {
 				<VForm @submit.prevent="handleSubmit">
 					<SelectBtnField
 						ref="fieldRef"
-						v-model="value"
 						v-bind="args"
+						v-model="value"
 						:custom-rules="customRules"
 					/>
 					<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
@@ -732,8 +732,8 @@ function handleSubmit(e: { isValid: boolean }) {
 			<div class="pa-4" style="max-width: 400px">
 				<SyForm @submit="handleSubmit">
 					<SelectBtnField
-						v-model="value"
 						v-bind="args"
+						v-model="value"
 						:rules="rules"
 					/>
 					<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
@@ -816,8 +816,8 @@ async function handleSubmit(e: Promise<{ valid: boolean }>) {
 			<div class="pa-4" style="max-width: 400px">
 				<VForm @submit.prevent="handleSubmit">
 					<SelectBtnField
-						v-model="value"
 						v-bind="args"
+						v-model="value"
 						:rules="rules"
 					/>
 					<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
