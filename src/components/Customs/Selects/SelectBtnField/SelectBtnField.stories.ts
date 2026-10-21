@@ -153,7 +153,7 @@ import { onMounted, ref } from 'vue'
 import { SelectBtnField } from '@cnamts/synapse'
 
 const value = ref(null)
-const fieldRef = ref(null)
+const fieldRef = ref<InstanceType<typeof SelectBtnField>>()
 
 onMounted(() => {
 	fieldRef.value?.validateOnSubmit()

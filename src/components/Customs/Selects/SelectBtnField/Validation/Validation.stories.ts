@@ -58,7 +58,7 @@ import { onMounted, ref } from 'vue'
 import { SelectBtnField } from '@cnamts/synapse'
 
 const value = ref('sms')
-const fieldRef = ref(null)
+const fieldRef = ref<InstanceType<typeof SelectBtnField>>()
 const items = [
 	{ text: 'Email', value: 'email' },
 	{ text: 'Courrier', value: 'courrier' },
@@ -145,7 +145,7 @@ import { onMounted, ref } from 'vue'
 import { SelectBtnField } from '@cnamts/synapse'
 
 const value = ref('courrier')
-const fieldRef = ref(null)
+const fieldRef = ref<InstanceType<typeof SelectBtnField>>()
 const items = [
 	{ text: 'Email', value: 'email' },
 	{ text: 'Courrier', value: 'courrier' },
@@ -233,7 +233,7 @@ import { onMounted, ref } from 'vue'
 import { SelectBtnField } from '@cnamts/synapse'
 
 const value = ref('email')
-const fieldRef = ref(null)
+const fieldRef = ref<InstanceType<typeof SelectBtnField>>()
 const items = [
 	{ text: 'Email', value: 'email' },
 	{ text: 'Courrier', value: 'courrier' },
@@ -336,8 +336,8 @@ const items = [
 
 const valueNoHandling = ref(null)
 const valueDefault = ref(null)
-const fieldRefNoHandling = ref(null)
-const fieldRefDefault = ref(null)
+const fieldRefNoHandling = ref<InstanceType<typeof SelectBtnField>>()
+const fieldRefDefault = ref<InstanceType<typeof SelectBtnField>>()
 
 onMounted(() => {
 	fieldRefNoHandling.value?.validateOnSubmit()
@@ -607,7 +607,7 @@ import { SelectBtnField } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const value = ref(null)
-const fieldRef = ref(null)
+const fieldRef = ref<InstanceType<typeof SelectBtnField>>()
 
 const customRules = [
 	{
