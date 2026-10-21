@@ -26,6 +26,25 @@ describe('SyTextField', () => {
 		})
 	})
 
+	it('uses the disabled background transparency in readonly mode while keeping the input enabled', async () => {
+		await wrapper.setProps({ modelValue: 'MARIE', readonly: true })
+		const input = wrapper.get('input')
+		expect(input.attributes('readonly')).toBeDefined()
+		expect(input.attributes('disabled')).toBeUndefined()
+		expect(wrapper.get('.v-field').attributes('style')).toContain('background-color: rgba(var(--v-theme-white), var(--v-disabled-opacity))')
+		await wrapper.setProps({ readonly: false })
+		expect(input.attributes('readonly')).toBeUndefined()
+		expect(wrapper.get('.v-field').classes()).toContain('bg-white')
+	})
+
+	it('preserves a custom background and avoids applying disabled opacity twice', async () => {
+		await wrapper.setProps({ readonly: true, bgColor: 'primary' })
+		expect(wrapper.get('.v-field').classes()).toContain('bg-primary')
+		await wrapper.setProps({ bgColor: 'white', disabled: true })
+		expect(wrapper.get('.v-field').classes()).toContain('bg-white')
+		expect(wrapper.get('input').attributes('disabled')).toBeDefined()
+	})
+
 	it('renders correctly with default props', () => {
 		expect(wrapper.exists()).toBe(true)
 		expect(wrapper.findComponent({ name: 'VIcon' }).exists()).toBe(false) // No icons by default
