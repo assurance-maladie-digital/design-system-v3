@@ -1,6 +1,9 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import { composeStories } from '@storybook/vue3-vite'
+import { combineParameters, inferControls } from 'storybook/preview-api'
+import { logger } from 'storybook/internal/client-logger'
+import type { StrictArgTypes } from 'storybook/internal/types'
 import { compileScript, parse } from 'vue/compiler-sfc'
 import * as mainStories from '../SyTextArea.stories'
 import * as validationStories from '../validation/Validation.stories'
@@ -60,6 +63,7 @@ enableAutoUnmount(afterEach)
 
 afterEach(() => {
 	vi.unstubAllGlobals()
+	vi.restoreAllMocks()
 })
 
 describe('SyTextArea stories', () => {
@@ -74,9 +78,23 @@ describe('SyTextArea stories', () => {
 	it.each([
 		{ name: 'principal', meta: mainStories.default },
 		{ name: 'de validation', meta: validationStories.default },
-	])('le meta $name déclare color et bgColor en contrôle texte', ({ meta }) => {
-		expect(meta.argTypes?.color?.control).toEqual({ type: 'text' })
-		expect(meta.argTypes?.bgColor?.control).toEqual({ type: 'text' })
+	])('le meta $name déclare color et bgColor sans avertissement du matcher color', ({ meta }) => {
+		const warn = vi.spyOn(logger, 'warn').mockImplementation(() => {})
+		// vue-docgen-api ne résout pas le type des props importées : Storybook les reçoit en « other ».
+		const docgenArgTypes = {
+			color: { name: 'color', type: { name: 'other' as const, value: '' } },
+			bgColor: { name: 'bgColor', type: { name: 'other' as const, value: '' } },
+		}
+		const argTypes = combineParameters(docgenArgTypes, meta.argTypes) as StrictArgTypes
+
+		const controls = inferControls({
+			argTypes,
+			parameters: { __isArgsStory: true, controls: { matchers: { color: /(background|color)$/i } } },
+		} as unknown as Parameters<typeof inferControls>[0])
+
+		expect(warn).not.toHaveBeenCalled()
+		expect(controls.color?.control).toEqual({ type: 'text' })
+		expect(controls.bgColor?.control).toEqual({ type: 'text' })
 	})
 
 	it.each([

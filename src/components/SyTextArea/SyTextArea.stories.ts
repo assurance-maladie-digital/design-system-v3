@@ -101,6 +101,7 @@ const meta = {
 			},
 		},
 		color: {
+			type: { name: 'string', required: false },
 			control: { type: 'text' },
 			description: 'Couleur du champ',
 			table: {
@@ -109,6 +110,7 @@ const meta = {
 			},
 		},
 		bgColor: {
+			type: { name: 'string', required: false },
 			control: { type: 'text' },
 			description: 'Couleur de fond du champ',
 			table: {

@@ -13,6 +13,7 @@ const meta: Meta<typeof SyTextArea> = {
 	},
 	argTypes: {
 		color: {
+			type: { name: 'string', required: false },
 			control: { type: 'text' },
 			description: 'Couleur du champ',
 			table: {
@@ -21,6 +22,7 @@ const meta: Meta<typeof SyTextArea> = {
 			},
 		},
 		bgColor: {
+			type: { name: 'string', required: false },
 			control: { type: 'text' },
 			description: 'Couleur de fond du champ',
 			table: {
