@@ -190,6 +190,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('')
 </script>
 				`,
@@ -220,6 +221,7 @@ export const HelpText: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('')
 </script>`,
 			},
@@ -255,6 +257,7 @@ export const Required: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('')
 </script>
 				`,
@@ -285,6 +288,7 @@ export const HideDetails: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('')
 </script>`,
 			},
@@ -334,6 +338,7 @@ export const Clearable: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('Texte initial')
 </script>`,
 			},
@@ -401,6 +406,7 @@ export const AutoGrowCompact: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('')
 </script>`,
 			},
@@ -460,6 +466,7 @@ export const Trim: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('')
 </script>
 				`,
@@ -500,6 +507,7 @@ export const ReplaceTabs: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('')
 </script>
 				`,
@@ -611,6 +619,7 @@ export const AutoWrap: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('')
 </script>
 				`,
@@ -656,6 +665,7 @@ export const Normalize: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('')
 </script>
 				`,

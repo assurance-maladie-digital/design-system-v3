@@ -8,7 +8,19 @@ import * as mainStories from '../SyTextArea.stories'
 import * as validationStories from '../validation/Validation.stories'
 import { locales } from '../locales'
 
-const { Default, Required, Trim, ReplaceTabs, MaxLines, AutoWrap, Normalize } = composeStories(mainStories)
+const {
+	Default,
+	HelpText,
+	Required,
+	HideDetails,
+	Clearable,
+	AutoGrowCompact,
+	Trim,
+	ReplaceTabs,
+	MaxLines,
+	AutoWrap,
+	Normalize,
+} = composeStories(mainStories)
 const {
 	WithError,
 	WithWarning,
@@ -130,7 +142,11 @@ describe('SyTextArea stories', () => {
 
 	it.each([
 		{ name: 'Default', story: Default },
+		{ name: 'HelpText', story: HelpText },
 		{ name: 'Required', story: Required },
+		{ name: 'HideDetails', story: HideDetails },
+		{ name: 'Clearable', story: Clearable },
+		{ name: 'AutoGrowCompact', story: AutoGrowCompact },
 		{ name: 'Trim', story: Trim },
 		{ name: 'ReplaceTabs', story: ReplaceTabs },
 		{ name: 'MaxLines', story: MaxLines },
@@ -155,7 +171,17 @@ describe('SyTextArea stories', () => {
 	})
 
 	it.each([
+		{ name: 'Default', story: Default },
+		{ name: 'HelpText', story: HelpText },
+		{ name: 'Required', story: Required },
+		{ name: 'HideDetails', story: HideDetails },
+		{ name: 'Clearable', story: Clearable },
+		{ name: 'AutoGrowCompact', story: AutoGrowCompact },
+		{ name: 'Trim', story: Trim },
+		{ name: 'ReplaceTabs', story: ReplaceTabs },
 		{ name: 'MaxLines', story: MaxLines },
+		{ name: 'AutoWrap', story: AutoWrap },
+		{ name: 'Normalize', story: Normalize },
 		{ name: 'WithError', story: WithError },
 		{ name: 'WithWarning', story: WithWarning },
 		{ name: 'WithSuccess', story: WithSuccess },
