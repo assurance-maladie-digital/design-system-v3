@@ -128,15 +128,15 @@ Pistes proposées :
 
 ## Checklist
 
-- [ ] La correction traite la cause racine (suppression des styles inline et des `!important` non justifiés, au profit de classes et de variables CSS)
-- [ ] Un test a été ajouté pour prévenir la régression (`SyTable.spec.ts` et `SyServerTable.spec.ts`) :
+- [x] La correction traite la cause racine (suppression des styles inline et des `!important` non justifiés, au profit de classes et de variables CSS)
+- [x] Un test a été ajouté pour prévenir la régression (`SyTable.spec.ts` et `SyServerTable.spec.ts`) :
   - cellule épinglée sans `background` ni `position: sticky` dans son style inline ;
   - classes `sy-table__pinned--*` présentes ;
   - `--sy-table-row-bg` posée sur les lignes paires quand `striped` est actif (si la piste 3 est retenue)
-- [ ] `pnpm vitest run src/components/Tables` passe sur le périmètre modifié
+- [x] `pnpm vitest run src/components/Tables` passe sur le périmètre modifié
 - [ ] Tests a11y passés si du markup a été modifié (`SyTable.a11y.spec.ts`, `SyServerTable.a11y.spec.ts`)
 - [ ] Tests visuels Cypress passés / baselines à jour si le rendu change (baselines régénérées via la GHA Linux)
-- [ ] Aucun nouvel avertissement ou erreur de console
+- [x] Aucun nouvel avertissement ou erreur de console
 
 ## Tickets liés
 
