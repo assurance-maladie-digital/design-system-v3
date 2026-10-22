@@ -720,7 +720,7 @@
 
 .sy-server-table--pinned-select-left :deep(.v-data-table__th--select),
 .sy-server-table--pinned-select-left :deep(.v-data-table__td--select-row) {
-	opacity: 1 !important;
+	opacity: 1;
 }
 
 .sy-server-table--pinned-select-left :deep(.v-data-table__th--select) {
@@ -745,13 +745,13 @@
 	position: sticky;
 	left: 0;
 	z-index: 3;
-	background: rgb(var(--v-theme-surface)) !important;
+	background: rgb(var(--v-theme-surface));
 }
 
 .sy-server-table--striped.sy-server-table--pinned-select-left :deep(
 	.v-table__wrapper > table > tbody > tr:nth-child(even) > .v-data-table__td--select-row
 ) {
-	background-color: var(--sy-table-row-bg) !important;
+	background-color: var(--sy-table-row-bg);
 }
 
 .sy-server-table--pinned-left-shadow.sy-server-table--pinned-select-left:not(.sy-server-table--select-single) :deep(.v-data-table__th--select),

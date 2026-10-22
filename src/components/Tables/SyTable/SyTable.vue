@@ -700,7 +700,7 @@
 
 .sy-table--pinned-select-left :deep(.v-data-table__th--select),
 .sy-table--pinned-select-left :deep(.v-data-table__td--select-row) {
-	opacity: 1 !important;
+	opacity: 1;
 }
 
 .sy-table--pinned-select-left :deep(.v-data-table__th--select) {
@@ -717,31 +717,25 @@
 
 /* stylelint-disable @stylistic/max-line-length */
 .sy-table--select-single.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-table__wrapper > table > thead > tr > th:first-child) {
-	box-shadow: none !important;
-	background: transparent !important;
+	box-shadow: none;
+	background: transparent;
 }
 
-.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > td:first-child),
-.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
-.sy-table--pinned-select-left :deep(.v-data-table__tbody .v-data-table__tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
-.sy-table--pinned-select-left :deep(.v-data-table__tbody tr:not(.v-data-table-rows-loading) > td:first-child) {
-	position: sticky !important;
-	left: 0 !important;
+.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr > .v-data-table__td--select-row) {
+	position: sticky;
+	left: 0;
 	z-index: 3;
-	background: rgb(var(--v-theme-surface)) !important;
+	background: rgb(var(--v-theme-surface));
 }
 
-.sy-server-table--striped.sy-server-table--pinned-select-left :deep(
+.sy-table--striped.sy-table--pinned-select-left :deep(
 	.v-table__wrapper > table > tbody > tr:nth-child(even) > .v-data-table__td--select-row
 ) {
-	background-color: var(--sy-table-row-bg) !important;
+	background-color: var(--sy-table-row-bg);
 }
 
 .sy-table--pinned-left-shadow.sy-table--pinned-select-left:not(.sy-table--select-single) :deep(.v-data-table__th--select),
-.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > td:first-child),
-.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
-.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-data-table__tbody .v-data-table__tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
-.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-data-table__tbody tr:not(.v-data-table-rows-loading) > td:first-child) {
+.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr > .v-data-table__td--select-row) {
 	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6);
 }
 /* stylelint-enable @stylistic/max-line-length */

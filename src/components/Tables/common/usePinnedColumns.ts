@@ -168,7 +168,7 @@ export function usePinnedColumns({
 				? 'sy-table__pinned--left'
 				: 'sy-table__pinned--right'
 
-			const offset = left !== undefined ? left : right!
+			const offset = left ?? right ?? 0
 
 			return {
 				...h,
