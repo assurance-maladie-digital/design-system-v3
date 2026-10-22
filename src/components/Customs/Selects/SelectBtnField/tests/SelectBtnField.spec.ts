@@ -946,4 +946,34 @@ describe('SelectBtnField', () => {
 			wrapper.unmount()
 		})
 	})
+
+	// Régression issue #2683 : avec une valeur falsy (0/false) sélectionnée, le focus
+	// clavier sur une autre option ne doit pas la sélectionner automatiquement.
+	describe('falsy selected value (0 / false)', () => {
+		it.each([0, false])('keeps the selection when focusing another option via keyboard (value = %s)', async (value) => {
+			const wrapper = mount(SelectBtnField, {
+				props: {
+					modelValue: value,
+					items: [
+						{ text: 'Choix falsy', value },
+						{ text: 'Autre', value: 'other' },
+					],
+				},
+				attachTo: document.body,
+			})
+
+			const options = wrapper.findAll('[role="option"]')
+			expect(options[0]!.attributes('aria-selected')).toBe('true')
+
+			// Focus clavier sur l'autre option
+			await options[1]!.trigger('focus')
+			await flushPromises()
+
+			expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+			expect(options[0]!.attributes('aria-selected')).toBe('true')
+			expect(options[1]!.attributes('aria-selected')).toBe('false')
+
+			wrapper.unmount()
+		})
+	})
 })

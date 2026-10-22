@@ -2,7 +2,7 @@ import { computed, toRef, type ComputedRef, type Ref } from 'vue'
 import { useValidation, type FieldValidationProps, type ValidationRule, type VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 
 export interface SyRadioGroupValidationProps extends FieldValidationProps {
-	modelValue?: PropertyKey | null
+	modelValue?: PropertyKey | boolean | null
 	required?: boolean
 	readonly?: boolean
 	disabled?: boolean
@@ -53,7 +53,7 @@ export interface UseSyRadioGroupValidationReturn {
  */
 export function useSyRadioGroupValidation(
 	props: SyRadioGroupValidationProps,
-	model: Ref<PropertyKey | null>,
+	model: Ref<PropertyKey | boolean | null>,
 	focused: Ref<boolean>,
 	locales: Ref<{
 		requiredField: (label: string | undefined) => string

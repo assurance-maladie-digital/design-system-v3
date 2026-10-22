@@ -144,7 +144,7 @@
 	const syncSearchFromValue = () => {
 		if (props.multiple) return
 		suppressMenuOpen.value = true
-		if (!selected.value) {
+		if (selected.value === null || selected.value === undefined) {
 			search.value = ''
 			return
 		}
@@ -162,7 +162,7 @@
 		})
 	})
 
-	const selectItem = (item: ItemType | string | number | null | undefined) => {
+	const selectItem = (item: ItemType | string | number | boolean | null | undefined) => {
 		markInteracted()
 		if (item === null || item === undefined) {
 			clearValidation()
@@ -226,7 +226,7 @@
 	})
 
 	const isItemSelected = (item: ItemType) => {
-		if (!selected.value) return false
+		if (selected.value === null || selected.value === undefined) return false
 		if (props.multiple && Array.isArray(selected.value)) {
 			return selected.value.some(sel => props.returnObject ? (sel as ItemType)[props.valueKey] === item[props.valueKey] : sel === item[props.valueKey])
 		}
@@ -238,16 +238,19 @@
 	const getItemKey = (item: ItemType, index: number): string | number => {
 		const raw = item[props.valueKey]
 		if (raw === undefined || raw === null) return index
+		if (typeof raw === 'boolean') return String(raw)
 		return typeof raw === 'string' || typeof raw === 'number' ? raw : index
 	}
 
 	const getChipKey = (
-		item: ItemType | string | number,
+		item: ItemType | string | number | boolean,
 		index: number,
 	): string | number => {
+		if (typeof item === 'boolean') return String(item)
 		if (typeof item !== 'object') return item
 
 		const raw = item?.[props.valueKey]
+		if (typeof raw === 'boolean') return String(raw)
 		return typeof raw === 'string' || typeof raw === 'number'
 			? raw
 			: index

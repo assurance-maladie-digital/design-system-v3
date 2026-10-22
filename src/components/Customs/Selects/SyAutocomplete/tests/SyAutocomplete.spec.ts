@@ -1615,4 +1615,88 @@ describe('SyAutocomplete', () => {
 			wrapper.unmount()
 		})
 	})
+
+	// Régression issue #2683 : 0 et false sont des valeurs de sélection valides,
+	// seuls null et undefined signifient « aucune sélection ».
+	describe('falsy values (0 / false)', () => {
+		const falsyItems = [
+			{ text: 'Zéro', value: 0 },
+			{ text: 'Un', value: 1 },
+			{ text: 'Faux', value: false },
+			{ text: 'Vrai', value: true },
+		]
+
+		it.each([
+			{ value: 0, text: 'Zéro', index: 0 },
+			{ value: false, text: 'Faux', index: 2 },
+		])('displays the label and marks the option as selected for value $value', async ({ value, text, index }) => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: value,
+					items: falsyItems,
+					label: 'Test Falsy',
+					textKey: 'text',
+					valueKey: 'value',
+					// filter: false pour que toutes les options restent dans la liste
+					// (sinon le texte sélectionné filtrerait les autres options)
+					filter: false,
+					menuId,
+				},
+				attachTo: document.body,
+			})
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			// Le champ affiche le libellé de l'option sélectionnée
+			expect(getInputEl()!.value).toBe(text)
+
+			// L'option est marquée comme sélectionnée dans la liste
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			const option = getOption(index)
+			expect(option).not.toBeNull()
+			expect(option?.getAttribute('aria-selected')).toBe('true')
+			expect(option?.classList.contains('active')).toBe(true)
+		})
+
+		it('updates the field when selecting an option whose value is 0', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					'modelValue': null,
+					'items': falsyItems,
+					'label': 'Test Falsy',
+					'textKey': 'text',
+					'valueKey': 'value',
+					menuId,
+					'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+				},
+				attachTo: document.body,
+			})
+
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			const option0 = getOption(0)
+			expect(option0).not.toBeNull()
+			option0?.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, button: 0 }))
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			expect(wrapper.emitted('update:modelValue')?.[0]).toEqual([0])
+			expect(getInputEl()!.value).toBe('Zéro')
+
+			// En rouvrant la liste, l'option reste marquée comme sélectionnée
+			await input.trigger('click')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+			expect(getOption(0)?.getAttribute('aria-selected')).toBe('true')
+		})
+	})
 })

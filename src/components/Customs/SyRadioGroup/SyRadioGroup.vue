@@ -25,9 +25,9 @@
 			hideDetails?: boolean | 'auto'
 			id?: string
 			label?: string
-			modelValue?: PropertyKey | null
+			modelValue?: PropertyKey | boolean | null
 			name?: string
-			options?: Array<{ label: string, value: PropertyKey }>
+			options?: Array<{ label: string, value: PropertyKey | boolean }>
 			title?: string
 			locales?: DeepPartial<typeof defaultLocales>
 		} & FieldValidationProps>(),
@@ -91,7 +91,7 @@
 	const showHelpTextAsMessage = computed(() => !!props.helpText && !hasMessages.value)
 	const showHelpTextBelow = computed(() => !!props.helpText && hasMessages.value && props.hideDetails !== true)
 
-	const getAriaChecked = (value: PropertyKey) => {
+	const getAriaChecked = (value: PropertyKey | boolean) => {
 		return model.value === value ? 'true' : 'false'
 	}
 
@@ -181,7 +181,7 @@
 				<slot>
 					<VRadio
 						v-for="opt in props.options"
-						:key="opt.value"
+						:key="String(opt.value)"
 						:value="opt.value"
 						role="radio"
 						:label="opt.label"

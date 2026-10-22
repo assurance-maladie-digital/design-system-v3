@@ -102,7 +102,7 @@
 		return item.value !== null && item.value !== undefined
 	}))
 
-	function isSelected(value: number | string): boolean {
+	function isSelected(value: number | string | boolean): boolean {
 		if (props.multiple) {
 			return (
 				Array.isArray(internalValue.value)
@@ -256,7 +256,7 @@
 		focusedIndex.value = index
 		const item = filteredItems.value[index]
 		// Only auto-select on keyboard focus (Tab or arrow keys)
-		if (!props.multiple && !internalValue.value && item) {
+		if (!props.multiple && (internalValue.value === null || internalValue.value === undefined) && item) {
 			toggleItem(item)
 		}
 	}

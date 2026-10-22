@@ -67,8 +67,10 @@ describe('useFieldValidation', () => {
 		const rules = generateRules([{ type: 'required', options: { message: 'This field is required.' } }])
 		const rule = rules[0]!
 
+		// Pour un composant de sélection, false est un choix valide (issue #2683).
+		// Le cas « J'accepte » (false invalide) est couvert par une règle custom dans SyCheckbox.
 		expect(await rule(true)).toEqual({ success: 'Le champ est valide.' })
-		expect(await rule(false)).toEqual({ error: 'This field is required.' })
+		expect(await rule(false)).toEqual({ success: 'Le champ est valide.' })
 	})
 
 	it('should validate required rule with warning mode', async () => {

@@ -11,7 +11,7 @@ interface KeyboardHandlerDeps {
 	search: Ref<string>
 	selected: Ref<SelectValue | SelectArray>
 	isOpen: Ref<boolean>
-	selectItem: (item: ItemType | string | number | null | undefined) => void
+	selectItem: (item: ItemType | string | number | boolean | null | undefined) => void
 	getItemText: (item: unknown) => unknown
 	filteredItems: ComputedRef<ItemType[]>
 	uniqueMenuId: Ref<string>

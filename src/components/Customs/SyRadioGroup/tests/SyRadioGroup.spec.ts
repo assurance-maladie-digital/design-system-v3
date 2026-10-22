@@ -249,6 +249,56 @@ describe('SyRadioGroup', () => {
 		expect(isValid).toBe(true)
 	})
 
+	// Régression issue #2683 : false est un choix valide pour un composant de sélection,
+	// la règle required ne doit pas le rejeter.
+	it('should accept false as a valid selection when required', async () => {
+		const wrapper = mount(SyRadioGroup, {
+			props: {
+				'modelValue': null,
+				'label': 'Debug',
+				'required': true,
+				'isValidateOnBlur': false,
+				'options': [
+					{ label: 'Vrai', value: true },
+					{ label: 'Faux', value: false },
+				],
+				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+			},
+		})
+
+		// L'utilisateur choisit « Faux »
+		await wrapper.setProps({ modelValue: false })
+		await nextTick()
+
+		const isValid = await wrapper.vm.validateOnSubmit()
+		expect(isValid).toBe(true)
+
+		await nextTick()
+		expect(wrapper.findAll('.v-messages__message').length).toBe(0)
+	})
+
+	it('should accept 0 as a valid selection when required', async () => {
+		const wrapper = mount(SyRadioGroup, {
+			props: {
+				'modelValue': null,
+				'label': 'Niveau',
+				'required': true,
+				'isValidateOnBlur': false,
+				'options': [
+					{ label: 'Zéro', value: 0 },
+					{ label: 'Un', value: 1 },
+				],
+				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+			},
+		})
+
+		await wrapper.setProps({ modelValue: 0 })
+		await nextTick()
+
+		const isValid = await wrapper.vm.validateOnSubmit()
+		expect(isValid).toBe(true)
+	})
+
 	it('should handle useVuetifyValidation mode', async () => {
 		const wrapper = mount(SyRadioGroup, {
 			props: {
