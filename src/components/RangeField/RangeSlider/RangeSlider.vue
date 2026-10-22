@@ -16,8 +16,8 @@
 
 	const props = withDefaults(
 		defineProps<
-			PropsStyle &
-			{
+			PropsStyle
+			& {
 				modelValue?: Array<number | string>
 				min?: number | string
 				max?: number | string

@@ -12,9 +12,9 @@ export function useTableProps({
 	options: Ref<Partial<DataOptions>>
 	storedOptions?: Partial<DataOptions>
 }): {
-		propsFacade: Ref<Record<string, unknown>>
-		updateOptions: (tableOptions: Partial<DataOptions>) => void
-	} {
+	propsFacade: Ref<Record<string, unknown>>
+	updateOptions: (tableOptions: Partial<DataOptions>) => void
+} {
 	const localOptions = ref<Partial<DataOptions>>(storedOptions || options.value || {})
 
 	const propsFacade = computed(() => {

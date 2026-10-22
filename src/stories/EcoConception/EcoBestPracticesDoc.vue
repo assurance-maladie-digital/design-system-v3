@@ -9,13 +9,13 @@
 	import SyCheckBoxGroup from '@/components/Customs/SyCheckBoxGroup/SyCheckBoxGroup.vue'
 	import SyPagination from '@/components/Customs/SyPagination/SyPagination.vue'
 
-	type Audience =
-		| 'UX / UI'
-		| 'Dev Front'
-		| 'Dev Back'
-		| 'Stratégie'
-		| 'Cadrage / Architecture'
-		| 'Run / Maintenance'
+	type Audience
+		= | 'UX / UI'
+			| 'Dev Front'
+			| 'Dev Back'
+			| 'Stratégie'
+			| 'Cadrage / Architecture'
+			| 'Run / Maintenance'
 	type PracticeLevel = 'level1' | 'level2'
 
 	type PlaceholderLevel = 'level1' | 'level2'
