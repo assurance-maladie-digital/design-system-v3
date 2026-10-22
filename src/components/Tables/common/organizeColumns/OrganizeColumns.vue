@@ -139,6 +139,7 @@
 			attach="body"
 		>
 			<template #activator="{ props }">
+				<!-- Neutralise aria-owns ajouté par VMenu : aria-controls pointe vers le dialogue réel. -->
 				<VBtn
 					:title="locales.reorganizeColumns"
 					variant="outlined"
