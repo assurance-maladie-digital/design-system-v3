@@ -10,6 +10,9 @@ const meta: Meta<typeof SyTextArea> = {
 	component: SyTextArea,
 	parameters: {
 		layout: 'fullscreen',
+		controls: {
+			exclude: ['validateOn'],
+		},
 	},
 	argTypes: {
 		color: {
@@ -76,7 +79,7 @@ import { onMounted, ref } from 'vue'
 import { SyTextArea } from '@cnamts/synapse'
 
 const value = ref('Ce texte est trop long et provoque une erreur.')
-const textAreaRef = ref(null)
+const textAreaRef = ref<InstanceType<typeof SyTextArea> | null>(null)
 
 onMounted(() => {
   textAreaRef.value?.validateOnSubmit()
@@ -617,7 +620,7 @@ import { SyTextArea } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const value = ref('')
-const textAreaRef = ref(null)
+const textAreaRef = ref<InstanceType<typeof SyTextArea> | null>(null)
 
 async function onSubmit() {
   const isValid = await textAreaRef.value?.validateOnSubmit()
