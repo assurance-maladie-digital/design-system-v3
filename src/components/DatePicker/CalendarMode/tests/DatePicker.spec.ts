@@ -473,6 +473,45 @@ describe('DatePicker', () => {
 		wrapper.unmount()
 	})
 
+	it('passes the date formatted at dateFormatReturn to custom rules on submit when isValidateOnBlur is false (issue #2627)', async () => {
+		const received: unknown[] = []
+		const wrapper = mountComponent({
+			noCalendar: true,
+			isValidateOnBlur: false,
+			modelValue: '',
+			format: 'DD/MM/YYYY',
+			dateFormatReturn: 'YYYY-MM-DD',
+			customRules: [
+				{
+					type: 'custom',
+					options: {
+						validate: (value: unknown) => {
+							received.push(value)
+							return true
+						},
+						message: 'Erreur de validation',
+					},
+				},
+			],
+		})
+
+		const input = wrapper.find('input')
+		await input.trigger('focus')
+		await input.setValue('07/10/2026')
+		await input.trigger('blur')
+		await flushPromises()
+
+		// Sans isValidateOnBlur, ni la saisie ni le blur ne déclenchent la validation
+		expect(received).toEqual([])
+
+		await (wrapper.vm as DatePickerInstance).validateOnSubmit()
+		await flushPromises()
+
+		expect(received).toEqual(['2026-10-07'])
+
+		wrapper.unmount()
+	})
+
 	describe('SyForm integration', () => {
 		it('updates SyForm v-model when a Vuetify-validated date becomes valid', async () => {
 			const Host = defineComponent({

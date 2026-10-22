@@ -130,7 +130,7 @@ Le DatePicker migré repose sur l'entrée de validation unifiée du design syste
 - Le mode recommandé pour DatePicker reste la validation Synapse via `customRules`, `customWarningRules` et `customSuccessRules`
 - Le mode `useVuetifyValidation` + `rules` est aussi disponible quand le besoin est celui d'un champ standard
 - Le bridge DatePicker reste responsable des contraintes métier date: plage, required conditionnel, flux CalendarMode et synchro calendrier/saisie
-- Le type reçu par le `validate` des règles personnalisées dépend du mode : une chaîne au format `dateFormatReturn || format` avec `noCalendar`, un objet `Date` en mode calendrier, avec `useCombinedMode` une chaîne à la saisie, puis une chaîne et un objet `Date` à la soumission (une règle écrite uniquement pour une chaîne y refuse une date valide, `null` pour un champ vide. `parseDate(value, dateFormatReturn || format)` (`useDateFormat`) accepte les deux types
+- Le `validate` des règles personnalisées reçoit une chaîne, un objet `Date` ou `null` selon le mode et le moment de la validation (détail dans la documentation de `DatePicker`, section « Avec validation d'erreur »). Pour qu'une règle fonctionne dans tous les modes, convertissez la valeur avec `parseDate(value, dateFormatReturn || format)` (`useDateFormat`), qui accepte une chaîne comme un objet `Date`
 
 ## Tableau comparatif des fonctionnalités
 

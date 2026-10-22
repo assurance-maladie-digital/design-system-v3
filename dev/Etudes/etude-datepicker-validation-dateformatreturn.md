@@ -100,7 +100,7 @@ Nuance : en 1.1.5, `validate` ne recevait pas toujours un `Date` en saisie texte
 
 - [x] La correction traite la cause : `returnFormat` transmis à `adaptCustomRules` dans le flux de saisie texte ; le parsing reste sur le format d'affichage
 - [x] Tests de non-régression : saisie texte avec et sans `returnFormat`, champ vide (`null`), sélection calendrier (`Date`), plages (`displayRange` : plage complète et première borne seule), scénario de l'issue de bout en bout (`DatePicker` en `useCombinedMode`)
-- [ ] Non-régression `isValidateOnBlur` avec `returnFormat` : non couverte
+- [x] Non-régression `isValidateOnBlur` avec `returnFormat` : `true` est la valeur par défaut, couverte par le test de bout en bout ; `false` couvert (aucune validation à la saisie ni au blur, chaîne au format de retour à la soumission)
 - [x] Stories : plus de `new Date(value)` ; stories `DateTextInput` `CustomRules` / `WarningRules` corrigées (règles sur la chaîne) et validées au montage
 - [x] `pnpm vitest run src/components/DatePicker` passe (619/619)
 - [x] Tests a11y : non concernés, pas de markup de composant modifié
