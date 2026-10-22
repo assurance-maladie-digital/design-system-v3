@@ -365,8 +365,8 @@
 			<!-- `top` plaçait la légende hors du tableau : non associée (RGAA 5.4). -->
 			<template #colgroup>
 				<caption
+					v-if="props.caption.trim()"
 					class="text-subtitle-1 text-center pa-4"
-					:class="{ 'd-sr-only': props.caption === '' }"
 				>
 					{{ props.caption }}
 				</caption>
