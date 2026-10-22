@@ -21,8 +21,8 @@
 
 	const props = withDefaults(
 		defineProps<
-			Widthable &
-			CustomizableOptions & {
+			Widthable
+			& CustomizableOptions & {
 				uploadList?: UploadItem[]
 				sectionTitle?: string
 				showFilePreview?: boolean

@@ -38,7 +38,7 @@
 	const focused = ref(false)
 	const emitClickEvent = () => emit('click')
 
-	const selectedValue = computed<'true' | 'false' | undefined >(() => {
+	const selectedValue = computed<'true' | 'false' | undefined>(() => {
 		if (props.selected) {
 			return 'true'
 		}

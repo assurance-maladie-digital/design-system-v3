@@ -4,15 +4,15 @@ export type SortOptions = {
 }
 
 export type FilterType = 'text' | 'number' | 'date' | 'period' | 'select' | 'autocomplete' | 'custom'
-type FilterValue =
-	| string
-	| number
-	| Date
-	| Array<string | number | Date | Record<string, unknown>>
-	| { from: string | null, to: string | null }
-	| Record<string, unknown>
-	| null
-	| undefined
+type FilterValue
+	= | string
+		| number
+		| Date
+		| Array<string | number | Date | Record<string, unknown>>
+		| { from: string | null, to: string | null }
+		| Record<string, unknown>
+		| null
+		| undefined
 export type TableDensityType = 'default' | 'comfortable' | 'compact'
 
 export type TableFilterInputConfig = Record<string, unknown> & {
