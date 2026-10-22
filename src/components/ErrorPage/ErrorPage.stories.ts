@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import ErrorPage from './ErrorPage.vue'
+import { VBtn } from 'vuetify/components'
 
 const meta: Meta = {
 	title: 'Templates/ErrorPage',
@@ -149,13 +150,14 @@ export const SlotAction: Story = {
 				code: `
                 <script setup lang="ts">
                     import { ErrorPage } from '@cnamts/synapse'
+                    import { VBtn } from 'vuetify/components'
                 </script>
                 `,
 			},
 		],
 	},
 	render: () => ({
-		components: { ErrorPage },
+		components: { ErrorPage, VBtn },
 		template: `
             <ErrorPage :hide-btn="true">
                 <template #action>
