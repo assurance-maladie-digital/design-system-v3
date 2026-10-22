@@ -2,26 +2,26 @@ import { ref, computed, unref, type MaybeRef, type Ref } from 'vue'
 import { devWarn } from '@/utils/devWarn'
 import { useFieldValidation, type RuleOptions, type ValidationResult as FieldValidationResult } from '../rules/useFieldValidation'
 
-type builtInDateRuleType =
-	'notWeekend'
-	| 'notBeforeToday'
-	| 'notAfterToday'
-	| 'notBeforeDate'
-	| 'notAfterDate'
-	| 'dateExact'
-	| 'isHolidayDay'
+type builtInDateRuleType
+	= 'notWeekend'
+		| 'notBeforeToday'
+		| 'notAfterToday'
+		| 'notBeforeDate'
+		| 'notAfterDate'
+		| 'dateExact'
+		| 'isHolidayDay'
 	// Alias historiques de 'notWeekend' / 'notBeforeToday', conservés pour compatibilité.
-	| 'noWeekend'
-	| 'noBeforeToday'
+		| 'noWeekend'
+		| 'noBeforeToday'
 
 type BuiltInNumberRuleType = 'min' | 'max'
 type BuiltInStringRuleType = 'minLength' | 'maxLength' | 'exactLength' | 'email' | 'matchPattern'
 type BuiltInRuleGeneralType = 'required' | 'custom'
-export type BuiltInRuleType =
-	| BuiltInRuleGeneralType
-	| BuiltInNumberRuleType
-	| BuiltInStringRuleType
-	| builtInDateRuleType
+export type BuiltInRuleType
+	= | BuiltInRuleGeneralType
+		| BuiltInNumberRuleType
+		| BuiltInStringRuleType
+		| builtInDateRuleType
 
 interface CustomValidationRule {
 	type: 'custom'

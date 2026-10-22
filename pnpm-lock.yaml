@@ -93,8 +93,8 @@ importers:
         specifier: 10.6.3
         version: 10.6.3(storybook@10.6.3(@types/react@19.3.0)(react@19.3.1))(typescript@5.9.3)(vite@6.4.5(@types/node@22.20.5)(jiti@2.7.0)(sass-embedded@1.105.1)(sass@1.107.1)(yaml@2.9.1))(vue@3.5.44(typescript@5.9.3))
       '@stylistic/eslint-plugin':
-        specifier: ^2.9.0
-        version: 2.13.0(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3)
+        specifier: ^5.10.0
+        version: 5.10.0(eslint@9.39.5(jiti@2.7.0))
       '@stylistic/stylelint-config':
         specifier: ^3.0.0
         version: 3.0.1(stylelint@16.26.1(typescript@5.9.3))
@@ -145,7 +145,7 @@ importers:
         version: 10.6.3(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3)
       eslint-plugin-vue:
         specifier: ^10.0.0
-        version: 10.12.0(@stylistic/eslint-plugin@2.13.0(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3))(@typescript-eslint/parser@8.72.1(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3))(eslint@9.39.5(jiti@2.7.0))(vue-eslint-parser@10.4.1(eslint@9.39.5(jiti@2.7.0)))
+        version: 10.12.0(@stylistic/eslint-plugin@5.10.0(eslint@9.39.5(jiti@2.7.0)))(@typescript-eslint/parser@8.72.1(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3))(eslint@9.39.5(jiti@2.7.0))(vue-eslint-parser@10.4.1(eslint@9.39.5(jiti@2.7.0)))
       eslint-plugin-vuejs-accessibility:
         specifier: ^2.4.1
         version: 2.6.3(eslint@9.39.5(jiti@2.7.0))(globals@14.0.0)
@@ -1644,11 +1644,11 @@ packages:
       typescript:
         optional: true
 
-  '@stylistic/eslint-plugin@2.13.0':
-    resolution: {integrity: sha512-RnO1SaiCFHn666wNz2QfZEFxvmiNRqhzaMXHXxXXKt+MEP7aajlPxUSMIQpKAaJfverpovEYqjBOXDq6dDcaOQ==}
+  '@stylistic/eslint-plugin@5.10.0':
+    resolution: {integrity: sha512-nPK52ZHvot8Ju/0A4ucSX1dcPV2/1clx0kLcH5wDmrE4naKso7TUC/voUyU1O9OTKTrR6MYip6LP0ogEMQ9jPQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
-      eslint: '>=8.40.0'
+      eslint: ^9.0.0 || ^10.0.0
 
   '@stylistic/stylelint-config@3.0.1':
     resolution: {integrity: sha512-Ohon4rLAxZpYTCyjP1blVe2Z0sx4XZ+K1VIM51m4coHFVSU+Mb8OMsdxkXizkZi4qjr8AhseHXXfRhiv84knrg==}
@@ -5970,17 +5970,15 @@ snapshots:
     optionalDependencies:
       typescript: 5.9.3
 
-  '@stylistic/eslint-plugin@2.13.0(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3)':
+  '@stylistic/eslint-plugin@5.10.0(eslint@9.39.5(jiti@2.7.0))':
     dependencies:
-      '@typescript-eslint/utils': 8.72.1(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3)
+      '@eslint-community/eslint-utils': 4.10.1(eslint@9.39.5(jiti@2.7.0))
+      '@typescript-eslint/types': 8.72.1
       eslint: 9.39.5(jiti@2.7.0)
       eslint-visitor-keys: 4.2.1
       espree: 10.4.0
       estraverse: 5.3.0
       picomatch: 4.0.7
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
 
   '@stylistic/stylelint-config@3.0.1(stylelint@16.26.1(typescript@5.9.3))':
     dependencies:
@@ -7091,7 +7089,7 @@ snapshots:
       - supports-color
       - typescript
 
-  eslint-plugin-vue@10.12.0(@stylistic/eslint-plugin@2.13.0(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3))(@typescript-eslint/parser@8.72.1(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3))(eslint@9.39.5(jiti@2.7.0))(vue-eslint-parser@10.4.1(eslint@9.39.5(jiti@2.7.0))):
+  eslint-plugin-vue@10.12.0(@stylistic/eslint-plugin@5.10.0(eslint@9.39.5(jiti@2.7.0)))(@typescript-eslint/parser@8.72.1(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3))(eslint@9.39.5(jiti@2.7.0))(vue-eslint-parser@10.4.1(eslint@9.39.5(jiti@2.7.0))):
     dependencies:
       '@eslint-community/eslint-utils': 4.10.1(eslint@9.39.5(jiti@2.7.0))
       eslint: 9.39.5(jiti@2.7.0)
@@ -7102,7 +7100,7 @@ snapshots:
       vue-eslint-parser: 10.4.1(eslint@9.39.5(jiti@2.7.0))
       xml-name-validator: 5.0.0
     optionalDependencies:
-      '@stylistic/eslint-plugin': 2.13.0(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3)
+      '@stylistic/eslint-plugin': 5.10.0(eslint@9.39.5(jiti@2.7.0))
       '@typescript-eslint/parser': 8.72.1(eslint@9.39.5(jiti@2.7.0))(typescript@5.9.3)
 
   eslint-plugin-vuejs-accessibility@2.6.3(eslint@9.39.5(jiti@2.7.0))(globals@14.0.0):
