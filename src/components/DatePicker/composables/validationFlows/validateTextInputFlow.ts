@@ -56,14 +56,16 @@ export function createValidateTextInputFlow(ctx: ValidationContext) {
 
 	/**
 	 * Adapte les règles DatePicker au format du validateur unifié.
-	 * Les règles personnalisées de saisie texte reçoivent une chaîne formatée.
+	 * Les règles personnalisées de saisie texte reçoivent une chaîne formatée :
+	 * au format d'affichage par défaut, ou au format de retour (`dateFormatReturn || format`)
+	 * quand `validateWithReturnFormat` est activé (option `returnFormat`).
 	 */
 	const getAdaptedRules = (
 		customRules: DatePickerRule[],
 		warningRules: DatePickerRule[],
 		successRules: DatePickerRule[],
 	): { customRules: ValidationRule[], warningRules: ValidationRule[], successRules: ValidationRule[] } => {
-		const format = unref(options.displayFormat) ?? ''
+		const format = unref(options.returnFormat) || unref(options.displayFormat) || ''
 		return {
 			customRules: adaptCustomRules(customRules, format) as unknown as ValidationRule[],
 			warningRules: adaptCustomRules(warningRules, format) as unknown as ValidationRule[],

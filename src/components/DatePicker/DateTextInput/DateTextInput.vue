@@ -108,6 +108,7 @@
 		showSuccessMessages: false,
 		successMessages: null,
 		validateOnModelChange: true,
+		validateWithReturnFormat: false,
 		title: false,
 		warningMessages: null,
 	})
@@ -182,6 +183,7 @@
 		isValidateOnBlur: computed(() => props.isValidateOnBlur),
 		fieldIdentifier: computed(() => props.label || props.placeholder || 'Date'),
 		displayFormat: computed(() => displayFormat.value),
+		returnFormat: computed(() => props.validateWithReturnFormat ? returnFormat.value : undefined),
 		parseDate,
 		hasInteracted,
 		formRegistration: {

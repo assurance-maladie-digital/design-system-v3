@@ -57,6 +57,24 @@ Les bornes `period.min` et `period.max` doivent rester exprimées dans le même 
 
 <Canvas of={GestionDesFormatsStories.CustomDateFormat}/>
 
+## Règles personnalisées et `dateFormatReturn`
+
+Par défaut, lors d'une saisie au clavier, le `validate` d'une règle `custom` reçoit la date **au format d'affichage** (`format`, ex. `07/10/2026`), même si `dateFormatReturn` est défini.
+
+Pour qu'il reçoive la date **au même format que le v-model** (`dateFormatReturn`, ex. `2026-10-07`), activez la prop `validateWithReturnFormat` :
+
+```vue
+<DatePicker
+  v-model="date"
+  format="DD/MM/YYYY"
+  date-format-return="YYYY-MM-DD"
+  validate-with-return-format
+  :custom-rules="customRules"
+/>
+```
+
+Cette prop est désactivée par défaut : les règles existantes ne sont pas modifiées. Elle n'a d'effet que sur la saisie texte ; en sélection calendrier, `validate` reçoit toujours un objet `Date`, et `null` quand le champ est vide.
+
 ## Mode lecture seule
 
 Le composant peut être configuré en mode lecture seule, ce qui empêche toute modification de la valeur.
