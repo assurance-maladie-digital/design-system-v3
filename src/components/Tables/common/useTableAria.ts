@@ -9,6 +9,10 @@ export interface UseTableAriaOptions {
 	totalItemsCount: Ref<number>
 	options: Ref<Partial<DataOptions>>
 	uniqueTableId: string
+	/** Keep the historical row-count announcement until the table uses useTableStatus. */
+	announceRowCount?: boolean
+	/** Keep all header controls exposed to assistive technology, including without focus. */
+	keepHeaderControlsAccessible?: boolean
 }
 
 export function useTableAria({
@@ -17,6 +21,8 @@ export function useTableAria({
 	totalItemsCount,
 	options,
 	uniqueTableId,
+	announceRowCount = true,
+	keepHeaderControlsAccessible = false,
 }: UseTableAriaOptions) {
 	// Registre des éléments avec des écouteurs d'événements pour le nettoyage
 	const elementsWithListeners = ref<HTMLElement[]>([])
@@ -160,6 +166,8 @@ export function useTableAria({
 				cell.setAttribute('aria-sort', 'none')
 			}
 
+			if (keepHeaderControlsAccessible) return
+
 			// Handle accessibility for header cell interactive elements
 			// Only apply to non-checkbox columns
 			if (!cell.querySelector('input[type="checkbox"]')) {
@@ -207,6 +215,7 @@ export function useTableAria({
 
 	// Update status message for screen readers
 	const updateStatusMessage = () => {
+		if (!announceRowCount) return
 		const count = items.value.length
 		statusMessage.value = locales.rowCountStatus(count)
 	}

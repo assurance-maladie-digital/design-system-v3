@@ -207,3 +207,36 @@ describe('SyPagination - focus', () => {
 		wrapper.unmount()
 	})
 })
+
+describe('SyPagination - buttonMode', () => {
+	it('renders buttons controlling the results and inert span ellipses', async () => {
+		const wrapper = mount(SyPagination, {
+			props: { modelValue: 10, pages: 20, visible: 3, buttonMode: true, ariaControls: 'results' },
+		})
+		expect(wrapper.findAll('a')).toHaveLength(0)
+		expect(wrapper.findAll('button').length).toBeGreaterThan(0)
+		for (const button of wrapper.findAll('button')) {
+			expect(button.attributes('type')).toBe('button')
+			expect(button.attributes('aria-controls')).toBe('results')
+			expect(button.attributes('href')).toBeUndefined()
+		}
+		expect(wrapper.get('[aria-current="page"]').text()).toBe('10')
+		expect(wrapper.findAll('span.ellipsis')).toHaveLength(2)
+		for (const ellipsis of wrapper.findAll('span.ellipsis')) {
+			expect(ellipsis.attributes('tabindex')).toBeUndefined()
+			expect(ellipsis.attributes('aria-hidden')).toBe('true')
+		}
+		await wrapper.get('.list-first').trigger('click')
+		expect(wrapper.emitted('update:modelValue')).toEqual([[1]])
+		wrapper.unmount()
+	})
+
+	it.each([1, 20])('does not emit when activating disabled navigation on page %s', async (page) => {
+		const wrapper = mount(SyPagination, { props: { modelValue: page, pages: 20, buttonMode: true } })
+		const disabled = wrapper.findAll('button[aria-disabled="true"]')
+		expect(disabled.length).toBeGreaterThan(0)
+		for (const button of disabled) await button.trigger('click')
+		expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+		wrapper.unmount()
+	})
+})

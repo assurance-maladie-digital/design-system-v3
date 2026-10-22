@@ -11,7 +11,6 @@
 	import TableHeader, { type HeaderPropsRaw } from '../common/TableHeader.vue'
 	import { locales } from '../common/locales'
 	import OrganizeColumns from '../common/organizeColumns/OrganizeColumns.vue'
-	import { useTableAccessibility } from '../common/tableAccessibilityUtils'
 	import { useTableProps } from '../common/tableProps'
 	import type { DataOptions, Item, SyTableProps } from '../common/types'
 	import type { ClickableTableRowPropsInput } from '../common/useClickableTableRow'
@@ -19,6 +18,7 @@
 	import { usePagination } from '../common/usePagination'
 	import { usePinnedColumns } from '../common/usePinnedColumns'
 	import useStoredOptions from '../common/useStoredOptions'
+	import { useTableStatus } from '../common/useTableStatus'
 	import { useTableAria } from '../common/useTableAria'
 	import { useTableBulkActions } from '../common/useTableBulkActions'
 	import { useTableCheckbox } from '../common/useTableCheckbox'
@@ -31,6 +31,7 @@
 
 	const props = withDefaults(defineProps<SyTableProps>(), {
 		caption: '',
+		hideCaption: false,
 		saveState: true,
 		showFilters: false,
 		resizableColumns: false,
@@ -107,10 +108,6 @@
 		clickableRow: toRef(props, 'clickableRow'),
 		rowProps: forwardedRowProps,
 		onRowClick: item => emit('row-click', item),
-	})
-
-	const { setupAccessibility } = useTableAccessibility({
-		tableId: uniqueTableId.value,
 	})
 
 	// Use the table headers composable
@@ -226,9 +223,10 @@
 	// Use the ARIA accessibility composable
 	const {
 		statusRegionId,
-		statusMessage,
 		setupAria,
 	} = useTableAria({
+		announceRowCount: false,
+		keepHeaderControlsAccessible: true,
 		table,
 		items: filteredItems,
 		totalItemsCount: itemsLength,
@@ -236,8 +234,19 @@
 		uniqueTableId: uniqueTableId.value,
 	})
 
-	// Initialize generic accessibility adjustments (tabbable elements, etc.)
-	setupAccessibility()
+	const statusMessage = useTableStatus({
+		page,
+		itemsPerPage: itemsPerPageValue,
+		total: itemsLength,
+		selected: () => model.value.length,
+		options,
+		headers: () => props.headers,
+	})
+	const resultsId = `${uniqueTableId.value}-results`
+	const paginationLabel = computed(() => props.caption
+		? locales.tablePagination(props.caption)
+		: locales.pagination.paginationNavAriaLabel,
+	)
 
 	const { accessibilityRowCheckboxes } = useTableRowCheckboxAccessibility({
 		uniqueTableId: uniqueTableId.value,
@@ -314,11 +323,11 @@
 		]"
 		:style="pinnedEdgeVars"
 	>
-		<!-- ARIA status region for row count announcements -->
+		<!-- ARIA status region for changes to table results -->
 		<div
 			:id="statusRegionId"
 			role="status"
-			aria-live="polite"
+			aria-atomic="true"
 			class="d-sr-only"
 		>
 			{{ statusMessage }}
@@ -340,11 +349,12 @@
 		</TableBulkActions>
 
 		<VDataTable
+			v-bind="propsFacade"
+			:id="resultsId"
 			ref="table"
 			v-model="model"
 			color="primary"
 			:headers="displayHeadersWithPinned"
-			v-bind="propsFacade"
 			:row-props="clickableRowProps"
 			:items="filteredItems"
 			:density="props.density"
@@ -366,7 +376,7 @@
 			<template #colgroup>
 				<caption
 					class="text-subtitle-1 text-center pa-4"
-					:class="{ 'd-sr-only': props.caption === '' }"
+					:class="{ 'd-sr-only': props.hideCaption || props.caption === '' }"
 				>
 					{{ props.caption }}
 				</caption>
@@ -379,6 +389,7 @@
 							:key="column.key!"
 						>
 							<th
+								scope="col"
 								:class="[
 									{ 'checkbox-column': column.key === 'data-table-select' },
 									{
@@ -417,8 +428,13 @@
 										</template>
 									</SyCheckbox>
 								</template>
+								<template v-else-if="column.key === 'data-table-select' || column.key === 'data-table-expand'">
+									<span class="d-sr-only">{{ column.key === 'data-table-select' ? locales.selectionColumn : locales.expandRows }}</span>
+								</template>
 								<template v-else>
 									<TableHeader
+										:data-column-key="column.key"
+										:announce-width="props.resizableColumns"
 										:table="table"
 										:header-params="slotProps"
 										:column="column"
@@ -444,12 +460,12 @@
 						v-if="props.showFilters"
 						class="filters"
 					>
-						<th v-if="props.showSelect || props.showSelectSingle" />
+						<td v-if="props.showSelect || props.showSelectSingle" />
 						<template
 							v-for="column in slotProps.columns.filter(c => c.key !== 'data-table-select')"
 							:key="column.key!"
 						>
-							<th
+							<td
 								:style="{
 									...(getHeaderForColumn(column)?.maxWidth && !props.resizableColumns ? { maxWidth: getHeaderForColumn(column)?.maxWidth } : {}),
 									...(getHeaderForColumn(column)?.minWidth ? { minWidth: getHeaderForColumn(column)?.minWidth } : {}),
@@ -457,7 +473,7 @@
 								}"
 							>
 								<SyTableFilter
-									v-if="!props.headers?.find(h => (h.key === column.key || h.value === column.key) && h.filterable === false)"
+									v-if="column.key !== 'data-table-expand' && !props.headers?.find(h => (h.key === column.key || h.value === column.key) && h.filterable === false)"
 									:filterable="true"
 									:filters="filters"
 									:header="getEnhancedHeader(column)"
@@ -472,7 +488,7 @@
 										/>
 									</template>
 								</SyTableFilter>
-							</th>
+							</td>
 						</template>
 					</tr>
 					<tr
@@ -500,6 +516,7 @@
 						<th
 							v-for="header in props.headers || []"
 							:key="header.key || header.value || ''"
+							scope="col"
 							:style="{
 								...(header.maxWidth ? { maxWidth: header.maxWidth } : {}),
 								...(header.minWidth ? { minWidth: header.minWidth } : {}),
@@ -513,7 +530,7 @@
 						v-if="props.showFilters"
 						class="filters"
 					>
-						<th
+						<td
 							v-for="header in props.headers || []"
 							:key="header.key || header.value || ''"
 							:style="{
@@ -537,7 +554,7 @@
 									/>
 								</template>
 							</SyTableFilter>
-						</th>
+						</td>
 					</tr>
 				</template>
 			</template>
@@ -641,6 +658,8 @@
 					<SyTablePagination
 						v-if="filteredItems.length > 0 && !props.hideDefaultFooter"
 						:page="page"
+						:controls-id="resultsId"
+						:pagination-label="paginationLabel"
 						:items-per-page="itemsPerPageValue"
 						:heading-level="props.headingLevel"
 						:page-count="pageCount"
