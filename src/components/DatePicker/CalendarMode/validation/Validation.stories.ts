@@ -431,7 +431,7 @@ export const CustomRulesReturnFormat: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Avec `validateWithReturnFormat`, le `validate` d\'une règle personnalisée reçoit la saisie au format `dateFormatReturn` (ici `YYYY-MM-DD`), comme le v-model. Saisissez une date en 2024 pour voir l\'erreur.',
+				story: 'Avec `validateWithReturnFormat`, le `validate` d\'une règle personnalisée reçoit la saisie au format `dateFormatReturn` (ici `YYYY-MM-DD`), comme le v-model. Saisissez ou sélectionnez une date en 2024 pour voir l\'erreur. La règle gère les deux types reçus : une chaîne (saisie clavier) et un objet `Date` (sélection calendrier).',
 			},
 		},
 		sourceCode: [
@@ -463,8 +463,11 @@ const customRules = [
   {
     type: 'custom',
     options: {
-      // value : '2026-10-07' (format dateFormatReturn), ou null si le champ est vide
-      validate: (value: unknown) => !(typeof value === 'string' && value.startsWith('2024')),
+      // Saisie clavier : '2026-10-07' (format dateFormatReturn) ; calendrier : objet Date ; champ vide : null
+      validate: (value: unknown) => {
+        const year = value instanceof Date ? value.getFullYear() : typeof value === 'string' ? Number(value.slice(0, 4)) : null
+        return year !== 2024
+      },
       message: 'Les dates en 2024 ne sont pas autorisées',
     },
   },
@@ -484,7 +487,10 @@ const customRules = [
 			{
 				type: 'custom',
 				options: {
-					validate: (value: unknown) => !(typeof value === 'string' && value.startsWith('2024')),
+					validate: (value: unknown) => {
+						const year = value instanceof Date ? value.getFullYear() : typeof value === 'string' ? Number(value.slice(0, 4)) : null
+						return year !== 2024
+					},
 					message: 'Les dates en 2024 ne sont pas autorisées',
 				},
 			},
