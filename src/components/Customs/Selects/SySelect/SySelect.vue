@@ -206,6 +206,12 @@
 	// Generate unique menu ID for each component instance to avoid conflicts and validation issues
 	const uniqueMenuId = ref(props.menuId === 'sy-select-menu' ? `sy-select-menu-${useId()}` : props.menuId)
 
+	function getLabelledBy() {
+		const externalLabel = attrs['aria-labelledby']
+		if (typeof externalLabel === 'string' && externalLabel.trim()) return externalLabel.trim()
+		return props.label.trim() ? `${inputId.value}-label` : undefined
+	}
+
 	const rawAriaLabel = computed(() => {
 		const ariaLabel = attrs['aria-label']
 		return typeof ariaLabel === 'string' && ariaLabel.trim().length > 0 ? ariaLabel.trim() : ''
@@ -993,6 +999,7 @@
 						v-bind="{
 							...Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk')),
 							...initializeActivatorProps(activatorProps),
+							'aria-labelledby': getLabelledBy(),
 						}"
 						@click="toggleMenu"
 						@keydown.enter.prevent="handleEnterKey"
@@ -1126,7 +1133,8 @@
 				class="v-list sy-select-grid"
 				role="listbox"
 				:aria-multiselectable="props.multiple ? 'true' : undefined"
-				:aria-labelledby="`${inputId}-label`"
+				:aria-labelledby="getLabelledBy()"
+				:aria-label="getLabelledBy() ? undefined : accessibleLabel"
 				:title="accessibleLabel"
 				:style="{
 					minWidth: `${textInput?.$el.offsetWidth}px`
