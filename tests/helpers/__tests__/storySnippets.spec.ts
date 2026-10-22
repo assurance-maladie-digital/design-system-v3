@@ -88,10 +88,59 @@ describe('storySnippets', () => {
 		expect(analysis.invalidAttributes).toEqual([])
 	})
 
-	it('signale l\'absence de script setup', () => {
-		const analysis = analyzeSnippet(story('<template><SyTextArea /></template>'))
+	it('ignore le texte et les valeurs entre apostrophes qui contiennent `clé:`', () => {
+		const analysis = analyzeSnippet(story(
+			`<template>
+  <SyTextArea v-model="value" :custom-rules='[{ type: "required" }]' />
+  <p>Onglet actif: {{ value }}</p>
+</template>`,
+			validScript,
+		))
+
+		expect(analysis.invalidAttributes).toEqual([])
+	})
+
+	it('ignore une source sans onglets exploitables', () => {
+		expect(getSource({ parameters: { sourceCode: 'invalide' } }, 'Template')).toBe('')
+		expect(getSource({ parameters: { sourceCode: [{ name: 'Template' }] } }, 'Template')).toBe('')
+	})
+
+	it('signale une erreur de syntaxe dans le script sans lever d\'exception', () => {
+		const analysis = analyzeSnippet(story(
+			'<template><SyTextArea v-model="value" /></template>',
+			`<script setup lang="ts">
+import { ref } from 'vue
+const value = ref('')
+</script>`,
+		))
+
+		expect(analysis.parseErrors).toEqual([expect.stringContaining('Unterminated string constant')])
+	})
+
+	it('analyse aussi un extrait sans script setup', () => {
+		const analysis = analyzeSnippet(story('<template><SyTextArea v-model="value" /></template>'))
 
 		expect(analysis.hasScriptSetup).toBe(false)
+		expect(analysis.undeclaredIdentifiers).toEqual(['value'])
+		expect(analysis.unresolvedComponents).toEqual(['SyTextArea'])
+	})
+
+	it.each([
+		{ name: 'sur une ligne', script: 'onMounted(() => fieldRef.value?.validateOnSubmit())' },
+		{ name: 'indenté', script: '  onMounted(async () => {\n    await fieldRef.value?.validateOnSubmit()\n  })' },
+	])('extrait le corps d\'un onMounted écrit $name', ({ script }) => {
+		const snippet = story('<template><div /></template>', `<script setup lang="ts">\n${script}\n</script>`)
+
+		expect(getMountedBody(snippet)).toContain('validateOnSubmit()')
+	})
+
+	it('extrait le onMounted quel que soit le nom de l\'onglet du script', () => {
+		const snippet = { parameters: { sourceCode: [
+			{ name: 'Template', code: '<template><div /></template>' },
+			{ name: 'Scripts', code: '<script setup lang="ts">\nonMounted(() => init())\n</script>' },
+		] } }
+
+		expect(getMountedBody(snippet)).toContain('init()')
 	})
 
 	it('extrait le corps du onMounted sans les commentaires ni le code qui suit', () => {
