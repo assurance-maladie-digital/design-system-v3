@@ -969,4 +969,37 @@ describe('SelectBtnField', () => {
 
 		wrapper.unmount()
 	})
+
+	describe('boolean values (issue #2683)', () => {
+		const booleanItems = [
+			{ text: 'Vrai', value: true },
+			{ text: 'Faux', value: false },
+		]
+
+		it('selects an option of value false', async () => {
+			const wrapper = mount(SelectBtnField, {
+				props: { modelValue: null, label: 'Debug', items: booleanItems },
+				attachTo: document.body,
+			})
+
+			await wrapper.findAll('[role="option"]')[1]!.trigger('click')
+			await flushPromises()
+
+			expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([false])
+			wrapper.unmount()
+		})
+
+		it('accepts false as a valid choice when required', async () => {
+			const wrapper = mount(SelectBtnField, {
+				props: { modelValue: false, label: 'Debug', items: booleanItems, required: true },
+				attachTo: document.body,
+			})
+
+			expect(await wrapper.vm.validateOnSubmit()).toBe(true)
+			await flushPromises()
+			expect(wrapper.text()).not.toContain('requis')
+			expect(wrapper.findAll('[role="option"]')[1]!.attributes('aria-selected')).toBe('true')
+			wrapper.unmount()
+		})
+	})
 })

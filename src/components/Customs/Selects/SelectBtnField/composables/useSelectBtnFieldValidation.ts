@@ -27,6 +27,8 @@ export function useSelectBtnFieldValidation(
 				options: {
 					message: locales.value.requiredField(props.label),
 					fieldIdentifier: props.label,
+					// `false` est un choix valide dans un composant de sélection
+					allowFalse: true,
 				},
 			}]
 		: [],

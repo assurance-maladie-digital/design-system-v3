@@ -2139,4 +2139,22 @@ describe('Integration with SyForm', () => {
 
 		wrapper.unmount()
 	})
+
+	it('displays and emits false for primitive boolean items (issue #2683)', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: [true, false], label: 'Debug' },
+			attachTo: document.body,
+		})
+
+		await wrapper.find('.v-field').trigger('click')
+		const items = wrapper.findComponent(VList).findAll('.v-list-item')
+		expect(items.map(item => item.text())).toEqual(['true', 'false'])
+
+		await items[1]!.trigger('click')
+
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([false])
+		expect(wrapper.find('input').element.value).toBe('false')
+
+		wrapper.unmount()
+	})
 })

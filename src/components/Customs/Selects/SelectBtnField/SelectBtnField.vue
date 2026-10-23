@@ -102,7 +102,7 @@
 		return item.value !== null && item.value !== undefined
 	}))
 
-	function isSelected(value: number | string): boolean {
+	function isSelected(value: number | string | boolean): boolean {
 		if (props.multiple) {
 			return (
 				Array.isArray(internalValue.value)
