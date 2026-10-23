@@ -256,7 +256,7 @@
 		focusedIndex.value = index
 		const item = filteredItems.value[index]
 		// Only auto-select on keyboard focus (Tab or arrow keys)
-		if (!props.multiple && !internalValue.value && item) {
+		if (!props.multiple && (internalValue.value === null || internalValue.value === undefined) && item) {
 			toggleItem(item)
 		}
 	}

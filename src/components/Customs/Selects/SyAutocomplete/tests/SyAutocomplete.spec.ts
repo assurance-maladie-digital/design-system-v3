@@ -1615,4 +1615,68 @@ describe('SyAutocomplete', () => {
 			wrapper.unmount()
 		})
 	})
+
+	describe('falsy values 0 and false (issue #2683)', () => {
+		it.each([
+			[0, [{ text: 'Zéro', value: 0 }, { text: 'Un', value: 1 }], 'Zéro'],
+			[false, [{ text: 'Vrai', value: true }, { text: 'Faux', value: false }], 'Faux'],
+		])('displays and marks the option selected for %s', async (value, falsyItems, label) => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: value,
+					items: falsyItems,
+					label: 'Valeur',
+					menuId,
+				},
+				attachTo: document.body,
+			})
+			await flushPromises()
+
+			expect(getInputEl()?.value).toBe(label)
+
+			await wrapper.find('input').trigger('click')
+			await flushPromises()
+			const selectedOptions = [...document.body.querySelectorAll(`#${menuId} [role="option"][aria-selected="true"]`)]
+			expect(selectedOptions.map(option => option.textContent?.trim())).toEqual([label])
+		})
+
+		it('displays the label after selecting an option of value 0', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					'modelValue': null,
+					'items': [{ text: 'Zéro', value: 0 }, { text: 'Un', value: 1 }],
+					'label': 'Valeur',
+					menuId,
+					'onUpdate:modelValue': (e: unknown) => wrapper.setProps({ modelValue: e as number }),
+				},
+				attachTo: document.body,
+			})
+
+			wrapper.vm.selectItem({ text: 'Zéro', value: 0 })
+			await flushPromises()
+
+			expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([0])
+			expect(getInputEl()?.value).toBe('Zéro')
+		})
+
+		it('accepts false as a valid choice when required', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: false,
+					items: [{ text: 'Vrai', value: true }, { text: 'Faux', value: false }],
+					label: 'Debug',
+					required: true,
+				},
+			})
+
+			const result = await wrapper.vm.validateOnSubmit()
+			await flushPromises()
+
+			expect(result).toBe(true)
+			expect(wrapper.find('.v-messages').text()).not.toContain('requis')
+		})
+	})
 })

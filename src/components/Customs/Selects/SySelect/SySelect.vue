@@ -23,12 +23,12 @@
 		[key: string]: unknown
 	}
 
-	export type SelectItemValueType = Record<string, unknown> | string | number | null | undefined
-	export type SelectItemArrayType = Array<Record<string, unknown> | string | number>
+	export type SelectItemValueType = Record<string, unknown> | string | number | boolean | null | undefined
+	export type SelectItemArrayType = Array<Record<string, unknown> | string | number | boolean>
 
 	const props = withDefaults(
 		defineProps<{
-			modelValue?: Record<string, unknown> | string | number | null | SelectItemArrayType
+			modelValue?: Record<string, unknown> | string | number | boolean | null | SelectItemArrayType
 			items?: Array<ItemType | string | number>
 			label?: string
 			menuId?: string

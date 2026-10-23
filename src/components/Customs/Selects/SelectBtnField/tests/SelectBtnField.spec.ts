@@ -946,4 +946,27 @@ describe('SelectBtnField', () => {
 			wrapper.unmount()
 		})
 	})
+
+	it('keeps a selected 0 when keyboard focus moves to another option (issue #2683)', async () => {
+		const wrapper = mount(SelectBtnField, {
+			props: {
+				modelValue: 0,
+				label: 'Niveau',
+				items: [
+					{ text: 'Zéro', value: 0 },
+					{ text: 'Un', value: 1 },
+					{ text: 'Deux', value: 2 },
+				],
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.findAll('[role="option"]')[2]!.trigger('focus')
+		await flushPromises()
+
+		expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+		expect(wrapper.findAll('[role="option"]')[0]!.attributes('aria-selected')).toBe('true')
+
+		wrapper.unmount()
+	})
 })

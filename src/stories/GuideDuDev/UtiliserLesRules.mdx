@@ -92,6 +92,7 @@ type RuleOptions<T = any> = {
   length?: number;         // Longueur pour minLength/maxLength
   pattern?: RegExp;        // Expression régulière
   ignoreSpace?: boolean;   // Ignorer les espaces
+  allowFalse?: boolean;    // required : accepter false comme une valeur renseignée
   isWarning?: boolean;     // Traiter comme un avertissement
   validate?: (value: any) => boolean | string | Promise<boolean | string>; // Validation personnalisée (synchrone ou asynchrone)
   date?: string | Date;    // Date de référence pour notBeforeDate / notAfterDate / dateExact
@@ -321,7 +322,7 @@ const asyncEmailRule = {
 
 | Type | Description | Options |
 |---|---|---|
-| `required` | Vérifie qu'une valeur est présente | `message` |
+| `required` | Vérifie qu'une valeur est présente. `false` est refusé (case « J'accepte »), sauf avec `allowFalse: true` | `message`, `allowFalse` |
 | `min` / `max` | Vérifie une borne numérique | `value` |
 | `minLength` / `maxLength` / `exactLength` | Vérifie la longueur d'une chaîne | `length`, `ignoreSpace` |
 | `email` | Vérifie qu'une chaîne est un email valide | `message` |

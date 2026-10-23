@@ -2118,4 +2118,25 @@ describe('Integration with SyForm', () => {
 
 		wrapper.unmount()
 	})
+
+	it('accepts false as a valid choice when required (issue #2683)', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				modelValue: false,
+				items: [{ text: 'Vrai', value: true }, { text: 'Faux', value: false }],
+				label: 'Debug',
+				required: true,
+			},
+			attachTo: document.body,
+		})
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- exposed method is not part of the inferred public instance type
+		const isValid = await (wrapper.vm as any).validateOnSubmit()
+		await nextTick()
+
+		expect(isValid).toBe(true)
+		expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+
+		wrapper.unmount()
+	})
 })

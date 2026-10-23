@@ -55,6 +55,8 @@ Le `v-model` reçoit bien la valeur ; seul l'affichage est faux. Cause, `SyAutoc
 - `SyAutocomplete/types.ts` : `SelectValue` (ligne 5) et `SelectArray` (ligne 7) n'incluent pas `boolean`.
 - `SyRadioGroup.vue` : `modelValue?: PropertyKey | null` (ligne 28), `options?: Array<{ label: string, value: PropertyKey }>` (ligne 30), `getAriaChecked(value: PropertyKey)` (ligne 94) et `useSyRadioGroupValidation` (`model: Ref<PropertyKey | null>`).
 
+- `SySelect.vue` (non cité dans l'issue) : `modelValue?: Record<string, unknown> | string | number | null | SelectItemArrayType` (ligne 31) et `items?: Array<ItemType | string | number>` (ligne 32). Un `v-model` sur `ref<boolean | null>` ne compile pas (mesuré avec `vue-tsc` sur le Playground), alors que l'affichage fonctionne.
+
 À l'exécution, les booléens fonctionnent déjà (`SyRadioGroup` émet `false` et coche le bouton, mesuré) ; seule la compilation impose un cast.
 
 ### Composants listés « à vérifier » dans l'issue
@@ -93,6 +95,7 @@ Les règles par défaut générées par la prop `required` de ces composants pas
 ### 4. Types
 
 - `SelectValue` et `SelectArray` : ajouter `boolean`.
+- `SySelect` : ajouter `boolean` au type de `modelValue`.
 - `SyRadioGroup` : typer `modelValue`, `options[].value`, `getAriaChecked` et le `model` de la validation avec `PropertyKey | boolean`.
 
 Ces élargissements sont additifs pour la prop. `update:modelValue` est déclaré sans type de charge utile dans les deux composants (`defineEmits([...])`), donc les gestionnaires existants ne changent pas de type. À confirmer par `vue-tsc` sur un exemple consommateur avec `ref<number | null>` et `ref<boolean | null>`.
@@ -107,6 +110,7 @@ Ces élargissements sont additifs pour la prop. `update:modelValue` est déclar�
 | `src/components/Customs/Selects/SyAutocomplete/types.ts` | `boolean` dans `SelectValue` et `SelectArray`. |
 | `src/components/Customs/Selects/SyAutocomplete/composables/useSyAutocompleteValidation.ts` | Option `allowFalse` sur la règle `required` par défaut. |
 | `src/components/Customs/Selects/SySelect/composables/useSySelectValidation.ts` | Idem. |
+| `src/components/Customs/Selects/SySelect/SySelect.vue` | `boolean` dans le type de `modelValue`. |
 | `src/components/Customs/SyRadioGroup/SyRadioGroup.vue` | Types booléens. |
 | `src/components/Customs/SyRadioGroup/composables/useSyRadioGroupValidation.ts` | Option `allowFalse` ; type du `model`. |
 | `src/components/Customs/Selects/SelectBtnField/SelectBtnField.vue` | Test `null` / `undefined` à la ligne 259. |
