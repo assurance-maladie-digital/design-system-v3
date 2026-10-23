@@ -30,11 +30,13 @@ afterEach(() => {
 	vi.restoreAllMocks()
 })
 
+const metas = [
+	{ name: 'principal', meta: mainStories.default },
+	{ name: 'de validation', meta: validationStories.default },
+]
+
 describe('SyTextArea stories', () => {
-	it.each([
-		{ name: 'principal', meta: mainStories.default },
-		{ name: 'de validation', meta: validationStories.default },
-	])('le meta $name type en string les props visées par le matcher color', ({ meta }) => {
+	it.each(metas)('le meta $name type en string les props visées par le matcher color', ({ meta }) => {
 		// vue-docgen-api type en « other » les props importées ; Storybook n'accepte le matcher color que sur un type string.
 		const colorProps = Object.keys(SyTextArea.props ?? {}).filter(prop => controlMatchers.color.test(prop))
 
@@ -116,6 +118,19 @@ describe('SyTextArea stories', () => {
 
 		expect(wrapper.text()).toContain('Ce champ est requis')
 		expect(alert).toHaveBeenCalledWith('Formulaire invalide.')
+	})
+
+	// `validateOn` est sans effet sur SyTextArea
+	it.each([
+		{ name: 'SyFormVuetifyValidation', story: SyFormVuetifyValidation },
+		{ name: 'VFormVuetifyValidation', story: VFormVuetifyValidation },
+	])('$name ne présente pas de validateOn sans effet', ({ story }) => {
+		expect(story.args).not.toHaveProperty('validateOn')
+		expect(JSON.stringify(story.parameters.sourceCode)).not.toContain('validate-on')
+	})
+
+	it.each(metas)('le meta $name masque validateOn des Controls', ({ meta }) => {
+		expect(meta.parameters?.controls?.exclude).toContain('validateOn')
 	})
 
 	it('NoValidateOnBlur conserve le résultat de validation après une saisie et une perte de focus', async () => {

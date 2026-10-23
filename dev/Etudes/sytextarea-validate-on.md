@@ -2,6 +2,8 @@
 
 Point relevé lors de l'audit des stories de validation, non corrigé (changement d'API).
 
+Suivi : [#2699](https://github.com/assurance-maladie-digital/design-system-v3/issues/2699).
+
 ### Problème
 
 - [ ] **medium** — La prop publique `validateOn` est déclarée (`src/components/SyTextArea/types.ts:16`) avec la valeur par défaut `'eager input'` (`SyTextArea.vue:28`), mais n'est jamais lue.
@@ -48,4 +50,4 @@ Impacts :
 
 ### Décision
 
-- [ ] À arbitrer : solution A (transmission en mode Vuetify) ou solution B (dépréciation).
+- [ ] À arbitrer : solution A (transmission en mode Vuetify) ou solution B (dépréciation). Solution A recommandée dans #2699.
