@@ -784,4 +784,19 @@ describe('SyCheckbox', () => {
 			expect(iconOf(wrapper)).toBe(mdiCheckboxBlankOutline)
 		})
 	})
+
+	// Non-régression #2683 : la règle `required` générique refuse toujours une case décochée
+	it('still refuses an unchecked box with a generic required custom rule', async () => {
+		const wrapper = mount(SyCheckbox, {
+			props: {
+				modelValue: false,
+				label: 'J\'accepte',
+				customRules: [{ type: 'required', options: { message: 'Votre consentement est obligatoire' } }],
+			},
+		})
+
+		expect(await wrapper.vm.validateOnSubmit()).toBe(false)
+		await nextTick()
+		expect(wrapper.text()).toContain('Votre consentement est obligatoire')
+	})
 })

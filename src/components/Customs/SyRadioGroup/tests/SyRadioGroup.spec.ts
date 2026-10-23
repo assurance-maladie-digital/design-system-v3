@@ -269,4 +269,27 @@ describe('SyRadioGroup', () => {
 		const isValid = await wrapper.vm.validateOnSubmit()
 		expect(typeof isValid).toBe('boolean')
 	})
+
+	it('accepts false as a valid choice when required (issue #2683)', async () => {
+		const wrapper = mount(SyRadioGroup, {
+			props: {
+				'modelValue': null,
+				'label': 'Debug',
+				'required': true,
+				'onUpdate:modelValue': e => wrapper.setProps({ modelValue: e }),
+				'options': [
+					{ label: 'Vrai', value: true },
+					{ label: 'Faux', value: false },
+				],
+			},
+		})
+
+		await wrapper.findAll('input[type="radio"]')[1]!.setValue(true)
+		await nextTick()
+
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([false])
+		expect(await wrapper.vm.validateOnSubmit()).toBe(true)
+		await nextTick()
+		expect(wrapper.text()).not.toContain('requis')
+	})
 })

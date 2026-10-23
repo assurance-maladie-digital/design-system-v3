@@ -1,6 +1,6 @@
 import { computed, nextTick, onUnmounted, type ComputedRef, type Ref } from 'vue'
 import { useSySelectKeyboard } from '@/components/Customs/Selects/SySelect/composables/useSySelectKeyboard'
-import type { ItemType, SelectValue, SelectArray } from '../types'
+import type { ItemType, SelectArray, SelectPrimitive, SelectValue } from '../types'
 
 interface KeyboardHandlerProps {
 	multiple: boolean
@@ -11,7 +11,7 @@ interface KeyboardHandlerDeps {
 	search: Ref<string>
 	selected: Ref<SelectValue | SelectArray>
 	isOpen: Ref<boolean>
-	selectItem: (item: ItemType | string | number | null | undefined) => void
+	selectItem: (item: ItemType | SelectPrimitive | null | undefined) => void
 	getItemText: (item: unknown) => unknown
 	filteredItems: ComputedRef<ItemType[]>
 	uniqueMenuId: Ref<string>

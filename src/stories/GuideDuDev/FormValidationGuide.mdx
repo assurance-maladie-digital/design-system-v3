@@ -764,7 +764,7 @@ const handleSubmit = async () => {
 
 | Type | Description | Options principales |
 |---|---|---|
-| `required` | Champ obligatoire | `message` |
+| `required` | Champ obligatoire (`false` refusé, sauf avec `allowFalse: true`) | `message`, `allowFalse` |
 | `minLength` / `maxLength` / `exactLength` | Longueur min / max / exacte | `length`, `ignoreSpace` |
 | `min` / `max` | Valeur numérique min / max | `value` |
 | `email` | Format d'email valide | `message` |

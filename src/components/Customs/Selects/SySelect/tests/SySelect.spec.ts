@@ -2118,4 +2118,43 @@ describe('Integration with SyForm', () => {
 
 		wrapper.unmount()
 	})
+
+	it('accepts false as a valid choice when required (issue #2683)', async () => {
+		const wrapper = mount(SySelect, {
+			props: {
+				modelValue: false,
+				items: [{ text: 'Vrai', value: true }, { text: 'Faux', value: false }],
+				label: 'Debug',
+				required: true,
+			},
+			attachTo: document.body,
+		})
+
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any -- exposed method is not part of the inferred public instance type
+		const isValid = await (wrapper.vm as any).validateOnSubmit()
+		await nextTick()
+
+		expect(isValid).toBe(true)
+		expect(wrapper.find('.v-messages__message').exists()).toBe(false)
+
+		wrapper.unmount()
+	})
+
+	it('displays and emits false for primitive boolean items (issue #2683)', async () => {
+		const wrapper = mount(SySelect, {
+			props: { items: [true, false], label: 'Debug' },
+			attachTo: document.body,
+		})
+
+		await wrapper.find('.v-field').trigger('click')
+		const items = wrapper.findComponent(VList).findAll('.v-list-item')
+		expect(items.map(item => item.text())).toEqual(['true', 'false'])
+
+		await items[1]!.trigger('click')
+
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([false])
+		expect(wrapper.find('input').element.value).toBe('false')
+
+		wrapper.unmount()
+	})
 })

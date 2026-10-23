@@ -71,6 +71,16 @@ describe('useFieldValidation', () => {
 		expect(await rule(false)).toEqual({ error: 'This field is required.' })
 	})
 
+	it('accepts false with the allowFalse option (selection components, issue #2683)', async () => {
+		const rules = generateRules([{ type: 'required', options: { message: 'This field is required.', allowFalse: true } }])
+		const rule = rules[0]!
+
+		expect(await rule(false)).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule(true)).toEqual({ success: 'Le champ est valide.' })
+		expect(await rule(null)).toEqual({ error: 'This field is required.' })
+		expect(await rule(undefined)).toEqual({ error: 'This field is required.' })
+	})
+
 	it('should validate required rule with warning mode', async () => {
 		const rules = generateRules([{ type: 'required', options: { isWarning: true, warningMessage: 'Warning: field required.' } }])
 		const rule = rules[0]!

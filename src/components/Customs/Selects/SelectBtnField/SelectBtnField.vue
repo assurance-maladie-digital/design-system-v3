@@ -7,6 +7,7 @@
 	import type { SelectBtnItem, SelectBtnValue } from './types'
 	import { locales as defaultLocales } from './locales'
 	import { useLocales } from '@/composables/useLocales'
+	import { isEmptySelectValue } from '@/utils/functions/isEmptySelectValue'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 	const props = withDefaults(defineProps<{
@@ -102,7 +103,7 @@
 		return item.value !== null && item.value !== undefined
 	}))
 
-	function isSelected(value: number | string): boolean {
+	function isSelected(value: number | string | boolean): boolean {
 		if (props.multiple) {
 			return (
 				Array.isArray(internalValue.value)
@@ -256,7 +257,7 @@
 		focusedIndex.value = index
 		const item = filteredItems.value[index]
 		// Only auto-select on keyboard focus (Tab or arrow keys)
-		if (!props.multiple && !internalValue.value && item) {
+		if (!props.multiple && isEmptySelectValue(internalValue.value) && item) {
 			toggleItem(item)
 		}
 	}

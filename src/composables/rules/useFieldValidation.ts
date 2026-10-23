@@ -21,6 +21,7 @@ export type RuleOptions<T = any> = {
 	length?: number
 	pattern?: RegExp
 	ignoreSpace?: boolean
+	allowFalse?: boolean // Si true, la règle `required` accepte `false` comme une valeur renseignée (composants de sélection)
 	isWarning?: boolean // Si true, la règle génère un warning au lieu d'une erreur
 	validate?: (value: T) => boolean | string | Promise<boolean | string> // Fonction de validation personnalisée pour les règles de type 'custom'
 	date?: string | Date // Date de référence pour les règles notBeforeDate et notAfterDate
@@ -130,7 +131,7 @@ export function useFieldValidation() {
 					return createValidationResult(
 						(typeof value === 'string' && value.trim() !== '')
 						|| (typeof value === 'number' && !Number.isNaN(value))
-						|| (typeof value === 'boolean' && value === true)
+						|| (typeof value === 'boolean' && (value || options.allowFalse === true))
 						|| (value instanceof Date)
 						// Un tableau vide (mode multiple : aucune sélection) n'est pas rempli
 						|| (Array.isArray(value)

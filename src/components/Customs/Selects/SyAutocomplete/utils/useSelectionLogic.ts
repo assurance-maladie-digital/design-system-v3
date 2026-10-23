@@ -1,5 +1,5 @@
 import type { Ref } from 'vue'
-import type { ItemType, SelectValue, SelectArray } from '../types'
+import type { ItemType, SelectArray, SelectPrimitive, SelectValue } from '../types'
 
 interface SelectionLogicProps {
 	multiple: boolean
@@ -11,8 +11,8 @@ type EmitFunction = (event: 'update:modelValue', value: SelectValue | SelectArra
 
 export function useSelectionLogic(
 	props: SelectionLogicProps,
-	getValueKey: (item: ItemType | string | number) => string | number,
-	getStoredValue: (item: ItemType | string | number) => ItemType | string | number,
+	getValueKey: (item: ItemType | SelectPrimitive) => SelectPrimitive,
+	getStoredValue: (item: ItemType | SelectPrimitive) => ItemType | SelectPrimitive,
 	getPlainText: (item: ItemType) => string,
 	selected: Ref<SelectValue | SelectArray>,
 	search: Ref<string>,
@@ -24,8 +24,8 @@ export function useSelectionLogic(
 		emit('update:modelValue', null)
 	}
 
-	const updateMultipleSelection = (valueKeyValue: string | number, valueToStore: ItemType | string | number) => {
-		const arr: (ItemType | string | number)[] = Array.isArray(selected.value) ? [...selected.value] : []
+	const updateMultipleSelection = (valueKeyValue: SelectPrimitive, valueToStore: ItemType | SelectPrimitive) => {
+		const arr: (ItemType | SelectPrimitive)[] = Array.isArray(selected.value) ? [...selected.value] : []
 		const index = arr.findIndex(val =>
 			props.returnObject
 				? (val as ItemType)[props.valueKey] === valueKeyValue
@@ -52,7 +52,7 @@ export function useSelectionLogic(
 		emit('update:modelValue', selected.value)
 	}
 
-	const updateValue = (item: ItemType | string | number | null) => {
+	const updateValue = (item: ItemType | SelectPrimitive | null) => {
 		if (item === null) {
 			resetValue()
 			return

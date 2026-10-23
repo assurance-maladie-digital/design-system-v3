@@ -311,7 +311,7 @@ Notre système propose trois modes de sélection, chacun adapté à des besoins 
 ## Bonnes pratiques
 
 - Toujours spécifier un label clair pour indiquer ce que l'utilisateur doit sélectionner
-- Utiliser la propriété `required` lorsqu'une sélection est obligatoire
+- Utiliser la propriété `required` lorsqu'une sélection est obligatoire. Pour `SyAutocomplete` et `SySelect`, les valeurs `0` et `false` sont des choix valides. Une règle `required` passée dans `customRules` refuse `false` : ajouter `allowFalse: true` à ses options pour une liste booléenne
 - Pour SySelect et SyInputSelect, ajouter `clearable` pour permettre à l'utilisateur d'effacer sa sélection
 - Pour les sélections multiples, préférer l'affichage en puces (chips) pour une meilleure lisibilité
 - Adapter le type de sélecteur au contexte d'utilisation (formulaire standard, menu utilisateur, etc.)
