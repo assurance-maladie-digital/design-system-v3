@@ -243,7 +243,7 @@
 		</slot>
 		<div
 			v-if="header!.sortable"
-			class="sort-container align-center"
+			class="sort-container d-flex align-center"
 		>
 			<button
 				type="button"
@@ -260,17 +260,13 @@
 					decorative
 				/>
 			</button>
-			<div
+			<span
 				v-if="sortOrderIndex"
-				class="sort-order-indicator text-primary ml-0 mr-2"
+				class="sort-order-indicator text-primary"
 				:title="locales.sortOrder(sortOrderIndex)"
 			>
 				{{ sortOrderIndex }}
-			</div>
-			<div
-				v-else-if="isColumnSorted"
-				class="mr-2"
-			/>
+			</span>
 		</div>
 		<button
 			v-if="props.resizableColumns && !isLastColumn"
@@ -314,6 +310,7 @@
 
 .sort-container {
 	flex: 0 0 auto;
+	position: relative;
 }
 
 // Bouton de tri natif : focusable et actionnable au clavier (Entrée/Espace).
@@ -344,7 +341,15 @@
 	outline-offset: 2px;
 }
 
+// Hors du flux : le chiffre ne modifie pas la largeur de la colonne quand un tri est
+// ajouté ou retiré (sinon toutes les colonnes se décalent, cf. #2595). Il occupe la
+// marge intérieure de la cellule, à droite de la flèche, centré verticalement (#2692).
 .sort-order-indicator {
+	position: absolute;
+	top: 50%;
+	left: 100%;
+	transform: translateY(-50%);
+	margin-left: 2px;
 	font-size: 0.75rem;
 	font-weight: bold;
 	line-height: 1;
