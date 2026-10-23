@@ -57,6 +57,25 @@ describe('validateWithReturnFormat (#2627)', () => {
 			expect(validate).not.toHaveBeenCalledWith('07/10/2026')
 			wrapper.unmount()
 		})
+
+		it('suit un changement de validateWithReturnFormat après le montage', async () => {
+			const validate = vi.fn(() => true)
+			const wrapper = mount(component, {
+				props: { label: 'Date', format: 'DD/MM/YYYY', dateFormatReturn: 'YYYY-MM-DD', customRules: buildRules(validate), ...modeProps },
+			})
+
+			await wrapper.setProps({ validateWithReturnFormat: true })
+			await typeAndBlur(wrapper, '07/10/2026')
+			expect(validate).toHaveBeenCalledWith('2026-10-07')
+			expect(validate).not.toHaveBeenCalledWith('07/10/2026')
+
+			validate.mockClear()
+			await wrapper.setProps({ validateWithReturnFormat: false })
+			await typeAndBlur(wrapper, '08/10/2026')
+			expect(validate).toHaveBeenCalledWith('08/10/2026')
+			expect(validate).not.toHaveBeenCalledWith('2026-10-08')
+			wrapper.unmount()
+		})
 	})
 
 	it('reproduit le scénario de l\'issue : une règle basée sur new Date(value) refuse 2024', async () => {
