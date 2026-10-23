@@ -7,6 +7,7 @@ import {
 	useComponentStatus,
 	type StatutResult,
 } from '../src/composables/useComponentStatus'
+import { controlMatchers } from './controlMatchers'
 const vuetify = createVuetifyInstance()
 const isDev = process.env.NODE_ENV === 'development'
 
@@ -186,10 +187,7 @@ const preview: Preview = {
 			},
 		},
 		controls: {
-			matchers: {
-				color: /(background|color)$/i,
-				date: /Date$/i,
-			},
+			matchers: controlMatchers,
 			disableSaveFromUI: true,
 			sort: 'alpha',
 		},
