@@ -8,6 +8,7 @@
 	import { useSyAutocompleteValidation } from './composables/useSyAutocompleteValidation'
 	import { locales as defaultLocales } from './locales'
 	import { useLocales } from '@/composables/useLocales'
+	import { isEmptySelectValue } from '@/utils/functions/isEmptySelectValue'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
 	import type { ItemType, SelectArray, SelectPrimitive, SelectValue } from './types'
 	import { ariaManager } from './utils/ariaManager'
@@ -144,7 +145,7 @@
 	const syncSearchFromValue = () => {
 		if (props.multiple) return
 		suppressMenuOpen.value = true
-		if (selected.value === null || selected.value === undefined) {
+		if (isEmptySelectValue(selected.value)) {
 			search.value = ''
 			return
 		}
@@ -226,7 +227,7 @@
 	})
 
 	const isItemSelected = (item: ItemType) => {
-		if (selected.value === null || selected.value === undefined) return false
+		if (isEmptySelectValue(selected.value)) return false
 		if (props.multiple && Array.isArray(selected.value)) {
 			return selected.value.some(sel => props.returnObject ? (sel as ItemType)[props.valueKey] === item[props.valueKey] : sel === item[props.valueKey])
 		}

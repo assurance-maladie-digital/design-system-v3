@@ -970,6 +970,26 @@ describe('SelectBtnField', () => {
 		wrapper.unmount()
 	})
 
+	it('still auto-selects on keyboard focus when the model is an empty string (issue #2683)', async () => {
+		const wrapper = mount(SelectBtnField, {
+			props: {
+				modelValue: '',
+				label: 'Niveau',
+				items: [
+					{ text: 'Un', value: 1 },
+					{ text: 'Deux', value: 2 },
+				],
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.findAll('[role="option"]')[1]!.trigger('focus')
+		await flushPromises()
+
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([2])
+		wrapper.unmount()
+	})
+
 	describe('boolean values (issue #2683)', () => {
 		const booleanItems = [
 			{ text: 'Vrai', value: true },

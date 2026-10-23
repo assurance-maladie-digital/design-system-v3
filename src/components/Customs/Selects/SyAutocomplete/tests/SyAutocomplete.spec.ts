@@ -1641,6 +1641,26 @@ describe('SyAutocomplete', () => {
 			expect(selectedOptions.map(option => option.textContent?.trim())).toEqual([label])
 		})
 
+		it('keeps an empty string as no selection, even with an option of value \'\'', async () => {
+			wrapper.unmount()
+			wrapper = mount(SyAutocomplete, {
+				props: {
+					modelValue: '',
+					items: [{ text: 'Aucun', value: '' }, { text: 'Un', value: 1 }],
+					label: 'Valeur',
+					menuId,
+				},
+				attachTo: document.body,
+			})
+			await flushPromises()
+
+			expect(getInputEl()?.value).toBe('')
+
+			await wrapper.find('input').trigger('click')
+			await flushPromises()
+			expect(document.body.querySelectorAll(`#${menuId} [role="option"][aria-selected="true"]`)).toHaveLength(0)
+		})
+
 		it('displays the label after selecting an option of value 0', async () => {
 			wrapper.unmount()
 			wrapper = mount(SyAutocomplete, {
