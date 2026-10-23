@@ -190,8 +190,8 @@ export const WithTabsPrependSlot: Story = {
 		template: `
       <SyTabs :items="args.items">
         <template #tabs-prepend>
-            <div class="pa-4 bg-info-variant-lighten rounded">
-              <p class="mr-4">Tabs prepend content</p>
+            <div class="d-flex align-center align-self-stretch px-4 bg-info-variant-lighten rounded">
+              Tabs prepend content
             </div>
         </template>
       </SyTabs>
@@ -204,8 +204,8 @@ export const WithTabsPrependSlot: Story = {
 				code: `
 <SyTabs :items="items">
 	<template #tabs-prepend>
-		<div class="pa-4 bg-info-variant-lighten rounded">
-			<p class="mr-4">Tabs prepend content</p>
+		<div class="d-flex align-center align-self-stretch px-4 bg-info-variant-lighten rounded">
+			Tabs prepend content
 		</div>
 	</template>
 </SyTabs>
@@ -237,8 +237,8 @@ export const WithTabsAppendSlot: Story = {
 		template: `
       <SyTabs :items="args.items">
         <template #tabs-append>
-            <div class="pa-4 bg-info-variant-lighten rounded">
-              <p class="mr-4">Tabs append content</p>
+            <div class="d-flex align-center align-self-stretch px-4 bg-info-variant-lighten rounded">
+              Tabs append content
             </div>
         </template>
       </SyTabs>
@@ -251,8 +251,8 @@ export const WithTabsAppendSlot: Story = {
 				code: `
 <SyTabs :items="items">
 	<template #tabs-append>
-		<div class="pa-4 bg-info-variant-lighten rounded">
-			<p class="mr-4">Tabs append content</p>
+		<div class="d-flex align-center align-self-stretch px-4 bg-info-variant-lighten rounded">
+			Tabs append content
 		</div>
 	</template>
 </SyTabs>
