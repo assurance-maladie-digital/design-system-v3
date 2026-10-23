@@ -67,9 +67,10 @@ button:focus-visible {
 		opacity: 1;
 	}
 
-	.v-btn__content {
-		position: relative;
-		z-index: 1;
+	isolation: isolate;
+
+	.v-btn__overlay {
+		z-index: -1;
 	}
 
 	&:hover .v-btn__overlay {
