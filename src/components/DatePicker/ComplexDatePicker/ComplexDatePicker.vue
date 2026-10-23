@@ -352,6 +352,7 @@
 		readonly: computed(() => props.readonly),
 		skipValidationWhenReadonly: true,
 		displayFormat: computed(() => props.format),
+		returnFormat: computed(() => props.validateWithReturnFormat ? (props.dateFormatReturn || props.format) : undefined),
 		parseDate,
 		hasInteracted,
 		formRegistration: {

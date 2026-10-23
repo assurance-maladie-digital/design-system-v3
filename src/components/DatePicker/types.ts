@@ -101,6 +101,14 @@ export interface DatePickerCommonProps {
 	textFieldActivator?: boolean
 	title?: string | false
 	useVuetifyValidation?: boolean
+	/**
+	 * Opt-in : quand `true`, la chaîne transmise au `validate` des règles personnalisées
+	 * (`customRules`, `customWarningRules`, `customSuccessRules`) lors de la saisie texte
+	 * est au format `dateFormatReturn || format` (comme le `v-model`) au lieu du format d'affichage.
+	 * Désactivé par défaut pour ne pas modifier les règles existantes.
+	 * @default false
+	 */
+	validateWithReturnFormat?: boolean
 	warningMessages?: string[] | null
 	width?: string
 }
@@ -257,6 +265,7 @@ export const DatePickerCommonDefaults = {
 	textFieldActivator: false,
 	title: false,
 	useVuetifyValidation: false,
+	validateWithReturnFormat: false,
 	warningMessages: null,
 	width: '100%',
 } as const

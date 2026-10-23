@@ -77,6 +77,12 @@ export type DatePickerValidationOptions = {
 	revalidateOnCustomRulesChange?: boolean
 	deferCustomRulesRevalidation?: MaybeRef<boolean>
 	displayFormat?: MaybeRef<string>
+	/**
+	 * Format de la chaîne transmise au `validate` des règles personnalisées par le flux
+	 * de saisie texte. `undefined` → `displayFormat` (comportement historique).
+	 * Renseigné par les composants uniquement quand `validateWithReturnFormat` est activé.
+	 */
+	returnFormat?: MaybeRef<string | undefined>
 	parseDate?: (dateStr: string, format: string) => Date | null
 	hasInteracted?: Ref<boolean>
 	formRegistration?: {

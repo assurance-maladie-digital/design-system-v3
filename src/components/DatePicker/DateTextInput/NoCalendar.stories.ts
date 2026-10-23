@@ -10,6 +10,7 @@ interface DatePickerProps {
 	'placeholder'?: string
 	'format'?: string
 	'dateFormatReturn'?: string
+	'validateWithReturnFormat'?: boolean
 	'density'?: 'default' | 'comfortable' | 'compact'
 	'showWeekNumber'?: boolean
 	'required'?: boolean
@@ -142,6 +143,11 @@ const meta = {
 			options: ['', 'DD/MM/YYYY', 'MM/DD/YYYY', 'YYYY-MM-DD'],
 			description: 'Format de la date Ã©mise par le v-model. Si vide, utilise le mÃªme format que la prop "format"',
 			defaultValue: '',
+		},
+		'validateWithReturnFormat': {
+			control: 'boolean',
+			description: 'Opt-in : transmet au `validate` des règles personnalisées la saisie au format `dateFormatReturn` (comme le v-model) au lieu du format d\'affichage. Désactivé par défaut.',
+			defaultValue: false,
 		},
 		'label': {
 			control: 'text',

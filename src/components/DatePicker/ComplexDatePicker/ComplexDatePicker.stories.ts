@@ -176,6 +176,11 @@ const meta = {
 			description: 'Format de la date émise par le v-model. Si vide, utilise le même format que la prop "format"',
 			defaultValue: 'DD/MM/YYYY',
 		},
+		'validateWithReturnFormat': {
+			control: 'boolean',
+			description: 'Opt-in : transmet au `validate` des règles personnalisées la saisie au format `dateFormatReturn` (comme le v-model) au lieu du format d\'affichage. Désactivé par défaut.',
+			defaultValue: false,
+		},
 		'isBirthDate': {
 			control: 'boolean',
 			description: 'Active le mode date de naissance qui ouvre le calendrier sur la vue de sélection d\'année (au lieu de la vue mensuelle), permettant une navigation année → mois → jour',

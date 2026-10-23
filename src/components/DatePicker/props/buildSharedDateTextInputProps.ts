@@ -44,4 +44,5 @@ export const buildSharedDateTextInputProps = (
 	'persistent-hint': props.persistentHint,
 	'use-vuetify-validation': props.useVuetifyValidation,
 	'rules': props.rules,
+	'validate-with-return-format': props.validateWithReturnFormat,
 })
