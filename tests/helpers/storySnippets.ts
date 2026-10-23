@@ -33,49 +33,15 @@ export interface SnippetAnalysis {
 const SNIPPET_ID = 'story-snippet'
 // `NodeTypes.ATTRIBUTE` de `@vue/compiler-core`, non exposé par `vue/compiler-sfc`.
 const ATTRIBUTE_NODE = 6
-// Commentaires JS, sans toucher aux URL (`https://…`).
-const COMMENTS = /\/\*[\s\S]*?\*\/|(?<!:)\/\/.*$/gm
 
 function isSourceCodeTab(tab: unknown): tab is SourceCodeTab {
 	return typeof tab === 'object' && tab !== null && 'code' in tab && typeof tab.code === 'string'
 }
 
-/** Onglets de code de la story, dans l'ordre déclaré. */
-export function getSourceCode(story: StoryWithSourceCode): SourceCodeTab[] {
-	const { sourceCode } = story.parameters
-	return Array.isArray(sourceCode) ? sourceCode.filter(isSourceCodeTab) : []
-}
-
-/** Code de l'onglet `name`, ou une chaîne vide s'il n'existe pas. */
-export function getSource(story: StoryWithSourceCode, name: string): string {
-	return getSourceCode(story).find(tab => tab.name === name)?.code ?? ''
-}
-
 function parseSnippet(story: StoryWithSourceCode) {
-	return parse(getSourceCode(story).map(tab => tab.code).join('\n'))
-}
-
-/**
- * Appel `onMounted(...)` du script de l'extrait, sans les commentaires, quel que soit le nom de l'onglet.
- * Retourne une chaîne vide si l'extrait n'appelle pas `onMounted`.
- */
-export function getMountedBody(story: StoryWithSourceCode): string {
-	const script = parseSnippet(story).descriptor.scriptSetup?.content.replace(COMMENTS, '') ?? ''
-	const start = script.indexOf('onMounted(')
-	if (start === -1) {
-		return ''
-	}
-
-	let depth = 0
-	for (let index = start + 'onMounted'.length; index < script.length; index++) {
-		if (script[index] === '(') {
-			depth++
-		}
-		else if (script[index] === ')' && --depth === 0) {
-			return script.slice(start, index + 1)
-		}
-	}
-	return ''
+	const { sourceCode } = story.parameters
+	const tabs = Array.isArray(sourceCode) ? sourceCode.filter(isSourceCodeTab) : []
+	return parse(tabs.map(tab => tab.code).join('\n'))
 }
 
 function isStaticAttribute(prop: unknown): prop is { name: string } {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { analyzeSnippet, getMountedBody, getSource } from '../storySnippets'
+import { analyzeSnippet } from '../storySnippets'
 
 function story(template: string, script?: string) {
 	const sourceCode = [{ name: 'Template', code: template }]
@@ -19,14 +19,6 @@ const onInput = (text: string) => text
 </script>`
 
 describe('storySnippets', () => {
-	it('retourne le code d\'un onglet ou une chaîne vide', () => {
-		const snippet = story('<template><div /></template>')
-
-		expect(getSource(snippet, 'Template')).toBe('<template><div /></template>')
-		expect(getSource(snippet, 'Script')).toBe('')
-		expect(getSource({ parameters: {} }, 'Template')).toBe('')
-	})
-
 	it('ne signale rien pour un SFC autonome', () => {
 		const analysis = analyzeSnippet(story(
 			'<template><SyTextArea ref="textAreaRef" v-model="value" @update:model-value="(text) => onInput(text)" /></template>',
@@ -100,9 +92,15 @@ describe('storySnippets', () => {
 		expect(analysis.invalidAttributes).toEqual([])
 	})
 
-	it('ignore une source sans onglets exploitables', () => {
-		expect(getSource({ parameters: { sourceCode: 'invalide' } }, 'Template')).toBe('')
-		expect(getSource({ parameters: { sourceCode: [{ name: 'Template' }] } }, 'Template')).toBe('')
+	it.each([
+		{ name: 'absente', parameters: {} },
+		{ name: 'qui n\'est pas un tableau', parameters: { sourceCode: 'invalide' } },
+		{ name: 'dont les onglets n\'ont pas de code', parameters: { sourceCode: [{ name: 'Template' }] } },
+	])('signale une source $name comme un extrait manquant', ({ parameters }) => {
+		const analysis = analyzeSnippet({ parameters })
+
+		expect(analysis.parseErrors).toEqual([expect.stringContaining('At least one <template> or <script> is required')])
+		expect(analysis.hasScriptSetup).toBe(false)
 	})
 
 	it('signale une erreur de syntaxe dans le script sans lever d\'exception', () => {
@@ -123,40 +121,5 @@ const value = ref('')
 		expect(analysis.hasScriptSetup).toBe(false)
 		expect(analysis.undeclaredIdentifiers).toEqual(['value'])
 		expect(analysis.unresolvedComponents).toEqual(['SyTextArea'])
-	})
-
-	it.each([
-		{ name: 'sur une ligne', script: 'onMounted(() => fieldRef.value?.validateOnSubmit())' },
-		{ name: 'indenté', script: '  onMounted(async () => {\n    await fieldRef.value?.validateOnSubmit()\n  })' },
-	])('extrait le corps d\'un onMounted écrit $name', ({ script }) => {
-		const snippet = story('<template><div /></template>', `<script setup lang="ts">\n${script}\n</script>`)
-
-		expect(getMountedBody(snippet)).toContain('validateOnSubmit()')
-	})
-
-	it('extrait le onMounted quel que soit le nom de l\'onglet du script', () => {
-		const snippet = { parameters: { sourceCode: [
-			{ name: 'Template', code: '<template><div /></template>' },
-			{ name: 'Scripts', code: '<script setup lang="ts">\nonMounted(() => init())\n</script>' },
-		] } }
-
-		expect(getMountedBody(snippet)).toContain('init()')
-	})
-
-	it('extrait le corps du onMounted sans les commentaires ni le code qui suit', () => {
-		const snippet = story('<template><div /></template>', `<script setup lang="ts">
-onMounted(() => {
-  // textAreaRef.value?.validateOnSubmit()
-  init()
-})
-
-async function onSubmit() {
-  await textAreaRef.value?.validateOnSubmit()
-}
-</script>`)
-
-		expect(getMountedBody(snippet)).toContain('init()')
-		expect(getMountedBody(snippet)).not.toContain('validateOnSubmit')
-		expect(getMountedBody(story('<template><div /></template>'))).toBe('')
 	})
 })
