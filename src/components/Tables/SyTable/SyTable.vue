@@ -691,11 +691,11 @@
 }
 
 .sy-table--pinned-left-shadow :deep(.sy-table__pinned--left) {
-	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6);
+	box-shadow: var(--sy-table-pinned-shadow-right);
 }
 
 .sy-table--pinned-right-shadow :deep(.sy-table__pinned--right) {
-	box-shadow: -2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6);
+	box-shadow: var(--sy-table-pinned-shadow-left);
 }
 
 .sy-table--pinned-select-left :deep(.v-data-table__th--select),
@@ -736,7 +736,7 @@
 
 .sy-table--pinned-left-shadow.sy-table--pinned-select-left:not(.sy-table--select-single) :deep(.v-data-table__th--select),
 .sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr > .v-data-table__td--select-row) {
-	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6);
+	box-shadow: var(--sy-table-pinned-shadow-right);
 }
 /* stylelint-enable @stylistic/max-line-length */
 

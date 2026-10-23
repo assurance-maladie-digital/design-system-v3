@@ -14,7 +14,8 @@ $sy-table-border: 1px solid rgb(var(--v-theme-disabled));
 		--sy-table-row-bg: transparent;
 
 		// Ombre des colonnes épinglées
-		--sy-table-pinned-shadow: -4px 0 8px rgb(0 0 0 / 8%);
+		--sy-table-pinned-shadow-left: -4px 0 8px rgb(0 0 0 / 8%);
+		--sy-table-pinned-shadow-right: 4px 0 8px rgb(0 0 0 / 8%);
 
 		// Standardisation des z-index pour les tableaux
 		--sy-table-z-base: 1;
