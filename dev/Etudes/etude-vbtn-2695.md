@@ -53,8 +53,18 @@ isolation: isolate;
 ## Vérification
 
 - [x] Stylelint sur `_btns.scss`
-- [ ] Vérification visuelle dans le playground : pastille en haut à droite (bouton texte et bouton icône), toutes variantes, survol, bouton désactivé
-- [ ] Tests visuels Cypress des boutons
+- [x] Vérification visuelle (playground, Chrome) : pastille `position: absolute` (`top: -3px`, `right: -6px`) dans le slot de chaque variante, overlay forcé visible, bouton désactivé et en chargement
+
+| Bouton | Avant (1.2.0), décalage pastille / bouton (haut, droite) | Après |
+|---|---|---|
+| `elevated` | +6 px, -10 px (sur le texte) | -3 px, +6 px (coin du bouton) |
+| `flat` | +6 px, -14 px (sur le texte) | -3 px, +6 px |
+| icône | +9 px, -6 px (sur l'icône) | -3 px, +6 px |
+| `outlined`, `text`, `tonal` | -3 px, +6 px | inchangé |
+
+  L'overlay reste peint sous le contenu (texte visible par-dessus), et les boutons désactivé et en chargement sont rendus à l'identique.
+- [x] Tests visuels Cypress des boutons : aucune baseline modifiée en CI.
+- [x] Test de régression : `src/composantsVuetify/VBtn/tests/VBtn.visual.cy.ts` vérifie la position de la pastille par rapport au bouton (`elevated`, `flat`, icône), sans snapshot. Les 3 tests échouent avec l'ancienne règle.
 
 ## Impact
 
