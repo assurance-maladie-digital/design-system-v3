@@ -135,6 +135,63 @@ describe('TableHeader', () => {
 		expect(wrapper.find('.sort-order-indicator').exists()).toBe(false)
 	})
 
+	// #2692 : le chiffre d'ordre est un élément en ligne placé à côté de la flèche, dans le
+	// conteneur de tri en flex ; en tri simple, aucun élément vide ne s'ajoute à côté de la flèche
+	describe('sort order indicator layout (issue #2692)', () => {
+		const column = {
+			title: 'Test Column',
+			key: 'test',
+			value: 'test',
+			sortable: true,
+		}
+		const mountHeader = (sortBy: SortOptions[]) => mount(TableHeader, {
+			props: {
+				column,
+				headerParams: {
+					sortBy,
+					getSortIcon: () => 'mdi-arrow-up',
+					toggleSort: () => {},
+					columns: [
+						{ key: 'test', value: 'test', title: 'Test Column', sortable: true },
+						{ key: 'other', value: 'other', title: 'Other Column', sortable: true },
+					],
+					headers: [],
+					someSelected: false,
+					allSelected: false,
+					selectAll: () => {},
+					isSorted: () => true,
+				},
+				table: { $el: { offsetWidth: 800 } } as unknown as VDataTable,
+				resizableColumns: false,
+			},
+		})
+
+		it('renders the order next to the sort button in a flex container', () => {
+			const wrapper = mountHeader([
+				{ key: 'other', order: 'asc' } as SortOptions,
+				{ key: 'test', order: 'desc' } as SortOptions,
+			])
+
+			const container = wrapper.find('.sort-container')
+			expect(container.classes()).toContain('d-flex')
+			const children = container.element.children
+			expect(children).toHaveLength(2)
+			expect(children[0]!.classList.contains('sort-button')).toBe(true)
+			expect(children[1]!.tagName).toBe('SPAN')
+			expect(children[1]!.classList.contains('sort-order-indicator')).toBe(true)
+			expect(children[1]!.textContent?.trim()).toBe('2')
+			expect(children[1]!.getAttribute('title')).toBeTruthy()
+		})
+
+		it('renders only the sort button when a single column is sorted', () => {
+			const wrapper = mountHeader([{ key: 'test', order: 'asc' } as SortOptions])
+
+			const children = wrapper.find('.sort-container').element.children
+			expect(children).toHaveLength(1)
+			expect(children[0]!.classList.contains('sort-button')).toBe(true)
+		})
+	})
+
 	it('wraps the column title when resizable columns are enabled', () => {
 		const column = {
 			title: 'A very long column title',

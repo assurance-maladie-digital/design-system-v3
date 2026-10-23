@@ -74,6 +74,33 @@ describe('SyTable - Visual regression tests', () => {
 		cy.matchImageSnapshot('sy-table-compact', cy.get('.v-application'))
 	})
 
+	// Tri multiple (#2692) : le chiffre d'ordre est aligné à droite de la flèche, sur la
+	// même ligne, et non plus sous la flèche.
+	it('displays the sort order next to the arrow with multi-sort', () => {
+		cy.mountWithVuetify(SyTable, {
+			props: {
+				headers: [
+					{ title: 'Nom', key: 'nom', sortable: true },
+					{ title: 'Prénom', key: 'prenom', sortable: true },
+					{ title: 'Ville', key: 'ville', sortable: true },
+				],
+				items: defaultItems,
+				caption: 'Tableau trié sur plusieurs colonnes',
+				multiSort: true,
+				options: {
+					multiSort: true,
+					sortBy: [
+						{ key: 'nom', order: 'desc' },
+						{ key: 'prenom', order: 'asc' },
+					],
+				},
+			},
+		})
+
+		cy.get('.sort-order-indicator').should('have.length', 2)
+		cy.matchImageSnapshot('sy-table-multi-sort', cy.get('.v-application'))
+	})
+
 	// Bouton de tri d'un en-tête (`.sort-button`) : ring DS primary (offset 2px).
 	it('shows the DS ring on a focused sort button', () => {
 		cy.mountWithVuetify(SyTable, {
