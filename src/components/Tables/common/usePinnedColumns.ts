@@ -164,26 +164,26 @@ export function usePinnedColumns({
 			const cellProps = (h.cellProps ?? {}) as Record<string, unknown>
 			const cellStyle = (cellProps.style ?? {}) as Record<string, string | number>
 
-			const stickyCellStyle: Record<string, string | number> = {
-				position: 'sticky',
-				zIndex: 'var(--sy-table-z-pinned-cell)',
-				background: 'rgb(var(--v-theme-surface))',
-			}
+			const sideClass = left !== undefined
+				? 'sy-table__pinned--left'
+				: 'sy-table__pinned--right'
 
-			const sideClass = left !== undefined ? 'sy-table__pinned--left' : 'sy-table__pinned--right'
-			if (left !== undefined) {
-				stickyCellStyle.left = `${left}px`
-			}
-			else if (right !== undefined) {
-				stickyCellStyle.right = `${right}px`
-			}
+			const offset = left ?? right ?? 0
 
 			return {
 				...h,
 				cellProps: {
 					...cellProps,
-					class: ['sy-table__pinned', sideClass, 'v-data-table-column--fixed', cellProps.class].filter(Boolean),
-					style: { ...cellStyle, ...stickyCellStyle },
+					class: [
+						'sy-table__pinned',
+						sideClass,
+						'v-data-table-column--fixed',
+						cellProps.class,
+					].filter(Boolean),
+					style: {
+						...cellStyle,
+						'--sy-pinned-offset': `${offset}px`,
+					},
 				},
 			}
 		})
