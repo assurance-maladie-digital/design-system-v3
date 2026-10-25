@@ -2,8 +2,9 @@
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import { mdiChevronDown } from '@mdi/js'
 	import { computed, inject, type ComputedRef } from 'vue'
-	import { locales as defaultLocales, localesKey } from '../locales'
-	import { dateToString } from './utils'
+	import { calendarLocalesKey } from '@/components/Common/Calendar/locales'
+	import { dateToString } from '@/components/Common/Calendar/utils'
+	import { locales as defaultLocales } from '../locales'
 
 	const props = defineProps<{
 		modelValue: string | undefined
@@ -28,9 +29,12 @@
 		else return dateToString(new Date())
 	})
 
-	const formatter = Intl.DateTimeFormat(navigator.language, { month: 'long' })
+	const formatter = new Intl.DateTimeFormat(
+		typeof navigator !== 'undefined' ? navigator.language : undefined,
+		{ month: 'long' },
+	)
 
-	const locales = inject<ComputedRef<typeof defaultLocales>>(localesKey)!
+	const locales = inject<ComputedRef<typeof defaultLocales>>(calendarLocalesKey)!
 
 	const btnLabel = computed(() => {
 		if (props.view === 'months') {
@@ -142,7 +146,6 @@
 	cursor: pointer;
 
 	&:focus-visible {
-		/* stylelint-disable-next-line custom-property-pattern */
 		outline: 2px solid rgb(var(--v-theme-primary, 12, 65, 154));
 	}
 }
