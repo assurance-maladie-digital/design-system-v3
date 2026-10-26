@@ -1,6 +1,24 @@
 $sy-table-radius: 8px;
 $sy-table-border: 1px solid rgb(var(--v-theme-disabled));
 
+// Valeurs par défaut des variables de personnalisation. Elles ne sont pas redéfinies sur `.v-table` :
+// le projet peut ainsi les poser sur n'importe quel ancêtre du tableau.
+$sy-table-pinned-cell-bg: var(--sy-table-pinned-cell-bg, rgb(var(--v-theme-surface)));
+$sy-table-pinned-shadow-color: rgba(var(--v-theme-grey-base), 0.6);
+$sy-table-pinned-left-shadow: var(--sy-table-pinned-left-shadow, 2px 0 6px -4px #{$sy-table-pinned-shadow-color});
+$sy-table-pinned-right-shadow: var(--sy-table-pinned-right-shadow, -2px 0 6px -4px #{$sy-table-pinned-shadow-color});
+$sy-table-checkbox-color: var(--sy-table-checkbox-color, rgb(var(--v-theme-primary)));
+
+// Fond opaque d'une cellule épinglée, sur lequel se superpose la couleur de sa ligne.
+@mixin pinned-cell-background {
+	background:
+		linear-gradient(
+			var(--sy-table-row-bg, transparent),
+			var(--sy-table-row-bg, transparent)
+		),
+		$sy-table-pinned-cell-bg;
+}
+
 @mixin tablestyles {
 	.v-table {
 		border: $sy-table-border;
@@ -8,14 +26,9 @@ $sy-table-border: 1px solid rgb(var(--v-theme-disabled));
 		overflow: hidden;
 
 		--sy-table-header-bg-pinned: color-mix(in srgb, rgb(var(--v-theme-info-variant)) 20%, rgb(var(--v-theme-surface)));
-		--sy-table-pinned-cell-bg: rgb(var(--v-theme-surface));
 
-		// Fond des lignes
+		// Couleur de ligne : redéfinie par `striped` ou par le projet sur le `tr` (via `row-props`)
 		--sy-table-row-bg: transparent;
-
-		// Ombre des colonnes épinglées
-		--sy-table-pinned-shadow-left: -4px 0 8px rgb(0 0 0 / 8%);
-		--sy-table-pinned-shadow-right: 4px 0 8px rgb(0 0 0 / 8%);
 
 		// Standardisation des z-index pour les tableaux
 		--sy-table-z-base: 1;
@@ -26,24 +39,18 @@ $sy-table-border: 1px solid rgb(var(--v-theme-disabled));
 
 	.sy-table__pinned {
 		position: sticky;
-		background:
-			linear-gradient(
-				var(--sy-table-row-bg, transparent),
-				var(--sy-table-row-bg, transparent)
-			),
-			var(--sy-table-pinned-cell-bg, rgb(var(--v-theme-surface)));
+
+		@include pinned-cell-background;
 	}
 
 	.sy-table__pinned--left {
 		left: var(--sy-pinned-offset);
 		z-index: var(--sy-table-z-pinned-cell);
-		box-shadow: var(--sy-table-pinned-shadow, none);
 	}
 
 	.sy-table__pinned--right {
 		right: var(--sy-pinned-offset);
 		z-index: var(--sy-table-z-pinned-cell);
-		box-shadow: var(--sy-table-pinned-shadow, none);
 	}
 
 	.sy-table-bulk-actions {
@@ -102,28 +109,28 @@ $sy-table-border: 1px solid rgb(var(--v-theme-disabled));
 
 	// Override Vuetify's checkbox styles to use primary color
 	.v-table .v-selection-control {
-		color: rgb(var(--v-theme-primary));
+		color: $sy-table-checkbox-color;
 	}
 
 	.v-table .v-selection-control--dirty .v-selection-control__input::before {
-		background-color: rgb(var(--v-theme-primary));
-		border-color: rgb(var(--v-theme-primary));
+		background-color: $sy-table-checkbox-color;
+		border-color: $sy-table-checkbox-color;
 	}
 
 	// Target the header checkbox specifically
 	.v-data-table-header__checkbox .v-selection-control {
-		color: rgb(var(--v-theme-primary));
+		color: $sy-table-checkbox-color;
 	}
 
 	// Target the row checkboxes specifically
 	.v-data-table-row__checkbox .v-selection-control {
-		color: rgb(var(--v-theme-primary));
+		color: $sy-table-checkbox-color;
 	}
 
 	// Add a global style for all checkboxes in the table
 	.v-checkbox .v-selection-control__input::before,
 	.v-checkbox-btn .v-selection-control__input::before {
-		border-color: rgb(var(--v-theme-primary)) !important;
+		border-color: $sy-table-checkbox-color !important;
 	}
 
 	// Aligner la checkbox de sélection de ligne sur celle de l'en-tête :
@@ -192,3 +199,62 @@ $sy-table-border: 1px solid rgb(var(--v-theme-disabled));
 		background-color: rgba(var(--v-theme-primary), 0.08) !important;
 	}
 }
+
+// Zébrage des lignes paires (prop `striped`). La couleur passe par `--sy-table-row-bg`
+// pour être reprise par les cellules épinglées.
+@mixin striped-rows {
+	.v-table tbody tr:nth-child(even) {
+		--sy-table-row-bg:
+			color-mix(
+				in srgb,
+				rgb(var(--v-theme-primary)) 5%,
+				rgb(var(--v-theme-surface))
+			);
+
+		background-color: var(--sy-table-row-bg);
+	}
+}
+
+// Styles des colonnes épinglées et de la colonne de sélection épinglée, partagés par SyTable et SyServerTable.
+// `$root` est la classe racine du composant (`sy-table` / `sy-server-table`), qui porte les modificateurs d'état.
+/* stylelint-disable @stylistic/max-line-length */
+@mixin pinned-styles($root) {
+	.#{$root} :deep(.sy-table__pinned) {
+		box-shadow: none;
+	}
+
+	// Vuetify rend semi-transparentes les cellules d'un tableau en chargement (`VDataTable.css`), y compris les
+	// cellules `--fixed` : une cellule épinglée laisserait alors voir le contenu qui défile dessous.
+	.#{$root} :deep(.v-data-table--loading .sy-table__pinned),
+	.#{$root} :deep(.v-data-table--loading .v-data-table__td--select-row) {
+		opacity: 1 !important;
+	}
+
+	.#{$root}--pinned-left-shadow :deep(.sy-table__pinned--left) {
+		box-shadow: $sy-table-pinned-left-shadow;
+	}
+
+	.#{$root}--pinned-right-shadow :deep(.sy-table__pinned--right) {
+		box-shadow: $sy-table-pinned-right-shadow;
+	}
+
+	// En sélection simple, l'en-tête de la colonne de sélection est vide : ni fond ni ombre.
+	// `!important` est nécessaire, car le `th` porte un style inline (slot `#headers`).
+	.#{$root}--select-single.#{$root}--pinned-select-left :deep(.v-table__wrapper > table > thead > tr > th.checkbox-column) {
+		box-shadow: none !important;
+		background: transparent !important;
+	}
+
+	.#{$root}--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr > .v-data-table__td--select-row) {
+		position: sticky;
+		left: 0;
+		z-index: var(--sy-table-z-pinned-cell);
+
+		@include pinned-cell-background;
+	}
+
+	.#{$root}--pinned-left-shadow.#{$root}--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr > .v-data-table__td--select-row) {
+		box-shadow: $sy-table-pinned-left-shadow;
+	}
+}
+/* stylelint-enable @stylistic/max-line-length */

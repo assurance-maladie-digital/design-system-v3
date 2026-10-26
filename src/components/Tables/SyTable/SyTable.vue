@@ -664,19 +664,6 @@
 	@include clickable-row-styles;
 }
 
-@mixin striped-rows {
-	.v-table tbody tr:nth-child(even) {
-		--sy-table-row-bg:
-			color-mix(
-				in srgb,
-				rgb(var(--v-theme-primary)) 5%,
-				rgb(var(--v-theme-surface))
-			);
-
-		background-color: var(--sy-table-row-bg);
-	}
-}
-
 .sy-table--striped :deep() {
 	@include striped-rows;
 }
@@ -685,59 +672,5 @@
 	max-width: fit-content;
 }
 
-.sy-table :deep(.sy-table__pinned) {
-	box-shadow: none;
-	opacity: 1 !important;
-}
-
-.sy-table--pinned-left-shadow :deep(.sy-table__pinned--left) {
-	box-shadow: var(--sy-table-pinned-shadow-right);
-}
-
-.sy-table--pinned-right-shadow :deep(.sy-table__pinned--right) {
-	box-shadow: var(--sy-table-pinned-shadow-left);
-}
-
-.sy-table--pinned-select-left :deep(.v-data-table__th--select),
-.sy-table--pinned-select-left :deep(.v-data-table__td--select-row) {
-	opacity: 1;
-}
-
-.sy-table--pinned-select-left :deep(.v-data-table__th--select) {
-	position: sticky;
-	left: 0;
-	z-index: 5;
-	background: var(--sy-table-header-bg-pinned);
-}
-
-.sy-table--select-single.sy-table--pinned-select-left :deep(.v-data-table__th--select) {
-	box-shadow: none !important;
-	background: transparent !important;
-}
-
-/* stylelint-disable @stylistic/max-line-length */
-.sy-table--select-single.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-table__wrapper > table > thead > tr > th:first-child) {
-	box-shadow: none;
-	background: transparent;
-}
-
-.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr > .v-data-table__td--select-row) {
-	position: sticky;
-	left: 0;
-	z-index: 3;
-	background: rgb(var(--v-theme-surface));
-}
-
-.sy-table--striped.sy-table--pinned-select-left :deep(
-	.v-table__wrapper > table > tbody > tr:nth-child(even) > .v-data-table__td--select-row
-) {
-	background-color: var(--sy-table-row-bg);
-}
-
-.sy-table--pinned-left-shadow.sy-table--pinned-select-left:not(.sy-table--select-single) :deep(.v-data-table__th--select),
-.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr > .v-data-table__td--select-row) {
-	box-shadow: var(--sy-table-pinned-shadow-right);
-}
-/* stylelint-enable @stylistic/max-line-length */
-
+@include pinned-styles('sy-table');
 </style>

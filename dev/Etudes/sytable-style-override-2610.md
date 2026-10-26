@@ -97,20 +97,47 @@ Pistes proposées :
    - Écartée : la technique CSS `background-attachment: local` — l'ombre est peinte en fond du conteneur et serait masquée par les cellules à fond opaque (épinglées, en-têtes).
    - Peut faire l'objet d'un ticket distinct.
 
-## Points à trancher avant implémentation
+## Mise en œuvre (PR #2630)
 
-1. **Contrat `--sy-table-row-bg`** : valider le mécanisme et la documentation associée (piste 3).
-2. **Couleur des cases décochées** : `primary` (comportement actuel) ou gris `SyCheckbox` (cohérence DS) — décision UX + contraste (piste 4).
-3. **Indication de scroll** : forme exacte (ombre bord droit) et périmètre — dans ce ticket ou un ticket dédié (piste 8).
+| Piste | Statut | Détail |
+|---|---|---|
+| 1. Styles inline | Fait | Le style inline des cellules épinglées se limite à `--sy-pinned-offset`. `position`, `z-index` et décalage passent dans `.sy-table__pinned--left` / `--right`. |
+| 2. Variables CSS | Fait, avec écarts | Variables `--sy-table-pinned-cell-bg`, `--sy-table-row-bg`, `--sy-table-pinned-left-shadow`, `--sy-table-pinned-right-shadow` et `--sy-table-checkbox-color`, documentées dans les `.mdx`. Voir ci-dessous. |
+| 3. Style de ligne sur les cellules épinglées | Fait | Mixin `pinned-cell-background`, partagé par les cellules épinglées et la colonne de sélection. Contrat `--sy-table-row-bg` documenté dans les `.mdx` avec un exemple `row-props`. |
+| 4. Cases à cocher | Fait, sans changement visuel | Les 4 règles `!important` de couleur sont retirées ; la couleur reste `primary`, via `--sy-table-checkbox-color`. La règle `border-color … !important` sur `.v-checkbox(-btn)` est conservée mais utilise la variable. |
+| 5. Colonne de sélection | Fait | `td:first-child` remplacé par `.v-data-table__td--select-row`, `!important` de fond et de position retirés. Voir aussi « En-tête de sélection » ci-dessous. |
+| 6. `opacity: 1 !important` | Fait | Restreint à l'état de chargement (`.v-data-table--loading`), pour les cellules épinglées et la colonne de sélection, avec un commentaire sur la contre-règle Vuetify. Mesuré en `loading` : cellules épinglées et de sélection à 1, autres cellules à 0,38. |
+| 7. Factorisation | Fait | Mixins `pinned-styles($root)` et `striped-rows` dans `tableStyles.scss` : les blocs `<style>` de `SyTable` / `SyServerTable`, identiques au préfixe près, se réduisent à leurs `@include`. Couleur d'ombre harmonisée, `z-index: 3` remplacé par `var(--sy-table-z-pinned-cell)`. Rendu mesuré identique avant et après sur les deux composants (zébrage, `row-props`, variables, chargement, ombres, sélection simple). |
+| 8. Indication de scroll | Reporté | Suivi dans #2706. |
+
+### Écarts par rapport aux pistes
+
+- **Valeurs par défaut des variables** : elles ne sont pas redéfinies sur `.v-table`, mais portées par la valeur de repli de `var()` (variables SCSS de `tableStyles.scss`). Mesuré : une variable redéfinie sur `.v-table` masque celle que le projet pose sur un ancêtre du tableau (seule une pose sur `tbody`, `tr` ou `td` fonctionnait). Seule `--sy-table-row-bg: transparent` reste définie sur `.v-table`, pour que la couleur de ligne ne vienne pas de l'extérieur.
+- **Ombres** : une variable par côté épinglé plutôt qu'une `--sy-table-pinned-shadow` unique. Couleur harmonisée sur `grey-base` : `on-surface-variant` (utilisée par `SyServerTable`) vaut `238, 238, 238` dans le thème, ce qui rendait l'ombre presque invisible.
+- **Variable pour les cases à cocher** : ajoutée, contrairement à la piste 2. Sans elle, les cases restaient impossibles à surcharger sans un sélecteur plus spécifique que la règle scopée (spécificité (0,3,0)), alors que l'issue le demande.
+
+### En-tête de sélection
+
+- Le `th` de la colonne de sélection est rendu par le slot `#headers` de `SyTable` / `SyServerTable` : il porte `checkbox-column` et jamais `v-data-table__th--select`. Les règles qui ciblaient `.v-data-table__th--select` n'avaient aucun effet : elles sont supprimées. Le sticky, le fond et l'ombre de cet en-tête viennent du style inline et des classes `sy-table__pinned*`.
+- En sélection simple (`showSelectSingle`), l'en-tête est vide et doit rester transparent et sans ombre. La règle cible `th.checkbox-column` et garde `!important`, seul moyen de l'emporter sur le style inline de l'en-tête (`background: var(--sy-table-header-bg-pinned)`).
+
+## Décisions
+
+1. **Contrat `--sy-table-row-bg`** : retenu, documenté dans `SyTable.mdx` / `SyServerTable.mdx` et dans `dev/ReleasesAlerts/v1.2.1.md`.
+2. **Couleur des cases décochées** : `primary` conservé (comportement actuel, aucun changement visuel), personnalisable par `--sy-table-checkbox-color`.
+3. **Indication de scroll** : ticket dédié #2706.
 
 ## Reproduction / vérification
 
-1. Storybook › `SyTable` › Colonnes : `pinned-columns="['name']"`, `striped`, `show-select`, `sticky-select`, avec une largeur de fenêtre réduite pour forcer le scroll horizontal.
-2. **Avant** : les lignes paires sont zébrées, sauf sur les cellules épinglées et la colonne de sélection, qui restent blanches ; aucune ombre au chargement.
-3. **Avant** : côté projet, `:deep(.sy-table__pinned) { background: red }` ou `.v-selection-control { color: green }` n'ont aucun effet sans `!important` (et pas d'effet du tout sur la colonne de sélection).
-4. **Après** : le zébrage et une ligne colorée via `row-props` (`--sy-table-row-bg`) couvrent toute la ligne, cellules épinglées comprises ; la surcharge de `--sy-table-pinned-cell-bg` fonctionne sans `!important`.
-5. **Après** : pendant un chargement (`loading`), les cellules épinglées restent opaques.
-6. **Après** : aucune régression du sticky ni des ombres, sur `SyTable` et `SyServerTable`, y compris en mode `show-select-single`.
+1. Tableau avec `pinned-columns` (une colonne de chaque côté), `striped`, `show-select`, `sticky-select`, dans un conteneur étroit pour forcer le scroll horizontal.
+2. **Avant** : les lignes paires sont zébrées, sauf sur les cellules épinglées et la colonne de sélection, qui restent blanches.
+3. **Avant** : côté projet, `.x .sy-table__pinned--right { background }`, `.x .v-data-table__td--select-row { background }` et `.x .v-selection-control { color }` n'ont aucun effet sans `!important`.
+4. **Après** (mesuré dans Chrome) :
+   - zébrage et ligne colorée via `row-props` (`--sy-table-row-bg`) couvrent les cellules épinglées et la colonne de sélection ;
+   - `--sy-table-pinned-cell-bg`, `--sy-table-checkbox-color` et les variables d'ombre posées sur la racine du tableau s'appliquent ;
+   - pendant un chargement, les cellules épinglées et de sélection restent à `opacity: 1` (0,38 pour les autres) ;
+   - après défilement, ombres `rgba(84, 88, 89, 0.6)` sur `SyTable` et `SyServerTable` ;
+   - en `show-select-single`, l'en-tête de sélection reste transparent et sans ombre, comme sur `dev`.
 
 ## Impact
 
@@ -121,24 +148,25 @@ Pistes proposées :
   - fonds et empilement (`z-index`) des colonnes épinglées pendant le scroll (chevauchement du contenu, en-tête sticky, barre de progression) ;
   - opacité des cellules épinglées pendant le chargement ;
   - mode `showSelectSingle` (radio), qui a des règles spécifiques ;
-  - couleur des cases décochées dans les tableaux (changement visuel si la piste 4 est retenue) ;
+  - couleur des cases à cocher dans les tableaux (inchangée : `primary` conservé, cf. Décisions) ;
   - survol `clickable-row` ;
   - baselines Cypress `SyTable.visual.cy.ts` / `SyServerTable.visual.cy.ts` ;
-  - projets ayant déjà contourné le problème avec `!important` (à signaler dans les notes de version).
+  - projets ayant déjà contourné le problème avec `!important` (signalé dans `dev/ReleasesAlerts/v1.2.1.md`) ;
+  - ombre des colonnes épinglées de `SyServerTable`, désormais visible (`grey-base`).
 
 ## Checklist
 
 - [x] La correction traite la cause racine (suppression des styles inline et des `!important` non justifiés, au profit de classes et de variables CSS)
-- [x] Un test a été ajouté pour prévenir la régression (`SyTable.spec.ts` et `SyServerTable.spec.ts`) :
-  - cellule épinglée sans `background` ni `position: sticky` dans son style inline ;
-  - classes `sy-table__pinned--*` présentes ;
-  - `--sy-table-row-bg` posée sur les lignes paires quand `striped` est actif (si la piste 3 est retenue)
+- [x] Tests de régression :
+  - `SyTable.spec.ts` / `SyServerTable.spec.ts` : cellule épinglée sans `position: sticky` inline, classes `sy-table__pinned--*` présentes ;
+  - `src/components/Tables/common/tests/pinnedColumns.visual.cy.ts` (`SyTable` et `SyServerTable`, style calculé, sans baseline) : zébrage, couleur de ligne `row-props`, variables posées sur un ancêtre, en-tête de sélection simple. Ils échouent sans le correctif.
 - [x] `pnpm vitest run src/components/Tables` passe sur le périmètre modifié
-- [ ] Tests a11y passés si du markup a été modifié (`SyTable.a11y.spec.ts`, `SyServerTable.a11y.spec.ts`)
-- [ ] Tests visuels Cypress passés / baselines à jour si le rendu change (baselines régénérées via la GHA Linux)
+- [x] Tests a11y passés (`SyTable.a11y.spec.ts`, `SyServerTable.a11y.spec.ts`)
+- [ ] Tests visuels Cypress passés / baselines à jour si le rendu change (baselines régénérées via la GHA Linux) : l'ombre de `SyServerTable` change après défilement
 - [x] Aucun nouvel avertissement ou erreur de console
 
 ## Tickets liés
 
-- Fixes #2610
+- Corrige en partie #2610
 - Fonctionnalité d'origine : #2044
+- Indication de défilement horizontal : #2706

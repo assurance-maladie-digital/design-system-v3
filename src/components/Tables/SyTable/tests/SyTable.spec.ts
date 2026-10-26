@@ -454,31 +454,6 @@ describe('SyTable', () => {
 		expect(pinnedTd.some(td => td.classes().includes('sy-table__pinned--right'))).toBe(true)
 	})
 
-	it('applies striped background to even rows', async () => {
-		const wrapper = mount(SyTable, {
-			props: {
-				options: { itemsPerPage: 5 } as DataOptions,
-				suffix: 'pinned-columns-test',
-				showSelect: true,
-				pinnedColumns: [
-					'data-table-select',
-					{ key: 'name', side: 'left' },
-					{ key: 'age', side: 'right' },
-				],
-				headers,
-				items: fakeItems,
-				serverItemsLength: fakeItems.length,
-			},
-		})
-
-		await wrapper.vm.$nextTick()
-		await flushPromises()
-
-		const rows = wrapper.findAll('.v-table tbody tr')
-
-		expect(rows.length).toBeGreaterThan(1)
-	})
-
 	it('enables selection when showSelect is true', async () => {
 		const wrapper = mount(SyTable, {
 			props: {

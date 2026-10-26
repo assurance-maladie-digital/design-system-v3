@@ -216,6 +216,48 @@ Le composant permet de personnaliser l'affichage des en-têtes de colonnes en ut
 ### Items par page options
 Le composant permet de personnaliser le nombre possible d'éléments par page en utilisant la prop `items-per-page-options`. Vous pouvez spécifier un tableau d'options pour permettre de choisir le nombre d'éléments affichés par page.
 
+### Personnalisation des styles
+
+Les colonnes épinglées (`pinned-columns`, `pinned-column-key`), la colonne de sélection épinglée (`sticky-select`) et les cases à cocher se personnalisent avec des variables CSS. Elles peuvent être posées sur le composant ou sur n'importe lequel de ses ancêtres, sans `!important`.
+
+| Variable | Rôle | Valeur par défaut |
+|---|---|---|
+| `--sy-table-pinned-cell-bg` | Fond des cellules épinglées et de la colonne de sélection épinglée | `rgb(var(--v-theme-surface))` |
+| `--sy-table-row-bg` | Couleur d'une ligne, superposée au fond des cellules épinglées | `transparent` (lignes paires teintées avec `striped`) |
+| `--sy-table-pinned-left-shadow` | Ombre des colonnes épinglées à gauche, visible quand du contenu défile dessous | `2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6)` |
+| `--sy-table-pinned-right-shadow` | Ombre des colonnes épinglées à droite | `-2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6)` |
+| `--sy-table-checkbox-color` | Couleur des cases à cocher du tableau | `rgb(var(--v-theme-primary))` |
+
+Pour colorer une ligne, cellules épinglées comprises, définissez `--sy-table-row-bg` sur la ligne via `row-props`. Une couleur posée directement en `background-color` sur la ligne ne s'étend pas aux cellules épinglées, dont le fond reste opaque pour masquer le contenu qui défile dessous.
+
+<Source dark code={`
+<template>
+  <SyTable
+    :headers="headers"
+    :items="items"
+    :pinned-columns="[{ key: 'name', side: 'left' }]"
+    :row-props="rowProps"
+    class="my-table"
+  />
+</template>
+
+<script setup lang="ts">
+const rowProps = ({ item }) => (item.urgent ? { class: 'row-urgent' } : {})
+</script>
+
+<style scoped>
+.my-table {
+  --sy-table-checkbox-color: rgb(var(--v-theme-secondary));
+}
+
+.my-table :deep(.row-urgent) {
+  --sy-table-row-bg: rgb(var(--v-theme-error-variant-lighten));
+
+  background-color: var(--sy-table-row-bg);
+}
+</style>
+`}/>
+
 <div className="header">
   <h1>Accessibilité</h1>
 </div>
