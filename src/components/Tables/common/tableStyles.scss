@@ -258,3 +258,36 @@ $sy-table-checkbox-color: var(--sy-table-checkbox-color, rgb(var(--v-theme-prima
 	}
 }
 /* stylelint-enable @stylistic/max-line-length */
+
+// Indicateur de défilement horizontal (#2706) : ombre au bord de la zone qui défile, tant que du contenu
+// est masqué de ce côté et qu'aucune colonne n'y est épinglée (l'ombre de la colonne joue alors ce rôle).
+// L'élément est placé juste hors du tableau (rogné par `overflow: hidden`) : seule son ombre est visible,
+// identique à celle d'une colonne épinglée. Il couvre uniquement la zone qui défile (`--sy-table-scroll-area-*`).
+@mixin scroll-indicator-styles($root) {
+	.#{$root} :deep(.v-table) {
+		position: relative;
+	}
+
+	.#{$root}--scroll-left-indicator :deep(.v-table)::before,
+	.#{$root}--scroll-right-indicator :deep(.v-table)::after {
+		content: '';
+		position: absolute;
+		top: var(--sy-table-scroll-area-top, 0);
+
+		// Assez large pour que le `spread` négatif de l'ombre ne l'annule pas
+		width: 24px;
+		height: var(--sy-table-scroll-area-height, 100%);
+		z-index: calc(var(--sy-table-z-pinned-header) + 1);
+		pointer-events: none;
+	}
+
+	.#{$root}--scroll-left-indicator :deep(.v-table)::before {
+		right: 100%;
+		box-shadow: $sy-table-pinned-left-shadow;
+	}
+
+	.#{$root}--scroll-right-indicator :deep(.v-table)::after {
+		left: 100%;
+		box-shadow: $sy-table-pinned-right-shadow;
+	}
+}

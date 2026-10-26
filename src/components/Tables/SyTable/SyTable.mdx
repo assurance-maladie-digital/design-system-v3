@@ -216,6 +216,10 @@ Le composant permet de personnaliser l'affichage des en-têtes de colonnes en ut
 ### Items par page options
 Le composant permet de personnaliser le nombre possible d'éléments par page en utilisant la prop `items-per-page-options`. Vous pouvez spécifier un tableau d'options pour permettre de choisir le nombre d'éléments affichés par page.
 
+### Indication du défilement horizontal
+
+Quand le tableau est plus large que son conteneur, une ombre au bord de la zone qui défile signale le contenu masqué, dès l'affichage : à droite tant qu'il reste du contenu à droite, à gauche dès que l'on a fait défiler le tableau. Si des colonnes sont épinglées d'un côté, c'est l'ombre de ces colonnes qui joue ce rôle. L'indication se met à jour au défilement et quand le tableau ou son contenu change de taille.
+
 ### Personnalisation des styles
 
 Les colonnes épinglées (`pinned-columns`, `pinned-column-key`), la colonne de sélection épinglée (`sticky-select`) et les cases à cocher se personnalisent avec des variables CSS. Elles peuvent être posées sur le composant ou sur n'importe lequel de ses ancêtres, sans `!important`.
@@ -224,8 +228,8 @@ Les colonnes épinglées (`pinned-columns`, `pinned-column-key`), la colonne de 
 |---|---|---|
 | `--sy-table-pinned-cell-bg` | Fond des cellules épinglées et de la colonne de sélection épinglée | `rgb(var(--v-theme-surface))` |
 | `--sy-table-row-bg` | Couleur d'une ligne, superposée au fond des cellules épinglées | `transparent` (lignes paires teintées avec `striped`) |
-| `--sy-table-pinned-left-shadow` | Ombre des colonnes épinglées à gauche, visible quand du contenu défile dessous | `2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6)` |
-| `--sy-table-pinned-right-shadow` | Ombre des colonnes épinglées à droite | `-2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6)` |
+| `--sy-table-pinned-left-shadow` | Ombre signalant du contenu masqué à gauche : colonnes épinglées à gauche, ou bord gauche du tableau | `2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6)` |
+| `--sy-table-pinned-right-shadow` | Ombre signalant du contenu masqué à droite : colonnes épinglées à droite, ou bord droit du tableau | `-2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6)` |
 | `--sy-table-checkbox-color` | Couleur des cases à cocher du tableau | `rgb(var(--v-theme-primary))` |
 
 Pour colorer une ligne, cellules épinglées comprises, définissez `--sy-table-row-bg` sur la ligne via `row-props`. Une couleur posée directement en `background-color` sur la ligne ne s'étend pas aux cellules épinglées, dont le fond reste opaque pour masquer le contenu qui défile dessous.

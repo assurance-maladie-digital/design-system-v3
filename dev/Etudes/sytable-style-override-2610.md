@@ -108,7 +108,7 @@ Pistes proposées :
 | 5. Colonne de sélection | Fait | `td:first-child` remplacé par `.v-data-table__td--select-row`, `!important` de fond et de position retirés. Voir aussi « En-tête de sélection » ci-dessous. |
 | 6. `opacity: 1 !important` | Fait | Restreint à l'état de chargement (`.v-data-table--loading`), pour les cellules épinglées et la colonne de sélection, avec un commentaire sur la contre-règle Vuetify. Mesuré en `loading` : cellules épinglées et de sélection à 1, autres cellules à 0,38. |
 | 7. Factorisation | Fait | Mixins `pinned-styles($root)` et `striped-rows` dans `tableStyles.scss` : les blocs `<style>` de `SyTable` / `SyServerTable`, identiques au préfixe près, se réduisent à leurs `@include`. Couleur d'ombre harmonisée, `z-index: 3` remplacé par `var(--sy-table-z-pinned-cell)`. Rendu mesuré identique avant et après sur les deux composants (zébrage, `row-props`, variables, chargement, ombres, sélection simple). |
-| 8. Indication de scroll | Reporté | Suivi dans #2706. |
+| 8. Indication de scroll | Fait (#2706) | Ombre au bord de la zone qui défile (pseudo-éléments de `.v-table`, mixin `scroll-indicator-styles`), pilotée par `canScrollLeft` / `canScrollRight` de `usePinnedColumns`, pour tous les tableaux qui débordent. Masquée du côté où une colonne est épinglée (son ombre joue ce rôle). Même rendu et mêmes variables que l'ombre des colonnes épinglées. Voir « Indicateur de défilement » ci-dessous. |
 
 ### Écarts par rapport aux pistes
 
@@ -121,11 +121,20 @@ Pistes proposées :
 - Le `th` de la colonne de sélection est rendu par le slot `#headers` de `SyTable` / `SyServerTable` : il porte `checkbox-column` et jamais `v-data-table__th--select`. Les règles qui ciblaient `.v-data-table__th--select` n'avaient aucun effet : elles sont supprimées. Le sticky, le fond et l'ombre de cet en-tête viennent du style inline et des classes `sy-table__pinned*`.
 - En sélection simple (`showSelectSingle`), l'en-tête est vide et doit rester transparent et sans ombre. La règle cible `th.checkbox-column` et garde `!important`, seul moyen de l'emporter sur le style inline de l'en-tête (`background: var(--sy-table-header-bg-pinned)`).
 
+### Indicateur de défilement (#2706)
+
+- **Placement** : pseudo-éléments `::before` / `::after` de `.v-table` (passé en `position: relative`), qui ne défile pas, et non de `.v-table__wrapper`, qui défile. Leur hauteur et leur position suivent la zone qui défile (`--sy-table-scroll-area-top` / `-height`, calculées par le composable) : la pagination (slot `#bottom`) n'est pas couverte.
+- **Rendu** : l'élément (24 px) est placé juste hors du tableau et rogné par son `overflow: hidden` ; seule son ombre est visible, identique à celle d'une colonne épinglée. Avec 8 px, le `spread` négatif de l'ombre l'annulait.
+- **Mise à jour** : au défilement, au redimensionnement de la fenêtre et, via `ResizeObserver`, quand la zone ou le tableau change de taille (données chargées, colonnes redimensionnées, conteneur modifié). Le throttle d'origine ignorait le dernier événement de défilement (état final parfois faux après un défilement rapide) : remplacé par une mise à jour par `requestAnimationFrame`, toujours exécutée après le dernier événement.
+- **Symétrie** : un indicateur à gauche aussi, dès que l'on a fait défiler le tableau sans colonne épinglée à gauche.
+- **Mesuré** (Chrome, tableau de 520 px) : indicateur droit au chargement, gauche et droit au milieu, gauche seul en fin de défilement ; aucun indicateur quand le tableau tient dans son conteneur ; avec des colonnes épinglées des deux côtés, seules leurs ombres s'affichent.
+- **Snapshots** : les 12 tests visuels existants de `SyTable` / `SyServerTable` passent avec et sans le changement (aucun ne déborde).
+
 ## Décisions
 
 1. **Contrat `--sy-table-row-bg`** : retenu, documenté dans `SyTable.mdx` / `SyServerTable.mdx` et dans `dev/ReleasesAlerts/v1.2.1.md`.
 2. **Couleur des cases décochées** : `primary` conservé (comportement actuel, aucun changement visuel), personnalisable par `--sy-table-checkbox-color`.
-3. **Indication de scroll** : ticket dédié #2706.
+3. **Indication de scroll** : traitée dans cette PR (#2706), avec un indicateur sur chaque bord.
 
 ## Reproduction / vérification
 
@@ -160,6 +169,7 @@ Pistes proposées :
 - [x] Tests de régression :
   - `SyTable.spec.ts` / `SyServerTable.spec.ts` : cellule épinglée sans `position: sticky` inline, classes `sy-table__pinned--*` présentes ;
   - `src/components/Tables/common/tests/pinnedColumns.visual.cy.ts` (`SyTable` et `SyServerTable`, style calculé, sans baseline) : zébrage, couleur de ligne `row-props`, variables posées sur un ancêtre, en-tête de sélection simple. Ils échouent sans le correctif.
+  - `src/components/Tables/common/tests/scrollIndicator.visual.cy.ts` (#2706) : indicateur au chargement et au défilement, relais des colonnes épinglées, tableau qui tient, redimensionnement.
 - [x] `pnpm vitest run src/components/Tables` passe sur le périmètre modifié
 - [x] Tests a11y passés (`SyTable.a11y.spec.ts`, `SyServerTable.a11y.spec.ts`)
 - [ ] Tests visuels Cypress passés / baselines à jour si le rendu change (baselines régénérées via la GHA Linux) : l'ombre de `SyServerTable` change après défilement
@@ -167,6 +177,6 @@ Pistes proposées :
 
 ## Tickets liés
 
-- Corrige en partie #2610
+- Fixes #2610
+- Fixes #2706 (indication de défilement horizontal)
 - Fonctionnalité d'origine : #2044
-- Indication de défilement horizontal : #2706

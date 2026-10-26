@@ -275,9 +275,12 @@
 	const {
 		showPinnedLeftShadow,
 		showPinnedRightShadow,
+		showScrollLeftIndicator,
+		showScrollRightIndicator,
 		hasPinnedSelectLeft,
 		pinnedMeta,
 		pinnedEdgeVars,
+		scrollAreaVars,
 		displayHeadersWithPinned,
 	} = usePinnedColumns({
 		displayHeaders,
@@ -325,11 +328,13 @@
 				'sy-server-table--striped': props.striped,
 				'sy-server-table--pinned-left-shadow': showPinnedLeftShadow,
 				'sy-server-table--pinned-right-shadow': showPinnedRightShadow,
+				'sy-server-table--scroll-left-indicator': showScrollLeftIndicator,
+				'sy-server-table--scroll-right-indicator': showScrollRightIndicator,
 				'sy-server-table--pinned-select-left': hasPinnedSelectLeft,
 				'sy-server-table--select-single': props.showSelectSingle,
 			},
 		]"
-		:style="pinnedEdgeVars"
+		:style="[pinnedEdgeVars, scrollAreaVars]"
 	>
 		<!-- ARIA status region for row count announcements -->
 		<div
@@ -693,4 +698,5 @@
 }
 
 @include pinned-styles('sy-server-table');
+@include scroll-indicator-styles('sy-server-table');
 </style>
