@@ -1,4 +1,4 @@
-# Étude — [SyTable] Style non surchargeable et non cohérent (#2610)
+# Étude — [SyTable] Style non surchargeable et non cohérent (#2610), indication du défilement (#2706)
 
 ## Description du bug
 
@@ -134,7 +134,7 @@ Pistes proposées :
 
 1. **Contrat `--sy-table-row-bg`** : retenu, documenté dans `SyTable.mdx` / `SyServerTable.mdx` et dans `dev/ReleasesAlerts/v1.2.1.md`.
 2. **Couleur des cases décochées** : `primary` conservé (comportement actuel, aucun changement visuel), personnalisable par `--sy-table-checkbox-color`.
-3. **Indication de scroll** : traitée dans cette PR (#2706), avec un indicateur sur chaque bord.
+3. **Indication de scroll** : traitée dans cette PR (#2706), avec un indicateur sur chaque bord. Forme validée ; réglable par `--sy-table-pinned-left-shadow` / `--sy-table-pinned-right-shadow`.
 
 ## Reproduction / vérification
 
@@ -152,7 +152,7 @@ Pistes proposées :
 
 - **Sévérité :** Moyenne — cosmétique et contournable via `!important` / sélecteurs très spécifiques, mais ces contournements sont fragiles et l'absence d'indication de scroll dégrade l'usage.
 - **Introduit dans :** #2044 (`a2fa7229`, 2026-04-03 — « SyTable / SyServerTable: pinned columns »). Constaté en 1.1.5, toujours présent en 1.1.6.
-- **Utilisateurs concernés :** sous-ensemble — projets utilisant `pinnedColumns` / `pinnedColumnKey` / `stickySelect`, en particulier avec `striped` ou une coloration de lignes (ex. GEDI refonte INVA). Pour les cases à cocher : tout projet souhaitant une couleur autre que `primary`.
+- **Utilisateurs concernés :** sous-ensemble — projets utilisant `pinnedColumns` / `pinnedColumnKey` / `stickySelect`, en particulier avec `striped` ou une coloration de lignes (ex. GEDI refonte INVA). Pour les cases à cocher : tout projet souhaitant une couleur autre que `primary`. Pour l'indication du défilement (#2706) : tous les tableaux plus larges que leur conteneur, avec ou sans colonne épinglée.
 - **Zones à risque :**
   - fonds et empilement (`z-index`) des colonnes épinglées pendant le scroll (chevauchement du contenu, en-tête sticky, barre de progression) ;
   - opacité des cellules épinglées pendant le chargement ;
@@ -161,7 +161,9 @@ Pistes proposées :
   - survol `clickable-row` ;
   - baselines Cypress `SyTable.visual.cy.ts` / `SyServerTable.visual.cy.ts` ;
   - projets ayant déjà contourné le problème avec `!important` (signalé dans `dev/ReleasesAlerts/v1.2.1.md`) ;
-  - ombre des colonnes épinglées de `SyServerTable`, désormais visible (`grey-base`).
+  - ombre des colonnes épinglées de `SyServerTable`, désormais visible (`grey-base`) ;
+  - indicateur de défilement : nouvel élément visuel sur tous les tableaux qui débordent, au-dessus des cellules et des en-têtes épinglés (`z-index` de l'en-tête épinglé + 1), `.v-table` passé en `position: relative` ;
+  - mise à jour de l'état de défilement : `ResizeObserver` et `requestAnimationFrame` remplacent le throttle (ombres des colonnes épinglées comprises).
 
 ## Checklist
 
@@ -169,10 +171,10 @@ Pistes proposées :
 - [x] Tests de régression :
   - `SyTable.spec.ts` / `SyServerTable.spec.ts` : cellule épinglée sans `position: sticky` inline, classes `sy-table__pinned--*` présentes ;
   - `src/components/Tables/common/tests/pinnedColumns.visual.cy.ts` (`SyTable` et `SyServerTable`, style calculé, sans baseline) : zébrage, couleur de ligne `row-props`, variables posées sur un ancêtre, en-tête de sélection simple. Ils échouent sans le correctif.
-  - `src/components/Tables/common/tests/scrollIndicator.visual.cy.ts` (#2706) : indicateur au chargement et au défilement, relais des colonnes épinglées, tableau qui tient, redimensionnement.
+  - `src/components/Tables/common/tests/scrollIndicator.visual.cy.ts` (#2706, `SyTable` et `SyServerTable`, sans baseline) : indicateur au chargement et au défilement, relais des colonnes épinglées, tableau qui tient, redimensionnement. Les tests d'apparition et de redimensionnement échouent sans le correctif.
 - [x] `pnpm vitest run src/components/Tables` passe sur le périmètre modifié
 - [x] Tests a11y passés (`SyTable.a11y.spec.ts`, `SyServerTable.a11y.spec.ts`)
-- [ ] Tests visuels Cypress passés / baselines à jour si le rendu change (baselines régénérées via la GHA Linux) : l'ombre de `SyServerTable` change après défilement
+- [ ] Tests visuels Cypress passés / baselines à jour si le rendu change (baselines régénérées via la GHA Linux) : les 12 snapshots existants de `SyTable` / `SyServerTable` passent en local avec et sans le changement (aucun ne déborde ni ne défile) ; résultat CI à confirmer
 - [x] Aucun nouvel avertissement ou erreur de console
 
 ## Tickets liés
