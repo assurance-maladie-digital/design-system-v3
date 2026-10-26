@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-// Prevent display-asterisk from being passed to the DOM
+	// Prevent display-asterisk from being passed to the DOM
 	defineOptions({
 		inheritAttrs: false,
 	})
