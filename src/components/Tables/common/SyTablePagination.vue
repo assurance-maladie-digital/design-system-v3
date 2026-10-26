@@ -26,8 +26,6 @@
 
 	// Reference to the SySelect component
 	const selectRef = ref<InstanceType<typeof SySelect> | null>(null)
-	const itemsPerPageLabelId = `sy-table-items-per-page-${useId()}`
-
 	// Items per page options - standard options and current value
 	const formatedItemsPerPageOptions = computed(() => {
 		// Use provided itemsPerPageOptions or default standard options
