@@ -46,7 +46,7 @@
     "build": "vue-tsc -p tsconfig.app.json && vite build",
     "pack:check": "node ./scripts/check-package-files.mjs",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "cross-env NODE_OPTIONS=--max-old-space-size=4096 storybook build",
+    "build-storybook": "cross-env NODE_OPTIONS=--max-old-space-size=8192 storybook build",
     "lint": "eslint \"src/**/*.{ts,vue}\"",
     "lint:style": "stylelint \"src/**/*.{css,scss,vue}\"",
     "lint:fix": "eslint \"src/**/*.{ts,vue}\" --fix && stylelint \"src/**/*.{css,scss,vue}\" --fix",
