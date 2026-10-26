@@ -598,7 +598,6 @@
 			:counter="props.counter"
 			:counter-value="props.counterValue"
 			:density="props.density"
-			:direction="props.direction"
 			:dirty="props.isDirty"
 			:disabled="props.disabled"
 			:error="hasError"

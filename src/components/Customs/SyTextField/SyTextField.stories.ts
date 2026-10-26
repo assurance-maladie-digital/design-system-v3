@@ -199,9 +199,8 @@ const meta = {
 			},
 		},
 		'direction': {
-			description: 'Direction du champ (horizontal ou vertical)',
-			control: 'select',
-			options: ['horizontal', 'vertical'],
+			description: '**Dépréciée, sans effet.** `VTextField` ne prend pas en charge `direction` : la valeur est ignorée et n\'est plus transmise au champ. Conservée pour compatibilité ascendante.',
+			control: false,
 			table: {
 				type: { summary: 'horizontal | vertical' },
 			},
