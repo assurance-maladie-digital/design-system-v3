@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { ref, watch, onMounted } from 'vue'
+import type { SubmitEventPromise } from 'vuetify'
 import { VBtn, VForm } from 'vuetify/components'
 import SyTextField from '@/components/Customs/SyTextField/SyTextField.vue'
 import { fn } from 'storybook/test'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
-import type { FieldValidationProps } from '@/composables/unifyValidation/useValidation'
+import type { SyTextFieldProps } from '../types'
 
 const meta = {
 	title: 'Composants/Formulaires/SyTextField/Validation',
@@ -33,6 +34,31 @@ const meta = {
 			control: 'text',
 			description: 'Libellé du champ',
 		},
+		color: {
+			type: { name: 'string', required: false },
+			control: 'select',
+			options: ['primary', 'secondary', 'success', 'error', 'warning'],
+			description: 'Couleur du champ',
+			table: {
+				type: { summary: 'string' },
+			},
+		},
+		baseColor: {
+			type: { name: 'string', required: false },
+			control: 'text',
+			description: 'Couleur de base du champ (par défaut hérite de color)',
+			table: {
+				type: { summary: 'string' },
+			},
+		},
+		bgColor: {
+			type: { name: 'string', required: false },
+			control: 'color',
+			description: 'Couleur de fond du champ',
+			table: {
+				type: { summary: 'string' },
+			},
+		},
 	},
 	args: {
 		'modelValue': '',
@@ -53,50 +79,53 @@ const meta = {
 
 export default meta
 
-type Story = StoryObj<FieldValidationProps>
+type Story = StoryObj<SyTextFieldProps>
+
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export const WithError: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'La valeur initiale ne respecte pas la règle : la validation est déclenchée au montage via `validateOnSubmit()` pour afficher l\'erreur dès le chargement.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<SyTextField
-						v-model="value"
-						label="Adresse email"
-						:custom-rules="customRules"
-					/>
-				</template>
-				`,
+				code: `<template>
+	<SyTextField
+		ref="fieldRef"
+		v-model="value"
+		label="Adresse email"
+		:custom-rules="customRules"
+	/>
+</template>`,
 			},
 			{
 				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { SyTextField } from '@cnamts/synapse'
+				code: `<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
 
-					const value = ref('not-an-email')
+const value = ref('not-an-email')
+const fieldRef = ref<InstanceType<typeof SyTextField> | null>(null)
 
-					const customRules = [
-						{
-							type: 'custom',
-							options: {
-								validate: (value: string) => {
-									const valid = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value)
-									if (!valid) {
-										return false
-									}
-									return true
-								},
-								message: 'L\\'adresse email est invalide.',
-								fieldIdentifier: 'email',
-							},
-						},
-					]
-				</script>
-				`,
+const customRules = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value: string) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value),
+			message: 'L\\'adresse email est invalide.',
+			fieldIdentifier: 'email',
+		},
+	},
+]
+
+onMounted(() => {
+	fieldRef.value?.validateOnSubmit()
+})
+</script>`,
 			},
 		],
 	},
@@ -107,13 +136,8 @@ export const WithError: Story = {
 			{
 				type: 'custom',
 				options: {
-					validate: (value: string) => {
-						const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
-						if (!valid) {
-							return 'L\'adresse email est invalide.'
-						}
-						return true
-					},
+					validate: (value: string) => emailPattern.test(value),
+					message: 'L\'adresse email est invalide.',
 					fieldIdentifier: 'email',
 				},
 			},
@@ -128,7 +152,7 @@ export const WithError: Story = {
 				value.value = newValue
 			})
 			onMounted(() => {
-				fieldRef.value!.validateOnSubmit()
+				fieldRef.value?.validateOnSubmit()
 			})
 			return { args, value, fieldRef }
 		},
@@ -142,40 +166,47 @@ export const WithError: Story = {
 
 export const WithWarning: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Les règles d\'avertissement (`customWarningRules`) sont non bloquantes. La validation est déclenchée au montage via `validateOnSubmit()` pour afficher l\'avertissement dès le chargement.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<SyTextField
-						v-model="value"
-						label="Nom d'utilisateur"
-						:custom-warning-rules="customWarningRules"
-					/>
-				</template>
-				`,
+				code: `<template>
+	<SyTextField
+		ref="fieldRef"
+		v-model="value"
+		label="Nom d'utilisateur"
+		:custom-warning-rules="customWarningRules"
+	/>
+</template>`,
 			},
 			{
 				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { SyTextField } from '@cnamts/synapse'
+				code: `<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
 
-					const value = ref('ab')
+const value = ref('ab')
+const fieldRef = ref<InstanceType<typeof SyTextField> | null>(null)
 
-					const customWarningRules = [
-						{
-							type: 'custom',
-							options: {
-								validate: (value: string) => value.length >= 3,
-								warningMessage: 'Le nom d\\'utilisateur est très court (moins de 3 caractères).',
-								fieldIdentifier: 'username',
-							},
-						},
-					]
-				</script>
-				`,
+const customWarningRules = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value: string) => value.length >= 3,
+			warningMessage: 'Le nom d\\'utilisateur est très court (moins de 3 caractères).',
+			fieldIdentifier: 'username',
+		},
+	},
+]
+
+onMounted(() => {
+	fieldRef.value?.validateOnSubmit()
+})
+</script>`,
 			},
 		],
 	},
@@ -202,7 +233,7 @@ export const WithWarning: Story = {
 				value.value = newValue
 			})
 			onMounted(() => {
-				fieldRef.value!.validateOnSubmit()
+				fieldRef.value?.validateOnSubmit()
 			})
 			return { args, value, fieldRef }
 		},
@@ -216,41 +247,48 @@ export const WithWarning: Story = {
 
 export const WithSuccess: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Les règles de succès (`customSuccessRules`) s\'affichent avec `showSuccessMessages`. La validation est déclenchée au montage via `validateOnSubmit()` pour afficher le succès dès le chargement.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<SyTextField
-						v-model="value"
-						label="Adresse email"
-						show-success-messages
-						:custom-success-rules="customSuccessRules"
-					/>
-				</template>
-				`,
+				code: `<template>
+	<SyTextField
+		ref="fieldRef"
+		v-model="value"
+		label="Adresse email"
+		show-success-messages
+		:custom-success-rules="customSuccessRules"
+	/>
+</template>`,
 			},
 			{
 				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { SyTextField } from '@cnamts/synapse'
+				code: `<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
 
-					const value = ref('exemple@domaine.fr')
+const value = ref('exemple@domaine.fr')
+const fieldRef = ref<InstanceType<typeof SyTextField> | null>(null)
 
-					const customSuccessRules = [
-						{
-							type: 'custom',
-							options: {
-								validate: (value: string) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value),
-								successMessage: 'L\\'adresse email est valide.',
-								fieldIdentifier: 'email',
-							},
-						},
-					]
-				</script>
-				`,
+const customSuccessRules = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value: string) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value),
+			successMessage: 'L\\'adresse email est valide.',
+			fieldIdentifier: 'email',
+		},
+	},
+]
+
+onMounted(() => {
+	fieldRef.value?.validateOnSubmit()
+})
+</script>`,
 			},
 		],
 	},
@@ -262,7 +300,7 @@ export const WithSuccess: Story = {
 			{
 				type: 'custom',
 				options: {
-					validate: (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+					validate: (value: string) => emailPattern.test(value),
 					successMessage: 'L\'adresse email est valide.',
 					fieldIdentifier: 'email',
 				},
@@ -278,7 +316,7 @@ export const WithSuccess: Story = {
 				value.value = newValue
 			})
 			onMounted(() => {
-				fieldRef.value!.validateOnSubmit()
+				fieldRef.value?.validateOnSubmit()
 			})
 			return { args, value, fieldRef }
 		},
@@ -295,53 +333,68 @@ export const WithCustomRules: Story = {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-				<template>
-					<SyTextField
-						v-model="value"
-						label="Mot de passe"
-						type="password"
-						required
-						:custom-rules="customRules"
-					/>
-				</template>
-				`,
+				code: `<template>
+	<SyTextField
+		v-model="value"
+		label="Mot de passe"
+		type="password"
+		required
+		width="400px"
+		:custom-rules="customRules"
+	/>
+</template>`,
 			},
 			{
 				name: 'Script',
-				code: `
-				<script setup lang="ts">
-					import { ref } from 'vue'
-					import { SyTextField } from '@cnamts/synapse'
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
 
-					const value = ref('')
+const value = ref('')
 
-					const customRules = [
-						{
-							type: 'custom',
-							options: {
-								validate: (value: string) => {
-									if (value.length < 8) return false
-									return true
-								},
-								message: 'Le mot de passe doit contenir au moins 8 caractères.',
-								fieldIdentifier: 'password',
-							},
-						},
-						{
-							type: 'custom',
-							options: {
-								validate: (value: string) => {
-									if (!/[A-Z]/.test(value)) return false
-									return true
-								},
-								message: 'Le mot de passe doit contenir au moins une majuscule.',
-								fieldIdentifier: 'password',
-							},
-						},
-					]
-				</script>
-				`,
+const customRules = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value: string) => value.length >= 8,
+			message: 'Le mot de passe doit contenir au moins 8 caractères.',
+			fieldIdentifier: 'password',
+		},
+	},
+	{
+		type: 'custom',
+		options: {
+			validate: (value: string) => /[A-Z]/.test(value),
+			message: 'Le mot de passe doit contenir au moins une majuscule.',
+			fieldIdentifier: 'password',
+		},
+	},
+]
+</script>`,
+			},
+		],
+	},
+	args: {
+		label: 'Mot de passe',
+		type: 'password',
+		required: true,
+		width: '400px',
+		customRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => value.length >= 8,
+					message: 'Le mot de passe doit contenir au moins 8 caractères.',
+					fieldIdentifier: 'password',
+				},
+			},
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => /[A-Z]/.test(value),
+					message: 'Le mot de passe doit contenir au moins une majuscule.',
+					fieldIdentifier: 'password',
+				},
 			},
 		],
 	},
@@ -352,44 +405,10 @@ export const WithCustomRules: Story = {
 			watch(() => args.modelValue, (newValue) => {
 				value.value = newValue
 			})
-
-			const customRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string) => {
-							if (value.length < 8) return false
-							return true
-						},
-						message: 'Le mot de passe doit contenir au moins 8 caractères.',
-						fieldIdentifier: 'password',
-					},
-				},
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string) => {
-							if (!/[A-Z]/.test(value)) return false
-							return true
-						},
-						message: 'Le mot de passe doit contenir au moins une majuscule.',
-						fieldIdentifier: 'password',
-					},
-				},
-			]
-
-			return { args, value, customRules }
+			return { args, value }
 		},
 		template: `
-			<SyTextField
-				v-bind="args"
-				v-model="value"
-				label="Mot de passe"
-				type="password"
-				required
-				:custom-rules="customRules"
-				width="400px"
-			/>
+			<SyTextField v-bind="args" v-model="value" />
 		`,
 	}),
 }
@@ -403,90 +422,123 @@ export const DisableErrorHandling: Story = {
 
 Cette story illustre l'utilisation de la propriété \`disableErrorHandling\` qui permet de désactiver complètement
 la gestion et l'affichage des erreurs dans un champ, même si des règles de validation sont définies.
+
+Les deux champs sont identiques : valeur vide et même règle \`required\` (message « Ce champ est requis. »).
+Ils sont validés au montage via \`validateOnSubmit()\`. Seul le premier affiche l'erreur : avec \`disableErrorHandling\`,
+les règles ne sont pas exécutées et \`validateOnSubmit()\` renvoie \`true\`.
+
+La règle est déclarée dans \`customRules\` plutôt qu'avec la prop \`required\` : celle-ci ajoute sa propre règle,
+dont le message « Le champ … est requis. » s'afficherait à la place (un seul message affiché par défaut, \`maxErrors: 1\`).
+Une règle \`custom\` ne convient pas non plus : hors règle \`required\`, une valeur vide n'est pas validée.
+
+Les Controls sont désactivés : la story compare deux configurations figées. La saisie dans l'un ou l'autre champ alimente l'action \`update:modelValue\`.
 `,
 			},
 		},
+		controls: { disable: true },
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
-  <!-- Champ avec validation normale -->
-  <SyTextField
-    v-model="value1"
-    label="Avec validation"
-    required
-    :custom-rules="customRules"
-  />
-
-  <!-- Champ avec gestion d'erreurs désactivée -->
-  <SyTextField
-    v-model="value2"
-    label="Sans gestion d'erreurs"
-    required
-    disable-error-handling
-    :custom-rules="customRules"
-  />
+	<div class="d-flex flex-column ga-6">
+		<div>
+			<p class="text-subtitle-2 mb-2">Avec gestion des erreurs (défaut)</p>
+			<SyTextField
+				ref="fieldWithHandlingRef"
+				v-model="valueWithHandling"
+				label="Avec gestion des erreurs"
+				:custom-rules="customRules"
+			/>
+		</div>
+		<div>
+			<p class="text-subtitle-2 mb-2">Sans gestion des erreurs (disableErrorHandling)</p>
+			<SyTextField
+				ref="fieldWithoutHandlingRef"
+				v-model="valueWithoutHandling"
+				label="Sans gestion des erreurs"
+				:custom-rules="customRules"
+				disable-error-handling
+			/>
+		</div>
+	</div>
 </template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+
+const valueWithHandling = ref('')
+const valueWithoutHandling = ref('')
+
+const customRules = [
+	{
+		type: 'required',
+		options: {
+			message: 'Ce champ est requis.',
+		},
+	},
+]
+
+const fieldWithHandlingRef = ref<InstanceType<typeof SyTextField> | null>(null)
+const fieldWithoutHandlingRef = ref<InstanceType<typeof SyTextField> | null>(null)
+
+onMounted(() => {
+	fieldWithHandlingRef.value?.validateOnSubmit()
+	fieldWithoutHandlingRef.value?.validateOnSubmit()
+})
+</script>`,
 			},
 		],
 	},
-	render: () => ({
+	render: args => ({
 		components: { SyTextField },
 		setup() {
-			const value1 = ref('')
-			const value2 = ref('')
+			const valueWithHandling = ref('')
+			const valueWithoutHandling = ref('')
 
 			const customRules = [
 				{
-					type: 'custom',
+					type: 'required',
 					options: {
-						validate: (value: string) => {
-							if (!value || value.trim().length === 0) {
-								return false
-							}
-							return true
-						},
 						message: 'Ce champ est requis.',
-						fieldIdentifier: 'field',
 					},
 				},
 			]
 
-			return { value1, value2, customRules }
+			const fieldWithHandlingRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+			const fieldWithoutHandlingRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+
+			onMounted(() => {
+				fieldWithHandlingRef.value?.validateOnSubmit()
+				fieldWithoutHandlingRef.value?.validateOnSubmit()
+			})
+
+			return { args, valueWithHandling, valueWithoutHandling, customRules, fieldWithHandlingRef, fieldWithoutHandlingRef }
 		},
 		template: `
-			<div>
-				<p class="mb-4">Cette démonstration compare un SyTextField standard et un avec <code>disableErrorHandling=true</code>.</p>
-
-				<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 16px;">
-					<div>
-						<p class="text-subtitle-2 mb-2">Validation normale</p>
-						<SyTextField
-							v-model="value1"
-							label="Nom"
-							required
-							:custom-rules="customRules"
-						/>
-					</div>
-
-					<div>
-						<p class="text-subtitle-2 mb-2">Sans gestion d'erreurs</p>
-						<SyTextField
-							v-model="value2"
-							label="Nom"
-							required
-							disable-error-handling
-							:custom-rules="customRules"
-						/>
-					</div>
+			<div class="d-flex flex-column ga-6">
+				<div>
+					<p class="text-subtitle-2 mb-2">Avec gestion des erreurs (défaut)</p>
+					<SyTextField
+						ref="fieldWithHandlingRef"
+						v-model="valueWithHandling"
+						@update:model-value="args['onUpdate:modelValue']"
+						label="Avec gestion des erreurs"
+						:custom-rules="customRules"
+					/>
 				</div>
-
-				<div class="mt-4 text-body-2">
-					<p>Instructions :</p>
-					<ol>
-						<li class="ml-4">Cliquez dans un champ puis en dehors pour déclencher la validation</li>
-						<li class="ml-4">Le champ de gauche affichera une erreur requise, mais pas celui de droite</li>
-					</ol>
+				<div>
+					<p class="text-subtitle-2 mb-2">Sans gestion des erreurs (disableErrorHandling)</p>
+					<SyTextField
+						ref="fieldWithoutHandlingRef"
+						v-model="valueWithoutHandling"
+						@update:model-value="args['onUpdate:modelValue']"
+						label="Sans gestion des erreurs"
+						:custom-rules="customRules"
+						disable-error-handling
+					/>
 				</div>
 			</div>
 		`,
@@ -505,6 +557,8 @@ export const ValidateOnInput: Story = {
 
 Lorsque \`isValidateOnBlur\` vaut \`false\`, la validation se déclenche à chaque modification
 de la valeur plutôt qu'à la perte de focus. Utile pour un retour immédiat à l'utilisateur.
+
+\`isValidateOnBlur\` est le sujet de la story : sa valeur est figée à \`false\` et son Control est désactivé.
 `,
 			},
 		},
@@ -512,21 +566,15 @@ de la valeur plutôt qu'à la perte de focus. Utile pour un retour immédiat à 
 			{
 				name: 'Template',
 				code: `<template>
+	<p class="mb-4">La validation se déclenche à chaque frappe (<code>isValidateOnBlur="false"</code>).</p>
 	<SyTextField
 		v-model="value"
 		label="Adresse email"
 		required
 		:is-validate-on-blur="false"
-		:custom-rules="[
-			{
-				type: 'custom',
-				options: {
-					message: 'L\\'adresse email est invalide.',
-					validate: (value) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value),
-				},
-			},
-		]"
+		:custom-rules="customRules"
 		show-success-messages
+		width="400px"
 	/>
 </template>`,
 			},
@@ -537,7 +585,36 @@ import { ref } from 'vue'
 import { SyTextField } from '@cnamts/synapse'
 
 const value = ref('')
+
+const customRules = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value: string) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value),
+			message: 'L\\'adresse email est invalide.',
+		},
+	},
+]
 </script>`,
+			},
+		],
+	},
+	argTypes: {
+		isValidateOnBlur: { control: false },
+	},
+	args: {
+		label: 'Adresse email',
+		required: true,
+		isValidateOnBlur: false,
+		showSuccessMessages: true,
+		width: '400px',
+		customRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => emailPattern.test(value),
+					message: 'L\'adresse email est invalide.',
+				},
 			},
 		],
 	},
@@ -553,23 +630,7 @@ const value = ref('')
 		template: `
 			<div>
 				<p class="mb-4">La validation se déclenche à chaque frappe (<code>isValidateOnBlur="false"</code>).</p>
-				<SyTextField
-					v-model="value"
-					label="Adresse email"
-					required
-					:is-validate-on-blur="false"
-					:custom-rules="[
-						{
-							type: 'custom',
-							options: {
-								message: 'L\\'adresse email est invalide.',
-								validate: (value) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value),
-							},
-						},
-					]"
-					show-success-messages
-					width="400px"
-				/>
+				<SyTextField v-bind="args" v-model="value" />
 			</div>
 		`,
 	}),
@@ -587,6 +648,8 @@ export const ExternalMessages: Story = {
 
 Les props \`errorMessages\`, \`warningMessages\` et \`successMessages\` permettent d'injecter
 des messages depuis le parent sans déclencher de règle de validation.
+
+Dans cette story, ces trois props sont pilotées par les boutons : leurs Controls sont désactivés.
 `,
 			},
 		},
@@ -597,16 +660,17 @@ des messages depuis le parent sans déclencher de règle de validation.
 	<SyTextField
 		v-model="value"
 		label="Nom"
-		:show-success-messages="true"
+		show-success-messages
+		width="400px"
 		:error-messages="errorMessages"
 		:warning-messages="warningMessages"
 		:success-messages="successMessages"
 	/>
-	<div class="mt-4">
-		<VBtn @click="setError">Simuler une erreur</VBtn>
-		<VBtn @click="setWarning" class="ml-2">Simuler un avertissement</VBtn>
-		<VBtn @click="setSuccess" class="ml-2">Simuler un succès</VBtn>
-		<VBtn @click="reset" class="ml-2">Réinitialiser</VBtn>
+	<div class="mt-4 d-flex flex-wrap ga-2 pa-2">
+		<VBtn color="error" @click="setError">Simuler une erreur</VBtn>
+		<VBtn color="warning" @click="setWarning">Simuler un avertissement</VBtn>
+		<VBtn color="success" @click="setSuccess">Simuler un succès</VBtn>
+		<VBtn color="black" @click="reset">Réinitialiser</VBtn>
 	</div>
 </template>`,
 			},
@@ -615,6 +679,7 @@ des messages depuis le parent sans déclencher de règle de validation.
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
 import { SyTextField } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
 
 const value = ref('')
 const errorMessages = ref<string[] | null>(null)
@@ -645,8 +710,15 @@ function reset() {
 			},
 		],
 	},
+	argTypes: {
+		errorMessages: { control: false },
+		warningMessages: { control: false },
+		successMessages: { control: false },
+	},
 	args: {
+		label: 'Nom',
 		showSuccessMessages: true,
+		width: '400px',
 	},
 	render: args => ({
 		components: { SyTextField, VBtn },
@@ -688,13 +760,11 @@ function reset() {
 					Les messages ci-dessous sont injectés par le parent sans déclencher de règle de validation.
 				</p>
 				<SyTextField
+					v-bind="args"
 					v-model="value"
-					label="Nom"
-					:show-success-messages="true"
 					:error-messages="errorMessages"
 					:warning-messages="warningMessages"
 					:success-messages="successMessages"
-					width="400px"
 				/>
 				<div class="mt-4 d-flex flex-wrap ga-2 pa-2">
 					<VBtn color="error" @click="setError">Simuler une erreur</VBtn>
@@ -725,6 +795,10 @@ native de Vuetify.
 			{
 				name: 'Template',
 				code: `<template>
+	<p class="mb-4">
+		Les règles sont des fonctions Vuetify natives <code>(value) => true | 'message'</code>.
+		Cliquez sur <strong>Valider</strong> ou quittez le champ pour déclencher la validation.
+	</p>
 	<VForm @submit.prevent="handleSubmit">
 		<SyTextField
 			v-model="value"
@@ -733,6 +807,7 @@ native de Vuetify.
 			:rules="rules"
 			required
 			:is-validate-on-blur="true"
+			width="400px"
 		/>
 		<div class="mt-4">
 			<VBtn type="submit" color="primary">Valider</VBtn>
@@ -744,6 +819,8 @@ native de Vuetify.
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import type { SubmitEventPromise } from 'vuetify'
+import { VBtn, VForm } from 'vuetify/components'
 import { SyTextField } from '@cnamts/synapse'
 
 const value = ref('')
@@ -753,11 +830,23 @@ const rules = [
 	(value: string) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value) || 'L\\'adresse email est invalide',
 ]
 
-async function handleSubmit(e) {
-	alert((await e).valid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
+async function handleSubmit(event: SubmitEventPromise) {
+	const result = await event
+	alert(result.valid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
 }
 </script>`,
 			},
+		],
+	},
+	args: {
+		label: 'Adresse email',
+		useVuetifyValidation: true,
+		required: true,
+		isValidateOnBlur: true,
+		width: '400px',
+		rules: [
+			(value: string) => !!value || 'Ce champ est requis',
+			(value: string) => emailPattern.test(value) || 'L\'adresse email est invalide',
 		],
 	},
 	render: args => ({
@@ -768,17 +857,12 @@ async function handleSubmit(e) {
 				value.value = newValue
 			})
 
-			const rules = [
-				(value: string) => !!value || 'Ce champ est requis',
-				(value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || 'L\'adresse email est invalide',
-			]
-
-			async function handleSubmit(e: Promise<{ valid: boolean }>) {
-				const result = await e
+			async function handleSubmit(event: SubmitEventPromise) {
+				const result = await event
 				alert(result.valid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
 			}
 
-			return { args, value, rules, handleSubmit }
+			return { args, value, handleSubmit }
 		},
 		template: `
 			<div>
@@ -787,14 +871,7 @@ async function handleSubmit(e) {
 					Cliquez sur <strong>Valider</strong> ou quittez le champ pour déclencher la validation.
 				</p>
 				<VForm @submit.prevent="handleSubmit">
-					<SyTextField
-						v-model="value"
-						label="Adresse email"
-						:use-vuetify-validation="true"
-						:rules="rules"
-						:is-validate-on-blur="true"
-						width="400px"
-					/>
+					<SyTextField v-bind="args" v-model="value" />
 					<div class="mt-4">
 						<VBtn type="submit" color="primary">Valider</VBtn>
 					</div>
@@ -810,48 +887,59 @@ export const SyFormValidation: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-    <SyForm @submit="handleSubmit">
-        <SyTextField
-            v-model="value"
-            label="Adresse email"
-            :custom-rules="customRules"
+	<SyForm @submit="handleSubmit">
+		<SyTextField
+			v-model="value"
+			label="Adresse email"
 			required
-        />
-        <div class="mt-4">
-            <VBtn type="submit" color="primary">Valider</VBtn>
-        </div>
-    </SyForm>
+			width="400px"
+			:custom-rules="customRules"
+		/>
+		<div class="mt-4">
+			<VBtn type="submit" color="primary">Valider</VBtn>
+		</div>
+	</SyForm>
 </template>`,
 			},
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
-import { SyTextField, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+import { SyForm, SyTextField } from '@cnamts/synapse'
 
 const value = ref('')
 
 const customRules = [
-    {
-        type: 'custom',
-        options: {
-            validate: (value: string) => {
-                if (!value || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value)) {
-                    return false
-                }
-                return true
-            },
-            message: 'L\\'adresse email est invalide.',
-            fieldIdentifier: 'email',
-        },
-    },
+	{
+		type: 'custom',
+		options: {
+			validate: (value: string) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value),
+			message: 'L\\'adresse email est invalide.',
+			fieldIdentifier: 'email',
+		},
+	},
 ]
 
-function handleSubmit(e) {
-    const isValid = e.isValid
-    alert(isValid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
+function handleSubmit(event: { isValid: boolean }) {
+	alert(event.isValid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
 }
 </script>`,
+			},
+		],
+	},
+	args: {
+		label: 'Adresse email',
+		required: true,
+		width: '400px',
+		customRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => emailPattern.test(value),
+					message: 'L\'adresse email est invalide.',
+					fieldIdentifier: 'email',
+				},
 			},
 		],
 	},
@@ -863,40 +951,16 @@ function handleSubmit(e) {
 				value.value = newValue
 			})
 
-			const customRules = [
-				{
-					type: 'custom',
-					options: {
-						validate: (value: string) => {
-							if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-								return false
-							}
-							return true
-						},
-						message: 'L\'adresse email est invalide.',
-						fieldIdentifier: 'email',
-					},
-				},
-			]
-
-			function handleSubmit(e: { isValid: boolean }) {
-				const isValid = e.isValid
-				alert(isValid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
+			function handleSubmit(event: { isValid: boolean }) {
+				alert(event.isValid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
 			}
 
-			return { args, value, customRules, handleSubmit }
+			return { args, value, handleSubmit }
 		},
 		template: `
 			<div>
 				<SyForm @submit="handleSubmit">
-					<SyTextField
-						v-bind="args"
-						v-model="value"
-						label="Adresse email"
-						:custom-rules="customRules"
-						width="400px"
-						required
-					/>
+					<SyTextField v-bind="args" v-model="value" />
 					<div class="mt-4">
 						<VBtn type="submit" color="primary">Valider</VBtn>
 					</div>
@@ -912,38 +976,48 @@ export const SyFormVuetifyValidation: Story = {
 			{
 				name: 'Template',
 				code: `<template>
-    <SyForm @submit="handleSubmit">
-        <SyTextField
-            v-model="value"
-            label="Adresse email"
-            :use-vuetify-validation="true"
-            :rules="vuetifyRules"
-        />
-        <div class="mt-4">
-            <VBtn type="submit" color="primary">Valider</VBtn>
-        </div>
-    </SyForm>
+	<SyForm @submit="handleSubmit">
+		<SyTextField
+			v-model="value"
+			label="Adresse email"
+			:use-vuetify-validation="true"
+			:rules="vuetifyRules"
+			width="400px"
+		/>
+		<div class="mt-4">
+			<VBtn type="submit" color="primary">Valider</VBtn>
+		</div>
+	</SyForm>
 </template>`,
 			},
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
-import { SyTextField, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+import { SyForm, SyTextField } from '@cnamts/synapse'
 
 const value = ref('')
 
 const vuetifyRules = [
-    (value: string) => !!value || 'Ce champ est requis',
-    (value: string) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value) || 'L\\'adresse email est invalide',
+	(value: string) => !!value || 'Ce champ est requis',
+	(value: string) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value) || 'L\\'adresse email est invalide',
 ]
 
-function handleSubmit(e) {
-    const isValid = e.isValid
-    alert(isValid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
+function handleSubmit(event: { isValid: boolean }) {
+	alert(event.isValid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
 }
 </script>`,
 			},
+		],
+	},
+	args: {
+		label: 'Adresse email',
+		useVuetifyValidation: true,
+		width: '400px',
+		rules: [
+			(value: string) => !!value || 'Ce champ est requis',
+			(value: string) => emailPattern.test(value) || 'L\'adresse email est invalide',
 		],
 	},
 	render: args => ({
@@ -954,29 +1028,16 @@ function handleSubmit(e) {
 				value.value = newValue
 			})
 
-			const vuetifyRules = [
-				(value: string) => !!value || 'Ce champ est requis',
-				(value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || 'L\'adresse email est invalide',
-			]
-
-			function handleSubmit(e: { isValid: boolean }) {
-				const isValid = e.isValid
-				alert(isValid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
+			function handleSubmit(event: { isValid: boolean }) {
+				alert(event.isValid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
 			}
 
-			return { args, value, vuetifyRules, handleSubmit }
+			return { args, value, handleSubmit }
 		},
 		template: `
 			<div>
 				<SyForm @submit="handleSubmit">
-					<SyTextField
-						v-bind="args"
-						v-model="value"
-						label="Adresse email"
-						:use-vuetify-validation="true"
-						:rules="vuetifyRules"
-						width="400px"
-					/>
+					<SyTextField v-bind="args" v-model="value" />
 					<div class="mt-4">
 						<VBtn type="submit" color="primary">Valider</VBtn>
 					</div>
@@ -992,22 +1053,15 @@ export const VFormValidation: Story = {
 			{
 				name: 'Template',
 				code: `<template>
+	<p>Il faut privilégier l'utilisation de <code>SyForm</code> pour bénéficier de l'intégration.</p>
 	<VForm @submit.prevent="handleSubmit">
 		<SyTextField
 			ref="textFieldRef"
 			v-model="value"
 			label="Adresse email"
-			:custom-rules="[
-				{
-					type: 'custom',
-					options: {
-						validate: (value) => !!value && /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value),
-						message: 'L\\'adresse email est invalide.',
-						fieldIdentifier: 'email',
-					},
-				},
-			]"
 			required
+			width="400px"
+			:custom-rules="customRules"
 		/>
 		<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
 	</VForm>
@@ -1017,11 +1071,22 @@ export const VFormValidation: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
-import { SyTextField } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
+import { SyTextField } from '@cnamts/synapse'
 
 const value = ref('')
-const textFieldRef = ref()
+const textFieldRef = ref<InstanceType<typeof SyTextField> | null>(null)
+
+const customRules = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value: string) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value),
+			message: 'L\\'adresse email est invalide.',
+			fieldIdentifier: 'email',
+		},
+	},
+]
 
 async function handleSubmit() {
 	if (textFieldRef.value) {
@@ -1033,6 +1098,21 @@ async function handleSubmit() {
 			},
 		],
 	},
+	args: {
+		label: 'Adresse email',
+		required: true,
+		width: '400px',
+		customRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => emailPattern.test(value),
+					message: 'L\'adresse email est invalide.',
+					fieldIdentifier: 'email',
+				},
+			},
+		],
+	},
 	render: args => ({
 		components: { SyTextField, VBtn, VForm },
 		setup() {
@@ -1040,7 +1120,7 @@ async function handleSubmit() {
 			watch(() => args.modelValue, (newValue) => {
 				value.value = newValue
 			})
-			const textFieldRef = ref()
+			const textFieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 			async function handleSubmit() {
 				if (textFieldRef.value) {
@@ -1053,26 +1133,9 @@ async function handleSubmit() {
 		},
 		template: `
 			<div>
-				<p>Il faut privilégier l'utilisation de <code>SyForm</code> pour bénéficier de intégration.</p>
+				<p>Il faut privilégier l'utilisation de <code>SyForm</code> pour bénéficier de l'intégration.</p>
 				<VForm @submit.prevent="handleSubmit">
-					<SyTextField
-						v-bind="args"
-						ref="textFieldRef"
-						v-model="value"
-						label="Adresse email"
-						:custom-rules="[
-							{
-								type: 'custom',
-								options: {
-									validate: (value) => !!value && /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value),
-									message: 'L\\'adresse email est invalide.',
-									fieldIdentifier: 'email',
-								},
-							},
-						]"
-						required
-						width="400px"
-					/>
+					<SyTextField ref="textFieldRef" v-bind="args" v-model="value" />
 					<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>
 				</VForm>
 			</div>
@@ -1097,23 +1160,52 @@ Cette story montre un cas d'usage courant : la validation d'une adresse email. L
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `<SyTextField
-	v-model="value"
-	autocomplete="email"
-	label="Email"
-	helpText="Format attendu : nom@domaine.fr"
-	required
-	:customRules="[
-		{
-			type: 'email',
-			options: {
-				message: 'L\\'email n\\'est pas valide',
-				successMessage: 'L\\'email est valide'
-			}
-		}
-	]"
-	showSuccessMessages
-/>`,
+				code: `<template>
+	<SyTextField
+		v-model="value"
+		label="Email"
+		help-text="Format attendu : nom@domaine.fr"
+		autocomplete="email"
+		required
+		show-success-messages
+		:custom-rules="customRules"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+
+const value = ref('')
+
+const customRules = [
+	{
+		type: 'email',
+		options: {
+			message: 'L\\'email n\\'est pas valide',
+			successMessage: 'L\\'email est valide',
+		},
+	},
+]
+</script>`,
+			},
+		],
+	},
+	args: {
+		label: 'Email',
+		helpText: 'Format attendu : nom@domaine.fr',
+		autocomplete: 'email',
+		required: true,
+		showSuccessMessages: true,
+		customRules: [
+			{
+				type: 'email',
+				options: {
+					message: 'L\'email n\'est pas valide',
+					successMessage: 'L\'email est valide',
+				},
 			},
 		],
 	},
@@ -1127,24 +1219,7 @@ Cette story montre un cas d'usage courant : la validation d'une adresse email. L
 			return { args, value }
 		},
 		template: `
-			<SyTextField
-				v-bind="args"
-				v-model="value"
-				label="Email"
-				helpText="Format attendu : nom@domaine.fr"
-				autocomplete="email"
-				required
-				:customRules="[
-					{
-						type: 'email',
-						options: {
-							message: 'L\\'email n\\'est pas valide',
-							successMessage: 'L\\'email est valide'
-						}
-					}
-				]"
-				showSuccessMessages
-			/>
+			<SyTextField v-bind="args" v-model="value" />
 		`,
 	}),
 }

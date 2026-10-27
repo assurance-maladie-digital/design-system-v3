@@ -93,6 +93,7 @@ const meta = {
 			},
 		},
 		'color': {
+			type: { name: 'string', required: false },
 			control: 'select',
 			options: ['primary', 'secondary', 'success', 'error', 'warning'],
 			description: 'Couleur du champ',
@@ -164,6 +165,7 @@ const meta = {
 			},
 		},
 		'baseColor': {
+			type: { name: 'string', required: false },
 			description: 'Couleur de base du champ (par défaut hérite de color)',
 			control: 'text',
 			table: {
@@ -171,6 +173,7 @@ const meta = {
 			},
 		},
 		'bgColor': {
+			type: { name: 'string', required: false },
 			description: 'Couleur de fond du champ',
 			control: 'color',
 			table: {
@@ -483,18 +486,23 @@ export const Default: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
-					<SyTextField v-model="value" />
-				</template>
-				`,
+<template>
+	<SyTextField
+		v-model="value"
+		label="Label"
+		is-clearable
+	/>
+</template>`,
 			},
 			{
 				name: 'Script',
 				code: `
-				<script setup lang="ts">
-					import { SyTextField } from '@cnamts/synapse'
-				</script>
-				`,
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+
+const value = ref('')
+</script>`,
 			},
 		],
 	},
@@ -531,21 +539,24 @@ export const HelpText: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
-					<SyTextField 
-					v-model="value" 
-					help-text="Texte d'aide à la saisie"
-				/>
-				</template>
-				`,
+<template>
+	<SyTextField
+		v-model="value"
+		label="Label"
+		help-text="Texte d'aide à la saisie"
+		is-clearable
+	/>
+</template>`,
 			},
 			{
 				name: 'Script',
 				code: `
-				<script setup lang="ts">
-					import { SyTextField } from '@cnamts/synapse'
-				</script>
-				`,
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+
+const value = ref('')
+</script>`,
 			},
 		],
 	},
@@ -580,6 +591,7 @@ export const HelpText: Story = {
 export const Required: Story = {
 	args: {
 		...Default.args,
+		label: 'Champ requis sans astérisque',
 		required: true,
 	},
 	render: (args) => {
@@ -617,8 +629,9 @@ Pour afficher l'astérisque sur un champ requis, il faut activer la prop \`displ
 	<p class="mb-2 text-caption text-grey-darken-2">Ce champ est obligatoire</p>
 	<SyTextField
 		v-model="value"
-		required
 		label="Champ requis sans astérisque"
+		required
+		is-clearable
 	/>
 </template>`,
 			},
@@ -638,6 +651,7 @@ Pour afficher l'astérisque sur un champ requis, il faut activer la prop \`displ
 export const RequiredWithAsterisk: Story = {
 	args: {
 		...Default.args,
+		label: 'Champ requis avec astérisque',
 		required: true,
 		displayAsterisk: true,
 	},
@@ -674,9 +688,10 @@ L'astérisque ne peut être affiché que sur un champ requis, en activant la pro
 				code: `<template>
 	<SyTextField
 		v-model="value"
+		label="Champ requis avec astérisque"
 		required
 		display-asterisk
-		label="Champ requis avec astérisque"
+		is-clearable
 	/>
 </template>`,
 			},
@@ -699,21 +714,24 @@ export const SlotPrepend: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
-					<SyTextField 
-						v-model="value" 
-						prepend-icon="info"
-					/>
-				</template>
-				`,
+<template>
+	<SyTextField
+		v-model="value"
+		label="Label"
+		prepend-icon="info"
+		is-clearable
+	/>
+</template>`,
 			},
 			{
 				name: 'Script',
 				code: `
-				<script setup lang="ts">
-					import { SyTextField } from '@cnamts/synapse'
-				</script>
-				`,
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+
+const value = ref('')
+</script>`,
 			},
 		],
 	},
@@ -751,21 +769,24 @@ export const SlotAppend: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
-					<SyTextField 
-						v-model="value" 
-						append-icon="success"
-					/>
-				</template>
-				`,
+<template>
+	<SyTextField
+		v-model="value"
+		label="champs de text"
+		append-icon="success"
+		is-clearable
+	/>
+</template>`,
 			},
 			{
 				name: 'Script',
 				code: `
-				<script setup lang="ts">
-					import { SyTextField } from '@cnamts/synapse'
-				</script>
-				`,
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+
+const value = ref('')
+</script>`,
 			},
 		],
 	},
@@ -803,21 +824,24 @@ export const SlotPrependInner: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
-					<SyTextField 
-						v-model="value" 
-						prepend-inner-icon="info"
-					/>
-				</template>
-				`,
+<template>
+	<SyTextField
+		v-model="value"
+		label="Label"
+		prepend-inner-icon="info"
+		is-clearable
+	/>
+</template>`,
 			},
 			{
 				name: 'Script',
 				code: `
-				<script setup lang="ts">
-					import { SyTextField } from '@cnamts/synapse'
-				</script>
-				`,
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+
+const value = ref('')
+</script>`,
 			},
 		],
 	},
@@ -855,22 +879,25 @@ export const SlotPrependInnerDivider: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
-					<SyTextField 
-						v-model="value" 
-						prepend-inner-icon="info"
-						show-divider
-					/>
-				</template>
-				`,
+<template>
+	<SyTextField
+		v-model="value"
+		label="Label"
+		prepend-inner-icon="info"
+		show-divider
+		is-clearable
+	/>
+</template>`,
 			},
 			{
 				name: 'Script',
 				code: `
-				<script setup lang="ts">
-					import { SyTextField } from '@cnamts/synapse'
-				</script>
-				`,
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+
+const value = ref('')
+</script>`,
 			},
 		],
 	},
@@ -908,21 +935,24 @@ export const SlotAppendInner: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
-					<SyTextField 
-						v-model="value" 
-						append-inner-icon="success"
-					/>
-				</template>
-				`,
+<template>
+	<SyTextField
+		v-model="value"
+		label="Label"
+		append-inner-icon="success"
+		is-clearable
+	/>
+</template>`,
 			},
 			{
 				name: 'Script',
 				code: `
-				<script setup lang="ts">
-					import { SyTextField } from '@cnamts/synapse'
-				</script>
-				`,
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+
+const value = ref('')
+</script>`,
 			},
 		],
 	},
@@ -960,27 +990,32 @@ export const SlotCustomIcon: Story = {
 			{
 				name: 'Template',
 				code: `
-				<template>
-					<SyTextField v-model="value">
-						<template #append-inner>
-							<VIcon>
-								{{ iconName }}
-							</VIcon>
-						</template>
-					</SyTextField>
-				</template>
-				`,
+<template>
+	<SyTextField
+		v-model="value"
+		label="Label"
+		is-clearable
+	>
+		<template #append-inner>
+			<VIcon>
+				{{ iconName }}
+			</VIcon>
+		</template>
+	</SyTextField>
+</template>`,
 			},
 			{
 				name: 'Script',
 				code: `
-				<script setup lang="ts">
-					import { SyTextField } from '@cnamts/synapse'
-					import { mdiAccountBox } from '@mdi/js'
-					
-					const iconName = mdiAccountBox
-				</script>
-				`,
+<script setup lang="ts">
+import { ref } from 'vue'
+import { VIcon } from 'vuetify/components'
+import { mdiAccountBox } from '@mdi/js'
+import { SyTextField } from '@cnamts/synapse'
+
+const value = ref('')
+const iconName = mdiAccountBox
+</script>`,
 			},
 		],
 	},
@@ -1000,7 +1035,7 @@ export const SlotCustomIcon: Story = {
 				watch(() => args.modelValue, (newValue) => {
 					value.value = newValue
 				})
-				const iconName = ref(mdiAccountBox)
+				const iconName = mdiAccountBox
 
 				return { args, value, iconName }
 			},
@@ -1036,53 +1071,69 @@ Cette story montre l'utilisation de la règle \`matchPattern\` pour valider un f
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `<SyTextField
-	v-model="value"
-	label="Code postal"
-	helpText="Exemple : 31000"
-	autocomplete="postal-code"
-	required
-	:customRules="[
-		{
-			type: 'matchPattern',
-			options: {
-				pattern: /^\\d{5}$/,
-				message: 'Le code postal doit contenir exactement 5 chiffres',
-				successMessage: 'Le format du code postal est valide'
-			}
-		}
-	]"
-	showSuccessMessages
-/>`,
+				code: `<template>
+	<SyTextField
+		v-model="value"
+		label="Code postal"
+		help-text="Exemple : 31000"
+		autocomplete="postal-code"
+		required
+		show-success-messages
+		:custom-rules="customRules"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+
+const value = ref('')
+
+const customRules = [
+	{
+		type: 'matchPattern',
+		options: {
+			pattern: /^\\d{5}$/,
+			message: 'Le code postal doit contenir exactement 5 chiffres',
+			successMessage: 'Le format du code postal est valide',
+		},
+	},
+]
+</script>`,
+			},
+		],
+	},
+	args: {
+		modelValue: '',
+		label: 'Code postal',
+		helpText: 'Exemple : 31000',
+		autocomplete: 'postal-code',
+		required: true,
+		showSuccessMessages: true,
+		customRules: [
+			{
+				type: 'matchPattern',
+				options: {
+					pattern: /^\d{5}$/,
+					message: 'Le code postal doit contenir exactement 5 chiffres',
+					successMessage: 'Le format du code postal est valide',
+				},
 			},
 		],
 	},
 	render: args => ({
 		components: { SyTextField },
 		setup() {
-			const value = ref('')
+			const value = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
 			return { args, value }
 		},
 		template: `
-			<SyTextField
-				v-model="value"
-				v-bind="args"
-				label="Code postal"
-				helpText="Exemple : 31000"
-				autocomplete="postal-code"
-				required
-				:customRules="[
-					{
-						type: 'matchPattern',
-						options: {
-							pattern: /^\\d{5}$/,
-							message: 'Le code postal doit contenir exactement 5 chiffres',
-							successMessage: 'Le format du code postal est valide'
-						}
-					}
-				]"
-				showSuccessMessages
-			/>
+			<SyTextField v-bind="args" v-model="value" />
 		`,
 	}),
 }
@@ -1111,8 +1162,8 @@ export const WithTooltips: Story = {
 					Survolez-les pour voir les messages d'aide qui apparaissent en haut grâce à la prop tooltipLocation="top".
 				</p>
 				<SyTextField
-					v-model="value"
 					v-bind="args"
+					v-model="value"
 				/>
 			</div>
 		`,
@@ -1128,15 +1179,29 @@ export const WithTooltips: Story = {
 				name: 'Template',
 				code: `
 <template>
+	<p class="mb-4">
+		Des icônes d'information avec tooltips sont affichées de chaque côté du champ.
+		Survolez-les pour voir les messages d'aide qui apparaissent en haut grâce à la prop tooltipLocation="top".
+	</p>
 	<SyTextField
 		v-model="value"
 		label="Champ avec tooltips"
-		prependTooltip="Information à gauche du champ"
-		appendTooltip="Information à droite du champ"
-		tooltipLocation="top"
+		prepend-tooltip="Information à gauche du champ"
+		append-tooltip="Information à droite du champ"
+		tooltip-location="top"
+		is-clearable
 	/>
-</template>
-				`,
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+
+const value = ref('')
+</script>`,
 			},
 		],
 	},
@@ -1162,8 +1227,8 @@ export const WithPrefixAndSuffix: Story = {
 					directement dans le champ.
 				</p>
 				<SyTextField
-					v-model="value"
 					v-bind="args"
+					v-model="value"
 				/>
 			</div>
 		`,
@@ -1179,14 +1244,27 @@ export const WithPrefixAndSuffix: Story = {
 				name: 'Template',
 				code: `
 <template>
+	<p class="mb-4">
+		Utilisation des props prefix et suffix pour ajouter des unités ou des informations complémentaires
+		directement dans le champ.
+	</p>
 	<SyTextField
 		v-model="value"
 		label="Montant"
 		prefix="€"
 		suffix="TTC"
 	/>
-</template>
-				`,
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+
+const value = ref('42')
+</script>`,
 			},
 		],
 	},
