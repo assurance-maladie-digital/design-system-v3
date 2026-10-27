@@ -1,7 +1,9 @@
 import axios from 'axios'
-import { defineComponent, h, onMounted, shallowRef } from 'vue'
+import { computed, defineComponent, h, nextTick, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
+import { VPagination } from 'vuetify/components'
 import * as marked from 'marked'
 import SyAlert from '../../components/SyAlert/SyAlert.vue'
+import SySelect from '../../components/Customs/Selects/SySelect/SySelect.vue'
 import { sanitizeHtml } from './sanitizeHtml'
 import './Releases.css'
 
@@ -304,6 +306,11 @@ const releaseAlerts: ReleaseAlert[] = [
 	},
 ]
 
+// Nombre de releases affichées par page
+const PAGE_SIZE = 3
+// Valeur du sélecteur pour afficher toutes les versions (une chaîne vide serait traitée comme une absence de valeur)
+const ALL_VERSIONS = 'all'
+
 // Rend un texte de bandeau en remplaçant les passages entre backticks par des `<code>`
 // (pas de `v-html` : le texte reste échappé par Vue).
 const AlertText = defineComponent({
@@ -325,21 +332,67 @@ export default {
 export const List = {
 	render: () => {
 		return {
-			components: { SyAlert, AlertText },
+			components: { SyAlert, SySelect, VPagination, AlertText },
 			setup() {
 				const releases = shallowRef<GitHubRelease[]>([])
 				const errorMessage = shallowRef('')
+				const loading = shallowRef(true)
+				const selectedVersion = shallowRef(ALL_VERSIONS)
+				const page = shallowRef(1)
+				const listRef = useTemplateRef<HTMLElement>('list')
 
 				const fetchReleases = async () => {
 					try {
-						const { data } = await axios.get('https://api.github.com/repos/assurance-maladie-digital/design-system-v3/releases')
+						// 100 par page (maximum de l'API) : toutes les releases en une requête, le sélecteur les liste toutes
+						const { data } = await axios.get('https://api.github.com/repos/assurance-maladie-digital/design-system-v3/releases', { params: { per_page: 100 } })
 						releases.value = data
 					}
 					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 					catch (error) {
 						errorMessage.value = 'Une erreur est survenue lors de la récupération des releases.'
 					}
+					finally {
+						loading.value = false
+					}
 				}
+
+				const versionItems = computed(() => [
+					{ text: 'Toutes les versions', value: ALL_VERSIONS },
+					...releases.value.map(release => ({
+						text: release.name || release.tag_name || String(release.id),
+						value: String(release.id),
+					})),
+				])
+
+				const filteredReleases = computed(() => selectedVersion.value === ALL_VERSIONS
+					? releases.value
+					: releases.value.filter(release => String(release.id) === selectedVersion.value),
+				)
+
+				const pageCount = computed(() => Math.ceil(filteredReleases.value.length / PAGE_SIZE))
+
+				const visibleReleases = computed(() => filteredReleases.value.slice((page.value - 1) * PAGE_SIZE, page.value * PAGE_SIZE))
+
+				const rangeText = computed(() => {
+					const total = filteredReleases.value.length
+					if (total <= 1) {
+						return ''
+					}
+					const start = (page.value - 1) * PAGE_SIZE + 1
+					const end = Math.min(page.value * PAGE_SIZE, total)
+					return `Versions ${start} à ${end} sur ${total}`
+				})
+
+				// Le sélecteur peut renvoyer `null` s'il est vidé : on revient alors à toutes les versions
+				const selectVersion = (value: unknown) => {
+					selectedVersion.value = typeof value === 'string' ? value : ALL_VERSIONS
+					page.value = 1
+				}
+
+				// La pagination est sous la liste : on ramène le focus (et la vue) sur le sélecteur, en haut de la nouvelle page
+				watch(page, () => {
+					nextTick(() => listRef.value?.focus())
+				})
 
 				const formatDate = (date: string | number | Date) => {
 					return new Date(date).toLocaleDateString()
@@ -364,8 +417,15 @@ export const List = {
 				})
 
 				return {
-					releases,
 					errorMessage,
+					loading,
+					selectedVersion,
+					page,
+					versionItems,
+					pageCount,
+					visibleReleases,
+					rangeText,
+					selectVersion,
 					formatDate,
 					formatMarkdown,
 					getReleaseAlerts,
@@ -380,8 +440,22 @@ export const List = {
 						<template #default>Version Amelipro : alpha</template>
 					</SyAlert>
 					<div v-if="errorMessage" class="error">{{ errorMessage }}</div>
-					<div v-else>
-						<div v-for="release in releases" :key="release.id">
+					<p v-else-if="loading" class="mt-4">Chargement des releases…</p>
+					<div v-else ref="list" tabindex="-1" class="releases__list">
+						<div class="releases__toolbar mt-6">
+							<SySelect
+								:model-value="selectedVersion"
+								:items="versionItems"
+								label="Version"
+								menu-id="releases-version-menu"
+								hide-details
+								disable-error-handling
+								class="releases__select"
+								@update:model-value="selectVersion"
+							/>
+							<p class="releases__range" aria-live="polite">{{ rangeText }}</p>
+						</div>
+						<div v-for="release in visibleReleases" :key="release.id">
 							<h2>{{ release.name }} ({{ formatDate(release.published_at) }})</h2>
 							<SyAlert
 								v-for="alert in getReleaseAlerts(release)"
@@ -413,6 +487,15 @@ export const List = {
 							<div v-html="formatMarkdown(release.body)"></div>
 							<hr>
 						</div>
+						<VPagination
+							v-if="pageCount > 1"
+							v-model="page"
+							:length="pageCount"
+							:total-visible="5"
+							rounded
+							class="releases__pagination mt-4"
+							aria-label="Pagination des releases"
+						/>
 					</div>
 				</div>
 			`,
