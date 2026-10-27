@@ -34,6 +34,104 @@ type ReleaseAlert = {
 
 const releaseAlerts: ReleaseAlert[] = [
 	{
+		id: 'datepicker-model-behavior',
+		releaseVersion: 'v1.2.1',
+		type: 'warning',
+		variant: 'tonal',
+		title: 'Changements de comportement du DatePicker',
+		paragraphs: [
+			'Ce sont des corrections, mais un projet existant peut les percevoir comme des régressions : vérifiez les écrans qui écoutent le modèle ou `date-selected`.',
+		],
+		items: [
+			{
+				label: '`update:modelValue`',
+				text: 'Il émet `null` dès que la saisie est invalide ou incomplète (format invalide, date non parsable, plage incomplète, saisie partiellement effacée). Avant, le modèle gardait la dernière valeur valide et se désynchronisait du texte affiché.',
+			},
+			{
+				label: '`date-selected`',
+				text: 'Il n\'est émis que pour une sélection complète (date unique confirmée ou plage complète). Il ne l\'est plus quand seule la première borne d\'une plage est saisie au clavier.',
+			},
+			{
+				label: 'Nouvelle prop `validateWithReturnFormat` (non cassant)',
+				text: 'Avec cette prop, le `validate` des règles personnalisées reçoit la date au format `dateFormatReturn`, comme le `v-model`. Sans elle, le comportement est inchangé.',
+			},
+		],
+		components: ['DatePicker', 'ComplexDatePicker', 'DateTextInput'],
+		link: { intro: 'Pour plus de détails, voir la page', href: '/?path=/docs/composants-formulaires-datepicker-calendarmode--docs', text: 'DatePicker' },
+	},
+	{
+		id: 'select-zero-false-values',
+		releaseVersion: 'v1.2.1',
+		type: 'warning',
+		variant: 'tonal',
+		title: 'Valeurs 0 et false dans les sélecteurs',
+		paragraphs: [
+			'Les valeurs `0` et `false` sont désormais des choix valides, et non plus une absence de valeur. `\'\'`, `null` et `undefined` restent une absence de valeur.',
+		],
+		items: [
+			{
+				label: '`SyAutocomplete` (sélection simple)',
+				text: 'Une option de valeur `0` ou `false` s\'affiche dans le champ et est marquée sélectionnée. Avant, le champ restait vide.',
+			},
+			{
+				label: 'Prop `required`',
+				text: 'Choisir une option de valeur `false` n\'affiche plus le message « Le champ … est requis. ».',
+			},
+			{
+				label: 'Règle `required` dans `customRules`',
+				text: 'Elle refuse toujours `false` par défaut, ce qui garde obligatoires les cases du type « J\'accepte ». Pour une liste booléenne, ajoutez l\'option `allowFalse: true`.',
+			},
+			{
+				label: '`SelectBtnField`',
+				text: 'Une sélection de valeur `0` n\'est plus remplacée quand le focus clavier passe sur une autre option.',
+			},
+			{
+				label: '`SySelect`',
+				text: 'Des items booléens bruts (`:items="[true, false]"`) s\'affichent et émettent leur valeur booléenne.',
+			},
+		],
+		components: ['SyAutocomplete', 'SySelect', 'SyRadioGroup', 'SelectBtnField', 'SyCheckBoxGroup'],
+		link: { intro: 'Pour plus de détails, voir la page', href: '/?path=/docs/composants-formulaires-selects-syselect--docs', text: 'SySelect' },
+	},
+	{
+		id: 'table-pinned-styles',
+		releaseVersion: 'v1.2.1',
+		type: 'warning',
+		variant: 'tonal',
+		title: 'Styles des tableaux personnalisables par variables CSS',
+		paragraphs: [
+			'Les colonnes épinglées, la colonne de sélection épinglée et les cases à cocher n\'imposent plus leur style par des styles inline ou des `!important`. Si votre projet les surchargeait avec `!important`, remplacez ces surcharges par les variables CSS ci-dessous.',
+		],
+		items: [
+			{
+				label: '`--sy-table-pinned-cell-bg`',
+				text: 'Fond des cellules épinglées et de la colonne de sélection épinglée.',
+			},
+			{
+				label: '`--sy-table-row-bg`',
+				text: 'Couleur d\'une ligne, étendue aux cellules épinglées. Un `background-color` posé seul sur la ligne ne s\'étend pas aux cellules épinglées.',
+			},
+			{
+				label: '`--sy-table-pinned-left-shadow` / `--sy-table-pinned-right-shadow`',
+				text: 'Ombre signalant le contenu masqué à gauche / à droite.',
+			},
+			{
+				label: '`--sy-table-checkbox-color`',
+				text: 'Couleur des cases à cocher du tableau.',
+			},
+			{
+				label: 'Zébrage `striped`',
+				text: 'Il s\'applique désormais à toute la ligne, cellules épinglées comprises.',
+			},
+			{
+				label: 'Défilement horizontal',
+				text: 'Une ombre signale le contenu masqué dès qu\'un tableau est plus large que son conteneur, y compris sans colonne épinglée.',
+			},
+		],
+		components: ['SyTable', 'SyServerTable'],
+		link: { intro: 'Pour plus de détails, voir la page', href: '/?path=/docs/composants-tableaux-sytable--docs', text: 'SyTable' },
+	},
+	{
 		id: 'syform-validation-behavior',
 		releaseVersion: 'v1.2.0',
 		type: 'warning',

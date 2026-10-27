@@ -1,6 +1,6 @@
 {
   "name": "@cnamts/synapse",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": false,
   "packageManager": "pnpm@10.33.4",
   "description": "CNAM DS v3",
@@ -80,10 +80,6 @@
     "email": "digital_TL.cnam@assurance-maladie.fr"
   },
   "license": "ISC",
-  "engines": {
-    "node": ">=20 <23",
-    "pnpm": ">=10 <11"
-  },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
     "@jls-digital/storybook-addon-code": "^2.3.0",

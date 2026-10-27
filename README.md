@@ -8,10 +8,16 @@ Pour consulter les changements récents, veuillez consulter le [CHANGELOG](https
 
 ## Prérequis
 
-Pour utiliser ce Design System, vous devez avoir les versions suivantes installées :
+### Utiliser le Design System
 
--   **Node** : >=20 <23 (versions 20 et 22 supportées)
--   **pnpm** : >=10 <11 (version 10 et supérieures compatibles)
+Synapse n'impose pas de version de Node ni de gestionnaire de paquets : utilisez les versions définies par votre projet ou par le Starter Kit (SKSN), qui suivent les exigences de sécurité de la Cnam.
+
+### Contribuer au Design System
+
+Les versions utilisées pour développer, tester et construire Synapse sont figées dans le dépôt :
+
+-   **Node** : version indiquée dans le fichier [`.nvmrc`](https://github.com/assurance-maladie-digital/design-system-v3/blob/dev/.nvmrc) (`nvm use` la sélectionne)
+-   **pnpm** : version indiquée dans le champ `packageManager` de [`package.json`](https://github.com/assurance-maladie-digital/design-system-v3/blob/dev/package.json) (pnpm et Corepack la sélectionnent automatiquement)
 
 ## Stack Technique
 
