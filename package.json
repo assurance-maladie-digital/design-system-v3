@@ -32,6 +32,10 @@
       "types": "./dist/vuetifyConfig.d.ts",
       "import": "./dist/vuetifyConfig.js"
     },
+    "./vuetifyOptions": {
+      "types": "./dist/vuetifyOptions.d.ts",
+      "import": "./dist/vuetifyOptions.js"
+    },
     "./modules/notification": {
       "types": "./src/modules/notification/index.ts",
       "default": "./src/modules/notification/index.ts"

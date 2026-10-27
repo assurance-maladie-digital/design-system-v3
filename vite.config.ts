@@ -49,6 +49,7 @@ export default defineConfig({
 			entry: {
 				'design-system-v3': resolve(__dirname, 'src/main.ts'),
 				'vuetifyConfig': resolve(__dirname, 'src/vuetifyConfig.ts'),
+				'vuetifyOptions': resolve(__dirname, 'src/vuetifyOptions.ts'),
 			},
 			name: 'DesignSystemV3',
 			cssFileName: 'synapse',
