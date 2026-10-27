@@ -112,7 +112,7 @@
   </thead>
   <tbody>
     <tr style="vertical-align: top;">
-      <td>- Security: update Node to 22.23.4 (CVE-2026-111497)
+      <td>- Security: update Node to 22.23.4
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2714">#2714</a>
       </td>
     </tr>
