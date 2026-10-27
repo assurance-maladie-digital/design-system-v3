@@ -14,10 +14,10 @@ Synapse n'impose pas de version de Node ni de gestionnaire de paquets : utilisez
 
 ### Contribuer au Design System
 
-Synapse est développé, testé et construit avec :
+Les versions utilisées pour développer, tester et construire Synapse sont figées dans le dépôt :
 
--   **Node** : 22.23.4 (fixée dans `.nvmrc`, sélectionnée par `nvm use`)
--   **pnpm** : 10.33.4 (fixée dans le champ `packageManager` de `package.json`)
+-   **Node** : version indiquée dans le fichier [`.nvmrc`](https://github.com/assurance-maladie-digital/design-system-v3/blob/dev/.nvmrc) (`nvm use` la sélectionne)
+-   **pnpm** : version indiquée dans le champ `packageManager` de [`package.json`](https://github.com/assurance-maladie-digital/design-system-v3/blob/dev/package.json) (pnpm et Corepack la sélectionnent automatiquement)
 
 ## Stack Technique
 
