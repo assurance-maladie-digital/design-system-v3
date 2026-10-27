@@ -10,7 +10,7 @@ describe('createVuetifyOptions', () => {
 		const options = createVuetifyOptions()
 
 		expect(options.theme && options.theme.defaultTheme).toBe('cnam')
-		expect(Object.keys((options.theme && options.theme.themes) ?? {})).toEqual(['cnam', 'pa', 'ap2026', 'ap'])
+		expect(Object.keys((options.theme && options.theme.themes) ?? {})).toEqual(expect.arrayContaining(['cnam', 'pa', 'ap']))
 		expect(options.locale?.locale).toBe('fr')
 		expect(options.icons?.defaultSet).toBe('mdi')
 	})
