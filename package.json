@@ -1,6 +1,6 @@
 {
   "name": "@cnamts/synapse",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "private": false,
   "packageManager": "pnpm@10.33.4",
   "description": "CNAM DS v3",
@@ -81,8 +81,8 @@
   },
   "license": "ISC",
   "engines": {
-    "node": ">=20 <23",
-    "pnpm": ">=10 <11"
+    "node": "=20.18.x || =22.17.x || =22.23.x",
+    "pnpm": "=10.12.x || =10.33.x || 12.9.x"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
