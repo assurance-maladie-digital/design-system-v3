@@ -1,6 +1,6 @@
 # Rapport d’historique d’accessibilité par composant
 
-- Généré le: 2026-10-19T14:41:06.849Z
+- Généré le: 2026-10-27T16:15:40.666Z
 
 ## Accordion
 
@@ -1667,6 +1667,13 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SelectBtnField
 
+- **23/10/2026** — SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)  
+  Release: `v1.2.1` · Hash: `886b13bece06b7abdd6b7dadd10264080f022557` | pattern ARIA
+
+- **21/10/2026** — SelectBtnField: standardize stories with v-bind pattern and add action tracking (#2676)  
+  Release: `v1.2.1` · Hash: `0dbf435d01af85b89bcf8390246623a136b2bf40` | pattern ARIA
+  Labels PR: `Documentation`
+
 - **17/09/2026** — add tests a11y to selectBtnField (#2543)  
   Release: `v1.1.6` · Hash: `99dd21e66e143bda73bf5d60d7cc258bf80fda35` | mot-clé a11y · pattern ARIA
   Labels PR: `Synapse`, `Amelipro`
@@ -1709,6 +1716,9 @@ Aucune amélioration d’accessibilité détectée.
   Labels PR: `Accessibility`
 
 ## SyAutocomplete
+
+- **23/10/2026** — SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)  
+  Release: `v1.2.1` · Hash: `886b13bece06b7abdd6b7dadd10264080f022557` | pattern ARIA
 
 - **12/08/2026** — refactor: replace KebabCase to PascaleCase component calls  
   Release: `v1.1.4` · Hash: `7dab36881ad0d0ba95dcbbff4810c1f7d34d72f5` | pattern ARIA
@@ -1783,6 +1793,9 @@ Aucune amélioration d’accessibilité détectée.
   Labels PR: `Accessibility`
 
 ## SySelect
+
+- **22/10/2026** — chore: remove study files and fix accessibility issues in tables and selects (#2686)  
+  Release: `v1.2.1` · Hash: `b6203901c9616bf60df6cefd3e13e901b46791cb` | mot-clé a11y · pattern ARIA
 
 - **26/08/2026** — [RGAA] Corrige les bordure des champs de formulaires (#2471)  
   Release: `v1.1.5` · Hash: `565c69fa40c97d79d13c2747919b0739dd91e079` | pattern ARIA
@@ -1962,6 +1975,10 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyIcon
 
+- **21/10/2026** — FileList: correction bug de couleur picto du SyIcon (#2672)  
+  Release: `v1.2.1` · Hash: `bf1833790d6d6b93837cb186f7eee3c3dfb9f333` | pattern ARIA
+  Labels PR: `Issue`
+
 - **24/09/2026** — SyIcon - add accessibility tab on AccessibilityDemo story (#2569)  
   Release: `v1.1.6` · Hash: `6b48d0b4c60df11d089c554c474f5f21f6e3a2fd` | mot-clé a11y · pattern ARIA
   Labels PR: `Synapse`, `Amelipro`
@@ -2016,6 +2033,10 @@ Aucune amélioration d’accessibilité détectée.
   Labels PR: `enhancement`, `Accessibility`
 
 ## SyIconAccessibility
+
+- **21/10/2026** — FileList: correction bug de couleur picto du SyIcon (#2672)  
+  Release: `v1.2.1` · Hash: `bf1833790d6d6b93837cb186f7eee3c3dfb9f333` | pattern ARIA
+  Labels PR: `Issue`
 
 - **24/09/2026** — SyIcon - add accessibility tab on AccessibilityDemo story (#2569)  
   Release: `v1.1.6` · Hash: `6b48d0b4c60df11d089c554c474f5f21f6e3a2fd` | mot-clé a11y · pattern ARIA
@@ -2120,6 +2141,9 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v1.0.3` · Hash: `f16bb16e024f573b35b5e58de919bda7478b7726` | pattern ARIA
 
 ## SyRadioGroup
+
+- **23/10/2026** — SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)  
+  Release: `v1.2.1` · Hash: `886b13bece06b7abdd6b7dadd10264080f022557` | pattern ARIA
 
 - **25/08/2026** — [SyRadioGroup] héritage des attributs (#2493)  
   Release: `v1.1.4` · Hash: `a216fc35e26df993b7be4d403abcc5d65b5a8e36` | pattern ARIA
@@ -4065,6 +4089,10 @@ Aucune amélioration d’accessibilité détectée.
 
 ## PhoneField
 
+- **27/10/2026** — fix(PhoneField): make validation story controls effective and fix descriptions (#2707)  
+  Release: `v1.2.1` · Hash: `a339f992d96ae62cd9c5a785bf5d9b895e447c00` | pattern ARIA
+  Labels PR: `Synapse`
+
 - **05/10/2026** — SyForm v2 (#2434)  
   Release: `v1.2.0` · Hash: `d7ac6be5343bfad4f05913e4fb9b9b4e2d8e6cae` | pattern ARIA
 
@@ -4101,6 +4129,10 @@ Aucune amélioration d’accessibilité détectée.
   Release: `v0.0.1` · Hash: `004a526cbd82d54581326a15531782d8c8fdbbda` | pattern ARIA
 
 ## PhoneField.reset.fixture
+
+- **27/10/2026** — fix(PhoneField): make validation story controls effective and fix descriptions (#2707)  
+  Release: `v1.2.1` · Hash: `a339f992d96ae62cd9c5a785bf5d9b895e447c00` | pattern ARIA
+  Labels PR: `Synapse`
 
 - **05/10/2026** — SyForm v2 (#2434)  
   Release: `v1.2.0` · Hash: `d7ac6be5343bfad4f05913e4fb9b9b4e2d8e6cae` | pattern ARIA
@@ -4591,6 +4623,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyServerTable
 
+- **22/10/2026** — chore: remove study files and fix accessibility issues in tables and selects (#2686)  
+  Release: `v1.2.1` · Hash: `b6203901c9616bf60df6cefd3e13e901b46791cb` | mot-clé a11y · pattern ARIA
+
 - **04/09/2026** — SyTable/SyServerTable: fix items per page  (#2538)  
   Release: `v1.1.5` · Hash: `2c90a270023a8f81debfab170380e16cdb6e0640` | pattern ARIA
 
@@ -4637,6 +4672,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyTable
 
+- **22/10/2026** — chore: remove study files and fix accessibility issues in tables and selects (#2686)  
+  Release: `v1.2.1` · Hash: `b6203901c9616bf60df6cefd3e13e901b46791cb` | mot-clé a11y · pattern ARIA
+
 - **18/09/2026** — SyTable: ne plus avoir "Table caption" quand le caption est vide (#2559)  
   Release: `v1.1.6` · Hash: `4d3907527c38c9958b531f95ff00a1bf4361c0a8` | pattern ARIA
 
@@ -4682,6 +4720,9 @@ Aucune amélioration d’accessibilité détectée.
   Labels PR: `PAG`
 
 ## SyTableFilter
+
+- **22/10/2026** — chore: remove study files and fix accessibility issues in tables and selects (#2686)  
+  Release: `v1.2.1` · Hash: `b6203901c9616bf60df6cefd3e13e901b46791cb` | mot-clé a11y · pattern ARIA
 
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: `v1.1.6` · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
@@ -4778,6 +4819,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## SyTablePagination
 
+- **22/10/2026** — chore: remove study files and fix accessibility issues in tables and selects (#2686)  
+  Release: `v1.2.1` · Hash: `b6203901c9616bf60df6cefd3e13e901b46791cb` | mot-clé a11y · pattern ARIA
+
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: `v1.1.6` · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
 
@@ -4873,6 +4917,9 @@ Aucune amélioration d’accessibilité détectée.
 
 ## TableBulkActions
 
+- **22/10/2026** — chore: remove study files and fix accessibility issues in tables and selects (#2686)  
+  Release: `v1.2.1` · Hash: `b6203901c9616bf60df6cefd3e13e901b46791cb` | mot-clé a11y · pattern ARIA
+
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: `v1.1.6` · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
 
@@ -4967,6 +5014,9 @@ Aucune amélioration d’accessibilité détectée.
   Labels PR: `PAG`
 
 ## TableHeader
+
+- **22/10/2026** — chore: remove study files and fix accessibility issues in tables and selects (#2686)  
+  Release: `v1.2.1` · Hash: `b6203901c9616bf60df6cefd3e13e901b46791cb` | mot-clé a11y · pattern ARIA
 
 - **22/09/2026** — Refactor: Migration de la validation des DatePickers (#2499)  
   Release: `v1.1.6` · Hash: `2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec` | pattern ARIA
