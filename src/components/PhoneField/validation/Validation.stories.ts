@@ -216,7 +216,7 @@ onMounted(() => {
 	},
 	args: {
 		showSuccessMessages: true,
-	} as Record<string, unknown>,
+	},
 	render: args => ({
 		components: { PhoneField },
 		setup() {
@@ -306,7 +306,7 @@ const phone = ref('')
 	args: {
 		isValidateOnBlur: false,
 		showSuccessMessages: true,
-	} as Record<string, unknown>,
+	},
 	render: args => ({
 		components: { PhoneField, VBtn },
 		setup() {
@@ -347,7 +347,7 @@ export const DisableErrorHandling: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Avec `disableErrorHandling: true`, les règles d\'erreur sont évaluées mais n\'affectent pas l\'état visuel du champ (pas de bordure rouge ni d\'icône d\'erreur). Utile dans les cas où la validation doit être effectuée en arrière-plan sans perturber l\'expérience utilisateur.',
+				story: 'Avec `disableErrorHandling: true`, la validation Synapse du champ est désactivée : les règles intégrées et les `customRules`, `customWarningRules` et `customSuccessRules` ne sont pas exécutées, ni à la saisie, ni au blur, ni à la soumission. Aucun message d\'erreur, d\'avertissement ou de succès issu de ces règles n\'est donc affiché, et ces règles ne bloquent pas la soumission. Les messages injectés par le parent (`errorMessages`, `warningMessages`, `successMessages`) restent affichés, et une erreur injectée ou l\'état forcé `hasError` fait toujours échouer `validateOnSubmit()`. Utile lorsque la gestion des erreurs est assurée par le parent.\n\nDans cet exemple, la valeur `123` ne respecte pas les règles du champ (longueur attendue et format personnalisé) : même après être entré puis sorti du champ, aucune erreur n\'apparaît. Désactivez le control `disableErrorHandling` pour comparer : une erreur s\'affiche alors à la sortie du champ.',
 			},
 		},
 		sourceCode: [
@@ -382,7 +382,7 @@ const phone = ref('123')
 	},
 	args: {
 		disableErrorHandling: true,
-	} as Record<string, unknown>,
+	},
 	render: args => ({
 		components: { PhoneField },
 		setup() {
@@ -452,6 +452,9 @@ const onSubmit = (e) => {
 			},
 		],
 	},
+	args: {
+		required: true,
+	},
 	render: args => ({
 		components: { SyForm, PhoneField, VBtn },
 		setup() {
@@ -467,7 +470,6 @@ const onSubmit = (e) => {
 					<PhoneField
 						v-model="phone"
 						v-bind="args"
-						required
 						:custom-rules="[{
 							type: 'custom',
 							options: {
@@ -487,7 +489,7 @@ export const VFormValidation: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Le champ peut également être utilisé dans un formulaire classique de Vuetify (`VForm`). Dans cet exemple, la validité du formulaire est vérifiée à la soumission.',
+				story: 'Le champ peut également être utilisé dans un formulaire classique de Vuetify (`VForm`). Dans cet exemple, la validité du champ est vérifiée à la soumission en appelant `validateOnSubmit()` sur sa référence.\n\nIl est préférable d\'utiliser `SyForm` pour bénéficier de la validation globale du formulaire.',
 			},
 		},
 		sourceCode: [
@@ -530,6 +532,9 @@ async function onSubmit() {
 			},
 		],
 	},
+	args: {
+		required: true,
+	},
 	render: args => ({
 		components: { PhoneField, VForm, VBtn },
 		setup() {
@@ -544,12 +549,10 @@ async function onSubmit() {
 		template: `
 			<div class="pa-4">
 				<VForm @submit.prevent="onSubmit">
-					<p>Preferable d'utiliser SyForm pour bénéficier de la validation globale du formulaire.</p>
 					<PhoneField
 						v-model="phone"
 						v-bind="args"
-						ref="phoneFieldRef" 
-						required
+						ref="phoneFieldRef"
 						:custom-rules="[{
 							type: 'custom',
 							options: {
@@ -571,7 +574,7 @@ export const SyFormVuetifyValidation: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Le champ est compatible avec les deux types de formulaires (`SyForm` et `VForm`) dans le même projet, permettant une intégration flexible selon les besoins spécifiques de chaque formulaire.\n\n- **SyForm** : la soumission déclenche automatiquement la validation de tous les champs enregistrés.\n- **VForm** : le bouton de soumission appelle manuellement `validateOnSubmit()` sur le champ.',
+				story: 'Validation native Vuetify (`useVuetifyValidation` + `rules`) dans un `SyForm` : les règles Vuetify du champ sont intégrées automatiquement à la validation globale du `SyForm`. La soumission déclenche la validation de tous les champs enregistrés et transmet le résultat dans `isValid`, sans appel manuel à `validateOnSubmit()`.\n\nEn mode Vuetify, `required` n\'ajoute que l\'astérisque et l\'attribut ARIA : la règle requise doit figurer dans `rules`.',
 			},
 		},
 		sourceCode: [
@@ -598,7 +601,7 @@ export const SyFormVuetifyValidation: Story = {
 <script setup lang="ts">
 import { ref } from 'vue'
 import { SyForm, PhoneField } from '@cnamts/synapse'
-import { VBtn, VForm } from 'vuetify/components'
+import { VBtn } from 'vuetify/components'
 
 const phone = ref('')
 
@@ -621,8 +624,13 @@ function onSyFormSubmit(event: { isValid: boolean }) {
 			},
 		],
 	},
+	args: {
+		required: true,
+		displayAsterisk: true,
+		useVuetifyValidation: true,
+	},
 	render: args => ({
-		components: { SyForm, PhoneField, VForm, VBtn },
+		components: { SyForm, PhoneField, VBtn },
 		setup() {
 			const phone = ref('')
 
@@ -649,10 +657,7 @@ function onSyFormSubmit(event: { isValid: boolean }) {
 				<PhoneField
 					v-model="phone"
 					v-bind="args"
-					required
-					display-asterisk
 					class="mb-4"
-					use-vuetify-validation
 					:rules="rules"
 				/>
 				<VBtn type="submit" color="primary">Soumettre</VBtn>
@@ -710,6 +715,16 @@ async function onSubmit(e) {
 			},
 		],
 	},
+	args: {
+		required: true,
+		displayAsterisk: true,
+	},
+	argTypes: {
+		useVuetifyValidation: {
+			control: false,
+			description: 'Figé à `true` dans cette story : un `VForm` ne prend en compte que les règles Vuetify (`rules`). En mode Synapse, ces règles sont ignorées et le `VForm` ne voit aucune erreur : la soumission serait toujours valide.',
+		},
+	},
 	render: args => ({
 		components: { PhoneField, VForm, VBtn },
 		setup() {
@@ -732,9 +747,7 @@ async function onSubmit(e) {
 					<PhoneField
 						v-model="phone"
 						v-bind="args"
-						:use-vuetify-validation="true"
-						required
-						display-asterisk
+						use-vuetify-validation
 						:rules="rules"
 					/>
 					<VBtn type="submit" class="mt-4" color="primary">Soumettre</VBtn>
