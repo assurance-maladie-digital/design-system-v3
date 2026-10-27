@@ -8,10 +8,16 @@ Pour consulter les changements récents, veuillez consulter le [CHANGELOG](https
 
 ## Prérequis
 
-Pour utiliser ce Design System, vous devez avoir les versions suivantes installées :
+### Utiliser le Design System
 
--   **Node** : >=20 <23 (versions 20 et 22 supportées)
--   **pnpm** : >=10 <11 (version 10 et supérieures compatibles)
+Synapse n'impose pas de version de Node ni de gestionnaire de paquets : utilisez les versions définies par votre projet ou par le Starter Kit (SKSN), qui suivent les exigences de sécurité de la Cnam.
+
+### Contribuer au Design System
+
+Synapse est développé, testé et construit avec :
+
+-   **Node** : 22.23.4 (fixée dans `.nvmrc`, sélectionnée par `nvm use`)
+-   **pnpm** : 10.33.4 (fixée dans le champ `packageManager` de `package.json`)
 
 ## Stack Technique
 
