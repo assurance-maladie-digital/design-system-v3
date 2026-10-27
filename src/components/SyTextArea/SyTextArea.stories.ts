@@ -101,11 +101,21 @@ const meta = {
 			},
 		},
 		color: {
+			type: { name: 'string', required: false },
 			control: { type: 'text' },
 			description: 'Couleur du champ',
 			table: {
 				type: { summary: 'string' },
 				defaultValue: { summary: 'primary' },
+			},
+		},
+		bgColor: {
+			type: { name: 'string', required: false },
+			control: { type: 'text' },
+			description: 'Couleur de fond du champ',
+			table: {
+				type: { summary: 'string' },
+				defaultValue: { summary: 'white' },
 			},
 		},
 		variant: {
@@ -170,12 +180,9 @@ export const Default: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
-		uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Texte"
-		placeholder="Entrez votre texte ici"
-		style="width: 100%"
-	></SyTextArea>
+	/>
 </template>
 				`,
 			},
@@ -183,6 +190,7 @@ export const Default: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('')
 </script>
 				`,
@@ -213,6 +221,7 @@ export const HelpText: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('')
 </script>`,
 			},
@@ -237,7 +246,6 @@ export const Required: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
-		uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Texte requis"
 		:required="true"
@@ -249,6 +257,7 @@ export const Required: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('')
 </script>
 				`,
@@ -279,6 +288,7 @@ export const HideDetails: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('')
 </script>`,
 			},
@@ -328,6 +338,7 @@ export const Clearable: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('Texte initial')
 </script>`,
 			},
@@ -395,6 +406,7 @@ export const AutoGrowCompact: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('')
 </script>`,
 			},
@@ -443,7 +455,6 @@ export const Trim: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
-		uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Trim text area"
 		:trim="true"
@@ -455,6 +466,7 @@ export const Trim: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('')
 </script>
 				`,
@@ -484,7 +496,6 @@ export const ReplaceTabs: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
-	    uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Replace tabs text area"
 		:replace-tabs="4"
@@ -496,6 +507,7 @@ export const ReplaceTabs: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('')
 </script>
 				`,
@@ -515,12 +527,17 @@ const text = ref('')
 
 export const MaxLines: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'La prop `maxLines` ajoute une règle bloquante sur le nombre de lignes. La valeur initiale dépasse 5 lignes : la validation est déclenchée au montage via `validateOnSubmit()` pour afficher l\'erreur dès le chargement.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
-	    uniqueId: 'text-area-unique-id',
+		ref="textAreaRef"
 		v-model="text"
 		label="Max lines text area"
 		:max-lines="5"
@@ -531,8 +548,16 @@ export const MaxLines: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { ref } from 'vue'
-const text = ref('')
+import { nextTick, onMounted, ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
+
+const text = ref('Lorem ipsum dolor sit amet,\\n consectetur adipiscing elit,\\n sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.\\n Ut enim ad minim veniam,\\n quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\\n Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.\\n Excepteur sint occaecat cupidatat non proident,\\n sunt in culpa qui officia deserunt mollit anim id est laborum.')
+const textAreaRef = ref<InstanceType<typeof SyTextArea> | null>(null)
+
+onMounted(async () => {
+	await nextTick()
+	textAreaRef.value?.validateOnSubmit()
+})
 </script>
 				`,
 			},
@@ -583,7 +608,6 @@ export const AutoWrap: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
-	    uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Auto wrap text area"
 		:auto-wrap="50"
@@ -595,6 +619,7 @@ export const AutoWrap: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('')
 </script>
 				`,
@@ -629,7 +654,6 @@ export const Normalize: Story = {
 				name: 'Template',
 				code: `<template>
 	<SyTextArea
-	    uniqueId: 'text-area-unique-id',
 		v-model="text"
 		label="Normalize text area"
 		:normalize="true"
@@ -641,6 +665,7 @@ export const Normalize: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
 const text = ref('')
 </script>
 				`,

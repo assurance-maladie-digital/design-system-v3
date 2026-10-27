@@ -1,18 +1,6 @@
 import { computed, nextTick, onMounted, onUnmounted, ref, type Ref } from 'vue'
 import type { DataTableHeaders, TableColumnHeader } from './types'
 
-// Fonction de throttling simple pour optimiser les performances
-const useThrottleFn = <T extends (...args: unknown[]) => void>(fn: T, delay: number): T => {
-	let lastCall = 0
-	return ((...args: Parameters<T>) => {
-		const now = Date.now()
-		if (now - lastCall >= delay) {
-			lastCall = now
-			return fn(...args)
-		}
-	}) as T
-}
-
 interface UsePinnedColumnsOptions {
 	displayHeaders: Ref<DataTableHeaders[] | undefined>
 	reactiveColumnWidths: Ref<Record<string, number | string>>
@@ -35,8 +23,11 @@ export function usePinnedColumns({
 	tableRef,
 }: UsePinnedColumnsOptions) {
 	const tableWrapperEl = ref<HTMLElement | null>(null)
-	const showPinnedLeftShadow = ref(false)
-	const showPinnedRightShadow = ref(false)
+	// Contenu masqué à gauche / à droite de la zone qui défile horizontalement
+	const canScrollLeft = ref(false)
+	const canScrollRight = ref(false)
+	// Position verticale de la zone qui défile dans `.v-table` (hors en-tête de tableau et pied de page)
+	const scrollArea = ref<{ top: number, height: number } | null>(null)
 
 	// Stocker la référence de la fonction pour éviter les fuites mémoire
 	const updatePinnedShadowsRef = ref<(() => void) | null>(null)
@@ -119,9 +110,25 @@ export function usePinnedColumns({
 		const el = tableWrapperEl.value
 		if (!el) return
 		const max = el.scrollWidth - el.clientWidth
-		showPinnedLeftShadow.value = pinnedMeta.value.totalLeft > 0 && el.scrollLeft > 0
-		showPinnedRightShadow.value = pinnedMeta.value.totalRight > 0 && max > 0 && el.scrollLeft < max - 1
+		canScrollLeft.value = el.scrollLeft > 0
+		canScrollRight.value = max > 0 && el.scrollLeft < max - 1
+		scrollArea.value = { top: el.offsetTop, height: el.clientHeight }
 	}
+
+	// Les colonnes épinglées d'un côté signalent elles-mêmes le contenu masqué de ce côté (ombre de la colonne).
+	// Sans colonne épinglée, un indicateur au bord de la zone qui défile prend le relais.
+	const showPinnedLeftShadow = computed(() => pinnedMeta.value.totalLeft > 0 && canScrollLeft.value)
+	const showPinnedRightShadow = computed(() => pinnedMeta.value.totalRight > 0 && canScrollRight.value)
+	const showScrollLeftIndicator = computed(() => pinnedMeta.value.totalLeft === 0 && canScrollLeft.value)
+	const showScrollRightIndicator = computed(() => pinnedMeta.value.totalRight === 0 && canScrollRight.value)
+
+	const scrollAreaVars = computed((): Record<string, string> => {
+		if (!scrollArea.value) return {}
+		return {
+			'--sy-table-scroll-area-top': `${scrollArea.value.top}px`,
+			'--sy-table-scroll-area-height': `${scrollArea.value.height}px`,
+		}
+	})
 
 	// Fonction pour trouver le wrapper du tableau avec retry
 	const findTableWrapper = (): HTMLElement | null => {
@@ -132,8 +139,19 @@ export function usePinnedColumns({
 	// Initialiser la référence de la fonction
 	updatePinnedShadowsRef.value = updatePinnedShadows
 
-	// Appliquer le throttling pour optimiser les performances (60fps)
-	const updatePinnedShadowsThrottled = useThrottleFn(updatePinnedShadows, 16)
+	// Une mise à jour par frame au plus, toujours exécutée après le dernier événement :
+	// l'état reflète la position finale du défilement.
+	let pendingFrame = 0
+	const updatePinnedShadowsThrottled = () => {
+		if (pendingFrame) return
+		pendingFrame = requestAnimationFrame(() => {
+			pendingFrame = 0
+			updatePinnedShadows()
+		})
+	}
+
+	// Recalcule quand la zone ou son contenu change de taille (chargement des données, colonnes redimensionnées)
+	let resizeObserver: ResizeObserver | null = null
 
 	const pinnedEdgeVars = computed<Record<string, string>>(() => {
 		const { totalLeft, totalRight } = pinnedMeta.value
@@ -164,26 +182,26 @@ export function usePinnedColumns({
 			const cellProps = (h.cellProps ?? {}) as Record<string, unknown>
 			const cellStyle = (cellProps.style ?? {}) as Record<string, string | number>
 
-			const stickyCellStyle: Record<string, string | number> = {
-				position: 'sticky',
-				zIndex: 'var(--sy-table-z-pinned-cell)',
-				background: 'rgb(var(--v-theme-surface))',
-			}
+			const sideClass = left !== undefined
+				? 'sy-table__pinned--left'
+				: 'sy-table__pinned--right'
 
-			const sideClass = left !== undefined ? 'sy-table__pinned--left' : 'sy-table__pinned--right'
-			if (left !== undefined) {
-				stickyCellStyle.left = `${left}px`
-			}
-			else if (right !== undefined) {
-				stickyCellStyle.right = `${right}px`
-			}
+			const offset = left ?? right ?? 0
 
 			return {
 				...h,
 				cellProps: {
 					...cellProps,
-					class: ['sy-table__pinned', sideClass, 'v-data-table-column--fixed', cellProps.class].filter(Boolean),
-					style: { ...cellStyle, ...stickyCellStyle },
+					class: [
+						'sy-table__pinned',
+						sideClass,
+						'v-data-table-column--fixed',
+						cellProps.class,
+					].filter(Boolean),
+					style: {
+						...cellStyle,
+						'--sy-pinned-offset': `${offset}px`,
+					},
 				},
 			}
 		})
@@ -200,6 +218,12 @@ export function usePinnedColumns({
 					if (tableWrapperEl.value && updatePinnedShadowsRef.value) {
 						updatePinnedShadowsRef.value()
 						tableWrapperEl.value.addEventListener('scroll', updatePinnedShadowsThrottled, { passive: true })
+						if (typeof ResizeObserver !== 'undefined') {
+							resizeObserver = new ResizeObserver(updatePinnedShadowsThrottled)
+							resizeObserver.observe(tableWrapperEl.value)
+							const tableEl = tableWrapperEl.value.querySelector('table')
+							if (tableEl) resizeObserver.observe(tableEl)
+						}
 					}
 					if (updatePinnedShadowsRef.value) {
 						window.addEventListener('resize', updatePinnedShadowsThrottled)
@@ -222,15 +246,24 @@ export function usePinnedColumns({
 		if (updatePinnedShadowsRef.value) {
 			window.removeEventListener('resize', updatePinnedShadowsThrottled)
 		}
+		resizeObserver?.disconnect()
+		resizeObserver = null
+		if (pendingFrame) {
+			cancelAnimationFrame(pendingFrame)
+			pendingFrame = 0
+		}
 		updatePinnedShadowsRef.value = null
 	})
 
 	return {
 		showPinnedLeftShadow,
 		showPinnedRightShadow,
+		showScrollLeftIndicator,
+		showScrollRightIndicator,
 		hasPinnedSelectLeft,
 		pinnedMeta,
 		pinnedEdgeVars,
+		scrollAreaVars,
 		displayHeadersWithPinned,
 	}
 }

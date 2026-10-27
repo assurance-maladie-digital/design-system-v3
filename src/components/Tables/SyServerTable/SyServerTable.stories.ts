@@ -57,6 +57,7 @@ export const Default: Story = {
 						:server-items-length="totalUsers"
 						:loading="state === StateEnum.PENDING"
 						suffix="server-default"
+						caption="Liste des utilisateurs"
 						@update:options="fetchData"
 					/>
 				</template>
@@ -173,7 +174,7 @@ export const Default: Story = {
 			{ title: 'Prénom', key: 'firstname' },
 			{ title: 'Email', key: 'email' },
 		],
-		caption: '',
+		caption: 'Liste des utilisateurs',
 		serverItemsLength: 15,
 		suffix: 'server-default',
 		density: 'default',

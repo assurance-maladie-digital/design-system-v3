@@ -103,8 +103,13 @@ describe('SyTable - accessibility (axe)', () => {
 				items,
 			},
 			slots: {
-				'item.actions': (params: { edit: () => void }) =>
-					h('button', { class: 'edit-btn', onClick: () => params.edit() }, 'Éditer'),
+				'item.actions': (params: unknown) => {
+					if (!params || typeof params !== 'object' || !('edit' in params) || typeof params.edit !== 'function') {
+						throw new Error('Missing edit callback in item.actions slot')
+					}
+					const edit = params.edit
+					return h('button', { class: 'edit-btn', onClick: () => edit() }, 'Éditer')
+				},
 			},
 			attachTo: document.body,
 		})
@@ -160,6 +165,10 @@ describe('SyTable - accessibility (axe)', () => {
 		await wrapper.vm.$nextTick()
 
 		expect(wrapper.find('table').attributes('aria-label')).toBeUndefined()
+		expect(wrapper.find('caption').exists()).toBe(false)
+
+		await wrapper.setProps({ caption: '   ' })
+		expect(wrapper.find('caption').exists()).toBe(false)
 
 		wrapper.unmount()
 	})

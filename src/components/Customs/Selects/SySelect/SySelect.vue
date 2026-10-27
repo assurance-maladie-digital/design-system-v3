@@ -23,13 +23,13 @@
 		[key: string]: unknown
 	}
 
-	export type SelectItemValueType = Record<string, unknown> | string | number | null | undefined
-	export type SelectItemArrayType = Array<Record<string, unknown> | string | number>
+	export type SelectItemValueType = Record<string, unknown> | string | number | boolean | null | undefined
+	export type SelectItemArrayType = Array<Record<string, unknown> | string | number | boolean>
 
 	const props = withDefaults(
 		defineProps<{
-			modelValue?: Record<string, unknown> | string | number | null | SelectItemArrayType
-			items?: Array<ItemType | string | number>
+			modelValue?: Record<string, unknown> | string | number | boolean | null | SelectItemArrayType
+			items?: Array<ItemType | string | number | boolean>
 			label?: string
 			menuId?: string
 			outlined?: boolean
@@ -206,6 +206,12 @@
 	// Generate unique menu ID for each component instance to avoid conflicts and validation issues
 	const uniqueMenuId = ref(props.menuId === 'sy-select-menu' ? `sy-select-menu-${useId()}` : props.menuId)
 
+	function getLabelledBy() {
+		const externalLabel = attrs['aria-labelledby']
+		if (typeof externalLabel === 'string' && externalLabel.trim()) return externalLabel.trim()
+		return props.label.trim() ? `${inputId.value}-label` : undefined
+	}
+
 	const rawAriaLabel = computed(() => {
 		const ariaLabel = attrs['aria-label']
 		return typeof ariaLabel === 'string' && ariaLabel.trim().length > 0 ? ariaLabel.trim() : ''
@@ -300,7 +306,7 @@
 
 			const selectedArray = selectedItem.value as SelectItemArrayType
 			let valueToCheck: unknown
-			let valueToStore: Record<string, unknown> | string | number
+			let valueToStore: Record<string, unknown> | string | number | boolean
 
 			if (props.returnObject) {
 				valueToCheck = item[props.valueKey]
@@ -308,7 +314,7 @@
 			}
 			else {
 				valueToCheck = item[props.valueKey]
-				valueToStore = item[props.valueKey] as string | number | Record<string, unknown>
+				valueToStore = item[props.valueKey] as string | number | boolean | Record<string, unknown>
 			}
 
 			// Check if item is already selected
@@ -366,8 +372,8 @@
 	})
 
 	const getPlainItemText = (item: unknown) => {
-		// Handle primitive types (string/number items)
-		if (typeof item === 'string' || typeof item === 'number') {
+		// Handle primitive types (string/number/boolean items)
+		if (typeof item === 'string' || typeof item === 'number' || typeof item === 'boolean') {
 			return String(item)
 		}
 		const itemObj = item as Record<string, unknown>
@@ -464,6 +470,9 @@
 
 	const formattedItems = computed(() => {
 		return props.items.map((item) => {
+			if (typeof item === 'boolean') {
+				return { [props.textKey]: String(item), [props.valueKey]: item }
+			}
 			if (typeof item === 'string' || typeof item === 'number') {
 				return { [props.textKey]: item, [props.valueKey]: item }
 			}
@@ -569,9 +578,9 @@
 	})
 
 	// Function to check if an item is the default option (e.g., "-choisir-")
-	const isDefaultOption = (item: ItemType | string | number) => {
+	const isDefaultOption = (item: ItemType | string | number | boolean) => {
 		// Normalize string/number items to objects for consistent access
-		const itemObj = typeof item === 'string' || typeof item === 'number'
+		const itemObj = typeof item === 'string' || typeof item === 'number' || typeof item === 'boolean'
 			? { [props.textKey]: item, [props.valueKey]: item }
 			: item
 		// Check if this is the first item and has a placeholder-like text
@@ -605,12 +614,12 @@
 	}
 
 	// Function to safely get an item for chip operations
-	const safeChipItem = (item: unknown): Record<string, unknown> | string | number => {
+	const safeChipItem = (item: unknown): Record<string, unknown> | string | number | boolean => {
 		// Handle null/undefined case
 		if (item === null || item === undefined) return ''
 
 		// If it's already a valid type, return it
-		if (typeof item === 'string' || typeof item === 'number') return item
+		if (typeof item === 'string' || typeof item === 'number' || typeof item === 'boolean') return item
 
 		// If it's an object, return it as a Record
 		if (typeof item === 'object') return item as Record<string, unknown>
@@ -993,6 +1002,7 @@
 						v-bind="{
 							...Object.fromEntries(Object.entries($attrs).filter(([key]) => key !== 'display-asterisk')),
 							...initializeActivatorProps(activatorProps),
+							'aria-labelledby': getLabelledBy(),
 						}"
 						@click="toggleMenu"
 						@keydown.enter.prevent="handleEnterKey"
@@ -1126,7 +1136,8 @@
 				class="v-list sy-select-grid"
 				role="listbox"
 				:aria-multiselectable="props.multiple ? 'true' : undefined"
-				:aria-labelledby="`${inputId}-label`"
+				:aria-labelledby="getLabelledBy()"
+				:aria-label="getLabelledBy() ? undefined : accessibleLabel"
 				:title="accessibleLabel"
 				:style="{
 					minWidth: `${textInput?.$el.offsetWidth}px`

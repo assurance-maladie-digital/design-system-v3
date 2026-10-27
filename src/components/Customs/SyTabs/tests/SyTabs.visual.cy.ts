@@ -27,6 +27,20 @@ describe('SyTabs - Visual regression tests', () => {
 		cy.get('.sy-tabs').should('be.visible')
 		cy.matchImageSnapshot('sy-tabs-second-active', cy.get('.sy-tabs'))
 	})
+
+	// Couleur vérifiée directement : l'écart de couleur du texte reste sous le seuil des snapshots.
+	it('displays inactive tabs in grey and the active tab in primary (issue #2688)', () => {
+		cy.mountWithVuetify(SyTabs, {
+			props: { items: defaultItems },
+		})
+
+		cy.get('.sy-tabs__button--active').should('have.css', 'color', 'rgb(12, 65, 154)')
+		cy.get('.sy-tabs__button:not(.sy-tabs__button--active)')
+			.should('have.length', 2)
+			.each(($tab) => {
+				cy.wrap($tab).should('have.css', 'color', 'rgb(84, 88, 89)')
+			})
+	})
 })
 
 // Déclenche :focus-visible via l'option native focus({ focusVisible: true }).

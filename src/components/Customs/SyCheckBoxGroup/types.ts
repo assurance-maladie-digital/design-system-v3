@@ -4,7 +4,7 @@ import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
 export type Option = {
 	label: string
-	value: string | number
+	value: string | number | boolean
 	disabled?: boolean
 	readonly?: boolean
 	id?: string
@@ -26,7 +26,7 @@ export interface SyCheckBoxGroupProps extends FieldValidationProps {
 	hideDetails?: boolean | 'auto'
 	id?: string
 	label?: string
-	modelValue?: (string | number) | (string | number)[] | null
+	modelValue?: (string | number | boolean) | (string | number | boolean)[] | null
 	multiple?: boolean
 	name?: string
 	options?: Option[]
@@ -38,7 +38,7 @@ export interface SyCheckBoxGroupProps extends FieldValidationProps {
  * Props de validation étendant FieldValidationProps du système unifié
  */
 export interface SyCheckBoxGroupValidationProps extends FieldValidationProps {
-	modelValue?: (string | number) | (string | number)[] | null
+	modelValue?: (string | number | boolean) | (string | number | boolean)[] | null
 	multiple?: boolean
 	required?: boolean
 	readonly?: boolean

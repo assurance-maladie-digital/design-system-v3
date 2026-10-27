@@ -68,14 +68,14 @@
 		model.value = props.multiple ? [] : null
 	}
 
-	function isOptionChecked(value: string | number): boolean {
+	function isOptionChecked(value: string | number | boolean): boolean {
 		if (isMultiple.value) {
 			return Array.isArray(model.value) && model.value.includes(value)
 		}
 		return model.value === value
 	}
 
-	function toggleOption(value: string | number): void {
+	function toggleOption(value: string | number | boolean): void {
 		if (props.readonly || props.disabled) return
 
 		if (isMultiple.value) {
@@ -172,7 +172,7 @@
 			<SyCheckbox
 				v-for="opt in props.options"
 				:id="opt.id"
-				:key="opt.value"
+				:key="String(opt.value)"
 				:model-value="isOptionChecked(opt.value)"
 				:label="opt.label"
 				:color="checkboxColor"

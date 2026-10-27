@@ -46,6 +46,7 @@ export const buildCalendarModeComplexDatePickerProps = (
 	period: props.period,
 	useVuetifyValidation: props.useVuetifyValidation,
 	rules: props.rules,
+	validateWithReturnFormat: props.validateWithReturnFormat,
 	warningMessages: props.warningMessages,
 	successMessages: props.successMessages,
 	formRegistration,

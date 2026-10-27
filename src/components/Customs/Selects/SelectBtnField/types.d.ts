@@ -1,11 +1,12 @@
-export type SelectBtnValue =
-	| string
-	| number
-	| Array<string | number | null | undefined>
-	| null
+export type SelectBtnValue
+	= | string
+		| number
+		| boolean
+		| Array<string | number | boolean | null | undefined>
+		| null
 
 export interface SelectBtnItem {
 	text: string
-	value: string | number
+	value: string | number | boolean
 	unique?: boolean
 }

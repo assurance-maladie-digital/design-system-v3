@@ -1,5 +1,5 @@
 import type { ComputedRef } from 'vue'
-import type { ItemType } from '../types'
+import type { ItemType, SelectPrimitive } from '../types'
 
 interface ItemUtilsProps {
 	textKey: string
@@ -18,15 +18,15 @@ export function useItemUtils(props: ItemUtilsProps, formattedItems: ComputedRef<
 		return String(item[props.textKey] ?? '')
 	}
 
-	const getValueKey = (item: ItemType | string | number): string | number =>
+	const getValueKey = (item: ItemType | SelectPrimitive): SelectPrimitive =>
 		typeof item === 'object'
-			? item[props.valueKey] as string | number
+			? item[props.valueKey] as SelectPrimitive
 			: item
 
-	const getStoredValue = (item: ItemType | string | number) =>
+	const getStoredValue = (item: ItemType | SelectPrimitive) =>
 		props.returnObject ? item : getValueKey(item)
 
-	const getChipLabel = (chip: ItemType | string | number): string => {
+	const getChipLabel = (chip: ItemType | SelectPrimitive): string => {
 		if (props.returnObject && typeof chip === 'object' && chip !== null) {
 			return getPlainText(chip as ItemType)
 		}

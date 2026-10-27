@@ -427,6 +427,93 @@ const value = ref('')
 	}),
 }
 
+export const CustomRulesReturnFormat: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Avec `validateWithReturnFormat`, le `validate` d\'une règle personnalisée reçoit la saisie au format `dateFormatReturn` (ici `YYYY-MM-DD`), comme le v-model. Saisissez ou sélectionnez une date en 2024 pour voir l\'erreur. La règle gère les deux types reçus : une chaîne (saisie clavier) et un objet `Date` (sélection calendrier).',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <DatePicker
+    v-model="value"
+    label="Date (JJ/MM/AAAA)"
+    placeholder="JJ/MM/AAAA"
+    format="DD/MM/YYYY"
+    date-format-return="YYYY-MM-DD"
+    validate-with-return-format
+    use-combined-mode
+    :custom-rules="customRules"
+  />
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DatePicker } from '@cnamts/synapse'
+
+const value = ref('')
+const customRules = [
+  {
+    type: 'custom',
+    options: {
+      // Saisie clavier : '2026-10-07' (format dateFormatReturn) ; calendrier : objet Date ; champ vide : null
+      validate: (value: unknown) => {
+        const year = value instanceof Date ? value.getFullYear() : typeof value === 'string' ? Number(value.slice(0, 4)) : null
+        return year !== 2024
+      },
+      message: 'Les dates en 2024 ne sont pas autorisées',
+    },
+  },
+]
+</script>`,
+			},
+		],
+	},
+	args: {
+		label: 'Date (JJ/MM/AAAA)',
+		placeholder: 'JJ/MM/AAAA',
+		format: 'DD/MM/YYYY',
+		dateFormatReturn: 'YYYY-MM-DD',
+		validateWithReturnFormat: true,
+		useCombinedMode: true,
+		customRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: unknown) => {
+						const year = value instanceof Date ? value.getFullYear() : typeof value === 'string' ? Number(value.slice(0, 4)) : null
+						return year !== 2024
+					},
+					message: 'Les dates en 2024 ne sont pas autorisées',
+				},
+			},
+		],
+	},
+	render: args => ({
+		components: { DatePicker },
+		setup() {
+			const value = ref('')
+			return { args, value }
+		},
+		template: `
+			<div class="pa-4">
+				<DatePicker
+					v-model="value"
+					v-bind="args"
+				/>
+				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
+			</div>
+		`,
+	}),
+}
+
 export const NoValidateOnBlur: Story = {
 	parameters: {
 		docs: {

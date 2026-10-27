@@ -30,7 +30,7 @@ export interface UseSyCheckBoxGroupValidationReturn {
  */
 export function useSyCheckBoxGroupValidation(
 	props: SyCheckBoxGroupValidationProps,
-	model: Ref<(string | number) | (string | number)[] | null>,
+	model: Ref<(string | number | boolean) | (string | number | boolean)[] | null>,
 	focused: Ref<boolean>,
 	locales: Ref<{
 		requiredField: (identifier: string | undefined) => string
@@ -43,6 +43,8 @@ export function useSyCheckBoxGroupValidation(
 					options: {
 						message: locales.value.requiredField(props.fieldIdentifier || props.label),
 						fieldIdentifier: props.label,
+						// `false` est un choix valide dans un composant de sélection
+						allowFalse: true,
 					},
 				}]
 			: [],

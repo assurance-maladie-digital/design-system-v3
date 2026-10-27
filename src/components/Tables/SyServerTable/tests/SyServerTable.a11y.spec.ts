@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 
-import { beforeAll, describe, it } from 'vitest'
+import { beforeAll, describe, expect, it } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { h } from 'vue'
 import { axe } from 'vitest-axe'
@@ -34,6 +34,34 @@ describe('SyServerTable - accessibility (axe)', () => {
 			addEventListener: () => {},
 			removeEventListener: () => {},
 			dispatchEvent: () => true,
+		}
+	})
+
+	it('renders only non-empty captions as a direct child of the table', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: { page: 1, itemsPerPage: 5, sortBy: [] },
+				serverItemsLength: items.length,
+				suffix: 'a11y-caption-regression',
+				headers,
+				items,
+			},
+			attachTo: document.body,
+		})
+
+		try {
+			expect(wrapper.find('caption').exists()).toBe(false)
+			await wrapper.setProps({ caption: '   ' })
+			expect(wrapper.find('caption').exists()).toBe(false)
+			await wrapper.setProps({ caption: 'Liste des agents' })
+			expect(wrapper.get('table > caption').text()).toBe('Liste des agents')
+			expect(wrapper.get('table').attributes('aria-label')).toBeUndefined()
+			assertNoA11yViolations(await axe(wrapper.element), 'SyServerTable – caption', { ignoreRules: ['region'] })
+			await wrapper.setProps({ caption: '' })
+			expect(wrapper.find('caption').exists()).toBe(false)
+		}
+		finally {
+			wrapper.unmount()
 		}
 	})
 
@@ -99,8 +127,13 @@ describe('SyServerTable - accessibility (axe)', () => {
 				items,
 			},
 			slots: {
-				'item.actions': (params: { edit: () => void }) =>
-					h('button', { class: 'edit-btn', onClick: () => params.edit() }, 'Éditer'),
+				'item.actions': (params: unknown) => {
+					if (!params || typeof params !== 'object' || !('edit' in params) || typeof params.edit !== 'function') {
+						throw new Error('Missing edit callback in item.actions slot')
+					}
+					const edit = params.edit
+					return h('button', { class: 'edit-btn', onClick: () => edit() }, 'Éditer')
+				},
 			},
 			attachTo: document.body,
 		})

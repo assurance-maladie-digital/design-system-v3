@@ -2,6 +2,7 @@ import {Meta, Canvas, Controls, Source} from '@storybook/addon-docs/blocks';
 import * as DatePickerStories from "./ComplexDatePicker.stories.ts";
 import * as GestionDesFormatsStories from "./gestionDesFormats/GestionDesFormats.stories.ts";
 import * as ValidationStories from "./validation/Validation.stories.ts";
+import '../../../stories/styles/shared.css';
 
 <Meta of={DatePickerStories}/>
 
@@ -16,6 +17,11 @@ import * as ValidationStories from "./validation/Validation.stories.ts";
 {/* a11y-version-start */}
 <p className="a11y-version-badge">Dernière mise à jour accessibilité : V1.1.3</p>
 {/* a11y-version-end */}
+
+<div className="doc-notice" role="note">
+  <p><strong>Composant en maintenance corrective</strong></p>
+  <p>En raison de sa complexité, le DatePicker ne reçoit plus d'évolution fonctionnelle : seules les corrections de bugs sont réalisées. Pour signaler une anomalie, consultez la page <a href="/?path=/docs/démarrer-signaler-une-anomalie--docs">Signaler une anomalie</a>.</p>
+</div>
 
 
 ## Description
@@ -56,6 +62,24 @@ Le composant supporte différents formats de date et détecte automatiquement le
 Les bornes `period.min` et `period.max` doivent rester exprimées dans le même format que la prop `format`, car elles sont fournies directement au calendrier.
 
 <Canvas of={GestionDesFormatsStories.CustomDateFormat}/>
+
+## Règles personnalisées et `dateFormatReturn`
+
+Par défaut, lors d'une saisie au clavier, le `validate` d'une règle `custom` reçoit la date **au format d'affichage** (`format`, ex. `07/10/2026`), même si `dateFormatReturn` est défini.
+
+Pour qu'il reçoive la date **au même format que le v-model** (`dateFormatReturn`, ex. `2026-10-07`), activez la prop `validateWithReturnFormat` :
+
+```vue
+<DatePicker
+  v-model="date"
+  format="DD/MM/YYYY"
+  date-format-return="YYYY-MM-DD"
+  validate-with-return-format
+  :custom-rules="customRules"
+/>
+```
+
+Cette prop est désactivée par défaut : les règles existantes ne sont pas modifiées. Elle n'a d'effet que sur la saisie texte ; en sélection calendrier, `validate` reçoit toujours un objet `Date`, et `null` quand le champ est vide.
 
 ## Mode lecture seule
 
@@ -201,7 +225,7 @@ Le composant expose plusieurs méthodes qui peuvent être utilisées via une ré
 Le composant émet plusieurs événements :
 
 ### update:modelValue
-- **Payload** : `string | string[]` - La nouvelle valeur du champ
+- **Payload** : `string | string[] | null` - La nouvelle valeur du champ. `null` est émis dès que la saisie devient invalide ou incomplète (format invalide, date non parsable, plage incomplète ou saisie effacée) : une saisie incomplète invalide le modèle.
 
 ### closed
 - **Description** : Émis lorsque le calendrier est fermé
@@ -216,4 +240,4 @@ Le composant émet plusieurs événements :
 - **Payload** : `string` - La valeur saisie dans le champ
 
 ### date-selected
-- **Payload** : `string | [string, string] | null` - La valeur sélectionnée, au format de retour du composant
+- **Payload** : `string | [string, string] | null` - La valeur sélectionnée, au format de retour du composant. L'événement n'est émis que lorsqu'une sélection est complète (date unique confirmée ou plage complète) : il n'est plus émis lorsque seule la première borne d'une plage est saisie au clavier.

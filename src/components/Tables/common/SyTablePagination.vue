@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { computed, ref, nextTick, watch, onMounted } from 'vue'
+	import { computed, ref, nextTick, watch, onMounted, useId } from 'vue'
 	import SySelect from '@/components/Customs/Selects/SySelect/SySelect.vue'
 	import SyPagination from '@/components/Customs/SyPagination/SyPagination.vue'
 	import { locales } from './locales'
@@ -20,6 +20,7 @@
 
 	// Reference to the SySelect component
 	const selectRef = ref<InstanceType<typeof SySelect> | null>(null)
+	const itemsPerPageLabelId = `sy-table-items-per-page-${useId()}`
 
 	// Items per page options - standard options and current value
 	const formatedItemsPerPageOptions = computed(() => {
@@ -203,7 +204,10 @@
 		</div>
 
 		<div class="rows-per-page">
-			<span class="rows-per-page-label">{{ locales.pagination.itemsPerPageText }}</span>
+			<span
+				:id="itemsPerPageLabelId"
+				class="rows-per-page-label"
+			>{{ locales.pagination.itemsPerPageText }}</span>
 
 			<SySelect
 				ref="selectRef"
@@ -214,6 +218,7 @@
 				disable-error-handling
 				density="compact"
 				class="rows-per-page-select"
+				:aria-labelledby="itemsPerPageLabelId"
 				:aria-label="locales.pagination.itemsPerPageText"
 				:label="''"
 				style="width: 90px;"

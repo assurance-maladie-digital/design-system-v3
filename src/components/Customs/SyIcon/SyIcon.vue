@@ -37,6 +37,9 @@
 		width?: string
 	}>()
 
+	// Apply "on-*" colors directly as a class, without the "text-" prefix.
+	const isForegroundColor = computed(() => props.color?.startsWith('on-') ?? false)
+
 	const resolvedDecorative = computed(() => props.decorative ?? true)
 
 	// Configuration pour la directive rgaaSvgFix
@@ -85,7 +88,8 @@
 	<VIcon
 		ref="svg"
 		v-rgaa-svg-fix="rgaaSvgFixConfig"
-		:color="props.color"
+		:class="isForegroundColor ? props.color : undefined"
+		:color="isForegroundColor ? undefined : props.color"
 		:size="props.size"
 		:role="props.role"
 		:aria-label="resolvedDecorative ? undefined : props.label"

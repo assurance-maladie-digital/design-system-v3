@@ -108,6 +108,7 @@
 		showSuccessMessages: false,
 		successMessages: null,
 		validateOnModelChange: true,
+		validateWithReturnFormat: false,
 		title: false,
 		warningMessages: null,
 	})
@@ -182,6 +183,7 @@
 		isValidateOnBlur: computed(() => props.isValidateOnBlur),
 		fieldIdentifier: computed(() => props.label || props.placeholder || 'Date'),
 		displayFormat: computed(() => displayFormat.value),
+		returnFormat: computed(() => props.validateWithReturnFormat ? returnFormat.value : undefined),
 		parseDate,
 		hasInteracted,
 		formRegistration: {
@@ -647,6 +649,12 @@
 		emit('update:model-value', val)
 	}
 
+	function emitNullModelIfSet(): void {
+		if (props.modelValue) {
+			emitModel(null)
+		}
+	}
+
 	function syncFromModelValue(modelValue: DateInput | undefined): string {
 		const nextState = resolveDatePickerStateFromModelValue({
 			modelValue,
@@ -826,7 +834,7 @@
 		if (isRange.value) {
 			const [startDate, endDate] = parseRangeInput(clampedValue)
 			if (startDate && endDate) emitRangeModelDates(startDate, endDate)
-			else if (startDate) emitModel(toReturnFormat(startDate))
+			else if (startDate) emitNullModelIfSet()
 		}
 		else {
 			const parsedDate = parseDate(clampedValue, displayFormat.value)
@@ -839,11 +847,13 @@
 	async function emitCompletedSingleInput(formattedValue: string, fallbackDisplayText = formattedValue): Promise<void> {
 		const formatValidationResult = validateDateFormatForSingleOrRange(formattedValue)
 		if (!formatValidationResult.isValid) {
+			emitNullModelIfSet()
 			return
 		}
 
 		const parsedDate = parseDate(formattedValue, displayFormat.value)
 		if (!parsedDate) {
+			emitNullModelIfSet()
 			return
 		}
 
@@ -860,6 +870,7 @@
 			const rangeError = getRangeValidationError(startDate, endDate)
 			if (rangeError) {
 				failWithDisplayedError(rangeError, { replace: true })
+				emitNullModelIfSet()
 			}
 			else {
 				emitRangeModelDates(startDate, endDate)
@@ -869,12 +880,13 @@
 		}
 
 		if (startDate) {
-			emit('date-selected', formatDate(startDate, returnFormat.value))
 			clearValidation()
+			emitNullModelIfSet()
 			return
 		}
 
 		clearValidation()
+		emitNullModelIfSet()
 	}
 
 	async function handleSingleOverwriteInput(): Promise<void> {
@@ -883,6 +895,7 @@
 
 		if (!isComplete) {
 			clearValidation()
+			emitNullModelIfSet()
 			return
 		}
 
@@ -927,21 +940,17 @@
 		const rangeError = getRangeValidationError(dates[0], dates[1])
 		if (rangeError) {
 			failWithDisplayedError(rangeError)
+			emitNullModelIfSet()
 		}
 	}
 
-	function handlePartialRangeSelection(dates: [Date | null, Date | null], justCompletedFirstDate?: boolean): void {
-		if (justCompletedFirstDate && dates[0]) {
-			emit('date-selected', toReturnFormat(dates[0]))
-		}
+	function handlePartialRangeSelection(): void {
+		emitNullModelIfSet()
 	}
 
 	function clearRangeSelection(): void {
 		selectedDates.value = null
-
-		if (props.modelValue !== null) {
-			emitModel(null)
-		}
+		emitNullModelIfSet()
 	}
 
 	function applyRangeInputResult(
@@ -958,7 +967,7 @@
 				handleCompletedRangeSelection(result.dates)
 			}
 			else {
-				handlePartialRangeSelection(result.dates, result.justCompletedFirstDate)
+				handlePartialRangeSelection()
 			}
 		}
 		else {
@@ -1019,8 +1028,9 @@
 			return
 		}
 
-		// For incomplete dates, clear validation but don't emit model value
+		// For incomplete dates, clear validation and reset the emitted model
 		clearValidation()
+		emitNullModelIfSet()
 	}
 
 	async function handleDisabledInputChange(newValue: string, oldValue: string | undefined): Promise<boolean> {
@@ -1169,7 +1179,7 @@
 		if (isRange.value) {
 			const [startDate, endDate] = parseRangeInput(inputValue.value)
 			if (startDate && endDate) emitRangeModelDates(startDate, endDate)
-			else if (startDate) emit('date-selected', toReturnFormat(startDate))
+			else if (startDate) emitNullModelIfSet()
 		}
 		else {
 			const parsedDate = parseDate(inputValue.value, displayFormat.value)
@@ -1306,6 +1316,9 @@
 		warnings: readonlyState(warningMessages),
 		successes: readonlyState(successMessages),
 		hasInput,
+		get displayValue() {
+			return inputValue.value
+		},
 		focus() {
 			const el = getNativeInputElement()
 			el?.focus({ preventScroll: true })

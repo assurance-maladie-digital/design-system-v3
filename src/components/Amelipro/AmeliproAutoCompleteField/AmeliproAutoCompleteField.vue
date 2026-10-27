@@ -1,5 +1,5 @@
 <script setup lang="ts">
-/* eslint-disable vuejs-accessibility/label-has-for */
+	/* eslint-disable vuejs-accessibility/label-has-for */
 	import type { AutoCompleteItem, InputAutoCompleteField } from './types'
 	import type { IndexedObject, ValidateOnType } from '../types'
 	import { computed, onMounted, type PropType, ref } from 'vue'

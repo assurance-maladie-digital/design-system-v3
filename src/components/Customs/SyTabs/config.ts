@@ -9,7 +9,7 @@ export const config = {
 		'show-arrows': true,
 	},
 	tab: {
-		'base-color': 'rgb(var(--v-theme-primary))',
+		'base-color': 'rgb(var(--v-theme-grey-base))',
 		'active-color': 'rgb(var(--v-theme-primary))',
 		'slider-color': 'rgb(var(--v-theme-primary))',
 		'ripple': false,

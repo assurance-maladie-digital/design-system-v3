@@ -946,4 +946,80 @@ describe('SelectBtnField', () => {
 			wrapper.unmount()
 		})
 	})
+
+	it('keeps a selected 0 when keyboard focus moves to another option (issue #2683)', async () => {
+		const wrapper = mount(SelectBtnField, {
+			props: {
+				modelValue: 0,
+				label: 'Niveau',
+				items: [
+					{ text: 'Zéro', value: 0 },
+					{ text: 'Un', value: 1 },
+					{ text: 'Deux', value: 2 },
+				],
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.findAll('[role="option"]')[2]!.trigger('focus')
+		await flushPromises()
+
+		expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+		expect(wrapper.findAll('[role="option"]')[0]!.attributes('aria-selected')).toBe('true')
+
+		wrapper.unmount()
+	})
+
+	it('still auto-selects on keyboard focus when the model is an empty string (issue #2683)', async () => {
+		const wrapper = mount(SelectBtnField, {
+			props: {
+				modelValue: '',
+				label: 'Niveau',
+				items: [
+					{ text: 'Un', value: 1 },
+					{ text: 'Deux', value: 2 },
+				],
+			},
+			attachTo: document.body,
+		})
+
+		await wrapper.findAll('[role="option"]')[1]!.trigger('focus')
+		await flushPromises()
+
+		expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([2])
+		wrapper.unmount()
+	})
+
+	describe('boolean values (issue #2683)', () => {
+		const booleanItems = [
+			{ text: 'Vrai', value: true },
+			{ text: 'Faux', value: false },
+		]
+
+		it('selects an option of value false', async () => {
+			const wrapper = mount(SelectBtnField, {
+				props: { modelValue: null, label: 'Debug', items: booleanItems },
+				attachTo: document.body,
+			})
+
+			await wrapper.findAll('[role="option"]')[1]!.trigger('click')
+			await flushPromises()
+
+			expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([false])
+			wrapper.unmount()
+		})
+
+		it('accepts false as a valid choice when required', async () => {
+			const wrapper = mount(SelectBtnField, {
+				props: { modelValue: false, label: 'Debug', items: booleanItems, required: true },
+				attachTo: document.body,
+			})
+
+			expect(await wrapper.vm.validateOnSubmit()).toBe(true)
+			await flushPromises()
+			expect(wrapper.text()).not.toContain('requis')
+			expect(wrapper.findAll('[role="option"]')[1]!.attributes('aria-selected')).toBe('true')
+			wrapper.unmount()
+		})
+	})
 })

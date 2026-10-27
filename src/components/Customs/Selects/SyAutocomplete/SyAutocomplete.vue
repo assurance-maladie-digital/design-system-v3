@@ -8,8 +8,9 @@
 	import { useSyAutocompleteValidation } from './composables/useSyAutocompleteValidation'
 	import { locales as defaultLocales } from './locales'
 	import { useLocales } from '@/composables/useLocales'
+	import { isEmptySelectValue } from '@/utils/functions/isEmptySelectValue'
 	import type { DeepPartial } from '@/utils/locales/mergeLocales'
-	import type { ItemType, SelectArray, SelectValue } from './types'
+	import type { ItemType, SelectArray, SelectPrimitive, SelectValue } from './types'
 	import { ariaManager } from './utils/ariaManager'
 	import { useItemUtils } from './utils/useItemUtils'
 	import { useSyAutocompleteKeyboard } from './utils/useKeyboardHandler'
@@ -144,7 +145,7 @@
 	const syncSearchFromValue = () => {
 		if (props.multiple) return
 		suppressMenuOpen.value = true
-		if (!selected.value) {
+		if (isEmptySelectValue(selected.value)) {
 			search.value = ''
 			return
 		}
@@ -162,7 +163,7 @@
 		})
 	})
 
-	const selectItem = (item: ItemType | string | number | null | undefined) => {
+	const selectItem = (item: ItemType | SelectPrimitive | null | undefined) => {
 		markInteracted()
 		if (item === null || item === undefined) {
 			clearValidation()
@@ -226,7 +227,7 @@
 	})
 
 	const isItemSelected = (item: ItemType) => {
-		if (!selected.value) return false
+		if (isEmptySelectValue(selected.value)) return false
 		if (props.multiple && Array.isArray(selected.value)) {
 			return selected.value.some(sel => props.returnObject ? (sel as ItemType)[props.valueKey] === item[props.valueKey] : sel === item[props.valueKey])
 		}
@@ -242,9 +243,10 @@
 	}
 
 	const getChipKey = (
-		item: ItemType | string | number,
+		item: ItemType | SelectPrimitive,
 		index: number,
 	): string | number => {
+		if (typeof item === 'boolean') return String(item)
 		if (typeof item !== 'object') return item
 
 		const raw = item?.[props.valueKey]

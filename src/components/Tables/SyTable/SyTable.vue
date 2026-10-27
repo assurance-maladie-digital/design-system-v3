@@ -259,9 +259,12 @@
 	const {
 		showPinnedLeftShadow,
 		showPinnedRightShadow,
+		showScrollLeftIndicator,
+		showScrollRightIndicator,
 		hasPinnedSelectLeft,
 		pinnedMeta,
 		pinnedEdgeVars,
+		scrollAreaVars,
 		displayHeadersWithPinned,
 	} = usePinnedColumns({
 		displayHeaders,
@@ -308,11 +311,13 @@
 				'sy-table--striped': props.striped,
 				'sy-table--pinned-left-shadow': showPinnedLeftShadow,
 				'sy-table--pinned-right-shadow': showPinnedRightShadow,
+				'sy-table--scroll-left-indicator': showScrollLeftIndicator,
+				'sy-table--scroll-right-indicator': showScrollRightIndicator,
 				'sy-table--pinned-select-left': hasPinnedSelectLeft,
 				'sy-table--select-single': props.showSelectSingle,
 			},
 		]"
-		:style="pinnedEdgeVars"
+		:style="[pinnedEdgeVars, scrollAreaVars]"
 	>
 		<!-- ARIA status region for row count announcements -->
 		<div
@@ -365,8 +370,8 @@
 			<!-- `top` plaçait la légende hors du tableau : non associée (RGAA 5.4). -->
 			<template #colgroup>
 				<caption
+					v-if="props.caption.trim()"
 					class="text-subtitle-1 text-center pa-4"
-					:class="{ 'd-sr-only': props.caption === '' }"
 				>
 					{{ props.caption }}
 				</caption>
@@ -664,12 +669,6 @@
 	@include clickable-row-styles;
 }
 
-@mixin striped-rows {
-	.v-table tbody tr:nth-child(even) {
-		background-color: rgba(var(--v-theme-primary), 0.05);
-	}
-}
-
 .sy-table--striped :deep() {
 	@include striped-rows;
 }
@@ -678,59 +677,6 @@
 	max-width: fit-content;
 }
 
-.sy-table :deep(.sy-table__pinned) {
-	box-shadow: none;
-	opacity: 1 !important;
-}
-
-.sy-table--pinned-left-shadow :deep(.sy-table__pinned--left) {
-	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6);
-}
-
-.sy-table--pinned-right-shadow :deep(.sy-table__pinned--right) {
-	box-shadow: -2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6);
-}
-
-.sy-table--pinned-select-left :deep(.v-data-table__th--select),
-.sy-table--pinned-select-left :deep(.v-data-table__td--select-row) {
-	opacity: 1 !important;
-}
-
-.sy-table--pinned-select-left :deep(.v-data-table__th--select) {
-	position: sticky;
-	left: 0;
-	z-index: 5;
-	background: var(--sy-table-header-bg-pinned);
-}
-
-.sy-table--select-single.sy-table--pinned-select-left :deep(.v-data-table__th--select) {
-	box-shadow: none !important;
-	background: transparent !important;
-}
-
-/* stylelint-disable @stylistic/max-line-length */
-.sy-table--select-single.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-table__wrapper > table > thead > tr > th:first-child) {
-	box-shadow: none !important;
-	background: transparent !important;
-}
-
-.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > td:first-child),
-.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
-.sy-table--pinned-select-left :deep(.v-data-table__tbody .v-data-table__tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
-.sy-table--pinned-select-left :deep(.v-data-table__tbody tr:not(.v-data-table-rows-loading) > td:first-child) {
-	position: sticky !important;
-	left: 0 !important;
-	z-index: 3;
-	background: rgb(var(--v-theme-surface)) !important;
-}
-
-.sy-table--pinned-left-shadow.sy-table--pinned-select-left:not(.sy-table--select-single) :deep(.v-data-table__th--select),
-.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > td:first-child),
-.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-table__wrapper > table > tbody > tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
-.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-data-table__tbody .v-data-table__tr:not(.v-data-table-rows-loading) > .v-data-table__td:first-child),
-.sy-table--pinned-left-shadow.sy-table--pinned-select-left :deep(.v-data-table__tbody tr:not(.v-data-table-rows-loading) > td:first-child) {
-	box-shadow: 2px 0 6px -4px rgba(var(--v-theme-grey-base), 0.6);
-}
-/* stylelint-enable @stylistic/max-line-length */
-
+@include pinned-styles('sy-table');
+@include scroll-indicator-styles('sy-table');
 </style>

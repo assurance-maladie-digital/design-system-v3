@@ -353,4 +353,39 @@ describe('SyCheckBoxGroup', () => {
 		// Devrait afficher l'erreur car champ vide
 		expect(wrapper.text()).toContain('requis')
 	})
+
+	describe('boolean values (issue #2683)', () => {
+		const booleanOptions = [
+			{ label: 'Vrai', value: true, id: 'opt-true' },
+			{ label: 'Faux', value: false, id: 'opt-false' },
+		]
+
+		it('emits false when the option of value false is checked (single)', async () => {
+			const wrapper = mount(SyCheckBoxGroup, {
+				props: {
+					'modelValue': null,
+					'onUpdate:modelValue': (value: unknown) => wrapper.setProps({ modelValue: value as boolean | null }),
+					'options': booleanOptions,
+				},
+			})
+
+			await wrapper.findAllComponents(SyCheckbox)[1]!.find('input').setValue(true)
+
+			expect(wrapper.emitted('update:modelValue')?.at(-1)).toEqual([false])
+			expect(wrapper.findAll('input[type="checkbox"]')[1]!.element.checked).toBe(true)
+		})
+
+		it.each([
+			{ mode: 'single', multiple: false, modelValue: false },
+			{ mode: 'multiple', multiple: true, modelValue: [false] },
+		])('accepts false as a valid choice when required ($mode)', async ({ multiple, modelValue }) => {
+			const wrapper = mount(SyCheckBoxGroup, {
+				props: { label: 'Debug', options: booleanOptions, required: true, multiple, modelValue },
+			})
+
+			expect(await wrapper.vm.validateOnSubmit()).toBe(true)
+			await nextTick()
+			expect(wrapper.text()).not.toContain('requis')
+		})
+	})
 })

@@ -10,6 +10,29 @@ const meta: Meta<typeof SyTextArea> = {
 	component: SyTextArea,
 	parameters: {
 		layout: 'fullscreen',
+		controls: {
+			exclude: ['validateOn'],
+		},
+	},
+	argTypes: {
+		color: {
+			type: { name: 'string', required: false },
+			control: { type: 'text' },
+			description: 'Couleur du champ',
+			table: {
+				type: { summary: 'string' },
+				defaultValue: { summary: 'primary' },
+			},
+		},
+		bgColor: {
+			type: { name: 'string', required: false },
+			control: { type: 'text' },
+			description: 'Couleur de fond du champ',
+			table: {
+				type: { summary: 'string' },
+				defaultValue: { summary: 'white' },
+			},
+		},
 	},
 	args: {
 		'onUpdate:modelValue': fn(),
@@ -56,7 +79,7 @@ import { onMounted, ref } from 'vue'
 import { SyTextArea } from '@cnamts/synapse'
 
 const value = ref('Ce texte est trop long et provoque une erreur.')
-const textAreaRef = ref(null)
+const textAreaRef = ref<InstanceType<typeof SyTextArea> | null>(null)
 
 onMounted(() => {
   textAreaRef.value?.validateOnSubmit()
@@ -106,7 +129,7 @@ export const WithWarning: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Les règles d\'alerte (`customWarningRules`) sont non bloquantes : le formulaire peut être soumis même si elles échouent.',
+				story: 'Les règles d\'alerte (`customWarningRules`) sont non bloquantes : le formulaire peut être soumis même si elles échouent. La validation est déclenchée au montage via `validateOnSubmit()` pour afficher l\'alerte dès le chargement.',
 			},
 		},
 		sourceCode: [
@@ -129,6 +152,21 @@ export const WithWarning: Story = {
     ]"
   />
 </template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
+
+const value = ref('Court.')
+const textAreaRef = ref<InstanceType<typeof SyTextArea> | null>(null)
+
+onMounted(() => {
+  textAreaRef.value?.validateOnSubmit()
+})
+</script>`,
 			},
 		],
 	},
@@ -173,7 +211,7 @@ export const WithSuccess: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Les règles de succès (`customSuccessRules`) affichent un message positif quand la valeur est valide.',
+				story: 'Les règles de succès (`customSuccessRules`) affichent un message positif quand la valeur est valide. La validation est déclenchée au montage via `validateOnSubmit()` pour afficher le succès dès le chargement.',
 			},
 		},
 		sourceCode: [
@@ -197,6 +235,21 @@ export const WithSuccess: Story = {
     ]"
   />
 </template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
+
+const value = ref('Voici une description bien détaillée du problème rencontré.')
+const textAreaRef = ref<InstanceType<typeof SyTextArea> | null>(null)
+
+onMounted(() => {
+  textAreaRef.value?.validateOnSubmit()
+})
+</script>`,
 			},
 		],
 	},
@@ -242,7 +295,7 @@ export const NoValidateOnBlur: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Avec `isValidateOnBlur: false`, la validation se déclenche **immédiatement** dès que la valeur change. Dans cette story, l\'état de validation est volontairement conservé uniquement pour les changements déclenchés par les boutons. Une saisie directe dans le textarea met donc à jour la valeur, puis réinitialise aussitôt les messages et l\'état visuel.',
+				story: 'Avec `isValidateOnBlur: false`, la validation se déclenche **immédiatement** à chaque modification de la valeur, qu\'elle provienne de la saisie ou des boutons. La perte de focus ne déclenche pas de validation supplémentaire et conserve le résultat affiché. Le bouton « Réinitialiser » vide le champ et efface son état de validation avec `clearField()`.',
 			},
 		},
 		sourceCode: [
@@ -253,7 +306,7 @@ export const NoValidateOnBlur: Story = {
   <div class="d-flex flex-column ga-4 pa-4">
     <SyTextArea
       ref="textAreaRef"
-      :model-value="value"
+      v-model="value"
       label="Description"
       :is-validate-on-blur="false"
       :show-success-messages="true"
@@ -265,12 +318,11 @@ export const NoValidateOnBlur: Story = {
           successMessage: 'Le contenu est valide.'
         }
       }]"
-      @update:model-value="handleManualChange"
     />
     <div class="d-flex ga-4 mt-2">
-      <VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('Contenu interdit')">Définir une valeur invalide</VBtn>
-      <VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('Contenu valide')">Définir une valeur valide</VBtn>
-      <VBtn @mousedown.prevent @click="applyButtonValue('')">Réinitialiser</VBtn>
+      <VBtn color="primary" class="mr-1" @click="value = 'Contenu interdit'">Définir une valeur invalide</VBtn>
+      <VBtn color="primary" class="mr-1" @click="value = 'Contenu valide'">Définir une valeur valide</VBtn>
+      <VBtn @click="reset">Réinitialiser</VBtn>
     </div>
   </div>
 </template>`,
@@ -279,27 +331,15 @@ export const NoValidateOnBlur: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { nextTick, ref } from 'vue'
+import { ref } from 'vue'
 import { SyTextArea } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 
 const value = ref('')
-const textAreaRef = ref(null)
-const isButtonDrivenChange = ref(false)
+const textAreaRef = ref<InstanceType<typeof SyTextArea> | null>(null)
 
-const handleManualChange = async (newValue) => {
-  value.value = newValue
-  if (isButtonDrivenChange.value) {
-    isButtonDrivenChange.value = false
-    return
-  }
-  await nextTick()
-  textAreaRef.value?.clearValidation()
-}
-
-const applyButtonValue = (newValue) => {
-  isButtonDrivenChange.value = true
-  value.value = newValue
+const reset = () => {
+  textAreaRef.value?.clearField()
 }
 </script>`,
 			},
@@ -315,31 +355,19 @@ const applyButtonValue = (newValue) => {
 		components: { SyTextArea, VBtn },
 		setup() {
 			const value = ref('')
-			const textAreaRef = ref<{ clearValidation: () => void } | null>(null)
-			const isButtonDrivenChange = ref(false)
+			const textAreaRef = ref<{ clearField: () => void } | null>(null)
 
-			const handleManualChange = async (newValue: string) => {
-				value.value = newValue
-				if (isButtonDrivenChange.value) {
-					isButtonDrivenChange.value = false
-					return
-				}
-				await nextTick()
-				textAreaRef.value?.clearValidation()
+			const reset = () => {
+				textAreaRef.value?.clearField()
 			}
 
-			const applyButtonValue = (newValue: string) => {
-				isButtonDrivenChange.value = true
-				value.value = newValue
-			}
-
-			return { args, value, textAreaRef, handleManualChange, applyButtonValue }
+			return { args, value, textAreaRef, reset }
 		},
 		template: `
 			<div class="d-flex flex-column ga-4 pa-4">
 				<SyTextArea
 					ref="textAreaRef"
-					:model-value="value"
+					v-model="value"
 					v-bind="args"
 					:custom-rules="[{
 						type: 'custom',
@@ -349,12 +377,11 @@ const applyButtonValue = (newValue) => {
 							successMessage: 'Le contenu est valide.'
 						}
 					}]"
-					@update:model-value="handleManualChange"
 				/>
 				<div class="d-flex ga-4 mt-2">
-					<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('Contenu interdit')">Définir une valeur invalide</VBtn>
-					<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('Contenu valide')">Définir une valeur valide</VBtn>
-					<VBtn @mousedown.prevent @click="applyButtonValue('')">Réinitialiser</VBtn>
+					<VBtn color="primary" class="mr-1" @click="value = 'Contenu interdit'">Définir une valeur invalide</VBtn>
+					<VBtn color="primary" class="mr-1" @click="value = 'Contenu valide'">Définir une valeur valide</VBtn>
+					<VBtn @click="reset">Réinitialiser</VBtn>
 				</div>
 			</div>
 		`,
@@ -365,9 +392,65 @@ export const DisableErrorHandling: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Avec `disableErrorHandling: true`, les messages d\'erreur ne sont pas affichés même si des règles échouent. L\'état visuel reste inchangé.',
+				story: 'Avec `disableErrorHandling: true`, les messages d\'erreur ne sont pas affichés même si des règles échouent. L\'état visuel reste inchangé. Les deux champs, vides et requis, sont validés au montage via `validateOnSubmit()` : seul le premier affiche l\'erreur.',
 			},
 		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+  <div class="pa-4 d-flex flex-column ga-6">
+    <div>
+      <p class="text-subtitle-2 mb-2">Avec gestion des erreurs (défaut)</p>
+      <SyTextArea
+        ref="textAreaRef1"
+        v-model="valueWithHandling"
+        label="Description"
+        :custom-rules="customRules"
+      />
+    </div>
+    <div>
+      <p class="text-subtitle-2 mb-2">Sans gestion des erreurs (disableErrorHandling)</p>
+      <SyTextArea
+        ref="textAreaRef2"
+        v-model="valueWithout"
+        label="Description"
+        :custom-rules="customRules"
+        disable-error-handling
+      />
+    </div>
+  </div>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { nextTick, onMounted, ref } from 'vue'
+import { SyTextArea } from '@cnamts/synapse'
+
+const valueWithHandling = ref('')
+const valueWithout = ref('')
+
+const customRules = [
+  {
+    type: 'required',
+    options: {},
+  },
+]
+
+const textAreaRef1 = ref<InstanceType<typeof SyTextArea> | null>(null)
+const textAreaRef2 = ref<InstanceType<typeof SyTextArea> | null>(null)
+
+onMounted(async () => {
+  await nextTick()
+  textAreaRef1.value?.validateOnSubmit()
+  textAreaRef2.value?.validateOnSubmit()
+})
+</script>`,
+			},
+		],
 	},
 	render: () => ({
 		components: { SyTextArea },
@@ -537,7 +620,7 @@ import { SyTextArea } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
 const value = ref('')
-const textAreaRef = ref(null)
+const textAreaRef = ref<InstanceType<typeof SyTextArea> | null>(null)
 
 async function onSubmit() {
   const isValid = await textAreaRef.value?.validateOnSubmit()
@@ -597,7 +680,7 @@ export const SyFormVuetifyValidation: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Validation native Vuetify (`useVuetifyValidation`) intégrée dans `SyForm`. Les règles sont définies au format Vuetify : des fonctions retournant `true` ou un message d\'erreur.',
+				story: 'Validation native Vuetify (`useVuetifyValidation`) intégrée dans `SyForm`. Les règles sont définies au format Vuetify : des fonctions retournant `true` ou un message d\'erreur. Le champ reste neutre au chargement ; les règles sont évaluées à la perte de focus (`isValidateOnBlur`, actif par défaut) puis à la soumission, que `SyForm` déclenche via la validation du formulaire.',
 			},
 		},
 		sourceCode: [
@@ -610,7 +693,6 @@ export const SyFormVuetifyValidation: Story = {
       v-model="value"
       label="Description"
       use-vuetify-validation
-      validate-on="submit"
       :show-success-messages="false"
       :rules="[v => !!v || 'Ce champ est requis']"
       class="mb-4"
@@ -643,7 +725,6 @@ function onSubmit(event: { isValid: boolean }) {
 	args: {
 		'label': 'Description',
 		'useVuetifyValidation': true,
-		'validateOn': 'submit',
 		'showSuccessMessages': false,
 		'onUpdate:modelValue': fn(),
 	},
@@ -686,7 +767,7 @@ export const VFormVuetifyValidation: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Validation native Vuetify (`useVuetifyValidation`) intégrée dans `VForm`. Les règles sont définies au format Vuetify : des fonctions retournant `true` ou un message d\'erreur.',
+				story: 'Validation native Vuetify (`useVuetifyValidation`) intégrée dans `VForm`. Les règles sont définies au format Vuetify : des fonctions retournant `true` ou un message d\'erreur. Le champ reste neutre au chargement ; les règles sont évaluées à la perte de focus (`isValidateOnBlur`, actif par défaut) puis à la soumission, qui appelle `form.validate()`.',
 			},
 		},
 		sourceCode: [
@@ -699,7 +780,6 @@ export const VFormVuetifyValidation: Story = {
       v-model="value"
       label="Description"
       use-vuetify-validation
-      validate-on="submit"
       :show-success-messages="false"
       :rules="[v => !!v || 'Ce champ est requis']"
       class="mb-4"
@@ -734,7 +814,6 @@ async function onSubmit() {
 	args: {
 		'label': 'Description',
 		'useVuetifyValidation': true,
-		'validateOn': 'submit',
 		'showSuccessMessages': false,
 		'onUpdate:modelValue': fn(),
 	},
