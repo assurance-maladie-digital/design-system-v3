@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-19T14:41:12.558Z",
+  "date": "2026-10-27T16:15:46.272Z",
   "totalCount": 76,
   "results": [
     {
@@ -1629,11 +1629,16 @@
       "componentName": "Customs/Selects/SelectBtnField",
       "storybookTitle": "Composants/Formulaires/Selects/SelectBtnField",
       "status": "actif",
-      "functionalVersion": "1.2.0",
-      "functionalDate": "15/10/2026",
+      "functionalVersion": "1.2.1",
+      "functionalDate": "23/10/2026",
       "a11yVersion": "1.1.6",
       "a11yDate": "17/09/2026",
       "commits": [
+        {
+          "date": "2026-10-23",
+          "message": "SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)",
+          "version": "1.2.1"
+        },
         {
           "date": "2026-10-15",
           "message": "SyForm: add tests page on sandbox + fixes (#2616)",
@@ -1706,6 +1711,31 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "886b13bece06b7abdd6b7dadd10264080f022557",
+          "date": "2026-10-23 15:21:56 +0200",
+          "dateFr": "23/10/2026",
+          "message": "SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)",
+          "version": "1.2.1",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
+        {
+          "hash": "0dbf435d01af85b89bcf8390246623a136b2bf40",
+          "date": "2026-10-21 09:54:10 +0200",
+          "dateFr": "21/10/2026",
+          "message": "SelectBtnField: standardize stories with v-bind pattern and add action tracking (#2676)",
+          "version": "1.2.1",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false,
+          "labels": [
+            "Documentation"
+          ]
+        },
         {
           "hash": "99dd21e66e143bda73bf5d60d7cc258bf80fda35",
           "date": "2026-09-17 14:05:01 +0200",
@@ -1860,11 +1890,16 @@
       "componentName": "Customs/Selects/SyAutocomplete",
       "storybookTitle": "Composants/Formulaires/Selects/SyAutocomplete",
       "status": "actif",
-      "functionalVersion": "1.2.0",
-      "functionalDate": "15/10/2026",
+      "functionalVersion": "1.2.1",
+      "functionalDate": "23/10/2026",
       "a11yVersion": "1.0.27",
       "a11yDate": "13/05/2026",
       "commits": [
+        {
+          "date": "2026-10-23",
+          "message": "SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)",
+          "version": "1.2.1"
+        },
         {
           "date": "2026-10-15",
           "message": "SyForm: add tests page on sandbox + fixes (#2616)",
@@ -1984,14 +2019,20 @@
           "date": "2026-03-18",
           "message": "Autocomplete : add custom value on chips mode (#1984)",
           "version": "1.0.23"
-        },
-        {
-          "date": "2026-03-17",
-          "message": "fix  clear chips (#1982)",
-          "version": "1.0.23"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "886b13bece06b7abdd6b7dadd10264080f022557",
+          "date": "2026-10-23 15:21:56 +0200",
+          "dateFr": "23/10/2026",
+          "message": "SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)",
+          "version": "1.2.1",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "7dab36881ad0d0ba95dcbbff4810c1f7d34d72f5",
           "date": "2026-08-12 16:12:41 +0200",
@@ -2330,11 +2371,16 @@
       "componentName": "Customs/Selects/SySelect",
       "storybookTitle": "Composants/Formulaires/Selects/SySelect",
       "status": "actif",
-      "functionalVersion": "1.2.0",
-      "functionalDate": "15/10/2026",
-      "a11yVersion": "1.1.3",
-      "a11yDate": "22/07/2026",
+      "functionalVersion": "1.2.1",
+      "functionalDate": "23/10/2026",
+      "a11yVersion": "1.2.1",
+      "a11yDate": "22/10/2026",
       "commits": [
+        {
+          "date": "2026-10-23",
+          "message": "SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)",
+          "version": "1.2.1"
+        },
         {
           "date": "2026-10-15",
           "message": "SyForm: add tests page on sandbox + fixes (#2616)",
@@ -2454,14 +2500,20 @@
           "date": "2026-03-10",
           "message": "SySelect: fix de la navigation clavier (#1920)",
           "version": "1.0.22"
-        },
-        {
-          "date": "2026-02-11",
-          "message": "Fix/sy select display (#1815)",
-          "version": "1.0.20"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "b6203901c9616bf60df6cefd3e13e901b46791cb",
+          "date": "2026-10-22 16:48:50 +0200",
+          "dateFr": "22/10/2026",
+          "message": "chore: remove study files and fix accessibility issues in tables and selects (#2686)",
+          "version": "1.2.1",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
           "date": "2026-08-26 13:27:43 +0200",
@@ -3115,11 +3167,16 @@
       "componentName": "Customs/SyCheckBoxGroup",
       "storybookTitle": "Composants/Formulaires/SyCheckBoxGroup",
       "status": "actif",
-      "functionalVersion": "1.2.0",
-      "functionalDate": "01/10/2026",
+      "functionalVersion": "1.2.1",
+      "functionalDate": "23/10/2026",
       "a11yVersion": "1.0.21",
       "a11yDate": "23/02/2026",
       "commits": [
+        {
+          "date": "2026-10-23",
+          "message": "SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)",
+          "version": "1.2.1"
+        },
         {
           "date": "2026-10-01",
           "message": "SyCheckBoxGroup: add color styling for error, warning, and success states on selection control input (#2603)",
@@ -3300,11 +3357,16 @@
       "componentName": "Customs/SyIcon",
       "storybookTitle": "Composants/Données/SyIcon",
       "status": "actif",
-      "functionalVersion": "1.1.4",
-      "functionalDate": "25/08/2026",
+      "functionalVersion": "1.2.1",
+      "functionalDate": "21/10/2026",
       "a11yVersion": "1.1.6",
       "a11yDate": "24/09/2026",
       "commits": [
+        {
+          "date": "2026-10-21",
+          "message": "FileList: correction bug de couleur picto du SyIcon (#2672)",
+          "version": "1.2.1"
+        },
         {
           "date": "2026-08-25",
           "message": "refactor: enforce no-console rule and replace TODO with Note comments (#2501)",
@@ -3347,6 +3409,20 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "bf1833790d6d6b93837cb186f7eee3c3dfb9f333",
+          "date": "2026-10-21 17:24:02 +0200",
+          "dateFr": "21/10/2026",
+          "message": "FileList: correction bug de couleur picto du SyIcon (#2672)",
+          "version": "1.2.1",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false,
+          "labels": [
+            "Issue"
+          ]
+        },
         {
           "hash": "6b48d0b4c60df11d089c554c474f5f21f6e3a2fd",
           "date": "2026-09-24 14:22:02 +0200",
@@ -3787,11 +3863,16 @@
       "componentName": "Customs/SyRadioGroup",
       "storybookTitle": "Composants/Formulaires/SyRadioGroup",
       "status": "actif",
-      "functionalVersion": "1.2.0",
-      "functionalDate": "15/10/2026",
+      "functionalVersion": "1.2.1",
+      "functionalDate": "23/10/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-10-23",
+          "message": "SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)",
+          "version": "1.2.1"
+        },
         {
           "date": "2026-10-15",
           "message": "SyForm: add tests page on sandbox + fixes (#2616)",
@@ -3869,6 +3950,17 @@
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "886b13bece06b7abdd6b7dadd10264080f022557",
+          "date": "2026-10-23 15:21:56 +0200",
+          "dateFr": "23/10/2026",
+          "message": "SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)",
+          "version": "1.2.1",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "a216fc35e26df993b7be4d403abcc5d65b5a8e36",
           "date": "2026-08-25 10:33:40 +0200",
@@ -3977,11 +4069,16 @@
       "componentName": "Customs/SyTabs",
       "storybookTitle": "Composants/Navigation/SyTabs",
       "status": "actif",
-      "functionalVersion": "1.1.6",
-      "functionalDate": "24/09/2026",
+      "functionalVersion": "1.2.1",
+      "functionalDate": "23/10/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "22/07/2026",
       "commits": [
+        {
+          "date": "2026-10-23",
+          "message": "SyTabs: change inactive tab base color from primary to grey-base (#2696)",
+          "version": "1.2.1"
+        },
         {
           "date": "2026-09-24",
           "message": "SyTabs: fix slots and stories (#2580)",
@@ -4228,11 +4325,16 @@
       "componentName": "Customs/SyTextField",
       "storybookTitle": "Composants/Formulaires/SyTextField",
       "status": "actif",
-      "functionalVersion": "1.1.5",
-      "functionalDate": "27/08/2026",
+      "functionalVersion": "1.2.1",
+      "functionalDate": "26/10/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "23/07/2026",
       "commits": [
+        {
+          "date": "2026-10-26",
+          "message": "Security: update plugins (#2705)",
+          "version": "1.2.1"
+        },
         {
           "date": "2026-08-27",
           "message": "refactor: replace `any` types with proper TypeScript types  (#2496)",
@@ -4352,11 +4454,6 @@
           "date": "2026-03-18",
           "message": "SyAutocomplete: improve loading state (#1987)",
           "version": "1.0.23"
-        },
-        {
-          "date": "2026-03-10",
-          "message": "SyTextField: add title prop to allow custom or disabled title attribute (#1947)",
-          "version": "1.0.22"
         }
       ],
       "a11yCommits": [
@@ -4910,11 +5007,16 @@
       "componentName": "DatePicker/CalendarMode",
       "storybookTitle": "Composants/Formulaires/DatePicker/CalendarMode",
       "status": "actif",
-      "functionalVersion": "1.2.0",
-      "functionalDate": "15/10/2026",
+      "functionalVersion": "1.2.1",
+      "functionalDate": "23/10/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "30/07/2026",
       "commits": [
+        {
+          "date": "2026-10-23",
+          "message": "DatePicker: fix returns (#2685)",
+          "version": "1.2.1"
+        },
         {
           "date": "2026-10-15",
           "message": "SyForm: add tests page on sandbox + fixes (#2616)",
@@ -5034,11 +5136,6 @@
           "date": "2026-04-21",
           "message": "Tokens simplify v2 (#2102)",
           "version": "1.0.25"
-        },
-        {
-          "date": "2026-04-03",
-          "message": "Amelioration du système de validation (#1902)",
-          "version": "1.0.24"
         }
       ],
       "a11yCommits": [
@@ -5219,11 +5316,21 @@
       "componentName": "DatePicker/ComplexDatePicker",
       "storybookTitle": "Composants/Formulaires/DatePicker/CombinedMode",
       "status": "actif",
-      "functionalVersion": "1.2.0",
-      "functionalDate": "15/10/2026",
+      "functionalVersion": "1.2.1",
+      "functionalDate": "23/10/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "30/07/2026",
       "commits": [
+        {
+          "date": "2026-10-23",
+          "message": "DatePicker: fix returns (#2685)",
+          "version": "1.2.1"
+        },
+        {
+          "date": "2026-10-20",
+          "message": "fix(DatePicker): prevent duplicate model emissions and invalidate model on incomplete dates (#2665)",
+          "version": "1.2.1"
+        },
         {
           "date": "2026-10-15",
           "message": "SyForm: add tests page on sandbox + fixes (#2616)",
@@ -5338,16 +5445,6 @@
           "date": "2026-03-04",
           "message": "Feat/1872 ajout de tokens (#1888)",
           "version": "1.0.22"
-        },
-        {
-          "date": "2026-01-20",
-          "message": "update vue-tsconfig (#1739)",
-          "version": "1.0.18"
-        },
-        {
-          "date": "2026-01-16",
-          "message": "Corrige les différences graphiques sur le DatePicker (#1670)",
-          "version": "1.0.17"
         }
       ],
       "a11yCommits": [
@@ -5534,11 +5631,21 @@
       "componentName": "DatePicker/DateTextInput",
       "storybookTitle": "Composants/Formulaires/DatePicker/DateInput",
       "status": "actif",
-      "functionalVersion": "1.2.0",
-      "functionalDate": "15/10/2026",
+      "functionalVersion": "1.2.1",
+      "functionalDate": "23/10/2026",
       "a11yVersion": "1.1.3",
       "a11yDate": "23/07/2026",
       "commits": [
+        {
+          "date": "2026-10-23",
+          "message": "DatePicker: fix returns (#2685)",
+          "version": "1.2.1"
+        },
+        {
+          "date": "2026-10-20",
+          "message": "fix(DatePicker): prevent duplicate model emissions and invalidate model on incomplete dates (#2665)",
+          "version": "1.2.1"
+        },
         {
           "date": "2026-10-15",
           "message": "fix(DateTextInput): passer la prop disable-error-handling au TextField (#2647)",
@@ -5653,16 +5760,6 @@
           "date": "2025-11-14",
           "message": "SyForm: fix reset for PhoneField & PasswordField (#1464)",
           "version": "1.0.13"
-        },
-        {
-          "date": "2025-11-13",
-          "message": "SyForm: fix reset for NirField, DatePicker & SyTextField (#1456)",
-          "version": "1.0.13"
-        },
-        {
-          "date": "2025-10-30",
-          "message": "DatePicker : add hint + improve display (#1372)",
-          "version": "1.0.12"
         }
       ],
       "a11yCommits": [
@@ -11763,6 +11860,20 @@
       ],
       "a11yCommits": [
         {
+          "hash": "a339f992d96ae62cd9c5a785bf5d9b895e447c00",
+          "date": "2026-10-27 09:03:09 +0100",
+          "dateFr": "27/10/2026",
+          "message": "fix(PhoneField): make validation story controls effective and fix descriptions (#2707)",
+          "version": "1.2.1",
+          "confidence": "faible",
+          "keywords": false,
+          "patterns": true,
+          "a11yLabel": false,
+          "labels": [
+            "Synapse"
+          ]
+        },
+        {
           "hash": "d7ac6be5343bfad4f05913e4fb9b9b4e2d8e6cae",
           "date": "2026-10-05 09:23:58 +0200",
           "dateFr": "05/10/2026",
@@ -13680,11 +13791,16 @@
       "componentName": "Tables/SyServerTable",
       "storybookTitle": "Composants/Tableaux/SyServerTable",
       "status": "actif",
-      "functionalVersion": "1.1.6",
-      "functionalDate": "18/09/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.2.1",
+      "functionalDate": "26/10/2026",
+      "a11yVersion": "1.2.1",
+      "a11yDate": "22/10/2026",
       "commits": [
+        {
+          "date": "2026-10-26",
+          "message": "SyTable / SyServerTable : styles non surchargeables et indication du défilement (#2630)",
+          "version": "1.2.1"
+        },
         {
           "date": "2026-09-18",
           "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
@@ -13804,14 +13920,20 @@
           "date": "2025-10-06",
           "message": "SyServerTable : fix undefined fetch (#1216)",
           "version": "1.0.10"
-        },
-        {
-          "date": "2025-09-30",
-          "message": "SyServerTable : fix double emit (#1186)",
-          "version": "1.0.10"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "b6203901c9616bf60df6cefd3e13e901b46791cb",
+          "date": "2026-10-22 16:48:50 +0200",
+          "dateFr": "22/10/2026",
+          "message": "chore: remove study files and fix accessibility issues in tables and selects (#2686)",
+          "version": "1.2.1",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "2c90a270023a8f81debfab170380e16cdb6e0640",
           "date": "2026-09-04 15:53:57 +0200",
@@ -13976,11 +14098,16 @@
       "componentName": "Tables/SyTable",
       "storybookTitle": "Composants/Tableaux/SyTable",
       "status": "actif",
-      "functionalVersion": "1.1.6",
-      "functionalDate": "18/09/2026",
-      "a11yVersion": "1.0.20",
-      "a11yDate": "11/02/2026",
+      "functionalVersion": "1.2.1",
+      "functionalDate": "26/10/2026",
+      "a11yVersion": "1.2.1",
+      "a11yDate": "22/10/2026",
       "commits": [
+        {
+          "date": "2026-10-26",
+          "message": "SyTable / SyServerTable : styles non surchargeables et indication du défilement (#2630)",
+          "version": "1.2.1"
+        },
         {
           "date": "2026-09-18",
           "message": "SyTable: ne plus avoir \"Table caption\" quand le caption est vide (#2559)",
@@ -14100,14 +14227,20 @@
           "date": "2025-09-10",
           "message": "Tables localstorage refactorisation (#1084)",
           "version": "1.0.9"
-        },
-        {
-          "date": "2025-09-08",
-          "message": "SyTable no-data slot (#1076)",
-          "version": "1.0.9"
         }
       ],
       "a11yCommits": [
+        {
+          "hash": "b6203901c9616bf60df6cefd3e13e901b46791cb",
+          "date": "2026-10-22 16:48:50 +0200",
+          "dateFr": "22/10/2026",
+          "message": "chore: remove study files and fix accessibility issues in tables and selects (#2686)",
+          "version": "1.2.1",
+          "confidence": "forte",
+          "keywords": true,
+          "patterns": true,
+          "a11yLabel": false
+        },
         {
           "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
           "date": "2026-09-18 14:10:26 +0200",
