@@ -4,10 +4,6 @@
 >
 > Ces changements sont des corrections, mais un projet existant peut les percevoir comme des régressions.
 >
-> **Versions de Node et pnpm requises (`engines`)**
-> - **Node :** seules les versions `20.18.x`, `22.17.x` et `22.23.x` sont acceptées (auparavant `>=20 <23`). Les autres versions de Node 20 et 22 déclenchent un avertissement à l'installation, ou un échec avec `engine-strict`. Nous recommandons Node `22.23.4`, seule version de cette liste qui corrige les failles de la mise à jour de sécurité Node.js du 21 octobre 2026 (dont CVE-2026-111497).
-> - **pnpm :** seules les versions `10.12.x`, `10.33.x` et `12.9.x` sont acceptées (auparavant `>=10 <11`).
->
 > **DatePicker / ComplexDatePicker / DateTextInput** ([#2665](https://github.com/assurance-maladie-digital/design-system-v3/pull/2665), [#2685](https://github.com/assurance-maladie-digital/design-system-v3/pull/2685))
 > - **`update:modelValue` émet `null` dès que la saisie est invalide ou incomplète** (format invalide, date non parsable, plage incomplète, saisie partiellement effacée). Avant, le modèle gardait la dernière valeur valide et se désynchronisait du texte affiché.
 > - **`date-selected` n'est émis que pour une sélection complète** : il ne l'est plus quand seule la première borne d'une plage est saisie au clavier.
@@ -142,6 +138,10 @@
     </tr>
   </thead>
   <tbody>
+    <tr style="vertical-align: top;">
+      <td>- Chore: remove the engines field, Node and pnpm versions are set by the consuming project
+      </td>
+    </tr>
     <tr style="vertical-align: top;">
       <td>- Chore: upgrade axe-core from 4.13.0 to 4.14.0
         <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2674">#2674</a>

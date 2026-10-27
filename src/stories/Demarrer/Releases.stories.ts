@@ -34,18 +34,6 @@ type ReleaseAlert = {
 
 const releaseAlerts: ReleaseAlert[] = [
 	{
-		id: 'node-pnpm-engines',
-		releaseVersion: 'v1.2.1',
-		type: 'warning',
-		variant: 'tonal',
-		title: 'Versions de Node et pnpm requises',
-		paragraphs: [
-			'Synapse n\'accepte plus que Node `20.18.x`, `22.17.x` ou `22.23.x` (auparavant `>=20 <23`). Les autres versions de Node 20 et 22 déclenchent un avertissement à l\'installation, ou un échec avec `engine-strict`.',
-			'pnpm : versions acceptées `10.12.x`, `10.33.x` et `12.9.x` (auparavant `>=10 <11`).',
-			'Nous recommandons Node `22.23.4` : c\'est la seule version de cette liste qui corrige les failles de la mise à jour de sécurité Node.js du 21 octobre 2026 (dont CVE-2026-111497). Mettez à jour vos postes, votre CI et vos images Docker.',
-		],
-	},
-	{
 		id: 'datepicker-model-behavior',
 		releaseVersion: 'v1.2.1',
 		type: 'warning',

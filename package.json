@@ -80,10 +80,6 @@
     "email": "digital_TL.cnam@assurance-maladie.fr"
   },
   "license": "ISC",
-  "engines": {
-    "node": "=20.18.x || =22.17.x || =22.23.x",
-    "pnpm": "=10.12.x || =10.33.x || 12.9.x"
-  },
   "devDependencies": {
     "@eslint/js": "^9.39.5",
     "@jls-digital/storybook-addon-code": "^2.3.0",
