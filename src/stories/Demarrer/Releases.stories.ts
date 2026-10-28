@@ -38,7 +38,7 @@ const releaseAlerts: ReleaseAlert[] = [
 	{
 		id: 'datepicker-model-behavior',
 		releaseVersion: 'v1.2.1',
-		type: 'warning',
+		type: 'info',
 		variant: 'tonal',
 		title: 'Changements de comportement du DatePicker',
 		paragraphs: [
@@ -64,7 +64,7 @@ const releaseAlerts: ReleaseAlert[] = [
 	{
 		id: 'select-zero-false-values',
 		releaseVersion: 'v1.2.1',
-		type: 'warning',
+		type: 'info',
 		variant: 'tonal',
 		title: 'Valeurs 0 et false dans les sélecteurs',
 		paragraphs: [
@@ -98,7 +98,7 @@ const releaseAlerts: ReleaseAlert[] = [
 	{
 		id: 'table-pinned-styles',
 		releaseVersion: 'v1.2.1',
-		type: 'warning',
+		type: 'info',
 		variant: 'tonal',
 		title: 'Styles des tableaux personnalisables par variables CSS',
 		paragraphs: [
