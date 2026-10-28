@@ -40,7 +40,7 @@ const releaseAlerts: ReleaseAlert[] = [
 		releaseVersion: 'v1.2.1',
 		type: 'info',
 		variant: 'tonal',
-		title: 'Changements de comportement du DatePicker',
+		title: 'Correction du comportement du DatePicker',
 		paragraphs: [
 			'Ce sont des corrections, mais un projet existant peut les percevoir comme des régressions : vérifiez les écrans qui écoutent le modèle ou `date-selected`.',
 		],
