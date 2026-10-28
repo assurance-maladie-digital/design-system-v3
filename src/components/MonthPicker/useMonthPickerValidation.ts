@@ -1,5 +1,5 @@
 import type { ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
-import { useValidation } from '@/composables/unifyValidation/useValidation'
+import { useValidation, type ValidateOn } from '@/composables/unifyValidation/useValidation'
 import { computed, type Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import type { locales } from './locales'
@@ -25,6 +25,7 @@ export function useMonthPickerValidation(args: {
 	hasWarningProp?: Ref<boolean>
 	hasSuccessProp?: Ref<boolean>
 	maxErrors?: Ref<number>
+	validateOn?: Ref<ValidateOn | undefined>
 	focused: Ref<boolean>
 	locales: Ref<typeof locales>
 }) {
@@ -62,6 +63,7 @@ export function useMonthPickerValidation(args: {
 		hasWarningProp: args.hasWarningProp,
 		hasSuccessProp: args.hasSuccessProp,
 		maxErrors: args.maxErrors,
+		validateOn: args.validateOn,
 		focused: args.focused,
 	})
 }

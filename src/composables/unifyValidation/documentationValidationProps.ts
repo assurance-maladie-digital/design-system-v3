@@ -58,6 +58,16 @@ export function getValidationDocumentation(type: 'base' | 'date' | 'number' | 's
 				category: 'props',
 			},
 		},
+		validateOn: {
+			description: 'Détermine le déclencheur de validation du composant Vuetify (uniquement si `useVuetifyValidation` est à `true`).',
+			control: 'select',
+			options: ['blur', 'input', 'submit', 'invalid-input'],
+			table: {
+				type: { summary: 'string' },
+				defaultValue: { summary: 'undefined' },
+				category: 'props',
+			},
+		},
 		showSuccessMessages: {
 			description: 'Affiche les messages de succès lorsque la validation est réussie. Si la prop est à `false` cela cache uniquement les messages texte, l\'état visuel reste actif.',
 			control: 'boolean',

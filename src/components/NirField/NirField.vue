@@ -85,6 +85,7 @@
 		hasWarning: false,
 		hasSuccess: false,
 		maxErrors: 1,
+		validateOn: undefined,
 	})
 
 	const emit = defineEmits(['update:modelValue'])
@@ -247,6 +248,7 @@
 		toRef(props, 'hasWarning'),
 		toRef(props, 'hasSuccess'),
 		toRef(props, 'maxErrors'),
+		toRef(props, 'validateOn'),
 	)
 
 	// Synchronisation avec modelValue — placé après useNirValidation pour éviter le TDZ sur clearValidation

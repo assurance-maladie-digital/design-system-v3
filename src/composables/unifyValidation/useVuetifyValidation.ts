@@ -2,6 +2,7 @@ import { computed, reactive, watch, type Ref } from 'vue'
 import type { ValidationRule } from 'vuetify'
 import { useValidation } from 'vuetify/lib/composables/validation.mjs'
 import { locales } from './locales'
+import type { ValidateOn } from './useValidation'
 
 /** Interface between the validation entrypoint "useValidation" composable and the Vuetify validation logic. */
 export function useVuetifyValidation(
@@ -16,7 +17,7 @@ export function useVuetifyValidation(
 	name: Ref<string | undefined>,
 	label: Ref<string | undefined>,
 	readonly: Ref<boolean>,
-	validateOn: Ref<'input' | 'blur' | 'submit'>,
+	validateOn: Ref<ValidateOn>,
 ) {
 	// The vuetify validation composable expects props to be passed as a single object, so we create a reactive proxified object to pass the relevant props and keep them reactive.
 	const proxifiedProps = reactive({

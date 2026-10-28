@@ -13,6 +13,12 @@ export type { VuetifyValidationRule }
 export type { SyValidationRule as ValidationRule }
 export type { LegacyValidationResult as ValidationResult }
 
+// Type pour validateOn, basé sur le type interne de Vuetify
+// vuetify/lib/composables/validation.d.ts:
+// type ValidateOnValue = 'blur' | 'input' | 'submit' | 'invalid-input'
+// type ValidateOn = ValidateOnValue | `${ValidateOnValue} lazy` | `${ValidateOnValue} eager` | `lazy ${ValidateOnValue}` | `eager ${ValidateOnValue}` | 'lazy' | 'eager'
+export type ValidateOn = 'blur' | 'input' | 'submit' | 'invalid-input' | 'blur lazy' | 'input lazy' | 'submit lazy' | 'invalid-input lazy' | 'blur eager' | 'input eager' | 'submit eager' | 'invalid-input eager' | 'lazy' | 'eager'
+
 export interface FieldValidationProps {
 	customRules?: SyValidationRule[]
 	customSuccessRules?: SyValidationRule[]
@@ -34,6 +40,7 @@ export interface FieldValidationProps {
 	successMessages?: string[] | null
 	// When true (Vuetify native mode), the controller should not handle errors/successes
 	useVuetifyValidation?: boolean
+	validateOn?: ValidateOn
 	warningMessages?: string[] | null
 }
 
@@ -90,6 +97,7 @@ export function useValidation(params: {
 	hasWarningProp?: Ref<boolean>
 	hasSuccessProp?: Ref<boolean>
 	maxErrors?: Ref<number>
+	validateOn?: Ref<ValidateOn | undefined>
 } & ({
 	useVuetifyValidation: true
 	rules: Ref<VuetifyValidationRule[] | undefined>
@@ -164,7 +172,7 @@ export function useValidation(params: {
 			computed(() => vuetifyName),
 			params.label,
 			params.readonly,
-			computed(() => params.isValidateOnBlur.value ? 'blur' : 'input'),
+			computed(() => params.validateOn?.value || (params.isValidateOnBlur.value ? 'blur' : 'input')),
 		)
 	}
 

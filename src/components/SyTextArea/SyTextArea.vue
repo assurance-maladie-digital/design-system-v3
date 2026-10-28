@@ -25,7 +25,7 @@
 		maxLines: undefined,
 		autoWrap: undefined,
 		normalize: false,
-		validateOn: 'eager input',
+		validateOn: 'input eager',
 		variant: 'outlined',
 		color: 'primary',
 		bgColor: 'white',

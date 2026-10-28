@@ -3,7 +3,7 @@ import { computed, ref, type Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 import type { locales as defaultLocales } from './locales'
 import type { ValidationRule } from '@/composables/validation/useValidation'
-import { useValidation } from '@/composables/unifyValidation/useValidation'
+import { useValidation, type ValidateOn } from '@/composables/unifyValidation/useValidation'
 
 export function usePasswordField(params: {
 	password: Ref<string | null>
@@ -13,6 +13,7 @@ export function usePasswordField(params: {
 	label: Ref<string>
 	required: Ref<boolean>
 	isValidateOnBlur: Ref<boolean>
+	validateOn?: Ref<ValidateOn | undefined>
 	showSuccessMessages: Ref<boolean>
 	disableErrorHandling: Ref<boolean>
 	useVuetifyValidation: Ref<boolean>
@@ -66,6 +67,7 @@ export function usePasswordField(params: {
 		hasWarningProp: computed<boolean>(() => params.hasWarningProp.value ?? false),
 		hasSuccessProp: computed<boolean>(() => params.hasSuccessProp.value ?? false),
 		maxErrors: computed<number>(() => params.maxErrors.value ?? 1),
+		validateOn: params.validateOn,
 		focused: params.focused,
 	})
 

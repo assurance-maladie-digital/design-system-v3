@@ -9,7 +9,7 @@
 		state?: string | null
 		loading?: boolean
 		locales: typeof defaultLocales
-		success?: boolean // This prop is used to determine if the captcha validation was successful, and to set the input to readonly if true
+		success?: boolean
 		errorMessages?: string[]
 		warningMessages?: string[]
 		successMessages?: string[]
