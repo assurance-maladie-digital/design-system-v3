@@ -627,7 +627,6 @@
 			:theme="props.theme"
 			:tile="props.isTiled"
 			:type="nativeInputType"
-			:validate-on="props.validateOn"
 			:inputmode="isNumberField ? 'decimal' : (props.type === 'tel' ? 'tel' : undefined)"
 			:variant="props.variantStyle"
 			:width="props.width"
