@@ -29,7 +29,7 @@ export type NirValidationProps = {
 	successMessages?: string[] | null
 	useVuetifyValidation?: boolean
 	warningMessages?: string[] | null
-	validateOn?: ValidateOn | null | undefined
+	validateOn?: ValidateOn | undefined
 }
 
 /**
@@ -69,7 +69,7 @@ export function useNirValidation(
 	hasWarningProp: Ref<boolean>,
 	hasSuccessProp: Ref<boolean>,
 	maxErrors: Ref<number>,
-	validateOn: Ref<ValidateOn | null | undefined>,
+	validateOn: Ref<ValidateOn | undefined>,
 ) {
 	// Règles de validation
 	const numberRules = computed(() => {
