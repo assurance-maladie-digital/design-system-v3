@@ -2,22 +2,19 @@ import type {
 	ValidationResult as LegacyValidationResult,
 	ValidationRule as SyValidationRule,
 } from '@/composables/validation/useValidation'
-import { computed, ref, toValue, useId, watch, type Ref } from 'vue'
 import { devWarn } from '@/utils/devWarn'
+import { computed, ref, toValue, useId, watch, type Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
+import type { VTextField } from 'vuetify/components/VTextField'
+import { mergeMessages } from './messageUtils'
 import { useCustomValidation, type UseCustomValidationOptions } from './useCustomValidation'
 import { useVuetifyValidation as useVuetifyValidationComposable } from './useVuetifyValidation'
-import { mergeMessages } from './messageUtils'
 
 export type { VuetifyValidationRule }
 export type { SyValidationRule as ValidationRule }
 export type { LegacyValidationResult as ValidationResult }
 
-// Type pour validateOn, basé sur le type interne de Vuetify
-// vuetify/lib/composables/validation.d.ts:
-// type ValidateOnValue = 'blur' | 'input' | 'submit' | 'invalid-input'
-// type ValidateOn = ValidateOnValue | `${ValidateOnValue} lazy` | `${ValidateOnValue} eager` | `lazy ${ValidateOnValue}` | `eager ${ValidateOnValue}` | 'lazy' | 'eager'
-export type ValidateOn = 'blur' | 'input' | 'submit' | 'invalid-input' | 'blur lazy' | 'input lazy' | 'submit lazy' | 'invalid-input lazy' | 'blur eager' | 'input eager' | 'submit eager' | 'invalid-input eager' | 'lazy' | 'eager'
+export type ValidateOn = NonNullable<VTextField['validateOn']>
 
 export interface FieldValidationProps {
 	customRules?: SyValidationRule[]
