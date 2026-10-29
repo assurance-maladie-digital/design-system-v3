@@ -171,9 +171,8 @@ describe('SyTextField stories', () => {
 		expect(ValidateOnInput.argTypes.isValidateOnBlur?.control).toMatchObject({ disable: true })
 	})
 
-	it('VFormValidation ne contient pas la coquille « bénéficier de intégration »', () => {
-		const wrapper = mount(VFormValidation())
-
-		expect(wrapper.text()).toContain('bénéficier de l\'intégration')
+	it('VFormValidation présente le conseil SyForm dans sa description, sans la coquille « bénéficier de intégration »', () => {
+		expect(VFormValidation.parameters.docs?.description?.story).toContain('bénéficier de l\'intégration')
+		expect(JSON.stringify(VFormValidation.parameters.sourceCode)).not.toContain('privilégier')
 	})
 })

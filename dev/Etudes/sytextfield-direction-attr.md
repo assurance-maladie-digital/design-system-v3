@@ -35,9 +35,9 @@
 ## Correction
 
 - **`SyTextField.vue`** : la ligne `:direction="props.direction"` est supprimée. C'était la seule à transmettre `direction` dans tout le code.
-- **`types.ts`** : la prop `direction` est conservée pour ne casser aucun projet qui la passe, mais marquée `@deprecated` (sans effet).
-- **`SyTextField.stories.ts`** : la description indique « Dépréciée, sans effet » et le control est désactivé.
-- **`dev/ReleasesAlerts/v1.2.2.md`** : une section signale la dépréciation de la prop et la disparition de l'attribut (changement observable, non cassant).
+- **Prop supprimée** (décision prise en revue de PR, à la place d'une dépréciation) : `direction` est retirée de `types.ts`, de `withDefaults` (`SyTextField.vue`) et des argTypes de `SyTextField.stories.ts`. Elle n'a jamais eu d'effet.
+- **Attribut filtré** : `direction` est exclu de `forwardedAttrs` (`SyTextField.vue`). Sans ce filtre, un consommateur qui passe encore `direction="…"` verrait l'attribut, devenu non déclaré, repasser par `VTextField` jusqu'à l'`<input>` : le défaut RGAA 8.2 reviendrait. Vérifié : sans le filtre, le test de régression échoue pour `horizontal` et `vertical`.
+- **`dev/ReleasesAlerts/v1.2.2.md`** : la note signale la suppression de la prop, sans effet sur le rendu. Seuls les templates vérifiés en mode strict et les usages TypeScript de `SyTextFieldProps` peuvent la signaler comme inconnue.
 - **Snapshots** : `Captcha.spec.ts.snap` (×2) et `MonthPicker.spec.ts.snap` (×1) sont mis à jour. Leur seule différence est la ligne `direction="horizontal"` retirée.
 
 **Alternative écartée :** appliquer nous-mêmes la classe `v-input--vertical`. Vuetify exclut volontairement `direction` de `VTextField`, et aucun composant du dépôt ne passe `direction="vertical"` à `SyTextField`.
@@ -45,22 +45,23 @@
 ## Reproduction / vérification
 
 1. Monter `PhoneField` avec `withCountryCode` : l'`<input type="tel">` porte `direction="horizontal"`. Monter `SyTextField` seul : même résultat.
-2. Test de régression ajouté dans `SyTextField.spec.ts` : aucun attribut `direction` sur l'`<input>`, que la prop soit absente, `horizontal` ou `vertical`. **Avant correction : 3 échecs sur 3 ; après : 3/3.**
-3. `pnpm test:unit` : 407 fichiers, 7752 tests, tous passent.
-4. Tests a11y de `SyTextField` et `PhoneField` : OK. `pnpm exec eslint` (SyTextField, Captcha, MonthPicker) : 0 erreur. `pnpm vue-tsc -p tsconfig.app.json --noEmit` : 0 erreur.
+2. Test de régression ajouté dans `SyTextField.spec.ts` : aucun attribut `direction` sur l'`<input>`, qu'il soit absent, `horizontal` ou `vertical`. **Avant correction : 3 échecs sur 3 ; après : 3/3.** Depuis la suppression de la prop, le test passe `direction` en attribut (`attrs`), comme le ferait un consommateur.
+3. Après la suppression : `pnpm vitest run` sur SyTextField, PhoneField, NirField, PasswordField, DatePicker, Captcha et MonthPicker donne 65 fichiers et 945 tests, tous passent, sans modification de snapshot.
+4. `pnpm test:unit` (avant la suppression) : 407 fichiers, 7752 tests, tous passent.
+5. Tests a11y de `SyTextField` et `PhoneField` : OK. `pnpm exec eslint` (SyTextField, Captcha, MonthPicker) : 0 erreur. `pnpm vue-tsc -p tsconfig.app.json --noEmit` : 0 erreur.
 
 ## Impact
 
 - **Sévérité :** faible à moyenne. Non-conformité RGAA 8.2 sur tous les champs texte du DS, sans gêne directe pour les technologies d'assistance.
 - **Introduit dans :** `336e12639` (#365).
 - **Utilisateurs concernés :** tous les projets qui utilisent `SyTextField` ou un composant construit dessus, ainsi que leurs audits RGAA.
-- **Zones à risque :** les snapshots des projets consommateurs qui contiendraient l'attribut. Le rendu ne change pas, puisque Vuetify ignorait déjà la valeur.
+- **Zones à risque :** les snapshots des projets consommateurs qui contiendraient l'attribut. Les projets qui typent leurs props avec `SyTextFieldProps` ou vérifient leurs templates en mode strict et passent `direction` verront la propriété signalée comme inconnue. Le rendu ne change pas, puisque Vuetify ignorait déjà la valeur.
 
 ## Checklist
 
-- [x] Cause racine traitée : la prop n'est plus transmise à `VTextField`.
+- [x] Cause racine traitée : la prop est supprimée et l'attribut n'est plus transmis à `VTextField`.
 - [x] Test de régression ajouté, en échec avant la correction.
-- [x] Contrat préservé : la prop reste acceptée et est marquée `@deprecated` ; dépréciation documentée dans `dev/ReleasesAlerts/v1.2.2.md`.
+- [x] Changement de contrat documenté : suppression de la prop dans `dev/ReleasesAlerts/v1.2.2.md`, sans effet au runtime (attribut filtré).
 - [x] `pnpm test:unit` complet : 407 fichiers, 7752 tests, tous passent.
 - [x] Tests a11y passés (SyTextField, PhoneField).
 - [x] Snapshots mis à jour (seule différence : l'attribut retiré).

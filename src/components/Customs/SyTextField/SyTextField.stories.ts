@@ -201,13 +201,6 @@ const meta = {
 				type: { summary: '(value: unknown) => number' },
 			},
 		},
-		'direction': {
-			description: '**Dépréciée, sans effet.** `VTextField` ne prend pas en charge `direction` : la valeur est ignorée et n\'est plus transmise au champ. Conservée pour compatibilité ascendante.',
-			control: false,
-			table: {
-				type: { summary: 'horizontal | vertical' },
-			},
-		},
 		'isDirty': {
 			description: 'Indique si le champ a été modifié',
 			control: 'boolean',

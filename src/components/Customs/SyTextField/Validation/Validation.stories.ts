@@ -1052,11 +1052,15 @@ function handleSubmit(event: { isValid: boolean }) {
 
 export const VFormValidation: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Il faut privilégier l\'utilisation de `SyForm` pour bénéficier de l\'intégration.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
-	<p>Il faut privilégier l'utilisation de <code>SyForm</code> pour bénéficier de l'intégration.</p>
 	<VForm @submit.prevent="handleSubmit">
 		<SyTextField
 			ref="textFieldRef"
@@ -1136,7 +1140,6 @@ async function handleSubmit() {
 		},
 		template: `
 			<div>
-				<p>Il faut privilégier l'utilisation de <code>SyForm</code> pour bénéficier de l'intégration.</p>
 				<VForm @submit.prevent="handleSubmit">
 					<SyTextField ref="textFieldRef" v-bind="args" v-model="value" />
 					<VBtn type="submit" color="primary" class="mt-4">Valider</VBtn>

@@ -29,8 +29,6 @@ export type SyTextFieldProps = {
 	counter?: string | number | boolean
 	counterValue?: number | ((value: string | number | null | undefined | string[]) => number)
 	density?: 'default' | 'comfortable' | 'compact'
-	/** @deprecated Sans effet : `VTextField` ne prend pas en charge `direction`. Conservé pour compatibilité ascendante. */
-	direction?: 'horizontal' | 'vertical'
 	isDirty?: boolean
 	disabled?: boolean
 	isFlat?: boolean

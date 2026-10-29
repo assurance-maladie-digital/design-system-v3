@@ -39,11 +39,12 @@ describe('SyTextField', () => {
 		expect(textField.props('variant')).toBe('filled')
 	})
 
-	// Régression RGAA 8.2 : VTextField ne déclare pas la prop `direction`, qui finissait
-	// en attribut HTML invalide sur l'<input>.
+	// Régression RGAA 8.2 : `direction` (prop supprimée, sans effet) finissait en attribut
+	// HTML invalide sur l'<input>, y compris passée en attribut par un consommateur.
 	it.each([undefined, 'horizontal', 'vertical'] as const)('does not render an invalid direction attribute on the input (direction: %s)', (direction) => {
 		wrapper = mount(SyTextField, {
-			props: { label: 'Test Field', direction },
+			props: { label: 'Test Field' },
+			attrs: direction ? { direction } : {},
 		})
 
 		expect(wrapper.find('input').attributes()).not.toHaveProperty('direction')

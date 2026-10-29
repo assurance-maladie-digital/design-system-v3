@@ -57,7 +57,7 @@ Alignement sur la correction de SyTextArea (#2680). Aucun changement du composan
   - `ValidateOnInput` : `isValidateOnBlur` est le sujet de la story et son texte annonce `false`. Sa valeur est figée et son Control désactivé, pour que la description reste vraie.
 - **`DisableErrorHandling` :** deux champs identiques (valeur vide, même règle `{ type: 'required', options: { message: 'Ce champ est requis.' } }`), sans la prop `required`, validés au montage via `validateOnSubmit()`. Seul le premier affiche « Ce champ est requis. ». Les libellés sont identiques dans l'extrait et le rendu. La description explique pourquoi la règle n'est pas une règle `custom` et pourquoi la prop `required` n'est pas utilisée.
 - **`Required`, `RequiredWithAsterisk` :** l'arg `label` reprend le libellé de l'extrait.
-- **Coquille :** « bénéficier de l'intégration » (`VFormValidation`, rendu et extrait). La même coquille dans `SySelect` relève de son propre ticket.
+- **Coquille :** « bénéficier de l'intégration » (`VFormValidation`). Suite à la revue de PR, la phrase est retirée de l'extrait et du rendu, et passe dans la description de la story : c'est un conseil de documentation, pas du code à copier. La même coquille dans `SySelect` relève de son propre ticket.
 - **Types :** `type Story = StoryObj<SyTextFieldProps>` dans `Validation.stories.ts` (au lieu de `FieldValidationProps`), pour que les args `type`, `width`, `helpText` et `autocomplete` soient typés.
 
 ## Reproduction / vérification
@@ -93,7 +93,7 @@ Retours de la revue de PR, corrigés :
 
 - `ExternalMessages` : le paragraphe « Les messages ci-dessous sont injectés… » du rendu manquait dans l'extrait. Il y est ajouté. Un test vérifie maintenant, pour les 25 stories, que chaque `<p>` du rendu figure dans l'extrait ; avant la correction, il échouait seulement sur `ExternalMessages`.
 - `SlotAppend` : le libellé « champs de text », recopié dans l'extrait, devient « Label » comme dans les autres stories `Slot*`.
-- La note de dépréciation de `direction` passe de `dev/ReleasesAlerts/v1.2.1.md` (version publiée le 27/10) à `dev/ReleasesAlerts/v1.2.2.md`.
+- La note sur `direction` passe de `dev/ReleasesAlerts/v1.2.1.md` (version publiée le 27/10) à `dev/ReleasesAlerts/v1.2.2.md`. La prop a ensuite été supprimée plutôt que dépréciée (voir `sytextfield-direction-attr.md`).
 
 Points résiduels, assumés :
 

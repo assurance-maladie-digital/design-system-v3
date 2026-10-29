@@ -46,7 +46,6 @@
 			counter: false,
 			counterValue: undefined,
 			density: 'default',
-			direction: 'horizontal',
 			isDirty: false,
 			isFlat: false,
 			isFocused: false,
@@ -195,7 +194,7 @@
 
 	const forwardedAttrs = computed(() => {
 		const filteredAttrs = Object.fromEntries(
-			Object.entries(attrs).filter(([key]) => key !== 'display-asterisk'),
+			Object.entries(attrs).filter(([key]) => key !== 'display-asterisk' && key !== 'direction'),
 		) as Record<string, unknown>
 
 		// aria-controls coming from menu activators is invalid on the input itself; drop it
