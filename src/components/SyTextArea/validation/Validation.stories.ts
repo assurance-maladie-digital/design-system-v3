@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SyTextArea from '../SyTextArea.vue'
 import SyForm from '../../Customs/SyForm/SyForm.vue'
-import { ref, onMounted, nextTick } from 'vue'
+import { ref, watch, onMounted, nextTick } from 'vue'
 import { fn } from 'storybook/test'
 import { VBtn, VForm } from 'vuetify/components'
 
@@ -347,8 +347,10 @@ const reset = () => {
 	},
 	args: {
 		'label': 'Description',
-		'isValidateOnBlur': false,
-		'showSuccessMessages': true,
+		'modelValue': '',
+		'useVuetifyValidation': true,
+		'showSuccessMessages': false,
+		'validateOn': 'submit',
 		'onUpdate:modelValue': fn(),
 	},
 	render: args => ({
@@ -849,6 +851,99 @@ async function onSubmit() {
 					/>
 					<VBtn type="submit" color="primary">Soumettre</VBtn>
 				</VForm>
+			</div>
+		`,
+	}),
+}
+
+export const SyFormVuetifyValidationSubmit: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Validation native Vuetify avec `validateOn="submit"`. Les règles ne sont évaluées qu\'à la soumission du formulaire, pas à la perte de focus ou pendant la saisie.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<SyForm @submit="onSubmit">
+		<p>Ce Champ est requis</p>
+		<SyTextArea
+			v-model="value"
+			label="Description*"
+			:use-vuetify-validation="true"
+			:validate-on="'submit'"
+			:rules="[v => !!v || 'Ce champ est requis']"
+			class="mb-4"
+		/>
+		<VBtn type="submit" color="primary">Soumettre</VBtn>
+	</SyForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextArea, SyForm } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+
+const value = ref('')
+
+function onSubmit(event: { isValid: boolean }) {
+	if (event.isValid) {
+		alert('Formulaire valide : ' + value.value)
+	} else {
+		alert('Formulaire invalide.')
+	}
+}
+</script>`,
+			},
+		],
+	},
+	args: {
+		'label': 'Description',
+		'useVuetifyValidation': true,
+		'showSuccessMessages': false,
+		'onUpdate:modelValue': fn(),
+	},
+	render: args => ({
+		components: { SyTextArea, VBtn, SyForm },
+		setup() {
+			const value = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
+			const rules = [
+				(v: string) => !!v || 'Ce champ est requis',
+			]
+
+			function onSubmit(event: { isValid: boolean }) {
+				if (event.isValid) {
+					alert(`Formulaire valide : ${value.value}`)
+				}
+				else {
+					alert('Formulaire invalide.')
+				}
+			}
+
+			return { args, value, rules, onSubmit }
+		},
+		template: `
+			<div class="ma-8">
+				<p class="mb-4">
+					La validation ne se déclenche <strong>qu'à la soumission</strong> (validateOn="submit").
+					Essayez de saisir une valeur vide, puis cliquez sur <strong>Soumettre</strong>.
+				</p>
+				<SyForm @submit="onSubmit">
+					<SyTextArea
+						v-bind="args"
+						v-model="value"
+						:rules="rules"
+						class="mb-4"
+					/>
+					<VBtn type="submit" color="primary">Soumettre</VBtn>
+				</SyForm>
 			</div>
 		`,
 	}),
