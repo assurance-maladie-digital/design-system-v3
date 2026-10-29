@@ -226,6 +226,7 @@ export const SlotIcon: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 	import { CopyBtn } from '@cnamts/synapse'
+	import { VIcon } from 'vuetify/components'
 	import { mdiContentDuplicate } from '@mdi/js'
 	
 	const duplicateIcon = mdiContentDuplicate
