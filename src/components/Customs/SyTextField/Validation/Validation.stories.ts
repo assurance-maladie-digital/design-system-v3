@@ -657,6 +657,9 @@ Dans cette story, ces trois props sont pilotées par les boutons : leurs Control
 			{
 				name: 'Template',
 				code: `<template>
+	<p class="mb-4">
+		Les messages ci-dessous sont injectés par le parent sans déclencher de règle de validation.
+	</p>
 	<SyTextField
 		v-model="value"
 		label="Nom"

@@ -63,6 +63,16 @@ describe('SyTextField stories', () => {
 		})
 	})
 
+	it.each(allStories)('l\'extrait de $name reprend les paragraphes affichés par le rendu', ({ story }) => {
+		const normalize = (text: string) => text.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()
+		const template = normalize(snippetCode(story, 'Template'))
+		const paragraphs = mount(story()).findAll('p').map(p => normalize(p.text()))
+
+		for (const paragraph of paragraphs) {
+			expect(template, paragraph).toContain(paragraph)
+		}
+	})
+
 	it.each([
 		{ name: 'WithError', story: WithError, message: 'L\'adresse email est invalide.' },
 		{ name: 'WithWarning', story: WithWarning, message: 'Le nom d\'utilisateur est très court (moins de 3 caractères).' },

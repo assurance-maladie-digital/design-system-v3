@@ -62,7 +62,7 @@ Alignement sur la correction de SyTextArea (#2680). Aucun changement du composan
 
 ## Reproduction / vérification
 
-1. **Test de régression** `src/components/Customs/SyTextField/tests/SyTextField.stories.spec.ts`. **Avant correction : 32 échecs sur 41. Après : 45/45** (4 tests ajoutés à la revue, voir plus bas). Les 9 tests qui passaient déjà portent sur des stories correctes avant la correction.
+1. **Test de régression** `src/components/Customs/SyTextField/tests/SyTextField.stories.spec.ts`. **Avant correction : 32 échecs sur 41. Après : 70/70** (tests ajoutés pendant les revues, voir plus bas). Les 9 tests qui passaient déjà portent sur des stories correctes avant la correction.
    - Pour les 25 stories : l'extrait se compile comme un SFC (`analyzeSnippet`), sans identifiant non déclaré, composant non importé ou ref non typée.
    - `WithError`, `WithWarning`, `WithSuccess` affichent leur message au chargement. L'extrait contient `ref="fieldRef"` et l'appel à `validateOnSubmit()` dans `onMounted`.
    - L'arg `required` pilote `aria-required` dans `PatternValidation`, `WithCustomRules`, `EmailValidation`, `SyFormValidation`, `VFormValidation` et `ValidateOnInput`.
@@ -71,9 +71,10 @@ Alignement sur la correction de SyTextArea (#2680). Aucun changement du composan
    - `DisableErrorHandling` : les libellés de l'extrait et du rendu sont identiques, et seul le premier champ affiche « Ce champ est requis. ».
    - `VFormValidation` : la coquille est corrigée.
 2. **Extraits recopiés dans des SFC réels :** les 25 extraits ont été écrits dans des fichiers `.vue` temporaires (`@cnamts/synapse` → `@/main`), puis vérifiés par `pnpm vue-tsc -p tsconfig.app.json --noEmit` : 0 erreur. Contrôle : un fichier volontairement faux est bien signalé.
-3. `pnpm vitest run src/components/Customs/SyTextField` : 3 fichiers, 100 tests, tous passent. Test a11y `SyTextField.a11y.spec.ts` : 6/6.
+3. `pnpm vitest run src/components/Customs/SyTextField` : 3 fichiers, 125 tests, tous passent. Test a11y `SyTextField.a11y.spec.ts` : 6/6.
 4. `pnpm exec eslint src/components/Customs/SyTextField` : 0 erreur. `pnpm vue-tsc -p tsconfig.app.json --noEmit` : 0 erreur.
 5. **Console :** les 25 stories ont été montées dans un test temporaire, avec saisie, perte de focus et clic sur chaque bouton. Aucun `console.warn` ni `console.error` (avertissements Vue compris). Storybook démarre sans erreur (`pnpm storybook`).
+6. **Rendu Storybook :** vérifié dans Chromium headless (Playwright), sur les styles réels. `WithError`, `WithWarning` et `WithSuccess` affichent leur message et leur état (`error-field` avec `aria-invalid="true"`, `warning-field`, `success-field`) dès le montage. `DisableErrorHandling` affiche « Ce champ est requis. » sur le premier champ seulement, le second reste neutre. Aucune erreur ni aucun avertissement en console.
 
 ## Revue
 
@@ -87,6 +88,12 @@ Avertissement Storybook relevé ensuite : `Addon controls: Control of type color
 - **Cause :** le matcher `color` de `.storybook/controlMatchers.ts` (`/(background|color)$/i`) vise trois props de `SyTextField` : `color`, `baseColor` et `bgColor`. `inferControl` (`storybook/dist/_browser-chunks/chunk-5WKL7XVT.js:966-971`) n'accepte ce matcher que sur un `type.name === 'string'`. Or `vue-docgen-api` ne type pas ces props, qui viennent du type importé `SyTextFieldProps`, et aucun des deux metas ne déclare leur `type`. Le défaut existait avant cette correction. C'est le même que celui corrigé pour SyTextArea dans #2680.
 - **Correction :** `type: { name: 'string', required: false }` sur `color`, `baseColor` et `bgColor` dans les deux metas. Ces trois argTypes sont ajoutés au meta de validation, avec les mêmes controls que le meta principal. Les controls explicites priment sur le matcher : `color` reste un select et `baseColor` un champ texte.
 - **Test :** « le meta … type en string les props visées par le matcher color », repris du spec de SyTextArea. Il échouait avant la correction et passe maintenant.
+
+Retours de la revue de PR, corrigés :
+
+- `ExternalMessages` : le paragraphe « Les messages ci-dessous sont injectés… » du rendu manquait dans l'extrait. Il y est ajouté. Un test vérifie maintenant, pour les 25 stories, que chaque `<p>` du rendu figure dans l'extrait ; avant la correction, il échouait seulement sur `ExternalMessages`.
+- `SlotAppend` : le libellé « champs de text », recopié dans l'extrait, devient « Label » comme dans les autres stories `Slot*`.
+- La note de dépréciation de `direction` passe de `dev/ReleasesAlerts/v1.2.1.md` (version publiée le 27/10) à `dev/ReleasesAlerts/v1.2.2.md`.
 
 Points résiduels, assumés :
 
@@ -115,7 +122,7 @@ Points résiduels, assumés :
 - [x] Règle « requis » de `DisableErrorHandling` vérifiable et expliquée.
 - [x] `EmailValidation` a un Template et un Script complets.
 - [x] Coquille « bénéficier de intégration » corrigée.
-- [x] `pnpm vitest run src/components/Customs/SyTextField` passe (100/100).
+- [x] `pnpm vitest run src/components/Customs/SyTextField` passe (125/125).
 - [x] Test a11y passé (6/6). Le markup du composant n'a pas changé.
 - [x] `pnpm test:visual` : non requis, les tests visuels ne montent pas les stories.
-- [x] Aucun nouvel avertissement ni erreur de console (25 stories montées et manipulées). Relecture visuelle dans Storybook à faire.
+- [x] Aucun nouvel avertissement ni erreur de console (25 stories montées et manipulées ; rendu Storybook vérifié pour `WithError`, `WithWarning`, `WithSuccess`, `DisableErrorHandling` et `ExternalMessages`).

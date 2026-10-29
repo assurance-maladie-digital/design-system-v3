@@ -37,7 +37,7 @@
 - **`SyTextField.vue`** : la ligne `:direction="props.direction"` est supprimée. C'était la seule à transmettre `direction` dans tout le code.
 - **`types.ts`** : la prop `direction` est conservée pour ne casser aucun projet qui la passe, mais marquée `@deprecated` (sans effet).
 - **`SyTextField.stories.ts`** : la description indique « Dépréciée, sans effet » et le control est désactivé.
-- **`dev/ReleasesAlerts/v1.2.1.md`** : une section signale la dépréciation de la prop et la disparition de l'attribut (changement observable, non cassant).
+- **`dev/ReleasesAlerts/v1.2.2.md`** : une section signale la dépréciation de la prop et la disparition de l'attribut (changement observable, non cassant).
 - **Snapshots** : `Captcha.spec.ts.snap` (×2) et `MonthPicker.spec.ts.snap` (×1) sont mis à jour. Leur seule différence est la ligne `direction="horizontal"` retirée.
 
 **Alternative écartée :** appliquer nous-mêmes la classe `v-input--vertical`. Vuetify exclut volontairement `direction` de `VTextField`, et aucun composant du dépôt ne passe `direction="vertical"` à `SyTextField`.
@@ -60,7 +60,7 @@
 
 - [x] Cause racine traitée : la prop n'est plus transmise à `VTextField`.
 - [x] Test de régression ajouté, en échec avant la correction.
-- [x] Contrat préservé : la prop reste acceptée et est marquée `@deprecated` ; dépréciation documentée dans `dev/ReleasesAlerts/v1.2.1.md`.
+- [x] Contrat préservé : la prop reste acceptée et est marquée `@deprecated` ; dépréciation documentée dans `dev/ReleasesAlerts/v1.2.2.md`.
 - [x] `pnpm test:unit` complet : 407 fichiers, 7752 tests, tous passent.
 - [x] Tests a11y passés (SyTextField, PhoneField).
 - [x] Snapshots mis à jour (seule différence : l'attribut retiré).

@@ -772,7 +772,7 @@ export const SlotAppend: Story = {
 <template>
 	<SyTextField
 		v-model="value"
-		label="champs de text"
+		label="Label"
 		append-icon="success"
 		is-clearable
 	/>
@@ -794,7 +794,7 @@ const value = ref('')
 		variantStyle: 'outlined',
 		isClearable: true,
 		showDivider: false,
-		label: 'champs de text',
+		label: 'Label',
 		color: 'primary',
 		appendIcon: 'success',
 		modelValue: '',
