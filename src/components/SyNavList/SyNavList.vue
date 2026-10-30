@@ -17,9 +17,9 @@
 	})
 
 	const emit = defineEmits<{
-		'action': [item: SyNavListItem, action: SyNavListAction]
-		// Vrai dès qu'un sous-niveau est ouvert, faux quand plus aucun ne l'est
-		'sub-level-change': [open: boolean]
+		action: [item: SyNavListItem, action: SyNavListAction]
+		// Vrai dès qu'un sous-niveau est ouvert, faux quand plus aucun ne l'est (écouté par @sub-level-change)
+		subLevelChange: [open: boolean]
 	}>()
 
 	defineSlots<{
@@ -41,7 +41,7 @@
 			:locales="resolvedLocales"
 			:icon-color="props.iconColor"
 			@action="(item, action) => emit('action', item, action)"
-			@open-change="(open) => emit('sub-level-change', open)"
+			@open-change="(open) => emit('subLevelChange', open)"
 		>
 			<template
 				v-if="$slots.actions"
