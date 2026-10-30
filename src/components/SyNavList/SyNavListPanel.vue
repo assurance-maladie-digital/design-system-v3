@@ -298,6 +298,10 @@
 .sy-nav-list-panel__toggle {
 	position: relative;
 	z-index: 1;
+
+	// Espacement de la maquette PA (Gap/2) : sans lui, en largeur fit-content, le libellé le plus long
+	// touche ses actions, et les actions touchent le chevron.
+	margin-inline-start: 8px;
 }
 
 .sy-nav-list-panel__actions {
