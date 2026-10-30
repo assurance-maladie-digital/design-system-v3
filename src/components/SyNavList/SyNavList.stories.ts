@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
-import { VBtn, VCol, VRow } from 'vuetify/components'
+import { VBtn } from 'vuetify/components'
 import { fn } from 'storybook/test'
 import { mdiAccount, mdiChevronDown, mdiChevronUp, mdiCog, mdiFileDocument, mdiFolderPlus, mdiShieldCheck, mdiPencilBox } from '@mdi/js'
 import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -158,10 +158,10 @@ const meta = {
 		},
 		width: {
 			control: 'text',
-			description: 'Largeur de chaque niveau de la liste : nombre en pixels ou valeur CSS (`360`, `\'20rem\'`, `\'auto\'` pour prendre la largeur du conteneur). Les sous-niveaux prennent la largeur de leur niveau parent. La liste reste limitée à la largeur de son conteneur. Sans prop, 300 px (maquette PA) ou la variable CSS `--sy-nav-list-width` si le projet la définit.',
+			description: 'Largeur du premier niveau de la liste : nombre en pixels ou valeur CSS (`360`, `\'20rem\'`, `\'auto\'` pour prendre la largeur du conteneur). La liste reste limitée à la largeur de son conteneur. Les sous-niveaux ouverts à droite (à partir de 960 px) suivent leur propre contenu, 300 px au plus ; en dessous, ils prennent la largeur de l\'entrée. Sans prop, la largeur suit le contenu (`fit-content`), sauf si le projet définit la variable CSS `--sy-nav-list-width`. La maquette PA utilise 300 px.',
 			table: {
 				type: { summary: 'number | string' },
-				defaultValue: { summary: '300px' },
+				defaultValue: { summary: 'fit-content' },
 				category: 'props',
 			},
 		},
@@ -458,13 +458,13 @@ ${onActionScript}
 
 export const CustomWidth: Story = {
 	args: {
-		width: 360,
+		width: 300,
 		items: subLevelItems,
 	},
 	parameters: {
 		docs: {
 			description: {
-				story: 'La prop `width` règle la largeur de chaque niveau, sous-niveaux compris : nombre en pixels ou valeur CSS. Un projet peut aussi définir la variable CSS `--sy-nav-list-width` sur un parent.',
+				story: 'Par défaut, la largeur suit le contenu. La prop `width` fixe la largeur du premier niveau : nombre en pixels ou valeur CSS, ici 300 px comme la maquette PA. Les sous-niveaux suivent leur propre contenu, 300 px au plus. Un projet peut aussi définir la variable CSS `--sy-nav-list-width` sur un parent.',
 			},
 		},
 		sourceCode: [
@@ -474,7 +474,7 @@ export const CustomWidth: Story = {
 	<SyNavList
 		:items="items"
 		label="Dossiers client"
-		:width="360"
+		:width="300"
 	/>
 </template>`,
 			},
@@ -501,89 +501,6 @@ const items: SyNavListItem[] = [
 			},
 		],
 	},
-}
-
-export const AutoWidth: Story = {
-	args: {
-		width: 'auto',
-		items: subLevelItems,
-	},
-	parameters: {
-		docs: {
-			description: {
-				story: 'Avec `width="auto"`, la liste prend la largeur de son conteneur, ici une colonne de grille (`md="4"`), et ses sous-niveaux la même largeur. À réserver à un conteneur plus étroit que la page : à partir de 960 px, les sous-niveaux s\'ouvrent à droite de la liste, par-dessus le contenu voisin.',
-			},
-		},
-		sourceCode: [
-			{
-				name: 'Template',
-				code: `<template>
-	<VRow>
-		<VCol
-			cols="12"
-			md="4"
-		>
-			<SyNavList
-				:items="items"
-				label="Dossiers client"
-				width="auto"
-			/>
-		</VCol>
-		<VCol
-			cols="12"
-			md="8"
-		>
-			<p>Contenu de la page.</p>
-		</VCol>
-	</VRow>
-</template>`,
-			},
-			{
-				name: 'Script',
-				code: `<script setup lang="ts">
-import { VCol, VRow } from 'vuetify/components'
-import { SyNavList, type SyNavListItem } from '@cnamts/synapse'
-
-const items: SyNavListItem[] = [
-	{
-		id: 'cmu-b',
-		label: 'CMU-B',
-		href: '/cmu-b',
-		children: [
-			{ id: 'reception', label: 'Réception', href: '/reception' },
-			{ id: 'instruction', label: 'Instruction', href: '/instruction' },
-			{ id: 'revision', label: 'Révision', href: '/revision' },
-		],
-	},
-	{ id: 'cmu-c-as', label: 'CMU-C/AS', href: '/cmu-c-as' },
-	{ id: 'ame', label: 'AME', href: '/ame' },
-]
-</script>`,
-			},
-		],
-	},
-	render: args => ({
-		components: { SyNavList, VCol, VRow },
-		setup() {
-			return { args }
-		},
-		template: `
-			<VRow>
-				<VCol
-					cols="12"
-					md="4"
-				>
-					<SyNavList v-bind="args" />
-				</VCol>
-				<VCol
-					cols="12"
-					md="8"
-				>
-					<p>Contenu de la page.</p>
-				</VCol>
-			</VRow>
-		`,
-	}),
 }
 
 export const SlotActions: Story = {

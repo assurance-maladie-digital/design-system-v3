@@ -9,7 +9,7 @@
 		label?: string
 		// Couleur des icônes (entrée, actions, chevron) : couleur du thème Vuetify ou valeur CSS
 		iconColor?: string
-		// Largeur de chaque niveau : nombre en pixels ou valeur CSS (300 px par défaut, comme la maquette)
+		// Largeur du premier niveau : nombre en pixels ou valeur CSS (par défaut, suit le contenu : fit-content)
 		width?: number | string
 		locales?: Partial<SyNavListLocales>
 	}>(), {

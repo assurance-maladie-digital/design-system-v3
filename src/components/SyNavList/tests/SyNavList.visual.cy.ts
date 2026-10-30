@@ -69,7 +69,7 @@ describe('SyNavList - Visual regression tests', () => {
 	})
 
 	it('wraps long labels instead of truncating them (RGAA 10.4)', () => {
-		cy.mountWithVuetify(SyNavList, { props: { items, label: 'Dossiers client' } })
+		cy.mountWithVuetify(SyNavList, { props: { items, label: 'Dossiers client', width: 300 } })
 
 		cy.contains('.v-list-item-title', 'Allocation de solidarité').should('have.css', 'white-space', 'normal')
 		cy.contains('.sy-nav-list-panel__row', 'Allocation de solidarité').invoke('outerHeight').should('be.greaterThan', 48)
@@ -118,28 +118,59 @@ describe('SyNavList - Visual regression tests', () => {
 		cy.matchImageSnapshot('sy-nav-list-open-narrow', cy.get('.v-application'))
 	})
 
-	it('keeps the 300 px width of the mockup in a shrink-to-fit container', () => {
+	it('follows its content by default, and grows with a longer entry', () => {
+		const shortItems: SyNavListItem[] = [{ id: 'ame', label: 'AME', href: '#ame' }, { id: 'cmu', label: 'CMU-C/AS', href: '#cmu' }]
+		cy.mountWithVuetify(InContainer, { props: { containerStyle: 'width: 600px', navProps: { items: shortItems } } })
+
+		cy.get('.sy-nav-list > .sy-nav-list-panel').invoke('outerWidth').then((shortWidth) => {
+			expect(shortWidth).to.be.lessThan(300)
+			cy.mountWithVuetify(InContainer, {
+				props: { containerStyle: 'width: 600px', navProps: { items: [...shortItems, { id: 'long', label: 'Demande d’affiliation et pièces', href: '#long' }] } },
+			})
+			cy.get('.sy-nav-list > .sy-nav-list-panel').invoke('outerWidth').should('be.greaterThan', shortWidth!)
+		})
+	})
+
+	it('keeps a fixed width in a shrink-to-fit container', () => {
 		// Conteneur à la largeur de son contenu, comme une colonne flex sans largeur
-		cy.mountWithVuetify(InContainer, { props: { containerStyle: 'display: inline-block', navProps: {} } })
+		cy.mountWithVuetify(InContainer, { props: { containerStyle: 'display: inline-block', navProps: { width: 300 } } })
 
 		cy.get('.sy-nav-list > .sy-nav-list-panel').invoke('outerWidth').should('equal', 300)
 	})
 
-	it('applies the width prop to every level, sub-levels on the right included', () => {
+	it('applies the width prop to the first level only, sub-levels following their content', () => {
 		cy.mountWithVuetify(SyNavList, { props: { items, label: 'Dossiers client', width: 360 } })
 
 		openBothLevels()
-		cy.get('.sy-nav-list-panel').filter(':visible').each(($panel) => {
-			expect($panel[0]!.getBoundingClientRect().width).to.equal(360)
+		cy.get('.sy-nav-list > .sy-nav-list-panel').invoke('outerWidth').should('equal', 360)
+		cy.get('.sy-nav-list-panel__flyout > .sy-nav-list-panel').filter(':visible').should('have.length', 2).each(($panel) => {
+			const width = $panel[0]!.getBoundingClientRect().width
+			expect(width).to.be.lessThan(300)
+			expect(width).to.be.greaterThan(100)
 		})
 	})
 
-	it('fills its container with width auto, sub-levels taking the same width', () => {
+	it('caps a sub-level at 300 px, wrapping a longer label', () => {
+		const longChild: SyNavListItem[] = [{
+			id: 'parent',
+			label: 'Parent',
+			href: '#parent',
+			children: [{ id: 'long', label: 'Allocation de solidarité aux personnes âgées et complémentaire santé solidaire', href: '#long' }],
+		}]
+		cy.mountWithVuetify(SyNavList, { props: { items: longChild, label: 'Dossiers client' } })
+
+		cy.get('button[aria-label="Parent : afficher le sous-menu"]').click()
+		cy.get('.sy-nav-list-panel__flyout > .sy-nav-list-panel').invoke('outerWidth').should('equal', 300)
+		cy.contains('.sy-nav-list-panel__row', 'Allocation de solidarité').invoke('outerHeight').should('be.greaterThan', 48)
+	})
+
+	it('fills its container with width auto, sub-levels following their content', () => {
 		cy.mountWithVuetify(InContainer, { props: { containerStyle: 'width: 400px', navProps: { width: 'auto' } } })
 
 		openBothLevels()
-		cy.get('.sy-nav-list-panel').filter(':visible').should('have.length', 3).each(($panel) => {
-			expect($panel[0]!.getBoundingClientRect().width).to.equal(400)
+		cy.get('.sy-nav-list > .sy-nav-list-panel').invoke('outerWidth').should('equal', 400)
+		cy.get('.sy-nav-list-panel__flyout > .sy-nav-list-panel').filter(':visible').should('have.length', 2).each(($panel) => {
+			expect($panel[0]!.getBoundingClientRect().width).to.be.at.most(300)
 		})
 	})
 })
