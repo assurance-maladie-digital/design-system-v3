@@ -32,6 +32,53 @@ createApp(App)
   .mount('#app')
 `} />
 
+## Choisir le point d'entrée
+
+`createVuetifyInstance` enregistre **tous** les composants et directives Vuetify. Ils sont alors tous inclus dans le bundle de votre application, JS et CSS, même ceux que vous n'utilisez pas.
+
+Si votre projet active le tree-shaking de Vuetify avec [`vite-plugin-vuetify`](https://vuetifyjs.com/en/features/treeshaking/), utilisez plutôt `createVuetifyOptions`. Cette fonction renvoie la même configuration (thèmes, `defaults`, locale, icônes), sans enregistrer de composant ni de directive. Seuls les composants réellement utilisés restent dans le bundle.
+
+<table>
+  <thead>
+    <tr>
+      <th>Votre projet</th>
+      <th>Point d'entrée</th>
+      <th>Fonction</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Sans tree-shaking Vuetify</td>
+      <td><code>@cnamts/synapse/vuetifyConfig</code></td>
+      <td><code>createVuetifyInstance()</code> : renvoie l'instance Vuetify</td>
+    </tr>
+    <tr>
+      <td>Avec <code>vite-plugin-vuetify</code> (import automatique des composants)</td>
+      <td><code>@cnamts/synapse/vuetifyOptions</code></td>
+      <td><code>createVuetifyOptions()</code> : renvoie les options à passer à <code>createVuetify</code></td>
+    </tr>
+  </tbody>
+</table>
+
+Les composants Synapse importent eux-mêmes les composants Vuetify qu'ils utilisent : ils fonctionnent avec les deux points d'entrée.
+
+<Source dark code={`
+import { createVuetify } from 'vuetify'
+import { createVuetifyOptions } from '@cnamts/synapse/vuetifyOptions'
+
+const options = createVuetifyOptions()
+
+export const vuetify = createVuetify({
+  ...options,
+  defaults: {
+    ...options.defaults,
+    VTextField: { variant: 'outlined', density: 'compact' },
+  },
+})
+`} />
+
+Chaque appel à `createVuetifyOptions` renvoie une nouvelle configuration : vous pouvez la compléter sans effet sur les autres appels.
+
 ## Thèmes disponibles
 
 L'instance inclut les thèmes suivants, utilisables via la prop `theme` sur un composant ou via `defaultTheme` :
@@ -93,3 +140,5 @@ vuetify.theme.global.name.value = 'pa'
 - **Locale française** (`fr`)
 - **Tokens de design** : couleurs, typographie et variables CSS injectées pour chaque thème
 - **Trois thèmes complets** : `cnam`, `pa`, `ap`
+
+`createVuetifyOptions` configure les mêmes éléments, sauf l'enregistrement des composants et directives Vuetify.

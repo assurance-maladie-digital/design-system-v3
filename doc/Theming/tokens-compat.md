@@ -75,6 +75,8 @@ Ces variables **ne sont pas livrées dans un fichier CSS** : elles sont **géné
    app.use(createVuetifyInstance())
    ```
 
+   Avec le tree-shaking de Vuetify (`vite-plugin-vuetify`), `createVuetify(createVuetifyOptions())` (`@cnamts/synapse/vuetifyOptions`) passe les mêmes thèmes : voir la section « Choisir le point d'entrée » de la page Storybook *Guide Du Dev / Démarrage / createVuetifyInstance* (`src/stories/GuideDuDev/CreateVuetifyInstance.mdx`).
+
    Un `createVuetify` maison qui ne reprend pas `theme.themes.<marque>.colors` de Synapse ne génère pas les variables de palette.
 3. **Le scope du thème.** Vuetify définit ces variables sous le sélecteur `.v-theme--<marque>` (posé sur `<v-app>`). Une règle CSS appliquée **hors de `<v-app>`** (style global sur `body`, overlay/teleport sorti de l'app…) ne résout pas `var(--v-theme-…)`.
 
