@@ -7,14 +7,19 @@
 	const props = withDefaults(defineProps<{
 		items: SyNavListItem[]
 		label?: string
+		// Couleur des icônes (entrée, actions, chevron) : couleur du thème Vuetify ou valeur CSS
+		iconColor?: string
 		locales?: Partial<SyNavListLocales>
 	}>(), {
 		label: undefined,
+		iconColor: 'primary',
 		locales: () => ({}),
 	})
 
 	const emit = defineEmits<{
-		action: [item: SyNavListItem, action: SyNavListAction]
+		'action': [item: SyNavListItem, action: SyNavListAction]
+		// Vrai dès qu'un sous-niveau est ouvert, faux quand plus aucun ne l'est
+		'sub-level-change': [open: boolean]
 	}>()
 
 	defineSlots<{
@@ -34,7 +39,9 @@
 		<SyNavListPanel
 			:items="props.items"
 			:locales="resolvedLocales"
+			:icon-color="props.iconColor"
 			@action="(item, action) => emit('action', item, action)"
+			@open-change="(open) => emit('sub-level-change', open)"
 		>
 			<template
 				v-if="$slots.actions"

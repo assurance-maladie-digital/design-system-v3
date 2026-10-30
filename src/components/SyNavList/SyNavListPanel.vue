@@ -12,6 +12,7 @@
 	const props = withDefaults(defineProps<{
 		items: SyNavListItem[]
 		locales: SyNavListLocales
+		iconColor: string
 		// Facultatif au premier niveau : le <nav> de SyNavList porte déjà le nom
 		label?: string
 		// Faux quand le niveau parent est fermé : ce niveau referme alors ses propres sous-niveaux
@@ -22,7 +23,9 @@
 	})
 
 	const emit = defineEmits<{
-		action: [item: SyNavListItem, action: SyNavListAction]
+		'action': [item: SyNavListItem, action: SyNavListAction]
+		// Un sous-niveau de ce panneau s'ouvre (true) ou plus aucun n'est ouvert (false)
+		'open-change': [open: boolean]
 	}>()
 
 	defineSlots<{
@@ -47,6 +50,7 @@
 	watch(openId, (now, before) => {
 		if (before !== null) unregisterOpenPanel(closeCurrent)
 		if (now !== null) registerOpenPanel(closeCurrent)
+		if ((now === null) !== (before === null)) emit('open-change', now !== null)
 	})
 
 	// v-show garde les sous-niveaux montés : sans cela, un sous-niveau resterait ouvert
@@ -149,6 +153,7 @@
 						v-if="item.icon"
 						:icon="item.icon"
 						size="small"
+						:color="props.iconColor"
 						class="sy-nav-list-panel__icon"
 						decorative
 					/>
@@ -170,7 +175,7 @@
 							:key="action.id"
 							:icon="action.icon"
 							:label="props.locales.actionLabel(action.label, item.label)"
-							color="primary"
+							:color="props.iconColor"
 							@click-icon-button="emit('action', item, action)"
 						/>
 					</slot>
@@ -183,7 +188,7 @@
 					:label="openId === item.id ? props.locales.closeSubMenu(item.label) : props.locales.openSubMenu(item.label)"
 					:aria-expanded="openId === item.id ? 'true' : 'false'"
 					:aria-controls="panelId(item)"
-					color="primary"
+					:color="props.iconColor"
 					class="sy-nav-list-panel__toggle pa-0"
 					:width="28"
 					:height="28"
@@ -202,6 +207,7 @@
 					<SyNavListPanel
 						:items="item.children ?? []"
 						:locales="props.locales"
+						:icon-color="props.iconColor"
 						:label="props.locales.subMenuLabel(item.label)"
 						:active="openId === item.id"
 						@keydown.esc.stop="onEscape(item)"
@@ -257,9 +263,10 @@
 		font-weight: 700;
 	}
 
+	// Contour porté par la zone cliquable (::after) : autour du seul texte,
+	// il serait coupé par .v-list-item__content.
 	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-primary));
-		outline-offset: 2px;
+		outline: none;
 	}
 }
 
@@ -268,6 +275,16 @@
 	content: '';
 	position: absolute;
 	inset: 0;
+}
+
+// Focus sur toute la ligne, à l'intérieur, comme les items de SyBtnMenu (overrides/_menus.scss).
+.sy-nav-list-panel__link:focus-visible::after {
+	outline: 2px solid rgb(var(--v-theme-primary));
+	outline-offset: -3px;
+}
+
+.v-theme--dark .sy-nav-list-panel__link:focus-visible::after {
+	outline-color: rgb(var(--v-theme-on-primary));
 }
 
 .sy-nav-list-panel__icon {
