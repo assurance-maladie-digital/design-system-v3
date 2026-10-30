@@ -1241,6 +1241,10 @@ export const SyFormVuetifyValidationSubmit: Story = {
 			{
 				name: 'Template',
 				code: `<template>
+	<p class="mb-4">
+		La validation ne se déclenche <strong>qu'à la soumission</strong>(validateOn="submit").
+		Essayez de saisir une valeur invalide, puis cliquez sur <strong>Soumettre</strong>.
+	</p>
 	<SyForm @submit="handleSubmit">
 		<SyTextField
 			v-model="value"
@@ -1259,6 +1263,7 @@ export const SyFormVuetifyValidationSubmit: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { VBtn } from 'vuetify/components'
 import { SyTextField, SyForm } from '@cnamts/synapse'
 
 const value = ref('')
@@ -1268,8 +1273,8 @@ const vuetifyRules = [
 	(value: string) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value) || 'L\\'adresse email est invalide',
 ]
 
-function handleSubmit(e) {
-	const isValid = e.isValid
+function handleSubmit(event: { isValid: boolean }) {
+	const isValid = event.isValid
 	alert(isValid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
 }
 </script>`,
