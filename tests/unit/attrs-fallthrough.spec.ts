@@ -29,6 +29,8 @@ const ATTR_VALUE = 'fallthrough-ok'
 // composants conditionnent leur rendu à des props optionnelles).
 const PROP_OVERRIDES: Record<string, Record<string, unknown>> = {
 	ChipList: { items: [{ text: 'stub-value', value: 'stub-value' }] },
+	// Sans entrée, SyNavList ne rend rien (pas de <nav> vide)
+	SyNavList: { items: [{ id: 'stub', label: 'stub-value' }] },
 	CookiesInformation: { type: 'essentials', tableItems: [] },
 	CookiesSelection: { items: { essentials: [] } },
 	FilePreview: { file: new Blob(['stub'], { type: 'text/plain' }) },
