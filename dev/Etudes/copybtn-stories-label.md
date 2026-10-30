@@ -1,68 +1,88 @@
-# Étude — CopyBtn : `label` n'est pas une prop, nom accessible perdu dans les exemples
+# Étude — CopyBtn : `label` n'est plus une prop, nom accessible perdu dans les exemples
 
 ## Problème
 
-Constats relevés lors de la revue du correctif des imports de l'extrait `SlotIcon` (branche `fix/copy-btn-story-imports`), hors du périmètre de ce ticket.
+Constats relevés lors de la revue du correctif des imports de l'extrait `SlotIcon` (branche `fix/copy-btn-story-imports`).
 
-**Périmètre :** `src/components/CopyBtn/CopyBtn.stories.ts`, `src/components/CopyBtn/CopyBtn.mdx`.
+**Périmètre :** `src/components/CopyBtn/CopyBtn.stories.ts`, `src/components/CopyBtn/CopyBtn.mdx`, `src/components/CopyBtn/tests/CopyBtn.spec.ts`.
 
 Aucun changement du composant de production n'est nécessaire.
 
-### P1 — `label` n'est pas une prop de `CopyBtn` (sévérité : moyenne)
+| Point | Sévérité | Statut |
+|---|---|---|
+| P1 — `label` au lieu de `aria-label` dans les exemples | Moyenne | **Corrigé dans cette PR** |
+| P2 — Controls `ariaLabel`, `textToCopy` et `tooltipDuration` sans effet | Basse | À traiter (ticket : *à créer*) |
+| P3 — Extrait `SlotIcon` : `VIcon` plutôt que `SyIcon` | Basse, facultatif | À traiter (ticket : *à créer*) |
+| P4 — Tests unitaires passant l'ancienne prop `label` | Basse | À traiter (ticket : *à créer*) |
+| Coquille « personalisé » (`SlotTooltip`) | Basse | **Corrigé dans cette PR** |
 
-**Constat :** tous les extraits affichés (onglet *Template*), tous les templates de `render` et l'exemple de `CopyBtn.mdx` (l. 48) passent `label="…"` à `CopyBtn` :
+### P1 — `label` n'est pas une prop de `CopyBtn` (corrigé)
 
-```vue
-<CopyBtn
-	label="Copier le numéro de patient"
-	text-to-copy="1970756541"
-/>
-```
+**Constat :** les 7 extraits affichés (onglet *Template*), les 7 templates de `render` et l'exemple de `CopyBtn.mdx` (l. 48) passaient `label="…"` à `CopyBtn`.
 
 `CopyBtn.vue` ne déclare pas de prop `label` ; le nom accessible du bouton est porté par `ariaLabel` (défaut : `'bouton de copie'`, `CopyBtn.vue:20`), lié sur le `VBtn` (`CopyBtn.vue:105`).
 
 **Conséquence :**
 
-- `label` tombe dans les attributs hérités et est posé sur la `<div class="sy-copy-btn">` racine (`CopyBtn.vue:90`) : attribut HTML sans signification.
-- Le bouton garde le nom accessible générique « bouton de copie ». Un consommateur qui recopie l'exemple croit fournir un intitulé explicite, qui n'est jamais restitué par les technologies d'assistance (RGAA, critère 11.9 : intitulé de bouton pertinent).
+- `label` tombait dans les attributs hérités et était posé sur la `<div class="sy-copy-btn">` racine (`CopyBtn.vue:90`) : attribut HTML sans signification.
+- Le bouton gardait le nom accessible générique « bouton de copie ». Un consommateur qui recopiait l'exemple croyait fournir un intitulé explicite, jamais restitué par les technologies d'assistance (RGAA, critère 11.9 : intitulé de bouton pertinent).
 
-**Stories concernées :** `Default`, `NoTooltip`, `SlotIcon`, `RemoveSeparators`, `MultiSeparators`, `RemoveSpaces`, `SlotTooltip`.
+**Correctif :** `label="…"` remplacé par `aria-label="…"` dans les 7 extraits, les 7 `render` et `CopyBtn.mdx`.
 
-### P2 — Controls `ariaLabel` et `textToCopy` sans effet (sévérité : moyenne)
+### P2 — Controls sans effet
 
-**Constat :** les stories `Default`, `NoTooltip`, `SlotIcon` et `SlotTooltip` définissent `args.ariaLabel` et `args.textToCopy`, mais leur `render` code ces valeurs en dur (`label="…"`, `text-to-copy="…"`) au lieu de les lier aux args.
+**Constat :** les `render` codent en dur des valeurs que les `args` définissent, au lieu de les lier :
 
-**Conséquence :** modifier ces Controls dans Storybook ne change pas le rendu. `RemoveSeparators`, `MultiSeparators` et `RemoveSpaces` lient bien `textToCopy`, mais pas `ariaLabel`.
+| Arg | Stories où le Control n'a aucun effet |
+|---|---|
+| `ariaLabel` | les 7 stories (valeur statique `aria-label="…"` dans `render`) |
+| `textToCopy` | `Default`, `NoTooltip`, `SlotIcon`, `SlotTooltip` |
+| `tooltipDuration` | les 7 stories (`2000` dans `args`, jamais passé au composant : la durée effective est le défaut `5000`) |
 
-### P3 — Extrait `SlotIcon` : `VIcon` plutôt que `SyIcon` (sévérité : faible, facultatif)
+**Correctif proposé :** lier `:aria-label="args.ariaLabel"`, `:text-to-copy="args.textToCopy"` et `:tooltip-duration="args.tooltipDuration"`, ou utiliser `v-bind="args"` en retirant les attributs statiques. Vérifier que l'extrait affiché reste aligné sur les `args` (notamment `tooltip-duration`).
+
+### P3 — Extrait `SlotIcon` : `VIcon` plutôt que `SyIcon` (facultatif)
 
 **Constat :** le contenu par défaut du slot `icon` est un `SyIcon decorative` (`CopyBtn.vue:110-114`), alors que l'exemple propose `VIcon` (`CopyBtn.stories.ts:218`).
 
 **Conséquence :** aucune en accessibilité (`VIcon` sans gestionnaire de clic rend `aria-hidden="true"`). Simple cohérence avec le Design System ; non bloquant.
 
+**Correctif proposé :** `import { CopyBtn, SyIcon } from '@cnamts/synapse'` et `<SyIcon :icon="duplicateIcon" decorative />`.
+
+### P4 — Tests unitaires utilisant l'ancienne prop `label`
+
+**Constat :** `CopyBtn.spec.ts` monte le composant avec `label: 'test'` (l. 28 à 162) ; le snapshot `__snapshots__/CopyBtn.spec.ts.snap:7` fige `label="test"` sur la `div` racine.
+
+**Conséquence :** pas d'impact consommateur, mais les tests entretiennent l'ancienne API et le snapshot valide un attribut invalide.
+
+**Correctif proposé :** remplacer `label` par `ariaLabel` dans les props de montage et mettre à jour le snapshot.
+
 ## Cause racine
 
-P1 et P2 ont la même origine : les exemples utilisent un attribut `label` qui ne correspond à aucune prop du composant (probable reliquat d'une ancienne API ou confusion avec d'autres composants). Les templates de `render` ont été écrits en recopiant l'extrait plutôt qu'en liant les args.
+Vérifiée dans l'historique Git :
 
-Le test `CopyBtn.stories.spec.ts` (`analyzeSnippet`) ne le détecte pas : il vérifie la résolution des composants et identifiants, pas la correspondance entre attributs et props déclarées.
+- `d4592f02a` (#81, 2024-09-27, création du composant) : `CopyBtn` déclare une prop `label: string`, utilisée par les stories et la doc.
+- `30ce91e56` (#87, 2024-09-27, « fix CopyBtn accessibility ») : la prop `label` est remplacée par `ariaLabel`, sans mise à jour des stories, de `CopyBtn.mdx` ni des tests unitaires.
 
-## Correctif proposé
+Les exemples sont donc un reliquat de l'API d'origine. Les templates de `render` ayant été écrits en recopiant l'extrait plutôt qu'en liant les `args` (P2), aucun Control ne révélait l'écart.
 
-1. Dans les 7 extraits affichés et dans `CopyBtn.mdx`, remplacer `label="…"` par `aria-label="…"`.
-2. Dans les templates de `render`, lier `:aria-label="args.ariaLabel"` et `:text-to-copy="args.textToCopy"` en supprimant les valeurs en dur ; aligner les `args` sur le texte affiché.
-3. Facultatif : dans `SlotIcon`, remplacer `VIcon` par `SyIcon` (`import { CopyBtn, SyIcon } from '@cnamts/synapse'`) avec `decorative`.
-4. Test de régression dans `CopyBtn.stories.spec.ts` :
-   - pour chaque story composée, monter la story et vérifier que le bouton porte `aria-label` égal à `args.ariaLabel` et que la racine `.sy-copy-btn` n'a pas d'attribut `label` ;
-   - vérifier que l'extrait affiché ne contient pas `label=` sur `<CopyBtn>` (ou, plus générique, que tout attribut statique de `<CopyBtn>` correspond à une prop de `CopyBtn.props`).
+`analyzeSnippet` ne le détectait pas : il vérifie la résolution des composants et identifiants, pas la correspondance entre attributs et props déclarées.
 
-## Vérification à prévoir
+## Vérification (P1 et coquille)
 
-- [ ] `pnpm vitest run src/components/CopyBtn`
-- [ ] `pnpm vitest run src/components/CopyBtn/tests/CopyBtn.a11y.spec.ts`
-- [ ] `pnpm exec eslint src/components/CopyBtn`
-- [ ] Storybook : modifier les Controls `ariaLabel` et `textToCopy` de chaque story et vérifier le rendu et le texte copié ; aucune erreur ou avertissement de console
-- [ ] Tests visuels Cypress : aucune baseline modifiée attendue (changement d'attributs uniquement)
+- [x] Test de régression dans `CopyBtn.stories.spec.ts` (14 tests, tous en échec avant correctif) :
+  - chaque extrait affiché ne passe à `<CopyBtn>` que des props déclarées par le composant, dont `aria-label` ;
+  - chaque story montée nomme le bouton avec `args.ariaLabel` (avant : « bouton de copie ») et ne pose pas d'attribut `label` sur la racine.
+- [x] `pnpm vitest run src/components/CopyBtn` : 3 fichiers, 36 tests passés, aucun avertissement Vue.
+- [x] `pnpm exec eslint src/components/CopyBtn`
+- [x] `pnpm vue-tsc -p tsconfig.app.json --noEmit` : aucune erreur sur `CopyBtn`.
+- [ ] Storybook : vérifier le nom accessible du bouton de chaque story et l'absence d'erreur de console.
+- [ ] Tests visuels Cypress : aucune baseline modifiée attendue (changement d'attributs uniquement, `CopyBtn.visual.cy.ts` n'utilise pas les stories).
 
 ## Impact
 
-Documentation et stories uniquement : aucun changement de contrat du composant, donc pas de note dans `releasesAlerts/`. Les consommateurs ayant recopié l'exemple avec `label` gagneraient à passer à `aria-label` ; une mention dans la note de version peut être envisagée.
+Documentation et stories uniquement : aucun changement de contrat du composant, donc pas de note dans `releasesAlerts/`. Les consommateurs ayant recopié l'exemple avec `label` ont un bouton nommé « bouton de copie » ; une mention dans la note de version invitant à passer à `aria-label` peut être envisagée.
+
+## Suite
+
+P2, P3 et P4 restent à traiter. Ticket de suivi : *à créer, lien à reporter ici et dans la PR*.
