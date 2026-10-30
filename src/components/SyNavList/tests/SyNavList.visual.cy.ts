@@ -173,4 +173,22 @@ describe('SyNavList - Visual regression tests', () => {
 			expect($panel[0]!.getBoundingClientRect().width).to.be.at.most(300)
 		})
 	})
+
+	it('keeps 8 px between the label, the actions and the chevron, even on the widest row', () => {
+		const rowItems: SyNavListItem[] = [
+			{ id: 'droit', label: 'Droit de base', href: '#droit', actions: [edit], children: [{ id: 'enfant', label: 'Enfant', href: '#enfant' }] },
+			{ id: 'ame', label: 'AME', href: '#ame' },
+		]
+		cy.mountWithVuetify(SyNavList, { props: { items: rowItems, label: 'Dossiers client' } })
+
+		cy.contains('.sy-nav-list-panel__row', 'Droit de base').then(($row) => {
+			const range = document.createRange()
+			range.selectNodeContents($row.find('.sy-nav-list-panel__link')[0]!)
+			const textRight = range.getBoundingClientRect().right
+			const action = $row.find('.sy-nav-list-panel__actions')[0]!.getBoundingClientRect()
+			const toggle = $row.find('.sy-nav-list-panel__toggle')[0]!.getBoundingClientRect()
+			expect(action.left - textRight).to.be.at.least(8)
+			expect(Math.round(toggle.left - action.right)).to.equal(8)
+		})
+	})
 })
