@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	// Un niveau de SyNavList, récursif pour les sous-niveaux.
 	// Lien, actions et bouton d'ouverture sont frères dans la ligne, jamais imbriqués.
-	import { type ComponentPublicInstance, onBeforeUnmount, ref, useId, watch } from 'vue'
+	import { type ComponentPublicInstance, computed, onBeforeUnmount, ref, useId, watch } from 'vue'
 	import { mdiChevronRight } from '@mdi/js'
 	import { VList, VListItem } from 'vuetify/components'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -64,6 +64,10 @@
 	function hasChildren(item: SyNavListItem): boolean {
 		return (item.children?.length ?? 0) > 0
 	}
+
+	// Une entrée de ce niveau a un sous-niveau : les autres réservent la place du chevron,
+	// pour que les chevrons restent à droite de tous les libellés.
+	const reservesToggle = computed(() => props.items.some(hasChildren))
 
 	function panelId(item: SyNavListItem): string {
 		return `${uid}-${item.id}`
@@ -194,6 +198,11 @@
 					:height="28"
 					@click-icon-button="toggle(item)"
 				/>
+				<span
+					v-else-if="reservesToggle"
+					class="sy-nav-list-panel__toggle-placeholder"
+					aria-hidden="true"
+				/>
 
 				<!-- Sous-niveau dans le slot append : .v-list-item__content couperait son débordement.
 					v-show et non v-if : la cible de aria-controls existe même fermée (RGAA 8.2). -->
@@ -292,6 +301,12 @@
 .sy-nav-list-panel__icon {
 	margin-inline-end: 8px;
 	vertical-align: text-bottom;
+}
+
+.sy-nav-list-panel__toggle-placeholder {
+	flex: none;
+	width: 28px;
+	margin-inline-start: 8px;
 }
 
 .sy-nav-list-panel__actions,
