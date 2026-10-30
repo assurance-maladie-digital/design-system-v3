@@ -23,9 +23,9 @@
 	})
 
 	const emit = defineEmits<{
-		'action': [item: SyNavListItem, action: SyNavListAction]
+		action: [item: SyNavListItem, action: SyNavListAction]
 		// Un sous-niveau de ce panneau s'ouvre (true) ou plus aucun n'est ouvert (false)
-		'open-change': [open: boolean]
+		openChange: [open: boolean]
 	}>()
 
 	defineSlots<{
@@ -50,7 +50,7 @@
 	watch(openId, (now, before) => {
 		if (before !== null) unregisterOpenPanel(closeCurrent)
 		if (now !== null) registerOpenPanel(closeCurrent)
-		if ((now === null) !== (before === null)) emit('open-change', now !== null)
+		if ((now === null) !== (before === null)) emit('openChange', now !== null)
 	})
 
 	// v-show garde les sous-niveaux montés : sans cela, un sous-niveau resterait ouvert

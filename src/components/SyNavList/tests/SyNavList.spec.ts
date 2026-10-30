@@ -346,17 +346,17 @@ describe('SyNavList', () => {
 		await parent.trigger('click')
 		await toggleOf(wrapper, 'Demande d’affiliation').trigger('click')
 
-		expect(wrapper.emitted('sub-level-change')).toEqual([[true]])
+		expect(wrapper.emitted('subLevelChange')).toEqual([[true]])
 
 		pressEscapeOnDocument()
 		await flushPromises()
 
-		expect(wrapper.emitted('sub-level-change')).toEqual([[true]])
+		expect(wrapper.emitted('subLevelChange')).toEqual([[true]])
 
 		pressEscapeOnDocument()
 		await flushPromises()
 
-		expect(wrapper.emitted('sub-level-change')).toEqual([[true], [false]])
+		expect(wrapper.emitted('subLevelChange')).toEqual([[true], [false]])
 	})
 
 	it('émet sub-level-change à chaque ouverture et fermeture au chevron', async () => {
@@ -366,7 +366,7 @@ describe('SyNavList', () => {
 		await parent.trigger('click')
 		await parent.trigger('click')
 
-		expect(wrapper.emitted('sub-level-change')).toEqual([[true], [false]])
+		expect(wrapper.emitted('subLevelChange')).toEqual([[true], [false]])
 	})
 
 	it('n\'émet pas sub-level-change quand on passe d\'un sous-niveau à un autre du même niveau', async () => {
@@ -380,7 +380,7 @@ describe('SyNavList', () => {
 		await toggleOf(wrapper, 'A').trigger('click')
 		await toggleOf(wrapper, 'B').trigger('click')
 
-		expect(wrapper.emitted('sub-level-change')).toEqual([[true]])
+		expect(wrapper.emitted('subLevelChange')).toEqual([[true]])
 	})
 
 	it('n\'ouvre pas le sous-niveau au survol en largeur réduite ni au toucher', async () => {
