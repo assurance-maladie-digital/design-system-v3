@@ -601,7 +601,8 @@ export const InHeaderBar: Story = {
 				name: 'Template',
 				code: `<template>
 	<HeaderBar
-		service-title="Portail Agents"
+		service-title="Synapse"
+		service-subtitle="Design System"
 		:sticky="false"
 	>
 		<template #append>
@@ -776,7 +777,8 @@ ${onActionScript}
 		},
 		template: `
 			<HeaderBar
-				service-title="Portail Agents"
+				service-title="Synapse"
+				service-subtitle="Design System"
 				:sticky="false"
 			>
 				<template #append>
