@@ -9,10 +9,13 @@
 		label?: string
 		// Couleur des icônes (entrée, actions, chevron) : couleur du thème Vuetify ou valeur CSS
 		iconColor?: string
+		// Largeur de chaque niveau : nombre en pixels ou valeur CSS (300 px par défaut, comme la maquette)
+		width?: number | string
 		locales?: Partial<SyNavListLocales>
 	}>(), {
 		label: undefined,
 		iconColor: 'primary',
+		width: undefined,
 		locales: () => ({}),
 	})
 
@@ -27,6 +30,12 @@
 	}>()
 
 	const resolvedLocales = computed<SyNavListLocales>(() => ({ ...defaultLocales, ...props.locales }))
+
+	// Sans prop, la variable n'est pas posée : le projet peut aussi la définir en CSS (--sy-nav-list-width).
+	const widthStyle = computed(() => {
+		if (props.width === undefined || props.width === '') return undefined
+		return { '--sy-nav-list-width': typeof props.width === 'number' ? `${props.width}px` : props.width }
+	})
 </script>
 
 <template>
@@ -34,6 +43,7 @@
 	<nav
 		v-if="props.items.length"
 		class="sy-nav-list"
+		:style="widthStyle"
 		:aria-label="props.label ?? resolvedLocales.navLabel"
 	>
 		<SyNavListPanel
