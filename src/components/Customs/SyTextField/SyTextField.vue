@@ -963,6 +963,12 @@
 }
 
 .basic-field {
+	:deep(.v-field:not(.v-field--disabled) .v-field-label--floating),
+	:deep(.v-field:not(.v-field--disabled) .v-text-field__prefix),
+	:deep(.v-field:not(.v-field--disabled) .v-text-field__suffix) {
+		--v-medium-emphasis-opacity: 1;
+	}
+
 	:deep(.v-icon:not(.sy-text-field__tooltip-icon) .v-icon__svg) {
 		fill: rgb(var(--v-theme-on-surface));
 	}
@@ -1044,13 +1050,13 @@
 		opacity: 1 !important;
 
 		.v-messages__message {
-			color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity)) !important;
+			color: rgb(var(--v-theme-on-surface)) !important;
 		}
 	}
 }
 
 .help-text-below {
-	color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity));
+	color: rgb(var(--v-theme-on-surface));
 	font-size: var(--v-fontSize-liensEtLibelles);
 	line-height: 1.2;
 }
