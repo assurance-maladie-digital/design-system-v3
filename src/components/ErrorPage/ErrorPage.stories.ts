@@ -8,6 +8,9 @@ const meta: Meta = {
 	parameters: {
 		layout: 'fullscreen',
 	},
+	decorators: [
+		() => ({ template: '<div style="padding: 20px; background: rgb(231, 236, 245)"><story /></div>' }),
+	],
 } satisfies Meta<typeof ErrorPage>
 
 export default meta
@@ -15,27 +18,19 @@ export default meta
 type Story = StoryObj<typeof ErrorPage>
 
 export const Default: Story = {
-	decorators: [
-		() => ({ template: '<div style="padding: 20px; background: rgb(231, 236, 245)"><story /></div>' }),
-	],
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-                <template>
-                    <div style="padding: 20px; background: rgb(231, 236, 245)">
-                        <ErrorPage />
-                    </div>
-                </template>
-                `,
-			}, {
+				code: `<template>
+	<ErrorPage />
+</template>`,
+			},
+			{
 				name: 'Script',
-				code: `
-                <script setup lang="ts">
-                    import { ErrorPage } from '@cnamts/synapse'
-                </script>
-                `,
+				code: `<script setup lang="ts">
+import { ErrorPage } from '@cnamts/synapse'
+</script>`,
 			},
 		],
 	},
@@ -43,210 +38,205 @@ export const Default: Story = {
 
 export const WithLink: Story = {
 	args: {
-		...Default.args,
 		btnHref: '/',
 		btnText: 'Retour à l\'accueil',
 	},
-	decorators: [
-		() => ({ template: '<div style="padding: 20px; background: rgb(231, 236, 245)"><story /></div>' }),
-	],
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-                <template>
-                    <div style="padding: 20px; background: rgb(231, 236, 245)">
-                        <ErrorPage 
-                            btn-href="/"
-                            btn-text="Retour à l'accueil"
-                        />
-                    </div>
-                </template>
-                `,
-			}, {
+				code: `<template>
+	<ErrorPage
+		btn-href="/"
+		btn-text="Retour à l'accueil"
+	/>
+</template>`,
+			},
+			{
 				name: 'Script',
-				code: `
-                <script setup lang="ts">
-                    import { ErrorPage } from '@cnamts/synapse'
-                </script>
-                `,
+				code: `<script setup lang="ts">
+import { ErrorPage } from '@cnamts/synapse'
+</script>`,
 			},
 		],
 	},
 }
 
 export const CustomIllustration: Story = {
-	decorators: [
-		() => ({ template: '<div style="padding: 20px; background: rgb(231, 236, 245)"><story /></div>' }),
-	],
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-                <template>
-                    <div style="padding: 20px; background: rgb(231, 236, 245)">
-                        <ErrorPage>
-                            <template #illustration>
-                                <div style="width: 260px; height: 200px; display: grid; place-items: center; border-radius: 12px; background: white; border: 2px dashed #0D419A;">
-                                    <span style="font-weight: 700; color: #0D419A;">Illustration</span>
-                                </div>
-                            </template>
-                        </ErrorPage>
-                    </div>
-                </template>
-                `,
+				code: `<template>
+	<ErrorPage>
+		<template #illustration>
+			<div
+				class="d-flex align-center justify-center rounded-lg bg-surface border-md border-dashed border-primary border-opacity-100"
+				style="width: 260px; height: 200px;"
+			>
+				<span class="font-weight-bold text-primary">Illustration</span>
+			</div>
+		</template>
+	</ErrorPage>
+</template>`,
 			},
 			{
 				name: 'Script',
-				code: `
-                <script setup lang="ts">
-                    import { ErrorPage } from '@cnamts/synapse'
-                </script>
-                `,
+				code: `<script setup lang="ts">
+import { ErrorPage } from '@cnamts/synapse'
+</script>`,
 			},
 		],
 	},
-	render: () => ({
+	render: args => ({
 		components: { ErrorPage },
+		setup() {
+			return { args }
+		},
 		template: `
-            <ErrorPage>
-                <template #illustration>
-                    <div style="width: 260px; height: 200px; display: grid; place-items: center; border-radius: 12px; background: white; border: 2px dashed #0D419A;">
-                        <span style="font-weight: 700; color: #0D419A;">Illustration</span>
-                    </div>
-                </template>
-            </ErrorPage>
-        `,
+			<ErrorPage v-bind="args">
+				<template #illustration>
+					<div
+						class="d-flex align-center justify-center rounded-lg bg-surface border-md border-dashed border-primary border-opacity-100"
+						style="width: 260px; height: 200px;"
+					>
+						<span class="font-weight-bold text-primary">Illustration</span>
+					</div>
+				</template>
+			</ErrorPage>
+		`,
 	}),
 }
 
 export const SlotAction: Story = {
-	decorators: [
-		() => ({ template: '<div style="padding: 20px; background: rgb(231, 236, 245)"><story /></div>' }),
-	],
 	parameters: {
+		docs: {
+			description: {
+				story: 'Le contenu du slot `action` remplace le bouton par défaut : il n\'est pas nécessaire de passer `hide-btn`.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-                <template>
-                    <div style="padding: 20px; background: rgb(231, 236, 245)">
-                        <ErrorPage :hide-btn="true">
-                            <template #action>
-                                <div style="display: flex; gap: 8px; margin-top: 16px;">
-                                    <VBtn href="/" color="primary">Retour à l'accueil</VBtn>
-                                    <VBtn variant="outlined" color="primary">Déconnexion</VBtn>
-                                </div>
-                            </template>
-                        </ErrorPage>
-                    </div>
-                </template>
-                `,
+				code: `<template>
+	<ErrorPage>
+		<template #action>
+			<div class="d-flex ga-2 mt-4">
+				<VBtn
+					href="/"
+					color="primary"
+				>
+					Retour à l'accueil
+				</VBtn>
+				<VBtn
+					variant="outlined"
+					color="primary"
+				>
+					Déconnexion
+				</VBtn>
+			</div>
+		</template>
+	</ErrorPage>
+</template>`,
 			},
 			{
 				name: 'Script',
-				code: `
-                <script setup lang="ts">
-                    import { ErrorPage } from '@cnamts/synapse'
-                    import { VBtn } from 'vuetify/components'
-                </script>
-                `,
+				code: `<script setup lang="ts">
+import { ErrorPage } from '@cnamts/synapse'
+import { VBtn } from 'vuetify/components'
+</script>`,
 			},
 		],
 	},
-	render: () => ({
+	render: args => ({
 		components: { ErrorPage, VBtn },
+		setup() {
+			return { args }
+		},
 		template: `
-            <ErrorPage :hide-btn="true">
-                <template #action>
-                    <div style="display: flex; gap: 8px; margin-top: 16px;">
-                        <VBtn href="/" color="primary">Retour à l'accueil</VBtn>
-                        <VBtn variant="outlined" color="primary">Déconnexion</VBtn>
-                    </div>
-                </template>
-            </ErrorPage>
-        `,
+			<ErrorPage v-bind="args">
+				<template #action>
+					<div class="d-flex ga-2 mt-4">
+						<VBtn
+							href="/"
+							color="primary"
+						>
+							Retour à l'accueil
+						</VBtn>
+						<VBtn
+							variant="outlined"
+							color="primary"
+						>
+							Déconnexion
+						</VBtn>
+					</div>
+				</template>
+			</ErrorPage>
+		`,
 	}),
 }
 
 export const SlotAdditionalContent: Story = {
-	decorators: [
-		() => ({ template: '<div style="padding: 20px; background: rgb(231, 236, 245)"><story /></div>' }),
-	],
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-                <template>
-                    <div style="padding: 20px; background: rgb(231, 236, 245)">
-                        <ErrorPage>
-                            <template #additional-content>
-                                <p style="text-align: center; color: #555;">
-                                    Si le problème persiste, veuillez contacter le support technique.
-                                </p>
-                            </template>
-                        </ErrorPage>
-                    </div>
-                </template>
-                `,
+				code: `<template>
+	<ErrorPage>
+		<template #additional-content>
+			<p class="text-center">
+				Si le problème persiste, veuillez contacter le support technique.
+			</p>
+		</template>
+	</ErrorPage>
+</template>`,
 			},
 			{
 				name: 'Script',
-				code: `
-                <script setup lang="ts">
-                    import { ErrorPage } from '@cnamts/synapse'
-                </script>
-                `,
+				code: `<script setup lang="ts">
+import { ErrorPage } from '@cnamts/synapse'
+</script>`,
 			},
 		],
 	},
-	render: () => ({
+	render: args => ({
 		components: { ErrorPage },
+		setup() {
+			return { args }
+		},
 		template: `
-            <ErrorPage>
-                <template #additional-content>
-                    <p style="text-align: center; color: #555;">
-                        Si le problème persiste, veuillez contacter le support technique.
-                    </p>
-                </template>
-            </ErrorPage>
-        `,
+			<ErrorPage v-bind="args">
+				<template #additional-content>
+					<p class="text-center">
+						Si le problème persiste, veuillez contacter le support technique.
+					</p>
+				</template>
+			</ErrorPage>
+		`,
 	}),
 }
 
 export const WithRole: Story = {
 	args: {
-		...Default.args,
 		role: 'region',
 		uniqueId: 'error-page-region',
 	},
-	decorators: [
-		() => ({ template: '<div style="padding: 20px; background: rgb(231, 236, 245)"><story /></div>' }),
-	],
 	parameters: {
 		sourceCode: [
 			{
 				name: 'Template',
-				code: `
-                <template>
-                    <div style="padding: 20px; background: rgb(231, 236, 245)">
-                        <ErrorPage
-                            role="region"
-                            unique-id="error-page-region"
-                        />
-                    </div>
-                </template>
-                `,
-			}, {
+				code: `<template>
+	<ErrorPage
+		role="region"
+		unique-id="error-page-region"
+	/>
+</template>`,
+			},
+			{
 				name: 'Script',
-				code: `
-                <script setup lang="ts">
-                    import { ErrorPage } from '@cnamts/synapse'
-                </script>
-                `,
+				code: `<script setup lang="ts">
+import { ErrorPage } from '@cnamts/synapse'
+</script>`,
 			},
 		],
 	},
