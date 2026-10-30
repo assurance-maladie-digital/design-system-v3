@@ -4,7 +4,7 @@
 
 **Branche :** `fix/background-textfield`.
 
-**Périmètre :** `src/components/Customs/SyTextField/` uniquement. Les autres champs ne sont pas modifiés.
+**Périmètre :** `SyTextField` et adaptation de son activateur dans `DatePicker/CalendarMode`. Les composants qui réutilisent `SyTextField` peuvent aussi changer de fond en lecture seule.
 
 **Attendu :** un champ `readonly` doit avoir le même aspect de fond qu’un champ `disabled`, tout en conservant le comportement de lecture seule : texte lisible, sélectionnable et champ pouvant recevoir le focus.
 
@@ -80,9 +80,36 @@ Ces résultats découlent de la transparence CSS. Ils ne constituent pas une val
 ## Checklist
 
 - [x] Cause identifiée : le fond blanc restait opaque en lecture seule.
-- [x] Correction limitée à `SyTextField` et au fond du champ.
+- [x] Correction du fond de `SyTextField` et préservation du fond du DatePicker utilisable.
 - [x] Tests de régression ajoutés, sans accès à l’état interne du composant.
 - [x] Documentation du comportement et du maintien de `bgColor` personnalisé.
 - [x] Contrôle visuel sur fonds bleu, gris et blanc.
 - [x] Contrôle visuel et contraste sur les thèmes CNAM, PA et AmeliPro.
-- [x] Cypress et baselines vérifiés dans un environnement équipé.
+- [ ] Tous les tests Cypress des composants concernés passent après vérification des diffs et mise à jour des baselines en CI.
+
+## Impact indirect et adaptation du DatePicker
+
+Les composants qui utilisent `SyTextField` héritent de sa nouvelle couleur lorsque le champ interne est `readonly`, non désactivé, avec `bgColor="white"`. Cela concerne notamment `DateTextInput`, `ComplexDatePicker`, `MonthPicker`, `PhoneField`, `NirField`, `PasswordField`, `LunarCalendar`, `SyAutocomplete`, ainsi que le champ du Captcha après succès. Leurs fichiers peuvent donc rester inchangés alors que leurs snapshots évoluent.
+
+### Cas particulier du mode calendrier
+
+Le DatePicker en mode calendrier impose toujours `readonly: true` à son champ interne pour empêcher la frappe. Cela ne signifie pas que le composant est en lecture seule : la sélection dans le calendrier reste possible lorsque sa prop publique `readonly` est fausse.
+
+Dans `buildCalendarModeActivatorTextFieldProps.ts`, le fond blanc est donc transmis sous la forme opaque `rgb(var(--v-theme-white))` lorsque le DatePicker n'est pas en lecture seule. Cette valeur conserve le token du thème tout en évitant le traitement du fond blanc de lecture seule dans `SyTextField`.
+
+- DatePicker utilisable : fond blanc opaque conservé, champ interne toujours non saisissable.
+- DatePicker avec `readonly: true` : fond transparent attendu.
+- Fond personnalisé : valeur du consommateur conservée.
+- Aucun changement de prop, événement ou slot public.
+
+Deux tests de régression dans `CalendarMode/tests/DatePicker.spec.ts` vérifient le fond rendu lors des changements de `readonly` et la conservation d'un fond personnalisé.
+
+Validation ciblée de cette adaptation : ESLint passe sur les deux fichiers TypeScript modifiés ; Vitest passe sur les dossiers de tests `CalendarMode` et `SyTextField` (10 fichiers, 189 tests). La validation visuelle en CI reste à effectuer.
+
+### État des tests visuels
+
+L'échec initial de `sy-text-field-readonly` présentait un écart de 69 % : l'image de diff locale montre le passage d'un fond blanc opaque à un fond laissant apparaître la page. Selon le retour sur la CI, ce test passe après mise à jour de sa référence.
+
+Les autres échecs ne sont pas automatiquement indépendants de cette PR. Examiner notamment les tests `readonly` de `DateTextInput`, `ComplexDatePicker`, `MonthPicker` et les tests du mode calendrier. Après l'adaptation du DatePicker, son état utilisable doit conserver son rendu antérieur ; seuls les changements visuels attendus doivent être acceptés.
+
+Les baselines officielles doivent être générées sous Linux natif ou via le workflow `Update Visual Test Snapshots`, après inspection des diffs. Ne pas committer les baselines générées sous WSL ni augmenter le seuil pour masquer l'écart.
