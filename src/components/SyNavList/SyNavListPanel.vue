@@ -232,8 +232,8 @@
 
 <style lang="scss" scoped>
 .sy-nav-list-panel {
-	width: 100%;
-	max-width: 300px;
+	width: var(--sy-nav-list-width, 300px);
+	max-width: 100%;
 
 	// .v-list coupe son débordement : le sous-niveau doit pouvoir en sortir.
 	overflow: visible;
@@ -338,6 +338,7 @@
 	z-index: 2;
 
 	> .sy-nav-list-panel {
+		width: 100%;
 		max-width: none;
 	}
 }
@@ -355,10 +356,8 @@
 		right: auto;
 		left: 100%;
 
-		> .sy-nav-list-panel {
-			width: 300px;
-			max-width: 300px;
-		}
+		// Même largeur que le niveau parent (la ligne) : suit la prop width, y compris « auto ».
+		width: 100%;
 	}
 
 	.sy-nav-list-panel__toggle :deep(.v-icon) {

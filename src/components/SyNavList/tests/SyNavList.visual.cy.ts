@@ -1,4 +1,5 @@
 import { mdiCogOutline, mdiSquareEditOutline } from '@mdi/js'
+import { defineComponent, h } from 'vue'
 import SyNavList from '../SyNavList.vue'
 import type { SyNavListItem } from '../types'
 
@@ -24,6 +25,15 @@ const items: SyNavListItem[] = [
 	{ id: 'ame', label: 'AME', href: '#ame', actions: [settings, edit] },
 	{ id: 'long', label: 'Allocation de solidarité aux personnes âgées et complémentaire santé solidaire', href: '#long' },
 ]
+
+// Conteneur de test : style du conteneur et props de SyNavList passés au montage
+const InContainer = defineComponent({
+	props: {
+		containerStyle: { type: String, required: true },
+		navProps: { type: Object, required: true },
+	},
+	setup: props => () => h('div', { style: props.containerStyle }, [h(SyNavList, { items, label: 'Dossiers client', ...props.navProps })]),
+})
 
 const openBothLevels = () => {
 	cy.get('button[aria-label="Droit de base : afficher le sous-menu"]').click()
@@ -106,5 +116,30 @@ describe('SyNavList - Visual regression tests', () => {
 			expect(doc.documentElement.scrollWidth).to.be.at.most(320)
 		})
 		cy.matchImageSnapshot('sy-nav-list-open-narrow', cy.get('.v-application'))
+	})
+
+	it('keeps the 300 px width of the mockup in a shrink-to-fit container', () => {
+		// Conteneur à la largeur de son contenu, comme une colonne flex sans largeur
+		cy.mountWithVuetify(InContainer, { props: { containerStyle: 'display: inline-block', navProps: {} } })
+
+		cy.get('.sy-nav-list > .sy-nav-list-panel').invoke('outerWidth').should('equal', 300)
+	})
+
+	it('applies the width prop to every level, sub-levels on the right included', () => {
+		cy.mountWithVuetify(SyNavList, { props: { items, label: 'Dossiers client', width: 360 } })
+
+		openBothLevels()
+		cy.get('.sy-nav-list-panel').filter(':visible').each(($panel) => {
+			expect($panel[0]!.getBoundingClientRect().width).to.equal(360)
+		})
+	})
+
+	it('fills its container with width auto, sub-levels taking the same width', () => {
+		cy.mountWithVuetify(InContainer, { props: { containerStyle: 'width: 400px', navProps: { width: 'auto' } } })
+
+		openBothLevels()
+		cy.get('.sy-nav-list-panel').filter(':visible').should('have.length', 3).each(($panel) => {
+			expect($panel[0]!.getBoundingClientRect().width).to.equal(400)
+		})
 	})
 })

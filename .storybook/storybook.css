@@ -166,9 +166,9 @@ pre.prismjs {
 }
 
 .sbdocs-preview {
-	/* Fix for dropdown positioning */
-	.docs-story .v-list,
-	.storybook-docs-mode .v-list {
+	/* Fix for dropdown positioning (SyNavList exclue : ce n'est pas un menu déroulant) */
+	.docs-story .v-list:not(.sy-nav-list-panel),
+	.storybook-docs-mode .v-list:not(.sy-nav-list-panel) {
 		top: auto;
 		left: auto;
 		margin-top: 0;

@@ -430,6 +430,21 @@ describe('SyNavList', () => {
 		expect(wrapper.find('button[aria-label="Modifier (AME)"]').exists()).toBe(true)
 	})
 
+	it.each([
+		{ width: 360, expected: '360px' },
+		{ width: '20rem', expected: '20rem' },
+	])('transmet la largeur $width aux niveaux par la variable --sy-nav-list-width', ({ width, expected }) => {
+		const wrapper = mountNavList({ width })
+
+		expect((wrapper.get('nav').element as HTMLElement).style.getPropertyValue('--sy-nav-list-width')).toBe(expected)
+	})
+
+	it('ne pose pas la variable de largeur sans prop width : le projet peut la définir en CSS', () => {
+		const wrapper = mountNavList()
+
+		expect(wrapper.get('nav').attributes('style')).toBeUndefined()
+	})
+
 	it('accepte une surcharge partielle des libellés', () => {
 		const wrapper = mountNavList({
 			locales: { openSubMenu: (label: string) => `Ouvrir ${label}` },
