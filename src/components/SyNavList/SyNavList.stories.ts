@@ -54,7 +54,7 @@ const dossiersClient: SyNavListItem[] = [
 		id: 'droit-de-base',
 		label: 'Droit de base',
 		href: '/droit-de-base',
-		actions: [edit],
+		actions: [settings, edit],
 		children: [
 			{
 				id: 'demande-affiliation',
@@ -356,7 +356,7 @@ const items: SyNavListItem[] = [
 		id: 'droit-de-base',
 		label: 'Droit de base',
 		href: '/droit-de-base',
-		actions: [edit],
+		actions: [settings, edit],
 		children: [
 			{
 				id: 'demande-affiliation',
@@ -678,7 +678,7 @@ const items: SyNavListItem[] = [
 		id: 'droit-de-base',
 		label: 'Droit de base',
 		href: '/droit-de-base',
-		actions: [edit],
+		actions: [settings, edit],
 		children: [
 			{
 				id: 'demande-affiliation',
