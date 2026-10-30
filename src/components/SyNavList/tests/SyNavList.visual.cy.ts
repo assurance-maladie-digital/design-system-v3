@@ -191,4 +191,23 @@ describe('SyNavList - Visual regression tests', () => {
 			expect(Math.round(toggle.left - action.right)).to.equal(8)
 		})
 	})
+
+	it('keeps the chevrons to the right of every label of the level', () => {
+		const levelItems: SyNavListItem[] = [
+			{ id: 'cmu-b', label: 'CMU-B', href: '#cmu-b', children: [{ id: 'reception', label: 'Réception', href: '#reception' }] },
+			{ id: 'cmu-c', label: 'CMU-C/AS', href: '#cmu-c' },
+			{ id: 'ame', label: 'AME', href: '#ame' },
+		]
+		cy.mountWithVuetify(SyNavList, { props: { items: levelItems, label: 'Dossiers client' } })
+
+		cy.get('.sy-nav-list > .sy-nav-list-panel').then(($list) => {
+			const labelsRight = Math.max(...[...$list.find('.sy-nav-list-panel__link')].map((link) => {
+				const range = document.createRange()
+				range.selectNodeContents(link)
+				return range.getBoundingClientRect().right
+			}))
+			const toggle = $list.find('.sy-nav-list-panel__toggle')[0]!.getBoundingClientRect()
+			expect(toggle.left - labelsRight).to.be.at.least(8)
+		})
+	})
 })

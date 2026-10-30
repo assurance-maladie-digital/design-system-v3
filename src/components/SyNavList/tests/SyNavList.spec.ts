@@ -138,6 +138,23 @@ describe('SyNavList', () => {
 		}
 	})
 
+	it('réserve la place du chevron sur les entrées sans sous-niveau d\'un niveau qui en a', () => {
+		const wrapper = mountNavList()
+		const rootRows = wrapper.findAll('.sy-nav-list > .sy-nav-list-panel > .sy-nav-list-panel__row')
+
+		const placeholders = rootRows.map(row => row.find(':scope > .v-list-item__append > .sy-nav-list-panel__toggle-placeholder').exists())
+
+		// Droit de base a un sous-niveau ; AME et CMU-C/AS non.
+		expect(placeholders).toEqual([false, true, true])
+		expect(wrapper.get('.sy-nav-list-panel__toggle-placeholder').attributes('aria-hidden')).toBe('true')
+	})
+
+	it('ne réserve pas la place du chevron dans un niveau sans sous-niveau', () => {
+		const wrapper = mountNavList({ items: [{ id: 'a', label: 'A', href: '/a' }, { id: 'b', label: 'B', href: '/b' }] })
+
+		expect(wrapper.find('.sy-nav-list-panel__toggle-placeholder').exists()).toBe(false)
+	})
+
 	it('n\'imbrique aucun bouton dans un lien (RGAA 8.2)', () => {
 		const wrapper = mountNavList()
 
