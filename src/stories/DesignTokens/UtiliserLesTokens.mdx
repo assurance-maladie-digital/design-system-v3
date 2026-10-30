@@ -144,7 +144,7 @@ import { createVuetifyInstance } from '@cnamts/synapse/vuetifyConfig'
 app.use(createVuetifyInstance())
 `} />
 
-Voir [createVuetifyInstance](/docs/guide-du-dev-démarrage-createvuetifyinstance--docs).
+Avec le tree-shaking de Vuetify (`vite-plugin-vuetify`), `createVuetify(createVuetifyOptions())` (`@cnamts/synapse/vuetifyOptions`) passe les mêmes thèmes. Voir [createVuetifyInstance](/docs/guide-du-dev-démarrage-createvuetifyinstance--docs) et [Choisir le point d'entrée](/docs/guide-du-dev-démarrage-createvuetifyinstance--docs#choisir-le-point-dentrée).
 
 3. **Le scope du thème.** Vuetify définit ces variables sous le sélecteur `.v-theme--<marque>` (posé sur `<v-app>`). Une règle CSS appliquée **hors de `<v-app>`** (style global sur `body`, overlay/teleport sorti de l'app…) ne résout pas `var(--v-theme-…)`.
 

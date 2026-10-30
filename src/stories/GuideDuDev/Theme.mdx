@@ -14,6 +14,8 @@ Si votre projet dépend du Portail Agent ou d'Amelipro, appliquez le thème corr
 
 Pour configurer Vuetify et changer le thème, utilisez `createVuetifyInstance` — consultez la page [createVuetifyInstance](/docs/guide-du-dev-démarrage-createvuetifyinstance--docs) pour le détail complet.
 
+Si votre projet active le tree-shaking de Vuetify avec `vite-plugin-vuetify`, utilisez plutôt `createVuetifyOptions` (`@cnamts/synapse/vuetifyOptions`), qui applique les mêmes thèmes sans inclure tous les composants Vuetify dans votre bundle : voir [Choisir le point d'entrée](/docs/guide-du-dev-démarrage-createvuetifyinstance--docs#choisir-le-point-dentrée).
+
 ## Résumé des thèmes disponibles
 
 <table>
