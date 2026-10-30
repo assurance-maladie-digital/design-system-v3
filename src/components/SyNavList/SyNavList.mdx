@@ -35,15 +35,24 @@ Chaque story ajoute une option à la précédente.
 
 <Canvas of={SyNavListStories.Complete} />
 
+## Couleur des icônes
+
+<Canvas of={SyNavListStories.IconColor} />
+
 ## Slot d'actions
 
 <Canvas of={SyNavListStories.SlotActions} />
+
+## Dans le HeaderBar
+
+<Canvas of={SyNavListStories.InHeaderBar} />
 
 # Fonctionnement
 
 - **Lien** : une entrée avec `href` est un lien `<a>`, une entrée avec `to` un `RouterLink`, qui pose `aria-current="page"` sur la page active. Une entrée sans l'un ni l'autre affiche son libellé sans lien.
 - **Actions** : jusqu'à 4 par entrée, déclarées dans `items` (événement `action`) ou fournies par le slot `actions`, qui reçoit l'entrée (`item`) ; pour une entrée où le slot ne rend rien, les actions de `items` s'affichent. Elles sont masquées au repos et apparaissent au survol, au focus dans l'entrée et en permanence sur les écrans tactiles. Leur nom accessible reprend celui de l'entrée : « Modifier (AME) ».
 - **Sous-niveau** : ouvert par le chevron (clic, Entrée, Espace), et au survol à la souris sur grand écran. Il s'affiche à droite de la liste à partir de 960 px, sous l'entrée en dessous. Échap ferme le sous-niveau le plus profond ; depuis l'intérieur d'un sous-niveau, il rend le focus au chevron.
+- **État des sous-niveaux** : l'événement `sub-level-change` émet `true` quand un sous-niveau s'ouvre alors qu'aucun ne l'était, `false` quand le dernier se ferme. Il permet par exemple, quand la liste est dans un menu, que Échap ferme d'abord les sous-niveaux puis le menu (story « Dans le HeaderBar »).
 - **Liste vide** : le composant ne rend rien.
 
 Lien, actions et chevron sont des éléments frères : un clic sur une action ne suit pas le lien et n'ouvre pas le sous-niveau.

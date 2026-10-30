@@ -2,16 +2,23 @@ import { afterEach, describe, expect, it } from 'vitest'
 import { enableAutoUnmount, mount } from '@vue/test-utils'
 import { composeStories } from '@storybook/vue3-vite'
 import { analyzeSnippet } from '@tests/helpers/storySnippets'
+import { controlMatchers } from '../../../../.storybook/controlMatchers'
 import * as stories from '../SyNavList.stories'
 
 const composedStories = composeStories(stories)
-const { Default, WithIcons, WithActions, WithSubLevel, Complete, SlotActions } = composedStories
+const { Default, WithIcons, WithActions, WithSubLevel, Complete, IconColor, SlotActions } = composedStories
 
 const allStories = Object.entries(composedStories).map(([name, story]) => ({ name, story }))
 
 enableAutoUnmount(afterEach)
 
 describe('SyNavList stories', () => {
+	it('le meta type en string la prop iconColor, visée par le matcher color', () => {
+		// Storybook n'accepte le matcher color que sur un type string.
+		expect(controlMatchers.color.test('iconColor')).toBe(true)
+		expect(stories.default.argTypes.iconColor.type).toMatchObject({ name: 'string' })
+	})
+
 	it.each(allStories)('l\'extrait de $name est un SFC autonome et copiable', ({ story }) => {
 		expect(analyzeSnippet(story)).toEqual({
 			parseErrors: [],
@@ -49,6 +56,13 @@ describe('SyNavList stories', () => {
 
 		expect(wrapper.find('button[aria-label="Modifier (Droit de base)"]').exists()).toBe(true)
 		expect(wrapper.find('button[aria-label="Demande d’affiliation : afficher le sous-menu"]').exists()).toBe(true)
+	})
+
+	it('IconColor applique la couleur à toutes les icônes', () => {
+		const wrapper = mount(IconColor())
+
+		expect(wrapper.findAll('.text-secondary').length).toBeGreaterThanOrEqual(6)
+		expect(wrapper.findAll('.text-primary')).toHaveLength(0)
 	})
 
 	it('le rendu de SlotActions transmet les args au composant', () => {

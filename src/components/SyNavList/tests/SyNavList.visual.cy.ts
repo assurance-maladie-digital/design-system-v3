@@ -70,6 +70,12 @@ describe('SyNavList - Visual regression tests', () => {
 
 		focusVisible('a[href="#ame"]')
 		cy.contains('.sy-nav-list-panel__row', 'AME').find('.sy-nav-list-panel__actions').should('have.css', 'opacity', '1')
+		// Contour sur toute la ligne, à l'intérieur, comme les items de SyBtnMenu
+		cy.get('a[href="#ame"]').then(($link) => {
+			const after = window.getComputedStyle($link[0]!, '::after')
+			expect([after.outlineStyle, after.outlineWidth, after.outlineOffset]).to.deep.equal(['solid', '2px', '-3px'])
+			expect(window.getComputedStyle($link[0]!).outlineStyle).to.equal('none')
+		})
 		cy.matchImageSnapshot('sy-nav-list-focus', cy.get('.v-application'))
 	})
 

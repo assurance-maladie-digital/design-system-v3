@@ -105,6 +105,39 @@ describe('SyNavList', () => {
 		expect(wrapper.get('a[href="/"]').attributes('aria-current')).toBeUndefined()
 	})
 
+	it('affiche toutes les icônes en couleur primaire par défaut', () => {
+		const wrapper = mountNavList()
+
+		expect(wrapper.get('a[href="/droit-de-base"] .v-icon').classes()).toContain('text-primary')
+		expect(wrapper.get('button[aria-label="Modifier (Droit de base)"]').classes()).toContain('text-primary')
+		expect(toggleOf(wrapper, 'Droit de base').classes()).toContain('text-primary')
+	})
+
+	it('applique iconColor aux icônes d\'entrée, aux actions et aux chevrons, à tous les niveaux', () => {
+		const nested: SyNavListItem[] = [
+			{
+				id: 'parent',
+				label: 'Parent',
+				icon: mdiFolderOutline,
+				actions: [edit],
+				children: [{ id: 'enfant', label: 'Enfant', icon: mdiFolderOutline, actions: [edit], children: [{ id: 'petit-enfant', label: 'Petit-enfant' }] }],
+			},
+		]
+		const wrapper = mountNavList({ items: nested, iconColor: 'secondary' })
+
+		const colored = [
+			...wrapper.findAll('.sy-nav-list-panel__icon'),
+			...wrapper.findAll('.sy-nav-list-panel__actions button'),
+			...wrapper.findAll('button[aria-controls]'),
+		]
+
+		expect(colored).toHaveLength(6)
+		for (const element of colored) {
+			expect(element.classes()).toContain('text-secondary')
+			expect(element.classes()).not.toContain('text-primary')
+		}
+	})
+
 	it('n\'imbrique aucun bouton dans un lien (RGAA 8.2)', () => {
 		const wrapper = mountNavList()
 
@@ -304,6 +337,50 @@ describe('SyNavList', () => {
 		await toggle.trigger('click')
 
 		expect(toggle.attributes('aria-expanded')).toBe('false')
+	})
+
+	it('émet sub-level-change à l\'ouverture du premier sous-niveau et à la fermeture du dernier', async () => {
+		const wrapper = mountNavList()
+		const parent = toggleOf(wrapper, 'Droit de base')
+
+		await parent.trigger('click')
+		await toggleOf(wrapper, 'Demande d’affiliation').trigger('click')
+
+		expect(wrapper.emitted('sub-level-change')).toEqual([[true]])
+
+		pressEscapeOnDocument()
+		await flushPromises()
+
+		expect(wrapper.emitted('sub-level-change')).toEqual([[true]])
+
+		pressEscapeOnDocument()
+		await flushPromises()
+
+		expect(wrapper.emitted('sub-level-change')).toEqual([[true], [false]])
+	})
+
+	it('émet sub-level-change à chaque ouverture et fermeture au chevron', async () => {
+		const wrapper = mountNavList()
+		const parent = toggleOf(wrapper, 'Droit de base')
+
+		await parent.trigger('click')
+		await parent.trigger('click')
+
+		expect(wrapper.emitted('sub-level-change')).toEqual([[true], [false]])
+	})
+
+	it('n\'émet pas sub-level-change quand on passe d\'un sous-niveau à un autre du même niveau', async () => {
+		const wrapper = mountNavList({
+			items: [
+				{ id: 'a', label: 'A', children: [{ id: 'a1', label: 'A1' }] },
+				{ id: 'b', label: 'B', children: [{ id: 'b1', label: 'B1' }] },
+			],
+		})
+
+		await toggleOf(wrapper, 'A').trigger('click')
+		await toggleOf(wrapper, 'B').trigger('click')
+
+		expect(wrapper.emitted('sub-level-change')).toEqual([[true]])
 	})
 
 	it('n\'ouvre pas le sous-niveau au survol en largeur réduite ni au toucher', async () => {

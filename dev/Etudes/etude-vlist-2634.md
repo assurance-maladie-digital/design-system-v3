@@ -237,12 +237,12 @@ Le composant est dans `src/components/SyNavList/`, exporté dans la catégorie N
 
 | Fichier | Rôle |
 |---|---|
-| `SyNavList.vue` | `<nav>` nommé (`label`, sinon `locales.navLabel`) ; ne rend rien si `items` est vide. |
+| `SyNavList.vue` | `<nav>` nommé (`label`, sinon `locales.navLabel`) ; couleur de toutes les icônes (entrée, actions, chevron) par la prop `iconColor`, `primary` par défaut ; événement `sub-level-change` (`true` à l'ouverture du premier sous-niveau, `false` à la fermeture du dernier), pour qu'un menu qui contient la liste laisse Échap fermer d'abord les sous-niveaux ; ne rend rien si `items` est vide. |
 | `SyNavListPanel.vue` | Un niveau, récursif : le prototype C, aux conventions du DS (interne, non exporté). |
 | `escapeStack.ts` | Pile d'Échap partagée ; écouteur posé seulement tant qu'un sous-niveau est ouvert (rien côté serveur). |
 | `types.ts`, `locales.ts` | Contrat et libellés ; `locales` accepte un objet partiel. |
-| `SyNavList.stories.ts`, `SyNavList.mdx`, `accessibilite/Accessibility.mdx` | Stories de la plus simple à la plus complète, une option à la fois : `Default` (liens seuls), `WithIcons`, `WithActions`, `WithSubLevel`, `Complete` (maquette PA), `SlotActions` ; et documentation (pas de story vide : sans entrée, le composant ne rend rien ; ce cas est documenté dans `SyNavList.mdx` et testé dans `SyNavList.spec.ts`). |
-| `tests/` | `SyNavList.spec.ts` (24 tests), `SyNavList.a11y.spec.ts` (2), `SyNavList.stories.spec.ts` (12), `SyNavList.visual.cy.ts` (6). |
+| `SyNavList.stories.ts`, `SyNavList.mdx`, `accessibilite/Accessibility.mdx` | Stories de la plus simple à la plus complète, une option à la fois : `Default` (liens seuls), `WithIcons`, `WithActions`, `WithSubLevel`, `Complete` (maquette PA), `IconColor`, `SlotActions`, `InHeaderBar` (sous-menu de l'entrée « Dossiers client », dans une barre de navigation du slot `append` du `HeaderBar`) ; et documentation (pas de story vide : sans entrée, le composant ne rend rien ; ce cas est documenté dans `SyNavList.mdx` et testé dans `SyNavList.spec.ts`). |
+| `tests/` | `SyNavList.spec.ts` (29 tests), `SyNavList.a11y.spec.ts` (2), `SyNavList.stories.spec.ts` (16), `SyNavList.visual.cy.ts` (6). |
 
 **Étapes de la conception recommandée :**
 
@@ -282,6 +282,7 @@ Les contournements de style (1, 2, 5, 6 : débordement, panneau dans `append`, b
 | SVG | 9, tous `aria-hidden="true"`, aucun `role="img"` |
 | Boutons d'action (données et slot) et chevron | 28 × 28 px ; icônes d'action de 16 px, chevron de 24 px |
 | Ordre de tabulation | lien → actions (opacité 1 au focus) → chevron, entrée par entrée |
+| Focus du lien | contour de 2 px sur toute la ligne, à l'intérieur (décalage -3 px), comme les items de `SyBtnMenu` ; d'abord autour du seul texte et coupé à gauche par `.v-list-item__content`, corrigé |
 | Survol puis clic souris sur le chevron | sous-niveau ouvert, et toujours ouvert après la sortie du pointeur |
 | Échap, deux niveaux ouverts, focus ailleurs | 1er appui : niveau le plus profond fermé ; 2e : parent fermé |
 | Sous-niveaux à 1200 px | à droite (x = 332 et 632 px), non recouverts |
@@ -523,7 +524,7 @@ Usage côté produit :
 - [x] `SyIconButton` (test temporaire, jsdom) : `aria-expanded` et `aria-controls` passés en attributs sont rendus sur le `<button>`, avec `aria-label` et `title` issus de `label` ; l'élément racine est le `<button>` ; un clic émet une fois `click-icon-button`.
 - [x] Prototype C (`dev/Etudes/etude-vlist-2634/`, testé via le Playground) : ESLint et `vue-tsc` sans erreur, vérifiés aussi après le déplacement ; comportement testé dans jsdom (test temporaire, supprimé) et dans Chrome headless piloté au clavier et à la souris (survol, tabulation, Entrée, flèches, Échap), à 1200 et 320 px ; axe-core 4.14 injecté dans la page ; mesures des critères C1 à C5 avant et après correction ; captures comparées à la maquette PA.
 - [x] Tanaguru : 0 erreur, testé en local sur le Playground (30/10/2026), après les corrections C1 à C5. À relancer sur la story du composant, dans le deploy preview de la PR.
-- [x] `SyNavList` (option 2a) : 38 tests unitaires, axe et stories ; 6 tests Cypress passés en local (captures supprimées, baselines à produire par la CI) ; mesures dans Chrome sur les stories ; ESLint, Stylelint et `vue-tsc` sans erreur. Détail dans « Implémentation ».
+- [x] `SyNavList` (option 2a) : 47 tests unitaires, axe et stories ; 6 tests Cypress passés en local (captures supprimées, baselines à produire par la CI) ; mesures dans Chrome sur les stories ; ESLint, Stylelint et `vue-tsc` sans erreur. Détail dans « Implémentation ».
 - [ ] Tanaguru sur la story `SyNavList`, dans le deploy preview de la PR.
 - [ ] Esquisse de l'option 2b (`SyNavList` en HTML natif) : ni implémentée, ni compilée, ni testée.
 - [ ] Restitution par un lecteur d'écran réel (NVDA, VoiceOver) : non faite, ni pour les constats A1 et A3 (HTML rendu et axe), ni pour le prototype C.
