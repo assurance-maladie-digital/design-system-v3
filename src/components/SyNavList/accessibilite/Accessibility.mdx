@@ -1,0 +1,76 @@
+import { Meta, Primary } from '@storybook/addon-docs/blocks';
+import * as SyNavListStories from '../SyNavList.stories.ts';
+import AccessibilityIcon from '@/common/imgs/accessibility-svgrepo-com.svg';
+import {
+  AccessibilityGuideLayout,
+  CriteriaSection,
+  CriteriaCard,
+  DemoSection,
+  BestPracticesSection,
+  ResourcesSection,
+} from '@/stories/accessibility/AccessibilityGuideLayout.mdx';
+
+<Meta of={SyNavListStories} />
+
+<AccessibilityGuideLayout
+	componentName="SyNavList"
+	iconSrc={AccessibilityIcon}
+	apgHref="https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/"
+>
+	<CriteriaSection>
+		<CriteriaCard title="Structure sémantique">
+			<ul>
+				<li><strong>Navigation nommée</strong> : <code>&lt;nav&gt;</code> avec <code>aria-label</code> (prop <code>label</code>), nom non répété sur la liste racine</li>
+				<li><strong>Listes</strong> : <code>role="list"</code> et <code>role="listitem"</code> ; chaque sous-niveau est nommé « Sous-menu … »</li>
+				<li><strong>Éléments frères</strong> : lien, actions et chevron ne sont jamais imbriqués (RGAA 8.2)</li>
+				<li><strong>Page active</strong> : <code>aria-current="page"</code>, posé par <code>RouterLink</code></li>
+				<li><strong>Pas de <code>role="menu"</code></strong> : c'est une navigation, pas un menu d'application</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard title="Navigation clavier">
+			<ul>
+				<li><strong>Tabulation</strong> : lien, puis actions, puis chevron, entrée par entrée</li>
+				<li><strong>Entrée / Espace</strong> sur le chevron : ouvre ou ferme le sous-niveau</li>
+				<li><strong>Échap</strong> : ferme le sous-niveau le plus profond, même ouvert au survol (RGAA 10.13) ; depuis le sous-niveau, rend le focus au chevron</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard title="États et retours d'information">
+			<ul>
+				<li><strong>Sous-niveau</strong> : <code>aria-expanded</code> et <code>aria-controls</code> sur le chevron ; la cible existe aussi sous-niveau fermé</li>
+				<li><strong>Intitulés propres à chaque entrée</strong> : « CMU-B : afficher le sous-menu », « Modifier (AME) »</li>
+				<li><strong>Actions masquées au repos</strong> : par opacité seulement, elles restent atteignables à la tabulation et apparaissent au focus</li>
+				<li><strong>Icônes</strong> : décoratives, masquées aux technologies d'assistance (<code>SyIcon</code>)</li>
+			</ul>
+		</CriteriaCard>
+
+		<CriteriaCard title="Adaptation">
+			<ul>
+				<li><strong>Libellés longs</strong> : retour à la ligne, jamais de points de suspension (RGAA 10.4, 10.12)</li>
+				<li><strong>Petits écrans</strong> : sous 960 px, le sous-niveau s'ouvre sous l'entrée, sans défilement horizontal à 320 px (RGAA 10.11)</li>
+				<li><strong>Tactile</strong> : actions toujours visibles ; boutons de 28 × 28 px (WCAG 2.5.8 : au moins 24 × 24 px)</li>
+			</ul>
+		</CriteriaCard>
+	</CriteriaSection>
+
+	<DemoSection componentName="SyNavList">
+		<Primary />
+	</DemoSection>
+
+	<BestPracticesSection>
+		<ul>
+			<li>Nommez la navigation avec la prop <code>label</code>, surtout s'il y a plusieurs <code>&lt;nav&gt;</code> dans la page</li>
+			<li>Donnez à chaque action un intitulé complet (« Modifier », pas une icône seule) : le nom de l'entrée y est ajouté automatiquement</li>
+			<li>Dans le slot <code>actions</code>, utilisez <code>SyIconButton</code> et reprenez le nom de l'entrée dans l'intitulé</li>
+			<li>Si une action mène à une page, utilisez un lien plutôt qu'un bouton</li>
+		</ul>
+	</BestPracticesSection>
+
+	<ResourcesSection>
+		<ul>
+			<li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/examples/disclosure-navigation/" target="_blank" rel="noopener noreferrer">WAI-ARIA Authoring Practices : Disclosure Navigation Menu</a></li>
+			<li><a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/" target="_blank" rel="noopener noreferrer">RGAA 4.1 : critères et tests</a></li>
+		</ul>
+	</ResourcesSection>
+</AccessibilityGuideLayout>
