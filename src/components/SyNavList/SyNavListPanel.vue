@@ -232,7 +232,9 @@
 
 <style lang="scss" scoped>
 .sy-nav-list-panel {
-	width: var(--sy-nav-list-width, 300px);
+	// Par défaut, la largeur suit le contenu (entrée la plus longue) ; prop width de SyNavList sinon.
+	// Toujours limitée à la largeur du conteneur.
+	width: var(--sy-nav-list-width, fit-content);
 	max-width: 100%;
 
 	// .v-list coupe son débordement : le sous-niveau doit pouvoir en sortir.
@@ -356,8 +358,11 @@
 		right: auto;
 		left: 100%;
 
-		// Même largeur que le niveau parent (la ligne) : suit la prop width, y compris « auto ».
-		width: 100%;
+		// La prop width ne vaut que pour le premier niveau : un sous-niveau suit son propre contenu,
+		// dans la limite de la largeur de la maquette PA (au-delà, le libellé passe à la ligne).
+		// max-content et non fit-content : positionné à droite, il serait limité à la largeur de la ligne parente.
+		width: max-content;
+		max-width: 300px;
 	}
 
 	.sy-nav-list-panel__toggle :deep(.v-icon) {
