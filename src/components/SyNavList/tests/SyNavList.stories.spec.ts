@@ -8,7 +8,10 @@ import * as stories from '../SyNavList.stories'
 const composedStories = composeStories(stories)
 const { Default, WithIcons, WithActions, WithSubLevel, Complete, IconColor, SlotActions } = composedStories
 
-const allStories = Object.entries(composedStories).map(([name, story]) => ({ name, story }))
+// LabsNotice est le bandeau de la documentation, pas un exemple du composant
+const allStories = Object.entries(composedStories)
+	.filter(([name]) => name !== 'LabsNotice')
+	.map(([name, story]) => ({ name, story }))
 
 enableAutoUnmount(afterEach)
 

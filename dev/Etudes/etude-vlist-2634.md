@@ -233,7 +233,7 @@ Passer du Playground à un composant du DS :
 
 ## Implémentation : `SyNavList` (option 2a)
 
-Le composant est dans `src/components/SyNavList/`, exporté dans la catégorie Navigation de `src/components/index.ts` avec ses types (`SyNavListItem`, `SyNavListAction`, `SyNavListLocales`). Le prototype C reste dans `dev/Etudes/etude-vlist-2634/` comme référence de l'étude.
+Le composant est dans `src/components/SyNavList/`, exporté dans la catégorie Navigation de `src/components/index.ts` avec ses types (`SyNavListItem`, `SyNavListAction`, `SyNavListLocales`). Dans la documentation, il est classé dans la rubrique **Labs** (composants en cours de validation, API susceptible d'évoluer dans une version mineure), avec une page `Labs/Introduction` et un bandeau en tête de sa page. Le prototype C reste dans `dev/Etudes/etude-vlist-2634/` comme référence de l'étude.
 
 | Fichier | Rôle |
 |---|---|
