@@ -44,9 +44,6 @@ const projects = [
  */
 export const SlotItem: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -135,9 +132,6 @@ export const SlotItem: Story = {
  */
 export const SlotHeaders: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -222,9 +216,6 @@ export const SlotHeaders: Story = {
  */
 export const SlotHeader: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -284,9 +275,6 @@ export const SlotHeader: Story = {
  */
 export const ComplexItemsDisplay: Story = {
 	parameters: {
-		a11y: {
-			disable: true,
-		},
 		sourceCode: [
 			{
 				name: 'Template',

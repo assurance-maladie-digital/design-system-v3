@@ -14,9 +14,28 @@ describe('SyTablePagination – accessibility', () => {
 		Object.defineProperty(HTMLElement.prototype, 'scrollIntoView', { configurable: true, value: vi.fn() })
 	})
 
+	it('labels the selector without controlsId', async () => {
+		const wrapper = mount(SyTablePagination, { props, attachTo: document.body })
+
+		try {
+			await flushPromises()
+			const input = wrapper.get('input[role="combobox"]')
+			expect(input.attributes('aria-label')).toBe(wrapper.get('.rows-per-page-label').text())
+			// The component is mounted outside a page landmark.
+			assertNoA11yViolations(await axe(wrapper.element), 'SyTablePagination – default', { ignoreRules: ['region'] })
+		}
+		finally {
+			wrapper.unmount()
+		}
+	})
+
 	it('associates each selector with its own visible label', async () => {
 		const wrapper = mount(defineComponent({
-			setup: () => () => h('div', [h(SyTablePagination, props), h(SyTablePagination, props)]),
+			setup: () => () => h('div', [
+				h('table', { id: 'pagination-table' }),
+				h(SyTablePagination, { ...props, controlsId: 'pagination-table' }),
+				h(SyTablePagination, { ...props, controlsId: 'pagination-table' }),
+			]),
 		}), { attachTo: document.body })
 
 		try {
@@ -40,7 +59,12 @@ describe('SyTablePagination – accessibility', () => {
 	})
 
 	it('labels the closed field and opened list and still emits selection changes', async () => {
-		const wrapper = mount(SyTablePagination, { props, attachTo: document.body })
+		const wrapper = mount(defineComponent({
+			setup: () => () => h('div', [
+				h('table', { id: 'pagination-table' }),
+				h(SyTablePagination, { ...props, controlsId: 'pagination-table' }),
+			]),
+		}), { attachTo: document.body })
 
 		try {
 			await flushPromises()
@@ -50,6 +74,7 @@ describe('SyTablePagination – accessibility', () => {
 			assertNoA11yViolations(await axe(wrapper.element), 'SyTablePagination – closed', { ignoreRules: ['region'] })
 
 			await input.trigger('keydown', { key: 'ArrowDown' })
+			await flushPromises()
 			const list = document.querySelector('[role="listbox"]')
 			expect(list).not.toBeNull()
 			expect(list?.getAttribute('aria-labelledby')).toBe(label.attributes('id'))
@@ -59,7 +84,8 @@ describe('SyTablePagination – accessibility', () => {
 			expect(option).toBeDefined()
 			option?.dispatchEvent(new MouseEvent('click', { bubbles: true }))
 			await input.trigger('blur')
-			expect(wrapper.emitted('update:items-per-page')).toContainEqual([25])
+			await flushPromises()
+			expect(wrapper.getComponent(SyTablePagination).emitted('update:items-per-page')).toContainEqual([25])
 		}
 		finally {
 			wrapper.unmount()

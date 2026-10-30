@@ -12,16 +12,20 @@
 		itemsPerPageOptions?: number[]
 		headingLevel?: 1 | 2 | 3 | 4 | 5 | 6
 		pageInput?: boolean
+		controlsId?: string
+		paginationLabel?: string
 	}>(), {
 		itemsPerPageOptions: undefined,
 		headingLevel: 2,
 		pageInput: false,
+		controlsId: undefined,
+		paginationLabel: undefined,
 	})
+
+	const itemsPerPageLabelId = `items-per-page-${useId()}`
 
 	// Reference to the SySelect component
 	const selectRef = ref<InstanceType<typeof SySelect> | null>(null)
-	const itemsPerPageLabelId = `sy-table-items-per-page-${useId()}`
-
 	// Items per page options - standard options and current value
 	const formatedItemsPerPageOptions = computed(() => {
 		// Use provided itemsPerPageOptions or default standard options
@@ -160,7 +164,9 @@
 				:pages="pageCount"
 				:heading-level="headingLevel"
 				:visible="5"
-				:label="locales.pagination.paginationNavAriaLabel"
+				:label="paginationLabel || locales.pagination.paginationNavAriaLabel"
+				:button-mode="!!controlsId"
+				:aria-controls="controlsId"
 				class="pagination"
 				@update:model-value="goToPage"
 			>
@@ -168,7 +174,11 @@
 					<span>{{ locales.pagination.previous }}</span>
 				</template>
 				<template #page-number="{ page: pageNum }">
-					{{ locales.pagination.pageText(pageNum) }}
+					<span
+						v-if="controlsId"
+						class="d-sr-only"
+					>{{ locales.pagination.pageAriaLabel(pageNum) }}</span>
+					<span :aria-hidden="controlsId ? true : undefined">{{ locales.pagination.pageText(pageNum) }}</span>
 				</template>
 				<template #next>
 					<span>{{ locales.pagination.next }}</span>
@@ -218,8 +228,8 @@
 				disable-error-handling
 				density="compact"
 				class="rows-per-page-select"
-				:aria-labelledby="itemsPerPageLabelId"
-				:aria-label="locales.pagination.itemsPerPageText"
+				:aria-label="controlsId ? undefined : locales.pagination.itemsPerPageText"
+				:aria-labelledby="controlsId ? itemsPerPageLabelId : undefined"
 				:label="''"
 				style="width: 90px;"
 				:clearable="false"
