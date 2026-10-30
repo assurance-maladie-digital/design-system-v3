@@ -6,6 +6,7 @@ import { mdiAccount, mdiChevronDown, mdiChevronUp, mdiCog, mdiFileDocument, mdiF
 import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
 import HeaderBar from '@/components/HeaderBar/HeaderBar.vue'
+import { createLabsNotice } from '@/stories/LabsNotice/LabsNotice'
 import SyNavList from './SyNavList.vue'
 import type { SyNavListAction, SyNavListItem } from './types'
 
@@ -99,7 +100,7 @@ const onActionScript = `function onAction(item: SyNavListItem, action: SyNavList
 }`
 
 const meta = {
-	title: 'Composants/Navigation/SyNavList',
+	title: 'Labs/SyNavList',
 	component: SyNavList,
 	parameters: {
 		layout: 'fullscreen',
@@ -780,4 +781,11 @@ ${onActionScript}
 			</main>
 		`,
 	}),
+}
+
+export const LabsNotice = {
+	...createLabsNotice(),
+	// Bandeau de la documentation : sans la marge ni la hauteur minimale du decorator des exemples
+	parameters: { fullPage: true },
+	tags: ['!dev'],
 }

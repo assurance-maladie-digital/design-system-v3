@@ -173,6 +173,7 @@ const preview: Preview = {
 						'Feedback', ['CookieBanner', 'DialogBox', 'NotificationBar', 'RatingPicker', 'SyAlert'],
 						'Composants Vuetify', ['Introduction', 'VBreadcrumbs', 'VBtn', 'VCard', 'VCarousel', 'VNavigationDrawer', 'VOtpInput', 'VSkeletonLoader', 'VSlideGroup', 'VStepper', 'VSwitch', 'VTooltip'],
 					],
+					'Labs', ['Introduction', '*'],
 					'Templates', ['Vue d\'ensemble', 'ErrorPage', 'MaintenancePage', 'NotFoundPage', 'StatusPage'],
 					'Guide Du Dev', [
 						'Démarrage', ['Installation', 'Configuration du thème', 'createVuetifyInstance', 'VuetifyOptions'],

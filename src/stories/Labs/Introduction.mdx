@@ -1,0 +1,31 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import '../styles/shared.css';
+
+<Meta title="Labs/Introduction" />
+
+<div className="header">
+  <h1>Labs</h1>
+  <p>Les Labs regroupent les composants du Design System en cours de validation. Ils répondent à un besoin identifié et sont testés (tests unitaires, accessibilité automatisée), mais leur API n'est pas encore figée.</p>
+</div>
+
+## Ce qui distingue un composant Labs
+
+- **API susceptible d'évoluer** : props, événements et slots peuvent changer dans une version mineure, et pas seulement dans une version majeure. Chaque changement est signalé dans les notes de version.
+- **Retours attendus** : l'usage en projet sert à valider le composant. Signalez les besoins non couverts ou les difficultés depuis la page [Signaler une anomalie](/docs/démarrer-signaler-une-anomalie--docs).
+- **Sortie des Labs** : une fois son API stabilisée et validée, le composant rejoint la rubrique Composants. Le changement est annoncé dans les notes de version.
+
+## Utilisation
+
+Un composant Labs s'importe comme les autres composants du Design System :
+
+```ts
+import { SyNavList } from '@cnamts/synapse'
+```
+
+Contrairement à Vuetify, il n'y a pas de point d'entrée séparé pour les Labs : seul son emplacement dans la documentation, et le bandeau en tête de sa page, le distinguent.
+
+## Composants
+
+| Composant | Description |
+|---|---|
+| [SyNavList](/docs/labs-synavlist--docs) | Liste de navigation dont chaque entrée mène à une page, peut proposer des actions rapides et ouvrir un sous-niveau. |
