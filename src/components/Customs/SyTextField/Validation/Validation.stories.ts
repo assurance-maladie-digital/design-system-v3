@@ -1229,3 +1229,102 @@ const customRules = [
 		`,
 	}),
 }
+
+export const SyFormVuetifyValidationSubmit: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Validation native Vuetify avec `validateOn="submit"`. Les règles ne sont évaluées qu\'à la soumission du formulaire, pas à la perte de focus ou pendant la saisie.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<p class="mb-4">
+		La validation ne se déclenche <strong>qu'à la soumission</strong>(validateOn="submit").
+		Essayez de saisir une valeur invalide, puis cliquez sur <strong>Soumettre</strong>.
+	</p>
+	<SyForm @submit="handleSubmit">
+		<SyTextField
+			v-model="value"
+			label="Adresse email"
+			:use-vuetify-validation="true"
+			validate-on="submit"
+			:rules="vuetifyRules"
+		/>
+		<div class="mt-4">
+			<VBtn type="submit" color="primary">Soumettre</VBtn>
+		</div>
+	</SyForm>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { VBtn } from 'vuetify/components'
+import { SyTextField, SyForm } from '@cnamts/synapse'
+
+const value = ref('')
+
+const vuetifyRules = [
+	(value: string) => !!value || 'Ce champ est requis',
+	(value: string) => /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(value) || 'L\\'adresse email est invalide',
+]
+
+function handleSubmit(event: { isValid: boolean }) {
+	const isValid = event.isValid
+	alert(isValid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
+}
+</script>`,
+			},
+		],
+	},
+	args: {
+		modelValue: '',
+		label: 'Adresse email',
+		useVuetifyValidation: true,
+		validateOn: 'submit',
+	},
+	render: args => ({
+		components: { SyTextField, VBtn, SyForm },
+		setup() {
+			const value = ref(args.modelValue)
+			watch(() => args.modelValue, (newValue) => {
+				value.value = newValue
+			})
+
+			const vuetifyRules = [
+				(value: string) => !!value || 'Ce champ est requis',
+				(value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || 'L\'adresse email est invalide',
+			]
+
+			function handleSubmit(e: { isValid: boolean }) {
+				const isValid = e.isValid
+				alert(isValid ? 'Valeur valide !' : 'Veuillez corriger les erreurs.')
+			}
+
+			return { args, value, vuetifyRules, handleSubmit }
+		},
+		template: `
+			<div>
+				<p class="mb-4">
+					La validation ne se déclenche <strong>qu'à la soumission</strong>(validateOn="submit").
+					Essayez de saisir une valeur invalide, puis cliquez sur <strong>Soumettre</strong>.
+				</p>
+				<SyForm @submit="handleSubmit">
+					<SyTextField
+						v-bind="args"
+						v-model="value"
+						:rules="vuetifyRules"
+						width="400px"
+					/>
+					<div class="mt-4">
+						<VBtn type="submit" color="primary">Soumettre</VBtn>
+					</div>
+				</SyForm>
+			</div>
+		`,
+	}),
+}

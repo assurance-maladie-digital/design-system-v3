@@ -2,16 +2,19 @@ import type {
 	ValidationResult as LegacyValidationResult,
 	ValidationRule as SyValidationRule,
 } from '@/composables/validation/useValidation'
-import { computed, ref, toValue, useId, watch, type Ref } from 'vue'
 import { devWarn } from '@/utils/devWarn'
+import { computed, ref, toValue, useId, watch, type Ref } from 'vue'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
+import type { VTextField } from 'vuetify/components/VTextField'
+import { mergeMessages } from './messageUtils'
 import { useCustomValidation, type UseCustomValidationOptions } from './useCustomValidation'
 import { useVuetifyValidation as useVuetifyValidationComposable } from './useVuetifyValidation'
-import { mergeMessages } from './messageUtils'
 
 export type { VuetifyValidationRule }
 export type { SyValidationRule as ValidationRule }
 export type { LegacyValidationResult as ValidationResult }
+
+export type ValidateOn = NonNullable<VTextField['validateOn']>
 
 export interface FieldValidationProps {
 	customRules?: SyValidationRule[]
@@ -34,6 +37,7 @@ export interface FieldValidationProps {
 	successMessages?: string[] | null
 	// When true (Vuetify native mode), the controller should not handle errors/successes
 	useVuetifyValidation?: boolean
+	validateOn?: ValidateOn
 	warningMessages?: string[] | null
 }
 
@@ -90,6 +94,7 @@ export function useValidation(params: {
 	hasWarningProp?: Ref<boolean>
 	hasSuccessProp?: Ref<boolean>
 	maxErrors?: Ref<number>
+	validateOn?: Ref<ValidateOn | undefined>
 } & ({
 	useVuetifyValidation: true
 	rules: Ref<VuetifyValidationRule[] | undefined>
@@ -123,6 +128,9 @@ export function useValidation(params: {
 			},
 			{ immediate: true },
 		)
+		if (!toValue(params.useVuetifyValidation) && params.validateOn?.value) {
+			devWarn(`[Synapse] La prop validateOn est ignorée en mode Synapse (use-vuetify-validation=false) pour le champ « ${params.label?.value ?? 'sans label'} ». Seule isValidateOnBlur est prise en compte.`)
+		}
 	}
 
 	const vuetifyErrors = ref<string[]>([])
@@ -164,7 +172,7 @@ export function useValidation(params: {
 			computed(() => vuetifyName),
 			params.label,
 			params.readonly,
-			computed(() => params.isValidateOnBlur.value ? 'blur' : 'input'),
+			computed(() => params.validateOn?.value || (params.isValidateOnBlur.value ? 'blur' : 'input')),
 		)
 	}
 
