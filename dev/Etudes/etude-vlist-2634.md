@@ -82,7 +82,7 @@ Briques réutilisables : `SyIconButton` (bouton icône avec `aria-label` et `tit
 
 ## Constats
 
-Deux structures ont été rendues avec Vuetify 3.12.2 et analysées avec axe (`vitest-axe`, jsdom), dans un test temporaire supprimé après mesure.
+Les structures A et B ont été rendues avec Vuetify 3.12.2 et analysées avec axe (`vitest-axe`, jsdom), dans un test temporaire supprimé après mesure. Le prototype C a été mesuré dans Chrome.
 
 ### A — Approche Vuetify directe : `VListGroup` + `VListItem` lien + actions dans `append`
 
@@ -122,21 +122,87 @@ Deux structures ont été rendues avec Vuetify 3.12.2 et analysées avec axe (`v
 
 Rendu : `role="listitem"` contenant un lien et des boutons frères, sans imbrication. **axe : 0 violation.**
 
-Cette structure répond au besoin, mais Vuetify n'en fournit que l'habillage : l'ouverture du sous-niveau (état, `aria-expanded`, `aria-controls`, rendu du sous-niveau), le lien actif (`aria-current="page"`) et le comportement clavier restent à écrire dans chaque projet.
+Cette structure est la bonne base, mais elle ne suffit pas seule : l'ouverture du sous-niveau, le panneau latéral, le clavier et le responsive restent à écrire. Le prototype C montre ce que cela demande.
+
+### C — Prototype complet sur Vuetify (Playground)
+
+La structure B a été développée jusqu'au comportement de la maquette PA, puis testée dans le Playground. Comme `dev/Playground.vue` ne peut pas être commité (bloqué par le hook de pre-commit), le prototype est conservé avec l'étude, dans `dev/Etudes/etude-vlist-2634/` :
+
+- `DemoVListNav.vue` : la page de démonstration, avec le sous-menu « Dossiers client » et les entrées de la maquette (« Pièces justificatives » est une donnée d'exemple, le contenu de ce niveau n'étant pas maquetté) ;
+- `VListNavPanel.vue` (environ 330 lignes) : le panneau, récursif pour les sous-niveaux.
+
+**Relancer le prototype :** remplacer localement le contenu de `dev/Playground.vue` par le code ci-dessous, puis lancer `pnpm dev`. Ne pas commiter cette modification.
+
+```vue
+<script setup lang="ts">
+	import DemoVListNav from './Etudes/etude-vlist-2634/DemoVListNav.vue'
+</script>
+
+<template>
+	<DemoVListNav />
+</template>
+```
+
+**Comportement :** actions masquées au repos, visibles au survol, au focus et en permanence sur tactile ; panneaux en cascade à droite sur au moins trois niveaux ; ouverture par le chevron (clic, Entrée, Espace), et au survol sur grand écran seulement ; Échap referme le panneau le plus profond ; sous 960 px, le sous-niveau s'ouvre sous l'entrée.
+
+**Première version : 5 non-conformités** relevées en mesurant dans Chrome les critères contrôlés par Tanaguru, alors qu'axe ne signalait rien :
+
+| # | Critère RGAA | Constat mesuré |
+|---|---|---|
+| C1 | 8.2 / 7.1 | Menu fermé, `aria-controls` des chevrons pointait vers un `id` absent (panneau rendu par `v-if`). Tanaguru a déjà relevé ce type d'erreur dans le DS (étude #2678). |
+| C2 | 1.1 / 1.2 | `VIcon` rend `<svg role="img" aria-hidden="true">`, ce que la directive `vRgaaSvgFix` du DS corrige précisément pour Tanaguru. |
+| C3 | 10.13 | Un panneau ouvert au survol, focus ailleurs, ne se fermait pas avec Échap. |
+| C4 | 10.11 | À 320 px, trois niveaux ouverts : page de 932 px, défilement horizontal. |
+| C5 | 10.12 / 10.4 | Libellés sur une ligne, coupés par des points de suspension : un libellé long perdait sa fin. |
+
+**Après correction :**
+
+| Mesure | Résultat |
+|---|---|
+| axe (WCAG 2.0 à 2.2 A/AA + bonnes pratiques), fermé, ouvert, à 320 px | 0 violation |
+| Tanaguru, testé en local sur le Playground (30/10/2026) | 0 erreur |
+| Cibles d'`aria-controls`, menu fermé | 3 sur 3 présentes |
+| SVG avec `role="img"` | 0 sur 9, tous masqués aux technologies d'assistance |
+| Échap, deux niveaux ouverts au survol, focus ailleurs | 1er appui : niveau le plus profond fermé ; 2e : parent fermé |
+| Largeur à 320 px, trois niveaux ouverts | 320 px, sans défilement horizontal |
+| Libellé long + espacement du texte augmenté (RGAA 10.12) | Aucun libellé tronqué ; la ligne passe de 48 à 80 px |
+| Clavier | Ordre lien → actions → chevron ; Entrée ouvre ; flèches dans le panneau sans saut double ; Échap rend le focus au chevron |
+| Dimensions | Lignes de 48 px, boutons de 28 × 28 px, comme dans la maquette |
+| Console | Aucune erreur |
+
+**Contournements nécessaires.** Chacun répond à un comportement de Vuetify 3.12.2 et repose sur un détail interne qui peut changer à une mise à jour :
+
+| # | Contournement | Pourquoi | Détail interne de Vuetify utilisé |
+|---|---|---|---|
+| 1 | `.v-list` en `overflow: visible` | `.v-list` coupe ce qui dépasse : le panneau latéral serait rogné. | Style de `.v-list` |
+| 2 | Panneau placé dans le slot `append` | `.v-list-item__content` coupe aussi son débordement. | Structure et styles de `VListItem` |
+| 3 | `tabindex="-1"` sur `VList` | `VList` pose un arrêt de tabulation sur son conteneur. | `tabindex` fixé par `VList` |
+| 4 | Flèches, Début, Fin et Échap arrêtés (`.stop`) dans les sous-listes | `VList` gère les flèches sur tout son sous-arbre : une liste imbriquée faisait bouger le focus deux fois. | Gestion clavier de `VList` |
+| 5 | `pa-0` sur les boutons de 28 px | Un `VBtn` icône garde 16 px de marge intérieure de chaque côté et ne descend pas sous 32 px. | Styles de `VBtn` dans le thème |
+| 6 | Titre en `white-space: normal` | `.v-list-item-title` est sur une ligne avec points de suspension (C5). | Style de `.v-list-item-title` |
+| 7 | `SyIcon decorative` au lieu de `VIcon` | `role="img"` sur le SVG (C2). | Rendu SVG de `VIcon` |
+| 8 | `v-show`, fermeture en cascade des sous-niveaux et pile d'Échap partagée | Cible d'`aria-controls` toujours présente (C1), Échap global (C3). Avec `v-show`, un sous-niveau restait ouvert, et dans la pile d'Échap, quand son parent se fermait : bug trouvé à la vérification et corrigé. | — (logique propre au prototype) |
+
+L'affichage des actions au survol et au focus cible aussi `.v-list-item__append` (sélecteur `:deep`).
+
+**Limites :** axe et Tanaguru ne couvrent que les critères testables automatiquement ; pas de test avec un lecteur d'écran réel ; sous 960 px, le sous-niveau recouvre les entrées suivantes au lieu de les pousser, ce qui est conforme mais reste à valider avec le design ; libellés écrits en dur, `VBtn` au lieu de `SyIconButton`, aucun test automatisé.
+
+**Conclusion :** une solution sur Vuetify est atteignable et passe toutes les mesures. Mais elle demande huit contournements, dont la plupart ne se devinent pas : la première version, pourtant construite avec les bonnes intentions, avait 5 non-conformités.
 
 ## Options
 
 | Option | Description | Avantages | Inconvénients |
 |---|---|---|---|
-| **1. Documentation** | Page `composantsVuetify/VList` décrivant la structure B, avec une story et un avertissement sur la structure A. | Coût faible, aucun nouveau composant à maintenir. | Chaque projet réécrit la logique d'ouverture et l'accessibilité ; la structure A, non conforme, reste la plus intuitive. |
-| **2. Nouveau composant `Sy…`** (nom à définir, par ex. `SyNavList`) | `nav > ul > li` avec, par entrée : icône, lien (`to`/`href`), actions, bouton d'ouverture, sous-liste. Données par prop (`items` avec `actions` et `children`) et slot par entrée pour des actions personnalisées, comme le demande l'issue. | Accessible par construction, testé (unitaires, axe, visuels), cohérent entre produits, réutilise `SyIconButton` et le motif de `HeaderSubMenu`. | Coût de développement et de maintenance ; justification multi-produits à apporter (voir ci-dessous). |
+| **1. Documentation** | Page `composantsVuetify/VList` présentant le prototype C, à recopier par les projets, avec un avertissement sur la structure A. | Coût faible, aucun nouveau composant à maintenir. | Chaque projet recopie environ 330 lignes et 8 contournements ; une erreur de recopie réintroduit les non-conformités C1 à C5 ; une mise à jour de Vuetify peut casser chaque copie sans que personne ne le voie. |
+| **2a. Composant `Sy…` construit sur Vuetify** (nom à définir, par ex. `SyNavList`) | Le prototype C repris dans `src/components/`, aux conventions du DS. Données par prop (`items` avec `actions` et `children`) et slot par entrée pour des actions personnalisées, comme le demande l'issue. | Prototype déjà validé et fidèle à la maquette ; thème, densité et états fournis par Vuetify, cohérent avec un DS construit sur Vuetify et avec la page Figma « Lists », qui renvoie à `VList` ; contournements écrits et testés une seule fois. | Dépend de détails internes de Vuetify (tableau des contournements) : à couvrir par des tests pour qu'une mise à jour qui les casse fasse échouer la CI ; coût de développement ; justification multi-produits à apporter. |
+| **2b. Composant `Sy…` en HTML natif** | `nav > ul > li` sans `VList` (conception en fin d'étude). | Aucun contournement, indépendant des détails internes de Vuetify. | Tout le style est à refaire (survol, densité, thèmes) ; non prototypé ; même coût de maintenance que 2a sans l'avantage d'un prototype validé. |
 | **3. Étendre un composant existant** | Ajouter actions et liens à `HeaderSubMenu` ou à `HeaderNavigationBar`. | Réutilisation du code. | Contextes différents (menu burger, barre horizontale) : élargit leur contrat pour un usage qui n'est pas le leur. |
 
-**Recommandation :** option 2, sous réserve des réponses aux questions ouvertes. L'option 1 ne protège pas les projets contre la structure A, qui est la plus naturelle et la moins conforme. Si le besoin reste propre au PA, l'option 1 est le minimum à livrer.
+**Recommandation :** option **2a**, à partir du prototype C, sous réserve des réponses aux questions ouvertes. Le prototype montre que la solution sur Vuetify fonctionne, mais aussi qu'aucun projet ne retrouverait seul les huit contournements : c'est ce qui écarte l'option 1. L'option 2b reste l'alternative si la dépendance aux détails internes de Vuetify est jugée trop risquée. Si le besoin reste propre au PA (question 8), l'option 1 est le minimum à livrer, en reprenant le prototype C tel quel.
 
-## Exigences pour l'option 2
+## Exigences pour l'option 2 (2a et 2b)
 
-- **Sémantique :** `nav` avec `aria-label`, liste `ul`/`li`, lien réel par entrée, `aria-current="page"` sur l'entrée active. Pas de `role="menu"` : c'est une navigation, pas un menu d'application.
+- **Sémantique :** `nav` avec `aria-label`, liste (`ul`/`li`, ou `role="list"`/`listitem` posés par `VList` dans l'option 2a), lien réel par entrée, `aria-current="page"` sur l'entrée active. Pas de `role="menu"` : c'est une navigation, pas un menu d'application. Un seul nom pour la navigation : sur le `nav`, pas répété sur la liste racine.
 - **Séparation des trois fonctions :** lien, actions et bouton d'ouverture sont des éléments frères ; aucun élément interactif imbriqué.
 - **Sous-niveau :** motif « disclosure » de `HeaderSubMenu` : `aria-expanded`, `aria-controls`, intitulé qui reprend le nom de l'entrée (« Dossiers : afficher le sous-menu »). Affiché en panneau à droite, comme dans la maquette PA ; ouvert par le bouton (clic, Entrée, Espace), le survol n'étant qu'un complément ; le panneau reste ouvert quand le pointeur passe de l'entrée au panneau.
 - **Actions :** `SyIconButton`, intitulé explicite et propre à l'entrée (« Créer un dossier », pas « Créer »). Si une action mène à une page, c'est un lien, pas un bouton. Jusqu'à 4 par entrée, comme dans le composant Figma.
@@ -144,15 +210,32 @@ Cette structure répond au besoin, mais Vuetify n'en fournit que l'habillage : l
 - **Clavier :** tous les éléments atteignables à la tabulation, ordre lien → actions → ouverture ; Échap referme le sous-niveau et rend le focus au bouton d'ouverture.
 - **Focus visible :** état à ajouter dans Figma, absent des variantes actuelles.
 - **Cible tactile :** au moins 24 × 24 px par bouton (WCAG 2.5.8) ; respecté par la maquette (28 et 24 px).
-- **Responsive :** les panneaux en cascade ne tiennent pas en largeur réduite (au moins 900 px pour trois niveaux) ; l'affichage mobile reste à maquetter.
+- **Responsive :** les panneaux en cascade ne tiennent pas en largeur réduite (au moins 900 px pour trois niveaux). Le prototype C ouvre le sous-niveau sous l'entrée en dessous de 960 px, sans défilement horizontal à 320 px (RGAA 10.11) ; l'affichage mobile reste à valider avec le design.
+- **Libellés longs :** retour à la ligne, jamais de points de suspension (RGAA 10.4, 10.12).
+- **Cible d'`aria-controls` toujours présente :** sous-niveaux masqués (`v-show`) plutôt que retirés de la page (`v-if`), avec fermeture en cascade quand un parent se ferme.
+- **Échap :** ferme le panneau ouvert le plus profond, y compris ouvert au survol alors que le focus est ailleurs (RGAA 10.13).
+- **Icônes :** `SyIcon` (correction `vRgaaSvgFix`), jamais `VIcon` directement.
 - **Contrat :** libellés dans `locales.ts`, surchargeables par prop ; composant exporté dans `src/components/index.ts` ; stories (cas standard, sans action, sans sous-niveau, liste vide) ; tests unitaires, `*.a11y.spec.ts` et visuels.
-- **Éco-conception :** aucune nouvelle dépendance ; sous-niveaux rendus à l'ouverture.
+- **Non-régression :** dans l'option 2a, chaque contournement est couvert par un test, pour qu'une mise à jour de Vuetify qui le casse fasse échouer la CI.
+- **Éco-conception :** aucune nouvelle dépendance. Les sous-niveaux sont rendus dès le départ, masqués, pour que la cible d'`aria-controls` existe : coût négligeable pour quelques dizaines d'entrées.
 
-## Conception proposée avec les composants du DS
+## Conception recommandée : option 2a, à partir du prototype C
 
-Proposition pour l'option 2, à valider avant développement. Elle n'est ni implémentée ni testée, en dehors du point vérifié ci-dessous.
+Passer du Playground à un composant du DS :
 
-**Principe :** HTML natif (`nav > ul > li`) et composants du Design System, sans `VList`. C'est `VList` qui produit les rôles incorrects (`aria-selected` sur un lien, groupe dans une liste) et le lien qui contient les boutons (constats A1 et A4).
+1. **Déplacer** `dev/Etudes/etude-vlist-2634/VListNavPanel.vue` vers `src/components/SyNavList/` (nom à définir), avec `types.ts`, l'export dans `src/components/index.ts`, la documentation `*.mdx` et les stories.
+2. **Libellés** : passer les textes écrits en dur (« afficher / masquer le sous-menu », « Sous-menu … ») dans `locales.ts`, avec des fonctions à paramètre, surchargeables par la prop `locales`.
+3. **Liens** : remplacer les ancres de démonstration par le motif de `FooterBar.vue:85-93` (`<component :is="item.href ? 'a' : 'RouterLink'">`), pour obtenir `aria-current="page"` sur la page active via `RouterLink`.
+4. **Boutons** : essayer `SyIconButton` à la place de `VBtn` (nom accessible obligatoire). Il transmet bien `aria-expanded` et `aria-controls` (vérifié) ; reste à vérifier qu'on peut le ramener à 28 px (contournement 5).
+5. **Slot d'actions** par entrée, comme le demande l'issue, en plus des actions déclarées en données.
+6. **Tests** qui figent chaque contournement et chaque correction : cible d'`aria-controls` présente menu fermé, aucun `role="img"` sur les SVG, pile d'Échap, fermeture en cascade, focus rendu au chevron, absence de bouton dans un lien ; `*.a11y.spec.ts` fermé et ouvert ; tests visuels en largeur réduite et en grand écran.
+7. **Story publiée** : relancer Tanaguru sur la story du composant, dans le deploy preview de la PR, pour confirmer le résultat obtenu en local sur le Playground.
+
+## Alternative : option 2b, composant en HTML natif
+
+Conception sans `VList`, à retenir si la dépendance aux détails internes de Vuetify (contournements du prototype C) est jugée trop risquée. Elle n'est ni implémentée ni testée, en dehors du point vérifié ci-dessous.
+
+**Principe :** HTML natif (`nav > ul > li`) et composants du Design System. Elle évite par construction les comportements de `VList` à contourner (débordement coupé, arrêt de tabulation, gestion des flèches) ; en contrepartie, tout le style est à écrire.
 
 ### Briques réutilisées
 
@@ -362,15 +445,14 @@ Usage côté produit :
 
 **À trancher avec la PO et l'équipe design avant le développement :**
 
-1. **Ouverture du sous-niveau :** au survol, au clic, ou les deux ? Le clic (et le clavier) est obligatoire ; le survol ne peut être qu'un complément.
+1. **Ouverture du sous-niveau :** au survol, au clic, ou les deux ? Le clic (et le clavier) est obligatoire ; le survol ne peut être qu'un complément. Le prototype C ouvre au clic partout, et aussi au survol sur grand écran.
 2. **Actions masquées au repos :** est-ce voulu ? Si oui, valider leur affichage au focus et leur affichage permanent sur tactile. Sinon, les afficher en permanence, ce qui règle la question.
 3. **Nature des actions :** l'icône « modifier » et l'engrenage déclenchent-ils un traitement (bouton) ou mènent-ils à une page (lien) ? Quels intitulés pour les lecteurs d'écran ?
 4. **Entrée parente sans page :** une entrée qui a un sous-niveau mène-t-elle aussi à une page ? Sinon, son libellé devient le bouton d'ouverture.
-5. **Affichage mobile :** les panneaux en cascade ne tiennent pas en largeur réduite. Dépliage dans la liste, ou navigation par écrans successifs ?
+5. **Affichage mobile :** les panneaux en cascade ne tiennent pas en largeur réduite. Le prototype C ouvre le sous-niveau sous l'entrée en le superposant aux entrées suivantes. Ce choix convient-il, ou faut-il pousser les entrées suivantes vers le bas, ou naviguer par écrans successifs ?
 6. **États manquants dans Figma :** focus (obligatoire), désactivé, entrée active (la variante `Selected` peut-elle porter la page courante ?).
 7. **Documentation Synapse :** l'anatomie de la page « Lists » doit-elle intégrer le slot d'actions, déjà présent mais masqué dans `List-element` ?
-8. **Multi-produits :** le critère « intérêt d'usage pour plusieurs produits » n'est pas coché dans l'issue. La page Synapse « Lists » couvre les thèmes CNAM, PA et amelipro, mais le slot d'actions n'apparaît que dans le composant de test du PA (`List-element [TEST]`). D'autres produits ont-ils ce besoin ? La réponse conditionne le choix entre les options 1 et 2.
-
+8. **Multi-produits :** le critère « intérêt d'usage pour plusieurs produits » n'est pas coché dans l'issue. La page Synapse « Lists » couvre les thèmes CNAM, PA et amelipro, mais le slot d'actions n'apparaît que dans le composant de test du PA (`List-element [TEST]`). D'autres produits ont-ils ce besoin ? La réponse conditionne le choix entre les options 1 et 2a.
 ## Vérifications effectuées
 
 - [x] Code source de Vuetify 3.12.2 (`VList`, `VListItem`, `VListGroup`) : rôles, rendu en `<a>`, slot `append` dans le lien, props transmises à l'activateur du groupe.
@@ -379,5 +461,7 @@ Usage côté produit :
 - [x] Recensement des composants du Design System qui gèrent une navigation ou des sous-niveaux.
 - [x] Maquettes Figma (lecture via le connecteur Figma) : captures des deux nœuds et de l'en-tête de la page Synapse, structure des calques (`List-element`, `List-element [TEST]`, cadre `SLOT ACTION`), variables appliquées à une entrée au survol.
 - [x] `SyIconButton` (test temporaire, jsdom) : `aria-expanded` et `aria-controls` passés en attributs sont rendus sur le `<button>`, avec `aria-label` et `title` issus de `label` ; l'élément racine est le `<button>` ; un clic émet une fois `click-icon-button`.
-- [ ] Esquisse de `SyNavList` : ni implémentée, ni compilée, ni testée.
-- [ ] Restitution par un lecteur d'écran réel (NVDA, VoiceOver) : non faite. Les constats A1 et A3 reposent sur le HTML rendu et sur axe.
+- [x] Prototype C (`dev/Etudes/etude-vlist-2634/`, testé via le Playground) : ESLint et `vue-tsc` sans erreur, vérifiés aussi après le déplacement ; comportement testé dans jsdom (test temporaire, supprimé) et dans Chrome headless piloté au clavier et à la souris (survol, tabulation, Entrée, flèches, Échap), à 1200 et 320 px ; axe-core 4.14 injecté dans la page ; mesures des critères C1 à C5 avant et après correction ; captures comparées à la maquette PA.
+- [x] Tanaguru : 0 erreur, testé en local sur le Playground (30/10/2026), après les corrections C1 à C5. À relancer sur la story du composant, dans le deploy preview de la PR.
+- [ ] Esquisse de l'option 2b (`SyNavList` en HTML natif) : ni implémentée, ni compilée, ni testée.
+- [ ] Restitution par un lecteur d'écran réel (NVDA, VoiceOver) : non faite, ni pour les constats A1 et A3 (HTML rendu et axe), ni pour le prototype C.
