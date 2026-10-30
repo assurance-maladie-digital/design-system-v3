@@ -1,4 +1,5 @@
 import SyTextField from '../SyTextField.vue'
+import { getTextContrast } from '../../../../../cypress/support/contrast'
 
 // Déclenche :focus-visible via l'option native focus({ focusVisible: true }).
 const focusVisible = (selector: string) =>
@@ -132,5 +133,53 @@ describe('SyTextField - Focus visual regression tests', () => {
 		focusVisible('.sy-text-field__clear')
 		cy.wait(100)
 		cy.matchImageSnapshot('sy-text-field-focus-clear', cy.get('.v-application'))
+	})
+})
+
+// RGAA 3.2 : texte de moins de 24 px et non gras, contraste minimal de 4,5:1.
+// Mesuré sur le fond blanc et sur le fond par défaut des stories (#e7ecf5).
+describe('SyTextField - Text contrast', () => {
+	const MIN_CONTRAST = 4.5
+	const backgrounds = ['#ffffff', '#e7ecf5']
+
+	const cases = [
+		{
+			name: 'help text',
+			props: { label: 'Prénom', helpText: 'Votre prénom usuel' },
+			selector: '.v-messages__message',
+		},
+		{
+			name: 'help text below a message',
+			props: { label: 'Prénom', helpText: 'Votre prénom usuel', errorMessages: ['Champ obligatoire'] },
+			selector: '.help-text-below',
+		},
+		{
+			name: 'prefix',
+			props: { label: 'Montant', prefix: '€', suffix: 'TTC', modelValue: '42' },
+			selector: '.v-text-field__prefix__text',
+		},
+		{
+			name: 'suffix',
+			props: { label: 'Montant', prefix: '€', suffix: 'TTC', modelValue: '42' },
+			selector: '.v-text-field__suffix__text',
+		},
+		{
+			name: 'floating label of a filled neutral field',
+			props: { label: 'Montant', modelValue: '42' },
+			selector: '.v-field-label--floating',
+		},
+	]
+
+	backgrounds.forEach((background) => {
+		cases.forEach(({ name, props, selector }) => {
+			it(`has a sufficient contrast for the ${name} on ${background}`, () => {
+				cy.mountWithVuetify(SyTextField, { props })
+				cy.get('.v-application').invoke('css', 'background-color', background)
+
+				cy.get(selector).should('be.visible').first().then(($el) => {
+					expect(getTextContrast($el[0]!)).to.be.at.least(MIN_CONTRAST)
+				})
+			})
+		})
 	})
 })
