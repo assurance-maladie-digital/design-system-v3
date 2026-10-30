@@ -1,0 +1,89 @@
+import { Meta, Canvas, Controls, Source } from '@storybook/addon-docs/blocks';
+import * as SyNavListStories from './SyNavList.stories.ts';
+
+<Meta of={SyNavListStories} />
+
+<div className="header">
+  <h1>SyNavList</h1>
+  <p>Le composant `SyNavList` affiche une liste de navigation dont chaque entrée permet trois choses distinctes : aller à la page de l'entrée, déclencher des actions rapides et ouvrir un sous-niveau.<br/>
+  Il est basé sur `v-list`.</p>
+</div>
+
+<Canvas of={SyNavListStories.Default} />
+
+# API
+
+<Controls of={SyNavListStories.Default} />
+
+# Options
+
+Chaque story ajoute une option à la précédente.
+
+## Icônes
+
+<Canvas of={SyNavListStories.WithIcons} />
+
+## Actions
+
+<Canvas of={SyNavListStories.WithActions} />
+
+## Sous-niveau
+
+<Canvas of={SyNavListStories.WithSubLevel} />
+
+## Exemple complet (maquette PA)
+
+<Canvas of={SyNavListStories.Complete} />
+
+## Slot d'actions
+
+<Canvas of={SyNavListStories.SlotActions} />
+
+# Fonctionnement
+
+- **Lien** : une entrée avec `href` est un lien `<a>`, une entrée avec `to` un `RouterLink`, qui pose `aria-current="page"` sur la page active. Une entrée sans l'un ni l'autre affiche son libellé sans lien.
+- **Actions** : jusqu'à 4 par entrée, déclarées dans `items` (événement `action`) ou fournies par le slot `actions`, qui reçoit l'entrée (`item`) ; pour une entrée où le slot ne rend rien, les actions de `items` s'affichent. Elles sont masquées au repos et apparaissent au survol, au focus dans l'entrée et en permanence sur les écrans tactiles. Leur nom accessible reprend celui de l'entrée : « Modifier (AME) ».
+- **Sous-niveau** : ouvert par le chevron (clic, Entrée, Espace), et au survol à la souris sur grand écran. Il s'affiche à droite de la liste à partir de 960 px, sous l'entrée en dessous. Échap ferme le sous-niveau le plus profond ; depuis l'intérieur d'un sous-niveau, il rend le focus au chevron.
+- **Liste vide** : le composant ne rend rien.
+
+Lien, actions et chevron sont des éléments frères : un clic sur une action ne suit pas le lien et n'ouvre pas le sous-niveau.
+
+# Exemple d'utilisation
+
+<Source
+	dark
+	code={`
+<script setup lang="ts">
+import { mdiSquareEditOutline } from '@mdi/js'
+import { SyNavList, type SyNavListAction, type SyNavListItem } from '@cnamts/synapse'
+
+const edit: SyNavListAction = { id: 'edit', icon: mdiSquareEditOutline, label: 'Modifier' }
+
+const items: SyNavListItem[] = [
+	{
+		id: 'cmu-b',
+		label: 'CMU-B',
+		to: '/cmu-b',
+		actions: [edit],
+		children: [
+			{ id: 'reception', label: 'Réception', to: '/cmu-b/reception' },
+			{ id: 'instruction', label: 'Instruction', to: '/cmu-b/instruction' },
+		],
+	},
+	{ id: 'ame', label: 'AME', to: '/ame', actions: [edit] },
+]
+
+function onAction(item: SyNavListItem, action: SyNavListAction): void {
+	// Traitement de l'action « action.label » sur l'entrée « item.label »
+}
+</script>
+
+<template>
+	<SyNavList
+		:items="items"
+		label="Dossiers client"
+		@action="onAction"
+	/>
+</template>
+`}
+/>

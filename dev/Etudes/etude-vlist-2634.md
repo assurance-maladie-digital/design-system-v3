@@ -215,7 +215,7 @@ L'affichage des actions au survol et au focus cible aussi `.v-list-item__append`
 - **Cible d'`aria-controls` toujours présente :** sous-niveaux masqués (`v-show`) plutôt que retirés de la page (`v-if`), avec fermeture en cascade quand un parent se ferme.
 - **Échap :** ferme le panneau ouvert le plus profond, y compris ouvert au survol alors que le focus est ailleurs (RGAA 10.13).
 - **Icônes :** `SyIcon` (correction `vRgaaSvgFix`), jamais `VIcon` directement.
-- **Contrat :** libellés dans `locales.ts`, surchargeables par prop ; composant exporté dans `src/components/index.ts` ; stories (cas standard, sans action, sans sous-niveau, liste vide) ; tests unitaires, `*.a11y.spec.ts` et visuels.
+- **Contrat :** libellés dans `locales.ts`, surchargeables par prop ; composant exporté dans `src/components/index.ts` ; stories (cas standard, sans action, sans sous-niveau, slot d’actions ; la liste vide, qui ne rend rien, est documentée et testée sans story) ; tests unitaires, `*.a11y.spec.ts` et visuels.
 - **Non-régression :** dans l'option 2a, chaque contournement est couvert par un test, pour qu'une mise à jour de Vuetify qui le casse fasse échouer la CI.
 - **Éco-conception :** aucune nouvelle dépendance. Les sous-niveaux sont rendus dès le départ, masqués, pour que la cible d'`aria-controls` existe : coût négligeable pour quelques dizaines d'entrées.
 
@@ -230,6 +230,66 @@ Passer du Playground à un composant du DS :
 5. **Slot d'actions** par entrée, comme le demande l'issue, en plus des actions déclarées en données.
 6. **Tests** qui figent chaque contournement et chaque correction : cible d'`aria-controls` présente menu fermé, aucun `role="img"` sur les SVG, pile d'Échap, fermeture en cascade, focus rendu au chevron, absence de bouton dans un lien ; `*.a11y.spec.ts` fermé et ouvert ; tests visuels en largeur réduite et en grand écran.
 7. **Story publiée** : relancer Tanaguru sur la story du composant, dans le deploy preview de la PR, pour confirmer le résultat obtenu en local sur le Playground.
+
+## Implémentation : `SyNavList` (option 2a)
+
+Le composant est dans `src/components/SyNavList/`, exporté dans la catégorie Navigation de `src/components/index.ts` avec ses types (`SyNavListItem`, `SyNavListAction`, `SyNavListLocales`). Le prototype C reste dans `dev/Etudes/etude-vlist-2634/` comme référence de l'étude.
+
+| Fichier | Rôle |
+|---|---|
+| `SyNavList.vue` | `<nav>` nommé (`label`, sinon `locales.navLabel`) ; ne rend rien si `items` est vide. |
+| `SyNavListPanel.vue` | Un niveau, récursif : le prototype C, aux conventions du DS (interne, non exporté). |
+| `escapeStack.ts` | Pile d'Échap partagée ; écouteur posé seulement tant qu'un sous-niveau est ouvert (rien côté serveur). |
+| `types.ts`, `locales.ts` | Contrat et libellés ; `locales` accepte un objet partiel. |
+| `SyNavList.stories.ts`, `SyNavList.mdx`, `accessibilite/Accessibility.mdx` | Stories de la plus simple à la plus complète, une option à la fois : `Default` (liens seuls), `WithIcons`, `WithActions`, `WithSubLevel`, `Complete` (maquette PA), `SlotActions` ; et documentation (pas de story vide : sans entrée, le composant ne rend rien ; ce cas est documenté dans `SyNavList.mdx` et testé dans `SyNavList.spec.ts`). |
+| `tests/` | `SyNavList.spec.ts` (24 tests), `SyNavList.a11y.spec.ts` (2), `SyNavList.stories.spec.ts` (12), `SyNavList.visual.cy.ts` (6). |
+
+**Étapes de la conception recommandée :**
+
+| # | Étape | Réalisé |
+|---|---|---|
+| 1 | Composant, types, export, doc, stories | Oui. |
+| 2 | Libellés dans `locales.ts` | `navLabel`, `subMenuLabel`, `openSubMenu`, `closeSubMenu`, `actionLabel` (« Modifier (AME) »), surchargeables un par un. |
+| 3 | Liens | `href` → `<a>`, `to` → `RouterLink` (`aria-current="page"` vérifié avec `createRouter`), ni l'un ni l'autre → libellé sans lien. |
+| 4 | `SyIconButton` | Pour les actions et le chevron. Taille de 28 px : `width`/`height` transmis au `VBtn`, et pour les boutons du slot, une règle CSS avec `padding: 0 !important`, car le thème impose `.v-btn { padding: 0 var(--spacing-4) !important }`. |
+| 5 | Slot `actions` | Reçoit l'entrée, à tous les niveaux. Pour une entrée où il ne rend rien, les actions déclarées dans `items` s'affichent (contenu de repli de Vue). |
+| 6 | Tests des contournements | Oui ; voir ci-dessous. |
+| 7 | Tanaguru sur la story publiée | **À faire** dans le deploy preview de la PR. |
+
+**Défaut du prototype C trouvé et corrigé.** À la souris sur grand écran, le survol de l'entrée ouvrait le sous-niveau, puis le clic sur le chevron le refermait aussitôt : `toggle` basculait l'état ouvert par le survol. Trouvé par le test Cypress, absent des mesures du prototype, qui cliquaient par script sans survol. Désormais, un clic sur un sous-niveau ouvert au survol le garde ouvert, et seul un sous-niveau ouvert au survol se referme à la sortie du pointeur. Le prototype de `dev/Etudes/` garde ce défaut.
+
+**Tests qui figent les contournements**, vérifiés en retirant chaque correction une à une (le test concerné échoue, puis la correction est remise) :
+
+| Correction retirée | Tests en échec |
+|---|---|
+| `v-show` remplacé par `v-if` (C1) | 6 tests, dont « cible de aria-controls présente, sous-niveau fermé » |
+| `SyIcon` remplacé par `VIcon` (C2) | « aucune icône avec role="img" » |
+| Pile d'Échap (C3) | « Échap ferme le niveau le plus profond, focus ailleurs » et « fermeture en cascade » |
+| Fermeture en cascade (`active`) | « referme les sous-niveaux d'une entrée qui se ferme » |
+| `tabindex="-1"` (contournement 3) | « listes retirées de l'ordre de tabulation » |
+| `.stop` sur les flèches (contournement 4) | « flèches d'un sous-niveau non transmises à la liste parente » |
+| Clic après survol | « garde ouvert au clic un sous-niveau ouvert au survol » |
+
+Les contournements de style (1, 2, 5, 6 : débordement, panneau dans `append`, boutons de 28 px, retour à la ligne) ne sont pas mesurables dans happy-dom : ils sont couverts par les assertions de `SyNavList.visual.cy.ts` (sous-niveau à droite et non recouvert, boutons de 28 × 28 px et icônes de 16 px, libellé long sur plusieurs lignes, aucun défilement horizontal à 320 px, actions visibles au focus).
+
+**Mesures dans Chrome sur les stories (Storybook local, 30/10/2026), comportements mesurés sur `Complete` :**
+
+| Mesure | Résultat |
+|---|---|
+| axe (WCAG 2.0 à 2.2 A/AA + bonnes pratiques) : les 6 stories ; `Complete` fermée, deux niveaux ouverts et à 320 px | 0 violation |
+| Icônes d'entrée (`WithIcons`) | 18 × 18 px, masquées (`aria-hidden`) |
+| Cibles d'`aria-controls`, menu fermé | 3 sur 3 présentes |
+| SVG | 9, tous `aria-hidden="true"`, aucun `role="img"` |
+| Boutons d'action (données et slot) et chevron | 28 × 28 px ; icônes d'action de 16 px, chevron de 24 px |
+| Ordre de tabulation | lien → actions (opacité 1 au focus) → chevron, entrée par entrée |
+| Survol puis clic souris sur le chevron | sous-niveau ouvert, et toujours ouvert après la sortie du pointeur |
+| Échap, deux niveaux ouverts, focus ailleurs | 1er appui : niveau le plus profond fermé ; 2e : parent fermé |
+| Sous-niveaux à 1200 px | à droite (x = 332 et 632 px), non recouverts |
+| 320 px, trois niveaux ouverts | largeur de page de 320 px, sans défilement horizontal |
+| Libellé long + espacement du texte augmenté | aucun libellé tronqué ; ligne de 48 à 80 px |
+| Console | aucune erreur ni avertissement |
+
+**Reste à faire avant fusion :** Tanaguru sur le deploy preview ; baselines visuelles générées par la CI (non commitées depuis macOS) ; restitution avec un lecteur d'écran ; réponses de la PO et du design aux questions ouvertes, en particulier l'affichage mobile (question 5), qui conserve le choix du prototype C.
 
 ## Alternative : option 2b, composant en HTML natif
 
@@ -463,5 +523,7 @@ Usage côté produit :
 - [x] `SyIconButton` (test temporaire, jsdom) : `aria-expanded` et `aria-controls` passés en attributs sont rendus sur le `<button>`, avec `aria-label` et `title` issus de `label` ; l'élément racine est le `<button>` ; un clic émet une fois `click-icon-button`.
 - [x] Prototype C (`dev/Etudes/etude-vlist-2634/`, testé via le Playground) : ESLint et `vue-tsc` sans erreur, vérifiés aussi après le déplacement ; comportement testé dans jsdom (test temporaire, supprimé) et dans Chrome headless piloté au clavier et à la souris (survol, tabulation, Entrée, flèches, Échap), à 1200 et 320 px ; axe-core 4.14 injecté dans la page ; mesures des critères C1 à C5 avant et après correction ; captures comparées à la maquette PA.
 - [x] Tanaguru : 0 erreur, testé en local sur le Playground (30/10/2026), après les corrections C1 à C5. À relancer sur la story du composant, dans le deploy preview de la PR.
+- [x] `SyNavList` (option 2a) : 38 tests unitaires, axe et stories ; 6 tests Cypress passés en local (captures supprimées, baselines à produire par la CI) ; mesures dans Chrome sur les stories ; ESLint, Stylelint et `vue-tsc` sans erreur. Détail dans « Implémentation ».
+- [ ] Tanaguru sur la story `SyNavList`, dans le deploy preview de la PR.
 - [ ] Esquisse de l'option 2b (`SyNavList` en HTML natif) : ni implémentée, ni compilée, ni testée.
 - [ ] Restitution par un lecteur d'écran réel (NVDA, VoiceOver) : non faite, ni pour les constats A1 et A3 (HTML rendu et axe), ni pour le prototype C.

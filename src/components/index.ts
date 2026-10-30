@@ -36,6 +36,8 @@ export { default as HeaderNavigationBar } from './HeaderNavigationBar/HeaderNavi
 export { default as SkipLink } from './SkipLink/SkipLink.vue'
 export { default as SocialMediaLinks } from './SocialMediaLinks/SocialMediaLinks.vue'
 export { default as SyBtnMenu } from './SyBtnMenu/SyBtnMenu.vue'
+export { default as SyNavList } from './SyNavList/SyNavList.vue'
+export type { SyNavListAction, SyNavListItem, SyNavListLocales } from './SyNavList/types'
 
 // ===========================
 // Boutons
