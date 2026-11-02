@@ -227,7 +227,7 @@
 	}
 
 	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-primary));
+		outline: 2px solid currentColor;
 		outline-offset: 2px;
 	}
 
@@ -239,6 +239,7 @@
 	// l'indicateur de focus clavier est le ring primary (ci-dessus), sans changement de fond —
 	// standard DS.
 	&--active,
+	&:focus,
 	&:hover {
 		&.sad {
 			background: rgb(var(--v-theme-error-variant-lighten));
