@@ -20,6 +20,8 @@ export interface SyNavListItem {
 	href?: string
 	/** Route interne (`RouterLink`) : pose `aria-current="page"` sur la page active. */
 	to?: RouteLocationRaw
+	/** Page en cours, pour un lien `href` (un `RouterLink` le détecte seul) : pose `aria-current="page"`. */
+	active?: boolean
 	/** Jusqu'à 4 actions, affichées au survol et au focus de l'entrée. */
 	actions?: SyNavListAction[]
 	/** Sous-niveau, ouvert par le chevron de l'entrée. */
@@ -27,3 +29,6 @@ export interface SyNavListItem {
 }
 
 export type SyNavListLocales = typeof locales
+
+/** Affichage des actions : au survol et au focus de l'entrée (maquette PA), ou en permanence. */
+export type SyNavListActionsVisibility = 'hover' | 'always'

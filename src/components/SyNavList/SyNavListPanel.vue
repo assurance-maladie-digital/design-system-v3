@@ -3,21 +3,25 @@
 	// Lien, actions et bouton d'ouverture sont frères dans la ligne, jamais imbriqués.
 	import { type ComponentPublicInstance, computed, onBeforeUnmount, ref, useId, watch } from 'vue'
 	import { mdiChevronRight } from '@mdi/js'
-	import { VList, VListItem } from 'vuetify/components'
+	import { VList, VListItem, VTooltip } from 'vuetify/components'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
 	import { registerOpenPanel, unregisterOpenPanel } from './escapeStack'
-	import type { SyNavListAction, SyNavListItem, SyNavListLocales } from './types'
+	import type { SyNavListAction, SyNavListActionsVisibility, SyNavListItem, SyNavListLocales } from './types'
 
 	const props = withDefaults(defineProps<{
 		items: SyNavListItem[]
 		locales: SyNavListLocales
 		iconColor: string
+		actionsVisibility: SyNavListActionsVisibility
+		// Premier niveau sans ombre (barre latérale) ; les sous-niveaux, superposés au contenu, la gardent
+		flat?: boolean
 		// Facultatif au premier niveau : le <nav> de SyNavList porte déjà le nom
 		label?: string
 		// Faux quand le niveau parent est fermé : ce niveau referme alors ses propres sous-niveaux
 		active?: boolean
 	}>(), {
+		flat: false,
 		label: undefined,
 		active: true,
 	})
@@ -42,7 +46,27 @@
 	let openedByHover = false
 	const toggleButtons = new Map<string, HTMLElement>()
 
+	// Délais d'intention du survol. Un simple passage du pointeur sur une entrée n'ouvre rien ;
+	// un sous-niveau ouvert résiste au passage sur une autre entrée, le temps de le rejoindre en diagonale.
+	const HOVER_OPEN_DELAY = 150
+	const HOVER_SWITCH_DELAY = 300
+	let hoverTimer: ReturnType<typeof setTimeout> | undefined
+
+	function cancelHover(): void {
+		clearTimeout(hoverTimer)
+		hoverTimer = undefined
+	}
+
+	function scheduleHover(action: () => void, delay: number): void {
+		cancelHover()
+		hoverTimer = setTimeout(() => {
+			hoverTimer = undefined
+			action()
+		}, delay)
+	}
+
 	function closeCurrent(): void {
+		cancelHover()
 		openId.value = null
 		openedByHover = false
 	}
@@ -59,7 +83,10 @@
 		if (!active) closeCurrent()
 	})
 
-	onBeforeUnmount(() => unregisterOpenPanel(closeCurrent))
+	onBeforeUnmount(() => {
+		cancelHover()
+		unregisterOpenPanel(closeCurrent)
+	})
 
 	function hasChildren(item: SyNavListItem): boolean {
 		return (item.children?.length ?? 0) > 0
@@ -79,9 +106,11 @@
 		return item.to ? 'RouterLink' : 'span'
 	}
 
-	function linkAttrs(item: SyNavListItem): Pick<SyNavListItem, 'href' | 'to'> {
-		if (item.href) return { href: item.href }
-		return item.to ? { to: item.to } : {}
+	function linkAttrs(item: SyNavListItem): Pick<SyNavListItem, 'href' | 'to'> & { 'aria-current'?: 'page' } {
+		// Un RouterLink pose lui-même aria-current sur la page active ; `active` le force pour un lien href.
+		const current = item.active ? { 'aria-current': 'page' as const } : {}
+		if (item.href) return { href: item.href, ...current }
+		return item.to ? { to: item.to, ...current } : {}
 	}
 
 	function setToggleButton(item: SyNavListItem, el: Element | ComponentPublicInstance | null): void {
@@ -96,6 +125,7 @@
 
 	// Sans ce cas, le survol de l'entrée ouvrirait le sous-niveau et le clic sur le chevron le refermerait aussitôt.
 	function toggle(item: SyNavListItem): void {
+		cancelHover()
 		if (openId.value === item.id && !openedByHover) {
 			closeCurrent()
 			return
@@ -106,17 +136,33 @@
 
 	// Le survol n'est qu'un complément du bouton, et seulement quand les sous-niveaux s'ouvrent à droite.
 	function onPointerEnter(item: SyNavListItem, event: PointerEvent): void {
-		if (event.pointerType === 'mouse' && hasChildren(item) && openId.value !== item.id && window.matchMedia(FLYOUT_MEDIA_QUERY).matches) {
-			openId.value = item.id
-			openedByHover = true
+		if (event.pointerType !== 'mouse' || !window.matchMedia(FLYOUT_MEDIA_QUERY).matches) return
+		cancelHover()
+		// Retour sur l'entrée ouverte, ou dans son sous-niveau (qui fait partie de la ligne) : rien ne change.
+		if (openId.value === item.id) return
+		const delay = openId.value === null ? HOVER_OPEN_DELAY : HOVER_SWITCH_DELAY
+		if (hasChildren(item)) {
+			scheduleHover(() => {
+				openId.value = item.id
+				openedByHover = true
+			}, delay)
+		}
+		else if (openedByHover) {
+			scheduleHover(closeCurrent, delay)
 		}
 	}
 
 	function onPointerLeave(item: SyNavListItem, event: PointerEvent): void {
+		if (event.pointerType !== 'mouse') return
 		const row = event.currentTarget as HTMLElement
-		if (openedByHover && event.pointerType === 'mouse' && !row.contains(document.activeElement)) {
-			close(item)
+		if (openId.value === item.id) {
+			if (openedByHover && !row.contains(document.activeElement)) scheduleHover(() => close(item), HOVER_SWITCH_DELAY)
+			return
 		}
+		// Entrée seulement traversée : son ouverture prévue est annulée, et un sous-niveau ouvert au survol
+		// se referme si le pointeur ne le rejoint pas avant la fin du délai.
+		if (openedByHover && openId.value !== null) scheduleHover(closeCurrent, HOVER_SWITCH_DELAY)
+		else cancelHover()
 	}
 
 	function onFocusOut(item: SyNavListItem, event: FocusEvent): void {
@@ -133,7 +179,11 @@
 <template>
 	<!-- tabindex -1 : VList pose sinon un arrêt de tabulation sur son conteneur -->
 	<VList
-		class="sy-nav-list-panel elevation-2 rounded"
+		class="sy-nav-list-panel"
+		:class="{
+			'elevation-2 rounded': !props.flat,
+			'sy-nav-list-panel--actions-always': props.actionsVisibility === 'always',
+		}"
 		:aria-label="props.label"
 		tabindex="-1"
 	>
@@ -174,14 +224,26 @@
 						name="actions"
 						:item="item"
 					>
-						<SyIconButton
+						<!-- Infobulle au survol et au focus : l'intitulé de l'action, sinon visible au seul survol (title).
+							Ni title (doublon) ni aria-describedby (aria-label déjà lu) sur le bouton. -->
+						<VTooltip
 							v-for="action in item.actions"
 							:key="action.id"
-							:icon="action.icon"
-							:label="props.locales.actionLabel(action.label, item.label)"
-							:color="props.iconColor"
-							@click-icon-button="emit('action', item, action)"
-						/>
+							:text="props.locales.actionLabel(action.label, item.label)"
+							location="top"
+						>
+							<template #activator="{ props: tooltipProps }">
+								<SyIconButton
+									v-bind="tooltipProps"
+									:icon="action.icon"
+									:label="props.locales.actionLabel(action.label, item.label)"
+									:title="undefined"
+									:aria-describedby="undefined"
+									:color="props.iconColor"
+									@click-icon-button="emit('action', item, action)"
+								/>
+							</template>
+						</VTooltip>
 					</slot>
 				</div>
 
@@ -217,6 +279,7 @@
 						:items="item.children ?? []"
 						:locales="props.locales"
 						:icon-color="props.iconColor"
+						:actions-visibility="props.actionsVisibility"
 						:label="props.locales.subMenuLabel(item.label)"
 						:active="openId === item.id"
 						@keydown.esc.stop="onEscape(item)"
@@ -256,7 +319,18 @@
 
 .sy-nav-list-panel__row:hover,
 .sy-nav-list-panel__row--open {
+	// Survol de la maquette PA (Colors/Interaction/Dark/Hover : primaire à 8 %)
 	background-color: rgba(var(--v-theme-primary), 0.08);
+}
+
+// Page en cours : fond en plus du texte en gras et en couleur primaire (pas seulement la couleur).
+.sy-nav-list-panel__row:has([aria-current='page']):not(:has(.sy-nav-list-panel__flyout [aria-current='page'])) {
+	background-color: rgba(var(--v-theme-primary), var(--v-activated-opacity, 0.12));
+}
+
+// Entrée dont le sous-niveau contient la page en cours : libellé en gras, pour se repérer menu fermé.
+.sy-nav-list-panel__row:has(.sy-nav-list-panel__flyout [aria-current='page']) > :deep(.v-list-item__content a) {
+	font-weight: 700;
 }
 
 // Libellés longs : retour à la ligne plutôt que points de suspension (RGAA 10.4, 10.12).
@@ -299,14 +373,22 @@
 }
 
 .sy-nav-list-panel__icon {
-	margin-inline-end: 8px;
+	margin-inline-end: var(--spacing-2, 8px);
 	vertical-align: text-bottom;
+}
+
+// Zone cliquable du chevron étendue à 40 × 48 px (hauteur de la ligne), sans changer l'icône ni le focus (28 px) :
+// un clic légèrement à côté ouvre le sous-niveau au lieu de suivre le lien. ::before car Vuetify utilise ::after.
+.sy-nav-list-panel__toggle::before {
+	content: '';
+	position: absolute;
+	inset: -10px -6px;
 }
 
 .sy-nav-list-panel__toggle-placeholder {
 	flex: none;
 	width: 28px;
-	margin-inline-start: 8px;
+	margin-inline-start: var(--spacing-2, 8px);
 }
 
 .sy-nav-list-panel__actions,
@@ -316,13 +398,18 @@
 
 	// Espacement de la maquette PA (Gap/2) : sans lui, en largeur fit-content, le libellé le plus long
 	// touche ses actions, et les actions touchent le chevron.
-	margin-inline-start: 8px;
+	margin-inline-start: var(--spacing-2, 8px);
 }
 
 .sy-nav-list-panel__actions {
 	display: flex;
-	gap: 4px;
+	gap: var(--spacing-1, 4px);
 	opacity: 0;
+}
+
+// Prop actionsVisibility « always » : actions visibles en permanence.
+.sy-nav-list-panel--actions-always .sy-nav-list-panel__actions {
+	opacity: 1;
 }
 
 // Boutons de 28 px avec icônes de 16 px, comme la maquette PA, y compris ceux du slot actions.

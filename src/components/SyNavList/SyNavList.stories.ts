@@ -131,6 +131,7 @@ const meta = {
 	icon?: IconValue
 	href?: string
 	to?: RouteLocationRaw
+	active?: boolean // page en cours, pour un lien href
 	actions?: { id: string, icon: IconValue, label: string }[]
 	children?: SyNavListItem[]
 }[]` },
@@ -162,6 +163,25 @@ const meta = {
 			table: {
 				type: { summary: 'number | string' },
 				defaultValue: { summary: 'fit-content' },
+				category: 'props',
+			},
+		},
+		actionsVisibility: {
+			control: 'select',
+			options: ['hover', 'always'],
+			description: 'Affichage des actions : `hover`, au survol, au focus dans l\'entrée et en permanence sur écran tactile (maquette PA) ; `always`, en permanence.',
+			table: {
+				type: { summary: '\'hover\' | \'always\'' },
+				defaultValue: { summary: 'hover' },
+				category: 'props',
+			},
+		},
+		flat: {
+			control: 'boolean',
+			description: 'Premier niveau sans ombre ni arrondi, pour une barre latérale permanente. Les sous-niveaux gardent leur ombre.',
+			table: {
+				type: { summary: 'boolean' },
+				defaultValue: { summary: 'false' },
 				category: 'props',
 			},
 		},
@@ -497,6 +517,108 @@ const items: SyNavListItem[] = [
 	{ id: 'cmu-c-as', label: 'CMU-C/AS', href: '/cmu-c-as' },
 	{ id: 'ame', label: 'AME', href: '/ame' },
 ]
+</script>`,
+			},
+		],
+	},
+}
+
+export const ActivePage: Story = {
+	args: {
+		items: [
+			{
+				id: 'cmu-b',
+				label: 'CMU-B',
+				href: '/cmu-b',
+				children: [
+					{ id: 'reception', label: 'Réception', href: '/reception', active: true },
+					{ id: 'instruction', label: 'Instruction', href: '/instruction' },
+				],
+			},
+			{ id: 'cmu-c-as', label: 'CMU-C/AS', href: '/cmu-c-as' },
+			{ id: 'ame', label: 'AME', href: '/ame' },
+		],
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'La page en cours porte `aria-current="page"` : un `RouterLink` le pose seul, l\'option `active` le pose sur un lien `href`. Elle est signalée par un fond, un texte en gras et la couleur primaire. L\'entrée dont le sous-niveau contient la page en cours a un libellé en gras, pour se repérer menu fermé : ici « CMU-B », dont le sous-niveau contient « Réception ».',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<SyNavList
+		:items="items"
+		label="Dossiers client"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { SyNavList, type SyNavListItem } from '@cnamts/synapse'
+
+// Avec des liens \`to\`, RouterLink détecte seul la page en cours : \`active\` est inutile.
+const items: SyNavListItem[] = [
+	{
+		id: 'cmu-b',
+		label: 'CMU-B',
+		href: '/cmu-b',
+		children: [
+			{ id: 'reception', label: 'Réception', href: '/reception', active: true },
+			{ id: 'instruction', label: 'Instruction', href: '/instruction' },
+		],
+	},
+	{ id: 'cmu-c-as', label: 'CMU-C/AS', href: '/cmu-c-as' },
+	{ id: 'ame', label: 'AME', href: '/ame' },
+]
+</script>`,
+			},
+		],
+	},
+}
+
+export const ActionsAlways: Story = {
+	args: {
+		items: actionItems,
+		actionsVisibility: 'always',
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Avec `actions-visibility="always"`, les actions restent visibles au repos, au lieu d\'apparaître au survol et au focus. Elles sont ainsi découvrables sans survoler chaque entrée.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<SyNavList
+		:items="items"
+		label="Dossiers client"
+		actions-visibility="always"
+		@action="onAction"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { mdiCog, mdiPencilBox } from '@mdi/js'
+import { SyNavList, type SyNavListAction, type SyNavListItem } from '@cnamts/synapse'
+
+const edit: SyNavListAction = { id: 'edit', icon: mdiPencilBox, label: 'Modifier' }
+const settings: SyNavListAction = { id: 'settings', icon: mdiCog, label: 'Paramètres' }
+
+const items: SyNavListItem[] = [
+	{ id: 'cmu-c-as', label: 'CMU-C/AS', href: '/cmu-c-as' },
+	{ id: 'ame', label: 'AME', href: '/ame', actions: [settings, edit] },
+	{ id: 'at-mp', label: 'AT/MP', href: '/at-mp', actions: [settings, edit] },
+]
+
+${onActionScript}
 </script>`,
 			},
 		],

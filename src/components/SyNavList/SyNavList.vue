@@ -2,7 +2,7 @@
 	import { computed } from 'vue'
 	import { locales as defaultLocales } from './locales'
 	import SyNavListPanel from './SyNavListPanel.vue'
-	import type { SyNavListAction, SyNavListItem, SyNavListLocales } from './types'
+	import type { SyNavListAction, SyNavListActionsVisibility, SyNavListItem, SyNavListLocales } from './types'
 
 	const props = withDefaults(defineProps<{
 		items: SyNavListItem[]
@@ -11,11 +11,17 @@
 		iconColor?: string
 		// Largeur du premier niveau : nombre en pixels ou valeur CSS (par défaut, suit le contenu : fit-content)
 		width?: number | string
+		// Actions affichées au survol et au focus de l'entrée (maquette PA), ou en permanence
+		actionsVisibility?: SyNavListActionsVisibility
+		// Premier niveau sans ombre ni arrondi, pour une barre latérale permanente
+		flat?: boolean
 		locales?: Partial<SyNavListLocales>
 	}>(), {
 		label: undefined,
 		iconColor: 'primary',
 		width: undefined,
+		actionsVisibility: 'hover',
+		flat: false,
 		locales: () => ({}),
 	})
 
@@ -50,6 +56,8 @@
 			:items="props.items"
 			:locales="resolvedLocales"
 			:icon-color="props.iconColor"
+			:actions-visibility="props.actionsVisibility"
+			:flat="props.flat"
 			@action="(item, action) => emit('action', item, action)"
 			@open-change="(open) => emit('subLevelChange', open)"
 		>

@@ -210,4 +210,63 @@ describe('SyNavList - Visual regression tests', () => {
 			expect(toggle.left - labelsRight).to.be.at.least(8)
 		})
 	})
+
+	it('extends the chevron click area to the full row height, without changing the icon', () => {
+		cy.mountWithVuetify(SyNavList, { props: { items, label: 'Dossiers client' } })
+
+		cy.get('button[aria-label="Droit de base : afficher le sous-menu"]').then(($toggle) => {
+			const toggle = $toggle[0]!
+			const box = toggle.getBoundingClientRect()
+			const row = toggle.closest('.sy-nav-list-panel__row')!.getBoundingClientRect()
+			const centerX = box.left + box.width / 2
+			const centerY = box.top + box.height / 2
+			const hit = (x: number, y: number) => document.elementFromPoint(x, y)?.closest('button') === toggle
+
+			expect([box.width, box.height]).to.deep.equal([28, 28])
+			// Haut et bas de la ligne, et 4 px de part et d'autre de l'icône : le chevron, pas le lien
+			expect(hit(centerX, row.top + 2)).to.equal(true)
+			expect(hit(centerX, row.bottom - 2)).to.equal(true)
+			expect(hit(box.left - 4, centerY)).to.equal(true)
+			expect(hit(box.right + 4, centerY)).to.equal(true)
+		})
+
+		cy.get('button[aria-label="Droit de base : afficher le sous-menu"]').then(($toggle) => {
+			const box = $toggle[0]!.getBoundingClientRect()
+			const row = $toggle[0]!.closest('.sy-nav-list-panel__row')!.getBoundingClientRect()
+			cy.get('body').click(box.left + box.width / 2, row.top + 3)
+		})
+		cy.get('button[aria-label="Droit de base : masquer le sous-menu"]').should('have.attr', 'aria-expanded', 'true')
+	})
+
+	it('highlights the current page, and the entry whose sub-level contains it', () => {
+		const activeItems: SyNavListItem[] = [
+			{ id: 'cmu-b', label: 'CMU-B', href: '#cmu-b', children: [{ id: 'reception', label: 'Réception', href: '#reception', active: true }] },
+			{ id: 'ame', label: 'AME', href: '#ame' },
+		]
+		cy.mountWithVuetify(SyNavList, { props: { items: activeItems, label: 'Dossiers client' } })
+
+		// Menu fermé : l'entrée parente est en gras, l'entrée ordinaire non
+		cy.contains('a', 'CMU-B').should('have.css', 'font-weight', '700')
+		cy.contains('a', 'AME').should('have.css', 'font-weight', '400')
+
+		cy.get('button[aria-label="CMU-B : afficher le sous-menu"]').click()
+		cy.contains('a', 'Réception').should('have.attr', 'aria-current', 'page').and('have.css', 'font-weight', '700')
+		cy.contains('.sy-nav-list-panel__row', 'Réception').should(($row) => {
+			expect(getComputedStyle($row[0]!).backgroundColor).to.match(/rgba\(12, 65, 154, 0\.12\)/)
+		})
+		cy.matchImageSnapshot('sy-nav-list-active-page', cy.get('.v-application'))
+	})
+
+	it('shows the action label in a tooltip on keyboard focus', () => {
+		cy.mountWithVuetify(SyNavList, { props: { items, label: 'Dossiers client' } })
+
+		focusVisible('button[aria-label="Modifier (AME)"]')
+		cy.get('.v-tooltip .v-overlay__content').filter(':visible').should('have.length', 1).and('have.text', 'Modifier (AME)')
+	})
+
+	it('keeps the actions visible at rest with actionsVisibility always', () => {
+		cy.mountWithVuetify(SyNavList, { props: { items, label: 'Dossiers client', actionsVisibility: 'always' } })
+
+		cy.get('.sy-nav-list-panel__actions').first().should('have.css', 'opacity', '1')
+	})
 })

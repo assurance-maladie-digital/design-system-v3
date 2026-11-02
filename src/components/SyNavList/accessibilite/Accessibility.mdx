@@ -33,6 +33,7 @@ import {
 				<li><strong>Tabulation</strong> : lien, puis actions, puis chevron, entrée par entrée</li>
 				<li><strong>Entrée / Espace</strong> sur le chevron : ouvre ou ferme le sous-niveau</li>
 				<li><strong>Échap</strong> : ferme le sous-niveau le plus profond, même ouvert au survol (RGAA 10.13) ; depuis le sous-niveau, rend le focus au chevron</li>
+				<li><strong>Flèches haut et bas, Début, Fin</strong> : déplacent le focus entre les éléments d'un même niveau (comportement de <code>v-list</code>), en complément de la tabulation</li>
 			</ul>
 		</CriteriaCard>
 
@@ -42,6 +43,8 @@ import {
 				<li><strong>Intitulés propres à chaque entrée</strong> : « CMU-B : afficher le sous-menu », « Modifier (AME) »</li>
 				<li><strong>Actions masquées au repos</strong> : par opacité seulement, elles restent atteignables à la tabulation et apparaissent au focus</li>
 				<li><strong>Icônes</strong> : décoratives, masquées aux technologies d'assistance (<code>SyIcon</code>)</li>
+				<li><strong>Intitulé des actions visible</strong> : infobulle au survol et au focus clavier de chaque action</li>
+				<li><strong>Page en cours</strong> : <code>aria-current="page"</code>, signalée visuellement par un fond et un texte en gras, pas seulement par la couleur</li>
 			</ul>
 		</CriteriaCard>
 

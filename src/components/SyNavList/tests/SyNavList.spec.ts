@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { type DOMWrapper, enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import { mdiCogOutline, mdiFolderOutline, mdiSquareEditOutline } from '@mdi/js'
@@ -324,36 +324,155 @@ describe('SyNavList', () => {
 		expect(received).toEqual(['ArrowDown'])
 	})
 
-	it('ouvre le sous-niveau au survol à la souris sur grand écran, et le referme en sortie', async () => {
-		const wrapper = mountNavList()
-		const row = wrapper.findAll('.sy-nav-list-panel__row')[0]!
+	describe('survol à la souris sur grand écran', () => {
+		afterEach(() => {
+			vi.useRealTimers()
+		})
 
-		await row.trigger('pointerenter', { pointerType: 'mouse' })
+		function rowOf(wrapper: ReturnType<typeof mountNavList>, label: string): DOMWrapper<Element> {
+			return wrapper.findAll('.sy-nav-list > .sy-nav-list-panel > .sy-nav-list-panel__row').find(row => row.text().startsWith(label))!
+		}
 
-		expect(toggleOf(wrapper, 'Droit de base').attributes('aria-expanded')).toBe('true')
+		async function wait(ms: number): Promise<void> {
+			vi.advanceTimersByTime(ms)
+			await flushPromises()
+		}
 
-		await row.trigger('pointerleave', { pointerType: 'mouse' })
+		const twoParents: SyNavListItem[] = [
+			{ id: 'a', label: 'A', href: '/a', children: [{ id: 'a1', label: 'A1', href: '/a1' }] },
+			{ id: 'b', label: 'B', href: '/b', children: [{ id: 'b1', label: 'B1', href: '/b1' }] },
+			{ id: 'c', label: 'C', href: '/c' },
+		]
 
-		expect(toggleOf(wrapper, 'Droit de base').attributes('aria-expanded')).toBe('false')
-	})
+		it('ouvre le sous-niveau après un court délai, et le referme après la sortie du pointeur', async () => {
+			vi.useFakeTimers()
+			const wrapper = mountNavList()
+			const row = rowOf(wrapper, 'Droit de base')
 
-	it('garde ouvert au clic un sous-niveau ouvert au survol, même après la sortie du pointeur', async () => {
-		const wrapper = mountNavList()
-		const row = wrapper.findAll('.sy-nav-list-panel__row')[0]!
-		const toggle = toggleOf(wrapper, 'Droit de base')
+			await row.trigger('pointerenter', { pointerType: 'mouse' })
+			await wait(100)
 
-		await row.trigger('pointerenter', { pointerType: 'mouse' })
-		await toggle.trigger('click')
+			expect(toggleOf(wrapper, 'Droit de base').attributes('aria-expanded')).toBe('false')
 
-		expect(toggle.attributes('aria-expanded')).toBe('true')
+			await wait(100)
 
-		await row.trigger('pointerleave', { pointerType: 'mouse' })
+			expect(toggleOf(wrapper, 'Droit de base').attributes('aria-expanded')).toBe('true')
 
-		expect(toggle.attributes('aria-expanded')).toBe('true')
+			await row.trigger('pointerleave', { pointerType: 'mouse' })
+			await wait(350)
 
-		await toggle.trigger('click')
+			expect(toggleOf(wrapper, 'Droit de base').attributes('aria-expanded')).toBe('false')
+		})
 
-		expect(toggle.attributes('aria-expanded')).toBe('false')
+		it('n\'ouvre rien sur un simple passage du pointeur', async () => {
+			vi.useFakeTimers()
+			const wrapper = mountNavList()
+			const row = rowOf(wrapper, 'Droit de base')
+
+			await row.trigger('pointerenter', { pointerType: 'mouse' })
+			await wait(50)
+			await row.trigger('pointerleave', { pointerType: 'mouse' })
+			await wait(400)
+
+			expect(toggleOf(wrapper, 'Droit de base').attributes('aria-expanded')).toBe('false')
+		})
+
+		it('garde le sous-niveau ouvert quand le pointeur le rejoint en diagonale en traversant une autre entrée', async () => {
+			vi.useFakeTimers()
+			const wrapper = mountNavList({ items: twoParents })
+			const rowA = rowOf(wrapper, 'A')
+			const rowB = rowOf(wrapper, 'B')
+			await rowA.trigger('pointerenter', { pointerType: 'mouse' })
+			await wait(200)
+
+			// Trajet : A, puis B traversée, puis le sous-niveau de A (qui fait partie de la ligne A)
+			await rowA.trigger('pointerleave', { pointerType: 'mouse' })
+			await rowB.trigger('pointerenter', { pointerType: 'mouse' })
+			await wait(150)
+
+			// Pendant la traversée de B, le sous-niveau de A reste affiché : le pointeur peut l'atteindre.
+			expect(toggleOf(wrapper, 'A').attributes('aria-expanded')).toBe('true')
+			expect(toggleOf(wrapper, 'B').attributes('aria-expanded')).toBe('false')
+
+			await rowB.trigger('pointerleave', { pointerType: 'mouse' })
+			await rowA.trigger('pointerenter', { pointerType: 'mouse' })
+			await wait(400)
+
+			expect(toggleOf(wrapper, 'A').attributes('aria-expanded')).toBe('true')
+			expect(toggleOf(wrapper, 'B').attributes('aria-expanded')).toBe('false')
+		})
+
+		it('bascule sur une autre entrée quand le pointeur s\'y attarde', async () => {
+			vi.useFakeTimers()
+			const wrapper = mountNavList({ items: twoParents })
+			const rowA = rowOf(wrapper, 'A')
+			const rowB = rowOf(wrapper, 'B')
+			await rowA.trigger('pointerenter', { pointerType: 'mouse' })
+			await wait(200)
+
+			await rowA.trigger('pointerleave', { pointerType: 'mouse' })
+			await rowB.trigger('pointerenter', { pointerType: 'mouse' })
+			await wait(350)
+
+			expect(toggleOf(wrapper, 'A').attributes('aria-expanded')).toBe('false')
+			expect(toggleOf(wrapper, 'B').attributes('aria-expanded')).toBe('true')
+		})
+
+		it('referme le sous-niveau quand le pointeur sort de la liste en traversant une entrée sans sous-niveau', async () => {
+			vi.useFakeTimers()
+			const wrapper = mountNavList({ items: twoParents })
+			const rowA = rowOf(wrapper, 'A')
+			const rowC = rowOf(wrapper, 'C')
+			await rowA.trigger('pointerenter', { pointerType: 'mouse' })
+			await wait(200)
+
+			await rowA.trigger('pointerleave', { pointerType: 'mouse' })
+			await rowC.trigger('pointerenter', { pointerType: 'mouse' })
+			await wait(50)
+			await rowC.trigger('pointerleave', { pointerType: 'mouse' })
+			await wait(400)
+
+			expect(toggleOf(wrapper, 'A').attributes('aria-expanded')).toBe('false')
+		})
+
+		it('Échap annule une ouverture au survol en attente', async () => {
+			vi.useFakeTimers()
+			const wrapper = mountNavList({ items: twoParents })
+			const rowA = rowOf(wrapper, 'A')
+			const rowB = rowOf(wrapper, 'B')
+			await rowA.trigger('pointerenter', { pointerType: 'mouse' })
+			await wait(200)
+			await rowA.trigger('pointerleave', { pointerType: 'mouse' })
+			await rowB.trigger('pointerenter', { pointerType: 'mouse' })
+
+			pressEscapeOnDocument()
+			await wait(400)
+
+			expect(toggleOf(wrapper, 'A').attributes('aria-expanded')).toBe('false')
+			expect(toggleOf(wrapper, 'B').attributes('aria-expanded')).toBe('false')
+		})
+
+		it('garde ouvert au clic un sous-niveau ouvert au survol, même après la sortie du pointeur', async () => {
+			vi.useFakeTimers()
+			const wrapper = mountNavList()
+			const row = rowOf(wrapper, 'Droit de base')
+			const toggle = toggleOf(wrapper, 'Droit de base')
+
+			await row.trigger('pointerenter', { pointerType: 'mouse' })
+			await wait(200)
+			await toggle.trigger('click')
+
+			expect(toggle.attributes('aria-expanded')).toBe('true')
+
+			await row.trigger('pointerleave', { pointerType: 'mouse' })
+			await wait(400)
+
+			expect(toggle.attributes('aria-expanded')).toBe('true')
+
+			await toggle.trigger('click')
+
+			expect(toggle.attributes('aria-expanded')).toBe('false')
+		})
 	})
 
 	it('émet sub-level-change à l\'ouverture du premier sous-niveau et à la fermeture du dernier', async () => {
@@ -404,20 +523,30 @@ describe('SyNavList', () => {
 		const wrapper = mountNavList()
 		const row = wrapper.findAll('.sy-nav-list-panel__row')[0]!
 
-		await row.trigger('pointerenter', { pointerType: 'touch' })
-
-		expect(toggleOf(wrapper, 'Droit de base').attributes('aria-expanded')).toBe('false')
-
-		const width = window.innerWidth
+		vi.useFakeTimers()
 		try {
-			window.innerWidth = 800
-			await row.trigger('pointerenter', { pointerType: 'mouse' })
+			await row.trigger('pointerenter', { pointerType: 'touch' })
+			vi.advanceTimersByTime(400)
+			await flushPromises()
+
+			expect(toggleOf(wrapper, 'Droit de base').attributes('aria-expanded')).toBe('false')
+
+			const width = window.innerWidth
+			try {
+				window.innerWidth = 800
+				await row.trigger('pointerenter', { pointerType: 'mouse' })
+				vi.advanceTimersByTime(400)
+				await flushPromises()
+			}
+			finally {
+				window.innerWidth = width
+			}
+
+			expect(toggleOf(wrapper, 'Droit de base').attributes('aria-expanded')).toBe('false')
 		}
 		finally {
-			window.innerWidth = width
+			vi.useRealTimers()
 		}
-
-		expect(toggleOf(wrapper, 'Droit de base').attributes('aria-expanded')).toBe('false')
 	})
 
 	it('remplace les actions par le slot actions, à tous les niveaux', async () => {
@@ -460,6 +589,41 @@ describe('SyNavList', () => {
 		const wrapper = mountNavList()
 
 		expect(wrapper.get('nav').attributes('style')).toBeUndefined()
+	})
+
+	it('pose aria-current="page" sur le lien href d\'une entrée active, et sur lui seul', () => {
+		const wrapper = mountNavList({
+			items: [
+				{ id: 'a', label: 'A', href: '/a', children: [{ id: 'a1', label: 'A1', href: '/a1', active: true }] },
+				{ id: 'b', label: 'B', href: '/b' },
+			],
+		})
+
+		expect(wrapper.findAll('[aria-current="page"]').map(link => link.attributes('href'))).toEqual(['/a1'])
+	})
+
+	it('affiche les actions en permanence à tous les niveaux avec actionsVisibility always', () => {
+		expect(mountNavList().findAll('.sy-nav-list-panel--actions-always')).toHaveLength(0)
+
+		const wrapper = mountNavList({ actionsVisibility: 'always' })
+
+		expect(wrapper.findAll('.sy-nav-list-panel--actions-always')).toHaveLength(wrapper.findAll('.sy-nav-list-panel').length)
+	})
+
+	it('retire l\'ombre du seul premier niveau avec flat', () => {
+		const panels = mountNavList({ flat: true }).findAll('.sy-nav-list-panel')
+
+		expect(panels[0]!.classes()).not.toContain('elevation-2')
+		expect(panels.slice(1).every(panel => panel.classes().includes('elevation-2'))).toBe(true)
+		expect(mountNavList().findAll('.sy-nav-list-panel')[0]!.classes()).toContain('elevation-2')
+	})
+
+	it('donne aux actions une infobulle, sans title en doublon ni aria-describedby', () => {
+		const wrapper = mountNavList()
+		const action = wrapper.get('button[aria-label="Modifier (AME)"]')
+
+		expect(action.attributes('title')).toBeUndefined()
+		expect(action.attributes('aria-describedby')).toBeUndefined()
 	})
 
 	it('accepte une surcharge partielle des libellés', () => {
