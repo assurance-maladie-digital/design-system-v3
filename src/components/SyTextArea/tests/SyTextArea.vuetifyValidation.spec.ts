@@ -17,7 +17,7 @@ describe('SyTextArea with use-vuetify-validation', () => {
 					label: 'Test Area',
 					useVuetifyValidation: true,
 					validateOn: 'input',
-					isValidateOnBlur: false,
+					isValidateOnBlur: true,
 					rules: [(v: string) => v.length > 2 || 'Must be longer than 2'],
 				},
 			})
@@ -43,10 +43,14 @@ describe('SyTextArea with use-vuetify-validation', () => {
 					label: 'Test Area',
 					useVuetifyValidation: true,
 					validateOn: 'input',
-					isValidateOnBlur: false,
+					isValidateOnBlur: true,
 					rules: [(v: string) => v.length > 2 || 'Must be longer than 2'],
 				},
 			})
+
+			// First validation to make it non-pristine
+			await wrapper.vm.validateOnSubmit()
+			await flushPromises()
 
 			// Start with valid value
 			expect(wrapper.vm.errors).toEqual([])
@@ -229,12 +233,13 @@ describe('SyTextArea with use-vuetify-validation', () => {
 
 	describe('validateOn and isValidateOnBlur provided together', () => {
 		it('uses validateOn when both validateOn and isValidateOnBlur are provided (input)', async () => {
-			// When both are provided, validateOn should take precedence
-			// According to useValidation.ts:172: computed(() => params.validateOn?.value || (params.isValidateOnBlur.value ? 'blur' : 'input'))
+			// When both are provided, validateOn should take precedence.
+			// The test starts from a valid value: without the fix the fallback would be
+			// isValidateOnBlur ('blur'), so no error could appear before a blur and this test would fail.
 			const wrapper = mount(SyTextArea, {
 				props: {
 					uniqueId: 'textarea-1',
-					modelValue: '',
+					modelValue: 'abc',
 					label: 'Test Area',
 					useVuetifyValidation: true,
 					validateOn: 'input',
@@ -243,9 +248,8 @@ describe('SyTextArea with use-vuetify-validation', () => {
 				},
 			})
 
-			// First validation to make it non-pristine
-			await wrapper.vm.validateOnSubmit()
-			await flushPromises()
+			// No error at start: valid value, no blur yet
+			expect(wrapper.vm.errors).toEqual([])
 
 			const textarea = wrapper.find('textarea')
 			await textarea.trigger('focus')
@@ -253,7 +257,7 @@ describe('SyTextArea with use-vuetify-validation', () => {
 			await wrapper.vm.$nextTick()
 			await flushPromises()
 
-			// Should validate on input (not wait for blur) because validateOn takes precedence
+			// Error appears on input without any blur because validateOn takes precedence
 			expect(wrapper.vm.errors).toContain('Must be longer than 2')
 		})
 

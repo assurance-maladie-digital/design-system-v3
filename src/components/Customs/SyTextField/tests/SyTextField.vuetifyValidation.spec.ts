@@ -9,26 +9,23 @@ describe('SyTextField with use-vuetify-validation', () => {
 	})
 
 	describe('validateOn mode: input', () => {
-		it('validates on input after first validation when validateOn is set to "input"', async () => {
+		it('validates on input when validateOn is set to "input"', async () => {
 			const wrapper = mount(SyTextField, {
 				props: {
-					modelValue: '',
+					modelValue: 'abc',
 					label: 'Test Field',
 					useVuetifyValidation: true,
 					validateOn: 'input',
-					isValidateOnBlur: false,
+					isValidateOnBlur: true,
 					rules: [(v: string) => v.length > 2 || 'Must be longer than 2'],
 				},
 			})
 
-			const input = wrapper.find('input')
-			// First validation to make it non-pristine
-			await wrapper.vm.validateOnSubmit()
-			await flushPromises()
+			// Start with valid value
+			expect(wrapper.vm.errors).toEqual([])
 
-			// Now input validation should work
-			await input.trigger('focus')
-			await input.setValue('ab')
+			// Change to invalid value
+			await wrapper.setProps({ modelValue: 'ab' })
 			await wrapper.vm.$nextTick()
 			await flushPromises()
 
@@ -38,31 +35,22 @@ describe('SyTextField with use-vuetify-validation', () => {
 		it('clears error when input becomes valid with validateOn="input"', async () => {
 			const wrapper = mount(SyTextField, {
 				props: {
-					modelValue: 'abc',
+					modelValue: '',
 					label: 'Test Field',
 					useVuetifyValidation: true,
 					validateOn: 'input',
-					isValidateOnBlur: false,
+					isValidateOnBlur: true,
 					rules: [(v: string) => v.length > 2 || 'Must be longer than 2'],
 				},
 			})
 
-			// Start with valid value
-			expect(wrapper.vm.errors).toEqual([])
-
-			// Change to invalid value via props
-			await wrapper.setProps({ modelValue: 'ab' })
-			await wrapper.vm.$nextTick()
-			await flushPromises()
-
-			// Trigger validation explicitly since we changed via props
+			// First validation to make it non-pristine and show the initial error
 			await wrapper.vm.validateOnSubmit()
 			await flushPromises()
 
 			expect(wrapper.vm.errors).toContain('Must be longer than 2')
 
-			// Now set valid value via props
-			wrapper.vm.clearValidation()
+			// Now set valid value
 			await wrapper.setProps({ modelValue: 'abc' })
 			await wrapper.vm.$nextTick()
 			await flushPromises()
@@ -231,11 +219,14 @@ describe('SyTextField with use-vuetify-validation', () => {
 
 	describe('validateOn and isValidateOnBlur provided together', () => {
 		it('uses validateOn when both validateOn and isValidateOnBlur are provided (input)', async () => {
-			// When both are provided, validateOn should take precedence
-			// According to useValidation.ts:172: computed(() => params.validateOn?.value || (params.isValidateOnBlur.value ? 'blur' : 'input'))
+			// When both are provided, validateOn should take precedence.
+			// The test starts from a valid value: without the fix the fallback would be
+			// isValidateOnBlur ('blur'), so no error could appear before a blur and this test would fail.
+			// The value is driven through setProps: SyTextField's model is a passthrough of
+			// props.modelValue, so a setValue on the input would never update it.
 			const wrapper = mount(SyTextField, {
 				props: {
-					modelValue: '',
+					modelValue: 'abc',
 					label: 'Test Field',
 					useVuetifyValidation: true,
 					validateOn: 'input',
@@ -244,17 +235,14 @@ describe('SyTextField with use-vuetify-validation', () => {
 				},
 			})
 
-			// First validation to make it non-pristine
-			await wrapper.vm.validateOnSubmit()
-			await flushPromises()
+			// No error at start: valid value, no blur yet
+			expect(wrapper.vm.errors).toEqual([])
 
-			const input = wrapper.find('input')
-			await input.trigger('focus')
-			await input.setValue('ab')
+			await wrapper.setProps({ modelValue: 'ab' })
 			await wrapper.vm.$nextTick()
 			await flushPromises()
 
-			// Should validate on input (not wait for blur) because validateOn takes precedence
+			// Error appears on input without any blur because validateOn takes precedence
 			expect(wrapper.vm.errors).toContain('Must be longer than 2')
 		})
 
