@@ -557,6 +557,82 @@ export const WithError: Story = {
 	}),
 }
 
+export const WithTargetedErrors: Story = {
+	...WithError,
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<PeriodField
+		v-model="selectedPeriod"
+		:custom-rules="periodRules"
+		placeholder-from="Début"
+		placeholder-to="Fin"
+		required
+		:display-icon="false"
+		display-append-icon
+	/>
+	<p>Période sélectionnée : {{ selectedPeriod }}</p>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { PeriodField } from '@cnamts/synapse'
+	import type { ValidationRule } from '@cnamts/synapse/composables/unifyValidation/useValidation'
+
+	const selectedPeriod = ref({ from: '01/01/2100', to: '05/01/2100' })
+	const periodRules: ValidationRule[] = [
+		{
+			type: 'notAfterDate',
+			options: {
+				date: '31/12/2099',
+				message: 'La date de début ne peut pas être postérieure au 31/12/2099',
+				fieldIdentifier: 'fromDate',
+			},
+		},
+		{
+			type: 'notAfterDate',
+			options: {
+				date: '31/12/2099',
+				message: 'La date de fin ne peut pas être postérieure au 31/12/2099',
+				fieldIdentifier: 'toDate',
+			},
+		},
+	]
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		...WithError.args,
+		customRules: [
+			{
+				type: 'notAfterDate',
+				options: {
+					date: '31/12/2099',
+					message: 'La date de début ne peut pas être postérieure au 31/12/2099',
+					fieldIdentifier: 'fromDate',
+				},
+			},
+			{
+				type: 'notAfterDate',
+				options: {
+					date: '31/12/2099',
+					message: 'La date de fin ne peut pas être postérieure au 31/12/2099',
+					fieldIdentifier: 'toDate',
+				},
+			},
+		],
+	},
+}
+
 export const WithWarning: Story = {
 	parameters: {
 		sourceCode: [

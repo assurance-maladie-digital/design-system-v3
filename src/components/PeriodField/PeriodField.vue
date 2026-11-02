@@ -82,6 +82,18 @@
 	const parsedFromDate = computed(() => formattedFromDate.value ? parseDate(formattedFromDate.value, props.format) : null)
 	const parsedToDate = computed(() => formattedToDate.value ? parseDate(formattedToDate.value, props.format) : null)
 
+	// Seuls les identifiants des bornes ciblent un champ ; les autres restent
+	// disponibles pour personnaliser les messages des règles communes.
+	function rulesForDate(rules: ValidationRule[], field: 'fromDate' | 'toDate'): ValidationRule[] {
+		return rules.filter(({ options }) => {
+			const identifier = options?.fieldIdentifier
+			return (identifier !== 'fromDate' && identifier !== 'toDate') || identifier === field
+		})
+	}
+
+	const fromDateWarningRules = computed(() => rulesForDate(props.customWarningRules, 'fromDate'))
+	const toDateWarningRules = computed(() => rulesForDate(props.customWarningRules, 'toDate'))
+
 	// Règles de validation pour la date de début
 	const fromDateRules = computed<ValidationRule[]>(() =>
 		!props.disableErrorHandling
@@ -120,7 +132,7 @@
 						},
 					}]
 					: []),
-				...(!props.disableErrorHandling ? props.customRules : []),
+				...rulesForDate(props.customRules, 'fromDate'),
 			]
 			: [],
 	)
@@ -168,7 +180,7 @@
 						},
 					}]
 					: []),
-				...props.customRules,
+				...rulesForDate(props.customRules, 'toDate'),
 			]
 			: [],
 	)
@@ -342,7 +354,7 @@
 				ref="fromDateRef"
 				v-model="internalFromDate"
 				:custom-rules="fromDateRules"
-				:custom-warning-rules="props.customWarningRules"
+				:custom-warning-rules="fromDateWarningRules"
 				:date-format-return="props.dateFormatReturn"
 				:display-append-icon="props.displayAppendIcon"
 				:display-icon="props.displayIcon"
@@ -369,7 +381,7 @@
 				ref="toDateRef"
 				v-model="internalToDate"
 				:custom-rules="toDateRules"
-				:custom-warning-rules="props.customWarningRules"
+				:custom-warning-rules="toDateWarningRules"
 				:date-format-return="props.dateFormatReturn"
 				:display-append-icon="props.displayAppendIcon"
 				:display-icon="props.displayIcon"

@@ -476,6 +476,62 @@ describe('PeriodField.vue', () => {
 	})
 
 	describe('Custom Rules', () => {
+		it.each(['customRules', 'customWarningRules'] as const)('targets each date independently with %s', async (ruleProp) => {
+			const fromMessage = 'La date de début dépasse la limite'
+			const toMessage = 'La date de fin dépasse la limite'
+			const wrapper = mount(PeriodField, {
+				props: {
+					modelValue: { from: '03/11/2026', to: '04/11/2026' },
+					[ruleProp]: [
+						{ type: 'notAfterDate', options: { date: '02/11/2026', message: fromMessage, warningMessage: fromMessage, fieldIdentifier: 'fromDate' } },
+						{ type: 'notAfterDate', options: { date: '02/11/2026', message: toMessage, warningMessage: toMessage, fieldIdentifier: 'toDate' } },
+					],
+				},
+			})
+			await flushPromises()
+
+			const [fromField, toField] = wrapper.findAll('.period-field__col')
+			expect(fromField!.text()).toContain(fromMessage)
+			expect(fromField!.text()).not.toContain(toMessage)
+			expect(toField!.text()).toContain(toMessage)
+			expect(toField!.text()).not.toContain(fromMessage)
+
+			await wrapper.setProps({ modelValue: { from: '01/11/2026', to: '04/11/2026' } })
+			await flushPromises()
+			expect(fromField!.text()).not.toContain(fromMessage)
+			expect(toField!.text()).toContain(toMessage)
+
+			// La validation suivante prend en compte les règles mises à jour.
+			await wrapper.setProps({ [ruleProp]: [
+				{ type: 'notAfterDate', options: { date: '02/11/2026', message: fromMessage, warningMessage: fromMessage, fieldIdentifier: 'fromDate' } },
+			] })
+			await wrapper.get('input').trigger('blur')
+			await flushPromises()
+			expect(wrapper.text()).not.toContain(toMessage)
+			expect(wrapper.text()).not.toContain(fromMessage)
+
+			await wrapper.setProps({ modelValue: { from: '03/11/2026', to: '04/11/2026' } })
+			await flushPromises()
+			expect(fromField!.text()).toContain(fromMessage)
+			expect(toField!.text()).not.toContain(fromMessage)
+			wrapper.unmount()
+		})
+
+		it.each([undefined, 'la période'])('keeps rules with identifier %s common to both dates', async (fieldIdentifier) => {
+			const message = 'La période dépasse la limite'
+			const wrapper = mount(PeriodField, {
+				props: {
+					modelValue: { from: '03/11/2026', to: '04/11/2026' },
+					customRules: [{ type: 'notAfterDate', options: { date: '02/11/2026', message, fieldIdentifier } }],
+				},
+			})
+			await flushPromises()
+			for (const field of wrapper.findAll('.period-field__col')) {
+				expect(field.text()).toContain(message)
+			}
+			wrapper.unmount()
+		})
+
 		it('revalidates the public state when custom rules change without changing dates', async () => {
 			const wrapper = mount(PeriodField, {
 				props: { modelValue: { from: '10/01/2024', to: '20/01/2024' } },

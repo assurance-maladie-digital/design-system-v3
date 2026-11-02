@@ -32,6 +32,38 @@ conservent leur enregistrement dans `SyForm`.
 Les méthodes `validateOnSubmit()` et `clearValidation()`, ainsi que les états
 `isValid`, `errors`, `warnings` et `successes`, restent disponibles.
 
+### Règles propres à chaque borne
+
+Dans `customRules` et `customWarningRules`, `options.fieldIdentifier: 'fromDate'`
+applique la règle uniquement au début ; `'toDate'` la réserve à la fin.
+Sans ces identifiants (identifiant absent ou autre valeur), la règle reste commune
+aux deux dates. Les règles croisées vérifiant l'ordre des bornes restent actives.
+
+```ts
+const periodRules = computed(() => [
+  {
+    type: 'notAfterDate',
+    options: {
+      date: dayjs().format('DD/MM/YYYY'),
+      message: 'La date de début ne peut pas être postérieure à aujourd’hui',
+      fieldIdentifier: 'fromDate',
+    },
+  },
+  {
+    type: 'notAfterDate',
+    options: {
+      date: dayjs().format('DD/MM/YYYY'),
+      message: 'La date de fin ne peut pas être postérieure à aujourd’hui',
+      fieldIdentifier: 'toDate',
+    },
+  },
+])
+```
+
+Transmettez ces règles avec `:custom-rules="periodRules"`.
+
+<Canvas of={PeriodFieldStories.WithTargetedErrors}/>
+
 ## Libellé accessible du groupe
 
 Les deux champs sont regroupés dans un même groupe accessible (`role="group"`).
