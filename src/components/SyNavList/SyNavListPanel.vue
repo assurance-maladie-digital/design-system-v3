@@ -3,7 +3,7 @@
 	// Lien, actions et bouton d'ouverture sont frères dans la ligne, jamais imbriqués.
 	import { type ComponentPublicInstance, computed, onBeforeUnmount, ref, useId, watch } from 'vue'
 	import { mdiChevronRight } from '@mdi/js'
-	import { VList, VListItem, VTooltip } from 'vuetify/components'
+	import { VList, VListItem } from 'vuetify/components'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
 	import { registerOpenPanel, unregisterOpenPanel } from './escapeStack'
@@ -224,26 +224,14 @@
 						name="actions"
 						:item="item"
 					>
-						<!-- Infobulle au survol et au focus : l'intitulé de l'action, sinon visible au seul survol (title).
-							Ni title (doublon) ni aria-describedby (aria-label déjà lu) sur le bouton. -->
-						<VTooltip
+						<SyIconButton
 							v-for="action in item.actions"
 							:key="action.id"
-							:text="props.locales.actionLabel(action.label, item.label)"
-							location="top"
-						>
-							<template #activator="{ props: tooltipProps }">
-								<SyIconButton
-									v-bind="tooltipProps"
-									:icon="action.icon"
-									:label="props.locales.actionLabel(action.label, item.label)"
-									:title="undefined"
-									:aria-describedby="undefined"
-									:color="props.iconColor"
-									@click-icon-button="emit('action', item, action)"
-								/>
-							</template>
-						</VTooltip>
+							:icon="action.icon"
+							:label="props.locales.actionLabel(action.label, item.label)"
+							:color="props.iconColor"
+							@click-icon-button="emit('action', item, action)"
+						/>
 					</slot>
 				</div>
 

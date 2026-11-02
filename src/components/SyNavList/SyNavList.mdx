@@ -47,9 +47,9 @@ Par défaut, la largeur suit le contenu : elle peut donc varier d'une page à l'
 
 <Canvas of={SyNavListStories.CustomWidth} />
 
-## Page en cours
+## Entrée active
 
-<Canvas of={SyNavListStories.ActivePage} />
+<Canvas of={SyNavListStories.ActiveItem} />
 
 ## Actions visibles en permanence
 
@@ -66,7 +66,7 @@ Par défaut, la largeur suit le contenu : elle peut donc varier d'une page à l'
 # Fonctionnement
 
 - **Lien** : une entrée avec `href` est un lien `<a>`, une entrée avec `to` un `RouterLink`, qui pose `aria-current="page"` sur la page active. Une entrée sans l'un ni l'autre affiche son libellé sans lien.
-- **Actions** : jusqu'à 4 par entrée, déclarées dans `items` (événement `action`) ou fournies par le slot `actions`, qui reçoit l'entrée (`item`) ; pour une entrée où le slot ne rend rien, les actions de `items` s'affichent. Elles sont masquées au repos et apparaissent au survol, au focus dans l'entrée et en permanence sur les écrans tactiles, ou toujours avec `actions-visibility="always"`. Leur nom accessible reprend celui de l'entrée : « Modifier (AME) » ; une infobulle l'affiche au survol et au focus de chaque action.
+- **Actions** : jusqu'à 4 par entrée, déclarées dans `items` (événement `action`) ou fournies par le slot `actions`, qui reçoit l'entrée (`item`) ; pour une entrée où le slot ne rend rien, les actions de `items` s'affichent. Elles sont masquées au repos et apparaissent au survol, au focus dans l'entrée et en permanence sur les écrans tactiles, ou toujours avec `actions-visibility="always"`. Leur nom accessible reprend celui de l'entrée : « Modifier (AME) » ; il s'affiche aussi au survol, dans l'infobulle native du navigateur, comme pour les autres boutons icônes du DS.
 - **Sous-niveau** : ouvert par le chevron (clic, Entrée, Espace ; toute la hauteur de la ligne autour du chevron est cliquable), et au survol à la souris sur grand écran, après un court délai pour qu'un simple passage du pointeur n'ouvre rien. Un sous-niveau ouvert reste affiché le temps de le rejoindre en diagonale, même si le pointeur traverse une autre entrée. Il s'affiche à droite de la liste à partir de 960 px, sous l'entrée en dessous. Échap ferme le sous-niveau le plus profond ; depuis l'intérieur d'un sous-niveau, il rend le focus au chevron.
 - **État des sous-niveaux** : l'événement `sub-level-change` émet `true` quand un sous-niveau s'ouvre alors qu'aucun ne l'était, `false` quand le dernier se ferme. Il permet par exemple, quand la liste est dans un menu, que Échap ferme d'abord les sous-niveaux puis le menu (story « Dans le HeaderBar »).
 - **Page en cours** : `aria-current="page"`, posé par `RouterLink` ou par l'option `active` d'une entrée `href`. Signalée par un fond, un texte en gras et la couleur primaire ; l'entrée qui la contient dans son sous-niveau a un libellé en gras.

@@ -618,12 +618,10 @@ describe('SyNavList', () => {
 		expect(mountNavList().findAll('.sy-nav-list-panel')[0]!.classes()).toContain('elevation-2')
 	})
 
-	it('donne aux actions une infobulle, sans title en doublon ni aria-describedby', () => {
+	it('affiche l\'intitulé des actions dans l\'infobulle native (title), comme les autres boutons icônes du DS', () => {
 		const wrapper = mountNavList()
-		const action = wrapper.get('button[aria-label="Modifier (AME)"]')
 
-		expect(action.attributes('title')).toBeUndefined()
-		expect(action.attributes('aria-describedby')).toBeUndefined()
+		expect(wrapper.get('button[aria-label="Modifier (AME)"]').attributes('title')).toBe('Modifier (AME)')
 	})
 
 	it('accepte une surcharge partielle des libellés', () => {

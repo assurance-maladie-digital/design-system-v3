@@ -6,7 +6,7 @@ import { controlMatchers } from '../../../../.storybook/controlMatchers'
 import * as stories from '../SyNavList.stories'
 
 const composedStories = composeStories(stories)
-const { Default, WithIcons, WithActions, WithSubLevel, Complete, IconColor, SlotActions } = composedStories
+const { Default, WithIcons, WithActions, WithSubLevel, Complete, IconColor, SlotActions, ActiveItem } = composedStories
 
 // LabsNotice est le bandeau de la documentation, pas un exemple du composant
 const allStories = Object.entries(composedStories)
@@ -66,6 +66,21 @@ describe('SyNavList stories', () => {
 
 		expect(wrapper.findAll('.text-secondary').length).toBeGreaterThanOrEqual(6)
 		expect(wrapper.findAll('.text-primary')).toHaveLength(0)
+	})
+
+	it('ActiveItem rend active l\'entrée cliquée', async () => {
+		const wrapper = mount(ActiveItem(), { attachTo: document.body })
+		const current = () => wrapper.findAll('[aria-current="page"]').map(link => link.text())
+
+		expect(current()).toEqual(['Réception'])
+
+		await wrapper.get('a[href="/ame"]').trigger('click')
+
+		expect(current()).toEqual(['AME'])
+
+		await wrapper.get('a[href="/instruction"]').trigger('click')
+
+		expect(current()).toEqual(['Instruction'])
 	})
 
 	it('le rendu de SlotActions transmet les args au composant', () => {

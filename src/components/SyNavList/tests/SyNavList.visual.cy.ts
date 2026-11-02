@@ -254,14 +254,7 @@ describe('SyNavList - Visual regression tests', () => {
 		cy.contains('.sy-nav-list-panel__row', 'Réception').should(($row) => {
 			expect(getComputedStyle($row[0]!).backgroundColor).to.match(/rgba\(12, 65, 154, 0\.12\)/)
 		})
-		cy.matchImageSnapshot('sy-nav-list-active-page', cy.get('.v-application'))
-	})
-
-	it('shows the action label in a tooltip on keyboard focus', () => {
-		cy.mountWithVuetify(SyNavList, { props: { items, label: 'Dossiers client' } })
-
-		focusVisible('button[aria-label="Modifier (AME)"]')
-		cy.get('.v-tooltip .v-overlay__content').filter(':visible').should('have.length', 1).and('have.text', 'Modifier (AME)')
+		cy.matchImageSnapshot('sy-nav-list-active-item', cy.get('.v-application'))
 	})
 
 	it('keeps the actions visible at rest with actionsVisibility always', () => {

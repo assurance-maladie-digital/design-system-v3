@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { VBtn } from 'vuetify/components'
 import { fn } from 'storybook/test'
 import { mdiAccount, mdiChevronDown, mdiChevronUp, mdiCog, mdiFileDocument, mdiFolderPlus, mdiShieldCheck, mdiPencilBox } from '@mdi/js'
@@ -523,7 +523,16 @@ const items: SyNavListItem[] = [
 	},
 }
 
-export const ActivePage: Story = {
+// Page en cours simulée dans la story : sans navigation réelle, l'entrée cliquée devient active.
+function markActive(entries: SyNavListItem[], currentHref: string): SyNavListItem[] {
+	return entries.map(entry => ({
+		...entry,
+		active: entry.href === currentHref,
+		children: entry.children && markActive(entry.children, currentHref),
+	}))
+}
+
+export const ActiveItem: Story = {
 	args: {
 		items: [
 			{
@@ -531,7 +540,7 @@ export const ActivePage: Story = {
 				label: 'CMU-B',
 				href: '/cmu-b',
 				children: [
-					{ id: 'reception', label: 'Réception', href: '/reception', active: true },
+					{ id: 'reception', label: 'Réception', href: '/reception' },
 					{ id: 'instruction', label: 'Instruction', href: '/instruction' },
 				],
 			},
@@ -542,7 +551,7 @@ export const ActivePage: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'La page en cours porte `aria-current="page"` : un `RouterLink` le pose seul, l\'option `active` le pose sur un lien `href`. Elle est signalée par un fond, un texte en gras et la couleur primaire. L\'entrée dont le sous-niveau contient la page en cours a un libellé en gras, pour se repérer menu fermé : ici « CMU-B », dont le sous-niveau contient « Réception ».',
+				story: 'Cliquez sur une entrée : elle devient l\'entrée active (la story simule la navigation). L\'entrée active porte `aria-current="page"` et se distingue par un fond, un texte en gras et la couleur primaire. L\'entrée dont le sous-niveau contient l\'entrée active a un libellé en gras, pour se repérer menu fermé : « CMU-B » au départ, dont le sous-niveau contient « Réception ». Avec des liens `to`, `RouterLink` détecte seul la page en cours ; avec des liens `href`, l\'option `active` l\'indique, ici calculée à partir de l\'URL courante.',
 			},
 		},
 		sourceCode: [
@@ -558,26 +567,61 @@ export const ActivePage: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
+import { computed, ref } from 'vue'
 import { SyNavList, type SyNavListItem } from '@cnamts/synapse'
 
-// Avec des liens \`to\`, RouterLink détecte seul la page en cours : \`active\` est inutile.
-const items: SyNavListItem[] = [
+const menu: SyNavListItem[] = [
 	{
 		id: 'cmu-b',
 		label: 'CMU-B',
 		href: '/cmu-b',
 		children: [
-			{ id: 'reception', label: 'Réception', href: '/reception', active: true },
+			{ id: 'reception', label: 'Réception', href: '/reception' },
 			{ id: 'instruction', label: 'Instruction', href: '/instruction' },
 		],
 	},
 	{ id: 'cmu-c-as', label: 'CMU-C/AS', href: '/cmu-c-as' },
 	{ id: 'ame', label: 'AME', href: '/ame' },
 ]
+
+// Entrée active d'après l'URL courante. Avec des liens \`to\`, RouterLink la détecte seul : ce code est inutile.
+const currentPath = ref(window.location.pathname)
+
+function markActive(entries: SyNavListItem[]): SyNavListItem[] {
+	return entries.map(entry => ({
+		...entry,
+		active: entry.href === currentPath.value,
+		children: entry.children && markActive(entry.children),
+	}))
+}
+
+const items = computed(() => markActive(menu))
 </script>`,
 			},
 		],
 	},
+	render: args => ({
+		components: { SyNavList },
+		setup() {
+			const currentHref = ref('/reception')
+			const items = computed(() => markActive(args.items, currentHref.value))
+
+			function onNavigate(event: MouseEvent): void {
+				const href = event.target instanceof Element ? event.target.closest('a')?.getAttribute('href') : null
+				if (href) currentHref.value = href
+			}
+
+			return { args, items, onNavigate }
+		},
+		template: `
+			<div @click="onNavigate">
+				<SyNavList
+					v-bind="args"
+					:items="items"
+				/>
+			</div>
+		`,
+	}),
 }
 
 export const ActionsAlways: Story = {
