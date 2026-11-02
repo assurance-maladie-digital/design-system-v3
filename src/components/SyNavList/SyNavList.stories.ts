@@ -99,6 +99,47 @@ const onActionScript = `function onAction(item: SyNavListItem, action: SyNavList
 	// Traitement de l'action « action.label » sur l'entrée « item.label »
 }`
 
+const completeScript = `<script setup lang="ts">
+import { mdiCog, mdiPencilBox } from '@mdi/js'
+import { SyNavList, type SyNavListAction, type SyNavListItem } from '@cnamts/synapse'
+
+const edit: SyNavListAction = { id: 'edit', icon: mdiPencilBox, label: 'Modifier' }
+const settings: SyNavListAction = { id: 'settings', icon: mdiCog, label: 'Paramètres' }
+
+const items: SyNavListItem[] = [
+	{
+		id: 'droit-de-base',
+		label: 'Droit de base',
+		href: '/droit-de-base',
+		actions: [settings, edit],
+		children: [
+			{
+				id: 'demande-affiliation',
+				label: 'Demande d’affiliation',
+				href: '/demande-affiliation',
+				children: [{ id: 'pieces-justificatives', label: 'Pièces justificatives', href: '/pieces-justificatives' }],
+			},
+		],
+	},
+	{
+		id: 'cmu-b',
+		label: 'CMU-B',
+		href: '/cmu-b',
+		actions: [edit],
+		children: [
+			{ id: 'reception', label: 'Réception', href: '/reception' },
+			{ id: 'instruction', label: 'Instruction', href: '/instruction' },
+			{ id: 'revision', label: 'Révision', href: '/revision' },
+		],
+	},
+	{ id: 'cmu-c-as', label: 'CMU-C/AS', href: '/cmu-c-as' },
+	{ id: 'ame', label: 'AME', href: '/ame', actions: [settings, edit] },
+	{ id: 'at-mp', label: 'AT/MP', href: '/at-mp', actions: [settings, edit] },
+]
+
+${onActionScript}
+</script>`
+
 const meta = {
 	title: 'Labs/SyNavList',
 	component: SyNavList,
@@ -365,46 +406,7 @@ export const Complete: Story = {
 			{ name: 'Template', code: actionTemplate },
 			{
 				name: 'Script',
-				code: `<script setup lang="ts">
-import { mdiCog, mdiPencilBox } from '@mdi/js'
-import { SyNavList, type SyNavListAction, type SyNavListItem } from '@cnamts/synapse'
-
-const edit: SyNavListAction = { id: 'edit', icon: mdiPencilBox, label: 'Modifier' }
-const settings: SyNavListAction = { id: 'settings', icon: mdiCog, label: 'Paramètres' }
-
-const items: SyNavListItem[] = [
-	{
-		id: 'droit-de-base',
-		label: 'Droit de base',
-		href: '/droit-de-base',
-		actions: [settings, edit],
-		children: [
-			{
-				id: 'demande-affiliation',
-				label: 'Demande d’affiliation',
-				href: '/demande-affiliation',
-				children: [{ id: 'pieces-justificatives', label: 'Pièces justificatives', href: '/pieces-justificatives' }],
-			},
-		],
-	},
-	{
-		id: 'cmu-b',
-		label: 'CMU-B',
-		href: '/cmu-b',
-		actions: [edit],
-		children: [
-			{ id: 'reception', label: 'Réception', href: '/reception' },
-			{ id: 'instruction', label: 'Instruction', href: '/instruction' },
-			{ id: 'revision', label: 'Révision', href: '/revision' },
-		],
-	},
-	{ id: 'cmu-c-as', label: 'CMU-C/AS', href: '/cmu-c-as' },
-	{ id: 'ame', label: 'AME', href: '/ame', actions: [settings, edit] },
-	{ id: 'at-mp', label: 'AT/MP', href: '/at-mp', actions: [settings, edit] },
-]
-
-${onActionScript}
-</script>`,
+				code: completeScript,
 			},
 		],
 	},
@@ -520,6 +522,45 @@ const items: SyNavListItem[] = [
 ]
 </script>`,
 			},
+		],
+	},
+}
+
+export const RightEdge: Story = {
+	args: {
+		items: dossiersClient,
+	},
+	render: args => ({
+		components: { SyNavList },
+		setup() {
+			return { args }
+		},
+		template: `
+			<div class="d-flex justify-end">
+				<SyNavList v-bind="args" />
+			</div>
+		`,
+	}),
+	parameters: {
+		docs: {
+			description: {
+				story: 'Liste placée contre le bord droit. À partir de 960 px, un sous-niveau qui manquerait de place à droite s\'ouvre à gauche, la cascade continue vers la gauche et le chevron pointe vers la gauche ; un sous-niveau qui dépasserait le bas de la fenêtre remonte. La position est recalculée quand la fenêtre change de taille. Ouvrez « Droit de base » puis « Demande d’affiliation » dans la story en plein écran (l\'aperçu de la documentation est souvent plus étroit que 960 px, où les sous-niveaux s\'ouvrent en accordéon).',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<div class="d-flex justify-end">
+		<SyNavList
+			:items="items"
+			label="Dossiers client"
+			@action="onAction"
+		/>
+	</div>
+</template>`,
+			},
+			{ name: 'Script', code: completeScript },
 		],
 	},
 }
