@@ -241,19 +241,19 @@ Le composant est dans `src/components/SyNavList/`, exporté dans la catégorie N
 | `SyNavListPanel.vue` | Un niveau, récursif : le prototype C, aux conventions du DS (interne, non exporté). |
 | `escapeStack.ts` | Pile d'Échap partagée ; écouteur posé seulement tant qu'un sous-niveau est ouvert (rien côté serveur). |
 | `types.ts`, `locales.ts` | Contrat et libellés ; `locales` accepte un objet partiel. |
-| `SyNavList.stories.ts`, `SyNavList.mdx`, `accessibilite/Accessibility.mdx` | Stories de la plus simple à la plus complète, une option à la fois : `Default` (liens seuls), `WithIcons`, `WithActions`, `WithSubLevel`, `Complete` (maquette PA), `IconColor`, `CustomWidth` (300 px, largeur de la maquette), `ActiveItem` (l'entrée cliquée devient active : la story simule la navigation), `ActionsAlways`, `SlotActions`, `InHeaderBar` (sous-menu de l'entrée « Dossiers client », dans une barre de navigation du slot `append` du `HeaderBar`). Pas de story vide : sans entrée, le composant ne rend rien ; ce cas est documenté dans `SyNavList.mdx` et testé dans `SyNavList.spec.ts`. |
-| `tests/` | `SyNavList.spec.ts` (43 tests), `SyNavList.a11y.spec.ts` (2), `SyNavList.stories.spec.ts` (20), `SyNavList.visual.cy.ts` (16). |
+| `SyNavList.stories.ts`, `SyNavList.mdx`, `accessibilite/Accessibility.mdx` | Stories de la plus simple à la plus complète, une option à la fois : `Default` (liens seuls), `WithIcons`, `WithActions`, `WithSubLevel`, `Complete` (maquette PA), `IconColor`, `CustomWidth` (300 px, largeur de la maquette), `ActiveItem` (l'entrée cliquée devient active : la story simule la navigation), `DisabledItem`, `ActionsAlways`, `SlotActions`, `InHeaderBar` (sous-menu de l'entrée « Dossiers client », dans une barre de navigation du slot `append` du `HeaderBar`). Pas de story vide : sans entrée, le composant ne rend rien ; ce cas est documenté dans `SyNavList.mdx` et testé dans `SyNavList.spec.ts`. |
+| `tests/` | `SyNavList.spec.ts` (47 tests), `SyNavList.a11y.spec.ts` (2), `SyNavList.stories.spec.ts` (21), `SyNavList.visual.cy.ts` (19). |
 
 **Contrat**
 
 | | |
 |---|---|
-| `items` | `id`, `label`, et optionnellement `icon` (décorative), `href` ou `to`, `active` (page en cours pour un lien `href` ; un `RouterLink` la détecte seul), `actions` (jusqu'à 4), `children` (sous-niveau, récursif). |
+| `items` | `id`, `label`, et optionnellement `icon` (décorative), `href` ou `to`, `active` (page en cours pour un lien `href` ; un `RouterLink` la détecte seul), `disabled` (entrée indisponible), `actions` (jusqu'à 4), `children` (sous-niveau, récursif). |
 | `label` | Nom accessible du `<nav>`. |
 | `iconColor` | Couleur de toutes les icônes : entrée, actions, chevron (`primary` par défaut). |
 | `width` | Largeur du premier niveau : nombre en pixels ou valeur CSS. Par défaut `fit-content` (suit le contenu) ; aussi réglable par la variable CSS `--sy-nav-list-width`. |
 | `actionsVisibility` | `'hover'` (défaut, maquette PA) : actions au survol, au focus et sur tactile ; `'always'` : en permanence. |
-| `flat` | Premier niveau sans ombre ni arrondi (barre latérale) ; les sous-niveaux gardent leur ombre. |
+| `flat` | Premier niveau sans ombre ni arrondi (barre latérale) ; les sous-niveaux ouverts à droite gardent leur ombre. |
 | `locales` | Libellés surchargeables un par un. |
 | `@action` | `(item, action)` au clic sur une action déclarée dans `items`. |
 | `@sub-level-change` | `true` à l'ouverture du premier sous-niveau, `false` à la fermeture du dernier : permet à un menu qui contient la liste de laisser Échap fermer d'abord les sous-niveaux (story `InHeaderBar`). |
@@ -287,12 +287,18 @@ Le composant est dans `src/components/SyNavList/`, exporté dans la catégorie N
 | 2 | **Mesuré :** chevron de 28 × 28 px dans une ligne de 48 px ; juste autour, c'est le lien : un clic légèrement à côté changeait de page. | **Corrigé.** Zone cliquable étendue à 40 × 48 px par un pseudo-élément `::before` (Vuetify utilise `::after`), sans changer l'icône ni le focus. |
 | 3 | Actions invisibles au repos. | Prop `actionsVisibility` (`'always'`) ; valeur par défaut inchangée (`'hover'`, maquette), à trancher (question 2). |
 | 4 | Page en cours peu visible, aucune indication sur l'entrée parente. | **Corrigé** (voir « Entrée active »). |
-| 5 | Sous 960 px, le sous-niveau recouvre les entrées suivantes. | **Non traité :** pousser les entrées vers le bas demande de restructurer la ligne (le sous-niveau est dans la zone de droite) et de revoir la zone cliquable et le focus de l'entrée parente. Attend la question 5. |
+| 5 | Sous 960 px, le sous-niveau recouvre les entrées suivantes. | **Corrigé : accordéon.** Le sous-niveau s'ouvre sous l'entrée, dans la liste, et pousse les entrées suivantes vers le bas. Texte décalé de 16 px par niveau, fonds et contour de focus jusqu'au bord de la liste, sans ombre ni arrondi ; chevron vers le bas, puis vers le haut une fois ouvert ; la ligne de l'entrée garde ses 48 px. Entrée ouverte : zone cliquable et contour de focus du lien limités à sa ligne, sans le sous-niveau (contour autour du libellé, sans les actions ni le chevron). Grand écran inchangé. Détails techniques ci-dessous. À valider avec le design (question 5). |
 | 6 | Intitulé des actions visible au seul survol (`title`). | **Abandonné.** Une infobulle `VTooltip` au survol et au focus a été essayée : au premier plan (`z-index` 2000), mais semi-transparente (style commun du DS, `_tooltips.scss`) et placée au-dessus du bouton, elle laissait transparaître le libellé de l'entrée précédente et semblait passer sous le menu ; aucun placement ne l'évite (à droite, elle recouvre le chevron et le sous-niveau ouvert). Les actions gardent l'infobulle native, comme tous les `SyIconButton` du DS. À traiter dans `SyIconButton` si besoin. |
 | 7 | Aspect de carte flottante, peu adapté à une barre latérale. | Prop `flat`. |
 | 8 | Largeur variable d'une page à l'autre (`fit-content`). | La documentation recommande de fixer `width` pour une navigation persistante. |
-| 9 | Pas d'état désactivé ni de chargement. | **Non traité :** ni la maquette ni l'étude ne définissent ces états (question 6). |
+| 9 | Pas d'état désactivé ni de chargement. | **Désactivé : ajouté** (option `disabled` d'une entrée, story `DisabledItem`) : libellé atténué (`--v-disabled-opacity`), sans fond au survol ; ni lien, ni actions, ni ouverture du sous-niveau (clic, survol, clavier) ; lien sans `href` avec `role="link"` et `aria-disabled="true"`, annoncé comme lien indisponible et hors de l'ordre de tabulation ; chevron affiché mais désactivé, pour signaler qu'un sous-niveau existe. **Chargement : non traité**, le composant ne fait aucun traitement asynchrone (les entrées sont fournies par le projet). À valider avec le design (question 6). |
 | 10 | Flèches non documentées, valeurs en dur. | Flèches documentées dans la page d'accessibilité ; espacements sur `--spacing-*`. 28 px, 300 px et 960 px n'ont pas de token, et une variable CSS ne peut pas servir dans une media query ; le survol à 8 % reste celui de la maquette (`--v-hover-opacity` vaut 4 %). |
+
+**Accordéon sous 960 px : mise en œuvre.**
+
+- Sous 960 px, la zone de droite de la ligne (`.v-list-item__append`) passe en `display: contents` : les actions et le chevron restent dans leur colonne, et le sous-niveau occupe une deuxième rangée de la grille de la ligne, sur toute sa largeur.
+- L'ombre `elevation-2` de Vuetify est en `!important` dans une couche CSS : une feuille de style du composant ne peut pas la retirer. Le panneau suit donc la largeur de la fenêtre par `matchMedia` (écouteur posé au montage, retiré au démontage ; valeur mobile côté serveur) et ne pose l'ombre que sur les sous-niveaux ouverts à droite.
+- Au-dessus de 960 px, le sous-niveau revient en position absolue, et son placement dans la grille est réinitialisé (`grid-row: auto`). **Défaut trouvé et corrigé :** sans cette réinitialisation, Chrome appliquait le placement en deuxième rangée au sous-niveau positionné à droite, car son bloc conteneur est la ligne, une grille. Le sous-niveau partait alors du bas de la ligne parente, 44 px trop bas. Signalé à la relecture du rendu ; couvert par un test Cypress.
 
 **Intégration au menu burger du `HeaderBar` (slot `menu`) : essayée, abandonnée.** Trois obstacles mesurés : le panneau du menu (350 px, `overflow: hidden auto`) coupe les sous-niveaux ouverts à droite ; le menu se ferme au relâchement d'Échap (`keyup`), donc le même appui fermait le sous-niveau et tout le menu ; le conteneur `role="menu"` du menu burger contient un bouton et une `nav`, ce que axe signale (`aria-required-children`), y compris sur ses propres stories, sans `SyNavList`. Ce dernier point mérite une issue à part.
 
@@ -311,8 +317,10 @@ Le composant est dans `src/components/SyNavList/`, exporté dans la catégorie N
 | Clic après survol | « garde ouvert au clic un sous-niveau ouvert au survol » |
 | Délais d'intention du survol (revue UX, point 1) | « ouvre le sous-niveau après un court délai » et « garde le sous-niveau ouvert quand le pointeur le rejoint en diagonale » |
 | Zone cliquable du chevron (revue UX, point 2) | Cypress « extends the chevron click area to the full row height » |
+| Accordéon sous 960 px (revue UX, point 5) | Cypress « opens sub-levels as an accordion on a narrow screen, pushing the next entries down » |
+| Réinitialisation du placement en grille au-dessus de 960 px | Cypress « aligns the first entry of each sub-level with its parent row » (68 px au lieu de 24) |
 
-Les contournements de style (débordement, panneau dans `append`, boutons de 28 px, retour à la ligne) et les règles de largeur ne sont pas mesurables dans happy-dom : ils sont couverts par les assertions de `SyNavList.visual.cy.ts` (sous-niveau à droite et non recouvert, boutons de 28 × 28 px et icônes de 16 px, libellé long sur plusieurs lignes, aucun défilement horizontal à 320 px, largeurs `fit-content`, fixe et `auto`, sous-niveau plafonné à 300 px, espacements, colonne du chevron, entrée active et parent en gras).
+Les contournements de style (débordement, panneau dans `append`, boutons de 28 px, retour à la ligne) et les règles de largeur ne sont pas mesurables dans happy-dom : ils sont couverts par les assertions de `SyNavList.visual.cy.ts` (sous-niveau à droite et non recouvert, boutons de 28 × 28 px et icônes de 16 px, libellé long sur plusieurs lignes, aucun défilement horizontal à 320 px, largeurs `fit-content`, fixe et `auto`, sous-niveau plafonné à 300 px, espacements, colonne du chevron, entrée active et parent en gras, accordéon, entrée désactivée atténuée, alignement des sous-niveaux sur leur ligne parente).
 
 **Mesures dans Chrome sur les stories (Storybook local, 30/10 et 02/11/2026) :**
 
@@ -327,11 +335,14 @@ Les contournements de style (débordement, panneau dans `append`, boutons de 28 
 | Échap, deux niveaux ouverts, focus ailleurs | 1er appui : niveau le plus profond fermé ; 2e : parent fermé |
 | Survol en diagonale vers un sous-niveau | sous-niveau conservé pendant la traversée d'une autre entrée |
 | 320 px, trois niveaux ouverts | sans défilement horizontal |
+| 360 px, sous-niveau ouvert en accordéon (`Complete`) | « CMU-B » poussé sous le sous-niveau (de 88 à 176 px) ; zone du lien parent de 44 px de haut pour une ligne de 136 px |
+| 1280 px, deux niveaux ouverts (`Complete`) | premier élément de chaque sous-niveau aligné sur sa ligne parente (24 px) |
+| Entrée désactivée (`DisabledItem`) | sautée par la tabulation ; axe : 0 violation à 360 et 1280 px |
 | Libellé long + espacement du texte augmenté | aucun libellé tronqué |
 | Entrée active (`ActiveItem`) | suit les clics ; fond, gras et couleur primaire ; parent en gras |
 | Console | aucune erreur ni avertissement |
 
-**Reste à faire avant fusion :** Tanaguru sur le deploy preview ; baselines visuelles générées par la CI (non commitées depuis macOS) ; restitution avec un lecteur d'écran ; réponses de la PO et du design aux questions ouvertes, en particulier l'affichage mobile (question 5) et la visibilité des actions (question 2) ; critères de sortie des Labs à fixer par l'équipe.
+**Reste à faire avant fusion :** Tanaguru sur le deploy preview ; baselines visuelles générées par la CI (non commitées depuis macOS) ; restitution avec un lecteur d'écran ; réponses de la PO et du design aux questions ouvertes, en particulier l'accordéon mobile (question 5), l'état désactivé (question 6) et la visibilité des actions (question 2) ; critères de sortie des Labs à fixer par l'équipe.
 
 ## Alternative : option 2b, composant en HTML natif
 
@@ -551,8 +562,8 @@ Usage côté produit :
 2. **Actions masquées au repos :** est-ce voulu ? Si oui, valider leur affichage au focus et leur affichage permanent sur tactile. Sinon, les afficher en permanence. `SyNavList` propose les deux (`actionsVisibility`), masquées par défaut comme la maquette : reste à fixer la valeur par défaut.
 3. **Nature des actions :** l'icône « modifier » et l'engrenage déclenchent-ils un traitement (bouton) ou mènent-ils à une page (lien) ? Quels intitulés pour les lecteurs d'écran ?
 4. **Entrée parente sans page :** une entrée qui a un sous-niveau mène-t-elle aussi à une page ? Sinon, son libellé devient le bouton d'ouverture.
-5. **Affichage mobile :** les panneaux en cascade ne tiennent pas en largeur réduite. Le prototype C ouvre le sous-niveau sous l'entrée en le superposant aux entrées suivantes. Ce choix convient-il, ou faut-il pousser les entrées suivantes vers le bas, ou naviguer par écrans successifs ?
-6. **États manquants dans Figma :** focus (obligatoire), désactivé, entrée active (la variante `Selected` peut-elle porter la page courante ?). `SyNavList` implémente le focus (comme `SyBtnMenu`) et l'entrée active (fond, gras, couleur primaire, parent en gras), à faire valider par le design ; l'état désactivé n'est pas implémenté.
+5. **Affichage mobile :** les panneaux en cascade ne tiennent pas en largeur réduite. Le prototype C ouvrait le sous-niveau sous l'entrée en le superposant aux entrées suivantes. `SyNavList` l'ouvre en accordéon : il pousse les entrées suivantes vers le bas, avec un décalage de 16 px par niveau. Ce choix convient-il, ou faut-il naviguer par écrans successifs ?
+6. **États manquants dans Figma :** focus (obligatoire), désactivé, entrée active (la variante `Selected` peut-elle porter la page courante ?). `SyNavList` implémente le focus (comme `SyBtnMenu`) et l'entrée active (fond, gras, couleur primaire, parent en gras), ainsi que l'état désactivé (libellé atténué, chevron désactivé), à faire valider par le design.
 7. **Documentation Synapse :** l'anatomie de la page « Lists » doit-elle intégrer le slot d'actions, déjà présent mais masqué dans `List-element` ?
 8. **Multi-produits :** le critère « intérêt d'usage pour plusieurs produits » n'est pas coché dans l'issue. La page Synapse « Lists » couvre les thèmes CNAM, PA et amelipro, mais le slot d'actions n'apparaît que dans le composant de test du PA (`List-element [TEST]`). D'autres produits ont-ils ce besoin ? La réponse conditionne le choix entre les options 1 et 2a.
 9. **Infobulles du DS :** leur fond semi-transparent (`_tooltips.scss`) laisse transparaître le texte qu'elles recouvrent ; dans un menu dense, elles semblent passer dessous. À revoir globalement, pas pour `SyNavList` seul.
@@ -568,7 +579,7 @@ Usage côté produit :
 - [x] `SyIconButton` (test temporaire, jsdom) : `aria-expanded` et `aria-controls` passés en attributs sont rendus sur le `<button>`, avec `aria-label` et `title` issus de `label` ; l'élément racine est le `<button>` ; un clic émet une fois `click-icon-button`.
 - [x] Prototype C (`dev/Etudes/etude-vlist-2634/`, testé via le Playground) : ESLint et `vue-tsc` sans erreur, vérifiés aussi après le déplacement ; comportement testé dans jsdom (test temporaire, supprimé) et dans Chrome headless piloté au clavier et à la souris (survol, tabulation, Entrée, flèches, Échap), à 1200 et 320 px ; axe-core 4.14 injecté dans la page ; mesures des critères C1 à C5 avant et après correction ; captures comparées à la maquette PA.
 - [x] Tanaguru : 0 erreur, testé en local sur le Playground (30/10/2026), après les corrections C1 à C5. À relancer sur la story du composant, dans le deploy preview de la PR.
-- [x] `SyNavList` (option 2a) : 65 tests unitaires, axe et stories ; 16 tests Cypress passés en local (captures supprimées, baselines à produire par la CI) ; mesures dans Chrome sur les stories, au clavier et à la souris réelle ; `pnpm build`, ESLint, Stylelint et `vue-tsc` sans erreur. Détail dans « Implémentation ».
+- [x] `SyNavList` (option 2a) : 70 tests unitaires, axe et stories ; 19 tests Cypress passés en local (captures supprimées, baselines à produire par la CI) ; mesures dans Chrome sur les stories, au clavier et à la souris réelle ; `pnpm build`, ESLint, Stylelint et `vue-tsc` sans erreur. Détail dans « Implémentation ».
 - [ ] Tanaguru sur la story `SyNavList`, dans le deploy preview de la PR.
 - [ ] Esquisse de l'option 2b (`SyNavList` en HTML natif) : ni implémentée, ni compilée, ni testée.
 - [ ] Restitution par un lecteur d'écran réel (NVDA, VoiceOver) : non faite, ni pour les constats A1 et A3 (HTML rendu et axe), ni pour le prototype C.
