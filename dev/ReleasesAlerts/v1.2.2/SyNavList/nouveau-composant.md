@@ -1,6 +1,6 @@
 # Nouveau composant `SyNavList` (Labs) — ajout au contrat
 
-`SyNavList` est une liste de navigation dont chaque entrée permet trois choses distinctes : aller à la page de l'entrée (`href` ou `to`), déclencher des actions rapides (`actions`, ou le slot `actions`) et ouvrir un sous-niveau (`children`). Il est exporté par `@cnamts/synapse`, avec ses types `SyNavListItem`, `SyNavListAction` et `SyNavListLocales`.
+`SyNavList` est une liste de navigation dont chaque entrée permet trois choses distinctes : aller à la page de l'entrée (`href` ou `to`), déclencher des actions rapides (`actions`, ou le slot `actions`) et ouvrir un sous-niveau (`children`). Il est exporté par `@cnamts/synapse`, avec ses types `SyNavListItem`, `SyNavListAction`, `SyNavListLocales` et `SyNavListActionsVisibility`.
 
 C'est le premier composant de la nouvelle rubrique **Labs** de la documentation : composants en cours de validation, dont l'API (props, événements, slots) peut encore évoluer dans une version mineure. Chaque changement sera signalé dans ces notes.
 
