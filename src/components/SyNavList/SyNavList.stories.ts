@@ -201,7 +201,7 @@ const meta = {
 		},
 		width: {
 			control: 'text',
-			description: 'Largeur du premier niveau de la liste : nombre en pixels ou valeur CSS (`360`, `\'20rem\'`, `\'auto\'` pour prendre la largeur du conteneur). La liste reste limitée à la largeur de son conteneur. Les sous-niveaux ouverts à droite (à partir de 960 px) suivent leur propre contenu, 300 px au plus ; en dessous, ils prennent la largeur de l\'entrée. Sans prop, la largeur suit le contenu (`fit-content`), sauf si le projet définit la variable CSS `--sy-nav-list-width`. La maquette PA utilise 300 px.',
+			description: 'Largeur du premier niveau de la liste : nombre en pixels ou valeur CSS (`360`, `\'20rem\'`, `\'auto\'` pour prendre la largeur du conteneur). La liste reste limitée à la largeur de son conteneur. Les sous-niveaux ouverts à droite (à partir de 960 px) suivent leur propre contenu, 300 px au plus ; en dessous, ils prennent la largeur de l\'entrée. Sans prop, la largeur suit le contenu (`fit-content`), sauf si le projet définit la variable CSS `--sy-nav-list-width`.',
 			table: {
 				type: { summary: 'number | string' },
 				defaultValue: { summary: 'fit-content' },
@@ -211,7 +211,7 @@ const meta = {
 		actionsVisibility: {
 			control: 'select',
 			options: ['hover', 'always'],
-			description: 'Affichage des actions : `hover`, au survol, au focus dans l\'entrée et en permanence sur écran tactile (maquette PA) ; `always`, en permanence.',
+			description: 'Affichage des actions : `hover`, au survol, au focus dans l\'entrée et en permanence sur écran tactile ; `always`, en permanence.',
 			table: {
 				type: { summary: '\'hover\' | \'always\'' },
 				defaultValue: { summary: 'hover' },
@@ -487,7 +487,7 @@ export const CustomWidth: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Par défaut, la largeur suit le contenu. La prop `width` fixe la largeur du premier niveau : nombre en pixels ou valeur CSS, ici 300 px comme la maquette PA. Les sous-niveaux suivent leur propre contenu, 300 px au plus. Un projet peut aussi définir la variable CSS `--sy-nav-list-width` sur un parent.',
+				story: 'Par défaut, la largeur suit le contenu. La prop `width` fixe la largeur du premier niveau : nombre en pixels ou valeur CSS, ici 300 px. Les sous-niveaux suivent leur propre contenu, 300 px au plus. Un projet peut aussi définir la variable CSS `--sy-nav-list-width` sur un parent.',
 			},
 		},
 		sourceCode: [
@@ -543,8 +543,11 @@ export const RightEdge: Story = {
 	}),
 	parameters: {
 		docs: {
+			// Rendue dans sa propre iframe, élargie à 960 px par .storybook/storybook.css : la page
+			// Docs, réduite par le menu de Storybook, passe souvent sous ce seuil (accordéon).
+			story: { inline: false, height: '360px' },
 			description: {
-				story: 'Liste placée contre le bord droit. À partir de 960 px, un sous-niveau qui manquerait de place à droite s\'ouvre à gauche, la cascade continue vers la gauche et le chevron pointe vers la gauche ; un sous-niveau qui dépasserait le bas de la fenêtre remonte. La position est recalculée quand la fenêtre change de taille. Ouvrez « Droit de base » puis « Demande d’affiliation » dans la story en plein écran (l\'aperçu de la documentation est souvent plus étroit que 960 px, où les sous-niveaux s\'ouvrent en accordéon).',
+				story: 'Liste placée contre le bord droit. À partir de 960 px, un sous-niveau qui manquerait de place à droite s\'ouvre à gauche, la cascade continue vers la gauche et le chevron pointe vers la gauche ; un sous-niveau qui dépasserait le bas de la fenêtre remonte. La position est recalculée quand la fenêtre change de taille. Ouvrez « Droit de base » puis « Demande d’affiliation ».',
 			},
 		},
 		sourceCode: [

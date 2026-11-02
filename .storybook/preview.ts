@@ -98,6 +98,12 @@ const preview: Preview = {
 				document.body.classList.add('storybook-docs-mode')
 			}
 
+			// Story rendue dans sa propre iframe d'une page Docs (docs.story.inline: false) :
+			// fond blanc comme les autres exemples de la page (voir storybook.css)
+			if (typeof window !== 'undefined' && window.frameElement?.closest('.docs-story')) {
+				document.documentElement.classList.add('sb-docs-iframe')
+			}
+
 			if (typeof window !== 'undefined') {
 				try {
 					const channel = (

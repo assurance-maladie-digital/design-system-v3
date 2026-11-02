@@ -165,6 +165,24 @@ pre.prismjs {
 	place-items: stretch !important;
 }
 
+/* Story SyNavList RightEdge, rendue dans sa propre iframe : au moins 960 px de large pour afficher
+   les sous-niveaux ouverts à gauche plutôt qu'en accordéon, même quand le menu de Storybook réduit la page */
+.sbdocs-preview #iframe--labs-synavlist--right-edge {
+	min-width: 960px;
+}
+
+/* Story dans sa propre iframe d'une page Docs : fond blanc comme les exemples rendus dans la page,
+   au lieu du fond de l'addon backgrounds (classe posée par preview.ts) */
+html.sb-docs-iframe .sb-show-main {
+	background: #fff !important;
+}
+
+/* Cadre plus étroit que l'iframe : défilement calé à droite, où se trouve la liste
+   (le contenu de l'iframe est un autre document, il reste en ltr) */
+.sbdocs-preview .docs-story:has(#iframe--labs-synavlist--right-edge) {
+	direction: rtl;
+}
+
 .sbdocs-preview {
 	/* Fix for dropdown positioning (SyNavList exclue : ce n'est pas un menu déroulant) */
 	.docs-story .v-list:not(.sy-nav-list-panel),
