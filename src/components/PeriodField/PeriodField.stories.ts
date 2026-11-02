@@ -567,7 +567,8 @@ export const WithTargetedErrors: Story = {
 <template>
 	<PeriodField
 		v-model="selectedPeriod"
-		:custom-rules="periodRules"
+		:custom-from-rules="fromRules"
+		:custom-to-rules="toRules"
 		placeholder-from="Début"
 		placeholder-to="Fin"
 		required
@@ -587,21 +588,21 @@ export const WithTargetedErrors: Story = {
 	import type { ValidationRule } from '@cnamts/synapse/composables/unifyValidation/useValidation'
 
 	const selectedPeriod = ref({ from: '01/01/2100', to: '05/01/2100' })
-	const periodRules: ValidationRule[] = [
+	const fromRules: ValidationRule[] = [
 		{
 			type: 'notAfterDate',
 			options: {
 				date: '31/12/2099',
 				message: 'La date de début ne peut pas être postérieure au 31/12/2099',
-				fieldIdentifier: 'fromDate',
 			},
 		},
+	]
+	const toRules: ValidationRule[] = [
 		{
 			type: 'notAfterDate',
 			options: {
 				date: '31/12/2099',
 				message: 'La date de fin ne peut pas être postérieure au 31/12/2099',
-				fieldIdentifier: 'toDate',
 			},
 		},
 	]
@@ -612,21 +613,22 @@ export const WithTargetedErrors: Story = {
 	},
 	args: {
 		...WithError.args,
-		customRules: [
+		customRules: [],
+		customFromRules: [
 			{
 				type: 'notAfterDate',
 				options: {
 					date: '31/12/2099',
 					message: 'La date de début ne peut pas être postérieure au 31/12/2099',
-					fieldIdentifier: 'fromDate',
 				},
 			},
+		],
+		customToRules: [
 			{
 				type: 'notAfterDate',
 				options: {
 					date: '31/12/2099',
 					message: 'La date de fin ne peut pas être postérieure au 31/12/2099',
-					fieldIdentifier: 'toDate',
 				},
 			},
 		],

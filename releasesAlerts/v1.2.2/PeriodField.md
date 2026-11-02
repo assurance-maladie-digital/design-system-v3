@@ -1,10 +1,9 @@
-# PeriodField : ciblage des règles de validation
+# PeriodField : règles de validation ciblées par borne
 
-Dans `customRules` et `customWarningRules`, les règles portant
-`options.fieldIdentifier: 'fromDate'` ne s'appliquent désormais qu'à la date de
-début ; celles portant `'toDate'` ne s'appliquent qu'à la date de fin.
-Cela permet d'afficher des messages différents pour chaque borne.
+Nouvelles props `customFromRules` / `customToRules`, ainsi que
+`customFromWarningRules` / `customToWarningRules` : les règles passées dans ces
+props ne s'appliquent qu'à la date de début ou de fin, ce qui permet d'afficher
+des messages différents pour chaque borne.
 
-Auparavant, toutes les règles étaient exécutées sur les deux champs. Si une règle
-doit rester commune aux deux dates, retirez ces identifiants réservés. Les règles
-sans identifiant ou avec un autre identifiant restent appliquées aux deux bornes.
+`customRules` et `customWarningRules` restent inchangés : leurs règles
+continuent de s'appliquer aux deux bornes.

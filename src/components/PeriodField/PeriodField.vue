@@ -14,7 +14,11 @@
 
 	const props = withDefaults(defineProps<{
 		bgColor?: string
+		customFromRules?: ValidationRule[]
+		customFromWarningRules?: ValidationRule[]
 		customRules?: ValidationRule[]
+		customToRules?: ValidationRule[]
+		customToWarningRules?: ValidationRule[]
 		customWarningRules?: ValidationRule[]
 		dateFormatReturn?: string
 		density?: 'default' | 'comfortable' | 'compact'
@@ -38,7 +42,11 @@
 		locales?: DeepPartial<typeof defaultLocales>
 	}>(), {
 		bgColor: 'white',
+		customFromRules: () => [],
+		customFromWarningRules: () => [],
 		customRules: () => [],
+		customToRules: () => [],
+		customToWarningRules: () => [],
 		customWarningRules: () => [],
 		dateFormatReturn: '',
 		density: 'default',
@@ -82,17 +90,10 @@
 	const parsedFromDate = computed(() => formattedFromDate.value ? parseDate(formattedFromDate.value, props.format) : null)
 	const parsedToDate = computed(() => formattedToDate.value ? parseDate(formattedToDate.value, props.format) : null)
 
-	// Seuls les identifiants des bornes ciblent un champ ; les autres restent
-	// disponibles pour personnaliser les messages des règles communes.
-	function rulesForDate(rules: ValidationRule[], field: 'fromDate' | 'toDate'): ValidationRule[] {
-		return rules.filter(({ options }) => {
-			const identifier = options?.fieldIdentifier
-			return (identifier !== 'fromDate' && identifier !== 'toDate') || identifier === field
-		})
-	}
-
-	const fromDateWarningRules = computed(() => rulesForDate(props.customWarningRules, 'fromDate'))
-	const toDateWarningRules = computed(() => rulesForDate(props.customWarningRules, 'toDate'))
+	// Règles de warning : les règles communes puis celles propres à chaque borne,
+	// comme les props customNumberRules/customKeyRules de NirField.
+	const fromDateWarningRules = computed(() => [...props.customWarningRules, ...props.customFromWarningRules])
+	const toDateWarningRules = computed(() => [...props.customWarningRules, ...props.customToWarningRules])
 
 	// Règles de validation pour la date de début
 	const fromDateRules = computed<ValidationRule[]>(() =>
@@ -132,7 +133,8 @@
 						},
 					}]
 					: []),
-				...rulesForDate(props.customRules, 'fromDate'),
+				...props.customRules,
+				...props.customFromRules,
 			]
 			: [],
 	)
@@ -180,7 +182,8 @@
 						},
 					}]
 					: []),
-				...rulesForDate(props.customRules, 'toDate'),
+				...props.customRules,
+				...props.customToRules,
 			]
 			: [],
 	)
