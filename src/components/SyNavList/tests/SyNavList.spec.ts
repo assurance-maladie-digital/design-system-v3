@@ -537,6 +537,41 @@ describe('SyNavList', () => {
 		expect(wrapper.emitted('subLevelChange')).toEqual([[true], [false]])
 	})
 
+	it('ferme le sous-niveau d\'une entrée retirée de items, et émet sub-level-change', async () => {
+		const wrapper = mountNavList()
+		await toggleOf(wrapper, 'Droit de base').trigger('click')
+		await toggleOf(wrapper, 'Demande d’affiliation').trigger('click')
+
+		await wrapper.setProps({ items: items.slice(1) })
+
+		expect(wrapper.emitted('subLevelChange')).toEqual([[true], [false]])
+
+		// Entrée remise dans la liste : elle revient fermée, et Échap ne vise plus l'ancien sous-niveau
+		await wrapper.setProps({ items })
+		const parent = toggleOf(wrapper, 'Droit de base')
+		expect(parent.attributes('aria-expanded')).toBe('false')
+		await parent.trigger('click')
+		pressEscapeOnDocument()
+		await flushPromises()
+		expect(parent.attributes('aria-expanded')).toBe('false')
+	})
+
+	it('ferme le sous-niveau d\'une entrée devenue désactivée, ou sans sous-niveau', async () => {
+		const wrapper = mountNavList()
+		const parent = toggleOf(wrapper, 'Droit de base')
+		await parent.trigger('click')
+
+		await wrapper.setProps({ items: [{ ...items[0]!, disabled: true }, ...items.slice(1)] })
+
+		expect(parent.attributes('aria-expanded')).toBe('false')
+
+		await wrapper.setProps({ items })
+		await parent.trigger('click')
+		await wrapper.setProps({ items: [{ ...items[0]!, children: [] }, ...items.slice(1)] })
+
+		expect(wrapper.emitted('subLevelChange')).toEqual([[true], [false], [true], [false]])
+	})
+
 	it('émet sub-level-change à chaque ouverture et fermeture au chevron', async () => {
 		const wrapper = mountNavList()
 		const parent = toggleOf(wrapper, 'Droit de base')

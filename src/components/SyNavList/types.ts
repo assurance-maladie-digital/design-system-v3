@@ -4,6 +4,7 @@ import type { locales } from './locales'
 
 /** Action rapide d'une entrée (bouton icône). */
 export interface SyNavListAction {
+	/** Identifiant unique parmi les actions de l'entrée. */
 	id: string
 	icon: IconValue
 	/** Intitulé de l'action (« Modifier ») ; le nom accessible y ajoute celui de l'entrée via `locales.actionLabel`. */
@@ -12,6 +13,11 @@ export interface SyNavListAction {
 
 /** Entrée de la liste de navigation. */
 export interface SyNavListItem {
+	/**
+	 * Identifiant unique dans son niveau (deux sous-niveaux différents peuvent réutiliser le même).
+	 * Il sert de clé de rendu et à relier le chevron à son sous-niveau (`aria-controls`) ; deux entrées
+	 * d'un même niveau avec le même `id` partageraient leur état ouvert et leur sous-niveau.
+	 */
 	id: string
 	label: string
 	/** Icône décorative affichée avant le libellé. */

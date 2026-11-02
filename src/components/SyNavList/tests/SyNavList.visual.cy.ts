@@ -364,6 +364,40 @@ describe('SyNavList - Visual regression tests', () => {
 		cy.matchImageSnapshot('sy-nav-list-accordion', cy.get('.v-application'))
 	})
 
+	describe('in Windows high contrast mode (forced colors)', () => {
+		const setForcedColors = (value: 'active' | 'none') => Cypress.automation('remote:debugger:protocol', {
+			command: 'Emulation.setEmulatedMedia',
+			params: { features: [{ name: 'forced-colors', value }] },
+		})
+
+		beforeEach(() => setForcedColors('active'))
+		afterEach(() => setForcedColors('none'))
+
+		it('outlines the list, the sub-levels and the open entry, underlines the current page and greys out a disabled entry', () => {
+			const contrastItems: SyNavListItem[] = [
+				items[0]!,
+				{ id: 'ame', label: 'AME', href: '#ame', active: true },
+				{ id: 'off', label: 'Indisponible', href: '#off', disabled: true },
+			]
+			cy.mountWithVuetify(SyNavList, { props: { items: contrastItems, label: 'Dossiers client' } })
+			cy.window().its('matchMedia').then(matchMedia => expect(matchMedia('(forced-colors: active)').matches).to.equal(true))
+
+			cy.get('button[aria-label="Droit de base : afficher le sous-menu"]').click()
+			cy.get('.sy-nav-list > .sy-nav-list-panel').should('have.css', 'outline-style', 'solid')
+			cy.get('.sy-nav-list-panel__flyout:visible > .sy-nav-list-panel').should('have.css', 'outline-style', 'solid')
+			cy.get('.sy-nav-list-panel__row--open').should('have.css', 'outline-style', 'solid')
+			cy.contains('a', 'AME').should('have.css', 'text-decoration-line', 'underline')
+			// Couleur système des éléments désactivés, lue sur un élément témoin
+			cy.document().then((doc) => {
+				const probe = doc.body.appendChild(doc.createElement('span'))
+				probe.style.color = 'GrayText'
+				const grayText = getComputedStyle(probe).color
+				probe.remove()
+				cy.contains('a', 'Indisponible').should('have.css', 'color', grayText)
+			})
+		})
+	})
+
 	it('dims a disabled entry', () => {
 		const disabledItems: SyNavListItem[] = [
 			{ id: 'off', label: 'Indisponible', href: '#off', disabled: true },

@@ -181,6 +181,16 @@
 		if (!active) closeCurrent()
 	})
 
+	// items remplacé par le projet (droits rechargés, liste filtrée) : une entrée ouverte qui n'existe plus, n'a plus
+	// de sous-niveau ou est désactivée est fermée. Sinon elle resterait dans la pile d'Échap, avec ses écouteurs,
+	// et sub-level-change resterait à true.
+	watch(
+		() => openId.value !== null && !props.items.some(item => item.id === openId.value && hasChildren(item) && !item.disabled),
+		(stale) => {
+			if (stale) closeCurrent()
+		},
+	)
+
 	onBeforeUnmount(() => {
 		flyoutMedia?.removeEventListener('change', updateFlyoutLayout)
 		document.removeEventListener('pointerdown', onDocumentPointerDown, true)
@@ -713,6 +723,33 @@
 		> :deep(.v-list-item__append > .sy-nav-list-panel__controls > .sy-nav-list-panel__toggle--left .v-icon) {
 			transform: scaleX(-1);
 		}
+	}
+}
+
+// Contraste élevé (Windows) : le navigateur retire ombres et fonds semi-transparents. Contours en couleurs système
+// à la place : limites de la liste et des sous-niveaux, entrée survolée ou ouverte ; page en cours soulignée en plus
+// du gras ; entrée désactivée en GrayText. Des contours plutôt que des bordures : rien ne bouge dans la mise en page.
+@media (forced-colors: active) {
+	.sy-nav-list-panel.elevation-2 {
+		outline: 1px solid CanvasText;
+	}
+
+	.sy-nav-list-panel__row:hover:not(.sy-nav-list-panel__row--disabled, .sy-nav-list-panel__row--open) {
+		outline: 1px dashed CanvasText;
+		outline-offset: -1px;
+	}
+
+	.sy-nav-list-panel__row--open {
+		outline: 2px solid Highlight;
+		outline-offset: -2px;
+	}
+
+	.sy-nav-list-panel__link[aria-current='page'] {
+		text-decoration: underline;
+	}
+
+	.sy-nav-list-panel__link--disabled {
+		color: GrayText;
 	}
 }
 </style>
