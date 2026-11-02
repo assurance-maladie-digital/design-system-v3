@@ -117,6 +117,76 @@ describe('SyNavList - Visual regression tests', () => {
 		})
 	})
 
+	const rectOf = (label: string) => cy.contains('a', label).then($link => $link[0]!.closest('.v-list-item')!.getBoundingClientRect())
+
+	it('opens sub-levels on the left when the list touches the right edge, without horizontal scroll (RGAA 10.11)', () => {
+		cy.mountWithVuetify(InContainer, { props: { containerStyle: 'display: flex; justify-content: flex-end', navProps: {} } })
+
+		openBothLevels()
+		cy.get('.sy-nav-list > .sy-nav-list-panel').then(($root) => {
+			const rootLeft = $root[0]!.getBoundingClientRect().left
+			rectOf('Demande d’affiliation').then((demande) => {
+				expect(demande.right).to.be.at.most(rootLeft)
+				// La cascade continue vers la gauche, sans recouvrir le niveau parent
+				rectOf('Pièces justificatives').its('right').should('be.at.most', demande.left)
+			})
+		})
+		cy.document().should((doc) => {
+			expect(doc.documentElement.scrollWidth).to.be.at.most(doc.documentElement.clientWidth)
+		})
+		cy.get('button[aria-label^="Droit de base :"] .v-icon').should('have.css', 'transform', 'matrix(-1, 0, 0, 1, 0, 0)')
+	})
+
+	it('repositions open sub-levels when the window shrinks, without horizontal scroll (RGAA 10.11)', () => {
+		cy.viewport(1400, 600)
+		cy.mountWithVuetify(InContainer, { props: { containerStyle: 'padding-left: 700px', navProps: { items: [items[0]!] } } })
+
+		openBothLevels()
+		cy.get('.sy-nav-list > .sy-nav-list-panel').then(($root) => {
+			const root = $root[0]!
+			rectOf('Demande d’affiliation').its('left').should('be.at.least', root.getBoundingClientRect().right)
+
+			// Fenêtre réduite (ou page zoomée) : les sous-niveaux, restés ouverts, passent à gauche
+			cy.viewport(1100, 600)
+			cy.get('button[aria-label^="Demande d’affiliation :"]').should('have.attr', 'aria-expanded', 'true')
+			// Mesure refaite à chaque essai : le repositionnement attend l'image suivante
+			cy.contains('a', 'Demande d’affiliation').should(($link) => {
+				expect($link[0]!.getBoundingClientRect().right).to.be.at.most(root.getBoundingClientRect().left)
+			})
+		})
+		cy.document().should((doc) => {
+			expect(doc.documentElement.scrollWidth).to.be.at.most(doc.documentElement.clientWidth)
+		})
+	})
+
+	it('moves a sub-level up so that it stays above the bottom of the window', () => {
+		cy.mountWithVuetify(InContainer, { props: { containerStyle: 'padding-top: 540px', navProps: {} } })
+
+		// Clic natif : cy.click() ferait défiler la page jusqu'au bouton, et le sous-niveau tiendrait sans remonter
+		cy.get('button[aria-label="Droit de base : afficher le sous-menu"]').then($button => $button[0]!.click())
+		cy.get('button[aria-label="Demande d’affiliation : afficher le sous-menu"]').then($button => $button[0]!.click())
+		cy.window().its('scrollY').should('equal', 0)
+		cy.window().then((win) => {
+			cy.get('.sy-nav-list-panel__flyout:visible').each(($flyout) => {
+				expect($flyout[0]!.getBoundingClientRect().bottom).to.be.at.most(win.innerHeight - 8)
+			})
+		})
+		// Le sous-niveau imbriqué n'hérite pas du décalage de son parent : il reste aligné sur sa ligne
+		rectOf('Demande d’affiliation').then((demande) => {
+			rectOf('Pièces justificatives').its('top').should('equal', demande.top)
+		})
+	})
+
+	it('opens sub-levels on the left in a right-to-left page', () => {
+		cy.mountWithVuetify(InContainer, { props: { containerStyle: 'direction: rtl; display: flex', navProps: {} } })
+
+		openBothLevels()
+		cy.get('.sy-nav-list > .sy-nav-list-panel').then(($root) => {
+			rectOf('Demande d’affiliation').its('right').should('be.at.most', $root[0]!.getBoundingClientRect().left)
+		})
+		cy.get('button[aria-label^="Droit de base :"] .v-icon').should('have.css', 'transform', 'matrix(-1, 0, 0, 1, 0, 0)')
+	})
+
 	it('opens sub-levels below the row on a narrow screen, without horizontal scroll (RGAA 10.11)', () => {
 		cy.viewport(320, 600)
 		cy.mountWithVuetify(SyNavList, { props: { items, label: 'Dossiers client' } })

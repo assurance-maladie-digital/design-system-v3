@@ -33,6 +33,7 @@ import {
 				<li><strong>Tabulation</strong> : lien, puis actions, puis chevron, entrée par entrée</li>
 				<li><strong>Entrée / Espace</strong> sur le chevron : ouvre ou ferme le sous-niveau</li>
 				<li><strong>Échap</strong> : ferme le sous-niveau le plus profond, même ouvert au survol (RGAA 10.13) ; depuis le sous-niveau, rend le focus au chevron</li>
+				<li><strong>Lien d'un sous-niveau ouvert à droite</strong> : le suivre referme tous les sous-niveaux et rend le focus au chevron du premier niveau</li>
 				<li><strong>Flèches haut et bas, Début, Fin</strong> : déplacent le focus entre les éléments d'un même niveau (comportement de <code>v-list</code>), en complément de la tabulation</li>
 			</ul>
 		</CriteriaCard>
@@ -53,6 +54,8 @@ import {
 			<ul>
 				<li><strong>Libellés longs</strong> : retour à la ligne, jamais de points de suspension (RGAA 10.4, 10.12)</li>
 				<li><strong>Petits écrans</strong> : sous 960 px, le sous-niveau s'ouvre sous l'entrée, sans défilement horizontal à 320 px (RGAA 10.11)</li>
+				<li><strong>Bords de la fenêtre</strong> : sur grand écran, un sous-niveau qui dépasserait à droite s'ouvre à gauche, et remonte s'il dépasserait en bas (RGAA 10.11)</li>
+				<li><strong>Sens de lecture</strong> : en RTL, les sous-niveaux s'ouvrent à gauche et les chevrons pointent vers la gauche</li>
 				<li><strong>Tactile</strong> : actions toujours visibles ; boutons de 28 × 28 px (WCAG 2.5.8 : au moins 24 × 24 px)</li>
 			</ul>
 		</CriteriaCard>

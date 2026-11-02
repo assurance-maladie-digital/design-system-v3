@@ -240,9 +240,10 @@ Le composant est dans `src/components/SyNavList/`, exporté dans la catégorie N
 | `SyNavList.vue` | `<nav>` nommé (`label`, sinon `locales.navLabel`) ; ne rend rien si `items` est vide. Props `iconColor`, `width`, `actionsVisibility`, `flat`, `locales` ; événements `action` et `sub-level-change` ; slot `actions` (voir le contrat ci-dessous). |
 | `SyNavListPanel.vue` | Un niveau, récursif : le prototype C, aux conventions du DS (interne, non exporté). |
 | `escapeStack.ts` | Pile d'Échap partagée ; écouteur posé seulement tant qu'un sous-niveau est ouvert (rien côté serveur). |
+| `flyoutPosition.ts` | Côté d'ouverture et remontée d'un sous-niveau ouvert à droite, selon la place dans la fenêtre et le sens de lecture (fonction pure, testée à part). |
 | `types.ts`, `locales.ts` | Contrat et libellés ; `locales` accepte un objet partiel. |
 | `SyNavList.stories.ts`, `SyNavList.mdx`, `accessibilite/Accessibility.mdx` | Stories de la plus simple à la plus complète, une option à la fois : `Default` (liens seuls), `WithIcons`, `WithActions`, `WithSubLevel`, `Complete` (maquette PA), `IconColor`, `CustomWidth` (300 px, largeur de la maquette), `ActiveItem` (l'entrée cliquée devient active : la story simule la navigation), `DisabledItem`, `ActionsAlways`, `SlotActions`, `InHeaderBar` (sous-menu de l'entrée « Dossiers client », dans une barre de navigation du slot `append` du `HeaderBar`). Pas de story vide : sans entrée, le composant ne rend rien ; ce cas est documenté dans `SyNavList.mdx` et testé dans `SyNavList.spec.ts`. |
-| `tests/` | `SyNavList.spec.ts` (47 tests), `SyNavList.a11y.spec.ts` (2), `SyNavList.stories.spec.ts` (21), `SyNavList.visual.cy.ts` (19). |
+| `tests/` | `SyNavList.spec.ts` (50 tests), `flyoutPosition.spec.ts` (7), `SyNavList.a11y.spec.ts` (2), `SyNavList.stories.spec.ts` (21), `SyNavList.visual.cy.ts` (23). |
 
 **Contrat**
 
@@ -294,6 +295,17 @@ Le composant est dans `src/components/SyNavList/`, exporté dans la catégorie N
 | 9 | Pas d'état désactivé ni de chargement. | **Désactivé : ajouté** (option `disabled` d'une entrée, story `DisabledItem`) : libellé atténué (`--v-disabled-opacity`), sans fond au survol ; ni lien, ni actions, ni ouverture du sous-niveau (clic, survol, clavier) ; lien sans `href` avec `role="link"` et `aria-disabled="true"`, annoncé comme lien indisponible et hors de l'ordre de tabulation ; chevron affiché mais désactivé, pour signaler qu'un sous-niveau existe. **Chargement : non traité**, le composant ne fait aucun traitement asynchrone (les entrées sont fournies par le projet). À valider avec le design (question 6). |
 | 10 | Flèches non documentées, valeurs en dur. | Flèches documentées dans la page d'accessibilité ; espacements sur `--spacing-*`. 28 px, 300 px et 960 px n'ont pas de token, et une variable CSS ne peut pas servir dans une media query ; le survol à 8 % reste celui de la maquette (`--v-hover-opacity` vaut 4 %). |
 
+**Fermeture et position des sous-niveaux ouverts à droite**, après une relecture des cas limites (02/11/2026) :
+
+- **Clic en dehors :** un sous-niveau se fermait seulement quand le focus quittait son entrée (`focusout`). Safari et Firefox sur macOS ne donnent pas le focus à un bouton cliqué : un clic ailleurs dans la page ne le refermait pas. Il se referme désormais au clic ou au toucher hors de l'entrée ouverte (écouteur `pointerdown` posé seulement tant qu'un sous-niveau est ouvert). La directive `clickOutside` du DS n'est pas utilisable depuis un composant : elle s'enregistre sur une application Vue créée à part.
+- **Lien suivi depuis un sous-niveau :** avec un routeur, la page change sans recharger et le focus reste sur le lien : le sous-niveau restait ouvert par-dessus la nouvelle page. Suivre un lien (souris ou Entrée) referme tous les niveaux ; le focus, s'il était dans le sous-niveau, revient au chevron du premier niveau. Un clic avec Ctrl ou Cmd (nouvel onglet) ne ferme rien.
+- **Accordéon exclu :** sous 960 px, ces deux fermetures ne s'appliquent pas. Rien n'y recouvre la page, un sous-niveau ouvert sert de repère, et toucher l'écran pour faire défiler la page déclencherait la fermeture.
+- **Bords de la fenêtre (RGAA 10.11) :** un sous-niveau s'ouvrait toujours à droite. Une liste collée au bord droit, ou trois niveaux dans une fenêtre de 960 à 1100 px, provoquaient un défilement horizontal. Il s'ouvre désormais à gauche quand la place manque à droite et qu'il y en a davantage à gauche ; la cascade garde ensuite ce côté tant qu'elle y tient, et le chevron pointe vers le côté d'ouverture. Un sous-niveau qui dépasserait le bas de la fenêtre remonte (marge de 8 px), sans en dépasser le haut. Pas de hauteur maximale avec défilement : elle couperait les sous-niveaux imbriqués, comme le débordement de `.v-list`.
+- **RTL :** `left: 100%` remplacé par la propriété logique `inset-inline-start` ; en RTL, le sous-niveau s'ouvre à gauche et le chevron pointe vers la gauche.
+- **Mise en œuvre :** mesure après l'affichage par `v-show` (`nextTick` ; mesuré plus tôt, le sous-niveau avait une largeur nulle et ne basculait jamais). Recalcul quand le niveau parent remonte : quand deux ouvertures s'enchaînent dans la même tâche, le sous-niveau imbriqué était mesuré avant que son parent remonte et gardait une remontée périmée (28 px de trop, trouvé par le test Cypress). La remontée passe par une variable CSS posée sur chaque sous-niveau : héritée, elle décalait aussi les sous-niveaux imbriqués.
+- **Redimensionnement et zoom :** la position était calculée à l'ouverture seulement. Zoomer à 200 ou 400 % redimensionne la fenêtre pour la page : un sous-niveau ouvert pouvait alors sortir de l'écran (RGAA 10.4, 10.11). Elle est recalculée au redimensionnement, une fois par image au plus (`requestAnimationFrame`), avec un écouteur posé seulement tant qu'un sous-niveau est ouvert. Un sous-niveau imbriqué se recalcule aussi quand le côté d'ouverture de son parent change. Mesuré dans Chrome (story `Complete`, liste à 716 px du bord gauche, deux niveaux ouverts) : à 1400 px, sous-niveaux à droite ; réduite à 1100 px, ils passent à gauche, restent ouverts, sans défilement horizontal.
+- **Pas au défilement :** attaché à sa ligne, le sous-niveau défile avec elle ; le replacer pendant le défilement le ferait sauter sous le pointeur. Écarté aussi : passer par `VMenu` de Vuetify, qui repositionne seul, mais sort le sous-niveau de la ligne (teleport) et casserait l'accordéon, la zone de survol en diagonale et l'ordre de tabulation.
+
 **Accordéon sous 960 px : mise en œuvre.**
 
 - Sous 960 px, la zone de droite de la ligne (`.v-list-item__append`) passe en `display: contents` : les actions et le chevron restent dans leur colonne, et le sous-niveau occupe une deuxième rangée de la grille de la ligne, sur toute sa largeur.
@@ -319,6 +331,13 @@ Le composant est dans `src/components/SyNavList/`, exporté dans la catégorie N
 | Zone cliquable du chevron (revue UX, point 2) | Cypress « extends the chevron click area to the full row height » |
 | Accordéon sous 960 px (revue UX, point 5) | Cypress « opens sub-levels as an accordion on a narrow screen, pushing the next entries down » |
 | Réinitialisation du placement en grille au-dessus de 960 px | Cypress « aligns the first entry of each sub-level with its parent row » (68 px au lieu de 24) |
+| Écouteur de clic hors de l'entrée ouverte | « referme les sous-niveaux au clic hors de la liste, même sans focus sur le chevron (Safari) » |
+| Fermeture au clic sur un lien d'un sous-niveau | « referme tous les sous-niveaux quand on suit un lien d'un sous-niveau, et rend le focus au premier chevron » |
+| Fermetures limitées aux sous-niveaux ouverts à droite | « garde l'accordéon ouvert au toucher de la page et au clic sur un lien, sous 960 px » |
+| Ouverture à gauche | Cypress « opens sub-levels on the left when the list touches the right edge » |
+| Remontée, variable posée sur chaque sous-niveau, recalcul quand le parent remonte | Cypress « moves a sub-level up so that it stays above the bottom of the window » (chacune des trois retirée à tour de rôle) |
+| `inset-inline-start` | Cypress « opens sub-levels on the left in a right-to-left page » |
+| Écouteur de redimensionnement | Cypress « repositions open sub-levels when the window shrinks » |
 
 Les contournements de style (débordement, panneau dans `append`, boutons de 28 px, retour à la ligne) et les règles de largeur ne sont pas mesurables dans happy-dom : ils sont couverts par les assertions de `SyNavList.visual.cy.ts` (sous-niveau à droite et non recouvert, boutons de 28 × 28 px et icônes de 16 px, libellé long sur plusieurs lignes, aucun défilement horizontal à 320 px, largeurs `fit-content`, fixe et `auto`, sous-niveau plafonné à 300 px, espacements, colonne du chevron, entrée active et parent en gras, accordéon, entrée désactivée atténuée, alignement des sous-niveaux sur leur ligne parente).
 
@@ -338,6 +357,10 @@ Les contournements de style (débordement, panneau dans `append`, boutons de 28 
 | 360 px, sous-niveau ouvert en accordéon (`Complete`) | « CMU-B » poussé sous le sous-niveau (de 88 à 176 px) ; zone du lien parent de 44 px de haut pour une ligne de 136 px |
 | 1280 px, deux niveaux ouverts (`Complete`) | premier élément de chaque sous-niveau aligné sur sa ligne parente (24 px) |
 | Entrée désactivée (`DisabledItem`) | sautée par la tabulation ; axe : 0 violation à 360 et 1280 px |
+| Clic en dehors, sous-niveaux ouverts sans focus sur le chevron (cas Safari) | tous refermés ; clic dans un sous-niveau hors lien : rien ne change |
+| Clic sur « Pièces justificatives » (souris), puis Entrée sur ce lien | tous les niveaux refermés ; au clavier, focus rendu au chevron « Droit de base » |
+| 1280 px, liste collée au bord droit, deux niveaux ouverts | sous-niveaux à gauche (cascade vers la gauche), chevrons vers la gauche, sans défilement horizontal (1280/1280) |
+| Fenêtre de 280 px de haut, liste en bas de page | sous-niveaux remontés jusqu'à 272 px (marge de 8 px), imbriqué aligné sur sa ligne (208 px) |
 | Libellé long + espacement du texte augmenté | aucun libellé tronqué |
 | Entrée active (`ActiveItem`) | suit les clics ; fond, gras et couleur primaire ; parent en gras |
 | Console | aucune erreur ni avertissement |
@@ -579,7 +602,7 @@ Usage côté produit :
 - [x] `SyIconButton` (test temporaire, jsdom) : `aria-expanded` et `aria-controls` passés en attributs sont rendus sur le `<button>`, avec `aria-label` et `title` issus de `label` ; l'élément racine est le `<button>` ; un clic émet une fois `click-icon-button`.
 - [x] Prototype C (`dev/Etudes/etude-vlist-2634/`, testé via le Playground) : ESLint et `vue-tsc` sans erreur, vérifiés aussi après le déplacement ; comportement testé dans jsdom (test temporaire, supprimé) et dans Chrome headless piloté au clavier et à la souris (survol, tabulation, Entrée, flèches, Échap), à 1200 et 320 px ; axe-core 4.14 injecté dans la page ; mesures des critères C1 à C5 avant et après correction ; captures comparées à la maquette PA.
 - [x] Tanaguru : 0 erreur, testé en local sur le Playground (30/10/2026), après les corrections C1 à C5. À relancer sur la story du composant, dans le deploy preview de la PR.
-- [x] `SyNavList` (option 2a) : 70 tests unitaires, axe et stories ; 19 tests Cypress passés en local (captures supprimées, baselines à produire par la CI) ; mesures dans Chrome sur les stories, au clavier et à la souris réelle ; `pnpm build`, ESLint, Stylelint et `vue-tsc` sans erreur. Détail dans « Implémentation ».
+- [x] `SyNavList` (option 2a) : 80 tests unitaires, axe et stories ; 23 tests Cypress passés en local (captures supprimées, baselines à produire par la CI) ; mesures dans Chrome sur les stories, au clavier et à la souris réelle ; `pnpm build`, ESLint, Stylelint et `vue-tsc` sans erreur. Détail dans « Implémentation ».
 - [ ] Tanaguru sur la story `SyNavList`, dans le deploy preview de la PR.
 - [ ] Esquisse de l'option 2b (`SyNavList` en HTML natif) : ni implémentée, ni compilée, ni testée.
 - [ ] Restitution par un lecteur d'écran réel (NVDA, VoiceOver) : non faite, ni pour les constats A1 et A3 (HTML rendu et axe), ni pour le prototype C.

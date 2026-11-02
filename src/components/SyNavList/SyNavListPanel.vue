@@ -1,12 +1,13 @@
 <script setup lang="ts">
 	// Un niveau de SyNavList, récursif pour les sous-niveaux.
 	// Lien, actions et bouton d'ouverture sont frères dans la ligne, jamais imbriqués.
-	import { type ComponentPublicInstance, computed, onBeforeUnmount, onMounted, ref, useId, watch } from 'vue'
+	import { type ComponentPublicInstance, computed, nextTick, onBeforeUnmount, onMounted, ref, useId, watch } from 'vue'
 	import { mdiChevronRight } from '@mdi/js'
 	import { VList, VListItem } from 'vuetify/components'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
 	import { registerOpenPanel, unregisterOpenPanel } from './escapeStack'
+	import { type SyNavListSide, resolveFlyoutPosition } from './flyoutPosition'
 	import type { SyNavListAction, SyNavListActionsVisibility, SyNavListItem, SyNavListLocales } from './types'
 
 	const props = withDefaults(defineProps<{
@@ -22,11 +23,17 @@
 		active?: boolean
 		// Profondeur du niveau (0 au premier) : décalage du texte en accordéon, sous 960 px
 		depth?: number
+		// Côté où s'ouvrent les sous-niveaux de ce niveau sur grand écran : celui du niveau parent
+		direction?: SyNavListSide
+		// Remontée du niveau parent : quand elle change, ce niveau repositionne son sous-niveau ouvert
+		parentShift?: number
 	}>(), {
 		flat: false,
 		label: undefined,
 		active: true,
 		depth: 0,
+		direction: 'end',
+		parentShift: 0,
 	})
 
 	const emit = defineEmits<{
@@ -47,6 +54,9 @@
 	// portent l'ombre de carte. Faux par défaut, donc côté serveur : la base est mobile.
 	const flyoutLayout = ref(false)
 	let flyoutMedia: MediaQueryList | undefined
+	const listRef = ref<ComponentPublicInstance | null>(null)
+	// Sens de lecture, lu au montage (rien côté serveur) : le chevron pointe vers le côté d'ouverture.
+	const rtl = ref(false)
 
 	function updateFlyoutLayout(): void {
 		flyoutLayout.value = flyoutMedia?.matches ?? false
@@ -56,6 +66,7 @@
 		flyoutMedia = window.matchMedia(FLYOUT_MEDIA_QUERY)
 		updateFlyoutLayout()
 		flyoutMedia.addEventListener('change', updateFlyoutLayout)
+		if (listRef.value?.$el instanceof HTMLElement) rtl.value = getComputedStyle(listRef.value.$el).direction === 'rtl'
 	})
 
 	const uid = useId()
@@ -63,6 +74,10 @@
 	// Sous-niveau ouvert au survol : la sortie du pointeur le referme, un clic le garde ouvert.
 	let openedByHover = false
 	const toggleButtons = new Map<string, HTMLElement>()
+	const flyouts = new Map<string, HTMLElement>()
+	// Position du sous-niveau ouvert sur grand écran : côté d'ouverture et remontée pour rester dans la fenêtre
+	const flyoutSide = ref<SyNavListSide>(props.direction)
+	const flyoutShift = ref(0)
 
 	// Délais d'intention du survol. Un simple passage du pointeur sur une entrée n'ouvre rien ;
 	// un sous-niveau ouvert résiste au passage sur une autre entrée, le temps de le rejoindre en diagonale.
@@ -89,10 +104,75 @@
 		openedByHover = false
 	}
 
+	// Sous-niveau ouvert à droite, superposé à la page : un clic ou un toucher hors de l'entrée ouverte (sous-niveau
+	// compris) la referme. Le focusout ne suffit pas : Safari et Firefox sur macOS ne donnent pas le focus à un
+	// bouton cliqué. Pas en accordéon : rien n'y est recouvert, et toucher la page pour la faire défiler le fermerait.
+	function onDocumentPointerDown(event: PointerEvent): void {
+		if (!flyoutLayout.value) return
+		const row = openId.value === null ? undefined : flyouts.get(openId.value)?.closest('.sy-nav-list-panel__row')
+		if (row && !row.contains(event.target as Node | null)) closeCurrent()
+	}
+
+	// Fenêtre redimensionnée, ou page zoomée (RGAA 10.4, 10.11), sous-niveau ouvert : il est repositionné,
+	// une fois par image au plus. Pas au défilement : attaché à sa ligne, il défile avec elle.
+	const viewportVersion = ref(0)
+	let resizeFrame: number | undefined
+
+	function onWindowResize(): void {
+		if (resizeFrame !== undefined) return
+		resizeFrame = requestAnimationFrame(() => {
+			resizeFrame = undefined
+			viewportVersion.value++
+		})
+	}
+
+	function stopResizeTracking(): void {
+		window.removeEventListener('resize', onWindowResize)
+		if (resizeFrame !== undefined) cancelAnimationFrame(resizeFrame)
+		resizeFrame = undefined
+	}
+
 	watch(openId, (now, before) => {
-		if (before !== null) unregisterOpenPanel(closeCurrent)
-		if (now !== null) registerOpenPanel(closeCurrent)
+		if (before !== null) {
+			unregisterOpenPanel(closeCurrent)
+			document.removeEventListener('pointerdown', onDocumentPointerDown, true)
+			stopResizeTracking()
+		}
+		if (now !== null) {
+			registerOpenPanel(closeCurrent)
+			document.addEventListener('pointerdown', onDocumentPointerDown, true)
+			window.addEventListener('resize', onWindowResize)
+		}
 		if ((now === null) !== (before === null)) emit('openChange', now !== null)
+	})
+
+	// Sous-niveau ouvert à droite : mesuré une fois affiché, il passe de l'autre côté ou remonte s'il sort
+	// de la fenêtre (RGAA 10.11). Recalculé à chaque ouverture, avant l'affichage à l'écran, au redimensionnement,
+	// et quand le niveau parent bouge (remontée ou côté) : mesuré avant lui, le sous-niveau garderait une position
+	// périmée. nextTick : v-show n'affiche le sous-niveau qu'après les observateurs, il serait sinon mesuré masqué.
+	watch([openId, () => props.parentShift, () => props.direction, viewportVersion], async ([now]) => {
+		flyoutSide.value = props.direction
+		flyoutShift.value = 0
+		await nextTick()
+		if (openId.value !== now) return
+		const flyout = now === null ? undefined : flyouts.get(now)
+		const list = listRef.value?.$el
+		if (!flyout || !(list instanceof HTMLElement) || !flyoutLayout.value) return
+		const listRect = list.getBoundingClientRect()
+		const flyoutRect = flyout.getBoundingClientRect()
+		const position = resolveFlyoutPosition({
+			listLeft: listRect.left,
+			listRight: listRect.right,
+			flyoutWidth: flyoutRect.width,
+			flyoutTop: flyoutRect.top,
+			flyoutHeight: flyoutRect.height,
+			viewportWidth: document.documentElement.clientWidth,
+			viewportHeight: window.innerHeight,
+			preferredSide: props.direction,
+			rtl: rtl.value,
+		})
+		flyoutSide.value = position.side
+		flyoutShift.value = position.shift
 	})
 
 	// v-show garde les sous-niveaux montés : sans cela, un sous-niveau resterait ouvert
@@ -103,6 +183,8 @@
 
 	onBeforeUnmount(() => {
 		flyoutMedia?.removeEventListener('change', updateFlyoutLayout)
+		document.removeEventListener('pointerdown', onDocumentPointerDown, true)
+		stopResizeTracking()
 		cancelHover()
 		unregisterOpenPanel(closeCurrent)
 	})
@@ -138,6 +220,17 @@
 		const button = el && '$el' in el ? el.$el as HTMLElement : null
 		if (button) toggleButtons.set(item.id, button)
 		else toggleButtons.delete(item.id)
+	}
+
+	function setFlyout(item: SyNavListItem, el: Element | ComponentPublicInstance | null): void {
+		if (el instanceof HTMLElement) flyouts.set(item.id, el)
+		else flyouts.delete(item.id)
+	}
+
+	// Chevron tourné vers le côté où s'ouvre le sous-niveau : celui mesuré s'il est ouvert, celui du niveau sinon.
+	function togglePointsLeft(item: SyNavListItem): boolean {
+		const side = openId.value === item.id ? flyoutSide.value : props.direction
+		return (side === 'start') !== rtl.value
 	}
 
 	function close(item: SyNavListItem): void {
@@ -196,11 +289,25 @@
 		close(item)
 		toggleButtons.get(item.id)?.focus()
 	}
+
+	// Lien suivi depuis un sous-niveau ouvert à droite : avec un routeur, la page change sans recharger, et le
+	// sous-niveau resterait par-dessus. Chaque niveau traverse le clic : tous se referment, et le focus, s'il était
+	// dans le sous-niveau, revient au chevron du premier niveau. Un clic avec modificateur ouvre un autre onglet :
+	// rien ne change. En accordéon, le sous-niveau ne recouvre rien et reste ouvert, comme repère.
+	function onFlyoutClick(item: SyNavListItem, event: MouseEvent): void {
+		if (!flyoutLayout.value) return
+		if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return
+		if (!(event.target instanceof Element) || !event.target.closest('a[href]')) return
+		const hadFocus = flyouts.get(item.id)?.contains(document.activeElement) ?? false
+		close(item)
+		if (hadFocus) toggleButtons.get(item.id)?.focus()
+	}
 </script>
 
 <template>
 	<!-- tabindex -1 : VList pose sinon un arrêt de tabulation sur son conteneur -->
 	<VList
+		ref="listRef"
 		class="sy-nav-list-panel"
 		:class="{
 			'elevation-2 rounded': !props.flat,
@@ -276,6 +383,7 @@
 						:color="props.iconColor"
 						:disabled="item.disabled"
 						class="sy-nav-list-panel__toggle pa-0"
+						:class="{ 'sy-nav-list-panel__toggle--left': togglePointsLeft(item) }"
 						:width="28"
 						:height="28"
 						@click-icon-button="toggle(item)"
@@ -293,7 +401,10 @@
 					v-if="hasChildren(item)"
 					v-show="openId === item.id"
 					:id="panelId(item)"
+					:ref="(el) => setFlyout(item, el)"
 					class="sy-nav-list-panel__flyout"
+					:class="{ 'sy-nav-list-panel__flyout--start': openId === item.id && flyoutSide === 'start' }"
+					:style="{ '--sy-nav-list-flyout-shift': `${openId === item.id ? flyoutShift : 0}px` }"
 				>
 					<!-- stop : sans lui, le VList parent rejouerait Échap et les flèches -->
 					<SyNavListPanel
@@ -303,10 +414,13 @@
 						:actions-visibility="props.actionsVisibility"
 						:flat="!flyoutLayout"
 						:depth="props.depth + 1"
+						:direction="openId === item.id ? flyoutSide : props.direction"
+						:parent-shift="flyoutShift"
 						:label="props.locales.subMenuLabel(item.label)"
 						:active="openId === item.id"
 						@keydown.esc.stop="onEscape(item)"
 						@keydown.up.down.home.end.stop
+						@click="(event: MouseEvent) => onFlyoutClick(item, event)"
 						@action="(child, action) => emit('action', child, action)"
 					>
 						<template
@@ -559,8 +673,12 @@
 		grid-column: auto;
 
 		// Compense la marge intérieure de 8 px de .v-list : le premier sous-élément s'aligne sur la ligne parente.
-		top: -8px;
-		left: 100%;
+		// Remonté de --sy-nav-list-flyout-shift quand il dépasserait le bas de la fenêtre (variable posée sur
+		// chaque sous-niveau : héritée, elle décalerait aussi les sous-niveaux imbriqués).
+		top: calc(-8px - var(--sy-nav-list-flyout-shift, 0px));
+
+		// Propriété logique : en RTL, le sous-niveau s'ouvre à gauche
+		inset-inline-start: 100%;
 
 		// La prop width ne vaut que pour le premier niveau : un sous-niveau suit son propre contenu,
 		// dans la limite de la largeur de la maquette PA (au-delà, le libellé passe à la ligne).
@@ -573,6 +691,11 @@
 		}
 	}
 
+	// Pas assez de place du côté habituel : le sous-niveau s'ouvre de l'autre côté de la liste
+	.sy-nav-list-panel__flyout--start {
+		inset-inline: auto 100%;
+	}
+
 	// Même spécificité que la règle d'accordéon de l'entrée ouverte, pour la remplacer
 	.sy-nav-list-panel__toggle :deep(.v-icon) {
 		transform: none;
@@ -581,6 +704,14 @@
 	.sy-nav-list-panel__row--open {
 		> :deep(.v-list-item__append > .sy-nav-list-panel__controls > .sy-nav-list-panel__toggle .v-icon) {
 			transform: none;
+		}
+	}
+
+	// Sous-niveau ouvert à gauche (place manquante à droite, ou RTL) : le chevron pointe vers la gauche.
+	// Placée après la règle de l'entrée ouverte, à spécificité égale, pour la remplacer.
+	.sy-nav-list-panel__row {
+		> :deep(.v-list-item__append > .sy-nav-list-panel__controls > .sy-nav-list-panel__toggle--left .v-icon) {
+			transform: scaleX(-1);
 		}
 	}
 }

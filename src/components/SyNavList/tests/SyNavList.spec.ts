@@ -278,6 +278,48 @@ describe('SyNavList', () => {
 		expect(parent.attributes('aria-expanded')).toBe('false')
 	})
 
+	it('referme les sous-niveaux au clic hors de la liste, même sans focus sur le chevron (Safari)', async () => {
+		const outside = document.createElement('button')
+		document.body.append(outside)
+		const wrapper = mountNavList()
+		const parent = toggleOf(wrapper, 'Droit de base')
+		await parent.trigger('click')
+		const child = toggleOf(wrapper, 'Demande d’affiliation')
+		await child.trigger('click')
+
+		wrapper.get('a[href="/pieces"]').element.closest('[role="list"]')!.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }))
+		await flushPromises()
+
+		expect(child.attributes('aria-expanded')).toBe('true')
+
+		outside.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }))
+		await flushPromises()
+
+		expect(child.attributes('aria-expanded')).toBe('false')
+		expect(parent.attributes('aria-expanded')).toBe('false')
+	})
+
+	it('referme tous les sous-niveaux quand on suit un lien d\'un sous-niveau, et rend le focus au premier chevron', async () => {
+		const wrapper = mountNavList()
+		const parent = toggleOf(wrapper, 'Droit de base')
+		await parent.trigger('click')
+		const child = toggleOf(wrapper, 'Demande d’affiliation')
+		await child.trigger('click')
+		const link = wrapper.get<HTMLAnchorElement>('a[href="/pieces"]')
+		link.element.addEventListener('click', event => event.preventDefault())
+
+		link.element.focus()
+		await link.trigger('click', { ctrlKey: true })
+
+		expect(child.attributes('aria-expanded')).toBe('true')
+
+		await link.trigger('click')
+
+		expect(child.attributes('aria-expanded')).toBe('false')
+		expect(parent.attributes('aria-expanded')).toBe('false')
+		expect(document.activeElement).toBe(parent.element)
+	})
+
 	it('referme les sous-niveaux d\'une entrée qui se ferme', async () => {
 		const wrapper = mountNavList()
 		const parent = toggleOf(wrapper, 'Droit de base')
@@ -630,6 +672,27 @@ describe('SyNavList', () => {
 
 			expect(panels[0]!.classes()).toContain('elevation-2')
 			expect(panels.slice(1).some(panel => panel.classes().includes('elevation-2'))).toBe(false)
+		}
+		finally {
+			window.innerWidth = width
+		}
+	})
+
+	it('garde l\'accordéon ouvert au toucher de la page et au clic sur un lien, sous 960 px', async () => {
+		const width = window.innerWidth
+		try {
+			window.innerWidth = 800
+			const wrapper = mountNavList()
+			await flushPromises()
+			const parent = toggleOf(wrapper, 'Droit de base')
+			await parent.trigger('click')
+			const link = wrapper.get<HTMLAnchorElement>('a[href="/demande-affiliation"]')
+			link.element.addEventListener('click', event => event.preventDefault())
+
+			document.body.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }))
+			await link.trigger('click')
+
+			expect(parent.attributes('aria-expanded')).toBe('true')
 		}
 		finally {
 			window.innerWidth = width
