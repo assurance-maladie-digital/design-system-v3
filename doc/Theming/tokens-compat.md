@@ -67,15 +67,16 @@ background: rgb(var(--v-theme-grey-lighten90));
 Ces variables **ne sont pas livrées dans un fichier CSS** : elles sont **générées au runtime par Vuetify** à partir du thème de Synapse, et uniquement dans le périmètre du thème actif. Si une variable `--v-theme-*` est « non définie » côté projet consommateur, vérifier dans l'ordre :
 
 1. **Le nom** — `grey-darken60` (sans tiret avant le chiffre). Cf. ci-dessus.
-2. **Le thème Vuetify de Synapse est bien câblé.** La palette n'est émise que si les `themes` de Synapse sont passés à `createVuetify`. Utiliser l'instance fournie :
+2. **Le thème Vuetify de Synapse est bien câblé.** La palette n'est émise que si les `themes` de Synapse sont passés à `createVuetify`. Utiliser la configuration fournie :
 
    ```ts
-   import { createVuetifyInstance } from '@cnamts/synapse/vuetifyConfig'
+   import { createVuetify } from 'vuetify'
+   import { createVuetifyOptions } from '@cnamts/synapse/vuetifyOptions'
 
-   app.use(createVuetifyInstance())
+   app.use(createVuetify(createVuetifyOptions()))
    ```
 
-   Avec le tree-shaking de Vuetify (`vite-plugin-vuetify`), `createVuetify(createVuetifyOptions())` (`@cnamts/synapse/vuetifyOptions`) passe les mêmes thèmes : voir la section « Choisir le point d'entrée » de la page Storybook *Guide Du Dev / Démarrage / createVuetifyInstance* (`src/stories/GuideDuDev/CreateVuetifyInstance.mdx`).
+   `createVuetifyInstance` (`@cnamts/synapse/vuetifyConfig`), conservée pour les projets existants, passe les mêmes thèmes. Mise en place complète : section « Configurer Vuetify » de la page Storybook *Guide Du Dev / Démarrage / Installation* (`src/stories/GuideDuDev/Installation.mdx`).
 
    Un `createVuetify` maison qui ne reprend pas `theme.themes.<marque>.colors` de Synapse ne génère pas les variables de palette.
 3. **Le scope du thème.** Vuetify définit ces variables sous le sélecteur `.v-theme--<marque>` (posé sur `<v-app>`). Une règle CSS appliquée **hors de `<v-app>`** (style global sur `body`, overlay/teleport sorti de l'app…) ne résout pas `var(--v-theme-…)`.
