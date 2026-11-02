@@ -100,11 +100,27 @@ const meta: Meta<typeof PeriodField> = {
 		},
 		customRules: {
 			control: 'object',
-			description: 'Règles de validation',
+			description: 'Règles de validation (appliquées aux deux bornes)',
+		},
+		customFromRules: {
+			control: 'object',
+			description: 'Règles de validation propres à la date de début',
+		},
+		customToRules: {
+			control: 'object',
+			description: 'Règles de validation propres à la date de fin',
 		},
 		customWarningRules: {
 			control: 'object',
-			description: 'Règles d\'avertissement',
+			description: 'Règles d\'avertissement (appliquées aux deux bornes)',
+		},
+		customFromWarningRules: {
+			control: 'object',
+			description: 'Règles d\'avertissement propres à la date de début',
+		},
+		customToWarningRules: {
+			control: 'object',
+			description: 'Règles d\'avertissement propres à la date de fin',
 		},
 		disableErrorHandling: {
 			control: 'boolean',
@@ -704,6 +720,84 @@ export const WithWarning: Story = {
               </div>
             `,
 	}),
+}
+
+export const WithTargetedWarnings: Story = {
+	...WithWarning,
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<PeriodField
+		v-model="selectedPeriod"
+		:custom-from-warning-rules="fromWarningRules"
+		:custom-to-warning-rules="toWarningRules"
+		placeholder-from="Début"
+		placeholder-to="Fin"
+		required
+		:display-icon="false"
+		display-append-icon
+	/>
+	<p>Période sélectionnée : {{ selectedPeriod }}</p>
+</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+	import { ref } from 'vue'
+	import { PeriodField } from '@cnamts/synapse'
+	import type { ValidationRule } from '@cnamts/synapse/composables/unifyValidation/useValidation'
+
+	const selectedPeriod = ref({ from: '20/12/2023', to: '21/12/2023' })
+	const fromWarningRules: ValidationRule[] = [
+		{
+			type: 'notBeforeDate',
+			options: {
+				date: '02/01/2024',
+				warningMessage: 'Attention : la date de début est antérieure au 02/01/2024',
+			},
+		},
+	]
+	const toWarningRules: ValidationRule[] = [
+		{
+			type: 'notBeforeDate',
+			options: {
+				date: '02/01/2024',
+				warningMessage: 'Attention : la date de fin est antérieure au 02/01/2024',
+			},
+		},
+	]
+</script>
+				`,
+			},
+		],
+	},
+	args: {
+		...WithWarning.args,
+		customWarningRules: [],
+		customFromWarningRules: [
+			{
+				type: 'notBeforeDate',
+				options: {
+					date: '02/01/2024',
+					warningMessage: 'Attention : la date de début est antérieure au 02/01/2024',
+				},
+			},
+		],
+		customToWarningRules: [
+			{
+				type: 'notBeforeDate',
+				options: {
+					date: '02/01/2024',
+					warningMessage: 'Attention : la date de fin est antérieure au 02/01/2024',
+				},
+			},
+		],
+	},
 }
 
 export const WithSuccess: Story = {

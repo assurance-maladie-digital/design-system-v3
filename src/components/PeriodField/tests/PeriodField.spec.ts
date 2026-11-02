@@ -556,6 +556,28 @@ describe('PeriodField.vue', () => {
 			wrapper.unmount()
 		})
 
+		it('combines shared and bound-specific warning rules on each field', async () => {
+			const sharedRule = { type: 'notAfterDate', options: { date: '02/11/2026', warningMessage: 'Avertissement commun' } }
+			const fromRule = { type: 'notBeforeDate', options: { date: '05/11/2026', warningMessage: 'Avertissement début' } }
+			const toRule = { type: 'notBeforeDate', options: { date: '05/11/2026', warningMessage: 'Avertissement fin' } }
+			const wrapper = mount(PeriodField, {
+				props: {
+					modelValue: { from: '03/11/2026', to: '04/11/2026' },
+					customWarningRules: [sharedRule],
+					customFromWarningRules: [fromRule],
+					customToWarningRules: [toRule],
+				},
+			})
+			await flushPromises()
+
+			const [fromPicker, toPicker] = wrapper.findAllComponents({ name: 'DatePicker' }) as [DatePickerWrapper, DatePickerWrapper]
+			expect(fromPicker.props('customWarningRules')).toEqual(expect.arrayContaining([sharedRule, fromRule]))
+			expect(fromPicker.props('customWarningRules')).not.toContainEqual(toRule)
+			expect(toPicker.props('customWarningRules')).toEqual(expect.arrayContaining([sharedRule, toRule]))
+			expect(toPicker.props('customWarningRules')).not.toContainEqual(fromRule)
+			wrapper.unmount()
+		})
+
 		it('revalidates the public state when custom rules change without changing dates', async () => {
 			const wrapper = mount(PeriodField, {
 				props: { modelValue: { from: '10/01/2024', to: '20/01/2024' } },
