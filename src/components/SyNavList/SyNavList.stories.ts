@@ -132,6 +132,7 @@ const meta = {
 	href?: string
 	to?: RouteLocationRaw
 	active?: boolean // page en cours, pour un lien href
+	disabled?: boolean // entrée indisponible
 	actions?: { id: string, icon: IconValue, label: string }[]
 	children?: SyNavListItem[]
 }[]` },
@@ -622,6 +623,67 @@ const items = computed(() => markActive(menu))
 			</div>
 		`,
 	}),
+}
+
+export const DisabledItem: Story = {
+	args: {
+		items: [
+			{
+				id: 'cmu-b',
+				label: 'CMU-B',
+				href: '/cmu-b',
+				actions: [edit],
+				disabled: true,
+				children: [{ id: 'reception', label: 'Réception', href: '/reception' }],
+			},
+			{ id: 'cmu-c-as', label: 'CMU-C/AS', href: '/cmu-c-as', disabled: true },
+			{ id: 'ame', label: 'AME', href: '/ame', actions: [settings, edit] },
+		],
+	},
+	parameters: {
+		docs: {
+			description: {
+				story: 'Une entrée `disabled` reste visible, libellé atténué, mais n\'est ni cliquable ni atteignable au clavier : ni lien, ni actions, ni ouverture du sous-niveau. Les lecteurs d\'écran l\'annoncent comme un lien indisponible. Son chevron reste affiché, désactivé, pour signaler qu\'elle a un sous-niveau.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<SyNavList
+		:items="items"
+		label="Dossiers client"
+		@action="onAction"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { mdiCog, mdiPencilBox } from '@mdi/js'
+import { SyNavList, type SyNavListAction, type SyNavListItem } from '@cnamts/synapse'
+
+const edit: SyNavListAction = { id: 'edit', icon: mdiPencilBox, label: 'Modifier' }
+const settings: SyNavListAction = { id: 'settings', icon: mdiCog, label: 'Paramètres' }
+
+const items: SyNavListItem[] = [
+	{
+		id: 'cmu-b',
+		label: 'CMU-B',
+		href: '/cmu-b',
+		actions: [edit],
+		disabled: true,
+		children: [{ id: 'reception', label: 'Réception', href: '/reception' }],
+	},
+	{ id: 'cmu-c-as', label: 'CMU-C/AS', href: '/cmu-c-as', disabled: true },
+	{ id: 'ame', label: 'AME', href: '/ame', actions: [settings, edit] },
+]
+
+${onActionScript}
+</script>`,
+			},
+		],
+	},
 }
 
 export const ActionsAlways: Story = {

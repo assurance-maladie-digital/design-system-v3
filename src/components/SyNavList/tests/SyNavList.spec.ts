@@ -142,7 +142,7 @@ describe('SyNavList', () => {
 		const wrapper = mountNavList()
 		const rootRows = wrapper.findAll('.sy-nav-list > .sy-nav-list-panel > .sy-nav-list-panel__row')
 
-		const placeholders = rootRows.map(row => row.find(':scope > .v-list-item__append > .sy-nav-list-panel__toggle-placeholder').exists())
+		const placeholders = rootRows.map(row => row.find(':scope > .v-list-item__append > .sy-nav-list-panel__controls > .sy-nav-list-panel__toggle-placeholder').exists())
 
 		// Droit de base a un sous-niveau ; AME et CMU-C/AS non.
 		expect(placeholders).toEqual([false, true, true])
@@ -610,18 +610,80 @@ describe('SyNavList', () => {
 		expect(wrapper.findAll('.sy-nav-list-panel--actions-always')).toHaveLength(wrapper.findAll('.sy-nav-list-panel').length)
 	})
 
-	it('retire l\'ombre du seul premier niveau avec flat', () => {
-		const panels = mountNavList({ flat: true }).findAll('.sy-nav-list-panel')
+	it('retire l\'ombre du seul premier niveau avec flat', async () => {
+		const wrapper = mountNavList({ flat: true })
+		await flushPromises()
+		const panels = wrapper.findAll('.sy-nav-list-panel')
 
 		expect(panels[0]!.classes()).not.toContain('elevation-2')
 		expect(panels.slice(1).every(panel => panel.classes().includes('elevation-2'))).toBe(true)
 		expect(mountNavList().findAll('.sy-nav-list-panel')[0]!.classes()).toContain('elevation-2')
 	})
 
+	it('affiche les sous-niveaux sans ombre en accordéon, sous 960 px', async () => {
+		const width = window.innerWidth
+		try {
+			window.innerWidth = 800
+			const wrapper = mountNavList()
+			await flushPromises()
+			const panels = wrapper.findAll('.sy-nav-list-panel')
+
+			expect(panels[0]!.classes()).toContain('elevation-2')
+			expect(panels.slice(1).some(panel => panel.classes().includes('elevation-2'))).toBe(false)
+		}
+		finally {
+			window.innerWidth = width
+		}
+	})
+
 	it('affiche l\'intitulé des actions dans l\'infobulle native (title), comme les autres boutons icônes du DS', () => {
 		const wrapper = mountNavList()
 
 		expect(wrapper.get('button[aria-label="Modifier (AME)"]').attributes('title')).toBe('Modifier (AME)')
+	})
+
+	describe('entrée désactivée', () => {
+		const disabledItems: SyNavListItem[] = [
+			{ id: 'a', label: 'A', href: '/a', actions: [edit], disabled: true, children: [{ id: 'a1', label: 'A1', href: '/a1' }] },
+			{ id: 'b', label: 'B', href: '/b', actions: [edit] },
+		]
+
+		it('est annoncée comme lien indisponible, hors de l\'ordre de tabulation', () => {
+			const link = mountNavList({ items: disabledItems }).get('.sy-nav-list-panel__link--disabled')
+
+			expect(link.element.tagName).toBe('A')
+			expect(link.attributes('href')).toBeUndefined()
+			expect(link.attributes('role')).toBe('link')
+			expect(link.attributes('aria-disabled')).toBe('true')
+		})
+
+		it('n\'a pas d\'actions, et son chevron est désactivé', async () => {
+			const wrapper = mountNavList({ items: disabledItems })
+			const toggle = toggleOf(wrapper, 'A')
+
+			expect(wrapper.find('button[aria-label="Modifier (A)"]').exists()).toBe(false)
+			expect(wrapper.find('button[aria-label="Modifier (B)"]').exists()).toBe(true)
+			expect(toggle.attributes('disabled')).toBeDefined()
+
+			await toggle.trigger('click')
+
+			expect(toggle.attributes('aria-expanded')).toBe('false')
+		})
+
+		it('n\'ouvre pas son sous-niveau au survol', async () => {
+			vi.useFakeTimers()
+			try {
+				const wrapper = mountNavList({ items: disabledItems })
+				await wrapper.findAll('.sy-nav-list-panel__row')[0]!.trigger('pointerenter', { pointerType: 'mouse' })
+				vi.advanceTimersByTime(400)
+				await flushPromises()
+
+				expect(toggleOf(wrapper, 'A').attributes('aria-expanded')).toBe('false')
+			}
+			finally {
+				vi.useRealTimers()
+			}
+		})
 	})
 
 	it('accepte une surcharge partielle des libellés', () => {

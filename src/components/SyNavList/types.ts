@@ -22,6 +22,8 @@ export interface SyNavListItem {
 	to?: RouteLocationRaw
 	/** Page en cours, pour un lien `href` (un `RouterLink` le détecte seul) : pose `aria-current="page"`. */
 	active?: boolean
+	/** Entrée indisponible : ni lien, ni actions, ni ouverture du sous-niveau ; annoncée comme lien indisponible. */
+	disabled?: boolean
 	/** Jusqu'à 4 actions, affichées au survol et au focus de l'entrée. */
 	actions?: SyNavListAction[]
 	/** Sous-niveau, ouvert par le chevron de l'entrée. */

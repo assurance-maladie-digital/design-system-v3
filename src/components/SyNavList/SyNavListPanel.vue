@@ -1,7 +1,7 @@
 <script setup lang="ts">
 	// Un niveau de SyNavList, récursif pour les sous-niveaux.
 	// Lien, actions et bouton d'ouverture sont frères dans la ligne, jamais imbriqués.
-	import { type ComponentPublicInstance, computed, onBeforeUnmount, ref, useId, watch } from 'vue'
+	import { type ComponentPublicInstance, computed, onBeforeUnmount, onMounted, ref, useId, watch } from 'vue'
 	import { mdiChevronRight } from '@mdi/js'
 	import { VList, VListItem } from 'vuetify/components'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
@@ -20,10 +20,13 @@
 		label?: string
 		// Faux quand le niveau parent est fermé : ce niveau referme alors ses propres sous-niveaux
 		active?: boolean
+		// Profondeur du niveau (0 au premier) : décalage du texte en accordéon, sous 960 px
+		depth?: number
 	}>(), {
 		flat: false,
 		label: undefined,
 		active: true,
+		depth: 0,
 	})
 
 	const emit = defineEmits<{
@@ -39,6 +42,21 @@
 	// Au-delà, les sous-niveaux s'ouvrent à droite ; en dessous, sous l'entrée (RGAA 10.11).
 	// Valeur reprise dans le style : à modifier aux deux endroits.
 	const FLYOUT_MEDIA_QUERY = '(min-width: 960px)'
+
+	// Sous-niveaux ouverts à droite (grand écran) ou en accordéon. Seuls les premiers, superposés au contenu,
+	// portent l'ombre de carte. Faux par défaut, donc côté serveur : la base est mobile.
+	const flyoutLayout = ref(false)
+	let flyoutMedia: MediaQueryList | undefined
+
+	function updateFlyoutLayout(): void {
+		flyoutLayout.value = flyoutMedia?.matches ?? false
+	}
+
+	onMounted(() => {
+		flyoutMedia = window.matchMedia(FLYOUT_MEDIA_QUERY)
+		updateFlyoutLayout()
+		flyoutMedia.addEventListener('change', updateFlyoutLayout)
+	})
 
 	const uid = useId()
 	const openId = ref<string | null>(null)
@@ -84,6 +102,7 @@
 	})
 
 	onBeforeUnmount(() => {
+		flyoutMedia?.removeEventListener('change', updateFlyoutLayout)
 		cancelHover()
 		unregisterOpenPanel(closeCurrent)
 	})
@@ -102,11 +121,13 @@
 
 	// Motif de FooterBar : seule la clé utile est liée, un `href: undefined` écraserait celui de RouterLink.
 	function linkComponent(item: SyNavListItem): string {
-		if (item.href) return 'a'
+		// Entrée désactivée : <a> sans href, ni focusable ni cliquable, annoncé comme lien indisponible.
+		if (item.href || item.disabled) return 'a'
 		return item.to ? 'RouterLink' : 'span'
 	}
 
-	function linkAttrs(item: SyNavListItem): Pick<SyNavListItem, 'href' | 'to'> & { 'aria-current'?: 'page' } {
+	function linkAttrs(item: SyNavListItem): Pick<SyNavListItem, 'href' | 'to'> & { 'aria-current'?: 'page', 'role'?: 'link', 'aria-disabled'?: 'true' } {
+		if (item.disabled) return { 'role': 'link', 'aria-disabled': 'true' }
 		// Un RouterLink pose lui-même aria-current sur la page active ; `active` le force pour un lien href.
 		const current = item.active ? { 'aria-current': 'page' as const } : {}
 		if (item.href) return { href: item.href, ...current }
@@ -126,6 +147,7 @@
 	// Sans ce cas, le survol de l'entrée ouvrirait le sous-niveau et le clic sur le chevron le refermerait aussitôt.
 	function toggle(item: SyNavListItem): void {
 		cancelHover()
+		if (item.disabled) return
 		if (openId.value === item.id && !openedByHover) {
 			closeCurrent()
 			return
@@ -141,7 +163,7 @@
 		// Retour sur l'entrée ouverte, ou dans son sous-niveau (qui fait partie de la ligne) : rien ne change.
 		if (openId.value === item.id) return
 		const delay = openId.value === null ? HOVER_OPEN_DELAY : HOVER_SWITCH_DELAY
-		if (hasChildren(item)) {
+		if (hasChildren(item) && !item.disabled) {
 			scheduleHover(() => {
 				openId.value = item.id
 				openedByHover = true
@@ -185,13 +207,17 @@
 			'sy-nav-list-panel--actions-always': props.actionsVisibility === 'always',
 		}"
 		:aria-label="props.label"
+		:style="{ '--sy-nav-list-depth': props.depth }"
 		tabindex="-1"
 	>
 		<VListItem
 			v-for="item in props.items"
 			:key="item.id"
 			class="sy-nav-list-panel__row"
-			:class="{ 'sy-nav-list-panel__row--open': openId === item.id }"
+			:class="{
+				'sy-nav-list-panel__row--open': openId === item.id,
+				'sy-nav-list-panel__row--disabled': item.disabled,
+			}"
 			@pointerenter="onPointerEnter(item, $event)"
 			@pointerleave="onPointerLeave(item, $event)"
 			@focusout="onFocusOut(item, $event)"
@@ -201,7 +227,10 @@
 					:is="linkComponent(item)"
 					v-bind="linkAttrs(item)"
 					class="sy-nav-list-panel__link"
-					:class="{ 'sy-nav-list-panel__link--static': linkComponent(item) === 'span' }"
+					:class="{
+						'sy-nav-list-panel__link--static': linkComponent(item) === 'span' || item.disabled,
+						'sy-nav-list-panel__link--disabled': item.disabled,
+					}"
 				>
 					<SyIcon
 						v-if="item.icon"
@@ -216,43 +245,47 @@
 			</template>
 
 			<template #append>
-				<div
-					v-if="$slots.actions || item.actions?.length"
-					class="sy-nav-list-panel__actions"
-				>
-					<slot
-						name="actions"
-						:item="item"
+				<!-- Actions et chevron regroupés : sous 960 px, le sous-niveau passe sur toute la largeur en dessous -->
+				<div class="sy-nav-list-panel__controls">
+					<div
+						v-if="!item.disabled && ($slots.actions || item.actions?.length)"
+						class="sy-nav-list-panel__actions"
 					>
-						<SyIconButton
-							v-for="action in item.actions"
-							:key="action.id"
-							:icon="action.icon"
-							:label="props.locales.actionLabel(action.label, item.label)"
-							:color="props.iconColor"
-							@click-icon-button="emit('action', item, action)"
-						/>
-					</slot>
-				</div>
+						<slot
+							name="actions"
+							:item="item"
+						>
+							<SyIconButton
+								v-for="action in item.actions"
+								:key="action.id"
+								:icon="action.icon"
+								:label="props.locales.actionLabel(action.label, item.label)"
+								:color="props.iconColor"
+								@click-icon-button="emit('action', item, action)"
+							/>
+						</slot>
+					</div>
 
-				<SyIconButton
-					v-if="hasChildren(item)"
-					:ref="(el) => setToggleButton(item, el)"
-					:icon="mdiChevronRight"
-					:label="openId === item.id ? props.locales.closeSubMenu(item.label) : props.locales.openSubMenu(item.label)"
-					:aria-expanded="openId === item.id ? 'true' : 'false'"
-					:aria-controls="panelId(item)"
-					:color="props.iconColor"
-					class="sy-nav-list-panel__toggle pa-0"
-					:width="28"
-					:height="28"
-					@click-icon-button="toggle(item)"
-				/>
-				<span
-					v-else-if="reservesToggle"
-					class="sy-nav-list-panel__toggle-placeholder"
-					aria-hidden="true"
-				/>
+					<SyIconButton
+						v-if="hasChildren(item)"
+						:ref="(el) => setToggleButton(item, el)"
+						:icon="mdiChevronRight"
+						:label="openId === item.id ? props.locales.closeSubMenu(item.label) : props.locales.openSubMenu(item.label)"
+						:aria-expanded="openId === item.id ? 'true' : 'false'"
+						:aria-controls="panelId(item)"
+						:color="props.iconColor"
+						:disabled="item.disabled"
+						class="sy-nav-list-panel__toggle pa-0"
+						:width="28"
+						:height="28"
+						@click-icon-button="toggle(item)"
+					/>
+					<span
+						v-else-if="reservesToggle"
+						class="sy-nav-list-panel__toggle-placeholder"
+						aria-hidden="true"
+					/>
+				</div>
 
 				<!-- Sous-niveau dans le slot append : .v-list-item__content couperait son débordement.
 					v-show et non v-if : la cible de aria-controls existe même fermée (RGAA 8.2). -->
@@ -268,6 +301,8 @@
 						:locales="props.locales"
 						:icon-color="props.iconColor"
 						:actions-visibility="props.actionsVisibility"
+						:flat="!flyoutLayout"
+						:depth="props.depth + 1"
 						:label="props.locales.subMenuLabel(item.label)"
 						:active="openId === item.id"
 						@keydown.esc.stop="onEscape(item)"
@@ -303,9 +338,12 @@
 
 .sy-nav-list-panel__row {
 	min-height: 48px;
+
+	// Ligne de l'entrée : 40 px + 2 × 4 px de marge = 48 px, y compris quand le sous-niveau s'ouvre en dessous
+	grid-template-rows: minmax(40px, auto);
 }
 
-.sy-nav-list-panel__row:hover,
+.sy-nav-list-panel__row:not(.sy-nav-list-panel__row--disabled):hover,
 .sy-nav-list-panel__row--open {
 	// Survol de la maquette PA (Colors/Interaction/Dark/Hover : primaire à 8 %)
 	background-color: rgba(var(--v-theme-primary), 0.08);
@@ -343,6 +381,12 @@
 	}
 }
 
+// Entrée désactivée : libellé atténué (texte d'un composant désactivé, exempté du contraste minimal, RGAA 3.2).
+.sy-nav-list-panel__link--disabled {
+	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity, 0.38));
+	cursor: default;
+}
+
 // Lien étendu à toute la ligne, comme le survol de la maquette ; les boutons restent au-dessus.
 .sy-nav-list-panel__link:not(.sy-nav-list-panel__link--static)::after {
 	content: '';
@@ -371,6 +415,14 @@
 	content: '';
 	position: absolute;
 	inset: -10px -6px;
+}
+
+.sy-nav-list-panel__controls {
+	display: flex;
+	align-items: center;
+
+	// Sous 960 px, la zone de droite (append) s'efface : les actions et le chevron restent dans cette zone de la grille.
+	grid-area: append;
 }
 
 .sy-nav-list-panel__toggle-placeholder {
@@ -414,9 +466,11 @@
 
 // Actions masquées au repos (maquette PA), mais visibles au survol, au focus et sans survol (tactile).
 // Masquage par opacité : elles restent atteignables à la tabulation.
-.sy-nav-list-panel__row:hover > :deep(.v-list-item__append) > .sy-nav-list-panel__actions,
-.sy-nav-list-panel__row:focus-within > :deep(.v-list-item__append) > .sy-nav-list-panel__actions {
-	opacity: 1;
+.sy-nav-list-panel__row:hover,
+.sy-nav-list-panel__row:focus-within {
+	> :deep(.v-list-item__append > .sy-nav-list-panel__controls > .sy-nav-list-panel__actions) {
+		opacity: 1;
+	}
 }
 
 @media (hover: none) {
@@ -425,31 +479,87 @@
 	}
 }
 
-// Base (mobile) : le sous-niveau s'ouvre sous l'entrée, sur toute sa largeur, sans défilement horizontal.
+// Base (mobile) : accordéon. Le sous-niveau s'ouvre sous l'entrée, sur toute la largeur, et pousse les entrées
+// suivantes au lieu de les recouvrir. La zone de droite (append) s'efface pour qu'il passe sur une seconde ligne
+// de la grille de VListItem ; actions et chevron restent dans la zone append (.sy-nav-list-panel__controls).
+.sy-nav-list-panel__row > :deep(.v-list-item__append) {
+	display: contents;
+}
+
 .sy-nav-list-panel__flyout {
-	position: absolute;
-	top: 100%;
-	right: 0;
-	left: 0;
+	// Positionné : au-dessus de la zone cliquable (::after) du lien parent
+	position: relative;
 	z-index: 2;
+	grid-row: 2;
+	grid-column: 1 / -1;
 
 	> .sy-nav-list-panel {
 		width: 100%;
 		max-width: none;
+		padding-block: 0;
 	}
 }
 
+// Chevron d'accordéon : vers le bas, vers le haut une fois ouvert.
 .sy-nav-list-panel__toggle :deep(.v-icon) {
 	font-size: 24px;
 	transform: rotate(90deg);
 }
 
+.sy-nav-list-panel__row--open {
+	> :deep(.v-list-item__append > .sy-nav-list-panel__controls > .sy-nav-list-panel__toggle .v-icon) {
+		transform: rotate(-90deg);
+	}
+}
+
+@media (width < 960px) {
+	// Sous-niveau sur toute la largeur de la ligne (sans sa marge de 16 px) ; le texte des entrées est décalé
+	// de 16 px par niveau, par leur marge intérieure : fonds et contour de focus vont jusqu'au bord.
+	.sy-nav-list-panel__flyout {
+		margin-inline: calc(-16px - var(--sy-nav-list-depth, 0) * 16px) -16px;
+	}
+
+	.sy-nav-list-panel__row {
+		padding-inline-start: calc(16px + var(--sy-nav-list-depth, 0) * 16px);
+	}
+
+	// Pas de bande de fond sous le sous-niveau ouvert
+	.sy-nav-list-panel__row--open {
+		padding-bottom: 0;
+	}
+
+	// Entrée ouverte : zone cliquable et contour de focus du lien limités à la ligne de l'entrée, sans le
+	// sous-niveau en dessous. Ils se calent sur la cellule du libellé, étirée sur la hauteur de la ligne, plus la
+	// marge de la ligne à gauche et en haut ; les actions et le chevron restent hors du contour.
+	.sy-nav-list-panel__row--open > :deep(.v-list-item__content) {
+		position: relative;
+		overflow: visible;
+		display: flex;
+		align-items: center;
+		align-self: stretch;
+
+		.sy-nav-list-panel__link:not(.sy-nav-list-panel__link--static)::after {
+			inset: -4px 0 0 calc(-16px - var(--sy-nav-list-depth, 0) * 16px);
+		}
+	}
+}
+
 // Large : sous-niveau à droite, comme dans la maquette PA (même seuil que FLYOUT_MEDIA_QUERY).
 @media (width >= 960px) {
+	.sy-nav-list-panel__row > :deep(.v-list-item__append) {
+		display: flex;
+	}
+
 	.sy-nav-list-panel__flyout {
+		position: absolute;
+
+		// Bloc conteneur : la ligne, une grille. Sans retour à auto, le placement en 2e rangée de l'accordéon
+		// s'appliquerait aussi en position absolue et décalerait le sous-niveau sous la ligne parente.
+		grid-row: auto;
+		grid-column: auto;
+
 		// Compense la marge intérieure de 8 px de .v-list : le premier sous-élément s'aligne sur la ligne parente.
 		top: -8px;
-		right: auto;
 		left: 100%;
 
 		// La prop width ne vaut que pour le premier niveau : un sous-niveau suit son propre contenu,
@@ -457,10 +567,21 @@
 		// max-content et non fit-content : positionné à droite, il serait limité à la largeur de la ligne parente.
 		width: max-content;
 		max-width: 300px;
+
+		> .sy-nav-list-panel {
+			padding-block: 8px;
+		}
 	}
 
+	// Même spécificité que la règle d'accordéon de l'entrée ouverte, pour la remplacer
 	.sy-nav-list-panel__toggle :deep(.v-icon) {
 		transform: none;
+	}
+
+	.sy-nav-list-panel__row--open {
+		> :deep(.v-list-item__append > .sy-nav-list-panel__controls > .sy-nav-list-panel__toggle .v-icon) {
+			transform: none;
+		}
 	}
 }
 </style>

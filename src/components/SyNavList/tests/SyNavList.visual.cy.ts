@@ -106,6 +106,17 @@ describe('SyNavList - Visual regression tests', () => {
 		cy.matchImageSnapshot('sy-nav-list-open-wide', cy.get('.v-application'))
 	})
 
+	it('aligns the first entry of each sub-level with its parent row', () => {
+		cy.mountWithVuetify(SyNavList, { props: { items, label: 'Dossiers client' } })
+
+		openBothLevels()
+		const top = (label: string) => cy.contains('a', label).then($link => Math.round($link[0]!.closest('.v-list-item')!.getBoundingClientRect().top))
+		top('Droit de base').then((parentTop) => {
+			top('Demande d’affiliation').should('equal', parentTop)
+			top('Pièces justificatives').should('equal', parentTop)
+		})
+	})
+
 	it('opens sub-levels below the row on a narrow screen, without horizontal scroll (RGAA 10.11)', () => {
 		cy.viewport(320, 600)
 		cy.mountWithVuetify(SyNavList, { props: { items, label: 'Dossiers client' } })
@@ -261,5 +272,37 @@ describe('SyNavList - Visual regression tests', () => {
 		cy.mountWithVuetify(SyNavList, { props: { items, label: 'Dossiers client', actionsVisibility: 'always' } })
 
 		cy.get('.sy-nav-list-panel__actions').first().should('have.css', 'opacity', '1')
+	})
+
+	it('opens sub-levels as an accordion on a narrow screen, pushing the next entries down', () => {
+		cy.viewport(320, 700)
+		cy.mountWithVuetify(SyNavList, { props: { items, label: 'Dossiers client' } })
+
+		openBothLevels()
+		cy.contains('a', 'Pièces justificatives').then(($last) => {
+			const lastBottom = $last[0]!.getBoundingClientRect().bottom
+			cy.contains('a', 'CMU-C/AS').then(($next) => {
+				const next = $next[0]!.getBoundingClientRect()
+				// L'entrée suivante est poussée sous le sous-niveau, et pas recouverte
+				expect(next.top).to.be.at.least(lastBottom)
+				expect(document.elementFromPoint(next.left + 5, next.top + next.height / 2)?.closest('a')).to.equal($next[0])
+			})
+		})
+		cy.document().then((doc) => {
+			expect(doc.documentElement.scrollWidth).to.be.at.most(320)
+		})
+		cy.matchImageSnapshot('sy-nav-list-accordion', cy.get('.v-application'))
+	})
+
+	it('dims a disabled entry', () => {
+		const disabledItems: SyNavListItem[] = [
+			{ id: 'off', label: 'Indisponible', href: '#off', disabled: true },
+			{ id: 'ame', label: 'AME', href: '#ame' },
+		]
+		cy.mountWithVuetify(SyNavList, { props: { items: disabledItems, label: 'Dossiers client' } })
+
+		cy.contains('a', 'Indisponible').should('have.css', 'cursor', 'default').and(($link) => {
+			expect(getComputedStyle($link[0]!).color).to.match(/rgba\(.*, 0\.38\)/)
+		})
 	})
 })

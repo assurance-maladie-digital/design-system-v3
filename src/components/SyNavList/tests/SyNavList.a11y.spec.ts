@@ -28,6 +28,7 @@ const items: SyNavListItem[] = [
 	},
 	{ id: 'ame', label: 'AME', href: '/ame', actions: [settings, edit] },
 	{ id: 'cmu-c', label: 'CMU-C/AS' },
+	{ id: 'at-mp', label: 'AT/MP', href: '/at-mp', disabled: true, children: [{ id: 'at-mp-1', label: 'Déclaration', href: '/declaration' }] },
 ]
 
 enableAutoUnmount(afterEach)
