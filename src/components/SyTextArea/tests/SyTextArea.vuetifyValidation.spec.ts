@@ -13,7 +13,7 @@ describe('SyTextArea with use-vuetify-validation', () => {
 			const wrapper = mount(SyTextArea, {
 				props: {
 					uniqueId: 'textarea-1',
-					modelValue: '',
+					modelValue: 'abc',
 					label: 'Test Area',
 					useVuetifyValidation: true,
 					validateOn: 'input',
@@ -22,9 +22,7 @@ describe('SyTextArea with use-vuetify-validation', () => {
 				},
 			})
 
-			// First validation to make it non-pristine
-			await wrapper.vm.validateOnSubmit()
-			await flushPromises()
+			expect(wrapper.vm.errors).toEqual([])
 
 			const textarea = wrapper.find('textarea')
 			await textarea.trigger('focus')
