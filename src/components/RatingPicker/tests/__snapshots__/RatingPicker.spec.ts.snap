@@ -29,6 +29,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           "
           role="radio"
           tabindex="0"
+          title="Note de 1 sur 10."
         >
           1
         </div>
@@ -42,6 +43,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           "
           role="radio"
           tabindex="-1"
+          title="Note de 2 sur 10."
         >
           2
         </div>
@@ -55,6 +57,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           "
           role="radio"
           tabindex="-1"
+          title="Note de 3 sur 10."
         >
           3
         </div>
@@ -68,6 +71,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           "
           role="radio"
           tabindex="-1"
+          title="Note de 4 sur 10."
         >
           4
         </div>
@@ -81,6 +85,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           "
           role="radio"
           tabindex="-1"
+          title="Note de 5 sur 10."
         >
           5
         </div>
@@ -94,6 +99,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           "
           role="radio"
           tabindex="-1"
+          title="Note de 6 sur 10."
         >
           6
         </div>
@@ -107,6 +113,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           "
           role="radio"
           tabindex="-1"
+          title="Note de 7 sur 10."
         >
           7
         </div>
@@ -120,6 +127,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           "
           role="radio"
           tabindex="-1"
+          title="Note de 8 sur 10."
         >
           8
         </div>
@@ -133,6 +141,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           "
           role="radio"
           tabindex="-1"
+          title="Note de 9 sur 10."
         >
           9
         </div>
@@ -146,6 +155,7 @@ exports[`RatingPicker > renders correctly 1`] = `
           "
           role="radio"
           tabindex="-1"
+          title="Note de 10 sur 10."
         >
           10
         </div>
