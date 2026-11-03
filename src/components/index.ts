@@ -200,6 +200,7 @@ export { default as AmeliproTextField } from './Amelipro/AmeliproTextField/Ameli
 export { default as AmeliproTileBtn } from './Amelipro/AmeliproTileBtn/AmeliproTileBtn.vue'
 export { default as AmeliproTooltips } from './Amelipro/AmeliproTooltips/AmeliproTooltips.vue'
 export { default as AmeliproTransmission } from './Amelipro/AmeliproTransmission/AmeliproTransmission.vue'
+export { default as AmeliproUpload } from './Amelipro/AmeliproUpload/AmeliproUpload.vue'
 export { default as ServiceMenu } from './Amelipro/ServiceMenu/ServiceMenu.vue'
 export { default as StructureMenu } from './Amelipro/StructureMenu/StructureMenu.vue'
 export { default as UserInformationSummary } from './Amelipro/UserInformationSummary/UserInformationSummary.vue'
