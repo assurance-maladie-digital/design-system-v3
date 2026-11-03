@@ -75,8 +75,8 @@ importers:
         specifier: ^7.4.47
         version: 7.4.47
       '@simonsmith/cypress-image-snapshot':
-        specifier: ^10.0.3
-        version: 10.1.1(cypress@15.21.1)
+        specifier: ^11.0.0
+        version: 11.0.0(cypress@15.21.1)
       '@storybook/addon-a11y':
         specifier: 10.6.3
         version: 10.6.3(storybook@10.6.3(@types/react@19.3.0)(react@19.3.1))
@@ -1457,10 +1457,10 @@ packages:
     peerDependencies:
       semantic-release: '>=20.1.0'
 
-  '@simonsmith/cypress-image-snapshot@10.1.1':
-    resolution: {integrity: sha512-+k1SREWJhp+qe8ui+VO4+ZZhidKoGXEqGEZku8rmhjSag98kI5AZbP6LlXBIu14/N9OfGjU+UD2Q0/sv31H/tQ==}
+  '@simonsmith/cypress-image-snapshot@11.0.0':
+    resolution: {integrity: sha512-fqiH4/0DARt4vR8U4d7mMyrWAdKlirG+0dNksZbMbP6a4zRPo6q7EmOSvRuse8kShbmrg7UogvlApjE9mN+crQ==}
     peerDependencies:
-      cypress: '>13.0.0'
+      cypress: '>=15.10.0'
 
   '@simple-libs/stream-utils@1.2.0':
     resolution: {integrity: sha512-KxXvfapcixpz6rVEB6HPjOUZT22yN6v0vI0urQSk1L8MlEWPDFCZkhw2xmkyoTGYeFw7tWTZd7e3lVzRZRN/EA==}
@@ -6495,7 +6495,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@simonsmith/cypress-image-snapshot@10.1.1(cypress@15.21.1)':
+  '@simonsmith/cypress-image-snapshot@11.0.0(cypress@15.21.1)':
     dependencies:
       '@types/pixelmatch': 5.2.6
       chalk: 4.1.2
