@@ -601,10 +601,9 @@ export const WithTargetedErrors: Story = {
 <script setup lang="ts">
 	import { ref } from 'vue'
 	import { PeriodField } from '@cnamts/synapse'
-	import type { ValidationRule } from '@cnamts/synapse/composables/unifyValidation/useValidation'
 
 	const selectedPeriod = ref({ from: '01/01/2100', to: '05/01/2100' })
-	const fromRules: ValidationRule[] = [
+	const fromRules = [
 		{
 			type: 'notAfterDate',
 			options: {
@@ -613,7 +612,7 @@ export const WithTargetedErrors: Story = {
 			},
 		},
 	]
-	const toRules: ValidationRule[] = [
+	const toRules = [
 		{
 			type: 'notAfterDate',
 			options: {
@@ -661,11 +660,10 @@ export const WithWarning: Story = {
 					<PeriodField 
 						v-model="selectedPeriod"
 						:custom-warning-rules="[
-							{ type: 'notBeforeDate', options: { 
+							{ type: 'notBeforeDate', options: {
 								warningMessage: 'Attention : les dates sont antérieures au 02/01/2031',
 								date: '02/01/2031',
 								isWarning: true,
-								fieldIdentifier: 'fromDate'
 							} }
 						]"
 					/>
@@ -750,10 +748,9 @@ export const WithTargetedWarnings: Story = {
 <script setup lang="ts">
 	import { ref } from 'vue'
 	import { PeriodField } from '@cnamts/synapse'
-	import type { ValidationRule } from '@cnamts/synapse/composables/unifyValidation/useValidation'
 
 	const selectedPeriod = ref({ from: '20/12/2023', to: '21/12/2023' })
-	const fromWarningRules: ValidationRule[] = [
+	const fromWarningRules = [
 		{
 			type: 'notBeforeDate',
 			options: {
@@ -762,7 +759,7 @@ export const WithTargetedWarnings: Story = {
 			},
 		},
 	]
-	const toWarningRules: ValidationRule[] = [
+	const toWarningRules = [
 		{
 			type: 'notBeforeDate',
 			options: {

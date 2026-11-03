@@ -40,24 +40,24 @@ une seule borne, utilisez `customFromRules` / `customToRules`, ainsi que
 Les règles croisées vérifiant l'ordre des bornes restent actives.
 
 ```ts
-const fromRules = computed(() => [
+const fromRules = [
   {
     type: 'notAfterDate',
     options: {
-      date: dayjs().format('DD/MM/YYYY'),
-      message: 'La date de début ne peut pas être postérieure à aujourd’hui',
+      date: '31/12/2099',
+      message: 'La date de début ne peut pas être postérieure au 31/12/2099',
     },
   },
-])
-const toRules = computed(() => [
+]
+const toRules = [
   {
     type: 'notAfterDate',
     options: {
-      date: dayjs().format('DD/MM/YYYY'),
-      message: 'La date de fin ne peut pas être postérieure à aujourd’hui',
+      date: '31/12/2099',
+      message: 'La date de fin ne peut pas être postérieure au 31/12/2099',
     },
   },
-])
+]
 ```
 
 Transmettez ces règles avec `:custom-from-rules="fromRules"` et
