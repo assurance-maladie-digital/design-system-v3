@@ -1473,7 +1473,6 @@ describe('SyServerTable hideDefaultFooter', () => {
 		expect(pagination.exists()).toBe(false)
 	})
 
-	// Régression #2736 : le pied vide gardait son padding et laissait une bande blanche sous le tableau
 	it('renders nothing below the table when hideDefaultFooter is true', async () => {
 		const wrapper = mount(SyServerTable, {
 			props: {

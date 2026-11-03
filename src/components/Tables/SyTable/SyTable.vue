@@ -137,7 +137,6 @@
 		updateOptions,
 	})
 
-	// Le pied n'est rendu que s'il a un contenu : vide, son padding laisserait une bande blanche sous le tableau
 	const showColumnControls = computed(() => props.enableColumnControls && !!headers.value)
 	const showPagination = computed(() => filteredItems.value.length > 0 && !props.hideDefaultFooter)
 
