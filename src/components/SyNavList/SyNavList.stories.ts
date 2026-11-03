@@ -983,8 +983,6 @@ const dossiersEntry = ref<HTMLElement | null>(null)
 
 function closeDossiers(returnFocus = false): void {
 	dossiersOpen.value = false
-	// La liste est démontée avec le sous-menu : elle n'émettra pas sub-level-change.
-	subLevelOpen.value = false
 	if (returnFocus) dossiersEntry.value?.querySelector('button')?.focus()
 }
 
@@ -1019,8 +1017,6 @@ ${onActionScript}
 
 			function closeDossiers(returnFocus = false): void {
 				dossiersOpen.value = false
-				// La liste est démontée avec le sous-menu : elle n'émettra pas sub-level-change.
-				subLevelOpen.value = false
 				if (returnFocus) dossiersEntry.value?.querySelector('button')?.focus()
 			}
 

@@ -6,7 +6,7 @@ import { controlMatchers } from '../../../../.storybook/controlMatchers'
 import * as stories from '../SyNavList.stories'
 
 const composedStories = composeStories(stories)
-const { Default, WithIcons, WithActions, WithSubLevel, Complete, IconColor, SlotActions, ActiveItem } = composedStories
+const { Default, WithIcons, WithActions, WithSubLevel, Complete, IconColor, SlotActions, ActiveItem, InHeaderBar } = composedStories
 
 // LabsNotice est le bandeau de la documentation, pas un exemple du composant
 const allStories = Object.entries(composedStories)
@@ -81,6 +81,23 @@ describe('SyNavList stories', () => {
 		await wrapper.get('a[href="/instruction"]').trigger('click')
 
 		expect(current()).toEqual(['Instruction'])
+	})
+
+	// Régression : la liste, démontée avec un sous-niveau ouvert, n'émettait pas sub-level-change à false ;
+	// Échap ne fermait plus le sous-menu une fois rouvert.
+	it('InHeaderBar : Échap ferme le sous-menu rouvert après une fermeture au bouton, sous-niveau ouvert', async () => {
+		const wrapper = mount(InHeaderBar(), { attachTo: document.body })
+		const dossiers = wrapper.get('button[aria-controls="sous-menu-dossiers"]')
+
+		await dossiers.trigger('click')
+		await wrapper.get('button[aria-label^="Droit de base :"]').trigger('click')
+		await dossiers.trigger('click')
+		await dossiers.trigger('click')
+		expect(dossiers.attributes('aria-expanded')).toBe('true')
+
+		await dossiers.trigger('keydown', { key: 'Escape' })
+
+		expect(dossiers.attributes('aria-expanded')).toBe('false')
 	})
 
 	it('le rendu de SlotActions transmet les args au composant', () => {

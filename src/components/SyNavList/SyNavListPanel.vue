@@ -104,6 +104,14 @@
 		openedByHover = false
 	}
 
+	// Échap pressé n'importe où dans la page (pile partagée, escapeStack.ts). Un accordéon reste ouvert quand le
+	// focus quitte la navigation : Échap appartient alors à ce qui a le focus (champ, dialogue), pas à la liste.
+	function onDocumentEscape(): void {
+		const nav = listRef.value?.$el instanceof HTMLElement ? listRef.value.$el.closest('.sy-nav-list') : null
+		if (!flyoutLayout.value && !nav?.contains(document.activeElement)) return
+		closeCurrent()
+	}
+
 	// Sous-niveau ouvert à droite, superposé à la page : un clic ou un toucher hors de l'entrée ouverte (sous-niveau
 	// compris) la referme. Le focusout ne suffit pas : Safari et Firefox sur macOS ne donnent pas le focus à un
 	// bouton cliqué. Pas en accordéon : rien n'y est recouvert, et toucher la page pour la faire défiler le fermerait.
@@ -134,12 +142,12 @@
 
 	watch(openId, (now, before) => {
 		if (before !== null) {
-			unregisterOpenPanel(closeCurrent)
+			unregisterOpenPanel(onDocumentEscape)
 			document.removeEventListener('pointerdown', onDocumentPointerDown, true)
 			stopResizeTracking()
 		}
 		if (now !== null) {
-			registerOpenPanel(closeCurrent)
+			registerOpenPanel(onDocumentEscape)
 			document.addEventListener('pointerdown', onDocumentPointerDown, true)
 			window.addEventListener('resize', onWindowResize)
 		}
@@ -196,7 +204,10 @@
 		document.removeEventListener('pointerdown', onDocumentPointerDown, true)
 		stopResizeTracking()
 		cancelHover()
-		unregisterOpenPanel(closeCurrent)
+		unregisterOpenPanel(onDocumentEscape)
+		// Liste démontée avec un sous-niveau ouvert (menu qui la contient refermé) : l'observateur de openId
+		// ne s'exécutera plus, sub-level-change resterait à true pour le projet.
+		if (openId.value !== null) emit('openChange', false)
 	})
 
 	function hasChildren(item: SyNavListItem): boolean {
@@ -290,7 +301,11 @@
 		else cancelHover()
 	}
 
+	// Focus sorti de l'entrée ouverte : son sous-niveau, superposé à la page, se referme (motif disclosure
+	// navigation de l'APG, WCAG 1.4.13). Pas en accordéon : comme au clic en dehors, il ne recouvre rien et reste
+	// ouvert, comme repère ; le refermer ferait aussi remonter les entrées suivantes, où va le focus.
 	function onFocusOut(item: SyNavListItem, event: FocusEvent): void {
+		if (!flyoutLayout.value) return
 		const row = event.currentTarget as HTMLElement
 		if (!row.contains(event.relatedTarget as Node | null)) close(item)
 	}

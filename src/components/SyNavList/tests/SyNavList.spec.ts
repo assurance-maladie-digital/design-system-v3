@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest'
 import { type DOMWrapper, enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import { mdiCogOutline, mdiFolderOutline, mdiSquareEditOutline } from '@mdi/js'
+import { defineComponent, h, ref } from 'vue'
 import { createVuetify } from 'vuetify'
 import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 import SyNavList from '../SyNavList.vue'
@@ -594,6 +595,78 @@ describe('SyNavList', () => {
 		await toggleOf(wrapper, 'B').trigger('click')
 
 		expect(wrapper.emitted('subLevelChange')).toEqual([[true]])
+	})
+
+	it('émet sub-level-change à false quand la liste est démontée avec un sous-niveau ouvert', async () => {
+		// Liste dans un menu refermé par le projet : sans cette émission, son état resterait à true
+		const shown = ref(true)
+		const subLevelOpen = ref(false)
+		const Host = defineComponent(() => () => shown.value
+			? h(SyNavList, { items, onSubLevelChange: (open: boolean) => { subLevelOpen.value = open } })
+			: null)
+		const wrapper = mount(Host, { attachTo: document.body })
+		await wrapper.get('button[aria-label^="Droit de base :"]').trigger('click')
+		expect(subLevelOpen.value).toBe(true)
+
+		shown.value = false
+		await flushPromises()
+
+		expect(subLevelOpen.value).toBe(false)
+	})
+
+	it('referme le sous-niveau ouvert à droite quand le focus quitte son entrée', async () => {
+		const wrapper = mountNavList()
+		const parent = toggleOf(wrapper, 'Droit de base')
+		await parent.trigger('click')
+
+		await parent.trigger('focusout', { relatedTarget: wrapper.get('a[href="/ame"]').element })
+
+		expect(parent.attributes('aria-expanded')).toBe('false')
+	})
+
+	it('garde l\'accordéon ouvert quand le focus quitte son entrée, sous 960 px', async () => {
+		const width = window.innerWidth
+		try {
+			window.innerWidth = 800
+			const wrapper = mountNavList()
+			await flushPromises()
+			const parent = toggleOf(wrapper, 'Droit de base')
+			await parent.trigger('click')
+
+			await parent.trigger('focusout', { relatedTarget: wrapper.get('a[href="/ame"]').element })
+
+			expect(parent.attributes('aria-expanded')).toBe('true')
+		}
+		finally {
+			window.innerWidth = width
+		}
+	})
+
+	it('en accordéon, ne ferme le sous-niveau à Échap que si le focus est dans la navigation, sous 960 px', async () => {
+		const width = window.innerWidth
+		try {
+			window.innerWidth = 800
+			const wrapper = mountNavList()
+			await flushPromises()
+			const parent = toggleOf(wrapper, 'Droit de base')
+			await parent.trigger('click')
+			const outside = document.createElement('input')
+			document.body.append(outside)
+
+			// Focus dans un champ de la page : Échap lui revient
+			outside.focus()
+			pressEscapeOnDocument()
+			await flushPromises()
+			expect(parent.attributes('aria-expanded')).toBe('true')
+
+			parent.element.focus()
+			pressEscapeOnDocument()
+			await flushPromises()
+			expect(parent.attributes('aria-expanded')).toBe('false')
+		}
+		finally {
+			window.innerWidth = width
+		}
 	})
 
 	it('n\'ouvre pas le sous-niveau au survol en largeur réduite ni au toucher', async () => {

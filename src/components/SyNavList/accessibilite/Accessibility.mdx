@@ -32,9 +32,10 @@ import {
 			<ul>
 				<li><strong>Tabulation</strong> : lien, puis actions, puis chevron, entrée par entrée</li>
 				<li><strong>Entrée / Espace</strong> sur le chevron : ouvre ou ferme le sous-niveau</li>
-				<li><strong>Échap</strong> : ferme le sous-niveau le plus profond, même ouvert au survol (RGAA 10.13) ; depuis le sous-niveau, rend le focus au chevron</li>
+				<li><strong>Échap</strong> : ferme le sous-niveau le plus profond, même ouvert au survol (RGAA 10.13) ; depuis le sous-niveau, rend le focus au chevron. Sous 960 px, seulement quand le focus est dans la navigation : ailleurs, Échap revient à l'élément qui a le focus</li>
+				<li><strong>Focus sorti de l'entrée</strong> : un sous-niveau ouvert à droite, superposé à la page, se referme (motif <em>Disclosure Navigation Menu</em> de l'APG, WCAG 1.4.13) ; un accordéon, sous 960 px, reste ouvert, comme au clic en dehors</li>
 				<li><strong>Lien d'un sous-niveau ouvert à droite</strong> : le suivre referme tous les sous-niveaux et rend le focus au chevron du premier niveau</li>
-				<li><strong>Flèches haut et bas, Début, Fin</strong> : déplacent le focus entre les éléments d'un même niveau (comportement de <code>v-list</code>), en complément de la tabulation</li>
+				<li><strong>Flèches haut et bas, Début, Fin</strong> : déplacent le focus entre les éléments d'un même niveau (comportement de <code>v-list</code>), en complément de la tabulation, comme les touches facultatives de l'APG ; Droite et Gauche ne sont pas gérées</li>
 			</ul>
 		</CriteriaCard>
 
