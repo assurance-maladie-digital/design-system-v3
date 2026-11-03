@@ -80,6 +80,86 @@ pnpm test:e2e
 
 > La commande de build est `pnpm generate` (et non `build`).
 
+## Configurer Vuetify
+
+Le Starter Kit est déjà configuré ainsi. Pour un projet existant, suivez ces étapes&nbsp;: seuls les composants Vuetify utilisés par votre application seront inclus dans le bundle.
+
+1. Installez le plugin Vite de Vuetify&nbsp;:
+
+<Source dark language="bash" code={`
+pnpm add -D vite-plugin-vuetify
+`}
+/>
+
+2. Activez l'import automatique des composants Vuetify dans `vite.config.ts`&nbsp;:
+
+<Source dark language="ts" code={`
+// vite.config.ts
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vuetify from 'vite-plugin-vuetify'
+
+export default defineConfig({
+  plugins: [
+    vue(),
+    vuetify({ autoImport: true }),
+  ],
+})
+`}
+/>
+
+3. Créez l'instance Vuetify avec la configuration de Synapse&nbsp;:
+
+<Source dark language="ts" code={`
+// src/plugins/vuetify.ts
+import { createVuetify } from 'vuetify'
+import { createVuetifyOptions } from '@cnamts/synapse/vuetifyOptions'
+
+export const vuetify = createVuetify(createVuetifyOptions())
+`}
+/>
+
+4. Enregistrez-la dans `src/main.ts`, avec les styles de Vuetify et de Synapse&nbsp;:
+
+<Source dark language="ts" code={`
+// src/main.ts
+import 'vuetify/styles'
+import '@cnamts/synapse/synapse.css'
+import { createApp } from 'vue'
+import App from './App.vue'
+import { vuetify } from './plugins/vuetify'
+
+createApp(App)
+  .use(vuetify)
+  .mount('#app')
+`}
+/>
+
+`createVuetifyOptions` apporte les thèmes `cnam`, `pa` et `ap`, les réglages par défaut des composants, la locale française et les icônes MDI. Pour choisir le thème de votre application, voir [Configuration du thème](/docs/guide-du-dev-démarrage-configuration-du-thème--docs).
+
+> `createVuetifyOptions` n'enregistre aucun composant Vuetify&nbsp;: c'est `vite-plugin-vuetify` qui importe ceux que votre application utilise (tree-shaking, voir la [documentation de Vuetify](https://vuetifyjs.com/en/features/treeshaking/)). Sans ce plugin, les composants Vuetify écrits dans vos templates (`VBtn`, `VCard`…) ne sont pas résolus et Vue affiche l'avertissement «&nbsp;Failed to resolve component&nbsp;». Les composants Synapse, eux, importent les composants Vuetify dont ils ont besoin.
+
+### Compléter la configuration
+
+Chaque appel à `createVuetifyOptions` renvoie une nouvelle configuration, que vous pouvez compléter avant de la passer à `createVuetify`&nbsp;:
+
+<Source dark language="ts" code={`
+// src/plugins/vuetify.ts
+import { createVuetify } from 'vuetify'
+import { createVuetifyOptions } from '@cnamts/synapse/vuetifyOptions'
+
+const options = createVuetifyOptions()
+
+export const vuetify = createVuetify({
+  ...options,
+  defaults: {
+    ...options.defaults,
+    VTextField: { variant: 'outlined', density: 'compact' },
+  },
+})
+`}
+/>
+
 ## Variabilisation
 
 Les paramètres de fonctionnement de l'IHM sont définis dans des fichiers JSON du dossier `public/json/` :

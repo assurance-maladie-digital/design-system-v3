@@ -9,10 +9,15 @@
  * étroit laisse fuiter tests et documentation. Ce script échoue dans les deux
  * cas, à partir de la sortie de `npm pack --dry-run`.
  *
+ * Il vérifie aussi que l'entrée `vuetifyOptions` reste sans `vuetify/components`
+ * ni `vuetify/directives` : ces imports annuleraient le tree-shaking de Vuetify
+ * chez les consommateurs qui utilisent vite-plugin-vuetify.
+ *
  * Usage : pnpm pack:check   (nécessite un `dist/` à jour)
  */
 
 import { execFileSync } from 'child_process';
+import { readFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -40,6 +45,8 @@ const required = [
   'dist/design-system-v3.js',
   'dist/vuetifyConfig.js',
   'dist/vuetifyConfig.d.ts',
+  'dist/vuetifyOptions.js',
+  'dist/vuetifyOptions.d.ts',
   'dist/synapse.css',
   'src/assets/settings.scss',
 ];
@@ -82,8 +89,41 @@ for (const dir of requiredDirs) {
   }
 }
 
+/**
+ * Entrées qui ne doivent pas importer tous les composants ou toutes les
+ * directives Vuetify, y compris par les chunks partagés qu'elles chargent.
+ */
+const treeShakableEntries = ['dist/vuetifyOptions.js'];
+const fullVuetifyImport = /^vuetify\/(components|directives)$/;
+
+/** Suit les imports relatifs (statiques et dynamiques) d'un fichier de `dist/` et renvoie les imports externes rencontrés. */
+const collectExternalImports = (entry) => {
+  const seen = new Set();
+  const external = new Map();
+  const visit = (file) => {
+    if (seen.has(file)) return;
+    seen.add(file);
+    const code = readFileSync(path.join(root, file), 'utf8');
+    for (const [, specifier] of code.matchAll(/\b(?:from|import)\s*\(?\s*["']([^"']+)["']/g)) {
+      if (specifier.startsWith('.')) visit(path.posix.join(path.posix.dirname(file), specifier));
+      else if (!external.has(specifier)) external.set(specifier, file);
+    }
+  };
+  visit(entry);
+  return external;
+};
+
+for (const entry of treeShakableEntries) {
+  if (!files.includes(entry)) continue;
+  for (const [specifier, file] of collectExternalImports(entry)) {
+    if (fullVuetifyImport.test(specifier)) {
+      problems.push(`${entry} importe \`${specifier}\` (via ${file}) : le tree-shaking de Vuetify est perdu pour les consommateurs`);
+    }
+  }
+}
+
 if (problems.length) {
-  console.error('\n✖ Contenu du paquet npm invalide (champ `files` de package.json) :\n');
+  console.error('\n✖ Contenu du paquet npm invalide :\n');
   problems.forEach((p) => console.error(`  - ${p}`));
   console.error('');
   process.exit(1);

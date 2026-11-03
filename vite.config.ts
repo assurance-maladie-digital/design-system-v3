@@ -17,6 +17,15 @@ export default defineConfig({
 			include: /[\\/]assets[\\/]logos[\\/].*\.svg$/,
 			name: 'logos/[name].[contenthash:8].[ext]',
 		}),
+		libAssetsPlugin({
+			// Library mode ignores build.assetsInlineLimit and inlines every
+			// asset, which put ~1 MB of illustrations into the JS. Emit images
+			// above 4 KB (Vite's default limit) as files instead.
+			include: /\.(svg|png|jpe?g|gif|webp|avif)$/,
+			exclude: /[\\/]assets[\\/]logos[\\/]/,
+			limit: 4096,
+			name: 'images/[name].[contenthash:8].[ext]',
+		}),
 		dts({
 			exclude: ['**/*.stories.ts', '**/*.spec.ts', '**/*.cy.ts', '**/tests/**', 'src/stories/**'],
 			entryRoot: 'src',
@@ -49,6 +58,7 @@ export default defineConfig({
 			entry: {
 				'design-system-v3': resolve(__dirname, 'src/main.ts'),
 				'vuetifyConfig': resolve(__dirname, 'src/vuetifyConfig.ts'),
+				'vuetifyOptions': resolve(__dirname, 'src/vuetifyOptions.ts'),
 			},
 			name: 'DesignSystemV3',
 			cssFileName: 'synapse',
