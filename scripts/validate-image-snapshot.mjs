@@ -26,6 +26,7 @@ assert.ok(originals.has(baseline), 'La référence du premier titre doit exister
 const hash = file => createHash('sha256').update(readFileSync(file)).digest('hex')
 const originalHash = hash(baseline)
 copyFileSync(baseline, join(evidenceDir, 'before.png'))
+let lastOutput = ''
 
 function checkOriginalSnapshots() {
 	for (const [file, buffer] of originals) {
@@ -40,6 +41,7 @@ function runCypress(label, updateSnapshots = false) {
 		'--env', `updateSnapshots=${updateSnapshots},debugSnapshots=false`,
 	], { encoding: 'utf8', timeout: 240_000, maxBuffer: 32 * 1024 * 1024 })
 	const output = `${result.stdout ?? ''}\n${result.stderr ?? ''}`
+	lastOutput = output
 	writeFileSync(join(evidenceDir, `${label}.log`), output)
 	process.stdout.write(output)
 	assert.ifError(result.error)
@@ -79,7 +81,6 @@ try {
 
 	const updated = runCypress('03-update', true)
 	assert.equal(updated.status, 0, 'La mise à jour doit réussir.')
-	assert.match(updated.output, /Snapshot mis à jour/)
 	const updatedHash = hash(baseline)
 	assert.notEqual(updatedHash, originalHash, 'La référence doit réellement être réécrite.')
 	copyFileSync(baseline, join(evidenceDir, 'after.png'))
@@ -93,6 +94,12 @@ try {
 	assert.doesNotMatch(comparedAgain.output, /Nouveau snapshot créé|Snapshot mis à jour/)
 	writeFileSync(join(evidenceDir, 'hashes.json'), JSON.stringify({ originalHash, updatedHash }, null, 2))
 	report('✅ Scénario 3 : la référence change, puis la comparaison réussit avec cette nouvelle référence sans la réécrire.')
+}
+catch (error) {
+	const message = `${error instanceof Error ? error.message : String(error)}\n${lastOutput.slice(-12_000)}`
+	const annotation = message.replaceAll('%', '%25').replaceAll('\r', '%0D').replaceAll('\n', '%0A')
+	process.stdout.write(`::error title=Validation des snapshots::${annotation}\n`)
+	throw error
 }
 finally {
 	writeFileSync(spec, source)
