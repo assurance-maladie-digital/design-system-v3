@@ -1,0 +1,73 @@
+name: Validate image snapshot v11
+
+on:
+  push:
+    branches:
+      - test/cypress-image-snapshot-v11
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-snapshots:
+    timeout-minutes: 20
+    runs-on: ubuntu-24.04
+    env:
+      NODE_OPTIONS: "--max-old-space-size=4096"
+      TZ: "Europe/Paris"
+      CI: true
+
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: '.nvmrc'
+          package-manager-cache: false
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+      - name: Accept Microsoft core fonts EULA
+        run: echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | sudo debconf-set-selections
+      - name: Install Arial font
+        run: sudo apt-get update && sudo apt-get install -y ttf-mscorefonts-installer
+      - name: Verify Arial font
+        run: fc-match --format='%{family}\n' Arial | grep -Fx 'Arial'
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - name: Setup pnpm cache
+        uses: actions/cache@v6
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Cache Cypress binary
+        uses: actions/cache@v6
+        with:
+          path: ~/.cache/Cypress
+          key: ${{ runner.os }}-cypress-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-cypress-
+      - name: Install Cypress binary
+        run: pnpm cypress install
+      - name: Validate comparison, failure and update under Electron
+        run: node scripts/validate-image-snapshot.mjs
+      - name: Verify original test and baselines were restored
+        if: always()
+        run: git diff --exit-code -- src/components/SyHeading/tests
+      - name: Upload validation evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: image-snapshot-v11-validation
+          path: |
+            .local/image-snapshot-validation
+            cypress/snapshots/diff
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
