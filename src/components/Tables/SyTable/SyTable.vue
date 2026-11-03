@@ -137,6 +137,10 @@
 		updateOptions,
 	})
 
+	// Le pied n'est rendu que s'il a un contenu : vide, son padding laisserait une bande blanche sous le tableau
+	const showColumnControls = computed(() => props.enableColumnControls && !!headers.value)
+	const showPagination = computed(() => filteredItems.value.length > 0 && !props.hideDefaultFooter)
+
 	// Use the table checkbox composable
 	const { toggleAllRows, getItemValue } = useTableCheckbox({
 		items: filteredItems,
@@ -638,13 +642,16 @@
 			</template>
 
 			<template #bottom>
-				<div class="d-flex align-center pa-2">
+				<div
+					v-if="showColumnControls || showPagination"
+					class="d-flex align-center pa-2"
+				>
 					<OrganizeColumns
 						v-if="props.enableColumnControls && headers"
 						v-model:headers="headers"
 					/>
 					<SyTablePagination
-						v-if="filteredItems.length > 0 && !props.hideDefaultFooter"
+						v-if="showPagination"
 						:page="page"
 						:items-per-page="itemsPerPageValue"
 						:heading-level="props.headingLevel"
