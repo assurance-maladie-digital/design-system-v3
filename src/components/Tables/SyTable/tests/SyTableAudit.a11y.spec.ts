@@ -83,6 +83,17 @@ describe('SyTable – audit accessibility', () => {
 		expect(wrapper.get('[role="status"]').text()).toContain('0 filtre actif')
 	})
 
+	it('announces no data when a filter has no matching rows and announces results when cleared', async () => {
+		const wrapper = render()
+		await flushPromises()
+		await wrapper.setProps({ options: { page: 1, itemsPerPage: 5, filters: [{ key: 'name', type: 'text', value: 'Introuvable' }] } })
+		await flushPromises()
+		expect(wrapper.get('[role="status"]').text()).toBe('Aucune donnée disponible 1 filtre actif.')
+		await wrapper.setProps({ options: { page: 1, itemsPerPage: 5, filters: [] } })
+		await flushPromises()
+		expect(wrapper.get('[role="status"]').text()).toContain('Page 1. Lignes 1 à 5 sur 12.')
+	})
+
 	it('names pagination landmarks using each table caption', async () => {
 		const host = mount({ render: () => h('div', ['Agents actifs', 'Agents archivés'].map(caption => h(SyTable, { headers, items, caption, suffix: caption, saveState: false, options: { page: 1, itemsPerPage: 5 } }))) }, { attachTo: document.body })
 		const [first, second] = host.findAllComponents(SyTable)

@@ -24,7 +24,7 @@ export function useTableStatus(input: {
 			return `${header?.title || entry.key} : ${entry.order === 'desc' ? locales.sortDescending : locales.sortAscending}`
 		}).join('. ') || locales.sortNone
 		return {
-			pagination: locales.visibleRows(start, end, total, page),
+			pagination: total === 0 ? locales.noData : locales.visibleRows(start, end, total, page),
 			selection: locales.selectedCount(toValue(input.selected)),
 			filters: JSON.stringify(options.filters || []),
 			filterCount: locales.activeFilters(options.filters?.length || 0),

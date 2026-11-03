@@ -447,14 +447,14 @@
 					border-color: rgb(0 0 0 / 20%);
 					pointer-events: none;
 				}
+			}
 
-				&.ellipsis {
-					border: none;
-					pointer-events: none;
-					display: inline-block;
-					color: var(--pagination-ellipsis);
-					padding: 0.6rem;
-				}
+			.ellipsis {
+				border: none;
+				pointer-events: none;
+				display: inline-block;
+				color: var(--pagination-ellipsis);
+				padding: 0.6rem;
 			}
 
 			.first-page,

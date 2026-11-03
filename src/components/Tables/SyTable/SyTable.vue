@@ -385,7 +385,7 @@
 				<caption
 					v-if="props.caption.trim()"
 					class="text-subtitle-1 text-center pa-4"
-					:class="{ 'd-sr-only': props.hideCaption || props.caption === '' }"
+					:class="{ 'd-sr-only': props.hideCaption }"
 				>
 					{{ props.caption }}
 				</caption>
