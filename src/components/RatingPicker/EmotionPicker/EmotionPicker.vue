@@ -231,8 +231,13 @@
 		outline-offset: 2px;
 	}
 
+	// La sélection ajoute une bordure visible (indice non colorimétrique, RGAA 3.1/3.3).
+	// Le contour focus est réservé au focus clavier via :focus-visible.
+	&--active {
+		border-color: currentcolor;
+	}
+
 	// La sélection, le focus et le survol utilisent le fond coloré de l'émotion.
-	// Le contour est réservé au focus clavier via :focus-visible.
 	&--active,
 	&:focus,
 	&:hover {
