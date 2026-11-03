@@ -14,7 +14,11 @@
 
 	const props = withDefaults(defineProps<{
 		bgColor?: string
+		customFromRules?: ValidationRule[]
+		customFromWarningRules?: ValidationRule[]
 		customRules?: ValidationRule[]
+		customToRules?: ValidationRule[]
+		customToWarningRules?: ValidationRule[]
 		customWarningRules?: ValidationRule[]
 		dateFormatReturn?: string
 		density?: 'default' | 'comfortable' | 'compact'
@@ -38,7 +42,11 @@
 		locales?: DeepPartial<typeof defaultLocales>
 	}>(), {
 		bgColor: 'white',
+		customFromRules: () => [],
+		customFromWarningRules: () => [],
 		customRules: () => [],
+		customToRules: () => [],
+		customToWarningRules: () => [],
 		customWarningRules: () => [],
 		dateFormatReturn: '',
 		density: 'default',
@@ -82,6 +90,11 @@
 	const parsedFromDate = computed(() => formattedFromDate.value ? parseDate(formattedFromDate.value, props.format) : null)
 	const parsedToDate = computed(() => formattedToDate.value ? parseDate(formattedToDate.value, props.format) : null)
 
+	// Règles de warning : les règles communes puis celles propres à chaque borne,
+	// comme les props customNumberRules/customKeyRules de NirField.
+	const fromDateWarningRules = computed(() => [...props.customWarningRules, ...props.customFromWarningRules])
+	const toDateWarningRules = computed(() => [...props.customWarningRules, ...props.customToWarningRules])
+
 	// Règles de validation pour la date de début
 	const fromDateRules = computed<ValidationRule[]>(() =>
 		!props.disableErrorHandling
@@ -120,7 +133,8 @@
 						},
 					}]
 					: []),
-				...(!props.disableErrorHandling ? props.customRules : []),
+				...props.customRules,
+				...props.customFromRules,
 			]
 			: [],
 	)
@@ -169,6 +183,7 @@
 					}]
 					: []),
 				...props.customRules,
+				...props.customToRules,
 			]
 			: [],
 	)
@@ -342,7 +357,7 @@
 				ref="fromDateRef"
 				v-model="internalFromDate"
 				:custom-rules="fromDateRules"
-				:custom-warning-rules="props.customWarningRules"
+				:custom-warning-rules="fromDateWarningRules"
 				:date-format-return="props.dateFormatReturn"
 				:display-append-icon="props.displayAppendIcon"
 				:display-icon="props.displayIcon"
@@ -369,7 +384,7 @@
 				ref="toDateRef"
 				v-model="internalToDate"
 				:custom-rules="toDateRules"
-				:custom-warning-rules="props.customWarningRules"
+				:custom-warning-rules="toDateWarningRules"
 				:date-format-return="props.dateFormatReturn"
 				:display-append-icon="props.displayAppendIcon"
 				:display-icon="props.displayIcon"
