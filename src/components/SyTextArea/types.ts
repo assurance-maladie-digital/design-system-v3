@@ -9,11 +9,9 @@ export type SyTextAreaOwnProps = {
 	modelValue?: string
 	trim?: boolean
 	replaceTabs?: number
-	required?: boolean
 	maxLines?: number
 	autoWrap?: number
 	normalize?: boolean
-	validateOn?: VTextarea['validateOn']
 	variant?: VTextarea['variant']
 	color?: string
 	label: string

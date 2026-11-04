@@ -25,3 +25,21 @@
 	padding: 3px 10px;
 	margin-bottom: 1.5rem;
 }
+
+/* Bandeau d'information en tête d'une page de documentation.
+   Sélecteur `div.doc-notice` : il doit l'emporter sur la remise à zéro des marges des blocs de doc Storybook. */
+div.doc-notice {
+	background-color: rgba(var(--v-theme-info), 0.08);
+	border: 1px solid rgb(var(--v-theme-info));
+	border-radius: 4px;
+	padding: 1rem 1.5rem;
+	margin-bottom: 2rem;
+}
+
+.doc-notice p {
+	margin: 0;
+}
+
+.doc-notice p + p {
+	margin-top: 0.5rem;
+}

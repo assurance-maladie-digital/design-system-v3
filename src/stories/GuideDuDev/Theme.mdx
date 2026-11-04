@@ -12,7 +12,7 @@ import '../styles/shared.css';
 Le thème par défaut du Starter kit est celui de la Cnam par défaut.
 Si votre projet dépend du Portail Agent ou d'Amelipro, appliquez le thème correspondant à votre ligne de fabrication.
 
-Pour configurer Vuetify et changer le thème, utilisez `createVuetifyInstance` — consultez la page [createVuetifyInstance](/docs/guide-du-dev-démarrage-createvuetifyinstance--docs) pour le détail complet.
+La configuration de Vuetify fournie par Synapse contient les trois thèmes : voir [Configurer Vuetify](/docs/guide-du-dev-démarrage-installation--docs#configurer-vuetify).
 
 ## Résumé des thèmes disponibles
 
@@ -47,6 +47,27 @@ Pour configurer Vuetify et changer le thème, utilisez `createVuetifyInstance` �
     <!-- votre application -->
   </VApp>
 </template>
+`}
+/>
+
+## Appliquer le thème à toute l'application
+
+Pour appliquer le thème sans modifier le composant racine, passez-le en `defaultTheme` dans la configuration Vuetify&nbsp;:
+
+<Source dark language="ts" code={`
+// src/plugins/vuetify.ts
+import { createVuetify } from 'vuetify'
+import { createVuetifyOptions } from '@cnamts/synapse/vuetifyOptions'
+
+const options = createVuetifyOptions()
+
+export const vuetify = createVuetify({
+  ...options,
+  theme: {
+    ...options.theme,
+    defaultTheme: 'pa',
+  },
+})
 `}
 />
 

@@ -47,7 +47,10 @@ const config: StorybookConfig = {
 	],
 	framework: {
 		name: '@storybook/vue3-vite',
-		options: {},
+		options: {
+			// tsconfig.json n'a que des références : le checker a besoin de celui qui inclut src/.
+			docgen: { plugin: 'vue-component-meta', tsconfig: 'tsconfig.app.json' },
+		},
 	},
 	async viteFinal(baseConfig) {
 		return mergeConfig(baseConfig, {

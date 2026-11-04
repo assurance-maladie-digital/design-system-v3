@@ -58,6 +58,7 @@ import {
             <li>Le composant doit être utilisable <strong>entièrement au clavier</strong>.</li>
             <li>On doit pouvoir se déplacer entre les notes facilement.</li>
             <li>Les flèches du clavier sont attendues pour naviguer entre les options.</li>
+            <li>Un seul item est placé dans l’ordre de tabulation (la radio cochée, sinon la première) ; les autres se parcourent aux flèches — c’est le pattern <em>roving tabindex</em> attendu pour un groupe <code>radiogroup</code>.</li>
             <li>Quand une note est sélectionnée, cela doit être clairement annoncé.</li>
             <li>Si la note ne peut être choisie qu’une seule fois, il faut le préciser à l’utilisateur.</li>
         </ul>
@@ -123,6 +124,26 @@ import {
         <li>Rester simple : moins de complexité = meilleure accessibilité.</li>
     </ul>
 </BestPracticesSection>
+
+<div
+    style={{
+        margin: '3rem 0',
+        padding: '1.5rem',
+        backgroundColor: '#fff3e0',
+        borderLeft: '4px solid #f57c00',
+        borderRadius: '4px'
+    }}
+>
+    <h2 style={{ color: '#e65100', marginTop: 0 }}>Faux positif connu (outillage) : Élément interactif non atteignable à la navigation clavier</h2>
+
+    <ul>
+        <li>L’audit automatisé signale les items <code>role="radio"</code> comme non atteignables à la navigation clavier, car ils possèdent <code>tabindex="-1"</code>.</li>
+        <li>Ce comportement est volontaire : c’est le pattern <strong><em>roving tabindex</em></strong> attendu pour un groupe <code>radiogroup</code> (APG). Un seul item est placé dans l’ordre de tabulation — la radio cochée, ou la première quand aucune valeur n’est sélectionnée — et les autres items sont atteints via les flèches du clavier.</li>
+        <li>La présence de <code>tabindex="-1"</code> ne permet donc pas, à elle seule, de conclure à un défaut d’accessibilité. Une vérification manuelle de la navigation clavier est nécessaire.</li>
+        <li><strong>Vérification manuelle :</strong> <kbd>Tab</kbd> doit permettre d’atteindre la radio cochée (ou la première), puis les touches <kbd>←</kbd>, <kbd>→</kbd>, <kbd>↑</kbd> et <kbd>↓</kbd> doivent permettre de déplacer le focus entre les items (avec bouclage), et <kbd>Entrée</kbd> ou <kbd>Espace</kbd> de cocher l’item ciblé.</li>
+        <li>Si cette navigation fonctionne, le signal de l’outil peut être considéré comme un faux positif lié à la gestion dynamique du focus.</li>
+    </ul>
+</div>
 
 <ResourcesSection>
     <ul>

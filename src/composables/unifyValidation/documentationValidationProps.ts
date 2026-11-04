@@ -58,6 +58,16 @@ export function getValidationDocumentation(type: 'base' | 'date' | 'number' | 's
 				category: 'props',
 			},
 		},
+		validateOn: {
+			description: 'Détermine le déclencheur de validation du composant Vuetify (uniquement si `useVuetifyValidation` est à `true`). Remplace `isValidateOnBlur` si les deux sont fournis. ⚠️ **En mode Synapse (useVuetifyValidation=false), cette prop est ignorée et un warning est émis en développement.** Valeurs possibles : `blur`, `input`, `submit`, `invalid-input`, ou combinées avec les modificateurs `lazy` (retarde la validation) ou `eager` (affiche les erreurs dès le chargement), par exemple `eager blur` ou `lazy input`.',
+			control: 'select',
+			options: ['blur', 'input', 'submit', 'invalid-input', 'lazy', 'eager', 'blur lazy', 'blur eager', 'input lazy', 'input eager', 'submit lazy', 'submit eager', 'invalid-input lazy', 'invalid-input eager', 'lazy blur', 'lazy input', 'lazy submit', 'lazy invalid-input', 'eager blur', 'eager input', 'eager submit', 'eager invalid-input'],
+			table: {
+				type: { summary: 'string' },
+				defaultValue: { summary: 'undefined' },
+				category: 'props',
+			},
+		},
 		showSuccessMessages: {
 			description: 'Affiche les messages de succès lorsque la validation est réussie. Si la prop est à `false` cela cache uniquement les messages texte, l\'état visuel reste actif.',
 			control: 'boolean',

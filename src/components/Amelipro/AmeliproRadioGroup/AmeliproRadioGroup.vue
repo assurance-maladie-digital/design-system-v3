@@ -1,5 +1,5 @@
 <script setup lang="ts">
-/* eslint-disable vuejs-accessibility/label-has-for */
+	/* eslint-disable vuejs-accessibility/label-has-for */
 	import { computed, type PropType, useSlots } from 'vue'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'
 	import type { AmeliproRadioGroupItem } from './types'

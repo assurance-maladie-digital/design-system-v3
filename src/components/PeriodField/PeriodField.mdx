@@ -32,6 +32,44 @@ conservent leur enregistrement dans `SyForm`.
 Les méthodes `validateOnSubmit()` et `clearValidation()`, ainsi que les états
 `isValid`, `errors`, `warnings` et `successes`, restent disponibles.
 
+### Règles propres à chaque borne
+
+`customRules` et `customWarningRules` s'appliquent aux deux dates. Pour cibler
+une seule borne, utilisez `customFromRules` / `customToRules`, ainsi que
+`customFromWarningRules` / `customToWarningRules` pour les avertissements.
+Les règles croisées vérifiant l'ordre des bornes restent actives.
+
+```ts
+const fromRules = [
+  {
+    type: 'notAfterDate',
+    options: {
+      date: '31/12/2099',
+      message: 'La date de début ne peut pas être postérieure au 31/12/2099',
+    },
+  },
+]
+const toRules = [
+  {
+    type: 'notAfterDate',
+    options: {
+      date: '31/12/2099',
+      message: 'La date de fin ne peut pas être postérieure au 31/12/2099',
+    },
+  },
+]
+```
+
+Transmettez ces règles avec `:custom-from-rules="fromRules"` et
+`:custom-to-rules="toRules"`.
+
+<Canvas of={PeriodFieldStories.WithTargetedErrors}/>
+
+Les règles d'avertissement fonctionnent de la même façon via
+`:custom-from-warning-rules` et `:custom-to-warning-rules` :
+
+<Canvas of={PeriodFieldStories.WithTargetedWarnings}/>
+
 ## Libellé accessible du groupe
 
 Les deux champs sont regroupés dans un même groupe accessible (`role="group"`).

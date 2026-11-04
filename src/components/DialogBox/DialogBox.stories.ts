@@ -20,6 +20,11 @@ const meta: Meta<typeof DialogBox> = {
 			control: { type: 'select' },
 			options: [1, 2, 3, 4, 5, 6],
 			description: 'Niveau de titre pour le titre de la boîte de dialogue',
+			table: {
+				defaultValue: {
+					summary: '2',
+				},
+			},
 		},
 		'modelValue': {
 			control: 'boolean',
@@ -62,6 +67,9 @@ const meta: Meta<typeof DialogBox> = {
 				type: {
 					summary: 'string',
 				},
+				defaultValue: {
+					summary: `'800px'`,
+				},
 			},
 		},
 		'cancelBtnText': {
@@ -95,6 +103,9 @@ const meta: Meta<typeof DialogBox> = {
 				type: {
 					summary: 'boolean',
 				},
+				defaultValue: {
+					summary: 'false',
+				},
 			},
 		},
 		'persistent': {
@@ -103,6 +114,9 @@ const meta: Meta<typeof DialogBox> = {
 			table: {
 				type: {
 					summary: 'boolean',
+				},
+				defaultValue: {
+					summary: 'false',
 				},
 			},
 		},

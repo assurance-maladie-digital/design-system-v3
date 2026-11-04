@@ -2452,7 +2452,6 @@ exports[`mounthpicker > should render mounthpicker 1`] = `
               aria-labelledby="input-v-4-label"
               autocomplete="off"
               class="v-field__input"
-              direction="horizontal"
               id="input-v-4"
               name="v-1"
               size="1"

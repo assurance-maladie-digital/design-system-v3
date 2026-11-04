@@ -1,5 +1,5 @@
 <script setup lang="ts">
-/* eslint-disable vuejs-accessibility/label-has-for */
+	/* eslint-disable vuejs-accessibility/label-has-for */
 	import type { InputPostalAddressAutoCompleteList, InputPostalAddressField, InputPostalAddressGroup } from './types'
 	import { computed, onMounted, type PropType, ref, watch } from 'vue'
 	import AmeliproMessage from '../AmeliproMessage/AmeliproMessage.vue'

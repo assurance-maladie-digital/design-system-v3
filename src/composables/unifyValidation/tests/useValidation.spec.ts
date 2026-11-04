@@ -3,6 +3,7 @@ import { describe, it, expect, vi } from 'vitest'
 import { defineComponent, nextTick, ref } from 'vue'
 import { mount } from '@vue/test-utils'
 import { useValidation } from '../useValidation'
+import type { ValidateOn } from '../useValidation'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 import type { ValidationRule } from '@/composables/validation/useValidation'
 
@@ -109,6 +110,34 @@ describe('useValidation (unifyValidation)', () => {
 			withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
 
 			expect(warn.mock.calls.filter(isRequiredWarning)).toHaveLength(0)
+			warn.mockRestore()
+		})
+	})
+
+	describe('validateOn in Synapse mode dev warning', () => {
+		const isValidateOnWarning = (call: unknown[]) => String(call[0]).includes('validateOn est ignorée en mode Synapse')
+
+		it('warns reactively when validateOn is set or the field switches to Synapse mode', async () => {
+			const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+			const useVuetifyValidation = ref(true)
+			const validateOn = ref<ValidateOn | undefined>(undefined)
+			const params = makeParams({ useVuetifyValidation, validateOn, rules: ref([]) })
+			withSetup(() => useValidation(params as Parameters<typeof useValidation>[0]))
+
+			validateOn.value = 'blur'
+			await nextTick()
+			expect(warn.mock.calls.filter(isValidateOnWarning)).toHaveLength(0)
+
+			useVuetifyValidation.value = false
+			await nextTick()
+			expect(warn.mock.calls.filter(isValidateOnWarning)).toHaveLength(1)
+
+			validateOn.value = undefined
+			await nextTick()
+			validateOn.value = 'input'
+			await nextTick()
+			expect(warn.mock.calls.filter(isValidateOnWarning)).toHaveLength(2)
+			expect(String(warn.mock.calls.filter(isValidateOnWarning)[1]![0])).toContain('« Mon champ »')
 			warn.mockRestore()
 		})
 	})

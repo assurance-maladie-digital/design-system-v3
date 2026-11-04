@@ -1,5 +1,5 @@
 import { computed, type Ref } from 'vue'
-import { useValidation } from '@/composables/unifyValidation/useValidation'
+import { useValidation, type ValidateOn } from '@/composables/unifyValidation/useValidation'
 import type { ValidationRule as SyValidationRule, VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 import type { SyTextFieldLocales } from './locales'
 
@@ -25,6 +25,7 @@ export function useSyTextFieldValidation(params: {
 	hasWarningProp: Ref<boolean>
 	hasSuccessProp: Ref<boolean>
 	maxErrors: Ref<number>
+	validateOn?: Ref<ValidateOn | undefined>
 	locales: Ref<SyTextFieldLocales>
 }) {
 	const defaultRules = computed<SyValidationRule[]>(() =>
@@ -63,6 +64,7 @@ export function useSyTextFieldValidation(params: {
 		hasWarningProp: params.hasWarningProp,
 		hasSuccessProp: params.hasSuccessProp,
 		maxErrors: params.maxErrors,
+		validateOn: params.validateOn,
 		focused: params.focused,
 	})
 

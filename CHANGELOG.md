@@ -1,3 +1,202 @@
+## v1.2.1 (27-10-2026)
+
+> **⚠️ Changements de comportement**
+>
+> Ces changements sont des corrections, mais un projet existant peut les percevoir comme des régressions.
+>
+> **DatePicker / ComplexDatePicker / DateTextInput** ([#2665](https://github.com/assurance-maladie-digital/design-system-v3/pull/2665), [#2685](https://github.com/assurance-maladie-digital/design-system-v3/pull/2685))
+> - **`update:modelValue` émet `null` dès que la saisie est invalide ou incomplète** (format invalide, date non parsable, plage incomplète, saisie partiellement effacée). Avant, le modèle gardait la dernière valeur valide et se désynchronisait du texte affiché.
+> - **`date-selected` n'est émis que pour une sélection complète** : il ne l'est plus quand seule la première borne d'une plage est saisie au clavier.
+>
+> **Sélecteurs : valeurs `0` et `false`** ([#2689](https://github.com/assurance-maladie-digital/design-system-v3/pull/2689))
+> - **`0` et `false` sont des choix valides**, et non plus une absence de valeur, dans `SyAutocomplete`, `SySelect`, `SyRadioGroup`, `SelectBtnField` et `SyCheckBoxGroup`. Avec `required`, choisir une option de valeur `false` n'affiche plus le message « requis ». Une règle `required` passée dans `customRules` refuse toujours `false`, sauf avec la nouvelle option `allowFalse`.
+>
+> **SyTable / SyServerTable** ([#2630](https://github.com/assurance-maladie-digital/design-system-v3/pull/2630))
+> - **Les colonnes épinglées et les cases à cocher n'imposent plus leur style** par des styles inline ou des `!important` : ils se personnalisent avec des variables CSS (`--sy-table-pinned-cell-bg`, `--sy-table-row-bg`, `--sy-table-checkbox-color`…). Remplacez vos surcharges en `!important` par ces variables.
+> - **Le zébrage `striped` s'applique à toute la ligne**, cellules épinglées comprises, et une ombre signale le contenu masqué dès qu'un tableau est plus large que son conteneur.
+
+### 🚀 Features
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 100%">Synapse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: add the validateWithReturnFormat prop to validate custom rules with the return format
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2685">#2685</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable: customize pinned columns and checkboxes with CSS variables
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2630">#2630</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable: show a horizontal scroll indicator when the table overflows
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2630">#2630</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### 🔧 Bug Fixes
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 100%">Synapse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- DatePicker: prevent duplicate model emissions and emit null on invalid or incomplete dates
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2665">#2665</a>
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2685">#2685</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Form components: treat 0 and false as valid values
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2689">#2689</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTable/SyServerTable: fix the multi-sort indicator in the header
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2694">#2694</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- VBtn: render the overlay behind the content using isolation
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2697">#2697</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTabs: change the inactive tab base color
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2696">#2696</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- FileList: fix the SyIcon picto color
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2672">#2672</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### ♿ Accessibility
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 100%">Synapse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- SyServerTable: associate the rows per page selector with its visible label
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2686">#2686</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### 🔒 Security
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 100%">Synapse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- Security: update Node to 22.23.4
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2714">#2714</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Security: update happy-dom, vite, undici and fast-uri
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2705">#2705</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Security: update Storybook to 10.6.3 and plugins
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2702">#2702</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### 🧹 Chore
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 100%">Synapse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- Chore: remove the engines field, Node and pnpm versions are set by the consuming project
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Chore: upgrade axe-core from 4.13.0 to 4.14.0
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2674">#2674</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Chore: add the contract change documentation requirement to the PR template
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2673">#2673</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### 📝 Documentation
+
+<table>
+  <thead>
+    <tr style="vertical-align: top;">
+      <th style="width: 100%">Synapse</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="vertical-align: top;">
+      <td>- PhoneField: make validation story controls effective and fix descriptions
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2707">#2707</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SyTextArea: fix stories
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2680">#2680</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- SelectBtnField: standardize stories with the v-bind pattern and add action tracking
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2676">#2676</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Doc: improve SyTextArea study
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2700">#2700</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Doc: improve release banner
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2671">#2671</a>
+      </td>
+    </tr>
+    <tr style="vertical-align: top;">
+      <td>- Doc: fix a11y components page
+        <a href="https://github.com/assurance-maladie-digital/design-system-v3/pull/2670">#2670</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
 ## v1.2.0 (19-10-2026)
 
 > **⚠️ Changements de comportement**

@@ -447,11 +447,11 @@ describe('SyTable', () => {
 		expect(pinnedTh.some(th => (th.attributes('style') || '').includes('right:'))).toBe(true)
 		expect(pinnedTh.every(th => (th.attributes('style') || '').includes('background: var(--sy-table-header-bg-pinned)'))).toBe(true)
 
-		const pinnedTd = wrapper.findAll('tbody td[style*="position: sticky"]')
+		const pinnedTd = wrapper.findAll('tbody td.sy-table__pinned')
 		expect(pinnedTd.length).toBeGreaterThan(0)
-		expect(pinnedTd.some(td => (td.attributes('style') || '').includes('left:'))).toBe(true)
-		expect(pinnedTd.some(td => (td.attributes('style') || '').includes('right:'))).toBe(true)
-		expect(pinnedTd.every(td => (td.attributes('style') || '').includes('background: rgb(var(--v-theme-surface))'))).toBe(true)
+		expect(pinnedTd.every(td => !(td.attributes('style') || '').includes('position: sticky'))).toBe(true)
+		expect(pinnedTd.some(td => td.classes().includes('sy-table__pinned--left'))).toBe(true)
+		expect(pinnedTd.some(td => td.classes().includes('sy-table__pinned--right'))).toBe(true)
 	})
 
 	it('enables selection when showSelect is true', async () => {

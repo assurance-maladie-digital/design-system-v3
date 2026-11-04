@@ -1,7 +1,7 @@
 import { computed, nextTick, ref, type Ref } from 'vue'
 import { checkNIR, isNIRKeyValid } from './nirValidation'
 import { locales } from './locales'
-import { useValidation, type ValidationRule as SyValidationRule } from '@/composables/unifyValidation/useValidation'
+import { useValidation, type ValidationRule as SyValidationRule, type ValidateOn } from '@/composables/unifyValidation/useValidation'
 import type { SyTextField } from '@/main'
 import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
 
@@ -29,6 +29,7 @@ export type NirValidationProps = {
 	successMessages?: string[] | null
 	useVuetifyValidation?: boolean
 	warningMessages?: string[] | null
+	validateOn?: ValidateOn | undefined
 }
 
 /**
@@ -68,6 +69,7 @@ export function useNirValidation(
 	hasWarningProp: Ref<boolean>,
 	hasSuccessProp: Ref<boolean>,
 	maxErrors: Ref<number>,
+	validateOn: Ref<ValidateOn | undefined>,
 ) {
 	// Règles de validation
 	const numberRules = computed(() => {
@@ -204,6 +206,7 @@ export function useNirValidation(
 		hasWarningProp,
 		hasSuccessProp,
 		maxErrors,
+		validateOn,
 	})
 
 	const keyValidation = useValidation({
@@ -221,6 +224,7 @@ export function useNirValidation(
 		customWarningRules: computed(() => (displayKey.value && unmaskedKeyValue.value.length === 2) ? customKeyWarningRules.value : []),
 		rules: vuetifyKeyRules,
 		focused: keyFieldFocused,
+		validateOn,
 	})
 
 	// Validation des champs

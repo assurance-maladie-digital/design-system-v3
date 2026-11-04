@@ -66,9 +66,9 @@ describe('RatingPicker - Visual regression tests', () => {
 		cy.matchImageSnapshot('rating-picker-number-focus', cy.get('.v-application'))
 	})
 
-	// Ring DS d'une émotion focusée : `outline: 2px primary` (et non currentcolor, pour rester
-	// lisible sur le fond coloré). Fond coloré au hover/sélection seulement, pas au focus.
-	it('shows the DS ring on a focused emotion', () => {
+	// Émotion focusée au clavier : fond coloré de l'émotion (comme au survol et à la sélection)
+	// et `outline: 2px currentcolor, offset 2px`.
+	it('shows the emotion background and outline on a focused emotion', () => {
 		cy.mountWithVuetify(RatingPicker, {
 			props: { type: 'emotion', label: 'Ressenti' },
 		})

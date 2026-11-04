@@ -1,7 +1,9 @@
 import axios from 'axios'
-import { defineComponent, h, onMounted, shallowRef } from 'vue'
+import { computed, defineComponent, h, nextTick, onMounted, shallowRef, useTemplateRef, watch } from 'vue'
+import { VPagination } from 'vuetify/components'
 import * as marked from 'marked'
 import SyAlert from '../../components/SyAlert/SyAlert.vue'
+import SySelect from '../../components/Customs/Selects/SySelect/SySelect.vue'
 import { sanitizeHtml } from './sanitizeHtml'
 import './Releases.css'
 
@@ -33,6 +35,104 @@ type ReleaseAlert = {
 }
 
 const releaseAlerts: ReleaseAlert[] = [
+	{
+		id: 'datepicker-model-behavior',
+		releaseVersion: 'v1.2.1',
+		type: 'info',
+		variant: 'tonal',
+		title: 'Correction du comportement du DatePicker',
+		paragraphs: [
+			'Ce sont des corrections, mais un projet existant peut les percevoir comme des régressions : vérifiez les écrans qui écoutent le modèle ou `date-selected`.',
+		],
+		items: [
+			{
+				label: '`update:modelValue`',
+				text: 'Il émet `null` dès que la saisie est invalide ou incomplète (format invalide, date non parsable, plage incomplète, saisie partiellement effacée). Avant, le modèle gardait la dernière valeur valide et se désynchronisait du texte affiché.',
+			},
+			{
+				label: '`date-selected`',
+				text: 'Il n\'est émis que pour une sélection complète (date unique confirmée ou plage complète). Il ne l\'est plus quand seule la première borne d\'une plage est saisie au clavier.',
+			},
+			{
+				label: 'Nouvelle prop `validateWithReturnFormat` (non cassant)',
+				text: 'Avec cette prop, le `validate` des règles personnalisées reçoit la date au format `dateFormatReturn`, comme le `v-model`. Sans elle, le comportement est inchangé.',
+			},
+		],
+		components: ['DatePicker', 'ComplexDatePicker', 'DateTextInput'],
+		link: { intro: 'Pour plus de détails, voir la page', href: '/?path=/docs/composants-formulaires-datepicker-calendarmode--docs', text: 'DatePicker' },
+	},
+	{
+		id: 'select-zero-false-values',
+		releaseVersion: 'v1.2.1',
+		type: 'info',
+		variant: 'tonal',
+		title: 'Valeurs 0 et false dans les sélecteurs',
+		paragraphs: [
+			'Les valeurs `0` et `false` sont désormais des choix valides, et non plus une absence de valeur. `\'\'`, `null` et `undefined` restent une absence de valeur.',
+		],
+		items: [
+			{
+				label: '`SyAutocomplete` (sélection simple)',
+				text: 'Une option de valeur `0` ou `false` s\'affiche dans le champ et est marquée sélectionnée. Avant, le champ restait vide.',
+			},
+			{
+				label: 'Prop `required`',
+				text: 'Choisir une option de valeur `false` n\'affiche plus le message « Le champ … est requis. ».',
+			},
+			{
+				label: 'Règle `required` dans `customRules`',
+				text: 'Elle refuse toujours `false` par défaut, ce qui garde obligatoires les cases du type « J\'accepte ». Pour une liste booléenne, ajoutez l\'option `allowFalse: true`.',
+			},
+			{
+				label: '`SelectBtnField`',
+				text: 'Une sélection de valeur `0` n\'est plus remplacée quand le focus clavier passe sur une autre option.',
+			},
+			{
+				label: '`SySelect`',
+				text: 'Des items booléens bruts (`:items="[true, false]"`) s\'affichent et émettent leur valeur booléenne.',
+			},
+		],
+		components: ['SyAutocomplete', 'SySelect', 'SyRadioGroup', 'SelectBtnField', 'SyCheckBoxGroup'],
+		link: { intro: 'Pour plus de détails, voir la page', href: '/?path=/docs/composants-formulaires-selects-syselect--docs', text: 'SySelect' },
+	},
+	{
+		id: 'table-pinned-styles',
+		releaseVersion: 'v1.2.1',
+		type: 'info',
+		variant: 'tonal',
+		title: 'Styles des tableaux personnalisables par variables CSS',
+		paragraphs: [
+			'Les colonnes épinglées, la colonne de sélection épinglée et les cases à cocher n\'imposent plus leur style par des styles inline ou des `!important`. Si votre projet les surchargeait avec `!important`, remplacez ces surcharges par les variables CSS ci-dessous.',
+		],
+		items: [
+			{
+				label: '`--sy-table-pinned-cell-bg`',
+				text: 'Fond des cellules épinglées et de la colonne de sélection épinglée.',
+			},
+			{
+				label: '`--sy-table-row-bg`',
+				text: 'Couleur d\'une ligne, étendue aux cellules épinglées. Un `background-color` posé seul sur la ligne ne s\'étend pas aux cellules épinglées.',
+			},
+			{
+				label: '`--sy-table-pinned-left-shadow` / `--sy-table-pinned-right-shadow`',
+				text: 'Ombre signalant le contenu masqué à gauche / à droite.',
+			},
+			{
+				label: '`--sy-table-checkbox-color`',
+				text: 'Couleur des cases à cocher du tableau.',
+			},
+			{
+				label: 'Zébrage `striped`',
+				text: 'Il s\'applique désormais à toute la ligne, cellules épinglées comprises.',
+			},
+			{
+				label: 'Défilement horizontal',
+				text: 'Une ombre signale le contenu masqué dès qu\'un tableau est plus large que son conteneur, y compris sans colonne épinglée.',
+			},
+		],
+		components: ['SyTable', 'SyServerTable'],
+		link: { intro: 'Pour plus de détails, voir la page', href: '/?path=/docs/composants-tableaux-sytable--docs', text: 'SyTable' },
+	},
 	{
 		id: 'syform-validation-behavior',
 		releaseVersion: 'v1.2.0',
@@ -206,6 +306,11 @@ const releaseAlerts: ReleaseAlert[] = [
 	},
 ]
 
+// Nombre de releases affichées par page
+const PAGE_SIZE = 3
+// Valeur du sélecteur pour afficher toutes les versions (une chaîne vide serait traitée comme une absence de valeur)
+const ALL_VERSIONS = 'all'
+
 // Rend un texte de bandeau en remplaçant les passages entre backticks par des `<code>`
 // (pas de `v-html` : le texte reste échappé par Vue).
 const AlertText = defineComponent({
@@ -227,21 +332,67 @@ export default {
 export const List = {
 	render: () => {
 		return {
-			components: { SyAlert, AlertText },
+			components: { SyAlert, SySelect, VPagination, AlertText },
 			setup() {
 				const releases = shallowRef<GitHubRelease[]>([])
 				const errorMessage = shallowRef('')
+				const loading = shallowRef(true)
+				const selectedVersion = shallowRef(ALL_VERSIONS)
+				const page = shallowRef(1)
+				const listRef = useTemplateRef<HTMLElement>('list')
 
 				const fetchReleases = async () => {
 					try {
-						const { data } = await axios.get('https://api.github.com/repos/assurance-maladie-digital/design-system-v3/releases')
+						// 100 par page (maximum de l'API) : toutes les releases en une requête, le sélecteur les liste toutes
+						const { data } = await axios.get('https://api.github.com/repos/assurance-maladie-digital/design-system-v3/releases', { params: { per_page: 100 } })
 						releases.value = data
 					}
 					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 					catch (error) {
 						errorMessage.value = 'Une erreur est survenue lors de la récupération des releases.'
 					}
+					finally {
+						loading.value = false
+					}
 				}
+
+				const versionItems = computed(() => [
+					{ text: 'Toutes les versions', value: ALL_VERSIONS },
+					...releases.value.map(release => ({
+						text: release.name || release.tag_name || String(release.id),
+						value: String(release.id),
+					})),
+				])
+
+				const filteredReleases = computed(() => selectedVersion.value === ALL_VERSIONS
+					? releases.value
+					: releases.value.filter(release => String(release.id) === selectedVersion.value),
+				)
+
+				const pageCount = computed(() => Math.ceil(filteredReleases.value.length / PAGE_SIZE))
+
+				const visibleReleases = computed(() => filteredReleases.value.slice((page.value - 1) * PAGE_SIZE, page.value * PAGE_SIZE))
+
+				const rangeText = computed(() => {
+					const total = filteredReleases.value.length
+					if (total <= 1) {
+						return ''
+					}
+					const start = (page.value - 1) * PAGE_SIZE + 1
+					const end = Math.min(page.value * PAGE_SIZE, total)
+					return `Versions ${start} à ${end} sur ${total}`
+				})
+
+				// Le sélecteur peut renvoyer `null` s'il est vidé : on revient alors à toutes les versions
+				const selectVersion = (value: unknown) => {
+					selectedVersion.value = typeof value === 'string' ? value : ALL_VERSIONS
+					page.value = 1
+				}
+
+				// La pagination est sous la liste : on ramène le focus (et la vue) sur le sélecteur, en haut de la nouvelle page
+				watch(page, () => {
+					nextTick(() => listRef.value?.focus())
+				})
 
 				const formatDate = (date: string | number | Date) => {
 					return new Date(date).toLocaleDateString()
@@ -266,8 +417,15 @@ export const List = {
 				})
 
 				return {
-					releases,
 					errorMessage,
+					loading,
+					selectedVersion,
+					page,
+					versionItems,
+					pageCount,
+					visibleReleases,
+					rangeText,
+					selectVersion,
 					formatDate,
 					formatMarkdown,
 					getReleaseAlerts,
@@ -282,8 +440,22 @@ export const List = {
 						<template #default>Version Amelipro : alpha</template>
 					</SyAlert>
 					<div v-if="errorMessage" class="error">{{ errorMessage }}</div>
-					<div v-else>
-						<div v-for="release in releases" :key="release.id">
+					<p v-else-if="loading" class="mt-4">Chargement des releases…</p>
+					<div v-else ref="list" tabindex="-1" class="releases__list">
+						<div class="releases__toolbar mt-6">
+							<SySelect
+								:model-value="selectedVersion"
+								:items="versionItems"
+								label="Version"
+								menu-id="releases-version-menu"
+								hide-details
+								disable-error-handling
+								class="releases__select"
+								@update:model-value="selectVersion"
+							/>
+							<p class="releases__range" aria-live="polite">{{ rangeText }}</p>
+						</div>
+						<div v-for="release in visibleReleases" :key="release.id">
 							<h2>{{ release.name }} ({{ formatDate(release.published_at) }})</h2>
 							<SyAlert
 								v-for="alert in getReleaseAlerts(release)"
@@ -315,6 +487,15 @@ export const List = {
 							<div v-html="formatMarkdown(release.body)"></div>
 							<hr>
 						</div>
+						<VPagination
+							v-if="pageCount > 1"
+							v-model="page"
+							:length="pageCount"
+							:total-visible="5"
+							rounded
+							class="releases__pagination mt-4"
+							aria-label="Pagination des releases"
+						/>
 					</div>
 				</div>
 			`,

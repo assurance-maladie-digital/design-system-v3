@@ -227,18 +227,19 @@
 	}
 
 	&:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-primary));
+		outline: 2px solid currentcolor;
 		outline-offset: 2px;
 	}
 
+	// La sélection ajoute une bordure visible (indice non colorimétrique, RGAA 3.1/3.3).
+	// Le contour focus est réservé au focus clavier via :focus-visible.
 	&--active {
-		border-color: currentcolor !important;
+		border-color: currentcolor;
 	}
 
-	// Fond coloré de l'émotion : survol et sélection (`--active`) uniquement. PAS au focus :
-	// l'indicateur de focus clavier est le ring primary (ci-dessus), sans changement de fond —
-	// standard DS.
+	// La sélection, le focus et le survol utilisent le fond coloré de l'émotion.
 	&--active,
+	&:focus,
 	&:hover {
 		&.sad {
 			background: rgb(var(--v-theme-error-variant-lighten));

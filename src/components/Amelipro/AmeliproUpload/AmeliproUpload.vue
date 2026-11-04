@@ -1,5 +1,5 @@
 <script setup lang="ts">
-/* eslint-disable vuejs-accessibility/no-static-element-interactions, vuejs-accessibility/label-has-for */
+	/* eslint-disable vuejs-accessibility/no-static-element-interactions, vuejs-accessibility/label-has-for */
 	import type { ErrorBucket, Registrable } from './types'
 	import type { ErrorMessages, ValidationRule } from '@/utils/rules/types'
 	import {

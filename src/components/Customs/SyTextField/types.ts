@@ -29,7 +29,6 @@ export type SyTextFieldProps = {
 	counter?: string | number | boolean
 	counterValue?: number | ((value: string | number | null | undefined | string[]) => number)
 	density?: 'default' | 'comfortable' | 'compact'
-	direction?: 'horizontal' | 'vertical'
 	isDirty?: boolean
 	disabled?: boolean
 	isFlat?: boolean

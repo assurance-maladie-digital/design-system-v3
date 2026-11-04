@@ -175,7 +175,7 @@ const preview: Preview = {
 					],
 					'Templates', ['Vue d\'ensemble', 'ErrorPage', 'MaintenancePage', 'NotFoundPage', 'StatusPage'],
 					'Guide Du Dev', [
-						'Démarrage', ['Installation', 'Configuration du thème', 'createVuetifyInstance', 'VuetifyOptions'],
+						'Démarrage', ['Installation', 'Configuration du thème', 'Prop vuetifyOptions'],
 						'Formulaires & Validation', ['Guide des formulaires', 'Guide technique'],
 						'Utilitaires', ['Vue d\'ensemble', 'Stockage', 'Formatage', 'Validation', 'DOM & Navigateur', 'Données', 'Règles de validation'],
 						'Services', ['useNotificationService'],

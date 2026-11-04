@@ -35,19 +35,19 @@ export const AmeliproComponents: StoryObj = {
 					? 'http://localhost:6006/?path=/docs/'
 					: 'https://cnam-design-system.netlify.app/?path=/docs/'
 
-				type ComponentType =
-					| 'composants vuetify'
-					| 'structure'
-					| 'layout'
-					| 'navigation'
-					| 'boutons'
-					| 'formulaires'
-					| 'formulaires selects'
-					| 'tableaux'
-					| 'données'
-					| 'feedback'
-					| 'filtres'
-					| 'templates'
+				type ComponentType
+					= | 'composants vuetify'
+						| 'structure'
+						| 'layout'
+						| 'navigation'
+						| 'boutons'
+						| 'formulaires'
+						| 'formulaires selects'
+						| 'tableaux'
+						| 'données'
+						| 'feedback'
+						| 'filtres'
+						| 'templates'
 
 				const getComponentUrl = (item: { name: string, type: ComponentType }) => {
 					const normalizedType = item.type.trim().toLowerCase()

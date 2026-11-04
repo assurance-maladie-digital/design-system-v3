@@ -1,5 +1,5 @@
 <script setup lang="ts">
-/* eslint-disable vuejs-accessibility/label-has-for */
+	/* eslint-disable vuejs-accessibility/label-has-for */
 	import type { IndexedObject, ValidateOnType } from '../types'
 	import type { InputSelect, SelectItem } from './types'
 	import { computed, onMounted, onUnmounted, type PropType, ref } from 'vue'

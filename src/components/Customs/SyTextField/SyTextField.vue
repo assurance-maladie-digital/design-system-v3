@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-// Prevent display-asterisk from being passed to the DOM
+	// Prevent display-asterisk from being passed to the DOM
 	defineOptions({
 		inheritAttrs: false,
 	})
@@ -46,7 +46,6 @@
 			counter: false,
 			counterValue: undefined,
 			density: 'default',
-			direction: 'horizontal',
 			isDirty: false,
 			isFlat: false,
 			isFocused: false,
@@ -189,22 +188,19 @@
 		hasWarningProp: toRef(props, 'hasWarning'),
 		hasSuccessProp: toRef(props, 'hasSuccess'),
 		maxErrors: toRef(props, 'maxErrors'),
+		validateOn: toRef(props, 'validateOn'),
 		focused,
 		locales,
 	})
 
 	const forwardedAttrs = computed(() => {
 		const filteredAttrs = Object.fromEntries(
-			Object.entries(attrs).filter(([key]) => key !== 'display-asterisk'),
+			Object.entries(attrs).filter(([key]) => key !== 'display-asterisk' && key !== 'direction'),
 		) as Record<string, unknown>
 
 		// aria-controls coming from menu activators is invalid on the input itself; drop it
 		if ('aria-controls' in filteredAttrs) {
 			delete filteredAttrs['aria-controls']
-		}
-
-		if (!('validate-on' in filteredAttrs) && 'rules' in filteredAttrs && props.isValidateOnBlur) {
-			filteredAttrs['validate-on'] = 'blur lazy'
 		}
 
 		return filteredAttrs
@@ -598,7 +594,6 @@
 			:counter="props.counter"
 			:counter-value="props.counterValue"
 			:density="props.density"
-			:direction="props.direction"
 			:dirty="props.isDirty"
 			:disabled="props.disabled"
 			:error="hasError"

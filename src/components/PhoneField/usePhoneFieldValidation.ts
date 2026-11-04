@@ -1,6 +1,6 @@
 import { type ValidationRule } from '@/composables/validation/useValidation'
 import { computed, ref, type Ref } from 'vue'
-import { useValidation } from '@/composables/unifyValidation/useValidation'
+import { useValidation, type ValidateOn } from '@/composables/unifyValidation/useValidation'
 import type { locales } from './locales'
 import type { VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
 import type { Indicatif } from './types'
@@ -19,6 +19,7 @@ export function usePhoneFieldValidation(params: {
 	showSuccessMessages: Ref<boolean>
 	disableErrorHandling: Ref<boolean>
 	isValidateOnBlur: Ref<boolean>
+	validateOn?: Ref<ValidateOn | undefined>
 	focused: Ref<boolean>
 	customRules: Ref<ValidationRule[]>
 	warningRules?: Ref<ValidationRule[]>
@@ -85,6 +86,7 @@ export function usePhoneFieldValidation(params: {
 		errorMessages: params.errorMessages,
 		warningMessages: params.warningMessages,
 		successMessages: params.successMessages,
+		validateOn: params.validateOn,
 	})
 
 	const iconColor = computed(() => {

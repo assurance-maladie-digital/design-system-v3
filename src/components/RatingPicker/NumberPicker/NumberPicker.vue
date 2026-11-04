@@ -132,6 +132,7 @@
 						:aria-checked="internalValue === index ? 'true' : 'false'"
 						class="sy-number-picker__item text-body-2 pa-0"
 						:aria-disabled="readonly ? 'true' : undefined"
+						:title="locales.ratingAriaLabel(index, props.length)"
 						:aria-label="locales.ratingAriaLabel(index, props.length)"
 						@click="selectAndFocus(index - 1)"
 						@keydown.enter.prevent="selectAndFocus(index - 1)"

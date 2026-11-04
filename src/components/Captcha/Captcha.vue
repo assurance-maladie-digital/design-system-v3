@@ -114,6 +114,7 @@
 		hasWarningProp: toRef(props, 'hasWarning'),
 		hasSuccessProp: toRef(props, 'hasSuccess'),
 		maxErrors: toRef(props, 'maxErrors'),
+		validateOn: toRef(props, 'validateOn'),
 		focused,
 		locales,
 	})

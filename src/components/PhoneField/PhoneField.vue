@@ -97,6 +97,7 @@
 		successRules: toRef(props, 'customSuccessRules'),
 		rules: toRef(props, 'rules'),
 		useVuetifyValidation: toRef(props, 'useVuetifyValidation'),
+		validateOn: toRef(props, 'validateOn'),
 		errorMessages: toRef(props, 'errorMessages'),
 		warningMessages: toRef(props, 'warningMessages'),
 		successMessages: toRef(props, 'successMessages'),

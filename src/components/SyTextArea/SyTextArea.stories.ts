@@ -11,11 +11,11 @@ const meta = {
 	parameters: {
 		docs: {
 			controls: {
-				exclude: ['validateOn', 'update:modelValue', 'onUpdate:modelValue'],
+				exclude: ['update:modelValue', 'onUpdate:modelValue'],
 			},
 		},
 		controls: {
-			exclude: ['validateOn', 'onUpdate:modelValue'],
+			exclude: ['onUpdate:modelValue'],
 		},
 	},
 	argTypes: {

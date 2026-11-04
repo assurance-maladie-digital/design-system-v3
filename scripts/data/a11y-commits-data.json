@@ -5274,6 +5274,31 @@
   ],
   "SelectBtnField": [
     {
+      "hash": "886b13bece06b7abdd6b7dadd10264080f022557",
+      "date": "2026-10-23 15:21:56 +0200",
+      "dateFr": "23/10/2026",
+      "message": "SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)",
+      "version": "1.2.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
+      "hash": "0dbf435d01af85b89bcf8390246623a136b2bf40",
+      "date": "2026-10-21 09:54:10 +0200",
+      "dateFr": "21/10/2026",
+      "message": "SelectBtnField: standardize stories with v-bind pattern and add action tracking (#2676)",
+      "version": "1.2.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Documentation"
+      ]
+    },
+    {
       "hash": "99dd21e66e143bda73bf5d60d7cc258bf80fda35",
       "date": "2026-09-17 14:05:01 +0200",
       "dateFr": "17/09/2026",
@@ -5423,6 +5448,17 @@
     }
   ],
   "SyAutocomplete": [
+    {
+      "hash": "886b13bece06b7abdd6b7dadd10264080f022557",
+      "date": "2026-10-23 15:21:56 +0200",
+      "dateFr": "23/10/2026",
+      "message": "SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)",
+      "version": "1.2.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "7dab36881ad0d0ba95dcbbff4810c1f7d34d72f5",
       "date": "2026-08-12 16:12:41 +0200",
@@ -5681,6 +5717,17 @@
     }
   ],
   "SySelect": [
+    {
+      "hash": "b6203901c9616bf60df6cefd3e13e901b46791cb",
+      "date": "2026-10-22 16:48:50 +0200",
+      "dateFr": "22/10/2026",
+      "message": "chore: remove study files and fix accessibility issues in tables and selects (#2686)",
+      "version": "1.2.1",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "565c69fa40c97d79d13c2747919b0739dd91e079",
       "date": "2026-08-26 13:27:43 +0200",
@@ -6278,6 +6325,20 @@
   ],
   "SyIcon": [
     {
+      "hash": "bf1833790d6d6b93837cb186f7eee3c3dfb9f333",
+      "date": "2026-10-21 17:24:02 +0200",
+      "dateFr": "21/10/2026",
+      "message": "FileList: correction bug de couleur picto du SyIcon (#2672)",
+      "version": "1.2.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Issue"
+      ]
+    },
+    {
       "hash": "6b48d0b4c60df11d089c554c474f5f21f6e3a2fd",
       "date": "2026-09-24 14:22:02 +0200",
       "dateFr": "24/09/2026",
@@ -6470,6 +6531,20 @@
     }
   ],
   "SyIconAccessibility": [
+    {
+      "hash": "bf1833790d6d6b93837cb186f7eee3c3dfb9f333",
+      "date": "2026-10-21 17:24:02 +0200",
+      "dateFr": "21/10/2026",
+      "message": "FileList: correction bug de couleur picto du SyIcon (#2672)",
+      "version": "1.2.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Issue"
+      ]
+    },
     {
       "hash": "6b48d0b4c60df11d089c554c474f5f21f6e3a2fd",
       "date": "2026-09-24 14:22:02 +0200",
@@ -6829,6 +6904,17 @@
     }
   ],
   "SyRadioGroup": [
+    {
+      "hash": "886b13bece06b7abdd6b7dadd10264080f022557",
+      "date": "2026-10-23 15:21:56 +0200",
+      "dateFr": "23/10/2026",
+      "message": "SyAutocomplete / SyRadioGroup: Les valeurs 0 et false sont traitées comme une absence de valeur (#2689)",
+      "version": "1.2.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "a216fc35e26df993b7be4d403abcc5d65b5a8e36",
       "date": "2026-08-25 10:33:40 +0200",
@@ -13480,6 +13566,20 @@
   ],
   "PhoneField": [
     {
+      "hash": "a339f992d96ae62cd9c5a785bf5d9b895e447c00",
+      "date": "2026-10-27 09:03:09 +0100",
+      "dateFr": "27/10/2026",
+      "message": "fix(PhoneField): make validation story controls effective and fix descriptions (#2707)",
+      "version": "1.2.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Synapse"
+      ]
+    },
+    {
       "hash": "d7ac6be5343bfad4f05913e4fb9b9b4e2d8e6cae",
       "date": "2026-10-05 09:23:58 +0200",
       "dateFr": "05/10/2026",
@@ -13608,6 +13708,20 @@
     }
   ],
   "PhoneField.reset.fixture": [
+    {
+      "hash": "a339f992d96ae62cd9c5a785bf5d9b895e447c00",
+      "date": "2026-10-27 09:03:09 +0100",
+      "dateFr": "27/10/2026",
+      "message": "fix(PhoneField): make validation story controls effective and fix descriptions (#2707)",
+      "version": "1.2.1",
+      "confidence": "faible",
+      "keywords": false,
+      "patterns": true,
+      "a11yLabel": false,
+      "labels": [
+        "Synapse"
+      ]
+    },
     {
       "hash": "d7ac6be5343bfad4f05913e4fb9b9b4e2d8e6cae",
       "date": "2026-10-05 09:23:58 +0200",
@@ -15261,6 +15375,17 @@
   ],
   "SyServerTable": [
     {
+      "hash": "b6203901c9616bf60df6cefd3e13e901b46791cb",
+      "date": "2026-10-22 16:48:50 +0200",
+      "dateFr": "22/10/2026",
+      "message": "chore: remove study files and fix accessibility issues in tables and selects (#2686)",
+      "version": "1.2.1",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "2c90a270023a8f81debfab170380e16cdb6e0640",
       "date": "2026-09-04 15:53:57 +0200",
       "dateFr": "04/09/2026",
@@ -15421,6 +15546,17 @@
   ],
   "SyTable": [
     {
+      "hash": "b6203901c9616bf60df6cefd3e13e901b46791cb",
+      "date": "2026-10-22 16:48:50 +0200",
+      "dateFr": "22/10/2026",
+      "message": "chore: remove study files and fix accessibility issues in tables and selects (#2686)",
+      "version": "1.2.1",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "4d3907527c38c9958b531f95ff00a1bf4361c0a8",
       "date": "2026-09-18 14:10:26 +0200",
       "dateFr": "18/09/2026",
@@ -15580,6 +15716,17 @@
     }
   ],
   "SyTableFilter": [
+    {
+      "hash": "b6203901c9616bf60df6cefd3e13e901b46791cb",
+      "date": "2026-10-22 16:48:50 +0200",
+      "dateFr": "22/10/2026",
+      "message": "chore: remove study files and fix accessibility issues in tables and selects (#2686)",
+      "version": "1.2.1",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",
@@ -15922,6 +16069,17 @@
   ],
   "SyTablePagination": [
     {
+      "hash": "b6203901c9616bf60df6cefd3e13e901b46791cb",
+      "date": "2026-10-22 16:48:50 +0200",
+      "dateFr": "22/10/2026",
+      "message": "chore: remove study files and fix accessibility issues in tables and selects (#2686)",
+      "version": "1.2.1",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",
       "dateFr": "22/09/2026",
@@ -16263,6 +16421,17 @@
   ],
   "TableBulkActions": [
     {
+      "hash": "b6203901c9616bf60df6cefd3e13e901b46791cb",
+      "date": "2026-10-22 16:48:50 +0200",
+      "dateFr": "22/10/2026",
+      "message": "chore: remove study files and fix accessibility issues in tables and selects (#2686)",
+      "version": "1.2.1",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
+    {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",
       "dateFr": "22/09/2026",
@@ -16603,6 +16772,17 @@
     }
   ],
   "TableHeader": [
+    {
+      "hash": "b6203901c9616bf60df6cefd3e13e901b46791cb",
+      "date": "2026-10-22 16:48:50 +0200",
+      "dateFr": "22/10/2026",
+      "message": "chore: remove study files and fix accessibility issues in tables and selects (#2686)",
+      "version": "1.2.1",
+      "confidence": "forte",
+      "keywords": true,
+      "patterns": true,
+      "a11yLabel": false
+    },
     {
       "hash": "2f3c708a2ac006a9c5aef8fcf2e39991ead1b1ec",
       "date": "2026-09-22 08:55:24 +0200",

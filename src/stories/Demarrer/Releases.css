@@ -64,3 +64,32 @@
 	font-size: 0.8125rem;
 	overflow-wrap: anywhere;
 }
+
+/* Sélecteur de version et position dans la liste */
+.releases__toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 1.5rem;
+}
+
+.releases__select {
+	inline-size: 100%;
+	max-inline-size: 20rem;
+}
+
+.releases__range {
+	margin: 0;
+}
+
+/* Cible du focus après un changement de page : pas un élément interactif, pas de contour */
+.releases__list:focus {
+	outline: none;
+}
+
+/* Page en cours : bouton plein, en plus de `aria-current` posé par Vuetify */
+.releases__pagination .v-pagination__item--is-active .v-btn {
+	background-color: rgb(var(--v-theme-primary));
+	color: rgb(var(--v-theme-on-primary));
+	font-weight: 700;
+}

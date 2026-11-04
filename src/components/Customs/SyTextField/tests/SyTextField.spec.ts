@@ -39,6 +39,17 @@ describe('SyTextField', () => {
 		expect(textField.props('variant')).toBe('filled')
 	})
 
+	// Régression RGAA 8.2 : `direction` (prop supprimée, sans effet) finissait en attribut
+	// HTML invalide sur l'<input>, y compris passée en attribut par un consommateur.
+	it.each([undefined, 'horizontal', 'vertical'] as const)('does not render an invalid direction attribute on the input (direction: %s)', (direction) => {
+		wrapper = mount(SyTextField, {
+			props: { label: 'Test Field' },
+			attrs: direction ? { direction } : {},
+		})
+
+		expect(wrapper.find('input').attributes()).not.toHaveProperty('direction')
+	})
+
 	it('renders default slots correctly', () => {
 		wrapper = mount(SyTextField, {
 			props: { label: 'Test Field' },

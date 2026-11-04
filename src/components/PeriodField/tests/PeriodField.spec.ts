@@ -476,6 +476,108 @@ describe('PeriodField.vue', () => {
 	})
 
 	describe('Custom Rules', () => {
+		it.each([
+			'customFromRules',
+			'customToRules',
+			'customFromWarningRules',
+			'customToWarningRules',
+		] as const)('applies %s only to its bound', async (ruleProp) => {
+			const message = 'La borne dépasse la limite'
+			const wrapper = mount(PeriodField, {
+				props: {
+					modelValue: { from: '03/11/2026', to: '04/11/2026' },
+					[ruleProp]: [
+						{ type: 'notAfterDate', options: { date: '02/11/2026', message, warningMessage: message } },
+					],
+				},
+			})
+			await flushPromises()
+
+			const [fromField, toField] = wrapper.findAll('.period-field__col')
+			const [targetField, otherField] = ruleProp.includes('From') ? [fromField!, toField!] : [toField!, fromField!]
+			expect(targetField.text()).toContain(message)
+			expect(otherField.text()).not.toContain(message)
+
+			await wrapper.setProps({ modelValue: { from: '01/11/2026', to: '01/11/2026' } })
+			await flushPromises()
+			expect(wrapper.text()).not.toContain(message)
+
+			// La suppression de la règle est prise en compte à la validation suivante.
+			await wrapper.setProps({ modelValue: { from: '03/11/2026', to: '04/11/2026' }, [ruleProp]: [] })
+			await flushPromises()
+			expect(wrapper.text()).not.toContain(message)
+
+			await wrapper.setProps({ [ruleProp]: [
+				{ type: 'notAfterDate', options: { date: '02/11/2026', message, warningMessage: message } },
+			] })
+			await wrapper.get('input').trigger('blur')
+			await flushPromises()
+			expect(targetField.text()).toContain(message)
+			expect(otherField.text()).not.toContain(message)
+			wrapper.unmount()
+		})
+
+		it.each([undefined, 'fromDate'])('keeps customRules with identifier %s common to both dates', async (fieldIdentifier) => {
+			const message = 'La période dépasse la limite'
+			const wrapper = mount(PeriodField, {
+				props: {
+					modelValue: { from: '03/11/2026', to: '04/11/2026' },
+					customRules: [{ type: 'notAfterDate', options: { date: '02/11/2026', message, fieldIdentifier } }],
+				},
+			})
+			await flushPromises()
+			for (const field of wrapper.findAll('.period-field__col')) {
+				expect(field.text()).toContain(message)
+			}
+			wrapper.unmount()
+		})
+
+		it('combines shared and bound-specific rules on each field', async () => {
+			// maxErrors vaut 1 par défaut : un seul message est affiché par champ.
+			// On vérifie donc la fusion des règles au niveau des props transmises.
+			const sharedRule = { type: 'notAfterDate', options: { date: '02/11/2026', message: 'Règle commune' } }
+			const fromRule = { type: 'notBeforeDate', options: { date: '05/11/2026', message: 'Règle début' } }
+			const toRule = { type: 'notBeforeDate', options: { date: '05/11/2026', message: 'Règle fin' } }
+			const wrapper = mount(PeriodField, {
+				props: {
+					modelValue: { from: '03/11/2026', to: '04/11/2026' },
+					customRules: [sharedRule],
+					customFromRules: [fromRule],
+					customToRules: [toRule],
+				},
+			})
+			await flushPromises()
+
+			const [fromPicker, toPicker] = wrapper.findAllComponents({ name: 'DatePicker' }) as [DatePickerWrapper, DatePickerWrapper]
+			expect(fromPicker.props('customRules')).toEqual(expect.arrayContaining([sharedRule, fromRule]))
+			expect(fromPicker.props('customRules')).not.toContainEqual(toRule)
+			expect(toPicker.props('customRules')).toEqual(expect.arrayContaining([sharedRule, toRule]))
+			expect(toPicker.props('customRules')).not.toContainEqual(fromRule)
+			wrapper.unmount()
+		})
+
+		it('combines shared and bound-specific warning rules on each field', async () => {
+			const sharedRule = { type: 'notAfterDate', options: { date: '02/11/2026', warningMessage: 'Avertissement commun' } }
+			const fromRule = { type: 'notBeforeDate', options: { date: '05/11/2026', warningMessage: 'Avertissement début' } }
+			const toRule = { type: 'notBeforeDate', options: { date: '05/11/2026', warningMessage: 'Avertissement fin' } }
+			const wrapper = mount(PeriodField, {
+				props: {
+					modelValue: { from: '03/11/2026', to: '04/11/2026' },
+					customWarningRules: [sharedRule],
+					customFromWarningRules: [fromRule],
+					customToWarningRules: [toRule],
+				},
+			})
+			await flushPromises()
+
+			const [fromPicker, toPicker] = wrapper.findAllComponents({ name: 'DatePicker' }) as [DatePickerWrapper, DatePickerWrapper]
+			expect(fromPicker.props('customWarningRules')).toEqual(expect.arrayContaining([sharedRule, fromRule]))
+			expect(fromPicker.props('customWarningRules')).not.toContainEqual(toRule)
+			expect(toPicker.props('customWarningRules')).toEqual(expect.arrayContaining([sharedRule, toRule]))
+			expect(toPicker.props('customWarningRules')).not.toContainEqual(fromRule)
+			wrapper.unmount()
+		})
+
 		it('revalidates the public state when custom rules change without changing dates', async () => {
 			const wrapper = mount(PeriodField, {
 				props: { modelValue: { from: '10/01/2024', to: '20/01/2024' } },
