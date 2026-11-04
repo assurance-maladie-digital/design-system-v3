@@ -14,3 +14,25 @@ describe('EmotionPicker - selection appearance', () => {
 		})
 	}
 })
+
+describe('EmotionPicker - keyboard focus appearance', () => {
+	for (const index of [0, 1, 2]) {
+		it(`shows the emotion background and a currentcolor outline on focused emotion ${index + 1}`, () => {
+			cy.mountWithVuetify(EmotionPicker)
+
+			// Déclenche `:focus-visible` (focus clavier) sans cocher l'émotion.
+			cy.get('[role="radio"]').eq(index).then(($el) => {
+				($el[0] as HTMLElement).focus({ focusVisible: true } as FocusOptions)
+			})
+
+			cy.get('[role="radio"]').eq(index)
+				.should('have.attr', 'aria-checked', 'false')
+				.and('not.have.css', 'background-color', 'rgba(0, 0, 0, 0)')
+				.and('have.css', 'outline-style', 'solid')
+				.then(($el) => {
+					const style = getComputedStyle($el[0]!)
+					expect(style.outlineColor).to.equal(style.color)
+				})
+		})
+	}
+})
