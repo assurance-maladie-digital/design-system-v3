@@ -942,7 +942,7 @@
 				:offset="[-20, 5]"
 				content-class="date-picker-overlay-content"
 				role="presentation"
-				:title="props.placeholder || locales.label"
+				:title="props.title === false ? undefined : props.title || props.placeholder || locales.label"
 			>
 				<template #activator="{ props: menuProps }">
 					<div

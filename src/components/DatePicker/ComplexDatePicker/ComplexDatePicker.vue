@@ -1578,7 +1578,7 @@
 					<div
 						ref="menuActivatorRef"
 						class="date-text-input-activator"
-						:title="props.placeholder || locales.label"
+						:title="props.title === false ? undefined : props.title || props.placeholder || locales.label"
 						v-bind="{ ...menuProps, onKeydown: undefined, 'aria-expanded': undefined, 'aria-haspopup': undefined, 'aria-owns': undefined, 'aria-controls': isDatePickerVisible ? datePickerDialogId : undefined }"
 						@focus="redirectActivatorFocus"
 					>
