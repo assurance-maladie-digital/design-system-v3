@@ -188,6 +188,7 @@
 		hasWarningProp: toRef(props, 'hasWarning'),
 		hasSuccessProp: toRef(props, 'hasSuccess'),
 		maxErrors: toRef(props, 'maxErrors'),
+		validateOn: toRef(props, 'validateOn'),
 		focused,
 		locales,
 	})
@@ -200,10 +201,6 @@
 		// aria-controls coming from menu activators is invalid on the input itself; drop it
 		if ('aria-controls' in filteredAttrs) {
 			delete filteredAttrs['aria-controls']
-		}
-
-		if (!('validate-on' in filteredAttrs) && 'rules' in filteredAttrs && props.isValidateOnBlur) {
-			filteredAttrs['validate-on'] = 'blur lazy'
 		}
 
 		return filteredAttrs

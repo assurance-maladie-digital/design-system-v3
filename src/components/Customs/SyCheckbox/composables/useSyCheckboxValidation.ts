@@ -86,6 +86,7 @@ export function useSyCheckboxValidation(
 		hasWarningProp: toRef(() => props.hasWarning ?? false),
 		hasSuccessProp: toRef(() => props.hasSuccess ?? false),
 		maxErrors: toRef(() => props.maxErrors ?? 1),
+		validateOn: toRef(() => props.validateOn),
 		focused: focused,
 	})
 

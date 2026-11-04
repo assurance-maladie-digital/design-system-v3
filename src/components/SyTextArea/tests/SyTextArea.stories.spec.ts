@@ -7,8 +7,9 @@ import SyTextArea from '../SyTextArea.vue'
 import * as mainStories from '../SyTextArea.stories'
 import * as validationStories from '../validation/Validation.stories'
 import { locales } from '../locales'
-
-const { MaxLines } = composeStories(mainStories)
+const {
+	MaxLines,
+} = composeStories(mainStories)
 const {
 	WithWarning,
 	WithSuccess,
@@ -17,7 +18,6 @@ const {
 	SyFormVuetifyValidation,
 	VFormVuetifyValidation,
 } = composeStories(validationStories)
-
 const allStories = [
 	...Object.entries(composeStories(mainStories)),
 	...Object.entries(composeStories(validationStories)),
@@ -120,17 +120,12 @@ describe('SyTextArea stories', () => {
 		expect(alert).toHaveBeenCalledWith('Formulaire invalide.')
 	})
 
-	// `validateOn` est sans effet sur SyTextArea
 	it.each([
 		{ name: 'SyFormVuetifyValidation', story: SyFormVuetifyValidation },
 		{ name: 'VFormVuetifyValidation', story: VFormVuetifyValidation },
 	])('$name ne présente pas de validateOn sans effet', ({ story }) => {
 		expect(story.args).not.toHaveProperty('validateOn')
 		expect(JSON.stringify(story.parameters.sourceCode)).not.toContain('validate-on')
-	})
-
-	it.each(metas)('le meta $name masque validateOn des Controls', ({ meta }) => {
-		expect(meta.parameters?.controls?.exclude).toContain('validateOn')
 	})
 
 	it('NoValidateOnBlur conserve le résultat de validation après une saisie et une perte de focus', async () => {

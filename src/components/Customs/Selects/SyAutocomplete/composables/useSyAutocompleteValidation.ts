@@ -50,6 +50,7 @@ export function useSyAutocompleteValidation(
 		hasWarningProp: toRef(props, 'hasWarning') as Ref<boolean>,
 		hasSuccessProp: toRef(props, 'hasSuccess') as Ref<boolean>,
 		maxErrors: toRef(props, 'maxErrors') as Ref<number>,
+		validateOn: toRef(props, 'validateOn'),
 		focused,
 	})
 

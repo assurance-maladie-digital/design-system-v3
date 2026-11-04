@@ -1,5 +1,5 @@
 import { computed, type Ref } from 'vue'
-import { useValidation, type VuetifyValidationRule } from '@/composables/unifyValidation/useValidation'
+import { useValidation, type VuetifyValidationRule, type ValidateOn } from '@/composables/unifyValidation/useValidation'
 import type { ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
 import type { locales as defaultLocales } from './locales'
 
@@ -24,6 +24,7 @@ export function useCaptchaValidation(params: {
 	hasWarningProp: Ref<boolean>
 	hasSuccessProp: Ref<boolean>
 	maxErrors: Ref<number | undefined>
+	validateOn?: Ref<ValidateOn | undefined>
 	focused: Ref<boolean>
 	locales: Ref<typeof defaultLocales>
 },
@@ -71,6 +72,7 @@ export function useCaptchaValidation(params: {
 		hasWarningProp: params.hasWarningProp,
 		hasSuccessProp: params.hasSuccessProp,
 		maxErrors: computed(() => params.maxErrors.value ?? 1),
+		validateOn: params.validateOn,
 		focused: params.focused,
 	})
 

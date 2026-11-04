@@ -48,6 +48,7 @@ export function useSySelectValidation(
 		hasWarningProp: computed(() => props.hasWarning ?? false),
 		hasSuccessProp: computed(() => props.hasSuccess ?? false),
 		maxErrors: computed(() => props.maxErrors ?? 1),
+		validateOn: computed(() => props.validateOn),
 		focused,
 	})
 
