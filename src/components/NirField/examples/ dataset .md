@@ -10,3 +10,9 @@
 | 8  | 1840275123456 73   | invalid         | Clé de contrôle incorrecte (73 au lieu de 74).                                               |
 | 9  | 1840A75123456 74   | invalid         | Contient une lettre 'A' dans la chaîne, format strictement numérique attendu.                |
 | 10 | 1840275123456     | invalid         | Chaîne trop courte (13 chiffres sans clé). Le NIR doit comporter 15 chiffres.                |
+| 11 | 278022B033078 85  | valid           | NIR complet avec clé correcte (ex. femme née en 1978, département 2B Haute-Corse).            |
+| 12 | 178122B046011 69  | valid           | NIR complet avec clé correcte (ex. homme né en 1978, département 2B Haute-Corse).             |
+| 13 | 279012B033077 21  | valid           | NIR complet avec clé correcte (ex. femme née en 1979, département 2B Haute-Corse).            |
+| 14 | 287102A004042 69  | valid           | NIR complet avec clé correcte (ex. femme née en 1987, département 2A Corse-du-Sud).           |
+| 15 | 283122A004075 70  | valid           | NIR complet avec clé correcte (ex. femme née en 1983, département 2A Corse-du-Sud).           |
+| 16 | 286062A004078 18  | valid           | NIR complet avec clé correcte (ex. femme née en 1986, département 2A Corse-du-Sud).           |
