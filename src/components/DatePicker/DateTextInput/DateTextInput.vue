@@ -246,7 +246,7 @@
 	const fieldKey = ref(0)
 	const isValidating = ref(false)
 	const formatDescriptionId = `date-format-desc-${useId()}`
-	const formatDescription = computed(() => `${locales.formatHint} ${displayFormat.value}`)
+	const formatDescription = computed(() => `${locales.formatHint} ${locales.dateFormatDescription(displayFormat.value)}`)
 
 	const updateDisplayValue = (dateDisplayText: string) => (inputValue.value = dateDisplayText)
 	const updateAriaLabel = (ariaLabelText: string) => {
@@ -1390,6 +1390,7 @@
 		<DatePickerLiveRegion
 			:id="formatDescriptionId"
 			:text="formatDescription"
+			live="off"
 		/>
 	</div>
 </template>
