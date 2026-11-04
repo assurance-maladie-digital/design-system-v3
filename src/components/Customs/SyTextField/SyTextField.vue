@@ -913,6 +913,8 @@
 	:deep(.v-field) {
 		color: rgb(var(--v-theme-error)) !important;
 
+		--v-medium-emphasis-opacity: 1;
+
 		.v-field__outline {
 			--v-field-border-opacity: 1;
 

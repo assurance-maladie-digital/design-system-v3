@@ -168,6 +168,18 @@ describe('SyTextField - Text contrast', () => {
 			props: { label: 'Montant', modelValue: '42' },
 			selector: '.v-field-label--floating',
 		},
+		...(['error', 'warning', 'success'] as const).flatMap(state => [
+			{
+				name: `prefix of a field in ${state} state`,
+				props: { label: 'Montant', prefix: '€', suffix: 'TTC', modelValue: '42', [`${state}Messages`]: ['Message'] },
+				selector: '.v-text-field__prefix__text',
+			},
+			{
+				name: `suffix of a field in ${state} state`,
+				props: { label: 'Montant', prefix: '€', suffix: 'TTC', modelValue: '42', [`${state}Messages`]: ['Message'] },
+				selector: '.v-text-field__suffix__text',
+			},
+		]),
 	]
 
 	backgrounds.forEach((background) => {
