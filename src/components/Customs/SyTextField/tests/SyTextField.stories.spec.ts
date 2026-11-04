@@ -7,7 +7,7 @@ import SyTextField from '../SyTextField.vue'
 import * as mainStories from '../SyTextField.stories'
 import * as validationStories from '../Validation/Validation.stories'
 
-const { PatternValidation } = composeStories(mainStories)
+const { PatternValidation, Disabled, Readonly } = composeStories(mainStories)
 const {
 	WithError,
 	WithWarning,
@@ -174,5 +174,72 @@ describe('SyTextField stories', () => {
 	it('VFormValidation présente le conseil SyForm dans sa description, sans la coquille « bénéficier de intégration »', () => {
 		expect(VFormValidation.parameters.docs?.description?.story).toContain('bénéficier de l\'intégration')
 		expect(JSON.stringify(VFormValidation.parameters.sourceCode)).not.toContain('privilégier')
+	})
+
+	it('Disabled affiche sa valeur dans un champ désactivé, sans bouton de vidage', () => {
+		const wrapper = mount(Disabled())
+		const input = wrapper.find('input')
+
+		expect(input.element.value).toBe('DOS-2024-0042')
+		expect(input.attributes('disabled')).toBeDefined()
+		expect(wrapper.find('.v-input').classes()).toContain('v-input--disabled')
+		expect(wrapper.find('.sy-text-field__clear').exists()).toBe(false)
+	})
+
+	it('Disabled réactive la saisie lorsque le control disabled est désactivé', async () => {
+		const onUpdate = vi.fn()
+		const wrapper = mount(Disabled({ 'disabled': false, 'onUpdate:modelValue': onUpdate }))
+		const input = wrapper.find('input')
+
+		expect(input.attributes('disabled')).toBeUndefined()
+		expect(wrapper.find('.sy-text-field__clear').exists()).toBe(true)
+
+		await input.setValue('DOS-2024-0043')
+		expect(onUpdate).toHaveBeenCalledWith('DOS-2024-0043')
+	})
+
+	it('Readonly affiche sa valeur dans un champ en lecture seule, focusable', () => {
+		const wrapper = mount(Readonly())
+		const input = wrapper.find('input')
+
+		expect(input.element.value).toBe('jean.dupont@example.com')
+		expect(input.attributes('readonly')).toBeDefined()
+		expect(input.attributes('disabled')).toBeUndefined()
+		expect(wrapper.find('.v-input').classes()).toContain('v-input--readonly')
+	})
+
+	it('Readonly garde le bouton d\'icône actif grâce à allowIconButtonWhenReadonly', async () => {
+		const onAppendIconClick = vi.fn()
+		const wrapper = mount(Readonly({ onAppendIconClick }))
+		const iconButton = wrapper.find('button.sy-text-field__icon-button')
+
+		expect(iconButton.attributes('disabled')).toBeUndefined()
+		expect(iconButton.attributes('aria-label')).toContain('Adresse e-mail')
+
+		await iconButton.trigger('click')
+		expect(onAppendIconClick).toHaveBeenCalledOnce()
+	})
+
+	it('Readonly désactive le bouton d\'icône sans allowIconButtonWhenReadonly', async () => {
+		const onAppendIconClick = vi.fn()
+		const wrapper = mount(Readonly({ allowIconButtonWhenReadonly: false, onAppendIconClick }))
+		const iconButton = wrapper.find('button.sy-text-field__icon-button')
+
+		expect(iconButton.attributes('disabled')).toBeDefined()
+		expect(iconButton.attributes('aria-disabled')).toBe('true')
+
+		await iconButton.trigger('click')
+		expect(onAppendIconClick).not.toHaveBeenCalled()
+	})
+
+	it.each([
+		{ name: 'Disabled', story: Disabled, attribute: 'disabled' },
+		{ name: 'Readonly', story: Readonly, attribute: 'readonly' },
+	])('l\'extrait de $name reprend la valeur et l\'état de la story', ({ story, attribute }) => {
+		const template = snippetCode(story, 'Template')
+
+		expect(template).toMatch(new RegExp(`\\s${attribute}\\n`))
+		expect(template).toContain(`label="${story.args.label}"`)
+		expect(snippetCode(story, 'Script')).toContain(`ref('${story.args.modelValue}')`)
 	})
 })

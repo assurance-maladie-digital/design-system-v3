@@ -66,7 +66,7 @@ Ces composants sont faits maison. La plupart des exemples Vuetify ne s'y appliqu
 
 | Composant | Story à ajouter | Exemple Vuetify | Props / slots Synapse |
 |---|---|---|---|
-| SyTextField | Désactivé et lecture seule | `prop-disabled-and-readonly` | `disabled`, `readonly`, `allowIconButtonWhenReadonly` |
+| SyTextField | ✅ Désactivé et lecture seule (ajoutées : `Disabled`, `Readonly`) |
 | SyTextField | Compteur de caractères | `prop-counter` | `counter`, `maxlength`, `counterValue`, `displayPersistentCounter` |
 | SyTextField | Icônes cliquables et événements | `event-icons` | `disableClickButton=false`, `@prepend-icon-click`, `@append-icon-click`, `@clear` |
 | SyTextArea | Compteur | `prop-counter` | `counter`, `customRules` |
@@ -112,13 +112,12 @@ Ces composants sont faits maison. La plupart des exemples Vuetify ne s'y appliqu
 - **Passthrough** : oui. `inheritAttrs: false`, puis les attributs sont transmis à `VTextField`, sauf `display-asterisk`, `direction` et `aria-controls`. Pas de prop `vuetifyOptions`.
 - **Slots exposés** : `prepend`, `append`, `default`, `prepend-inner`, `append-inner`, `details`. Les slots `loader` et `label` ne sont pas exposés.
 - **Stories existantes** :
-  - `SyTextField.stories.ts` : Default, HelpText, Required, RequiredWithAsterisk, SlotPrepend, SlotAppend, SlotPrependInner, SlotPrependInnerDivider, SlotAppendInner, SlotCustomIcon, PatternValidation, WithTooltips, WithPrefixAndSuffix.
+  - `SyTextField.stories.ts` : Default, HelpText, Required, RequiredWithAsterisk, Disabled, Readonly, SlotPrepend, SlotAppend, SlotPrependInner, SlotPrependInnerDivider, SlotAppendInner, SlotCustomIcon, PatternValidation, WithTooltips, WithPrefixAndSuffix.
   - `Validation.stories.ts` : WithError, WithWarning, WithSuccess, WithCustomRules, DisableErrorHandling, ValidateOnInput, ExternalMessages, EmailValidation, et les quatre combinaisons SyForm / VForm.
   - `Usages.stories.ts` : UsagePage.
 
 | Exemple Vuetify | Ce que ça montre | Props / slots Synapse | Priorité |
 |---|---|---|---|
-| `prop-disabled-and-readonly` | Champ désactivé ou en lecture seule, avec une valeur | `disabled`, `readonly`, `modelValue`, `allowIconButtonWhenReadonly` | haute |
 | `prop-counter` | Compteur, limite, compteur personnalisé (en mots) | `counter`, `maxlength`, `counterValue`, `displayPersistentCounter`, `customRules` | haute |
 | `event-icons` | Icônes cliquables avec nom accessible | `prependIcon`, `appendIcon`, `disableClickButton=false`, `@prepend-icon-click`, `@append-icon-click`, `@clear`, `isClearable` | haute |
 | `prop-placeholder` / `prop-label` | Libellé et placeholder ensemble | `label`, `placeholder`, `displayPersistentPlaceholder`, `type="email"`, `autocomplete` | moyenne |
@@ -132,6 +131,7 @@ Ces composants sont faits maison. La plupart des exemples Vuetify ne s'y appliqu
 
 **Non retenus** :
 - `usage`, `prop-clearable`, `prop-icon`, `prop-prefixes-and-suffixes`, `slot-icons` : déjà couverts.
+- `prop-disabled-and-readonly` : couvert par les stories `Disabled` et `Readonly` (la seconde illustre aussi `allowIconButtonWhenReadonly`), testées dans `tests/SyTextField.stories.spec.ts`.
 - `prop-rules`, `prop-validation`, `misc-custom-validation`, `misc-guide` : couverts par `Validation.stories.ts`.
 - `prop-custom-colors` : contraire au DS.
 - `slot-label` : slot non exposé.
@@ -743,6 +743,7 @@ Ces props, slots ou modes sont déclarés mais n'apparaissent dans aucune story.
 | SyCheckbox | `ariaDescribedby` est déclarée mais ignorée : l'`aria-describedby` réel est calculé à partir de `ariaLabelledby` et `helpText`. |
 | SyBtnMenu | L'événement `logout` est déclaré mais jamais émis. |
 | SyAlert | Aucune story pour le type `error`. |
+| SyTextField | En `readonly` avec `isClearable`, le bouton de vidage reste affiché et efface la valeur : `showClear` ne teste que `disabled`. |
 
 ### Signalées pendant l'analyse, à confirmer
 
