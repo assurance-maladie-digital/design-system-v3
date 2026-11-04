@@ -94,7 +94,7 @@ export const Default: Story = {
 					<HeaderBar>
 						<template #menu>
 							<HeaderBurgerMenu
-								tag="div"
+								inner-tag="div"
 							>
 								<p>lorem ipsum</p>
 							</HeaderBurgerMenu>
