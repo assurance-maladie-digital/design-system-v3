@@ -163,7 +163,7 @@
 	}
 
 	&.text-lighten {
-		color: rgb(var(--v-theme-primary), 0.4) !important;
+		color: rgb(var(--v-theme-primary)) !important;
 	}
 
 	&--disabled.text-lighten {
