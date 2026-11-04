@@ -15,9 +15,9 @@ export default function useStoredOptions({
 	key: Ref<string>
 	saveState: Ref<boolean>
 }): {
-		storedOptions: TableOptions
-		storeOptions: (options: TableOptions) => void
-	} {
+	storedOptions: TableOptions
+	storeOptions: (options: TableOptions) => void
+} {
 	const localStorageUtility = new LocalStorageUtility()
 
 	const storedOptions: TableOptions
