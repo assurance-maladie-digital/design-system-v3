@@ -25,7 +25,7 @@ describe('CopyBtn', () => {
 	it('renders correctly', () => {
 		const wrapper = shallowMount(CopyBtn, {
 			propsData: {
-				label: 'test',
+				ariaLabel: 'test',
 				textToCopy: 'test',
 			},
 		})
@@ -36,7 +36,7 @@ describe('CopyBtn', () => {
 	it('copies the text to the clipboard', async () => {
 		const wrapper = mount(CopyBtn, {
 			propsData: {
-				label: 'test',
+				ariaLabel: 'test',
 				textToCopy: 'test',
 			},
 		})
@@ -57,7 +57,7 @@ describe('CopyBtn', () => {
 	it('shows a tooltip when the text is copied', async () => {
 		const wrapper = mount(CopyBtn, {
 			propsData: {
-				label: 'test',
+				ariaLabel: 'test',
 				textToCopy: 'test',
 				tooltipDuration: 100,
 			},
@@ -75,7 +75,7 @@ describe('CopyBtn', () => {
 	it('does not show a tooltip when the text is copied but hide-tooltip is true', async () => {
 		const wrapper = mount(CopyBtn, {
 			propsData: {
-				label: 'test',
+				ariaLabel: 'test',
 				textToCopy: 'test',
 				hideTooltip: true,
 			},
@@ -89,7 +89,7 @@ describe('CopyBtn', () => {
 	it('removes spaces in the text', async () => {
 		const wrapper = mount(CopyBtn, {
 			propsData: {
-				label: 'test',
+				ariaLabel: 'test',
 				textToCopy: 'text with spaces',
 				separatorsToRemove: ' ',
 			},
@@ -103,7 +103,7 @@ describe('CopyBtn', () => {
 	it('removes all types of whitespace', async () => {
 		const wrapper = mount(CopyBtn, {
 			propsData: {
-				label: 'test',
+				ariaLabel: 'test',
 				textToCopy: 'text with\tspaces\nand\rtabs',
 				separatorsToRemove: ' ',
 			},
@@ -117,7 +117,7 @@ describe('CopyBtn', () => {
 	it('removes specified separator when separatorsToRemove is a string', async () => {
 		const wrapper = mount(CopyBtn, {
 			propsData: {
-				label: 'test',
+				ariaLabel: 'test',
 				textToCopy: 'FR76-3000-4000-0300',
 				separatorsToRemove: '-',
 			},
@@ -131,7 +131,7 @@ describe('CopyBtn', () => {
 	it('removes multiple separators when separatorsToRemove is an array', async () => {
 		const wrapper = mount(CopyBtn, {
 			propsData: {
-				label: 'test',
+				ariaLabel: 'test',
 				textToCopy: '+33 (0)6.12.34.56',
 				separatorsToRemove: ['+', '(', ')', '.'],
 			},
@@ -145,7 +145,7 @@ describe('CopyBtn', () => {
 	it('handles special regex characters in separators correctly', async () => {
 		const wrapper = mount(CopyBtn, {
 			propsData: {
-				label: 'test',
+				ariaLabel: 'test',
 				textToCopy: 'text.with*special[chars]',
 				separatorsToRemove: ['.', '*', '[', ']'],
 			},
@@ -159,7 +159,7 @@ describe('CopyBtn', () => {
 	it('removes separators', async () => {
 		const wrapper = mount(CopyBtn, {
 			propsData: {
-				label: 'test',
+				ariaLabel: 'test',
 				textToCopy: 'FR76-3000-4000',
 				separatorsToRemove: '-',
 			},

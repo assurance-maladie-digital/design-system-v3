@@ -4,7 +4,6 @@ exports[`CopyBtn > renders correctly 1`] = `
 <div
   class="sy-copy-btn"
   id="copy-btn-v-0"
-  label="test"
 >
   <v-tooltip-stub
     activatorprops="[object Object]"
