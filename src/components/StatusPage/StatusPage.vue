@@ -5,9 +5,9 @@
 	import type { PageAriaRole } from '../types'
 	import SyHeading from '../SyHeading/SyHeading.vue'
 
-	type MessagePart =
-		| { type: 'text', value: string }
-		| { type: 'phone', value: string }
+	type MessagePart
+		= | { type: 'text', value: string }
+			| { type: 'phone', value: string }
 
 	// Fonction pour formater le message et ajouter des liens tel: aux numéros de téléphone
 	const splitMessage = (message?: string): MessagePart[] => {

@@ -4,14 +4,14 @@ import { type FieldValidationProps } from '@/composables/unifyValidation/useVali
 import { locales as defaultLocales } from './locales'
 import type { DeepPartial } from '@/utils/locales/mergeLocales'
 
-export type MonthPickerProps =
-	TextFieldProps
-	& FieldValidationProps
-	& Partial<MonthPickerVisualProps>
-	& {
-		modelValue?: string
-		locales?: DeepPartial<typeof defaultLocales>
-		disabled?: boolean
-		readonly?: boolean
-		displayAsterisk?: boolean
-	}
+export type MonthPickerProps
+	= TextFieldProps
+		& FieldValidationProps
+		& Partial<MonthPickerVisualProps>
+		& {
+			modelValue?: string
+			locales?: DeepPartial<typeof defaultLocales>
+			disabled?: boolean
+			readonly?: boolean
+			displayAsterisk?: boolean
+		}
