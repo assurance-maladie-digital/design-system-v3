@@ -17,6 +17,7 @@ export interface SyNavListItem {
 	 * Identifiant unique dans son niveau (deux sous-niveaux différents peuvent réutiliser le même).
 	 * Il sert de clé de rendu et à relier le chevron à son sous-niveau (`aria-controls`) ; deux entrées
 	 * d'un même niveau avec le même `id` partageraient leur état ouvert et leur sous-niveau.
+	 * Sans espaces : il entre dans un id HTML.
 	 */
 	id: string
 	label: string
@@ -30,7 +31,7 @@ export interface SyNavListItem {
 	active?: boolean
 	/** Entrée indisponible : ni lien, ni actions, ni ouverture du sous-niveau ; annoncée comme lien indisponible. */
 	disabled?: boolean
-	/** Jusqu'à 4 actions, affichées au survol et au focus de l'entrée. */
+	/** Jusqu'à 4 actions (au-delà, un avertissement en développement), affichées au survol et au focus de l'entrée. */
 	actions?: SyNavListAction[]
 	/** Sous-niveau, ouvert par le chevron de l'entrée. */
 	children?: SyNavListItem[]

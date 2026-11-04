@@ -6,6 +6,7 @@
 	import { VList, VListItem } from 'vuetify/components'
 	import SyIcon from '@/components/Customs/SyIcon/SyIcon.vue'
 	import SyIconButton from '@/components/Customs/SyIconButton/SyIconButton.vue'
+	import { devWarn } from '@/utils/devWarn'
 	import { registerOpenPanel, unregisterOpenPanel } from './escapeStack'
 	import { type SyNavListSide, resolveFlyoutPosition } from './flyoutPosition'
 	import type { SyNavListAction, SyNavListActionsVisibility, SyNavListItem, SyNavListLocales } from './types'
@@ -49,6 +50,7 @@
 	// Au-delà, les sous-niveaux s'ouvrent à droite ; en dessous, sous l'entrée (RGAA 10.11).
 	// Valeur reprise dans le style : à modifier aux deux endroits.
 	const FLYOUT_MEDIA_QUERY = '(min-width: 960px)'
+	const MAX_ACTIONS = 4
 
 	// Sous-niveaux ouverts à droite (grand écran) ou en accordéon. Seuls les premiers, superposés au contenu,
 	// portent l'ombre de carte. Faux par défaut, donc côté serveur : la base est mobile.
@@ -106,8 +108,12 @@
 
 	// Échap pressé n'importe où dans la page (pile partagée, escapeStack.ts). Un accordéon reste ouvert quand le
 	// focus quitte la navigation : Échap appartient alors à ce qui a le focus (champ, dialogue), pas à la liste.
+	// Focus dans une boîte de dialogue ouverte par-dessus la liste : Échap la referme, elle, pas le sous-niveau
+	// (VOverlay écoute sur window, après document, sans arrêter l'événement).
 	function onDocumentEscape(): void {
 		const nav = listRef.value?.$el instanceof HTMLElement ? listRef.value.$el.closest('.sy-nav-list') : null
+		const overlay = document.activeElement?.closest('[aria-modal="true"], .v-overlay__content')
+		if (overlay && !overlay.contains(nav)) return
 		if (!flyoutLayout.value && !nav?.contains(document.activeElement)) return
 		closeCurrent()
 	}
@@ -189,6 +195,14 @@
 		if (!active) closeCurrent()
 	})
 
+	// Limites documentées mais non bloquantes : signalées au développeur seulement.
+	watch(() => props.items, (items) => {
+		for (const item of items) {
+			if ((item.actions?.length ?? 0) > MAX_ACTIONS) devWarn(`[SyNavList] L'entrée « ${item.label} » a ${item.actions!.length} actions : ${MAX_ACTIONS} au maximum.`)
+			if (/\s/.test(item.id)) devWarn(`[SyNavList] L'id « ${item.id} » contient un espace : il produit un id HTML et un aria-controls invalides.`)
+		}
+	}, { immediate: true })
+
 	// items remplacé par le projet (droits rechargés, liste filtrée) : une entrée ouverte qui n'existe plus, n'a plus
 	// de sous-niveau ou est désactivée est fermée. Sinon elle resterait dans la pile d'Échap, avec ses écouteurs,
 	// et sub-level-change resterait à true.
@@ -237,8 +251,10 @@
 		return item.to ? { to: item.to, ...current } : {}
 	}
 
+	// Le <button> réel, même si SyIconButton l'enrobe un jour : c'est lui qui reçoit le focus rendu.
 	function setToggleButton(item: SyNavListItem, el: Element | ComponentPublicInstance | null): void {
-		const button = el && '$el' in el ? el.$el as HTMLElement : null
+		const root: unknown = el && '$el' in el ? el.$el : null
+		const button = root instanceof HTMLButtonElement ? root : root instanceof HTMLElement ? root.querySelector('button') : null
 		if (button) toggleButtons.set(item.id, button)
 		else toggleButtons.delete(item.id)
 	}
@@ -272,7 +288,7 @@
 
 	// Le survol n'est qu'un complément du bouton, et seulement quand les sous-niveaux s'ouvrent à droite.
 	function onPointerEnter(item: SyNavListItem, event: PointerEvent): void {
-		if (event.pointerType !== 'mouse' || !window.matchMedia(FLYOUT_MEDIA_QUERY).matches) return
+		if (event.pointerType !== 'mouse' || !flyoutLayout.value) return
 		cancelHover()
 		// Retour sur l'entrée ouverte, ou dans son sous-niveau (qui fait partie de la ligne) : rien ne change.
 		if (openId.value === item.id) return

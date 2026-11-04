@@ -138,6 +138,8 @@ ${onActionScript}
 </script>`
 
 const meta = {
+	// id fixé : .storybook/storybook.css cible l'iframe de la story RightEdge par son id
+	id: 'labs-synavlist',
 	title: 'Labs/SyNavList',
 	component: SyNavList,
 	parameters: {

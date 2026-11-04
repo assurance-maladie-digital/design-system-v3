@@ -166,7 +166,9 @@ pre.prismjs {
 }
 
 /* Story SyNavList RightEdge, rendue dans sa propre iframe : au moins 960 px de large pour afficher
-   les sous-niveaux ouverts à gauche plutôt qu'en accordéon, même quand le menu de Storybook réduit la page */
+   les sous-niveaux ouverts à gauche plutôt qu'en accordéon, même quand le menu de Storybook réduit la page.
+   L'id vient de l'id du meta (fixé dans SyNavList.stories.ts) et du nom de l'export RightEdge :
+   à garder synchronisés. */
 .sbdocs-preview #iframe--labs-synavlist--right-edge {
 	min-width: 960px;
 }

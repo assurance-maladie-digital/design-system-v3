@@ -279,6 +279,59 @@ describe('SyNavList', () => {
 		expect(parent.attributes('aria-expanded')).toBe('false')
 	})
 
+	it('Échap dans une boîte de dialogue ouverte par-dessus ne referme pas le sous-niveau', async () => {
+		const dialog = document.createElement('div')
+		dialog.setAttribute('role', 'dialog')
+		dialog.setAttribute('aria-modal', 'true')
+		const field = document.createElement('input')
+		dialog.append(field)
+		document.body.append(dialog)
+		const wrapper = mountNavList()
+		const parent = toggleOf(wrapper, 'Droit de base')
+		await parent.trigger('click')
+
+		field.focus()
+		pressEscapeOnDocument()
+		await flushPromises()
+
+		expect(parent.attributes('aria-expanded')).toBe('true')
+
+		dialog.remove()
+		pressEscapeOnDocument()
+		await flushPromises()
+
+		expect(parent.attributes('aria-expanded')).toBe('false')
+	})
+
+	it('avertit en développement au-delà de 4 actions, ou pour un id contenant un espace', () => {
+		const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+		try {
+			mountNavList({ items: [
+				{ id: 'trop', label: 'Trop', actions: [edit, settings, { ...edit, id: 'e2' }, { ...edit, id: 'e3' }, { ...edit, id: 'e4' }] },
+				{ id: 'avec espace', label: 'Espace' },
+			] })
+
+			expect(warn).toHaveBeenCalledWith(expect.stringContaining('« Trop » a 5 actions'))
+			expect(warn).toHaveBeenCalledWith(expect.stringContaining('« avec espace » contient un espace'))
+			expect(warn).toHaveBeenCalledTimes(2)
+		}
+		finally {
+			warn.mockRestore()
+		}
+	})
+
+	it('n\'avertit pas pour 4 actions et des id sans espace', () => {
+		const warn = vi.spyOn(console, 'warn').mockImplementation(() => {})
+		try {
+			mountNavList({ items: [{ id: 'ok', label: 'OK', actions: [edit, settings, { ...edit, id: 'e2' }, { ...edit, id: 'e3' }] }] })
+
+			expect(warn).not.toHaveBeenCalled()
+		}
+		finally {
+			warn.mockRestore()
+		}
+	})
+
 	it('referme les sous-niveaux au clic hors de la liste, même sans focus sur le chevron (Safari)', async () => {
 		const outside = document.createElement('button')
 		document.body.append(outside)
@@ -681,18 +734,20 @@ describe('SyNavList', () => {
 
 			expect(toggleOf(wrapper, 'Droit de base').attributes('aria-expanded')).toBe('false')
 
+			// happy-dom ne déclenche pas le `change` de la media query au redimensionnement : la liste est montée à 800 px.
 			const width = window.innerWidth
 			try {
 				window.innerWidth = 800
-				await row.trigger('pointerenter', { pointerType: 'mouse' })
+				const narrow = mountNavList()
+				await narrow.findAll('.sy-nav-list-panel__row')[0]!.trigger('pointerenter', { pointerType: 'mouse' })
 				vi.advanceTimersByTime(400)
 				await flushPromises()
+
+				expect(toggleOf(narrow, 'Droit de base').attributes('aria-expanded')).toBe('false')
 			}
 			finally {
 				window.innerWidth = width
 			}
-
-			expect(toggleOf(wrapper, 'Droit de base').attributes('aria-expanded')).toBe('false')
 		}
 		finally {
 			vi.useRealTimers()
