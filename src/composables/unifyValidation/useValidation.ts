@@ -128,9 +128,15 @@ export function useValidation(params: {
 			},
 			{ immediate: true },
 		)
-		if (!toValue(params.useVuetifyValidation) && params.validateOn?.value) {
-			devWarn(`[Synapse] La prop validateOn est ignorée en mode Synapse (use-vuetify-validation=false) pour le champ « ${params.label?.value ?? 'sans label'} ». Seule isValidateOnBlur est prise en compte.`)
-		}
+		watch(
+			() => !toValue(params.useVuetifyValidation) && Boolean(params.validateOn?.value),
+			(isValidateOnIgnored) => {
+				if (isValidateOnIgnored) {
+					devWarn(`[Synapse] La prop validateOn est ignorée en mode Synapse (use-vuetify-validation=false) pour le champ « ${params.label?.value ?? 'sans label'} ». Seule isValidateOnBlur est prise en compte.`)
+				}
+			},
+			{ immediate: true },
+		)
 	}
 
 	const vuetifyErrors = ref<string[]>([])
