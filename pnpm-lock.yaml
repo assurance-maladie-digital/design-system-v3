@@ -75,8 +75,8 @@ importers:
         specifier: ^7.4.47
         version: 7.4.47
       '@simonsmith/cypress-image-snapshot':
-        specifier: ^10.0.3
-        version: 10.1.1(cypress@15.21.1)
+        specifier: ^11.0.0
+        version: 11.0.0(cypress@15.21.1)
       '@storybook/addon-a11y':
         specifier: 10.6.3
         version: 10.6.3(storybook@10.6.3(@types/react@19.3.0)(react@19.3.1))
@@ -1557,10 +1557,10 @@ packages:
     resolution: {integrity: sha512-acP68tGx/DJEIQgTqj/xStBRaghN7axV+uAjNasDjVXgHgHaLQ1f16/bbXtw6mNLjURhTORD4fdfbOZM7kyWcw==}
     engines: {node: '>=20.9.0'}
 
-  '@simonsmith/cypress-image-snapshot@10.1.1':
-    resolution: {integrity: sha512-+k1SREWJhp+qe8ui+VO4+ZZhidKoGXEqGEZku8rmhjSag98kI5AZbP6LlXBIu14/N9OfGjU+UD2Q0/sv31H/tQ==}
+  '@simonsmith/cypress-image-snapshot@11.0.0':
+    resolution: {integrity: sha512-fqiH4/0DARt4vR8U4d7mMyrWAdKlirG+0dNksZbMbP6a4zRPo6q7EmOSvRuse8kShbmrg7UogvlApjE9mN+crQ==}
     peerDependencies:
-      cypress: '>13.0.0'
+      cypress: '>=15.10.0'
 
   '@standard-schema/spec@1.1.0':
     resolution: {integrity: sha512-l2aFy5jALhniG5HgqrD6jXLi/rUWrKvqN/qJx6yoJsgKhblVd+iqqU4RCXavm/jPityDo5TCvKMnpjKnOriy0w==}
@@ -5878,7 +5878,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@simonsmith/cypress-image-snapshot@10.1.1(cypress@15.21.1)':
+  '@simonsmith/cypress-image-snapshot@11.0.0(cypress@15.21.1)':
     dependencies:
       '@types/pixelmatch': 5.2.6
       chalk: 4.1.2
