@@ -66,7 +66,7 @@
 	import customParseFormat from 'dayjs/plugin/customParseFormat'
 	import { useDateFormat } from '@/composables/date/useDateFormatDayjs'
 	import { buildDateTextInputTextFieldProps } from './props/buildDateTextInputTextFieldProps'
-	import { locales } from '../locales'
+	import { locales, toFrenchDateFormat } from '../locales'
 	import type { DateInput, DateModelValue } from '@/composables/date/useDateInitializationDayjs'
 	import type { DateObjectValue, DateTextInputProps, DateTextInputPublicApi } from '../types'
 	import DatePickerLiveRegion from '../DatePickerLiveRegion.vue'
@@ -230,8 +230,8 @@
 			const startDateFormatValidation = validateDateFormat(start, displayFormat.value, dateFormatReturn.value, required.value, hasInteracted.value, props.disableErrorHandling)
 			const endDateFormatValidation = end ? validateDateFormat(end, displayFormat.value, dateFormatReturn.value, required.value, hasInteracted.value, props.disableErrorHandling) : { isValid: true, message: '' }
 			if (startDateFormatValidation.isValid && endDateFormatValidation.isValid) return { isValid: true, message: '' }
-			if (!startDateFormatValidation.isValid) return { isValid: false, message: `${locales.invalidStartDateFormat} (${displayFormat.value})` }
-			return { isValid: false, message: `${locales.invalidEndDateFormat} (${displayFormat.value})` }
+			if (!startDateFormatValidation.isValid) return { isValid: false, message: `${locales.invalidStartDateFormat} (${toFrenchDateFormat(displayFormat.value)})` }
+			return { isValid: false, message: `${locales.invalidEndDateFormat} (${toFrenchDateFormat(displayFormat.value)})` }
 		}
 		return validateDateFormat(input, displayFormat.value, dateFormatReturn.value, required.value, hasInteracted.value, props.disableErrorHandling)
 	}
@@ -246,7 +246,7 @@
 	const fieldKey = ref(0)
 	const isValidating = ref(false)
 	const formatDescriptionId = `date-format-desc-${useId()}`
-	const formatDescription = computed(() => `${locales.formatHint} ${displayFormat.value}`)
+	const formatDescription = computed(() => `${locales.formatHint} ${toFrenchDateFormat(displayFormat.value)}`)
 
 	const updateDisplayValue = (dateDisplayText: string) => (inputValue.value = dateDisplayText)
 	const updateAriaLabel = (ariaLabelText: string) => {

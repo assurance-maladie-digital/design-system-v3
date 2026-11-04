@@ -959,6 +959,6 @@ describe('DateTextInput.clean', () => {
 		const descriptionEl = wrapper.find(`#${descriptionId}`).element
 		expect(descriptionEl).toBeTruthy()
 		expect(descriptionEl?.textContent).toContain('Format attendu :')
-		expect(descriptionEl?.textContent).toContain('DD/MM/YYYY')
+		expect(descriptionEl?.textContent).toContain('JJ/MM/AAAA')
 	})
 })

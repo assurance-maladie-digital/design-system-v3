@@ -1,5 +1,13 @@
 import dayjs from 'dayjs'
 
+/**
+ * Traduit un motif de format dayjs (`DD/MM/YYYY`) en motif français
+ * (`JJ/MM/AAAA`) pour l'affichage dans les aides et messages.
+ * Ne jamais l'utiliser pour le parsing : `J` et `A` ne sont pas des tokens dayjs.
+ */
+export const toFrenchDateFormat = (format: string): string =>
+	format.replace(/D/g, 'J').replace(/Y/g, 'A')
+
 export const locales = {
 	// Labels et placeholders
 	label: 'Date',
@@ -14,7 +22,7 @@ export const locales = {
 	// Le format reçu est un motif dayjs (`DD/MM/YYYY`) : traduit avant affichage,
 	// sans quoi le message mêle du français et des jetons anglais
 	invalidDateFormatWithFormat: (format: string): string =>
-		`Format de date invalide (${format.replace(/D/g, 'J').replace(/Y/g, 'A')})`,
+		`Format de date invalide (${toFrenchDateFormat(format)})`,
 	incompleteDate: 'La date est incomplète.',
 	invalidRange: 'La plage de dates est invalide.',
 	startDateMissing: 'La date de début est manquante.',
