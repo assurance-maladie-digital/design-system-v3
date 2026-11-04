@@ -646,8 +646,9 @@
 					class="d-flex align-center pa-2"
 				>
 					<OrganizeColumns
-						v-if="props.enableColumnControls && headers"
-						v-model:headers="headers"
+						v-if="showColumnControls"
+						:headers="headers ?? []"
+						@update:headers="headers = $event"
 					/>
 					<SyTablePagination
 						v-if="showPagination"
