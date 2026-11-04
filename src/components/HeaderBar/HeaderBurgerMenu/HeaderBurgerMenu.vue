@@ -88,7 +88,6 @@
 					@keyup.esc="menuOpen = false"
 				>
 					<div
-						role="menu"
 						class="menu-wrapper"
 						:style="menuStyle"
 					>
