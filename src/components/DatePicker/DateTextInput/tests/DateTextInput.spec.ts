@@ -941,7 +941,7 @@ describe('DateTextInput.clean', () => {
 		expect((input.element as HTMLInputElement).value).toBe('01/01/2025 - 10/01/2025')
 	})
 
-	it('associates the expected date format to the input via aria-describedby', async () => {
+	it('associates a user-friendly date format description to the input via aria-describedby', async () => {
 		const wrapper = mountComponent({
 			label: 'Date',
 			format: 'DD/MM/YYYY',
@@ -959,6 +959,43 @@ describe('DateTextInput.clean', () => {
 		const descriptionEl = wrapper.find(`#${descriptionId}`).element
 		expect(descriptionEl).toBeTruthy()
 		expect(descriptionEl?.textContent).toContain('Format attendu :')
-		expect(descriptionEl?.textContent).toContain('DD/MM/YYYY')
+		expect(descriptionEl?.textContent).toContain('jour sur 2 chiffres, mois sur 2 chiffres, année sur 4 chiffres')
+		expect(descriptionEl?.textContent).not.toContain('DD/MM/YYYY')
+	})
+
+	it('adapts the format description to the configured format', async () => {
+		const wrapper = mountComponent({
+			label: 'Date',
+			format: 'YYYY-MM-DD',
+		})
+
+		await flushPromises()
+
+		const input = wrapper.find('input')
+		const descriptionId = input.attributes('aria-describedby')
+			?.split(' ')
+			.find(id => id.startsWith('date-format-desc-'))
+
+		const descriptionEl = wrapper.find(`#${descriptionId}`).element
+		expect(descriptionEl?.textContent).toContain('année sur 4 chiffres, mois sur 2 chiffres, jour sur 2 chiffres')
+	})
+
+	it('preserves the business label as accessible name and does not announce the description redundantly', async () => {
+		const wrapper = mountComponent({
+			label: 'Date de naissance',
+			format: 'DD/MM/YYYY',
+		})
+
+		await flushPromises()
+
+		const input = wrapper.find('input')
+		expect(input.attributes('aria-label')).toBe('Date de naissance')
+
+		const descriptionId = input.attributes('aria-describedby')
+			?.split(' ')
+			.find(id => id.startsWith('date-format-desc-'))
+		const descriptionEl = wrapper.find(`#${descriptionId}`).element
+		// Unique canal d'annonce : aria-describedby (pas de live region qui répèterait la description)
+		expect(descriptionEl?.getAttribute('aria-live')).toBe('off')
 	})
 })
