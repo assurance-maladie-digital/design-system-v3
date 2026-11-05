@@ -98,6 +98,12 @@ const preview: Preview = {
 				document.body.classList.add('storybook-docs-mode')
 			}
 
+			// Story rendue dans sa propre iframe d'une page Docs (docs.story.inline: false) :
+			// fond blanc comme les autres exemples de la page (voir storybook.css)
+			if (typeof window !== 'undefined' && window.frameElement?.closest('.docs-story')) {
+				document.documentElement.classList.add('sb-docs-iframe')
+			}
+
 			if (typeof window !== 'undefined') {
 				try {
 					const channel = (
@@ -173,6 +179,7 @@ const preview: Preview = {
 						'Feedback', ['CookieBanner', 'DialogBox', 'NotificationBar', 'RatingPicker', 'SyAlert'],
 						'Composants Vuetify', ['Introduction', 'VBreadcrumbs', 'VBtn', 'VCard', 'VCarousel', 'VNavigationDrawer', 'VOtpInput', 'VSkeletonLoader', 'VSlideGroup', 'VStepper', 'VSwitch', 'VTooltip'],
 					],
+					'Labs', ['Introduction', '*'],
 					'Templates', ['Vue d\'ensemble', 'ErrorPage', 'MaintenancePage', 'NotFoundPage', 'StatusPage'],
 					'Guide Du Dev', [
 						'Démarrage', ['Installation', 'Configuration du thème', 'Prop vuetifyOptions'],

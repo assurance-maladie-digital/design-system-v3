@@ -40,7 +40,7 @@ export const buildCalendarModeActivatorTextFieldProps = (
 	'display-asterisk': false,
 	'is-clearable': !props.readonly,
 	'auto-clamp': props.autoClamp,
-	'title': props.title || props.placeholder,
+	'title': props.title === false ? props.title : props.title || props.placeholder,
 	'hint': props.hint,
 	'persistent-hint': props.persistentHint,
 })

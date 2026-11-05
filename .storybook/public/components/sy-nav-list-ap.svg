@@ -1,0 +1,18 @@
+<svg width="541" height="357" viewBox="0 0 541 357" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="541" height="357" fill="#E7ECF5"/>
+<rect x="63" y="70" width="200" height="220" fill="white"/>
+<rect x="63" y="78" width="200" height="40" fill="#00749C" fill-opacity="0.08"/>
+<rect opacity="0.5" x="79" y="88" width="96" height="20" rx="10" fill="#CED9EB"/>
+<rect x="211" y="91" width="14" height="14" rx="2" fill="#00749C"/>
+<path d="M237 92L243 98L237 104" stroke="#00749C" stroke-width="2"/>
+<rect opacity="0.5" x="79" y="130" width="70" height="20" rx="10" fill="#CED9EB"/>
+<path d="M237 134L243 140L237 146" stroke="#00749C" stroke-width="2"/>
+<rect opacity="0.5" x="79" y="172" width="110" height="20" rx="10" fill="#CED9EB"/>
+<rect opacity="0.5" x="79" y="214" width="60" height="20" rx="10" fill="#CED9EB"/>
+<rect opacity="0.5" x="79" y="256" width="84" height="20" rx="10" fill="#CED9EB"/>
+<rect x="263" y="70" width="200" height="132" fill="white"/>
+<rect opacity="0.5" x="279" y="88" width="120" height="20" rx="10" fill="#CED9EB"/>
+<path d="M437 92L443 98L437 104" stroke="#00749C" stroke-width="2"/>
+<rect opacity="0.5" x="279" y="130" width="86" height="20" rx="10" fill="#CED9EB"/>
+<rect opacity="0.5" x="279" y="172" width="100" height="20" rx="10" fill="#CED9EB"/>
+</svg>

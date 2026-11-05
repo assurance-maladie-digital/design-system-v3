@@ -37,7 +37,7 @@
 - **`SyTextField.vue`** : la ligne `:direction="props.direction"` est supprimée. C'était la seule à transmettre `direction` dans tout le code.
 - **Prop supprimée** (décision prise en revue de PR, à la place d'une dépréciation) : `direction` est retirée de `types.ts`, de `withDefaults` (`SyTextField.vue`) et des argTypes de `SyTextField.stories.ts`. Elle n'a jamais eu d'effet.
 - **Attribut filtré** : `direction` est exclu de `forwardedAttrs` (`SyTextField.vue`). Sans ce filtre, un consommateur qui passe encore `direction="…"` verrait l'attribut, devenu non déclaré, repasser par `VTextField` jusqu'à l'`<input>` : le défaut RGAA 8.2 reviendrait. Vérifié : sans le filtre, le test de régression échoue pour `horizontal` et `vertical`.
-- **`dev/ReleasesAlerts/v1.2.2.md`** : la note signale la suppression de la prop, sans effet sur le rendu. Seuls les templates vérifiés en mode strict et les usages TypeScript de `SyTextFieldProps` peuvent la signaler comme inconnue.
+- **`dev/ReleasesAlerts/v1.2.2/SyTextField/prop-direction-supprimee.md`** : la note signale la suppression de la prop, sans effet sur le rendu. Seuls les templates vérifiés en mode strict et les usages TypeScript de `SyTextFieldProps` peuvent la signaler comme inconnue.
 - **Snapshots** : `Captcha.spec.ts.snap` (×2) et `MonthPicker.spec.ts.snap` (×1) sont mis à jour. Leur seule différence est la ligne `direction="horizontal"` retirée.
 
 **Alternative écartée :** appliquer nous-mêmes la classe `v-input--vertical`. Vuetify exclut volontairement `direction` de `VTextField`, et aucun composant du dépôt ne passe `direction="vertical"` à `SyTextField`.
@@ -61,7 +61,7 @@
 
 - [x] Cause racine traitée : la prop est supprimée et l'attribut n'est plus transmis à `VTextField`.
 - [x] Test de régression ajouté, en échec avant la correction.
-- [x] Changement de contrat documenté : suppression de la prop dans `dev/ReleasesAlerts/v1.2.2.md`, sans effet au runtime (attribut filtré).
+- [x] Changement de contrat documenté : suppression de la prop dans `dev/ReleasesAlerts/v1.2.2/SyTextField/prop-direction-supprimee.md`, sans effet au runtime (attribut filtré).
 - [x] `pnpm test:unit` complet : 407 fichiers, 7752 tests, tous passent.
 - [x] Tests a11y passés (SyTextField, PhoneField).
 - [x] Snapshots mis à jour (seule différence : l'attribut retiré).

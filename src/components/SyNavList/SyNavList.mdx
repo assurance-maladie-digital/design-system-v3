@@ -1,0 +1,150 @@
+import { Meta, Canvas, Controls, Source, Story } from '@storybook/addon-docs/blocks';
+import * as SyNavListStories from './SyNavList.stories.ts';
+
+<Meta of={SyNavListStories} />
+
+<Story of={SyNavListStories.LabsNotice} />
+
+<div className="header">
+  <h1>SyNavList</h1>
+  <p>Le composant `SyNavList` affiche une liste de navigation dont chaque entrée permet trois choses distinctes : aller à la page de l'entrée, déclencher des actions rapides et ouvrir un sous-niveau.<br/>
+  Il est basé sur `v-list`.</p>
+</div>
+
+<Canvas of={SyNavListStories.Default} />
+
+# API
+
+<Controls of={SyNavListStories.Default} />
+
+# Options
+
+Chaque story ajoute une option à la précédente.
+
+## Icônes
+
+<Canvas of={SyNavListStories.WithIcons} />
+
+## Actions
+
+<Canvas of={SyNavListStories.WithActions} />
+
+## Sous-niveau
+
+<Canvas of={SyNavListStories.WithSubLevel} />
+
+## Exemple complet
+
+<Canvas of={SyNavListStories.Complete} />
+
+## Couleur des icônes
+
+<Canvas of={SyNavListStories.IconColor} />
+
+## Largeur
+
+Par défaut, la largeur suit le contenu : elle peut donc varier d'une page à l'autre selon les libellés. Pour une navigation persistante (barre latérale, menu présent sur toutes les pages), fixez `width` pour qu'elle garde la même largeur partout.
+
+<Canvas of={SyNavListStories.CustomWidth} />
+
+## Contre le bord droit
+
+Quand la place manque à droite, les sous-niveaux s'ouvrent à gauche, chevrons tournés vers la gauche. Cet affichage s'applique à partir de 960 px de large : l'exemple garde cette largeur, et défile horizontalement si la page est plus étroite. Ouvrez « Droit de base » puis « Demande d’affiliation ».
+
+<Canvas of={SyNavListStories.RightEdge} />
+
+## Entrée active
+
+<Canvas of={SyNavListStories.ActiveItem} />
+
+## Entrée désactivée
+
+<Canvas of={SyNavListStories.DisabledItem} />
+
+## Actions visibles en permanence
+
+<Canvas of={SyNavListStories.ActionsAlways} />
+
+## Slot d'actions
+
+<Canvas of={SyNavListStories.SlotActions} />
+
+# Fonctionnement
+
+- **Lien** : une entrée avec `href` est un lien `<a>`, une entrée avec `to` un `RouterLink`, qui pose `aria-current="page"` sur la page active. Une entrée sans l'un ni l'autre affiche son libellé sans lien.
+- **Actions** : jusqu'à 4 par entrée, déclarées dans `items` (événement `action`) ou fournies par le slot `actions`, qui reçoit l'entrée (`item`) ; pour une entrée où le slot ne rend rien, les actions de `items` s'affichent. Elles sont masquées au repos et apparaissent au survol, au focus dans l'entrée et en permanence sur les écrans tactiles, ou toujours avec `actions-visibility="always"`. Leur nom accessible reprend celui de l'entrée : « Modifier (AME) » ; il s'affiche aussi au survol, dans l'infobulle native du navigateur, comme pour les autres boutons icônes du DS.
+- **Sous-niveau** : ouvert par le chevron (clic, Entrée, Espace ; toute la hauteur de la ligne autour du chevron est cliquable), et au survol à la souris sur grand écran, après un court délai pour qu'un simple passage du pointeur n'ouvre rien. Un sous-niveau ouvert reste affiché le temps de le rejoindre en diagonale, même si le pointeur traverse une autre entrée. Il s'affiche à droite de la liste à partir de 960 px, ou à gauche si la place manque à droite (le chevron pointe alors vers la gauche) ; il remonte s'il dépasse le bas de la fenêtre. En RTL, il s'ouvre à gauche. Un clic hors de l'entrée ouverte, le focus qui la quitte, ou un clic sur un lien d'un sous-niveau referme les sous-niveaux ouverts à droite. En dessous de 960 px, il s'ouvre en accordéon : sous l'entrée, décalé de 16 px par niveau, il pousse les entrées suivantes vers le bas, et le chevron pointe vers le bas, puis vers le haut une fois ouvert. Il reste ouvert quand le focus quitte l'entrée ou qu'on clique ailleurs. Échap ferme le sous-niveau le plus profond ; depuis l'intérieur d'un sous-niveau, il rend le focus au chevron. En accordéon, Échap n'agit que si le focus est dans la navigation.
+- **État des sous-niveaux** : l'événement `sub-level-change` émet `true` quand un sous-niveau s'ouvre alors qu'aucun ne l'était, `false` quand le dernier se ferme, ou quand la liste est retirée de la page avec un sous-niveau ouvert. Il permet par exemple, quand la liste est dans un menu, que Échap ferme d'abord les sous-niveaux puis le menu.
+- **Navigation sans clic dans la liste** : un clic sur un lien d'un sous-niveau ouvert à droite referme les sous-niveaux. Le composant ne suit pas la route : après un retour arrière du navigateur ou une navigation déclenchée par le code (`router.push`), un sous-niveau ouvert le reste. Pour le refermer, recréez la liste à chaque changement de page avec une `key` (voir l'exemple ci-dessous).
+- **Liste remplacée** : si `items` change et que l'entrée ouverte n'existe plus, n'a plus de sous-niveau ou est désactivée, son sous-niveau se ferme.
+- **Page en cours** : `aria-current="page"`, posé par `RouterLink` ou par l'option `active` d'une entrée `href`. Signalée par un fond, un texte en gras et la couleur primaire ; l'entrée qui la contient dans son sous-niveau a un libellé en gras.
+- **Entrée désactivée** (`disabled`) : libellé atténué, ni lien, ni actions, ni ouverture du sous-niveau, hors de l'ordre de tabulation ; annoncée comme lien indisponible (`role="link"`, `aria-disabled="true"`). Le chevron reste affiché, désactivé.
+- **Identifiants** : l'`id` d'une entrée doit être unique dans son niveau (deux sous-niveaux différents peuvent réutiliser le même), et celui d'une action unique parmi les actions de son entrée. Il sert de clé de rendu et relie le chevron à son sous-niveau (`aria-controls`) : deux entrées d'un même niveau avec le même `id` partageraient leur état ouvert et leur sous-niveau. Le composant ne vérifie pas l'unicité. L'`id` d'une entrée ne doit pas contenir d'espace, car il entre dans un id HTML : un avertissement le signale en développement, comme plus de 4 actions sur une entrée.
+- **Liste vide** : le composant ne rend rien.
+
+Lien, actions et chevron sont des éléments frères : un clic sur une action ne suit pas le lien et n'ouvre pas le sous-niveau.
+
+## Refermer les sous-niveaux à chaque changement de page
+
+Avec Vue Router, une `key` liée au chemin recrée la liste à chaque changement de page, quelle qu'en soit l'origine (lien, retour arrière, `router.push`) : tous les sous-niveaux se referment.
+
+La liste recréée perd le focus qu'elle contenait : comme pour tout changement de page, l'application doit placer le focus (titre de la page ou lien d'évitement).
+
+<Source
+	dark
+	code={`
+<script setup lang="ts">
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+</script>
+
+<template>
+	<SyNavList
+		:key="route.path"
+		:items="items"
+		label="Dossiers client"
+	/>
+</template>
+`}
+/>
+
+# Exemple d'utilisation
+
+<Source
+	dark
+	code={`
+<script setup lang="ts">
+import { mdiSquareEditOutline } from '@mdi/js'
+import { SyNavList, type SyNavListAction, type SyNavListItem } from '@cnamts/synapse'
+
+const edit: SyNavListAction = { id: 'edit', icon: mdiSquareEditOutline, label: 'Modifier' }
+
+const items: SyNavListItem[] = [
+	{
+		id: 'cmu-b',
+		label: 'CMU-B',
+		to: '/cmu-b',
+		actions: [edit],
+		children: [
+			{ id: 'reception', label: 'Réception', to: '/cmu-b/reception' },
+			{ id: 'instruction', label: 'Instruction', to: '/cmu-b/instruction' },
+		],
+	},
+	{ id: 'ame', label: 'AME', to: '/ame', actions: [edit] },
+]
+
+function onAction(item: SyNavListItem, action: SyNavListAction): void {
+	// Traitement de l'action « action.label » sur l'entrée « item.label »
+}
+</script>
+
+<template>
+	<SyNavList
+		:items="items"
+		label="Dossiers client"
+		@action="onAction"
+	/>
+</template>
+`}
+/>

@@ -6,6 +6,25 @@ export const locales = {
 
 	// Messages de description
 	formatHint: 'Format attendu :',
+	// Libellés des jetons dayjs, pour décrire le format en langage naturel
+	dateFormatTokenLabels: {
+		D: 'jour',
+		DD: 'jour sur 2 chiffres',
+		M: 'mois',
+		MM: 'mois sur 2 chiffres',
+		MMM: 'nom du mois abrégé',
+		MMMM: 'nom du mois',
+		YY: 'année sur 2 chiffres',
+		YYYY: 'année sur 4 chiffres',
+	},
+	// Traduit le motif dayjs (format de parsing) en description compréhensible par l'utilisateur
+	// (ex : 'DD/MM/YYYY' → 'jour sur 2 chiffres, mois sur 2 chiffres, année sur 4 chiffres')
+	dateFormatDescription: (format: string): string => {
+		const tokenLabels: Record<string, string> = locales.dateFormatTokenLabels
+		return (format.match(/[A-Za-z]+/g) ?? [])
+			.map(token => tokenLabels[token] ?? token)
+			.join(', ')
+	},
 
 	// Messages d'erreur
 	required: 'La date est requise.',

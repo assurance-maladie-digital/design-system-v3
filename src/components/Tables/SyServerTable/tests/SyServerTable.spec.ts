@@ -1473,6 +1473,39 @@ describe('SyServerTable hideDefaultFooter', () => {
 		expect(pagination.exists()).toBe(false)
 	})
 
+	it('renders nothing below the table when hideDefaultFooter is true', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'hide-footer-server-test',
+				serverItemsLength: 11,
+				hideDefaultFooter: true,
+			},
+			attrs: { items: manyItems, headers },
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		expect(wrapper.get('.v-table__wrapper').element.nextElementSibling).toBeNull()
+	})
+
+	it('renders nothing below the table when there are no items', async () => {
+		const wrapper = mount(SyServerTable, {
+			props: {
+				options: { itemsPerPage: 5 } as DataOptions,
+				suffix: 'empty-footer-server-test',
+				serverItemsLength: 0,
+			},
+			attrs: { items: [], headers },
+		})
+
+		await wrapper.vm.$nextTick()
+		await vi.dynamicImportSettled()
+
+		expect(wrapper.get('.v-table__wrapper').element.nextElementSibling).toBeNull()
+	})
+
 	it('still shows OrganizeColumns when hideDefaultFooter is true and enableColumnControls is enabled', async () => {
 		const wrapper = mount(SyServerTable, {
 			props: {

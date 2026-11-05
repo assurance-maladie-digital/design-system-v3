@@ -195,4 +195,27 @@ describe('SyTable - accessibility (axe)', () => {
 
 		wrapper.unmount()
 	})
+	it('conserve la légende accessible lorsqu’elle est masquée visuellement', async () => {
+		const wrapper = mount(SyTable, {
+			props: {
+				suffix: 'hidden-caption',
+				saveState: false,
+				headers,
+				items,
+				caption: 'Liste des contacts',
+				hideCaption: true,
+				options: { itemsPerPage: 1 },
+			},
+			attachTo: document.body,
+		})
+		await wrapper.vm.$nextTick()
+		const caption = wrapper.get('table > caption')
+		expect(caption.text()).toBe('Liste des contacts')
+		expect(caption.classes()).toContain('d-sr-only')
+		expect(caption.attributes('aria-hidden')).toBeUndefined()
+		expect(wrapper.get('nav h2').text()).toBe('Pagination du tableau Liste des contacts')
+		await wrapper.setProps({ hideCaption: false })
+		expect(caption.classes()).not.toContain('d-sr-only')
+		wrapper.unmount()
+	})
 })

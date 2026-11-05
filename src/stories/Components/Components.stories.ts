@@ -113,6 +113,13 @@ export const ComponentsList: StoryObj = {
 						category: 'Navigation',
 					},
 					{
+						title: 'SyNavList',
+						description: 'Utilisé pour naviguer entre des pages, avec des actions rapides et un sous-niveau par entrée.',
+						link: '/?path=/docs/labs-synavlist--docs',
+						img: `/components/sy-nav-list${isAp ? '-ap' : ''}.svg`,
+						category: 'Labs',
+					},
+					{
 						title: 'SyTabs',
 						description: 'Permet de masquer du contenu derrière un élément sélectionnable.',
 						link: '/?path=/docs/composants-navigation-sytabs--docs',
@@ -530,6 +537,7 @@ export const ComponentsList: StoryObj = {
 					'Données',
 					'Feedback',
 					'Filtres',
+					'Labs',
 				]
 
 				const apComponents = [
@@ -593,6 +601,7 @@ export const ComponentsList: StoryObj = {
 					'DataListGroup',
 					'DataList',
 					'SyBtnMenu',
+					'SyNavList',
 					'SocialMediaLinks',
 					'SyInputSelect',
 					'ExternalLinks',

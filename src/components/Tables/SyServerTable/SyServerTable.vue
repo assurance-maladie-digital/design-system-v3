@@ -153,6 +153,9 @@
 		updateOptions,
 	})
 
+	const showColumnControls = computed(() => props.enableColumnControls && !!headers.value)
+	const showPagination = computed(() => displayedItems.value.length > 0 && displayedItemsLength.value > 0 && !props.hideDefaultFooter)
+
 	const { getItemValue, toggleAllRows } = useTableCheckbox({
 		items: displayedItems,
 		modelValue: model,
@@ -658,13 +661,17 @@
 			</template>
 
 			<template #bottom>
-				<div class="d-flex align-center pa-2">
+				<div
+					v-if="showColumnControls || showPagination"
+					class="d-flex align-center pa-2"
+				>
 					<OrganizeColumns
-						v-if="props.enableColumnControls && headers"
-						v-model:headers="headers"
+						v-if="showColumnControls"
+						:headers="headers ?? []"
+						@update:headers="headers = $event"
 					/>
 					<SyTablePagination
-						v-if="(displayedItems.length > 0 ? displayedItemsLength : 0) && !props.hideDefaultFooter"
+						v-if="showPagination"
 						:page="page"
 						:heading-level="props.headingLevel"
 						:items-per-page="itemsPerPageValue"

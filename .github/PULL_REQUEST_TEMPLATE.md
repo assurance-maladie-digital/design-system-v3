@@ -17,8 +17,8 @@
 <!--
   Impact de la PR sur le contrat du composant ou de la librairie.
   Conservez uniquement la ligne pertinente.
-  Si changement de contrat : documentez-le dans releasesAlerts/vX.X.X/
-  (format : releasesAlerts/README.md). À fournir avant la fin de la PR.
+  Si changement de contrat : ajoutez un fichier dans dev/ReleasesAlerts/vX.X.X/<Composant>/
+  (format : dev/ReleasesAlerts/README.md). À fournir avant la fin de la PR.
 -->
 
 - Aucun changement de contrat
@@ -39,7 +39,7 @@
 **Documentation**
 
 - [ ] Story créée ou mise à jour (exemples d'usage, état d'erreur/vide)
-- [ ] Changement de contrat documenté dans `releasesAlerts/vX.X.X/` (si applicable)
+- [ ] Changement de contrat documenté dans `dev/ReleasesAlerts/vX.X.X/<Composant>/` (si applicable)
 
 **Tests**
 
