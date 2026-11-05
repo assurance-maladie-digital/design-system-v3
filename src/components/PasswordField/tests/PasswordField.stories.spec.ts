@@ -51,6 +51,17 @@ describe('PasswordField validation stories', () => {
 		expect(wrapper.text()).not.toContain(message)
 	})
 
+	it.each([WithSuccessMessages, DisableErrorHandling])('applies shared Controls to both comparison fields', (story) => {
+		const wrapper = mount(story({ readonly: true }))
+		for (const input of wrapper.findAll('input')) {
+			expect(input.attributes('readonly')).toBeDefined()
+		}
+		const editable = mount(story({ disabled: true }))
+		for (const input of editable.findAll('input')) {
+			expect(input.attributes('disabled')).toBeDefined()
+		}
+	})
+
 	it('shows success after interaction only when messages are enabled', async () => {
 		const wrapper = mount(WithSuccessMessages())
 		await flushPromises()

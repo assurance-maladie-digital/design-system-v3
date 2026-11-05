@@ -24,7 +24,7 @@ Les stories `ValidateOnInput` et `ExternalMessages` ne transmettaient pas les ar
 - Déplacement des paramètres de validation de `ValidateOnInput` dans les `args`.
 - Déclaration de `required` dans les `args` de `VFormValidation`, plutôt que dans son template.
 
-Lorsque les paramètres sont volontairement fixes, les Controls correspondants sont désactivés : comparaisons `WithSuccessMessages` et `DisableErrorHandling`, messages pilotés par les boutons de `ExternalMessages`, règles et modes de validation imposés par les démonstrations de formulaires.
+Les Controls sont disponibles dans `WithSuccessMessages` et `DisableErrorHandling` : les deux champs reçoivent les arguments communs avec `v-bind="args"`. Les valeurs, libellés et paramètres propres à chaque comparaison sont exclus du panneau, car ils restent définis explicitement. Les Controls des messages pilotés par les boutons de `ExternalMessages`, ainsi que des règles et modes imposés par les démonstrations de formulaires, restent désactivés.
 
 ### Démonstration des messages de succès
 

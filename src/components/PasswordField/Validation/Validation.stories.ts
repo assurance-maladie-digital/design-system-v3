@@ -459,13 +459,13 @@ export const WithCustomRules: Story = {
 
 export const WithSuccessMessages: Story = {
 	parameters: {
-		controls: { disable: true },
+		controls: { exclude: ['on*', 'modelValue', 'label', 'required', 'customSuccessRules', 'showSuccessMessages'] },
 		docs: {
 			description: {
 				story: `
 ### Messages de succès
 
-Comparaison à paramètres fixes : les Controls sont désactivés. Les deux champs sont neutres au chargement. Modifiez leur valeur puis quittez le champ pour déclencher la validation.
+Les Controls pilotent les options communes aux deux champs (lecture seule, désactivation, apparence…). Les valeurs, libellés et paramètres propres à la comparaison sont fixes et exclus des Controls. Les deux champs sont neutres au chargement. Modifiez leur valeur puis quittez le champ pour déclencher la validation.
 
 Cette story illustre l'utilisation de la propriété \`showSuccessMessages\` qui permet de contrôler
 l'affichage des messages de succès lors de la validation. Par défaut, cette propriété est à \`false\`.
@@ -509,14 +509,14 @@ const customSuccessRules = [{ type: 'custom', options: { validate: (value: strin
 </script>` },
 		],
 	},
-	render: () => ({
+	render: args => ({
 		components: { PasswordField },
 		setup() {
 			const value1 = ref('P@ssw0rd123')
 			const value2 = ref('P@ssw0rd123')
 			const customSuccessRules = [{ type: 'custom', options: { validate: (value: string) => value.length >= 8, successMessage: 'Mot de passe valide' } }]
 
-			return { value1, value2, customSuccessRules }
+			return { args, value1, value2, customSuccessRules }
 		},
 		template: `
       <div>
@@ -526,6 +526,7 @@ const customSuccessRules = [{ type: 'custom', options: { validate: (value: strin
           <div>
             <p class="text-subtitle-2 mb-2">Avec messages de succès</p>
             <PasswordField
+              v-bind="args"
               v-model="value1"
               label="Mot de passe avec messages de succès"
               required
@@ -537,6 +538,7 @@ const customSuccessRules = [{ type: 'custom', options: { validate: (value: strin
           <div>
             <p class="text-subtitle-2 mb-2">Sans messages de succès</p>
             <PasswordField
+              v-bind="args"
               v-model="value2"
               label="Mot de passe sans messages de succès"
               required
@@ -562,13 +564,13 @@ const customSuccessRules = [{ type: 'custom', options: { validate: (value: strin
 
 export const DisableErrorHandling: Story = {
 	parameters: {
-		controls: { disable: true },
+		controls: { exclude: ['on*', 'modelValue', 'label', 'required', 'customRules', 'disableErrorHandling'] },
 		docs: {
 			description: {
 				story: `
 ### Désactivation de la gestion des erreurs
 
-Comparaison à paramètres fixes : les Controls sont désactivés.
+Les Controls pilotent les options communes aux deux champs (lecture seule, désactivation, apparence…). Les valeurs, libellés et paramètres propres à la comparaison sont fixes et exclus des Controls.
 
 Cette story illustre l'utilisation de la propriété \`disableErrorHandling\` qui permet de désactiver complètement
 la gestion et l'affichage des erreurs dans un champ, même si des règles de validation sont définies.
@@ -617,7 +619,7 @@ const customRules = [{
 </script>` },
 		],
 	},
-	render: () => ({
+	render: args => ({
 		components: { PasswordField },
 		setup() {
 			const value1 = ref('')
@@ -638,7 +640,7 @@ const customRules = [{
 				},
 			]
 
-			return { value1, value2, customRules }
+			return { args, value1, value2, customRules }
 		},
 		template: `
 			<div>
@@ -648,6 +650,7 @@ const customRules = [{
 					<div>
 						<p class="text-subtitle-2 mb-2">Validation normale</p>
 						<PasswordField
+							v-bind="args"
 							v-model="value1"
 							label="Mot de passe avec validation"
 							required
@@ -658,6 +661,7 @@ const customRules = [{
 					<div>
 						<p class="text-subtitle-2 mb-2">Sans gestion d'erreurs</p>
 						<PasswordField
+							v-bind="args"
 							v-model="value2"
 							label="Mot de passe sans gestion d'erreurs"
 							required
