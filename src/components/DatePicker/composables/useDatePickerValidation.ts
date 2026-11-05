@@ -30,6 +30,7 @@ import {
 } from '@/composables/unifyValidation/messageUtils'
 import { locales } from '../locales'
 import type { DateObjectValue, DatePickerRule } from '../types'
+import { adaptCustomRulesWithStringFallback } from '../utils/validationUtils'
 import { useDateRangeValidation } from './useDateRangeValidation'
 
 export type DatePickerValidationRule = DatePickerRule
@@ -429,7 +430,23 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		}
 
 		if (!unref(options.useVuetifyValidation)) {
-			return validation!.validateValue(value, rules, warningRules, successRules)
+			// Les validations des dates sélectionnées passent un objet Date aux règles,
+			// alors que la saisie texte passe une chaîne (adaptCustomRules). Envelopper
+			// les règles custom avec le repli chaîne pour qu'une règle écrite pour une
+			// chaîne ne fasse pas échouer une date valide (repli transitoire non cassant).
+			const wrap = (ruleSet: ValidationRule[]) =>
+				value instanceof Date
+					? adaptCustomRulesWithStringFallback(
+						ruleSet as unknown as DatePickerRule[],
+						unref(options.returnFormat) || unref(options.displayFormat) || '',
+					) as unknown as ValidationRule[]
+					: ruleSet
+			return validation!.validateValue(
+				value,
+				wrap(rules),
+				wrap(warningRules),
+				wrap(successRules),
+			)
 		}
 
 		const token = currentValidationToken.value

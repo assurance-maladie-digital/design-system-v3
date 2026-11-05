@@ -19,6 +19,7 @@
  * indirectement par les composants DatePicker via le bridge de validation.
  */
 import { formatDate } from '@/utils/formatDate'
+import { devWarn } from '@/utils/devWarn'
 import dayjs from 'dayjs'
 import { locales } from '../locales'
 import type { DatePickerRule } from '../types'
@@ -67,6 +68,126 @@ export const adaptCustomRules = (rules: DatePickerRule[] = [], format: string): 
 			return safeCopy
 		}
 		return rule
+	})
+}
+
+/**
+ * Enveloppe les règles personnalisées avec un repli « chaîne formatée ».
+ *
+ * Contexte : les validations des dates sélectionnées (calendrier, soumission) passent
+ * un objet `Date` au `validate` des règles, alors que la saisie texte passe une chaîne
+ * (voir `adaptCustomRules`). Une règle écrite pour une chaîne lève alors une exception
+ * (ex: `value.includes(...)`) qui est convertie silencieusement en échec de validation :
+ * une date valide est refusée.
+ *
+ * Correctif transitoire non cassant : la règle est d'abord appelée avec la valeur
+ * d'origine (les règles écrites pour un `Date` continuent de fonctionner à l'identique) ;
+ * si elle lève une exception ou rejette une promesse, elle est rappelée avec la chaîne
+ * formatée et un avertissement est émis en développement.
+ *
+ * En développement uniquement, une sonde détecte aussi les règles dont le résultat
+ * diffère selon le type (invalide sur `Date` mais valide sur la chaîne formatée) et
+ * émet un avertissement — sans jamais modifier le résultat renvoyé.
+ *
+ * @param rules - Règles personnalisées à envelopper
+ * @param format - Format utilisé pour convertir le `Date` en chaîne (`toISOString` si vide)
+ * @returns Règles enveloppées (les règles non-custom sont retournées inchangées)
+ */
+// Les règles sont ré-enveloppées à chaque validation : ce WeakSet garantit que
+// l'avertissement dev n'est émis qu'une seule fois par fonction de validation d'origine.
+const fallbackWarnedValidates = new WeakSet<(...args: unknown[]) => unknown>()
+
+export const adaptCustomRulesWithStringFallback = (rules: DatePickerRule[] = [], format: string): DatePickerRule[] => {
+	return rules.map((rule) => {
+		if (rule.type !== 'custom' || !rule.options?.validate) {
+			return rule
+		}
+
+		const originalValidate = rule.options.validate
+
+		const formatForRetry = (val: unknown) =>
+			val instanceof Date
+				? (format ? formatDate(dayjs(val), format) : val.toISOString())
+				: val
+
+		const warnOnce = (message: string) => {
+			if (!fallbackWarnedValidates.has(originalValidate)) {
+				fallbackWarnedValidates.add(originalValidate)
+				devWarn(message)
+			}
+		}
+
+		const retryWithFormattedString = (val: unknown) => {
+			warnOnce(
+				'[DatePicker] Une règle personnalisée a levé une exception sur un objet Date '
+				+ 'et a été rappelée avec la chaîne formatée. Ce repli est transitoire : '
+				+ 'gérez les deux types dans la règle (ex : via parseDate).',
+			)
+			return originalValidate(formatForRetry(val))
+		}
+
+		// Sonde dev : si la règle renvoie invalide sur le Date mais valide sur la
+		// chaîne formatée, elle attend probablement une chaîne. On avertit sans
+		// jamais modifier le résultat renvoyé (librairie publique : pas de
+		// substitution de résultat sur la base d'une heuristique).
+		const probeStringResult = (val: unknown): void => {
+			if (!import.meta.env.DEV) {
+				return
+			}
+			try {
+				const report = (retryResult: unknown) => {
+					if (retryResult === true) {
+						warnOnce(
+							'[DatePicker] Une règle personnalisée renvoie un résultat invalide sur un objet Date '
+							+ 'mais valide sur la chaîne formatée : elle attend probablement une chaîne. '
+							+ 'Le résultat n\'est pas modifié ; gérez les deux types dans la règle (ex : via parseDate).',
+						)
+					}
+				}
+				const retryResult = originalValidate(formatForRetry(val))
+				if (retryResult instanceof Promise) {
+					void retryResult.then(report).catch(() => {})
+				}
+				else {
+					report(retryResult)
+				}
+			}
+			catch {
+				// La sonde ne doit jamais faire échouer la validation
+			}
+		}
+
+		return {
+			...rule,
+			options: {
+				...rule.options,
+				validate: (val: unknown) => {
+					if (!(val instanceof Date)) {
+						return originalValidate(val)
+					}
+					try {
+						const result = originalValidate(val)
+						if (result instanceof Promise) {
+							return result
+								.then((resolved) => {
+									if (resolved !== true) {
+										probeStringResult(val)
+									}
+									return resolved
+								})
+								.catch(() => retryWithFormattedString(val))
+						}
+						if (result !== true) {
+							probeStringResult(val)
+						}
+						return result
+					}
+					catch {
+						return retryWithFormattedString(val)
+					}
+				},
+			},
+		}
 	})
 }
 
