@@ -82,10 +82,16 @@ export const adaptCustomRules = (rules: DatePickerRule[] = [], format: string): 
  *
  * Correctif transitoire non cassant : la règle est d'abord appelée avec la valeur
  * d'origine (les règles écrites pour un `Date` continuent de fonctionner à l'identique) ;
- * si elle lève une `TypeError` (ou rejette une promesse avec une `TypeError`), elle est
- * rappelée avec la chaîne formatée et un avertissement est émis en développement.
- * Les autres exceptions et rejets (métier, réseau…) sont propagés sans rappel pour
- * ne pas doubler d'éventuels effets de bord en production.
+ * si elle lève une `TypeError` de façon **synchrone**, elle est rappelée avec la
+ * chaîne formatée et un avertissement est émis en développement.
+ *
+ * Aucun repli sur rejet de promesse : il est impossible de distinguer une
+ * `TypeError` « programmation » (règle async écrite pour une chaîne) d'une
+ * `TypeError` « infrastructure » (`fetch` rejette avec une `TypeError` sur échec
+ * réseau ou CORS). Rappeler doublerait les effets de bord (ex. un second appel
+ * HTTP) : tout rejet est propagé tel quel. Une `TypeError` rejetée émet
+ * seulement un avertissement en développement — une règle async écrite pour
+ * une chaîne doit donc gérer les deux types (ex : via `parseDate`).
  *
  * En développement uniquement, une sonde détecte aussi les règles dont le résultat
  * diffère selon le type (invalide sur `Date` mais valide sur la chaîne formatée) et
@@ -97,8 +103,10 @@ export const adaptCustomRules = (rules: DatePickerRule[] = [], format: string): 
  */
 // Les règles sont ré-enveloppées à chaque validation : ces WeakSets garantissent que
 // chaque avertissement dev n'est émis qu'une seule fois par fonction de validation
-// d'origine (un pour le repli sur exception, un pour la sonde de divergence).
+// d'origine (un pour le repli sur exception synchrone, un pour le rejet de promesse,
+// un pour la sonde de divergence).
 const fallbackWarnedValidates = new WeakSet<(...args: unknown[]) => unknown>()
+const rejectionWarnedValidates = new WeakSet<(...args: unknown[]) => unknown>()
 const probeWarnedValidates = new WeakSet<(...args: unknown[]) => unknown>()
 
 export const adaptCustomRulesWithStringFallback = (rules: DatePickerRule[] = [], format: string): DatePickerRule[] => {
@@ -174,21 +182,23 @@ export const adaptCustomRulesWithStringFallback = (rules: DatePickerRule[] = [],
 					try {
 						const result = originalValidate(val)
 						if (result instanceof Promise) {
+							// Pas de sonde sur les règles asynchrones : elle rappellerait
+							// la règle une seconde fois (double appel réseau en dev).
 							return result
-								.then((resolved) => {
-									if (resolved !== true) {
-										probeStringResult(val)
-									}
-									return resolved
-								})
 								.catch((error) => {
-									// Le repli ne s'applique qu'aux erreurs de type : un rejet
-									// métier (réseau, refus serveur…) n'est pas rappelé pour
-									// éviter de doubler des effets de bord en production.
-									if (!(error instanceof TypeError)) {
-										throw error
+									// Jamais de repli sur rejet : une TypeError rejetée peut
+									// venir de `fetch` (échec réseau/CORS) — rappeler la règle
+									// doublerait l'appel HTTP. On avertit seulement en dev.
+									if (error instanceof TypeError) {
+										warnOnce(
+											rejectionWarnedValidates,
+											'[DatePicker] Une règle personnalisée a rejeté une promesse avec une TypeError '
+											+ 'sur un objet Date : si elle attend une chaîne, gérez les deux types '
+											+ 'dans la règle (ex : via parseDate). Le rejet est propagé sans rappel '
+											+ 'pour ne pas doubler un éventuel effet de bord (ex. appel réseau).',
+										)
 									}
-									return retryWithFormattedString(val)
+									throw error
 								})
 						}
 						if (result !== true) {

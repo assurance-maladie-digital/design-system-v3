@@ -2,6 +2,7 @@ import { unref } from 'vue'
 import type { ValidationResult } from '@/composables/unifyValidation/useValidation'
 import { locales } from '../../locales'
 import { emptyValidationResult, successValidationResult, requiredValidationResult } from './validationResultFactories'
+import { adaptCustomRulesWithStringFallback } from '../../utils/validationUtils'
 import type { ValidationContext } from './types'
 
 /**
@@ -27,6 +28,18 @@ import type { ValidationContext } from './types'
  */
 export function createValidateDatesFlow(ctx: ValidationContext) {
 	const { options } = ctx
+
+	/**
+	 * Enveloppe les règles custom avec le repli « chaîne formatée » : les validations
+	 * des dates retenues passent un objet `Date` au `validate` des règles, alors que
+	 * la saisie texte passe une chaîne (adaptCustomRules). Une règle écrite pour une
+	 * chaîne ne doit pas faire échouer une date valide (repli transitoire non cassant).
+	 */
+	const wrapRulesForDateFallback = <T extends typeof options.customRules.value>(rules: T): T =>
+		adaptCustomRulesWithStringFallback(
+			rules,
+			unref(options.returnFormat) || unref(options.displayFormat) || '',
+		) as T
 
 	/**
 	 * Détecte une sélection de plage incomplète en mode displayRange.
@@ -103,16 +116,19 @@ export function createValidateDatesFlow(ctx: ValidationContext) {
 		token = ctx.currentValidationToken.value,
 	): ValidationResult[] | Promise<ValidationResult[]> => {
 		const syncResults: ValidationResult[] = []
+		const wrappedRules = wrapRulesForDateFallback(rules)
+		const wrappedWarningRules = wrapRulesForDateFallback(warningRules)
+		const wrappedSuccessRules = wrapRulesForDateFallback(successRules)
 
 		for (const date of dates) {
-			const result = ctx.validateField(date, rules, warningRules, successRules)
+			const result = ctx.validateField(date, wrappedRules, wrappedWarningRules, wrappedSuccessRules)
 			if (result instanceof Promise) {
 				const startIndex = syncResults.length
 				return (async () => {
 					const results = [...syncResults, await result]
 					if (token !== ctx.currentValidationToken.value) return results
 					for (let i = startIndex + 1; i < dates.length; i++) {
-						results.push(await Promise.resolve(ctx.validateField(dates[i], rules, warningRules, successRules)))
+						results.push(await Promise.resolve(ctx.validateField(dates[i], wrappedRules, wrappedWarningRules, wrappedSuccessRules)))
 					}
 					if (token !== ctx.currentValidationToken.value) return results
 					return accumulateValidationResults(results)
@@ -137,12 +153,16 @@ export function createValidateDatesFlow(ctx: ValidationContext) {
 			const dates = ctx.getDatesToValidate()
 			const results: ValidationResult[] = []
 
+			const wrappedRules = wrapRulesForDateFallback(options.customRules.value)
+			const wrappedWarningRules = wrapRulesForDateFallback(options.customWarningRules.value)
+			const wrappedSuccessRules = wrapRulesForDateFallback(options.customSuccessRules?.value ?? [])
+
 			for (const date of dates) {
 				const result = await Promise.resolve(ctx.validateField(
 					date,
-					options.customRules.value,
-					options.customWarningRules.value,
-					options.customSuccessRules?.value ?? [],
+					wrappedRules,
+					wrappedWarningRules,
+					wrappedSuccessRules,
 				))
 				if (token !== ctx.currentValidationToken.value) return
 				results.push(result)

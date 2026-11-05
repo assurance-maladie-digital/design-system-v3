@@ -234,7 +234,8 @@ describe('adaptCustomRulesWithStringFallback', () => {
 		expect(warnSpy.mock.calls[0][0]).toContain('résultat n\'est pas modifié')
 	})
 
-	it('rappelle la règle avec la chaîne quand la promesse est rejetée avec une TypeError sur un Date', async () => {
+	it('propage le rejet sans rappel quand la promesse rejette avec une TypeError (ex. fetch réseau/CORS), avec avertissement dev', async () => {
+		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
 		const receivedValue: unknown[] = []
 		const rules: DatePickerRule[] = [
 			{
@@ -242,10 +243,7 @@ describe('adaptCustomRulesWithStringFallback', () => {
 				options: {
 					validate: (value: unknown) => {
 						receivedValue.push(value)
-						if (value instanceof Date) {
-							return Promise.reject(new TypeError('value.includes is not a function'))
-						}
-						return Promise.resolve(true)
+						return Promise.reject(new TypeError('Failed to fetch'))
 					},
 				},
 			},
@@ -253,11 +251,17 @@ describe('adaptCustomRulesWithStringFallback', () => {
 
 		const wrapped = adaptCustomRulesWithStringFallback(rules, 'DD/MM/YYYY')
 		const validateFn = wrapped[0].options!.validate!
-		const result = await validateFn(new Date('2026-03-15T12:00:00'))
 
+		// Pas de second appel : une TypeError rejetée peut être une erreur
+		// réseau (fetch) — rappeler doublerait l'appel HTTP. Le rejet est
+		// propagé tel quel, avec un avertissement dev pour les règles async
+		// écrites pour une chaîne.
+		await expect(validateFn(new Date('2026-03-15T12:00:00'))).rejects.toThrow('Failed to fetch')
+		await expect(validateFn(new Date('2026-03-15T12:00:00'))).rejects.toThrow('Failed to fetch')
 		expect(receivedValue).toHaveLength(2)
-		expect(receivedValue[1]).toBe('15/03/2026')
-		expect(result).toBe(true)
+		expect(receivedValue.every(v => v instanceof Date)).toBe(true)
+		expect(warnSpy).toHaveBeenCalledTimes(1)
+		expect(warnSpy.mock.calls[0][0]).toContain('[DatePicker]')
 	})
 
 	it('sonde dev : avertit sans modifier le résultat quand la règle échoue silencieusement sur un Date', () => {
@@ -301,14 +305,17 @@ describe('adaptCustomRulesWithStringFallback', () => {
 		expect(warnSpy).not.toHaveBeenCalled()
 	})
 
-	it('sonde dev : détecte aussi la divergence quand la règle est asynchrone', async () => {
+	it('sonde dev : ne se lance pas sur une règle asynchrone (un second appel doublerait un effet de bord réseau)', async () => {
 		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+		let callCount = 0
 		const rules: DatePickerRule[] = [
 			{
 				type: 'custom',
 				options: {
-					validate: (value: unknown) =>
-						Promise.resolve(value === '15/03/2026'),
+					validate: (value: unknown) => {
+						callCount++
+						return Promise.resolve(value === '15/03/2026')
+					},
 				},
 			},
 		]
@@ -318,10 +325,10 @@ describe('adaptCustomRulesWithStringFallback', () => {
 		const result = await validateFn(new Date('2026-03-15T12:00:00'))
 
 		expect(result).toBe(false)
-		// La sonde async est fire-and-forget : laisser les microtâches s'exécuter
+		// Laisser les microtâches s'exécuter : la règle ne doit pas avoir été rappelée
 		await new Promise(resolve => setTimeout(resolve, 0))
-		expect(warnSpy).toHaveBeenCalledTimes(1)
-		expect(warnSpy.mock.calls[0][0]).toContain('attend probablement une chaîne')
+		expect(callCount).toBe(1)
+		expect(warnSpy).not.toHaveBeenCalled()
 	})
 
 	it('utilise toISOString quand aucun format n\'est fourni', () => {
