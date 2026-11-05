@@ -2,7 +2,7 @@
 
 ## Périmètre
 
-Cette étude décrit les modifications de la PR `fix/accessibility-sytable`, y compris les derniers ajustements de pagination et d’annonce du tableau vide. Elle est reconstituée à partir du diff de la branche et du code actuel ; la version initiale de la page n’a pas été retrouvée dans l’historique consulté.
+Cette étude décrit les corrections d’accessibilité de `SyTable` apportées par la PR #2622, à la suite de l’audit de Julien (STD-177).
 
 Le périmètre principal est `SyTable`, ses stories et sa documentation. Des corrections concernent aussi les composants partagés `TableHeader`, `OrganizeColumns`, `SyTablePagination` et `SyPagination`. L’alignement complet de `SyServerTable` reste prévu dans une autre PR : le déplacement de `useTableStatus` dans `Tables/common` prépare sa réutilisation sans l’activer pour ce composant.
 
@@ -57,4 +57,28 @@ Les stories sont également corrigées : les boutons de dépliage exposent leur 
 - Les surcharges CSS ciblant uniquement `.sy-pagination a` doivent couvrir les boutons si elles s’appliquent à `SyTable`.
 - Une légende descriptive reste nécessaire, y compris lorsqu’elle est masquée ; utiliser des légendes distinctes pour plusieurs tableaux.
 - Les changements de contrat et la conduite à tenir sont consignés dans `dev/ReleasesAlerts/v1.2.2.md`.
+
+## Reste à faire
+
+Ces points sortent du périmètre de la PR. Chacun doit faire l’objet d’une carte d’étude, dont le lien est à reporter ici et dans la description de la PR.
+
+### `SyServerTable` : aligner l’accessibilité sur `SyTable`
+
+`SyServerTable` partage `TableHeader`, `SyTablePagination` et `useTableAria` avec `SyTable`, mais n’a pas reçu les corrections :
+
+- la ligne de filtres utilise encore des `th`, dont un `th` vide pour la colonne de sélection (`empty-table-header`) ;
+- les colonnes techniques de sélection et de dépliage n’ont pas d’intitulé pour les lecteurs d’écran ;
+- les en-têtes de colonnes n’ont pas `scope="col"` ;
+- la pagination garde le nom générique « Navigation de pagination » et des liens `href="#"` : plusieurs tableaux sur une même page produisent des `nav` de même nom (`landmark-unique`) ;
+- la zone de statut annonce seulement « N lignes trouvées » (`useTableAria`) au lieu de `useTableStatus` ;
+- la poignée de redimensionnement n’annonce pas la largeur de la colonne (`announceWidth` non transmis) ;
+- les commandes d’en-tête restent masquées par `aria-hidden` hors focus (`keepHeaderControlsAccessible` non activé).
+
+`useTableStatus` est déjà placé dans `Tables/common` pour être réutilisé. Ce changement modifiera le HTML de la pagination de `SyServerTable` : il devra être signalé dans les notes de version, comme pour `SyTable`.
+
+Une fois les deux composants alignés, les options de compatibilité ajoutées à `useTableAria` (`announceRowCount`, `keepHeaderControlsAccessible`) et le calcul de `statusMessage` pourront être retirés.
+
+### `SyTable` : vérification manuelle sous NVDA
+
+Vérifier en mode navigation (sans focus sur la poignée) que la largeur de colonne est bien restituée, ainsi que les annonces de la zone de statut après une pagination, un tri, un filtre et une sélection.
 
