@@ -68,7 +68,7 @@ const items = [
   { text: 'Option 3', value: '3' },
 ]
 
-const selectRef = ref(null)
+const selectRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
 onMounted(() => {
   selectRef.value?.validateOnSubmit()
@@ -534,8 +534,8 @@ const items = [
 	{ text: 'Option 3', value: '3' },
 ]
 
-const value1 = ref(null)
-const value2 = ref(null)
+const value1 = ref<string | null>(null)
+const value2 = ref<string | null>(null)
 </script>`,
 			},
 		],
@@ -547,8 +547,8 @@ const value2 = ref(null)
 		return {
 			components: { SySelect },
 			setup() {
-				const value1 = ref(null)
-				const value2 = ref(null)
+				const value1 = ref<string | null>(null)
+				const value2 = ref<string | null>(null)
 				return { args, value1, value2 }
 			},
 			template: `
@@ -716,8 +716,8 @@ import { ref } from 'vue'
 import { SySelect } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
-const value = ref('')
-const selectRef = ref(null)
+const value = ref<string | null>('')
+const selectRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 const items = [
   { text: 'Option 1', value: '1' },
   { text: 'Option 2', value: '2' },
@@ -814,7 +814,7 @@ import { ref } from 'vue'
 import { SySelect, SyForm } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 
-const value = ref(null)
+const value = ref<string | null>(null)
 const items = [
   { text: 'Option 1', value: '1' },
   { text: 'Option 2', value: '2' },
@@ -842,7 +842,7 @@ function onSubmit(event: { isValid: boolean }) {
 	render: args => ({
 		components: { SySelect, SyForm, VBtn },
 		setup() {
-			const value = ref(null)
+			const value = ref<string | null>(null)
 
 			function onSubmit(event: { isValid: boolean }) {
 				if (event.isValid) {
