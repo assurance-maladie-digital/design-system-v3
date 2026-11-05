@@ -234,7 +234,7 @@ describe('adaptCustomRulesWithStringFallback', () => {
 		expect(warnSpy.mock.calls[0][0]).toContain('résultat n\'est pas modifié')
 	})
 
-	it('rappelle la règle avec la chaîne quand la promesse est rejetée sur un Date', async () => {
+	it('rappelle la règle avec la chaîne quand la promesse est rejetée avec une TypeError sur un Date', async () => {
 		const receivedValue: unknown[] = []
 		const rules: DatePickerRule[] = [
 			{
@@ -243,7 +243,7 @@ describe('adaptCustomRulesWithStringFallback', () => {
 					validate: (value: unknown) => {
 						receivedValue.push(value)
 						if (value instanceof Date) {
-							return Promise.reject(new Error('TypeError simulée'))
+							return Promise.reject(new TypeError('value.includes is not a function'))
 						}
 						return Promise.resolve(true)
 					},
@@ -364,6 +364,85 @@ describe('adaptCustomRulesWithStringFallback', () => {
 		const wrapped = adaptCustomRulesWithStringFallback(rules, 'DD/MM/YYYY')
 		expect(wrapped[0].options!.validate).not.toBe(originalValidate)
 		expect(rules[0].options!.validate).toBe(originalValidate)
+	})
+
+	it('propage le rejet sans repli quand la promesse rejette avec une erreur métier', async () => {
+		const receivedValue: unknown[] = []
+		const rules: DatePickerRule[] = [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: unknown) => {
+						receivedValue.push(value)
+						return Promise.reject(new Error('serveur indisponible'))
+					},
+				},
+			},
+		]
+
+		const wrapped = adaptCustomRulesWithStringFallback(rules, 'DD/MM/YYYY')
+		const validateFn = wrapped[0].options!.validate!
+
+		// Pas de second appel : un rejet métier n'est pas rappelé (évite de
+		// doubler des effets de bord, ex. un appel HTTP, en production)
+		await expect(validateFn(new Date('2026-03-15T12:00:00'))).rejects.toThrow('serveur indisponible')
+		expect(receivedValue).toHaveLength(1)
+	})
+
+	it('propage l\'exception sans repli quand elle n\'est pas une TypeError', () => {
+		const receivedValue: unknown[] = []
+		const rules: DatePickerRule[] = [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: unknown) => {
+						receivedValue.push(value)
+						throw new Error('échec métier')
+					},
+				},
+			},
+		]
+
+		const wrapped = adaptCustomRulesWithStringFallback(rules, 'DD/MM/YYYY')
+		const validateFn = wrapped[0].options!.validate!
+
+		expect(() => validateFn(new Date('2026-03-15T12:00:00'))).toThrow('échec métier')
+		expect(receivedValue).toHaveLength(1)
+	})
+
+	it('émet chaque type d\'avertissement une fois par règle', () => {
+		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
+		let callCount = 0
+		const rules: DatePickerRule[] = [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: unknown) => {
+						callCount++
+						if (callCount === 1) {
+							// Premier appel : invalide sur Date mais valide sur chaîne → sonde
+							return value === '15/03/2026'
+						}
+						// Appels suivants : lève une TypeError sur Date → repli
+						if (value instanceof Date) {
+							throw new TypeError('value.includes is not a function')
+						}
+						return true
+					},
+				},
+			},
+		]
+
+		const wrapped = adaptCustomRulesWithStringFallback(rules, 'DD/MM/YYYY')
+		const validateFn = wrapped[0].options!.validate!
+		const date = new Date('2026-03-15T12:00:00')
+
+		expect(validateFn(date)).toBe(false)
+		expect(validateFn(date)).toBe(true)
+
+		const messages = warnSpy.mock.calls.map(call => call[0])
+		expect(messages.some(m => m.includes('attend probablement une chaîne'))).toBe(true)
+		expect(messages.some(m => m.includes('rappelée avec la chaîne formatée'))).toBe(true)
 	})
 
 	it('propage l\'exception sans repli quand la valeur n\'est pas un Date', () => {

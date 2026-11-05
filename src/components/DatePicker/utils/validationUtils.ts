@@ -82,8 +82,10 @@ export const adaptCustomRules = (rules: DatePickerRule[] = [], format: string): 
  *
  * Correctif transitoire non cassant : la règle est d'abord appelée avec la valeur
  * d'origine (les règles écrites pour un `Date` continuent de fonctionner à l'identique) ;
- * si elle lève une exception ou rejette une promesse, elle est rappelée avec la chaîne
- * formatée et un avertissement est émis en développement.
+ * si elle lève une `TypeError` (ou rejette une promesse avec une `TypeError`), elle est
+ * rappelée avec la chaîne formatée et un avertissement est émis en développement.
+ * Les autres exceptions et rejets (métier, réseau…) sont propagés sans rappel pour
+ * ne pas doubler d'éventuels effets de bord en production.
  *
  * En développement uniquement, une sonde détecte aussi les règles dont le résultat
  * diffère selon le type (invalide sur `Date` mais valide sur la chaîne formatée) et
@@ -93,9 +95,11 @@ export const adaptCustomRules = (rules: DatePickerRule[] = [], format: string): 
  * @param format - Format utilisé pour convertir le `Date` en chaîne (`toISOString` si vide)
  * @returns Règles enveloppées (les règles non-custom sont retournées inchangées)
  */
-// Les règles sont ré-enveloppées à chaque validation : ce WeakSet garantit que
-// l'avertissement dev n'est émis qu'une seule fois par fonction de validation d'origine.
+// Les règles sont ré-enveloppées à chaque validation : ces WeakSets garantissent que
+// chaque avertissement dev n'est émis qu'une seule fois par fonction de validation
+// d'origine (un pour le repli sur exception, un pour la sonde de divergence).
 const fallbackWarnedValidates = new WeakSet<(...args: unknown[]) => unknown>()
+const probeWarnedValidates = new WeakSet<(...args: unknown[]) => unknown>()
 
 export const adaptCustomRulesWithStringFallback = (rules: DatePickerRule[] = [], format: string): DatePickerRule[] => {
 	return rules.map((rule) => {
@@ -110,15 +114,16 @@ export const adaptCustomRulesWithStringFallback = (rules: DatePickerRule[] = [],
 				? (format ? formatDate(dayjs(val), format) : val.toISOString())
 				: val
 
-		const warnOnce = (message: string) => {
-			if (!fallbackWarnedValidates.has(originalValidate)) {
-				fallbackWarnedValidates.add(originalValidate)
+		const warnOnce = (warnedSet: WeakSet<(...args: unknown[]) => unknown>, message: string) => {
+			if (!warnedSet.has(originalValidate)) {
+				warnedSet.add(originalValidate)
 				devWarn(message)
 			}
 		}
 
 		const retryWithFormattedString = (val: unknown) => {
 			warnOnce(
+				fallbackWarnedValidates,
 				'[DatePicker] Une règle personnalisée a levé une exception sur un objet Date '
 				+ 'et a été rappelée avec la chaîne formatée. Ce repli est transitoire : '
 				+ 'gérez les deux types dans la règle (ex : via parseDate).',
@@ -138,6 +143,7 @@ export const adaptCustomRulesWithStringFallback = (rules: DatePickerRule[] = [],
 				const report = (retryResult: unknown) => {
 					if (retryResult === true) {
 						warnOnce(
+							probeWarnedValidates,
 							'[DatePicker] Une règle personnalisée renvoie un résultat invalide sur un objet Date '
 							+ 'mais valide sur la chaîne formatée : elle attend probablement une chaîne. '
 							+ 'Le résultat n\'est pas modifié ; gérez les deux types dans la règle (ex : via parseDate).',
@@ -175,14 +181,25 @@ export const adaptCustomRulesWithStringFallback = (rules: DatePickerRule[] = [],
 									}
 									return resolved
 								})
-								.catch(() => retryWithFormattedString(val))
+								.catch((error) => {
+									// Le repli ne s'applique qu'aux erreurs de type : un rejet
+									// métier (réseau, refus serveur…) n'est pas rappelé pour
+									// éviter de doubler des effets de bord en production.
+									if (!(error instanceof TypeError)) {
+										throw error
+									}
+									return retryWithFormattedString(val)
+								})
 						}
 						if (result !== true) {
 							probeStringResult(val)
 						}
 						return result
 					}
-					catch {
+					catch (error) {
+						if (!(error instanceof TypeError)) {
+							throw error
+						}
 						return retryWithFormattedString(val)
 					}
 				},
