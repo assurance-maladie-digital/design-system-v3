@@ -31,6 +31,26 @@ describe('SyPagination - Visual regression tests', () => {
 		cy.matchImageSnapshot('sy-pagination-middle-page', cy.get('.sy-pagination'))
 	})
 
+	it('styles non-interactive ellipses in button mode', () => {
+		cy.mountWithVuetify(SyPagination, {
+			props: { modelValue: 5, pages: 10, buttonMode: true },
+		})
+
+		cy.get('span.ellipsis').should('be.visible').and('have.css', 'display', 'inline-block')
+		cy.get('span.ellipsis').first().then(($ellipsis) => {
+			const element = $ellipsis[0]
+			const style = getComputedStyle(element)
+			const rem = Number.parseFloat(getComputedStyle(element.ownerDocument.documentElement).fontSize)
+			expect(Number.parseFloat(style.paddingLeft)).to.be.closeTo(0.6 * rem, 0.01)
+			expect(Number.parseFloat(style.paddingTop)).to.be.closeTo(0.6 * rem, 0.01)
+			const probe = element.ownerDocument.createElement('span')
+			probe.style.color = style.getPropertyValue('--pagination-ellipsis')
+			element.append(probe)
+			expect(style.color).to.equal(getComputedStyle(probe).color)
+			probe.remove()
+		})
+	})
+
 	it('displays pagination with label', () => {
 		cy.mountWithVuetify(SyPagination, {
 			props: {
