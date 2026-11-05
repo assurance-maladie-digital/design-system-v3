@@ -132,7 +132,7 @@ Pistes proposées :
 
 ## Décisions
 
-1. **Contrat `--sy-table-row-bg`** : retenu, documenté dans `SyTable.mdx` / `SyServerTable.mdx` et dans `dev/ReleasesAlerts/v1.2.1.md`.
+1. **Contrat `--sy-table-row-bg`** : retenu, documenté dans `SyTable.mdx` / `SyServerTable.mdx` et dans `dev/ReleasesAlerts/v1.2.1/SyTable/colonnes-epinglees-et-defilement.md`.
 2. **Couleur des cases décochées** : `primary` conservé (comportement actuel, aucun changement visuel), personnalisable par `--sy-table-checkbox-color`.
 3. **Indication de scroll** : traitée dans cette PR (#2706), avec un indicateur sur chaque bord. Forme validée ; réglable par `--sy-table-pinned-left-shadow` / `--sy-table-pinned-right-shadow`.
 
@@ -160,7 +160,7 @@ Pistes proposées :
   - couleur des cases à cocher dans les tableaux (inchangée : `primary` conservé, cf. Décisions) ;
   - survol `clickable-row` ;
   - baselines Cypress `SyTable.visual.cy.ts` / `SyServerTable.visual.cy.ts` ;
-  - projets ayant déjà contourné le problème avec `!important` (signalé dans `dev/ReleasesAlerts/v1.2.1.md`) ;
+  - projets ayant déjà contourné le problème avec `!important` (signalé dans `dev/ReleasesAlerts/v1.2.1/SyTable/colonnes-epinglees-et-defilement.md`) ;
   - ombre des colonnes épinglées de `SyServerTable`, désormais visible (`grey-base`) ;
   - indicateur de défilement : nouvel élément visuel sur tous les tableaux qui débordent, au-dessus des cellules et des en-têtes épinglés (`z-index` de l'en-tête épinglé + 1), `.v-table` passé en `position: relative` ;
   - mise à jour de l'état de défilement : `ResizeObserver` et `requestAnimationFrame` remplacent le throttle (ombres des colonnes épinglées comprises).
