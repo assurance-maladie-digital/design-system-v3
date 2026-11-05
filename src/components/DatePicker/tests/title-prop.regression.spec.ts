@@ -33,7 +33,7 @@ describe('prop title — régression', () => {
 			await wrapper.find('input').trigger('click')
 			await flushPromises()
 
-			const menuContainer = document.querySelector<HTMLElement>('[role="presentation"]')
+			const menuContainer = document.querySelector<HTMLElement>('[data-testid="date-picker-menu"]')
 			expect(menuContainer).not.toBeNull()
 			expect(menuContainer?.getAttribute('title')).toBeNull()
 
@@ -51,7 +51,7 @@ describe('prop title — régression', () => {
 			await wrapper.find('input').trigger('click')
 			await flushPromises()
 
-			const menuContainer = document.querySelector<HTMLElement>('[role="presentation"]')
+			const menuContainer = document.querySelector<HTMLElement>('[data-testid="date-picker-menu"]')
 			expect(menuContainer?.getAttribute('title')).toBe('Saisir la date de naissance')
 
 			wrapper.unmount()
@@ -141,13 +141,34 @@ describe('prop title — régression', () => {
 		})
 	})
 
-	it('ne génère aucun title quand la prop n\'est pas renseignée (défaut false)', () => {
-		const wrapper = mount(DatePicker, {
-			props: { label: 'Date de naissance', placeholder: 'JJ/MM/AAAA' },
+	describe('prop title non renseignée (défaut false)', () => {
+		it('ne génère aucun title sur le champ ni le conteneur du calendrier', async () => {
+			const wrapper = mount(DatePicker, {
+				props: { label: 'Date de naissance', placeholder: 'JJ/MM/AAAA' },
+				attachTo: document.body,
+			})
+
+			expect(wrapper.find('input').attributes('title')).toBeUndefined()
+
+			await wrapper.find('input').trigger('click')
+			await flushPromises()
+
+			const menuContainer = document.querySelector<HTMLElement>('[data-testid="date-picker-menu"]')
+			expect(menuContainer).not.toBeNull()
+			expect(menuContainer?.getAttribute('title')).toBeNull()
+
+			wrapper.unmount()
 		})
 
-		expect(wrapper.find('input').attributes('title')).toBeUndefined()
+		it('ne génère aucun title sur le champ ni l\'activateur en mode combiné', () => {
+			const wrapper = mount(DatePicker, {
+				props: { label: 'Date de naissance', placeholder: 'JJ/MM/AAAA', useCombinedMode: true },
+			})
 
-		wrapper.unmount()
+			expect(wrapper.find('input').attributes('title')).toBeUndefined()
+			expect(wrapper.find('.date-text-input-activator').attributes('title')).toBeUndefined()
+
+			wrapper.unmount()
+		})
 	})
 })

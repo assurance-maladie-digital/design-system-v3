@@ -57,6 +57,7 @@
 	import type { CalendarModeDatePickerPublicApi, CalendarModeProps, DateObjectValue } from '../types'
 	import { DatePickerCommonDefaults } from '../types'
 	import { formatDateRangeDisplay, getDisplayedMonthYearState, resolveDatePickerStateFromModelValue } from '../utils/dateFormattingUtils'
+	import { resolveTitle } from '../utils/titleUtils'
 	import { isModelValueEqual } from '../utils/validationUtils'
 	import { buildCalendarModeComplexDatePickerProps } from './props/buildCalendarModeComplexDatePickerProps'
 	import { buildCalendarModeDateTextInputProps } from './props/buildCalendarModeDateTextInputProps'
@@ -942,7 +943,8 @@
 				:offset="[-20, 5]"
 				content-class="date-picker-overlay-content"
 				role="presentation"
-				:title="props.title === false ? undefined : props.title || props.placeholder || locales.label"
+				data-testid="date-picker-menu"
+				:title="resolveTitle(props.title, props.placeholder, locales.label)"
 			>
 				<template #activator="{ props: menuProps }">
 					<div
