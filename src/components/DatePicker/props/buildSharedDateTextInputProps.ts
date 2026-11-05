@@ -39,7 +39,7 @@ export const buildSharedDateTextInputProps = (
 	'display-asterisk': props.displayAsterisk,
 	'is-validate-on-blur': props.isValidateOnBlur,
 	'max-errors': props.maxErrors,
-	'title': props.title || props.placeholder || undefined,
+	'title': props.title === false ? props.title : props.title || props.placeholder || undefined,
 	'hint': props.hint,
 	'persistent-hint': props.persistentHint,
 	'use-vuetify-validation': props.useVuetifyValidation,
