@@ -27,6 +27,13 @@ if (isDev) {
 const config: StorybookConfig = {
 	stories,
 	staticDirs: ['./public'],
+	features: {
+		// Hide the "Get started" onboarding checklist card in the sidebar.
+		sidebarOnboardingChecklist: false,
+		// Needed by '@storybook/addon-mcp'
+		componentsManifest: true,
+		experimentalDocgenServer: true,
+	},
 	// Le manager est bundlé à part : la décision lui passe par le <head>.
 	managerHead: head => `${head}<meta name="synapse-conformite" content="${showConformitePanel}">`,
 	addons: [
@@ -44,6 +51,7 @@ const config: StorybookConfig = {
 				},
 			},
 		},
+		'@storybook/addon-mcp',
 	],
 	framework: {
 		name: '@storybook/vue3-vite',
@@ -68,9 +76,6 @@ const config: StorybookConfig = {
 				exclude: [
 					'@storybook/addon-docs',
 					'@storybook/addon-docs/preview',
-					'@storybook/addon-docs/blocks',
-					'@storybook/addon-essentials/docs/preview',
-					'@storybook/addon-essentials/docs/mdx-react-shim',
 					'@storybook/addon-docs/blocks',
 					'@storybook/vue3/dist/entry-preview-docs.mjs',
 				],
