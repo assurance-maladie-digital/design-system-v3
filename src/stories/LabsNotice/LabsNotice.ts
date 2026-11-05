@@ -6,7 +6,8 @@ export const createLabsNotice = () => ({
 		template: `
           <SyAlert type="info" variant="tonal" class="mb-4" role="note" :closable="false">
             <b>Composant Labs</b> : ce composant est en cours de validation.
-            Son API (props, événements, slots) peut encore évoluer dans une version mineure ; chaque changement est signalé dans les notes de version.
+            Son API (props, événements, slots) et son design peuvent encore évoluer dans une version mineure ; chaque changement est signalé dans les notes de version.
+            L'audit d'accessibilité n'a pas encore été réalisé.
             <a class="text-primary" href="/?path=/docs/labs-introduction--docs">En savoir plus sur les Labs</a>.
           </SyAlert>
         `,
