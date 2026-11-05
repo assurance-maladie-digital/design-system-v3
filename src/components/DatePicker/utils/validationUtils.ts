@@ -71,6 +71,15 @@ export const adaptCustomRules = (rules: DatePickerRule[] = [], format: string): 
 	})
 }
 
+// Les règles sont ré-enveloppées à chaque validation : ces WeakSets garantissent que
+// chaque avertissement dev n'est émis qu'une seule fois par fonction de validation
+// d'origine (un pour le repli sur exception synchrone, un pour le rejet de promesse,
+// un pour la sonde de divergence).
+const fallbackWarnedValidates = new WeakSet<(...args: unknown[]) => unknown>()
+const rejectionWarnedValidates = new WeakSet<(...args: unknown[]) => unknown>()
+const probeWarnedValidates = new WeakSet<(...args: unknown[]) => unknown>()
+const probedValidates = new WeakSet<(...args: unknown[]) => unknown>()
+
 /**
  * Enveloppe les règles personnalisées avec un repli « chaîne formatée ».
  *
@@ -101,14 +110,6 @@ export const adaptCustomRules = (rules: DatePickerRule[] = [], format: string): 
  * @param format - Format utilisé pour convertir le `Date` en chaîne (`toISOString` si vide)
  * @returns Règles enveloppées (les règles non-custom sont retournées inchangées)
  */
-// Les règles sont ré-enveloppées à chaque validation : ces WeakSets garantissent que
-// chaque avertissement dev n'est émis qu'une seule fois par fonction de validation
-// d'origine (un pour le repli sur exception synchrone, un pour le rejet de promesse,
-// un pour la sonde de divergence).
-const fallbackWarnedValidates = new WeakSet<(...args: unknown[]) => unknown>()
-const rejectionWarnedValidates = new WeakSet<(...args: unknown[]) => unknown>()
-const probeWarnedValidates = new WeakSet<(...args: unknown[]) => unknown>()
-
 export const adaptCustomRulesWithStringFallback = (rules: DatePickerRule[] = [], format: string): DatePickerRule[] => {
 	return rules.map((rule) => {
 		if (rule.type !== 'custom' || !rule.options?.validate) {
@@ -144,9 +145,12 @@ export const adaptCustomRulesWithStringFallback = (rules: DatePickerRule[] = [],
 		// jamais modifier le résultat renvoyé (librairie publique : pas de
 		// substitution de résultat sur la base d'une heuristique).
 		const probeStringResult = (val: unknown): void => {
-			if (!import.meta.env.DEV) {
+			// Une seule exécution de la sonde par règle : évite de rappeler à chaque
+			// validation une règle synchrone ayant des effets de bord.
+			if (!import.meta.env.DEV || probedValidates.has(originalValidate)) {
 				return
 			}
+			probedValidates.add(originalValidate)
 			try {
 				const report = (retryResult: unknown) => {
 					if (retryResult === true) {

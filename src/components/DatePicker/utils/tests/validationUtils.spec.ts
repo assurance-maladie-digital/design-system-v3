@@ -305,6 +305,32 @@ describe('adaptCustomRulesWithStringFallback', () => {
 		expect(warnSpy).not.toHaveBeenCalled()
 	})
 
+	it('sonde dev : ne rappelle la règle synchrone qu\'une seule fois au-delà du premier résultat invalide', () => {
+		vi.spyOn(console, 'warn').mockImplementation(() => {})
+		let callCount = 0
+		const rules: DatePickerRule[] = [
+			{
+				type: 'custom',
+				options: {
+					validate: () => {
+						callCount++
+						return false
+					},
+				},
+			},
+		]
+
+		const wrapped = adaptCustomRulesWithStringFallback(rules, 'DD/MM/YYYY')
+		const validateFn = wrapped[0].options!.validate!
+
+		validateFn(new Date('2026-03-15T12:00:00'))
+		expect(callCount).toBe(2)
+
+		validateFn(new Date('2026-03-16T12:00:00'))
+		validateFn(new Date('2026-03-17T12:00:00'))
+		expect(callCount).toBe(4)
+	})
+
 	it('sonde dev : ne se lance pas sur une règle asynchrone (un second appel doublerait un effet de bord réseau)', async () => {
 		const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {})
 		let callCount = 0
