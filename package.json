@@ -94,7 +94,7 @@
     "@storybook/vue3-vite": "10.6.3",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@stylistic/stylelint-config": "^3.0.0",
-    "@tsconfig/node22": "^22.0.6",
+    "@tsconfig/node24": "^24.0.0",
     "@types/node": "^22.20.5",
     "@types/react": "^19.2.17",
     "@typescript-eslint/parser": "^8.11.0",
