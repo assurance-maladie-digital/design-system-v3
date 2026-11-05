@@ -139,11 +139,14 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
+					import { ref } from 'vue'
 					import { SySelect } from '@cnamts/synapse'
+
+					const value = ref<string | null>(null)
 					
 					const items =  [
 						{ text: 'Lorem Ipsum is simply dummy text of the printing and typesetting', value: 'Adrien' },
-						{ text: 'Industry. Lorem Ipsum has been the industry's standard dummy', value: 'Axel' },
+						{ text: "Industry. Lorem Ipsum has been the industry's standard dummy", value: 'Axel' },
 						{ text: 'Text ever since the 1500s, when an unknown printer took a galley', value: 'Baptiste' },
 						{ text: 'Of type and scrambled it to make a type specimen book. It has', value: 'Clement' },
 						{ text: 'Survived not only five centuries, but also the leap into electronic', value: 'Corentin' },
@@ -152,7 +155,7 @@ export const Default: Story = {
 						{ text: 'Expositas semper eius modi rumoribus et patentes, varia', value: 'Eloi' },
 						{ text: 'Emensis itaque difficultatibus multis et nive obrutis callibus', value: 'Louis' },
 						{ text: 'Plurimis ubi prope Rauracum ventum est ad supercilia', value: 'Valentin' },
-					],
+					]
 				</script>
 				`,
 			},
@@ -218,7 +221,10 @@ export const HelpText: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
+					import { ref } from 'vue'
 					import { SySelect } from '@cnamts/synapse'
+
+					const value = ref<string | null>(null)
 					
 					const items =  [
 						{ text: 'Adrien', value: 'Adrien' },
@@ -231,7 +237,7 @@ export const HelpText: Story = {
 						{ text: 'Eloi', value: 'Eloi' },
 						{ text: 'Louis', value: 'Louis' },
 						{ text: 'Valentin', value: 'Valentin' },
-					],
+					]
 				</script>
 				`,
 			},
@@ -367,7 +373,7 @@ export const RequiredWithAsterisk: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import SySelect from '@cnamts/synapse'
+import { SySelect } from '@cnamts/synapse'
 
 const value = ref('')
 const items = [
@@ -637,7 +643,7 @@ export const MultipleSelection: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import SySelect from '@cnamts/synapse'
+import { SySelect } from '@cnamts/synapse'
 
 const selectedOptions = ref([])
 const options = [
@@ -725,7 +731,7 @@ export const ChipsDisplay: Story = {
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import SySelect from '@cnamts/synapse'
+import { SySelect } from '@cnamts/synapse'
 
 const selectedOptions = ref([])
 const options = [
@@ -791,12 +797,15 @@ export const WithCustomKey: Story = {
 				name: 'Script',
 				code: `
 					<script setup lang="ts">
+						import { ref } from 'vue'
 						import { SySelect } from '@cnamts/synapse'
+
+						const value = ref<string | null>(null)
 						
 						const items =  [
 							{ customKey: 'Choix 1', value: '1' },
 							{ customKey: 'Choix 2', value: '2' },
-						],
+						]
 					</script>
 					`,
 			},
