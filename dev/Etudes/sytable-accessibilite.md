@@ -56,7 +56,7 @@ Les stories sont également corrigées : les boutons de dépliage exposent leur 
 - Les tests E2E ciblant les liens de pagination de `SyTable` doivent cibler des boutons, avec un nom tel que « Page 2 ».
 - Les surcharges CSS ciblant uniquement `.sy-pagination a` doivent couvrir les boutons si elles s’appliquent à `SyTable`.
 - Une légende descriptive reste nécessaire, y compris lorsqu’elle est masquée ; utiliser des légendes distinctes pour plusieurs tableaux.
-- Les changements de contrat et la conduite à tenir sont consignés dans `dev/ReleasesAlerts/v1.2.2.md`.
+- Les changements de contrat et la conduite à tenir sont consignés dans `dev/ReleasesAlerts/v1.2.2/SyTable/pagination-boutons-et-annonces.md`.
 
 ## Reste à faire
 
