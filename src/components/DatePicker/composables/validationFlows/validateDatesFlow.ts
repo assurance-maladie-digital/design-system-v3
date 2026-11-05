@@ -3,6 +3,7 @@ import type { ValidationResult } from '@/composables/unifyValidation/useValidati
 import { locales } from '../../locales'
 import { emptyValidationResult, successValidationResult, requiredValidationResult } from './validationResultFactories'
 import { adaptCustomRulesWithStringFallback } from '../../utils/validationUtils'
+import type { DatePickerRule } from '../../types'
 import type { ValidationContext } from './types'
 
 /**
@@ -35,11 +36,11 @@ export function createValidateDatesFlow(ctx: ValidationContext) {
 	 * la saisie texte passe une chaîne (adaptCustomRules). Une règle écrite pour une
 	 * chaîne ne doit pas faire échouer une date valide (repli transitoire non cassant).
 	 */
-	const wrapRulesForDateFallback = <T extends typeof options.customRules.value>(rules: T): T =>
+	const wrapRulesForDateFallback = (rules: DatePickerRule[]): DatePickerRule[] =>
 		adaptCustomRulesWithStringFallback(
 			rules,
 			unref(options.returnFormat) || unref(options.displayFormat) || '',
-		) as T
+		)
 
 	/**
 	 * Détecte une sélection de plage incomplète en mode displayRange.

@@ -194,7 +194,8 @@ export const adaptCustomRulesWithStringFallback = (rules: DatePickerRule[] = [],
 											rejectionWarnedValidates,
 											'[DatePicker] Une règle personnalisée a rejeté une promesse avec une TypeError '
 											+ 'sur un objet Date : si elle attend une chaîne, gérez les deux types '
-											+ 'dans la règle (ex : via parseDate). Le rejet est propagé sans rappel '
+											+ 'dans la règle (ex : via parseDate) ; s\'il s\'agit d\'une erreur réseau '
+											+ '(fetch), ce message peut être ignoré. Le rejet est propagé sans rappel '
 											+ 'pour ne pas doubler un éventuel effet de bord (ex. appel réseau).',
 										)
 									}

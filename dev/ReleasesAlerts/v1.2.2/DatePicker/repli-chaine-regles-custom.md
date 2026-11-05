@@ -4,13 +4,13 @@ Selon le chemin de validation, les règles `custom` (`customRules`, `customWarni
 
 Désormais, quand la valeur validée est un `Date`, une règle qui lève une **`TypeError` de façon synchrone** est rappelée avec **la même chaîne formatée que celle transmise par la saisie texte** (format d'affichage, ou `dateFormatReturn` si `validateWithReturnFormat` est activé ; `toISOString()` en dernier recours) et le résultat de ce rappel est adopté. Les règles écrites pour un `Date` (`value.getFullYear()`, `instanceof`…) sont inchangées : elles reçoivent toujours le `Date`.
 
-**Aucun repli sur rejet de promesse.** Une `TypeError` rejetée peut venir de `fetch` (échec réseau ou CORS) comme d'une règle async écrite pour une chaîne : impossible de les distinguer, et rappeler doublerait un éventuel effet de bord (ex. un second appel HTTP). Tout rejet — métier, réseau, refus serveur — est donc **propagé sans rappel**. Conséquence : une règle **asynchrone** écrite pour une chaîne ne bénéficie pas du repli ; elle doit gérer les deux types (un avertissement en développement le signale).
+**Aucun repli sur rejet de promesse.** Une `TypeError` rejetée peut venir de `fetch` (échec réseau ou CORS) comme d'une règle async écrite pour une chaîne : impossible de les distinguer, et rappeler doublerait un éventuel effet de bord (ex. un second appel HTTP). Tout rejet — métier, réseau, refus serveur — est donc **propagé sans rappel**. Conséquence : une règle **asynchrone** écrite pour une chaîne n'est pas rappelée. Si elle rejette en `TypeError`, un avertissement dev le signale ; si elle renvoie un résultat invalide sans exception, **aucun avertissement n'est émis** — elle doit gérer les deux types.
 
 En développement uniquement, des avertissements `console.warn` préfixés `[DatePicker]` peuvent apparaître :
 
 - la règle a **levé une `TypeError`** de façon synchrone sur un `Date` et a été rappelée avec la chaîne formatée ;
 - la règle a **rejeté une promesse avec une `TypeError`** sur un `Date` : le rejet est propagé, l'avertissement invite à gérer les deux types ;
-- la règle renvoie un résultat **invalide sur le `Date` mais valide sur la chaîne** : elle attend probablement une chaîne. Le résultat n'est pas modifié dans ce cas, l'avertissement signale l'incohérence.
+- la règle **synchrone** renvoie un résultat **invalide sur le `Date` mais valide sur la chaîne** : elle attend probablement une chaîne. Le résultat n'est pas modifié dans ce cas, l'avertissement signale l'incohérence. Cette vérification n'a pas lieu sur les règles asynchrones (elle doublerait un éventuel effet de bord).
 
 Chaque avertissement n'est émis qu'une seule fois par règle. En production, rien ne change hormis le repli sur `TypeError` synchrone décrit ci-dessus.
 
