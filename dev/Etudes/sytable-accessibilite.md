@@ -64,6 +64,8 @@ Ces points sortent du périmètre de la PR. Chacun doit faire l’objet d’une 
 
 ### `SyServerTable` : aligner l’accessibilité sur `SyTable`
 
+Suivi : #2752.
+
 `SyServerTable` partage `TableHeader`, `SyTablePagination` et `useTableAria` avec `SyTable`, mais n’a pas reçu les corrections :
 
 - la ligne de filtres utilise encore des `th`, dont un `th` vide pour la colonne de sélection (`empty-table-header`) ;
