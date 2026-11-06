@@ -19,6 +19,10 @@
 	}
 }
 
+.v-field.v-field--variant-outlined.v-field--focused .v-field__outline {
+	--v-field-border-width: 3px !important;
+}
+
 // AP theme: inset the loader bar to match the larger field border-radius (12px)
 .theme-ap,
 .theme-ap2026 {
