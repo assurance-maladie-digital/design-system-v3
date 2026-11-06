@@ -444,7 +444,7 @@ la gestion et l'affichage des erreurs dans un champ, même si des règles de val
   <!-- Champ avec validation normale -->
   <MonthPicker
     v-model="value1"
-    label="Avec validation"
+    label="Mois de début (avec validation)"
     required
     :custom-rules="customRules"
   />
@@ -452,12 +452,37 @@ la gestion et l'affichage des erreurs dans un champ, même si des règles de val
   <!-- Champ avec gestion d'erreurs désactivée -->
   <MonthPicker
     v-model="value2"
-    label="Sans gestion d'erreurs"
+    label="Mois de début (sans gestion d'erreurs)"
     required
     disable-error-handling
     :custom-rules="customRules"
   />
 </template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+import { MonthPicker } from '@cnamts/synapse'
+
+const value1 = ref('')
+const value2 = ref('')
+
+const customRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value: string) => {
+        if (!value || !/^(0[1-9]|1[0-2])\\/\\d{4}$/.test(value)) {
+          return 'Le format doit être MM/AAAA avec un mois valide (ex: 03/2026).'
+        }
+        return true
+      },
+      fieldIdentifier: 'selectedMonth',
+    },
+  },
+]
+</script>`,
 			},
 		],
 	},
@@ -493,7 +518,7 @@ la gestion et l'affichage des erreurs dans un champ, même si des règles de val
 						<p class="text-subtitle-2 mb-2">Validation normale</p>
 						<MonthPicker
 							v-model="value1"
-							label="Mois de début"
+							label="Mois de début (avec validation)"
 							required
 							:custom-rules="customRules"
 						/>
@@ -503,7 +528,7 @@ la gestion et l'affichage des erreurs dans un champ, même si des règles de val
 						<p class="text-subtitle-2 mb-2">Sans gestion d'erreurs</p>
 						<MonthPicker
 							v-model="value2"
-							label="Mois de début"
+							label="Mois de début (sans gestion d'erreurs)"
 							required
 							disable-error-handling
 							:custom-rules="customRules"
@@ -629,11 +654,11 @@ des messages depuis le parent sans déclencher de règle de validation.
 		:success-messages="successMessages"
 		show-success-messages
 	/>
-	<div class="mt-4">
-		<VBtn @click="setError">Simuler une erreur</VBtn>
-		<VBtn @click="setWarning" class="ml-2">Simuler un avertissement</VBtn>
-		<VBtn @click="setSuccess" class="ml-2">Simuler un succès</VBtn>
-		<VBtn @click="reset" class="ml-2">Réinitialiser</VBtn>
+	<div class="mt-4 d-flex flex-wrap ga-2">
+		<VBtn color="error" @click="setError">Simuler une erreur</VBtn>
+		<VBtn color="warning" @click="setWarning">Simuler un avertissement</VBtn>
+		<VBtn color="success" @click="setSuccess">Simuler un succès</VBtn>
+		<VBtn @click="reset">Réinitialiser</VBtn>
 	</div>
 </template>`,
 			},
@@ -641,6 +666,7 @@ des messages depuis le parent sans déclencher de règle de validation.
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { VBtn } from 'vuetify/components'
 import { MonthPicker } from '@cnamts/synapse'
 
 const selectedMonth = ref('')
