@@ -306,6 +306,47 @@ const dateValue = ref('12/13/1564')
 	},
 }
 
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, ne pas utiliser `is-clearable`
+ * et répéter l'intitulé dans `help-text` pour qu'il reste lisible en entier.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<LunarCalendar
+		v-model="dateValue"
+		label="Date de naissance figurant sur votre acte de naissance"
+		help-text="Date de naissance figurant sur votre acte de naissance"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+
+const dateValue = ref('')
+</script>`,
+			},
+		],
+	},
+	args: {
+		modelValue: '',
+		label: 'Date de naissance figurant sur votre acte de naissance',
+		helpText: 'Date de naissance figurant sur votre acte de naissance',
+		isClearable: false,
+	},
+}
+
 export const HelpText: Story = {
 	parameters: {
 		sourceCode: [

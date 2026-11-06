@@ -203,6 +203,52 @@ export const Default: Story = {
 	},
 }
 
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, ne pas utiliser `clearable`
+ * et reprendre l'intitulé dans `help-text` pour qu'il reste lisible en entier.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+	],
+	args: {
+		'modelValue': '',
+		'label': 'Mois de début de votre arrêt de travail figurant sur votre prescription',
+		'helpText': 'Mois de début de votre arrêt de travail figurant sur votre prescription',
+		'clearable': false,
+		'onUpdate:modelValue': fn(),
+		'onUpdate:open': fn(),
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<MonthPicker
+						v-model="selectedMonth"
+						label="Mois de début de votre arrêt de travail figurant sur votre prescription"
+						help-text="Mois de début de votre arrêt de travail figurant sur votre prescription"
+					/>
+				</template>
+				`,
+			}, {
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { MonthPicker } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const selectedMonth = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+}
+
 export const Required: Story = {
 	args: {
 		'modelValue': '',

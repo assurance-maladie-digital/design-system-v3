@@ -321,6 +321,50 @@ const customRules = [
 	},
 }
 
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : ne pas utiliser `is-clearable` pour libérer de la place
+ * dans le champ. Le composant n'expose pas `help-text` : si l'intitulé est personnalisé via `locales`
+ * (`image.textfieldLabel`), il doit rester court et explicite.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+	],
+	args: {
+		...Default.args,
+		isClearable: false,
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+    <VCard class="pa-8" max-width="600">
+        <Captcha
+			url-create="..."
+			url-get-image="..."
+			url-get-audio="/..."
+			:is-clearable="false"
+		/>
+    </VCard>
+</template>
+                `,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { Captcha } from '@cnamts/synapse'
+import { VCard } from 'vuetify/components'
+</script>
+                `,
+			},
+		],
+	},
+}
+
 export const Choice: Story = {
 	args: {
 		'onUpdate:modelValue': fn(),

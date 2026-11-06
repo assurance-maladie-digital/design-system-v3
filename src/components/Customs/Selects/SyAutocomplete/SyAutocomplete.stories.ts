@@ -253,6 +253,69 @@ export const Default: Story = {
 	},
 }
 
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, ne pas utiliser `clearable`
+ * et reprendre l'intitulé dans `help-text` pour qu'il reste lisible en entier.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyAutocomplete
+						v-model="selectedValue"
+						:items="items"
+						label="Prénom du professionnel de santé figurant sur votre ordonnance"
+						help-text="Prénom du professionnel de santé figurant sur votre ordonnance"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyAutocomplete } from '@cnamts/synapse'
+
+					const selectedValue = ref('')
+					const items = [
+						{ text: 'Adrien', value: 'Adrien' },
+						{ text: 'Axel', value: 'Axel' },
+						{ text: 'Baptiste', value: 'Baptiste' },
+					]
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		items: sampleItems,
+		label: 'Prénom du professionnel de santé figurant sur votre ordonnance',
+		helpText: 'Prénom du professionnel de santé figurant sur votre ordonnance',
+		clearable: false,
+	},
+	render: (args) => {
+		return {
+			components: { SyAutocomplete },
+			setup() {
+				const selectedValue = ref('')
+				return { args, selectedValue }
+			},
+			template: `
+				<div style="max-width: 320px;">
+					<SyAutocomplete
+						v-model="selectedValue"
+						v-bind="args"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
 export const HelpText: Story = {
 	parameters: {
 		sourceCode: [

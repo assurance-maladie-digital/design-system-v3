@@ -1262,3 +1262,56 @@ const value = ref('42')
 		],
 	},
 }
+
+export const MobileAccessibilityGuideline: Story = {
+	parameters: {
+		docs: {
+			description: {
+				story: 'Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : lorsque l\'intitulé est long, il peut être tronqué. N\'utilisez pas `is-clearable` (le bouton réduit la largeur disponible) et répétez l\'intitulé dans `help-text` pour qu\'il reste lisible en entier sous le champ.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyTextField
+		v-model="value"
+		label="Numéro de dossier figurant en haut à droite de votre courrier de notification"
+		help-text="Numéro de dossier figurant en haut à droite de votre courrier de notification"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+
+const value = ref('')
+</script>`,
+			},
+		],
+	},
+	args: {
+		label: 'Numéro de dossier figurant en haut à droite de votre courrier de notification',
+		helpText: 'Numéro de dossier figurant en haut à droite de votre courrier de notification',
+		isClearable: false,
+		modelValue: '',
+	},
+	render: (args) => {
+		return {
+			components: { SyTextField },
+			setup() {
+				const value = ref(args.modelValue)
+				return { args, value }
+			},
+			template: `
+				<div style="max-width: 320px;">
+					<SyTextField v-bind="args" v-model="value" />
+				</div>
+			`,
+		}
+	},
+}

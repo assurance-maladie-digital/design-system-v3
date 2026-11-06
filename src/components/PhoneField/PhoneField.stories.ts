@@ -388,6 +388,53 @@ const phoneNumber = ref('')
 	},
 }
 
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, ne pas utiliser `is-clearable`
+ * et fournir un `help-text` reprenant l'intitulé pour qu'il reste lisible en entier.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+	],
+	parameters: {
+		a11y: {
+			disable: false,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="modelValue"
+						help-text="Numéro de téléphone sur lequel vous souhaitez être contacté"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PhoneField } from '@cnamts/synapse'
+					
+					const modelValue = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		helpText: 'Numéro de téléphone sur lequel vous souhaitez être contacté',
+		isClearable: false,
+	} as Record<string, unknown>,
+}
+
 export const HelpText: Story = {
 	parameters: {
 		a11y: {

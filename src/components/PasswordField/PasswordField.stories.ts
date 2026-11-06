@@ -320,6 +320,51 @@ export const ReadOnly: Story = {
 	},
 }
 
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, ne pas utiliser `clearable`
+ * et répéter l'intitulé dans `help-text` pour qu'il reste lisible en entier.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PasswordField
+						v-model="password"
+						label="Mot de passe de votre compte utilisé pour accéder à vos remboursements"
+						help-text="Mot de passe de votre compte utilisé pour accéder à vos remboursements"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PasswordField } from '@cnamts/synapse'
+					
+					const password = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		label: 'Mot de passe de votre compte utilisé pour accéder à vos remboursements',
+		helpText: 'Mot de passe de votre compte utilisé pour accéder à vos remboursements',
+		clearable: false,
+	},
+}
+
 export const HelpText: Story = {
 	parameters: {
 		sourceCode: [

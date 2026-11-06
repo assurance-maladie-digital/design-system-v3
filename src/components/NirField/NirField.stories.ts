@@ -614,6 +614,53 @@ export const WithoutKey: Story = {
 	},
 }
 
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec des intitulés longs, ne pas utiliser `clearable`
+ * et reprendre l'intitulé dans `help-text` pour qu'il reste lisible en entier.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+    <template>
+     <NirField
+      v-model="value"
+      number-label="Numéro de sécurité sociale figurant sur votre carte Vitale"
+      key-label="Clé de validation"
+      help-text="Numéro de sécurité sociale figurant sur votre carte Vitale"
+     />
+    </template>
+    `,
+			},
+			{
+				name: 'Script',
+				code: `
+    <script setup lang="ts">
+     import { NirField } from '@cnamts/synapse'
+     import { ref } from 'vue'
+     
+     const value = ref('')
+    </script>
+    `,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		numberLabel: 'Numéro de sécurité sociale figurant sur votre carte Vitale',
+		helpText: 'Numéro de sécurité sociale figurant sur votre carte Vitale',
+		clearable: false,
+	},
+}
+
 export const WithHelpText: Story = {
 	parameters: {
 		docs: {

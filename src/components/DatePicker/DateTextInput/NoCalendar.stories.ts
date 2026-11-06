@@ -358,6 +358,57 @@ export const Default: Story = {
 	},
 }
 
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, reprendre l'intitulé dans
+ * `hint` (avec `persistent-hint`) pour qu'il reste lisible en entier. Le composant n'expose pas `clearable`.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const date = ref<string | null>(null)
+				</script>
+				`,
+			},
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						format="DD/MM/YYYY"
+						placeholder="JJ/MM/AAAA"
+						label="Date de début de votre arrêt de travail (JJ/MM/AAAA)"
+						hint="Date de début de votre arrêt de travail (JJ/MM/AAAA)"
+						persistent-hint
+						:no-calendar="true"
+					/>
+				</template>
+				`,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		required: false,
+		label: 'Date de début de votre arrêt de travail (JJ/MM/AAAA)',
+		hint: 'Date de début de votre arrêt de travail (JJ/MM/AAAA)',
+		persistentHint: true,
+	} as typeof Default.args,
+}
+
 export const Required: Story = {
 	parameters: {
 		sourceCode: [
