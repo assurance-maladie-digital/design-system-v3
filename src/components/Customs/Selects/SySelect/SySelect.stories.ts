@@ -187,7 +187,7 @@ export const Default: Story = {
 		return {
 			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				return { args, value }
 			},
 			template: `
@@ -271,7 +271,7 @@ export const HelpText: Story = {
 		return {
 			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				return { args, value }
 			},
 			template: `
@@ -308,7 +308,7 @@ export const Required: Story = {
 				<script setup lang="ts">
 					import { ref } from 'vue'
 					import { SySelect } from '@cnamts/synapse'
-					const value = ref(null)
+					const value = ref<string | null>(null)
 					const items =  [
 						{ text: 'Option 1', value: '1' },
 						{ text: 'Option 2', value: '2' },
@@ -330,7 +330,7 @@ export const Required: Story = {
 		return {
 			components: { SySelect },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				return { args, value }
 			},
 			template: `
@@ -396,7 +396,7 @@ const items = [
 		return {
 			components: { SySelect },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				return { args, value }
 			},
 			template: `
@@ -434,7 +434,7 @@ export const SlotPrepend: Story = {
 					import { ref } from 'vue'
 					import { SySelect } from '@cnamts/synapse'
 
-					const value = ref(null)
+					const value = ref<string | null>(null)
 					const items = [
 						{ text: 'Option 1', value: '1' },
 						{ text: 'Option 2', value: '2' },
@@ -458,7 +458,7 @@ export const SlotPrepend: Story = {
 		return {
 			components: { SySelect },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				const onPrependIconClick = fn()
 				return { args, value, onPrependIconClick }
 			},
@@ -498,7 +498,7 @@ export const SlotAppend: Story = {
 					import { ref } from 'vue'
 					import { SySelect } from '@cnamts/synapse'
 
-					const value = ref(null)
+					const value = ref<string | null>(null)
 					const items = [
 						{ text: 'Option 1', value: '1' },
 						{ text: 'Option 2', value: '2' },
@@ -522,7 +522,7 @@ export const SlotAppend: Story = {
 		return {
 			components: { SySelect },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				const onAppendIconClick = fn()
 				return { args, value, onAppendIconClick }
 			},
@@ -556,7 +556,7 @@ export const WithTooltips: Story = {
 		return {
 			components: { SySelect },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				return { args, value }
 			},
 			template: `
@@ -602,7 +602,7 @@ export const WithTooltips: Story = {
 	import { ref } from 'vue'
 	import { SySelect } from '@cnamts/synapse'
 
-	const value = ref(null)
+	const value = ref<string | null>(null)
 	const items = [
 		{ text: 'Option 1', value: '1' },
 		{ text: 'Option 2', value: '2' },
@@ -829,7 +829,7 @@ export const WithCustomKey: Story = {
 		return {
 			components: { SySelect, VBtn, VMenu, VList, VListItem, VListItemTitle },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				return { args, value }
 			},
 			template: `
@@ -885,7 +885,7 @@ export const StringArray: Story = {
 		return {
 			components: { SySelect },
 			setup() {
-				const value = ref(null)
+				const value = ref<string | null>(null)
 				return { args, value }
 			},
 			template: `
