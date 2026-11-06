@@ -61,15 +61,15 @@ export const Default: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyInputSelect from '@cnamts/synapse'
+					import { SyInputSelect } from '@cnamts/synapse'
 					import { ref } from 'vue'
-					
+
 					const items =  [
 						{ text: 'Option 1', value: '1' },
 						{ text: 'Option 2', value: '2' },
-					],
-					
-					const value = ref(undefined)
+					]
+
+					const value = ref<string | undefined>(undefined)
 				</script>
 				`,
 			},
@@ -131,15 +131,15 @@ export const Required: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyInputSelect from '@cnamts/synapse'
+					import { SyInputSelect } from '@cnamts/synapse'
 					import { ref } from 'vue'
-					
+
 					const items =  [
 						{ text: 'Option 1', value: '1' },
 						{ text: 'Option 2', value: '2' },
-					],
-					
-					const value = ref(undefined)
+					]
+
+					const value = ref<string | undefined>(undefined)
 				</script>
 				`,
 			},
@@ -182,30 +182,30 @@ export const RequiredWithAsterisk: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <SyInputSelect
-    v-model="value"
-    :items="items"
-    label="Sélectionnez une option"
-    required
-    display-asterisk
-  />
+	<SyInputSelect
+	v-model="value"
+	:items="items"
+	label="Sélectionnez une option"
+	required
+	display-asterisk
+	/>
 </template>
-        `,
+		`,
 			},
 			{
 				name: 'Script',
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import SyInputSelect from '@cnamts/synapse'
+import { SyInputSelect } from '@cnamts/synapse'
 
 const value = ref('')
 const items = [
-  { text: 'Option 1', value: '1' },
-  { text: 'Option 2', value: '2' },
+	{ text: 'Option 1', value: '1' },
+	{ text: 'Option 2', value: '2' },
 ]
 </script>
-        `,
+		`,
 			},
 		],
 	},
@@ -256,21 +256,22 @@ export const WithCustomError: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyInputSelect from '@cnamts/synapse'
+					import { SyInputSelect } from '@cnamts/synapse'
+					import { VBtn } from 'vuetify/components'
 					import { ref } from 'vue'
-					
+
 					const items =  [
 						{ text: 'Option 1', value: '1' },
 						{ text: 'Option 2', value: '2' },
 					]
-					
-					const errorMessages = ref([])
-					
+
+					const errorMessages = ref<string[]>([])
+
 					const triggerError = () => {
 						errorMessages.value = ['This is a test error message']
 					}
-                    
-                    const value = ref(undefined)
+
+					const value = ref<string | undefined>(undefined)
 				</script>
 				`,
 			},
@@ -327,15 +328,15 @@ export const WithCustomKey: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyInputSelect from '@cnamts/synapse'
+					import { SyInputSelect } from '@cnamts/synapse'
 					import { ref } from 'vue'
-					
+
 					const items =  [
 						{ customKey: 'Choix 1', value: '1' },
 						{ customKey: 'Choix 2', value: '2' }
 					]
-					
-					const value = ref(undefined)
+
+					const value = ref<string | undefined>(undefined)
 				</script>
 				`,
 			},
@@ -375,7 +376,7 @@ export const WithCustomStyles: Story = {
 					<SyInputSelect
 						v-model="value"
 						:items="items"
-						:vuetify-options="vuetifyOptions
+						:vuetify-options="vuetifyOptions"
 					/>
 				</template>
 				`,
@@ -384,14 +385,14 @@ export const WithCustomStyles: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import SyInputSelect from '@cnamts/synapse'
+					import { SyInputSelect } from '@cnamts/synapse'
 					import { ref } from 'vue'
-					
+
 					const items =  [
 						{ text: 'Option 1', value: '1' },
 						{ text: 'Option 2', value: '2' },
 					]
-					
+
 					const vuetifyOptions = {
 						menu: {
 							color: 'secondary',
@@ -400,8 +401,8 @@ export const WithCustomStyles: Story = {
 							color: 'secondary',
 						},
 					}
-                    
-                    const value = ref(undefined)
+
+					const value = ref<string | undefined>(undefined)
 				</script>
 				`,
 			},
@@ -475,70 +476,74 @@ export const FormValidation: Story = {
 				name: 'Template',
 				code: `
 <template>
-  <VForm ref="form" @submit.prevent="validateForm">
-    <SyInputSelect
-      ref="selectField"
-      v-model="formData.option"
-      :items="options"
-      label="Option"
-      required
-      display-asterisk
-      :error-messages="errorMessages"
-      class="mb-1"
-    />
-    <VBtn
-      type="submit"
-      color="primary"
-      class="mt-1"
-    >
-      Valider
-    </VBtn>
-  </VForm>
-  <div v-if="formSubmitted" class="mt-1 success--text">
-    Formulaire validé avec succès !
-  </div>
+	<VForm @submit.prevent="validateForm">
+	<SyInputSelect
+		ref="selectField"
+		v-model="formData.option"
+		:items="options"
+		label="Option"
+		required
+		display-asterisk
+		:error-messages="errorMessages"
+		class="mb-1"
+	/>
+	<VBtn
+		type="submit"
+		color="primary"
+		class="mt-1"
+	>
+		Valider
+	</VBtn>
+	</VForm>
+	<div v-if="formSubmitted" class="mt-1 success--text">
+	Formulaire validé avec succès !
+	</div>
 </template>
-        `,
+		`,
 			},
 			{
 				name: 'Script',
 				code: `
 <script setup lang="ts">
 import { ref } from 'vue'
-import SyInputSelect from '@cnamts/synapse'
+import { SyInputSelect } from '@cnamts/synapse'
 import { VBtn, VForm } from 'vuetify/components'
 
-const form = ref(null)
-const selectField = ref(null)
+const selectField = ref<InstanceType<typeof SyInputSelect> | null>(null)
 const formData = ref({
-  option: ''
+	option: ''
 })
 
-const errorMessages = ref([])
+const errorMessages = ref<string[]>([])
 const formSubmitted = ref(false)
 
 const options = [
-  { text: 'Option 1', value: '1' },
-  { text: 'Option 2', value: '2' },
-  { text: 'Option 3', value: '3' },
+	{ text: 'Option 1', value: '1' },
+	{ text: 'Option 2', value: '2' },
+	{ text: 'Option 3', value: '3' },
 ]
 
 const validateForm = async (): Promise<void> => {
-  // Réinitialiser
-  formSubmitted.value = false
-  
-  // Valider le champ avec la méthode validateOnSubmit
-  const isValid = await selectField.value.validateOnSubmit()
-  
-  if (!isValid) {
-    return
-  }
-  
-  // Si tout est valide
-  formSubmitted.value = true
+	// Réinitialiser
+	formSubmitted.value = false
+
+	// Valider le champ avec la méthode validateOnSubmit
+	const field = selectField.value
+	if (!field) {
+	return
+	}
+
+	const isValid = await field.validateOnSubmit()
+
+	if (!isValid) {
+	return
+	}
+
+	// Si tout est valide
+	formSubmitted.value = true
 }
 </script>
-        `,
+		`,
 			},
 		],
 	},
@@ -556,7 +561,6 @@ const validateForm = async (): Promise<void> => {
 		return {
 			components: { SyInputSelect, VBtn, VForm },
 			setup() {
-				const form = ref(null)
 				const selectField = ref<InstanceType<typeof SyInputSelect> | null>(null)
 				const formData = ref({
 					option: '',
@@ -585,11 +589,11 @@ const validateForm = async (): Promise<void> => {
 					formSubmitted.value = true
 				}
 
-				return { args, form, selectField, formData, errorMessages, formSubmitted, validateForm }
+				return { args, selectField, formData, errorMessages, formSubmitted, validateForm }
 			},
 			template: `
 				<div class="pa-4">
-					<VForm ref="form" @submit.prevent="validateForm">
+					<VForm @submit.prevent="validateForm">
 						<SyInputSelect
 							ref="selectField"
 							v-model="formData.option"
