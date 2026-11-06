@@ -123,6 +123,18 @@ describe('SyTextField - Visual regression tests', () => {
 })
 
 describe('SyTextField - Focus visual regression tests', () => {
+	// Champ :focus : bordure de 3px sur les champs outlined (overrides/forms).
+	// `.focus()` applique la classe `v-field--focused` ciblée par la règle.
+	it('shows the 3px border on the focused field', () => {
+		cy.mountWithVuetify(SyTextField, {
+			props: { label: 'Prénom' },
+		})
+
+		cy.get('input').focus()
+		cy.wait(100)
+		cy.matchImageSnapshot('sy-text-field-focus', cy.get('.v-text-field'))
+	})
+
 	// Bouton d'effacement (VBtn) : ring standard global (2px primary, offset 3px).
 	// Capture `.v-application` pour ne pas rogner le ring outset.
 	it('shows the ring on the clear button', () => {
