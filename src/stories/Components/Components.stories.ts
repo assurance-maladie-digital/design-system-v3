@@ -27,6 +27,7 @@ export const ComponentsList: StoryObj = {
 			setup() {
 				const theme = useTheme()
 				const isAp = theme.global.name.value === 'ap'
+				const isPa = theme.global.name.value === 'pa'
 				const components = [
 					{
 						title: 'HeaderBar',
@@ -608,7 +609,17 @@ export const ComponentsList: StoryObj = {
 					'RatingPicker',
 				]
 
+				// Composants non proposés dans le thème PA
+				const paExcludedComponents = [
+					'FooterBar',
+					'HeaderBar',
+				]
+
 				const shouldDisplayComponent = (component: { category: string, title: string }, category: string) => {
+					if (isPa && paExcludedComponents.includes(component.title)) {
+						return false
+					}
+
 					if (isAp) {
 						return (
 							component.category === category
