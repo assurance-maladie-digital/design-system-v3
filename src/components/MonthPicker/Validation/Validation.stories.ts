@@ -226,7 +226,7 @@ export const WithSuccess: Story = {
 
 					const monthPickerRef = ref<InstanceType<typeof MonthPicker> | null>(null)
 
-					const selectedMonth = ref('06/2026')
+					const selectedMonth = ref(\`06/\${new Date().getFullYear()}\`)
 
 					const customSuccessRules = [
 						{
