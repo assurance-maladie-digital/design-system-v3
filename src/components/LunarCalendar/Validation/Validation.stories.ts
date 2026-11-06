@@ -1,10 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch } from 'vue'
 import { VBtn, VForm } from 'vuetify/components'
 import { fn } from 'storybook/test'
 import LunarCalendar from '../LunarCalendar.vue'
 import SyForm from '../../Customs/SyForm/SyForm.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { renderValidatedOnMount } from '@/stories/utils/renderValidatedOnMount'
 
 const meta = {
 	title: 'Composants/Formulaires/LunarCalendar/Validation',
@@ -56,53 +57,70 @@ type Story = StoryObj<typeof meta>
 
 export const WithError: Story = {
 	parameters: {
-
+		docs: {
+			description: {
+				story: 'Une règle personnalisée (`customRules`) bloque la saisie : un mois lunaire compte 29 ou 30 jours. La validation est déclenchée au montage pour afficher l\'erreur dès le chargement.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
 	<LunarCalendar
-		label="Date de naissance"
+		ref="fieldRef"
 		v-model="dateValue"
-		:min-year="1400"
-		:max-year="1500"
+		label="Date de naissance"
+		:custom-rules="customRules"
 	/>
 </template>`,
 			},
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { LunarCalendar } from '@cnamts/synapse'
 
-const dateValue = ref('16/08/1550')
+const dateValue = ref('31/08/1445')
+const fieldRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
+
+const customRules = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value: string) => {
+				if (!value) return true
+				const day = Number(value.split('/')[0])
+				return isNaN(day) || day <= 30
+			},
+			message: 'Un mois lunaire compte au plus 30 jours.',
+		},
+	},
+]
+
+onMounted(() => {
+	fieldRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
 	},
 	args: {
-		modelValue: '16/08/1550',
-		minYear: 1400,
-		maxYear: 1500,
+		modelValue: '31/08/1445',
+		customRules: [
+			{
+				type: 'custom',
+				options: {
+					validate: (value: string) => {
+						if (!value) return true
+						const day = Number(value.split('/')[0])
+						return isNaN(day) || day <= 30
+					},
+					message: 'Un mois lunaire compte au plus 30 jours.',
+				},
+			},
+		],
 	},
-	render: args => ({
-		components: { LunarCalendar },
-		setup() {
-			const value = ref(args.modelValue)
-			const fieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
-			watch(() => args.modelValue, (newValue) => {
-				value.value = newValue
-			})
-			onMounted(() => {
-				fieldRef.value?.validateOnSubmit()
-			})
-			return { args, value, fieldRef }
-		},
-		template: `
-			<div class="pa-4">
-				<LunarCalendar ref="fieldRef" v-bind="args" v-model="value" />
-			</div>
-		`,
-	}),
+	render: renderValidatedOnMount(LunarCalendar),
 }
 
 export const WithWarning: Story = {
@@ -112,8 +130,9 @@ export const WithWarning: Story = {
 				name: 'Template',
 				code: `<template>
 	<LunarCalendar
-		label="Date de naissance"
+		ref="fieldRef"
 		v-model="dateValue"
+		label="Date de naissance"
 		:custom-warning-rules="customWarningRules"
 	/>
 </template>`,
@@ -121,15 +140,18 @@ export const WithWarning: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { LunarCalendar } from '@cnamts/synapse'
 
 const dateValue = ref('01/01/1900')
+const fieldRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
 
 const customWarningRules = [
 	{
 		type: 'custom',
 		options: {
 			validate: (value: string) => {
+				if (!value) return true
 				const year = Number(value.split('/')[2])
 				return isNaN(year) || year >= 1912
 			},
@@ -137,6 +159,10 @@ const customWarningRules = [
 		},
 	},
 ]
+
+onMounted(() => {
+	fieldRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
@@ -148,6 +174,7 @@ const customWarningRules = [
 				type: 'custom',
 				options: {
 					validate: (value: string) => {
+						if (!value) return true
 						const year = Number(value.split('/')[2])
 						return isNaN(year) || year >= 1912
 					},
@@ -156,25 +183,7 @@ const customWarningRules = [
 			},
 		],
 	},
-	render: args => ({
-		components: { LunarCalendar },
-		setup() {
-			const value = ref(args.modelValue)
-			const fieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
-			watch(() => args.modelValue, (newValue) => {
-				value.value = newValue
-			})
-			onMounted(() => {
-				fieldRef.value?.validateOnSubmit()
-			})
-			return { args, value, fieldRef }
-		},
-		template: `
-			<div class="pa-4">
-				<LunarCalendar ref="fieldRef" v-bind="args" v-model="value" />
-			</div>
-		`,
-	}),
+	render: renderValidatedOnMount(LunarCalendar),
 }
 
 export const WithSuccess: Story = {
@@ -184,8 +193,9 @@ export const WithSuccess: Story = {
 				name: 'Template',
 				code: `<template>
 	<LunarCalendar
-		label="Date de naissance"
+		ref="fieldRef"
 		v-model="dateValue"
+		label="Date de naissance"
 		show-success-messages
 		:custom-success-rules="customSuccessRules"
 	/>
@@ -194,9 +204,11 @@ export const WithSuccess: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { LunarCalendar } from '@cnamts/synapse'
 
 const dateValue = ref('15/08/1450')
+const fieldRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
 
 const customSuccessRules = [
 	{
@@ -207,6 +219,10 @@ const customSuccessRules = [
 		},
 	},
 ]
+
+onMounted(() => {
+	fieldRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
@@ -224,25 +240,7 @@ const customSuccessRules = [
 			},
 		],
 	},
-	render: args => ({
-		components: { LunarCalendar },
-		setup() {
-			const value = ref(args.modelValue)
-			const fieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
-			watch(() => args.modelValue, (newValue) => {
-				value.value = newValue
-			})
-			onMounted(() => {
-				fieldRef.value?.validateOnSubmit()
-			})
-			return { args, value, fieldRef }
-		},
-		template: `
-			<div class="pa-4">
-				<LunarCalendar ref="fieldRef" v-bind="args" v-model="value" show-success-messages />
-			</div>
-		`,
-	}),
+	render: renderValidatedOnMount(LunarCalendar),
 }
 
 export const ExternalMessages: Story = {
@@ -271,6 +269,8 @@ export const ExternalMessages: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { VBtn } from 'vuetify/components'
+import { LunarCalendar } from '@cnamts/synapse'
 
 const dateValue = ref('15/08/1450')
 const errorMessages = ref<string[] | null>(null)
@@ -362,13 +362,19 @@ function reset() {
 
 export const WithYearConstraints: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Les props `minYear` et `maxYear` bornent l\'année saisie. La valeur initiale (1550) dépasse la borne maximale : l\'erreur est affichée dès le chargement.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
 	<LunarCalendar
-		label="Date de naissance"
+		ref="fieldRef"
 		v-model="dateValue"
+		label="Date de naissance"
 		:min-year="1400"
 		:max-year="1500"
 	/>
@@ -377,9 +383,15 @@ export const WithYearConstraints: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { LunarCalendar } from '@cnamts/synapse'
 
 const dateValue = ref('16/08/1550')
+const fieldRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
+
+onMounted(() => {
+	fieldRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
@@ -389,36 +401,24 @@ const dateValue = ref('16/08/1550')
 		minYear: 1400,
 		maxYear: 1500,
 	},
-	render: args => ({
-		components: { LunarCalendar },
-		setup() {
-			const value = ref(args.modelValue)
-			const fieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
-			watch(() => args.modelValue, (newValue) => {
-				value.value = newValue
-			})
-			onMounted(() => {
-				fieldRef.value?.validateOnSubmit()
-			})
-			return { args, value, fieldRef }
-		},
-		template: `
-			<div class="pa-4">
-				<LunarCalendar ref="fieldRef" v-bind="args" v-model="value" />
-			</div>
-		`,
-	}),
+	render: renderValidatedOnMount(LunarCalendar),
 }
 
 export const WithMinYearOnly: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Seule la borne minimale (`minYear`) est définie. La valeur initiale (1410) est antérieure à 1420 : l\'erreur est affichée dès le chargement.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
 	<LunarCalendar
-		label="Date de naissance"
+		ref="fieldRef"
 		v-model="dateValue"
+		label="Date de naissance"
 		:min-year="1420"
 	/>
 </template>`,
@@ -426,47 +426,41 @@ export const WithMinYearOnly: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { LunarCalendar } from '@cnamts/synapse'
 
-const dateValue = ref('12/12/1445')
+const dateValue = ref('12/12/1410')
+const fieldRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
+
+onMounted(() => {
+	fieldRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
 	},
 	args: {
-		modelValue: '12/12/1445',
+		modelValue: '12/12/1410',
 		minYear: 1420,
 	},
-	render: args => ({
-		components: { LunarCalendar },
-		setup() {
-			const value = ref(args.modelValue)
-			const fieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
-			watch(() => args.modelValue, (newValue) => {
-				value.value = newValue
-			})
-			onMounted(() => {
-				fieldRef.value?.validateOnSubmit()
-			})
-			return { args, value, fieldRef }
-		},
-		template: `
-			<div class="pa-4">
-				<LunarCalendar ref="fieldRef" v-bind="args" v-model="value" />
-			</div>
-		`,
-	}),
+	render: renderValidatedOnMount(LunarCalendar),
 }
 
 export const WithMaxYearOnly: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Seule la borne maximale (`maxYear`) est définie. La valeur initiale (1460) est postérieure à 1450 : l\'erreur est affichée dès le chargement.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
 				code: `<template>
 	<LunarCalendar
-		label="Date de naissance"
+		ref="fieldRef"
 		v-model="dateValue"
+		label="Date de naissance"
 		:max-year="1450"
 	/>
 </template>`,
@@ -474,36 +468,24 @@ export const WithMaxYearOnly: Story = {
 			{
 				name: 'Script',
 				code: `<script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { LunarCalendar } from '@cnamts/synapse'
 
-const dateValue = ref('12/12/1445')
+const dateValue = ref('12/12/1460')
+const fieldRef = ref<InstanceType<typeof LunarCalendar> | null>(null)
+
+onMounted(() => {
+	fieldRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
 	},
 	args: {
-		modelValue: '12/12/1445',
+		modelValue: '12/12/1460',
 		maxYear: 1450,
 	},
-	render: args => ({
-		components: { LunarCalendar },
-		setup() {
-			const value = ref(args.modelValue)
-			const fieldRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
-			watch(() => args.modelValue, (newValue) => {
-				value.value = newValue
-			})
-			onMounted(() => {
-				fieldRef.value?.validateOnSubmit()
-			})
-			return { args, value, fieldRef }
-		},
-		template: `
-			<div class="pa-4">
-				<LunarCalendar ref="fieldRef" v-bind="args" v-model="value" />
-			</div>
-		`,
-	}),
+	render: renderValidatedOnMount(LunarCalendar),
 }
 
 export const SyFormValidation: Story = {
@@ -529,6 +511,7 @@ export const SyFormValidation: Story = {
 				name: 'Script',
 				code: `<script setup lang="ts">
 import { ref } from 'vue'
+import { VBtn } from 'vuetify/components'
 import { LunarCalendar, SyForm } from '@cnamts/synapse'
 
 const value = ref('')
