@@ -459,13 +459,10 @@ export const WithCustomRules: Story = {
 
 export const WithSuccessMessages: Story = {
 	parameters: {
-		controls: { exclude: ['on*', 'modelValue', 'label', 'required', 'customSuccessRules', 'showSuccessMessages'] },
 		docs: {
 			description: {
 				story: `
 ### Messages de succès
-
-Les Controls pilotent les options communes aux deux champs (lecture seule, désactivation, apparence…). Les valeurs, libellés et paramètres propres à la comparaison sont fixes et exclus des Controls. Les deux champs sont neutres au chargement. Modifiez leur valeur puis quittez le champ pour déclencher la validation.
 
 Cette story illustre l'utilisation de la propriété \`showSuccessMessages\` qui permet de contrôler
 l'affichage des messages de succès lors de la validation. Par défaut, cette propriété est à \`false\`.
@@ -564,13 +561,10 @@ const customSuccessRules = [{ type: 'custom', options: { validate: (value: strin
 
 export const DisableErrorHandling: Story = {
 	parameters: {
-		controls: { exclude: ['on*', 'modelValue', 'label', 'required', 'customRules', 'disableErrorHandling'] },
 		docs: {
 			description: {
 				story: `
 ### Désactivation de la gestion des erreurs
-
-Les Controls pilotent les options communes aux deux champs (lecture seule, désactivation, apparence…). Les valeurs, libellés et paramètres propres à la comparaison sont fixes et exclus des Controls.
 
 Cette story illustre l'utilisation de la propriété \`disableErrorHandling\` qui permet de désactiver complètement
 la gestion et l'affichage des erreurs dans un champ, même si des règles de validation sont définies.
