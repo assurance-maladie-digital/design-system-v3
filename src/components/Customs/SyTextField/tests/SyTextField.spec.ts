@@ -32,7 +32,7 @@ describe('SyTextField', () => {
 		expect(input.attributes('readonly')).toBeDefined()
 		expect(wrapper.classes()).toContain('sy-textfield-readonly')
 		expect(input.attributes('disabled')).toBeUndefined()
-		expect(wrapper.get('.v-field').attributes('style')).toContain('background-color: rgb(var(--v-theme-on-surface-bright))')
+		expect(wrapper.get('.v-field').attributes('style')).toContain('background-color: rgb(var(--v-theme-surface-bright))')
 		await wrapper.setProps({ readonly: false })
 		expect(input.attributes('readonly')).toBeUndefined()
 		expect(wrapper.classes()).not.toContain('sy-textfield-readonly')

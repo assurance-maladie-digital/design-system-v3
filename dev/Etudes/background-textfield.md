@@ -10,9 +10,12 @@ En lecture seule (`readonly`) et hors état désactivé (`disabled`), les couleu
 
 | Élément | Token CSS |
 |---|---|
-| Fond blanc par défaut | `--v-theme-on-surface-bright` |
+| Fond blanc par défaut | `--v-theme-surface-bright` |
 | Bordure | `--v-theme-on-disabled` |
-| Libellé | `--v-theme-on-surface-variant` |
+| Libellé à l’intérieur du champ | `--v-theme-on-surface` |
+| Libellé flottant en haut | `--v-theme-grey-base` (`#545859`) |
+
+La couleur du libellé flottant correspond au « on-surface-variant » de la maquette. Dans les thèmes actuels du dépôt, ce nom désigne un gris très clair ; `grey-base` fournit la valeur attendue `#545859`, sans modifier le token global.
 
 Les valeurs sont utilisées avec `rgb(var(--v-theme-…))`. Le fond est opaque et ne dépend plus de la couleur de la page par mélange. Les tokens suivent le thème actif.
 
@@ -47,7 +50,7 @@ Les tests ciblés doivent vérifier le fond rendu, les transitions de `readonly`
 
 À contrôler visuellement dans Storybook avec les thèmes CNAM, PA et AmeliPro :
 
-- fond, bordure et libellé conformes aux trois tokens, sur fond blanc et coloré ;
+- fond, bordure et libellé conformes aux tokens, sur fond blanc et coloré ;
 - bordure et libellé au repos, au survol et au focus, dans les variantes outlined et underlined ;
 - lisibilité, sélection du texte et navigation clavier ;
 - DatePicker utilisable conservant ses couleurs habituelles et DatePicker en lecture seule utilisant les nouveaux tokens ;
