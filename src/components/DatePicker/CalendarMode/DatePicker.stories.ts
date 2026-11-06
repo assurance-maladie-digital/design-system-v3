@@ -3,6 +3,7 @@ import DatePicker from './DatePicker.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { ref, computed } from 'vue'
 import { fn } from 'storybook/test'
+import { createInfoNotice } from '@/stories/InfoNotice/InfoNotice'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import utc from 'dayjs/plugin/utc'
@@ -1017,3 +1018,20 @@ export const UTC: Story = {
 		}
 	},
 }
+
+export const AccessibilityNotice = createInfoNotice(`
+	<p>
+		<strong>Le calendrier doit être un moyen alternatif, optionnel de saisir une date.</strong>
+	</p>
+	<p>
+		Afin de garantir à tous la possibilité de remplir la date, mettre à disposition un champ de saisie
+		textuel, avec la possibilité additionnelle et non obligatoire d'utiliser le calendrier.
+	</p>
+	<p>
+		Options disponibles : le <strong>mode combiné</strong>
+		(<a class="text-primary" href="/?path=/docs/composants-formulaires-datepicker-combinedmode--docs"><code>CombinedMode</code></a>, prop
+		<code>useCombinedMode</code>) qui associe saisie textuelle et calendrier, ou le
+		<strong>mode saisie manuelle</strong>
+		(<a class="text-primary" href="/?path=/docs/composants-formulaires-datepicker-dateinput--docs"><code>DateInput</code></a>, prop <code>noCalendar</code>) sans calendrier.
+	</p>
+`)
