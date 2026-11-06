@@ -15,25 +15,36 @@ import * as HeaderMenuItemStories from "./HeaderMenuItem.stories";
 
 
 Le composant `HeaderMenuItem` est un composant de menu qui permet de wrapper un lien de navigation. Cela peut être un lien `a`, `router-link` ou `nuxt-link`.
-Ce composant doit être utilisé dans un composant `HeaderMenuSection` afin de respecter la structure du menu et de garantir la bonne accessibilité de celui ci.
+Le composant rend un `li` par défaut. Dans le slot principal de `HeaderBurgerMenu`, la liste `ul` est ajoutée automatiquement : utilisez directement `HeaderMenuItem` pour une liste simple. Pour regrouper les items, placez-les dans le slot principal d'un `HeaderMenuSection`, qui fournit sa propre liste `ul`. Si vous utilisez `HeaderMenuItem` ailleurs, assurez-vous qu'il est contenu dans un `ul`.
 
 <Source
   dark
   code={`
-<HeaderMenuSection>
+<ul>
 	<HeaderMenuItem>
 		<a href="/">Home</a>
 	</HeaderMenuItem>
 	<HeaderMenuItem>
 		<a href="/about">About</a>
 	</HeaderMenuItem>
-	<HeaderMenuItem>
-		<RouterLink to="/services">Services</RouterLink>
-	</HeaderMenuItem>
-	<HeaderMenuItem>
-		<NuxtLink to="/contact">Contact</NuxtLink>
-	</HeaderMenuItem>
-</HeaderMenuSection>
+</ul>
+
+<ul>
+	<HeaderMenuSection>
+		<HeaderMenuItem>
+			<a href="/">Home</a>
+		</HeaderMenuItem>
+		<HeaderMenuItem>
+			<a href="/about">About</a>
+		</HeaderMenuItem>
+		<HeaderMenuItem>
+			<RouterLink to="/services">Services</RouterLink>
+		</HeaderMenuItem>
+		<HeaderMenuItem>
+			<NuxtLink to="/contact">Contact</NuxtLink>
+		</HeaderMenuItem>
+	</HeaderMenuSection>
+</ul>
 `}
 />
 

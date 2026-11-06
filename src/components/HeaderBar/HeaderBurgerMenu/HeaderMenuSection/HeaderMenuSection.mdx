@@ -6,7 +6,7 @@ import * as HeaderMenuSectionStories from "./HeaderMenuSection.stories";
 
 <div className="header">
   <h1>HeaderMenuSection</h1>
-  <p>Le composant `HeaderMenuSection` permet de regrouper des éléments de menu dans une section. Il s'utilise dans le composant `HeaderComplexMenu` ou `HeaderSubMenu` et doit contenir des éléments de menu (`HeaderMenuItem`).</p>
+  <p>Le composant `HeaderMenuSection` permet de regrouper des éléments de menu. Il s'utilise dans un `ul`, notamment dans le slot principal de `HeaderBurgerMenu` ou de `HeaderSubMenu`, et rend un `li` par défaut. Son slot principal est enveloppé dans sa propre liste (`ul` par défaut) : placez-y les composants `HeaderMenuItem` sans ajouter de `ul` supplémentaire.</p>
 </div>
 
 {/* func-version-start */}
@@ -22,4 +22,3 @@ import * as HeaderMenuSectionStories from "./HeaderMenuSection.stories";
 ## API
 
 <Controls of={HeaderMenuSectionStories.Default} />
-

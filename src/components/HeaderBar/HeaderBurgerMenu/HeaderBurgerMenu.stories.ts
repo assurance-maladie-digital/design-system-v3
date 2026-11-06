@@ -94,7 +94,7 @@ export const Default: Story = {
 					<HeaderBar>
 						<template #menu>
 							<HeaderBurgerMenu
-								tag="div"
+								inner-tag="div"
 							>
 								<p>lorem ipsum</p>
 							</HeaderBurgerMenu>
@@ -130,13 +130,12 @@ export const WithAnItem: Story = {
 					<template #menu>
 						<HeaderBurgerMenu
 							v-model="args.modelValue"
+							inner-tag="ul"
 							@update:modelValue="args['onUpdate:modelValue']"
 						>
-							<HeaderMenuSection>
-								<HeaderMenuItem>
-									<a href="">Item 1</a>
-								</HeaderMenuItem>
-							</HeaderMenuSection>
+							<HeaderMenuItem>
+								<a href="">Item 1</a>
+							</HeaderMenuItem>
 						</HeaderBurgerMenu>
 					</template>
 				</HeaderBar>
@@ -151,12 +150,12 @@ export const WithAnItem: Story = {
 				<template>
 					<HeaderBar>
 						<template #menu>
-							<HeaderBurgerMenu>
-								<HeaderMenuSection>
-									<HeaderMenuItem>
-										<a href="">Item 1</a>
-									</HeaderMenuItem>
-								</HeaderMenuSection>
+							<HeaderBurgerMenu
+								inner-tag="ul"
+							>
+								<HeaderMenuItem>
+									<a href="">Item 1</a>
+								</HeaderMenuItem>
 							</HeaderBurgerMenu>
 						</template>
 					</HeaderBar>
