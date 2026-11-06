@@ -47,7 +47,7 @@ export const WithError: Story = {
       {
         type: 'custom',
         options: {
-          validate: (v) => v !== '1',
+          validate: (v: string | null) => v !== '1',
           message: 'Option 1 n\\'est pas autorisée, choisissez Option 2 ou 3.'
         }
       }
@@ -104,7 +104,7 @@ onMounted(() => {
 						{
 							type: 'custom',
 							options: {
-								validate: (v) => v !== '1',
+								validate: (v: string | null) => v !== '1',
 								message: 'Option 1 n\\'est pas autorisée, choisissez Option 2 ou 3.'
 							}
 						}
@@ -136,7 +136,7 @@ export const WithWarning: Story = {
       {
         type: 'custom',
         options: {
-          validate: (v) => v !== '1',
+          validate: (v: string | null) => v !== '1',
           warningMessage: 'Option 1 est dépréciée, préférez Option 2 ou 3.'
         }
       }
@@ -194,7 +194,7 @@ onMounted(() => {
 						{
 							type: 'custom',
 							options: {
-								validate: (v) => v !== '1',
+								validate: (v: string | null) => v !== '1',
 								warningMessage: 'Option 1 est dépréciée, préférez Option 2 ou 3.'
 							}
 						}
@@ -227,7 +227,7 @@ export const WithSuccess: Story = {
       {
         type: 'custom',
         options: {
-          validate: (v) => v !== null && v !== undefined,
+          validate: (v: string | null) => v !== null && v !== undefined,
           successMessage: 'Option sélectionnée avec succès.'
         }
       }
@@ -286,7 +286,7 @@ onMounted(() => {
 						{
 							type: 'custom',
 							options: {
-								validate: (v) => v !== null && v !== undefined,
+								validate: (v: string | null) => v !== null && v !== undefined,
 								successMessage: 'Option sélectionnée avec succès.'
 							}
 						}
