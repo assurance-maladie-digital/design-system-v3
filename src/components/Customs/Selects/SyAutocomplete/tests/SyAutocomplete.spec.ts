@@ -1409,6 +1409,28 @@ describe('SyAutocomplete', () => {
 	})
 
 	describe('filter and search', () => {
+		it('shows all items after selecting an option and reopening the menu', async () => {
+			const input = wrapper.find('input')
+			await input.trigger('click')
+			await flushPromises()
+			wrapper.findComponent(SyTextField).vm.$emit('update:modelValue', 'Option 2')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			expect(document.body.querySelectorAll(`#${menuId} [role="option"]`)).toHaveLength(1)
+			getOption(0)?.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true, button: 0 }))
+			await flushPromises()
+			await wrapper.setProps({ modelValue: '2' })
+			await wrapper.vm.$nextTick()
+
+			expect(isMenuOverlayActive()).toBe(false)
+			await input.trigger('click')
+			await flushPromises()
+			await wrapper.vm.$nextTick()
+
+			expect(document.body.querySelectorAll(`#${menuId} [role="option"]`)).toHaveLength(3)
+		})
+
 		it('filters items client-side based on input', async () => {
 			const input = wrapper.find('input')
 			await input.trigger('click')
