@@ -5,7 +5,7 @@
 // SyBtnMenu : menu utilisateur.
 .sy-user-menu {
 	.v-list-item:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-primary));
+		outline: var(--v-focus-width, 2px) solid rgb(var(--v-focus-color, var(--v-theme-primary)));
 		outline-offset: -3px;
 	}
 
@@ -21,7 +21,7 @@
 	// Focus virtuel (aria-activedescendant) ET focus DOM (roving tabindex) : ring DS.
 	.menu-item-focused,
 	.v-list-item:focus-visible {
-		outline: 2px solid rgb(var(--v-theme-primary));
+		outline: var(--v-focus-width, 2px) solid rgb(var(--v-focus-color, var(--v-theme-primary)));
 		outline-offset: -3px;
 	}
 
