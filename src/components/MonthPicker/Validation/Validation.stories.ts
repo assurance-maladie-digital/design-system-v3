@@ -1,11 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { onMounted, ref, watch } from 'vue'
+import { ref } from 'vue'
 import { VBtn, VForm } from 'vuetify/components'
 import MonthPicker from '../MonthPicker.vue'
 import { fn } from 'storybook/test'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 import type { MonthPickerProps } from '../types'
 import { default as MonthPickerMeta } from '../MonthPicker.stories'
+import { renderValidatedOnMount } from '@/stories/utils/renderValidatedOnMount'
 
 const meta = {
 	title: 'Composants/Formulaires/MonthPicker/Validation',
@@ -50,34 +51,6 @@ const meta = {
 export default meta
 
 type Story = StoryObj<MonthPickerProps>
-
-/**
- * Rendu partagé par les stories WithError / WithWarning / WithSuccess :
- * la validation est déclenchée au montage via `validateOnSubmit()` afin que
- * le message soit visible dès le chargement (y compris dans l'onglet Docs,
- * où les fonctions `play` ne sont pas exécutées).
- */
-const renderValidatedOnMount: Story['render'] = args => ({
-	components: { MonthPicker },
-	setup() {
-		const selectedMonth = ref(args.modelValue)
-		const monthPickerRef = ref<{ validateOnSubmit: () => unknown } | null>(null)
-		watch(() => args.modelValue, (newValue) => {
-			selectedMonth.value = newValue
-		})
-		onMounted(() => {
-			monthPickerRef.value?.validateOnSubmit()
-		})
-		return { args, selectedMonth, monthPickerRef }
-	},
-	template: `
-		<MonthPicker
-			ref="monthPickerRef"
-			v-bind="args"
-			v-model="selectedMonth"
-		/>
-	`,
-})
 
 export const WithError: Story = {
 	parameters: {
@@ -142,7 +115,7 @@ export const WithError: Story = {
 			},
 		],
 	},
-	render: renderValidatedOnMount,
+	render: renderValidatedOnMount(MonthPicker),
 }
 
 export const WithWarning: Story = {
@@ -224,7 +197,7 @@ export const WithWarning: Story = {
 			},
 		],
 	},
-	render: renderValidatedOnMount,
+	render: renderValidatedOnMount(MonthPicker),
 }
 
 export const WithSuccess: Story = {
@@ -298,7 +271,7 @@ export const WithSuccess: Story = {
 			},
 		],
 	},
-	render: renderValidatedOnMount,
+	render: renderValidatedOnMount(MonthPicker),
 }
 
 export const WithCustomRules: Story = {
