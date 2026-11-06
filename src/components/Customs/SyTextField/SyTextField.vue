@@ -109,7 +109,7 @@
 	// Preserve custom backgrounds while applying the readonly theme surface.
 	const fieldBackgroundColor = computed(() =>
 		props.readonly && !props.disabled && props.bgColor === 'white'
-			? 'rgb(var(--v-theme-on-surface-bright))'
+			? 'rgb(var(--v-theme-surface-bright))'
 			: props.bgColor,
 	)
 
@@ -1082,8 +1082,12 @@
 	}
 
 	:deep(.v-input:not(.calendar-activator-editable) .v-label.v-field-label) {
-		color: rgb(var(--v-theme-on-surface-variant)) !important;
+		color: rgb(var(--v-theme-on-surface)) !important;
 		opacity: 1;
+	}
+
+	:deep(.v-input:not(.calendar-activator-editable) .v-label.v-field-label.v-field-label--floating) {
+		color: rgb(var(--v-theme-grey-base)) !important;
 	}
 }
 
