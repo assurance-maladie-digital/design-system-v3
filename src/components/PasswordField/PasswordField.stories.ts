@@ -4,6 +4,7 @@ import PasswordField from './PasswordField.vue'
 import type { PasswordFieldProps } from './types'
 import { fn } from 'storybook/test'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 
 type PasswordFieldStoryArgs = PasswordFieldProps & {
 	'onUpdate:modelValue': (...args: unknown[]) => unknown
@@ -317,6 +318,56 @@ export const ReadOnly: Story = {
 	args: {
 		readonly: true,
 		modelValue: 'MonMotDePasse123',
+	},
+}
+
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, ne pas utiliser `clearable`
+ * et répéter l'intitulé dans `help-text` pour qu'il reste lisible en entier.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+		createInfoNoticeDecorator(`
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
+			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
+			préférez un intitulé court avec un <code>help-text</code> qui complète l'information.
+		`),
+	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PasswordField
+						v-model="password"
+						label="Mot de passe de votre compte utilisé pour accéder à vos remboursements"
+						help-text="Mot de passe de votre compte utilisé pour accéder à vos remboursements"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PasswordField } from '@cnamts/synapse'
+					
+					const password = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		label: 'Mot de passe de votre compte utilisé pour accéder à vos remboursements',
+		helpText: 'Mot de passe de votre compte utilisé pour accéder à vos remboursements',
+		clearable: false,
 	},
 }
 

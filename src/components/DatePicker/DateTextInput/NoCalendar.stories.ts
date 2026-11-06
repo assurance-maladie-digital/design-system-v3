@@ -3,6 +3,7 @@ import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import type { DatePickerRule } from '@/components/DatePicker/types'
 import { ref } from 'vue'
 import { fn } from 'storybook/test'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 
 interface DatePickerProps {
 	'modelValue'?: string | string[] | null
@@ -356,6 +357,62 @@ export const Default: Story = {
 			`,
 		}
 	},
+}
+
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, reprendre l'intitulé dans
+ * `hint` (avec `persistent-hint`) pour qu'il reste lisible en entier. Le composant n'expose pas `clearable`.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+		createInfoNoticeDecorator(`
+			<code>hint</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
+			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
+			préférez un intitulé court avec un <code>hint</code> qui complète l'information.
+		`),
+	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { DatePicker } from '@cnamts/synapse'
+
+					const date = ref<string | null>(null)
+				</script>
+				`,
+			},
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						format="DD/MM/YYYY"
+						placeholder="JJ/MM/AAAA"
+						label="Date de début de votre arrêt de travail (JJ/MM/AAAA)"
+						hint="Date de début de votre arrêt de travail (JJ/MM/AAAA)"
+						persistent-hint
+						:no-calendar="true"
+					/>
+				</template>
+				`,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		required: false,
+		label: 'Date de début de votre arrêt de travail (JJ/MM/AAAA)',
+		hint: 'Date de début de votre arrêt de travail (JJ/MM/AAAA)',
+		persistentHint: true,
+	} as typeof Default.args,
 }
 
 export const Required: Story = {

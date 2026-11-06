@@ -5,6 +5,7 @@ import { VBtn, VMenu, VList, VListItem, VListItemTitle } from 'vuetify/component
 import { ref } from 'vue'
 import { fn } from 'storybook/test'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 
 const meta: Meta<typeof SySelect> = {
 	title: 'Composants/Formulaires/Selects/SySelect',
@@ -189,6 +190,80 @@ export const Default: Story = {
 			},
 			template: `
 				<div class="pa-4">
+					<SySelect
+						v-model="value"
+						v-bind="args"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, ne pas utiliser `clearable`
+ * et reprendre l'intitulé dans `help-text` pour qu'il reste lisible en entier.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	decorators: [
+		createInfoNoticeDecorator(`
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
+			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
+			préférez un intitulé court avec un <code>help-text</code> qui complète l'information.
+		`),
+	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SySelect
+						v-model="value"
+						:items="items"
+						label="Moyen de contact que vous souhaitez utiliser pour être informé de vos remboursements"
+						help-text="Moyen de contact que vous souhaitez utiliser pour être informé de vos remboursements"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SySelect } from '@cnamts/synapse'
+					
+					const value = ref(null)
+					const items = [
+						{ text: 'Email', value: 'email' },
+						{ text: 'Courrier', value: 'courrier' },
+						{ text: 'SMS', value: 'sms' },
+					]
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		items: [
+			{ text: 'Email', value: 'email' },
+			{ text: 'Courrier', value: 'courrier' },
+			{ text: 'SMS', value: 'sms' },
+		],
+		label: 'Moyen de contact que vous souhaitez utiliser pour être informé de vos remboursements',
+		helpText: 'Moyen de contact que vous souhaitez utiliser pour être informé de vos remboursements',
+		clearable: false,
+	},
+	render: (args) => {
+		return {
+			components: { SySelect },
+			setup() {
+				const value = ref(null)
+				return { args, value }
+			},
+			template: `
+				<div style="max-width: 320px;">
 					<SySelect
 						v-model="value"
 						v-bind="args"

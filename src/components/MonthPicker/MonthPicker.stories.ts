@@ -3,6 +3,7 @@ import MonthPicker from './MonthPicker.vue'
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import type SyTextField from '../Customs/SyTextField/SyTextField.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 
 const meta: Meta<typeof MonthPicker> = {
 	title: 'Composants/Formulaires/MonthPicker',
@@ -196,6 +197,57 @@ export const Default: Story = {
 							message: 'Le format doit être MM/YYYY (ex: 12/2026).',
 						},
 					}]
+				</script>
+				`,
+			},
+		],
+	},
+}
+
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, ne pas utiliser `clearable`
+ * et reprendre l'intitulé dans `help-text` pour qu'il reste lisible en entier.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+		createInfoNoticeDecorator(`
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
+			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
+			préférez un intitulé court avec un <code>help-text</code> qui complète l'information.
+		`),
+	],
+	args: {
+		'modelValue': '',
+		'label': 'Mois de début de votre arrêt de travail figurant sur votre prescription',
+		'helpText': 'Mois de début de votre arrêt de travail figurant sur votre prescription',
+		'clearable': false,
+		'onUpdate:modelValue': fn(),
+		'onUpdate:open': fn(),
+	},
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<MonthPicker
+						v-model="selectedMonth"
+						label="Mois de début de votre arrêt de travail figurant sur votre prescription"
+						help-text="Mois de début de votre arrêt de travail figurant sur votre prescription"
+					/>
+				</template>
+				`,
+			}, {
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { MonthPicker } from '@cnamts/synapse'
+					import { ref } from 'vue'
+
+					const selectedMonth = ref('')
 				</script>
 				`,
 			},

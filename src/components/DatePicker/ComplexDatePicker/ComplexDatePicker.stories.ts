@@ -4,6 +4,7 @@ import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { ref, onMounted } from 'vue'
 import { fn } from 'storybook/test'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 import type { CalendarModeProps } from '../types'
 
 const meta = {
@@ -442,6 +443,61 @@ export const Default: Story = {
               </div>
             `,
 		}
+	},
+}
+
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, reprendre l'intitulé dans
+ * `hint` (avec `persistent-hint`) pour qu'il reste lisible en entier. Le composant n'expose pas `clearable`.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+		createInfoNoticeDecorator(`
+			<code>hint</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
+			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
+			préférez un intitulé court avec un <code>hint</code> qui complète l'information.
+		`),
+	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<DatePicker
+						v-model="date"
+						label="Date de début de votre arrêt de travail (JJ/MM/AAAA)"
+						hint="Date de début de votre arrêt de travail (JJ/MM/AAAA)"
+						persistent-hint
+						placeholder="JJ/MM/AAAA"
+						useCombinedMode
+						format="DD/MM/YYYY"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { DatePicker } from '@cnamts/synapse'
+					import { ref } from 'vue'
+					
+					const date = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		label: 'Date de début de votre arrêt de travail (JJ/MM/AAAA)',
+		hint: 'Date de début de votre arrêt de travail (JJ/MM/AAAA)',
+		persistentHint: true,
 	},
 }
 

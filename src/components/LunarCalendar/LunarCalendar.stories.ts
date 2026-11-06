@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import { onMounted, ref, watch } from 'vue'
 import LunarCalendar from './LunarCalendar.vue'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 
 const meta = {
 	title: 'Composants/Formulaires/LunarCalendar',
@@ -303,6 +304,52 @@ const dateValue = ref('12/13/1564')
 				</div>
 			`,
 		}
+	},
+}
+
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, ne pas utiliser `is-clearable`
+ * et répéter l'intitulé dans `help-text` pour qu'il reste lisible en entier.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+		createInfoNoticeDecorator(`
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
+			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
+			préférez un intitulé court avec un <code>help-text</code> qui complète l'information.
+		`),
+	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `<template>
+	<LunarCalendar
+		v-model="dateValue"
+		label="Date de naissance figurant sur votre acte de naissance"
+		help-text="Date de naissance figurant sur votre acte de naissance"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `<script setup lang="ts">
+import { ref } from 'vue'
+
+const dateValue = ref('')
+</script>`,
+			},
+		],
+	},
+	args: {
+		modelValue: '',
+		label: 'Date de naissance figurant sur votre acte de naissance',
+		helpText: 'Date de naissance figurant sur votre acte de naissance',
+		isClearable: false,
 	},
 }
 

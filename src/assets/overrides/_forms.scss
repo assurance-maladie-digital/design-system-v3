@@ -19,6 +19,46 @@
 	}
 }
 
+// RGAA 10.4 : zoom texte 200 % sur mobile, on libère de la place pour l'intitulé.
+// Portée limitée aux champs du design system : `:is()` énumère les conteneurs
+// racine de chaque composant de champ — à compléter si un nouveau champ ajoute
+// son propre conteneur (les composants bâtis sur SyTextField en héritent déjà).
+@media (width <= 599px) {
+	:is(
+		.sy-textfield-container,
+		.sy-select-container,
+		.sy-textarea,
+		.sy-input-select,
+		.amelipro-text-field__wrapper,
+		.amelipro-select__wrapper,
+		.amelipro-textarea,
+		.amelipro-autocomplete,
+		.amelipro-postal-address,
+		.amelipro-upload,
+		.sy-table-toolbar
+	) .v-field {
+		.v-field__field .v-label.v-field-label {
+			max-width: 100%;
+		}
+
+		.v-field__prepend-inner,
+		.v-field__append-inner,
+		.v-field__clearable {
+			padding-inline: 0;
+
+			> .v-icon {
+				font-size: 1.25rem;
+				width: 1.25rem;
+				height: 1.25rem;
+			}
+		}
+
+		.v-field__input {
+			padding-inline: 8px;
+		}
+	}
+}
+
 // AP theme: inset the loader bar to match the larger field border-radius (12px)
 .theme-ap,
 .theme-ap2026 {

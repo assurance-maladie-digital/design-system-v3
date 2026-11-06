@@ -3,6 +3,7 @@ import PhoneField from './PhoneField.vue'
 import { ref, watch } from 'vue'
 import { indicatifs } from './indicatifs'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 import { fn } from 'storybook/test'
 
 const meta = {
@@ -386,6 +387,58 @@ const phoneNumber = ref('')
 			`,
 		}
 	},
+}
+
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, ne pas utiliser `is-clearable`
+ * et fournir un `help-text` reprenant l'intitulé pour qu'il reste lisible en entier.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	...Default,
+	decorators: [
+		() => ({
+			template: '<div style="max-width: 320px;"><story/></div>',
+		}),
+		createInfoNoticeDecorator(`
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
+			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
+			préférez un intitulé court avec un <code>help-text</code> qui complète l'information.
+		`),
+	],
+	parameters: {
+		a11y: {
+			disable: false,
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<PhoneField
+						v-model="modelValue"
+						help-text="Numéro de téléphone sur lequel vous souhaitez être contacté"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { PhoneField } from '@cnamts/synapse'
+					
+					const modelValue = ref('')
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		...Default.args,
+		helpText: 'Numéro de téléphone sur lequel vous souhaitez être contacté',
+		isClearable: false,
+	} as Record<string, unknown>,
 }
 
 export const HelpText: Story = {

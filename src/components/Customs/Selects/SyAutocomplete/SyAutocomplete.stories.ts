@@ -6,6 +6,7 @@ import { computed, ref } from 'vue'
 import { fn } from 'storybook/test'
 import { VBtn, VCheckbox, VDivider, VListItem, VListItemTitle } from 'vuetify/components'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 
 const meta: Meta<typeof SyAutocomplete> = {
 	title: 'Composants/Formulaires/Selects/SyAutocomplete',
@@ -243,6 +244,76 @@ export const Default: Story = {
 			},
 			template: `
 				<div class="pa-4">
+					<SyAutocomplete
+						v-model="selectedValue"
+						v-bind="args"
+					/>
+				</div>
+			`,
+		}
+	},
+}
+
+/**
+ * Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : avec un intitulé long, ne pas utiliser `clearable`
+ * et reprendre l'intitulé dans `help-text` pour qu'il reste lisible en entier.
+ */
+export const MobileAccessibilityGuideline: Story = {
+	decorators: [
+		createInfoNoticeDecorator(`
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
+			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
+			préférez un intitulé court avec un <code>help-text</code> qui complète l'information.
+		`),
+	],
+	parameters: {
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+				<template>
+					<SyAutocomplete
+						v-model="selectedValue"
+						:items="items"
+						label="Prénom du professionnel de santé figurant sur votre ordonnance"
+						help-text="Prénom du professionnel de santé figurant sur votre ordonnance"
+					/>
+				</template>
+				`,
+			},
+			{
+				name: 'Script',
+				code: `
+				<script setup lang="ts">
+					import { ref } from 'vue'
+					import { SyAutocomplete } from '@cnamts/synapse'
+
+					const selectedValue = ref('')
+					const items = [
+						{ text: 'Adrien', value: 'Adrien' },
+						{ text: 'Axel', value: 'Axel' },
+						{ text: 'Baptiste', value: 'Baptiste' },
+					]
+				</script>
+				`,
+			},
+		],
+	},
+	args: {
+		items: sampleItems,
+		label: 'Prénom du professionnel de santé figurant sur votre ordonnance',
+		helpText: 'Prénom du professionnel de santé figurant sur votre ordonnance',
+		clearable: false,
+	},
+	render: (args) => {
+		return {
+			components: { SyAutocomplete },
+			setup() {
+				const selectedValue = ref('')
+				return { args, selectedValue }
+			},
+			template: `
+				<div style="max-width: 320px;">
 					<SyAutocomplete
 						v-model="selectedValue"
 						v-bind="args"

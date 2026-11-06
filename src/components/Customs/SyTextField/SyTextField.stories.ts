@@ -4,6 +4,7 @@ import { VIcon } from 'vuetify/components'
 import { ref, watch } from 'vue'
 import { mdiAccountBox } from '@mdi/js'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 import { fn } from 'storybook/test'
 import type { SyTextFieldProps } from './types'
 
@@ -1260,5 +1261,65 @@ const value = ref('42')
 </script>`,
 			},
 		],
+	},
+}
+
+export const MobileAccessibilityGuideline: Story = {
+	decorators: [
+		createInfoNoticeDecorator(`
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
+			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
+			préférez un intitulé court avec un <code>help-text</code> qui complète l'information.
+		`),
+	],
+	parameters: {
+		docs: {
+			description: {
+				story: 'Recommandation RGAA 10.4 (zoom texte 200 %, mobile) : lorsque l\'intitulé est long, il peut être tronqué. N\'utilisez pas `is-clearable` (le bouton réduit la largeur disponible) et répétez l\'intitulé dans `help-text` pour qu\'il reste lisible en entier sous le champ.',
+			},
+		},
+		sourceCode: [
+			{
+				name: 'Template',
+				code: `
+<template>
+	<SyTextField
+		v-model="value"
+		label="Numéro de dossier figurant en haut à droite de votre courrier de notification"
+		help-text="Numéro de dossier figurant en haut à droite de votre courrier de notification"
+	/>
+</template>`,
+			},
+			{
+				name: 'Script',
+				code: `
+<script setup lang="ts">
+import { ref } from 'vue'
+import { SyTextField } from '@cnamts/synapse'
+
+const value = ref('')
+</script>`,
+			},
+		],
+	},
+	args: {
+		label: 'Numéro de dossier figurant en haut à droite de votre courrier de notification',
+		helpText: 'Numéro de dossier figurant en haut à droite de votre courrier de notification',
+		isClearable: false,
+		modelValue: '',
+	},
+	render: (args) => {
+		return {
+			components: { SyTextField },
+			setup() {
+				const value = ref(args.modelValue)
+				return { args, value }
+			},
+			template: `
+				<div style="max-width: 320px;">
+					<SyTextField v-bind="args" v-model="value" />
+				</div>
+			`,
+		}
 	},
 }
