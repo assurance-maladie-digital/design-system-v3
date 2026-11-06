@@ -31,7 +31,7 @@ describe('createVuetifyOptions with a theme configuration', () => {
 	})
 
 	it('uses the brand as default theme and exposes focus variables on every theme', () => {
-		const options = createVuetifyOptions({ brand: 'pa', focus: { width: 3, offset: 1, color: 'secondary' } })
+		const options = createVuetifyOptions({ brand: 'pa', focus: { width: 3, offset: 1, color: 'pinkDarken20' } })
 		const theme = options.theme && typeof options.theme === 'object' ? options.theme : {}
 
 		expect(theme.defaultTheme).toBe('pa')
@@ -39,7 +39,7 @@ describe('createVuetifyOptions with a theme configuration', () => {
 			expect(definition.variables).toMatchObject({
 				'focus-width': '3px',
 				'focus-offset': '1px',
-				'focus-color': 'var(--v-theme-secondary)',
+				'focus-color': 'var(--v-theme-pink-darken20)',
 			})
 		}
 	})
@@ -65,6 +65,21 @@ describe('createVuetifyOptions with a theme configuration', () => {
 describe('checkThemeConfig', () => {
 	it('validates the focus color against the real brand colors', () => {
 		expect(checkThemeConfig({ brand: 'cnam', focus: { color: 'primary' } }).valid).toBe(true)
+		expect(checkThemeConfig({ brand: 'cnam', focus: { color: 'pinkDarken20' } }).valid).toBe(true)
 		expect(checkThemeConfig({ brand: 'cnam', focus: { color: 'surface' } }).valid).toBe(false)
+	})
+
+	it('rejects pinkDarken20 on ap2026, where the color does not exist', () => {
+		expect(checkThemeConfig({ brand: 'ap2026', focus: { color: 'pinkDarken20' } }).valid).toBe(false)
+	})
+
+	it('falls back to primary when pinkDarken20 is requested on ap2026', () => {
+		const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined)
+		const options = createVuetifyOptions({ brand: 'ap2026', focus: { color: 'pinkDarken20' } })
+		const theme = options.theme && typeof options.theme === 'object' ? options.theme : {}
+
+		expect(theme.themes?.ap2026?.variables?.['focus-color']).toBe('var(--v-theme-primary)')
+		expect(warn).toHaveBeenCalledWith(expect.stringContaining('pinkDarken20'))
+		warn.mockRestore()
 	})
 })

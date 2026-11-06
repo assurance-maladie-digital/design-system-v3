@@ -2,6 +2,7 @@ import { toKebabCase } from '@/designTokens/utils/toKebabCase'
 import {
 	FIELD_DENSITIES,
 	FIELD_VARIANTS,
+	FOCUS_COLORS,
 	FOCUS_MIN_CONTRAST,
 	FOCUS_OFFSET_MAX,
 	FOCUS_OFFSET_MIN,
@@ -10,7 +11,7 @@ import {
 	SYNAPSE_BRANDS,
 } from './constants'
 import { getContrastRatio } from './contrast'
-import type { SynapseThemeConfigInput, ThemeConfigIssue, ThemeConfigValidationResult } from './types'
+import type { SynapseFocusColor, SynapseThemeConfigInput, ThemeConfigIssue, ThemeConfigValidationResult } from './types'
 
 const KNOWN_KEYS: Record<string, readonly string[]> = {
 	'': ['brand', 'focus', 'fields'],
@@ -56,8 +57,8 @@ const checkFocusColor = (
 	if (color === undefined) {
 		return
 	}
-	if (typeof color !== 'string') {
-		issues.push({ level: 'error', path: 'focus.color', message: '« focus.color » doit être une clé de couleur du thème (ex. primary).' })
+	if (typeof color !== 'string' || !FOCUS_COLORS.includes(color as SynapseFocusColor)) {
+		issues.push({ level: 'error', path: 'focus.color', message: `Valeur « ${String(color)} » non autorisée pour « focus.color ». Valeurs possibles : ${FOCUS_COLORS.join(', ')}.` })
 		return
 	}
 	if (!themeColors) {

@@ -24,7 +24,7 @@ Sans argument, `createVuetifyOptions()` garde exactement le rendu actuel. `creat
 | `brand` | `cnam`, `pa`, `ap`, `ap2026` | `cnam` | Thème Vuetify par défaut |
 | `focus.width` | 2 à 4 (px) | 2 | Épaisseur du ring de focus (boutons, liens, menus) |
 | `focus.offset` | 0 à 4 (px) | 3 | Écart du ring des boutons (les liens gardent 2px, les menus leur ring intérieur) |
-| `focus.color` | clé de couleur du thème (camelCase) | `primary` | Couleur du ring ; contraste ≥ 3:1 avec `surface` exigé |
+| `focus.color` | `primary`, `pinkDarken20` | `primary` | Couleur du ring ; contraste ≥ 3:1 avec `surface` exigé. `pinkDarken20` n'existe pas dans le thème `ap2026` : il y est refusé et remplacé par `primary` |
 | `fields.variant` | `outlined`, `filled`, `underlined` | `outlined` | `variant` des champs Vuetify |
 | `fields.density` | `default`, `comfortable`, `compact` | `default` | `density` des champs Vuetify |
 
