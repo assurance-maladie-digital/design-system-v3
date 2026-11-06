@@ -48,8 +48,10 @@ describe('DatePicker', () => {
 		expect(wrapper.get('input').attributes('readonly')).toBeDefined()
 		expect(wrapper.get('.v-field').attributes('style')).toContain('background-color: rgb(var(--v-theme-white))')
 
+		expect(wrapper.find('.calendar-activator-editable').exists()).toBe(true)
 		await wrapper.setProps({ readonly: true })
-		expect(wrapper.get('.v-field').attributes('style')).toContain('background-color: rgba(var(--v-theme-white), var(--v-disabled-opacity))')
+		expect(wrapper.find('.calendar-activator-editable').exists()).toBe(false)
+		expect(wrapper.get('.v-field').attributes('style')).toContain('background-color: rgb(var(--v-theme-on-surface-bright))')
 
 		await wrapper.setProps({ readonly: false })
 		expect(wrapper.get('.v-field').attributes('style')).toContain('background-color: rgb(var(--v-theme-white))')
