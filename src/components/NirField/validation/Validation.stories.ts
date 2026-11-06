@@ -4,6 +4,7 @@ import SyForm from '../../Customs/SyForm/SyForm.vue'
 import { onMounted, ref } from 'vue'
 import { fn } from 'storybook/test'
 import { VBtn, VForm } from 'vuetify/components'
+import type { ValidationRule } from '@/composables/unifyValidation/useValidation'
 
 const meta: Meta<typeof NirField> = {
 	title: 'Composants/Formulaires/NirField/Validation',
@@ -22,6 +23,71 @@ type Story = StoryObj<typeof meta>
 
 const VALID_NIR = '184027512345674'
 const INVALID_NIR = '199012345678'
+
+const maleNirWarningRules: ValidationRule[] = [
+	{
+		type: 'custom',
+		options: {
+			validate: (v: string) => !v || !v.startsWith('1'),
+			warningMessage: 'Attention : NIR masculin (commence par 1).',
+		},
+	},
+]
+
+const vuetifyNumberRules = [(v: string) => (v && v.replaceAll(' ', '').length === 13) || 'Le numéro doit contenir 13 chiffres']
+const vuetifyKeyRules = [(v: string) => (v && v.replaceAll(' ', '').length === 2) || 'La clé doit contenir 2 chiffres']
+
+const nirFormatRules: ValidationRule[] = [
+	{
+		type: 'custom',
+		options: {
+			validate: (value: string) => {
+				if (!value) return true
+
+				const valueWithoutSpaces = value.replace(/\s/g, '')
+
+				if (valueWithoutSpaces.length !== 13) {
+					return 'Le numéro de sécurité sociale doit contenir 13 caractères.'
+				}
+
+				if (!/^[12]/.test(valueWithoutSpaces)) {
+					return 'Le premier chiffre doit être 1 (homme) ou 2 (femme).'
+				}
+
+				const anneeNaissance = valueWithoutSpaces.substring(1, 3)
+				if (!/^[0-9]{2}$/.test(anneeNaissance)) {
+					return 'Les chiffres 2 et 3 doivent représenter l\'année de naissance.'
+				}
+
+				const moisNaissance = valueWithoutSpaces.substring(3, 5)
+				if (!/^(0[1-9]|1[0-2])$/.test(moisNaissance)) {
+					return 'Les chiffres 4 et 5 doivent représenter un mois valide (01-12).'
+				}
+
+				const departement = valueWithoutSpaces.substring(5, 7)
+				if (!((/^[0-9]{2}$/.test(departement) && departement !== '00')
+					|| departement === '2A' || departement === '2B' || departement === '99')) {
+					return 'Les chiffres 6 et 7 doivent représenter un département valide.'
+				}
+
+				const codeCommune = valueWithoutSpaces.substring(7, 10)
+				if (!/^[0-9]{3}$/.test(codeCommune)) {
+					return 'Les chiffres 8 à 10 doivent représenter un code commune ou pays valide.'
+				}
+
+				const numeroOrdre = valueWithoutSpaces.substring(10, 13)
+				if (!/^[0-9]{3}$/.test(numeroOrdre)) {
+					return 'Les chiffres 11 à 13 doivent représenter un numéro d\'ordre valide.'
+				}
+
+				return true
+			},
+			message: 'Le numéro de sécurité sociale est invalide.',
+			successMessage: 'Le numéro de sécurité sociale est valide.',
+			fieldIdentifier: 'Numéro de sécurité sociale',
+		},
+	},
+]
 
 export const WithError: Story = {
 	parameters: {
@@ -137,6 +203,7 @@ onMounted(() => {
 	},
 	args: {
 		label: 'Identifiant assuré',
+		customNumberWarningRules: maleNirWarningRules,
 	},
 	render: args => ({
 		components: { NirField },
@@ -156,15 +223,6 @@ onMounted(() => {
 					ref="nirRef"
 					v-model="value"
 					v-bind="args"
-					:custom-number-warning-rules="[
-						{
-							type: 'custom',
-							options: {
-								validate: (v) => !v || !v.startsWith('1'),
-								warningMessage: 'Attention : NIR masculin (commence par 1).'
-							}
-						}
-					]"
 				/>
 			</div>
 		`,
@@ -240,6 +298,12 @@ onMounted(() => {
 
 export const DisableErrorHandling: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Compare deux champs requis et vides : après la perte de focus, le premier affiche ses erreurs de validation, le second (`disableErrorHandling`) n\'en affiche aucune. Les Controls sont désactivés : la story compare deux configurations figées (libellés, `required` et `disableErrorHandling`). La saisie dans l\'un ou l\'autre champ alimente l\'action `update:modelValue`.',
+			},
+		},
+		controls: { disable: true },
 		sourceCode: [
 			{
 				name: 'Template',
@@ -274,12 +338,12 @@ const value2 = ref('')
 			},
 		],
 	},
-	render: () => ({
+	render: args => ({
 		components: { NirField },
 		setup() {
 			const value1 = ref('')
 			const value2 = ref('')
-			return { value1, value2 }
+			return { args, value1, value2 }
 		},
 		template: `
 			<div class="pa-4 d-flex flex-column" style="gap: 16px;">
@@ -287,12 +351,14 @@ const value2 = ref('')
 					v-model="value1"
 					label="Avec validation interne (défaut)"
 					required
+					@update:model-value="args['onUpdate:modelValue']"
 				/>
 				<NirField
 					v-model="value2"
 					label="Validation interne désactivée"
 					required
 					disable-error-handling
+					@update:model-value="args['onUpdate:modelValue']"
 				/>
 			</div>
 		`,
@@ -301,63 +367,15 @@ const value2 = ref('')
 
 export const CustomRules: Story = {
 	args: {
+		label: 'Identifiant assuré',
 		customRulesPrecedence: true,
-		customNumberRules: [
-			{
-				type: 'custom',
-				options: {
-					validate: (value: string) => {
-						if (!value) return true
-
-						const valueWithoutSpaces = value.replace(/\s/g, '')
-
-						if (valueWithoutSpaces.length !== 13) {
-							return 'Le numéro de sécurité sociale doit contenir 13 caractères.'
-						}
-
-						if (!/^[12]/.test(valueWithoutSpaces)) {
-							return 'Le premier chiffre doit être 1 (homme) ou 2 (femme).'
-						}
-
-						const anneeNaissance = valueWithoutSpaces.substring(1, 3)
-						if (!/^[0-9]{2}$/.test(anneeNaissance)) {
-							return 'Les chiffres 2 et 3 doivent représenter l\'année de naissance.'
-						}
-
-						const moisNaissance = valueWithoutSpaces.substring(3, 5)
-						if (!/^(0[1-9]|1[0-2])$/.test(moisNaissance)) {
-							return 'Les chiffres 4 et 5 doivent représenter un mois valide (01-12).'
-						}
-
-						const departement = valueWithoutSpaces.substring(5, 7)
-						if (!((/^[0-9]{2}$/.test(departement) && departement !== '00')
-							|| departement === '2A' || departement === '2B' || departement === '99')) {
-							return 'Les chiffres 6 et 7 doivent représenter un département valide.'
-						}
-
-						const codeCommune = valueWithoutSpaces.substring(7, 10)
-						if (!/^[0-9]{3}$/.test(codeCommune)) {
-							return 'Les chiffres 8 à 10 doivent représenter un code commune ou pays valide.'
-						}
-
-						const numeroOrdre = valueWithoutSpaces.substring(10, 13)
-						if (!/^[0-9]{3}$/.test(numeroOrdre)) {
-							return 'Les chiffres 11 à 13 doivent représenter un numéro d\'ordre valide.'
-						}
-
-						return true
-					},
-					message: 'Le numéro de sécurité sociale est invalide.',
-					successMessage: 'Le numéro de sécurité sociale est valide.',
-					fieldIdentifier: 'Numéro de sécurité sociale',
-				},
-			},
-		],
+		showSuccessMessages: true,
+		customNumberRules: nirFormatRules,
 	},
 	parameters: {
 		docs: {
 			description: {
-				story: 'Règle personnalisée avec prévalence (`customRulesPrecedence: true`) qui valide le format du NIR selon les règles officielles françaises : sexe, année, mois, département, commune, numéro d\'ordre.',
+				story: 'Règle personnalisée avec prévalence (`customRulesPrecedence: true`) qui remplace la validation standard du numéro et contrôle son format : sexe, année, mois, département (`00` exclu, `2A`/`2B` acceptés), commune et numéro d\'ordre. Chaque contrôle renvoie son propre message d\'erreur. Un NIR valide est présaisi et validé au chargement : avec `showSuccessMessages`, le `successMessage` de la règle s\'affiche sous le champ (ainsi que celui de la clé, validée par la règle par défaut).',
 			},
 		},
 		sourceCode: [
@@ -366,38 +384,81 @@ export const CustomRules: Story = {
 				code: `
 <template>
   <NirField
+    ref="nirRef"
     v-model="value"
     label="Identifiant assuré"
-    :custom-rules-precedence="true"
-    :custom-number-rules="[
-      {
-        type: 'custom',
-        options: {
-          validate: (value) => {
-            if (!value) return true
-            const v = value.replace(/\\s/g, '')
-            if (v.length !== 13) return 'Doit contenir 13 caractères.'
-            if (!/^[12]/.test(v)) return 'Le 1er chiffre doit être 1 ou 2.'
-            const mois = v.substring(3, 5)
-            if (!/^(0[1-9]|1[0-2])$/.test(mois)) return 'Mois invalide (01-12).'
-            return true
-          },
-          message: 'Le numéro de sécurité sociale est invalide.',
-          successMessage: 'Le numéro de sécurité sociale est valide.',
-        }
-      }
-    ]"
+    custom-rules-precedence
+    show-success-messages
+    :custom-number-rules="customNumberRules"
   />
+  <div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 </template>`,
 			},
 			{
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { NirField } from '@cnamts/synapse'
 
 const value = ref('184027512345674')
+const nirRef = ref<InstanceType<typeof NirField> | null>(null)
+
+const customNumberRules = [
+  {
+    type: 'custom',
+    options: {
+      validate: (value: string) => {
+        if (!value) return true
+
+        const valueWithoutSpaces = value.replace(/\\s/g, '')
+
+        if (valueWithoutSpaces.length !== 13) {
+          return 'Le numéro de sécurité sociale doit contenir 13 caractères.'
+        }
+
+        if (!/^[12]/.test(valueWithoutSpaces)) {
+          return 'Le premier chiffre doit être 1 (homme) ou 2 (femme).'
+        }
+
+        const anneeNaissance = valueWithoutSpaces.substring(1, 3)
+        if (!/^[0-9]{2}$/.test(anneeNaissance)) {
+          return 'Les chiffres 2 et 3 doivent représenter l\\'année de naissance.'
+        }
+
+        const moisNaissance = valueWithoutSpaces.substring(3, 5)
+        if (!/^(0[1-9]|1[0-2])$/.test(moisNaissance)) {
+          return 'Les chiffres 4 et 5 doivent représenter un mois valide (01-12).'
+        }
+
+        const departement = valueWithoutSpaces.substring(5, 7)
+        if (!((/^[0-9]{2}$/.test(departement) && departement !== '00')
+          || departement === '2A' || departement === '2B' || departement === '99')) {
+          return 'Les chiffres 6 et 7 doivent représenter un département valide.'
+        }
+
+        const codeCommune = valueWithoutSpaces.substring(7, 10)
+        if (!/^[0-9]{3}$/.test(codeCommune)) {
+          return 'Les chiffres 8 à 10 doivent représenter un code commune ou pays valide.'
+        }
+
+        const numeroOrdre = valueWithoutSpaces.substring(10, 13)
+        if (!/^[0-9]{3}$/.test(numeroOrdre)) {
+          return 'Les chiffres 11 à 13 doivent représenter un numéro d\\'ordre valide.'
+        }
+
+        return true
+      },
+      message: 'Le numéro de sécurité sociale est invalide.',
+      successMessage: 'Le numéro de sécurité sociale est valide.',
+      fieldIdentifier: 'Numéro de sécurité sociale',
+    },
+  },
+]
+
+onMounted(() => {
+  nirRef.value?.validateOnSubmit()
+})
 </script>`,
 			},
 		],
@@ -406,14 +467,20 @@ const value = ref('184027512345674')
 		components: { NirField },
 		setup() {
 			const value = ref(VALID_NIR)
-			return { args, value }
+			const nirRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+
+			onMounted(() => {
+				nirRef.value?.validateOnSubmit()
+			})
+
+			return { args, value, nirRef }
 		},
 		template: `
 			<div class="pa-4">
 				<NirField
+					ref="nirRef"
 					v-model="value"
 					v-bind="args"
-					label="Identifiant assuré"
 				/>
 				<div class="mt-4 text-body-2">Valeur actuelle : {{ value }}</div>
 			</div>
@@ -754,6 +821,8 @@ const onSubmit = (event) => {
 	args: {
 		label: 'Identifiant assuré',
 		useVuetifyValidation: true,
+		numberRules: vuetifyNumberRules,
+		keyRules: vuetifyKeyRules,
 	},
 	render: args => ({
 		components: { NirField, SyForm, VBtn },
@@ -777,8 +846,6 @@ const onSubmit = (event) => {
 					<NirField
 						v-model="value"
 						v-bind="args"
-						:number-rules="[v => (v && v.replaceAll(' ', '').length === 13) || 'Le numéro doit contenir 13 chiffres']"
-						:key-rules="[v => (v && v.replaceAll(' ', '').length === 2) || 'La clé doit contenir 2 chiffres']"
 						class="mb-4"
 					/>
 					<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
@@ -839,6 +906,8 @@ async function onSubmit() {
 	args: {
 		label: 'Identifiant assuré',
 		useVuetifyValidation: true,
+		numberRules: vuetifyNumberRules,
+		keyRules: vuetifyKeyRules,
 	},
 	render: args => ({
 		components: { NirField, VBtn, VForm },
@@ -864,8 +933,6 @@ async function onSubmit() {
 					<NirField
 						v-model="value"
 						v-bind="args"
-						:number-rules="[v => (v && v.replaceAll(' ', '').length === 13) || 'Le numéro doit contenir 13 chiffres']"
-						:key-rules="[v => (v && v.replaceAll(' ', '').length === 2) || 'La clé doit contenir 2 chiffres']"
 						class="mb-4"
 					/>
 					<VBtn type="submit" color="primary" class="mt-4">Soumettre</VBtn>
