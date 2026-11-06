@@ -1,5 +1,8 @@
-/** Marques disponibles : chaque marque correspond à un thème Vuetify de Synapse. */
-export type SynapseBrand = 'cnam' | 'pa' | 'ap' | 'ap2026'
+/**
+ * Marques disponibles : chaque marque correspond à un thème Vuetify de Synapse.
+ * `ap2026` n'est pas proposé : c'est un thème de test.
+ */
+export type SynapseBrand = 'cnam' | 'pa' | 'ap'
 
 /** Style visuel des champs de formulaire (prop `variant` des champs Vuetify). */
 export type SynapseFieldVariant = 'outlined' | 'filled' | 'underlined'

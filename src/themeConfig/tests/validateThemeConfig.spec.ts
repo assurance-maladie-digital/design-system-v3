@@ -33,6 +33,12 @@ describe('validateThemeConfig', () => {
 		expect(result.issues).toEqual([expect.objectContaining({ level: 'error', path: 'focus.width' })])
 	})
 
+	it('rejects ap2026, which is a test theme', () => {
+		const result = validateThemeConfig({ brand: 'ap2026' })
+
+		expect(result.issues).toEqual([expect.objectContaining({ level: 'error', path: 'brand' })])
+	})
+
 	it('rejects values outside the allowed lists', () => {
 		const result = validateThemeConfig({ brand: 'acme', fields: { variant: 'solo', density: 'tiny' } })
 

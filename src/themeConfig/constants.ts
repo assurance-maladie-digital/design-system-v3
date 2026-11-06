@@ -1,6 +1,6 @@
 import type { SynapseBrand, SynapseFieldDensity, SynapseFieldVariant, SynapseFocusColor, SynapseThemeConfig } from './types'
 
-export const SYNAPSE_BRANDS: readonly SynapseBrand[] = ['cnam', 'pa', 'ap', 'ap2026']
+export const SYNAPSE_BRANDS: readonly SynapseBrand[] = ['cnam', 'pa', 'ap']
 export const FIELD_VARIANTS: readonly SynapseFieldVariant[] = ['outlined', 'filled', 'underlined']
 export const FIELD_DENSITIES: readonly SynapseFieldDensity[] = ['default', 'comfortable', 'compact']
 
