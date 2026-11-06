@@ -770,7 +770,7 @@ export const LoadingState: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Simule un chargement asynchrone : au clic le dropdown s\'ouvre, le loader s\'active puis les résultats apparaissent.',
+				story: 'Simule un chargement asynchrone : au clic le dropdown s\'ouvre, le loader s\'active puis les résultats apparaissent. Les controls `items` et `loading` sont désactivés : ces valeurs sont pilotées par la simulation.',
 			},
 		},
 		sourceCode: [
@@ -822,6 +822,14 @@ const loadOnClick = () => {
 			},
 		],
 	},
+	argTypes: {
+		items: {
+			control: false,
+		},
+		loading: {
+			control: false,
+		},
+	},
 	args: {
 		label: 'Recherche avec chargement',
 	},
@@ -871,6 +879,11 @@ const loadOnClick = () => {
 
 export const HideDetails: Story = {
 	parameters: {
+		docs: {
+			description: {
+				story: 'Les libellés, états de succès et réglages de détails sont fixes pour comparer les deux variantes. Les autres props transmises via `args` restent configurables.',
+			},
+		},
 		sourceCode: [
 			{
 				name: 'Template',
@@ -918,6 +931,23 @@ const value2 = ref('1')
 			},
 		],
 	},
+	argTypes: {
+		modelValue: {
+			control: false,
+		},
+		label: {
+			control: false,
+		},
+		hasSuccess: {
+			control: false,
+		},
+		successMessages: {
+			control: false,
+		},
+		hideDetails: {
+			control: false,
+		},
+	},
 	args: {
 		items: [
 			{ text: 'Option 1', value: '1' },
@@ -936,15 +966,15 @@ const value2 = ref('1')
 			template: `
 				<div class="pa-4 d-flex flex-column" style="gap: 16px;">
 					<SyAutocomplete
-						v-model="value1"
 						v-bind="args"
+						v-model="value1"
 						label="Avec zone de messages (défaut)"
 						:has-success="true"
 						:success-messages="['Sélection valide']"
 					/>
 					<SyAutocomplete
-						v-model="value2"
 						v-bind="args"
+						v-model="value2"
 						label="Sans zone de messages (hide-details)"
 						:has-success="true"
 						:success-messages="['Sélection valide']"
