@@ -429,7 +429,15 @@ export function useDatePickerValidation(options: DatePickerValidationOptions): D
 		}
 
 		if (!unref(options.useVuetifyValidation)) {
-			return validation!.validateValue(value, rules, warningRules, successRules)
+			// Le repli « chaîne formatée » pour les règles custom est appliqué en
+			// amont par les flux qui valident réellement des objets Date
+			// (validateDatesFlow, ComplexDatePicker.validateCalendarSelection).
+			return validation!.validateValue(
+				value,
+				rules,
+				warningRules,
+				successRules,
+			)
 		}
 
 		const token = currentValidationToken.value
