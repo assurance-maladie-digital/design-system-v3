@@ -20,7 +20,7 @@
 }
 
 // RGAA 10.4 : zoom texte 200 % sur mobile, on libère de la place pour l'intitulé
-@media (max-width: 599px) {
+@media (width <= 599px) {
 	.v-field {
 		.v-field__field .v-label.v-field-label {
 			max-width: 100%;
