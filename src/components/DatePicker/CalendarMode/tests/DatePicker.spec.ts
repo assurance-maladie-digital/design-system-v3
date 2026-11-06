@@ -43,6 +43,28 @@ describe('DatePicker', () => {
 		expect(input.exists()).toBe(true)
 	})
 
+	it('keeps the calendar activator opaque unless the picker is readonly', async () => {
+		const wrapper = mountComponent()
+		expect(wrapper.get('input').attributes('readonly')).toBeDefined()
+		expect(wrapper.get('.v-field').attributes('style')).toContain('background-color: rgb(var(--v-theme-white))')
+
+		expect(wrapper.find('.calendar-activator-editable').exists()).toBe(true)
+		await wrapper.setProps({ readonly: true })
+		expect(wrapper.find('.calendar-activator-editable').exists()).toBe(false)
+		expect(wrapper.get('.v-field').attributes('style')).toContain('background-color: rgb(var(--v-theme-surface-bright))')
+
+		await wrapper.setProps({ readonly: false })
+		expect(wrapper.get('.v-field').attributes('style')).toContain('background-color: rgb(var(--v-theme-white))')
+	})
+
+	it('preserves a custom calendar activator background in both readonly states', async () => {
+		const wrapper = mountComponent({ bgColor: 'primary' })
+		expect(wrapper.get('.v-field').classes()).toContain('bg-primary')
+
+		await wrapper.setProps({ readonly: true })
+		expect(wrapper.get('.v-field').classes()).toContain('bg-primary')
+	})
+
 	it('forwards all validation props in combined mode', () => {
 		const customSuccessRules = [{ type: 'custom', options: { validate: () => true } }]
 		const wrapper = mountComponent({

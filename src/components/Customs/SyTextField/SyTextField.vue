@@ -106,6 +106,13 @@
 		close: label => locales.value.closeField(label),
 	}
 
+	// Preserve custom backgrounds while applying the readonly theme surface.
+	const fieldBackgroundColor = computed(() =>
+		props.readonly && !props.disabled && props.bgColor === 'white'
+			? 'rgb(var(--v-theme-surface-bright))'
+			: props.bgColor,
+	)
+
 	const emit = defineEmits([
 		'update:modelValue',
 		'input',
@@ -576,7 +583,10 @@
 </script>
 
 <template>
-	<div class="sy-textfield-container">
+	<div
+		class="sy-textfield-container"
+		:class="{ 'sy-textfield-readonly': props.readonly && !props.disabled }"
+	>
 		<VTextField
 			:id="props.id"
 			ref="syTextFieldRef"
@@ -588,7 +598,7 @@
 			:aria-invalid="hasError ? 'true' : undefined"
 			:aria-required="props.required ? 'true' : undefined"
 			:base-color="props.baseColor"
-			:bg-color="props.bgColor"
+			:bg-color="fieldBackgroundColor"
 			:center-affix="props.centerAffix"
 			:color="props.color"
 			:counter="props.counter"
@@ -1063,4 +1073,22 @@
 .help-text-below.text-disabled {
 	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
 }
+
+.sy-textfield-readonly {
+	:deep(.v-input:not(.calendar-activator-editable) .v-field__outline) {
+		--v-field-border-opacity: 1;
+
+		color: rgb(var(--v-theme-on-disabled)) !important;
+	}
+
+	:deep(.v-input:not(.calendar-activator-editable) .v-label.v-field-label) {
+		color: rgb(var(--v-theme-on-surface)) !important;
+		opacity: 1;
+	}
+
+	:deep(.v-input:not(.calendar-activator-editable) .v-label.v-field-label.v-field-label--floating) {
+		color: rgb(var(--v-theme-grey-base)) !important;
+	}
+}
+
 </style>

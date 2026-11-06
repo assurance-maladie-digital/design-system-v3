@@ -26,6 +26,7 @@ export const buildCalendarModeActivatorTextFieldProps = (
 	'disable-click-button': props.textFieldActivator,
 	'allow-icon-button-when-readonly': true,
 	'readonly': true,
+	'class': { 'calendar-activator-editable': !props.readonly },
 	'use-vuetify-validation': props.useVuetifyValidation,
 	'rules': props.rules,
 	'label': labelWithAsterisk.value,
@@ -34,7 +35,9 @@ export const buildCalendarModeActivatorTextFieldProps = (
 	'prepend-icon': props.displayIcon && !props.displayAppendIcon ? 'calendar' : undefined,
 	'variant-style': props.isOutlined ? 'outlined' : 'underlined',
 	'show-success-messages': props.showSuccessMessages,
-	'bg-color': props.bgColor,
+	'bg-color': !props.readonly && props.bgColor === 'white'
+		? 'rgb(var(--v-theme-white))'
+		: props.bgColor,
 	'density': props.density,
 	'hide-details': props.hideDetails,
 	'display-asterisk': false,
