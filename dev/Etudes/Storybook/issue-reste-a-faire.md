@@ -63,7 +63,7 @@ Suite de l'audit des stories de validation (PR #<pr>). Points relevés mais non 
 
 ### MonthPicker / LunarCalendar
 
-- [ ] **medium** — MonthPicker `WithError` / `WithWarning` / `WithSuccess` : pas de `render`, messages visibles uniquement après `play`.
+- [x] **medium** — MonthPicker `WithError` / `WithWarning` / `WithSuccess` : pas de `render`, messages visibles uniquement après `play`.
 - [ ] **medium** — MonthPicker `WithSuccess` : valeur `'06/2026'` en dur alors que la règle dépend de l'année courante (cassera en 2027).
 - [ ] **medium** — MonthPicker `DisableErrorHandling` : pas de Script, labels identiques pour les deux champs ; `ExternalMessages` : `VBtn` non importé.
 - [ ] **low** — MonthPicker `SyForm*` : `v-bind="args"` après `v-model` écrase la valeur liée.

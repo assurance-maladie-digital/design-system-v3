@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
-import { ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { VBtn, VForm } from 'vuetify/components'
 import MonthPicker from '../MonthPicker.vue'
-import { fn, userEvent, within } from 'storybook/test'
+import { fn } from 'storybook/test'
 import SyForm from '@/components/Customs/SyForm/SyForm.vue'
 import type { MonthPickerProps } from '../types'
 import { default as MonthPickerMeta } from '../MonthPicker.stories'
@@ -51,6 +51,34 @@ export default meta
 
 type Story = StoryObj<MonthPickerProps>
 
+/**
+ * Rendu partagé par les stories WithError / WithWarning / WithSuccess :
+ * la validation est déclenchée au montage via `validateOnSubmit()` afin que
+ * le message soit visible dès le chargement (y compris dans l'onglet Docs,
+ * où les fonctions `play` ne sont pas exécutées).
+ */
+const renderValidatedOnMount: Story['render'] = args => ({
+	components: { MonthPicker },
+	setup() {
+		const selectedMonth = ref(args.modelValue)
+		const monthPickerRef = ref<{ validateOnSubmit: () => unknown } | null>(null)
+		watch(() => args.modelValue, (newValue) => {
+			selectedMonth.value = newValue
+		})
+		onMounted(() => {
+			monthPickerRef.value?.validateOnSubmit()
+		})
+		return { args, selectedMonth, monthPickerRef }
+	},
+	template: `
+		<MonthPicker
+			ref="monthPickerRef"
+			v-bind="args"
+			v-model="selectedMonth"
+		/>
+	`,
+})
+
 export const WithError: Story = {
 	parameters: {
 		sourceCode: [
@@ -59,6 +87,7 @@ export const WithError: Story = {
 				code: `
 				<template>
 					<MonthPicker
+						ref="monthPickerRef"
 						v-model="selectedMonth"
 						label="Mois de début"
 						:custom-rules="customRules"
@@ -70,8 +99,10 @@ export const WithError: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import { ref } from 'vue'
+					import { onMounted, ref } from 'vue'
 					import { MonthPicker } from '@cnamts/synapse'
+
+					const monthPickerRef = ref<InstanceType<typeof MonthPicker> | null>(null)
 
 					const selectedMonth = ref('13/2025')
 
@@ -87,6 +118,10 @@ export const WithError: Story = {
 							},
 						},
 					]
+
+					onMounted(() => {
+						monthPickerRef.value?.validateOnSubmit()
+					})
 				</script>
 				`,
 			},
@@ -107,13 +142,7 @@ export const WithError: Story = {
 			},
 		],
 	},
-	play: async ({ canvasElement }) => {
-		const input = within(canvasElement).getByRole('textbox')
-		await userEvent.clear(input)
-		await userEvent.type(input, '13/2025')
-		input.blur()
-	},
-
+	render: renderValidatedOnMount,
 }
 
 export const WithWarning: Story = {
@@ -124,6 +153,7 @@ export const WithWarning: Story = {
 				code: `
 				<template>
 					<MonthPicker
+						ref="monthPickerRef"
 						v-model="selectedMonth"
 						label="Mois de début"
 						:custom-warning-rules="customWarningRules"
@@ -135,8 +165,10 @@ export const WithWarning: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import { ref } from 'vue'
+					import { onMounted, ref } from 'vue'
 					import { MonthPicker } from '@cnamts/synapse'
+
+					const monthPickerRef = ref<InstanceType<typeof MonthPicker> | null>(null)
 
 					const selectedMonth = ref('01/2035')
 
@@ -160,6 +192,10 @@ export const WithWarning: Story = {
 							},
 						},
 					]
+
+					onMounted(() => {
+						monthPickerRef.value?.validateOnSubmit()
+					})
 				</script>
 				`,
 			},
@@ -188,12 +224,7 @@ export const WithWarning: Story = {
 			},
 		],
 	},
-	play: async ({ canvasElement }) => {
-		const input = within(canvasElement).getByRole('textbox')
-		await userEvent.clear(input)
-		await userEvent.type(input, '01/2035')
-		input.blur()
-	},
+	render: renderValidatedOnMount,
 }
 
 export const WithSuccess: Story = {
@@ -204,6 +235,7 @@ export const WithSuccess: Story = {
 				code: `
 				<template>
 					<MonthPicker
+						ref="monthPickerRef"
 						v-model="selectedMonth"
 						label="Mois de début"
 						:custom-success-rules="customSuccessRules"
@@ -216,8 +248,10 @@ export const WithSuccess: Story = {
 				name: 'Script',
 				code: `
 				<script setup lang="ts">
-					import { ref } from 'vue'
+					import { onMounted, ref } from 'vue'
 					import { MonthPicker } from '@cnamts/synapse'
+
+					const monthPickerRef = ref<InstanceType<typeof MonthPicker> | null>(null)
 
 					const selectedMonth = ref('06/2026')
 
@@ -236,20 +270,24 @@ export const WithSuccess: Story = {
 							},
 						},
 					]
+
+					onMounted(() => {
+						monthPickerRef.value?.validateOnSubmit()
+					})
 				</script>
 				`,
 			},
 		],
 	},
 	args: {
-		modelValue: '06/2026',
+		modelValue: `06/${new Date().getFullYear()}`,
 		showSuccessMessages: true,
 		customSuccessRules: [
 			{
 				type: 'custom',
 				options: {
 					validate: (value: string) => {
-						if (!value || value === '') return true // Ne pas afficher de success si le champ est vide
+						if (!value || value === '') return false // Ne pas afficher de succès si le champ est vide
 						const [, year] = value.split('/').map(Number) as [number, number]
 						const currentYear = new Date().getFullYear()
 						return year === currentYear
@@ -260,13 +298,7 @@ export const WithSuccess: Story = {
 			},
 		],
 	},
-	play: async ({ canvasElement }) => {
-		const input = within(canvasElement).getByRole('textbox')
-		await userEvent.clear(input)
-		const currentYear = new Date().getFullYear()
-		await userEvent.type(input, `06/${currentYear}`)
-		input.blur()
-	},
+	render: renderValidatedOnMount,
 }
 
 export const WithCustomRules: Story = {
