@@ -26,8 +26,11 @@ describe('SyAutocomplete snippets', () => {
 		})
 	})
 
-	it('l\'extrait de NoValidateOnBlur efface la validation à la réinitialisation', () => {
-		expect(snippetCode(NoValidateOnBlur)).toContain('autocompleteRef.value?.clearValidation()')
+	it('l\'extrait de NoValidateOnBlur efface la validation des deux champs à la réinitialisation', () => {
+		const code = snippetCode(NoValidateOnBlur)
+
+		expect(code).toContain('changeAutocompleteRef.value?.clearValidation()')
+		expect(code).toContain('blurAutocompleteRef.value?.clearValidation()')
 	})
 
 	it('l\'extrait de VFormAndVuetifyValidation signale une soumission invalide', () => {

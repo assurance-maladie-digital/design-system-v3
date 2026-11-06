@@ -1,6 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { enableAutoUnmount, flushPromises, mount } from '@vue/test-utils'
 import { composeStories } from '@storybook/vue3-vite'
+import SyAutocomplete from '../SyAutocomplete.vue'
 import * as validationStories from '../validation/Validation.stories'
 
 const { NoValidateOnBlur, VFormAndVuetifyValidation } = composeStories(validationStories)
@@ -17,11 +18,16 @@ const clickButton = async (wrapper: ReturnType<typeof mount>, label: string): Pr
 }
 
 describe('SyAutocomplete stories', () => {
-	it('NoValidateOnBlur affiche l\'erreur d\'une valeur invalide puis l\'efface à la réinitialisation', async () => {
+	it('NoValidateOnBlur valide au changement le premier champ seulement, puis réinitialise les deux', async () => {
 		const wrapper = mount(NoValidateOnBlur(), { attachTo: document.body })
+		const [changeField, blurField] = wrapper.findAllComponents(SyAutocomplete)
 
-		await clickButton(wrapper, 'Définir une valeur invalide')
-		expect(wrapper.text()).toContain('Option 1 n\'est pas autorisée.')
+		changeField!.vm.$emit('update:modelValue', '1')
+		blurField!.vm.$emit('update:modelValue', '1')
+		await flushPromises()
+
+		expect(changeField!.text()).toContain('Option 1 n\'est pas autorisée.')
+		expect(blurField!.text()).not.toContain('Option 1 n\'est pas autorisée.')
 
 		await clickButton(wrapper, 'Réinitialiser')
 		expect(wrapper.text()).not.toContain('Option 1 n\'est pas autorisée.')

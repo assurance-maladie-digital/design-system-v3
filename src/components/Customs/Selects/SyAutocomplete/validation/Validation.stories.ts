@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import SyAutocomplete from '../SyAutocomplete.vue'
 import SyForm from '../../../SyForm/SyForm.vue'
-import { computed, ref, onMounted, nextTick } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { fn } from 'storybook/test'
 import { VBtn, VForm } from 'vuetify/components'
 
@@ -25,6 +25,7 @@ const items = [
 	{ text: 'Option 2', value: '2' },
 	{ text: 'Option 3', value: '3' },
 ]
+const requiredRule = (value: unknown): boolean | string => Boolean(value) || 'Ce champ est requis'
 
 export const WithError: Story = {
 	parameters: {
@@ -42,16 +43,9 @@ export const WithError: Story = {
     ref="autocompleteRef"
     v-model="value"
     :items="items"
+    :filter="false"
     label="Option"
-    :customRules="[
-      {
-        type: 'custom',
-        options: {
-          validate: (v) => v !== '1',
-          message: 'Option 1 n\\'est pas autorisée, choisissez Option 2 ou 3.'
-        }
-      }
-    ]"
+    :custom-rules="customRules"
   />
 </template>`,
 			},
@@ -68,6 +62,13 @@ const items = [
   { text: 'Option 2', value: '2' },
   { text: 'Option 3', value: '3' },
 ]
+const customRules = [{
+  type: 'custom',
+  options: {
+    validate: (value: unknown): boolean => value !== '1',
+    message: 'Option 1 n\\'est pas autorisée, choisissez Option 2 ou 3.'
+  }
+}]
 
 const autocompleteRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
@@ -77,6 +78,12 @@ onMounted(() => {
 </script>`,
 			},
 		],
+	},
+	argTypes: {
+		customRules: {
+			control: false,
+			description: 'La règle fixe est nécessaire pour déclencher l’erreur illustrée au chargement.',
+		},
 	},
 	args: {
 		'items': items,
@@ -89,12 +96,19 @@ onMounted(() => {
 		setup() {
 			const value = ref('1')
 			const autocompleteRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+			const customRules = [{
+				type: 'custom',
+				options: {
+					validate: (value: unknown): boolean => value !== '1',
+					message: 'Option 1 n\'est pas autorisée, choisissez Option 2 ou 3.',
+				},
+			}]
 
 			onMounted(() => {
 				autocompleteRef.value?.validateOnSubmit()
 			})
 
-			return { args, value, autocompleteRef }
+			return { args, value, autocompleteRef, customRules }
 		},
 		template: `
 			<div class="pa-4">
@@ -102,15 +116,7 @@ onMounted(() => {
 					ref="autocompleteRef"
 					v-model="value"
 					v-bind="args"
-					:customRules="[
-						{
-							type: 'custom',
-							options: {
-								validate: (v) => v !== '1',
-								message: 'Option 1 n\\'est pas autorisée, choisissez Option 2 ou 3.'
-							}
-						}
-					]"
+					:custom-rules="customRules"
 				/>
 			</div>
 		`,
@@ -133,16 +139,9 @@ export const WithWarning: Story = {
     ref="autocompleteRef"
     v-model="value"
     :items="items"
+    :filter="false"
     label="Option"
-    :customWarningRules="[
-      {
-        type: 'custom',
-        options: {
-          validate: (v) => v !== '1',
-          warningMessage: 'Option 1 est dépréciée, préférez Option 2 ou 3.'
-        }
-      }
-    ]"
+    :custom-warning-rules="customWarningRules"
   />
 </template>`,
 			},
@@ -159,6 +158,13 @@ const items = [
   { text: 'Option 2', value: '2' },
   { text: 'Option 3', value: '3' },
 ]
+const customWarningRules = [{
+  type: 'custom',
+  options: {
+    validate: (value: unknown): boolean => value !== '1',
+    warningMessage: 'Option 1 est dépréciée, préférez Option 2 ou 3.'
+  }
+}]
 
 const autocompleteRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
@@ -168,6 +174,12 @@ onMounted(() => {
 </script>`,
 			},
 		],
+	},
+	argTypes: {
+		customWarningRules: {
+			control: false,
+			description: 'La règle fixe est nécessaire pour déclencher l’avertissement illustré au chargement.',
+		},
 	},
 	args: {
 		'items': items,
@@ -180,12 +192,19 @@ onMounted(() => {
 		setup() {
 			const value = ref('1')
 			const autocompleteRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+			const customWarningRules = [{
+				type: 'custom',
+				options: {
+					validate: (value: unknown): boolean => value !== '1',
+					warningMessage: 'Option 1 est dépréciée, préférez Option 2 ou 3.',
+				},
+			}]
 
 			onMounted(() => {
 				autocompleteRef.value?.validateOnSubmit()
 			})
 
-			return { args, value, autocompleteRef }
+			return { args, value, autocompleteRef, customWarningRules }
 		},
 		template: `
 			<div class="pa-4">
@@ -193,15 +212,7 @@ onMounted(() => {
 					ref="autocompleteRef"
 					v-model="value"
 					v-bind="args"
-					:customWarningRules="[
-						{
-							type: 'custom',
-							options: {
-								validate: (v) => v !== '1',
-								warningMessage: 'Option 1 est dépréciée, préférez Option 2 ou 3.'
-							}
-						}
-					]"
+					:custom-warning-rules="customWarningRules"
 				/>
 			</div>
 		`,
@@ -224,17 +235,10 @@ export const WithSuccess: Story = {
     ref="autocompleteRef"
     v-model="value"
     :items="items"
+    :filter="false"
     label="Option"
     show-success-messages
-    :customSuccessRules="[
-      {
-        type: 'custom',
-        options: {
-          validate: (v) => v !== null && v !== undefined,
-          successMessage: 'Option sélectionnée avec succès.'
-        }
-      }
-    ]"
+    :custom-success-rules="customSuccessRules"
   />
 </template>`,
 			},
@@ -251,6 +255,13 @@ const items = [
   { text: 'Option 2', value: '2' },
   { text: 'Option 3', value: '3' },
 ]
+const customSuccessRules = [{
+  type: 'custom',
+  options: {
+    validate: (value: unknown): boolean => value !== null && value !== undefined,
+    successMessage: 'Option sélectionnée avec succès.'
+  }
+}]
 
 const autocompleteRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
 
@@ -260,6 +271,11 @@ onMounted(() => {
 </script>`,
 			},
 		],
+	},
+	argTypes: {
+		customSuccessRules: {
+			control: false,
+		},
 	},
 	args: {
 		'items': items,
@@ -273,12 +289,19 @@ onMounted(() => {
 		setup() {
 			const value = ref('1')
 			const autocompleteRef = ref<{ validateOnSubmit: () => Promise<boolean> } | null>(null)
+			const customSuccessRules = [{
+				type: 'custom',
+				options: {
+					validate: (value: unknown): boolean => value !== null && value !== undefined,
+					successMessage: 'Option sélectionnée avec succès.',
+				},
+			}]
 
 			onMounted(() => {
 				autocompleteRef.value?.validateOnSubmit()
 			})
 
-			return { args, value, autocompleteRef }
+			return { args, value, autocompleteRef, customSuccessRules }
 		},
 		template: `
 			<div class="pa-4">
@@ -286,15 +309,7 @@ onMounted(() => {
 					ref="autocompleteRef"
 					v-model="value"
 					v-bind="args"
-					:customSuccessRules="[
-						{
-							type: 'custom',
-							options: {
-								validate: (v) => v !== null && v !== undefined,
-								successMessage: 'Option sélectionnée avec succès.'
-							}
-						}
-					]"
+					:custom-success-rules="customSuccessRules"
 				/>
 			</div>
 		`,
@@ -305,7 +320,7 @@ export const NoValidateOnBlur: Story = {
 	parameters: {
 		docs: {
 			description: {
-				story: 'Dans cette story, une saisie, une sélection directe ou un blur garde le composant dans un état neutre. Seuls les boutons activent un scénario de validation visible.',
+				story: 'Par défaut, `isValidateOnBlur` vaut `false` sur SyAutocomplete : la validation se déclenche au changement de valeur. Sélectionnez « Option 1 » (invalide) dans chaque champ puis quittez-le : le champ configuré à `false` affiche l’erreur dès la sélection, tandis que celui configuré à `true` attend le blur. « Option 2 » est valide. Le bouton réinitialise les valeurs et efface les messages.',
 			},
 		},
 		sourceCode: [
@@ -315,21 +330,26 @@ export const NoValidateOnBlur: Story = {
 <template>
   <div class="d-flex flex-column ga-4 pa-4">
     <SyAutocomplete
-      ref="autocompleteRef"
-      :model-value="value"
+      ref="changeAutocompleteRef"
+      v-model="changeValue"
       :items="items"
-      label="Option"
-      :is-validate-on-blur="false"
-      :show-success-messages="true"
       :custom-rules="customRules"
       :custom-success-rules="customSuccessRules"
-      @update:model-value="handleManualChange"
+      label="Validation au changement (false)"
+      :is-validate-on-blur="false"
+      show-success-messages
     />
-    <div class="d-flex ga-4 mt-2">
-      <VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('1')">Définir une valeur invalide</VBtn>
-      <VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('2')">Définir une valeur valide</VBtn>
-      <VBtn @mousedown.prevent @click="applyButtonValue(null)">Réinitialiser</VBtn>
-    </div>
+    <SyAutocomplete
+      ref="blurAutocompleteRef"
+      v-model="blurValue"
+      :items="items"
+      :custom-rules="customRules"
+      :custom-success-rules="customSuccessRules"
+      label="Validation au blur (true)"
+      :is-validate-on-blur="true"
+      show-success-messages
+    />
+    <VBtn class="align-self-start" @mousedown.prevent @click="resetComparisons">Réinitialiser</VBtn>
   </div>
 </template>`,
 			},
@@ -337,163 +357,135 @@ export const NoValidateOnBlur: Story = {
 				name: 'Script',
 				code: `
 <script setup lang="ts">
-import { computed, nextTick, ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import { SyAutocomplete } from '@cnamts/synapse'
 import { VBtn } from 'vuetify/components'
 
-const value = ref<string | null>(null)
-const autocompleteRef = ref<{ validateOnSubmit: () => Promise<boolean>, clearValidation: () => void } | null>(null)
-const validationMode = ref<'neutral' | 'invalid' | 'valid'>('neutral')
+type SyAutocompleteInstance = { clearValidation: () => void }
+
+const changeValue = ref<string | null>(null)
+const blurValue = ref<string | null>(null)
+const changeAutocompleteRef = ref<SyAutocompleteInstance | null>(null)
+const blurAutocompleteRef = ref<SyAutocompleteInstance | null>(null)
 const items = [
   { text: 'Option 1', value: '1' },
   { text: 'Option 2', value: '2' },
   { text: 'Option 3', value: '3' },
 ]
 
-const customRules = computed(() => validationMode.value === 'invalid'
-  ? [{
-      type: 'custom',
-      options: {
-        validate: (v: string | null) => v !== '1',
-        message: "Option 1 n'est pas autorisée."
-      }
-    }]
-  : [])
-
-const customSuccessRules = computed(() => {
-  if (validationMode.value === 'neutral') {
-    return [{
-      type: 'custom',
-      options: {
-        validate: () => false
-      }
-    }]
+const customRules = [{
+  type: 'custom',
+  options: {
+    validate: (value: unknown): boolean => value !== '1',
+    message: "Option 1 n'est pas autorisée."
   }
+}]
 
-  if (validationMode.value === 'valid') {
-    return [{
-      type: 'custom',
-      options: {
-        validate: (v: string | null) => v !== null,
-        successMessage: 'Option sélectionnée avec succès.'
-      }
-    }]
+const customSuccessRules = [{
+  type: 'custom',
+  options: {
+    validate: (value: unknown): boolean => value !== null && value !== undefined,
+    successMessage: 'Option sélectionnée avec succès.'
   }
+}]
 
-  return []
-})
-
-const handleManualChange = async (newValue: string | null) => {
-  validationMode.value = 'neutral'
-  value.value = newValue
+const resetComparisons = async () => {
+  changeValue.value = null
+  blurValue.value = null
   await nextTick()
-  autocompleteRef.value?.clearValidation()
-}
-
-const applyButtonValue = async (newValue: string | null) => {
-  if (newValue === null) {
-    validationMode.value = 'neutral'
-    value.value = null
-    await nextTick()
-    autocompleteRef.value?.clearValidation()
-    return
-  }
-
-  validationMode.value = newValue === '1' ? 'invalid' : newValue ? 'valid' : 'neutral'
-  value.value = newValue
-  await nextTick()
-  await autocompleteRef.value?.validateOnSubmit()
+  changeAutocompleteRef.value?.clearValidation()
+  blurAutocompleteRef.value?.clearValidation()
 }
 </script>`,
 			},
 		],
 	},
+	argTypes: {
+		modelValue: {
+			control: false,
+		},
+		label: {
+			control: false,
+		},
+		isValidateOnBlur: {
+			control: false,
+		},
+		customRules: {
+			control: false,
+		},
+		customSuccessRules: {
+			control: false,
+		},
+	},
 	args: {
 		items,
-		label: 'Option',
-		isValidateOnBlur: false,
 		showSuccessMessages: true,
 	},
 	render: (args) => {
 		return {
 			components: { SyAutocomplete, VBtn },
 			setup() {
-				const value = ref<string | null>(null)
-				const autocompleteRef = ref<{ validateOnSubmit: () => Promise<boolean>, clearValidation: () => void } | null>(null)
-				const validationMode = ref<'neutral' | 'invalid' | 'valid'>('neutral')
+				type SyAutocompleteInstance = { clearValidation: () => void }
 
-				const customRules = computed(() => validationMode.value === 'invalid'
-					? [{
-							type: 'custom',
-							options: {
-								validate: (v: string | null) => v !== '1',
-								message: 'Option 1 n\'est pas autorisée.',
-							},
-						}]
-					: [])
+				const changeValue = ref<string | null>(null)
+				const blurValue = ref<string | null>(null)
+				const changeAutocompleteRef = ref<SyAutocompleteInstance | null>(null)
+				const blurAutocompleteRef = ref<SyAutocompleteInstance | null>(null)
+				const customRules = [{
+					type: 'custom',
+					options: {
+						validate: (value: unknown): boolean => value !== '1',
+						message: 'Option 1 n\'est pas autorisée.',
+					},
+				}]
+				const customSuccessRules = [{
+					type: 'custom',
+					options: {
+						validate: (value: unknown): boolean => value !== null && value !== undefined,
+						successMessage: 'Option sélectionnée avec succès.',
+					},
+				}]
 
-				const customSuccessRules = computed(() => {
-					if (validationMode.value === 'neutral') {
-						return [{
-							type: 'custom',
-							options: {
-								validate: () => false,
-							},
-						}]
-					}
-
-					if (validationMode.value === 'valid') {
-						return [{
-							type: 'custom',
-							options: {
-								validate: (v: string | null) => v !== null,
-								successMessage: 'Option sélectionnée avec succès.',
-							},
-						}]
-					}
-
-					return []
-				})
-
-				const handleManualChange = async (newValue: string | null) => {
-					validationMode.value = 'neutral'
-					value.value = newValue
+				const resetComparisons = async () => {
+					changeValue.value = null
+					blurValue.value = null
 					await nextTick()
-					autocompleteRef.value?.clearValidation()
+					changeAutocompleteRef.value?.clearValidation()
+					blurAutocompleteRef.value?.clearValidation()
 				}
 
-				const applyButtonValue = async (newValue: string | null) => {
-					if (newValue === null) {
-						validationMode.value = 'neutral'
-						value.value = null
-						await nextTick()
-						autocompleteRef.value?.clearValidation()
-						return
-					}
-
-					validationMode.value = newValue === '1' ? 'invalid' : newValue ? 'valid' : 'neutral'
-					value.value = newValue
-					await nextTick()
-					await autocompleteRef.value?.validateOnSubmit()
+				return {
+					args,
+					changeValue,
+					blurValue,
+					changeAutocompleteRef,
+					blurAutocompleteRef,
+					customRules,
+					customSuccessRules,
+					resetComparisons,
 				}
-
-				return { args, value, autocompleteRef, customRules, customSuccessRules, handleManualChange, applyButtonValue }
 			},
 			template: `
 				<div class="d-flex flex-column ga-4 pa-4">
 					<SyAutocomplete
-						ref="autocompleteRef"
-						:model-value="value"
 						v-bind="args"
+						ref="changeAutocompleteRef"
+						v-model="changeValue"
+						label="Validation au changement (false)"
+						:is-validate-on-blur="false"
 						:custom-rules="customRules"
 						:custom-success-rules="customSuccessRules"
-						@update:model-value="handleManualChange"
 					/>
-					<div class="d-flex ga-4 mt-2">
-						<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('1')">Définir une valeur invalide</VBtn>
-						<VBtn color="primary" class="mr-1" @mousedown.prevent @click="applyButtonValue('2')">Définir une valeur valide</VBtn>
-						<VBtn @mousedown.prevent @click="applyButtonValue(null)">Réinitialiser</VBtn>
-					</div>
+					<SyAutocomplete
+						v-bind="args"
+						ref="blurAutocompleteRef"
+						v-model="blurValue"
+						label="Validation au blur (true)"
+						:is-validate-on-blur="true"
+						:custom-rules="customRules"
+						:custom-success-rules="customSuccessRules"
+					/>
+					<VBtn class="align-self-start" @mousedown.prevent @click="resetComparisons">Réinitialiser</VBtn>
 				</div>
 			`,
 		}
@@ -544,8 +536,17 @@ const value2 = ref<string | null>(null)
 			},
 		],
 	},
+	argTypes: {
+		label: {
+			control: false,
+		},
+		disableErrorHandling: {
+			control: false,
+		},
+	},
 	args: {
 		items,
+		required: true,
 	},
 	render: (args) => {
 		return {
@@ -561,13 +562,11 @@ const value2 = ref<string | null>(null)
 						v-model="value1"
 						v-bind="args"
 						label="Avec validation interne (défaut)"
-						required
 					/>
 					<SyAutocomplete
 						v-model="value2"
 						v-bind="args"
 						label="Validation interne désactivée"
-						required
 						disable-error-handling
 					/>
 				</div>
@@ -707,6 +706,7 @@ const items = [
   { text: 'Option 2', value: '2' },
   { text: 'Option 3', value: '3' },
 ]
+const requiredRule = (value: unknown): boolean | string => Boolean(value) || 'Ce champ est requis'
 
 async function onSubmit() {
   const isValid = await autocompleteRef.value?.validateOnSubmit()
@@ -781,7 +781,7 @@ export const SyFormVuetifyValidation: Story = {
       label="Option"
       use-vuetify-validation
       :show-success-messages="false"
-      :rules="[v => !!v || 'Ce champ est requis']"
+      :rules="[requiredRule]"
     />
     <VBtn type="submit" color="primary" class="mt-4">
       Soumettre
@@ -803,6 +803,7 @@ const items = [
   { text: 'Option 2', value: '2' },
   { text: 'Option 3', value: '3' },
 ]
+const requiredRule = (value: unknown): boolean | string => Boolean(value) || 'Ce champ est requis'
 
 function onSubmit(event: { isValid: boolean }) {
   if (event.isValid) {
@@ -814,6 +815,11 @@ function onSubmit(event: { isValid: boolean }) {
 </script>`,
 			},
 		],
+	},
+	argTypes: {
+		rules: {
+			control: false,
+		},
 	},
 	args: {
 		'items': items,
@@ -836,7 +842,7 @@ function onSubmit(event: { isValid: boolean }) {
 				}
 			}
 
-			return { args, value, onSubmit }
+			return { args, value, requiredRule, onSubmit }
 		},
 		template: `
 			<div class="pa-4">
@@ -844,7 +850,7 @@ function onSubmit(event: { isValid: boolean }) {
 					<SyAutocomplete
 						v-model="value"
 						v-bind="args"
-						:rules="[v => !!v || 'Ce champ est requis']"
+						:rules="[requiredRule]"
 					/>
 					<VBtn
 						type="submit"
@@ -877,7 +883,7 @@ export const VFormAndVuetifyValidation: Story = {
       :items="items"
       label="Option"
       use-vuetify-validation
-      :rules="[v => !!v || 'Ce champ est requis']"
+      :rules="[requiredRule]"
     />
     <VBtn type="submit" color="primary" class="mt-4">
       Soumettre
@@ -900,6 +906,7 @@ const items = [
   { text: 'Option 2', value: '2' },
   { text: 'Option 3', value: '3' },
 ]
+const requiredRule = (value: unknown): boolean | string => Boolean(value) || 'Ce champ est requis'
 
 async function onSubmit() {
   const result = await formRef.value?.validate()
@@ -912,6 +919,11 @@ async function onSubmit() {
 </script>`,
 			},
 		],
+	},
+	argTypes: {
+		rules: {
+			control: false,
+		},
 	},
 	args: {
 		'items': items,
@@ -935,7 +947,7 @@ async function onSubmit() {
 				}
 			}
 
-			return { args, value, formRef, onSubmit }
+			return { args, value, formRef, requiredRule, onSubmit }
 		},
 		template: `
 			<div class="pa-4">
@@ -943,7 +955,7 @@ async function onSubmit() {
 					<SyAutocomplete
 						v-model="value"
 						v-bind="args"
-						:rules="[v => !!v || 'Ce champ est requis']"
+						:rules="[requiredRule]"
 					/>
 					<VBtn
 						type="submit"
