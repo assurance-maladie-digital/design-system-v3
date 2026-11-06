@@ -106,10 +106,10 @@
 		close: label => locales.value.closeField(label),
 	}
 
-	// Match the disabled background without dimming readonly text or blocking focus.
+	// Preserve custom backgrounds while applying the readonly theme surface.
 	const fieldBackgroundColor = computed(() =>
 		props.readonly && !props.disabled && props.bgColor === 'white'
-			? 'rgba(var(--v-theme-white), var(--v-disabled-opacity))'
+			? 'rgb(var(--v-theme-on-surface-bright))'
 			: props.bgColor,
 	)
 
@@ -583,7 +583,10 @@
 </script>
 
 <template>
-	<div class="sy-textfield-container">
+	<div
+		class="sy-textfield-container"
+		:class="{ 'sy-textfield-readonly': props.readonly && !props.disabled }"
+	>
 		<VTextField
 			:id="props.id"
 			ref="syTextFieldRef"
@@ -1070,4 +1073,18 @@
 .help-text-below.text-disabled {
 	color: rgba(var(--v-theme-on-surface), var(--v-disabled-opacity));
 }
+
+.sy-textfield-readonly {
+	:deep(.v-input:not(.calendar-activator-editable) .v-field__outline) {
+		--v-field-border-opacity: 1;
+
+		color: rgb(var(--v-theme-on-disabled)) !important;
+	}
+
+	:deep(.v-input:not(.calendar-activator-editable) .v-label.v-field-label) {
+		color: rgb(var(--v-theme-on-surface-variant)) !important;
+		opacity: 1;
+	}
+}
+
 </style>

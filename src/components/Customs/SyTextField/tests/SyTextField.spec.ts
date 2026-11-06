@@ -26,18 +26,20 @@ describe('SyTextField', () => {
 		})
 	})
 
-	it('uses the disabled background transparency in readonly mode while keeping the input enabled', async () => {
+	it('uses the readonly surface token while keeping the input enabled', async () => {
 		await wrapper.setProps({ modelValue: 'MARIE', readonly: true })
 		const input = wrapper.get('input')
 		expect(input.attributes('readonly')).toBeDefined()
+		expect(wrapper.classes()).toContain('sy-textfield-readonly')
 		expect(input.attributes('disabled')).toBeUndefined()
-		expect(wrapper.get('.v-field').attributes('style')).toContain('background-color: rgba(var(--v-theme-white), var(--v-disabled-opacity))')
+		expect(wrapper.get('.v-field').attributes('style')).toContain('background-color: rgb(var(--v-theme-on-surface-bright))')
 		await wrapper.setProps({ readonly: false })
 		expect(input.attributes('readonly')).toBeUndefined()
+		expect(wrapper.classes()).not.toContain('sy-textfield-readonly')
 		expect(wrapper.get('.v-field').classes()).toContain('bg-white')
 	})
 
-	it('preserves a custom background and avoids applying disabled opacity twice', async () => {
+	it('preserves custom backgrounds and the disabled appearance', async () => {
 		await wrapper.setProps({ readonly: true, bgColor: 'primary' })
 		expect(wrapper.get('.v-field').classes()).toContain('bg-primary')
 		await wrapper.setProps({ bgColor: 'white', disabled: true })
