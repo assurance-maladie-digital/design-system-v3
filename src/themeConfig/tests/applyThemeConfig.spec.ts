@@ -68,18 +68,4 @@ describe('checkThemeConfig', () => {
 		expect(checkThemeConfig({ brand: 'cnam', focus: { color: 'pinkDarken20' } }).valid).toBe(true)
 		expect(checkThemeConfig({ brand: 'cnam', focus: { color: 'surface' } }).valid).toBe(false)
 	})
-
-	it('rejects pinkDarken20 on ap2026, where the color does not exist', () => {
-		expect(checkThemeConfig({ brand: 'ap2026', focus: { color: 'pinkDarken20' } }).valid).toBe(false)
-	})
-
-	it('falls back to primary when pinkDarken20 is requested on ap2026', () => {
-		const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined)
-		const options = createVuetifyOptions({ brand: 'ap2026', focus: { color: 'pinkDarken20' } })
-		const theme = options.theme && typeof options.theme === 'object' ? options.theme : {}
-
-		expect(theme.themes?.ap2026?.variables?.['focus-color']).toBe('var(--v-theme-primary)')
-		expect(warn).toHaveBeenCalledWith(expect.stringContaining('pinkDarken20'))
-		warn.mockRestore()
-	})
 })
