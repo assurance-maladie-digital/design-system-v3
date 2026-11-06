@@ -15,3 +15,20 @@ export const createInfoNotice = (content: string) => ({
 	}),
 	tags: ['!dev'],
 })
+
+/**
+ * Décorateur Storybook : affiche le même bandeau d'information au-dessus de la story
+ * décorée. Variante de `createInfoNotice` pour l'usage direct dans les stories.
+ * `content` est un fragment de template Vue inséré dans le slot par défaut de l'alerte.
+ */
+export const createInfoNoticeDecorator = (content: string) => () => ({
+	components: { SyAlert },
+	template: `
+		<div>
+			<SyAlert type="info" variant="tonal" class="mb-4" role="note" :closable="false">
+				${content}
+			</SyAlert>
+			<story/>
+		</div>
+	`,
+})

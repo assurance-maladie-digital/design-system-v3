@@ -3,6 +3,7 @@ import PhoneField from './PhoneField.vue'
 import { ref, watch } from 'vue'
 import { indicatifs } from './indicatifs'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 import { fn } from 'storybook/test'
 
 const meta = {
@@ -398,6 +399,11 @@ export const MobileAccessibilityGuideline: Story = {
 		() => ({
 			template: '<div style="max-width: 320px;"><story/></div>',
 		}),
+		createInfoNoticeDecorator(`
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
+			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
+			préférez un intitulé court avec un <code>help-text</code> qui complète l'information.
+		`),
 	],
 	parameters: {
 		a11y: {

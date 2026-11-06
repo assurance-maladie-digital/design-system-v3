@@ -4,6 +4,7 @@ import { VIcon } from 'vuetify/components'
 import { ref, watch } from 'vue'
 import { mdiAccountBox } from '@mdi/js'
 import { getValidationDocumentation } from '@/composables/unifyValidation/documentationValidationProps'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 import { fn } from 'storybook/test'
 import type { SyTextFieldProps } from './types'
 
@@ -1264,6 +1265,13 @@ const value = ref('42')
 }
 
 export const MobileAccessibilityGuideline: Story = {
+	decorators: [
+		createInfoNoticeDecorator(`
+			<code>help-text</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
+			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
+			préférez un intitulé court avec un <code>help-text</code> qui complète l'information.
+		`),
+	],
 	parameters: {
 		docs: {
 			description: {

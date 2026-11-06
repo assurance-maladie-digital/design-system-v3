@@ -3,7 +3,7 @@ import DatePicker from './DatePicker.vue'
 import SyAlert from '@/components/SyAlert/SyAlert.vue'
 import { ref, computed } from 'vue'
 import { fn } from 'storybook/test'
-import { createInfoNotice } from '@/stories/InfoNotice/InfoNotice'
+import { createInfoNotice, createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import utc from 'dayjs/plugin/utc'
@@ -405,6 +405,11 @@ export const MobileAccessibilityGuideline: Story = {
 		() => ({
 			template: '<div style="max-width: 320px;"><story/></div>',
 		}),
+		createInfoNoticeDecorator(`
+			<code>hint</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
+			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
+			préférez un intitulé court avec un <code>hint</code> qui complète l'information.
+		`),
 	],
 	parameters: {
 		sourceCode: [

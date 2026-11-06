@@ -3,6 +3,7 @@ import DatePicker from '@/components/DatePicker/CalendarMode/DatePicker.vue'
 import type { DatePickerRule } from '@/components/DatePicker/types'
 import { ref } from 'vue'
 import { fn } from 'storybook/test'
+import { createInfoNoticeDecorator } from '@/stories/InfoNotice/InfoNotice'
 
 interface DatePickerProps {
 	'modelValue'?: string | string[] | null
@@ -368,6 +369,11 @@ export const MobileAccessibilityGuideline: Story = {
 		() => ({
 			template: '<div style="max-width: 320px;"><story/></div>',
 		}),
+		createInfoNoticeDecorator(`
+			<code>hint</code> est lié au champ via <code>aria-describedby</code> : l'intitulé répété
+			est lu deux fois par le lecteur d'écran. Ce n'est pas une non-conformité, mais si possible
+			préférez un intitulé court avec un <code>hint</code> qui complète l'information.
+		`),
 	],
 	parameters: {
 		sourceCode: [
