@@ -1,8 +1,11 @@
-import type { SynapseBrand, SynapseFieldDensity, SynapseFieldVariant, SynapseThemeConfig } from './types'
+import type { SynapseBrand, SynapseFieldDensity, SynapseFieldVariant, SynapseFocusColor, SynapseThemeConfig } from './types'
 
 export const SYNAPSE_BRANDS: readonly SynapseBrand[] = ['cnam', 'pa', 'ap', 'ap2026']
 export const FIELD_VARIANTS: readonly SynapseFieldVariant[] = ['outlined', 'filled', 'underlined']
 export const FIELD_DENSITIES: readonly SynapseFieldDensity[] = ['default', 'comfortable', 'compact']
+
+/** Couleurs autorisées pour le ring de focus. */
+export const FOCUS_COLORS: readonly SynapseFocusColor[] = ['primary', 'pinkDarken20']
 
 /** Bornes du ring de focus, en pixels. */
 export const FOCUS_WIDTH_MIN = 2

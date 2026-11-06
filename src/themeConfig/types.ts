@@ -7,14 +7,17 @@ export type SynapseFieldVariant = 'outlined' | 'filled' | 'underlined'
 /** Densité des champs de formulaire (prop `density` des champs Vuetify). */
 export type SynapseFieldDensity = 'default' | 'comfortable' | 'compact'
 
+/** Couleurs autorisées pour le ring de focus (clé de couleur du thème, camelCase). */
+export type SynapseFocusColor = 'primary' | 'pinkDarken20'
+
 /** Réglages du ring de focus clavier. */
 export interface SynapseFocusConfig {
 	/** Épaisseur du ring, en pixels. Minimum 2 (RGAA / WCAG 2.4.13). */
 	width: number
 	/** Écart entre l'élément et le ring, en pixels. */
 	offset: number
-	/** Clé de couleur du thème (camelCase, ex. `primary`, `secondary`). */
-	color: string
+	/** Couleur du ring : `primary` ou `pinkDarken20`. */
+	color: SynapseFocusColor
 }
 
 /** Réglages des champs de formulaire. */
