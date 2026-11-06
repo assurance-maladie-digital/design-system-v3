@@ -1,0 +1,104 @@
+import type { ValidationRule as SyValidationRule } from '@/composables/validation/useValidation'
+import { useValidation } from '@/composables/unifyValidation/useValidation'
+import { computed, nextTick, watch, type Ref } from 'vue'
+import type { ValidationRule as VuetifyValidationRule } from 'vuetify'
+import type { locales } from '../locales'
+
+export function useDatePickerValidation(args: {
+	/** Text backing the validation rules (incomplete entries never parse to Date) */
+	modelValue: Ref<unknown>
+	/** Component model (picker selection, external update): changes don't necessarily blur the field */
+	pickerValue: Ref<unknown>
+	readonly: Ref<boolean>
+	disabled: Ref<boolean>
+	required: Ref<boolean>
+	isValidateOnBlur: Ref<boolean>
+	showSuccessMessages: Ref<boolean>
+	disableErrorHandling: Ref<boolean>
+	useVuetifyValidation: Ref<boolean>
+	label: Ref<string | undefined>
+	rules: Ref<VuetifyValidationRule[] | undefined>
+	customRules: Ref<SyValidationRule[]>
+	customWarningRules?: Ref<SyValidationRule[]>
+	customSuccessRules?: Ref<SyValidationRule[]>
+	errorMessages?: Ref<string[] | null | undefined>
+	warningMessages?: Ref<string[] | null | undefined>
+	successMessages?: Ref<string[] | null | undefined>
+	hasErrorProp?: Ref<boolean>
+	hasWarningProp?: Ref<boolean>
+	hasSuccessProp?: Ref<boolean>
+	maxErrors?: Ref<number>
+	/** Focus state of the text field: gates the eager picker-value validation */
+	focused: Ref<boolean>
+	locales: Ref<typeof locales>
+	onReset: () => void
+}) {
+	const allCustomRules = computed<SyValidationRule[]>(() => {
+		const base: SyValidationRule[] = args.required.value
+			? [{
+					type: 'required',
+					options: {
+						message: args.locales.value.fieldRequired(args.label.value),
+						fieldIdentifier: args.label.value,
+					},
+				}]
+			: []
+		return [...base, ...(args.customRules.value ?? [])]
+	})
+
+	/**
+	 * The validation composable mutates the modelValue directly when the form reset is triggered.
+	 * Since we validate against the text field value rather than the component model, we need to
+	 * intercept that clear action and reset the component model ourselves.
+	 */
+	const validationModel = computed({
+		get: () => args.modelValue.value,
+		set: (value) => {
+			if (value == null) {
+				// Deferred so the synchronous VForm reset sequence settles before our clear lands.
+				nextTick(args.onReset)
+			}
+			else {
+				// The validation should never set the modelValue to a non null value.
+				throw new Error('SyDatePicker: In the validation pipeline modelValue can only be set to null to reset the value.')
+			}
+		},
+	})
+
+	const validation = useValidation({
+		modelValue: validationModel,
+		readonly: args.readonly,
+		disabled: args.disabled,
+		required: args.required,
+		isValidateOnBlur: args.isValidateOnBlur,
+		showSuccessMessages: args.showSuccessMessages,
+		disableErrorHandling: args.disableErrorHandling,
+		useVuetifyValidation: args.useVuetifyValidation,
+		label: args.label,
+		rules: args.rules,
+		customRules: allCustomRules,
+		customWarningRules: args.customWarningRules,
+		customSuccessRules: args.customSuccessRules,
+		errorMessages: args.errorMessages,
+		warningMessages: args.warningMessages,
+		successMessages: args.successMessages,
+		hasErrorProp: args.hasErrorProp,
+		hasWarningProp: args.hasWarningProp,
+		hasSuccessProp: args.hasSuccessProp,
+		maxErrors: args.maxErrors,
+		focused: args.focused,
+	})
+
+	// Calendar selections and external model updates change the picker value without
+	// a focus/blur cycle on the text field: validation must run once the text synced.
+	// Typed text also updates the model, but while the field is focused — the blur
+	// cycle validates it, so it must not trigger validation at input time.
+	// In validate-on-input mode the textValue watcher inside useValidation already covers it.
+	watch(args.pickerValue, async () => {
+		if (!args.isValidateOnBlur.value || args.focused.value) return
+		await nextTick()
+		await validation.validate()
+	})
+
+	return validation
+}
