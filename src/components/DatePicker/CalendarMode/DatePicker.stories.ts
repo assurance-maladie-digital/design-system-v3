@@ -1019,14 +1019,19 @@ export const UTC: Story = {
 	},
 }
 
-export const AccessibilityNotice = {
-	...createInfoNotice(`
-		<b>Le calendrier doit être un moyen alternatif, optionnel de saisir une date.</b><br/>
+export const AccessibilityNotice = createInfoNotice(`
+	<p>
+		<strong>Le calendrier doit être un moyen alternatif, optionnel de saisir une date.</strong>
+	</p>
+	<p>
 		Afin de garantir à tous la possibilité de remplir la date, mettre à disposition un champ de saisie
-		textuel, avec la possibilité additionnelle et non obligatoire d'utiliser le calendrier.<br/><br/>
-		Options disponibles : le <b>mode combiné</b> (<code>CombinedMode</code>, prop
+		textuel, avec la possibilité additionnelle et non obligatoire d'utiliser le calendrier.
+	</p>
+	<p>
+		Options disponibles : le <strong>mode combiné</strong>
+		(<a class="text-primary" href="/?path=/docs/composants-formulaires-datepicker-combinedmode--docs"><code>CombinedMode</code></a>, prop
 		<code>useCombinedMode</code>) qui associe saisie textuelle et calendrier, ou le
-		<b>mode saisie manuelle</b> (<code>DateInput</code>, prop <code>noCalendar</code>) sans calendrier.
-	`),
-	tags: ['!dev'],
-}
+		<strong>mode saisie manuelle</strong>
+		(<a class="text-primary" href="/?path=/docs/composants-formulaires-datepicker-dateinput--docs"><code>DateInput</code></a>, prop <code>noCalendar</code>) sans calendrier.
+	</p>
+`)
