@@ -88,6 +88,7 @@
 
 	const isOpen = ref(false)
 	const search = ref('')
+	const isPristine = ref(true)
 	// Miroir inscriptible de `modelValue` : la validation (et le reset côté formulaire)
 	// peuvent y écrire. L'écriture émet `update:modelValue` vers le parent — c'est le
 	// contrat `v-model` — et le `watch(props.modelValue)` ci-dessous resynchronise
@@ -144,6 +145,7 @@
 
 	const syncSearchFromValue = () => {
 		if (props.multiple) return
+		isPristine.value = true
 		suppressMenuOpen.value = true
 		if (isEmptySelectValue(selected.value)) {
 			search.value = ''
@@ -157,6 +159,7 @@
 
 	const filteredItems = computed(() => {
 		if (!props.filter || props.loading) return formattedItems.value
+		if (!props.multiple && isPristine.value) return formattedItems.value
 		return formattedItems.value.filter((item) => {
 			const text = String(item[props.plainTextKey || props.textKey] ?? item[props.textKey] ?? '').toLowerCase()
 			return text.includes(normalizedSearch.value)
@@ -168,7 +171,9 @@
 		if (item === null || item === undefined) {
 			clearValidation()
 		}
+		if (!props.multiple) suppressMenuOpen.value = true
 		updateValue(item ?? null)
+		if (!props.multiple) isPristine.value = true
 		if (props.multiple) {
 			suppressNextInput.value = true
 			search.value = ''
@@ -317,6 +322,7 @@
 		// the current value after a programmatic update): no actual user input occurred.
 		if (inputValue === search.value) return
 
+		isPristine.value = false
 		search.value = inputValue
 
 		if (!inputValue && !props.multiple && selected.value != null) {
