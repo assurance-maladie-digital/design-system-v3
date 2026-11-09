@@ -200,17 +200,52 @@ describe('DatePicker (CalendarMode) – accessibility (axe)', () => {
 		const yearsContainer = document.body.querySelector<HTMLElement>('.v-date-picker-years')
 		expect(yearsContainer).not.toBeNull()
 
-		// Le conteneur scrollable de la liste des années doit être nommé ;
+		// Le conteneur scrollable n'est plus focusable, donc sans nom propre ;
 		// role="rowgroup" car il est enfant direct du role="grid" posé sur .v-date-picker-years
 		const yearsContent = yearsContainer?.querySelector<HTMLElement>('.v-date-picker-years__content')
 		expect(yearsContent).not.toBeNull()
 		expect(yearsContent?.getAttribute('role')).toBe('rowgroup')
-		expect(yearsContent?.getAttribute('aria-label')).toBe(locales.yearListRegionLabel)
+		expect(yearsContent?.hasAttribute('aria-label')).toBe(false)
 
 		const results = await axe(document.body)
 		assertNoA11yViolations(results, 'DatePicker – opened year view (birth date)', {
 			ignoreRules: ['region'],
 		})
+
+		wrapper.unmount()
+	}, 60000)
+
+	it('expose un seul arrêt de tabulation dans la vue années, y compris après un cycle focus/blur', async () => {
+		const wrapper = mount(DatePicker, {
+			props: {
+				label: 'Date de naissance',
+				format: 'DD/MM/YYYY',
+				modelValue: null,
+				isBirthDate: true,
+			},
+			attachTo: document.body,
+		})
+
+		wrapper.vm.isDatePickerVisible = true
+		await nextTick()
+		await wrapper.vm.updateAccessibility()
+		await nextTick()
+
+		const yearsContainer = document.body.querySelector<HTMLElement>('.v-date-picker-years')
+		expect(yearsContainer).not.toBeNull()
+		const yearsContent = yearsContainer?.querySelector<HTMLElement>('.v-date-picker-years__content')
+		expect(yearsContent?.getAttribute('tabindex')).toBe('-1')
+		expect(yearsContainer?.querySelectorAll('[tabindex="0"]').length).toBeLessThanOrEqual(1)
+
+		const firstYear = yearsContainer?.querySelector<HTMLElement>('button')
+		firstYear?.focus()
+		await nextTick()
+		firstYear?.blur()
+		await nextTick()
+		await nextTick()
+
+		expect(yearsContent?.getAttribute('tabindex')).toBe('-1')
+		expect(yearsContainer?.querySelectorAll('[tabindex="0"]').length).toBeLessThanOrEqual(1)
 
 		wrapper.unmount()
 	}, 60000)

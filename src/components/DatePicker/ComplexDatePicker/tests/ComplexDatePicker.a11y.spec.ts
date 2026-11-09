@@ -79,12 +79,12 @@ describe('ComplexDatePicker – accessibility (axe)', () => {
 		const yearsContainer = document.body.querySelector<HTMLElement>('.v-date-picker-years')
 		expect(yearsContainer).not.toBeNull()
 
-		// Le conteneur scrollable de la liste des années doit être nommé ;
+		// Le conteneur scrollable n'est plus focusable, donc sans nom propre ;
 		// role="rowgroup" car il est enfant direct du role="grid" posé sur .v-date-picker-years
 		const yearsContent = yearsContainer?.querySelector<HTMLElement>('.v-date-picker-years__content')
 		expect(yearsContent).not.toBeNull()
 		expect(yearsContent?.getAttribute('role')).toBe('rowgroup')
-		expect(yearsContent?.getAttribute('aria-label')).toBe('Liste des années')
+		expect(yearsContent?.hasAttribute('aria-label')).toBe(false)
 
 		const results = await axe(document.body)
 		assertNoA11yViolations(results, 'ComplexDatePicker – opened year view (birth date)', {

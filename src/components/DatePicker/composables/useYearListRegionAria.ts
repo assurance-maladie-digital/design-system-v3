@@ -1,5 +1,4 @@
-import { type Ref, nextTick, watch } from 'vue'
-import { locales } from '../locales'
+import { type Ref, nextTick, onBeforeUnmount, watch } from 'vue'
 import type { ViewMode } from './useDatePickerViewMode'
 
 /**
@@ -17,15 +16,16 @@ export interface UseYearListRegionAriaOptions {
 }
 
 /**
- * useYearListRegionAria — Nomme la région scrollable de la vue années.
+ * useYearListRegionAria — Structure ARIA du conteneur scrollable de la vue années.
  *
  * ## Rôle
  *
- * Vuetify rend `.v-date-picker-years__content` focusable (`tabindex="0"`) pour
- * permettre le scroll au clavier, mais sans nom ni rôle : un élément qui reçoit
- * le focus sans intitulé est annoncé « blanc » par les lecteurs d'écran.
- * Ce composable pose `role="rowgroup"` + `aria-label` sur cet élément quand la
- * vue années est affichée.
+ * Vuetify rend `.v-date-picker-years__content` focusable (`tabindex="0"`), ce qui
+ * ajoute un arrêt de tabulation avant l'année active. Ce composable pose
+ * `role="rowgroup"` et `tabindex="-1"` (maintenu par un observateur, car Vuetify
+ * réécrit `tabindex="0"` au focusout) quand la vue années est affichée.
+ * Pas d'`aria-label` : le conteneur n'est plus focusable et la grille porte déjà
+ * son nom (« Sélectionner une année »).
  *
  * `rowgroup` (et non `region`) car `__content` est l'enfant direct de
  * `.v-date-picker-years[role="grid"]` (cf. `applyOptionGridStructure` dans
@@ -42,6 +42,27 @@ export interface UseYearListRegionAriaOptions {
 export const useYearListRegionAria = (options: UseYearListRegionAriaOptions) => {
 	const { getRootEl, isDatePickerVisible, currentViewMode } = options
 
+	let tabindexObserver: MutationObserver | undefined
+
+	const stopTabindexGuard = (): void => {
+		tabindexObserver?.disconnect()
+		tabindexObserver = undefined
+	}
+
+	// Vuetify réécrit tabindex=0 sur le conteneur au focusout : on le maintient à -1.
+	const guardContainerTabindex = (content: HTMLElement): void => {
+		stopTabindexGuard()
+		if (typeof MutationObserver === 'undefined') return
+		tabindexObserver = new MutationObserver(() => {
+			if (content.getAttribute('tabindex') !== '-1') {
+				content.setAttribute('tabindex', '-1')
+			}
+		})
+		tabindexObserver.observe(content, { attributes: true, attributeFilter: ['tabindex'] })
+	}
+
+	onBeforeUnmount(stopTabindexGuard)
+
 	const applyYearListRegionAria = (): void => {
 		const rootEl = getRootEl()
 		const content = rootEl?.querySelector<HTMLElement>('.v-date-picker-years__content')
@@ -50,7 +71,9 @@ export const useYearListRegionAria = (options: UseYearListRegionAriaOptions) => 
 		if (content.getAttribute('role') !== 'rowgroup') {
 			content.setAttribute('role', 'rowgroup')
 		}
-		content.setAttribute('aria-label', locales.yearListRegionLabel)
+		// Un seul arrêt de tabulation (roving tabindex sur les années) : le conteneur n'en est pas un.
+		content.setAttribute('tabindex', '-1')
+		guardContainerTabindex(content)
 	}
 
 	// Couvre l'ouverture du calendrier directement en vue années (isBirthDate) :

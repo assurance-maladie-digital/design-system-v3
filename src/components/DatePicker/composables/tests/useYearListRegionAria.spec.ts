@@ -2,7 +2,6 @@ import { mount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import { ref, nextTick, defineComponent } from 'vue'
 import { useYearListRegionAria } from '../useYearListRegionAria'
-import { locales } from '../../locales'
 import type { ViewMode } from '../useDatePickerViewMode'
 
 const buildYearsDom = () => {
@@ -44,14 +43,28 @@ const mountComposable = (options: {
 }
 
 describe('useYearListRegionAria', () => {
-	it('applique role=rowgroup et aria-label sur .v-date-picker-years__content', () => {
+	it('applique role=rowgroup sans aria-label sur .v-date-picker-years__content', () => {
 		const { rootEl, yearsContent } = buildYearsDom()
 
 		const { api } = mountComposable({ getRootEl: () => rootEl })
 		api.applyYearListRegionAria()
 
 		expect(yearsContent.getAttribute('role')).toBe('rowgroup')
-		expect(yearsContent.getAttribute('aria-label')).toBe(locales.yearListRegionLabel)
+		expect(yearsContent.hasAttribute('aria-label')).toBe(false)
+		rootEl.remove()
+	})
+
+	it('retire le conteneur de l\'ordre de tabulation et ne laisse qu\'un seul tabindex=0', () => {
+		const { rootEl, yearsContent } = buildYearsDom()
+		const activeYear = document.createElement('button')
+		activeYear.tabIndex = 0
+		yearsContent.appendChild(activeYear)
+
+		const { api } = mountComposable({ getRootEl: () => rootEl })
+		api.applyYearListRegionAria()
+
+		expect(yearsContent.getAttribute('tabindex')).toBe('-1')
+		expect(rootEl.querySelectorAll('.v-date-picker-years [tabindex="0"]')).toHaveLength(1)
 		rootEl.remove()
 	})
 
@@ -64,7 +77,7 @@ describe('useYearListRegionAria', () => {
 		rootEl.remove()
 	})
 
-	it('est idempotent : la réapplication conserve un seul role et un seul label', () => {
+	it('est idempotent : la réapplication conserve le même role et tabindex', () => {
 		const { rootEl, yearsContent } = buildYearsDom()
 
 		const { api } = mountComposable({ getRootEl: () => rootEl })
@@ -72,7 +85,7 @@ describe('useYearListRegionAria', () => {
 		api.applyYearListRegionAria()
 
 		expect(yearsContent.getAttribute('role')).toBe('rowgroup')
-		expect(yearsContent.getAttribute('aria-label')).toBe(locales.yearListRegionLabel)
+		expect(yearsContent.hasAttribute('aria-label')).toBe(false)
 		rootEl.remove()
 	})
 
@@ -90,7 +103,7 @@ describe('useYearListRegionAria', () => {
 		api.applyYearListRegionAria()
 
 		expect(recreated.getAttribute('role')).toBe('rowgroup')
-		expect(recreated.getAttribute('aria-label')).toBe(locales.yearListRegionLabel)
+		expect(recreated.getAttribute('tabindex')).toBe('-1')
 		rootEl.remove()
 	})
 
@@ -108,7 +121,7 @@ describe('useYearListRegionAria', () => {
 		await nextTick()
 
 		expect(yearsContent.getAttribute('role')).toBe('rowgroup')
-		expect(yearsContent.getAttribute('aria-label')).toBe(locales.yearListRegionLabel)
+		expect(yearsContent.getAttribute('tabindex')).toBe('-1')
 		rootEl.remove()
 	})
 
